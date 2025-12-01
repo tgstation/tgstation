@@ -250,7 +250,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 
 /datum/ai_behavior/find_and_set/music_audience
 
-/datum/ai_behavior/find_and_set/music_audience/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/music_audience/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/atom/home = controller.blackboard[BB_HOME_VILLAGE]
 	for(var/mob/living/carbon/human/target in oview(search_range, controller.pawn))
 		if(target.stat > UNCONSCIOUS || !target.mind)
@@ -289,7 +289,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 		return
 	controller.queue_behavior(/datum/ai_behavior/find_and_set/find_chief, BB_MOOK_TRIBAL_CHIEF, /mob/living/basic/mining/mook/worker/tribal_chief)
 
-/datum/ai_behavior/find_and_set/find_chief/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/find_chief/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/mob/living/chief = locate(locate_path) in oview(search_range, controller.pawn)
 	if(isnull(chief))
 		return null

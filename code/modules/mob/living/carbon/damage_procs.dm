@@ -82,13 +82,13 @@
 	return final_mod
 
 //These procs fetch a cumulative total damage from all bodyparts
-/mob/living/carbon/getBruteLoss()
+/mob/living/carbon/get_brute_loss()
 	var/amount = 0
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		amount += bodypart.brute_dam
 	return round(amount, DAMAGE_PRECISION)
 
-/mob/living/carbon/getFireLoss()
+/mob/living/carbon/get_fire_loss()
 	var/amount = 0
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		amount += bodypart.burn_dam
@@ -102,7 +102,7 @@
  * Arguments:
  * *  required_bodytype - The bodytype(s) to match against.
  */
-/mob/living/carbon/proc/getBruteLossForType(required_bodytype = ALL)
+/mob/living/carbon/proc/get_brute_loss_for_type(required_bodytype = ALL)
 	var/amount = 0
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		if(!(bodypart.bodytype & required_bodytype))
@@ -117,7 +117,7 @@
  * Arguments:
  * *  required_bodytype - The bodytype(s) to match against.
  */
-/mob/living/carbon/proc/getFireLossForType(required_bodytype = ALL)
+/mob/living/carbon/proc/get_fire_loss_for_type(required_bodytype = ALL)
 	var/amount = 0
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		if(!(bodypart.bodytype & required_bodytype))
@@ -125,7 +125,7 @@
 		amount += bodypart.burn_dam
 	return round(amount, DAMAGE_PRECISION)
 
-/mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/carbon/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(!can_adjust_brute_loss(amount, forced, required_bodytype))
 		return 0
 	if(amount > 0)
@@ -133,16 +133,16 @@
 	else
 		. = heal_overall_damage(brute = abs(amount), required_bodytype = required_bodytype, updating_health = updating_health, forced = forced)
 
-/mob/living/carbon/setBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/carbon/set_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
 		return FALSE
-	var/current = getBruteLoss()
+	var/current = get_brute_loss()
 	var/diff = amount - current
 	if(!diff)
 		return FALSE
-	return adjustBruteLoss(diff, updating_health, forced, required_bodytype)
+	return adjust_brute_loss(diff, updating_health, forced, required_bodytype)
 
-/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/carbon/adjust_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(!can_adjust_fire_loss(amount, forced, required_bodytype))
 		return 0
 	if(amount > 0)
@@ -150,16 +150,16 @@
 	else
 		. = heal_overall_damage(burn = abs(amount), required_bodytype = required_bodytype, updating_health = updating_health, forced = forced)
 
-/mob/living/carbon/setFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/carbon/set_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
 		return FALSE
-	var/current = getFireLoss()
+	var/current = get_fire_loss()
 	var/diff = amount - current
 	if(!diff)
 		return FALSE
-	return adjustFireLoss(diff, updating_health, forced, required_bodytype)
+	return adjust_fire_loss(diff, updating_health, forced, required_bodytype)
 
-/mob/living/carbon/human/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
+/mob/living/carbon/human/adjust_tox_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
 	. = ..()
 	if(. >= 0) // 0 = no damage, + values = healed damage
 		return .
@@ -167,7 +167,7 @@
 	if(AT_TOXIN_VOMIT_THRESHOLD(src))
 		apply_status_effect(/datum/status_effect/tox_vomit)
 
-/mob/living/carbon/human/setToxLoss(amount, updating_health, forced, required_biotype)
+/mob/living/carbon/human/set_tox_loss(amount, updating_health, forced, required_biotype)
 	. = ..()
 	if(. >= 0)
 		return .
@@ -191,7 +191,7 @@
  *
  * Returns: The net change in damage from apply_organ_damage()
  */
-/mob/living/carbon/adjustOrganLoss(slot, amount, maximum, required_organ_flag = NONE)
+/mob/living/carbon/adjust_organ_loss(slot, amount, maximum, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
 	if(!affected_organ || HAS_TRAIT(src, TRAIT_GODMODE))
 		return FALSE
@@ -201,7 +201,7 @@
 
 /**
  * If an organ exists in the slot requested, and we are capable of taking damage (we don't have TRAIT_GODMODE), call the set damage proc on that organ, which can
- * set or clear the failing variable on that organ, making it either cease or start functions again, unlike adjustOrganLoss.
+ * set or clear the failing variable on that organ, making it either cease or start functions again, unlike adjust_organ_loss.
  *
  * Arguments:
  * * slot - organ slot, like [ORGAN_SLOT_HEART]
@@ -210,7 +210,7 @@
  *
  * Returns: The net change in damage from set_organ_damage()
  */
-/mob/living/carbon/setOrganLoss(slot, amount, required_organ_flag = NONE)
+/mob/living/carbon/set_organ_loss(slot, amount, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
 	if(!affected_organ || HAS_TRAIT(src, TRAIT_GODMODE))
 		return FALSE

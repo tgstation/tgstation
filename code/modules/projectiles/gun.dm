@@ -24,6 +24,16 @@
 	attack_verb_simple = list("strike", "hit", "bash")
 	action_slots = ALL
 
+	// Muzzle Flash
+	light_on = FALSE
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
+	light_range = 3
+	light_color = LIGHT_COLOR_ORANGE
+	light_power = 0.5
+	var/can_muzzle_flash = TRUE
+	/// Muzzle Flash Duration
+	var/light_time = 0.1 SECONDS
+
 	var/gun_flags = NONE
 	var/fire_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
 	var/vary_fire_sound = TRUE
@@ -47,7 +57,7 @@
 	/// Delay between shots in a burst.
 	var/burst_delay = 2
 	/// Delay between bursts (if burst-firing) or individual shots (if weapon is single-fire).
-	var/fire_delay = 0
+	var/fire_delay = 0 SECONDS
 	var/firing_burst = 0 //Prevent the weapon from firing again while already firing
 	/// firing cooldown, true if this gun shouldn't be allowed to manually fire
 	var/fire_cd = 0
@@ -95,7 +105,7 @@
 	. = ..()
 	if(ispath(pin))
 		pin = new pin
-		pin.gun_insert(new_gun = src)
+		pin.gun_insert(new_gun = src, starting = TRUE)
 
 	add_seclight_point()
 	add_bayonet_point()
@@ -207,10 +217,21 @@
 	else
 		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
 
+/obj/item/gun/proc/muzzle_flash_on()
+	if (can_muzzle_flash)
+		set_light_on(TRUE)
+		addtimer(CALLBACK(src, PROC_REF(muzzle_flash_off)), light_time, TIMER_UNIQUE | TIMER_OVERRIDE)
+	else
+		muzzle_flash_off()
+
+/obj/item/gun/proc/muzzle_flash_off()
+	set_light_on(FALSE)
+
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
 	if(recoil && !tk_firing(user))
 		shake_camera(user, recoil + 1, recoil)
 	fire_sounds()
+	muzzle_flash_on()
 	if(suppressed || !message)
 		return FALSE
 	if(tk_firing(user))
@@ -362,12 +383,6 @@
 			return
 		if(target == user && (user.zone_selected != BODY_ZONE_PRECISE_MOUTH && doafter_self_shoot)) //so we can't shoot ourselves (unless mouth selected)
 			return
-		if(iscarbon(target))
-			var/mob/living/carbon/C = target
-			for(var/i in C.all_wounds)
-				var/datum/wound/W = i
-				if(W.try_treating(src, user))
-					return // another coward cured!
 
 	if(istype(user))//Check if the user can use the gun, if the user isn't alive(turrets) assume it can.
 		var/mob/living/L = user
@@ -645,7 +660,7 @@
 	if(pin)
 		qdel(pin)
 	var/obj/item/firing_pin/new_pin = new
-	new_pin.gun_insert(new_gun = src)
+	new_pin.gun_insert(new_gun = src, starting = TRUE)
 
 //Happens before the actual projectile creation
 /obj/item/gun/proc/before_firing(atom/target,mob/user)

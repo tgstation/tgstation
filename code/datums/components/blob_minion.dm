@@ -49,6 +49,8 @@
 	RegisterSignal(overmind, COMSIG_QDELETING, PROC_REF(overmind_deleted))
 	RegisterSignal(overmind, COMSIG_BLOB_SELECTED_STRAIN, PROC_REF(strain_properties_changed))
 	strain_properties_changed(overmind, overmind.blobstrain)
+	var/mob/living_parent = parent
+	living_parent.pass_flags |= PASSBLOB
 
 /// Our overmind is gone, uh oh!
 /datum/component/blob_minion/proc/overmind_deleted()
@@ -70,7 +72,6 @@
 
 /datum/component/blob_minion/RegisterWithParent()
 	var/mob/living/living_parent = parent
-	living_parent.pass_flags |= PASSBLOB
 	living_parent.faction |= ROLE_BLOB
 	ADD_TRAIT(parent, TRAIT_BLOB_ALLY, REF(src))
 	remove_verb(parent, /mob/living/verb/pulled) // No dragging people into the blob
@@ -113,6 +114,7 @@
 		COMSIG_HOSTILE_PRE_ATTACKINGTARGET,
 	))
 	GLOB.blob_telepathy_mobs -= parent
+	living_parent.pass_flags &= ~PASSBLOB
 
 /// Become blobpilled when we gain a mind
 /datum/component/blob_minion/proc/on_mind_init(mob/living/minion, datum/mind/new_mind)
@@ -152,9 +154,9 @@
 /datum/component/blob_minion/proc/on_burned(mob/living/minion, exposed_temperature, exposed_volume)
 	SIGNAL_HANDLER
 	if(isnull(exposed_temperature))
-		minion.adjustFireLoss(5)
+		minion.adjust_fire_loss(5)
 		return
-	minion.adjustFireLoss(clamp(0.01 * exposed_temperature, 1, 5))
+	minion.adjust_fire_loss(clamp(0.01 * exposed_temperature, 1, 5))
 
 /// Someone is attempting to move through us, allow it if it is a blob tile
 /datum/component/blob_minion/proc/on_attempted_pass(mob/living/minion, atom/movable/incoming)

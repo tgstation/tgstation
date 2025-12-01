@@ -83,6 +83,7 @@
 	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT) //Need to set before init cause if we init in hyperspace we get dragged before the trait can be added
 	. = ..()
 
+	status_flags &= ~CANSTUN
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/glass_pacifist)
 
@@ -145,6 +146,9 @@
 		var/mob/living/carbon/human/hewmon = target
 
 		var/should_attack = try_kidnap(hewmon)
+
+		// Marks the victim with nodeath
+		hewmon.apply_status_effect(/datum/status_effect/void_chomped)
 
 		if(!should_attack)
 			return FALSE
@@ -259,7 +263,7 @@
 		CRASH("[victim] was instantly dumped after being voidwalker kidnapped due to a missing landmark!")
 	else
 		victim.heal_and_revive(90)
-		victim.adjustOxyLoss(-100, FALSE)
+		victim.adjust_oxy_loss(-100, FALSE)
 
 		conversions_remaining++
 

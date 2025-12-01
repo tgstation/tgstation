@@ -7,10 +7,11 @@ All ShuttleMove procs go here
 // Called on every turf in the shuttle region, returns a bitflag for allowed movements of that turf
 // returns the new move_mode (based on the old)
 /turf/proc/fromShuttleMove(turf/newT, move_mode)
-	if(!(move_mode & MOVE_AREA) || !isshuttleturf(src))
-		return move_mode
-
-	return move_mode | MOVE_TURF | MOVE_CONTENTS
+	. = move_mode
+	if((move_mode & MOVE_AREA) && isshuttleturf(src))
+		. |= MOVE_TURF | MOVE_CONTENTS
+	if(SEND_SIGNAL(src, COMSIG_SHUTTLE_TURF_SHOULD_MOVE_SPECIAL, newT, move_mode))
+		. |= MOVE_SPECIAL
 
 // Called from the new turf before anything has been moved
 // Only gets called if fromShuttleMove returns true first
@@ -238,11 +239,11 @@ All ShuttleMove procs go here
 	. = ..()
 	if(. & MOVE_AREA)
 		. |= MOVE_CONTENTS
-		GLOB.cameranet.removeCamera(src)
+		SScameras.remove_camera_from_chunk(src)
 
 /obj/machinery/camera/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
-	GLOB.cameranet.addCamera(src)
+	SScameras.add_camera_to_chunk(src)
 
 /obj/machinery/mech_bay_recharge_port/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()

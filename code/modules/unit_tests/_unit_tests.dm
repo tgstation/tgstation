@@ -87,6 +87,7 @@
 #define EASY_ALLOCATE(arguments...) allocate(__IMPLIED_TYPE__, run_loc_floor_bottom_left, ##arguments)
 
 // BEGIN_INCLUDE
+#include "aas_configs.dm"
 #include "abductor_baton_spell.dm"
 #include "ablative_hud.dm"
 #include "achievements.dm"
@@ -108,6 +109,7 @@
 #include "binary_insert.dm"
 #include "bitrunning.dm"
 #include "blindness.dm"
+#include "blood_volume_procs.dm"
 #include "bloody_footprints.dm"
 #include "breath.dm"
 #include "buckle.dm"
@@ -174,6 +176,7 @@
 #include "gloves_and_shoes_armor.dm"
 #include "greyscale_config.dm"
 #include "hallucination_icons.dm"
+#include "heretic_knowledge.dm"
 #include "heretic_rituals.dm"
 #include "high_five.dm"
 #include "holder_loving.dm"
@@ -260,8 +263,10 @@
 #include "reagent_names.dm"
 #include "reagent_recipe_collisions.dm"
 #include "reagent_transfer.dm"
+#include "recycle_recycling.dm"
 #include "required_map_items.dm"
 #include "resist.dm"
+#include "reskin_validation.dm"
 #include "reta_system.dm"
 #include "say.dm"
 #include "screenshot_airlocks.dm"
@@ -326,6 +331,7 @@
 #include "unit_test.dm"
 #include "verify_config_tags.dm"
 #include "verify_emoji_names.dm"
+#include "wallmount.dm"
 #include "washing.dm"
 #include "weird_food.dm"
 #include "wizard_loadout.dm"

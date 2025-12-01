@@ -34,12 +34,11 @@
 		return
 
 	var/need_mob_update = FALSE
-	need_mob_update += owner.adjustBruteLoss(-BASE_HEAL * seconds_per_tick, updating_health = FALSE)
-	need_mob_update += owner.adjustFireLoss(-BASE_HEAL * seconds_per_tick, updating_health = FALSE)
-	need_mob_update += owner.adjustToxLoss(-BASE_HEAL * seconds_per_tick, updating_health = FALSE, forced = TRUE)
+	need_mob_update += owner.adjust_brute_loss(-BASE_HEAL * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += owner.adjust_fire_loss(-BASE_HEAL * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += owner.adjust_tox_loss(-BASE_HEAL * seconds_per_tick, updating_health = FALSE, forced = TRUE)
 
-	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-		owner.blood_volume += BASE_HEAL * seconds_per_tick
+	owner.adjust_blood_volume(BASE_HEAL * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
 
 	if(need_mob_update)
 		owner.updatehealth()

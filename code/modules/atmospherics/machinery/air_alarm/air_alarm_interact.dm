@@ -51,7 +51,7 @@
 	return FALSE
 
 /obj/machinery/airalarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_WALLFRAME)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_WALLFRAME)
 		balloon_alert(user, "circuit installed")
 		buildstage = AIR_ALARM_BUILD_NO_WIRES
 		update_appearance()
@@ -186,3 +186,10 @@
 	icon_state = "alarm_bitem"
 	result_path = /obj/machinery/airalarm
 	pixel_shift = 27
+
+/obj/item/wallframe/airalarm/try_build(atom/support, mob/user)
+	var/area/A = get_area(user)
+	if(A.always_unpowered)
+		balloon_alert(user, "cannot place in this area!")
+		return FALSE
+	return ..()

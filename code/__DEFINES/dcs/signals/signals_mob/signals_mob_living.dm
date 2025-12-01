@@ -197,6 +197,9 @@
 	#define TREAT_TTS_FILTER_ARG 3
 	#define TREAT_CAPITALIZE_MESSAGE 4
 
+/// From mob/living/send_speech(): (atom/source, list/listeners)
+#define COMSIG_LIVING_SEND_SPEECH "living_send_speech"
+
 ///From obj/item/toy/crayon/spraycan
 #define COMSIG_LIVING_MOB_PAINTED "living_mob_painted"
 
@@ -318,6 +321,10 @@
 /// From /obj/machinery/gibber/startgibbing(): (mob/living/user, /obj/machinery/gibber, list/results)
 #define COMSIG_LIVING_GIBBER_ACT "living_gibber_act"
 
+/// From /mob/living/get_eye_protection() (list/reflist)
+#define COMSIG_LIVING_GET_EAR_PROTECTION "living_get_ear_protection"
+	#define EAR_PROTECTION_ARG 1
+
 /// Sent to the mob when their mind is slaved
 #define COMSIG_MOB_ENSLAVED_TO "mob_enslaved_to"
 /// From /obj/item/proc/attack_atom: (mob/living/attacker, atom/attacked, list/modifiers)
@@ -365,6 +372,11 @@
 #define COMSIG_LIVING_DROP_LOOT "living_drop_loot"
 	/// Prevent loot from being dropped
 	#define COMPONENT_NO_LOOT_DROP (1<<0)
+/// From /datum/element/death_drops/on_death(mob/living/target, gibbed) : (list/loot, gibbed)
+#define COMSIG_LIVING_DROPPED_LOOT "living_dropped_loot"
 
 /// From /mob/living/proc/mob_pickup() : (mob/living/user, obj/item/mob_holder/holder)
 #define COMSIG_LIVING_SCOOPED_UP "living_scooped_up"
+
+/// From /mob/living/proc/update_blood_status(), sent when the return value of /mob/living/proc/can_have_blood() changes : (had_blood, has_blood, old_blood_volume, new_blood_volume)
+#define COMSIG_LIVING_UPDATE_BLOOD_STATUS "living_update_blood_status"

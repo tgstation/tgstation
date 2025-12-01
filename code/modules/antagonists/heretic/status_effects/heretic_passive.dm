@@ -226,7 +226,7 @@
 	. = ..()
 	if(locate(/obj/effect/forcefield/cosmic_field) in get_turf(owner))
 		var/delta_time = DELTA_WORLD_TIME(SSmobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
-		owner.adjustStaminaLoss(-15 * delta_time, updating_stamina = FALSE)
+		owner.adjust_stamina_loss(-15 * delta_time, updating_stamina = FALSE)
 
 /**
  * Creates a cosmic field at a given loc
@@ -301,10 +301,9 @@
 
 /datum/status_effect/heretic_passive/flesh/proc/heal_glutton()
 	var/healed_amount = owner.heal_overall_damage(2, 2, updating_health = FALSE)
-	healed_amount += owner.adjustOxyLoss(-2, FALSE)
-	healed_amount += owner.adjustToxLoss(-2, FALSE, TRUE)
-	if(!HAS_TRAIT(owner, TRAIT_NOBLOOD))
-		owner.blood_volume += 2.5
+	healed_amount += owner.adjust_oxy_loss(-2, FALSE)
+	healed_amount += owner.adjust_tox_loss(-2, FALSE, TRUE)
+	owner.adjust_blood_volume(2.5)
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbon_eater = owner
@@ -433,7 +432,7 @@
 		healing_amount = -15 * seconds_between_ticks
 	if(!amulet_equipped)
 		healing_amount *= 0.5 // Half healing if you dont have the moon amulet
-	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, healing_amount)
+	owner.adjust_organ_loss(ORGAN_SLOT_BRAIN, healing_amount)
 
 	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!our_brain)
@@ -526,9 +525,9 @@
 	var/main_healing = 1 + 1 * passive_level * delta_time
 	var/stam_healing = 5 + 5 * passive_level * delta_time
 	need_mob_update += source.heal_overall_damage(-main_healing, -main_healing, updating_health = FALSE)
-	need_mob_update += source.adjustStaminaLoss(-stam_healing, updating_stamina = FALSE)
-	need_mob_update += source.adjustToxLoss(-main_healing, updating_health = FALSE, forced = TRUE) // Slimes are people too
-	need_mob_update += source.adjustOxyLoss(-main_healing, updating_health = FALSE)
+	need_mob_update += source.adjust_stamina_loss(-stam_healing, updating_stamina = FALSE)
+	need_mob_update += source.adjust_tox_loss(-main_healing, updating_health = FALSE, forced = TRUE) // Slimes are people too
+	need_mob_update += source.adjust_oxy_loss(-main_healing, updating_health = FALSE)
 	if(need_mob_update)
 		source.updatehealth()
 		new /obj/effect/temp_visual/heal(get_turf(owner), COLOR_BROWN)
@@ -536,8 +535,7 @@
 	var/stun_reduction = 0.5 * passive_level * delta_time
 	source.AdjustAllImmobility(-stun_reduction)
 	// Heals blood loss
-	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
-		source.blood_volume += 2.5 * delta_time
+	source.adjust_blood_volume(2.5 * delta_time, maximum = BLOOD_VOLUME_NORMAL)
 	for(var/datum/reagent/reagent as anything in source.reagents.reagent_list)
 		source.reagents.remove_reagent(reagent.type, 2 * reagent.purge_multiplier * REM * seconds_per_tick)
 

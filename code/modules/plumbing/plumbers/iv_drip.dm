@@ -10,12 +10,18 @@
 
 /obj/machinery/iv_drip/plumbing/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
+	AddComponent(/datum/component/plumbing/automated_iv, bolt, layer)
 	AddComponent(/datum/component/simple_rotation)
+
+/obj/machinery/iv_drip/attack_hand_secondary(mob/user, list/modifiers)
+	return FALSE
+
+/obj/machinery/iv_drip/plumbing/click_alt(mob/user)
+	return FALSE
 
 /obj/machinery/iv_drip/plumbing/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
-	if(held_item.tool_behaviour != TOOL_WRENCH)
+	if(isnull(held_item) || held_item.tool_behaviour != TOOL_WRENCH)
 		return
 	context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Una" : "A"]nchor"
 	return CONTEXTUAL_SCREENTIP_SET

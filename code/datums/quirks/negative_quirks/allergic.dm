@@ -37,15 +37,13 @@
 	allergy_string = allergy_chem_names.Join(", ")
 	name = "Extreme [allergy_string] Allergies"
 	medical_record_text = "Patient's immune system responds violently to [allergy_string]"
+	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK, PROC_REF(block_metab))
 
 /datum/quirk/item_quirk/allergic/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/clothing/accessory/dogtag/allergy/dogtag = new(get_turf(human_holder), allergy_string)
 
 	give_item_to_holder(dogtag, list(LOCATION_BACKPACK, LOCATION_HANDS), flavour_text = "Make sure medical staff can see this...", notify_player = TRUE)
-
-/datum/quirk/item_quirk/allergic/add()
-	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK, PROC_REF(block_metab))
 
 /datum/quirk/item_quirk/allergic/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK)
@@ -67,5 +65,5 @@
 	source.reagents.add_reagent(/datum/reagent/toxin/histamine, 3 * seconds_per_tick)
 	if(SPT_PROB(10, seconds_per_tick))
 		source.vomit(VOMIT_CATEGORY_DEFAULT)
-		source.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN, ORGAN_SLOT_APPENDIX, ORGAN_SLOT_LUNGS, ORGAN_SLOT_HEART, ORGAN_SLOT_LIVER, ORGAN_SLOT_STOMACH), 10)
+		source.adjust_organ_loss(pick(ORGAN_SLOT_BRAIN, ORGAN_SLOT_APPENDIX, ORGAN_SLOT_LUNGS, ORGAN_SLOT_HEART, ORGAN_SLOT_LIVER, ORGAN_SLOT_STOMACH), 10)
 	return NONE

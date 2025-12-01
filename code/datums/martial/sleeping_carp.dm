@@ -162,7 +162,7 @@
 	var/grab_log_description = "grabbed"
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
-	if(defender.stat != DEAD && !defender.IsUnconscious() && defender.getStaminaLoss() >= 80) //We put our target to sleep.
+	if(defender.stat != DEAD && !defender.IsUnconscious() && defender.get_stamina_loss() >= 80) //We put our target to sleep.
 		defender.visible_message(
 			span_danger("[attacker] carefully pinch a nerve in [defender]'s neck, knocking them out cold!"),
 			span_userdanger("[attacker] pinches something in your neck, and you fall unconscious!"),
@@ -195,6 +195,9 @@
 				defender.death()
 				defender.investigate_log("has had [defender.p_their()] neck snapped by [attacker].", INVESTIGATE_DEATHS)
 			return MARTIAL_ATTACK_SUCCESS
+
+	if(defender.check_block(attacker, 10, attacker.name, UNARMED_ATTACK))
+		return MARTIAL_ATTACK_FAIL
 
 	add_to_streak("H", defender)
 	if(check_streak(attacker, defender))
@@ -339,7 +342,7 @@
 		oh_no_armor += human_carp_user.run_armor_check(potential_chest, MELEE)
 
 	// We also consider whether our footwear is appropriate
-	if(is_it_the_shoes.clothing_flags & CARP_STYLE_FACTOR)
+	if(istype(is_it_the_shoes) && is_it_the_shoes.clothing_flags & CARP_STYLE_FACTOR)
 		style_factor_points += 20
 
 	// Achieved a carp state of mind.
@@ -384,8 +387,9 @@
 	[span_notice("Kraken Wrack")]: Grab Punch. Deliver a knee jab into the opponent, dealing high stamina damage, as well as briefly stunning them, winding them and making it difficult for them to speak.\n\
 	[span_notice("Grabs and Shoves")]: While in combat mode, your typical grab and shove do decent stamina damag, and your grabs harder to break. If you grab someone who has substantial amounts of stamina damage, you knock them out!\n\
 	<span class='notice'>While in combat mode (and not stunned, not a hulk, and not in a mech), you can reflect all projectiles that come your way, sending them back at the people who fired them! \n\
-	However, your ability to avoid projectiles is negatively affected when your are burdened by armor, or whenever you are carrying objects in your hands. \n\
-	But if you commmit fully to the nautical lifestyle by wearing martial arts or carp-related regalia, you will feel empowered enough to potentially avoid attacks even from melee weapons or other unarmed combatants. \n\
+	However, your ability to avoid projectiles is negatively affected when your are burdened by armor, or whenever you are carrying normal-sized or heavier objects in your hands. \n\
+	But if you commmit fully to the martial arts lifestyle by wearing martial arts or carp-related regalia, you will feel empowered enough to potentially avoid attacks even from melee weapons or other unarmed combatants. \n\
+	Some melee weapons, such as bo starves, spears, short blades, knives, toolboxes, baseball bats and non-blocking small objects are safe to carry without affecting your ability to defend yourself. Exploit this for a tactical advantage. \n\
 	Also, you are more resilient against suffering wounds in combat, and your limbs cannot be dismembered. This grants you extra staying power during extended combat, especially against slashing and other bleeding weapons. \n\
 	You are not invincible, however- while you may not suffer debilitating wounds often, you must still watch your health and should have appropriate medical supplies for use during downtime. \n\
 	In addition, your training has imbued you with a loathing of guns, and you can no longer use them.</span>"))
@@ -449,7 +453,7 @@
 						span_userdanger("[user] [pick(fluffmessages)]s you with [src]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
 		to_chat(user, span_danger("You [pick(fluffmessages)] [H] with [src]!"))
 		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, TRUE, -1)
-		H.adjustStaminaLoss(rand(13,20))
+		H.adjust_stamina_loss(rand(13,20))
 		if(prob(10))
 			H.visible_message(span_warning("[H] collapses!"), \
 							span_userdanger("Your legs give out!"))
@@ -461,7 +465,7 @@
 								span_userdanger("You're knocked unconscious by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
 				to_chat(user, span_danger("You deliver a heavy hit to [H]'s head, knocking [H.p_them()] out cold!"))
 				H.SetSleeping(60 SECONDS)
-				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
+				H.adjust_organ_loss(ORGAN_SLOT_BRAIN, 15, 150)
 	else
 		return ..()
 

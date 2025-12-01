@@ -52,7 +52,7 @@
  */
 /datum/unit_test/mob_damage/proc/test_apply_damage(mob/living/testing_mob, amount, expected = -amount, amount_after, included_types, biotypes, bodytypes, forced)
 	if(isnull(amount_after))
-		amount_after = testing_mob.getStaminaLoss() - expected // stamina loss applies to both carbon and basic mobs the same way, so that's why we're using it here
+		amount_after = testing_mob.get_stamina_loss() - expected // stamina loss applies to both carbon and basic mobs the same way, so that's why we're using it here
 	if(!apply_damage(testing_mob, amount, expected, included_types, biotypes, bodytypes, forced))
 		return FALSE
 	if(!verify_damage(testing_mob, amount_after, included_types))
@@ -77,7 +77,7 @@
  */
 /datum/unit_test/mob_damage/proc/test_set_damage(mob/living/testing_mob, amount, expected, amount_after, included_types, biotypes, bodytypes, forced)
 	if(isnull(amount_after))
-		amount_after = testing_mob.getStaminaLoss() - expected
+		amount_after = testing_mob.get_stamina_loss() - expected
 	if(!set_damage(testing_mob, amount, expected, included_types, biotypes, bodytypes, forced))
 		return FALSE
 	if(!verify_damage(testing_mob, amount_after, included_types))
@@ -95,28 +95,28 @@
  */
 /datum/unit_test/mob_damage/proc/verify_damage(mob/living/carbon/testing_mob, amount, included_types = ALL)
 	if(included_types & TOXLOSS)
-		TEST_ASSERT_EQUAL(testing_mob.getToxLoss(), amount, \
-			"[testing_mob] should have [amount] toxin damage, instead they have [testing_mob.getToxLoss()]!")
+		TEST_ASSERT_EQUAL(testing_mob.get_tox_loss(), amount, \
+			"[testing_mob] should have [amount] toxin damage, instead they have [testing_mob.get_tox_loss()]!")
 	if(included_types & BRUTELOSS)
-		TEST_ASSERT_EQUAL(round(testing_mob.getBruteLoss(), 1), amount, \
-			"(Testing getBruteLoss()) [testing_mob] should have [amount] brute damage, instead they have [testing_mob.getBruteLoss()]!")
-		TEST_ASSERT_EQUAL(round(testing_mob.getBruteLossForType(BODYTYPE_ORGANIC), 1), amount, \
-			"(Testing getBruteLossForType(BODYTYPE_ORGANIC)) [testing_mob] should have [amount] brute damage, instead they have [testing_mob.getBruteLossForType(BODYTYPE_ORGANIC)]!")
+		TEST_ASSERT_EQUAL(round(testing_mob.get_brute_loss(), 1), amount, \
+			"(Testing get_brute_loss()) [testing_mob] should have [amount] brute damage, instead they have [testing_mob.get_brute_loss()]!")
+		TEST_ASSERT_EQUAL(round(testing_mob.get_brute_loss_for_type(BODYTYPE_ORGANIC), 1), amount, \
+			"(Testing get_brute_loss_for_type(BODYTYPE_ORGANIC)) [testing_mob] should have [amount] brute damage, instead they have [testing_mob.get_brute_loss_for_type(BODYTYPE_ORGANIC)]!")
 	if(included_types & FIRELOSS)
-		TEST_ASSERT_EQUAL(round(testing_mob.getFireLoss(), 1), amount, \
-			"(Testing getFireLoss()) [testing_mob] should have [amount] burn damage, instead they have [testing_mob.getFireLoss()]!")
-		TEST_ASSERT_EQUAL(round(testing_mob.getFireLossForType(BODYTYPE_ORGANIC), 1), amount, \
-			"(Testing getFireLossForType(BODYTYPE_ORGANIC)) [testing_mob] should have [amount] burn damage, instead they have [testing_mob.getFireLossForType(BODYTYPE_ORGANIC)]!")
+		TEST_ASSERT_EQUAL(round(testing_mob.get_fire_loss(), 1), amount, \
+			"(Testing get_fire_loss()) [testing_mob] should have [amount] burn damage, instead they have [testing_mob.get_fire_loss()]!")
+		TEST_ASSERT_EQUAL(round(testing_mob.get_fire_loss_for_type(BODYTYPE_ORGANIC), 1), amount, \
+			"(Testing get_fire_loss_for_type(BODYTYPE_ORGANIC)) [testing_mob] should have [amount] burn damage, instead they have [testing_mob.get_fire_loss_for_type(BODYTYPE_ORGANIC)]!")
 	if(included_types & OXYLOSS)
-		TEST_ASSERT_EQUAL(testing_mob.getOxyLoss(), amount, \
-			"[testing_mob] should have [amount] oxy damage, instead they have [testing_mob.getOxyLoss()]!")
+		TEST_ASSERT_EQUAL(testing_mob.get_oxy_loss(), amount, \
+			"[testing_mob] should have [amount] oxy damage, instead they have [testing_mob.get_oxy_loss()]!")
 	if(included_types & STAMINALOSS)
-		TEST_ASSERT_EQUAL(testing_mob.getStaminaLoss(), amount, \
-			"[testing_mob] should have [amount] stamina damage, instead they have [testing_mob.getStaminaLoss()]!")
+		TEST_ASSERT_EQUAL(testing_mob.get_stamina_loss(), amount, \
+			"[testing_mob] should have [amount] stamina damage, instead they have [testing_mob.get_stamina_loss()]!")
 	return TRUE
 
 /**
- * Apply a specific amount of damage to the mob using adjustBruteLoss(), adjustToxLoss(), etc.
+ * Apply a specific amount of damage to the mob using adjust_brute_loss(), adjust_tox_loss(), etc.
  *
  * By default this applies <amount> damage of every type to the mob, and checks that the damage procs return the <expected> value
  * Arguments:
@@ -131,29 +131,29 @@
 /datum/unit_test/mob_damage/proc/apply_damage(mob/living/carbon/testing_mob, amount, expected = -amount, included_types = ALL, biotypes = ALL, bodytypes = ALL, forced = FALSE)
 	var/damage_returned
 	if(included_types & TOXLOSS)
-		damage_returned = testing_mob.adjustToxLoss(amount, updating_health = FALSE, forced = forced, required_biotype = biotypes)
+		damage_returned = testing_mob.adjust_tox_loss(amount, updating_health = FALSE, forced = forced, required_biotype = biotypes)
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
-			"adjustToxLoss() should have returned [expected], but returned [damage_returned] instead!")
+			"adjust_tox_loss() should have returned [expected], but returned [damage_returned] instead!")
 	if(included_types & BRUTELOSS)
-		damage_returned = round(testing_mob.adjustBruteLoss(amount, updating_health = FALSE, forced = forced, required_bodytype = bodytypes), 1)
+		damage_returned = round(testing_mob.adjust_brute_loss(amount, updating_health = FALSE, forced = forced, required_bodytype = bodytypes), 1)
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
-			"adjustBruteLoss() should have returned [expected], but returned [damage_returned] instead!")
+			"adjust_brute_loss() should have returned [expected], but returned [damage_returned] instead!")
 	if(included_types & FIRELOSS)
-		damage_returned = round(testing_mob.adjustFireLoss(amount, updating_health = FALSE, forced = forced, required_bodytype = bodytypes), 1)
+		damage_returned = round(testing_mob.adjust_fire_loss(amount, updating_health = FALSE, forced = forced, required_bodytype = bodytypes), 1)
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
-			"adjustFireLoss() should have returned [expected], but returned [damage_returned] instead!")
+			"adjust_fire_loss() should have returned [expected], but returned [damage_returned] instead!")
 	if(included_types & OXYLOSS)
-		damage_returned = testing_mob.adjustOxyLoss(amount, updating_health = FALSE, forced = forced, required_biotype = biotypes)
+		damage_returned = testing_mob.adjust_oxy_loss(amount, updating_health = FALSE, forced = forced, required_biotype = biotypes)
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
-			"adjustOxyLoss() should have returned [expected], but returned [damage_returned] instead!")
+			"adjust_oxy_loss() should have returned [expected], but returned [damage_returned] instead!")
 	if(included_types & STAMINALOSS)
-		damage_returned = testing_mob.adjustStaminaLoss(amount, updating_stamina = FALSE, forced = forced, required_biotype = biotypes)
+		damage_returned = testing_mob.adjust_stamina_loss(amount, updating_stamina = FALSE, forced = forced, required_biotype = biotypes)
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
-			"adjustStaminaLoss() should have returned [expected], but returned [damage_returned] instead!")
+			"adjust_stamina_loss() should have returned [expected], but returned [damage_returned] instead!")
 	return TRUE
 
 /**
- * Set a specific amount of damage for the mob using setBruteLoss(), setToxLoss(), etc.
+ * Set a specific amount of damage for the mob using set_brute_loss(), set_tox_loss(), etc.
  *
  * By default this sets every type of damage to <amount> for the mob, and checks that the damage procs return the <expected> value
  * Arguments:
@@ -168,28 +168,28 @@
 /datum/unit_test/mob_damage/proc/set_damage(mob/living/carbon/testing_mob, amount, expected = -amount, included_types = ALL, biotypes = ALL, bodytypes = ALL, forced = FALSE)
 	var/damage_returned
 	if(included_types & TOXLOSS)
-		damage_returned = testing_mob.setToxLoss(amount, updating_health = FALSE, forced = forced, required_biotype = biotypes)
+		damage_returned = testing_mob.set_tox_loss(amount, updating_health = FALSE, forced = forced, required_biotype = biotypes)
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
-			"setToxLoss() should have returned [expected], but returned [damage_returned] instead!")
+			"set_tox_loss() should have returned [expected], but returned [damage_returned] instead!")
 	if(included_types & BRUTELOSS)
-		damage_returned = round(testing_mob.setBruteLoss(amount, updating_health = FALSE, forced = forced), 1)
+		damage_returned = round(testing_mob.set_brute_loss(amount, updating_health = FALSE, forced = forced), 1)
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
-			"setBruteLoss() should have returned [expected], but returned [damage_returned] instead!")
+			"set_brute_loss() should have returned [expected], but returned [damage_returned] instead!")
 	if(included_types & FIRELOSS)
-		damage_returned = round(testing_mob.setFireLoss(amount, updating_health = FALSE, forced = forced), 1)
+		damage_returned = round(testing_mob.set_fire_loss(amount, updating_health = FALSE, forced = forced), 1)
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
-			"setFireLoss() should have returned [expected], but returned [damage_returned] instead!")
+			"set_fire_loss() should have returned [expected], but returned [damage_returned] instead!")
 	if(included_types & OXYLOSS)
-		damage_returned = testing_mob.setOxyLoss(amount, updating_health = FALSE, forced = forced, required_biotype = biotypes)
+		damage_returned = testing_mob.set_oxy_loss(amount, updating_health = FALSE, forced = forced, required_biotype = biotypes)
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
-			"setOxyLoss() should have returned [expected], but returned [damage_returned] instead!")
+			"set_oxy_loss() should have returned [expected], but returned [damage_returned] instead!")
 	if(included_types & STAMINALOSS)
-		damage_returned = testing_mob.setStaminaLoss(amount, updating_stamina = FALSE, forced = forced, required_biotype = biotypes)
+		damage_returned = testing_mob.set_stamina_loss(amount, updating_stamina = FALSE, forced = forced, required_biotype = biotypes)
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
-			"setStaminaLoss() should have returned [expected], but returned [damage_returned] instead!")
+			"set_stamina_loss() should have returned [expected], but returned [damage_returned] instead!")
 	return TRUE
 
-///	Sanity tests damage and healing using adjustToxLoss, adjustBruteLoss, etc
+///	Sanity tests damage and healing using adjust_tox_loss, adjust_brute_loss, etc
 /datum/unit_test/mob_damage/proc/test_sanity_simple(mob/living/carbon/human/consistent/dummy)
 	// Apply 5 damage and then heal it
 	if(!test_apply_damage(dummy, amount = 5))
@@ -230,10 +230,10 @@
 	TEST_ASSERT_EQUAL(damage_returned, -7, \
 		"take_bodypart_damage() should have returned -7, but returned [damage_returned] instead!")
 
-	TEST_ASSERT_EQUAL(round(dummy.getBruteLoss(), 1), 5, \
-		"Dummy should have 5 brute damage, instead they have [dummy.getBruteLoss()]!")
-	TEST_ASSERT_EQUAL(round(dummy.getFireLoss(), 1), 2, \
-		"Dummy should have 2 burn damage, instead they have [dummy.getFireLoss()]!")
+	TEST_ASSERT_EQUAL(round(dummy.get_brute_loss(), 1), 5, \
+		"Dummy should have 5 brute damage, instead they have [dummy.get_brute_loss()]!")
+	TEST_ASSERT_EQUAL(round(dummy.get_fire_loss(), 1), 2, \
+		"Dummy should have 2 burn damage, instead they have [dummy.get_fire_loss()]!")
 
 	// heal 4 brute, 1 burn
 	damage_returned = round(dummy.heal_bodypart_damage(4, 1, updating_health = FALSE), 1)
@@ -356,14 +356,14 @@
 	// TRAIT_NOBREATH is supposed to prevent oxyloss damage (but not healing). Let's make sure that's the case.
 	ADD_TRAIT(dummy, TRAIT_NOBREATH, TRAIT_SOURCE_UNIT_TESTS)
 	// force some oxyloss here
-	dummy.setOxyLoss(2, updating_health = FALSE, forced = TRUE)
+	dummy.set_oxy_loss(2, updating_health = FALSE, forced = TRUE)
 
 	// Try to take more oxyloss damage with TRAIT_NOBREATH. It should not work.
-	if(!test_apply_damage(dummy, 2, expected = 0, amount_after = dummy.getOxyLoss(), included_types = OXYLOSS))
+	if(!test_apply_damage(dummy, 2, expected = 0, amount_after = dummy.get_oxy_loss(), included_types = OXYLOSS))
 		TEST_FAIL("ABOVE FAILURE: failed test_nobreath! mob took oxyloss damage while having TRAIT_NOBREATH")
 
 	// Make sure we are still be able to heal the oxyloss. This should work.
-	if(!test_apply_damage(dummy, -2, amount_after = dummy.getOxyLoss()-2, included_types = OXYLOSS))
+	if(!test_apply_damage(dummy, -2, amount_after = dummy.get_oxy_loss()-2, included_types = OXYLOSS))
 		TEST_FAIL("ABOVE FAILURE: failed test_nobreath! mob could not heal oxyloss damage while having TRAIT_NOBREATH")
 
 	REMOVE_TRAIT(dummy, TRAIT_NOBREATH, TRAIT_SOURCE_UNIT_TESTS)
@@ -376,28 +376,28 @@
 	// TRAIT_TOXINLOVER is supposed to invert toxin damage and healing. Things that would normally cause toxloss now heal it, and vice versa.
 	ADD_TRAIT(dummy, TRAIT_TOXINLOVER, TRAIT_SOURCE_UNIT_TESTS)
 	// force some toxloss here
-	dummy.setToxLoss(2, updating_health = FALSE, forced = TRUE)
+	dummy.set_tox_loss(2, updating_health = FALSE, forced = TRUE)
 
 	// Try to take more toxloss damage with TRAIT_TOXINLOVER. It should heal instead.
-	if(!test_apply_damage(dummy, 2, expected = 2, amount_after = dummy.getToxLoss()-2, included_types = TOXLOSS))
+	if(!test_apply_damage(dummy, 2, expected = 2, amount_after = dummy.get_tox_loss()-2, included_types = TOXLOSS))
 		TEST_FAIL("ABOVE FAILURE: failed test_toxintraits! mob did not heal from toxin damage with TRAIT_TOXINLOVER")
 
 	// If we try to heal the toxloss we should take damage instead
-	if(!test_apply_damage(dummy, -2, expected = -2, amount_after = dummy.getToxLoss()+2, included_types = TOXLOSS))
+	if(!test_apply_damage(dummy, -2, expected = -2, amount_after = dummy.get_tox_loss()+2, included_types = TOXLOSS))
 		TEST_FAIL("ABOVE FAILURE: failed test_toxintraits! mob did not take damage from toxin healing with TRAIT_TOXINLOVER")
 
 	// TOXIMMUNE trait should prevent the damage you get from being healed by toxins medicines while having TRAIT_TOXINLOVER
 	ADD_TRAIT(dummy, TRAIT_TOXIMMUNE, TRAIT_SOURCE_UNIT_TESTS)
 
 	// need to force apply some toxin damage since the TOXIMUNNE trait sets toxloss to 0 upon being added
-	dummy.setToxLoss(2, updating_health = FALSE, forced = TRUE)
+	dummy.set_tox_loss(2, updating_health = FALSE, forced = TRUE)
 
 	// try to 'heal' again - this time it should just do nothing because we should be immune to any sort of toxin damage - including from inverted healing
-	if(!test_apply_damage(dummy, -2, expected = 0, amount_after = dummy.getToxLoss(), included_types = TOXLOSS))
+	if(!test_apply_damage(dummy, -2, expected = 0, amount_after = dummy.get_tox_loss(), included_types = TOXLOSS))
 		TEST_FAIL("ABOVE FAILURE: failed test_toxintraits! mob should not have taken any damage or healing with TRAIT_TOXINLOVER + TRAIT_TOXIMMUNE")
 
 	// ok, let's try taking 'damage'. The inverted damage should still heal mobs with the TOXIMMUNE trait.
-	if(!test_apply_damage(dummy, 2, expected = 2, amount_after = dummy.getToxLoss()-2, included_types = TOXLOSS))
+	if(!test_apply_damage(dummy, 2, expected = 2, amount_after = dummy.get_tox_loss()-2, included_types = TOXLOSS))
 		TEST_FAIL("ABOVE FAILURE: failed test_toxintraits! mob did not heal from taking toxin damage with TRAIT_TOXINLOVER + TRAIT_TOXIMMUNE")
 
 	REMOVE_TRAIT(dummy, TRAIT_TOXINLOVER, TRAIT_SOURCE_UNIT_TESTS)
@@ -418,12 +418,12 @@
 		"heal_ordered_damage() should have returned 30, but returned [damage_returned] instead!")
 
 	// Should have 10 burn damage and 20 toxins damage remaining, let's check
-	TEST_ASSERT_EQUAL(dummy.getBruteLoss(), 0, \
-		"[src] should have 0 brute damage, but has [dummy.getBruteLoss()] instead!")
-	TEST_ASSERT_EQUAL(dummy.getFireLoss(), 10, \
-		"[src] should have 10 burn damage, but has [dummy.getFireLoss()] instead!")
-	TEST_ASSERT_EQUAL(dummy.getToxLoss(), 20, \
-		"[src] should have 20 toxin damage, but has [dummy.getToxLoss()] instead!")
+	TEST_ASSERT_EQUAL(dummy.get_brute_loss(), 0, \
+		"[src] should have 0 brute damage, but has [dummy.get_brute_loss()] instead!")
+	TEST_ASSERT_EQUAL(dummy.get_fire_loss(), 10, \
+		"[src] should have 10 burn damage, but has [dummy.get_fire_loss()] instead!")
+	TEST_ASSERT_EQUAL(dummy.get_tox_loss(), 20, \
+		"[src] should have 20 toxin damage, but has [dummy.get_tox_loss()] instead!")
 
 	// Now heal the remaining 30, overhealing by 5.
 	damage_returned = round(dummy.heal_ordered_damage(35, list(BRUTE, BURN, TOX)), 1)
@@ -431,12 +431,12 @@
 		"heal_ordered_damage() should have returned 30, but returned [damage_returned] instead!")
 
 	// Should have no damage remaining
-	TEST_ASSERT_EQUAL(dummy.getBruteLoss(), 0, \
-		"[src] should have 0 brute damage, but has [dummy.getBruteLoss()] instead!")
-	TEST_ASSERT_EQUAL(dummy.getFireLoss(), 0, \
-		"[src] should have 0 burn damage, but has [dummy.getFireLoss()] instead!")
-	TEST_ASSERT_EQUAL(dummy.getToxLoss(), 0, \
-		"[src] should have 0 toxin damage, but has [dummy.getToxLoss()] instead!")
+	TEST_ASSERT_EQUAL(dummy.get_brute_loss(), 0, \
+		"[src] should have 0 brute damage, but has [dummy.get_brute_loss()] instead!")
+	TEST_ASSERT_EQUAL(dummy.get_fire_loss(), 0, \
+		"[src] should have 0 burn damage, but has [dummy.get_fire_loss()] instead!")
+	TEST_ASSERT_EQUAL(dummy.get_tox_loss(), 0, \
+		"[src] should have 0 toxin damage, but has [dummy.get_tox_loss()] instead!")
 
 /// Tests that mob damage procs are working as intended for basic and simple mobs
 /datum/unit_test/mob_damage/animal
@@ -475,20 +475,20 @@
  */
 /datum/unit_test/mob_damage/animal/verify_damage(mob/living/carbon/testing_mob, amount, expected, included_types = ALL)
 	if(included_types & TOXLOSS)
-		TEST_ASSERT_EQUAL(testing_mob.getToxLoss(), 0, \
-			"[testing_mob] should have [0] toxin damage, instead they have [testing_mob.getToxLoss()]!")
+		TEST_ASSERT_EQUAL(testing_mob.get_tox_loss(), 0, \
+			"[testing_mob] should have [0] toxin damage, instead they have [testing_mob.get_tox_loss()]!")
 	if(included_types & BRUTELOSS)
-		TEST_ASSERT_EQUAL(round(testing_mob.getBruteLoss(), 1), expected || amount * 4, \
-			"[testing_mob] should have [expected || amount * 4] brute damage, instead they have [testing_mob.getBruteLoss()]!")
+		TEST_ASSERT_EQUAL(round(testing_mob.get_brute_loss(), 1), expected || amount * 4, \
+			"[testing_mob] should have [expected || amount * 4] brute damage, instead they have [testing_mob.get_brute_loss()]!")
 	if(included_types & FIRELOSS)
-		TEST_ASSERT_EQUAL(round(testing_mob.getFireLoss(), 1), 0, \
-			"[testing_mob] should have [0] burn damage, instead they have [testing_mob.getFireLoss()]!")
+		TEST_ASSERT_EQUAL(round(testing_mob.get_fire_loss(), 1), 0, \
+			"[testing_mob] should have [0] burn damage, instead they have [testing_mob.get_fire_loss()]!")
 	if(included_types & OXYLOSS)
-		TEST_ASSERT_EQUAL(testing_mob.getOxyLoss(), 0, \
-			"[testing_mob] should have [0] oxy damage, instead they have [testing_mob.getOxyLoss()]!")
+		TEST_ASSERT_EQUAL(testing_mob.get_oxy_loss(), 0, \
+			"[testing_mob] should have [0] oxy damage, instead they have [testing_mob.get_oxy_loss()]!")
 	if(included_types & STAMINALOSS)
-		TEST_ASSERT_EQUAL(testing_mob.getStaminaLoss(), amount, \
-			"[testing_mob] should have [amount] stamina damage, instead they have [testing_mob.getStaminaLoss()]!")
+		TEST_ASSERT_EQUAL(testing_mob.get_stamina_loss(), amount, \
+			"[testing_mob] should have [amount] stamina damage, instead they have [testing_mob.get_stamina_loss()]!")
 	return TRUE
 
 /datum/unit_test/mob_damage/animal/test_sanity_simple(mob/living/carbon/test_mob)
@@ -603,15 +603,15 @@
 /datum/unit_test/human_tox_damage/Run()
 	// Spawn a dummy, give it a bunch of tox damage. It should get the status effect.
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
-	dummy.setToxLoss(75)
+	dummy.set_tox_loss(75)
 	var/datum/status_effect/tox_effect = dummy.has_status_effect(/datum/status_effect/tox_vomit)
-	TEST_ASSERT_NOTNULL(tox_effect, "Dummy didn't get tox_vomit status effect despite at [dummy.getToxLoss()] toxin damage (Method: SET)!")
+	TEST_ASSERT_NOTNULL(tox_effect, "Dummy didn't get tox_vomit status effect despite at [dummy.get_tox_loss()] toxin damage (Method: SET)!")
 	// Clear the toxin damage away, and force a status effect tick: It should delete itself
-	dummy.setToxLoss(0)
-	tox_effect.tick(initial(tox_effect.tick_interval))
-	TEST_ASSERT(QDELETED(tox_effect), "Dummy still has tox_vomit status effect despite at [dummy.getToxLoss()] toxin damage (Method: SET)!")
+	dummy.set_tox_loss(0)
+	tox_effect.tick(tox_effect.tick_interval)
+	TEST_ASSERT(QDELETED(tox_effect), "Dummy still has tox_vomit status effect despite at [dummy.get_tox_loss()] toxin damage (Method: SET)!")
 	// Test another method of gaining tox damage, use an entirely clean slate just to be sure
 	var/mob/living/carbon/human/dummy_two = allocate(/mob/living/carbon/human/consistent)
-	dummy_two.adjustToxLoss(75)
+	dummy_two.adjust_tox_loss(75)
 	var/datum/status_effect/tox_effect_two = dummy_two.has_status_effect(/datum/status_effect/tox_vomit)
-	TEST_ASSERT_NOTNULL(tox_effect_two, "Dummy didn't get tox_vomit status effect at [dummy_two.getToxLoss()] toxin damage (METHOD: ADJUST)!")
+	TEST_ASSERT_NOTNULL(tox_effect_two, "Dummy didn't get tox_vomit status effect at [dummy_two.get_tox_loss()] toxin damage (METHOD: ADJUST)!")

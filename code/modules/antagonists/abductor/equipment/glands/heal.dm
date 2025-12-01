@@ -59,7 +59,7 @@
 			replace_limb(zone, limb)
 			return
 
-	if(owner.getToxLoss() > 40)
+	if(owner.get_tox_loss() > 40)
 		replace_blood()
 		return
 	var/tox_amount = 0
@@ -68,8 +68,8 @@
 	if(tox_amount > 10)
 		replace_blood()
 		return
-	if(owner.blood_volume < BLOOD_VOLUME_OKAY)
-		owner.blood_volume = BLOOD_VOLUME_NORMAL
+	if(owner.get_blood_volume() < BLOOD_VOLUME_OKAY)
+		owner.set_blood_volume(BLOOD_VOLUME_NORMAL)
 		to_chat(owner, span_warning("You feel your blood pulsing within you."))
 		return
 
@@ -194,13 +194,13 @@
 	var/keep_going = FALSE
 	owner.vomit(vomit_flags = (MOB_VOMIT_BLOOD | MOB_VOMIT_FORCE), lost_nutrition = 0, distance = 3)
 	owner.Stun(15)
-	owner.adjustToxLoss(-15, forced = TRUE)
+	owner.adjust_tox_loss(-15, forced = TRUE)
 
-	owner.blood_volume = min(BLOOD_VOLUME_NORMAL, owner.blood_volume + 20)
-	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
+	owner.adjust_blood_volume(20, maximum = BLOOD_VOLUME_NORMAL)
+	if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 		keep_going = TRUE
 
-	if(owner.getToxLoss())
+	if(owner.get_tox_loss())
 		keep_going = TRUE
 	for(var/datum/reagent/toxin/R in owner.reagents.reagent_list)
 		owner.reagents.remove_reagent(R.type, 4)

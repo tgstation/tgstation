@@ -30,12 +30,18 @@
 
 /obj/structure/light_construct/Initialize(mapload)
 	. = ..()
-	if(mapload)
-		find_and_hang_on_wall()
+	if(mapload && !find_and_mount_on_atom(mark_for_late_init = TRUE))
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/light_construct/LateInitialize()
+	find_and_mount_on_atom(late_init = TRUE)
 
 /obj/structure/light_construct/Destroy()
 	QDEL_NULL(cell)
 	return ..()
+
+/obj/structure/light_construct/get_turfs_to_mount_on()
+	return list(get_step(src, dir))
 
 /obj/structure/light_construct/get_cell()
 	return cell
@@ -141,11 +147,13 @@
 				tool.play_tool_sound(src, 75)
 				switch(fixture_type)
 					if("tube")
-						new_light = new /obj/machinery/light/built(loc)
+						new_light = new /obj/machinery/light/empty(loc)
 					if("bulb")
-						new_light = new /obj/machinery/light/small/built(loc)
+						new_light = new /obj/machinery/light/small/empty(loc)
+					if("floor")
+						new_light = new /obj/machinery/light/floor/empty(loc)
 				new_light.setDir(dir)
-				new_light.find_and_hang_on_wall()
+				new_light.find_and_mount_on_atom()
 				transfer_fingerprints_to(new_light)
 				if(!QDELETED(cell))
 					new_light.cell = cell
@@ -168,4 +176,10 @@
 	name = "small light fixture frame"
 	icon_state = "bulb-construct-stage1"
 	fixture_type = "bulb"
+	sheets_refunded = 1
+
+/obj/structure/light_construct/floor
+	name = "floor light fixture frame"
+	icon_state = "floor-construct-stage1"
+	fixture_type = "floor"
 	sheets_refunded = 1

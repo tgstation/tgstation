@@ -19,7 +19,7 @@
 	switch(stage)
 		if(2)
 			if(SPT_PROB(26, seconds_per_tick))
-				affected_mob.adjustFireLoss(5)
+				affected_mob.adjust_fire_loss(5)
 			if(SPT_PROB(0.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel strange..."))
 		if(3)

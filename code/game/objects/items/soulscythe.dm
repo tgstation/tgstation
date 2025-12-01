@@ -138,15 +138,15 @@
 	return TRUE
 
 /obj/item/soulscythe/proc/use_blood(amount = 0, message = TRUE)
-	if(amount > soul.blood_volume)
+	if(amount > soul.get_blood_volume())
 		if(message)
 			to_chat(soul, span_warning("Not enough blood!"))
 		return FALSE
-	soul.blood_volume -= amount
+	soul.adjust_blood_volume(-amount)
 	return TRUE
 
 /obj/item/soulscythe/proc/give_blood(amount)
-	soul.blood_volume = min(MAX_BLOOD_LEVEL, soul.blood_volume + amount)
+	soul.adjust_blood_volume(amount, maximum = MAX_BLOOD_LEVEL)
 
 /obj/item/soulscythe/proc/on_resist(mob/living/user)
 	SIGNAL_HANDLER
@@ -256,8 +256,9 @@
 	gender = NEUTER
 	mob_biotypes = MOB_SPIRIT
 	faction = list()
-	blood_volume = MAX_BLOOD_LEVEL
+	default_blood_volume = MAX_BLOOD_LEVEL
 	hud_type = /datum/hud/soulscythe
+	spawn_blacklisted = TRUE
 
 /mob/living/basic/soulscythe/Initialize(mapload)
 	. = ..()
@@ -266,7 +267,7 @@
 
 /mob/living/basic/soulscythe/proc/on_life(datum/source, seconds_per_tick, times_fired) // done like this because there's no need to go through all of life since the item does the work anyways
 	if(stat == CONSCIOUS)
-		blood_volume = min(MAX_BLOOD_LEVEL, blood_volume + round(1 * seconds_per_tick))
+		adjust_blood_volume(round(1 * seconds_per_tick), maximum = MAX_BLOOD_LEVEL)
 	return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
 
 /// Special projectile for the soulscythe.

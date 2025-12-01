@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-22.04
     concurrency: gen-docs
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup cache
         uses: actions/cache@v4
         with:
@@ -27,7 +27,7 @@ jobs:
           touch dmdoc/.nojekyll
           echo codedocs.tgstation13.org > dmdoc/CNAME
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4.7.3
+        uses: JamesIves/github-pages-deploy-action@v4.7.4
         with:
           branch: gh-pages
           clean: true

@@ -68,9 +68,9 @@
 		say("Not enough energy. Restoration cancelled.")
 		return FALSE
 	var/need_mob_update = FALSE
-	need_mob_update += occupier.adjustOxyLoss(-5, updating_health = FALSE)
-	need_mob_update += occupier.adjustFireLoss(-5, updating_health = FALSE)
-	need_mob_update += occupier.adjustBruteLoss(-5, updating_health = FALSE)
+	need_mob_update += occupier.adjust_oxy_loss(-5, updating_health = FALSE)
+	need_mob_update += occupier.adjust_fire_loss(-5, updating_health = FALSE)
+	need_mob_update += occupier.adjust_brute_loss(-5, updating_health = FALSE)
 	if(need_mob_update)
 		occupier.updatehealth()
 	if(occupier.health >= 0 && occupier.stat == DEAD)

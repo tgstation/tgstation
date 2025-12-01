@@ -84,9 +84,9 @@
 		return human_lungs.check_breath(breath, src)
 
 	if(health >= crit_threshold)
-		adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
+		adjust_oxy_loss(HUMAN_MAX_OXYLOSS + 1)
 	else if(!HAS_TRAIT(src, TRAIT_NOCRITDAMAGE))
-		adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
+		adjust_oxy_loss(HUMAN_CRIT_MAX_OXYLOSS)
 
 	failed_last_breath = TRUE
 
@@ -296,10 +296,10 @@
 		return
 
 	if(we_breath)
-		adjustOxyLoss(4 * seconds_per_tick)
+		adjust_oxy_loss(4 * seconds_per_tick)
 		Unconscious(80)
 	// Tissues die without blood circulation
-	adjustBruteLoss(1 * seconds_per_tick)
+	adjust_brute_loss(1 * seconds_per_tick)
 
 /mob/living/carbon/human/proc/handle_radiation(seconds_per_tick, times_fired)
 	if(HAS_TRAIT(src, TRAIT_RADIMMUNE))
