@@ -52,7 +52,7 @@
 			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_GLASSED)))
 				return ITEM_INTERACT_BLOCKING
 			if(suicide_check())
-				balloon_alert(user, "nothing happened?")
+				balloon_alert(user, "processor is completely useless!")
 				return ITEM_INTERACT_BLOCKING
 
 			var/atom/movable/alert_source = src
@@ -64,8 +64,7 @@
 			return ITEM_INTERACT_SUCCESS
 		if(CORE_STATE_FINISHED)
 			if(!core_mmi?.brainmob?.mind || suicide_check())
-				tool.play_tool_sound(src, 50)
-				balloon_alert(user, "nothing happened?")
+				balloon_alert(user, "processor is inactive!")
 				return ITEM_INTERACT_BLOCKING
 
 			if(!anchored)
@@ -78,7 +77,7 @@
 
 			var/atom/movable/alert_source = ai_structure_to_mob()
 			if(!alert_source)
-				balloon_alert(user, "nothing happened?")
+				balloon_alert(user, "processor is inactive!")
 				return ITEM_INTERACT_BLOCKING
 
 			alert_source.balloon_alert(user, "connected neural network")
