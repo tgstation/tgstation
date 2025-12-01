@@ -9,7 +9,6 @@
 	pickup_sound = 'sound/items/handling/gun/gun_pick_up.ogg'
 	drop_sound = 'sound/items/handling/gun/gun_drop.ogg'
 	sound_vary = TRUE
-	unique_reskin_changes_base_icon_state = TRUE
 
 	min_recoil = 0.1
 
@@ -609,6 +608,7 @@
 	suppressor = new_suppressor
 	suppressed = suppressor.suppression
 	update_weight_class(w_class + suppressor.w_class) //so pistols do not fit in pockets when suppressed
+	can_muzzle_flash = FALSE
 	update_appearance()
 
 /obj/item/gun/ballistic/clear_suppressor()
@@ -618,6 +618,7 @@
 	if(suppressor)
 		update_weight_class(w_class - suppressor.w_class)
 		suppressor = null
+	can_muzzle_flash = initial(can_muzzle_flash)
 	update_appearance()
 
 /obj/item/gun/ballistic/click_alt(mob/user)

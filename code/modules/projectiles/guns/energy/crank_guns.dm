@@ -7,6 +7,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket)
 	slot_flags = ITEM_SLOT_BACK
 	obj_flags = UNIQUE_RENAME
+	light_color = COLOR_PURPLE
 
 /obj/item/gun/energy/laser/musket/add_bayonet_point()
 	AddComponent(/datum/component/bayonet_attachable, offset_x = 22, offset_y = 11)
@@ -118,6 +119,7 @@
 		While it doesn't manipulate temperature in and of itself, it does cause an violent eruption in anyone who is severely cold. Able to generate \
 		ammunition by manually spinning the weapon's nanite canister."
 	icon_state = "infernopistol"
+	light_color = COLOR_RED
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite/inferno)
 
 /obj/item/gun/energy/laser/thermal/cryo //the ice gun
@@ -126,6 +128,7 @@
 		While it doesn't manipulate temperature in and of itself, it does cause an internal explosion in anyone who is severely hot. Able to generate \
 		ammunition by manually spinning the weapon's nanite canister."
 	icon_state = "cryopistol"
+	light_color = COLOR_BLUE
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite/cryo)
 
 // The Deep Lore //

@@ -118,7 +118,7 @@
 		message_animal_or_basic = custom_message
 	. = ..()
 	message_animal_or_basic = initial(message_animal_or_basic)
-	if(!user.can_speak() || user.getOxyLoss() >= 50)
+	if(!user.can_speak() || user.get_oxy_loss() >= 50)
 		return //stop the sound if oxyloss too high/cant speak
 	var/mob/living/carbon/carbon_user = user
 	// For masks that give unique death sounds
@@ -364,7 +364,7 @@
 						TIMER_COOLDOWN_START(src, "point_verb_emote_cooldown", 2 SECONDS)
 					else
 						message_param = "[span_userdanger("bumps [user.p_their()] head on the ground")] trying to motion towards %t."
-						our_carbon.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+						our_carbon.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5)
 						playsound(user, 'sound/effects/glass/glassbash.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 						TIMER_COOLDOWN_START(src, "point_verb_emote_cooldown", 2.5 SECONDS)
 	return ..()
@@ -698,6 +698,7 @@
 /datum/emote/living/custom
 	key = "me"
 	key_third_person = "custom"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	message = null
 
 /datum/emote/living/custom/can_run_emote(mob/user, status_check, intentional, params)
@@ -782,23 +783,15 @@
 	if(!emote_is_valid(user, our_message))
 		return FALSE
 
-	if(type_override)
-		emote_type = type_override
-
 	if(!params)
 		var/user_emote_type = get_custom_emote_type_from_user()
 
 		if(!user_emote_type)
 			return FALSE
 
-		emote_type = user_emote_type
+		type_override = user_emote_type
 
-	message = our_message
-	. = ..()
-
-	///Reset the message and emote type after it's run.
-	message = null
-	emote_type = EMOTE_VISIBLE
+	. = ..(user = user, params = our_message, type_override = type_override, intentional = intentional)
 
 /datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return message

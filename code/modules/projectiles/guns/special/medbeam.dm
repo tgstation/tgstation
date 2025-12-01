@@ -6,6 +6,7 @@
 	inhand_icon_state = "chronogun"
 	w_class = WEIGHT_CLASS_NORMAL
 	item_flags = parent_type::item_flags & ~NEEDS_PERMIT
+	can_muzzle_flash = FALSE
 
 	var/mob/living/current_target
 	var/last_check = 0
@@ -114,10 +115,10 @@
 	if(target.health != target.maxHealth)
 		new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)
 	var/need_mob_update
-	need_mob_update = target.adjustBruteLoss(-4, updating_health = FALSE, forced = TRUE)
-	need_mob_update += target.adjustFireLoss(-4, updating_health = FALSE, forced = TRUE)
-	need_mob_update += target.adjustToxLoss(-1, updating_health = FALSE, forced = TRUE)
-	need_mob_update += target.adjustOxyLoss(-1, updating_health = FALSE, forced = TRUE)
+	need_mob_update = target.adjust_brute_loss(-4, updating_health = FALSE, forced = TRUE)
+	need_mob_update += target.adjust_fire_loss(-4, updating_health = FALSE, forced = TRUE)
+	need_mob_update += target.adjust_tox_loss(-1, updating_health = FALSE, forced = TRUE)
+	need_mob_update += target.adjust_oxy_loss(-1, updating_health = FALSE, forced = TRUE)
 	if(need_mob_update)
 		target.updatehealth()
 	return

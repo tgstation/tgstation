@@ -5,7 +5,7 @@
 	pixel_x = 9
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aw" = (
 /obj/effect/decal/cleanable/glass/plastitanium,
 /turf/open/floor/mineral/titanium/white/airless,
@@ -987,7 +987,7 @@
 	pixel_x = 8
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "FX" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/machinery/sleeper{

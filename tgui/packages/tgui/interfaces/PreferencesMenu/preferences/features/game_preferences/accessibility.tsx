@@ -38,3 +38,13 @@ export const min_recoil_multiplier: Feature<number> = {
     `,
   component: FeatureSliderInput,
 };
+
+export const stair_indicator: FeatureToggle = {
+  name: 'Enable stair indicator',
+  category: 'ACCESSIBILITY',
+  description: `
+      When toggled, staircases will have a visual indicator showing which
+      direction to walk to transition floors.
+    `,
+  component: CheckboxInput,
+};

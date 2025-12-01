@@ -23,11 +23,11 @@
 /obj/structure/sign/Initialize(mapload)
 	. = ..()
 	register_context()
-	if(mapload && !find_and_hang_on_atom(mark_for_late_init = TRUE))
+	if(mapload && !find_and_mount_on_atom(mark_for_late_init = TRUE))
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/sign/LateInitialize()
-	find_and_hang_on_atom(late_init = TRUE)
+	find_and_mount_on_atom(late_init = TRUE)
 
 /obj/structure/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -220,7 +220,7 @@
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
 	placed_sign.update_integrity(get_integrity())
 	placed_sign.setDir(dir)
-	placed_sign.find_and_hang_on_atom()
+	placed_sign.find_and_mount_on_atom()
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 

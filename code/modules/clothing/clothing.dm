@@ -405,7 +405,7 @@
 				continue
 			if(!added_durability_header)
 				readout += "<b><u>DURABILITY (I-X)</u></b>"
-				added_damage_header = TRUE
+				added_durability_header = TRUE
 			readout += "[armor_to_protection_name(durability_key)] [armor_to_protection_class(rating)]"
 
 		if((flags_cover & HEADCOVERSMOUTH) || (flags_cover & PEPPERPROOF))

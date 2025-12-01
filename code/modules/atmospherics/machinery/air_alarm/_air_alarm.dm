@@ -130,7 +130,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	GLOB.air_alarms += src
 	if(mapload)
-		find_and_hang_on_atom()
+		find_and_mount_on_atom()
 	register_context()
 	check_enviroment()
 

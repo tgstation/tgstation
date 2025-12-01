@@ -24,6 +24,16 @@
 	attack_verb_simple = list("strike", "hit", "bash")
 	action_slots = ALL
 
+	// Muzzle Flash
+	light_on = FALSE
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
+	light_range = 3
+	light_color = LIGHT_COLOR_ORANGE
+	light_power = 0.5
+	var/can_muzzle_flash = TRUE
+	/// Muzzle Flash Duration
+	var/light_time = 0.1 SECONDS
+
 	var/gun_flags = NONE
 
 	var/fire_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
@@ -83,7 +93,9 @@
 	var/recoil_backtime_multiplier = 1.5
 	///this is how much deviation the gun recoil can have, recoil pushes the screen towards the reverse angle you shot + some deviation which this is the max.
 	var/recoil_deviation = 20
-	///Used if the guns recoil is lower then the min, it clamps the highest recoil
+	/// Used as the min value when calculating recoil
+	/// Affected by a player's min_recoil_multiplier preference, so keep in mind it can ultimately be 0 regardless
+	/// Often utilized as a "purely visual" form of recoil (as it can be disabled)
 	var/min_recoil = 0
 
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -217,11 +229,22 @@
 	else
 		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
 
+/obj/item/gun/proc/muzzle_flash_on()
+	if (can_muzzle_flash)
+		set_light_on(TRUE)
+		addtimer(CALLBACK(src, PROC_REF(muzzle_flash_off)), light_time, TIMER_UNIQUE | TIMER_OVERRIDE)
+	else
+		muzzle_flash_off()
+
+/obj/item/gun/proc/muzzle_flash_off()
+	set_light_on(FALSE)
+
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
 	if(!tk_firing(user))
 		var/actual_angle = get_angle((user || get_turf(src)), pbtarget)
 		simulate_recoil(user, recoil, actual_angle)
 	fire_sounds()
+	muzzle_flash_on()
 	if(suppressed || !message)
 		return FALSE
 	if(tk_firing(user))

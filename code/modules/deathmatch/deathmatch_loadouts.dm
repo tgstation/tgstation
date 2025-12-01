@@ -849,7 +849,7 @@
 		/obj/item/etherealballdeployer,
 	)
 
-	mutations_to_add = list(/obj/item/dnainjector/shock) // pretend ethereals are interesting
+	mutations_to_add = list(/datum/mutation/shock) // pretend ethereals are interesting
 
 /datum/outfit/deathmatch_loadout/plasmamen
 	name = "Deathmatch: Plasmaman Species"

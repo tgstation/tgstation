@@ -2734,9 +2734,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/structure/sign/poster/contraband/random/directional/north{
-	dir = 4
-	},
+/obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "aMr" = (
@@ -6005,7 +6003,8 @@
 /area/station/engineering/lobby)
 "bDB" = (
 /obj/structure/plaque/static_plaque/golden/commission/icebox{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
@@ -81049,8 +81048,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/item/kirbyplants/random,
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/cafeteria{
 	dir = 8
 	},
