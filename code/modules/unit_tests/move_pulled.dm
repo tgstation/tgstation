@@ -1,3 +1,4 @@
+/// Test that people can move pulled objects by clicking distant turfs or decals
 /datum/unit_test/move_pulled
 	abstract_type = /datum/unit_test/move_pulled
 
@@ -22,7 +23,7 @@
 	CRASH("Unimplemented get_first_target in move_pulled unit test")
 
 /datum/unit_test/move_pulled/proc/get_second_target()
-	CRASH("Unimplemented get_first_target in move_pulled unit test")
+	CRASH("Unimplemented get_second_target in move_pulled unit test")
 
 /// Try to move a pulled object to the turf below us, then to the opposite corner
 /datum/unit_test/move_pulled/to_turf

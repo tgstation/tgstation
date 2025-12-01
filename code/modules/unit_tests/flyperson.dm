@@ -1,3 +1,4 @@
+/// Test that flypeople can get nutriment from vomit decals
 /datum/unit_test/flyperson
 
 /datum/unit_test/flyperson/Run()
