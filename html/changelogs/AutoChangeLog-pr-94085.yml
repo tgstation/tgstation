@@ -1,0 +1,6 @@
+author: "Fghj240"
+delete-after: True
+changes:
+  - balance: "Regenerative Coma activation thresholds scales with your max hp"
+  - balance: "Regenerative Coma can be canceled by gaining nosoftcrit before it activates"
+  - balance: "Toxolysis food scales with the amount of reagents purged"

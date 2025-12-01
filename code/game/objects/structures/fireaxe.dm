@@ -39,7 +39,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 		held_item = new item_path(src)
 	update_appearance()
 	if(mapload)
-		find_and_hang_on_atom()
+		find_and_mount_on_atom()
 
 /obj/structure/fireaxecabinet/Destroy()
 	if(held_item)

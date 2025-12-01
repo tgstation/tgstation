@@ -524,7 +524,7 @@
 	return FALSE
 
 /obj/structure/girder/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data["[RCD_DESIGN_MODE]"])
+	switch(rcd_data[RCD_DESIGN_MODE])
 		if(RCD_TURF)
 			if(the_rcd.rcd_design_path != /turf/open/floor/plating/rcd)
 				return FALSE

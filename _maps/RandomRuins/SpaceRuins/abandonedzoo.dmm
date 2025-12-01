@@ -66,7 +66,7 @@
 "aK" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aL" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -81,7 +81,7 @@
 "aQ" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aT" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/eva,
@@ -211,7 +211,7 @@
 "bK" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/space/nearstation)
 "bN" = (
 /obj/structure/grille/broken,
 /obj/item/stack/cable_coil/cut,
@@ -227,14 +227,14 @@
 "bP" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bR" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
 /obj/structure/disposaloutlet,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/space/nearstation)
 "bT" = (
 /obj/structure/grille,
 /obj/item/shard{
@@ -249,7 +249,7 @@
 "bW" = (
 /obj/item/shard,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bX" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
@@ -319,7 +319,7 @@
 "ly" = (
 /obj/machinery/power/shieldwallgen/unlocked,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "nI" = (
 /obj/structure/alien/resin/wall,
 /obj/machinery/light/floor/broken,

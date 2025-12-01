@@ -493,9 +493,9 @@
 		update_appearance()
 		if(mob_occupant)
 			if(uv_super)
-				mob_occupant.adjustFireLoss(rand(20, 36))
+				mob_occupant.adjust_fire_loss(rand(20, 36))
 			else
-				mob_occupant.adjustFireLoss(rand(10, 16))
+				mob_occupant.adjust_fire_loss(rand(10, 16))
 			if(iscarbon(mob_occupant) && mob_occupant.stat < UNCONSCIOUS)
 				//Awake, organic and screaming
 				mob_occupant.emote("scream")

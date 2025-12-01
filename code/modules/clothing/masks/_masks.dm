@@ -9,7 +9,6 @@
 	strip_delay = 4 SECONDS
 	equip_delay_other = 4 SECONDS
 	visor_vars_to_toggle = NONE
-	unique_reskin_changes_base_icon_state = TRUE
 
 	var/adjusted_flags = null
 	///Did we install a filtering cloth?

@@ -884,7 +884,7 @@
 "VL" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "WK" = (
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/item/clothing/shoes/workboots{
