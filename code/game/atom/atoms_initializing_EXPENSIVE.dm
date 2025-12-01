@@ -154,6 +154,12 @@
 	if(ispath(ai_controller))
 		ai_controller = new ai_controller(src)
 
+	if(save_container_parent_id)
+		GLOB.save_containers_parents[save_container_parent_id] = src
+
+	if(save_container_child_id)
+		GLOB.save_containers_children += src
+
 	return INITIALIZE_HINT_NORMAL
 
 /**
