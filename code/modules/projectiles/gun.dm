@@ -486,7 +486,7 @@
 /obj/item/gun/proc/calculate_recoil(mob/living/user, recoil_amount = 0)
 	var/used_min_recoil = min_recoil
 	if(user.client)
-		used_min_recoil *= (user.client.prefs.read_preference(/datum/preference/numeric/min_recoil_multiplier)/100)
+		used_min_recoil *= (user.client.prefs.read_preference(/datum/preference/numeric/min_recoil_multiplier) / 100)
 	return clamp(recoil_amount, used_min_recoil, INFINITY)
 
 /obj/item/gun/proc/simulate_recoil(mob/living/user, recoil_amount = 0, firing_angle)
