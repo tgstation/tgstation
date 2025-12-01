@@ -9,7 +9,7 @@
 
 /datum/surgery_operation/limb/add_dental_implant/all_required_strings()
 	. = list()
-	. += "operate on mouth"
+	. += "operate on mouth (target mouth)"
 	. += ..()
 	. += "the mouth must have teeth"
 

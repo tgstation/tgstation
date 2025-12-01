@@ -17,7 +17,7 @@
 	return image('icons/hud/implants.dmi', "lighting_bolt")
 
 /datum/surgery_operation/limb/bioware/all_required_strings()
-	return list("operate on the [parse_zone(required_zone)]") + ..()
+	return list("operate on [parse_zone(required_zone)] (target [parse_zone(required_zone)])") + ..()
 
 /datum/surgery_operation/limb/bioware/all_blocked_strings()
 	var/list/incompatible_surgeries = list()

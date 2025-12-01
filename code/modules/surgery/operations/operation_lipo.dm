@@ -26,7 +26,7 @@
 
 /datum/surgery_operation/limb/lipoplasty/all_required_strings()
 	. = list()
-	. += "operate on chest"
+	. += "operate on chest (target chest)"
 	. += ..()
 	. += "the patient must have excess fat to remove"
 

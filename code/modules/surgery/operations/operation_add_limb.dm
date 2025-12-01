@@ -3,7 +3,7 @@
 // This surgery is so snowflake that it doesn't use any of the operation subtypes, it forges its own path
 /datum/surgery_operation/prosthetic_replacement
 	name = "prosthetic replacement"
-	desc = "Replace a missing limb with a prosthetic or arbitrary item."
+	desc = "Replace a missing limb with a prosthetic (or arbitrary) item."
 	implements = list(
 		/obj/item/bodypart = 1,
 		/obj/item = 1,
@@ -24,7 +24,10 @@
 	return "any limb / any item"
 
 /datum/surgery_operation/prosthetic_replacement/all_required_strings()
-	return list("operate on chest (but target the missing limb)") + ..()
+	. = list()
+	. += "operate on chest (target chest)"
+	. += ..()
+	. += "when the chest is prepared, target the zone of the limb you are attaching"
 
 /datum/surgery_operation/prosthetic_replacement/any_required_strings()
 	return list("arms may receive any suitable item in lieu of a replacement limb") + ..()

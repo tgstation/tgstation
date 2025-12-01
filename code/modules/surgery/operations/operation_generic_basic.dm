@@ -9,6 +9,7 @@
 		/obj/item/melee/energy/sword = 1.33,
 		/obj/item/knife = 1.5,
 		/obj/item/shard = 2.25,
+		/obj/item/screwdriver = 5,
 		/obj/item/pen = 5,
 		/obj/item = 3.33,
 	)
@@ -44,8 +45,67 @@
 
 /datum/surgery_operation/basic/incise_skin/on_success(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
-	// Skip straight to open, basic mobs don't have vessels to bleed from
 	patient.apply_status_effect(/datum/status_effect/basic_surgery_state, SURGERY_SKIN_OPEN)
+
+/datum/surgery_operation/basic/saw_bone
+	name = "saw bone"
+	desc = "Saw through the patient's bones to access their internal organs."
+	implements = list(
+		TOOL_SAW = 1,
+		/obj/item/shovel/serrated = 1.33,
+		/obj/item/melee/arm_blade = 1.33,
+		/obj/item/fireaxe = 2,
+		/obj/item/hatchet = 2.85,
+		/obj/item/knife/butcher = 2.85,
+		/obj/item = 4,
+	)
+	time = 5.4 SECONDS
+	preop_sound = list(
+		/obj/item/circular_saw = 'sound/items/handling/surgery/saw.ogg',
+		/obj/item/melee/arm_blade = 'sound/items/handling/surgery/scalpel1.ogg',
+		/obj/item/fireaxe = 'sound/items/handling/surgery/scalpel1.ogg',
+		/obj/item/hatchet = 'sound/items/handling/surgery/scalpel1.ogg',
+		/obj/item/knife/butcher = 'sound/items/handling/surgery/scalpel1.ogg',
+		/obj/item = 'sound/items/handling/surgery/scalpel1.ogg',
+	)
+	success_sound = 'sound/items/handling/surgery/organ2.ogg'
+	operation_flags = OPERATION_AFFECTS_MOOD
+	all_surgery_states_required = SURGERY_SKIN_OPEN
+	any_surgery_states_blocked = SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED
+	target_zone = null
+
+/datum/surgery_operation/basic/saw_bones/all_blocked_strings()
+	return ..() + list("The patient must not have complex anatomy")
+
+/datum/surgery_operation/basic/saw_bones/get_default_radial_image()
+	return image(/obj/item/circular_saw)
+
+/datum/surgery_operation/basic/saw_bones/tool_check(obj/item/tool)
+	// Require edged sharpness and sufficient force OR a tool behavior match
+	return (((tool.get_sharpness() & SHARP_EDGED) && tool.force >= 10) || implements[tool.tool_behaviour])
+
+/datum/surgery_operation/basic/saw_bones/on_preop(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
+	display_results(
+		surgeon,
+		patient,
+		span_notice("You begin to saw through [patient]'s bones..."),
+		span_notice("[surgeon] begins to saw through [patient]'s bones."),
+		span_notice("[surgeon] begins to saw through [patient]'s bones."),
+	)
+	display_pain(patient, "You feel a horrid ache spread through your insides!")
+
+/datum/surgery_operation/basic/saw_bones/on_success(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
+	. = ..()
+	patient.apply_status_effect(/datum/status_effect/basic_surgery_state, SURGERY_BONE_SAWED)
+	patient.apply_damage(patient.maxHealth * 0.5, sharpness = tool.get_sharpness(), wound_bonus = CANT_WOUND, attacking_item = tool)
+	display_results(
+		surgeon,
+		patient,
+		span_notice("You saw [patient] open."),
+		span_notice("[surgeon] saws [patient] open!"),
+		span_notice("[surgeon] saws [patient] open!"),
+	)
+	display_pain(patient, "It feels like something just broke!")
 
 // Closing of skin for basic mobs
 /datum/surgery_operation/basic/close_skin

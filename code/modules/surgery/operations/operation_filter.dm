@@ -11,7 +11,7 @@
 
 /datum/surgery_operation/limb/filter_blood/all_required_strings()
 	. = list()
-	. += "operate on chest"
+	. += "operate on chest (target chest)"
 	. += ..()
 	. += "the patient must not be husked"
 

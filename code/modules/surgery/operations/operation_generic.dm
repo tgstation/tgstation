@@ -11,6 +11,7 @@
 		/obj/item/melee/energy/sword = 1.33,
 		/obj/item/knife = 1.5,
 		/obj/item/shard = 2.25,
+		/obj/item/screwdriver = 5,
 		/obj/item/pen = 5,
 		/obj/item = 3.33,
 	)
@@ -261,7 +262,7 @@
 
 /// Saws through bones to access organs
 /datum/surgery_operation/limb/saw_bones
-	name = "saw bone"
+	name = "saw limb bone"
 	desc = "Saw through the patient's bones to access their internal organs."
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	implements = list(
@@ -319,7 +320,7 @@
 
 /// Fixes sawed bones back together
 /datum/surgery_operation/limb/fix_bones
-	name = "fix bone"
+	name = "fix limb bone"
 	desc = "Repair a patient's cut or broken bones."
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	implements = list(
@@ -363,7 +364,7 @@
 	limb.heal_damage(40)
 
 /datum/surgery_operation/limb/drill_bones
-	name = "drill bone"
+	name = "drill limb bone"
 	desc = "Drill through a patient's bones."
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	implements = list(

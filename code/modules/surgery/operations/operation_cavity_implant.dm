@@ -15,7 +15,7 @@
 	return image(/obj/item/retractor)
 
 /datum/surgery_operation/limb/prepare_cavity/all_required_strings()
-	return list("operate on chest") + ..()
+	return list("operate on chest (target chest)") + ..()
 
 /datum/surgery_operation/limb/prepare_cavity/state_check(obj/item/bodypart/chest/limb)
 	return limb.body_zone == BODY_ZONE_CHEST
@@ -58,7 +58,7 @@
 	return "any item"
 
 /datum/surgery_operation/limb/cavity_implant/all_required_strings()
-	return list("operate on chest") + ..()
+	return list("operate on chest (target chest)") + ..()
 
 /datum/surgery_operation/limb/cavity_implant/get_default_radial_image()
 	var/image/base = ..()
@@ -140,7 +140,7 @@
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_CAVITY_WIDENED
 
 /datum/surgery_operation/limb/undo_cavity_implant/all_required_strings()
-	return list("operate on chest") + ..()
+	return list("operate on chest (target chest)") + ..()
 
 /datum/surgery_operation/limb/undo_cavity_implant/get_radial_options(obj/item/bodypart/chest/limb, obj/item/tool, operating_zone)
 	// Not bothering to cache this as the chance of hitting the same cavity item in the same round is rather low

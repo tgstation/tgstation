@@ -14,7 +14,7 @@
 
 /datum/surgery_operation/limb/autopsy/all_required_strings()
 	. = list()
-	. += "operate on chest"
+	. += "operate on chest (target chest)"
 	. += ..()
 	. += "the patient must be deceased"
 	. += "the patient must not have been autopsied prior"

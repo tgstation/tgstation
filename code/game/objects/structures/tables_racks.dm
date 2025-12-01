@@ -1092,6 +1092,7 @@
 			SIGNAL_REMOVETRAIT(TRAIT_READY_TO_OPERATE),
 			COMSIG_LIVING_BEING_OPERATED_ON,
 			COMSIG_LIVING_SURGERY_FINISHED,
+			COMSIG_LIVING_UPDATING_SURGERY_STATE,
 		))
 		if (patient.external && patient.external == air_tank)
 			patient.close_externals()
@@ -1105,13 +1106,14 @@
 		SIGNAL_ADDTRAIT(TRAIT_READY_TO_OPERATE),
 		SIGNAL_REMOVETRAIT(TRAIT_READY_TO_OPERATE),
 		COMSIG_LIVING_SURGERY_FINISHED,
+		COMSIG_LIVING_UPDATING_SURGERY_STATE,
 	), PROC_REF(on_surgery_change))
 	RegisterSignal(patient, COMSIG_LIVING_BEING_OPERATED_ON, PROC_REF(get_surgeries))
 
 /obj/structure/table/optable/proc/on_surgery_change(datum/source)
 	SIGNAL_HANDLER
 	update_appearance()
-	computer?.update_static_data_for_all_viewers()
+	computer?.update_static_data_batched()
 
 /obj/structure/table/optable/proc/get_surgeries(datum/source, mob/living/surgeon, list/operations)
 	SIGNAL_HANDLER

@@ -1108,9 +1108,9 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/basic/all_required_strings()
 	. = list()
 	if(required_biotype)
-		. += "operate on \a [english_list(bitfield_to_list(required_biotype, MOB_TYPE_TO_NAME), and_text = " or ")] [target_zone ? "[parse_zone(target_zone)]" : "patient"]"
+		. += "operate on \a [english_list(bitfield_to_list(required_biotype, MOB_TYPE_TO_NAME), and_text = " or ")] [target_zone ? "[parse_zone(target_zone)] (target [parse_zone(target_zone)])" : "patient"]"
 	else if(target_zone)
-		. += "operate on [parse_zone(target_zone)]"
+		. += "operate on [parse_zone(target_zone)] (target [parse_zone(target_zone)])"
 	. += ..()
 
 /datum/surgery_operation/basic/is_available(mob/living/patient, operated_zone)
@@ -1138,7 +1138,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	var/obj/item/bodypart/carbon_part = patient.get_bodypart(target_zone)
 	if(isnull(carbon_part)) // non-carbon
 		var/datum/status_effect/basic_surgery_state/state_holder = patient.has_status_effect(__IMPLIED_TYPE__)
-		return HAS_SURGERY_STATE(state_holder?.surgery_state, state & ALL_SURGERY_SKIN_STATES) // right now we only support skin states. update this if that changes
+		return HAS_SURGERY_STATE(state_holder?.surgery_state, state & (SURGERY_BONE_SAWED|SURGERY_SKIN_OPEN)) // these are the only states basic mobs support, update this if that changes
 
 	return LIMB_HAS_SURGERY_STATE(carbon_part, state)
 
@@ -1212,7 +1212,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	var/obj/item/organ/target_type
 
 /datum/surgery_operation/organ/all_required_strings()
-	return list("operate on [target_type::name]") + ..()
+	return list("operate on [target_type::name] (target [target_type::zone])") + ..()
 
 /datum/surgery_operation/organ/all_blocked_strings()
 	. = ..()
@@ -1233,7 +1233,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/organ/is_available(obj/item/organ/organ, operated_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(organ.zone != operated_zone)
+	if(organ.zone != operated_zone) // this check prevents eyes from showing up in head operations
 		return FALSE
 	if(required_organ_flag && !(organ.organ_flags & required_organ_flag))
 		return FALSE

@@ -17,7 +17,7 @@
 	success_sound = 'sound/machines/defib/defib_zap.ogg'
 	required_biotype = NONE
 	target_zone = BODY_ZONE_HEAD
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
 
 /datum/surgery_operation/basic/revival/all_required_strings()
 	return ..() + list("the patient must be deceased", "the patient must be in a revivable state")

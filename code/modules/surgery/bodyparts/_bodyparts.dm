@@ -1452,12 +1452,21 @@
 	// In 99% of situations we won't get to this point if we aren't wired or blooded
 	// But I'm covering my ass in case someone adds some weird new species
 	if(biological_state & BIOSTATE_HAS_VESSELS)
+		var/surgery_bloodloss = 0
 		// better clamp those up quick
 		if(HAS_ANY_SURGERY_STATE(surgery_state, SURGERY_VESSELS_UNCLAMPED))
-			cached_bleed_rate += 2
+			surgery_bloodloss += 1.5
 		// better, but still not exactly ideal
 		else if(HAS_ANY_SURGERY_STATE(surgery_state, SURGERY_VESSELS_CLAMPED|SURGERY_ORGANS_CUT))
-			cached_bleed_rate += 0.25
+			surgery_bloodloss += 0.2
+
+		// modify rate so cutting everything open won't nuke people
+		if(body_zone == BODY_ZONE_HEAD)
+			surgery_bloodloss *= 0.5
+		else if(body_zone != BODY_ZONE_CHEST)
+			surgery_bloodloss *= 0.25
+
+		cached_bleed_rate += surgery_bloodloss
 
 	for(var/obj/item/embeddies as anything in embedded_objects)
 		if(!embeddies.get_embed().is_harmless())
@@ -1712,7 +1721,16 @@
 
 	if(isnull(owner))
 		return
+	SEND_SIGNAL(owner, COMSIG_LIVING_UPDATING_SURGERY_STATE, old_state, surgery_state, changed_states)
 	if(HAS_SURGERY_STATE(surgery_state, ALL_SURGERY_FISH_STATES(body_zone)))
 		owner.AddComponent(/datum/component/fishing_spot, /datum/fish_source/surgery) // no-op if they already have one
 	else if(HAS_SURGERY_STATE(old_state, ALL_SURGERY_FISH_STATES(body_zone)))
 		qdel(owner.GetComponent(/datum/component/fishing_spot))
+
+/obj/item/bodypart/vv_edit_var(vname, vval)
+	if(vname != NAMEOF(src, surgery_state))
+		return ..()
+
+	var/old_state = surgery_state
+	. = ..()
+	update_surgical_state(old_state, surgery_state ^ old_state)

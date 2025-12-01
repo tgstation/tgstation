@@ -30,12 +30,9 @@
 	var/mob/living/target_mob = target
 	if(!target_mob.has_limbs)
 		context[SCREENTIP_CONTEXT_LMB] = HAS_TRAIT(source, TRAIT_READY_TO_OPERATE) ? "Remove [aid_name]" : "Prepare for surgery"
-		return NONE
+		return CONTEXTUAL_SCREENTIP_SET
 
-	var/obj/item/bodypart/precise_part = target_mob.get_bodypart(deprecise_zone(user.zone_selected))
-	if(isnull(precise_part))
-		return NONE
-
+	var/obj/item/bodypart/precise_part = target_mob.get_bodypart(deprecise_zone(user.zone_selected)) || target_mob.get_bodypart(BODY_ZONE_CHEST)
 	context[SCREENTIP_CONTEXT_LMB] = HAS_TRAIT(precise_part, TRAIT_READY_TO_OPERATE) ? "Remove [aid_name]" : "Prepare [precise_part.plaintext_zone] for surgery"
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -46,10 +43,7 @@
 		return NONE
 
 	var/mob/living/target_mob = target
-	var/obj/item/bodypart/precise_part = target_mob.get_bodypart(deprecise_zone(user.zone_selected))
-	if(isnull(precise_part) && target_mob.has_limbs)
-		return NONE
-
+	var/obj/item/bodypart/precise_part = target_mob.get_bodypart(deprecise_zone(user.zone_selected)) || target_mob.get_bodypart(BODY_ZONE_CHEST)
 	surgery_prep(target_mob, user, precise_part?.body_zone || BODY_ZONE_CHEST, aid_name)
 	return ITEM_INTERACT_SUCCESS
 
@@ -57,7 +51,7 @@
 	var/datum/status_effect/surgery_prepped/prep = target_mob.has_status_effect(__IMPLIED_TYPE__)
 	if(isnull(prep) || !(body_zone in prep.zones))
 		target_mob.apply_status_effect(/datum/status_effect/surgery_prepped, body_zone, aid_name)
-		target_mob.balloon_alert(surgeon, "surgery prepared")
+		target_mob.balloon_alert(surgeon, "[parse_zone(body_zone)] surgery prepared")
 		return
 	prep.untrack_surgery(body_zone)
 	target_mob.balloon_alert(surgeon, "surgery cleared")
