@@ -1,0 +1,5 @@
+author: "ArchBTW"
+delete-after: True
+changes:
+  - bugfix: "Click dragging something onto a tile with a decal (pool of oil/blood, etc)"
+  - code_imp: "Add force_move_pulled element; replace respective code with the element"
