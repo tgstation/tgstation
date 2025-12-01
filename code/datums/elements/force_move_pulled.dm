@@ -13,6 +13,8 @@
 
 /datum/element/force_move_pulled/proc/on_click(atom/moving_atom, mob/user, list/modifiers)
 	SIGNAL_HANDLER
-	if(isliving(user) && !QDELETED(user))
-		user.Move_Pulled(moving_atom)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+	if(isnull(user.pulling))
+		return NONE
+
+	user.Move_Pulled(moving_atom)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
