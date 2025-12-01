@@ -29,8 +29,6 @@
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	circuit_components = list()
-
 	src.circuit_component_types = circuit_component_types
 	src.extra_registration_callback = extra_registration_callback
 	src.extra_unregistration_callback = extra_unregistration_callback
@@ -41,6 +39,7 @@
 		UnregisterFromParent()
 		should_register = TRUE
 		QDEL_LIST(circuit_components)
+		LAZYNULL(circuit_components)
 
 	for(var/circuit_component in components)
 		var/obj/item/circuit_component/component = circuit_component
@@ -49,7 +48,7 @@
 		if(!should_register)
 			component.register_usb_parent(parent)
 		RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_SAVE, PROC_REF(save_component))
-		circuit_components += component
+		LAZYADD(circuit_components, component)
 
 	if(should_register)
 		RegisterWithParent()
@@ -160,7 +159,7 @@
 /datum/component/usb_port/proc/on_atom_usb_cable_try_attach(datum/source, obj/item/usb_cable/connecting_cable, mob/user)
 	SIGNAL_HANDLER
 
-	if (!length(circuit_components))
+	if (!LAZYLEN(circuit_components))
 		set_circuit_components(circuit_component_types)
 
 	var/atom/atom_parent = parent

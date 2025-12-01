@@ -35,10 +35,12 @@
 
 /obj/machinery/computer/records/security/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/arrest_console_data,
-		/obj/item/circuit_component/arrest_console_arrest,
-	))
+	AddComponent(/datum/component/usb_port, \
+		typecacheof(list(
+			/obj/item/circuit_component/arrest_console_data,
+			/obj/item/circuit_component/arrest_console_arrest,
+		), only_root_path = TRUE) \
+	)
 
 /obj/machinery/computer/records/security/emp_act(severity)
 	. = ..()

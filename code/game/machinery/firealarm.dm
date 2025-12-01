@@ -72,9 +72,7 @@
 	soundloop = new(src, FALSE)
 	set_wires(new /datum/wires/firealarm(src))
 
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/firealarm,
-	))
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/firealarm), only_root_path = TRUE))
 
 	AddComponent( \
 		/datum/component/redirect_attack_hand_from_turf, \

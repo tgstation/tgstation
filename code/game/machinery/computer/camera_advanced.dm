@@ -55,9 +55,10 @@
 		actions += new move_down_action(src)
 	if(add_usb_port)
 		AddComponent(/datum/component/usb_port, \
-			list(
+			typecacheof(list(
 				/obj/item/circuit_component/advanced_camera,
 				/obj/item/circuit_component/advanced_camera_intercept,
+				), \
 			), \
 			extra_registration_callback = PROC_REF(register_usb_port), \
 			extra_unregistration_callback = PROC_REF(unregister_usb_port) \
