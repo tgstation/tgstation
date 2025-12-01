@@ -106,7 +106,7 @@
 		var/obj/item/assembly/assembly = LAZYACCESS(assemblies, color)
 		assembly.holder = null
 		assembly.connected = null
-	LAZYCLEARLIST(assemblies)
+	LAZYNULL(assemblies)
 	return ..()
 
 /// Adds a number of wires which do absolutely nothing.

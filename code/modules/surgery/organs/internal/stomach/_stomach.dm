@@ -53,7 +53,8 @@
 		reagents.flags |= REAGENT_HOLDER_ALIVE
 
 /obj/item/organ/stomach/Destroy()
-	QDEL_LIST(stomach_contents)
+	if(stomach_contents)
+		QDEL_LIST(stomach_contents)
 	return ..()
 
 /obj/item/organ/stomach/on_life(seconds_per_tick, times_fired)
