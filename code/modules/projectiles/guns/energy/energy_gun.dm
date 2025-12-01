@@ -8,6 +8,7 @@
 	modifystate = TRUE
 	ammo_x_offset = 3
 	dual_wield_spread = 60
+	light_color = LIGHT_COLOR_CYAN
 
 /obj/item/gun/energy/e_gun/Initialize(mapload)
 	. = ..()
@@ -176,11 +177,11 @@
 		switch(fail_tick)
 			if(0 to 200)
 				fail_tick += (2*(fail_chance))
-				M.adjustFireLoss(3)
+				M.adjust_fire_loss(3)
 				to_chat(M, span_userdanger("Your [name] feels warmer."))
 			if(201 to INFINITY)
 				SSobj.processing.Remove(src)
-				M.adjustFireLoss(10)
+				M.adjust_fire_loss(10)
 				reactor_overloaded = TRUE
 				to_chat(M, span_userdanger("Your [name]'s reactor overloads!"))
 

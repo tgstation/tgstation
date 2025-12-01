@@ -24,6 +24,16 @@
 	attack_verb_simple = list("strike", "hit", "bash")
 	action_slots = ALL
 
+	// Muzzle Flash
+	light_on = FALSE
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
+	light_range = 3
+	light_color = LIGHT_COLOR_ORANGE
+	light_power = 0.5
+	var/can_muzzle_flash = TRUE
+	/// Muzzle Flash Duration
+	var/light_time = 0.1 SECONDS
+
 	var/gun_flags = NONE
 	var/fire_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
 	var/vary_fire_sound = TRUE
@@ -207,10 +217,21 @@
 	else
 		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
 
+/obj/item/gun/proc/muzzle_flash_on()
+	if (can_muzzle_flash)
+		set_light_on(TRUE)
+		addtimer(CALLBACK(src, PROC_REF(muzzle_flash_off)), light_time, TIMER_UNIQUE | TIMER_OVERRIDE)
+	else
+		muzzle_flash_off()
+
+/obj/item/gun/proc/muzzle_flash_off()
+	set_light_on(FALSE)
+
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
 	if(recoil && !tk_firing(user))
 		shake_camera(user, recoil + 1, recoil)
 	fire_sounds()
+	muzzle_flash_on()
 	if(suppressed || !message)
 		return FALSE
 	if(tk_firing(user))
