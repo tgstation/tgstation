@@ -1,4 +1,0 @@
-author: "Ezel"
-delete-after: True
-changes:
-  - bugfix: "Removes rogue decal from catwalk station"

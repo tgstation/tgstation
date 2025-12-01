@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Stairs now have an indicator that stepping beyond them will take you upwards. You can disable it in accessibility settings if desired."
-  - image: "Stairs blend in and together better."
