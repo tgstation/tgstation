@@ -90,6 +90,7 @@
 #define MONEY_NAME_CAPITALIZED "Credits"
 // Due to the ways macros work, I cant just directly use credit\s.
 // You will need to verify there is no loose use cases of credit\s.
+// As of present there is none left floating around.
 #define MONEY_NAME_AUTOPURAL(amount) "credit[#amount == 1 ? "" : "s"]"
 
 #define MONEY_MINING_SYMBOL "mp"
