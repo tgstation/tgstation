@@ -1,7 +1,7 @@
-#define CREDIT_ROLL_SPEED 125
-#define CREDIT_SPAWN_SPEED 10
+#define CREDIT_ROLL_SPEED (12.5 SECONDS)
+#define CREDIT_SPAWN_SPEED (1 SECONDS)
 #define CREDIT_ANIMATE_HEIGHT (14 * ICON_SIZE_Y)
-#define CREDIT_EASE_DURATION 22
+#define CREDIT_EASE_DURATION (2.2 SECONDS)
 #define CREDITS_PATH "[global.config.directory]/contributors.dmi"
 
 /client/proc/RollCredits()
