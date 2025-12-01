@@ -790,12 +790,8 @@
 "gg" = (
 /obj/structure/sign/warning/fire/directional/north,
 /obj/structure/sign/warning/xeno_mining/directional/south,
-/obj/structure/sign/warning/secure_area/directional/south{
-	pixel_x = 32
-	},
-/obj/structure/sign/warning/secure_area/directional/north{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/secure_area/directional/northeast,
+/obj/structure/sign/warning/secure_area/directional/southeast,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/cargo)
 "gh" = (
@@ -1873,12 +1869,8 @@
 "oD" = (
 /obj/structure/sign/warning/xeno_mining/directional/west,
 /obj/structure/sign/warning/fire/directional/east,
-/obj/structure/sign/warning/secure_area/directional/south{
-	pixel_x = -32
-	},
-/obj/structure/sign/warning/secure_area/directional/south{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/secure_area/directional/southwest,
+/obj/structure/sign/warning/secure_area/directional/southeast,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/arrivals)
 "oF" = (

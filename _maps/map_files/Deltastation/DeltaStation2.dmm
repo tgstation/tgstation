@@ -37086,11 +37086,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
-"jfL" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/secure_area/directional/west,
-/turf/open/floor/plating,
-/area/station/engineering/atmos/mix)
 "jfP" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -50118,6 +50113,7 @@
 /obj/effect/turf_decal/tile/yellow/opposingcorners{
 	dir = 1
 	},
+/obj/structure/sign/warning/secure_area/directional/northwest,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -56934,14 +56930,12 @@
 	dir = 4;
 	name = "Mix Outlet Pump"
 	},
-/obj/structure/sign/warning/secure_area/directional/west{
-	pixel_y = -32
-	},
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 8
 	},
+/obj/structure/sign/warning/secure_area/directional/southwest,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/mix)
 "ofN" = (
@@ -77694,6 +77688,7 @@
 	dir = 5
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/departments/vault/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "tiP" = (
@@ -120050,7 +120045,7 @@ unO
 jxJ
 avX
 tiC
-jfL
+hhM
 mtm
 guU
 nNz

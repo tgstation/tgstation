@@ -6396,9 +6396,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/sign/warning/secure_area/directional/north{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/directional/northeast,
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
 "coe" = (
@@ -14749,15 +14747,13 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/sign/warning/secure_area/directional/west{
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/red/opposingcorners{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/sign/warning/secure_area/directional/southwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "fcJ" = (
@@ -18240,9 +18236,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/sign/warning/secure_area/directional/south{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/directional/southwest,
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
 "grZ" = (
@@ -21627,9 +21621,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/sign/warning/secure_area/directional/north{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/directional/northwest,
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
 "hxW" = (
@@ -26161,9 +26153,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/sign/warning/secure_area/directional/south{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/directional/southeast,
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
 "iYE" = (
@@ -41393,6 +41383,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/sign/departments/vault/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/vault)
 "okP" = (
@@ -48131,9 +48122,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/sign/warning/secure_area/directional/north{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/secure_area/directional/northeast,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "qCv" = (
@@ -51564,9 +51553,6 @@
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 6
 	},
-/obj/structure/sign/warning/secure_area/directional/east{
-	pixel_y = 32
-	},
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 6
 	},
@@ -51576,6 +51562,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/sign/warning/secure_area/directional/northeast,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "rHz" = (
@@ -71208,12 +71195,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
-"yme" = (
-/obj/structure/sign/departments/vault/directional/north{
-	pixel_y = 0
-	},
-/turf/closed/wall/r_wall,
-/area/station/command/vault)
 
 (1,1,1) = {"
 aaa
@@ -92641,7 +92622,7 @@ vbF
 wHW
 wHW
 okj
-yme
+rlU
 qYC
 pNC
 qme
