@@ -10,30 +10,36 @@
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/passive_message = "" //random message to infected but not actively healing people
+	var/healable_bodytypes = BODYTYPE_ORGANIC // What types of body parts we can heal
 
-/datum/symptom/heal/Activate(datum/disease/advance/A)
+/datum/symptom/heal/Activate(datum/disease/advance/our_disease)
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/M = A.affected_mob
-	switch(A.stage)
+	healable_bodytypes = BODYTYPE_ORGANIC
+	if(our_disease.infectable_biotypes & MOB_ROBOTIC)
+		healable_bodytypes |= BODYTYPE_ROBOTIC // Inorganic biology lets us heal more bodytypes
+	if(our_disease.infectable_biotypes & MOB_MINERAL)
+		healable_bodytypes |= BODYTYPE_GOLEM
+	var/mob/living/living_host = our_disease.affected_mob
+	switch(our_disease.stage)
 		if(4, 5)
-			var/effectiveness = CanHeal(A)
+			var/effectiveness = CanHeal(our_disease)
 			if(!effectiveness)
-				if(passive_message && prob(2) && passive_message_condition(M))
-					to_chat(M, passive_message)
+				if(passive_message && prob(2) && passive_message_condition(living_host))
+					to_chat(living_host, passive_message)
 				return
 			else
-				Heal(M, A, effectiveness)
+				Heal(living_host, our_disease, effectiveness)
 	return
 
-/datum/symptom/heal/proc/CanHeal(datum/disease/advance/A)
+/datum/symptom/heal/proc/CanHeal(datum/disease/advance/our_disease)
 	return power
 
-/datum/symptom/heal/proc/Heal(mob/living/M, datum/disease/advance/A, actual_power)
+/datum/symptom/heal/proc/Heal(mob/living/living_host, datum/disease/advance/our_disease, actual_power)
 	return TRUE
 
-/datum/symptom/heal/proc/passive_message_condition(mob/living/M)
+/datum/symptom/heal/proc/passive_message_condition(mob/living/living_host)
 	return TRUE
 
 /*Starlight Condensation
@@ -64,13 +70,13 @@
 #define STARLIGHT_CANNOT_HEAL 0
 #define STARLIGHT_MAX_RANGE 2
 
-/datum/symptom/heal/starlight/Start(datum/disease/advance/A)
+/datum/symptom/heal/starlight/Start(datum/disease/advance/our_disease)
 	. = ..()
 	if(!.)
 		return
-	if(A.totalTransmittable() >= 6)
+	if(our_disease.totalTransmittable() >= 6)
 		nearspace_penalty = 1
-	if(A.totalStageSpeed() >= 6)
+	if(our_disease.totalStageSpeed() >= 6)
 		power = 2
 
 /datum/symptom/heal/starlight/proc/CanTileHealDirectional(turf/turf_to_check, direction)
@@ -132,15 +138,15 @@
 	else
 		return current_heal_level
 
-/datum/symptom/heal/starlight/CanHeal(datum/disease/advance/A)
-	var/mob/living/affected_mob = A.affected_mob
-	var/turf/turf_of_mob = get_turf(affected_mob)
+/datum/symptom/heal/starlight/CanHeal(datum/disease/advance/our_disease)
+	var/mob/living/living_host = our_disease.affected_mob
+	var/turf/turf_of_mob = get_turf(living_host)
 	switch(CanTileHeal(turf_of_mob, FALSE))
 		if(STARLIGHT_CAN_HEAL_WITH_PENALTY)
 			return power * nearspace_penalty
 		if(STARLIGHT_CAN_HEAL)
 			return power
-	for(var/turf/turf_to_check in view(affected_mob, STARLIGHT_MAX_RANGE))
+	for(var/turf/turf_to_check in view(living_host, STARLIGHT_MAX_RANGE))
 		if(CanTileHeal(turf_to_check, TRUE))
 			return power * nearspace_penalty
 
@@ -149,25 +155,19 @@
 #undef STARLIGHT_CANNOT_HEAL
 #undef STARLIGHT_MAX_RANGE
 
-/datum/symptom/heal/starlight/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
+/datum/symptom/heal/starlight/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
 	var/heal_amt = actual_power
-	if(M.get_tox_loss() && prob(5))
-		to_chat(M, span_notice("Your skin tingles as the starlight seems to heal you."))
+	if(carbon_host.get_tox_loss() && prob(5))
+		to_chat(carbon_host, span_notice("Your skin tingles as the starlight seems to heal you."))
+	var/needs_update = FALSE
+	needs_update += carbon_host.adjust_tox_loss(-4 * heal_amt, updating_health = FALSE, required_biotype = healable_bodytypes) // Most effective on toxins
+	needs_update += carbon_host.heal_overall_damage(heal_amt, heal_amt, required_bodytype = healable_bodytypes, updating_health = FALSE)
+	if(needs_update)
+		carbon_host.updatehealth()
+	return TRUE
 
-	M.adjust_tox_loss(-(4 * heal_amt)) //most effective on toxins
-
-	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)
-
-	if(!parts.len)
-		return
-
-	for(var/obj/item/bodypart/bodypart in parts)
-		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
-			M.update_damage_overlays()
-	return 1
-
-/datum/symptom/heal/starlight/passive_message_condition(mob/living/M)
-	if(M.get_brute_loss() || M.get_fire_loss() || M.get_tox_loss())
+/datum/symptom/heal/starlight/passive_message_condition(mob/living/living_host)
+	if(living_host.get_brute_loss() || living_host.get_fire_loss() || living_host.get_tox_loss())
 		return TRUE
 	return FALSE
 
@@ -193,23 +193,23 @@
 	)
 	var/food_conversion = FALSE
 
-/datum/symptom/heal/chem/Start(datum/disease/advance/A)
+/datum/symptom/heal/chem/Start(datum/disease/advance/our_disease)
 	. = ..()
 	if(!.)
 		return
-	if(A.totalStageSpeed() >= 6)
+	if(our_disease.totalStageSpeed() >= 6)
 		food_conversion = TRUE
-	if(A.totalResistance() >= 7)
+	if(our_disease.totalResistance() >= 7)
 		power = 2
 
-/datum/symptom/heal/chem/Heal(mob/living/M, datum/disease/advance/A, actual_power)
-	for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
-		M.reagents.remove_reagent(R.type, actual_power)
+/datum/symptom/heal/chem/Heal(mob/living/living_host, datum/disease/advance/our_disease, actual_power)
+	for(var/datum/reagent/each_reagent in living_host.reagents.reagent_list) //Not just toxins!
+		var/food = living_host.reagents.remove_reagent(each_reagent.type, actual_power)
 		if(food_conversion)
-			M.adjust_nutrition(0.3)
+			living_host.adjust_nutrition(0.3 * food)
 		if(prob(2))
-			to_chat(M, span_notice("You feel a mild warmth as your blood purifies itself."))
-	return 1
+			to_chat(living_host, span_notice("You feel a mild warmth as your blood purifies itself."))
+	return TRUE
 
 
 /*Metabolic Boost
@@ -237,23 +237,23 @@
 	var/triple_metabolism = FALSE
 	var/reduced_hunger = FALSE
 
-/datum/symptom/heal/metabolism/Start(datum/disease/advance/A)
+/datum/symptom/heal/metabolism/Start(datum/disease/advance/our_disease)
 	. = ..()
 	if(!.)
 		return
-	if(A.totalStageSpeed() >= 10)
+	if(our_disease.totalStageSpeed() >= 10)
 		triple_metabolism = TRUE
-	if(A.totalStealth() >= 3)
+	if(our_disease.totalStealth() >= 3)
 		reduced_hunger = TRUE
 
-/datum/symptom/heal/metabolism/Heal(mob/living/carbon/infected_mob, datum/disease/advance/A, actual_power)
+/datum/symptom/heal/metabolism/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
 	var/metabolic_boost = triple_metabolism ? 2 : 1
-	infected_mob.reagents.metabolize(infected_mob, metabolic_boost * SSMOBS_DT, 0, can_overdose=TRUE) //this works even without a liver; it's intentional since the virus is metabolizing by itself
-	infected_mob.overeatduration = max(infected_mob.overeatduration - 4 SECONDS, 0)
+	carbon_host.reagents.metabolize(carbon_host, metabolic_boost * SSMOBS_DT, 0, can_overdose=TRUE) //this works even without a liver; it's intentional since the virus is metabolizing by itself
+	carbon_host.overeatduration = max(carbon_host.overeatduration - 4 SECONDS, 0)
 	var/lost_nutrition = 9 - (reduced_hunger * 5)
-	infected_mob.adjust_nutrition(-lost_nutrition * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
+	carbon_host.adjust_nutrition(-lost_nutrition * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
 	if(prob(2))
-		to_chat(infected_mob, span_notice("You feel an odd gurgle in your stomach, as if it was working much faster than normal."))
+		to_chat(carbon_host, span_notice("You feel an odd gurgle in your stomach, as if it was working much faster than normal."))
 	return TRUE
 
 /*Nocturnal Regeneration
@@ -276,40 +276,31 @@
 		"Stage Speed 8" = "Doubles healing speed.",
 	)
 
-/datum/symptom/heal/darkness/Start(datum/disease/advance/A)
+/datum/symptom/heal/darkness/Start(datum/disease/advance/our_disease)
 	. = ..()
 	if(!.)
 		return
-	if(A.totalStageSpeed() >= 8)
+	if(our_disease.totalStageSpeed() >= 8)
 		power = 2
 
-/datum/symptom/heal/darkness/CanHeal(datum/disease/advance/A)
-	var/mob/living/M = A.affected_mob
+/datum/symptom/heal/darkness/CanHeal(datum/disease/advance/our_disease)
+	var/mob/living/living_host = our_disease.affected_mob
 	var/light_amount = 0
-	if(isturf(M.loc)) //else, there's considered to be no light
-		var/turf/T = M.loc
-		light_amount = min(1,T.get_lumcount()) - 0.5
+	if(isturf(living_host.loc)) //else, there's considered to be no light
+		var/turf/host_turf = living_host.loc
+		light_amount = min(1,host_turf.get_lumcount()) - 0.5
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			return power
 
-/datum/symptom/heal/darkness/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
+/datum/symptom/heal/darkness/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
 	var/heal_amt = 2 * actual_power
-
-	var/list/parts = M.get_damaged_bodyparts(1,1,BODYTYPE_ORGANIC)
-
-	if(!parts.len)
-		return
-
+	carbon_host.heal_overall_damage(heal_amt, heal_amt * 0.5, required_bodytype = healable_bodytypes)
 	if(prob(5))
-		to_chat(M, span_notice("The darkness soothes and mends your wounds."))
+		to_chat(carbon_host, span_notice("The darkness soothes and mends your wounds."))
+	return TRUE
 
-	for(var/obj/item/bodypart/bodypart in parts)
-		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len * 0.5, required_bodytype = BODYTYPE_ORGANIC)) //more effective on brute
-			M.update_damage_overlays()
-	return 1
-
-/datum/symptom/heal/darkness/passive_message_condition(mob/living/M)
-	if(M.get_brute_loss() || M.get_fire_loss())
+/datum/symptom/heal/darkness/passive_message_condition(mob/living/living_host)
+	if(living_host.get_brute_loss() || living_host.get_fire_loss())
 		return TRUE
 	return FALSE
 
@@ -338,84 +329,74 @@
 		"Stage Speed 7" = "Increases healing speed.",
 	)
 
-/datum/symptom/heal/coma/Start(datum/disease/advance/A)
+/datum/symptom/heal/coma/Start(datum/disease/advance/our_disease)
 	. = ..()
 	if(!.)
 		return
-	if(A.totalStageSpeed() >= 7)
+	if(our_disease.totalStageSpeed() >= 7)
 		power = 1.5
-	if(A.totalResistance() >= 4)
+	if(our_disease.totalResistance() >= 4)
 		stabilize = TRUE
-	if(A.totalStealth() >= 2)
+	if(our_disease.totalStealth() >= 2)
 		deathgasp = TRUE
 
-/datum/symptom/heal/coma/on_stage_change(datum/disease/advance/A)  //mostly copy+pasted from the code for self-respiration's TRAIT_NOBREATH stuff
+/datum/symptom/heal/coma/on_stage_change(datum/disease/advance/our_disease)  //mostly copy+pasted from the code for self-respiration's TRAIT_NOBREATH stuff
 	. = ..()
 	if(!.)
 		return FALSE
-	if(A.stage >= 4 && stabilize)
-		ADD_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+	if(our_disease.stage >= 4 && stabilize)
+		ADD_TRAIT(our_disease.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
 	else
-		REMOVE_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+		REMOVE_TRAIT(our_disease.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
 	return TRUE
 
-/datum/symptom/heal/coma/End(datum/disease/advance/A)
+/datum/symptom/heal/coma/End(datum/disease/advance/our_disease)
 	. = ..()
 	if(!.)
 		return
 	if(active_coma)
 		uncoma()
-	REMOVE_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+	REMOVE_TRAIT(our_disease.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
 
-/datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
-	var/mob/living/M = A.affected_mob
-	if(HAS_TRAIT(M, TRAIT_DEATHCOMA))
+/datum/symptom/heal/coma/CanHeal(datum/disease/advance/our_disease)
+	var/mob/living/living_host = our_disease.affected_mob
+	if(HAS_TRAIT(living_host, TRAIT_DEATHCOMA))
 		return power
-	if(M.IsSleeping())
+	if(living_host.IsSleeping())
 		return power * 0.25 //Voluntary unconsciousness yields lower healing.
-	switch(M.stat)
+	switch(living_host.stat)
 		if(UNCONSCIOUS, HARD_CRIT)
 			return power * 0.9
 		if(SOFT_CRIT)
 			return power * 0.5
-	if(M.get_brute_loss() + M.get_fire_loss() >= 70 && !active_coma && !(HAS_TRAIT(M,TRAIT_NOSOFTCRIT)))
-		to_chat(M, span_warning("You feel yourself slip into a regenerative coma..."))
+	if(living_host.get_brute_loss() + living_host.get_fire_loss() >= living_host.maxHealth * 0.7 && !active_coma && !(HAS_TRAIT(living_host, TRAIT_NOSOFTCRIT)))
+		to_chat(living_host, span_warning("You feel yourself slip into a regenerative coma..."))
 		active_coma = TRUE
-		addtimer(CALLBACK(src, PROC_REF(coma), M), 6 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(coma), living_host), 6 SECONDS)
 
 
-/datum/symptom/heal/coma/proc/coma(mob/living/M)
-	if(QDELETED(M) || M.stat == DEAD)
+/datum/symptom/heal/coma/proc/coma(mob/living/living_host)
+	if(QDELETED(living_host) || living_host.stat == DEAD || HAS_TRAIT(living_host, TRAIT_NOSOFTCRIT))
 		return
-	M.fakedeath("regenerative_coma", !deathgasp)
-	addtimer(CALLBACK(src, PROC_REF(uncoma), M), 30 SECONDS)
+	living_host.fakedeath("regenerative_coma", !deathgasp)
+	addtimer(CALLBACK(src, PROC_REF(uncoma), living_host), 30 SECONDS)
 
-/datum/symptom/heal/coma/proc/uncoma(mob/living/M)
-	if(QDELETED(M) || !active_coma)
+/datum/symptom/heal/coma/proc/uncoma(mob/living/living_host)
+	if(QDELETED(living_host) || !active_coma)
 		return
 	active_coma = FALSE
-	M.cure_fakedeath("regenerative_coma")
+	living_host.cure_fakedeath("regenerative_coma")
 
 
-/datum/symptom/heal/coma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
+/datum/symptom/heal/coma/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
 	var/heal_amt = 4 * actual_power
-
-	var/list/parts = M.get_damaged_bodyparts(1,1)
-
-	if(!parts.len)
-		return
-
-	for(var/obj/item/bodypart/bodypart in parts)
-		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
-			M.update_damage_overlays()
-
-	if(active_coma && M.get_brute_loss() + M.get_fire_loss() == 0)
-		uncoma(M)
-
+	carbon_host.heal_overall_damage(heal_amt, heal_amt, required_bodytype = healable_bodytypes)
+	if(active_coma && carbon_host.get_brute_loss() + carbon_host.get_fire_loss() == 0)
+		uncoma(carbon_host)
 	return 1
 
-/datum/symptom/heal/coma/passive_message_condition(mob/living/M)
-	if((M.get_brute_loss() + M.get_fire_loss()) > 30)
+/datum/symptom/heal/coma/passive_message_condition(mob/living/living_host)
+	if((living_host.get_brute_loss() + living_host.get_fire_loss()) > living_host.maxHealth * 0.3)
 		return TRUE
 	return FALSE
 
@@ -435,48 +416,37 @@
 	)
 	var/absorption_coeff = 1
 
-/datum/symptom/heal/water/Start(datum/disease/advance/A)
+/datum/symptom/heal/water/Start(datum/disease/advance/our_disease)
 	. = ..()
 	if(!.)
 		return
-	if(A.totalStageSpeed() >= 7)
+	if(our_disease.totalStageSpeed() >= 7)
 		power = 2
-	if(A.totalResistance() >= 5)
+	if(our_disease.totalResistance() >= 5)
 		absorption_coeff = 0.25
 
-/datum/symptom/heal/water/CanHeal(datum/disease/advance/advanced_disease)
+/datum/symptom/heal/water/CanHeal(datum/disease/advance/our_disease)
 	. = 0
-	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
+	var/mob/living/carbon/carbon_host = our_disease.affected_mob
 
-	if(infected_mob.fire_stacks < 0)
-		infected_mob.adjust_fire_stacks(min(absorption_coeff, -infected_mob.fire_stacks))
+	if(carbon_host.fire_stacks < 0)
+		carbon_host.adjust_fire_stacks(min(absorption_coeff, -carbon_host.fire_stacks))
 		. += power
-	if(infected_mob.reagents.has_reagent(/datum/reagent/water/holywater, needs_metabolizing = FALSE))
-		infected_mob.reagents.remove_reagent(/datum/reagent/water/holywater, 0.5 * absorption_coeff)
+	if(carbon_host.reagents.has_reagent(/datum/reagent/water/holywater, needs_metabolizing = FALSE))
+		carbon_host.reagents.remove_reagent(/datum/reagent/water/holywater, 0.5 * absorption_coeff)
 		. += power * 0.75
-	else if(infected_mob.reagents.has_reagent(/datum/reagent/water, needs_metabolizing = FALSE))
-		infected_mob.reagents.remove_reagent(/datum/reagent/water, 0.5 * absorption_coeff)
+	else if(carbon_host.reagents.has_reagent(/datum/reagent/water, needs_metabolizing = FALSE))
+		carbon_host.reagents.remove_reagent(/datum/reagent/water, 0.5 * absorption_coeff)
 		. += power * 0.5
 
-/datum/symptom/heal/water/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
+/datum/symptom/heal/water/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
 	var/heal_amt = 2 * actual_power
+	if(carbon_host.heal_overall_damage(heal_amt * 0.5, heal_amt, required_bodytype = healable_bodytypes) && prob(5))
+		to_chat(carbon_host, span_notice("You feel yourself absorbing the water around you to soothe your damaged skin."))
+	return TRUE
 
-	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC) //more effective on burns
-
-	if(!parts.len)
-		return
-
-	if(prob(5))
-		to_chat(M, span_notice("You feel yourself absorbing the water around you to soothe your damaged skin."))
-
-	for(var/obj/item/bodypart/bodypart in parts)
-		if(bodypart.heal_damage(heal_amt/parts.len * 0.5, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
-			M.update_damage_overlays()
-
-	return 1
-
-/datum/symptom/heal/water/passive_message_condition(mob/living/carbon/infected_mob)
-	if(infected_mob.get_brute_loss() || infected_mob.get_fire_loss())
+/datum/symptom/heal/water/passive_message_condition(mob/living/carbon/carbon_host)
+	if(carbon_host.get_brute_loss() || carbon_host.get_fire_loss())
 		return TRUE
 
 	return FALSE
@@ -510,37 +480,37 @@
 	)
 	var/temp_rate = 1
 
-/datum/symptom/heal/plasma/Start(datum/disease/advance/A)
+/datum/symptom/heal/plasma/Start(datum/disease/advance/our_disease)
 	. = ..()
 	if(!.)
 		return
-	if(A.totalStageSpeed() >= 7)
+	if(our_disease.totalStageSpeed() >= 7)
 		power = 2
-	if(A.totalTransmittable() >= 6)
+	if(our_disease.totalTransmittable() >= 6)
 		temp_rate = 4
 
 // We do this to prevent liver damage from injecting plasma when plasma fixation virus reaches stage 4 and beyond
-/datum/symptom/heal/plasma/on_stage_change(datum/disease/advance/advanced_disease)
+/datum/symptom/heal/plasma/on_stage_change(datum/disease/advance/our_disease)
 	. = ..()
 	if(!.)
 		return FALSE
 
-	if(advanced_disease.stage >= 4)
-		ADD_TRAIT(advanced_disease.affected_mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
+	if(our_disease.stage >= 4)
+		ADD_TRAIT(our_disease.affected_mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
 	else
-		REMOVE_TRAIT(advanced_disease.affected_mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
+		REMOVE_TRAIT(our_disease.affected_mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
 	return TRUE
 
-/datum/symptom/heal/plasma/End(datum/disease/advance/advanced_disease)
+/datum/symptom/heal/plasma/End(datum/disease/advance/our_disease)
 	. = ..()
 	if(!.)
 		return
 
-	REMOVE_TRAIT(advanced_disease.affected_mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
+	REMOVE_TRAIT(our_disease.affected_mob, TRAIT_PLASMA_LOVER_METABOLISM, DISEASE_TRAIT)
 
 // Check internals breath, environmental plasma, and plasma in bloodstream to determine the heal power
-/datum/symptom/heal/plasma/CanHeal(datum/disease/advance/advanced_disease)
-	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
+/datum/symptom/heal/plasma/CanHeal(datum/disease/advance/our_disease)
+	var/mob/living/carbon/carbon_host = our_disease.affected_mob
 	var/datum/gas_mixture/environment
 	var/list/gases
 
@@ -550,7 +520,7 @@
 	///  the amount of mols in a breath is significantly lower than in the environment so we are just going to use the tank's
 	///  distribution pressure as an abstraction rather than calculate it using the ideal gas equation.
 	///  balanced around a tank set to 4kpa = about 0.2 healing power. maxes out at 0.75 healing power, or 15kpa.
-	var/obj/item/tank/internals/internals_tank = infected_mob.internal
+	var/obj/item/tank/internals/internals_tank = carbon_host.internal
 	if(internals_tank)
 		var/datum/gas_mixture/tank_contents = internals_tank.return_air()
 		if(tank_contents && round(tank_contents.return_pressure())) // make sure the tank is not empty or 0 pressure
@@ -558,44 +528,39 @@
 				// higher tank distribution pressure leads to more healing, but once you get to about 15kpa you reach the max
 				. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, internals_tank.distribute_pressure * HEALING_PER_BREATH_PRESSURE)
 	else // Check environment
-		if(infected_mob.loc)
-			environment = infected_mob.loc.return_air()
+		if(carbon_host.loc)
+			environment = carbon_host.loc.return_air()
 		if(environment)
 			gases = environment.gases
 			if(gases[/datum/gas/plasma])
 				. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
 
 	// Check for reagents in bloodstream
-	if(infected_mob.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
+	if(carbon_host.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
 		. += power * MAX_HEAL_COEFFICIENT_BLOODSTREAM //Determines how much the symptom heals if injected or ingested
 
-/datum/symptom/heal/plasma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
+/datum/symptom/heal/plasma/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
 	var/heal_amt = BASE_HEAL_PLASMA_FIXATION * actual_power
 
 	if(prob(5))
-		to_chat(M, span_notice("You feel yourself absorbing plasma inside and around you..."))
+		to_chat(carbon_host, span_notice("You feel yourself absorbing plasma inside and around you..."))
 
-	var/target_temp = M.get_body_temp_normal()
-	if(M.bodytemperature > target_temp)
-		M.adjust_bodytemperature(-20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT, target_temp)
-		if(prob(5))
-			to_chat(M, span_notice("You feel less hot."))
-	else if(M.bodytemperature < (M.get_body_temp_normal() + 1))
-		M.adjust_bodytemperature(20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT, 0, target_temp)
-		if(prob(5))
-			to_chat(M, span_notice("You feel warmer."))
-
-	M.adjust_tox_loss(-heal_amt)
-
-	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)
-	if(!parts.len)
-		return
+	var/difference = carbon_host.get_body_temp_normal() - carbon_host.bodytemperature
 	if(prob(5))
-		to_chat(M, span_notice("The pain from your wounds fades rapidly."))
-	for(var/obj/item/bodypart/bodypart in parts)
-		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
-			M.update_damage_overlays()
-	return 1
+		if(difference > -1) // Yes, it's supposed to be -1 and not 0. Probably so you keep getting passive messages even at normal temperature.
+			to_chat(carbon_host, span_notice("You feel warmer."))
+		if(difference < 0)
+			to_chat(carbon_host, span_notice("You feel less hot."))
+	carbon_host.adjust_bodytemperature(clamp(difference, -20 * temp_rate, 20 * temp_rate))
+	var/needs_update = FALSE
+	needs_update += carbon_host.adjust_tox_loss(-heal_amt, updating_health = FALSE, required_biotype = healable_bodytypes)
+	var/brute_burn_heal = carbon_host.heal_overall_damage(heal_amt, heal_amt, required_bodytype = healable_bodytypes, updating_health = FALSE)
+	needs_update += brute_burn_heal
+	if(brute_burn_heal && prob(5))
+		to_chat(carbon_host, span_notice("The pain from your wounds fades rapidly."))
+	if(needs_update)
+		carbon_host.updatehealth()
+	return TRUE
 
 ///Plasma End
 #undef HEALING_PER_MOL
@@ -617,38 +582,28 @@
 	symptom_delay_max = 1
 	passive_message = span_notice("Your skin glows faintly for a moment.")
 	threshold_descs = list(
-		"Transmission 6" = "Additionally heals cellular damage.",
 		"Resistance 7" = "Increases healing speed.",
 	)
 
-/datum/symptom/heal/radiation/Start(datum/disease/advance/A)
+/datum/symptom/heal/radiation/Start(datum/disease/advance/our_disease)
 	. = ..()
 	if(!.)
 		return
-	if(A.totalResistance() >= 7)
+	if(our_disease.totalResistance() >= 7)
 		power = 2
 
-/datum/symptom/heal/radiation/CanHeal(datum/disease/advance/A)
-	return HAS_TRAIT(A.affected_mob, TRAIT_IRRADIATED) ? power : 0
+/datum/symptom/heal/radiation/CanHeal(datum/disease/advance/our_disease)
+	return HAS_TRAIT(our_disease.affected_mob, TRAIT_IRRADIATED) ? power : 0
 
-/datum/symptom/heal/radiation/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
+/datum/symptom/heal/radiation/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
 	var/heal_amt = actual_power
-
-	if(M.adjust_tox_loss(-(2 * heal_amt), updating_health = FALSE))
-		M.updatehealth()
-
-	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)
-
-	if(!parts.len)
-		return
-
-	if(prob(4))
-		to_chat(M, span_notice("Your skin glows faintly, and you feel your wounds mending themselves."))
-
-	for(var/obj/item/bodypart/bodypart in parts)
-		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
-			M.update_damage_overlays()
-	return 1
+	var/needs_update = FALSE
+	needs_update += carbon_host.adjust_tox_loss(-2 * heal_amt, updating_health = FALSE)
+	var/brute_burn_heal = carbon_host.heal_overall_damage(heal_amt, heal_amt, required_bodytype = healable_bodytypes, updating_health = FALSE)
+	needs_update += brute_burn_heal
+	if(brute_burn_heal && prob(4))
+		to_chat(carbon_host, span_notice("Your skin glows faintly, and you feel your wounds mending themselves."))
+	return TRUE
 
 /datum/symptom/heal/radiation/can_generate_randomly()
-	return ..() && !HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA) //because people can never really suffer enough
+	return ..() && !HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA) // Because people can never really suffer enough

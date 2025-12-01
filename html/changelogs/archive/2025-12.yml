@@ -1,0 +1,61 @@
+2025-12-01:
+  Absolucy:
+  - bugfix: Voltaic combat cyberhearts no longer kill toxlovers (i.e jellypeople),
+      albeit they won't heal toxins for them either.
+  Aliceee2ch:
+  - bugfix: Added missing "require all" type of access for Bitrunning Den.
+  - map: Removes one (1) bush in NebulaStation warehouse.
+  - spellcheck: Plant produce spawner now correctly spawns plum instead of plum seeds.
+  - spellcheck: Removed cellular damage mention from Radioactive Resonance virus description.
+  - bugfix: Fixed missing access to ORM room for miners on CatwalkStation.
+  ArchBTW:
+  - bugfix: Fix crowbar combat mode right clicking an unpowered airlock
+  ArchBTW, WinterDarkraven:
+  - qol: Guns have a directional muzzle flash effect now
+  Ezel:
+  - bugfix: Removes rogue decal from catwalk station
+  FalloutFalcon:
+  - code_imp: standardized defines for currency symbols
+  - balance: Lattice now ignore the slowdowns of turfs
+  - bugfix: Lattice now stop you from dipping into water
+  Fghj240:
+  - bugfix: Durability header no longer appears twice when inspecting armor
+  - bugfix: Exosuit fabricator UI now shows the Savannah-Ivanov's supported equipment
+  - qol: you can swap beakers in a pandemic
+  - qol: pandemics now display overall virus severity
+  - admin: virus logs now include severity along with other stats
+  - qol: weapon rechargers don't wait an extra tick before announcing they've finished
+      recharging
+  - spellcheck: weapon rechargers no longer claim a battle rifle has "finished recharging"
+      when it's finished recalibrating.
+  Melbert:
+  - qol: Stairs now have an indicator that stepping beyond them will take you upwards.
+      You can disable it in accessibility settings if desired.
+  - image: Stairs blend in and together better.
+  SmArtKar:
+  - admin: Added jump and search functions to the planecube debugger
+  - qol: Bot assemblies will only be picked up if you held the medkit/toolbox/helmet/etc
+      in your hands when creating one.
+  - qol: Assembling med/repair/secbots will now put their assemblies in your main
+      hand instead of your offhand
+  - bugfix: Hulk and infusions no longer texture robotic limbs
+  - bugfix: Fixed raptor younglings going invisible when killed
+  SyncIt21:
+  - bugfix: all mounted objects on tables, fences, windows & walls should fall of
+      correctly when the atom it is placed on is destroyed
+  - bugfix: security telescreen now falls off when their mounted wall is destroyed
+  - bugfix: defib wall mount falls off when their mounted wall is destroyed
+  - bugfix: floor lights are mounted to the ground/catwalk/tram floor they are sitting
+      on meaning destroying it will destroy the light
+  - bugfix: wall mounted plaques now fall off when their mounted wall is destroyed
+  Xrmanser:
+  - bugfix: 'graft stat adjustments now apply even when the trait is rejected
+
+      :cl:'
+  ezel:
+  - bugfix: Removes a duplicate fire alarm in metastation botany
+  - bugfix: fixes catwalk atmos pipeline at the courtroom
+  - bugfix: removes random powerline going trough the walls
+  lelandkemble:
+  - spellcheck: abilities that check for consciousness will say you're dead rather
+      than unconscious if you're dead

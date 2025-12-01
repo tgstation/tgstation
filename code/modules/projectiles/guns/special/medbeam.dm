@@ -6,6 +6,7 @@
 	inhand_icon_state = "chronogun"
 	w_class = WEIGHT_CLASS_NORMAL
 	item_flags = parent_type::item_flags & ~NEEDS_PERMIT
+	can_muzzle_flash = FALSE
 
 	var/mob/living/current_target
 	var/last_check = 0

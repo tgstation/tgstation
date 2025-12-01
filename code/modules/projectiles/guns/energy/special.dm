@@ -9,6 +9,7 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
+	light_color = LIGHT_COLOR_BLUE
 
 /obj/item/gun/energy/ionrifle/Initialize(mapload)
 	. = ..()

@@ -1,3 +1,31 @@
+// Gel skins
+/datum/atom_skin/med_gel
+	abstract_type = /datum/atom_skin/med_gel
+
+/datum/atom_skin/med_gel/blue
+	preview_name = "Blue"
+	new_icon_state = "medigel_blue"
+
+/datum/atom_skin/med_gel/cyan
+	preview_name = "Cyan"
+	new_icon_state = "medigel_cyan"
+
+/datum/atom_skin/med_gel/green
+	preview_name = "Green"
+	new_icon_state = "medigel_green"
+
+/datum/atom_skin/med_gel/red
+	preview_name = "Red"
+	new_icon_state = "medigel_red"
+
+/datum/atom_skin/med_gel/orange
+	preview_name = "Orange"
+	new_icon_state = "medigel_orange"
+
+/datum/atom_skin/med_gel/purple
+	preview_name = "Purple"
+	new_icon_state = "medigel_purple"
+
 /obj/item/reagent_containers/medigel
 	name = "medical gel"
 	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap."
@@ -23,15 +51,11 @@
 	var/apply_method = "spray" //the thick gel is sprayed and then dries into patch like film.
 	var/self_delay = 30
 	custom_price = PAYCHECK_CREW * 2
-	unique_reskin = list(
-		"Blue" = "medigel_blue",
-		"Cyan" = "medigel_cyan",
-		"Green" = "medigel_green",
-		"Red" = "medigel_red",
-		"Orange" = "medigel_orange",
-		"Purple" = "medigel_purple"
-	)
 
+/obj/item/reagent_containers/medigel/Initialize(mapload)
+	. = ..()
+	if(icon_state == "medigel") // oh yeah baby raw icon state check to make sure we can't reskin preset gels
+		AddComponent(/datum/component/reskinable_item, /datum/atom_skin/med_gel)
 
 /obj/item/reagent_containers/medigel/mode_change_message(mob/user)
 	var/squirt_mode = amount_per_transfer_from_this == initial(amount_per_transfer_from_this)
@@ -78,21 +102,18 @@
 	name = "medical gel (libital)"
 	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains libital, for treating cuts and bruises. Libital does minor liver damage. Diluted with granibitaluri."
 	icon_state = "brutegel"
-	current_skin = "brutegel"
 	list_reagents = list(/datum/reagent/medicine/c2/libital = 24, /datum/reagent/medicine/granibitaluri = 36)
 
 /obj/item/reagent_containers/medigel/aiuri
 	name = "medical gel (aiuri)"
 	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains aiuri, useful for treating burns. Aiuri does minor eye damage. Diluted with granibitaluri."
 	icon_state = "burngel"
-	current_skin = "burngel"
 	list_reagents = list(/datum/reagent/medicine/c2/aiuri = 24, /datum/reagent/medicine/granibitaluri = 36)
 
 /obj/item/reagent_containers/medigel/synthflesh
 	name = "medical gel (synthflesh)"
 	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains synthflesh, a slightly toxic medicine capable of healing bruises, burns, and husks."
 	icon_state = "synthgel"
-	current_skin = "synthgel"
 	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 60)
 	list_reagents_purity = 1
 	amount_per_transfer_from_this = 60
@@ -117,6 +138,5 @@
 	name = "sterilizer gel"
 	desc = "gel bottle loaded with non-toxic sterilizer. Useful in preparation for surgery."
 	icon_state = "medigel_blue"
-	current_skin = "medigel_blue"
 	list_reagents = list(/datum/reagent/space_cleaner/sterilizine = 60)
 	custom_price = PAYCHECK_CREW * 2

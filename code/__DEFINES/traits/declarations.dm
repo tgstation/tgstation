@@ -1608,4 +1608,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Doesn't need to be applied to any turfs that override can_cross_safely
 #define TRAIT_AI_AVOID_TURF "warning_turf"
 
+/// Object is dangerous to mobs buckled to it
+#define TRAIT_DANGEROUS_BUCKLE "dangerous_buckle"
+
 // END TRAIT DEFINES

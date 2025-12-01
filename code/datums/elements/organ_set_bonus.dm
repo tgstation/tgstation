@@ -106,6 +106,8 @@
 	RegisterSignal(carbon_owner, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(untexture_limb))
 
 	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
+		if (!(limb.bodytype & BODYTYPE_ORGANIC))
+			continue
 		limb.add_bodypart_overlay(new limb_overlay(), update = FALSE)
 		if (color_overlay_priority)
 			limb.add_color_override(COLOR_WHITE, color_overlay_priority)
@@ -149,6 +151,9 @@
 
 /datum/status_effect/organ_set_bonus/proc/texture_limb(atom/source, obj/item/bodypart/limb)
 	SIGNAL_HANDLER
+
+	if (!(limb.bodytype & BODYTYPE_ORGANIC))
+		return
 
 	// Not updating because enable/disable_bonus(obj/item/organ/removed_organ) call it down the line, and calls coming from comsigs update the owner's body themselves
 	limb.add_bodypart_overlay(new limb_overlay(), update = FALSE)

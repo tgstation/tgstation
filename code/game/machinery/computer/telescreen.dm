@@ -14,6 +14,11 @@
 	var/frame_type = /obj/item/wallframe/telescreen
 	projectiles_pass_chance = 100
 
+/obj/machinery/computer/security/telescreen/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
+
 /obj/item/wallframe/telescreen
 	name = "telescreen frame"
 	desc = "A wall-mountable telescreen frame. Apply to wall to use."
@@ -70,8 +75,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
 	. = ..()
-	if(mapload)
-		find_and_hang_on_atom()
 	register_context()
 	RegisterSignal(SSdcs, COMSIG_GLOB_NETWORK_BROADCAST_UPDATED, PROC_REF(on_network_broadcast_updated))
 	speakers = new(src)
