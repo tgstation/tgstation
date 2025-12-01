@@ -38,9 +38,7 @@
 	if(length(circuit_components))
 		UnregisterFromParent()
 		should_register = TRUE
-		if(circuit_components)
-			QDEL_LIST(circuit_components)
-			circuit_components = null
+		QDEL_LAZYLIST(circuit_components)
 
 	for(var/circuit_component in components)
 		var/obj/item/circuit_component/component = circuit_component
@@ -113,8 +111,7 @@
 	on_atom_usb_cable_try_attach(src, cable, null)
 
 /datum/component/usb_port/Destroy()
-	if(circuit_components)
-		QDEL_LIST(circuit_components)
+	QDEL_LAZYLIST(circuit_components)
 	QDEL_NULL(usb_cable_beam)
 
 	attached_circuit = null
