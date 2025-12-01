@@ -231,7 +231,6 @@
 				cube.AddComponent(/datum/component/pricetag, scanner_account, cube.handler_tip, FALSE)
 
 				cube.bounty_handler_account = scanner_account
-				#warn seems like this should not be singular...
 				cube.bounty_handler_account.bank_card_talk("Bank account for [price ? "<b>[price * cube.handler_tip]</b> [MONEY_NAME_SINGULAR] " : ""]handling tip successfully registered.")
 
 				if(cube.bounty_holder_account != cube.bounty_handler_account) //No need to send a tracking update to the person scanning it

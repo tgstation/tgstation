@@ -203,7 +203,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			if(paying_for_this)
 				if(!paying_for_this.adjust_money(-price, "Cargo: [spawning_order.pack.name]"))
 					if(spawning_order.paying_account)
-						paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] rejected due to lack of funds. [MONEY_NAME_CAPITALIZED]s required: [price]")
+						paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] rejected due to lack of funds. [MONEY_NAME_CAPITALIZED] required: [price]")
 					if(!spawning_order.can_be_cancelled) //only if it absolutly cannot be canceled by the player do we cancel it for them
 						SSshuttle.shopping_list -= spawning_order
 						clean_up_orders += spawning_order

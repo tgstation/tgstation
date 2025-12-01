@@ -30,7 +30,7 @@
 /obj/item/holochip/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(istype(held_item, /obj/item/holochip))
 		context[SCREENTIP_CONTEXT_LMB] = "Merge Into"
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Extract [MONEY_NAME_CAPITALIZED]s"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Extract [MONEY_NAME_CAPITALIZED]"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/holochip/get_item_credit_value()
