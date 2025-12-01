@@ -46,7 +46,7 @@
 	maptext = MAPTEXT_PIXELLARI(credited)
 	maptext_x = ICON_SIZE_X + 8
 	maptext_y = (ICON_SIZE_Y / 2) - 4
-	maptext_width = ICON_SIZE_X * 3
+	maptext_width = ICON_SIZE_X * 6
 	var/matrix/M = matrix(transform)
 	M.Translate(0, CREDIT_ANIMATE_HEIGHT)
 	animate(src, transform = M, time = CREDIT_ROLL_SPEED)
