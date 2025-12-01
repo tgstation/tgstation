@@ -1,10 +1,19 @@
+/obj/machinery/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, panel_open)
+	return .
+
+/obj/machinery/PersistentInitialize()
+	. = ..()
+	update_appearance()
+	return .
+
 /obj/machinery/camera/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, network)
 	. += NAMEOF(src, camera_construction_state)
 	. += NAMEOF(src, camera_upgrade_bitflags)
 	. += NAMEOF(src, camera_enabled)
-	. += NAMEOF(src, panel_open) // technically this should be under machine subtype
 	return .
 
 /obj/machinery/camera/PersistentInitialize()
@@ -15,7 +24,6 @@
 		upgradeEmpProof()
 	if(camera_upgrade_bitflags & CAMERA_UPGRADE_MOTION)
 		upgradeMotion()
-	update_appearance()
 	return .
 
 // in game built cameras spawn deconstructed
@@ -94,7 +102,6 @@
 	. = ..()
 	. += NAMEOF(src, density)
 	. += NAMEOF(src, state_open)
-	. += NAMEOF(src, panel_open)
 	. += NAMEOF(src, locked)
 	. += NAMEOF(src, safeties)
 	// ignore card reader stuff for now
@@ -115,6 +122,3 @@
 		.[NAMEOF(src, storage_type)] = storage.type
 	return .
 
-/obj/machinery/suit_storage_unit/PersistentInitialize()
-	. = ..()
-	update_appearance()
