@@ -30,7 +30,7 @@ export const remove_double_click: FeatureToggle = {
 };
 
 export const min_recoil_multiplier: Feature<number> = {
-  name: 'Cosmetic Recoil Multiplier',
+  name: 'Cosmetic Recoil Strength',
   category: 'ACCESSIBILITY',
   description: `
       Modifies the strength of cosmetic recoil's effect on your camera.
