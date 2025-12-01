@@ -13,9 +13,10 @@
 
 /obj/machinery/defibrillator_mount/PersistentInitialize()
 	. = ..()
+	var/obj/item/defibrillator/defib_unit = locate(/obj/item/defibrillator) in contents
+	defib = defib_unit
 
-	for(var/obj/item/defibrillator/defib_unit in contents)
-		defib = defib_unit
-		contents -= defib_unit
+	if(is_operational && defib)
+		begin_processing()
 
 	update_appearance()
