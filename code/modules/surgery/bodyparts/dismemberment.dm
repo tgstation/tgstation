@@ -370,8 +370,8 @@
 		sexy_chad.hair_color = hair_color
 		sexy_chad.facial_hairstyle = facial_hairstyle
 		sexy_chad.facial_hair_color = facial_hair_color
-		sexy_chad.grad_style = gradient_styles.Copy()
-		sexy_chad.grad_color = gradient_colors.Copy()
+		sexy_chad.grad_style = LAZYCOPY(gradient_styles)
+		sexy_chad.grad_color = LAZYCOPY(gradient_colors)
 		sexy_chad.lip_style = lip_style
 		sexy_chad.lip_color = lip_color
 
