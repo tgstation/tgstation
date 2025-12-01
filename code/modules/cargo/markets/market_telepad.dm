@@ -192,7 +192,7 @@
 		return
 
 	if(creds_value < restock_cost)
-		say("Insufficient credits!")
+		say("Insufficient [MONEY_NAME]!")
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
 		return ITEM_INTERACT_BLOCKING
 
@@ -289,7 +289,7 @@
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
 			return
 		if(!card.registered_account.adjust_money(-PLACE_ON_MARKET_COST, "Market: Placement Fee"))
-			say("Insufficient credits!")
+			say("Insufficient [MONEY_NAME]!")
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
 			return
 		account = card.registered_account

@@ -178,7 +178,7 @@
 	if(length(target.contents))
 		message = "Scanned [target] and its contents"
 		if(price)
-			message += ", total value: <b>[price]</b> credits"
+			message += ", total value: <b>[price]</b> [MONEY_NAME]"
 		else
 			message += ", no export values"
 			warning = TRUE
@@ -190,7 +190,7 @@
 			message += ", unable to determine value."
 			warning = TRUE
 		else if(price)
-			message += ", value: <b>[price]</b> credits."
+			message += ", value: <b>[price]</b> [MONEY_NAME]."
 		else
 			message += ", no export value."
 			warning = TRUE
@@ -231,7 +231,8 @@
 				cube.AddComponent(/datum/component/pricetag, scanner_account, cube.handler_tip, FALSE)
 
 				cube.bounty_handler_account = scanner_account
-				cube.bounty_handler_account.bank_card_talk("Bank account for [price ? "<b>[price * cube.handler_tip]</b> credit " : ""]handling tip successfully registered.")
+				#warn seems like this should not be singular...
+				cube.bounty_handler_account.bank_card_talk("Bank account for [price ? "<b>[price * cube.handler_tip]</b> [MONEY_NAME_SINGULAR] " : ""]handling tip successfully registered.")
 
 				if(cube.bounty_holder_account != cube.bounty_handler_account) //No need to send a tracking update to the person scanning it
 					cube.bounty_holder_account.bank_card_talk("<b>[cube]</b> was scanned in \the <b>[get_area(cube)]</b> by <b>[scan_human] ([scan_human.job])</b>.")

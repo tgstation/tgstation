@@ -87,6 +87,10 @@
 /// The name for the default type of money used in the code.
 #define MONEY_NAME "credits"
 #define MONEY_NAME_SINGULAR "credit"
+#define MONEY_NAME_CAPITALIZED "Credits"
+// Due to the ways macros work, I cant just directly use credit\s.
+// You will need to verify there is no loose use cases of credit\s.
+#define MONEY_NAME_AUTOPURAL(amount) "credit[#amount == 1 ? "" : "s"]"
 
 #define MONEY_MINING_SYMBOL "mp"
 #define MONEY_BITRUNNING_SYMBOL "np"

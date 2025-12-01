@@ -878,7 +878,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return TRUE
 	payment_target.transfer_money(current_user, active_request.value, "Bounty Request")
-	say("Paid out [active_request.value] credits.")
+	say("Paid out [active_request.value] [MONEY_NAME].")
 	GLOB.request_list.Remove(active_request)
 	qdel(active_request)
 

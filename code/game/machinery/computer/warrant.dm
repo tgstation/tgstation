@@ -166,7 +166,7 @@
 	bounty_text += "<b>Issued to:</b><br>[usr]<br>"
 	bounty_text += "<b>Issued on:</b><br>[warrant.time]<br>"
 	bounty_text += "<b>Comments:</b><br>[!target.security_note ? "None." : target.security_note]<br><br>"
-	bounty_text += "<center><b>FINE:</b> [warrant.fine] credits</center>"
+	bounty_text += "<center><b>FINE:</b> [warrant.fine] [MONEY_NAME]</center>"
 
 	printing = TRUE
 	balloon_alert(user, "printing")
