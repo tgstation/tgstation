@@ -76,10 +76,7 @@
 
 /obj/structure/ai_core/examine(mob/user)
 	. = ..()
-	if(!anchored)
-		. += span_notice("It has some <b>bolts</b> that look loosened.")
-	else
-		. += span_notice("It has some <b>bolts</b> that look tightened.")
+	. += span_notice("It has some <b>bolts</b> that look [anchored ? "tightened" : "loosened"].")
 
 	switch(state)
 		if(CORE_STATE_EMPTY)
