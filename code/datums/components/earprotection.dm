@@ -21,4 +21,4 @@
 	if(protection_amount == EAR_PROTECTION_NORMAL)
 		examine_list["sound-proof"] = "It protects the ears from flashbangs and other loud noises."
 	else if(protection_amount >= EAR_PROTECTION_HEAVY)
-		examine_list["sound-proof"] = "It provides [(protection_amount = EAR_PROTECTION_FULL) ? "full" : "heavy"] protection against flashbangs and other loud noises."
+		examine_list["sound-proof"] = "It provides [protection_amount == EAR_PROTECTION_FULL ? "full" : "heavy"] protection against flashbangs and other loud noises."
