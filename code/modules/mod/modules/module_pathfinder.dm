@@ -149,6 +149,7 @@
 				playsound(closet, 'sound/effects/bang.ogg', vol = 50, vary = TRUE)
 				closet.bust_open()
 
+
 	mod.add_overlay(jet_icon)
 	playsound(mod, 'sound/vehicles/rocketlaunch.ogg', vol = 80, vary = FALSE)
 	var/turf/land_target = get_turf(implant.imp_in)
@@ -160,6 +161,11 @@
 
 	pod.insert(mod, pod)
 	RegisterSignal(pod, COMSIG_SUPPLYPOD_RETURNING, PROC_REF(pod_takeoff))
+
+	if (istype(container, /obj/machinery/suit_storage_unit))
+		var/obj/machinery/suit_storage_unit/storage = container
+		storage.locked = FALSE
+		storage.open_machine()
 
 /// Track when pod has taken off so we don't falsely report the initial landing
 /obj/item/mod/module/pathfinder/proc/pod_takeoff(datum/pod)
