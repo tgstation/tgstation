@@ -333,7 +333,7 @@
 		radiation_damage = max(radiation_damage - seconds_per_tick * 0.5, 0)
 
 	if(effective_rad_damage >= RAD_STAGE_THRESHOLDS[1] && effective_rad_damage < RAD_STAGE_THRESHOLDS[2]) // Stage 1: Mild dizziness, tox damage, and fatigue
-		adjustToxLoss(0.1)
+		adjust_tox_loss(0.1)
 		if(SPT_PROB(3, seconds_per_tick))
 			if(prob(30)) // To avoid chat spam since there are going to be a lot of symptoms at high stages
 				to_chat(src, span_warning("You feel dizzy."))
@@ -341,9 +341,9 @@
 		if(SPT_PROB(2, seconds_per_tick))
 			if(prob(30))
 				to_chat(src, span_warning("You feel weak."))
-			adjustStaminaLoss(25)
+			adjust_stamina_loss(25)
 	if(effective_rad_damage >= RAD_STAGE_THRESHOLDS[2]) // Stage 2: It's like stage 1 but worse. From here on we keep the effects of all stages below ours
-		adjustToxLoss(min(0.1 + (effective_rad_damage-15)/1000, 0.5))
+		adjust_tox_loss(min(0.1 + (effective_rad_damage-15)/1000, 0.5))
 		if(SPT_PROB(2, seconds_per_tick))
 			if(prob(30))
 				to_chat(src, span_warning("You feel nauseated."))
@@ -351,7 +351,7 @@
 		if(SPT_PROB(2, seconds_per_tick))
 			if(prob(30))
 				to_chat(src, span_warning("You feel [(effective_rad_damage >= 300) ? "very" : ""] weak."))
-			adjustStaminaLoss(min(20+effective_rad_damage/10, 60))
+			adjust_stamina_loss(min(20+effective_rad_damage/10, 60))
 	if(effective_rad_damage >= RAD_STAGE_THRESHOLDS[3]) // Stage 3: Glow that lasts until we are no longer irradiated + headaches and immunodeficiency
 		ADD_TRAIT(src, TRAIT_IMMUNODEFICIENCY, RADIATION_TRAIT)
 		var/filter = get_filter("rad_glow")
@@ -362,7 +362,7 @@
 			to_chat(src, span_warning("[pick("Your head hurts.", "Your head pounds.")]"))
 			adjust_dizzy_up_to(15 SECONDS, 30 SECONDS)
 			adjust_drowsiness_up_to(15 SECONDS, 30 SECONDS)
-			adjustStaminaLoss(min(10+effective_rad_damage/10, 50))
+			adjust_stamina_loss(min(10+effective_rad_damage/10, 50))
 		if(effective_radiation > RAD_MOB_HAIRLOSS && SPT_PROB(0.5, seconds_per_tick)) // Hair loss and mutations are thematic but not necessarily fun, so they shouldn't happen unless we are thoroughly fucked up
 			var/obj/item/bodypart/head/head = get_bodypart(BODY_ZONE_HEAD)
 			if(!(hairstyle == "Bald") && (head?.head_flags & (HEAD_HAIR|HEAD_FACIAL_HAIR)))
@@ -379,7 +379,7 @@
 				if(slot == radiation_resistant_organ)
 					damage /= 2
 					max_damage /=2
-			adjustOrganLoss(slot, damage, max_damage, ORGAN_ORGANIC) // Robotics are immune to radiation
+			adjust_organ_loss(slot, damage, max_damage, ORGAN_ORGANIC) // Robotics are immune to radiation
 		if(SPT_PROB(1, seconds_per_tick))
 			visible_message(span_danger("[src] starts having a seizure!"), span_userdanger("You have a seizure!"))
 			Unconscious(12 SECONDS)
@@ -390,7 +390,7 @@
 			adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
 			adjust_disgust(30)
 			adjust_staggered_up_to(15 SECONDS, 30 SECONDS)
-			adjustStaminaLoss(40)
+			adjust_stamina_loss(40)
 			Knockdown(4 SECONDS, 3 SECONDS)
 		if(effective_radiation > RAD_MOB_MUTATE && SPT_PROB(0.75, seconds_per_tick))
 			to_chat(src, span_danger("You mutate!"))
@@ -400,10 +400,10 @@
 	if(effective_rad_damage >= RAD_STAGE_THRESHOLDS[5]) // Stage 5: Our skin starts peeling off and we start vomiting blood.
 		var/possible_organic_parts = get_damageable_bodyparts(BODYTYPE_ORGANIC)
 		if(possible_organic_parts) // We don't want to tell someone their skin is peeling off if it actually isn't
-			adjustBruteLoss(0.25 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
+			adjust_brute_loss(0.25 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
 			if(SPT_PROB(1.5, seconds_per_tick))
 				to_chat(src, span_danger("Your skin is peeling off of your body!"))
-				adjustBruteLoss(6, required_bodytype = BODYTYPE_ORGANIC)
+				adjust_brute_loss(6, required_bodytype = BODYTYPE_ORGANIC)
 		if(SPT_PROB(0.5, seconds_per_tick))
 			vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 10)
 

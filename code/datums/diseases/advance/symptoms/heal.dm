@@ -599,7 +599,7 @@
 	var/heal_amt = actual_power
 	var/needs_update = FALSE
 	needs_update += carbon_host.adjust_tox_loss(-2 * heal_amt, updating_health = FALSE)
-	if(ishuman(M))
+	if(ishuman(carbon_host))
 		var/mob/living/carbon/human/human_host = carbon_host
 		human_host.radiation = max(human_host.radiation - heal_amt * 0.2, 0)
 		human_host.radiation_damage = max(human_host.radiation_damage - heal_amt * 2, 0)
