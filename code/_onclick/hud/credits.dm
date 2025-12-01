@@ -37,7 +37,6 @@
 	screen_loc = "12,1"
 	plane = SPLASHSCREEN_PLANE
 	var/client/parent
-	var/matrix/target
 
 /atom/movable/screen/credit/Initialize(mapload, datum/hud/hud_owner, credited, client/P, icon/I)
 	. = ..()
@@ -51,7 +50,6 @@
 	var/matrix/M = matrix(transform)
 	M.Translate(0, CREDIT_ANIMATE_HEIGHT)
 	animate(src, transform = M, time = CREDIT_ROLL_SPEED)
-	target = M
 	animate(src, alpha = 255, time = CREDIT_EASE_DURATION, flags = ANIMATION_PARALLEL)
 	addtimer(CALLBACK(src, PROC_REF(FadeOut)), CREDIT_ROLL_SPEED - CREDIT_EASE_DURATION)
 	QDEL_IN(src, CREDIT_ROLL_SPEED)
@@ -67,7 +65,7 @@
 	return ..()
 
 /atom/movable/screen/credit/proc/FadeOut()
-	animate(src, alpha = 0, transform = target, time = CREDIT_EASE_DURATION)
+	animate(src, alpha = 0, time = CREDIT_EASE_DURATION, flags = ANIMATION_PARALLEL)
 
 #undef CREDIT_ANIMATE_HEIGHT
 #undef CREDIT_EASE_DURATION
