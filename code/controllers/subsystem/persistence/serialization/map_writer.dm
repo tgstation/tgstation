@@ -97,12 +97,12 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 				//Stuff to add
 				else
 					var/area/place_area = get_area(pull_from)
-					saved_area = place_area.type
+					saved_area = place_area
 					saved_turf = pull_from.type
 
 				//====Saving holodeck areas====
 				// All hologram objects get skipped and floor tiles get replaced with empty plating
-				if(ispath(saved_area, /area/station/holodeck) && istype(saved_turf, /turf/open/floor/holofloor))
+				if(istype(saved_area, /area/station/holodeck) && istype(saved_turf, /turf/open/floor/holofloor))
 					saved_turf = /turf/open/floor/holofloor/plating
 				//====For toggling not saving areas and turfs====
 				if(!(save_flags & SAVE_AREAS))
@@ -115,8 +115,8 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 				var/list/current_header = list()
 
 				//====Saving Shuttles==========
-				var/is_shuttle_area = ispath(saved_area, /area/shuttle)
-				var/is_custom_shuttle_area = ispath(saved_area, /area/shuttle/custom)
+				var/is_shuttle_area = istype(saved_area, /area/shuttle)
+				var/is_custom_shuttle_area = istype(saved_area, /area/shuttle/custom)
 				var/skip_nonshuttle_area = (shuttle_area_flag == SAVE_SHUTTLES_ONLY) && !is_shuttle_area
 				if(skip_nonshuttle_area)
 					saved_turf = /turf/template_noop
@@ -139,7 +139,7 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 					// save area underneath shuttle
 					if(shuttle)
 						var/area/area_underneath_shuttle = shuttle.underlying_areas_by_turf[pull_from]
-						saved_area = area_underneath_shuttle.type || SHUTTLE_DEFAULT_UNDERLYING_AREA
+						saved_area = area_underneath_shuttle || SHUTTLE_DEFAULT_UNDERLYING_AREA
 					else // shouldn't be possible but just in case
 						saved_area = /area/template_noop
 
@@ -165,8 +165,8 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 					INCREMENT_TURF_COUNT
 
 				// Count unique areas
-				if(saved_area != /area/template_noop && !(SSpersistence.counted_areas[saved_area]))
-					SSpersistence.counted_areas[saved_area] = TRUE
+				if(saved_area.type != /area/template_noop && !(SSpersistence.counted_areas[saved_area.type]))
+					SSpersistence.counted_areas[saved_area.type] = TRUE
 					INCREMENT_AREA_COUNT
 
 				for(var/atom/movable/target_atom as anything in pull_from)
@@ -214,7 +214,10 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 
 				TGM_MAP_BLOCK(current_header, saved_turf.type, turf_metadata)
 
-				var/area_metadata = generate_tgm_metadata(saved_area)
+				var/area_metadata
+				if(!ispath(saved_area) && !istype(saved_area, /area/space))
+					area_metadata = generate_tgm_metadata(saved_area)
+
 				TGM_MAP_BLOCK(current_header, saved_area.type, area_metadata)
 
 				//====Fill the contents file====
