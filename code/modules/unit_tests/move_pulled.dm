@@ -28,10 +28,10 @@
 	return get_turf(run_loc_floor_top_right)
 
 /// Try to move a pulled object to a decal below us, then to a decal in the opposite corner
-/datum/unit_test/move_pulled_decal/to_decal
+/datum/unit_test/move_pulled/to_decal
 
-/datum/unit_test/move_pulled_decal/to_decal/get_first_target()
+/datum/unit_test/move_pulled/to_decal/get_first_target()
 	return allocate(/obj/effect/decal/cleanable/blood, run_loc_floor_bottom_left)
 
-/datum/unit_test/move_pulled_decal/to_decal/get_second_target()
+/datum/unit_test/move_pulled/to_decal/get_second_target()
 	return allocate(/obj/effect/decal/cleanable/blood, run_loc_floor_top_right)
