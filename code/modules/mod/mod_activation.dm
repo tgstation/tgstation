@@ -261,8 +261,7 @@
 		part.alternate_worn_layer = part_datum.sealed_layer
 		if((part.slot_flags & ITEM_SLOT_HEAD) && istype(part, /obj/item/clothing/head/mod))
 			var/obj/item/clothing/head/mod/mod_clothing_part = part
-			mod_clothing_part.AddComponent(/datum/component/wearertargeting/earprotection, protection_amount = mod_clothing_part.hearing_protection)
-			var/datum/component/wearertargeting/earprotection/protection = mod_clothing_part.GetComponent(/datum/component/wearertargeting/earprotection)
+			protection = mod_clothing_part.AddComponent(/datum/component/wearertargeting/earprotection, protection_amount = mod_clothing_part.hearing_protection)
 			protection.on_equip(src, wearer, ITEM_SLOT_HEAD)
 	else
 		part.icon_state = "[skin]-[part.base_icon_state]"
