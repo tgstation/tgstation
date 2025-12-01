@@ -273,6 +273,7 @@
 		TRAIT_PUSHIMMUNE,
 		TRAIT_STUNIMMUNE,
 		TRAIT_ANALGESIA,
+		TRAIT_NO_OXYLOSS_PASSOUT,
 	) // fight till your last breath
 
 /datum/mutation/hulk/superhuman/on_life(seconds_per_tick, times_fired)

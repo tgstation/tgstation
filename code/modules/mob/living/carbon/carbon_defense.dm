@@ -558,7 +558,7 @@
 */
 /mob/living/carbon/proc/check_passout()
 	var/mob_oxyloss = get_oxy_loss()
-	if(mob_oxyloss >= OXYLOSS_PASSOUT_THRESHOLD)
+	if(mob_oxyloss >= OXYLOSS_PASSOUT_THRESHOLD && !HAS_TRAIT(src, TRAIT_NO_OXYLOSS_PASSOUT))
 		if(!HAS_TRAIT_FROM(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT))
 			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
 	else if(mob_oxyloss < OXYLOSS_PASSOUT_THRESHOLD)
