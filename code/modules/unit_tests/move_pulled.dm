@@ -18,6 +18,12 @@
 	TEST_ASSERT(crate.loc != run_loc_floor_bottom_left, "The crate should have moved in the direction of the top right turf.")
 	TEST_ASSERT(crate.loc == get_step(puller, NORTHEAST), "The crate should be located at the northeast of the puller.")
 
+/datum/unit_test/move_pulled/proc/get_first_target()
+	CRASH("Unimplemented get_first_target in move_pulled unit test")
+
+/datum/unit_test/move_pulled/proc/get_second_target()
+	CRASH("Unimplemented get_first_target in move_pulled unit test")
+
 /// Try to move a pulled object to the turf below us, then to the opposite corner
 /datum/unit_test/move_pulled/to_turf
 

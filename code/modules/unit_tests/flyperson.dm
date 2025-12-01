@@ -10,4 +10,4 @@
 	click_wrapper(fly, gross)
 
 	TEST_ASSERT(QDELETED(gross), "The vomit was not deleted by the flyperson")
-	TEST_ASSERT(fly.has_reagent(/datum/reagent/consumable/nutriment, 10), "The flyperson did not gaint the reagents present in the vomit")
+	TEST_ASSERT(fly.has_reagent(/datum/reagent/consumable/nutriment, 10), "The flyperson did not gain the reagents present in the vomit")
