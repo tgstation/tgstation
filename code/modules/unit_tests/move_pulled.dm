@@ -10,14 +10,16 @@
 
 	TEST_ASSERT(puller.pulling == crate, "The puller is not pulling the crate.")
 
-	click_wrapper(puller, get_first_target())
+	var/atom/first_target = get_first_target()
+	click_wrapper(puller, first_target)
 
-	TEST_ASSERT(crate.loc == run_loc_floor_bottom_left, "The crate should have moved from clicking on the crate's turf.")
+	TEST_ASSERT(crate.loc == run_loc_floor_bottom_left, "The crate should not have moved from clicking on the crate's turf.")
 
-	click_wrapper(puller, get_second_target())
+	var/atom/second_target = get_second_target()
+	click_wrapper(puller, second_target)
 
 	TEST_ASSERT(crate.loc != run_loc_floor_bottom_left, "The crate should have moved in the direction of the top right turf.")
-	TEST_ASSERT(crate.loc == get_step(puller, NORTHEAST), "The crate should be located at the northeast of the puller.")
+	TEST_ASSERT(crate.loc == get_turf(second_target), "The crate should be located at the northeast of the puller.")
 
 /datum/unit_test/move_pulled/proc/get_first_target()
 	CRASH("Unimplemented get_first_target in move_pulled unit test")
@@ -32,7 +34,7 @@
 	return run_loc_floor_bottom_left
 
 /datum/unit_test/move_pulled/to_turf/get_second_target()
-	return run_loc_floor_top_right
+	return get_step(puller, NORTHEAST)
 
 /// Try to move a pulled object to a decal below us, then to a decal in the opposite corner
 /datum/unit_test/move_pulled/to_decal
@@ -41,4 +43,4 @@
 	return allocate(/obj/effect/decal/cleanable/blood, run_loc_floor_bottom_left)
 
 /datum/unit_test/move_pulled/to_decal/get_second_target()
-	return allocate(/obj/effect/decal/cleanable/blood, run_loc_floor_top_right)
+	return allocate(/obj/effect/decal/cleanable/blood, get_step(puller, NORTHEAST))
