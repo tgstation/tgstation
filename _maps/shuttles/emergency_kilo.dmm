@@ -170,10 +170,6 @@
 /obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
-"bh" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "bi" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/suit_storage_unit/standard_unit,
@@ -218,6 +214,7 @@
 	pixel_y = 4
 	},
 /obj/item/clothing/mask/breath,
+/obj/structure/sign/warning/secure_area/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bp" = (
@@ -1547,7 +1544,7 @@ bY
 kh
 dZ
 Uc
-bh
+ab
 bo
 Em
 Wu

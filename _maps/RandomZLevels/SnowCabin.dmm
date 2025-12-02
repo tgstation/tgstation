@@ -2485,8 +2485,11 @@
 /turf/closed/indestructible/syndicate,
 /area/awaymission/cabin/caves/sovietcave)
 "no" = (
-/obj/structure/sign/warning,
-/turf/closed/indestructible/syndicate,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/directional/south,
+/turf/open/floor/mineral/plastitanium/red{
+	name = "soviet floor"
+	},
 /area/awaymission/cabin/caves/sovietcave)
 "np" = (
 /turf/closed/indestructible/fakedoor{
@@ -2843,6 +2846,14 @@
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"qx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/spider/stickyweb,
+/obj/structure/sign/warning/directional/south,
+/turf/open/floor/mineral/plastitanium/red{
+	name = "soviet floor"
+	},
+/area/awaymission/cabin/caves/sovietcave)
 "qz" = (
 /obj/effect/light_emitter{
 	set_cap = 3;
@@ -4041,6 +4052,13 @@
 	},
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/snowforest)
+"EK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/directional/north,
+/turf/open/floor/mineral/plastitanium/red{
+	name = "soviet floor"
+	},
+/area/awaymission/cabin/caves/sovietcave)
 "EL" = (
 /obj/machinery/light/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -68755,10 +68773,10 @@ gx
 gx
 gx
 gx
+ii
+EK
 no
-im
-im
-no
+ii
 gx
 gx
 gx
@@ -69269,10 +69287,10 @@ gx
 gx
 gx
 gx
-no
-im
-lS
-no
+ii
+EK
+qx
+ii
 gx
 gx
 gx

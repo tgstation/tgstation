@@ -2678,10 +2678,6 @@
 "mc" = (
 /turf/closed/mineral/plasma,
 /area/ruin/space/ancientstation/charlie/dorms)
-"md" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/r_wall,
-/area/ruin/space/ancientstation/delta/biolab)
 "me" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -4534,6 +4530,7 @@
 /obj/machinery/door/window/right/directional/east{
 	req_access = list("away_general")
 	},
+/obj/structure/sign/warning/secure_area/directional/north,
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/delta/biolab)
 "xT" = (
@@ -15375,7 +15372,7 @@ uo
 GX
 NG
 Lo
-md
+rp
 xM
 Go
 Yl

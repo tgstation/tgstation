@@ -207,7 +207,6 @@
 /turf/open/floor/pod,
 /area/shuttle/abandoned/cargo)
 "aT" = (
-/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
 /area/shuttle/abandoned/cargo)
 "aU" = (
@@ -226,6 +225,7 @@
 "aW" = (
 /obj/effect/spawner/random/trash/hobo_squat,
 /obj/effect/mob_spawn/corpse/human/assistant,
+/obj/structure/sign/warning/secure_area/directional/west,
 /turf/open/floor/pod,
 /area/shuttle/abandoned/cargo)
 "aX" = (
@@ -1229,6 +1229,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/crew)
+"KQ" = (
+/obj/structure/sign/warning/secure_area/directional/east,
+/turf/open/floor/pod,
+/area/shuttle/abandoned/cargo)
 "LM" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/tracks{
@@ -1790,7 +1794,7 @@ cA
 aS
 bn
 cA
-cA
+KQ
 cH
 ez
 cV
