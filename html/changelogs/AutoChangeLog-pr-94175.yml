@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - refactor: "Refactored how mech icons update mid-construction, report any disappearing mechs please"
+  - bugfix: "One of the Phazon's mid construction icons was not visible in the past, now it is again. Yippee."
