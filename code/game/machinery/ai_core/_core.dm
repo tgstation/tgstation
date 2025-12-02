@@ -85,14 +85,14 @@
 		if(CORE_STATE_SCREWED)
 			. += span_notice("The frame can be <b>wired</b>, the circuit board can be <b>unfastened</b>.")
 		if(CORE_STATE_CABLED)
-			if(!core_mmi)
-				. += span_notice("There are wires which could be hooked up to an <b>MMI or positronic brain</b>, or <b>cut</b>.")
-			else
+			if(core_mmi)
 				. += span_notice("There is a <b>slot</b> for a reinforced glass panel, the [AI_CORE_BRAIN(core_mmi)] could be <b>pried</b> out.")
+			else
+				. += span_notice("There are wires which could be hooked up to an <b>MMI or positronic brain</b>, or <b>cut</b>.")
 		if(CORE_STATE_GLASSED)
-			. += span_notice("The monitor [core_mmi?.brainmob?.mind && !suicide_check() ? "and neural interface " : ""]can be <b>screwed</b> in, the panel can be <b>pried</b> out.")
+			. += span_notice("The monitor [(core_mmi?.brainmob?.mind && !suicide_check()) ? "and neural interface " : ""]can be <b>screwed</b> in, the panel can be <b>pried</b> out.")
 		if(CORE_STATE_FINISHED)
-			. += span_notice("The monitor's connection can be <b>cut</b>[core_mmi?.brainmob?.mind && !suicide_check() ? " the neural interface can be <b>screwed</b> in." : "."]")
+			. += span_notice("The monitor's connection can be <b>cut</b>[(core_mmi?.brainmob?.mind && !suicide_check()) ? " the neural interface can be <b>screwed</b> in." : "."]")
 
 /obj/structure/ai_core/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(state < CORE_STATE_FINISHED)
