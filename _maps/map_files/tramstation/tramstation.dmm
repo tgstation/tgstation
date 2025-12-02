@@ -31988,9 +31988,6 @@
 	name = "Secure Medical Storage";
 	req_access = list("medical")
 	},
-/obj/item/defibrillator/loaded{
-	pixel_y = 6
-	},
 /obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/ears/earmuffs,
