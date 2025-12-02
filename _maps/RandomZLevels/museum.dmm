@@ -5370,8 +5370,8 @@
 /turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "Tr" = (
-/obj/structure/plaque/static_plaque/golden/commission/kilo,
 /obj/machinery/light/floor,
+/obj/structure/plaque/static_plaque/golden/commission/kilo,
 /turf/open/floor/mineral/gold,
 /area/awaymission/museum)
 "Tt" = (

@@ -44,7 +44,7 @@
 	if(SPT_PROB(reside_chance, seconds_per_tick))
 		controller.queue_behavior(/datum/ai_behavior/find_and_set/valid_home, BB_CAT_HOME, /obj/structure/cat_house)
 
-/datum/ai_behavior/find_and_set/valid_home/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/valid_home/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	for(var/obj/structure/cat_house/home in oview(search_range, controller.pawn))
 		if(home.resident_cat)
 			continue
@@ -95,7 +95,7 @@
 
 	controller.queue_behavior(/datum/ai_behavior/find_and_set/cat_tresspasser, BB_TRESSPASSER_TARGET, /mob/living/basic/pet/cat)
 
-/datum/ai_behavior/find_and_set/cat_tresspasser/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/cat_tresspasser/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/list/ignore_types = controller.blackboard[BB_BABIES_CHILD_TYPES]
 	for(var/mob/living/basic/pet/cat/potential_enemy in oview(search_range, controller.pawn))
 		if(potential_enemy.gender != MALE)
@@ -244,7 +244,7 @@
 
 /datum/ai_behavior/find_and_set/valid_kitten
 
-/datum/ai_behavior/find_and_set/valid_kitten/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/valid_kitten/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/mob/living/kitten = locate(locate_path) in oview(search_range, controller.pawn)
 	//kitten already has food near it, go feed another hungry kitten
 

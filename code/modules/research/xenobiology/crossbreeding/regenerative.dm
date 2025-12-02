@@ -254,9 +254,9 @@ Regenerative extracts:
 		carbon_dummy.real_name = carbon_target.real_name
 		carbon_target.dna.copy_dna(carbon_dummy.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 		carbon_dummy.updateappearance(mutcolor_update = TRUE)
-	dummy.adjustBruteLoss(target.getBruteLoss())
-	dummy.adjustFireLoss(target.getFireLoss())
-	dummy.adjustToxLoss(target.getToxLoss())
+	dummy.adjust_brute_loss(target.get_brute_loss())
+	dummy.adjust_fire_loss(target.get_fire_loss())
+	dummy.adjust_tox_loss(target.get_tox_loss())
 	dummy.death()
 
 /obj/item/slimecross/regenerative/lightpink

@@ -27,7 +27,7 @@
 	. = ..()
 
 	if(mapload)
-		find_and_hang_on_atom()
+		find_and_mount_on_atom()
 	else
 		locked = FALSE
 	power_change()

@@ -689,7 +689,7 @@
 	width = 9
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "KG" = (
 /obj/structure/curtain,
 /obj/effect/decal/cleanable/dirt,

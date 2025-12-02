@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes:
+  - rscadd: "Hygiene bots now extinguish when cleaning."

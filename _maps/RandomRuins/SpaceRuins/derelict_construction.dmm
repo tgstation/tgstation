@@ -261,12 +261,12 @@
 "DU" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "DY" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/burgundy,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "DZ" = (
 /obj/structure/frame,
 /turf/open/misc/asteroid,

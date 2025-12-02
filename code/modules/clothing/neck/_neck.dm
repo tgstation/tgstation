@@ -252,7 +252,7 @@
 
 	var/mob/living/carbon/carbon_patient = target
 	var/body_part = carbon_patient.parse_zone_with_bodypart(user.zone_selected)
-	var/oxy_loss = carbon_patient.getOxyLoss()
+	var/oxy_loss = carbon_patient.get_oxy_loss()
 
 	var/heart_strength
 	var/pulse_pressure
