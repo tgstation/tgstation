@@ -14508,7 +14508,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "dXh" = (
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -16375,7 +16375,7 @@
 /area/mine/eva/lower)
 "ezq" = (
 /obj/structure/table,
-/obj/item/stamp,
+/obj/item/stamp/granted,
 /obj/item/poster/random_official,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)

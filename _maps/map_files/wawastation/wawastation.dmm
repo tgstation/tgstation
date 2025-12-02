@@ -190,7 +190,7 @@
 	dir = 4
 	},
 /obj/structure/table/wood/fancy/orange,
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = 7;
 	pixel_y = 9
 	},
@@ -4931,7 +4931,7 @@
 /area/station/maintenance/department/cargo)
 "bIe" = (
 /obj/structure/table,
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -23719,7 +23719,7 @@
 	pixel_x = 3;
 	pixel_y = 12
 	},
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = -6;
 	pixel_y = 4
 	},
@@ -46890,7 +46890,7 @@
 	pixel_x = 4;
 	pixel_y = -2
 	},
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = 5;
 	pixel_y = 12
 	},

@@ -711,7 +711,7 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = 7;
 	pixel_y = 9
 	},
@@ -2394,7 +2394,7 @@
 /area/ruin/space/has_grav/waystation/cargooffice)
 "Qx" = (
 /obj/structure/table,
-/obj/item/stamp,
+/obj/item/stamp/granted,
 /obj/item/stamp/denied{
 	pixel_x = 8
 	},
