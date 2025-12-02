@@ -882,6 +882,7 @@
 	desc = "A throwing weapon used to ignite things, typically filled with an accelerant. Recommended highly by rioters and revolutionaries. Light and toss."
 	icon_state = "vodkabottle"
 	list_reagents = list()
+	heatable = FALSE
 	var/active = FALSE
 	var/list/accelerants = list(
 		/datum/reagent/consumable/ethanol,
