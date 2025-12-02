@@ -64,8 +64,8 @@
 /obj/item/mod/module/storage/large_capacity
 	name = "MOD expanded storage module"
 	desc = "Reverse engineered by Nakamura Engineering from Donk Company designs, this system of hidden compartments \
-		is entirely within the suit, distributing items and weight evenly to ensure a comfortable experience for the user; \
-		whether smuggling, or simply hauling."
+		is entirely within the suit, distributing items and weight evenly to ensure a comfortable experience for the user, \
+		whether smuggling or simply hauling. When undeployed, the many small pockets make it heavier than the standard design."
 	icon_state = "storage_large"
 	max_combined_w_class = 21
 	max_items = 14
@@ -75,7 +75,8 @@
 	name = "MOD syndicate storage module"
 	desc = "A storage system using nanotechnology developed by Cybersun Industries, these compartments use \
 		esoteric technology to compress the physical matter of items put inside of them, \
-		essentially shrinking items for much easier and more portable storage."
+		essentially shrinking items for much easier and more portable storage. \
+		This makes it slightly heavier than the standard design."
 	icon_state = "storage_syndi"
 	max_combined_w_class = 30
 	max_items = 21
@@ -96,7 +97,7 @@
 /obj/item/mod/module/storage/bluespace
 	name = "MOD bluespace storage module"
 	desc = "A storage system developed by Nanotrasen, these compartments employ \
-		miniaturized bluespace pockets for the ultimate in storage technology; regardless of the weight of objects put inside."
+		miniaturized bluespace pockets for the ultimate in storage technology, regardless of the weight of objects put inside."
 	icon_state = "storage_large"
 	max_w_class = WEIGHT_CLASS_GIGANTIC
 	max_combined_w_class = 60
@@ -242,8 +243,8 @@
 /obj/item/mod/module/status_readout
 	name = "MOD status readout module"
 	desc = "A once-common module, this technology unfortunately went out of fashion in the safer regions of space; \
-		and found new life in the research networks of the Periphery. This particular unit hooks into the suit's spine, \
-		capable of capturing and displaying all possible biometric data of the wearer; sleep, nutrition, fitness, fingerprints, \
+		it found new life in the research networks of the Periphery. This particular unit hooks into the suit's spine, \
+		capable of capturing and displaying all possible biometric data of the wearer: sleep, nutrition, fitness, fingerprints, \
 		and even useful information such as their overall health and wellness. The vitals monitor also comes with a speaker, loud enough \
 		to alert anyone nearby that someone has, in fact, died."
 	icon_state = "status"
@@ -581,7 +582,7 @@
 	name = "MOD thermal regulator module"
 	desc = "Advanced climate control, using an inner body glove interwoven with thousands of tiny, \
 		flexible cooling lines. This circulates coolant at various user-controlled temperatures, \
-		ensuring they're comfortable; even if they're some that like it hot."
+		ensuring they're comfortable — even if there's some that like it hot."
 	icon_state = "regulator"
 	module_type = MODULE_TOGGLE
 	complexity = 1
