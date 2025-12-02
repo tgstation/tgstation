@@ -323,7 +323,7 @@
 /*
  * Bamboo Spear
  */
-/obj/item/spear/bamboospear //Blatant imitation of spear, but all natural. Also not valid for explosive modification.
+/obj/item/spear/bamboospear //Blatant imitation of spear, but all natural.
 	icon_state = "bamboo_spear0"
 	base_icon_state = "bamboo_spear0"
 	icon_prefix = "bamboo_spear"
