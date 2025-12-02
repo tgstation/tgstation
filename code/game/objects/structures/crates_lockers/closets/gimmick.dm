@@ -10,14 +10,14 @@
 	max_integrity = 70
 	door_anim_time = 0 // no animation
 	material_drop = /obj/item/stack/sheet/mineral/wood
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/closet/acloset
 	name = "strange closet"
 	desc = "It looks alien!"
 	icon_state = "alien"
 	material_drop = /obj/item/stack/sheet/mineral/abductor
-	custom_materials = list(/datum/material/alloy/alien = SHEET_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/alloy/alien = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/closet/gimmick
 	name = "administrative supply closet"
