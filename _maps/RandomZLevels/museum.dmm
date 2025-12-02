@@ -4755,6 +4755,7 @@
 	dir = 1
 	},
 /obj/structure/closet/crate/bin,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/museum)
 "NB" = (
@@ -5442,6 +5443,7 @@
 	dir = 1
 	},
 /obj/item/kirbyplants/random/fullysynthetic,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/museum)
 "TO" = (
@@ -6024,10 +6026,6 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/access/all/away/generic3,
 /turf/open/indestructible/plating,
-/area/awaymission/museum)
-"Ye" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/indestructible/reinforced/titanium/nodiagonal,
 /area/awaymission/museum)
 "Yg" = (
 /obj/effect/mob_spawn/cockroach,
@@ -29523,7 +29521,7 @@ iW
 go
 iW
 TN
-Ye
+fe
 FK
 FK
 FK
@@ -30294,7 +30292,7 @@ DU
 iW
 iW
 Ny
-Ye
+fe
 FK
 FK
 FK

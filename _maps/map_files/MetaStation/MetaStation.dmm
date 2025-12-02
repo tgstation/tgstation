@@ -1527,6 +1527,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "aDa" = (
@@ -1818,6 +1819,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "aIm" = (
@@ -3349,6 +3351,7 @@
 "biA" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/delivery,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "biF" = (
@@ -18521,10 +18524,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/commons/locker)
-"gvR" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall,
-/area/station/hallway/secondary/exit/departure_lounge)
 "gvS" = (
 /obj/machinery/bci_implanter,
 /obj/machinery/light/small/directional/south,
@@ -20525,10 +20524,6 @@
 /obj/machinery/meter,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"hej" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall,
-/area/station/maintenance/port/aft)
 "hep" = (
 /obj/effect/landmark/blobstart,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -38745,9 +38740,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "nob" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall,
-/area/station/maintenance/aft/greater)
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/sign/nanotrasen/directional/west,
+/turf/open/floor/plating,
+/area/station/maintenance/port)
 "noj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -46584,10 +46580,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
-"pZW" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall,
-/area/station/maintenance/port)
 "qaf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/large,
@@ -83934,7 +83926,7 @@ pOa
 pOa
 pOa
 emN
-pZW
+pOa
 pOa
 aaa
 aaa
@@ -84191,7 +84183,7 @@ iCx
 pOa
 dlL
 qgf
-gDZ
+nob
 jUb
 jUb
 nBy
@@ -85753,7 +85745,7 @@ lMJ
 lMJ
 jUb
 kPQ
-hej
+jUb
 jUb
 lMJ
 xjH
@@ -89112,7 +89104,7 @@ gmS
 drm
 tSw
 tSw
-nob
+tSw
 tSw
 gAf
 sGL
@@ -97606,7 +97598,7 @@ iUm
 aAS
 kJB
 biA
-gvR
+iUm
 lAu
 lMJ
 aaa

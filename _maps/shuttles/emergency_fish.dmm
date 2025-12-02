@@ -45,6 +45,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "cZ" = (
@@ -227,10 +228,6 @@
 	dir = 8
 	},
 /turf/open/floor/wood/tile,
-/area/shuttle/escape)
-"oA" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "oB" = (
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
@@ -780,6 +777,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Tn" = (
@@ -1047,7 +1045,7 @@ Kg
 "}
 (5,1,1) = {"
 Me
-oA
+jL
 SS
 qA
 aa
@@ -1163,7 +1161,7 @@ Kg
 "}
 (9,1,1) = {"
 Me
-oA
+jL
 cf
 qA
 aa

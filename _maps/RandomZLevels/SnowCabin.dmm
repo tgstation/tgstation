@@ -1530,9 +1530,9 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "hL" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/snow,
-/area/awaymission/cabin/caves/mountain)
+/obj/structure/sign/nanotrasen/directional/north,
+/turf/open/misc/ice/smooth,
+/area/awaymission/cabin/caves)
 "hM" = (
 /turf/closed/wall/mineral/snow,
 /area/awaymission/cabin/caves/mountain)
@@ -5524,7 +5524,6 @@
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/cabin/caves)
 "Zb" = (
-/obj/structure/sign/nanotrasen,
 /obj/effect/light_emitter{
 	set_cap = 3;
 	set_luminosity = 6;
@@ -5571,6 +5570,16 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
+"ZZ" = (
+/obj/effect/light_emitter{
+	name = "cave light";
+	set_cap = 3;
+	set_luminosity = 6;
+	light_color = "#9bbbff"
+	},
+/obj/structure/sign/nanotrasen/directional/north,
+/turf/open/misc/asteroid/snow/snow_cabin,
+/area/awaymission/cabin/caves)
 
 (1,1,1) = {"
 ab
@@ -17108,7 +17117,7 @@ vh
 vh
 vh
 Zb
-Su
+ZZ
 oz
 oz
 oz
@@ -18907,7 +18916,7 @@ vh
 vh
 vh
 Zb
-Su
+ZZ
 oz
 oz
 oz
@@ -48279,8 +48288,8 @@ gx
 gx
 gx
 gx
+hM
 hL
-PV
 PV
 PV
 PV
@@ -49307,8 +49316,8 @@ gx
 gx
 gx
 gx
+hM
 hL
-PV
 PV
 PV
 PV

@@ -41,8 +41,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "ai" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/titanium,
+/obj/structure/sign/nanotrasen/directional/north,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "ao" = (
 /obj/effect/turf_decal/delivery,
@@ -150,6 +150,7 @@
 /obj/machinery/camera/autoname{
 	dir = 4
 	},
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bb" = (
@@ -288,6 +289,7 @@
 /obj/machinery/camera/autoname{
 	dir = 4
 	},
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/escape)
 "bO" = (
@@ -555,6 +557,7 @@
 /obj/machinery/camera/autoname{
 	dir = 8
 	},
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/escape)
 "hE" = (
@@ -1254,6 +1257,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "VD" = (
@@ -1326,7 +1330,7 @@ ab
 ac
 ab
 ac
-ai
+ab
 bb
 ab
 bq
@@ -1338,7 +1342,7 @@ ab
 bX
 ab
 bX
-ai
+ab
 ab
 as
 cS
@@ -1430,8 +1434,8 @@ cS
 (5,1,1) = {"
 ab
 ac
+ab
 ai
-as
 cw
 IX
 Mo
@@ -1592,8 +1596,8 @@ cT
 (11,1,1) = {"
 ab
 ac
+ab
 ai
-as
 as
 aO
 aX
@@ -1704,19 +1708,19 @@ ab
 ab
 ab
 ac
-ai
-ac
 ab
 ac
 ab
 ac
+ab
+ac
 ac
 ac
 ab
 ac
 ab
 ab
-ai
+ab
 ab
 as
 cS
