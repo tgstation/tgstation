@@ -910,11 +910,11 @@
 	..(hit_atom, throwingdatum, do_splash = FALSE)
 
 /obj/item/reagent_containers/cup/glass/bottle/molotov/smash(atom/target, mob/thrower, datum/thrownthing/throwingdatum, break_top)
-	var/firestarter = 0
+	var/firestarter = FALSE
 	for(var/datum/reagent/contained_reagent in reagents.reagent_list)
 		for(var/accelerant_type in accelerants)
 			if(istype(contained_reagent, accelerant_type))
-				firestarter = 1
+				firestarter = TRUE
 				break
 	..()
 	if(firestarter && active)
