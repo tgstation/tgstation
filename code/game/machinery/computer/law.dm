@@ -240,9 +240,10 @@
 	for(var/obj/item/ai_module/installed in ai_modules)
 		installed.forceMove(get_turf(src))
 
-/obj/machinery/ai_law_rack/can_be_unfasten_wrench(mob/living/user)
+/obj/machinery/ai_law_rack/can_be_unfasten_wrench(mob/living/user, silent)
 	if(welded)
-		balloon_alert(user, "unweld it first!")
+		if(!silent)
+			balloon_alert(user, "unweld it first!")
 		return FAILED_UNFASTEN
 	return ..()
 

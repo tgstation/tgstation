@@ -69,7 +69,7 @@
 
 	// Transfer the AI from the core we created into the card, then delete the core
 	capture_ai(new_ai, user)
-	var/obj/structure/ai_core/deactivated/detritus = locate() in get_turf(src)
+	var/obj/structure/ai_core/detritus = locate() in get_turf(src)
 	qdel(detritus)
 	AI.set_control_disabled(FALSE)
 	AI.radio_enabled = TRUE

@@ -115,6 +115,7 @@
 		target.fire_act()
 		return
 	target.wash(CLEAN_WASH)
+	target.extinguish()
 
 /mob/living/basic/bot/hygienebot/on_bot_movement(atom/movable/source, atom/oldloc, dir, forced)
 
