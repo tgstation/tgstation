@@ -84,6 +84,8 @@
 	COOLDOWN_DECLARE(cooldown_mod_move)
 	/// Person wearing the MODsuit.
 	var/mob/living/carbon/human/wearer
+	/// If the suit will consider the control unit for slowdown
+	var/heavy_storage = FALSE
 
 /obj/item/mod/control/Initialize(mapload, datum/mod_theme/new_theme, new_skin, obj/item/mod/core/new_core)
 	. = ..()
@@ -664,10 +666,11 @@
 	SEND_SIGNAL(src, COMSIG_MOD_UPDATE_SPEED, module_slowdowns, prevent_slowdown)
 	for (var/module_slow in module_slowdowns)
 		total_slowdown += module_slow
-
-	for(var/datum/mod_part/part_datum as anything in get_part_datums(all = TRUE))
+	var/list/part_datums = get_part_datums(all = heavy_storage)
+	var/amount_of_parts = length(part_datums)
+	for(var/datum/mod_part/part_datum as anything in part_datums)
 		var/obj/item/part = part_datum.part_item
-		part.slowdown = total_slowdown / length(mod_parts)
+		part.slowdown = total_slowdown / amount_of_parts
 		if (!part_datum.sealed)
 			part.slowdown = max(part.slowdown, 0)
 	wearer?.update_equipment_speed_mods()

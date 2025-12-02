@@ -17,6 +17,8 @@
 	var/max_items = 7
 	/// Is nesting same-size storage items allowed?
 	var/big_nesting = FALSE
+	/// Will this module make the suit control unit considered for slowdown?
+	var/heavy = FALSE
 
 /obj/item/mod/module/storage/Initialize(mapload)
 	. = ..()
@@ -30,6 +32,8 @@
 	modstorage.set_real_location(src)
 	modstorage.allow_big_nesting = big_nesting
 	atom_storage.set_locked(STORAGE_NOT_LOCKED)
+	mod.heavy_storage = heavy
+	mod.update_speed()
 	var/obj/item/clothing/suit = mod.get_part_from_slot(ITEM_SLOT_OCLOTHING)
 	if(istype(suit))
 		RegisterSignal(suit, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_suit_unequip))
@@ -40,6 +44,9 @@
 	QDEL_NULL(mod.atom_storage)
 	if(!deleting)
 		atom_storage.remove_all(mod.drop_location())
+	mod.heavy_storage = FALSE
+	mod.slowdown = 0
+	mod.update_speed()
 	var/obj/item/clothing/suit = mod.get_part_from_slot(ITEM_SLOT_OCLOTHING)
 	if(istype(suit))
 		UnregisterSignal(suit, COMSIG_ITEM_PRE_UNEQUIP)
@@ -62,6 +69,7 @@
 	icon_state = "storage_large"
 	max_combined_w_class = 21
 	max_items = 14
+	heavy = TRUE
 
 /obj/item/mod/module/storage/syndicate
 	name = "MOD syndicate storage module"
@@ -71,6 +79,7 @@
 	icon_state = "storage_syndi"
 	max_combined_w_class = 30
 	max_items = 21
+	heavy = TRUE
 
 /obj/item/mod/module/storage/belt
 	name = "MOD case storage module"
