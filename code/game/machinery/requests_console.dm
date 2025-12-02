@@ -547,6 +547,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 	icon_state = "req_comp_off"
 	result_path = /obj/machinery/requests_console/auto_name
 	pixel_shift = 30
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7)
 
 /datum/aas_config_entry/rc_emergency
 	name = "RC Alert: Emergency Request"

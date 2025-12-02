@@ -3,6 +3,7 @@
 	desc = "A fun way to get around."
 	icon_state = "scooter"
 	are_legs_exposed = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 11)
 
 /obj/vehicle/ridden/scooter/Initialize(mapload)
 	. = ..()
@@ -39,6 +40,7 @@
 	desc = "An old, battered skateboard. It's still rideable, but probably unsafe."
 	icon_state = "skateboard"
 	density = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10)
 	///Sparks datum for when we grind on tables
 	var/datum/effect_system/spark_spread/sparks
 	///Whether the board is currently grinding
@@ -240,6 +242,7 @@
 	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "scooter_frame"
 	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/scooter_frame/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(I, /obj/item/stack/sheet/iron))

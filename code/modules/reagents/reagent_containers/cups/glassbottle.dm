@@ -1022,6 +1022,7 @@
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
 	isGlass = FALSE
 	age_restricted = FALSE
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT * 1.5)
 
 /obj/item/reagent_containers/cup/glass/bottle/juice/orangejuice
 	name = "orange juice"

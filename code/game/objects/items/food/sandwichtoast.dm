@@ -270,6 +270,7 @@
 	tastes = list("bread" = 1, "meat" = 1, "tomato sauce" = 1, "death" = 1)
 	foodtypes = MEAT|VEGETABLES|GRAIN
 	eat_time = 4 SECONDS // Makes it harder to force-feed this to people as a weapon, as funny as that is.
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 2)
 	var/static/list/correct_clothing = list(/obj/item/clothing/under/rank/civilian/cookjorts, /obj/item/clothing/under/shorts/jeanshorts)
 
 /obj/item/food/sandwich/death/Initialize(mapload)

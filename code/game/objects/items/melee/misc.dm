@@ -243,6 +243,7 @@
 	armour_penetration = 1000
 	force_string = "INFINITE"
 	item_flags = NEEDS_PERMIT|NO_BLOOD_ON_ITEM
+	custom_materials = list(/datum/material/adamantine = SHEET_MATERIAL_AMOUNT * 20, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	var/obj/machinery/power/supermatter_crystal/shard
 	var/balanced = 1
 

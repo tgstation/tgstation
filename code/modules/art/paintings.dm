@@ -12,6 +12,7 @@
 	density = TRUE
 	resistance_flags = FLAMMABLE
 	max_integrity = 60
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
 	var/obj/item/canvas/painting = null
 
 //Adding canvases
