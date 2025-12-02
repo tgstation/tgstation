@@ -628,20 +628,21 @@
 	charge_drain = DEFAULT_CHARGE_DRAIN * 1.5
 	slowdown_deployed = 0.5
 	allowed_suit_storage = list(
+		/obj/item/crowbar/power/paramedic,
+		/obj/item/defibrillator/compact,
 		/obj/item/healthanalyzer,
-		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
+		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/stack/medical,
 		/obj/item/sensor_device,
-		/obj/item/storage/pill_bottle,
-		/obj/item/storage/bag/chemistry,
+		/obj/item/stack/medical,
 		/obj/item/storage/bag/bio,
-		/obj/item/crowbar/power/paramedic,
+		/obj/item/storage/bag/chemistry,
+		/obj/item/storage/pill_bottle,
 	)
 	variants = list(
 		"medical" = list(
