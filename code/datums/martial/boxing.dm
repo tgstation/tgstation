@@ -11,19 +11,19 @@
 #define DISCOMBOBULATE "discombobulate"
 #define BLIND_JAB "blind_jab"
 #define CRAVEN_BLOW "craven_blow"
+#define NO_COMBO ""
 
 /datum/martial_art/boxing
 	name = "Boxing"
 	id = MARTIALART_BOXING
 	pacifist_style = TRUE
+	help_verb = /mob/living/proc/boxing_help
 	/// Boolean on whether we are sportsmanlike in our tussling; TRUE means we have restrictions
 	var/honorable_boxer = TRUE
 	/// Default damage type for our boxing.
 	var/default_damage_type = STAMINA
 	/// List of traits applied to users of this martial art.
 	var/list/boxing_traits = list(TRAIT_BOXING_READY)
-	/// Balloon alert cooldown for warning our boxer to alternate their blows to get more damage
-	COOLDOWN_DECLARE(warning_cooldown)
 
 /datum/martial_art/boxing/can_teach(mob/living/new_holder)
 	return ishuman(new_holder)
@@ -45,7 +45,7 @@
 		reset_streak()
 		return CRAVEN_BLOW
 
-	if(is_detective_job(attacker.mind?.assigned_role)  && defender.is_blind()) //In short: discombobulate
+	if(HAS_TRAIT(attacker, TRAIT_DETECTIVES_TASTE) && defender.is_blind()) //In short: discombobulate
 		reset_streak()
 		return DISCOMBOBULATE
 
@@ -72,8 +72,7 @@
 		else
 			return UPPERCUT
 
-	perform_extra_effect(attacker, defender)
-	return NONE
+	return NO_COMBO
 
 /// An extra effect on some moves and attacks.
 /datum/martial_art/boxing/proc/perform_extra_effect(mob/living/attacker, mob/living/defender)
@@ -135,8 +134,8 @@
 	var/damage = rand(lower_force, upper_force)
 
 	// Attack verbs for our visible chat messages.
-	var/current_atk_verb = "normal punches"
-	var/current_atk_verbed = "normal punched"
+	var/current_atk_verb = "punches"
+	var/current_atk_verbed = "punched"
 
 	if(defender.check_block(attacker, damage, "[attacker]'s punch", UNARMED_ATTACK))
 		return FALSE
@@ -161,16 +160,18 @@
 
 		var/streak_augmentation = check_streak(attacker, defender, active_arm)
 
-		var/combo_multiplier = 1
+		var/combo_multiplier = 0
 
 		switch(streak_augmentation)
 			if(STRAIGHT_PUNCH)
 				current_atk_verb = "consecutively normal punches"
 				current_atk_verbed = "cnsecutively normal punched"
+				combo_multiplier = 1
 
 			if(LIGHT_JAB)
 				current_atk_verb = "light jabs"
 				current_atk_verbed = "light jabbed"
+				combo_multiplier = 1
 
 			if(LEFT_HOOK)
 				current_atk_verb = "left hooks"
@@ -188,6 +189,7 @@
 				current_atk_verb = "uppercuts"
 				current_atk_verbed = "uppercutted"
 				base_unarmed_effectiveness *= 1.5
+				combo_multiplier = 1
 				attacker.changeNext_move(CLICK_CD_MELEE * 1.5)
 
 			if(DISCOMBOBULATE)
@@ -196,6 +198,7 @@
 				affecting = defender.get_bodypart(defender.get_random_valid_zone(BODY_ZONE_HEAD))
 				defender.adjust_confusion_up_to(20 SECONDS, 50 SECONDS)
 				defender.adjust_dizzy_up_to(20 SECONDS, 50 SECONDS)
+				combo_multiplier = 1
 
 			if(BLIND_JAB)
 				current_atk_verb = "blind jabs"
@@ -213,6 +216,9 @@
 				defender.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS) //why yes, this could result in them being knocked out in one.
 
 		damage += round((athletics_skill + strength_bonus) * combo_multiplier, 1)
+
+		if(combo_multiplier >= 1)
+			perform_extra_effect(attacker, defender)
 
 		if(defender.stat <= HARD_CRIT) // Do not grant experience against dead targets
 			grant_experience = TRUE
@@ -292,7 +298,7 @@
 		to_chat(attacker, span_danger("You stagger [defender] with a haymaker!"))
 		log_combat(attacker, defender, "staggered (boxing) ")
 
-	if(defender.pulledby && defender.pulledby.grab_state >= GRAB_AGGRESSIVE) // dubious a normal boxer will be in a state where this happens, buuuut.
+	if(attacker.pulling == defender && attacker.grab_state >= GRAB_AGGRESSIVE) // dubious a normal boxer will be in a state where this happens, buuuut.
 		var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 		defender.throw_at(throw_target, 2, 2, attacker)
 
@@ -371,6 +377,23 @@
 		return FALSE
 	return ..()
 
+/mob/living/proc/boxing_help()
+	set name = "Focus on your Form"
+	set desc = "You focus on how to make the most of your boxing form."
+	set category = "Boxing"
+	to_chat(usr, "<b><i>You focus on your form, visualizing how best to throw a punch.</i></b>")
+
+	to_chat(usr, "<b><i>What moves you perform depend on what mouse buttons you click, and whether the last button clicked matches which hand you have selected when you throw the last punch.</i></b>")
+
+	to_chat(usr, "[span_notice("Straight Punch")]: Left Left/Right Right with the matching hand. Regular damage.")
+	to_chat(usr, "[span_notice("Jab")]: Left Left/Right Right with the opposite hand. Regular damage. If you're blind, you'll make a blind jab instead.")
+	to_chat(usr, "[span_notice("Left/Rigth Hook")]: Left Right/Right Left with the matching hand. Does extra damage, but slows your next hit.")
+	to_chat(usr, "[span_notice("Uppercut")]: Left Right/Right Left with the opposite hand. Has a higher probability to knock out the target, but slows your next hit.</b>")
+
+	to_chat(usr, "<b><i>While in Throw Mode, you can block incoming punches and return a bit of damage back to an attacker. Blocking attacks this way causes you to lose some stamina damage.</i></b>")
+
+	to_chat(usr, "<b><i>Your boxing abilities are only able to be used on other boxers.</i></b>")
+
 // Boxing Variants!
 
 /// Evil Boxing; for sick, evil scoundrels. Has no honor, making it more lethal (therefore unable to be used by pacifists).
@@ -380,8 +403,25 @@
 	name = "Evil Boxing"
 	id = MARTIALART_EVIL_BOXING
 	pacifist_style = FALSE
+	help_verb = /mob/living/proc/evil_boxing_help
 	honorable_boxer = FALSE
 	boxing_traits = list(TRAIT_BOXING_READY, TRAIT_STRENGTH, TRAIT_STIMMED)
+
+/mob/living/proc/evil_boxing_help()
+	set name = "Focus on Brawling"
+	set desc = "You ponder how best to rearrange the faces of your enemies."
+	set category = "Evil Boxing"
+	to_chat(usr, "<b><i>You contemplate on the violence ahead, visualizing how best to throw a punch.</i></b>")
+
+	to_chat(usr, "<b><i>What moves you perform depend on what mouse buttons you click, and whether the last button clicked matches which hand you have selected when you throw the last punch.</i></b>")
+
+	to_chat(usr, "[span_notice("Straight Punch")]: Left Left/Right Right with the matching hand. Regular damage.")
+	to_chat(usr, "[span_notice("Jab")]: Left Left/Right Right with the opposite hand. Regular damage. If you're blind, you'll make a blind jab instead.")
+	to_chat(usr, "[span_notice("Left/Rigth Hook")]: Left Right/Right Left with the matching hand. Does extra damage, but slows your next hit.")
+	to_chat(usr, "[span_notice("Uppercut")]: Left Right/Right Left with the opposite hand. Has a higher probability to knock out the target, but slows your next hit.")
+	to_chat(usr, "[span_notice("Sucker Punch")]: Any combination done to a vulnerable target becomes a sucker punch. This could knock them out in one!.</b>")
+
+	to_chat(usr, "<b><i>While in Throw Mode, you can block incoming punches and return a bit of damage back to an attacker. Blocking attacks this way causes you to lose some stamina damage.</i></b>")
 
 /// Hunter Boxing: for the uncaring, completely deranged one-spacer ecological disaster.
 /// The honor check accepts boxing ready targets, OR various biotypes as valid targets. Uses a special crit effect rather than the standard one (against monsters).
@@ -390,6 +430,7 @@
 	name = "Hunter Boxing"
 	id = MARTIALART_HUNTER_BOXING
 	pacifist_style = FALSE
+	help_verb = /mob/living/proc/hunter_boxing_help
 	default_damage_type = BRUTE
 	boxing_traits = list(TRAIT_BOXING_READY)
 	/// The mobs we are looking for to pass the honor check
@@ -397,6 +438,24 @@
 	/// Our crit shout words. First word is then paired with a second word to form an attack name.
 	var/list/first_word_strike = list("Extinction", "Brutalization", "Explosion", "Adventure", "Thunder", "Lightning", "Sonic", "Atomizing", "Whirlwind", "Tornado", "Shark", "Falcon")
 	var/list/second_word_strike = list(" Punch", " Pawnch", "-punch", " Jab", " Hook", " Fist", " Uppercut", " Straight", " Strike", " Lunge")
+
+/mob/living/proc/hunter_boxing_help()
+	set name = "Focus on the Hunt"
+	set desc = "You focus on how to most effectively punch the hell out of another endangered species."
+	set category = "Hunter Boxing"
+	to_chat(usr, "<b><i>You focus on your Fists. You focus on Adventure. You focus on the Hunt.</i></b>")
+
+	to_chat(usr, "<b><i>What moves you perform depend on what mouse buttons you click, and whether the last button clicked matches which hand you have selected when you throw the last punch.</i></b>")
+
+	to_chat(usr, "[span_notice("Straight Punch")]: Left Left/Right Right with the matching hand. Regular damage.")
+	to_chat(usr, "[span_notice("Jab")]: Left Left/Right Right with the opposite hand. Regular damage. If you're blind, you'll make a blind jab instead.")
+	to_chat(usr, "[span_notice("Left/Rigth Hook")]: Left Right/Right Left with the matching hand. Does extra damage, but slows your next hit.")
+	to_chat(usr, "[span_notice("Uppercut")]: Left Right/Right Left with the opposite hand. Has a higher probability to critically hit the target, but slows your next hit.</b>")
+
+	to_chat(usr, "<b><i>While in Throw Mode, you can block incoming punches and return a bit of damage back to an attacker. Blocking attacks this way causes you to lose some stamina damage.</i></b>")
+	to_chat(usr, "<b><i>Stringing together effective combos restores some of your health and deals even more damage.</i></b>")
+
+	to_chat(usr, "<b><i>Your hunter boxing abilities are only able to be used on the various flora, fauna and unnatural creatures that reside in this universe. Against normal humanoids, you are just a boxer.</i></b>")
 
 /datum/martial_art/boxing/hunter/honor_check(mob/living/possible_boxer)
 	if(HAS_TRAIT(possible_boxer, TRAIT_BOXING_READY))
