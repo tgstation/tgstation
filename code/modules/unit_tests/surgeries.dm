@@ -153,3 +153,41 @@
 	nullrod.on_selected(null, null, picker)
 
 	TEST_ASSERT(HAS_TRAIT_FROM(nullrod, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT), "Chainsaw nullrod item attachment failed! Item does not have the nodrop trait")
+
+/**
+ * Tests the manipulate_organs step of the organ_manipulation surgery
+ * Only tests the success proc for now
+*/
+/datum/unit_test/organ_manipulation
+
+/datum/unit_test/organ_manipulation/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
+
+	var/datum/surgery/organ_manipulation/surgery = new(patient, BODY_ZONE_CHEST, patient.get_bodypart(BODY_ZONE_CHEST))
+	var/datum/surgery_step/manipulate_organs/manipulate_organs = new
+
+	// Test extracting the stomach organ
+	var/obj/item/organ/stomach/target_stomach = patient.get_organ_slot(ORGAN_SLOT_STOMACH)
+	surgery.target_organ = target_stomach
+	manipulate_organs.implement_type = TOOL_HEMOSTAT
+	var/obj/item/hemostat/hemostat = allocate(/obj/item/hemostat)
+	user.put_in_active_hand(hemostat)
+	manipulate_organs.success(user, patient, BODY_ZONE_CHEST, hemostat, surgery)
+
+	// Ensure the stomach is moved to the turf
+	TEST_ASSERT_EQUAL(patient.get_organ_slot(ORGAN_SLOT_STOMACH), null, "Organ manipulation surgery failed to extract stomach organ from patient")
+	TEST_ASSERT_EQUAL(target_stomach.loc, run_loc_floor_bottom_left, "Organ manipulation surgery failed to move stomach organ to turf after extracting from patient")
+
+	// Ensure the hemostat hasn't moved
+	TEST_ASSERT_NOTEQUAL(user.is_holding_item_of_type(/obj/item/hemostat), FALSE, "Organ manipulation surgery unexpectedly moved a hemostat out of the user's hands after extracting stomach organ from patient")
+
+	// Test inserting a new stomach organ
+	var/obj/item/organ/stomach/stomach = allocate(/obj/item/organ/stomach)
+	user.put_in_active_hand(stomach, forced = TRUE)
+	surgery.target_organ = stomach
+	manipulate_organs.success(user, patient, BODY_ZONE_CHEST, stomach, surgery)
+
+	// Ensure the new stomach is inside the mob
+	TEST_ASSERT_EQUAL(patient.get_organ_slot(ORGAN_SLOT_STOMACH), stomach, "Organ manipulation surgery failed to insert stomach organ into patient")
+	TEST_ASSERT(!user.is_holding(stomach), "Organ manipulation surgery  failed to remove stomach organ from user's hands after inserting into patient")
