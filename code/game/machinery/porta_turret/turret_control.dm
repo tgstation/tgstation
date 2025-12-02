@@ -211,3 +211,4 @@
 	icon_state = "control_frame"
 	result_path = /obj/machinery/turretid
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT)
+	pixel_shift = 30
