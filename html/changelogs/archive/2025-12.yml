@@ -59,3 +59,37 @@
   lelandkemble:
   - spellcheck: abilities that check for consciousness will say you're dead rather
       than unconscious if you're dead
+2025-12-02:
+  ArchBTW:
+  - bugfix: Click dragging something onto a tile with a decal (pool of oil/blood,
+      etc)
+  - code_imp: Add force_move_pulled element; replace respective code with the element
+  Fghj240:
+  - qol: Revolutionaires gain a positive moodlet instead of a negative one when they
+      see a dead head of staff
+  - balance: Regenerative Coma activation thresholds scales with your max hp
+  - balance: Regenerative Coma can be canceled by gaining nosoftcrit before it activates
+  - balance: Toxolysis food scales with the amount of reagents purged
+  - qol: Quick carry and fast medicine properties are now visible on gloves
+  - bugfix: Getting shoved into a wall while stun immune no longer sends a message
+      saying you were knocked down
+  - bugfix: Nooartrium patients and super hulks can no longer pass out from oxygen
+      damage
+  Melbert:
+  - refactor: Refactored item reskinning (the alt-click way), report any oddities
+      with that
+  - rscdel: Deleted the crusher retool kit, now you can just reskin your crusher with
+      alt-click. The Skull skin is still locked behind having the Ashen Skull trophy
+      applied.
+  - bugfix: Stunswords no longer have an incorrect lore blurb
+  - bugfix: Fixed loadout item reskinning's UI
+  ezel:
+  - rscadd: Compact Defibrillator is now a Spy objective
+  - balance: Compact Defib is CMO exclusive again
+  - balance: you can no longer print Defibrillators in techlathe (purchase them via
+      cargo if needed)
+  - map: catwalk defibs trimmed to 4 instead of 6
+  - map: metastation defib added from 3 to 4
+  - map: wawastation defib added from 3 to 4
+  - map: tramstation defib added from 3 to 4
+  - map: nebulastation defibs trimmed from 6 to 4

@@ -1,4 +1,0 @@
-author: "Fghj240"
-delete-after: True
-changes:
-  - bugfix: "Getting shoved into a wall while stun immune no longer sends a message saying you were knocked down"
