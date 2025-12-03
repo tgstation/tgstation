@@ -1,0 +1,6 @@
+author: "FalloutFalcon"
+delete-after: True
+changes:
+  - rscadd: "water and saltwater can be scooped from water turfs"
+  - rscadd: "mineral water (water with minor tox heal), scoop-able from hot-springs"
+  - refactor: "behavior for scooping reagents from plasma turfs has been made generic and reusable"
