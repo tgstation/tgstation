@@ -451,7 +451,7 @@
 #define COMSIG_PROJECTILE_ON_SPAWN_DROP "projectile_on_spawn_drop"
 ///sent to the projectile when spawning the item (shrapnel) that may be embedded: (new_item, victim)
 #define COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED "projectile_on_spawn_embedded"
-///sent to the projectile when successfully embedding into something: (new_item, victim)
+///sent to the projectile when successfully embedding into something
 #define COMSIG_PROJECTILE_ON_EMBEDDED "projectile_on_embedded"
 
 // /obj/vehicle/sealed/car/vim signals
@@ -585,11 +585,6 @@
 
 /// from /obj/machinery/computer/camera_advanced/shuttle_docker/gatherNavComputerOverlays() : (list/images_out)
 #define COMSIG_SHUTTLE_NAV_COMPUTER_IMAGE_REQUESTED "shuttle_nav_computer_image_requested"
-
-/// Sent from /obj/item/organ/wings/functional/proc/open_wings(): (mob/living/carbon/owner)
-#define COMSIG_WINGS_OPENED "wings_opened"
-/// Sent from /obj/item/organ/wings/functional/proc/close_wings(): (mob/living/carbon/owner)
-#define COMSIG_WINGS_CLOSED "wings_closed"
 
 /// Sent from /obj/item/assembly/on_attach(): (atom/holder)
 #define COMSIG_ASSEMBLY_ATTACHED "assembly_attached"

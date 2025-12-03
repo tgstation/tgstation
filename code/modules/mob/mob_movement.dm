@@ -93,7 +93,6 @@
 		return loc_atom.relaymove(mob, direct)
 
 	if(!mob.Process_Spacemove(direct))
-		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVE_NOGRAV, args)
 		return FALSE
 
 	if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_MOVE, args) & COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE)
@@ -270,20 +269,8 @@
 	if(buckled)
 		return TRUE
 
-	if(movement_type & FLYING || HAS_TRAIT(src, TRAIT_FREE_FLOAT_MOVEMENT))
-		return TRUE
-
-	if (HAS_TRAIT(src, TRAIT_NOGRAV_ALWAYS_DRIFT))
-		return FALSE
-
 	var/atom/movable/backup = get_spacemove_backup(movement_dir, continuous_move)
 	if(!backup)
-		return FALSE
-
-	if (SEND_SIGNAL(src, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, movement_dir, continuous_move, backup) & COMPONENT_PREVENT_SPACEMOVE_HALT)
-		return FALSE
-
-	if (drift_handler?.attempt_halt(movement_dir, continuous_move, backup))
 		return FALSE
 
 	if(continuous_move || !istype(backup) || !movement_dir || backup.anchored)
@@ -292,41 +279,29 @@
 	// last pushoff exists for one reason
 	// to ensure pushing a mob doesn't just lead to it considering us as backup, and failing
 	last_pushoff = world.time
-	if(backup.newtonian_move(dir2angle(REVERSE_DIR(movement_dir)), instant = TRUE)) //You're pushing off something movable, so it moves
+	if(backup.newtonian_move(REVERSE_DIR(movement_dir), instant = TRUE)) //You're pushing off something movable, so it moves
 		// We set it down here so future calls to Process_Spacemove by the same pair in the same tick don't lead to fucky
 		backup.last_pushoff = world.time
 		to_chat(src, span_info("You push off of [backup] to propel yourself."))
 	return TRUE
 
-/// We handle lattices via backups
-/mob/handle_spacemove_grabbing()
-	return
-
 /**
  * Finds a target near a mob that is viable for pushing off when moving.
  * Takes the intended movement direction as input, alongside if the context is checking if we're allowed to continue drifting
- * If include_floors is TRUE, includes floors *with gravity*
  */
-/mob/get_spacemove_backup(moving_direction, continuous_move, include_floors = FALSE)
-	var/atom/secondary_backup
-	var/list/priority_dirs = (moving_direction in GLOB.cardinals) ? GLOB.cardinals : GLOB.diagonals
+/mob/get_spacemove_backup(moving_direction, continuous_move)
 	for(var/atom/pushover as anything in range(1, get_turf(src)))
 		if(pushover == src)
 			continue
 		if(isarea(pushover))
 			continue
-		var/is_priority = pushover.loc == loc || (get_dir(src, pushover) in priority_dirs)
 		if(isturf(pushover))
 			var/turf/turf = pushover
 			if(isspaceturf(turf))
 				continue
 			if(!turf.density && !mob_negates_gravity())
-				if (!include_floors || !turf.has_gravity())
-					continue
-			if (is_priority)
-				return pushover
-			secondary_backup = pushover
-			continue
+				continue
+			return pushover
 
 		var/atom/movable/rebound = pushover
 		if(rebound == buckled)
@@ -337,30 +312,24 @@
 				continue
 
 		var/pass_allowed = rebound.CanPass(src, get_dir(rebound, src))
-		if(!rebound.density && pass_allowed && !istype(rebound, /obj/structure/lattice))
+		if(!rebound.density && pass_allowed)
 			continue
 		//Sometime this tick, this pushed off something. Doesn't count as a valid pushoff target
 		if(rebound.last_pushoff == world.time)
 			continue
 		if(continuous_move && !pass_allowed)
-			var/datum/move_loop/smooth_move/rebound_engine = GLOB.move_manager.processing_on(rebound, SSnewtonian_movement)
+			var/datum/move_loop/move/rebound_engine = GLOB.move_manager.processing_on(rebound, SSspacedrift)
 			// If you're moving toward it and you're both going the same direction, stop
-			if(moving_direction == get_dir(src, pushover) && rebound_engine && moving_direction == angle2dir(rebound_engine.angle))
+			if(moving_direction == get_dir(src, pushover) && rebound_engine && moving_direction == rebound_engine.direction)
 				continue
 		else if(!pass_allowed)
 			if(moving_direction == get_dir(src, pushover)) // Can't push "off" of something that you're walking into
 				continue
 		if(rebound.anchored)
-			if (is_priority)
-				return rebound
-			secondary_backup = rebound
-			continue
+			return rebound
 		if(pulling == rebound)
 			continue
-		if (is_priority)
-			return rebound
-		secondary_backup = rebound
-	return secondary_backup
+		return rebound
 
 /mob/has_gravity(turf/gravity_turf)
 	return mob_negates_gravity() || ..()

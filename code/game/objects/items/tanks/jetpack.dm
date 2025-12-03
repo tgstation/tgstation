@@ -14,16 +14,10 @@
 	var/on = FALSE
 	/// If the jetpack will stop when you stop moving
 	var/stabilize = FALSE
-	/// If the jetpack will have a speedboost in space/nograv or not
-	var/full_speed = TRUE
 	/// If our jetpack is disabled, from getting EMPd
 	var/disabled = FALSE
 	/// Callback for the jetpack component
 	var/thrust_callback
-	/// How much force out jetpack can output per tick
-	var/drift_force = 1.5 NEWTONS
-	/// How much force this jetpack can output per tick to stabilize the user
-	var/stabilizer_force = 1.2 NEWTONS
 
 /obj/item/tank/jetpack/Initialize(mapload)
 	. = ..()
@@ -47,8 +41,6 @@
 	AddComponent( \
 		/datum/component/jetpack, \
 		src.stabilize, \
-		drift_force, \
-		stabilizer_force, \
 		COMSIG_JETPACK_ACTIVATED, \
 		COMSIG_JETPACK_DEACTIVATED, \
 		JETPACK_ACTIVATION_FAILED, \
@@ -56,12 +48,6 @@
 		thrust_callback, \
 		/datum/effect_system/trail_follow/ion, \
 	)
-
-	if (!isnull(user) && user.get_item_by_slot(slot_flags) == src)
-		if (!stabilize)
-			ADD_TRAIT(user, TRAIT_NOGRAV_ALWAYS_DRIFT, JETPACK_TRAIT)
-		else
-			REMOVE_TRAIT(user, TRAIT_NOGRAV_ALWAYS_DRIFT, JETPACK_TRAIT)
 
 /obj/item/tank/jetpack/equipped(mob/user, slot, initial)
 	. = ..()
@@ -84,7 +70,7 @@
 		cycle(user)
 	else if(istype(action, /datum/action/item_action/jetpack_stabilization))
 		if(on)
-			configure_jetpack(!stabilize, user)
+			configure_jetpack(!stabilize)
 			to_chat(user, span_notice("You turn the jetpack stabilization [stabilize ? "on" : "off"]."))
 	else
 		toggle_internals(user)
@@ -116,19 +102,12 @@
 		return FALSE
 	on = TRUE
 	update_icon(UPDATE_ICON_STATE)
-	if(full_speed)
-		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
-	if (!stabilize)
-		ADD_TRAIT(user, TRAIT_NOGRAV_ALWAYS_DRIFT, JETPACK_TRAIT)
 	return TRUE
 
 /obj/item/tank/jetpack/proc/turn_off(mob/user)
 	SEND_SIGNAL(src, COMSIG_JETPACK_DEACTIVATED, user)
 	on = FALSE
 	update_icon(UPDATE_ICON_STATE)
-	if(user)
-		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
-		REMOVE_TRAIT(user, TRAIT_NOGRAV_ALWAYS_DRIFT, JETPACK_TRAIT)
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, use_fuel = TRUE)
 	if(!ismob(loc))
@@ -186,9 +165,6 @@
 	worn_icon_state = "jetpack-improvised"
 	volume = 20 //normal jetpacks have 70 volume
 	gas_type = null //it starts empty
-	full_speed = FALSE
-	drift_force = 1 NEWTONS
-	stabilizer_force = 0.5 NEWTONS
 
 /obj/item/tank/jetpack/improvised/allow_thrust(num)
 	if(!ismob(loc))
@@ -225,8 +201,6 @@
 	volume = 90
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //steal objective items are hard to destroy.
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
-	drift_force = 2 NEWTONS
-	stabilizer_force = 2 NEWTONS
 
 /obj/item/tank/jetpack/security
 	name = "security jetpack (oxygen)"

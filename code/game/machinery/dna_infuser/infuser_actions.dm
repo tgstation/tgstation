@@ -54,7 +54,7 @@
 	ink.firer = clicker
 	ink.fire()
 	playsound(clicker, 'sound/items/weapons/pierce.ogg', 20, TRUE, -1)
-	clicker.newtonian_move(get_angle(target, clicker))
+	clicker.newtonian_move(get_dir(target, clicker))
 	StartCooldown()
 	return TRUE
 

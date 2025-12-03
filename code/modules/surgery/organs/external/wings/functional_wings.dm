@@ -1,6 +1,3 @@
-#define FUNCTIONAL_WING_FORCE 2.25 NEWTONS
-#define FUNCTIONAL_WING_STABILIZATION 4.5 NEWTONS
-
 ///hud action for starting and stopping flight
 /datum/action/innate/flight
 	name = "Toggle Flight"
@@ -11,40 +8,25 @@
 /datum/action/innate/flight/Activate()
 	var/mob/living/carbon/human/human = owner
 	var/obj/item/organ/wings/functional/wings = human.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
-	if(wings?.can_fly())
+	if(wings?.can_fly(human))
 		wings.toggle_flight(human)
+		if(!(human.movement_type & FLYING))
+			to_chat(human, span_notice("You settle gently back onto the ground..."))
+		else
+			to_chat(human, span_notice("You beat your wings and begin to hover gently above the ground..."))
+			human.set_resting(FALSE, TRUE)
 
 ///The true wings that you can use to fly and shit (you cant actually shit with them)
 /obj/item/organ/wings/functional
 	///The flight action object
 	var/datum/action/innate/flight/fly
-
 	bodypart_overlay = /datum/bodypart_overlay/mutant/wings/functional
-
 	///Are our wings open or closed?
 	var/wings_open = FALSE
 	///We cant hide this wings in suit
 	var/cant_hide = FALSE
-
 	// grind_results = list(/datum/reagent/flightpotion = 5)
 	food_reagents = list(/datum/reagent/flightpotion = 5)
-
-	var/drift_force = FUNCTIONAL_WING_FORCE
-	var/stabilizer_force = FUNCTIONAL_WING_STABILIZATION
-
-/obj/item/organ/wings/functional/Initialize(mapload)
-	. = ..()
-	AddComponent( \
-		/datum/component/jetpack, \
-		TRUE, \
-		drift_force, \
-		stabilizer_force, \
-		COMSIG_WINGS_OPENED, \
-		COMSIG_WINGS_CLOSED, \
-		null, \
-		CALLBACK(src, PROC_REF(can_fly)), \
-		CALLBACK(src, PROC_REF(can_fly)), \
-	)
 
 /obj/item/organ/wings/functional/Destroy()
 	QDEL_NULL(fly)
@@ -52,7 +34,6 @@
 
 /obj/item/organ/wings/functional/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
-
 	if(QDELETED(fly))
 		fly = new
 	fly.Grant(receiver)
@@ -69,9 +50,9 @@
 
 ///Called on_life(). Handle flight code and check if we're still flying
 /obj/item/organ/wings/functional/proc/handle_flight(mob/living/carbon/human/human)
-	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLOATING, SPECIES_FLIGHT_TRAIT))
+	if(!(human.movement_type & FLYING))
 		return FALSE
-	if(!can_fly())
+	if(!can_fly(human))
 		toggle_flight(human)
 		return FALSE
 	return TRUE
@@ -120,49 +101,34 @@
 
 ///UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
 /obj/item/organ/wings/functional/proc/toggle_flight(mob/living/carbon/human/human)
-	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLOATING, SPECIES_FLIGHT_TRAIT))
+	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT))
 		human.physiology.stun_mod *= 2
-		human.add_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SPECIES_FLIGHT_TRAIT)
-		human.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
-		human.AddElement(/datum/element/forced_gravity, 0)
+		human.add_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), SPECIES_FLIGHT_TRAIT)
 		passtable_on(human, SPECIES_FLIGHT_TRAIT)
 		open_wings()
-		to_chat(human, span_notice("You beat your wings and begin to hover gently above the ground..."))
-		human.set_resting(FALSE, TRUE)
-		human.refresh_gravity()
-		return
 
+	human.remove_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), SPECIES_FLIGHT_TRAIT)
 	human.physiology.stun_mod *= 0.5
-	human.remove_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SPECIES_FLIGHT_TRAIT)
-	human.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
-	human.RemoveElement(/datum/element/forced_gravity, 0)
 	passtable_off(human, SPECIES_FLIGHT_TRAIT)
-	to_chat(human, span_notice("You settle gently back onto the ground..."))
 	close_wings()
 	human.refresh_gravity()
 
-///SPREAD OUR WINGS AND FLLLLLYYYYYY
 /obj/item/organ/wings/functional/proc/open_wings()
 	var/datum/bodypart_overlay/mutant/wings/functional/overlay = bodypart_overlay
 	overlay.open_wings()
 	wings_open = TRUE
 	owner.update_body_parts()
-	SEND_SIGNAL(src, COMSIG_WINGS_OPENED, owner)
 
-///close our wings
 /obj/item/organ/wings/functional/proc/close_wings()
 	var/datum/bodypart_overlay/mutant/wings/functional/overlay = bodypart_overlay
 	wings_open = FALSE
 	overlay.close_wings()
 	owner.update_body_parts()
-
 	if(isturf(owner?.loc))
 		var/turf/location = loc
 		location.Entered(src, NONE)
 
-	SEND_SIGNAL(src, COMSIG_WINGS_CLOSED, owner)
-
-///Bodypart overlay of function wings, including open and close functionality!
+///Bodypart overlay of function wings, including open and close functionality
 /datum/bodypart_overlay/mutant/wings/functional
 	///Are our wings currently open? Change through open_wings or close_wings()
 	VAR_PRIVATE/wings_open = FALSE
@@ -188,59 +154,54 @@
 	. = ..()
 	. += wings_open ? "open" : "closed"
 
-///angel wings, which relate to humans. comes with holiness.
+///angel wings, which relate to humans. comes with holiness
 /obj/item/organ/wings/functional/angel
 	name = "angel wings"
 	desc = "Holier-than-thou attitude not included."
 	sprite_accessory_override = /datum/sprite_accessory/wings_open/angel
-
 	organ_traits = list(TRAIT_HOLY)
 
-///dragon wings, which relate to lizards.
+///dragon wings, which relate to lizards
 /obj/item/organ/wings/functional/dragon
 	name = "dragon wings"
 	desc = "Hey, HEY- NOT lizard wings. Dragon wings. Mighty dragon wings."
 	sprite_accessory_override = /datum/sprite_accessory/wings/dragon
 
-///robotic wings, which relate to androids.
+///robotic wings, which relate to androids
 /obj/item/organ/wings/functional/robotic
 	name = "robotic wings"
 	desc = "Using microscopic hover-engines, or \"microwings,\" as they're known in the trade, these tiny devices are able to lift a few grams at a time. Gather enough of them, and you can lift impressively large things."
 	organ_flags = ORGAN_ROBOTIC
 	sprite_accessory_override = /datum/sprite_accessory/wings/robotic
 
-///skeletal wings, which relate to skeletal races.
+///skeletal wings, which relate to skeletal races
 /obj/item/organ/wings/functional/skeleton
 	name = "skeletal wings"
 	desc = "Powered by pure edgy-teenager-notebook-scribblings. Just kidding. But seriously, how do these keep you flying?!"
 	sprite_accessory_override = /datum/sprite_accessory/wings/skeleton
-
 /obj/item/organ/wings/functional/moth/make_flap_sound(mob/living/carbon/wing_owner)
 	playsound(wing_owner, 'sound/mobs/humanoids/moth/moth_flutter.ogg', 50, TRUE)
 
-///mothra wings, which relate to moths.
+///mothra wings, which relate to moths
 /obj/item/organ/wings/functional/moth/mothra
 	name = "mothra wings"
 	desc = "Fly like the mighty mothra of legend once did."
 	sprite_accessory_override = /datum/sprite_accessory/wings/mothra
 
-///megamoth wings, which relate to moths as an alternate choice. they're both pretty cool.
+///megamoth wings, which relate to moths as an alternate choice
 /obj/item/organ/wings/functional/moth/megamoth
 	name = "megamoth wings"
 	desc = "Don't get murderous."
 	sprite_accessory_override = /datum/sprite_accessory/wings/megamoth
 
-///fly wings, which relate to flies.
+///fly wings, which relate to flies
 /obj/item/organ/wings/functional/fly
 	name = "fly wings"
 	desc = "Fly as a fly."
 	sprite_accessory_override = /datum/sprite_accessory/wings/fly
 
-///slime wings, which relate to slimes.
+///slime wings, which relate to slimes
 /obj/item/organ/wings/functional/slime
 	name = "slime wings"
 	desc = "How does something so squishy even fly?"
 	sprite_accessory_override = /datum/sprite_accessory/wings/slime
-
-#undef FUNCTIONAL_WING_FORCE
-#undef FUNCTIONAL_WING_STABILIZATION

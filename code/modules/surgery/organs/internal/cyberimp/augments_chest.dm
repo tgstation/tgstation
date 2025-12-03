@@ -175,8 +175,6 @@
 	AddComponent( \
 		/datum/component/jetpack, \
 		FALSE, \
-		1.5 NEWTONS, \
-		1.2 NEWTONS, \
 		COMSIG_THRUSTER_ACTIVATED, \
 		COMSIG_THRUSTER_DEACTIVATED, \
 		THRUSTER_ACTIVATION_FAILED, \

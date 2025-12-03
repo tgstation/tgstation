@@ -34,8 +34,6 @@
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
 	///pacifism check for boolet, set to FALSE if bullet is non-lethal
 	var/harmful = TRUE
-	/// How much force is applied when fired in zero-G
-	var/newtonian_force = 1
 
 	///If set to true or false, this ammunition can or cannot misfire, regardless the gun can_misfire setting
 	var/can_misfire = null

@@ -12,8 +12,8 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	pass_flags = PASSTABLE | PASSGRILLE
 	anchored = TRUE
 
-// Prevents effects from getting registered for SSnewtonian_movement
-/obj/effect/particle_effect/newtonian_move(inertia_angle, instant = FALSE, start_delay = 0, drift_force = 0, controlled_cap = null)
+// Prevents effects from getting registered for SSspacedrift
+/obj/effect/particle_effect/newtonian_move(direction, instant = FALSE, start_delay = 0)
 	return TRUE
 
 /datum/effect_system

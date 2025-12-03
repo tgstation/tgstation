@@ -8,7 +8,6 @@
 	base_icon_state = "foamdart"
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1125)
 	harmful = FALSE
-	newtonian_force = 0.5
 	embed_type = /datum/embedding/foam_dart
 	var/modified = FALSE
 	var/static/list/insertable_items_hint = list(/obj/item/pen)

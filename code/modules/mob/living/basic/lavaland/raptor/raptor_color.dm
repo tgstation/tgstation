@@ -163,10 +163,6 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	var/wings_open = FALSE
 	/// Wings underlay added to the owner, because human rendering code is a mess
 	var/mutable_appearance/wings_underlay = null
-	/// Our drift force
-	var/drift_force = 2 NEWTONS
-	/// Our stabilizing force
-	var/stabilizer_force = 4.5 NEWTONS
 
 /obj/item/mob_holder/purple_raptor/Initialize(mapload, mob/living/held_mob, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags)
 	. = ..()
@@ -192,8 +188,6 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	AddComponent( \
 		/datum/component/jetpack, \
 		TRUE, \
-		drift_force, \
-		stabilizer_force, \
 		COMSIG_RAPTOR_WINGS_OPENED, \
 		COMSIG_RAPTOR_WINGS_CLOSED, \
 		null, \
@@ -270,7 +264,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 		wings_underlay = user.apply_height_offsets(mutable_appearance(worn_icon, "raptor_purple_wings", -BODY_BEHIND_LAYER, user), UPPER_BODY)
 		user.add_overlay(wings_underlay)
 		user.physiology.stun_mod *= 2
-		user.add_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), REF(src))
+		user.add_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY), REF(src))
 		if (struggling)
 			user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor/slow)
 		else
@@ -288,7 +282,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	user.cut_overlay(wings_underlay)
 	QDEL_NULL(wings_underlay)
 	user.physiology.stun_mod *= 0.5
-	user.remove_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), REF(src))
+	user.remove_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY), REF(src))
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor/slow)
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor)
 	user.RemoveElement(/datum/element/forced_gravity, 0)

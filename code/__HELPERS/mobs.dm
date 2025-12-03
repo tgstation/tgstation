@@ -226,7 +226,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 	var/atom/target_loc = target?.loc
 
 	var/drifting = FALSE
-	if(!isnull(user.drift_handler))
+	if(GLOB.move_manager.processing_on(user, SSspacedrift))
 		drifting = TRUE
 
 	var/holding = user.get_active_held_item()
@@ -259,7 +259,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		if(!QDELETED(progbar))
 			progbar.update(world.time - starttime)
 
-		if(drifting && isnull(user.drift_handler))
+		if(drifting && !GLOB.move_manager.processing_on(user, SSspacedrift))
 			drifting = FALSE
 			user_loc = user.loc
 

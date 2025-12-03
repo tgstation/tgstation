@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(movement)
 		return // Still work to be done
 	var/bucket_time = bucket_info[MOVEMENT_BUCKET_TIME]
 	smash_bucket(1, bucket_time) // We assume we're the first bucket in the queue right now
-	visual_delay = MC_AVERAGE_FAST(visual_delay, max((world.time - canonical_time) / TICKS2DS(wait), 1))
+	visual_delay = MC_AVERAGE_FAST(visual_delay, max((world.time - canonical_time) / wait, 1))
 
 /// Removes a bucket from our system. You only need to pass in the time, but if you pass in the index of the list you save us some work
 /datum/controller/subsystem/movement/proc/smash_bucket(index, bucket_time)
@@ -108,7 +108,7 @@ SUBSYSTEM_DEF(movement)
 
 /datum/controller/subsystem/movement/proc/dequeue_loop(datum/move_loop/loop)
 	// Go home, you're not here anyway
-	if(!(loop.status & MOVELOOP_STATUS_QUEUED))
+	if(!(loop.status & MOVELOOP_STATUS_QUEUED) || isnull(loop.queued_time))
 		return
 	if(isnull(loop.queued_time)) // This happens if a moveloop is dequeued while handling process()
 		loop.status &= ~MOVELOOP_STATUS_QUEUED

@@ -5,12 +5,6 @@
 /datum/movespeed_modifier/jetpack/cybernetic
 	multiplicative_slowdown = -0.3
 
-/datum/movespeed_modifier/jetpack/full_speed
-	multiplicative_slowdown = -0.3
-
-/datum/movespeed_modifier/jetpack/wings
-	multiplicative_slowdown = -0.3
-
 /datum/movespeed_modifier/jetpack/raptor
 	multiplicative_slowdown = 0.2
 

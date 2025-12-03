@@ -34,10 +34,8 @@
 	var/speech_span
 	///Are we moving with inertia? Mostly used as an optimization
 	var/inertia_moving = FALSE
-	///Multiplier for inertia based movement in space
-	var/inertia_move_multiplier = 1
-	///Object "weight", higher weight reduces acceleration applied to the object
-	var/inertia_force_weight = 1
+	///Delay in deciseconds between inertia based movement
+	var/inertia_move_delay  = 5
 	///The last time we pushed off something
 	///This is a hack to get around dumb him him me scenarios
 	var/last_pushoff
@@ -106,9 +104,6 @@
 
 	/// The pitch adjustment that this movable uses when speaking.
 	var/pitch = 0
-
-	/// Datum that keeps all data related to zero-g drifting and handles related code/comsigs
-	var/datum/drift_handler/drift_handler
 
 	/// The filter to apply to the voice when processing the TTS audio message.
 	var/voice_filter = ""
@@ -203,7 +198,6 @@
 /atom/movable/Destroy(force)
 	QDEL_NULL(language_holder)
 	QDEL_NULL(em_block)
-	QDEL_NULL(drift_handler)
 
 	unbuckle_all_mobs(force = TRUE)
 
@@ -777,7 +771,7 @@
 				if(!. && set_dir_on_move && update_dir)
 					setDir(first_step_dir)
 				else if(!inertia_moving)
-					newtonian_move(dir2angle(direct))
+					newtonian_move(direct)
 				if(client_mobs_in_contents)
 					update_parallax_contents()
 			moving_diagonally = 0
@@ -851,8 +845,8 @@
 /atom/movable/proc/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if (!moving_diagonally && !inertia_moving && momentum_change && movement_dir)
-		newtonian_move(dir2angle(movement_dir))
+	if (!inertia_moving && momentum_change)
+		newtonian_move(movement_dir)
 	// If we ain't moving diagonally right now, update our parallax
 	// We don't do this all the time because diag movements should trigger one call to this, not two
 	// Waste of cpu time, and it fucks the animate
@@ -1269,30 +1263,21 @@
 	if(!isturf(loc))
 		return TRUE
 
-	if (handle_spacemove_grabbing())
+	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
 		return TRUE
 
 	return FALSE
 
-/atom/movable/proc/handle_spacemove_grabbing()
-	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
-		return TRUE
-
 /// Only moves the object if it's under no gravity
 /// Accepts the direction to move, if the push should be instant, and an optional parameter to fine tune the start delay
-/// Drift force determines how much acceleration should be applied. Controlled cap, if set, will ensure that if the object was moving slower than the cap before, it cannot accelerate past the cap from this move.
-/atom/movable/proc/newtonian_move(inertia_angle, instant = FALSE, start_delay = 0, drift_force = 1 NEWTONS, controlled_cap = null, force_loop = TRUE)
-	if(!isturf(loc) || Process_Spacemove(angle2dir(inertia_angle), continuous_move = TRUE))
+/atom/movable/proc/newtonian_move(direction, instant = FALSE, start_delay = 0)
+	if(!isturf(loc) || Process_Spacemove(direction, continuous_move = TRUE))
 		return FALSE
 
-	if (!isnull(drift_handler))
-		if (drift_handler.newtonian_impulse(inertia_angle, start_delay, drift_force, controlled_cap, force_loop))
-			return TRUE
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_NEWTONIAN_MOVE, direction, start_delay) & COMPONENT_MOVABLE_NEWTONIAN_BLOCK)
+		return TRUE
 
-	new /datum/drift_handler(src, inertia_angle, instant, start_delay, drift_force)
-	// Something went wrong and it failed to create itself, most likely we have a higher priority loop already
-	if (QDELETED(drift_handler))
-		return FALSE
+	AddComponent(/datum/component/drift, direction, instant, start_delay)
 	return TRUE
 
 /atom/movable/set_explosion_block(explosion_block)
@@ -1476,7 +1461,6 @@
 	return
 
 /atom/movable/proc/get_spacemove_backup()
-	var/atom/secondary_backup
 	for(var/checked_range in orange(1, get_turf(src)))
 		if(isarea(checked_range))
 			continue
@@ -1484,18 +1468,12 @@
 			var/turf/turf = checked_range
 			if(!turf.density)
 				continue
-			if (get_dir(src, turf) in GLOB.cardinals)
-				return turf
-			secondary_backup = turf
-			continue
+			return turf
 		var/atom/movable/checked_atom = checked_range
 		if(checked_atom.density || !checked_atom.CanPass(src, get_dir(src, checked_atom)))
 			if(checked_atom.last_pushoff == world.time)
 				continue
-			if (get_dir(src, checked_atom) in GLOB.cardinals)
-				return checked_atom
-			secondary_backup = checked_atom
-	return secondary_backup
+			return checked_atom
 
 ///called when a mob resists while inside a container that is itself inside something.
 /atom/movable/proc/relay_container_resist_act(mob/living/user, obj/container)

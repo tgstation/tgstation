@@ -4,7 +4,6 @@
 	icon_state = "magspear"
 	base_icon_state = "magspear"
 	projectile_type = /obj/projectile/bullet/harpoon
-	newtonian_force = 1.5
 
 /obj/item/ammo_casing/harpoon/Initialize(mapload)
 	. = ..()

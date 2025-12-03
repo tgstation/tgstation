@@ -49,7 +49,6 @@
 /obj/item/ammo_casing/energy/meteor
 	projectile_type = /obj/projectile/meteor
 	select_name = "goddamn meteor"
-	newtonian_force = 3
 
 /obj/item/ammo_casing/energy/scatter
 	projectile_type = /obj/projectile/beam/disabler/scatter
@@ -80,7 +79,6 @@
 	select_name = "marksman nanoshot"
 	e_cost = 0 // Can't use the macro
 	fire_sound = 'sound/items/weapons/gun/revolver/shot_alt.ogg'
-	newtonian_force = 1
 
 /obj/item/ammo_casing/energy/fisher
 	projectile_type = /obj/projectile/energy/fisher

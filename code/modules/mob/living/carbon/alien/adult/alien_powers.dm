@@ -298,7 +298,7 @@ Doesn't work on other aliens/AI.*/
 	neurotoxin.aim_projectile(target, clicker, modifiers)
 	neurotoxin.firer = clicker
 	neurotoxin.fire()
-	clicker.newtonian_move(get_angle(target, clicker))
+	clicker.newtonian_move(get_dir(target, caller))
 	return TRUE
 
 // Has to return TRUE, otherwise is skipped.
