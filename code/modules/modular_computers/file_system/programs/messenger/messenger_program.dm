@@ -598,6 +598,13 @@
 	for(var/datum/computer_file/program/messenger/messenger as anything in targets)
 		stringified_targets += get_messenger_name(messenger)
 
+	var/sent_prob = 0
+	if(ishuman(user))
+		var/mob/living/carbon/human/old_person = user
+		sent_prob = 0.01 * (old_person.age ** 1.5)
+	if (computer && prob(sent_prob))
+		message = "[message] [computer.get_messenger_ending()]"
+
 	var/datum/signal/subspace/messaging/tablet_message/signal = new(computer, list(
 		"ref" = REF(src),
 		"message" = message,
