@@ -588,9 +588,10 @@
 	w_class = WEIGHT_CLASS_BULKY
 	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
 	var/stored_blade
-	actions_types = list(/datum/action/cooldown/spell/pointed/blade_counter)
+	actions_types = list(/datum/action/innate/blade_counter)
 	action_slots = ITEM_SLOT_BELT
 	COOLDOWN_DECLARE(resheath_cooldown)
+	COOLDOWN_DECLARE(full_ability_cooldown)
 
 /obj/item/storage/belt/sheath/Initialize(mapload)
 	. = ..()
@@ -635,31 +636,28 @@
 	SIGNAL_HANDLER
 	COOLDOWN_START(src, resheath_cooldown, 10 SECONDS)
 
-/datum/action/cooldown/spell/pointed/blade_counter
+/datum/action/innate/blade_counter
 	name = "Counterattack"
 	desc = "Anticipate an enemy's attack and strike back with your sheathed blade."
+	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "declaration"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/honorbound.dmi'
 
-	cooldown_time = 60 SECONDS
-	spell_requirements = NONE
-	antimagic_flags = NONE
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_LYING
+	enable_text = "You prepare to counterattack a target..."
+	disable_text = "You relax your stance."
 
-	active_msg = "You prepare to counterattack a target..."
-	deactive_msg = "You relax your stance."
-	cast_range = 2
+	click_action = TRUE
 
 	var/datum/weakref/blade_sheath_ref
 	var/datum/weakref/eyed_fool
 
-/datum/action/cooldown/spell/pointed/blade_counter/can_cast_spell(feedback = TRUE)
+/datum/action/innate/blade_counter/IsAvailable(feedback = TRUE)
 	if(!isliving(owner))
 		return FALSE
 	var/obj/item/storage/belt/sheath/owners_sheath = owner.get_item_by_slot(ITEM_SLOT_BELT)
-	if(!istype(owners_sheath, /obj/item/storage/belt/sheath))
+	if(!COOLDOWN_FINISHED(owners_sheath, full_ability_cooldown))
 		if(feedback)
-			to_chat(owner, span_warning("You must wear your sheath on your hip to draw it quickly!"))
+			to_chat(owner, span_warning("You failed a counterattack too recently!"))
 		return FALSE
 	if(!length(owners_sheath.contents))
 		if(feedback)
@@ -672,10 +670,7 @@
 	blade_sheath_ref = WEAKREF(owners_sheath)
 	return TRUE
 
-/datum/action/cooldown/spell/pointed/blade_counter/is_valid_target(atom/cast_on)
-	. = ..()
-	if(!.)
-		return FALSE
+/datum/action/innate/blade_counter/proc/final_checks(atom/cast_on)
 	if(!isliving(cast_on))
 		return FALSE
 	var/mob/living/target = cast_on
@@ -689,26 +684,29 @@
 		return FALSE
 	return TRUE
 
-/datum/action/cooldown/spell/pointed/blade_counter/cast(mob/living/cast_on)
-	. = ..()
-	var/mob/living/swordsman = owner
+/datum/action/innate/blade_counter/do_ability(mob/living/swordsman, mob/living/cast_on)
+	if(!final_checks(cast_on))
+		return FALSE
+	var/obj/item/storage/belt/sheath/used_sheath = blade_sheath_ref.resolve()
 	RegisterSignal(swordsman, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(counter_attack))
 	swordsman.Immobilize(1 SECONDS)
 	eyed_fool = WEAKREF(cast_on)
 	swordsman.visible_message(span_danger("[swordsman] widens [p_their(swordsman)] stance, [p_their(swordsman)] hand hovering over \the [src]!"), span_notice("You prepare to counterattack [cast_on]!"))
 	addtimer(CALLBACK(src, PROC_REF(relax), swordsman), 1 SECONDS)
+	COOLDOWN_START(used_sheath, full_ability_cooldown, 60 SECONDS)
+	unset_ranged_ability(swordsman)
 
 #define COUNTERMULTIPLIER 3
 
-/datum/action/cooldown/spell/pointed/blade_counter/proc/counter_attack(mob/living/forward_thinker, atom/attackingthing)
+/datum/action/innate/blade_counter/proc/counter_attack(mob/living/forward_thinker, atom/attackingthing)
 	SIGNAL_HANDLER
-	var/obj/item/storage/belt/sheath/our_sheath = blade_sheath_ref.resolve()
-	if(!our_sheath || !length(our_sheath.contents))
+	var/obj/item/storage/belt/sheath/used_sheath = blade_sheath_ref.resolve()
+	if(!used_sheath || !length(used_sheath.contents))
 		return FAILED_BLOCK
 
-	var/obj/item/justicetool = our_sheath.contents[1]
+	var/obj/item/justicetool = used_sheath.contents[1]
 	var/mob/living/fool = isliving(attackingthing) ? attackingthing : attackingthing.loc
-	if(our_sheath.loc != forward_thinker || fool != eyed_fool.resolve() || !forward_thinker.put_in_active_hand(justicetool))
+	if(used_sheath.loc != forward_thinker || fool != eyed_fool.resolve() || !forward_thinker.put_in_active_hand(justicetool))
 		return FAILED_BLOCK
 	var/obj/item/bodypart/offending_hand = fool.get_active_hand()
 	fool.apply_damage(
@@ -724,12 +722,12 @@
 	)
 	playsound(forward_thinker, 'sound/items/unsheath.ogg', 50, TRUE)
 	forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [p_their(fool)] attack!"), span_notice("You swiftly draw \the [justicetool] and counter-attack [fool]!"))
-	ResetCooldown()
+	COOLDOWN_RESET(used_sheath, full_ability_cooldown)
 	return SUCCESSFUL_BLOCK
 
 #undef COUNTERMULTIPLIER
 
-/datum/action/cooldown/spell/pointed/blade_counter/proc/relax(mob/living/holder)
+/datum/action/innate/blade_counter/proc/relax(mob/living/holder)
 	UnregisterSignal(holder, COMSIG_LIVING_CHECK_BLOCK)
 
 /obj/item/storage/belt/sheath/sabre
