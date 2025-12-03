@@ -81,3 +81,50 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	category = CAT_FURNITURE
 	time = 10 SECONDS
+
+/datum/crafting_recipe/lamp
+	name = "Desk Lamp"
+	result = /obj/item/flashlight/lamp
+	time = 1 SECONDS
+	reqs = list(
+		/obj/item/flashlight = 1,
+		/obj/item/stack/sheet/iron = 1,
+		/obj/item/light/bulb = 1,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	category = CAT_FURNITURE
+
+/datum/crafting_recipe/lamp/New()
+	. = ..()
+	blacklist += subtypesof(/obj/item/flashlight)
+
+/datum/crafting_recipe/green_lamp
+	name = "Green Desk Lamp"
+	result = /obj/item/flashlight/lamp/green
+	time = 1 SECONDS
+	reqs = list(
+		/obj/item/flashlight = 1,
+		/obj/item/stack/sheet/iron = 1,
+		/obj/item/light/tube = 1,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	category = CAT_FURNITURE
+
+/datum/crafting_recipe/lamp/New()
+	. = ..()
+	blacklist += subtypesof(/obj/item/flashlight)
+
+/datum/crafting_recipe/banana_lamp
+	name = "Banana Lamp"
+	result = /obj/item/flashlight/lamp/bananalamp
+	time = 1 SECONDS
+	reqs = list(
+		/obj/item/flashlight/lamp = 1,
+		/obj/item/grown/bananapeel = 1,
+	)
+	blacklist = list(
+		/obj/item/flashlight/lamp/bananalamp,
+		/obj/item/flashlight/lamp/space_bubble,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	category = CAT_FURNITURE
