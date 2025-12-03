@@ -204,7 +204,7 @@
 	var/mob/living/organ_receiver = target
 	// bodyparts actually *do* hit a specific bodypart, but random variance would make this projectile unusable
 	// so we just fake it, and assume the organ always hits the place it needs to go
-	var/obj/item/bodypart/fake_hit_part = organ_receiver.get_bodypart(organ.zone)
+	var/obj/item/bodypart/fake_hit_part = organ_receiver.get_bodypart(length(organ.valid_zones) ? pick(organ.valid_zones) : deprecise_zone(organ.zone))
 	if(!LIMB_HAS_SURGERY_STATE(fake_hit_part, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED))
 		organ.forceMove(drop_location())
 		return
