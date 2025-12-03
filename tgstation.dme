@@ -1638,6 +1638,7 @@
 #include "code\datums\elements\radioactive.dm"
 #include "code\datums\elements\ranged_armour.dm"
 #include "code\datums\elements\raptor_food.dm"
+#include "code\datums\elements\reagent_scoopable_atom.dm"
 #include "code\datums\elements\reagents_heated_on_fire.dm"
 #include "code\datums\elements\reagents_item_heatable.dm"
 #include "code\datums\elements\regal_rat_minion.dm"
