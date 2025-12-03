@@ -170,7 +170,7 @@
 	reqs = list(
 		/datum/reagent/saltpetre = 5,
 		/datum/reagent/aluminium = 5,
-		/obj/item/stack/sheet/cardboard = 1,
+		/obj/item/stack/sheet/plastic = 1,
 	)
 	result = /obj/item/flashlight/flare
 	category = CAT_EQUIPMENT

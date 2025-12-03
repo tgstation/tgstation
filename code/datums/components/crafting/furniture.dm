@@ -91,6 +91,7 @@
 		/obj/item/stack/sheet/iron = 1,
 		/obj/item/light/bulb = 1,
 	)
+	requirements_mats_blacklist = list(/obj/item/stack/sheet/glass)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	category = CAT_FURNITURE
 
@@ -107,6 +108,7 @@
 		/obj/item/stack/sheet/iron = 1,
 		/obj/item/light/tube = 1,
 	)
+	requirements_mats_blacklist = list(/obj/item/stack/sheet/glass)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	category = CAT_FURNITURE
 
@@ -125,6 +127,10 @@
 	blacklist = list(
 		/obj/item/flashlight/lamp/bananalamp,
 		/obj/item/flashlight/lamp/space_bubble,
+	)
+	requirements_mats_blacklist = list(
+		/obj/item/stack/sheet/iron,
+		/obj/item/stack/sheet/glass,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	category = CAT_FURNITURE
