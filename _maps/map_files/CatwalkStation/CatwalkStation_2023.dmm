@@ -1665,6 +1665,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/suit_storage_unit/medical,
+/obj/effect/turf_decal/bot_white{
+	color = "#52B4E9"
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/storage)
 "axr" = (
@@ -9970,7 +9974,7 @@
 	pixel_x = 7;
 	pixel_y = 8
 	},
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -13939,7 +13943,7 @@
 /obj/item/stamp/denied{
 	pixel_x = 6
 	},
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = -4
 	},
 /turf/open/floor/carpet/executive,
@@ -21120,10 +21124,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/cafeteria)
-"fTF" = (
-/obj/structure/sign/warning/radiation,
-/turf/closed/wall/r_wall,
-/area/station/engineering/main)
 "fTM" = (
 /obj/structure/chair,
 /obj/effect/turf_decal/tile/dark_blue{
@@ -41248,11 +41248,11 @@
 /turf/open/openspace,
 /area/station/science/research)
 "loB" = (
-/obj/machinery/suit_storage_unit/medical,
+/obj/machinery/status_display/evac/directional/south,
 /obj/effect/turf_decal/bot_white{
 	color = "#52B4E9"
 	},
-/obj/machinery/status_display/evac/directional/south,
+/obj/structure/closet/secure_closet/medical3,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/storage)
 "loI" = (
@@ -46563,12 +46563,6 @@
 	network = list("ss13","medbay")
 	},
 /obj/structure/closet/secure_closet/medical3,
-/obj/item/defibrillator/loaded,
-/obj/item/clothing/glasses/hud/health{
-	pixel_y = 13
-	},
-/obj/item/clothing/gloves/latex/nitrile,
-/obj/item/clothing/gloves/latex/nitrile,
 /obj/effect/turf_decal/bot_white{
 	color = "#52B4E9"
 	},
@@ -46871,7 +46865,7 @@
 	pixel_x = -5;
 	pixel_y = -1
 	},
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = 13;
 	pixel_y = 12
 	},
@@ -55782,9 +55776,6 @@
 /turf/open/openspace,
 /area/station/engineering/atmos/project)
 "ppa" = (
-/obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
-	dir = 4
-	},
 /obj/structure/cable,
 /turf/closed/wall,
 /area/station/medical/surgery)
@@ -62992,7 +62983,7 @@
 	pixel_x = -1;
 	pixel_y = 11
 	},
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = -3;
 	pixel_y = 1
 	},
@@ -70953,6 +70944,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/structure/sign/warning/radiation/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
 "tFD" = (
@@ -75059,7 +75051,7 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -75986,16 +75978,9 @@
 "uUK" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/structure/closet/secure_closet/medical3,
-/obj/item/clothing/gloves/latex/nitrile,
-/obj/item/defibrillator/loaded,
-/obj/item/clothing/glasses/hud/health{
-	pixel_y = 13
-	},
-/obj/item/clothing/gloves/latex/nitrile,
 /obj/effect/turf_decal/bot_white{
 	color = "#52B4E9"
 	},
-/obj/item/clothing/gloves/latex/nitrile,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/storage)
 "uUL" = (
@@ -76664,7 +76649,7 @@
 	pixel_x = -6;
 	pixel_y = -7
 	},
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = 7;
 	pixel_y = -1
 	},
@@ -83764,7 +83749,7 @@
 	pixel_x = 5;
 	pixel_y = 6
 	},
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = -7;
 	pixel_y = 2
 	},
@@ -87630,17 +87615,10 @@
 /area/station/ai/satellite/maintenance/storage)
 "yee" = (
 /obj/structure/closet/secure_closet/medical3,
-/obj/item/clothing/gloves/latex/nitrile,
-/obj/item/defibrillator/loaded,
-/obj/item/clothing/glasses/hud/health{
-	pixel_y = 13
-	},
-/obj/item/clothing/gloves/latex/nitrile,
 /obj/effect/turf_decal/bot_white{
 	color = "#52B4E9"
 	},
 /obj/machinery/newscaster/directional/south,
-/obj/item/clothing/gloves/latex/nitrile,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/storage)
 "yeg" = (
@@ -130707,7 +130685,7 @@ wrQ
 wrQ
 wrQ
 tFC
-fTF
+jSf
 dnb
 gym
 inI

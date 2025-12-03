@@ -1,8 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "all mounted objects on tables, fences, windows & walls should fall of correctly when the atom it is placed on is destroyed"
-  - bugfix: "security telescreen now falls off when their mounted wall is destroyed"
-  - bugfix: "defib wall mount falls off when their mounted wall is destroyed"
-  - bugfix: "floor lights are mounted to the ground/catwalk/tram floor they are sitting on meaning destroying it will destroy the light"
-  - bugfix: "wall mounted plaques now fall off when their mounted wall is destroyed"

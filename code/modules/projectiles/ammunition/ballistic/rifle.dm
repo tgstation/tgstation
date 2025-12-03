@@ -62,7 +62,8 @@
 	icon_state = "rod_sharp"
 	base_icon_state = "rod_sharp"
 	projectile_type = /obj/projectile/bullet/rebar
-
+  custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
+  
 /obj/item/ammo_casing/rebar/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/caseless, TRUE)
@@ -102,6 +103,7 @@
 	icon_state = "rod_healium"
 	base_icon_state =  "rod_healium"
 	projectile_type = /obj/projectile/bullet/rebar/healium
+	custom_materials = null
 	/// How many seconds of healing/sleeping action we have left, once all are spent the bolt dissolves
 	var/heals_left = 6 SECONDS
 
@@ -178,3 +180,4 @@
 	icon_state = "paperball"
 	base_icon_state = "paperball"
 	projectile_type = /obj/projectile/bullet/paperball
+  custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)

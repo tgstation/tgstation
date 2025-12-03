@@ -165,6 +165,7 @@
 	worn_icon_state = "jetpack-improvised"
 	volume = 20 //normal jetpacks have 70 volume
 	gas_type = null //it starts empty
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4.4, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 
 /obj/item/tank/jetpack/improvised/allow_thrust(num)
 	if(!ismob(loc))

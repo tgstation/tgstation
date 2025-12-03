@@ -122,8 +122,8 @@
 	/* REMOTE CONTROL */
 	/// Equipment that the AI is controlling remotely, to determine whether to relaymove or use the AI eye
 	VAR_FINAL/obj/controlled_equipment
-	/// AI core that this AI is linked to, used when put into an exosuit
-	VAR_FINAL/obj/structure/ai_core/deactivated/linked_core
+	/// AI core that this AI is linked to. See [proc/create_core_link] [proc/resolve_core_link] [proc/break_core_link]
+	VAR_FINAL/obj/structure/ai_core/linked_core
 	/// Robot that this AI is currently using
 	VAR_FINAL/mob/living/silicon/robot/deployed_shell
 	/// Action to deploy to a shell from a list of options

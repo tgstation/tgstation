@@ -106,6 +106,7 @@
 "x" = (
 /obj/structure/table/wood/shuttle_bar,
 /obj/item/clothing/head/costume/garland/poppy,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/wood/lavaland,
 /area/lavaland/surface/outdoors)
 "y" = (
@@ -118,10 +119,6 @@
 "A" = (
 /obj/structure/chair/pew/right,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"C" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/wood,
 /area/lavaland/surface/outdoors)
 "E" = (
 /obj/structure/flora/grass/jungle/b,
@@ -588,7 +585,7 @@ a
 a
 a
 a
-C
+h
 x
 c
 c

@@ -8,6 +8,7 @@
 	armor_type = /datum/armor/structure_fireaxecabinet
 	max_integrity = 150
 	integrity_failure = 0.33
+	custom_materials = /obj/item/wallframe/fireaxecabinet::custom_materials
 	/// Do we need to be unlocked to be opened.
 	var/locked = TRUE
 	/// Are we opened, can someone take the held item out.
@@ -221,6 +222,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/empty, 32)
 	icon_state = "fireaxe"
 	result_path = /obj/structure/fireaxecabinet/empty
 	pixel_shift = 32
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5.1, /datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 5, /datum/material/iron = SMALL_MATERIAL_AMOUNT)
 
 /obj/structure/fireaxecabinet/mechremoval
 	name = "mech removal tool cabinet"
