@@ -193,12 +193,6 @@
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech)))
 
-/obj/item/organ/tongue/lizard/should_modify_speech(datum/source, list/speech_args)
-	. = ..()
-
-	if(owner == null || bodypart_owner == null)
-		return FALSE
-
 /obj/item/organ/tongue/lizard/silver
 	name = "silver tongue"
 	desc = "A genetic branch of the high society Silver Scales that gives them their silverizing properties. To them, it is everything, and society traitors have their tongue forcibly revoked. Oddly enough, it itself is just blue."
