@@ -425,7 +425,8 @@
 				bleed_text = span_warning("It's bleeding profusely!")
 
 		if(bleed_text)
-			check_list += "\t[span_tooltip("Your limb is bleeding. You should wrap it in gauze or apply pressure to it by grabbing yourself (targeting the limb) to slow the loss of blood.", bleed_text)]"
+			check_list += "\t[span_tooltip("You are loosing blood. You should wrap your limb in gauze \
+				or apply pressure to it by grabbing yourself (while targeting the limb) to stem the flow.", bleed_text)]"
 
 	return jointext(check_list, "<br>")
 
@@ -467,7 +468,8 @@
 		surgery_message += "chest cavity is wide open"
 
 	if(length(surgery_message))
-		return span_tooltip("Your limb is undergoing surgery. You could suture or cauterize it to undo it.", span_warning("Its [english_list(surgery_message)]!"))
+		return span_tooltip("Your limb is undergoing surgery. If no doctors are around, \
+			you could suture or cauterize yourself to cancel it.", span_warning("Its [english_list(surgery_message)]!"))
 	return ""
 
 /// Returns surgery examine information for this bodypart
