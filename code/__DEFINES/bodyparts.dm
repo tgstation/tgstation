@@ -163,7 +163,7 @@ DEFINE_BITFIELD(surgery_state, list(
 #define VESSELLESS_SURGERY_STATES (SURGERY_VESSELS_CLAMPED|SURGERY_ORGANS_CUT)
 
 /// Biological state that has some kind of skin that can be cut.
-#define BIOSTATE_HAS_SKIN (BIO_FLESH|BIO_METAL)
+#define BIOSTATE_HAS_SKIN (BIO_FLESH|BIO_METAL|BIO_CHITIN)
 /// Checks if a bodypart lacks both flesh and metal, meaning it has no skin to cut.
 #define LIMB_HAS_SKIN(limb) (limb?.biological_state & BIOSTATE_HAS_SKIN)
 /// Biological state that has some kind of bones that can be sawed.
