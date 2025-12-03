@@ -285,7 +285,7 @@
 /datum/supply_pack/costumes_toys/christmas
 	name = "Surplus Christmas Gifts"
 	desc = "This crate contains pre-wrapped gifts addressed to station employees, sourced at random from Nanotrasen surplus as part of a morale boosting initiative."
-	cost = CARGO_CRATE_VALUE * 15
+	cost = CARGO_CRATE_VALUE * 30
 	contains = list()
 	special = TRUE
 	crate_type = /obj/structure/closet/crate/mail
