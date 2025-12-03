@@ -570,7 +570,7 @@
 	if(new_trait?.can_add(src))
 		genes += new_trait
 	else
-		return
+		new_trait = null
 
 	// Adjust stats based on graft stats
 	set_lifespan(round(max(lifespan, (lifespan + (2/3)*(snip.plant_dna.lifespan - lifespan)))))

@@ -166,7 +166,7 @@
 		return
 
 	// Non-heretics instead go crazy
-	human_user?.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
+	human_user?.adjust_organ_loss(ORGAN_SLOT_BRAIN, 10, 190)
 	human_user?.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 	human_user?.do_jitter_animation(50)
 	// Hand fires at them from the location

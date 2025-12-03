@@ -208,7 +208,7 @@
 	var/cable_color = CABLE_COLOR_RED
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.75)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
 	breakouttime = 30 SECONDS
 	cuffsound = 'sound/items/weapons/cablecuff.ogg'
 	pickup_sound = null
@@ -572,6 +572,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/thrown_righthand.dmi'
 	breakouttime = 3.5 SECONDS//easy to apply, easy to break out of
 	gender = NEUTER
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
 	///Amount of time to knock the target down for once it's hit in deciseconds.
 	var/knockdown = 0
 	///Reference of the mob we will attempt to snare
@@ -624,6 +625,7 @@
 	inhand_icon_state = "bola_r"
 	breakouttime = 7 SECONDS
 	knockdown = 3.5 SECONDS
+	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 6.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
 
 /**
  * A security variant of the bola.
@@ -639,6 +641,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	breakouttime = 6 SECONDS
 	custom_price = PAYCHECK_COMMAND * 0.35
+	custom_materials = null
 
 /obj/item/restraints/legcuffs/bola/energy/Initialize(mapload)
 	. = ..()

@@ -14,7 +14,7 @@
 	you_are_text = "You are a space pirate."
 	flavour_text = "The station refused to pay for your protection. Protect the ship, siphon the credits from the station, and raid it for even more loot."
 	spawner_job_path = /datum/job/space_pirate
-	allow_custom_character = GHOSTROLE_ALLOW_OTHER
+	allow_custom_character = GHOSTROLE_TAKE_PREFS_APPEARANCE
 	///Rank of the pirate on the ship, it's used in generating pirate names!
 	var/rank = "Deserter"
 	///Path of the structure we spawn after creating a pirate.
@@ -26,7 +26,7 @@
 	///json key to pirate names, the last part ("fish" in "Cometfish")
 	var/name_endings = "generic_endings"
 
-/obj/effect/mob_spawn/ghost_role/human/pirate/special(mob/living/spawned_mob, mob/mob_possessor)
+/obj/effect/mob_spawn/ghost_role/human/pirate/special(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_mob.fully_replace_character_name(spawned_mob.real_name, generate_pirate_name(spawned_mob.gender))
 	spawned_mob.mind.add_antag_datum(/datum/antagonist/pirate)
@@ -36,7 +36,7 @@
 	var/endings = strings(PIRATE_NAMES_FILE, name_endings)
 	return "[rank ? rank + " " : ""][pick(beggings)][pick(endings)]"
 
-/obj/effect/mob_spawn/ghost_role/human/pirate/create(mob/mob_possessor, newname)
+/obj/effect/mob_spawn/ghost_role/human/pirate/create(mob/mob_possessor, newname, apply_prefs)
 	if(fluff_spawn)
 		new fluff_spawn(drop_location())
 	return ..()
@@ -209,7 +209,7 @@
 	outfit = /datum/outfit/pirate/medieval
 	rank = "Footsoldier"
 
-/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/special(mob/living/carbon/spawned_mob, mob/mob_possessor)
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/special(mob/living/carbon/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()
 	if(rank == "Footsoldier")
 		spawned_mob.add_traits(list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD), INNATE_TRAIT)
@@ -221,7 +221,7 @@
 	rank = "Warlord"
 	outfit = /datum/outfit/pirate/medieval/warlord
 
-/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord/special(mob/living/carbon/spawned_mob, mob/mob_possessor)
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord/special(mob/living/carbon/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_mob.dna.add_mutation(/datum/mutation/hulk/superhuman, MUTATION_SOURCE_GHOST_ROLE)
 	spawned_mob.dna.add_mutation(/datum/mutation/gigantism, MUTATION_SOURCE_GHOST_ROLE)

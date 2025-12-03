@@ -35,29 +35,44 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
-ADMIN_VERB(spawn_atom, R_SPAWN, "Spawn", "Spawn an atom.", ADMIN_CATEGORY_DEBUG, object as text)
-	if(!object)
-		return
-	var/list/preparsed = splittext(object,":")
-	var/path = preparsed[1]
+ADMIN_VERB(spawn_atom, R_SPAWN, "Spawn", "Spawn an atom.", ADMIN_CATEGORY_DEBUG, object as text|null)
+	var/static/list/atom_types
+	if (isnull(atom_types))
+		atom_types = subtypesof(/atom)
+
+	var/chosen_path = null
+	var/list/preparsed = null
+	if (object)
+		preparsed = splittext(object, ":")
+		var/list/matches = filter_fancy_list(atom_types, preparsed[1])
+		if (length(matches) == 1)
+			chosen_path = matches[1]
+
+	if(!chosen_path)
+		var/datum/spawn_menu/menu = user.holder.spawn_menu
+		if (!menu)
+			menu = new()
+			user.holder.spawn_menu = menu
+		menu.init_value = object
+		menu.ui_interact(user.mob)
+		BLACKBOX_LOG_ADMIN_VERB("Spawn Atom")
+		return TRUE
+
 	var/amount = 1
-	if(preparsed.len > 1)
-		amount = clamp(text2num(preparsed[2]),1,ADMIN_SPAWN_CAP)
+	if (length(preparsed) > 1)
+		amount = clamp(text2num(preparsed[2]), 1, ADMIN_SPAWN_CAP)
 
-	var/chosen = pick_closest_path(path)
-	if(!chosen)
-		return
-	var/turf/T = get_turf(user.mob)
-
-	if(ispath(chosen, /turf))
-		T.ChangeTurf(chosen)
+	var/turf/target_turf = get_turf(user.mob)
+	if (ispath(chosen_path, /turf))
+		target_turf.ChangeTurf(chosen_path)
 	else
-		for(var/i in 1 to amount)
-			var/atom/A = new chosen(T)
-			A.flags_1 |= ADMIN_SPAWNED_1
+		for (var/i in 1 to amount)
+			var/atom/spawned = new chosen_path(target_turf)
+			spawned.flags_1 |= ADMIN_SPAWNED_1
 
-	log_admin("[key_name(user)] spawned [amount] x [chosen] at [AREACOORD(user.mob)]")
+	log_admin("[key_name(user.mob)] spawned [amount] x [chosen_path] at [AREACOORD(user.mob)]")
 	BLACKBOX_LOG_ADMIN_VERB("Spawn Atom")
+	return TRUE
 
 ADMIN_VERB(spawn_atom_pod, R_SPAWN, "PodSpawn", "Spawn an atom via supply drop.", ADMIN_CATEGORY_DEBUG, object as text)
 	var/chosen = pick_closest_path(object)
