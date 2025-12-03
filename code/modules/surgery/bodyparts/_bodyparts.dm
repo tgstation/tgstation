@@ -413,15 +413,19 @@
 	if(current_gauze)
 		check_list += span_notice("\tThere is some [current_gauze.name] wrapped around it.")
 	else if(can_bleed())
+		var/bleed_text = ""
 		switch(cached_bleed_rate)
 			if(0.2 to 1)
-				check_list += span_warning("\tIt's lightly bleeding.")
+				bleed_text = span_warning("It's lightly bleeding.")
 			if(1 to 2)
-				check_list += span_warning("\tIt's bleeding.")
+				bleed_text = span_warning("It's bleeding.")
 			if(3 to 4)
-				check_list += span_warning("\tIt's bleeding heavily!")
+				bleed_text = span_warning("It's bleeding heavily!")
 			if(4 to INFINITY)
-				check_list += span_warning("\tIt's bleeding profusely!")
+				bleed_text = span_warning("It's bleeding profusely!")
+
+		if(bleed_text)
+			check_list += "\t[span_tooltip("Your limb is bleeding. You should wrap it in gauze or apply pressure to it by grabbing yourself (targeting the limb) to slow the loss of blood.", bleed_text)]"
 
 	return jointext(check_list, "<br>")
 
@@ -443,7 +447,7 @@
 
 	// We can only see these if the skin is open
 	// And we check the real state rather than reported_state
-	if(LIMB_HAS_SURGERY_STATE(src, SURGERY_SKIN_OPEN))
+	if(LIMB_HAS_ANY_SURGERY_STATE(src, ALL_SURGERY_SKIN_STATES))
 		if(HAS_SURGERY_STATE(reported_state, SURGERY_VESSELS_UNCLAMPED))
 			surgery_message += "blood vessels are unclamped and bleeding"
 		if(HAS_SURGERY_STATE(reported_state, SURGERY_VESSELS_CLAMPED))
@@ -463,7 +467,7 @@
 		surgery_message += "chest cavity is wide open"
 
 	if(length(surgery_message))
-		return span_warning("Its [english_list(surgery_message)]!")
+		return span_tooltip("Your limb is undergoing surgery. You could suture or cauterize it to undo it.", span_warning("Its [english_list(surgery_message)]!"))
 	return ""
 
 /// Returns surgery examine information for this bodypart
@@ -489,7 +493,7 @@
 
 	// We can only see these if the skin is open
 	// And we check the real state rather than reported_state
-	if(LIMB_HAS_SURGERY_STATE(src, SURGERY_SKIN_OPEN))
+	if(LIMB_HAS_ANY_SURGERY_STATE(src, ALL_SURGERY_SKIN_STATES))
 		if(HAS_SURGERY_STATE(reported_state, SURGERY_VESSELS_UNCLAMPED))
 			sub_messages += "blood vessels are unclamped[cached_bleed_rate ? " and bleeding" : ""]"
 			single_message = "The blood vessels in [t_his] [plaintext_zone] are unclamped[cached_bleed_rate ? " and bleeding!" : "."]"
@@ -1465,6 +1469,9 @@
 			surgery_bloodloss *= 0.5
 		else if(body_zone != BODY_ZONE_CHEST)
 			surgery_bloodloss *= 0.25
+		// bonus for being gauzed up
+		if(current_gauze)
+			surgery_bloodloss *= 0.4
 
 		cached_bleed_rate += surgery_bloodloss
 

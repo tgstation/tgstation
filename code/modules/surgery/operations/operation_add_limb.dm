@@ -163,6 +163,7 @@
 		/obj/item/stack/sticky_tape = 2,
 	)
 	time = 4.8 SECONDS
+	operation_flags = OPERATION_SELF_OPERABLE | OPERATION_STANDING_ALLOWED
 	all_surgery_states_required = SURGERY_PROSTHETIC_UNSECURED
 
 /datum/surgery_operation/limb/secure_arbitrary_prosthetic/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/stack/tool, list/operation_args)

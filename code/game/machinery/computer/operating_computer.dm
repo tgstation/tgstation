@@ -128,22 +128,35 @@
 /obj/machinery/computer/operating/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "OperatingComputer", name)
-		ui.open()
+	if(ui)
+		return
+
+	if(ishuman(user))
+		// if you are the first human to open the ui, it changes to your active zone
+		if(!LAZYLEN(zone_on_open))
+			target_zone = user.zone_selected
+		// then we record what you were looking at for when you close it
 		LAZYSET(zone_on_open, WEAKREF(user), user.zone_selected)
+
+	ui = new(user, src, "OperatingComputer", name)
+	ui.open()
+
+/obj/machinery/computer/operating/ui_close(mob/user)
+	. = ..()
+	// reverts zone to whatever you had going into it, typically chest, so you don't have to mess around with it
+	var/zone_found = LAZYACCESS(zone_on_open, WEAKREF(user))
+	if(!zone_found)
+		return
+
+	var/atom/movable/screen/zone_sel/selector = user.hud_used?.zone_select
+	selector?.set_selected_zone(zone_found, user, FALSE)
+	LAZYREMOVE(zone_on_open, WEAKREF(user))
+	if(!LAZYLEN(zone_on_open))
+		zone_on_open = initial(zone_on_open)
 
 /obj/machinery/computer/operating/ui_assets(mob/user)
 	. = ..()
 	. += get_asset_datum(/datum/asset/simple/body_zones)
-
-/obj/machinery/computer/operating/ui_close(mob/user)
-	. = ..()
-	var/zone_found = LAZYACCESS(zone_on_open, WEAKREF(user))
-	if(zone_found)
-		var/atom/movable/screen/zone_sel/selector = user.hud_used?.zone_select
-		selector?.set_selected_zone(zone_found, user, FALSE)
-		LAZYREMOVE(zone_on_open, WEAKREF(user))
 
 /obj/machinery/computer/operating/ui_data(mob/user)
 	var/list/data = list()

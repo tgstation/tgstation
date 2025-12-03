@@ -122,8 +122,14 @@
 		/obj/item = 3.33,
 	)
 	time = 2.4 SECONDS
-	preop_sound = 'sound/items/handling/surgery/cautery1.ogg'
-	success_sound = 'sound/items/handling/surgery/cautery2.ogg'
+	preop_sound = list(
+		/obj/item/stack/medical/suture = SFX_SUTURE_BEGIN,
+		/obj/item = 'sound/items/handling/surgery/cautery1.ogg',
+	)
+	success_sound = list(
+		/obj/item/stack/medical/suture = SFX_SUTURE_END,
+		/obj/item = 'sound/items/handling/surgery/cautery2.ogg',
+	)
 	any_surgery_states_required = ALL_SURGERY_STATES_UNSET_ON_CLOSE // we're not picky
 	target_zone = null
 

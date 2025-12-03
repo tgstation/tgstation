@@ -26,7 +26,7 @@
 	abstract = TRUE
 
 	required_wounding_type = WOUND_SLASH
-	required_limb_biostate = BIO_FLESH|BIO_CHITIN
+	required_limb_biostate = BIO_FLESH
 
 	wound_series = WOUND_SERIES_FLESH_SLASH_BLEED
 

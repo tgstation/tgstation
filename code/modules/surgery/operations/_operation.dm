@@ -121,7 +121,7 @@
 
 	return tool == holding.get_proxy_attacker_for(patient, src) // tool (or its proxy) is still being held
 
-/// src attempts to cauterize themselves to reset their surgery state
+/// src attempts to cauterize themselves to reset their surgery state. Basically a manual form of the real "close skin" operation
 /mob/living/proc/try_manual_cauterize(obj/item/tool)
 	var/cauterize_zone = deprecise_zone(zone_selected)
 	var/obj/item/bodypart/limb = get_bodypart(cauterize_zone)
@@ -137,7 +137,7 @@
 		vision_distance = 5,
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
-	playsound(src, 'sound/items/handling/surgery/cautery1.ogg', 50, TRUE)
+	playsound(src, istype(tool, /obj/item/stack/medical/suture) ? SFX_SUTURE_BEGIN : 'sound/items/handling/surgery/cautery1.ogg', 50, TRUE)
 	if(!do_after(
 		user = src,
 		delay = /datum/surgery_operation/limb/close_skin::time * 2 * tool.toolspeed,
@@ -153,18 +153,33 @@
 		vision_distance = 5,
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
-	playsound(src, 'sound/items/handling/surgery/cautery2.ogg', 50, TRUE)
+	playsound(src, istype(tool, /obj/item/stack/medical/suture) ? SFX_SUTURE_END : 'sound/items/handling/surgery/cautery2.ogg', 50, TRUE)
 	limb.remove_surgical_state(ALL_SURGERY_STATES_UNSET_ON_CLOSE)
-	limb.receive_damage(burn = 5, wound_bonus = CANT_WOUND, damage_source = tool)
+	if(istype(tool, /obj/item/stack/medical/suture))
+		var/obj/item/stack/medical/suture/suture_tool = tool
+		suture_tool.use(1)
+	else
+		limb.receive_damage(burn = 5, wound_bonus = CANT_WOUND, damage_source = tool)
 	return ITEM_INTERACT_SUCCESS
 
 /// Callback for checking if the cauterization do-after can continue
 /mob/living/proc/manual_cauterize_check(obj/item/tool, obj/item/bodypart/limb)
 	PRIVATE_PROC(TRUE)
+
 	if(QDELETED(limb) || limb.owner != src)
 		return FALSE
-	if(QDELETED(tool) || (tool.get_temperature() <= 0 && tool.tool_behaviour != TOOL_CAUTERY))
+
+	if(QDELETED(tool))
 		return FALSE
+	else if(istype(tool, /obj/item/stack/medical/suture))
+		var/obj/item/stack/medical/suture/suture_tool = tool
+		if(suture_tool.amount <= 0)
+			return FALSE
+	else if(tool.tool_behaviour != TOOL_CAUTERY)
+		if(tool.get_temperature() <= 0)
+			return FALSE
+
+	// we need to have a surgery state worth closing
 	var/states_to_check = ALL_SURGERY_STATES_UNSET_ON_CLOSE
 	if(!LIMB_HAS_BONES(limb))
 		states_to_check &= ~BONELESS_SURGERY_STATES
@@ -174,6 +189,11 @@
 		states_to_check &= ~SKINLESS_SURGERY_STATES
 	if(!states_to_check || !LIMB_HAS_ANY_SURGERY_STATE(limb, states_to_check))
 		return FALSE
+
+	// skin has to be open or cut to do anything (we can't have a negative state without also having skin open anyways)
+	if(!LIMB_HAS_ANY_SURGERY_STATE(limb, ALL_SURGERY_SKIN_STATES))
+		return FALSE
+
 	return TRUE
 
 /// Debug proc to print all surgeries available to whoever called the proc
