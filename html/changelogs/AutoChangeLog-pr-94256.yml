@@ -1,4 +1,0 @@
-author: "uaioy"
-delete-after: True
-changes:
-  - bugfix: "lavaland crash site ruin should properly be affected by ash storm now"

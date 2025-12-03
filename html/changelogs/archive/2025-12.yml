@@ -93,3 +93,47 @@
   - map: wawastation defib added from 3 to 4
   - map: tramstation defib added from 3 to 4
   - map: nebulastation defibs trimmed from 6 to 4
+2025-12-03:
+  Aliceee2ch:
+  - map: Added shutters in some of service areas on WawaStation.
+  Cyberboss:
+  - rscadd: Hygiene bots now extinguish when cleaning.
+  Ghommie:
+  - refactor: Follow-up to the crafting/material refactor from months ago. All objects
+      crafted with stacks now inherit their mat composition (not necessarily the effects
+      and color) by default, while previously only a few things like chair, sinks
+      and toilets did. Report any object looking or behaving weirdly as a result.
+  - bugfix: The material composition of ammo boxes is no longer a 1/10 of what it's
+      supposed to be. It was a shitty hack to make it harder to recycle empty ammo
+      boxes. Instead, they lose materials as they're emptied now.
+  Melbert:
+  - bugfix: Fix Flypeople's vomit interaction before anyone realizes it's broken but
+      me
+  - rscadd: Compact defib can be worn and used on the suit storage slot of labcoats,
+      surgical aprons, and medical MODsuits
+  - rscadd: Drones and Dex Holoparasites can (hypothetically) wear and use compact
+      defibs
+  - refactor: Refactored how mech icons update mid-construction, report any disappearing
+      mechs please
+  - bugfix: One of the Phazon's mid construction icons was not visible in the past,
+      now it is again. Yippee.
+  SyncIt21:
+  - qol: added mapping directional helper for warning, radiation & secure area sign
+      allowing them to interact with fire/acid on their mounted turf
+  - qol: adds mapping helper to create diagonally shifted objects
+  - qol: adds mapping directional helper for nanotrasen sign & replaces all var edited
+      instances
+  TealSeer:
+  - code_imp: makes /obj/item/stamp abstract, creates /obj/item/stamp/granted
+  alien3301:
+  - balance: The lethal injection locker is now accessible by the warden.
+  necromanceranne:
+  - balance: High frequency blades (both null rod and admin versions) are able to
+      block melee attacks from mechs.
+  - balance: High frequency blade null rods are now two-handed weapons.
+  - balance: Mech melee attacks can be blocked or avoided by a few rare sources.
+  tontyGH:
+  - refactor: Handling relating to AI cores has been overhauled. Please make an issue
+      report on the Github if unexpected behaviour occurs.
+  uaioy:
+  - bugfix: lavaland crash site ruin should properly be affected by ash storm now

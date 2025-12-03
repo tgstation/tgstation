@@ -1,4 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - code_imp: "makes /obj/item/stamp abstract, creates /obj/item/stamp/granted"
