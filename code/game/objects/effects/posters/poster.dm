@@ -44,8 +44,7 @@
 		icon_state = poster_type::poster_item_icon_state
 
 /obj/item/poster/Destroy(force)
-	if(poster_structure)
-		QDEL_NULL(poster_structure)
+	QDEL_NULL(poster_structure)
 	return ..()
 
 /obj/item/poster/examine(mob/user)
