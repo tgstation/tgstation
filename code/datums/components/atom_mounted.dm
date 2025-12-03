@@ -26,7 +26,10 @@
 	else
 		UnregisterSignal(hanging_support_atom, COMSIG_QDELETING)
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
+
+/datum/component/atom_mounted/Destroy(force)
 	hanging_support_atom = null
+	return ..()
 
 /**
  * When the wall is examined, explains that it's supporting the linked object.
