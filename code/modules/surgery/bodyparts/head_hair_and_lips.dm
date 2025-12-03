@@ -206,7 +206,7 @@
 /// Returns an appropriate missing eyes overlay
 /obj/item/bodypart/head/proc/get_eyeless_overlay(dropped)
 	RETURN_TYPE(/image)
-	var/eyeless_icon = 'icons/mob/human/human_face.dmi'
+	var/eyeless_icon = 'icons/mob/human/human_eyes.dmi'
 	var/eyeless_icon_state = "eyes_missing"
 
 	var/image/eyeless_overlay = mutable_appearance(eyeless_icon, eyeless_icon_state, -HAIR_LAYER)
