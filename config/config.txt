@@ -20,16 +20,16 @@ $include persistence.txt
 # There are various options which are hard-locked for security reasons.
 
 ## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
-# SERVERNAME tgstation
+SERVERNAME TG-Persistence
 
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
 # SERVERSQLNAME tgstation
 
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
-STATIONNAME Space Station 13
+#STATIONNAME Space Station 13
 
 ## Put on byond hub: Uncomment this to put your server on the byond hub.
-#HUB
+HUB
 
 ## Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
 LOBBY_COUNTDOWN 120
@@ -87,13 +87,13 @@ ENABLE_LOCALHOST_RANK
 PICTURE_LOGGING_CAMERA
 
 ## period of time in seconds for players to be considered inactive
-# INACTIVITY_PERIOD 300
+INACTIVITY_PERIOD 300
 
 ## period of time in seconds for players to be considered afk and kickable
-# AFK_PERIOD 600
+AFK_PERIOD 1200
 
 ## disconnect players who are considered afk
-# KICK_INACTIVE
+KICK_INACTIVE
 
 ## Comment this out to stop admins being able to choose their personal ooccolor
 ALLOW_ADMIN_OOCCOLOR
@@ -142,17 +142,17 @@ VOTE_PERIOD 600
 ## 0 = Cannot respawn (default)
 ## 1 = Can respawn
 ## 2 = Can respawn if choosing a different character
-ALLOW_RESPAWN 0
+ALLOW_RESPAWN 2
 
 ## Respawn delay (deciseconds), which doesn't allow to return to lobby
-RESPAWN_DELAY 0
+RESPAWN_DELAY 12000
 
 ## set a hosted by name for unix platforms
-HOSTEDBY Yournamehere
+HOSTEDBY Tilus
 
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting).
 ## You probably want this enabled for a production server.
-#GUEST_BAN
+GUEST_BAN
 
 ## IPINTEL:
 ## This allows you to detect likely proxies by checking ips against getipintel.net

@@ -161,11 +161,11 @@ ALLOW_RANDOM_EVENTS
 
 ## The lower bound, in deciseconds, for how soon another random event can be scheduled.
 ## Defaults to 1500 deciseconds or 2.5 minutes
-EVENTS_FREQUENCY_LOWER 1500
+EVENTS_FREQUENCY_LOWER 15000
 
 ## The upper bound, in deciseconds, for how soon another random event can be scheduled.
 ## Defaults to 4200 deciseconds or 7 minutes
-EVENTS_FREQUENCY_UPPER 4200
+EVENTS_FREQUENCY_UPPER 42000
 
 ## AI ###
 
@@ -445,7 +445,7 @@ REACTIONARY_EXPLOSIONS
 ## Small (3, 7, 14)
 #BOMBCAP 14
 ## Default (5, 10, 20) (recommended if you enable REACTIONARY_EXPLOSIONS above)
-BOMBCAP 20
+BOMBCAP 10
 ## LagHell (7, 14, 28)
 #BOMBCAP 28
 
@@ -455,7 +455,7 @@ BOMBCAP 20
 ## a less lootfilled or smaller or less round effecting ruin costs less to
 ## spawn, while the converse is true. Alter this number to affect the amount
 ## of ruins.
-LAVALAND_BUDGET 60
+LAVALAND_BUDGET 20
 
 ## Ice Moon Budget
 ICEMOON_BUDGET 90
@@ -475,7 +475,7 @@ ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 
 ## How many wirechewing rodents you want to spawn on exposed maintenance wires at the start of the round. You may wish to set this to 0 if you're testing powernets.
 
-MICE_ROUNDSTART 10
+MICE_ROUNDSTART 1
 
 ## If the percentage of players alive (doesn't count conversions) drops below this threshold the emergency shuttle will be forcefully called (provided it can be)
 #EMERGENCY_SHUTTLE_AUTOCALL_THRESHOLD 0.2
@@ -526,7 +526,7 @@ MAXFINE 2000
 
 ## Comment if you wish to enable title music playing at the lobby screen. This flag is disabled by default to facilitate better code testing on local machines.
 ## Do keep in mind that this flag will not affect individual player's preferences: if they opt-out on your server, it will never play for them.
-DISALLOW_TITLE_MUSIC
+#DISALLOW_TITLE_MUSIC
 
 ## If enabled, then when the database is disabled, all players will get tutorials.
 ## This is primarily useful for developing tutorials. If you have a proper DB setup, you

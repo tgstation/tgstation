@@ -17,8 +17,8 @@
 ## Loading 100 z-levels, with all of them empty space, will utilize ~1 GB of RAM
 ##
 ## Station Traits:
-## Certain station traits and random events are not compatiable with persistence on the station z-level
-## FORBID_STATION_TRAITS and ALLOW_RANDOM_EVENTS in game_options.txt allows you to disable them
+## If you do not have ZTRAIT_STATION defined for your z-levels then it is recommended to
+## disable FORBID_STATION_TRAITS and ALLOW_RANDOM_EVENTS in game_options.txt
 
 ## To enable map saving and loading that persists between rounds, uncomment this flag
 ## This will load the most recent saved map(s) in the _maps/persistence folder if available
@@ -28,11 +28,11 @@ PERSISTENT_SAVE_ENABLED
 ## The period of time in hours between map autosaves for persistence
 ## Set to -1 to only allow saving when the server reboots
 ## Defaults to every 4 hours
-PERSISTENT_AUTOSAVE_PERIOD 4
+PERSISTENT_AUTOSAVE_PERIOD 1
 
 ## The maximum number of autosaves to store
 ## Set to -1 to never delete any autosaves
-PERSISTENT_MAX_AUTOSAVES -1
+PERSISTENT_MAX_AUTOSAVES 50
 
 ##########################
 ##   Z - L E V E L S    ##
@@ -41,18 +41,18 @@ PERSISTENT_MAX_AUTOSAVES -1
 ## Include specific z levels when saving and loading determined by ZTRAIT
 ## CentCom and Transit/Reserved z-levels can be saved but are never loaded
 ## It is recommended to disable them to avoid saving unnecessary data
-PERSISTENT_SAVE_Z_LEVELS CentCom
+#PERSISTENT_SAVE_Z_LEVELS CentCom
 PERSISTENT_SAVE_Z_LEVELS Station
-PERSISTENT_SAVE_Z_LEVELS Mining
-PERSISTENT_SAVE_Z_LEVELS Space Empty
-PERSISTENT_SAVE_Z_LEVELS Space Ruins
-PERSISTENT_SAVE_Z_LEVELS Ice Ruins
-PERSISTENT_SAVE_Z_LEVELS Transit/Reserved
-PERSISTENT_SAVE_Z_LEVELS Away Mission
+#PERSISTENT_SAVE_Z_LEVELS Mining
+#PERSISTENT_SAVE_Z_LEVELS Space Empty
+#PERSISTENT_SAVE_Z_LEVELS Space Ruins
+#PERSISTENT_SAVE_Z_LEVELS Ice Ruins
+#PERSISTENT_SAVE_Z_LEVELS Transit/Reserved
+#PERSISTENT_SAVE_Z_LEVELS Away Mission
 
 ## This loads a fixed grid layout (not randomized) from the z-level JSON files if they were linked together
 ## Requires "Space Empty", "Space Ruins", and "Ice Ruins" to be enabled in PERSISTENT_SAVE_Z_LEVELS to work
-PERSISTENT_USE_STATIC_MAP_GRID
+#PERSISTENT_USE_STATIC_MAP_GRID
 
 ## This section includes specific flags that control which types of data are saved and loaded
 ##
@@ -65,7 +65,7 @@ PERSISTENT_USE_STATIC_MAP_GRID
 ##########################
 
 ## The max limit of allowed objects to be saved on a turf
-PERSISTENT_MAX_OBJECT_LIMIT_PER_TURF 100
+PERSISTENT_MAX_OBJECT_LIMIT_PER_TURF 30
 
 ## Save and load objects and their properties.
 PERSISTENT_SAVE_FLAGS objects
@@ -79,7 +79,7 @@ PERSISTENT_SAVE_FLAGS objects_properties
 ##########################
 
 ## The max limit of allowed mobs to be saved on a turf
-PERSISTENT_MAX_MOB_LIMIT_PER_TURF 5
+PERSISTENT_MAX_MOB_LIMIT_PER_TURF 3
 
 ## Save and load mobs, excluding mob/living/carbon.
 PERSISTENT_SAVE_FLAGS mobs

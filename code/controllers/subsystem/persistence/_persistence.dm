@@ -8,6 +8,8 @@ SUBSYSTEM_DEF(persistence)
 	dependencies = list(
 		/datum/controller/subsystem/mapping,
 		/datum/controller/subsystem/atoms,
+		/datum/controller/subsystem/machines,
+		/datum/controller/subsystem/shuttle,
 	)
 	flags = SS_BACKGROUND
 	wait = INFINITY
@@ -101,6 +103,35 @@ SUBSYSTEM_DEF(persistence)
 
 	if(CONFIG_GET(number/persistent_autosave_period) > 0 && CONFIG_GET(flag/persistent_save_enabled))
 		wait = CONFIG_GET(number/persistent_autosave_period) HOURS
+
+	for(var/obj/child in GLOB.save_containers_children)
+		var/parent_id = child.save_container_child_id
+		if(parent_id == "NSMGs")
+			var/foo = "blah"
+		child.forceMove(GLOB.save_containers_parents[parent_id])
+		child.save_container_child_id = null
+
+	for(var/parent_id in GLOB.save_containers_parents)
+		if(parent_id == "NSMGs")
+			var/foo = "blah"
+
+		var/obj/parent = GLOB.save_containers_parents[parent_id]
+		parent.update_appearance()
+		parent.save_container_parent_id = null
+
+	if(SSatoms.persistent_loaders.len)
+		if(CONFIG_GET(flag/persistent_save_enabled))
+			for(var/I in 1 to SSatoms.persistent_loaders.len)
+				var/atom/A = SSatoms.persistent_loaders[I]
+				//I hate that we need this
+				if(QDELETED(A))
+					continue
+				A.PersistentInitialize()
+			testing("Persistent initialized [persistent_loaders.len] atoms")
+		SSatoms.persistent_loaders.Cut()
+
+	GLOB.save_containers_parents.Cut()
+	GLOB.save_containers_children.Cut()
 
 	return SS_INIT_SUCCESS
 
