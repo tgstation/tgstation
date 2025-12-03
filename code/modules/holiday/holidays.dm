@@ -843,6 +843,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 
 /datum/holiday/xmas
 	name = CHRISTMAS
+	always_celebrate = TRUE
 	begin_day = 18
 	begin_month = DECEMBER
 	end_day = 27
@@ -895,7 +896,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
 
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/costumes_toys/christmas]
-	pack.special_enabled = TRUE
+	pack.order_flags |= ORDER_SPECIAL_ENABLED
 
 /datum/holiday/boxing
 	name = "Boxing Day"

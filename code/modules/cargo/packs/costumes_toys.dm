@@ -74,7 +74,7 @@
 	name = "Hilarious Firing Pin Crate"
 	desc = "I uh... I'm not really sure what this does. Wanna buy it?"
 	cost = CARGO_CRATE_VALUE * 10
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 	contains = list(/obj/item/firing_pin/clown)
 	crate_name = "toy crate" // It's /technically/ a toy. For the clown, at least.
 	crate_type = /obj/structure/closet/crate/wooden
@@ -110,7 +110,7 @@
 	name = "Laser Tag Firing Pins Crate"
 	desc = "Three laser tag firing pins used in laser-tag units to ensure users are wearing their vests."
 	cost = CARGO_CRATE_VALUE * 3.5
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 	contains = list(/obj/item/storage/box/lasertagpins)
 	crate_name = "laser tag crate"
 
@@ -287,7 +287,7 @@
 	desc = "This crate contains pre-wrapped gifts addressed to station employees, sourced at random from Nanotrasen surplus as part of a morale boosting initiative."
 	cost = CARGO_CRATE_VALUE * 30
 	contains = list()
-	special = TRUE
+	order_flags = ORDER_SPECIAL
 	crate_type = /obj/structure/closet/crate/mail
 	discountable = SUPPLY_PACK_NOT_DISCOUNTABLE
 
