@@ -4,6 +4,7 @@
 	pass_flags_self = PASSSTRUCTURE
 	material_drop = /obj/item/stack/sheet/cardboard
 	material_drop_amount = 4
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT * 4)
 	icon_state = "cardboard"
 	base_icon_state = "cardboard"
 	open_sound = 'sound/items/poster/poster_ripped.ogg'

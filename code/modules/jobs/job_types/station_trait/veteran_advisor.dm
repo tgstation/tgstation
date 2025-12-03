@@ -3,7 +3,6 @@
 	description = "Advise HoS, and Captain on matters of Security. Train green Officers. \
 		Lay back in your wheelchair and say \"I told you\" to the HoS when all of the station collapses."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
-	department_head = list(JOB_HEAD_OF_SECURITY)
 	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 0

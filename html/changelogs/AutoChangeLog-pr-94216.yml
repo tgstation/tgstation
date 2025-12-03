@@ -1,4 +1,0 @@
-author: "ezel"
-delete-after: True
-changes:
-  - bugfix: "Removes a duplicate fire alarm in metastation botany"

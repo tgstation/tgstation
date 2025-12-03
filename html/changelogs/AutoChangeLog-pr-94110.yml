@@ -1,0 +1,5 @@
+author: "FalloutFalcon"
+delete-after: True
+changes:
+  - rscadd: "Added the medium sized cardboard boxes to random spawners"
+  - qol: "You can now craft the medium sized cardboard boxes"
