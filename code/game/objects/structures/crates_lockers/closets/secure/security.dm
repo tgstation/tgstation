@@ -174,7 +174,7 @@
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections locker"
-	req_access = list(ACCESS_ARMORY)
+	req_access = list(ACCESS_HOS)
 
 /obj/structure/closet/secure_closet/injection/PopulateContents()
 	..()
