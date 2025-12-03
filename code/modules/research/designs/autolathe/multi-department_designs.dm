@@ -474,14 +474,13 @@
 /datum/design/package_wrap
 	name = "Package Wrapping"
 	id = "packagewrap"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
+	build_type = AUTOLATHE
+	materials = list(/datum/material/paper = SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/package_wrap
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE,
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/holodisk
 	name = "Holodisk"

@@ -94,6 +94,7 @@
 	max_amount = 25
 	resistance_flags = FLAMMABLE
 	grind_results = list(/datum/reagent/cellulose = 5)
+	custom_materials = list(/datum/material/paper = SMALL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/package_wrap
 
 /obj/item/stack/package_wrap/suicide_act(mob/living/user)
