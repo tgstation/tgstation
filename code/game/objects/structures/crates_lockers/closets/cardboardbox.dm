@@ -19,6 +19,7 @@
 	door_anim_time = 0 // no animation
 	can_install_electronics = FALSE
 	paint_jobs = null
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT * 4)
 	/// Cooldown controlling when the box can trigger the Metal Gear Solid-style '!' alert.
 	COOLDOWN_DECLARE(alert_cooldown)
 

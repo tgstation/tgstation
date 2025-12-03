@@ -75,6 +75,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
+"ba" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
 "bd" = (
 /obj/structure/table/wood,
 /obj/structure/cable/layer1,
@@ -433,6 +438,12 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/public)
+"dq" = (
+/mob/living/basic/viscerator,
+/obj/effect/turf_decal/bot_red,
+/obj/structure/sign/warning/directional/east,
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "dt" = (
 /obj/structure/chair/sofa/left/brown{
 	dir = 4
@@ -585,11 +596,6 @@
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public)
-"eG" = (
-/obj/structure/lattice,
-/obj/structure/grille/broken,
-/turf/template_noop,
-/area/space/nearstation)
 "eN" = (
 /obj/structure/cable/layer1,
 /obj/item/dualsaber/toy,
@@ -608,11 +614,6 @@
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
-"fr" = (
-/obj/structure/grille,
-/obj/structure/lattice,
-/turf/template_noop,
-/area/space/nearstation)
 "fu" = (
 /obj/structure/table/wood,
 /obj/item/dice/d10{
@@ -1052,6 +1053,16 @@
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
+"iL" = (
+/mob/living/basic/viscerator,
+/obj/effect/turf_decal/bot_red,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/button/door/directional/north{
+	id = "donk_aicore_door_bolts"
+	},
+/obj/structure/sign/warning/directional/west,
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "iS" = (
 /obj/effect/decal/cleanable/plastic,
 /obj/effect/decal/cleanable/dirt,
@@ -1100,11 +1111,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
-"jc" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/template_noop,
-/area/space/nearstation)
 "jd" = (
 /obj/structure/cable/layer1,
 /obj/item/restraints/handcuffs/cable/zipties/used,
@@ -1252,12 +1258,9 @@
 /obj/machinery/camera/xray/directional/north,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
-"kv" = (
+"kr" = (
 /obj/structure/lattice,
-/obj/machinery/atmospherics/components/unary/passive_vent{
-	dir = 4;
-	name = "external vent"
-	},
+/obj/structure/grille,
 /turf/template_noop,
 /area/space/nearstation)
 "kx" = (
@@ -1580,11 +1583,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/maint/toystorage)
-"nB" = (
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/template_noop,
-/area/space/nearstation)
 "nC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -1620,17 +1618,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
-"nS" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 11;
-	height = 24;
-	name = "Donk Co Trading Outpost: Dock 2";
-	shuttle_id = "whiteship_home";
-	width = 35
-	},
-/turf/template_noop,
-/area/space/nearstation)
 "nZ" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -2536,10 +2523,6 @@
 	},
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
-"vL" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/space/nearstation)
 "vM" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/large,
@@ -2893,6 +2876,11 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
+"yS" = (
+/obj/effect/spawner/random/structure/grille,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
 "yU" = (
 /obj/item/rack_parts{
 	pixel_y = 8;
@@ -2997,15 +2985,6 @@
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
-"zQ" = (
-/mob/living/basic/viscerator,
-/obj/effect/turf_decal/bot_red,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/button/door/directional/north{
-	id = "donk_aicore_door_bolts"
-	},
-/turf/open/floor/circuit/red/off,
-/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "Ab" = (
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -3089,11 +3068,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
-"AI" = (
-/obj/effect/spawner/random/structure/grille,
-/obj/structure/lattice,
-/turf/template_noop,
-/area/space/nearstation)
 "AQ" = (
 /obj/structure/frame/machine/secured,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -3146,6 +3120,11 @@
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
+"Bi" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/grille,
+/turf/template_noop,
+/area/space/nearstation)
 "Bj" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/medical/minor_healing,
@@ -3737,16 +3716,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
-"GB" = (
-/obj/structure/cable/layer1,
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/ai_module/law/supplied/protect_station{
-	pixel_x = 2;
-	pixel_y = 5
-	},
-/obj/machinery/light/red/dim/directional/east,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "GC" = (
 /obj/structure/safe/floor,
 /obj/structure/cable/layer1,
@@ -4143,6 +4112,16 @@
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
+"JR" = (
+/obj/structure/cable/layer1,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ai_module/law/supplied/protect_station{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/machinery/light/red/dim/directional/east,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "JX" = (
 /obj/structure/cable/layer1,
 /obj/structure/chair/office{
@@ -4594,6 +4573,10 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/public)
+"NS" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
 "NY" = (
 /obj/structure/cable/layer1,
 /obj/machinery/vending/coffee{
@@ -4655,6 +4638,10 @@
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
+"Oy" = (
+/obj/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "OD" = (
 /obj/structure/cable/layer1,
 /obj/machinery/duct,
@@ -4867,11 +4854,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/maint)
-"QA" = (
-/obj/structure/sign/warning,
-/obj/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "QF" = (
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
@@ -5014,6 +4996,17 @@
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
+"RH" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 11;
+	height = 24;
+	name = "Donk Co Trading Outpost: Dock 2";
+	shuttle_id = "whiteship_home";
+	width = 35
+	},
+/turf/template_noop,
+/area/space/nearstation)
 "RI" = (
 /obj/structure/chair/sofa/left/brown{
 	dir = 1
@@ -5035,6 +5028,20 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/public)
+"RT" = (
+/obj/structure/cable/multilayer,
+/obj/structure/cable/layer1,
+/obj/structure/safe/floor,
+/obj/item/sticker/syndicate/apc,
+/obj/item/grenade/empgrenade,
+/obj/item/book/granter/crafting_recipe/donk_secret_recipe,
+/obj/item/ai_module/law/core/full/cybersun,
+/obj/item/reagent_containers/condiment/donksauce,
+/mob/living/basic/cybersun_ai_core{
+	donk_ai_master = 1
+	},
+/turf/open/floor/plating/reinforced,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "RU" = (
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -5270,6 +5277,14 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
+"TT" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 4;
+	name = "external vent"
+	},
+/turf/template_noop,
+/area/space/nearstation)
 "TU" = (
 /obj/structure/cable/layer1,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -5358,20 +5373,6 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/public)
-"UP" = (
-/obj/structure/cable/multilayer,
-/obj/structure/cable/layer1,
-/obj/structure/safe/floor,
-/obj/item/sticker/syndicate/apc,
-/obj/item/grenade/empgrenade,
-/obj/item/book/granter/crafting_recipe/donk_secret_recipe,
-/obj/item/ai_module/law/core/full/cybersun,
-/obj/item/reagent_containers/condiment/donksauce,
-/mob/living/basic/cybersun_ai_core{
-	donk_ai_master = 1
-	},
-/turf/open/floor/plating/reinforced,
-/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "UV" = (
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/item/lighter{
@@ -5987,6 +5988,11 @@
 /obj/structure/sign/poster/ripped/directional/north,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/public)
+"Zu" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/template_noop,
+/area/space/nearstation)
 "ZI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -6137,7 +6143,7 @@ WW
 FI
 WP
 qR
-kv
+TT
 qR
 qR
 qR
@@ -6152,7 +6158,7 @@ qR
 qR
 qR
 qR
-nS
+RH
 qR
 qR
 qR
@@ -6200,7 +6206,7 @@ Pv
 Gw
 Pv
 qR
-fr
+ba
 qR
 qR
 "}
@@ -6245,7 +6251,7 @@ Lt
 QF
 Pv
 qR
-AI
+yS
 qR
 qR
 "}
@@ -6274,10 +6280,10 @@ dE
 gz
 mp
 gz
-vL
+NS
 qR
 qR
-vL
+NS
 Pv
 QF
 tK
@@ -6290,7 +6296,7 @@ KC
 QF
 Pv
 qR
-jc
+kr
 qR
 qR
 "}
@@ -6319,10 +6325,10 @@ sW
 pO
 sW
 gz
-vL
-vL
-vL
-vL
+NS
+NS
+NS
+NS
 Pv
 bI
 qM
@@ -6334,8 +6340,8 @@ Dt
 tQ
 Kd
 Pv
-vL
-jc
+NS
+kr
 qR
 qR
 "}
@@ -6379,10 +6385,10 @@ Pv
 Pv
 mf
 Pv
-vL
-jc
-vL
-vL
+NS
+kr
+NS
+NS
 "}
 (9,1,1) = {"
 qR
@@ -6427,7 +6433,7 @@ yi
 yi
 yi
 yi
-vL
+NS
 "}
 (10,1,1) = {"
 qR
@@ -6652,7 +6658,7 @@ yi
 OE
 yi
 yi
-nB
+Bi
 "}
 (15,1,1) = {"
 qR
@@ -6667,7 +6673,7 @@ je
 Nw
 Ii
 ht
-QA
+Oy
 lA
 nE
 IL
@@ -6697,7 +6703,7 @@ yi
 CZ
 Sj
 yi
-jc
+kr
 "}
 (16,1,1) = {"
 qR
@@ -6712,7 +6718,7 @@ Nw
 eN
 Oh
 MR
-zQ
+iL
 Gk
 iv
 qK
@@ -6742,7 +6748,7 @@ yi
 hL
 ox
 yi
-jc
+kr
 "}
 (17,1,1) = {"
 qR
@@ -6761,7 +6767,7 @@ iv
 iv
 ot
 XW
-UP
+RT
 MR
 tl
 YR
@@ -6787,12 +6793,12 @@ yi
 Qy
 kx
 yi
-jc
+kr
 "}
 (18,1,1) = {"
 qR
 qR
-vL
+NS
 ur
 CU
 Dp
@@ -6802,7 +6808,7 @@ BE
 yb
 Im
 MR
-kl
+dq
 Gk
 iv
 PX
@@ -6832,12 +6838,12 @@ yi
 CZ
 ic
 yi
-jc
+kr
 "}
 (19,1,1) = {"
 qR
 qR
-vL
+NS
 ur
 iE
 GG
@@ -6847,7 +6853,7 @@ je
 Nw
 AB
 MR
-QA
+Oy
 kl
 nE
 SK
@@ -6877,12 +6883,12 @@ yi
 WV
 cb
 yi
-jc
+kr
 "}
 (20,1,1) = {"
 qR
 qR
-vL
+NS
 ur
 Px
 Ye
@@ -6922,7 +6928,7 @@ yi
 CZ
 Uk
 yi
-jc
+kr
 "}
 (21,1,1) = {"
 ur
@@ -6967,7 +6973,7 @@ yi
 ch
 yi
 yi
-nB
+Bi
 "}
 (22,1,1) = {"
 ur
@@ -7023,7 +7029,7 @@ hV
 vx
 tm
 Gg
-GB
+JR
 bu
 cv
 gb
@@ -7192,7 +7198,7 @@ yi
 yi
 yi
 yi
-vL
+NS
 "}
 (27,1,1) = {"
 pG
@@ -7234,10 +7240,10 @@ Pv
 Pv
 mB
 mV
-vL
-nB
-vL
-vL
+NS
+Bi
+NS
+NS
 "}
 (28,1,1) = {"
 pG
@@ -7267,7 +7273,7 @@ zb
 Sl
 wH
 yF
-vL
+NS
 Pv
 wQ
 vg
@@ -7279,8 +7285,8 @@ HX
 bx
 hX
 KI
-vL
-eG
+NS
+Zu
 qR
 qR
 "}
@@ -7312,7 +7318,7 @@ yF
 OR
 nu
 yF
-vL
+NS
 Pv
 QF
 IN
@@ -7325,7 +7331,7 @@ JZ
 uH
 Sy
 qR
-eG
+Zu
 qR
 qR
 "}
@@ -7370,7 +7376,7 @@ TB
 uH
 hT
 qR
-nB
+Bi
 qR
 qR
 "}
@@ -7415,7 +7421,7 @@ aO
 vA
 aw
 qR
-jc
+kr
 qR
 qR
 "}

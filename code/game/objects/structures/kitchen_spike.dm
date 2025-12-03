@@ -8,6 +8,7 @@
 	density = TRUE
 	anchored = FALSE
 	max_integrity = 200
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/structure/kitchenspike_frame/Initialize(mapload)
 	. = ..()
@@ -74,6 +75,7 @@
 	buckle_lying = FALSE
 	can_buckle = TRUE
 	max_integrity = 250
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7)
 
 /obj/structure/kitchenspike/Initialize(mapload)
 	. = ..()

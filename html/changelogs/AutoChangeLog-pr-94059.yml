@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - qol: "adds mapping directional helper for nanotrasen sign & replaces all var edited instances"

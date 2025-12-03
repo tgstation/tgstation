@@ -287,6 +287,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
+"bA" = (
+/obj/structure/ai_core{
+	state = 5
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "bC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -2407,6 +2413,13 @@
 "kQ" = (
 /turf/closed/wall,
 /area/ruin/space/ancientstation/beta/hall)
+"kR" = (
+/obj/machinery/door/window/right/directional/east{
+	req_access = list("away_general")
+	},
+/obj/structure/sign/warning/secure_area/directional/north,
+/turf/open/floor/engine,
+/area/ruin/space/ancientstation/delta/biolab)
 "kS" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/textured,
@@ -2672,10 +2685,6 @@
 "mc" = (
 /turf/closed/mineral/plasma,
 /area/ruin/space/ancientstation/charlie/dorms)
-"md" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/r_wall,
-/area/ruin/space/ancientstation/delta/biolab)
 "me" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -3352,6 +3361,14 @@
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
+"pr" = (
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg/burst,
+/obj/item/circuitboard/machine/ai_law_rack/core,
+/obj/item/stock_parts/subspace/transmitter,
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "pD" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -4106,20 +4123,6 @@
 	dir = 1
 	},
 /area/ruin/space/ancientstation/delta/biolab)
-"va" = (
-/obj/effect/decal/cleanable/blood/oil,
-/obj/structure/alien/weeds,
-/obj/machinery/light/small/broken/directional/west,
-/obj/item/stack/cable_coil{
-	pixel_y = -2;
-	pixel_x = -2
-	},
-/obj/item/stock_parts/subspace/amplifier{
-	pixel_x = -8;
-	pixel_y = 4
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/ancientstation/delta/ai)
 "vh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
@@ -4333,12 +4336,6 @@
 /obj/machinery/light/broken/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
-"ws" = (
-/obj/structure/ai_core{
-	state = 5
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/ancientstation/delta/ai)
 "wt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/old{
@@ -4538,12 +4535,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
-"xM" = (
-/obj/machinery/door/window/right/directional/east{
-	req_access = list("away_general")
-	},
-/turf/open/floor/engine,
-/area/ruin/space/ancientstation/delta/biolab)
 "xT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -4867,14 +4858,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
-"Ap" = (
-/obj/effect/decal/cleanable/blood/gibs/robot_debris,
-/obj/structure/alien/weeds,
-/obj/structure/alien/egg/burst,
-/obj/item/circuitboard/machine/ai_law_rack/core,
-/obj/item/stock_parts/subspace/transmitter,
-/turf/open/floor/iron/dark,
-/area/ruin/space/ancientstation/delta/ai)
 "Ar" = (
 /obj/structure/transit_tube_pod{
 	dir = 4;
@@ -8041,6 +8024,20 @@
 /obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
+"Vi" = (
+/obj/effect/decal/cleanable/blood/oil,
+/obj/structure/alien/weeds,
+/obj/machinery/light/small/broken/directional/west,
+/obj/item/stack/cable_coil{
+	pixel_y = -2;
+	pixel_x = -2
+	},
+/obj/item/stock_parts/subspace/amplifier{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "Vk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -15232,8 +15229,8 @@ aa
 aa
 aa
 ad
-Ap
-va
+pr
+Vi
 lq
 ag
 gk
@@ -15367,7 +15364,7 @@ aa
 ad
 ad
 ad
-ws
+bA
 ad
 ad
 ad
@@ -15385,8 +15382,8 @@ uo
 GX
 NG
 Lo
-md
-xM
+rp
+kR
 Go
 Yl
 yX

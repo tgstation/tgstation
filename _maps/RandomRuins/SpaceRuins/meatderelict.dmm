@@ -101,6 +101,12 @@
 /obj/structure/holosign/barrier,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
+"dg" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/directional/east,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
 "dv" = (
 /obj/structure/window/spawner/directional/west,
 /obj/structure/window/spawner/directional/north,
@@ -332,10 +338,6 @@
 /obj/item/crowbar,
 /turf/open/indestructible/meat,
 /area/ruin/space/has_grav/powered/biooutpost)
-"hR" = (
-/obj/structure/sign/warning,
-/turf/closed/indestructible/reinforced,
-/area/ruin/space/has_grav/powered/biooutpost/vault)
 "hW" = (
 /obj/effect/turf_decal/siding/purple,
 /obj/effect/decal/cleanable/blood/splatter,
@@ -587,6 +589,19 @@
 /obj/item/ammo_casing/c45/spent,
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
+"lI" = (
+/obj/structure/fluff/empty_cryostasis_sleeper{
+	name = "broken genetics device";
+	desc = "Depowered and broken, this machine no longer serves its purpose."
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/purple{
+	dir = 5
+	},
+/obj/structure/sign/warning/chem_diamond/directional/west,
+/obj/structure/sign/warning/directional/south,
+/turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
 "lJ" = (
 /obj/machinery/door/airlock/science/glass,
 /obj/effect/mapping_helpers/airlock/welded,
@@ -709,12 +724,6 @@
 	},
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/biooutpost)
-"on" = (
-/obj/structure/sign/directions/security/directional/south{
-	pixel_y = 0
-	},
-/turf/closed/indestructible/riveted/plastinum/nodiagonal,
-/area/ruin/space/has_grav/powered/biooutpost/vault)
 "op" = (
 /turf/closed/mineral/random/stationside/asteroid{
 	baseturfs = /turf/open/indestructible/white
@@ -748,6 +757,13 @@
 "oX" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"pd" = (
+/obj/structure/broken_flooring/corner/always_floorplane{
+	dir = 4
+	},
+/obj/structure/sign/warning/directional/west,
+/turf/open/indestructible/meat,
 /area/ruin/space/has_grav/powered/biooutpost)
 "pe" = (
 /obj/structure/chair/office,
@@ -1037,6 +1053,14 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
+"tX" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/ai_module/law/core/full/ten_commandments,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/biooutpost)
 "uc" = (
 /obj/effect/turf_decal/siding/purple/corner,
 /obj/item/ammo_casing/shotgun/buckshot/spent,
@@ -1310,18 +1334,6 @@
 	},
 /turf/open/indestructible,
 /area/ruin/space/has_grav/powered/biooutpost)
-"yU" = (
-/obj/structure/fluff/empty_cryostasis_sleeper{
-	name = "broken genetics device";
-	desc = "Depowered and broken, this machine no longer serves its purpose."
-	},
-/obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/effect/turf_decal/siding/purple{
-	dir = 5
-	},
-/obj/structure/sign/warning/chem_diamond/directional/west,
-/turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/biooutpost)
 "za" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/color/yellow,
@@ -1392,10 +1404,6 @@
 	dir = 6
 	},
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/biooutpost)
-"AT" = (
-/obj/structure/sign/warning,
-/turf/closed/indestructible/riveted/plastinum/nodiagonal,
 /area/ruin/space/has_grav/powered/biooutpost)
 "AV" = (
 /obj/effect/turf_decal/stripes/full,
@@ -1530,14 +1538,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
-"Da" = (
-/obj/structure/table/wood/fancy/orange,
-/obj/item/ai_module/law/core/full/ten_commandments,
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/ruin/space/has_grav/powered/biooutpost)
 "Df" = (
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/siding/purple{
@@ -1670,6 +1670,14 @@
 /obj/item/storage/box/beakers,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/biooutpost)
+"Fr" = (
+/obj/structure/puzzle_blockade{
+	id = "md_armory"
+	},
+/obj/effect/turf_decal/stripes/full,
+/obj/structure/sign/warning/directional/north,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
 "Fv" = (
 /obj/item/food/muffin/moffin{
 	preserved_food = 1
@@ -1718,6 +1726,12 @@
 /obj/machinery/light/small/broken/directional/south,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/biooutpost)
+"Gq" = (
+/obj/structure/sign/directions/security/directional/south{
+	pixel_y = 0
+	},
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
 "GA" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
@@ -2220,12 +2234,6 @@
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
-"QY" = (
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/obj/structure/sign/poster/official/random/directional/east,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/powered/biooutpost)
 "Ra" = (
 /obj/effect/spawner/structure/window/hollow/end,
 /turf/open/indestructible/plating,
@@ -2538,6 +2546,12 @@
 /obj/structure/broken_flooring/pile/always_floorplane,
 /obj/structure/cable,
 /turf/open/indestructible/plating,
+/area/ruin/space/has_grav/powered/biooutpost)
+"XO" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/structure/sign/poster/official/random/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
 "XP" = (
 /turf/closed/mineral/bananium,
@@ -2986,8 +3000,8 @@ Jh
 Jh
 AP
 DJ
-yU
-AT
+lI
+Jh
 vF
 ih
 hf
@@ -3174,7 +3188,7 @@ Jh
 Jh
 Jh
 eT
-Da
+tX
 Tw
 tg
 Jh
@@ -3265,8 +3279,8 @@ Jh
 wX
 wM
 DJ
-cp
-QY
+dg
+XO
 Ju
 op
 op
@@ -3307,9 +3321,9 @@ UX
 UX
 EC
 xr
-hR
+EC
 UX
-on
+Gq
 UX
 op
 Gd
@@ -3563,8 +3577,8 @@ EN
 EN
 eP
 EC
-hR
-IK
+EC
+Fr
 IK
 IK
 PQ
@@ -3724,7 +3738,7 @@ Rb
 Sj
 EC
 Yc
-hR
+EC
 EC
 xr
 EC
@@ -3766,7 +3780,7 @@ UD
 qV
 ij
 Nz
-sJ
+pd
 OM
 Vu
 NE

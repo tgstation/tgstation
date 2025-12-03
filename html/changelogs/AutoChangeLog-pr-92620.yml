@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - refactor: "Follow-up to the crafting/material refactor from months ago. All objects crafted with stacks now inherit their mat composition (not necessarily the effects and color) by default, while previously only a few things like chair, sinks and toilets did. Report any object looking or behaving weirdly as a result."
+  - bugfix: "The material composition of ammo boxes is no longer a 1/10 of what it's supposed to be. It was a shitty hack to make it harder to recycle empty ammo boxes. Instead, they lose materials as they're emptied now."

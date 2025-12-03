@@ -94,11 +94,6 @@
 /obj/structure/fluff/paper/stack,
 /turf/open/floor/iron,
 /area/virtual_domain)
-"aH" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/frame/machine/secured,
-/turf/open/floor/iron,
-/area/virtual_domain)
 "aO" = (
 /obj/structure/toilet{
 	pixel_y = 13
@@ -666,13 +661,6 @@
 	pixel_y = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron,
-/area/virtual_domain)
-"fr" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "fz" = (
@@ -1587,15 +1575,6 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
-"no" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/ai_module/law/malf,
-/turf/open/floor/iron,
-/area/virtual_domain)
 "nq" = (
 /obj/effect/mob_spawn/corpse/human/scientist,
 /turf/open/misc/dirt/dark/jungle,
@@ -1713,6 +1692,15 @@
 	},
 /obj/structure/closet/body_bag,
 /turf/open/floor/iron/dark,
+/area/virtual_domain)
+"ow" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/holosign/barrier,
+/obj/structure/marker_beacon/burgundy,
+/obj/structure/sign/warning/secure_area/directional/north,
+/turf/open/floor/iron,
 /area/virtual_domain)
 "oy" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
@@ -2376,13 +2364,6 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/virtual_domain)
-"tI" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/item/trash/can/food/pine_nuts,
-/turf/open/floor/iron,
 /area/virtual_domain)
 "tM" = (
 /obj/effect/turf_decal/tile/neutral,
@@ -3783,10 +3764,6 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
-"FF" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/r_wall,
-/area/virtual_domain)
 "FG" = (
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /obj/effect/turf_decal/weather/dirt{
@@ -3857,13 +3834,12 @@
 /obj/structure/marker_beacon/bronze,
 /turf/open/floor/plating,
 /area/virtual_domain)
-"Gi" = (
+"Gc" = (
 /obj/effect/turf_decal/tile/neutral{
-	dir = 1
+	dir = 8
 	},
-/obj/structure/fluff/paper/stack{
-	dir = 6
-	},
+/obj/item/trash/energybar,
+/obj/structure/sign/warning/secure_area/directional/south,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "Gk" = (
@@ -3897,6 +3873,13 @@
 /obj/item/clothing/mask/gas,
 /turf/open/floor/plating,
 /area/virtual_domain)
+"Gw" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/sign/warning/secure_area/directional/north,
+/turf/open/floor/iron,
+/area/virtual_domain)
 "Gx" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -3924,16 +3907,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/barricade/sandbags,
 /turf/open/floor/wood,
-/area/virtual_domain)
-"GJ" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/cardboard/mothic{
-	pixel_y = 8
-	},
-/turf/open/floor/iron,
 /area/virtual_domain)
 "GQ" = (
 /obj/effect/turf_decal/weather/dirt,
@@ -4168,6 +4141,16 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
+"IN" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 6
+	},
+/obj/structure/sign/warning/secure_area/directional/north,
+/turf/open/floor/iron,
+/area/virtual_domain)
 "IS" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -4340,6 +4323,14 @@
 "KF" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"KG" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/obj/structure/sign/warning/secure_area/directional/north,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "KM" = (
@@ -4903,6 +4894,14 @@
 	},
 /turf/open/floor/iron/white,
 /area/virtual_domain)
+"OH" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/trash/can/food/pine_nuts,
+/obj/structure/sign/warning/secure_area/directional/south,
+/turf/open/floor/iron,
+/area/virtual_domain)
 "OS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -5163,21 +5162,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/turf/open/floor/iron,
-/area/virtual_domain)
-"Rz" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/item/trash/energybar,
-/turf/open/floor/iron,
-/area/virtual_domain)
-"RB" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/holosign/barrier,
-/obj/structure/marker_beacon/burgundy,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "RD" = (
@@ -5472,6 +5456,15 @@
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/carpet,
+/area/virtual_domain)
+"TO" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ai_module/law/malf,
+/turf/open/floor/iron,
 /area/virtual_domain)
 "TP" = (
 /obj/effect/decal/cleanable/dirt,
@@ -6010,6 +6003,11 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
+"YB" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/frame/machine/secured,
+/turf/open/floor/iron,
+/area/virtual_domain)
 "YD" = (
 /obj/item/clothing/head/cone{
 	pixel_x = 6;
@@ -6135,6 +6133,17 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
+/area/virtual_domain)
+"Zy" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/cardboard/mothic{
+	pixel_y = 8
+	},
+/obj/structure/sign/warning/secure_area/directional/north,
+/turf/open/floor/iron,
 /area/virtual_domain)
 "ZC" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -6682,8 +6691,8 @@ uS
 dX
 XK
 tq
-tI
-FF
+OH
+uS
 mq
 oA
 wj
@@ -6919,7 +6928,7 @@ Kh
 yq
 WF
 uS
-aH
+YB
 uS
 TH
 nS
@@ -7001,7 +7010,7 @@ HM
 ps
 hV
 Hd
-no
+TO
 hZ
 ii
 SN
@@ -7018,8 +7027,8 @@ ny
 JP
 ul
 tq
-Rz
-FF
+Gc
+uS
 iI
 MM
 Vr
@@ -7171,8 +7180,8 @@ Yo
 pH
 pK
 ep
-FF
-GJ
+uS
+Zy
 FR
 Hd
 Ka
@@ -7208,8 +7217,8 @@ ps
 Nl
 YG
 iH
-FF
-dd
+uS
+Gw
 FK
 Of
 qu
@@ -7496,8 +7505,8 @@ ps
 Ht
 rJ
 VG
-FF
-RB
+uS
+ow
 qL
 jd
 LP
@@ -7555,8 +7564,8 @@ oH
 Mj
 gE
 xI
-FF
-Gi
+uS
+IN
 Hd
 aC
 Uo
@@ -8083,8 +8092,8 @@ uS
 uS
 oo
 uS
-FF
-fr
+uS
+KG
 DV
 MN
 EH

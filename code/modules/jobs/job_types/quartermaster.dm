@@ -29,7 +29,7 @@
 		/datum/job_department/cargo,
 		/datum/job_department/command,
 		)
-	family_heirlooms = list(/obj/item/stamp, /obj/item/stamp/denied)
+	family_heirlooms = list(/obj/item/stamp/granted, /obj/item/stamp/denied)
 	mail_goodies = list(
 		/obj/item/circuitboard/machine/emitter = 3
 	)

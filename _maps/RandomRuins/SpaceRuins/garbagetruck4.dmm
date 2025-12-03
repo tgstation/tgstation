@@ -75,6 +75,7 @@
 /obj/item/clothing/shoes/kindle_kicks{
 	pixel_y = -10
 	},
+/obj/structure/sign/warning/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "hH" = (
@@ -195,10 +196,6 @@
 /obj/effect/spawner/random/trash/food_packaging,
 /obj/item/food/spidereggs,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/toystore)
-"rb" = (
-/obj/structure/sign/warning,
-/turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "rc" = (
 /obj/effect/decal/cleanable/blood/oil,
@@ -796,6 +793,7 @@
 	},
 /obj/structure/mop_bucket,
 /obj/item/broken_bottle,
+/obj/structure/sign/warning/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "UD" = (
@@ -951,7 +949,7 @@ xC
 Ix
 dq
 TO
-rb
+Yr
 "}
 (4,1,1) = {"
 yP
@@ -1105,7 +1103,7 @@ ld
 Hy
 Rl
 hD
-rb
+Yr
 "}
 (11,1,1) = {"
 Zi

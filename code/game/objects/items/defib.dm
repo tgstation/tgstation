@@ -121,17 +121,10 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/defibrillator/attack_hand(mob/user, list/modifiers)
 	if(loc == user)
-		if(slot_flags & ITEM_SLOT_BACK)
-			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
-				ui_action_click()
-			else
-				to_chat(user, span_warning("Put the defibrillator on your back first!"))
-
-		else if(slot_flags & ITEM_SLOT_BELT)
-			if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
-				ui_action_click()
-			else
-				to_chat(user, span_warning("Strap the defibrillator's belt on first!"))
+		if(user.get_slot_by_item(src) & slot_flags)
+			ui_action_click()
+		else
+			balloon_alert(user, "equip the unit first!")
 		return
 	else if(istype(loc, /obj/machinery/defibrillator_mount))
 		ui_action_click() //checks for this are handled in defibrillator.mount.dm
@@ -266,9 +259,10 @@
 	desc = "A belt-equipped defibrillator that can be rapidly deployed."
 	icon_state = "defibcompact"
 	inhand_icon_state = null
+	slot_flags = ITEM_SLOT_BELT|ITEM_SLOT_SUITSTORE|ITEM_SLOT_DEX_STORAGE
+	worn_icon = 'icons/mob/clothing/belt.dmi'
 	worn_icon_state = "defibcompact"
 	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = ITEM_SLOT_BELT
 	paddle_state = "defibcompact-paddles"
 	powered_state = "defibcompact-powered"
 	charge_state = "defibcompact-charge"
