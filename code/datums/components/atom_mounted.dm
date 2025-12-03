@@ -8,14 +8,14 @@
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 	hanging_support_atom = target_structure
-
-/datum/component/atom_mounted/RegisterWithParent()
-	ADD_TRAIT(parent, TRAIT_WALLMOUNTED, REF(src))
 	RegisterSignal(hanging_support_atom, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	if(isclosedturf(hanging_support_atom))
 		RegisterSignal(hanging_support_atom, COMSIG_TURF_CHANGE, PROC_REF(on_turf_changing))
 	else
 		RegisterSignal(hanging_support_atom, COMSIG_QDELETING, PROC_REF(on_structure_delete))
+
+/datum/component/atom_mounted/RegisterWithParent()
+	ADD_TRAIT(parent, TRAIT_WALLMOUNTED, REF(src))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 
 /datum/component/atom_mounted/UnregisterFromParent()
