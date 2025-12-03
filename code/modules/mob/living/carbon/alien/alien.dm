@@ -1,4 +1,5 @@
 /mob/living/carbon/alien
+	abstract_type = /mob/living/carbon/alien
 	name = "alien"
 	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	gender = FEMALE //All xenos are girls!!

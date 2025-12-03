@@ -205,6 +205,6 @@
 
 /// Proc to lessen the amount of copypasta we do for the alien tests, simply sets the rolling vars we have.
 /datum/unit_test/explosion_action/proc/read_alien_damages(mob/living/carbon/alien/subject)
-	alien_brute_loss = subject.getBruteLoss()
-	alien_burn_loss = subject.getFireLoss()
+	alien_brute_loss = subject.get_brute_loss()
+	alien_burn_loss = subject.get_fire_loss()
 	alien_ear_damage = subject.get_organ_loss(ORGAN_SLOT_EARS)

@@ -65,7 +65,7 @@
 
 	carbon_hit.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/heretic)
 	carbon_hit.AdjustKnockdown(5 SECONDS, daze_amount = 3 SECONDS)
-	carbon_hit.adjustStaminaLoss(80)
+	carbon_hit.adjust_stamina_loss(80)
 
 	return TRUE
 
@@ -127,7 +127,7 @@
 			return FIRELOSS
 
 		if(prob(70))
-			carbon_user.adjustFireLoss(20)
+			carbon_user.adjust_fire_loss(20)
 			playsound(carbon_user, 'sound/effects/wounds/sizzle1.ogg', 70, vary = TRUE)
 			if(prob(50))
 				carbon_user.emote("scream")

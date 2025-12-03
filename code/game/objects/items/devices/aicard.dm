@@ -35,12 +35,14 @@
 	desc = "A stylish upgrade (?) to the intelliCard."
 	icon_state = "aitater"
 	base_icon_state = "aitater"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/aicard/aispook
 	name = "intelliLantern"
 	desc = "A spoOoOoky upgrade to the intelliCard."
 	icon_state = "aispook"
 	base_icon_state = "aispook"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/aicard/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is trying to upload [user.p_them()]self into [src]! That's not going to work out well!"))
@@ -159,7 +161,7 @@
 	if(AI && AI.loc == src)
 		to_chat(AI, span_userdanger("Your core files are being wiped!"))
 		while(AI.stat != DEAD && flush)
-			AI.adjustOxyLoss(5)
+			AI.adjust_oxy_loss(5)
 			AI.updatehealth()
 			sleep(0.5 SECONDS)
 		flush = FALSE

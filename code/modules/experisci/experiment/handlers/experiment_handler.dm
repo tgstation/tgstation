@@ -163,20 +163,6 @@
 		playsound(source, 'sound/machines/ping.ogg', 25)
 		source.say("New unique autopsy successfully catalogued.")
 
-
-/**
- * Announces a message to all experiment handlers
- *
- * Arguments:
- * * message - The message to announce
- */
-/datum/component/experiment_handler/proc/announce_message_to_all(message)
-	for(var/datum/component/experiment_handler/experi_handler as anything in GLOB.experiment_handlers)
-		if(experi_handler.linked_web != linked_web)
-			continue
-		var/atom/movable/experi_parent = experi_handler.parent
-		experi_parent.say(message)
-
 /**
  * Announces a message to this experiment handler
  *
@@ -292,16 +278,23 @@
  * * experiment - The experiment to check
  */
 /datum/component/experiment_handler/proc/can_select_experiment(datum/experiment/experiment)
+	// Check that this experiment is visible currently
+	if (!(experiment in linked_web?.available_experiments))
+		return FALSE
+
+	return is_compatible_experiment(experiment)
+
+/**
+ * Checks if an experiment could be selected by the handler if it were available in the linked web.
+ * Basically, it skips the available_experiments check, unlike can_select_experiment.
+ */
+/datum/component/experiment_handler/proc/is_compatible_experiment(datum/experiment/experiment)
 	// Check that this experiments has no disallowed traits
 	if (experiment.traits & disallowed_traits)
 		return FALSE
 
 	// Check against the list of allowed experimentors
 	if (length(experiment.allowed_experimentors) && !is_type_in_list(parent, experiment.allowed_experimentors))
-		return FALSE
-
-	// Check that this experiment is visible currently
-	if (!(experiment in linked_web?.available_experiments))
 		return FALSE
 
 	// Check that this experiment type isn't blacklisted

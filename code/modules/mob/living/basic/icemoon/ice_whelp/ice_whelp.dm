@@ -87,7 +87,7 @@
 	if(!do_after(src, 5 SECONDS, target))
 		return
 	target.gib(DROP_ALL_REMAINS)
-	adjustBruteLoss(-1 * heal_on_cannibalize)
+	adjust_brute_loss(-1 * heal_on_cannibalize)
 
 ///Ash whelp, the "lava" variant of ice whelps.
 /mob/living/basic/mining/ice_whelp/ash

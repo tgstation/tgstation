@@ -34,7 +34,7 @@
 
 	if(organ_flags & ORGAN_FAILING)
 		// forced to ensure people don't use it to gain tox as slime person
-		owner.adjustToxLoss(2 * seconds_per_tick, forced = TRUE)
+		owner.adjust_tox_loss(2 * seconds_per_tick, forced = TRUE)
 	else if(inflamation_stage)
 		inflamation(seconds_per_tick)
 	else if(SPT_PROB(APPENDICITIS_PROB, seconds_per_tick) && !HAS_TRAIT(owner, TRAIT_TEMPORARY_BODY))
@@ -68,13 +68,13 @@
 		if(2)
 			if(SPT_PROB(1.5, seconds_per_tick))
 				to_chat(organ_owner, span_warning("You feel a stabbing pain in your abdomen!"))
-				organ_owner.adjustOrganLoss(ORGAN_SLOT_APPENDIX, 5)
+				organ_owner.adjust_organ_loss(ORGAN_SLOT_APPENDIX, 5)
 				organ_owner.Stun(rand(40, 60))
-				organ_owner.adjustToxLoss(1, forced = TRUE)
+				organ_owner.adjust_tox_loss(1, forced = TRUE)
 		if(3)
 			if(SPT_PROB(0.5, seconds_per_tick))
 				organ_owner.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 95)
-				organ_owner.adjustOrganLoss(ORGAN_SLOT_APPENDIX, 15)
+				organ_owner.adjust_organ_loss(ORGAN_SLOT_APPENDIX, 15)
 
 /obj/item/organ/appendix/feel_for_damage(self_aware)
 	var/effective_stage = floor(inflamation_stage + (damage / maxHealth))

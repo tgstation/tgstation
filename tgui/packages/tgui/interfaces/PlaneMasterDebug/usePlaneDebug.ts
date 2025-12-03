@@ -19,6 +19,10 @@ type PlaneDebug = {
   planeOpen: boolean;
   setPlaneOpen: Dispatch<SetStateAction<boolean>>;
   planesProcessed: PlaneMap;
+  zoomToX: number | undefined;
+  setZoomToX: Dispatch<SetStateAction<number | undefined>>;
+  zoomToY: number | undefined;
+  setZoomToY: Dispatch<SetStateAction<number | undefined>>;
 };
 
 export const PlaneDebugContext = createContext({} as PlaneDebug);

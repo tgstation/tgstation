@@ -1,0 +1,4 @@
+author: "Yobrocharlie"
+delete-after: True
+changes:
+  - map: "added the \"heretic\" gateway map (it has nothing related to heretics)"

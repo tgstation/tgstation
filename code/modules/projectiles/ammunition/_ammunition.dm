@@ -16,6 +16,8 @@
 	var/caliber = null
 	///The bullet type to create when New() is called
 	var/projectile_type = null
+	///Muzzle flash color based on ammo casing.
+	var/muzzle_flash_color = LIGHT_COLOR_ORANGE
 	///the loaded projectile in this ammo casing
 	var/obj/projectile/loaded_projectile = null
 	///Pellets for spreadshot

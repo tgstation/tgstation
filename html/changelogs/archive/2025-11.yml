@@ -587,3 +587,219 @@
   vinylspiders:
   - bugfix: fixes an where modsuits would accumulate in nullspace over the course
       of a round
+2025-11-21:
+  ArchBTW:
+  - balance: Increase Captain's Sabre damage [15->20]
+  Ezel:
+  - balance: Cmo no longer starts with a advanced health analyzer
+  Fghj240:
+  - rscadd: Added 2 new virus symptoms
+  Ghommie:
+  - bugfix: Fixed some fishes trying to eat other (bigger) fish while not hungry.
+      Also a nit with purple sludgefish being a bit too rare.
+  - bugfix: Fixes fish analyzers not working with held or equipped fish or aquariums
+      (not in your backpack).
+  - balance: Fish analyzers and operating computers no longer announce completed experiments
+      that they aren't compatible with.
+  - balance: the ping sound from using fishing lures should be a smidge louder and
+      can be heard from more than 1 tile away.
+  - qol: Examining fish tanks (the item) when they're almost full will warn you about
+      it.
+  SmArtKar:
+  - bugfix: Echolocation no longer displays pipes and other invisible objects
+  - bugfix: Clearing centcom podbays no longer deletes ghosts and runtimes upon doing
+      so
+  UwUMacaroniTime:
+  - balance: Nerfed cyborg hypospray across the board, notably refilling chems 20%
+      slower.
+2025-11-22:
+  ArchBTW:
+  - rscdel: Removes the limit for how many times you can emag an emag (6->127 max)
+  FalloutFalcon:
+  - refactor: refactors some attack-chain code relating to xenobio potions and items
+  Melbert:
+  - balance: Facehuggers now apply a 1 second stun when initially applied
+  - balance: Facehuggers now apply a 20 second confusion effect
+  - balance: Facehugger knockdown duration has been doubled (to 10 seconds)
+  - balance: While your face is covered by a facehugger, you are forced to whisper
+  - bugfix: Fixes borg RCD
+  SmArtKar:
+  - bugfix: Fixed blood emissives rendering below disposals pipes and other floor
+      objects
+  SyncIt21:
+  - bugfix: exosuit RCD uses charge without silo link
+  - bugfix: deconstruct sound fx plays for borg rcd & rtd
+  - bugfix: Chiral inversion buffer now converts multiple reagents
+  - bugfix: Chiral inversion buffer can now be transferred into another reagent holder
+      if no conversion took place instead of just evaporating
+  - bugfix: dropper, bottles & syringes now won't display messages like 0u of reagent
+      transferred
+  Time-Green:
+  - bugfix: Blobs can spawn blobbernauts again
+  dwinters99:
+  - code_imp: Puce
+  lelandkemble:
+  - bugfix: Several things that turn you into a random animal will no longer turn
+      you into a spriteless penguin.
+  necromanceranne:
+  - rscadd: Three variants of the laser gun; Carbine (replacing the existing one),
+      Pistol and Rifle! Find it (possibly) in your armory today!
+  - balance: The armory laser guns might be different variants of the laser gun, rather
+      than always being the standard. The standard is the same as ever, even if it
+      looks different.
+  - rscadd: If you care, the sovl version is available as a goodie. And in the hands
+      of pirates...
+  - spellcheck: Lore! LORE FOR LASER GUNS! LOOOORE! Examine laser guns closely and
+      you might learn more about them.
+  - balance: The new set of laser guns come with brand new sprites.
+  trickyfox-inc:
+  - rscadd: Added centcom officer's access (cent_officer)
+  - rscadd: Added mapping helpers for cent_officer and cent_specops access
+  - map: Changed access on the administrative office doors (cent_officer)
+2025-11-23:
+  EEASAS:
+  - bugfix: Fixes a few disposal pipes on CatwalkStation. Read the PR!
+  - bugfix: Fixes Icebox's comms agent ruin having generic documents, not the secret
+      ones
+  Fghj240:
+  - balance: NT Frontier can purchase and refund researched techweb nodes.
+  Melbert:
+  - bugfix: Wall mounts no longer stick to tables instead of the wall behind it
+  SmArtKar:
+  - code_imp: Improved borg hypo reagent handling
+  - bugfix: Fixed a duplicate signal registration in station trait lobby button code
+  alien3301:
+  - qol: Captain's fountain pen writes in black
+  combustor:
+  - bugfix: Fixes the AI sat's teleporter on catwalk
+  hry-gh:
+  - bugfix: chat storage should load more reliably
+  - server: server operators can now properly disable the iframe chat storage solution
+      by unsetting the STORAGE_CDN_IFRAME config
+  timothymtorres:
+  - qol: Add direction helpers for burned subtypes of lights
+  vinylspiders:
+  - bugfix: you can no longer send money from virtualspace to a real account
+  - code_imp: adds a flag for virtual areas so they can easily be checked, as well
+      as an easy helper proc, 'is_area_virtual(your_area)'
+2025-11-24:
+  JohnFulpWillard:
+  - rscadd: The horrific necktie can now become sentient.
+  SmArtKar:
+  - image: Cybernetic cat ears now have unique sprites and emissives
+  ibexgoetia:
+  - image: Resprited the Plague Doctor's costume.
+2025-11-25:
+  Cat:
+  - balance: Bartender's wardrobe vendor starts with a service plumbing constructor
+  FalloutFalcon:
+  - code_imp: generic helpers and defines for validating file extenstion
+  - refactor: the jukebox has had some improvements in how it validates the sound
+      file. hopefully none of your funny songs disappear.
+  - admin: command_report_menu will let you set ANY sound file type for the sound
+      it plays.
+  - admin: Admins can now manage jukebox songs in game
+  - server: Jukebox songs length are now set automatically, update your jukebox configs!
+  alien3301:
+  - qol: Kaza Ruk has balloon alerts when switching attacks
+  lelandkemble:
+  - bugfix: xenobio console potions work again
+  vinylspiders, Wallemations:
+  - image: space heaters got a model replacement, from stick heaters to box heaters
+2025-11-26:
+  Aliceee2ch:
+  - image: Various beakers now have own inhands sprites.
+  JohnFulpWillard:
+  - bugfix: Headslugs are now small.
+  Y0SH1M4S73R:
+  - sound: Squid tongues have a distinctive effect on your text-to-speech voice.
+  lelandkemble:
+  - bugfix: Ghosts can no longer try and fail to admire aquariums.
+  - bugfix: cyborg RTD works again
+2025-11-27:
+  Cirrial:
+  - bugfix: Health analysers will no longer erroneously show a blood level for things
+      that don't have blood.
+  Fghj240:
+  - rscadd: Netpods can now scan their occupants to create more accurate bit avatars
+  Hatterhat:
+  - bugfix: The blood-drunk miner's corpse now properly appears and fades away again.
+  Melbert:
+  - bugfix: Pirates will no longer randomly spawn as human
+  - bugfix: Servant Golems have numbered names again
+  - refactor: Refactored ghost spawns (like spider eggs or pirate spawners), report
+      any oddities
+  - admin: Adds "roleplay reminder" button to player panel
+  Thunder12345:
+  - bugfix: The captain suit costume (green suit) no longer has the same armour as
+      real captain outfits.
+  Wallem:
+  - qol: Replaces abandoned crate multitool interaction with a TGUI window that shows
+      ALL your previous attempts
+  alien3301:
+  - balance: The warden starts with a bandolier in their locker
+  lelandkemble:
+  - map: Catwalk Abandoned Kitchen APC powered by default
+  - admin: Admins get powertool belts in their special outfits.
+  san7890:
+  - refactor: The Cult of Nar'Sie realized that they were installing the mirrors on
+      their mirror shields the wrong way around, thus altering the makeup of their
+      mirror clones health, damage, and re-replicability.
+  - refactor: In response to the recent updates in clone magic, Nanotrasen's Stealth
+      Reactive Armor should now generate more convincing clones.
+  vinylspiders:
+  - bugfix: fixes a bug that caused you to need to wear shoes in order to gain any
+      defensive benefit from the sleeping carp martial art style
+2025-11-28:
+  Bisar:
+  - code_imp: All (Brute|Burn|Fire|Tox|Oxy|Organ|Stamina)(Loss) procs now use snake_case,
+      in-line with the STYLE guide. Underscores rule!
+  Co0kie-GG:
+  - rscadd: New emotions on the AI status display
+  FalloutFalcon:
+  - bugfix: Less abstract mobs will spawn in random spawners (mostly relating to the
+      summoning prefix)
+  - bugfix: '"Boss" basic mobs are now exluded from the summoning prefix to parody
+      behavior of them being megafauna'
+  Melbert:
+  - qol: Search bars in "settings" and "keybindings"
+  - refactor: Refactored how zombie powder and inverse cryogeldia apply their effects
+      to maybe have them get stuck less
+  - bugfix: 'Deathmatch: Ethereal Species gives you shock touch as intended'
+  WebcomicArtist:
+  - qol: Ethereal Drinks (Voltaic wine,telepole,pod tesla) now can feed etherials
+      decently without needing them to risk blacking out.
+  necromanceranne:
+  - bugfix: The Hellfire Laser now has its unique sprite back.
+2025-11-29:
+  Cirrial:
+  - bugfix: Stoats have a chance to try and grab items like they always should have.
+  Pickle-Coding:
+  - bugfix: Fixes overclocked volume pumps being able to work on walls.
+  SmArtKar:
+  - admin: Converted the Spawn verb into a TGUI input, featuring for dynamic search
+      and RegEx support
+  SyncIt21:
+  - bugfix: items such as dna injectors and others that have strange characters in
+      their names can now be dispensed from custom vending machines
+  Y0SH1M4S73R:
+  - rscadd: Trapdoors built inside of a shuttle will move along with the shuttle.
+  - bugfix: Open trapdoors will not cause shuttles containing them to bring open space
+      into transit.
+  ezel:
+  - balance: You can no longer print soup pots
+2025-11-30:
+  Aliceee2ch:
+  - image: Added more inhands sprite for welders, aswell as upgrading some of them.
+  Cat:
+  - qol: The plumbing IV drip can be rotate with alt click now
+  - rscadd: The plumbing IV drip can now output chemicals into plumbing factories
+  SmArtKar:
+  - bugfix: Fixed partially deployed MODsuits trying to deploy parts onto blocked
+      slots when the deploy action is right clicked, instead of retracting already
+      deployed parts.
+  TealSeer:
+  - bugfix: fixed MULEbots unloading deliveries onto the wrong tile
+  lelandkemble:
+  - bugfix: Emagging the cap's spare safe will no longer turn it into a smiling table
+  - bugfix: Video game winning experiment no longer completes over and over
