@@ -1,6 +1,0 @@
-author: "Fghj240"
-delete-after: True
-changes:
-  - qol: "you can swap beakers in a pandemic"
-  - qol: "pandemics now display overall virus severity"
-  - admin: "virus logs now include severity along with other stats"

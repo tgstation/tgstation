@@ -6,6 +6,7 @@
 	foldabletype = null
 	max_integrity = 150
 	ttv_icon = "motor_chair_ttv"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 14.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	///How "fast" the wheelchair goes only affects ramming
 	var/speed = 2
 	///Self explanatory, ratio of how much power we use

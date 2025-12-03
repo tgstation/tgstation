@@ -16,6 +16,7 @@
 	shrapnel_type = /obj/projectile/bullet/shrapnel/ied
 	det_time = 225 SECONDS //this is handled by assemblies now
 	display_timer = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.65, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	/// Explosive power
 	var/power = 5
 	/// Our assembly that when activated causes us to explode
