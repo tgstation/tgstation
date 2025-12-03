@@ -180,6 +180,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	icon_state = "wm_1_0"
 	density = TRUE
 	state_open = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	var/busy = FALSE
 	var/bloody_mess = FALSE
 	var/obj/item/color_source

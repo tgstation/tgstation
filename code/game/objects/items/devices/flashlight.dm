@@ -415,6 +415,7 @@
 	custom_materials = null
 	start_on = TRUE
 	has_closed_handle = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 // green-shaded desk lamp
 /obj/item/flashlight/lamp/green
