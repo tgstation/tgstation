@@ -843,7 +843,6 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 
 /datum/holiday/xmas
 	name = CHRISTMAS
-	always_celebrate = TRUE
 	begin_day = 18
 	begin_month = DECEMBER
 	end_day = 27
