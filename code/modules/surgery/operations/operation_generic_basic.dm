@@ -74,17 +74,20 @@
 	any_surgery_states_blocked = SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED
 	target_zone = null
 
-/datum/surgery_operation/basic/saw_bones/all_blocked_strings()
+/datum/surgery_operation/basic/saw_bone/all_blocked_strings()
 	return ..() + list("The patient must not have complex anatomy")
 
-/datum/surgery_operation/basic/saw_bones/get_default_radial_image()
+/datum/surgery_operation/basic/saw_bone/get_default_radial_image()
 	return image(/obj/item/circular_saw)
 
-/datum/surgery_operation/basic/saw_bones/tool_check(obj/item/tool)
+/datum/surgery_operation/basic/saw_bone/state_check(mob/living/patient)
+	return !patient.has_limbs // Only for limbless mobs
+
+/datum/surgery_operation/basic/saw_bone/tool_check(obj/item/tool)
 	// Require edged sharpness and sufficient force OR a tool behavior match
 	return (((tool.get_sharpness() & SHARP_EDGED) && tool.force >= 10) || implements[tool.tool_behaviour])
 
-/datum/surgery_operation/basic/saw_bones/on_preop(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/basic/saw_bone/on_preop(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		patient,
@@ -94,7 +97,7 @@
 	)
 	display_pain(patient, "You feel a horrid ache spread through your insides!")
 
-/datum/surgery_operation/basic/saw_bones/on_success(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/basic/saw_bone/on_success(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	patient.apply_status_effect(/datum/status_effect/basic_surgery_state, SURGERY_BONE_SAWED)
 	patient.apply_damage(patient.maxHealth * 0.5, sharpness = tool.get_sharpness(), wound_bonus = CANT_WOUND, attacking_item = tool)
