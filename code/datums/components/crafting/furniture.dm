@@ -110,7 +110,7 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	category = CAT_FURNITURE
 
-/datum/crafting_recipe/lamp/New()
+/datum/crafting_recipe/green_lamp/New()
 	. = ..()
 	blacklist += subtypesof(/obj/item/flashlight)
 
@@ -128,3 +128,18 @@
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	category = CAT_FURNITURE
+
+/datum/crafting_recipe/washing_machine
+	name = "Washing Machine"
+	result = /obj/machinery/washing_machine
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/assembly/timer = 1,
+		/obj/item/stock_parts/water_recycler = 1,
+	)
+	tool_behaviors = list(TOOL_WELDER, TOOL_WRENCH, TOOL_SCREWDRIVER)
+	category = CAT_FURNITURE
+
