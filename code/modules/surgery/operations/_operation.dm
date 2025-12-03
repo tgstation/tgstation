@@ -1099,19 +1099,26 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/basic
 	abstract_type = /datum/surgery_operation/basic
 	/// Biotype required to perform this operation
-	var/required_biotype = MOB_ORGANIC
+	var/required_biotype = ~MOB_ROBOTIC
 	/// The zone we are expected to be working on, even if the target is a non-carbon mob
 	var/target_zone = BODY_ZONE_CHEST
 	/// When working on carbons, what bodypart are we working on? Keep it representative of the required biotype
-	var/required_bodytype = BODYTYPE_ORGANIC
+	var/required_bodytype = ~BODYTYPE_ROBOTIC
 
 /datum/surgery_operation/basic/all_required_strings()
 	. = list()
 	if(required_biotype)
-		. += "operate on \a [english_list(bitfield_to_list(required_biotype, MOB_TYPE_TO_NAME), and_text = " or ")] [target_zone ? "[parse_zone(target_zone)] (target [parse_zone(target_zone)])" : "patient"]"
+		. += "operate on [target_zone ? "[parse_zone(target_zone)] (target [parse_zone(target_zone)])" : "patient"]"
 	else if(target_zone)
 		. += "operate on [parse_zone(target_zone)] (target [parse_zone(target_zone)])"
 	. += ..()
+
+/datum/surgery_operation/basic/all_blocked_strings()
+	. = ..()
+	if(required_biotype & MOB_ROBOTIC)
+		. += "the patient must not be organic"
+	else if(required_biotype)
+		. += "the patient must not be robotic"
 
 /datum/surgery_operation/basic/is_available(mob/living/patient, operated_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)

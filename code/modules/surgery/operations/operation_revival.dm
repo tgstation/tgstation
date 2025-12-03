@@ -33,10 +33,10 @@
 	return mob_check(patient)
 
 /datum/surgery_operation/basic/revival/proc/brain_check(obj/item/organ/brain/brain)
-	return IS_ORGANIC_ORGAN(brain)
+	return !IS_ROBOTIC_ORGAN(brain)
 
 /datum/surgery_operation/basic/revival/proc/mob_check(mob/living/patient)
-	return patient.mob_biotypes & MOB_ORGANIC
+	return !(patient.mob_biotypes & MOB_ROBOTIC)
 
 /datum/surgery_operation/basic/revival/tool_check(obj/item/tool)
 	if(istype(tool, /obj/item/shockpaddles))
@@ -110,7 +110,7 @@
 	required_biotype = MOB_ROBOTIC
 
 /datum/surgery_operation/basic/revival/mechanic/brain_check(obj/item/organ/brain/brain)
-	return IS_ROBOTIC_ORGAN(brain)
+	return !..()
 
 /datum/surgery_operation/basic/revival/mechanic/mob_check(mob/living/patient)
-	return patient.mob_biotypes & MOB_ROBOTIC
+	return !..()
