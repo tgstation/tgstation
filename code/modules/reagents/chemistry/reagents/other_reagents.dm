@@ -250,7 +250,8 @@
 
 /datum/reagent/water/mineral/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	affected_mob.adjustToxLoss(-0.1 * REM * seconds_per_tick, updating_health = FALSE)
+	affected_mob.adjust_tox_loss(-0.1 * REM * seconds_per_tick, updating_health = FALSE)
+	return UPDATE_MOB_HEALTH
 
 /datum/reagent/water/salt
 	name = "Saltwater"
