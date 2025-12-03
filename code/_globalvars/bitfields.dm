@@ -516,6 +516,7 @@ DEFINE_BITFIELD(biological_state, list(
 	"BIO_WIRED" = BIO_WIRED,
 	"BIO_BLOODED" = BIO_BLOODED,
 	"BIO_JOINTED" = BIO_JOINTED,
+	"BIO_CHITIN" = BIO_CHITIN,
 ))
 
 DEFINE_BITFIELD(change_exempt_flags, list(

@@ -1652,6 +1652,8 @@
 		return "flesh"
 	if (biological_state & BIO_WIRED)
 		return "wiring"
+	if (biological_state & BIO_CHITIN)
+		return "chitin"
 
 	return "error"
 
@@ -1665,6 +1667,8 @@
 		return "shreds of ligaments"
 	if (biological_state & BIO_WOOD)
 		return "splinters of poorly manufactured wood"
+	if (biological_state & BIO_CHITIN)
+		return "fragments of chitin"
 
 	return "error"
 
