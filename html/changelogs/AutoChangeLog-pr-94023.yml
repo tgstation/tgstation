@@ -1,0 +1,5 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - bugfix: "Non-virtual megafauna should no longer be dropping encrypted caches when mulched with a crusher if their matching virtual domain was deployed."
+  - bugfix: "Virtual megafauna no longer count as valid kills for achievement tracking."
