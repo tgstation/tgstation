@@ -52,20 +52,20 @@
 	if(istype(vampire.loc, /obj/structure/closet/crate/coffin))
 		var/need_mob_update = FALSE
 		need_mob_update += vampire.heal_overall_damage(brute = 2 * seconds_per_tick, burn = 2 * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-		need_mob_update += vampire.adjustToxLoss(-2 * seconds_per_tick, updating_health = FALSE,)
-		need_mob_update += vampire.adjustOxyLoss(-2 * seconds_per_tick, updating_health = FALSE,)
+		need_mob_update += vampire.adjust_tox_loss(-2 * seconds_per_tick, updating_health = FALSE,)
+		need_mob_update += vampire.adjust_oxy_loss(-2 * seconds_per_tick, updating_health = FALSE,)
 		if(need_mob_update)
 			vampire.updatehealth()
 		return
-	vampire.blood_volume -= 0.125 * seconds_per_tick
-	if(vampire.blood_volume <= BLOOD_VOLUME_SURVIVE)
+	vampire.adjust_blood_volume(-0.125 * seconds_per_tick)
+	if(vampire.get_blood_volume(apply_modifiers = TRUE) <= BLOOD_VOLUME_SURVIVE)
 		to_chat(vampire, span_danger("You ran out of blood!"))
 		vampire.investigate_log("has been dusted by a lack of blood (vampire).", INVESTIGATE_DEATHS)
 		vampire.dust()
 	var/area/A = get_area(vampire)
 	if(istype(A, /area/station/service/chapel))
 		to_chat(vampire, span_warning("You don't belong here!"))
-		vampire.adjustFireLoss(10 * seconds_per_tick)
+		vampire.adjust_fire_loss(10 * seconds_per_tick)
 		vampire.adjust_fire_stacks(3 * seconds_per_tick)
 		vampire.ignite_mob()
 
@@ -231,14 +231,14 @@
 		return FALSE
 
 	var/mob/living/carbon/victim = user.pulling
-	if(user.blood_volume >= BLOOD_VOLUME_MAXIMUM)
+	if(user.get_blood_volume() >= BLOOD_VOLUME_MAXIMUM)
 		to_chat(user, span_warning("You're already full!"))
 		return FALSE
 	if(victim.stat == DEAD)
 		to_chat(user, span_warning("You need a living victim!"))
 		return FALSE
 	var/blood_name = LOWER_TEXT(user.get_bloodtype()?.get_blood_name())
-	if(!victim.blood_volume || victim.get_blood_reagent() != user.get_blood_reagent())
+	if(!victim.get_blood_volume() || victim.get_blood_reagent() != user.get_blood_reagent())
 		if (blood_name)
 			to_chat(user, span_warning("[victim] doesn't have [blood_name]!"))
 		else
@@ -255,14 +255,20 @@
 		return FALSE
 	if(!do_after(user, 3 SECONDS, target = victim, hidden = TRUE))
 		return FALSE
-	var/blood_volume_difference = BLOOD_VOLUME_MAXIMUM - user.blood_volume //How much capacity we have left to absorb blood
-	var/drained_blood = min(victim.blood_volume, VAMP_DRAIN_AMOUNT, blood_volume_difference)
+
 	victim.show_message(span_danger("[user] is draining your blood!"))
 	to_chat(user, span_notice("You drain some blood!"))
 	playsound(user, 'sound/items/drink.ogg', 30, TRUE, -2)
-	victim.blood_volume = clamp(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
-	user.blood_volume = clamp(user.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
-	if(!victim.blood_volume)
+
+	// Since we adjust the user first, we need to take the victim's blood volume into account.
+	var/amount_drained = min(VAMP_DRAIN_AMOUNT, victim.get_blood_volume())
+
+	// Takes into account how much blood the vampire can take.
+	amount_drained = user.adjust_blood_volume(amount_drained)
+
+	victim.adjust_blood_volume(-amount_drained)
+
+	if(!victim.get_blood_volume())
 		to_chat(user, span_notice("You finish off [victim]'s [blood_name] supply."))
 	return TRUE
 

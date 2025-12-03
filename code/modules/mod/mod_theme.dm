@@ -126,7 +126,6 @@
 		part.set_armor(armor_type)
 		part.resistance_flags = resistance_flags
 		part.flags_1 |= atom_flags //flags like initialization or admin spawning are here, so we cant set, have to add
-		part.item_flags |= DO_NOT_WARDROBE
 		part.heat_protection = NONE
 		part.cold_protection = NONE
 		part.max_heat_protection_temperature = max_heat_protection_temperature
@@ -232,6 +231,42 @@
 	fire = 25
 	acid = 25
 	wound = 5
+
+/datum/mod_theme/portable_suit
+	name = "portable suit"
+	desc = "A one-piece three-piece suit designed for maximum negotiating power. Provides no meaningful protection."
+	extended_desc = "The \"secret weapon\" of the Moonrakers Conglomerate, designed for maximum bureaucratic efficiency. \
+		While giving practically no protection against any physical threat, the aura of affluence it exudes is said to ward off \
+		bear markets."
+	default_skin = "psuit"
+	armor_type = /datum/armor/mod_theme_portable_suit
+	charge_drain = DEFAULT_CHARGE_DRAIN / 2
+	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
+	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
+	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
+	slot_flags = ITEM_SLOT_NECK
+	slowdown_deployed = 0
+	inbuilt_modules = list(/obj/item/mod/module/selfcleaner)
+	variants = list(
+		"psuit" = list(
+			/obj/item/clothing/glasses/mod = list(
+				UNSEALED_MESSAGE = GLASSES_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = GLASSES_SEAL_MESSAGE,
+			),
+			/obj/item/clothing/suit/mod = list(
+				UNSEALED_MESSAGE = CHESTPLATE_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = CHESTPLATE_SEAL_MESSAGE,
+			),
+			/obj/item/clothing/shoes/mod = list(
+				CAN_OVERSLOT = TRUE,
+				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
+			),
+		),
+	)
+
+/datum/armor/mod_theme_portable_suit
+	bio = 50
 
 /datum/mod_theme/engineering
 	name = "engineering"
@@ -629,20 +664,21 @@
 	charge_drain = DEFAULT_CHARGE_DRAIN * 1.5
 	slowdown_deployed = 0.5
 	allowed_suit_storage = list(
+		/obj/item/crowbar/power/paramedic,
+		/obj/item/defibrillator/compact,
 		/obj/item/healthanalyzer,
-		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
+		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/stack/medical,
 		/obj/item/sensor_device,
-		/obj/item/storage/pill_bottle,
-		/obj/item/storage/bag/chemistry,
+		/obj/item/stack/medical,
 		/obj/item/storage/bag/bio,
-		/obj/item/crowbar/power/paramedic,
+		/obj/item/storage/bag/chemistry,
+		/obj/item/storage/pill_bottle,
 	)
 	variants = list(
 		"medical" = list(

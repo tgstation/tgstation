@@ -6,55 +6,160 @@
 				BLOOD SYSTEM
 ****************************************************/
 
+/// Returns whether this mob can have blood.
+/// Use the CAN_HAVE_BLOOD(mob) macro instead, this is used to update the cached value.
+/mob/living/proc/can_have_blood()
+	return default_blood_volume > 0
+
+/mob/living/carbon/can_have_blood()
+	return !HAS_TRAIT(src, TRAIT_NOBLOOD)
+
+/// Returns the blood volume of the mob.
+/// Apply modifiers when reading blood volume for oxyloss damage, HUDs and analyzers.
+/// Don't apply modifiers when using blood itself, like in spells and reagent transfers.
+/mob/living/proc/get_blood_volume(apply_modifiers = FALSE)
+	return CAN_HAVE_BLOOD(src) ? blood_volume : 0 // Overriding blood setting code can cause blood_volume to be non-zero even when a mob shouldn't have blood.
+
+/mob/living/carbon/get_blood_volume(apply_modifiers = FALSE)
+	if (!CAN_HAVE_BLOOD(src))
+		return 0 // Overriding blood setting code can cause blood_volume to be non-zero even when a mob shouldn't have blood.
+	if (!apply_modifiers)
+		return blood_volume // Default behavior, returns the real blood volume.
+	if (HAS_TRAIT(src, TRAIT_GODMODE))
+		return default_blood_volume // Makes TRAIT_GODMODE grant immunity to the effects of bleeding. (oxyloss, passing out, etc.)
+
+	var/amount = blood_volume
+
+	// Handled here instead of in the saline reagent datum, because this way the modification order is consistent.
+	// E.g. if you have an effect that modifies blood volume over the dilution cap, then saline should do nothing.
+	var/datum/reagent/medicine/salglu_solution/saline = reagents?.has_reagent(/datum/reagent/medicine/salglu_solution)
+	if (saline && amount < saline.dilution_cap)
+		var/datum/blood_type/blood_type = get_bloodtype()
+		if (blood_type?.restoration_chem == saline.required_restoration_chem)
+			amount = min(amount + saline.volume * saline.dilution_per_unit, BLOOD_VOLUME_NORMAL)
+
+	return amount
+
+/// Sets the base blood volume of the mob, returns the blood volume of the mob after.
+/mob/living/proc/set_blood_volume(amount, minimum = 0, maximum = BLOOD_VOLUME_MAXIMUM, cached_blood_volume = null)
+	if (!isnum(cached_blood_volume))
+		cached_blood_volume = get_blood_volume()
+
+	if (!CAN_HAVE_BLOOD(src) && amount != 0)
+		return cached_blood_volume
+
+	if (amount == cached_blood_volume)
+		return cached_blood_volume
+
+	blood_volume = clamp(amount, minimum, maximum)
+
+	var/updated_blood_volume = get_blood_volume()
+
+	if (cached_blood_volume != updated_blood_volume)
+		living_flags |= QUEUE_BLOOD_UPDATE
+
+	return updated_blood_volume
+
+/// Adjusts the base blood volume of the mob and returns the change.
+/// Increases in blood volume give a positive return value and vice versa.
+/// Maximum only applies on positive amounts and vice versa.
+/mob/living/proc/adjust_blood_volume(amount, minimum = 0, maximum = BLOOD_VOLUME_MAXIMUM)
+	if (!CAN_HAVE_BLOOD(src) || amount == 0)
+		return 0
+
+	var/cached_blood_volume = get_blood_volume()
+
+	if (amount < 0)
+		if (cached_blood_volume <= minimum)
+			// Already at or below the minimum, don't decrease further.
+			return 0
+		// Decreases shouldn't jump the pre-existing value to the maximum.
+		maximum = INFINITY
+	else
+		if (cached_blood_volume >= maximum)
+			// Already at or above the maximum, don't increase further.
+			return 0
+		// Increases shouldn't jump the pre-existing value to the minimum.
+		minimum = -INFINITY
+
+	var/updated_blood_volume = set_blood_volume(cached_blood_volume + amount, minimum = minimum, maximum = maximum, cached_blood_volume = cached_blood_volume)
+	return updated_blood_volume - cached_blood_volume
+
+/// Updates effects that rely on blood volume, like blood HUDs.
+/mob/living/proc/update_blood_effects()
+	living_flags &= ~QUEUE_BLOOD_UPDATE
+
+/// Updates effects that rely on whether the mob can have blood.
+/mob/living/proc/update_blood_status()
+	var/had_blood = CAN_HAVE_BLOOD(src)
+
+	living_flags = can_have_blood() ? (living_flags | LIVING_CAN_HAVE_BLOOD) : (living_flags & ~LIVING_CAN_HAVE_BLOOD)
+
+	var/has_blood = CAN_HAVE_BLOOD(src)
+
+	if (had_blood == has_blood)
+		return
+
+	var/old_blood_volume = get_blood_volume()
+
+	set_blood_volume(has_blood ? default_blood_volume : 0)
+
+	var/new_blood_volume = get_blood_volume()
+
+	SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_BLOOD_STATUS, had_blood, has_blood, old_blood_volume, new_blood_volume)
+
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood(seconds_per_tick, times_fired)
 	// Under these circumstances blood handling is not necessary
-	if(bodytemperature < BLOOD_STOP_TEMP || HAS_TRAIT(src, TRAIT_FAKEDEATH) || HAS_TRAIT(src, TRAIT_HUSK))
+	if(bodytemperature < BLOOD_STOP_TEMP || HAS_TRAIT(src, TRAIT_FAKEDEATH))
 		return
+
 	// Run the signal, still allowing mobs with noblood to "handle blood" in their own way
 	var/sigreturn = SEND_SIGNAL(src, COMSIG_HUMAN_ON_HANDLE_BLOOD, seconds_per_tick, times_fired)
-	if((sigreturn & HANDLE_BLOOD_HANDLED) || HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if((sigreturn & HANDLE_BLOOD_HANDLED) || !CAN_HAVE_BLOOD(src))
 		return
 
 	//Blood regeneration if there is some space
-	if(!(sigreturn & HANDLE_BLOOD_NO_NUTRITION_DRAIN))
-		if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))
-			var/nutrition_ratio = round(nutrition / NUTRITION_LEVEL_WELL_FED, 0.2)
-			if(satiety > 80)
-				nutrition_ratio *= 1.25
-			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * seconds_per_tick)
-			blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * physiology.blood_regen_mod * nutrition_ratio * seconds_per_tick), BLOOD_VOLUME_NORMAL)
+	if(!(sigreturn & HANDLE_BLOOD_NO_NUTRITION_DRAIN) && get_blood_volume() < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))
+		var/nutrition_ratio = round(nutrition / NUTRITION_LEVEL_WELL_FED, 0.2)
 
-	//Bloodloss from wounds
-	var/temp_bleed = 0
-	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
-		temp_bleed += iter_part.cached_bleed_rate * seconds_per_tick
+		if(satiety > 80)
+			nutrition_ratio *= 1.25
 
-		if(iter_part.generic_bleedstacks) // If you don't have any bleedstacks, don't try and heal them
-			iter_part.adjustBleedStacks(-1, 0)
+		var/blood_to_restore = BLOOD_REGEN_FACTOR * physiology.blood_regen_mod * nutrition_ratio * seconds_per_tick
+		var/blood_restored = adjust_blood_volume(blood_to_restore, maximum = BLOOD_VOLUME_NORMAL)
 
-	if(temp_bleed)
-		bleed(temp_bleed)
-		bleed_warn(temp_bleed)
+		if (blood_restored > 0)
+			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * seconds_per_tick * (blood_restored / blood_to_restore))
+
+	var/bleed_rate = get_bleed_rate()
+
+	if(bleed_rate)
+		bleed(bleed_rate * seconds_per_tick)
+		bleed_warn(bleed_rate)
+
+	for (var/obj/item/bodypart/bodypart as anything in bodyparts)
+		if (bodypart.generic_bleedstacks)
+			bodypart.adjustBleedStacks(-1, 0)
 
 	//Effects of bloodloss
 	if(sigreturn & HANDLE_BLOOD_NO_OXYLOSS)
 		return
 
+	// Takes into account modifiers like saline-glucose solution in the blood
+	var/modified_blood_volume = get_blood_volume(apply_modifiers = TRUE)
+
 	// Some effects are halved mid-combat.
 	var/determined_mod = has_status_effect(/datum/status_effect/determined) ? 0.5 : 0
 
 	var/word = pick("dizzy","woozy","faint")
-	switch(blood_volume)
+	switch(modified_blood_volume)
+		// Way too much blood!
 		if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
 			if(SPT_PROB(7.5, seconds_per_tick))
 				to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
 				investigate_log("has been gibbed by having too much blood.", INVESTIGATE_DEATHS)
 				inflate_gib()
-		// Way too much blood!
-		if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
-			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(src, span_warning("You feel your skin swelling."))
 		// Too much blood
 		if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
 			if(SPT_PROB(5, seconds_per_tick))
@@ -66,9 +171,9 @@
 				if(prob(50))
 					to_chat(src, span_danger("You feel [word]. It's getting a bit hard to breathe."))
 					losebreath += 0.5 * determined_mod * seconds_per_tick
-				else if(getStaminaLoss() < 25 * determined_mod)
+				else if(get_stamina_loss() < 25 * determined_mod)
 					to_chat(src, span_danger("You feel [word]. It's getting a bit hard to focus."))
-					adjustStaminaLoss(10 * determined_mod * REM * seconds_per_tick)
+					adjust_stamina_loss(10 * determined_mod * REM * seconds_per_tick)
 		// Pretty low blood, getting dangerous!
 		if(BLOOD_VOLUME_RISKY to BLOOD_VOLUME_OKAY)
 			if(SPT_PROB(5, seconds_per_tick))
@@ -77,9 +182,9 @@
 				if(prob(50))
 					to_chat(src, span_bolddanger("You feel very [word]. It's getting hard to breathe!"))
 					losebreath += 1 * determined_mod * seconds_per_tick
-				else if(getStaminaLoss() < 40 * determined_mod)
+				else if(get_stamina_loss() < 40 * determined_mod)
 					to_chat(src, span_bolddanger("You feel very [word]. It's getting hard to stay awake!"))
-					adjustStaminaLoss(15 * determined_mod * REM * seconds_per_tick)
+					adjust_stamina_loss(15 * determined_mod * REM * seconds_per_tick)
 		// Very low blood, danger!!
 		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_RISKY)
 			if(SPT_PROB(5, seconds_per_tick))
@@ -88,9 +193,9 @@
 				if(prob(50))
 					to_chat(src, span_userdanger("You feel extremely [word]! It's getting very hard to breathe!"))
 					losebreath += 1.5 * determined_mod * seconds_per_tick
-				else if(getStaminaLoss() < 80 * determined_mod)
+				else if(get_stamina_loss() < 80 * determined_mod)
 					to_chat(src, span_userdanger("You feel extremely [word]! It's getting very hard to stay awake!"))
-					adjustStaminaLoss(20 * determined_mod * REM * seconds_per_tick)
+					adjust_stamina_loss(20 * determined_mod * REM * seconds_per_tick)
 		// Critically low blood, death is near! Adrenaline won't help you here.
 		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 			if(SPT_PROB(7.5, seconds_per_tick))
@@ -103,35 +208,35 @@
 				death()
 
 	// Blood ratio! if you have 280 blood, this equals 0.5 as that's half of the current value, 560.
-	var/effective_blood_ratio = blood_volume / BLOOD_VOLUME_NORMAL
+	var/effective_blood_ratio = modified_blood_volume / BLOOD_VOLUME_NORMAL
 	var/target_oxyloss = max((1 - effective_blood_ratio) * 100, 0)
 
 	// If your ratio is less than one (you're missing any blood) and your oxyloss is under missing blood %, start getting oxy damage.
 	// This damage accrues faster the less blood you have.
 	// If the damage surpasses the KO threshold for oxyloss, then we'll always tick up so you die eventually
-	if(target_oxyloss > 0 && (getOxyLoss() < target_oxyloss || (target_oxyloss >= OXYLOSS_PASSOUT_THRESHOLD && stat >= UNCONSCIOUS)))
+	if(target_oxyloss > 0 && (get_oxy_loss() < target_oxyloss || (target_oxyloss >= OXYLOSS_PASSOUT_THRESHOLD && stat >= UNCONSCIOUS)))
 		// At roughly half blood this equals to 3 oxyloss per tick. At 90% blood it's close to 0.5
-		var/rounded_oxyloss = round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume), 0.25) * seconds_per_tick
-		adjustOxyLoss(rounded_oxyloss, updating_health = TRUE)
+		var/rounded_oxyloss = round(0.01 * (BLOOD_VOLUME_NORMAL - modified_blood_volume), 0.25) * seconds_per_tick
+		adjust_oxy_loss(rounded_oxyloss, updating_health = TRUE)
 
 /// Has each bodypart update its bleed/wound overlay icon states
 /mob/living/carbon/proc/update_bodypart_bleed_overlays()
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		iter_part.update_part_wound_overlay()
 
-/// Makes a blood drop, leaking amt units of blood from the mob
-/mob/living/proc/bleed(amt)
+/// Bleeds amount units of blood from the mob, sometimes creating a blood splatter on the floor.
+/mob/living/proc/bleed(amount)
 	if(HAS_TRAIT(src, TRAIT_GODMODE) || !can_bleed())
 		return
 
-	blood_volume = max(blood_volume - amt, 0)
+	var/amount_bled = -adjust_blood_volume(-amount)
 
 	// Blood loss still happens in locker, floor stays clean
-	if(isturf(loc) && prob(sqrt(amt) * BLOOD_DRIP_RATE_MOD))
-		add_splatter_floor(loc, (amt <= 10))
+	if(isturf(loc) && prob(sqrt(amount_bled) * BLOOD_DRIP_RATE_MOD))
+		add_splatter_floor(loc, (amount_bled <= 10))
 
-/mob/living/carbon/human/bleed(amt)
-	amt *= physiology.bleed_mod
+/mob/living/carbon/human/bleed(amount)
+	amount *= physiology.bleed_mod
 	return ..()
 
 /// A helper to see how much blood we're losing per tick
@@ -140,12 +245,11 @@
 
 /mob/living/carbon/get_bleed_rate()
 	if(HAS_TRAIT(src, TRAIT_GODMODE) || !can_bleed())
-		return
-	var/bleed_amt = 0
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/iter_bodypart = X
-		bleed_amt += iter_bodypart.cached_bleed_rate
-	return bleed_amt
+		return 0
+
+	. = 0
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		. += bodypart.cached_bleed_rate
 
 /mob/living/carbon/human/get_bleed_rate()
 	return ..() * physiology.bleed_mod
@@ -154,22 +258,22 @@
  * bleed_warn() is used to for carbons with an active client to occasionally receive messages warning them about their bleeding status (if applicable)
  *
  * Arguments:
- * * bleed_amt- When we run this from [/mob/living/carbon/human/proc/handle_blood] we already know how much blood we're losing this tick, so we can skip tallying it again with this
- * * forced-
+ * * bleed_rate - When we run this from [/mob/living/carbon/human/proc/handle_blood] we already know how much blood we're losing per second, so we can skip tallying it again with this.
+ * * skip_cooldown - Skips caring about the bleed message cooldown.
  */
-/mob/living/carbon/proc/bleed_warn(bleed_amt = 0, forced = FALSE)
-	if(!blood_volume || !client)
+/mob/living/carbon/proc/bleed_warn(bleed_rate = null, skip_cooldown = FALSE)
+	if(!CAN_HAVE_BLOOD(src) || !client)
 		return
-	if(!COOLDOWN_FINISHED(src, bleeding_message_cd) && !forced)
+	if(!COOLDOWN_FINISHED(src, bleeding_message_cd) && !skip_cooldown)
 		return
 
-	if(!bleed_amt) // if we weren't provided the amount of blood we lost this tick in the args
-		bleed_amt = get_bleed_rate()
+	if(!isnum(bleed_rate))
+		bleed_rate = get_bleed_rate()
 
 	var/bleeding_severity = ""
 	var/next_cooldown = BLEEDING_MESSAGE_BASE_CD
 
-	switch(bleed_amt)
+	switch(bleed_rate)
 		if(-INFINITY to 0)
 			return
 		if(0 to 1)
@@ -208,15 +312,11 @@
 	to_chat(src, span_warning("[bleeding_severity][rate_of_change]"))
 	COOLDOWN_START(src, bleeding_message_cd, next_cooldown)
 
-/mob/living/carbon/human/bleed_warn(bleed_amt = 0, forced = FALSE)
-	if(!HAS_TRAIT(src, TRAIT_NOBLOOD))
-		return ..()
-
 /mob/living/proc/restore_blood()
-	blood_volume = initial(blood_volume)
+	set_blood_volume(default_blood_volume)
 
 /mob/living/carbon/restore_blood()
-	blood_volume = BLOOD_VOLUME_NORMAL
+	. = ..()
 	for(var/obj/item/bodypart/bodypart_to_restore as anything in bodyparts)
 		bodypart_to_restore.setBleedStacks(0)
 
@@ -224,47 +324,54 @@
 				BLOOD TRANSFERS
 ****************************************************/
 
-//Gets blood from mob to a container or other mob, preserving all data in it.
-/mob/living/proc/transfer_blood_to(atom/movable/receiver, amount, forced, ignore_incompatibility)
-	if(!blood_volume || !receiver.reagents)
-		return FALSE
+// Transfers blood from mob to a container or another mob, preserving all data in it.
+// Returns how much blood was able to be transferred.
+/mob/living/proc/transfer_blood_to(atom/movable/receiver, amount, ignore_low_blood = FALSE, ignore_incompatibility = FALSE, transfer_viruses = TRUE)
+	var/cached_blood_volume = get_blood_volume()
 
-	if(blood_volume < BLOOD_VOLUME_BAD && !forced)
-		return FALSE
+	if(!cached_blood_volume || !receiver.reagents || amount <= 0)
+		return 0
 
-	if(blood_volume < amount)
-		amount = blood_volume
+	if(cached_blood_volume < BLOOD_VOLUME_BAD && !ignore_low_blood)
+		return 0
 
 	var/datum/blood_type/blood_type = get_bloodtype()
 	if (!blood_type)
-		return FALSE
+		return 0
 
 	var/blood_reagent = get_blood_reagent()
-
-	blood_volume -= amount
 	var/list/blood_data = get_blood_data()
 
-	if (!isliving(receiver))
-		receiver.reagents.add_reagent(blood_reagent, amount, blood_data, bodytemperature, creation_callback = CALLBACK(src, PROC_REF(on_blood_created), blood_type))
-		return TRUE
+	// Caps the amount to how much blood we have.
+	amount = min(amount, get_blood_volume())
+
+	if (!ignore_low_blood)
+		// Caps the amount to how much we can transfer before reaching low blood.
+		amount = min(amount, get_blood_volume() - BLOOD_VOLUME_BAD)
 
 	var/mob/living/target = receiver
-	if (target.get_blood_reagent() != blood_reagent)
-		target.reagents.add_reagent(blood_reagent, amount, blood_data, bodytemperature, creation_callback = CALLBACK(src, PROC_REF(on_blood_created), blood_type))
-		return TRUE
+	if (!isliving(receiver) || target.get_blood_reagent() != blood_reagent)
+		// Further caps the amount to how much blood we were able to add to the target.
+		amount = receiver.reagents.add_reagent(blood_reagent, amount, blood_data, bodytemperature, creation_callback = CALLBACK(src, PROC_REF(on_blood_created), blood_type))
+		adjust_blood_volume(-amount)
+		return amount
 
-	if(blood_data["viruses"])
+	if(blood_data["viruses"] && transfer_viruses)
 		for(var/datum/disease/blood_disease as anything in blood_data["viruses"])
 			if((blood_disease.spread_flags & DISEASE_SPREAD_SPECIAL) || (blood_disease.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
 				continue
 			target.ForceContractDisease(blood_disease)
 
 	if(!ignore_incompatibility && !(blood_type.type_key() in target.get_bloodtype().compatible_types))
-		target.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
-		return TRUE
+		// Yes, we cap it to the amount of toxin. This is ridiculously niche, but we do it anyway.
+		amount = target.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5) * 2
+		adjust_blood_volume(-amount)
+		return amount
 
-	target.blood_volume = min(target.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAX_LETHAL)
-	return TRUE
+	// And, obviously, cap it to how much blood the target can take if they're living.
+	amount = target.adjust_blood_volume(amount, maximum = BLOOD_VOLUME_MAX_LETHAL)
+	adjust_blood_volume(-amount)
+	return amount
 
 /// Callback that adds blood_reagent to any blood extracted from ourselves
 /mob/living/proc/on_blood_created(datum/blood_type/blood_type, datum/reagent/new_blood)
@@ -346,7 +453,7 @@
 
 /mob/living/proc/get_bloodtype()
 	RETURN_TYPE(/datum/blood_type)
-	if (!blood_volume)
+	if (!CAN_HAVE_BLOOD(src))
 		return
 
 	if (!(mob_biotypes & MOB_ORGANIC))
@@ -376,7 +483,7 @@
 
 /// Check if a mob can bleed, and possibly if they're capable of leaving decals on turfs/mobs/items
 /mob/living/proc/can_bleed(bleed_flag = NONE)
-	if (HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if (!CAN_HAVE_BLOOD(src))
 		return BLEED_NONE
 
 	if (!bleed_flag)
@@ -460,7 +567,7 @@
 
 /// Create a small visual-only blood splatter
 /mob/living/proc/create_splatter(splatter_dir = pick(GLOB.cardinals))
-	// Check for husking and TRAIT_NOBLOOD
+	// Check for TRAIT_NOBLOOD
 	if (!can_bleed()) // Even if we can't cover turfs, we still can add DNA to everything our blood hits
 		return
 	var/obj/effect/temp_visual/dir_setting/bloodsplatter/splatter = new(get_turf(src), splatter_dir, get_bloodtype()?.get_color())
@@ -479,7 +586,7 @@
 	if (!splatter_turf)
 		return
 
-	// Check for husking and TRAIT_NOBLOOD
+	// Check for TRAIT_NOBLOOD
 	switch (can_bleed(BLOOD_COVER_TURFS))
 		if (BLEED_NONE)
 			return
@@ -505,24 +612,34 @@
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
 	our_splatter.fly_towards(targ, splatter_strength)
 
+// FIXME: This duplicates blood like crazy. The amount you bleed is way less than the splatter.
+// To summarize, you can literally dupe blood and bypass bloodloss with a syringe and a beaker.
+// I'm writing this here because it's out of scope for my PR, but was discovered because of it.
 /mob/living/proc/make_blood_trail(turf/target_turf, turf/start, was_facing, movement_direction)
-	if(!has_gravity() || !isturf(start))
+	if(!has_gravity() || !isturf(start) || !can_bleed())
+		return
+
+	var/cached_blood_volume = get_blood_volume()
+
+	if(!cached_blood_volume)
 		return
 
 	var/base_bleed_rate = get_bleed_rate()
-	var/base_brute = getBruteLoss()
+	var/base_brute = get_brute_loss()
 
 	var/brute_ratio = round(base_brute / (maxHealth * 4), 0.1)
-	var/bleeding_rate =  round(base_bleed_rate / 4, 0.1)
+	var/bleeding_rate = round(base_bleed_rate / 4, 0.1)
+
 	// We only leave a trail if we're below a certain blood threshold
 	// The more brute damage we have, or the more we're bleeding, the less blood we need to leave a trail
-	if(blood_volume < max(BLOOD_VOLUME_NORMAL * (1 - max(bleeding_rate, brute_ratio)), 0))
+	if(cached_blood_volume < max(BLOOD_VOLUME_NORMAL * (1 - max(bleeding_rate, brute_ratio)), 0))
 		return
 
 	var/blood_to_add = BLOOD_AMOUNT_PER_DECAL * 0.1
+
 	if(body_position == LYING_DOWN)
 		blood_to_add += bleed_drag_amount()
-		blood_volume = max(blood_volume - blood_to_add, 0)
+		adjust_blood_volume(-blood_to_add)
 	else
 		blood_to_add += base_bleed_rate
 
@@ -530,10 +647,11 @@
 	if(base_brute >= 300 || base_bleed_rate >= 7)
 		blood_to_add *= 2
 
-	switch (can_bleed(BLOOD_COVER_TURFS))
-		if (BLEED_NONE)
+	// Checks if we can add visual blood effects on turfs.
+	switch(can_bleed(BLOOD_COVER_TURFS))
+		if(BLEED_NONE)
 			return
-		if (BLEED_ADD_DNA)
+		if(BLEED_ADD_DNA)
 			return start.add_mob_blood(src)
 
 	var/trail_dir = REVERSE_DIR(movement_direction)
@@ -565,7 +683,7 @@
 					trail_dir &= ~(was_facing & (EAST|WEST))
 				break
 
-	if (continuing_trail || (trail_dir in GLOB.diagonals))
+	if(continuing_trail || (trail_dir in GLOB.diagonals))
 		create_blood_trail_component(start, trail_dir, blood_to_add * 0.67, FALSE)
 		create_blood_trail_component(target_turf, get_dir(start, target_turf), blood_to_add * 0.33, TRUE)
 		return
@@ -625,7 +743,7 @@
 
 /// Returns how much blood we're losing from being dragged a tile, from [/mob/living/proc/make_blood_trail]
 /mob/living/proc/bleed_drag_amount()
-	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
+	var/brute_ratio = round(get_brute_loss() / maxHealth, 0.1)
 	return max(1, brute_ratio * 2)
 
 /mob/living/carbon/bleed_drag_amount()

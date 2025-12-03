@@ -24,6 +24,7 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	use_power = NO_POWER_USE
 	interaction_flags_mouse_drop = NEED_HANDS
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.1, /datum/material/plastic = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2)
 
 	/// Information and effects about where the IV drip is attached to
 	var/datum/iv_drip_attachment/attachment
@@ -264,7 +265,7 @@
 			return
 
 		// If the human is losing too much blood, beep.
-		if(attached_mob.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
+		if(attached_mob.get_blood_volume(apply_modifiers = TRUE) < BLOOD_VOLUME_SAFE && prob(5))
 			audible_message(span_hear("[src] beeps loudly."))
 			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 		var/atom/movable/target = use_internal_storage ? src : reagent_container

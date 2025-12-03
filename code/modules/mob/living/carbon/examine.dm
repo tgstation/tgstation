@@ -106,7 +106,7 @@
 		if(user == src && has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_crit))//fake damage
 			temp = 50
 		else
-			temp = getBruteLoss()
+			temp = get_brute_loss()
 		var/list/damage_desc = get_majority_bodypart_damage_desc()
 		if(temp)
 			if(temp < 25)
@@ -116,7 +116,7 @@
 			else
 				. += span_bolddanger("[t_He] [t_has] severe [damage_desc[BRUTE]]!")
 
-		temp = getFireLoss()
+		temp = get_fire_loss()
 		if(temp)
 			if(temp < 25)
 				. += span_danger("[t_He] [t_has] minor [damage_desc[BURN]].")
@@ -143,7 +143,7 @@
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
 			. += "[t_He] look[p_s()] extremely disgusted."
 
-	var/apparent_blood_volume = blood_volume
+	var/apparent_blood_volume = CAN_HAVE_BLOOD(src) ? get_blood_volume(apply_modifiers = TRUE) : BLOOD_VOLUME_NORMAL
 	if(HAS_TRAIT(src, TRAIT_USES_SKINTONES) && ishuman(src))
 		var/mob/living/carbon/human/husrc = src // gross istypesrc but easier than refactoring even further for now
 		if(husrc.skin_tone == "albino")

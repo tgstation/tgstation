@@ -408,7 +408,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	))
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(on_sec_level_change))
 	if(mapload)
-		find_and_hang_on_wall()
+		find_and_mount_on_atom()
 
 /obj/machinery/status_display/evac/Destroy()
 	SSradio.remove_object(src,frequency)
@@ -744,7 +744,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 	. = ..()
 	// register for radio system to receive AI emote signals
 	SSradio.add_object(src, frequency)
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/machinery/status_display/ai/Destroy()
 	SSradio.remove_object(src, frequency)
@@ -776,7 +777,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 		icon_state = GLOB.ai_status_display_emotes[emotion]
 	// Default fallback
 	else
-		icon_state = "ai_neutral"
+		icon_state = "ai_download"
 
 	set_picture(icon_state)
 	return PROCESS_KILL

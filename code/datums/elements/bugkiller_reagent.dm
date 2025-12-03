@@ -30,7 +30,7 @@
 		return
 
 	// capping damage so splashing a beaker on a moth is not an instant crit
-	var/damage = min(round(0.4 * reac_volume * (1 - touch_protection), 0.1), 12)
+	var/damage = min(round(reac_volume * (1 - touch_protection), 0.1), 20)
 	if(damage < 1)
 		return
 

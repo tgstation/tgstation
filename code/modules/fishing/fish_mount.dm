@@ -4,7 +4,7 @@
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fish_mount_item"
 	result_path = /obj/structure/fish_mount
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 	pixel_shift = 31
 	///Reference to the persistent_id of the mount this was spawned from.
 	var/persistence_id
@@ -39,7 +39,7 @@
 	//Mounted fish shouldn't flop. It should also show size and weight to everyone.
 	add_traits(list(TRAIT_STOP_FISH_FLOPPING, TRAIT_EXAMINE_FISH), INNATE_TRAIT)
 	if(mapload)
-		find_and_hang_on_wall()
+		find_and_mount_on_atom()
 	if(!persistence_id)
 		return
 	if(SSfishing.initialized)
@@ -130,7 +130,6 @@
 
 	AddElement(/datum/element/beauty, get_fish_beauty())
 	RegisterSignals(fish, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW), PROC_REF(on_fish_attack_hand))
-	rotate_fish(dir)
 	if(from_persistence)
 		persistence_loaded_fish = TRUE
 		fish.add_traits(list(TRAIT_NO_FISHING_ACHIEVEMENT, TRAIT_FISH_LOW_PRICE), INNATE_TRAIT)
@@ -143,20 +142,6 @@
 	if(main_material)
 		beauty += main_material.beauty_modifier * mounted_fish.weight
 	return round(beauty)
-
-/obj/structure/fish_mount/proc/rotate_fish(direction, old_direction)
-	var/rotation = angle2dir(REVERSE_DIR(direction))
-	if(old_direction)
-		rotation -= angle2dir(REVERSE_DIR(old_direction))
-
-	if(!rotation)
-		return
-	mounted_fish.transform = mounted_fish.transform.Turn(rotation)
-
-/obj/structure/fish_mount/setDir(newdir)
-	var/old_dir = dir
-	. = ..()
-	rotate_fish(dir, old_dir)
 
 /obj/structure/fish_mount/proc/on_fish_attack_hand(datum/source, mob/living/user)
 	SIGNAL_HANDLER
@@ -195,7 +180,6 @@
 		return ..()
 	RemoveElement(/datum/element/beauty, get_fish_beauty())
 	if(!QDELETED(mounted_fish) && (!persistence_loaded_fish || roll_for_safe_removal()))
-		rotate_fish(0, dir)
 		UnregisterSignal(mounted_fish, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW))
 		mounted_fish.vis_flags &= ~(VIS_INHERIT_PLANE|VIS_INHERIT_LAYER)
 		mounted_fish.interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP

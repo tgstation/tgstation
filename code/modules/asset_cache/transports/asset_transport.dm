@@ -120,7 +120,7 @@
 		if (!keep_local_name)
 			new_asset_name = "asset.[ACI.hash][ACI.ext]"
 		if (client.sent_assets[new_asset_name] == asset_hash)
-			if (GLOB.Debug2)
+			if (GLOB.debugging_enabled)
 				log_asset("DEBUG: Skipping send of `[asset_name]` (as `[new_asset_name]`) for `[client]` because it already exists in the client's sent_assets list")
 			continue
 		unreceived[asset_name] = ACI

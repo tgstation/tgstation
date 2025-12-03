@@ -30,16 +30,6 @@
 	QDEL_NULL(breathing_loop)
 	GLOB.carbon_list -= src
 
-/mob/living/carbon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
-	// Needs to happen after parent call otherwise wounds are prioritized over surgery
-	for(var/datum/wound/wound as anything in shuffle(all_wounds))
-		if(wound.try_treating(tool, user))
-			return ITEM_INTERACT_SUCCESS
-	return .
-
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	var/hurt = TRUE
@@ -344,14 +334,14 @@
 	var/turf/location = get_turf(src)
 	if(!blood)
 		adjust_nutrition(-lost_nutrition)
-		need_mob_update += adjustToxLoss(-3, updating_health = FALSE)
+		need_mob_update += adjust_tox_loss(-3, updating_health = FALSE)
 
 	for(var/i = 0 to distance)
 		if(blood)
 			if(location)
 				add_splatter_floor(location)
 			if(vomit_flags & MOB_VOMIT_HARM)
-				need_mob_update += adjustBruteLoss(3, updating_health = FALSE)
+				need_mob_update += adjust_brute_loss(3, updating_health = FALSE)
 		else
 			if(location)
 				location.add_vomit_floor(src, vomit_type, vomit_flags, purge_ratio) // call purge when doing detoxicfication to pump more chems out of the stomach.
@@ -423,7 +413,7 @@
 		var/obj/item/bodypart/BP = X
 		total_brute += (BP.brute_dam * BP.body_damage_coeff)
 		total_burn += (BP.burn_dam * BP.body_damage_coeff)
-	set_health(round(maxHealth - getOxyLoss() - getToxLoss() - total_burn - total_brute, DAMAGE_PRECISION))
+	set_health(round(maxHealth - get_oxy_loss() - get_tox_loss() - total_burn - total_brute, DAMAGE_PRECISION))
 	update_stat()
 	update_stamina()
 
@@ -605,7 +595,7 @@
 		clear_fullscreen("oxy")
 
 	//Fire and Brute damage overlay (BSSR)
-	var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
+	var/hurtdamage = get_brute_loss() + get_fire_loss() + damageoverlaytemp
 	if(hurtdamage && !HAS_TRAIT(src, TRAIT_NO_DAMAGE_OVERLAY))
 		var/severity = 0
 		switch(hurtdamage)
@@ -671,7 +661,7 @@
 	else
 
 		if(shown_stamina_loss == null)
-			shown_stamina_loss = getStaminaLoss()
+			shown_stamina_loss = get_stamina_loss()
 
 		if(shown_stamina_loss >= stam_crit_threshold)
 			hud_used.stamina.icon_state = "stamina_crit"
@@ -745,8 +735,7 @@
 
 /mob/living/carbon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	if(excess_healing)
-		if(dna && !HAS_TRAIT(src, TRAIT_NOBLOOD))
-			blood_volume += (excess_healing * 2) //1 excess = 10 blood
+		adjust_blood_volume(excess_healing * 2)
 
 		for(var/obj/item/organ/target_organ as anything in organs)
 			if(!target_organ.damage)
@@ -833,7 +822,7 @@
 	if (HAS_TRAIT(src, TRAIT_DEFIB_BLACKLISTED))
 		return DEFIB_FAIL_BLACKLISTED
 
-	if ((getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
+	if ((get_brute_loss() >= MAX_REVIVE_BRUTE_DAMAGE) || (get_fire_loss() >= MAX_REVIVE_FIRE_DAMAGE))
 		return DEFIB_FAIL_TISSUE_DAMAGE
 
 	var/heart_status = can_defib_heart(get_organ_by_type(/obj/item/organ/heart))
@@ -1111,12 +1100,17 @@
 
 /// if any of our bodyparts are bleeding
 /mob/living/carbon/proc/is_bleeding()
+	if(!CAN_HAVE_BLOOD(src))
+		return FALSE
 	for(var/obj/item/bodypart/part as anything in bodyparts)
 		if(part.cached_bleed_rate)
 			return TRUE
 
 /// get our total bleedrate
 /mob/living/carbon/proc/get_total_bleed_rate()
+	if(!CAN_HAVE_BLOOD(src))
+		return FALSE
+
 	var/total_bleed_rate = 0
 	for(var/obj/item/bodypart/part as anything in bodyparts)
 		total_bleed_rate += part.cached_bleed_rate
@@ -1350,4 +1344,6 @@
 
 /mob/living/carbon/get_bloodtype()
 	RETURN_TYPE(/datum/blood_type)
+	if(!CAN_HAVE_BLOOD(src))
+		return
 	return dna?.blood_type

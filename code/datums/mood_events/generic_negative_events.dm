@@ -583,6 +583,12 @@
 		mood_change *= -0.5
 		description = "More souls for the Geometer!"
 		return
+	if(IS_REVOLUTIONARY(owner))
+		var/datum/job/possible_head_job = dead_mob.mind?.assigned_role
+		if(possible_head_job.job_flags & JOB_HEAD_OF_STAFF)
+			mood_change *= -0.5
+			description = "[possible_head_job.title ? "The [LOWER_TEXT(possible_head_job.title)]" : "Another head of staff"] is dead! Long live the revolution!"
+			return
 
 	var/ispet = istype(dead_mob, /mob/living/basic/pet) || ismonkey(dead_mob)
 	if(HAS_PERSONALITY(owner, /datum/personality/callous) || (ispet && HAS_PERSONALITY(owner, /datum/personality/animal_disliker)))
@@ -592,7 +598,7 @@
 		return
 	// future todo : make the hop care about ian, cmo runtime, etc.
 	if(ispet)
-		description = replacetext(pet_message, "%DEAD_MOB%", capitalize(dead_mob.name)) // doesn't use a descriptor, so it says "Ian died"
+		description = capitalize(replacetext(pet_message, "%DEAD_MOB%", "[dead_mob]")) // doesn't use a descriptor, so it says "Ian died"
 		if(HAS_PERSONALITY(owner, /datum/personality/animal_friend))
 			mood_change *= 1.5
 			timeout *= 1.25

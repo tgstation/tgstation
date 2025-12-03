@@ -44,7 +44,7 @@
 	if(user.movement_type & VENTCRAWLING)
 		user.balloon_alert(user, "can't shriek in pipes!")
 		return FALSE
-	empulse(get_turf(user), 2, 5, 1)
+	empulse(get_turf(user), 2, 5, 1, emp_source = src)
 	for(var/obj/machinery/light/L in range(5, usr))
 		L.on = TRUE
 		L.break_light_tube()

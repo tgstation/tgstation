@@ -44,7 +44,7 @@
 	target_key = BB_DEER_GRASS_TARGET
 	finding_behavior = /datum/ai_behavior/find_and_set/in_list/turf_types
 	hunting_behavior = /datum/ai_behavior/hunt_target/eat_grass
-	hunt_targets = list(/turf/open/floor/grass)
+	hunt_targets = list(/turf/open/floor/grass, /turf/open/misc/grass)
 	hunt_range = 7
 	hunt_chance = 45
 

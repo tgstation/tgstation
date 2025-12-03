@@ -19,7 +19,7 @@
 	attack_sound = 'sound/items/weapons/punch1.ogg'
 	health = 75
 	maxHealth = 75
-	blood_volume = BLOOD_VOLUME_NORMAL
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/deer
 	/// Things that will scare us into being stationary. Vehicles are scary to deers because they might have headlights.
 	var/static/list/stationary_scary_things = list(/obj/vehicle)

@@ -176,6 +176,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS
 	flags_inv = HIDEJUMPSUIT
 	dog_fashion = /datum/dog_fashion/back
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT * 3)
 	var/in_use = FALSE
 
 /obj/item/clothing/suit/costume/cardborg/equipped(mob/living/user, slot)
@@ -568,6 +569,7 @@
 		/obj/item/toy/clockwork_watch,
 		)
 	armor_type = /datum/armor/costume_bronze
+	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/suit/hooded/mysticrobe
 	name = "mystic's robe"
