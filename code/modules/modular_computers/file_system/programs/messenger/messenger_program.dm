@@ -599,9 +599,9 @@
 		stringified_targets += get_messenger_name(messenger)
 
 	var/sent_prob = 0
-	if(ishuman(user))
-		var/mob/living/carbon/human/old_person = user
-		sent_prob = 0.01 * (old_person.age ** 1.5)
+	if(ishuman(source))
+		var/mob/living/carbon/human/oldie = source
+		sent_prob = 0.01 * (oldie.age ** 1.5)
 	if (computer && prob(sent_prob))
 		message = "[message] [computer.get_messenger_ending()]"
 
