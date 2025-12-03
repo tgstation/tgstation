@@ -423,6 +423,7 @@
 	icon_state = "lampgreen"
 	inhand_icon_state = "lampgreen"
 	light_color = LIGHT_COLOR_TUNGSTEN
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 //Bananalamp
 /obj/item/flashlight/lamp/bananalamp
