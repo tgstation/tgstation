@@ -175,7 +175,7 @@
 
 /obj/item/crowbar/power/examine()
 	. = ..()
-	. += " It's fitted with a [tool_behaviour == first_tool_behavior ? inactive_text : active_text] head."
+	. += "It's fitted with a [tool_behaviour == first_tool_behavior ? inactive_text : active_text] head."
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -333,8 +333,9 @@
 	)
 
 /obj/item/crowbar/power/paramedic/silent
-	name = "modified jaws of recovery"
-	desc = "Modified version for jaws of life, made to act like jaws of recovery. This one doesn't announce doors you're prying open and lets you pry any door, acting like regular jaws of life"
+	desc = "A specialized version of the jaws of life, primarily to be used by paramedics to recover the injured and the recently deceased. Rather than a cutting arm, this tool has a bonesetting apparatus. \
+		This one looks upgraded."
+	w_class = WEIGHT_CLASS_NORMAL // it's a modified, normal jaws
 	limit_jaws_access = FALSE
 	radio_alert = FALSE
 
