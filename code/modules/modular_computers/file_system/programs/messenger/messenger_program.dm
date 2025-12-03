@@ -601,7 +601,7 @@
 	var/sent_prob = 0
 	if(ishuman(source))
 		var/mob/living/carbon/human/oldie = source
-		sent_prob = 0.01 * (oldie.age ** 1.5)
+		sent_prob = (0.025 * oldie.age) ** 3 // 25 y/o = ~0.25% chance, 85 y/o = ~10% chance
 	if (computer && prob(sent_prob))
 		message = "[message] [computer.get_messenger_ending()]"
 
