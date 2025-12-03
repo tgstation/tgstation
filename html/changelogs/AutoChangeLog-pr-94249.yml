@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "If you are within a disposal bin or chute, and drop an item, the item will go into the bin, rather than onto the floor outside of the bin."

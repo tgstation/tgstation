@@ -156,13 +156,13 @@
 		to_chat(trample_target, span_userdanger("[src] tramples you and kicks you away!"))
 		trample_target.safe_throw_at(throwtarget, 10, 1, src)
 		trample_target.Paralyze(20)
-		trample_target.adjustBruteLoss(melee_damage_upper)
+		trample_target.adjust_brute_loss(melee_damage_upper)
 	addtimer(CALLBACK(src, PROC_REF(legionnaire_charge_2), move_dir, (times_ran + 1)), 0.7)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/head_detach(target)
 	ranged_cooldown = world.time + 1 SECONDS
 	if(myhead != null)
-		myhead.adjustBruteLoss(600)
+		myhead.adjust_brute_loss(600)
 		return
 	if(has_head)
 		has_head = FALSE

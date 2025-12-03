@@ -116,7 +116,7 @@
 
 GLOBAL_LIST_INIT(sand_recipes, list(\
 		new /datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 1 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_TOOLS), \
-		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50, crafting_flags = NONE, category = CAT_MISC),\
+		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50, crafting_flags = CRAFT_NO_MATERIALS, category = CAT_MISC),\
 		new /datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 1, 50, crafting_flags = NONE, category = CAT_TILES)\
 ))
 
@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		C.visible_message(span_danger("[C]'s eye protection blocks the sand!"), span_warning("Your eye protection blocks the sand!"))
 		return
 	C.adjust_eye_blur(12 SECONDS)
-	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
+	C.adjust_stamina_loss(15)//the pain from your eyes burning does stamina damage
 	C.adjust_confusion(5 SECONDS)
 	to_chat(C, span_userdanger("\The [src] gets into your eyes! The pain, it burns!"))
 	qdel(src)
@@ -483,7 +483,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/index = sideslist.Find(coinflip)
 	if (index == 2)//tails
 		user.visible_message(span_suicide("\the [src] lands on [coinflip]! [user] promptly falls over, dead!"))
-		user.adjustOxyLoss(200)
+		user.adjust_oxy_loss(200)
 		user.death(FALSE)
 		user.set_suicide(TRUE)
 		user.suicide_log()
@@ -664,7 +664,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/eldritch/heads_action(mob/user)
 	var/mob/living/living_user = user
 	if(!IS_HERETIC(user))
-		living_user.adjustBruteLoss(5)
+		living_user.adjust_brute_loss(5)
 		return
 	for(var/obj/machinery/door/airlock/target_airlock in range(airlock_range, user))
 		if(target_airlock.density)
@@ -675,7 +675,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/eldritch/tails_action(mob/user)
 	var/mob/living/living_user = user
 	if(!IS_HERETIC(user))
-		living_user.adjustFireLoss(5)
+		living_user.adjust_fire_loss(5)
 		return
 	for(var/obj/machinery/door/airlock/target_airlock in range(airlock_range, user))
 		if(target_airlock.locked)

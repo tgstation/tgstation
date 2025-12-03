@@ -134,7 +134,7 @@
 	if(!bonus_active || !HAS_TRAIT(owner, TRAIT_IS_WET))
 		return
 	owner.adjust_bodytemperature(-2 * seconds_between_ticks, min_temp = owner.get_body_temp_normal())
-	owner.adjustStaminaLoss(-1.5 * seconds_between_ticks)
+	owner.adjust_stamina_loss(-1.5 * seconds_between_ticks)
 
 /datum/status_effect/organ_set_bonus/fish/proc/update_wetness(datum/source)
 	SIGNAL_HANDLER
@@ -374,7 +374,7 @@
 		breathe_gas_volume(breath, /datum/gas/water_vapor, /datum/gas/carbon_dioxide)
 	// Heal mob if not in crit.
 	if(breather.health >= breather.crit_threshold && breather.oxyloss)
-		breather.adjustOxyLoss(-5)
+		breather.adjust_oxy_loss(-5)
 
 /// Called when there isn't enough water to breath
 /obj/item/organ/lungs/fish/proc/on_low_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp)

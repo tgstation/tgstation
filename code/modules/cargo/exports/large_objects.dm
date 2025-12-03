@@ -8,6 +8,7 @@
 		/obj/structure/closet/crate/large,
 		/obj/structure/closet/crate/mail,
 		/obj/structure/closet/crate/wooden,
+		/obj/structure/closet/crate/cardboard,
 		)
 
 /datum/export/crate/total_printout(datum/export_report/ex, notes = TRUE) // That's why a goddamn metal crate costs that much.
@@ -35,6 +36,11 @@
 	cost = CARGO_CRATE_VALUE/2 //50 wooden crates cost 800 credits, and you can make 10 coffins in seconds with those planks. Each coffin selling for 100 means you can make a net gain of 200 credits for wasting your time making coffins.
 	unit_name = "coffin"
 	export_types = list(/obj/structure/closet/crate/coffin)
+
+/datum/export/crate/cardboard
+	cost = CARGO_CRATE_VALUE/5
+	unit_name = "cardboard box"
+	export_types = list(/obj/structure/closet/crate/cardboard, /obj/structure/closet/cardboard)
 
 /datum/export/reagent_dispenser
 	abstract_type = /datum/export/reagent_dispenser

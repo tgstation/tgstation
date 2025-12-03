@@ -66,10 +66,10 @@
 		return
 	var/grace_heal = bloodlust * 0.02
 	var/need_mob_update = FALSE
-	need_mob_update += owner.adjustBruteLoss(-grace_heal * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-	need_mob_update += owner.adjustFireLoss(-grace_heal * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-	need_mob_update += owner.adjustToxLoss(-grace_heal * seconds_between_ticks, forced = TRUE)
-	need_mob_update += owner.adjustOxyLoss(-(grace_heal * 2) * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+	need_mob_update += owner.adjust_brute_loss(-grace_heal * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+	need_mob_update += owner.adjust_fire_loss(-grace_heal * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+	need_mob_update += owner.adjust_tox_loss(-grace_heal * seconds_between_ticks, forced = TRUE)
+	need_mob_update += owner.adjust_oxy_loss(-(grace_heal * 2) * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
 	if(need_mob_update)
 		owner.updatehealth()
 
@@ -160,9 +160,9 @@
 		return
 
 	var/need_mob_update = FALSE
-	need_mob_update += owner.adjustBruteLoss(-4 * seconds_between_ticks, updating_health = FALSE)
-	need_mob_update += owner.adjustFireLoss(-2 * seconds_between_ticks, updating_health = FALSE)
-	need_mob_update += owner.adjustOxyLoss(-4 * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjust_brute_loss(-4 * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjust_fire_loss(-2 * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjust_oxy_loss(-4 * seconds_between_ticks, updating_health = FALSE)
 	if(need_mob_update)
 		owner.updatehealth()
 
@@ -340,12 +340,12 @@
 			if(itemUser.health < itemUser.maxHealth)
 				new /obj/effect/temp_visual/heal(get_turf(itemUser), "#375637")
 			var/need_mob_update = FALSE
-			need_mob_update += itemUser.adjustBruteLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-			need_mob_update += itemUser.adjustFireLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-			need_mob_update += itemUser.adjustToxLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE) //Because Slime People are people too
-			need_mob_update += itemUser.adjustOxyLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-			need_mob_update += itemUser.adjustStaminaLoss(-3 * seconds_between_ticks, updating_stamina = FALSE, forced = TRUE)
-			need_mob_update += itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.6 * seconds_between_ticks)
+			need_mob_update += itemUser.adjust_brute_loss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+			need_mob_update += itemUser.adjust_fire_loss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+			need_mob_update += itemUser.adjust_tox_loss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE) //Because Slime People are people too
+			need_mob_update += itemUser.adjust_oxy_loss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+			need_mob_update += itemUser.adjust_stamina_loss(-3 * seconds_between_ticks, updating_stamina = FALSE, forced = TRUE)
+			need_mob_update += itemUser.adjust_organ_loss(ORGAN_SLOT_BRAIN, -0.6 * seconds_between_ticks)
 			if(need_mob_update)
 				itemUser.updatehealth()
 
@@ -391,8 +391,8 @@
 
 /datum/status_effect/regenerative_core/on_apply()
 	owner.add_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
-	owner.adjustBruteLoss(-25)
-	owner.adjustFireLoss(-25)
+	owner.adjust_brute_loss(-25)
+	owner.adjust_fire_loss(-25)
 	owner.fully_heal(HEAL_CC_STATUS)
 	owner.bodytemperature = owner.get_body_temp_normal()
 	if(ishuman(owner))
@@ -529,7 +529,7 @@
 		var/mob/living/simple_animal/healthy_animal = owner
 		healthy_animal.adjustHealth(-(health_increase * healing_modifier))
 	else
-		owner.adjustBruteLoss(-(health_increase * healing_modifier))
+		owner.adjust_brute_loss(-(health_increase * healing_modifier))
 
 /datum/status_effect/limited_buff/health_buff/maxed_out()
 	. = ..()
@@ -549,10 +549,10 @@
 		return
 
 	var/need_mob_update = FALSE
-	need_mob_update += owner.adjustBruteLoss(-2 * seconds_between_ticks, updating_health = FALSE)
-	need_mob_update += owner.adjustFireLoss(-2 * seconds_between_ticks, updating_health = FALSE)
-	need_mob_update += owner.adjustOxyLoss(-4 * seconds_between_ticks, updating_health = FALSE)
-	need_mob_update += owner.adjustStaminaLoss(-4 * seconds_between_ticks, updating_stamina = FALSE)
+	need_mob_update += owner.adjust_brute_loss(-2 * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjust_fire_loss(-2 * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjust_oxy_loss(-4 * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjust_stamina_loss(-4 * seconds_between_ticks, updating_stamina = FALSE)
 	if(need_mob_update)
 		owner.updatehealth()
 	owner.adjust_bodytemperature(BODYTEMP_NORMAL, 0, BODYTEMP_NORMAL) //Won't save you from the void of space, but it will stop you from freezing or suffocating in low pressure

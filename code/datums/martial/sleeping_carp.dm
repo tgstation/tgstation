@@ -162,7 +162,7 @@
 	var/grab_log_description = "grabbed"
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
-	if(defender.stat != DEAD && !defender.IsUnconscious() && defender.getStaminaLoss() >= 80) //We put our target to sleep.
+	if(defender.stat != DEAD && !defender.IsUnconscious() && defender.get_stamina_loss() >= 80) //We put our target to sleep.
 		defender.visible_message(
 			span_danger("[attacker] carefully pinch a nerve in [defender]'s neck, knocking them out cold!"),
 			span_userdanger("[attacker] pinches something in your neck, and you fall unconscious!"),
@@ -280,11 +280,11 @@
 	)
 	return COMPONENT_NO_AFTERATTACK
 
-/// If our user has committed to being as nautically radical as they can be, they may be able to avoid incoming attacks.
+/// If our user has committed to being as martial arty as they can be, they may be able to avoid incoming attacks.
 /datum/martial_art/the_sleeping_carp/proc/check_dodge(mob/living/carp_user, atom/movable/hitby, damage, attack_text, attack_type, ...)
 	SIGNAL_HANDLER
 
-	var/determine_avoidance = clamp(carp_style_check(carp_user), 0, 75)
+	var/determine_avoidance = clamp(round(carp_style_check(carp_user) / (attack_type == OVERWHELMING_ATTACK ? 2 : 1), 1), 0, 75)
 
 	if(!can_deflect(carp_user))
 		return
@@ -453,7 +453,7 @@
 						span_userdanger("[user] [pick(fluffmessages)]s you with [src]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
 		to_chat(user, span_danger("You [pick(fluffmessages)] [H] with [src]!"))
 		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, TRUE, -1)
-		H.adjustStaminaLoss(rand(13,20))
+		H.adjust_stamina_loss(rand(13,20))
 		if(prob(10))
 			H.visible_message(span_warning("[H] collapses!"), \
 							span_userdanger("Your legs give out!"))
@@ -465,7 +465,7 @@
 								span_userdanger("You're knocked unconscious by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
 				to_chat(user, span_danger("You deliver a heavy hit to [H]'s head, knocking [H.p_them()] out cold!"))
 				H.SetSleeping(60 SECONDS)
-				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
+				H.adjust_organ_loss(ORGAN_SLOT_BRAIN, 15, 150)
 	else
 		return ..()
 

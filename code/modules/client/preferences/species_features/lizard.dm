@@ -4,7 +4,7 @@
 
 	if (isnull(lizard))
 		lizard = uni_icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_head", EAST)
-		var/datum/universal_icon/eyes = uni_icon('icons/mob/human/human_face.dmi', "eyes_l", EAST)
+		var/datum/universal_icon/eyes = uni_icon(/obj/item/organ/eyes/lizard::eye_icon, "[/obj/item/organ/eyes/lizard::eye_icon_state]_l", EAST)
 		eyes.blend_color(COLOR_GRAY, ICON_MULTIPLY)
 		lizard.blend_icon(eyes, ICON_OVERLAY)
 
