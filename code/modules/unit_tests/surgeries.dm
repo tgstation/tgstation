@@ -190,4 +190,4 @@
 
 	// Ensure the new stomach is inside the mob
 	TEST_ASSERT_EQUAL(patient.get_organ_slot(ORGAN_SLOT_STOMACH), stomach, "Organ manipulation surgery failed to insert stomach organ into patient")
-	TEST_ASSERT(!user.is_holding(stomach), "Organ manipulation surgery  failed to remove stomach organ from user's hands after inserting into patient")
+	TEST_ASSERT(!user.is_holding(stomach), "Organ manipulation surgery failed to remove stomach organ from user's hands after inserting into patient")
