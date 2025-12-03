@@ -8,7 +8,7 @@
 
 	implant_info = "Automatically activates upon implantation. Teaches the Tiziran martial arts of Kaza Ruk."
 
-	implant_lore = "The CORPORATION_TBD Kaza Ruk Implant is an integrated training database consisting of five short instructional videos \
+	implant_lore = "The Kaza Ruk Implant is an integrated training database consisting of five short instructional videos \
 		beamed directly into the eyeballs, capable of being replayed on demand in order to review the fundamentals of the Tiziran \
 		martial arts of Kaza Ruk, regardless of the host's previous martial arts skills or a distinct lack thereof."
 

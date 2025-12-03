@@ -5,7 +5,7 @@
 	implant_color = "r"
 	uses = FREEDOM_IMPLANT_CHARGES
 
-	implant_info = "<b>Illegal</b>. Activated manually. \
+	implant_info = "Activated manually. \
 		Unlocks bindings on arms and legs when activated, but not larger ones e.g. straightjackets."
 
 	implant_lore = "The CSMD Freedom Beacon is a hybrid signal transmitter and specialized nanite manufactory \

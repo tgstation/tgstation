@@ -1,6 +1,10 @@
 /datum/deathrattle_group
+	/// The name of our deathrattle group.
 	var/name
+	/// The associated implants in this deathrattle group.
 	var/list/implants = list()
+	/// The area whitelist: if someone dies in an area marked with this, they don't cause an alert.
+	var/list/area/area_whitelist = list()
 
 /datum/deathrattle_group/New(name)
 	if(name)
@@ -9,6 +13,20 @@
 		// Give the group a unique name for debugging, and possible future
 		// use for making custom linked groups.
 		src.name = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
+
+/datum/deathrattle_group/offsite
+	area_whitelist = list(
+		/area/station,
+		/area/mine,
+	)
+
+/datum/deathrattle_group/offsite/New(name)
+	if(name)
+		src.name = name
+	else
+		// Give the group a unique name for debugging, and possible future
+		// use for making custom linked groups.
+		src.name = "OS-[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 
 /*
  * Proc called by new implant being added to the group. Listens for the
@@ -52,7 +70,10 @@
 		return
 
 	var/name = owner.mind ? owner.mind.name : owner.real_name
-	var/area = get_area_name(get_turf(owner))
+	var/area/death_area = get_area(owner)
+	if(is_type_in_list(death_area, area_whitelist))
+		return // don't alert a death if it's in the area whitelist
+	var/area_name = get_area_name(get_turf(owner))
 	// All "hearers" hear the same sound.
 	var/sound = pick(
 		'sound/items/knell/knell1.ogg',
@@ -71,7 +92,7 @@
 
 		// Deliberately the same message framing as ghost deathrattle
 		var/mob/living/recipient = implant.imp_in
-		to_chat(recipient, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("<b>[name]</b> has died at <b>[area]</b>.")]\"")
+		to_chat(recipient, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("<b>[name]</b> has died at <b>[area_name]</b>.")]\"")
 		recipient.playsound_local(get_turf(recipient), sound, vol = 75, vary = FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 /obj/item/implant/deathrattle
@@ -80,6 +101,7 @@
 
 	actions_types = null
 	allow_multiple = TRUE
+	var/deathrattle_group_type = /datum/deathrattle_group
 
 	/// Associated deathrattle group, for future configuration.
 	var/datum/deathrattle_group/current_group
@@ -100,7 +122,21 @@
 	// Can be implanted in anything that's a mob. Syndicate cyborgs, talking fish, humans...
 	return TRUE
 
+/obj/item/implant/deathrattle/offstation
+	name = "expeditionary deathrattle implant"
+
+	deathrattle_group_type = /datum/deathrattle_group/offsite
+
+	implant_info = "ONLY TRIGGERS ON NON-STATION DEATHS. \
+		Requires configuration before implanting. Automatically activates upon implantation. \
+		Notifies the host of deaths that occur in other deathrattle implant hosts linked to the same deathrattle group."
+
 /obj/item/implantcase/deathrattle
 	name = "implant case - 'Deathrattle'"
 	desc = "A glass case containing a deathrattle implant."
 	imp_type = /obj/item/implant/deathrattle
+
+/obj/item/implantcase/deathrattle/offstation
+	name = "implant case - 'Expeditionary Deathrattle'"
+	desc = "A glass case containing an expeditionary deathrattle implant. Only alerts to deaths outside of the station and mining outpost."
+	imp_type = /obj/item/implant/deathrattle/offstation

@@ -15,8 +15,8 @@ type Data = {
   has_implant: BooleanLike;
   case_information: string;
   case_lore: string;
-  saved_deathrattle_group: string;
-  current_deathrattle_group: string;
+  saved_deathrattle_group?: string;
+  current_deathrattle_group?: string;
 };
 
 export const ImplantPad = (props) => {
@@ -48,16 +48,14 @@ export const ImplantPad = (props) => {
         </Stack>
         <Divider />
         <Section>
-          Saved Deathrattle Group:{' '}
-          {saved_deathrattle_group ? saved_deathrattle_group : 'None'}
+          Saved Deathrattle Group: {saved_deathrattle_group || 'None'}
           <br />
-          Current Deathrattle Group:{' '}
-          {current_deathrattle_group ? current_deathrattle_group : 'None'}
+          Current Deathrattle Group: {current_deathrattle_group || 'None'}
         </Section>
         <Stack>
           <Stack.Item>
             <Button
-              disabled={!has_case}
+              disabled={!current_deathrattle_group}
               onClick={() => act('save_deathrattle_group')}
             >
               Save Group
@@ -65,7 +63,7 @@ export const ImplantPad = (props) => {
           </Stack.Item>
           <Stack.Item>
             <Button
-              disabled={!has_case}
+              disabled={!!current_deathrattle_group || !has_case}
               onClick={() => act('set_deathrattle_group')}
             >
               Set Group
@@ -73,7 +71,8 @@ export const ImplantPad = (props) => {
           </Stack.Item>
           <Stack.Item>
             <Button
-              disabled={!has_case}
+              disabled={!!current_deathrattle_group || !has_case}
+              // in case you want to start a new deathrattle group
               onClick={() => act('init_deathrattle_group')}
             >
               Initialize Group

@@ -60,12 +60,14 @@
 		ui = new(user, src, "ImplantPad", name)
 		ui.open()
 
-/obj/item/implantpad/ui_static_data(mob/user)
+/obj/item/implantpad/ui_data(mob/user)
 	var/list/data = list()
-	data["has_case"] = inserted_case ? TRUE : FALSE
+	data["saved_deathrattle_group"] = saved_deathrattle_group ? saved_deathrattle_group.name : null
+	data["current_deathrattle_group"] = null
+	data["has_case"] = !!inserted_case
 	if(!inserted_case)
 		return data
-	data["has_implant"] = inserted_case.imp ? TRUE : FALSE
+	data["has_implant"] = !!inserted_case.imp
 	if(inserted_case.imp)
 		data["case_information"] = inserted_case.imp.get_data()
 		data["case_lore"] = inserted_case.imp.get_lore()
@@ -73,8 +75,6 @@
 			var/obj/item/implant/deathrattle/inserted_deathrattle = inserted_case.imp
 			if(inserted_deathrattle.current_group)
 				data["current_deathrattle_group"] = inserted_deathrattle.current_group
-	if(saved_deathrattle_group)
-		data["saved_deathrattle_group"] = saved_deathrattle_group.name
 	return data
 
 /obj/item/implantpad/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -152,7 +152,7 @@
 		user.balloon_alert(user, "group already set!")
 		return FALSE
 	// init and save new group
-	saved_deathrattle_group = new
+	saved_deathrattle_group = new inserted_implant.deathrattle_group_type
 	// register current implant
 	saved_deathrattle_group.register(inserted_implant)
 	user.balloon_alert(user, "registered to new group [saved_deathrattle_group.name]")

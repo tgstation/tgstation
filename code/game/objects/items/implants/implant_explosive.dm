@@ -201,8 +201,9 @@
 	no_paralyze = TRUE
 	master_implant = TRUE
 
-	implant_info = parent_type::implant_info + "While implanted, prevent unconsciousness from excessive trauma. \
-		Does not prevent death, nor being stunned. Also delays detonation of other implanted microbombs by ten seconds."
+	implant_info = parent_type::implant_info + "While implanted, prevents unconsciousness from excessive trauma. \
+		Does not prevent death from excessive trauma, nor being stunned. \
+		Also delays detonation of other implanted microbombs by ten seconds."
 
 	implant_lore = "The Robust Corp RX-78/T Tactical Deniability Implant is an electrically-detonated microexplosive and \
 		paired neural override lattice, designed to prevent recovery of equipment and/or evidence for non-state actors, \
