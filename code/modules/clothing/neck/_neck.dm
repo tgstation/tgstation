@@ -220,17 +220,6 @@
 	. = ..()
 	AddComponent(/datum/component/surgery_initiator)
 
-/obj/item/clothing/neck/tie/disco
-	name = "horrific necktie"
-	icon = 'icons/obj/clothing/neck.dmi'
-	icon_state = "eldritch_tie"
-	post_init_icon_state = null
-	desc = "The necktie is adorned with a garish pattern. It's disturbingly vivid. Somehow you feel as if it would be wrong to ever take it off. It's your friend now. You will betray it if you change it for some boring scarf."
-	clip_on = TRUE
-	greyscale_config = null
-	greyscale_config_worn = null
-	greyscale_colors = null
-
 /obj/item/clothing/neck/tie/detective
 	name = "loose tie"
 	desc = "A loosely tied necktie, a perfect accessory for the over-worked detective."
@@ -263,7 +252,7 @@
 
 	var/mob/living/carbon/carbon_patient = target
 	var/body_part = carbon_patient.parse_zone_with_bodypart(user.zone_selected)
-	var/oxy_loss = carbon_patient.getOxyLoss()
+	var/oxy_loss = carbon_patient.get_oxy_loss()
 
 	var/heart_strength
 	var/pulse_pressure
@@ -584,6 +573,7 @@
 	worn_y_offset = 10
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 2, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/clothing/neck/wreath/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -595,3 +585,4 @@
 	desc = "An elaborate crown made from the twisted flesh and sinew of an icewing watcher. \
 		Wearing it sends shivers down your spine just from being near it."
 	icon_state = "icewing_wreath"
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2)

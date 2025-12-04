@@ -1,5 +1,5 @@
-///This unique key decides how items are stacked on the UI. We separate them based on name,price & type
-#define ITEM_HASH(item)("[item.name][item.custom_price][item.type]")
+///This unique key decides how items are stacked on the UI. We separate them based on name, price & type
+#define ITEM_HASH(item)(sanitize_css_class_name("[item.name][item.custom_price][item.type]"))
 
 /obj/machinery/vending/custom
 	name = "Custom Vendor"
@@ -275,8 +275,6 @@
 		if(ITEM_HASH(product) == dispensed_item)
 			dispensed_item = product
 			break
-	if(QDELETED(dispensed_item))
-		return
 
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
 	if(QDELETED(id_card))

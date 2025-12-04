@@ -34,7 +34,7 @@
 "ga" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/template_noop)
+/area/space/nearstation)
 "gJ" = (
 /obj/item/ammo_casing/shotgun/stunslug,
 /turf/open/indestructible,
@@ -170,7 +170,7 @@
 "ur" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "vB" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/indestructible,
@@ -202,7 +202,7 @@
 	desc = "An old, blue toolbox, it looks soulful."
 	},
 /turf/open/space/basic,
-/area/template_noop)
+/area/space/nearstation)
 "Bs" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -220,7 +220,7 @@
 /obj/structure/lattice/catwalk,
 /obj/effect/mob_spawn/corpse/human/engineer/mod,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Dt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area{
@@ -298,7 +298,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/statue/sandstone/assistant,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Ij" = (
 /turf/open/space/basic,
 /area/template_noop)
@@ -335,7 +335,7 @@
 "MC" = (
 /obj/effect/mob_spawn/corpse/human/assistant,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Na" = (
 /obj/structure/rack,
 /obj/item/reagent_containers/cup/soda_cans/starkist,
@@ -396,7 +396,7 @@
 "Qr" = (
 /obj/structure/closet/wardrobe,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/space/nearstation)
 "QN" = (
 /obj/item/razor,
 /obj/structure/table/reinforced,

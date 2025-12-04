@@ -256,7 +256,7 @@
 "mb" = (
 /obj/item/stack/ore/glass,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "mu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
@@ -633,7 +633,7 @@
 "zg" = (
 /obj/item/stack/tile/wood,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "zm" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/decoration,
@@ -955,7 +955,7 @@
 "ID" = (
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "IG" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood/parquet,
@@ -1028,11 +1028,11 @@
 "KF" = (
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "KO" = (
 /obj/item/light/tube/broken,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Ln" = (
 /obj/effect/turf_decal/trimline/brown/filled/warning,
 /obj/effect/turf_decal/trimline/brown/line{
@@ -1094,7 +1094,7 @@
 "MC" = (
 /obj/effect/mob_spawn/corpse/human/laborer,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Nc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1309,7 +1309,7 @@
 /obj/item/shard,
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Xy" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/yellow/filled/line{

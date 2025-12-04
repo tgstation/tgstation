@@ -23,10 +23,13 @@
 	var/reagent_consumption_method = INGEST
 	///What sound does our consumption play on consuming from the container?
 	var/consumption_sound = 'sound/items/drink.ogg'
+	///Whether to allow heating up the contents with a source of flame.
+	var/heatable = TRUE
 
 /obj/item/reagent_containers/cup/Initialize(mapload, vol)
 	. = ..()
-	AddElement(/datum/element/reagents_item_heatable)
+	if(heatable)
+		AddElement(/datum/element/reagents_item_heatable)
 
 /obj/item/reagent_containers/cup/examine(mob/user)
 	. = ..()
@@ -211,6 +214,7 @@
 	name = "x-large beaker"
 	desc = "An extra-large beaker. Can hold up to 120 units."
 	icon_state = "beakerwhite"
+	inhand_icon_state = "beaker_white"
 	custom_materials = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plastic=SHEET_MATERIAL_AMOUNT * 1.5)
 	volume = 120
 	amount_per_transfer_from_this = 10
@@ -221,6 +225,7 @@
 	name = "metamaterial beaker"
 	desc = "A large beaker. Can hold up to 180 units."
 	icon_state = "beakergold"
+	inhand_icon_state = "beaker_gold"
 	custom_materials = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plastic=SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium=HALF_SHEET_MATERIAL_AMOUNT)
 	volume = 180
 	amount_per_transfer_from_this = 10
@@ -232,6 +237,7 @@
 	desc = "A cryostasis beaker that allows for chemical storage without \
 		reactions. Can hold up to 50 units."
 	icon_state = "beakernoreact"
+	inhand_icon_state = "beaker_cryo"
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 1.5)
 	initial_reagent_flags = OPENCONTAINER | NO_REACT
 	volume = 50
@@ -243,6 +249,7 @@
 		and Element Cuban combined with the Compound Pete. Can hold up to \
 		300 units."
 	icon_state = "beakerbluespace"
+	inhand_icon_state = "beaker_bluespace"
 	custom_materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/plasma =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT)
 	volume = 300
 	amount_per_transfer_from_this = 10
@@ -311,7 +318,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	fill_icon_state = "bucket"
 	fill_icon_thresholds = list(50, 90)
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2)
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,70)
@@ -344,7 +351,7 @@
 	name = "wooden bucket"
 	icon_state = "woodbucket"
 	inhand_icon_state = "woodbucket"
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 3)
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/bucket_wooden
 
@@ -399,6 +406,7 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "pestle"
 	force = 7
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/cup/mortar
 	name = "mortar"
@@ -408,7 +416,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50, 100)
 	volume = 100
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 3)
 	resistance_flags = FLAMMABLE
 	initial_reagent_flags = OPENCONTAINER
 	var/obj/item/grinded
@@ -429,7 +437,7 @@
 		if(!grinded)
 			to_chat(user, span_warning("There is nothing to grind!"))
 			return ITEM_INTERACT_BLOCKING
-		if(user.getStaminaLoss() > 50)
+		if(user.get_stamina_loss() > 50)
 			to_chat(user, span_warning("You are too tired to work!"))
 			return ITEM_INTERACT_BLOCKING
 		var/list/choose_options = list(
@@ -442,7 +450,7 @@
 		to_chat(user, span_notice("You start grinding..."))
 		if(!do_after(user, 2.5 SECONDS, target = src))
 			return ITEM_INTERACT_BLOCKING
-		user.adjustStaminaLoss(40)
+		user.adjust_stamina_loss(40)
 		switch(picked_option)
 			if("Juice")
 				return juice_item(grinded, user) ? ITEM_INTERACT_BLOCKING : ITEM_INTERACT_SUCCESS

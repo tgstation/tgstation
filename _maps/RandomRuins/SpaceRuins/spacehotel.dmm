@@ -137,13 +137,11 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/machinery/button/door/directional/south{
-	id = "a5";
-	name = "privacy button";
-	pixel_y = 24
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
+	},
+/obj/machinery/button/door/directional/north{
+	id = "a5"
 	},
 /turf/open/floor/carpet/purple,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
@@ -356,7 +354,7 @@
 	pixel_y = 17
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "dK" = (
 /obj/structure/frame/computer{
 	dir = 1
@@ -579,17 +577,14 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hotel/bar)
 "gv" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
+/obj/machinery/light/small/directional/south,
+/obj/machinery/button{
+	id = "hcb2";
+	name = "shutters control";
+	pixel_y = -25
 	},
-/obj/structure/sign/warning/fire{
-	desc = "A sign that states the labeled room's number.";
-	icon_state = "roomnum";
-	name = "Room Number 1";
-	pixel_y = -24
-	},
-/turf/open/floor/wood/tile,
-/area/ruin/space/has_grav/hotel)
+/turf/open/floor/catwalk_floor,
+/area/ruin/space/has_grav/hotel/dock)
 "gB" = (
 /obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/carpet/black,
@@ -634,16 +629,15 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "hg" = (
-/obj/effect/turf_decal/siding/wood,
 /obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
 	dir = 10;
 	icon_state = "roomnum";
 	name = "Room Number 6";
-	pixel_y = 24
+	pixel_y = -5
 	},
-/turf/open/floor/wood/tile,
-/area/ruin/space/has_grav/hotel)
+/turf/closed/wall,
+/area/ruin/space/has_grav/hotel/guestroom/room_6)
 "hh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -1160,7 +1154,7 @@
 	pixel_y = 17
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "lf" = (
 /obj/structure/window/spawner/directional/north,
 /obj/machinery/shower/directional/south,
@@ -1197,7 +1191,7 @@
 	pixel_y = 17
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "lw" = (
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
@@ -1205,7 +1199,7 @@
 "lB" = (
 /obj/structure/fluff/tram_rail,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "lE" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/grimy,
@@ -1281,7 +1275,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "mj" = (
 /obj/structure/chair/sofa/right/brown{
 	dir = 4
@@ -1543,7 +1537,7 @@
 /obj/structure/fluff/tram_rail,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ot" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/paper_bin,
@@ -1573,7 +1567,7 @@
 	},
 /obj/structure/fluff/tram_rail,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "po" = (
 /obj/structure/fluff/beach_umbrella/syndi,
 /turf/open/misc/beach/sand,
@@ -1666,7 +1660,7 @@
 	pixel_y = 17
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "qF" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1686,7 +1680,7 @@
 	pixel_y = 17
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "qM" = (
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
@@ -1929,16 +1923,13 @@
 /turf/open/floor/carpet/blue,
 /area/ruin/space/has_grav/hotel)
 "tW" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/sign/warning/fire{
-	desc = "A sign that states the labeled room's number.";
-	dir = 8;
-	icon_state = "roomnum";
-	name = "Room Number 4";
-	pixel_y = 24
+/obj/machinery/button{
+	id = "hcb2";
+	name = "shutters control";
+	pixel_y = 8
 	},
-/turf/open/floor/wood/tile,
-/area/ruin/space/has_grav/hotel)
+/turf/closed/wall,
+/area/ruin/space/has_grav/hotel/dock)
 "ua" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/light/small/directional/south,
@@ -2019,10 +2010,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/machinery/button/door/directional/south{
-	id = "a3";
-	name = "privacy button";
-	pixel_y = 24
+/obj/machinery/button/door/directional/north{
+	id = "a3"
 	},
 /turf/open/floor/carpet/red,
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
@@ -2102,7 +2091,8 @@
 	id = "hcb1";
 	name = "shutters control";
 	pixel_x = 26;
-	pixel_y = 8
+	pixel_y = 8;
+	dir = 4
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2393,7 +2383,7 @@
 "yB" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "yD" = (
 /obj/structure/sink/directional/west,
 /obj/machinery/firealarm/directional/north,
@@ -2432,7 +2422,7 @@
 "yV" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "yY" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/tile,
@@ -2449,12 +2439,6 @@
 /area/ruin/space/has_grav/hotel/power)
 "zr" = (
 /obj/effect/turf_decal/loading_area,
-/obj/machinery/button{
-	id = "hcb2";
-	name = "shutters control";
-	pixel_x = -25;
-	pixel_y = 8
-	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel/dock)
 "zy" = (
@@ -2588,6 +2572,13 @@
 /obj/machinery/vending/coffee,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel)
+"BP" = (
+/obj/machinery/button{
+	id = "hcd1";
+	name = "shutters control"
+	},
+/turf/closed/wall,
+/area/ruin/space/has_grav/hotel/dock)
 "BU" = (
 /obj/structure/cable,
 /turf/open/floor/circuit/green,
@@ -2901,7 +2892,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "FT" = (
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/hotel/dock)
@@ -3123,7 +3114,7 @@
 /obj/structure/lattice,
 /obj/structure/grille/broken,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Iq" = (
 /obj/item/kirbyplants/organic/plant16,
 /obj/structure/sign/poster/random/directional/west,
@@ -3176,7 +3167,7 @@
 "IZ" = (
 /obj/structure/fluff/tram_rail/end,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Je" = (
 /obj/structure/cable,
 /obj/item/reagent_containers/cup/bucket,
@@ -3397,18 +3388,14 @@
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
 "MY" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
+/obj/structure/sign/warning/fire{
+	desc = "A sign that states the labeled room's number.";
+	icon_state = "roomnum";
+	name = "Room Number 5";
+	dir = 5
 	},
-/obj/structure/table/wood/fancy/red,
-/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
-/obj/machinery/button/door/directional/north{
-	id = "a2";
-	name = "privacy button";
-	pixel_y = -24
-	},
-/turf/open/floor/carpet/green,
-/area/ruin/space/has_grav/hotel/guestroom/room_2)
+/turf/closed/wall,
+/area/ruin/space/has_grav/hotel/guestroom/room_5)
 "Ne" = (
 /obj/effect/turf_decal/loading_area,
 /obj/machinery/light/small/directional/east,
@@ -3429,23 +3416,22 @@
 /turf/open/floor/carpet/blue,
 /area/ruin/space/has_grav/hotel)
 "ND" = (
-/obj/machinery/button{
-	id = "hcd1";
-	name = "shutters control";
-	pixel_x = -25;
-	pixel_y = -25
+/obj/structure/sign/warning/fire{
+	desc = "A sign that states the labeled room's number.";
+	dir = 8;
+	icon_state = "roomnum";
+	name = "Room Number 4"
 	},
-/turf/open/floor/iron/dark/side,
-/area/ruin/space/has_grav/hotel/dock)
+/turf/closed/wall,
+/area/ruin/space/has_grav/hotel/guestroom/room_4)
 "NG" = (
-/obj/machinery/button{
-	id = "hcb2";
-	name = "shutters control";
-	pixel_x = -25;
-	pixel_y = -25
+/obj/structure/sign/warning/fire{
+	desc = "A sign that states the labeled room's number.";
+	icon_state = "roomnum";
+	name = "Room Number 1"
 	},
-/turf/open/floor/catwalk_floor,
-/area/ruin/space/has_grav/hotel/dock)
+/turf/closed/wall,
+/area/ruin/space/has_grav/hotel/guestroom/room_1)
 "NJ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3891,18 +3877,15 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
 "Tq" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
 /obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
-	dir = 6;
+	dir = 1;
 	icon_state = "roomnum";
-	name = "Room Number 5";
-	pixel_y = -24
+	name = "Room Number 2";
+	pixel_y = -10
 	},
-/turf/open/floor/wood/tile,
-/area/ruin/space/has_grav/hotel)
+/turf/closed/wall,
+/area/ruin/space/has_grav/hotel/guestroom/room_2)
 "Ts" = (
 /turf/open/floor/carpet/purple,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
@@ -3918,18 +3901,15 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/hotel)
 "TG" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
 /obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
 	dir = 4;
 	icon_state = "roomnum";
 	name = "Room Number 3";
-	pixel_y = -24
+	pixel_y = 10
 	},
-/turf/open/floor/wood/tile,
-/area/ruin/space/has_grav/hotel)
+/turf/closed/wall,
+/area/ruin/space/has_grav/hotel/guestroom/room_3)
 "TH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -4072,7 +4052,8 @@
 	id = "hcb1";
 	name = "shutters control";
 	pixel_x = -25;
-	pixel_y = 8
+	pixel_y = 8;
+	dir = 8
 	},
 /turf/open/floor/catwalk_floor,
 /area/ruin/space/has_grav/hotel/dock)
@@ -4092,7 +4073,7 @@
 	pixel_y = 17
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "VM" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -4369,12 +4350,9 @@
 /area/ruin/space/has_grav/hotel/bar)
 "Yf" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/sign/warning/fire{
-	desc = "A sign that states the labeled room's number.";
-	dir = 1;
-	icon_state = "roomnum";
-	name = "Room Number 2";
-	pixel_y = 24
+/obj/machinery/button/door/directional/north{
+	id = "a2";
+	pixel_y = 32
 	},
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
@@ -4483,7 +4461,7 @@
 	},
 /obj/structure/fluff/tram_rail/end,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Zo" = (
 /obj/structure/sink/directional/west,
 /turf/open/floor/iron/showroomfloor,
@@ -5557,13 +5535,13 @@ ez
 Ka
 Xg
 XS
-xI
 hg
+yY
 Lj
 PF
 wr
-Tq
-LD
+QH
+MY
 bu
 lZ
 hO
@@ -6579,13 +6557,13 @@ Fy
 On
 eR
 Gg
-Hm
-tW
+ND
+yY
 cf
 PF
 cf
+QH
 TG
-vy
 vx
 Xx
 Rl
@@ -7256,9 +7234,9 @@ VV
 aC
 lW
 sh
-Ct
+gv
 VV
-VV
+tW
 iP
 jf
 jy
@@ -7329,7 +7307,7 @@ VV
 hZ
 hE
 xd
-NG
+hZ
 LB
 zr
 nw
@@ -7381,14 +7359,14 @@ WD
 CL
 Ml
 OS
-MY
-Ff
+OS
+Tq
 Yf
 cf
 PF
 cf
-gv
-BK
+QH
+NG
 Xw
 Bb
 SN
@@ -8211,7 +8189,7 @@ VV
 lI
 xS
 FT
-VV
+BP
 VV
 Cl
 Cl
@@ -8283,7 +8261,7 @@ nX
 hU
 lI
 KZ
-ND
+FT
 hB
 Jj
 Cl

@@ -57,6 +57,6 @@
 			to_chat(infected_mob, span_userdanger("You can't think straight!"))
 			infected_mob.adjust_confusion_up_to(16 SECONDS * power, 30 SECONDS)
 			if(brain_damage)
-				infected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * power, 80)
+				infected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 3 * power, 80)
 				infected_mob.updatehealth()
 	return
