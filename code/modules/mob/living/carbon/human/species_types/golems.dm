@@ -89,7 +89,7 @@
 	if(source.nutrition <= 20)
 		// this is "hard crit" for golems
 		source.Unconscious(1.5 SECONDS * seconds_per_tick)
-	if(source.nutrition <= 100)
+	if(source.nutrition <= 100 || source.health < source.crit_threshold)
 		// and this is "crit damage" for golems
 		source.adjust_nutrition(-2 * seconds_per_tick * (source.nutrtion <= 50 ? 2 : 1), forced = TRUE)
 
