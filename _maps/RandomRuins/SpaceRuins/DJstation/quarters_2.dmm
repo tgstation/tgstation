@@ -21,7 +21,7 @@
 	name = "Rest Room"
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "v" = (
 /obj/structure/bed/maint,
 /turf/open/floor/iron/dark/textured,
@@ -32,7 +32,7 @@
 	},
 /obj/modular_map_connector,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "J" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,

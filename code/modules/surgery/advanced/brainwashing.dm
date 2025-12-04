@@ -110,7 +110,7 @@
 			span_notice("[user] completes the surgery on [target]'s brain."),
 		)
 		display_pain(target, "Your head throbs with horrible pain!")
-		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 40)
+		target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 40)
 	else
 		user.visible_message(span_warning("[user] suddenly notices that the brain [user.p_they()] [user.p_were()] working on is not there anymore."), span_warning("You suddenly notice that the brain you were working on is not there anymore."))
 	return FALSE

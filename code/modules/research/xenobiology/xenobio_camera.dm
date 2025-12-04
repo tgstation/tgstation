@@ -442,7 +442,7 @@
 
 	for(var/mob/living/basic/slime/potioned_slime in eye_turf)
 		xeno_console.spit_atom(xeno_console.current_potion, eye_turf)
-		xeno_console.current_potion.attack(potioned_slime, living_owner)
+		xeno_console.current_potion.interact_with_slime(potioned_slime, living_owner)
 		xeno_console.xeno_hud.update_potion(xeno_console.current_potion)
 		break
 

@@ -820,7 +820,7 @@
 		uses -= round(blood_needed / USES_TO_BLOOD)
 		to_chat(user,span_warning("Your blood rites have restored [human_bloodbag == user ? "your" : "[human_bloodbag.p_their()]"] blood to safe levels!"))
 
-	var/overall_damage = human_bloodbag.getBruteLoss() + human_bloodbag.getFireLoss() + human_bloodbag.getToxLoss() + human_bloodbag.getOxyLoss()
+	var/overall_damage = human_bloodbag.get_brute_loss() + human_bloodbag.get_fire_loss() + human_bloodbag.get_tox_loss() + human_bloodbag.get_oxy_loss()
 	if(overall_damage == 0)
 		if(blood_donor)
 			return TRUE
@@ -838,10 +838,10 @@
 	human_bloodbag.visible_message(span_warning("[human_bloodbag] is [uses == 0 ? "partially healed":"fully healed"] by [human_bloodbag == user ? "[human_bloodbag.p_their()]":"[human_bloodbag]'s"] blood magic!"))
 
 	var/need_mob_update = FALSE
-	need_mob_update += human_bloodbag.adjustOxyLoss(damage_healed * (human_bloodbag.getOxyLoss() / overall_damage), updating_health = FALSE)
-	need_mob_update += human_bloodbag.adjustToxLoss(damage_healed * (human_bloodbag.getToxLoss() / overall_damage), updating_health = FALSE)
-	need_mob_update += human_bloodbag.adjustFireLoss(damage_healed * (human_bloodbag.getFireLoss() / overall_damage), updating_health = FALSE)
-	need_mob_update += human_bloodbag.adjustBruteLoss(damage_healed * (human_bloodbag.getBruteLoss() / overall_damage), updating_health = FALSE)
+	need_mob_update += human_bloodbag.adjust_oxy_loss(damage_healed * (human_bloodbag.get_oxy_loss() / overall_damage), updating_health = FALSE)
+	need_mob_update += human_bloodbag.adjust_tox_loss(damage_healed * (human_bloodbag.get_tox_loss() / overall_damage), updating_health = FALSE)
+	need_mob_update += human_bloodbag.adjust_fire_loss(damage_healed * (human_bloodbag.get_fire_loss() / overall_damage), updating_health = FALSE)
+	need_mob_update += human_bloodbag.adjust_brute_loss(damage_healed * (human_bloodbag.get_brute_loss() / overall_damage), updating_health = FALSE)
 	if(need_mob_update)
 		human_bloodbag.updatehealth()
 	playsound(get_turf(human_bloodbag), 'sound/effects/magic/staff_healing.ogg', 25)

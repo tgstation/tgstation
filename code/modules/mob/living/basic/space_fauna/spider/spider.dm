@@ -155,8 +155,8 @@
 	grown.faction = faction.Copy()
 	grown.directive = directive
 	grown.set_name()
-	grown.setBruteLoss(getBruteLoss())
-	grown.setFireLoss(getFireLoss())
+	grown.set_brute_loss(get_brute_loss())
+	grown.set_fire_loss(get_fire_loss())
 	qdel(src)
 
 /**
