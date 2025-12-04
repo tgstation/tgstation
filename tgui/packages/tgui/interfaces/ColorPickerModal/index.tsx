@@ -72,9 +72,6 @@ export const ColorPickerModal: React.FC<ColorPickerModalProps> = () => {
               />
             </Section>
           </Stack.Item>
-          <Stack.Item>
-            <InputButtons input={hsvaToHex(selectedColor)} />
-          </Stack.Item>
         </Stack>
       </Window.Content>
     </Window>

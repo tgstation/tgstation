@@ -12,6 +12,7 @@ import {
   rgbaToHsva,
 } from 'tgui-core/color';
 import { Box, Button, Stack, Tooltip } from 'tgui-core/components';
+import { InputButtons } from '../common/InputButtons';
 import {
   ColorPresets,
   Hue,
@@ -79,6 +80,9 @@ export const ColorSelector: React.FC<ColorSelectorProps> = React.memo(
                   backgroundColor={defaultColor}
                 />
               </Tooltip>
+            </Stack.Item>
+            <Stack.Item>
+              <InputButtons input={hsvaToHex(color)} />
             </Stack.Item>
           </Stack>
         </Stack.Item>
