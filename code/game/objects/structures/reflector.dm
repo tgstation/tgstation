@@ -37,9 +37,7 @@
 	if(admin)
 		can_rotate = FALSE
 
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/reflector,
-	))
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/reflector), only_root_path = TRUE))
 
 /obj/structure/reflector/examine(mob/user)
 	. = ..()

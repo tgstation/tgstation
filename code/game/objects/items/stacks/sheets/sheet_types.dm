@@ -623,7 +623,6 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	singular_name = "raw durathread ball"
 	icon_state = "sheet-durathreadraw"
 	merge_type = /obj/item/stack/sheet/cotton/durathread
-	grind_results = list()
 	loom_result = /obj/item/stack/sheet/durathread
 
 /obj/item/stack/sheet/cotton/wool
@@ -632,7 +631,6 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	singular_name = "raw wool ball"
 	icon_state = "sheet-wool"
 	merge_type = /obj/item/stack/sheet/cotton/wool
-	grind_results = list()
 	loom_result = /obj/item/stack/sheet/cloth
 
 /*
