@@ -21,40 +21,45 @@
 	)
 
 /datum/status_effect/grouped/blindness/on_apply()
-	if (!CAN_BE_BLIND(owner))
-		return FALSE
+    if (!CAN_BE_BLIND(owner))
+        return FALSE
 
-	RegisterSignals(owner, update_signals, PROC_REF(update_blindness))
-	update_blindness()
-	return ..()
+    RegisterSignals(owner, update_signals, PROC_REF(update_blindness))
+    return ..()
 
 /datum/status_effect/grouped/blindness/source_added(source, ...)
-	update_blindness()
+    update_blindness(source) // new: pass source to update
 
 /datum/status_effect/grouped/blindness/source_removed(source, removing)
-	if (!removing)
-		update_blindness()
+    if (!removing)
+        update_blindness(source) // new: pass source to update
 
-/datum/status_effect/grouped/blindness/proc/update_blindness()
-	if (!CAN_BE_BLIND(owner)) // future proofing
-		qdel(src)
-		return
+/datum/status_effect/grouped/blindness/proc/update_blindness(changed_source)
+    if (!CAN_BE_BLIND(owner)) // future proofing
+        qdel(src)
+        return
 
-	if (!HAS_TRAIT(owner, TRAIT_SIGHT_BYPASS))
-		make_blind()
-		return
+    if (!HAS_TRAIT(owner, TRAIT_SIGHT_BYPASS))
+        make_blind(changed_source) // new: pass source to make_blind
+        return
 
-	for (var/blocker in blocking_sources)
-		if (owner.is_blind_from(blocker))
-			make_blind()
-			return
+    for (var/blocker in blocking_sources)
+        if (owner.is_blind_from(blocker))
+            make_blind(changed_source) // new: pass source to make_blind
+            return
 
-	make_unblind()
+    make_unblind()
 
-/datum/status_effect/grouped/blindness/proc/make_blind()
-	owner.overlay_fullscreen(id, /atom/movable/screen/fullscreen/blind)
-	// You are blind - at most, able to make out shapes near you
-	owner.add_client_colour(/datum/client_colour/monochrome, REF(src))
+/datum/status_effect/grouped/blindness/proc/make_blind(changed_source)
+    // new: have some extra logic to determine what overlay to use
+    // by default we use the noflicker overlay
+    // but if our one and only source is from "temp blindness", use flicker overlay
+    var/overlay_to_use = /atom/movable/screen/fullscreen/blind/noflicker
+    if(changed_source == /datum/status_effect/temporary_blindness::id && length(sources) == 1)
+        overlay_to_use = /atom/movable/screen/fullscreen/blind
+    owner.overlay_fullscreen(id, overlay_to_use )
+    // You are blind - at most, able to make out shapes near you
+    owner.add_client_colour(/datum/client_colour/blindness, REF(src))
 
 /datum/status_effect/grouped/blindness/proc/make_unblind()
 	owner.clear_fullscreen(id)
