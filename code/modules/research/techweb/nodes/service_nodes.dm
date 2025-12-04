@@ -52,6 +52,7 @@
 		"beartrap",
 		"buffer",
 		"vacuum",
+		"washing_machine",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/janitor_trash = TECHWEB_TIER_2_POINTS)
