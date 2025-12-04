@@ -9,7 +9,6 @@ import { type HsvaColor, hexToHsva, hsvaToHex } from 'tgui-core/color';
 import { Autofocus, Box, Section, Stack } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { InputButtons } from '../common/InputButtons';
 import { Loader } from '../common/Loader';
 import { ColorSelector } from './ColorSetter';
 
