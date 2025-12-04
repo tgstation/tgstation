@@ -272,17 +272,8 @@
 	if (target_zone == BODY_ZONE_PRECISE_EYES)
 		target_zone = check_zone(target_zone)
 	if(isorgan(tool))
-		var/obj/item/apparatus
-		if(istype(tool, /obj/item/borg/apparatus/organ_storage))
-			apparatus = tool
-			tool = tool.contents[1]
-			target_organ = tool
 		user.temporarilyRemoveItemFromInventory(target_organ, TRUE)
 		target_organ.Insert(target)
-		if(apparatus)
-			apparatus.icon_state = initial(apparatus.icon_state)
-			apparatus.desc = initial(apparatus.desc)
-			apparatus.cut_overlays()
 		display_results(
 			user,
 			target,
@@ -292,6 +283,13 @@
 		)
 		display_pain(target, "Your [target.parse_zone_with_bodypart(target_zone)] throbs with pain as your new [tool.name] comes to life!")
 		target_organ.on_surgical_insertion(user, target, target_zone, tool)
+
+		// Update icons and description for cyborg organ storage
+		var/obj/item/borg/apparatus/organ_storage/apparatus = user.get_active_held_item()
+		if(istype(apparatus))
+			apparatus.icon_state = initial(apparatus.icon_state)
+			apparatus.desc = initial(apparatus.desc)
+			apparatus.cut_overlays()
 
 	else if(implement_type in implements_extract)
 		if(target_organ && target_organ.owner == target)
