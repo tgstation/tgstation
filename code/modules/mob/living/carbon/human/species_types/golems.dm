@@ -10,6 +10,7 @@
 		TRAIT_NOBREATH,
 		TRAIT_NOCRITDAMAGE,
 		TRAIT_NODISMEMBER,
+		TRAIT_NOFAT,
 		TRAIT_NOFIRE,
 		TRAIT_NOSOFTCRIT,
 		TRAIT_NO_AUGMENTS,
@@ -65,6 +66,7 @@
 	RegisterSignal(human_who_gained_species, COMSIG_CARBON_DEFIB_HEART_CHECK, PROC_REF(defib_check))
 	RegisterSignal(human_who_gained_species, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(rebuild_check))
 	RegisterSignal(human_who_gained_species, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(human_who_gained_species, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	// nutrition = health, so give people a head start
 	human_who_gained_species.set_nutrition(NUTRITION_LEVEL_WELL_FED)
 
@@ -74,11 +76,13 @@
 
 /datum/species/golem/on_species_loss(mob/living/carbon/human/human_who_lost_species, datum/species/new_species, pref_load)
 	. = ..()
-	UnregisterSignal(human_who_lost_species, COMSIG_MOB_AFTER_APPLY_DAMAGE)
-	UnregisterSignal(human_who_lost_species, COMSIG_LIVING_UPDATE_NUTRITION)
-	UnregisterSignal(human_who_lost_species, COMSIG_CARBON_DEFIB_HEART_CHECK)
-	UnregisterSignal(human_who_lost_species, COMSIG_ATOM_ITEM_INTERACTION)
-	UnregisterSignal(human_who_lost_species, COMSIG_ATOM_EXAMINE)
+	UnregisterSignal(human_who_lost_species, list(
+		COMSIG_MOB_AFTER_APPLY_DAMAGE,
+		COMSIG_LIVING_UPDATE_NUTRITION,
+		COMSIG_CARBON_DEFIB_HEART_CHECK,
+		COMSIG_ATOM_ITEM_INTERACTION,
+		COMSIG_ATOM_EXAMINE,
+	))
 
 	human_who_lost_species.physiology.stamina_mod /= 0.6
 	human_who_lost_species.physiology.stun_mod /= 0.6
@@ -97,6 +101,9 @@
 		if(source.health < source.crit_threshold)
 			drain *= 2
 		source.adjust_nutrition(-1 * drain * seconds_per_tick, forced = TRUE)
+	if(source.nutrition > NUTRITION_LEVEL_FAT)
+		// nutrition is health so let's keep this sane
+		source.set_nutrition(NUTRITION_LEVEL_FAT)
 
 /datum/species/golem/proc/on_examine(mob/living/carbon/human/source, mob/living/examiner, list/examine_text)
 	SIGNAL_HANDLER
@@ -203,7 +210,7 @@
 	if(damage_type != BURN && damage_type != BRUTE)
 		return
 
-	source.adjust_nutrition(-4 * damage_amt, forced = TRUE)
+	source.adjust_nutrition(round(-3 * damage_amt, 0.01), forced = TRUE)
 
 /datum/species/golem/proc/check_nutrition(mob/living/carbon/human/source)
 	SIGNAL_HANDLER

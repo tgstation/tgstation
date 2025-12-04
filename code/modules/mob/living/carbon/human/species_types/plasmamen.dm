@@ -14,6 +14,7 @@
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_UNHUSKABLE,
+		TRAIT_NO_BIOTYPE_DEMOMOD, // in the future we can consider removing plasmamen's innate damage mods while also removing this trait
 	)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
