@@ -341,7 +341,7 @@
 
 	if(diff == FORWARD && steps[index]["forward_message"])
 		user.balloon_alert_to_viewers(steps[index]["forward_message"])
-		var/list/next_step = index + 1 == steps.len ? null : steps[index + 1]
+		var/list/next_step = index == steps.len ? null : steps[index + 1]
 		if(next_step?["desc"])
 			to_chat(user, span_smallnoticeital(next_step["desc"]))
 
