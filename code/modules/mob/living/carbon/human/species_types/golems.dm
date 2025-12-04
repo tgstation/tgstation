@@ -91,7 +91,12 @@
 		source.Unconscious(1.5 SECONDS * seconds_per_tick)
 	if(source.nutrition <= 100 || source.health < source.crit_threshold)
 		// and this is "crit damage" for golems
-		source.adjust_nutrition(-2 * seconds_per_tick * (source.nutrtion <= 50 ? 2 : 1), forced = TRUE)
+		var/drain = 1
+		if(source.nutrition <= 50)
+			drain *= 2
+		if(source.health < source.crit_threshold)
+			drain *= 2
+		source.adjust_nutrition(-1 * drain * seconds_per_tick, forced = TRUE)
 
 /datum/species/golem/proc/on_examine(mob/living/carbon/human/source, mob/living/examiner, list/examine_text)
 	SIGNAL_HANDLER
