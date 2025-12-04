@@ -1001,7 +1001,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(!pre_preop(operating_on, surgeon, tool, operation_args))
 		return FALSE
 	// if pre_preop slept, sanity check that everything is still valid
-	if(preop_time != world.time && (patient != get_patient(operating_on) || !surgeon.Adjacent(patient) || !surgeon.is_holding(tool) || !operate_check(operating_on, surgeon, tool, operation_args)))
+	if(preop_time != world.time && (patient != get_patient(operating_on) || !surgeon.Adjacent(patient) || !surgeon.is_holding(tool) || !operate_check(patient, operating_on, surgeon, tool, operation_args)))
 		return FALSE
 
 	play_operation_sound(operating_on, surgeon, tool, preop_sound)
