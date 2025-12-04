@@ -1612,7 +1612,4 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Object is dangerous to mobs buckled to it
 #define TRAIT_DANGEROUS_BUCKLE "dangerous_buckle"
 
-/// Applied to mobs, makes them immune to weapond demolition modifier based on their biotype
-#define TRAIT_NO_BIOTYPE_DEMOMOD "no_biotype_demomod"
-
 // END TRAIT DEFINES
