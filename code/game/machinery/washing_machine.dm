@@ -181,15 +181,29 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	density = TRUE
 	state_open = TRUE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
+	circuit = /obj/item/circuitboard/machine/washing_machine
 	var/busy = FALSE
 	var/bloody_mess = FALSE
 	var/obj/item/color_source
-	var/max_wash_capacity = 5
+	/// The max amount of items that can be washed per load
+	var/max_wash_capacity
+	/// The time it takes to wash a load of laundry
+	var/time_to_wash
 
 /obj/machinery/washing_machine/examine(mob/user)
 	. = ..()
 	if(!busy)
 		. += span_notice("<b>Right-click</b> with an empty hand to start a wash cycle.")
+
+/obj/machinery/washing_machine/RefreshParts()
+	. = ..()
+	var/total_volume = 0
+	for(var/obj/item/reagent_containers/cup/beaker/beaker in component_parts)
+		total_volume += beaker.reagents.maximum_volume
+	max_wash_capacity = floor(total_volume/20)
+
+	for(var/datum/stock_part/servo/servo in component_parts)
+		time_to_wash = 20 SECONDS / servo.tier
 
 /obj/machinery/washing_machine/process(seconds_per_tick)
 	if(!busy)
@@ -432,7 +446,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(HAS_TRAIT(user, TRAIT_BRAINWASHING))
 		ADD_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
 	update_appearance()
-	addtimer(CALLBACK(src, PROC_REF(wash_cycle), user), 20 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(wash_cycle), user), time_to_wash)
 	START_PROCESSING(SSfastprocess, src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
