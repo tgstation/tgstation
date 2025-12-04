@@ -1,6 +1,6 @@
 ADMIN_VERB(toggle_game_debug, R_DEBUG, "Debug-Game", "Toggles game debugging.", ADMIN_CATEGORY_DEBUG)
-	GLOB.Debug2 = !GLOB.Debug2
-	var/message = "toggled debugging [(GLOB.Debug2 ? "ON" : "OFF")]"
+	GLOB.debugging_enabled = !GLOB.debugging_enabled
+	var/message = "toggled debugging [(GLOB.debugging_enabled ? "ON" : "OFF")]"
 	message_admins("[key_name_admin(user)] [message].")
 	log_admin("[key_name(user)] [message].")
 	BLACKBOX_LOG_ADMIN_VERB("Toggle Debug Two")

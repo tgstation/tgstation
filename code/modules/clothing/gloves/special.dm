@@ -68,6 +68,7 @@
 	icon_state = "radio_g"
 	inhand_icon_state = null
 	clothing_traits = list(TRAIT_CAN_SIGN_ON_COMMS)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.9, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.4)
 
 /obj/item/clothing/gloves/race
 	name = "race gloves"
@@ -227,7 +228,7 @@
 		stamina_exhaustion *= 1.5
 		experience *= 2
 
-	wearer.adjustStaminaLoss(stamina_exhaustion)
+	wearer.adjust_stamina_loss(stamina_exhaustion)
 	wearer.mind?.adjust_experience(/datum/skill/athletics, experience)
 	wearer.apply_status_effect(/datum/status_effect/exercised)
 

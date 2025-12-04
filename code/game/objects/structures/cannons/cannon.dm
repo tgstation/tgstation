@@ -15,7 +15,7 @@
 	var/anchorable_cannon = TRUE
 	var/obj/item/stack/cannonball/loaded_cannonball = null
 	var/charge_ignited = FALSE
-	var/fire_delay = 15
+	var/fire_delay = 1.5 SECONDS
 	var/charge_size = 15
 	var/fire_sound = 'sound/items/weapons/gun/general/cannon.ogg'
 
@@ -117,6 +117,7 @@
 	icon_state = "garbagegun"
 	anchored = FALSE
 	anchorable_cannon = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 11.15, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
 	var/fires_before_deconstruction = 5
 
 /obj/structure/cannon/trash/fire()

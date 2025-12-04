@@ -8,6 +8,7 @@
 	armor_type = /datum/armor/ridden_wheelchair
 	density = FALSE
 	interaction_flags_mouse_drop = ALLOW_RESTING
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 	/// Run speed delay is multiplied with this for vehicle move delay.
 	var/delay_multiplier = 6.7
@@ -154,7 +155,7 @@
 	overlay_icon = "gold_wheelchair_overlay"
 	max_integrity = 200
 	armor_type = /datum/armor/wheelchair_gold
-	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5)
 	foldabletype = /obj/item/wheelchair/gold
 
 /// Handheld wheelchair item
@@ -168,7 +169,7 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 8 //Force is same as a chair
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	/// The wheelchair vehicle type we create when we unfold this chair
 	var/unfolded_type = /obj/vehicle/ridden/wheelchair
 
@@ -197,7 +198,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 10
-	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5)
 	unfolded_type = /obj/vehicle/ridden/wheelchair/gold
 
 /datum/armor/wheelchair_gold

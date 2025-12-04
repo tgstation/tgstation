@@ -99,18 +99,32 @@
 	contains = list(/obj/item/gun/energy/e_gun)
 
 /datum/supply_pack/goody/laser_single
-	name = "Laser Gun Single-Pack"
-	desc = "Contains one laser gun, the lethal workhorse of Nanotrasen security everywhere."
+	name = "Type 5 Laser Gun Single-Pack"
+	desc = "Contains one Type 5 laser gun, the lethal workhorse of Nanotrasen security everywhere."
 	cost = PAYCHECK_COMMAND * 6
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/energy/laser)
 
 /datum/supply_pack/goody/carbine_single
-	name = "Laser Carbine Single_Pack"
-	desc = "Contains one laser carbines, capable of rapidly firing weak lasers."
+	name = "Type 5R Laser Carbine Single_Pack"
+	desc = "Contains one laser carbine. Fires a rapid burst of slightly weaker laser projectiles."
 	cost = PAYCHECK_COMMAND * 8
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/energy/laser/carbine)
+
+/datum/supply_pack/goody/laser_pistol_single
+	name = "Type 5C Laser Pistol Single-Pack"
+	desc = "Contains one Type 5C laser pistol in an energy shoulder holster. Groovy."
+	cost = PAYCHECK_COMMAND * 2
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/storage/belt/holster/energy/laser_pistol)
+
+/datum/supply_pack/goody/laser_single_soul
+	name = "Type 3 Laser Gun Single-Pack"
+	desc = "Contains one Type 3 laser gun. They don't make 'em like they used to."
+	cost = PAYCHECK_COMMAND * 6
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/gun/energy/laser/soul)
 
 /datum/supply_pack/goody/smg_single
 	name = "Disabler SMG Single_Pack"

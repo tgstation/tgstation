@@ -209,6 +209,8 @@
 	PROTECTED_PROC(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
+	find_and_mount_on_atom(late_init = TRUE)
+
 	power_change()
 	if(use_power == NO_POWER_USE)
 		return
@@ -309,7 +311,11 @@
 	set waitfor = FALSE
 	return PROCESS_KILL
 
-/obj/machinery/proc/process_atmos()//If you dont use process why are you here
+/**
+ * Process but for machines interacting with atmospherics.
+ * Like process, anything sensitive to changes in the wait time between process ticks should account for seconds_per_tick.
+**/
+/obj/machinery/proc/process_atmos(seconds_per_tick)//If you dont touch atmos why are you here
 	set waitfor = FALSE
 	return PROCESS_KILL
 
