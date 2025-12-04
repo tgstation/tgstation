@@ -131,7 +131,7 @@
 
 /obj/item/knife/kitchen/silicon/examine()
 	. = ..()
-	. += " It's fitted with a [tool_behaviour] head."
+	. += "It's fitted with a [tool_behaviour] head."
 
 /obj/item/knife/kitchen/silicon/attack_self(mob/user)
 	playsound(get_turf(user), 'sound/items/tools/change_drill.ogg', 50, TRUE)

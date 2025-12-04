@@ -120,7 +120,8 @@
 	category = CAT_TOOLS
 
 /datum/crafting_recipe/jaws_of_recovery
-	name = "Modified Jaws of Life"
+	name = "Modified Jaws of Recovery"
+	desc = "This one acts like regular jaws of life, letting you pry any door and doesn't announce doors you're prying open."
 	time = 10 SECONDS
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
 	result = /obj/item/crowbar/power/paramedic/silent

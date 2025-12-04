@@ -1,0 +1,5 @@
+author: "ArchBTW"
+delete-after: True
+changes:
+  - bugfix: "Fix sitting on stools (it's a chair)"
+  - bugfix: "Fix offset when sitting on a stool"

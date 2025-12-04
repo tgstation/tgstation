@@ -623,7 +623,6 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	singular_name = "raw durathread ball"
 	icon_state = "sheet-durathreadraw"
 	merge_type = /obj/item/stack/sheet/cotton/durathread
-	grind_results = list()
 	loom_result = /obj/item/stack/sheet/durathread
 
 /obj/item/stack/sheet/cotton/wool
@@ -632,7 +631,6 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	singular_name = "raw wool ball"
 	icon_state = "sheet-wool"
 	merge_type = /obj/item/stack/sheet/cotton/wool
-	grind_results = list()
 	loom_result = /obj/item/stack/sheet/cloth
 
 /*
@@ -643,6 +641,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/costume/cardborg, 3, crafting_flags = NONE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/costume/cardborg, crafting_flags = NONE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("medium box", /obj/structure/closet/crate/cardboard, 4, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_CONTAINERS), \
 	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5, crafting_flags = NONE, category = CAT_ENTERTAINMENT), \
 	null, \
 

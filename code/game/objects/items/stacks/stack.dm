@@ -189,7 +189,7 @@
 		return FALSE
 
 	//Now transfer the grind results scaled by available_amount
-	var/list/grind_reagents = grind_results.Copy()
+	var/list/grind_reagents = LAZYCOPY(grind_results)
 	for(var/reagent in grind_reagents)
 		grind_reagents[reagent] *= available_amount
 	target_holder.add_reagent_list(grind_reagents)
