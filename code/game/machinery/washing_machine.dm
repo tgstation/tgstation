@@ -189,6 +189,8 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	var/max_wash_capacity
 	/// The time it takes to wash a load of laundry
 	var/time_to_wash
+	/// The current number of items inserted
+	var/total_load = 0
 
 /obj/machinery/washing_machine/examine(mob/user)
 	. = ..()
@@ -344,7 +346,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		icon_state = "wm_[state_open]_blood"
 		return ..()
 
-	var/full = contents.len ? 1 : 0
+	var/full = total_load ? 1 : 0
 	icon_state = "wm_[state_open]_[full]"
 	return ..()
 
@@ -376,7 +378,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(bloody_mess)
 		to_chat(user, span_warning("[src] must be cleaned up first!"))
 		return ITEM_INTERACT_BLOCKING
-	if(contents.len >= max_wash_capacity)
+	if(total_load >= max_wash_capacity)
 		to_chat(user, span_warning("The washing machine is full!"))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(item, src))
@@ -384,6 +386,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		return ITEM_INTERACT_BLOCKING
 	if(item.dye_color)
 		color_source = item
+	total_load++
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -460,3 +463,4 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	. = ..()
 	set_density(TRUE) //because machinery/open_machine() sets it to FALSE
 	color_source = null
+	total_load = 0

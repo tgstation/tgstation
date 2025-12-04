@@ -1895,5 +1895,5 @@
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/reagent_containers/cup/beaker = 2,
 		/datum/stock_part/water_recycler = 1,
-		/obj/item/stock_parts/servo = 1,
+		/datum/stock_part/servo = 1,
 	)
