@@ -905,9 +905,8 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "fn" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/vacuum/external,
-/turf/open/floor/plating,
+/obj/structure/sign/warning/vacuum/external/directional/west,
+/turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "fo" = (
 /obj/machinery/conveyor_switch/oneway{
@@ -5715,7 +5714,7 @@ ax
 eh
 dY
 dY
-fn
+en
 fs
 en
 dY
@@ -5807,7 +5806,7 @@ ax
 eh
 eh
 eV
-eh
+fn
 eh
 eh
 eV

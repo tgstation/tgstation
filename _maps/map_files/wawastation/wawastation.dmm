@@ -23623,6 +23623,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /turf/open/floor/iron/textured,
 /area/station/cargo/miningoffice)
 "iin" = (
@@ -64757,10 +64758,6 @@
 /obj/effect/turf_decal/tile/dark_green/opposingcorners,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
-"wli" = (
-/obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall,
-/area/station/cargo/miningoffice)
 "wlo" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 5
@@ -147920,7 +147917,7 @@ pEH
 pEH
 vxX
 iaN
-wli
+iaN
 aJP
 iaN
 sdc

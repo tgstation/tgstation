@@ -1,0 +1,9 @@
+/obj/structure/sign/departments/cargo{dir=1} : /obj/structure/sign/departments/cargo/directional/north
+/obj/structure/sign/departments/cargo{dir=2} : /obj/structure/sign/departments/cargo/directional/south
+/obj/structure/sign/departments/cargo{dir=4} : /obj/structure/sign/departments/cargo/directional/east
+/obj/structure/sign/departments/cargo{dir=8} : /obj/structure/sign/departments/cargo/directional/west
+
+/obj/structure/sign/warning/vacuum/external{dir=1} : /obj/structure/sign/warning/vacuum/external/directional/north
+/obj/structure/sign/warning/vacuum/external{dir=2} : /obj/structure/sign/warning/vacuum/external/directional/south
+/obj/structure/sign/warning/vacuum/external{dir=4} : /obj/structure/sign/warning/vacuum/external/directional/east
+/obj/structure/sign/warning/vacuum/external{dir=8} : /obj/structure/sign/warning/vacuum/external/directional/west

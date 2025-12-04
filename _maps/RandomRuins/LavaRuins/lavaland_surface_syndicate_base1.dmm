@@ -818,10 +818,6 @@
 /obj/structure/sink/kitchen/directional/west,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
-"gO" = (
-/obj/structure/sign/departments/cargo,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/syndicate_lava_base/cargo)
 "gP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown{
@@ -3318,6 +3314,7 @@
 	},
 /obj/machinery/duct,
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/departments/cargo/directional/east,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
 "Iv" = (
@@ -6273,7 +6270,7 @@ SQ
 Iw
 dy
 dy
-gO
+dy
 Tb
 hC
 dy
