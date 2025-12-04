@@ -17,3 +17,7 @@
 
 /obj/item/sensor_device/attack_self(mob/user)
 	GLOB.crewmonitor.show(user,src) //Proc already exists, just had to call it
+
+/obj/item/sensor_device/mouse_drop_dragged(atom/over_object, mob/user)
+	if(!istype(over_object, /atom/movable/screen))
+		return attack_self(user)
