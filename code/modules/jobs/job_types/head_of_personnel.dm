@@ -3,8 +3,7 @@
 	description = "Alter access on ID cards, manage the service department, \
 		protect Ian, run the station when the captain dies."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
-	department_head = list(JOB_CAPTAIN)
-	head_announce = list(RADIO_CHANNEL_SERVICE)
+	head_announce = RADIO_CHANNEL_SERVICE
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1

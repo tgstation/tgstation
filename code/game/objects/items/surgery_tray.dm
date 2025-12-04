@@ -13,6 +13,7 @@
 	slowdown = 1
 	item_flags = SLOWS_WHILE_IN_HAND
 	pass_flags = NONE
+	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 	/// If true we're currently portable
 	var/is_portable = TRUE

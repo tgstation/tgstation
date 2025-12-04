@@ -265,9 +265,9 @@
 	return FALSE
 
 /turf/closed/wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data["[RCD_DESIGN_MODE]"])
+	switch(rcd_data[RCD_DESIGN_MODE])
 		if(RCD_WALLFRAME)
-			var/obj/item/wallframe/wallmount = rcd_data["[RCD_DESIGN_PATH]"]
+			var/obj/item/wallframe/wallmount = rcd_data[RCD_DESIGN_PATH]
 			var/obj/item/wallframe/new_wallmount = new wallmount(user.drop_location())
 			if(new_wallmount.interact_with_atom(src, user) == ITEM_INTERACT_SUCCESS)
 				return TRUE

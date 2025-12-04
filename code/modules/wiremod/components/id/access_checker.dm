@@ -57,7 +57,7 @@
 	return check_access_list(subject_accesses.value)
 
 /obj/item/circuit_component/compare/access/ui_perform_action(mob/user, action)
-	if(length(required_accesses.connected_ports))
+	if(LAZYLEN(required_accesses.connected_ports))
 		balloon_alert(user, "disconnect port before manually configuring!")
 		return
 	interact(user)

@@ -49,7 +49,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/structure/barricade/wooden,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "L" = (
 /turf/closed/wall,
 /area/ruin/space/djstation)
@@ -60,7 +60,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/structure/barricade/wooden,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "S" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,

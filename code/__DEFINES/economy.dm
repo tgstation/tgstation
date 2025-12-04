@@ -81,3 +81,12 @@
 #define MARKET_TREND_STABLE 0
 
 #define MARKET_EVENT_PROBABILITY 8 //Probability of a market event firing, in percent. Fires once per material, every stock market tick.
+
+/// The symbol for the default type of money used in the code.
+#define MONEY_SYMBOL "cr"
+/// The name for the default type of money used in the code.
+#define MONEY_NAME "credits"
+#define MONEY_NAME_SINGULAR "credit"
+
+#define MONEY_MINING_SYMBOL "mp"
+#define MONEY_BITRUNNING_SYMBOL "np"

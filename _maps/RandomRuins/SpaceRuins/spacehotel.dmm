@@ -354,7 +354,7 @@
 	pixel_y = 17
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "dK" = (
 /obj/structure/frame/computer{
 	dir = 1
@@ -1154,7 +1154,7 @@
 	pixel_y = 17
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "lf" = (
 /obj/structure/window/spawner/directional/north,
 /obj/machinery/shower/directional/south,
@@ -1191,7 +1191,7 @@
 	pixel_y = 17
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "lw" = (
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
@@ -1199,7 +1199,7 @@
 "lB" = (
 /obj/structure/fluff/tram_rail,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "lE" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/grimy,
@@ -1275,7 +1275,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "mj" = (
 /obj/structure/chair/sofa/right/brown{
 	dir = 4
@@ -1537,7 +1537,7 @@
 /obj/structure/fluff/tram_rail,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ot" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/paper_bin,
@@ -1567,7 +1567,7 @@
 	},
 /obj/structure/fluff/tram_rail,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "po" = (
 /obj/structure/fluff/beach_umbrella/syndi,
 /turf/open/misc/beach/sand,
@@ -1660,7 +1660,7 @@
 	pixel_y = 17
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "qF" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1680,7 +1680,7 @@
 	pixel_y = 17
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "qM" = (
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
@@ -2383,7 +2383,7 @@
 "yB" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "yD" = (
 /obj/structure/sink/directional/west,
 /obj/machinery/firealarm/directional/north,
@@ -2422,7 +2422,7 @@
 "yV" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "yY" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/tile,
@@ -2892,7 +2892,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "FT" = (
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/hotel/dock)
@@ -3114,7 +3114,7 @@
 /obj/structure/lattice,
 /obj/structure/grille/broken,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Iq" = (
 /obj/item/kirbyplants/organic/plant16,
 /obj/structure/sign/poster/random/directional/west,
@@ -3167,7 +3167,7 @@
 "IZ" = (
 /obj/structure/fluff/tram_rail/end,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Je" = (
 /obj/structure/cable,
 /obj/item/reagent_containers/cup/bucket,
@@ -4073,7 +4073,7 @@
 	pixel_y = 17
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "VM" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -4461,7 +4461,7 @@
 	},
 /obj/structure/fluff/tram_rail/end,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Zo" = (
 /obj/structure/sink/directional/west,
 /turf/open/floor/iron/showroomfloor,

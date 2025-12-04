@@ -280,12 +280,16 @@
 			var/part_name = "Undefined"
 			if(istype(part, /obj/item/clothing/head/mod))
 				part_name = "Helmet"
-			if(istype(part, /obj/item/clothing/suit/mod))
+			else if(istype(part, /obj/item/clothing/suit/mod))
 				part_name = "Chestplate"
-			if(istype(part, /obj/item/clothing/gloves/mod))
+			else if(istype(part, /obj/item/clothing/gloves/mod))
 				part_name = "Gloves"
-			if(istype(part, /obj/item/clothing/shoes/mod))
+			else if(istype(part, /obj/item/clothing/shoes/mod))
 				part_name = "Boots"
+			else if(istype(part, /obj/item/clothing/glasses/mod))
+				part_name = "Glasses"
+			else if(istype(part, /obj/item/clothing/neck/mod))
+				part_name = "Tie"
 			string_list += part_name
 	deployed_parts.set_output(string_list)
 	deployed.set_output(is_deployed)

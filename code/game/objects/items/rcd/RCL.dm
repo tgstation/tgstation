@@ -324,6 +324,7 @@
 	max_amount = 30
 	name = "makeshift rapid pipe cleaner layer"
 	ghetto = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15)
 
 /obj/item/rcl/ghetto/update_icon_state()
 	if(!loaded)

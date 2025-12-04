@@ -10,7 +10,6 @@
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	abstract_type = /obj/item/food
 	obj_flags = UNIQUE_RENAME
-	grind_results = list()
 	material_flags = MATERIAL_NO_EDIBILITY
 	/**
 	 * A list of material paths. the main material in the custom_materials list is also added on init.

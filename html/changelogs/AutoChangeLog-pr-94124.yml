@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Sleeping carp now actually lets you dodge melee attacks without filling your hands with stuff."

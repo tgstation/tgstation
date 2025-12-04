@@ -10,25 +10,26 @@
 	allowed = list(
 		/obj/item/analyzer,
 		/obj/item/biopsy_tool,
+		/obj/item/defibrillator/compact,
 		/obj/item/dnainjector,
 		/obj/item/flashlight/pen,
+		/obj/item/gun/syringe,
 		/obj/item/healthanalyzer,
 		/obj/item/paper,
-		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
+		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/gun/syringe,
 		/obj/item/sensor_device,
 		/obj/item/soap,
 		/obj/item/stack/medical,
 		/obj/item/storage/pill_bottle,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
-		)
+	)
 	armor_type = /datum/armor/toggle_labcoat
 	species_exception = list(/datum/species/golem)
 

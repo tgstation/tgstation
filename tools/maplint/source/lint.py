@@ -311,6 +311,7 @@ class Rules:
     required_neighbors: list[AtomNeighbor] = []
     ignored_neighbors: list[AtomNeighbor] = []
     when: Optional[When] = None
+    skip_files: list[Union[str, re.Pattern]] = []
 
     def __init__(self, data):
         expect(isinstance(data, dict), "Lint rules must be a dictionary.")
@@ -359,11 +360,37 @@ class Rules:
         if "when" in data:
             self.when = When(data.pop("when"))
 
+        if "skip_files" in data:
+            skip_files_data = data.pop("skip_files")
+            expect(isinstance(skip_files_data, list), "skip_files must be a list.")
+            self.skip_files = []
+            for entry in skip_files_data:
+                if isinstance(entry, str):
+                    self.skip_files.append(entry)
+                elif isinstance(entry, dict) and "pattern" in entry:
+                    pattern = entry.pop("pattern")
+                    self.skip_files.append(re.compile(pattern))
+                    expect(len(entry) == 0, f"Unknown key in skip_files entry: {', '.join(entry.keys())}.")
+                else:
+                    raise MapParseError("skip_files entries must be strings or dicts with a 'pattern' key.")
+
         expect(len(data) == 0, f"Unknown lint rules: {', '.join(data.keys())}.")
 
     def run(self, identified: Content, contents: list[Content], identified_index) -> list[MaplintError]:
         failures: list[MaplintError] = []
         when_text = self.when.match_string() if self.when is not None else ""
+
+        if self.skip_files:
+            filename = getattr(identified, "filename", None)
+            if filename is not None:
+                norm = str(filename).replace("\\", "/")
+                for entry in self.skip_files:
+                    if isinstance(entry, str):
+                        if entry in norm:
+                            return failures
+                    else:
+                        if entry.search(norm):
+                            return failures
 
         # If a when is present and is unmet, skip evaluation of this rule
         if self.when and not self.when.evaluate(identified):

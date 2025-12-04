@@ -24,7 +24,7 @@
 	name = "Rest Room"
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "u" = (
 /obj/machinery/duct,
 /turf/open/floor/iron/grimy,
@@ -51,7 +51,7 @@
 	},
 /obj/modular_map_connector,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "F" = (
 /obj/structure/curtain,
 /obj/machinery/shower/directional/south,

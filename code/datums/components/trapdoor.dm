@@ -377,6 +377,7 @@
 	icon = 'icons/obj/devices/remote.dmi'
 	icon_state = "trapdoor_remote"
 	COOLDOWN_DECLARE(trapdoor_cooldown)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 	var/trapdoor_cooldown_time = 2 SECONDS
 	var/obj/item/assembly/trapdoor/internals
 
@@ -474,6 +475,7 @@
 	desc = "A kit containing all the parts needed to build a trapdoor. Can only be used on open space."
 	icon = 'icons/obj/weapons/improvised.dmi'
 	icon_state = "kitsuitcase"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.2)
 	var/in_use = FALSE
 
 /obj/item/trapdoor_kit/Initialize(mapload)

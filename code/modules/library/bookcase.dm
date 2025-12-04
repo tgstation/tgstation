@@ -13,6 +13,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
 	armor_type = /datum/armor/structure_bookcase
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 4)
 	var/state = BOOKCASE_UNANCHORED
 	/// When enabled, books_to_load number of random books will be generated for this bookcase
 	var/load_random_books = FALSE

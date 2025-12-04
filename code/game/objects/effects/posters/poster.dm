@@ -99,7 +99,7 @@
 		return ITEM_INTERACT_FAILURE
 
 	placed_poster.setDir(get_dir(user_drop_location, wall_structure))
-	placed_poster.find_and_hang_on_atom()
+	placed_poster.find_and_mount_on_atom()
 	placed_poster.on_placed_poster(user)
 	return ITEM_INTERACT_SUCCESS
 

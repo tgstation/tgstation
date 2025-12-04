@@ -227,6 +227,7 @@
 	resistance_flags = FLAMMABLE
 	anchored = TRUE
 	density = FALSE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
 	///The airlock electronics inserted into the chassis, to be moved to the finished product.
 	var/obj/item/electronics/airlock/electronics
 

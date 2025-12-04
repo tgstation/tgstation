@@ -120,7 +120,7 @@
  * Arguments
  * * [AM][atom] - the atom to grind or juice
  */
-/obj/machinery/plumbing/grinder_chemical/proc/blend(obj/item/I)
+/obj/machinery/plumbing/grinder_chemical/proc/blend(obj/item/item_to_blend)
 	PRIVATE_PROC(TRUE)
 
 	if(!is_operational || !anchored)
@@ -128,14 +128,14 @@
 	if(reagents.holder_full())
 		return
 
-	if((I.item_flags & ABSTRACT) || (I.flags_1 & HOLOGRAM_1))
+	if((item_to_blend.item_flags & ABSTRACT) || (item_to_blend.flags_1 & HOLOGRAM_1))
 		return
-	if(!I.blend_requirements(src))
+	if(!item_to_blend.blend_requirements(src))
 		return
 
 	if(!grinding)
-		I.juice(reagents, usr, src)
-	else if(length(I.grind_results) || I.reagents?.total_volume)
-		I.grind(reagents, usr, src)
+		item_to_blend.juice(reagents, usr, src)
+	else if(LAZYLEN(item_to_blend.grind_results) || item_to_blend.reagents?.total_volume)
+		item_to_blend.grind(reagents, usr, src)
 
 	use_energy(active_power_usage)

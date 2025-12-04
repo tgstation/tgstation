@@ -2058,6 +2058,7 @@
 	worn_icon_state = "nothing"
 	resistance_flags = FLAMMABLE
 	slot_flags = ITEM_SLOT_ID
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 	///The "name" of the "owner" of this "ID"
 	var/scribbled_name
 	///The assignment written on this card.

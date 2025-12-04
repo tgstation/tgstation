@@ -11,6 +11,7 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	armor_type = /datum/armor/gloves_bracer
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/clothing/gloves/bracer/Initialize(mapload)
 	. = ..()

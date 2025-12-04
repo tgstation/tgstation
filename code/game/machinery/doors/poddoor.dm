@@ -14,6 +14,7 @@
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 70
 	can_open_with_hands = FALSE
+	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 15, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	/// The recipe for this door
 	var/datum/crafting_recipe/recipe_type = /datum/crafting_recipe/blast_doors
 	/// The current deconstruction step

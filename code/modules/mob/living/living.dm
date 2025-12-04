@@ -1505,23 +1505,23 @@
 			var/static/list/robot_options = list(
 				/mob/living/silicon/robot = 200,
 				/mob/living/basic/drone/polymorphed = 200,
+				/mob/living/silicon/robot/model/syndicate = 100,
+				/mob/living/silicon/robot/model/syndicate/medical = 100,
+				/mob/living/silicon/robot/model/syndicate/saboteur = 100,
+				/mob/living/basic/hivebot/strong = 50,
+				/mob/living/basic/hivebot/mechanic = 50,
 				/mob/living/basic/bot/dedbot = 25,
 				/mob/living/basic/bot/cleanbot = 25,
 				/mob/living/basic/bot/firebot = 25,
 				/mob/living/basic/bot/honkbot = 25,
 				/mob/living/basic/bot/hygienebot = 25,
-				/mob/living/basic/bot/medbot/mysterious = 12,
-				/mob/living/basic/bot/medbot = 13,
 				/mob/living/basic/bot/vibebot = 25,
-				/mob/living/basic/hivebot/strong = 50,
-				/mob/living/basic/hivebot/mechanic = 50,
+				/mob/living/basic/bot/medbot = 13,
+				/mob/living/basic/bot/medbot/mysterious = 12,
 				/mob/living/basic/netguardian = 1,
-				/mob/living/silicon/robot/model/syndicate = 1,
-				/mob/living/silicon/robot/model/syndicate/medical = 1,
-				/mob/living/silicon/robot/model/syndicate/saboteur = 1,
 			)
 
-			var/picked_robot = pick(robot_options)
+			var/picked_robot = pick_weight(robot_options)
 			new_mob = new picked_robot(loc)
 			if(issilicon(new_mob))
 				var/mob/living/silicon/robot/created_robot = new_mob

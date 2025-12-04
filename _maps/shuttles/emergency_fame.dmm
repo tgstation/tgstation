@@ -115,6 +115,7 @@
 "fm" = (
 /obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/box,
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "fS" = (
@@ -428,8 +429,9 @@
 /turf/open/floor/mineral/silver,
 /area/shuttle/escape)
 "qM" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/sign/nanotrasen/directional/west,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "qW" = (
 /obj/effect/turf_decal/siding{
@@ -530,6 +532,16 @@
 "wK" = (
 /obj/machinery/vending/boozeomat,
 /obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"wX" = (
+/obj/structure/sign/nanotrasen/directional/south,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"wY" = (
+/obj/structure/closet/emcloset/anchored,
+/obj/effect/turf_decal/bot,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "xc" = (
@@ -697,6 +709,7 @@
 /area/shuttle/escape)
 "EF" = (
 /obj/item/kirbyplants/organic/plant16,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Fi" = (
@@ -975,6 +988,10 @@
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
+/area/shuttle/escape)
+"UW" = (
+/obj/structure/sign/nanotrasen/directional/north,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Vl" = (
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -1271,7 +1288,7 @@ iN
 Cz
 "}
 (9,1,1) = {"
-qM
+Oa
 Oa
 aX
 Uu
@@ -1293,7 +1310,7 @@ Oa
 mc
 Oa
 Oa
-qM
+Oa
 "}
 (10,1,1) = {"
 mz
@@ -1317,7 +1334,7 @@ cu
 cu
 Yp
 Ty
-PP
+qM
 mz
 "}
 (11,1,1) = {"
@@ -1349,8 +1366,8 @@ mz
 mz
 NN
 eW
-RZ
-qM
+wX
+Oa
 mz
 mz
 Ws
@@ -1364,14 +1381,14 @@ Oa
 Ws
 mz
 mz
-qM
-Yp
+Oa
+UW
 Yp
 PP
 mz
 "}
 (13,1,1) = {"
-qM
+Oa
 Oa
 FJ
 RZ
@@ -1392,8 +1409,8 @@ Bj
 mz
 Yp
 Yp
-oc
-qM
+wY
+Oa
 "}
 (14,1,1) = {"
 Oa

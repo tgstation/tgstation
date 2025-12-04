@@ -1679,7 +1679,7 @@
 "rd" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "re" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
@@ -6394,7 +6394,7 @@
 /area/ruin/space/ks13/medical/morgue)
 "PG" = (
 /turf/closed/wall/r_wall,
-/area/template_noop)
+/area/space/nearstation)
 "PH" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -8139,9 +8139,9 @@
 /turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "YE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/plaque/static_plaque/golden/commission/ks13,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/central)
 "YF" = (

@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface)
+/area/lavaland/surface/outdoors)
 "b" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Escape Pod Airlock"
@@ -45,11 +45,11 @@
 "h" = (
 /obj/effect/decal/cleanable/rubble,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface)
+/area/lavaland/surface/outdoors)
 "i" = (
 /obj/effect/mob_spawn/corpse/goliath,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface)
+/area/lavaland/surface/outdoors)
 "j" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -63,7 +63,7 @@
 /area/ruin/unpowered)
 "l" = (
 /turf/open/water/hot_spring/lavaland_atmos,
-/area/lavaland/surface)
+/area/lavaland/surface/outdoors)
 "m" = (
 /obj/machinery/door/airlock/survival_pod/glass,
 /turf/open/floor/pod/dark,
@@ -75,7 +75,7 @@
 /area/ruin/unpowered)
 "o" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface)
+/area/lavaland/surface/outdoors)
 "p" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/emergency,
@@ -97,17 +97,17 @@
 "t" = (
 /obj/structure/flora/tree/stump,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface)
+/area/lavaland/surface/outdoors)
 "u" = (
 /obj/structure/bonfire/prelit,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface)
+/area/lavaland/surface/outdoors)
 "v" = (
 /obj/effect/decal/cleanable/rubble,
 /obj/item/stack/sheet/mineral/titanium,
 /obj/item/stack/sheet/mineral/titanium,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface)
+/area/lavaland/surface/outdoors)
 "w" = (
 /obj/effect/decal/cleanable/glass/titanium,
 /obj/item/stack/sheet/mineral/titanium,
@@ -119,7 +119,7 @@
 	dir = 8
 	},
 /turf/open/misc/ashplanet/wateryrock/lavaland_atmos,
-/area/lavaland/surface)
+/area/lavaland/surface/outdoors)
 "y" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -130,22 +130,22 @@
 "z" = (
 /obj/item/book/manual/fish_catalog,
 /turf/open/misc/ashplanet/wateryrock/lavaland_atmos,
-/area/lavaland/surface)
+/area/lavaland/surface/outdoors)
 "B" = (
 /mob/living/basic/mining/goliath,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface)
+/area/lavaland/surface/outdoors)
 "D" = (
 /obj/item/gun/energy/recharge/kinetic_accelerator,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface)
+/area/lavaland/surface/outdoors)
 "E" = (
 /turf/open/misc/ashplanet/wateryrock/lavaland_atmos,
-/area/lavaland/surface)
+/area/lavaland/surface/outdoors)
 "F" = (
 /obj/effect/mob_spawn/corpse/human/cargo_tech,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface)
+/area/lavaland/surface/outdoors)
 "G" = (
 /turf/template_noop,
 /area/template_noop)
@@ -176,7 +176,7 @@
 "L" = (
 /obj/item/storage/toolbox/fishing,
 /turf/open/misc/ashplanet/wateryrock/lavaland_atmos,
-/area/lavaland/surface)
+/area/lavaland/surface/outdoors)
 "M" = (
 /obj/structure/rack,
 /obj/item/pickaxe/emergency,
@@ -194,14 +194,14 @@
 "P" = (
 /obj/effect/mob_spawn/corpse/human/miner,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface)
+/area/lavaland/surface/outdoors)
 "Q" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ruin/unpowered)
 "R" = (
 /mob/living/basic/mining/goliath/ancient,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface)
+/area/lavaland/surface/outdoors)
 "S" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/black,
@@ -214,7 +214,7 @@
 "U" = (
 /obj/item/bait_can/worm/premium,
 /turf/open/misc/ashplanet/wateryrock/lavaland_atmos,
-/area/lavaland/surface)
+/area/lavaland/surface/outdoors)
 "V" = (
 /obj/structure/table/survival_pod,
 /obj/item/food/meat/steak/goliath,

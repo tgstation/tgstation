@@ -34,11 +34,14 @@
 	if(!.)
 		return
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
-		part.add_color_override(bodypart_color, LIMB_COLOR_HULK)
+		if (part.bodytype & BODYTYPE_ORGANIC)
+			part.add_color_override(bodypart_color, LIMB_COLOR_HULK)
 	owner.update_body_parts()
 	owner.add_mood_event("hulk", /datum/mood_event/hulk)
 	RegisterSignal(owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(check_swing))
+	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(texture_limb))
+	RegisterSignal(owner, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(untexture_limb))
 	owner.add_movespeed_mod_immunities("hulk", /datum/movespeed_modifier/damage_slowdown)
 
 /datum/mutation/hulk/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
@@ -78,6 +81,15 @@
 	UnregisterSignal(owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
 	UnregisterSignal(owner, COMSIG_MOB_CLICKON)
 	owner.remove_movespeed_mod_immunities("hulk", /datum/movespeed_modifier/damage_slowdown)
+
+/datum/mutation/hulk/proc/texture_limb(atom/source, obj/item/bodypart/limb)
+	SIGNAL_HANDLER
+	if (limb.bodytype & BODYTYPE_ORGANIC)
+		limb.add_color_override(bodypart_color, LIMB_COLOR_HULK)
+
+/datum/mutation/hulk/proc/untexture_limb(atom/source, obj/item/bodypart/limb)
+	SIGNAL_HANDLER
+	limb.remove_color_override(LIMB_COLOR_HULK)
 
 /// How many steps it takes to throw the mob
 #define HULK_TAILTHROW_STEPS 28
@@ -261,6 +273,7 @@
 		TRAIT_PUSHIMMUNE,
 		TRAIT_STUNIMMUNE,
 		TRAIT_ANALGESIA,
+		TRAIT_NO_OXYLOSS_PASSOUT,
 	) // fight till your last breath
 
 /datum/mutation/hulk/superhuman/on_life(seconds_per_tick, times_fired)

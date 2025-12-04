@@ -352,13 +352,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"aT" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "aU" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/west,
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aV" = (
@@ -408,6 +405,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "ba" = (
@@ -690,6 +688,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/box/zipties,
 /obj/item/radio/intercom/directional/south,
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bX" = (
@@ -718,6 +717,7 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1
 	},
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ci" = (
@@ -727,6 +727,7 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
 	},
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cj" = (
@@ -1004,6 +1005,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Jl" = (
@@ -1107,7 +1109,7 @@ hB
 af
 af
 aO
-aT
+af
 aW
 af
 hB
@@ -1246,7 +1248,7 @@ bN
 bU
 af
 af
-aT
+af
 hB
 af
 af
@@ -1305,7 +1307,7 @@ af
 af
 bt
 hB
-aT
+af
 af
 WG
 jU
@@ -1457,7 +1459,7 @@ aE
 dY
 ah
 af
-aT
+af
 af
 af
 bY
@@ -1525,7 +1527,7 @@ ae
 af
 af
 af
-aT
+af
 hB
 af
 af
@@ -1634,7 +1636,7 @@ hB
 hB
 af
 af
-aT
+af
 af
 hB
 hB

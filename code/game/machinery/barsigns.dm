@@ -31,7 +31,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	change_area_name = mapload
 	set_sign(new /datum/barsign/hiddensigns/signoff)
 	if(mapload)
-		find_and_hang_on_atom()
+		find_and_mount_on_atom()
 
 /obj/machinery/barsign/proc/set_sign(datum/barsign/sign)
 	if(!istype(sign))

@@ -24,14 +24,12 @@
 #define BLOCKS_CONSTRUCTION_DIR (1<<10)
 /// Can we ignore density when building on this object (for example, directional windows and grilles)
 #define IGNORE_DENSITY (1<<11)
-/// We can reskin this item infinitely
-#define INFINITE_RESKIN (1<<12)
 /// Can this object conduct electricity
-#define CONDUCTS_ELECTRICITY (1<<13)
+#define CONDUCTS_ELECTRICITY (1<<12)
 /// Atoms don't spawn anything when deconstructed (they just vanish)
-#define NO_DEBRIS_AFTER_DECONSTRUCTION (1<<14)
+#define NO_DEBRIS_AFTER_DECONSTRUCTION (1<<13)
 /// Flag which tells an object to hang onto an support atom on late initialize. Usefull only during mapload and supported by some atoms only
-#define MOUNT_ON_LATE_INITIALIZE (1<<15)
+#define MOUNT_ON_LATE_INITIALIZE (1<<14)
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 

@@ -352,6 +352,7 @@
 	dart_insert_casing_icon_state = "overlay_syringe_crude"
 	dart_insert_projectile_icon_state = "overlay_syringe_crude_proj"
 	embed_type = /datum/embedding/syringe/crude
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 5)
 
 /datum/embedding/syringe/crude
 	embed_chance = 75

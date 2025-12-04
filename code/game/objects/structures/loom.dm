@@ -6,6 +6,7 @@
 	icon_state = "loom"
 	density = TRUE
 	anchored = TRUE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 10)
 
 /obj/structure/loom/Initialize(mapload)
 	. = ..()

@@ -19,7 +19,7 @@
 	name = "stamp spawner"
 	icon_state = "stamp"
 	loot = list(
-		/obj/item/stamp = 3,
+		/obj/item/stamp/granted = 3,
 		/obj/item/stamp/denied = 1,
 	)
 

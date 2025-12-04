@@ -22,12 +22,11 @@
 	force = 10
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 22, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 	///What item is being charged currently?
 	var/obj/item/charging = null
 	///Did we put power into "charging" last process()?
 	var/using_power = FALSE
-	///Did we finish recharging the currently inserted item?
-	var/finished_recharging = FALSE
 
 	///Current rotor animation frame. (floating point value).
 	var/rotor_tick = 0
@@ -231,7 +230,6 @@
 	if(is_type_in_typecache(arrived, allowed_devices))
 		charging = arrived
 		START_PROCESSING(SSmachines, src)
-		finished_recharging = FALSE
 		using_power = TRUE
 		update_appearance()
 	return ..()
@@ -313,17 +311,16 @@
 	if(charging_cell)
 		var/wanted_power = min(charging_cell.maxcharge - charging_cell.charge, charging_cell.chargerate)
 		if(wanted_power > 0)
-			using_power = TRUE
 			var/power_to_give = min(available_power, wanted_power) * seconds_per_tick / 2
 			if (power_to_give > 0)
 				charging_cell.give(power_to_give)
 				available_power -= power_to_give
+				if(charging_cell.charge == charging_cell.maxcharge)
+					playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+					say("[charging] has finished recharging!")
+				else
+					using_power = TRUE
 		update_appearance()
-
-	if(!using_power && !finished_recharging) //Inserted thing is at max charge/ammo, notify those around us
-		finished_recharging = TRUE
-		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
-		say("[charging] has finished recharging!")
 
 /obj/item/portable_wind_turbine/emp_act(severity)
 	. = ..()

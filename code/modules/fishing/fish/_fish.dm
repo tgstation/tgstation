@@ -259,6 +259,11 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	slapperoni(user, iteration = 1)
 	return MANUAL_SUICIDE
 
+/obj/item/fish/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
+	return ..()
+
 /obj/item/fish/proc/slapperoni(mob/living/user, iteration)
 	stoplag(0.1 SECONDS)
 	user.visible_message(span_bolddanger(suicide_slap_text))

@@ -453,7 +453,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	desc = "A creepy wooden mask. Surprisingly expressive for a poorly carved bit of wood."
 	icon_state = "tiki_eyebrow"
 	inhand_icon_state = null
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 1.25)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 	resistance_flags = FLAMMABLE
 	flags_cover = MASKCOVERSEYES
 	max_integrity = 100

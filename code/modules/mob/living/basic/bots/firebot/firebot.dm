@@ -7,6 +7,7 @@
 	icon_state = "firebot1"
 	light_color = "#8cffc9"
 	light_power = 0.8
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.9, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
 	radio_key = /obj/item/encryptionkey/headset_eng

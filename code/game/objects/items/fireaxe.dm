@@ -83,6 +83,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 	icon_angle = 180
 	force_unwielded = 5
 	force_wielded = 23
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 6)
 
 /*
  * Metal Hydrogen Axe

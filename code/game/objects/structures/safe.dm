@@ -21,11 +21,13 @@ FLOOR SAFES
 	obj_flags = CONDUCTS_ELECTRICITY
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 	custom_materials = list(
-		/datum/material/metalhydrogen = SHEET_MATERIAL_AMOUNT*10,
-		/datum/material/alloy/plastitanium = SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/metalhydrogen = SHEET_MATERIAL_AMOUNT * 15,
+		/datum/material/alloy/plastitanium = SHEET_MATERIAL_AMOUNT * 8,
+		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 6,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3,
 	)
 	material_flags = MATERIAL_EFFECTS
-
 	/// The maximum combined w_class of stuff in the safe
 	var/maxspace = 24
 	/// The amount of tumblers that will be generated
@@ -302,6 +304,11 @@ FLOOR SAFES
 	icon_state = "floorsafe"
 	density = FALSE
 	layer = LOW_OBJ_LAYER
+	custom_materials = list(
+		/datum/material/metalhydrogen = SHEET_MATERIAL_AMOUNT * 15,
+		/datum/material/alloy/plastitanium = SHEET_MATERIAL_AMOUNT * 8,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.55,
+	)
 
 /obj/structure/safe/floor/Initialize(mapload)
 	. = ..()

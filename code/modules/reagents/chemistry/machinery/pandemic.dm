@@ -99,12 +99,12 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return ..()
 	if(beaker)
-		balloon_alert(user, "pandemic full!")
-		return ..()
-	if(!user.transferItemToLoc(held_item, src))
-		return ..()
+		balloon_alert(user, "beaker swapped")
+		try_put_in_hand(beaker, usr)
+	else
+		balloon_alert(user, "beaker loaded")
+	user.transferItemToLoc(held_item, src)
 	beaker = held_item
-	balloon_alert(user, "beaker loaded")
 	update_appearance()
 	SStgui.update_uis(src)
 
@@ -363,6 +363,7 @@
 			traits["resistance"] = adv_disease.totalResistance()
 			traits["stage_speed"] = adv_disease.totalStageSpeed()
 			traits["stealth"] = adv_disease.totalStealth()
+			traits["severity"] = adv_disease.totalSeverity()
 			traits["symptoms"] = list()
 			for(var/datum/symptom/symptom as anything in adv_disease.symptoms)
 				var/list/this_symptom = list()

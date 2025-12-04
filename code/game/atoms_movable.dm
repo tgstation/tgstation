@@ -579,7 +579,7 @@
 		if(pulling_mob.buckled && pulling_mob.buckled.buckle_prevents_pull) //if they're buckled to something that disallows pulling, prevent it
 			stop_pulling()
 			return FALSE
-	if(moving_atom == loc && pulling.density)
+	if(get_turf(moving_atom) == loc && pulling.density)
 		return FALSE
 	var/move_dir = get_dir(pulling.loc, moving_atom)
 	if(!Process_Spacemove(move_dir))

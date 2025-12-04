@@ -350,7 +350,7 @@
 		dame.physique = FEMALE
 		dame.update_body()
 	if(prob(30))
-		back = /obj/item/nullrod/vibro/talking
+		back = /obj/item/nullrod/claymore/talking
 	else
 		back = /obj/item/shield/buckler
 		belt = /obj/item/nullrod/claymore

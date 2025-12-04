@@ -12,7 +12,7 @@
 #define BEYBLADE_CONFUSION_LIMIT (40 SECONDS)
 
 //The code execution of the emote datum is located at code/datums/emotes.dm
-/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE, forced = FALSE)
+/mob/proc/emote(act, type_override =  NONE, message = null, intentional = FALSE, force_silence = FALSE, forced = FALSE)
 	var/param = message
 	var/custom_param = findchar(act, " ")
 	if(custom_param)
@@ -33,11 +33,11 @@
 			continue
 		if(!forced && !emote.can_run_emote(src, TRUE, intentional, param))
 			continue
-		if(SEND_SIGNAL(src, COMSIG_MOB_PRE_EMOTED, emote.key, param, m_type, intentional, emote) & COMPONENT_CANT_EMOTE)
+		if(SEND_SIGNAL(src, COMSIG_MOB_PRE_EMOTED, emote.key, param, type_override, intentional, emote) & COMPONENT_CANT_EMOTE)
 			silenced = TRUE
 			continue
-		emote.run_emote(src, param, m_type, intentional)
-		SEND_SIGNAL(src, COMSIG_MOB_EMOTE, emote, act, m_type, message, intentional)
+		emote.run_emote(src, param, type_override, intentional)
+		SEND_SIGNAL(src, COMSIG_MOB_EMOTE, emote, act, type_override, message, intentional)
 		SEND_SIGNAL(src, COMSIG_MOB_EMOTED(emote.key))
 		return TRUE
 	if(intentional && !silenced && !force_silence)

@@ -54,7 +54,7 @@
 	return locate(/mob/living/basic) in mousey_holder.contents
 
 /// Relays emotes emoted by your boss to the hat wearer for full immersion
-/obj/item/clothing/head/utility/chefhat/proc/on_mouse_emote(mob/living/source, key, emote_message, type_override)
+/obj/item/clothing/head/utility/chefhat/proc/on_mouse_emote(mob/living/source, key, emote_message, type_override, intentional, datum/emote/emote)
 	SIGNAL_HANDLER
 	var/mob/living/carbon/wearer = loc
 	if(!wearer || INCAPACITATED_IGNORING(wearer, INCAPABLE_RESTRAINTS))
@@ -444,6 +444,7 @@
 	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	worn_x_dimension = 64
 	worn_y_dimension = 64
+	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 2, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/clothing/head/hats/hos/beret
 	name = "head of security's beret"

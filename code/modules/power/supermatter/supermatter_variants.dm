@@ -61,6 +61,7 @@
 	icon_state = "sm_small"
 	moveable = TRUE
 	anchored = FALSE
+	custom_materials = list(/datum/material/adamantine = SHEET_MATERIAL_AMOUNT * 20, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/machinery/power/supermatter_crystal/small/Initialize(mapload)
 	. = ..()
@@ -76,3 +77,4 @@
 	throw_speed = 1
 	throw_range = 1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	custom_materials = list(/datum/material/adamantine = SHEET_MATERIAL_AMOUNT * 20)

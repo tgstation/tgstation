@@ -268,7 +268,7 @@
 	return FALSE
 
 /turf/open/floor/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data["[RCD_DESIGN_MODE]"])
+	switch(rcd_data[RCD_DESIGN_MODE])
 		if(RCD_TURF)
 			var/obj/structure/girder/girder = locate() in src
 			if(girder)
@@ -282,7 +282,7 @@
 				return grille.rcd_act(user, the_rcd, rcd_data)
 
 			//allow directional windows to be built without grills
-			var/obj/structure/window/window_path = rcd_data["[RCD_DESIGN_PATH]"]
+			var/obj/structure/window/window_path = rcd_data[RCD_DESIGN_PATH]
 			if(!initial(window_path.fulltile))
 				if(!valid_build_direction(src, user.dir, is_fulltile = FALSE))
 					balloon_alert(user, "window already here!")
@@ -296,7 +296,7 @@
 			grille.set_anchored(TRUE)
 			return TRUE
 		if(RCD_AIRLOCK)
-			var/obj/machinery/door/airlock_type = rcd_data["[RCD_DESIGN_PATH]"]
+			var/obj/machinery/door/airlock_type = rcd_data[RCD_DESIGN_PATH]
 
 			if(ispath(airlock_type, /obj/machinery/door/window))
 				if(!valid_build_direction(src, user.dir, is_fulltile = FALSE))
@@ -330,7 +330,7 @@
 			assembly.finish_door()
 			return TRUE
 		if(RCD_STRUCTURE)
-			var/atom/movable/design_type = rcd_data["[RCD_DESIGN_PATH]"]
+			var/atom/movable/design_type = rcd_data[RCD_DESIGN_PATH]
 
 			//map absolute types to basic subtypes
 			var/atom/movable/locate_type = design_type

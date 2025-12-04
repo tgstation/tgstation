@@ -543,6 +543,9 @@
 /datum/disease/advance/proc/totalTransmittable()
 	return properties["transmittable"]
 
+/datum/disease/advance/proc/totalSeverity()
+	return properties["severity"]
+
 /**
  *  If the disease has an incubation time (such as event diseases) start the timer, let properties determine if there's no timer set.
  */

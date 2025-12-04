@@ -8,6 +8,7 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "smash")
 	turf_type = /turf/open/floor/light
 	merge_type = /obj/item/stack/tile/light
+	mats_per_unit = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.05, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.05)
 	var/state = 0
 
 /obj/item/stack/tile/light/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)

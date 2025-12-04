@@ -7,6 +7,8 @@ export type CargoData = {
   can_send: BooleanLike;
   cart: CartEntry[];
   department: string;
+  displayed_currency_full_name: string;
+  displayed_currency_name: string;
   docked: BooleanLike;
   grocery: number;
   loan_dispatched: BooleanLike;

@@ -163,7 +163,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "firebrand"
 	desc = "An unlit firebrand. It makes you wonder why it's not just called a stick."
 	smoketime = 40 SECONDS
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 	grind_results = list(/datum/reagent/carbon = 2)
 
 /obj/item/match/firebrand/Initialize(mapload)
@@ -175,6 +175,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A budget lighter done by using a battery and some aluminium. Hold tightly to ignite."
 	icon_state = "battery_unlit"
 	base_icon_state = "battery"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/match/battery/attack_self(mob/living/user, modifiers)
 	. = ..()
@@ -197,7 +198,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	throw_speed = 0.5
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_MASK
-	grind_results = list()
 	heat = 1000
 	light_range = 1
 	light_color = LIGHT_COLOR_FIRE
@@ -932,6 +932,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	list_reagents = null
 	w_class = WEIGHT_CLASS_SMALL
 	choke_forever = TRUE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 	///name of the stuff packed inside this pipe
 	var/packeditem
 
@@ -1009,7 +1010,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	inhand_icon_on = null
 	inhand_icon_off = null
 	lung_harm = 2
-	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 3)
 
 ///////////
 //ROLLING//

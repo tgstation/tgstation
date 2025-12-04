@@ -109,3 +109,18 @@
 	var/refill_add = min(volume - reagents.total_volume, 2 * seconds_per_tick)
 	if(refill_add > 0)
 		reagents.add_reagent(/datum/reagent/space_cleaner, refill_add)
+
+/obj/item/mod/module/selfcleaner
+	name = "MOD perfumer module"
+	desc = "A small spray to clean oneself up. Has a pleasant scent."
+	icon_state = "cleaner"
+	module_type = MODULE_USABLE
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
+	complexity = 1
+	incompatible_modules = list(/obj/item/mod/module/selfcleaner)
+	cooldown_time = 10 SECONDS
+
+/obj/item/mod/module/selfcleaner/on_use(mob/activator)
+	activator.wash(CLEAN_WASH)
+	drain_power(use_energy_cost)
+	playsound(activator, 'sound/effects/spray.ogg', 50, FALSE)

@@ -10,6 +10,7 @@
 	armor_type = /datum/armor/machinery_igniter
 	resistance_flags = FIRE_PROOF
 	processing_flags = NONE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5 + HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT / 2)
 	var/id = null
 	var/on = FALSE
 
@@ -164,7 +165,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	spark_system.attach(src)
 	register_context()
 	if(mapload)
-		find_and_hang_on_atom()
+		find_and_mount_on_atom()
 
 /obj/machinery/sparker/Destroy()
 	QDEL_NULL(spark_system)

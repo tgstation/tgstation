@@ -2,7 +2,6 @@
 /datum/job/pun_pun
 	title = JOB_PUN_PUN
 	description = "Assist the service department by serving drinks and food and entertaining the crew."
-	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 0

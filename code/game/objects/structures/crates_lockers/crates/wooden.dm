@@ -11,6 +11,7 @@
 	close_sound_volume = 50
 	paint_jobs = null
 	cutting_tool = /obj/item/crowbar
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 6)
 
 /obj/structure/closet/crate/wooden/toy
 	name = "toy box"

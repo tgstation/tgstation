@@ -18,6 +18,7 @@
 	anchored = TRUE
 	armor_type = /datum/armor/half_wall
 	material_flags = MATERIAL_EFFECTS | MATERIAL_AFFECT_STATISTICS
+	custom_materials = list(/datum/material/iron = PLATFORM_BASE_MATERIAL_AMOUNT)
 	/// Icon used for the frame
 	var/frame_icon = 'icons/obj/smooth_structures/platform/frame_faces/window_frame_normal.dmi'
 	/// Material used in our construction

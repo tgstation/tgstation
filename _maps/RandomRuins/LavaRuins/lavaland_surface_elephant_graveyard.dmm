@@ -40,6 +40,7 @@
 "bh" = (
 /obj/effect/decal/cleanable/blood/oil,
 /obj/structure/chair/office/light,
+/obj/structure/sign/warning/secure_area/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
 "bi" = (
@@ -298,6 +299,7 @@
 "vP" = (
 /obj/item/light/bulb/broken,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/secure_area/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
 "vS" = (
@@ -622,10 +624,6 @@
 "YM" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/powered/graveyard_shuttle)
-"ZC" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/mineral/titanium,
 /area/ruin/powered/graveyard_shuttle)
 "ZH" = (
 /obj/structure/stone_tile/surrounding_tile,
@@ -1499,9 +1497,9 @@ AB
 bf
 aH
 aH
-ZC
+aH
 IR
-ZC
+aH
 aH
 aH
 aH

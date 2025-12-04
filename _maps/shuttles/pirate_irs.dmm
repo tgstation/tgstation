@@ -1508,7 +1508,7 @@
 /area/shuttle/pirate)
 "NW" = (
 /obj/structure/table/reinforced,
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = 7;
 	pixel_y = 10
 	},

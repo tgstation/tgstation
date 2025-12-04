@@ -790,10 +790,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
 /obj/machinery/light/directional/south,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "oV" = (
@@ -1127,10 +1125,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
 /obj/machinery/light/directional/south,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "wm" = (
@@ -1416,10 +1412,8 @@
 	dir = 10
 	},
 /obj/machinery/vending/coffee,
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
 /obj/machinery/light/directional/north,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "AQ" = (
@@ -1609,7 +1603,7 @@
 /obj/item/pen/fourcolor{
 	pixel_x = -4
 	},
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = 8;
 	pixel_y = 5
 	},
@@ -2460,10 +2454,8 @@
 	dir = 6
 	},
 /obj/machinery/vending/coffee,
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
 /obj/machinery/light/directional/north,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "UF" = (

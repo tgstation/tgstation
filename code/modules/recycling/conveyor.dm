@@ -63,6 +63,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(conveyable_enter)
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/force_move_pulled)
 	update_move_direction()
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 	if(wire_mode)
@@ -362,14 +363,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-
-// attack with hand, move pulled object onto conveyor
-/obj/machinery/conveyor/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	user.Move_Pulled(src)
-
 /obj/machinery/conveyor/powered(chan = power_channel, ignore_use_power = FALSE)
 	if(!wire_mode)
 		return ..()
@@ -447,9 +440,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	update_appearance()
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 	set_wires(new /datum/wires/conveyor(src))
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/conveyor_switch,
-	))
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/conveyor_switch), only_root_path = TRUE))
 	register_context()
 
 /obj/machinery/conveyor_switch/Destroy()

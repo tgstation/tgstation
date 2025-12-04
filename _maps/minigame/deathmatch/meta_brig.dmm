@@ -20,11 +20,7 @@
 /obj/structure/marker_beacon/burgundy,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
-"an" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/space)
+/area/space/nearstation)
 "aw" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/closed/indestructible/reinforced,
@@ -1444,7 +1440,7 @@
 "vC" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "vD" = (
 /obj/structure/table,
 /obj/structure/cable,
@@ -4492,7 +4488,7 @@ IJ
 IJ
 "}
 (32,1,1) = {"
-an
+vC
 Fi
 Fi
 Fi

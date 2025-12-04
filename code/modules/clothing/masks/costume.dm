@@ -1,3 +1,28 @@
+// Mask skins
+/datum/atom_skin/joy_mask
+	abstract_type = /datum/atom_skin/joy_mask
+	change_base_icon_state = TRUE
+
+/datum/atom_skin/joy_mask/joy
+	preview_name = "Joy"
+	new_icon_state = "joy"
+
+/datum/atom_skin/joy_mask/flushed
+	preview_name = "Flushed"
+	new_icon_state = "flushed"
+
+/datum/atom_skin/joy_mask/pensive
+	preview_name = "Pensive"
+	new_icon_state = "pensive"
+
+/datum/atom_skin/joy_mask/angry
+	preview_name = "Angry"
+	new_icon_state = "angry"
+
+/datum/atom_skin/joy_mask/pleading
+	preview_name = "Pleading"
+	new_icon_state = "pleading"
+
 /obj/item/clothing/mask/joy
 	name = "emotion mask"
 	desc = "Express your happiness or hide your sorrows with this cultured cutout."
@@ -5,19 +30,10 @@
 	base_icon_state = "joy"
 	clothing_flags = MASKINTERNALS
 	flags_inv = HIDESNOUT
-	obj_flags = parent_type::obj_flags | INFINITE_RESKIN
-	unique_reskin = list(
-			"Joy" = "joy",
-			"Flushed" = "flushed",
-			"Pensive" = "pensive",
-			"Angry" = "angry",
-			"Pleading" = "pleading"
-	)
 
-
-/obj/item/clothing/mask/joy/reskin_obj(mob/user)
+/obj/item/clothing/mask/joy/Initialize(mapload)
 	. = ..()
-	user.update_worn_mask()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/joy_mask, infinite = TRUE)
 
 /obj/item/clothing/mask/mummy
 	name = "mummy mask"
@@ -77,3 +93,4 @@
 	greyscale_config = /datum/greyscale_config/rebellion_mask
 	greyscale_config_worn = /datum/greyscale_config/rebellion_mask/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)

@@ -470,6 +470,7 @@
 	pixel_x = 4;
 	pixel_y = 3
 	},
+/obj/structure/sign/warning/secure_area/directional/north,
 /turf/open/floor/iron/white,
 /area/ruin/powered/mailroom)
 "Wr" = (
@@ -484,10 +485,6 @@
 /area/ruin/powered/mailroom)
 "WE" = (
 /turf/closed/wall/r_wall,
-/area/ruin/powered/mailroom)
-"Xa" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/indestructible/reinforced,
 /area/ruin/powered/mailroom)
 "Xi" = (
 /obj/effect/turf_decal/loading_area{
@@ -693,7 +690,7 @@ SY
 iO
 MC
 Wr
-Xa
+ms
 Wj
 ch
 Mi
