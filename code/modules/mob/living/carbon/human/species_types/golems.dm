@@ -89,9 +89,9 @@
 	if(source.nutrition <= 20)
 		// this is "hard crit" for golems
 		source.Unconscious(1.5 SECONDS * seconds_per_tick)
-	if(source.nutrition <= 50)
+	if(source.nutrition <= 100)
 		// and this is "crit damage" for golems
-		source.adjust_nutrition(-1 * seconds_per_tick, forced = TRUE)
+		source.adjust_nutrition(-2 * seconds_per_tick * (source.nutrtion <= 50 ? 2 : 1), forced = TRUE)
 
 /datum/species/golem/proc/on_examine(mob/living/carbon/human/source, mob/living/examiner, list/examine_text)
 	SIGNAL_HANDLER
@@ -118,7 +118,7 @@
 	source.notify_revival("You are being rebuilt by [user.real_name]!")
 	var/brute_ready = source.get_brute_loss() < 50
 	var/burn_ready = source.get_fire_loss() < 50
-	var/nutrition_ready = source.nutrition > NUTRITION_LEVEL_HUNGRY
+	var/nutrition_ready = source.nutrition > NUTRITION_LEVEL_VERY_HUNGRY
 
 	while(check_rebuild(source, user, mats))
 		user.visible_message(
