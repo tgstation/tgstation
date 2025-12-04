@@ -527,3 +527,4 @@
 #undef DISCOMBOBULATE
 #undef BLIND_JAB
 #undef CRAVEN_BLOW
+#undef NO_COMBO
