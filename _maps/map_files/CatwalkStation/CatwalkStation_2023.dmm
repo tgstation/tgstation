@@ -23373,10 +23373,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/lesser)
-"gvl" = (
-/obj/machinery/flasher/directional/west,
-/turf/open/floor/carpet/black,
-/area/station/ai/upload/chamber)
 "gvI" = (
 /obj/effect/turf_decal/stripes/end,
 /turf/open/floor/iron/dark/smooth_large,
@@ -39901,16 +39897,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
-"kSB" = (
-/obj/machinery/porta_turret/ai{
-	dir = 4
-	},
-/obj/structure/sign/plaques/kiddie{
-	pixel_y = 32;
-	dir = 1
-	},
-/turf/open/floor/circuit/red,
-/area/station/ai/upload/chamber)
 "kSD" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/end{
 	dir = 1
@@ -44434,7 +44420,8 @@
 	uses = 8
 	},
 /obj/structure/sign/plaques/kiddie{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 4
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai/upload/chamber)
@@ -118194,7 +118181,7 @@ izk
 fQp
 buy
 ofb
-gvl
+mvq
 qIp
 uXx
 vsW
@@ -118963,7 +118950,7 @@ tRY
 wXL
 uEZ
 fQp
-kSB
+pLG
 mvq
 vSW
 vyV
