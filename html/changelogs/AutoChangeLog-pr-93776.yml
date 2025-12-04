@@ -1,5 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - rscadd: "Added a modular SUIT, a deployable, one-piece three-piece suit. Purchasable from the LawDrobe."
-  - balance: "The MODsuit equipment techweb node has been split in two, with an offshoot for civilian MODules."

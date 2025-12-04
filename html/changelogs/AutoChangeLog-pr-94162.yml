@@ -1,5 +1,0 @@
-author: "Aliceee2ch"
-delete-after: True
-changes:
-  - bugfix: "Fixes for MetaStation fire alarms."
-  - map: "Removed one pair of firelocks in Brig cycling room - now it has fire sanity marker instead. That should prevent trapping anyone without crowbar inside."
