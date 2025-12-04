@@ -404,6 +404,8 @@
 
 /obj/item/claymore/weak
 	desc = "This one is rusted."
+	icon = 'icons/obj/weapons/sword.dmi'
+	icon_state = "claymore_old"
 	force = 30
 	armour_penetration = 15
 
