@@ -13,6 +13,7 @@
 	greyscale_config = /datum/greyscale_config/wrap_paper
 	amount = 25
 	max_amount = 25
+	mats_per_unit = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/wrapping_paper
 	singular_name = "wrapping paper"
@@ -94,7 +95,7 @@
 	max_amount = 25
 	resistance_flags = FLAMMABLE
 	grind_results = list(/datum/reagent/cellulose = 5)
-	custom_materials = list(/datum/material/paper = SMALL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/package_wrap
 
 /obj/item/stack/package_wrap/suicide_act(mob/living/user)

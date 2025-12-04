@@ -270,8 +270,7 @@
 	force = 5
 	maxWeightClass = 10
 	gasPerThrow = 5
-	// This really should be /datum/material/paper = SMALL_MATERIAL_AMOUNT * 8 but the unit test seems to think it only requires 1 stacks worth of mats?
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6, /datum/material/paper = SMALL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6, /datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT * 8)
 
 /obj/item/pneumatic_cannon/proc/updateTank(obj/item/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
 	if(removing)

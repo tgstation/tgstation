@@ -475,7 +475,7 @@
 	name = "Package Wrapping"
 	id = "packagewrap"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/paper = SMALL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/package_wrap
 	category = list(
 		RND_CATEGORY_INITIAL,
