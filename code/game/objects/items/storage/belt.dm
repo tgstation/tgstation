@@ -648,13 +648,12 @@
 
 	click_action = TRUE
 
-	var/datum/weakref/blade_sheath_ref
 	var/datum/weakref/eyed_fool
 
 /datum/action/innate/blade_counter/IsAvailable(feedback = TRUE)
 	if(!isliving(owner))
 		return FALSE
-	var/obj/item/storage/belt/sheath/owners_sheath = owner.get_item_by_slot(ITEM_SLOT_BELT)
+	var/obj/item/storage/belt/sheath/owners_sheath = target
 	if(!COOLDOWN_FINISHED(owners_sheath, full_ability_cooldown))
 		if(feedback)
 			to_chat(owner, span_warning("You failed a counterattack too recently!"))
@@ -667,19 +666,19 @@
 		if(feedback)
 			to_chat(owner, span_warning("You only just resheathed your blade!"))
 		return FALSE
-	blade_sheath_ref = WEAKREF(owners_sheath)
 	return TRUE
 
 /datum/action/innate/blade_counter/proc/final_checks(atom/cast_on)
 	if(!isliving(cast_on))
 		return FALSE
+	if(owner == cast_on)
+		to_chat(owner, span_warning("You can't counterattack yourself!"))
+		return FALSE
 	var/mob/living/target = cast_on
 	if(!target.mind)
 		to_chat(owner, span_warning("They are too unpredictable to counterattack!"))
 		return FALSE
-	var/obj/item/storage/belt/sheath/oursheath = blade_sheath_ref.resolve()
-	if(!oursheath)
-		return FALSE
+	var/obj/item/storage/belt/sheath/oursheath = target
 	if(!length(oursheath.contents))
 		return FALSE
 	return TRUE
@@ -687,11 +686,11 @@
 /datum/action/innate/blade_counter/do_ability(mob/living/swordsman, mob/living/cast_on)
 	if(!final_checks(cast_on))
 		return FALSE
-	var/obj/item/storage/belt/sheath/used_sheath = blade_sheath_ref.resolve()
+	var/obj/item/storage/belt/sheath/used_sheath = target
 	RegisterSignal(swordsman, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(counter_attack))
 	swordsman.Immobilize(1 SECONDS)
 	eyed_fool = WEAKREF(cast_on)
-	swordsman.visible_message(span_danger("[swordsman] widens [p_their(swordsman)] stance, [p_their(swordsman)] hand hovering over \the [src]!"), span_notice("You prepare to counterattack [cast_on]!"))
+	swordsman.visible_message(span_danger("[swordsman] widens [p_their(swordsman)] stance, [p_their(swordsman)] hand hovering over \the [used_sheath]!"), span_notice("You prepare to counterattack [cast_on]!"))
 	addtimer(CALLBACK(src, PROC_REF(relax), swordsman), 1 SECONDS)
 	COOLDOWN_START(used_sheath, full_ability_cooldown, 60 SECONDS)
 	unset_ranged_ability(swordsman)
@@ -700,7 +699,7 @@
 
 /datum/action/innate/blade_counter/proc/counter_attack(mob/living/forward_thinker, atom/attackingthing)
 	SIGNAL_HANDLER
-	var/obj/item/storage/belt/sheath/used_sheath = blade_sheath_ref.resolve()
+	var/obj/item/storage/belt/sheath/used_sheath = target
 	if(!used_sheath || !length(used_sheath.contents))
 		return FAILED_BLOCK
 
