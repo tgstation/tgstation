@@ -258,6 +258,7 @@
 	custom_materials = null
 	grind_results = null
 	emp_damage_modifier = 0
+	abstract_type = /obj/item/stock_parts/power_store/cell/ethereal
 
 /obj/item/stock_parts/power_store/cell/ethereal/examine(mob/user)
 	. = ..()

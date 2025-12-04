@@ -188,7 +188,7 @@
 	name = "Inquisition Commander"
 
 	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
-	r_hand = /obj/item/nullrod/vibro/talking/chainsword
+	r_hand = /obj/item/nullrod/claymore/talking/chainsword
 	backpack_contents = null
 
 /datum/outfit/centcom/ert/security/inquisitor

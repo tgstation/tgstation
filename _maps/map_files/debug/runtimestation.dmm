@@ -159,7 +159,7 @@
 /obj/structure/table,
 /obj/item/weldingtool/experimental,
 /obj/item/inducer,
-/obj/item/storage/belt/utility/chief/full,
+/obj/item/storage/belt/utility/full/powertools,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -1797,7 +1797,7 @@
 /area/station/command/bridge)
 "BG" = (
 /obj/structure/table,
-/obj/item/ammo_box/c10mm,
+/obj/item/ammo_box/c9mm,
 /obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/iron,
 /area/station/command/bridge)

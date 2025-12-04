@@ -8,7 +8,7 @@
 	///Sound used when item sold/bought
 	var/sell_sound = 'sound/effects/cashregister.ogg'
 	///The currency name
-	var/currency_name = "credits"
+	var/currency_name = MONEY_NAME
 	///The initial products that the trader offers
 	var/list/initial_products = list(
 		/obj/item/food/burger/ghost = list(PAYCHECK_CREW * 4, INFINITY),

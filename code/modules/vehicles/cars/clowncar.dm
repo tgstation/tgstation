@@ -157,7 +157,7 @@
 			carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
 
 	hittarget_living.add_splatter_floor(small_drip = FALSE)
-	hittarget_living.adjustBruteLoss(200)
+	hittarget_living.adjust_brute_loss(200)
 	log_combat(src, hittarget_living, "rammed into", null, "injuring all passengers and killing the [hittarget_living]")
 	dump_mobs(TRUE)
 	playsound(src, 'sound/vehicles/car_crash.ogg', 100)

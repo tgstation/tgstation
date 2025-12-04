@@ -25,7 +25,7 @@
 		return modifier * damage_coeff[damage_type]
 	return modifier
 
-/mob/living/simple_animal/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/simple_animal/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(!can_adjust_brute_loss(amount, forced, required_bodytype))
 		return 0
 	if(forced)
@@ -33,7 +33,7 @@
 	else if(damage_coeff[BRUTE])
 		. = adjustHealth(amount * damage_coeff[BRUTE] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
-/mob/living/simple_animal/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/simple_animal/adjust_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(!can_adjust_fire_loss(amount, forced, required_bodytype))
 		return 0
 	if(forced)
@@ -41,7 +41,7 @@
 	else if(damage_coeff[BURN])
 		. = adjustHealth(amount * damage_coeff[BURN] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
-/mob/living/simple_animal/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype, required_respiration_type)
+/mob/living/simple_animal/adjust_oxy_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype, required_respiration_type)
 	if(!can_adjust_oxy_loss(amount, forced, required_biotype, required_respiration_type))
 		return 0
 	if(forced)
@@ -49,7 +49,7 @@
 	else if(damage_coeff[OXY])
 		. = adjustHealth(amount * damage_coeff[OXY] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
-/mob/living/simple_animal/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
+/mob/living/simple_animal/adjust_tox_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	if(!can_adjust_tox_loss(amount, forced, required_biotype))
 		return 0
 	if(forced)
@@ -57,7 +57,7 @@
 	else if(damage_coeff[TOX])
 		. = adjustHealth(amount * damage_coeff[TOX] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
-/mob/living/simple_animal/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
+/mob/living/simple_animal/adjust_stamina_loss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
 	if(!can_adjust_stamina_loss(amount, forced, required_biotype))
 		return 0
 	var/old_stamloss = staminaloss

@@ -60,10 +60,11 @@
 	desc = "These were once used by plague doctors. This hat will only slightly protect you from exposure to the Pestilence."
 	icon_state = "plaguedoctor"
 	armor_type = /datum/armor/bio_hood_plague
-	flags_inv = NONE
+	flags_inv = HIDEHAIR|HIDEEARS
 	clothing_flags = SNUG_FIT
 	flags_cover = NONE
 	dirt_state = null
+	alternate_worn_layer = HAIR_LAYER
 
 /datum/armor/bio_hood_plague
 	bio = 100
@@ -390,3 +391,4 @@
 	icon_state = "paper"
 	worn_icon_state = "paper"
 	dog_fashion = /datum/dog_fashion/head
+	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)
