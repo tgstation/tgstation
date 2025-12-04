@@ -333,7 +333,7 @@
 		), ARMOR_MAX_BLOCK)
 
 	var/final_force = CALCULATE_FORCE(attacking_item, attack_modifiers)
-	if(mob_biotypes & MOB_ROBOTIC)
+	if(mob_biotypes & (MOB_ROBOTIC|MOB_MINERAL))
 		final_force *= attacking_item.get_demolition_modifier(src)
 
 	var/wounding = attacking_item.wound_bonus
