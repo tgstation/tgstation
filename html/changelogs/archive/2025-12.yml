@@ -137,3 +137,39 @@
       report on the Github if unexpected behaviour occurs.
   uaioy:
   - bugfix: lavaland crash site ruin should properly be affected by ash storm now
+2025-12-04:
+  Aliceee2ch:
+  - bugfix: Fixes for MetaStation fire alarms.
+  - map: Removed one pair of firelocks in Brig cycling room - now it has fire sanity
+      marker instead. That should prevent trapping anyone without crowbar inside.
+  FalloutFalcon:
+  - bugfix: Cardboard crates are now made of cardboard
+  - bugfix: eyeless overlays with now display properly again
+  - rscadd: Added the medium sized cardboard boxes to random spawners
+  - qol: You can now craft the medium sized cardboard boxes
+  - rscadd: water and saltwater can be scooped from water turfs
+  - rscadd: mineral water (water with minor tox heal), scoop-able from hot-springs
+  - refactor: behavior for scooping reagents from plasma turfs has been made generic
+      and reusable
+  Hatterhat:
+  - bugfix: Non-virtual megafauna should no longer be dropping encrypted caches when
+      mulched with a crusher if their matching virtual domain was deployed.
+  - bugfix: Virtual megafauna no longer count as valid kills for achievement tracking.
+  Jacquerel:
+  - balance: The Captain's MODSuit pathfinder module now flies it directly to their
+      location rather than physically traversing the halls of the station.
+  LT3:
+  - qol: Silent jaws of recovery is now less obvious that it's modified
+  Melbert:
+  - qol: If you are within a disposal bin or chute, and drop an item, the item will
+      go into the bin, rather than onto the floor outside of the bin.
+  TealSeer:
+  - code_imp: ruin loading now logs placement coordinates
+  - bugfix: fixed molotov cocktails not lighting
+  Yobrocharlie:
+  - map: added the "heretic" gateway map (it has nothing related to heretics)
+  lelandkemble:
+  - rscadd: Added a modular SUIT, a deployable, one-piece three-piece suit. Purchasable
+      from the LawDrobe.
+  - balance: The MODsuit equipment techweb node has been split in two, with an offshoot
+      for civilian MODules.

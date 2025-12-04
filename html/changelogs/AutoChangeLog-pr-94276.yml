@@ -1,4 +1,0 @@
-author: "FalloutFalcon"
-delete-after: True
-changes:
-  - bugfix: "eyeless overlays with now display properly again"

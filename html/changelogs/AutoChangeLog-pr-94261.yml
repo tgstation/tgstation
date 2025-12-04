@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "The Captain's MODSuit pathfinder module now flies it directly to their location rather than physically traversing the halls of the station."
