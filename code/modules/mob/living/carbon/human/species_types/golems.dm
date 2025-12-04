@@ -69,7 +69,7 @@
 	human_who_gained_species.set_nutrition(NUTRITION_LEVEL_WELL_FED)
 
 	human_who_gained_species.physiology.stamina_mod *= 0.6
-	human_who_gained_species.physiology.stun_mod *= 0.5
+	human_who_gained_species.physiology.stun_mod *= 0.6
 	human_who_gained_species.physiology.knockdown_mod *= 1.2
 
 /datum/species/golem/on_species_loss(mob/living/carbon/human/human_who_lost_species, datum/species/new_species, pref_load)
@@ -81,7 +81,7 @@
 	UnregisterSignal(human_who_lost_species, COMSIG_ATOM_EXAMINE)
 
 	human_who_lost_species.physiology.stamina_mod /= 0.6
-	human_who_lost_species.physiology.stun_mod /= 0.5
+	human_who_lost_species.physiology.stun_mod /= 0.6
 	human_who_lost_species.physiology.knockdown_mod /= 1.2
 
 /datum/species/golem/spec_life(mob/living/carbon/human/source, seconds_per_tick, times_fired)
