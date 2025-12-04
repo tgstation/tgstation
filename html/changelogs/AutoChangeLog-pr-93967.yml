@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - refactor: "Refactored inventory code a little to be hopefully more robust. Report any possible new, quirky nit or outright problematic issue with it."
+  - bugfix: "Storing objects with slowdown in a backpack or belt (or any such storage) now properly updates your speed."
