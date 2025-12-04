@@ -141,7 +141,7 @@
 	manifest_text += "Contents: <br/>"
 	manifest_text += "<ul>"
 	var/container_contents = list() // Associative list with the format (item_name = nº of occurrences, ...)
-	for(var/obj/item/stuff in container.contents - manifest_paper)
+	for(var/atom/movable/stuff as anything in container.contents - manifest_paper)
 		if(isstack(stuff))
 			var/obj/item/stack/thing = stuff
 			container_contents[thing.singular_name] += thing.amount
