@@ -50,7 +50,7 @@
 		targeted = owner.loc
 		RegisterSignal(targeted, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
-	if (istype(parent, /obj/item/organ))
+	if (isorgan(parent))
 		RegisterSignal(parent, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_implanted))
 		RegisterSignal(parent, COMSIG_ORGAN_REMOVED, PROC_REF(on_removed))
 	else
