@@ -28,11 +28,11 @@
 	return ..()
 
 /datum/status_effect/grouped/blindness/source_added(source, ...)
-	update_blindness(source) // new: pass source to update
+	update_blindness(source)
 
 /datum/status_effect/grouped/blindness/source_removed(source, removing)
 	if (!removing)
-		update_blindness(source) // new: pass source to update
+		update_blindness(source)
 
 /datum/status_effect/grouped/blindness/proc/update_blindness(changed_source)
 	if (!CAN_BE_BLIND(owner)) // future proofing
@@ -40,18 +40,18 @@
 		return
 
 	if (!HAS_TRAIT(owner, TRAIT_SIGHT_BYPASS))
-		make_blind(changed_source) // new: pass source to make_blind
+		make_blind(changed_source)
 		return
 
 	for (var/blocker in blocking_sources)
 		if (owner.is_blind_from(blocker))
-			make_blind(changed_source) // new: pass source to make_blind
+			make_blind(changed_source)
 			return
 
 	make_unblind()
 
 /datum/status_effect/grouped/blindness/proc/make_blind(changed_source)
-	// new: have some extra logic to determine what overlay to use
+	// have some extra logic to determine what overlay to use
 	// by default we use the noflicker overlay
 	// but if our one and only source is from "temp blindness", use flicker overlay
 	var/overlay_to_use = /atom/movable/screen/fullscreen/blind/noflicker
