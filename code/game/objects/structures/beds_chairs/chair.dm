@@ -328,6 +328,19 @@
 	item_chair = /obj/item/chair/stool
 	max_integrity = 300
 
+/obj/structure/chair/stool/post_buckle_mob(mob/living/Mob)
+	var/z_offset = 0
+	if(dir & NORTH)
+		z_offset = 7
+	else
+		z_offset = 3
+
+	Mob.add_offsets(type, z_add = z_offset)
+	. = ..()
+
+/obj/structure/chair/stool/post_unbuckle_mob(mob/living/Mob)
+	Mob.remove_offsets(type)
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 
 /obj/structure/chair/stool/narsie_act()
