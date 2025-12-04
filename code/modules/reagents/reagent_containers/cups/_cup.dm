@@ -23,10 +23,13 @@
 	var/reagent_consumption_method = INGEST
 	///What sound does our consumption play on consuming from the container?
 	var/consumption_sound = 'sound/items/drink.ogg'
+	///Whether to allow heating up the contents with a source of flame.
+	var/heatable = TRUE
 
 /obj/item/reagent_containers/cup/Initialize(mapload, vol)
 	. = ..()
-	AddElement(/datum/element/reagents_item_heatable)
+	if(heatable)
+		AddElement(/datum/element/reagents_item_heatable)
 
 /obj/item/reagent_containers/cup/examine(mob/user)
 	. = ..()

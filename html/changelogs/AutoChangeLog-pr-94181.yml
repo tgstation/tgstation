@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - qol: "added mapping directional helper for warning, radiation & secure area sign allowing them to interact with fire/acid on their mounted turf"
-  - qol: "adds mapping helper to create diagonally shifted objects"

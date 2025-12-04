@@ -1,4 +1,0 @@
-author: "tontyGH"
-delete-after: True
-changes:
-  - refactor: "Handling relating to AI cores has been overhauled. Please make an issue report on the Github if unexpected behaviour occurs."

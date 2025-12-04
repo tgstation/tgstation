@@ -1,6 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "High frequency blades (both null rod and admin versions) are able to block melee attacks from mechs."
-  - balance: "High frequency blade null rods are now two-handed weapons."
-  - balance: "Mech melee attacks can be blocked or avoided by a few rare sources."
