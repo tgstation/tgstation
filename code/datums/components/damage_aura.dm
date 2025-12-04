@@ -97,11 +97,11 @@
 /// What effect the damage aura has if it has an owner.
 /datum/component/damage_aura/proc/owner_effect(mob/living/owner_mob, seconds_per_tick)
 	var/need_mob_update = FALSE
-	need_mob_update += owner_mob.adjustStaminaLoss(-20 * seconds_per_tick, updating_stamina = FALSE)
-	need_mob_update += owner_mob.adjustBruteLoss(-1 * seconds_per_tick, updating_health = FALSE)
-	need_mob_update += owner_mob.adjustFireLoss(-1 * seconds_per_tick, updating_health = FALSE)
-	need_mob_update += owner_mob.adjustToxLoss(-1 * seconds_per_tick, updating_health = FALSE, forced = TRUE)
-	need_mob_update += owner_mob.adjustOxyLoss(-1 * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += owner_mob.adjust_stamina_loss(-20 * seconds_per_tick, updating_stamina = FALSE)
+	need_mob_update += owner_mob.adjust_brute_loss(-1 * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += owner_mob.adjust_fire_loss(-1 * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += owner_mob.adjust_tox_loss(-1 * seconds_per_tick, updating_health = FALSE, forced = TRUE)
+	need_mob_update += owner_mob.adjust_oxy_loss(-1 * seconds_per_tick, updating_health = FALSE)
 
 	owner_mob.adjust_blood_volume(2 * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
 
@@ -135,16 +135,16 @@
 			to_chat(candidate, damage_message)
 
 		if (iscarbon(candidate) || issilicon(candidate) || isbasicmob(candidate))
-			candidate.adjustBruteLoss(brute_damage * seconds_per_tick, updating_health = FALSE)
-			candidate.adjustFireLoss(burn_damage * seconds_per_tick, updating_health = FALSE)
+			candidate.adjust_brute_loss(brute_damage * seconds_per_tick, updating_health = FALSE)
+			candidate.adjust_fire_loss(burn_damage * seconds_per_tick, updating_health = FALSE)
 
 		if (iscarbon(candidate))
-			candidate.adjustToxLoss(toxin_damage * seconds_per_tick, updating_health = FALSE)
-			candidate.adjustOxyLoss(suffocation_damage * seconds_per_tick, updating_health = FALSE)
-			candidate.adjustStaminaLoss(stamina_damage * seconds_per_tick, updating_stamina = FALSE)
+			candidate.adjust_tox_loss(toxin_damage * seconds_per_tick, updating_health = FALSE)
+			candidate.adjust_oxy_loss(suffocation_damage * seconds_per_tick, updating_health = FALSE)
+			candidate.adjust_stamina_loss(stamina_damage * seconds_per_tick, updating_stamina = FALSE)
 
 			for (var/organ in organ_damage)
-				candidate.adjustOrganLoss(organ, organ_damage[organ] * seconds_per_tick)
+				candidate.adjust_organ_loss(organ, organ_damage[organ] * seconds_per_tick)
 		else if (isanimal(candidate))
 			var/mob/living/simple_animal/animal_candidate = candidate
 			animal_candidate.adjustHealth(simple_damage * seconds_per_tick, updating_health = FALSE)

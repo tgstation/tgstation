@@ -159,7 +159,7 @@
 /obj/structure/table,
 /obj/item/weldingtool/experimental,
 /obj/item/inducer,
-/obj/item/storage/belt/utility/chief/full,
+/obj/item/storage/belt/utility/full/powertools,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron,

@@ -815,6 +815,7 @@
 	base_icon_state = "frame"
 	anchored = FALSE
 	density = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3)
 	var/constructionStep = CONSTRUCTION_NO_CIRCUIT
 	var/reinforced = 0
 	/// Is this a border_only firelock? Used in several checks during construction
@@ -951,7 +952,7 @@
 	return FALSE
 
 /obj/structure/firelock_frame/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data["[RCD_DESIGN_MODE]"])
+	switch(rcd_data[RCD_DESIGN_MODE])
 		if(RCD_UPGRADE_SIMPLE_CIRCUITS)
 			user.balloon_alert(user, "circuit installed")
 			constructionStep = CONSTRUCTION_PANEL_OPEN
@@ -971,6 +972,7 @@
 	flags_1 = ON_BORDER_1
 	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
 	directional = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/firelock_frame/border_only/Initialize(mapload)
 	. = ..()

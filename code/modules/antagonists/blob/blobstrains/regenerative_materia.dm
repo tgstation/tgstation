@@ -28,7 +28,7 @@
 
 /datum/reagent/blob/regenerative_materia/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
 	. = ..()
-	if(metabolizer.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE))
+	if(metabolizer.adjust_tox_loss(1 * REM * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/blob/regenerative_materia/on_mob_metabolize(mob/living/metabolizer)

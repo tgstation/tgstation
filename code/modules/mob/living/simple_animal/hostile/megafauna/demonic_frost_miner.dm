@@ -158,7 +158,7 @@ Difficulty: Extremely Hard
 	adjustHealth(-maxHealth)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/ex_act(severity, target)
-	adjustBruteLoss(-30 * severity)
+	adjust_brute_loss(-30 * severity)
 	visible_message(span_danger("[src] absorbs the explosion!"), span_userdanger("You absorb the explosion!"))
 	return TRUE
 

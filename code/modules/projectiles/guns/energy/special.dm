@@ -9,6 +9,8 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 3, /datum/material/uranium = SHEET_MATERIAL_AMOUNT)
+	light_color = LIGHT_COLOR_BLUE
 
 /obj/item/gun/energy/ionrifle/Initialize(mapload)
 	. = ..()
@@ -322,6 +324,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
 	cell_type = /obj/item/stock_parts/power_store/cell/high
 	pin = null
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/gun/energy/temperature/security
 	name = "security temperature gun"
@@ -388,6 +391,7 @@ it is often confused with the mech weapon of the same name, since it is a bit mo
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	///if our stpck is extended and we are ready to fire.
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 5)
 	var/ready_to_fire = FALSE
 
 /obj/item/gun/energy/tesla_cannon/Initialize(mapload)
@@ -502,6 +506,7 @@ it is often confused with the mech weapon of the same name, since it is a bit mo
 	light_system = OVERLAY_LIGHT
 	light_power = 2
 	light_range = 1
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 7, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/gun/energy/photon/Initialize(mapload)
 	. = ..()

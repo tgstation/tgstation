@@ -101,7 +101,7 @@
 
 	if(!is_bone_limb && SPT_PROB(severity * 1.5, seconds_per_tick))
 		victim.take_bodypart_damage(rand(1, severity * 2), wound_bonus=CANT_WOUND)
-		victim.adjustStaminaLoss(rand(2, severity * 2.5))
+		victim.adjust_stamina_loss(rand(2, severity * 2.5))
 		if(prob(33))
 			to_chat(victim, span_danger("You feel a sharp pain in your body as your bones are reforming!"))
 
