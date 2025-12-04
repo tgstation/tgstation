@@ -113,6 +113,8 @@ GLOBAL_VAR(department_cd_override)
 		return FALSE
 	if(to_check.goody)
 		return FALSE
+	if(to_check.hidden_dept_orders)
+		return FALSE
 	return TRUE
 
 /// Looks through all possible departments and finds one this ID card "corresponds" to.
