@@ -114,16 +114,9 @@
 		if(!ispath(path))
 			continue
 		var/obj/item/mod_part = new path(mod)
-		if(isclothing(mod_part))
-			var/obj/item/clothing/clothing_part = mod_part
-			switch(mod_part.slot_flags)
-				if(ITEM_SLOT_OCLOTHING)
-					clothing_part.allowed |= allowed_suit_storage
-				if(ITEM_SLOT_HEAD)
-					if(hearing_protection && istype(clothing_part, /obj/item/clothing/head/mod))
-						var/obj/item/clothing/head/mod/mod_clothing_part = mod_part
-						// This doesn't give us hearing protection, it just tells the helmet to remember that for when it gets activated
-						mod_clothing_part.hearing_protection = hearing_protection
+		if(isclothing(mod_part) && mod_part.slot_flags == ITEM_SLOT_OCLOTHING)
+			var/obj/item/clothing/chestplate = mod_part
+			chestplate.allowed |= allowed_suit_storage
 		var/datum/mod_part/part_datum = new()
 		part_datum.set_item(mod_part)
 		mod.mod_parts["[mod_part.slot_flags]"] = part_datum

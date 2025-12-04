@@ -9,8 +9,6 @@
 	body_parts_covered = HEAD
 	heat_protection = HEAD
 	cold_protection = HEAD
-	// Whether or not the helmet has hearing protection. This has to go here and not get added as a component because the hearing protection goes away when it's unsealed.
-	var/hearing_protection
 
 // Even without a hat stabilizer, hats can be worn - however, they'll fall off very easily
 /obj/item/clothing/head/mod/Initialize(mapload)
