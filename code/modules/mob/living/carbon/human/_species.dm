@@ -1674,6 +1674,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_DESC = "[plural_form] are resilient to being shocked.",
 		))
 
+	if(inherent_biotypes & (MOB_ROBOTIC|MOB_MINERAL))
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = FA_ICON_HAMMER,
+			SPECIES_PERK_NAME = "Tough Frame",
+			SPECIES_PERK_DESC = "[plural_form] are more resistant to slashing and stabbing, but more vulnerable to impacts.",
+		))
+
 	return to_add
 
 /**
