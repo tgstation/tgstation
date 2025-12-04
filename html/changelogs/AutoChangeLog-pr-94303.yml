@@ -1,0 +1,4 @@
+author: "SomeRandomOwl"
+delete-after: True
+changes:
+  - bugfix: "The forked lizard tongue no longer makes you slur your S's if its in your hands or pockets."
