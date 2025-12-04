@@ -8,9 +8,9 @@
 	pass_flags = parent_type::pass_flags | PASSTABLE
 	layer = BELOW_MOB_LAYER
 	anchored = FALSE
-	health = 100
+	health = 20
 	can_be_held = TRUE
-	maxHealth = 100
+	maxHealth = 20
 	path_image_color = "#80dae7"
 	bot_ui = "RepairBot"
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_ENGINEERING)
@@ -85,7 +85,7 @@
 		/datum/action/repairbot_resources = null,
 	)
 	grant_actions_by_list(abilities)
-	add_traits(list(TRAIT_NEGATES_GRAVITY, TRAIT_MOB_MERGE_STACKS, TRAIT_FIREDOOR_OPENER), INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_NEGATES_GRAVITY, TRAIT_MOB_MERGE_STACKS, TRAIT_FIREDOOR_OPENER), INNATE_TRAIT)
 	our_welder = new(src)
 	our_welder.switched_on(src)
 	our_crowbar = new(src)
