@@ -1562,13 +1562,6 @@
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/equipment_speedmod)
 
-///Get all items in our possession that should affect our movespeed
-/mob/proc/get_equipped_speed_mod_items()
-	. = list()
-	for(var/obj/item/thing in held_items)
-		if(thing.item_flags & SLOWS_WHILE_IN_HAND)
-			. += thing
-
 /mob/proc/set_stat(new_stat)
 	if(new_stat == stat)
 		return
