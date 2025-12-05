@@ -405,12 +405,8 @@
 		render_list += "<span class='[cached_blood_volume < BLOOD_VOLUME_SAFE ? "alert" : "info"] ml-1'>[blood_type.get_blood_name()] level: [level_format],</span> <span class='info'>[blood_type_format]</span><br>"
 
 	var/blood_alcohol_content = target.get_blood_alcohol_content()
-	if(blood_alcohol_content > 0)
-		if(blood_alcohol_content >= 0.24)
-			// "Oil alcohol content" is kinda funny if you think about it from a technical standpoint
-			render_list += "<span class='alert ml-1'>[blood_type?.get_blood_name() || "Blood"] alcohol content: <b>CRITICAL [blood_alcohol_content]%</b></span><br>"
-		else
-			render_list += "<span class='info ml-1'>[blood_type?.get_blood_name() || "Blood"] alcohol content: [blood_alcohol_content]%</span><br>"
+	if(blood_alcohol_content > 0) // "Oil alcohol content" is kinda funny if you think about it from a technical standpoint
+		render_list += "<span class='alert ml-1'>[blood_type?.get_blood_name() || "Blood"] alcohol content: [blood_alcohol_content >= 0.24 ? "<b>CRITICAL [blood_alcohol_content]%</b>" : "[blood_alcohol_content]%"]</span><br>"
 
 	//Diseases
 	var/disease_hr = FALSE
