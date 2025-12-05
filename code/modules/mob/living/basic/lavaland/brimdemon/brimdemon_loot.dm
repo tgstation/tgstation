@@ -17,6 +17,7 @@
 	icon_state = "oresensor"
 	icon = 'icons/obj/mining.dmi'
 	slot_flags = ITEM_SLOT_EARS
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT)
 	var/range = 5
 	var/cooldown = 4 SECONDS //between the standard and the advanced ore scanner in strength
 	COOLDOWN_DECLARE(ore_sensing_cooldown)

@@ -74,6 +74,9 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
+/obj/machinery/disposal/AllowDrop()
+	return TRUE
+
 /// Checks if there a connecting trunk diposal pipe under the disposal
 /obj/machinery/disposal/proc/trunk_check()
 	var/obj/structure/disposalpipe/trunk/found_trunk = locate() in loc

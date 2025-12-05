@@ -225,7 +225,7 @@
 	///What dye registry should be looked at when dying this item; see washing_machine.dm
 	var/dying_key
 
-	///Grinder var:A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
+	/// A lazy reagent list containing the reagents this item produces when ground up in a grinder
 	var/list/grind_results
 	///A reagent the nutriments are converted into when the item is juiced.
 	var/datum/reagent/consumable/juice_typepath
@@ -1062,7 +1062,7 @@
 	PROTECTED_PROC(TRUE)
 
 	. = FALSE
-	if(length(grind_results))
+	if(LAZYLEN(grind_results))
 		target_holder.add_reagent_list(grind_results)
 		. = TRUE
 	if(reagents?.trans_to(target_holder, reagents.total_volume, transferred_by = user))

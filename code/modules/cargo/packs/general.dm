@@ -113,7 +113,7 @@
 					/obj/item/folder/red,
 					/obj/item/folder/yellow,
 					/obj/item/clipboard = 2,
-					/obj/item/stamp,
+					/obj/item/stamp/granted,
 					/obj/item/stamp/denied,
 					/obj/item/laser_pointer/purple,
 				)

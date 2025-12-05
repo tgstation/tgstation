@@ -190,7 +190,7 @@
 	dir = 4
 	},
 /obj/structure/table/wood/fancy/orange,
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = 7;
 	pixel_y = 9
 	},
@@ -3655,9 +3655,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "bme" = (
-/obj/structure/sign/warning,
-/turf/closed/wall/r_wall,
-/area/station/security/armory)
+/obj/structure/sign/warning/directional/east,
+/turf/closed/mineral/random/stationside/asteroid/porus{
+	mineralChance = 20
+	},
+/area/station/asteroid)
 "bmf" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 1
@@ -4875,6 +4877,11 @@
 /obj/item/paper,
 /obj/item/pen,
 /obj/effect/turf_decal/stripes/box,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Hydroponics Shutters";
+	id = "hydroponics_shutters";
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "bHc" = (
@@ -4924,7 +4931,7 @@
 /area/station/maintenance/department/cargo)
 "bIe" = (
 /obj/structure/table,
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -9473,6 +9480,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
+"dra" = (
+/obj/structure/sign/warning/directional/west,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 "drb" = (
 /obj/machinery/newscaster/directional/west,
 /obj/machinery/vending/wardrobe/curator_wardrobe,
@@ -10353,6 +10364,12 @@
 /obj/structure/cable,
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/captain/private)
+"dGk" = (
+/obj/structure/sign/warning/directional/south,
+/turf/closed/mineral/random/stationside/asteroid/porus{
+	mineralChance = 20
+	},
+/area/station/asteroid)
 "dGq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -13748,6 +13765,10 @@
 /area/station/command/heads_quarters/cmo)
 "eOY" = (
 /obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Hydroponics Shutters";
+	id = "hydroponics_shutters"
+	},
 /turf/open/floor/plating,
 /area/station/service/hydroponics)
 "eOZ" = (
@@ -17642,6 +17663,10 @@
 	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
 	name = "HoochMaster Deluxe"
 	},
+/obj/machinery/button/door/directional/west{
+	name = "Bar shuttters";
+	id = "bar_shutters"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "ghU" = (
@@ -19889,6 +19914,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/button/door/directional/north{
+	name = "Hydroponics shutters";
+	id = "hydroponics_shutters"
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "gUv" = (
@@ -23690,7 +23719,7 @@
 	pixel_x = 3;
 	pixel_y = 12
 	},
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = -6;
 	pixel_y = 4
 	},
@@ -25484,6 +25513,10 @@
 /area/station/commons/fitness/recreation)
 "iRL" = (
 /obj/structure/sink/kitchen/directional/east,
+/obj/machinery/button/door/directional/west{
+	id = "kitchen_counter";
+	name = "Kitchen Shutters"
+	},
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "iRR" = (
@@ -26419,6 +26452,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "bar_shutters";
+	name = "Bar Shutters"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "jkG" = (
@@ -27144,6 +27182,11 @@
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
 	dir = 5
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "bar_shutters";
+	name = "Bar Shutters"
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
@@ -29230,6 +29273,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Hydroponics Shutters";
+	id = "hydroponics_shutters"
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "ked" = (
@@ -32004,6 +32051,11 @@
 	},
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "bar_shutters";
+	name = "Bar Shutters"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "kYZ" = (
@@ -32072,6 +32124,10 @@
 	req_access = list("hydroponics")
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Hydroponics Shutters";
+	id = "hydroponics_shutters"
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "lac" = (
@@ -38819,6 +38875,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/structure/sign/warning/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/security/armory)
 "npw" = (
@@ -39022,6 +39079,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
+"nuH" = (
+/obj/structure/sign/warning/directional/west,
+/turf/closed/mineral/random/stationside/asteroid/porus{
+	mineralChance = 20
+	},
+/area/station/asteroid)
 "nuM" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Courtroom"
@@ -41335,6 +41398,11 @@
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "bar_shutters";
+	name = "Bar Shutters"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "oqj" = (
@@ -43576,6 +43644,11 @@
 /area/station/engineering/main)
 "pco" = (
 /obj/machinery/biogenerator,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Hydroponics Shutters";
+	id = "hydroponics_shutters";
+	dir = 8
+	},
 /turf/closed/wall,
 /area/station/service/hydroponics)
 "pcN" = (
@@ -46817,7 +46890,7 @@
 	pixel_x = 4;
 	pixel_y = -2
 	},
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = 5;
 	pixel_y = 12
 	},
@@ -56123,6 +56196,10 @@
 	},
 /obj/structure/desk_bell,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Hydroponics Shutters";
+	id = "hydroponics_shutters"
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "tla" = (
@@ -58342,8 +58419,10 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "tXg" = (
-/obj/structure/sign/warning,
-/turf/closed/wall/rock/porous,
+/obj/structure/sign/warning/directional/north,
+/turf/closed/mineral/random/stationside/asteroid/porus{
+	mineralChance = 20
+	},
 /area/station/asteroid)
 "tXi" = (
 /obj/machinery/duct,
@@ -59769,6 +59848,11 @@
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/spawner/random/entertainment/lighter,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "bar_shutters";
+	name = "Bar Shutters"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "uwx" = (
@@ -62772,6 +62856,11 @@
 /area/station/command/corporate_showroom)
 "vCL" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Hydroponics Shutters";
+	id = "hydroponics_shutters";
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/service/hydroponics)
 "vCQ" = (
@@ -65650,12 +65739,10 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/food/grown/banana,
 /obj/structure/sign/warning/biohazard/directional/south,
-/obj/structure/sign/warning{
-	pixel_x = 32
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/structure/sign/warning/directional/east,
 /turf/open/misc/grass,
 /area/station/cargo/boutique)
 "wCj" = (
@@ -153727,7 +153814,7 @@ mIW
 mIW
 mIW
 hED
-bme
+hED
 hnJ
 hED
 hED
@@ -155587,8 +155674,8 @@ vxX
 vxX
 vxX
 vxX
-vxX
-tXg
+dGk
+unk
 hhX
 hhX
 hhX
@@ -156108,8 +156195,8 @@ hhX
 hhX
 hhX
 hhX
+unk
 tXg
-vxX
 vxX
 vxX
 vxX
@@ -156875,9 +156962,9 @@ vxX
 vxX
 unk
 unk
-tXg
+unk
 vxX
-tXg
+unk
 unk
 unk
 vxX
@@ -157132,13 +157219,13 @@ azk
 azk
 azk
 unk
-gMk
+dra
+vxX
+nuH
 vxX
 vxX
 vxX
-vxX
-vxX
-vxX
+bme
 vxX
 hhX
 hhX
@@ -157395,7 +157482,7 @@ uet
 vxX
 gMk
 mGM
-tXg
+unk
 unk
 hhX
 hhX

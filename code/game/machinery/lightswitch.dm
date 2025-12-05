@@ -23,9 +23,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 
 	AddComponent(/datum/component/redirect_attack_hand_from_turf)
 
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/light_switch,
-	))
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/light_switch), only_root_path = TRUE))
 	if(istext(area))
 		area = text2path(area)
 	if(ispath(area))

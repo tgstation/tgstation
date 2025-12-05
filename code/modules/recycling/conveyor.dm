@@ -440,9 +440,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	update_appearance()
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 	set_wires(new /datum/wires/conveyor(src))
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/conveyor_switch,
-	))
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/conveyor_switch), only_root_path = TRUE))
 	register_context()
 
 /obj/machinery/conveyor_switch/Destroy()
