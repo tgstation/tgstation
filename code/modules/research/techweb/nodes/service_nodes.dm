@@ -33,6 +33,7 @@
 		"normtrash",
 		"wirebrush",
 		"flashlight",
+		"flare",
 		"water_balloon",
 		"ticket_machine",
 		"radio_entertainment",

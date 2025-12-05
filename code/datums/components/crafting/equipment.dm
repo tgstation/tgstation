@@ -166,17 +166,6 @@
 	. = ..()
 	blacklist += typesof(/obj/item/flashlight/flare)
 
-/datum/crafting_recipe/flare
-	name = "Flare"
-	reqs = list(
-		/datum/reagent/saltpetre = 5,
-		/datum/reagent/aluminium = 5,
-		/obj/item/stack/sheet/plastic = 1,
-	)
-	result = /obj/item/flashlight/flare
-	category = CAT_EQUIPMENT
-	time = 1 SECONDS
-
 /datum/crafting_recipe/extendohand_r
 	name = "Extendo-Hand (Right Arm)"
 	reqs = list(
