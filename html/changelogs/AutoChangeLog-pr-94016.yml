@@ -1,0 +1,10 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "[Catwalk] Entirely new Dorms & Holodeck"
+  - rscadd: "[Catwalk] Modified Atmos, Gravity Generator, Engineering and Tech Storage a fair bit"
+  - rscadd: "[Catwalk] Event locations were updated, meaning several random events now trigger in more appropriate places"
+  - rscdel: "[Catwalk] Removed duplicate First Aid stations in a few places"
+  - qol: "[Catwalk] Changed around maint areas (not the actual layouts but the area designations) to be a bit less monolithic"
+  - bugfix: "[Catwalk] Xenobio kill room uses a passive vent"
+  - bugfix: "[Catwalk] Fixes a few erroneous space tiles around sec"
