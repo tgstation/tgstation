@@ -181,7 +181,7 @@
 	for(var/mob/living/nearby in viewers(src))
 		if(nearby.stat >= UNCONSCIOUS || nearby.is_blind())
 			continue
-		nearby.add_conditional_mood_event("saw_death", /datum/mood_event/conditional/see_death, src, dusted, gibbed)
+		nearby.add_mood_event("saw_death", /datum/mood_event/conditional/see_death, src, dusted, gibbed)
 
 /mob/living/silicon/send_death_moodlets(dusted = FALSE, gibbed = FALSE)
 	return // You are a machine (Future todo, roboticists feel sad though)

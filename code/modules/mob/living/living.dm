@@ -2726,13 +2726,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/add_mood_event(category, type, ...)
 	if(QDELETED(mob_mood))
 		return
-	mob_mood.add_mood_event(arglist(args))
 
-/// Adds a conditional mood event to the mob
-/mob/living/proc/add_conditional_mood_event(category, type, ...)
-	if(QDELETED(mob_mood))
-		return
-	mob_mood.add_conditional_mood_event(arglist(args))
+	if(ispath(type, /datum/mood_event/conditional))
+		mob_mood.add_conditional_mood_event(arglist(args))
+	else
+		mob_mood.add_mood_event(arglist(args))
 
 /// Clears a mood event from the mob
 /mob/living/proc/clear_mood_event(category)
