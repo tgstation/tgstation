@@ -102,7 +102,6 @@
 /datum/crafting_recipe/lamp/green
 	name = "Green Desk Lamp"
 	result = /obj/item/flashlight/lamp/green
-	time = 1 SECONDS
 
 /datum/crafting_recipe/banana_lamp
 	name = "Banana Lamp"
