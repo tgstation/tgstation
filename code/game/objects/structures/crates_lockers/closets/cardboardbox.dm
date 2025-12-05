@@ -8,8 +8,8 @@
 	integrity_failure = 0
 	can_weld_shut = 0
 	cutting_tool = /obj/item/wirecutters
-	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 	material_drop = /obj/item/stack/sheet/cardboard
+	material_drop_amount = 4
 	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT * 4)
 	delivery_icon = "deliverybox"
 	anchorable = FALSE
