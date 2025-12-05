@@ -87091,11 +87091,6 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/engineering/storage)
-"xyP" = (
-/obj/structure/sign/clock/directional/east,
-/obj/effect/spawner/random/engineering/atmospherics_portable,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/fore/upper)
 "xyR" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/chair{
@@ -195124,7 +195119,7 @@ tzn
 dCP
 khf
 uMK
-xyP
+hzK
 uRm
 vUY
 spv
