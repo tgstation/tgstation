@@ -445,7 +445,7 @@
 		if(!custom_materials)
 			return "null"
 		mats_list = custom_materials
-	var/text = "\[list("
+	var/text = "list("
 	var/index = 1
 	var/mats_len = length(mats_list)
 	for(var/datum/material/mat as anything in mats_list)
@@ -464,7 +464,7 @@
 		if(index < mats_len)
 			text += ", "
 		index++
-	text += ")\]"
+	text += ")"
 	return text
 
 /// Convert a raw material amount into
