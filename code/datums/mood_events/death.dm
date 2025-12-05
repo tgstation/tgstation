@@ -4,6 +4,8 @@
 
 /datum/mood_event/conditional/see_death/add_effects(mob/dead_mob, dusted, gibbed)
 	if(isnull(dead_mob))
+		description = "I just saw... no one die? That's odd, almost like a glitch in reality."
+		mood_change = 0
 		return
 
 	update_effect(dead_mob)
@@ -29,6 +31,7 @@
 
 		description = replacetext(default_message, "%DEAD_MOB%", get_descriptor(dead_mob))
 
+	// lots of replacements and bespoke handling, just make sure we're capitalized by the end
 	description = capitalize(description)
 
 /// Blank proc which allows conditional effects to modify mood, timeout, or description before the main effect is applied
@@ -84,7 +87,7 @@
 /datum/mood_event/conditional/see_death/cult/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
 	if(!HAS_TRAIT(who, TRAIT_CULT_HALO))
 		return FALSE
-	if(!isnull(dead_mob) || HAS_TRAIT(dead_mob, TRAIT_CULT_HALO))
+	if(HAS_TRAIT(dead_mob, TRAIT_CULT_HALO))
 		return FALSE
 	return TRUE
 
@@ -94,10 +97,10 @@
 	mood_change = parent_type::mood_change * -0.5
 
 /datum/mood_event/conditional/see_death/revolutionary/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
-	return IS_REVOLUTIONARY(who) && (dead_mob?.mind?.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
+	return IS_REVOLUTIONARY(who) && (dead_mob.mind?.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 
 /datum/mood_event/conditional/see_death/revolutionary/update_effect(mob/dead_mob)
-	var/datum/job/possible_head_job = dead_mob?.mind?.assigned_role
+	var/datum/job/possible_head_job = dead_mob.mind?.assigned_role
 	description = "[possible_head_job.title ? "The [LOWER_TEXT(possible_head_job.title)]" : "Another head of staff"] is dead! Long live the revolution!"
 
 /// Then gamers
