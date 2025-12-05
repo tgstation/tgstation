@@ -367,7 +367,7 @@ Diagnostic HUDs!
 
 //Borgie battery tracking!
 /mob/living/silicon/robot/proc/diag_hud_set_borgcell()
-	if(QDELETED(cell) || !cell.maxcharge)
+	if(QDELETED(cell) || (cell.maxcharge == 0))
 		set_hud_image_state(DIAG_BATT_HUD, "hudnobatt")
 	else
 		var/chargelvl = (cell.charge/cell.maxcharge)
@@ -400,7 +400,7 @@ Diagnostic HUDs!
 	set_hud_image_state(DIAG_MECH_HUD, "huddiag[RoundDiagBar(atom_integrity/max_integrity)]")
 
 /obj/vehicle/sealed/mecha/proc/diag_hud_set_mechcell()
-	if(QDELETED(cell) || !cell.maxcharge)
+	if(QDELETED(cell) || (cell.maxcharge == 0))
 		set_hud_image_state(DIAG_BATT_HUD, "hudnobatt")
 	else
 		var/chargelvl = cell.charge/cell.maxcharge
@@ -471,7 +471,7 @@ Diagnostic HUDs!
 			set_hud_image_state(DIAG_BOT_HUD, "")
 
 /mob/living/simple_animal/bot/mulebot/proc/diag_hud_set_mulebotcell()
-	if(QDELETED(cell) || !cell.maxcharge)
+	if(QDELETED(cell) || (cell.maxcharge == 0))
 		set_hud_image_state(DIAG_BATT_HUD, "hudnobatt")
 	else
 		var/chargelvl = (cell.charge/cell.maxcharge)
