@@ -75,14 +75,6 @@
 		playsound(src.loc, meteorsound, 40, TRUE)
 		get_hit()
 
-/obj/effect/meteor/examine(mob/user)
-	. = ..()
-	if(!isliving(user))
-		return
-	var/mob/living/livinguser = user
-	if((livinguser.mind && livinguser.mind.get_skill_level(/datum/skill/athletics) >= SKILL_LEVEL_LEGENDARY))
-		. += span_notice("On second thought, it doesn't look too tough.")
-
 /obj/effect/meteor/proc/chase_target(atom/chasing, delay, home)
 	if(!isatom(chasing))
 		return
@@ -125,6 +117,8 @@
 /obj/effect/meteor/examine(mob/user)
 	. = ..()
 
+	if((user.mind && user.mind.get_skill_level(/datum/skill/athletics) >= SKILL_LEVEL_LEGENDARY))
+		. += span_notice("On second thought, it doesn't look too tough.")
 	check_examine_award(user)
 
 /obj/effect/meteor/attack_hand(mob/user, list/modifiers)
