@@ -17,7 +17,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
+	custom_materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2,
+	)
 	actions_types = list(/datum/action/item_action/toggle_light)
 	action_slots = ALL
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
@@ -415,7 +418,6 @@
 	custom_materials = null
 	start_on = TRUE
 	has_closed_handle = FALSE
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 // green-shaded desk lamp
 /obj/item/flashlight/lamp/green
@@ -423,7 +425,6 @@
 	icon_state = "lampgreen"
 	inhand_icon_state = "lampgreen"
 	light_color = LIGHT_COLOR_TUNGSTEN
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 //Bananalamp
 /obj/item/flashlight/lamp/bananalamp
@@ -717,6 +718,7 @@
 	slot_flags = null
 	trash_type = /obj/effect/decal/cleanable/ash
 	can_be_extinguished = TRUE
+	custom_materials = list(/datum/material/wood = SMALL_MATERIAL_AMOUNT*0.5)
 
 /obj/item/flashlight/flare/torch/on
 	start_on = TRUE
@@ -728,6 +730,7 @@
 	fuel = INFINITY
 	randomize_fuel = FALSE
 	start_on = TRUE
+	custom_materials = null
 
 /obj/item/flashlight/flare/torch/red
 	color = "#ff0000"
@@ -862,6 +865,7 @@
 	toggle_context = FALSE
 	ignore_base_color = TRUE
 	has_closed_handle = FALSE
+	custom_materials = null
 	/// How much max fuel we have
 	var/max_fuel = 0
 	/// How much oxygen gets added upon cracking the stick. Doesn't actually produce a reaction with the fluid but it does allow for bootleg chemical "grenades"
