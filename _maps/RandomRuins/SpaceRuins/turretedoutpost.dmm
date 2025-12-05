@@ -195,7 +195,7 @@
 /obj/structure/lattice,
 /obj/structure/girder,
 /turf/open/floor/plating/rust/airless,
-/area/template_noop)
+/area/space/nearstation)
 "my" = (
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 8
@@ -307,7 +307,7 @@
 "rK" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "sb" = (
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/turretedoutpost)

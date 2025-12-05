@@ -147,7 +147,7 @@
 		qdel(victim.get_organ_slot(ORGAN_SLOT_LUNGS))
 		qdel(victim.get_organ_slot(ORGAN_SLOT_HEART))
 		qdel(victim.get_organ_slot(ORGAN_SLOT_LIVER))
-	victim.adjustBruteLoss(500)
+	victim.adjust_brute_loss(500)
 	victim.death() //make sure they die
 	victim.apply_status_effect(/datum/status_effect/gutted)
 	LoseTarget()
@@ -170,13 +170,13 @@
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
-			adjustBruteLoss(250)
+			adjust_brute_loss(250)
 
 		if (EXPLODE_HEAVY)
-			adjustBruteLoss(100)
+			adjust_brute_loss(100)
 
 		if (EXPLODE_LIGHT)
-			adjustBruteLoss(50)
+			adjust_brute_loss(50)
 
 	return TRUE
 

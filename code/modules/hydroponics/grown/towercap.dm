@@ -137,6 +137,7 @@
 	density = FALSE
 	anchored = TRUE
 	buckle_lying = 90
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 5)
 	/// Overlay we apply when impaling a mob.
 	var/mutable_appearance/stab_overlay
 

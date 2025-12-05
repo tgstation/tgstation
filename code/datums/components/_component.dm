@@ -457,6 +457,9 @@
 			var/c_type = target.type
 			qdel(target)
 			CRASH("Incompatible [c_type] transfer attempt to a [type]!")
+		if(COMPONENT_NOTRANSFER)
+			qdel(target)
+			return
 
 	AddComponent(target)
 	if(!QDELETED(target))
