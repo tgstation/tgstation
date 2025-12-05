@@ -84,7 +84,7 @@
 /datum/mood_event/conditional/see_death/cult/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
 	if(!HAS_TRAIT(who, TRAIT_CULT_HALO))
 		return FALSE
-	if(isnull(dead_mob) || HAS_TRAIT(dead_mob, TRAIT_CULT_HALO))
+	if(!isnull(dead_mob) || HAS_TRAIT(dead_mob, TRAIT_CULT_HALO))
 		return FALSE
 	return TRUE
 
@@ -94,7 +94,7 @@
 	mood_change = parent_type::mood_change * -0.5
 
 /datum/mood_event/conditional/see_death/revolutionary/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
-	return IS_REVOLUTIONARY(who) && (dead_mob.mind?.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
+	return IS_REVOLUTIONARY(who) && (dead_mob?.mind?.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 
 /datum/mood_event/conditional/see_death/revolutionary/update_effect(mob/dead_mob)
 	var/datum/job/possible_head_job = dead_mob?.mind?.assigned_role
