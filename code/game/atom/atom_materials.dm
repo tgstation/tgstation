@@ -454,13 +454,13 @@
 			var/amount = sheets_from_value(mats_list[mat])
 			switch(amount)
 				if(0 to 0.49)
-					amount_string = "SMALL_MATERIAL_AMOUNT * [amount * 10]"
+					amount_string = "SMALL_MATERIAL_AMOUNT * " + num2text(amount * 10)
 				if(0.5)
 					amount_string = "HALF_SHEET_MATERIAL_AMOUNT"
 				if(1)
 					amount_string = "SHEET_MATERIAL_AMOUNT"
 				else
-					amount_string = "SHEET_MATERIAL_AMOUNT * [amount]"
+					amount_string = "SHEET_MATERIAL_AMOUNT * " + num2text(amount)
 		else
 			amount_string = "[mats_list[mat]]"
 		text += "[mat.type] = " + amount_string
