@@ -7,7 +7,6 @@
 	lose_text = span_danger("You think you might stay home today.")
 	icon = FA_ICON_HOUSE
 	value = 4
-	mob_trait = TRAIT_SETTLER
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	medical_record_text = "Patient has been exposed to planetary conditions for extended periods, resulting in an excessively stout build."
 	mail_goodies = list(
