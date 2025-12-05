@@ -149,7 +149,7 @@
 	if(internal_cell)
 		internal_cell = new internal_cell(src)
 
-	AddElement(/datum/element/drag_activate)
+	AddElement(/datum/element/drag_to_activate)
 	install_default_programs()
 	register_context()
 	update_appearance()

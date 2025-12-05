@@ -20,4 +20,4 @@
 
 /obj/item/sensor_device/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/drag_activate)
+	AddElement(/datum/element/drag_to_activate)
