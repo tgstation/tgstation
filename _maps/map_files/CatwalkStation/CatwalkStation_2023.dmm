@@ -9531,6 +9531,7 @@
 /obj/structure/sign/poster/official/work_for_a_future/directional/west,
 /obj/machinery/camera/autoname/directional/west,
 /obj/structure/cable,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/carpet/black,
 /area/station/service/library/private)
 "cAF" = (
