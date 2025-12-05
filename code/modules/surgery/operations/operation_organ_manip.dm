@@ -221,13 +221,17 @@
 	// chest organs and the brain require bone sawed
 	if(organ.zone == BODY_ZONE_CHEST || organ.slot == ORGAN_SLOT_BRAIN)
 		return LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_SAWED)
+	// groin can have be sawed, it doesn't care
+	if(organ.zone == BODY_ZONE_GROIN)
+		return TRUE
 	// all other organs require bone intact
 	return !LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED)
 
 /datum/surgery_operation/limb/organ_manipulation/internal/all_required_strings()
 	return ..() + list(
-		"if operating on the chest or brain, the bone must be sawed",
-		"otherwise, if the limb has bones, they must be intact",
+		"if operating on the chest or brain, the bone MUST be sawed",
+		"if operating on the groin, the state of the bone doesn't matter",
+		"otherwise, if the limb has bones, they MUST be intact",
 	)
 
 /datum/surgery_operation/limb/organ_manipulation/internal/mechanic
