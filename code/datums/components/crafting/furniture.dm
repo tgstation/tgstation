@@ -88,10 +88,10 @@
 	time = 1 SECONDS
 	reqs = list(
 		/obj/item/flashlight = 1,
-		/obj/item/stack/sheet/iron = 1,
+		/obj/item/stack/rods = 1,
 		/obj/item/light/bulb = 1,
 	)
-	requirements_mats_blacklist = list(/obj/item/light/bulb)
+	crafting_flags = CRAFT_SKIP_MATERIALS_PARITY
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	category = CAT_FURNITURE
 
