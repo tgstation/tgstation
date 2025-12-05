@@ -4607,13 +4607,6 @@
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/ai/satellite/interior)
-"bmh" = (
-/obj/effect/spawner/random/trash/moisture_trap,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/fore/upper)
 "bmp" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -39853,13 +39846,6 @@
 "kCJ" = (
 /turf/closed/wall,
 /area/station/maintenance/aft/upper)
-"kCM" = (
-/obj/effect/spawner/random/engineering/atmospherics_portable,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/fore/upper)
 "kCN" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
@@ -56918,9 +56904,6 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "pmZ" = (
-/obj/structure/rack,
-/obj/effect/spawner/random/maintenance,
-/obj/item/wrench,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/binary/pump/on/layer4{
 	dir = 1;
@@ -194881,8 +194864,8 @@ iqK
 lkK
 xDC
 pmZ
-kCM
-bmh
+dXb
+dXb
 dXb
 bcy
 fKx
