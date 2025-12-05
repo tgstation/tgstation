@@ -38,6 +38,10 @@
 /datum/unit_test/death_moodlets/pet/get_dying_mob()
 	return allocate(/mob/living/basic/pet/cat/_proc)
 
+/// Test the normal ol default moodlet
+/datum/unit_test/death_moodlets/human/normal
+	desired_moodlet = /datum/mood_event/conditional/see_death
+
 /// Test desensitized moodlet
 /datum/unit_test/death_moodlets/human/desensitized
 	desired_moodlet = /datum/mood_event/conditional/see_death/desensitized

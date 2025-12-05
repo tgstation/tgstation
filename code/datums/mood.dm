@@ -222,7 +222,7 @@
 
 	var/list/params = args.Copy(3)
 	var/list/datum/mood_event/conditional/all_valid_conditional_events = list()
-	for(var/event_subtype in valid_subtypesof(base_type))
+	for(var/event_subtype in valid_typesof(base_type))
 		var/datum/mood_event/potential_event = new event_subtype(category)
 		if(!potential_event.can_effect_mob(arglist(list(src, mob_parent) + params)))
 			qdel(potential_event)
