@@ -4,7 +4,7 @@
 
 /datum/mood_event/conditional/see_death/can_effect_mob(datum/mood/home, mob/living/who, mob/dead_mob, dusted, gibbed)
 	if(isnull(dead_mob))
-		startup_log("Death mood event being applied with null dead_mob")
+		stack_trace("Death mood event being applied with null dead_mob")
 		return FALSE
 
 	return ..()
