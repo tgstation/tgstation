@@ -20,16 +20,16 @@
 		mood_change *= 1.2
 		timeout *= 1.5
 
-	if(description)
-		return // we have a custom description already
+	if(!description)
+		var/default_message = "I just saw %DEAD_MOB% die. How horrible..."
+		if(gibbed)
+			default_message = "%DEAD_MOB% just exploded in front of me!!"
+		else if(dusted)
+			default_message = "%DEAD_MOB% was just vaporized in front of me!!"
 
-	var/default_message = "I just saw %DEAD_MOB% die. How horrible..."
-	if(gibbed)
-		default_message = "%DEAD_MOB% just exploded in front of me!!"
-	else if(dusted)
-		default_message = "%DEAD_MOB% was just vaporized in front of me!!"
+		description = replacetext(default_message, "%DEAD_MOB%", get_descriptor(dead_mob))
 
-	description = replacetext(default_message, "%DEAD_MOB%", get_descriptor(dead_mob))
+	description = capitalize(description)
 
 /// Blank proc which allows conditional effects to modify mood, timeout, or description before the main effect is applied
 /datum/mood_event/conditional/see_death/proc/update_effect(mob/dead_mob)
@@ -139,7 +139,7 @@
 		pet_message = "%DEAD_MOB% just vaporized!!"
 
 	// future todo : make the hop care about ian, cmo runtime, etc.
-	description = replacetext(pet_message, "%DEAD_MOB%", get_descriptor(dead_mob))
+	description = replacetext(pet_message, "%DEAD_MOB%", "[dead_mob]")
 	if(HAS_PERSONALITY(owner, /datum/personality/animal_friend))
 		mood_change *= 1.5
 		timeout *= 1.25
