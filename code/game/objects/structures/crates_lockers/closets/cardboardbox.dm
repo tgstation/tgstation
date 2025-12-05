@@ -120,5 +120,5 @@
 	close_sound = 'sound/machines/crate/crate_close.ogg'
 	open_sound_volume = 35
 	close_sound_volume = 50
-	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 4)
 	material_drop = /obj/item/stack/sheet/plasteel

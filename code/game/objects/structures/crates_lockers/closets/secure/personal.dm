@@ -45,7 +45,7 @@
 	open_sound_volume = 25
 	close_sound_volume = 50
 	door_anim_time = 0 // no animation
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 	material_drop = /obj/item/stack/sheet/mineral/wood
 
 /obj/structure/closet/secure_closet/personal/cabinet/PopulateContents()
