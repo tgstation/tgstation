@@ -137,3 +137,74 @@
       report on the Github if unexpected behaviour occurs.
   uaioy:
   - bugfix: lavaland crash site ruin should properly be affected by ash storm now
+2025-12-04:
+  Aliceee2ch:
+  - bugfix: Fixes for MetaStation fire alarms.
+  - map: Removed one pair of firelocks in Brig cycling room - now it has fire sanity
+      marker instead. That should prevent trapping anyone without crowbar inside.
+  FalloutFalcon:
+  - bugfix: Cardboard crates are now made of cardboard
+  - bugfix: eyeless overlays with now display properly again
+  - rscadd: Added the medium sized cardboard boxes to random spawners
+  - qol: You can now craft the medium sized cardboard boxes
+  - rscadd: water and saltwater can be scooped from water turfs
+  - rscadd: mineral water (water with minor tox heal), scoop-able from hot-springs
+  - refactor: behavior for scooping reagents from plasma turfs has been made generic
+      and reusable
+  Hatterhat:
+  - bugfix: Non-virtual megafauna should no longer be dropping encrypted caches when
+      mulched with a crusher if their matching virtual domain was deployed.
+  - bugfix: Virtual megafauna no longer count as valid kills for achievement tracking.
+  Jacquerel:
+  - balance: The Captain's MODSuit pathfinder module now flies it directly to their
+      location rather than physically traversing the halls of the station.
+  LT3:
+  - qol: Silent jaws of recovery is now less obvious that it's modified
+  Melbert:
+  - qol: If you are within a disposal bin or chute, and drop an item, the item will
+      go into the bin, rather than onto the floor outside of the bin.
+  TealSeer:
+  - code_imp: ruin loading now logs placement coordinates
+  - bugfix: fixed molotov cocktails not lighting
+  Yobrocharlie:
+  - map: added the "heretic" gateway map (it has nothing related to heretics)
+  lelandkemble:
+  - rscadd: Added a modular SUIT, a deployable, one-piece three-piece suit. Purchasable
+      from the LawDrobe.
+  - balance: The MODsuit equipment techweb node has been split in two, with an offshoot
+      for civilian MODules.
+2025-12-05:
+  Aliceee2ch:
+  - image: Most of mapping spawner icons were updated to match latest version of sprites.
+  ArchBTW:
+  - bugfix: Fix sitting on stools (it's a chair)
+  - bugfix: Fix offset when sitting on a stool
+  FalloutFalcon:
+  - bugfix: You can toss things over cardboard crates
+  Fghj240:
+  - bugfix: Deathmatch felinids now spawn in with pet collars as intended
+  Gboster-0:
+  - balance: wabbajack robot transformations are now weighted like 3 years ago
+  Ghommie:
+  - refactor: Refactored inventory code a little to be hopefully more robust. Report
+      any possible new, quirky nit or outright problematic issue with it.
+  - bugfix: Storing objects with slowdown in a backpack or belt (or any such storage)
+      now properly updates your speed.
+  Melbert:
+  - balance: Tech storage access is no longer a "command level" access, meaning the
+      HoP can give it to crewmembers that have a normal ID card. Note, secure tech
+      storage still requires bridge access, which requires a silver ID card.
+  - bugfix: Tie names are verified
+  - bugfix: Fix mech construction
+  SomeRandomOwl:
+  - bugfix: The forked lizard tongue no longer makes you slur your S's if its in your
+      hands or pockets.
+  SyncIt21:
+  - bugfix: shards can be embedded in posters again
+  TealSeer:
+  - bugfix: fixed cargo manifests missing things in certain crates
+  lelandkemble:
+  - bugfix: Turret control wallframes visibly attach to the wall
+  necromanceranne:
+  - bugfix: Sleeping carp now actually lets you dodge melee attacks without filling
+      your hands with stuff.

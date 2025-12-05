@@ -890,7 +890,7 @@
 	head = /obj/item/clothing/head/soft/rainbow
 	glasses = null
 	ears = /obj/item/radio/headset
-	neck = /obj/item/clothing/neck/petcollar
+	neck = /obj/item/clothing/neck/petcollar/wearable
 	//suit
 	uniform = /obj/item/clothing/under/color/rainbow
 	l_pocket = /obj/item/toy/cattoy

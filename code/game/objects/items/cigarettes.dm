@@ -198,7 +198,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	throw_speed = 0.5
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_MASK
-	grind_results = list()
 	heat = 1000
 	light_range = 1
 	light_color = LIGHT_COLOR_FIRE
