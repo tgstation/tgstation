@@ -86,7 +86,7 @@
 		/datum/action/repairbot_resources = null,
 	)
 	grant_actions_by_list(abilities)
-	add_traits(list(TRAIT_SPACEWALK, TRAIT_NEGATES_GRAVITY, TRAIT_MOB_MERGE_STACKS, TRAIT_FIREDOOR_OPENER), INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_NEGATES_GRAVITY, TRAIT_MOB_MERGE_STACKS), INNATE_TRAIT)
 	our_welder = new(src)
 	our_welder.switched_on(src)
 	our_crowbar = new(src)
