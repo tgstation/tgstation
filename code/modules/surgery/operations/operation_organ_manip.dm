@@ -213,25 +213,20 @@
 	replaced_by = /datum/surgery_operation/limb/organ_manipulation/internal/abductor
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
 
+	var/bone_locked_organs = "the brain or any chest organs"
+
 /datum/surgery_operation/limb/organ_manipulation/internal/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
 	if(organ.organ_flags & ORGAN_EXTERNAL)
 		return FALSE
-	if(!LIMB_HAS_BONES(limb))
-		return TRUE
 	// chest organs and the brain require bone sawed
 	if(organ.zone == BODY_ZONE_CHEST || organ.slot == ORGAN_SLOT_BRAIN)
-		return LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_SAWED)
-	// groin can have be sawed, it doesn't care
-	if(organ.zone == BODY_ZONE_GROIN)
-		return TRUE
-	// all other organs require bone intact
-	return !LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED)
+		return !LIMB_HAS_BONES(limb) || LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_SAWED)
+	return TRUE
 
-/datum/surgery_operation/limb/organ_manipulation/internal/all_required_strings()
+/datum/surgery_operation/limb/organ_manipulation/internal/any_required_strings()
 	return ..() + list(
-		"if operating on the chest or brain, the bone MUST be sawed",
-		"if operating on the groin, the state of the bone doesn't matter",
-		"otherwise, if the limb has bones, they MUST be intact",
+		"if operating on [bone_locked_organs], the bone MUST be sawed",
+		"otherwise, the state of the bone doesn't matter",
 	)
 
 /datum/surgery_operation/limb/organ_manipulation/internal/mechanic
@@ -249,14 +244,10 @@
 	name = "experimental organ manipulation"
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
+	bone_locked_organs = "the brain or any chest organs EXCLUDING the heart"
 
 /datum/surgery_operation/limb/organ_manipulation/internal/abductor/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
 	return (organ.slot == ORGAN_SLOT_HEART) || ..() // Hearts can always be removed, it doesn't check for bone state
-
-/datum/surgery_operation/limb/organ_manipulation/internal/abductor/any_optional_strings()
-	return ..() + list(
-		"if operating on the heart, the bones may be intact",
-	)
 
 // All external organ manipulation requires bones sawed
 /datum/surgery_operation/limb/organ_manipulation/external

@@ -578,6 +578,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	)
 
 /// Returns a list of strings indicating requirements for this operation
+/// "All requirements" are formatted as "All of the following must be true:"
 /datum/surgery_operation/proc/all_required_strings()
 	SHOULD_CALL_PARENT(TRUE)
 	. = bitfield_to_list(all_surgery_states_required, SURGERY_STATE_GUIDES("must"))
@@ -585,6 +586,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		. += "the patient must be lying down"
 
 /// Returns a list of strings indicating any of the requirements for this operation
+/// "Any requirements" are formatted as "At least one of the following must be true:"
 /datum/surgery_operation/proc/any_required_strings()
 	SHOULD_CALL_PARENT(TRUE)
 	. = list()
@@ -603,6 +605,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	. += bitfield_to_list(parsed_any_flags, SURGERY_STATE_GUIDES("must"))
 
 /// Returns a list of strings indicating optional conditions for this operation
+/// "Optional conditions" are formatted as "Additionally, any of the following may be true:"
 /datum/surgery_operation/proc/any_optional_strings()
 	SHOULD_CALL_PARENT(TRUE)
 	. = list()
@@ -610,6 +613,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		. += "a surgeon may perform this on themselves"
 
 /// Returns a list of strings indicating blocked states for this operation
+/// "Blocked requirements" are formatted as "However, none of the following may be true:"
 /datum/surgery_operation/proc/all_blocked_strings()
 	SHOULD_CALL_PARENT(TRUE)
 	. = list()
