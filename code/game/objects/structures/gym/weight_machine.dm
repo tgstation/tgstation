@@ -12,6 +12,7 @@
 	density = TRUE
 	anchored = TRUE
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7)
 
 	///How much we shift the user's pixel y when using the weight machine.
 	var/pixel_shift_z = -3

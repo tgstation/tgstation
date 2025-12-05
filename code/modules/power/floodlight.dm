@@ -11,7 +11,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floodlight_c1"
 	density = TRUE
-
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	var/state = FLOODLIGHT_NEEDS_WIRES
 
 /obj/structure/floodlight_frame/Initialize(mapload)

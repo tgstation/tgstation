@@ -12,6 +12,7 @@
 	anchored = TRUE
 	opacity = FALSE
 	density = FALSE
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	/// used in making the icon state
 	var/icon_type = "bathroom"
 	var/open = TRUE
@@ -107,6 +108,7 @@
 	color = null
 	alpha = 255
 	opaque_closed = TRUE
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/curtain/cloth/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/cloth (loc, 4)
