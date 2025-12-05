@@ -103,7 +103,5 @@
 			// held_signs is a list so slightly different
 			held_signs += jani_obj
 
-		contents -= jani_obj
-
 	update_appearance()
 
