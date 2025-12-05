@@ -143,13 +143,13 @@
 		make_debris()
 		qdel(src)
 	else if (istype(attacking_item, /obj/item/melee/powerfist))
-		var/obj/item/melee/powerfist/fist
+		var/obj/item/melee/powerfist/fist = attacking_item
 		if(!fist.tank)
 			to_chat(user, span_warning("\The [fist]'s tank is empty!"))
 			return ..()
 		var/datum/gas_mixture/gas_used = fist.tank.remove_air(fist.gas_per_fist * 3) // 3 is HIGH_PRESSURE setting on powerfist.
 		if(!gas_used || !molar_cmp_equals(gas_used.total_moles(), fist.gas_per_fist * 3))
-			to_chat(user, span_warning("\The [fist] didn't have enough gas to budge the [src]!"))
+			to_chat(user, span_warning("\The [fist] didn't have enough gas to budge \the [src]!"))
 			return ..()
 		playsound(src, 'sound/items/weapons/resonator_blast.ogg', 50, TRUE)
 		punch_redirect(user)
