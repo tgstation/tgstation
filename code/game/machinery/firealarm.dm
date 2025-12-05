@@ -249,6 +249,16 @@
 /obj/machinery/firealarm/proc/alarm(mob/user, silent = FALSE)
 	if(!is_operational || !can_trigger || my_area?.fire)
 		return
+	if(istype(user) && HAS_TRAIT(user, TRAIT_PACIFISM))
+		var/range_to_vision_check = user.is_blind() ? 1 : (user.client?.view || world.view) //make sure blind people can still close firelocks in case there's actually a fire, life is hard enough :(
+		for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
+			if(QDELETED(firelock) || !(firelock in view(user, range_to_vision_check)))
+				continue
+			for(var/mob/living/potential_victim in get_turf(firelock))
+				if((potential_victim.stat == DEAD) || !(potential_victim in view(user, range_to_vision_check)))
+					continue
+				to_chat(user, span_warning("You can bring yourself to pull [src]! You don't want to risk harming anyone..."))
+				return
 	my_area.alarm_manager.send_alarm(ALARM_FIRE, my_area)
 	// This'll setup our visual effects, so we only need to worry about the alarm
 	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)

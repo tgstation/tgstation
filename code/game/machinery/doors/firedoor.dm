@@ -568,7 +568,7 @@
 		RegisterSignal(crowbar_owner, COMSIG_QDELETING, PROC_REF(handle_held_open_adjacency))
 		handle_held_open_adjacency(crowbar_owner)
 	else
-		close()
+		close(user)
 
 /// A simple toggle for firedoors between on and off
 /obj/machinery/door/firedoor/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
@@ -580,7 +580,7 @@
 		if(active)
 			addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
 	else
-		close()
+		close(user)
 
 /obj/machinery/door/firedoor/proc/handle_held_open_adjacency(atom/crowbar_owner)
 	SIGNAL_HANDLER
@@ -609,7 +609,7 @@
 		if(active)
 			addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
 	else
-		close()
+		close(user)
 	return TRUE
 
 /obj/machinery/door/firedoor/attack_robot(mob/user)
@@ -697,7 +697,15 @@
 	if(old_activity != active) //Something changed while we were sleeping
 		correct_state() //So we should re-evaluate our state
 
-/obj/machinery/door/firedoor/close()
+/obj/machinery/door/firedoor/close(mob/user)
+	if(istype(user) && HAS_TRAIT(user, TRAIT_PACIFISM))
+		var/range_to_vision_check = user.is_blind() ? 1 : (user.client?.view || world.view) //we love telekenesis.
+		if(src in view(user, range_to_vision_check))
+			for(var/mob/living/potential_victim in get_turf(src))
+				if((potential_victim.stat == DEAD) || !(potential_victim in view(user, range_to_vision_check)))
+					continue
+				to_chat(user, span_warning("You can bring yourself to close [src]! You don't want to risk harming anyone..."))
+				return
 	if(HAS_TRAIT(loc, TRAIT_FIREDOOR_STOP))
 		return
 	var/old_activity = active
