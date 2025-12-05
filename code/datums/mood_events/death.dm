@@ -35,7 +35,7 @@
 		else
 			description = "I just saw %DEAD_MOB% die. How horrible..."
 
-	description = capitalize(replacetext(default_message, "%DEAD_MOB%", get_descriptor(dead_mob)))
+	description = capitalize(replacetext(description, "%DEAD_MOB%", get_descriptor(dead_mob)))
 
 /// Blank proc which allows conditional effects to modify mood, timeout, or description before the main effect is applied
 /datum/mood_event/conditional/see_death/proc/update_effect(mob/dead_mob)
