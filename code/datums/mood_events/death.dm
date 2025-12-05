@@ -2,12 +2,17 @@
 	mood_change = -8
 	timeout = 5 MINUTES
 
-/datum/mood_event/conditional/see_death/add_effects(mob/dead_mob, dusted, gibbed)
+/datum/mood_event/conditional/see_death/can_effect_mob(datum/mood/home, mob/living/who, mob/dead_mob, dusted, gibbed)
 	if(isnull(dead_mob))
-		description = "I just saw... no one die? That's odd, almost like a glitch in reality."
-		mood_change = 0
-		return
+		startup_log("Death mood event being applied with null dead_mob")
+		return FALSE
 
+	return ..()
+
+/datum/mood_event/conditional/see_death/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
+	return TRUE
+
+/datum/mood_event/conditional/see_death/add_effects(mob/dead_mob, dusted, gibbed)
 	update_effect(dead_mob)
 
 	if(HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB))
@@ -23,20 +28,22 @@
 		timeout *= 1.5
 
 	if(!description)
-		var/default_message = "I just saw %DEAD_MOB% die. How horrible..."
 		if(gibbed)
-			default_message = "%DEAD_MOB% just exploded in front of me!!"
+			description = "%DEAD_MOB% just exploded in front of me!!"
 		else if(dusted)
-			default_message = "%DEAD_MOB% was just vaporized in front of me!!"
+			description = "%DEAD_MOB% was just vaporized in front of me!!"
+		else
+			description = "I just saw %DEAD_MOB% die. How horrible..."
 
-		description = replacetext(default_message, "%DEAD_MOB%", get_descriptor(dead_mob))
-
-	// lots of replacements and bespoke handling, just make sure we're capitalized by the end
-	description = capitalize(description)
+	description = capitalize(replacetext(default_message, "%DEAD_MOB%", get_descriptor(dead_mob)))
 
 /// Blank proc which allows conditional effects to modify mood, timeout, or description before the main effect is applied
 /datum/mood_event/conditional/see_death/proc/update_effect(mob/dead_mob)
 	return
+
+/// Checks if the dead mob is a pet
+/datum/mood_event/conditional/see_death/proc/is_pet(mob/dead_mob)
+	return istype(dead_mob, /mob/living/basic/pet) || ismonkey(dead_mob)
 
 /datum/mood_event/conditional/see_death/be_refreshed(datum/mood/home, mob/dead_mob, dusted, gibbed)
 	if(can_stack_effect(dead_mob))
@@ -61,8 +68,8 @@
 
 /// Changes "I saw Joe x" to "I saw the engineer x"
 /datum/mood_event/conditional/see_death/proc/get_descriptor(mob/dead_mob)
-	if(isnull(dead_mob))
-		return "something"
+	if(is_pet(dead_mob))
+		return "[dead_mob]"
 	if(dead_mob.name != "Unknown" && dead_mob.mind?.assigned_role?.job_flags & JOB_CREW_MEMBER)
 		return "the [LOWER_TEXT(dead_mob.mind?.assigned_role.title)]"
 	return "someone"
@@ -121,9 +128,7 @@
 /datum/mood_event/conditional/see_death/dontcare/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
 	if(HAS_PERSONALITY(who, /datum/personality/callous))
 		return TRUE
-	if(!istype(dead_mob, /mob/living/basic/pet) && !ismonkey(dead_mob))
-		return FALSE
-	if(HAS_PERSONALITY(who, /datum/personality/animal_disliker))
+	if(HAS_PERSONALITY(who, /datum/personality/animal_disliker) && is_pet(dead_mob))
 		return TRUE
 	return FALSE
 
@@ -132,17 +137,17 @@
 	priority = 30
 
 /datum/mood_event/conditional/see_death/pet/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
-	return istype(dead_mob, /mob/living/basic/pet) || ismonkey(dead_mob)
+	return is_pet(dead_mob)
 
 /datum/mood_event/conditional/see_death/pet/update_effect(mob/dead_mob, dusted, gibbed)
-	var/pet_message = "%DEAD_MOB% just died!!"
 	if(gibbed)
-		pet_message = "%DEAD_MOB% just exploded!!"
+		description = "%DEAD_MOB% just exploded!!"
 	else if(dusted)
-		pet_message = "%DEAD_MOB% just vaporized!!"
+		description = "%DEAD_MOB% just vaporized!!"
+	else
+		description = "%DEAD_MOB% just died!!"
 
 	// future todo : make the hop care about ian, cmo runtime, etc.
-	description = replacetext(pet_message, "%DEAD_MOB%", "[dead_mob]")
 	if(HAS_PERSONALITY(owner, /datum/personality/animal_friend))
 		mood_change *= 1.5
 		timeout *= 1.25
@@ -151,13 +156,12 @@
 		timeout *= 0.5
 
 /datum/mood_event/conditional/see_death/dontcare/update_effect(mob/dead_mob, dusted, gibbed)
-	var/dont_care_message = "Oh, %DEAD_MOB% died. Shame, I guess."
 	if(gibbed)
-		dont_care_message = "Oh, %DEAD_MOB% exploded. Now I have to get the mop."
+		description = "Oh, %DEAD_MOB% exploded. Now I have to get the mop."
 	else if(dusted)
-		dont_care_message = "Oh, %DEAD_MOB% was vaporized. Now I have to get the dustpan."
-
-	description = replacetext(dont_care_message, "%DEAD_MOB%", get_descriptor(dead_mob))
+		description = "Oh, %DEAD_MOB% was vaporized. Now I have to get the dustpan."
+	else
+		description = "Oh, %DEAD_MOB% died. Shame, I guess."
 
 /// Desensitized brings up the rear
 /datum/mood_event/conditional/see_death/desensitized
@@ -169,10 +173,9 @@
 	return HAS_TRAIT(who, TRAIT_DESENSITIZED)
 
 /datum/mood_event/conditional/see_death/desensitized/update_effect(mob/dead_mob, dusted, gibbed)
-	var/desensitized_message = "I saw %DEAD_MOB% die."
 	if(gibbed)
-		desensitized_message = "I saw %DEAD_MOB% explode."
+		description = "I saw %DEAD_MOB% explode."
 	else if(dusted)
-		desensitized_message = "I saw %DEAD_MOB% get vaporized."
-
-	description = replacetext(desensitized_message, "%DEAD_MOB%", get_descriptor(dead_mob))
+		description = "I saw %DEAD_MOB% get vaporized."
+	else
+		description = "I saw %DEAD_MOB% die."

@@ -37,7 +37,9 @@
 /**
  * Called when this datum is created, checks if the passed mob can experience this mood event
  *
+ * * home - the mood datum we are being added to
  * * who - the mob to check
+ * * ... - any other arguments that are passed to the mood event
  *
  * Return TRUE if the mob can experience this mood event
  * Return FALSE if the mob should be unaffected
@@ -66,6 +68,10 @@
 
 /**
  * Wrapper for the mood event being added to a mob
+ *
+ * * home - the mood datum we are being added to
+ * * who - the mob to add the mood event to
+ * * mood_args - any other arguments that are passed to the mood event
  */
 /datum/mood_event/proc/on_add(datum/mood/home, mob/living/who, list/mood_args)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -150,7 +156,12 @@
 /datum/mood_event/conditional/can_effect_mob(datum/mood/home, mob/living/who, ...)
 	return ..() && condition_fulfilled(arglist(args.Copy(2)))
 
-/// Is the condition for this mood event fulfilled for the given mob?
+/**
+ * Is the condition for this mood event fulfilled for the given mob?
+ *
+ * * who - the mob to check
+ * * ... - any other arguments that are passed to the mood event
+ */
 /datum/mood_event/conditional/proc/condition_fulfilled(mob/living/who, ...)
 	return FALSE
 
