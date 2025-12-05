@@ -452,12 +452,15 @@
 		var/amount_string = ""
 		if(as_sheets)
 			var/amount = sheets_from_value(mats_list[mat])
-			if(amount == 1)
-				amount_string = "SHEET_MATERIAL_AMOUNT"
-			else if(amount == 0)
-				amount_string = "0" // not sure this should even happen, but for completeness
-			else
-				amount_string = "SHEET_MATERIAL_AMOUNT * " + num2text(amount)
+			switch(amount)
+				if(0 to 0.49)
+					amount_string = "SMALL_MATERIAL_AMOUNT * [amount * 10]"
+				if(0.5)
+					amount_string = "HALF_SHEET_MATERIAL_AMOUNT"
+				if(1)
+					amount_string = "SHEET_MATERIAL_AMOUNT"
+				else
+					amount_string = "SHEET_MATERIAL_AMOUNT * [amount]"
 		else
 			amount_string = "[mats_list[mat]]"
 		text += "[mat.type] = " + amount_string
