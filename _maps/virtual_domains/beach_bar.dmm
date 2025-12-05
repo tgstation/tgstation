@@ -806,8 +806,9 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "Kd" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/mineral/sandstone,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/sign/warning/secure_area/directional/west,
+/turf/open/floor/plating,
 /area/virtual_domain/fullbright)
 "KH" = (
 /obj/structure/mineral_door/wood{
@@ -1609,7 +1610,7 @@ LD
 LD
 Fn
 Fn
-Kd
+Fn
 Fn
 Fn
 bQ
@@ -1652,7 +1653,7 @@ pT
 LD
 EC
 LD
-pT
+Kd
 PM
 wD
 wD

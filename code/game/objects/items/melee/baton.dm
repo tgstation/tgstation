@@ -764,6 +764,20 @@
 /obj/item/melee/baton/security/loaded/hos
 	preload_cell_type = /obj/item/stock_parts/power_store/cell/super
 
+// Stunsword Skins
+/datum/atom_skin/stunsword
+	abstract_type = /datum/atom_skin/stunsword
+	change_inhand_icon_state = TRUE
+	change_base_icon_state = TRUE
+
+/datum/atom_skin/stunsword/default
+	preview_name = "Default"
+	new_icon_state = "stunsword"
+
+/datum/atom_skin/stunsword/energy
+	preview_name = "Energy"
+	new_icon_state = "stunsword_energy"
+
 ///Stun Sword
 /obj/item/melee/baton/security/stunsword
 	name = "\improper NT-20 'Excalibur' Stunsword"
@@ -789,14 +803,12 @@
 	convertible = FALSE
 
 	obj_flags = UNIQUE_RENAME
-	unique_reskin = list(
-		"Default" = "stunsword",
-		"Energy Stunsword" = "stunsword_energy",
-	)
-	unique_reskin_changes_inhand = TRUE
-	unique_reskin_changes_base_icon_state = TRUE
 
-/obj/item/melee/baton/security/stunsword/loaded/add_deep_lore()
+/obj/item/melee/baton/security/stunsword/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/stunsword)
+
+/obj/item/melee/baton/security/stunsword/add_deep_lore()
 	return
 
 /obj/item/melee/baton/security/stunsword/loaded
@@ -824,6 +836,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
 	active_changes_inhand = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.15, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	var/obj/item/assembly/igniter/sparkler
 	///Determines whether or not we can improve the cattleprod into a new type. Prevents turning the cattleprod subtypes into different subtypes, or wasting materials on making it....another version of itself.
 	var/can_upgrade = TRUE
@@ -913,6 +926,7 @@
 	inhand_icon_state = "teleprod"
 	slot_flags = null
 	can_upgrade = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.15, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 
 /obj/item/melee/baton/security/cattleprod/teleprod/clumsy_check(mob/living/carbon/human/user)
 	. = ..()

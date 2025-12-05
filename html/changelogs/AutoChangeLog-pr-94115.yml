@@ -1,4 +1,0 @@
-author: "ArchBTW"
-delete-after: True
-changes:
-  - bugfix: "Fix crowbar combat mode right clicking an unpowered airlock"

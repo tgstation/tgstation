@@ -184,7 +184,7 @@
 	VAR_PROTECTED/datum/embedding/embed_data
 
 	///for flags such as [GLASSESCOVERSEYES]
-	var/flags_cover = 0
+	var/flags_cover = NONE
 	var/heat = 0
 	/// All items with sharpness of SHARP_EDGED or higher will automatically get the butchering component.
 	var/sharpness = NONE
@@ -225,7 +225,7 @@
 	///What dye registry should be looked at when dying this item; see washing_machine.dm
 	var/dying_key
 
-	///Grinder var:A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
+	/// A lazy reagent list containing the reagents this item produces when ground up in a grinder
 	var/list/grind_results
 	///A reagent the nutriments are converted into when the item is juiced.
 	var/datum/reagent/consumable/juice_typepath
@@ -240,14 +240,6 @@
 	/// A lazylist used for applying fantasy values, contains the actual modification applied to a variable.
 	var/list/fantasy_modifications = null
 
-	/// Has the item been reskinned?
-	var/current_skin
-	/// List of options to reskin.
-	var/list/unique_reskin
-	/// If reskins change base icon state as well
-	var/unique_reskin_changes_base_icon_state = FALSE
-	/// If reskins change inhands as well
-	var/unique_reskin_changes_inhand = FALSE
 	/// Do we apply a click cooldown when resisting this object if it is restraining them?
 	var/resist_cooldown = CLICK_CD_BREAKOUT
 
@@ -283,9 +275,6 @@
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_ITEM, src)
 
-	setup_reskinning()
-
-
 /obj/item/Destroy(force)
 	// This var exists as a weird proxy "owner" ref
 	// It's used in a few places. Stop using it, and optimially replace all uses please
@@ -299,19 +288,6 @@
 		remove_item_action(action)
 
 	return ..()
-
-
-/obj/item/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-
-	if(!unique_reskin)
-		return
-
-	if(current_skin && !(obj_flags & INFINITE_RESKIN))
-		return
-
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Reskin"
-	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/click_ctrl(mob/user)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -457,9 +433,6 @@
 		.["insulated"] = "It is made from a robust electrical insulator and will block any electricity passing through it!"
 	else if (siemens_coefficient <= 0.5)
 		.["partially insulated"] = "It is made from a poor insulator that will dampen (but not fully block) electric shocks passing through it."
-
-	if(LAZYLEN(unique_reskin) && !current_skin)
-		.["reskinnable"] = "This item is able to be reskinned! Alt-Click to do so!"
 
 /obj/item/examine_descriptor(mob/user)
 	return "item"
@@ -743,7 +716,6 @@
 
 	if(item_flags & DROPDEL && !QDELETED(src))
 		qdel(src)
-	item_flags &= ~IN_INVENTORY
 	UnregisterSignal(src, list(SIGNAL_ADDTRAIT(TRAIT_NO_WORN_ICON), SIGNAL_REMOVETRAIT(TRAIT_NO_WORN_ICON)))
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	SEND_SIGNAL(user, COMSIG_MOB_DROPPED_ITEM, src)
@@ -755,7 +727,6 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
 	SEND_SIGNAL(user, COMSIG_LIVING_PICKED_UP_ITEM, src)
-	item_flags |= IN_INVENTORY
 
 /// called when "found" in pockets and storage items. Returns 1 if the search should end.
 /obj/item/proc/on_found(mob/finder)
@@ -808,7 +779,6 @@
 	for(var/datum/action/action as anything in actions)
 		give_item_action(action, user, slot)
 
-	item_flags |= IN_INVENTORY
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_NO_WORN_ICON), SIGNAL_REMOVETRAIT(TRAIT_NO_WORN_ICON)), PROC_REF(update_slot_icon), override = TRUE)
 
 	if(!initial && (slot_flags & slot) && (play_equip_sound()))
@@ -1089,7 +1059,7 @@
 	PROTECTED_PROC(TRUE)
 
 	. = FALSE
-	if(length(grind_results))
+	if(LAZYLEN(grind_results))
 		target_holder.add_reagent_list(grind_results)
 		. = TRUE
 	if(reagents?.trans_to(target_holder, reagents.total_volume, transferred_by = user))
@@ -1324,28 +1294,26 @@
 /obj/item/proc/get_part_rating()
 	return 0
 
+/**
+ * this proc override makes sure that even if DoUnEquip is not properly called through the appropriate channels,
+ * it'll still be called if we find that the item has the IN_INVENTORY flag.
+ *
+ * THIS IS BY NO MEAN AN EXCUSE TO KNOWINGLY AVOID CALLING THE RIGHT PROCS FOR INVENTORY MANAGEMENT,
+ * BUT A FALLBACK IN THE CASE WE MISTAKINGLY DON'T, TO MAKE SURE THINGS WORK AS INTENDED SINCE
+ * INVENTORY MANAGEMENT HAS A LOT MORE TO IT THAN JUST CALLING A PROC OR TWO MANUALLY.
+ */
 /obj/item/doMove(atom/destination)
-	if (!ismob(loc))
+	if (!(item_flags & IN_INVENTORY))
+		return ..()
+
+	if(!ismob(loc))
+		stack_trace("[src] had the IN_INVENTORY flag but the location was not a mob!")
+		item_flags &= ~IN_INVENTORY
 		return ..()
 
 	var/mob/owner = loc
-	var/hand_index = owner.get_held_index_of_item(src)
-	if(!hand_index)
-		return ..()
-
-	owner.held_items[hand_index] = null
-	owner.update_held_items()
-	if(owner.client)
-		owner.client.screen -= src
-	if(owner.observers?.len)
-		for(var/mob/dead/observe as anything in owner.observers)
-			if(observe.client)
-				observe.client.screen -= src
-	layer = initial(layer)
-	SET_PLANE_IMPLICIT(src, initial(plane))
-	appearance_flags &= ~NO_CLIENT_COLOR
-	dropped(owner, FALSE)
-	return ..()
+	// This should remove the IN_INVENTORY flag. Otherwise we'll end up having a loop
+	owner.transferItemToLoc(src, destination, force = TRUE, silent = TRUE, animated = FALSE)
 
 /obj/item/proc/canStrip(mob/stripper, mob/owner)
 	SHOULD_BE_PURE(TRUE)
