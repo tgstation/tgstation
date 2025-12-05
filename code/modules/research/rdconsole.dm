@@ -170,7 +170,7 @@ Nothing else in the console has ID requirements.
 	var/obj/item/circuitboard/computer/rdconsole/board = circuit
 	if(!(board.obj_flags & EMAGGED))
 		board.silence_announcements = TRUE
-	set_locked(FALSE)
+	board.locked = FALSE
 	return TRUE
 
 /obj/machinery/computer/rdconsole/ui_interact(mob/user, datum/tgui/ui = null)
@@ -188,8 +188,11 @@ Nothing else in the console has ID requirements.
 // heavy data from this proc should be moved to static data when possible
 /obj/machinery/computer/rdconsole/ui_data(mob/user)
 	var/list/data = list()
+
+	var/obj/item/circuitboard/computer/rdconsole/board = circuit
+
 	data["stored_research"] = !!stored_research
-	data["locked"] = is_locked()
+	data["locked"] = board.locked
 	if(!stored_research) //lack of a research node is all we care about.
 		return data
 	data += list(
@@ -335,8 +338,10 @@ Nothing else in the console has ID requirements.
 
 	add_fingerprint(usr)
 
+	var/obj/item/circuitboard/computer/rdconsole/board = circuit
+
 	// Check if the console is locked to block any actions occuring
-	if (is_locked() && action != "toggleLock")
+	if (board.locked && action != "toggleLock")
 		say("Console is locked, cannot perform further actions.")
 		return TRUE
 
@@ -346,7 +351,7 @@ Nothing else in the console has ID requirements.
 				to_chat(usr, span_boldwarning("Security protocol error: Unable to access locking protocols."))
 				return TRUE
 			if(allowed(usr))
-				toggle_locked()
+				board.locked = !board.locked
 			else
 				to_chat(usr, span_boldwarning("Unauthorized Access."))
 			return TRUE
@@ -410,17 +415,6 @@ Nothing else in the console has ID requirements.
 	if(type == RND_TECH_DISK && t_disk)
 		t_disk.forceMove(get_turf(src))
 		t_disk = null
-
-/obj/machinery/computer/rdconsole/proc/is_locked()
-	var/obj/item/circuitboard/computer/rdconsole/board = circuit
-	return board.locked
-
-/obj/machinery/computer/rdconsole/proc/set_locked(locked)
-	var/obj/item/circuitboard/computer/rdconsole/board = circuit
-	board.locked = locked
-
-/obj/machinery/computer/rdconsole/proc/toggle_locked()
-	set_locked(!is_locked())
 
 #undef RND_TECH_DISK
 #undef RND_DESIGN_DISK
