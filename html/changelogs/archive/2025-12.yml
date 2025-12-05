@@ -173,3 +173,38 @@
       from the LawDrobe.
   - balance: The MODsuit equipment techweb node has been split in two, with an offshoot
       for civilian MODules.
+2025-12-05:
+  Aliceee2ch:
+  - image: Most of mapping spawner icons were updated to match latest version of sprites.
+  ArchBTW:
+  - bugfix: Fix sitting on stools (it's a chair)
+  - bugfix: Fix offset when sitting on a stool
+  FalloutFalcon:
+  - bugfix: You can toss things over cardboard crates
+  Fghj240:
+  - bugfix: Deathmatch felinids now spawn in with pet collars as intended
+  Gboster-0:
+  - balance: wabbajack robot transformations are now weighted like 3 years ago
+  Ghommie:
+  - refactor: Refactored inventory code a little to be hopefully more robust. Report
+      any possible new, quirky nit or outright problematic issue with it.
+  - bugfix: Storing objects with slowdown in a backpack or belt (or any such storage)
+      now properly updates your speed.
+  Melbert:
+  - balance: Tech storage access is no longer a "command level" access, meaning the
+      HoP can give it to crewmembers that have a normal ID card. Note, secure tech
+      storage still requires bridge access, which requires a silver ID card.
+  - bugfix: Tie names are verified
+  - bugfix: Fix mech construction
+  SomeRandomOwl:
+  - bugfix: The forked lizard tongue no longer makes you slur your S's if its in your
+      hands or pockets.
+  SyncIt21:
+  - bugfix: shards can be embedded in posters again
+  TealSeer:
+  - bugfix: fixed cargo manifests missing things in certain crates
+  lelandkemble:
+  - bugfix: Turret control wallframes visibly attach to the wall
+  necromanceranne:
+  - bugfix: Sleeping carp now actually lets you dodge melee attacks without filling
+      your hands with stuff.
