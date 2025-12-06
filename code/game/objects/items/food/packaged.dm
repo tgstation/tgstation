@@ -166,7 +166,6 @@
 		splat_color = COLOR_NEARLY_ALL_BLACK, \
 		hit_callback = CALLBACK(src, PROC_REF(blind_em)), \
 	)
-	ADD_TRAIT(src, INNATE_TRAIT)
 
 /obj/item/food/canned/squid_ink/proc/blind_em(mob/living/victim, can_splat_on)
 	if(can_splat_on)
