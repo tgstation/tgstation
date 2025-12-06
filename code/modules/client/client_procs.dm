@@ -352,9 +352,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 			concatables += double_match ? "!BOTH! [matched_ip] and [matched_cid]" : (!isnull(matched_ip) ? matched_ip : matched_cid)
 			concatables += "as [isnull(potential_match) ? "[joined_player_ckey] (no longer logged in)" : "[key_name_admin(potential_match)]"]"
 			if(same_round)
-				concatables += span_bold("in the current round.")
-			else
-				concatables += "."
+				concatables += span_bold("in the current round")
 
 			concatables += "</span>"
 
