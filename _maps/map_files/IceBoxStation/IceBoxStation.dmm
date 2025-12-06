@@ -7318,7 +7318,6 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "bVJ" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -19575,7 +19574,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "fvx" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light_switch/directional/west,
@@ -63946,7 +63944,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "rVe" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -73520,6 +73517,14 @@
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
+"uFX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningdock)
 "uGe" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -78884,6 +78889,11 @@
 /obj/item/toy/figure/paramedic,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/paramedic)
+"wqf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/cargo/miningdock)
 "wqn" = (
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
@@ -237905,7 +237915,7 @@ szU
 eVn
 pBE
 ePB
-hxE
+wqf
 xtr
 qjQ
 utC
@@ -238419,7 +238429,7 @@ byn
 wBy
 pBE
 qdC
-jBf
+uFX
 dhY
 qjQ
 xXk
@@ -238676,7 +238686,7 @@ gSf
 cYK
 pBE
 cZa
-hxE
+wqf
 xUS
 unP
 utC
@@ -238933,7 +238943,7 @@ uYc
 pBE
 pBE
 iVA
-hxE
+wqf
 aCh
 unP
 utC
@@ -239189,8 +239199,8 @@ hxE
 hxE
 vQj
 fvx
-hxE
-hxE
+wqf
+wqf
 xFb
 unP
 utC
