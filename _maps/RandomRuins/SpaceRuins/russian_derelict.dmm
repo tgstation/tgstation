@@ -6989,7 +6989,7 @@
 /obj/structure/frame/computer{
 	dir = 1
 	},
-/obj/item/circuitboard/computer/rdconsole,
+/obj/item/circuitboard/computer/rdconsole/unlocked,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,

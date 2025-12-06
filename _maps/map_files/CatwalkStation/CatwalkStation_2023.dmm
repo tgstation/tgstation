@@ -8283,7 +8283,7 @@
 /turf/open/floor/wood/large,
 /area/station/medical/psychology)
 "cjE" = (
-/obj/machinery/computer/rdconsole,
+/obj/machinery/computer/rdconsole/unlocked,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
 "cjQ" = (
@@ -42526,7 +42526,7 @@
 /area/station/maintenance/starboard/aft/upper)
 "lvj" = (
 /obj/machinery/status_display/ai/directional/north,
-/obj/machinery/computer/rdconsole,
+/obj/machinery/computer/rdconsole/unlocked,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -81722,7 +81722,7 @@
 /turf/closed/wall,
 /area/station/security/interrogation)
 "waA" = (
-/obj/machinery/computer/rdconsole,
+/obj/machinery/computer/rdconsole/unlocked,
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
 "waH" = (

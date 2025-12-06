@@ -33606,7 +33606,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "ipr" = (
-/obj/machinery/computer/rdconsole{
+/obj/machinery/computer/rdconsole/unlocked{
 	dir = 8
 	},
 /obj/machinery/camera/directional/east{
@@ -54646,7 +54646,7 @@
 /area/station/ai/satellite/exterior)
 "nBF" = (
 /obj/structure/cable,
-/obj/machinery/computer/rdconsole,
+/obj/machinery/computer/rdconsole/unlocked,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
@@ -97782,7 +97782,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/computer/rdconsole{
+/obj/machinery/computer/rdconsole/unlocked{
 	dir = 4
 	},
 /turf/open/floor/iron,

@@ -12396,7 +12396,7 @@
 /turf/open/floor/plating,
 /area/station/security/checkpoint/medical)
 "dqR" = (
-/obj/machinery/computer/rdconsole,
+/obj/machinery/computer/rdconsole/unlocked,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 8
@@ -54604,7 +54604,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/drone_bay)
 "ppz" = (
-/obj/machinery/computer/rdconsole{
+/obj/machinery/computer/rdconsole/unlocked{
 	dir = 1
 	},
 /turf/open/floor/iron/white/corner{
@@ -63562,7 +63562,7 @@
 	},
 /obj/effect/mapping_helpers/requests_console/ore_update,
 /obj/effect/mapping_helpers/requests_console/supplies,
-/obj/machinery/computer/rdconsole{
+/obj/machinery/computer/rdconsole/unlocked{
 	dir = 4
 	},
 /turf/open/floor/iron/checker,

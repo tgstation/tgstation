@@ -48093,7 +48093,7 @@
 	},
 /area/station/security/execution/transfer)
 "qCT" = (
-/obj/machinery/computer/rdconsole,
+/obj/machinery/computer/rdconsole/unlocked,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/iron/dark,
@@ -52399,7 +52399,7 @@
 /turf/open/openspace,
 /area/station/security/prison/garden)
 "rXS" = (
-/obj/machinery/computer/rdconsole,
+/obj/machinery/computer/rdconsole/unlocked,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
@@ -62178,7 +62178,7 @@
 /turf/open/floor/carpet/executive,
 /area/station/command/meeting_room)
 "voQ" = (
-/obj/machinery/computer/rdconsole,
+/obj/machinery/computer/rdconsole/unlocked,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
