@@ -27,6 +27,10 @@
 		exotic_material = 2 // this needs to be refactored properly
 	)
 
+/obj/structure/girder/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/uses_girder_wall_recipes)
+
 /obj/structure/girder/examine(mob/user)
 	. = ..()
 	switch(state)
@@ -62,6 +66,7 @@
 			qdel(src)
 		return
 
+	/*
 	if(isstack(W))
 		var/obj/item/stack/stack = W
 		if(!stack.usable_for_construction)
@@ -81,6 +86,7 @@
 
 		make_wall(stack, user)
 		return
+	*/
 
 	if(istype(W, /obj/item/pipe))
 		var/obj/item/pipe/P = W

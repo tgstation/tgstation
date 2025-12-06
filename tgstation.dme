@@ -1676,6 +1676,7 @@
 #include "code\datums\elements\update_icon_blocker.dm"
 #include "code\datums\elements\update_icon_updates_onmob.dm"
 #include "code\datums\elements\uplink_reimburse.dm"
+#include "code\datums\elements\uses_girder_wall_recipes.dm"
 #include "code\datums\elements\venomous.dm"
 #include "code\datums\elements\volatile_gas_storage.dm"
 #include "code\datums\elements\voucher_redeemer.dm"

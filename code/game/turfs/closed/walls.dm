@@ -40,8 +40,6 @@
 	var/girder_state = GIRDER_NORMAL
 	/// How long this wall takes to make by using its sheet type on a girder.
 	var/make_delay = 4 SECONDS
-	/// Whether this wall can be made by using its sheet type on a girder.
-	var/can_make = FALSE
 
 /turf/closed/wall/Initialize(mapload)
 	. = ..()

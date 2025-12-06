@@ -1,31 +1,117 @@
-/// A list of all girder wall recipes in the format: list(stack_type = list(girder_state = recipe))
-GLOBAL_LIST_INIT(girder_wall_recipes, init_girder_wall_recipes())
+GLOBAL_LIST_INIT(main_girder_wall_recipes, init_main_girder_wall_recipes())
+GLOBAL_LIST_INIT(material_girder_wall_recipes, init_material_girder_wall_recipes())
 
-/proc/init_girder_wall_recipes()
+/proc/init_main_girder_wall_recipes()
+	return create_girder_wall_recipes(
+		wall_types = list(
+			/turf/closed/wall,
+			/turf/closed/wall/metal_foam_base,
+			/turf/closed/wall/r_wall,
+			/turf/closed/wall/r_wall/plastitanium,
+			/turf/closed/wall/mineral/gold,
+			/turf/closed/wall/mineral/silver,
+			/turf/closed/wall/mineral/diamond,
+			/turf/closed/wall/mineral/bananium,
+			/turf/closed/wall/mineral/sandstone,
+			/turf/closed/wall/mineral/uranium,
+			/turf/closed/wall/mineral/plasma,
+			/turf/closed/wall/mineral/wood,
+			/turf/closed/wall/mineral/wood/nonmetal,
+			/turf/closed/wall/mineral/bamboo,
+			/turf/closed/wall/mineral/iron,
+			/turf/closed/wall/mineral/snow,
+			/turf/closed/wall/mineral/abductor,
+			/turf/closed/wall/mineral/titanium,
+			/turf/closed/wall/mineral/plastitanium,
+			/turf/closed/wall/mineral/cult,
+			/turf/closed/wall/mineral/bronze,
+			/turf/closed/wall/material,
+		),
+		falsewall_types = list(
+			/obj/structure/falsewall,
+			/obj/structure/falsewall/reinforced,
+			/obj/structure/falsewall/gold,
+			/obj/structure/falsewall/silver,
+			/obj/structure/falsewall/diamond,
+			/obj/structure/falsewall/bananium,
+			/obj/structure/falsewall/sandstone,
+			/obj/structure/falsewall/uranium,
+			/obj/structure/falsewall/plasma,
+			/obj/structure/falsewall/wood,
+			/obj/structure/falsewall/bamboo,
+			/obj/structure/falsewall/iron,
+			/obj/structure/falsewall/abductor,
+			/obj/structure/falsewall/titanium,
+			/obj/structure/falsewall/plastitanium,
+			/obj/structure/falsewall/material,
+		),
+		tram_types = list(
+			/obj/structure/tram,
+			/obj/structure/tram/alt/gold,
+			/obj/structure/tram/alt/silver,
+			/obj/structure/tram/alt/diamond,
+			/obj/structure/tram/alt/bananium,
+			/obj/structure/tram/alt/sandstone,
+			/obj/structure/tram/alt/uranium,
+			/obj/structure/tram/alt/plasma,
+			/obj/structure/tram/alt/wood,
+			/obj/structure/tram/alt/bamboo,
+			/obj/structure/tram/alt/iron,
+			/obj/structure/tram/alt/abductor,
+			/obj/structure/tram/alt/titanium,
+			/obj/structure/tram/alt/plastitanium,
+		)
+	)
+
+/proc/init_material_girder_wall_recipes()
+	return create_girder_wall_recipes(
+		wall_types = list(/turf/closed/wall/material),
+		falsewall_types = list(/obj/structure/falsewall/material)
+	)
+
+/proc/create_girder_wall_recipes(list/wall_types, list/falsewall_types, list/tram_types)
 	var/list/recipes = list()
 
-	for (var/turf/closed/wall/wall_type in valid_typesof(/turf/closed/wall))
-		if (!wall_type::can_make)
-			continue
+	for (var/turf/closed/wall/wall_type as anything in wall_types)
 		add_girder_wall_recipe(
 			recipes = recipes,
 			wall_type = wall_type,
 			stack_type = wall_type::sheet_type,
 			stack_amount = wall_type::sheet_amount,
+			girder_type = wall_type::girder_type,
 			girder_state = wall_type::girder_state,
 			make_delay = wall_type::make_delay,
-			alert = "adding plating..."
+			start_alert = "adding plating..."
+		)
+
+	for (var/obj/structure/falsewall/falsewall_type as anything in falsewall_types)
+		add_girder_wall_recipe(
+			recipes = recipes,
+			wall_type = falsewall_type,
+			stack_type = falsewall_type::mineral,
+			stack_amount = falsewall_type::mineral_amount,
+			girder_type = falsewall_type::girder_type,
+			girder_state = GIRDER_DISPLACED,
+			make_delay = 2 SECONDS,
+			start_alert = "concealing entrance..."
+		)
+
+	for (var/obj/structure/tram/tram_type as anything in tram_types)
+		add_girder_wall_recipe(
+			recipes = recipes,
+			wall_type = tram_type,
+			stack_type = tram_type::mineral,
+			stack_amount = tram_type::mineral_amount,
+			girder_type = tram_type::girder_type,
+			girder_state = GIRDER_NORMAL,
+			make_delay = 4 SECONDS,
+			start_alert = "adding plating..."
 		)
 
 	return recipes
 
-/proc/add_girder_wall_recipe(list/recipes, wall_type, stack_type, stack_amount, girder_state, make_delay, alert)
+/proc/add_girder_wall_recipe(list/recipes, wall_type, stack_type, stack_amount, girder_type, girder_state, make_delay, start_alert)
 	if (!ispath(stack_type, /obj/item/stack))
-		CRASH("Attempted to create a girder wall recipe for a wall type with an invalid stack type: [wall_type]")
+		CRASH("Attempted to create a girder wall recipe for wall type ([wall_type]) with an invalid stack type ([stack_type])")
 
-	if (!recipes[stack_type])
-		recipes[stack_type] = list()
-	else if (recipes[stack_type][girder_state])
-		CRASH("Attempted to create a girder wall recipe that has the same stack type and girder state as another: [wall_type]")
-
-	recipes[stack_type][girder_state] = new /datum/girder_wall_recipe(stack_amount, make_delay, wall_type, alert)
+	recipes += new /datum/girder_wall_recipe(wall_type, stack_type, stack_amount, girder_type, girder_state, make_delay, start_alert)

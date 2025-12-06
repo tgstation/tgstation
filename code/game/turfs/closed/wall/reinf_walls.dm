@@ -12,6 +12,7 @@
 	sheet_type = /obj/item/stack/sheet/plasteel
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/reinforced
+	make_delay = 5 SECONDS
 	explosive_resistance = 2
 	rad_insulation = RAD_HEAVY_INSULATION
 	rust_resistance = RUST_RESISTANCE_REINFORCED
