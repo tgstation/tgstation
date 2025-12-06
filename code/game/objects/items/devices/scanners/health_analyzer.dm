@@ -807,7 +807,7 @@
 			if(istype(disease, /datum/disease/advance))
 				var/datum/disease/advance/advanced_disease = disease
 				for(var/datum/symptom/each_symptom in advanced_disease.symptoms)
-					if(each_symptom.symptom_cure)
+					if(!each_symptom.neutered && each_symptom.symptom_cure)
 						var/datum/reagent/each_cure = each_symptom.symptom_cure
 						disease_cure = each_cure.name
 						break // We only get one
