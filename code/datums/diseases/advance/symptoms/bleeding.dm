@@ -16,6 +16,7 @@
 	transmittable = -2
 	severity = 3
 	level = 7
+	symptom_cure = /datum/reagent/cellulose // Kind of hard to get quickly, but seeing it on a health analyzer is a dead giveaway of this stealthy symptom
 	threshold_descs = list(
 		"Stage Speed 9" = "The host becomes more vulnerable to bleeding wounds.",
 		"Stealth 3" = "The symptom remains hidden even while active."

@@ -72,11 +72,12 @@
 	if(required_organ)
 		if(!advanced_disease.has_required_infectious_organ(advanced_disease.affected_mob, required_organ))
 			return FALSE
-	if(advanced_disease.affected_mob.has_reagent(symptom_cure))
-		remedied = TRUE
-		return FALSE
-	else
-		remedied = FALSE
+	if(symptom_cure)
+		if(advanced_disease.affected_mob.has_reagent(symptom_cure))
+			remedied = TRUE
+			return FALSE
+		else
+			remedied = FALSE
 	if(world.time < next_activation)
 		return FALSE
 	else
@@ -123,7 +124,7 @@
 	data["level"] = level
 	data["neutered"] = neutered
 	data["threshold_desc"] = threshold_descs
-	data["symptom_cure"] = symptom_cure.name
+	data["symptom_cure"] = symptom_cure.name || "Nothing"
 	data["cure_color"] = cure_color
 	return data
 

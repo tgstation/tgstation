@@ -12,7 +12,7 @@ and your disease can spread via people walking on vomit.
 	desc = "The virus causes nausea and irritates the stomach, causing occasional vomit."
 	illness = "Cyclonic Irritation"
 	stealth = -2
-	resistance = -1
+	resistance = 0
 	stage_speed = -1
 	transmittable = 2
 	level = 3
@@ -21,6 +21,8 @@ and your disease can spread via people walking on vomit.
 	symptom_delay_min = 25
 	symptom_delay_max = 80
 	required_organ = ORGAN_SLOT_STOMACH
+	symptom_cure = /datum/reagent/medicine/ondansetron
+	cure_color = "yellow"
 	threshold_descs = list(
 		"Resistance 7" = "Host will vomit blood, causing internal damage.",
 		"Transmission 7" = "Host will projectile vomit, increasing vomiting range.",

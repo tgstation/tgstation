@@ -12,13 +12,14 @@
 	illness = "Shattered Reality"
 	stealth = 1
 	resistance = -1
-	stage_speed = -3
+	stage_speed = -2
 	transmittable = 0
 	level = 4
 	severity = 2
 	base_message_chance = 25
 	symptom_delay_min = 10
 	symptom_delay_max = 30
+	symptom_cure = /datum/reagent/medicine/synaptizine
 	threshold_descs = list(
 		"Resistance 6" = "Causes brain damage over time.",
 		"Transmission 6" = "Increases confusion duration and strength.",

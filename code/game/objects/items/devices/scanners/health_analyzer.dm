@@ -426,9 +426,10 @@
 			var/remedies = list()
 			var/remedy_limit = advanced ? 3 : 2
 			for(var/datum/symptom/each_symptom in advanced_disease.symptoms)
-				if(!each_symptom.neutered && length(remedies) < remedy_limit && !(each_symptom.symptom_cure.name in remedies))
-					remedies += each_symptom.symptom_cure.name
-			cure_text = english_list(remedies)
+				if(each_symptom.symptom_cure)
+					if(!each_symptom.neutered && length(remedies) < remedy_limit && !(each_symptom.symptom_cure.name in remedies))
+						remedies += each_symptom.symptom_cure.name
+			cure_text = english_list(remedies, nothing_text = "Nothing")
 		else
 			cure_text = disease.cure_text
 		render_list += "<span class='alert ml-1'>\

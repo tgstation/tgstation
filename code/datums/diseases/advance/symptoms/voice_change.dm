@@ -1,5 +1,5 @@
 /*Voice Change
- * Slight stealth reduction
+ * Slight stealth increase
  * Reduces resistance
  * Reduces stage speed
  * Increases transmissibility
@@ -11,8 +11,8 @@
 	name = "Voice Change"
 	desc = "The virus alters the pitch and tone of the host's vocal cords, changing how their voice sounds."
 	illness = "Mime Crisis"
-	stealth = -1
-	resistance = -2
+	stealth = 1
+	resistance = -1
 	stage_speed = -2
 	transmittable = 2
 	level = 6
