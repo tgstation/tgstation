@@ -1,0 +1,4 @@
+author: "RikuTheKiller"
+delete-after: True
+changes:
+  - balance: "R&D console boards sourced from printing or tech storage are now locked by default. It's recommended to ask your respective head of department or the science department to complete research for you. Heads of department can remotely access the research network using their PDAs."
