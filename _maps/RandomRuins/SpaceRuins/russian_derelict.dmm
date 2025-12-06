@@ -137,6 +137,19 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/ks13/security/court)
+"ba" = (
+/obj/structure/rack,
+/obj/item/circuitboard/machine/circuit_imprinter/offstation{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/ai_module/law/core/full/drone,
+/obj/item/circuitboard/machine/ai_law_rack/core{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/ks13/ai/corridor)
 "bd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
@@ -481,12 +494,6 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
-"eI" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/plaque/static_plaque/golden/commission/ks13,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/hallway/central)
 "eL" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
@@ -5809,6 +5816,15 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
+"MQ" = (
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/obj/item/circuitboard/computer/rdconsole/unlocked,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/ai/vault)
 "MT" = (
 /obj/item/stack/cable_coil/cut,
 /obj/effect/decal/cleanable/dirt,
@@ -6982,15 +6998,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/sec)
-"SM" = (
-/obj/structure/frame/computer{
-	dir = 1
-	},
-/obj/item/circuitboard/computer/rdconsole,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/ai/vault)
 "SN" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
@@ -7619,19 +7626,6 @@
 /obj/structure/door_assembly/door_assembly_public,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/genetics)
-"VV" = (
-/obj/structure/rack,
-/obj/item/circuitboard/machine/circuit_imprinter/offstation{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/ai_module/law/core/full/drone,
-/obj/item/circuitboard/machine/ai_law_rack/core{
-	pixel_y = 5;
-	pixel_x = -4
-	},
-/turf/open/floor/circuit/red/off,
-/area/ruin/space/ks13/ai/corridor)
 "VW" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating/airless,
@@ -8141,6 +8135,12 @@
 /obj/structure/fluff/oldturret,
 /turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
+"YE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/plaque/static_plaque/golden/commission/ks13,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/hallway/central)
 "YF" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/mapping_helpers/broken_floor,
@@ -12477,7 +12477,7 @@ Fw
 LA
 Xr
 DM
-eI
+YE
 yR
 Qz
 tY
@@ -13563,7 +13563,7 @@ Jy
 lq
 YC
 Yc
-VV
+ba
 Yc
 aa
 aa
@@ -14466,7 +14466,7 @@ xf
 zH
 ss
 Jk
-SM
+MQ
 Ym
 xf
 aa

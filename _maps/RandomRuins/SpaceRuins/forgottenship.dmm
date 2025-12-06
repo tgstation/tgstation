@@ -228,27 +228,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"bf" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/mapping_helpers/apc/no_charge,
-/obj/effect/mapping_helpers/apc/syndicate_access,
-/obj/structure/cable,
-/obj/structure/closet/crate/secure/gear{
-	req_access = list("syndicate")
-	},
-/obj/item/circuitboard/machine/circuit_imprinter/offstation,
-/obj/item/circuitboard/machine/protolathe/offstation,
-/obj/item/stack/sheet/iron/twenty,
-/obj/item/stack/sheet/glass{
-	amount = 10
-	},
-/obj/item/stack/cable_coil,
-/obj/item/circuitboard/computer/rdconsole,
-/obj/item/storage/box/stockparts/deluxe,
-/obj/item/storage/box/stockparts/deluxe,
-/obj/item/storage/box/beakers,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bg" = (
 /obj/structure/sign/poster/contraband/syndicate_pistol,
 /turf/closed/wall/r_wall/plastitanium/syndicate,
@@ -438,6 +417,11 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bN" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/template_noop,
+/area/space/nearstation)
 "bO" = (
 /obj/structure/bodycontainer/crematorium{
 	id = "fscremate"
@@ -915,6 +899,9 @@
 /obj/item/disk/surgery/forgottenship,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
+"dj" = (
+/turf/closed/mineral/random/high_chance,
+/area/space/nearstation)
 "dl" = (
 /obj/machinery/door/password/voice/sfc{
 	password = null
@@ -1096,9 +1083,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"zg" = (
-/turf/closed/mineral/random/high_chance,
-/area/space/nearstation)
 "Cy" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
@@ -1172,11 +1156,27 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"Lu" = (
-/obj/structure/lattice/catwalk,
+"LK" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
-/turf/template_noop,
-/area/space/nearstation)
+/obj/structure/closet/crate/secure/gear{
+	req_access = list("syndicate")
+	},
+/obj/item/circuitboard/machine/circuit_imprinter/offstation,
+/obj/item/circuitboard/machine/protolathe/offstation,
+/obj/item/stack/sheet/iron/twenty,
+/obj/item/stack/sheet/glass{
+	amount = 10
+	},
+/obj/item/stack/cable_coil,
+/obj/item/circuitboard/computer/rdconsole/unlocked,
+/obj/item/storage/box/stockparts/deluxe,
+/obj/item/storage/box/stockparts/deluxe,
+/obj/item/storage/box/beakers,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "VF" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
@@ -1187,7 +1187,7 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"Wz" = (
+"Wa" = (
 /obj/item/ai_module/law/core/full/cybersun,
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium/red,
@@ -1372,8 +1372,8 @@ aa
 aa
 aa
 aa
-zg
-zg
+dj
+dj
 aa
 aa
 aa
@@ -1419,9 +1419,9 @@ aa
 aa
 aa
 aa
-zg
-zg
-zg
+dj
+dj
+dj
 aa
 aa
 aa
@@ -1467,8 +1467,8 @@ aa
 aa
 aa
 aa
-zg
-zg
+dj
+dj
 aa
 aa
 aa
@@ -1617,9 +1617,9 @@ aa
 aa
 aa
 aa
-zg
-zg
-zg
+dj
+dj
+dj
 aa
 aa
 "}
@@ -1665,9 +1665,9 @@ aa
 aa
 aa
 aa
-zg
-zg
-zg
+dj
+dj
+dj
 aa
 "}
 (11,1,1) = {"
@@ -2007,7 +2007,7 @@ aa
 aa
 aa
 bZ
-Wz
+Wa
 aw
 bZ
 aB
@@ -2360,7 +2360,7 @@ aY
 aY
 ba
 bb
-bf
+LK
 bh
 bj
 bj
@@ -2446,11 +2446,11 @@ be
 aP
 aP
 bM
-Lu
-Lu
-Lu
-Lu
-Lu
+bN
+bN
+bN
+bN
+bN
 ab
 ab
 bF
@@ -2977,7 +2977,7 @@ aa
 aa
 aa
 aa
-zg
+dj
 aa
 aa
 aa
@@ -3022,10 +3022,10 @@ aa
 aa
 aa
 aa
-zg
-zg
-zg
-zg
+dj
+dj
+dj
+dj
 aa
 aa
 aa
@@ -3069,9 +3069,9 @@ aa
 aa
 aa
 aa
-zg
-zg
-zg
+dj
+dj
+dj
 aa
 aa
 aa
@@ -3107,7 +3107,7 @@ aa
 aa
 aa
 aa
-zg
+dj
 aa
 aa
 aa
@@ -3153,9 +3153,9 @@ aa
 aa
 aa
 aa
-zg
-zg
-zg
+dj
+dj
+dj
 aa
 aa
 aa
@@ -3200,10 +3200,10 @@ aa
 aa
 aa
 aa
-zg
-zg
-zg
-zg
+dj
+dj
+dj
+dj
 aa
 aa
 aa
@@ -3248,7 +3248,7 @@ aa
 aa
 aa
 aa
-zg
+dj
 aa
 aa
 aa
