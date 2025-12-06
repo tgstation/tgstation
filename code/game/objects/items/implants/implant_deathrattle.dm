@@ -1,10 +1,19 @@
+/// This deathrattle group does not care about the area someone dies in.
+#define DEATHRATTLE_AREA_NOLIST		0
+/// This deathrattle group uses its `area_list` as a blacklist: if someone dies in these areas, they DO NOT cause an alert.
+#define DEATHRATTLE_AREA_BLACKLIST	1
+/// This deathrattle group uses its `area_list` as a whitelist: if someone dies in these areas, they DO cause an alert.
+#define DEATHRATTLE_AREA_WHITELIST	2
+
 /datum/deathrattle_group
 	/// The name of our deathrattle group.
 	var/name
 	/// The associated implants in this deathrattle group.
 	var/list/implants = list()
-	/// The area whitelist: if someone dies in an area marked with this, they don't cause an alert.
-	var/list/area/area_whitelist = list()
+	/// The area list mode.
+	var/area_list_mode = DEATHRATTLE_AREA_NOLIST
+	/// The area list. See `area_list_mode` for how this gets used.
+	var/list/area/area_list = list()
 
 /datum/deathrattle_group/New(name)
 	if(name)
@@ -14,19 +23,22 @@
 		// use for making custom linked groups.
 		src.name = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 
-/datum/deathrattle_group/offsite
-	area_whitelist = list(
-		/area/station,
-		/area/mine,
+/// A deathrattle group subtype specifically for alerting people who die in the Lavaland or Icemoon Wastes.
+/// As per maintainer request, excludes... basically everything that isn't raw wasteland.
+/datum/deathrattle_group/lavaland
+	area_list_mode = DEATHRATTLE_AREA_WHITELIST
+	area_list = list(
+		/area/lavaland,
+		/area/icemoon,
 	)
 
-/datum/deathrattle_group/offsite/New(name)
+/datum/deathrattle_group/lavaland/New(name)
 	if(name)
 		src.name = name
 	else
 		// Give the group a unique name for debugging, and possible future
 		// use for making custom linked groups.
-		src.name = "OS-[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
+		src.name = "MIN-[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 
 /*
  * Proc called by new implant being added to the group. Listens for the
@@ -71,8 +83,12 @@
 
 	var/name = owner.mind ? owner.mind.name : owner.real_name
 	var/area/death_area = get_area(owner)
-	if(is_type_in_list(death_area, area_whitelist))
-		return // don't alert a death if it's in the area whitelist
+	// don't alert for a death if it's in in the area list AND we're on blacklist mode
+	if(is_type_in_list(death_area, area_list) && area_list_mode == DEATHRATTLE_AREA_BLACKLIST)
+		return
+	// don't alert a death if it's not in the area list AND we're on whitelist mode
+	if(!is_type_in_list(death_area, area_list) && area_list_mode == DEATHRATTLE_AREA_WHITELIST)
+		return
 	var/area_name = get_area_name(get_turf(owner))
 	// All "hearers" hear the same sound.
 	var/sound = pick(
@@ -122,10 +138,10 @@
 	// Can be implanted in anything that's a mob. Syndicate cyborgs, talking fish, humans...
 	return TRUE
 
-/obj/item/implant/deathrattle/offstation
+/obj/item/implant/deathrattle/lavaland
 	name = "expeditionary deathrattle implant"
 
-	deathrattle_group_type = /datum/deathrattle_group/offsite
+	deathrattle_group_type = /datum/deathrattle_group/lavaland
 
 	implant_info = "ONLY TRIGGERS ON NON-STATION DEATHS. \
 		Requires configuration before implanting. Automatically activates upon implantation. \
@@ -136,7 +152,11 @@
 	desc = "A glass case containing a deathrattle implant."
 	imp_type = /obj/item/implant/deathrattle
 
-/obj/item/implantcase/deathrattle/offstation
+/obj/item/implantcase/deathrattle/lavaland
 	name = "implant case - 'Expeditionary Deathrattle'"
-	desc = "A glass case containing an expeditionary deathrattle implant. Only alerts to deaths outside of the station and mining outpost."
-	imp_type = /obj/item/implant/deathrattle/offstation
+	desc = "A glass case containing an expeditionary deathrattle implant. Only alerts to deaths that occur on Lavaland."
+	imp_type = /obj/item/implant/deathrattle/lavaland
+
+#undef DEATHRATTLE_AREA_NOLIST
+#undef DEATHRATTLE_AREA_BLACKLIST
+#undef DEATHRATTLE_AREA_WHITELIST
