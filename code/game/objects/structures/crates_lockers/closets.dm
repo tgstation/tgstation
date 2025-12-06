@@ -395,7 +395,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 	if(isnull(held_item))
 		if(secure && !broken)
-			context[SCREENTIP_CONTEXT_RMB] = opened ? "Lock" : "Unlock"
+			context[SCREENTIP_CONTEXT_RMB] = !locked ? "Lock" : "Unlock"
 		if(!welded)
 			context[SCREENTIP_CONTEXT_LMB] = opened ? "Close" : "Open"
 		screentip_change = TRUE
