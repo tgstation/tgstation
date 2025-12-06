@@ -36,7 +36,7 @@
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
-	new /obj/item/autosurgeon/paperwork
+	new /obj/item/autosurgeon/paperwork(src)
 	new /obj/item/door_remote/head_of_personnel(src)
 	new /obj/item/circuitboard/machine/techfab/department/service(src)
 	new /obj/item/storage/photo_album/hop(src)
