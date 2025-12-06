@@ -634,6 +634,7 @@
 	armor_type = /datum/armor/mod_theme_medical
 	charge_drain = DEFAULT_CHARGE_DRAIN * 1.5
 	slowdown_deployed = 0.5
+	complexity_max = DEFAULT_MAX_COMPLEXITY - 1
 	glove_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
 	allowed_suit_storage = list(
 		/obj/item/healthanalyzer,
