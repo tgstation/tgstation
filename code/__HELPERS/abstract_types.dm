@@ -16,6 +16,6 @@
 /// Like typesof, but automatically excludes abstract typepaths
 /proc/valid_typesof(datum/base_type)
 	. = list()
-	for (var/datum/type as anything in typesof(base_type))
-		if (type != type::abstract_type)
-			. += type
+	for (var/datum/some_type as anything in typesof(base_type))
+		if (some_type != some_type::abstract_type)
+			. += some_type
