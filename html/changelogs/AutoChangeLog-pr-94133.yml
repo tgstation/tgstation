@@ -1,0 +1,6 @@
+author: "alien3301"
+delete-after: True
+changes:
+  - bugfix: "Executing people with guns no longer makes you hit them with the gun"
+  - bugfix: "Trying to shoot a gun when it cant shoot doesn't make you melee with it"
+  - bugfix: "If trying to shoot would make a click sound then executing will also make the sound"
