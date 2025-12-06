@@ -327,11 +327,10 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/gun/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(try_fire_gun(interacting_with, user, list2params(modifiers)))
-		return ITEM_INTERACT_SUCCESS
-	if(chambered_attack_block == TRUE && can_shoot() && isliving(interacting_with))
-		return ITEM_INTERACT_BLOCKING // block melee (etc), usually if waiting on fire delay
-	return NONE
+	var/fired = try_fire_gun(interacting_with, user, list2params(modifiers))
+	if(!fired && chambered_attack_block == TRUE && can_shoot() && isliving(interacting_with))
+		return ITEM_INTERACT_BLOCKING
+	return fired
 
 /obj/item/gun/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(user.combat_mode && isliving(interacting_with))
@@ -353,9 +352,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(try_fire_gun(interacting_with, user, list2params(modifiers)))
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	return try_fire_gun(interacting_with, user, list2params(modifiers))
 
 /obj/item/gun/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(IN_GIVEN_RANGE(user, interacting_with, GUNPOINT_SHOOTER_STRAY_RANGE))
@@ -367,43 +364,42 @@
 
 /obj/item/gun/proc/fire_gun(atom/target, mob/living/user, flag, params)
 	if(QDELETED(target))
-		return
+		return NONE
 	if(firing_burst)
-		return
+		return NONE
 
 	if(SEND_SIGNAL(user, COMSIG_MOB_TRYING_TO_FIRE_GUN, src, target, flag, params) & COMPONENT_CANCEL_GUN_FIRE)
-		return
+		return NONE
 
 	if(SEND_SIGNAL(src, COMSIG_GUN_TRY_FIRE, user, target, flag, params) & COMPONENT_CANCEL_GUN_FIRE)
-		return
+		return NONE
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
-			return
+			return NONE
 		if(!ismob(target)) //melee attack
-			return
+			return NONE
 		if(target == user && (user.zone_selected != BODY_ZONE_PRECISE_MOUTH && doafter_self_shoot)) //so we can't shoot ourselves (unless mouth selected)
-			return
+			return NONE
 
 	if(istype(user))//Check if the user can use the gun, if the user isn't alive(turrets) assume it can.
 		var/mob/living/L = user
 		if(!can_trigger_gun(L))
-			return
+			return NONE
 
 	if(flag && doafter_self_shoot && user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
-		handle_suicide(user, target, params)
-		return
+		return handle_suicide(user, target, params)
 
 	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
 		shoot_with_empty_chamber(user)
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(check_botched(user, target))
-		return
+		return NONE
 
 	var/obj/item/bodypart/other_hand = user.has_hand_for_held_index(user.get_inactive_hand_index()) //returns non-disabled inactive hands
 	if(weapon_weight == WEAPON_HEAVY && (user.get_inactive_held_item() || !other_hand))
 		balloon_alert(user, "use both hands!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
 	var/loop_counter = 0
@@ -507,7 +503,7 @@
 	add_fingerprint(user)
 
 	if(fire_cd)
-		return
+		return NONE
 
 	//Vary by at least this much
 	var/randomized_bonus_spread = rand(base_bonus_spread, bonus_spread)
@@ -532,12 +528,12 @@
 			if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 				if(chambered.harmful) // Is the bullet chambered harmful?
 					to_chat(user, span_warning("[src] is lethally chambered! You don't want to risk harming anyone..."))
-					return
+					return NONE
 			var/sprd = round((rand(0, 1) - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * total_random_spread)
 			before_firing(target,user)
 			if(!chambered.fire_casing(target, user, params, 0, suppressed, zone_override, sprd, src))
 				shoot_with_empty_chamber(user)
-				return
+				return NONE
 			else
 				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
 					shoot_live_shot(user, TRUE, target, message)
@@ -545,7 +541,7 @@
 					shoot_live_shot(user, FALSE, target, message)
 		else
 			shoot_with_empty_chamber(user)
-			return
+			return NONE
 		// If gun gets destroyed as a result of firing
 		if (!QDELETED(src))
 			process_chamber()
@@ -618,10 +614,10 @@
 
 /obj/item/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params, bypass_timer)
 	if(!ishuman(user) || !ishuman(target))
-		return
+		return NONE
 
 	if(fire_cd)
-		return
+		return NONE
 
 	if(user == target)
 		target.visible_message(span_warning("[user] sticks [src] in [user.p_their()] mouth, ready to pull the trigger..."), \
@@ -639,22 +635,27 @@
 			else if(target?.Adjacent(user))
 				target.visible_message(span_notice("[user] has decided to spare [target]"), span_notice("[user] has decided to spare your life!"))
 		fire_cd = FALSE
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	fire_cd = FALSE
 
 	target.visible_message(span_warning("[user] pulls the trigger!"), span_userdanger("[(user == target) ? "You pull" : "[user] pulls"] the trigger!"))
 
-	if(chambered?.loaded_projectile)
-		chambered.loaded_projectile.damage *= 5
-		if(chambered.loaded_projectile.wound_bonus != CANT_WOUND)
-			chambered.loaded_projectile.wound_bonus += 5 // much more dramatic on multiple pellet'd projectiles really
+	if(!chambered?.loaded_projectile)
+		shoot_with_empty_chamber()
+		return ITEM_INTERACT_BLOCKING
+
+	chambered.loaded_projectile.damage *= 5
+	if(chambered.loaded_projectile.wound_bonus != CANT_WOUND)
+		chambered.loaded_projectile.wound_bonus += 5 // much more dramatic on multiple pellet'd projectiles really
 
 	var/fired = process_fire(target, user, TRUE, params, BODY_ZONE_HEAD)
 	if(!fired && chambered?.loaded_projectile)
 		chambered.loaded_projectile.damage /= 5
 		if(chambered.loaded_projectile.wound_bonus != CANT_WOUND)
 			chambered.loaded_projectile.wound_bonus -= 5
+		return NONE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/proc/unlock() //used in summon guns and as a convience for admins
 	if(pin)
