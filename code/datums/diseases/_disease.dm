@@ -213,7 +213,7 @@
 		if(recovery_prob)
 			if(istype(src, /datum/disease/advance)) //advanced diseases can fight off recovery with a high resistance stat
 				var/datum/disease/advance/advanced_disease = src
-				var/recovery_failure_prob = clamp((advanced_disease.properties["resistance"] * 2), 0, 50)
+				var/recovery_failure_prob = clamp((advanced_disease.properties["resistance"] * 1.5), 0, 50)
 				if(prob(recovery_failure_prob))
 					return FALSE
 			if(SPT_PROB(recovery_prob, seconds_per_tick))
