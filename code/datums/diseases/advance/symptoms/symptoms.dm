@@ -124,7 +124,11 @@
 	data["level"] = level
 	data["neutered"] = neutered
 	data["threshold_desc"] = threshold_descs
-	data["symptom_cure"] = symptom_cure.name || "Nothing"
+	if(symptom_cure)
+		var/datum/reagent/cure = symptom_cure
+		data["symptom_cure"] = cure.name
+	else
+		data["symptom_cure"] = "Nothing"
 	data["cure_color"] = cure_color
 	return data
 
