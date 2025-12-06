@@ -1,0 +1,7 @@
+author: "ArchBTW, Bisar"
+delete-after: True
+changes:
+  - balance: "Changeling's Biodegrade works against grabs."
+  - balance: "Changeling's Biodegrade destroys all restraints instead of one single restraint."
+  - bugfix: "Changeling's Biodegrade shows the effect when used inside lockers."
+  - bugfix: "Changeling's Biodegrade properly covers restraint types (cuffed prisoner shoes, strait jackets, etc)."

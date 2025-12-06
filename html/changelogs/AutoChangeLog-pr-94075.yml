@@ -1,0 +1,4 @@
+author: "Tostah"
+delete-after: True
+changes:
+  - balance: "increases mech damage to windows to feel more realistic"
