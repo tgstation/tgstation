@@ -40,7 +40,7 @@
 	///If the symptom requires an organ for the effects to function, robotic organs are immune to disease unless inorganic biology symptom is present
 	var/required_organ
 	///The remedy for this symptom
-	var/datum/reagent/symptom_cure = /datum/reagent/medicine/spaceacillin
+	var/symptom_cure = /datum/reagent/medicine/spaceacillin
 	///What color the cure text shows up in the pandemic UI
 	var/cure_color = "green"
 	///A remedied symptom has no effect and contributes to the cure
