@@ -99,7 +99,9 @@
 
 /obj/item/stock_parts/power_store/cell/laser_pistol
 	name = "laser pistol power cell"
-	chargerate = STANDARD_CELL_RATE * 0.15
+	chargerate = INFINITY
+	charge = INFINITY
+	emp_damage_modifier = -1
 
 /obj/item/stock_parts/power_store/cell/ninja
 	name = "black power cell"
