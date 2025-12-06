@@ -117,7 +117,7 @@
 /obj/effect/meteor/examine(mob/user)
 	. = ..()
 
-	if((user.mind && user.mind.get_skill_level(/datum/skill/athletics) >= SKILL_LEVEL_LEGENDARY))
+	if((user.mind?.get_skill_level(/datum/skill/athletics) >= SKILL_LEVEL_LEGENDARY))
 		. += span_notice("On second thought, it doesn't look too tough.")
 	check_examine_award(user)
 
@@ -125,17 +125,27 @@
 	if(!isliving(user))
 		return ..()
 	var/mob/living/livinguser = user
-	if(livinguser.mind && livinguser.combat_mode && livinguser.mind.get_skill_level(/datum/skill/athletics) >= SKILL_LEVEL_LEGENDARY)
+
+	if(livinguser.combat_mode && livinguser.mind?.get_skill_level(/datum/skill/athletics) >= SKILL_LEVEL_LEGENDARY)
 		check_punch_award(livinguser)
 		playsound(loc, SFX_PUNCH, 50, TRUE)
-		punch_redirect(livinguser)
+		redirect(livinguser)
 		return TRUE
+
 	return ..()
 
 /obj/effect/meteor/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.tool_behaviour == TOOL_MINING)
 		make_debris()
 		qdel(src)
+
+	else if	(istype(attacking_item, /obj/item/melee/baseball_bat))
+		if(user.mind?.get_skill_level(/datum/skill/athletics) >= SKILL_LEVEL_EXPERT)
+			playsound(src, 'sound/items/baseballhit.ogg', 100, TRUE)
+			redirect(user)
+			return TRUE
+		to_chat(user, span_warning("\The [src] is too heavy for you!"))
+
 	else if (istype(attacking_item, /obj/item/melee/powerfist))
 		var/obj/item/melee/powerfist/fist = attacking_item
 		if(!fist.tank)
@@ -146,12 +156,12 @@
 			to_chat(user, span_warning("\The [fist] didn't have enough gas to budge \the [src]!"))
 			return ..()
 		playsound(src, 'sound/items/weapons/resonator_blast.ogg', 50, TRUE)
-		punch_redirect(user)
+		redirect(user)
 		return TRUE
 
 	return ..()
 
-/obj/effect/meteor/proc/punch_redirect(mob/athlete)
+/obj/effect/meteor/proc/redirect(mob/athlete)
 	dest = spaceDebrisStartLoc(get_cardinal_dir(athlete, src), z)
 	chase_target(dest)
 
@@ -189,7 +199,7 @@
 	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
 		user.client.give_award(/datum/award/achievement/misc/meteor_examine, user)
 
-//Same thing, but for punching award
+///Same as check_examine_award(), but for punching award
 /obj/effect/meteor/proc/check_punch_award(mob/user)
 	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
 		user.client.give_award(/datum/award/achievement/misc/meteor_punch, user)
