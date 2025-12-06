@@ -71,7 +71,7 @@
 	name = "ominous hood"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
-	icon_state = "eldritch"
+	icon_state = "armor"
 	desc = "A torn, dust-caked hood. Strange eyes line the inside."
 	flags_inv = HIDEMASK | HIDEEARS | HIDEEYES | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR | HIDESNOUT
 	flags_cover = HEADCOVERSEYES | PEPPERPROOF
