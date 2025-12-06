@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - code_imp: "Drag-drop activation can now be added as an element to objects"
+  - qol: "Portable crew monitor can now be drag-drop activated similar to a PDA"
