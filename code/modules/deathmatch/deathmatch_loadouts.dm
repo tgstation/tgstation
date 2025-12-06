@@ -849,7 +849,7 @@
 		/obj/item/etherealballdeployer,
 	)
 
-	mutations_to_add = list(/obj/item/dnainjector/shock) // pretend ethereals are interesting
+	mutations_to_add = list(/datum/mutation/shock) // pretend ethereals are interesting
 
 /datum/outfit/deathmatch_loadout/plasmamen
 	name = "Deathmatch: Plasmaman Species"
@@ -890,7 +890,7 @@
 	head = /obj/item/clothing/head/soft/rainbow
 	glasses = null
 	ears = /obj/item/radio/headset
-	neck = /obj/item/clothing/neck/petcollar
+	neck = /obj/item/clothing/neck/petcollar/wearable
 	//suit
 	uniform = /obj/item/clothing/under/color/rainbow
 	l_pocket = /obj/item/toy/cattoy

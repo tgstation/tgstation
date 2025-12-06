@@ -113,7 +113,7 @@
 					/obj/item/folder/red,
 					/obj/item/folder/yellow,
 					/obj/item/clipboard = 2,
-					/obj/item/stamp,
+					/obj/item/stamp/granted,
 					/obj/item/stamp/denied,
 					/obj/item/laser_pointer/purple,
 				)
@@ -224,8 +224,7 @@
 ///Generate assorted uplink items, taking into account the same surplus modifiers used for surplus crates
 /datum/supply_pack/misc/syndicate/fill(obj/structure/closet/crate/C)
 	var/list/uplink_items = list()
-	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
-		var/datum/uplink_item/item = SStraitor.uplink_items_by_type[item_path]
+	for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
 		if(item.purchasable_from & contents_uplink_type && item.item)
 			uplink_items += item
 

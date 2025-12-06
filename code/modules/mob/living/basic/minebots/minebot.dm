@@ -119,7 +119,7 @@
 		user.balloon_alert(user, "at full integrity!")
 		return TRUE
 	if(welder.use_tool(src, user, 0, volume=40))
-		adjustBruteLoss(-15)
+		adjust_brute_loss(-15)
 		user.balloon_alert(user, "successfully repaired!")
 	return TRUE
 

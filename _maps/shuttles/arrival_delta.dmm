@@ -201,10 +201,6 @@
 /obj/structure/window/reinforced/shuttle,
 /turf/open/floor/grass,
 /area/shuttle/arrival)
-"az" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/arrival)
 "aC" = (
 /obj/machinery/computer{
 	dir = 1;
@@ -337,6 +333,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "DV" = (
@@ -357,6 +354,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "Nn" = (
@@ -395,7 +393,7 @@ ah
 ah
 ah
 ah
-az
+ag
 an
 ag
 ag
@@ -547,7 +545,7 @@ ah
 ah
 ah
 ah
-az
+ag
 an
 ag
 ag

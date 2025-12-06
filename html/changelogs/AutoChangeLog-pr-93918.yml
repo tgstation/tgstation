@@ -1,4 +1,0 @@
-author: "FalloutFalcon"
-delete-after: True
-changes:
-  - refactor: "refactors some attack-chain code relating to xenobio potions and items"

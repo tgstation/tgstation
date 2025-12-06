@@ -42,6 +42,12 @@
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
 	layer = ABOVE_MOB_LAYER
+	custom_materials = list(
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 20,
+		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT,
+	)
 	/// The sound the guillotine makes when it successfully cuts off a head
 	var/drop_sound = 'sound/items/weapons/guillotine.ogg'
 	/// The current state of the blade

@@ -103,6 +103,7 @@
 	icon_state = "flatcart"
 	density = TRUE
 	opacity = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 8, /datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/flatpack_cart/Initialize(mapload)
 	. = ..()
