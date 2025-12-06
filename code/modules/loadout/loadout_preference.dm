@@ -16,7 +16,7 @@
 
 // Sanitize on load to ensure no invalid paths from older saves get in
 /datum/preference/loadout/deserialize(input, datum/preferences/preferences)
-	return sanitize_loadout_list(input, preferences.parent?.mob)
+	return sanitize_loadout_list(input)
 
 // Default value is null - the loadout list is a lazylist
 /datum/preference/loadout/create_default_value(datum/preferences/preferences)
@@ -51,6 +51,10 @@
 					It has been removed, renamed, or is otherwise missing - \
 					You may want to check your loadout settings."))
 			continue
+
+		var/datum/loadout_item/loadout_item = GLOB.all_loadout_datums[real_path]
+		if(loadout_item.is_disabled())
+			continue // this just falls off silently
 
 		// Set into sanitize list using converted path key
 		var/list/data = passed_list[path]
