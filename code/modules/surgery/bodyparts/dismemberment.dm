@@ -248,7 +248,7 @@
 	old_limb?.drop_limb(TRUE)
 
 	if(!try_attach_limb(limb_owner, TRUE)) //If it failed to replace, re-attach their old limb as if nothing happened.
-		old_limb.try_attach_limb(limb_owner, TRUE)
+		old_limb?.try_attach_limb(limb_owner, TRUE)
 		return FALSE
 	return TRUE
 
