@@ -71068,7 +71068,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
 "tUV" = (
