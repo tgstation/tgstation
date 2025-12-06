@@ -109,7 +109,3 @@ DEFINE_BITFIELD(spread_flags, list(
 /// Symptom Frequency Modifier
 //// Raise to make symptoms fire less frequently, lower to make them fire more frequently. Keep at 0 or above.
 #define DISEASE_SYMPTOM_FREQUENCY_MODIFIER 1
-
-/// Minimum Chemical Cure Chance
-//// Minimum per-cycle chance we want of being able to cure an advanced disease with the chemicals present.
-#define DISEASE_MINIMUM_CHEMICAL_CURE_CHANCE 5

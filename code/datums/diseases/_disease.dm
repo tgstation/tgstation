@@ -109,10 +109,11 @@
 			cure(add_resistance = FALSE)
 			return FALSE
 
-	if(has_cure())
+	var/cure_status = has_cure()
+	if(cure_status)
 		cure_mod = cure_chance / bad_immune
 		if(istype(src, /datum/disease/advance))
-			cure_mod = max(cure_chance, DISEASE_MINIMUM_CHEMICAL_CURE_CHANCE)
+			cure_mod = cure_mod * 2 * cure_status // Advanced diseases can be cured up to 2x as fast if all symptoms are remedied
 		if(disease_flags & CHRONIC && SPT_PROB(cure_mod, seconds_per_tick))
 			update_stage(1)
 			to_chat(affected_mob, span_notice("Your chronic illness is alleviated a little, though it can't be cured!"))
@@ -210,6 +211,11 @@
 		recovery_prob = clamp(recovery_prob / bad_immune, 0, 100)
 
 		if(recovery_prob)
+			if(istype(src, /datum/disease/advance)) //advanced diseases can fight off recovery with a high resistance stat
+				var/datum/disease/advance/advanced_disease = src
+				var/recovery_failure_prob = clamp((advanced_disease.properties["resistance"] * 2), 0, 50)
+				if(prob(recovery_failure_prob))
+					return FALSE
 			if(SPT_PROB(recovery_prob, seconds_per_tick))
 				if(stage == 1 && prob(cure_chance * DISEASE_FINAL_CURE_CHANCE_MULTIPLIER)) //if we reduce FROM stage == 1, cure the virus - after defeating its cure_chance in a final battle
 					if(!HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) && (affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING))

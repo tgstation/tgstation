@@ -420,15 +420,25 @@
 		if(!disease_hr)
 			render_list += "<hr>"
 			disease_hr = TRUE
+		var/cure_text
+		if(istype(disease, /datum/disease/advance))
+			var/datum/disease/advance/advanced_disease = disease
+			var/remedies = list()
+			var/remedy_limit = advanced ? 3 : 2
+			for(var/datum/symptom/each_symptom in advanced_disease.symptoms)
+				if(!each_symptom.neutered && length(remedies) >= remedy_limit)
+					remedies += each_symptom.symptom_cure.name
+			cure_text = english_list(remedies)
+		else
+			cure_text = disease.cure_text
 		render_list += "<span class='alert ml-1'>\
 			<b>Warning: [disease.form] detected</b><br>\
 			<div class='ml-2'>\
 			Name: [disease.name].<br>\
 			Type: [disease.spread_text].<br>\
 			Stage: [disease.stage]/[disease.max_stages].<br>\
-			Possible Cure: [disease.cure_text]</div>\
+			Possible Cure: [cure_text]</div>\
 			</span>"
-
 
 	// Lungs
 	var/obj/item/organ/lungs/lungs = target.get_organ_slot(ORGAN_SLOT_LUNGS)
