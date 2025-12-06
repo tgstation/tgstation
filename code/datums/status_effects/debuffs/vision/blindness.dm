@@ -12,6 +12,8 @@
 	var/static/list/update_signals = list(
 		SIGNAL_REMOVETRAIT(TRAIT_SIGHT_BYPASS),
 		SIGNAL_ADDTRAIT(TRAIT_SIGHT_BYPASS),
+		SIGNAL_ADDTRAIT(TRAIT_ECHOLOCATOR),
+		SIGNAL_REMOVETRAIT(TRAIT_ECHOLOCATOR),
 	)
 	/// List of sources which prevent SIGHT_BYPASS from working
 	var/static/list/blocking_sources = list(
@@ -52,6 +54,12 @@
 	make_unblind()
 
 /datum/status_effect/grouped/blindness/proc/make_blind()
+	if(HAS_TRAIT(owner, TRAIT_ECHOLOCATOR))
+		// echolocators don't have the actual visual effects of blindness
+		// but they're still blind. so is_blind() checks pass.
+		make_unblind()
+		return
+
 	owner.overlay_fullscreen(id, /atom/movable/screen/fullscreen/blind)
 	// You are blind - at most, able to make out shapes near you
 	owner.add_client_colour(/datum/client_colour/monochrome, REF(src))

@@ -9,18 +9,20 @@
 	)
 	w_class = WEIGHT_CLASS_NORMAL
 	shade_color = "blue"
-	var/does_it_blind = FALSE
 	variant_traits_added = list(TRAIT_ANTIMAGIC_NO_SELFBLOCK)
+
+	var/datum/component/echolocation/echolocation_component
+	var/datum/component/anti_magic/antimagic_component
 
 /obj/item/organ/brain/psyker/on_mob_insert(mob/living/carbon/inserted_into)
 	. = ..()
-	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker, blinding = does_it_blind)
-	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
+	echolocation_component = inserted_into.AddComponent(/datum/component/echolocation, echo_icon = "psyker")
+	antimagic_component = inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
 
 /obj/item/organ/brain/psyker/on_mob_remove(mob/living/carbon/removed_from)
 	. = ..()
-	qdel(removed_from.GetComponent(/datum/component/echolocation))
-	qdel(removed_from.GetComponent(/datum/component/anti_magic))
+	qdel(echolocation_component)
+	qdel(antimagic_component)
 
 /obj/item/organ/brain/psyker/on_life(seconds_per_tick, times_fired)
 	. = ..()
@@ -33,9 +35,6 @@
 	owner.adjust_disgust(33 * seconds_per_tick)
 	apply_organ_damage(5 * seconds_per_tick, 199)
 
-/obj/item/organ/brain/psyker/blinding
-	does_it_blind = TRUE
-
 /obj/item/bodypart/head/psyker
 	limb_id = BODYPART_ID_PSYKER
 	is_dimorphic = FALSE
@@ -44,7 +43,7 @@
 	head_flags = HEAD_DEBRAIN | HEAD_NO_DISFIGURE // ignore disfigurement by damage, as we're always disfigured
 
 /// flavorful variant of psykerizing that deals damage and sends messages before calling psykerize()
-/mob/living/carbon/human/proc/slow_psykerize(blind_them = FALSE)
+/mob/living/carbon/human/proc/slow_psykerize()
 	if(stat == DEAD || !get_bodypart(BODY_ZONE_HEAD) || istype(get_bodypart(BODY_ZONE_HEAD), /obj/item/bodypart/head/psyker))
 		return
 	to_chat(src, span_userdanger("You feel unwell..."))
@@ -55,7 +54,7 @@
 	emote("scream")
 	apply_damage(30, BRUTE, BODY_ZONE_HEAD)
 	sleep(5 SECONDS)
-	if(!psykerize(is_blinding = blind_them))
+	if(!psykerize())
 		to_chat(src, span_warning("The transformation subsides..."))
 		return
 	apply_damage(50, BRUTE, BODY_ZONE_HEAD)
@@ -64,7 +63,7 @@
 	emote("scream")
 
 /// Proc with no side effects that turns someone into a psyker. returns FALSE if it could not psykerize.
-/mob/living/carbon/human/proc/psykerize(is_blinding = FALSE)
+/mob/living/carbon/human/proc/psykerize(E)
 	var/obj/item/bodypart/head/old_head = get_bodypart(BODY_ZONE_HEAD)
 	var/obj/item/organ/brain/old_brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	var/obj/item/organ/old_eyes = get_organ_slot(ORGAN_SLOT_EYES)
@@ -75,14 +74,11 @@
 		return FALSE
 	qdel(old_head)
 	var/obj/item/organ/brain/psyker/psyker_brain = new() /// turns out if you make a flashing monochromatic outline against black background that refreshes on inconsistant intervals, it hurts peoples eyes. Who'da thunk.
-	if(is_blinding)
-		var/obj/item/organ/brain/psyker/blinding/dummy = new()
-		psyker_brain = dummy
 	old_brain.before_organ_replacement(psyker_brain)
 	old_brain.Remove(src, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	qdel(old_brain)
 	psyker_brain.Insert(src, special = TRUE, movement_flags = DELETE_IF_REPLACED)
-	if(old_eyes && is_blinding)
+	if(old_eyes)
 		qdel(old_eyes)
 	return TRUE
 
