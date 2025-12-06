@@ -1,0 +1,9 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Ammo will no longer show up in the Spy loot pool until a weapon that uses said ammo has been claimed. Some ammo for weapons easily obtainable on station (shotgun shot) are not limited by this restriction. Also, there's a rare chance ammo will show up anyways just to keep people on their toes."
+  - balance: "Claiming a weapon will refresh ammo in the loot pool that has already been claimed or cycled out."
+  - balance: "Bounty rewards that no Spy claimed have a chance to re-enter the loot pool after a bounty refresh, rather than being lost for the remainder of the round."
+  - balance: "When higher tier Spy bounties empty their loot pools, they will attempt to draw from lower tier pools before defaulting to telecrystals."
+  - balance: "Spies no longer are rewarded with gun cases for bounties; rather just the gun itself"
+  - spellcheck: "Modified the Spy antag info text"
