@@ -1,0 +1,4 @@
+author: "alien3301"
+delete-after: True
+changes:
+  - bugfix: "Captain starts with a command megaphone in their locker"
