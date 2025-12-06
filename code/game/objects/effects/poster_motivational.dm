@@ -152,6 +152,14 @@
 	When people read this poster they'll feel better!"
 	icon_state = "bike"
 
+/obj/structure/sign/poster/quirk/crew/mining
+	name = "Undiscovered Species"
+	desc = "A poster showing one of the Ash Walker species. We still know very little about them, be a pioneer! \
+	When people read this poster they'll feel better!"
+	icon_state = "ashwalkers"
+
+/// Departmental posters ///
+
 /obj/item/poster/quirk/cargo_logo
 	poster_type = /obj/structure/sign/poster/quirk/cargo_logo
 	quirk_poster_department = ACCOUNT_CAR
