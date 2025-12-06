@@ -289,6 +289,7 @@
 		/obj/item/laser_pointer,
 		/obj/item/stamp/granted,
 		/obj/item/stamp/denied,
+		/obj/item/stamp/void,
 	)
 
 /obj/item/organ/cyberimp/arm/toolkit/paperwork/emag_act(mob/user, obj/item/card/emag/emag_card)
