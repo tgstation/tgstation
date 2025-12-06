@@ -20,7 +20,7 @@
 	base_message_chance = 20
 	symptom_delay_min = 20
 	symptom_delay_max = 75
-	symptom_cure = /datum/reagent/leporazine // See, this one's tricky. You gotta convince them you don't have fever or chills in the same virus.
+	symptom_cure = /datum/reagent/medicine/leporazine // See, this one's tricky. You gotta convince them you don't have fever or chills in the same virus.
 	var/infective = FALSE
 	threshold_descs = list(
 		"Stage Speed 4" = "Increases the intensity of the flames.",

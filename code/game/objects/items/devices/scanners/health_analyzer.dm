@@ -804,7 +804,11 @@
 		if(!(disease.visibility_flags & HIDDEN_SCANNER))
 			var/disease_cure = disease.cure_text
 			if(istype(disease, /datum/disease/advance))
-				disease_cure = disease.symptoms[1].symptom_cure.name
+				var/datum/disease/advance/advanced_disease = disease
+				for(var/datum/symptom/each_symptom in advanced_disease.symptoms)
+					if(each_symptom.symptom_cure)
+						disease_cure = each_symptom.symptom_cure.name
+						break
 			render += "<span class='alert ml-1'><b>Warning: [disease.form] detected</b><br>\
 			<div class='ml-2'>Name: [disease.name].<br>Type: [disease.spread_text].<br>Stage: [disease.stage]/[disease.max_stages].<br>Possible Cure: [disease_cure]</div>\
 			</span>"

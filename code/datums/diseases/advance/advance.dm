@@ -69,6 +69,8 @@
 	infect(infectee, make_copy)
 	return TRUE
 
+/datum/disease/advance/get_recovery_failure_chance()
+	return clamp((properties["resistance"] * 1.5), 0, 50)
 
 // Randomly pick a symptom to activate.
 /datum/disease/advance/stage_act(seconds_per_tick, times_fired)

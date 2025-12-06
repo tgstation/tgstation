@@ -20,7 +20,7 @@
 	base_message_chance = 25
 	symptom_delay_min = 25
 	symptom_delay_max = 90
-	symptom_cure = /datum/medicine/psicodine
+	symptom_cure = /datum/reagent/medicine/psicodine
 	cure_color = "yellow"
 	threshold_descs = list(
 		"Stage Speed 7" = "Increases the amount of hallucinations.",

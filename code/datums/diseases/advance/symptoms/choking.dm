@@ -21,7 +21,7 @@
 	symptom_delay_min = 10
 	symptom_delay_max = 30
 	required_organ = ORGAN_SLOT_LUNGS
-	symptom_cure = /datum/reagent/c2/tirimol
+	symptom_cure = /datum/reagent/medicine/c2/tirimol
 	cure_color = "orange"
 	threshold_descs = list(
 		"Stage Speed 8" = "Causes choking more frequently.",
@@ -101,7 +101,7 @@ Bonus
 	symptom_delay_max = 30
 	required_organ = ORGAN_SLOT_LUNGS
 	symptom_cure = /datum/reagent/toxin/bonehurtingjuice // It'll be funny I swear
-	symptom_color = "orange" // The only level 7 symptom without a red color
+	cure_color = "orange" // The only level 7 symptom without a red color
 	threshold_descs = list(
 		"Stage Speed 8" = "Additionally synthesizes pancuronium and sodium thiopental inside the host.",
 		"Transmission 8" = "Doubles the damage caused by the symptom."

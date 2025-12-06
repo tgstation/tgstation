@@ -20,7 +20,7 @@
 	severity = 2
 	symptom_delay_min = 10
 	symptom_delay_max = 30
-	symptom_cure = /datum/disease/medicine/leporazine
+	symptom_cure = /datum/reagent/medicine/leporazine
 	threshold_descs = list(
 		"Stage Speed 5" = "Increases the intensity of the cooling; the host can fall below safe temperature levels.",
 		"Stage Speed 10" = "Increases the intensity of the cooling even further."
