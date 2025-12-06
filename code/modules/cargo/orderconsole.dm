@@ -121,7 +121,7 @@
 			"id" = order.id,
 			"amount" = 1,
 			"orderer" = order.orderer,
-			"paid" = !!order.paying_account?.add_to_accounts, //number of orders purchased privatly
+			"paid" = !isnull(order.paying_account), //number of orders purchased privatly
 			"dep_order" = !!order.department_destination, //number of orders purchased by a department
 			"can_be_cancelled" = order.can_be_cancelled,
 		))
@@ -156,6 +156,9 @@
 				"name" = pack.group,
 				"packs" = get_packs_data(pack.group),
 			)
+
+	data["displayed_currency_full_name"] = " [MONEY_NAME]"
+	data["displayed_currency_name"] = " [MONEY_SYMBOL]"
 
 	return data
 
@@ -271,7 +274,7 @@
 				if(!dept_choice)
 					return
 				if(dept_choice == "Cargo Budget")
-					personal_department = SSeconomy.get_dep_account(cargo_account)
+					personal_department = null
 
 	if(pack.goody && !self_paid)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
@@ -298,13 +301,13 @@
 				break
 
 		var/datum/supply_order/order = new(
-			pack = pack ,
+			pack = pack,
 			orderer = name,
 			orderer_rank = rank,
 			orderer_ckey = ckey,
 			reason = reason,
 			paying_account = account,
-			coupon = applied_coupon
+			coupon = applied_coupon,
 		)
 		working_list += order
 

@@ -1340,10 +1340,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/camera/directional/west{
-	c_tag = "Monastery Archives Access Tunnel";
-	network = list("ss13","monastery")
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -3242,6 +3238,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/camera/directional/west{
+	c_tag = "Monastery Archives Access Tunnel";
+	network = list("ss13","monastery")
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "TJ" = (

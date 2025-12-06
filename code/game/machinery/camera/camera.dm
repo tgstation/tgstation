@@ -7,12 +7,12 @@
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
 	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "cameracase"
-	custom_materials = list(
-		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 4,
-		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.5,
-	)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	result_path = /obj/machinery/camera/autoname/deconstructed
 	wall_external = TRUE
+
+/obj/item/wallframe/camera/find_support_structure(atom/structure)
+	return istype(structure, /obj/structure/window) ? structure : ..()
 
 /obj/machinery/camera
 	name = "security camera"
@@ -128,7 +128,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 	alarm_manager = new(src)
 	if(mapload)
-		find_and_hang_on_wall()
+		find_and_mount_on_atom(mark_for_late_init = TRUE)
+
+/obj/machinery/camera/get_turfs_to_mount_on()
+	return list(get_step(src, dir))
 
 /obj/machinery/camera/Destroy(force)
 	if(can_use())

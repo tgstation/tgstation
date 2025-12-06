@@ -2,6 +2,10 @@
 #define SHUTTER_WAIT_DURATION 0.2 SECONDS
 /// Maximum number of station trait buttons we will display, please think hard before creating scenarios where there are more than this
 #define MAX_STATION_TRAIT_BUTTONS_VERTICAL 3
+#define TRAIT_BUTTON_Y_ORIGIN 397
+#define TRAIT_BUTTON_X_ORIGIN 233
+#define TRAIT_BUTTON_OFFSET 27
+#define SQUARE_VIEWPORT_OFFSET 64
 
 /datum/hud/new_player
 	///Whether the menu is currently on the client's screen or not
@@ -34,6 +38,10 @@
 	start_button.RegisterSignal(src, COMSIG_HUD_LOBBY_COLLAPSED, TYPE_PROC_REF(/atom/movable/screen/lobby, collapse_button))
 	start_button.RegisterSignal(src, COMSIG_HUD_LOBBY_EXPANDED, TYPE_PROC_REF(/atom/movable/screen/lobby, expand_button))
 
+/datum/hud/new_player/on_viewdata_update()
+	. = ..()
+	place_station_trait_buttons()
+
 /// Load and then display the buttons for relevant station traits
 /datum/hud/new_player/proc/show_station_trait_buttons()
 	if (!mymob?.client || mymob.client.interviewee || !length(GLOB.lobby_station_traits))
@@ -54,14 +62,17 @@
 
 /// Display the buttosn for relevant station traits.
 /datum/hud/new_player/proc/place_station_trait_buttons()
+	SIGNAL_HANDLER
 	if(hud_version != HUD_STYLE_STANDARD || !mymob?.client)
 		return
 
-	var/y_offset = 397
-	var/x_offset = 233
-	var/y_button_offset = 27
-	var/x_button_offset = -27
+	var/y_offset = TRAIT_BUTTON_Y_ORIGIN
+	var/x_offset = TRAIT_BUTTON_X_ORIGIN
+	var/y_button_offset = TRAIT_BUTTON_OFFSET
+	var/x_button_offset = -TRAIT_BUTTON_OFFSET
 	var/iteration = 0
+	if(mymob.client.view == SQUARE_VIEWPORT_SIZE)
+		x_offset -= SQUARE_VIEWPORT_OFFSET
 	for(var/trait in shown_station_trait_buttons)
 		var/atom/movable/screen/lobby/button/sign_up/sign_up_button = shown_station_trait_buttons[trait]
 		iteration++
@@ -69,7 +80,7 @@
 		mymob.client.screen |= sign_up_button
 		if (iteration >= MAX_STATION_TRAIT_BUTTONS_VERTICAL)
 			iteration = 0
-			y_offset = 397
+			y_offset = TRAIT_BUTTON_Y_ORIGIN
 			x_offset += x_button_offset
 		else
 			y_offset += y_button_offset
@@ -806,3 +817,7 @@
 #undef SHUTTER_MOVEMENT_DURATION
 #undef SHUTTER_WAIT_DURATION
 #undef MAX_STATION_TRAIT_BUTTONS_VERTICAL
+#undef TRAIT_BUTTON_Y_ORIGIN
+#undef TRAIT_BUTTON_X_ORIGIN
+#undef TRAIT_BUTTON_OFFSET
+#undef SQUARE_VIEWPORT_OFFSET

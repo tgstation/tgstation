@@ -206,7 +206,7 @@
 "nv" = (
 /obj/item/stack/sheet/mineral/plastitanium,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "nF" = (
 /obj/item/radio/intercom/directional/south,
 /obj/effect/decal/cleanable/blood/old,
@@ -268,7 +268,6 @@
 "sL" = (
 /obj/structure/table,
 /obj/effect/spawner/random/engineering/tool,
-/obj/machinery/light/directional/north,
 /obj/item/stack/cable_coil,
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)
@@ -439,6 +438,7 @@
 	pixel_x = 8
 	},
 /obj/machinery/status_display/evac/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)
 "Da" = (
@@ -521,7 +521,7 @@
 "Jd" = (
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "JH" = (
 /obj/structure/frame/machine,
 /turf/open/floor/circuit/red/airless,
@@ -544,7 +544,7 @@
 "KM" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Lz" = (
 /obj/structure/table,
 /obj/item/tank/internals/emergency_oxygen/engi,
@@ -562,11 +562,9 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/unpowered)
 "Mw" = (
-/obj/machinery/status_display/ai{
-	pixel_x = 32
-	},
 /obj/machinery/light/directional/east,
 /obj/effect/decal/cleanable/blood/old,
+/obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/unpowered)
 "MB" = (
@@ -646,7 +644,7 @@
 "Tc" = (
 /obj/item/stack/rods/two,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Tx" = (
 /obj/machinery/door/window/brigdoor/right/directional/west{
 	req_access = list("syndicate");
@@ -732,7 +730,7 @@
 "YT" = (
 /obj/item/shard,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Zh" = (
 /obj/structure/table,
 /obj/item/storage/medkit/ancient{

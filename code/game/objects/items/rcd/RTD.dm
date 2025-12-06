@@ -285,7 +285,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	//resource sanity check before & after delay along with special effects
-	if(!checkResource(selected_design.cost, user))
+	if(!useResource(selected_design.cost, user, TRUE))
 		return ITEM_INTERACT_BLOCKING
 	var/delay = CONSTRUCTION_TIME(selected_design.cost)
 	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_TURF)
@@ -299,15 +299,11 @@
 		qdel(beam)
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
-	if(!checkResource(selected_design.cost, user))
+	if(!useResource(selected_design.cost, user, TRUE))
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 
 	//do the tilling
-	if(!useResource(selected_design.cost, user))
-		qdel(rcd_effect)
-		return ITEM_INTERACT_BLOCKING
-	activate()
 	//step 1 create tile
 	var/obj/item/stack/tile/final_tile = selected_design.new_tile(user.drop_location(), selected_direction)
 	if(QDELETED(final_tile)) //if you were standing on a stack of tiles this newly spawned tile could get merged with it cause its spawned on your location
@@ -320,6 +316,7 @@
 		for(var/datum/overlay_info/info in design_overlays)
 			info.add_decal(new_turf)
 	rcd_effect.end_animation()
+	useResource(selected_design.cost, user)
 
 	return ITEM_INTERACT_SUCCESS
 
@@ -357,7 +354,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	//resource sanity check before & after delay along with beam effects
-	if(!checkResource(cost * 0.7, user)) //no ballon alert for checkResource as it already spans an alert to chat
+	if(!useResource(cost * 0.7, user, TRUE)) //no ballon alert for checkResource as it already spans an alert to chat
 		return ITEM_INTERACT_BLOCKING
 	var/delay = DECONSTRUCTION_TIME(cost)
 	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_DECONSTRUCT)
@@ -371,15 +368,11 @@
 		qdel(beam)
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
-	if(!checkResource(cost * 0.7, user))
+	if(!useResource(cost * 0.7, user, TRUE))
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 
 	//begin deconstruction
-	if(!useResource(cost * 0.7, user))
-		qdel(rcd_effect)
-		return ITEM_INTERACT_BLOCKING
-	activate()
 	//find & collect all decals
 	var/list/all_decals = list()
 	for(var/obj/effect/decal in floor.contents)
@@ -393,6 +386,7 @@
 	else //for every other turf we scrape away exposing base turf underneath
 		floor.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	rcd_effect.end_animation()
+	useResource(cost * 0.7, user)
 
 	return ITEM_INTERACT_SUCCESS
 
@@ -415,27 +409,20 @@
 	max_matter = borgy.cell.maxcharge
 	return borgy.cell.charge
 
-/obj/item/construction/rtd/borg/useResource(amount, mob/user)
-	if(!iscyborg(user))
-		return 0
+/obj/item/construction/rtd/borg/useResource(amount, mob/user, dry_run)
 	var/mob/living/silicon/robot/borgy = user
+	if(!iscyborg(borgy))
+		return FALSE
 	if(!borgy.cell)
 		balloon_alert(user, "no cell found!")
-		return 0
-	. = borgy.cell.use(amount * RTD_BORG_ENERGY_FACTOR)
-	if(!.)
+		return FALSE
+	if(borgy.cell.charge < (amount * RTD_BORG_ENERGY_FACTOR))
 		balloon_alert(user, "insufficient charge!")
-
-/obj/item/construction/rtd/borg/checkResource(amount, mob/user)
-	if(!iscyborg(user))
-		return 0
-	var/mob/living/silicon/robot/borgy = user
-	if(!borgy.cell)
-		balloon_alert(user, "no cell found!")
-		return 0
-	. = borgy.cell.charge >= (amount * RTD_BORG_ENERGY_FACTOR)
-	if(!.)
-		balloon_alert(user, "insufficient charge!")
+		return FALSE
+	if(!dry_run)
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		return borgy.cell.use(amount * RTD_BORG_ENERGY_FACTOR)
+	return TRUE
 
 #undef RTD_BORG_ENERGY_FACTOR
 

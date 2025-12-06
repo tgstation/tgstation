@@ -23,4 +23,4 @@
 
 /mob/living/basic/heretic_summon/ash_spirit/Life(seconds_per_tick, times_fired)
 	. = ..()
-	adjustBruteLoss(-3) // 3 health passively healing
+	adjust_brute_loss(-3) // 3 health passively healing

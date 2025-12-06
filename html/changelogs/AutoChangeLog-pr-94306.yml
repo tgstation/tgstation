@@ -1,0 +1,5 @@
+author: "Fghj240"
+delete-after: True
+changes:
+  - bugfix: "inhalers no longer have infinite reach"
+  - bugfix: "using an inhaler no longer results in whacking the target with it afterwards"

@@ -6,66 +6,93 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
+	///The final object to construct after mount
 	var/result_path
-	var/wall_external = FALSE // For frames that are external to the wall they are placed on, like light fixtures and cameras.
-	var/pixel_shift //The amount of pixels
+	/// For frames that are external to the wall they are placed on, like light fixtures and cameras.
+	var/wall_external = FALSE
+	//The amount of pixels to shift when mounted
+	var/pixel_shift
 
-/obj/item/wallframe/proc/try_build(turf/on_wall, mob/user)
-	if(get_dist(on_wall,user) > 1)
+/**
+ * Returns an structure to mount on from the atom passed
+ * for e.g if its not an closed turf then return an structure on the turf to mount on
+ * Arguments
+ * * atom/structure - the atom or something in this atom we are trying to mount on
+*/
+/obj/item/wallframe/proc/find_support_structure(atom/structure)
+	SHOULD_BE_PURE(TRUE)
+
+	return isclosedturf(structure) ? structure : null
+
+/obj/item/wallframe/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/atom/support_structure = find_support_structure(interacting_with)
+	if(isnull(support_structure))
+		return NONE
+	if(!try_build(support_structure, user))
+		return ITEM_INTERACT_FAILURE
+
+	playsound(loc, 'sound/machines/click.ogg', 75, TRUE)
+	user.visible_message(span_notice("[user.name] attaches [src] to the wall."),
+		span_notice("You attach [src] to the wall."),
+		span_hear("You hear clicking."))
+
+	var/floor_to_support = get_dir(user, support_structure)
+	var/obj/hanging_object = new result_path(get_turf(user))
+	hanging_object.setDir(floor_to_support)
+	if(pixel_shift)
+		switch(floor_to_support)
+			if(NORTH)
+				hanging_object.pixel_y = pixel_shift
+			if(SOUTH)
+				hanging_object.pixel_y = -pixel_shift
+			if(EAST)
+				hanging_object.pixel_x = pixel_shift
+			if(WEST)
+				hanging_object.pixel_x = -pixel_shift
+	if(!hanging_object.find_and_mount_on_atom())
+		to_chat(user, span_warning("[src] Could not find all to mount on!."))
+		return
+	after_attach(hanging_object)
+	qdel(src)
+
+	return ITEM_INTERACT_SUCCESS
+
+/**
+ * Check if we can build on this support structure
+ *
+ * Arguments
+ * * atom/support - the atom we are trying to mount on
+ * * mob/user - the player attempting to do the mount
+*/
+/obj/item/wallframe/proc/try_build(atom/support, mob/user)
+	if(get_dist(support, user) > 1)
 		balloon_alert(user, "you are too far!")
-		return
-	var/floor_to_wall = get_dir(user, on_wall)
-	if(!(floor_to_wall in GLOB.cardinals))
+		return FALSE
+	var/floor_to_support = get_dir(user, support)
+	if(!(floor_to_support in GLOB.cardinals))
 		balloon_alert(user, "stand in line with wall!")
-		return
+		return FALSE
 	var/turf/T = get_turf(user)
-	var/area/A = get_area(T)
 	if(!isfloorturf(T))
 		balloon_alert(user, "cannot place here!")
-		return
-	if(A.always_unpowered)
-		balloon_alert(user, "cannot place in this area!")
-		return
-	if(check_wall_item(T, floor_to_wall, wall_external))
+		return FALSE
+	if(check_wall_item(T, floor_to_support, wall_external))
 		balloon_alert(user, "already something here!")
-		return
+		return FALSE
 
 	return TRUE
 
-/obj/item/wallframe/proc/attach(turf/on_wall, mob/user)
-	if(result_path)
-		playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
-		user.visible_message(span_notice("[user.name] attaches [src] to the wall."),
-			span_notice("You attach [src] to the wall."),
-			span_hear("You hear clicking."))
-		var/floor_to_wall = get_dir(user, on_wall)
-
-		var/obj/hanging_object = new result_path(get_turf(user))
-		hanging_object.setDir(floor_to_wall)
-		if(pixel_shift)
-			switch(floor_to_wall)
-				if(NORTH)
-					hanging_object.pixel_y = pixel_shift
-				if(SOUTH)
-					hanging_object.pixel_y = -pixel_shift
-				if(EAST)
-					hanging_object.pixel_x = pixel_shift
-				if(WEST)
-					hanging_object.pixel_x = -pixel_shift
-		hanging_object.find_and_hang_on_wall()
-		after_attach(hanging_object)
-
-	qdel(src)
-
+/**
+ * Stuff to do after wallframe attached to support atom
+ *
+ * Arguments
+ * * obj/attached_to - the object that has been created on the atom
+*/
 /obj/item/wallframe/proc/after_attach(obj/attached_to)
 	transfer_fingerprints_to(attached_to)
 
 /obj/item/wallframe/screwdriver_act(mob/living/user, obj/item/tool)
-	// For camera-building borgs
-	var/turf/wall_turf = get_step(get_turf(user), user.dir)
-	if(iswallturf(wall_turf))
-		wall_turf.item_interaction(user, src)
-	return ITEM_INTERACT_SUCCESS
+	return interact_with_atom(get_step(get_turf(user), user.dir), user)
 
 /obj/item/wallframe/wrench_act(mob/living/user, obj/item/tool)
 	var/metal_amt = round(custom_materials[GET_MATERIAL_REF(/datum/material/iron)]/SHEET_MATERIAL_AMOUNT) //Replace this shit later

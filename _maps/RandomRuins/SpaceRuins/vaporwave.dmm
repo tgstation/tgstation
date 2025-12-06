@@ -5,7 +5,7 @@
 "b" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "c" = (
 /obj/structure/lattice,
 /turf/open/misc/asteroid/airless,

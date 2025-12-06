@@ -80,9 +80,6 @@
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "ch" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/cerulean,
 /turf/template_noop,
@@ -241,13 +238,9 @@
 /turf/open/floor/circuit/red,
 /area/ruin/space/has_grav/listeningstation)
 "lO" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
-	},
 /obj/structure/marker_beacon/cerulean,
+/obj/structure/sign/nanotrasen/directional/north,
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "nG" = (
@@ -350,10 +343,8 @@
 /area/ruin/space/has_grav/listeningstation)
 "vt" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
-	},
 /obj/structure/marker_beacon/cerulean,
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/template_noop,
 /area/ruin/space)
 "vC" = (
@@ -471,10 +462,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "zV" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
 /obj/structure/cable,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "zZ" = (
@@ -609,13 +598,9 @@
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/listeningstation)
 "FU" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
-	},
 /obj/structure/marker_beacon/cerulean,
+/obj/structure/sign/nanotrasen/directional/south,
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "FV" = (
@@ -684,7 +669,7 @@
 	width = 9
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "KG" = (
 /obj/structure/curtain,
 /obj/effect/decal/cleanable/dirt,
@@ -819,6 +804,7 @@
 	dir = 4
 	},
 /obj/machinery/light/warm/directional/south,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
 "Sx" = (
@@ -930,10 +916,8 @@
 /area/ruin/space/has_grav/listeningstation)
 "WG" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
 /obj/structure/marker_beacon/cerulean,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/template_noop,
 /area/ruin/space)
 "WW" = (

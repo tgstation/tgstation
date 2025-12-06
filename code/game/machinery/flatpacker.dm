@@ -219,7 +219,7 @@
 	return costs
 
 /obj/machinery/flatpacker/base_item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
-	if(attacking_item.flags_1 & HOLOGRAM_1 || attacking_item.item_flags & ABSTRACT)
+	if(attacking_item.flags_1 & HOLOGRAM_1)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
 	if(istype(attacking_item, /obj/item/circuitboard/machine))
