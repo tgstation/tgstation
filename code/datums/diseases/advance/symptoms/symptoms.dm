@@ -42,7 +42,7 @@
 	///The remedy for this symptom
 	var/datum/reagent/symptom_cure = /datum/reagent/medicine/spaceacillin
 	///What color the cure text shows up in the pandemic UI
-	var/cure_color = 'green'
+	var/cure_color = "green"
 	///A remedied symptom has no effect and contributes to the cure
 	var/remedied = FALSE
 
