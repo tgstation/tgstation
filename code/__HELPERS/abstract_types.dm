@@ -10,5 +10,12 @@
 	return abstracts
 
 /// Like subtypesof, but automatically excludes abstract typepaths
-/proc/valid_subtypesof(datum/sometype)
-	return subtypesof(sometype) - get_abstract_types()
+/proc/valid_subtypesof(datum/base_type)
+	return valid_typesof(base_type) - base_type
+
+/// Like typesof, but automatically excludes abstract typepaths
+/proc/valid_typesof(datum/base_type)
+	. = list()
+	for (var/datum/type as anything in typesof(base_type))
+		if (type != type::abstract_type)
+			. += type
