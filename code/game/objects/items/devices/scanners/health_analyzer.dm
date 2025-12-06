@@ -426,7 +426,7 @@
 			var/remedies = list()
 			var/remedy_limit = advanced ? 3 : 2
 			for(var/datum/symptom/each_symptom in advanced_disease.symptoms)
-				if(!each_symptom.neutered && length(remedies) >= remedy_limit && !(each_symptom.symptom_cure.name in remedies))
+				if(!each_symptom.neutered && length(remedies) < remedy_limit && !(each_symptom.symptom_cure.name in remedies))
 					remedies += each_symptom.symptom_cure.name
 			cure_text = english_list(remedies)
 		else
@@ -801,8 +801,11 @@
 	var/list/render = list()
 	for(var/datum/disease/disease as anything in patient.diseases)
 		if(!(disease.visibility_flags & HIDDEN_SCANNER))
+			var/disease_cure = disease.cure_text
+			if(istype(disease, /datum/disease/advance))
+				disease_cure = disease.symptoms[1].symptom_cure.name
 			render += "<span class='alert ml-1'><b>Warning: [disease.form] detected</b><br>\
-			<div class='ml-2'>Name: [disease.name].<br>Type: [disease.spread_text].<br>Stage: [disease.stage]/[disease.max_stages].<br>Possible Cure: [disease.cure_text]</div>\
+			<div class='ml-2'>Name: [disease.name].<br>Type: [disease.spread_text].<br>Stage: [disease.stage]/[disease.max_stages].<br>Possible Cure: [disease_cure]</div>\
 			</span>"
 
 	if(!length(render))
