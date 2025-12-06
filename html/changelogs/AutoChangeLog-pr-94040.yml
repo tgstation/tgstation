@@ -1,0 +1,6 @@
+author: "san7890"
+delete-after: True
+changes:
+  - balance: "After noticing it was too easy for animals to crawl through maintenance by abusing the Easy-Exit sensors, Nanotrasen has replaced all unrestricted door sensors (like in maintenance) with a pull-down lever that should take around 2-3 seconds to engage. It has been designed to allow the employee to actuate it despite any pressure differentials within an area."
+  - balance: "The above change does not apply to select doors in the medical section of the station, which will continue to use the \"older\" Ready-Exit system."
+  - sound: "In order to ensure that staff in high-traffic areas don't go bonkers due to this new change, sound dampeners have been installed to prevent the hydraulics from being heard for super long distances. However, they skimped out on the quality for the ones in maintenance..."
