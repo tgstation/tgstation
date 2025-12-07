@@ -333,6 +333,9 @@
 /datum/config_entry/string/githuburl
 	default = "https://www.github.com/tgstation/tgstation"
 
+/datum/config_entry/string/configurl
+	default = "https://github.com/tgstation-operations/server-config"
+
 /datum/config_entry/string/discordbotcommandprefix
 	default = "?"
 
