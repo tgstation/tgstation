@@ -360,7 +360,7 @@
 	var/obj/item/equipped_item = get_item_by_slot(slot_type)
 	var/thing_reject
 	if(thing)
-		item_reject = SEND_SIGNAL(thing, COMSIG_HUMAN_NON_STORAGE_HOTKEY, equipped_item)
+		thing_reject = SEND_SIGNAL(thing, COMSIG_HUMAN_NON_STORAGE_HOTKEY, equipped_item)
 	if(!equipped_item) // We also let you equip an item like this
 		if(!thing)
 			to_chat(src, span_warning("You have no [slot_item_name] to take something out of!"))
