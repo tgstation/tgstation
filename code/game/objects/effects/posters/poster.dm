@@ -128,7 +128,7 @@
 	var/list/blacklisted_types = list()
 	///Whether the poster should be printable from library management computer.
 	var/printable = FALSE
-
+	///What type should we put back in the rolled poster when we get cut down
 	var/cutdown_type
 
 	var/poster_item_name = "hypothetical poster"
