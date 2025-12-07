@@ -85,7 +85,6 @@
 /datum/crafting_recipe/lamp
 	name = "Desk Lamp"
 	result = /obj/item/flashlight/lamp
-	time = 1 SECONDS
 	reqs = list(
 		/obj/item/flashlight = 1,
 		/obj/item/stack/rods = 1,
@@ -106,7 +105,6 @@
 /datum/crafting_recipe/banana_lamp
 	name = "Banana Lamp"
 	result = /obj/item/flashlight/lamp/bananalamp
-	time = 1 SECONDS
 	reqs = list(
 		/obj/item/flashlight/lamp = 1,
 		/obj/item/grown/bananapeel = 1,
