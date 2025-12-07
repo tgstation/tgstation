@@ -669,11 +669,11 @@
 /obj/item/shockpaddles/proc/is_wielded()
 	return HAS_TRAIT(src, TRAIT_WIELDED)
 
-/obj/item/shockpaddles/proc/on_non_storage_hotkey(datum/source, obj/item/possible_storage)
+/obj/item/shockpaddles/proc/on_non_storage_hotkey(datum/source,  mob/living/carbon/human/user, obj/item/possible_storage)
 	SIGNAL_HANDLER
 	if(possible_storage == defib)
-		dropped()
-		return TRUE
+		user.dropItemToGround(src)
+		return COMPONENT_STORAGE_HOTKEY_HANDLED
 	return FALSE
 
 /obj/item/shockpaddles/cyborg

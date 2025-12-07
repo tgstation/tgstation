@@ -360,7 +360,7 @@
 	var/obj/item/equipped_item = get_item_by_slot(slot_type)
 	var/thing_reject
 	if(thing)
-		thing_reject = SEND_SIGNAL(thing, COMSIG_HUMAN_NON_STORAGE_HOTKEY, equipped_item)
+		thing_reject = SEND_SIGNAL(thing, COMSIG_HUMAN_NON_STORAGE_HOTKEY, src, equipped_item)
 	if(!equipped_item) // We also let you equip an item like this
 		if(!thing)
 			to_chat(src, span_warning("You have no [slot_item_name] to take something out of!"))
@@ -373,7 +373,7 @@
 		if(!thing)
 			equipped_item.attack_hand(src)
 		else
-			if(thing_reject)
+			if(thing_reject & COMPONENT_STORAGE_HOTKEY_HANDLED)
 				return
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
 		return
