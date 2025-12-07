@@ -208,3 +208,78 @@
   necromanceranne:
   - bugfix: Sleeping carp now actually lets you dodge melee attacks without filling
       your hands with stuff.
+2025-12-07:
+  ArchBTW, Bisar:
+  - balance: Changeling's Biodegrade works against grabs.
+  - balance: Changeling's Biodegrade destroys all restraints instead of one single
+      restraint.
+  - bugfix: Changeling's Biodegrade shows the effect when used inside lockers.
+  - bugfix: Changeling's Biodegrade properly covers restraint types (cuffed prisoner
+      shoes, strait jackets, etc).
+  Fghj240:
+  - bugfix: inhalers no longer have infinite reach
+  - bugfix: using an inhaler no longer results in whacking the target with it afterwards
+  - qol: You can see whether you just locked or unlocked a cyborg
+  LT3:
+  - code_imp: Drag-drop activation can now be added as an element to objects
+  - qol: Portable crew monitor can now be drag-drop activated similar to a PDA
+  Melbert:
+  - rscadd: Readds Sent from my PDA Sent from my PDA
+  - bugfix: Summon animals relic makes you less depressed
+  - bugfix: Fix detached storage (modsuit storage)
+  - rscadd: '[Catwalk] Entirely new Dorms & Holodeck'
+  - rscadd: '[Catwalk] Modified Atmos, Gravity Generator, Engineering and Tech Storage
+      a fair bit'
+  - rscadd: '[Catwalk] Event locations were updated, meaning several random events
+      now trigger in more appropriate places'
+  - rscdel: '[Catwalk] Removed duplicate First Aid stations in a few places'
+  - qol: '[Catwalk] Changed around maint areas (not the actual layouts but the area
+      designations) to be a bit less monolithic'
+  - bugfix: '[Catwalk] Xenobio kill room uses a passive vent'
+  - bugfix: '[Catwalk] Fixes a few erroneous space tiles around sec'
+  - bugfix: Bolas don't slow while in hand
+  - balance: Ammo will no longer show up in the Spy loot pool until a weapon that
+      uses said ammo has been claimed. Some ammo for weapons easily obtainable on
+      station (shotgun shot) are not limited by this restriction. Also, there's a
+      rare chance ammo will show up anyways just to keep people on their toes.
+  - balance: Claiming a weapon will refresh ammo in the loot pool that has already
+      been claimed or cycled out.
+  - balance: Bounty rewards that no Spy claimed have a chance to re-enter the loot
+      pool after a bounty refresh, rather than being lost for the remainder of the
+      round.
+  - balance: When higher tier Spy bounties empty their loot pools, they will attempt
+      to draw from lower tier pools before defaulting to telecrystals.
+  - balance: Spies no longer are rewarded with gun cases for bounties; rather just
+      the gun itself
+  - spellcheck: Modified the Spy antag info text
+  RikuTheKiller:
+  - balance: R&D console boards sourced from printing or tech storage are now locked
+      by default. It's recommended to ask your respective head of department or the
+      science department to complete research for you. Heads of department can remotely
+      access the research network using their PDAs.
+  TealSeer:
+  - bugfix: fixed TRAIT_NO_UNDERWEAR not being respected in human rendering
+  Tostah:
+  - balance: increases mech damage to windows to feel more realistic
+  alien3301:
+  - bugfix: Captain starts with a command megaphone in their locker
+  - bugfix: Executing people with guns no longer makes you hit them with the gun
+  - bugfix: Trying to shoot a gun when it cant shoot doesn't make you melee with it
+  - bugfix: If trying to shoot would make a click sound then executing will also make
+      the sound
+  dungeon_vr, KnigTheThrasher, xPokee:
+  - image: The DNR ghost HUD icon has gotten a new look.
+  lelandkemble:
+  - bugfix: Malf AI "Destroy RCDs" power now properly destroys mech RCDs
+  san7890:
+  - balance: After noticing it was too easy for animals to crawl through maintenance
+      by abusing the Easy-Exit sensors, Nanotrasen has replaced all unrestricted door
+      sensors (like in maintenance) with a pull-down lever that should take around
+      2-3 seconds to engage. It has been designed to allow the employee to actuate
+      it despite any pressure differentials within an area.
+  - balance: The above change does not apply to select doors in the medical section
+      of the station, which will continue to use the "older" Ready-Exit system.
+  - sound: In order to ensure that staff in high-traffic areas don't go bonkers due
+      to this new change, sound dampeners have been installed to prevent the hydraulics
+      from being heard for super long distances. However, they skimped out on the
+      quality for the ones in maintenance...
