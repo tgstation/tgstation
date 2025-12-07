@@ -164,5 +164,6 @@
 	icon_state = "template"
 	use_user_hud_icon = TRUE
 	clickable_glow = TRUE
+	click_master = FALSE
 
 #undef HEAL_EFFECT_COOLDOWN
