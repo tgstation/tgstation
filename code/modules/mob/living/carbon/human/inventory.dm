@@ -358,7 +358,7 @@
 		return
 	var/obj/item/thing = get_active_held_item()
 	var/obj/item/equipped_item = get_item_by_slot(slot_type)
-	var/thing_reject
+	var/thing_reject = NONE
 	if(thing)
 		thing_reject = SEND_SIGNAL(thing, COMSIG_HUMAN_NON_STORAGE_HOTKEY, src, equipped_item)
 	if(!equipped_item) // We also let you equip an item like this

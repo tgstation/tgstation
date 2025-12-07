@@ -674,7 +674,7 @@
 	if(possible_storage == defib)
 		user.dropItemToGround(src)
 		return COMPONENT_STORAGE_HOTKEY_HANDLED
-	return FALSE
+	return NONE
 
 /obj/item/shockpaddles/cyborg
 	name = "cyborg defibrillator paddles"
