@@ -783,7 +783,7 @@
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/applicator/pill,
+		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/stack/medical,
 		/obj/item/sensor_device,
@@ -791,6 +791,7 @@
 		/obj/item/storage/bag/chemistry,
 		/obj/item/storage/bag/bio,
 		/obj/item/melee/baton/telescopic,
+		/obj/item/defibrillator/compact,
 	)
 	variants = list(
 		"rescue" = list(
