@@ -1,0 +1,4 @@
+author: "ArchBTW"
+delete-after: True
+changes:
+  - balance: "repairbot hp 100 -> 35"
