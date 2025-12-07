@@ -1,0 +1,6 @@
+author: "FalloutFalcon, rye-rice"
+delete-after: True
+changes:
+  - rscadd: "Adds a small cosmetic recoil to all ballistics (with an accompanying pref option to tweak or disable it)"
+  - balance: "Changes recoil from an erratic shaking to a kicking of your screen relative to your firing angle"
+  - qol: "Pref option for darkened screen has some scaling with duration of shake"
