@@ -358,6 +358,9 @@
 		return
 	var/obj/item/thing = get_active_held_item()
 	var/obj/item/equipped_item = get_item_by_slot(slot_type)
+	var/thing_reject
+	if(thing)
+		item_reject = SEND_SIGNAL(thing, COMSIG_HUMAN_NON_STORAGE_HOTKEY, equipped_item)
 	if(!equipped_item) // We also let you equip an item like this
 		if(!thing)
 			to_chat(src, span_warning("You have no [slot_item_name] to take something out of!"))
@@ -367,12 +370,11 @@
 		return
 	var/datum/storage/storage = equipped_item.atom_storage
 	if(!storage)
-		if(istype(thing, /obj/item/shockpaddles) && istype(equipped_item, /obj/item/defibrillator))
-			thing.dropped()
-			return
 		if(!thing)
 			equipped_item.attack_hand(src)
 		else
+			if(thing_reject)
+				return
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
 		return
 	if(!storage.supports_smart_equip)

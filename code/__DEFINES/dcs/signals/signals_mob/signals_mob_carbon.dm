@@ -187,3 +187,7 @@
 /// From /mob/living/carbon/proc/can_defib() : ()
 /// Return a defib result flag to override default defib brain check
 #define COMSIG_CARBON_DEFIB_BRAIN_CHECK "carbon_defib_brain_check"
+
+/// From /mob/living/carbon/human/proc/smart_equip_targeted(): (obj/item/possible_container)
+/// Return true to stop the transfer from happening
+#define COMSIG_HUMAN_NON_STORAGE_HOTKEY "human_storage_hotkey"
