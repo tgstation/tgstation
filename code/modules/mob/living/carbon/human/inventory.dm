@@ -367,6 +367,9 @@
 		return
 	var/datum/storage/storage = equipped_item.atom_storage
 	if(!storage)
+		if(istype(thing, /obj/item/shockpaddles) && istype(equipped_item, /obj/item/defibrillator))
+			thing.dropped()
+			return
 		if(!thing)
 			equipped_item.attack_hand(src)
 		else
