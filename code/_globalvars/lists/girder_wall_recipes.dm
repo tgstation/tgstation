@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(material_girder_wall_recipes, init_material_girder_wall_recipes
 			stack_type = tram_type::mineral,
 			stack_amount = tram_type::mineral_amount,
 			girder_type = tram_type::girder_type,
-			girder_state = GIRDER_NORMAL,
+			girder_state = GIRDER_TRAM,
 			make_delay = 4 SECONDS,
 			start_alert = "adding plating..."
 		)

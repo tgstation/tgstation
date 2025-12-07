@@ -77,6 +77,9 @@
 		blind_message = span_hear("You hear a series of clangs."),
 	)
 
+	structure.add_fingerprint(user)
+	stack.add_fingerprint(user)
+
 	if (!stack.use_tool(structure, user, recipe.make_delay, recipe.stack_amount, extra_checks = CALLBACK(src, PROC_REF(check_recipe), structure, user, recipe)))
 		return
 
@@ -113,7 +116,6 @@
 		structure.balloon_alert(user, "need tram floor!")
 		return FALSE
 	if (!check_girder_state(structure, recipe))
-		structure.balloon_alert(user, "wrong girder state!")
 		return FALSE
 	return TRUE
 
