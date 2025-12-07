@@ -199,7 +199,7 @@
 	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
 		user.client.give_award(/datum/award/achievement/misc/meteor_examine, user)
 
-///Same as check_examine_award(), but for punching award
+
 /obj/effect/meteor/proc/check_punch_award(mob/user)
 	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
 		user.client.give_award(/datum/award/achievement/misc/meteor_punch, user)
@@ -246,6 +246,9 @@
 	return ..()
 
 /obj/effect/meteor/sand/check_examine_award(mob/user) //Too insignificant and predictable to warrant an award.
+	return
+
+/obj/effect/meteor/sand/check_punch_award(mob/user)
 	return
 
 //Dust
