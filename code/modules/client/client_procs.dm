@@ -349,7 +349,10 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 			var/list/concatables = list()
 			concatables += span_danger(span_bold("[double_match ? "MULTIKEY" : "Notice"]:"))
 			concatables += "<span class='notice'>Connecting player [key_name_admin(src)] has the same"
-			concatables += double_match ? "!BOTH! [matched_ip] and [matched_cid]" : (!isnull(matched_ip) ? matched_ip : matched_cid)
+			if(double_match)
+				concatables += "!BOTH! [matched_ip] and [matched_cid]"
+			else
+				concatables += (!isnull(matched_ip) ? matched_ip : matched_cid)
 			concatables += "as [isnull(potential_match) ? "[joined_player_ckey] (no longer logged in)" : "[key_name_admin(potential_match)]"]"
 			if(same_round)
 				concatables += span_bold("in the current round")
