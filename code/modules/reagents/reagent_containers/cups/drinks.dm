@@ -33,7 +33,6 @@
 	var/obj/item/broken_bottle/B = new (loc)
 	B.mimic_broken(src, target, break_top)
 	qdel(src)
-	target.Bumped(B)
 
 /obj/item/reagent_containers/cup/glass/bullet_act(obj/projectile/proj)
 	. = ..()
@@ -235,7 +234,7 @@
 	icon_state = "smallbottle"
 	inhand_icon_state = null
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
-	custom_materials = list(/datum/material/plastic=HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 	volume = 50
 	amount_per_transfer_from_this = 10
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
@@ -320,7 +319,7 @@
 /obj/item/reagent_containers/cup/glass/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
-	custom_materials = list(/datum/material/plastic=SHEET_MATERIAL_AMOUNT * 1.5)
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 10
@@ -353,6 +352,7 @@
 	possible_transfer_amounts = list(10)
 	volume = 10
 	isGlass = FALSE
+	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/cup/glass/sillycup/update_icon_state()
 	icon_state = reagents.total_volume ? "water_cup" : "water_cup_e"
@@ -365,6 +365,7 @@
 	icon_state = "juicebox"
 	volume = 15
 	drink_type = NONE
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/Initialize(mapload, vol)
 	. = ..()
@@ -382,7 +383,6 @@
 	var/obj/item/broken_bottle/bottle_shard = new(drop_location())
 	bottle_shard.mimic_broken(src, target)
 	qdel(src)
-	target.Bumped(bottle_shard)
 
 /obj/item/reagent_containers/cup/glass/colocup
 	name = "colo cup"
@@ -390,7 +390,7 @@
 	icon = 'icons/obj/drinks/colo.dmi'
 	icon_state = "colocup"
 	inhand_icon_state = "colocup"
-	custom_materials = list(/datum/material/plastic =HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 	possible_transfer_amounts = list(5, 10, 15, 20)
 	volume = 20
 	amount_per_transfer_from_this = 5

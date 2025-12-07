@@ -404,7 +404,8 @@
 
 	var/trans = round(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
 	playsound(target.loc, SFX_LIQUID_POUR, 50, TRUE)
-	to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
+	if(trans)
+		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
 	SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, target)
 	target.update_appearance()
 	return ITEM_INTERACT_SUCCESS

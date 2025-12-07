@@ -40,7 +40,7 @@
 /datum/ai_behavior/find_and_set/treatable_hydro
 	action_cooldown = 5 SECONDS
 
-/datum/ai_behavior/find_and_set/treatable_hydro/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/treatable_hydro/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/list/possible_trays = list()
 	var/mob/living/living_pawn = controller.pawn
 	var/waterlevel_threshold = controller.blackboard[BB_WATERLEVEL_THRESHOLD]
@@ -102,7 +102,7 @@
 /datum/ai_behavior/find_and_set/beamable_hydroplants
 	action_cooldown = 15 SECONDS
 
-/datum/ai_behavior/find_and_set/beamable_hydroplants/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/beamable_hydroplants/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/list/possible_trays = list()
 
 	for(var/obj/machinery/hydroponics/hydro in oview(search_range, controller.pawn))

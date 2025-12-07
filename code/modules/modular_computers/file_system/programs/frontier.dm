@@ -155,7 +155,8 @@
 					else
 						data["relations"][partner.type] = "Undefined"
 				data["purchaseableBoosts"][partner.type] = list()
-				for(var/node_id in linked_techweb.get_available_nodes())
+				var/displayable_nodes = linked_techweb.get_available_nodes() + linked_techweb.get_researched_nodes()
+				for(var/node_id in displayable_nodes)
 					// Not from our partner
 					if(!(node_id in partner.boostable_nodes))
 						continue
@@ -218,8 +219,9 @@
 			var/datum/scientific_partner/partner = locate(text2path(params["boost_seller"])) in SSresearch.scientific_partners
 			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(params["purchased_boost"])
 			if(partner && node)
-				if(partner.purchase_boost(linked_techweb, node))
-					computer.say("Purchase successful.")
+				var/possible_boost = partner.purchase_boost(linked_techweb, node)
+				if(possible_boost)
+					computer.say("Purchase successful[possible_boost == SCIPAPER_ALREADY_BOUGHT ? ", refunding [partner.boostable_nodes[params["purchased_boost"]]] points" : ""].")
 					playsound(computer, 'sound/machines/ping.ogg', 25)
 					return TRUE
 			playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 25)

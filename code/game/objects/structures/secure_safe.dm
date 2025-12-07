@@ -10,8 +10,9 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	resistance_flags = FIRE_PROOF
 	custom_materials = list(
-		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT*5,
-		/datum/material/titanium = SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 8,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
 	)
 	material_flags = MATERIAL_EFFECTS
 	/// The lock code transferred from the structure
@@ -109,11 +110,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 		if(!(obj_flags & CONTENTS_INITIALIZED))
 			PopulateContents()
 
-		find_and_hang_on_atom()
+		find_and_mount_on_atom()
 	obj_flags |= CONTENTS_INITIALIZED
 	RegisterSignal(src, COMSIG_LOCKABLE_STORAGE_SET_CODE, PROC_REF(update_lock_code))
 
-/obj/structure/secure_safe/find_and_hang_on_atom(mark_for_late_init = FALSE, late_init = FALSE)
+/obj/structure/secure_safe/find_and_mount_on_atom(mark_for_late_init, late_init)
 	if(!density)
 		return ..()
 
@@ -166,7 +167,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 		It is made out of the same material as the station's Black Box and is designed to resist all conventional weaponry. \
 		There appears to be a small amount of surface corrosion. It doesn't look like it could withstand much of an explosion.\
 		Due to the expensive material, it was made incredibly small to cut corners, leaving only enough room to fit something as slim as an ID card."
-	icon = 'icons/obj/structures.dmi'
 	icon_state = "spare_safe"
 	base_icon_state = "spare_safe"
 	armor_type = /datum/armor/safe_caps_spare

@@ -134,3 +134,4 @@
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "skeleton_key"
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 5)

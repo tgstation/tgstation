@@ -5,7 +5,7 @@
 "b" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "c" = (
 /obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
@@ -13,7 +13,7 @@
 "d" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "e" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -40,7 +40,7 @@
 "k" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "l" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -76,7 +76,7 @@
 "p" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "q" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
