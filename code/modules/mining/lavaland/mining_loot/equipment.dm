@@ -55,7 +55,7 @@
 		to_chat(itemUser, failText)
 		return
 
-	apply_oath(itemUser, usedHand)
+	apply_oath(itemUser)
 
 /obj/item/rod_of_asclepius/proc/apply_oath(mob/living/carbon/user)
 	to_chat(user, span_notice("The snake, satisfied with your oath, attaches itself and the rod to your forearm with an inseparable grip. Your thoughts seem to only revolve around the core idea of helping others, and harm is nothing more than a distant, wicked memory..."))
