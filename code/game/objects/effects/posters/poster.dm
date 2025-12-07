@@ -36,7 +36,10 @@
 		new_poster_structure.forceMove(src)
 	poster_structure = new_poster_structure
 	if(!poster_type) // If we weren't already assigned a poster_type, we infer from the contained poster_structure
-		poster_type = poster_structure?.type
+		if(istype(poster_structure, /obj/structure/sign/poster)) // Make sure our poster structure is valid
+			poster_type = poster_structure.type
+		else
+			poster_type = /obj/structure/sign/poster/random // Panic, do something random
 	if(ispath(poster_type, /obj/structure/sign/poster)) // Make sure we have a valid poster_type before using it
 		name = "[poster_type::poster_item_name] - [poster_type::name]"
 		desc = poster_type::poster_item_desc
