@@ -846,13 +846,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/bojack, 32)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/double_rainbow, 32)
 
-/obj/structure/sign/poster/contraband/imposter
-	name = "I'm Poster"
-	desc = "This poster is clearly not hanging there with good intentions. Perhaps, there's a syndicate traitor amongst us?"
-	icon_state = "imposter"
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/imposter, 32)
-
 /obj/structure/sign/poster/contraband/vodka
 	name = "Vodka"
 	desc = "The text is written entirely in Russian. You can barely read anything except the word 'BODKA'."
@@ -866,17 +859,3 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vodka, 32)
 	icon_state = "ninja"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ninja, 32)
-
-/obj/structure/sign/poster/contraband/wanted_assistant
-	name = "WANTED!"
-	desc = "DEAD OR ALIVE! John Greytide, for numerous Space Law violations. Reward - 5000 credits."
-	icon_state = "assistant_wanted"
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/wanted_assistant, 32)
-
-/obj/structure/sign/poster/contraband/toolbox
-	name = "Toolbox"
-	desc = "Apparently, this bloody poster is an invitation to one of the tournaments sponsored by the Central Command."
-	icon_state = "toolbox"
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/toolbox, 32)
