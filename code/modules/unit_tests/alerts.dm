@@ -52,6 +52,6 @@
 
 	for(var/mutable_appearance/some_overlay as anything in alert.overlays)
 		var/base_plane = PLANE_TO_TRUE(some_overlay.plane)
-		for(var/mutable_appearance/some_subunderlay as anything in overlay.underlays)
+		for(var/mutable_appearance/some_subunderlay as anything in some_overlay.underlays)
 			if(PLANE_TO_TRUE(some_subunderlay.plane) != base_plane)
 				TEST_FAIL("Alert overlay has a off-plane underlay - it should have been stripped, otherwise it may interfere with screens.")
