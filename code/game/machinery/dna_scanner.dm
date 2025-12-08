@@ -171,7 +171,7 @@
 /obj/item/disk/data/Initialize(mapload)
 	. = ..()
 	icon_state = "datadisk[rand(0,7)]"
-	add_overlay(pick("o_dna1", "o_dna2"))
+	set_sticker_icon_state(pick("o_dna1", "o_dna2"))
 	if(length(genetic_makeup_buffer))
 		var/datum/blood_type = genetic_makeup_buffer["blood_type"]
 		if(blood_type)
