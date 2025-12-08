@@ -12,7 +12,7 @@
 
 /obj/item/clothing/gloves/color/black/Initialize(mapload)
 	. = ..()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/radiogloves)
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/radio_containing/radiogloves)
 
 	AddElement(
 		/datum/element/slapcrafting,\

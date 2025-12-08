@@ -33,8 +33,19 @@
 	time = 4 SECONDS
 	category = CAT_EQUIPMENT
 
+/datum/crafting_recipe/radio_containing
+	abstract_type = /datum/crafting_recipe/radio_containing
+	/// Shared blacklist of all the radio types for anything that uses a radio in its construction, so we don't repeat it.
+	var/static/list/radio_types_blacklist
 
-/datum/crafting_recipe/radiogloves
+/datum/crafting_recipe/radio_containing/New()
+	if(isnull(radio_types_blacklist))
+		// because we got shit like /obj/item/radio/off ... WHY!?!
+		radio_types_blacklist = typecacheof(/obj/item/radio/headset) + typecacheof(/obj/item/radio/intercom)
+	blacklist = radio_types_blacklist
+	return ..()
+
+/datum/crafting_recipe/radio_containing/radiogloves
 	name = "Radio Gloves"
 	result = /obj/item/clothing/gloves/radio
 	time = 1.5 SECONDS
@@ -45,10 +56,6 @@
 	)
 	tool_behaviors = list(TOOL_WIRECUTTER)
 	category = CAT_EQUIPMENT
-
-/datum/crafting_recipe/radiogloves/New()
-	..()
-	blacklist += typecacheof(/obj/item/radio/headset) + typecacheof(/obj/item/radio/intercom)
 
 /datum/crafting_recipe/wheelchair
 	name = "Wheelchair"

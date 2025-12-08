@@ -108,13 +108,14 @@
 	time = 10 SECONDS
 	category = CAT_WEAPON_RANGED
 
-//
 /datum/crafting_recipe/laser
 	abstract_type = /datum/crafting_recipe/laser
 	/// We will use the same blacklist for every type here to avoid repeating lists
-	var/static/list/laser_blacklist = typecacheof(/obj/item/gun/energy/laser, ignore_root_path = TRUE)
+	var/static/list/laser_blacklist
 
 /datum/crafting_recipe/laser/New()
+	if(isnull(laser_blacklist))
+		laser_blacklist = typecacheof(/obj/item/gun/energy/laser, ignore_root_path = TRUE)
 	blacklist = laser_blacklist
 	return ..()
 
