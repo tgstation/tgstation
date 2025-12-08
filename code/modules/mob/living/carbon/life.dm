@@ -530,26 +530,27 @@
 			disease.stage_act(seconds_per_tick, times_fired)
 
 /mob/living/carbon/handle_mutations(time_since_irradiated, seconds_per_tick, times_fired)
-	if(!dna?.temporary_mutations.len)
+	if(!LAZYLEN(dna?.temporary_mutations))
 		return
 
-	for(var/mut in dna.temporary_mutations)
-		if(dna.temporary_mutations[mut] < world.time)
-			if(mut == UI_CHANGED)
+	for(var/mut, mut_data in dna.temporary_mutations)
+		if(mut_data < world.time)
+			var/has_prev = LAZYLEN(dna.previous)
+			if(mut == UI_CHANGED && has_prev)
 				if(dna.previous["UI"])
 					dna.unique_identity = merge_text(dna.unique_identity,dna.previous["UI"])
 					updateappearance(mutations_overlay_update=1)
 					dna.previous.Remove("UI")
 				dna.temporary_mutations.Remove(mut)
 				continue
-			if(mut == UF_CHANGED)
+			if(mut == UF_CHANGED && has_prev)
 				if(dna.previous["UF"])
 					dna.unique_features = merge_text(dna.unique_features,dna.previous["UF"])
 					updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 					dna.previous.Remove("UF")
 				dna.temporary_mutations.Remove(mut)
 				continue
-			if(mut == UE_CHANGED)
+			if(mut == UE_CHANGED && has_prev)
 				if(dna.previous["name"])
 					real_name = dna.previous["name"]
 					name = real_name

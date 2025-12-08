@@ -74,7 +74,7 @@
 	///The delay between being attacked and gaining our old search_objects value back
 	var/search_objects_regain_time = 3 SECONDS
 	///A typecache of objects types that will be checked against to attack, should we have search_objects enabled
-	var/list/wanted_objects = list()
+	var/list/wanted_objects
 	///Mobs ignore mob/living targets with a stat lower than that of stat_attack. If set to DEAD, then they'll include corpses in their targets, if to HARD_CRIT they'll keep attacking until they kill, and so on.
 	var/stat_attack = CONSCIOUS
 	///Mobs with this set to TRUE will exclusively attack things defined by stat_attack, stat_attack DEAD means they will only attack corpses
@@ -95,7 +95,8 @@
 
 /mob/living/simple_animal/hostile/Initialize(mapload)
 	. = ..()
-	wanted_objects = typecacheof(wanted_objects)
+	if(LAZYLEN(wanted_objects))
+		wanted_objects = typecacheof(wanted_objects)
 
 /mob/living/simple_animal/hostile/Destroy()
 	//We can't use losetarget here because fucking cursed blobs override it to do nothing the motherfuckers

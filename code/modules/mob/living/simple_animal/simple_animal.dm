@@ -184,7 +184,7 @@
 	if(LAZYLEN(emote_hear))
 		emote_hear = string_list(emote_hear)
 	if(LAZYLEN(emote_see))
-		emote_see = string_list(emote_hear)
+		emote_see = string_list(emote_see)
 	if(LAZYLEN(damage_coeff))
 		damage_coeff = string_assoc_list(damage_coeff)
 	if(footstep_type)
