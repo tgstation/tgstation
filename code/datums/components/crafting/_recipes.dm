@@ -53,7 +53,7 @@
 	///crafting_flags var to hold bool values
 	var/crafting_flags = CRAFT_CHECK_DENSITY
 	// Should the recipe blacklist its result? Default behavior is to blacklist any result that isn't in reqs. Can be set to FALSE (not null!) to override the default behavior.
-	var/blacklist_result
+	var/blacklist_result = ASSUME_BLACKLIST_RESULT
 	/// Global crafting blacklist. These should be excluded from all crafting recipes no matter what.
 	var/static/list/global_blacklist = typecacheof(list(
 		/obj/item/cautery/augment,
@@ -80,8 +80,8 @@
 	if(!name && result)
 		var/atom/atom_result = result
 		name = initial(atom_result.name)
-	if(result && isnull(blacklist_result) && !(result in reqs))
-		blacklist_result = TRUE
+	if(result && blacklist_result == ASSUME_BLACKLIST_RESULT && !(result in reqs))
+		blacklist_result = ALWAYS_BLACKLIST_RESULT
 	if(tool_behaviors)
 		tool_behaviors = string_list(tool_behaviors)
 	if(tool_paths)
