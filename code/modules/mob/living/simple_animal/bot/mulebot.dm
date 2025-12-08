@@ -500,7 +500,7 @@
 	if(HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 		return
 
-	var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 1) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 2)
+	var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 2) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 1)
 	if(!speed)//Devide by zero man bad
 		return
 	num_steps = round(10/speed) //10, 5, or 3 steps, depending on how many wires we have cut
