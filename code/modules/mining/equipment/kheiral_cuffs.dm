@@ -72,6 +72,7 @@
 		return
 	balloon_alert(user, "gps de-activated")
 	REMOVE_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
+	qdel(GetComponent(/datum/component/gps/kheiral_cuffs))
 	gps_enabled = FALSE
 
 /// If we're off the Z-level, set far_from_home = TRUE. If being worn, trigger kheiral_network proc
