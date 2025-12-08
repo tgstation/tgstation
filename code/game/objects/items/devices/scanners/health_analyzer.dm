@@ -428,8 +428,10 @@
 			for(var/datum/symptom/each_symptom in advanced_disease.symptoms)
 				if(each_symptom.symptom_cure)
 					var/datum/reagent/each_cure = each_symptom.symptom_cure
-					if(!each_symptom.neutered && length(remedies) < remedy_limit && !(each_cure.name in remedies))
+					if(!each_symptom.neutered && !(each_cure.name in remedies))
 						remedies += each_cure.name
+					if(length(remedies) < remedy_limit)
+						break
 			cure_text = english_list(remedies, nothing_text = "Nothing")
 		else
 			cure_text = disease.cure_text
