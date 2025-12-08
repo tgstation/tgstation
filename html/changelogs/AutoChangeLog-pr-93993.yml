@@ -1,0 +1,11 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Blood flow and clotting has universally been slashed by about 0.85x. This means blood wounds kill you slightly slower, but heal slightly slower."
+  - balance: "Sutures now heal 0.85x less blood flow and gauze's clotting bonus is also 0.85x lower. Medicated sutures are unaffected."
+  - balance: "Bloody Mary's blood healing effect now scales with how drunk you are. Worse in low amounts, better in high amounts."
+  - balance: "Epoetin Alfa no longer generates Sangurite. It now directly clots bleeding wounds (at a rate ~3x worse than sangurite, but still ~4x better than the natural clotting rate)"
+  - balance: "Epoetin Alfa no longer heals liver damage."
+  - balance: "Epoetin Alfa regenerates 3x less blood. It's still 4x effective than Saline Glucose or Iron."
+  - balance: "Epoetin Alfa now causes minor heart damage (0.2 damage per tick)."
+  - code_imp: "All \"coagulating\" effects now use a shared function."
