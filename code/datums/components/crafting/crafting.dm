@@ -71,9 +71,8 @@
 	var/recipe_result
 	if(recipe.blacklist_result)
 		recipe_result = recipe.result
-	for(var/requirement_path in recipe.reqs)
+	for(var/requirement_path, needed_amount in recipe.reqs)
 		// Check we have the appropriate amount available in the contents list
-		var/needed_amount = recipe.reqs[requirement_path]
 		for(var/content_item_path in contents)
 			// Right path and not blacklisted
 			if(!ispath(content_item_path, requirement_path) || (content_item_path in recipe.blacklist) || is_type_in_typecache(recipe.global_blacklist, content_item_path))
@@ -91,9 +90,9 @@
 
 		// Store the instances of what we will use for recipe.check_requirements() for requirement_path
 		var/list/instances_list = list()
-		for(var/instance_path in item_instances)
+		for(var/instance_path, item_instance in item_instances)
 			if(ispath(instance_path, requirement_path))
-				instances_list += item_instances[instance_path]
+				instances_list += item_instance
 
 		requirements_list[requirement_path] = instances_list
 
@@ -251,8 +250,7 @@
 	var/list/total_materials = list()
 	var/list/stuff_to_use = get_used_reqs(recipe, crafter, total_materials)
 
-	for(var/mat in recipe.removed_mats)
-		var/to_remove = recipe.removed_mats[mat]
+	for(var/mat, to_remove in recipe.removed_mats)
 		var/datum/material/ref_mat = locate(mat) in total_materials
 		if(!ref_mat)
 			continue

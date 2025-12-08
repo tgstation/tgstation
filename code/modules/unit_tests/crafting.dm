@@ -48,17 +48,14 @@
 	//If it doesn't fail, then it was already handled, maybe through `unit_test_spawn_extras`
 	var/list/uncreatables_found
 
-	for(var/spawn_path in recipe.unit_test_spawn_extras)
-		var/amount = recipe.unit_test_spawn_extras[spawn_path]
+	for(var/spawn_path, amount in recipe.unit_test_spawn_extras)
 		if(ispath(spawn_path, /obj/item/stack))
 			new spawn_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
 			continue
 		for(var/index in 1 to amount)
 			new spawn_path(turf)
 
-	for(var/req_path in recipe.reqs) //spawn items and reagents
-		var/amount = recipe.reqs[req_path]
-
+	for(var/req_path, amount in recipe.reqs) //spawn items and reagents
 		if(ispath(req_path, /datum/reagent)) //it's a reagent
 			if(!bottomless_cup.reagents.has_reagent(req_path, amount))
 				bottomless_cup.reagents.add_reagent(req_path, amount + 1, no_react = TRUE)
@@ -95,8 +92,8 @@
 	list_clear_nulls(needed_tools) //so we clear the list
 	///tool instances which have been moved to the crafter loc, which are moved back to nullspace once the recipe is done
 	var/list/summoned_tools = list()
-	for(var/tooltype in needed_tools)
-		var/obj/item/tool = tools[tooltype]
+	for(var/tooltype, tool in needed_tools)
+		var/obj/item/tool = tool
 		if(!QDELETED(tool))
 			tool.forceMove(turf)
 		else
