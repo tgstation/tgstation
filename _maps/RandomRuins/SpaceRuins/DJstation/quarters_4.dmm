@@ -29,7 +29,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/structure/barricade/wooden,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "q" = (
 /obj/structure/girder,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -50,7 +50,7 @@
 "C" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "E" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating/airless,
@@ -72,10 +72,6 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/structure/barricade/wooden,
 /turf/template_noop,
-/area/template_noop)
-"U" = (
-/obj/structure/lattice,
-/turf/template_noop,
 /area/space/nearstation)
 "W" = (
 /obj/structure/lattice,
@@ -85,7 +81,7 @@
 	pixel_y = -1
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Y" = (
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
@@ -126,9 +122,9 @@ a
 "}
 (3,1,1) = {"
 a
-U
-U
-U
+C
+C
+C
 J
 x
 g
@@ -139,12 +135,12 @@ W
 (4,1,1) = {"
 a
 a
-U
+C
 a
-U
+C
 a
-U
-U
+C
+C
 q
 a
 "}
@@ -153,10 +149,10 @@ a
 a
 a
 a
-U
+C
 a
 a
-U
+C
 J
 a
 "}
@@ -165,7 +161,7 @@ a
 a
 a
 a
-U
+C
 a
 a
 M

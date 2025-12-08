@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "exosuit RCD uses charge without silo link"
-  - bugfix: "deconstruct sound fx plays for borg rcd & rtd"
