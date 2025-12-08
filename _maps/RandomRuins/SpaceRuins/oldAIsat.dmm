@@ -204,12 +204,9 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/template_noop,
 /area/space/nearstation)
-"aU" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/r_wall,
-/area/ruin/space/tcommsat_oldaisat)
 "aV" = (
 /obj/machinery/light/small/directional/west,
+/obj/structure/sign/warning/secure_area/directional/west,
 /turf/open/floor/iron/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "aW" = (
@@ -2354,7 +2351,7 @@ ag
 ag
 ag
 ag
-aU
+ag
 bf
 ag
 ag

@@ -492,6 +492,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		TRAIT_NOHARDCRIT,
 		TRAIT_NOSOFTCRIT,
 		TRAIT_STABLEHEART,
+		TRAIT_NO_OXYLOSS_PASSOUT,
 	)
 
 /datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
@@ -508,7 +509,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	affected_mob.update_sight()
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, STAT_TRAIT)
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT) //Because these are normally updated using set_health() - but we don't want to adjust health, and the addition of NOHARDCRIT blocks it being added after, but doesn't remove it if it was added before
-	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT) //Prevents the user from being knocked out by oxyloss
+	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT) //As above, removes unconsciousness if it was added before the reagent was administered
 	affected_mob.set_resting(FALSE) //Please get up, no one wants a deaththrows juggernaught that lies on the floor all the time
 	affected_mob.SetAllImmobility(0)
 	affected_mob.grab_ghost(force = FALSE) //Shoves them back into their freshly reanimated corpse.
@@ -1022,7 +1023,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/aranesp
 	name = "Epoetin Alfa"
-	description = "Synthetic medication that induces blood regeneration, liver healing and wound clotting in patients. Causes adverse side effects when excessively used over time."
+	description = "Synthetic medication that induces blood regeneration and wound clotting in patients. \
+		Causes adverse side effects, including arterial damage and migraines when excessively used over time."
 	color = "#dee4ff"
 	metabolization_rate = 0.25 * REM
 	overdose_threshold = 20
@@ -1033,16 +1035,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	if(overdosed)
 		return
-	var/need_mob_update
-	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, -1 * REM * seconds_per_tick)
-	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
-		if(iter_wound.blood_flow)
-			if(holder.has_reagent(/datum/reagent/medicine/coagulant, 3))
-				return
-			else
-				holder.add_reagent(/datum/reagent/medicine/coagulant, 0.2 * REM * seconds_per_tick)
 
-	affected_mob.adjust_blood_volume(3 * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
+	affected_mob.coagulant_effect(0.1 * REM * seconds_per_tick)
+	affected_mob.adjust_blood_volume(1 * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
+	affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, 0.2 * REM * seconds_per_tick)
 
 	switch(current_cycle)
 		if(10)
@@ -1085,10 +1081,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 				to_chat(affected_mob, span_warning("Your breathing becomes weak and raspy, you can barely stay conscious!"))
 				holder.add_reagent(/datum/reagent/toxin/histamine, 6 * REM * seconds_per_tick)
 				affected_mob.losebreath += 3
-				need_mob_update = TRUE
-
-	if(need_mob_update)
-		return UPDATE_MOB_HEALTH
 
 /datum/reagent/inverse/aranesp/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

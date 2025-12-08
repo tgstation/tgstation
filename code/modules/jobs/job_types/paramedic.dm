@@ -2,7 +2,6 @@
 	title = JOB_PARAMEDIC
 	description = "Run around the station looking for patients, respond to \
 		emergencies, give patients a roller bed ride to medbay."
-	department_head = list(JOB_CHIEF_MEDICAL_OFFICER)
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2

@@ -243,6 +243,15 @@
 	//You don't belong in this world, monster!
 	mytray.reagents.remove_reagent(type, volume)
 
+/datum/reagent/water/mineral
+	name = "Mineral Water"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE|REAGENT_CLEANS
+
+/datum/reagent/water/mineral/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.adjust_tox_loss(-0.1 * REM * seconds_per_tick, updating_health = FALSE)
+	return UPDATE_MOB_HEALTH
+
 /datum/reagent/water/salt
 	name = "Saltwater"
 	description = "Water, but salty. Smells like... the station infirmary?"
@@ -464,17 +473,8 @@
 		need_mob_update += affected_mob.adjust_brute_loss(-2 * REM * seconds_per_tick, updating_health = FALSE)
 		need_mob_update += affected_mob.adjust_fire_loss(-2 * REM * seconds_per_tick, updating_health = FALSE)
 		need_mob_update = TRUE
-		if(ishuman(affected_mob))
-			affected_mob.adjust_blood_volume(3 * REM * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
-
-			var/datum/wound/bloodiest_wound
-
-			for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
-				if(iter_wound.blood_flow && iter_wound.blood_flow > bloodiest_wound?.blood_flow)
-					bloodiest_wound = iter_wound
-
-			if(bloodiest_wound)
-				bloodiest_wound.adjust_blood_flow(-2 * REM * seconds_per_tick)
+		affected_mob.adjust_blood_volume(3 * REM * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
+		affected_mob.coagulant_effect(2 * REM * seconds_per_tick)
 
 	else  // Will deal about 90 damage when 50 units are thrown
 		need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 3 * REM * seconds_per_tick, 150)

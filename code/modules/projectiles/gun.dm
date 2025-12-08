@@ -24,7 +24,18 @@
 	attack_verb_simple = list("strike", "hit", "bash")
 	action_slots = ALL
 
+	// Muzzle Flash
+	light_on = FALSE
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
+	light_range = 3
+	light_color = LIGHT_COLOR_ORANGE
+	light_power = 0.5
+	var/can_muzzle_flash = TRUE
+	/// Muzzle Flash Duration
+	var/light_time = 0.1 SECONDS
+
 	var/gun_flags = NONE
+
 	var/fire_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
 	var/vary_fire_sound = TRUE
 	var/fire_sound_volume = 50
@@ -37,7 +48,7 @@
 	var/suppressed_volume = 60
 	/// Whether a gun can be unsuppressed. for ballistics, also determines if it generates a suppressor overlay
 	var/can_unsuppress = TRUE
-	var/recoil = 0 //boom boom shake the room
+
 	var/clumsy_check = TRUE
 	var/obj/item/ammo_casing/chambered = null
 	trigger_guard = TRIGGER_GUARD_NORMAL //trigger guard on the weapon, hulks can't fire them with their big meaty fingers
@@ -52,7 +63,6 @@
 	/// firing cooldown, true if this gun shouldn't be allowed to manually fire
 	var/fire_cd = 0
 	var/weapon_weight = WEAPON_LIGHT
-	var/dual_wield_spread = 24 //additional spread when dual wielding
 	///Can we hold up our target with this? Default to yes
 	var/can_hold_up = TRUE
 	/// If TRUE, and we aim at ourselves, it will initiate a do after to fire at ourselves.
@@ -75,6 +85,18 @@
 
 	var/spread = 0 //Spread induced by the gun itself.
 	var/randomspread = 1 //Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
+	var/dual_wield_spread = 24 //additional spread when dual wielding
+
+	///Screen shake when the weapon is fired
+	var/recoil = 0
+	///a multiplier of the duration the recoil takes to go back to normal view, this is (recoil*recoil_backtime_multiplier)+1
+	var/recoil_backtime_multiplier = 1.5
+	///this is how much deviation the gun recoil can have, recoil pushes the screen towards the reverse angle you shot + some deviation which this is the max.
+	var/recoil_deviation = 20
+	/// Used as the min value when calculating recoil
+	/// Affected by a player's min_recoil_multiplier preference, so keep in mind it can ultimately be 0 regardless
+	/// Often utilized as a "purely visual" form of recoil (as it can be disabled)
+	var/min_recoil = 0
 
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
@@ -207,10 +229,22 @@
 	else
 		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
 
+/obj/item/gun/proc/muzzle_flash_on()
+	if (can_muzzle_flash)
+		set_light_on(TRUE)
+		addtimer(CALLBACK(src, PROC_REF(muzzle_flash_off)), light_time, TIMER_UNIQUE | TIMER_OVERRIDE)
+	else
+		muzzle_flash_off()
+
+/obj/item/gun/proc/muzzle_flash_off()
+	set_light_on(FALSE)
+
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
-	if(recoil && !tk_firing(user))
-		shake_camera(user, recoil + 1, recoil)
+	if(!tk_firing(user))
+		var/actual_angle = get_angle((user || get_turf(src)), pbtarget)
+		simulate_recoil(user, recoil, actual_angle)
 	fire_sounds()
+	muzzle_flash_on()
 	if(suppressed || !message)
 		return FALSE
 	if(tk_firing(user))
@@ -306,11 +340,10 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/gun/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(try_fire_gun(interacting_with, user, list2params(modifiers)))
-		return ITEM_INTERACT_SUCCESS
-	if(chambered_attack_block == TRUE && can_shoot() && isliving(interacting_with))
-		return ITEM_INTERACT_BLOCKING // block melee (etc), usually if waiting on fire delay
-	return NONE
+	var/fired = try_fire_gun(interacting_with, user, list2params(modifiers))
+	if(!fired && chambered_attack_block == TRUE && can_shoot() && isliving(interacting_with))
+		return ITEM_INTERACT_BLOCKING
+	return fired
 
 /obj/item/gun/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(user.combat_mode && isliving(interacting_with))
@@ -332,9 +365,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(try_fire_gun(interacting_with, user, list2params(modifiers)))
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	return try_fire_gun(interacting_with, user, list2params(modifiers))
 
 /obj/item/gun/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(IN_GIVEN_RANGE(user, interacting_with, GUNPOINT_SHOOTER_STRAY_RANGE))
@@ -346,43 +377,42 @@
 
 /obj/item/gun/proc/fire_gun(atom/target, mob/living/user, flag, params)
 	if(QDELETED(target))
-		return
+		return NONE
 	if(firing_burst)
-		return
+		return NONE
 
 	if(SEND_SIGNAL(user, COMSIG_MOB_TRYING_TO_FIRE_GUN, src, target, flag, params) & COMPONENT_CANCEL_GUN_FIRE)
-		return
+		return NONE
 
 	if(SEND_SIGNAL(src, COMSIG_GUN_TRY_FIRE, user, target, flag, params) & COMPONENT_CANCEL_GUN_FIRE)
-		return
+		return NONE
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
-			return
+			return NONE
 		if(!ismob(target)) //melee attack
-			return
+			return NONE
 		if(target == user && (user.zone_selected != BODY_ZONE_PRECISE_MOUTH && doafter_self_shoot)) //so we can't shoot ourselves (unless mouth selected)
-			return
+			return NONE
 
 	if(istype(user))//Check if the user can use the gun, if the user isn't alive(turrets) assume it can.
 		var/mob/living/L = user
 		if(!can_trigger_gun(L))
-			return
+			return NONE
 
 	if(flag && doafter_self_shoot && user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
-		handle_suicide(user, target, params)
-		return
+		return handle_suicide(user, target, params)
 
 	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
 		shoot_with_empty_chamber(user)
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(check_botched(user, target))
-		return
+		return NONE
 
 	var/obj/item/bodypart/other_hand = user.has_hand_for_held_index(user.get_inactive_hand_index()) //returns non-disabled inactive hands
 	if(weapon_weight == WEAPON_HEAVY && (user.get_inactive_held_item() || !other_hand))
 		balloon_alert(user, "use both hands!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
 	var/loop_counter = 0
@@ -472,6 +502,39 @@
 	update_appearance()
 	return TRUE
 
+/**
+ * Calculates the final recoil value applied when firing a gun.
+ *
+ * Arguments:
+ * * user - The living mob attempting to fire the gun. Used for preference lookups.
+ * * recoil_amount - The raw recoil value to be processed before clamping.
+ *
+ * Returns:
+ * The clamped recoil value after applying all modifiers.
+ */
+/obj/item/gun/proc/calculate_recoil(mob/living/user, recoil_amount = 0)
+	var/used_min_recoil = min_recoil
+	if(user.client)
+		used_min_recoil *= (user.client.prefs.read_preference(/datum/preference/numeric/min_recoil_multiplier) / 100)
+	return clamp(recoil_amount, used_min_recoil, INFINITY)
+
+/**
+ * Simulates firearm recoil and applies camera feedback when firing.
+ *
+ * Arguments:
+ * * user - The mob firing the gun. Used for recoil calculation and camera shake.
+ * * recoil_amount - The base recoil value before modifiers.
+ * * firing_angle - The firing direction used to determine camera kick direction.
+ */
+/obj/item/gun/proc/simulate_recoil(mob/living/user, recoil_amount = 0, firing_angle)
+	var/total_recoil = calculate_recoil(user, recoil_amount)
+
+	var/actual_angle = firing_angle + rand(-recoil_deviation, recoil_deviation) + 180
+	if(actual_angle > 360)
+		actual_angle -= 360
+	if(total_recoil > 0)
+		recoil_camera(user, total_recoil + 1, (total_recoil * recoil_backtime_multiplier)+1, total_recoil, actual_angle)
+
 ///returns true if the gun successfully fires
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	var/base_bonus_spread = 0
@@ -486,7 +549,7 @@
 	add_fingerprint(user)
 
 	if(fire_cd)
-		return
+		return NONE
 
 	//Vary by at least this much
 	var/randomized_bonus_spread = rand(base_bonus_spread, bonus_spread)
@@ -511,12 +574,12 @@
 			if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 				if(chambered.harmful) // Is the bullet chambered harmful?
 					to_chat(user, span_warning("[src] is lethally chambered! You don't want to risk harming anyone..."))
-					return
+					return NONE
 			var/sprd = round((rand(0, 1) - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * total_random_spread)
 			before_firing(target,user)
 			if(!chambered.fire_casing(target, user, params, 0, suppressed, zone_override, sprd, src))
 				shoot_with_empty_chamber(user)
-				return
+				return NONE
 			else
 				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
 					shoot_live_shot(user, TRUE, target, message)
@@ -524,7 +587,7 @@
 					shoot_live_shot(user, FALSE, target, message)
 		else
 			shoot_with_empty_chamber(user)
-			return
+			return NONE
 		// If gun gets destroyed as a result of firing
 		if (!QDELETED(src))
 			process_chamber()
@@ -597,10 +660,10 @@
 
 /obj/item/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params, bypass_timer)
 	if(!ishuman(user) || !ishuman(target))
-		return
+		return NONE
 
 	if(fire_cd)
-		return
+		return NONE
 
 	if(user == target)
 		target.visible_message(span_warning("[user] sticks [src] in [user.p_their()] mouth, ready to pull the trigger..."), \
@@ -618,22 +681,27 @@
 			else if(target?.Adjacent(user))
 				target.visible_message(span_notice("[user] has decided to spare [target]"), span_notice("[user] has decided to spare your life!"))
 		fire_cd = FALSE
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	fire_cd = FALSE
 
 	target.visible_message(span_warning("[user] pulls the trigger!"), span_userdanger("[(user == target) ? "You pull" : "[user] pulls"] the trigger!"))
 
-	if(chambered?.loaded_projectile)
-		chambered.loaded_projectile.damage *= 5
-		if(chambered.loaded_projectile.wound_bonus != CANT_WOUND)
-			chambered.loaded_projectile.wound_bonus += 5 // much more dramatic on multiple pellet'd projectiles really
+	if(!chambered?.loaded_projectile)
+		shoot_with_empty_chamber()
+		return ITEM_INTERACT_BLOCKING
+
+	chambered.loaded_projectile.damage *= 5
+	if(chambered.loaded_projectile.wound_bonus != CANT_WOUND)
+		chambered.loaded_projectile.wound_bonus += 5 // much more dramatic on multiple pellet'd projectiles really
 
 	var/fired = process_fire(target, user, TRUE, params, BODY_ZONE_HEAD)
 	if(!fired && chambered?.loaded_projectile)
 		chambered.loaded_projectile.damage /= 5
 		if(chambered.loaded_projectile.wound_bonus != CANT_WOUND)
 			chambered.loaded_projectile.wound_bonus -= 5
+		return NONE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/proc/unlock() //used in summon guns and as a convience for admins
 	if(pin)
