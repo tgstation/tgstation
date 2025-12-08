@@ -51,7 +51,7 @@
 	pickup_sound = 'sound/items/handling/disk_pickup.ogg'
 
 	/// Sticker icons to choose from (as icon states)
-	var/list/icon_variants = list(
+	var/static/list/sticker_variants = list(
 		"One" = "o_one",
 		"Two" = "o_two",
 		"Three" = "o_three",
@@ -117,7 +117,6 @@
 
 		custom_description = newdescription
 		set_sticker_icon_state(pick("o_text1", "o_text2", "o_text3"))
-		unique_reskin = list()
 		return ITEM_INTERACT_SUCCESS
 
 	. = ..()
@@ -133,12 +132,12 @@
 	if(sticker_icon_state != STARTING_STICKER)
 		return CLICK_ACTION_BLOCKING
 
-	if(!LAZYLEN(icon_variants))
+	if(!LAZYLEN(sticker_variants))
 		return CLICK_ACTION_BLOCKING
 
 	var/list/items = list()
-	for(var/variant_name in icon_variants)
-		var/icon_state_name = icon_variants[variant_name]
+	for(var/variant_name in sticker_variants)
+		var/icon_state_name = sticker_variants[variant_name]
 		var/image/item_image = image(icon = icon, icon_state = icon_state)
 
 		var/image/overlay_preview = image(icon = icon, icon_state = icon_state_name)
@@ -148,10 +147,10 @@
 	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, PROC_REF(check_sticker_menu), user), radius = 38, require_near = TRUE)
 	if(!pick)
 		return CLICK_ACTION_BLOCKING
-	if(!icon_variants[pick])
+	if(!sticker_variants[pick])
 		return CLICK_ACTION_BLOCKING
 
-	set_sticker_icon_state(icon_variants[pick])
+	set_sticker_icon_state(sticker_variants[pick])
 	to_chat(user, span_notice("You change the sticker on [src] to '[pick]'."))
 	return CLICK_ACTION_SUCCESS
 
@@ -172,30 +171,9 @@
 	sticker_icon_state = new_icon_state
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/item/disk_stack
-	name = "stack of floppy disks"
-	desc = "A stack of floppy disks. You wonder what happens if you pull out the bottom one..."
-	icon = null
-	icon_state = null
-	w_class = WEIGHT_CLASS_SMALL
-	inhand_icon_state = "card-id"
-	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	drop_sound = 'sound/items/handling/disk_drop.ogg'
-	pickup_sound = 'sound/items/handling/disk_pickup.ogg'
-	var/list/stacked_disks = list()
-
-/obj/item/disk_stack/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(spread))
-
-/obj/item/disk_stack/examine(mob/user)
-	. = ..()
-	. += span_notice("There are [span_bold("[length(stacked_disks)]")] disks in the stack.")
-
-/obj/item/disk/proc/handle_interaction(mob/living/user, obj/item/other)
-	if(istype(other, /obj/item/disk_stack))
-		var/obj/item/disk_stack/held_stack = other
+/obj/item/disk/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/disk_stack))
+		var/obj/item/disk_stack/held_stack = tool
 		var/obj/item/disk_stack/new_stack = new(get_turf(src))
 		var/was_in_hand = user.is_holding(src) || user.is_holding(held_stack)
 		new_stack.add_to_stack(user, src)
@@ -216,35 +194,51 @@
 		balloon_alert(user, "merged stacks")
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(other, /obj/item/disk))
+	if(istype(tool, /obj/item/disk))
 		var/obj/item/disk_stack/new_stack = new(get_turf(src))
 		new_stack.pixel_x = pixel_x
 		new_stack.pixel_y = pixel_y
 
 		var/was_in_hand = user.is_holding(src)
 		new_stack.add_to_stack(user, src)
-		new_stack.add_to_stack(user, other)
+		new_stack.add_to_stack(user, tool)
 		new_stack.update_appearance(UPDATE_OVERLAYS)
-		if(was_in_hand || user.is_holding(other))
+		if(was_in_hand || user.is_holding(tool))
 			user.put_in_hands(new_stack)
 		return ITEM_INTERACT_SUCCESS
 
+/obj/item/disk_stack
+	name = "stack of floppy disks"
+	desc = "A stack of floppy disks. You wonder what happens if you pull out the bottom one..."
+	icon = null
+	icon_state = null
+	w_class = WEIGHT_CLASS_SMALL
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	drop_sound = 'sound/items/handling/disk_drop.ogg'
+	pickup_sound = 'sound/items/handling/disk_pickup.ogg'
+	/// List of references to the disks inside the stack
+	var/list/stacked_disks = list()
 
-/obj/item/disk_stack/proc/handle_interaction(mob/living/user, obj/item/other)
-	if(istype(other, /obj/item/disk_stack))
-		return merge_stacks(user, other)
+/obj/item/disk_stack/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(spread))
+	RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
 
-	if(istype(other, /obj/item/disk))
-		return add_to_stack(user, other)
-
-/obj/item/disk/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	return handle_interaction(user, tool)
+/obj/item/disk_stack/examine(mob/user)
+	. = ..()
+	. += span_notice("There are [span_bold("[length(stacked_disks)]")] disks in the stack.")
 
 /obj/item/disk_stack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	return handle_interaction(user, tool)
+	if(istype(tool, /obj/item/disk_stack))
+		return merge_stacks(user, tool)
+
+	if(istype(tool, /obj/item/disk))
+		return add_to_stack(user, tool)
 
 /obj/item/disk_stack/proc/add_to_stack(mob/living/user, obj/item/disk/newdisk)
-	if(length(stacked_disks) + 1 > MAX_DISK_STACK_SIZE)
+	if(length(stacked_disks) >= MAX_DISK_STACK_SIZE)
 		balloon_alert(user, "can't add more!")
 		return ITEM_INTERACT_BLOCKING
 
@@ -271,15 +265,12 @@
 		return FALSE
 
 	var/obj/item/disk/top = stacked_disks[length(stacked_disks)]
-	stacked_disks.Cut(length(stacked_disks))
-
-	balloon_alert(user, "removed top disk")
 	user.put_in_hands(top)
+	balloon_alert(user, "removed top disk")
 
 	if(length(stacked_disks) == 1)
 		var/obj/item/disk/last_disk = stacked_disks[1]
 		var/was_in_hand = user.is_holding(src)
-		stacked_disks.Cut()
 		if(was_in_hand)
 			last_disk.forceMove(user)
 			user.put_in_hands(last_disk)
@@ -299,12 +290,11 @@
 	var/amount_counter = 0
 
 	for(var/obj/item/disk/each_disk as anything in diskstack.stacked_disks)
-		if(length(stacked_disks) + 1 > MAX_DISK_STACK_SIZE)
+		if(length(stacked_disks) >= MAX_DISK_STACK_SIZE)
 			break
 
 		each_disk.forceMove(src)
 		stacked_disks += each_disk
-		diskstack.stacked_disks.Remove(each_disk)
 		amount_counter += 1
 
 	diskstack.update_overlays()
@@ -321,9 +311,8 @@
 
 	else if(length(diskstack.stacked_disks) == 1)
 		var/obj/item/disk/last_disk = diskstack.stacked_disks[1]
-		var/turf/T = get_turf(diskstack)
-		last_disk.forceMove(T)
-		diskstack.stacked_disks.Cut()
+		var/turf/our_turf = get_turf(diskstack)
+		last_disk.forceMove(our_turf)
 		QDEL_IN(diskstack, 0)
 
 	return ITEM_INTERACT_SUCCESS
@@ -336,7 +325,6 @@
 
 	var/turf/landing = get_turf(src)
 	for(var/obj/item/disk/each_disk as anything in stacked_disks)
-		stacked_disks.Remove(each_disk)
 		each_disk.forceMove(landing)
 		each_disk.throw_at(get_step(src, pick(NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST)), 1, 0.8)
 
@@ -349,6 +337,19 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	. = ..()
+
+/// Handle disks leaving the stack through other means
+/obj/item/disk_stack/proc/on_exited(datum/source, atom/movable/gone, direction)
+	SIGNAL_HANDLER
+
+	if(!istype(gone, /obj/item/disk))
+		return
+
+	stacked_disks -= gone
+	update_appearance(UPDATE_OVERLAYS)
+
+	if(!length(stacked_disks))
+		QDEL_IN(src, 0)
 
 /obj/item/disk/can_be_package_wrapped()
 	return TRUE
