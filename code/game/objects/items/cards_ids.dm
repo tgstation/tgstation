@@ -1098,8 +1098,7 @@
 	var/datum/bank_account/department_account = SSeconomy.get_dep_account(department_ID)
 	if(department_account)
 		registered_account = department_account
-		if(!LAZYFIND(department_account.bank_cards, src))
-			LAZYADD(department_account.bank_cards, src)
+		LAZYOR(department_account.bank_cards, src)
 		name = "departmental card ([department_name])"
 		desc = "Provides access to the [department_name]."
 	SSeconomy.dep_cards += src

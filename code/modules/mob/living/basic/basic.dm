@@ -122,8 +122,7 @@
 
 	if(LAZYLEN(speak_emote))
 		speak_emote = string_list(speak_emote)
-	if(LAZYLEN(damage_coeff))
-		damage_coeff = string_assoc_list(damage_coeff)
+	damage_coeff = string_assoc_list(damage_coeff)
 
 	///We need to wait for SSair to be initialized before we can check atmos/temp requirements.
 	if(PERFORM_ALL_TESTS(focus_only/atmos_and_temp_requirements) && mapload && !SSair.initialized)

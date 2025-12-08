@@ -41,7 +41,7 @@
 /datum/crafting_recipe/radio_containing/New()
 	if(isnull(radio_types_blacklist))
 		// because we got shit like /obj/item/radio/off ... WHY!?!
-		radio_types_blacklist = typecacheof(/obj/item/radio/headset) + typecacheof(/obj/item/radio/intercom)
+		radio_types_blacklist = typecacheof(list(/obj/item/radio/headset, /obj/item/radio/intercom))
 	blacklist = radio_types_blacklist
 	return ..()
 
@@ -169,7 +169,7 @@
 	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/flashlight_eyes/New()
-	blacklist += typecacheof(/obj/item/flashlight/flare)
+	LAZYADD(typecacheof(/obj/item/flashlight/flare))
 	return ..()
 
 /datum/crafting_recipe/extendohand_r
