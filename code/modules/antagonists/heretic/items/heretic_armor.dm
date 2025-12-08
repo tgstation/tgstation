@@ -83,6 +83,7 @@
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/heretic_focus)
+	allowed += GLOB.security_vest_allowed
 
 /datum/armor/eldritch_armor
 	melee = 50
