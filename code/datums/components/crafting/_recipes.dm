@@ -55,7 +55,7 @@
 	// Should the recipe blacklist its result? Default behavior is to blacklist any result that isn't in reqs. Can be set to FALSE (not null!) to override the default behavior.
 	var/blacklist_result
 	/// Global crafting blacklist. These should be excluded from all crafting recipes no matter what.
-	var/static/list/global_crafting_blacklist = typecacheof(list(
+	var/static/list/global_blacklist = typecacheof(list(
 		/obj/item/cautery/augment,
 		/obj/item/cautery/cruel/augment,
 		/obj/item/circular_saw/augment,
