@@ -120,7 +120,6 @@
 	. += span_notice("Their order was: \"[order].\"")
 
 /mob/living/basic/robot_customer/death()
-	new /obj/effect/temp_visual/gib_animation(loc, "gibbed-r")
 	new /obj/effect/gibspawner/robot(drop_location())
 
 	return ..()
