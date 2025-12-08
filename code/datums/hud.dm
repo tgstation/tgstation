@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(trait_blockers_to_hud, list(
 	for(var/z_level in 1 to world.maxz)
 		hud_atoms += list(list())
 		hud_users += list(list())
-	if(length(hud_icons))
+	if(LAZYLEN(hud_icons))
 		hud_icons = string_list(hud_icons)
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_Z, PROC_REF(add_z_level_huds))
