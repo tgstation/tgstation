@@ -72,6 +72,15 @@
 	. += NAMEOF(src, id)
 	return .
 
+/obj/machinery/button/get_custom_save_vars(save_flags=ALL)
+	. = ..()
+	if(id)
+		.[NAMEOF(src, id)] = id
+	else if(istype(device, /obj/item/assembly/control))
+		var/obj/item/assembly/control/control_device = device
+		.[NAMEOF(src, id)] = control_device.id
+	return .
+
 /obj/machinery/conveyor_switch/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, id)
