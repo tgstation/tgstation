@@ -421,7 +421,7 @@
 	)
 	reqs = list(/obj/item/stack/sheet/cloth = 4)
 	category = CAT_CLOTHING
-	blacklist_result = FALSE
+	blacklist_result = FALSE //the resulting hoodie can be used to craft other hoodies.
 
 /datum/crafting_recipe/flower_garland
 	name = "Flower Garland"
