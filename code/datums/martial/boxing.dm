@@ -164,8 +164,8 @@
 
 		switch(streak_augmentation)
 			if(STRAIGHT_PUNCH)
-				current_atk_verb = "consecutively normal punches"
-				current_atk_verbed = "consecutively normal punched"
+				current_atk_verb = "straight punches"
+				current_atk_verbed = "straight punched"
 				combo_multiplier = 1
 
 			if(LIGHT_JAB)
