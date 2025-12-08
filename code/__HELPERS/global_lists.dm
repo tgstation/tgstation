@@ -20,9 +20,7 @@
 
 /// Inits crafting recipe lists
 /proc/init_crafting_recipes()
-	for(var/datum/crafting_recipe_path as anything in subtypesof(/datum/crafting_recipe))
-		if(crafting_recipe_path::abstract_type == crafting_recipe_path)
-			continue
+	for(var/datum/crafting_recipe_path as anything in valid_subtypesof(/datum/crafting_recipe))
 		var/datum/crafting_recipe/recipe = new crafting_recipe_path()
 		var/is_cooking = (recipe.category in GLOB.crafting_category_food)
 		recipe.reqs = sort_list(recipe.reqs, GLOBAL_PROC_REF(cmp_crafting_req_priority))
