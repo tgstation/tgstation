@@ -51,11 +51,31 @@
 	. = ..()
 	update_appearance()
 
-/obj/structure/filingcabinet/employment/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
+/obj/structure/filingcabinet/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
 	save_stored_contents(map_string, current_loc, obj_blacklist)
 
 /obj/item/folder/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
 	save_stored_contents(map_string, current_loc, obj_blacklist)
+
+/obj/item/clipboard/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
+	var/list/clipboard_contents = list()
+	if(pen)
+		clipboard_contents += pen
+
+	for(var/obj/item/paper/paper in contents)
+		clipboard_contents += paper
+
+	save_stored_contents(map_string, current_loc, obj_blacklist, clipboard_contents)
+
+/obj/item/clipboard/PersistentInitialize()
+	. = ..()
+
+	for(var/clipboard_obj in contents)
+		if(istype(clipboard_obj, /obj/item/pen))
+			pen = clipboard_obj
+		if(istype(clipboard_obj, /obj/item/paper))
+			continue // paper is by default inside contents
+	update_appearance()
 
 // technically you could do this with all the regular pipes but it might clog
 /obj/machinery/disposal/bin/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
