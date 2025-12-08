@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 /datum/atom_hud/alternate_appearance/New(key)
 	// We use hud_icons to register our hud, so we need to do this before the parent call
 	appearance_key = key
-	hud_icons = string_list(appearance_key)
+	hud_icons = list(appearance_key)
 	..()
 
 	GLOB.active_alternate_appearances += src
