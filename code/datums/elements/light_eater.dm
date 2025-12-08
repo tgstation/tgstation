@@ -141,8 +141,9 @@
 	if (ismob(target))
 		var/mob/hit_user = target
 		if (hit_user.pulling)
-			var/atom/pulled_thing = hit_user.pulling
-			eat_lights(pulled_thing, source)
+			var/atom/pulled_thing = hit_user.pulling // dragging a light
+			if (!isliving(pulled_thing)) // we don't want conga lines to be effected
+				eat_lights(pulled_thing, source)
 	// not particularly picky about what happens afterwards in the attack chain
 	return NONE
 
