@@ -1,0 +1,6 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Boxing combos are now broader and user friendly. Alternating combinations of buttons AND hands produces different results, but all of them good. Experiment!"
+  - balance: "Evil boxing now has a Sucker Punch. Hit someone from behind to potentially knock them out cold!"
+  - bugfix: "Punching mitts no longer mention punching rocks."
