@@ -116,9 +116,7 @@
 "qf" = (
 /obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
-	},
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "qt" = (
@@ -466,9 +464,7 @@
 "Tw" = (
 /obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
-	},
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "TZ" = (

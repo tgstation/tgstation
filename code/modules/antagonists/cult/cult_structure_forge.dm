@@ -14,6 +14,7 @@
 	light_color = LIGHT_COLOR_LAVA
 	break_message = span_warning("The forge breaks apart into shards with a howling scream!")
 	mansus_conversion_path = /obj/structure/destructible/eldritch_crucible
+	custom_materials = list(/datum/material/runedmetal = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/structure/destructible/cult/item_dispenser/forge/setup_options()
 	var/static/list/forge_items = list(

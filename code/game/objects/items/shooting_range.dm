@@ -5,7 +5,7 @@
 	icon_state = "target_h"
 	density = FALSE
 	max_integrity = 1800
-	item_flags = CAN_BE_HIT
+	obj_flags = CAN_BE_HIT
 	/// Lazylist to keep track of bullet-hole overlays.
 	var/list/bullethole_overlays
 
