@@ -10,7 +10,7 @@
 	base_icon_state = "datadisk"
 	icon_state = "datadisk0"
 	unique_reskin = list()
-	initial_sticker_icon_state = "o_code"
+	sticker_icon_state = "o_code"
 	/// Name of the choice made
 	var/choice_made
 

@@ -4,7 +4,7 @@
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
 	max_integrity = 250
-	initial_sticker_icon_state = NONE
+	sticker_icon_state = null
 	armor_type = /datum/armor/disk_nuclear
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	read_only = TRUE

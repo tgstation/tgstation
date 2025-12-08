@@ -1,6 +1,7 @@
 #define MAX_DISK_STACK_SIZE 10
 #define STACK_PIXEL_STEP 2
 #define MAX_TEXT_LENGTH 30
+#define STARTING_STICKER "o_empty"
 
 /obj/item/disk
 	name = "floppy disk"
@@ -54,26 +55,17 @@
 	/// If readonly state can be toggled on and off
 	var/read_only_locked = FALSE
 	/// The current sticker icon state to display
-	var/sticker_icon_state
+	var/sticker_icon_state = STARTING_STICKER
 	/// Custom description
 	var/custom_description
-	/// Whether the sticker has been changed from the initial state
-	var/sticker_changed = FALSE
-	/// Initial sticker icon state set by subtypes
-	var/initial_sticker_icon_state
 
 /obj/item/disk/Initialize(mapload)
 	. = ..()
-	if(!sticker_icon_state)
-		if(initial_sticker_icon_state == NONE)
-			sticker_icon_state = null
-		else
-			sticker_icon_state = initial_sticker_icon_state || "o_empty"
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/disk/update_overlays()
 	. = ..()
-	if(sticker_icon_state && sticker_icon_state != NONE)
+	if(sticker_icon_state)
 		. += sticker_icon_state
 
 /obj/item/disk/examine(mob/user)
@@ -86,7 +78,7 @@
 
 /obj/item/disk/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/pen))
-		if(sticker_changed)
+		if(sticker_icon_state != STARTING_STICKER)
 			to_chat(user, span_warning("You can't add anything else!"))
 			return ITEM_INTERACT_FAILURE
 
@@ -99,7 +91,6 @@
 
 		custom_description = newdescription
 		set_sticker_icon_state(pick("o_text1", "o_text2", "o_text3"))
-		sticker_changed = TRUE
 		unique_reskin = list()
 		return ITEM_INTERACT_SUCCESS
 
@@ -113,7 +104,7 @@
 	to_chat(user, span_notice("You flip the write-protect tab to [span_bold("[read_only ? "protected" : "unprotected"]")]."))
 
 /obj/item/disk/click_alt(mob/user)
-	if(sticker_changed)
+	if(sticker_icon_state != STARTING_STICKER)
 		return CLICK_ACTION_BLOCKING
 
 	if(!LAZYLEN(icon_variants))
@@ -135,7 +126,6 @@
 		return CLICK_ACTION_BLOCKING
 
 	set_sticker_icon_state(icon_variants[pick])
-	sticker_changed = TRUE
 	to_chat(user, span_notice("You change the sticker on [src] to '[pick]'."))
 	return CLICK_ACTION_SUCCESS
 
@@ -143,7 +133,7 @@
 /obj/item/disk/proc/check_sticker_menu(mob/user)
 	if(QDELETED(src))
 		return FALSE
-	if(sticker_changed)
+	if(sticker_icon_state != STARTING_STICKER)
 		return FALSE
 	if(!istype(user))
 		return FALSE
