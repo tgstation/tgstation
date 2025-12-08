@@ -129,7 +129,7 @@
 	return TRUE
 
 /// Add any limb specific effects you might want here
-/obj/item/organ/proc/on_bodypart_insert(obj/item/bodypart/limb, movement_flags)
+/obj/item/organ/proc/on_bodypart_insert(obj/item/bodypart/limb)
 	SHOULD_CALL_PARENT(TRUE)
 
 	item_flags |= ABSTRACT
