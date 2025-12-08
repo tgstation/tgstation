@@ -68,5 +68,3 @@
 	SStgui.update_uis(pad.computer)
 	updated_text.set_output(pad.written_note)
 	updated.set_output(COMPONENT_SIGNAL)
-
-#undef NTOS_NOTEPAD_DEFAULT_NOTE
