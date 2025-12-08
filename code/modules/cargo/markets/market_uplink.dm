@@ -177,6 +177,6 @@
 	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/blackmarket_uplink/New()
-	..()
-	blacklist |= typesof(/obj/item/radio/headset) // because we got shit like /obj/item/radio/off ... WHY!?!
-	blacklist |= typesof(/obj/item/radio/intercom)
+	blacklist = typecacheof(/obj/item/radio/headset) + typecacheof(/obj/item/radio/intercom)
+	// because we got shit like /obj/item/radio/off ... WHY!?!
+	return ..()

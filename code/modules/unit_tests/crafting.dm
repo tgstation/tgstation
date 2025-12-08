@@ -76,8 +76,8 @@
 		for(var/iteration in 1 to amount)
 			new req_path(turf)
 
-	for(var/req_path in recipe.chem_catalysts) // spawn catalysts
-		var/amount = recipe.chem_catalysts[req_path]
+	for(var/req_path, chem_amount in recipe.chem_catalysts) // spawn catalysts
+		var/amount = chem_amount
 		if(!bottomless_cup.reagents.has_reagent(req_path, amount))
 			bottomless_cup.reagents.add_reagent(req_path, amount + 1, no_react = TRUE)
 
