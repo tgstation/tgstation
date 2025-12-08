@@ -45,7 +45,9 @@
 	dummy.put_in_hands(asclepius)
 	asclepius.apply_oath(dummy)
 
-	TEST_ASSERT_NOTNULL(dummy.has_status_effect(/datum/status_effect/hippocratic_oath), "Dummy should have the Hippocratic Oath status effect.")
+	var/datum/status_effect/hippocratic_oath/oath = dummy.has_status_effect(/datum/status_effect/hippocratic_oath)
+	TEST_ASSERT_NOTNULL(oath, "Dummy should have the Hippocratic Oath status effect.")
+	oath.aura_healing.process(1) // tick it once to apply the alert
 	var/atom/movable/screen/alert/aura_healing/alert = locate() in assoc_to_values(dummy.alerts)
 	TEST_ASSERT_NOTNULL(alert, "Dummy should have received the aura healing alert.")
 	TEST_ASSERT(length(alert.overlays) > 0, "Alert should have overlays applied.")
