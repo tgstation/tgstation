@@ -152,7 +152,7 @@
 	When people read this poster they'll feel better!"
 	icon_state = "bike"
 
-/// Departmental posters ///
+// Departmental posters
 
 /obj/item/poster/quirk/cargo_logo
 	poster_type = /obj/structure/sign/poster/quirk/cargo_logo
