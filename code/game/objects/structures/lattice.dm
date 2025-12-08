@@ -16,7 +16,7 @@
 	canSmoothWith = SMOOTH_GROUP_LATTICE + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_OPEN_FLOOR
 	var/number_of_mats = 1
 	var/build_material = /obj/item/stack/rods
-	var/list/give_turf_traits = list(TRAIT_CHASM_STOPPED, TRAIT_HYPERSPACE_STOPPED)
+	var/list/give_turf_traits = list(TRAIT_CHASM_STOPPED, TRAIT_HYPERSPACE_STOPPED, TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_IMMERSE_STOPPED)
 
 /obj/structure/lattice/Initialize(mapload)
 	. = ..()
@@ -86,8 +86,8 @@
 	return FALSE
 
 /obj/structure/lattice/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF)
-		var/design_structure = rcd_data["[RCD_DESIGN_PATH]"]
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_TURF)
+		var/design_structure = rcd_data[RCD_DESIGN_PATH]
 		if(design_structure == /turf/open/floor/plating/rcd)
 			var/turf/T = src.loc
 			if(isgroundlessturf(T))

@@ -133,6 +133,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/warning/secure_area/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "R" = (
@@ -146,10 +147,6 @@
 /obj/structure/noticeboard/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/telecomms)
-"V" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/telecomms)
 "W" = (
 /turf/open/floor/iron/dark,
@@ -200,7 +197,7 @@ a
 (4,1,1) = {"
 f
 f
-V
+f
 O
 f
 f

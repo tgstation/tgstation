@@ -23,11 +23,11 @@
 /obj/structure/sign/Initialize(mapload)
 	. = ..()
 	register_context()
-	if(mapload && !find_and_hang_on_atom(mark_for_late_init = TRUE))
+	if(mapload && !find_and_mount_on_atom(mark_for_late_init = TRUE))
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/sign/LateInitialize()
-	find_and_hang_on_atom(late_init = TRUE)
+	find_and_mount_on_atom(late_init = TRUE)
 
 /obj/structure/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -129,19 +129,6 @@
 	is_editable = TRUE
 	sign_change_name = "Blank Sign"
 
-/obj/structure/sign/nanotrasen
-	name = "\improper Nanotrasen logo sign"
-	sign_change_name = "Corporate Logo - Nanotrasen"
-	desc = "A sign with the Nanotrasen logo on it. Glory to Nanotrasen!"
-	icon_state = "nanotrasen"
-	is_editable = TRUE
-
-/obj/structure/sign/logo
-	name = "\improper Nanotrasen logo sign"
-	desc = "The Nanotrasen corporate logo."
-	icon_state = "nanotrasen_sign1"
-	buildable_sign = FALSE
-
 /obj/item/sign
 	name = "sign backing"
 	desc = "A plastic sign backing, use a pen to change the decal. It can be placed on a wall."
@@ -220,7 +207,7 @@
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
 	placed_sign.update_integrity(get_integrity())
 	placed_sign.setDir(dir)
-	placed_sign.find_and_hang_on_atom()
+	placed_sign.find_and_mount_on_atom()
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 

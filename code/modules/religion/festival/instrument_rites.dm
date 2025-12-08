@@ -173,7 +173,7 @@
 	if(listener.mind?.holy_role)
 		damage_dealt *= 0.5
 
-	listener.adjustBruteLoss(damage_dealt)
+	listener.adjust_brute_loss(damage_dealt)
 
 /datum/religion_rites/song_tuner/pain/finish_effect(mob/living/carbon/human/listener, atom/song_source)
 	var/obj/item/bodypart/sliced_limb = pick(listener.bodyparts)

@@ -1,7 +1,6 @@
 /datum/job/cargo_gorilla
 	title = JOB_CARGO_GORILLA
 	description = "Assist the supply department by moving freight and disposing of unwanted fruits."
-	department_head = list(JOB_QUARTERMASTER)
 	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 0

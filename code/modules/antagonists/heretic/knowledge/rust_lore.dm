@@ -302,11 +302,11 @@
 
 	var/need_mob_update = FALSE
 	var/base_heal_amt = 1 * DELTA_WORLD_TIME(SSmobs)
-	need_mob_update += source.adjustBruteLoss(-base_heal_amt, updating_health = FALSE)
-	need_mob_update += source.adjustFireLoss(-base_heal_amt, updating_health = FALSE)
-	need_mob_update += source.adjustToxLoss(-base_heal_amt, updating_health = FALSE, forced = TRUE)
-	need_mob_update += source.adjustOxyLoss(-base_heal_amt, updating_health = FALSE)
-	need_mob_update += source.adjustStaminaLoss(-base_heal_amt * 4, updating_stamina = FALSE)
+	need_mob_update += source.adjust_brute_loss(-base_heal_amt, updating_health = FALSE)
+	need_mob_update += source.adjust_fire_loss(-base_heal_amt, updating_health = FALSE)
+	need_mob_update += source.adjust_tox_loss(-base_heal_amt, updating_health = FALSE, forced = TRUE)
+	need_mob_update += source.adjust_oxy_loss(-base_heal_amt, updating_health = FALSE)
+	need_mob_update += source.adjust_stamina_loss(-base_heal_amt * 4, updating_stamina = FALSE)
 
 	source.adjust_blood_volume(base_heal_amt, maximum = BLOOD_VOLUME_NORMAL)
 

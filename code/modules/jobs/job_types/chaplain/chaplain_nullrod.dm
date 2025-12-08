@@ -128,7 +128,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -3)
 
 /obj/item/nullrod/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == (PROJECTILE_ATTACK || LEAP_ATTACK || OVERWHELMING_ATTACK))
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
 	return ..()
 
@@ -191,62 +191,26 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	SET_ATTACK_FORCE(attack_modifiers, rand(max(force - 15, 1), force + 15))
 	return ..()
 
-/// Vibro Variant
-/// This subtype possesses armor penetration and is sharp.
-
-/obj/item/nullrod/vibro
-	name = "high frequency blade"
-	desc = "Bad references are the DNA of the soul."
-	icon = 'icons/obj/weapons/sword.dmi'
-	icon_state = "hfrequency0"
-	inhand_icon_state = "hfrequency1"
-	worn_icon_state = "hfrequency0"
-	icon_angle = -45
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
-	armour_penetration = 35
-	slot_flags = ITEM_SLOT_BACK
-	sharpness = SHARP_EDGED
-	attack_verb_continuous = list("chops", "slices", "cuts", "zandatsu's")
-	attack_verb_simple = list("chop", "slice", "cut", "zandatsu")
-	hitsound = 'sound/items/weapons/rapierhit.ogg'
-	menu_description = "A sharp blade which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
-	var/list/alt_continuous = list("stabs", "pierces", "impales")
-	var/list/alt_simple = list("stab", "pierce", "impale")
-
-/obj/item/nullrod/vibro/Initialize(mapload)
-	. = ..()
-	alt_continuous = string_list(alt_continuous)
-	alt_simple = string_list(alt_simple)
-	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -3)
-
-/obj/item/nullrod/vibro/Initialize(mapload)
-	. = ..()
-	AddComponent(
-		/datum/component/butchering, \
-		speed = 7 SECONDS, \
-		effectiveness = 110, \
-	)
-
-/obj/item/nullrod/vibro/spellblade
+/obj/item/nullrod/claymore/spellblade
 	name = "dormant spellblade"
 	desc = "The blade grants the wielder nearly limitless power...if they can figure out how to turn it on, that is."
 	icon = 'icons/obj/weapons/guns/magic.dmi'
 	icon_state = "spellblade"
 	inhand_icon_state = "spellblade"
+	slot_flags = ITEM_SLOT_BACK
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	worn_icon_state = "spellblade"
 	hitsound = 'sound/items/weapons/rapierhit.ogg'
-	menu_description = "A sharp blade which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
+	menu_description = "A sharp blade which provides a low chance of blocking incoming melee attacks. Can be worn on the back."
 
-/obj/item/nullrod/vibro/talking
+/obj/item/nullrod/claymore/talking
 	name = "possessed blade"
 	desc = "When the station falls into chaos, it's nice to have a friend by your side."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "talking_sword"
 	inhand_icon_state = "talking_sword"
+	slot_flags = ITEM_SLOT_BACK
 	icon_angle = 45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -254,13 +218,13 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	attack_verb_continuous = list("chops", "slices", "cuts")
 	attack_verb_simple= list("chop", "slice", "cut")
 	hitsound = 'sound/items/weapons/rapierhit.ogg'
-	menu_description = "A sharp blade which partially penetrates armor. Able to awaken a friendly spirit to provide guidance. Very effective at butchering bodies. Can be worn on the back."
+	menu_description = "A sharp blade which provides a low chance of blocking incoming melee attacks. Able to awaken a friendly spirit to provide guidance. Can be worn on the back."
 
-/obj/item/nullrod/vibro/talking/Initialize(mapload)
+/obj/item/nullrod/spellblade/talking/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/spirit_holding)
 
-/obj/item/nullrod/vibro/talking/chainsword
+/obj/item/nullrod/claymore/talking/chainsword
 	name = "possessed chainsaw sword"
 	desc = "Suffer not a heretic to live."
 	icon_state = "chainswordon"
@@ -275,12 +239,82 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	toolspeed = 0.5 //same speed as an active chainsaw
 	chaplain_spawnable = FALSE //prevents being pickable as a chaplain weapon (it has 30 force)
 
-/obj/item/nullrod/vibro/talking/chainsword/Initialize(mapload)
+/obj/item/nullrod/spellblade/talking/chainsword/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/cuffable_item) //Thanks goodness it cannot be selected by chappies
+	AddComponent(
+		/datum/component/butchering, \
+		speed = 7 SECONDS, \
+		effectiveness = 110, \
+	)
+
+/obj/item/nullrod/claymore/heretic
+	name = "occultist's khopesh"
+	desc = "Steels your hand to slay foes beyond comprehension."
+	icon = 'icons/obj/weapons/khopesh.dmi'
+	icon_state = "eldritch_blade"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	inhand_icon_state = "eldritch_blade"
+	worn_icon_state = "eldritch_blade"
+	menu_description = "A sharp curved blade which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
 
 /// Other Variants
 /// Not a special category on their own, but usually possess more unique mechanics
+
+// High Frequency Blade - Two-handed, has armor penetration, and can block exosuit attacks relatively easily. Can't block anything else.
+
+/obj/item/nullrod/vibro
+	name = "high frequency blade"
+	desc = "Bad references are the DNA of the soul."
+	icon = 'icons/obj/weapons/sword.dmi'
+	icon_state = "hfrequency0"
+	inhand_icon_state = "hfrequency0"
+	base_icon_state = "hfrequency"
+	worn_icon_state = "hfrequency0"
+	icon_angle = -45
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	w_class = WEIGHT_CLASS_BULKY
+	force = 10
+	armour_penetration = 35
+	block_chance = 40
+	slot_flags = ITEM_SLOT_BACK
+	sharpness = SHARP_EDGED
+	attack_verb_continuous = list("chops", "slices", "cuts", "zandatsu's")
+	attack_verb_simple = list("chop", "slice", "cut", "zandatsu")
+	hitsound = 'sound/items/weapons/rapierhit.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
+	menu_description = "A sharp blade which partially penetrates armor. Unusualy adept at blocking melee attacks from exosuits. Very effective at butchering bodies. Can be worn on the back."
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
+
+/obj/item/nullrod/vibro/Initialize(mapload)
+	. = ..()
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -3)
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = 10, \
+		force_wielded = 18, \
+	)
+	AddComponent(
+		/datum/component/butchering, \
+		speed = 7 SECONDS, \
+		effectiveness = 110, \
+	)
+
+/obj/item/nullrod/vibro/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)) && attack_type == OVERWHELMING_ATTACK)
+		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
+		return TRUE
+	return FALSE
+
+/obj/item/nullrod/vibro/update_icon_state()
+	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
+	return ..()
 
 // God Hand - Cannot be dropped. Does burn damage.
 
@@ -585,7 +619,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	AddElement(/datum/element/nullrod_core)
 	AddComponent(/datum/component/faction_granter, FACTION_CARP, holy_role_required = HOLY_ROLE_PRIEST, grant_message = span_boldnotice("You are blessed by Carp-Sie. Wild space carp will no longer attack you."))
 
-// Monk's Staff - Higher block, lower damage.
+// Monk's Staff - Good block, two-handed. Great for showing off.
 
 /obj/item/nullrod/bostaff
 	name = "monk's staff"
@@ -620,7 +654,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	return ..()
 
 /obj/item/nullrod/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == (PROJECTILE_ATTACK || LEAP_ATTACK || OVERWHELMING_ATTACK))
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
 		final_block_chance = 0 //Don't bring a stick to a gunfight, and also you aren't going to really block someone full body tackling you with a stick. Or a road roller, if one happened to hit you.
 	return ..()
 

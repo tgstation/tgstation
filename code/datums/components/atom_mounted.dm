@@ -8,25 +8,28 @@
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 	hanging_support_atom = target_structure
-
-/datum/component/atom_mounted/RegisterWithParent()
-	ADD_TRAIT(parent, TRAIT_WALLMOUNTED, REF(src))
 	RegisterSignal(hanging_support_atom, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	if(isclosedturf(hanging_support_atom))
 		RegisterSignal(hanging_support_atom, COMSIG_TURF_CHANGE, PROC_REF(on_turf_changing))
 	else
 		RegisterSignal(hanging_support_atom, COMSIG_QDELETING, PROC_REF(on_structure_delete))
+
+/datum/component/atom_mounted/RegisterWithParent()
+	ADD_TRAIT(parent, TRAIT_WALLMOUNTED, REF(src))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 
 /datum/component/atom_mounted/UnregisterFromParent()
 	REMOVE_TRAIT(parent, TRAIT_WALLMOUNTED, REF(src))
+	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
+
+/datum/component/atom_mounted/Destroy(force)
 	UnregisterSignal(hanging_support_atom, list(COMSIG_ATOM_EXAMINE))
 	if(isclosedturf(hanging_support_atom))
 		UnregisterSignal(hanging_support_atom, COMSIG_TURF_CHANGE)
 	else
 		UnregisterSignal(hanging_support_atom, COMSIG_QDELETING)
-	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 	hanging_support_atom = null
+	return ..()
 
 /**
  * When the wall is examined, explains that it's supporting the linked object.
@@ -69,6 +72,55 @@
 	hanging_parent.visible_message(message = span_warning("\The [hanging_parent] falls apart!"), vision_distance = 5)
 	hanging_parent.deconstruct(FALSE)
 
+
+/// Returns a list of potential turfs to mount on. This should not check if those turfs are valid but only locate them
+/obj/proc/get_turfs_to_mount_on()
+	PROTECTED_PROC(TRUE)
+	RETURN_TYPE(/list/turf)
+
+	//Infer using icon offsets. Can support diagonal mounting
+	var/pixel_direction = NONE
+	if(pixel_x > (ICON_SIZE_X / 2))
+		pixel_direction |= EAST
+	else if(pixel_x < -(ICON_SIZE_X / 2))
+		pixel_direction |= WEST
+	if(pixel_y > (ICON_SIZE_Y / 2))
+		pixel_direction |= NORTH
+	else if(pixel_y < -(ICON_SIZE_Y / 2))
+		pixel_direction |= SOUTH
+
+	. = list()
+	if(pixel_direction != NONE)
+		. += get_step(src, pixel_direction)
+	. += get_turf(src)
+
+/**
+ * Checks if our object can mount on this turf
+ *
+ * Arguments
+ * * turf/target - the turf we are trying to mount on
+*/
+/obj/proc/is_mountable_turf(turf/target)
+	PROTECTED_PROC(TRUE)
+	SHOULD_BE_PURE(TRUE)
+
+	return isclosedturf(target)
+
+/// Returns an list of object types we can mount on if the turf is unmountable
+/obj/proc/get_moutable_objects()
+	PROTECTED_PROC(TRUE)
+	SHOULD_BE_PURE(TRUE)
+	RETURN_TYPE(/list/obj)
+
+	var/static/list/obj/attachables = list(
+		/obj/structure/table,
+		/obj/structure/window,
+		/obj/structure/fence,
+		/obj/structure/falsewall,
+	)
+
+	return attachables
+
 /**
  * Finds an support atom to hang this object on. If you need to mount the object on Late Initialize
  * then pass TRUE inside Initialize() but not in LateInitialize().
@@ -78,7 +130,7 @@
  * * mark_for_late_init - if TRUE will apply the MOUNT_ON_LATE_INITIALIZE which gets cleared on every call
  * * late_init - should only be passed as TRUE from inside LateInitialize()
 */
-/obj/proc/find_and_hang_on_atom(mark_for_late_init = FALSE, late_init = FALSE)
+/obj/proc/find_and_mount_on_atom(mark_for_late_init = FALSE, late_init = FALSE)
 	if(obj_flags & MOUNT_ON_LATE_INITIALIZE)
 		obj_flags &= ~MOUNT_ON_LATE_INITIALIZE
 	else if(late_init)
@@ -92,19 +144,13 @@
 	if(PERFORM_ALL_TESTS(focus_only/atom_mounted) && !mark_for_late_init)
 		msg = "[type] Could not find attachable object at [location.type] "
 
-	var/list/turf/attachable_turfs = list()
-	attachable_turfs += get_step(src, dir)
-	attachable_turfs += get_turf(src)
+	var/list/turf/attachable_turfs = get_turfs_to_mount_on()
 	for(var/turf/target as anything in attachable_turfs)
 		var/atom/attachable_atom
-		if(isclosedturf(target))
+		if(is_mountable_turf(target))
 			attachable_atom = target //your usual wallmount
 		else
-			var/static/list/attachables = list(
-				/obj/structure/table,
-				/obj/structure/window,
-				/obj/structure/fence,
-			) //list of structures to mount on
+			var/list/obj/attachables = get_moutable_objects()
 			for(var/obj/attachable in target)
 				if(is_type_in_list(attachable, attachables))
 					attachable_atom = attachable

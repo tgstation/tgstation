@@ -3,6 +3,41 @@
 #define MAX_TEXT_LENGTH 30
 #define STARTING_STICKER "o_empty"
 
+/datum/atom_skin/floppy_disk
+	abstract_type = /datum/atom_skin/floppy_disk
+
+/datum/atom_skin/floppy_disk/red
+	preview_name = "Red"
+	new_icon_state = "datadisk0"
+
+/datum/atom_skin/floppy_disk/dark_blue
+	preview_name = "Dark Blue"
+	new_icon_state = "datadisk1"
+
+/datum/atom_skin/floppy_disk/yellow
+	preview_name = "Yellow"
+	new_icon_state = "datadisk2"
+
+/datum/atom_skin/floppy_disk/black
+	preview_name = "Black"
+	new_icon_state = "datadisk3"
+
+/datum/atom_skin/floppy_disk/green
+	preview_name = "Green"
+	new_icon_state = "datadisk4"
+
+/datum/atom_skin/floppy_disk/purple
+	preview_name = "Purple"
+	new_icon_state = "datadisk5"
+
+/datum/atom_skin/floppy_disk/grey
+	preview_name = "Grey"
+	new_icon_state = "datadisk6"
+
+/datum/atom_skin/floppy_disk/light_blue
+	preview_name = "Light Blue"
+	new_icon_state = "datadisk7"
+
 /obj/item/disk
 	name = "floppy disk"
 	desc = "A generic floppy disk. No way Nanotrasen still uses those, right?"
@@ -14,16 +49,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	drop_sound = 'sound/items/handling/disk_drop.ogg'
 	pickup_sound = 'sound/items/handling/disk_pickup.ogg'
-	unique_reskin = list(
-		"Red" = "datadisk0",
-		"Dark Blue" = "datadisk1",
-		"Yellow" = "datadisk2",
-		"Black" = "datadisk3",
-		"Green" = "datadisk4",
-		"Purple" = "datadisk5",
-		"Grey" = "datadisk6",
-		"Light Blue" = "datadisk7",
-	)
 
 	/// Sticker icons to choose from (as icon states)
 	var/list/icon_variants = list(
@@ -61,6 +86,7 @@
 
 /obj/item/disk/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/floppy_disk, infinite = FALSE)
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/disk/update_overlays()

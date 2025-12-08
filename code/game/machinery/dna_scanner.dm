@@ -159,7 +159,6 @@
 	SIGNAL_HANDLER
 	set_linked_console(null)
 
-
 //Just for transferring between genetics machines.
 /obj/item/disk/data
 	name = "DNA data disk"
