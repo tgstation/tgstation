@@ -162,8 +162,7 @@
 /mob/living/basic/bot/cleanbot/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(istype(arrived, /obj/item/reagent_containers/cup/bucket))
-		if(build_bucket)
-			QDEL_NULL(build_bucket)
+		QDEL_NULL(build_bucket)
 		build_bucket = arrived
 
 	if(istype(arrived, /obj/item/mop) && isnull(our_mop))
@@ -209,8 +208,7 @@
 
 /mob/living/basic/bot/cleanbot/explode()
 	var/atom/drop_loc = drop_location()
-	if(build_bucket)
-		build_bucket.forceMove(drop_loc)
+	build_bucket?.forceMove(drop_loc)
 	new /obj/item/assembly/prox_sensor(drop_loc)
 	if(weapon)
 		weapon.force = initial(weapon.force)
