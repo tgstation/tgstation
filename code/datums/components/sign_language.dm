@@ -312,7 +312,7 @@
 /datum/component/sign_language/proc/emote_tone(mob/living/carbon/carbon_parent, emote_tone)
 	if(ishuman(carbon_parent))
 		var/mob/living/carbon/human/human_parent = carbon_parent
-		if(human_parent.get_face_name() == "Unknown")
+		if(human_parent.is_face_obscured())
 			return // You can't see someone's expression if their face is obscured (or disfigured)
 	switch(emote_tone)
 		if(TONE_INQUISITIVE)
