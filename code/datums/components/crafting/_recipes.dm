@@ -52,7 +52,10 @@
 	var/mass_craftable = FALSE
 	///crafting_flags var to hold bool values
 	var/crafting_flags = CRAFT_CHECK_DENSITY
-	// Should the recipe blacklist its result? Default behavior is to blacklist any result that isn't in reqs. Can be set to FALSE (not null!) to override the default behavior.
+	/**
+	* Should the recipe blacklist its result? Default behavior is to blacklist any result that isn't in reqs.
+	* Can be set to ALWAYS_BLACKLIST_RESULT or NEVER_BLACKLIST_RESULT to override the default behavior.
+	*/
 	var/blacklist_result = BLACKLIST_RESULT_IF_NOT_IN_REQS
 	/// Global crafting blacklist. These should be excluded from all crafting recipes no matter what.
 	var/static/list/global_blacklist = typecacheof(list(
