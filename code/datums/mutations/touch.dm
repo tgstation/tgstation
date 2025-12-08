@@ -265,6 +265,7 @@
 	// The total amount of brute and burn we can take on all of our organic limbs, so you can't get a full aug minus one organic limb and only be able to take damage up to that limb's max_damage.
 	for(var/obj/item/bodypart/organic_part in mendicant_organic_parts)
 		damage_we_can_absorb += (organic_part.max_damage - (organic_part.brute_dam + organic_part.burn_dam))
+	damage_we_can_absorb /= pain_multiplier // If we take less damage to our limbs we can afford to heal more
 
 	var/damage_to_heal = min(70 * heal_multiplier, damage_we_can_absorb)
 	var/damage_left = damage_to_heal
@@ -325,7 +326,7 @@
 			var/blood_to_remove = 0
 			if(mendicant_blood > BLOOD_VOLUME_NORMAL) // Reduce blood based on the pain multiplier, but not if it would be helpful
 				blood_to_remove = min(mendicant_blood - BLOOD_VOLUME_NORMAL, blood_we_can_remove)
-				mendicant.adjust_blood_volume(blood_to_remove)
+				mendicant.adjust_blood_volume(-blood_to_remove)
 			if(blood_received)
 				to_chat(hurtguy, span_notice("Your veins don't feel quite so swollen anymore."))
 				. = TRUE
