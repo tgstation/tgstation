@@ -3095,6 +3095,7 @@
 #include "code\modules\admin\poll_management.dm"
 #include "code\modules\admin\skill_panel.dm"
 #include "code\modules\admin\sound_emitter.dm"
+#include "code\modules\admin\spawn_menu.dm"
 #include "code\modules\admin\sql_ban_system.dm"
 #include "code\modules\admin\sql_message_system.dm"
 #include "code\modules\admin\stickyban.dm"

@@ -151,10 +151,10 @@
 
 /datum/symptom/heal/starlight/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = actual_power
-	if(M.getToxLoss() && prob(5))
+	if(M.get_tox_loss() && prob(5))
 		to_chat(M, span_notice("Your skin tingles as the starlight seems to heal you."))
 
-	M.adjustToxLoss(-(4 * heal_amt)) //most effective on toxins
+	M.adjust_tox_loss(-(4 * heal_amt)) //most effective on toxins
 
 	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)
 
@@ -167,7 +167,7 @@
 	return 1
 
 /datum/symptom/heal/starlight/passive_message_condition(mob/living/M)
-	if(M.getBruteLoss() || M.getFireLoss() || M.getToxLoss())
+	if(M.get_brute_loss() || M.get_fire_loss() || M.get_tox_loss())
 		return TRUE
 	return FALSE
 
@@ -309,7 +309,7 @@
 	return 1
 
 /datum/symptom/heal/darkness/passive_message_condition(mob/living/M)
-	if(M.getBruteLoss() || M.getFireLoss())
+	if(M.get_brute_loss() || M.get_fire_loss())
 		return TRUE
 	return FALSE
 
@@ -378,7 +378,7 @@
 			return power * 0.9
 		if(SOFT_CRIT)
 			return power * 0.5
-	if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma && !(HAS_TRAIT(M,TRAIT_NOSOFTCRIT)))
+	if(M.get_brute_loss() + M.get_fire_loss() >= 70 && !active_coma && !(HAS_TRAIT(M,TRAIT_NOSOFTCRIT)))
 		to_chat(M, span_warning("You feel yourself slip into a regenerative coma..."))
 		active_coma = TRUE
 		addtimer(CALLBACK(src, PROC_REF(coma), M), 6 SECONDS)
@@ -409,13 +409,13 @@
 		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 
-	if(active_coma && M.getBruteLoss() + M.getFireLoss() == 0)
+	if(active_coma && M.get_brute_loss() + M.get_fire_loss() == 0)
 		uncoma(M)
 
 	return 1
 
 /datum/symptom/heal/coma/passive_message_condition(mob/living/M)
-	if((M.getBruteLoss() + M.getFireLoss()) > 30)
+	if((M.get_brute_loss() + M.get_fire_loss()) > 30)
 		return TRUE
 	return FALSE
 
@@ -476,7 +476,7 @@
 	return 1
 
 /datum/symptom/heal/water/passive_message_condition(mob/living/carbon/infected_mob)
-	if(infected_mob.getBruteLoss() || infected_mob.getFireLoss())
+	if(infected_mob.get_brute_loss() || infected_mob.get_fire_loss())
 		return TRUE
 
 	return FALSE
@@ -585,7 +585,7 @@
 		if(prob(5))
 			to_chat(M, span_notice("You feel warmer."))
 
-	M.adjustToxLoss(-heal_amt)
+	M.adjust_tox_loss(-heal_amt)
 
 	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)
 	if(!parts.len)
@@ -634,7 +634,7 @@
 /datum/symptom/heal/radiation/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = actual_power
 
-	if(M.adjustToxLoss(-(2 * heal_amt), updating_health = FALSE))
+	if(M.adjust_tox_loss(-(2 * heal_amt), updating_health = FALSE))
 		M.updatehealth()
 
 	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)

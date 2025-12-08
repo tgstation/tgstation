@@ -122,11 +122,11 @@ Consuming extracts:
 
 /obj/item/slime_cookie/purple/do_effect(mob/living/M, mob/user)
 	var/need_mob_update = FALSE
-	need_mob_update += M.adjustBruteLoss(-5, updating_health = FALSE)
-	need_mob_update += M.adjustFireLoss(-5, updating_health = FALSE)
-	need_mob_update += M.adjustToxLoss(-5, updating_health = FALSE, forced = TRUE) //To heal slimepeople.
-	need_mob_update += M.adjustOxyLoss(-5, updating_health = FALSE)
-	need_mob_update += M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5)
+	need_mob_update += M.adjust_brute_loss(-5, updating_health = FALSE)
+	need_mob_update += M.adjust_fire_loss(-5, updating_health = FALSE)
+	need_mob_update += M.adjust_tox_loss(-5, updating_health = FALSE, forced = TRUE) //To heal slimepeople.
+	need_mob_update += M.adjust_oxy_loss(-5, updating_health = FALSE)
+	need_mob_update += M.adjust_organ_loss(ORGAN_SLOT_BRAIN, -5)
 	if(need_mob_update)
 		M.updatehealth()
 

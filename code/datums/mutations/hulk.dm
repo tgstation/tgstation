@@ -184,7 +184,7 @@
 		if(!collateral_mob.density || collateral_mob == yeeted_person)
 			continue
 
-		yeeted_person.adjustBruteLoss(step*0.5)
+		yeeted_person.adjust_brute_loss(step*0.5)
 		playsound(collateral_mob,'sound/items/weapons/punch1.ogg',50,TRUE)
 		log_combat(the_hulk, collateral_mob, "has smacked with tail swing victim")
 		log_combat(the_hulk, yeeted_person, "has smacked this person into someone while tail swinging") // i have no idea how to better word this
@@ -192,14 +192,14 @@
 		if(collateral_mob == the_hulk) // if the hulk moves wrong and crosses himself
 			the_hulk.visible_message(span_warning("[the_hulk] smacks [the_hulk.p_them()]self with [yeeted_person]!"), span_userdanger("You end up smacking [yeeted_person] into yourself!"), ignored_mobs = yeeted_person)
 			to_chat(yeeted_person, span_userdanger("[the_hulk] smacks you into [the_hulk.p_them()]self, turning you free!"))
-			the_hulk.adjustBruteLoss(step)
+			the_hulk.adjust_brute_loss(step)
 			return
 
 		yeeted_person.visible_message(span_warning("[the_hulk] swings [yeeted_person] directly into [collateral_mob], sending [collateral_mob.p_them()] flying!"), \
 			span_userdanger("You're smacked into [collateral_mob]!"), ignored_mobs = collateral_mob)
 		to_chat(collateral_mob, span_userdanger("[the_hulk] swings [yeeted_person] directly into you, sending you flying!"))
 
-		collateral_mob.adjustBruteLoss(step*0.5)
+		collateral_mob.adjust_brute_loss(step*0.5)
 		collateral_mob.throw_at(collat_throw_target, round(step * 0.25) + 1, round(step * 0.25) + 1)
 		step -= 5
 		delay += 5

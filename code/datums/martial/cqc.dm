@@ -115,7 +115,7 @@
 		return FALSE
 
 	attacker.do_attack_animation(defender)
-	if(defender.body_position == LYING_DOWN && !defender.IsUnconscious() && defender.getStaminaLoss() >= 100)
+	if(defender.body_position == LYING_DOWN && !defender.IsUnconscious() && defender.get_stamina_loss() >= 100)
 		log_combat(attacker, defender, "knocked out (Head kick)(CQC)")
 		defender.visible_message(
 			span_danger("[attacker] kicks [defender]'s head, knocking [defender.p_them()] out!"),
@@ -130,7 +130,7 @@
 		var/helmet_protection = defender.run_armor_check(BODY_ZONE_HEAD, MELEE)
 		defender.apply_effect(20 SECONDS, EFFECT_KNOCKDOWN, helmet_protection)
 		defender.apply_effect(10 SECONDS, EFFECT_UNCONSCIOUS, helmet_protection)
-		defender.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
+		defender.adjust_organ_loss(ORGAN_SLOT_BRAIN, 15, 150)
 
 	else
 		defender.visible_message(
@@ -146,7 +146,7 @@
 		defender.throw_at(throw_target, 1, 14, attacker)
 		defender.apply_damage(10, attacker.get_attack_type())
 		if(defender.body_position == LYING_DOWN && !defender.IsUnconscious())
-			defender.adjustStaminaLoss(45)
+			defender.adjust_stamina_loss(45)
 		log_combat(attacker, defender, "kicked (CQC)")
 
 	return TRUE
@@ -162,7 +162,7 @@
 		attacker,
 	)
 	to_chat(attacker, span_danger("You punch [defender]'s neck!"))
-	defender.adjustStaminaLoss(60)
+	defender.adjust_stamina_loss(60)
 	playsound(attacker, 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 	return TRUE
 
@@ -181,7 +181,7 @@
 		attacker,
 	)
 	to_chat(attacker, span_danger("You lock [defender] into a restraining position!"))
-	defender.adjustStaminaLoss(20)
+	defender.adjust_stamina_loss(20)
 	defender.Stun(10 SECONDS)
 	restraining_mob = WEAKREF(defender)
 	addtimer(VARSET_CALLBACK(src, restraining_mob, null), 5 SECONDS, TIMER_UNIQUE)
@@ -205,7 +205,7 @@
 	var/obj/item/held_item = defender.get_active_held_item()
 	if(held_item && defender.temporarilyRemoveItemFromInventory(held_item))
 		attacker.put_in_hands(held_item)
-	defender.adjustStaminaLoss(50)
+	defender.adjust_stamina_loss(50)
 	defender.apply_damage(25, attacker.get_attack_type())
 	return TRUE
 

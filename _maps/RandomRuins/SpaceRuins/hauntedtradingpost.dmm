@@ -79,7 +79,7 @@
 /obj/structure/grille,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bd" = (
 /obj/structure/table/wood,
 /obj/structure/cable/layer1,
@@ -1246,7 +1246,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "kx" = (
 /mob/living/basic/bot/dedbot{
 	bot_mode_flags = 29
@@ -2878,7 +2878,7 @@
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "yU" = (
 /obj/item/rack_parts{
 	pixel_y = 8;
@@ -3131,7 +3131,7 @@
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Bj" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/medical/minor_healing,
@@ -4583,7 +4583,7 @@
 "NS" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "NY" = (
 /obj/structure/cable/layer1,
 /obj/machinery/vending/coffee{
@@ -5014,7 +5014,7 @@
 	width = 35
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "RI" = (
 /obj/structure/chair/sofa/left/brown{
 	dir = 1
@@ -5278,7 +5278,7 @@
 	name = "external vent"
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "TU" = (
 /obj/structure/cable/layer1,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -5986,7 +5986,7 @@
 /obj/structure/lattice,
 /obj/structure/grille/broken,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ZI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4

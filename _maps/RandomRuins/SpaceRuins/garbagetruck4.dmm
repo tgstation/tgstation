@@ -809,7 +809,7 @@
 "VL" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Wl" = (
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plating,

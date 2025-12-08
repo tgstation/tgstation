@@ -649,7 +649,7 @@
 "VL" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "VV" = (
 /obj/effect/decal/cleanable/blood/gibs/robot_debris/up,
 /obj/structure/frame/computer,

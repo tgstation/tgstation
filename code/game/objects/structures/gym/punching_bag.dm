@@ -65,7 +65,7 @@
 	if(HAS_TRAIT(user, TRAIT_STRENGTH)) //The strong get reductions to stamina damage taken while exercising
 		stamina_exhaustion *= 0.5
 
-	user.adjustStaminaLoss(stamina_exhaustion)
+	user.adjust_stamina_loss(stamina_exhaustion)
 	user.mind?.adjust_experience(/datum/skill/athletics, is_heavy_gravity ? 0.6 : 0.3)
 	user.apply_status_effect(/datum/status_effect/exercised)
 

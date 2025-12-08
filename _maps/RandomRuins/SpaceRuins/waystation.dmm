@@ -111,7 +111,7 @@
 "dd" = (
 /obj/structure/broken_flooring/pile/directional/west,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "dl" = (
 /obj/machinery/door/airlock/mining/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -561,7 +561,7 @@
 "kn" = (
 /obj/structure/broken_flooring/pile/directional/north,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ko" = (
 /obj/machinery/door/airlock{
 	name = "Freezer"
@@ -823,7 +823,7 @@
 	width = 35
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "nQ" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 1
@@ -1255,7 +1255,7 @@
 "vi" = (
 /obj/structure/girder,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "vn" = (
 /obj/effect/turf_decal/siding/red{
 	dir = 1
@@ -1323,7 +1323,7 @@
 "wf" = (
 /obj/item/stack/rods/two,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "wj" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/siding/green,
@@ -1379,7 +1379,7 @@
 "xi" = (
 /obj/structure/broken_flooring/pile/directional/east,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "xq" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -2521,7 +2521,7 @@
 "Tl" = (
 /obj/item/shell/airlock,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Tx" = (
 /obj/effect/turf_decal/siding/brown{
 	dir = 8

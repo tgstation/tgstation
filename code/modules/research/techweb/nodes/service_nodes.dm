@@ -146,7 +146,6 @@
 		"oven",
 		"stove",
 		"range",
-		"souppot",
 		"processor",
 		"gibber",
 		"monkey_recycler",

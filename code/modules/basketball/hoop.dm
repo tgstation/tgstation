@@ -109,7 +109,7 @@
 	score(ball, baller, 2)
 
 	if(istype(ball, /obj/item/toy/basketball))
-		baller.adjustStaminaLoss(STAMINA_COST_DUNKING)
+		baller.adjust_stamina_loss(STAMINA_COST_DUNKING)
 
 /obj/structure/hoop/attack_hand(mob/living/baller, list/modifiers)
 	. = ..()
@@ -127,7 +127,7 @@
 	loser.Paralyze(100)
 	visible_message(span_danger("[baller] dunks [loser] into \the [src]!"))
 	playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100, FALSE)
-	baller.adjustStaminaLoss(STAMINA_COST_DUNKING_MOB)
+	baller.adjust_stamina_loss(STAMINA_COST_DUNKING_MOB)
 	baller.stop_pulling()
 
 /obj/structure/hoop/click_ctrl(mob/user)

@@ -159,7 +159,7 @@
 	if(AI && AI.loc == src)
 		to_chat(AI, span_userdanger("Your core files are being wiped!"))
 		while(AI.stat != DEAD && flush)
-			AI.adjustOxyLoss(5)
+			AI.adjust_oxy_loss(5)
 			AI.updatehealth()
 			sleep(0.5 SECONDS)
 		flush = FALSE
