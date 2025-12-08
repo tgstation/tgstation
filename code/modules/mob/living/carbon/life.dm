@@ -535,22 +535,23 @@
 
 	for(var/mut, mut_data in dna.temporary_mutations)
 		if(mut_data < world.time)
-			var/has_prev = LAZYLEN(dna.previous)
-			if(mut == UI_CHANGED && has_prev)
+			if(!LAZYLEN(dna.previous))
+				continue
+			if(mut == UI_CHANGED)
 				if(dna.previous["UI"])
 					dna.unique_identity = merge_text(dna.unique_identity,dna.previous["UI"])
 					updateappearance(mutations_overlay_update=1)
 					dna.previous.Remove("UI")
-				dna.temporary_mutations.Remove(mut)
+				LAZYREMOVE(dna.temporary_mutations, mut)
 				continue
-			if(mut == UF_CHANGED && has_prev)
+			if(mut == UF_CHANGED)
 				if(dna.previous["UF"])
 					dna.unique_features = merge_text(dna.unique_features,dna.previous["UF"])
 					updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 					dna.previous.Remove("UF")
-				dna.temporary_mutations.Remove(mut)
+				LAZYREMOVE(dna.temporary_mutations, mut)
 				continue
-			if(mut == UE_CHANGED && has_prev)
+			if(mut == UE_CHANGED)
 				if(dna.previous["name"])
 					real_name = dna.previous["name"]
 					name = real_name
@@ -561,7 +562,7 @@
 				if(dna.previous["blood_type"])
 					set_blood_type(dna.previous["blood_type"])
 					dna.previous.Remove("blood_type")
-				dna.temporary_mutations.Remove(mut)
+				LAZYREMOVE(dna.temporary_mutations, mut)
 				continue
 
 /**
