@@ -227,7 +227,7 @@
 
 // Fix pepperspraying yourself
 /obj/item/reagent_containers/spray/pepper/try_spray(atom/target, mob/user)
-	if (target.loc == user)
+	if (target.loc == user.loc)
 		return FALSE
 	return ..()
 
@@ -315,7 +315,7 @@
 	volume = 600
 
 /obj/item/reagent_containers/spray/chemsprayer/try_spray(atom/target, mob/user)
-	if (target.loc == user)
+	if (target.loc == user.loc)
 		return FALSE
 	return ..()
 
