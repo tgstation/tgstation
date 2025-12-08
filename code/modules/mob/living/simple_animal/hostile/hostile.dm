@@ -84,17 +84,10 @@
 	//Attempting to call GET_TARGETS_FROM(mob) when this var is null will just return mob as a base
 	///all range/attack/etc. calculations should be done from the atom this weakrefs, useful for Vehicles and such.
 	var/datum/weakref/targets_from
-	///if true, equivalent to having a wanted_objects list containing ALL objects.
-	var/attack_all_objects = FALSE
 	///id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
 	var/lose_patience_timer_id
 	///30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
 	var/lose_patience_timeout = 30 SECONDS
-
-/mob/living/simple_animal/hostile/Initialize(mapload)
-	. = ..()
-	if(LAZYLEN(wanted_objects))
-		wanted_objects = typecacheof(wanted_objects)
 
 /mob/living/simple_animal/hostile/Destroy()
 	//We can't use losetarget here because fucking cursed blobs override it to do nothing the motherfuckers
@@ -292,10 +285,6 @@
 				return FALSE
 			if(P.machine_stat & BROKEN) //Or turrets that are already broken
 				return FALSE
-			return TRUE
-
-	if(isobj(the_target))
-		if(attack_all_objects || is_type_in_typecache(the_target, wanted_objects))
 			return TRUE
 
 	return FALSE

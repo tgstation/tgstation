@@ -169,7 +169,7 @@
 	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/flashlight_eyes/New()
-	LAZYADD(typecacheof(/obj/item/flashlight/flare))
+	LAZYADD(blacklist, typecacheof(/obj/item/flashlight/flare))
 	return ..()
 
 /datum/crafting_recipe/extendohand_r
