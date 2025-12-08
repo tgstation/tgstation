@@ -24,14 +24,6 @@
 	airs[3] = air3
 	register_context()
 
-/obj/machinery/atmospherics/components/trinary/mixer/Initialize(mapload)
-	if(piping_layer == 5)
-		var/moo = "this is a cow"
-
-	. = ..()
-	var/blah = "delete this later"
-
-
 /obj/machinery/atmospherics/components/trinary/mixer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"

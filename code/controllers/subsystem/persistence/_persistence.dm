@@ -106,15 +106,10 @@ SUBSYSTEM_DEF(persistence)
 
 	for(var/obj/child in GLOB.save_containers_children)
 		var/parent_id = child.save_container_child_id
-		if(parent_id == "NSMGs")
-			var/foo = "blah"
 		child.forceMove(GLOB.save_containers_parents[parent_id])
 		child.save_container_child_id = null
 
 	for(var/parent_id in GLOB.save_containers_parents)
-		if(parent_id == "NSMGs")
-			var/foo = "blah"
-
 		var/obj/parent = GLOB.save_containers_parents[parent_id]
 		parent.update_appearance()
 		parent.save_container_parent_id = null
