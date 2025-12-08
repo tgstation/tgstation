@@ -105,7 +105,12 @@
 	inhand_icon_state = "crossbow"
 	no_charge_state = "crossbow_empty"
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 0.5,
+	)
 	suppressed = SUPPRESSED_QUIET
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	recharge_time = 2 SECONDS
@@ -130,7 +135,12 @@
 	base_icon_state = "crossbowlarge"
 	no_charge_state = "crossbowlarge_empty"
 	w_class = WEIGHT_CLASS_BULKY
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.5,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+	)
 	suppressed = SUPPRESSED_NONE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 

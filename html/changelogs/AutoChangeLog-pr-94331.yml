@@ -1,0 +1,5 @@
+author: "Fghj240"
+delete-after: True
+changes:
+  - bugfix: "mod pathfinder module no longer gets stuck after an interrupted launch"
+  - bugfix: "mod pathfinder module gives you a unique balloon alert on your position if you try to recall a suit that's being held by another mob"

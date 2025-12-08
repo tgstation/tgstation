@@ -496,15 +496,19 @@
 	desc = "It's for pets."
 	icon_state = "petcollar"
 	var/tagname = null
+	var/human_wearable = FALSE
 
 /datum/armor/large_scarf_syndie
 	fire = 50
 	acid = 40
 
 /obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
-	if(!ismonkey(M))
+	if(!ismonkey(M) && !human_wearable)
 		return FALSE
 	return ..()
+
+/obj/item/clothing/neck/petcollar/wearable
+	human_wearable = TRUE
 
 /obj/item/clothing/neck/petcollar/attack_self(mob/user)
 	tagname = sanitize_name(tgui_input_text(user, "Would you like to change the name on the tag?", "Pet Naming", "Spot", MAX_NAME_LEN))
@@ -573,6 +577,7 @@
 	worn_y_offset = 10
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 2, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/clothing/neck/wreath/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -584,3 +589,4 @@
 	desc = "An elaborate crown made from the twisted flesh and sinew of an icewing watcher. \
 		Wearing it sends shivers down your spine just from being near it."
 	icon_state = "icewing_wreath"
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2)

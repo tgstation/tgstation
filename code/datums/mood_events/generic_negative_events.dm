@@ -583,6 +583,12 @@
 		mood_change *= -0.5
 		description = "More souls for the Geometer!"
 		return
+	if(IS_REVOLUTIONARY(owner))
+		var/datum/job/possible_head_job = dead_mob.mind?.assigned_role
+		if(possible_head_job.job_flags & JOB_HEAD_OF_STAFF)
+			mood_change *= -0.5
+			description = "[possible_head_job.title ? "The [LOWER_TEXT(possible_head_job.title)]" : "Another head of staff"] is dead! Long live the revolution!"
+			return
 
 	var/ispet = istype(dead_mob, /mob/living/basic/pet) || ismonkey(dead_mob)
 	if(HAS_PERSONALITY(owner, /datum/personality/callous) || (ispet && HAS_PERSONALITY(owner, /datum/personality/animal_disliker)))
