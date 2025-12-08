@@ -288,7 +288,8 @@
 
 /datum/atom_skin/kaza_ruk/get_preview_icon(atom/for_atom)
 	var/image/generated = ..()
-	generated.add_filter("preview_filter", 1, color_matrix_filter(reskin_color))
+	if(reskin_color)
+		generated.add_filter("preview_filter", 1, color_matrix_filter(reskin_color))
 	return generated
 
 /datum/atom_skin/kaza_ruk/red
@@ -296,7 +297,7 @@
 
 /datum/atom_skin/kaza_ruk/blue
 	preview_name = "Blue"
-	reskin_color = list(0.33, 0.33, 0.33, 0, 0, 0, 0, 0, 3)
+	reskin_color = list(0.33, 0.33, 0.33, 0, 0, 0, 0, 0, 1)
 
 /obj/item/clothing/gloves/kaza_ruk/sec//more obviously named, given to sec
 	name = "kaza ruk gloves"
