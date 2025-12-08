@@ -22,10 +22,6 @@
 	/// Whether the hood is flipped up
 	var/hood_up = FALSE
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/Initialize(mapload)
-	. = ..()
-	allowed += GLOB.security_vest_allowed
-
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/equipped(mob/user, slot, initial)
 	. = ..()
 	if(!(slot_flags & slot))
