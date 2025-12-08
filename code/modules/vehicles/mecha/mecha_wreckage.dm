@@ -42,6 +42,8 @@
 	if(AI)
 		QDEL_NULL(AI)
 	QDEL_LIST(crowbar_salvage)
+	new /obj/effect/decal/cleanable/blood/gibs/robot_debris/(get_turf(src))
+	do_sparks(5, TRUE, src)
 	return ..()
 
 /obj/structure/mecha_wreckage/examine(mob/user)
