@@ -120,7 +120,7 @@
 
 	for (var/mob/living/candidate as anything in to_heal)
 		if (!current_alerts[candidate])
-			var/atom/movable/screen/alert/aura_healing/alert = candidate.throw_alert(alert_category, /atom/movable/screen/alert/aura_healing, new_master = parent)
+			candidate.throw_alert(alert_category, /atom/movable/screen/alert/aura_healing, new_master = parent)
 			current_alerts[candidate] = TRUE
 
 		if (should_show_effect && candidate.health < candidate.maxHealth)
