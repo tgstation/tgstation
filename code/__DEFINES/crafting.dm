@@ -39,7 +39,7 @@
 
 //Crafting blacklist behaviors
 /// By default, blacklist the result if it's not in reqs
-#define ASSUME_BLACKLIST_RESULT null
+#define BLACKLIST_RESULT_IF_NOT_IN_REQS null
 /// Always blacklist - override default behavior
 #define ALWAYS_BLACKLIST_RESULT TRUE
 /// Never blacklist - override default behavior
