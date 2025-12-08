@@ -92,8 +92,8 @@
 	list_clear_nulls(needed_tools) //so we clear the list
 	///tool instances which have been moved to the crafter loc, which are moved back to nullspace once the recipe is done
 	var/list/summoned_tools = list()
-	for(var/tooltype, tool_needed in needed_tools)
-		var/obj/item/tool = tool_needed
+	for(var/tooltype in needed_tools)
+		var/obj/item/tool = tools[tooltype]
 		if(!QDELETED(tool))
 			tool.forceMove(turf)
 		else
