@@ -159,6 +159,41 @@
 	SIGNAL_HANDLER
 	set_linked_console(null)
 
+// Disk skins
+/datum/atom_skin/dna_disk
+	abstract_type = /datum/atom_skin/dna_disk
+
+/datum/atom_skin/dna_disk/red
+	preview_name = "Red"
+	new_icon_state = "datadisk0"
+
+/datum/atom_skin/dna_disk/dark_blue
+	preview_name = "Dark Blue"
+	new_icon_state = "datadisk1"
+
+/datum/atom_skin/dna_disk/yellow
+	preview_name = "Yellow"
+	new_icon_state = "datadisk2"
+
+/datum/atom_skin/dna_disk/black
+	preview_name = "Black"
+	new_icon_state = "datadisk3"
+
+/datum/atom_skin/dna_disk/green
+	preview_name = "Green"
+	new_icon_state = "datadisk4"
+
+/datum/atom_skin/dna_disk/purple
+	preview_name = "Purple"
+	new_icon_state = "datadisk5"
+
+/datum/atom_skin/dna_disk/grey
+	preview_name = "Grey"
+	new_icon_state = "datadisk6"
+
+/datum/atom_skin/dna_disk/light_blue
+	preview_name = "Light Blue"
+	new_icon_state = "datadisk7"
 
 //Just for transferring between genetics machines.
 /obj/item/disk/data
@@ -170,6 +205,7 @@
 
 /obj/item/disk/data/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/dna_disk, infinite = TRUE)
 	icon_state = "datadisk[rand(0,7)]"
 	add_overlay(pick("o_dna1", "o_dna2"))
 	if(length(genetic_makeup_buffer))

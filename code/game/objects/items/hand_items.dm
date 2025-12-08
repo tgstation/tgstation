@@ -128,7 +128,7 @@
 		to_chat(user, span_warning("You can't bring yourself to noogie [target]! You don't want to risk harming anyone..."))
 		return
 
-	if(!(target?.get_bodypart(BODY_ZONE_HEAD)) || user.pulling != target || user.grab_state < GRAB_AGGRESSIVE || user.getStaminaLoss() > 80)
+	if(!(target?.get_bodypart(BODY_ZONE_HEAD)) || user.pulling != target || user.grab_state < GRAB_AGGRESSIVE || user.get_stamina_loss() > 80)
 		return FALSE
 
 	var/obj/item/bodypart/head/the_head = target.get_bodypart(BODY_ZONE_HEAD)
@@ -174,7 +174,7 @@
 	if(!(target?.get_bodypart(BODY_ZONE_HEAD)) || user.pulling != target)
 		return FALSE
 
-	if(user.getStaminaLoss() > 80)
+	if(user.get_stamina_loss() > 80)
 		to_chat(user, span_warning("You're too tired to continue giving [target] a noogie!"))
 		to_chat(target, span_danger("[user] is too tired to continue giving you a noogie!"))
 		return
@@ -190,7 +190,7 @@
 
 	log_combat(user, target, "given a noogie to", addition = "([damage] brute before armor)")
 	target.apply_damage(damage, BRUTE, BODY_ZONE_HEAD)
-	user.adjustStaminaLoss(iteration + 5)
+	user.adjust_stamina_loss(iteration + 5)
 	playsound(get_turf(user), SFX_RUSTLE, 50)
 
 	if(prob(33))
@@ -245,7 +245,7 @@
 		shake_camera(slapped, 2, 2)
 		slapped.Paralyze(2.5 SECONDS)
 		slapped.adjust_confusion(7 SECONDS)
-		slapped.adjustStaminaLoss(40)
+		slapped.adjust_stamina_loss(40)
 	else if(user.zone_selected == BODY_ZONE_HEAD || user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 		if(user == slapped)
 			user.visible_message(

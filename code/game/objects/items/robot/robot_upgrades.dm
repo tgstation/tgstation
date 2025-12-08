@@ -359,8 +359,8 @@
 			else
 				repair_amount = -1
 				energy_cost = 0.01 * STANDARD_CELL_CHARGE
-			cyborg.adjustBruteLoss(repair_amount)
-			cyborg.adjustFireLoss(repair_amount)
+			cyborg.adjust_brute_loss(repair_amount)
+			cyborg.adjust_fire_loss(repair_amount)
 			cyborg.updatehealth()
 			cyborg.cell.use(energy_cost)
 		else

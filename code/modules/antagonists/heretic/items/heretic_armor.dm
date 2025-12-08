@@ -6,7 +6,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	name = "ominous armor"
 	desc = "A ragged, dusty set of robes. Strange eyes line the inside."
-	icon_state = "eldritch_armor"
+	icon_state = "armor"
 	inhand_icon_state = null
 	flags_inv = HIDESHOES | HIDEJUMPSUIT | HIDEBELT
 	body_parts_covered = CHEST | GROIN | LEGS | FEET | ARMS
@@ -71,7 +71,7 @@
 	name = "ominous hood"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
-	icon_state = "eldritch"
+	icon_state = "helmet"
 	desc = "A torn, dust-caked hood. Strange eyes line the inside."
 	flags_inv = HIDEMASK | HIDEEARS | HIDEEYES | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR | HIDESNOUT
 	flags_cover = HEADCOVERSEYES | PEPPERPROOF
@@ -637,7 +637,7 @@
 	return COMPONENT_IGNORE_CHANGE
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/handle_damage(mob/living/user, damage)
-	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage * damage_modifier)
+	user.adjust_organ_loss(ORGAN_SLOT_BRAIN, damage * damage_modifier)
 	check_braindeath(user)
 
 /// Gives the health HUD to the wearer
@@ -726,7 +726,7 @@
 	if(!istype(wearer) || wearer.wear_suit != src || wearer.stat == DEAD)
 		return ..()
 	if(!IS_HERETIC_OR_MONSTER(wearer))
-		wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
+		wearer.adjust_organ_loss(ORGAN_SLOT_BRAIN, 20)
 	var/brain_damage = wearer.get_organ_loss(ORGAN_SLOT_BRAIN)
 	var/emote_rng = 0
 	var/list/emote_list = list()
@@ -762,7 +762,7 @@
 		return
 
 	braindead = TRUE
-	wearer.setOrganLoss(ORGAN_SLOT_BRAIN, INFINITY)
+	wearer.set_organ_loss(ORGAN_SLOT_BRAIN, INFINITY)
 	playsound(wearer, 'sound/effects/pope_entry.ogg', 50)
 	to_chat(wearer, span_bold(span_hypnophrase("A terrible fate has befallen you.")))
 	addtimer(CALLBACK(src, PROC_REF(kill_wearer), wearer), 5 SECONDS)

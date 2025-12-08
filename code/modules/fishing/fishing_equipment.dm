@@ -291,6 +291,7 @@
 	desc = "A simple hook carved from sharpened bone"
 	icon_state = "hook_bone"
 	wiki_desc = "A generic fishing hook carved out of sharpened bone. Bone fishing rods come pre-equipped with it."
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/fishing_hook/stabilized
 	name = "gyro-stabilized hook"

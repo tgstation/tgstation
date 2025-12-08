@@ -38,6 +38,7 @@
 	var/list/all_designs = list()
 	var/list/exceptions = list(
 		/datum/design/surgery/healing, // Ignored due to the above test
+		/datum/design/telescreen_monastery, // It's map-specific, so it doesn't always have a source.
 	)
 
 	for (var/datum/design/design as anything in subtypesof(/datum/design))
