@@ -22,9 +22,9 @@
 	var/obj/some_manner_of_cage = astype(user.loc, /obj)
 	var/mob/living/space_invader = user.pulledby || user.buckled
 
-	if(!istype(prisoner_shoes) || !prisoner_shoes?.attached_cuffs)
+	if(!istype(prisoner_shoes) || !prisoner_shoes.attached_cuffs)
 		prisoner_shoes = null
-	if(!istype(knotted_shoes) || knotted_shoes?.tied != SHOES_KNOTTED)
+	if(!istype(knotted_shoes) || knotted_shoes.tied != SHOES_KNOTTED)
 		knotted_shoes = null
 	if(!straitjacket?.breakouttime)
 		straitjacket = null
