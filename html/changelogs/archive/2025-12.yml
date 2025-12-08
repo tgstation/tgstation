@@ -283,3 +283,15 @@
       to this new change, sound dampeners have been installed to prevent the hydraulics
       from being heard for super long distances. However, they skimped out on the
       quality for the ones in maintenance...
+2025-12-08:
+  ArchBTW:
+  - balance: repairbot hp 100 -> 35
+  FalloutFalcon, rye-rice:
+  - rscadd: Adds a small cosmetic recoil to all ballistics (with an accompanying pref
+      option to tweak or disable it)
+  - balance: Changes recoil from an erratic shaking to a kicking of your screen relative
+      to your firing angle
+  - qol: Pref option for darkened screen has some scaling with duration of shake
+  Thunder12345:
+  - rscadd: Added a new set of chaplain armour based on the generic heretic robes
+      unavailable since the path rework.
