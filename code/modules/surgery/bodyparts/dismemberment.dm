@@ -292,6 +292,8 @@
 			for(var/obj/item/organ/organ as anything in new_limb_owner.organs)
 				if(deprecise_zone(organ.zone) != body_zone)
 					continue
+				if(organ.bodypart_owner == src) // someone manually updated the organs already
+					continue
 				organ.bodypart_insert(src)
 
 		for(var/datum/wound/wound as anything in wounds)
