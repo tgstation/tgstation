@@ -773,6 +773,11 @@
 /obj/effect/decal/cleanable/confetti,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"DT" = (
+/obj/effect/turf_decal/tile/purple/full,
+/obj/machinery/status_display/evac/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "Ei" = (
 /obj/effect/turf_decal/tile/dark_green/full,
 /obj/effect/decal/cleanable/confetti,
@@ -1311,11 +1316,11 @@ AG
 OC
 zJ
 OC
-PE
-zJ
-PE
 zJ
 OC
+PE
+zJ
+PE
 zJ
 zJ
 mr
@@ -1335,9 +1340,9 @@ TY
 qM
 qg
 TY
-hw
+gh
 ZK
-TY
+DT
 gh
 qg
 QR
