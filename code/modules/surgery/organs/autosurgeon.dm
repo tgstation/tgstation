@@ -152,11 +152,6 @@
 	uses = 1
 	starting_organ = /obj/item/organ/cyberimp/eyes/hud/medical
 
-/obj/item/autosurgeon/paperwork
-	desc = "A single use autosurgeon that contains an integrated paperwork implant. A screwdriver can be used to remove it, but implants can't be placed back in."
-	uses = 1
-	starting_organ = /obj/item/organ/cyberimp/arm/toolkit/paperwork
-
 /obj/item/autosurgeon/syndicate
 	name = "suspicious autosurgeon"
 	icon_state = "autosurgeon_syndicate"
