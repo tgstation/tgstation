@@ -12,7 +12,7 @@
 	desc = "The virus causes inflammation of the vestibular system, leading to bouts of dizziness."
 	illness = "Motion Sickness"
 	stealth = 1
-	resistance = -2
+	resistance = 0
 	stage_speed = -2
 	transmittable = -1
 	level = 4

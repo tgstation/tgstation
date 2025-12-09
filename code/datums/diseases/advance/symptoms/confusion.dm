@@ -10,10 +10,10 @@
 	name = "Confusion"
 	desc = "The virus interferes with the proper function of the neural system, leading to bouts of confusion and erratic movement."
 	illness = "Shattered Reality"
-	stealth = 1
-	resistance = -1
-	stage_speed = -2
-	transmittable = 0
+	stealth = 2
+	resistance = 1
+	stage_speed = 1
+	transmittable = 2
 	level = 4
 	severity = 2
 	base_message_chance = 25
