@@ -15,7 +15,7 @@
 	///whether the cannon can be unwrenched from the ground. Anchorable_cannon equivalent.
 	var/anchorable_gun = TRUE
 	/// does this thing need ammo at all or does it just make ammo?
-	var/uses_ammo= TRUE
+	var/uses_ammo = TRUE
 	///Max shots per firing of the gun.
 	var/max_shots_per_fire = 1
 	///Is there a do_after when loading the gun?
