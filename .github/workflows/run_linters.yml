@@ -24,6 +24,8 @@ jobs:
         with:
           path: tools/bootstrap/.cache
           key: ${{ runner.os }}-bootstrap-${{ hashFiles('/tools/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-bootstrap-
       - name: Restore Rust cache
         uses: actions/cache@v4
         with:
