@@ -533,7 +533,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		. += span_notice("[p_they(TRUE)] weighs [weight] g.")
 
 		if(HAS_TRAIT(src, TRAIT_FISH_GENEGUNNED))
-			. += span_warning("[p_theyve(TRUE)] appears to have been edited by a fish genegun. [p_they(TRUE)]'ll die if edited again.")
+			. += span_warning("[p_theyve(TRUE)] been edited by a fish genegun. [p_they(TRUE)]'ll die if edited again.")
 
 	. += get_health_warnings(user, always_deep = FALSE)
 
@@ -541,7 +541,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		. += span_smallnoticeital("[p_they(TRUE)] can be used as a fishing bait.")
 
 	if(bites_amount)
-		. += span_warning("[p_theyre(TRUE)] been bitten by someone.")
+		. += span_warning("[p_theyve(TRUE)] been bitten by someone.")
 
 /obj/item/fish/proc/get_health_warnings(mob/user, always_deep = FALSE)
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH) && !always_deep)
