@@ -295,3 +295,40 @@
   Thunder12345:
   - rscadd: Added a new set of chaplain armour based on the generic heretic robes
       unavailable since the path rework.
+2025-12-09:
+  Aliceee2ch:
+  - image: Added 2 new contraband and 1 new official posters.
+  Fghj240:
+  - bugfix: mod pathfinder module no longer gets stuck after an interrupted launch
+  - bugfix: mod pathfinder module gives you a unique balloon alert on your position
+      if you try to recall a suit that's being held by another mob
+  Melbert:
+  - balance: Blood flow and clotting has universally been slashed by about 0.85x.
+      This means blood wounds kill you slightly slower, but heal slightly slower.
+  - balance: Sutures now heal 0.85x less blood flow and gauze's clotting bonus is
+      also 0.85x lower. Medicated sutures are unaffected.
+  - balance: Bloody Mary's blood healing effect now scales with how drunk you are.
+      Worse in low amounts, better in high amounts.
+  - balance: Epoetin Alfa no longer generates Sangurite. It now directly clots bleeding
+      wounds (at a rate ~3x worse than sangurite, but still ~4x better than the natural
+      clotting rate)
+  - balance: Epoetin Alfa no longer heals liver damage.
+  - balance: Epoetin Alfa regenerates 3x less blood. It's still 4x effective than
+      Saline Glucose or Iron.
+  - balance: Epoetin Alfa now causes minor heart damage (0.2 damage per tick).
+  - code_imp: All "coagulating" effects now use a shared function.
+  Rockdtben:
+  - bugfix: Secure Briefcase buttons no longer push column down.
+  lelandkemble:
+  - map: Powered catwalk library office
+  - rscadd: Syndicate Powerfist users and our most athletic employees have discovered
+      that if you punch a meteor with enough force, it can be redirected.
+  necromanceranne:
+  - balance: Boxing combos are now broader and user friendly. Alternating combinations
+      of buttons AND hands produces different results, but all of them good. Experiment!
+  - balance: Evil boxing now has a Sucker Punch. Hit someone from behind to potentially
+      knock them out cold!
+  - bugfix: Punching mitts no longer mention punching rocks.
+  san7890:
+  - admin: Multikeying Notice Messages have taken on a new form factor but should
+      still furnish the same information.
