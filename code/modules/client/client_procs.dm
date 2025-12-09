@@ -1272,7 +1272,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	message_to_send += pick(cheesy_messages)
 	message_to_send += "(No admins online)"
 
-	send2adminchat("Server", jointext(message_to_send, " "))
+	//send2adminchat("Server", jointext(message_to_send, " "))
 
 /// This grabs the DPI of the user per their skin
 /client/proc/acquire_dpi()
