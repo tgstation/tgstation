@@ -24,6 +24,7 @@ import {
   recallWindowGeometry,
   resizeStartHandler,
   setWindowKey,
+  setWindowPosition,
 } from '../drag';
 import { createLogger } from '../logging';
 import { Layout } from './Layout';
@@ -162,6 +163,8 @@ type ContentProps = Partial<{
 const WindowContent = (props: ContentProps) => {
   const { className, fitted, children, ...rest } = props;
 
+  // Allow front end to force a position reset.
+  Byond.subscribeTo('resetposition', function (payload) { setWindowPosition([0, 0]); });
   return (
     <Layout.Content
       className={classes(['Window__content', className])}
