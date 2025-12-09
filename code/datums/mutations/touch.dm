@@ -256,7 +256,7 @@
 	// Did the transfer work?
 	. = FALSE
 
-	var/mendicant_organic_parts = mendicant.get_damageable_bodyparts(BODYTYPE_ORGANIC) // We need organic limbs that can recieve damage in order to do the transfer
+	var/mendicant_organic_parts = mendicant.get_damageable_bodyparts(BODYTYPE_ORGANIC) // We need organic limbs that can receive damage in order to do the transfer
 	if(!length(mendicant_organic_parts))
 		mendicant.balloon_alert(mendicant, "no organic limbs!")
 		return .
@@ -331,7 +331,7 @@
 				to_chat(hurtguy, span_notice("Your veins don't feel quite so swollen anymore."))
 				. = TRUE
 				// ...Because we do our own spin on it!
-				blood_received -= blood_to_remove // We only update blood_recieved now so a pain_multiplier of 0 will still alert healguy of their new blood
+				blood_received -= blood_to_remove // We only update blood_received now so a pain_multiplier of 0 will still alert healguy of their new blood
 				if(mendicant.get_blood_compatibility(hurtguy) == FALSE)
 					mendicant.adjust_tox_loss((blood_received * 0.1) * pain_multiplier) // 1 dmg per 10 blood
 					to_chat(mendicant, span_notice("Your veins swell and itch!"))
