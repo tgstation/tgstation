@@ -19,19 +19,19 @@
 /datum/export/advanced_disk
 	cost = CARGO_CRATE_VALUE * 0.4
 	unit_name = "advanced data disk"
-	export_types = list(/obj/item/computer_disk/advanced)
+	export_types = list(/obj/item/disk/computer/advanced)
 	include_subtypes = FALSE
 
 /datum/export/super_disk
 	cost = CARGO_CRATE_VALUE * 0.6
 	unit_name = "super data disk"
-	export_types = list(/obj/item/computer_disk/super)
+	export_types = list(/obj/item/disk/computer/super)
 	include_subtypes = FALSE
 
 /datum/export/standard_disk
 	cost = CARGO_CRATE_VALUE * 0.2
 	unit_name = "data disk"
-	export_types = list(/obj/item/computer_disk)
+	export_types = list(/obj/item/disk/computer)
 	include_subtypes = TRUE
 
 /datum/export/refill_canister
