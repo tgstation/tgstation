@@ -43,7 +43,8 @@
 		QDEL_NULL(AI)
 	QDEL_LIST(crowbar_salvage)
 	new /obj/effect/decal/cleanable/blood/gibs/robot_debris/(get_turf(src))
-	do_sparks(5, TRUE, src)
+	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+	src.visible_message(span_danger("[src]'s superstructure folds in on itself, collapsing into a heap of unsalvageable scrap!"))
 	return ..()
 
 /obj/structure/mecha_wreckage/examine(mob/user)
