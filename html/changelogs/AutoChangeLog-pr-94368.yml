@@ -1,0 +1,4 @@
+author: "levels0"
+delete-after: True
+changes:
+  - bugfix: "make evolved lungs actually resistant to co2"

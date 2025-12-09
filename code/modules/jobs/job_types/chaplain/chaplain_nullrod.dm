@@ -248,6 +248,19 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 		effectiveness = 110, \
 	)
 
+/obj/item/nullrod/claymore/heretic
+	name = "occultist's khopesh"
+	desc = "Steels your hand to slay foes beyond comprehension."
+	icon = 'icons/obj/weapons/khopesh.dmi'
+	icon_state = "eldritch_blade"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	inhand_icon_state = "eldritch_blade"
+	worn_icon_state = "eldritch_blade"
+	menu_description = "A sharp curved blade which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
+
 /// Other Variants
 /// Not a special category on their own, but usually possess more unique mechanics
 
