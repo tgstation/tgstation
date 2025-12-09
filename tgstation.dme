@@ -1552,6 +1552,7 @@
 #include "code\datums\elements\digitalcamo.dm"
 #include "code\datums\elements\disarm_attack.dm"
 #include "code\datums\elements\door_pryer.dm"
+#include "code\datums\elements\drag_activation.dm"
 #include "code\datums\elements\drag_pickup.dm"
 #include "code\datums\elements\dryable.dm"
 #include "code\datums\elements\earhealing.dm"

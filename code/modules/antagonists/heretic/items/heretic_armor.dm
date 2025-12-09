@@ -6,7 +6,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	name = "ominous armor"
 	desc = "A ragged, dusty set of robes. Strange eyes line the inside."
-	icon_state = "eldritch_armor"
+	icon_state = "armor"
 	inhand_icon_state = null
 	flags_inv = HIDESHOES | HIDEJUMPSUIT | HIDEBELT
 	body_parts_covered = CHEST | GROIN | LEGS | FEET | ARMS
@@ -71,7 +71,7 @@
 	name = "ominous hood"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
-	icon_state = "eldritch"
+	icon_state = "helmet"
 	desc = "A torn, dust-caked hood. Strange eyes line the inside."
 	flags_inv = HIDEMASK | HIDEEARS | HIDEEYES | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR | HIDESNOUT
 	flags_cover = HEADCOVERSEYES | PEPPERPROOF
