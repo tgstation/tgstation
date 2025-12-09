@@ -5,7 +5,7 @@
 "b" = (
 /obj/docking_port/stationary/picked/whiteship,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 
 (1,1,1) = {"
 a

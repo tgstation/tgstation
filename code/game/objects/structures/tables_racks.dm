@@ -427,7 +427,7 @@
 	return FALSE
 
 /obj/structure/table/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_DECONSTRUCT)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_DECONSTRUCT)
 		qdel(src)
 		return TRUE
 	return FALSE

@@ -333,6 +333,7 @@
 	name = "industrial welding tool"
 	desc = "A slightly larger welder with a larger tank."
 	icon_state = "indwelder"
+	inhand_icon_state = "indwelder"
 	max_fuel = 40
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
 
@@ -353,6 +354,7 @@
 	name = "emergency welding tool"
 	desc = "A miniature welder used during emergencies."
 	icon_state = "miniwelder"
+	inhand_icon_state = "miniwelder"
 	max_fuel = 10
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.1)
@@ -369,6 +371,7 @@
 	desc = "An alien welding tool. Whatever fuel it uses, it never runs out."
 	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "welder"
+	inhand_icon_state = "abductorwelder"
 	toolspeed = 0.1
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plasma =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/titanium =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
 	light_system = NO_LIGHT_SUPPORT
