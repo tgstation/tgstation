@@ -104,6 +104,8 @@ GLOBAL_LIST_EMPTY(save_containers_children)
 	for(var/obj/target_obj in extra_contents)
 		if(!target_obj.is_saveable(current_loc, obj_blacklist))
 			continue
+		if(target_obj in contents)
+			continue // already been saved
 
 		if(!parent_container_id_tag)
 			parent_container_id_tag = assign_random_name()
