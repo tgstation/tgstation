@@ -86,6 +86,10 @@
 	var/reagentlist = pretty_string_from_reagent_list(reagents.reagent_list)
 	var/log_object = "containing [reagentlist]"
 	if(!carbon_target.is_mouth_covered())
+		carbon_target.visible_message(span_danger("[user] is trying to smother [carbon_target]!"),\
+		span_danger("[user] is trying to put smother you!"))
+		if(!do_after(user, 1 SECONDS, carbon_target))
+			return ITEM_INTERACT_BLOCKING
 		reagents.trans_to(carbon_target, reagents.total_volume, transferred_by = user, methods = INGEST)
 		carbon_target.visible_message(span_danger("[user] smothers \the [carbon_target] with \the [src]!"), span_userdanger("[user] smothers you with \the [src]!"), span_hear("You hear some struggling and muffled cries of surprise."))
 		log_combat(user, carbon_target, "smothered", src, log_object)
