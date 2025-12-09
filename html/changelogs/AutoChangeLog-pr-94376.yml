@@ -1,0 +1,4 @@
+author: "ArchBTW"
+delete-after: True
+changes:
+  - bugfix: "Biodegrade: Fireman carry & knotted shoes works as intended, description update"
