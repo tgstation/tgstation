@@ -1,0 +1,4 @@
+author: "Rockdtben"
+delete-after: True
+changes:
+  - bugfix: "ScreenTip for Lockers will show \"Unlock\" or \"Lock\" instead of always showing \"Unlock\""
