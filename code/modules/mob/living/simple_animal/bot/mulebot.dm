@@ -164,18 +164,16 @@
 		return
 	if(!cell)
 		to_chat(user, span_warning("[src] doesn't have a power cell!"))
-		return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
 	cell.add_fingerprint(user)
-	if(Adjacent(user) && !issilicon(user))
-		user.put_in_hands(cell)
-	else
-		cell.forceMove(drop_location())
 	user.visible_message(
 		span_notice("[user] crowbars [cell] out from [src]."),
 		span_notice("You pry [cell] out of [src]."),
 	)
-	cell = null
-	diag_hud_set_mulebotcell()
+	if(Adjacent(user) && !issilicon(user))
+		user.put_in_hands(cell)
+	else
+		cell.forceMove(drop_location())
 	return ITEM_INTERACT_SUCCESS
 
 /mob/living/simple_animal/bot/mulebot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
