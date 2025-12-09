@@ -23,7 +23,7 @@
 	///Delay it takes to load the gun. Set to 0 if none.
 	var/load_delay = 0
 	///Message displayed when loading gun
-	var/loading_message = "You Loaded The Gun."
+	var/loading_message = "gun loaded"
 	///Shots currently loaded. Should never be more than max_shots_per_fire.
 	var/shots_in_gun = 1
 	///shots added to gun, per piece of ammo loaded.
