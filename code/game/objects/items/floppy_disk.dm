@@ -83,10 +83,13 @@
 	var/sticker_icon_state = STARTING_STICKER
 	/// Custom description
 	var/custom_description
+	/// Whether this disk can be reskinned
+	var/reskin_allowed = TRUE
 
 /obj/item/disk/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/floppy_disk, infinite = FALSE)
+	if(reskin_allowed)
+		AddComponent(/datum/component/reskinable_item, /datum/atom_skin/floppy_disk, infinite = FALSE)
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/disk/update_overlays()
@@ -175,23 +178,13 @@
 	if(istype(tool, /obj/item/disk_stack))
 		var/obj/item/disk_stack/held_stack = tool
 		var/obj/item/disk_stack/new_stack = new(get_turf(src))
-		var/was_in_hand = user.is_holding(src) || user.is_holding(held_stack)
+		var/should_put_in_hand = user.is_holding(src)
+		
 		new_stack.add_to_stack(user, src)
-
-		for(var/obj/item/disk/disk_from_hand in held_stack.stacked_disks)
-			if(length(new_stack.stacked_disks) >= MAX_DISK_STACK_SIZE)
-				break
-
-			disk_from_hand.forceMove(new_stack)
-			new_stack.stacked_disks += disk_from_hand
-
-		held_stack.stacked_disks.Cut()
-		new_stack.update_appearance(UPDATE_OVERLAYS)
-		if(was_in_hand)
+		new_stack.merge_stacks(user, held_stack)
+		
+		if(should_put_in_hand)
 			user.put_in_hands(new_stack)
-		QDEL_IN(held_stack, 0)
-
-		balloon_alert(user, "merged stacks")
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/disk))
@@ -199,11 +192,11 @@
 		new_stack.pixel_x = pixel_x
 		new_stack.pixel_y = pixel_y
 
-		var/was_in_hand = user.is_holding(src)
+		var/should_put_in_hand = user.is_holding(src) && user.is_holding(tool)
 		new_stack.add_to_stack(user, src)
 		new_stack.add_to_stack(user, tool)
 		new_stack.update_appearance(UPDATE_OVERLAYS)
-		if(was_in_hand || user.is_holding(tool))
+		if(should_put_in_hand)
 			user.put_in_hands(new_stack)
 		return ITEM_INTERACT_SUCCESS
 
@@ -225,6 +218,10 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(spread))
 	RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
+
+/obj/item/disk_stack/Destroy()
+	stacked_disks.Cut()
+	return ..()
 
 /obj/item/disk_stack/examine(mob/user)
 	. = ..()
@@ -288,6 +285,7 @@
 
 /obj/item/disk_stack/proc/merge_stacks(mob/user, obj/item/disk_stack/diskstack)
 	var/amount_counter = 0
+	var/list/moved_disks = list()
 
 	for(var/obj/item/disk/each_disk as anything in diskstack.stacked_disks)
 		if(length(stacked_disks) >= MAX_DISK_STACK_SIZE)
@@ -295,9 +293,11 @@
 
 		each_disk.forceMove(src)
 		stacked_disks += each_disk
+		moved_disks += each_disk
 		amount_counter += 1
 
-	diskstack.update_overlays()
+	diskstack.stacked_disks -= moved_disks
+	diskstack.update_appearance(UPDATE_OVERLAYS)
 
 	if(!amount_counter)
 		balloon_alert(user, "no space!")
@@ -307,12 +307,6 @@
 	to_chat(user, span_notice("You merge two stacks of disks together."))
 
 	if(!length(diskstack.stacked_disks))
-		QDEL_IN(diskstack, 0)
-
-	else if(length(diskstack.stacked_disks) == 1)
-		var/obj/item/disk/last_disk = diskstack.stacked_disks[1]
-		var/turf/our_turf = get_turf(diskstack)
-		last_disk.forceMove(our_turf)
 		QDEL_IN(diskstack, 0)
 
 	return ITEM_INTERACT_SUCCESS

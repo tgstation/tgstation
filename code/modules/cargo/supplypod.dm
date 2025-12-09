@@ -797,5 +797,5 @@
 	name = "Bluespace Drop Pod Upgrade"
 	desc = "This disk provides a firmware update to the Express Supply Console, granting the use of Nanotrasen's Bluespace Drop Pods to the supply department."
 	icon_state = "datadisk12"
-	unique_reskin = list()
 	sticker_icon_state = "o_cargopod"
+	reskin_allowed = FALSE

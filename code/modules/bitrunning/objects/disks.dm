@@ -9,8 +9,8 @@
 	desc = "A disk containing source code."
 	base_icon_state = "datadisk"
 	icon_state = "datadisk0"
-	unique_reskin = list()
 	sticker_icon_state = "o_code"
+	reskin_allowed = FALSE
 	/// Name of the choice made
 	var/choice_made
 

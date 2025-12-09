@@ -9,7 +9,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	read_only = TRUE
 	read_only_locked = TRUE
-	unique_reskin = list()
+	reskin_allowed = FALSE
 	/// Whether we're a real nuke disk or not.
 	var/fake = FALSE
 
