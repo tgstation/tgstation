@@ -265,6 +265,9 @@
 	// The total amount of brute and burn we can take on all of our organic limbs, so you can't get a full aug minus one organic limb and only be able to take damage up to that limb's max_damage.
 	for(var/obj/item/bodypart/organic_part in mendicant_organic_parts)
 		damage_we_can_absorb += (organic_part.max_damage - (organic_part.brute_dam + organic_part.burn_dam))
+	if(damage_we_can_absorb == 0)
+		mendicant.balloon_alert(mendicant, "can't receive any more damage!")
+		return .
 	damage_we_can_absorb /= pain_multiplier // If we take less damage to our limbs we can afford to heal more
 
 	var/damage_to_heal = min(70 * heal_multiplier, damage_we_can_absorb)
