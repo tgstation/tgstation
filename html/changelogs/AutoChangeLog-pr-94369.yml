@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - map: "Icebox morgue has been given an additional redundant power line"
