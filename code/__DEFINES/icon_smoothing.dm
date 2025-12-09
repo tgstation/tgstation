@@ -142,8 +142,9 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 // Troutstation edit
 #define SMOOTH_GROUP_FLOCK S_TURF(63) ///turf/open/floor/flock
+#define SMOOTH_GROUP_CARPET_PICNIC S_TURF(64) ///turf/open/floor/carpet/picnic
 
-#define MAX_S_TURF 63 //Always match this value with the one above it.
+#define MAX_S_TURF 64 //Always match this value with the one above it.
 
 #define S_OBJ(num) ("-" + #num + ",")
 /* /obj included */
