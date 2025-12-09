@@ -1,4 +1,0 @@
-author: "Rockdtben"
-delete-after: True
-changes:
-  - bugfix: "Secure Briefcase buttons no longer push column down."
