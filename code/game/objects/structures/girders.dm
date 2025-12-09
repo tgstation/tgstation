@@ -17,13 +17,15 @@
 	var/stack_type = /obj/item/stack/sheet/iron
 	/// The stack amount required to construct and dropped upon deconstructing the girder.
 	var/stack_amount = 2
+	/// Always drops the stack in full, even when demolished rather than disassembled.
+	var/always_drop_stack = FALSE
 
 	/// The current state of the girder. Used for construction.
 	var/state = GIRDER_NORMAL
 	/// Whether the girder can be unanchored by wrenching it.
 	var/can_displace = TRUE
-	/// Whether the girder can be reinforced by using plasteel on it.
-	var/can_reinforce = TRUE
+	/// Whether the girder can be welded apart. (for cult and bronze girders)
+	var/can_weld_apart = FALSE
 
 	/// The percentage chance (0-100) that a projectile passes through the girder.
 	var/projectile_pass_chance = 20
@@ -46,32 +48,30 @@
 			. += span_notice("The bolts are <i>loosened</i>, but the <b>screws</b> are holding [src] together.")
 		if(GIRDER_TRAM)
 			. += span_notice("[src] is designed for tram usage. Deconstructed with a screwdriver!")
+	if (can_weld_apart)
+		. += span_notice("The frame looks weak enough to be <b>welded</b> apart.")
+	else
+		. += span_notice("The frame could be sliced apart with a <b>plasmacutter</b>.")
 
-/// Returns whether the girder is in any reinforced state, regardless of support struts.
-/obj/structure/girder/proc/is_reinforced()
-	return state == GIRDER_REINF || state == GIRDER_REINF_STRUTS
-
-// Basically plasmacutter_act to be honest.
 /obj/structure/girder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (user.combat_mode)
 		return
-	if (!istype(tool, /obj/item/gun/energy/plasmacutter))
-		return
-	if (!try_construction_step(user, tool, 4 SECONDS, start_alert = "slicing apart..."))
+	if (istype(tool, /obj/item/stack/sheet/plasteel))
+		if (try_construction_step(user, tool, 5 SECONDS, req_state = GIRDER_NORMAL, start_alert = "reinforcing frame..."))
+			replace_girder(/obj/structure/girder/reinforced)
+			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
-	atom_deconstruct(disassembled = TRUE)
-	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/girder/screwdriver_act(mob/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
 	switch (state)
 		if (GIRDER_TRAM)
-			if (try_construction_step(user, tool, 4 SECONDS, req_state = GIRDER_TRAM, req_state = GIRDER_DISPLACED, start_alert = "disassembling frame..."))
-				atom_deconstruct(disassembled = TRUE)
+			if (try_construction_step(user, tool, 4 SECONDS, req_state = GIRDER_TRAM, start_alert = "disassembling frame..."))
+				deconstruct(disassembled = TRUE)
 				return ITEM_INTERACT_SUCCESS
 		if (GIRDER_DISPLACED)
-			if (try_construction_step(user, tool, 4 SECONDS, req_state = GIRDER_DISPLACED, req_state = GIRDER_DISPLACED, start_alert = "disassembling frame..."))
-				atom_deconstruct(disassembled = TRUE)
+			if (try_construction_step(user, tool, 4 SECONDS, req_state = GIRDER_DISPLACED, start_alert = "disassembling frame..."))
+				deconstruct(disassembled = TRUE)
 				return ITEM_INTERACT_SUCCESS
 		if (GIRDER_REINF)
 			if (try_construction_step(user, tool, 4 SECONDS, req_state = GIRDER_REINF, start_alert = "unsecuring support struts..."))
@@ -86,20 +86,33 @@
 	. = ITEM_INTERACT_BLOCKING
 	if (try_construction_step(user, tool, 4 SECONDS, req_state = GIRDER_REINF_STRUTS, start_alert = "removing inner grille..."))
 		new /obj/item/stack/sheet/plasteel(get_turf(src))
-		state = GIRDER_NORMAL
+		replace_girder(/obj/structure/girder)
 		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/girder/wrench_act(mob/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
 	if (!can_displace)
+		balloon_alert(user, "no bolts!")
 		return
 	switch (state)
 		if (GIRDER_NORMAL)
-			if (try_construction_step(user, tool, 4 SECONDS, req_state = state, start_alert = "unsecuring frame..."))
+			if (try_construction_step(user, tool, 4 SECONDS, req_state = GIRDER_NORMAL, start_alert = "unsecuring frame..."))
+				replace_girder(/obj/structure/girder/displaced)
 				return ITEM_INTERACT_SUCCESS
 		if (GIRDER_DISPLACED)
-			if (try_construction_step(user, tool, 4 SECONDS, req_state = state, start_alert = "securing frame..."))
+			if (try_construction_step(user, tool, 4 SECONDS, req_state = GIRDER_DISPLACED, start_alert = "securing frame..."))
+				replace_girder(/obj/structure/girder)
 				return ITEM_INTERACT_SUCCESS
+
+/obj/structure/girder/welder_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	// Plasmacutters can always slice apart girders.
+	if (!can_weld_apart && !istype(tool, /obj/item/gun/energy/plasmacutter))
+		balloon_alert(user, "can't weld apart!")
+		return
+	if (try_construction_step(user, tool, 4 SECONDS, start_alert = "slicing apart..."))
+		deconstruct(disassembled = TRUE)
+		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/girder/proc/try_construction_step(mob/living/user, obj/item/tool, delay, req_state, req_floor, start_alert, volume = 100)
 	if (!check_state(user, req_state, req_floor))
@@ -110,7 +123,7 @@
 	add_fingerprint(user)
 	tool.add_fingerprint(user)
 
-	return tool.use_tool(src, user, volume = volume, extra_checks = CALLBACK(src, PROC_REF(check_state), user, req_state, req_floor))
+	return tool.use_tool(src, user, delay, volume = volume, extra_checks = CALLBACK(src, PROC_REF(check_state), user, req_state, req_floor))
 
 /obj/structure/girder/proc/check_state(mob/living/user, req_state, req_anchored, req_floor)
 	if (!isnull(req_state) && req_state != state)
@@ -120,8 +133,11 @@
 		return FALSE
 	return TRUE
 
+// We do this instead of state handling because of the large number of variables we would otherwise need to keep track of.
+// That said, ultimately, it would be a better solution for all of it to just be [/obj/structure/girder] at base.
+// For example right now if you paint a girder and use a wrench on it, it will magically lose that paint.
 /obj/structure/girder/proc/replace_girder(girder_type)
-	var/obj/structure/girder/new_girder = new girder_type(get_turf(src))
+	var/obj/structure/girder/new_girder = new girder_type(loc)
 	transfer_fingerprints_to(new_girder)
 	new_girder.update_integrity(new_girder.max_integrity * (atom_integrity / max_integrity))
 	qdel(src)
@@ -139,15 +155,14 @@
 	return FALSE
 
 /obj/structure/girder/atom_deconstruct(disassembled = TRUE)
-	if (disassembled)
+	if (disassembled || always_drop_stack)
 		new stack_type(drop_location(), stack_amount)
 	else
 		var/remains = pick(/obj/item/stack/rods, stack_type)
 		new remains(drop_location())
 
 /obj/structure/girder/narsie_act()
-	new /obj/structure/girder/cult(loc)
-	qdel(src)
+	replace_girder(/obj/structure/girder/cult)
 
 /obj/structure/girder/displaced
 	name = "displaced girder"
@@ -180,6 +195,7 @@
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
+	stack_type = /obj/item/stack/sheet/mineral/titanium
 
 /obj/structure/girder/tram/corner
 	name = "tram frame corner"
@@ -196,26 +212,13 @@
 	smoothing_groups = null
 	canSmoothWith = null
 	custom_materials = list(/datum/material/runedmetal = SHEET_MATERIAL_AMOUNT)
-
-/obj/structure/girder/cult/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	add_fingerprint(user)
-	if(W.tool_behaviour == TOOL_WELDER)
-		if(!W.tool_start_check(user, amount=1))
-			return
-
-		balloon_alert(user, "slicing apart...")
-		if(W.use_tool(src, user, 40, volume=50))
-			var/obj/item/stack/sheet/runed_metal/R = new(drop_location(), 1)
-			transfer_fingerprints_to(R)
-			qdel(src)
-	else
-		return ..()
+	stack_type = /obj/item/stack/sheet/runed_metal
+	stack_amount = 1
+	always_drop_stack = TRUE
+	can_weld_apart = TRUE
 
 /obj/structure/girder/cult/narsie_act()
 	return
-
-/obj/structure/girder/cult/atom_deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/runed_metal(drop_location())
 
 /obj/structure/girder/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -256,16 +259,7 @@
 	smoothing_groups = null
 	canSmoothWith = null
 	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 2)
-
-/obj/structure/girder/bronze/attackby(obj/item/W, mob/living/user, list/modifiers, list/attack_modifiers)
-	add_fingerprint(user)
-	if(W.tool_behaviour == TOOL_WELDER)
-		if(!W.tool_start_check(user, amount = 0, heat_required = HIGH_TEMPERATURE_REQUIRED))
-			return
-		balloon_alert(user, "slicing apart...")
-		if(W.use_tool(src, user, 40, volume=50))
-			var/obj/item/stack/sheet/bronze/B = new(drop_location(), 2)
-			transfer_fingerprints_to(B)
-			qdel(src)
-	else
-		return ..()
+	stack_type = /obj/item/stack/sheet/bronze
+	stack_amount = 1
+	always_drop_stack = TRUE
+	can_weld_apart = TRUE

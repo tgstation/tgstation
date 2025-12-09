@@ -13,7 +13,7 @@
 /datum/element/uses_girder_wall_recipes/proc/on_item_interaction(obj/structure/structure, mob/living/user, obj/item/stack/stack, list/modifiers)
 	SIGNAL_HANDLER
 	if (!isstack(stack))
-		return
+		return NONE
 	if (!stack.usable_for_construction)
 		structure.balloon_alert(user, "unusable material!")
 		return ITEM_INTERACT_BLOCKING
@@ -29,8 +29,8 @@
 		return ITEM_INTERACT_BLOCKING
 
 	// Plasteel is used for reinforcing girders.
-	if (istype(stack, /obj/item/stack/sheet/plasteel))
-		return ITEM_INTERACT_BLOCKING
+	if (istype(structure, /obj/structure/girder) && istype(stack, /obj/item/stack/sheet/plasteel))
+		return NONE
 
 	var/datum/girder_wall_recipe/material_recipe = get_material_recipe(structure, stack)
 
