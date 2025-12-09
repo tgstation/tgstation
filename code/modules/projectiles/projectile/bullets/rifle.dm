@@ -230,7 +230,7 @@
 	icon_state = "paperball"
 
 //Big Ballista Mounted gun Spear
-/obj/projectile/bullet/Large_Ballista_Spear
+/obj/projectile/bullet/large_ballista_spear
 	name = "Spear"
 	icon_state = "ballista_spear"
 	//range = 20
