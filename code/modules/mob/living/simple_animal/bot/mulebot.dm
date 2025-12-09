@@ -178,32 +178,34 @@
 	diag_hud_set_mulebotcell()
 	return ITEM_INTERACT_SUCCESS
 
-/mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/stock_parts/power_store/cell) && bot_cover_flags & BOT_COVER_MAINTS_OPEN)
+/mob/living/simple_animal/bot/mulebot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stock_parts/power_store/cell) && (bot_cover_flags & BOT_COVER_MAINTS_OPEN))
 		if(cell)
 			to_chat(user, span_warning("[src] already has a power cell!"))
-			return TRUE
-		if(!user.transferItemToLoc(I, src))
-			return TRUE
-		cell = I
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		cell = tool
 		diag_hud_set_mulebotcell()
 		user.visible_message(
 			span_notice("[user] inserts \a [cell] into [src]."),
 			span_notice("You insert [cell] into [src]."),
 		)
+		return ITEM_INTERACT_SUCCESS
+	if(is_wire_tool(tool) && (bot_cover_flags & BOT_COVER_MAINTS_OPEN))
+		attack_hand(user)
+		return ITEM_INTERACT_SUCCESS
+	return ..()
+
+/mob/living/simple_animal/bot/mulebot/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	if(ismob(load) && prob(1 + attacking_item.force * 2))
+		user.visible_message(
+			span_danger("[user] knocks [load] off [src] with \the [attacking_item]!"),
+			span_danger("You knock [load] off [src] with \the [attacking_item]!"),
+		)
+		unload(0)
 		return TRUE
-	else if(is_wire_tool(I) && bot_cover_flags & BOT_COVER_MAINTS_OPEN)
-		return attack_hand(user)
-	else if(load && ismob(load))  // chance to knock off rider
-		if(prob(1 + I.force * 2))
-			unload(0)
-			user.visible_message(span_danger("[user] knocks [load] off [src] with \the [I]!"),
-									span_danger("You knock [load] off [src] with \the [I]!"))
-		else
-			to_chat(user, span_warning("You hit [src] with \the [I] but to no effect!"))
-			return ..()
-	else
-		return ..()
 
 /mob/living/simple_animal/bot/mulebot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
