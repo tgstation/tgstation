@@ -187,3 +187,7 @@
 /// From /mob/living/carbon/proc/can_defib() : ()
 /// Return a defib result flag to override default defib brain check
 #define COMSIG_CARBON_DEFIB_BRAIN_CHECK "carbon_defib_brain_check"
+
+/// From /mob/living/carbon/human/proc/defib_check() : ()
+/// Return a defib result flag to override default defib heart check
+#define COMSIG_CARBON_DEFIB_HEART_CHECK "carbon_defib_heart_check"
