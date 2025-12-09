@@ -66,7 +66,7 @@
 ///Covers Reloading and lighting of the gun
 /obj/structure/mounted_gun/attackby(obj/item/ammo_casing/used_item, mob/user, params)
 	if(is_firing)
-		balloon_alert(user, "the gun is in the middle of firing!")
+		balloon_alert(user, "gun is firing!")
 		return
 	if(istype(used_item, ammo_type) && (uses_ammo == TRUE)) //see if the gun needs to be loaded in some way.
 		if(fully_loaded_gun)
