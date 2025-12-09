@@ -10,9 +10,9 @@
 	name = "Hyphema"
 	desc = "Sufferers exhibit dangerously low levels of frames per second in the eyes, leading to damage and eventually blindness."
 	illness = "Diluted Pupils"
-	stealth = -1
-	resistance = -3
-	stage_speed = -4
+	stealth = 0
+	resistance = -2
+	stage_speed = -3
 	transmittable = -2
 	level = 5
 	severity = 5
