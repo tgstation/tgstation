@@ -87,7 +87,7 @@
 	var/log_object = "containing [reagentlist]"
 	if(!carbon_target.is_mouth_covered())
 		carbon_target.visible_message(span_danger("[user] is trying to smother [carbon_target]!"),\
-		span_danger("[user] is trying to put smother you!"))
+		span_danger("[user] is trying to smother you!"))
 		if(!do_after(user, 1 SECONDS, carbon_target))
 			return ITEM_INTERACT_BLOCKING
 		reagents.trans_to(carbon_target, reagents.total_volume, transferred_by = user, methods = INHALE)
