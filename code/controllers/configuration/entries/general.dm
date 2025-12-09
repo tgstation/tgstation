@@ -181,9 +181,6 @@
 /// allow votes to change map
 /datum/config_entry/flag/allow_vote_map
 
-/// allow players to vote to re-do the map vote
-/datum/config_entry/flag/allow_rock_the_vote
-
 /// the number of times we allow players to rock the vote
 /datum/config_entry/number/max_rocking_votes
 	default = 1
