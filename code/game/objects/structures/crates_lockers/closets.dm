@@ -21,7 +21,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	contents_thermal_insulation = 0
 	pass_flags_self = PASSSTRUCTURE | LETPASSCLICKS
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
-
 	/// The overlay for the closet's door
 	var/obj/effect/overlay/closet_door/door_obj
 	/// Whether or not this door is being animated
