@@ -256,7 +256,6 @@
 /obj/projectile/bullet/Large_Ballista_Spear_Dragonator
 	name = "Dragon-Slaying Spear"
 	icon_state = "ballista_spear_dragon"
-	//range = 20
 	damage = 120 //If you get hit by this thing you deserve it.
 	speed = 4
 	catastropic_dismemberment = TRUE
