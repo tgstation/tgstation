@@ -130,10 +130,12 @@
 	var/remedied_symptoms = 0
 	var/non_remedied_symptoms = 0
 	for(var/datum/symptom/each_symptom in symptoms)
-		if(each_symptom.remedied) //neutered symptoms can't be remedied, so don't worry about that here
+		if(each_symptom.remedied) // Neutered symptoms can't be remedied, so don't worry about that here
 			remedied_symptoms++
 		else if(!each_symptom.neutered)
 			non_remedied_symptoms++
+		if(remedied_symptoms+non_remedied_symptoms == 0) // In case all symptoms are neutered, we don't want to divide by 0
+			return 0
 		return remedied_symptoms/(remedied_symptoms+non_remedied_symptoms)
 
 // Mix the symptoms of two diseases (the src and the argument)

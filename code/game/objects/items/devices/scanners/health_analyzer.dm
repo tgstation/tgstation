@@ -430,7 +430,7 @@
 					var/datum/reagent/each_cure = each_symptom.symptom_cure
 					if(!each_symptom.neutered && !(each_cure.name in remedies))
 						remedies += each_cure.name
-					if(length(remedies) < remedy_limit)
+					if(length(remedies) >= remedy_limit)
 						break
 			cure_text = english_list(remedies, nothing_text = "Nothing")
 		else
