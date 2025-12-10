@@ -93,3 +93,4 @@
 	attack_verb_simple = list("flog", "whip", "lash", "discipline")
 	hitsound = 'sound/items/weapons/whip.ogg'
 	slot_flags = ITEM_SLOT_BELT
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT)

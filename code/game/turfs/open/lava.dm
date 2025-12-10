@@ -190,7 +190,7 @@
 	return FALSE
 
 /turf/open/lava/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF && rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_TURF && rcd_data[RCD_DESIGN_PATH] == /turf/open/floor/plating/rcd)
 		place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
 	return FALSE
@@ -406,17 +406,9 @@
 	immunity_resistance_flags = FREEZE_PROOF
 	lava_temperature = 100
 
-/turf/open/lava/plasma/examine(mob/user)
+/turf/open/lava/plasma/Initialize(mapload)
 	. = ..()
-	. += span_info("Some <b>liquid plasma<b> could probably be scooped up with a <b>container</b>.")
-
-/turf/open/lava/plasma/attackby(obj/item/I, mob/user, list/modifiers)
-	if(!I.is_open_container())
-		return ..()
-	if(!I.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 10)))
-		to_chat(user, span_warning("[I] is full."))
-		return
-	user.visible_message(span_notice("[user] scoops some plasma from the [src] with [I]."), span_notice("You scoop out some plasma from the [src] using [I]."))
+	AddElement(/datum/element/reagent_scoopable_atom, /datum/reagent/toxin/plasma)
 
 /turf/open/lava/plasma/do_burn(atom/movable/burn_target, seconds_per_tick = 1)
 	. = TRUE

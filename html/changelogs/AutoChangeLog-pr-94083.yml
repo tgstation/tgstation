@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed partially deployed MODsuits trying to deploy parts onto blocked slots when the deploy action is right clicked, instead of retracting already deployed parts."

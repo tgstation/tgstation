@@ -23,9 +23,7 @@
 	if(map_pad_id)
 		mapped_quantum_pads[map_pad_id] = src
 
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/quantumpad,
-	))
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/quantumpad), only_root_path = TRUE))
 
 /obj/machinery/quantumpad/Destroy()
 	mapped_quantum_pads -= map_pad_id
