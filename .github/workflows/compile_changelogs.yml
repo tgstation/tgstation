@@ -48,9 +48,9 @@ jobs:
       - name: Commit
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         run: |
-          git config --local user.name "tgstation-ci[bot]"
-          git config --local user.email "179393467+tgstation-ci[bot]@users.noreply.github.com"
-          git pull origin master
+          git config --local user.name "troutstation-ci[bot]"
+          git config --local user.email "8466903+troutstation-ci[bot]@users.noreply.github.com"
+          git pull origin troutstation
           git add html/changelogs
           git commit -m "Automatic changelog compile [ci skip]" -a || true
 
