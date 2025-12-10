@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Installing camera upgrades now consumes more power. Installing several upgrades onto the same camera has a power multiplier effect that stacks."
+  - bugfix: "Fix disabled cameras consuming power"
