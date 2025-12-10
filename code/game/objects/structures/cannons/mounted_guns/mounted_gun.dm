@@ -310,7 +310,6 @@
 	icon_state_base = "Improvised_Ballista"
 	icon_state_loaded = "Improvised_Ballista_Loaded"
 	icon_state_fire = "Improvised_Ballista"
-	loading_message = "You finish loading the ballista with a spear."
 	anchored = FALSE
 	anchorable_gun = TRUE
 	uses_ammo = TRUE
