@@ -18,7 +18,7 @@
 	force = 0
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_SMALL
-	var/obj/structure/sign/poster/poster_type
+	var/obj/structure/sign/poster/poster_type = /obj/structure/sign/poster/random
 	var/obj/structure/sign/poster/poster_structure
 
 /obj/item/poster/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
@@ -39,8 +39,8 @@
 		if(istype(poster_structure, /obj/structure/sign/poster)) // Make sure our poster structure is valid
 			poster_type = poster_structure.type
 		else
-			poster_type = /obj/structure/sign/poster/random // Panic, do something random
 			stack_trace("Rolled poster [type] was created without either a valid poster_type [poster_type] or poster_structure [poster_structure]")
+			poster_type = /obj/structure/sign/poster/random // Panic, do something random
 	if(ispath(poster_type, /obj/structure/sign/poster)) // Make sure we have a valid poster_type before using it
 		name = "[poster_type::poster_item_name] - [poster_type::name]"
 		desc = poster_type::poster_item_desc
