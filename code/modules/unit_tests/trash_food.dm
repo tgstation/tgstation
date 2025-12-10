@@ -21,6 +21,8 @@
 		/obj/item/stack/rods, // kebab
 		/obj/item/paper/paperslip/fortune, // fortune cookie
 		/obj/item/dice/fudge, // /obj/item/food/fudgedice
+		// Troutstation edit
+		/obj/item/food/float_your_goat, // the trash is just a drinking glass, makes no sense to have it
 	)
 
 	for(var/path in subtypesof(/obj/item/food))
