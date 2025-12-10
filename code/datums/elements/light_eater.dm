@@ -129,6 +129,12 @@
 	SIGNAL_HANDLER
 	if(eat_lights(target, source))
 		// do a "pretend" attack if we're hitting something that can't normally be
+		if (ismob(target))
+			var/mob/hit_user = target
+			if (hit_user.pulling)
+				var/atom/pulled_thing = hit_user.pulling // dragging a light
+				if (!isliving(pulled_thing)) // we don't want conga lines to be affected
+					eat_lights(pulled_thing, source)
 		if(isobj(target))
 			var/obj/smacking = target
 			if(smacking.obj_flags & CAN_BE_HIT)
@@ -138,12 +144,6 @@
 		user.do_attack_animation(target)
 		user.changeNext_move(CLICK_CD_RAPID)
 		target.play_attack_sound()
-	if (ismob(target))
-		var/mob/hit_user = target
-		if (hit_user.pulling)
-			var/atom/pulled_thing = hit_user.pulling // dragging a light
-			if (!isliving(pulled_thing)) // we don't want conga lines to be affected
-				eat_lights(pulled_thing, source)
 	// not particularly picky about what happens afterwards in the attack chain
 	return NONE
 
