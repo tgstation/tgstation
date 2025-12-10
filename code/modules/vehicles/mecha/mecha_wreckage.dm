@@ -46,7 +46,7 @@
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	for(var/mob/living/witness in range(2, src))
 		shake_camera(witness, 2, 1)
-	new /obj/effect/decal/cleanable/blood/gibs/robot_debris/(get_turf(src))
+	new /obj/effect/decal/cleanable/blood/gibs/robot_debris(get_turf(src))
 	return ..()
 
 /obj/structure/mecha_wreckage/examine(mob/user)
