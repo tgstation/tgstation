@@ -233,7 +233,6 @@
 /obj/projectile/bullet/large_ballista_spear
 	name = "Spear"
 	icon_state = "ballista_spear"
-	//range = 20
 	damage = 80
 	speed = 3
 	catastropic_dismemberment = TRUE //BECAUSE IF IT TAKES YOUR LEG OFF YOU SHOULDNT JUST BE GETTING OFF EASY.
