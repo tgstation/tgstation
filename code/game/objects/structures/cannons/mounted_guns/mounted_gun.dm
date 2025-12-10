@@ -65,9 +65,6 @@
 
 ///Covers Reloading and lighting of the gun
 /obj/structure/mounted_gun/attackby(obj/item/ammo_casing/used_item, mob/user, params)
-	if(is_firing)
-		balloon_alert(user, "gun is firing!")
-		return
 	if(istype(used_item, ammo_type) && (uses_ammo == TRUE)) //see if the gun needs to be loaded in some way.
 		if(fully_loaded_gun)
 			balloon_alert(user, "already fully loaded!")
@@ -87,12 +84,15 @@
 			icon_state = icon_state_loaded
 			return
 
+	if(is_firing)
+		balloon_alert(user, "gun is firing!")
+		return
 /obj/structure/mounted_gun/attack_hand(mob/living/user, list/modifiers)
 	if(is_firing)
-		balloon_alert(user, "the gun is in the middle of firing!")
+		balloon_alert(user, "gun is firing!")
 		return
 	user.log_message("fired a cannon", LOG_ATTACK)
-	log_game("[key_name(user)] fired a cannon in [AREACOORD(src)]")
+	log_game("[key_name(user)] fired a mounted gun in [AREACOORD(src)]")
 	addtimer(CALLBACK(src, PROC_REF(fire)), fire_delay) //uses fire proc as shown below to shoot the gun
 	return
 
