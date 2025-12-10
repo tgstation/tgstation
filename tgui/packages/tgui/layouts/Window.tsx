@@ -179,10 +179,10 @@ const WindowContent = (props: ContentProps) => {
     >
       <KeyListener
         onKeyDown={(e: KeyEvent) => {
-          if(KEY_ALT == e.code) { setAltDown(true); logger.log(`alt on ${altDown}`) }
+          if(KEY_ALT === e.code) { setAltDown(true); logger.log(`alt on ${altDown}`) }
         }}
         onKeyUp ={(e: KeyEvent) => {
-          if(KEY_ALT == e.code) { setAltDown(false); logger.log(`alt off ${altDown}`)}
+          if(KEY_ALT === e.code) { setAltDown(false); logger.log(`alt off ${altDown}`)}
         }}
         />
 
