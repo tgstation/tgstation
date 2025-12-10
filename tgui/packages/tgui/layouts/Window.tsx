@@ -173,7 +173,6 @@ const WindowContent = (props: ContentProps) => {
   };
 
   return (
-
     <Layout.Content onMouseDown={dragStartIfAltHeld}
       className={classes(['Window__content', className])}
       {...rest}
