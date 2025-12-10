@@ -8,11 +8,6 @@
 	result = /obj/item/food/space_shuttle_jelly
 	category = CAT_IO
 
-
-// for raw dim sims to regular:
-//	removed_foodtypes = RAW
-//	added_foodtypes = FRIED
-
 /datum/crafting_recipe/food/raw_dim_sim
 	name = "raw dim sim"
 	reqs = list(
@@ -29,6 +24,7 @@
 	reqs = list(/obj/item/food/raw_dim_sim = 1)
 	result = /obj/item/food/dim_sim
 	removed_foodtypes = RAW
+	added_foodtypes = FRIED
 	category = CAT_IO
 
 /datum/crafting_recipe/food/democracy_sausage
@@ -80,6 +76,7 @@
 		/obj/item/food/griddle_toast = 1,
 	)
 	result = /obj/item/food/vegemite_toast
+	added_foodtypes = VEGETABLES
 	category = CAT_IO
 
 /datum/crafting_recipe/food/cheese_vegemite_scroll
@@ -90,6 +87,7 @@
 		/obj/item/food/cheese/wedge = 1,
 	)
 	result = /obj/item/food/cheese_vegemite_scroll
+	added_foodtypes = VEGETABLES
 	category = CAT_IO
 
 /datum/crafting_recipe/food/fairy_bread
@@ -100,6 +98,7 @@
 		/obj/item/food/breadslice/plain = 1,
 	)
 	result = /obj/item/food/fairy_bread
+	added_foodtypes = SUGAR
 	removed_foodtypes = JUNKFOOD
 	category = CAT_IO
 
@@ -128,6 +127,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/pie_floater
+	added_foodtypes = VEGETABLES
 	category = CAT_IO
 
 /datum/crafting_recipe/food/vanilla_slice
@@ -138,6 +138,7 @@
 		/datum/reagent/consumable/sugar = 10,
 	)
 	result = /obj/item/food/vanilla_slice
+	added_foodtypes = SUGAR
 	category = CAT_IO
 
 /datum/crafting_recipe/food/knife/vanilla_slice_slice

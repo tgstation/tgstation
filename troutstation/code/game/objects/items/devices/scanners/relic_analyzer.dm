@@ -5,6 +5,7 @@ GLOBAL_LIST_EMPTY(relic_nodes_scanned)
 	name = "relic analyzer"
 	icon = 'troutstation/icons/obj/devices/scanner.dmi'
 	icon_state = "relic"
+	worn_icon_state = "healthanalyzer"
 	desc = "A hand-held scanner that analyzes relic potentials, aiding research efforts."
 	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = NOBLUDGEON

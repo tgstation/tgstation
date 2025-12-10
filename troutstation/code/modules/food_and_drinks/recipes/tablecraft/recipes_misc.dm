@@ -11,4 +11,6 @@
 		/datum/reagent/consumable/milk = 15,
 	)
 	result = /obj/item/food/float_your_goat
+	removed_foodtypes = BREAKFAST // holy god no could you fucking IMAGINE. even our most deranged would not eat this for BREAKFAST
+	added_foodtypes = DAIRY
 	category = CAT_MISCFOOD

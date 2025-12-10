@@ -200,6 +200,7 @@
 
 /obj/item/toy/plush/vending/tool
 	icon_state = "plushie_vend_3"
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*1.5) // amount of iron in a wrench
 
 /obj/item/toy/plush/vending/snack
 	icon_state = "plushie_vend_4"

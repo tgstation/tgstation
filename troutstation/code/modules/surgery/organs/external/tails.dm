@@ -7,6 +7,3 @@
 
 /datum/bodypart_overlay/mutant/tail/anteater
 	feature_key = FEATURE_ANTEATER_TAIL
-
-/datum/bodypart_overlay/mutant/tail/anteater/get_global_feature_list()
-	return SSaccessories.tails_list_anteater

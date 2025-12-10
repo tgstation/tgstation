@@ -670,48 +670,48 @@
 
 /obj/item/relic/proc/on_emped(severity, protection)
 	SIGNAL_HANDLER
-	current_node.check_trans(null, /datum/relic_trans/emp)
+	current_node?.check_trans(null, /datum/relic_trans/emp)
 	if (!activated)
 		reveal()
 	return
 
 /obj/item/relic/proc/on_fired(exposed_temperature, exposed_volume)
 	SIGNAL_HANDLER
-	current_node.check_trans(null, /datum/relic_trans/heat)
+	current_node?.check_trans(null, /datum/relic_trans/heat)
 	return
 
 /obj/item/relic/proc/on_clicked(atom/source, mob/user, obj/item/item)
 	SIGNAL_HANDLER
 	if(item.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		balloon_alert(user, "The heat transfer warms [src].")
-		current_node.check_trans(user, /datum/relic_trans/heat)
+		current_node?.check_trans(user, /datum/relic_trans/heat)
 	if (istype(item, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/container = item
 		container.reagents.remove_all(container.amount_per_transfer_from_this)
 		balloon_alert(user, "[container.amount_per_transfer_from_this] units splashed on [src]")
-		current_node.check_trans(user, /datum/relic_trans/reagent)
+		current_node?.check_trans(user, /datum/relic_trans/reagent)
 
 		return ITEM_INTERACT_SUCCESS
 	return
 
 /obj/item/relic/proc/on_hit_react(datum/source, mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type, damage_type)
 	SIGNAL_HANDLER
-	current_node.check_trans(owner, /datum/relic_trans/harm, owner)
+	current_node?.check_trans(owner, /datum/relic_trans/harm, owner)
 	return
 
 /obj/item/relic/proc/on_painted()
 	SIGNAL_HANDLER
-	current_node.check_trans(null, /datum/relic_trans/paint)
+	current_node?.check_trans(null, /datum/relic_trans/paint)
 	return
 
 /obj/item/relic/proc/on_exposure(list/lists, /datum/reagents/the_reagents, methods, volume_modifier, show_message)
 	SIGNAL_HANDLER
-	current_node.check_trans(null, /datum/relic_trans/reagent)
+	current_node?.check_trans(null, /datum/relic_trans/reagent)
 	return
 
 /obj/item/relic/proc/on_radiated()
 	SIGNAL_HANDLER
-	current_node.check_trans(null, /datum/relic_trans/irradiate)
+	current_node?.check_trans(null, /datum/relic_trans/irradiate)
 	return
 
 /obj/item/relic/proc/on_embedded(victim, target_limb)
@@ -731,13 +731,13 @@
 	if (hearing_args[HEARING_SPEAKER] == src || get_dist(src, hearing_args[HEARING_SPEAKER]) > canhear_range || hearing_args[HEARING_MESSAGE_MODE][MODE_RELAY])
 		return .
 	//to_chat(hearing_args[HEARING_SPEAKER], span_warning("DEBUG: [source] is listening to [hearing_args[HEARING_SPEAKER]]...."))
-	current_node.check_trans(null, /datum/relic_trans/hear)
+	current_node?.check_trans(null, /datum/relic_trans/hear)
 	return
 
 /obj/item/relic/MouseEntered(location, control, params)
 	. = ..()
 	if (current_node != null)
-		current_node.check_trans(null, /datum/relic_trans/mouseover)
+		current_node?.check_trans(null, /datum/relic_trans/mouseover)
 
 // Rules:
 // - Creates 3-15 nodes
@@ -798,14 +798,14 @@
 	if(istype(living_user) && living_user.combat_mode)
 		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 		to_chat(user, span_warning("You smack the [src]!"))
-		current_node.check_trans(user, /datum/relic_trans/harm, user)
+		current_node?.check_trans(user, /datum/relic_trans/harm, user)
 		return TRUE
 	else
 		if (istype(current_node, /datum/relic_node/rosetta) && istype(user, /mob/living))
 			var/datum/relic_node/rosetta/r = current_node
 			var/mob/living/l = user
 			var/datum/language_holder/lholder = l.get_language_holder()
-			if(lholder.mutual_understanding[r.language] < r.percent)
+			if(lholder.best_mutual_languages[r.language] < r.percent)
 				to_chat(user, span_notice("[src] has familiar text that fills you with knowledge of a language."))
 			else
 				to_chat(user, span_warning("After reading the text on [src], you feel you understand it even less."))
@@ -813,7 +813,7 @@
 			l.grant_partial_language(r.language, r.percent, MAGIC_TRAIT)
 		else
 			to_chat(user, span_notice("You touch [src], its surface seems inviting."))
-		current_node.check_trans(user, /datum/relic_trans/touch)
+		current_node?.check_trans(user, /datum/relic_trans/touch)
 	return ..()
 
 /obj/item/relic/attack_self(mob/user)
@@ -824,10 +824,10 @@
 	var/mob/living/living_user = user
 	if(istype(living_user) && living_user.combat_mode)
 		to_chat(user, span_warning("You smack the [src]!"))
-		current_node.check_trans(user, /datum/relic_trans/harm, user)
+		current_node?.check_trans(user, /datum/relic_trans/harm, user)
 	else
 		to_chat(user, span_notice("You touch [src], its surface seems inviting."))
-		current_node.check_trans(user, /datum/relic_trans/touch)
+		current_node?.check_trans(user, /datum/relic_trans/touch)
 	return //..()
 
 /obj/item/relic/attack(mob/M, mob/user)
@@ -841,11 +841,11 @@
 			to_chat(user, span_warning("You smack yourself with [src]!"))
 		else
 			to_chat(user, span_warning("You smack [M] with [src]!"))
-		current_node.check_trans(user, /datum/relic_trans/harm, M)
+		current_node?.check_trans(user, /datum/relic_trans/harm, M)
 	return ..()
 
 /obj/item/relic/ex_act(severity, target)
-	current_node.check_trans(null, /datum/relic_trans/explode)
+	current_node?.check_trans(null, /datum/relic_trans/explode)
 	return
 
 /obj/item/relic/Destroy(force)

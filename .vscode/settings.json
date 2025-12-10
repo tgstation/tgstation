@@ -25,5 +25,9 @@
 	"search.exclude": {
 		"**/node_modules": true
 	},
-	"Lua.diagnostics.enable": false
+	"Lua.diagnostics.enable": false,
+	"tgstationTestExplorer.logfile": "test_output.log",
+	"tgstationTestExplorer.project.defines": [
+		"#define CIBUILDING"
+	]
 }

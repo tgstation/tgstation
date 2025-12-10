@@ -17,6 +17,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_5
 	venue_value = FOOD_PRICE_EXOTIC
 	trash_type = /obj/item/reagent_containers/cup/glass/drinkingglass
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT + MEATDISH_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.5)
 	food_flags = FOOD_TINY_SNOUT_EDIBLE
 
 /obj/item/food/gaywatermelonslice

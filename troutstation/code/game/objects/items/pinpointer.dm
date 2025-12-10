@@ -10,6 +10,7 @@
 	worn_icon_state = "pinpointer_black"
 	custom_price = PAYCHECK_CREW * 6
 	custom_premium_price = PAYCHECK_CREW * 6
+	custom_materials = list(/datum/material/iron = 58, /datum/material/glass = 7) // based on ingredients
 	var/scan_type = SCAN_SWEEP
 
 /obj/item/pinpointer/relic/proc/trackable(obj/item/relic/R)

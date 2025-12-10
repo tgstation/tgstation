@@ -4,7 +4,7 @@
 
 	if (isnull(anteater))
 		anteater = uni_icon('troutstation/icons/mob/human/species/anteater/bodyparts.dmi', "anteater_head", EAST)
-		var/datum/universal_icon/eyes = uni_icon('icons/mob/human/human_face.dmi', "eyes_l", EAST)
+		var/datum/universal_icon/eyes = uni_icon(/obj/item/organ/eyes::eye_icon, "[/obj/item/organ/eyes::eye_icon_state]_l", EAST)
 		eyes.blend_color(COLOR_GRAY, ICON_MULTIPLY)
 		anteater.blend_icon(eyes, ICON_OVERLAY)
 
@@ -23,7 +23,7 @@
 
 	return final_icon
 
-/datum/preference/choiced/anteater_body_markings
+/datum/preference/choiced/species_feature/anteater_body_markings
 	savefile_key = "feature_anteater_body_markings"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
@@ -31,11 +31,8 @@
 	should_generate_icons = TRUE
 	relevant_body_markings = /datum/bodypart_overlay/simple/body_marking/anteater
 
-/datum/preference/choiced/anteater_body_markings/init_possible_values()
-	return assoc_to_keys_features(SSaccessories.anteater_markings_list)
-
-/datum/preference/choiced/anteater_body_markings/icon_for(value)
-	var/datum/sprite_accessory/sprite_accessory = SSaccessories.anteater_markings_list[value]
+/datum/preference/choiced/species_feature/anteater_body_markings/icon_for(value)
+	var/datum/sprite_accessory/sprite_accessory = get_accessory_for_value(value)
 
 	var/datum/universal_icon/final_icon = uni_icon('troutstation/icons/mob/human/species/anteater/bodyparts.dmi', "anteater_chest_m")
 
@@ -54,10 +51,7 @@
 
 	return final_icon
 
-/datum/preference/choiced/anteater_body_markings/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features[FEATURE_ANTEATER_MARKINGS] = value
-
-/datum/preference/choiced/anteater_snout
+/datum/preference/choiced/species_feature/anteater_snout
 	savefile_key = "feature_anteater_snout"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
@@ -65,26 +59,14 @@
 	should_generate_icons = TRUE
 	relevant_organ = /obj/item/organ/anteater_snout
 
-/datum/preference/choiced/anteater_snout/init_possible_values()
-	return assoc_to_keys_features(SSaccessories.anteater_snouts_list)
+/datum/preference/choiced/species_feature/anteater_snout/icon_for(value)
+	return generate_anteater_side_shot(get_accessory_for_value(value), FEATURE_ANTEATER_SNOUT, include_snout = FALSE)
 
-/datum/preference/choiced/anteater_snout/icon_for(value)
-	return generate_anteater_side_shot(SSaccessories.anteater_snouts_list[value], FEATURE_ANTEATER_SNOUT, include_snout = FALSE)
-
-/datum/preference/choiced/anteater_snout/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features[FEATURE_ANTEATER_SNOUT] = value
-
-/datum/preference/choiced/anteater_tail
+/datum/preference/choiced/species_feature/anteater_tail
 	savefile_key = "feature_anteater_tail"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	relevant_organ = /obj/item/organ/tail/anteater
 
-/datum/preference/choiced/anteater_tail/init_possible_values()
-	return assoc_to_keys_features(SSaccessories.tails_list_anteater)
-
-/datum/preference/choiced/anteater_tail/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features[FEATURE_ANTEATER_TAIL] = value
-
-/datum/preference/choiced/anteater_tail/create_default_value()
+/datum/preference/choiced/species_feature/anteater_tail/create_default_value()
 	return /datum/sprite_accessory/tails/anteater/giant::name

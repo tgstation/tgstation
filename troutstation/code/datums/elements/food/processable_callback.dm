@@ -4,7 +4,6 @@
 /datum/element/processable_callback
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	var/result_target
 	var/result_callback
 	var/tool_behaviour
 	var/time_to_process
@@ -25,7 +24,6 @@
 
 	var/atom/atom_target = target
 	atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
-	result_target = atom_target
 
 	RegisterSignal(atom_target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(tool_behaviour), PROC_REF(try_process))
@@ -53,7 +51,7 @@
 			to_chat(user, span_notice("You cannot prepare this here! You need a table or at least a tray."))
 			return
 
-	call(result_target, result_callback)(user)
+	call(result_callback)(source)
 
 /datum/element/processable_callback/proc/OnExamine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER

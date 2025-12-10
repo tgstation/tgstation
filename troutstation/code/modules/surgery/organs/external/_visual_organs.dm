@@ -19,9 +19,6 @@
 /datum/bodypart_overlay/mutant/snout/anteater
 	feature_key = FEATURE_ANTEATER_SNOUT
 
-/datum/bodypart_overlay/mutant/snout/anteater/get_global_feature_list()
-	return SSaccessories.anteater_snouts_list
-
 // let's violate the whole "visual organ" thing and add some extra functionality
 /obj/item/organ/anteater_snout/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()

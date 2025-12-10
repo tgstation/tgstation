@@ -4,7 +4,7 @@
 	icon = 'troutstation/icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'troutstation/icons/mob/clothing/head/helmet.dmi'
 	icon_state = "gaywatermelon"
-	inhand_icon_state = "gaywatermelon"
+	inhand_icon_state = null
 	flags_inv = HIDEEARS
 	dog_fashion = /datum/dog_fashion/head/gaywatermelon
 	armor_type = /datum/armor/helmet_watermelon

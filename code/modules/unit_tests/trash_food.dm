@@ -22,7 +22,7 @@
 		/obj/item/paper/paperslip/fortune, // fortune cookie
 		/obj/item/dice/fudge, // /obj/item/food/fudgedice
 		// Troutstation edit
-		/obj/item/food/float_your_goat, // the trash is just a drinking glass, makes no sense to have it
+		/obj/item/reagent_containers/cup/glass/drinkingglass // /obj/item/food/float_your_goat
 	)
 
 	for(var/path in subtypesof(/obj/item/food))

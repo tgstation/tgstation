@@ -54,9 +54,9 @@
 
 /datum/species/anteater/randomize_features()
 	var/list/features = ..()
-	features[FEATURE_ANTEATER_SNOUT] = pick(SSaccessories.anteater_snouts_list)
-	features[FEATURE_ANTEATER_TAIL] = pick(SSaccessories.tails_list_anteater)
-	features[FEATURE_ANTEATER_MARKINGS] = pick(SSaccessories.anteater_markings_list)
+	features[FEATURE_ANTEATER_SNOUT] = pick(SSaccessories.feature_list[FEATURE_ANTEATER_SNOUT])
+	features[FEATURE_ANTEATER_TAIL] = pick(SSaccessories.feature_list[FEATURE_ANTEATER_TAIL])
+	features[FEATURE_ANTEATER_MARKINGS] = pick(SSaccessories.feature_list[FEATURE_ANTEATER_MARKINGS])
 	return features
 
 // sounds

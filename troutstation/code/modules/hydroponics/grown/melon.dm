@@ -7,6 +7,7 @@
 	species = "gaywatermelon"
 	plantname = "Gaywatermelon Vines"
 	product = /obj/item/food/grown/gaywatermelon
+	icon_dead = "gaywatermelon-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = null
 	reagents_add = list(/datum/reagent/medicine/gaywater = 0.2,
