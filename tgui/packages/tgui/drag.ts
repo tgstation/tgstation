@@ -232,26 +232,6 @@ export const dragStartHandler = (event) => {
   dragMoveHandler(event);
 };
 
-export const dragStartHandlerOnAlt = (event, altHeld) => {
-  if (!altHeld)
-  {
-    logger.log('drag on alt skipped');
-    return;
-  }
-  logger.log('drag on alt started');
-  dragging = true;
-  dragPointOffset = vecSubtract(
-    [event.screenX * pixelRatio, event.screenY * pixelRatio],
-    getWindowPosition(),
-  ) as [number, number];
-
-  // Focus click target
-  (event.target as HTMLElement)?.focus();
-  document.addEventListener('mousemove', dragMoveHandler);
-  document.addEventListener('mouseup', dragEndHandler);
-  dragMoveHandler(event);
-};
-
 // End dragging the window
 const dragEndHandler = (event) => {
   logger.log('drag end');
