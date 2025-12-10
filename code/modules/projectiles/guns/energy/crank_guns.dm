@@ -153,13 +153,14 @@
 
 /obj/item/gun/energy/laser/musket/repeater
 	name = "Iconoclast's Repeater"
-	desc = "A weapon of incredible bulk, this ratvarian repeater has been permanently severed from its stand to be carried by hand. Cumbersome yes - but powerful."
+	desc = "A weapon of incredible bulk, this ratvarian repeater has been permanently severed from its stand to be carried by hand. Cumbersome, Yes - but powerful."
 	icon_state = "repeater"
 	inhand_icon_state = "repeater"
 	slowdown = 1
 	w_class = WEIGHT_CLASS_HUGE
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket/repeater)
 	spread = 20
+	charge_sections = 1
 	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 
 /obj/item/gun/energy/laser/musket/repeater/Initialize(mapload)

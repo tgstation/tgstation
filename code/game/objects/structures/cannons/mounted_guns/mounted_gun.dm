@@ -65,7 +65,10 @@
 
 ///Covers Reloading and lighting of the gun
 /obj/structure/mounted_gun/attackby(obj/item/ammo_casing/used_item, mob/user, params)
-	if(uses_ammo && istype(used_item, ammo_type)) //see if the gun needs to be loaded in some way.
+	if(is_firing)
+		balloon_alert(user, "gun is firing")
+		return
+	if(istype(used_item, ammo_type) && (uses_ammo == TRUE)) //see if the gun needs to be loaded in some way.
 		if(fully_loaded_gun)
 			balloon_alert(user, "already fully loaded!")
 			return
@@ -84,16 +87,14 @@
 			icon_state = icon_state_loaded
 			return
 
-	if(is_firing)
-		balloon_alert(user, "gun is firing!")
-		return
 /obj/structure/mounted_gun/attack_hand(mob/living/user, list/modifiers)
 	if(is_firing)
-		balloon_alert(user, "gun is firing!")
+		balloon_alert(user, "gun is firing")
 		return
-	user.log_message("fired a cannon", LOG_ATTACK)
+	user.log_message("fired a mounted gun", LOG_ATTACK)
 	log_game("[key_name(user)] fired a mounted gun in [AREACOORD(src)]")
 	addtimer(CALLBACK(src, PROC_REF(fire)), fire_delay) //uses fire proc as shown below to shoot the gun
+	return
 
 /obj/structure/mounted_gun/proc/fire()
 	if (!loaded_gun)
@@ -256,7 +257,7 @@
 /obj/structure/mounted_gun/ratvarian_repeater/attack_hand(mob/user, params) //the repeater is weird so has to have its own code since it takes no ammo.
 
 	if(is_firing)
-		balloon_alert(user, "gun is firing!")
+		balloon_alert(user, "gun is firing")
 		return
 
 	if(!fully_loaded_gun)
@@ -279,7 +280,7 @@
 
 /obj/structure/mounted_gun/ratvarian_repeater/fire()
 	if (!loaded_gun)
-		balloon_alert_to_viewers("needs winding!", vision_distance = 2)
+		balloon_alert_to_viewers("needs winding", vision_distance = 2)
 		return
 	is_firing = TRUE
 	for(var/times_fired = 1, times_fired <= shots_in_gun, times_fired++) //The normal DM for loop structure since the times it has fired is changing in the loop itself.
@@ -333,7 +334,7 @@
 
 /obj/structure/mounted_gun/large_ballista/attackby(obj/item/ammo_casing/used_item, mob/user, params) //again its single shot so its kinda weird.
 	if(is_firing)
-		balloon_alert(user, "gun is firing!")
+		balloon_alert(user, "gun is firing")
 		return
 
 	if(istype(used_item, ammo_type || alt_ammo_type))
@@ -341,15 +342,15 @@
 			balloon_alert(user, "already fully loaded!")
 			return
 
-		if(istype(used_item, alt_ammo_type))
-			use_alt_ammo = TRUE
+		else //Single shot weirdness.
+			if(istype(used_item, alt_ammo_type))
+				use_alt_ammo = TRUE
 
-		playsound(src, 'sound/items/weapons/draw_bow.ogg', 50, FALSE, 5)
-		do_after(user, load_delay, target = src)
-		shots_in_gun = 1 //MAX OF ONE SHOT.
-		balloon_alert(user, loading_message)
-		loaded_gun = TRUE
-		QDEL_NULL(used_item)
-		fully_loaded_gun = TRUE
-		icon_state = icon_state_loaded
-
+			playsound(src, 'sound/items/weapons/draw_bow.ogg', 50, FALSE, 5)
+			do_after(user, load_delay, target = src)
+			shots_in_gun = 1 //MAX OF ONE SHOT.
+			balloon_alert(user, loading_message)
+			loaded_gun = TRUE
+			QDEL_NULL(used_item)
+			fully_loaded_gun = TRUE
+			icon_state = icon_state_loaded
