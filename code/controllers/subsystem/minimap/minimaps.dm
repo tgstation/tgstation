@@ -38,6 +38,8 @@
 	var/list/hashed_minimaps = list()
 	///list of names of tiles
 	var/list/map_position_to_name = list()
+	///list of mobs currently viewing the map, only updates the map while we have viewers
+	var/list/minimap_viewers = list()
 
 /// Initialized only when needed
 /datum/tactical_map/proc/Initialize()
@@ -54,6 +56,17 @@
 	updators_by_datum = SSminimaps.updators_by_datum
 	drawn_images = SSminimaps.drawn_images
 */
+
+/// Adds our target to the list of viewers
+/datum/tactical_map/proc/add_viewer(viewer)
+	minimap_viewers += viewer
+	START_PROCESSING(SSobj, src)
+
+/// Removes our target from the list of viewers
+/datum/tactical_map/proc/remove_viewer(viewer)
+	minimap_viewers -= viewer
+	if(!length(minimap_viewers))
+		STOP_PROCESSING(SSobj, src)
 
 /datum/tactical_map/process(seconds_per_tick)
 	var/static/iteration = 0
@@ -77,8 +90,8 @@
 
 	var/level = z_level.z_value
 	minimaps_by_z["[level]"] = new /datum/hud_displays
-	//if(!is_station_level(level)) //todo: maybe move this around XANTODO Somehow filter specific z levels
-	//	return
+	if(!is_station_level(level)) //todo: maybe move this around XANTODO Somehow filter specific z levels
+		return
 	var/icon/icon_gen = new('icons/ui_icons/minimap/minimap.dmi') //480x480 blank icon template for drawing on the map
 	for(var/xval = 1 to world.maxx)
 		for(var/yval = 1 to world.maxy) //Scan all the turfs and draw as needed
@@ -646,6 +659,8 @@
 			owner.client.screen += z_down
 		locator.update(tracking)
 		locator.RegisterSignal(tracking, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/atom/movable/screen/minimap_locator, update))
+		my_map.process()
+		my_map.add_viewer(owner)
 	else
 		if(owner.client)
 			owner.client.screen -= map_object
@@ -655,6 +670,7 @@
 			owner.client.screen -= z_down
 		map_object.stop_polling -= owner
 		locator.UnregisterSignal(tracking, COMSIG_MOVABLE_MOVED)
+		my_map.remove_viewer(owner)
 	minimap_displayed = force_state
 	return TRUE
 
@@ -738,9 +754,9 @@
 /**
  * Updates the map when the owner changes zlevel
  */
-/datum/action/minimap/proc/on_owner_z_change(atom/movable/source, oldz, newz)
+/datum/action/minimap/proc/on_owner_z_change(atom/movable/source, old_turf, turf/new_turf)
 	SIGNAL_HANDLER
-	change_z_shown(newz)
+	change_z_shown(new_turf.z)
 
 /// changes the currently to be displayed z. takes the new z as an arg
 /datum/action/minimap/proc/change_z_shown(newz)

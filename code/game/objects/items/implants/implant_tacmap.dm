@@ -8,8 +8,11 @@
 	var/datum/tactical_map/my_map
 
 /obj/item/implant/tacmap/implant(mob/living/target, mob/user, silent, force)
-	add_minimap(target)
 	. = ..()
+	if(!my_map)
+		my_map = new
+		my_map.Initialize()
+	add_minimap(target)
 
 /obj/item/implant/tacmap/removed(mob/living/source, silent, special)
 	remove_minimap(source)
@@ -23,9 +26,6 @@
 /// Adds a minimap to the mob, starts the subsystem if it hasnt already
 /obj/item/implant/tacmap/proc/add_minimap(mob/user)
 	remove_minimap(user)
-	if(!my_map)
-		my_map = new
-		my_map.Initialize()
 	var/datum/action/minimap/mini = new minimap_type(tactical_map = my_map)
 	mini.Grant(user)
 	addtimer(CALLBACK(src, PROC_REF(update_minimap_icon), user), 0.1 SECONDS) //Mobs are spawned inside nullspace sometimes so this is to avoid that hijinks
@@ -87,7 +87,13 @@
 /obj/item/implant/tacmap/nuclear // Nukie subtype, map shows you nuke disk, operatives, cayenne and the nuke
 	minimap_type = /datum/action/minimap/nuclear
 
-
+/obj/item/implant/tacmap/nuclear/implant(mob/living/target, mob/user, silent, force)
+	var/datum/antagonist/nukeop/nukie = IS_NUKE_OP(target)
+	if(isnull(nukie))
+		return ..()
+	var/datum/team/nuclear/nukie_team = nukie.get_team()
+	my_map = nukie_team.nuclear_tacmap // Specify that we are using the nukeop map before calling parent
+	return ..()
 
 /obj/item/implanter/tacmap
 	name = "implanter (minimap)"
