@@ -205,7 +205,6 @@
 	icon_state_base = "canister_gatling"
 	icon_state_loaded = "canister_gatling"
 	icon_state_fire = "canister_gatling_fire"
-	loading_message = "You dump a bucket of canister shot into the gatling."
 	anchored = FALSE
 	anchorable_gun = TRUE
 	max_shots_per_fire = 50
