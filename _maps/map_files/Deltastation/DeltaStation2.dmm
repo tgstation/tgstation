@@ -15250,6 +15250,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/structure/sign/warning/vacuum/external/directional/east,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
 "dMM" = (
@@ -53264,10 +53265,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
-"njz" = (
-/obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall,
-/area/station/maintenance/starboard/aft)
 "njA" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -71171,10 +71168,7 @@
 /area/station/service/kitchen/abandoned)
 "rIl" = (
 /obj/machinery/mass_driver/chapelgun,
-/obj/structure/sign/warning/vacuum/external{
-	pixel_y = 32;
-	dir = 1
-	},
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -150732,7 +150726,7 @@ qOK
 nXH
 nXH
 nXH
-njz
+nXH
 mOH
 nXH
 nXH

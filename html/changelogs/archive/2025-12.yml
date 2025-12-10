@@ -283,3 +283,92 @@
       to this new change, sound dampeners have been installed to prevent the hydraulics
       from being heard for super long distances. However, they skimped out on the
       quality for the ones in maintenance...
+2025-12-08:
+  ArchBTW:
+  - balance: repairbot hp 100 -> 35
+  FalloutFalcon, rye-rice:
+  - rscadd: Adds a small cosmetic recoil to all ballistics (with an accompanying pref
+      option to tweak or disable it)
+  - balance: Changes recoil from an erratic shaking to a kicking of your screen relative
+      to your firing angle
+  - qol: Pref option for darkened screen has some scaling with duration of shake
+  Thunder12345:
+  - rscadd: Added a new set of chaplain armour based on the generic heretic robes
+      unavailable since the path rework.
+2025-12-09:
+  Aliceee2ch:
+  - image: Added 2 new contraband and 1 new official posters.
+  Fghj240:
+  - bugfix: mod pathfinder module no longer gets stuck after an interrupted launch
+  - bugfix: mod pathfinder module gives you a unique balloon alert on your position
+      if you try to recall a suit that's being held by another mob
+  Melbert:
+  - balance: Blood flow and clotting has universally been slashed by about 0.85x.
+      This means blood wounds kill you slightly slower, but heal slightly slower.
+  - balance: Sutures now heal 0.85x less blood flow and gauze's clotting bonus is
+      also 0.85x lower. Medicated sutures are unaffected.
+  - balance: Bloody Mary's blood healing effect now scales with how drunk you are.
+      Worse in low amounts, better in high amounts.
+  - balance: Epoetin Alfa no longer generates Sangurite. It now directly clots bleeding
+      wounds (at a rate ~3x worse than sangurite, but still ~4x better than the natural
+      clotting rate)
+  - balance: Epoetin Alfa no longer heals liver damage.
+  - balance: Epoetin Alfa regenerates 3x less blood. It's still 4x effective than
+      Saline Glucose or Iron.
+  - balance: Epoetin Alfa now causes minor heart damage (0.2 damage per tick).
+  - code_imp: All "coagulating" effects now use a shared function.
+  Rockdtben:
+  - bugfix: Secure Briefcase buttons no longer push column down.
+  lelandkemble:
+  - map: Powered catwalk library office
+  - rscadd: Syndicate Powerfist users and our most athletic employees have discovered
+      that if you punch a meteor with enough force, it can be redirected.
+  necromanceranne:
+  - balance: Boxing combos are now broader and user friendly. Alternating combinations
+      of buttons AND hands produces different results, but all of them good. Experiment!
+  - balance: Evil boxing now has a Sucker Punch. Hit someone from behind to potentially
+      knock them out cold!
+  - bugfix: Punching mitts no longer mention punching rocks.
+  san7890:
+  - admin: Multikeying Notice Messages have taken on a new form factor but should
+      still furnish the same information.
+2025-12-10:
+  ArcaneMusic:
+  - bugfix: Plasma sheets are once again immune to market elasticity, selling for
+      a static 80 credits each yet again.
+  ArchBTW:
+  - bugfix: 'Biodegrade: Fireman carry & knotted shoes works as intended, description
+      update'
+  - balance: Nightmare's light eater will snuff out dragged lights
+  Fghj240:
+  - qol: You can hotkey shockpaddles back into their defibs
+  - bugfix: Obscuring your face prevents people from noticing your facial expression
+      when you're using sign language
+  Melbert:
+  - rscadd: Wardens can alt-click-reskin their Kaza Ruk gloves to match their formal
+      attire
+  - rscadd: You can select a recolorable Santa Hat in the loadout during the festive
+      season (December 1st - 31st)
+  Rockdtben:
+  - bugfix: ScreenTip for Lockers will show "Unlock" or "Lock" instead of always showing
+      "Unlock"
+  SyncIt21:
+  - qol: added mapping directional helper for cargo & vacuum signs allowing them to
+      interact with fire/acid on their mounted turf
+  jlsnow301:
+  - rscdel: TGUI now defaults to fancy mode, there is only fancy mode. Welcome to
+      the future.
+  lelandkemble:
+  - map: Catwalk engi secpoint, prisoner education chamber, & starboard bow solar
+      maintenance repowered
+  - map: Catwalk Engineering Project Room accesses have been made consistent
+  - map: Many of Catwalk's useless pipes have been cut out
+  - map: Catwalk's waste line will no longer constantly vent into space
+  - map: Icebox morgue has been given an additional redundant power line
+  levels0:
+  - bugfix: make evolved lungs actually resistant to co2
+  timothymtorres:
+  - rscadd: Add new emotes "slit", "scratch_h",  "thumb_u", "thumb_d", "time", "tap",
+      "halt", "shush", "listen", "think", "beckon", "airquote", "crazy", "squint",
+      "rub".
+  - bugfix: Fix closets, crates, and drawers missing material tags

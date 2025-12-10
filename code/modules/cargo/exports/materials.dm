@@ -57,6 +57,7 @@
 
 /datum/export/material/plasma
 	cost = CARGO_CRATE_VALUE * 0.4
+	k_elasticity = 0
 	material_id = /datum/material/plasma
 	message = "cm3 of plasma"
 

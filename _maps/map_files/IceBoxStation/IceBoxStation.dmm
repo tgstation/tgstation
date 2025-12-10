@@ -995,6 +995,7 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/external,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/medical/morgue)
 "aoW" = (
@@ -9378,6 +9379,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/medical/morgue)
 "czl" = (
@@ -22084,6 +22086,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/maintenance/aft/greater)
+"giJ" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/medical/morgue)
 "giN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/yellow/line,
@@ -23920,6 +23927,7 @@
 /area/station/security/holding_cell)
 "gIJ" = (
 /obj/machinery/light/small/directional/east,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/medical/morgue)
 "gIL" = (
@@ -38480,6 +38488,7 @@
 	cycle_id = "chem-airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/chemistry,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/medical/chemistry)
 "kRJ" = (
@@ -45363,6 +45372,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/warning/cold_temp/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "mSY" = (
@@ -70608,6 +70618,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "tNx" = (
@@ -82596,6 +82607,7 @@
 /area/station/maintenance/port/greater)
 "xqY" = (
 /obj/machinery/firealarm/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
 "xrb" = (
@@ -186875,7 +186887,7 @@ ioK
 jDz
 bja
 czj
-jvw
+giJ
 gIJ
 kRH
 xqY
