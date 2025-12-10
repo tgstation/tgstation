@@ -280,7 +280,7 @@
 
 /obj/structure/mounted_gun/ratvarian_repeater/fire()
 	if (!loaded_gun)
-		balloon_alert_to_viewers("clockwork mechanism not wound!","",2)
+		balloon_alert_to_viewers("needs winding!", vision_distance = 2)
 		return
 	is_firing = TRUE
 	for(var/times_fired = 1, times_fired <= shots_in_gun, times_fired++) //The normal DM for loop structure since the times it has fired is changing in the loop itself.
