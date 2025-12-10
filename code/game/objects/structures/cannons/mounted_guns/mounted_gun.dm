@@ -94,7 +94,6 @@
 	user.log_message("fired a cannon", LOG_ATTACK)
 	log_game("[key_name(user)] fired a mounted gun in [AREACOORD(src)]")
 	addtimer(CALLBACK(src, PROC_REF(fire)), fire_delay) //uses fire proc as shown below to shoot the gun
-	return
 
 /obj/structure/mounted_gun/proc/fire()
 	if (!loaded_gun)
