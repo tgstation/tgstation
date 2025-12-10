@@ -252,7 +252,6 @@
 	firing_shakes_camera = FALSE
 /obj/structure/mounted_gun/ratvarian_repeater/dump_contents() // for some god-forsaken reason trying to break this thing attempts to dump nonexistient contents and crashes the game. dont remove this.
 
-
 /obj/structure/mounted_gun/ratvarian_repeater/attack_hand(mob/user, params) //the repeater is weird so has to have its own code since it takes no ammo.
 
 	if(is_firing)
