@@ -103,7 +103,7 @@ function TreePage(props: TreeProps) {
       title={`${backend.config.interface.name ?? 'TGUI'} data`}
     >
       <div style={{ border: 'thin solid var(--color-base)' }}>
-        <JSONTree data={inView} theme={tgui16} hideRoot />
+        <JSONTree data={inView} theme={tgui16} />
       </div>
     </Section>
   );
