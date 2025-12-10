@@ -13,7 +13,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	tgui_id = "NtosJobManager"
 	program_icon = "address-book"
 
-	var/change_position_cooldown = 30
+	var/change_position_cooldown = 5
 
 	//The scaling factor of max total positions in relation to the total amount of people on board the station in %
 	var/max_relative_positions = 30 //30%: Seems reasonable, limit of 6 @ 20 players
