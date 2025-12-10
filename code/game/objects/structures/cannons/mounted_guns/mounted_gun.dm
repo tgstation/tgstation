@@ -255,7 +255,7 @@
 /obj/structure/mounted_gun/ratvarian_repeater/attack_hand(mob/user, params) //the repeater is weird so has to have its own code since it takes no ammo.
 
 	if(is_firing)
-		balloon_alert(user, "the gun is in the middle of firing!")
+		balloon_alert(user, "gun is firing!")
 		return
 
 	if(!fully_loaded_gun)
