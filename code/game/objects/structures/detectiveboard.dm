@@ -34,7 +34,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			if(istype(item, /obj/item/paper) || istype(item, /obj/item/photo))
 				item.forceMove(src)
 				cases[current_case].notices++
-		find_and_hang_on_atom()
+		find_and_mount_on_atom()
 
 	register_context()
 

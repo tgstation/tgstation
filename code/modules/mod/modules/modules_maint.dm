@@ -226,7 +226,7 @@
 /obj/item/mod/module/balloon/on_use(mob/activator)
 	if(!do_after(mod.wearer, blowing_time, target = mod))
 		return FALSE
-	mod.wearer.adjustOxyLoss(oxygen_damage)
+	mod.wearer.adjust_oxy_loss(oxygen_damage)
 	playsound(src, 'sound/items/modsuit/inflate_bloon.ogg', 50, TRUE)
 	var/obj/item/balloon = new balloon_path(get_turf(src))
 	mod.wearer.put_in_hands(balloon)
@@ -243,7 +243,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/paper_dispenser)
 	cooldown_time = 5 SECONDS
-	required_slots = list(ITEM_SLOT_GLOVES)
+	required_slots = list(ITEM_SLOT_GLOVES|ITEM_SLOT_NECK)
 	/// The total number of sheets created by this MOD. The more sheets, them more likely they set on fire.
 	var/num_sheets_dispensed = 0
 
@@ -286,7 +286,7 @@
 	device = /obj/item/stamp/mod
 	incompatible_modules = list(/obj/item/mod/module/stamp)
 	cooldown_time = 0.5 SECONDS
-	required_slots = list(ITEM_SLOT_GLOVES)
+	required_slots = list(ITEM_SLOT_GLOVES|ITEM_SLOT_NECK)
 
 /obj/item/stamp/mod
 	name = "MOD electronic stamp"

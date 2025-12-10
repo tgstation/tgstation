@@ -27,7 +27,7 @@
 	. = ..()
 
 	if(mapload)
-		find_and_hang_on_atom()
+		find_and_mount_on_atom()
 	else
 		locked = FALSE
 	power_change()
@@ -210,4 +210,5 @@
 	icon = 'icons/obj/machines/turret_control.dmi'
 	icon_state = "control_frame"
 	result_path = /obj/machinery/turretid
-	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6)
+	pixel_shift = 30
