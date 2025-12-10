@@ -448,6 +448,9 @@
   tralezab:
   - balance: The cargo console now has a delay to express orders (renamed to autodelivery)
 2025-03-17:
+  Cirrial:
+  - troutstation: true
+  - rscadd: Added scugs
   Absolucy:
   - bugfix: Toxins no longer damage your liver if you are immune to toxins anyways.
   ArcaneMusic:

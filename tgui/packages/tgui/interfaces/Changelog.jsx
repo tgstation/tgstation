@@ -44,6 +44,8 @@ const icons = {
   wip: { icon: 'hammer', color: 'orange' },
 };
 
+const TROUTSTATION_IDENT = 'troutstation';
+
 export class Changelog extends Component {
   constructor(props) {
     super(props);
@@ -304,44 +306,76 @@ export class Changelog extends Component {
         .map(([date, authors]) => (
           <Section key={date} title={dateformat(date, 'd mmmm yyyy', true)}>
             <Box ml={3}>
-              {Object.entries(authors).map(([name, changes]) => (
-                <Fragment key={name}>
-                  <h4>{name} changed:</h4>
-                  <Box ml={3}>
-                    <Table>
-                      {changes.map((change) => {
-                        const changeType = Object.keys(change)[0];
-                        return (
-                          <Table.Row key={changeType + change[changeType]}>
-                            <Table.Cell
-                              className={classes([
-                                'Changelog__Cell',
-                                'Changelog__Cell--Icon',
-                              ])}
-                            >
-                              <Icon
-                                color={
-                                  icons[changeType]
-                                    ? icons[changeType].color
-                                    : icons.unknown.color
-                                }
-                                name={
-                                  icons[changeType]
-                                    ? icons[changeType].icon
-                                    : icons.unknown.icon
-                                }
-                              />
-                            </Table.Cell>
-                            <Table.Cell className="Changelog__Cell">
-                              {change[changeType]}
-                            </Table.Cell>
-                          </Table.Row>
-                        );
-                      })}
-                    </Table>
-                  </Box>
-                </Fragment>
-              ))}
+              {Object.entries(authors).map(([name, changes]) => {
+                let isTroutstationEntry = false;
+                changes.map((change) => {
+                  const changeType = Object.keys(change)[0];
+                  if (isTroutstationEntry) {
+                    // already figured it out
+                    return;
+                  }
+                  if (changeType === TROUTSTATION_IDENT) {
+                    isTroutstationEntry = true;
+                    return;
+                  }
+                });
+                return (
+                  <Fragment key={name}>
+                    <h4
+                      className={
+                        isTroutstationEntry
+                          ? 'Changelog__Cell__Troutstation'
+                          : ''
+                      }
+                    >
+                      {name} changed:
+                    </h4>
+                    <Box ml={3}>
+                      <Table>
+                        {changes.map((change) => {
+                          const changeType = Object.keys(change)[0];
+                          if (changeType === TROUTSTATION_IDENT) {
+                            return; // do not actually display anything
+                          }
+                          return (
+                            <Table.Row key={changeType + change[changeType]}>
+                              <Table.Cell
+                                className={classes([
+                                  'Changelog__Cell',
+                                  'Changelog__Cell--Icon',
+                                ])}
+                              >
+                                <Icon
+                                  color={
+                                    icons[changeType]
+                                      ? icons[changeType].color
+                                      : icons.unknown.color
+                                  }
+                                  name={
+                                    icons[changeType]
+                                      ? icons[changeType].icon
+                                      : icons.unknown.icon
+                                  }
+                                />
+                              </Table.Cell>
+                              <Table.Cell
+                                className={classes([
+                                  'Changelog__Cell',
+                                  isTroutstationEntry
+                                    ? 'Changelog__Cell__Troutstation'
+                                    : '',
+                                ])}
+                              >
+                                {change[changeType]}
+                              </Table.Cell>
+                            </Table.Row>
+                          );
+                        })}
+                      </Table>
+                    </Box>
+                  </Fragment>
+                );
+              })}
             </Box>
           </Section>
         ));

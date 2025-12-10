@@ -44,6 +44,10 @@
   - bugfix: Fixed shuttle cleanup code bypassing move contents of turfs
   - bugfix: Fixed tram crossing signals bypassing north and east direction checks
 2025-09-03:
+  Guffy:
+  - troutstation: true
+  - rscadd: gay water explosion
+  - rscadd: gay water replication
   Rhials:
   - bugfix: Pirates can sell minerals and other cargo exports on their bounty pad
       again.
@@ -99,6 +103,11 @@
   subject217:
   - spellcheck: fixed a typo in the admin message about achievements cleanup
 2025-09-05:
+  Guffy:
+  - troutstation: true
+  - rscadd: rufran plush
+  - rscadd: bowling ball
+  - rscadd: Gay water detectable in mobs upon examination
   Ezel:
   - bugfix: fixes kitchen plumbing not being connected to any water source
   - map: Adds and expands plumbing systems around metastation
@@ -328,6 +337,9 @@
   - bugfix: Imperium monk outfits now hold the true list of chaplain suit storage
       items, and not just a limited list.
 2025-09-12:
+  Guffy:
+  - troutstation: true
+  - bugfix: fixed rufran plush activation
   Aliceee2ch:
   - map: Added shutters in Cargo bay on every station.
   - map: Added firelocks on lower Cargo staircase on TramStation. Also added space
@@ -693,6 +705,10 @@
   timothymtorres:
   - qol: Objects that are EMP-proof will now have it appear as a examine tag desc
 2025-09-29:
+  Kaltren:
+  - troutstation: true
+  - rscadd: Anteater Mutation Toxin now exists as a reagent. It cannot show up in random recipes.
+  - rscadd: Injecting ants into a Green Slime Extract now produces Anteater Mutation Toxin.
   ArcaneMusic:
   - rscdel: You can no longer obtain an emagged fishing portal board from treasure
       chests. You can still, however, emag fishing portals.

@@ -381,6 +381,11 @@
   vinylspiders:
   - bugfix: removed the gap from the quirks page menu items
 2025-04-14:
+  Cirrial:
+  - troutstation: true
+  - rscadd: Anteaters.
+  - rscadd: Added skiff icons
+  - image: Added skiff icons
   Bisar:
   - code_imp: Subsystems that are meant to represent a network in-game have been moved
       into their own category inside the codebase.
@@ -615,6 +620,11 @@
   - bugfix: Objects crafted from lavaland fauna materials (bone, sinew, hide) are
       now fireproof and lavaproof. And also reinforced fishing lines.
 2025-04-21:
+  Guffy:
+  - troutstation: true
+  - rscadd: maddie plush
+  - rscadd: VOX sounds
+  - rscadd: Added two AI displays.
   FlufflesTheDog:
   - bugfix: Passive modsuit modules (radiation protection, welding protection, etc)
       should work reliably again.
@@ -645,6 +655,11 @@
   jlsnow301:
   - bugfix: Fixed more bugs in tgui-say. Admin chat shouldn't be cut off any more.
 2025-04-22:
+  Guffy:
+  - troutstation: true
+  - rscadd: Added new food category
+  - rscadd: Added 5 new foods
+  - rscadd: Added 1 new drink
   DaCoolBoss:
   - spellcheck: Removed 5 random wizard names. Added 6 to replace them.
   EmptyLullaby:
@@ -693,6 +708,9 @@
   - balance: Part-Mart vending machines now have mousetraps, spare screwdrivers and
       rifle stocks in their contraband section.
 2025-04-24:
+  Cirrial:
+  - troutstation: true
+  - rscadd: Added coconut, thanks to Guffy for sprites
   Ghommie:
   - qol: You can now interact with held mobs in more ways beside wearing them.
   - bugfix: Fixed moonfish eggs appearing like huge errors inside aquariums.
@@ -707,6 +725,10 @@
       them FAST. Report if they are not FAST.
   - bugfix: Fixed a bluescreen caused when moving a tgui window with a tooltip open.
 2025-04-25:
+  Guffy:
+  - troutstation: true
+  - rscadd: Ionian dialect effect to food
+  - rscadd: cork cat that applies Ionian dialect
   Cirrial:
   - qol: Added some help for abductors if they get a weird half-machine test subject
       in their ship.
@@ -766,6 +788,10 @@
   zxaber:
   - bugfix: Fixed a visual bug with cyborg tools that are able to carry items.
 2025-04-27:
+  Guffy:
+  - troutstation: true
+  - rscadd: Added more food from Io
+  - qol: Changed pavlova to be Io food.
   Cirrial:
   - bugfix: Made it so minebot commands don't talk about dumping ore when you're toggling
       the lights.
