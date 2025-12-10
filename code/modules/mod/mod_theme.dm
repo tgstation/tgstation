@@ -777,20 +777,22 @@
 	slowdown_deployed = 0.25
 	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced)
 	allowed_suit_storage = list(
+		/obj/item/crowbar/power/paramedic,
+		/obj/item/defibrillator/compact,
 		/obj/item/healthanalyzer,
+		/obj/item/melee/baton/telescopic,
+		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/applicator/pill,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/stack/medical,
 		/obj/item/sensor_device,
-		/obj/item/storage/pill_bottle,
+		/obj/item/stack/medical,
 		/obj/item/storage/bag/chemistry,
 		/obj/item/storage/bag/bio,
-		/obj/item/melee/baton/telescopic,
+		/obj/item/storage/pill_bottle,
 	)
 	variants = list(
 		"rescue" = list(
