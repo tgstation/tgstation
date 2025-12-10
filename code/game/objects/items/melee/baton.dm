@@ -881,9 +881,7 @@
 	user.put_in_hands(brand_new_prod)
 
 /obj/item/melee/baton/security/cattleprod/can_baton(mob/living/target, mob/living/user)
-	if(!sparkler.activate())
-		return FALSE
-	return ..()
+	sparkler?.activate()
 
 /obj/item/melee/baton/security/cattleprod/Destroy()
 	if(sparkler)
