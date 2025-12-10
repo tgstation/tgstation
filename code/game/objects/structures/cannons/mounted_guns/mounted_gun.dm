@@ -233,7 +233,7 @@
 	icon_state = "ratvarian_repeater"
 	icon_state_base = "ratvarian_repeater"
 	icon_state_fire = "ratvarian_repeater_fire"
-	loading_message = "You finish cranking up the spring mechanism on the repeater, reading it to fire."
+	loading_message = "gun charged"
 	anchored = FALSE
 	anchorable_gun = TRUE
 	uses_ammo = FALSE
