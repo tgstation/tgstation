@@ -340,16 +340,15 @@
 			balloon_alert(user, "already fully loaded!")
 			return
 
-		else //Single shot weirdness.
-			if(istype(used_item, alt_ammo_type))
-				use_alt_ammo = TRUE
+		if(istype(used_item, alt_ammo_type))
+			use_alt_ammo = TRUE
 
-			playsound(src, 'sound/items/weapons/draw_bow.ogg', 50, FALSE, 5)
-			do_after(user, load_delay, target = src)
-			shots_in_gun = 1 //MAX OF ONE SHOT.
-			balloon_alert(user, loading_message)
-			loaded_gun = TRUE
-			QDEL_NULL(used_item)
-			fully_loaded_gun = TRUE
-			icon_state = icon_state_loaded
+		playsound(src, 'sound/items/weapons/draw_bow.ogg', 50, FALSE, 5)
+		do_after(user, load_delay, target = src)
+		shots_in_gun = 1 //MAX OF ONE SHOT.
+		balloon_alert(user, loading_message)
+		loaded_gun = TRUE
+		QDEL_NULL(used_item)
+		fully_loaded_gun = TRUE
+		icon_state = icon_state_loaded
 
