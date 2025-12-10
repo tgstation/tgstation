@@ -104,7 +104,6 @@ export const Window = (props: Props) => {
   }, [isReadyToRender, width, height, scale]);
 
   const dispatch = globalStore.dispatch;
-  const fancy = config.window?.fancy;
 
   // Determine when to show dimmer
   const showDimmer =
@@ -118,7 +117,6 @@ export const Window = (props: Props) => {
       <TitleBar
         title={title || decodeHtmlEntities(config.title)}
         status={config.status}
-        fancy={fancy}
         onDragStart={dragStartHandler}
         onClose={() => {
           logger.log('pressed close');
@@ -132,22 +130,18 @@ export const Window = (props: Props) => {
         {!suspended && children}
         {showDimmer && <div className="Window__dimmer" />}
       </div>
-      {fancy && (
-        <>
-          <div
-            className="Window__resizeHandle__e"
-            onMouseDown={resizeStartHandler(1, 0) as any}
-          />
-          <div
-            className="Window__resizeHandle__s"
-            onMouseDown={resizeStartHandler(0, 1) as any}
-          />
-          <div
-            className="Window__resizeHandle__se"
-            onMouseDown={resizeStartHandler(1, 1) as any}
-          />
-        </>
-      )}
+      <div
+        className="Window__resizeHandle__e"
+        onMouseDown={resizeStartHandler(1, 0) as any}
+      />
+      <div
+        className="Window__resizeHandle__s"
+        onMouseDown={resizeStartHandler(0, 1) as any}
+      />
+      <div
+        className="Window__resizeHandle__se"
+        onMouseDown={resizeStartHandler(1, 1) as any}
+      />
     </Layout>
   );
 };
