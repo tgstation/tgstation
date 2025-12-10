@@ -335,7 +335,7 @@
 
 /obj/structure/mounted_gun/large_ballista/attackby(obj/item/ammo_casing/used_item, mob/user, params) //again its single shot so its kinda weird.
 	if(is_firing)
-		balloon_alert(user, "the gun is in the middle of firing!")
+		balloon_alert(user, "gun is firing!")
 		return
 
 	if(istype(used_item, ammo_type || alt_ammo_type))
