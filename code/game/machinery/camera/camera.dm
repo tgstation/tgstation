@@ -1,3 +1,12 @@
+/// Active power use of a regular default camera
+#define CAMERA_POWER_CONSUMPTION (BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02)
+/// Active power multiplier of the xray camera upgrade
+#define XRAY_POWER_MOD (10)
+/// Active power multiplier of the motion camera upgrade
+#define MOTION_POWER_MOD (4)
+/// Active power multiplier of the EMP camera upgrade
+#define EMP_POWER_MOD (1.25)
+
 /**
  * Camera assembly frame
  * Putting this on a wall will put a deconstructed camera machine on the wall.
@@ -21,7 +30,7 @@
 	icon_state = "camera"
 	base_icon_state = "camera"
 	use_power = ACTIVE_POWER_USE
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
+	active_power_usage = CAMERA_POWER_CONSUMPTION
 	layer = WALL_OBJ_LAYER
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 12
@@ -125,7 +134,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		else //this is handled by toggle_camera, so no need to update it twice.
 			update_appearance()
 #endif
-
 	alarm_manager = new(src)
 	if(mapload)
 		find_and_mount_on_atom(mark_for_late_init = TRUE)
@@ -227,6 +235,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	set_light(0)
 	emped++ //Increase the number of consecutive EMP's
 	update_appearance()
+	calculate_active_power()
 	addtimer(CALLBACK(src, PROC_REF(post_emp_reset), emped, network), reset_time)
 	for(var/mob/M as anything in GLOB.player_list)
 		if (M.client?.eye == src)
@@ -252,6 +261,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		SScameras.add_camera_to_chunk(src)
 	emped = 0 //Resets the consecutive EMP count
 	addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 10 SECONDS)
+	calculate_active_power()
 
 /obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
@@ -366,6 +376,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 		playsound(src, 'sound/items/tools/wirecutter.ogg', 100, TRUE)
 	update_appearance() //update Initialize() if you remove this.
+	calculate_active_power()
 
 	// now disconnect anyone using the camera
 	//Apparently, this will disconnect anyone even if the camera was re-activated.
@@ -448,3 +459,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 ///Called when the camera stops being watched on a camera console.
 /obj/machinery/camera/proc/on_stop_watching()
 	return
+
+/obj/machinery/camera/proc/calculate_active_power()
+	if(!can_use())
+		active_power_usage = 0
+		return
+
+	var/xray_power_mod = (camera_upgrade_bitflags & CAMERA_UPGRADE_XRAY) && !malf_xray_firmware_present ? XRAY_POWER_MOD : 1
+	var/motion_power_mod = (camera_upgrade_bitflags & CAMERA_UPGRADE_MOTION) ? MOTION_POWER_MOD : 1
+	var/EMP_power_mod = (camera_upgrade_bitflags & CAMERA_UPGRADE_EMP_PROOF) && !malf_emp_firmware_present ? EMP_POWER_MOD : 1
+
+	active_power_usage = CAMERA_POWER_CONSUMPTION * xray_power_mod * motion_power_mod * EMP_power_mod
+
+#undef CAMERA_POWER_CONSUMPTION
+#undef XRAY_POWER_MOD
+#undef MOTION_POWER_MOD
+#undef EMP_POWER_MOD

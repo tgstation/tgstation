@@ -23,6 +23,8 @@
   padding-left: 0 !important;
   padding-right: 0 !important;
   transition-duration: 0s;
+  border-style: outset !important;
+  border-color: var(--nuclear-beige);
 
   i.Icon {
     margin: 0;
@@ -33,7 +35,7 @@
 
     .Button__content {
       opacity: 0.75;
-      transform: translate(1px, 1px);
+      transform: translate(0px, 2px);
     }
   }
 }
@@ -52,10 +54,18 @@
   }
 }
 
-.NuclearBomb__Button--1 {
-  background-color: hsl(50, 33%, 78%) !important;
-  border-color: hsl(50, 33%, 78%) !important;
-  color: hsl(50, 10%, 70%) !important;
+.NuclearBomb__Button--1,
+.NuclearBomb__Button--2,
+.NuclearBomb__Button--3,
+.NuclearBomb__Button--4,
+.NuclearBomb__Button--5,
+.NuclearBomb__Button--6,
+.NuclearBomb__Button--7,
+.NuclearBomb__Button--8,
+.NuclearBomb__Button--9,
+.NuclearBomb__Button--0 {
+  color: rgb(56, 52, 52);
+  background-color: var(--nuclear-beige) !important;
 }
 
 .NuclearBomb__Button--E {

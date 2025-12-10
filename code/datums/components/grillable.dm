@@ -42,7 +42,7 @@
 	if(!item_parent.compare_materials(result))
 		var/warning = "custom_materials of [result.type] when grilled compared to just spawned don't match"
 		var/what_it_should_be = item_parent.transcribe_materials_list()
-		stack_trace("[warning]. custom_materials should be [what_it_should_be].")
+		stack_trace("[warning]. should be: custom_materials = [what_it_should_be].")
 	qdel(result)
 
 /datum/component/grillable/RegisterWithParent()

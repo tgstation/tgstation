@@ -433,25 +433,65 @@
 			return FALSE
 	return TRUE
 
-#undef COMPARISION_ACCEPTABLE_MATERIAL_DEVIATION
-
 /**
  * Returns a string with the materials and their respective amounts written in a way that reflects how it's displayed in the code
  * (eg. [list(/datum/material/meat = 100, /datum/material/plastic = 10)]). Also used in several unit tests.
  * Not to be confused with get_material_english_list()
+ * Arguments:
+ * * as_sheets: returns the text in terms of sheets, e.g "[list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2)]"
  */
-/atom/proc/transcribe_materials_list(list/mats_list)
+/atom/proc/transcribe_materials_list(list/mats_list, as_sheets = TRUE)
 	if(!mats_list)
 		if(!custom_materials)
 			return "null"
 		mats_list = custom_materials
-	var/text = "\[list("
+	var/text = "list("
 	var/index = 1
 	var/mats_len = length(mats_list)
 	for(var/datum/material/mat as anything in mats_list)
-		text += "[mat.type] = [mats_list[mat]]"
+		var/amount_string = ""
+		if(as_sheets)
+			var/amount = sheets_from_value(mats_list[mat])
+			switch(amount)
+				if(0 to 0.49)
+					amount_string = "SMALL_MATERIAL_AMOUNT * " + num2text(amount * 10)
+				if(0.5)
+					amount_string = "HALF_SHEET_MATERIAL_AMOUNT"
+				if(1)
+					amount_string = "SHEET_MATERIAL_AMOUNT"
+				else
+					amount_string = "SHEET_MATERIAL_AMOUNT * " + num2text(amount)
+		else
+			amount_string = "[mats_list[mat]]"
+		text += "[mat.type] = " + amount_string
 		if(index < mats_len)
 			text += ", "
 		index++
-	text += ")\]"
+	text += ")"
 	return text
+
+/// Convert a raw material amount into
+/// "SHEET_MATERIAL_AMOUNT", or "* N", with rounding rules.
+/proc/sheets_from_value(value, sheet_amount = SHEET_MATERIAL_AMOUNT)
+	if(!value)
+		return 0
+
+	// If value is small, do NOT try rounding to nearest 0 or 5. percentage error becomes huge.
+	var/final_value
+
+	if(value < sheet_amount)
+		// Use exact amount for small-value materials (0.1, 0.25, 0.55, etc)
+		final_value = value
+	else
+		// Large values: round to nearest 0 or 5
+		var/nearest5_value = round(value / 5) * 5
+		var/max_error = value * COMPARISION_ACCEPTABLE_MATERIAL_DEVIATION // 3%
+		if(abs(nearest5_value - value) <= max_error)
+			final_value = nearest5_value
+		else
+			final_value = value
+
+	var/final_sheet_multiplier = final_value / sheet_amount
+	return final_sheet_multiplier
+
+#undef COMPARISION_ACCEPTABLE_MATERIAL_DEVIATION

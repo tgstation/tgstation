@@ -1073,6 +1073,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_type_in_typecache(target, splattable))
 		to_chat(user, span_warning("You easily splat [target]."))
+		if(QDELETED(target))
+			return
 		if(isliving(target))
 			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
 			var/mob/living/bug = target

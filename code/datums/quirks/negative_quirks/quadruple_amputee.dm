@@ -17,12 +17,12 @@
 
 /datum/quirk/quadruple_amputee/post_add()
 	to_chat(quirk_holder, span_bolddanger("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. \
-	Additionally, you need to use a welding tool and cables to repair them, instead of bruise packs and ointment."))
+	Additionally, you need to use a welding tool and cables to repair them, instead of sutures and regenerative mesh."))
 
 /datum/quirk/quadruple_amputee/remove()
 	if(QDELING(quirk_holder))
 		return
-	
+
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.reset_to_original_bodypart(BODY_ZONE_L_ARM)
 	human_holder.reset_to_original_bodypart(BODY_ZONE_R_ARM)

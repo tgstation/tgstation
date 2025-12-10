@@ -138,6 +138,12 @@
 		user.do_attack_animation(target)
 		user.changeNext_move(CLICK_CD_RAPID)
 		target.play_attack_sound()
+	if (ismob(target))
+		var/mob/hit_user = target
+		if (hit_user.pulling)
+			var/atom/pulled_thing = hit_user.pulling // dragging a light
+			if (!isliving(pulled_thing)) // we don't want conga lines to be affected
+				eat_lights(pulled_thing, source)
 	// not particularly picky about what happens afterwards in the attack chain
 	return NONE
 

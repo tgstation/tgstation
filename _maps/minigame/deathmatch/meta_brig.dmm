@@ -2622,10 +2622,8 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "Mb" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_y = 32
-	},
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /turf/open/indestructible,
 /area/deathmatch)
 "Mk" = (
@@ -3303,12 +3301,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = -32
-	},
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
 	},
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /turf/open/indestructible,
 /area/deathmatch)
 "WD" = (

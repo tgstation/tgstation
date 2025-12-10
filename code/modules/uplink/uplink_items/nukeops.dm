@@ -72,6 +72,17 @@
 	desc = "A fully-loaded 2-round burst fire drum-fed shotgun, complete with a secondary magazine you can hotswap. The gun has a handy label to explain how. \
 		Compatible with all 12g rounds. Designed for close quarter anti-personnel engagements. Comes with three spare magazines."
 	item = /obj/item/storage/toolbox/guncase/bulldog
+	relevant_child_items = list(
+		/datum/uplink_item/ammo_nuclear/basic/buck,
+		/datum/uplink_item/ammo_nuclear/basic/donk,
+		/datum/uplink_item/ammo_nuclear/basic/flechette,
+		/datum/uplink_item/ammo_nuclear/basic/slug,
+		/datum/uplink_item/ammo_nuclear/incendiary/dragon,
+		/datum/uplink_item/ammo_nuclear/special/meteor,
+		/datum/uplink_item/spy_unique/shotgun_ammo,
+		/datum/uplink_item/spy_unique/shotgun_ammo/breacher_slug,
+		/datum/uplink_item/spy_unique/shotgun_ammo/slugs,
+	)
 
 /datum/uplink_item/ammo_nuclear/basic/buck
 	name = "12g Buckshot Drum (Bulldog)"
@@ -122,6 +133,12 @@
 	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
 			with suppressors. Comes with three spare magazines."
 	item = /obj/item/storage/toolbox/guncase/clandestine
+	relevant_child_items = list(
+		/datum/uplink_item/ammo_nuclear/basic/m10mm,
+		/datum/uplink_item/ammo_nuclear/ap/m10mm,
+		/datum/uplink_item/ammo_nuclear/hp/m10mm,
+		/datum/uplink_item/ammo_nuclear/incendiary/m10mm,
+	)
 
 /datum/uplink_item/ammo_nuclear/basic/m10mm
 	name = "10mm Handgun Magazine (Ansem)"
@@ -164,6 +181,12 @@
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun. The C-20r fires .45 rounds with a \
 		24-round magazine and is compatible with suppressors. Comes with spare three magazines."
 	item = /obj/item/storage/toolbox/guncase/c20r
+	relevant_child_items = list(
+		/datum/uplink_item/ammo_nuclear/ap/smg,
+		/datum/uplink_item/ammo_nuclear/basic/smg,
+		/datum/uplink_item/ammo_nuclear/hp/smg,
+		/datum/uplink_item/ammo_nuclear/incendiary/smg,
+	)
 
 /datum/uplink_item/ammo_nuclear/basic/smg
 	name = ".45 SMG Magazine (C-20r)"
@@ -213,6 +236,12 @@
 	desc = "Waffle Corp's modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum. \
 		A classic operative weapon, improved for the modern era. Comes with 3 additional speedloaders of .357."
 	item = /obj/item/storage/toolbox/guncase/revolver
+	relevant_child_items = list(
+		/datum/uplink_item/ammo/revolver,
+		/datum/uplink_item/ammo_nuclear/basic/revolver,
+		/datum/uplink_item/ammo_nuclear/special/revolver/phasic,
+		/datum/uplink_item/ammo_nuclear/special/revolver/heartseeker,
+	)
 
 /datum/uplink_item/ammo_nuclear/basic/revolver
 	name = ".357 Speed Loader (Revolver)"
@@ -246,6 +275,10 @@
 	desc = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm HE round. \
 		Guaranteed to take your target out with a bang, or your money back! Comes with a bouquet of additional rockets!"
 	item = /obj/item/storage/toolbox/guncase/rocketlauncher
+	relevant_child_items = list(
+		/datum/uplink_item/ammo_nuclear/ap/rocket,
+		/datum/uplink_item/ammo_nuclear/basic/rocket,
+	)
 
 /datum/uplink_item/ammo_nuclear/basic/rocket
 	name = "84mm HE Rocket Bouquet (Rocket Launcher)"
@@ -272,6 +305,13 @@
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
 		This deadly weapon has a massive 50-round magazine of devastating 7mm ammunition."
 	item = /obj/item/gun/ballistic/automatic/l6_saw
+	relevant_child_items = list(
+		/datum/uplink_item/ammo_nuclear/ap/machinegun,
+		/datum/uplink_item/ammo_nuclear/basic/machinegun,
+		/datum/uplink_item/ammo_nuclear/hp/machinegun,
+		/datum/uplink_item/ammo_nuclear/incendiary/machinegun,
+		/datum/uplink_item/ammo_nuclear/special/machinegun,
+	)
 
 /datum/uplink_item/ammo_nuclear/basic/machinegun
 	name = "7mm Box Magazine (L6 SAW)"
@@ -311,6 +351,11 @@
 		Comes with a 40mm underbarrel grenade launcher. Use secondary-fire to fire the grenade launcher. Also comes with two spare magazines \
 		and a box of 40mm rubber slugs."
 	item = /obj/item/storage/toolbox/guncase/m90gl
+	relevant_child_items = list(
+		/datum/uplink_item/ammo_nuclear/basic/carbine,
+		/datum/uplink_item/ammo_nuclear/special/carbine,
+		/datum/uplink_item/ammo_nuclear/basic/carbine/a40mm,
+	)
 
 /datum/uplink_item/ammo_nuclear/basic/carbine
 	name = ".223 Toploader Magazine (M-90gl)"
@@ -340,6 +385,13 @@
 		Can be fitted with a suppressor. If anyone asks how that even works, tell them it's Nanotrasen's fault. Comes with \
 		3 spare magazines; 2 regular magazines and 1 disruptor magazine. Also comes with a suit and tie."
 	item = /obj/item/storage/briefcase/sniper
+	relevant_child_items = list(
+		/datum/uplink_item/ammo_nuclear/ap/sniper/penetrator,
+		/datum/uplink_item/ammo_nuclear/basic/sniper,
+		/datum/uplink_item/ammo_nuclear/basic/sniper/disruptor,
+		/datum/uplink_item/ammo_nuclear/incendiary/sniper,
+		/datum/uplink_item/ammo_nuclear/special/sniper/marksman,
+	)
 
 /datum/uplink_item/ammo_nuclear/basic/sniper
 	name = ".50 BMG Magazine (AMSR)"
@@ -398,6 +450,9 @@
 	item = /obj/item/gun/ballistic/automatic/smartgun
 	cost = 2
 	purchasable_from = UPLINK_SERIOUS_OPS
+	relevant_child_items = list(
+		/datum/uplink_item/ammo_nuclear/surplus_smg,
+	)
 
 /datum/uplink_item/ammo_nuclear/surplus_smg
 	name = "Surplus Smart-SMG Magazine (Smartgun)"
@@ -629,6 +684,12 @@
 	item = /obj/item/storage/box/syndie_kit/cowboy
 	cost = 18
 	purchasable_from = UPLINK_SERIOUS_OPS
+	relevant_child_items = list(
+		/datum/uplink_item/ammo/revolver,
+		/datum/uplink_item/ammo_nuclear/basic/revolver,
+		/datum/uplink_item/ammo_nuclear/special/revolver/phasic,
+		/datum/uplink_item/ammo_nuclear/special/revolver/heartseeker,
+	)
 
 // Mech related gear
 
@@ -650,6 +711,9 @@
 		for hit-and-run style attacks. Features a scattershot shotgun, armor boosters against melee and ranged attacks, and ion thrusters."
 	item = /obj/vehicle/sealed/mecha/gygax/dark/loaded
 	cost = 60
+	relevant_child_items = list(
+		/datum/uplink_item/mech/support_bag/mauler,
+	)
 
 /datum/uplink_item/mech/mauler
 	name = "Mauler Exosuit"
@@ -657,6 +721,9 @@
 		and deployable smoke. Comes equipped with an LMG, scattershot carbine, missile rack, and an antiprojectile armor booster."
 	item = /obj/vehicle/sealed/mecha/marauder/mauler/loaded
 	cost = 100
+	relevant_child_items = list(
+		/datum/uplink_item/mech/support_bag/mauler,
+	)
 
 // ~~ Mech Support ~~
 

@@ -5668,7 +5668,7 @@
 /obj/machinery/door/airlock{
 	name = "Central Emergency Storage"
 	},
-/obj/effect/mapping_helpers/airlock/unres,
+/obj/effect/mapping_helpers/airlock/unres/delayed,
 /turf/open/floor/plating,
 /area/virtual_domain)
 "VP" = (

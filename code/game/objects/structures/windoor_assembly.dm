@@ -325,7 +325,7 @@
 			if(EAST,WEST)
 				windoor.unres_sides &= ~NORTH
 				windoor.unres_sides &= ~SOUTH
-		windoor.unres_sensor = TRUE
+		windoor.unres_latch = TRUE
 	electronics.forceMove(windoor)
 	windoor.electronics = electronics
 	windoor.autoclose = TRUE

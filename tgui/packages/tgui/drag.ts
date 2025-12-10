@@ -117,14 +117,13 @@ const storeWindowGeometry = async () => {
 // Recall window geometry from local storage and apply it
 export const recallWindowGeometry = async (
   options: {
-    fancy?: BooleanLike;
     pos?: [number, number];
     size?: [number, number];
     locked?: BooleanLike;
     scale?: BooleanLike;
   } = {},
 ) => {
-  const geometry = options.fancy && (await storage.get(windowKey));
+  const geometry = await storage.get(windowKey);
   if (geometry) {
     logger.log('recalled geometry:', geometry);
   }

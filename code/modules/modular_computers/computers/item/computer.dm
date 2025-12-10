@@ -149,6 +149,7 @@
 	if(internal_cell)
 		internal_cell = new internal_cell(src)
 
+	AddElement(/datum/element/drag_to_activate)
 	install_default_programs()
 	register_context()
 	update_appearance()
@@ -397,10 +398,6 @@
 	update_slot_icon()
 	update_appearance()
 	return TRUE
-
-/obj/item/modular_computer/mouse_drop_dragged(atom/over_object, mob/user)
-	if(!istype(over_object, /atom/movable/screen))
-		return attack_self(user)
 
 /obj/item/modular_computer/attack_ai(mob/user)
 	return attack_self(user)

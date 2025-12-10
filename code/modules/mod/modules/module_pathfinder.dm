@@ -121,8 +121,12 @@
 	if(in_transit)
 		balloon_alert(recaller, "suit in transit!")
 		return FALSE
-	if(ismob(get_atom_on_turf(mod)))
-		balloon_alert(recaller, "already worn!")
+	var/atom_on_turf = get_atom_on_turf(mod)
+	if(ismob(atom_on_turf))
+		if(atom_on_turf == recaller)
+			balloon_alert(recaller, "already worn!")
+		else
+			recaller.balloon_alert(recaller, "suit is worn by somebody else!")
 		return FALSE
 
 	in_transit = TRUE
@@ -140,6 +144,7 @@
 	var/container = get_atom_on_turf(mod)
 	if(ismob(container))
 		balloon_alert(recaller, "launch interrupted!")
+		in_transit = FALSE
 		return
 
 	if(iscloset(container))

@@ -340,6 +340,7 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_BACK)
 	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
+	RegisterSignal(src, COMSIG_HUMAN_NON_STORAGE_HOTKEY, PROC_REF(on_non_storage_hotkey))
 
 /obj/item/shockpaddles/Destroy()
 	defib = null
@@ -667,6 +668,13 @@
 
 /obj/item/shockpaddles/proc/is_wielded()
 	return HAS_TRAIT(src, TRAIT_WIELDED)
+
+/obj/item/shockpaddles/proc/on_non_storage_hotkey(datum/source,  mob/living/carbon/human/user, obj/item/possible_storage)
+	SIGNAL_HANDLER
+	if(possible_storage == defib)
+		user.dropItemToGround(src)
+		return COMPONENT_STORAGE_HOTKEY_HANDLED
+	return NONE
 
 /obj/item/shockpaddles/cyborg
 	name = "cyborg defibrillator paddles"

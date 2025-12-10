@@ -189,6 +189,7 @@
 	pickup_sound = null
 	drop_sound = null
 	equip_sound = null
+	custom_materials = null
 
 /obj/item/clothing/glasses/eyepatch/click_alt(mob/user)
 	. = ..()
