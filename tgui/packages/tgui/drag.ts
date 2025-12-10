@@ -224,7 +224,6 @@ export const dragStartHandler = (event) => {
     [event.screenX * pixelRatio, event.screenY * pixelRatio],
     getWindowPosition(),
   ) as [number, number];
-
   // Focus click target
   (event.target as HTMLElement)?.focus();
   document.addEventListener('mousemove', dragMoveHandler);
