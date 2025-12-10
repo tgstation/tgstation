@@ -42,9 +42,9 @@ export const getWindowSize = (): [number, number] => [
 // Set window position
 export const setWindowPosition = (vec: [number, number]) => {
   const byondPos = vecAdd(vec, screenOffset);
-  Byond.winset(Byond.windowId, { pos: `${byondPos[0]},${byondPos[1]}`, });
-  storeWindowGeometry();
-  return
+  return Byond.winset(Byond.windowId, {
+      pos: `${byondPos[0]},${byondPos[1]}`,
+    });
 };
 
 // Set window size
@@ -224,6 +224,27 @@ export const dragStartHandler = (event) => {
     [event.screenX * pixelRatio, event.screenY * pixelRatio],
     getWindowPosition(),
   ) as [number, number];
+
+  // Focus click target
+  (event.target as HTMLElement)?.focus();
+  document.addEventListener('mousemove', dragMoveHandler);
+  document.addEventListener('mouseup', dragEndHandler);
+  dragMoveHandler(event);
+};
+
+export const dragStartHandlerOnAlt = (event, altHeld) => {
+  if (!altHeld)
+  {
+    logger.log('drag on alt skipped');
+    return;
+  }
+  logger.log('drag on alt started');
+  dragging = true;
+  dragPointOffset = vecSubtract(
+    [event.screenX * pixelRatio, event.screenY * pixelRatio],
+    getWindowPosition(),
+  ) as [number, number];
+
   // Focus click target
   (event.target as HTMLElement)?.focus();
   document.addEventListener('mousemove', dragMoveHandler);
