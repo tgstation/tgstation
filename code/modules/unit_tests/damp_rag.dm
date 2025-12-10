@@ -10,8 +10,6 @@
 	attacker.zone_selected = BODY_ZONE_PRECISE_MOUTH
 	attacker.set_combat_mode(TRUE)
 	rag.reagents.add_reagent(/datum/reagent/water, rag.reagents.maximum_volume)
-	attacker.grab(victim)
-	attacker.setGrabState(GRAB_AGGRESSIVE)
 	click_wrapper(attacker, victim)
 	TEST_ASSERT_EQUAL(victim.reagents.get_reagent_amount(/datum/reagent/water), rag.reagents.maximum_volume, \
 		"The victim should have been smothered by the rag, gaining water reagent.")
