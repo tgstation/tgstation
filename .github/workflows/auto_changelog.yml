@@ -5,7 +5,7 @@ on:
     types:
       - closed
     branches:
-      - master
+      - troutstation
 permissions:
   contents: write
 jobs:
