@@ -89,6 +89,7 @@
 /obj/machinery/conveyor/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, id)
+	. += NAMEOF(src, speed)
 	return .
 
 /obj/machinery/photocopier/get_save_vars(save_flags=ALL)
