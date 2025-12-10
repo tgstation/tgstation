@@ -124,6 +124,7 @@
 				fired_projectile.fired_from = src
 				fired_projectile.fire(dir2angle(dir))
 		sleep(shot_delay)
+
 	if(uses_ammo == TRUE)
 		loaded_gun = FALSE
 		use_alt_ammo = FALSE

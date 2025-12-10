@@ -230,7 +230,7 @@
 	icon_state = "paperball"
 
 //Big Ballista Mounted gun Spear
-/obj/projectile/bullet/large_ballista_spear
+/obj/projectile/bullet/Large_Ballista_Spear
 	name = "Spear"
 	icon_state = "ballista_spear"
 	damage = 80
@@ -256,6 +256,7 @@
 	name = "Dragon-Slaying Spear"
 	icon_state = "ballista_spear_dragon"
 	damage = 120 //If you get hit by this thing you deserve it.
+	//range = 20
 	speed = 4
 	catastropic_dismemberment = TRUE
 	projectile_piercing = PASSMOB
