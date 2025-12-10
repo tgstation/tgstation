@@ -1,3 +1,31 @@
+/obj/item/radio/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, unscrewed)
+	. += NAMEOF(src, use_command)
+	. += NAMEOF(src, channels)
+	. += NAMEOF(src, special_channels)
+	. += NAMEOF(src, on)
+	. += NAMEOF(src, frequency)
+	. += NAMEOF(src, broadcasting)
+	. += NAMEOF(src, listening)
+	return .
+
+/obj/item/radio/get_custom_save_vars(save_flags=ALL)
+	. = ..()
+	if(ispath(keyslot))
+		.[NAMEOF(src, keyslot)] = keyslot
+	else if(istype(keyslot))
+		.[NAMEOF(src, keyslot)] = keyslot.type
+	return .
+
+/obj/item/radio/headset/get_custom_save_vars(save_flags=ALL)
+	. = ..()
+	if(ispath(keyslot2))
+		.[NAMEOF(src, keyslot2)] = keyslot2
+	else if(istype(keyslot2))
+		.[NAMEOF(src, keyslot2)] = keyslot2.type
+	return .
+
 /obj/machinery/telecomms/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, on)
