@@ -40,6 +40,7 @@
 			poster_type = poster_structure.type
 		else
 			poster_type = /obj/structure/sign/poster/random // Panic, do something random
+			stack_trace("Rolled poster [type] was created without either a valid poster_type [poster_type] or poster_structure [poster_structure]")
 	if(ispath(poster_type, /obj/structure/sign/poster)) // Make sure we have a valid poster_type before using it
 		name = "[poster_type::poster_item_name] - [poster_type::name]"
 		desc = poster_type::poster_item_desc
@@ -258,6 +259,7 @@
 /obj/structure/sign/poster/proc/return_to_poster_item(atom/location)
 	. = new poster_item_type(location, new cutdown_type)
 	qdel(src)
+	return .
 
 /obj/structure/sign/poster/proc/snowflake_closed_turf_check(atom/hopefully_still_a_closed_turf) //since turfs never get deleted but instead change type, make sure we're still being placed on a wall.
 	return isclosedturf(hopefully_still_a_closed_turf)
