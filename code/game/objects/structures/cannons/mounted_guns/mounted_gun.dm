@@ -65,7 +65,7 @@
 
 ///Covers Reloading and lighting of the gun
 /obj/structure/mounted_gun/attackby(obj/item/ammo_casing/used_item, mob/user, params)
-	if(istype(used_item, ammo_type) && (uses_ammo == TRUE)) //see if the gun needs to be loaded in some way.
+	if(uses_ammo && istype(used_item, ammo_type)) //see if the gun needs to be loaded in some way.
 		if(fully_loaded_gun)
 			balloon_alert(user, "already fully loaded!")
 			return
