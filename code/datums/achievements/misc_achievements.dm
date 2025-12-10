@@ -8,6 +8,12 @@
 	database_id = MEDAL_METEOR
 	icon_state = "meteors"
 
+/datum/award/achievement/misc/meteor_punch
+	name = "Your Life In Your Hands"
+	desc = "Give some space debris a piece of your mind"
+	database_id = MEDAL_METEOR_PUNCH
+	icon_state = "punchmeteors"
+
 /datum/award/achievement/misc/pulse
 	name = "Jackpot"
 	desc = "Win a pulse rifle from an arcade machine"

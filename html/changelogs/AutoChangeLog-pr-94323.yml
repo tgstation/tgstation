@@ -1,0 +1,5 @@
+author: "MrMelbert, Zergspower"
+delete-after: True
+changes:
+  - qol: "The world is now heavily desaturated while blind, rather than pure monochrome, to give players some visual stimulus"
+  - qol: "When blind, the brief flicker of the entire screen now only appears for mobs temporarily blinded - ie, mobs blinded from quirk / trauma / genetic mutation no longer experience it"

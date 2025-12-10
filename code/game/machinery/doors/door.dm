@@ -452,6 +452,9 @@
 	try_to_crowbar(tool, user, forced_open)
 	return ITEM_INTERACT_SUCCESS
 
+/obj/machinery/door/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
+	try_to_crowbar(null, user, FALSE)
+
 /obj/machinery/door/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/access_key))
 		var/obj/item/access_key/key = weapon

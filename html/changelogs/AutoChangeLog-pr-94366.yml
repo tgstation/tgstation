@@ -1,0 +1,4 @@
+author: "ArchBTW"
+delete-after: True
+changes:
+  - balance: "Canned ink: Remove uncatchable & paralyze. Lower stagger & blind"

@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Romerol, when applied via touch or vapor, is now guaranteed to infect when using >=1u. (Prior, it had a % chance of infecting equal to the amount of chemicals use - so 1u meant 1% chance to infect.) Other methods of applying Romerol are unaffected (ingesting or injecting any amount is still a guaranteed infection)."
