@@ -253,6 +253,10 @@
 	fire_delay = 1
 	shot_delay = 2
 	firing_shakes_camera = FALSE
+	custom_materials = list(
+	/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.25,
+	/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 5,
+	/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.29)
 /obj/structure/mounted_gun/ratvarian_repeater/dump_contents() // for some god-forsaken reason trying to break this thing attempts to dump nonexistient contents and crashes the game. dont remove this.
 
 /obj/structure/mounted_gun/ratvarian_repeater/attack_hand(mob/user, params) //the repeater is weird so has to have its own code since it takes no ammo.

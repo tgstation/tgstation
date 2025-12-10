@@ -162,6 +162,10 @@
 	spread = 20
 	charge_sections = 1
 	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
+	custom_materials = list(
+	/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8,
+	/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.2,
+	/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.2)
 
 /obj/item/gun/energy/laser/musket/repeater/Initialize(mapload)
 	. = ..()
