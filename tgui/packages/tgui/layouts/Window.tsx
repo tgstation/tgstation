@@ -190,7 +190,6 @@ const WindowContent = (props: ContentProps) => {
       {(fitted && children) || (
         <div className="Window__contentPadding">{children}</div>
       )}
-
     </Layout.Content>
   );
 };
