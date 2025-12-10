@@ -153,7 +153,7 @@
 
 /obj/item/gun/energy/laser/musket/repeater
 	name = "Iconoclast's Repeater"
-	desc = "A weapon of incredible bulk, this ratvarian repeater has been permanently severed from its stand to be carried by hand. Cumbersome, Yes - but powerful."
+	desc = "A weapon of incredible bulk, this ratvarian repeater has been permanently severed from its stand to be carried by hand. Cumbersome yes - but powerful."
 	icon_state = "repeater"
 	inhand_icon_state = "repeater"
 	slowdown = 1
