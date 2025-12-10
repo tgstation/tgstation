@@ -139,6 +139,7 @@
 	icon_state_base = "pipeorgangun"
 	icon_state_loaded = "pipeorgangun"
 	icon_state_fire = "pipeorgangun_fire"
+	loading_message = "You loaded the Pipe Organ Gun."
 	anchored = FALSE
 	anchorable_gun = TRUE
 	max_shots_per_fire = 8
