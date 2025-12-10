@@ -312,7 +312,8 @@
 	exposed_wound_bonus = 25
 	force_unwielded = 15
 	force_wielded = 30
-	list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 42,
+	custom_materials =  list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 42,
 		 /datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 15,
 		 /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 5)
 
