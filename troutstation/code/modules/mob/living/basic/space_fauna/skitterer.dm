@@ -123,6 +123,8 @@
 /datum/ai_controller/basic_controller/skitterer
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_GUILTY_CONSCIOUS_CHANCE = 3,
+		BB_STEAL_CHANCE = 10,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -131,6 +133,7 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/call_reinforcements,
+		/datum/ai_planning_subtree/steal_items,
 		/datum/ai_planning_subtree/random_speech/blackboard,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
@@ -139,6 +142,8 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BE_GAY_CHANCE = 2,
+		BB_GUILTY_CONSCIOUS_CHANCE = 1,
+		BB_STEAL_CHANCE = 15,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -147,6 +152,7 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/call_reinforcements,
+		/datum/ai_planning_subtree/steal_items,
 		/datum/ai_planning_subtree/use_mob_ability/be_gay,
 		/datum/ai_planning_subtree/random_speech/blackboard,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,

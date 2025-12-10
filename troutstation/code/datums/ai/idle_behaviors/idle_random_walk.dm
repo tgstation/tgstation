@@ -1,2 +1,2 @@
 /datum/idle_behavior/idle_random_walk/more_walking
-	walk_chance = 75
+	walk_chance = 90
