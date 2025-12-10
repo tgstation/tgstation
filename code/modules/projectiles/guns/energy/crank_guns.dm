@@ -160,7 +160,6 @@
 	w_class = WEIGHT_CLASS_HUGE
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket/repeater)
 	spread = 20
-	charge_sections = 1
 	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 
 /obj/item/gun/energy/laser/musket/repeater/Initialize(mapload)
