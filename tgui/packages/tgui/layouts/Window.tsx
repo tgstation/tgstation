@@ -21,7 +21,6 @@ import { backendSuspendStart, globalStore, useBackend } from '../backend';
 import { useDebug } from '../debug';
 import {
   dragStartHandler,
-  dragStartHandlerOnAlt,
   recallWindowGeometry,
   resizeStartHandler,
   setWindowKey,
