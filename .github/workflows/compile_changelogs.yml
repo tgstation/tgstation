@@ -43,7 +43,7 @@ jobs:
       - name: "Compile"
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         run: |
-          python tools/ss13_genchangelog.py html/changelogs
+          python tools/ss13_genchangelog.py html/changelogs/troutstation
 
       - name: Commit
         if: steps.value_holder.outputs.ACTIONS_ENABLED
