@@ -111,19 +111,9 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/carpet/royalblack,
 /area/virtual_domain)
-"cZ" = (
-/obj/structure/table/reinforced,
-/obj/item/gun/ballistic/automatic/l6_saw/unrestricted,
-/obj/item/ammo_box/magazine/m7mm,
-/turf/open/floor/mineral/plastitanium,
-/area/virtual_domain/protected_space)
 "da" = (
 /obj/machinery/stasis,
 /turf/open/floor/plastic,
-/area/virtual_domain)
-"dd" = (
-/obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/virtual_domain)
 "di" = (
 /obj/machinery/power/terminal{
@@ -222,10 +212,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/virtual_domain)
-"iL" = (
-/obj/structure/sign/departments/cargo,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/virtual_domain/protected_space)
 "iU" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -314,6 +300,17 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/virtual_domain/protected_space)
+"ln" = (
+/obj/machinery/turretid{
+	control_area = "/area/ruin/space/has_grav/syndicate_forgotten_ship";
+	enabled = 0;
+	lethal = 1;
+	name = "Ship turret control panel";
+	pixel_y = 32;
+	req_access = list("syndicate")
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain)
 "lo" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external/ruin{
@@ -325,17 +322,6 @@
 "lN" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/plastitanium,
-/area/virtual_domain)
-"mc" = (
-/obj/machinery/turretid{
-	control_area = "/area/ruin/space/has_grav/syndicate_forgotten_ship";
-	enabled = 0;
-	lethal = 1;
-	name = "Ship turret control panel";
-	pixel_y = 32;
-	req_access = list("syndicate")
-	},
-/turf/open/floor/mineral/plastitanium/red,
 /area/virtual_domain)
 "mo" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer2{
@@ -374,6 +360,11 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/virtual_domain)
+"nL" = (
+/obj/item/ai_module/law/core/full/cybersun,
+/obj/structure/table/reinforced,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain)
 "nU" = (
 /obj/structure/sign/poster/contraband/syndicate_pistol,
 /turf/closed/wall/r_wall/plastitanium/syndicate,
@@ -382,6 +373,10 @@
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/cup/glass/trophy/silver_cup,
 /turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain)
+"om" = (
+/obj/structure/sign/warning/vacuum/external/directional/south,
+/turf/open/floor/mineral/plastitanium,
 /area/virtual_domain)
 "oM" = (
 /obj/structure/cable,
@@ -589,11 +584,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/virtual_domain/protected_space)
-"xu" = (
-/obj/item/ai_module/law/core/full/cybersun,
-/obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium/red,
-/area/virtual_domain)
 "xJ" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -755,6 +745,10 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain)
+"EW" = (
+/obj/structure/sign/warning/vacuum/external/directional/north,
+/turf/open/floor/mineral/plastitanium,
 /area/virtual_domain)
 "Fp" = (
 /obj/structure/tank_dispenser/oxygen,
@@ -1150,6 +1144,13 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/virtual_domain)
+"Xj" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/ballistic/automatic/l6_saw/unrestricted,
+/obj/item/ammo_box/magazine/m7mm,
+/obj/structure/sign/departments/cargo/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/protected_space)
 "Xp" = (
 /turf/open/space/basic,
 /area/virtual_domain)
@@ -2388,7 +2389,7 @@ qx
 qx
 qx
 ru
-xu
+nL
 Kz
 ru
 Yu
@@ -2970,8 +2971,8 @@ qx
 ru
 uP
 uP
-dd
-uP
+ru
+EW
 uP
 uP
 Ox
@@ -2979,8 +2980,8 @@ aw
 uP
 uP
 uP
-uP
-dd
+om
+ru
 uP
 Qg
 ru
@@ -2991,8 +2992,8 @@ qx
 qx
 qx
 qx
-iL
-cZ
+zN
+Xj
 dp
 dp
 RU
@@ -3316,7 +3317,7 @@ qx
 qx
 qx
 ru
-mc
+ln
 Kz
 ru
 iB

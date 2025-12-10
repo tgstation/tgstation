@@ -53,10 +53,6 @@
 "am" = (
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"an" = (
-/obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ao" = (
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -228,6 +224,27 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
+"bf" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
+/obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/structure/cable,
+/obj/structure/closet/crate/secure/gear{
+	req_access = list("syndicate")
+	},
+/obj/item/circuitboard/machine/circuit_imprinter/offstation,
+/obj/item/circuitboard/machine/protolathe/offstation,
+/obj/item/stack/sheet/iron/twenty,
+/obj/item/stack/sheet/glass{
+	amount = 10
+	},
+/obj/item/stack/cable_coil,
+/obj/item/circuitboard/computer/rdconsole/unlocked,
+/obj/item/storage/box/stockparts/deluxe,
+/obj/item/storage/box/stockparts/deluxe,
+/obj/item/storage/box/beakers,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bg" = (
 /obj/structure/sign/poster/contraband/syndicate_pistol,
 /turf/closed/wall/r_wall/plastitanium/syndicate,
@@ -547,10 +564,6 @@
 /obj/machinery/stasis,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"ck" = (
-/obj/structure/sign/departments/cargo,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "cm" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Syndicate Ship Airlock"
@@ -1071,24 +1084,16 @@
 /mob/living/basic/trooper/nanotrasen/ranged/assault,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"yv" = (
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/toolbox/electrical,
-/obj/item/clothing/glasses/welding,
-/obj/item/clothing/glasses/welding,
-/obj/item/clothing/glasses/welding,
-/obj/structure/closet/crate/secure/engineering{
-	req_access = list("syndicate")
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "Cy" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "Dx" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"Fm" = (
+/obj/structure/sign/warning/vacuum/external/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "Hi" = (
@@ -1130,6 +1135,11 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
+"Jh" = (
+/obj/item/ai_module/law/core/full/cybersun,
+/obj/structure/table/reinforced,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "Ji" = (
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 8
@@ -1156,27 +1166,10 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"LK" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/mapping_helpers/apc/no_charge,
-/obj/effect/mapping_helpers/apc/syndicate_access,
-/obj/structure/cable,
-/obj/structure/closet/crate/secure/gear{
-	req_access = list("syndicate")
-	},
-/obj/item/circuitboard/machine/circuit_imprinter/offstation,
-/obj/item/circuitboard/machine/protolathe/offstation,
-/obj/item/stack/sheet/iron/twenty,
-/obj/item/stack/sheet/glass{
-	amount = 10
-	},
-/obj/item/stack/cable_coil,
-/obj/item/circuitboard/computer/rdconsole/unlocked,
-/obj/item/storage/box/stockparts/deluxe,
-/obj/item/storage/box/stockparts/deluxe,
-/obj/item/storage/box/beakers,
+"Lm" = (
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "VF" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
@@ -1187,11 +1180,19 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"Wa" = (
-/obj/item/ai_module/law/core/full/cybersun,
-/obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"Wd" = (
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/electrical,
+/obj/item/clothing/glasses/welding,
+/obj/item/clothing/glasses/welding,
+/obj/item/clothing/glasses/welding,
+/obj/structure/closet/crate/secure/engineering{
+	req_access = list("syndicate")
+	},
+/obj/structure/sign/departments/cargo/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "WR" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -2007,7 +2008,7 @@ aa
 aa
 aa
 bZ
-Wa
+Jh
 aw
 bZ
 aB
@@ -2360,7 +2361,7 @@ aY
 aY
 ba
 bb
-LK
+bf
 bh
 bj
 bj
@@ -2479,8 +2480,8 @@ aa
 bZ
 al
 al
-an
-al
+bZ
+Lm
 at
 ah
 cA
@@ -2488,8 +2489,8 @@ cP
 ah
 ah
 aL
-al
-an
+Fm
+bZ
 al
 bJ
 bZ
@@ -2500,8 +2501,8 @@ aa
 aa
 aY
 aY
-ck
-yv
+bb
+Wd
 bj
 bj
 jZ

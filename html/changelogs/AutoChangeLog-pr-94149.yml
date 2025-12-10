@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Add new emotes \"slit\", \"scratch_h\",  \"thumb_u\", \"thumb_d\", \"time\", \"tap\", \"halt\", \"shush\", \"listen\", \"think\", \"beckon\", \"airquote\", \"crazy\", \"squint\", \"rub\"."

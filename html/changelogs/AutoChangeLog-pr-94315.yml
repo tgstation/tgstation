@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - qol: "added mapping directional helper for cargo & vacuum signs allowing them to interact with fire/acid on their mounted turf"

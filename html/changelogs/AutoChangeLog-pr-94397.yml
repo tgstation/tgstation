@@ -1,0 +1,5 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - map: "Catwalk engi secpoint, prisoner education chamber, & starboard bow solar maintenance repowered"
+  - map: "Catwalk Engineering Project Room accesses have been made consistent"

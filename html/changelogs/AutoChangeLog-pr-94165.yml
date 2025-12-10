@@ -1,0 +1,5 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - map: "Many of Catwalk's useless pipes have been cut out"
+  - map: "Catwalk's waste line will no longer constantly vent into space"
