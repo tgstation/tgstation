@@ -31,7 +31,6 @@
 		"mod_longfall",
 		"mod_thermal_regulator",
 		"mod_sign_radio",
-		"mod_mister_janitor",
 		"mod_storage_expanded",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
