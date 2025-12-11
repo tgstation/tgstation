@@ -56,6 +56,7 @@
 	var/last_fire_sound = 'sound/items/weapons/gun/general/mountedgunend.ogg'
 	///So you can't reload it mid-firing
 	var/is_firing = FALSE
+
 /obj/structure/mounted_gun/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!anchorable_gun) /// Can't anchor an unanchorable gun.
