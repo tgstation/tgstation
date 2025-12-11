@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Revenant objectives can only target people that are actually present"
