@@ -234,7 +234,7 @@
 		enable()
 
 /datum/component/plumbing/process()
-	if(!demand_connects || QDELETED(reagents))
+	if(!demand_connects)
 		return PROCESS_KILL
 
 	var/datum/reagents/receiver = recipient_reagents_holder()
