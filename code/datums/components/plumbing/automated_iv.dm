@@ -1,7 +1,7 @@
 /datum/component/plumbing/automated_iv
 	demand_connects = SOUTH
 	supply_connects = NORTH
-	///Temporary holder to store all the reagents from the iv drip before transferring it to the ducts
+	///Temporary holder to store all the reagents from the iv drip before transferring to the ducts
 	var/datum/reagents/plumbing/holder
 
 /datum/component/plumbing/automated_iv/Initialize(ducting_layer)
