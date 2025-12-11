@@ -198,7 +198,7 @@
 		if(!ammo_band_icon)
 			balloon_alert(user, "no indicator support!")
 			return
-		var/new_color = input(user, "Set a new ammo band color, cancel to remove indicator", "Ammo Box Indicator Color", ammo_band_color) as color|null
+		var/new_color = tgui_color_picker(user, "Set a new ammo band color, cancel to remove indicator", "Ammo Box Indicator Color", ammo_band_color)
 		ammo_band_color = new_color
 		balloon_alert(user, "indicator updated")
 		update_appearance()

@@ -256,7 +256,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 		if("set_on")
 			parent.set_light(l_on = params["value"])
 		if("change_color")
-			var/chosen_color = input(ui.user, "Pick new color", "[parent]", parent.light_color) as color|null
+			var/chosen_color = tgui_color_picker(ui.user, "Pick new color", "[parent]", parent.light_color)
 			if(chosen_color)
 				parent.set_light(l_color = chosen_color)
 		if("set_power")
