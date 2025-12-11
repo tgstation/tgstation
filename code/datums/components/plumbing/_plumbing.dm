@@ -238,6 +238,9 @@
 		return PROCESS_KILL
 
 	var/datum/reagents/receiver = recipient_reagents_holder()
+	if(QDELETED(receiver))
+		return PROCESS_KILL
+
 	if(!receiver.holder_full())
 		for(var/D in GLOB.cardinals)
 			if(D & demand_connects)
