@@ -72,6 +72,10 @@
 	icon_state = "cutters"
 	toolspeed = 0.1
 	random_color = FALSE
+	greyscale_config = null
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
+	greyscale_colors = null
 	snap_time_strong_handcuffs = 1 SECONDS
 
 /obj/item/wirecutters/cyborg
@@ -82,3 +86,5 @@
 	worn_icon_state = "cutters"
 	toolspeed = 0.5
 	random_color = FALSE
+	greyscale_config = null
+	greyscale_colors = null
