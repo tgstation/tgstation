@@ -1,0 +1,5 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - rscdel: "Removed the TGUI kitchensink component view"
+  - rscadd: "Added a new data explorer for TGUI dev mode"
