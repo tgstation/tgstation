@@ -24,6 +24,8 @@ import {
   recallWindowGeometry,
   resizeStartHandler,
   setWindowKey,
+  setWindowPosition,
+  storeWindowGeometry
 } from '../drag';
 import { createLogger } from '../logging';
 import { Layout } from './Layout';
@@ -166,6 +168,10 @@ const WindowContent = (props: ContentProps) => {
     }
   };
 
+  Byond.subscribeTo('resetposition', function (payload) {
+    setWindowPosition([0, 0]);
+    storeWindowGeometry();
+  });
   return (
     <Layout.Content onMouseDown={dragStartIfAltHeld}
       className={classes(['Window__content', className])}
