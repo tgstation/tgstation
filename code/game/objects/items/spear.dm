@@ -308,11 +308,15 @@
 	desc = "An oversized multi-bladed spear designed to kill large hostile xenoforms such as space dragons or the creatures of lavaland. Capable of being launched from a ballista."
 	demolition_mod = 0.5
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	force = 13
+	throwforce = 23
+	throw_range = 9
+	throw_speed = 5
 	wound_bonus = 0
 	exposed_wound_bonus = 20
 	force_unwielded = 13
 	force_wielded = 21
-	armour_penetration = 5
+	armour_penetration = 15
 	custom_materials =  list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 42,
 		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 15,
