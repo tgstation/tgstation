@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "When the game considers it to be Christmas, Cargo can order additional Christmas gifts pre-addressed to random crew members."

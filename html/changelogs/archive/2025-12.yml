@@ -372,3 +372,38 @@
       "halt", "shush", "listen", "think", "beckon", "airquote", "crazy", "squint",
       "rub".
   - bugfix: Fix closets, crates, and drawers missing material tags
+2025-12-11:
+  ArchBTW:
+  - bugfix: Fix RMB crowbar consistency for doors
+  - spellcheck: Removed obsolete morph tip of the round
+  - balance: 'Canned ink: Remove uncatchable & paralyze. Lower stagger & blind'
+  Fghj240:
+  - bugfix: Rescue modsuit suit storage can hold anything the medical modsuit suit
+      storage can hold
+  - spellcheck: updated quadruple amputee to mention newer healing items
+  - spellcheck: fixed a missing e in sleeping carp's recall teachings verb
+  Melbert:
+  - balance: Romerol, when applied via touch or vapor, is now guaranteed to infect
+      when using >=1u. (Prior, it had a % chance of infecting equal to the amount
+      of chemicals use - so 1u meant 1% chance to infect.) Other methods of applying
+      Romerol are unaffected (ingesting or injecting any amount is still a guaranteed
+      infection).
+  MrMelbert, Zergspower:
+  - qol: The world is now heavily desaturated while blind, rather than pure monochrome,
+      to give players some visual stimulus
+  - qol: When blind, the brief flicker of the entire screen now only appears for mobs
+      temporarily blinded - ie, mobs blinded from quirk / trauma / genetic mutation
+      no longer experience it
+  Shadow-Quill:
+  - spellcheck: Corrected the spelling of department in the message monitor console.
+  TealSeer:
+  - bugfix: fixed mulebot speed wire max steps being swapped
+  lelandkemble:
+  - spellcheck: Tuberculosis no longer tells naked people to get naked
+  - bugfix: Revenant objectives can only target people that are actually present
+  timothymtorres:
+  - rscadd: Installing camera upgrades now consumes more power. Installing several
+      upgrades onto the same camera has a power multiplier effect that stacks.
+  - bugfix: Fix disabled cameras consuming power
+  xPokee:
+  - spellcheck: The Scrubs, MD abduction spy bounty now has the proper name.
