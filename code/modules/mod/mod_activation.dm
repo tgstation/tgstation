@@ -259,7 +259,7 @@
 		part.heat_protection = initial(part.heat_protection)
 		part.cold_protection = initial(part.cold_protection)
 		part.alternate_worn_layer = part_datum.sealed_layer
-		if((part.slot_flags & ITEM_SLOT_HEAD))
+		if(part.slot_flags & ITEM_SLOT_HEAD)
 			var/datum/component/wearertargeting/protection = part.AddComponent(/datum/component/wearertargeting/earprotection, protection_amount = src.theme.hearing_protection)
 			protection.on_equip(src, wearer, ITEM_SLOT_HEAD)
 	else
