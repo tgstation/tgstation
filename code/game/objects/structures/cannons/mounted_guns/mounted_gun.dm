@@ -18,8 +18,6 @@
 	var/uses_ammo = TRUE
 	///Max shots per firing of the gun.
 	var/max_shots_per_fire = 1
-	///Is there a do_after when loading the gun?
-	var/has_loading_delay = FALSE
 	///Delay it takes to load the gun. Set to 0 if none.
 	var/load_delay = 0
 	///Message displayed when loading gun
@@ -67,7 +65,7 @@
 ///Covers Reloading and lighting of the gun
 /obj/structure/mounted_gun/attackby(obj/item/ammo_casing/used_item, mob/user, params)
 	if(is_firing)
-		balloon_alert(user, "gun is firing")
+		balloon_alert(user, "gun is firing!")
 		return
 	if(istype(used_item, ammo_type) && (uses_ammo == TRUE)) //see if the gun needs to be loaded in some way.
 		if(fully_loaded_gun)
@@ -75,9 +73,8 @@
 			return
 
 		else
-			if(has_loading_delay == TRUE)
-				if(!do_after(user, load_delay, target = src))
-					return
+			if(!do_after(user, load_delay, target = src))
+				return
 			shots_in_gun = shots_in_gun + shots_per_load //Add one to the shots in the gun
 			balloon_alert(user, loading_message)
 			loaded_gun = TRUE // Make sure it registers theres ammo in there, so it can fire.
@@ -90,7 +87,7 @@
 
 /obj/structure/mounted_gun/attack_hand(mob/living/user, list/modifiers)
 	if(is_firing)
-		balloon_alert(user, "gun is firing")
+		balloon_alert(user, "gun is firing!")
 		return
 	user.log_message("fired a mounted gun", LOG_ATTACK)
 	log_game("[key_name(user)] fired a mounted gun in [AREACOORD(src)]")
@@ -142,7 +139,6 @@
 	icon_state_base = "pipeorgangun"
 	icon_state_loaded = "pipeorgangun"
 	icon_state_fire = "pipeorgangun_fire"
-	loading_message = "You loaded the Pipe Organ Gun."
 	anchored = FALSE
 	anchorable_gun = TRUE
 	max_shots_per_fire = 8
@@ -231,7 +227,6 @@
 	projectile_type = /obj/projectile/bullet/shrapnel
 
 /obj/structure/mounted_gun/ratvarian_repeater
-
 	name = "Ratvarian Repeater"
 	desc = "''Brains? Bronze? Why not both?''"
 	icon_state = "ratvarian_repeater"
@@ -241,7 +236,6 @@
 	anchored = FALSE
 	anchorable_gun = TRUE
 	uses_ammo = FALSE
-	has_loading_delay = TRUE
 	load_delay = 30
 	max_shots_per_fire = 12
 	shots_per_load = 12
@@ -258,7 +252,7 @@
 	/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.25,
 	/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 5,
 	/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.29)
-/obj/structure/mounted_gun/ratvarian_repeater/dump_contents() // for some god-forsaken reason trying to break this thing attempts to dump nonexistient contents and crashes the game. dont remove this.
+/obj/structure/mounted_gun/ratvarian_repeater/dump_contents()
 
 /obj/structure/mounted_gun/ratvarian_repeater/attack_hand(mob/user, params) //the repeater is weird so has to have its own code since it takes no ammo.
 
@@ -279,14 +273,14 @@
 		return
 
 	else
-		user.log_message("fired a cannon", LOG_ATTACK)
-		log_game("[key_name(user)] fired a cannon in [AREACOORD(src)]")
+		user.log_message("fired a ratvatian repeater", LOG_ATTACK)
+		log_game("[key_name(user)] fired a ratvatian repeater in [AREACOORD(src)]")
 		addtimer(CALLBACK(src, PROC_REF(fire)), fire_delay) //uses fire proc as shown below to shoot the gun
 		return
 
 /obj/structure/mounted_gun/ratvarian_repeater/fire()
 	if (!loaded_gun)
-		balloon_alert_to_viewers("needs winding", vision_distance = 2)
+		balloon_alert_to_viewers("needs winding!", vision_distance = 2)
 		return
 	is_firing = TRUE
 	for(var/times_fired = 1, times_fired <= shots_in_gun, times_fired++) //The normal DM for loop structure since the times it has fired is changing in the loop itself.
@@ -320,7 +314,6 @@
 	anchored = FALSE
 	anchorable_gun = TRUE
 	uses_ammo = TRUE
-	has_loading_delay = TRUE
 	load_delay = 60
 	max_shots_per_fire = 1
 	shots_per_load = 1
@@ -338,7 +331,7 @@
 	shot_delay = 1
 	firing_shakes_camera = FALSE
 
-/obj/structure/mounted_gun/large_ballista/attackby(obj/item/ammo_casing/used_item, mob/user, params) //again its single shot so its kinda weird.
+/obj/structure/mounted_gun/ballista/attackby(obj/item/ammo_casing/used_item, mob/user, params) //again its single shot so its kinda weird.
 	if(is_firing)
 		balloon_alert(user, "gun is firing")
 		return
