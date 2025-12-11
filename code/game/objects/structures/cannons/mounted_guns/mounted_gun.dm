@@ -72,18 +72,18 @@
 			balloon_alert(user, "already fully loaded!")
 			return
 
-		else
-			if(!do_after(user, load_delay, target = src))
-				return
-			shots_in_gun = shots_in_gun + shots_per_load //Add one to the shots in the gun
-			balloon_alert(user, loading_message)
-			loaded_gun = TRUE // Make sure it registers theres ammo in there, so it can fire.
-			QDEL_NULL(used_item)
-			if(shots_in_gun >= max_shots_per_fire)
-				shots_in_gun = max_shots_per_fire // in case of somehow firing only some of a guns shots, and reloading, you still cant get above the maximum ammo size.
-				fully_loaded_gun = TRUE //So you cant load extra.
-			icon_state = icon_state_loaded
+		if(load_delay > 0 && !do_after(user, load_delay, target = src))
 			return
+
+		shots_in_gun = shots_in_gun + shots_per_load //Add one to the shots in the gun
+		balloon_alert(user, loading_message)
+		loaded_gun = TRUE // Make sure it registers theres ammo in there, so it can fire.
+		QDEL_NULL(used_item)
+		if(shots_in_gun >= max_shots_per_fire)
+			shots_in_gun = max_shots_per_fire // in case of somehow firing only some of a guns shots, and reloading, you still cant get above the maximum ammo size.
+			fully_loaded_gun = TRUE //So you cant load extra.
+		icon_state = icon_state_loaded
+		return
 
 /obj/structure/mounted_gun/attack_hand(mob/living/user, list/modifiers)
 	if(is_firing)
@@ -251,7 +251,7 @@
 /obj/structure/mounted_gun/ratvarian_repeater/attack_hand(mob/user, params) //the repeater is weird so has to have its own code since it takes no ammo.
 
 	if(is_firing)
-		balloon_alert(user, "gun is firing")
+		balloon_alert(user, "gun is firing!")
 		return
 
 	if(!fully_loaded_gun)
@@ -264,13 +264,11 @@
 		if(shots_in_gun >= max_shots_per_fire)
 			shots_in_gun = max_shots_per_fire // in case of somehow firing only some of a guns shots, and reloading, you still cant get above the maximum ammo size.
 			fully_loaded_gun = TRUE //So you cant load extra.
-		return
 
 	else
 		user.log_message("fired a ratvatian repeater", LOG_ATTACK)
 		log_game("[key_name(user)] fired a ratvatian repeater in [AREACOORD(src)]")
 		addtimer(CALLBACK(src, PROC_REF(fire)), fire_delay) //uses fire proc as shown below to shoot the gun
-		return
 
 /obj/structure/mounted_gun/ratvarian_repeater/fire()
 	if (!loaded_gun)
@@ -324,7 +322,10 @@
 	fire_delay = 1
 	shot_delay = 1
 	firing_shakes_camera = FALSE
-
+	custom_materials = list(
+	/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15.15,
+	/datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5
+	)
 /obj/structure/mounted_gun/ballista/attackby(obj/item/ammo_casing/used_item, mob/user, params) //again its single shot so its kinda weird.
 	if(is_firing)
 		balloon_alert(user, "gun is firing")
