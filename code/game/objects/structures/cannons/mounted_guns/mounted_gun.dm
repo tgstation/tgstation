@@ -111,16 +111,10 @@
 			else
 				playsound(src, last_fire_sound, 50, TRUE, 5) //for the empty fire sound
 
-			if (use_alt_ammo)
-				var/obj/projectile/fired_projectile = new alt_projectile_type(get_turf(src))
-				fired_projectile.firer = src
-				fired_projectile.fired_from = src
-				fired_projectile.fire(dir2angle(dir))
-			else
-				var/obj/projectile/fired_projectile = new projectile_type(get_turf(src))
-				fired_projectile.firer = src
-				fired_projectile.fired_from = src
-				fired_projectile.fire(dir2angle(dir))
+			var/obj/projectile/fired_projectile = (use_alt_ammo) ? new alt_projectile_type(get_turf(src)) : new projectile_type(get_turf(src))
+			fired_projectile.firer = src
+			fired_projectile.fired_from = src
+			fired_projectile.fire(dir2angle(dir))
 		sleep(shot_delay)
 
 	if(uses_ammo == TRUE)
