@@ -235,7 +235,7 @@
 	icon_state = "ballista_spear"
 	damage = 80
 	speed = 3
-	catastropic_dismemberment = TRUE //BECAUSE IF IT TAKES YOUR LEG OFF YOU SHOULDNT JUST BE GETTING OFF EASY.
+	catastropic_dismemberment = TRUE
 	projectile_piercing = PASSMOB
 	dismemberment = 3
 	embed_type = null
@@ -248,13 +248,11 @@
 /obj/projectile/bullet/ballista_spear/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/projectile_drop, shrapnel_type)
-	RegisterSignal(src, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(handle_drop))
 
 /obj/projectile/bullet/ballista_spear_dragon
 	name = "Dragon-Slaying Spear"
 	icon_state = "ballista_spear_dragon"
-	damage = 120 //If you get hit by this thing you deserve it.
-	//range = 20
+	damage = 120
 	speed = 4
 	catastropic_dismemberment = TRUE
 	projectile_piercing = PASSMOB
@@ -269,5 +267,4 @@
 /obj/projectile/bullet/ballista_spear_dragon/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/projectile_drop, shrapnel_type)
-	RegisterSignal(src, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(handle_drop))
 	AddElement(/datum/element/bane, mob_biotypes = MOB_MINING, damage_multiplier = 2)

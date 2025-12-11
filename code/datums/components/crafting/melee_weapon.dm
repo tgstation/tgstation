@@ -256,17 +256,14 @@
 	time = 120 SECONDS
 	category = CAT_WEAPON_MELEE
 
-/datum/crafting_recipe/dragonator_spear
-	name = "Giant-Killer Spear"
-	result = /obj/item/spear/dragonator
+/datum/crafting_recipe/dragonator_spear_untreated
+	name = "Untreated Giant-Killer Spear"
+	result = /obj/item/spear/dragonator_untreated
 	reqs = list(
 		/obj/item/stack/sheet/plasteel = 15,
 		/obj/item/stack/sheet/mineral/titanium = 5,
-		/obj/item/knife = 7
+		/obj/item/knife = 7,
 	)
-	structures = list(
-		/obj/structure/spawner/lavaland = CRAFTING_STRUCTURE_USE,
-	)
-	time = 5 SECONDS //Since youre right next to a tendril this thing SHOULD be fast.
+	time = 5 SECONDS
 	category = CAT_WEAPON_MELEE
 
