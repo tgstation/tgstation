@@ -308,7 +308,7 @@
 	is_firing = FALSE
 	icon_state = icon_state_base
 
-/obj/structure/mounted_gun/large_ballista
+/obj/structure/mounted_gun/ballista
 
 	name = "Improvised Ballista"
 	desc = "''Engineers like to solve problems. If there are no problems handily available, they will create their own problems.''"
@@ -328,9 +328,9 @@
 	last_fire_sound = 'sound/items/xbow_lock.ogg'
 	has_alt_ammo = TRUE
 	ammo_type = /obj/item/spear
-	projectile_type = /obj/projectile/bullet/Large_Ballista_Spear
+	projectile_type = /obj/projectile/bullet/ballista_spear
 	alt_ammo_type = /obj/item/spear/dragonator
-	alt_projectile_type = /obj/projectile/bullet/Large_Ballista_Spear_Dragonator
+	alt_projectile_type = /obj/projectile/bullet/ballista_spear_dragon
 	loaded_gun = FALSE
 	fully_loaded_gun = FALSE
 	fire_delay = 1

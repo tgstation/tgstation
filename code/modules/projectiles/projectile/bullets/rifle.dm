@@ -230,7 +230,7 @@
 	icon_state = "paperball"
 
 //Big Ballista Mounted gun Spear
-/obj/projectile/bullet/Large_Ballista_Spear
+/obj/projectile/bullet/ballista_spear
 	name = "Spear"
 	icon_state = "ballista_spear"
 	damage = 80
@@ -245,14 +245,12 @@
 	damage_type = BRUTE
 	shrapnel_type = /obj/item/spear
 
-/obj/projectile/bullet/Large_Ballista_Spear/Initialize(mapload)
+/obj/projectile/bullet/ballista_spear/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/projectile_drop, shrapnel_type)
 	RegisterSignal(src, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(handle_drop))
 
-/obj/projectile/bullet/Large_Ballista_Spear/proc/handle_drop(datum/source, /obj/item/spear/spear)
-
-/obj/projectile/bullet/Large_Ballista_Spear_Dragonator
+/obj/projectile/bullet/ballista_spear_dragon
 	name = "Dragon-Slaying Spear"
 	icon_state = "ballista_spear_dragon"
 	damage = 120 //If you get hit by this thing you deserve it.
@@ -268,11 +266,8 @@
 	damage_type = BRUTE
 	shrapnel_type = /obj/item/spear/dragonator
 
-/obj/projectile/bullet/Large_Ballista_Spear_Dragonator/Initialize(mapload)
+/obj/projectile/bullet/ballista_spear_dragon/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/projectile_drop, shrapnel_type)
 	RegisterSignal(src, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(handle_drop))
-	AddElement(/datum/element/bane, mob_biotypes = MOB_SPECIAL|MOB_MINING, damage_multiplier = 2) //because anything
-
-
-/obj/projectile/bullet/Large_Ballista_Spear_Dragonator/proc/handle_drop(datum/source, /obj/item/spear/dragonator/newcasing)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_MINING, damage_multiplier = 2)

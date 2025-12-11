@@ -360,7 +360,7 @@
 /datum/crafting_recipe/large_ballista
 	name = "Improvised Ballista"
 	tool_behaviors = list(TOOL_WELDER,TOOL_SCREWDRIVER,TOOL_WRENCH,TOOL_WIRECUTTER)
-	result = /obj/structure/mounted_gun/large_ballista
+	result = /obj/structure/mounted_gun/ballista
 	reqs = list(
 		/obj/item/stack/cable_coil = 15,
 		/obj/item/stack/sheet/iron = 10,
