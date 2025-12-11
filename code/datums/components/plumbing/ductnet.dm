@@ -7,9 +7,6 @@
 	///All the ducts that make this network
 	var/list/obj/machinery/duct/ducts = list()
 
-	///Max reagents we can carry per tick
-	var/capacity
-
 ///Add a duct to our network
 /datum/ductnet/proc/add_duct(obj/machinery/duct/D)
 	if(!D || (D in ducts))
@@ -26,9 +23,12 @@
 
 ///add a plumbing object to either demanders or suppliers
 /datum/ductnet/proc/add_plumber(datum/component/plumbing/P, dir)
-	if(!P.can_add(src, dir))
+	if(!P.active())
 		return FALSE
-	P.ducts[num2text(dir)] = src
+	var/dir_text = num2text(dir)
+	if(dir_text in P.ducts)
+		return FALSE
+	P.ducts[dir_text] = src
 	if(dir & P.supply_connects)
 		suppliers += P
 	else if(dir & P.demand_connects)

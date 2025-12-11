@@ -12,38 +12,23 @@ All the important duct code:
 
 	///bitfield with the directions we're connected in
 	var/connects
-	///set to TRUE to disable smart duct behaviour
-	var/dumb = FALSE
-	///wheter we allow our connects to be changed after initialization or not
-	var/lock_connects = FALSE
 	///our ductnet, wich tracks what we're connected to
 	var/datum/ductnet/duct
-	///amount we can transfer per process. note that the ductnet can carry as much as the lowest capacity duct
-	var/capacity = 10
-
 	///the color of our duct
 	var/duct_color = COLOR_VERY_LIGHT_GRAY
 	///TRUE to ignore colors, so yeah we also connect with other colors without issue
 	var/ignore_colors = FALSE
 	///1,2,4,8,16
 	var/duct_layer = DUCT_LAYER_DEFAULT
-	///whether we allow our layers to be altered
-	var/lock_layers = FALSE
-	///TRUE to let colors connect when forced with a wrench, false to just not do that at all
-	var/color_to_color_support = TRUE
 	///wheter to even bother with plumbing code or not
 	var/active = TRUE
 	///track ducts we're connected to. Mainly for ducts we connect to that we normally wouldn't, like different layers and colors, for when we regenerate the ducts
 	var/list/neighbours = list()
-	///what stack to drop when disconnected. Must be /obj/item/stack/ducts or a subtype
-	var/drop_on_wrench = /obj/item/stack/ducts
 
-/obj/machinery/duct/Initialize(mapload, no_anchor, color_of_duct = null, layer_of_duct = null, force_connects, force_ignore_colors)
+/obj/machinery/duct/Initialize(mapload, color_of_duct, layer_of_duct, force_ignore_colors)
 	. = ..()
 
-	if(force_connects)
-		connects = force_connects //skip change_connects() because we're still initializing and we need to set our connects at one point
-	if(!lock_layers && layer_of_duct)
+	if(layer_of_duct)
 		duct_layer = layer_of_duct
 	if(force_ignore_colors)
 		ignore_colors = force_ignore_colors
@@ -52,10 +37,7 @@ All the important duct code:
 	if(duct_color)
 		add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
 
-	if(no_anchor)
-		active = FALSE
-		set_anchored(FALSE)
-	else if(!can_anchor())
+	if(!can_anchor())
 		if(mapload)
 			log_mapping("Overlapping ducts detected at [AREACOORD(src)], unanchoring one.")
 		// Note that qdeling automatically drops a duct stack
@@ -66,14 +48,29 @@ All the important duct code:
 	attempt_connect()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
+/obj/machinery/duct/Destroy()
+	active = FALSE
+	if(duct)
+		duct.remove_duct(src)
+	for(var/obj/machinery/duct/other in neighbours)
+		other.neighbours.Remove(src)
+		other.generate_connects()
+	neighbours.Cut()
+	return ..()
+
+///we disconnect ourself from our neighbours. we also destroy our ductnet and tell our neighbours to make a new one
+/obj/machinery/duct/on_deconstruction()
+	var/obj/item/stack/ducts/duct_stack = new (drop_location())
+	duct_stack.duct_color = GLOB.pipe_color_name[duct_color] || DUCT_COLOR_OMNI
+	duct_stack.duct_layer = GLOB.plumbing_layer_names["[duct_layer]"] || GLOB.plumbing_layer_names[DUCT_LAYER_DEFAULT]
+	duct_stack.add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
+
 ///start looking around us for stuff to connect to
 /obj/machinery/duct/proc/attempt_connect()
 	for(var/direction in GLOB.cardinals)
-		if(dumb && !(direction & connects))
-			continue
 		for(var/atom/movable/duct_candidate in get_step(src, direction))
 			if(connect_network(duct_candidate, direction))
-				add_connects(direction)
+				connects |= direction
 	update_appearance()
 
 ///see if whatever we found can be connected to
@@ -90,15 +87,9 @@ All the important duct code:
 	if(!active || !other.active)
 		return
 
-	if(!dumb && other.dumb && !(opposite_dir & other.connects))
-		return
-	if(dumb && other.dumb && !(connects & other.connects)) //we eliminated a few more scenarios in attempt connect
-		return
-
 	if((duct == other.duct) && duct)//check if we're not just comparing two null values
 		add_neighbour(other, direction)
-
-		other.add_connects(opposite_dir)
+		other.connects |= opposite_dir
 		other.update_appearance()
 		return TRUE //tell the current pipe to also update its sprite
 	if(!(other in neighbours)) //we cool
@@ -133,7 +124,7 @@ All the important duct code:
 	if(!(duct_layer & plumbing.ducting_layer))
 		return FALSE
 
-	if(!plumbing.active)
+	if(!plumbing.active())
 		return
 
 	var/comp_directions = plumbing.supply_connects + plumbing.demand_connects //they should never, ever have supply and demand connects overlap or catastrophic failure
@@ -144,29 +135,8 @@ All the important duct code:
 			neighbours[plumbing.parent] = direction
 			return TRUE
 
-///we disconnect ourself from our neighbours. we also destroy our ductnet and tell our neighbours to make a new one
-/obj/machinery/duct/proc/disconnect_duct(skipanchor)
-	if(!skipanchor) //since set_anchored calls us too.
-		set_anchored(FALSE)
-	active = FALSE
-	if(duct)
-		duct.remove_duct(src)
-	lose_neighbours()
-	reset_connects(0)
-	update_appearance()
-	if(ispath(drop_on_wrench))
-		var/obj/item/stack/ducts/duct_stack = new drop_on_wrench(drop_location())
-		duct_stack.duct_color = GLOB.pipe_color_name[duct_color] || DUCT_COLOR_OMNI
-		duct_stack.duct_layer = GLOB.plumbing_layer_names["[duct_layer]"] || GLOB.plumbing_layer_names[DUCT_LAYER_DEFAULT]
-		duct_stack.add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
-		drop_on_wrench = null
-	if(!QDELING(src))
-		qdel(src)
-
 ///Special proc to draw a new connect frame based on neighbours. not the norm so we can support multiple duct kinds
 /obj/machinery/duct/proc/generate_connects()
-	if(lock_connects)
-		return
 	connects = 0
 	for(var/A in neighbours)
 		connects |= neighbours[A]
@@ -183,38 +153,6 @@ All the important duct code:
 		neighbours[other] = direction
 	if(!(src in other.neighbours))
 		other.neighbours[src] = REVERSE_DIR(direction)
-
-///remove all our neighbours, and remove us from our neighbours aswell
-/obj/machinery/duct/proc/lose_neighbours()
-	for(var/obj/machinery/duct/other in neighbours)
-		other.neighbours.Remove(src)
-		other.generate_connects()
-	neighbours = list()
-
-///add a connect direction
-/obj/machinery/duct/proc/add_connects(new_connects) //make this a define to cut proc calls?
-	if(!lock_connects)
-		connects |= new_connects
-
-///remove a connect direction
-/obj/machinery/duct/proc/remove_connects(dead_connects)
-	if(!lock_connects)
-		connects &= ~dead_connects
-
-///remove our connects
-/obj/machinery/duct/proc/reset_connects()
-	if(!lock_connects)
-		connects = 0
-
-///get a list of the ducts we can connect to if we are dumb
-/obj/machinery/duct/proc/get_adjacent_ducts()
-	var/list/adjacents = list()
-	for(var/direction in GLOB.cardinals)
-		if(direction & connects)
-			for(var/obj/machinery/duct/other in get_step(src, direction))
-				if((REVERSE_DIR(direction) & other.connects) && other.active)
-					adjacents += other
-	return adjacents
 
 /obj/machinery/duct/update_icon_state()
 	var/temp_icon = initial(icon_state)
@@ -259,19 +197,18 @@ All the important duct code:
 		active = TRUE
 		attempt_connect()
 	else
-		disconnect_duct(TRUE)
+		deconstruct()
 
 /obj/machinery/duct/wrench_act(mob/living/user, obj/item/wrench) //I can also be the RPD
-	..()
-	add_fingerprint(user)
-	wrench.play_tool_sound(src)
 	if(anchored || can_anchor())
-		set_anchored(!anchored)
+		wrench.play_tool_sound(src)
 		user.visible_message( \
-		"[user] [anchored ? null : "un"]fastens \the [src].", \
-		span_notice("You [anchored ? null : "un"]fasten \the [src]."), \
+		"[user] ununfastens \the [src].", \
+		span_notice("You unfasten \the [src]."), \
 		span_hear("You hear ratcheting."))
-	return TRUE
+		set_anchored(!anchored)
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_FAILURE
 
 ///collection of all the sanity checks to prevent us from stacking ducts that shouldn't be stacked
 /obj/machinery/duct/proc/can_anchor(turf/destination)
@@ -285,15 +222,6 @@ All the important duct code:
 			if(plumber.ducting_layer & duct_layer)
 				return FALSE
 	return TRUE
-
-/obj/machinery/duct/doMove(destination)
-	. = ..()
-	disconnect_duct()
-	set_anchored(FALSE)
-
-/obj/machinery/duct/Destroy()
-	disconnect_duct()
-	return ..()
 
 /obj/machinery/duct/mouse_drop_receive(atom/drag_source, mob/living/user, params)
 	if(!istype(drag_source, /obj/machinery/duct))
@@ -312,7 +240,7 @@ All the important duct code:
 		to_chat(user, span_warning("You need to be holding a wrench in your active hand to do that!"))
 		return
 
-	add_connects(direction) //the connect of the other duct is handled in connect_network, but do this here for the parent duct because it's not necessary in normal cases
+	connects |= direction //the connect of the other duct is handled in connect_network, but do this here for the parent duct because it's not necessary in normal cases
 	add_neighbour(other, direction)
 	connect_network(other, direction)
 	update_appearance()
@@ -375,8 +303,7 @@ All the important duct code:
 /obj/item/stack/ducts/proc/check_attach_turf(atom/target)
 	if(isopenturf(target) && use(1))
 		var/turf/open/open_turf = target
-		var/is_omni = duct_color == DUCT_COLOR_OMNI
-		new /obj/machinery/duct(open_turf, FALSE, GLOB.pipe_paint_colors[duct_color], GLOB.plumbing_layers[duct_layer], null, is_omni)
+		new /obj/machinery/duct(open_turf, GLOB.pipe_paint_colors[duct_color], GLOB.plumbing_layers[duct_layer], duct_color == DUCT_COLOR_OMNI)
 		playsound(open_turf, 'sound/machines/click.ogg', 50, TRUE)
 		return TRUE
 	return FALSE

@@ -23,9 +23,9 @@
 	///towards which temperature do we build (except during draining)?
 	var/target_temperature = 300
 
-/obj/machinery/plumbing/reaction_chamber/Initialize(mapload, bolt, layer)
+/obj/machinery/plumbing/reaction_chamber/Initialize(mapload, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/reaction_chamber, bolt, layer)
+	AddComponent(/datum/component/plumbing/reaction_chamber, layer)
 
 /// Handles stopping the emptying process when the chamber empties.
 /obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/plumbing/reaction_chamber/holder)
@@ -177,24 +177,18 @@
 	var/alkaline_limit = 9
 
 	///beaker that holds the acidic buffer(50u)
-	var/obj/item/reagent_containers/cup/beaker/acidic_beaker
+	var/datum/reagents/acidic_beaker
 	///beaker that holds the alkaline buffer(50u).
-	var/obj/item/reagent_containers/cup/beaker/alkaline_beaker
+	var/datum/reagents/alkaline_beaker
 
 /obj/machinery/plumbing/reaction_chamber/chem/Initialize(mapload, bolt, layer)
 	. = ..()
 
-	acidic_beaker = new (src)
-	alkaline_beaker = new (src)
+	var/datum/component/plumbing/buffered/acidic_input = AddComponent(/datum/component/plumbing/buffered/acidic_input)
+	var/datum/component/plumbing/buffered/basic_input = AddComponent(/datum/component/plumbing/buffered/alkaline_input)
 
-	AddComponent(/datum/component/plumbing/acidic_input, bolt, custom_receiver = acidic_beaker)
-	AddComponent(/datum/component/plumbing/alkaline_input, bolt, custom_receiver = alkaline_beaker)
-
-/// Make sure beakers are deleted when being deconstructed
-/obj/machinery/plumbing/reaction_chamber/chem/Destroy()
-	QDEL_NULL(acidic_beaker)
-	QDEL_NULL(alkaline_beaker)
-	return ..()
+	acidic_beaker = acidic_input.recipient_reagents_holder()
+	alkaline_beaker = basic_input.recipient_reagents_holder()
 
 /obj/machinery/plumbing/reaction_chamber/chem/handle_reagents(seconds_per_tick)
 	if(reagents.ph < acidic_limit || reagents.ph > alkaline_limit)
@@ -208,7 +202,7 @@
 		 * if solution is getting too basic(high ph) add some acid to lower its value
 		 * else if solution is getting too acidic(low ph) add some base to increase its value
 		 */
-		var/datum/reagents/buffer = reagents.ph > alkaline_limit ? acidic_beaker.reagents : alkaline_beaker.reagents
+		var/datum/reagents/buffer = reagents.ph > alkaline_limit ? acidic_beaker : alkaline_beaker
 		if(!buffer.total_volume)
 			return
 
