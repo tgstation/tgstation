@@ -306,12 +306,13 @@
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "Giantslayer Spear"
 	desc = "An oversized multi-bladed spear designed to kill large hostile xenoforms such as space dragons or the creatures of lavaland. Capable of being launched from a ballista."
-	armour_penetration = 15 //Enhanced armor piercing
 	demolition_mod = 0.5
 	custom_materials = list(/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT * 7)
-	exposed_wound_bonus = 25
-	force_unwielded = 15
-	force_wielded = 30
+	wound_bonus = 0
+	exposed_wound_bonus = 20
+	force_unwielded = 13
+	force_wielded = 21
+	armour_penetration = 15
 	custom_materials =  list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 42,
 		 /datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 15,
@@ -319,7 +320,7 @@
 
 /obj/item/spear/dragonator/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bane, mob_biotypes = MOB_SPECIAL|MOB_MINING, damage_multiplier = 2.5) //For killing really big monsters,
+	AddElement(/datum/element/bane, mob_biotypes = MOB_MINING, damage_multiplier = 3.5) //For killing really big monsters,
 
 
 /*
