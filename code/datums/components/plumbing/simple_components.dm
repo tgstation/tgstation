@@ -3,8 +3,7 @@
 /datum/component/plumbing/simple_demand
 	demand_connects = SOUTH
 
-/datum/component/plumbing/simple_demand/extended
-
+///Component for adding an extended overlay on wall mounts
 /datum/component/plumbing/simple_demand/extended/create_overlays(atom/movable/parent_movable, list/overlays)
 	. = ..()
 
