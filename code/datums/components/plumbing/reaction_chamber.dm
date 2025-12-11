@@ -74,7 +74,7 @@
 
 /datum/component/plumbing/buffered/Initialize(ducting_layer)
 	. = ..()
-	buffer = new(50, NO_REACT)
+	buffer = new (50, NO_REACT)
 	buffer.my_atom = parent
 
 /datum/component/plumbing/buffered/Destroy()
