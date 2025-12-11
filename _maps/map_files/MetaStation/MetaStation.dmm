@@ -3095,10 +3095,6 @@
 /obj/machinery/air_sensor/oxygen_tank,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
-"beq" = (
-/obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/r_wall,
-/area/space/nearstation)
 "beO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/green{
@@ -7531,6 +7527,7 @@
 "cGv" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "cGG" = (
@@ -8246,6 +8243,7 @@
 	network = list("minisat")
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/warning/vacuum/external/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/ai/satellite/exterior)
 "cUP" = (
@@ -29297,10 +29295,6 @@
 	},
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/atmos/storage/gas)
-"kat" = (
-/obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall,
-/area/station/cargo/miningoffice)
 "kaC" = (
 /obj/machinery/light_switch/directional/east,
 /obj/effect/turf_decal/tile/red/half/contrasted{
@@ -32350,6 +32344,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
+/obj/structure/sign/departments/cargo/directional/west,
 /turf/open/floor/iron,
 /area/station/construction/storage_wing)
 "laE" = (
@@ -34804,11 +34799,6 @@
 /obj/structure/window/spawner/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
-"lXm" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/vacuum/external,
-/turf/open/floor/plating,
-/area/station/hallway/secondary/entry)
 "lXr" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -42476,10 +42466,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
-"oDJ" = (
-/obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall,
-/area/station/cargo/storage)
 "oDW" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
 /obj/machinery/firealarm/directional/south,
@@ -47423,6 +47409,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/ai/satellite/exterior)
 "qnj" = (
@@ -49845,10 +49832,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
-"rcR" = (
-/obj/structure/sign/departments/cargo,
-/turf/closed/wall,
-/area/station/cargo/lobby)
 "rcW" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -50159,6 +50142,7 @@
 /obj/machinery/atmospherics/components/unary/airlock_pump{
 	dir = 4
 	},
+/obj/structure/sign/warning/vacuum/external/directional/south,
 /turf/open/floor/plating,
 /area/station/cargo/storage)
 "riW" = (
@@ -59475,6 +59459,7 @@
 /obj/machinery/atmospherics/components/unary/airlock_pump{
 	dir = 4
 	},
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
 "usC" = (
@@ -83262,7 +83247,7 @@ eIa
 vNM
 wdr
 lMJ
-lXm
+qEt
 jrY
 qEt
 lMJ
@@ -87596,7 +87581,7 @@ com
 hKg
 hKg
 xXR
-kat
+hKg
 hKg
 pnI
 hKg
@@ -87606,7 +87591,7 @@ aaa
 hxo
 bnA
 riU
-oDJ
+cbz
 lAa
 fyz
 hxo
@@ -92493,7 +92478,7 @@ kQP
 kQP
 kQP
 kQP
-rcR
+lVp
 sZP
 pxK
 tAV
@@ -122825,10 +122810,10 @@ aaa
 aaa
 aaa
 lMJ
-beq
+ghL
 qmR
 cUI
-beq
+ghL
 blx
 qZX
 hml

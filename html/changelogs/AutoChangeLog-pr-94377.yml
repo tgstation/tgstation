@@ -1,0 +1,8 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - bugfix: "Posters printed from the library are no longer poorly coded and ugly."
+  - bugfix: "Posters printed from the library will no longer go up in the wrong places."
+  - bugfix: "Posters now show their name correctly when rolled up."
+  - bugfix: "Random posters will no longer remain random after being put up for the first time."
+  - bugfix: "Spacemen now know how to hang posters correctly, and the majority of poster sprites will no longer sit on the floor."

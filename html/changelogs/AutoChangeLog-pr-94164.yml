@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Malf AI \"Destroy RCDs\" power now properly destroys mech RCDs"
