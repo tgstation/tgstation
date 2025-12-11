@@ -57,9 +57,9 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/computer/security/telescreen/entertainment/click_ctrl(mob/user)
-	. = ..()
 	balloon_alert(user, speakers.should_be_listening ? "muted" : "unmuted")
 	speakers.toggle_mute()
+	return CLICK_ACTION_SUCCESS
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment, 32)
 
