@@ -24,5 +24,6 @@
 	},
 	"search.exclude": {
 		"**/node_modules": true
-	}
+	},
+	"Lua.diagnostics.enable": false
 }
