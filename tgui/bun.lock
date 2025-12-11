@@ -43,7 +43,7 @@
         "dompurify": "^3.2.5",
         "es-toolkit": "^1.39.3",
         "highlight.js": "^11.11.1",
-        "jotai": "^2.12.4",
+        "jotai": "^2.16.0",
         "js-yaml": "^4.1.0",
         "marked": "^15.0.11",
         "marked-base-url": "^1.1.6",
@@ -51,7 +51,7 @@
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
         "react-json-tree": "^0.20.0",
-        "tgui-core": "^5.3.1",
+        "tgui-core": "^5.5.10",
         "tgui-dev-server": "workspace:*",
       },
     },
@@ -71,10 +71,11 @@
         "common": "workspace:*",
         "dompurify": "^3.2.5",
         "es-toolkit": "^1.39.3",
+        "jotai": "^2.16.0",
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
         "tgui": "workspace:*",
-        "tgui-core": "^5.3.1",
+        "tgui-core": "^5.5.10",
         "tgui-dev-server": "workspace:*",
       },
     },
@@ -86,7 +87,7 @@
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
         "tgui": "workspace:*",
-        "tgui-core": "^5.3.1",
+        "tgui-core": "^5.5.10",
       },
     },
     "packages/tgui-setup": {
@@ -647,7 +648,7 @@
 
     "jiti": ["jiti@2.4.2", "", { "bin": { "jiti": "lib/jiti-cli.mjs" } }, "sha512-rg9zJN+G4n2nfJl5MW3BMygZX56zKPNVEYYqq7adpmMh4Jn2QNEwhvQlFy6jPVdcod7txZtKHWnyZiA3a0zP7A=="],
 
-    "jotai": ["jotai@2.12.5", "", { "peerDependencies": { "@types/react": ">=17.0.0", "react": ">=17.0.0" }, "optionalPeers": ["@types/react", "react"] }, "sha512-G8m32HW3lSmcz/4mbqx0hgJIQ0ekndKWiYP7kWVKi0p6saLXdSoye+FZiOFyonnd7Q482LCzm8sMDl7Ar1NWDw=="],
+    "jotai": ["jotai@2.16.0", "", { "peerDependencies": { "@babel/core": ">=7.0.0", "@babel/template": ">=7.0.0", "@types/react": ">=17.0.0", "react": ">=17.0.0" }, "optionalPeers": ["@babel/core", "@babel/template", "@types/react", "react"] }, "sha512-NmkwPBet0SHQ28GBfEb10sqnbVOYyn6DL4iazZgGRDUKxSWL0iqcm+IK4TqTSFC2ixGk+XX2e46Wbv364a3cKg=="],
 
     "js-yaml": ["js-yaml@4.1.0", "", { "dependencies": { "argparse": "^2.0.1" }, "bin": { "js-yaml": "bin/js-yaml.js" } }, "sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA=="],
 
@@ -1009,7 +1010,7 @@
 
     "tgui": ["tgui@workspace:packages/tgui"],
 
-    "tgui-core": ["tgui-core@5.3.1", "", { "dependencies": { "@floating-ui/react": "^0.27.16", "@nozbe/microfuzz": "^1.0.0" }, "peerDependencies": { "react": "^19.1.0", "react-dom": "^19.1.0" } }, "sha512-+8dDM4R2G6T1SpzpkRXGYc7YD+9ohqYjTV/4Zgcqc1I4Ld8bJH9vKHCQVbEAsHTCIjHsTBW4xnOpKyAx1gRB5w=="],
+    "tgui-core": ["tgui-core@5.5.10", "", { "dependencies": { "@floating-ui/react": "^0.27.16", "@nozbe/microfuzz": "^1.0.0" }, "peerDependencies": { "react": "^19.1.0", "react-dom": "^19.1.0" } }, "sha512-/LrZOS9BXSGItzNWzqGpQSo+5BmXQiydbc95+vJGpO/44bW9PqZ2/AnyvP6JCSbBhHT/PQSGVJscJcBnqB+eiA=="],
 
     "tgui-dev-server": ["tgui-dev-server@workspace:packages/tgui-dev-server"],
 
