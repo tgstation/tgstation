@@ -192,7 +192,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			if(spawning_order.paying_account) //Someone paid out of pocket
 				paying_for_this = spawning_order.paying_account
 				// note this is before we increment, so this is the GOODY_FREE_SHIPPING_MAX + 1th goody to ship. also note we only increment off this step if they successfully pay the fee, so there's no way around it
-				if(spawning_order.pack.goody)
+				if(spawning_order.pack.order_flags & ORDER_GOODY)
 					var/list/current_buyer_orders = goodies_by_buyer[spawning_order.paying_account]
 					if(LAZYLEN(current_buyer_orders) == GOODY_FREE_SHIPPING_MAX)
 						price = round(price + CRATE_TAX)
@@ -212,7 +212,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		pack_cost = spawning_order.pack.get_cost()
 		if(spawning_order.paying_account)
 			paying_for_this = spawning_order.paying_account
-			if(spawning_order.pack.goody)
+			if(spawning_order.pack.order_flags & ORDER_GOODY)
 				LAZYADD(goodies_by_buyer[spawning_order.paying_account], spawning_order)
 			var/receiver_message = "Cargo order #[spawning_order.id] has shipped."
 			if(spawning_order.charge_on_purchase)
@@ -223,7 +223,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			cargo.adjust_money(price - pack_cost) //Cargo gets the handling fee
 		value += pack_cost
 
-		if(!spawning_order.pack.goody) //we handle goody crates below
+		if(!(spawning_order.pack.order_flags & ORDER_GOODY)) //we handle goody crates below
 			var/obj/structure/closet/crate = spawning_order.generate(pick_n_take(empty_turfs))
 			crate.name += " - #[spawning_order.id]"
 
@@ -231,7 +231,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		var/from_whom = paying_for_this?.account_holder || "nobody (department order)"
 
 		investigate_log("Order #[spawning_order.id] ([spawning_order.pack.name], placed by [key_name(spawning_order.orderer_ckey)]), paid by [from_whom] has shipped.", INVESTIGATE_CARGO)
-		if(spawning_order.pack.dangerous)
+		if(spawning_order.pack.order_flags & ORDER_DANGEROUS)
 			message_admins("\A [spawning_order.pack.name] ordered by [ADMIN_LOOKUPFLW(spawning_order.orderer_ckey)], paid by [from_whom] has shipped.")
 		purchases++
 

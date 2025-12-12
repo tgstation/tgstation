@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - bugfix: "Plasma sheets are once again immune to market elasticity, selling for a static 80 credits each yet again."
