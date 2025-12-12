@@ -1,4 +1,4 @@
-#define VOX_NORMAL "Normal VOX"
-#define VOX_BMS "Black Mesa Source Vox"
-#define VOX_HL "Half-Life 1 VOX"
-#define VOX_MIL "Black Mesa Source Military Vox"
+#define VOX_NORMAL "Female (Classic)"
+#define VOX_BMS "Female (Modern)"
+#define VOX_HL "Male (Classic)"
+#define VOX_MIL "Male (Modern)"

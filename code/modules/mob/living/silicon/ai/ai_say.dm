@@ -65,11 +65,6 @@
 // Make sure that the code compiles with AI_VOX undefined
 #ifdef AI_VOX
 #define VOX_DELAY 600
-/mob/living/silicon/ai
-	/// The currently selected VOX Announcer voice.
-	var/vox_type = VOX_NORMAL
-	/// The list of available VOX Announcer voices to choose from.
-	var/list/vox_voices = list(VOX_NORMAL, VOX_HL, VOX_BMS, VOX_MIL)
 
 /// Returns a list of vox sounds based on the sound_type passed in
 /mob/living/silicon/ai/proc/get_vox_sounds(vox_type)
@@ -92,11 +87,11 @@
 	if(incapacitated)
 		return
 	var/selection = tgui_input_list(src, "Please select a new VOX voice:", "VOX VOICE", vox_voices)
-	if(selection == null)
+	if(isnull(selection))
 		return
 	vox_type = selection
 
-	to_chat(src, "Vox voice set to [vox_type]")
+	to_chat(src, span_info("Vox voice set to [vox_type]."))
 
 /mob/living/silicon/ai/verb/announcement_help()
 
