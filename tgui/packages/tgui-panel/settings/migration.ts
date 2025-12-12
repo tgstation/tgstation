@@ -61,6 +61,7 @@ const highlightKeys: (keyof typeof defaultHighlights)[] = [
 export function startSettingsMigration(
   next: SettingsState & HighlightState,
 ): void {
+  // Split the merged object as we save them individually
   const settingsPart = omit(next, highlightKeys);
   const highlightPart = pick(next, highlightKeys);
 
