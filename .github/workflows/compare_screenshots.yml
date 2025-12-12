@@ -34,7 +34,7 @@ jobs:
           echo ${{ github.event.pull_request.number }} > artifacts/screenshot_comparisons/pull_request_number.txt
       - name: Upload bad screenshots
         if: failure()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: bad-screenshots
           path: artifacts/screenshot_comparisons
