@@ -173,3 +173,162 @@
       from the LawDrobe.
   - balance: The MODsuit equipment techweb node has been split in two, with an offshoot
       for civilian MODules.
+2025-12-05:
+  Aliceee2ch:
+  - image: Most of mapping spawner icons were updated to match latest version of sprites.
+  ArchBTW:
+  - bugfix: Fix sitting on stools (it's a chair)
+  - bugfix: Fix offset when sitting on a stool
+  FalloutFalcon:
+  - bugfix: You can toss things over cardboard crates
+  Fghj240:
+  - bugfix: Deathmatch felinids now spawn in with pet collars as intended
+  Gboster-0:
+  - balance: wabbajack robot transformations are now weighted like 3 years ago
+  Ghommie:
+  - refactor: Refactored inventory code a little to be hopefully more robust. Report
+      any possible new, quirky nit or outright problematic issue with it.
+  - bugfix: Storing objects with slowdown in a backpack or belt (or any such storage)
+      now properly updates your speed.
+  Melbert:
+  - balance: Tech storage access is no longer a "command level" access, meaning the
+      HoP can give it to crewmembers that have a normal ID card. Note, secure tech
+      storage still requires bridge access, which requires a silver ID card.
+  - bugfix: Tie names are verified
+  - bugfix: Fix mech construction
+  SomeRandomOwl:
+  - bugfix: The forked lizard tongue no longer makes you slur your S's if its in your
+      hands or pockets.
+  SyncIt21:
+  - bugfix: shards can be embedded in posters again
+  TealSeer:
+  - bugfix: fixed cargo manifests missing things in certain crates
+  lelandkemble:
+  - bugfix: Turret control wallframes visibly attach to the wall
+  necromanceranne:
+  - bugfix: Sleeping carp now actually lets you dodge melee attacks without filling
+      your hands with stuff.
+2025-12-07:
+  ArchBTW, Bisar:
+  - balance: Changeling's Biodegrade works against grabs.
+  - balance: Changeling's Biodegrade destroys all restraints instead of one single
+      restraint.
+  - bugfix: Changeling's Biodegrade shows the effect when used inside lockers.
+  - bugfix: Changeling's Biodegrade properly covers restraint types (cuffed prisoner
+      shoes, strait jackets, etc).
+  Fghj240:
+  - bugfix: inhalers no longer have infinite reach
+  - bugfix: using an inhaler no longer results in whacking the target with it afterwards
+  - qol: You can see whether you just locked or unlocked a cyborg
+  LT3:
+  - code_imp: Drag-drop activation can now be added as an element to objects
+  - qol: Portable crew monitor can now be drag-drop activated similar to a PDA
+  Melbert:
+  - rscadd: Readds Sent from my PDA Sent from my PDA
+  - bugfix: Summon animals relic makes you less depressed
+  - bugfix: Fix detached storage (modsuit storage)
+  - rscadd: '[Catwalk] Entirely new Dorms & Holodeck'
+  - rscadd: '[Catwalk] Modified Atmos, Gravity Generator, Engineering and Tech Storage
+      a fair bit'
+  - rscadd: '[Catwalk] Event locations were updated, meaning several random events
+      now trigger in more appropriate places'
+  - rscdel: '[Catwalk] Removed duplicate First Aid stations in a few places'
+  - qol: '[Catwalk] Changed around maint areas (not the actual layouts but the area
+      designations) to be a bit less monolithic'
+  - bugfix: '[Catwalk] Xenobio kill room uses a passive vent'
+  - bugfix: '[Catwalk] Fixes a few erroneous space tiles around sec'
+  - bugfix: Bolas don't slow while in hand
+  - balance: Ammo will no longer show up in the Spy loot pool until a weapon that
+      uses said ammo has been claimed. Some ammo for weapons easily obtainable on
+      station (shotgun shot) are not limited by this restriction. Also, there's a
+      rare chance ammo will show up anyways just to keep people on their toes.
+  - balance: Claiming a weapon will refresh ammo in the loot pool that has already
+      been claimed or cycled out.
+  - balance: Bounty rewards that no Spy claimed have a chance to re-enter the loot
+      pool after a bounty refresh, rather than being lost for the remainder of the
+      round.
+  - balance: When higher tier Spy bounties empty their loot pools, they will attempt
+      to draw from lower tier pools before defaulting to telecrystals.
+  - balance: Spies no longer are rewarded with gun cases for bounties; rather just
+      the gun itself
+  - spellcheck: Modified the Spy antag info text
+  RikuTheKiller:
+  - balance: R&D console boards sourced from printing or tech storage are now locked
+      by default. It's recommended to ask your respective head of department or the
+      science department to complete research for you. Heads of department can remotely
+      access the research network using their PDAs.
+  TealSeer:
+  - bugfix: fixed TRAIT_NO_UNDERWEAR not being respected in human rendering
+  Tostah:
+  - balance: increases mech damage to windows to feel more realistic
+  alien3301:
+  - bugfix: Captain starts with a command megaphone in their locker
+  - bugfix: Executing people with guns no longer makes you hit them with the gun
+  - bugfix: Trying to shoot a gun when it cant shoot doesn't make you melee with it
+  - bugfix: If trying to shoot would make a click sound then executing will also make
+      the sound
+  dungeon_vr, KnigTheThrasher, xPokee:
+  - image: The DNR ghost HUD icon has gotten a new look.
+  lelandkemble:
+  - bugfix: Malf AI "Destroy RCDs" power now properly destroys mech RCDs
+  san7890:
+  - balance: After noticing it was too easy for animals to crawl through maintenance
+      by abusing the Easy-Exit sensors, Nanotrasen has replaced all unrestricted door
+      sensors (like in maintenance) with a pull-down lever that should take around
+      2-3 seconds to engage. It has been designed to allow the employee to actuate
+      it despite any pressure differentials within an area.
+  - balance: The above change does not apply to select doors in the medical section
+      of the station, which will continue to use the "older" Ready-Exit system.
+  - sound: In order to ensure that staff in high-traffic areas don't go bonkers due
+      to this new change, sound dampeners have been installed to prevent the hydraulics
+      from being heard for super long distances. However, they skimped out on the
+      quality for the ones in maintenance...
+2025-12-08:
+  ArchBTW:
+  - balance: repairbot hp 100 -> 35
+  FalloutFalcon, rye-rice:
+  - rscadd: Adds a small cosmetic recoil to all ballistics (with an accompanying pref
+      option to tweak or disable it)
+  - balance: Changes recoil from an erratic shaking to a kicking of your screen relative
+      to your firing angle
+  - qol: Pref option for darkened screen has some scaling with duration of shake
+  Thunder12345:
+  - rscadd: Added a new set of chaplain armour based on the generic heretic robes
+      unavailable since the path rework.
+2025-12-09:
+  Aliceee2ch:
+  - image: Added 2 new contraband and 1 new official posters.
+  Fghj240:
+  - bugfix: mod pathfinder module no longer gets stuck after an interrupted launch
+  - bugfix: mod pathfinder module gives you a unique balloon alert on your position
+      if you try to recall a suit that's being held by another mob
+  Melbert:
+  - balance: Blood flow and clotting has universally been slashed by about 0.85x.
+      This means blood wounds kill you slightly slower, but heal slightly slower.
+  - balance: Sutures now heal 0.85x less blood flow and gauze's clotting bonus is
+      also 0.85x lower. Medicated sutures are unaffected.
+  - balance: Bloody Mary's blood healing effect now scales with how drunk you are.
+      Worse in low amounts, better in high amounts.
+  - balance: Epoetin Alfa no longer generates Sangurite. It now directly clots bleeding
+      wounds (at a rate ~3x worse than sangurite, but still ~4x better than the natural
+      clotting rate)
+  - balance: Epoetin Alfa no longer heals liver damage.
+  - balance: Epoetin Alfa regenerates 3x less blood. It's still 4x effective than
+      Saline Glucose or Iron.
+  - balance: Epoetin Alfa now causes minor heart damage (0.2 damage per tick).
+  - code_imp: All "coagulating" effects now use a shared function.
+  Rockdtben:
+  - bugfix: Secure Briefcase buttons no longer push column down.
+  lelandkemble:
+  - map: Powered catwalk library office
+  - rscadd: Syndicate Powerfist users and our most athletic employees have discovered
+      that if you punch a meteor with enough force, it can be redirected.
+  necromanceranne:
+  - balance: Boxing combos are now broader and user friendly. Alternating combinations
+      of buttons AND hands produces different results, but all of them good. Experiment!
+  - balance: Evil boxing now has a Sucker Punch. Hit someone from behind to potentially
+      knock them out cold!
+  - bugfix: Punching mitts no longer mention punching rocks.
+  san7890:
+  - admin: Multikeying Notice Messages have taken on a new form factor but should
+      still furnish the same information.

@@ -1,0 +1,4 @@
+author: "Fghj240"
+delete-after: True
+changes:
+  - bugfix: "Obscuring your face prevents people from noticing your facial expression when you're using sign language"

@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "You can select a recolorable Santa Hat in the loadout during the festive season (December 1st - 31st)"

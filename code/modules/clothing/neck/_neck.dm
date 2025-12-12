@@ -496,15 +496,19 @@
 	desc = "It's for pets."
 	icon_state = "petcollar"
 	var/tagname = null
+	var/human_wearable = FALSE
 
 /datum/armor/large_scarf_syndie
 	fire = 50
 	acid = 40
 
 /obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
-	if(!ismonkey(M))
+	if(!ismonkey(M) && !human_wearable)
 		return FALSE
 	return ..()
+
+/obj/item/clothing/neck/petcollar/wearable
+	human_wearable = TRUE
 
 /obj/item/clothing/neck/petcollar/attack_self(mob/user)
 	tagname = sanitize_name(tgui_input_text(user, "Would you like to change the name on the tag?", "Pet Naming", "Spot", MAX_NAME_LEN))

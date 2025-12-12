@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - rscdel: "TGUI now defaults to fancy mode, there is only fancy mode. Welcome to the future."
