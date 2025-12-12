@@ -19,7 +19,7 @@ export function useSettings() {
     if (initialized) return;
     initialized = true;
 
-    async function fetchSettings() {
+    async function fetchSettings(): Promise<void> {
       try {
         const storedSettings = await storage.get('panel-settings');
         if (!storedSettings) return;
@@ -39,7 +39,7 @@ export function useSettings() {
   function updateSettings<TKey extends keyof SettingsState>(
     update: Record<TKey, SettingsState[TKey]>,
   ): void {
-    const newSettings = {
+    const newSettings: SettingsState = {
       ...settings,
       ...update,
     };

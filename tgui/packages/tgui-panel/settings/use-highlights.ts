@@ -30,7 +30,7 @@ export function useHighlights() {
     if (!current) return;
 
     // Update the specific highlight setting by id
-    const draft = {
+    const draft: HighlightState['highlightSettingById'] = {
       ...highlights.highlightSettingById,
       [id]: {
         ...current,
@@ -39,7 +39,7 @@ export function useHighlights() {
     };
 
     // Reconstruct the overall highlight settings structure
-    const newState = {
+    const newState: HighlightState = {
       highlightSettings: Object.keys(draft),
       highlightSettingById: draft,
     };
@@ -58,7 +58,7 @@ export function useHighlights() {
     }
 
     // Construct the updated highlight settings structure
-    const newState = {
+    const newState: HighlightState = {
       highlightSettingById: draft,
       highlightSettings: Object.keys(draft),
     };
@@ -68,19 +68,19 @@ export function useHighlights() {
   }
 
   function addHighlight(): void {
-    const draft = {
+    const draft: HighlightSetting = {
       ...defaultHighlightSetting,
       id: createUuid(),
     };
 
     // Append to the existing highlight settings
-    const updatedIds = {
+    const updatedIds: HighlightState['highlightSettingById'] = {
       ...highlights.highlightSettingById,
       [draft.id]: draft,
     };
 
     // Reconstruct the overall highlight settings structure
-    const newState = {
+    const newState: HighlightState = {
       highlightSettings: [...highlights.highlightSettings, draft.id],
       highlightSettingById: updatedIds,
     };
