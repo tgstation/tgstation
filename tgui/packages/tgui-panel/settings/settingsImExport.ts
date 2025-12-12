@@ -1,13 +1,13 @@
 import { useDispatch } from 'tgui/backend';
 import type { Page } from '../chat/types';
-
+import { store } from '../events/store';
 import { importSettings } from './actions';
+import { storedSettingsAtom } from './atoms';
 import { startSettingsMigration } from './helpers';
 
-export function exportChatSettings(
-  settings: Record<string, any>,
-  pages: Record<string, Page>[],
-): void {
+export function exportChatSettings(pages: Record<string, Page>): void {
+  const settings = store.get(storedSettingsAtom);
+
   const opts: SaveFilePickerOptions = {
     id: `ss13-chatprefs-${Date.now()}`,
     suggestedName: `ss13-chatsettings-${new Date().toJSON().slice(0, 10)}.json`,

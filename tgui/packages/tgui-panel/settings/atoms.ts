@@ -41,4 +41,10 @@ const initialHighlights: HighlightState = {
 
 export const settingsAtom = atom(defaultSettings);
 export const settingsVisibleAtom = atom(false);
+
 export const highlightsAtom = atom(initialHighlights);
+
+export const storedSettingsAtom = atom((get) => ({
+  ...get(settingsAtom),
+  ...get(highlightsAtom),
+}));

@@ -167,7 +167,7 @@ export function SettingsGeneral(props) {
           <Button
             icon="compact-disc"
             tooltip="Export chat settings"
-            onClick={() => exportChatSettings(settings, chat)}
+            onClick={() => exportChatSettings(chat)}
           >
             Export settings
           </Button>

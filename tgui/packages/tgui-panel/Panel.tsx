@@ -24,7 +24,7 @@ export const Panel = (props) => {
   const [settingsVisible, setSettingsVisible] = useAtom(settingsVisibleAtom);
 
   return (
-    <Pane theme="light">
+    <Pane theme={settings.theme}>
       <Stack fill vertical>
         <Stack.Item>
           <Section fitted>

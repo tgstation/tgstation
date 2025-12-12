@@ -23,7 +23,7 @@ let overrideFontFamily: string | undefined;
 let overrideFontSize: string;
 
 /** Updates the global CSS rule to override the font family and size. */
-function updateGlobalOverrideRule() {
+function updateGlobalOverrideRule(): void {
   let fontFamily = '';
 
   if (overrideFontFamily !== undefined) {
@@ -49,7 +49,7 @@ function setGlobalFontSize(
   fontSize: string | number,
   statFontSize: string | number,
   statLinked: boolean,
-) {
+): void {
   overrideFontSize = `${fontSize}px`;
 
   // Used solution from theme.ts
@@ -64,11 +64,11 @@ function setGlobalFontSize(
   }, 1500);
 }
 
-function setGlobalFontFamily(fontFamily: string) {
+function setGlobalFontFamily(fontFamily: string): void {
   overrideFontFamily = fontFamily === FONTS_DISABLED ? undefined : fontFamily;
 }
 
-function setStatTabsStyle(style: string) {
+function setStatTabsStyle(style: string): void {
   clearInterval(statTabsTimer);
   Byond.command(`.output statbrowser:set_tabs_style ${style}`);
   statTabsTimer = setTimeout(() => {
@@ -76,7 +76,7 @@ function setStatTabsStyle(style: string) {
   }, 1500);
 }
 
-export function generalSettingsHandler(update: SettingsState) {
+export function generalSettingsHandler(update: SettingsState): void {
   // Set client theme
   const theme = update?.theme;
   if (theme) {

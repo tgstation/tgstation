@@ -39,13 +39,13 @@ export function useHighlights() {
     };
 
     // Reconstruct the overall highlight settings structure
-    const newHighlights = {
+    const draft = {
       highlightSettings: Object.keys(updatedIds),
       highlightSettingById: updatedIds,
     };
 
     // Update state and persist to storage
-    storeHighlights(newHighlights);
+    storeHighlights(draft);
   }
 
   function removeHighlight(id: string) {
@@ -58,13 +58,13 @@ export function useHighlights() {
     }
 
     // Construct the updated highlight settings structure
-    const updatedHighlightSettings = {
+    const draft = {
       highlightSettingById: next,
       highlightSettings: Object.keys(next),
     };
 
     // Update state and persist to storage
-    storeHighlights(updatedHighlightSettings);
+    storeHighlights(draft);
   }
 
   function addHighlight() {
@@ -80,13 +80,13 @@ export function useHighlights() {
     };
 
     // Reconstruct the overall highlight settings structure
-    const newHighlightSettings = {
+    const draft = {
       highlightSettings: [...highlights.highlightSettings, newSetting.id],
       highlightSettingById: updatedIds,
     };
 
     // Update state and persist to storage
-    storeHighlights(newHighlightSettings);
+    storeHighlights(draft);
   }
 
   return {
