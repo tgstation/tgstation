@@ -30,18 +30,24 @@ function migrateHighlights(next: HighlightState): HighlightState {
   }
 
   // Update the highlight settings for default highlight
-  // settings compatibility
-  const highlightSetting =
+  // settings compatibility — don't overwrite existing values
+  const defaultHighlight =
     draft.highlightSettingById[defaultHighlightSetting.id];
-  highlightSetting.highlightColor =
-    draft.highlightColor ?? defaultHighlightSetting.highlightColor;
-  highlightSetting.highlightText =
-    draft.highlightText ?? defaultHighlightSetting.highlightText;
+
+  if (!defaultHighlight.highlightColor) {
+    defaultHighlight.highlightColor =
+      draft.highlightColor ?? defaultHighlightSetting.highlightColor;
+  }
+
+  if (!defaultHighlight.highlightText) {
+    defaultHighlight.highlightText =
+      draft.highlightText ?? defaultHighlightSetting.highlightText;
+  }
 
   return draft;
 }
 
-/** Mostly just initializes the new settings */
+/** Initializes new settings */
 function mergeSettings(next: SettingsState): SettingsState {
   const nextState = {
     ...defaultSettings,

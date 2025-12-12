@@ -30,7 +30,7 @@ export function useHighlights() {
     if (!current) return;
 
     // Update the specific highlight setting by id
-    const updatedIds = {
+    const draft = {
       ...highlights.highlightSettingById,
       [id]: {
         ...current,
@@ -39,36 +39,36 @@ export function useHighlights() {
     };
 
     // Reconstruct the overall highlight settings structure
-    const draft = {
-      highlightSettings: Object.keys(updatedIds),
-      highlightSettingById: updatedIds,
+    const newState = {
+      highlightSettings: Object.keys(draft),
+      highlightSettingById: draft,
     };
 
     // Update state and persist to storage
-    storeHighlights(draft);
+    storeHighlights(newState);
   }
 
   function removeHighlight(id: string) {
-    const next = {};
+    const draft = {};
     // Rebuild the highlight settings without the specified id
     for (const key in highlights.highlightSettingById) {
       if (key !== id) {
-        next[key] = highlights.highlightSettingById[key];
+        draft[key] = highlights.highlightSettingById[key];
       }
     }
 
     // Construct the updated highlight settings structure
-    const draft = {
-      highlightSettingById: next,
-      highlightSettings: Object.keys(next),
+    const newState = {
+      highlightSettingById: draft,
+      highlightSettings: Object.keys(draft),
     };
 
     // Update state and persist to storage
-    storeHighlights(draft);
+    storeHighlights(newState);
   }
 
   function addHighlight() {
-    const newSetting = {
+    const draft = {
       ...defaultHighlightSetting,
       id: createUuid(),
     };
@@ -76,17 +76,17 @@ export function useHighlights() {
     // Append to the existing highlight settings
     const updatedIds = {
       ...highlights.highlightSettingById,
-      [newSetting.id]: newSetting,
+      [draft.id]: draft,
     };
 
     // Reconstruct the overall highlight settings structure
-    const draft = {
-      highlightSettings: [...highlights.highlightSettings, newSetting.id],
+    const newState = {
+      highlightSettings: [...highlights.highlightSettings, draft.id],
       highlightSettingById: updatedIds,
     };
 
     // Update state and persist to storage
-    storeHighlights(draft);
+    storeHighlights(newState);
   }
 
   return {

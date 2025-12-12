@@ -20,7 +20,6 @@ export function useSettings() {
     initialized = true;
 
     async function fetchSettings() {
-      console.log('Initializing settings');
       try {
         const storedSettings = await storage.get('panel-settings');
         if (!storedSettings) return;
@@ -47,6 +46,7 @@ export function useSettings() {
 
     generalSettingsHandler(newSettings);
     setSettings(newSettings);
+    console.log('Updated panel settings:', newSettings);
     storage.set('panel-settings', { ...newSettings, ...highlights });
   }
 
