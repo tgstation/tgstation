@@ -57,10 +57,18 @@ export function useHighlights() {
       }
     }
 
+    const draftKeys = highlights.highlightSettings.filter((key) => key !== id);
+
+    // Ensure the default highlight setting always exists
+    if (id === defaultHighlightSetting.id) {
+      draft[defaultHighlightSetting.id] = defaultHighlightSetting;
+      draftKeys.unshift(defaultHighlightSetting.id);
+    }
+
     // Construct the updated highlight settings structure
     const newState: HighlightState = {
       highlightSettingById: draft,
-      highlightSettings: Object.keys(draft),
+      highlightSettings: draftKeys,
     };
 
     // Update state and persist to storage

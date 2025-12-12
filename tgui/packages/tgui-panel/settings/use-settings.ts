@@ -22,9 +22,17 @@ export function useSettings() {
     async function fetchSettings(): Promise<void> {
       try {
         const storedSettings = await storage.get('panel-settings');
-        if (!storedSettings) return;
-        console.log('Loaded panel settings from storage:', storedSettings);
+        if (!storedSettings) {
+          // Just run with defaults
+          const draft: SettingsState = {
+            ...settings,
+            initialized: true,
+          };
+          storeSettings(draft);
+          return;
+        }
 
+        console.log('Loaded panel settings from storage:', storedSettings);
         startSettingsMigration(storedSettings);
       } catch (error) {
         console.error('Failed to load panel settings:', error);
@@ -34,6 +42,12 @@ export function useSettings() {
     fetchSettings();
     setDisplayScaling();
   }, []);
+
+  function storeSettings(update: SettingsState): void {
+    setSettings(update);
+    console.log('Updated panel settings:', update);
+    storage.set('panel-settings', { ...update, ...highlights });
+  }
 
   /** Updates any set of keys. Offers type safety based on the selection */
   function updateSettings<TKey extends keyof SettingsState>(
@@ -45,9 +59,7 @@ export function useSettings() {
     };
 
     generalSettingsHandler(newSettings);
-    setSettings(newSettings);
-    console.log('Updated panel settings:', newSettings);
-    storage.set('panel-settings', { ...newSettings, ...highlights });
+    storeSettings(newSettings);
   }
 
   return { settings, updateSettings };
