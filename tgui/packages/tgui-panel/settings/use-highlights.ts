@@ -49,7 +49,7 @@ export function useHighlights() {
   }
 
   function removeHighlight(id: string): void {
-    const draft = {};
+    const draft: Record<string, HighlightSetting> = {};
     // Rebuild the highlight settings without the specified id
     for (const key in highlights.highlightSettingById) {
       if (key !== id) {
