@@ -48,7 +48,7 @@ export function useHighlights() {
     storeHighlights(newState);
   }
 
-  function removeHighlight(id: string) {
+  function removeHighlight(id: string): void {
     const draft = {};
     // Rebuild the highlight settings without the specified id
     for (const key in highlights.highlightSettingById) {
