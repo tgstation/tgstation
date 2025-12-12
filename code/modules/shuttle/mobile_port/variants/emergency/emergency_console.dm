@@ -135,9 +135,9 @@
 		var/repeal = (new_len < old_len)
 		var/remaining = max(0, auth_need - new_len)
 		if(new_len && remaining)
-			minor_announce("[remaining] authorizations needed until shuttle is launched early.", "Emergency Shuttle Status", alert)
+			minor_announce("[remaining] authorization\s needed until shuttle is launched early.", "Emergency Shuttle Status", alert)
 		if(repeal)
-			minor_announce("Early launch authorization revoked, [remaining] authorizations needed.", "Emergency Shuttle Status")
+			minor_announce("Early launch authorization revoked, [remaining] authorization\s needed.", "Emergency Shuttle Status")
 
 	acted_recently += user
 	SStgui.update_user_uis(user, src)
