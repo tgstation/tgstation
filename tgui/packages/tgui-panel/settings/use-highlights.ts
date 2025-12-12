@@ -29,7 +29,7 @@ export function useHighlights() {
     const current = highlights.highlightSettingById[id];
     if (!current) return;
 
-    // Update the specific highlight setting by id
+    // Copies highlights and updates the specified setting
     const draft: HighlightState['highlightSettingById'] = {
       ...highlights.highlightSettingById,
       [id]: {
@@ -38,7 +38,7 @@ export function useHighlights() {
       },
     };
 
-    // Reconstruct the overall highlight settings structure
+    // Reconstruct the overall highlight structure
     const newState: HighlightState = {
       highlightSettings: Object.keys(draft),
       highlightSettingById: draft,
