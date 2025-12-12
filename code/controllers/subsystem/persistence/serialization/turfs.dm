@@ -11,3 +11,14 @@
 		var/datum/gas_mixture/turf_gasmix = return_air()
 		.[NAMEOF(src, initial_gas_mix)] = turf_gasmix.to_string()
 	return .
+
+/turf/open/floor/light/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, on)
+	. += NAMEOF(src, state)
+	. += NAMEOF(src, currentcolor)
+	return .
+
+/turf/open/floor/light/PersistentInitialize()
+	. = ..()
+	update_appearance()
