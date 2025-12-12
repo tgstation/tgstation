@@ -715,9 +715,8 @@
 	},
 /area/ruin/thelizardsgas_lavaland)
 "Eh" = (
-/obj/machinery/atmospherics/components/tank/oxygen{
-	dir = 8;
-	piping_layer = 2
+/obj/machinery/atmospherics/components/tank/air/layer2{
+	dir = 8
 	},
 /turf/open/floor/iron/smooth{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
