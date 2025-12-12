@@ -65,6 +65,39 @@
 // Make sure that the code compiles with AI_VOX undefined
 #ifdef AI_VOX
 #define VOX_DELAY 600
+/mob/living/silicon/ai
+	/// The currently selected VOX Announcer voice.
+	var/vox_type = VOX_NORMAL
+	/// The list of available VOX Announcer voices to choose from.
+	var/list/vox_voices = list(VOX_NORMAL, VOX_HL, VOX_BMS, VOX_MIL)
+
+/// Returns a list of vox sounds based on the sound_type passed in
+/mob/living/silicon/ai/proc/get_vox_sounds(vox_type)
+	switch(vox_type)
+		if(VOX_NORMAL)
+			return GLOB.vox_sounds
+		if(VOX_HL)
+			return GLOB.vox_sounds_hl
+		if(VOX_BMS)
+			return GLOB.vox_sounds_bms
+		if(VOX_MIL)
+			return GLOB.vox_sounds_mil
+	return GLOB.vox_sounds
+
+/mob/living/silicon/ai/verb/switch_vox()
+	set name = "Switch Vox Voice"
+	set desc = "Switch your VOX announcement voice!"
+	set category = "AI Commands"
+
+	if(incapacitated)
+		return
+	var/selection = tgui_input_list(src, "Please select a new VOX voice:", "VOX VOICE", vox_voices)
+	if(selection == null)
+		return
+	vox_type = selection
+
+	to_chat(src, "Vox voice set to [vox_type]")
+
 /mob/living/silicon/ai/verb/announcement_help()
 
 	set name = "Announcement Help"
@@ -86,10 +119,10 @@
 	"}
 
 	var/index = 0
-	for(var/word in GLOB.vox_sounds)
+	for(var/word in get_vox_sounds(vox_type))
 		index++
 		dat += "<A href='byond://?src=[REF(src)];say_word=[word]'>[capitalize(word)]</A>"
-		if(index != GLOB.vox_sounds.len)
+		if(index != length(get_vox_sounds(vox_type)))
 			dat += " / "
 
 	var/datum/browser/popup = new(src, "announce_help", "Announcement Help", 500, 400)
@@ -134,7 +167,7 @@
 		if(!word)
 			words -= word
 			continue
-		if(!GLOB.vox_sounds[word])
+		if(!get_vox_sounds(vox_type)[word])
 			incorrect_words += word
 
 	if(incorrect_words.len)
@@ -162,15 +195,34 @@
 
 	word = LOWER_TEXT(word)
 
-	if(GLOB.vox_sounds[word])
+	// Get AI for the vox Type
+	var/turf/ai_turf_as_turf = ai_turf
+	if(!istype(ai_turf_as_turf))
+		return //and prolly throw an error because wtf
+	var/mob/living/silicon/ai/the_AI = null
+	for(var/mob/living/silicon/ai/found_AI in ai_turf_as_turf.contents)
+		if(istype(found_AI))
+			the_AI = found_AI
 
-		var/sound_file = GLOB.vox_sounds[word]
+	var/vox_volume_modifier = 1
+	var/sound_file
+	if(the_AI.get_vox_sounds(the_AI.vox_type)[word])
+		sound_file = the_AI.get_vox_sounds(the_AI.vox_type)[word]
+		// If the vox stuff are disabled, or we failed getting the word from the list, just early return.
+		if(!sound_file)
+			return FALSE
+		switch(the_AI.vox_type)
+			if(VOX_HL)
+				vox_volume_modifier = 0.75
+			if(VOX_MIL)
+				vox_volume_modifier = 0.50 // My poor ears...
 
 	// If there is no single listener, broadcast to everyone in the same z level
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/player_mob as anything in GLOB.player_list)
 				var/pref_volume = safe_read_pref(player_mob.client, /datum/preference/numeric/volume/sound_ai_vox)
+				pref_volume *= vox_volume_modifier
 				if(!player_mob.can_hear() || !pref_volume)
 					continue
 
