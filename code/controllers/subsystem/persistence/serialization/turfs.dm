@@ -1,3 +1,14 @@
+/turf/open/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, broken)
+	. += NAMEOF(src, burnt)
+	return .
+
+/turf/open/PersistentInitialize()
+	. = ..()
+	if(broken || burnt)
+		update_appearance()
+
 // Save atmos data
 /turf/open/get_custom_save_vars(save_flags=ALL)
 	. = ..()
