@@ -333,7 +333,7 @@
 		<br>\
 		Invented in the think-tank laboratories of Nanotrasen's weapon development team towards the end of the 24th century, the Type 1 found \
 		itself adopted broadly by various factions and military entities vying for control over the frontier once it hit the market. One \
-		hallmark of those who stood successful in these conflicts was the adoption the Type 1 as a standard infantry \
+		hallmark of those who stood successful in these conflicts was the adoption of the Type 1 as a standard infantry \
 		weapon. The logistics required to maintain the operational peak of the HDS-1 allowed most quartermasters to merely dump a half \
 		dozen of the weapons into the hands of bloodythirsty marines, knowing full well the weapons were rugged enough to survive \
 		most anything thrown at them, only needing a recharging station with a power supply to become operational again once they ran empty.<br>\
@@ -374,10 +374,11 @@
 		example of Nanotrasen's weapons development teams flying too close to the sun.<br>\
 		<br>\
 		The success of the Type 3 resulted in shareholders urging marketing to bring out the 'next best thing' in energy-based weaponry. \
-		At the time, Nanotrasen's weapons division had a prototype still in the works. However, there were some concerns raised amongst \
-		researchers as to the 'moral implications' that might result from unleashing 'that much directed radioactive material' towards \
-		a living being. Executives at the time brushed off such concerns, as there was money to be made and already ultrawealthy shareholders \
-		to feed the earnings.<br>\
+		At the time, Nanotrasen's weapons division had a prototype still in the works, with recently-learned lessons \
+		from the failure-prone Type 2 in mind after it had more than a few catastrophic failures in testing. \
+		However, there were some concerns raised amongst researchers as to the 'moral implications' \
+		that might result from unleashing 'that much directed radioactive material' towards a living being. \
+		Executives at the time brushed off such concerns, as there was money to be made and already ultrawealthy shareholders to feed the earnings.<br>\
 		<br>\
 		The Type 4 was rushed onto the market within the next quarter, even before most common safety mechanisms had been properly tested and implemented. \
 		Reports immediately began flooding in of horrific accidental discharges, battlefield atrocities, and unexpected spontaneous combustion \
