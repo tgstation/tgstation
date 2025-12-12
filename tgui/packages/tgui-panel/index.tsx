@@ -33,14 +33,12 @@ const store = configureStore({
     chat: chatReducer,
     game: gameReducer,
     ping: pingReducer,
-    // settings: settingsReducer,
   }),
   middleware: {
     pre: [
       chatMiddleware,
       pingMiddleware,
       telemetryMiddleware,
-      // settingsMiddleware,
       audioMiddleware,
       gameMiddleware,
     ],
