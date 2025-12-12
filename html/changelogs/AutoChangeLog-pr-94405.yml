@@ -1,0 +1,5 @@
+author: "Rockdtben"
+delete-after: True
+changes:
+  - qol: "Hold ALT + CLICK and drag a UI window. Provides a work around for stuck uplink UI"
+  - qol: "A new verb under OOC: Reset UI Positions -> Which you can use to fix a stuck uplink UI as well."

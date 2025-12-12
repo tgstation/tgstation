@@ -150,7 +150,7 @@ export function touchRecents(
 }
 
 // Store window geometry in local storage
-async function storeWindowGeometry(): Promise<void> {
+export async function storeWindowGeometry(): Promise<void> {
   logger.log('storing geometry');
   const geometry = {
     pos: getWindowPosition(),
