@@ -273,6 +273,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access[ACCESS_AI_UPLOAD] = "AI Chambers"
 	desc_by_access[ACCESS_TELEPORTER] = "Teleporter"
 	desc_by_access[ACCESS_EVA] = "EVA"
+	desc_by_access[ACCESS_BUDGET] = "Department Budget"
 	desc_by_access[ACCESS_COMMAND] = "Command"
 	desc_by_access[ACCESS_CAPTAIN] = "Captain"
 	desc_by_access[ACCESS_ALL_PERSONAL_LOCKERS] = "Personal Lockers"

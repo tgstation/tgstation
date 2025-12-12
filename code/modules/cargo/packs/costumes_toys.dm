@@ -74,7 +74,7 @@
 	name = "Hilarious Firing Pin Crate"
 	desc = "I uh... I'm not really sure what this does. Wanna buy it?"
 	cost = CARGO_CRATE_VALUE * 10
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 	contains = list(/obj/item/firing_pin/clown)
 	crate_name = "toy crate" // It's /technically/ a toy. For the clown, at least.
 	crate_type = /obj/structure/closet/crate/wooden
@@ -110,7 +110,7 @@
 	name = "Laser Tag Firing Pins Crate"
 	desc = "Three laser tag firing pins used in laser-tag units to ensure users are wearing their vests."
 	cost = CARGO_CRATE_VALUE * 3.5
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 	contains = list(/obj/item/storage/box/lasertagpins)
 	crate_name = "laser tag crate"
 
@@ -281,3 +281,39 @@
 	crate_name = "long balloons kit"
 	crate_type = /obj/structure/closet/crate/wooden
 	discountable = SUPPLY_PACK_STD_DISCOUNTABLE
+
+/datum/supply_pack/costumes_toys/christmas
+	name = "Surplus Christmas Gifts"
+	desc = "This crate contains pre-wrapped gifts addressed to station employees, sourced at random from Nanotrasen surplus as part of a morale boosting initiative."
+	cost = CARGO_CRATE_VALUE * 30
+	contains = list()
+	order_flags = ORDER_SPECIAL
+	crate_type = /obj/structure/closet/crate/mail
+	discountable = SUPPLY_PACK_NOT_DISCOUNTABLE
+
+/datum/supply_pack/costumes_toys/christmas/fill(obj/structure/closet/crate/crate)
+	var/list/mail_recipients = list()
+	for(var/mob/living/carbon/human/human in GLOB.player_list)
+		if(human.stat == DEAD || !human.mind)
+			continue
+		// Skip wizards, nuke ops, cyborgs; They're not written down as employees
+		if(!(human.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
+			continue
+		mail_recipients += human.mind
+
+	for (var/i in 1 to rand(4, 6))
+		var/obj/item/gift/anything/gift = new(crate)
+		var/datum/mind/recipient = pick_n_take(mail_recipients)
+		if(recipient)
+			gift.assign_recipient(recipient)
+		else
+			qdel(gift)
+			break
+
+	var/obj/item/delivery/big/parcel = new(crate.loc)
+	parcel.base_icon_state = crate.delivery_icon
+	parcel.giftwrapped = TRUE
+	parcel.update_icon()
+	parcel.drag_slowdown = crate.drag_slowdown
+	crate.forceMove(parcel)
+	parcel.name = "christmas gifts"

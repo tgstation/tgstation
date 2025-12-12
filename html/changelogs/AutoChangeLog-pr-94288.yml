@@ -1,0 +1,6 @@
+author: "alien3301"
+delete-after: True
+changes:
+  - rscadd: "\"Department Budget\" access that lets someone place orders with the NT shopping app"
+  - qol: "Warden starts with the shopping app installed"
+  - balance: "Cargo techs and Warden can place orders with the shopping app by default"

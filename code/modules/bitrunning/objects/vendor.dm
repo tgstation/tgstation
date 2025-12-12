@@ -72,7 +72,7 @@
 
 /datum/supply_pack/bitrunning
 	name = "bitrunning order"
-	hidden = TRUE
+	order_flags = ORDER_INVISIBLE
 	crate_name = "bitrunning delivery crate"
 	access = list(ACCESS_BIT_DEN)
 	test_ignored = TRUE

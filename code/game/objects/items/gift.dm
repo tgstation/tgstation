@@ -106,6 +106,8 @@
 /obj/item/gift/anything
 	name = "christmas gift"
 	desc = "It could be anything!"
+	/// Weak reference to who this gift is for and who can open it, if that's nobody then anyone can
+	var/datum/weakref/recipient_ref = null
 
 /obj/item/gift/anything/get_gift_type()
 	var/static/list/obj/item/possible_gifts = null
@@ -115,3 +117,25 @@
 
 	var/gift_type = pick(possible_gifts)
 	return gift_type
+
+/obj/item/gift/anything/attack_self(mob/user)
+	if (isnull(recipient_ref))
+		return ..()
+
+	var/datum/mind/recipient = recipient_ref.resolve()
+	if(recipient && recipient != user?.mind)
+		to_chat(user, span_notice("This gift isn't for you, and you don't want to get on Santa's bad side!"))
+		return FALSE
+	return ..()
+
+/// Assign the mind of someone as the person this gift is for
+/obj/item/gift/anything/proc/assign_recipient(datum/mind/recipient)
+	if (ismob(recipient)) // You're presumably at this point because you are an admin who fucked up but I will save you
+		var/mob/recipient_mob = recipient
+		recipient = recipient_mob.mind
+
+	if (isnull(recipient))
+		return
+
+	name = "[initial(name)] for [recipient.name] ([recipient.assigned_role.title])"
+	recipient_ref = WEAKREF(recipient)

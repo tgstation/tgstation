@@ -98,7 +98,7 @@
 	var/cost = pack.get_cost()
 	if(applied_coupon) //apply discount price
 		cost *= (1 - applied_coupon.discount_pct_off)
-	if(paying_account?.add_to_accounts && !pack.goody) //privately purchased and not a goody means 1.1x the cost
+	if(paying_account?.add_to_accounts && !(pack.order_flags & ORDER_GOODY)) //privately purchased and not a goody means 1.1x the cost
 		cost *= 1.1
 	return round(cost)
 
@@ -189,7 +189,7 @@
 	else
 		account_holder = "Cargo"
 	var/obj/structure/closet/crate/crate = pack.generate(A, paying_account)
-	if(pack.contraband)
+	if(pack.order_flags & ORDER_CONTRABAND)
 		for(var/atom/movable/item_within as anything in crate.get_all_contents())
 			ADD_TRAIT(item_within, TRAIT_CONTRABAND, INNATE_TRAIT)
 	if(department_destination)

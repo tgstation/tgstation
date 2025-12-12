@@ -144,7 +144,7 @@
 		The Alpha and the Omega of security headwear. Guaranteed to strike fear into the hearts \
 		of each and every criminal aboard the station. Also comes with a security gasmask."
 	cost = CARGO_CRATE_VALUE * 6 //justice comes at a price. An expensive, noisy price.
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 	contains = list(/obj/item/clothing/head/helmet/toggleable/justice,
 					/obj/item/clothing/mask/gas/sechailer,
 				)
@@ -171,7 +171,7 @@
 	desc = "Spare equipment found in a warehouse. Contains a constable's outfit, \
 		whistle, and conversion kit."
 	cost = CARGO_CRATE_VALUE * 2.2
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 	contains = list(/obj/item/clothing/under/rank/security/constable,
 					/obj/item/clothing/head/costume/constable,
 					/obj/item/clothing/gloves/color/white,
@@ -308,7 +308,7 @@
 				)
 	crate_name = "incendiary weapons crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
-	dangerous = TRUE
+	order_flags = ORDER_DANGEROUS
 
 /datum/supply_pack/security/armory/mindshield
 	name = "Mindshield Implants Crate"

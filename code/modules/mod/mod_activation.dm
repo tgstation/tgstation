@@ -259,6 +259,9 @@
 		part.heat_protection = initial(part.heat_protection)
 		part.cold_protection = initial(part.cold_protection)
 		part.alternate_worn_layer = part_datum.sealed_layer
+		if(part.slot_flags & ITEM_SLOT_HEAD)
+			var/datum/component/wearertargeting/protection = part.AddComponent(/datum/component/wearertargeting/earprotection, protection_amount = src.theme.hearing_protection)
+			protection.on_equip(src, wearer, ITEM_SLOT_HEAD)
 	else
 		part.icon_state = "[skin]-[part.base_icon_state]"
 		part.flags_cover &= ~part.visor_flags_cover
@@ -267,6 +270,8 @@
 		part.heat_protection = NONE
 		part.cold_protection = NONE
 		part.alternate_worn_layer = part_datum.unsealed_layer
+		if((part.slot_flags & ITEM_SLOT_HEAD) && istype(part, /obj/item/clothing/head/mod))
+			qdel(part.GetComponent(/datum/component/wearertargeting/earprotection))
 	update_speed()
 	wearer.update_clothing(part.slot_flags | slot_flags)
 	wearer.refresh_obscured()
