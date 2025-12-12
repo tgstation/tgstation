@@ -243,6 +243,15 @@
 	//You don't belong in this world, monster!
 	mytray.reagents.remove_reagent(type, volume)
 
+/datum/reagent/water/mineral
+	name = "Mineral Water"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE|REAGENT_CLEANS
+
+/datum/reagent/water/mineral/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.adjust_tox_loss(-0.1 * REM * seconds_per_tick, updating_health = FALSE)
+	return UPDATE_MOB_HEALTH
+
 /datum/reagent/water/salt
 	name = "Saltwater"
 	description = "Water, but salty. Smells like... the station infirmary?"
@@ -464,17 +473,8 @@
 		need_mob_update += affected_mob.adjust_brute_loss(-2 * REM * seconds_per_tick, updating_health = FALSE)
 		need_mob_update += affected_mob.adjust_fire_loss(-2 * REM * seconds_per_tick, updating_health = FALSE)
 		need_mob_update = TRUE
-		if(ishuman(affected_mob))
-			affected_mob.adjust_blood_volume(3 * REM * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
-
-			var/datum/wound/bloodiest_wound
-
-			for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
-				if(iter_wound.blood_flow && iter_wound.blood_flow > bloodiest_wound?.blood_flow)
-					bloodiest_wound = iter_wound
-
-			if(bloodiest_wound)
-				bloodiest_wound.adjust_blood_flow(-2 * REM * seconds_per_tick)
+		affected_mob.adjust_blood_volume(3 * REM * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
+		affected_mob.coagulant_effect(2 * REM * seconds_per_tick)
 
 	else  // Will deal about 90 damage when 50 units are thrown
 		need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 3 * REM * seconds_per_tick, 150)
@@ -2473,12 +2473,18 @@
 /datum/reagent/romerol/expose_mob(mob/living/carbon/human/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	// Silently add the zombie infection organ to be activated upon death
-	if(exposed_mob.get_organ_slot(ORGAN_SLOT_ZOMBIE))
-		return
-
-	if((methods & (PATCH|INGEST|INJECT|INHALE)) || ((methods & (VAPOR|TOUCH)) && prob(min(reac_volume,100)*(1 - touch_protection))))
+	if(can_infect(exposed_mob, reac_volume, methods))
 		var/obj/item/organ/zombie_infection/nodamage/zombie_infection = new()
 		zombie_infection.Insert(exposed_mob)
+
+/datum/reagent/romerol/proc/can_infect(mob/living/carbon/human/exposed_mob, reac_volume = 5, methods = INGEST)
+	if(exposed_mob.get_organ_slot(ORGAN_SLOT_ZOMBIE))
+		return FALSE
+	if(methods & (PATCH|INGEST|INJECT|INHALE))
+		return TRUE
+	if(reac_volume >= 1)
+		return TRUE
+	return FALSE
 
 /datum/reagent/magillitis
 	name = "Magillitis"

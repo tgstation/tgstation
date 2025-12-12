@@ -326,20 +326,22 @@
 	var/obj/item/bodypart/potential_chest = human_carp_user.get_bodypart(BODY_ZONE_CHEST)
 	var/obj/item/clothing/is_it_the_shoes = human_carp_user.get_item_by_slot(ITEM_SLOT_FEET)
 
-	// The presence of armor is a style malus
-	var/oh_no_armor = 0
+	// The presence of armor and heavy objects is a style malus
+	var/style_factor_malus = 0
 
 	// Lets look to see if any relevant headwear is armored or on theme
-	for(var/obj/item/clothing/possible_headbands in human_carp_user.get_clothing_on_part(potential_head))
-		if(possible_headbands.clothing_flags & CARP_STYLE_FACTOR)
-			style_factor_points += 20 // Basically, you only need one chest level item to contribute
-		oh_no_armor += human_carp_user.run_armor_check(potential_head, MELEE)
+	if(potential_head)
+		for(var/obj/item/clothing/possible_headbands in human_carp_user.get_clothing_on_part(potential_head))
+			if(possible_headbands.clothing_flags & CARP_STYLE_FACTOR)
+				style_factor_points += 20 // Basically, you only need one chest level item to contribute
+		style_factor_malus += human_carp_user.run_armor_check(potential_head, MELEE)
 
 	// Then let's look for any chest clothing that is either armored or on theme
-	for(var/obj/item/clothing/possible_gi in human_carp_user.get_clothing_on_part(potential_chest))
-		if(possible_gi.clothing_flags & CARP_STYLE_FACTOR)
-			style_factor_points += 20 // Only need one head level item to contribute
-		oh_no_armor += human_carp_user.run_armor_check(potential_chest, MELEE)
+	if(potential_chest)
+		for(var/obj/item/clothing/possible_gi in human_carp_user.get_clothing_on_part(potential_chest))
+			if(possible_gi.clothing_flags & CARP_STYLE_FACTOR)
+				style_factor_points += 20 // Only need one head level item to contribute
+		style_factor_malus += human_carp_user.run_armor_check(potential_chest, MELEE)
 
 	// We also consider whether our footwear is appropriate
 	if(istype(is_it_the_shoes) && is_it_the_shoes.clothing_flags & CARP_STYLE_FACTOR)
@@ -349,12 +351,8 @@
 	if(human_carp_user.has_status_effect(/datum/status_effect/organ_set_bonus/carp))
 		style_factor_points += 20
 
-	var/list/our_held_items = list()
-	our_held_items += human_carp_user.get_active_held_item()
-	our_held_items += human_carp_user.get_inactive_held_item()
-
-	// We check for wielded objects. If they're not abstract items or exempt items, we
-	for(var/obj/item/possibly_a_held_object as anything in our_held_items)
+	// We check for wielded objects. If they're not abstract items or exempt items, we add their weight as a penalty. And their block chance.
+	for(var/obj/item/possibly_a_held_object in human_carp_user.held_items)
 		if(possibly_a_held_object.item_flags & (ABSTRACT|HAND_ITEM) && !possibly_a_held_object.block_chance)
 			continue
 
@@ -364,13 +362,13 @@
 		if(possibly_a_held_object.w_class <= WEIGHT_CLASS_SMALL && !possibly_a_held_object.block_chance)
 			continue
 
-		oh_no_armor += possibly_a_held_object.block_chance
-		oh_no_armor += possibly_a_held_object.w_class * 10 * (HAS_TRAIT(possibly_a_held_object, TRAIT_WIELDED) ? 2 : 1)
+		style_factor_malus += possibly_a_held_object.block_chance
+		style_factor_malus += possibly_a_held_object.w_class * 10 * (HAS_TRAIT(possibly_a_held_object, TRAIT_WIELDED) ? 2 : 1)
 
-	if(human_carp_user.body_position != STANDING_UP) // YARR, MAN OVERBOARD
+	if(human_carp_user.body_position != STANDING_UP) // this ain't monkey style
 		style_factor_points -= 30
 
-	style_factor_points -= oh_no_armor
+	style_factor_points -= style_factor_malus
 
 	return style_factor_points
 
@@ -385,7 +383,7 @@
 	[span_notice("Crashing Wave Kick")]: Punch Shove. Launch your opponent away from you with incredible force!\n\
 	[span_notice("Keelhaul")]: Shove Shove. Nonlethally kick an opponent to the floor, knocking them down, discombobulating them and dealing substantial stamina damage. If they're already prone, disarm them as well.\n\
 	[span_notice("Kraken Wrack")]: Grab Punch. Deliver a knee jab into the opponent, dealing high stamina damage, as well as briefly stunning them, winding them and making it difficult for them to speak.\n\
-	[span_notice("Grabs and Shoves")]: While in combat mode, your typical grab and shove do decent stamina damag, and your grabs harder to break. If you grab someone who has substantial amounts of stamina damage, you knock them out!\n\
+	[span_notice("Grabs and Shoves")]: While in combat mode, your typical grab and shove do decent stamina damage, and your grabs harder to break. If you grab someone who has substantial amounts of stamina damage, you knock them out!\n\
 	<span class='notice'>While in combat mode (and not stunned, not a hulk, and not in a mech), you can reflect all projectiles that come your way, sending them back at the people who fired them! \n\
 	However, your ability to avoid projectiles is negatively affected when your are burdened by armor, or whenever you are carrying normal-sized or heavier objects in your hands. \n\
 	But if you commmit fully to the martial arts lifestyle by wearing martial arts or carp-related regalia, you will feel empowered enough to potentially avoid attacks even from melee weapons or other unarmed combatants. \n\

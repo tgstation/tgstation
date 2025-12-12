@@ -1319,9 +1319,6 @@
 	if(density && !open(BYPASS_DOOR_CHECKS))
 		to_chat(user, span_warning("Despite your attempts, [src] refuses to open."))
 
-/obj/machinery/door/airlock/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
-	try_to_crowbar(null, user, FALSE)
-
 /obj/machinery/door/airlock/open(forced = DEFAULT_DOOR_CHECKS)
 	if(cycle_pump && !operating && !welded && !seal && locked && density)
 		cycle_pump.airlock_act(src)
@@ -2444,6 +2441,7 @@
 	aiControlDisabled = AI_WIRE_DISABLED
 	req_access = list(ACCESS_BLOODCULT)
 	damage_deflection = 10
+	custom_materials = list(/datum/material/runedmetal = SHEET_MATERIAL_AMOUNT)
 	var/openingoverlaytype = /obj/effect/temp_visual/cult/door
 	var/friendly = FALSE
 	var/stealthy = FALSE

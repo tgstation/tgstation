@@ -21,6 +21,14 @@
 	selfcharge = TRUE
 	light_color = COLOR_STRONG_BLUE
 	self_charge_amount = STANDARD_ENERGY_GUN_SELF_CHARGE_RATE * 10
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2.25,
+	)
 
 /obj/item/gun/energy/event_horizon/Initialize(mapload)
 	. = ..()

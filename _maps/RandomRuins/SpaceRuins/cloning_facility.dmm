@@ -122,11 +122,8 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/iron/white,
-/area/ruin/space/has_grav/powered/ancient_shuttle)
-"n" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "o" = (
 /obj/machinery/vending/snack/teal,
@@ -521,7 +518,7 @@ a
 (18,1,1) = {"
 a
 d
-n
+T
 A
 K
 T

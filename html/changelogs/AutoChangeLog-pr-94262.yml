@@ -1,0 +1,5 @@
+author: "Fghj240"
+delete-after: True
+changes:
+  - qol: "ear protection is visible on examine"
+  - qol: "hearing protection modsuit module is now built in"
