@@ -18,7 +18,7 @@
 	force = 0
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_SMALL
-	var/obj/structure/sign/poster/poster_type
+	var/obj/structure/sign/poster/poster_type = /obj/structure/sign/poster/random
 	var/obj/structure/sign/poster/poster_structure
 
 /obj/item/poster/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
@@ -35,10 +35,18 @@
 		qdel(new_poster_structure.GetComponent(/datum/component/atom_mounted))
 		new_poster_structure.forceMove(src)
 	poster_structure = new_poster_structure
-	if(poster_type)
-		name = "[poster_type::poster_item_name] - [poster_type::original_name]"
+	if(!poster_type) // If we weren't already assigned a poster_type, we infer from the contained poster_structure
+		if(istype(poster_structure, /obj/structure/sign/poster)) // Make sure our poster structure is valid
+			poster_type = poster_structure.type
+		else
+			stack_trace("Rolled poster [type] was created without either a valid poster_type [poster_type] or poster_structure [poster_structure]")
+			poster_type = /obj/structure/sign/poster/random // Panic, do something random
+	if(ispath(poster_type, /obj/structure/sign/poster)) // Make sure we have a valid poster_type before using it
+		name = "[poster_type::poster_item_name] - [poster_type::name]"
 		desc = poster_type::poster_item_desc
 		icon_state = poster_type::poster_item_icon_state
+	else // We did not have a valid poster_type, light the beacons
+		CRASH("Rolled poster [type] has an invalid or null poster_type [poster_type]")
 
 /obj/item/poster/Destroy(force)
 	QDEL_NULL(poster_structure)
@@ -122,8 +130,10 @@
 	var/never_random = FALSE // used for the 'random' subclasses.
 	///Exclude posters of these types from being added to the random pool
 	var/list/blacklisted_types = list()
-	///Whether the poster should be printable from library management computer. Mostly exists to keep directionals from being printed.
+	///Whether the poster should be printable from library management computer.
 	var/printable = FALSE
+	///What type should we put back in the rolled poster when we get cut down
+	var/cutdown_type
 
 	var/poster_item_name = "hypothetical poster"
 	var/poster_item_desc = "This hypothetical poster item should not exist, let's be honest here."
@@ -132,6 +142,7 @@
 
 /obj/structure/sign/poster/Initialize(mapload)
 	. = ..()
+	cutdown_type = type
 	if(random_basetype)
 		randomise(random_basetype)
 	if(!ruined)
@@ -164,7 +175,8 @@
 			poster_types -= typesof(iterated_type)
 	var/list/approved_types = list()
 	for(var/obj/structure/sign/poster/type_of_poster as anything in poster_types)
-		if(initial(type_of_poster.icon_state) && !initial(type_of_poster.never_random))
+		// It must have an icon state, not be banned from the random pool, and not be pixel shifted (eliminates directional subtypes)
+		if(initial(type_of_poster.icon_state) && !initial(type_of_poster.never_random) && !initial(type_of_poster.pixel_x) && !initial(type_of_poster.pixel_y))
 			approved_types |= type_of_poster
 
 	var/obj/structure/sign/poster/selected = pick(approved_types)
@@ -177,6 +189,7 @@
 	poster_item_desc = initial(selected.poster_item_desc)
 	poster_item_icon_state = initial(selected.poster_item_icon_state)
 	ruined = initial(selected.ruined)
+	cutdown_type = initial(selected.type)
 	if(length(GLOB.holidays) && prob(30)) // its the holidays! lets get festive
 		apply_holiday()
 	update_appearance()
@@ -244,7 +257,9 @@
 
 /// Re-creates the poster item from the poster structure
 /obj/structure/sign/poster/proc/return_to_poster_item(atom/location)
-	return new poster_item_type(location, src)
+	. = new poster_item_type(location, new cutdown_type)
+	qdel(src)
+	return .
 
 /obj/structure/sign/poster/proc/snowflake_closed_turf_check(atom/hopefully_still_a_closed_turf) //since turfs never get deleted but instead change type, make sure we're still being placed on a wall.
 	return isclosedturf(hopefully_still_a_closed_turf)
