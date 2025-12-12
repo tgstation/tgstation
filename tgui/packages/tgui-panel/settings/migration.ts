@@ -1,7 +1,10 @@
+import { storage } from 'common/storage';
+import { omit, pick } from 'es-toolkit';
 import { chatRenderer } from '../chat/renderer';
 import { store } from '../events/store';
 import {
   defaultHighlightSetting,
+  type defaultHighlights,
   defaultSettings,
   highlightsAtom,
   settingsAtom,
@@ -47,36 +50,43 @@ function migrateHighlights(next: HighlightState): HighlightState {
   return draft;
 }
 
-/** Initializes new settings */
-function mergeSettings(next: SettingsState): SettingsState {
-  const nextState = {
-    ...defaultSettings,
-    ...next,
-    initialized: true,
-    view: defaultSettings.view, // Preserve view state
-  };
-
-  return nextState;
-}
+const highlightKeys: (keyof typeof defaultHighlights)[] = [
+  'highlightSettings',
+  'highlightSettingById',
+  'highlightText',
+  'highlightColor',
+] as const;
 
 /** A bit of a chunky procedural function. Handles imported and loaded settings */
 export function startSettingsMigration(
   next: SettingsState & HighlightState,
 ): void {
-  generalSettingsHandler(next);
+  const settingsPart = omit(next, highlightKeys);
+  const highlightPart = pick(next, highlightKeys);
 
-  const migratedSettings = mergeSettings(next);
-  store.set(settingsAtom, migratedSettings);
-  console.log('Migrated panel settings:', migratedSettings);
+  const draftSettings: SettingsState = {
+    ...defaultSettings,
+    ...settingsPart,
+    initialized: true,
+    view: defaultSettings.view, // Preserve view state
+  };
 
-  if (next.version) {
-    const migratedHighlights = migrateHighlights(next);
-    store.set(highlightsAtom, migratedHighlights);
+  generalSettingsHandler(draftSettings);
+  store.set(settingsAtom, draftSettings);
+  console.log('Migrated panel settings:', draftSettings);
 
-    chatRenderer.setHighlight(
-      migratedHighlights.highlightSettings,
-      migratedHighlights.highlightSettingById,
-    );
-    console.log('Migrated panel highlight settings:', migratedHighlights);
+  const migratedHighlights = migrateHighlights(highlightPart);
+
+  // Just exit if no valid storage was found
+  if (!next?.version) {
+    storage.set('panel-settings', { ...draftSettings, ...migratedHighlights });
+    return;
   }
+
+  chatRenderer.setHighlight(
+    migratedHighlights.highlightSettings,
+    migratedHighlights.highlightSettingById,
+  );
+  store.set(highlightsAtom, migratedHighlights);
+  console.log('Migrated panel highlight settings:', migratedHighlights);
 }

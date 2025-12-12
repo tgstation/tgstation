@@ -28,7 +28,7 @@ export const defaultHighlightSetting: HighlightSetting = {
   matchCase: false,
 };
 
-const initialHighlights: HighlightState = {
+export const defaultHighlights: HighlightState = {
   highlightSettings: ['default'],
   highlightSettingById: {
     default: defaultHighlightSetting,
@@ -42,7 +42,7 @@ const initialHighlights: HighlightState = {
 export const settingsAtom = atom(defaultSettings);
 export const settingsVisibleAtom = atom(false);
 
-export const highlightsAtom = atom(initialHighlights);
+export const highlightsAtom = atom(defaultHighlights);
 
 export const storedSettingsAtom = atom((get) => ({
   ...get(settingsAtom),

@@ -4,7 +4,7 @@
 	"dependencies": {
 		"common": "workspace:*",
 		"dompurify": "^3.2.5",
-		"es-toolkit": "^1.39.3",
+		"es-toolkit": "^1.42.0",
 		"jotai": "^2.16.0",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",

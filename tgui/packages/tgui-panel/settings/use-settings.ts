@@ -22,16 +22,6 @@ export function useSettings() {
     async function fetchSettings(): Promise<void> {
       try {
         const storedSettings = await storage.get('panel-settings');
-        if (!storedSettings) {
-          // Just run with defaults
-          const draft: SettingsState = {
-            ...settings,
-            initialized: true,
-          };
-          storeSettings(draft);
-          return;
-        }
-
         console.log('Loaded panel settings from storage:', storedSettings);
         startSettingsMigration(storedSettings);
       } catch (error) {
