@@ -3,7 +3,7 @@ import type { Page } from '../chat/types';
 import { store } from '../events/store';
 import { importSettings } from './actions';
 import { storedSettingsAtom } from './atoms';
-import { startSettingsMigration } from './helpers';
+import { startSettingsMigration } from './migration';
 
 export function exportChatSettings(pages: Record<string, Page>): void {
   const settings = store.get(storedSettingsAtom);

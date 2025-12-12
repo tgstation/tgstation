@@ -2,7 +2,8 @@ import { storage } from 'common/storage';
 import { useAtom, useAtomValue } from 'jotai';
 import { useEffect } from 'react';
 import { highlightsAtom, settingsAtom } from './atoms';
-import { generalSettingsHandler, startSettingsMigration } from './helpers';
+import { generalSettingsHandler } from './helpers';
+import { startSettingsMigration } from './migration';
 import { setDisplayScaling } from './scaling';
 import type { SettingsState } from './types';
 
