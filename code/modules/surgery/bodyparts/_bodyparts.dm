@@ -226,6 +226,9 @@
 	var/list/bodypart_effects
 	/// The cached info about the blood this organ belongs to, set during on_removal()
 	var/list/blood_dna_info
+	/// What item we drop whenever we're butchered
+	/// If unset, the bodyparot cannot be butchered
+	var/meat_type = null
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -436,22 +439,6 @@
 					span_notice("[user] forces [src] into your empty socket, and it locks into place!"))
 				return
 	return ..()
-
-/obj/item/bodypart/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	SHOULD_CALL_PARENT(TRUE)
-
-	if(weapon.get_sharpness())
-		add_fingerprint(user)
-		if(!contents.len)
-			to_chat(user, span_warning("There is nothing left inside [src]!"))
-			return
-		playsound(loc, 'sound/items/weapons/slice.ogg', 50, TRUE, -1)
-		user.visible_message(span_warning("[user] begins to cut open [src]."),\
-			span_notice("You begin to cut open [src]..."))
-		if(do_after(user, 5.4 SECONDS, target = src))
-			drop_organs(user, TRUE)
-	else
-		return ..()
 
 /obj/item/bodypart/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	SHOULD_CALL_PARENT(TRUE)
