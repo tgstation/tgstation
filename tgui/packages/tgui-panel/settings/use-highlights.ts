@@ -67,7 +67,7 @@ export function useHighlights() {
     storeHighlights(newState);
   }
 
-  function addHighlight() {
+  function addHighlight(): void {
     const draft = {
       ...defaultHighlightSetting,
       id: createUuid(),
