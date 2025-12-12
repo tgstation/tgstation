@@ -124,7 +124,7 @@
 	desc = "Contains one Type 3 laser gun. They don't make 'em like they used to."
 	cost = PAYCHECK_COMMAND * 6
 	access_view = ACCESS_WEAPONS
-	contains = list(/obj/item/gun/energy/laser/soulful)
+	contains = list(/obj/item/gun/energy/laser/soul)
 
 /datum/supply_pack/goody/smg_single
 	name = "Disabler SMG Single_Pack"

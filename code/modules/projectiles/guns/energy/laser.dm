@@ -84,7 +84,7 @@
 	icon_state = "retro"
 	ammo_x_offset = 3
 
-/obj/item/gun/energy/laser/soulful
+/obj/item/gun/energy/laser/soul
 	name ="\improper Type 3 laser gun"
 	desc = "The Type 3 Heat Delivery System, developed by Nanotrasen. Quite possibly the most popular model of HDS ever made by Nanotrasen. \
 		They don't make them like they used to."
@@ -345,7 +345,7 @@
 
 // Soulful Laser Gun
 
-/obj/item/gun/energy/laser/soulful/add_deep_lore()
+/obj/item/gun/energy/laser/soul/add_deep_lore()
 	AddElement(/datum/element/examine_lore, \
 		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
 		lore = "The NT Type 3 Heat Delivery System (sometimes referred to as the HDS-3 in the memories of security officers) is quite possibly \

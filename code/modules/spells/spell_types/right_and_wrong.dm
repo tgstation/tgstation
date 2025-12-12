@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/energy/e_gun/advtaser,
 	/obj/item/gun/energy/e_gun/nuclear,
 	/obj/item/gun/energy/laser,
-	/obj/item/gun/energy/laser/soulful,
+	/obj/item/gun/energy/laser/soul,
 	/obj/item/gun/energy/laser/pistol,
 	/obj/item/gun/energy/laser/assault,
 	/obj/item/gun/energy/laser/carbine,

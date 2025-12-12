@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(mystery_box_guns, list(
 	/obj/item/gun/energy/e_gun,
 	/obj/item/gun/energy/e_gun/nuclear,
 	/obj/item/gun/energy/laser,
-	/obj/item/gun/energy/laser/soulful,
+	/obj/item/gun/energy/laser/soul,
 	/obj/item/gun/energy/laser/pistol,
 	/obj/item/gun/energy/laser/assault,
 	/obj/item/gun/energy/laser/hellgun,
