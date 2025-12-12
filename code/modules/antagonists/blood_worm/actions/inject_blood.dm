@@ -236,8 +236,8 @@
 
 /datum/status_effect/blood_worm_transfuse/adult
 	damage_regen_rate = 10 // 20 s * 10 hp/s = 200 hp, note that major host healing is expected as the worm itself is very vulnerable to bleeding.
-	wound_regen_rate = 1 / 5 // One wound every 5 seconds, +30% per wound severity level.
+	wound_regen_rate = 1 / 4 // One wound every 4 seconds, +30% per wound severity level.
 	organ_regen_rate = 5 // 20 s * 5 hp/s = 100 hp, which is also the standard organ health threshold.
-	trauma_regen_rate = 1 / 6 // One trauma every 4 seconds.
+	trauma_regen_rate = 1 / 4 // One trauma every 4 seconds.
 
 #undef REQUIRED_ACCUMULATION
