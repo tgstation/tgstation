@@ -124,11 +124,16 @@
 
 	var/certified_jolly = FALSE
 
-	for (var/mob/living/carbon/human/possible_claus in view(5, owner))
-		if (possible_claus == owner)
-			continue  // imagine being scared of your own existence
-		var/datum/antagonist/santa/jolly = possible_claus.mind?.has_antag_datum(/datum/antagonist/santa)
-		if (jolly)
+	for(var/mob/living/carbon/human/possible_claus in view(5, owner))
+		if(istype(possible_claus.back, /obj/item/storage/backpack/santabag))
+			certified_jolly = TRUE
+			break
+
+		if(istype(possible_claus.head, /obj/item/clothing/head/costume/santa) || istype(possible_claus.head, /obj/item/clothing/head/helmet/space/santahat))
+			certified_jolly = TRUE
+			break
+
+		if(istype(possible_claus.wear_suit, /obj/item/clothing/suit/space/santa))
 			certified_jolly = TRUE
 			break
 
