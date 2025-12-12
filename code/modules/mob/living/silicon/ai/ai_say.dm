@@ -212,10 +212,10 @@
 		if(!sound_file)
 			return FALSE
 		switch(the_AI.vox_type)
-			if(VOX_HL)
-				vox_volume_modifier = 0.75
 			if(VOX_MIL)
-				vox_volume_modifier = 0.50 // My poor ears...
+				vox_volume_modifier = 0.50
+			if(VOX_HL)
+				vox_volume_modifier = 0.40 // No, my poor ears...
 
 	// If there is no single listener, broadcast to everyone in the same z level
 		if(!only_listener)
