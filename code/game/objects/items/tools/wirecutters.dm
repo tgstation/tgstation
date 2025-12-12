@@ -7,7 +7,7 @@
 	inhand_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	flags_1 = IS_PLAYER_COLORABLE_1
+	flags_1 = IS_PLAYER_COLORABLE_1|NO_NEW_GAGS_PREVIEW_1
 	greyscale_config = /datum/greyscale_config/wirecutters
 	greyscale_config_belt = /datum/greyscale_config/wirecutters_belt_overlay
 	greyscale_config_inhand_left = /datum/greyscale_config/wirecutter_inhand_left
