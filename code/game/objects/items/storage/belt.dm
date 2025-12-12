@@ -697,10 +697,10 @@
 
 #define COUNTERMULTIPLIER 3
 
-/datum/action/innate/blade_counter/proc/counter_attack(mob/living/forward_thinker, atom/attackingthing)
+/datum/action/innate/blade_counter/proc/counter_attack(mob/living/forward_thinker, atom/attackingthing, damage, attack_text, attack_type)
 	SIGNAL_HANDLER
 	var/obj/item/storage/belt/sheath/used_sheath = target
-	if(!used_sheath || !length(used_sheath.contents))
+	if(!used_sheath || !length(used_sheath.contents) || (attack_type != MELEE_ATTACK && attack_type != UNARMED_ATTACK))
 		return FAILED_BLOCK
 
 	var/obj/item/justicetool = used_sheath.contents[1]
