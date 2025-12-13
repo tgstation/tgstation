@@ -134,20 +134,22 @@
 		return TRUE
 
 	if(!isliving(target))
-		return FALSE // bashing inanimate objects
+		return FALSE // bashing objects
 
 	var/harmbatonning = LAZYACCESS(modifiers, RIGHT_CLICK)
 	if(harmbatonning && !stun_on_harmbaton)
 		return FALSE // harmbatonning, no stun
 
-	if(!can_baton(target, user, harmbatonning))
-		return !harmbatonning // can't baton - only cancel attack if not harmbatonning
+	// see if this attack will result in a stun, or if we need to cancel it
+	if(!can_baton(target, user, harmbatonning) || !will_stun(target, user, harmbatonning))
+		if(harmbatonning)
+			return FALSE // always allow attacks while harmbatonning
+		if(user.combat_mode && stun_on_harmbaton)
+			return FALSE // only allow an attacks in combat mode + if stun_on_harmbaton is set
+		return TRUE // otherwise, prevent the attack
 
 	if(clumsy_check(user, target))
 		return TRUE // you hit yourself, nerd
-
-	if(!will_stun(target, user, harmbatonning))
-		return !harmbatonning // will not stun - only cancel attack if not harmbatonning
 
 	// if not harm batonning, we override the default attack properties do do nothing
 	if(!harmbatonning)
