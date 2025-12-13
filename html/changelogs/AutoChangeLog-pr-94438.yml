@@ -1,0 +1,6 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - bugfix: "Non-base laser guns now attach their lore properly."
+  - spellcheck: "Adjusted the names on the laser guns to have a slash between the numeric type/version and the variant... abbreviation? Letter? One of the two."
+  - spellcheck: "Fixed some typos and adjusted the now-visible lore on the laser guns to read a little nicer, theoretically. Whether the grammar tweaks improved anything or not is subjective."

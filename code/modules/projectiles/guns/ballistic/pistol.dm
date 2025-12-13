@@ -100,6 +100,8 @@
 	return ..()
 
 /obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
+	if(QDELETED(target))
+		return
 	var/obj/projectile/energy/fisher/melee/simulated_hit = new
 	simulated_hit.firer = user
 	simulated_hit.on_hit(target)

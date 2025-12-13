@@ -1,18 +1,6 @@
 {
-	"private": true,
 	"name": "tgui-workspace",
 	"version": "6.0.0",
-	"packageManager": "bun@1.2.16",
-	"workspaces": [
-		"packages/*"
-	],
-	"scripts": {
-		"tgui:analyze": "rspack --analyze",
-		"tgui:build": "rspack build",
-		"tgui:dev": "bun --smol packages/tgui-dev-server/index.ts",
-		"tgui:test": "bun test",
-		"tgui:tsc": "tsc"
-	},
 	"devDependencies": {
 		"@happy-dom/global-registrator": "^17.4.7",
 		"@rspack/cli": "^1.4.5",
@@ -26,5 +14,17 @@
 		"sass-embedded": "^1.89.2",
 		"sass-loader": "^16.0.5",
 		"typescript": "^5.8.3"
-	}
+	},
+	"packageManager": "bun@1.2.16",
+	"private": true,
+	"scripts": {
+		"tgui:analyze": "rspack --analyze",
+		"tgui:build": "rspack build",
+		"tgui:dev": "bun --smol packages/tgui-dev-server/index.ts",
+		"tgui:test": "bun test",
+		"tgui:tsc": "tsc"
+	},
+	"workspaces": [
+		"packages/*"
+	]
 }

@@ -735,10 +735,10 @@
 	bot_type = /mob/living/simple_animal/bot/secbot/pingsky
 	help = "Abduct Officer Pingsky - commonly found protecting the station's AI."
 
-/datum/spy_bounty/some_bot/scrubbs
+/datum/spy_bounty/some_bot/scrubs
 	difficulty = SPY_DIFFICULTY_EASY
 	bot_type = /mob/living/basic/bot/cleanbot/medbay
-	help = "Abduct Scrubbs, MD - commonly found mopping up blood in Medbay."
+	help = "Abduct Scrubs, MD - commonly found mopping up blood in Medbay."
 
-/datum/spy_bounty/some_bot/scrubbs/can_claim(mob/user)
+/datum/spy_bounty/some_bot/scrubs/can_claim(mob/user)
 	return !(user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_MEDICAL)
