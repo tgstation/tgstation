@@ -316,12 +316,17 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_IMMOBILE | AB_CHECK_INCAPACITATED
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "raptor_wings"
+	background_icon_state = "bg_default"
+	overlay_icon_state = "bg_default_border"
 
 /datum/action/innate/raptor_wings/Activate()
 	var/obj/item/mob_holder/purple_raptor/holder = target
 	var/mob/living/carbon/human/user = holder.loc
-	if (istype(user) && user.get_item_by_slot(ITEM_SLOT_BACK) == holder)
-		holder.toggle_wings(user)
+	if (!istype(user) || user.get_item_by_slot(ITEM_SLOT_BACK) != holder)
+		return
+	holder.toggle_wings(user)
+	background_icon_state = "bg_default[holder.wings_open ? "_on" : ""]"
+	build_all_button_icons()
 
 /datum/raptor_color/green
 	color = "green"
