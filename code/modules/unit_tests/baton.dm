@@ -136,7 +136,7 @@
 // Left click stunprod
 /datum/unit_test/baton/left_click/prod
 	abstract_type = /datum/unit_test/baton/left_click
-	baton_type = /obj/item/melee/baton/cattleprod/loaded
+	baton_type = /obj/item/melee/baton/security/cattleprod/loaded
 
 // - Active + combat mode = stuns, no damage
 /datum/unit_test/baton/left_click/prod/on_with_combat
@@ -175,7 +175,7 @@
 
 // Right click stunprod
 /datum/unit_test/baton/right_click/prod
-	baton_type = /obj/item/melee/baton/cattleprod/loaded
+	baton_type = /obj/item/melee/baton/security/cattleprod/loaded
 
 // - Active + combat mode = stuns, deals damage
 /datum/unit_test/baton/right_click/prod/on_with_combat
