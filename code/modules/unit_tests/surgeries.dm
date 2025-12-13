@@ -174,7 +174,7 @@
 /datum/unit_test/verify_surgery_setup
 
 /datum/unit_test/verify_surgery_setup/Run()
-	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(subtypesof(/datum/surgery_operation), filter_replaced = FALSE))
+	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances_from(subtypesof(/datum/surgery_operation), filter_replaced = FALSE))
 		if (isnull(operation.name))
 			TEST_FAIL("Surgery operation [operation.type] has no name set")
 		if (isnull(operation.desc))
@@ -184,7 +184,7 @@
 /datum/unit_test/verify_surgery_replacements
 
 /datum/unit_test/verify_surgery_replacements/Run()
-	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(subtypesof(/datum/surgery_operation), filter_replaced = TRUE))
+	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances_from(subtypesof(/datum/surgery_operation), filter_replaced = TRUE))
 		if(!operation.replaced_by || operation.replaced_by.type == operation.type)
 			continue
 		TEST_FAIL("Surgery operation [operation.type] is marked as replaced by [operation.replaced_by.type], \

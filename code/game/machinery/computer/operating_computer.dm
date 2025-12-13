@@ -217,7 +217,7 @@
 			if(istype(experiment, /datum/experiment/autopsy))
 				data["experiments"] += list(experiment.to_ui_data())
 
-	var/list/operations = GLOB.operations.get_instances(GLOB.operations.unlocked | advanced_surgeries)
+	var/list/operations = GLOB.operations.get_instances_from(GLOB.operations.unlocked | advanced_surgeries)
 	var/any_recommended = FALSE
 	for(var/datum/surgery_operation/operation as anything in operations)
 		var/recommend = FALSE

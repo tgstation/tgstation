@@ -79,6 +79,9 @@
 	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_PRIORITY_NEXT_STEP
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
 
+/datum/surgery_operation/limb/seal_veins/get_any_tool()
+	return "Any heat source"
+
 /datum/surgery_operation/limb/seal_veins/all_required_strings()
 	return list("the limb must have an operated puncture wound") + ..()
 

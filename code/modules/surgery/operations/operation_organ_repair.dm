@@ -174,7 +174,7 @@
 /datum/surgery_operation/organ/repair/coronary_bypass
 	name = "graft coronary bypass"
 	rnd_name = "Coronary Artery Bypass Graft (Heart Surgery)"
-	desc = "Graft a bypass onto a a patient's damaged heart to restore proper blood flow."
+	desc = "Graft a bypass onto a patient's damaged heart to restore proper blood flow."
 	implements = list(
 		TOOL_HEMOSTAT = 1.05,
 		TOOL_WIRECUTTER = 2.85,
@@ -254,6 +254,9 @@
 	target_type = /obj/item/organ/stomach
 	heal_to_percent = 0.2
 	failure_damage_percent = 0.15
+
+/datum/surgery_operation/organ/repair/gastrectomy/get_any_tool()
+	return "Any sharp edged item"
 
 /datum/surgery_operation/organ/repair/gastrectomy/tool_check(obj/item/tool)
 	// Require edged sharpness OR a tool behavior match

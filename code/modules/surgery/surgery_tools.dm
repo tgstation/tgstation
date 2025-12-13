@@ -363,7 +363,7 @@
 	. += span_boldnotice("Advanced surgeries available:")
 	//list of downloaded surgeries' names
 	var/list/surgeries_names = list()
-	for(var/datum/surgery_operation/downloaded_surgery as anything in GLOB.operations.get_instances(loaded_surgeries))
+	for(var/datum/surgery_operation/downloaded_surgery as anything in GLOB.operations.get_instances_from(loaded_surgeries))
 		surgeries_names += "[capitalize(downloaded_surgery.name)]"
 	. += span_notice("[english_list(surgeries_names)]")
 

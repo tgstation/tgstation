@@ -3,7 +3,8 @@
 /datum/surgery_operation/basic/incise_skin
 	name = "make incision"
 	// rnd_name = "Laparotomy / Craniotomy / Myotomy (Make Incision)" // Maybe we keep this one simple
-	desc = "Make an incision in the patient's skin to access internals."
+	desc = "Make an incision in the patient's skin to access internals. \
+		Causes \"cut skin\" surgical state."
 	implements = list(
 		TOOL_SCALPEL = 1,
 		/obj/item/melee/energy/sword = 1.33,
@@ -19,6 +20,9 @@
 	operation_flags = OPERATION_AFFECTS_MOOD
 	any_surgery_states_blocked = ALL_SURGERY_SKIN_STATES
 	target_zone = null
+
+/datum/surgery_operation/basic/incise_skin/get_any_tool()
+	return "Any sharp edged item"
 
 /datum/surgery_operation/basic/incise_skin/all_blocked_strings()
 	return ..() + list("The patient must not have complex anatomy")
@@ -49,7 +53,8 @@
 
 /datum/surgery_operation/basic/saw_bone
 	name = "saw bone"
-	desc = "Saw through the patient's bones to access their internal organs."
+	desc = "Saw through the patient's bones to access their internal organs. \
+		Causes \"bone sawed\" surgical state."
 	implements = list(
 		TOOL_SAW = 1,
 		/obj/item/shovel/serrated = 1.33,
@@ -73,6 +78,9 @@
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED
 	target_zone = null
+
+/datum/surgery_operation/basic/saw_bone/get_any_tool()
+	return "Any sharp edged item with decent force"
 
 /datum/surgery_operation/basic/saw_bone/all_blocked_strings()
 	return ..() + list("The patient must not have complex anatomy")
@@ -113,7 +121,8 @@
 // Closing of skin for basic mobs
 /datum/surgery_operation/basic/close_skin
 	name = "mend incision"
-	desc = "Mend the incision in the patient's skin, closing it up."
+	desc = "Mend the incision in the patient's skin, closing it up. \
+		Clears most skin surgical states."
 	implements = list(
 		TOOL_CAUTERY = 1,
 		/obj/item/stack/medical/suture = 1,
@@ -132,6 +141,9 @@
 	)
 	any_surgery_states_required = ALL_SURGERY_STATES_UNSET_ON_CLOSE // we're not picky
 	target_zone = null
+
+/datum/surgery_operation/basic/close_skin/get_any_tool()
+	return "Any heat source"
 
 /datum/surgery_operation/basic/close_skin/all_blocked_strings()
 	return ..() + list("The patient must not have complex anatomy")

@@ -1,0 +1,91 @@
+/datum/autowiki/surgery
+	page = "Template:Autowiki/Content/Surgeries"
+	var/list/already_generated_tools = list()
+
+/datum/autowiki/surgery/generate()
+	var/output = ""
+
+	var/list/unlocked_operations_alpha = list()
+	var/list/locked_operations_alpha = list()
+	for(var/op_type, op_datum in GLOB.operations.operations_by_typepath)
+		if(op_type in GLOB.operations.locked)
+			locked_operations_alpha += op_datum
+		else
+			unlocked_operations_alpha += op_datum
+
+	// sorts all unlocked operations alphabetically by name, then followed by all locked operations by name
+	sortTim(unlocked_operations_alpha, GLOBAL_PROC_REF(cmp_name_asc))
+	sortTim(locked_operations_alpha, GLOBAL_PROC_REF(cmp_name_asc))
+
+	for(var/datum/surgery_operation/operation as anything in unlocked_operations_alpha + locked_operations_alpha)
+		var/list/operation_data = list()
+		var/locked = (operation in locked_operations_alpha)
+
+		operation_data["name"] = escape_value(capitalize(operation.rnd_name || operation.name))
+		operation_data["description"] = escape_value(operation.rnd_desc || operation.desc)
+
+		var/list/raw_reqs = operation.get_requirements()
+		operation_data["hard_requirements"] = format_requirement_list(raw_reqs[1])
+		operation_data["soft_requirements"] = format_requirement_list(raw_reqs[2])
+		operation_data["optional_requirements"] = format_requirement_list(raw_reqs[3])
+		operation_data["blocker_requirements"] = format_requirement_list(raw_reqs[4])
+
+		operation_data["tools"] = format_tool_list(operation)
+
+		var/filename = "surgery_[SANITIZE_FILENAME(escape_value(LOWER_TEXT(operation.type)))]"
+		operation_data["icon"] = filename
+
+		var/image/radial_icon = operation.get_default_radial_image()
+		upload_icon(getFlatIcon(radial_icon, no_anim = TRUE), filename)
+
+		output += include_template("Autowiki/SurgeryTemplate[locked ? "Locked" : ""]", operation_data)
+
+	return include_template("Autowiki/SurgeryTableTemplate", list("content" = output))
+
+/datum/autowiki/surgery/proc/format_requirement_list(list/requirements)
+	var/output = "<ul>"
+	for(var/requirement in requirements)
+		output += "<li>[escape_value(capitalize(requirement))]</li>"
+	output += "</ul>"
+	return output
+
+/datum/autowiki/surgery/proc/format_tool_list(datum/surgery_operation/operation)
+	var/output = ""
+
+	for(var/tool, multiplier in operation.implements)
+		var/list/tool_info = list()
+
+		tool_info["tool_multiplier"] = multiplier
+
+		var/tool_name = escape_value(get_tool_name(operation, tool))
+		tool_info["tool_name"] = tool_name
+
+		var/tool_icon = "surgery_tool_[SANITIZE_FILENAME(LOWER_TEXT(tool_name))]"
+		tool_info["tool_icon"] = tool_icon
+
+		if(!already_generated_tools[tool_icon])
+			already_generated_tools[tool_icon] = TRUE
+			var/image/tool_image = get_tool_icon(tool)
+			upload_icon(getFlatIcon(tool_image, no_anim = TRUE),  tool_icon)
+
+		output += include_template("Autowiki/SurgeryToolTemplate", tool_info)
+
+	return output
+
+/datum/autowiki/surgery/proc/get_tool_name(datum/surgery_operation/operation, obj/item/tool)
+	if(istext(tool))
+		return capitalize(tool)
+	if(tool == /obj/item)
+		return operation.get_any_tool()
+	return capitalize(format_text(tool::name))
+
+/datum/autowiki/surgery/proc/get_tool_icon(obj/item/tool)
+	if(tool == IMPLEMENT_HAND)
+		return image(/obj/item/hand_item)
+	if(istext(tool))
+		return GLOB.tool_to_image[tool] || image('icons/effects/random_spawners.dmi', "questionmark")
+	if(tool == /obj/item)
+		return image('icons/effects/random_spawners.dmi', "questionmark")
+	if(ispath(tool, /obj/item/melee/energy)) // snowflake for soul reasons
+		return image(tool::icon, "[tool::icon_state]_on")
+	return image(tool)

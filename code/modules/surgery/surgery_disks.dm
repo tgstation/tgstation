@@ -15,7 +15,7 @@
 /obj/item/disk/surgery/debug/Initialize(mapload)
 	. = ..()
 	surgeries = list()
-	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(subtypesof(/datum/surgery_operation)))
+	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances_from(subtypesof(/datum/surgery_operation)))
 		surgeries += operation.type
 
 /obj/item/disk/surgery/advanced_plastic_surgery

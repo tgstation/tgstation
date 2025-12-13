@@ -54,9 +54,6 @@
 		/obj/item/transfer_valve,
 	))
 
-/datum/surgery_operation/limb/cavity_implant/get_recommended_tool()
-	return "any item"
-
 /datum/surgery_operation/limb/cavity_implant/all_required_strings()
 	return list("operate on chest (target chest)") + ..()
 

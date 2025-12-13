@@ -21,6 +21,9 @@
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
 
+/datum/surgery_operation/limb/lipoplasty/get_any_tool()
+	return "Any sharp edged item"
+
 /datum/surgery_operation/limb/lipoplasty/get_default_radial_image()
 	return image(/obj/item/food/meat/slab/human)
 

@@ -94,7 +94,7 @@
 	SEND_SIGNAL(patient, COMSIG_LIVING_BEING_OPERATED_ON, patient, possible_operations)
 
 	var/list/operations = list()
-	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(possible_operations))
+	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances_from(possible_operations))
 		var/atom/movable/operate_on = operation.get_operation_target(patient, operating_zone)
 		if(!operation.check_availability(patient, operate_on, src, potential_tool, operating_zone))
 			continue
@@ -299,7 +299,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /// Singleton containing all surgery operation, as well as some helpers for organizing them
 /datum/operation_holder
 	/// All operation singletons, indexed by typepath
-	/// It is recommended to use get_instances() where possible, rather than accessing this directly
+	/// It is recommended to use get_instances_from() where possible, rather than accessing this directly
 	var/list/operations_by_typepath
 	/// All operation typepaths which are unlocked by default, indexed by typepath
 	var/list/unlocked
@@ -324,7 +324,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 			unlocked += operation_type
 
 /// Takes in a list of operation typepaths and returns their singleton instances. Optionally can filter out replaced surgeries and by certain operation flags.
-/datum/operation_holder/proc/get_instances(list/typepaths, filter_replaced = TRUE)
+/datum/operation_holder/proc/get_instances_from(list/typepaths, filter_replaced = TRUE)
 	var/list/result = list()
 	for(var/datum/surgery_operation/operation_type as anything in typepaths)
 		var/datum/surgery_operation/operation = operations_by_typepath[operation_type]
@@ -579,11 +579,19 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		return null
 	var/recommendation = implements[1]
 	if(istext(recommendation))
-		return recommendation
+		return recommendation // handles tools or IMPLEMENT_HAND
+	if(recommendation == /obj/item)
+		return get_any_tool()
 	if(ispath(recommendation, /obj/item))
 		var/obj/item/tool = recommendation
 		return tool::name
 	return null
+
+/**
+ * For surgery operations that can be performed with any item, this explains what kind of item is needed
+ */
+/datum/surgery_operation/proc/get_any_tool()
+	return "Any item"
 
 /**
  * Return a list of lists of strings indicating the various requirements for this operation
@@ -655,7 +663,6 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 /// Returns what icon this surgery uses by default on the radial wheel, if it doesn't implement its own radial options
 /datum/surgery_operation/proc/get_default_radial_image()
-	PROTECTED_PROC(TRUE)
 	return image(icon = 'icons/effects/random_spawners.dmi', icon_state = "questionmark")
 
 /// Helper to get a generic limb radial image based on body zone

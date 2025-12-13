@@ -30,3 +30,16 @@
 
 	//unequip
 	borg.drop_all_held_items()
+
+/datum/unit_test/omnitool_icons
+
+/datum/unit_test/omnitool_icons/Run()
+	var/list/all_tools = GLOB.all_tool_behaviours.Copy()
+	for(var/tool, tool_image in GLOB.tool_to_image)
+		var/image/tool_image_real = tool_image
+		if(!icon_exists(tool_image_real.icon, tool_image_real.icon_state))
+			TEST_FAIL("Tool image for [tool] not found ([tool_image_real.icon], [tool_image_real.icon_state])")
+		all_tools -= tool
+
+	for(var/missing_tool in all_tools)
+		TEST_FAIL("No tool image defined for tool behaviour [missing_tool] in global tool_to_image")

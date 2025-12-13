@@ -20,6 +20,9 @@
 		/datum/reagent/toxin/formaldehyde,
 	)
 
+/datum/surgery_operation/basic/viral_bonding/get_any_tool()
+	return "Any heat source"
+
 /datum/surgery_operation/basic/viral_bonding/all_required_strings()
 	. = ..()
 	. += "the patient must have a virus to bond"

@@ -3,7 +3,8 @@
 /datum/surgery_operation/limb/incise_skin
 	name = "make skin incision"
 	// rnd_name = "Laparotomy / Craniotomy / Myotomy (Make Incision)" // Maybe we keep this one simple
-	desc = "Make an incision in the patient's skin to access internal organs."
+	desc = "Make an incision in the patient's skin to access internal organs. \
+		Causes \"cut skin\" surgical state."
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	replaced_by = /datum/surgery_operation/limb/incise_skin/abductor
 	implements = list(
@@ -22,6 +23,9 @@
 	any_surgery_states_blocked = ALL_SURGERY_SKIN_STATES
 	/// We can't cut mobs with this biostate
 	var/biostate_blacklist = BIO_CHITIN
+
+/datum/surgery_operation/limb/incise_skin/get_any_tool()
+	return "Any sharp edged item"
 
 /datum/surgery_operation/limb/incise_skin/get_default_radial_image()
 	return image(/obj/item/scalpel)
@@ -70,6 +74,9 @@
 	)
 	biostate_blacklist = BIO_FLESH|BIO_METAL
 
+/datum/surgery_operation/limb/incise_skin/thick/get_any_tool()
+	return "Any sharp edged item with decent force"
+
 /datum/surgery_operation/limb/incise_skin/thick/tool_check(obj/item/tool)
 	return ..() && tool.force >= 10
 
@@ -81,7 +88,8 @@
 /// Pulls the skin back to access internals
 /datum/surgery_operation/limb/retract_skin
 	name = "retract skin"
-	desc = "Retract the patient's skin to access their internal organs."
+	desc = "Retract the patient's skin to access their internal organs. \
+		Causes \"skin open\" surgical state."
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	replaced_by = /datum/surgery_operation/limb/retract_skin/abductor
 	implements = list(
@@ -120,7 +128,8 @@
 /// Closes the skin
 /datum/surgery_operation/limb/close_skin
 	name = "mend skin incision"
-	desc = "Mend the incision in the patient's skin, closing it up."
+	desc = "Mend the incision in the patient's skin, closing it up. \
+		Clears most skin surgical states."
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	replaced_by = /datum/surgery_operation/limb/close_skin/abductor
 	implements = list(
@@ -140,6 +149,9 @@
 		/obj/item = 'sound/items/handling/surgery/cautery2.ogg',
 	)
 	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
+
+/datum/surgery_operation/limb/close_skin/get_any_tool()
+	return "Any heat source"
 
 /datum/surgery_operation/limb/close_skin/get_default_radial_image()
 	return image(/obj/item/cautery)
@@ -183,7 +195,8 @@
 /// Clamps bleeding blood vessels to prevent blood loss
 /datum/surgery_operation/limb/clamp_bleeders
 	name = "clamp bleeders"
-	desc = "Clamp bleeding blood vessels in the patient's body to prevent blood loss."
+	desc = "Clamp bleeding blood vessels in the patient's body to prevent blood loss. \
+		Causes \"vessels clamped\" surgical state."
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	operation_flags = OPERATION_PRIORITY_NEXT_STEP
 	replaced_by = /datum/surgery_operation/limb/clamp_bleeders/abductor
@@ -225,7 +238,8 @@
 /// Unclamps blood vessels to allow blood flow again
 /datum/surgery_operation/limb/unclamp_bleeders
 	name = "unclamp bleeders"
-	desc = "Unclamp blood vessels in the patient's body to allow blood flow again."
+	desc = "Unclamp blood vessels in the patient's body to allow blood flow again. \
+		Clears \"vessels clamped\" surgical state."
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	replaced_by = /datum/surgery_operation/limb/unclamp_bleeders/abductor
 	implements = list(
@@ -269,7 +283,8 @@
 /// Saws through bones to access organs
 /datum/surgery_operation/limb/saw_bones
 	name = "saw limb bone"
-	desc = "Saw through the patient's bones to access their internal organs."
+	desc = "Saw through the patient's bones to access their internal organs. \
+		Causes \"bone sawed\" surgical state."
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_SAW = 1,
@@ -327,7 +342,8 @@
 /// Fixes sawed bones back together
 /datum/surgery_operation/limb/fix_bones
 	name = "fix limb bone"
-	desc = "Repair a patient's cut or broken bones."
+	desc = "Repair a patient's cut or broken bones. \
+		Clears \"bone sawed\" and \"bone drilled\" surgical states."
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	implements = list(
 		/obj/item/stack/medical/bone_gel = 1,
@@ -371,7 +387,8 @@
 
 /datum/surgery_operation/limb/drill_bones
 	name = "drill limb bone"
-	desc = "Drill through a patient's bones."
+	desc = "Drill through a patient's bones. \
+		Causes \"bone drilled\" surgical state."
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_DRILL = 1,
@@ -386,6 +403,9 @@
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED
+
+/datum/surgery_operation/limb/drill_bones/get_any_tool()
+	return "Any sharp pointed item with decent force"
 
 /datum/surgery_operation/limb/drill_bones/get_default_radial_image()
 	return image(/obj/item/surgicaldrill)
@@ -417,7 +437,8 @@
 
 /datum/surgery_operation/limb/incise_organs
 	name = "incise organs"
-	desc = "Make an incision in patient's internal organ tissue to allow for manipulation or repair."
+	desc = "Make an incision in patient's internal organ tissue to allow for manipulation or repair. \
+		Causes \"organs cut\" surgical state."
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	replaced_by = /datum/surgery_operation/limb/incise_organs/abductor
 	implements = list(
@@ -433,6 +454,9 @@
 	success_sound = 'sound/items/handling/surgery/organ1.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_ORGANS_CUT
+
+/datum/surgery_operation/limb/incise_organs/get_any_tool()
+	return "Any sharp edged item"
 
 /datum/surgery_operation/limb/incise_organs/get_default_radial_image()
 	return image(/obj/item/scalpel)

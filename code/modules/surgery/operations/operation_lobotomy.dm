@@ -18,6 +18,9 @@
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED
 
+/datum/surgery_operation/organ/lobotomy/get_any_tool()
+	return "Any sharp edged item"
+
 /datum/surgery_operation/organ/lobotomy/tool_check(obj/item/tool)
 	// Require edged sharpness OR a tool behavior match
 	return ((tool.get_sharpness() & SHARP_EDGED) || implements[tool.tool_behaviour])

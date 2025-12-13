@@ -3722,6 +3722,7 @@
 #include "code\modules\autowiki\pages\fishing.dm"
 #include "code\modules\autowiki\pages\soup.dm"
 #include "code\modules\autowiki\pages\stockparts.dm"
+#include "code\modules\autowiki\pages\surgery.dm"
 #include "code\modules\autowiki\pages\techweb.dm"
 #include "code\modules\autowiki\pages\vending.dm"
 #include "code\modules\awaymissions\away_props.dm"

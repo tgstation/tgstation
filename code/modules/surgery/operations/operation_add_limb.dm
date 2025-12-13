@@ -23,6 +23,9 @@
 /datum/surgery_operation/prosthetic_replacement/get_recommended_tool()
 	return "any limb / any item"
 
+/datum/surgery_operation/prosthetic_replacement/get_any_tool()
+	return "Any suitable arm replacement"
+
 /datum/surgery_operation/prosthetic_replacement/all_required_strings()
 	. = list()
 	. += "operate on chest (target chest)"

@@ -2,7 +2,8 @@
 /// Mechanical equivalent of cutting skin
 /datum/surgery_operation/limb/mechanical_incision
 	name = "unscrew shell"
-	desc = "Unscrew the shell of a mechanical patient to access its internals."
+	desc = "Unscrew the shell of a mechanical patient to access its internals. \
+		Causes \"cut skin\" surgical state."
 	implements = list(
 		TOOL_SCREWDRIVER = 1,
 		TOOL_SCALPEL = 1.33,
@@ -15,6 +16,9 @@
 	preop_sound = 'sound/items/tools/screwdriver.ogg'
 	success_sound = 'sound/items/tools/screwdriver2.ogg'
 	any_surgery_states_blocked = ALL_SURGERY_SKIN_STATES
+
+/datum/surgery_operation/limb/mechanical_incision/get_any_tool()
+	return "Any sharp item"
 
 /datum/surgery_operation/limb/mechanical_incision/get_default_radial_image()
 	return image(/obj/item/screwdriver)
@@ -40,7 +44,8 @@
 /// Mechanical equivalent of opening skin and clamping vessels
 /datum/surgery_operation/limb/mechanical_open
 	name = "open hatch"
-	desc = "Open the hatch of a mechanical patient to access its internals."
+	desc = "Open the hatch of a mechanical patient to access its internals. \
+		Causes \"skin open\" and \"vessels clamped\" surgical states."
 	required_bodytype = BODYTYPE_ROBOTIC
 	implements = list(
 		IMPLEMENT_HAND = 1,
@@ -74,7 +79,8 @@
 /// Mechanical equivalent of cauterizing / closing skin
 /datum/surgery_operation/limb/mechanical_close
 	name = "screw shell"
-	desc = "Screw the shell of a mechanical patient back into place."
+	desc = "Screw the shell of a mechanical patient back into place. \
+		Clears most skin surgical states."
 	required_bodytype = BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_SCREWDRIVER = 1,
@@ -87,6 +93,9 @@
 	preop_sound = 'sound/items/tools/screwdriver.ogg'
 	success_sound = 'sound/items/tools/screwdriver2.ogg'
 	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
+
+/datum/surgery_operation/limb/mechanical_close/get_any_tool()
+	return "Any sharp item"
 
 /datum/surgery_operation/limb/mechanical_close/get_default_radial_image()
 	return image(/obj/item/screwdriver)
@@ -116,7 +125,8 @@
 // Mechanical equivalent of cutting vessels and organs
 /datum/surgery_operation/limb/prepare_electronics
 	name = "prepare electronics"
-	desc = "Prepare the internal electronics of a mechanical patient for surgery."
+	desc = "Prepare the internal electronics of a mechanical patient for surgery. \
+		Causes \"organs cut\" surgical state."
 	required_bodytype = BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_MULTITOOL = 1,
@@ -149,7 +159,8 @@
 // Mechanical equivalent of sawing bone
 /datum/surgery_operation/limb/mechanic_unwrench
 	name = "unwrench endoskeleton"
-	desc = "Unwrench a mechanical patient's endoskeleton to access its internals."
+	desc = "Unwrench a mechanical patient's endoskeleton to access its internals. \
+		Clears \"bone sawed\" surgical state."
 	required_bodytype = BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_WRENCH = 1,
@@ -181,7 +192,8 @@
 // Mechanical equivalent of unsawing bone
 /datum/surgery_operation/limb/mechanic_wrench
 	name = "wrench endoskeleton"
-	desc = "Wrench a mechanical patient's endoskeleton back into place."
+	desc = "Wrench a mechanical patient's endoskeleton back into place. \
+		Clears \"bone sawed\" surgical state."
 	required_bodytype = BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_WRENCH = 1,
