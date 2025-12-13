@@ -34,7 +34,7 @@
 	phobia.trigger_species = GLOB.phobia_species[phobia_type]
 	phobia.mood_event_type = mood_event_type
 
-/datum/brain_trauma/severe/monophobia/on_lose(silent)
+/datum/brain_trauma/mild/phobia/on_lose(silent)
 	. = ..()
 	owner.RemoveComponentSource(REF(src), /datum/component/fearful)
 
