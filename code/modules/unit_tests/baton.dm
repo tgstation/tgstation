@@ -2,7 +2,7 @@
 	abstract_type = /datum/unit_test/baton
 	var/baton_type
 	var/test_descriptor
-	var/list/click_modifiers = list(LEFT_CLICK = TRUE, BUTTON = LEFT_CLICK)
+	var/list/click_modifiers
 
 /datum/unit_test/baton/Run()
 	var/mob/living/carbon/human/consistent/secoff = EASY_ALLOCATE()
@@ -28,10 +28,12 @@
 /datum/unit_test/baton/left_click
 	abstract_type = /datum/unit_test/baton/left_click
 	test_descriptor = "left click"
+	click_modifiers = list(LEFT_CLICK = TRUE, BUTTON = LEFT_CLICK)
 
 /datum/unit_test/baton/right_click
 	abstract_type = /datum/unit_test/baton/right_click
 	test_descriptor = "right click"
+	click_modifiers = list(RIGHT_CLICK = TRUE, BUTTON = RIGHT_CLICK)
 
 /datum/unit_test/baton/right_click/test_attack(mob/living/attacker, mob/living/defender, obj/item/melee/baton)
 	. = ..()
