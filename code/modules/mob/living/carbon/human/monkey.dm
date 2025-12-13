@@ -50,11 +50,12 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 /mob/living/carbon/human/species/monkey/punpun/Initialize(mapload)
 	. = ..()
 
+	REGISTER_REQUIRED_MAP_ITEM(1, 1) // pun pun is required on maps.
 	if(mapload && (locate(/datum/station_trait/job/pun_pun) in SSstation.station_traits))
 		new /obj/effect/landmark/start/pun_pun(loc) //Pun Pun is a crewmember, and may late-join.
 		return INITIALIZE_HINT_QDEL
 
-	REGISTER_REQUIRED_MAP_ITEM(1, 1)
+	Read_Memory()
 	if(!GLOB.the_one_and_only_punpun && mapload)
 		GLOB.the_one_and_only_punpun = src
 	else if(GLOB.the_one_and_only_punpun)
@@ -132,8 +133,6 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 
 /// Gives pun pun a special name based on various factors
 /mob/living/carbon/human/species/monkey/punpun/proc/give_special_name()
-	Read_Memory()
-
 	var/name_to_use = name
 
 	if(ancestor_name)
