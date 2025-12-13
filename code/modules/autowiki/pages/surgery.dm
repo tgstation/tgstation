@@ -24,8 +24,8 @@
 		var/list/operation_data = list()
 		var/locked = (operation in locked_operations_alpha)
 
-		operation_data["name"] = escape_value(capitalize(replace_text(operation.rnd_name || operation.name, "\"", "&quot;")))
-		operation_data["description"] = escape_value(replace_text(operation.rnd_desc || operation.desc, "\"", "&quot;"))
+		operation_data["name"] = escape_value(capitalize(replacetext(operation.rnd_name || operation.name, "\"", "&quot;")))
+		operation_data["description"] = escape_value(replacetext(operation.rnd_desc || operation.desc, "\"", "&quot;"))
 
 		var/list/raw_reqs = operation.get_requirements()
 		if(length(raw_reqs[2]) == 1)
@@ -73,7 +73,15 @@
 /datum/autowiki/surgery/proc/format_tool_list(datum/surgery_operation/operation)
 	var/output = ""
 
+	// tools which should not show up in the tools list
+	var/list/blacklisted_tool_types = list(
+		/obj/item/shovel/giant_wrench, // easter egg interaction
+	)
+
 	for(var/tool, multiplier in operation.implements)
+		if(tool in blacklisted_tool_types)
+			continue
+
 		var/list/tool_info = list()
 
 		tool_info["tool_multiplier"] = multiplier
@@ -81,7 +89,8 @@
 		var/tool_name = escape_value(get_tool_name(operation, tool))
 		tool_info["tool_name"] = tool_name
 
-		var/tool_icon = "surgery_tool_[SANITIZE_FILENAME(LOWER_TEXT(tool_name))]"
+		var/tool_id = LOWER_TEXT(replacetext("[tool_name]", " ", "_"))
+		var/tool_icon = "surgery_tool_[SANITIZE_FILENAME(tool_id)]" // already escaped
 		tool_info["tool_icon"] = tool_icon
 
 		if(!already_generated_tools[tool_icon])
@@ -110,7 +119,7 @@
 	if(ispath(tool, /obj/item/melee/energy)) // snowflake for soul reasons
 		return image(tool::icon, "[tool::icon_state]_on")
 	if(ispath(tool, /obj/item/bodypart)) // snowflake for readability
-		return image(/obj/item/bodypart/chest)
+		return image('icons/obj/medical/surgery_ui.dmi', "surgery_limbs")
 	if(ispath(tool, /obj/item/organ)) // snowflake for readability
-		return image(/obj/item/organ/stomach)
+		return image('icons/obj/medical/surgery_ui.dmi', "surgery_chest")
 	return image(tool)

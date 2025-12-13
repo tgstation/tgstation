@@ -86,7 +86,7 @@
 	rnd_name = "Wetware OS Destructive Defragmentation (Lobotomy)"
 	implements = list(
 		TOOL_MULTITOOL = 1.15,
-		/obj/item/melee/energy/sword = 0.55,
+		/obj/item/melee/energy/sword = 1.85,
 		/obj/item/knife = 2.85,
 		/obj/item/shard = 4,
 		/obj/item = 5,

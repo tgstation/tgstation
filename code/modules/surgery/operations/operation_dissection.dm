@@ -14,6 +14,9 @@
 	required_biotype = NONE
 	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
 
+/datum/surgery_operation/basic/dissection/get_default_radial_image()
+	return image(/obj/item/paper)
+
 /datum/surgery_operation/basic/dissection/all_required_strings()
 	. += ..()
 	. += "the patient must be deceased"
