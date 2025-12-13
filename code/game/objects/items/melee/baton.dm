@@ -103,12 +103,22 @@
 /obj/item/melee/baton/proc/add_deep_lore()
 	return
 
-/// Checks if we can actually USE the baton. Impure
-/obj/item/melee/baton/proc/can_baton(mob/living/target, mob/living/user)
-	PROTECTED_PROC(TRUE)
-	if(clumsy_check(user, target))
-		return FALSE
+#define STUN_ATTACK "stun attack"
 
+/**
+ * Checks if we can stun targets with the baton.
+ *
+ * Impure (has chat messages)
+ *
+ * * target - The mob being hit with the baton
+ * * user - The mob using the baton
+ * * harmbatonning - Whether or not this is being called from a harmbaton attack
+ *
+ * Returns TRUE if we can baton the target, FALSE if we cannot.
+ * If you return TRUE, it will also prevent an attack from occurring if we are not harmbatonning.
+ */
+/obj/item/melee/baton/proc/can_baton(mob/living/target, mob/living/user, harmbatonning)
+	PROTECTED_PROC(TRUE)
 	if(!chunky_finger_usable && ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.check_chunky_fingers() && user.is_holding(src) && !HAS_MIND_TRAIT(user, TRAIT_CHUNKYFINGERS_IGNORE_BATON))
@@ -120,50 +130,54 @@
 // Stun attack
 /obj/item/melee/baton/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(. || !isliving(target))
-		return .
-
-	if(!can_baton(target, user))
+	if(.)
 		return TRUE
 
-	if(!COOLDOWN_FINISHED(src, cooldown_check))
-		if(wait_desc)
-			balloon_alert(user, wait_desc)
-		return TRUE
+	if(!isliving(target))
+		return FALSE // bashing inanimate objects
 
-	if(HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user))) //no doublebaton abuse anon!
-		target.balloon_alert(user, "can't stun yet!")
-		return TRUE
+	var/harmbatonning = LAZYACCESS(modifiers, RIGHT_CLICK)
+	if(harmbatonning && !stun_on_harmbaton)
+		return FALSE // harmbatonning, no stun
 
-	if(active)
-		// when we continue to attack, deal 0 (brute) damage (just stun)
+	if(!can_baton(target, user, harmbatonning))
+		return !harmbatonning // can't baton - only cancel attack if not harmbatonning
+
+	if(clumsy_check(user, target))
+		return TRUE // you hit yourself, nerd
+
+	if(!will_stun(target, user, harmbatonning))
+		return !harmbatonning // will not stun - only cancel attack if not harmbatonning
+
+	// if not harm batonning, we override the default attack properties do do nothing
+	if(!harmbatonning)
 		SET_ATTACK_FORCE(attack_modifiers, 0)
 		MUTE_ATTACK_HITSOUND(attack_modifiers)
 		HIDE_ATTACK_MESSAGES(attack_modifiers)
-	return .
+	// then denote the attack as "will stun" for afterattack
+	LAZYSET(attack_modifiers, STUN_ATTACK, TRUE)
+	return FALSE // attack and stun
 
-// Harm attack
-/obj/item/melee/baton/pre_attack_secondary(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(. != SECONDARY_ATTACK_CALL_NORMAL || !isliving(target))
-		return .
-
-	if(!can_baton(target, user))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	// call attack, NOT pre_attack
-	// (so we go directly to harming)
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+/// Checks if an ongoing attack will stun the target
+/obj/item/melee/baton/proc/will_stun(mob/living/target, mob/user, harmbatonning)
+	if(!active)
+		return FALSE
+	if(!COOLDOWN_FINISHED(src, cooldown_check))
+		if(wait_desc && !harmbatonning)
+			balloon_alert(user, wait_desc)
+		return FALSE
+	if(HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)) ) //no doublebaton abuse anon!
+		if(!harmbatonning)
+			target.balloon_alert(user, "can't stun yet!")
+		return FALSE
+	return TRUE
 
 // This is where stun gets applied
 /obj/item/melee/baton/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
-	if(!isliving(target) || !active || !COOLDOWN_FINISHED(src, cooldown_check) || HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
-		return
-	// worst check in the chain but - right click = harmbaton
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) && !stun_on_harmbaton)
+	if(!isliving(target) || !LAZYACCESS(attack_modifiers, STUN_ATTACK))
 		return
 
-	finalize_baton_attack(target, user, modifiers)
+	finalize_baton_attack(target, user)
 
 	var/list/desc
 	if(iscyborg(target))
@@ -209,17 +223,17 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /// Wrapper for calling "stun()" and doing relevant vfx/sfx
-/obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, list/modifiers)
+/obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user)
 	PROTECTED_PROC(TRUE)
 	COOLDOWN_START(src, cooldown_check, cooldown)
 	if(on_stun_sound)
 		playsound(src, on_stun_sound, on_stun_volume, TRUE, -1)
-	if(baton_effect(target, user, modifiers) && user)
+	if(baton_effect(target, user) && user)
 		set_batoned(target, user, cooldown)
 		log_combat(user, target, "stunned", src.name)
 
 /// The actual "stun()" of the stun baton
-/obj/item/melee/baton/proc/baton_effect(mob/living/target, mob/living/user, list/modifiers, stun_override)
+/obj/item/melee/baton/proc/baton_effect(mob/living/target, mob/living/user, stun_override)
 	PROTECTED_PROC(TRUE)
 	var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE)
 	if(iscyborg(target))
@@ -279,33 +293,22 @@
 	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_IWASBATONED, user_ref), cooldown)
 
 /obj/item/melee/baton/proc/clumsy_check(mob/living/user, mob/living/intented_target)
-	if(!active || !HAS_TRAIT(user, TRAIT_CLUMSY) || prob(50))
+	if(!HAS_TRAIT(user, TRAIT_CLUMSY) || prob(50) || !will_stun(user, user, FALSE))
 		return FALSE
-	user.visible_message(span_danger("[user] accidentally hits [user.p_them()]self over the head with [src]! What a doofus!"), span_userdanger("You accidentally hit yourself over the head with [src]!"), visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE)
+	user.visible_message(
+		span_danger("[user] accidentally hits [user.p_them()]self over the head with [src]! What a doofus!"),
+		span_userdanger("You accidentally hit yourself over the head with [src]!"),
+		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+	)
 
-	if(iscyborg(user))
-		if(affect_cyborg)
-			user.flash_act(affect_silicon = TRUE)
-			user.Paralyze(clumsy_knockdown_time)
-			additional_effects_cyborg(user, user) // user is the target here
-			if(on_stun_sound)
-				playsound(src, on_stun_sound, on_stun_volume, TRUE, -1)
-		else
-			playsound(src, 'sound/effects/bang.ogg', 10, TRUE)
-	else
-		//straight up always force say for clumsy humans
-		if(ishuman(user))
-			var/mob/living/carbon/human/human_user = user
-			human_user.force_say()
-		user.Knockdown(clumsy_knockdown_time)
-		user.apply_damage(stamina_damage, STAMINA)
-		additional_effects_non_cyborg(user, user) // user is the target here
-		if(on_stun_sound)
-			playsound(src, on_stun_sound, on_stun_volume, TRUE, -1)
-
+	finalize_baton_attack(user, user)
 	user.apply_damage(2 * force, BRUTE, BODY_ZONE_HEAD, attacking_item = src)
 	log_combat(user, user, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
 	user.do_attack_animation(user)
+	user.changeNext_move(attack_speed)
+	return TRUE
+
+#undef STUN_ATTACK
 
 /obj/item/conversion_kit
 	name = "conversion kit"
@@ -666,28 +669,18 @@
 		//we're below minimum, turn off
 		turn_off()
 
-/obj/item/melee/baton/security/clumsy_check(mob/living/carbon/human/user)
-	. = ..()
-	if(.)
-		SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
-		deductcharge(cell_hit_cost)
-
-/obj/item/melee/baton/security/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(. || !isliving(target))
-		return .
-
-	if(!active && !user.combat_mode)
+/obj/item/melee/baton/security/can_baton(mob/living/target, mob/living/user, harmbatonning)
+	if(!active && !harmbatonning && !user.combat_mode)
 		target.visible_message(
 			span_warning("[user] prods [target] with [src]. Luckily it was off."),
 			span_warning("[user] prods you with [src]. Luckily it was off."),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
-		return TRUE
+		return FALSE
 
-	return .
+	return ..()
 
-/obj/item/melee/baton/security/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
+/obj/item/melee/baton/security/baton_effect(mob/living/target, mob/living/user, stun_override)
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/robot = loc
 		if(!robot || !robot.cell || !robot.cell.use(cell_hit_cost))
@@ -880,15 +873,15 @@
 	var/obj/item/melee/baton/security/cattleprod/brand_new_prod = new our_prod(user.loc)
 	user.put_in_hands(brand_new_prod)
 
-/obj/item/melee/baton/security/cattleprod/can_baton(mob/living/target, mob/living/user)
-	if(!sparkler.activate())
-		return FALSE
-	return ..()
+/obj/item/melee/baton/security/cattleprod/will_stun(mob/living/target, mob/user, harmbatonning)
+	return ..() && sparkler.activate()
 
 /obj/item/melee/baton/security/cattleprod/Destroy()
-	if(sparkler)
-		QDEL_NULL(sparkler)
+	QDEL_NULL(sparkler)
 	return ..()
+
+/obj/item/melee/baton/security/cattleprod/loaded
+	preload_cell_type = /obj/item/stock_parts/power_store/cell/high
 
 /obj/item/melee/baton/security/boomerang
 	name = "\improper OZtek Boomerang"
@@ -928,13 +921,7 @@
 	can_upgrade = FALSE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.15, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 
-/obj/item/melee/baton/security/cattleprod/teleprod/clumsy_check(mob/living/carbon/human/user)
-	. = ..()
-	if(!.)
-		return
-	do_teleport(user, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE)
-
-/obj/item/melee/baton/security/cattleprod/teleprod/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
+/obj/item/melee/baton/security/cattleprod/teleprod/baton_effect(mob/living/target, mob/living/user, stun_override)
 	. = ..()
 	if(!. || target.move_resist >= MOVE_FORCE_OVERPOWERING)
 		return
@@ -957,7 +944,7 @@
 		return
 	do_teleport(src, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE) //Wait, where did it go?
 
-/obj/item/melee/baton/security/cattleprod/telecrystalprod/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
+/obj/item/melee/baton/security/cattleprod/telecrystalprod/baton_effect(mob/living/target, mob/living/user, stun_override)
 	. = ..()
 	if(!.)
 		return
