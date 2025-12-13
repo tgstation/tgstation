@@ -288,12 +288,12 @@
 
 	if(owner)
 		if(loc?.loc == owner) // loc = some bodypart, loc.loc = some bodypart's owner
-			stack_trace("Forced removal triggered on a organ moving into the same mob!")
+			stack_trace("Forced removal triggered on [src] ([type]) moving into the same mob [owner] ([owner.type])!")
 		else
 			Remove(owner)
 	else if(bodypart_owner)
 		if(loc == bodypart_owner)
-			stack_trace("Forced removal triggered on a organ moving into the same bodypart!")
+			stack_trace("Forced removal triggered on [src] ([type]) moving into the same bodypart [bodypart_owner] ([bodypart_owner.type])!")
 		else
 			bodypart_remove(bodypart_owner)
 	else

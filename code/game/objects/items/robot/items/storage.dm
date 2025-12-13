@@ -212,7 +212,7 @@
 	/// Underlay of whatever we have stored
 	var/image/stored_underlay
 
-/obj/item/borg/apparatus/organ_storage/update_appearance(updates)
+/obj/item/borg/apparatus/organ_storage/update_overlays()
 	. = ..()
 	if(stored_underlay)
 		underlays -= stored_underlay

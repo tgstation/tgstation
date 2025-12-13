@@ -1,4 +1,4 @@
-/// You can apply this item to a mob to help in surgery - speeds it up marginally and makes incorrect actions not attack the guy
+/// Item can be applied to mobs to prepare them for surgery (allowing people to operate on them)
 /datum/element/surgery_aid
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2

@@ -262,9 +262,29 @@
  * If null, it will be permanent until removed.
  */
 /mob/living/proc/add_surgery_speed_mod(id, amount, duration)
-	LAZYSET(mob_surgery_speed_mods, id, amount)
+	ASSERT(!isnull(id), "Surgery speed mod ID cannot be null")
+	ASSERT(isnum(amount), "Surgery speed mod amount must be a number")
+	ASSERT(isnum(duration) || isnull(duration), "Surgery speed mod duration must be a number or null")
+
+	var/existing = LAZYACCESS(mob_surgery_speed_mods, id)
+	if(existing == amount)
+		return
+
+	if(isnum(existing))
+		if(amount > 1 && existing > 1)
+			// both are speed decreases, take the better one
+			LAZYSET(mob_surgery_speed_mods, id, max(amount, existing))
+		else if(amount < 1 && existing < 1)
+			// both are speed increases, take the better one
+			LAZYSET(mob_surgery_speed_mods, id, min(amount, existing))
+		else
+			// one of each, just multiply them
+			LAZYSET(mob_surgery_speed_mods, id, amount * existing)
+	else
+		LAZYSET(mob_surgery_speed_mods, id, amount)
+
 	if(isnum(duration))
-		addtimer(CALLBACK(src, PROC_REF(remove_surgery_speed_mod), id), duration, TIMER_DELETE_ME|TIMER_NO_HASH_WAIT)
+		addtimer(CALLBACK(src, PROC_REF(remove_surgery_speed_mod), id), duration, TIMER_DELETE_ME|TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_NO_HASH_WAIT)
 
 /**
  * Removes a speed modifier from this mob
@@ -888,18 +908,25 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	PROTECTED_PROC(TRUE)
 
-	surgeon.visible_message(detailed_message, self_message, vision_distance = 1, ignored_mobs = target_detailed ? null : target)
+	ASSERT(istext(self_message), "[type] operation display_results must have a self_message!")
+	ASSERT(istext(detailed_message), "[type] operation display_results must have a detailed_message!")
+	ASSERT(istext(vague_message) || target_detailed, "[type] operation display_results must have either a vague_message or target_detailed = TRUE!")
+
+	surgeon.visible_message(
+		message = detailed_message,
+		self_message = self_message,
+		vision_distance = 1,
+		ignored_mobs = target_detailed ? null : target
+	)
 	if(target_detailed)
 		return
+
 	var/you_feel = pick("a brief pain", "your body tense up", "an unnerving sensation")
-	if(!vague_message)
-		if(detailed_message)
-			stack_trace("DIDN'T GET PASSED A VAGUE MESSAGE.")
-			vague_message = detailed_message
-		else
-			stack_trace("NO MESSAGES TO SEND TO TARGET!")
-			vague_message = span_notice("You feel [you_feel] as you are operated on.")
-	target.show_message(vague_message, MSG_VISUAL, span_notice("You feel [you_feel] as you are operated on."))
+	target.show_message(
+		msg = vague_message || detailed_message || span_notice("You feel [you_feel] as you are operated on."),
+		type = MSG_VISUAL,
+		alt_msg = span_notice("You feel [you_feel] as you are operated on."),
+	)
 
 /// Display pain message to the target based on their traits and condition
 /datum/surgery_operation/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE)

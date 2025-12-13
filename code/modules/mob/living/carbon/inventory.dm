@@ -439,7 +439,7 @@
 	switch(location)
 		// Snowflake checks for these precise zones
 		if(BODY_ZONE_PRECISE_EYES)
-			if(is_eyes_covered(~exluded_equipment_slots) || (obscured_slots & HIDEFACE))
+			if(is_eyes_covered(~exluded_equipment_slots) || (obscured_slots & (HIDEEYES|HIDEFACE)))
 				return FALSE
 		if(BODY_ZONE_PRECISE_MOUTH)
 			if(is_mouth_covered(~exluded_equipment_slots) || (obscured_slots & HIDEFACE))
