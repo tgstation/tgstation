@@ -51,11 +51,11 @@
 	return include_template("Autowiki/SurgeryTableTemplate", list("content" = output))
 
 /datum/autowiki/surgery/proc/format_requirement_list(list/requirements)
-	var/output = "<ul>"
+	var/output
 	for(var/requirement in requirements)
 		output += "<li>[escape_value(capitalize(requirement))]</li>"
-	output += "</ul>"
-	return output
+
+	return output ? "<ul>[output]</ul>" : ""
 
 /datum/autowiki/surgery/proc/format_tool_list(datum/surgery_operation/operation)
 	var/output = ""
