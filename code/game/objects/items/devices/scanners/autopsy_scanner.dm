@@ -91,7 +91,7 @@
 			dmgreport += "</tr>"
 			dmgreport += "<tr><td colspan=6>&rdsh; Physical trauma: <u>Dismembered</u></td></tr>"
 			continue
-		var/has_any_embeds = length(limb.embedded_objects) >= 1
+		var/has_any_embeds = LAZYLEN(limb.embedded_objects) >= 1
 		var/has_any_wounds = length(limb.wounds) >= 1
 		dmgreport += "<tr>"
 		dmgreport += "<td><b>[capitalize(limb.name)]:</b></td>"

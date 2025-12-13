@@ -38,7 +38,7 @@
 	filename = "syndeye"
 	filedesc = "SyndEye"
 	extended_desc = "This program allows for illegal access to security camera networks."
-	download_access = list()
+	download_access = null
 	can_run_on_flags = PROGRAM_ALL
 	program_flags = PROGRAM_ON_SYNDINET_STORE | PROGRAM_UNIQUE_COPY
 

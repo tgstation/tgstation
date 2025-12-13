@@ -10,8 +10,8 @@
 	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/strobeshield/New()
-	..()
-	blacklist |= subtypesof(/obj/item/shield/riot)
+	LAZYADD(blacklist, typecacheof(/obj/item/shield/riot, ignore_root_path = TRUE))
+	return ..()
 
 /datum/crafting_recipe/improvisedshield
 	name = "Improvised Shield"
@@ -33,8 +33,19 @@
 	time = 4 SECONDS
 	category = CAT_EQUIPMENT
 
+/datum/crafting_recipe/radio_containing
+	abstract_type = /datum/crafting_recipe/radio_containing
+	/// Shared blacklist of all the radio types for anything that uses a radio in its construction, so we don't repeat it.
+	var/static/list/radio_types_blacklist
 
-/datum/crafting_recipe/radiogloves
+/datum/crafting_recipe/radio_containing/New()
+	if(isnull(radio_types_blacklist))
+		// because we got shit like /obj/item/radio/off ... WHY!?!
+		radio_types_blacklist = typecacheof(list(/obj/item/radio/headset, /obj/item/radio/intercom))
+	blacklist = radio_types_blacklist
+	return ..()
+
+/datum/crafting_recipe/radio_containing/radiogloves
 	name = "Radio Gloves"
 	result = /obj/item/clothing/gloves/radio
 	time = 1.5 SECONDS
@@ -45,11 +56,6 @@
 	)
 	tool_behaviors = list(TOOL_WIRECUTTER)
 	category = CAT_EQUIPMENT
-
-/datum/crafting_recipe/radiogloves/New()
-	..()
-	blacklist |= typesof(/obj/item/radio/headset)
-	blacklist |= typesof(/obj/item/radio/intercom)
 
 /datum/crafting_recipe/wheelchair
 	name = "Wheelchair"
@@ -163,8 +169,8 @@
 	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/flashlight_eyes/New()
-	. = ..()
-	blacklist += typesof(/obj/item/flashlight/flare)
+	LAZYADD(blacklist, typecacheof(/obj/item/flashlight/flare))
+	return ..()
 
 /datum/crafting_recipe/extendohand_r
 	name = "Extendo-Hand (Right Arm)"
@@ -308,8 +314,8 @@
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 
 /datum/crafting_recipe/morbid_surgical_toolset/New()
-	..()
-	blacklist |= subtypesof(/obj/item/organ/cyberimp/arm/toolkit/surgery)
+	LAZYADD(blacklist, typecacheof(/obj/item/organ/cyberimp/arm/toolkit/surgery, ignore_root_path = TRUE))
+	return ..()
 
 /datum/crafting_recipe/surgical_toolset
 	name = "Surgical Toolset Implant"

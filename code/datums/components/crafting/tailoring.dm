@@ -421,12 +421,7 @@
 	)
 	reqs = list(/obj/item/stack/sheet/cloth = 4)
 	category = CAT_CLOTHING
-
-/datum/crafting_recipe/chaplain_hood/New()
-	. = ..()
-	//the resulting hoodie can be used to craft other hoodies.
-	//recipe blacklists should be refactored to only affect components and not tools.
-	blacklist -= result
+	blacklist_result = NEVER_BLACKLIST_RESULT //the resulting hoodie can be used to craft other hoodies.
 
 /datum/crafting_recipe/flower_garland
 	name = "Flower Garland"

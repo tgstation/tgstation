@@ -1277,7 +1277,8 @@
 	. = ..()
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
 	if(affected_mob.has_dna())
-		affected_mob.dna.remove_mutation_group(affected_mob.dna.mutations - affected_mob.dna.get_mutation(/datum/mutation/race), GLOB.standard_mutation_sources)
+		var/list/mutations = affected_mob.dna.mutations || list()
+		affected_mob.dna.remove_mutation_group(mutations - affected_mob.dna.get_mutation(/datum/mutation/race), GLOB.standard_mutation_sources)
 		affected_mob.dna.scrambled = FALSE
 
 /datum/reagent/medicine/antihol
