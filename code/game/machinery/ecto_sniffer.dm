@@ -63,8 +63,8 @@
 	balloon_alert(user, "sniffer [anchored ? "anchored" : "unanchored"]")
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/ecto_sniffer/screwdriver_act(mob/living/user, obj/item/screwdriver)
-	if(default_deconstruction_screwdriver(user, "ecto_sniffer_open", "ecto_sniffer", screwdriver))
+/obj/machinery/ecto_sniffer/screwdriver_act(mob/living/user, obj/item/screwdrivertool)
+	if(default_deconstruction_screwdriver(user, "ecto_sniffer_open", "ecto_sniffer", screwdrivertool))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
