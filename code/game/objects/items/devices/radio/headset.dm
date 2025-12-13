@@ -455,24 +455,23 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	return TRUE
 
 /obj/item/radio/headset/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/encryptionkey))
-		if(keyslot && keyslot2)
-			to_chat(user, span_warning("The headset can't hold another key!"))
+	if(!istype(W, /obj/item/encryptionkey))
+		return ..()
+
+	if(keyslot && keyslot2)
+		to_chat(user, span_warning("The headset can't hold another key!"))
+		return
+
+	if(!keyslot)
+		if(!user.transferItemToLoc(W, src))
 			return
+		keyslot = W
+	else
+		if(!user.transferItemToLoc(W, src))
+			return
+		keyslot2 = W
 
-		if(!keyslot)
-			if(!user.transferItemToLoc(W, src))
-				return
-			keyslot = W
-
-		else
-			if(!user.transferItemToLoc(W, src))
-				return
-			keyslot2 = W
-
-		recalculateChannels()
-		return TRUE
-	return ..()
+	recalculateChannels()
 
 /obj/item/radio/headset/recalculateChannels()
 	. = ..()
