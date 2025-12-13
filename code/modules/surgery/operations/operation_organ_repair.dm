@@ -18,6 +18,8 @@
 	. = ..()
 	if(operation_flags & OPERATION_LOOPING)
 		repeatable = TRUE // if it's looping it would necessitate being repeatable
+	if(!repeatable)
+		desc += " This procedure can only be performed once per organ."
 
 /datum/surgery_operation/organ/repair/state_check(obj/item/organ/organ)
 	if(organ.damage < (organ.maxHealth * heal_to_percent) || (!repeatable && HAS_TRAIT(organ, TRAIT_ORGAN_OPERATED_ON)))

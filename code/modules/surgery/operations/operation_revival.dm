@@ -19,6 +19,9 @@
 	target_zone = BODY_ZONE_HEAD
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
 
+/datum/surgery_operation/basic/revival/get_default_radial_image()
+	return image(/obj/item/shockpaddles)
+
 /datum/surgery_operation/basic/revival/all_required_strings()
 	return ..() + list("the patient must be deceased", "the patient must be in a revivable state")
 

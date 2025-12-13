@@ -80,7 +80,7 @@
 /datum/surgery_operation/limb/mechanical_close
 	name = "screw shell"
 	desc = "Screw the shell of a mechanical patient back into place. \
-		Clears most skin surgical states."
+		Clears most surgical states."
 	required_bodytype = BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_SCREWDRIVER = 1,
@@ -120,7 +120,6 @@
 /datum/surgery_operation/limb/mechanical_close/on_success(obj/item/bodypart/limb)
 	. = ..()
 	limb.remove_surgical_state(ALL_SURGERY_STATES_UNSET_ON_CLOSE)
-	limb.refresh_bleed_rate()
 
 // Mechanical equivalent of cutting vessels and organs
 /datum/surgery_operation/limb/prepare_electronics

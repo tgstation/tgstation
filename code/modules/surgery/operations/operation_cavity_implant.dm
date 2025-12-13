@@ -58,9 +58,7 @@
 	return list("operate on chest (target chest)") + ..()
 
 /datum/surgery_operation/limb/cavity_implant/get_default_radial_image()
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(image('icons/hud/screen_gen.dmi', "arrow_large_still"))
-	return base
+	return image('icons/hud/screen_gen.dmi', "arrow_large_still")
 
 /datum/surgery_operation/limb/cavity_implant/state_check(obj/item/bodypart/chest/limb)
 	if(limb.body_zone != BODY_ZONE_CHEST)
@@ -138,6 +136,9 @@
 
 /datum/surgery_operation/limb/undo_cavity_implant/all_required_strings()
 	return list("operate on chest (target chest)") + ..()
+
+/datum/surgery_operation/limb/undo_cavity_implant/get_default_radial_image()
+	return image('icons/hud/screen_gen.dmi', "arrow_large_still")
 
 /datum/surgery_operation/limb/undo_cavity_implant/get_radial_options(obj/item/bodypart/chest/limb, obj/item/tool, operating_zone)
 	// Not bothering to cache this as the chance of hitting the same cavity item in the same round is rather low

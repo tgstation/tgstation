@@ -81,7 +81,7 @@
 	return ..() && tool.force >= 10
 
 /datum/surgery_operation/limb/incise_skin/abductor
-	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
+	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED | OPERATION_NO_WIKI
 	required_bodytype = NONE
 	biostate_blacklist = NONE // they got laser scalpels
 
@@ -122,14 +122,14 @@
 	limb.remove_surgical_state(SURGERY_SKIN_CUT)
 
 /datum/surgery_operation/limb/retract_skin/abductor
-	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
+	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED  | OPERATION_NO_WIKI
 	required_bodytype = NONE
 
 /// Closes the skin
 /datum/surgery_operation/limb/close_skin
 	name = "mend skin incision"
 	desc = "Mend the incision in the patient's skin, closing it up. \
-		Clears most skin surgical states."
+		Clears most surgical states."
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	replaced_by = /datum/surgery_operation/limb/close_skin/abductor
 	implements = list(
@@ -189,7 +189,7 @@
 	limb.remove_surgical_state(ALL_SURGERY_STATES_UNSET_ON_CLOSE)
 
 /datum/surgery_operation/limb/close_skin/abductor
-	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
+	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED  | OPERATION_NO_WIKI
 	required_bodytype = NONE
 
 /// Clamps bleeding blood vessels to prevent blood loss
@@ -232,7 +232,7 @@
 	limb.remove_surgical_state(SURGERY_VESSELS_UNCLAMPED)
 
 /datum/surgery_operation/limb/clamp_bleeders/abductor
-	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
+	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED  | OPERATION_NO_WIKI
 	required_bodytype = NONE
 
 /// Unclamps blood vessels to allow blood flow again
@@ -277,7 +277,7 @@
 	limb.remove_surgical_state(SURGERY_VESSELS_CLAMPED)
 
 /datum/surgery_operation/limb/unclamp_bleeders/abductor
-	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
+	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED  | OPERATION_NO_WIKI
 	required_bodytype = NONE
 
 /// Saws through bones to access organs
@@ -308,6 +308,9 @@
 	operation_flags = OPERATION_AFFECTS_MOOD
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED
+
+/datum/surgery_operation/limb/saw_bones/get_any_tool()
+	return "Any sharp edged item with decent force"
 
 /datum/surgery_operation/limb/saw_bones/get_default_radial_image()
 	return image(/obj/item/circular_saw)
@@ -489,7 +492,7 @@
 	display_pain(limb.owner, "You feel a sharp pain from inside your [limb.plaintext_zone]!")
 
 /datum/surgery_operation/limb/incise_organs/abductor
-	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
+	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED  | OPERATION_NO_WIKI
 	required_bodytype = NONE
 
 /datum/surgery_operation/limb/incise_organs/abductor/state_check(obj/item/bodypart/limb)

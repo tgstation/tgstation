@@ -14,6 +14,9 @@
 /datum/surgery_operation/limb/replace_limb/get_recommended_tool()
 	return "cybernetic limb"
 
+/datum/surgery_operation/limb/replace_limb/get_default_radial_image()
+	return image(/obj/item/bodypart/chest/robot)
+
 /datum/surgery_operation/limb/replace_limb/get_radial_options(obj/item/bodypart/limb, obj/item/tool, operating_zone)
 	var/datum/radial_menu_choice/option = LAZYACCESS(cached_augment_options, tool.type)
 	if(!option)

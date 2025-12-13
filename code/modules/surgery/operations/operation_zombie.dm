@@ -16,7 +16,7 @@
 	)
 
 /datum/surgery_operation/limb/bionecrosis/get_default_radial_image()
-	return get_dynamic_human_appearance(species_path = /datum/species/zombie)
+	return image(get_dynamic_human_appearance(species_path = /datum/species/zombie))
 
 /datum/surgery_operation/limb/bionecrosis/all_required_strings()
 	. = ..()

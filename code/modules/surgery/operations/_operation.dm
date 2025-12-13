@@ -661,7 +661,11 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(!(operation_flags & OPERATION_IGNORE_CLOTHES))
 		. += "the operation site must not be obstructed by clothing"
 
-/// Returns what icon this surgery uses by default on the radial wheel, if it doesn't implement its own radial options
+/**
+ * Returns what icon this surgery uses by default on the radial wheel if it does not implement its own radial options
+ *
+ * Also used when generating icons for the wiki
+ */
 /datum/surgery_operation/proc/get_default_radial_image()
 	return image(icon = 'icons/effects/random_spawners.dmi', icon_state = "questionmark")
 

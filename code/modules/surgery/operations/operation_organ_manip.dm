@@ -36,6 +36,9 @@
 /datum/surgery_operation/limb/organ_manipulation/get_recommended_tool()
 	return "[..()] / organ"
 
+/datum/surgery_operation/limb/organ_manipulation/get_default_radial_image()
+	return image('icons/obj/medical/surgery_ui.dmi', "surgery_any")
+
 /// Checks that the passed organ can be inserted/removed
 /datum/surgery_operation/limb/organ_manipulation/proc/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
 	return TRUE
@@ -242,7 +245,7 @@
 /// Abductor subtype that works through clothes and lets you extract the heart without sawing bones
 /datum/surgery_operation/limb/organ_manipulation/internal/abductor
 	name = "experimental organ manipulation"
-	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
+	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED | OPERATION_NO_WIKI
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
 	bone_locked_organs = "the brain or any chest organs EXCLUDING the heart"
 
@@ -273,7 +276,7 @@
 /// Abductor subtype that works through clothes
 /datum/surgery_operation/limb/organ_manipulation/external/abductor
 	name = "experimental feature manipulation"
-	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
+	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED | OPERATION_NO_WIKI
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
 
 #undef OPERATION_REMOVED_ORGAN

@@ -11,6 +11,9 @@
 	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_PRIORITY_NEXT_STEP
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
 
+/datum/surgery_operation/limb/repair_puncture/get_default_radial_image()
+	return image(/obj/item/hemostat)
+
 /datum/surgery_operation/limb/repair_puncture/all_required_strings()
 	return list("the limb must have an unoperated puncture wound") + ..()
 
@@ -78,6 +81,9 @@
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_PRIORITY_NEXT_STEP
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
+
+/datum/surgery_operation/limb/seal_veins/get_default_radial_image()
+	return image(/obj/item/cautery)
 
 /datum/surgery_operation/limb/seal_veins/get_any_tool()
 	return "Any heat source"

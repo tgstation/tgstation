@@ -37,6 +37,9 @@
 /datum/surgery_operation/basic/tend_wounds/state_check(mob/living/patient)
 	return patient.get_brute_loss() > 0 || patient.get_fire_loss() > 0
 
+/datum/surgery_operation/basic/tend_wounds/get_default_radial_image()
+	return image(/obj/item/storage/medkit)
+
 /datum/surgery_operation/basic/tend_wounds/get_radial_options(mob/living/patient, obj/item/tool, operating_zone)
 	var/list/options = list()
 

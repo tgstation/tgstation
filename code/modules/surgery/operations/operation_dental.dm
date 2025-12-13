@@ -69,6 +69,9 @@
 	time = 3.2 SECONDS
 	all_surgery_states_required = SURGERY_BONE_DRILLED|SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
 
+/datum/surgery_operation/limb/remove_dental_implant/get_default_radial_image()
+	return image(/obj/item/reagent_containers/applicator/pill)
+
 /datum/surgery_operation/limb/remove_dental_implant/snowflake_check_availability(atom/movable/operating_on, mob/living/surgeon, tool, operated_zone)
 	return ..() && operated_zone == BODY_ZONE_PRECISE_MOUTH
 

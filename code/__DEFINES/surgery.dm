@@ -115,6 +115,8 @@
 #define OPERATION_PRIORITY_NEXT_STEP (1<<9)
 /// Operation is a mechanic / robotic surgery
 #define OPERATION_MECHANIC (1<<10)
+/// Hides the operation from autowiki generation
+#define OPERATION_NO_WIKI (1<<11)
 
 DEFINE_BITFIELD(operation_flags, list(
 	"AFFECTS MOOD" = OPERATION_AFFECTS_MOOD,

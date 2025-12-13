@@ -122,7 +122,7 @@
 /datum/surgery_operation/basic/close_skin
 	name = "mend incision"
 	desc = "Mend the incision in the patient's skin, closing it up. \
-		Clears most skin surgical states."
+		Clears most surgical states."
 	implements = list(
 		TOOL_CAUTERY = 1,
 		/obj/item/stack/medical/suture = 1,

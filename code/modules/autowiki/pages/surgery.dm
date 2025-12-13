@@ -18,13 +18,20 @@
 	sortTim(locked_operations_alpha, GLOBAL_PROC_REF(cmp_name_asc))
 
 	for(var/datum/surgery_operation/operation as anything in unlocked_operations_alpha + locked_operations_alpha)
+		if(operation.operation_flags & OPERATION_NO_WIKI)
+			continue
+
 		var/list/operation_data = list()
 		var/locked = (operation in locked_operations_alpha)
 
-		operation_data["name"] = escape_value(capitalize(operation.rnd_name || operation.name))
-		operation_data["description"] = escape_value(operation.rnd_desc || operation.desc)
+		operation_data["name"] = escape_value(capitalize(replace_text(operation.rnd_name || operation.name, "\"", "&quot;")))
+		operation_data["description"] = escape_value(replace_text(operation.rnd_desc || operation.desc, "\"", "&quot;"))
 
 		var/list/raw_reqs = operation.get_requirements()
+		if(length(raw_reqs[2]) == 1)
+			raw_reqs[1] += raw_reqs[2]
+			raw_reqs[2] = list()
+
 		operation_data["hard_requirements"] = format_requirement_list(raw_reqs[1])
 		operation_data["soft_requirements"] = format_requirement_list(raw_reqs[2])
 		operation_data["optional_requirements"] = format_requirement_list(raw_reqs[3])
@@ -32,18 +39,24 @@
 
 		operation_data["tools"] = format_tool_list(operation)
 
-		var/filename = "surgery_[SANITIZE_FILENAME(escape_value(LOWER_TEXT(operation.type)))]"
+		var/type_id = LOWER_TEXT(replacetext("[operation.type]", "[/datum/surgery_operation]", ""))
+		var/filename = "surgery_[SANITIZE_FILENAME(escape_value(type_id))]"
 		operation_data["icon"] = filename
 
-		var/image/radial_icon = operation.get_default_radial_image()
-		upload_icon(getFlatIcon(radial_icon, no_anim = TRUE), filename)
+		var/image/radial_base = image('icons/hud/screen_alert.dmi', "template")
+		var/image/radial_overlay = operation.get_default_radial_image()
+		radial_overlay.plane = radial_base.plane
+		radial_overlay.layer = radial_base.layer + 1
+		radial_base.overlays += radial_overlay
+
+		upload_icon(getFlatIcon(radial_base, no_anim = TRUE), filename)
 
 		operation_data["cstyle"] = ""
 		if(locked && (operation.operation_flags & OPERATION_MECHANIC))
 			operation_data["cstyle"] = "background: linear-gradient(115deg, [COLOR_VOID_PURPLE] 50%, [COLOR_DARK_MODERATE_LIME_GREEN] 50%); color: [COLOR_WHITE];"
 		else if(locked)
 			operation_data["cstyle"] = "background-color: [COLOR_VOID_PURPLE]; color: [COLOR_WHITE];"
-		if(operation.operation_flags & OPERATION_MECHANIC)
+		else if(operation.operation_flags & OPERATION_MECHANIC)
 			operation_data["cstyle"] = "background-color: [COLOR_DARK_MODERATE_LIME_GREEN]; color: [COLOR_WHITE];"
 
 		output += include_template("Autowiki/SurgeryTemplate", operation_data)
@@ -96,4 +109,8 @@
 		return image('icons/effects/random_spawners.dmi', "questionmark")
 	if(ispath(tool, /obj/item/melee/energy)) // snowflake for soul reasons
 		return image(tool::icon, "[tool::icon_state]_on")
+	if(ispath(tool, /obj/item/bodypart)) // snowflake for readability
+		return image(/obj/item/bodypart/chest)
+	if(ispath(tool, /obj/item/organ)) // snowflake for readability
+		return image(/obj/item/organ/stomach)
 	return image(tool)
