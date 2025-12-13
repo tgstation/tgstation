@@ -108,23 +108,32 @@
 /**
  * Checks if we can stun targets with the baton.
  *
- * Impure (has chat messages)
+ * Impure (has chat feedback)
  *
  * * target - The mob being hit with the baton
  * * user - The mob using the baton
  * * harmbatonning - Whether or not this is being called from a harmbaton attack
  *
- * Returns TRUE if we can baton the target, FALSE if we cannot.
- * If you return TRUE, it will also prevent an attack from occurring if we are not harmbatonning.
+ * Returns TRUE if we can stun the target, FALSE if we cannot.
  */
-/obj/item/melee/baton/proc/can_baton(mob/living/target, mob/living/user, harmbatonning)
+/obj/item/melee/baton/proc/can_stun(mob/living/target, mob/living/user, harmbatonning)
 	PROTECTED_PROC(TRUE)
+	if(!active)
+		return FALSE
 	if(!chunky_finger_usable && ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.check_chunky_fingers() && user.is_holding(src) && !HAS_MIND_TRAIT(user, TRAIT_CHUNKYFINGERS_IGNORE_BATON))
-			balloon_alert(human_user, "fingers are too big!")
+			if(!harmbatonning)
+				balloon_alert(human_user, "fingers are too big!")
 			return FALSE
-
+	if(!COOLDOWN_FINISHED(src, cooldown_check))
+		if(wait_desc && !harmbatonning)
+			balloon_alert(user, wait_desc)
+		return FALSE
+	if(HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)) ) //no doublebaton abuse anon!
+		if(!harmbatonning)
+			target.balloon_alert(user, "can't stun yet!")
+		return FALSE
 	return TRUE
 
 // Stun attack
@@ -141,7 +150,7 @@
 		return FALSE // harmbatonning, no stun
 
 	// see if this attack will result in a stun, or if we need to cancel it
-	if(!can_baton(target, user, harmbatonning) || !will_stun(target, user, harmbatonning))
+	if(!can_stun(target, user, harmbatonning))
 		if(harmbatonning)
 			return FALSE // always allow attacks while harmbatonning
 		if(user.combat_mode && stun_on_harmbaton)
@@ -159,20 +168,6 @@
 	// then denote the attack as "will stun" for afterattack
 	LAZYSET(attack_modifiers, STUN_ATTACK, TRUE)
 	return FALSE // attack and stun
-
-/// Checks if an ongoing attack will stun the target
-/obj/item/melee/baton/proc/will_stun(mob/living/target, mob/user, harmbatonning)
-	if(!active)
-		return FALSE
-	if(!COOLDOWN_FINISHED(src, cooldown_check))
-		if(wait_desc && !harmbatonning)
-			balloon_alert(user, wait_desc)
-		return FALSE
-	if(HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)) ) //no doublebaton abuse anon!
-		if(!harmbatonning)
-			target.balloon_alert(user, "can't stun yet!")
-		return FALSE
-	return TRUE
 
 // This is where stun gets applied
 /obj/item/melee/baton/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
@@ -671,7 +666,7 @@
 		//we're below minimum, turn off
 		turn_off()
 
-/obj/item/melee/baton/security/can_baton(mob/living/target, mob/living/user, harmbatonning)
+/obj/item/melee/baton/security/can_stun(mob/living/target, mob/living/user, harmbatonning)
 	if(!active && !harmbatonning && !user.combat_mode)
 		target.visible_message(
 			span_warning("[user] prods [target] with [src]. Luckily it was off."),
@@ -875,7 +870,7 @@
 	var/obj/item/melee/baton/security/cattleprod/brand_new_prod = new our_prod(user.loc)
 	user.put_in_hands(brand_new_prod)
 
-/obj/item/melee/baton/security/cattleprod/will_stun(mob/living/target, mob/user, harmbatonning)
+/obj/item/melee/baton/security/cattleprod/can_stun(mob/living/target, mob/living/user, harmbatonning)
 	return ..() && sparkler.activate()
 
 /obj/item/melee/baton/security/cattleprod/Destroy()
