@@ -7,6 +7,3 @@
 #define DUCT_LAYER_DEFAULT THIRD_DUCT_LAYER
 
 #define MACHINE_REAGENT_TRANSFER 10 //the default max plumbing machinery transfers
-
-/// Name of omni color
-#define DUCT_COLOR_OMNI "omni"

@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 	///How many units the shower refills every second.
 	var/refill_rate = 0.5
 	///Does the shower have a water recycler to recollect its water supply?
-	var/has_water_reclaimer = TRUE
+	var/has_water_reclaimer = FALSE
 	///Which mode the shower is operating in.
 	var/mode = SHOWER_MODE_UNTIL_EMPTY
 	///The cooldown for SHOWER_MODE_TIMED mode.
@@ -60,16 +60,27 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
-/obj/machinery/shower/Initialize(mapload, ndir = 0, has_water_reclaimer = null)
+/obj/machinery/shower/Initialize(mapload)
 	. = ..()
+	setDir(dir)
 
-	if(ndir)
-		dir = ndir
+	has_water_reclaimer = mapload
+	create_reagents(reagent_capacity)
+	if(has_water_reclaimer)
+		reagents.add_reagent(reagent_id, reagent_capacity)
+	AddComponent(/datum/component/plumbing/simple_demand/extended)
 
-	if(has_water_reclaimer != null)
-		src.has_water_reclaimer = has_water_reclaimer
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_EXITED = PROC_REF(on_exited),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
-	switch(dir)
+	soundloop = new(src, FALSE)
+
+/obj/machinery/shower/setDir(newdir)
+	. = ..()
+	switch(newdir)
 		if(NORTH)
 			pixel_x = 0
 			pixel_y = -pixel_shift
@@ -83,17 +94,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 			pixel_x = pixel_shift
 			pixel_y = 0
 
-	create_reagents(reagent_capacity)
-	if(src.has_water_reclaimer)
-		reagents.add_reagent(reagent_id, reagent_capacity)
-	soundloop = new(src, FALSE)
-	AddComponent(/datum/component/plumbing/simple_demand/extended)
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-		COMSIG_ATOM_EXITED = PROC_REF(on_exited),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
-
 /obj/machinery/shower/examine(mob/user)
 	. = ..()
 	. += span_notice("It looks like the thermostat has an adjustment screw.")
@@ -104,7 +104,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 /obj/machinery/shower/Destroy()
 	QDEL_NULL(soundloop)
-	QDEL_NULL(reagents)
 	return ..()
 
 /obj/machinery/shower/interact(mob/user)
@@ -393,7 +392,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 /obj/structure/showerframe/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(tool, /obj/item/stock_parts/water_recycler))
 		qdel(tool)
-		var/obj/machinery/shower/shower = new(loc, REVERSE_DIR(dir), TRUE)
+		var/obj/machinery/shower/shower = new(loc)
+		shower.setDir(REVERSE_DIR(dir))
+		shower.has_water_reclaimer = TRUE
 		qdel(src)
 		playsound(shower, 'sound/machines/click.ogg', 20, TRUE)
 		return
@@ -403,7 +404,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	. = ..()
 
 	tool.play_tool_sound(src)
-	new/obj/machinery/shower(loc, REVERSE_DIR(dir), FALSE)
+	var/obj/machinery/shower/shower = new(loc)
+	shower.setDir(REVERSE_DIR(dir))
 	qdel(src)
 
 	return TRUE

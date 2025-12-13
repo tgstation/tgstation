@@ -54,7 +54,7 @@
 	))
 
 /datum/component/plumbing/Destroy()
-	ducts = null
+	ducts.Cut()
 	reagents = null
 	return ..()
 
@@ -112,38 +112,35 @@
 		for(var/atom/movable/found_atom in get_step(parent, direction))
 			if(istype(found_atom, /obj/machinery/duct))
 				var/obj/machinery/duct/duct = found_atom
-				duct.attempt_connect()
+				if(duct.neighbours) //neighbours is initialized during late init. We use this to stop connecting during here at mapload because the duct does that for us
+					duct.attempt_connect()
 				continue
 
 			for(var/datum/component/plumbing/plumber as anything in found_atom.GetComponents(/datum/component/plumbing))
 				if(plumber.active() && (plumber.ducting_layer & ducting_layer))
 					var/opposite_dir = REVERSE_DIR(direction)
 					if(plumber.demand_connects & opposite_dir && supply_connects & direction || plumber.supply_connects & opposite_dir && demand_connects & direction) //make sure we arent connecting two supplies or demands
-						var/datum/ductnet/net = new()
+						var/datum/ductnet/net = new
 						net.add_plumber(src, direction)
 						net.add_plumber(plumber, opposite_dir)
-
 
 /datum/component/plumbing/proc/disable()
 	SIGNAL_HANDLER
 
 	STOP_PROCESSING(SSplumbing, src)
 
-	//remove_plumber() can remove all ducts at once if they all belong to the same pipenet
-	//for e.g. in case of circular connections
-	//so we check if we have ducts to remove after each iteration
 	while(ducts.len)
-		var/datum/ductnet/duct = ducts[ducts[1]] //for maps index 1 will return the 1st key
-		duct.remove_plumber(src)
-	for(var/direction in GLOB.cardinals)
-		if(!(direction & (demand_connects | supply_connects)))
-			continue
-		for(var/obj/machinery/duct/duct in get_step(parent, direction))
-			if(!(duct.duct_layer & ducting_layer))
-				continue
-			duct.connects &= ~REVERSE_DIR(direction)
-			duct.neighbours.Remove(parent)
-			duct.update_appearance()
+		var/datum/ductnet/net = ducts[ducts[1]]
+
+		//disconnect ourself from any ducts connected to us
+		for(var/obj/machinery/duct/pipe as anything in net.ducts)
+			if(pipe.neighbours[parent])
+				pipe.neighbours -= parent
+				pipe.update_appearance()
+
+		//remove ourself from this network and delete it if emtpy
+		if(net.remove_plumber(src))
+			qdel(net)
 
 /datum/component/plumbing/proc/toggle_active(obj/parent_obj, new_state)
 	SIGNAL_HANDLER
@@ -253,10 +250,12 @@
 ///check who can give us what we want, and how many each of them will give us
 /datum/component/plumbing/proc/process_request(amount = MACHINE_REAGENT_TRANSFER, reagent, dir, round_robin = TRUE)
 	//find the duct to take from
-	var/datum/ductnet/net
-	if(!ducts.Find(num2text(dir)))
+	var/dirtext = num2text(dir)
+	var/datum/ductnet/net = ducts[dirtext]
+	if(QDELETED(net))
+		if(net)
+			ducts -= dirtext
 		return FALSE
-	net = ducts[num2text(dir)]
 
 	//find all valid suppliers in the duct
 	var/list/valid_suppliers = list()

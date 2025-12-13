@@ -23,7 +23,7 @@
 	/// Lazylist of fish in the toilet, not to be mixed with the items in the cistern. Max of 3
 	var/list/fishes
 	/// Does the toilet have a water recycler to recollect its water supply?
-	var/has_water_reclaimer = TRUE
+	var/has_water_reclaimer = FALSE
 	/// Units of water to reclaim per second
 	var/reclaim_rate = 0.5
 	/// What reagent does the toilet flush with
@@ -33,20 +33,22 @@
 	/// Item stuck in the basin of the toilet
 	var/obj/item/stuck_item = null
 
-/obj/structure/toilet/Initialize(mapload, has_water_reclaimer = null)
+/obj/structure/toilet/Initialize(mapload)
 	. = ..()
 	cover_open = round(rand(0, 1))
-	if(!isnull(has_water_reclaimer))
-		src.has_water_reclaimer = has_water_reclaimer
 	update_appearance(UPDATE_ICON)
+
 	if(mapload && SSmapping.level_trait(z, ZTRAIT_STATION))
 		AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/toilet])
 	AddElement(/datum/element/fish_safe_storage)
-	register_context()
+
+	has_water_reclaimer = mapload
 	create_reagents(reagent_capacity)
-	if(src.has_water_reclaimer)
+	if(has_water_reclaimer)
 		reagents.add_reagent(reagent_id, reagent_capacity)
 	AddComponent(/datum/component/plumbing/simple_demand/extended)
+
+	register_context()
 
 /obj/structure/toilet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -92,10 +94,10 @@
 		. += span_notice("You can see [cistern_items.len] items inside of the cistern.")
 
 /obj/structure/toilet/Destroy(force)
-	. = ..()
 	QDEL_LAZYLIST(fishes)
 	QDEL_LAZYLIST(cistern_items)
 	QDEL_NULL(stuck_item)
+	return ..()
 
 /obj/structure/toilet/Exited(atom/movable/gone, direction)
 	. = ..()

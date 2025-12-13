@@ -1,76 +1,80 @@
 ///We handle the unity part of plumbing. We track who is connected to who.
 /datum/ductnet
-	///Stuff that can supply chems
-	var/list/suppliers = list()
-	////Stuff that can take chems
-	var/list/demanders = list()
 	///All the ducts that make this network
-	var/list/obj/machinery/duct/ducts = list()
+	var/list/obj/machinery/duct/ducts
+	///Stuff that can supply chems used by machines to retrive chems
+	var/list/datum/component/plumbing/suppliers
+	///Stuff that demands chems keep track of components that need their ducts updated as this net evolves
+	VAR_PRIVATE/list/datum/component/plumbing/demanders
 
-///Add a duct to our network
+/datum/ductnet/New(obj/machinery/duct/parent)
+	ducts = list()
+	suppliers = list()
+	demanders = list()
+	if(parent) //is null when connecting 2 machines without a duct
+		add_duct(parent)
+	return ..()
+
+/datum/ductnet/Destroy(force)
+	ducts.Cut()
+	for(var/datum/component/plumbing/P as anything in suppliers + demanders)
+		remove_plumber(P)
+	suppliers.Cut()
+	demanders.Cut()
+	return ..()
+
+///Adds an duct to this net
 /datum/ductnet/proc/add_duct(obj/machinery/duct/D)
-	if(!D || (D in ducts))
+	if(D in ducts)
 		return
+	if(D.net) //is null when duct is initialized
+		D.disconnect()
 	ducts += D
-	D.duct = src
-
-///Remove a duct from our network and commit suicide, because this is probably easier than to check who that duct was connected to and what part of us was lost
-/datum/ductnet/proc/remove_duct(obj/machinery/duct/ducting)
-	destroy_network(FALSE)
-	for(var/obj/machinery/duct/D in ducting.neighbours)
-		addtimer(CALLBACK(D, TYPE_PROC_REF(/obj/machinery/duct,attempt_connect))) //needs to happen after qdel
-	qdel(src)
+	D.net = src
 
 ///add a plumbing object to either demanders or suppliers
 /datum/ductnet/proc/add_plumber(datum/component/plumbing/P, dir)
-	if(!P.active())
+	var/dirtext = num2text(dir)
+	if(P.ducts[dirtext] == src)
 		return FALSE
-	var/dir_text = num2text(dir)
-	if(dir_text in P.ducts)
-		return FALSE
-	P.ducts[dir_text] = src
+	P.ducts[dirtext] = src
 	if(dir & P.supply_connects)
 		suppliers += P
-	else if(dir & P.demand_connects)
+	if(dir & P.demand_connects)
 		demanders += P
 	return TRUE
 
-///remove a plumber. we don't delete ourselves because ductnets don't persist through plumbing objects
+///remove a plumber. we don't delete ourselves because ductnets don't persist through plumbing objects.
 /datum/ductnet/proc/remove_plumber(datum/component/plumbing/P)
-	suppliers.Remove(P) //we're probably only in one of these, but Remove() is inherently sane so this is fine
-	demanders.Remove(P)
-
 	for(var/dir in P.ducts)
 		if(P.ducts[dir] == src)
 			P.ducts -= dir
+			dir = text2num(dir)
+			if(dir & P.supply_connects)
+				suppliers -= P
+			if(dir & P.demand_connects)
+				demanders -= P
 
-	if(!ducts.len) //there were no ducts, so it was a direct connection. we destroy ourselves since a ductnet with only one plumber and no ducts is worthless
-		destroy_network()
+	//return if this net has no ducts like when 2 machines are connected
+	return !ducts.len
 
 ///we combine ductnets. this occurs when someone connects to separate sets of fluid ducts
 /datum/ductnet/proc/assimilate(datum/ductnet/D)
-	ducts.Add(D.ducts)
-	suppliers.Add(D.suppliers)
-	demanders.Add(D.demanders)
-	for(var/A in D.suppliers + D.demanders)
-		var/datum/component/plumbing/P = A
+	//Take all its suppliers & demanders
+	suppliers |= D.suppliers
+	demanders |= D.demanders
+	for(var/datum/component/plumbing/P as anything in D.suppliers + D.demanders)
 		for(var/s in P.ducts)
 			if(P.ducts[s] != D)
 				continue
-			P.ducts[s] = src  //all your ducts are belong to us
-	for(var/A in D.ducts)
-		var/obj/machinery/duct/M = A
-		M.duct = src //forget your old master
+			P.ducts[s] = src
+	D.suppliers.Cut()
+	D.demanders.Cut()
 
-	D.ducts.Cut() //clear this so the other network doesn't clear the ducts along with themselves (this took the life out of me)
-	D.destroy_network()
+	//Take all its ducts
+	ducts |= D.ducts
+	for(var/obj/machinery/duct/M as anything in D.ducts)
+		M.net = src
 
-///destroy the network and tell all our ducts and plumbers we are gone
-/datum/ductnet/proc/destroy_network(delete=TRUE)
-	for(var/A in suppliers + demanders)
-		remove_plumber(A)
-	for(var/A in ducts)
-		var/obj/machinery/duct/D = A
-		D.duct = null
-	if(delete) //I don't want code to run with qdeleted objects because that can never be good, so keep this in-case the ductnet has some business left to attend to before committing suicide
-		qdel(src)
+	//destory it
+	qdel(D)

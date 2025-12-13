@@ -15,7 +15,7 @@
 	///Number of sheets of material to drop when broken or deconstructed.
 	var/buildstackamount = 1
 	///Does the sink have a water recycler to recollect its water supply?
-	var/has_water_reclaimer = TRUE
+	var/has_water_reclaimer = FALSE
 	///Units of water to reclaim per second
 	var/reclaim_rate = 0.5
 	///Amount of shift the pixel for placement
@@ -23,16 +23,19 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 
-/obj/structure/sink/Initialize(mapload, ndir = 0, has_water_reclaimer = null)
+/obj/structure/sink/Initialize(mapload)
 	. = ..()
+	setDir(dir)
 
-	if(ndir)
-		dir = ndir
+	has_water_reclaimer = mapload
+	create_reagents(100, NO_REACT)
+	if(src.has_water_reclaimer)
+		reagents.add_reagent(dispensedreagent, 100)
+	AddComponent(/datum/component/plumbing/simple_demand/extended)
 
-	if(has_water_reclaimer != null)
-		src.has_water_reclaimer = has_water_reclaimer
-
-	switch(dir)
+/obj/structure/sink/setDir(newdir)
+	. = ..()
+	switch(newdir)
 		if(NORTH)
 			pixel_x = 0
 			pixel_y = -pixel_shift
@@ -45,11 +48,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		if(WEST)
 			pixel_x = pixel_shift
 			pixel_y = 0
-
-	create_reagents(100, NO_REACT)
-	if(src.has_water_reclaimer)
-		reagents.add_reagent(dispensedreagent, 100)
-	AddComponent(/datum/component/plumbing/simple_demand/extended)
 
 /obj/structure/sink/examine(mob/user)
 	. = ..()

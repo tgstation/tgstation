@@ -210,7 +210,7 @@
 
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	if(ispath(blueprint, /obj/machinery/duct))
-		new blueprint(destination, GLOB.pipe_paint_colors[current_color], GLOB.plumbing_layers[current_layer], current_color == DUCT_COLOR_OMNI)
+		new blueprint(destination, GLOB.pipe_paint_colors[current_color], GLOB.plumbing_layers[current_layer])
 	else
 		new blueprint(destination, GLOB.plumbing_layers[current_layer])
 	useResource(cost, user)
