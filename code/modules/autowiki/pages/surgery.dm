@@ -38,7 +38,15 @@
 		var/image/radial_icon = operation.get_default_radial_image()
 		upload_icon(getFlatIcon(radial_icon, no_anim = TRUE), filename)
 
-		output += include_template("Autowiki/SurgeryTemplate[locked ? "Locked" : ""]", operation_data)
+		operation_data["cstyle"] = ""
+		if(locked && (operation.operation_flags & OPERATION_MECHANIC))
+			operation_data["cstyle"] = "background: linear-gradient(115deg, [COLOR_VOID_PURPLE] 50%, [COLOR_DARK_MODERATE_LIME_GREEN] 50%); color: [COLOR_WHITE];"
+		else if(locked)
+			operation_data["cstyle"] = "background-color: [COLOR_VOID_PURPLE]; color: [COLOR_WHITE];"
+		if(operation.operation_flags & OPERATION_MECHANIC)
+			operation_data["cstyle"] = "background-color: [COLOR_DARK_MODERATE_LIME_GREEN]; color: [COLOR_WHITE];"
+
+		output += include_template("Autowiki/SurgeryTemplate", operation_data)
 
 	return include_template("Autowiki/SurgeryTableTemplate", list("content" = output))
 
