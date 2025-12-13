@@ -108,7 +108,8 @@
 /**
  * Checks if we can stun targets with the baton.
  *
- * Impure (has chat feedback)
+ * Impure (has chat feedback and mutates state in some subtypes).
+ * In other words don't call this unless a stun is being attempted.
  *
  * * target - The mob being hit with the baton
  * * user - The mob using the baton
@@ -116,7 +117,7 @@
  *
  * Returns TRUE if we can stun the target, FALSE if we cannot.
  */
-/obj/item/melee/baton/proc/can_stun(mob/living/target, mob/living/user, harmbatonning)
+/obj/item/melee/baton/proc/try_stun(mob/living/target, mob/living/user, harmbatonning)
 	PROTECTED_PROC(TRUE)
 	if(!active)
 		return FALSE
@@ -150,14 +151,26 @@
 		return FALSE // harmbatonning, no stun
 
 	// see if this attack will result in a stun, or if we need to cancel it
-	if(!can_stun(target, user, harmbatonning))
+	if(!try_stun(target, user, harmbatonning))
 		if(harmbatonning)
 			return FALSE // always allow attacks while harmbatonning
 		if(user.combat_mode && stun_on_harmbaton)
 			return FALSE // only allow an attacks in combat mode + if stun_on_harmbaton is set
 		return TRUE // otherwise, prevent the attack
 
-	if(clumsy_check(user, target))
+	// clumsy people redirect this attack - yes, this bypasses IWASBATONED and such
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
+		user.visible_message(
+			span_danger("[user] accidentally hits [user.p_them()]self over the head with [src]! What a doofus!"),
+			span_userdanger("You accidentally hit yourself over the head with [src]!"),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+
+		finalize_baton_attack(user, user, clumsy = TRUE)
+		user.apply_damage(2 * force, BRUTE, BODY_ZONE_HEAD, attacking_item = src)
+		log_combat(user, user, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
+		user.do_attack_animation(user)
+		user.changeNext_move(attack_speed)
 		return TRUE // you hit yourself, nerd
 
 	// if not harm batonning, we override the default attack properties do do nothing
@@ -220,17 +233,17 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /// Wrapper for calling "stun()" and doing relevant vfx/sfx
-/obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user)
+/obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, clumsy = FALSE)
 	PROTECTED_PROC(TRUE)
 	COOLDOWN_START(src, cooldown_check, cooldown)
 	if(on_stun_sound)
 		playsound(src, on_stun_sound, on_stun_volume, TRUE, -1)
-	if(baton_effect(target, user) && user)
+	if(baton_effect(target, user, null, clumsy) && user)
 		set_batoned(target, user, cooldown)
 		log_combat(user, target, "stunned", src.name)
 
 /// The actual "stun()" of the stun baton
-/obj/item/melee/baton/proc/baton_effect(mob/living/target, mob/living/user, stun_override)
+/obj/item/melee/baton/proc/baton_effect(mob/living/target, mob/living/user, stun_override, clumsy)
 	PROTECTED_PROC(TRUE)
 	var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE)
 	if(iscyborg(target))
@@ -288,22 +301,6 @@
 	var/user_ref = REF(user) // avoids harddels.
 	ADD_TRAIT(target, TRAIT_IWASBATONED, user_ref)
 	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_IWASBATONED, user_ref), cooldown)
-
-/obj/item/melee/baton/proc/clumsy_check(mob/living/user, mob/living/intented_target)
-	if(!HAS_TRAIT(user, TRAIT_CLUMSY) || prob(50) || !will_stun(user, user, FALSE))
-		return FALSE
-	user.visible_message(
-		span_danger("[user] accidentally hits [user.p_them()]self over the head with [src]! What a doofus!"),
-		span_userdanger("You accidentally hit yourself over the head with [src]!"),
-		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
-	)
-
-	finalize_baton_attack(user, user)
-	user.apply_damage(2 * force, BRUTE, BODY_ZONE_HEAD, attacking_item = src)
-	log_combat(user, user, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
-	user.do_attack_animation(user)
-	user.changeNext_move(attack_speed)
-	return TRUE
 
 #undef STUN_ATTACK
 
@@ -666,7 +663,7 @@
 		//we're below minimum, turn off
 		turn_off()
 
-/obj/item/melee/baton/security/can_stun(mob/living/target, mob/living/user, harmbatonning)
+/obj/item/melee/baton/security/try_stun(mob/living/target, mob/living/user, harmbatonning)
 	if(!active && !harmbatonning && !user.combat_mode)
 		target.visible_message(
 			span_warning("[user] prods [target] with [src]. Luckily it was off."),
@@ -677,7 +674,7 @@
 
 	return ..()
 
-/obj/item/melee/baton/security/baton_effect(mob/living/target, mob/living/user, stun_override)
+/obj/item/melee/baton/security/baton_effect(mob/living/target, mob/living/user, stun_override, clumsy)
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/robot = loc
 		if(!robot || !robot.cell || !robot.cell.use(cell_hit_cost))
@@ -870,7 +867,7 @@
 	var/obj/item/melee/baton/security/cattleprod/brand_new_prod = new our_prod(user.loc)
 	user.put_in_hands(brand_new_prod)
 
-/obj/item/melee/baton/security/cattleprod/can_stun(mob/living/target, mob/living/user, harmbatonning)
+/obj/item/melee/baton/security/cattleprod/try_stun(mob/living/target, mob/living/user, harmbatonning)
 	return ..() && sparkler.activate()
 
 /obj/item/melee/baton/security/cattleprod/Destroy()
@@ -918,11 +915,11 @@
 	can_upgrade = FALSE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.15, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 
-/obj/item/melee/baton/security/cattleprod/teleprod/baton_effect(mob/living/target, mob/living/user, stun_override)
+/obj/item/melee/baton/security/cattleprod/teleprod/baton_effect(mob/living/target, mob/living/user, stun_override, clumsy)
 	. = ..()
 	if(!. || target.move_resist >= MOVE_FORCE_OVERPOWERING)
 		return
-	do_teleport(target, get_turf(target), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
+	do_teleport(target, get_turf(target), clumsy ? 50 : 15, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/item/melee/baton/security/cattleprod/telecrystalprod
 	name = "snatcherprod"
@@ -935,13 +932,7 @@
 	throw_stun_chance = 50 //I think it'd be funny
 	can_upgrade = FALSE
 
-/obj/item/melee/baton/security/cattleprod/telecrystalprod/clumsy_check(mob/living/carbon/human/user)
-	. = ..()
-	if(!.)
-		return
-	do_teleport(src, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE) //Wait, where did it go?
-
-/obj/item/melee/baton/security/cattleprod/telecrystalprod/baton_effect(mob/living/target, mob/living/user, stun_override)
+/obj/item/melee/baton/security/cattleprod/telecrystalprod/baton_effect(mob/living/target, mob/living/user, stun_override, clumsy)
 	. = ..()
 	if(!.)
 		return
@@ -954,6 +945,8 @@
 		stuff_in_hand.forceMove(user.drop_location())
 		stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears!"))
 
+	if(clumsy && user.dropItemToGround(src, force = TRUE, silent = TRUE))
+		do_teleport(src, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE) //Wait, where did it go?
 
 /obj/item/melee/baton/nunchaku
 	name = "Syndie Fitness Nunchuks"

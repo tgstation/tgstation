@@ -377,10 +377,10 @@ Return to step 11 of normal process."}
 			icon_state = "wonderprodProbe"
 			inhand_icon_state = "wonderprodProbe"
 
-/obj/item/melee/baton/abductor/can_stun(mob/living/target, mob/living/user, harmbatonning)
+/obj/item/melee/baton/abductor/try_stun(mob/living/target, mob/living/user, harmbatonning)
 	return AbductorCheck(user) && ..()
 
-/obj/item/melee/baton/abductor/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
+/obj/item/melee/baton/abductor/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override, clumsy)
 	switch (mode)
 		if(BATON_STUN)
 			target.visible_message(span_danger("[user] stuns [target] with [src]!"),
