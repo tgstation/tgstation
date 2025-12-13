@@ -51,7 +51,7 @@
 #define TERROR_HANDLER_EFFECT "effect"
 
 // Default cooldown for terror messages, to not get spammy
-#define TERROR_MESSAGE_CD 30 SECONDS
+#define TERROR_MESSAGE_CD 15 SECONDS
 
 // Values for terror buildup effects
 /// Initial value for effects that apply the component from spooking you
