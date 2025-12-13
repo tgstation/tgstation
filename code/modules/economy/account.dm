@@ -318,8 +318,11 @@
 
 /datum/bank_account/department/adjust_money(amount, reason)
 	. = ..()
+
+	SSblackbox.record_feedback("amount", "[department_id]_balance", account_balance, world.time) //Provides the cargo balance alongside a timestamp for comparison afterwards.
 	if(department_id != ACCOUNT_CAR)
 		return
+
 	// If we're under (or equal) 3 crates woth of money (600?) in the cargo department, we unlock the scrapheap, which gives us a buncha money. Useful in an emergency?
 	if(account_balance >= CARGO_CRATE_VALUE * 3)
 		return
