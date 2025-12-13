@@ -202,7 +202,7 @@ All the important duct code:
 				if(!(duct_layer & plumbing.ducting_layer))
 					continue
 
-				//does the duct back end connect to either supplier or demander
+				//does the duct backend connect to either supplier or demander
 				if(!(opposite_dir & (plumbing.supply_connects | plumbing.demand_connects)))
 					continue
 
