@@ -72,7 +72,7 @@ const RequestLogsScreen = (props) => {
               <Table.Cell>Delete</Table.Cell>
               <Table.Cell>Message</Table.Cell>
               <Table.Cell>Stamp</Table.Cell>
-              <Table.Cell>Departament</Table.Cell>
+              <Table.Cell>Department</Table.Cell>
               <Table.Cell>Authentication</Table.Cell>
             </Table.Row>
             {requests?.map((request) => (

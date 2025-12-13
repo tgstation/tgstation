@@ -96,7 +96,7 @@ export const touchRecents = (
 };
 
 // Store window geometry in local storage
-const storeWindowGeometry = async () => {
+export const storeWindowGeometry = async () => {
   logger.log('storing geometry');
   const geometry = {
     pos: getWindowPosition(),
@@ -117,14 +117,13 @@ const storeWindowGeometry = async () => {
 // Recall window geometry from local storage and apply it
 export const recallWindowGeometry = async (
   options: {
-    fancy?: BooleanLike;
     pos?: [number, number];
     size?: [number, number];
     locked?: BooleanLike;
     scale?: BooleanLike;
   } = {},
 ) => {
-  const geometry = options.fancy && (await storage.get(windowKey));
+  const geometry = await storage.get(windowKey);
   if (geometry) {
     logger.log('recalled geometry:', geometry);
   }
