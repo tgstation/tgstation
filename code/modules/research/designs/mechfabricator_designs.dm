@@ -2105,15 +2105,6 @@
 	)
 	build_path = /obj/item/mod/module/storage
 
-/datum/design/module/mod_storage_expanded
-	name = "Expanded Storage Module"
-	id = "mod_storage_expanded"
-	materials = list(
-		/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5,
-		/datum/material/uranium =SHEET_MATERIAL_AMOUNT,
-	)
-	build_path = /obj/item/mod/module/storage/large_capacity
-
 /datum/design/module/mod_visor_medhud
 	name = "Medical Visor Module"
 	id = "mod_visor_medhud"
