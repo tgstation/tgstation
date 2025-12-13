@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - rscadd: "Added a counterattack for sheathed weapons. When used, an attack from your target within a one-second window will cause you to counterattack with a triple-damage strike."
