@@ -115,19 +115,17 @@ All the important duct code:
 				for(var/obj/machinery/node in pipe.neighbours)
 					queue += node
 
-		//now establish a new pipenet for the full network
+		//first move all ducts to the new network
 		var/datum/ductnet/newnet
-		for(var/obj/machinery/node in network)
-			//assign new pipenet to ducts
-			var/obj/machinery/duct/pipe = astype(node)
-			if(!isnull(pipe))
-				if(!newnet)
-					newnet = new (pipe)
-				else
-					newnet.add_duct(pipe)
-				continue
+		for(var/obj/machinery/duct/pipe in network)
+			if(!newnet)
+				newnet = new (pipe)
+			else
+				newnet.add_duct(pipe)
+			network -= pipe
 
-			//make surrounding ducts with their new pipenet reconnect to this machine
+		//next reconnect machines with their new pipenets
+		for(var/obj/machinery/node as anything in network)
 			for(var/datum/component/plumbing/plumbing as anything in node.GetComponents(/datum/component/plumbing))
 				for(var/direction in GLOB.cardinals)
 					if(!(direction & (plumbing.demand_connects | plumbing.supply_connects)))
