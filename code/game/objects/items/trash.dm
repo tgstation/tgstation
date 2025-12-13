@@ -77,9 +77,14 @@
 	icon_state = "sosjerky"
 
 /obj/item/trash/syndi_cakes
-	name = "syndi-cakes"
+	name = "lil syndie's snack cakes box"
+	desc = "Created with non-biodegradable cardboard."
 	icon_state = "syndi_cakes"
-	custom_materials = list(/datum/material/cardboard=SMALL_MATERIAL_AMOUNT*2)
+	custom_materials = list(/datum/material/cardboard=SMALL_MATERIAL_AMOUNT*2) //we dont care about the environment
+
+/obj/item/trash/syndi_cakes_wrapper
+	name = "syndi-cake wrapper"
+	icon_state = "syndi_cakes_wrapper"
 
 /obj/item/trash/energybar
 	name = "energybar wrapper"
