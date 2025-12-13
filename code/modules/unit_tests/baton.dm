@@ -30,16 +30,16 @@
 	// Perform an attack, while off baton cooldown
 	click_wrapper(attacker, defender, click_modifiers)
 	TEST_ASSERT_EQUAL(defender.get_stamina_loss(), asserted_stamina_damage(), \
-		"[baton_type] did an incorrect amount of stamina damage to target ([get_descriptor()])")
+		"[baton_type::name] did an incorrect amount of stamina damage to target ([get_descriptor()])")
 	TEST_ASSERT_EQUAL(defender.get_brute_loss(), asserted_brute_damage(), \
-		"[baton_type] did an incorrect amount of brute damage to target ([get_descriptor()])")
+		"[baton_type::name] did an incorrect amount of brute damage to target ([get_descriptor()])")
 
 	// Now perform an attack while on baton cooldown
 	click_wrapper(attacker, defender, click_modifiers)
 	TEST_ASSERT_EQUAL(defender.get_stamina_loss(), asserted_stamina_damage(), \
-		"[baton_type] did an incorrect amount of stamina damage to target while on cooldown ([get_descriptor()])")
+		"[baton_type::name] did an incorrect amount of stamina damage to target while on cooldown ([get_descriptor()])")
 	TEST_ASSERT_EQUAL(defender.get_brute_loss(), asserted_brute_damage() * 2, \
-		"[baton_type] did an incorrect amount of brute damage to target while on cooldown ([get_descriptor()])")
+		"[baton_type::name] did an incorrect amount of brute damage to target while on cooldown ([get_descriptor()])")
 
 /// How much stamina damage is expected from this test case
 /datum/unit_test/baton/proc/asserted_stamina_damage()
@@ -135,7 +135,7 @@
 
 // Left click stunprod
 /datum/unit_test/baton/left_click/prod
-	abstract_type = /datum/unit_test/baton/left_click
+	abstract_type = /datum/unit_test/baton/left_click/prod
 	baton_type = /obj/item/melee/baton/security/cattleprod/loaded
 
 // - Active + combat mode = stuns, no damage
@@ -175,6 +175,7 @@
 
 // Right click stunprod
 /datum/unit_test/baton/right_click/prod
+	abstract_type = /datum/unit_test/baton/right_click/prod
 	baton_type = /obj/item/melee/baton/security/cattleprod/loaded
 
 // - Active + combat mode = stuns, deals damage

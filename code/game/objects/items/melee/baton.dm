@@ -153,10 +153,13 @@
 	// see if this attack will result in a stun, or if we need to cancel it
 	if(!try_stun(target, user, harmbatonning))
 		if(harmbatonning)
-			return FALSE // always allow attacks while harmbatonning
-		if(user.combat_mode && stun_on_harmbaton)
-			return FALSE // only allow an attacks in combat mode + if stun_on_harmbaton is set
-		return TRUE // otherwise, prevent the attack
+			return FALSE // if harmbatonning, ALwAYS attack
+		if(active)
+			return TRUE  // if active, but can't stun? no attack
+		if(!user.combat_mode)
+			return TRUE  // if not in combat mode? no attack
+
+		return FALSE // otherwise, attack normally
 
 	// clumsy people redirect this attack - yes, this bypasses IWASBATONED and such
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
