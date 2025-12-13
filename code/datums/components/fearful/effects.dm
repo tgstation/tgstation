@@ -65,7 +65,7 @@
 	if (!SPT_PROB(1 + FEAR_SCALING(4, TERROR_BUILDUP_FEAR, TERROR_BUILDUP_PANIC), seconds_per_tick)) // 1% to 5% chance
 		return
 
-	if (terror_buildup < TERROR_BUILDUP_HEART_ATTACK || !SPT_PROB(15, seconds_per_tick))
+	if (terror_buildup < TERROR_BUILDUP_HEART_ATTACK || !prob(15))
 		owner.adjust_oxy_loss(8)
 		if (!COOLDOWN_FINISHED(src, message_cd))
 			return
@@ -205,10 +205,10 @@
 					span_danger("[owner.name] drops \the [held_item]!"),
 					span_warning("You drop \the [held_item]!"), null, COMBAT_MESSAGE_RANGE)
 
-	if (3)
-		to_chat(owner, span_warning("You lose your balance!"))
-		owner.adjust_staggered_up_to(2 SECONDS * (terror_buildup / TERROR_BUILDUP_FEAR), 20 SECONDS)
-		owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/spooked)
+		if (3)
+			to_chat(owner, span_warning("You lose your balance!"))
+			owner.adjust_staggered_up_to(2 SECONDS * (terror_buildup / TERROR_BUILDUP_FEAR), 20 SECONDS)
+			owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/spooked)
 
 /datum/terror_handler/startle/proc/speed_up()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/spooked)
