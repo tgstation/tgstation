@@ -407,3 +407,37 @@
   - bugfix: Fix disabled cameras consuming power
   xPokee:
   - spellcheck: The Scrubs, MD abduction spy bounty now has the proper name.
+2025-12-13:
+  ArchBTW:
+  - bugfix: Fix clicking on things underneath directional firelocks
+  Ezel:
+  - map: Engineering deliveries now go to the techlathe room on Deltastation
+  Fghj240:
+  - qol: ear protection is visible on examine
+  - qol: hearing protection modsuit module is now built in
+  Jacquerel:
+  - rscadd: When the game considers it to be Christmas, Cargo can order additional
+      Christmas gifts pre-addressed to random crew members.
+  Rockdtben:
+  - qol: Hold ALT + CLICK and drag a UI window. Provides a work around for stuck uplink
+      UI
+  - qol: 'A new verb under OOC: Reset UI Positions -> Which you can use to fix a stuck
+      uplink UI as well.'
+  TealSeer:
+  - bugfix: fixed disposal unit light not turning on when dumping bag contents inside
+  Thunder12345:
+  - bugfix: Posters printed from the library are no longer poorly coded and ugly.
+  - bugfix: Posters printed from the library will no longer go up in the wrong places.
+  - bugfix: Posters now show their name correctly when rolled up.
+  - bugfix: Random posters will no longer remain random after being put up for the
+      first time.
+  - bugfix: Spacemen now know how to hang posters correctly, and the majority of poster
+      sprites will no longer sit on the floor.
+  alien3301:
+  - rscadd: '"Department Budget" access that lets someone place orders with the NT
+      shopping app'
+  - qol: Warden starts with the shopping app installed
+  - balance: Cargo techs and Warden can place orders with the shopping app by default
+  jlsnow301:
+  - rscdel: Removed the TGUI kitchensink component view
+  - rscadd: Added a new data explorer for TGUI dev mode
