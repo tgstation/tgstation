@@ -11,6 +11,7 @@
 
 	var/obj/item/melee/baton/stun_baton = allocate(baton_type)
 	secoff.put_in_active_hand(stun_baton)
+	stun_baton.attack_self(secoff)
 
 	test_attack(secoff, tider)
 
