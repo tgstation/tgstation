@@ -88,11 +88,28 @@
 	name = "MOD bluespace storage module"
 	desc = "A storage system developed by Nanotrasen, these compartments employ \
 		miniaturized bluespace pockets for the ultimate in storage technology; regardless of the weight of objects put inside."
-	icon_state = "storage_large"
+	icon_state = "storage_bluespace_core"
 	max_w_class = WEIGHT_CLASS_GIGANTIC
 	max_combined_w_class = 60
 	max_items = 21
 	big_nesting = TRUE
+
+/obj/item/mod/module/bluespace_nocore
+	name = "MOD bluespace storage module (inactive)"
+	icon_state = "storage_bluespace"
+	desc = "An elite storage system developed by Nanotrasen. However, it wont work without bluespace core."
+
+/obj/item/mod/module/bluespace_nocore/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/assembly/signaler/anomaly/bluespace))
+		return
+	new /obj/item/mod/module/storage/bluespace(get_turf(src))
+	balloon_alert(user, "core installed")
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+	qdel(tool)
+	qdel(src)
+
+/obj/item/mod/module/bluespace_nocore/can_install(obj/item/mod/control/mod)
+	return FALSE
 
 ///Ion Jetpack - Lets the user fly freely through space using battery charge.
 /obj/item/mod/module/jetpack

@@ -155,6 +155,7 @@
 		"mod_antigrav",
 		"mod_teleporter",
 		"mod_kinesis",
+		"mod_storage_bluespace",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
