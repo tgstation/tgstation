@@ -8,7 +8,8 @@
 	hud_type = /datum/hud/new_player
 	hud_possible = list()
 
-	var/ready = FALSE
+	/// Whether the new_player is ready to play or not.
+	var/ready = PLAYER_NOT_READY
 	/// Referenced when you want to delete the new_player later on in the code.
 	var/spawning = FALSE
 	/// For instant transfer once the round is set up

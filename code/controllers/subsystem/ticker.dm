@@ -220,7 +220,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/get_player_ready_states()
 	var/list/player_states = list()
 	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
-		player_states += "[player.ckey]: [player.ready]"
+		player_states[player.ckey] = player.ready
 	return player_states
 
 /datum/controller/subsystem/ticker/proc/setup()
@@ -228,7 +228,7 @@ SUBSYSTEM_DEF(ticker)
 	var/init_start = world.timeofday
 
 	var/list/players_and_readiness = get_player_ready_states()
-	log_game("Players readied up: [json_encode(players_and_readiness)]", players_and_readiness)
+	log_game("Players and Readiness: [json_encode(players_and_readiness)]", players_and_readiness)
 
 	CHECK_TICK
 	//Configure mode and assign player to antagonists
