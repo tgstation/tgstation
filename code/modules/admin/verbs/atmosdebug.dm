@@ -9,7 +9,7 @@ ADMIN_VERB(atmos_debug, R_DEBUG, "Check Plumbing", "Verifies the integrity of th
 
 	//Pipes
 	for(var/obj/machinery/atmospherics/pipe/pipe as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/pipe))
-		if(istype(pipe, /obj/machinery/atmospherics/pipe/smart) || istype(pipe, /obj/machinery/atmospherics/pipe/layer_manifold))
+		if(istype(pipe, /obj/machinery/atmospherics/pipe/smart) || istype(pipe, /obj/machinery/atmospherics/pipe/layer_manifold) || istype(pipe, /obj/machinery/atmospherics/pipe/multiz))
 			continue
 		if(pipe.z && (!pipe.nodes || !pipe.nodes.len || (null in pipe.nodes)))
 			to_chat(user, "Unconnected [pipe.name] located at [ADMIN_VERBOSEJMP(pipe)]", confidential = TRUE)
