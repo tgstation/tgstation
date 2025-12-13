@@ -1,0 +1,4 @@
+author: "ArchBTW"
+delete-after: True
+changes:
+  - bugfix: "Fix stacking flash assemblies"
