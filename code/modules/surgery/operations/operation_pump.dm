@@ -12,7 +12,7 @@
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
 
 /datum/surgery_operation/organ/stomach_pump/get_default_radial_image()
-	return image(/atom/movable/screen/alert/disgusted::overlay_icon, /atom/movable/screen/alert/disgusted::overlay_icon_state)
+	return image(/atom/movable/screen/alert/disgusted::overlay_icon, /atom/movable/screen/alert/disgusted::overlay_state)
 
 /datum/surgery_operation/organ/stomach_pump/all_required_strings()
 	return ..() + list("the patient must not be husked")
