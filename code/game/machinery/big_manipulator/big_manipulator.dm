@@ -65,7 +65,7 @@
 		return
 
 	main_hud.loc = get_turf(src)
-	main_hud.appearance = mutable_appearance('icons/effects/interaction_points.dmi', null, ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
+	main_hud.appearance = mutable_appearance('icons/effects/interaction_points.dmi', null, ABOVE_ALL_MOB_LAYER, src, GAME_PLANE)
 
 	main_hud.overlays.Cut()
 	var/list/point_overlays = list()
@@ -74,7 +74,7 @@
 		var/datum/interaction_point/point = pickup_points[i]
 		var/turf/target_turf = point.interaction_turf
 		if(target_turf)
-			var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "pickup_[i]", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
+			var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "pickup_[i]", ABOVE_ALL_MOB_LAYER, src, GAME_PLANE)
 			var/turf/manip_turf = get_turf(src)
 			point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
 			point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
@@ -84,7 +84,7 @@
 		var/datum/interaction_point/point = dropoff_points[i]
 		var/turf/target_turf = point.interaction_turf
 		if(target_turf)
-			var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "dropoff_[i]", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
+			var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "dropoff_[i]", ABOVE_ALL_MOB_LAYER, src, GAME_PLANE)
 			var/turf/manip_turf = get_turf(src)
 			point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
 			point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
@@ -846,4 +846,3 @@
 		if(TASKING_STRICT_ROBIN)
 			return new /datum/tasking_strategy/strict_robin()
 	return new /datum/tasking_strategy/prefer_first()
-
