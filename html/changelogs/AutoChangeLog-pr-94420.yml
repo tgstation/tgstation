@@ -1,0 +1,4 @@
+author: "ArchBTW"
+delete-after: True
+changes:
+  - bugfix: "Gives eligible sentient simplemobs a stamina hud"

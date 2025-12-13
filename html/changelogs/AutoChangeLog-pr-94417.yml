@@ -1,0 +1,4 @@
+author: "ArchBTW"
+delete-after: True
+changes:
+  - bugfix: "Fix nightmare not properly snuffing dragged lights if other lights were turned on simultaneously"

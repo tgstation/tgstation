@@ -1,0 +1,4 @@
+author: "Geoengi"
+delete-after: True
+changes:
+  - rscadd: "Robot customers and mech wreckage destruction are messier. Bring a mop!"

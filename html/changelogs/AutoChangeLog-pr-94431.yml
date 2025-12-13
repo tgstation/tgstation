@@ -1,0 +1,4 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - rscadd: "Added a key memory to the family heirloom quirk"
