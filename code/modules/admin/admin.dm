@@ -99,7 +99,7 @@ ADMIN_VERB(spawn_cargo, R_SPAWN, "Spawn Cargo", "Spawn a cargo crate.", ADMIN_CA
 	if(!chosen)
 		return
 	var/datum/supply_pack/S = new chosen
-	S.admin_spawned = TRUE
+	S.order_flags |= ORDER_ADMIN_SPAWNED
 	S.generate(get_turf(user.mob))
 
 	log_admin("[key_name(user)] spawned cargo pack [chosen] at [AREACOORD(user.mob)]")

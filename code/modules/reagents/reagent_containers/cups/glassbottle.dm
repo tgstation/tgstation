@@ -151,25 +151,25 @@
 		return
 
 	var/head_hitter = user.zone_selected == BODY_ZONE_HEAD && isliving(target)
-
-	// An attack that targets the head of a living mob will attempt to knock them down
-	if(head_hitter)
-		var/mob/living/living_target = target
-		var/knockdown_effectiveness = 0
-		if(!HAS_TRAIT(target, TRAIT_HEAD_INJURY_BLOCKED))
-			knockdown_effectiveness = bottle_knockdown_duration + ((force / 10) * 1 SECONDS) - living_target.getarmor(BODY_ZONE_HEAD, MELEE)
-		if(prob(knockdown_effectiveness))
-			living_target.Knockdown(min(knockdown_effectiveness, 20 SECONDS))
+	if(!QDELETED(target))
+		// An attack that targets the head of a living mob will attempt to knock them down
+		if(head_hitter)
+			var/mob/living/living_target = target
+			var/knockdown_effectiveness = 0
+			if(!HAS_TRAIT(target, TRAIT_HEAD_INJURY_BLOCKED))
+				knockdown_effectiveness = bottle_knockdown_duration + ((force / 10) * 1 SECONDS) - living_target.getarmor(BODY_ZONE_HEAD, MELEE)
+			if(prob(knockdown_effectiveness))
+				living_target.Knockdown(min(knockdown_effectiveness, 20 SECONDS))
 
 	// Displays a custom message which follows the attack
 	if(target == user)
-		target.visible_message(
+		user.visible_message(
 			span_warning("[user] smashes [src] [head_hitter ? "over [user.p_their()] head" : "against [user.p_them()]selves"]!"),
 			span_warning("You smash [src] [head_hitter ? "over your head" : "against yourself"]!"),
 		)
 
 	else
-		target.visible_message(
+		user.visible_message(
 			span_warning("[user] smashes [src] [head_hitter ? "over [target]'s head" : "against [target]"]!"),
 			span_warning("[user] smashes [src] [head_hitter ? "over your head" : "against you"]!"),
 		)
@@ -916,7 +916,8 @@
 				break
 	..()
 	if(firestarter && active)
-		target.fire_act()
+		if(!QDELETED(target))
+			target.fire_act()
 		new /obj/effect/hotspot(get_turf(target))
 
 /obj/item/reagent_containers/cup/glass/bottle/molotov/item_interaction(mob/living/user, obj/item/item, list/modifiers)

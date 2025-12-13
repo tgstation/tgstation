@@ -174,7 +174,7 @@
 
 // This is where stun gets applied
 /obj/item/melee/baton/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
-	if(!isliving(target) || !LAZYACCESS(attack_modifiers, STUN_ATTACK))
+	if(QDELETED(target) || !LAZYACCESS(attack_modifiers, STUN_ATTACK))
 		return
 
 	finalize_baton_attack(target, user)

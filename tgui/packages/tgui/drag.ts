@@ -96,7 +96,7 @@ export const touchRecents = (
 };
 
 // Store window geometry in local storage
-const storeWindowGeometry = async () => {
+export const storeWindowGeometry = async () => {
   logger.log('storing geometry');
   const geometry = {
     pos: getWindowPosition(),
