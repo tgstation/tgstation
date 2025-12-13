@@ -74,8 +74,7 @@
 		return
 	if(on_wrist && far_from_home)
 		return
-	balloon_alert(user, "gps de-activated")
-	qdel(GetComponent(/datum/component/gps/kheiral_cuffs))
+	balloon_alert(user, "gps de-activated") // GPS component deletes itself when we get on-Z
 	REMOVE_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
 	gps_enabled = FALSE
 
