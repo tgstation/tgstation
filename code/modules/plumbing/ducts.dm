@@ -170,7 +170,9 @@ All the important duct code:
 			if(!reconnect_machines && LAZYACCESS(neighbours, plumbable))
 				continue
 
-			if(istype(plumbable, /obj/machinery/duct) && !reconnect_machines)
+			if(istype(plumbable, /obj/machinery/duct))
+				if(reconnect_machines)
+					continue
 				var/obj/machinery/duct/other = plumbable
 
 				//must be same duct color
