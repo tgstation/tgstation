@@ -131,13 +131,25 @@
 
 	var/new_len = length(authorized)
 	if((old_len != new_len) && !ENGINES_STARTED)
-		var/alert = (new_len > old_len)
 		var/repeal = (new_len < old_len)
 		var/remaining = max(0, auth_need - new_len)
 		if(new_len && remaining)
-			minor_announce("[remaining] authorization\s needed until shuttle is launched early.", "Emergency Shuttle Status", alert)
+			priority_announce(
+				"[remaining] authorization\s needed until shuttle is launched early.",
+				"Emergency Shuttle Status",
+				sound = 'sound/announcer/notice/notice1.ogg',
+				type = ANNOUNCEMENT_TYPE_PRIORITY,
+				has_important_message = TRUE,
+				color_override = "red",
+			)
 		if(repeal)
-			minor_announce("Early launch authorization revoked, [remaining] authorization\s needed.", "Emergency Shuttle Status")
+			priority_announce(
+				"Early launch authorization revoked, [remaining] authorization\s needed.",
+				"Emergency Shuttle Status",
+				sound = 'sound/announcer/notice/notice2.ogg',
+				type = ANNOUNCEMENT_TYPE_PRIORITY,
+				color_override = "blue",
+			)
 
 	acted_recently += user
 	SStgui.update_user_uis(user, src)
