@@ -1886,3 +1886,14 @@
 	req_components = list(
 		/datum/stock_part/micro_laser = 1,
 	)
+
+/obj/item/circuitboard/machine/washing_machine
+	name = "Washing Machine"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/washing_machine
+	req_components = list(
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/reagent_containers/cup/beaker = 2,
+		/datum/stock_part/water_recycler = 1,
+		/datum/stock_part/servo = 1,
+	)
