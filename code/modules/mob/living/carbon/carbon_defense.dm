@@ -10,7 +10,8 @@
 	else
 		return INFINITY //Can't get flashed without eyes
 	if(isclothing(head)) //Adds head protection
-		. += head.flash_protect
+		var/obj/item/clothing/helmet = head
+		. += helmet.flash_protect
 	if(isclothing(glasses)) //Glasses
 		. += glasses.flash_protect
 	if(isclothing(wear_mask)) //Mask
