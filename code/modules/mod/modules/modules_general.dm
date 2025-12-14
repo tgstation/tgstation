@@ -12,9 +12,9 @@
 	/// Max weight class of items in the storage.
 	var/max_w_class = WEIGHT_CLASS_NORMAL
 	/// Max combined weight of all items in the storage.
-	var/max_combined_w_class = 15
+	var/max_combined_w_class = 17
 	/// Max amount of items in the storage.
-	var/max_items = 7
+	var/max_items = 14
 	/// Is nesting same-size storage items allowed?
 	var/big_nesting = FALSE
 
@@ -61,7 +61,6 @@
 		whether smuggling, or simply hauling."
 	icon_state = "storage_large"
 	max_combined_w_class = 21
-	max_items = 14
 
 /obj/item/mod/module/storage/syndicate
 	name = "MOD syndicate storage module"
