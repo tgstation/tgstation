@@ -24,6 +24,46 @@
 	var/new_icon
 	/// Optional, icon_state to change the atom to when applied
 	var/new_icon_state
+	/// Specifies the icon state for the atom's appearance in hand. Should appear in both new_lefthand_file and new_righthand_file.
+	var/new_inhand_icon_state
+	/// Optional, specifies the icon state for the atom's appearance in teh back slot.
+	var/new_back_icon
+	/// Optional, specifies the left hand inhand icon file. Don't forget to set the right hand file as well.
+	var/new_lefthand_file
+	/// Optional, specifies the right hand inhand icon file. Don't forget to set the left hand file as well.
+	var/new_righthand_file
+	/// Optional, specifies the worn icon file.
+	var/new_worn_icon
+	/// When set true, will allow concrete subtypes of abstract subtypes (such as for organizational purposes) to be selectable as reskins in the loadout menu.
+	var/allow_abstract_subtypes_in_loadout
+	/// Mandatory for GAGs items. The path to the greyscale item this is to be applied to.
+	var/atom/greyscale_item_path
+	/// Auto populated. The greyscale_config from greyscale_item_path.
+	VAR_FINAL/greyscale_config
+	/// Auto populated. The greyscale_colors from greyscale_item_path.
+	VAR_FINAL/greyscale_colors
+
+/datum/atom_skin/New()
+	. = ..()
+	if(isnull(greyscale_item_path))
+		return
+
+	// Populate the fields required for GAGS previews
+	greyscale_config = greyscale_item_path::greyscale_config
+	greyscale_colors = greyscale_item_path::greyscale_colors
+
+	// The icon isn't 'new'. So we don't make an extra icon in map_icons.
+	if(greyscale_item_path::post_init_icon_state == new_icon_state)
+		new_icon_state = null
+
+/// Returns the correct preview icon state for this atom skin, whether it be a map_preview or a normal icon. This is assumed from our var population above.
+/datum/atom_skin/proc/get_preview_icon_state()
+	if(isnull(greyscale_item_path)) // Not a GAGs icon
+		return new_icon_state
+	if(isnull(new_icon_state)) // The base GAGS item icon
+		return "[greyscale_item_path]"
+
+	return "[greyscale_item_path]--[new_icon_state]" // A GAGs reskin of the item icon
 
 /**
  * Applies all relevant skin changes to the given atom
@@ -31,17 +71,25 @@
  *
  * * apply_to: The atom to apply the skin to
  */
-/datum/atom_skin/proc/apply(atom/apply_to)
+/datum/atom_skin/proc/apply(atom/apply_to, mob/user)
 	SHOULD_CALL_PARENT(TRUE)
+	// Never want to be resetting a GAGS icon back to initial.
+	var/is_greyscale = apply_to.greyscale_config || apply_to.greyscale_colors
 	APPLY_VAR_OR_RESET_INITIAL(apply_to, name, new_name, reset_missing)
 	APPLY_VAR_OR_RESET_INITIAL(apply_to, desc, new_desc, reset_missing)
-	APPLY_VAR_OR_RESET_INITIAL(apply_to, icon, new_icon, reset_missing)
+	if(!is_greyscale)
+		APPLY_VAR_OR_RESET_INITIAL(apply_to, icon, new_icon, reset_missing)
 	APPLY_VAR_OR_RESET_TO(apply_to, icon_state, new_icon_state, reset_missing, initial(apply_to.post_init_icon_state) || initial(apply_to.icon_state))
 	if(change_base_icon_state)
 		APPLY_VAR_OR_RESET_INITIAL(apply_to, base_icon_state, new_icon_state, reset_missing)
-	if(change_inhand_icon_state && isitem(apply_to))
+	if(isitem(apply_to))
 		var/obj/item/item_apply_to = apply_to
-		APPLY_VAR_OR_RESET_INITIAL(item_apply_to, inhand_icon_state, new_icon_state, reset_missing)
+		if(!is_greyscale)
+			APPLY_VAR_OR_RESET_INITIAL(item_apply_to, worn_icon, new_worn_icon, reset_missing)
+			APPLY_VAR_OR_RESET_INITIAL(item_apply_to, lefthand_file, new_lefthand_file, reset_missing)
+			APPLY_VAR_OR_RESET_INITIAL(item_apply_to, righthand_file, new_righthand_file, reset_missing)
+		APPLY_VAR_OR_RESET_INITIAL(item_apply_to, worn_icon_state, new_icon_state, reset_missing)
+		APPLY_VAR_OR_RESET_INITIAL(item_apply_to, inhand_icon_state, change_inhand_icon_state ? new_inhand_icon_state : new_icon_state, reset_missing)
 
 /**
  * Resets all changes this skin would have made to the given atom
@@ -54,13 +102,20 @@
 	SHOULD_CALL_PARENT(TRUE)
 	RESET_INITIAL_IF_SET(clear_from, name, new_name)
 	RESET_INITIAL_IF_SET(clear_from, desc, new_desc)
-	RESET_INITIAL_IF_SET(clear_from, icon, new_icon)
+	var/is_greyscale = clear_from.greyscale_config || clear_from.greyscale_colors
+	if(!is_greyscale)
+		RESET_INITIAL_IF_SET(clear_from, icon, new_icon)
 	RESET_TO_IF_SET(clear_from, icon_state, new_icon_state, initial(clear_from.post_init_icon_state) || initial(clear_from.icon_state))
 	if(change_base_icon_state)
 		RESET_INITIAL_IF_SET(clear_from, base_icon_state, new_icon_state)
-	if(change_inhand_icon_state && isitem(clear_from))
+	if(isitem(clear_from))
 		var/obj/item/item_clear_from = clear_from
-		RESET_INITIAL_IF_SET(item_clear_from, inhand_icon_state, new_icon_state)
+		RESET_INITIAL_IF_SET(item_clear_from, worn_icon, new_worn_icon)
+		RESET_INITIAL_IF_SET(item_clear_from, inhand_icon_state, change_inhand_icon_state ? new_inhand_icon_state : new_icon_state)
+		if(!is_greyscale)
+			RESET_INITIAL_IF_SET(item_clear_from, worn_icon_state, new_icon_state)
+			RESET_INITIAL_IF_SET(item_clear_from, lefthand_file, new_lefthand_file)
+			RESET_INITIAL_IF_SET(item_clear_from, righthand_file, new_righthand_file)
 
 /// Gets a preview image for this skin based on the given atom's icon and icon_state
 /datum/atom_skin/proc/get_preview_icon(atom/for_atom)
@@ -82,13 +137,26 @@
 	VAR_PRIVATE/infinite_reskin = FALSE
 	/// List of subtypes of /datum/atom_skin that are not allowed to be used for this item
 	VAR_PRIVATE/list/blacklisted_subtypes
-
 	/// Currently applied skin preview_name
 	VAR_PRIVATE/current_skin
 
 /datum/component/reskinable_item/Initialize(base_reskin_type, infinite = FALSE, initial_skin, list/blacklisted_subtypes = list())
 	if(!isatom(parent) || isarea(parent))
 		return COMPONENT_INCOMPATIBLE
+
+	var/atom/atom_parent = parent
+	if(!atom_parent.can_reskin)
+		return COMPONENT_REDUNDANT
+
+#ifdef UNIT_TESTS
+	if(atom_parent.greyscale_config && (atom_parent.type in GLOB.all_loadout_datums)) // We only care about these when they're in the loadout
+		var/datum/atom_skin/reskin_type = base_reskin_type
+		if(reskin_type && isnull(reskin_type::greyscale_item_path)) // greyscale_item_path unset
+			stack_trace("[type] added to a greyscale item without setting the greyscale_item_path! In [reskin_type], add 'greyscale_item_path = [atom_parent::type]'.")
+		else if(atom_parent.type != reskin_type::greyscale_item_path) // greyscale_item_path set but doesn't match the item it's being added to
+			stack_trace("[type] added to an invalid item type, [atom_parent.type]. [reskin_type] is set up to only be added to: [reskin_type::greyscale_item_path]. \
+				Either fix its greyscale_item_path if this is incorrect, or apply a different skin.")
+#endif
 
 	src.base_reskin_type = base_reskin_type
 	src.infinite_reskin = infinite
@@ -97,7 +165,6 @@
 	if(initial_skin)
 		set_skin_by_name(initial_skin)
 
-	var/atom/atom_parent = parent
 	atom_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 /datum/component/reskinable_item/RegisterWithParent()
@@ -127,15 +194,16 @@
 
 	return reskin_options
 
-/datum/component/reskinable_item/proc/set_skin_by_name(input_name)
+/datum/component/reskinable_item/proc/set_skin_by_name(input_name, mob/user)
 	var/list/reskin_options = get_skins_by_name()
+	var/list/atom_skins = get_atom_skins()
 	if(current_skin)
-		var/datum/atom_skin/previous_skin = GLOB.atom_skins[reskin_options[current_skin]]
-		previous_skin.clear_skin(parent)
+		var/datum/atom_skin/previous_skin = atom_skins[reskin_options[current_skin]]
+		previous_skin.clear_skin(parent, user)
 
 	if(input_name)
-		var/datum/atom_skin/reskin_to_apply = GLOB.atom_skins[reskin_options[input_name]]
-		reskin_to_apply.apply(parent)
+		var/datum/atom_skin/reskin_to_apply = atom_skins[reskin_options[input_name]]
+		reskin_to_apply.apply(parent, user)
 
 	current_skin = input_name
 
@@ -179,8 +247,10 @@
 	var/atom/atom_parent = parent
 
 	var/list/items = list()
+	var/list/atom_skins = get_atom_skins()
 	for(var/reskin_name, reskin_typepath in get_skins_by_name())
-		items[reskin_name] = GLOB.atom_skins[reskin_typepath].get_preview_icon(atom_parent)
+		var/datum/atom_skin/reskin = atom_skins[reskin_typepath]
+		items[reskin_name] = image(icon = reskin.new_icon || atom_parent.icon, icon_state = reskin.new_icon_state || atom_parent.icon_state)
 
 	sort_list(items)
 
@@ -188,7 +258,7 @@
 	if(!pick || !items[pick])
 		return
 
-	set_skin_by_name(pick)
+	set_skin_by_name(pick, user)
 	to_chat(user, span_info("[parent] is now skinned as '[pick].'"))
 
 	if(!infinite_reskin)

@@ -35,13 +35,13 @@ type SpawnSearchData = {
 type SpawnAtomData = {
   // Type -> Name
   types: Record<string, string>;
-  abstractTypes: Array<string>;
+  abstractTypes: Record<string, boolean>
   fancyTypes: Record<string, string>;
 };
 
 type AtomPathData = {
   types: Array<AtomTypeData>;
-  abstractTypes: Array<string>;
+  abstractTypes: Record<string, boolean>
   fancyTypes: Record<string, string>;
 };
 
@@ -56,7 +56,7 @@ export const SpawnSearch = () => {
     data;
   const [atomData, setAtomData] = useState<AtomPathData>({
     types: [],
-    abstractTypes: [],
+    abstractTypes: {},
     fancyTypes: {},
   });
   const [selected, setSelected] = useState<number>(0);
@@ -129,7 +129,7 @@ export const SpawnSearch = () => {
       (type: AtomTypeData) =>
         (searchLambda(type.typepath) ||
           (searchNames && searchLambda(type.name))) &&
-        (includeAbstracts || !atomData.abstractTypes.includes(type.typepath)),
+        (includeAbstracts || !atomData.abstractTypes[type.typepath]),
     );
   };
 
@@ -313,7 +313,7 @@ export const SpawnSearch = () => {
                     >
                       <span
                         style={
-                          atomData.abstractTypes.includes(item.typepath)
+                          atomData.abstractTypes[item.typepath]
                             ? { opacity: 0.75, color: '#FFA246' }
                             : {}
                         }
@@ -344,7 +344,7 @@ export const SpawnSearch = () => {
                       >
                         {item.name}
                       </span>
-                      {!!atomData.abstractTypes.includes(item.typepath) && (
+                      {!!atomData.abstractTypes[item.typepath] && (
                         <span
                           style={{
                             float: 'right',

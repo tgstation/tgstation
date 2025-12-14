@@ -181,11 +181,12 @@
 /datum/atom_skin/cap_pen
 	abstract_type = /datum/atom_skin/cap_pen
 
-/datum/atom_skin/cap_pen/apply(atom/apply_to)
+/datum/atom_skin/cap_pen/apply(atom/apply_to, mob/user)
 	. = ..()
 	apply_to.desc = "It's an expensive [preview_name] fountain pen. The nib is quite sharp."
+	apply_to.update_desc()
 
-/datum/atom_skin/cap_pen/clear_skin(atom/clear_from)
+/datum/atom_skin/cap_pen/clear_skin(atom/clear_from, mob/user)
 	. = ..()
 	clear_from.desc = initial(clear_from.desc)
 
