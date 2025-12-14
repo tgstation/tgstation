@@ -3,6 +3,10 @@
 /datum/component/plumbing/simple_demand
 	demand_connects = SOUTH
 
+/datum/component/plumbing/simple_demand/Initialize(start, ducting_layer, turn_connects, datum/reagents/custom_receiver, extend_pipe_to_edge, distinct_reagent_cap = INFINITY)
+	src.distinct_reagent_cap = distinct_reagent_cap
+	return ..()
+
 ///has one pipe output that only supplies. example is liquid pump and manual input pipe
 /datum/component/plumbing/simple_supply
 	supply_connects = SOUTH

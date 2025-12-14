@@ -21,7 +21,7 @@
 
 /obj/machinery/plumbing/bottler/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
+	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer, distinct_reagent_cap = 3)
 	setDir(dir)
 
 /obj/machinery/plumbing/bottler/examine(mob/user)
