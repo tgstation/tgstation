@@ -15,6 +15,9 @@
 	var/list/atom/movable/neighbours
 
 /obj/machinery/duct/Initialize(mapload, color_of_duct, layer_of_duct)
+	if(GLOB.plumbing_layer_names["[layer_of_duct]"])
+		duct_layer = layer_of_duct
+
 	var/turf/destination = get_turf(src)
 	//check for overlapping ducts
 	for(var/obj/machinery/duct/other in destination)
@@ -34,9 +37,7 @@
 
 	net = new (src)
 
-	if(layer_of_duct)
-		duct_layer = layer_of_duct
-	if(!color_of_duct)
+	if(GLOB.pipe_color_name[color_of_duct])
 		duct_color = color_of_duct
 	add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
 
@@ -66,8 +67,8 @@
 ///we disconnect ourself from our neighbours. we also destroy our ductnet and tell our neighbours to make a new one
 /obj/machinery/duct/on_deconstruction()
 	var/obj/item/stack/ducts/duct_stack = new (drop_location())
-	duct_stack.duct_color = GLOB.pipe_color_name[duct_color]
-	duct_stack.duct_layer = GLOB.plumbing_layer_names["[duct_layer]"]
+	duct_stack.duct_color = duct_color
+	duct_stack.duct_layer = duct_layer
 	duct_stack.add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
 
 ///Removes duct from ductnet
@@ -79,8 +80,12 @@
 	net = null
 
 /obj/machinery/duct/Destroy()
+	//object was early deleted
+	if(!net)
+		return ..()
+
 	var/list/atom/movable/visited = list(src = TRUE)
-	for(var/atom/movable/neighbour in neighbours)
+	for(var/atom/movable/neighbour as anything in neighbours)
 		//disconnect ourself from our neighbours
 		var/obj/machinery/duct/pipe = neighbour
 		if(istype(pipe))
@@ -107,7 +112,7 @@
 
 		//first move all ducts to the new network
 		var/datum/ductnet/newnet
-		for(var/atom/movable/node in network)
+		for(var/atom/movable/node as anything in network)
 			//assign duct to new network
 			pipe = node
 			if(istype(pipe))
@@ -231,21 +236,21 @@
 	merge_type = /obj/item/stack/ducts
 	matter_amount = 1
 	///Color of our duct
-	var/duct_color = "omni"
+	var/duct_color = ATMOS_COLOR_OMNI
 	///Default layer of our duct
-	var/duct_layer = "Default Layer"
+	var/duct_layer = THIRD_DUCT_LAYER
 
 /obj/item/stack/ducts/examine(mob/user)
 	. = ..()
-	. += span_notice("Its current color and layer are [duct_color] and [duct_layer]. Use in-hand to change.")
+	. += span_notice("Its current color and layer are [GLOB.pipe_color_name[duct_color]] and [GLOB.plumbing_layer_names["[duct_layer]"]]. Use in-hand to change.")
 
 /obj/item/stack/ducts/attack_self(mob/user)
-	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers, duct_layer)
+	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers, GLOB.plumbing_layer_names["[duct_layer]"])
 	if(!user.is_holding(src))
 		return
 	if(new_layer)
 		duct_layer = new_layer
-	var/new_color = tgui_input_list(user, "Select a color", "Color", GLOB.pipe_paint_colors, duct_color)
+	var/new_color = tgui_input_list(user, "Select a color", "Color", GLOB.pipe_paint_colors, GLOB.pipe_color_name[duct_color])
 	if(!user.is_holding(src))
 		return
 	if(new_color)
@@ -274,7 +279,7 @@
 /obj/item/stack/ducts/proc/check_attach_turf(turf/open_turf)
 	. = NONE
 	if(isopenturf(open_turf) && use(1))
-		new /obj/machinery/duct(open_turf, GLOB.pipe_paint_colors[duct_color], GLOB.plumbing_layers[duct_layer])
+		new /obj/machinery/duct(open_turf, duct_color, duct_layer)
 		playsound(open_turf, 'sound/machines/click.ogg', 50, TRUE)
 		qdel(src)
 		return ITEM_INTERACT_SUCCESS

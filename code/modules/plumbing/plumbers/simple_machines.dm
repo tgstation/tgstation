@@ -19,7 +19,7 @@
 	reagent_flags = TRANSPARENT | DRAINABLE
 	reagents = /datum/reagents
 
-/obj/machinery/plumbing/output/Initialize(mapload, bolt, layer)
+/obj/machinery/plumbing/output/Initialize(mapload, layer)
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand, layer)
 
@@ -36,7 +36,7 @@
 	icon_state = "tank"
 	buffer = 400
 
-/obj/machinery/plumbing/tank/Initialize(mapload, bolt, layer)
+/obj/machinery/plumbing/tank/Initialize(mapload, layer)
 	. = ..()
 	AddComponent(/datum/component/plumbing/tank, layer)
 

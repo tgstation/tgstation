@@ -1,15 +1,15 @@
 /datum/component/plumbing
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	///Index with "1" = /datum/ductnet/theductpointingnorth etc. "1" being the num2text from NORTH define
-	var/list/datum/ductnet/ducts = list()
+	var/list/datum/ductnet/ducts
 	///shortcut to our parents' reagent holder. The holder that sends reagents into the pipeline
 	var/datum/reagents/reagents
 	///Whether our tile is covered and we should hide our ducts
 	var/tile_covered = FALSE
 	///directions in wich we act as a supplier
-	var/supply_connects
+	var/supply_connects = NONE
 	///direction in wich we act as a demander
-	var/demand_connects
+	var/demand_connects = NONE
 	///The layer on which we connect. Don't add multiple. If you want multiple layer connects for some reason you can just add multiple components with different layers
 	var/ducting_layer = DUCT_LAYER_DEFAULT
 	///What color is our demand connect?
@@ -26,8 +26,10 @@
 	if(!parent_movable.reagents)
 		return COMPONENT_INCOMPATIBLE
 
-	if(ducting_layer)
+	if(GLOB.plumbing_layer_names["[ducting_layer]"])
 		src.ducting_layer = ducting_layer
+
+	ducts = list()
 
 	reagents = parent_movable.reagents
 

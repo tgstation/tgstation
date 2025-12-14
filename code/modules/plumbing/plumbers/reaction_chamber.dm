@@ -181,7 +181,7 @@
 	///beaker that holds the alkaline buffer(50u).
 	var/datum/reagents/alkaline_beaker
 
-/obj/machinery/plumbing/reaction_chamber/chem/Initialize(mapload, bolt, layer)
+/obj/machinery/plumbing/reaction_chamber/chem/Initialize(mapload, layer)
 	. = ..()
 
 	var/datum/component/plumbing/buffered/acidic_input = AddComponent(/datum/component/plumbing/buffered/acidic_input)
