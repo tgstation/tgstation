@@ -26,9 +26,9 @@
 	///When conditions are met we send out the stored reagents
 	var/emptying = FALSE
 
-/obj/machinery/plumbing/acclimator/Initialize(mapload, bolt, layer)
+/obj/machinery/plumbing/acclimator/Initialize(mapload, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/acclimator, bolt, layer)
+	AddComponent(/datum/component/plumbing/acclimator, layer)
 
 /obj/machinery/plumbing/acclimator/process(seconds_per_tick)
 	if(!is_operational || !enabled || !reagents.total_volume || reagents.chem_temp == target_temperature)

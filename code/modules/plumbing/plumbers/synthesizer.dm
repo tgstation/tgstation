@@ -42,9 +42,9 @@
 	//reagents this synthesizer can dispense
 	var/list/dispensable_reagents
 
-/obj/machinery/plumbing/synthesizer/Initialize(mapload, bolt, layer)
+/obj/machinery/plumbing/synthesizer/Initialize(mapload, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
+	AddComponent(/datum/component/plumbing/simple_supply, layer)
 	dispensable_reagents = default_reagents
 
 /obj/machinery/plumbing/synthesizer/process(seconds_per_tick)
