@@ -53,7 +53,7 @@
 	if(new_master)
 		thealert.master_ref = master_ref
 		thealert.RegisterSignal(new_master, COMSIG_ATOM_UPDATE_APPEARANCE, TYPE_PROC_REF(/atom/movable/screen/alert, on_master_update_appearance))
-		thealert.update_appearance(UPDATE_OVERLAYS)
+		thealert.update_appearance()
 	else if(severity)
 		thealert.icon_state = "[initial(thealert.icon_state)][severity]"
 		thealert.severity = severity
@@ -125,7 +125,7 @@
 		add_filter("clickglow", 2, outline_filter(color = COLOR_GOLD, size = 1))
 		mouse_over_pointer = MOUSE_HAND_POINTER
 	if(overlay_state)
-		update_appearance(UPDATE_OVERLAYS)
+		update_appearance()
 
 /atom/movable/screen/alert/MouseEntered(location,control,params)
 	. = ..()
@@ -137,7 +137,7 @@
 
 /atom/movable/screen/alert/proc/on_master_update_appearance(datum/source)
 	SIGNAL_HANDLER
-	update_appearance(UPDATE_OVERLAYS)
+	update_appearance()
 
 /atom/movable/screen/alert/update_overlays()
 	. = ..()
@@ -158,8 +158,7 @@
 	atom_appearance.pixel_y = atom.base_pixel_y
 	atom_appearance.pixel_w = atom.base_pixel_w
 	atom_appearance.pixel_z = atom.base_pixel_z
-	strip_appearance_underlays(atom_appearance)
-	return atom_appearance
+	return strip_appearance_underlays(atom_appearance)
 
 /atom/movable/screen/alert/Click(location, control, params)
 	SHOULD_CALL_PARENT(TRUE)

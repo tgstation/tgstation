@@ -120,8 +120,7 @@
 
 	for (var/mob/living/candidate as anything in to_heal)
 		if (!current_alerts[candidate])
-			var/atom/movable/screen/alert/aura_healing/alert = candidate.throw_alert(alert_category, /atom/movable/screen/alert/aura_healing, new_master = parent)
-			alert.desc = "You are being healed by [parent]."
+			candidate.throw_alert(alert_category, /atom/movable/screen/alert/aura_healing, new_master = parent)
 			current_alerts[candidate] = TRUE
 
 		if (should_show_effect && candidate.health < candidate.maxHealth)
@@ -164,5 +163,10 @@
 	icon_state = "template"
 	use_user_hud_icon = TRUE
 	clickable_glow = TRUE
+	click_master = FALSE
+
+/atom/movable/screen/alert/aura_healing/update_desc(updates)
+	. = ..()
+	desc = "You are being healed by [master_ref?.resolve()]."
 
 #undef HEAL_EFFECT_COOLDOWN
