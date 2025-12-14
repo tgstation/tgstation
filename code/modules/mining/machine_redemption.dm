@@ -168,7 +168,7 @@
 		if(isnull(smelted_ore))
 			continue
 
-		if(materials.insert_item(smelted_ore, ore_multiplier) <= 0)
+		if(materials.insert_item(smelted_ore, ore_multiplier, ID_DATA(user)) <= 0)
 			unload_mineral(smelted_ore)
 
 	return ITEM_INTERACT_SUCCESS
