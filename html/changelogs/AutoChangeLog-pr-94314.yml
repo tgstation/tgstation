@@ -1,0 +1,4 @@
+author: "alien3301"
+delete-after: True
+changes:
+  - spellcheck: "fixed a typo in the moon heretic robe's attack messages"
