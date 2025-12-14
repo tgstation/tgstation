@@ -133,7 +133,8 @@
 		to_chat(owner, span_bolddanger("Hearing [span_phobia(reason)] [message]!"))
 		owner.add_mood_event("phobia_minor", /datum/mood_event/startled)
 		// Because this is called from a signal and not the main process, we need to add the buildup by hand
-		component.terror_buildup += PHOBIA_WORD_TERROR_BUILDUP
+		if (component.terror_buildup < TERROR_BUILDUP_PASSIVE_MAXIMUM)
+			component.terror_buildup = min(component.terror_buildup + PHOBIA_WORD_TERROR_BUILDUP, TERROR_BUILDUP_PASSIVE_MAXIMUM)
 		return
 
 	if(mood_event_type)
