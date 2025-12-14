@@ -1,23 +1,22 @@
 import { storage } from 'common/storage';
 import { useAtom, useAtomValue } from 'jotai';
 import { useEffect } from 'react';
-import { highlightsAtom, settingsAtom } from './atoms';
+import { highlightsAtom, settingsAtom, settingsLoadedAtom } from './atoms';
 import { generalSettingsHandler } from './helpers';
 import { startSettingsMigration } from './migration';
 import { setDisplayScaling } from './scaling';
 import type { SettingsState } from './types';
-
-let initialized = false;
 
 /** Custom hook that handles loading and updating settings from storage. */
 export function useSettings() {
   const [settings, setSettings] = useAtom(settingsAtom);
   const highlights = useAtomValue(highlightsAtom);
 
+  const [loaded, setLoaded] = useAtom(settingsLoadedAtom);
+
   /** Load and migrate settings */
   useEffect(() => {
-    if (initialized) return;
-    initialized = true;
+    if (loaded) return;
 
     async function fetchSettings(): Promise<void> {
       try {
@@ -31,6 +30,7 @@ export function useSettings() {
 
     fetchSettings();
     setDisplayScaling();
+    setLoaded(true);
   }, []);
 
   function storeSettings(update: SettingsState): void {
