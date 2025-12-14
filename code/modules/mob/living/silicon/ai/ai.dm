@@ -429,7 +429,7 @@
 		alert_control.ui_interact(src)
 #ifdef AI_VOX
 	if(href_list["say_word"])
-		play_vox_word(href_list["say_word"], null, src)
+		play_vox_word(href_list["say_word"], get_turf(src), src)
 		return
 #endif
 	if(href_list["show_tablet_note"])

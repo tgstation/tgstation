@@ -48,6 +48,10 @@
 	var/hack_software = FALSE //Will be able to use hacking actions
 	interaction_range = 7 //wireless control range
 	var/control_disabled = FALSE // Set to 1 to stop AI from interacting via Click()
+	/// Default VOX.
+	var/vox_type = VOX_NORMAL
+	/// The list of available VOX Announcer voices to choose from.
+	var/list/vox_voices = list(VOX_NORMAL, VOX_HL, VOX_BMS, VOX_MIL)
 
 	var/obj/item/modular_computer/pda/silicon/modularInterface
 
