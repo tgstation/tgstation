@@ -1,5 +1,26 @@
 <!-- Most valid html will work in here, but you have to use URL links for images. -->
 
-<h1>Welcome to Space Station 13!</h1>
+<body link="blue">
 
-<i>This server is running a /tg/station 13 Git build.</i>
+<h1>Welcome to /TG/ Persistence SS13! This is an experimental server that saves z-levels that persist between rounds. Currently the only selected z-level to save is the main station, so anything off station will reset between rounds.</h1>
+
+<h2>Please use the following links for your information:</h2>
+
+<p>To avoid getting banned, make sure you read the <a href="https://wiki.tgstation13.org/Rules"><b><u>Rules</b></u></a></p>
+
+<p>For a host of useful information, take a look at the <a href="https://wiki.tgstation13.org/Main_Page"><b><u>Wiki</b></u></a></p>
+
+<p>You can join us on our Discord server <a href="https://discord.gg/rC3FDYkj"><b><u>by clicking here.</b></u></a></p>
+
+<h2> Server hosted weekly during these timeslots: </h2>
+
+<p>Monday [US] (00:00 UTC - 04:00 UTC)</p>
+<p>Tuesday [EU] (17:00 UTC - 21:00 UTC)</p>
+<p>Friday [US] (00:00 UTC - 04:00 UTC)</p>
+<p>Saturday [EU] (17:00 UTC - 21:00 UTC)</p>
+
+<!-- <h3> Notice Board: </h3> -->
+
+<p><b>NOTE:</b> Respawn is enabled, after 30 minutes of being dead you may use the Respawn verb on the OOC tab and pick a different character to join the round as.  Remember, this is a new character and knows nothing of your previous life.</p>
+<p><b>NOTE:</b> Items stored inside containers (lockers, closets, safes, etc.) will now properly save.</p>
+

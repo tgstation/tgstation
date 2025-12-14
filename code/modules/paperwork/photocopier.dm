@@ -118,11 +118,6 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	starting_toner = /obj/item/toner
 	starting_paper = 30
 
-/obj/machinery/photocopier/get_save_vars()
-	. = ..()
-	. += NAMEOF(src, paper_stack)
-	return .
-
 /obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
 	setup_components()
