@@ -254,7 +254,8 @@
 	icon_state = "borg_stack_apparatus"
 	storable = list(/obj/item/stack/sheet,
 					/obj/item/stack/tile,
-					/obj/item/stack/rods)
+					/obj/item/stack/rods,
+					/obj/item/stack/conveyor)
 
 /obj/item/borg/apparatus/sheet_manipulator/Initialize(mapload)
 	update_appearance()
@@ -292,6 +293,7 @@
 		/obj/item/electronics,
 		/obj/item/stock_parts/power_store,
 		/obj/item/light,
+		/obj/item/conveyor_switch_construct,
 	)
 
 /obj/item/borg/apparatus/engineering/Initialize(mapload)
