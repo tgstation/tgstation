@@ -20,7 +20,7 @@
 	// so we need to delay species change until we're fully inserted
 	RegisterSignal(inserted_organ, COMSIG_ORGAN_BODYPART_INSERTED, PROC_REF(flyify))
 
-/datum/status_effect/organ_set_bonus/fly/proc/flyify(obj/item/organ/source, obj/item/bodypart/limb, movement_flags)
+/datum/status_effect/organ_set_bonus/fly/proc/flyify(obj/item/organ/source, obj/item/bodypart/limb)
 	SIGNAL_HANDLER
 	var/mob/living/carbon/human/new_fly = owner
 	// just in case?

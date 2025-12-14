@@ -87,16 +87,8 @@
 	var/list/exp_to_process = stored_research.available_experiments.Copy()
 	for (var/comp_experi in stored_research.completed_experiments)
 		exp_to_process += stored_research.completed_experiments[comp_experi]
-	for (var/process_experi in exp_to_process)
-		var/datum/experiment/unf_experi = process_experi
-		data["experiments"][unf_experi.type] = list(
-			"name" = unf_experi.name,
-			"description" = unf_experi.description,
-			"tag" = unf_experi.exp_tag,
-			"progress" = unf_experi.check_progress(),
-			"completed" = unf_experi.completed,
-			"performance_hint" = unf_experi.performance_hint
-		)
+	for (var/datum/experiment/unf_experi as anything in exp_to_process)
+		data["experiments"][unf_experi.type] = unf_experi.to_ui_data()
 	return data
 
 /datum/computer_file/program/science/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

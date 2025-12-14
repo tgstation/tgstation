@@ -934,6 +934,7 @@
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(mark_patient),
+		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(mark_patient),
 		COMSIG_ATOM_EXITED = PROC_REF(unmark_patient),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
@@ -1042,15 +1043,15 @@
 	buckled.remove_offsets(type)
 
 /// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
-/obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/carbon/potential_patient)
+/obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/potential_patient)
 	SIGNAL_HANDLER
 	if(!istype(potential_patient))
 		return
-	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(recheck_patient))
+	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(recheck_patient), TRUE)
 	recheck_patient(potential_patient) // In case the mob is already lying down before they entered.
 
 /// Unmark the potential patient.
-/obj/structure/table/optable/proc/unmark_patient(datum/source, mob/living/carbon/potential_patient)
+/obj/structure/table/optable/proc/unmark_patient(datum/source, mob/living/potential_patient)
 	SIGNAL_HANDLER
 	if(!istype(potential_patient))
 		return
@@ -1067,34 +1068,60 @@
 	if(patient && patient != potential_patient)
 		return
 
-	if(potential_patient.body_position == LYING_DOWN && potential_patient.loc == loc)
+	if(IS_LYING_OR_CANNOT_LIE(potential_patient) && potential_patient.loc == loc)
 		set_patient(potential_patient)
 		return
 
 	// Find another lying mob as a replacement.
-	for (var/mob/living/carbon/replacement_patient in loc.contents)
-		if(replacement_patient.body_position == LYING_DOWN)
-			set_patient(replacement_patient)
-			return
+	var/found_replacement
+	for (var/mob/living/replacement_patient in loc)
+		if(!IS_LYING_OR_CANNOT_LIE(replacement_patient))
+			continue
+		if(iscarbon(found_replacement))
+			break
+		else if(isliving(found_replacement) && !iscarbon(replacement_patient))
+			continue // Prefer carbons over non-carbons.
+		found_replacement = replacement_patient
 
-	set_patient(null)
+	set_patient(found_replacement)
 
 /obj/structure/table/optable/proc/set_patient(mob/living/carbon/new_patient)
 	if (patient)
-		UnregisterSignal(patient, list(COMSIG_MOB_SURGERY_STARTED, COMSIG_MOB_SURGERY_FINISHED))
+		UnregisterSignal(patient, list(
+			SIGNAL_ADDTRAIT(TRAIT_READY_TO_OPERATE),
+			SIGNAL_REMOVETRAIT(TRAIT_READY_TO_OPERATE),
+			COMSIG_LIVING_BEING_OPERATED_ON,
+			COMSIG_LIVING_SURGERY_FINISHED,
+			COMSIG_LIVING_UPDATING_SURGERY_STATE,
+		))
 		if (patient.external && patient.external == air_tank)
 			patient.close_externals()
 
 	patient = new_patient
 	update_appearance()
+	computer?.update_static_data_for_all_viewers()
 	if (!patient)
 		return
-	RegisterSignal(patient, COMSIG_MOB_SURGERY_STARTED, PROC_REF(on_surgery_change))
-	RegisterSignal(patient, COMSIG_MOB_SURGERY_FINISHED, PROC_REF(on_surgery_change))
+	RegisterSignals(patient, list(
+		SIGNAL_ADDTRAIT(TRAIT_READY_TO_OPERATE),
+		SIGNAL_REMOVETRAIT(TRAIT_READY_TO_OPERATE),
+		COMSIG_LIVING_SURGERY_FINISHED,
+		COMSIG_LIVING_UPDATING_SURGERY_STATE,
+	), PROC_REF(on_surgery_change))
+	RegisterSignal(patient, COMSIG_LIVING_BEING_OPERATED_ON, PROC_REF(get_surgeries))
 
 /obj/structure/table/optable/proc/on_surgery_change(datum/source)
 	SIGNAL_HANDLER
 	update_appearance()
+	computer?.update_static_data_batched()
+
+/obj/structure/table/optable/proc/get_surgeries(datum/source, mob/living/surgeon, list/operations)
+	SIGNAL_HANDLER
+
+	if(isnull(computer))
+		return
+
+	operations |= computer.advanced_surgeries
 
 /obj/structure/table/optable/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (istype(tool, /obj/item/clothing/mask/breath))
@@ -1275,7 +1302,7 @@
 		. += mutable_appearance(icon, air_tank.tank_holder_icon_state)
 	if (breath_mask?.loc == src)
 		. += mutable_appearance(icon, "mask_[breath_mask.icon_state]")
-	if (!length(patient?.surgeries))
+	if (!patient || !HAS_TRAIT(patient, TRAIT_READY_TO_OPERATE))
 		return
 	. += mutable_appearance(icon, "[icon_state]_[computer ? "" : "un"]linked")
 	if (computer)

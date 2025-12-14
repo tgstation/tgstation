@@ -8,11 +8,11 @@ import {
   Table,
   Tooltip,
 } from 'tgui-core/components';
-
+import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-type Techweb = {
+export type Techweb = {
   all_servers: string[];
   ref: string;
   selected: number;
@@ -20,13 +20,14 @@ type Techweb = {
   web_org: string;
 };
 
-type ExperimentData = {
+export type ExperimentData = {
   description: string;
   name: string;
   performance_hint: string;
   progress: Stage[];
   ref: string;
-  selected: number;
+  selected?: BooleanLike;
+  completed?: BooleanLike;
   tag: string;
 };
 
@@ -84,9 +85,14 @@ function ExperimentStageRow(props: ExperimentStageRowProps) {
   );
 }
 
-function TechwebServer(props) {
+type TechwebServerProps = {
+  techwebs: Techweb[];
+  can_select?: boolean;
+};
+
+export function TechwebServer(props: TechwebServerProps) {
   const { act } = useBackend<Data>();
-  const { techwebs } = props;
+  const { techwebs, can_select = true } = props;
 
   return techwebs.map((server, index) => (
     <Box key={index} m={1} className="ExperimentTechwebServer__Web">
@@ -98,19 +104,21 @@ function TechwebServer(props) {
         <Stack.Item className="ExperimentTechwebServer__WebName">
           {server.web_id} / {server.web_org}
         </Stack.Item>
-        <Stack.Item>
-          <Button
-            onClick={() =>
-              server.selected
-                ? act('clear_server')
-                : act('select_server', { ref: server.ref })
-            }
-            backgroundColor={server.selected ? 'good' : 'rgba(0, 0, 0, 0.4)'}
-            className="ExperimentTechwebServer__ConnectButton"
-          >
-            {server.selected ? 'Disconnect' : 'Connect'}
-          </Button>
-        </Stack.Item>
+        {can_select && (
+          <Stack.Item>
+            <Button
+              onClick={() =>
+                server.selected
+                  ? act('clear_server')
+                  : act('select_server', { ref: server.ref })
+              }
+              backgroundColor={server.selected ? 'good' : 'rgba(0, 0, 0, 0.4)'}
+              className="ExperimentTechwebServer__ConnectButton"
+            >
+              {server.selected ? 'Disconnect' : 'Connect'}
+            </Button>
+          </Stack.Item>
+        )}
       </Stack>
       <Box className="ExperimentTechwebServer__WebContent">
         <span>
@@ -126,23 +134,64 @@ function TechwebServer(props) {
   ));
 }
 
-export function Experiment(props) {
+type ExperimentTitleElementProps = {
+  selected: boolean;
+  ref: string;
+  can_select?: boolean;
+  children?: React.ReactNode;
+};
+
+function ExperimentTitleElement(props: ExperimentTitleElementProps) {
   const { act } = useBackend<Data>();
-  const { exp } = props;
+  const { selected, ref, can_select = true, children } = props;
+
+  if (!can_select) {
+    return (
+      <Box className="ExperimentConfigure__ExperimentNameFakeButton">
+        {children}
+      </Box>
+    );
+  }
+
+  return (
+    <Button
+      fluid
+      onClick={() =>
+        selected
+          ? act('clear_experiment')
+          : act('select_experiment', { ref: ref })
+      }
+      selected={selected}
+      className="ExperimentConfigure__ExperimentName"
+    >
+      {children}
+    </Button>
+  );
+}
+
+type ExperimentProps = {
+  exp: ExperimentData;
+  children?: React.ReactNode;
+  can_select?: boolean;
+};
+
+export function Experiment(props: ExperimentProps) {
+  const { exp, children, can_select } = props;
   const { name, description, tag, selected, progress, performance_hint, ref } =
     exp;
 
   return (
-    <Box m={1} key={ref} className="ExperimentConfigure__ExperimentPanel">
-      <Button
-        fluid
-        onClick={() =>
-          selected
-            ? act('clear_experiment')
-            : act('select_experiment', { ref: ref })
-        }
-        backgroundColor={selected ? 'good' : '#40628a'}
-        className="ExperimentConfigure__ExperimentName"
+    <Box
+      m={1}
+      key={ref}
+      className={
+        'ExperimentConfigure__ExperimentPanel' + (selected ? '--selected' : '')
+      }
+    >
+      <ExperimentTitleElement
+        selected={!!selected}
+        ref={ref}
+        can_select={can_select}
       >
         <Stack>
           <Stack.Item>{name}</Stack.Item>
@@ -160,10 +209,10 @@ export function Experiment(props) {
             </div>
           </Stack.Item>
         </Stack>
-      </Button>
+      </ExperimentTitleElement>
       <div className="ExperimentConfigure__ExperimentContent">
         <Box mb={1}>{description}</Box>
-        {props.children}
+        {children}
         <Table ml={2} className="ExperimentStage__Table">
           {progress.map((stage, idx) => (
             <ExperimentStageRow key={idx} stage={stage} />

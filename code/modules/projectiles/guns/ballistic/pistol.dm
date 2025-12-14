@@ -75,7 +75,6 @@
 	. = ..()
 	underbarrel = new /obj/item/gun/energy/recharge/fisher(src)
 	AddElement(/datum/element/examine_lore, \
-		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
 		lore = "The Ansem/SC is a Scarborough Arms overhaul suite for their own Ansem handgun, designed for special operators who operate operationally, \
 		especially against people who like using lightbulbs.<br>\
 		<br>\
