@@ -1,8 +1,3 @@
-/*
-All the important duct code:
-/code/datums/components/plumbing/plumbing.dm
-/code/datums/ductnet.dm
-*/
 /obj/machinery/duct
 	name = "fluid duct"
 	icon = 'icons/obj/pipes_n_cables/hydrochem/fluid_ducts.dmi'
@@ -17,7 +12,7 @@ All the important duct code:
 	///the layer of the duct
 	var/duct_layer = DUCT_LAYER_DEFAULT
 	///track machines we're connected to.
-	var/list/obj/machinery/neighbours
+	var/list/atom/movable/neighbours
 
 /obj/machinery/duct/Initialize(mapload, color_of_duct, layer_of_duct)
 	var/turf/destination = get_turf(src)
@@ -84,56 +79,55 @@ All the important duct code:
 	net = null
 
 /obj/machinery/duct/Destroy()
-	//remove duct from net and delete the net if nessaassary
-	disconnect()
+	var/list/atom/movable/visited = list(src = TRUE)
+	for(var/atom/movable/neighbour in neighbours)
+		//disconnect ourself from our neighbours
+		var/obj/machinery/duct/pipe = neighbour
+		if(istype(pipe))
+			pipe.neighbours -= src
+			pipe.update_appearance(UPDATE_ICON_STATE)
 
-	//disconnect ourself from our neighbours
-	for(var/obj/machinery/duct/other in neighbours)
-		other.neighbours -= src
-		other.update_appearance()
-
-	//go over all neighbours and assign new ductnets which are disconnected
-	var/list/obj/machinery/visited = list()
-	while(neighbours.len)
-		var/obj/machinery/neighbour = popleft(neighbours)
+		//find every node that can be reached from our neighbour making sure to not revisit it again in circles
 		if(visited[neighbour])
 			continue
-
-		//find every node that can be reached from our neighbour
-		var/list/obj/machinery/network = list()
-		var/list/obj/machinery/queue = list(neighbour)
+		var/list/atom/movable/network = list()
+		var/list/atom/movable/queue = list(neighbour)
 		while(queue.len)
-			var/obj/machinery/target = popleft(queue)
+			var/atom/movable/target = popleft(queue)
 			if(visited[target])
 				continue
 			visited[target] = TRUE
 			network += target
 
 			//visit all neighbours of this pipe as well
-			var/obj/machinery/duct/pipe = astype(target)
-			if(!isnull(pipe))
-				for(var/obj/machinery/node in pipe.neighbours)
+			pipe = target
+			if(istype(pipe))
+				for(var/atom/movable/node in pipe.neighbours)
 					queue += node
 
 		//first move all ducts to the new network
 		var/datum/ductnet/newnet
-		for(var/obj/machinery/duct/pipe in network)
-			if(!newnet)
-				newnet = new (pipe)
-			else
-				newnet.add_duct(pipe)
-			network -= pipe
+		for(var/atom/movable/node in network)
+			//assign duct to new network
+			pipe = node
+			if(istype(pipe))
+				pipe.disconnect()
+				if(!newnet)
+					newnet = new
+				newnet.ducts += pipe
+				pipe.net = newnet
+				continue
 
-		//next reconnect machines with their new pipenets
-		for(var/obj/machinery/node as anything in network)
+			//assign machines to new network
 			for(var/datum/component/plumbing/plumbing as anything in node.GetComponents(/datum/component/plumbing))
-				for(var/direction in GLOB.cardinals)
-					if(!(direction & (plumbing.demand_connects | plumbing.supply_connects)))
-						continue
-					for(var/obj/machinery/duct/found_duct in get_step(node, direction))
-						if(found_duct.net == newnet) //only reconnect the duct that has had its pipenet changed
-							addtimer(CALLBACK(found_duct, PROC_REF(attempt_connect), TRUE))
-							break
+				for(var/dirtext in plumbing.ducts)
+					if(plumbing.ducts[dirtext] == net)
+						net.remove_plumber(plumbing)
+						if(newnet)
+							newnet.add_plumber(plumbing, text2num(dirtext))
+	neighbours.Cut()
+
+	disconnect()
 
 	return ..()
 
@@ -159,18 +153,16 @@ All the important duct code:
 	return ..()
 
 ///start looking around us for stuff to connect to
-/obj/machinery/duct/proc/attempt_connect(reconnect_machines = FALSE)
+/obj/machinery/duct/proc/attempt_connect()
 	for(var/direction in GLOB.cardinals)
 		for(var/atom/movable/plumbable in get_step(src, direction))
 			var/opposite_dir = REVERSE_DIR(direction)
 
 			//we have already connected. happens in circular connections
-			if(!reconnect_machines && LAZYACCESS(neighbours, plumbable))
+			if(LAZYACCESS(neighbours, plumbable))
 				continue
 
 			if(istype(plumbable, /obj/machinery/duct))
-				if(reconnect_machines)
-					continue
 				var/obj/machinery/duct/other = plumbable
 
 				//must be same duct color
@@ -180,14 +172,15 @@ All the important duct code:
 				if(!(duct_layer & other.duct_layer))
 					continue
 
-				//connecting ductnets
-				net.assimilate(other.net)
+				//connecting ductnets but only for non circular connections where we don't merge ourselves
+				if(net != other.net)
+					net.assimilate(other.net)
 
 				//connecting us to duct
 				LAZYADDASSOC(neighbours, other, direction)
 				//connecting duct to us
 				LAZYADDASSOC(other.neighbours, src, opposite_dir)
-				other.update_appearance()
+				other.update_appearance(UPDATE_ICON_STATE)
 
 				continue
 
@@ -205,13 +198,13 @@ All the important duct code:
 					continue
 
 				//connect duct to plumber
-				if(!net.add_plumber(plumbing, opposite_dir) || reconnect_machines)
+				if(!net.add_plumber(plumbing, opposite_dir))
 					continue
 
 				//assign neighbour
 				LAZYADDASSOC(neighbours, plumbing.parent, direction)
 
-	update_appearance()
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/duct/wrench_act(mob/living/user, obj/item/wrench) //I can also be the RPD
 	wrench.play_tool_sound(src)
@@ -258,6 +251,11 @@ All the important duct code:
 	if(new_color)
 		duct_color = new_color
 		add_atom_colour(GLOB.pipe_paint_colors[new_color], FIXED_COLOUR_PRIORITY)
+
+/obj/item/stack/ducts/wrench_act(mob/living/user, obj/item/tool)
+	. = check_attach_turf(loc)
+	if(!.)
+		. = ITEM_INTERACT_FAILURE
 
 /obj/item/stack/ducts/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = NONE

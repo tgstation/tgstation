@@ -8,11 +8,9 @@
 	VAR_PRIVATE/list/datum/component/plumbing/demanders
 
 /datum/ductnet/New(obj/machinery/duct/parent)
-	ducts = list()
+	ducts = parent ? list(parent) : list()
 	suppliers = list()
 	demanders = list()
-	if(parent) //is null when connecting 2 machines without a duct
-		add_duct(parent)
 	return ..()
 
 /datum/ductnet/Destroy(force)
@@ -22,15 +20,6 @@
 	suppliers.Cut()
 	demanders.Cut()
 	return ..()
-
-///Adds an duct to this net
-/datum/ductnet/proc/add_duct(obj/machinery/duct/D)
-	if(D in ducts)
-		return
-	if(D.net) //is null when duct is initialized
-		D.disconnect()
-	ducts += D
-	D.net = src
 
 ///add a plumbing object to either demanders or suppliers
 /datum/ductnet/proc/add_plumber(datum/component/plumbing/P, dir)
@@ -56,7 +45,7 @@
 				demanders -= P
 
 	//return if this net has no ducts like when 2 machines are connected
-	return !ducts.len
+	return ducts.len == 0
 
 ///we combine ductnets. this occurs when someone connects to separate sets of fluid ducts
 /datum/ductnet/proc/assimilate(datum/ductnet/D)
@@ -65,9 +54,8 @@
 	demanders |= D.demanders
 	for(var/datum/component/plumbing/P as anything in D.suppliers + D.demanders)
 		for(var/s in P.ducts)
-			if(P.ducts[s] != D)
-				continue
-			P.ducts[s] = src
+			if(P.ducts[s] == D)
+				P.ducts[s] = src
 	D.suppliers.Cut()
 	D.demanders.Cut()
 
