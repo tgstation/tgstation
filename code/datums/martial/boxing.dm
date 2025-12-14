@@ -377,10 +377,7 @@
 		return FALSE
 	return ..()
 
-/mob/living/proc/boxing_help()
-	set name = "Focus on your Form"
-	set desc = "You focus on how to make the most of your boxing form."
-	set category = "Boxing"
+DEFINE_PROC_VERB(/mob/living, boxing_help, "Focus on your Form", "You focus on how to make the most of your boxing form.", FALSE, "Boxing")
 	to_chat(usr, "<b><i>You focus on your form, visualizing how best to throw a punch.</i></b>")
 
 	to_chat(usr, "<b><i>What moves you perform depend on what mouse buttons you click, and whether the last button clicked matches which hand you have selected when you throw the last punch.</i></b>")
@@ -407,10 +404,7 @@
 	honorable_boxer = FALSE
 	boxing_traits = list(TRAIT_BOXING_READY, TRAIT_STRENGTH, TRAIT_STIMMED)
 
-/mob/living/proc/evil_boxing_help()
-	set name = "Focus on Brawling"
-	set desc = "You ponder how best to rearrange the faces of your enemies."
-	set category = "Evil Boxing"
+DEFINE_PROC_VERB(/mob/living, evil_boxing_help, "Focus on Brawling", "You ponder how best to rearrange the faces of your enemies.", FALSE, "Evil Boxing")
 	to_chat(usr, "<b><i>You contemplate on the violence ahead, visualizing how best to throw a punch.</i></b>")
 
 	to_chat(usr, "<b><i>What moves you perform depend on what mouse buttons you click, and whether the last button clicked matches which hand you have selected when you throw the last punch.</i></b>")
@@ -439,10 +433,7 @@
 	var/list/first_word_strike = list("Extinction", "Brutalization", "Explosion", "Adventure", "Thunder", "Lightning", "Sonic", "Atomizing", "Whirlwind", "Tornado", "Shark", "Falcon")
 	var/list/second_word_strike = list(" Punch", " Pawnch", "-punch", " Jab", " Hook", " Fist", " Uppercut", " Straight", " Strike", " Lunge")
 
-/mob/living/proc/hunter_boxing_help()
-	set name = "Focus on the Hunt"
-	set desc = "You focus on how to most effectively punch the hell out of another endangered species."
-	set category = "Hunter Boxing"
+DEFINE_PROC_VERB(/mob/living, hunter_boxing_help, "Focus on the Hunt", "You focus on how to most effectively punch the hell out of another endangered species.", FALSE, "Hunter Boxing")
 	to_chat(usr, "<b><i>You focus on your Fists. You focus on Adventure. You focus on the Hunt.</i></b>")
 
 	to_chat(usr, "<b><i>What moves you perform depend on what mouse buttons you click, and whether the last button clicked matches which hand you have selected when you throw the last punch.</i></b>")

@@ -870,9 +870,7 @@ DEFINE_VERB(/mob, cancel_camera, "Cancel Camera View", "", FALSE, "OOC")
  * Helpful for when a players uplink window gets glitched to above their screen.
  * preventing them from moving the UPLINK window.
  */
-/mob/verb/reset_ui_positions_for_mob()
-	set name = "Reset UI Positions"
-	set category = "OOC"
+DEFINE_VERB(/mob, reset_ui_positions_for_mob, "Reset UI Positions", "", FALSE, "OOC")
 	SStgui.reset_ui_position(src)
 
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
