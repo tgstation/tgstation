@@ -44,5 +44,5 @@
 	qdel(new_minion.GetComponent(/datum/component/tameable)) // Rats don't share
 
 	new_minion.befriend(master)
-	new_minion.faction = master.faction.Copy()
+	apply_faction_and_allies_from(master, new_minion)
 	new_minion.balloon_alert_to_viewers(success_balloon)

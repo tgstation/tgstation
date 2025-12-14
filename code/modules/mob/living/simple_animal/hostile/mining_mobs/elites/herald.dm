@@ -196,7 +196,7 @@
 	var/mob/living/simple_animal/hostile/asteroid/elite/herald/mirror/new_mirror = new /mob/living/simple_animal/hostile/asteroid/elite/herald/mirror(loc)
 	my_mirror = new_mirror
 	my_mirror.my_master = src
-	my_mirror.faction = faction.Copy()
+	apply_faction_and_allies_from(src, my_mirror)
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/mirror
 	name = "herald's mirror"

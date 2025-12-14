@@ -159,7 +159,7 @@
 	. = ..()
 	if(isnull(.))
 		return
-	faction = new_friend.faction.Copy()
+	apply_faction_and_allies_from(new_friend, src)
 
 /mob/living/basic/mining/goliath/RangedAttack(atom/atom_target, modifiers)
 	tentacles?.Trigger(target = atom_target)

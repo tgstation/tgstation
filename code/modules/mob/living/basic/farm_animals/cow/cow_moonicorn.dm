@@ -37,7 +37,8 @@
 /mob/living/basic/cow/moonicorn/tamed(mob/living/tamer, atom/food)
 	. = ..()
 	///stop killing my FRIENDS
-	faction |= tamer.faction
+	add_faction(tamer.get_faction())
+	add_ally(tamer.allies)
 
 /datum/ai_controller/basic_controller/cow/moonicorn
 	blackboard = list(

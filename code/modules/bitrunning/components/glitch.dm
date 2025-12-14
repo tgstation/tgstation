@@ -13,8 +13,7 @@
 	var/mob/living/owner = parent
 	server.remove_threat(owner) // so the server doesn't dust us
 
-	owner.faction.Cut()
-	owner.faction += list(ROLE_GLITCH)
+	owner.set_faction(list(ROLE_GLITCH))
 
 	var/current_max = owner.maxHealth + ROUND_UP(server.threat * 0.2)
 	owner.maxHealth = clamp(current_max, 200, 500)

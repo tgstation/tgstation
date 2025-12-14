@@ -165,6 +165,8 @@
 
 /obj/effect/watcher_orbiter/Initialize(mapload)
 	. = ..()
+	if(LAZYLEN(target_faction))
+		target_faction = string_list(target_faction)
 	START_PROCESSING(SSobj, src)
 
 // Shuttle rotation fucks with our position, we just want to stick with our guy

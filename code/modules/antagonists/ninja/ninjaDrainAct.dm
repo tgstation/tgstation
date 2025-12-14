@@ -289,7 +289,7 @@
 
 //BORG//
 /mob/living/silicon/robot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!ninja || !hacking_module || (ROLE_NINJA in faction))
+	if(!ninja || !hacking_module || has_faction(ROLE_NINJA))
 		return NONE
 
 	to_chat(src, span_danger("Warni-***BZZZZZZZZZRT*** UPLOADING SPYDERPATCHER VERSION 9.5.2..."))
@@ -302,7 +302,7 @@
 	spark_system.start()
 	playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(src, span_danger("UPLOAD COMPLETE. NEW CYBORG MODEL DETECTED.  INSTALLING..."))
-	faction = list(ROLE_NINJA)
+	set_faction(list(ROLE_NINJA))
 	bubble_icon = "syndibot"
 	UnlinkSelf()
 	ionpulse = TRUE

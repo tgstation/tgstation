@@ -90,7 +90,7 @@
 
 /obj/structure/closet/supplypod/podspawn/deathmatch/preOpen()
 	for(var/mob/living/critter in contents)
-		critter.faction = list(FACTION_HOSTILE) //No infighting, but also KILL!!
+		critter.set_faction(list(FACTION_HOSTILE)) //No infighting, but also KILL!!
 	return ..()
 
 /obj/structure/closet/supplypod/extractionpod

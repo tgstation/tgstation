@@ -100,3 +100,19 @@
 
 /// Generates a mob faction for the passed owner, used by stabilized pink extracts
 #define FACTION_PINK_EXTRACT(owner) "pink_[owner]"
+
+/**
+ * apply_faction_and_allies_from(source, destination)
+ * Sets the atom's faction and allies to match that of the provided type's.
+ *
+ * This is equivalent to:
+ *   destination.set_faction(source.get_faction())
+ *    destination.set_allies(source.allies)
+ *
+ * This is a macro (not a proc) to avoid proc call overhead in hot paths.
+ */
+#define apply_faction_and_allies_from(source, destination) \
+	do { \
+		(destination).set_faction((source).get_faction()); \
+		(destination).set_allies((source).allies); \
+	} while(FALSE)

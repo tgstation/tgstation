@@ -97,8 +97,9 @@
 	. = ..()
 	if(isnull(.))
 		return
-	faction |= new_friend.faction
-	faction -= FACTION_MINING
+	add_faction(new_friend.get_faction())
+	add_ally(new_friend.allies)
+	remove_faction(FACTION_MINING)
 
 /mob/living/basic/mining/lobstrosity/mind_initialize()
 	. = ..()

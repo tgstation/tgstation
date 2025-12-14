@@ -197,7 +197,8 @@
 		podman.PossessByPlayer(ckey_holder)
 
 	podman.gender = blood_gender
-	podman.faction |= factions
+	podman.add_faction(factions)
+	podman.add_ally(allies)
 	features[FEATURE_MUTANT_COLOR] ||= "#59CE00"
 	features[FEATURE_POD_HAIR] ||= pick(SSaccessories.feature_list[FEATURE_POD_HAIR])
 
