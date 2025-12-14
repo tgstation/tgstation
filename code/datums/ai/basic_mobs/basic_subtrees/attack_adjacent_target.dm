@@ -22,11 +22,14 @@
 /datum/ai_behavior/basic_melee_attack/opportunistic/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	if (!controller.blackboard_key_exists(targeting_strategy_key))
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
+	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
+	if(QDELETED(target))
+		return FALSE
 	return controller.blackboard_key_exists(target_key)
 
 /datum/ai_behavior/basic_melee_attack/opportunistic/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	var/atom/movable/atom_pawn = controller.pawn
-	var/atom/atom_target = controller.blackboard[target_key]
+	var/atom/atom_target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	if(!atom_target.IsReachableBy(atom_pawn))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 	. = ..()
