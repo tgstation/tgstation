@@ -236,6 +236,7 @@ function tab_change(tab) {
     document.getElementById(tab).className = "button active"; // make current button active
   var spell_tabs_thingy = spell_tabs.includes(tab);
   var verb_tabs_thingy = verb_tabs.includes(tab);
+  statcontentdiv.className = "statcontent"
   if (tab == "Status") {
     draw_status();
   } else if (tab == "MC") {
@@ -389,6 +390,7 @@ function draw_status() {
 
 function draw_mc() {
   statcontentdiv.textContent = "";
+  statcontentdiv.className = "mcstatcontent"
   var table = document.createElement("table");
   for (var i = 0; i < mc_tab_parts.length; i++) {
     var part = mc_tab_parts[i];
@@ -746,11 +748,9 @@ function set_theme(which) {
   if (which == "light") {
     document.body.className = "";
     document.documentElement.className = "light";
-    set_style_sheet("browserOutput_white");
   } else if (which == "dark") {
     document.body.className = "dark";
     document.documentElement.className = "dark";
-    set_style_sheet("browserOutput");
   }
 }
 
@@ -769,21 +769,6 @@ function set_tabs_style(style) {
     menu.classList.remove("menu-wrap");
     menu.classList.remove("tabs-classic");
   }
-}
-
-function set_style_sheet(sheet) {
-  if (document.getElementById("goonStyle")) {
-    var currentSheet = document.getElementById("goonStyle");
-    currentSheet.parentElement.removeChild(currentSheet);
-  }
-  var head = document.getElementsByTagName("head")[0];
-  var sheetElement = document.createElement("link");
-  sheetElement.id = "goonStyle";
-  sheetElement.rel = "stylesheet";
-  sheetElement.type = "text/css";
-  sheetElement.href = sheet + ".css";
-  sheetElement.media = "all";
-  head.appendChild(sheetElement);
 }
 
 function restoreFocus() {

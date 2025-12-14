@@ -23,9 +23,7 @@
 		qdel(chopchop)
 		user.mind?.adjust_experience(/datum/skill/gaming, 100)
 		user.won_game()
-		playsound(src, 'sound/machines/arcade/win.ogg', 50, TRUE)
-		new /obj/item/stack/arcadeticket((get_turf(src)), rand(6,10))
-		to_chat(user, span_notice("[src] dispenses a handful of tickets!"))
+		victory_tickets(rand(6,10))
 		return
 	if(!do_they_still_have_that_hand(user, chopchop))
 		to_chat(user, span_warning("The guillotine drops, but your hand seems to be gone already!"))

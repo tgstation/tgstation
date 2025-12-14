@@ -23,7 +23,6 @@
 
 	. = ..()
 
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(clean_face))
 	AddComponent(/datum/component/personal_crafting, ui_human_crafting)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
@@ -75,7 +74,7 @@
 	//Update med hud images...
 	..()
 	//...sec hud images...
-	sec_hud_set_ID()
+	update_ID_card()
 	sec_hud_set_implants()
 	sec_hud_set_security_status()
 	//...fan gear
@@ -106,7 +105,7 @@
 		if(!same_id || (text2num(href_list["examine_time"]) + viable_time) < world.time)
 			to_chat(viewer, span_notice("You don't have that good of a memory. Examine [p_them()] again."))
 			return
-		if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		if(HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
 			to_chat(viewer, span_notice("You can't make out that ID anymore."))
 			return
 		if(!isobserver(viewer) && get_dist(viewer, src) > ID_EXAMINE_DISTANCE + 1) // leeway, ignored if the viewer is a ghost
@@ -128,7 +127,7 @@
 			id_species ||= dna.species.name
 			id_blood_type ||= get_bloodtype()
 
-		if(istype(id, /obj/item/card/id/advanced))
+		else if(istype(id, /obj/item/card/id/advanced))
 			var/obj/item/card/id/advanced/advancedID = id
 			id_job = advancedID.trim_assignment_override || id_job
 
@@ -589,7 +588,7 @@
  * Returns false if we couldn't wash our hands due to them being obscured, otherwise true
  */
 /mob/living/carbon/human/proc/wash_hands(clean_types)
-	if(check_covered_slots() & ITEM_SLOT_GLOVES)
+	if(covered_slots & HIDEGLOVES)
 		return FALSE
 
 	if(gloves)
@@ -612,7 +611,7 @@
 	if(glasses && !is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types))
 		. = TRUE
 
-	if(wear_mask && !(check_covered_slots() & ITEM_SLOT_MASK) && wear_mask.wash(clean_types))
+	if(wear_mask && !(covered_slots & HIDEMASK) && wear_mask.wash(clean_types))
 		. = TRUE
 
 /**
@@ -624,7 +623,7 @@
 		. |= COMPONENT_CLEANED
 
 	// Wash hands if exposed
-	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0 && !(check_covered_slots() & ITEM_SLOT_GLOVES))
+	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0 && !(covered_slots & HIDEGLOVES))
 		blood_in_hands = 0
 		update_worn_gloves()
 		. |= COMPONENT_CLEANED
@@ -692,7 +691,8 @@
 	// Updates the health bar, also sends signal
 	. = ..()
 	// Handles changing limb colors and stuff
-	hud_used.healthdoll?.update_appearance()
+	if(!(living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
+		hud_used.healthdoll?.update_appearance()
 
 /mob/living/carbon/human/fully_heal(heal_flags = HEAL_ALL)
 	if(heal_flags & HEAL_NEGATIVE_MUTATIONS)
@@ -707,7 +707,7 @@
 	return ..()
 
 /mob/living/carbon/human/vomit(vomit_flags = VOMIT_CATEGORY_DEFAULT, vomit_type = /obj/effect/decal/cleanable/vomit/toxic, lost_nutrition = 10, distance = 1, purge_ratio = 0.1)
-	if(!((vomit_flags & MOB_VOMIT_BLOOD) && HAS_TRAIT(src, TRAIT_NOBLOOD) && !HAS_TRAIT(src, TRAIT_TOXINLOVER)))
+	if(!((vomit_flags & MOB_VOMIT_BLOOD) && !CAN_HAVE_BLOOD(src) && !HAS_TRAIT(src, TRAIT_TOXINLOVER)))
 		return ..()
 
 	if(vomit_flags & MOB_VOMIT_MESSAGE)
@@ -901,7 +901,7 @@
 	var/carrydelay = 5 SECONDS //if you have latex you are faster at grabbing
 	var/skills_space
 	var/fitness_level = mind?.get_skill_level(/datum/skill/athletics) - 1
-	var/experience_reward = 5
+	var/experience_reward = ATHLETICS_SKILL_MISC_EXP
 	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
 		carrydelay -= 2 SECONDS
 		experience_reward *= 3
@@ -933,7 +933,7 @@
 		visible_message(span_warning("[src] fails to fireman carry [target]!"))
 		return
 
-	mind?.adjust_experience(/datum/skill/athletics, experience_reward) //Get a bit fitter every time we fireman carry successfully. Deadlift your friends for gains!
+	mind?.adjust_experience(/datum/skill/athletics, round(experience_reward/(fitness_level || 1), 1)) //Get a bit fitter every time we fireman carry successfully. Deadlift your friends for gains!
 
 	return buckle_mob(target, TRUE, TRUE, CARRIER_NEEDS_ARM)
 
@@ -967,24 +967,11 @@
 	var/health_deficiency = max((maxHealth - health), staminaloss)
 	if(health_deficiency >= 40)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, TRUE, multiplicative_slowdown = health_deficiency / 75)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, TRUE, multiplicative_slowdown = health_deficiency / 25)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
-		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
-
-/mob/living/carbon/human/is_bleeding()
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
-		return FALSE
-	return ..()
-
-/mob/living/carbon/human/get_total_bleed_rate()
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
-		return FALSE
-	return ..()
 
 /mob/living/carbon/human/get_exp_list(minutes)
 	. = ..()
-
 	if(mind.assigned_role.title in SSjob.name_occupations)
 		.[mind.assigned_role.title] = minutes
 
@@ -1046,7 +1033,7 @@
 	if (!isnull(race))
 		dna.species = new race
 
-/mob/living/carbon/human/species/set_species(datum/species/mrace, icon_update, pref_load)
+/mob/living/carbon/human/species/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
 	. = ..()
 	if(use_random_name)
 		fully_replace_character_name(real_name, generate_random_mob_name())
@@ -1061,19 +1048,17 @@
 
 	add_traits(list(TRAIT_NO_DNA_SCRAMBLE, TRAIT_BADDNA, TRAIT_BORN_MONKEY), SPECIES_TRAIT)
 
-/mob/living/carbon/human/proc/is_atmos_sealed(additional_flags = null, check_hands = FALSE, alt_flags = FALSE)
+/mob/living/carbon/human/proc/is_atmos_sealed(additional_flags = null, check_hands = FALSE)
 	var/chest_covered = FALSE
 	var/head_covered = FALSE
 	var/hands_covered = FALSE
-	for (var/obj/item/clothing/equipped in get_equipped_items())
+	for (var/obj/item/clothing/equipped in get_equipped_items(INCLUDE_ABSTRACT))
 		// We don't really have space-proof gloves, so even if we're checking them we ignore the flags
 		if ((equipped.body_parts_covered & HANDS) && num_hands >= default_num_hands)
 			hands_covered = TRUE
-		if (!alt_flags && !isnull(additional_flags) && !(equipped.clothing_flags & additional_flags))
-			continue
-		if ((equipped.clothing_flags & (STOPSPRESSUREDAMAGE | (alt_flags ? additional_flags : NONE))) && (equipped.body_parts_covered & CHEST))
+		if ((equipped.clothing_flags & (STOPSPRESSUREDAMAGE | additional_flags)) && (equipped.body_parts_covered & CHEST))
 			chest_covered = TRUE
-		if ((equipped.clothing_flags & (STOPSPRESSUREDAMAGE | (alt_flags ? additional_flags : NONE))) && (equipped.body_parts_covered & HEAD))
+		if ((equipped.clothing_flags & (STOPSPRESSUREDAMAGE | additional_flags)) && (equipped.body_parts_covered & HEAD))
 			head_covered = TRUE
 	if (!chest_covered)
 		return FALSE
@@ -1120,6 +1105,9 @@
 /mob/living/carbon/human/species/lizard/silverscale
 	race = /datum/species/lizard/silverscale
 
+/mob/living/carbon/human/species/ghost
+	race = /datum/species/ghost
+
 /mob/living/carbon/human/species/ethereal
 	race = /datum/species/ethereal
 
@@ -1155,6 +1143,3 @@
 
 /mob/living/carbon/human/species/zombie/infectious
 	race = /datum/species/zombie/infectious
-
-/mob/living/carbon/human/species/voidwalker
-	race = /datum/species/voidwalker

@@ -31,14 +31,10 @@
 	. = ..()
 	animate_pulse()
 
-/obj/item/organ/legion_tumour/apply_organ_damage(damage_amount, maximum, required_organ_flag)
-	var/was_failing = organ_flags & ORGAN_FAILING
-	. = ..()
-	if (was_failing != (organ_flags & ORGAN_FAILING))
-		animate_pulse()
+/obj/item/organ/legion_tumour/on_begin_failure()
+	animate_pulse()
 
-/obj/item/organ/legion_tumour/set_organ_damage(damage_amount, required_organ_flag)
-	. = ..()
+/obj/item/organ/legion_tumour/on_failure_recovery()
 	animate_pulse()
 
 /// Do a heartbeat animation depending on if we're failing or not
@@ -86,7 +82,7 @@
 
 	log_combat(user, target, "used a Legion Tumour on", src, "as they are in crit, this will turn them into a Legion.")
 	target.visible_message(span_boldwarning("[user] splatters [target] with [src]... and it springs into horrible life!"))
-	var/mob/living/basic/legion_brood/skull = new(target.loc)
+	var/mob/living/basic/mining/legion_brood/skull = new(target.loc)
 	skull.melee_attack(target)
 	return TRUE
 
@@ -125,7 +121,7 @@
 				if (prob(50))
 					var/turf/check_turf = get_step(owner.loc, owner.dir)
 					var/atom/land_turf = (check_turf.is_blocked_turf()) ? owner.loc : check_turf
-					var/mob/living/basic/legion_brood/child = new(land_turf)
+					var/mob/living/basic/mining/legion_brood/child = new(land_turf)
 					child.assign_creator(owner, copy_full_faction = FALSE)
 
 			if(SPT_PROB(3, seconds_per_tick))

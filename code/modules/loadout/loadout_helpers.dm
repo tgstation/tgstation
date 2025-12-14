@@ -36,14 +36,14 @@
 	if(!equipped_outfit.equip(src, visuals_only))
 		return FALSE
 	// Handle any snowflake on_equips
-	var/list/new_contents = get_all_gear()
+	var/list/new_contents = get_all_gear(INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT|INCLUDE_ACCESSORIES)
 	var/update = NONE
 	for(var/datum/loadout_item/item as anything in loadout_datums)
 		update |= item.on_equip_item(
 			equipped_item = locate(item.item_path) in new_contents,
-			preference_source = preference_source,
-			preference_list = preference_list,
+			item_details = preference_list?[item.item_path] || list(),
 			equipper = src,
+			outfit = equipped_outfit,
 			visuals_only = visuals_only,
 		)
 	if(update)

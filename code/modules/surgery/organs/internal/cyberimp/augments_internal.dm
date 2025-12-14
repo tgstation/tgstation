@@ -2,7 +2,7 @@
 /obj/item/organ/cyberimp
 	name = "cybernetic implant"
 	desc = "A state-of-the-art implant that improves a baseline's functionality."
-
+	abstract_type = /obj/item/organ/cyberimp
 	organ_flags = ORGAN_ROBOTIC
 	failing_desc = "seems to be broken."
 	/// icon of the bodypart overlay we're going to be applying to our owner

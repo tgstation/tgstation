@@ -226,7 +226,7 @@
 /area/shuttle/arrival)
 "CA" = (
 /obj/effect/turf_decal/trimline/yellow/arrow_cw,
-/obj/machinery/vending/wallmed/directional/north,
+/obj/machinery/wall_healer/free/directional/north,
 /obj/effect/turf_decal/trimline/dark_blue/corner{
 	dir = 4
 	},

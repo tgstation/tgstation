@@ -2,48 +2,29 @@
 	"private": true,
 	"name": "tgui-workspace",
 	"version": "6.0.0",
-	"packageManager": "yarn@4.9.1",
+	"packageManager": "bun@1.2.16",
 	"workspaces": [
 		"packages/*"
 	],
 	"scripts": {
 		"tgui:analyze": "rspack --analyze",
-		"tgui:bench": "rspack --env TGUI_BENCH=1 && node packages/tgui-bench/index.js",
 		"tgui:build": "rspack build",
-		"tgui:dev": "node --experimental-modules packages/tgui-dev-server/index.js",
-		"tgui:lint": "eslint packages --ext .js,.cjs,.ts,.tsx",
-		"tgui:prettier": "prettier --check .",
-		"tgui:sonar": "eslint packages -c .eslintrc-sonar.yml",
-		"tgui:test": "vitest",
-		"tgui:test-simple": "CI=true vitest",
-		"tgui:test-ci": "CI=true vitest",
-		"tgui:tsc": "tsc",
-		"tgui:prettier-fix": "prettier --write .",
-		"tgui:eslint-fix": "eslint --fix packages --ext .js,.cjs,.ts,.jsx,.tsx"
-	},
-	"dependencies": {
-		"@rspack/cli": "^1.3.7",
-		"@rspack/core": "^1.3.7",
-		"@typescript-eslint/parser": "^8.13.0",
-		"@typescript-eslint/utils": "^8.13.0",
-		"css-loader": "^7.1.2",
-		"eslint": "^8.57.0",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-react": "^7.34.1",
-		"eslint-plugin-simple-import-sort": "^12.0.0",
-		"eslint-plugin-sonarjs": "^0.25.0",
-		"eslint-plugin-unused-imports": "^3.1.0",
-		"jsdom": "^26.0.0",
-		"prettier": "^3.5.3",
-		"sass": "^1.80.6",
-		"sass-embedded": "^1.85.1",
-		"sass-loader": "^16.0.3",
-		"typescript": "^5.8.3"
+		"tgui:dev": "bun --smol packages/tgui-dev-server/index.ts",
+		"tgui:test": "bun test",
+		"tgui:tsc": "tsc"
 	},
 	"devDependencies": {
-		"@types/node": "^22.14.0",
+		"@happy-dom/global-registrator": "^17.4.7",
+		"@rspack/cli": "^1.4.5",
+		"@rspack/core": "^1.4.5",
+		"@types/bun": "^1.2.14",
+		"@types/react": "^19.1.5",
+		"@types/react-dom": "^19.1.5",
 		"@types/webpack-env": "^1.18.8",
 		"@types/wicg-file-system-access": "^2023.10.6",
-		"vitest": "^3.1.1"
+		"css-loader": "^7.1.2",
+		"sass-embedded": "^1.89.2",
+		"sass-loader": "^16.0.5",
+		"typescript": "^5.8.3"
 	}
 }

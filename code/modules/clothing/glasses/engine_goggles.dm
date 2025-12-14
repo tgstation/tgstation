@@ -6,6 +6,7 @@
 #define MODE_SHUTTLE "shuttle"
 #define MODE_PIPE_CONNECTABLE "connectable"
 #define MODE_ATMOS_THERMAL "atmospheric-thermal"
+#define MODE_AREA_BLUEPRINTS "area-blueprints"
 #define TEMP_SHADE_CYAN 273.15
 #define TEMP_SHADE_GREEN 283.15
 #define TEMP_SHADE_YELLOW 300
@@ -19,13 +20,17 @@
 	actions_types = list(/datum/action/item_action/toggle_mode)
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 	gender = PLURAL
-
 	vision_flags = NONE
 	color_cutoffs = null
-
-	var/list/modes = list(MODE_NONE = MODE_MESON, MODE_MESON = MODE_TRAY, MODE_TRAY = MODE_NONE)
+	/// List of selectable modes that can be used by the goggles
+	var/list/modes = list(MODE_NONE, MODE_MESON, MODE_TRAY)
+	/// The current mode string that is selected from the modes list (used for icons)
 	var/mode = MODE_NONE
+	/// The current mode index that is selected from the modes list
+	var/mode_index = 1
+	/// The distance for how far we can see special objects (only used for pipes and wires)
 	var/range = 1
+	/// A cache of tracked pipes used in MODE_PIPE_CONNECTABLE
 	var/list/connection_images = list()
 
 /obj/item/clothing/glasses/meson/engine/Initialize(mapload)
@@ -39,7 +44,8 @@
 	return ..()
 
 /obj/item/clothing/glasses/meson/engine/proc/toggle_mode(mob/user, voluntary)
-	mode = modes[mode]
+	mode_index = WRAP_UP(mode_index, modes.len)
+	mode = modes[mode_index]
 	to_chat(user, "<span class='[voluntary ? "notice":"warning"]'>[voluntary ? "You turn the goggles":"The goggles turn"] [mode ? "to [mode] mode":"off"][voluntary ? ".":"!"]</span>")
 	if(connection_images.len)
 		connection_images.Cut()
@@ -59,6 +65,9 @@
 
 		if(MODE_SHUTTLE)
 			change_glass_color(/datum/client_colour/glass_colour/red)
+
+		if(MODE_AREA_BLUEPRINTS)
+			change_glass_color(/datum/client_colour/glass_colour/lightyellow)
 
 		if(MODE_NONE)
 			change_glass_color(initial(glass_colour_type))
@@ -89,6 +98,8 @@
 			show_connections()
 		if(MODE_ATMOS_THERMAL)
 			atmos_thermal(user)
+		if(MODE_AREA_BLUEPRINTS)
+			show_blueprints(user)
 
 /obj/item/clothing/glasses/meson/engine/proc/show_shuttle()
 	var/mob/living/carbon/human/user = loc
@@ -142,9 +153,7 @@
 	inhand_icon_state = "trayson-t-ray"
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
 	range = 2
-
-
-	modes = list(MODE_NONE = MODE_TRAY, MODE_TRAY = MODE_PIPE_CONNECTABLE, MODE_PIPE_CONNECTABLE = MODE_ATMOS_THERMAL, MODE_ATMOS_THERMAL = MODE_NONE) // atmos techs now finally have 3 modes on their  goggles!
+	modes = list(MODE_NONE, MODE_TRAY, MODE_PIPE_CONNECTABLE, MODE_ATMOS_THERMAL) // atmos techs now finally have 3 modes on their  goggles!
 
 /obj/item/clothing/glasses/meson/engine/tray/dropped(mob/user)
 	. = ..()
@@ -156,8 +165,7 @@
 	icon_state = "trayson-shuttle"
 	inhand_icon_state = "trayson-shuttle"
 	desc = "Used to see the boundaries of shuttle regions."
-
-	modes = list(MODE_NONE = MODE_SHUTTLE, MODE_SHUTTLE = MODE_NONE)
+	modes = list(MODE_NONE, MODE_SHUTTLE)
 
 
 /obj/item/clothing/glasses/meson/engine/atmos_imaging
@@ -166,14 +174,29 @@
 	icon_state = "trayson-atmospheric-thermal"
 	inhand_icon_state = "trayson-meson"
 	glass_colour_type = /datum/client_colour/glass_colour/gray
-
-	modes = list(MODE_NONE = MODE_ATMOS_THERMAL, MODE_ATMOS_THERMAL = MODE_NONE)
+	modes = list(MODE_NONE, MODE_ATMOS_THERMAL)
 
 /obj/item/clothing/glasses/meson/engine/atmos_imaging/update_icon_state()
 	icon_state = inhand_icon_state = "trayson-[mode]"
 	return ..()
 
+/obj/item/clothing/glasses/meson/engine/admin
+	name = "admin imaging goggles"
+	desc = "Used by Nanotrasen admins to detect blueprint areas, pipes, thermal, wiring, and pipes."
+	range = 7
+	modes = list(MODE_NONE, MODE_TRAY, MODE_PIPE_CONNECTABLE, MODE_ATMOS_THERMAL, MODE_AREA_BLUEPRINTS)
 
+/proc/show_blueprints(mob/viewer, range = 7, duration = 10)
+	if(!ismob(viewer) || !viewer.client)
+		return
+	for(var/turf/viewable_turf in view(range, viewer))
+		var/area/selected_area = get_area(viewable_turf)
+		var/obj/area_overlay = image(selected_area.icon, viewable_turf, initial(selected_area.icon_state), TOPDOWN_ABOVE_WATER_LAYER)
+		SET_PLANE_EXPLICIT(area_overlay, ABOVE_GAME_PLANE, viewable_turf)
+		area_overlay.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+		area_overlay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		area_overlay.alpha = 255
+		flick_overlay_global(area_overlay, list(viewer.client), duration)
 
 /proc/atmos_thermal(mob/viewer, range = 5, duration = 10)
 	if(!ismob(viewer) || !viewer.client)
@@ -211,6 +234,7 @@
 #undef MODE_SHUTTLE
 #undef MODE_PIPE_CONNECTABLE
 #undef MODE_ATMOS_THERMAL
+#undef MODE_AREA_BLUEPRINTS
 #undef TEMP_SHADE_CYAN
 #undef TEMP_SHADE_GREEN
 #undef TEMP_SHADE_YELLOW

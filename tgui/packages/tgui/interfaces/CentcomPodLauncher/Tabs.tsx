@@ -1,7 +1,7 @@
 import { Box, Button } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { PodLauncherData } from './types';
+import type { PodLauncherData } from './types';
 
 export function TabPod(props) {
   return (

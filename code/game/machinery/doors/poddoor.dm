@@ -19,15 +19,21 @@
 	/// The current deconstruction step
 	var/deconstruction = BLASTDOOR_FINISHED
 	/// The door's ID (used for buttons, etc to control the door)
-	var/id = 1
+	var/id = null
 	/// The sound that plays when the door opens/closes
 	var/animation_sound = 'sound/machines/blastdoor.ogg'
 	var/show_nav_computer_icon = TRUE
+	///The mob who crafted this blastdoor
+	var/datum/weakref/owner
 
 /obj/machinery/door/poddoor/Initialize(mapload)
 	. = ..()
 	if(show_nav_computer_icon)
 		AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "airlock", TRUE)
+
+/obj/machinery/door/poddoor/Destroy()
+	owner = null
+	return ..()
 
 /datum/armor/door_poddoor
 	melee = 50
@@ -46,7 +52,7 @@
 	if(panel_open)
 		if(deconstruction == BLASTDOOR_FINISHED)
 			. += span_notice("The maintenance panel is opened and the electronics could be <b>pried</b> out.")
-			. += span_notice("\The [src] could be calibrated to a blast door controller ID with a <b>multitool</b> or a <b>blast door controller</b>.")
+			. += span_notice("\The [src] could be calibrated to a blast door controller ID with a <b>blast door controller</b>.")
 		else if(deconstruction == BLASTDOOR_NEEDS_ELECTRONICS)
 			. += span_notice("The <i>electronics</i> are missing and there are some <b>wires</b> sticking out.")
 		else if(deconstruction == BLASTDOOR_NEEDS_WIRES)
@@ -71,9 +77,6 @@
 		if(TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_LMB] = "Open panel"
 			return CONTEXTUAL_SCREENTIP_SET
-		if(TOOL_MULTITOOL)
-			context[SCREENTIP_CONTEXT_LMB] = "Calibrate ID"
-			return CONTEXTUAL_SCREENTIP_SET
 		if(TOOL_CROWBAR)
 			context[SCREENTIP_CONTEXT_LMB] = "Remove electronics"
 			return CONTEXTUAL_SCREENTIP_SET
@@ -83,6 +86,10 @@
 		if(TOOL_WELDER)
 			context[SCREENTIP_CONTEXT_LMB] = "Disassemble"
 			return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/door/poddoor/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
+	owner = WEAKREF(crafter)
 
 /obj/machinery/door/poddoor/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(deconstruction == BLASTDOOR_NEEDS_WIRES && istype(tool, /obj/item/stack/cable_coil))
@@ -117,8 +124,22 @@
 			balloon_alert(user, "open the panel first!")
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/assembly/control/controller_item = tool
+		if(controller_item.id == -1)
+			//collect existing ids
+			var/list/door_ids = list()
+			for(var/obj/machinery/door/poddoor/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
+				if(!M.id || (M.id in door_ids))
+					continue
+				door_ids += "[M.id]"
+
+			//create new id
+			var/new_id = 0
+			while("[new_id]" in door_ids)
+				new_id += 1
+			controller_item.id = "[new_id]"
 		id = controller_item.id
-		balloon_alert(user, "id changed")
+		owner = WEAKREF(user)
+		balloon_alert(user, "id changed to [id]")
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE
@@ -130,24 +151,6 @@
 		return ITEM_INTERACT_SUCCESS
 	else if (default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/door/poddoor/multitool_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if (density)
-		balloon_alert(user, "open the door first!")
-		return ITEM_INTERACT_SUCCESS
-	if (!panel_open)
-		balloon_alert(user, "open the panel first!")
-		return ITEM_INTERACT_SUCCESS
-	if (deconstruction != BLASTDOOR_FINISHED)
-		return
-	var/change_id = tgui_input_number(user, "Set the door controllers ID (Current: [id])", "Door Controller ID", isnum(id) ? id : null, 100)
-	if(!change_id || QDELETED(usr) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
-	id = change_id
-	to_chat(user, span_notice("You change the ID to [id]."))
-	balloon_alert(user, "id changed")
-	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/poddoor/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -166,6 +169,7 @@
 	if(tool.use_tool(src, user, 10 SECONDS, volume = 50))
 		new /obj/item/electronics/airlock(loc)
 		id = null
+		owner = null
 		deconstruction = BLASTDOOR_NEEDS_ELECTRONICS
 		balloon_alert(user, "removed airlock electronics")
 	return ITEM_INTERACT_SUCCESS

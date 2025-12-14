@@ -398,6 +398,9 @@
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/station/asteroid)
+"YV" = (
+/turf/closed/wall,
+/area/station/asteroid)
 "Zs" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -1273,7 +1276,7 @@ XJ
 fd
 rJ
 hs
-jx
+YV
 nm
 nm
 gV

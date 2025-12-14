@@ -16,15 +16,22 @@
 	if(isclothing(wear_mask)) //Mask
 		. += wear_mask.flash_protect
 
-/mob/living/carbon/get_ear_protection()
-	. = ..()
-	if(HAS_TRAIT(src, TRAIT_DEAF))
-		return INFINITY //For all my homies that can not hear in the world
-	var/obj/item/organ/ears/E = get_organ_slot(ORGAN_SLOT_EARS)
-	if(!E)
+/mob/living/carbon/sound_damage(damage, deafen)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
+		return
+	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
+	if(QDELETED(ears))
+		return
+	if(damage)
+		ears.apply_organ_damage(damage * ears.damage_multiplier)
+	if(deafen)
+		ears.adjust_temporary_deafness(deafen)
+
+/mob/living/carbon/get_ear_protection(ignore_deafness = FALSE)
+	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
+	if(!ears)
 		return INFINITY
-	else
-		. += E.bang_protect
+	return ..() + ears.bang_protect
 
 /mob/living/carbon/is_mouth_covered(check_flags = ALL)
 	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & HEADCOVERSMOUTH))
@@ -56,7 +63,7 @@
 	return null
 
 /mob/living/carbon/is_ears_covered()
-	for(var/obj/item/worn_thing as anything in get_equipped_items())
+	for(var/obj/item/worn_thing as anything in get_equipped_items(INCLUDE_ABSTRACT))
 		if(worn_thing.flags_cover & EARS_COVERED)
 			return worn_thing
 
@@ -85,6 +92,12 @@
 	return ..()
 
 /mob/living/carbon/send_item_attack_message(obj/item/weapon, mob/living/user, hit_area, def_zone)
+	// In the future replace these with parent call if the item attack message proc is ever unshittified
+	if(SEND_SIGNAL(weapon, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT, src, user) & SIGNAL_MESSAGE_MODIFIED)
+		return TRUE
+	if(SEND_SIGNAL(src, COMSIG_SEND_ITEM_ATTACK_MESSAGE_CARBON, weapon, user) & SIGNAL_MESSAGE_MODIFIED)
+		return TRUE
+
 	if(!weapon.force && !length(weapon.attack_verb_simple) && !length(weapon.attack_verb_continuous))
 		return
 	var/obj/item/bodypart/hit_bodypart = get_bodypart(def_zone)
@@ -299,7 +312,7 @@
 
 	for(var/obj/item/thing as anything in who_touched_us.get_equipped_items())
 		if((thing.body_parts_covered & HANDS) && prob(GET_ATOM_BLOOD_DNA_LENGTH(thing) * 25))
-			add_blood_DNA_to_items(GET_ATOM_BLOOD_DNA(who_touched_us.wear_suit), messy_slots)
+			add_blood_DNA_to_items(GET_ATOM_BLOOD_DNA(thing), messy_slots)
 			return
 
 	if(prob(blood_in_hands * GET_ATOM_BLOOD_DNA_LENGTH(who_touched_us) * 10))
@@ -452,6 +465,9 @@
 	return embeds
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
+	if(SEND_SIGNAL(src, COMSIG_MOB_FLASH_OVERRIDE_CHECK, src) & FLASH_OVERRIDDEN) //Check for behavior overrides before doing the act itself. If we have a behavior override, we handle everything there and skip the rest
+		return FLASH_COMPLETED
+
 	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes) //can't flash what can't see!
 		return
@@ -496,37 +512,6 @@
 
 	else if(damage == 0 && prob(20)) // just enough protection
 		to_chat(src, span_notice("Something bright flashes in the corner of your vision!"))
-
-
-/mob/living/carbon/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
-	var/list/reflist = list(intensity) // Need to wrap this in a list so we can pass a reference
-	SEND_SIGNAL(src, COMSIG_CARBON_SOUNDBANG, reflist)
-	intensity = reflist[1]
-	var/ear_safety = get_ear_protection()
-	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
-	var/effect_amount = intensity - ear_safety
-	if(effect_amount > 0)
-		if(stun_pwr)
-			Paralyze((stun_pwr*effect_amount)*0.1)
-			Knockdown(stun_pwr*effect_amount)
-
-		if(ears && (deafen_pwr || damage_pwr))
-			var/ear_damage = damage_pwr * effect_amount
-			var/deaf = deafen_pwr * effect_amount
-			ears.adjustEarDamage(ear_damage,deaf)
-
-			if(ears.damage >= 15)
-				to_chat(src, span_warning("Your ears start to ring badly!"))
-				if(prob(ears.damage - 5))
-					to_chat(src, span_userdanger("You can't hear anything!"))
-					// Makes you deaf, enough that you need a proper source of healing, it won't self heal
-					// you need earmuffs, inacusiate, or replacement
-					ears.set_organ_damage(ears.maxHealth)
-			else if(ears.damage >= 5)
-				to_chat(src, span_warning("Your ears start to ring!"))
-			SEND_SOUND(src, sound('sound/items/weapons/flash_ring.ogg',0,1,0,250))
-		return effect_amount //how soundbanged we are
-
 
 /mob/living/carbon/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
 	if(damage_type != BRUTE && damage_type != BURN)
@@ -598,7 +583,7 @@
 		to_chat(src, span_danger("You can't grasp your [grasped_part.name] with itself!"))
 		return
 
-	var/bleed_rate = grasped_part.get_modified_bleed_rate()
+	var/bleed_rate = grasped_part.cached_bleed_rate
 	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")
 	to_chat(src, span_warning("You try grasping at your [grasped_part.name][bleeding_text]..."))
 	if(!do_after(src, 0.75 SECONDS))
@@ -614,7 +599,7 @@
 
 /// If TRUE, the owner of this bodypart can try grabbing it to slow bleeding, as well as various other effects.
 /obj/item/bodypart/proc/can_be_grasped()
-	if (get_modified_bleed_rate())
+	if (cached_bleed_rate)
 		return TRUE
 
 	for (var/datum/wound/iterated_wound as anything in wounds)
@@ -667,7 +652,7 @@
 	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(qdel_void))
 	RegisterSignals(grasped_part, list(COMSIG_CARBON_REMOVE_LIMB, COMSIG_QDELETING), PROC_REF(qdel_void))
 
-	var/bleed_rate = grasped_part.get_modified_bleed_rate()
+	var/bleed_rate = grasped_part.cached_bleed_rate
 	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")
 	user.visible_message(span_danger("[user] grasps at [user.p_their()] [grasped_part.name][bleeding_text]."), span_notice("You grab hold of your [grasped_part.name] tightly."), vision_distance=COMBAT_MESSAGE_RANGE)
 	playsound(get_turf(src), 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
@@ -697,14 +682,15 @@
 		new_organ.replace_into(src)
 		new_organ.organ_flags |= ORGAN_MUTANT
 
-	var/obj/item/bodypart/new_part = pick(GLOB.bioscrambler_valid_parts)
-	var/obj/item/bodypart/picked_user_part = get_bodypart(initial(new_part.body_zone))
-	if (picked_user_part && BODYTYPE_CAN_BE_BIOSCRAMBLED(picked_user_part.bodytype))
-		changed_something = TRUE
-		new_part = new new_part()
-		new_part.replace_limb(src, special = TRUE)
-		if (picked_user_part)
-			qdel(picked_user_part)
+	if (!HAS_TRAIT(src, TRAIT_NODISMEMBER))
+		var/obj/item/bodypart/new_part = pick(GLOB.bioscrambler_valid_parts)
+		var/obj/item/bodypart/picked_user_part = get_bodypart(initial(new_part.body_zone))
+		if (picked_user_part && BODYTYPE_CAN_BE_BIOSCRAMBLED(picked_user_part.bodytype))
+			changed_something = TRUE
+			new_part = new new_part()
+			new_part.replace_limb(src, special = TRUE)
+			if (picked_user_part)
+				qdel(picked_user_part)
 
 	if (!changed_something)
 		to_chat(src, span_notice("Your augmented body protects you from [scramble_source]!"))

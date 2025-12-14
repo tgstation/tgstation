@@ -48,7 +48,7 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 				return
 
 			var/already_exists_row = query_already_exists.NextRow()
-			qdel(query_already_exists)
+			QDEL_NULL(query_already_exists)
 
 			if (already_exists_row)
 				alert(usr, "Those two are already in the list of known alts!")
@@ -71,7 +71,7 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 				cached_known_alts = null
 				load_known_alts()
 
-			qdel(query_add_known_alt)
+			QDEL_NULL(query_add_known_alt)
 			show_panel(usr.client)
 
 			if (!is_banned_from(ckey2, "Server"))
@@ -101,7 +101,7 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 				return
 
 			var/list/result = query_known_alt_info.item
-			qdel(query_known_alt_info)
+			QDEL_NULL(query_known_alt_info)
 
 			if (alert("Are you sure you want to delete the alt connection between [result[1]] and [result[2]]?",,"Yes", "No") != "Yes")
 				return
@@ -121,7 +121,7 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 				cached_known_alts = null
 				load_known_alts()
 
-			qdel(query_delete_known_alt)
+			QDEL_NULL(query_delete_known_alt)
 			show_panel(usr.client)
 
 /// Returns the list of known alts, will return an empty list if the DB could not be connected to.
@@ -152,8 +152,8 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 			query_known_alts.item[1],
 		))
 
+	QDEL_NULL(query_known_alts)
 	COOLDOWN_START(src, cache_cooldown, 10 SECONDS)
-	qdel(query_known_alts)
 
 	return cached_known_alts
 

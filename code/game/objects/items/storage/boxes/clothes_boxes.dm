@@ -209,6 +209,7 @@
 /obj/item/storage/box/holy/adept/PopulateContents()
 	new /obj/item/clothing/suit/chaplainsuit/armor/adept(src)
 	new /obj/item/clothing/head/helmet/chaplain/adept(src)
+	new /obj/item/clothing/gloves/bracer(src)
 
 /obj/item/storage/box/holy/follower
 	name = "Followers of the Chaplain Kit"

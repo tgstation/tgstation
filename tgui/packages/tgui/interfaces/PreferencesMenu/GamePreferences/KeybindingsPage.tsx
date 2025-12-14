@@ -1,4 +1,4 @@
-import { range, sortBy } from 'common/collections';
+import { range, sortBy } from 'es-toolkit';
 import { Component } from 'react';
 import { resolveAsset } from 'tgui/assets';
 import { useBackend } from 'tgui/backend';
@@ -10,12 +10,12 @@ import {
   Tooltip,
   TrackOutsideClicks,
 } from 'tgui-core/components';
-import { KeyEvent } from 'tgui-core/events';
+import type { KeyEvent } from 'tgui-core/events';
 import { fetchRetry } from 'tgui-core/http';
 import { isEscape, KEY } from 'tgui-core/keys';
 
 import { LoadingScreen } from '../../common/LoadingScreen';
-import { PreferencesMenuData } from '../types';
+import type { PreferencesMenuData } from '../types';
 import { TabbedMenu } from './TabbedMenu';
 
 type Keybinding = {
@@ -29,7 +29,8 @@ type KeybindingsPageState = {
   keybindings?: Keybindings;
   lastKeyboardEvent?: KeyboardEvent;
   selectedKeybindings?: PreferencesMenuData['keybindings'];
-
+  searchText?: string;
+  setSearchText?: (text: string) => void;
   /**
    * The current hotkey that the user is rebinding.
    *
@@ -69,15 +70,13 @@ const KEY_CODE_TO_BYOND: Record<string, string> = {
 const DOM_KEY_LOCATION_NUMPAD = 3;
 
 function sortKeybindings(array: [string, Keybinding][]) {
-  return sortBy(array, ([_, keybinding]) => {
-    return keybinding.name;
-  });
+  return sortBy(array, [([, keybinding]) => keybinding.name]);
 }
 
 function sortKeybindingsByCategory(
   array: [string, Record<string, Keybinding>][],
 ) {
-  return sortBy(array, ([category, _]) => category);
+  return sortBy(array, [([category]) => category]);
 }
 
 function formatKeyboardEvent(event: KeyboardEvent): string {
@@ -206,7 +205,56 @@ function ResetToDefaultButton(props: ResetToDefaultButtonProps) {
   );
 }
 
-export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
+// Generates react nodes for keybindings
+function getKeybindingNodes(
+  input: Record<string, Keybinding>,
+  searchText: string | undefined,
+  selectedKeybindings: PreferencesMenuData['keybindings'] | undefined,
+  getTypingHotkey: (keybindingId: string, slot: number) => string | undefined,
+  getKeybindingOnClick: (keybindingId: string, slot: number) => () => void,
+) {
+  return sortKeybindings(Object.entries(input))
+    .map(([keybindingId, keybinding]) => {
+      if (
+        searchText &&
+        searchText.length >= 2 &&
+        !keybinding.name.toLowerCase().includes(searchText.toLowerCase())
+      ) {
+        return null;
+      }
+      const keys = selectedKeybindings![keybindingId] || [];
+
+      const name = (
+        <Stack.Item basis="25%">
+          <KeybindingName keybinding={keybinding} />
+        </Stack.Item>
+      );
+
+      return (
+        <Stack.Item key={keybindingId} mb={1}>
+          <Stack fill>
+            {name}
+
+            {range(0, 3).map((key) => (
+              <Stack.Item key={key} grow basis="10%">
+                <KeybindingButton
+                  currentHotkey={keys[key]}
+                  typingHotkey={getTypingHotkey(keybindingId, key)}
+                  onClick={getKeybindingOnClick(keybindingId, key)}
+                />
+              </Stack.Item>
+            ))}
+
+            <Stack.Item shrink>
+              <ResetToDefaultButton keybindingId={keybindingId} />
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+      );
+    })
+    .filter((node) => node !== null);
+}
+export class KeybindingsPage extends Component<any, KeybindingsPageState> {
   cancelNextKeyUp?: number;
   keybindingOnClicks: Record<string, (() => void)[]> = {};
   lastKeybinds?: PreferencesMenuData['keybindings'];
@@ -216,6 +264,8 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     keybindings: undefined,
     selectedKeybindings: undefined,
     rebindingHotkey: undefined,
+    searchText: undefined,
+    setSearchText: undefined,
   };
 
   constructor(props) {
@@ -223,6 +273,10 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
+    this.state.searchText = '';
+    this.state.setSearchText = ((text) => {
+      this.setState({ searchText: text });
+    }).bind(this);
   }
 
   componentDidMount() {
@@ -418,53 +472,17 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
                 ([category, keybindings]) => {
                   return [
                     category,
-                    <Stack key={category} vertical fill>
-                      {sortKeybindings(Object.entries(keybindings)).map(
-                        ([keybindingId, keybinding]) => {
-                          const keys =
-                            this.state.selectedKeybindings![keybindingId] || [];
-
-                          const name = (
-                            <Stack.Item basis="25%">
-                              <KeybindingName keybinding={keybinding} />
-                            </Stack.Item>
-                          );
-
-                          return (
-                            <Stack.Item key={keybindingId}>
-                              <Stack fill>
-                                {name}
-
-                                {range(0, 3).map((key) => (
-                                  <Stack.Item key={key} grow basis="10%">
-                                    <KeybindingButton
-                                      currentHotkey={keys[key]}
-                                      typingHotkey={this.getTypingHotkey(
-                                        keybindingId,
-                                        key,
-                                      )}
-                                      onClick={this.getKeybindingOnClick(
-                                        keybindingId,
-                                        key,
-                                      )}
-                                    />
-                                  </Stack.Item>
-                                ))}
-
-                                <Stack.Item shrink>
-                                  <ResetToDefaultButton
-                                    keybindingId={keybindingId}
-                                  />
-                                </Stack.Item>
-                              </Stack>
-                            </Stack.Item>
-                          );
-                        },
-                      )}
-                    </Stack>,
+                    getKeybindingNodes(
+                      keybindings,
+                      this.state.searchText,
+                      this.state.selectedKeybindings,
+                      this.getTypingHotkey.bind(this),
+                      this.getKeybindingOnClick.bind(this),
+                    ),
                   ];
                 },
               )}
+              setSearchText={this.state.setSearchText}
             />
           </Stack.Item>
 

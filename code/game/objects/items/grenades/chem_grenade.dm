@@ -586,17 +586,17 @@
 	beakers += beaker_two
 
 /obj/item/grenade/chem_grenade/glitter
-	name = "generic glitter grenade"
-	desc = "You shouldn't see this description."
+	name = "white glitter grenade"
+	desc = "For that somnolent glittery look."
 	stage = GRENADE_READY
-	var/glitter_type = /datum/reagent/glitter
+	var/glitter_colors = list(COLOR_WHITE = 100)
 
 /obj/item/grenade/chem_grenade/glitter/Initialize(mapload)
 	. = ..()
 	var/obj/item/reagent_containers/cup/beaker/beaker_one = new(src)
 	var/obj/item/reagent_containers/cup/beaker/beaker_two = new(src)
 
-	beaker_one.reagents.add_reagent(glitter_type, 25)
+	beaker_one.reagents.add_reagent(/datum/reagent/glitter, 25, data = list("colors" = glitter_colors))
 	beaker_one.reagents.add_reagent(/datum/reagent/potassium, 25)
 	beaker_two.reagents.add_reagent(/datum/reagent/phosphorus, 25)
 	beaker_two.reagents.add_reagent(/datum/reagent/consumable/sugar, 25)
@@ -607,17 +607,12 @@
 /obj/item/grenade/chem_grenade/glitter/pink
 	name = "pink glitter bomb"
 	desc = "For that HOT glittery look."
-	glitter_type = /datum/reagent/glitter/pink
+	glitter_colors = list("#ff8080" = 100)
 
 /obj/item/grenade/chem_grenade/glitter/blue
 	name = "blue glitter bomb"
 	desc = "For that COOL glittery look."
-	glitter_type = /datum/reagent/glitter/blue
-
-/obj/item/grenade/chem_grenade/glitter/white
-	name = "white glitter bomb"
-	desc = "For that somnolent glittery look."
-	glitter_type = /datum/reagent/glitter/white
+	glitter_colors = list("#4040ff" = 100)
 
 /obj/item/grenade/chem_grenade/clf3
 	name = "clf3 grenade"

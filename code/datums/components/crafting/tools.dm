@@ -104,7 +104,7 @@
 	for(var/obj/item/toy/crayon/crayon in collected_tools)
 		if(!is_type_in_typecache(crayon, valid_types))
 			continue
-		if(final_check ? crayon.use_charges(user, 10) : crayon.check_empty(user, 10))
+		if(final_check ? crayon.use_charges(user, 10) : !crayon.check_empty(user, 10))
 			return TRUE
 	return FALSE
 
@@ -115,6 +115,17 @@
 		/obj/item/universal_scanner = 1,
 		/obj/item/encryptionkey = 1,
 		/obj/item/stack/cable_coil = 5,
+	)
+	category = CAT_TOOLS
+
+/datum/crafting_recipe/jaws_of_recovery
+	name = "Modified Jaws of Life"
+	time = 10 SECONDS
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	result = /obj/item/crowbar/power/paramedic/silent
+	reqs = list(
+		/obj/item/crowbar/power = 1,
+		/obj/item/bonesetter = 1,
 	)
 	category = CAT_TOOLS
 

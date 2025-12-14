@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
 import {
   BlockQuote,
@@ -63,7 +63,7 @@ export const WarrantConsole = (props) => {
 const RecordList = (props) => {
   const { act, data } = useBackend<Data>();
   const { records = [] } = data;
-  const sorted = sortBy(records, (record) => record.crew_name);
+  const sorted = sortBy(records, [(record) => record.crew_name]);
 
   const [selectedRecord, setSelectedRecord] = useLocalState<
     WarrantRecord | undefined
@@ -116,7 +116,7 @@ const RecordList = (props) => {
 /** Views info on the current selection. */
 const ViewRecord = (props) => {
   const foundRecord = getCurrentRecord();
-  if (!foundRecord) return <> </>;
+  if (!foundRecord) return;
 
   const { citations = [], crew_name } = foundRecord;
 
@@ -136,7 +136,7 @@ const ViewRecord = (props) => {
 /** Handles paying fines */
 const CitationManager = (props) => {
   const foundRecord = getCurrentRecord();
-  if (!foundRecord) return <> </>;
+  if (!foundRecord) return;
 
   const { act } = useBackend<Data>();
   const {

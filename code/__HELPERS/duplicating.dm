@@ -34,6 +34,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars, list(
 	"parent",
 	"parent_type",
 	"power_supply",
+	"pixloc",
 	"quirks",
 	"reagents",
 	"_signal_procs",
@@ -65,14 +66,16 @@ GLOBAL_PROTECT(duplicate_forbidden_vars)
 
 	var/atom/made_copy = new original.type(spawning_location)
 
-	for(var/atom_vars in original.vars - GLOB.duplicate_forbidden_vars)
-		if(islist(original.vars[atom_vars]))
-			var/list/var_list = original.vars[atom_vars]
-			made_copy.vars[atom_vars] = var_list.Copy()
-			continue
-		else if(istype(original.vars[atom_vars], /datum) || ismob(original.vars[atom_vars]))
+	for(var/atom_vars in (original.vars - GLOB.duplicate_forbidden_vars))
+		var/var_value = original.vars[atom_vars]
+		if(isdatum(var_value))
 			continue // this would reference the original's object, that will break when it is used or deleted.
-		made_copy.vars[atom_vars] = original.vars[atom_vars]
+
+		if(islist(var_value))
+			var/list/var_list = var_value
+			var_value = var_list.Copy()
+
+		made_copy.vars[atom_vars] = var_value
 
 	if(isliving(made_copy))
 		if(iscarbon(made_copy))
@@ -90,6 +93,6 @@ GLOBAL_PROTECT(duplicate_forbidden_vars)
 			copied_implant.implant(made_copy, silent = TRUE, force = TRUE)
 		//transfer quirks, we do this because transfering the original's quirks keeps the 'owner' as the original.
 		for(var/datum/quirk/original_quirks as anything in original_living.quirks)
-			copied_living.add_quirk(original_quirks.type)
+			copied_living.add_quirk(original_quirks.type, announce = FALSE)
 
 	return made_copy

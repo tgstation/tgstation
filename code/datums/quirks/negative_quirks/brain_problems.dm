@@ -26,7 +26,13 @@
 			LOCATION_HANDS,
 		),
 		flavour_text = "These will keep you alive until you can secure a supply of medication. Don't rely on them too much!",
+		notify_player = TRUE,
 	)
+
+/datum/quirk/item_quirk/brainproblems/is_species_appropriate(datum/species/mob_species)
+	if(ispath(mob_species, /datum/species/dullahan))
+		return FALSE
+	return ..()
 
 /datum/quirk/item_quirk/brainproblems/process(seconds_per_tick)
 	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * seconds_per_tick)

@@ -31,9 +31,6 @@
 		/mob/living/simple_animal/hostile/asteroid/elite/pandora,
 		/mob/living/simple_animal/hostile/asteroid/polarbear,
 		/mob/living/simple_animal/hostile/asteroid/polarbear/lesser,
-		/mob/living/simple_animal/hostile/illusion,
-		/mob/living/simple_animal/hostile/illusion/escape,
-		/mob/living/simple_animal/hostile/illusion/mirage,
 		/mob/living/simple_animal/hostile/megafauna,
 		/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner,
 		/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom,
@@ -58,7 +55,6 @@
 		/mob/living/simple_animal/hostile/ooze,
 		/mob/living/simple_animal/hostile/ooze/gelatinous,
 		/mob/living/simple_animal/hostile/ooze/grapes,
-		/mob/living/simple_animal/soulscythe,
 		// DO NOT ADD NEW ENTRIES TO THIS LIST
 		// READ THE COMMENT ABOVE
 	)

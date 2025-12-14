@@ -39,7 +39,7 @@
 	rpg_title = "Omnissiah"
 	random_spawns_possible = FALSE
 	allow_bureaucratic_error = FALSE
-	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS
+	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS | JOB_ANTAG_PROTECTED
 	human_authority = JOB_AUTHORITY_NON_HUMANS_ALLOWED //we can safely assume NT doesn't care what species AIs are made of, much less if they can't even afford an AI.
 
 /datum/job/human_ai/get_roundstart_spawn_point()
@@ -163,7 +163,7 @@
 /obj/item/secure_camera_console_pod/attack_self(mob/user, modifiers)
 	. = ..()
 	var/area/current_area = get_area(user)
-	var/static/list/allowed_areas = typecacheof(list(/area/station/ai_monitored/turret_protected/ai))
+	var/static/list/allowed_areas = typecacheof(list(/area/station/ai/satellite/chamber))
 	if(!is_type_in_typecache(current_area, allowed_areas))
 		user.balloon_alert(user, "not in the sat!")
 		return

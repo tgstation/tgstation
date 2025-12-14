@@ -56,26 +56,40 @@
 
 	if(isnull(board))
 		return ITEM_INTERACT_BLOCKING
-	if(loc == user)
-		balloon_alert(user, "can't deploy in hand")
+	if(!isturf(loc))
+		balloon_alert(user, "must deploy on the floor")
 		return ITEM_INTERACT_BLOCKING
-	else if(isturf(loc))
-		var/turf/location = loc
-		if(!isopenturf(location))
-			balloon_alert(user, "can't deploy here")
-			return ITEM_INTERACT_BLOCKING
-		else if(location.is_blocked_turf(source_atom = src))
-			balloon_alert(user, "no space for deployment")
-			return ITEM_INTERACT_BLOCKING
+	var/turf/location = loc
+	if(!isopenturf(location))
+		balloon_alert(user, "can't deploy here")
+		return ITEM_INTERACT_BLOCKING
+	else if(location.is_blocked_turf(source_atom = src))
+		balloon_alert(user, "no space for deployment")
+		return ITEM_INTERACT_BLOCKING
 	balloon_alert_to_viewers("deploying!")
 	if(!do_after(user, 1 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
 
 	new /obj/effect/temp_visual/mook_dust(loc)
-	var/obj/machinery/new_machine = new board.build_path(loc)
+	var/obj/item/circuitboard/machine/leaving_circuit = board
+	if(contents.len > 1)
+		leaving_circuit.replacement_parts = leaving_circuit.flatten_component_list()
+		for(var/obj/item/flatpack_component in src)
+			if(flatpack_component == leaving_circuit)
+				continue
+			for(var/i in 1 to leaving_circuit.replacement_parts.len)
+				var/obj/item/machine_component = leaving_circuit.replacement_parts[i]
+				if(!ispath(machine_component, /obj/item))
+					continue
+				if(flatpack_component.type == machine_component)
+					leaving_circuit.replacement_parts[i] = flatpack_component
+					break
+
+	board = null
+	var/obj/machinery/new_machine = new leaving_circuit.build_path(loc, board = leaving_circuit)
+	new_machine.on_construction(user)
 	loc.visible_message(span_warning("[src] deploys!"))
 	playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 70, TRUE)
-	new_machine.on_construction(user)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 

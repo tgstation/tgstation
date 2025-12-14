@@ -33,7 +33,8 @@
 /obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'MULE CROSSING - LOOK BOTH WAYS";
 	name = "MULE CROSSING - LOOK BOTH WAYS";
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/catwalk_floor,
@@ -207,7 +208,7 @@
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
 	dir = 1
 	},
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "CA" = (

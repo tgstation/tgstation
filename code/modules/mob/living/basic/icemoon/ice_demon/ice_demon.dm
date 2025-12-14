@@ -55,6 +55,7 @@
 	icon_state = "ice_demon"
 	icon_living = "ice_demon"
 	icon_gib = "syndicate_gib"
+	density = FALSE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	basic_mob_flags = DEL_ON_DEATH
 	speed = 5
@@ -69,6 +70,14 @@
 	ai_controller = /datum/ai_controller/basic_controller/ice_demon/afterimage
 	///how long do we exist for
 	var/existence_period = 15 SECONDS
+
+// Passable, but mining mobs avoid pathing through them
+/mob/living/basic/mining/demon_afterimage/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
+	var/mob/living/requester = pass_info.requester_ref?.resolve()
+	// Only block mining mobs so that drones etc can still path through
+	if (istype(requester) && (requester.mob_biotypes & MOB_MINING) && requester.loc != loc)
+		return FALSE
+	return ..()
 
 /mob/living/basic/mining/demon_afterimage/Initialize(mapload)
 	. = ..()

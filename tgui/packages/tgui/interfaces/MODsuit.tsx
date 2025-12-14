@@ -17,7 +17,7 @@ import {
   Table,
 } from 'tgui-core/components';
 import { formatSiUnit } from 'tgui-core/format';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -431,8 +431,8 @@ const SuitStatusSection = (props) => {
             content={
               link_freq
                 ? link_call
-                  ? 'Calling (' + link_call + ')'
-                  : 'Call (' + link_id + ')'
+                  ? `Calling (${link_call})`
+                  : `Call (${link_id})`
                 : 'Frequency Unset'
             }
             onClick={() => act('call')}
@@ -505,7 +505,7 @@ const ModParts = (props) => {
         return (
           <LabeledList.Item
             key={part.slot}
-            label={part.slot + ' Slot'}
+            label={`${part.slot} Slot`}
             buttons={
               <Button
                 selected={part.deployed}

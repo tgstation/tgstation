@@ -66,7 +66,7 @@
  * * new_holder - The mob to add this quirk to.
  * * quirk_transfer - If this is being added to the holder as part of a quirk transfer. Quirks can use this to decide not to spawn new items or apply any other one-time effects.
  */
-/datum/quirk/proc/add_to_holder(mob/living/new_holder, quirk_transfer = FALSE, client/client_source, unique = TRUE)
+/datum/quirk/proc/add_to_holder(mob/living/new_holder, quirk_transfer = FALSE, client/client_source, unique = TRUE, announce = TRUE)
 	if(!new_holder)
 		CRASH("Quirk attempted to be added to null mob.")
 
@@ -80,7 +80,7 @@
 		CRASH("Attempted to add quirk to a holder when it already has a holder.")
 
 	quirk_holder = new_holder
-	quirk_holder.quirks += src
+	LAZYADD(quirk_holder.quirks, src)
 	// If we weren't passed a client source try to use a present one
 	client_source ||= quirk_holder.client
 
@@ -98,7 +98,7 @@
 			START_PROCESSING(SSquirks, src)
 
 	if(!quirk_transfer)
-		if(gain_text)
+		if(gain_text && announce)
 			to_chat(quirk_holder, gain_text)
 		if (unique)
 			add_unique(client_source)
@@ -121,7 +121,7 @@
 	if(process_update_signals)
 		UnregisterSignal(quirk_holder, process_update_signals)
 
-	quirk_holder.quirks -= src
+	LAZYREMOVE(quirk_holder.quirks, src)
 
 	if(!quirk_transfer && lose_text)
 		to_chat(quirk_holder, lose_text)
@@ -222,7 +222,7 @@
  * * default_location - If the item isn't possible to equip in a valid slot, this is a description of where the item was spawned.
  * * notify_player - If TRUE, adds strings to where_items_spawned list to be output to the player in [/datum/quirk/item_quirk/post_add()]
  */
-/datum/quirk/item_quirk/proc/give_item_to_holder(obj/item/quirk_item, list/valid_slots, flavour_text = null, default_location = "at your feet", notify_player = TRUE)
+/datum/quirk/item_quirk/proc/give_item_to_holder(obj/item/quirk_item, list/valid_slots, flavour_text = null, default_location = "at your feet", notify_player = FALSE)
 	if(ispath(quirk_item))
 		quirk_item = new quirk_item(get_turf(quirk_holder))
 
@@ -278,7 +278,7 @@
 	return medical ?  dat.Join("<br>") : dat.Join(", ")
 
 /mob/living/proc/cleanse_quirk_datums() //removes all trait datums
-	QDEL_LIST(quirks)
+	QDEL_LAZYLIST(quirks)
 
 /mob/living/proc/transfer_quirk_datums(mob/living/to_mob)
 	// We could be done before the client was moved or after the client was moved

@@ -142,9 +142,19 @@
 	if(!gibbed)
 		var/make_a_corpse = TRUE
 		var/place_to_make_corpse = loc
-		if(istype(loc, /obj/item/clothing/head/mob_holder))//If our mouse is dying in place holder we want to put the dead mouse where the place holder was
-			var/obj/item/clothing/head/mob_holder/found_holder = loc
+		var/must_equip = FALSE
+		var/equip_slot
+		var/mob/holding_mob
+		var/obj/item/mob_holder/found_holder
+		if(istype(loc, /obj/item/mob_holder))//If our mouse is dying in place holder we want to put the dead mouse where the place holder was
+			found_holder = loc
 			place_to_make_corpse = found_holder.loc
+			if(istype(found_holder.loc,/mob/living/carbon))
+				holding_mob = found_holder.loc
+				place_to_make_corpse = get_turf(holding_mob)
+				equip_slot = holding_mob.get_slot_by_item(found_holder)
+				if(equip_slot == ITEM_SLOT_HANDS || equip_slot == ITEM_SLOT_RPOCKET || equip_slot == ITEM_SLOT_LPOCKET)
+					must_equip = TRUE
 			if(istype(found_holder.loc, /obj/machinery/microwave))//Microwaves gib things that die when cooked, so we don't need to make a dead body too
 				make_a_corpse = FALSE
 		if(make_a_corpse)
@@ -153,6 +163,11 @@
 			if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
 				mouse.desc = "They're toast."
 				mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
+			found_holder?.release(FALSE)
+			if(must_equip)
+				if(equip_slot == ITEM_SLOT_HANDS)
+					holding_mob.dropItemToGround(found_holder)
+				holding_mob.equip_to_slot(mouse,equip_slot)
 	qdel(src)
 
 /mob/living/basic/mouse/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
@@ -412,7 +427,7 @@
 		BB_SONG_LINES = MOUSE_SONG,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
@@ -458,10 +473,11 @@
 		)
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = DEFAULT_AI_FLAGS | STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,

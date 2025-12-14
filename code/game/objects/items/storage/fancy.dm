@@ -15,6 +15,7 @@
 
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
+	abstract_type = /obj/item/storage/fancy
 	resistance_flags = FLAMMABLE
 	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 	/// Used by examine to report what this thing is holding.
@@ -196,6 +197,10 @@
 	age_restricted = TRUE
 	contents_tag = "cigarette"
 	storage_type = /datum/storage/cigarette_box
+	drop_sound = SFX_CIG_PACK_DROP
+	pickup_sound = SFX_CIG_PACK_PICKUP
+	throw_drop_sound = SFX_CIG_PACK_THROW_DROP
+	sound_vary = TRUE
 
 	///for cigarette overlay
 	var/candy = FALSE
@@ -209,6 +214,8 @@
 /obj/item/storage/fancy/cigarettes/attack_self(mob/user)
 	if(contents.len != 0 || !spawn_coupon)
 		return ..()
+
+	playsound(src, storage_type.rustle_sound, 50, TRUE)
 
 	balloon_alert(user, "ooh, free coupon")
 	var/obj/item/coupon/attached_coupon = new
@@ -224,6 +231,8 @@
 	. = ..()
 
 	register_context()
+	if(!spawn_count)
+		update_appearance()
 
 /obj/item/storage/fancy/cigarettes/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
@@ -287,12 +296,22 @@
 		. += "[use_icon_state]_[cig_position]"
 		cig_position++
 
+/obj/item/storage/fancy/cigarettes/empty
+	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
+
 /obj/item/storage/fancy/cigarettes/dromedaryco
 	name = "\improper DromedaryCo packet"
 	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
 	icon_state = "dromedary"
 	base_icon_state = "dromedary"
 	spawn_type = /obj/item/cigarette/dromedary
+
+/obj/item/storage/fancy/cigarettes/dromedaryco/empty
+	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigpack_uplift
 	name = "\improper Uplift Smooth packet"
@@ -301,12 +320,22 @@
 	base_icon_state = "uplift"
 	spawn_type = /obj/item/cigarette/uplift
 
+/obj/item/storage/fancy/cigarettes/cigpack_uplift/empty
+	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
+
 /obj/item/storage/fancy/cigarettes/cigpack_robust
 	name = "\improper Robust packet"
 	desc = "Smoked by the robust."
 	icon_state = "robust"
 	base_icon_state = "robust"
 	spawn_type = /obj/item/cigarette/robust
+
+/obj/item/storage/fancy/cigarettes/cigpack_robust/empty
+	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigpack_robustgold
 	name = "\improper Robust Gold packet"
@@ -315,12 +344,22 @@
 	base_icon_state = "robustg"
 	spawn_type = /obj/item/cigarette/robustgold
 
+/obj/item/storage/fancy/cigarettes/cigpack_robustgold/empty
+	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
+
 /obj/item/storage/fancy/cigarettes/cigpack_greytide
 	name = "\improper Mainthol Grey packet"
 	desc = "The thin grey line."
 	icon_state = "greytide"
 	base_icon_state = "greytide"
 	spawn_type = /obj/item/cigarette/greytide
+
+/obj/item/storage/fancy/cigarettes/cigpack_greytide/empty
+	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigpack_carp
 	name = "\improper Carp Classic packet"
@@ -329,6 +368,11 @@
 	base_icon_state = "carp"
 	spawn_type = /obj/item/cigarette/carp
 
+/obj/item/storage/fancy/cigarettes/cigpack_carp/empty
+	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
+
 /obj/item/storage/fancy/cigarettes/cigpack_syndicate
 	name = "cigarette packet"
 	desc = "An obscure brand of cigarettes."
@@ -336,12 +380,22 @@
 	base_icon_state = "syndie"
 	spawn_type = /obj/item/cigarette/syndicate
 
+/obj/item/storage/fancy/cigarettes/cigpack_syndicate/empty
+	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
+
 /obj/item/storage/fancy/cigarettes/cigpack_midori
 	name = "\improper Midori Tabako packet"
 	desc = "You can't understand the runes, but the packet smells funny."
 	icon_state = "midori"
 	base_icon_state = "midori"
 	spawn_type = /obj/item/cigarette/rollie/nicotine
+
+/obj/item/storage/fancy/cigarettes/cigpack_midori/empty
+	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigpack_candy
 	name = "\improper Timmy's First Candy Smokes packet"
@@ -358,12 +412,22 @@
 	if(prob(7))
 		spawn_type = /obj/item/cigarette/candy/nicotine //uh oh!
 
+/obj/item/storage/fancy/cigarettes/cigpack_candy/empty
+	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
+
 /obj/item/storage/fancy/cigarettes/cigpack_shadyjims
 	name = "\improper Shady Jim's Super Slims packet"
 	desc = "Is your weight slowing you down? Having trouble running away from gravitational singularities? Can't stop stuffing your mouth? Smoke Shady Jim's Super Slims and watch all that fat burn away. Guaranteed results!"
 	icon_state = "shadyjim"
 	base_icon_state = "shadyjim"
 	spawn_type = /obj/item/cigarette/shadyjims
+
+/obj/item/storage/fancy/cigarettes/cigpack_shadyjims/empty
+	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
 
 /obj/item/storage/fancy/cigarettes/cigpack_xeno
 	name = "\improper Xeno Filtered packet"
@@ -372,6 +436,11 @@
 	base_icon_state = "slime"
 	spawn_type = /obj/item/cigarette/xeno
 
+/obj/item/storage/fancy/cigarettes/cigpack_xeno/empty
+	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
+
 /obj/item/storage/fancy/cigarettes/cigpack_cannabis
 	name = "\improper Freak Brothers' Special packet"
 	desc = "A label on the packaging reads, \"Endorsed by Phineas, Freddy and Franklin.\""
@@ -379,12 +448,25 @@
 	base_icon_state = "midori"
 	spawn_type = /obj/item/cigarette/rollie/cannabis
 
+/obj/item/storage/fancy/cigarettes/cigpack_cannabis/empty
+	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
+
 /obj/item/storage/fancy/cigarettes/cigpack_mindbreaker
 	name = "\improper Leary's Delight packet"
 	desc = "Banned in over 36 galaxies."
 	icon_state = "shadyjim"
 	base_icon_state = "shadyjim"
 	spawn_type = /obj/item/cigarette/rollie/mindbreaker
+
+/obj/item/storage/fancy/cigarettes/cigpack_mindbreaker/empty
+	spawn_count = 0
+	spawn_coupon = FALSE
+	open_status = FANCY_CONTAINER_OPEN
+
+/obj/item/storage/fancy/cigarettes/flash_powder
+	spawn_type = /obj/item/cigarette/flash_powder
 
 /obj/item/storage/fancy/rollingpapers
 	name = "rolling paper pack"
@@ -400,10 +482,19 @@
 	has_open_closed_states = FALSE
 	storage_type = /datum/storage/rolling_paper_pack
 
+/obj/item/storage/fancy/rollingpapers/Initialize(mapload)
+	. = ..()
+
+	if(!spawn_count)
+		update_appearance()
+
 /obj/item/storage/fancy/rollingpapers/update_overlays()
 	. = ..()
 	if(!contents.len)
 		. += "[base_icon_state]_empty"
+
+/obj/item/storage/fancy/rollingpapers/empty
+	spawn_count = 0
 
 /////////////
 //CIGAR BOX//
@@ -428,6 +519,10 @@
 	//reset any changes the parent call may have made
 	icon_state = base_icon_state
 
+/obj/item/storage/fancy/cigarettes/cigars/empty
+	spawn_count = 0
+	open_status = FANCY_CONTAINER_OPEN
+
 /obj/item/storage/fancy/cigarettes/cigars/update_overlays()
 	. = ..()
 	if(!open_status)
@@ -444,12 +539,20 @@
 	base_icon_state = "cohibacase"
 	spawn_type = /obj/item/cigarette/cigar/cohiba
 
+/obj/item/storage/fancy/cigarettes/cigars/cohiba/empty
+	spawn_count = 0
+	open_status = FANCY_CONTAINER_OPEN
+
 /obj/item/storage/fancy/cigarettes/cigars/havana
 	name = "\improper premium Havanian cigar case"
 	desc = "A case of classy Havanian cigars."
 	icon_state = "cohibacase"
 	base_icon_state = "cohibacase"
 	spawn_type = /obj/item/cigarette/cigar/havana
+
+/obj/item/storage/fancy/cigarettes/cigars/havana/empty
+	spawn_count = 0
+	open_status = FANCY_CONTAINER_OPEN
 
 /*
  * Heart Shaped Box w/ Chocolates

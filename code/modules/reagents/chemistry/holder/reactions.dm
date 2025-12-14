@@ -237,7 +237,7 @@
 	var/list/mix_message = list()
 	for(var/datum/equilibrium/equilibrium as anything in reaction_list)
 		mix_message += end_reaction(equilibrium)
-	if(my_atom && length(mix_message))
+	if(!QDELETED(my_atom) && length(mix_message))
 		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]"))
 	finish_reacting()
 

@@ -2,7 +2,7 @@ import { Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Objective } from './common/Objectives';
+import type { Objective } from './common/Objectives';
 
 type Data = {
   antag_name: string;
@@ -50,7 +50,7 @@ export const AntagInfoGlitch = (props) => {
             </Stack.Item>
             <Stack.Item>
               <span style={textStyles.variable}>system.</span>
-              <span style={textStyles.danger}>INTRUDERS</span>;
+              <span style={textStyles.danger}>INTRUDERS</span>
             </Stack.Item>
             <Stack.Item>
               while <span style={textStyles.variable}>TARGETS</span>.LIFE !={' '}

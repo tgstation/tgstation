@@ -25,9 +25,9 @@
 	set_zipper(TRUE)
 	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, PROC_REF(on_speed_potioned))
 
-/obj/item/storage/backpack/duffelbag/update_desc(updates)
+/obj/item/storage/backpack/duffelbag/examine(mob/user)
 	. = ..()
-	desc = "[initial(desc)]<br>[zipped_up ? "It's zipped up, preventing you from accessing its contents." : "It's unzipped, and harder to move in."]"
+	. += "[zipped_up ? "It's zipped up, preventing you from accessing its contents." : "It's unzipped, and harder to move in."]"
 
 /obj/item/storage/backpack/duffelbag/attack_self(mob/user, modifiers)
 	if(loc != user) // God fuck TK
@@ -130,6 +130,12 @@
 	name = "medical duffel bag"
 	desc = "A large duffel bag for holding extra medical supplies."
 	icon_state = "duffel-medical"
+	inhand_icon_state = "duffel-med"
+
+/obj/item/storage/backpack/duffelbag/chief_medic
+	name = "chief medical officer's duffel bag"
+	desc = "A large duffel bag for handling the duties of the entire medical department at once."
+	icon_state = "duffel-chiefmedical"
 	inhand_icon_state = "duffel-med"
 
 /obj/item/storage/backpack/duffelbag/coroner
@@ -293,10 +299,13 @@
 	icon_state = "duffel-syndieammo"
 	inhand_icon_state = "duffel-syndieammo"
 
-/obj/item/storage/backpack/duffelbag/syndie/ammo/mech
-	desc = "A large duffel bag, packed to the brim with various exosuit ammo."
+/obj/item/storage/backpack/duffelbag/syndie/ammo/darkgygax
+	name = "\improper Dark Gygax ammunition duffel bag"
+	desc = "A large duffel bag, packed to the brim with ammunition for the scattershot exosuit weapon. Suited to equipping the standard loadout of a Dark Gygax."
 
-/obj/item/storage/backpack/duffelbag/syndie/ammo/mech/PopulateContents()
+/obj/item/storage/backpack/duffelbag/syndie/ammo/darkgygax/PopulateContents()
+	new /obj/item/mecha_ammo/scattershot(src)
+	new /obj/item/mecha_ammo/scattershot(src)
 	new /obj/item/mecha_ammo/scattershot(src)
 	new /obj/item/mecha_ammo/scattershot(src)
 	new /obj/item/mecha_ammo/scattershot(src)
@@ -304,18 +313,17 @@
 	new /obj/item/storage/belt/utility/syndicate(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler
-	desc = "A large duffel bag, packed to the brim with various exosuit ammo."
+	name = "\improper Mauler ammunition duffel bag"
+	desc = "A large duffel bag, packed to the brim with various exosuit ammo. Suited to equipping the standard loadout of a Dark Gygax."
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler/PopulateContents()
 	new /obj/item/mecha_ammo/lmg(src)
 	new /obj/item/mecha_ammo/lmg(src)
 	new /obj/item/mecha_ammo/lmg(src)
-	new /obj/item/mecha_ammo/scattershot(src)
-	new /obj/item/mecha_ammo/scattershot(src)
-	new /obj/item/mecha_ammo/scattershot(src)
 	new /obj/item/mecha_ammo/missiles_srm(src)
 	new /obj/item/mecha_ammo/missiles_srm(src)
 	new /obj/item/mecha_ammo/missiles_srm(src)
+	new /obj/item/storage/belt/utility/syndicate(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
 	desc = "A large duffel bag containing a medical equipment, a Donksoft LMG, a big jumbo box of riot darts, and a magboot MODsuit module."
@@ -345,7 +353,7 @@
 		new /obj/item/grenade/c4(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/x4/PopulateContents()
-	for(var/i in 1 to 3)
+	for(var/i in 1 to 10)
 		new /obj/item/grenade/c4/x4(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/firestarter

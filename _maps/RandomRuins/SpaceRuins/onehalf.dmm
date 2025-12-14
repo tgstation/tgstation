@@ -828,17 +828,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
-"cT" = (
+"cU" = (
+/obj/structure/table/reinforced,
 /obj/machinery/button/door{
 	id = "bridge_onehalf";
 	name = "Bridge Blast Door";
-	pixel_x = 32;
 	pixel_y = 5
 	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/onehalf/bridge)
-"cU" = (
-/obj/structure/table/reinforced,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cY" = (
@@ -1411,7 +1407,7 @@ Vh
 Vh
 cJ
 cn
-cT
+cn
 cn
 cq
 ad

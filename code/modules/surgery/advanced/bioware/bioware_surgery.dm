@@ -16,6 +16,7 @@
 /datum/surgery_step/apply_bioware
 	accept_hand = TRUE
 	time = 12.5 SECONDS
+	surgery_effects_mood = TRUE
 
 /datum/surgery_step/apply_bioware/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/advanced/bioware/surgery, default_display_results)
 	. = ..()

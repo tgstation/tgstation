@@ -118,8 +118,118 @@
 /obj/effect/spawner/random/engineering/vending_restock
 	name = "vending restock spawner"
 	icon_state = "vending_restock"
-	loot_subtype_path = /obj/item/vending_refill
-	loot = list()
+	loot = list(
+		/obj/effect/spawner/random/engineering/vending_restock/common = 935,
+		/obj/effect/spawner/random/engineering/vending_restock/rare = 60,
+		/obj/effect/spawner/random/engineering/vending_restock/oddity = 5,
+	)
+
+/obj/effect/spawner/random/engineering/vending_restock/wardrobe
+	name = "wardrobe vending restock spawner"
+	icon_state = "vending_restock"
+	loot = list(
+		/obj/item/vending_refill/wardrobe/det_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/medi_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/chem_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/viro_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/sec_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/science_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/robo_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/gene_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/engi_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/atmos_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/cargo_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/hydro_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/chap_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/chef_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/chap_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/curator_wardrobe= 1,
+		/obj/item/vending_refill/wardrobe/jani_wardrobe = 1,
+		/obj/item/vending_refill/wardrobe/law_wardrobe = 1,
+
+	)
+
+
+/obj/effect/spawner/random/engineering/vending_restock/food_and_drink
+	name = "food & drink vending restock spawner"
+	icon_state = "vending_restock"
+	loot = list(
+		/obj/item/vending_refill/cigarette = 1,
+		/obj/item/vending_refill/cola = 1,
+		/obj/item/vending_refill/coffee = 1,
+		/obj/item/vending_refill/snack = 1,
+		/obj/item/vending_refill/boozeomat = 1,
+		/obj/item/vending_refill/sustenance = 1,
+		/obj/item/vending_refill/sovietsoda = 1,
+		/obj/item/vending_refill/cola/shamblers = 1,
+	)
+
+/obj/effect/spawner/random/engineering/vending_restock/medical
+	name = "medical vending restock spawner"
+	icon_state = "vending_restock"
+	loot = list(
+		/obj/item/vending_refill/wallmed = 1,
+		/obj/item/vending_refill/medical = 1,
+		/obj/item/vending_refill/drugs = 1,
+	)
+
+/obj/effect/spawner/random/engineering/vending_restock/engineering
+	name = "engineering vending restock spawner"
+	icon_state = "vending_restock"
+	loot = list(
+		/obj/item/vending_refill/engivend = 1,
+		/obj/item/vending_refill/engineering = 1,
+		/obj/item/vending_refill/youtool = 1,
+		/obj/item/vending_refill/modularpc = 1,
+		/obj/item/vending_refill/robotics = 1,
+		/obj/item/vending_refill/assist = 1,
+	)
+
+//common everyday vendors
+/obj/effect/spawner/random/engineering/vending_restock/common
+	name = "common vending restock spawner"
+	icon_state = "vending_restock"
+	loot = list(
+		/obj/effect/spawner/random/engineering/vending_restock/wardrobe = 8, //roughtly reduced to half weight due to lameness of drobe contents
+		/obj/effect/spawner/random/engineering/vending_restock/food_and_drink = 8,
+		/obj/effect/spawner/random/engineering/vending_restock/engineering = 6,
+		/obj/effect/spawner/random/engineering/vending_restock/medical = 3,
+		/obj/item/vending_refill/cart = 1,
+		/obj/item/vending_refill/clothing = 1,
+		/obj/item/vending_refill/autodrobe = 1,
+		/obj/item/vending_refill/security = 1,
+		/obj/item/vending_refill/custom = 1,
+		/obj/item/vending_refill/dinnerware = 1,
+		/obj/item/vending_refill/cytopro = 1,
+		/obj/item/vending_refill/hydronutrients = 1,
+		/obj/item/vending_refill/hydroseeds = 1,
+		/obj/item/vending_refill/games = 1,
+	)
+
+//vendors that should feel rare and special but are unlikely to warp the shift too much
+/obj/effect/spawner/random/engineering/vending_restock/rare
+	name = "rare vending restock spawner"
+	icon_state = "vending_restock"
+	loot = list(
+		/obj/item/vending_refill/syndichem = 1,
+		/obj/item/vending_refill/cigarette/syndicate = 1,
+		/obj/item/vending_refill/plasmaresearch = 1,
+		/obj/item/vending_refill/donksnackvendor = 1,
+		/obj/item/vending_refill/donksoft = 1,
+		/obj/item/vending_refill/hotdog = 1,
+	)
+
+//high chance to derail the shift, use cautiously
+/obj/effect/spawner/random/engineering/vending_restock/oddity
+	name = "oddity vending restock spawner"
+	icon_state = "vending_restock"
+	loot = list(
+
+		/obj/item/vending_refill/magivend = 1,
+		/obj/item/vending_refill/liberation = 1,
+		/obj/item/vending_refill/wardrobe/cent_wardrobe = 1,
+
+	)
 
 /obj/effect/spawner/random/engineering/atmospherics_portable
 	name = "portable atmospherics machine spawner"

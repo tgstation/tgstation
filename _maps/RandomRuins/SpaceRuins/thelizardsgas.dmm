@@ -126,9 +126,7 @@
 /turf/open/floor/iron/white/side,
 /area/ruin/space/has_grav/thelizardsgas)
 "kS" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "lizardgas"
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored,
 /turf/open/floor/engine/plasma{
 	initial_gas_mix = "plasma=35000;TEMP=293.15"
 	},
@@ -478,7 +476,6 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "Uh" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "lizardgas";
 	dir = 4
 	},
 /turf/open/floor/engine/plasma{

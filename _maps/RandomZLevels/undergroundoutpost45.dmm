@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "ab" = (
 /turf/closed/indestructible/riveted,
@@ -112,12 +112,6 @@
 /turf/open/floor/iron/grimy,
 /area/awaymission/undergroundoutpost45/central)
 "az" = (
-/obj/structure/sign/warning/vacuum{
-	desc = "A beacon used by a teleporter.";
-	icon = 'icons/obj/devices/tracker.dmi';
-	icon_state = "beacon";
-	name = "tracking beacon"
-	},
 /obj/effect/landmark/awaystart/underground,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
@@ -4078,15 +4072,11 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/undergroundoutpost45/engineering)
 "pE" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "uo45air"
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored,
 /turf/open/floor/engine/air,
 /area/awaymission/undergroundoutpost45/engineering)
 "pF" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "uo45air"
-	},
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored,
 /turf/open/floor/engine/air,
 /area/awaymission/undergroundoutpost45/engineering)
 "pG" = (
@@ -4915,7 +4905,6 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "sr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "uo45mix";
 	dir = 8
 	},
 /turf/open/floor/engine/vacuum,
@@ -5086,7 +5075,6 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "te" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "uo45mix";
 	dir = 8
 	},
 /turf/open/floor/engine/vacuum,
@@ -5624,28 +5612,24 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "vd" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "uo45n2";
 	dir = 1
 	},
 /turf/open/floor/engine/n2,
 /area/awaymission/undergroundoutpost45/engineering)
 "ve" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "uo45n2";
 	dir = 1
 	},
 /turf/open/floor/engine/n2,
 /area/awaymission/undergroundoutpost45/engineering)
 "vf" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "uo45o2";
 	dir = 1
 	},
 /turf/open/floor/engine/o2,
 /area/awaymission/undergroundoutpost45/engineering)
 "vg" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "uo45o2";
 	dir = 1
 	},
 /turf/open/floor/engine/o2,
@@ -5850,11 +5834,8 @@
 /turf/open/floor/iron/checker,
 /area/awaymission/undergroundoutpost45/engineering)
 "vQ" = (
-/obj/structure/noticeboard{
-	dir = 1;
-	pixel_y = -27
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/noticeboard/directional/south,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
 "vR" = (
@@ -7322,6 +7303,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
+"Px" = (
+/obj/structure/sign/warning/vacuum{
+	desc = "A beacon used by a teleporter.";
+	icon = 'icons/obj/devices/tracker.dmi';
+	icon_state = "beacon";
+	name = "tracking beacon"
+	},
+/turf/closed/wall,
+/area/awaymission/undergroundoutpost45/central)
 "PB" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -37797,7 +37787,7 @@ aK
 aC
 aP
 aP
-aC
+Px
 aC
 bv
 aC

@@ -4,6 +4,7 @@
 	circuit = /obj/item/circuitboard/computer/white_ship
 	shuttleId = "whiteship"
 	possible_destinations = "whiteship_away;whiteship_home;whiteship_z4;whiteship_waystation;whiteship_lavaland;whiteship_custom"
+	may_be_remote_controlled = TRUE
 
 /// Console used on the whiteship bridge. Comes with GPS pre-baked.
 /obj/machinery/computer/shuttle/white_ship/bridge

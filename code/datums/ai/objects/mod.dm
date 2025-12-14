@@ -1,8 +1,8 @@
-/// An AI controller for the MODsuit pathfinder module. It's activated by implant and attaches itself to the user.
+/// An AI controller for the MODsuit pathfinder module. It's activated by module and attaches itself to the user.
 /datum/ai_controller/mod
 	blackboard = list(
 		BB_MOD_TARGET,
-		BB_MOD_IMPLANT,
+		BB_MOD_MODULE,
 	)
 	can_idle = FALSE
 	max_target_distance = MOD_AI_RANGE //a little spicy but its one specific item that summons it, and it doesn't run otherwise
@@ -25,7 +25,7 @@
 
 /datum/ai_controller/mod/SelectBehaviors(seconds_per_tick)
 	current_behaviors = list()
-	if(blackboard[BB_MOD_TARGET] && blackboard[BB_MOD_IMPLANT])
+	if(blackboard[BB_MOD_TARGET] && blackboard[BB_MOD_MODULE])
 		queue_behavior(/datum/ai_behavior/mod_attach)
 
 /datum/ai_controller/mod/get_access()
@@ -37,12 +37,12 @@
 /datum/ai_behavior/mod_attach/perform(seconds_per_tick, datum/ai_controller/controller)
 	if(!controller.pawn.Adjacent(controller.blackboard[BB_MOD_TARGET]))
 		return AI_BEHAVIOR_DELAY
-	var/obj/item/implant/mod/implant = controller.blackboard[BB_MOD_IMPLANT]
-	implant.module.attach(controller.blackboard[BB_MOD_TARGET])
+	var/obj/item/mod/module/pathfinder/module = controller.blackboard[BB_MOD_MODULE]
+	module.attach(controller.blackboard[BB_MOD_TARGET])
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/mod_attach/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.clear_blackboard_key(BB_MOD_TARGET)
-	var/obj/item/implant/mod/implant = controller.blackboard[BB_MOD_IMPLANT]
-	implant.end_recall(succeeded)
+	var/obj/item/mod/module/pathfinder/module = controller.blackboard[BB_MOD_MODULE]
+	module.end_recall(succeeded)

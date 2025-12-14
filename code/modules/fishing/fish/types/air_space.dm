@@ -29,6 +29,7 @@
 	average_size = 60
 	average_weight = 1000
 	weight_size_deviation = 0.1
+	stable_population = 5
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	required_temperature_min = MIN_AQUARIUM_TEMP+20
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
@@ -102,7 +103,7 @@
 
 /obj/item/fish/starfish/proc/add_emissive()
 	if(status == FISH_ALIVE)
-		return emissive_appearance(icon, "starfish_emissive", src)
+		return emissive_appearance(icon, "starfish_emissive", src, effect_type = EMISSIVE_NO_BLOOM)
 
 ///It spins, and dimly glows in the dark.
 /obj/item/fish/starfish/flop_animation()
@@ -215,7 +216,7 @@
 /obj/item/fish/baby_carp/proc/growth_checks(datum/source, seconds_per_tick, growth, result_path)
 	SIGNAL_HANDLER
 	var/hunger = CLAMP01((world.time - last_feeding) / feeding_frequency)
-	if(health <= initial(health) * 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
+	if(get_health_percentage() <= 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
 		return COMPONENT_DONT_GROW
 
 	if(!loc || !HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))

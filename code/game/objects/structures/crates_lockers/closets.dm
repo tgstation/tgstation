@@ -20,7 +20,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	/// How insulated the thing is, for the purposes of calculating body temperature. Must be between 0 and 1!
 	contents_thermal_insulation = 0
 	pass_flags_self = PASSSTRUCTURE | LETPASSCLICKS
-
 	/// The overlay for the closet's door
 	var/obj/effect/overlay/closet_door/door_obj
 	/// Whether or not this door is being animated
@@ -70,8 +69,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/icon_broken = "sparking"
 	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
-	/// true whenever someone with the strong pull component (or magnet modsuit module) is dragging this, preventing opening
-	var/strong_grab = FALSE
 	/// secure locker or not, also used if overriding a non-secure locker with a secure door overlay to add fancy lights
 	var/secure = FALSE
 	var/can_install_electronics = TRUE
@@ -100,6 +97,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/x_shake_pixel_shift = 2
 	/// how many pixels the closet can shift on the y axes when shaking
 	var/y_shake_pixel_shift = 1
+	///Creates see through image for clients to see while inside closet
+	VAR_PRIVATE/datum/closet_see_inside/closet_see_inside
 
 /datum/armor/structure_closet
 	melee = 20
@@ -153,6 +152,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(is_station_level(z) && mapload)
 		add_to_roundstart_list()
 
+	closet_see_inside = new(src)
+	obj_flags |= UNIQUE_RENAME
+
 	// if closed, any item at the crate's loc is put in the contents
 	if (mapload)
 		is_maploaded = TRUE
@@ -203,6 +205,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	id_card = null
 	QDEL_NULL(internal_air)
 	QDEL_NULL(door_obj)
+	QDEL_NULL(closet_see_inside)
 	GLOB.roundstart_station_closets -= src
 	return ..()
 
@@ -286,12 +289,27 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(vname in list(NAMEOF(src, locked), NAMEOF(src, welded), NAMEOF(src, secure), NAMEOF(src, icon_welded), NAMEOF(src, delivery_icon)))
 		update_appearance()
 
+// Clone of closet items
+/obj/effect/appearance_clone/closet_item
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
 /// Animates the closet door opening and closing
 /obj/structure/closet/proc/animate_door(closing = FALSE)
 	if(!door_anim_time)
 		return
 	if(!door_obj)
 		door_obj = new
+	if(closing && length(contents))
+		var/icon/mask_icon = icon(icon, has_closed_overlay ? "[icon_door || base_icon_state || initial(icon_state)]_door" : icon_state)
+		// When closing, all of our contents are already in src - they've already disappeared from the world
+		// So to make the animation less jarring, we create a clone of everything in the closet to show in the animation
+		for(var/content in src)
+			var/obj/effect/appearance_clone/closet_item/clone = new(loc, content)
+			// Mask keeps in in bounds of the inside of the closet
+			clone.add_filter("closet_mask", 1, alpha_mask_filter(x = -1 * (clone.pixel_x + clone.pixel_w), y = -1 * (clone.pixel_y + clone.pixel_z), icon = mask_icon))
+			clone.layer = FLOAT_LAYER - 1
+			vis_contents += clone
+
 	var/default_door_icon = "[icon_door || icon_state]_door"
 	vis_contents += door_obj
 	door_obj.icon = icon
@@ -327,6 +345,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 /obj/structure/closet/proc/end_door_animation()
 	is_animating_door = FALSE
 	vis_contents -= door_obj
+	for(var/obj/effect/appearance_clone/closet_item/clone in vis_contents)
+		vis_contents -= clone
+		qdel(clone)
 	update_icon()
 
 /// Calculates the matrix to be applied to the animated door overlay
@@ -433,9 +454,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return TRUE
 	if(welded || locked)
 		return FALSE
-	if(strong_grab)
-		if(user)
-			to_chat(user, span_danger("[pulledby] has an incredibly strong grip on [src], preventing it from opening."))
+	if(isliving(user))
+		if(!(user.mobility_flags & MOBILITY_USE))
+			return FALSE
+	if(pulledby && user && HAS_TRAIT(src, TRAIT_STRONGPULL) && user != pulledby)
+		to_chat(user, span_danger("[pulledby] has an incredibly strong grip on [src], preventing it from opening."))
 		return FALSE
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
@@ -831,39 +854,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		else
 			balloon_alert(user, "set to [choice]")
 
-	else if(!opened && IS_WRITING_UTENSIL(weapon))
-		if(locked)
-			balloon_alert(user, "unlock first!")
-			return
-
-		if(isnull(id_card) && secure)
-			balloon_alert(user, "not yours to rename!")
-			return
-
-		var/name_set = FALSE
-		var/desc_set = FALSE
-
-
-		var/input_name = tgui_input_text(user, "Locker Name", "Locker Name", max_length = MAX_NAME_LEN)
-
-		if(!isnull(input_name))
-			name = input_name
-			name_set = TRUE
-
-		var/input_desc = tgui_input_text(user, "Locker Description", "Locker Description", max_length = MAX_DESC_LEN)
-
-		if(!isnull(input_desc))
-			desc = input_desc
-			desc_set = TRUE
-
-		var/bit_flag = NONE
-		if(name_set)
-			bit_flag |= UPDATE_NAME
-		if(desc_set)
-			bit_flag |= UPDATE_DESC
-		if(bit_flag)
-			update_appearance(bit_flag)
-
 	else if(opened)
 		if(istype(weapon, cutting_tool))
 			if(weapon.tool_behaviour == TOOL_WELDER)
@@ -975,7 +965,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return
 	container_resist_act(user)
 
-
 /obj/structure/closet/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -1030,15 +1019,13 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	return TRUE
 
 /obj/structure/closet/container_resist_act(mob/living/user, loc_required = TRUE)
-	if(isstructure(loc))
-		relay_container_resist_act(user, loc)
 	if(opened)
 		return
 	if(ismovable(loc))
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
-		var/atom/movable/AM = loc
-		AM.relay_container_resist_act(user, src)
+		var/atom/movable/movable_parent = loc
+		movable_parent.relay_container_resist_act(user, src)
 		return
 	if(!welded && !locked)
 		open()
@@ -1067,7 +1054,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			to_chat(user, span_warning("You fail to break out of [src]!"))
 
 /obj/structure/closet/relay_container_resist_act(mob/living/user, obj/container)
-	container.container_resist_act(user)
+	container_resist_act(user)
 
 /// Check if someone is still resisting inside, and choose to either keep shaking or stop shaking the closet
 /obj/structure/closet/proc/check_if_shake()
@@ -1257,6 +1244,16 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 ///Adds the closet to a global list. Placed in its own proc so that crates may be excluded.
 /obj/structure/closet/proc/add_to_roundstart_list()
 	GLOB.roundstart_station_closets += src
+
+/obj/structure/closet/rename_checks(mob/living/user)
+	. = TRUE
+	if(locked)
+		src.balloon_alert(user, "unlock first!")
+		return FALSE
+
+	if(isnull(id_card) && secure)
+		src.balloon_alert(user, "not yours to rename!")
+		return FALSE
 
 ///Spears deal bonus damages to lockers
 /obj/structure/closet/secure_closet/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)

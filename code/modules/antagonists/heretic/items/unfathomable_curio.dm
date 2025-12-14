@@ -57,8 +57,6 @@
 /obj/item/storage/belt/unfathomable_curio/proc/shield_damaged(mob/living/carbon/wearer, attack_text, new_current_charges)
 	var/list/brain_traumas = list(
 		/datum/brain_trauma/severe/mute,
-		/datum/brain_trauma/severe/flesh_desire,
-		/datum/brain_trauma/severe/eldritch_beauty,
 		/datum/brain_trauma/severe/paralysis,
 		/datum/brain_trauma/severe/monophobia
 	)
@@ -69,7 +67,7 @@
 	to_chat(wearer, span_warning("Laughter echoes in your mind...."))
 	wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, 40)
 	wearer.dropItemToGround(src, TRUE)
-	wearer.gain_trauma(pick(brain_traumas) ,TRAUMA_RESILIENCE_ABSOLUTE)
+	wearer.gain_trauma(pick(brain_traumas), TRAUMA_RESILIENCE_MAGIC)
 
 /obj/item/storage/belt/unfathomable_curio/examine(mob/living/carbon/user)
 	. = ..()

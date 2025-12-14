@@ -20,7 +20,7 @@
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 3
 	wound_bonus = -20
-	bare_wound_bonus = 10
+	exposed_wound_bonus = 10
 	embed_type = /datum/embedding/bullet/c38
 	embed_falloff_tile = -4
 
@@ -65,6 +65,7 @@
 	ricochet_shoots_firer = FALSE
 	shrapnel_type = null
 	embed_type = null
+	armour_penetration = 30
 
 // premium .38 ammo from cargo, weak against armor, lower base damage, but excellent at embedding and causing slice wounds at close range
 /obj/projectile/bullet/c38/dumdum
@@ -74,7 +75,7 @@
 	ricochets_max = 0
 	sharpness = SHARP_EDGED
 	wound_bonus = 20
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	embed_type = /datum/embedding/bullet/c38/dumdum
 	wound_falloff_tile = -5
 	embed_falloff_tile = -15

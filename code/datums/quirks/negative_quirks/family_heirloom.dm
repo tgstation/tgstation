@@ -40,6 +40,7 @@
 			LOCATION_HANDS,
 		),
 		flavour_text = "This is a precious family heirloom, passed down from generation to generation. Keep it safe!",
+		notify_player = TRUE,
 	)
 
 /datum/quirk/item_quirk/family_heirloom/post_add()
@@ -57,7 +58,7 @@
 /datum/quirk/item_quirk/family_heirloom/process()
 	var/obj/family_heirloom = heirloom?.resolve()
 
-	if(family_heirloom && (family_heirloom in quirk_holder.get_all_contents()))
+	if(family_heirloom && quirk_holder.contains(family_heirloom))
 		quirk_holder.clear_mood_event("family_heirloom_missing")
 		quirk_holder.add_mood_event("family_heirloom", /datum/mood_event/family_heirloom)
 	else

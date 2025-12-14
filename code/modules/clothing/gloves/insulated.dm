@@ -1,4 +1,5 @@
 /obj/item/clothing/gloves/color
+	abstract_type = /obj/item/clothing/gloves/color
 	dying_key = DYE_REGISTRY_GLOVES
 	greyscale_colors = null
 

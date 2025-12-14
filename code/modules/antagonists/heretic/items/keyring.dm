@@ -139,7 +139,7 @@
 	trim = card.trim
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearing = loc
-		wearing.sec_hud_set_ID()
+		wearing.update_ID_card()
 	assignment = card.assignment
 	registered_age = card.registered_age
 	registered_name = card.registered_name

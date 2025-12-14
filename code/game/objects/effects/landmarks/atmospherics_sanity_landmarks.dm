@@ -33,3 +33,10 @@
 /obj/effect/landmark/atmospheric_sanity/ignore_area
 	name = "Atmospheric Sanity Ignore"
 	icon_state = "atmos_sanity_ignore"
+
+/**
+ * Marks a firedoor region as safely ignorable / doesn't need a fire alarm
+ */
+/obj/effect/landmark/firealarm_sanity
+	name = "Fire Alarm Sanity Ignore"
+	icon_state = "firealarm_sanity"

@@ -12,7 +12,7 @@
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
-/obj/item/clothing/under/costume/schoolgirl,
+/obj/item/clothing/under/costume/seifuku,
 /obj/item/toy/katana,
 /turf/open/floor/holofloor,
 /area/template_noop)
@@ -25,7 +25,7 @@
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
-/obj/item/clothing/under/costume/schoolgirl/orange,
+/obj/item/clothing/under/costume/seifuku/tan,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "E" = (
@@ -37,7 +37,7 @@
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
-/obj/item/clothing/under/costume/schoolgirl,
+/obj/item/clothing/under/costume/seifuku,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "R" = (
@@ -50,14 +50,14 @@
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
-/obj/item/clothing/under/costume/schoolgirl/green,
+/obj/item/clothing/under/costume/seifuku/teal,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "T" = (
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
-/obj/item/clothing/under/costume/schoolgirl/red,
+/obj/item/clothing/under/costume/seifuku/red,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "Y" = (

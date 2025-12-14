@@ -21,13 +21,16 @@
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT *2)
 	interaction_flags_click = NEED_LITERACY|NEED_LIGHT|ALLOW_RESTING
+	custom_price = PAYCHECK_COMMAND
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 	/// Verbose/condensed
 	var/mode = SCANNER_VERBOSE
 	/// HEALTH/WOUND
 	var/scanmode = SCANMODE_HEALTH
 	/// Advanced health analyzer
 	var/advanced = FALSE
-	custom_price = PAYCHECK_COMMAND
 	/// If this analyzer will give a bonus to wound treatments apon woundscan.
 	var/give_wound_treatment_bonus = FALSE
 	var/last_scan_text
@@ -175,12 +178,12 @@
 	// Husk detection
 	if(HAS_TRAIT(target, TRAIT_HUSK))
 		if(advanced)
-			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
-				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("severe burns", "Tend burns and apply a de-husking agent, such as [/datum/reagent/medicine/c2/synthflesh::name].", tochat)].</span><br>"
-			else if (HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
+			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
 				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("desiccation", "Irreparable. Under normal circumstances, revival can only proceed via brain transplant.", tochat)].</span><br>"
-			else
+			else if(!HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN)) // prioritize showing unknown causes over burns
 				render_list += "<span class='alert ml-1'>Subject has been husked by mysterious causes.</span><br>"
+			else
+				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("severe burns", "Tend burns and apply a de-husking agent, such as [/datum/reagent/medicine/c2/synthflesh::name].", tochat)].</span><br>"
 
 		else
 			render_list += "<span class='alert ml-1'>Subject has been husked.</span><br>"
@@ -190,7 +193,17 @@
 			render_list += "<span class='alert ml-1'>Fatigue level: [target.getStaminaLoss()]%.</span><br>"
 		else
 			render_list += "<span class='alert ml-1'>Subject appears to be suffering from fatigue.</span><br>"
-	if (!target.get_organ_slot(ORGAN_SLOT_BRAIN)) // kept exclusively for soul purposes
+
+	// Check for brain - both organic (carbon) and synthetic (cyborg MMI)
+	var/has_brain = FALSE
+	if(target.get_organ_slot(ORGAN_SLOT_BRAIN))
+		has_brain = TRUE
+	else if(iscyborg(target))
+		var/mob/living/silicon/robot/cyborg_target = target
+		if(cyborg_target.mmi?.brain)
+			has_brain = TRUE
+
+	if(!has_brain) // kept exclusively for soul purposes
 		render_list += "<span class='alert ml-1'>Subject lacks a brain.</span><br>"
 
 	if(iscarbon(target))
@@ -229,7 +242,7 @@
 
 			if(mode == SCANNER_VERBOSE)
 				// Follow same body zone list every time so it's consistent across all humans
-				for(var/zone in GLOB.all_body_zones)
+				for(var/zone in carbontarget.get_all_limbs())
 					var/obj/item/bodypart/limb = carbontarget.get_bodypart(zone)
 					if(isnull(limb))
 						dmgreport += "<tr>"
@@ -283,24 +296,7 @@
 			<td style='width:30em;'><font color='#ff0000'><b>Status</b></font></td>\
 			</tr>"
 
-		var/list/missing_organs = list()
-		if(!humantarget.get_organ_slot(ORGAN_SLOT_BRAIN))
-			missing_organs[ORGAN_SLOT_BRAIN] = "Brain"
-		if(humantarget.needs_heart() && !humantarget.get_organ_slot(ORGAN_SLOT_HEART))
-			missing_organs[ORGAN_SLOT_HEART] = "Heart"
-		if(!HAS_TRAIT_FROM(humantarget, TRAIT_NOBREATH, SPECIES_TRAIT) && !isnull(humantarget.dna.species.mutantlungs) && !humantarget.get_organ_slot(ORGAN_SLOT_LUNGS))
-			missing_organs[ORGAN_SLOT_LUNGS] = "Lungs"
-		if(!HAS_TRAIT_FROM(humantarget, TRAIT_LIVERLESS_METABOLISM, SPECIES_TRAIT) && !isnull(humantarget.dna.species.mutantliver) && !humantarget.get_organ_slot(ORGAN_SLOT_LIVER))
-			missing_organs[ORGAN_SLOT_LIVER] = "Liver"
-		if(!HAS_TRAIT_FROM(humantarget, TRAIT_NOHUNGER, SPECIES_TRAIT) && !isnull(humantarget.dna.species.mutantstomach) && !humantarget.get_organ_slot(ORGAN_SLOT_STOMACH))
-			missing_organs[ORGAN_SLOT_STOMACH] ="Stomach"
-		if(!isnull(humantarget.dna.species.mutanttongue) && !humantarget.get_organ_slot(ORGAN_SLOT_TONGUE))
-			missing_organs[ORGAN_SLOT_TONGUE] = "Tongue"
-		if(!isnull(humantarget.dna.species.mutantears) && !humantarget.get_organ_slot(ORGAN_SLOT_EARS))
-			missing_organs[ORGAN_SLOT_EARS] = "Ears"
-		if(!isnull(humantarget.dna.species.mutantears) && !humantarget.get_organ_slot(ORGAN_SLOT_EYES))
-			missing_organs[ORGAN_SLOT_EYES] = "Eyes"
-
+		var/list/missing_organs = humantarget.get_missing_organs()
 		// Follow same order as in the organ_process_order so it's consistent across all humans
 		for(var/sorted_slot in GLOB.organ_process_order)
 			var/obj/item/organ/organ = humantarget.get_organ_slot(sorted_slot)
@@ -375,15 +371,16 @@
 	// Blood Level
 	var/datum/blood_type/blood_type = target.get_bloodtype()
 	if(blood_type)
-		var/blood_percent = round((target.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
+		var/cached_blood_volume = target.get_blood_volume(apply_modifiers = TRUE)
+		var/blood_percent = round((cached_blood_volume / BLOOD_VOLUME_NORMAL) * 100)
 		var/blood_type_format
 		var/level_format
-		if(target.blood_volume <= BLOOD_VOLUME_SAFE && target.blood_volume > BLOOD_VOLUME_OKAY)
-			level_format = "LOW [blood_percent]%, [target.blood_volume] cl"
+		if(cached_blood_volume <= BLOOD_VOLUME_SAFE && cached_blood_volume > BLOOD_VOLUME_OKAY)
+			level_format = "LOW [blood_percent]%, [cached_blood_volume] cl"
 			if (blood_type.restoration_chem)
 				level_format = conditional_tooltip(level_format, "Recommendation: [blood_type.restoration_chem::name] supplement.", tochat)
-		else if(target.blood_volume <= BLOOD_VOLUME_OKAY)
-			level_format = "<b>CRITICAL [blood_percent]%</b>, [target.blood_volume] cl"
+		else if(cached_blood_volume <= BLOOD_VOLUME_OKAY)
+			level_format = "<b>CRITICAL [blood_percent]%</b>, [cached_blood_volume] cl"
 			var/recommendation = list()
 			if (blood_type.restoration_chem)
 				recommendation += "[blood_type.restoration_chem::name] supplement"
@@ -395,7 +392,7 @@
 				recommendation += "immediate [blood_type.get_blood_name()] transufion"
 			level_format = conditional_tooltip(level_format, "Recommendation: [english_list(recommendation, and_text = " or ")].", tochat)
 		else
-			level_format = "[blood_percent]%, [target.blood_volume] cl"
+			level_format = "[blood_percent]%, [cached_blood_volume] cl"
 
 		if (blood_type.get_type())
 			blood_type_format = "type: [blood_type.get_type()]"
@@ -405,7 +402,7 @@
 					compatible_types_readable |= initial(comp_blood_type.name)
 				blood_type_format = span_tooltip("Can receive from types [english_list(compatible_types_readable)].", blood_type_format)
 
-		render_list += "<span class='[target.blood_volume < BLOOD_VOLUME_SAFE ? "alert" : "info"] ml-1'>[blood_type.get_blood_name()] level: [level_format],</span> <span class='info'>[blood_type_format]</span><br>"
+		render_list += "<span class='[cached_blood_volume < BLOOD_VOLUME_SAFE ? "alert" : "info"] ml-1'>[blood_type.get_blood_name()] level: [level_format],</span> <span class='info'>[blood_type_format]</span><br>"
 
 	var/blood_alcohol_content = target.get_blood_alcohol_content()
 	if(blood_alcohol_content > 0)
@@ -431,6 +428,31 @@
 			Stage: [disease.stage]/[disease.max_stages].<br>\
 			Possible Cure: [disease.cure_text]</div>\
 			</span>"
+
+
+	// Lungs
+	var/obj/item/organ/lungs/lungs = target.get_organ_slot(ORGAN_SLOT_LUNGS)
+	if (lungs)
+		var/initial_pressure_mult = lungs::received_pressure_mult
+		if (lungs.received_pressure_mult != initial_pressure_mult)
+			var/tooltip
+			var/dilation_text
+			var/beginning_text = "Lung Dilation: "
+			if (lungs.received_pressure_mult > initial_pressure_mult) // higher than usual
+				beginning_text = span_blue("<b>[beginning_text]</b>")
+				dilation_text = span_blue("[(lungs.received_pressure_mult * 100) - 100]%")
+				tooltip = "Subject's lungs are dilated and breathing more air than usual. Increases the effectiveness of healium and other gases."
+			else
+				beginning_text = span_danger("<b>[beginning_text]</b>")
+				if (lungs.received_pressure_mult <= 0) // lethal
+					dilation_text = span_bolddanger("[lungs.received_pressure_mult * 100]%")
+					tooltip = "Subject's lungs are completely shut. Subject is unable to breathe and requires emergency surgery. If asthmatic, perform asthmatic bypass surgery and adminster albuterol inhalant. Otherwise, replace lungs."
+				else
+					dilation_text = span_danger("[lungs.received_pressure_mult * 100]%")
+					tooltip = "Subject's lungs are partially shut. If unable to breathe, administer a high-pressure internals tank or replace lungs. If asthmatic, inhaled albuterol or bypass surgery will likely help."
+
+			var/lung_message = beginning_text + conditional_tooltip(dilation_text, tooltip, TRUE)
+			render_list += lung_message
 
 	// Time of death
 	if(target.station_timestamp_timeofdeath && !target.appears_alive())
@@ -501,7 +523,7 @@
 	REMOVE_TRAIT(target, TRAIT_RECENTLY_TREATED, ANALYZER_TRAIT)
 	return TRUE
 
-/proc/chemscan(mob/living/user, mob/living/target)
+/proc/chemscan(mob/living/user, mob/living/target, reagent_types_to_check = null)
 	if(user.incapacitated)
 		return
 
@@ -515,6 +537,9 @@
 				var/datum/reagent/reagent = r
 				if(reagent.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems on scanners
 					continue
+				if(reagent_types_to_check)
+					if(!istype(reagent, reagent_types_to_check))
+						continue
 				render_block += "<span class='notice ml-2'>[round(reagent.volume, 0.001)] units of [reagent.name][reagent.overdosed ? "</span> - [span_bolddanger("OVERDOSING")]" : ".</span>"]<br>"
 
 		if(!length(render_block)) //If no VISIBLY DISPLAYED reagents are present, we report as if there is nothing.
@@ -532,6 +557,9 @@
 					var/datum/reagent/bit = bile
 					if(bit.chemical_flags & REAGENT_INVISIBLE)
 						continue
+					if(reagent_types_to_check)
+						if(!istype(bit, reagent_types_to_check))
+							continue
 					if(!belly.food_reagents[bit.type])
 						render_block += "<span class='notice ml-2'>[round(bit.volume, 0.001)] units of [bit.name][bit.overdosed ? "</span> - [span_bolddanger("OVERDOSING")]" : ".</span>"]<br>"
 					else

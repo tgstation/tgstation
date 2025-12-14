@@ -37,7 +37,7 @@
 		/obj/item/melee/energy/sword = 65,
 		/obj/item/knife = 45,
 		/obj/item/shard = 35)
-	time = 42
+	time = 4.2 SECONDS
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/organ1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'

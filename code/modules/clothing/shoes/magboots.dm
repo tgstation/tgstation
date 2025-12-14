@@ -9,8 +9,8 @@
 	inhand_icon_state = "magboots"
 	armor_type = /datum/armor/shoes_magboots
 	actions_types = list(/datum/action/item_action/toggle)
-	strip_delay = 70
-	equip_delay_other = 70
+	strip_delay = 7 SECONDS
+	equip_delay_other = 7 SECONDS
 	resistance_flags = FIRE_PROOF
 	clothing_flags = parent_type::clothing_flags | STOPSPRESSUREDAMAGE
 	slowdown = SHOES_SLOWDOWN

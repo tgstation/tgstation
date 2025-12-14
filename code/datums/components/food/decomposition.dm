@@ -117,7 +117,12 @@
 	if(produce_ants)
 		new /obj/effect/decal/cleanable/ants(decomp.loc)
 	if(decomp_result)
-		new decomp_result(decomp.loc)
+		var/atom/movable/result = new decomp_result(decomp.loc)
+		//make space and tranfer reagents if it has any, also let any bad result handle removing or converting the transferred reagents on its own terms
+		if(result.reagents && decomp.reagents)
+			result.reagents.clear_reagents()
+			decomp.reagents.trans_to(result, decomp.reagents.total_volume)
+		SEND_SIGNAL(result, COMSIG_OBJ_DECOMPOSITION_RESULT, decomp)
 	decomp.visible_message(span_warning("[decomp] gets overtaken by mold[produce_ants ? " and ants":""]! Gross!"))
 	qdel(decomp)
 	return

@@ -199,7 +199,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /turf/open/floor/iron,
 /area/ruin/plasma_facility/operations)
@@ -325,7 +325,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "fx" = (
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/lava/plasma/ice_moon,
 /area/ruin/plasma_facility/operations)
 "fJ" = (
@@ -399,7 +399,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /turf/open/floor/iron/grimy,
 /area/ruin/plasma_facility/commons)
 "gH" = (
@@ -759,7 +759,7 @@
 "lX" = (
 /obj/structure/table/reinforced,
 /obj/item/flashlight/lantern,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/iron/smooth{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -1182,7 +1182,7 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/commons)
 "sP" = (
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/plasma_facility/operations)
 "sX" = (
@@ -1928,7 +1928,7 @@
 /area/icemoon/underground/explored)
 "Jn" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/iron/smooth{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -2077,7 +2077,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "KY" = (
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/plasma_facility/commons)
 "Lh" = (
@@ -2126,7 +2126,7 @@
 /turf/open/floor/wood/large,
 /area/ruin/plasma_facility/commons)
 "LY" = (
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /turf/open/floor/plating,
 /area/ruin/plasma_facility/commons)
 "LZ" = (
@@ -2912,7 +2912,7 @@
 /area/ruin/plasma_facility/commons)
 "ZC" = (
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "ZH" = (

@@ -1,5 +1,6 @@
 /obj/item/melee/energy
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
+	abstract_type = /obj/item/melee/energy
 	icon_angle = -45
 	max_integrity = 200
 	armor_type = /datum/armor/melee_energy
@@ -10,7 +11,7 @@
 	light_range = 3
 	light_power = 1
 	light_on = FALSE
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	demolition_mod = 1.5 //1.5x damage to objects, robots, etc.
 	stealthy_audio = TRUE
 	w_class = WEIGHT_CLASS_SMALL
@@ -22,12 +23,14 @@
 	var/active_force = 30
 	/// Throwforce while active.
 	var/active_throwforce = 20
+	/// The throw speed of the weapon when on
+	var/active_throw_speed = 4
 	/// Sharpness while active.
 	var/active_sharpness = SHARP_EDGED
 	/// Hitsound played attacking while active.
 	var/active_hitsound = 'sound/items/weapons/blade1.ogg'
 	/// Weight class while active.
-	var/active_w_class = WEIGHT_CLASS_BULKY
+	var/active_w_class = WEIGHT_CLASS_HUGE
 	/// The heat given off when active.
 	var/active_heat = 3500
 
@@ -60,7 +63,7 @@
 		/datum/component/transforming, \
 		force_on = active_force, \
 		throwforce_on = active_throwforce, \
-		throw_speed_on = 4, \
+		throw_speed_on = active_throw_speed, \
 		sharpness_on = active_sharpness, \
 		hitsound_on = active_hitsound, \
 		w_class_on = active_w_class, \
@@ -155,6 +158,7 @@
 
 	active_force = 150
 	active_throwforce = 30
+	active_throw_speed = 3
 	active_w_class = WEIGHT_CLASS_HUGE
 
 /obj/item/melee/energy/axe/make_transformable()
@@ -162,7 +166,7 @@
 		/datum/component/transforming, \
 		force_on = active_force, \
 		throwforce_on = active_throwforce, \
-		throw_speed_on = throw_speed, \
+		throw_speed_on = active_throw_speed, \
 		sharpness_on = sharpness, \
 		w_class_on = active_w_class, \
 	)
@@ -196,12 +200,15 @@
 	embed_type = /datum/embedding/esword
 	var/list/alt_continuous = list("stabs", "pierces", "impales")
 	var/list/alt_simple = list("stab", "pierce", "impale")
+	var/alt_sharpness = SHARP_POINTY
+	var/alt_force_mod = -10
+	var/alt_hitsound = null
 
 /obj/item/melee/energy/sword/Initialize(mapload)
 	. = ..()
 	alt_continuous = string_list(alt_continuous)
 	alt_simple = string_list(alt_simple)
-	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -10, TRAIT_TRANSFORM_ACTIVE)
+	AddComponent(/datum/component/alternative_sharpness, alt_sharpness, alt_continuous, alt_simple, alt_force_mod, TRAIT_TRANSFORM_ACTIVE, alt_hitsound)
 
 /obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
@@ -325,6 +332,10 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	light_color = COLOR_RED
 
+/obj/item/melee/energy/sword/pirate/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item) //closed sword guard
+
 /// Energy blades, which are effectively perma-extended energy swords
 /obj/item/melee/energy/blade
 	name = "energy blade"
@@ -374,3 +385,201 @@
 	inhand_icon_state = "lightblade"
 	base_icon_state = "lightblade"
 	icon_angle = 0
+
+/obj/item/melee/energy/sword/surplus
+	name = "\improper Pattern I 'Iaito' energy sword"
+	desc = "Oversized, overengineered, and somehow still mass-produced. The twin energy blades, theoretically, help make up for the poor cutting plane the emitter generates. \
+		When there are no more heroes in a desperate struggle, it's kill or be killed."
+	icon_state = "surplus_e_sword"
+	inhand_icon_state = "surplus_e_sword"
+	base_icon_state = "surplus_e_sword"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	active_force = 15 // This force is augmented by the state of our target.
+	active_throwforce = 15
+	active_throw_speed = 3
+	alt_continuous = list("whacks", "smacks", "bashes")
+	alt_simple = list("whack", "smack", "bash")
+	alt_sharpness = NONE
+	alt_force_mod = -12
+	alt_hitsound = SFX_SWING_HIT
+	/// Battery used to determine how many hits we can make before our sword switches off and can't be turned back on without a do_after.
+	var/charge = 20
+	/// Our battery maximum.
+	var/max_charge = 20
+	/// The amount of time it takes to recharge the sword.
+	var/charge_time = 5 SECONDS
+	/// The cooldown between instances of vigorous jiggling to get your shitty sword back on.
+	COOLDOWN_DECLARE(jiggle_cooldown)
+
+/obj/item/melee/energy/sword/surplus/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_TRANSFORMING_PRE_TRANSFORM, PROC_REF(check_power))
+	AddElement(/datum/element/examine_lore, \
+		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
+		lore = "This early iteration of the now infamous energy sword was, supposedly, a Waffle Corp prototype first trialed in a variety of armed conflicts \
+		around the interstellar frontier.<br>\
+		<br>\
+		Unfortunately, the success rate of the platform, along with the survival rate of its users, was abysmally low. \
+		To make matters worse, initial overestimation of its effectiveness meant that by the time its myriad flaws reared their heads, production had already \
+		reached such a level that the company behind its manufacture would have to pay more to properly disassemble and dispose of the swords, \
+		than if they started offloading them onto markets of various legitimacy to try and recoup costs. Thus, the Iaito was 'born'.<br><br>\
+		As a consequence of its haphazard proliferation and its low market price compared to later, improved energy sword models, examples of the Iaito are \
+		typically found in the hands of various grunts, mooks, goons, criminals, wannabe assassins, lunatics, or those otherwise embroiled in \
+		a desperate struggle. If you're actually trying to kill someone with this sword, you may or may not fit into one or more of those categories." \
+	)
+
+/obj/item/melee/energy/sword/surplus/examine(mob/user)
+	. = ..()
+	if(charge)
+		. += span_notice("[src] has [charge] hits left before it must be recharged.")
+	else
+		. += span_warning("[src] needs to be recharged.")
+
+	. += span_info("You get the sense that this weapon isn't very effective unless you hit someone while they are exposed in some way, like attacking from behind or while they're staggered.")
+
+/obj/item/melee/energy/sword/surplus/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(charge < max_charge)
+		context[SCREENTIP_CONTEXT_RMB] = "Recharge"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
+// A weapon best employed by someone in a desperate struggle
+/obj/item/melee/energy/sword/surplus/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(!isliving(target))
+		return ..()
+
+	if(sharpness == NONE)
+		return ..()
+
+	var/mob/living/living_target = target
+	var/vulnerable_target = FALSE
+
+	if(living_target.stat == DEAD) // I know it doesn't make a lot of sense but it makes it a bit too good for dismemberment otherwise
+		return ..()
+
+	if(living_target.get_timed_status_effect_duration(/datum/status_effect/staggered))
+		vulnerable_target = TRUE
+
+	if(HAS_TRAIT(living_target, TRAIT_INCAPACITATED))
+		vulnerable_target = TRUE
+
+	if(check_behind(user, living_target))
+		vulnerable_target = TRUE
+
+	if(vulnerable_target)
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 2)
+
+	return ..()
+
+/obj/item/melee/energy/sword/surplus/attack_self_secondary(mob/user, list/modifiers)
+	. = ..()
+	if (.)
+		return
+
+	if(charge == max_charge)
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	if(DOING_INTERACTION(user, DOAFTER_SOURCE_CHARGING_ESWORD))
+		user.balloon_alert(user, "busy!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(charge <= max_charge)
+		user.balloon_alert(user, "attempting recharge...")
+		if(!do_after(user, charge_time, target = src, extra_checks = CALLBACK(src, PROC_REF(do_jiggle), user), interaction_key = DOAFTER_SOURCE_CHARGING_ESWORD, iconstate = "beat_the_heat"))
+			user.balloon_alert(user, "interrupted!")
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	charge = max_charge
+	user.balloon_alert(user, "recharge successful")
+	playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/melee/energy/sword/surplus/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) || charge <= 0)
+		return
+
+	expend_charge(user)
+
+/obj/item/melee/energy/sword/surplus/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return FALSE
+
+	if(prob(final_block_chance) && charge)
+		expend_charge(owner)
+		return TRUE
+
+/obj/item/melee/energy/sword/surplus/proc/expend_charge(mob/user)
+	if(!charge) // not that this will ever get here without charge, but...
+		return
+
+	charge--
+	if(charge <= 0)
+		user.balloon_alert(user, "out of charge!")
+		attack_self(user)
+
+/obj/item/melee/energy/sword/surplus/proc/check_power(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	if(charge <= 0 && !HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		balloon_alert(user, "no charge!")
+		return COMPONENT_BLOCK_TRANSFORM
+
+/obj/item/melee/energy/sword/surplus/proc/do_jiggle(mob/user)
+	if(!COOLDOWN_FINISHED(src, jiggle_cooldown))
+		return TRUE
+
+	user.Shake(2, 1, 0.3 SECONDS, shake_interval = 0.1 SECONDS)
+	playsound(src, 'sound/items/baton/telescopic_baton_folded_pickup.ogg', 40, TRUE)
+	COOLDOWN_START(src, jiggle_cooldown, 1 SECONDS)
+	return TRUE
+
+// Null rod variants
+
+/obj/item/melee/energy/sword/nullrod
+	name = "light energy sword"
+	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
+	throw_speed = 3
+	throw_range = 4
+	block_chance = 30
+	armour_penetration = 0
+	wound_bonus = -10
+	demolition_mod = 1
+	sword_color_icon = "blue"
+	light_color = LIGHT_COLOR_LIGHT_CYAN
+	active_force = 18
+	active_throwforce = 10
+	active_throw_speed = 3
+	alt_force_mod = -3
+
+/obj/item/melee/energy/sword/nullrod/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/nullrod_core)
+
+/obj/item/melee/energy/sword/nullrod/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return FALSE
+
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
+
+	return ..()
+
+/obj/item/melee/energy/sword/nullrod/red
+	name = "dark energy sword"
+	desc = "Woefully ineffective when used on steep terrain."
+	sword_color_icon = "red"
+	light_color = COLOR_SOFT_RED
+
+/obj/item/melee/energy/sword/nullrod/pirate
+	name = "nautical energy cutlass"
+	desc = "Convincing HR that your religion involved piracy was no mean feat."
+	icon_state = "e_cutlass"
+	inhand_icon_state = "e_cutlass"
+	base_icon_state = "e_cutlass"
+	sword_color_icon = null
+	light_color = COLOR_RED

@@ -767,9 +767,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/allamericandiner)
 "HF" = (
-/obj/structure/noticeboard/directional/north{
-	dir = 2
-	},
+/obj/structure/noticeboard/directional/north,
 /obj/machinery/deepfryer,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/paper/fluff/ruins/allamericandiner,

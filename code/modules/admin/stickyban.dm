@@ -124,7 +124,7 @@
 					list("ckey" = ckey, "alt" = alt)
 				)
 				query_remove_stickyban_alt.warn_execute()
-				qdel(query_remove_stickyban_alt)
+				QDEL_NULL(query_remove_stickyban_alt)
 
 			log_admin_private("[key_name(usr)] has disassociated [alt] from [ckey]'s sticky ban")
 			message_admins(span_adminnotice("[key_name_admin(usr)] has disassociated [alt] from [ckey]'s sticky ban"))
@@ -158,7 +158,7 @@
 					list("reason" = reason, "ckey" = ckey)
 				)
 				query_edit_stickyban.warn_execute()
-				qdel(query_edit_stickyban)
+				QDEL_NULL(query_edit_stickyban)
 
 			log_admin_private("[key_name(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]")
 			message_admins(span_adminnotice("[key_name_admin(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]"))
@@ -208,7 +208,7 @@
 					list("ckey" = ckey, "alt" = alt)
 				)
 				query_exempt_stickyban_alt.warn_execute()
-				qdel(query_exempt_stickyban_alt)
+				QDEL_NULL(query_exempt_stickyban_alt)
 
 			log_admin_private("[key_name(usr)] has exempted [alt] from [ckey]'s sticky ban")
 			message_admins(span_adminnotice("[key_name_admin(usr)] has exempted [alt] from [ckey]'s sticky ban"))
@@ -258,7 +258,7 @@
 					list("ckey" = ckey, "alt" = alt)
 				)
 				query_unexempt_stickyban_alt.warn_execute()
-				qdel(query_unexempt_stickyban_alt)
+				QDEL_NULL(query_unexempt_stickyban_alt)
 
 			log_admin_private("[key_name(usr)] has unexempted [alt] from [ckey]'s sticky ban")
 			message_admins(span_adminnotice("[key_name_admin(usr)] has unexempted [alt] from [ckey]'s sticky ban"))

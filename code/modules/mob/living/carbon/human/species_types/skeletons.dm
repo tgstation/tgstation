@@ -23,6 +23,7 @@
 		TRAIT_UNHUSKABLE,
 		TRAIT_XENO_IMMUNE,
 	)
+	inherent_factions = list(FACTION_SKELETON)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/tongue/bone
 	mutantstomach = /obj/item/organ/stomach/bone

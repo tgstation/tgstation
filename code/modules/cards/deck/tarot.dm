@@ -7,10 +7,8 @@
 	cardgame_desc = "tarot card reading"
 	icon_state = "deck_tarot_full"
 	deckstyle = "tarot"
-	is_standard_deck = FALSE
 
-/obj/item/toy/cards/deck/tarot/Initialize(mapload)
-	. = ..()
+/obj/item/toy/cards/deck/tarot/initialize_cards()
 	for(var/suit in list("Hearts", "Pikes", "Clovers", "Tiles"))
 		for(var/i in 1 to 10)
 			initial_cards += "[i] of [suit]"
@@ -29,6 +27,23 @@
 		var/matrix/M = matrix()
 		M.Turn(180)
 		card.transform = M
+
+/obj/item/toy/cards/deck/tarot/pick_card(mob/living/user, list/obj/item/toy/singlecard/cards)
+	// If the user is cursed they have increase chance of drawing Death or The Tower
+	if(!HAS_TRAIT(user, TRAIT_CURSED))
+		return ..()
+
+	var/total_card = length(cards)
+	// give a boosted chance if they're using the full deck
+	var/chance_modifier = total_card >= 56 ? 24 : 4
+	if(!prob(min(33, chance_modifier / total_card * 100)))
+		return ..()
+
+	for(var/obj/item/toy/singlecard/card as anything in cards)
+		if(card.cardname == "Death" || card.cardname == "The Tower")
+			return card
+
+	return ..()
 
 /obj/item/toy/cards/deck/tarot/haunted
 	name = "haunted tarot game deck"

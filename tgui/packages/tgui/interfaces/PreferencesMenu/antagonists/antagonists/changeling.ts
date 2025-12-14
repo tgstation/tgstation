@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { type Antagonist, Category } from '../base';
 
 export const CHANGELING_MECHANICAL_DESCRIPTION = `
 Transform yourself or others into different identities, and buy from an

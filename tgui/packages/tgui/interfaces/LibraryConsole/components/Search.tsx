@@ -8,7 +8,7 @@ import {
   Table,
 } from 'tgui-core/components';
 
-import { LibraryConsoleData } from '../types';
+import type { LibraryConsoleData } from '../types';
 
 export function SearchAndDisplay(props) {
   return (

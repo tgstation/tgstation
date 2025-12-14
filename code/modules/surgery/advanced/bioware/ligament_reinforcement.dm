@@ -2,6 +2,7 @@
 	name = "Ligament Reinforcement"
 	desc = "A surgical procedure which adds a protective tissue and bone cage around the connections between the torso and limbs, preventing dismemberment. \
 		However, the nerve connections as a result are more easily interrupted, making it easier to disable limbs with damage."
+	surgery_flags = SURGERY_MORBID_CURIOSITY
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,

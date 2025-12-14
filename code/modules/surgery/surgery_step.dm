@@ -9,7 +9,7 @@
 	var/implement_type = null //the current type of implement used. This has to be stored, as the actual typepath of the tool may not match the list type.
 	var/accept_hand = FALSE //does the surgery step require an open hand? If true, ignores implements. Compatible with accept_any_item.
 	var/accept_any_item = FALSE //does the surgery step accept any item? If true, ignores implements. Compatible with require_hand.
-	var/time = 10 //how long does the step take?
+	var/time = 1 SECONDS //how long does the step take?
 	var/repeatable = FALSE //can this step be repeated? Make shure it isn't last step, or else the surgeon will be stuck in the loop
 	var/list/chems_needed = list()  //list of chems needed to complete the step. Even on success, the step will have no effect if there aren't the chems required in the mob.
 	var/require_all_chems = TRUE    //any on the list or all on the list?
@@ -91,21 +91,24 @@
 	// Only followers of Asclepius have the ability to use Healing Touch and perform miracle feats of surgery.
 	// Prevents people from performing multiple simultaneous surgeries unless they're holding a Rod of Asclepius.
 
-	surgery.step_in_progress = TRUE
-	var/speed_mod = 1
-	var/fail_prob = 0//100 - fail_prob = success_prob
-	var/advance = FALSE
+	var/interaction_key = HAS_TRAIT(user, TRAIT_HIPPOCRATIC_OATH) ? target : DOAFTER_SOURCE_SURGERY
+	if(DOING_INTERACTION(user, interaction_key))
+		user.balloon_alert(user, "already doing surgery!")
+		return FALSE
 
 	if(!chem_check(target))
 		user.balloon_alert(user, "missing [LOWER_TEXT(get_chem_list())]!")
 		to_chat(user, span_warning("[target] is missing the [LOWER_TEXT(get_chem_list())] required to perform this surgery step!"))
-		surgery.step_in_progress = FALSE
 		return FALSE
 
 	if(preop(user, target, target_zone, tool, surgery) == SURGERY_STEP_FAIL)
 		update_surgery_mood(target, SURGERY_STATE_FAILURE)
-		surgery.step_in_progress = FALSE
 		return FALSE
+
+	surgery.step_in_progress = TRUE
+	var/speed_mod = 1
+	var/fail_prob = 0//100 - fail_prob = success_prob
+	var/advance = FALSE
 
 	update_surgery_mood(target, SURGERY_STATE_STARTED)
 	play_preop_sound(user, target, target_zone, tool, surgery) // Here because most steps overwrite preop
@@ -126,23 +129,41 @@
 	if(implement_type) //this means it isn't a require hand or any item step.
 		implement_speed_mod = implements[implement_type] / 100.0
 
-	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod) * target.mob_surgery_speed_mod
+	//multiply speed_mod by sterilizer modifier
+	speed_mod *= surgery.speed_modifier
+
+	speed_mod /= (get_location_modifier(target) * implement_speed_mod) * target.mob_surgery_speed_mod
 	var/modded_time = time * speed_mod
 
 
-	fail_prob = min(max(0, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)),99)//if modded_time > time * modifier, then fail_prob = modded_time - time*modifier. starts at 0, caps at 99
-	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)//also if that, then cap modded_time at time*modifier
+	fail_prob = max(0, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)) //if modded_time > time * modifier, then fail_prob = modded_time - time*modifier
+
+	var/list/user_modifiers = list(0, 1)
+	SEND_SIGNAL(user, COMSIG_LIVING_INITIATE_SURGERY_STEP, user, target, target_zone, tool, surgery, src, user_modifiers)
+	fail_prob += user_modifiers[FAIL_PROB_INDEX]
+	modded_time *= user_modifiers[SPEED_MOD_INDEX]
+
+	var/list/target_modifiers = list(0, 1)
+	SEND_SIGNAL(target, COMSIG_LIVING_SURGERY_STEP_INITIATED_ON, user, target, target_zone, tool, surgery, src, target_modifiers)
+	fail_prob += target_modifiers[FAIL_PROB_INDEX]
+	modded_time *= target_modifiers[SPEED_MOD_INDEX]
+
+	fail_prob = min(max(0, fail_prob),99) // clamp fail_prob between 0 and 99
+	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)// cap modded_time at time*modifier
 
 	if(iscyborg(user))//any immunities to surgery slowdown should go in this check.
 		modded_time = time * tool.toolspeed
 
 	var/was_sleeping = (target.stat != DEAD && target.IsSleeping())
 
-	if(do_after(user, modded_time, target = target, interaction_key = user.has_status_effect(/datum/status_effect/hippocratic_oath) ? target : DOAFTER_SOURCE_SURGERY)) //If we have the hippocratic oath, we can perform one surgery on each target, otherwise we can only do one surgery in total.
+	if(do_after(user, modded_time, target = target, interaction_key = interaction_key)) //If we have the hippocratic oath, we can perform one surgery on each target, otherwise we can only do one surgery in total.
 
 		if((prob(100-fail_prob) || (iscyborg(user) && !silicons_obey_prob)) && !try_to_fail)
 			if(success(user, target, target_zone, tool, surgery))
-				update_surgery_mood(target, SURGERY_STATE_SUCCESS)
+				if((tool && tool.item_flags & CRUEL_IMPLEMENT) || (accept_hand && surgery.surgery_flags & SURGERY_MORBID_CURIOSITY && HAS_MIND_TRAIT(user, TRAIT_MORBID)))
+					update_surgery_mood(target, SURGERY_STATE_FAILURE)
+				else
+					update_surgery_mood(target, SURGERY_STATE_SUCCESS)
 				play_success_sound(user, target, target_zone, tool, surgery)
 				advance = TRUE
 		else
@@ -297,9 +318,11 @@
 /datum/surgery_step/proc/check_morbid_curiosity(mob/user, obj/item/tool, datum/surgery/surgery)
 	if(!(surgery.surgery_flags & SURGERY_MORBID_CURIOSITY))
 		return FALSE
-	if(tool && !(tool.item_flags & CRUEL_IMPLEMENT))
-		return FALSE
 	if(!HAS_MIND_TRAIT(user, TRAIT_MORBID))
+		return FALSE
+	if(!tool && accept_hand)
+		return TRUE
+	if(tool && !(tool.item_flags & CRUEL_IMPLEMENT))
 		return FALSE
 	return TRUE
 

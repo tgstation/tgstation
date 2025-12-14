@@ -28,14 +28,10 @@
 	return .
 
 /obj/machinery/atmospherics/components/Initialize(mapload)
-	. = ..()
-	update_appearance()
-
-/obj/machinery/atmospherics/components/New()
 	parents = new(device_type)
 	airs = new(device_type)
 
-	..()
+	. = ..()
 
 	for(var/i in 1 to device_type)
 		if(airs[i])
@@ -43,6 +39,8 @@
 		var/datum/gas_mixture/component_mixture = new
 		component_mixture.volume = 200
 		airs[i] = component_mixture
+
+	update_appearance()
 
 // Iconnery
 
@@ -73,7 +71,7 @@
 	underlays.Cut()
 
 	color = null
-	var/uncovered_turf = HAS_TRAIT(loc, TRAIT_UNCOVERED_TURF)
+	var/uncovered_turf = loc && HAS_TRAIT(loc, TRAIT_UNCOVERED_TURF)
 	SET_PLANE_IMPLICIT(src, (underfloor_state == UNDERFLOOR_INTERACTABLE && !uncovered_turf) ? GAME_PLANE : FLOOR_PLANE)
 
 	// Layer is handled in update_layer()
@@ -114,7 +112,7 @@
 
 /obj/machinery/atmospherics/components/get_pipe_image(iconfile, iconstate, direction, color, piping_layer, trinary)
 	var/mutable_appearance/pipe_appearance = ..()
-	if (underfloor_state == UNDERFLOOR_VISIBLE || HAS_TRAIT(loc, TRAIT_UNCOVERED_TURF))
+	if (underfloor_state == UNDERFLOOR_VISIBLE || (loc && HAS_TRAIT(loc, TRAIT_UNCOVERED_TURF)))
 		pipe_appearance.layer = BELOW_CATWALK_LAYER + get_pipe_layer_offset()
 		SET_PLANE_EXPLICIT(pipe_appearance, FLOOR_PLANE, src)
 	return pipe_appearance

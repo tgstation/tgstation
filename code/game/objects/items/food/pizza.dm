@@ -2,6 +2,7 @@
 /obj/item/food/pizza
 	name = "pizza"
 	icon = 'icons/obj/food/pizza.dmi'
+	abstract_type = /obj/item/food/pizza
 	w_class = WEIGHT_CLASS_NORMAL
 	max_volume = 80
 	icon_state = "pizzamargherita"
@@ -72,7 +73,7 @@
 	. = ..()
 	if(!sliced)
 		return
-	user.visible_message(span_notice("You take a slice of [src]."), span_notice("[user] takes a slice of [src]."))
+	user.visible_message(span_notice("[user] takes a slice of [src]."), span_notice("You take a slice of [src]."))
 	produce_slice(user)
 
 /obj/item/food/pizza/proc/get_slices_filter() //to not repeat code
@@ -124,6 +125,7 @@
 /obj/item/food/pizzaslice
 	name = "pizza slice"
 	icon = 'icons/obj/food/pizza.dmi'
+	abstract_type = /obj/item/food/pizzaslice
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	icon_state = "pizzamargheritaslice"
 	foodtypes = GRAIN
@@ -132,7 +134,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/pizzaslice/make_processable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 1 SECONDS, table_required = TRUE, screentip_verb = "Flatten")
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 1 SECONDS, table_required = TRUE, screentip_verb = "Flatten", sound_to_play = SFX_ROLLING_PIN_ROLLING)
 
 /obj/item/food/pizza/margherita
 	name = "pizza margherita"
@@ -302,7 +304,7 @@
 	slice_type = /obj/item/food/pizzaslice/donkpocket
 	boxtag = "Bangin' Donk"
 	crafting_complexity = FOOD_COMPLEXITY_3
-	intrisic_food_materials = list(/datum/material/meat) //default donkpockets do not contain meat but homemade ones do.
+	intrinsic_food_materials = list(/datum/material/meat) //default donkpockets do not contain meat but homemade ones do.
 
 /obj/item/food/pizza/donkpocket/raw
 	name = "raw donkpocket pizza"
@@ -319,7 +321,7 @@
 	icon_state = "donkpocketpizzaslice"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "umami" = 1, "laziness" = 1)
 	foodtypes = GRAIN|VEGETABLES|DAIRY|JUNKFOOD
-	intrisic_food_materials = list(/datum/material/meat) //default donkpockets do not contain meat but homemade ones do.
+	intrinsic_food_materials = list(/datum/material/meat) //default donkpockets do not contain meat but homemade ones do.
 
 /obj/item/food/pizza/dank
 	name = "dank pizza"
@@ -465,7 +467,7 @@
 	boxtag = "9mm Pepperoni"
 	foodtypes = MEAT|GRAIN|DAIRY|VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_4
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4, /datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 8, /datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/pizza/arnold/raw
 	name = "raw Arnold pizza"

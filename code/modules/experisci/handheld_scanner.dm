@@ -11,6 +11,9 @@
 	icon_state = "experiscanner"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 
 /obj/item/experi_scanner/Initialize(mapload)
 	..()
@@ -25,6 +28,7 @@
 	AddComponent(/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/scanning, /datum/experiment/physical), \
 		disallowed_traits = EXPERIMENT_TRAIT_DESTRUCTIVE, \
+		config_flags = EXPERIMENT_CONFIG_ALWAYS_ANNOUNCE, \
 		experiment_signals = handheld_signals, \
 	)
 

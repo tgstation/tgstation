@@ -57,7 +57,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	wound_bonus = -25
-	bare_wound_bonus = 45
+	exposed_wound_bonus = 45
 	sharpness = SHARP_EDGED
 	gold_core_spawnable = HOSTILE_SPAWN
 	faction = list(FACTION_HOSTILE)

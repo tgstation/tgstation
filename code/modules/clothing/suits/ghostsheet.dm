@@ -28,8 +28,9 @@
 	desc = "This is obviously just a bedsheet, but maybe try it on?"
 	icon = 'icons/obj/clothing/suits/costume.dmi'
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
-	user_vars_to_edit = list("name" = "Spooky Ghost", "real_name" = "Spooky Ghost" , "incorporeal_move" = INCORPOREAL_MOVE_BASIC, "appearance_flags" = KEEP_TOGETHER|TILE_BOUND, "alpha" = 150)
+	icon_state = "ghost_sheet"
 	inhand_icon_state = null
+	user_vars_to_edit = list("name" = "Spooky Ghost", "real_name" = "Spooky Ghost", "incorporeal_move" = INCORPOREAL_MOVE_BASIC, "appearance_flags" = KEEP_TOGETHER|TILE_BOUND, "alpha" = 150)
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2

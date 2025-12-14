@@ -5,6 +5,7 @@
  * as much as possible to the components/elements system
  */
 /atom
+	abstract_type = /atom
 	layer = ABOVE_NORMAL_TURF_LAYER
 	plane = GAME_PLANE
 	appearance_flags = TILE_BOUND|LONG_GLIDE
@@ -136,6 +137,9 @@
 	var/interaction_flags_click = NONE
 	/// Flags to check for in can_perform_action for mouse drag & drop checks. To bypass checks see interaction_flags_atom mouse drop flags
 	var/interaction_flags_mouse_drop = NONE
+
+	/// Generally for niche objects, atoms blacklisted can spawn if enabled by spawner.
+	var/spawn_blacklisted = FALSE
 
 /**
  * Top level of the destroy chain for most atoms
@@ -332,11 +336,12 @@
 	return FALSE
 
 /**
- * Ensure a list of atoms/reagents exists inside this atom
+ * Called whenever an item is crafted, either via stack recipes or crafting recipes from the crafting menu
  *
- * Cycles through the list of movables used up in the recipe and calls used_in_craft() for each of them
- * then it either moves them inside the object or deletes
- * them depending on whether they're in the list of parts for the recipe or not
+ * By default, it just cycles through the list of movables used in the recipe and calls used_in_craft() for each of them,
+ * then it either moves them inside the object if they're in the list of parts for the recipe
+ * or deletes them if they're not.
+ * The proc can be overriden by subtypes, as long as it always call parent.
  */
 /atom/proc/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	SHOULD_CALL_PARENT(TRUE)
@@ -345,17 +350,17 @@
 	var/list/parts_by_type = remaining_parts?.Copy()
 	for(var/parttype in parts_by_type) //necessary for our is_type_in_list() call with the zebra arg set to true
 		parts_by_type[parttype] = parttype
-	for(var/obj/item/item in components) // machinery or structure objects in the list are guaranteed to be used up. We only check items.
-		item.used_in_craft(src, current_recipe)
-		var/matched_type = is_type_in_list(item, parts_by_type, zebra = TRUE)
+	for(var/atom/movable/movable as anything in components) // machinery or structure objects in the list are guaranteed to be used up. We only check items.
+		movable.used_in_craft(src, current_recipe)
+		var/matched_type = is_type_in_list(movable, parts_by_type, zebra = TRUE)
 		if(!matched_type)
 			continue
 
-		if(isliving(item.loc))
-			var/mob/living/living = item.loc
-			living.transferItemToLoc(item, src)
+		if(isliving(movable.loc) && isitem(movable))
+			var/mob/living/living = movable.loc
+			living.transferItemToLoc(movable, src)
 		else
-			item.forceMove(src)
+			movable.forceMove(src)
 
 		if(matched_type)
 			remaining_parts[matched_type] -= 1
@@ -390,11 +395,11 @@
 	return is_refillable() && is_drainable()
 
 /// Is this atom injectable into other atoms
-/atom/proc/is_injectable(mob/user, allowmobs = TRUE)
+/atom/proc/is_injectable()
 	return reagents && (reagents.flags & (INJECTABLE | REFILLABLE))
 
 /// Can we draw from this atom with an injectable atom
-/atom/proc/is_drawable(mob/user, allowmobs = TRUE)
+/atom/proc/is_drawable()
 	return reagents && (reagents.flags & (DRAWABLE | DRAINABLE))
 
 /// Can this atoms reagents be refilled
@@ -414,18 +419,15 @@
  * - [reagents][/list]: The list of reagents the atom is being exposed to.
  * - [source][/datum/reagents]: The reagent holder the reagents are being sourced from.
  * - methods: How the atom is being exposed to the reagents. Bitflags.
- * - volume_modifier: Volume multiplier.
  * - show_message: Whether to display anything to mobs when they are exposed.
  */
-/atom/proc/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
-	. = SEND_SIGNAL(src, COMSIG_ATOM_EXPOSE_REAGENTS, reagents, source, methods, volume_modifier, show_message)
+/atom/proc/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, show_message=TRUE)
+	. = SEND_SIGNAL(src, COMSIG_ATOM_EXPOSE_REAGENTS, reagents, source, methods, show_message)
 	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
-	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_ATOM, src, reagents, methods, volume_modifier, show_message)
 	for(var/datum/reagent/current_reagent as anything in reagents)
 		. |= current_reagent.expose_atom(src, reagents[current_reagent], methods)
-	SEND_SIGNAL(src, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, reagents, source, methods, volume_modifier, show_message)
 
 /// Are you allowed to drop this atom
 /atom/proc/AllowDrop()
@@ -618,6 +620,7 @@
  */
 /atom/Exited(atom/movable/gone, direction)
 	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, gone, direction)
+	SEND_SIGNAL(gone, COMSIG_ATOM_EXITING, src, direction)
 
 ///Return atom temperature
 /atom/proc/return_temperature()
@@ -651,26 +654,29 @@
 
 /atom/proc/StartProcessingAtom(mob/living/user, obj/item/process_item, list/chosen_option)
 	var/processing_time = chosen_option[TOOL_PROCESSING_TIME]
+	var/sound_to_play = chosen_option[TOOL_PROCESSING_SOUND]
 	to_chat(user, span_notice("You start working on [src]."))
-	if(process_item.use_tool(src, user, processing_time, volume=50))
-		var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
-		var/list/atom/created_atoms = list()
-		var/amount_to_create = chosen_option[TOOL_PROCESSING_AMOUNT]
-		for(var/i = 1 to amount_to_create)
-			var/atom/created_atom = new atom_to_create(drop_location())
-			if(custom_materials)
-				created_atom.set_custom_materials(custom_materials, 1 / amount_to_create)
-			created_atom.pixel_x = pixel_x
-			created_atom.pixel_y = pixel_y
-			if(i > 1)
-				created_atom.pixel_x += rand(-8,8)
-				created_atom.pixel_y += rand(-8,8)
-			created_atom.OnCreatedFromProcessing(user, process_item, chosen_option, src)
-			created_atoms.Add(created_atom)
-		to_chat(user, span_notice("You manage to create [amount_to_create] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)][plural_s(initial(atom_to_create.name))]"] from [src]."))
-		SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, process_item, created_atoms)
-		UsedforProcessing(user, process_item, chosen_option, created_atoms)
+	if(sound_to_play)
+		playsound(src, sound_to_play, 50, TRUE)
+	if(!process_item.use_tool(src, user, processing_time, volume=50))
 		return
+	var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
+	var/list/atom/created_atoms = list()
+	var/amount_to_create = chosen_option[TOOL_PROCESSING_AMOUNT]
+	for(var/i = 1 to amount_to_create)
+		var/atom/created_atom = new atom_to_create(drop_location())
+		created_atom.OnCreatedFromProcessing(user, process_item, chosen_option, src)
+		if(custom_materials)
+			created_atom.set_custom_materials(custom_materials, 1 / amount_to_create)
+		created_atom.pixel_x = pixel_x
+		created_atom.pixel_y = pixel_y
+		if(i > 1)
+			created_atom.pixel_x += rand(-8,8)
+			created_atom.pixel_y += rand(-8,8)
+		created_atoms.Add(created_atom)
+	to_chat(user, span_notice("You manage to create [amount_to_create] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)][plural_s(initial(atom_to_create.name))]"] from [src]."))
+	SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, process_item, created_atoms)
+	UsedforProcessing(user, process_item, chosen_option, created_atoms)
 
 /atom/proc/UsedforProcessing(mob/living/user, obj/item/used_item, list/chosen_option, list/created_atoms)
 	qdel(src)

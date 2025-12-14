@@ -113,7 +113,7 @@
 /turf/open/floor/circuit/red/airless,
 /area/ruin/space/unpowered)
 "ie" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/ruin/space/unpowered)
 "iI" = (
 /obj/effect/turf_decal/syndicateemblem/top/left,
@@ -562,11 +562,9 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/unpowered)
 "Mw" = (
-/obj/machinery/status_display/ai{
-	pixel_x = 32
-	},
 /obj/machinery/light/directional/east,
 /obj/effect/decal/cleanable/blood/old,
+/obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/unpowered)
 "MB" = (
@@ -608,7 +606,7 @@
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)
 "Pq" = (
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/ruin/space/unpowered)
 "PC" = (
 /obj/item/stock_parts/capacitor/adv{

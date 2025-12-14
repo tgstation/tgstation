@@ -1,15 +1,5 @@
 //Contains generic skillchips that are fairly short and simple
 
-/obj/item/skillchip/basketweaving
-	name = "Basketsoft 3000 skillchip"
-	desc = "Underwater edition."
-	auto_traits = list(TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE)
-	skill_name = "Underwater Basketweaving"
-	skill_description = "Master intricate art of using twine to create perfect baskets while submerged."
-	skill_icon = "shopping-basket"
-	activate_message = span_notice("You're one with the twine and the sea.")
-	deactivate_message = span_notice("Higher mysteries of underwater basketweaving leave your mind.")
-
 /obj/item/skillchip/wine_taster
 	name = "WINE skillchip"
 	desc = "Wine.Is.Not.Equal version 5."

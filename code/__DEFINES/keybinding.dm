@@ -28,6 +28,7 @@
 #define COMSIG_KB_CLIENT_SCREENSHOT_DOWN "keybinding_client_screenshot_down"
 #define COMSIG_KB_CLIENT_FULLSCREEN_DOWN "keybinding_client_fullscreen_down"
 #define COMSIG_KB_CLIENT_MINIMALHUD_DOWN "keybinding_client_minimalhud_down"
+#define COMSIG_KB_CLIENT_CLOSEUI_DOWN "keybinding_client_closeui_down"
 
 //Communication
 
@@ -68,6 +69,8 @@
 #define COMSIG_KB_MOB_CYCLEINTENTRIGHT_DOWN "keybinding_mob_cycleintentright_down"
 #define COMSIG_KB_MOB_CYCLEINTENTLEFT_DOWN "keybinding_mob_cycleintentleft_down"
 #define COMSIG_KB_MOB_SWAPHANDS_DOWN "keybinding_mob_swaphands_down"
+#define COMSIG_KB_MOB_SELECTRIGHTHAND_DOWN "keybinding_mob_selectrighthand_down"
+#define COMSIG_KB_MOB_SELECTLEFTHAND_DOWN "keybinding_mob_selectlefthand_down"
 #define COMSIG_KB_MOB_ACTIVATEINHAND_DOWN "keybinding_mob_activateinhand_down"
 #define COMSIG_KB_MOB_DROPITEM_DOWN "keybinding_mob_dropitem_down"
 #define COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN "keybinding_mob_targetcyclehead_down"

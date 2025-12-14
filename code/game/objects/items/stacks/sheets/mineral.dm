@@ -25,8 +25,9 @@ Mineral Sheets
 
 GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_DOORS), \
-	new/datum/stack_recipe("Breakdown into sand", /obj/item/stack/ore/glass, 1, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND, category = CAT_MISC) \
-	))
+	new/datum/stack_recipe("sandstone platform", /obj/structure/platform/sandstone, 2, time = 3 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
+	new/datum/stack_recipe("Breakdown into sand", /obj/item/stack/ore/glass, 1, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND, category = CAT_MISC), \
+))
 
 /obj/item/stack/sheet/mineral/sandstone
 	name = "sandstone brick"
@@ -37,7 +38,7 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	throw_speed = 3
 	throw_range = 5
 	mats_per_unit = list(/datum/material/sandstone=SHEET_MATERIAL_AMOUNT)
-	sheettype = "sandstone"
+	construction_path_type = "sandstone"
 	merge_type = /obj/item/stack/sheet/mineral/sandstone
 	walltype = /turf/closed/wall/mineral/sandstone
 	material_type = /datum/material/sandstone
@@ -82,7 +83,7 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	if(istype(W, /obj/item/stack/ore/glass))
 		var/obj/item/stack/ore/glass/G = W
 		to_chat(user, span_notice("You fill the sandbag."))
-		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags(drop_location())
+		var/obj/item/stack/sheet/mineral/sandbags/I = new (drop_location())
 		qdel(src)
 		if (Adjacent(user) && !issilicon(user))
 			user.put_in_hands(I)
@@ -98,7 +99,7 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	icon_state = "sheet-diamond"
 	inhand_icon_state = "sheet-diamond"
 	singular_name = "diamond"
-	sheettype = "diamond"
+	construction_path_type = "diamond"
 	mats_per_unit = list(/datum/material/diamond=SHEET_MATERIAL_AMOUNT)
 	grind_results = list(/datum/reagent/carbon = 20)
 	gulag_valid = TRUE
@@ -129,7 +130,7 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	icon_state = "sheet-uranium"
 	inhand_icon_state = "sheet-uranium"
 	singular_name = "uranium sheet"
-	sheettype = "uranium"
+	construction_path_type = "uranium"
 	mats_per_unit = list(/datum/material/uranium=SHEET_MATERIAL_AMOUNT)
 	grind_results = list(/datum/reagent/uranium = 20)
 	gulag_valid = TRUE
@@ -139,6 +140,7 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 
 GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	new/datum/stack_recipe("uranium door", /obj/structure/mineral_door/uranium, 10, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_DOORS), \
+	new/datum/stack_recipe("depleted uranium platform", /obj/structure/platform/uranium, 2, time = 3 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("uranium tile", /obj/item/stack/tile/mineral/uranium, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
 	))
 
@@ -163,7 +165,7 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	icon_state = "sheet-plasma"
 	inhand_icon_state = "sheet-plasma"
 	singular_name = "plasma sheet"
-	sheettype = "plasma"
+	construction_path_type = "plasma"
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	mats_per_unit = list(/datum/material/plasma=SHEET_MATERIAL_AMOUNT)
@@ -203,7 +205,7 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 	icon_state = "sheet-gold"
 	inhand_icon_state = "sheet-gold"
 	singular_name = "gold bar"
-	sheettype = "gold"
+	construction_path_type = "gold"
 	mats_per_unit = list(/datum/material/gold=SHEET_MATERIAL_AMOUNT)
 	grind_results = list(/datum/reagent/gold = 20)
 	gulag_valid = TRUE
@@ -213,6 +215,7 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 
 GLOBAL_LIST_INIT(gold_recipes, list ( \
 	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_DOORS), \
+	new/datum/stack_recipe("golden platform", /obj/structure/platform/gold, 2, time = 3 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("gold tile", /obj/item/stack/tile/mineral/gold, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
 	new/datum/stack_recipe("blank plaque", /obj/item/plaque, 1, crafting_flags = NONE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("Simple Crown", /obj/item/clothing/head/costume/crown, 5, crafting_flags = NONE, category = CAT_CLOTHING), \
@@ -233,7 +236,7 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 	icon_state = "sheet-silver"
 	inhand_icon_state = "sheet-silver"
 	singular_name = "silver bar"
-	sheettype = "silver"
+	construction_path_type = "silver"
 	mats_per_unit = list(/datum/material/silver=SHEET_MATERIAL_AMOUNT)
 	grind_results = list(/datum/reagent/silver = 20)
 	gulag_valid = TRUE
@@ -244,6 +247,7 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 
 GLOBAL_LIST_INIT(silver_recipes, list ( \
 	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_DOORS), \
+	new/datum/stack_recipe("silver platform", /obj/structure/platform/silver, 2, time = 3 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("silver tile", /obj/item/stack/tile/mineral/silver, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
 	))
 
@@ -262,7 +266,7 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 	icon_state = "sheet-bananium"
 	inhand_icon_state = null
 	singular_name = "bananium sheet"
-	sheettype = "bananium"
+	construction_path_type = "bananium"
 	mats_per_unit = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT)
 	grind_results = list(/datum/reagent/consumable/banana = 20)
 	gulag_valid = TRUE
@@ -294,7 +298,7 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 1
 	throw_range = 3
-	sheettype = "titanium"
+	construction_path_type = "titanium"
 	mats_per_unit = list(/datum/material/titanium=SHEET_MATERIAL_AMOUNT)
 	gulag_valid = TRUE
 	merge_type = /obj/item/stack/sheet/mineral/titanium
@@ -303,6 +307,7 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 
 GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	new /datum/stack_recipe("Titanium tile", /obj/item/stack/tile/mineral/titanium, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
+	new/datum/stack_recipe("Titanium Platform", /obj/structure/platform/titanium, 2, time = 3 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
 	new /datum/stack_recipe("Shuttle seat", /obj/structure/chair/comfy/shuttle, 2, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
 	new /datum/stack_recipe("Material tram door assembly", /obj/structure/door_assembly/multi_tile/door_assembly_tram, 8, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_DOORS), \
 	))
@@ -347,7 +352,7 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 1
 	throw_range = 3
-	sheettype = "plastitanium"
+	construction_path_type = "plastitanium"
 	mats_per_unit = list(/datum/material/alloy/plastitanium=SHEET_MATERIAL_AMOUNT)
 	gulag_valid = TRUE
 	material_type = /datum/material/alloy/plastitanium
@@ -357,6 +362,7 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 
 GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	new/datum/stack_recipe("plastitanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
+	new/datum/stack_recipe("plastitanium platform", /obj/structure/platform/plastitanium, 2, time = 3 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
 	))
 
 /obj/item/stack/sheet/mineral/plastitanium/get_main_recipes()
@@ -457,7 +463,7 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	icon_state = "sheet-abductor"
 	inhand_icon_state = "sheet-abductor"
 	singular_name = "alien alloy sheet"
-	sheettype = "abductor"
+	construction_path_type = "abductor"
 	mats_per_unit = list(/datum/material/alloy/alien=SHEET_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/abductor
 	material_type = /datum/material/alloy/alien
@@ -525,17 +531,26 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	inhand_icon_state = null
 	singular_name = "metal hydrogen sheet"
 	w_class = WEIGHT_CLASS_NORMAL
-	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF | INDESTRUCTIBLE
+	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF | BOMB_PROOF
 	gulag_valid = TRUE
 	mats_per_unit = list(/datum/material/metalhydrogen = SHEET_MATERIAL_AMOUNT)
 	material_type = /datum/material/metalhydrogen
 	merge_type = /obj/item/stack/sheet/mineral/metal_hydrogen
+	armor_type = /datum/armor/metal_hydrogen_sheet
 
 /obj/item/stack/sheet/mineral/metal_hydrogen/get_main_recipes()
 	. = ..()
 	. += GLOB.metalhydrogen_recipes
 
-
+/datum/armor/metal_hydrogen_sheet
+	melee = 100
+	bullet = 100
+	laser = 100
+	energy = 100
+	bomb = 100
+	fire = 100
+	acid = 100
+	bio = 100
 
 GLOBAL_LIST_INIT(zaukerite_recipes, list(
 	new /datum/stack_recipe("zaukerite shard", /obj/item/ammo_casing/rebar/zaukerite, req_amount=1, res_amount=1, category = CAT_WEAPON_AMMO),

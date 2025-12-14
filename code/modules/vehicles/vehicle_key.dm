@@ -36,7 +36,7 @@
 	sharpness = SHARP_EDGED
 	embed_type = /datum/embedding/janicart_key
 	wound_bonus = -1
-	bare_wound_bonus = 2
+	exposed_wound_bonus = 2
 
 /datum/embedding/janicart_key
 	pain_mult = 1

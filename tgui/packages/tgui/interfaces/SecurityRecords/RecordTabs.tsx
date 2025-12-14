@@ -1,4 +1,5 @@
-import { filter, sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
+import { filter } from 'es-toolkit/compat';
 import { useState } from 'react';
 import { useBackend, useLocalState } from 'tgui/backend';
 import {
@@ -15,7 +16,7 @@ import {
 import { JOB2ICON } from '../common/JobToIcon';
 import { CRIMESTATUS2COLOR } from './constants';
 import { isRecordMatch } from './helpers';
-import { SecurityRecord, SecurityRecordsData } from './types';
+import type { SecurityRecord, SecurityRecordsData } from './types';
 
 /** Tabs on left, with search bar */
 export const SecurityRecordTabs = (props) => {
@@ -30,7 +31,7 @@ export const SecurityRecordTabs = (props) => {
 
   const sorted = sortBy(
     filter(records, (record) => isRecordMatch(record, search)),
-    (record) => record.name,
+    [(record) => record.name],
   );
 
   return (

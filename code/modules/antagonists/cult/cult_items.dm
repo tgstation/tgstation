@@ -25,7 +25,7 @@
 	throwforce = 25
 	block_chance = 25
 	wound_bonus = -10
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	armour_penetration = 35
 	block_sound = 'sound/items/weapons/parry.ogg'
 	///Reference to a boomerang component we add when a non-cultist throws us.
@@ -55,7 +55,7 @@ Striking a noncultist, however, will tear their flesh."}
 	if(owner.get_active_held_item() != src)
 		block_message = "[owner] parries [attack_text] with [src] in their offhand"
 
-	if(IS_CULTIST(owner) && prob(final_block_chance) && attack_type != PROJECTILE_ATTACK)
+	if(IS_CULTIST(owner) && prob(final_block_chance) && attack_type != (PROJECTILE_ATTACK || OVERWHELMING_ATTACK))
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 		owner.visible_message(span_danger("[block_message]"))
 		return TRUE
@@ -101,7 +101,7 @@ Striking a noncultist, however, will tear their flesh."}
 	throwforce = 10
 	block_chance = 50 // now it's officially a cult esword
 	wound_bonus = -50
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	block_sound = 'sound/items/weapons/parry.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
@@ -123,6 +123,9 @@ Striking a noncultist, however, will tear their flesh."}
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/item/melee/cultblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
+
 	if(IS_CULTIST(owner) && prob(final_block_chance))
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
@@ -158,7 +161,7 @@ Striking a noncultist, however, will tear their flesh."}
 	throwforce = 25
 	block_chance = 55
 	wound_bonus = -25
-	bare_wound_bonus = 30
+	exposed_wound_bonus = 30
 	free_use = TRUE
 	light_color = COLOR_HERETIC_GREEN
 	light_range = 3
@@ -219,7 +222,7 @@ Striking a noncultist, however, will tear their flesh."}
 		// Moon
 		PATH_MOON = list(
 			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/projectile/moon_parade),
-			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/moon_smile),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/mind_gate),
 			SWORD_PREFIX = "shimmering",
 		),
 		// Starter
@@ -409,7 +412,7 @@ Striking a noncultist, however, will tear their flesh."}
 	fling_act.Grant(trapped_entity)
 
 	// Set the sword's path for spell selection.
-	heretic_path = heretic_holder.heretic_path
+	heretic_path = heretic_holder.heretic_path.route || PATH_START
 
 	// Copy the objectives to keep for roundend, remove the datum as neither us nor the heretic need it anymore
 	var/list/copied_objectives = heretic_holder.objectives.Copy()
@@ -469,25 +472,23 @@ Striking a noncultist, however, will tear their flesh."}
 
 	// on bound
 	if(bound)
+		remove_filter("unbound_ray", update = FALSE)
 		add_filter("bind_glow", 2, list("type" = "outline", "color" = h_color, "size" = 0.1))
-		remove_filter("unbound_ray")
-		update_filters()
-	// on unbound
-	else
-		// we re-add this every time it's picked up or dropped
-		remove_filter("unbound_ray")
-		add_filter(name = "unbound_ray", priority = 1, params = list(
-			type = "rays",
-			size = 16,
-			color = COLOR_HERETIC_GREEN, // the sickly green of the heretic leaking through
-			density = 16,
-		))
-		// because otherwise the animations stack and it looks ridiculous
-		var/ray_filter = get_filter("unbound_ray")
-		animate(ray_filter, offset = 100, time = 2 MINUTES, loop = -1, flags = ANIMATION_PARALLEL) // Absurdly long animate so nobody notices it hitching when it loops
-		animate(offset = 0, time = 2 MINUTES) // I sure hope duration of animate doesnt have any performance effect
+		return
 
-	update_filters()
+	// on unbound
+	// we re-add this every time it's picked up or dropped
+	remove_filter("bind_glow", update = FALSE)
+	add_filter(name = "unbound_ray", priority = 1, params = list(
+		type = "rays",
+		size = 16,
+		color = COLOR_HERETIC_GREEN, // the sickly green of the heretic leaking through
+		density = 16,
+	))
+	// because otherwise the animations stack and it looks ridiculous
+	var/ray_filter = get_filter("unbound_ray")
+	animate(ray_filter, offset = 100, time = 2 MINUTES, loop = -1, flags = ANIMATION_PARALLEL) // Absurdly long animate so nobody notices it hitching when it loops
+	animate(offset = 0, time = 2 MINUTES) // I sure hope duration of animate doesnt have any performance effect
 
 /obj/item/melee/cultblade/haunted/proc/start_glow_loop()
 	var/filter = get_filter("bind_glow")
@@ -595,8 +596,6 @@ Striking a noncultist, however, will tear their flesh."}
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
-///how many times can the shuttle be cursed?
-#define MAX_SHUTTLE_CURSES 3
 ///if the max number of shuttle curses are used within this duration, the entire cult gets an achievement
 #define SHUTTLE_CURSE_OMFG_TIMESPAN (10 SECONDS)
 
@@ -672,8 +671,6 @@ Striking a noncultist, however, will tear their flesh."}
 					iter_player.client?.give_award(/datum/award/achievement/misc/cult_shuttle_omfg, iter_player)
 
 		qdel(src)
-
-#undef MAX_SHUTTLE_CURSES
 
 #define GATEWAY_TURF_SCAN_RANGE 40
 
@@ -808,65 +805,6 @@ Striking a noncultist, however, will tear their flesh."}
 	playsound(destination, 'sound/effects/phasein.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	playsound(destination, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
-/obj/item/flashlight/flare/culttorch
-	name = "void torch"
-	desc = "Used by veteran cultists to instantly transport items to their needful brethren."
-	w_class = WEIGHT_CLASS_SMALL
-	light_range = 1
-	icon_state = "torch"
-	inhand_icon_state = "torch"
-	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	color = "#ff0000"
-	on_damage = 15
-	slot_flags = null
-	var/charges = 5
-	start_on = TRUE
-
-/obj/item/flashlight/flare/culttorch/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	var/datum/antagonist/cult/cult = user.mind.has_antag_datum(/datum/antagonist/cult)
-	var/datum/team/cult/cult_team = cult?.get_team()
-	if(isnull(cult_team))
-		to_chat(user, span_warning("That doesn't seem to do anything useful."))
-		return ITEM_INTERACT_BLOCKING
-
-	if(!isitem(interacting_with))
-		to_chat(user, span_warning("[src] can only transport items!"))
-		return ITEM_INTERACT_BLOCKING
-
-	var/list/mob/living/cultists = list()
-	for(var/datum/mind/cult_mind as anything in cult_team.members)
-		if(cult_mind == user.mind)
-			continue
-		if(cult_mind.current?.stat != DEAD)
-			cultists |= cult_mind.current
-
-	var/mob/living/cultist_to_receive = tgui_input_list(user, "Who do you wish to call to [src]?", "Followers of the Geometer", (cultists - user))
-	if(QDELETED(src) || loc != user || user.incapacitated)
-		return ITEM_INTERACT_BLOCKING
-	if(isnull(cultist_to_receive))
-		to_chat(user, span_cult_italic("You require a destination!"))
-		return ITEM_INTERACT_BLOCKING
-	if(cultist_to_receive.stat == DEAD)
-		to_chat(user, span_cult_italic("[cultist_to_receive] has died!"))
-		return ITEM_INTERACT_BLOCKING
-	if(!(cultist_to_receive.mind in cult_team.members))
-		to_chat(user, span_cult_italic("[cultist_to_receive] is not a follower of the Geometer!"))
-		return ITEM_INTERACT_BLOCKING
-	if(!isturf(interacting_with.loc))
-		to_chat(user, span_cult_italic("[interacting_with] must be on a surface in order to teleport it!"))
-		return ITEM_INTERACT_BLOCKING
-
-	to_chat(user, span_cult_italic("You ignite [interacting_with] with [src], turning it to ash, \
-		but through the torch's flames you see that [interacting_with] has reached [cultist_to_receive]!"))
-	user.log_message("teleported [interacting_with] to [cultist_to_receive] with [src].", LOG_GAME)
-	cultist_to_receive.put_in_hands(interacting_with)
-	charges--
-	to_chat(user, span_notice("[src] now has [charges] charge\s."))
-	if(charges <= 0)
-		qdel(src)
-	return ITEM_INTERACT_SUCCESS
-
 /obj/item/melee/cultblade/halberd
 	name = "bloody halberd"
 	desc = "A halberd with a volatile axehead made from crystallized blood. It seems linked to its creator. And, admittedly, more of a poleaxe than a halberd."
@@ -940,6 +878,8 @@ Striking a noncultist, however, will tear their flesh."}
 	qdel(src)
 
 /obj/item/melee/cultblade/halberd/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		final_block_chance *= 2
 	if(IS_CULTIST(owner) && prob(final_block_chance))
@@ -1158,45 +1098,44 @@ Striking a noncultist, however, will tear their flesh."}
 	var/illusions = 2
 
 /obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(IS_CULTIST(owner))
-		if(attack_type == PROJECTILE_ATTACK)
-			if(damage_type == BRUTE || damage_type == BURN)
-				if(damage >= 30)
-					var/turf/T = get_turf(owner)
-					T.visible_message(span_warning("The sheer force from [hitby] shatters the mirror shield!"))
-					new /obj/effect/temp_visual/cult/sparks(T)
-					playsound(T, 'sound/effects/glass/glassbr3.ogg', 100)
-					owner.Paralyze(25)
-					qdel(src)
-					return FALSE
-			var/obj/projectile/projectile = hitby
-			if(projectile.reflectable)
-				return FALSE //To avoid reflection chance double-dipping with block chance
-		. = ..()
-		if(.)
-			if(illusions > 0)
-				illusions--
-				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 45 SECONDS)
-				if(prob(60))
-					var/mob/living/simple_animal/hostile/illusion/M = new(owner.loc)
-					M.faction = list(FACTION_CULT)
-					M.Copy_Parent(owner, 70, 10, 5)
-					M.move_to_delay = owner.cached_multiplicative_slowdown
-				else
-					var/mob/living/simple_animal/hostile/illusion/escape/E = new(owner.loc)
-					E.Copy_Parent(owner, 70, 10)
-					E.GiveTarget(owner)
-					E.Goto(owner, owner.cached_multiplicative_slowdown, E.minimum_distance)
-			return TRUE
-	else
+	if(!IS_CULTIST(owner))
 		if(prob(50))
-			var/mob/living/simple_animal/hostile/illusion/H = new(owner.loc)
-			H.Copy_Parent(owner, 100, 20, 5)
-			H.faction = list(FACTION_CULT)
-			H.GiveTarget(owner)
-			H.move_to_delay = owner.cached_multiplicative_slowdown
-			to_chat(owner, span_danger("<b>[src] betrays you!</b>"))
+			var/mob/living/basic/illusion/bizarro = new(owner.loc)
+			bizarro.full_setup(owner, target_mob = owner, faction = list(FACTION_CULT), life = 10 SECONDS, damage = 20, replicate = 5)
+
+			to_chat(owner, span_bolddanger("You're betrayed by \"yourself\"!"))
 		return FALSE
+
+	if(attack_type == PROJECTILE_ATTACK)
+		if(damage_type == BRUTE || damage_type == BURN)
+			if(damage >= 30)
+				var/turf/T = get_turf(owner)
+				T.visible_message(span_warning("The sheer force from [hitby] shatters the mirror shield!"))
+				new /obj/effect/temp_visual/cult/sparks(T)
+				playsound(T, 'sound/effects/glass/glassbr3.ogg', 100)
+				owner.Paralyze(25)
+				qdel(src)
+				return FALSE
+		var/obj/projectile/projectile = hitby
+		if(projectile.reflectable)
+			return FALSE //To avoid reflection chance double-dipping with block chance
+
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(illusions > 0)
+		illusions--
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 45 SECONDS)
+		if(prob(60)) // make a potentially slower, but replicable apparation
+			var/mob/living/basic/illusion/apparation = new(owner.loc)
+			apparation.full_setup(owner, target_mob = null, faction = list(FACTION_CULT), life = 7 SECONDS, damage = 10, replicate = 5)
+			apparation.cached_multiplicative_slowdown = owner.cached_multiplicative_slowdown
+		else // normal apparation designed to escape
+			var/mob/living/basic/illusion/escape/decoy = new(owner.loc)
+			decoy.full_setup(owner, target_mob = owner, faction = list(FACTION_CULT), life = 7 SECONDS, damage = 10) // Damage for retaliation
+	return TRUE
+
 
 /obj/item/shield/mirror/proc/readd()
 	illusions++

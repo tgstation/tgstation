@@ -24,6 +24,7 @@
 	return list(
 		interaction_mode = MODE_STAMPING,
 		stamp_icon_state = icon_state,
+		stamp_icon = icon,
 		stamp_class = sheet.icon_class_name(icon_state)
 	)
 

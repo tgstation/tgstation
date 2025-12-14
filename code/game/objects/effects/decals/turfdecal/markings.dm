@@ -219,6 +219,9 @@
 	icon_state = "synd3,3"
 
 
+/obj/effect/turf_decal/roroco
+	icon_state = "roroco"
+
 /obj/effect/turf_decal/mining
 	icon_state = "mining"
 

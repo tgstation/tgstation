@@ -14,16 +14,17 @@
 	var/list/data = list()
 	var/list/vending_list = list()
 	var/id_increment = 1
-	for(var/obj/machinery/vending/vendor as anything in GLOB.vending_machines_to_restock)
-		var/stock = vendor.total_loaded_stock()
-		var/max_stock = vendor.total_max_stock()
-		if((max_stock == 0 || (stock >= max_stock)) && vendor.credits_contained == 0)
+	for(var/obj/machinery/vending/vendor as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/vending))
+		if(vendor.all_products_free)
+			continue
+		var/list/total_legal_stock = vendor.total_stock(contrabrand = FALSE)
+		if((!total_legal_stock[2] || (total_legal_stock[1] >= total_legal_stock[2])) && !vendor.credits_contained)
 			continue
 		vending_list += list(list(
 			"name" = vendor.name,
 			"location" = get_area_name(vendor),
 			"credits" = vendor.credits_contained,
-			"percentage" = (stock / max_stock) * 100,
+			"percentage" = (total_legal_stock[1] / total_legal_stock[2]) * 100,
 			"id" = id_increment,
 		))
 		id_increment++

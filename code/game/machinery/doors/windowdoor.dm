@@ -119,20 +119,24 @@
 	switch(dir)
 		if(NORTH,SOUTH)
 			if(unres_sides & NORTH)
-				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n")
+				var/mutable_appearance/side_overlay = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_1", FLOAT_LAYER, src, O_LIGHTING_VISUAL_PLANE, appearance_flags = RESET_COLOR | KEEP_APART)
+				side_overlay.color = LIGHT_COLOR_DEFAULT
 				side_overlay.pixel_z = dir == NORTH ? 31 : 6
 				. += side_overlay
 			if(unres_sides & SOUTH)
-				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s")
+				var/mutable_appearance/side_overlay = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_2", FLOAT_LAYER, src, O_LIGHTING_VISUAL_PLANE, appearance_flags = RESET_COLOR | KEEP_APART)
+				side_overlay.color = LIGHT_COLOR_DEFAULT
 				side_overlay.pixel_z = dir == NORTH ? -6 : -31
 				. += side_overlay
 		if(EAST,WEST)
 			if(unres_sides & EAST)
-				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e")
+				var/mutable_appearance/side_overlay = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_4", FLOAT_LAYER, src, O_LIGHTING_VISUAL_PLANE, appearance_flags = RESET_COLOR | KEEP_APART)
+				side_overlay.color = LIGHT_COLOR_DEFAULT
 				side_overlay.pixel_w = dir == EAST ? 31 : 6
 				. += side_overlay
 			if(unres_sides & WEST)
-				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
+				var/mutable_appearance/side_overlay = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_8", FLOAT_LAYER, src, O_LIGHTING_VISUAL_PLANE, appearance_flags = RESET_COLOR | KEEP_APART)
+				side_overlay.color = LIGHT_COLOR_DEFAULT
 				side_overlay.pixel_w = dir == EAST ? -6 : -31
 				. += side_overlay
 
@@ -252,7 +256,6 @@
 	var/open_delay = animation_segment_delay(DOOR_OPENING_FINISHED) - passable_delay
 	sleep(open_delay)
 	air_update_turf(TRUE, FALSE)
-	update_freelook_sight()
 
 	if(operating == 1) //emag again
 		operating = FALSE
@@ -295,7 +298,6 @@
 	sleep(unpassable_delay)
 	set_density(TRUE)
 	air_update_turf(TRUE, TRUE)
-	update_freelook_sight()
 	var/close_delay = animation_segment_delay(DOOR_CLOSING_FINISHED) - unpassable_delay
 	sleep(close_delay)
 
@@ -460,6 +462,13 @@
 	return ..()
 
 /obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user, forced = FALSE)
+	if(istype(I, /obj/item/crowbar/power))
+		var/obj/item/crowbar/power/power_tool = I
+		if(power_tool.limit_jaws_access && forced)
+			playsound(src.loc, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
+			user.balloon_alert(user, "cannot pry open!")
+			return
+
 	if(!hasPower() || forced)
 		if(density)
 			open(BYPASS_DOOR_CHECKS)
@@ -525,3 +534,38 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holding
 /obj/machinery/door/window/brigdoor/security/holding/right
 	icon_state = "rightsecure"
 	base_state = "rightsecure"
+
+/*
+ * Subtype used in unit tests to ensure instant windoor open/close
+*/
+/obj/machinery/door/window/instant
+
+/obj/machinery/door/window/instant/open(forced = DEFAULT_DOOR_CHECKS)
+	if(!density || operating || !try_to_force_door_open(forced))
+		return FALSE
+
+	operating = TRUE
+
+	set_density(FALSE)
+	set_opacity(FALSE)
+	air_update_turf(TRUE, FALSE)
+
+	operating = FALSE
+	update_appearance()
+
+	return TRUE
+
+/obj/machinery/door/window/instant/close(forced = DEFAULT_DOOR_CHECKS)
+	if(density || operating || !try_to_force_door_shut(forced))
+		return FALSE
+
+	operating = TRUE
+
+	set_density(TRUE)
+	set_opacity(TRUE)
+	air_update_turf(TRUE, TRUE)
+
+	operating = FALSE
+	update_appearance()
+
+	return TRUE

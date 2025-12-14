@@ -65,7 +65,7 @@
 	if(honor && (potential_deacon in honor.guilty))
 		honor.guilty -= potential_deacon
 	to_chat(user, span_notice("[GLOB.deity] has bound [potential_deacon] to the code! They are now a holy role! (albeit the lowest level of such)"))
-	potential_deacon.mind.holy_role = HOLY_ROLE_DEACON
+	potential_deacon.mind.set_holy_role(HOLY_ROLE_DEACON)
 	GLOB.religious_sect.on_conversion(potential_deacon)
 	playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
 	return TRUE

@@ -70,8 +70,7 @@
 "dC" = (
 /obj/structure/sign/warning/fire/directional/north,
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/plasma_input{
-	dir = 4;
-	chamber_id = "lizardgaslava"
+	dir = 4
 	},
 /turf/open/floor/engine/plasma{
 	initial_gas_mix = "plasma=30000;TEMP=293.15"
@@ -134,8 +133,7 @@
 /area/ruin/thelizardsgas_lavaland)
 "fO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output{
-	dir = 8;
-	chamber_id = "lizardgaslava"
+	dir = 8
 	},
 /turf/open/floor/engine/plasma{
 	initial_gas_mix = "plasma=30000;TEMP=293.15"
@@ -401,8 +399,7 @@
 "rv" = (
 /obj/structure/sign/warning/fire/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output{
-	dir = 8;
-	chamber_id = "lizardgaslava"
+	dir = 8
 	},
 /turf/open/floor/engine/plasma{
 	initial_gas_mix = "plasma=30000;TEMP=293.15"
@@ -649,8 +646,7 @@
 /area/ruin/thelizardsgas_lavaland)
 "BU" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/plasma_input{
-	dir = 4;
-	chamber_id = "lizardgaslava"
+	dir = 4
 	},
 /turf/open/floor/engine/plasma{
 	initial_gas_mix = "plasma=30000;TEMP=293.15"
@@ -882,8 +878,7 @@
 /area/ruin/thelizardsgas_lavaland)
 "JK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output{
-	dir = 8;
-	chamber_id = "lizardgaslava"
+	dir = 8
 	},
 /obj/item/toy/plush/lizard_plushie/space/green{
 	desc = "A famous lizard, in plushy form.";

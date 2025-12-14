@@ -66,12 +66,13 @@
 		BB_TIME_TO_GIVE_UP_ON_VENT_PATHING = 30 SECONDS,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 
 	// We understand that vents are nice little hidey holes through epigenetic inheritance, so we'll use them.
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/target_retaliate/to_flee,
 		/datum/ai_planning_subtree/flee_target/from_flee_key,
 		/datum/ai_planning_subtree/opportunistic_ventcrawler,

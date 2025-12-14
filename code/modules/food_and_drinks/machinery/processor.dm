@@ -72,7 +72,7 @@
 			var/atom/processed_food = new recipe.output(drop_location())
 			if(processed_food.reagents && what.reagents)
 				processed_food.reagents.clear_reagents()
-				what.reagents.copy_to(processed_food, what.reagents.total_volume, multiplier = 1 / cached_multiplier)
+				what.reagents.trans_to(processed_food, what.reagents.total_volume, multiplier = 1 / cached_multiplier, copy_only = TRUE)
 			if(cached_mats)
 				processed_food.set_custom_materials(cached_mats, 1 / cached_multiplier)
 
@@ -201,6 +201,10 @@
 	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
 	circuit = /obj/item/circuitboard/machine/processor/slime
 
+/obj/machinery/processor/slime/fullupgrade //fully ugpraded stock parts
+	desc = "An industrial grinder with a sticker saying appropiated for bioterrorism department. keep hands clear of intake while operating."
+	circuit = /obj/item/circuitboard/machine/processor/slime/fullupgrade
+
 /obj/machinery/processor/slime/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/usb_port, list(
@@ -228,7 +232,7 @@
 	/// We pick up a number of slimes equal to the rating of the matter bin
 	var/slimes_picked = 0
 	for(var/mob/living/basic/slime/slime in range(1,src))
-		if(!CanReach(slime)) //don't take slimes behind glass panes or somesuch; also makes it ignore slimes inside the processor
+		if(!slime.IsReachableBy(src)) //don't take slimes behind glass panes or somesuch; also makes it ignore slimes inside the processor
 			continue
 		if(slime.stat)
 			var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(slime)

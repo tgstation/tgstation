@@ -106,9 +106,6 @@
 	if(state != FRAME_COMPUTER_STATE_EMPTY)
 		balloon_alert(user, "circuit already installed!")
 		return FALSE
-	if(!anchored && istype(board))
-		balloon_alert(user, "frame must be anchored!")
-		return FALSE
 	. = ..()
 	if(. && !by_hand) // Installing via RPED auto-secures it
 		state = FRAME_COMPUTER_STATE_BOARD_SECURED
@@ -124,7 +121,7 @@
 
 			if(add_cabling(user, cable, time = 0))
 				if(!no_sound)
-					replacer.play_rped_sound()
+					replacer.play_rped_effect()
 					no_sound = TRUE
 				return install_parts_from_part_replacer(user, replacer, no_sound = no_sound)  // Recursive call to handle the next part
 
@@ -137,7 +134,7 @@
 
 			if(add_glass(user, glass_sheets, time = 0))
 				if(!no_sound)
-					replacer.play_rped_sound()
+					replacer.play_rped_effect()
 				return TRUE
 
 			return FALSE
@@ -194,8 +191,6 @@
 		if(FRAME_COMPUTER_STATE_GLASSED)
 			if(finalize_construction(user, tool))
 				return ITEM_INTERACT_SUCCESS
-
-			balloon_alert(user, "missing components!")
 			return ITEM_INTERACT_BLOCKING
 
 /obj/structure/frame/computer/crowbar_act(mob/living/user, obj/item/tool)
@@ -295,6 +290,10 @@
 	return TRUE
 
 /obj/structure/frame/computer/finalize_construction(mob/living/user, obj/item/tool)
+	if(!anchored)
+		balloon_alert(user, "frame must be anchored!")
+		return FALSE
+
 	tool.play_tool_sound(src)
 	var/obj/machinery/new_machine = new circuit.build_path(loc)
 	new_machine.balloon_alert(user, "monitor connected")

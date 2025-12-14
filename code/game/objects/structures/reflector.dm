@@ -292,6 +292,7 @@
 		return
 	if(!can_rotate)
 		user.balloon_alert(user, "can't rotate!")
+		ui?.close()
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)

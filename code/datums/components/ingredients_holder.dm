@@ -45,7 +45,6 @@
 	if (!atom_parent.reagents && !replacement)
 		return COMPONENT_INCOMPATIBLE
 
-	atom_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 	src.replacement = replacement
 	src.fill_type = fill_type
@@ -59,7 +58,7 @@
 	ingredient_names = processed_holder.ingredient_names
 	custom_name = processed_holder.custom_name
 	atom_parent.name = "[custom_adjective()] [custom_name] [atom_parent.name]"
-	for(var/fillcol as anything in processed_holder.filling_colors)
+	for(var/fillcol in processed_holder.filling_colors)
 		apply_fill(fillcol)
 
 /datum/component/ingredients_holder/Destroy(force)
@@ -67,7 +66,8 @@
 	return ..()
 
 /datum/component/ingredients_holder/RegisterWithParent()
-	. = ..()
+	var/atom/atom_parent = parent
+	atom_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(customizable_attack))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(food_exited))
@@ -76,7 +76,6 @@
 	ADD_TRAIT(parent, TRAIT_INGREDIENTS_HOLDER, INNATE_TRAIT)
 
 /datum/component/ingredients_holder/UnregisterFromParent()
-	. = ..()
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACKBY,
 		COMSIG_ATOM_EXAMINE,
@@ -205,9 +204,9 @@
 		ingredient.forceMove(replacement_parent)
 		replacement = null
 		replacement_parent.TakeComponent(src)
-		atom_parent = parent
-		handle_reagents(atom_parent)
+		handle_reagents(parent)
 		qdel(atom_parent)
+		atom_parent = parent
 
 	handle_reagents(ingredient)
 

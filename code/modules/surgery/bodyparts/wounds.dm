@@ -1,5 +1,5 @@
 /// Allows us to roll for and apply a wound without actually dealing damage. Used for aggregate wounding power with pellet clouds
-/obj/item/bodypart/proc/painless_wound_roll(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, sharpness=NONE, wound_clothing)
+/obj/item/bodypart/proc/painless_wound_roll(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus, sharpness=NONE, wound_clothing)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(!owner || wounding_dmg <= WOUND_MINIMUM_DAMAGE || wound_bonus == CANT_WOUND || HAS_TRAIT(owner, TRAIT_GODMODE))
@@ -32,9 +32,9 @@
 			if(wounding_type == WOUND_PIERCE && !easy_dismember)
 				wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
 			wounding_type = WOUND_BLUNT
-		if ((dismemberable_by_wound() || dismemberable_by_total_damage()) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+		if ((dismemberable_by_wound() || dismemberable_by_total_damage()) && try_dismember(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus))
 			return
-	return check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, wound_clothing)
+	return check_wounding(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus, wound_clothing)
 
 /**
  * check_wounding() is where we handle rolling for, selecting, and applying a wound if we meet the criteria
@@ -46,26 +46,32 @@
  * * woundtype- Either WOUND_BLUNT, WOUND_SLASH, WOUND_PIERCE, or WOUND_BURN based on the attack type.
  * * damage- How much damage is tied to this attack, since wounding potential scales with damage in an attack (see: WOUND_DAMAGE_EXPONENT)
  * * wound_bonus- The wound_bonus of an attack
- * * bare_wound_bonus- The bare_wound_bonus of an attack
+ * * exposed_wound_bonus- The exposed_wound_bonus of an attack
  * * wound_clothing- If this should damage clothing.
  */
-/obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, bare_wound_bonus, attack_direction, damage_source, wound_clothing)
+/obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, exposed_wound_bonus, attack_direction, damage_source, wound_clothing)
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/datum/wound)
 
-	if(HAS_TRAIT(owner, TRAIT_NEVER_WOUNDED) || HAS_TRAIT(owner, TRAIT_GODMODE))
+	if(!is_woundable())
 		return
 
 	// note that these are fed into an exponent, so these are magnified
 	var/easily_wounded = HAS_TRAIT(owner, TRAIT_EASILY_WOUNDED)
 	var/hardly_wounded = HAS_TRAIT(owner, TRAIT_HARDLY_WOUNDED)
+	var/considered_damage_cap = WOUND_MAX_CONSIDERED_DAMAGE
 	if(easily_wounded && !hardly_wounded)
-		damage *= 1.5
-	else
-		damage = min(damage, WOUND_MAX_CONSIDERED_DAMAGE)
+		considered_damage_cap *= 1.5
+	else if(hardly_wounded && !easily_wounded)
+		considered_damage_cap /= 2
 
-	if(hardly_wounded && !easily_wounded)
-		damage *= 0.85
+	if(HAS_TRAIT(owner, TRAIT_BLOODY_MESS))
+		if(easily_wounded && !hardly_wounded) //Super sucks to be you.
+			damage *= 1.5
+		else if(hardly_wounded && !easily_wounded)
+			damage *= 0.5
+	else
+		damage = min(damage, considered_damage_cap)
 
 	if(HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) && !HAS_TRAIT(owner, TRAIT_NODISMEMBER))
 		damage *= 1.1
@@ -75,7 +81,7 @@
 
 	var/base_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))
 	var/injury_roll = base_roll
-	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus, wound_clothing)
+	injury_roll = check_woundings_mods(woundtype, injury_roll, damage, wound_bonus, exposed_wound_bonus, wound_clothing)
 	var/list/series_wounding_mods = check_series_wounding_mods()
 
 	if(injury_roll > WOUND_DISMEMBER_OUTRIGHT_THRESH && prob(get_damage() / max_damage * 100) && can_dismember())
@@ -84,73 +90,49 @@
 		return
 
 	var/list/datum/wound/possible_wounds = list()
-	for (var/datum/wound/type as anything in GLOB.all_wound_pregen_data)
-		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[type]
-		if (pregen_data.can_be_applied_to(src, list(woundtype), random_roll = TRUE))
-			possible_wounds[type] = pregen_data.get_weight(src, woundtype, damage, attack_direction, damage_source)
-	// quick re-check to see if bare_wound_bonus applies, for the benefit of log_wound(), see about getting the check from check_woundings_mods() somehow
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_wearer = owner
-		var/list/clothing = human_wearer.get_clothing_on_part(src)
-		for(var/obj/item/clothing/clothes_check as anything in clothing)
-			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
-			if(clothes_check.get_armor_rating(WOUND))
-				bare_wound_bonus = 0
-				break
-
-	for (var/datum/wound/iterated_path as anything in possible_wounds)
-		for (var/datum/wound/existing_wound as anything in wounds)
-			if (iterated_path == existing_wound.type)
-				possible_wounds -= iterated_path
-				break // breaks out of the nested loop
-
-		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[iterated_path]
-		var/specific_injury_roll = (injury_roll + series_wounding_mods[pregen_data.wound_series])
-		if (pregen_data.get_threshold_for(src, attack_direction, damage_source) > specific_injury_roll)
-			possible_wounds -= iterated_path
+	for (var/datum/wound/wound_type as anything in GLOB.all_wound_pregen_data)
+		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
+		if (!pregen_data.compete_for_wounding)
 			continue
 
-		if (pregen_data.compete_for_wounding)
-			for (var/datum/wound/other_path as anything in possible_wounds)
-				if (other_path == iterated_path)
-					continue
-				if (initial(iterated_path.severity) == initial(other_path.severity) && pregen_data.overpower_wounds_of_even_severity)
+		var/specific_injury_roll = (injury_roll + series_wounding_mods[pregen_data.wound_series])
+		if (pregen_data.get_threshold_for(src, attack_direction, damage_source) > specific_injury_roll)
+			continue
+
+		if (pregen_data.can_be_applied_to(src, woundtype, random_roll = TRUE))
+			possible_wounds[wound_type] = pregen_data.get_weight(src, woundtype, damage, attack_direction, damage_source)
+
+	for (var/datum/wound/wound_type as anything in possible_wounds)
+		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
+		for (var/datum/wound/other_path as anything in (possible_wounds - wound_type))
+
+			if (pregen_data.competition_mode == WOUND_COMPETITION_OVERPOWER_LESSERS)
+				if (initial(wound_type.severity) > initial(other_path.severity))
 					possible_wounds -= other_path
-					continue
-				else if (pregen_data.competition_mode == WOUND_COMPETITION_OVERPOWER_LESSERS)
-					if (initial(iterated_path.severity) > initial(other_path.severity))
-						possible_wounds -= other_path
-						continue
-				else if (pregen_data.competition_mode == WOUND_COMPETITION_OVERPOWER_GREATERS)
-					if (initial(iterated_path.severity) < initial(other_path.severity))
-						possible_wounds -= other_path
-						continue
+			else if (pregen_data.competition_mode == WOUND_COMPETITION_OVERPOWER_GREATERS)
+				if (initial(wound_type.severity) < initial(other_path.severity))
+					possible_wounds -= other_path
 
-	while (TRUE)
-		var/datum/wound/possible_wound = pick_weight(possible_wounds)
-		if (isnull(possible_wound))
-			break
+	if (!length(possible_wounds))
+		return
 
-		possible_wounds -= possible_wound
-		var/datum/wound_pregen_data/possible_pregen_data = GLOB.all_wound_pregen_data[possible_wound]
+	var/datum/wound/possible_wound = pick_weight(possible_wounds)
+	var/datum/wound_pregen_data/possible_pregen_data = GLOB.all_wound_pregen_data[possible_wound]
+	var/datum/wound/replaced_wound = null
+	for(var/datum/wound/existing_wound as anything in wounds)
+		var/datum/wound_pregen_data/existing_pregen_data = GLOB.all_wound_pregen_data[existing_wound.type]
+		if(existing_pregen_data.wound_series == possible_pregen_data.wound_series)
+			if(existing_wound.severity >= initial(possible_wound.severity))
+				continue
+			replaced_wound = existing_wound
 
-		var/datum/wound/replaced_wound
-		for(var/datum/wound/existing_wound as anything in wounds)
-			var/datum/wound_pregen_data/existing_pregen_data = GLOB.all_wound_pregen_data[existing_wound.type]
-			if(existing_pregen_data.wound_series == possible_pregen_data.wound_series)
-				if(existing_wound.severity >= initial(possible_wound.severity))
-					continue
-				else
-					replaced_wound = existing_wound
-			// if we get through this whole loop without continuing, we found our winner
-
-		var/datum/wound/new_wound = new possible_wound
-		if(replaced_wound)
-			new_wound = replaced_wound.replace_wound(new_wound, attack_direction = attack_direction)
-		else
-			new_wound.apply_wound(src, attack_direction = attack_direction, wound_source = damage_source)
-		log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll) // dismembering wounds are logged in the apply_wound() for loss wounds since they delete themselves immediately, these will be immediately returned
-		return new_wound
+	var/datum/wound/new_wound = new possible_wound
+	if(replaced_wound)
+		new_wound = replaced_wound.replace_wound(new_wound, attack_direction = attack_direction)
+	else
+		new_wound.apply_wound(src, attack_direction = attack_direction, wound_source = damage_source)
+	log_wound(owner, new_wound, damage, wound_bonus, exposed_wound_bonus, base_roll) // dismembering wounds are logged in the apply_wound() for loss wounds since they delete themselves immediately, these will be immediately returned
+	return new_wound
 
 // try forcing a specific wound, but only if there isn't already a wound of that severity or greater for that type on this bodypart
 /obj/item/bodypart/proc/force_wound_upwards(datum/wound/potential_wound, smited = FALSE, wound_source)
@@ -191,11 +173,7 @@
 	if (isnull(limb))
 		limb = pick(bodyparts)
 
-	var/list/type_list = wounding_type
-	if (!islist(type_list))
-		type_list = list(type_list)
-
-	var/datum/wound/corresponding_typepath = get_corresponding_wound_type(type_list, limb, min_severity, max_severity, severity_pick_mode)
+	var/datum/wound/corresponding_typepath = get_corresponding_wound_type(wounding_type, limb, min_severity, max_severity, severity_pick_mode)
 	if (corresponding_typepath)
 		return limb.force_wound_upwards(corresponding_typepath, wound_source = wound_source)
 
@@ -222,11 +200,7 @@
  * return_value_if_no_wound if no wound is found - if one IS found, the wound threshold for that wound.
  */
 /obj/item/bodypart/proc/get_wound_threshold_of_wound_type(wounding_type, severity, return_value_if_no_wound, wound_source)
-	var/list/type_list = wounding_type
-	if (!islist(type_list))
-		type_list = list(type_list)
-
-	var/datum/wound/wound_path = get_corresponding_wound_type(type_list, src, severity, duplicates_allowed = TRUE, care_about_existing_wounds = FALSE)
+	var/datum/wound/wound_path = get_corresponding_wound_type(wounding_type, src, severity, duplicates_allowed = TRUE, care_about_existing_wounds = FALSE)
 	if (wound_path)
 		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_path]
 		return pregen_data.get_threshold_for(src, damage_source = wound_source)
@@ -236,18 +210,19 @@
 /**
  * check_wounding_mods() is where we handle the various modifiers of a wound roll
  *
- * A short list of things we consider: any armor a human target may be wearing, and if they have no wound armor on the limb, if we have a bare_wound_bonus to apply, plus the plain wound_bonus
+ * A short list of things we consider: any armor a human target may be wearing, and if they have no wound armor on the limb, and add the plain wound_bonus if there is any value to add
  * We also flick through all of the wounds we currently have on this limb and add their threshold penalties, so that having lots of bad wounds makes you more liable to get hurt worse
- * Lastly, we add the inherent wound_resistance variable the bodypart has (heads and chests are slightly harder to wound), and a small bonus if the limb is already disabled
+ * We add the inherent wound_resistance variable the bodypart has (heads and chests are slightly harder to wound) as an armor bonus unless the limb is mangled, and a small wound bonus if the limb is already disabled
+ * Once we have everything, we then check if we have acquired any armor. If so, reduce our value by the percentage value of that armour. If not, we add our exposed_wound_bonus as a final bonus to our roll.
  *
  * Arguments:
- * * It's the same ones on [/obj/item/bodypart/proc/receive_damage]
+ * * It's the same ones on [/obj/item/bodypart/proc/receive_damage] except injury_roll, which is fed to this proc.
  */
-/obj/item/bodypart/proc/check_woundings_mods(wounding_type, damage, wound_bonus, bare_wound_bonus, wound_clothing)
+/obj/item/bodypart/proc/check_woundings_mods(wounding_type, injury_roll, damage, wound_bonus, exposed_wound_bonus, wound_clothing)
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/armor_ablation = 0
-	var/injury_mod = 0
+	var/injury_mod = injury_roll
 
 	if(owner && ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
@@ -262,20 +237,21 @@
 				else if(wounding_type == WOUND_BURN)
 					clothes.take_damage_zone(body_zone, damage, BURN)
 
-		if(!armor_ablation)
-			injury_mod += bare_wound_bonus
-
-	injury_mod -= armor_ablation
 	injury_mod += wound_bonus
 
 	for(var/datum/wound/wound as anything in wounds)
 		injury_mod += wound.threshold_penalty
 
-	var/part_mod = -wound_resistance
-	if(get_damage() >= max_damage)
-		part_mod += disabled_wound_penalty
+	if(!get_mangled_state())
+		armor_ablation += wound_resistance
 
-	injury_mod += part_mod
+	if(get_damage() >= max_damage)
+		injury_mod += disabled_wound_penalty
+
+	if(!armor_ablation)
+		injury_mod += exposed_wound_bonus
+	else
+		injury_mod *= ((100 - armor_ablation) /100)
 
 	return injury_mod
 

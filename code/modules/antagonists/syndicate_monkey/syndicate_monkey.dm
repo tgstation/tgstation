@@ -4,7 +4,7 @@
 	show_in_roundend = TRUE
 	show_in_antagpanel = TRUE
 	show_name_in_check_antagonists = TRUE
-	count_against_dynamic_roll_chance = FALSE
+	antag_flags = ANTAG_SKIP_GLOBAL_LIST
 	show_to_ghosts = TRUE
 	/// The antagonist's master, used for objective
 	var/mob/living/monky_master
@@ -27,7 +27,7 @@
 	var/mob/living/monky_master
 
 /datum/objective/syndicate_monkey/check_completion()
-	return monky_master.stat != DEAD
+	return monky_master && monky_master.stat != DEAD
 
 /datum/antagonist/syndicate_monkey/forge_objectives(mob/monky_master)
 	var/datum/objective/syndicate_monkey/objective = new

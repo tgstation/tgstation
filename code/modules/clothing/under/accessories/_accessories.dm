@@ -15,6 +15,7 @@
 	worn_icon = 'icons/mob/clothing/accessories.dmi'
 	icon_state = "plasma"
 	inhand_icon_state = "" //no inhands
+	abstract_type = /obj/item/clothing/accessory
 	slot_flags = NONE
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NOBLUDGEON
@@ -111,6 +112,10 @@
 /obj/item/clothing/accessory/proc/successful_attach(obj/item/clothing/under/attached_to)
 	SHOULD_CALL_PARENT(TRUE)
 
+	if(!attached_to.accessory_overlay)
+		attached_to.accessory_overlay = mutable_appearance()
+	attached_to.accessory_overlay.overlays += generate_accessory_overlay(attached_to) //uniform appearance will be updated by the caller
+
 	// Do on-equip effects if we're already equipped
 	var/mob/worn_on = attached_to.loc
 	if(istype(worn_on))
@@ -118,6 +123,13 @@
 
 	SEND_SIGNAL(src, COMSIG_ACCESSORY_ATTACHED, attached_to)
 	SEND_SIGNAL(attached_to, COMSIG_CLOTHING_ACCESSORY_ATTACHED, src)
+
+/obj/item/clothing/accessory/proc/generate_accessory_overlay(obj/item/clothing/under/attached_to)
+	SHOULD_CALL_PARENT(TRUE)
+	var/mutable_appearance/appearance = mutable_appearance(worn_icon, icon_state)
+	appearance.alpha = alpha
+	appearance.color = color
+	return appearance
 
 /**
  * Detach this accessory from the passed clothing article

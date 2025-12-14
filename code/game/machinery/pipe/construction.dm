@@ -271,7 +271,7 @@ Buildable meters
 
 	wrench.play_tool_sound(src)
 	user.visible_message( \
-		"[user] fastens \the [src].", \
+		span_notice("[user] fastens \the [src]."), \
 		span_notice("You fasten \the [src]."), \
 		span_hear("You hear ratcheting."))
 
@@ -393,7 +393,7 @@ Buildable meters
 			if(prob(20))
 				C.spew_organ()
 			sleep(0.5 SECONDS)
-		C.blood_volume = 0
+		C.set_blood_volume(0)
 	return(OXYLOSS|BRUTELOSS)
 
 /obj/item/pipe/examine(mob/user)

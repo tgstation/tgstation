@@ -102,7 +102,7 @@
 	var/dunk_pixel_w = ((dunk_dir & EAST) && 16) || ((dunk_dir & WEST) && -16) || 0
 
 	animate(baller, pixel_w = dunk_pixel_w, pixel_z = dunk_pixel_z, time = 0.5 SECONDS, easing = BOUNCE_EASING|EASE_IN|EASE_OUT, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
-	animate(pixel_w = -dunk_pixel_w, pixel_z = -dunk_pixel_z, time = 0.5 SECONDS, flags = ANIMATION_PARALLEL)
+	animate(pixel_w = -dunk_pixel_w, pixel_z = -dunk_pixel_z, time = 0.5 SECONDS, flags = ANIMATION_RELATIVE)
 
 	visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
 	baller.add_mood_event("basketball", /datum/mood_event/basketball_dunk)
@@ -148,13 +148,16 @@
 	var/click_on_hoop = TRUE
 	var/mob/living/thrower = throwingdatum?.get_thrower()
 
+	if(!istype(thrower))
+		return
+
 	// aim penalty for not clicking directly on the hoop when shooting
 	if(!istype(backboard) || backboard != src)
 		click_on_hoop = FALSE
 		score_chance *= 0.5
 
 	// aim penalty for spinning while shooting
-	if(istype(thrower) && HAS_TRAIT(thrower, TRAIT_SPINNING))
+	if(HAS_TRAIT(thrower, TRAIT_SPINNING))
 		score_chance *= 0.5
 
 	if(prob(score_chance))

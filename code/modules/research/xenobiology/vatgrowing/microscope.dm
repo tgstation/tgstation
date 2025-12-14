@@ -120,10 +120,13 @@
 	balloon_alert(user, "dish removed")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/obj/structure/microscope/unanchored
+	anchored = FALSE
+
 /datum/crafting_recipe/microscope
 	name = "Microscope"
 	result = /obj/structure/microscope
-	time = 30
+	time = 3 SECONDS
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	reqs = list(
 		/obj/item/stack/sheet/glass = 1,

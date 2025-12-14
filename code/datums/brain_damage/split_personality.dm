@@ -182,7 +182,7 @@
 	to_chat(src, span_warning("You cannot speak, your other self is controlling your body!"))
 	return FALSE
 
-/mob/living/split_personality/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE)
+/mob/living/split_personality/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE, forced = FALSE)
 	return FALSE
 
 ///////////////BRAINWASHING////////////////////
@@ -283,11 +283,15 @@
 		header = "Bro I'm not even drunk right now",
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 	)
+	var/datum/status_effect/inebriated/inebriation = owner.has_status_effect(/datum/status_effect/inebriated)
+	inebriation?.iron_liver = TRUE
 
 /datum/brain_trauma/severe/split_personality/blackout/on_lose()
 	. = ..()
 	owner.add_mood_event("hang_over", /datum/mood_event/hang_over)
 	UnregisterSignal(owner, COMSIG_ATOM_SPLASHED)
+	var/datum/status_effect/inebriated/inebriation = owner.has_status_effect(/datum/status_effect/inebriated)
+	inebriation?.iron_liver = FALSE
 
 /datum/brain_trauma/severe/split_personality/blackout/proc/on_splashed()
 	SIGNAL_HANDLER

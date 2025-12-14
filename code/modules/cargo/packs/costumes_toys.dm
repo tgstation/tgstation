@@ -190,7 +190,7 @@
 		if(prob(50))
 			the_toy = pick_weight(GLOB.arcade_prize_pool)
 		else
-			the_toy = pick(subtypesof(/obj/item/toy/plush))
+			the_toy = /obj/effect/spawner/random/entertainment/plushie_delux
 		new the_toy(C)
 
 /datum/supply_pack/costumes_toys/wizard

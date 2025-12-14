@@ -559,7 +559,6 @@
 	trait_to_give = STATION_TRAIT_RADIOACTIVE_NEBULA
 
 	blacklist = list(/datum/station_trait/random_event_weight_modifier/rad_storms)
-	threat_reduction = 30
 	dynamic_threat_id = "Radioactive Nebula"
 
 	intensity_increment_time = 5 MINUTES

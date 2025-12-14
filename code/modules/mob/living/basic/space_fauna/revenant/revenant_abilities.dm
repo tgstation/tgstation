@@ -192,7 +192,7 @@
 		if(window.fulltile)
 			new /obj/effect/temp_visual/revenant/cracks(window.loc)
 	for(var/obj/machinery/light/light in victim)
-		light.flicker(20) //spooky
+		light.flicker(rand(3, 5)) //spooky
 
 //Malfunction: Makes bad stuff happen to robots and machines.
 /datum/action/cooldown/spell/aoe/revenant/malfunction

@@ -228,8 +228,9 @@ Otherwise, any other numbers will lead to pixels being scaled by some multiple.
 This effect can only really result in nice clean edges if you pass in whole numbers which is why most of the constant scaling we give players are whole numbers.
 
 `zoom-mode` controls how a pixel will be up-scaled, if it needs to be.
-See the ref for more details, but `normal` is gonna have the sharpest output, `distort` uses nearest neighbor,
-which causes some blur, and `blur` uses bilinear sampling, which causes a LOT of blur.
+See the ref for more details, but `normal` is fairly sharp, with a little blur, `distort` uses nearest neighbor, which is the sharpest option, but introduces heavier distortion some might find distracting, and `blur` uses bilinear sampling, which causes a LOT of blur.
+
+If you are using integer scaling, `distort` provides a perfect image, while the other two are not recommended to be used.
 
 ## Eye
 

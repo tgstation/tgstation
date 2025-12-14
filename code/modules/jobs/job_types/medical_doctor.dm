@@ -16,6 +16,7 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_MED
 
+	mind_traits = list(MEDICAL_MIND_TRAITS)
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_MEDICAL_DOCTOR
@@ -60,15 +61,3 @@
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe
 	skillchips = list(/obj/item/skillchip/entrails_reader)
-
-/datum/outfit/job/doctor/mod
-	name = "Medical Doctor (MODsuit)"
-
-	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/mod/control/pre_equipped/medical
-	suit = null
-	head = null
-	uniform = /obj/item/clothing/under/rank/medical/doctor
-	mask = /obj/item/clothing/mask/breath/medical
-	r_pocket = /obj/item/flashlight/pen
-	internals_slot = ITEM_SLOT_SUITSTORE

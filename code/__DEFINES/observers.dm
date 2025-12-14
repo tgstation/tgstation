@@ -10,3 +10,11 @@
 #define NOTIFY_CATEGORY_DEFAULT (GHOST_NOTIFY_FLASH_WINDOW | GHOST_NOTIFY_IGNORE_MAPLOAD | GHOST_NOTIFY_NOTIFY_SUICIDERS)
 /// The default set of flags, without the flash_window flag.
 #define NOTIFY_CATEGORY_NOFLASH (NOTIFY_CATEGORY_DEFAULT & ~GHOST_NOTIFY_FLASH_WINDOW)
+
+///Assoc List of types of ghost lightings & the player-facing name.
+GLOBAL_LIST_INIT(ghost_lightings, list(
+	"Normal" = LIGHTING_CUTOFF_VISIBLE,
+	"Darker" = LIGHTING_CUTOFF_MEDIUM,
+	"Night Vision" = LIGHTING_CUTOFF_HIGH,
+	"Fullbright" = LIGHTING_CUTOFF_FULLBRIGHT,
+))

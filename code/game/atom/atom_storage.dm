@@ -10,13 +10,15 @@
 	list/canhold,
 	list/canthold,
 	storage_type = /datum/storage,
+	rustle_sound,
+	remove_rustle_sound
 )
 	RETURN_TYPE(/datum/storage)
 
 	if(atom_storage)
 		QDEL_NULL(atom_storage)
 
-	atom_storage = new storage_type(src, max_slots, max_specific_storage, max_total_storage)
+	atom_storage = new storage_type(src, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 
 	if(canhold || canthold)
 		atom_storage.set_holdable(canhold, canthold)

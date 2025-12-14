@@ -979,7 +979,12 @@
 			if(!mutation.scrambled && !(MUTATION_SOURCE_MUTATOR in mutation.sources))
 				return
 
-			scanner_occupant.dna.remove_mutation(mutation.type, MUTATION_SOURCE_MUTATOR)
+			var/list/types_to_remove = list(MUTATION_SOURCE_MUTATOR)
+			if(mutation.scrambled)
+				types_to_remove += MUTATION_SOURCE_ACTIVATED
+			scanner_occupant.dna.remove_mutation(mutation.type, types_to_remove)
+			if(!QDELETED(mutation))
+				mutation.scrambled = FALSE
 			return
 
 		// Deletes saved mutation from console buffer.
@@ -1988,10 +1993,10 @@
 			// These will all be active mutations. They're added by injector and their
 			//  sequencing code can't be changed. They can only be nullified, which
 			//  completely removes them.
-			var/datum/mutation/active = GET_INITIALIZED_MUTATION(mutation.type)
-			var/mut_class = get_mutation_class(active)
+			var/datum/mutation/initialized = GET_INITIALIZED_MUTATION(mutation.type)
+			var/mut_class = get_mutation_class(mutation)
 
-			mutation_data["Alias"] = active.alias
+			mutation_data["Alias"] = initialized.alias
 			mutation_data["Sequence"] = text_sequence
 			mutation_data["Discovered"] = TRUE
 			mutation_data["Quality"] = mutation.quality

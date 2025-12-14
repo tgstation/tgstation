@@ -340,7 +340,7 @@ Versioning
 		"name" = L.real_name,
 		"key" = L.ckey,
 		"job" = L.mind.assigned_role.title,
-		"special" = L.mind.special_role,
+		"special" = jointext(L.mind.get_special_roles(), " | "),
 		"pod" = get_area_name(L, TRUE),
 		"laname" = L.lastattacker,
 		"lakey" = L.lastattackerckey,
@@ -419,7 +419,7 @@ Versioning
 /datum/controller/subsystem/blackbox/proc/ReportRoundstartManifest(list/characters)
 	var/list/query_rows = list()
 	var/list/special_columns = list("server_ip" = "INET_ATON(?)")
-	for(var/mob_ckey as anything in characters)
+	for(var/mob_ckey in characters)
 		var/mob/living/new_character = characters[mob_ckey]
 		query_rows += list(list(
 			"server_ip" = world.internet_address || 0,
@@ -428,7 +428,7 @@ Versioning
 			"ckey" = mob_ckey,
 			"character_name" = new_character.real_name,
 			"job" = new_character.mind?.assigned_role?.title,
-			"special" = new_character.mind?.special_role,
+			"special" = english_list(new_character.mind?.get_special_roles(), nothing_text = "NONE"),
 			"latejoin" = 0,
 		))
 	SSdbcore.MassInsert(format_table_name("manifest"), query_rows, special_columns = special_columns)

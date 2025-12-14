@@ -10,7 +10,7 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	rcd_proof = TRUE
 	rust_resistance = RUST_RESISTANCE_REINFORCED
 	floor_tile = /obj/item/stack/rods
@@ -56,7 +56,7 @@
 	if(target == src)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
-	if(severity < EXPLODE_DEVASTATE && is_shielded())
+	if(is_explosion_shielded(severity))
 		return FALSE
 
 	switch(severity)
@@ -75,6 +75,10 @@
 				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
 	return TRUE
+
+// Contents *under* the reinforced flooring is protected from explosions (unless it's devastate level)
+/turf/open/floor/engine/can_propagate_explosion(atom/movable/some_thing, severity)
+	return severity == EXPLODE_DEVASTATE || !HAS_TRAIT(some_thing, TRAIT_UNDERFLOOR)
 
 /turf/open/floor/engine/singularity_pull(atom/singularity, current_size)
 	..()

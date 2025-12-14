@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
@@ -29,15 +29,14 @@ export const StationAlertConsoleContent = (props) => {
     Camera: 5,
   };
 
-  const sortedAlarms = sortBy(
-    data.alarms || [],
+  const sortedAlarms = sortBy(data.alarms || [], [
     (alarm) => sortingKey[alarm.name],
-  );
+  ]);
 
   return (
     <>
       {sortedAlarms.map((category) => (
-        <Section key={category.name} title={category.name + ' Alarms'}>
+        <Section key={category.name} title={`${category.name} Alarms`}>
           <ul>
             {category.alerts.length === 0 && (
               <li className="color-good">Systems Nominal</li>
@@ -48,7 +47,7 @@ export const StationAlertConsoleContent = (props) => {
                   <li className="color-average">
                     {alert.name}{' '}
                     {!!cameraView && alert.sources > 1
-                      ? ' (' + alert.sources + ' sources)'
+                      ? ` (${alert.sources} sources)`
                       : ''}
                   </li>
                 </Stack.Item>
@@ -61,9 +60,9 @@ export const StationAlertConsoleContent = (props) => {
                       disabled={!alert.cameras}
                       content={
                         alert.cameras === 1
-                          ? alert.cameras + ' Camera'
+                          ? `${alert.cameras} Camera`
                           : alert.cameras > 1
-                            ? alert.cameras + ' Cameras'
+                            ? `${alert.cameras} Cameras`
                             : 'No Camera'
                       }
                       onClick={() =>

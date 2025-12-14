@@ -1,4 +1,4 @@
-import { CheckboxInput, FeatureToggle } from '../base';
+import { CheckboxInput, type FeatureToggle } from '../base';
 
 export const typingIndicator: FeatureToggle = {
   name: 'Enable typing indicators for self',

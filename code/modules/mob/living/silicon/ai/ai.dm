@@ -25,7 +25,7 @@
 
 	if((target_ai.mind && target_ai.mind.active) || SSticker.current_state == GAME_STATE_SETTING_UP)
 		target_ai.mind.transfer_to(src)
-		if(mind.special_role)
+		if(is_antag())
 			to_chat(src, span_userdanger("You have been installed as an AI! "))
 			to_chat(src, span_danger("You must obey your silicon laws above all else. Your objectives will consider you to be dead."))
 		if(!mind.has_ever_been_ai)
@@ -81,21 +81,37 @@
 	//They aren't given a c_tag so they don't show up in camera consoles
 	builtInCamera = new(src)
 
+	var/static/list/alert_areas
+	if(isnull(alert_areas))
+		alert_areas = (GLOB.the_station_areas + typesof(/area/mine))
+	if(is_station_level(z))
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), SSmapping.levels_by_trait(ZTRAIT_STATION), alert_areas, camera_view = TRUE)
+	else
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), (SSmapping.levels_by_trait(ZTRAIT_STATION) + z), alert_areas, camera_view = TRUE)
+	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
+	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
+
 	ai_tracking_tool = new(src)
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_GLIDE_CHANGED, PROC_REF(tracked_glidesize_changed))
 
 	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_AI_ACCESS, TRAIT_HANDS_BLOCKED, TRAIT_CAN_GET_AI_TRACKING_MESSAGE, TRAIT_LOUD_BINARY), INNATE_TRAIT)
 
-	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
-	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
-	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
+	//Heads up to other binary chat listeners that a new AI is online and listening to Binary.
+	if(announce_init_to_others && !is_centcom_level(z)) //Skip new syndicate AIs and also new AIs on centcom Z
+		for(var/mob/McMobby as anything in GLOB.player_list)
+			if(McMobby == src)
+				continue
+			if(!McMobby.binarycheck())
+				continue
+			to_chat(McMobby,span_binarysay("<span class=[SPAN_COMMAND]>\[ SYSTEM \] NEW REMOTE HOST HAS CONNECTED TO THIS CHANNEL -- ID: [src]</span>"), type = MESSAGE_TYPE_RADIO)
 
 /mob/living/silicon/ai/weak_syndie
 	radio = /obj/item/radio/headset/silicon/ai/evil
 	radio_enabled = TRUE
 	interaction_range = 1
 	sprint = 5
+	announce_init_to_others = FALSE
 
 /mob/living/silicon/ai/key_down(_key, client/user)
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
@@ -128,6 +144,7 @@
 	QDEL_NULL(malf_picker)
 	QDEL_NULL(doomsday_device)
 	QDEL_NULL(robot_control)
+	QDEL_NULL(status_display_picker)
 	QDEL_NULL(aiMulti)
 	QDEL_NULL(alert_control)
 	QDEL_NULL(ai_tracking_tool)
@@ -179,7 +196,9 @@
 		var/emote_choice = player_client.prefs.read_preference(/datum/preference/choiced/ai_emote_display)
 
 		if(emote_choice == "Random")
-			emote_choice = pick(GLOB.ai_status_display_emotes)
+			if(!length(GLOB.ai_status_display_all_options))
+				init_ai_status_display_options()
+			emote_choice = pick(GLOB.ai_status_display_all_options)
 
 		apply_emote_display(emote_choice)
 
@@ -192,29 +211,28 @@
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
 	set name = "Set AI Core Display"
+	set desc = "Choose what appears on your AI core display"
+
 	if(incapacitated)
-		return
-	icon = initial(icon)
-	icon_state = "ai"
-	cut_overlays()
-	var/list/iconstates = GLOB.ai_core_display_screens
-	for(var/option in iconstates)
-		if(option == "Random")
-			iconstates[option] = image(icon = src.icon, icon_state = "ai-random")
-			continue
-		if(option == "Portrait")
-			iconstates[option] = image(icon = src.icon, icon_state = "ai-portrait")
-			continue
-		iconstates[option] = image(icon = src.icon, icon_state = resolve_ai_icon(option))
-
-	view_core()
-	var/ai_core_icon = show_radial_menu(src, src , iconstates, radius = 42)
-
-	if(!ai_core_icon || incapacitated)
+		to_chat(src, span_warning("You cannot access the core display controls in your current state."))
 		return
 
-	display_icon_override = ai_core_icon
-	set_core_display_icon(ai_core_icon)
+	if(!core_display_picker)
+		core_display_picker = new(src)
+	core_display_picker.ui_interact(src)
+
+/mob/living/silicon/ai/verb/pick_status_display()
+	set category = "AI Commands"
+	set name = "Set AI Status Display"
+	set desc = "Choose what appears on status displays around the station"
+
+	if(incapacitated)
+		to_chat(src, span_warning("You cannot access the status display controls in your current state."))
+		return
+
+	if(!status_display_picker)
+		status_display_picker = new(src)
+	status_display_picker.ui_interact(src)
 
 /mob/living/silicon/ai/get_status_tab_items()
 	. = ..()
@@ -292,7 +310,7 @@
 		return ISINRANGE(target_turf.x, ai_turf.x - interaction_range, ai_turf.x + interaction_range) \
 			&& ISINRANGE(target_turf.y, ai_turf.y - interaction_range, ai_turf.y + interaction_range)
 	else
-		return GLOB.cameranet.checkTurfVis(target_turf)
+		return SScameras.is_visible_by_cameras(target_turf)
 
 /mob/living/silicon/ai/cancel_camera()
 	view_core()
@@ -414,7 +432,7 @@
 		return
 
 	if (href_list["switchcamera"])
-		switchCamera(locate(href_list["switchcamera"]) in GLOB.cameranet.cameras)
+		switchCamera(locate(href_list["switchcamera"]) in SScameras.cameras)
 	if (href_list["showalerts"])
 		alert_control.ui_interact(src)
 #ifdef AI_VOX
@@ -457,7 +475,7 @@
 		if(controlled_equipment)
 			to_chat(src, span_warning("You are already loaded into an onboard computer!"))
 			return
-		if(!GLOB.cameranet.checkCameraVis(M))
+		if(!SScameras.is_visible_by_cameras(M))
 			to_chat(src, span_warning("Exosuit is no longer near active cameras."))
 			return
 		if(!isturf(loc))
@@ -502,7 +520,7 @@
 		//The target must be in view of a camera or near the core.
 	if(turf_check in range(get_turf(src)))
 		call_bot(turf_check)
-	else if(GLOB.cameranet && GLOB.cameranet.checkTurfVis(turf_check))
+	else if(SScameras.is_visible_by_cameras(turf_check))
 		call_bot(turf_check)
 	else
 		to_chat(src, span_danger("Selected location is not visible."))
@@ -560,7 +578,7 @@
 
 	var/mob/living/silicon/ai/U = usr
 
-	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+	for (var/obj/machinery/camera/C in SScameras.cameras)
 		var/turf/camera_turf = get_turf(C) //get camera's turf in case it's built into something so we don't get z=0
 
 		var/list/tempnetwork = C.network
@@ -582,7 +600,7 @@
 	if(isnull(network))
 		network = old_network // If nothing is selected
 	else
-		for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+		for(var/obj/machinery/camera/C in SScameras.cameras)
 			if(!C.can_use())
 				continue
 			if(network in C.network)
@@ -771,7 +789,7 @@
 	var/obj/structure/ai_core/new_core = new /obj/structure/ai_core/deactivated(loc, posibrain_inside)//Spawns a deactivated terminal at AI location.
 	new_core.circuit.battery = battery
 	ai_restore_power()//So the AI initially has power.
-	control_disabled = TRUE //Can't control things remotely if you're stuck in a card!
+	set_control_disabled(TRUE) //Can't control things remotely if you're stuck in a card!
 	radio_enabled = FALSE //No talking on the built-in radio for you either!
 	forceMove(card)
 	card.AI = src
@@ -788,26 +806,26 @@
 	if(isturf(loc)) //AI in core, check if on cameras
 		//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
 		//apc_override is needed here because AIs use their own APC when depowered
-		return ((GLOB.cameranet && GLOB.cameranet.checkTurfVis(get_turf_pixel(A))) || (A == apc_override))
+		return (SScameras.is_visible_by_cameras(get_turf_pixel(A)) || (A == apc_override))
 	//AI is carded/shunted
 	//view(src) returns nothing for carded/shunted AIs and they have X-ray vision so just use get_dist
 	var/list/viewscale = getviewsize(client.view)
 	return get_dist(src, A) <= max(viewscale[1]*0.5,viewscale[2]*0.5)
 
-/mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+/mob/living/silicon/ai/proc/relay_speech(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	var/raw_translation = translate_language(speaker, message_language, raw_message, spans, message_mods)
 	var/atom/movable/source = speaker.GetSource() || speaker // is the speaker virtual/radio
-	var/treated_message = source.say_quote(raw_translation, spans, message_mods)
+	var/treated_message = source.generate_messagepart(raw_translation, spans, message_mods)
 
 	var/start = "Relayed Speech: "
-	var/namepart
-	var/list/stored_name = list(null)
-	SEND_SIGNAL(speaker, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, stored_name, FALSE)
-	namepart = stored_name[NAME_PART_INDEX] || "[speaker.GetVoice()]"
+	var/namepart = speaker.get_message_voice()
 	var/hrefpart = "<a href='byond://?src=[REF(src)];track=[html_encode(namepart)]'>"
 	var/jobpart = "Unknown"
 
-	if(!HAS_TRAIT(speaker, TRAIT_UNKNOWN)) //don't fetch the speaker's job in case they have something that conseals their identity completely
+	// if voice is concealed, job is concealed
+	// on the other hand we don't care about TRAIT_UNKNOWN_APPEARANCE
+	// (AI can associate voice -> name -> crew record -> job)
+	if(!HAS_TRAIT(speaker, TRAIT_UNKNOWN_VOICE))
 		if (isliving(speaker))
 			var/mob/living/living_speaker = speaker
 			if(living_speaker.job)
@@ -923,7 +941,7 @@
 		playsound(get_turf(src), 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE, ignore_walls = FALSE)
 		return
 
-	malf_picker.processing_time += 10
+	malf_picker.processing_time += max(0, 9 - hacked_apcs.len) // Less resources for each apc hacked, 9 instead of 10 is because you will get 1 as soon as the hacked apc processes
 	var/area/apcarea = apc.area
 	var/datum/ai_module/malf/destructive/nuke_station/doom_n_boom = locate(/datum/ai_module/malf/destructive/nuke_station) in malf_picker.possible_modules["Destructive Modules"]
 	if(doom_n_boom && (is_type_in_list (apcarea, doom_n_boom.discount_areas)) && !(is_type_in_list (apcarea, doom_n_boom.hacked_command_areas)))
@@ -989,7 +1007,7 @@
 	button_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_shell"
 
-/datum/action/innate/deploy_shell/Trigger(trigger_flags)
+/datum/action/innate/deploy_shell/Trigger(mob/clicker, trigger_flags)
 	var/mob/living/silicon/ai/AI = owner
 	if(!AI)
 		return
@@ -1002,7 +1020,7 @@
 	button_icon_state = "ai_last_shell"
 	var/mob/living/silicon/robot/last_used_shell
 
-/datum/action/innate/deploy_last_shell/Trigger(trigger_flags)
+/datum/action/innate/deploy_last_shell/Trigger(mob/clicker, trigger_flags)
 	if(!owner)
 		return
 	if(last_used_shell)
@@ -1027,7 +1045,7 @@
 	. = ..()
 
 /mob/living/silicon/ai/proc/camera_visibility(mob/eye/camera/ai/moved_eye)
-	GLOB.cameranet.visibility(moved_eye)
+	SScameras.update_eye_chunk(moved_eye)
 
 /mob/living/silicon/ai/forceMove(atom/destination)
 	. = ..()
@@ -1061,7 +1079,7 @@
 		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
 
 /mob/living/silicon/ai/proc/show_camera_list()
-	var/list/cameras = GLOB.cameranet.get_available_camera_by_tag_list(network)
+	var/list/cameras = SScameras.get_available_camera_by_tag_list(network)
 	var/camera_tag = tgui_input_list(src, "Choose which camera you want to view", "Cameras", cameras)
 	if(isnull(camera_tag))
 		return
@@ -1080,17 +1098,16 @@
 
 /mob/living/silicon/ai/get_exp_list(minutes)
 	. = ..()
+	.[/datum/job/ai::title] = minutes
 
-	var/datum/job/ai/ai_job_ref = SSjob.get_job_type(/datum/job/ai)
-
-	.[ai_job_ref.title] = minutes
-
-
-/mob/living/silicon/ai/GetVoice()
-	. = ..()
-	if(ai_voicechanger && ai_voicechanger.changing_voice)
+/mob/living/silicon/ai/get_voice(add_id_name)
+	if(ai_voicechanger?.changing_voice)
 		return ai_voicechanger.say_name
-	return
+	return ..()
+
+/mob/living/silicon/ai/proc/set_control_disabled(control_disabled)
+	SEND_SIGNAL(src, COMSIG_SILICON_AI_SET_CONTROL_DISABLED, control_disabled)
+	src.control_disabled = control_disabled
 
 #undef HOLOGRAM_CHOICE_CHARACTER
 #undef CHARACTER_TYPE_SELF

@@ -63,7 +63,7 @@
 	worn_icon = 'icons/mob/clothing/ears.dmi'
 	inhand_icon_state = null
 	slot_flags = ITEM_SLOT_EARS
-	strip_delay = 100 //air pods don't fall out
+	strip_delay = 10 SECONDS //air pods don't fall out
 	instrument_range = 0 //you're paying for quality here
 	custom_premium_price = PAYCHECK_CREW * 36 //Save up 5 shifts worth of pay just to lose it down a drainpipe on the sidewalk
 
@@ -144,6 +144,8 @@
 	SIGNAL_HANDLER
 	is_playing.set_output(TRUE)
 	started_playing.set_output(COMPONENT_SIGNAL)
+	if (beats_per_min.value)
+		synth.song.set_bpm(beats_per_min.value)
 
 /obj/item/circuit_component/synth/proc/continue_if_autoplaying(datum/source, atom/music_player)
 	SIGNAL_HANDLER
@@ -165,7 +167,8 @@
 	synth.song.set_repeats(repetitions.value)
 
 /obj/item/circuit_component/synth/proc/set_bpm()
-	synth.song.sanitize_tempo(BPM_TO_TEMPO_SETTING(beats_per_min.value))
+	if (beats_per_min.value)
+		synth.song.set_bpm(beats_per_min.value)
 
 /obj/item/circuit_component/synth/proc/set_instrument()
 	synth.song.set_instrument(selected_instrument.value)

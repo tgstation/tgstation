@@ -128,6 +128,10 @@
 	piping_layer = 4
 	icon_state= "pump_on_map-4"
 
+/obj/machinery/atmospherics/components/binary/pump/on/layer5
+	piping_layer = 5
+	icon_state = "pump_on_map-5"
+
 /obj/item/circuit_component/atmos_pump
 	display_name = "Atmospheric Binary Pump"
 	desc = "The interface for communicating with a pump."

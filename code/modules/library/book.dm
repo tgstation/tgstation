@@ -138,7 +138,7 @@
 /// Checks for whether we can vandalize this book, to ensure we still can after each input.
 /// Uses to_chat over balloon alerts to give more detailed information as to why.
 /obj/item/book/proc/can_vandalize(mob/living/user, obj/item/tool)
-	if(!user.can_perform_action(src) || !user.can_write(tool))
+	if(!user.can_perform_action(src) || !user.can_write(tool, TRUE))
 		return FALSE
 	if(user.is_blind())
 		to_chat(user, span_warning("As you are trying to write on the book, you suddenly feel very stupid!"))

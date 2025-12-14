@@ -42,7 +42,6 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/Initialize(mapload)
 	. = ..()
-	RefreshParts()
 	update_appearance(UPDATE_ICON)
 	register_context()
 
@@ -127,9 +126,8 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_overlays()
 	. = ..()
-	var/mutable_appearance/thermo_overlay = new(icon)
-	var/image/pipe = get_pipe_image(thermo_overlay, "pipe", dir, pipe_color, piping_layer)
-	pipe.appearance_flags |= RESET_COLOR|KEEP_APART
+	var/image/pipe = get_pipe_image('icons/obj/machines/atmospherics/thermomachine.dmi', "pipe", dir, pipe_color, piping_layer)
+	pipe.appearance_flags |= RESET_COLOR | KEEP_APART
 	. += pipe
 
 /obj/machinery/atmospherics/components/unary/thermomachine/examine(mob/user)

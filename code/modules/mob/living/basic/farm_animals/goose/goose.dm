@@ -57,7 +57,7 @@
 	SIGNAL_HANDLER
 	if (ai_controller?.blackboard[BB_GOOSE_PANICKED])
 		return COMSIG_MOB_CANCEL_EAT
-	if (potential_food.has_material_type(/datum/material/plastic) || IsEdible(potential_food))
+	if (potential_food.has_material_type(/datum/material/plastic) || IS_EDIBLE(potential_food))
 		return NONE// Geese only eat FOOD or PLASTIC
 	return COMSIG_MOB_CANCEL_EAT
 

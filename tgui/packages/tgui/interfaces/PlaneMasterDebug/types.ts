@@ -1,6 +1,6 @@
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
-import { Position } from '../common/Connections';
+import type { Coordinates } from '../common/Connections';
 
 export type PlaneDebugData = {
   mob_name: string;
@@ -63,7 +63,7 @@ export type Plane = {
   incoming_filters: Filter[];
   outgoing_relays: Relay[];
   outgoing_filters: Filter[];
-  position: Position;
+  position: Coordinates;
   parents: Plane[];
   depth: number;
 };
@@ -120,8 +120,8 @@ export type PlaneConnectorElement = {
 
 export type PlaneConnection = {
   // Both of these are relay/filter ref -> coordinates for that input/output
-  input: Position;
-  output: Position;
+  input: Coordinates;
+  output: Coordinates;
 };
 
 export type PlaneHighlight = {

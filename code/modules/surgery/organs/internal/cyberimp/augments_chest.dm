@@ -1,6 +1,7 @@
 /obj/item/organ/cyberimp/chest
 	name = "cybernetic torso implant"
 	desc = "Implants for the organs in your torso."
+	abstract_type = /obj/item/organ/cyberimp/chest
 	zone = BODY_ZONE_CHEST
 
 /obj/item/organ/cyberimp/chest/nutriment
@@ -334,6 +335,7 @@
 	added_throw_speed = /obj/item/organ/cyberimp/chest/spine/atlas::added_throw_speed
 	strength_bonus = /obj/item/organ/cyberimp/chest/spine/atlas::strength_bonus
 	core_applied = TRUE
+	icon_state = "herculean_implant_core"
 	update_appearance()
 	qdel(tool)
 	return ITEM_INTERACT_SUCCESS

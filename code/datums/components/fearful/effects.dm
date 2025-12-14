@@ -108,6 +108,8 @@
 	var/active_attack = FALSE
 	/// Breath loop used during a panic attack
 	var/datum/looping_sound/breathing/breath_loop
+	/// Timer that will stop our panic attack
+	var/panic_end_timer = null
 
 /datum/terror_handler/panic/New(mob/living/new_owner, datum/component/fearful/new_component)
 	. = ..()
@@ -116,12 +118,13 @@
 /datum/terror_handler/panic/Destroy(force)
 	owner.remove_fov_trait(type, FOV_270_DEGREES)
 	QDEL_NULL(breath_loop)
+	deltimer(panic_end_timer)
 	return ..()
 
 /datum/terror_handler/panic/tick(seconds_per_tick, terror_buildup)
 	. = ..()
 	if (owner.stat >= UNCONSCIOUS)
-		active_attack = FALSE
+		stop_panic_attack()
 		active = FALSE
 		owner.remove_fov_trait(type, FOV_270_DEGREES)
 		return
@@ -154,12 +157,14 @@
 	owner.emote("gasp")
 	owner.Knockdown(0.5 SECONDS)
 	breath_loop.start()
-	addtimer(CALLBACK(src, PROC_REF(stop_panic_attack)), rand(3 SECONDS, 5 SECONDS))
+	panic_end_timer = addtimer(CALLBACK(src, PROC_REF(stop_panic_attack)), rand(3 SECONDS, 5 SECONDS), TIMER_UNIQUE|TIMER_STOPPABLE)
 	owner.visible_message(span_warning("[owner] drops to the floor for a moment, clutching their chest."), span_alert("Your heart lurches in your chest. You can't take much more of this!"))
 	return PANIC_ATTACK_TERROR_AMOUNT
 
 /datum/terror_handler/panic/proc/stop_panic_attack()
 	breath_loop.stop()
 	active_attack = FALSE
+	deltimer(panic_end_timer)
+	panic_end_timer = null
 
 #undef FEAR_SCALING

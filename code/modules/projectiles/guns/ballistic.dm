@@ -1,9 +1,10 @@
 ///Subtype for any kind of ballistic gun
 ///This has a shitload of vars on it, and I'm sorry for that, but it does make making new subtypes really easy
 /obj/item/gun/ballistic
-	desc = "Now comes in flavors like GUN. Uses 10mm ammo, for some reason."
 	name = "projectile gun"
+	desc = "Now comes in flavors like GUN. Uses 10mm ammo, for some reason."
 	icon_state = "debug"
+	abstract_type = /obj/item/gun/ballistic
 	w_class = WEIGHT_CLASS_NORMAL
 	pickup_sound = 'sound/items/handling/gun/gun_pick_up.ogg'
 	drop_sound = 'sound/items/handling/gun/gun_drop.ogg'
@@ -139,6 +140,10 @@
 	var/burst_fire_selection = FALSE
 	/// If it has an icon for a selector switch indicating current firemode.
 	var/selector_switch_icon = FALSE
+	/// Suppressor attached to the gun, if any
+	var/obj/item/suppressor/suppressor = null
+	/// Sound played when the burst mode is changed
+	var/burst_select_sound = SFX_FIRE_MODE_SWITCH
 
 /obj/item/gun/ballistic/Initialize(mapload)
 	. = ..()
@@ -161,7 +166,13 @@
 
 /obj/item/gun/ballistic/Destroy()
 	QDEL_NULL(magazine)
+	QDEL_NULL(suppressor)
 	return ..()
+
+/obj/item/gun/ballistic/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == suppressor)
+		clear_suppressor()
 
 /obj/item/gun/ballistic/add_weapon_description()
 	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_ballistic))
@@ -275,16 +286,35 @@
 	burst_fire_selection = !burst_fire_selection
 	if(!burst_fire_selection)
 		burst_size = 1
-		fire_delay = 0
+		fire_delay = 0 SECONDS
 		balloon_alert(user, "switched to semi-automatic")
 	else
 		burst_size = initial(burst_size)
 		fire_delay = initial(fire_delay)
 		balloon_alert(user, "switched to [burst_size]-round burst")
 
-	playsound(user, 'sound/items/weapons/empty.ogg', 100, TRUE)
+	if(burst_select_sound)
+		playsound(user, burst_select_sound, 50, TRUE)
+	else
+		playsound(user, 'sound/items/weapons/empty.ogg', 100, TRUE)
 	update_appearance()
 	update_item_action_buttons()
+
+// Didn't attempt to catch the casing.
+#define CASING_CATCH_NO_ATTEMPT	0
+// Tried to catch, failed because casing was hot and hands were unprotected.
+#define CASING_CATCH_FAILED_SPICY	1
+// Tried to catch, failed because clumsy.
+#define CASING_CATCH_FAILED_CLUMSY	2
+// Tried to catch, failed because hands full.
+#define CASING_CATCH_FAILED_PLACEMENT	3
+// Tried to catch, succeeded. Hands protected or casing was cold (not recently fired).
+#define CASING_CATCH_SUCCESSFUL	4
+// Tried to catch, succeeded. Casing was hot, hands were unprotected, hands burned.
+#define CASING_CATCH_SUCCESSFUL_OUCH	5
+// Offset added to an ejected casing's fire timestamp;
+// if world.time is past the casing's fired timestamp plus this offset, casing is considered cold, and won't burn hands.
+#define CASING_HOT_DELAY (5 SECONDS)
 
 /obj/item/gun/ballistic/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!semi_auto && from_firing)
@@ -297,12 +327,89 @@
 		else if(casing_ejector || !from_firing)
 			casing.forceMove(drop_location()) //Eject casing onto ground.
 			if(!QDELETED(casing))
-				casing.bounce_away(TRUE)
 				SEND_SIGNAL(casing, COMSIG_CASING_EJECTED)
+				var/hitting_ground = TRUE
+				if(ishuman(loc))
+					var/mob/living/carbon/human/wielder = loc
+					var/caught_casing = can_catch_casing(casing, wielder, from_firing)
+					switch(caught_casing)
+						if(CASING_CATCH_NO_ATTEMPT)
+							hitting_ground = TRUE
+						if(CASING_CATCH_FAILED_SPICY)
+							hitting_ground = TRUE
+							wielder.visible_message(
+								span_warning("[wielder] reaches out for \the [casing] as it ejects from [src], and catches it... before fumbling it because it's a hot casing. Uncool!"),
+								span_warning("You reach out and catch \the [casing] as it ejects from [src]... before dropping it, because it's a hot casing! Ouch! Uncool!"),
+								span_notice("You hear someone reaching for something before a hiss of pain and the sound of something clattering."),
+							)
+							var/obj/item/bodypart/affecting = wielder.get_inactive_hand()
+							wielder.apply_damage(2, BURN, affecting, wound_bonus = CANT_WOUND)
+						if(CASING_CATCH_FAILED_CLUMSY)
+							hitting_ground = TRUE
+							wielder.visible_message(
+								span_warning("[wielder] reaches out for \the [casing] as it ejects from [src]... before fumbling it in an incredibly unlikely, comical manner! Uncool!"),
+								span_warning("You reach out and catch \the [casing] as it ejects from [src]... before fumbling it in an incredibly unlikely, comical manner! Uncool!"),
+								span_notice("You hear someone reaching for something, shortly followed by an embarassingly loud, comedic clattering."),
+							)
+							if(!(world.time >= casing.shot_timestamp + CASING_HOT_DELAY))
+								var/obj/item/bodypart/affecting = wielder.get_inactive_hand()
+								to_chat(wielder, span_warning("As if to add insult to injury, \the [casing] lands in the perfect way... to burn your [affecting.plaintext_zone]."))
+								wielder.apply_damage(5, BURN, affecting, wound_bonus = CANT_WOUND)
+						if(CASING_CATCH_FAILED_PLACEMENT)
+							hitting_ground = TRUE
+							wielder.visible_message(
+								span_warning("[wielder] reaches out for \the [casing] as it ejects from [src] and fumbles it due to [wielder.p_their()] full hands. Uncool!"),
+								span_warning("You try and reach out for \the [casing] as it ejects from [src], and fumble it because your hands are full. Uncool!"),
+								span_notice("You hear someone reaching for something, before a metallic clattering."),
+							)
+						if(CASING_CATCH_SUCCESSFUL)
+							hitting_ground = FALSE
+							casing.update_appearance()
+							to_chat(wielder, span_notice("You reach out and catch \the [casing] as it ejects from [src]. Awesome."))
+						if(CASING_CATCH_SUCCESSFUL_OUCH)
+							hitting_ground = FALSE
+							casing.update_appearance()
+							var/obj/item/bodypart/affecting = wielder.get_inactive_hand()
+							to_chat(wielder, span_notice("You reach out and catch \the [casing] as it ejects from [src]. Awesome. Your [affecting.plaintext_zone] hurts, though."))
+							wielder.apply_damage(4, BURN, affecting, wound_bonus = CANT_WOUND)
+				if(hitting_ground)
+					casing.bounce_away(TRUE)
 		else if(empty_chamber)
 			clear_chambered()
 	if (chamber_next_round && (magazine?.max_ammo > 1))
 		chamber_round()
+
+/// Used to check if the mob `wielder` can catch an ejected casing.
+/// Returns CASING_CATCH_NO_ATTEMPT if not trying, CASING_CATCH_FAILED if failed, CASING_CATCH_SUCCESSFUL if successful.
+/obj/item/gun/ballistic/proc/can_catch_casing(obj/item/ammo_casing/casing, mob/living/carbon/human/wielder)
+	if(!wielder.throw_mode) // if they're not in throw mode, don't bother
+		return CASING_CATCH_NO_ATTEMPT
+	if(HAS_TRAIT(wielder, TRAIT_CLUMSY)) // feats of dexterity are beyond the jester
+		return CASING_CATCH_FAILED_CLUMSY
+	// following adapted from lightbulbs
+	var/protected_hands = FALSE
+	if(wielder.gloves)
+		var/obj/item/clothing/gloves/electrician_gloves = wielder.gloves
+		if(electrician_gloves.max_heat_protection_temperature && electrician_gloves.max_heat_protection_temperature > 360)
+			protected_hands = TRUE
+	// from left to right: are our hands protected from hot things via gloves? are we or our hands heat resistant? was this casing shot more than 5 seconds ago?
+	if(protected_hands || HAS_TRAIT(wielder, TRAIT_RESISTHEAT) || HAS_TRAIT(wielder, TRAIT_RESISTHEATHANDS) || world.time >= casing.shot_timestamp + CASING_HOT_DELAY)
+		if(wielder.put_in_hands(casing)) // try placement in hand,
+			return CASING_CATCH_SUCCESSFUL // success
+		return CASING_CATCH_FAILED_PLACEMENT // or not.
+	if(HAS_TRAIT(wielder, TRAIT_LIGHTBULB_REMOVER))
+		if(wielder.put_in_hands(casing)) // try placement in hand,
+			return CASING_CATCH_SUCCESSFUL_OUCH // success
+		return CASING_CATCH_FAILED_PLACEMENT // or not.
+	return CASING_CATCH_FAILED_SPICY
+
+#undef CASING_CATCH_NO_ATTEMPT
+#undef CASING_CATCH_FAILED_SPICY
+#undef CASING_CATCH_FAILED_CLUMSY
+#undef CASING_CATCH_FAILED_PLACEMENT
+#undef CASING_CATCH_SUCCESSFUL
+#undef CASING_CATCH_SUCCESSFUL_OUCH
+#undef CASING_HOT_DELAY
 
 ///Used to chamber a new round and eject the old one
 /obj/item/gun/ballistic/proc/chamber_round(spin_cylinder, replace_new_round)
@@ -435,7 +542,7 @@
 			return ITEM_INTERACT_FAILURE
 
 		if(suppressed)
-			balloon_alert(user, "already has a supressor!")
+			balloon_alert(user, "already has a suppressor!")
 			return ITEM_INTERACT_FAILURE
 
 		if(!user.transferItemToLoc(tool, src))
@@ -456,7 +563,7 @@
 			magazine.stored_ammo -= chambered
 		chambered = null
 
-	var/num_loaded = magazine?.attackby(ammo, user, silent = TRUE)
+	var/num_loaded = magazine?.try_load(user, ammo, silent = TRUE)
 	if (!num_loaded)
 		return FALSE
 
@@ -496,27 +603,28 @@
 	return ..()
 
 ///Installs a new suppressor, assumes that the suppressor is already in the contents of src
-/obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
-	suppressed = S
-	update_weight_class(w_class + S.w_class) //so pistols do not fit in pockets when suppressed
+/obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/new_suppressor)
+	suppressor = new_suppressor
+	suppressed = suppressor.suppression
+	update_weight_class(w_class + suppressor.w_class) //so pistols do not fit in pockets when suppressed
 	update_appearance()
 
 /obj/item/gun/ballistic/clear_suppressor()
 	if(!can_unsuppress)
 		return
-	if(isitem(suppressed))
-		var/obj/item/I = suppressed
-		update_weight_class(w_class - I.w_class)
-	return ..()
+	suppressed = SUPPRESSED_NONE
+	if(suppressor)
+		update_weight_class(w_class - suppressor.w_class)
+		suppressor = null
+	update_appearance()
 
 /obj/item/gun/ballistic/click_alt(mob/user)
 	if(!suppressed || !can_unsuppress)
 		return CLICK_ACTION_BLOCKING
-	var/obj/item/suppressor/S = suppressed
 	if(!user.is_holding(src))
 		return CLICK_ACTION_BLOCKING
-	balloon_alert(user, "[S.name] removed")
-	user.put_in_hands(S)
+	balloon_alert(user, "[suppressor.name] removed")
+	user.put_in_hands(suppressor)
 	clear_suppressor()
 	return CLICK_ACTION_SUCCESS
 
@@ -596,7 +704,7 @@
 		. += "It does not seem to have a round chambered."
 	if (bolt_locked)
 		. += "The [bolt_wording] is locked back and needs to be released before firing or de-fouling."
-	if (suppressed)
+	if (suppressor)
 		. += "It has a suppressor [can_unsuppress ? "attached that can be removed with <b>alt+click</b>." : "that is integral or can't otherwise be removed."]"
 	if(can_misfire)
 		. += span_danger("You get the feeling this might explode if you fire it...")
@@ -774,3 +882,5 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "suppressor"
 	w_class = WEIGHT_CLASS_TINY
+	/// How quiet should the gun be when we're installed?
+	var/suppression = SUPPRESSED_QUIET

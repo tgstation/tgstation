@@ -83,6 +83,9 @@
 		"Mob level \"apply organ damage\" returned the wrong value for [slot_to_use] organ with default arguments.")
 	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use), test_organ.maxHealth, \
 		"Mob level \"apply organ damage\" can exceed the [slot_to_use] organ's damage cap with default arguments.")
+	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use, required_organ_flag = test_organ.organ_flags), test_organ.maxHealth, \
+		"(Testing get_organ_loss() with required_organ_flag = [test_organ.organ_flags]) \
+			Mob level \"apply organ damage\" can exceed the [slot_to_use] organ's damage cap with default arguments.")
 	dummy.fully_heal(HEAL_ORGANS)
 
 	// Tests [mob/living/proc/set_organ_damage]
@@ -97,6 +100,9 @@
 		"Mob level \"apply organ damage\" returned the wrong value for [slot_to_use] organ with a large maximum supplied.")
 	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use), test_organ.maxHealth, \
 		"Mob level \"apply organ damage\" can exceed the [slot_to_use] organ's damage cap with a large maximum supplied.")
+	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use, required_organ_flag = test_organ.organ_flags), test_organ.maxHealth, \
+		"(Testing get_organ_loss() with required_organ_flag = [test_organ.organ_flags]) \
+			Mob level \"apply organ damage\" can exceed the [slot_to_use] organ's damage cap with a large maximum supplied.")
 	dummy.fully_heal(HEAL_ORGANS)
 
 ///Allocate a human mob, give 'em a skillchip and a generic trauma, then see if it throws any error when the brain is removed.
@@ -118,3 +124,16 @@
 	var/obj/item/organ/brain = locate() in dummy.organs
 	brain.forceMove(dummy.loc)
 	allocated += brain
+
+/datum/unit_test/felinid_ears
+
+/datum/unit_test/felinid_ears/Run()
+	var/mob/living/carbon/human/normal_dummy = allocate(/mob/living/carbon/human/consistent)
+	normal_dummy.dna.features[FEATURE_EARS] = SPRITE_ACCESSORY_NONE
+	normal_dummy.set_species(/datum/species/human/felinid, pref_load = TRUE)
+	TEST_ASSERT(!istype(normal_dummy.get_organ_slot(ORGAN_SLOT_EARS), /obj/item/organ/ears/cat), "Felinid with NONE ears set had cat ears on species gain.")
+	TEST_ASSERT_NOTNULL(normal_dummy.get_organ_slot(ORGAN_SLOT_EARS), "Felinid with NONE ears set had NO ears on species gain.")
+
+	var/mob/living/carbon/human/anime_dummy = allocate(/mob/living/carbon/human/consistent)
+	anime_dummy.set_species(/datum/species/human/felinid, pref_load = TRUE)
+	TEST_ASSERT(istype(anime_dummy.get_organ_slot(ORGAN_SLOT_EARS), /obj/item/organ/ears/cat), "Felinid with default ears set did not have cat ears on species gain.")

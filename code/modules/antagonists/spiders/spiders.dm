@@ -29,7 +29,7 @@
 		explanation_text = "Your queen has given you a directive! Follow it at all costs: [directive]"
 
 /datum/objective/spider/check_completion()
-	return owner.current.stat != DEAD
+	return owner.current && owner.current.stat != DEAD
 
 /datum/antagonist/spider/forge_objectives()
 	var/datum/objective/spider/objective = new(directive)

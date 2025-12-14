@@ -11,6 +11,9 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	worn_icon_state = "electronic"
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 
 	/// Spam alert prevention
 	var/alert_cooldown
@@ -122,6 +125,7 @@
 		name = pai.name,
 		transmit = pai.can_transmit,
 		receive = pai.can_receive,
+		leashed = pai.leash,
 		range = pai.leash?.distance,
 	)
 	return data
@@ -155,6 +159,9 @@
 			return TRUE
 		if("toggle_holo")
 			pai.toggle_holo()
+			return TRUE
+		if("toggle_leash")
+			pai.toggle_leash()
 			return TRUE
 		if("toggle_radio")
 			pai.toggle_radio(params["option"])

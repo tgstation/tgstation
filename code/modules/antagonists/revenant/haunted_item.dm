@@ -7,6 +7,8 @@
 	var/despawn_message
 	/// List of types that, if they hit our item, we will instantly stop the haunting
 	var/list/types_which_dispell_us
+	/// List of traits which allow items outside of types_which_dispell_us to also work on us
+	var/list/traits_which_dispell_us
 
 /datum/component/haunted_item/Initialize(
 	// What color should the haunted item be glowing? By default the color's white (passed into the haunted element).
@@ -25,6 +27,9 @@
 	throw_force_max = 15,
 	// See the types_which_dispell_us list. By default / if null, this will become the default static list.
 	list/types_which_dispell_us,
+	// List of traits which allow items outside of types_which_dispell_us to also work on us
+	// By default / if null will default to TRAIT_NULLROD_ITEM
+	list/traits_which_dispell_us,
 )
 
 	if(!isitem(parent))
@@ -62,7 +67,9 @@
 		haunted_item.throwforce = min(haunted_item.throwforce + throw_force_bonus, throw_force_max)
 
 	var/static/list/default_dispell_types = list(/obj/item/nullrod, /obj/item/book/bible)
+	var/static/list/default_dispell_traits = list(TRAIT_NULLROD_ITEM)
 	src.types_which_dispell_us = types_which_dispell_us || default_dispell_types
+	src.traits_which_dispell_us = traits_which_dispell_us || default_dispell_traits
 	src.despawn_message = despawn_message
 
 /datum/component/haunted_item/Destroy(force)
@@ -94,7 +101,14 @@
 	SIGNAL_HANDLER
 
 	if(!is_type_in_list(attacking_item, types_which_dispell_us))
-		return
+		var/has_trait = FALSE
+		for(var/dispell_trait in traits_which_dispell_us)
+			if(HAS_TRAIT(attacking_item, dispell_trait))
+				has_trait = TRUE
+				break
+
+		if(!has_trait)
+			return
 
 	attacker.visible_message(span_warning("[attacker] dispells the ghostly energy from [source]!"), span_warning("You dispel the ghostly energy from [source]!"))
 	clear_haunting()

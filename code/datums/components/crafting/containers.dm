@@ -28,15 +28,14 @@
 	)
 	result = /obj/item/storage/basket
 	category = CAT_CONTAINERS
+	crafting_flags = parent_type::crafting_flags | CRAFT_MUST_BE_LEARNED
 	steps = list(
-		"master the art of underwater basketweaving", 
+		"master the art of underwater basketweaving",
 		"be underwater"
 	)
 
 /datum/crafting_recipe/underwater_basket/check_requirements(mob/user, list/collected_requirements)
 	. = ..()
-	if(!HAS_TRAIT(user,TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE))
-		return FALSE
 	var/turf/T = get_turf(user)
 	if(istype(T, /turf/open/water))
 		return TRUE

@@ -303,7 +303,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Dk" = (
-/obj/machinery/vending/wallmed/directional/north{
+/obj/machinery/wall_healer/free/directional/north{
 	use_power = 0
 	},
 /turf/open/floor/mineral/titanium,

@@ -2,7 +2,7 @@ import { Button, ColorBox, Section, Stack, Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
-import { NTOSData } from '../layouts/NtosWindow';
+import type { NTOSData } from '../layouts/NtosWindow';
 
 export enum alert_relevancies {
   ALERT_RELEVANCY_SAFE,
@@ -143,9 +143,7 @@ export const NtosMain = (props) => {
               {show_imprint
                 ? login.IDName +
                   ' ' +
-                  (proposed_login.IDName
-                    ? '(' + proposed_login.IDName + ')'
-                    : '')
+                  (proposed_login.IDName ? `(${proposed_login.IDName})` : '')
                 : (proposed_login.IDName ?? '')}
             </Table.Row>
             <Table.Row>
@@ -153,7 +151,7 @@ export const NtosMain = (props) => {
               {show_imprint
                 ? login.IDJob +
                   ' ' +
-                  (proposed_login.IDJob ? '(' + proposed_login.IDJob + ')' : '')
+                  (proposed_login.IDJob ? `(${proposed_login.IDJob})` : '')
                 : (proposed_login.IDJob ?? '')}
             </Table.Row>
           </Table>

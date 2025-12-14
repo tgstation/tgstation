@@ -36,9 +36,6 @@
 	/// Martial art for the mushpeople
 	var/datum/martial_art/mushpunch/mush
 
-/datum/species/mush/check_roundstart_eligible()
-	return FALSE //hard locked out of roundstart on the order of design lead kor, this can be removed in the future when planetstation is here OR SOMETHING but right now we have a problem with races.
-
 /datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	mush = new(src)
@@ -62,9 +59,7 @@
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_POD_HAIR
 
-	preference = "feature_mushperson_cap"
-
-	dna_block = DNA_MUSHROOM_CAPS_BLOCK
+	dna_block = /datum/dna_block/feature/accessory/mush_cap
 	restyle_flags = EXTERNAL_RESTYLE_PLANT
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/mushroom_cap
@@ -74,19 +69,11 @@
 /// Bodypart overlay for the mushroom cap organ
 /datum/bodypart_overlay/mutant/mushroom_cap
 	layers = EXTERNAL_ADJACENT
-	feature_key = "caps"
+	feature_key = FEATURE_MUSH_CAP
 	dyable = TRUE
 
-/datum/bodypart_overlay/mutant/mushroom_cap/get_global_feature_list()
-	return SSaccessories.caps_list
-
 /datum/bodypart_overlay/mutant/mushroom_cap/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	var/mob/living/carbon/human/human = bodypart_owner.owner
-	if(!istype(human))
-		return TRUE
-	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
-		return FALSE
-	return TRUE
+	return !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
 
 /datum/bodypart_overlay/mutant/mushroom_cap/override_color(obj/item/bodypart/bodypart_owner)
 	//The mushroom cap is red by default (can still be dyed)

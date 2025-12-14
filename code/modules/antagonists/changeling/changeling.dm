@@ -5,8 +5,8 @@
 	name = "\improper Changeling"
 	roundend_category = "changelings"
 	antagpanel_category = "Changeling"
-	job_rank = ROLE_CHANGELING
-	antag_moodlet = /datum/mood_event/focused
+	pref_flag = ROLE_CHANGELING
+	antag_moodlet = /datum/mood_event/ling
 	antag_hud_name = "changeling"
 	hijack_speed = 0.5
 	ui_name = "AntagInfoChangeling"
@@ -144,6 +144,7 @@
 	RegisterSignal(living_mob, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 	RegisterSignals(living_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), PROC_REF(on_click_sting))
 	ADD_TRAIT(living_mob, TRAIT_FAKE_SOULLESS, CHANGELING_TRAIT)
+	ADD_TRAIT(living_mob, TRAIT_BRAINLESS_CARBON, CHANGELING_TRAIT)
 
 	if(living_mob.hud_used)
 		var/datum/hud/hud_used = living_mob.hud_used
@@ -203,6 +204,7 @@
 	handle_clown_mutation(living_mob, removing = FALSE)
 	UnregisterSignal(living_mob, list(COMSIG_MOB_LOGIN, COMSIG_LIVING_LIFE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
 	REMOVE_TRAIT(living_mob, TRAIT_FAKE_SOULLESS, CHANGELING_TRAIT)
+	REMOVE_TRAIT(living_mob, TRAIT_BRAINLESS_CARBON, CHANGELING_TRAIT)
 
 	if(living_mob.hud_used)
 		var/datum/hud/hud_used = living_mob.hud_used
@@ -219,7 +221,8 @@
 	return ..()
 
 /datum/antagonist/changeling/farewell()
-	to_chat(owner.current, span_userdanger("You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!"))
+	if(owner.current)
+		to_chat(owner.current, span_userdanger("You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!"))
 
 /*
  * Instantiate the cellular emporium for the changeling.
@@ -1022,7 +1025,7 @@
 	name = "\improper Headslug Changeling"
 	show_in_antagpanel = FALSE
 	give_objectives = FALSE
-	count_against_dynamic_roll_chance = FALSE
+	antag_flags = ANTAG_SKIP_GLOBAL_LIST
 
 	genetic_points = 5
 	total_genetic_points = 5

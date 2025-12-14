@@ -12,7 +12,7 @@
 	incompatible_modules = list(/obj/item/mod/module/bikehorn)
 	cooldown_time = 1 SECONDS
 
-/obj/item/mod/module/bikehorn/on_use()
+/obj/item/mod/module/bikehorn/on_use(mob/activator)
 	playsound(src, 'sound/items/bikehorn.ogg', 100, FALSE)
 	drain_power(use_energy_cost)
 

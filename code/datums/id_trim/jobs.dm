@@ -353,6 +353,7 @@
 		ACCESS_MORGUE,
 		ACCESS_SURGERY,
 		ACCESS_VIROLOGY,
+		ACCESS_PARAMEDIC,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -432,6 +433,7 @@
 		ACCESS_RC_ANNOUNCE,
 		ACCESS_SURGERY,
 		ACCESS_VIROLOGY,
+		ACCESS_PARAMEDIC,
 	)
 	minimal_wildcard_access = list(
 		ACCESS_CMO,
@@ -467,6 +469,8 @@
 		ACCESS_HOP,
 		)
 	job = /datum/job/clown
+	honorifics = list(" the Clown")
+	honorific_positions = HONORIFIC_POSITION_LAST_FULL | HONORIFIC_POSITION_NONE
 
 /datum/id_trim/job/cook
 	assignment = JOB_COOK
@@ -517,6 +521,7 @@
 		ACCESS_PSYCHOLOGY,
 		ACCESS_PHARMACY,
 		ACCESS_VIROLOGY,
+		ACCESS_PARAMEDIC,
 	)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -795,6 +800,7 @@
 		ACCESS_PHARMACY,
 		ACCESS_SURGERY,
 		ACCESS_VIROLOGY,
+		ACCESS_PARAMEDIC,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -823,6 +829,8 @@
 		ACCESS_HOP,
 		)
 	job = /datum/job/mime
+	honorifics = list(" the Mime")
+	honorific_positions = HONORIFIC_POSITION_LAST_FULL | HONORIFIC_POSITION_NONE
 
 /datum/id_trim/job/paramedic
 	assignment = JOB_PARAMEDIC
@@ -831,23 +839,26 @@
 	subdepartment_color = COLOR_MEDICAL_BLUE
 	sechud_icon_state = SECHUD_PARAMEDIC
 	minimal_access = list(
+		ACCESS_EXTERNAL_AIRLOCKS,
+		ACCESS_MEDICAL,
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_MORGUE,
+		ACCESS_MECH_MEDICAL,
+		ACCESS_PARAMEDIC,
+		)
+	extra_access = list(
 		ACCESS_BIT_DEN,
 		ACCESS_CARGO,
 		ACCESS_CONSTRUCTION,
 		ACCESS_HYDROPONICS,
-		ACCESS_MAINT_TUNNELS,
-		ACCESS_MECH_MEDICAL,
-		ACCESS_MEDICAL,
+		ACCESS_SURGERY,
+		ACCESS_VIROLOGY,
+		ACCESS_PHARMACY,
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_MINING,
 		ACCESS_MINING_STATION,
-		ACCESS_MORGUE,
 		ACCESS_SCIENCE,
 		ACCESS_SERVICE,
-		)
-	extra_access = list(
-		ACCESS_SURGERY,
-		ACCESS_VIROLOGY,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -1188,6 +1199,7 @@
 		ACCESS_PLUMBING,
 		ACCESS_SURGERY,
 		ACCESS_VIROLOGY,
+		ACCESS_PARAMEDIC,
 	)
 	honorifics = list("Orderly", "Officer")
 

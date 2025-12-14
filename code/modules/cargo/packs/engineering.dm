@@ -334,3 +334,13 @@
 	contains = list(/obj/machinery/power/portagrav = 1)
 	crate_name = "portable gravity unit crate"
 	crate_type = /obj/structure/closet/crate/engineering
+
+/datum/supply_pack/engineering/golfcart
+	name = "Golf Cart Parts Kit Crate"
+	desc = "Contains the parts to build a cart intended for moving heavy machinery and cargo across the station. \
+		Nanotrasen assumes no liability for carts operated as 'party wagons'."
+	cost = CARGO_CRATE_VALUE * 11
+	access_view = ACCESS_ENGINEERING
+	contains = list(/obj/item/golfcart_kit = 1, /obj/item/key/golfcart = 2, /obj/item/stock_parts/power_store/cell/lead = 1)
+	crate_name = "golf cart parts kit"
+	crate_type = /obj/structure/closet/crate/engineering

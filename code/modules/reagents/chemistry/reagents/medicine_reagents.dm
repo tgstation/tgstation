@@ -291,30 +291,34 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
 	taste_description = "sweetness and salt"
-	var/last_added = 0
-	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10 //So that normal blood regeneration can continue with salglu active
-	var/extra_regen = 0.25 // in addition to acting as temporary blood, also add about half this much to their actual blood per second
 	ph = 5.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+	/// Add about half this much extra blood regen per second.
+	var/extra_regen = 0.25
+
+	/// Add many extra units of blood per unit of saline.
+	var/dilution_per_unit = 5
+
+	/// Doesn't dilute blood beyond this point.
+	var/dilution_cap = BLOOD_VOLUME_NORMAL
+
+	/// Only supplements blood types that use this restoration chem.
+	var/required_restoration_chem = /datum/reagent/iron
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update = FALSE
+
 	if(SPT_PROB(18, seconds_per_tick))
 		need_mob_update = affected_mob.adjustBruteLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_biotype)
 		need_mob_update += affected_mob.adjustFireLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_biotype)
+
+	// Regen is handled here, dilution is handled in [living/proc/get_blood_volume]
 	var/datum/blood_type/blood_type = affected_mob.get_bloodtype()
-	// Only suppliments base blood types
-	if(blood_type?.restoration_chem != /datum/reagent/iron)
-		return need_mob_update ? UPDATE_MOB_HEALTH : null
-	if(last_added)
-		affected_mob.blood_volume -= last_added
-		last_added = 0
-	if(affected_mob.blood_volume < maximum_reachable) //Can only up to double your effective blood level.
-		var/amount_to_add = min(affected_mob.blood_volume, 5*volume)
-		var/new_blood_level = min(affected_mob.blood_volume + amount_to_add, maximum_reachable)
-		last_added = new_blood_level - affected_mob.blood_volume
-		affected_mob.blood_volume = new_blood_level + (extra_regen * REM * seconds_per_tick)
+	if(blood_type?.restoration_chem == required_restoration_chem)
+		affected_mob.adjust_blood_volume(extra_regen * REM * seconds_per_tick)
+
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -369,7 +373,7 @@
 	if(methods & (PATCH|TOUCH))
 		var/mob/living/carbon/exposed_carbon = exposed_mob
 		for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
-			surgery.speed_modifier = max(0.1, surgery.speed_modifier)
+			surgery.speed_modifier = min(0.9, surgery.speed_modifier)
 
 		if(show_message)
 			to_chat(exposed_carbon, span_danger("You feel your injuries fade away to nothing!") )
@@ -566,6 +570,87 @@
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
+/datum/reagent/medicine/albuterol
+	name = "Albuterol"
+	description = "A potent bronchodilator capable of increasing the amount of gas inhaled by the lungs. Is highly effective at shutting down asthma attacks, \
+		but only when inhaled. Overdose causes over-dilation, resulting in reduced lung function. "
+	taste_description = "bitter and salty air"
+	overdose_threshold = 30
+	color = "#8df5f0"
+	metabolization_rate = REAGENTS_METABOLISM
+	ph = 4
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/inhaler_canister
+
+	/// The decrement we will apply to the received_pressure_mult of our targets lungs.
+	var/pressure_mult_increment = 0.4
+	/// After this many cycles of overdose, we activate secondary effects.
+	var/secondary_overdose_effect_cycle_threshold = 40
+	/// We stop increasing stamina damage once we reach this number.
+	var/maximum_od_stamina_damage = 80
+
+/datum/reagent/medicine/albuterol/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+
+	if (!iscarbon(affected_mob))
+		return
+
+	// has additional effects on asthma, but that's handled in the quirk
+
+	RegisterSignal(affected_mob, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(holder_lost_organ))
+	RegisterSignal(affected_mob, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(holder_gained_organ))
+	var/mob/living/carbon/carbon_mob = affected_mob
+	var/obj/item/organ/lungs/holder_lungs = carbon_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
+	holder_lungs?.adjust_received_pressure_mult(pressure_mult_increment)
+
+/datum/reagent/medicine/albuterol/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+
+	if (!iscarbon(affected_mob))
+		return
+
+	UnregisterSignal(affected_mob, list(COMSIG_CARBON_LOSE_ORGAN, COMSIG_CARBON_GAIN_ORGAN))
+	var/mob/living/carbon/carbon_mob = affected_mob
+	var/obj/item/organ/lungs/holder_lungs = carbon_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
+	holder_lungs?.adjust_received_pressure_mult(-pressure_mult_increment)
+
+/datum/reagent/medicine/albuterol/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+
+	if (!iscarbon(affected_mob))
+		return
+
+	var/mob/living/carbon/carbon_mob = affected_mob
+	if (SPT_PROB(25, seconds_per_tick))
+		carbon_mob.adjust_jitter_up_to(2 SECONDS, 20 SECONDS)
+	if (SPT_PROB(35, seconds_per_tick))
+		if (prob(60))
+			carbon_mob.losebreath += 1
+			to_chat(affected_mob, span_danger("Your diaphram spasms and you find yourself unable to breathe!"))
+		else
+			carbon_mob.breathe(seconds_per_tick, times_fired)
+			to_chat(affected_mob, span_danger("Your diaphram spasms and you unintentionally take a breath!"))
+
+	if (current_cycle > secondary_overdose_effect_cycle_threshold)
+		if (SPT_PROB(30, seconds_per_tick))
+			carbon_mob.adjust_eye_blur_up_to(6 SECONDS, 30 SECONDS)
+		if (carbon_mob.getStaminaLoss() < maximum_od_stamina_damage)
+			carbon_mob.adjustStaminaLoss(seconds_per_tick)
+
+/datum/reagent/medicine/albuterol/proc/holder_lost_organ(datum/source, obj/item/organ/lost)
+	SIGNAL_HANDLER
+
+	if (istype(lost, /obj/item/organ/lungs))
+		var/obj/item/organ/lungs/holder_lungs = lost
+		holder_lungs.adjust_received_pressure_mult(-pressure_mult_increment)
+
+/datum/reagent/medicine/albuterol/proc/holder_gained_organ(datum/source, obj/item/organ/gained)
+	SIGNAL_HANDLER
+
+	if (istype(gained, /obj/item/organ/lungs))
+		var/obj/item/organ/lungs/holder_lungs = gained
+		holder_lungs.adjust_received_pressure_mult(pressure_mult_increment)
+
 /datum/reagent/medicine/ephedrine
 	name = "Ephedrine"
 	description = "Increases resistance to batons and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing."
@@ -637,6 +722,7 @@
 	name = "Morphine"
 	description = "A painkiller that allows the patient to move at full speed even when injured. Causes drowsiness and eventually unconsciousness in high doses. Overdose will cause a variety of effects, ranging from minor to lethal."
 	color = "#A9FBFB"
+	taste_description = "a perfumy, bitter vanilla"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	ph = 8.96
@@ -747,7 +833,7 @@
 		if(eyes.apply_organ_damage(-2 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
 			. = UPDATE_MOB_HEALTH
 		// If our eyes are seriously damaged, we have a probability of causing eye blur while healing depending on purity
-		if(eyes.damaged && IS_ORGANIC_ORGAN(eyes) && SPT_PROB(16 - min(normalized_purity * 6, 12), seconds_per_tick))
+		if(eyes.damage >= eyes.low_threshold && IS_ORGANIC_ORGAN(eyes) && SPT_PROB(16 - min(normalized_purity * 6, 12), seconds_per_tick))
 			// While healing, gives some eye blur
 			if(affected_mob.is_blind_from(EYE_DAMAGE))
 				to_chat(affected_mob, span_warning("Your vision slowly returns..."))
@@ -847,7 +933,9 @@
 	var/obj/item/organ/ears/ears = affected_mob.get_organ_slot(ORGAN_SLOT_EARS)
 	if(!ears)
 		return
-	ears.adjustEarDamage(-4 * REM * seconds_per_tick * normalise_creation_purity(), -4 * REM * seconds_per_tick * normalise_creation_purity())
+	var/multiplier = REM * seconds_per_tick * normalise_creation_purity()
+	ears.apply_organ_damage(-4 * multiplier)
+	ears.adjust_temporary_deafness(-8 * multiplier)
 	return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/inacusiate/on_mob_delete(mob/living/affected_mob)
@@ -895,7 +983,8 @@
 
 /datum/reagent/medicine/epinephrine
 	name = "Epinephrine"
-	description = "Very minor boost to stun resistance. Slowly heals damage if a patient is in critical condition, as well as regulating oxygen loss. Overdose causes weakness and toxin damage."
+	description = "Stabilizes and slowly heals patients in critical condition, and slows suffocation. \
+		Also provides a very minor boost to stun resistance. Overdose causes weakness and toxin damage."
 	color = "#D2FFFA"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
@@ -1225,7 +1314,7 @@
 		return
 
 	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
-		surgery.speed_modifier = max(surgery.speed_modifier  - 0.1, -0.9)
+		surgery.speed_modifier = min(surgery.speed_modifier  +  0.1, 1.1)
 
 /datum/reagent/medicine/stimulants
 	name = "Stimulants"
@@ -1697,6 +1786,7 @@
 	overdose_threshold = 50
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM //same as C2s
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_ANALGESIA)
 
 /datum/reagent/medicine/granibitaluri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1747,7 +1837,7 @@
 
 /datum/reagent/medicine/coagulant/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(!affected_mob.blood_volume || !affected_mob.all_wounds)
+	if(!CAN_HAVE_BLOOD(affected_mob) || !affected_mob.all_wounds)
 		return
 
 	var/datum/wound/bloodiest_wound
@@ -1768,7 +1858,7 @@
 
 /datum/reagent/medicine/coagulant/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(!affected_mob.blood_volume)
+	if(!CAN_HAVE_BLOOD(affected_mob))
 		return
 
 	if(SPT_PROB(7.5, seconds_per_tick))
@@ -1837,3 +1927,38 @@
 		if(affected_mob.adjustStaminaLoss(10 * REM * seconds_per_tick, updating_stamina = FALSE))
 			. = UPDATE_MOB_HEALTH
 	affected_mob.adjust_disgust(-10 * REM * seconds_per_tick)
+
+/datum/reagent/medicine/naloxone
+	name = "Naloxone"
+	description = "Opioid antagonist that purges drowsiness and narcotics from the patient, restores breath loss and accelerates addiction recovery."
+	color = "#f5f5dc"
+	metabolization_rate = 0.2 * REM
+	ph = 4
+	penetrates_skin = TOUCH|VAPOR
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_ADDICTIONRESILIENT)
+	var/static/list/opiates_to_clear = list(
+		/datum/reagent/medicine/morphine,
+		/datum/reagent/impedrezene,
+		/datum/reagent/toxin/fentanyl,
+		/datum/reagent/drug/krokodil,
+		/datum/reagent/inverse/krokodil,
+	)
+
+/datum/reagent/medicine/naloxone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	for(var/opiate in opiates_to_clear)
+		holder.remove_reagent(opiate, 3 * REM * seconds_per_tick)
+
+	if(affected_mob.mob_mood?.get_mood_event("numb"))
+		affected_mob.clear_mood_event("numb")
+		affected_mob.add_mood_event("not numb", /datum/mood_event/antinarcotic_medium)
+
+	if(affected_mob.mob_mood?.get_mood_event("smacked out"))
+		affected_mob.clear_mood_event("smacked out")
+		affected_mob.add_mood_event("not smacked out", /datum/mood_event/antinarcotic_heavy)
+
+	affected_mob.adjust_drowsiness(-5 SECONDS * REM * seconds_per_tick)
+	if(affected_mob.losebreath >= 1)
+		affected_mob.losebreath -= 1 * REM * seconds_per_tick
+		return UPDATE_MOB_HEALTH

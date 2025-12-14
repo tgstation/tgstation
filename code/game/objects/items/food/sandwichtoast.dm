@@ -30,9 +30,9 @@
 	custom_materials = null
 
 /obj/item/food/sandwich/cheese/make_grillable()
-	AddComponent(/datum/component/grillable, /obj/item/food/sandwich/cheese/grilled, rand(30 SECONDS, 60 SECONDS), TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/sandwich/grilled_cheese, rand(30 SECONDS, 60 SECONDS), TRUE)
 
-/obj/item/food/sandwich/cheese/grilled
+/obj/item/food/sandwich/grilled_cheese
 	name = "grilled cheese sandwich"
 	desc = "A warm, melty sandwich that goes perfectly with tomato soup."
 	icon_state = "toastedsandwich"
@@ -43,8 +43,10 @@
 		/datum/reagent/carbon = 4,
 	)
 	tastes = list("toast" = 2, "cheese" = 3, "butter" = 1)
+	foodtypes = GRAIN | DAIRY
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = null
 
 /obj/item/food/sandwich/jelly
 	name = "jelly sandwich"

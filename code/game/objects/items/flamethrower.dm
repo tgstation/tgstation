@@ -25,7 +25,9 @@
 	var/lit = FALSE //on or off
 	var/operating = FALSE//cooldown
 	var/obj/item/weldingtool/weldtool = null
+	/// The igniter stored in the flamethrower
 	var/obj/item/assembly/igniter/igniter = null
+	/// The plasma tank that we shoot gas from
 	var/obj/item/tank/internals/plasma/ptank = null
 	var/warned_admins = FALSE //for the message_admins() when lit
 	//variables for prebuilt flamethrowers
@@ -94,9 +96,9 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/flamethrower/wrench_act(mob/living/user, obj/item/tool)
-	. = TRUE
+	. = ITEM_INTERACT_SUCCESS
 	if(status)
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	tool.play_tool_sound(src)
 	var/turf/T = get_turf(src)
 	if(weldtool)
@@ -119,34 +121,34 @@
 		update_appearance()
 		return TRUE
 
-/obj/item/flamethrower/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(isigniter(W))
-		var/obj/item/assembly/igniter/I = W
-		if(I.secured)
-			return
+/obj/item/flamethrower/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(isigniter(tool))
+		var/obj/item/assembly/igniter/inserting_igniter = tool
+		if(inserting_igniter.secured)
+			return ITEM_INTERACT_BLOCKING
 		if(igniter)
-			return
-		if(!user.transferItemToLoc(W, src))
-			return
-		igniter = I
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		igniter = inserting_igniter
 		update_appearance()
-		return
-
-	else if(istype(W, /obj/item/tank/internals/plasma))
+		balloon_alert(user, "attached")
+		return ITEM_INTERACT_SUCCESS
+	if(istype(tool, /obj/item/tank/internals/plasma))
 		if(ptank)
-			if(user.transferItemToLoc(W,src))
-				ptank.forceMove(get_turf(src))
-				ptank = W
-				to_chat(user, span_notice("You swap the plasma tank in [src]!"))
-			return
-		if(!user.transferItemToLoc(W, src))
-			return
-		ptank = W
+			if(!user.transferItemToLoc(tool, src))
+				return ITEM_INTERACT_BLOCKING
+			ptank.forceMove(get_turf(src))
+			ptank = tool
+			to_chat(user, span_notice("You swap the plasma tank in [src]!"))
+			return ITEM_INTERACT_SUCCESS
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		ptank = tool
 		update_appearance()
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	else
-		return ..()
+	return NONE
 
 /obj/item/flamethrower/return_analyzable_air()
 	if(ptank)
@@ -237,6 +239,14 @@
 
 /obj/item/flamethrower/Initialize(mapload)
 	. = ..()
+	AddComponent(\
+	/datum/component/bullet_intercepting,\
+		block_chance = 15,\
+		on_intercepted = CALLBACK(src, PROC_REF(intercepted_bullet_reaction)),\
+		active_slots = ITEM_SLOT_HANDS,\
+		block_type = list(BULLET,LASER),\
+		is_blocking_check = CALLBACK(src, PROC_REF(check_tank)),\
+	)
 	if(create_full)
 		if(!weldtool)
 			weldtool = new /obj/item/weldingtool(src)
@@ -256,15 +266,15 @@
 /obj/item/flamethrower/full/tank
 	create_with_tank = TRUE
 
-/obj/item/flamethrower/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(damage && attack_type == PROJECTILE_ATTACK && damage_type != STAMINA && prob(15))
-		owner.visible_message(span_danger("\The [attack_text] hits the fuel tank on [owner]'s [name], rupturing it! What a shot!"))
-		var/turf/target_turf = get_turf(owner)
-		owner.log_message("held a flamethrower tank detonated by a projectile ([hitby])", LOG_GAME)
-		igniter.ignite_turf(src,target_turf, release_amount = 100)
-		qdel(ptank)
-		return 1 //It hit the flamethrower, not them
+/obj/item/flamethrower/proc/intercepted_bullet_reaction(mob/living/holder, obj/projectile/bullet)
+	holder.visible_message(span_danger("\The [bullet] hits the fuel tank on [holder]'s [name], rupturing it! What a shot!"))
+	var/turf/target_turf = get_turf(holder)
+	holder.log_message("held a flamethrower tank detonated by a projectile ([bullet])", LOG_GAME)
+	igniter.ignite_turf(src,target_turf, release_amount = 100)
+	qdel(ptank)
 
+/obj/item/flamethrower/proc/check_tank()
+	return ptank
 
 /obj/item/assembly/igniter/proc/flamethrower_process(turf/open/location)
 	location.hotspot_expose(heat,2)

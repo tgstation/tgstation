@@ -27,12 +27,30 @@
 
 /datum/material/hauntium/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
-	if(isobj(source))
-		var/obj/obj = source
-		obj.make_haunted(INNATE_TRAIT, "#f8f8ff")
+	if(!isobj(source))
+		return
+	var/obj/obj = source
+	obj.make_haunted(INNATE_TRAIT, "#f8f8ff")
+	if(isbodypart(source))
+		var/obj/item/bodypart/bodypart = source
+		if(!(bodypart::bodytype & BODYTYPE_GHOST))
+			bodypart.bodytype |= BODYTYPE_GHOST
+	if(isorgan(source))
+		var/obj/item/organ/organ = source
+		if(!(organ::organ_flags & ORGAN_GHOST))
+			organ.organ_flags |= ORGAN_GHOST
 
 /datum/material/hauntium/on_main_removed(atom/source, mat_amount, multiplier)
 	. = ..()
-	if(isobj(source))
-		var/obj/obj = source
-		obj.remove_haunted(INNATE_TRAIT)
+	if(!isobj(source))
+		return
+	var/obj/obj = source
+	obj.remove_haunted(INNATE_TRAIT)
+	if(isbodypart(source))
+		var/obj/item/bodypart/bodypart = source
+		if(!(bodypart::bodytype & BODYTYPE_GHOST))
+			bodypart.bodytype &= ~BODYTYPE_GHOST
+	if(isorgan(source))
+		var/obj/item/organ/organ = source
+		if(!(organ::organ_flags & ORGAN_GHOST))
+			organ.organ_flags &= ~ORGAN_GHOST

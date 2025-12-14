@@ -34,5 +34,5 @@
 
 /mob/living/basic/heretic_summon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/death_drops, string_list(list(/obj/effect/gibspawner/generic)))
+	AddElement(/datum/element/death_drops, /obj/effect/gibspawner/generic)
 	ADD_TRAIT(src, TRAIT_HERETIC_SUMMON, INNATE_TRAIT)

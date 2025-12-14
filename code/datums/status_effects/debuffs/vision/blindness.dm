@@ -68,7 +68,8 @@
 /atom/movable/screen/alert/status_effect/blind
 	name = "Blind"
 	desc = "You can't see! This may be caused by a genetic defect, eye trauma, being unconscious, or something covering your eyes."
-	icon_state = "blind"
+	use_user_hud_icon = TRUE
+	overlay_state = "blind"
 
 /// This status effect handles applying a temporary blind to the mob.
 /datum/status_effect/temporary_blindness

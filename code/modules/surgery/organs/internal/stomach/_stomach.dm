@@ -24,6 +24,10 @@
 	//This is a reagent user and needs more then the 10u from edible component
 	reagent_vol = 1000
 
+	cell_line = CELL_LINE_ORGAN_STOMACH
+	cells_minimum = 1
+	cells_maximum = 2
+
 	///The rate that disgust decays
 	var/disgust_metabolism = 1
 
@@ -329,7 +333,7 @@
 	if (isliving(nomnom)) // NO VORE ALLOWED
 		return 0
 	// Yeah maybe don't, if something edible ended up here it should either handle itself or not be digested
-	if (IsEdible(nomnom))
+	if (IS_EDIBLE(nomnom))
 		return 0
 	if (HAS_TRAIT(owner, TRAIT_STRONG_STOMACH))
 		return 10
@@ -517,7 +521,7 @@
 /obj/item/organ/stomach/cybernetic/tier2/stomach_acid_power(atom/movable/nomnom)
 	if (isliving(nomnom))
 		return 0
-	if (IsEdible(nomnom))
+	if (IS_EDIBLE(nomnom))
 		return 0
 	return 20
 
@@ -530,10 +534,10 @@
 	emp_vulnerability = 20
 	metabolism_efficiency = 0.1
 
-/obj/item/organ/stomach/cybernetic/tier2/stomach_acid_power(atom/movable/nomnom)
+/obj/item/organ/stomach/cybernetic/tier3/stomach_acid_power(atom/movable/nomnom)
 	if (isliving(nomnom))
 		return 0
-	if (IsEdible(nomnom))
+	if (IS_EDIBLE(nomnom))
 		return 0
 	return 35
 
@@ -557,5 +561,21 @@
 	desc = "A green plant-like organ that functions similarly to a human stomach."
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
 	color = COLOR_LIME
+
+/obj/item/organ/stomach/ghost
+	name = "ghost stomach"
+	desc = "Ghosts eat plenty, you know? And it's not just your life, I swear!"
+	icon_state = "stomach-ghost"
+	movement_type = PHASING
+	organ_flags = parent_type::organ_flags | ORGAN_GHOST
+
+/obj/item/organ/stomach/evolved
+	name = "evolved stomach"
+	desc = "It can draw nutrients from your food even harder!"
+	icon_state = "stomach-evolved"
+
+	maxHealth = 1.2 * STANDARD_ORGAN_THRESHOLD
+	disgust_metabolism = 2.5
+	metabolism_efficiency = 0.08
 
 #undef STOMACH_METABOLISM_CONSTANT

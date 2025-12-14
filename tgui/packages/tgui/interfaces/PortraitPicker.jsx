@@ -10,11 +10,11 @@ export const PortraitPicker = (props) => {
   const [listIndex, setListIndex] = useState(0);
   const { paintings, search_string, search_mode } = data;
   const got_paintings = !!paintings.length;
-  const current_portrait_title = got_paintings && paintings[listIndex]['title'];
+  const current_portrait_title = got_paintings && paintings[listIndex].title;
   const current_portrait_author =
-    got_paintings && 'By ' + paintings[listIndex]['creator'];
+    got_paintings && `By ${paintings[listIndex].creator}`;
   const current_portrait_asset_name =
-    got_paintings && 'paintings' + '_' + paintings[listIndex]['md5'];
+    got_paintings && `paintings_${paintings[listIndex].md5}`;
 
   return (
     <Window theme="ntos" title="Portrait Picker" width={400} height={406}>
@@ -103,7 +103,7 @@ export const PortraitPicker = (props) => {
                         disabled={!got_paintings}
                         onClick={() =>
                           act('select', {
-                            selected: paintings[listIndex]['ref'],
+                            selected: paintings[listIndex].ref,
                           })
                         }
                       />

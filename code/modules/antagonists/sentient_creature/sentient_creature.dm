@@ -2,7 +2,7 @@
 	name = "\improper Sentient Creature"
 	show_in_antagpanel = FALSE
 	show_in_roundend = FALSE
-	count_against_dynamic_roll_chance = FALSE
+	antag_flags = ANTAG_FAKE|ANTAG_SKIP_GLOBAL_LIST
 	ui_name = "AntagInfoSentient"
 
 /datum/antagonist/sentient_creature/get_preview_icon()
@@ -23,6 +23,11 @@
 	var/mob/living/master = owner.enslaved_to?.resolve()
 	if(master)
 		owner.current.copy_languages(master, LANGUAGE_MASTER)
+		ADD_TRAIT(owner, TRAIT_UNCONVERTABLE, REF(src))
+	return ..()
+
+/datum/antagonist/sentient_creature/on_removal()
+	REMOVE_TRAIT(owner, TRAIT_UNCONVERTABLE, REF(src))
 	return ..()
 
 /datum/antagonist/sentient_creature/ui_static_data(mob/user)

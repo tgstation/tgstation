@@ -76,6 +76,17 @@
 /**
  * public
  *
+ * Will force an update on non-static data for all viewers.
+ * Use when you are manually controlling UI data updates,
+ * such as when you are not using the auto-update system.
+ */
+/datum/proc/update_data_for_all_viewers()
+	for(var/datum/tgui/ui as anything in open_uis)
+		ui.send_update()
+
+/**
+ * public
+ *
  * Called on a UI when the UI receieves a href.
  * Think of this as Topic().
  *

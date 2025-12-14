@@ -158,7 +158,7 @@
 			to_chat(src, span_warning("[offered.p_Theyre()] unable to take anything in [offered.p_their()] current state!"))
 			return
 
-		if(!CanReach(offered))
+		if(!offered.IsReachableBy(src))
 			to_chat(src, span_warning("You have to be beside [offered.p_them()]!"))
 			return
 

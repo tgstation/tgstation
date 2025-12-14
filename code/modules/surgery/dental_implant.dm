@@ -21,17 +21,17 @@
 		count++
 
 	if(teeth_receptangle.teeth_count == 0)
-		to_chat(user, span_notice("[user] has no teeth, doofus!"))
+		to_chat(user, span_notice("[target] has no teeth, doofus!"))
 		return SURGERY_STEP_FAIL
 
 	if(count >= teeth_receptangle.teeth_count)
-		to_chat(user, span_notice("[user]'s teeth have all been replaced with pills already!"))
+		to_chat(user, span_notice("[target]'s teeth have all been replaced with pills already!"))
 		return SURGERY_STEP_FAIL
 
 /datum/surgery_step/insert_pill
 	name = "insert pill"
 	implements = list(/obj/item/reagent_containers/applicator/pill = 100)
-	time = 16
+	time = 1.6 SECONDS
 
 /datum/surgery_step/insert_pill/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 

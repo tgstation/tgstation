@@ -1,0 +1,5 @@
+cig_pack_drop[1,2].ogg - grungussusss, license: CC-BY-SA
+cig_pack_insert[1,...,4].ogg - grungussusss, license: CC-BY-SA
+cig_pack_pickup[1,2,3].ogg - grungussusss, license: CC-BY-SA
+cig_pack_rustle[1,...,6].ogg - grungussusss, license: CC-BY-SA
+cig_pack_throw_drop.ogg - grungussusss, license: CC-BY-SA

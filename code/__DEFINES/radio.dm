@@ -4,61 +4,78 @@
 
 #define RADIO_CHANNEL_COMMON "Common"
 #define RADIO_KEY_COMMON ";"
+#define RADIO_COLOR_COMMON "#1ecc43"
 
 #define RADIO_CHANNEL_SECURITY "Security"
 #define RADIO_KEY_SECURITY "s"
 #define RADIO_TOKEN_SECURITY ":s"
+#define RADIO_COLOR_SECURITY "#dd3535"
 
 #define RADIO_CHANNEL_ENGINEERING "Engineering"
 #define RADIO_KEY_ENGINEERING "e"
 #define RADIO_TOKEN_ENGINEERING ":e"
+#define RADIO_COLOR_ENGINEERING "#f37746"
 
 #define RADIO_CHANNEL_COMMAND "Command"
 #define RADIO_KEY_COMMAND "c"
 #define RADIO_TOKEN_COMMAND ":c"
+#define RADIO_COLOR_COMMAND "#fcdf03"
 
 #define RADIO_CHANNEL_SCIENCE "Science"
 #define RADIO_KEY_SCIENCE "n"
 #define RADIO_TOKEN_SCIENCE ":n"
+#define RADIO_COLOR_SCIENCE "#c68cfa"
 
 #define RADIO_CHANNEL_MEDICAL "Medical"
 #define RADIO_KEY_MEDICAL "m"
 #define RADIO_TOKEN_MEDICAL ":m"
+#define RADIO_COLOR_MEDICAL "#57b8f0"
 
 #define RADIO_CHANNEL_SUPPLY "Supply"
 #define RADIO_KEY_SUPPLY "u"
 #define RADIO_TOKEN_SUPPLY ":u"
+#define RADIO_COLOR_SUPPLY "#b88646"
 
 #define RADIO_CHANNEL_SERVICE "Service"
 #define RADIO_KEY_SERVICE "v"
 #define RADIO_TOKEN_SERVICE ":v"
+#define RADIO_COLOR_SERVICE "#6ca729"
 
 #define RADIO_CHANNEL_AI_PRIVATE "AI Private"
 #define RADIO_KEY_AI_PRIVATE "o"
 #define RADIO_TOKEN_AI_PRIVATE ":o"
+#define RADIO_COLOR_AI_PRIVATE "#d65d95"
 
 #define RADIO_CHANNEL_ENTERTAINMENT "Entertainment"
 #define RADIO_KEY_ENTERTAINMENT "p"
 #define RADIO_TOKEN_ENTERTAINMENT ":p"
+#define RADIO_COLOR_ENTERTAIMENT "#79c5a8"
 
 #define STATUS_DISPLAY_RELAY "Captain-Cast"
 
 #define RADIO_CHANNEL_SYNDICATE "Syndicate"
 #define RADIO_KEY_SYNDICATE "t"
 #define RADIO_TOKEN_SYNDICATE ":t"
+#define RADIO_COLOR_SYNDICATE "#8f4a4b"
 
 #define RADIO_CHANNEL_CENTCOM "CentCom"
 #define RADIO_KEY_CENTCOM "y"
 #define RADIO_TOKEN_CENTCOM ":y"
+#define RADIO_COLOR_CENTCOM "#2681a5"
 
 #define RADIO_CHANNEL_UPLINK "Uplink"
 #define RADIO_KEY_UPLINK "z"
 #define RADIO_TOKEN_UPLINK ":z"
+#define RADIO_COLOR_UPLINK "#8f4a4b"
 
 #define RADIO_CHANNEL_CTF_RED "Red Team"
+#define RADIO_COLOR_CTF_RED "#ff0000"
 #define RADIO_CHANNEL_CTF_BLUE "Blue Team"
+#define RADIO_COLOR_CTF_BLUE "#0000ff"
 #define RADIO_CHANNEL_CTF_GREEN "Green Team"
+#define RADIO_COLOR_GREEN "#00ff00"
 #define RADIO_CHANNEL_CTF_YELLOW "Yellow Team"
+#define RADIO_COLOR_YELLOW "#d1ba22"
 
 
 #define MIN_FREE_FREQ 1201 // -------------------------------------------------

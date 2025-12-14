@@ -94,8 +94,8 @@ export class IntegratedCircuit extends Component {
     position.color = port.color;
 
     if (
-      isNaN(position.x) ||
-      isNaN(position.y) ||
+      Number.isNaN(position.x) ||
+      Number.isNaN(position.y) ||
       (lastPosition &&
         lastPosition.x === position.x &&
         lastPosition.y === position.y)
@@ -348,8 +348,8 @@ export class IntegratedCircuit extends Component {
     act('add_setter_or_getter', {
       variable: draggingVariable,
       is_setter: variableIsSetter,
-      rel_x: xPos * Math.pow(zoom, -1),
-      rel_y: (yPos + ABSOLUTE_Y_OFFSET) * Math.pow(zoom, -1),
+      rel_x: xPos * zoom ** -1,
+      rel_y: (yPos + ABSOLUTE_Y_OFFSET) * zoom ** -1,
     });
   }
 
@@ -384,8 +384,8 @@ export class IntegratedCircuit extends Component {
 
     act('print_component', {
       component_to_print: draggingComponent.type,
-      rel_x: xPos * Math.pow(zoom, -1),
-      rel_y: (yPos + ABSOLUTE_Y_OFFSET) * Math.pow(zoom, -1),
+      rel_x: xPos * zoom ** -1,
+      rel_y: (yPos + ABSOLUTE_Y_OFFSET) * zoom ** -1,
     });
   }
 
@@ -429,7 +429,7 @@ export class IntegratedCircuit extends Component {
         for (const output of input.connected_to) {
           const output_port = locations[output];
           connections.push({
-            color: (output_port && output_port.color) || 'blue',
+            color: output_port?.color || 'blue',
             from: output_port,
             to: locations[input.ref],
           });
@@ -442,11 +442,11 @@ export class IntegratedCircuit extends Component {
       const isOutput = selectedPort.is_output;
       const portLocation = locations[selectedPort.ref];
       const mouseCoords = {
-        x: mouseX * Math.pow(zoom, -1),
-        y: (mouseY + ABSOLUTE_Y_OFFSET) * Math.pow(zoom, -1),
+        x: mouseX * zoom ** -1,
+        y: (mouseY + ABSOLUTE_Y_OFFSET) * zoom ** -1,
       };
       connections.push({
-        color: (portLocation && portLocation.color) || 'blue',
+        color: portLocation?.color || 'blue',
         from: isOutput ? portLocation : mouseCoords,
         to: isOutput ? mouseCoords : portLocation,
       });

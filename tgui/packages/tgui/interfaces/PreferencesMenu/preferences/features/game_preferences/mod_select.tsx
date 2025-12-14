@@ -1,4 +1,4 @@
-import { Feature } from '../base';
+import type { Feature } from '../base';
 import { FeatureDropdownInput } from '../dropdowns';
 
 export const mod_select: Feature<string> = {

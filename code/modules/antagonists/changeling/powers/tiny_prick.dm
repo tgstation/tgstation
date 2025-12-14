@@ -2,7 +2,7 @@
 	name = "Tiny Prick"
 	desc = "Stabby stabby"
 
-/datum/action/changeling/sting/Trigger(trigger_flags)
+/datum/action/changeling/sting/Trigger(mob/clicker, trigger_flags)
 	var/mob/user = owner
 	if(!user || !user.mind)
 		return
@@ -166,7 +166,7 @@
 
 	var/obj/item/held = target.get_active_held_item()
 	if(held && !target.dropItemToGround(held))
-		to_chat(user, span_warning("[held] is stuck to [target.p_their()] hand, you cannot grow a false armblade over it!"))
+		to_chat(user, span_warning("[held] is stuck to [target.p_their()] hand, we cannot grow a false armblade over it!"))
 		return
 
 	..()
@@ -193,7 +193,7 @@
 /datum/action/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
 	desc = "We stealthily sting a target and extract their DNA. Costs 25 chemicals."
-	helptext = "Will give you the DNA of your target, allowing you to transform into them."
+	helptext = "Will give us the DNA of our target, allowing us to transform into them. This will render us unable to absorb their body fully later."
 	button_icon_state = "sting_extract"
 	chemical_cost = 25
 	dna_cost = 0

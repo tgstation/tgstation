@@ -291,7 +291,7 @@
 
 /datum/controller/subsystem/stat_entry(msg)
 	if(can_fire && !(SS_NO_FIRE & flags) && init_stage <= Master.init_stage_completed)
-		msg = "[round(cost,1)]ms|[round(tick_usage,1)]%([round(tick_overrun,1)]%)|[round(ticks,0.1)]\t[msg]"
+		msg = "[round(cost,1)]ms|[round(tick_usage,1)]%([round(tick_overrun,1)]%)|[round(ticks,0.1)] [msg]"
 	else
 		msg = "OFFLINE\t[msg]"
 	return msg

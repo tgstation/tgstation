@@ -74,9 +74,10 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "mQ" = (
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
@@ -103,9 +104,10 @@
 /area/icemoon/underground/explored)
 "pi" = (
 /obj/effect/turf_decal/weather/snow/corner,
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)
@@ -121,17 +123,19 @@
 /area/icemoon/underground/explored)
 "rx" = (
 /obj/structure/flora/rock/pile/icy,
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "rI" = (
 /obj/effect/decal/cleanable/glass,
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)
@@ -151,9 +155,10 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "uN" = (
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)
@@ -161,9 +166,10 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)
@@ -171,9 +177,10 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)
@@ -215,9 +222,10 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)
@@ -303,9 +311,10 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/glitter/blue{
+/obj/effect/decal/cleanable/glitter{
 	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
+	name = "icy wind";
+	color = "4040ff"
 	},
 /turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)

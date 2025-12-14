@@ -169,6 +169,7 @@
 
 /datum/ai_controller/basic_controller/frog/trash
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/random_speech/frog,
 		/datum/ai_planning_subtree/simple_find_target,

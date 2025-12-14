@@ -24,31 +24,34 @@
 ///How fast the game will speed up when half the players are gone.
 #define MAFIA_SPEEDUP_INCREASE 2
 
-#define MAFIA_TEAM_TOWN "town"
-#define MAFIA_TEAM_MAFIA "mafia"
-#define MAFIA_TEAM_SOLO "solo"
+//'Team' flags, used to know which alliance your role is part of.
+#define MAFIA_TEAM_TOWN (1<<0)
+#define MAFIA_TEAM_MAFIA (1<<1)
+#define MAFIA_TEAM_SOLO (1<<2)
+//those part of the 'dead' faction can hear dead chat, not a "faction" of players.
+#define MAFIA_TEAM_DEAD (1<<3)
 
 //types of town roles for random setup gen
 /// Add this if you don't want a role to be a choice in the selection
-#define TOWN_OVERFLOW "overflow"
+#define TOWN_OVERFLOW "town overflow"
 /// roles that learn info about others in the game (chaplain, detective, psych)
-#define TOWN_INVEST "invest"
+#define TOWN_INVEST "town invest"
 /// roles that keep other roles safe (doctor, sec officer, and weirdly enough lawyer counts)
-#define TOWN_PROTECT "protect"
+#define TOWN_PROTECT "town protect"
 /// roles that are only there to kill bad guys.
-#define TOWN_KILLING "killing"
+#define TOWN_KILLING "town killing"
 /// roles that don't fit into anything else (hop)
-#define TOWN_SUPPORT "support"
+#define TOWN_SUPPORT "town support"
 
 //other types (mafia team, neutrals)
 /// normal vote kill changelings
-#define MAFIA_REGULAR "regular"
+#define MAFIA_REGULAR "mafia"
 /// every other changeling role that has extra abilities
-#define MAFIA_SPECIAL "special"
+#define MAFIA_SPECIAL "mafia special"
 /// role that wins solo that nobody likes
-#define NEUTRAL_KILL "kill"
+#define NEUTRAL_KILL "neutral killing"
 /// role that upsets the game aka obsessed, usually worse for town than mafia but they can vote against mafia
-#define NEUTRAL_DISRUPT "disrupt"
+#define NEUTRAL_DISRUPT "neutral chaos"
 
 //role flags (special status of roles like detection immune)
 ///to all forms of detection, shows themselves as an assistant.

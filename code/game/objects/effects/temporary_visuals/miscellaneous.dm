@@ -245,8 +245,10 @@
 		setDir(mimiced_atom.dir)
 		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/obj/effect/temp_visual/decoy/fading/Initialize(mapload, atom/mimiced_atom)
+/obj/effect/temp_visual/decoy/fading/Initialize(mapload, atom/mimiced_atom, start_alpha)
 	. = ..()
+	if (start_alpha)
+		alpha = start_alpha
 	animate(src, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/decoy/fading/threesecond
@@ -752,7 +754,7 @@
 	name = "mech attack aoe charge"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "mech_attack_aoe_charge"
-	duration = 1 SECONDS
+	duration = 0.5 SECONDS
 	pixel_x = -32
 	pixel_y = -32
 
@@ -802,3 +804,24 @@
 	color = COLOR_FULL_TONER_BLACK
 	duration = 12 SECONDS
 	amount_to_scale = 12
+
+/obj/effect/temp_visual/circle_wave/star_blast
+	color = COLOR_VOID_PURPLE
+
+/obj/effect/temp_visual/focus_ring
+	randomdir = FALSE
+	name = "ring"
+	icon_state = "focus_ring"
+	layer = BELOW_MOB_LAYER
+	duration = 2.5 SECONDS
+	pixel_y = -4
+	alpha = 0
+
+/obj/effect/temp_visual/focus_ring/Initialize(mapload)
+	. = ..()
+	animate(src, alpha = 100, time = 2 SECONDS, easing = QUAD_EASING|EASE_IN)
+	addtimer(CALLBACK(src, PROC_REF(dissipate)), 2 SECONDS)
+
+
+/obj/effect/temp_visual/focus_ring/proc/dissipate()
+	animate(src, alpha = 0, time = 0.5 SECONDS, easing = QUAD_EASING|EASE_OUT)

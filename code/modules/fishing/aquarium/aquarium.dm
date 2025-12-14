@@ -163,7 +163,7 @@
 		/datum/component/aquarium,\
 		min_px = 6,\
 		max_px = 26,\
-		min_py = 6,\
+		min_py = 7,\
 		max_py = 24,\
 		default_beauty = 100,\
 		reagents_size = src.reagent_size,\
@@ -247,6 +247,11 @@
 
 	force = min(2 + (GET_FISH_WEIGHT_RANK(current_summed_weight) * 3), 21)
 	throwforce = force
+
+/obj/item/fish_tank/examine(mob/user)
+	. = ..()
+	if(HAS_TRAIT_FROM(src, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, INNATE_TRAIT))
+		. += span_warning("It's cramped in there. There's no more room for fish to reproduce and grow!")
 
 ///The lawyer's own pet goldfish's fish tank. It used to be an aquarium, but now it can be held and carried around.
 /obj/item/fish_tank/lawyer

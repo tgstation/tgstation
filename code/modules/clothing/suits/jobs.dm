@@ -49,6 +49,7 @@
 	post_init_icon_state = "overalls"
 	inhand_icon_state = ""
 	body_parts_covered = CHEST|GROIN|LEGS
+	gender = PLURAL
 	species_exception = list(/datum/species/golem)
 	greyscale_config = /datum/greyscale_config/overalls
 	greyscale_config_worn = /datum/greyscale_config/overalls/worn
@@ -196,7 +197,7 @@
 /obj/item/clothing/suit/hazardvest/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, apply_bloom = FALSE)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
 /obj/item/clothing/suit/hazardvest/press // Variant used by the Curator
 	name = "press hazard vest"
@@ -214,6 +215,7 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	species_exception = list(/datum/species/golem)
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/suit/toggle/lawyer/purple
 	name = "purple formal suit jacket"
@@ -442,4 +444,4 @@
 /obj/item/clothing/suit/atmos_overalls/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)

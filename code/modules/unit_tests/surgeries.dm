@@ -68,7 +68,7 @@
 	TEST_ASSERT_EQUAL(alice.facial_hair_color, COLOR_LIGHT_BROWN, "Bob's head was transplanted onto Alice's body, but their facial hair color is not COLOR_LIGHT_BROWN")
 
 /datum/unit_test/multiple_surgeries/Run()
-	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent/slow)
 	var/mob/living/carbon/human/patient_zero = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/patient_one = allocate(/mob/living/carbon/human/consistent)
 
@@ -131,3 +131,25 @@
 	basic_brute_heal.success(user, clothed_patient, BODY_ZONE_CHEST)
 
 	TEST_ASSERT(naked_patient.getBruteLoss() < clothed_patient.getBruteLoss(), "Naked patient did not heal more from wounds tending than a clothed patient")
+
+/// Tests items-as-prosthetic-limbs can apply
+/datum/unit_test/prosthetic_item
+
+/datum/unit_test/prosthetic_item/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/claymore/sword = allocate(/obj/item/claymore)
+
+	patient.make_item_prosthetic(sword)
+
+	TEST_ASSERT(HAS_TRAIT_FROM(sword, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT), "Prosthetic item attachment failed! Item does not have the nodrop trait")
+
+/// Specifically checks the chainsaw nullrod
+/datum/unit_test/prosthetic_item/nullrod
+
+/datum/unit_test/prosthetic_item/nullrod/Run()
+	var/mob/living/carbon/human/picker = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/nullrod/chainsaw/nullrod = allocate(/obj/item/nullrod/chainsaw)
+
+	nullrod.on_selected(null, null, picker)
+
+	TEST_ASSERT(HAS_TRAIT_FROM(nullrod, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT), "Chainsaw nullrod item attachment failed! Item does not have the nodrop trait")

@@ -1,7 +1,7 @@
 /// Exploration event
 /datum/exploration_event
 	/// These types will be ignored in event creation
-	var/root_abstract_type = /datum/exploration_event
+	abstract_type = /datum/exploration_event
 	///This name will show up in exploration list if it's repeatable
 	var/name = "Something interesting"
 	/// encountered at least once
@@ -40,7 +40,7 @@
 
 /// Simple events, not a full fledged adventure, consist only of single encounter screen
 /datum/exploration_event/simple
-	root_abstract_type = /datum/exploration_event/simple
+	abstract_type = /datum/exploration_event/simple
 	var/ui_image = "default"
 	/// Show ignore button.
 	var/skippable = TRUE

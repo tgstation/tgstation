@@ -1,4 +1,4 @@
-import { createDropdownInput, Feature } from '../base';
+import { createDropdownInput, type Feature } from '../base';
 
 export const multiz_performance: Feature<number> = {
   name: 'Multi-Z Depth',

@@ -1,6 +1,10 @@
 /obj/item/clothing/head/utility
 	icon = 'icons/obj/clothing/head/utility.dmi'
 	worn_icon = 'icons/mob/clothing/head/utility.dmi'
+	sound_vary = TRUE
+	pickup_sound = SFX_HARD_HAT_PICKUP
+	drop_sound = SFX_HARD_HAT_DROP
+	equip_sound = SFX_HARD_HAT_EQUIP
 
 /obj/item/clothing/head/utility/hardhat
 	name = "hard hat"
@@ -118,6 +122,8 @@
 	name = "welding hard hat"
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight AND welding shield! The bulb seems a little smaller though."
 	light_range = 3 //Needs a little bit of tradeoff
+	toggle_message = "You pull the visor down"
+	alt_toggle_message = "You push the visor up"
 	dog_fashion = null
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_welding_screen)
 	flash_protect = FLASH_PROTECTION_WELDER
@@ -220,7 +226,7 @@
 /obj/item/clothing/head/utility/hardhat/welding/atmos/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
 /obj/item/clothing/head/utility/hardhat/pumpkinhead
 	name = "carved pumpkin"
@@ -241,6 +247,9 @@
 	worn_y_offset = 1
 	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
 	clothing_traits = list()
+	pickup_sound = null
+	drop_sound = null
+	equip_sound = null
 
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/Initialize(mapload)
 	. = ..()

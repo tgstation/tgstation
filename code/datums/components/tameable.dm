@@ -56,7 +56,6 @@
 /datum/component/tameable/proc/on_tame(atom/source, mob/living/tamer, obj/item/food, inform_tamer = FALSE)
 	SIGNAL_HANDLER
 	source.tamed(tamer, food)//Run custom behavior if needed
-
 	if(isliving(parent) && isliving(tamer))
 		INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, befriend), tamer)
 		if(inform_tamer)

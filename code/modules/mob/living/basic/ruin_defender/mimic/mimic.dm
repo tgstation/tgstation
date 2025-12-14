@@ -366,7 +366,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 
 /mob/living/basic/mimic/copy/machine
 	ai_controller = /datum/ai_controller/basic_controller/mimic_copy/machine
-	faction = list(FACTION_MIMIC, FACTION_SILICON)
+	faction = list(FACTION_MIMIC, FACTION_SILICON, FACTION_TURRET)
 
 /mob/living/basic/mimic/copy/ranged
 	icon = 'icons/turf/floors.dmi'

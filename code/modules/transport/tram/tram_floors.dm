@@ -15,7 +15,7 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	rcd_proof = TRUE
 
 /turf/open/floor/tram/examine(mob/user)
@@ -55,7 +55,7 @@
 	if(target == src)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
-	if(severity < EXPLODE_DEVASTATE && is_shielded())
+	if(is_explosion_shielded(severity))
 		return FALSE
 
 	switch(severity)

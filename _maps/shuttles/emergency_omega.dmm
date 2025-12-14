@@ -247,7 +247,7 @@
 /obj/machinery/stasis{
 	dir = 4
 	},
-/obj/machinery/vending/wallmed/directional/west{
+/obj/machinery/wall_healer/free/directional/west{
 	use_power = 0
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners{
@@ -500,7 +500,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/wallmed/directional/east{
+/obj/machinery/wall_healer/free/directional/east{
 	use_power = 0
 	},
 /obj/machinery/light/small/directional/east,
@@ -571,7 +571,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/wallmed/directional/west{
+/obj/machinery/wall_healer/free/directional/west{
 	use_power = 0
 	},
 /turf/open/floor/iron,

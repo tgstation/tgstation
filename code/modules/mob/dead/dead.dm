@@ -59,8 +59,8 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	var/client/hopper = client
 	to_chat(hopper, span_notice("Sending you to [pick]."))
-	var/atom/movable/screen/splash/fade_in = new(null, src, hopper, FALSE)
-	fade_in.Fade(FALSE)
+	var/atom/movable/screen/splash/fade_in = new(null, null, hopper, FALSE)
+	fade_in.fade(FALSE)
 
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, SERVER_HOPPER_TRAIT)
 	sleep(2.9 SECONDS) //let the animation play

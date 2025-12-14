@@ -204,7 +204,7 @@
 	text_gain_indication = span_notice("You feel pretty good, honeydoll.")
 	text_lose_indication = span_notice("You feel a little less conversation would be great.")
 
-/datum/mutation/chav/New(datum/mutation/copymut)
+/datum/mutation/elvis/New(datum/mutation/copymut)
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = strings("elvis_replacement.json", "elvis"))
 
@@ -231,12 +231,12 @@
 	if(!.)
 		return
 	owner.grant_language(/datum/language/beachbum, source = LANGUAGE_STONER)
-	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
+	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, source = LANGUAGE_STONER)
 
 /datum/mutation/stoner/on_losing(mob/living/carbon/human/owner)
 	..()
 	owner.remove_language(/datum/language/beachbum, source = LANGUAGE_STONER)
-	owner.remove_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
+	owner.remove_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, source = LANGUAGE_STONER)
 
 /datum/mutation/medieval
 	name = "Medieval"

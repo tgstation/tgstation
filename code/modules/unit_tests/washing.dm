@@ -10,7 +10,7 @@
 	VAR_PRIVATE/clean_sig_caught = 0
 
 /datum/unit_test/washing/Run()
-	for(var/i in subtypesof(/obj/effect/decal/cleanable) + cleanable_bonus_list)
+	for(var/i in subtypesof(/obj/effect/decal/cleanable) + cleanable_bonus_list - uncreatables)
 		var/atom/movable/to_clean = allocate(i)
 		var/mopable = HAS_TRAIT(to_clean, TRAIT_MOPABLE)
 

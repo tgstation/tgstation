@@ -3,7 +3,7 @@ import { Button, ByondUi, Section, Stack } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import { POD_GREY, TABPAGES } from './constants';
 import { useTab } from './hooks';
-import { PodLauncherData } from './types';
+import type { PodLauncherData } from './types';
 
 export function ViewTabHolder(props) {
   const { act, data } = useBackend<PodLauncherData>();

@@ -6,14 +6,15 @@
 	key = STRIPPABLE_ITEM_BACK
 	item_slot = ITEM_SLOT_BACK
 
-/datum/strippable_item/mob_item_slot/back/get_alternate_actions(atom/source, mob/user)
-	return get_strippable_alternate_action_internals(get_item(source), source)
+/datum/strippable_item/mob_item_slot/back/get_alternate_actions(atom/source, mob/user, obj/item/item)
+	. = ..()
+	. += get_strippable_alternate_action_internals(item, source)
 
-/datum/strippable_item/mob_item_slot/back/perform_alternate_action(atom/source, mob/user, action_key)
+/datum/strippable_item/mob_item_slot/back/perform_alternate_action(atom/source, mob/user, action_key, obj/item/item)
 	if(!..())
 		return
-	if(action_key in get_strippable_alternate_action_internals(get_item(source), source))
-		strippable_alternate_action_internals(get_item(source), source, user)
+	if(action_key in get_strippable_alternate_action_internals(item, source))
+		strippable_alternate_action_internals(item, source, user)
 
 /datum/strippable_item/mob_item_slot/mask
 	key = STRIPPABLE_ITEM_MASK

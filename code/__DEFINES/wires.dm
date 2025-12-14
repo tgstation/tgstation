@@ -42,7 +42,7 @@
 #define WIRE_BACKUP1 "Auxiliary Power 1"
 #define WIRE_BACKUP2 "Auxiliary Power 2"
 #define WIRE_BEACON "Beacon"
-#define WIRE_BOLTLIGHT "Bolt Lights"
+#define WIRE_FEEDBACK "Feedback"
 #define WIRE_BOLTS "Bolts"
 #define WIRE_BOOM "Boom Wire"
 #define WIRE_CAMERA "Camera"
@@ -97,6 +97,9 @@
 #define WIRE_ENVIRONMENT "Environment"
 #define WIRE_LOOP_MODE "Loop mode"
 #define WIRE_REPLAY_MODE "Replay mode"
+#define WIRE_FIRE_DETECT "Automatic Detection"
+#define WIRE_FIRE_TRIGGER "Alarm Trigger"
+#define WIRE_FIRE_RESET "Alarm Reset"
 
 // Wire states for the AI
 #define AI_WIRE_NORMAL 0

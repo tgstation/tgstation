@@ -17,10 +17,9 @@
 
 /datum/antagonist/xeno
 	name = "\improper Xenomorph"
-	job_rank = ROLE_ALIEN
+	pref_flag = ROLE_ALIEN
 	show_in_antagpanel = FALSE
 	antagpanel_category = ANTAG_GROUP_XENOS
-	prevent_roundtype_conversion = FALSE
 	show_to_ghosts = TRUE
 	var/datum/team/xeno/xeno_team
 
@@ -96,7 +95,7 @@
 	explanation_text = "Survive and advance the Hive."
 
 /datum/objective/advance_hive/check_completion()
-	return owner.current.stat != DEAD
+	return owner.current && owner.current.stat != DEAD
 
 ///Captive Xenomorphs team
 /datum/team/xeno/captive
@@ -161,7 +160,6 @@
 			mind.add_antag_datum(/datum/antagonist/xeno)
 
 		mind.set_assigned_role(SSjob.get_job_type(/datum/job/xenomorph))
-		mind.special_role = ROLE_ALIEN
 
 /mob/living/carbon/alien/on_wabbajacked(mob/living/new_mob)
 	. = ..()
@@ -171,7 +169,6 @@
 		return
 	mind.remove_antag_datum(/datum/antagonist/xeno)
 	mind.set_assigned_role(SSjob.get_job_type(/datum/job/unassigned))
-	mind.special_role = null
 
 #undef CAPTIVE_XENO_DEAD
 #undef CAPTIVE_XENO_FAIL

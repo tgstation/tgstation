@@ -22,10 +22,17 @@
 	postHeaderColor = COLOR_BLUE
 
 
-/obj/item/poster/wanted/Initialize(mapload, icon/person_icon, wanted_name, description, headerText, posterHeaderColor)
+/obj/item/poster/wanted/Initialize(mapload, obj/structure/sign/poster/new_poster_structure, icon/person_icon, wanted_name, description, headerText, posterHeaderColor)
 	if(posterHeaderColor)
 		postHeaderColor = posterHeaderColor
-	var/obj/structure/sign/poster/wanted/wanted_poster = new (src, person_icon, wanted_name, description, headerText, postHeaderColor, background, postName, postDesc)
+
+	var/obj/structure/sign/poster/wanted/wanted_poster
+
+	if(new_poster_structure) // this is shit but a bigger refactor would be needed to properly resolve this
+		wanted_poster = new_poster_structure
+	else
+		wanted_poster = new (src, person_icon, wanted_name, description, headerText, postHeaderColor, background, postName, postDesc)
+
 	. = ..(mapload, wanted_poster)
 	name = "[postName] ([wanted_name])"
 	desc = "[postDesc] [wanted_name]."
@@ -84,7 +91,7 @@
 	var/textLen = min(length(text), 7)
 	var/startX = 16 - (2*textLen)
 	var/i
-	for(i=1; i <= textLen, i++)
+	for(i=1; i <= textLen; i++)
 		var/letter = uppertext(text[i])
 		var/icon/letter_icon = icon("icon" = 'icons/testing/Font_Minimal.dmi', "icon_state" = letter)
 		letter_icon.Shift(EAST, startX) //16 - (2*n)
@@ -93,10 +100,6 @@
 		poster_icon.Blend(letter_icon, ICON_OVERLAY)
 		startX = startX + 4
 
-/obj/structure/sign/poster/wanted/roll_and_drop(atom/location, mob/user)
-	pixel_x = 0
-	pixel_y = 0
-	var/obj/item/poster/rolled_poster = new poster_item_type(location, original_icon, wanted_name, desc, posterHeaderText, posterHeaderColor)
-	if(!user?.put_in_hands(rolled_poster))
-		forceMove(rolled_poster)
-	return rolled_poster
+/// We have some additional params since we are doing icon shenanigans
+/obj/structure/sign/poster/wanted/return_to_poster_item(atom/location)
+	return new poster_item_type(location, src, original_icon, wanted_name, desc, posterHeaderText, posterHeaderColor)

@@ -114,21 +114,21 @@
 	log_message("Hit by [AM].", LOG_MECHA, color="red")
 	return ..()
 
-/obj/vehicle/sealed/mecha/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit) //wrapper
-
+/obj/vehicle/sealed/mecha/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
 	// Determine our potential to shoot through the mech and into the cockpit, hitting the pilot
 	var/kill_the_meat = clamp(hitting_projectile.armour_penetration - get_armor_rating(hitting_projectile.armor_flag), 0, 100)
+	// Allows bullets to hit the pilot of open-canopy mechs, or if the bullet penetrates to the pilot, or the bullet can pass through structures
+	if (!LAZYLEN(occupants) || (mecha_flags & SILICON_PILOT))
+		return ..()
+	if (def_zone != BODY_ZONE_HEAD && def_zone != BODY_ZONE_CHEST)
+		return ..()
+	if ((mecha_flags & IS_ENCLOSED) && !(kill_the_meat && prob(kill_the_meat) && !(mecha_flags & CANNOT_OVERPENETRATE)) && !(hitting_projectile.pass_flags & (PASSSTRUCTURE|PASSVEHICLE)))
+		return ..()
+	var/mob/living/hitmob = pick(occupants)
+	return hitmob.projectile_hit(hitting_projectile, def_zone, piercing_hit) //If we've passed any of the above conditions, the pilot can be hit
 
-	//allows bullets to hit the pilot of open-canopy mechs, or if the bullet penetrates to the pilot, or the bullet can pass through structures
-	if((!(mecha_flags & IS_ENCLOSED) || kill_the_meat && prob(kill_the_meat) && !(mecha_flags & CANNOT_OVERPENETRATE) || hitting_projectile.pass_flags & (PASSSTRUCTURE|PASSVEHICLE)) \
-		&& LAZYLEN(occupants) \
-		&& !(mecha_flags & SILICON_PILOT) \
-		&& (def_zone == BODY_ZONE_HEAD || def_zone == BODY_ZONE_CHEST))
-		var/mob/living/hitmob = pick(occupants)
-		return hitmob.projectile_hit(hitting_projectile, def_zone, piercing_hit) //If we've passed any of the above conditions, the pilot can be hit
-
+/obj/vehicle/sealed/mecha/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked = null)
 	. = ..()
-
 	log_message("Hit by projectile. Type: [hitting_projectile]([hitting_projectile.damage_type]).", LOG_MECHA, color="red")
 	// yes we *have* to run the armor calc proc here I love tg projectile code too
 	try_damage_component(run_atom_armor(
@@ -138,7 +138,6 @@
 		attack_dir = REVERSE_DIR(hitting_projectile.dir),
 		armour_penetration = hitting_projectile.armour_penetration,
 	), def_zone)
-
 
 /obj/vehicle/sealed/mecha/ex_act(severity, target)
 	log_message("Affected by explosion of severity: [severity].", LOG_MECHA, color="red")
@@ -191,6 +190,12 @@
 		chassis_camera.is_emp_scrambled = TRUE
 		diag_hud_set_camera()
 		addtimer(CALLBACK(chassis_camera, TYPE_PROC_REF(/obj/machinery/camera/exosuit, emp_refocus), src), 10 SECONDS / severity)
+
+	for(var/obj/item/mecha_parts/mecha_tracking/tracker in trackers) // Go through our list of trackers and potentially delete our trackers due to an EMP.
+		if(prob(MECH_EMP_BEACON_DESTRUCTION_PROB / severity))
+			if((mecha_flags & SILICON_PILOT) && tracker.ai_beacon) // ignore any beacons which allows our AI pilot to be in the mech. Even if it isn't using a beacon, let's just do this to be safe. The code doesn't make a distinction! YAY!
+				continue // Does this mean that a AI tracking beacon can be EMP'd over and over without risk of self-destruction? Yes. Is this a nerf to silicon mechs? I guess. Do I care? No.
+			qdel(tracker)
 
 	if(!equipment_disabled && LAZYLEN(occupants)) //prevent spamming this message with back-to-back EMPs
 		to_chat(occupants, span_warning("Error -- Connection to equipment control unit has been lost."))
@@ -263,6 +268,8 @@
 		return part.try_attach_part(user, src, FALSE)
 
 	if(is_wire_tool(tool) && (mecha_flags & PANEL_OPEN))
+		if(user.combat_mode)
+			return
 		if(wires.interact(user))
 			return ITEM_INTERACT_SUCCESS
 

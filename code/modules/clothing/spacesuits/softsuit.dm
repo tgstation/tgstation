@@ -73,7 +73,7 @@
 	icon_state = "syndicate-helm-orange"
 	inhand_icon_state = "syndicate-helm-orange" //resprite?
 	armor_type = /datum/armor/space_fragile
-	strip_delay = 65
+	strip_delay = 6.5 SECONDS
 
 /obj/item/clothing/suit/space/fragile
 	name = "emergency space suit"
@@ -83,7 +83,7 @@
 	inhand_icon_state = "syndicate-orange"
 	slowdown = 2
 	armor_type = /datum/armor/space_fragile
-	strip_delay = 65
+	strip_delay = 6.5 SECONDS
 
 /datum/armor/space_fragile
 	melee = 5

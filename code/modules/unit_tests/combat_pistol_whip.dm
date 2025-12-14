@@ -57,4 +57,4 @@
 
 	butcher.put_in_active_hand(gun, forced = TRUE)
 	click_wrapper(butcher, meat, list(RIGHT_CLICK = TRUE, BUTTON = RIGHT_CLICK))
-	TEST_ASSERT(DOING_INTERACTION(butcher, meat), "The butcher did not start butchering the monkey when using a bayonetted weapon.")
+	TEST_ASSERT(QDELETED(meat), "The butcher did not butchering the monkey when using a bayonetted weapon.")

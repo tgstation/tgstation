@@ -167,6 +167,9 @@ GLOBAL_VAR(restart_counter)
 
 	load_poll_data()
 
+	// Initialize RETA system - code/modules/reta/reta_system.dm
+	reta_init_config()
+
 	LoadVerbs(/datum/verbs/menu)
 
 	if(fexists(RESTART_COUNTER_PATH))

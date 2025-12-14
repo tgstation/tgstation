@@ -43,6 +43,8 @@
 	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
+	if(HAS_TRAIT(M, TRAIT_SOOTHED_HEADACHE))
+		return
 	if(power < 2)
 		if(prob(base_message_chance) || A.stage >= 4)
 			to_chat(M, span_warning("[pick("Your head hurts.", "Your head pounds.")]"))

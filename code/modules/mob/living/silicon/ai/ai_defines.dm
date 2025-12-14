@@ -12,7 +12,7 @@
 	mob_size = MOB_SIZE_LARGE
 	can_buckle_to = FALSE
 
-	silicon_huds = list(DATA_HUD_MEDICAL_BASIC, DATA_HUD_SECURITY_BASIC, DATA_HUD_DIAGNOSTIC, DATA_HUD_BOT_PATH)
+	silicon_huds = list(TRAIT_MEDICAL_HUD_SENSOR_ONLY, TRAIT_SECURITY_HUD_ID_ONLY, TRAIT_DIAGNOSTIC_HUD, TRAIT_BOT_PATH_HUD)
 	radio = /obj/item/radio/headset/silicon/ai
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
 
@@ -24,6 +24,8 @@
 	var/explodes_on_death = FALSE
 	/// Whether its MMI is a posibrain or regular MMI, used when being [obj/structure/ai_core][deconstructed]
 	var/posibrain_inside = TRUE
+	/// Whether other AIs get a "new host" announcement text. Syndicate AIs get to be sneaky and won't send the message.
+	var/announce_init_to_others = TRUE
 
 
 	/* STATE */
@@ -161,6 +163,10 @@
 	/* UI */
 	/// UI for station alerts
 	VAR_FINAL/datum/station_alert/alert_control
+	/// UI for AI status display picker
+	VAR_FINAL/datum/ai_status_display_picker/status_display_picker
+	/// UI for AI core display picker
+	VAR_FINAL/datum/ai_core_display_picker/core_display_picker
 
 	/* I'M DUMB AND CAN'T SORT */
 	/// Used as a fake multitool in tcomms machinery

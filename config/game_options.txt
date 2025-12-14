@@ -55,6 +55,11 @@ HUMANS_NEED_SURNAMES
 ## If uncommented, this forces all players to use random names !and appearances!.
 #FORCE_RANDOM_NAMES
 
+## Amount of time after the round starts that the player disconnect report is issued, randomized by ROUNDSTART_LOGOUT_REPORT_TIME_VARIANCE as a lower and upper possible timer
+## Setting ROUNDSTART_LOGOUT_REPORT_TIME_VARIANCE to 0 will result in no variance, and only display the time in ROUNDSTART_LOGOUT_REPORT_TIME_AVERAGE
+ROUNDSTART_LOGOUT_REPORT_TIME_VARIANCE 1800
+ROUNDSTART_LOGOUT_REPORT_TIME_AVERAGE 6000
+
 ## Unhash this to turn on automatic reopening of a player's job if they suicide at roundstart
 #REOPEN_ROUNDSTART_SUICIDE_ROLES
 
@@ -80,6 +85,11 @@ ALERT_DELTA Destruction of the station is imminent. All crew are instructed to o
 
 ## The total weight of station goals possible for a round (allows multiple goals)
 STATION_GOAL_BUDGET 1
+
+## If TRUE / 1, station is raised to blue alert at roundstart.
+## If FALSE / 0, station remains at green alert.
+## Roundstart command report and greendshift announcements are unaffected.
+ROUNDSTART_BLUE_ALERT 1
 
 ## GAME MODES ###
 
@@ -374,6 +384,7 @@ ROUNDSTART_RACES ethereal
 #ROUNDSTART_RACES skeleton
 #ROUNDSTART_RACES zombie
 #ROUNDSTART_RACES pod
+#ROUNDSTART_RACES ghost
 
 ## Races that are radical departures to what a species is, so while they technically can be roundstart - it's probably not wise
 #ROUNDSTART_RACES android

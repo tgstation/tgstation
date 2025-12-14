@@ -62,12 +62,7 @@
 	var/turf/screen_location = get_turf(screenmob)
 
 	if(SSmapping.level_trait(screen_location?.z, ZTRAIT_NOPARALLAX))
-		for(var/atom/movable/screen/plane_master/white_space as anything in get_true_plane_masters(PLANE_SPACE))
-			white_space.hide_plane(screenmob)
 		return FALSE
-
-	for(var/atom/movable/screen/plane_master/white_space as anything in get_true_plane_masters(PLANE_SPACE))
-		white_space.unhide_plane(screenmob)
 
 	if (SSlag_switch.measures[DISABLE_PARALLAX] && !HAS_TRAIT(viewmob, TRAIT_BYPASS_MEASURES))
 		return FALSE

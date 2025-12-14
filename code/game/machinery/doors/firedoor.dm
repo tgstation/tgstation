@@ -185,6 +185,8 @@
 
 /obj/machinery/door/firedoor/update_name(updates)
 	. = ..()
+	if(!my_area || !id_tag)
+		return
 	name = "[get_area_name(my_area)] [initial(name)] [id_tag]"
 
 /**
@@ -584,7 +586,7 @@
 	SIGNAL_HANDLER
 
 
-	if(!QDELETED(crowbar_owner) && crowbar_owner.CanReach(src))
+	if(!QDELETED(crowbar_owner) && IsReachableBy(crowbar_owner))
 		if(!ismob(crowbar_owner))
 			return
 		var/mob/living/mob_user = crowbar_owner

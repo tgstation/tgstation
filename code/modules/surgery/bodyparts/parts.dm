@@ -135,6 +135,7 @@
 /obj/item/bodypart/arm
 	name = "arm"
 	desc = "Hey buddy give me a HAND and report this to the github because you shouldn't be seeing this."
+	abstract_type = /obj/item/bodypart/arm
 	attack_verb_continuous = list("slaps", "punches")
 	attack_verb_simple = list("slap", "punch")
 	max_damage = LIMB_MAX_HP_DEFAULT
@@ -142,7 +143,9 @@
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_DEFAULT
 	can_be_disabled = TRUE
 	unarmed_attack_verbs = list("punch") /// The classic punch, wonderfully classic and completely random
+	unarmed_attack_verbs_continuous = list("punches")
 	grappled_attack_verb = "pummel"
+	grappled_attack_verb_continuous = "pummels"
 	unarmed_damage_low = 5
 	unarmed_damage_high = 10
 	unarmed_pummeling_bonus = 1.5
@@ -398,6 +401,7 @@
 /obj/item/bodypart/leg
 	name = "leg"
 	desc = "This item shouldn't exist. Talk about breaking a leg. Badum-Tss!"
+	abstract_type = /obj/item/bodypart/leg
 	attack_verb_continuous = list("kicks", "stomps")
 	attack_verb_simple = list("kick", "stomp")
 	max_damage = LIMB_MAX_HP_DEFAULT
@@ -406,6 +410,7 @@
 	unarmed_attack_effect = ATTACK_EFFECT_KICK
 	body_zone = BODY_ZONE_L_LEG
 	unarmed_attack_verbs = list("kick") // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
+	unarmed_attack_verbs_continuous = list("kicks")
 	unarmed_damage_low = 7
 	unarmed_damage_high = 15
 	unarmed_effectiveness = 15

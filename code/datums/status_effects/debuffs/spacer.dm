@@ -85,10 +85,10 @@
 /atom/movable/screen/alert/status_effect/gravity_sickness
 	name = "Gravity Sickness"
 	desc = "The gravity of the planet around you is making you feel sick and tired."
-	icon_state = "paralysis"
+	use_user_hud_icon = TRUE
+	overlay_state = "paralysis"
 
 /datum/mood_event/spacer
-	category = "spacer"
 
 /datum/mood_event/spacer/in_space
 	description = "Space is long and dark and empty, but it's my home."

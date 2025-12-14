@@ -64,14 +64,14 @@
 )
 	. = ..()
 	set_holdable(list(
-		/obj/item/clothing/head/mob_holder,
+		/obj/item/mob_holder,
 		/obj/item/food/deadmouse
 	))
 
 /datum/storage/pockets/chefhat/can_insert(obj/item/to_insert, mob/user, messages, force)
 	. = ..()
 	if(ispickedupmob(to_insert))
-		var/obj/item/clothing/head/mob_holder/mausholder = to_insert
+		var/obj/item/mob_holder/mausholder = to_insert
 		if(locate(/mob/living/basic/mouse) in mausholder.contents)
 			return
 		return FALSE
@@ -97,6 +97,7 @@
 			/obj/item/switchblade,
 			/obj/item/boxcutter,
 			/obj/item/pen,
+			/obj/item/flashlight/pen, //i mean cmon if a pen fits in there this does
 			/obj/item/scalpel,
 			/obj/item/dnainjector,
 			/obj/item/reagent_containers/syringe,
@@ -154,6 +155,7 @@
 			/obj/item/lipstick,
 			/obj/item/match,
 			/obj/item/pen,
+			/obj/item/flashlight/pen,
 			/obj/item/reagent_containers/cup/glass/flask,
 			/obj/item/reagent_containers/dropper,
 			/obj/item/reagent_containers/hypospray/medipen,
@@ -211,7 +213,7 @@
 		/obj/item/reagent_containers/cup/glass/bottle/vodka,
 		/obj/item/reagent_containers/cup/glass/bottle/molotov,
 		/obj/item/reagent_containers/cup/glass/drinkingglass,
-		/obj/item/ammo_box/strilka310
+		/obj/item/ammo_box/speedloader/strilka310
 	))
 
 ///Void cloak pocket
@@ -229,7 +231,7 @@
 	. = ..()
 	set_holdable(
 		can_hold_list = list(
-			/obj/item/ammo_box/strilka310/lionhunter,
+			/obj/item/ammo_box/speedloader/strilka310/lionhunter,
 			/obj/item/bodypart, // Bodyparts are often used in rituals. They're also often normal sized, so you can only fit one.
 			/obj/item/clothing/neck/eldritch_amulet,
 			/obj/item/clothing/neck/heretic_focus,

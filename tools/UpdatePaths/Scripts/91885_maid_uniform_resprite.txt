@@ -1,0 +1,6 @@
+# Neck and gloves were merged into main sprite
+
+/obj/item/clothing/gloves/maid : @DELETE
+/obj/item/clothing/neck/maid : @DELETE
+
+/obj/item/clothing/head/costume/maidheadband : /obj/item/clothing/head/costume/maid_headband{@OLD}

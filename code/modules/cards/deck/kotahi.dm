@@ -4,10 +4,8 @@
 	cardgame_desc = "KOTAHI game"
 	icon_state = "deck_kotahi_full"
 	deckstyle = "kotahi"
-	is_standard_deck = FALSE
 
-/obj/item/toy/cards/deck/kotahi/Initialize(mapload)
-	. = ..()
+/obj/item/toy/cards/deck/kotahi/initialize_cards()
 	for(var/colour in list("Red","Yellow","Green","Blue"))
 		initial_cards += "[colour] 0" //kotahi decks have only one colour of each 0, weird huh?
 		for(var/k in 0 to 1) //two of each colour of number

@@ -225,7 +225,7 @@ Doesn't work on other aliens/AI.*/
 	if(get_dist(owner, target) > 1)
 		return FALSE
 	if(ismob(target)) //If it could corrode mobs, it would one-shot them.
-		owner.balloon_alert(owner, "doesn't work on mobs!")
+		owner.balloon_alert(owner, "doesn't work on creatures!")
 		return FALSE
 
 	return ..()

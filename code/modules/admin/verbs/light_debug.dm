@@ -357,7 +357,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 	SIGNAL_HANDLER
 	Grant(new_mob)
 
-/datum/action/spawn_light/Trigger(trigger_flags)
+/datum/action/spawn_light/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	ui_interact(usr)
 

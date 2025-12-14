@@ -1,12 +1,12 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { Component } from 'react';
 import { Button, KeyListener, Stack } from 'tgui-core/components';
 import { KEY_DOWN, KEY_ENTER, KEY_UP } from 'tgui-core/keycodes';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { BodyZone, BodyZoneSelector } from './common/BodyZoneSelector';
+import { type BodyZone, BodyZoneSelector } from './common/BodyZoneSelector';
 
 type Surgery = {
   name: string;
@@ -20,7 +20,7 @@ type SurgeryInitiatorData = {
 };
 
 const sortSurgeries = (array: Surgery[]) =>
-  sortBy(array, (surgery) => surgery.name);
+  sortBy(array, [(surgery) => surgery.name]);
 
 type SurgeryInitiatorInnerState = {
   selectedSurgeryIndex: number;

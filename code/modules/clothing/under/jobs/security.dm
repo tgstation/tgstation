@@ -12,8 +12,9 @@
 /obj/item/clothing/under/rank/security
 	icon = 'icons/obj/clothing/under/security.dmi'
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
+	abstract_type = /obj/item/clothing/under/rank/security
 	armor_type = /datum/armor/clothing_under/rank_security
-	strip_delay = 50
+	strip_delay = 5 SECONDS
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
@@ -145,7 +146,7 @@
 	icon_state = "rhos"
 	inhand_icon_state = "r_suit"
 	armor_type = /datum/armor/clothing_under/security_head_of_security
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 
 /datum/armor/clothing_under/security_head_of_security
 	melee = 10

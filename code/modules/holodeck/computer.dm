@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 
 	///special locs that can mess with derez'ing holo spawned objects
 	var/list/special_locs = list(
-		/obj/item/clothing/head/mob_holder,
+		/obj/item/mob_holder,
 	)
 
 	///TRUE if the holodeck is using extra power because of a program, FALSE otherwise

@@ -87,7 +87,7 @@
 
 	var/success = FALSE
 
-	if(do_after(living_pawn, MONKEY_ITEM_SNATCH_DELAY, victim) && target && living_pawn.CanReach(victim))
+	if(do_after(living_pawn, MONKEY_ITEM_SNATCH_DELAY, victim) && target && victim.IsReachableBy(living_pawn))
 
 		for(var/obj/item/I in victim.held_items)
 			if(I == target)
@@ -195,7 +195,7 @@
 
 	//look for any potential weapons we're holding
 	var/obj/item/potential_weapon = locate() in living_pawn.held_items
-	if(!living_pawn.CanReach(target, potential_weapon))
+	if(!target.IsReachableBy(living_pawn, potential_weapon?.reach))
 		return FALSE
 
 	if(isnull(potential_weapon))

@@ -2,6 +2,9 @@
 #define FISH_SCLERA_COLOR COLOR_WHITE
 #define FISH_PUPIL_COLOR COLOR_BLUE
 #define FISH_COLORS FISH_ORGAN_COLOR + FISH_SCLERA_COLOR + FISH_PUPIL_COLOR
+/// How many fishy organs can you have at once, requirement to get the tail color
+/// Currently liver, stomach, lungs and tail plus tongue
+#define FISH_INFUSION_ALL_ORGANS 4
 
 ///bonus of the observing gondola: you can ignore environmental hazards
 /datum/status_effect/organ_set_bonus/fish
@@ -24,8 +27,11 @@
 		TRAIT_WATER_ADAPTATION,
 		)
 	bonus_biotype = MOB_AQUATIC
+	limb_overlay = /datum/bodypart_overlay/texture/fishscale
+	/// Are we at all five organs?
+	var/color_active = FALSE
 
-/datum/status_effect/organ_set_bonus/fish/enable_bonus()
+/datum/status_effect/organ_set_bonus/fish/enable_bonus(obj/item/organ/inserted_organ)
 	. = ..()
 	if(!.)
 		return
@@ -49,7 +55,7 @@
 	owner.mind?.adjust_experience(/datum/skill/fishing, SKILL_EXP_JOURNEYMAN, silent = TRUE)
 	owner.grant_language(/datum/language/carptongue, ALL, type)
 
-/datum/status_effect/organ_set_bonus/fish/disable_bonus()
+/datum/status_effect/organ_set_bonus/fish/disable_bonus(obj/item/organ/removed_organ)
 	. = ..()
 	UnregisterSignal(owner, list(
 		COMSIG_CARBON_GAIN_ORGAN,
@@ -73,6 +79,46 @@
 		remove_speed_buff()
 	owner.mind?.adjust_experience(/datum/skill/fishing, -SKILL_EXP_JOURNEYMAN, silent = TRUE)
 	owner.remove_language(/datum/language/carptongue, ALL, type)
+
+/datum/status_effect/organ_set_bonus/fish/set_organs(new_value, obj/item/organ/organ)
+	. = ..()
+	if (!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon_owner = owner
+	var/obj/item/organ/tail/fish/tail = carbon_owner.get_organ_by_type(/obj/item/organ/tail/fish)
+	var/tail_color = tail?.bodypart_overlay?.draw_color
+	// We need to snowflake the tongue because it doesn't count towards the set bonus
+	if (carbon_owner.get_organ_by_type(/obj/item/organ/tongue/inky))
+		new_value += 1
+
+	if (new_value >= FISH_INFUSION_ALL_ORGANS && tail_color)
+		if (!color_active)
+			for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
+				limb.add_color_override(tail_color, LIMB_COLOR_FISH_INFUSION)
+			color_active = TRUE
+		return
+
+	if (!color_active)
+		return
+
+	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
+		limb.remove_color_override(LIMB_COLOR_FISH_INFUSION)
+	color_active = FALSE
+
+/datum/status_effect/organ_set_bonus/fish/texture_limb(atom/source, obj/item/bodypart/limb)
+	. = ..()
+	if (!color_active || !iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon_owner = owner
+	var/obj/item/organ/tail/fish/tail = carbon_owner.get_organ_by_type(/obj/item/organ/tail/fish)
+	var/tail_color = tail?.bodypart_overlay?.draw_color
+	if (tail_color)
+		limb.add_color_override(tail_color, LIMB_COLOR_FISH_INFUSION)
+
+/datum/status_effect/organ_set_bonus/fish/untexture_limb(atom/source, obj/item/bodypart/limb)
+	. = ..()
+	if (color_active)
+		limb.remove_color_override(LIMB_COLOR_FISH_INFUSION)
 
 /datum/status_effect/organ_set_bonus/fish/proc/get_perceived_food_quality(datum/source, datum/component/edible/edible, list/extra_quality)
 	SIGNAL_HANDLER
@@ -133,6 +179,10 @@
 
 /datum/status_effect/organ_set_bonus/fish/proc/check_tail(mob/living/carbon/source, obj/item/organ/organ, special)
 	SIGNAL_HANDLER
+	// We need to snowflake the tongue because it doesn't count towards the set bonus
+	if (istype(organ, /obj/item/organ/tongue/inky))
+		set_organs(organs)
+		return
 	if(!HAS_TRAIT(owner, TRAIT_IS_WET) || !istype(organ, /obj/item/organ/tail/fish))
 		return
 	var/obj/item/organ/tail = owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
@@ -170,7 +220,7 @@
 	greyscale_colors = FISH_ORGAN_COLOR
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish
-	dna_block = DNA_FISH_TAIL_BLOCK
+	dna_block = /datum/dna_block/feature/accessory/tail_fish
 	wag_flags = NONE
 	organ_traits = list(TRAIT_FLOPPING, TRAIT_SWIMMER)
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
@@ -232,15 +282,15 @@
 		source.add_traits(list(TRAIT_OFF_BALANCE_TACKLER, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), type)
 
 /datum/bodypart_overlay/mutant/tail/fish
-	feature_key = "fish_tail"
+	feature_key = FEATURE_TAIL_FISH
 	color_source = ORGAN_COLOR_OVERRIDE
 
 /datum/bodypart_overlay/mutant/tail/fish/on_mob_insert(obj/item/organ/parent, mob/living/carbon/receiver)
 	//Initialize the related dna feature block if we don't have any so it doesn't error out.
 	//This isn't tied to any species, but I kinda want it to be mutable instead of having a fixed sprite accessory.
-	if(imprint_on_next_insertion && !receiver.dna.features["fish_tail"])
-		receiver.dna.features["fish_tail"] = pick(SSaccessories.tails_list_fish)
-		receiver.dna.update_uf_block(DNA_FISH_TAIL_BLOCK)
+	if(imprint_on_next_insertion && !receiver.dna.features[feature_key])
+		receiver.dna.features[feature_key] = pick(SSaccessories.feature_list[feature_key])
+		receiver.dna.update_uf_block(/datum/dna_block/feature/accessory/tail_fish)
 
 	return ..()
 
@@ -251,9 +301,14 @@
 	else //otherwise get one from a set of faded out blue and some greys colors.
 		return pick("#B4B8DD", "#85C7D0", "#67BBEE", "#2F4450", "#55CCBB", "#999FD0", "#345066", "#585B69", "#7381A0", "#B6DDE5", "#4E4E50")
 
-/datum/bodypart_overlay/mutant/tail/fish/get_global_feature_list()
-	return SSaccessories.tails_list_fish
-
+/datum/bodypart_overlay/mutant/tail/fish/get_image(image_layer, obj/item/bodypart/limb)
+	var/mutable_appearance/appearance = ..()
+	// We add all appearances the parent bodypart has to the tail to inherit scales and fancy effects
+	// but most other organs don't want to inherit those so we do it here and not on parent
+	for (var/datum/bodypart_overlay/texture/texture in limb.bodypart_overlays)
+		if(texture.can_draw_on_bodypart(limb, limb.owner))
+			texture.modify_bodypart_appearance(appearance)
+	return appearance
 
 ///Lungs that replace the need of oxygen with water vapor or being wet
 /obj/item/organ/lungs/fish
@@ -261,7 +316,7 @@
 	desc = "Fish DNA infused on what once was a normal pair of lungs that now require spacemen to breathe water vapor, or keep themselves covered in water."
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "gills"
-
+	breath_noise = "the dribbling of water"
 	organ_traits = list(TRAIT_NODROWN)
 	// Seafood instead of meat, because it's a fish organ. Additionally gross for being gills
 	foodtype_flags = RAW | SEAFOOD | GORE | GROSS
@@ -306,7 +361,7 @@
 
 /// Requires the spaceman to have either water vapor or be wet.
 /obj/item/organ/lungs/fish/proc/breathe_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp, old_water_pp)
-	var/need_to_breathe = !HAS_TRAIT(src, TRAIT_SPACEBREATHING) && !HAS_TRAIT(breather, TRAIT_IS_WET)
+	var/need_to_breathe = !HAS_TRAIT(breather, TRAIT_NO_BREATHLESS_DAMAGE) && !HAS_TRAIT(breather, TRAIT_IS_WET)
 	if(water_pp < safe_water_level && need_to_breathe)
 		on_low_water(breather, breath, water_pp)
 		return
@@ -412,6 +467,37 @@
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "inky_tongue"
 	actions_types = list(/datum/action/cooldown/ink_spit)
+	/**
+	 * This is probably the most complex tts filter that won't require external files to be added to the tts image.
+	 * It works as follows:
+	 * 1. Increase the pitch of the input audio. Pitch increase is lower for higher speaker pitch and vice-versa.
+	 * 2. Apply a mid-heavy EQ curve.
+	 * 3. Using an oscillating target frequency:
+	 *   - Apply a low pass filter with its cutoff at the target frequency
+	 *   - Boost frequencies very close to the target frequency
+	 */
+	voice_filter = "\
+	rubberband=pitch='\
+		ifnot(%BLIPS%,\
+			2-(%PITCH%+if(%FEMALE%,4))/16\
+			,1)'\
+	:formant=preserved,\
+	highpass=f=1000:t=s:w=24,\
+	equalizer=f=1200:g=15,\
+	equalizer=f=4350:g=-15,\
+	highshelf=f=870:g=1,\
+	afftfilt=\
+		real='\
+			st(0,(b+0.5)/nb*sr);\
+			st(1,3000+1500*sin(9.3*2*PI*pts));\
+			st(2,ld(0)/ld(1));\
+			re*(1-ld(2)^2+2*gauss(log(ld(2)+1)))'\
+		:imag='\
+			st(0,(b+0.5)/nb*sr);\
+			st(1,3000+1500*sin(9.3*2*PI*pts));\
+			st(2,ld(0)/ld(1));\
+			im*(1-ld(2)^2+2*gauss(log(ld(2)+1)))'\
+		:win_size=1024"
 
 	// Seafood instead of meat, because it's a fish organ
 	foodtype_flags = RAW | SEAFOOD | GORE
@@ -457,3 +543,4 @@
 #undef FISH_SCLERA_COLOR
 #undef FISH_PUPIL_COLOR
 #undef FISH_COLORS
+#undef FISH_INFUSION_ALL_ORGANS

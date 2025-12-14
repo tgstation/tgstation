@@ -33,8 +33,8 @@
 	desc = "Plain black gloves without fingertips for the hard-working."
 	icon_state = "fingerless"
 	greyscale_colors = "#2f2e31"
-	strip_delay = 40
-	equip_delay_other = 20
+	strip_delay = 4 SECONDS
+	equip_delay_other = 2 SECONDS
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	custom_price = PAYCHECK_CREW * 1.5

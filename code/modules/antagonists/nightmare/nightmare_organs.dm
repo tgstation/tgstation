@@ -8,6 +8,7 @@
 	desc = "A fleshy growth that was dug out of the skull of a Nightmare."
 	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "brain-x-d"
+	shade_color = "black, somehow"
 
 	///Our associated shadow jaunt spell, for all nightmares
 	var/datum/action/cooldown/spell/jaunt/shadow_walk/our_jaunt
@@ -18,7 +19,7 @@
 	. = ..()
 
 	if(brain_owner.dna.species.id != SPECIES_NIGHTMARE)
-		brain_owner.set_species(/datum/species/shadow/nightmare)
+		brain_owner.set_species(/datum/species/shadow/nightmare, replace_missing = FALSE)
 		visible_message(span_warning("[brain_owner] thrashes as [src] takes root in [brain_owner.p_their()] body!"))
 
 	our_jaunt = new(brain_owner)
@@ -82,6 +83,7 @@
 	icon_state = "demon_heart-on"
 	base_icon_state = "demon_heart"
 
+	beat_noise = "the writhing pulses of a fear given form" // evil schmeevil
 	color = COLOR_CRAYON_BLACK
 	decay_factor = 0
 	// No love is to be found in a heart so twisted.

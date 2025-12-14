@@ -14,7 +14,9 @@
 	anchored = TRUE
 	density = TRUE
 	max_integrity = 100
-	var/proj_pass_rate = 50 //How many projectiles will pass the cover. Lower means stronger cover
+	// The probability for a projectile to pass through the barrier. Lower values result in less projectiles passing through.
+	var/proj_pass_rate = 50
+	// What type of material is our barricade made from?
 	var/bar_material = METAL
 
 /obj/structure/barricade/atom_deconstruct(disassembled = TRUE)
@@ -26,17 +28,25 @@
 
 	return
 
-/obj/structure/barricade/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode && bar_material == METAL)
-		if(atom_integrity < max_integrity)
-			if(!I.tool_start_check(user, amount=1))
-				return
+/obj/structure/barricade/welder_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
 
-			to_chat(user, span_notice("You begin repairing [src]..."))
-			if(I.use_tool(src, user, 40, volume=40))
-				atom_integrity = clamp(atom_integrity + 20, 0, max_integrity)
-	else
-		return ..()
+	if(bar_material != METAL)
+		return ITEM_INTERACT_BLOCKING
+
+	if(atom_integrity >= max_integrity)
+		balloon_alert(user, "already full integrity!")
+		return ITEM_INTERACT_BLOCKING
+
+	user.balloon_alert_to_viewers("repairing [src]...", "repairing...")
+
+	if(!tool.use_tool(src, user, 4 SECONDS, amount = 10, volume=50))
+		return ITEM_INTERACT_BLOCKING
+
+	balloon_alert(user, "repaired")
+	repair_damage(20)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/barricade/CanAllowThrough(atom/movable/mover, border_dir)//So bullets will fly over and stuff.
 	. = ..()
@@ -60,6 +70,7 @@
 	icon_state = "woodenbarricade"
 	resistance_flags = FLAMMABLE
 	bar_material = WOOD
+	/// When destroyed or deconstructed, how many planks of wood does our barricade drop? Also determines how many it takes to repair the barricade and by how much.
 	var/drop_amount = 3
 
 /obj/structure/barricade/wooden/Initialize(mapload)
@@ -69,22 +80,32 @@
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 	register_context()
 
-/obj/structure/barricade/wooden/attackby(obj/item/I, mob/user)
-	if(istype(I,/obj/item/stack/sheet/mineral/wood))
-		var/obj/item/stack/sheet/mineral/wood/W = I
-		if(W.amount < 5)
-			to_chat(user, span_warning("You need at least five wooden planks to make a wall!"))
-			return
-		else
-			to_chat(user, span_notice("You start adding [I] to [src]..."))
-			playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
-			if(do_after(user, 5 SECONDS, target=src))
-				W.use(5)
-				var/turf/T = get_turf(src)
-				T.place_on_top(/turf/closed/wall/mineral/wood/nonmetal)
-				qdel(src)
-				return
-	return ..()
+/obj/structure/barricade/wooden/item_interaction(mob/living/user, obj/item/stack/sheet/mineral/wood/our_wood, list/modifiers)
+	if(user.combat_mode)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	if(!istype(our_wood, /obj/item/stack/sheet/mineral/wood))
+		return NONE
+
+	if(our_wood.amount < 5)
+		balloon_alert(user, "not enough wood!")
+		to_chat(user, span_warning("You need at least five wooden planks to make a barricade!"))
+		return ITEM_INTERACT_BLOCKING
+
+
+	to_chat(user, span_notice("You start adding [our_wood] to [src]..."))
+	playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
+	if(!do_after(user, 5 SECONDS, target=src))
+		balloon_alert(user, "interrupted!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(!our_wood.use(drop_amount))
+		return ITEM_INTERACT_BLOCKING
+
+	var/turf/cur_turf = get_turf(src)
+	cur_turf.place_on_top(/turf/closed/wall/mineral/wood/nonmetal)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/barricade/wooden/crowbar_act(mob/living/user, obj/item/tool)
 	balloon_alert(user, "deconstructing barricade...")
@@ -136,16 +157,10 @@
 	name = "security barrier"
 	desc = "A deployable barrier. Provides good cover in fire fights."
 	icon = 'icons/obj/structures.dmi'
-	icon_state = "barrier0"
-	density = FALSE
-	anchored = FALSE
+	icon_state = "barrier1"
 	max_integrity = 180
 	proj_pass_rate = 20
 	armor_type = /datum/armor/barricade_security
-
-	var/deploy_time = 40
-	var/deploy_message = TRUE
-
 
 /datum/armor/barricade_security
 	melee = 10
@@ -154,18 +169,6 @@
 	energy = 50
 	bomb = 10
 	fire = 10
-
-/obj/structure/barricade/security/Initialize(mapload)
-	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(deploy)), deploy_time)
-
-/obj/structure/barricade/security/proc/deploy()
-	icon_state = "barrier1"
-	set_density(TRUE)
-	set_anchored(TRUE)
-	if(deploy_message)
-		visible_message(span_warning("[src] deploys!"))
-
 
 /obj/item/grenade/barrier
 	name = "barrier grenade"

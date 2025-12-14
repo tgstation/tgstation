@@ -32,9 +32,6 @@
 	// ATMOS_INTERNAL_BOUND: Do not pass internal_pressure_bound
 	// NO_BOUND: Do not pass either
 
-	/// id of air sensor its connected to
-	var/chamber_id
-
 	///area this vent is assigned to
 	var/area/assigned_area
 
@@ -366,8 +363,8 @@
 	name = "large air vent"
 	power_channel = AREA_USAGE_EQUIP
 
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
-	..()
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/Initialize(mapload)
+	. = ..()
 	var/datum/gas_mixture/air_contents = airs[1]
 	air_contents.volume = 1000
 

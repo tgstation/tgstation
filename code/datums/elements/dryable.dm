@@ -14,6 +14,17 @@
 	RegisterSignal(target, COMSIG_ITEM_DRIED, PROC_REF(finish_drying))
 	ADD_TRAIT(target, TRAIT_DRYABLE, ELEMENT_TRAIT(type))
 
+	var/atom/atom_target = target
+	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || !atom_target.custom_materials || !dry_result || isstack(atom_target))
+		return
+
+	var/atom/result = new dry_result
+	if(!atom_target.compare_materials(result))
+		var/warning = "custom_materials of [result.type] when dried compared to just spawned don't match"
+		var/what_it_should_be = atom_target.get_materials_english_list()
+		stack_trace("[warning]. custom_materials should be [what_it_should_be].")
+	qdel(result)
+
 
 /datum/element/dryable/Detach(datum/target)
 	. = ..()

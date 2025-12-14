@@ -226,9 +226,9 @@
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, seconds_per_tick)
 	return ..() || .
 
-/datum/reagent/milk/used_on_fish(obj/item/fish/fish)
+/datum/reagent/consumable/milk/used_on_fish(obj/item/fish/fish)
 	if(HAS_TRAIT(fish, TRAIT_FISH_MADE_OF_BONE))
-		fish.adjust_health(fish.health + initial(fish.health) * max(fish.get_hunger() * 0.5, 0.12))
+		fish.repair_damage(fish.max_integrity * max(fish.get_hunger() * 0.5, 0.12))
 		fish.sate_hunger()
 		return TRUE
 
@@ -333,7 +333,7 @@
 /datum/wound/burn/flesh/tea_life_process()
 	// Sanitizes and heals, but with a limit
 	flesh_healing = (flesh_healing > 0.1) ? flesh_healing : flesh_healing + 0.02
-	infestation_rate = max(infestation_rate - 0.005, 0)
+	infection_rate = max(infection_rate - 0.005, 0)
 	return TRUE
 
 /datum/reagent/consumable/lemonade
@@ -998,12 +998,12 @@
 	. = ..()
 	if(IS_REVOLUTIONARY(drinker))
 		to_chat(drinker, span_warning("Antioxidants are weakening your radical spirit!"))
-		
+
 /datum/reagent/consumable/grenadine/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	if(IS_REVOLUTIONARY(drinker))
 		drinker.set_dizzy_if_lower(10 SECONDS * REM * seconds_per_tick)
-		if(drinker.getStaminaLoss() < 80) 
+		if(drinker.getStaminaLoss() < 80)
 			drinker.adjustStaminaLoss(12, required_biotype = affected_biotype) //The pomegranate stops free radicals! Har har.
 
 /datum/reagent/consumable/parsnipjuice
@@ -1164,7 +1164,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/strawberry_banana
-	name = "strawberry banana smoothie"
+	name = "Strawberry Banana Smoothie"
 	description = "A classic smoothie made from strawberries and bananas."
 	color = "#FF9999"
 	nutriment_factor = 0
@@ -1172,7 +1172,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/berry_blast
-	name = "berry blast smoothie"
+	name = "Berry Blast Smoothie"
 	description = "A classic smoothie made from mixed berries."
 	color = "#A76DC5"
 	nutriment_factor = 0
@@ -1180,7 +1180,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/funky_monkey
-	name = "funky monkey smoothie"
+	name = "Funky Monkey Smoothie"
 	description = "A classic smoothie made from chocolate and bananas."
 	color = COLOR_BROWNER_BROWN
 	nutriment_factor = 0
@@ -1188,7 +1188,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/green_giant
-	name = "green giant smoothie"
+	name = "Green Giant Smoothie"
 	description = "A green vegetable smoothie, made without vegetables."
 	color = COLOR_VERY_DARK_LIME_GREEN
 	nutriment_factor = 0
@@ -1196,7 +1196,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/melon_baller
-	name = "melon baller smoothie"
+	name = "Melon Baller Smoothie"
 	description = "A classic smoothie made from melons."
 	color = "#D22F55"
 	nutriment_factor = 0
@@ -1204,7 +1204,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/vanilla_dream
-	name = "vanilla dream smoothie"
+	name = "Vanilla Dream Smoothie"
 	description = "A classic smoothie made from vanilla and fresh cream."
 	color = "#FFF3DD"
 	nutriment_factor = 0
@@ -1309,3 +1309,97 @@
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
 		stomach.adjust_charge(reac_volume * 20 * ETHEREAL_DISCHARGE_RATE)
+
+/datum/reagent/consumable/fruit_punch
+	name = "fruit punch"
+	description = "Impossibly sweet fruit punch. Nobody knows what fruits were used to make it, not even it's creators... \
+		It's unique recipe heals and rejuvinates the drinker, but is unsafe to consume without the support of a nearby watercooler."
+	color = "#f7b2e3"
+	taste_description = "dangerously sweet fruit"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	quality = DRINK_VERYGOOD
+
+/datum/reagent/consumable/fruit_punch/on_mob_life(mob/living/affected_mob, seconds_per_tick)
+	. = ..()
+	var/need_mob_update
+	var/found_valid_cooler = FALSE
+	for(var/obj/structure/reagent_dispensers/water_cooler/found_cooler in range(4, affected_mob))
+		if(found_cooler.anchored)
+			found_valid_cooler = TRUE
+			var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(found_cooler))
+			heal_effect.color = "#f7b2e3"
+			break
+
+	if(found_valid_cooler)
+		affected_mob.clear_alert("punch_bad")
+		affected_mob.throw_alert("punch_good", /atom/movable/screen/alert/fruit_punch_good)
+		need_mob_update = affected_mob.adjustToxLoss(-0.6 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update = affected_mob.adjustBruteLoss(-0.6 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update = affected_mob.adjustFireLoss(-0.6 * REM * seconds_per_tick, updating_health = FALSE)
+		affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/punch_punishment)
+	else
+		affected_mob.clear_alert("punch_good")
+		affected_mob.throw_alert("punch_bad", /atom/movable/screen/alert/fruit_punch_bad)
+		need_mob_update = affected_mob.apply_damage(1.5 * REM * seconds_per_tick, TOX)
+		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/punch_punishment)
+		if(SPT_PROB(10, seconds_per_tick))
+			affected_mob.Knockdown(3 SECONDS, 6 SECONDS) //Gives daze effect. Using the cooler is a commitment and if you get jumped during it or have to run away to fight something, you should be vulnerable.
+			to_chat(affected_mob, span_warning("The overwhelming sweetness of the fruit punch disorients and confounds you!"))
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH
+
+/datum/movespeed_modifier/punch_punishment
+	multiplicative_slowdown = 0.30
+
+/datum/reagent/consumable/fruit_punch/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.clear_alert("punch_bad")
+	affected_mob.clear_alert("punch_good")
+	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/punch_punishment)
+
+/atom/movable/screen/alert/fruit_punch_good
+	name = "Fruit Punch Blessing"
+	desc = "The sweetness of the fruit punch and the friendly company of the liquid cooler are slowly restoring your health..."
+	use_user_hud_icon = TRUE
+	overlay_state = "punch_blessing"
+
+/atom/movable/screen/alert/fruit_punch_bad
+	name = "Fruit Punishment"
+	desc = "The unbearable sweetness of the fruit punch is too much to bear without the soothing aura of a liquid cooler! Your body is going into shock!"
+	use_user_hud_icon = TRUE
+	overlay_state = "punch_punishment"
+
+/datum/reagent/consumable/ethanol/bitters_soda
+	name = "Bitters and Soda"
+	description = "A simple beverage of soda water flavored with aromatic bitters. Soothes upset stomachs."
+	boozepwr = 0
+	color = "#f1c1b3"
+	quality = DRINK_NICE
+	taste_description = "mild aromatics"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/bitters_soda/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.adjust_disgust(-5 * REM * seconds_per_tick)
+
+/datum/reagent/consumable/lean
+	name = "Lean"
+	description = "The drank that makes you go wheezy."
+	color = "#DE55ED"
+	quality = DRINK_GOOD
+	taste_description = "purple and a hint of opioid."
+	addiction_types = list(/datum/addiction/opioids = 6)
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolization_rate = 0.2 * REM
+
+/datum/reagent/consumable/lean/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.adjust_jitter(2.5 SECONDS * REM * seconds_per_tick)
+	affected_mob.adjust_stutter(2.25 SECONDS * REM * seconds_per_tick)
+	affected_mob.adjust_drugginess(2 SECONDS * REM * seconds_per_tick)
+	if(SPT_PROB(15, seconds_per_tick))
+		affected_mob.emote(pick("taunt","twitch","shiver","laugh","moan","blush","stare"))
+	if(current_cycle > 16 && SPT_PROB(3.5, seconds_per_tick))
+		affected_mob.adjust_dizzy(15 SECONDS * REM * seconds_per_tick)
+		affected_mob.adjust_drowsiness(7.5 SECONDS * REM * seconds_per_tick)
+		affected_mob.emote("drool")

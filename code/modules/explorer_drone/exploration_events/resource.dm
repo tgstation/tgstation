@@ -1,7 +1,7 @@
 /// Simple event type that checks if you have a tool and after a retrieval delay adds loot to drone.
 /datum/exploration_event/simple/resource
 	name = "retrievable resource"
-	root_abstract_type = /datum/exploration_event/simple/resource
+	abstract_type = /datum/exploration_event/simple/resource
 	discovery_log = "Encountered recoverable resource."
 	action_text = "Extract"
 	/// Tool type required to recover this resource

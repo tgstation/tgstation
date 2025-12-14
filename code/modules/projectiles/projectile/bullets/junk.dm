@@ -78,7 +78,7 @@
 	damage = 10
 	embed_type = /datum/embedding/bullet/junk/ripper
 	wound_bonus = 10
-	bare_wound_bonus = 30
+	exposed_wound_bonus = 30
 
 /datum/embedding/bullet/junk/ripper
 	embed_chance = 100

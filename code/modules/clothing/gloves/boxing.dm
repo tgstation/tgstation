@@ -3,7 +3,7 @@
 	desc = "Because you really needed another excuse to punch your crewmates."
 	icon_state = "boxing"
 	greyscale_colors = "#f32110"
-	equip_delay_other = 60
+	equip_delay_other = 6 SECONDS
 	species_exception = list(/datum/species/golem) // now you too can be a golem boxing champion
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
 	equip_sound = 'sound/items/equip/glove_equip.ogg'
@@ -46,7 +46,7 @@
 	icon_state = "boxinggold"
 	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT*1)  //LITERALLY GOLD
 	material_flags = MATERIAL_EFFECTS | MATERIAL_AFFECT_STATISTICS
-	equip_delay_other = 120
+	equip_delay_other = 12 SECONDS
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 
 /obj/item/clothing/gloves/boxing/golden/Initialize(mapload)

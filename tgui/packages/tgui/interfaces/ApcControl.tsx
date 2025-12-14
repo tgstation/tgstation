@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
 import {
   Box,
@@ -11,7 +11,7 @@ import {
   Table,
   Tabs,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -248,15 +248,14 @@ function ApcControlScene(props) {
 
   let sorted: WithIndex[] = [];
   if (sortByField === 'name') {
-    sorted = sortBy(withIndex, (apc) => apc.name);
+    sorted = sortBy(withIndex, [(apc) => apc.name]);
   } else if (sortByField === 'charge') {
-    sorted = sortBy(withIndex, (apc) => -apc.charge);
+    sorted = sortBy(withIndex, [(apc) => -apc.charge]);
   } else if (sortByField === 'draw') {
-    sorted = sortBy(
-      withIndex,
+    sorted = sortBy(withIndex, [
       (apc) => -powerRank(apc.load),
       (apc) => -parseFloat(apc.load),
-    );
+    ]);
   }
 
   return (

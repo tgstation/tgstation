@@ -23,25 +23,26 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SEC
 
+	mind_traits = list(SECURITY_MIND_TRAITS)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_DETECTIVE
 
 	mail_goodies = list(
 		/obj/item/storage/fancy/cigarettes = 25,
-		/obj/item/ammo_box/c38 = 20,
-		/obj/item/ammo_box/c38/dumdum = 5,
-		/obj/item/ammo_box/c38/hotshot = 5,
-		/obj/item/ammo_box/c38/iceblox = 5,
-		/obj/item/ammo_box/c38/match = 5,
-		/obj/item/ammo_box/c38/trac = 5,
+		/obj/item/ammo_box/speedloader/c38 = 20,
+		/obj/item/ammo_box/speedloader/c38/dumdum = 5,
+		/obj/item/ammo_box/speedloader/c38/hotshot = 5,
+		/obj/item/ammo_box/speedloader/c38/iceblox = 5,
+		/obj/item/ammo_box/speedloader/c38/match = 5,
+		/obj/item/ammo_box/speedloader/c38/trac = 5,
 		/obj/item/card/id/advanced/plainclothes = 5,
 		/obj/item/storage/belt/holster/detective/full = 1,
 	)
 
 	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/bottle/whiskey)
 	rpg_title = "Thiefcatcher" //I guess they caught them all rip thief...
-	job_flags = STATION_JOB_FLAGS
+	job_flags = STATION_JOB_FLAGS | JOB_ANTAG_PROTECTED
 
 	job_tone = "objection"
 

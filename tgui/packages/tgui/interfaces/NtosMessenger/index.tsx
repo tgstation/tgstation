@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
 import {
   Box,
@@ -12,13 +12,13 @@ import {
   Stack,
   TextArea,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { NtosWindow } from '../../layouts';
 import { ChatScreen } from './ChatScreen';
-import { NtChat, NtMessenger, NtPicture } from './types';
+import type { NtChat, NtMessenger, NtPicture } from './types';
 
 type NtosMessengerData = {
   can_spam: BooleanLike;
@@ -141,7 +141,7 @@ const ContactsScreen = (props: any) => {
   const [searchUser, setSearchUser] = useState('');
 
   const sortByUnreads = (array: NtChat[]) =>
-    sortBy(array, (chat) => chat.unread_messages);
+    sortBy(array, [(chat) => chat.unread_messages]);
 
   const searchChatByName = createSearch(
     searchUser,

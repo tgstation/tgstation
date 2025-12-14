@@ -8,7 +8,7 @@ import {
   Slider,
   Tooltip,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -96,7 +96,7 @@ export const IVDrip = (props) => {
                 minValue={minTransferRate}
                 maxValue={maxTransferRate}
                 unit="units/sec."
-                onDrag={(e, value) =>
+                onChange={(e, value) =>
                   act('changeRate', {
                     rate: value,
                   })

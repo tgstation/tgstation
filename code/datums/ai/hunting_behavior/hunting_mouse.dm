@@ -40,7 +40,7 @@
 		if (!isturf(instrument.loc) || !can_see(pawn, instrument))
 			controller.clear_blackboard_key(BB_SONG_INSTRUMENT)
 			return
-		if (pawn.CanReach(instrument))
+		if (instrument.IsReachableBy(pawn))
 			return
 		controller.queue_behavior(/datum/ai_behavior/travel_towards/adjacent, BB_SONG_INSTRUMENT)
 		return SUBTREE_RETURN_FINISH_PLANNING

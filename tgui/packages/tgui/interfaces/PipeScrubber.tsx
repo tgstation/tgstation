@@ -9,7 +9,7 @@ import {
 } from 'tgui-core/components';
 import { formatSiUnit } from 'tgui-core/format';
 import { toFixed } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { getGasLabel } from '../constants';
@@ -38,7 +38,7 @@ type Filter = {
 
 const formatPressure = (value) => {
   if (value < 10000) {
-    return toFixed(value) + ' kPa';
+    return `${toFixed(value)} kPa`;
   }
   return formatSiUnit(value * 1000, 1, 'Pa');
 };

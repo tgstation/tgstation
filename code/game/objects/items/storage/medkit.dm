@@ -27,6 +27,10 @@
 	/// Defines damage type of the medkit. General ones stay null. Used for medibot healing bonuses
 	var/damagetype_healed
 
+/obj/item/storage/medkit/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item)
+
 /obj/item/storage/medkit/regular
 	icon_state = "medkit"
 	desc = "A first aid kit with the ability to heal common types of injuries."
@@ -59,7 +63,7 @@
 	var/static/items_inside = list(
 		/obj/item/healthanalyzer/simple = 1,
 		/obj/item/stack/medical/gauze = 1,
-		/obj/item/stack/medical/suture/emergency = 1,
+		/obj/item/stack/medical/bandage = 1,
 		/obj/item/stack/medical/ointment = 1,
 		/obj/item/reagent_containers/hypospray/medipen/ekit = 2,
 		/obj/item/storage/pill_bottle/iron = 1,

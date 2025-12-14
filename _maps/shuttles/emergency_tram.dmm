@@ -119,7 +119,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aF" = (
-/obj/machinery/vending/wallmed/directional/north{
+/obj/machinery/wall_healer/free/directional/north{
 	use_power = 0
 	},
 /turf/open/floor/mineral/titanium,
@@ -216,7 +216,7 @@
 /area/shuttle/escape)
 "ba" = (
 /obj/machinery/shower/directional/south,
-/obj/machinery/vending/wallmed/directional/north{
+/obj/machinery/wall_healer/free/directional/north{
 	use_power = 0
 	},
 /turf/open/floor/mineral/titanium/white,

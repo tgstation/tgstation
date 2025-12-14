@@ -1,8 +1,3 @@
-/// Range checking is being deferred because the component's parent is being moved by a shuttle
-#define PARENT_DEFERRED (1<<0)
-/// Range checking is being deferred because the circuit shell being tracked is being moved by a shuttle
-#define PHYSICAL_OBJECT_DEFERRED (1<<1)
-
 /// Opens up a USB port that can be connected to by circuits, creating registerable circuit components
 /datum/component/usb_port
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -23,9 +18,6 @@
 
 	/// The current physical object that the beam is connected to and listens to.
 	var/atom/movable/physical_object
-
-	/// Used to prevent range checking during shuttle movement, which moves atoms en-masse.
-	var/defer_range_checks = 0
 
 	/// An extra callback to invoke when registering this component with its parent. Can be a proc name or a callback datum.
 	var/extra_registration_callback
@@ -64,11 +56,9 @@
 
 /datum/component/usb_port/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, PROC_REF(on_atom_usb_cable_try_attach))
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-	RegisterSignal(parent, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, PROC_REF(before_parent_shuttle_move))
-	RegisterSignal(parent, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, PROC_REF(after_parent_shuttle_move))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, PROC_REF(on_load))
+	AddComponentFrom(REF(parent), /datum/component/shuttle_move_deferred_checks, PROC_REF(on_moved))
 
 	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		component.register_usb_parent(parent)
@@ -83,12 +73,10 @@
 /datum/component/usb_port/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_USB_CABLE_TRY_ATTACH,
-		COMSIG_MOVABLE_MOVED,
-		COMSIG_ATOM_BEFORE_SHUTTLE_MOVE,
-		COMSIG_ATOM_AFTER_SHUTTLE_MOVE,
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_MOVABLE_CIRCUIT_LOADED,
 	))
+	RemoveComponentSource(REF(parent), /datum/component/shuttle_move_deferred_checks)
 
 	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		component.unregister_usb_parent(parent)
@@ -148,12 +136,8 @@
 		return
 
 	SEND_SIGNAL(src, COMSIG_USB_PORT_UNREGISTER_PHYSICAL_OBJECT, physical_object)
-	UnregisterSignal(physical_object, list(
-		COMSIG_MOVABLE_MOVED,
-		COMSIG_ATOM_BEFORE_SHUTTLE_MOVE,
-		COMSIG_ATOM_AFTER_SHUTTLE_MOVE,
-		COMSIG_ATOM_EXAMINE,
-	))
+	UnregisterSignal(physical_object, COMSIG_ATOM_EXAMINE)
+	RemoveComponentSource(REF(physical_object), /datum/component/shuttle_move_deferred_checks)
 
 /datum/component/usb_port/proc/attach_circuit_components(obj/item/integrated_circuit/circuitboard)
 	for(var/obj/item/circuit_component/component as anything in circuit_components)
@@ -228,9 +212,7 @@
 	var/atom/atom_parent = parent
 	usb_cable_beam = atom_parent.Beam(new_physical_object, "usb_cable_beam", 'icons/obj/science/circuits.dmi')
 
-	RegisterSignal(new_physical_object, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-	RegisterSignal(new_physical_object, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, PROC_REF(before_physical_object_shuttle_move))
-	RegisterSignal(new_physical_object, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, PROC_REF(after_physical_object_shuttle_move))
+	AddComponentFrom(REF(new_physical_object), /datum/component/shuttle_move_deferred_checks, PROC_REF(on_moved))
 	RegisterSignal(new_physical_object, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine_shell))
 	SEND_SIGNAL(src, COMSIG_USB_PORT_REGISTER_PHYSICAL_OBJECT, new_physical_object)
 	physical_object = new_physical_object
@@ -244,9 +226,6 @@
 	SIGNAL_HANDLER
 
 	if (isnull(attached_circuit))
-		return
-
-	if (defer_range_checks)
 		return
 
 	if (IN_GIVEN_RANGE(attached_circuit, parent, USB_CABLE_MAX_RANGE))
@@ -289,28 +268,3 @@
 	usb_cable_ref = null
 
 	QDEL_NULL(usb_cable_beam)
-
-/datum/component/usb_port/proc/before_parent_shuttle_move()
-	SIGNAL_HANDLER
-
-	defer_range_checks |= PARENT_DEFERRED
-
-/datum/component/usb_port/proc/before_physical_object_shuttle_move()
-	SIGNAL_HANDLER
-
-	defer_range_checks |= PHYSICAL_OBJECT_DEFERRED
-
-/datum/component/usb_port/proc/after_parent_shuttle_move()
-	SIGNAL_HANDLER
-
-	defer_range_checks &= ~PARENT_DEFERRED
-	on_moved()
-
-/datum/component/usb_port/proc/after_physical_object_shuttle_move()
-	SIGNAL_HANDLER
-
-	defer_range_checks &= ~PHYSICAL_OBJECT_DEFERRED
-	on_moved()
-
-#undef PARENT_DEFERRED
-#undef PHYSICAL_OBJECT_DEFERRED

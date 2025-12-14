@@ -66,7 +66,7 @@
 	if(flaming)
 		ash = new(owner, /particles/smoke/ash, PARTICLE_ATTACH_MOB)
 		var/clear_in = rand(15 SECONDS, 25 SECONDS)
-		if(duration != -1)
+		if(duration != STATUS_EFFECT_PERMANENT)
 			clear_in = min(duration, clear_in)
 		addtimer(CALLBACK(src, PROC_REF(clear_flame)), clear_in)
 	return TRUE

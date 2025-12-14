@@ -1,5 +1,5 @@
-import { sortBy } from 'common/collections';
-import { Dispatch, SetStateAction, useMemo, useState } from 'react';
+import { sortBy } from 'es-toolkit';
+import { type Dispatch, type SetStateAction, useMemo, useState } from 'react';
 import {
   BlockQuote,
   Button,
@@ -16,7 +16,7 @@ import { formatMoney } from 'tgui-core/format';
 import { useBackend, useSharedState } from '../../backend';
 import { SearchBar } from '../common/SearchBar';
 import { searchForSupplies } from './helpers';
-import { CargoData, Supply, SupplyCategory } from './types';
+import type { CargoData, Supply, SupplyCategory } from './types';
 
 type Props = {
   express?: boolean;
@@ -47,7 +47,7 @@ export function CargoCatalog(props: Props) {
 
     if (!fetched) return [];
 
-    fetched = sortBy(fetched, (pack: Supply) => pack.name);
+    fetched = sortBy(fetched, [(pack: Supply) => pack.name]);
 
     return fetched;
   }, [activeSupplyName, supplies, searchText]);
@@ -105,7 +105,7 @@ function CatalogTabs(props: CatalogTabsProps & Props) {
   } = props;
   const { self_paid } = data;
 
-  const sorted = sortBy(categories, (supply) => supply.name);
+  const sorted = sortBy(categories, [(supply) => supply.name]);
 
   return (
     <Stack fill vertical>
@@ -181,7 +181,7 @@ type CatalogListProps = {
 
 function CatalogList(props: CatalogListProps) {
   const { act, data } = useBackend<CargoData>();
-  const { amount_by_name = {}, max_order, self_paid, app_cost } = data;
+  const { cart = [], max_order, self_paid, app_cost } = data;
   const { packs = [], openContents } = props;
 
   return (
@@ -206,6 +206,14 @@ function CatalogList(props: CatalogListProps) {
           </Stack.Item>
         );
 
+        let amount = 0;
+        if (cart) {
+          const entry = cart.find((entry) => entry.object === pack.name);
+          if (entry) {
+            amount = entry.amount;
+          }
+        }
+
         return (
           <ImageButton
             key={pack.id}
@@ -214,7 +222,7 @@ function CatalogList(props: CatalogListProps) {
             dmIconState={pack.first_item_icon_state}
             imageSize={32}
             color={color}
-            disabled={(amount_by_name[pack.name] || 0) >= max_order}
+            disabled={amount >= max_order}
             buttonsAlt={
               <Button
                 color="transparent"

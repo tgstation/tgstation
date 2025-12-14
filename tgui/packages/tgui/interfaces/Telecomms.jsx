@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Flex,
   Input,
   LabeledControls,
   LabeledList,
@@ -11,12 +12,12 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
 
 export const Telecomms = (props) => {
   const { act, data } = useBackend();
   const {
+    channels,
     type,
     minfreq,
     maxfreq,
@@ -31,6 +32,7 @@ export const Telecomms = (props) => {
     currfrequency,
     broadcasting,
     receiving,
+    frequencyinfos,
   } = data;
   const linked = data.linked || [];
   const frequencies = data.frequencies || [];
@@ -78,6 +80,7 @@ export const Telecomms = (props) => {
               buttons={
                 <Button
                   icon={prefab ? 'check' : 'times'}
+                  color={prefab ? 'good' : 'bad'}
                   content={prefab ? 'True' : 'False'}
                   disabled={'True'}
                 />
@@ -93,13 +96,13 @@ export const Telecomms = (props) => {
                   <Table.Row>
                     <Table.Cell>Change Frequency:</Table.Cell>
                     <Table.Cell>
-                      {RADIO_CHANNELS.find(
+                      {channels.find(
                         (channel) => channel.freq === changefrequency,
                       ) && (
                         <Box
                           inline
                           color={
-                            RADIO_CHANNELS.find(
+                            channels.find(
                               (channel) => channel.freq === changefrequency,
                             ).color
                           }
@@ -107,7 +110,7 @@ export const Telecomms = (props) => {
                         >
                           [
                           {
-                            RADIO_CHANNELS.find(
+                            channels.find(
                               (channel) => channel.freq === changefrequency,
                             ).name
                           }
@@ -126,7 +129,8 @@ export const Telecomms = (props) => {
                       onChange={(value) => act('change_freq', { value })}
                     />
                     <Button
-                      icon={'times'}
+                      icon="times"
+                      color="bad"
                       disabled={changefrequency === 0}
                       onClick={() => act('change_freq', { value: 10001 })}
                     />
@@ -159,7 +163,8 @@ export const Telecomms = (props) => {
                     </Table.Cell>
                     {!!multitool && (
                       <Button
-                        icon={'times'}
+                        icon="times"
+                        color="bad"
                         disabled={!multitool}
                         onClick={() => act('unlink', { value: entry.index })}
                       />
@@ -174,24 +179,20 @@ export const Telecomms = (props) => {
                   <Table.Row key={frequencies.i} className="candystripe">
                     <Table.Cell bold>{entry / 10} kHz</Table.Cell>
                     <Table.Cell>
-                      {RADIO_CHANNELS.find(
-                        (channel) => channel.freq === entry,
-                      ) && (
+                      {channels.find((channel) => channel.freq === entry) && (
                         <Box
                           inline
                           color={
-                            RADIO_CHANNELS.find(
-                              (channel) => channel.freq === entry,
-                            ).color
+                            channels.find((channel) => channel.freq === entry)
+                              .color
                           }
                           ml={2}
                         >
                           [
                           {
-                            RADIO_CHANNELS.find(
-                              (channel) => channel.freq === entry,
-                            ).name
-                          }{' '}
+                            channels.find((channel) => channel.freq === entry)
+                              .name
+                          }
                           ]
                         </Box>
                       )}
@@ -199,7 +200,8 @@ export const Telecomms = (props) => {
                     <Table.Cell />
                     {!!multitool && (
                       <Button
-                        icon={'times'}
+                        icon="times"
+                        color="bad"
                         disabled={!multitool}
                         onClick={() => act('delete', { value: entry })}
                       />
@@ -210,13 +212,13 @@ export const Telecomms = (props) => {
                   <Table.Row className="candystripe" collapsing>
                     <Table.Cell>Add Frequency</Table.Cell>
                     <Table.Cell>
-                      {RADIO_CHANNELS.find(
+                      {channels.find(
                         (channel) => channel.freq === frequency,
                       ) && (
                         <Box
                           inline
                           color={
-                            RADIO_CHANNELS.find(
+                            channels.find(
                               (channel) => channel.freq === frequency,
                             ).color
                           }
@@ -224,7 +226,7 @@ export const Telecomms = (props) => {
                         >
                           [
                           {
-                            RADIO_CHANNELS.find(
+                            channels.find(
                               (channel) => channel.freq === frequency,
                             ).name
                           }
@@ -253,6 +255,59 @@ export const Telecomms = (props) => {
                 )}
               </Table>
             </Section>
+            {type === 'server' && (
+              <Section
+                title="Frequencies Settings"
+                buttons={
+                  <Button
+                    icon="plus"
+                    color="good"
+                    onClick={() => act('add_freq_info')}
+                  />
+                }
+              >
+                <Table>
+                  {frequencyinfos.map((freq) => (
+                    <Table.Row key={freq.frequency} className="candystripe">
+                      <Flex justify="space-between" align="center">
+                        <Flex.Item bold>{freq.frequency / 10} kHz</Flex.Item>
+                        <Flex.Item>
+                          <Box inline color={freq.color} ml={2}>
+                            [{freq.name}]
+                          </Box>
+                        </Flex.Item>
+                        <Flex.Item>
+                          {!!multitool && (
+                            <>
+                              <Button
+                                icon="wrench"
+                                color="good"
+                                disabled={!multitool}
+                                onClick={() =>
+                                  act('modify_freq_info', {
+                                    freq: freq.frequency,
+                                  })
+                                }
+                              />
+                              <Button
+                                icon="times"
+                                color="bad"
+                                disabled={!multitool}
+                                onClick={() =>
+                                  act('delete_freq_info', {
+                                    freq: freq.frequency,
+                                  })
+                                }
+                              />
+                            </>
+                          )}
+                        </Flex.Item>
+                      </Flex>
+                    </Table.Row>
+                  ))}
+                </Table>
+              </Section>
+            )}
             {!!multitool && (
               <Section title="Multitool">
                 {!!multibuff && (
@@ -274,7 +329,8 @@ export const Telecomms = (props) => {
                     onClick={() => act('link')}
                   />
                   <Button
-                    icon={'times'}
+                    icon="times"
+                    color="bad"
                     content={'Flush'}
                     disabled={!multibuff}
                     onClick={() => act('flush')}
