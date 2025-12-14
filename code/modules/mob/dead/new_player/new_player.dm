@@ -6,7 +6,6 @@
 	density = FALSE
 	stat = DEAD
 	hud_type = /datum/hud/new_player
-	hud_possible = list()
 
 	var/ready = FALSE
 	/// Referenced when you want to delete the new_player later on in the code.
