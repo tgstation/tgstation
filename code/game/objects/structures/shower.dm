@@ -68,7 +68,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	create_reagents(reagent_capacity)
 	if(has_water_reclaimer)
 		reagents.add_reagent(reagent_id, reagent_capacity)
-	AddComponent(/datum/component/plumbing/simple_demand/extended)
+	AddComponent(/datum/component/plumbing/simple_demand)
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
