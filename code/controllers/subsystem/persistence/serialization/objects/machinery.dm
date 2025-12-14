@@ -67,24 +67,36 @@
 
 	return cached_typepath
 
-/obj/machinery/button/get_save_vars(save_flags=ALL)
+/obj/item/assembly/control/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, id)
+	. += NAMEOF(src, sync_doors)
 	return .
 
-/obj/machinery/button/get_custom_save_vars(save_flags=ALL)
+/obj/machinery/button/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
+	// save the [/obj/item/assembly/control] inside the button that controls the id
+	save_stored_contents(map_string, current_loc, obj_blacklist)
+
+/obj/machinery/button/PersistentInitialize()
 	. = ..()
-	if(id)
-		.[NAMEOF(src, id)] = id
-	else if(istype(device, /obj/item/assembly/control))
-		var/obj/item/assembly/control/control_device = device
-		.[NAMEOF(src, id)] = control_device.id
-	return .
+	var/obj/item/assembly/control/control_device = locate(/obj/item/assembly/control) in contents
+	device = control_device
+	setup_device()
+	update_appearance()
 
 /obj/machinery/conveyor_switch/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, id)
+	. += NAMEOF(src, conveyor_speed)
+	. += NAMEOF(src, position)
+	. += NAMEOF(src, oneway)
 	return .
+
+/obj/machinery/conveyor_switch/PersistentInitialize()
+	. = ..()
+	update_appearance()
+	update_linked_conveyors()
+	update_linked_switches()
 
 /obj/machinery/conveyor/get_save_vars(save_flags=ALL)
 	. = ..()
