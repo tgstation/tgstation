@@ -19,7 +19,7 @@
 	///The alt slot, only used by certain UIs like the access app.
 	var/obj/item/card/id/alt_stored_id
 	///The disk in this PDA. If set, this will be inserted on Initialize.
-	var/obj/item/computer_disk/inserted_disk
+	var/obj/item/disk/computer/inserted_disk
 	///The power cell the computer uses to run on.
 	var/obj/item/stock_parts/power_store/internal_cell = /obj/item/stock_parts/power_store/cell
 	///A pAI currently loaded into the modular computer.
@@ -927,7 +927,7 @@
 	if(istype(tool, /obj/item/paper_bin))
 		return paper_bin_act(user, tool)
 
-	if(istype(tool, /obj/item/computer_disk))
+	if(istype(tool, /obj/item/disk/computer))
 		return computer_disk_act(user, tool)
 
 	return NONE
@@ -999,7 +999,7 @@
 	bin.update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/modular_computer/proc/computer_disk_act(mob/user, obj/item/computer_disk/disk)
+/obj/item/modular_computer/proc/computer_disk_act(mob/user, obj/item/disk/computer/disk)
 	if(!user.transferItemToLoc(disk, src))
 		return ITEM_INTERACT_BLOCKING
 	if(inserted_disk)
