@@ -46,7 +46,7 @@
 	create_reagents(reagent_capacity)
 	if(has_water_reclaimer)
 		reagents.add_reagent(reagent_id, reagent_capacity)
-	AddComponent(/datum/component/plumbing/simple_demand)
+	AddComponent(/datum/component/plumbing/simple_demand/extended)
 
 	register_context()
 
