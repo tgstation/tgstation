@@ -25,6 +25,9 @@
 /datum/id_trim/job/New()
 	if(ispath(job))
 		job = SSjob.get_job_type(job)
+		if (isnull(job))
+			// Not a valid job. Maybe removed by the map.
+			return
 
 	if(isnull(job_changes))
 		job_changes = SSmapping.current_map.job_changes
