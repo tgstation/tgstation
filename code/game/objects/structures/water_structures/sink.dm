@@ -29,7 +29,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 
 	has_water_reclaimer = mapload
 	create_reagents(100, NO_REACT)
-	if(src.has_water_reclaimer)
+	if(has_water_reclaimer)
 		reagents.add_reagent(dispensedreagent, 100)
 	AddComponent(/datum/component/plumbing/simple_demand/extended)
 

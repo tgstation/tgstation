@@ -35,7 +35,7 @@
 		enable()
 
 /datum/component/plumbing/RegisterWithParent()
-	RegisterSignals(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(disable))
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(disable))
 	RegisterSignal(parent, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, PROC_REF(toggle_active))
 	RegisterSignal(parent, COMSIG_OBJ_HIDE, PROC_REF(hide))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(create_overlays)) //called by lateinit on startup
@@ -45,7 +45,6 @@
 /datum/component/plumbing/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_QDELETING,
 		COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH,
 		COMSIG_OBJ_HIDE,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
@@ -54,6 +53,7 @@
 	))
 
 /datum/component/plumbing/Destroy()
+	disable()
 	ducts.Cut()
 	reagents = null
 	return ..()
