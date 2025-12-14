@@ -3,8 +3,8 @@
 //Misc mob defines
 
 //Ready states at roundstart for mob/dead/new_player
-#define PLAYER_NOT_READY 0
-#define PLAYER_READY_TO_PLAY 1
+#define PLAYER_NOT_READY "Not Ready"
+#define PLAYER_READY_TO_PLAY "Ready"
 
 //movement intent defines for the move_intent var
 #define MOVE_INTENT_WALK "walk"
