@@ -19,11 +19,16 @@ function migrateHighlights(next: HighlightState): HighlightState {
   // Lazy init the list for compatibility reasons
   if (!draft.highlightSettings) {
     draft.highlightSettings = [defaultHighlightSetting.id];
-    draft.highlightSettingById[defaultHighlightSetting.id] =
-      defaultHighlightSetting;
   }
+
+  if (!draft.highlightSettingById) {
+    draft.highlightSettingById = {
+      [defaultHighlightSetting.id]: defaultHighlightSetting,
+    };
+  }
+
   // Compensating for mishandling of default highlight settings
-  else if (!draft.highlightSettingById[defaultHighlightSetting.id]) {
+  if (!draft.highlightSettingById[defaultHighlightSetting.id]) {
     draft.highlightSettings = [
       defaultHighlightSetting.id,
       ...draft.highlightSettings,
