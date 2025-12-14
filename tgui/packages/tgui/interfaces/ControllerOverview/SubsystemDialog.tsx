@@ -23,7 +23,7 @@ export function SubsystemDialog(props: Props) {
     last_fire,
     name,
     next_fire,
-    tick_overrun,
+    overtime,
     tick_usage,
     usage_per_tick,
   } = subsystem;
@@ -54,7 +54,7 @@ export function SubsystemDialog(props: Props) {
             {usage_per_tick.toFixed(2)}%
           </LabeledList.Item>
           <LabeledList.Item label="Tick Overrun">
-            {tick_overrun.toFixed(2)}%
+            {overtime.toFixed(2)}%
           </LabeledList.Item>
           {initialization_failure_message && (
             <LabeledList.Item color="bad">

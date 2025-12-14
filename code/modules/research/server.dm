@@ -146,13 +146,13 @@
 		if(HDD_PANEL_CLOSED)
 			. += "The front panel is closed. You can see some recesses which may have <b>screws</b>."
 		if(HDD_PANEL_OPEN)
-			. += "The front panel is dangling open. The hdd is in a secure housing. Looks like you'll have to <b>pry</b> it loose."
+			. += "The front panel is dangling open. The HDD is in a secure housing. Looks like you'll have to <b>pry</b> it loose."
 		if(HDD_PRIED)
-			. += "The front panel is dangling open. The hdd has been pried from its housing. It is still connected by <b>wires</b>."
+			. += "The front panel is dangling open. The HDD has been pried from its housing. It is still connected by <b>wires</b>."
 		if(HDD_CUT_LOOSE)
 			. += "The front panel is dangling open. All you can see inside are cut wires and mangled metal."
 		if(HDD_OVERLOADED)
-			. += "The front panel is dangling open. The hdd inside is destroyed and the wires are all burned."
+			. += "The front panel is dangling open. The HDD inside is destroyed and the wires are all burned."
 
 /obj/machinery/rnd/server/master/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(!tool.tool_behaviour)
@@ -175,10 +175,10 @@
 				balloon_alert(user, "you weren't trained to install this!")
 				return TRUE
 			if(HDD_PRIED)
-				balloon_alert(user, "the hdd housing is completely broken, it won't fit!")
+				balloon_alert(user, "the HDD housing is completely broken, it won't fit!")
 				return TRUE
 			if(HDD_CUT_LOOSE)
-				balloon_alert(user, "the hdd housing is completely broken and all the wires are cut!")
+				balloon_alert(user, "the HDD housing is completely broken and all the wires are cut!")
 				return TRUE
 			if(HDD_OVERLOADED)
 				balloon_alert(user, "the inside is scorched and all the wires are burned!")

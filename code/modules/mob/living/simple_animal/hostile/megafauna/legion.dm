@@ -46,16 +46,14 @@
 	minimum_distance = 5
 	ranged_cooldown_time = 2 SECONDS
 	gps_name = "Echoing Signal"
-	achievement_type = /datum/award/achievement/boss/legion_kill
+	// Achievements not set as they're added only when the last skull is killed
 	crusher_achievement_type = /datum/award/achievement/boss/legion_crusher
-	score_achievement_type = /datum/award/score/legion_score
 	SET_BASE_PIXEL(-32, -16)
 	maptext_height = 96
 	maptext_width = 96
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
 	wander = FALSE
-	elimination = TRUE
 	appearance_flags = LONG_GLIDE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	var/size = LEGION_LARGE
@@ -175,7 +173,8 @@
 			break
 	if(last_legion)
 		loot = list(/obj/item/storm_staff)
-		elimination = FALSE
+		var/list/achievements = list(/datum/award/achievement/boss/boss_killer, /datum/award/score/boss_score, /datum/award/score/legion_score, /datum/award/achievement/boss/legion_kill)
+		AddElement(/datum/element/kill_achievement, string_list(achievements), crusher_achievement_type, /datum/memory/megafauna_slayer)
 	else if(prob(20)) //20% chance for sick lootz.
 		loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		if(!true_spawn)

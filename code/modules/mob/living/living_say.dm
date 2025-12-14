@@ -259,7 +259,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	return TRUE
 
 
-/mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range=0)
+/mob/living/Hear(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range=0)
 	if((SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_HEAR, args) & COMSIG_MOVABLE_CANCEL_HEARING) || !GET_CLIENT(src))
 		return FALSE
 
@@ -289,13 +289,14 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	else if (!ismob(speaker) && !client?.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs))
 		use_runechat = FALSE
 
+	var/message = ""
 	// if someone is whispering we make an extra type of message that is obfuscated for people out of range
 	// Less than or equal to 0 means normal hearing. More than 0 and less than or equal to EAVESDROP_EXTRA_RANGE means
 	// partial hearing. More than EAVESDROP_EXTRA_RANGE means no hearing. Exception for GOOD_HEARING trait
 	var/dist = get_dist(speaker, src) - message_range
-	if(dist > 0 && dist <= EAVESDROP_EXTRA_RANGE && !HAS_TRAIT(src, TRAIT_GOOD_HEARING) && !isobserver(src)) // ghosts can hear all messages clearly
+	if(dist > 0 && dist <= EAVESDROP_EXTRA_RANGE && !HAS_TRAIT(src, TRAIT_GOOD_HEARING))
 		raw_message = stars(raw_message)
-	if(message_range != INFINITY && dist > EAVESDROP_EXTRA_RANGE && !HAS_TRAIT(src, TRAIT_GOOD_HEARING) && !isobserver(src))
+	if(message_range != INFINITY && dist > EAVESDROP_EXTRA_RANGE && !HAS_TRAIT(src, TRAIT_GOOD_HEARING))
 		// Too far away and don't have good hearing, you can't hear anything
 		if(is_blind() || HAS_TRAIT(speaker, TRAIT_INVISIBLE_MAN)) // Can't see them speak either
 			return FALSE
@@ -309,7 +310,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			if(isliving(speaker))
 				var/mob/living/living_speaker = speaker
 				var/mouth_hidden = living_speaker.is_mouth_covered() || HAS_TRAIT(living_speaker, TRAIT_FACE_COVERED)
-				if(!HAS_TRAIT(src, TRAIT_EMPATH) && mouth_hidden) // Can't see them speak if their mouth is covered or hidden, unless we're an empath
+				if(mouth_hidden && !HAS_TRAIT(src, TRAIT_SEE_MASK_WHISPER)) // Can't see them speak if their mouth is covered or hidden, unless we're an empath
 					return FALSE
 
 			deaf_message = "[span_name("[speaker]")] [speaker.verb_whisper] something, but you are too far away to hear [speaker.p_them()]."
@@ -386,6 +387,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(!(listening_movable in in_view) && !HAS_TRAIT(listening_movable, TRAIT_XRAY_HEARING))
 			listening.Remove(listening_movable)
 
+	SEND_SIGNAL(src, COMSIG_LIVING_SEND_SPEECH, listening)
+
 	if(imaginary_group)
 		listening |= imaginary_group
 
@@ -412,7 +415,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
 			continue
 
-		if(listening_movable.Hear(null, src, message_language, message_raw, null, null, null, spans, message_mods, message_range))
+		if(listening_movable.Hear(src, message_language, message_raw, null, null, null, spans, message_mods, message_range))
 			listened += listening_movable
 
 	//speech bubble

@@ -11,6 +11,7 @@
 	throwforce = 1
 	firing_effect_type = null
 	caliber = CALIBER_ARROW
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	///Whether the bullet type spawns another casing of the same type or not.
 	var/reusable = TRUE
 
@@ -131,6 +132,7 @@
 	base_icon_state = "plastic_arrow"
 	projectile_type = /obj/projectile/bullet/arrow/plastic
 	reusable = FALSE //cheap shit
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 
 /// plastic arrow projectile
 /obj/projectile/bullet/arrow/plastic
@@ -142,18 +144,20 @@
 	icon_state = "plastic_arrow_projectile"
 
 /// special pyre sect arrow
-/// in the future, this needs a special sprite, but bows don't support non-hardcoded arrow sprites
 /obj/item/ammo_casing/arrow/holy/blazing
 	name = "blazing star arrow"
 	desc = "A holy diver seeking its target, blessed with fire. Will ignite on hit, destroying the arrow. But if you hit an already ignited target...?"
+	icon_state = "flaming_arrow"
+	inhand_icon_state = "flaming_arrow"
+	base_icon_state = "flaming_arrow"
 	projectile_type = /obj/projectile/bullet/arrow/blazing
 	reusable = FALSE
 
 /obj/projectile/bullet/arrow/blazing
 	name = "blazing arrow"
 	desc = "THE UNMATCHED POWER OF THE SUN"
-	icon_state = "holy_arrow_projectile"
-	damage = 20
+	icon_state = "flaming_arrow_projectile"
+	damage_type = BURN
 	embed_type = null
 
 /obj/projectile/bullet/arrow/blazing/on_hit(atom/target, blocked, pierce_hit)
@@ -168,3 +172,23 @@
 		return
 	to_chat(human_target, span_danger("[src] reacts with the flames enveloping you! Oh shit!"))
 	explosion(src, light_impact_range = 1, flame_range = 2) //ow
+
+/// Ashen arrows
+/obj/item/ammo_casing/arrow/ashen
+	name = "ashen arrow"
+	desc = "An arrow made from watcher sinew and bone. Seems unusually lethal against the creatures it is made from."
+	icon_state = "ashen_arrow"
+	inhand_icon_state = "ashen_arrow"
+	base_icon_state = "ashen_arrow"
+	projectile_type = /obj/projectile/bullet/arrow/ashen
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT)
+
+/// ashen arrow projectile
+/obj/projectile/bullet/arrow/ashen
+	name = "ashen arrow"
+	icon_state = "ashen_arrow_projectile"
+
+/obj/projectile/bullet/arrow/ashen/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/bane, mob_biotypes = MOB_MINING, damage_multiplier = 0, added_damage = 40)
+

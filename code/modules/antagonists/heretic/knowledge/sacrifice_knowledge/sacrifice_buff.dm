@@ -4,7 +4,8 @@
 /atom/movable/screen/alert/status_effect/unholy_determination
 	name = "Unholy Determination"
 	desc = "You appear in a unfamiliar room. The darkness begins to close in. Panic begins to set in. There is no time. Fight on, or die!"
-	icon_state = "wounded"
+	icon_state = "heretic_template"
+	overlay_state = "wounded"
 
 /// The buff given to people within the shadow realm to assist them in surviving.
 /datum/status_effect/unholy_determination
@@ -22,8 +23,8 @@
 
 /datum/status_effect/unholy_determination/on_apply()
 	owner.add_traits(list(TRAIT_COAGULATING, TRAIT_NOCRITDAMAGE, TRAIT_NOSOFTCRIT), TRAIT_STATUS_EFFECT(id))
-	if(owner.blood_volume < BLOOD_VOLUME_OKAY)
-		owner.blood_volume = BLOOD_VOLUME_OKAY
+	if(owner.get_blood_volume() < BLOOD_VOLUME_OKAY)
+		owner.set_blood_volume(BLOOD_VOLUME_OKAY)
 	return TRUE
 
 /datum/status_effect/unholy_determination/on_remove()
@@ -65,10 +66,10 @@
 	owner.losebreath = max(owner.losebreath - (0.5 * seconds_between_ticks), 0)
 
 	var/damage_healed = 0
-	damage_healed += owner.adjustToxLoss(-amount, updating_health = FALSE, forced = TRUE)
-	damage_healed += owner.adjustOxyLoss(-amount, updating_health = FALSE)
-	damage_healed += owner.adjustBruteLoss(-amount, updating_health = FALSE)
-	damage_healed += owner.adjustFireLoss(-amount, updating_health = FALSE)
+	damage_healed += owner.adjust_tox_loss(-amount, updating_health = FALSE, forced = TRUE)
+	damage_healed += owner.adjust_oxy_loss(-amount, updating_health = FALSE)
+	damage_healed += owner.adjust_brute_loss(-amount, updating_health = FALSE)
+	damage_healed += owner.adjust_fire_loss(-amount, updating_health = FALSE)
 	if(damage_healed > 0)
 		owner.updatehealth()
 
@@ -93,22 +94,8 @@
  * Slow and stop any blood loss the owner's experiencing.
  */
 /datum/status_effect/unholy_determination/proc/adjust_bleed_wounds(seconds_between_ticks)
-	if(!iscarbon(owner) || !owner.blood_volume)
-		return
-
-	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-		owner.blood_volume = owner.blood_volume + (2 * seconds_between_ticks)
-
-	var/mob/living/carbon/carbon_owner = owner
-	var/datum/wound/bloodiest_wound
-	for(var/datum/wound/iter_wound as anything in carbon_owner.all_wounds)
-		if(iter_wound.blood_flow && (iter_wound.blood_flow > bloodiest_wound?.blood_flow))
-			bloodiest_wound = iter_wound
-
-	if(!bloodiest_wound)
-		return
-
-	bloodiest_wound.adjust_blood_flow(-0.5 * seconds_between_ticks)
+	owner.adjust_blood_volume(2 * seconds_between_ticks, maximum = BLOOD_VOLUME_NORMAL)
+	owner.coagulant_effect(0.5 * seconds_between_ticks)
 
 /// Torment the target with a frightening hand
 /proc/fire_curse_hand(mob/living/carbon/victim, turf/forced_turf, range = 8, projectile_type = /obj/projectile/curse_hand/hel)

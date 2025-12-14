@@ -38,6 +38,7 @@
 	var/list/all_designs = list()
 	var/list/exceptions = list(
 		/datum/design/surgery/healing, // Ignored due to the above test
+		/datum/design/telescreen_monastery, // It's map-specific, so it doesn't always have a source.
 	)
 
 	for (var/datum/design/design as anything in subtypesof(/datum/design))
@@ -67,7 +68,7 @@
 
 	for (var/obj/item/disk/surgery/design_disk as anything in subtypesof(/obj/item/disk/surgery))
 		design_disk = new design_disk()
-		for (var/surgery_type as anything in design_disk.surgeries)
+		for (var/surgery_type in design_disk.surgeries)
 			for (var/design_id in all_designs)
 				var/datum/design/surgery/design = all_designs[design_id]
 				if (ispath(design, /datum/design/surgery) && design::surgery == surgery_type)

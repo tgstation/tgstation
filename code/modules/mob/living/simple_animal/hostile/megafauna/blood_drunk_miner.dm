@@ -37,11 +37,11 @@ Difficulty: Medium
 	rapid_melee = 5 // starts fast because the saw's closed. gets reduced appropriately when extended, see their transform_weapon ability
 	pixel_x = -16
 	base_pixel_x = -16
-	crusher_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye, /obj/item/knife/hunting/wildhunter)
+	crusher_loot = list(/obj/item/crusher_trophy/miner_eye, /obj/item/knife/hunting/wildhunter)
 	loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator)
 	wander = FALSE
 	del_on_death = TRUE
-	blood_volume = BLOOD_VOLUME_NORMAL
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 	gps_name = "Resonant Signal"
 	achievement_type = /datum/award/achievement/boss/blood_miner_kill
 	crusher_achievement_type = /datum/award/achievement/boss/blood_miner_crusher
@@ -78,7 +78,7 @@ Difficulty: Medium
 	dash_attack.Grant(src)
 	transform_weapon.Grant(src)
 
-	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg', 167 SECONDS)
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg')
 
 /// Block deletion of their saw under normal circumstances. It is fused to their hands as far as we're concerned.
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/on_saw_deleted(datum/source, force)
@@ -127,10 +127,9 @@ Difficulty: Medium
 		changeNext_move(adjustment_amount) //attacking it interrupts it attacking, but only briefly
 	. = ..()
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/death()
-	. = ..()
-	if(.)
-		new /obj/effect/temp_visual/dir_setting/miner_death(loc, dir)
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/drop_loot(drop_loc)
+	new /obj/effect/temp_visual/dir_setting/miner_death(loc, dir)
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Move(atom/newloc)
 	if(newloc && newloc.z == z && ischasm(newloc)) //we're not stupid!
@@ -188,11 +187,11 @@ Difficulty: Medium
 	if(dir & (EAST|WEST)) //Facing east or west
 		final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 
-	animate(src, transform = our_matrix, pixel_y = -6, dir = final_dir, time = 2, easing = EASE_IN|EASE_OUT)
+	animate(src, transform = our_matrix, pixel_y = -6, dir = final_dir, time = 2, easing = QUAD_EASING)
 	sleep(0.5 SECONDS)
-	animate(src, color = list("#A7A19E", "#A7A19E", "#A7A19E", list(0, 0, 0)), time = 10, easing = EASE_IN, flags = ANIMATION_PARALLEL)
+	animate(src, color = list("#A7A19E", "#A7A19E", "#A7A19E", list(0, 0, 0)), time = 10, easing = SINE_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	sleep(0.4 SECONDS)
-	animate(src, alpha = 0, time = 6, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
+	animate(src, alpha = 0, time = 6, easing = SINE_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance
 	guidance = TRUE

@@ -232,7 +232,7 @@
 	. = ..()
 	set_holdable(/obj/item/ammo_casing/harpoon)
 
-///Rebar quiber bag
+///Rebar quiver bag
 /datum/storage/bag/rebar_quiver
 	max_specific_storage = WEIGHT_CLASS_TINY
 	max_slots = 10
@@ -268,12 +268,51 @@
 /datum/storage/bag/garment
 	numerical_stacking = FALSE
 	max_total_storage = 200
-	max_slots = 15
+	max_slots = 20
 	insert_preposition = "in"
+	allow_big_nesting = TRUE
 
 /datum/storage/bag/garment/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
-	set_holdable(/obj/item/clothing)
+	set_holdable(
+		can_hold_list = list(/obj/item/clothing, /obj/item/storage/backpack),
+		exception_hold_list = list(/obj/item/storage/backpack),
+	)
+
+/datum/storage/bag/garment/can_insert(obj/item/to_insert, mob/user, messages, force)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(istype(to_insert, /obj/item/storage/backpack) && length(to_insert.contents))
+		if(messages && user)
+			parent.balloon_alert(user, "can't store filled backpacks!")
+		return FALSE
+
+	return TRUE
+
+/datum/storage/bag/garment/item_init(datum/source, obj/item/inited)
+	. = ..()
+	if(!istype(inited, /obj/item/storage/backpack))
+		return
+	RegisterSignal(inited, COMSIG_ATOM_PRE_STORED_ITEM, PROC_REF(block_inner_storage))
+
+/datum/storage/bag/garment/handle_enter(datum/source, obj/item/arrived)
+	. = ..()
+	if(!istype(arrived, /obj/item/storage/backpack))
+		return
+	RegisterSignal(arrived, COMSIG_ATOM_PRE_STORED_ITEM, PROC_REF(block_inner_storage))
+
+/datum/storage/bag/garment/handle_exit(datum/source, obj/item/gone)
+	. = ..()
+	UnregisterSignal(gone, COMSIG_ATOM_PRE_STORED_ITEM)
+
+/datum/storage/bag/garment/proc/block_inner_storage(obj/item/backpack, to_insert, user, force, messages)
+	SIGNAL_HANDLER
+
+	if(user && messages)
+		parent.balloon_alert(user, "garment bag is in the way!")
+	return BLOCK_STORAGE_INSERT
 
 ///Quiver bag
 /datum/storage/bag/quiver
@@ -300,16 +339,24 @@
 
 ///Money bag
 /datum/storage/bag/money
-	max_slots = 40
-	max_specific_storage = 40
+	max_specific_storage = WEIGHT_CLASS_BULKY
+	max_total_storage = 1000
+	max_slots = 1000
 
 /datum/storage/bag/money/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/coin,
 		/obj/item/stack/spacecash,
-		/obj/item/holochip
+		/obj/item/holochip,
+		/obj/item/poker_chip,
+		/obj/item/stack/sheet/mineral/diamond, // Precious gems and stones are something a sophisticated french thief might put in his thief bag.
+		/obj/item/stack/sheet/mineral/gold, // This is money, the only real money actually, if you ask a Ron Paul-style guy.
+		/obj/item/stack/sheet/mineral/silver,
+		/obj/item/stack/sheet/mineral/mythril,
+		/obj/item/stack/telecrystal,
 	))
+
 
 ///Fishing bag
 /datum/storage/bag/fishing

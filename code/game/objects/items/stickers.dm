@@ -220,3 +220,12 @@
 /obj/item/sticker/syndicate/trap
 	name = "bear trap sticker"
 	icon_state = "trap"
+
+/obj/item/sticker/purity_seal
+	name = "purity seal"
+	icon_state = "purity_seal_1"
+	desc =  "Looking closer, you realize it's actually a mass produced sticker. You suppose it's the holiness that counts."
+
+/obj/item/sticker/purity_seal/purity_seal_2
+	icon_state = "purity_seal_2"
+

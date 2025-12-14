@@ -390,7 +390,7 @@
 	to_chat(user, span_notice("You stick the rod into the stick of butter."))
 	user.temporarilyRemoveItemFromInventory(src)
 	var/obj/item/food/butter/on_a_stick/new_item = new(drop_location())
-	if (user.CanReach(new_item))
+	if (new_item.IsReachableBy(user))
 		user.put_in_hands(new_item)
 	qdel(src)
 	return TRUE
@@ -405,7 +405,7 @@
 	can_stick = FALSE
 
 /obj/item/food/butter/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/butterslice, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/butterslice, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/butterslice
 	name = "butter slice"
@@ -849,8 +849,7 @@
 
 /obj/item/food/ink_sac/proc/blind_em(mob/living/victim, can_splat_on)
 	if(can_splat_on)
-		victim.adjust_temp_blindness_up_to(7 SECONDS, 10 SECONDS)
-		victim.adjust_confusion_up_to(3.5 SECONDS, 6 SECONDS)
-		victim.Paralyze(2 SECONDS) //splat!
+		victim.adjust_temp_blindness_up_to(2.5 SECONDS, 3 SECONDS)
+		victim.adjust_confusion_up_to(2.5 SECONDS, 3 SECONDS)
 	victim.visible_message(span_warning("[victim] is inked by [src]!"), span_userdanger("You've been inked by [src]!"))
 	playsound(victim, SFX_DESECRATION, 50, TRUE)

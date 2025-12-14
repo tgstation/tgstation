@@ -152,7 +152,7 @@
 /area/awaymission/caves/bmp_asteroid/level_four)
 "ba" = (
 /obj/structure/table/wood/fancy,
-/obj/item/clothing/gloves/krav_maga/combatglovesplus,
+/obj/item/clothing/gloves/kaza_ruk/combatglovesplus,
 /turf/open/floor/engine/cult,
 /area/awaymission/caves/bmp_asteroid/level_four)
 "bf" = (
@@ -1038,7 +1038,7 @@
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/caves/bmp_asteroid)
 "nw" = (
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -1149,7 +1149,7 @@
 	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
 	name = "\improper MECH TUNNEL PASSAGE A2 TO B1"
 	},
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "vR" = (
@@ -1190,7 +1190,7 @@
 "yS" = (
 /obj/structure/closet/crate,
 /obj/item/paper/fluff/awaymissions/caves/shipment_receipt,
-/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser/soul,
 /obj/item/slimepotion/fireproof,
 /obj/item/slimepotion/fireproof,
 /obj/item/clothing/glasses/thermal,
@@ -1314,7 +1314,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/research)
 "FS" = (
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /obj/structure/spider/stickyweb,
 /mob/living/basic/spider/giant/hunter/away_caves,
 /turf/open/floor/iron,
@@ -1324,7 +1324,7 @@
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "Gt" = (
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /obj/machinery/suit_storage_unit/mining{
 	desc = "An industrial unit made to hold space suits. Age has seemed to rust the sliding door mechanisms, making it difficult to open.";
 	name = "rusted suit storage unit"
@@ -1347,7 +1347,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/research)
 "IE" = (
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/structure/sign/warning/pods/directional/east{
 	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
 	name = "\improper MECH TUNNEL PASSAGE B1 TO A2"
@@ -1397,7 +1397,7 @@
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "Mk" = (
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "Mq" = (
@@ -1453,7 +1453,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid)
 "PS" = (
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /obj/machinery/suit_storage_unit/mining{
 	desc = "An industrial unit made to hold space suits. Age has seemed to rust the sliding door mechanisms, making it difficult to open.";
 	name = "rusted suit storage unit"

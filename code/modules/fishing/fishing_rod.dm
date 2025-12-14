@@ -151,13 +151,13 @@
 	var/list/block = list()
 	var/get_percent = HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH)
 	block += span_info("You think you can cast it up to [get_cast_range()] tiles away.")
-	block += get_stat_info(get_percent, difficulty_modifier * 0.01, "Fishing will be", "easier", "harder", "with this fishing rod", offset = 0)
-	block += get_stat_info(get_percent, experience_multiplier, "You will gain experience", "faster", "slower")
-	block += get_stat_info(get_percent, completion_speed_mult, "You should complete the minigame", "faster", "slower")
-	block += get_stat_info(get_percent, bait_speed_mult, "Reeling is", "faster", "slower")
-	block += get_stat_info(get_percent, deceleration_mult, "Deceleration is", "faster", "slower", less_is_better = TRUE)
-	block += get_stat_info(get_percent, bounciness_mult, "This fishing rod is ", "bouncier", "less bouncy", "than a normal one", less_is_better = TRUE)
-	block += get_stat_info(get_percent, gravity_mult, "The lure will sink", "faster", "slower", span_info = TRUE)
+	block += get_stat_info(get_percent, difficulty_modifier * 0.01, "Fishing will be", "easier", "harder", "with this fishing rod")
+	block += get_stat_info(get_percent, experience_multiplier - 1, "You will gain experience", "faster", "slower")
+	block += get_stat_info(get_percent, completion_speed_mult - 1, "The minigame completion speed is", "faster", "slower")
+	block += get_stat_info(get_percent, bait_speed_mult - 1, "Reeling is", "faster", "slower")
+	block += get_stat_info(get_percent, deceleration_mult - 1, "Deceleration is", "faster", "slower")
+	block += get_stat_info(get_percent, bounciness_mult - 1, "This fishing rod is ", "bouncier", "less bouncy", "than a normal one", less_is_better = TRUE)
+	block += get_stat_info(get_percent, gravity_mult - 1, "The lure will sink", "faster", "slower", span_info = TRUE)
 
 	list_clear_nulls(block)
 	. += boxed_message(block.Join("\n"))
@@ -184,10 +184,9 @@
 		. += boxed_message(block.Join("\n"))
 
 ///Used in examine_more to reduce all the copypasta when getting more information about the various stats of the fishing rod.
-/obj/item/fishing_rod/proc/get_stat_info(get_percent, value, prefix, easier, harder, suffix = "with this fishing rod", span_info = FALSE, less_is_better = FALSE, offset = 1)
-	if(value == 1)
+/obj/item/fishing_rod/proc/get_stat_info(get_percent, value, prefix, easier, harder, suffix = "with this fishing rod", span_info = FALSE, less_is_better = FALSE)
+	if(!value)
 		return
-	value -= offset
 	var/percent = get_percent ? "[abs(value * 100)]% " : ""
 	var/harder_easier = value > 0 ? easier : harder
 	. = "[prefix] [percent][harder_easier] [suffix]."
@@ -380,8 +379,9 @@
 		return
 	if(!hook.can_be_hooked(target_atom))
 		return
+	if(!create_fishing_line(target_atom, user))
+		return
 	currently_hooked = target_atom
-	create_fishing_line(target_atom, user)
 	hook.hook_attached(target_atom, src)
 	SEND_SIGNAL(src, COMSIG_FISHING_ROD_HOOKED_ITEM, target_atom, user)
 
@@ -543,13 +543,13 @@
 	var/list/data = list()
 
 	data["bait_name"] = format_text(bait?.name)
-	data["bait_icon"] = bait != null ? icon2base64(icon(bait.icon, bait.icon_state)) : null
+	data["bait_icon"] = bait != null ? icon2base64(icon(bait.icon, bait.icon_state, frame = 1)) : null
 
 	data["line_name"] = format_text(line?.name)
-	data["line_icon"] = line != null ? icon2base64(icon(line.icon, line.icon_state)) : null
+	data["line_icon"] = line != null ? icon2base64(icon(line.icon, line.icon_state, frame = 1)) : null
 
 	data["hook_name"] = format_text(hook?.name)
-	data["hook_icon"] = hook != null ? icon2base64(icon(hook.icon, hook.icon_state)) : null
+	data["hook_icon"] = hook != null ? icon2base64(icon(hook.icon, hook.icon_state, frame = 1)) : null
 
 	data["busy"] = fishing_line
 
@@ -695,6 +695,7 @@
 	frame_state = "frame_bone"
 	line = null //sinew line (usable to fish in lava) not included
 	hook = /obj/item/fishing_hook/bone
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/fishing_rod/telescopic
 	name = "telescopic fishing rod"

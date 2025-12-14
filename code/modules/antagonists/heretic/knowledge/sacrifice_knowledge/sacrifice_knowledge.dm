@@ -211,11 +211,11 @@
 	// Heads give 3 points, cultists give 1 point (and a special reward), normal sacrifices give 2 points.
 	heretic_datum.total_sacrifices++
 	if((sac_job_flag & JOB_HEAD_OF_STAFF))
-		heretic_datum.knowledge_points += 3
+		heretic_datum.adjust_knowledge_points(3)
 		heretic_datum.high_value_sacrifices++
 		feedback += " <i>graciously</i>"
 	if(cultist_datum)
-		heretic_datum.knowledge_points += 1
+		heretic_datum.adjust_knowledge_points(1)
 		grant_reward(user, sacrifice, loc)
 		// easier to read
 		var/rewards_given = heretic_datum.rewards_given
@@ -234,7 +234,7 @@
 			to_chat(user, non_flavor_warning)
 		return
 	else
-		heretic_datum.knowledge_points += 2
+		heretic_datum.adjust_knowledge_points(2)
 
 	to_chat(user, span_hypnophrase("[feedback]."))
 	if(!begin_sacrifice(sacrifice))
@@ -333,10 +333,10 @@
 	var/turf/destination = get_turf(destination_landmark)
 
 	sac_target.visible_message(span_danger("[sac_target] begins to shudder violenty as dark tendrils begin to drag them into thin air!"))
-	sac_target.set_handcuffed(new /obj/item/restraints/handcuffs/energy/cult(sac_target))
+	sac_target.equip_to_slot_or_del(new /obj/item/restraints/handcuffs/cult, ITEM_SLOT_HANDCUFFED, indirect_action = TRUE)
 	sac_target.dropItemToGround(sac_target.legcuffed, TRUE)
 
-	sac_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 85, 150)
+	sac_target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 85, 150)
 	sac_target.do_jitter_animation()
 	log_combat(heretic_mind.current, sac_target, "sacrificed")
 
@@ -345,7 +345,7 @@
 
 	// If our target is dead, try to revive them
 	// and if we fail to revive them, don't proceede the chain
-	sac_target.adjustOxyLoss(-100, FALSE)
+	sac_target.adjust_oxy_loss(-100, FALSE)
 	if(!sac_target.heal_and_revive(50, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
 		return
 
@@ -390,7 +390,7 @@
 	// If our target died during the (short) wait timer,
 	// and we fail to revive them (using a lower number than before),
 	// just disembowel them and stop the chain
-	sac_target.adjustOxyLoss(-100, FALSE)
+	sac_target.adjust_oxy_loss(-100, FALSE)
 	if(!sac_target.heal_and_revive(60, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
 		disembowel_target(sac_target)
 		return
@@ -499,7 +499,7 @@
 	sac_target.clear_mood_event("shadow_realm")
 	if(IS_HERETIC(sac_target))
 		var/datum/antagonist/heretic/victim_heretic = sac_target.mind?.has_antag_datum(/datum/antagonist/heretic)
-		victim_heretic.knowledge_points -= 3
+		victim_heretic.adjust_knowledge_points(-3)
 
 	// Wherever we end up, we sure as hell won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
@@ -581,7 +581,7 @@
 	sac_target.set_eye_blur_if_lower(100 SECONDS)
 	sac_target.set_dizzy_if_lower(1 MINUTES)
 	sac_target.AdjustKnockdown(80)
-	sac_target.adjustStaminaLoss(120)
+	sac_target.adjust_stamina_loss(120)
 
 	// Glad i'm outta there, though!
 	sac_target.add_mood_event("shadow_realm_survived", /datum/mood_event/shadow_realm_live)

@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix map reader ignoring valid variable names. If a variable had a number inside the name anywhere the map reader would ignore this value when a map was loaded and use the initial value instead. This was due to a faulty regex pattern that did not properly match variable names."

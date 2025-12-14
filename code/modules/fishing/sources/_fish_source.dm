@@ -615,7 +615,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		table_copy -= FISHING_DUD
 		var/exponent = weight_leveling_exponents[trait]
 		var/multiplier = weight_result_multiplier[trait]
-		for(var/fish as anything in table_copy)
+		for(var/fish in table_copy)
 			if(!ispath(fish, /obj/item/fish))
 				continue
 			table_copy[fish] = round(table_copy[fish] * multiplier, 1)

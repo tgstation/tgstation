@@ -8,7 +8,7 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	rust_resistance = RUST_RESISTANCE_ORGANIC
+	rust_resistance = RUST_RESISTANCE_REINFORCED
 
 /turf/open/misc/beach/Initialize(mapload)
 	. = ..()
@@ -72,7 +72,7 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/misc/sandy_dirt/break_tile()

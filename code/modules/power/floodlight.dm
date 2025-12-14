@@ -11,7 +11,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floodlight_c1"
 	density = TRUE
-
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	var/state = FLOODLIGHT_NEEDS_WIRES
 
 /obj/structure/floodlight_frame/Initialize(mapload)
@@ -155,6 +155,9 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, TYPE_PROC_REF(/obj/machinery/power/floodlight, on_color_change))  //update light color when color changes
 	register_context()
+	if(mapload)
+		set_anchored(TRUE)
+		connect_to_network()
 
 /obj/machinery/power/floodlight/proc/on_color_change(obj/machinery/power/flood_light, mob/user, obj/item/toy/crayon/spraycan/spraycan, is_dark_color)
 	SIGNAL_HANDLER

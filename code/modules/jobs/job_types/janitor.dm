@@ -1,7 +1,6 @@
 /datum/job/janitor
 	title = JOB_JANITOR
 	description = "Clean up trash and blood. Replace broken lights. Slip people over."
-	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 1
@@ -47,10 +46,10 @@
 	. = ..()
 	if(check_holidays(GARBAGEDAY))
 		backpack_contents += list(/obj/item/gun/ballistic/revolver)
-		r_pocket = /obj/item/ammo_box/a357
+		r_pocket = /obj/item/ammo_box/speedloader/c357
 
 /datum/outfit/job/janitor/get_types_to_preload()
 	. = ..()
 	if(check_holidays(GARBAGEDAY))
 		. += /obj/item/gun/ballistic/revolver
-		. += /obj/item/ammo_box/a357
+		. += /obj/item/ammo_box/speedloader/c357

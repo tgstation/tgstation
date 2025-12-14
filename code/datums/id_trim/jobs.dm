@@ -291,6 +291,7 @@
 	subdepartment_color = COLOR_CARGO_BROWN
 	sechud_icon_state = SECHUD_CARGO_TECHNICIAN
 	minimal_access = list(
+		ACCESS_BUDGET,
 		ACCESS_CARGO,
 		ACCESS_MAINT_TUNNELS,
 		ACCESS_MECH_MINING,
@@ -353,6 +354,7 @@
 		ACCESS_MORGUE,
 		ACCESS_SURGERY,
 		ACCESS_VIROLOGY,
+		ACCESS_PARAMEDIC,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -374,6 +376,7 @@
 		ACCESS_ATMOSPHERICS,
 		ACCESS_AUX_BASE,
 		ACCESS_BRIG_ENTRANCE,
+		ACCESS_BUDGET,
 		ACCESS_CE,
 		ACCESS_COMMAND,
 		ACCESS_CONSTRUCTION,
@@ -417,6 +420,7 @@
 	extra_wildcard_access = list()
 	minimal_access = list(
 		ACCESS_BRIG_ENTRANCE,
+		ACCESS_BUDGET,
 		ACCESS_COMMAND,
 		ACCESS_KEYCARD_AUTH,
 		ACCESS_PLUMBING,
@@ -432,6 +436,7 @@
 		ACCESS_RC_ANNOUNCE,
 		ACCESS_SURGERY,
 		ACCESS_VIROLOGY,
+		ACCESS_PARAMEDIC,
 	)
 	minimal_wildcard_access = list(
 		ACCESS_CMO,
@@ -467,6 +472,8 @@
 		ACCESS_HOP,
 		)
 	job = /datum/job/clown
+	honorifics = list(" the Clown")
+	honorific_positions = HONORIFIC_POSITION_LAST_FULL | HONORIFIC_POSITION_NONE
 
 /datum/id_trim/job/cook
 	assignment = JOB_COOK
@@ -517,6 +524,7 @@
 		ACCESS_PSYCHOLOGY,
 		ACCESS_PHARMACY,
 		ACCESS_VIROLOGY,
+		ACCESS_PARAMEDIC,
 	)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -629,6 +637,7 @@
 		ACCESS_AUX_BASE,
 		ACCESS_BAR,
 		ACCESS_BRIG_ENTRANCE,
+		ACCESS_BUDGET,
 		ACCESS_CARGO,
 		ACCESS_CHAPEL_OFFICE,
 		ACCESS_CHANGE_IDS,
@@ -687,6 +696,7 @@
 		ACCESS_BIT_DEN,
 		ACCESS_BRIG,
 		ACCESS_BRIG_ENTRANCE,
+		ACCESS_BUDGET,
 		ACCESS_CARGO,
 		ACCESS_COMMAND,
 		ACCESS_CONSTRUCTION,
@@ -795,6 +805,7 @@
 		ACCESS_PHARMACY,
 		ACCESS_SURGERY,
 		ACCESS_VIROLOGY,
+		ACCESS_PARAMEDIC,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -823,6 +834,8 @@
 		ACCESS_HOP,
 		)
 	job = /datum/job/mime
+	honorifics = list(" the Mime")
+	honorific_positions = HONORIFIC_POSITION_LAST_FULL | HONORIFIC_POSITION_NONE
 
 /datum/id_trim/job/paramedic
 	assignment = JOB_PARAMEDIC
@@ -836,6 +849,7 @@
 		ACCESS_MAINT_TUNNELS,
 		ACCESS_MORGUE,
 		ACCESS_MECH_MEDICAL,
+		ACCESS_PARAMEDIC,
 		)
 	extra_access = list(
 		ACCESS_BIT_DEN,
@@ -942,6 +956,7 @@
 	minimal_access = list(
 		ACCESS_AUX_BASE,
 		ACCESS_BIT_DEN,
+		ACCESS_BUDGET,
 		ACCESS_CARGO,
 		ACCESS_MAINT_TUNNELS,
 		ACCESS_MECH_MINING,
@@ -985,6 +1000,7 @@
 		ACCESS_AI_UPLOAD,
 		ACCESS_AUX_BASE,
 		ACCESS_BRIG_ENTRANCE,
+		ACCESS_BUDGET,
 		ACCESS_COMMAND,
 		ACCESS_CONSTRUCTION,
 		ACCESS_EVA,
@@ -1190,6 +1206,7 @@
 		ACCESS_PLUMBING,
 		ACCESS_SURGERY,
 		ACCESS_VIROLOGY,
+		ACCESS_PARAMEDIC,
 	)
 	honorifics = list("Orderly", "Officer")
 
@@ -1325,6 +1342,7 @@
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_SECURITY,
 		ACCESS_WEAPONS,
+		ACCESS_BUDGET,
 		) // See /datum/job/warden/get_access()
 	extra_access = list(
 		ACCESS_DETECTIVE,

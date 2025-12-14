@@ -163,7 +163,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "firebrand"
 	desc = "An unlit firebrand. It makes you wonder why it's not just called a stick."
 	smoketime = 40 SECONDS
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 	grind_results = list(/datum/reagent/carbon = 2)
 
 /obj/item/match/firebrand/Initialize(mapload)
@@ -175,6 +175,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A budget lighter done by using a battery and some aluminium. Hold tightly to ignite."
 	icon_state = "battery_unlit"
 	base_icon_state = "battery"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/match/battery/attack_self(mob/living/user, modifiers)
 	. = ..()
@@ -197,7 +198,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	throw_speed = 0.5
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_MASK
-	grind_results = list()
 	heat = 1000
 	light_range = 1
 	light_color = LIGHT_COLOR_FIRE
@@ -422,16 +422,29 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	damtype = BURN
 	force = 4
 
-	if(reagents && reagents.has_reagent(/datum/reagent/drug/methamphetamine))
+	if(reagents?.has_reagent(/datum/reagent/flash_powder))
+		if(!isliving(loc))
+			loc.visible_message(span_hear("\The [src] burns up!"))
+			qdel(src)
+			return
+		var/mob/living/user = loc
+		loc.visible_message(span_hear("[user]'s [name] burns up as [p_they(user)] fall to the ground!"), span_danger("The solution violently explodes!"))
+		user.flash_act(INFINITY, visual = TRUE, length = 5 SECONDS)
+		user.playsound_local(get_turf(user), SFX_EXPLOSION, 50, TRUE)
+		user.cause_hallucination(/datum/hallucination/death, "trick trick [name]")
+		qdel(src)
+		return
+
+	if(reagents?.has_reagent(/datum/reagent/drug/methamphetamine))
 		reagents.flags |= NO_REACT
 
-	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
+	if(reagents?.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0)
 		e.start(src)
 		qdel(src)
 		return
-	if(reagents.get_reagent_amount(/datum/reagent/fuel)) // the fuel explodes, too, but much less violently
+	if(reagents?.get_reagent_amount(/datum/reagent/fuel)) // the fuel explodes, too, but much less violently
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/fuel) / 5, 1), get_turf(src), 0, 0)
 		e.start(src)
@@ -551,7 +564,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/obj/item/organ/lungs/lungs = smoker.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(lungs && IS_ORGANIC_ORGAN(lungs))
 		var/smoker_resistance = HAS_TRAIT(smoker, TRAIT_SMOKER) ? 0.5 : 1
-		smoker.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm * smoker_resistance)
+		smoker.adjust_organ_loss(ORGAN_SLOT_LUNGS, lung_harm * smoker_resistance)
 	if(!reagents.trans_to(smoker, to_smoke, methods = INHALE, ignore_stomach = TRUE))
 		reagents.remove_all(to_smoke)
 
@@ -709,6 +722,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A Xeno Filtered brand cigarette."
 	lung_harm = 2
 	list_reagents = list (/datum/reagent/drug/nicotine = 20, /datum/reagent/medicine/regen_jelly = 15, /datum/reagent/drug/krokodil = 4)
+
+/obj/item/cigarette/flash_powder
+	desc = /obj/item/cigarette/space_cigarette::desc
+	list_reagents = list (/datum/reagent/drug/nicotine = 9, /datum/reagent/flash_powder = 5)
 
 // Rollies.
 
@@ -915,6 +932,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	list_reagents = null
 	w_class = WEIGHT_CLASS_SMALL
 	choke_forever = TRUE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 	///name of the stuff packed inside this pipe
 	var/packeditem
 
@@ -992,7 +1010,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	inhand_icon_on = null
 	inhand_icon_off = null
 	lung_harm = 2
-	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 3)
 
 ///////////
 //ROLLING//

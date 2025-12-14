@@ -204,7 +204,7 @@
 	if(victim.incorporeal_move || HAS_TRAIT(victim, TRAIT_GODMODE)) //try to keep this in sync with supermatter's consume fail conditions
 		return ..()
 	var/mob/thrower = throwingdatum?.get_thrower()
-	if(thrower)
+	if(istype(thrower))
 		log_combat(thrower, hit_atom, "consumed", src)
 		message_admins("[src] has consumed [key_name_admin(victim)] [ADMIN_JMP(src)], thrown by [key_name_admin(thrower)].")
 		investigate_log("has consumed [key_name(victim)], thrown by [key_name(thrower)]", INVESTIGATE_ENGINE)

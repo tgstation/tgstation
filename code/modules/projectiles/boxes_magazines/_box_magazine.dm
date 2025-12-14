@@ -30,7 +30,7 @@
 	var/multiple_sprite_use_base = FALSE
 	///String, used for checking if ammo of different types but still fits can fit inside it; generally used for magazines
 	var/caliber
-	/// Determines whether ammo boxes can multiload in or out.
+	/// Determines whether ammo boxes can multiload in or out. See code/__DEFINES/combat.dm for details.
 	var/ammo_box_multiload = AMMO_BOX_MULTILOAD_BOTH
 
 	///Whether the magazine should start with nothing in it
@@ -45,9 +45,16 @@
 
 /obj/item/ammo_box/Initialize(mapload)
 	. = ..()
-	custom_materials = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.1)
 	if(!start_empty)
 		top_off(starting=TRUE)
+	else if(custom_materials && !(item_flags & ABSTRACT)) //internal magazines are abstract
+		var/obj/item/ammo_casing/prototype = new ammo_type
+		var/list/new_materials = custom_materials?.Copy()
+		for(var/mat in prototype.custom_materials)
+			new_materials[mat] -= prototype.custom_materials[mat] * max_ammo
+		qdel(prototype)
+		set_custom_materials(new_materials)
+
 	update_icon_state()
 
 /obj/item/ammo_box/Destroy(force)
@@ -64,6 +71,11 @@
 
 /obj/item/ammo_box/proc/remove_from_stored_ammo(atom/movable/gone)
 	stored_ammo -= gone
+	if(gone.custom_materials && custom_materials && !(item_flags & ABSTRACT))
+		var/list/new_materials = custom_materials?.Copy()
+		for(var/mat in gone.custom_materials)
+			new_materials[mat] -= gone.custom_materials[mat]
+		set_custom_materials(new_materials)
 	update_appearance()
 
 /obj/item/ammo_box/add_weapon_description()
@@ -108,8 +120,21 @@
 		stack_trace("Tried loading unsupported ammocasing type [load_type] into ammo box [type].")
 		return
 
+	var/list/new_materials = null
+	if(!(item_flags & ABSTRACT))
+		new_materials = custom_materials?.Copy() || list()
 	for(var/i in max(1, stored_ammo.len + 1) to max_ammo)
-		stored_ammo += starting ? round_check : new round_check(src)
+		var/obj/item/ammo_casing/casing = round_check
+		if(!starting)
+			casing = new round_check(src)
+			if(new_materials)
+				for(var/mat in casing.custom_materials)
+					new_materials[mat] += casing.custom_materials[mat]
+		stored_ammo += casing
+
+	if(!starting && length(new_materials))
+		set_custom_materials(new_materials)
+
 	update_appearance()
 
 ///gets a round from the magazine
@@ -141,6 +166,11 @@
 	if (stored_ammo.len < max_ammo)
 		stored_ammo += new_round
 		new_round.forceMove(src)
+		if(new_round.custom_materials && !(item_flags & ABSTRACT))
+			var/list/new_materials = custom_materials?.Copy() || list()
+			for(var/mat in new_round.custom_materials)
+				new_materials[mat] += new_round.custom_materials[mat]
+			set_custom_materials(new_materials)
 		return TRUE
 
 	if(!replace_spent)
@@ -189,7 +219,17 @@
 			if(did_load)
 				other_box.stored_ammo -= casing
 				num_loaded++
-			if(!did_load || !(ammo_box_multiload & AMMO_BOX_MULTILOAD_IN) || !(other_box.ammo_box_multiload & AMMO_BOX_MULTILOAD_OUT))
+			// failed to load (full already? ran out of ammo?)
+			if(!did_load)
+				break
+			// this box can't accept being multiloaded into
+			if(!(ammo_box_multiload & AMMO_BOX_MULTILOAD_IN))
+				break
+			// the other box can't give multiple bullets in one go to an unloaded magazine
+			if(!isgun(loc) && !(other_box.ammo_box_multiload & AMMO_BOX_MULTILOAD_OUT))
+				break
+			// the other box can't give multiple bullets in one go to a loaded magazine
+			if(isgun(loc) && !(other_box.ammo_box_multiload & AMMO_BOX_MULTILOAD_OUT_LOADED))
 				break
 
 		if(num_loaded)

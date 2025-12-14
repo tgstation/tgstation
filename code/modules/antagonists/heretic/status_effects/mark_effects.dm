@@ -83,8 +83,8 @@
 /datum/status_effect/eldritch/ash/on_effect()
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.adjustStaminaLoss(6 * repetitions) // first one = 30 stam
-		carbon_owner.adjustFireLoss(3 * repetitions) // first one = 15 burn
+		carbon_owner.adjust_stamina_loss(6 * repetitions) // first one = 30 stam
+		carbon_owner.adjust_fire_loss(3 * repetitions) // first one = 15 burn
 		for(var/mob/living/carbon/victim in shuffle(range(1, carbon_owner)))
 			if(IS_HERETIC(victim) || victim == carbon_owner)
 				continue
@@ -220,7 +220,7 @@
 
 /datum/status_effect/eldritch/cosmic/on_effect()
 	new teleport_effect(get_turf(owner))
-	new /obj/effect/forcefield/cosmic_field(get_turf(owner))
+	create_cosmic_field(get_turf(owner), owner)
 	do_teleport(
 		owner,
 		get_turf(cosmic_diamond),
@@ -258,12 +258,12 @@
 
 /datum/status_effect/eldritch/moon/on_apply()
 	. = ..()
-	if(owner.can_block_magic(MAGIC_RESISTANCE_MIND))
+	if(owner.can_block_magic(MAGIC_RESISTANCE_MOON))
 		return FALSE
 	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 	owner.emote(pick("giggle", "laugh"))
 	owner.balloon_alert(owner, "you feel unable to hurt a soul!")
-	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
 	return TRUE
 
 /// Checks for damage so the heretic can't just attack them with another weapon whilst they are unable to fight back
@@ -285,14 +285,14 @@
 
 /datum/status_effect/eldritch/moon/on_effect()
 	owner.adjust_confusion(30 SECONDS)
-	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25, 160)
+	owner.adjust_organ_loss(ORGAN_SLOT_BRAIN, 25, 160)
 	owner.emote(pick("giggle", "laugh"))
 	owner.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
 	return ..()
 
 /datum/status_effect/eldritch/moon/on_remove()
 	. = ..()
-	UnregisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE)
+	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
 
 	// In case the trait was not removed earlier
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))

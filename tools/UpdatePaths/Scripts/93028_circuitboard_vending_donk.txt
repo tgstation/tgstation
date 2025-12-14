@@ -1,0 +1,2 @@
+/obj/item/circuitboard/machine/vending/donksnackvendor : @DELETE
+/obj/item/circuitboard/machine/vending/donksofttoyvendor : @DELETE

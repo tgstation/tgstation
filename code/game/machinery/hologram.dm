@@ -575,19 +575,19 @@ Possible to do for anyone motivated enough:
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
-/obj/machinery/holopad/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
+/obj/machinery/holopad/Hear(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(speaker && LAZYLEN(masters) && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
 		for(var/mob/living/silicon/ai/master in masters)
 			if(masters[master] && speaker != master)
-				master.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
+				master.relay_speech(speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
 	for(var/datum/holocall/holocall_to_update as anything in holo_calls)
 		if(holocall_to_update.connected_holopad == src)//if we answered this call originating from another holopad
 			if(speaker == holocall_to_update.hologram && holocall_to_update.user.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 				holocall_to_update.user.create_chat_message(speaker, message_language, raw_message, spans)
 			else
-				holocall_to_update.user.Hear(message, speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, message_mods, message_range = INFINITY)
+				holocall_to_update.user.Hear(speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, message_mods, message_range = INFINITY)
 
 	if(outgoing_call?.hologram && speaker == outgoing_call.user)
 		outgoing_call.hologram.say(raw_message, spans = spans, sanitize = FALSE, language = message_language, message_mods = message_mods)

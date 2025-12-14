@@ -5,8 +5,10 @@
 	var/can_be_driven = TRUE
 	/// If TRUE, this creature's abilities can be triggered by the rider while mounted
 	var/can_use_abilities = FALSE
-	/// shall we require riders to go through the riding minigame if they arent in our friends list
+	/// Shall we require riders to go through the riding minigame if they arent in our friends list
 	var/require_minigame = FALSE
+	/// Do we use vehicle_move_delay or default to mob's own movespeed?
+	var/uses_native_speed = FALSE
 	/// unsharable abilities that we will force to be shared anyway
 	var/list/override_unsharable_abilities = list()
 	/// abilities that are always blacklisted from sharing
@@ -103,8 +105,12 @@
 	formerly_ridden.layer = MOB_LAYER
 	return ..()
 
+/datum/component/riding/creature/Process_Spacemove(direction, continuous_move)
+	var/mob/living/living_parent = parent
+	return override_allow_spacemove || living_parent.Process_Spacemove(direction, continuous_move)
+
 /datum/component/riding/creature/driver_move(atom/movable/movable_parent, mob/living/user, direction)
-	if(!COOLDOWN_FINISHED(src, vehicle_move_cooldown) || !Process_Spacemove())
+	if(!COOLDOWN_FINISHED(src, vehicle_move_cooldown) || !Process_Spacemove(direction))
 		return COMPONENT_DRIVER_BLOCK_MOVE
 	if(!keycheck(user))
 		if(ispath(keytype, /obj/item))
@@ -113,7 +119,7 @@
 		return COMPONENT_DRIVER_BLOCK_MOVE
 	var/mob/living/living_parent = parent
 	step(living_parent, direction)
-	var/modified_move_delay = vehicle_move_delay
+	var/modified_move_delay = uses_native_speed ? living_parent.cached_multiplicative_slowdown : vehicle_move_delay
 	if(HAS_TRAIT(user, TRAIT_ROUGHRIDER)) // YEEHAW!
 		switch(HAS_TRAIT(user, TRAIT_PRIMITIVE) ? SANITY_LEVEL_GREAT : user.mob_mood?.sanity_level)
 			if(SANITY_LEVEL_GREAT)
@@ -126,6 +132,8 @@
 				modified_move_delay *= 1.1
 			if(SANITY_LEVEL_INSANE)
 				modified_move_delay *= 1.2
+	if(NSCOMPONENT(direction) && EWCOMPONENT(direction))
+		modified_move_delay = FLOOR(modified_move_delay * sqrt(2), world.tick_lag)
 	COOLDOWN_START(src, vehicle_move_cooldown, modified_move_delay)
 	return ..()
 
@@ -417,6 +425,7 @@
 		COOLDOWN_START(src, pony_trot_cooldown, 500 MILLISECONDS)
 
 /datum/component/riding/creature/bear
+	vehicle_move_delay = 1.5
 
 /datum/component/riding/creature/bear/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	return list(
@@ -494,7 +503,7 @@
 
 /datum/component/riding/creature/goliath
 	keytype = /obj/item/key/lasso
-	vehicle_move_delay = 4
+	uses_native_speed = TRUE
 	rider_traits = list(TRAIT_NO_FLOATING_ANIM, TRAIT_TENTACLE_IMMUNE)
 
 /datum/component/riding/creature/goliath/deathmatch
@@ -570,6 +579,17 @@
 	return charger.summoner == user
 
 /datum/component/riding/creature/goldgrub
+	uses_native_speed = TRUE
+
+/datum/component/riding/creature/goldgrub/Initialize(mob/living/riding_mob, force, ride_check_flags)
+	. = ..()
+	var/mob/living/basic/mining/goldgrub/goldgrub = parent
+	goldgrub.add_movespeed_modifier(/datum/movespeed_modifier/goldgrub_mount)
+
+/datum/component/riding/creature/goldgrub/Destroy(force)
+	var/mob/living/basic/mining/goldgrub/goldgrub = parent
+	goldgrub.remove_movespeed_modifier(/datum/movespeed_modifier/goldgrub_mount)
+	return ..()
 
 /datum/component/riding/creature/goldgrub/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	return list(
@@ -616,7 +636,7 @@
 	if(!isclosedturf(pointed))
 		return
 	var/mob/living/basic/basic_parent = parent
-	if(!basic_parent.CanReach(pointed))
+	if(!pointed.IsReachableBy(basic_parent))
 		return
 	basic_parent.melee_attack(pointed)
 
@@ -626,6 +646,7 @@
 
 /datum/component/riding/creature/raptor
 	require_minigame = TRUE
+	uses_native_speed = TRUE
 	ride_check_flags = RIDER_NEEDS_ARM | UNBUCKLE_DISABLED_RIDER
 
 /datum/component/riding/creature/raptor/Initialize(mob/living/riding_mob, force, ride_check_flags)
@@ -655,18 +676,11 @@
 		force_dismount(buckled_mob, throw_range = 2, gentle = TRUE)
 
 /datum/component/riding/creature/raptor/get_rider_offsets_and_layers(pass_index, mob/offsetter)
-	if(!SSmapping.is_planetary())
-		return list(
-			TEXT_NORTH = list(-1, 7),
-			TEXT_SOUTH = list(2, 10),
-			TEXT_EAST =  list(0, 7),
-			TEXT_WEST =  list(0, 7),
-		)
 	return list(
-		TEXT_NORTH = list(0, 7),
-		TEXT_SOUTH = list(0, 10),
-		TEXT_EAST =  list(-3, 9),
-		TEXT_WEST =  list(3, 9),
+		TEXT_NORTH = list(-1, 7),
+		TEXT_SOUTH = list(2, 10),
+		TEXT_EAST =  list(0, 7),
+		TEXT_WEST =  list(0, 7),
 	)
 
 /datum/component/riding/creature/raptor/get_parent_offsets_and_layers()
@@ -683,8 +697,45 @@
 	if (istype(raptor))
 		raptor.adjust_offsets(dir)
 
-/datum/component/riding/creature/raptor/fast
-	vehicle_move_delay = 1.5
-
 /datum/component/riding/creature/raptor/combat
 	ai_behavior_while_ridden = RIDING_PAUSE_AI_MOVEMENT
+
+/datum/component/riding/creature/raptor/healer/vehicle_mob_buckle(mob/living/ridden, mob/living/rider, force)
+	RegisterSignal(rider, COMSIG_MOB_STATCHANGE, PROC_REF(on_buckled_stat_change))
+	return ..()
+
+/datum/component/riding/creature/raptor/healer/vehicle_mob_unbuckle(mob/living/formerly_ridden, mob/living/former_rider, force)
+	UnregisterSignal(former_rider, COMSIG_MOB_STATCHANGE)
+	return ..()
+
+/datum/component/riding/creature/raptor/healer/proc/on_buckled_stat_change(mob/living/source, new_stat, old_stat)
+	SIGNAL_HANDLER
+
+	var/mob/living/basic/raptor/raptor = source.buckled
+	if (!istype(raptor)) // what
+		UnregisterSignal(source, COMSIG_MOB_STATCHANGE)
+		return
+
+	// Heal the owner and flee whatever might've attacked them
+	if (new_stat == CONSCIOUS || new_stat == DEAD || old_stat != CONSCIOUS || !raptor.ai_controller)
+		ADD_TRAIT(raptor, TRAIT_AI_PAUSED, REF(src))
+		return
+
+	REMOVE_TRAIT(raptor, TRAIT_AI_PAUSED, REF(src))
+	// Rip bozo, but you're not our friend
+	if (source in raptor.ai_controller.blackboard[BB_FRIENDS_LIST])
+		raptor.ai_controller.set_blackboard_key(BB_INJURED_RAPTOR, source)
+
+	for (var/mob/living/possible_hostile in view(5, raptor))
+		if (possible_hostile.stat || possible_hostile.invisibility > raptor.see_invisible || source.faction_check_atom(possible_hostile))
+			continue
+		raptor.ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEE_TARGET, possible_hostile)
+		break
+
+/datum/component/riding/creature/raptor/small/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list(-1, 5),
+		TEXT_SOUTH = list(2, 8),
+		TEXT_EAST =  list(0, 5),
+		TEXT_WEST =  list(0, 5),
+	)

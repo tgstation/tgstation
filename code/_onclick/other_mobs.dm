@@ -175,7 +175,7 @@
  * Called when a simple animal is unarmed attacking / clicking on this atom.
  */
 /atom/proc/attack_animal(mob/user, list/modifiers)
-	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user)
+	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user, modifiers)
 
 /**
  * Called when a simple animal or basic mob right clicks an atom.
@@ -235,7 +235,7 @@
 	return TRUE
 
 /atom/proc/attack_larva(mob/user, list/modifiers)
-	return
+	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_LARVA, user, modifiers)
 
 /**
  * Called when an alien larva right clicks an atom.

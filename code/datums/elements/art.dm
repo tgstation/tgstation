@@ -70,7 +70,7 @@
 /datum/element/art/commoner/apply_moodlet(atom/source, mob/living/user, impress)
 	var/msg
 	var/list/haters = list()
-	for(var/hater_department_type as anything in list(/datum/job_department/security, /datum/job_department/command))
+	for(var/hater_department_type in list(/datum/job_department/security, /datum/job_department/command))
 		var/datum/job_department/hater_department = SSjob.get_department_type(hater_department_type)
 		for(var/datum/job/hater_job as anything in hater_department.department_jobs)
 			haters += hater_job.title

@@ -3,64 +3,6 @@
 	abstract_type = /obj/item/melee
 	item_flags = NEEDS_PERMIT
 
-/obj/item/melee/chainofcommand
-	name = "chain of command"
-	desc = "A tool used by great men to placate the frothing masses. Can be used to hasten allies with right-click."
-	icon = 'icons/obj/weapons/whip.dmi'
-	icon_state = "chain"
-	inhand_icon_state = "chain"
-	worn_icon_state = "whip"
-	icon_angle = -90
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	obj_flags = CONDUCTS_ELECTRICITY
-	slot_flags = ITEM_SLOT_BELT
-	force = 10
-	throwforce = 7
-	demolition_mod = 0.25
-	wound_bonus = 15
-	exposed_wound_bonus = 10
-	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb_continuous = list("flogs", "whips", "lashes", "disciplines")
-	attack_verb_simple = list("flog", "whip", "lash", "discipline")
-	hitsound = 'sound/items/weapons/chainhit.ogg'
-	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
-	///Does this chain allow you to speed people up with right click?
-	var/can_hasten = TRUE
-
-/obj/item/melee/chainofcommand/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return OXYLOSS
-
-/obj/item/melee/chainofcommand/attack_secondary(mob/living/victim, mob/living/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	if(victim == user)
-		to_chat(user, span_warning("You consider lashing yourself, but hesitate at the thought of how much it would hurt."))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	playsound(victim, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
-	victim.apply_status_effect(/datum/status_effect/speed_boost/commanded)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/datum/status_effect/speed_boost/commanded
-	id = "commanded"
-	status_type = STATUS_EFFECT_REFRESH
-	alert_type = /atom/movable/screen/alert/status_effect/commanded
-	move_datum = /datum/movespeed_modifier/status_speed_boost/minor
-	duration = 7 SECONDS
-
-/datum/movespeed_modifier/status_speed_boost/minor
-	multiplicative_slowdown = -0.20
-
-/atom/movable/screen/alert/status_effect/commanded
-	name = "Commanded"
-	desc = "You are inspired to move faster!"
-	icon_state = "commanded"
-
 /obj/item/melee/synthetic_arm_blade
 	name = "synthetic arm blade"
 	desc = "A grotesque blade that on closer inspection seems to be made out of synthetic flesh, it still feels like it would hurt very badly as a weapon."
@@ -101,7 +43,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY | UNIQUE_RENAME
-	force = 15
+	force = 20
 	throwforce = 10
 	demolition_mod = 0.75 //but not metal
 	w_class = WEIGHT_CLASS_BULKY
@@ -118,6 +60,7 @@
 
 /obj/item/melee/sabre/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/cuffable_item) //closed sword guard
 	AddComponent(/datum/component/jousting)
 	//fast and effective, but as a sword, it might damage the results.
 	AddComponent(/datum/component/butchering, \
@@ -151,7 +94,7 @@
 	INVOKE_ASYNC(baned_target, TYPE_PROC_REF(/mob/living/carbon/human, emote), "scream")
 
 /obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == (PROJECTILE_ATTACK || LEAP_ATTACK || OVERWHELMING_ATTACK))
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
 	return ..()
 
@@ -196,11 +139,11 @@
 	if(!QDELETED(affecting) && !(affecting.bodypart_flags & BODYPART_UNREMOVABLE) && affecting.owner == user && !QDELETED(user))
 		playsound(user, hitsound, 25, TRUE)
 		affecting.dismember(BRUTE)
-		user.adjustBruteLoss(20)
+		user.adjust_brute_loss(force * 1.25)
 
 /obj/item/melee/sabre/proc/manual_suicide(mob/living/user, originally_nodropped)
 	if(!QDELETED(user))
-		user.adjustBruteLoss(200)
+		user.adjust_brute_loss(200)
 		user.death(FALSE)
 	REMOVE_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
 
@@ -231,10 +174,11 @@
 
 /obj/item/melee/parsnip_sabre/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/cuffable_item) //closed sword guard
 	AddComponent(/datum/component/jousting)
 
 /obj/item/melee/parsnip_sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == (PROJECTILE_ATTACK || LEAP_ATTACK || OVERWHELMING_ATTACK))
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
 	return ..()
 
@@ -270,12 +214,12 @@
 	block_sound = 'sound/items/weapons/parry.ogg'
 
 /obj/item/melee/beesword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == (PROJECTILE_ATTACK || LEAP_ATTACK || OVERWHELMING_ATTACK))
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
 	return ..()
 
 /obj/item/melee/beesword/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
-	if(iscarbon(target))
+	if(iscarbon(target) && !QDELETED(target))
 		var/mob/living/carbon/carbon_target = target
 		carbon_target.reagents.add_reagent(/datum/reagent/toxin, 4)
 
@@ -299,6 +243,7 @@
 	armour_penetration = 1000
 	force_string = "INFINITE"
 	item_flags = NEEDS_PERMIT|NO_BLOOD_ON_ITEM
+	custom_materials = list(/datum/material/adamantine = SHEET_MATERIAL_AMOUNT * 20, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	var/obj/machinery/power/supermatter_crystal/shard
 	var/balanced = 1
 
@@ -569,7 +514,7 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS //Material type changes the prefix as well as the color.
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4.5, /datum/material/wood = SHEET_MATERIAL_AMOUNT * 1.5)  //Defaults to an Iron Mace.
 	slot_flags = ITEM_SLOT_BELT
-	force = 14
+	force = 16
 	w_class = WEIGHT_CLASS_BULKY
 	throwforce = 8
 	block_chance = 10
@@ -599,6 +544,7 @@
 	desc = "[initial(desc)] Its handle is made of [material.name]."
 
 /obj/item/melee/cleric_mace/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == (PROJECTILE_ATTACK || LEAP_ATTACK || OVERWHELMING_ATTACK))
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
 		final_block_chance = 0 //Don't bring a...mace to a gunfight, and also you aren't going to really block someone full body tackling you with a mace. Or a road roller, if one happened to hit you.
 	return ..()
+

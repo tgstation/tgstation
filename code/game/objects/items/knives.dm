@@ -27,6 +27,10 @@
 	tool_behaviour = TOOL_KNIFE
 	var/list/alt_continuous = list("stabs", "pierces", "shanks")
 	var/list/alt_simple = list("stab", "pierce", "shank")
+	sound_vary = TRUE
+	operating_sound = SFX_KNIFE_SLICE
+	pickup_sound = SFX_KNIFE_PICKUP
+	drop_sound = SFX_KNIFE_DROP
 
 /datum/armor/item_knife
 	fire = 50
@@ -213,7 +217,7 @@
 	obj_flags = parent_type::obj_flags & ~CONDUCTS_ELECTRICITY
 	force = 15
 	throwforce = 15
-	custom_materials = null
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 2)
 
 /datum/embedding/combat_knife/weak
 	embed_chance = 35
@@ -241,7 +245,7 @@
 	attack_verb_continuous = list("shanks", "shivs")
 	attack_verb_simple = list("shank", "shiv")
 	armor_type = /datum/armor/none
-	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/knife/shiv/make_stabby()
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -3)
@@ -254,7 +258,7 @@
 	force = 9
 	throwforce = 13
 	armor_type = /datum/armor/shiv_plasma
-	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT *4, /datum/material/plasma=SMALL_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT)
 
 /datum/armor/shiv_plasma
 	melee = 25
@@ -274,7 +278,7 @@
 	throw_range = 7
 	wound_bonus = 10
 	armor_type = /datum/armor/shiv_titanium
-	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 4, /datum/material/titanium=SMALL_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/alloy/titaniumglass = SHEET_MATERIAL_AMOUNT)
 
 /datum/armor/shiv_titanium
 	melee = 25
@@ -297,7 +301,7 @@
 	wound_bonus = 10
 	exposed_wound_bonus = 20
 	armor_type = /datum/armor/shiv_plastitanium
-	custom_materials = list(/datum/material/glass= SMALL_MATERIAL_AMOUNT * 4, /datum/material/alloy/plastitanium= SMALL_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/alloy/plastitaniumglass = SHEET_MATERIAL_AMOUNT)
 
 /datum/armor/shiv_plastitanium
 	melee = 50

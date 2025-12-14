@@ -262,7 +262,7 @@
 	inhand_icon_state = "shrink_ray"
 	icon_state = "shrink_ray"
 	automatic_charge_overlays = FALSE
-	fire_delay = 30
+	fire_delay = 3 SECONDS
 	selfcharge = 1//shot costs 200 energy, has a max capacity of 1000 for 5 shots. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it? (abductors need this to be set so the gun is usable for them)
 
@@ -445,7 +445,7 @@ Return to step 11 of normal process."}
 									span_userdanger("[user] begins shaping an energy field around your hands!"))
 			if(do_after(user, time_to_cuff, carbon_victim) && carbon_victim.canBeHandcuffed())
 				if(!carbon_victim.handcuffed)
-					carbon_victim.set_handcuffed(new /obj/item/restraints/handcuffs/energy/used(carbon_victim))
+					carbon_victim.set_handcuffed(new /obj/item/restraints/handcuffs/energy(carbon_victim))
 					to_chat(user, span_notice("You restrain [carbon_victim]."))
 					log_combat(user, carbon_victim, "handcuffed")
 			else
@@ -481,22 +481,16 @@ Return to step 11 of normal process."}
 	name = "hard-light energy field"
 	desc = "A hard-light field restraining the hands."
 	icon_state = "cuff" // Needs sprite
-	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	breakouttime = 45 SECONDS
-	trashtype = /obj/item/restraints/handcuffs/energy/used
 	flags_1 = NONE
 
-/obj/item/restraints/handcuffs/energy/used
-	item_flags = DROPDEL
-
-/obj/item/restraints/handcuffs/energy/used/dropped(mob/user)
-	user.visible_message(span_danger("[user]'s [name] breaks in a discharge of energy!"), \
-							span_userdanger("[user]'s [name] breaks in a discharge of energy!"))
-	var/datum/effect_system/spark_spread/sparks = new
-	sparks.set_up(4,0,user.loc)
-	sparks.start()
+/obj/item/restraints/handcuffs/energy/on_uncuffed(datum/source, mob/living/wearer)
 	. = ..()
+	wearer.visible_message(span_danger("[wearer]'s [name] breaks in a discharge of energy!"), span_userdanger("[wearer]'s [name] breaks in a discharge of energy!"))
+	var/datum/effect_system/spark_spread/sparks = new
+	sparks.set_up(4,0,wearer.loc)
+	sparks.start()
+	qdel(src)
 
 /obj/item/melee/baton/abductor/examine(mob/user)
 	. = ..()

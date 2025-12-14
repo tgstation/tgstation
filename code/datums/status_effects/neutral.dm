@@ -67,7 +67,8 @@
 /atom/movable/screen/alert/status_effect/in_love
 	name = "In Love"
 	desc = "You feel so wonderfully in love!"
-	icon_state = "in_love"
+	use_user_hud_icon = TRUE
+	overlay_state = "in_love"
 
 /datum/status_effect/in_love
 	id = "in_love"
@@ -107,6 +108,20 @@
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_SOOTHED_THROAT, TRAIT_STATUS_EFFECT(id))
 
+/datum/status_effect/headache_soothed
+	id = "headache_soothed"
+	duration = 60 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
+
+/datum/status_effect/headache_soothed/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_SOOTHED_HEADACHE, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/headache_soothed/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_SOOTHED_HEADACHE, TRAIT_STATUS_EFFECT(id))
+
 /datum/status_effect/bounty
 	id = "bounty"
 	status_type = STATUS_EFFECT_UNIQUE
@@ -137,10 +152,10 @@
 			spell.reset_spell_cooldown()
 
 		var/need_mob_update = FALSE
-		need_mob_update += rewarded.adjustBruteLoss(-25, updating_health = FALSE)
-		need_mob_update += rewarded.adjustFireLoss(-25, updating_health = FALSE)
-		need_mob_update += rewarded.adjustToxLoss(-25, updating_health = FALSE)
-		need_mob_update += rewarded.adjustOxyLoss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjust_brute_loss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjust_fire_loss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjust_tox_loss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjust_oxy_loss(-25, updating_health = FALSE)
 		if(need_mob_update)
 			rewarded.updatehealth()
 
@@ -155,7 +170,8 @@
 /atom/movable/screen/alert/status_effect/heldup
 	name = "Held Up"
 	desc = "Making any sudden moves would probably be a bad idea!"
-	icon_state = "aimed"
+	use_user_hud_icon = TRUE
+	overlay_state = "aimed"
 
 /datum/status_effect/grouped/heldup/on_apply()
 	owner.apply_status_effect(/datum/status_effect/grouped/surrender, REF(src))
@@ -176,7 +192,8 @@
 /atom/movable/screen/alert/status_effect/holdup
 	name = "Holding Up"
 	desc = "You're currently pointing a gun at someone. Click to cancel."
-	icon_state = "aimed"
+	use_user_hud_icon = TRUE
+	overlay_state = "aimed"
 	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/holdup/Click(location, control, params)
@@ -251,7 +268,7 @@
 /// One of our possible takers moved, see if they left us hanging
 /datum/status_effect/offering/proc/check_taker_in_range(mob/living/taker)
 	SIGNAL_HANDLER
-	if(owner.CanReach(taker) && !IS_DEAD_OR_INCAP(taker))
+	if(taker.IsReachableBy(owner) || ((owner.pulling == taker) || (taker.pulling == owner)) && !IS_DEAD_OR_INCAP(taker))
 		return
 
 	to_chat(taker, span_warning("You moved out of range of [owner]!"))
@@ -262,7 +279,7 @@
 	SIGNAL_HANDLER
 
 	for(var/mob/living/checking_taker as anything in possible_takers)
-		if(!istype(checking_taker) || !owner.CanReach(checking_taker) || IS_DEAD_OR_INCAP(checking_taker))
+		if(!istype(checking_taker) || (!checking_taker.IsReachableBy(owner) && !((owner.pulling == checking_taker) || (checking_taker.pulling == owner))) || IS_DEAD_OR_INCAP(checking_taker))
 			remove_candidate(checking_taker)
 
 /// We lost the item, give it up
@@ -277,7 +294,7 @@
  * Returns `TRUE` if the taker is valid as a target for the offering.
  */
 /datum/status_effect/offering/proc/is_taker_elligible(mob/living/taker)
-	return owner.CanReach(taker) && !IS_DEAD_OR_INCAP(taker) && additional_taker_check(taker)
+	return taker.IsReachableBy(owner) && !IS_DEAD_OR_INCAP(taker) && additional_taker_check(taker)
 
 /**
  * Additional checks added to `CanReach()` and `IS_DEAD_OR_INCAP()` in `is_taker_elligible()`.
@@ -359,7 +376,8 @@
 /atom/movable/screen/alert/status_effect/surrender
 	name = "Surrender"
 	desc = "Looks like you're in trouble now, bud. Click here to surrender. (Warning: You will be incapacitated.)"
-	icon_state = "surrender"
+	use_user_hud_icon = TRUE
+	overlay_state = "surrender"
 	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/surrender/Click(location, control, params)
@@ -665,11 +683,11 @@
 
 		var/healed = 0
 		if(recovery) //very mild healing for those with the water adaptation trait (fish infusion)
-			healed += owner.adjustOxyLoss(recovery * (water_adaptation ? 1.5 : 1), updating_health = FALSE, required_biotype = MOB_ORGANIC)
-			healed += owner.adjustFireLoss(recovery, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-			healed += owner.adjustToxLoss(recovery, updating_health = FALSE, required_biotype = MOB_ORGANIC)
-			healed += owner.adjustBruteLoss(recovery, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-		healed += owner.adjustStaminaLoss(stam_recovery, updating_stamina = FALSE)
+			healed += owner.adjust_oxy_loss(recovery * (water_adaptation ? 1.5 : 1), updating_health = FALSE, required_biotype = MOB_ORGANIC)
+			healed += owner.adjust_fire_loss(recovery, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+			healed += owner.adjust_tox_loss(recovery, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+			healed += owner.adjust_brute_loss(recovery, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+		healed += owner.adjust_stamina_loss(stam_recovery, updating_stamina = FALSE)
 		if(healed)
 			owner.updatehealth()
 	else if(istype(shower_reagent, /datum/reagent/blood))
@@ -787,3 +805,53 @@
 	id = "divine_spotlight"
 
 #undef BEAM_ALPHA
+
+/datum/status_effect/moodlet_in_area
+	id = "moodlet_in_area"
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
+	status_type = STATUS_EFFECT_MULTIPLE
+	alert_type = null
+	/// Moodlet to apply while in the area
+	VAR_PRIVATE/moodlet_type
+	/// Typecache of areas that will trigger the moodlet while in them
+	VAR_PRIVATE/list/allowed_areas
+	/// Optional callback to run when checking if the moodlet should be applied. Should return TRUE to apply, FALSE to not.
+	VAR_PRIVATE/datum/callback/special_check
+
+/datum/status_effect/moodlet_in_area/on_creation(mob/living/new_owner, moodlet_type, list/allowed_areas, datum/callback/special_check)
+	src.moodlet_type = moodlet_type
+	src.allowed_areas = typecacheof(allowed_areas)
+	src.special_check = special_check
+	return ..()
+
+/datum/status_effect/moodlet_in_area/before_remove(moodlet_type, ...)
+	return moodlet_type == src.moodlet_type
+
+/datum/status_effect/moodlet_in_area/on_apply()
+	if(!length(allowed_areas))
+		return FALSE
+
+	for(var/datum/status_effect/moodlet_in_area/other_effect in owner.status_effects)
+		if(other_effect.moodlet_type == moodlet_type)
+			return FALSE
+
+	owner.become_area_sensitive("[id]_[moodlet_type]")
+	RegisterSignal(owner, COMSIG_ENTER_AREA, PROC_REF(check_area))
+	return TRUE
+
+/datum/status_effect/moodlet_in_area/on_remove()
+	UnregisterSignal(owner, COMSIG_ENTER_AREA)
+	owner.lose_area_sensitivity("[id]_[moodlet_type]")
+	owner.clear_mood_event("[id]_[moodlet_type]")
+
+/datum/status_effect/moodlet_in_area/proc/check_area(datum/source, area/new_area)
+	SIGNAL_HANDLER
+
+	if(special_check && !special_check.Invoke(owner, new_area))
+		return
+
+	if(is_type_in_typecache(new_area, allowed_areas))
+		owner.add_mood_event("[id]_[moodlet_type]", moodlet_type)
+	else
+		owner.clear_mood_event("[id]_[moodlet_type]")

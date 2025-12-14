@@ -1,9 +1,9 @@
 /datum/computer_file/program/budgetorders
 	filename = "orderapp"
-	filedesc = "NT IRN"
+	filedesc = "NT Shopping Network"
 	downloader_category = PROGRAM_CATEGORY_SUPPLY
 	program_open_overlay = "request"
-	extended_desc = "Nanotrasen Internal Requisition Network interface for supply purchasing using a department budget account."
+	extended_desc = "Nanotrasen Shopping Network interface for purchasing supplies from the cargo catalogue using a department budget account."
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	can_run_on_flags = PROGRAM_LAPTOP | PROGRAM_PDA
 	size = 10
@@ -62,37 +62,43 @@
 	var/list/data = list()
 	data["location"] = SSshuttle.supply.getStatusText()
 	data["department"] = "Cargo"
+
 	var/datum/bank_account/buyer = SSeconomy.get_dep_account(cargo_account)
 	var/obj/item/card/id/id_card = computer.stored_id?.GetID()
 	if(id_card?.registered_account)
-		if((ACCESS_COMMAND in id_card.access))
+		buyer = SSeconomy.get_dep_account(id_card?.registered_account.account_job.paycheck_department)
+		if((ACCESS_BUDGET in id_card.access))
 			requestonly = FALSE
-			buyer = SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)
 			can_approve_requests = TRUE
+			// If buyer is a departmental budget, replaces "Cargo" with that budget - we're not using the cargo budget here
+			data["department"] = "[buyer.account_holder] Requisitions"
 		else
 			requestonly = TRUE
 			can_approve_requests = FALSE
-		if(ACCESS_COMMAND in id_card.access)
-			// If buyer is a departmental budget, replaces "Cargo" with that budget - we're not using the cargo budget here
-			data["department"] = addtext(buyer.account_holder, " Requisitions")
 	else
 		requestonly = TRUE
 	if(buyer)
 		data["points"] = buyer.account_balance
+	// To recap above because it's kind of a mess, here's all the options:
+		//Head of staff ID card: Can approve, buy, and make purchases using their own departmental budgets.
+		//ID card, not a head of staff: can request items from cargo using departmental budget.
+		//No ID card, can request items from cargo using the cargo budget.
 
 	//Otherwise static data, that is being applied in ui_data as the crates visible and buyable are not static, and are determined by inserted ID.
 	data["requestonly"] = requestonly
 	data["supplies"] = list()
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-		if(!is_visible_pack(user, P.access_view , null, P.contraband) || P.hidden)
+		if(P.order_flags & ORDER_INVISIBLE)
+			continue
+		if(!is_visible_pack(user, P.access_view , null, (P.order_flags & ORDER_CONTRABAND)) || (P.order_flags & ORDER_EMAG_ONLY))
 			continue
 		if(!data["supplies"][P.group])
 			data["supplies"][P.group] = list(
 				"name" = P.group,
 				"packs" = list()
 			)
-		if((P.hidden && (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.drop_pod_only))
+		if(((P.order_flags & ORDER_EMAG_ONLY) && ((P.order_flags & ORDER_CONTRABAND) && !contraband) || ((P.order_flags & ORDER_SPECIAL) && !(P.order_flags & ORDER_SPECIAL_ENABLED)) || (P.order_flags & ORDER_POD_ONLY)))
 			continue
 
 		var/obj/item/first_item = length(P.contains) > 0 ? P.contains[1] : null
@@ -103,7 +109,7 @@
 			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
 			"first_item_icon" = first_item?.icon,
 			"first_item_icon_state" = first_item?.icon_state,
-			"goody" = P.goody,
+			"goody" = P.order_flags & ORDER_GOODY,
 			"access" = P.access,
 			"contains" = P.get_contents_ui_data(),
 		))
@@ -123,11 +129,9 @@
 	if(SSshuttle.supply_blocked)
 		message = blockade_warning
 	data["message"] = message
-	var/list/amount_by_name = list()
 	var/cart_list = list()
 	for(var/datum/supply_order/order in SSshuttle.shopping_list)
 		if(cart_list[order.pack.name])
-			amount_by_name[order.pack.name] += 1
 			cart_list[order.pack.name][1]["amount"]++
 			cart_list[order.pack.name][1]["cost"] += order.get_final_cost()
 			if(order.department_destination)
@@ -143,26 +147,26 @@
 			"id" = order.id,
 			"amount" = 1,
 			"orderer" = order.orderer,
-			"paid" = !isnull(order.paying_account) ? 1 : 0, //number of orders purchased privatly
-			"dep_order" = order.department_destination ? 1 : 0, //number of orders purchased by a department
+			"paid" = !isnull(order.paying_account), //number of orders purchased privatly
+			"dep_order" = !!order.department_destination, //number of orders purchased by a department
 			"can_be_cancelled" = order.can_be_cancelled,
 		))
 	data["cart"] = list()
 	for(var/item_id in cart_list)
 		data["cart"] += cart_list[item_id]
 
+
 	data["requests"] = list()
 	for(var/datum/supply_order/order in SSshuttle.request_list)
 		var/datum/supply_pack/pack = order.pack
-		amount_by_name[pack.name] += 1
 		data["requests"] += list(list(
 			"object" = pack.name,
 			"cost" = pack.get_cost(),
 			"orderer" = order.orderer,
 			"reason" = order.reason,
-			"id" = order.id
+			"id" = order.id,
+			"account" = order.paying_account ? order.paying_account.account_holder : "Cargo Department"
 		))
-	data["amount_by_name"] = amount_by_name
 
 	return data
 
@@ -173,6 +177,7 @@
 
 /datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
+	var/mob/user = ui.user
 	switch(action)
 		if("send")
 			if(!SSshuttle.supply.canMove())
@@ -184,9 +189,9 @@
 			if(SSshuttle.supply.getDockedId() == docking_home)
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
 				computer.say("The supply shuttle is departing.")
-				usr.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
+				user.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
-				usr.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
+				user.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
 				computer.say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minute\s.")
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 			. = TRUE
@@ -205,50 +210,66 @@
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
 				computer.say("The supply shuttle has been loaned to CentCom.")
-				usr.investigate_log("accepted a shuttle loan event.", INVESTIGATE_CARGO)
-				usr.log_message("accepted a shuttle loan event.", LOG_GAME)
+				user.investigate_log("accepted a shuttle loan event.", INVESTIGATE_CARGO)
+				user.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE
 		if("add")
 			var/id = text2path(params["id"])
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				return
-			if(pack.hidden || pack.contraband || pack.drop_pod_only || (pack.special && !pack.special_enabled))
+			if((pack.order_flags & (ORDER_EMAG_ONLY | ORDER_POD_ONLY | ORDER_CONTRABAND)) || ((pack.order_flags & ORDER_SPECIAL) && !(pack.order_flags & ORDER_SPECIAL_ENABLED)))
 				return
 
 			var/name = "*None Provided*"
 			var/rank = "*None Provided*"
-			var/ckey = usr.ckey
-			if(ishuman(usr))
-				var/mob/living/carbon/human/H = usr
-				name = H.get_authentification_name()
-				rank = H.get_assignment(hand_first = TRUE)
-			else if(issilicon(usr))
-				name = usr.real_name
+			var/ckey = user.ckey
+			var/mob/living/carbon/human/hwoman
+			if(ishuman(user))
+				hwoman = user
+				rank = hwoman.get_assignment(hand_first = TRUE)
+			else if(issilicon(user))
+				name = user.real_name
 				rank = "Silicon"
 
+			// Our account that we want to end up paying with.
 			var/datum/bank_account/account
+			// Our ID card that we want to pull from for identification. Modifies either name, account, or neither depending on function.
+			var/obj/item/card/id/id_card_customer = computer.stored_id?.GetID()
+			if(!id_card_customer)
+				id_card_customer = hwoman?.get_idcard(TRUE) //Grab from hands/mob if there's no id_card slot to prioritize.
+			name = id_card_customer?.registered_account.account_holder
+
 			if(self_paid)
-				var/mob/living/carbon/human/H = usr
-				var/obj/item/card/id/id_card = H.get_idcard(TRUE)
-				if(!istype(id_card))
+				if(!istype(id_card_customer))
 					computer.say("No ID card detected.")
 					return
-				if(IS_DEPARTMENTAL_CARD(id_card))
-					computer.say("[id_card] cannot be used to make purchases.")
+				if(IS_DEPARTMENTAL_CARD(id_card_customer))
+					computer.say("[id_card_customer] cannot be used to make purchases.")
 					return
-				account = id_card.registered_account
+				account = id_card_customer.registered_account
+				name = id_card_customer.registered_account.account_holder
 				if(!istype(account))
 					computer.say("Invalid bank account.")
 					return
 
 			var/reason = ""
+			var/datum/bank_account/personal_department
 			if((requestonly && !self_paid) || !(computer.stored_id?.GetID()))
-				reason = tgui_input_text(usr, "Reason", name, max_length = MAX_MESSAGE_LEN)
+				reason = tgui_input_text(user, "Reason", name, max_length = MAX_MESSAGE_LEN)
 				if(isnull(reason) || ..())
 					return
 
-			if(pack.goody && !self_paid)
+			if(id_card_customer?.registered_account?.account_job && !self_paid) //Find a budget to pull from
+				personal_department = SSeconomy.get_dep_account(id_card_customer.registered_account.account_job.paycheck_department)
+				if(!(personal_department.account_holder == "Cargo Budget"))
+					var/dept_choice = tgui_alert(user, "Which department are you requesting this for?", "Choose request department", list("Cargo Budget", "[personal_department.account_holder]"))
+					if(!dept_choice)
+						return
+					if(dept_choice == "Cargo Budget")
+						personal_department = null
+
+			if((pack.order_flags & ORDER_GOODY) && !self_paid)
 				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 				computer.say("ERROR: Small crates may only be purchased by private accounts.")
 				return
@@ -258,9 +279,8 @@
 				computer.say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
 				return
 
-			if(!requestonly && !self_paid && ishuman(usr) && !account)
-				var/obj/item/card/id/id_card = computer.stored_id?.GetID()
-				account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
+			if(!self_paid)
+				account = personal_department
 
 			var/turf/T = get_turf(computer)
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
@@ -271,6 +291,7 @@
 				SSshuttle.shopping_list += SO
 				if(self_paid)
 					computer.say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
+			playsound(computer, 'sound/effects/coin2.ogg', 40, TRUE)
 			. = TRUE
 		if("remove")
 			var/id = text2num(params["id"])

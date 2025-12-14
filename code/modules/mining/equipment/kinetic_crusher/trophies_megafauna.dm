@@ -35,7 +35,7 @@
 		playsound(living_target, 'sound/effects/magic/fireball.ogg', 20, TRUE)
 		new /obj/effect/temp_visual/fire(living_target.loc)
 		addtimer(CALLBACK(src, PROC_REF(pushback), living_target, user), 1) //no free backstabs, we push AFTER module stuff is done
-		living_target.adjustFireLoss(bonus_value, forced = TRUE)
+		living_target.adjust_fire_loss(bonus_value, forced = TRUE)
 
 /obj/item/crusher_trophy/tail_spike/proc/pushback(mob/living/target, mob/living/user)
 	if(!QDELETED(target) && !QDELETED(user) && (!target.anchored || ismegafauna(target))) //megafauna will always be pushed
@@ -150,7 +150,7 @@
 	denied_type = /obj/item/crusher_trophy/wendigo_horn
 
 /obj/item/crusher_trophy/wendigo_horn/effect_desc()
-	return "melee hits inflict twice as much damage"
+	return "melee hits to inflict twice as much damage"
 
 /obj/item/crusher_trophy/wendigo_horn/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()

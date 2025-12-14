@@ -231,9 +231,8 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				log_admin("[key_name(holder)] turned all humans into [result]")
 				message_admins("\blue [key_name_admin(holder)] turned all humans into [result]")
 				var/newtype = GLOB.species_list[result]
-				for(var/i in GLOB.human_list)
-					var/mob/living/carbon/human/H = i
-					H.set_species(newtype)
+				for(var/mob/living/carbon/human/human_mob as anything in GLOB.human_list)
+					human_mob.set_species(newtype)
 		if("power")
 			if(!is_funmin)
 				return
@@ -518,9 +517,8 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Monkeyize All Humans"))
 			message_admins("[key_name_admin(holder)] made everyone into monkeys.")
 			log_admin("[key_name_admin(holder)] made everyone into monkeys.")
-			for(var/i in GLOB.human_list)
-				var/mob/living/carbon/human/H = i
-				INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon, monkeyize))
+			for(var/mob/living/carbon/human/human_mob as anything in GLOB.human_list)
+				INVOKE_ASYNC(human_mob, TYPE_PROC_REF(/mob/living/carbon, monkeyize))
 		if("antag_all")
 			if(!is_funmin)
 				return
@@ -554,9 +552,9 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Mass Braindamage"))
-			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				to_chat(H, span_bolddanger("You suddenly feel stupid."), confidential = TRUE)
-				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60, 80)
+			for(var/mob/living/carbon/human/human_mob in GLOB.player_list)
+				to_chat(human_mob, span_bolddanger("You suddenly feel stupid."), confidential = TRUE)
+				human_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 60, 80)
 			message_admins("[key_name_admin(holder)] made everybody brain damaged")
 		if("floorlava")
 			SSweather.run_weather(/datum/weather/floor_is_lava)
@@ -573,33 +571,32 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Chinese Cartoons"))
 			message_admins("[key_name_admin(holder)] made everything kawaii.")
-			for(var/i in GLOB.human_list)
-				var/mob/living/carbon/human/H = i
-				SEND_SOUND(H, sound(SSstation.announcer.event_sounds[ANNOUNCER_ANIMES]))
+			for(var/mob/living/carbon/human/human_mob as anything in GLOB.human_list)
+				SEND_SOUND(human_mob, sound(SSstation.announcer.event_sounds[ANNOUNCER_ANIMES]))
 
-				if(H.dna.species.id == SPECIES_HUMAN)
-					if(H.dna.features[FEATURE_TAIL] == "None" || H.dna.features[FEATURE_EARS] == "None")
+				if(human_mob.dna.species.id == SPECIES_HUMAN)
+					if(human_mob.dna.features[FEATURE_TAIL_CAT] == "None" || human_mob.dna.features[FEATURE_EARS] == "None")
 						var/obj/item/organ/ears/cat/ears = new
 						var/obj/item/organ/tail/cat/tail = new
-						ears.Insert(H, movement_flags = DELETE_IF_REPLACED)
-						tail.Insert(H, movement_flags = DELETE_IF_REPLACED)
+						ears.Insert(human_mob, movement_flags = DELETE_IF_REPLACED)
+						tail.Insert(human_mob, movement_flags = DELETE_IF_REPLACED)
 					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san"), "[PLURAL]" = list("san")) //John Robust -> Robust-kun
-					var/list/names = splittext(H.real_name," ")
+					var/list/names = splittext(human_mob.real_name," ")
 					var/forename = names.len > 1 ? names[2] : names[1]
-					var/newname = "[forename]-[pick(honorifics["[H.gender]"])]"
-					H.fully_replace_character_name(H.real_name,newname)
-					H.update_body_parts()
+					var/newname = "[forename]-[pick(honorifics["[human_mob.gender]"])]"
+					human_mob.fully_replace_character_name(human_mob.real_name,newname)
+					human_mob.update_body_parts()
 					if(animetype == "Yes")
 						var/seifuku = pick(typesof(/obj/item/clothing/under/costume/seifuku))
-						var/obj/item/clothing/under/costume/seifuku/I = new seifuku
-						var/olduniform = H.w_uniform
-						H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE, FALSE)
-						H.equip_to_slot_or_del(I, ITEM_SLOT_ICLOTHING)
+						var/obj/item/clothing/under/costume/seifuku/anime_uniform = new seifuku
+						var/olduniform = human_mob.w_uniform
+						human_mob.temporarilyRemoveItemFromInventory(human_mob.w_uniform, TRUE, FALSE)
+						human_mob.equip_to_slot_or_del(anime_uniform, ITEM_SLOT_ICLOTHING)
 						qdel(olduniform)
 						if(droptype == "Yes")
-							ADD_TRAIT(I, TRAIT_NODROP, ADMIN_TRAIT)
+							ADD_TRAIT(anime_uniform, TRAIT_NODROP, ADMIN_TRAIT)
 				else
-					to_chat(H, span_warning("You're not kawaii enough for this!"), confidential = TRUE)
+					to_chat(human_mob, span_warning("You're not kawaii enough for this!"), confidential = TRUE)
 		if("masspurrbation")
 			if(!is_funmin)
 				return
@@ -709,16 +706,16 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 /// portal_appearance is a list in the form (turf's plane offset + 1) -> appearance to use
 /proc/do_portal_spawn(turf/loc, mobtype, numtospawn, list/portal_appearance, players, humanoutfit)
 	for (var/i in 1 to numtospawn)
-		var/mob/spawnedMob = new mobtype(loc)
+		var/mob/spawned_mob = new mobtype(loc)
 		if (length(players))
 			var/mob/chosen = players[1]
 			if (chosen.client)
-				chosen.client.prefs.safe_transfer_prefs_to(spawnedMob, is_antag = TRUE)
-				spawnedMob.PossessByPlayer(chosen.key)
+				chosen.client.prefs.safe_transfer_prefs_to(spawned_mob, is_antag = TRUE)
+				spawned_mob.PossessByPlayer(chosen.key)
 			players -= chosen
-		if (ishuman(spawnedMob) && ispath(humanoutfit, /datum/outfit))
-			var/mob/living/carbon/human/H = spawnedMob
-			H.equipOutfit(humanoutfit)
+		if (ishuman(spawned_mob) && ispath(humanoutfit, /datum/outfit))
+			var/mob/living/carbon/human/human_mob = spawned_mob
+			human_mob.equipOutfit(humanoutfit)
 	var/turf/T = get_step(loc, SOUTHWEST)
 	T.flick_overlay_static(portal_appearance[GET_TURF_PLANE_OFFSET(T) + 1], 15)
 	playsound(T, 'sound/effects/magic/lightningbolt.ogg', rand(80, 100), TRUE)

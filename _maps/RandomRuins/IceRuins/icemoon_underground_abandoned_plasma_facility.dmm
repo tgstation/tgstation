@@ -199,7 +199,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /turf/open/floor/iron,
 /area/ruin/plasma_facility/operations)
@@ -325,7 +325,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "fx" = (
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/lava/plasma/ice_moon,
 /area/ruin/plasma_facility/operations)
 "fJ" = (
@@ -399,7 +399,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /turf/open/floor/iron/grimy,
 /area/ruin/plasma_facility/commons)
 "gH" = (
@@ -759,7 +759,7 @@
 "lX" = (
 /obj/structure/table/reinforced,
 /obj/item/flashlight/lantern,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/iron/smooth{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -1035,6 +1035,10 @@
 /obj/structure/flora/grass/green/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"qr" = (
+/obj/structure/sign/warning/directional/north,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "qv" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -1181,8 +1185,11 @@
 /obj/item/stock_parts/capacitor,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/commons)
+"sN" = (
+/turf/closed/wall,
+/area/icemoon/underground/explored)
 "sP" = (
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/plasma_facility/operations)
 "sX" = (
@@ -1309,6 +1316,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/underground/explored)
+"vh" = (
+/obj/structure/flora/grass/brown/style_random,
+/obj/structure/sign/warning/directional/west,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "vt" = (
 /turf/closed/wall,
@@ -1583,7 +1595,6 @@
 /obj/structure/fence{
 	dir = 4
 	},
-/obj/structure/sign/warning,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "BZ" = (
@@ -1928,7 +1939,7 @@
 /area/icemoon/underground/explored)
 "Jn" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/iron/smooth{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -2015,6 +2026,11 @@
 /obj/machinery/light/small/blacklight/directional/south,
 /turf/open/floor/iron/grimy,
 /area/ruin/plasma_facility/commons)
+"Kj" = (
+/obj/structure/flora/rock/icy/style_random,
+/obj/structure/sign/warning/directional/north,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "Km" = (
 /obj/structure/girder,
 /turf/open/floor/plating/icemoon,
@@ -2077,7 +2093,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "KY" = (
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/plasma_facility/commons)
 "Lh" = (
@@ -2126,7 +2142,7 @@
 /turf/open/floor/wood/large,
 /area/ruin/plasma_facility/commons)
 "LY" = (
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /turf/open/floor/plating,
 /area/ruin/plasma_facility/commons)
 "LZ" = (
@@ -2912,7 +2928,7 @@
 /area/ruin/plasma_facility/commons)
 "ZC" = (
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "ZH" = (
@@ -3168,7 +3184,7 @@ Yw
 Yw
 Yw
 BY
-LZ
+Kj
 rs
 fP
 rs
@@ -3187,7 +3203,7 @@ AG
 AG
 LZ
 BY
-ms
+qr
 hJ
 Py
 Yw
@@ -4085,8 +4101,8 @@ rk
 dr
 dr
 dr
-NC
-ms
+sN
+qr
 AG
 AG
 AG
@@ -4241,7 +4257,7 @@ AG
 AG
 AG
 AG
-NC
+sN
 dr
 II
 vt
@@ -4276,7 +4292,7 @@ AG
 AG
 AG
 AG
-zF
+vh
 rs
 rs
 oi

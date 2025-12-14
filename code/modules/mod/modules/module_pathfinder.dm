@@ -1,3 +1,5 @@
+#define PATHFINDER_PRE_ANIMATE_TIME (2 SECONDS)
+
 ///Pathfinder - Can fly the suit from a long distance to an implant installed in someone.
 /obj/item/mod/module/pathfinder
 	name = "MOD pathfinder module"
@@ -24,6 +26,8 @@
 	var/image/jet_icon
 	/// Allow suit activation - Lets this module be recalled from the MOD.
 	var/allow_suit_activation = FALSE // I'm not here to argue about balance
+	/// Are we currently travelling?
+	var/in_transit = FALSE
 
 
 /obj/item/mod/module/pathfinder/Initialize(mapload)
@@ -88,7 +92,7 @@
 		return
 	balloon_alert(activator, "implanted")
 	if(!(activator == mod.wearer)) // someone else implanted you
-		balloon_alert(mod.wearer, "pathfinder MOD tracker implanted!")
+		balloon_alert(mod.wearer, "tracker implanted!")
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
 
 /obj/item/mod/module/pathfinder/proc/attach(mob/living/user)
@@ -101,64 +105,86 @@
 		return
 	mod.quick_deploy(user)
 	human_user.update_action_buttons(TRUE)
-	balloon_alert(human_user, "[mod] attached")
 	playsound(mod, 'sound/machines/ping.ogg', 50, TRUE)
 	drain_power(use_energy_cost)
 
 /obj/item/mod/module/pathfinder/proc/recall(mob/recaller)
 	if(!implant)
-		balloon_alert(recaller, "no target implant!")
+		balloon_alert(recaller, "no implant!")
 		return FALSE
 	if(recaller != implant.imp_in && !allow_suit_activation) // No pAI recalling
-		balloon_alert(recaller, "sector safety regulations prevent MOD-side recalling!")
+		balloon_alert(recaller, "invalid user!")
 		return FALSE
 	if(mod.open)
 		balloon_alert(recaller, "cover open!")
 		return FALSE
-	if(mod.ai_controller)
-		balloon_alert(recaller, "already moving!")
+	if(in_transit)
+		balloon_alert(recaller, "suit in transit!")
 		return FALSE
-	if(ismob(get_atom_on_turf(mod)))
-		balloon_alert(recaller, "already on someone!")
+	var/atom_on_turf = get_atom_on_turf(mod)
+	if(ismob(atom_on_turf))
+		if(atom_on_turf == recaller)
+			balloon_alert(recaller, "already worn!")
+		else
+			recaller.balloon_alert(recaller, "suit is worn by somebody else!")
 		return FALSE
-	if(mod.z != implant.imp_in.z || get_dist(implant.imp_in, mod) > MOD_AI_RANGE)
-		balloon_alert(recaller, "too far!")
-		return FALSE
-	var/datum/ai_controller/mod_ai = new /datum/ai_controller/mod(mod)
-	mod.ai_controller = mod_ai
-	mod_ai.set_movement_target(type, implant.imp_in)
-	mod_ai.set_blackboard_key(BB_MOD_TARGET, implant.imp_in)
-	mod_ai.set_blackboard_key(BB_MOD_MODULE, src)
-	mod.interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
-	mod.AddElement(/datum/element/movetype_handler)
-	ADD_TRAIT(mod, TRAIT_MOVE_FLYING, MOD_TRAIT)
-	animate(mod, 0.2 SECONDS, pixel_x = base_pixel_y, pixel_y = base_pixel_y)
-	mod.add_overlay(jet_icon)
-	RegisterSignal(mod, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+
+	in_transit = TRUE
+	animate(mod, 0.5 SECONDS, pixel_x = base_pixel_y, pixel_y = base_pixel_y)
+	mod.Shake(pixelshiftx = 1, pixelshifty = 1, duration = PATHFINDER_PRE_ANIMATE_TIME)
+	addtimer(CALLBACK(src, PROC_REF(do_recall), recaller), PATHFINDER_PRE_ANIMATE_TIME, TIMER_DELETE_ME)
+
 	balloon_alert(recaller, "suit recalled")
 	if(!(recaller == mod.wearer))
 		balloon_alert(mod.wearer, "suit recalled")
 	return TRUE
 
-/obj/item/mod/module/pathfinder/proc/on_move(atom/movable/source, atom/old_loc, dir, forced)
-	SIGNAL_HANDLER
-
-	var/matrix/mod_matrix = matrix()
-	mod_matrix.Turn(get_angle(source, implant.imp_in))
-	source.transform = mod_matrix
-
-/obj/item/mod/module/pathfinder/proc/end_recall(successful = TRUE)
-	if(!mod)
+/// Pod-transport the suit to its owner
+/obj/item/mod/module/pathfinder/proc/do_recall(mob/recaller)
+	var/container = get_atom_on_turf(mod)
+	if(ismob(container))
+		balloon_alert(recaller, "launch interrupted!")
+		in_transit = FALSE
 		return
-	QDEL_NULL(mod.ai_controller)
-	mod.interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
-	REMOVE_TRAIT(mod, TRAIT_MOVE_FLYING, MOD_TRAIT)
-	mod.RemoveElement(/datum/element/movetype_handler)
+
+	if(iscloset(container))
+		var/obj/structure/closet/closet = container
+		if (!closet.opened)
+			if (!closet.open())
+				playsound(closet, 'sound/effects/bang.ogg', vol = 50, vary = TRUE)
+				closet.bust_open()
+
+
+	mod.add_overlay(jet_icon)
+	playsound(mod, 'sound/vehicles/rocketlaunch.ogg', vol = 80, vary = FALSE)
+	var/turf/land_target = get_turf(implant.imp_in)
+	var/obj/structure/closet/supplypod/pod = podspawn(list(
+		"target" = get_turf(mod),
+		"path" = /obj/structure/closet/supplypod/transport/module_pathfinder,
+		"reverse_dropoff_coords" = list(land_target.x, land_target.y, land_target.z),
+	))
+
+	pod.insert(mod, pod)
+	RegisterSignal(pod, COMSIG_SUPPLYPOD_RETURNING, PROC_REF(pod_takeoff))
+
+	if (istype(container, /obj/machinery/suit_storage_unit))
+		var/obj/machinery/suit_storage_unit/storage = container
+		storage.locked = FALSE
+		storage.open_machine()
+
+/// Track when pod has taken off so we don't falsely report the initial landing
+/obj/item/mod/module/pathfinder/proc/pod_takeoff(datum/pod)
+	SIGNAL_HANDLER
+	RegisterSignal(pod, COMSIG_SUPPLYPOD_LANDED, PROC_REF(pod_landed))
+
+/// When the pod landed, we can recall again
+/obj/item/mod/module/pathfinder/proc/pod_landed()
+	SIGNAL_HANDLER
+	in_transit = FALSE
 	mod.cut_overlay(jet_icon)
-	mod.transform = matrix()
-	UnregisterSignal(mod, COMSIG_MOVABLE_MOVED)
-	if(!successful)
-		balloon_alert(implant.imp_in, "suit lost connection!")
+	playsound(mod, 'sound/items/handling/toolbox/toolbox_drop.ogg', vol = 80, vary = FALSE)
+	if (implant?.imp_in?.Adjacent(src))
+		INVOKE_ASYNC(src, PROC_REF(attach), implant.imp_in)
 
 // ###########
 // THE INPLANT
@@ -173,8 +199,6 @@
 	/// The pathfinder module we are linked to.
 	var/obj/item/mod/module/pathfinder/module
 
-
-
 /obj/item/implant/mod/Initialize(mapload)
 	. = ..()
 	if(!istype(loc, /obj/item/mod/module/pathfinder))
@@ -182,8 +206,6 @@
 	module = loc
 
 /obj/item/implant/mod/Destroy()
-	if(module?.mod?.ai_controller)
-		module.end_recall(successful = FALSE)
 	module = null
 	return ..()
 
@@ -191,7 +213,6 @@
 	return "<b>Implant Specifications:</b><BR> \
 		<b>Name:</b> Nakamura Engineering Pathfinder Implant<BR> \
 		<b>Implant Details:</b> Allows for the recall of a Modular Outerwear Device by the implant owner at any time.<BR>"
-
 
 /datum/action/item_action/mod_recall
 	name = "Recall MOD"
@@ -205,7 +226,7 @@
 	COOLDOWN_DECLARE(recall_cooldown)
 
 /datum/action/item_action/mod_recall/New(Target)
-	..()
+	. = ..()
 	if(!istype(Target, /obj/item/implant/mod))
 		qdel(src)
 		return
@@ -215,5 +236,14 @@
 	if(!COOLDOWN_FINISHED(src, recall_cooldown))
 		implant.balloon_alert(owner, "on cooldown!")
 		return
-	if(implant.module.recall(owner)) // change this
-		COOLDOWN_START(src, recall_cooldown, 15 SECONDS)
+	if(implant.module.recall(owner))
+		implant.balloon_alert(owner, "suit incoming...")
+		COOLDOWN_START(src, recall_cooldown, 5 SECONDS)
+
+/// Special pod subtype we use just to make insertion check easy
+/obj/structure/closet/supplypod/transport/module_pathfinder
+
+/obj/structure/closet/supplypod/transport/module_pathfinder/insertion_allowed(atom/to_insert)
+	return istype(to_insert, /obj/item/mod/control)
+
+#undef PATHFINDER_PRE_ANIMATE_TIME

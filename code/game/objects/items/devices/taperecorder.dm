@@ -109,8 +109,8 @@
 	update_appearance()
 
 /obj/item/taperecorder/fire_act(exposed_temperature, exposed_volume)
-	mytape.unspool() //Fires unspool the tape, which makes sense if you don't think about it
-	..()
+	mytape?.unspool() //Fires unspool the tape, which makes sense if you don't think about it
+	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/taperecorder/attack_hand(mob/user, list/modifiers)
@@ -150,7 +150,7 @@ DEFINE_VERB(/obj/item/taperecorder, ejectverb, "Eject Tape", "", FALSE, "Object"
 	return ..()
 
 
-/obj/item/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, list/message_mods = list(), message_range)
+/obj/item/taperecorder/Hear(atom/movable/speaker, message_langs, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(message_mods[MODE_RELAY] || !mytape || istype(speaker, /obj/item/taperecorder))
 		return

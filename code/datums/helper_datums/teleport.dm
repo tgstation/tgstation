@@ -125,26 +125,53 @@
 		effect.attach(location)
 		effect.start()
 
-// Safe location finder
-/proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE, dense_atoms = FALSE)
-	if(!zlevels)
-		if (zlevel)
-			zlevels = list(zlevel)
-		else
-			zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
-	var/cycles = 1000
-	for(var/cycle in 1 to cycles)
-		// DRUNK DIALLING WOOOOOOOOO
+/**
+ * Attempts to find a "safe" floor turf within some given z-levels
+ * * zlevel_or_levels: The list of z-levels we are searching though. You can supply just a number and it will be turned into a list.
+ * * extended_safety_checks: Will do some additional checks to make sure the destination is safe, see [/proc/is_safe_turf].
+ * * dense_atoms: Will additionally check to see if the turf has any dense obstructions, like machines or structures.
+ *
+ * Returns a safe floor turf,
+ * **BUT** there is a chance of it being null if an extremely large portion of a z-level is unsafe or blocked.
+ */
+/proc/find_safe_turf(zlevel_or_levels, extended_safety_checks = FALSE, dense_atoms = FALSE) as /turf/open/floor
+	SHOULD_BE_PURE(TRUE)
+	RETURN_TYPE(/turf/open/floor)
+
+	var/list/zlevels
+	if(islist(zlevel_or_levels))
+		zlevels = zlevel_or_levels
+	else if(zlevel_or_levels)
+		zlevels = list(zlevel_or_levels)
+	else
+		zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
+
+	for(var/cycle in 1 to 1000)
 		var/x = rand(1, world.maxx)
 		var/y = rand(1, world.maxy)
 		var/z = pick(zlevels)
 		var/random_location = locate(x,y,z)
-
-		if(is_safe_turf(random_location, extended_safety_checks, dense_atoms, cycle < 300))//if the area is mostly NOTELEPORT (centcom) we gotta give up on this fantasy at some point.
+		var/keep_trying_no_teleport = (cycle < 300) //if the area is mostly NOTELEPORT (centcom) we gotta give up on this fantasy at some point.
+		if(is_safe_turf(random_location, extended_safety_checks, dense_atoms, keep_trying_no_teleport))
 			return random_location
 
-/// Checks if a given turf is a "safe" location
+/**
+ * Checks to see if a given turf is a "safe" location. Being safe requires the following to be true:
+ * * Must be a [floor][/turf/open/floor]
+ * * Must have air, and that air must have [breathable bounds][/proc/check_gases] for humans
+ * * Must have goldilocks temperature
+ * * Must have safe pressure
+ *
+ * Optionally:
+ * * extended_safety_checks: Will make additional checks for turfs that technically pass all previous requirements but still may not be safe
+ * * dense_atoms: Must be unobstructed (no blocking objects such as machines, structures or mobs)
+ * * no_teleport: Must not have [NOTELEPORT][/area/var/area_flag]
+ *
+ * Returns TRUE if all conditions pass, FALSE otherwise.
+ */
 /proc/is_safe_turf(turf/random_location, extended_safety_checks = FALSE, dense_atoms = FALSE, no_teleport = FALSE)
+	SHOULD_BE_PURE(TRUE)
+
 	. = FALSE
 	if(!isfloorturf(random_location))
 		return
@@ -160,18 +187,18 @@
 
 	var/list/floor_gases = floor_gas_mixture.gases
 	var/static/list/gases_to_check = list(
-		/datum/gas/oxygen = list(16, 100),
+		/datum/gas/oxygen = list(/obj/item/organ/lungs::safe_oxygen_min, 100),
 		/datum/gas/nitrogen,
-		/datum/gas/carbon_dioxide = list(0, 10)
+		/datum/gas/carbon_dioxide = list(0, /obj/item/organ/lungs::safe_co2_max)
 	)
 	if(!check_gases(floor_gases, gases_to_check))
 		return FALSE
 
 	// Aim for goldilocks temperatures and pressure
-	if((floor_gas_mixture.temperature <= 270) || (floor_gas_mixture.temperature >= 360))
+	if((floor_gas_mixture.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT) || (floor_gas_mixture.temperature >= BODYTEMP_HEAT_DAMAGE_LIMIT))
 		return
 	var/pressure = floor_gas_mixture.return_pressure()
-	if((pressure <= 20) || (pressure >= 550))
+	if((pressure <= HAZARD_LOW_PRESSURE) || (pressure >= HAZARD_HIGH_PRESSURE))
 		return
 
 	if(extended_safety_checks)

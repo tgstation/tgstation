@@ -19,6 +19,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /obj/item/fish
 	name = "fish"
 	desc = "very bland"
+	abstract_type = /obj/item/fish
 	icon = 'icons/obj/aquarium/fish.dmi'
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
@@ -220,7 +221,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	//Adding this because not all fish have the gore foodtype that makes them automatically eligible for dna infusion.
 	add_traits(list(TRAIT_DUCT_TAPE_UNREPAIRABLE, TRAIT_VALID_DNA_INFUSION), INNATE_TRAIT)
 
-	//stops new fish from being able to reproduce right away.
+	//new fish should be modestly hungry and cannot reproduce right away.
 	breeding_wait = world.time + (breeding_timeout * NEW_FISH_BREEDING_TIMEOUT_MULT)
 	last_feeding = world.time - (feeding_frequency * NEW_FISH_LAST_FEEDING_MULT)
 
@@ -231,6 +232,23 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	register_context()
 	register_item_context()
 
+	if(!apply_qualities || !PERFORM_ALL_TESTS(focus_only/fish_population) || type == abstract_type || stable_population > 1)
+		return
+	if(length(compatible_types))
+		for(var/obj/item/fish/fishie as anything in compatible_types)
+			if(fishie::stable_population > 1)
+				if(!HAS_TRAIT(src, TRAIT_FISH_RECESSIVE))
+					stack_trace("[type] has a stable population of [stable_population] but is compatible with fishes with a higher stable population. \
+						However, it doesn't have the [/datum/fish_trait/recessive] trait. Either increase its stable population or add the trait to it.")
+				return
+	if(!HAS_TRAIT(src, TRAIT_FISH_NO_MATING) && !HAS_TRAIT(src, TRAIT_FISH_CROSSBREEDER))
+		var/list/pick_one = list(
+			/datum/fish_trait/crossbreeder,
+			/datum/fish_trait/no_mating,
+		)
+		stack_trace("[type] has a stable_population of [stable_population] but has neither of these traits: [english_list(pick_one)]. \
+			Either increase its stable population or add one of these traits to it.")
+
 /obj/item/fish/suicide_act(mob/living/user)
 	if(force == 0)
 		user.visible_message(span_suicide("[user] slaps [user.p_them()]self with [src], but nothing happens!"))
@@ -240,6 +258,11 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	ADD_TRAIT(user, TRAIT_COMBAT_MODE_LOCK, REF(src))
 	slapperoni(user, iteration = 1)
 	return MANUAL_SUICIDE
+
+/obj/item/fish/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
+	return ..()
 
 /obj/item/fish/proc/slapperoni(mob/living/user, iteration)
 	stoplag(0.1 SECONDS)
@@ -1274,7 +1297,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		return FALSE
 	if(!being_targeted && length(get_aquarium_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
 		return FALSE
-	return !HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH) && get_health_percentage() >= 0.8 && stable_population >= 1 && world.time >= breeding_wait
+	return !HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH) && get_health_percentage() >= 0.8 && world.time >= breeding_wait
 
 /obj/item/fish/proc/try_to_reproduce()
 	if(!loc || !HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
@@ -1286,19 +1309,17 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if(!HAS_TRAIT(src, TRAIT_FISH_NO_MATING))
 		var/list/available_fishes = list()
 		SEND_SIGNAL(loc, COMSIG_AQUARIUM_GET_REPRODUCTION_CANDIDATES, src, available_fishes)
+		available_fishes -= src //self-reproduction goes last
 		if(length(available_fishes))
-			//make sure we check if the fish can reproduce with itself last, since that should've lower priority
-			available_fishes = shuffle(available_fishes) - src
-			available_fishes += src
+			available_fishes = shuffle(available_fishes)
 			for(var/obj/item/fish/other_fish as anything in available_fishes)
 				if(other_fish.ready_to_reproduce(TRUE))
 					second_fish = other_fish
 					break
 
-	if(!second_fish || second_fish == src) //check if the fish can self-reproduce in these cases.
-		if(!HAS_TRAIT(src, TRAIT_FISH_SELF_REPRODUCE))
-			return FALSE
-		second_fish = null //set it to null, since this will make the following operations a bit easier
+	//check if the fish can self-reproduce if there's no other option
+	if(!second_fish && !HAS_TRAIT(src, TRAIT_FISH_SELF_REPRODUCE))
+		return FALSE
 
 	if(PERFORM_ALL_TESTS(fish_breeding) && second_fish && !length(evolution_types))
 		return create_offspring(second_fish.type, second_fish)
@@ -1342,6 +1363,9 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 	return create_offspring(chosen_type, second_fish, chosen_evolution)
 
+///The timeout multiplier for offspring fish, the ones generated when two compatible fish are coupled
+#define OFFSPRING_FISH_BREEDING_TIMEOUT_MULT 2
+
 /obj/item/fish/proc/create_offspring(chosen_type, obj/item/fish/partner, datum/fish_evolution/evolution)
 	var/obj/item/fish/new_fish = new chosen_type (loc, FALSE)
 	//Try to pass down compatible traits based on inheritability
@@ -1356,7 +1380,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		var/ratio_weight = new_fish.average_size * (((weight / average_weight) + (partner.weight / partner.average_weight)) / 2)
 		var/mean_weight = (weight + partner.weight)/2
 		new_fish.randomize_size_and_weight((mean_size + ratio_size) * 0.5, (mean_weight + ratio_weight) * 0.5, 0.3, update = FALSE)
-		partner.breeding_wait = world.time + breeding_timeout
+		partner.breeding_wait = world.time + partner.breeding_timeout
 
 		if(length(partner.custom_materials))
 			if(length(custom_materials))
@@ -1383,7 +1407,11 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 	breeding_wait = world.time + breeding_timeout
 
+	new_fish.breeding_wait = world.time + new_fish.breeding_timeout * OFFSPRING_FISH_BREEDING_TIMEOUT_MULT
+
 	return new_fish
+
+#undef OFFSPRING_FISH_BREEDING_TIMEOUT_MULT
 
 #define PAUSE_BETWEEN_PHASES 15
 #define PAUSE_BETWEEN_FLOPS 2
@@ -1477,7 +1505,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 #define FISH_PRICE_SOFT_CAP_EXPONENT 0.86
 
 ///Returns the price of this fish, for the fish export.
-/obj/item/fish/proc/get_export_price(price, elasticity_percent)
+/obj/item/fish/proc/get_export_price(price)
 	var/size_weight_exponentation = (size * weight * FISH_PRICE_MULTIPLIER)^FISH_PRICE_CURVE_EXPONENT
 	var/raw_price = price + size_weight_exponentation
 	if(raw_price >= FISH_PRICE_SOFT_CAP_THRESHOLD + 1)
@@ -1485,7 +1513,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		raw_price = FISH_PRICE_SOFT_CAP_THRESHOLD + soft_cap
 	if(HAS_TRAIT(src, TRAIT_FISH_LOW_PRICE)) //Avoid printing money by simply ordering fish and sending it back.
 		raw_price *= 0.05
-	return raw_price * elasticity_percent
+	return raw_price
 
 #undef FISH_PRICE_MULTIPLIER
 #undef FISH_PRICE_CURVE_EXPONENT

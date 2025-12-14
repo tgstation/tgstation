@@ -381,9 +381,13 @@ DEFINE_VERB(/client, drop_item, "drop_item", "", TRUE, "")
  * force_drop = the slip forces them to drop held items
  */
 /mob/proc/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, daze, force_drop = FALSE)
-	add_mob_memory(/datum/memory/was_slipped, antagonist = slipped_on)
-
 	SEND_SIGNAL(src, COMSIG_MOB_SLIPPED, knockdown_amount, slipped_on, lube_flags, paralyze, daze, force_drop)
+
+/mob/living/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, daze, force_drop = FALSE)
+	add_mob_memory(/datum/memory/was_slipped, antagonist = slipped_on)
+	add_mood_event("slipped", /datum/mood_event/slipped)
+	add_personality_mood_to_viewers(src, "slip_observed", list(/datum/personality/whimsical = /datum/mood_event/whimsical_slip), range = 5)
+	return ..()
 
 //bodypart selection verbs - Cyberboss
 //8: repeated presses toggles through head - eyes - mouth

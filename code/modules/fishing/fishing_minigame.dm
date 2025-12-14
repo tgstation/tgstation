@@ -258,7 +258,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	float.update_appearance(UPDATE_OVERLAYS)
 	if(special_effects & FISHING_MINIGAME_AUTOREEL)
 		addtimer(CALLBACK(src, PROC_REF(auto_spin)), 0.2 SECONDS)
-	playsound(float, 'sound/machines/ping.ogg', 10, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(float, 'sound/machines/ping.ogg', 20, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 
 /datum/fishing_challenge/proc/auto_spin()
 	if(phase != WAIT_PHASE || !float.spin_ready)
@@ -284,7 +284,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 /datum/fishing_challenge/proc/on_float_or_user_move(datum/source)
 	SIGNAL_HANDLER
 
-	if(!user.CanReach(location))
+	if(!location.IsReachableBy(user))
 		user.balloon_alert(user, "too far!")
 		interrupt()
 

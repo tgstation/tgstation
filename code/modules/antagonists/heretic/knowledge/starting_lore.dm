@@ -211,7 +211,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/codex_cicatrix
 	name = "Codex Cicatrix"
-	desc = "Allows you to transmute a book, any unique pen (anything but generic pens), and your pick from any carcass (animal or human), leather, or hide to create a Codex Cicatrix. \
+	desc = "Allows you to transmute a book, any pen, and your pick from any carcass (animal or human), leather, or hide to create a Codex Cicatrix. \
 		The Codex Cicatrix can be used when draining influences to gain additional knowledge, but comes at greater risk of being noticed. \
 		It can also be used to draw and remove transmutation runes easier, and as a spell focus in a pinch."
 	gain_text = "The occult leaves fragments of knowledge and power anywhere and everywhere. The Codex Cicatrix is one such example. \
@@ -221,7 +221,6 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		/obj/item/pen = 1,
 		list(/mob/living, /obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide, /obj/item/food/deadmouse) = 1,
 	)
-	banned_atom_types = list(/obj/item/pen)
 	result_atoms = list(/obj/item/codex_cicatrix)
 	cost = 1
 	is_starting_knowledge = TRUE
@@ -229,11 +228,6 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	var/static/list/non_mob_bindings = typecacheof(list(/obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide, /obj/item/food/deadmouse))
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "book"
-
-/datum/heretic_knowledge/codex_cicatrix/parse_required_item(atom/item_path, number_of_things)
-	if(item_path == /obj/item/pen)
-		return "unique type of pen"
-	return ..()
 
 /datum/heretic_knowledge/codex_cicatrix/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
@@ -311,13 +305,15 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	. = TRUE
 
 	heretic_datum.feast_of_owls = TRUE
+	heretic_datum.update_heretic_aura()
 	user.set_temp_blindness(reward * 1 SECONDS)
 	user.AdjustParalyzed(reward * 1 SECONDS)
 	user.playsound_local(get_turf(user), 'sound/music/antag/heretic/heretic_gain_intense.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	for(var/i in 1 to reward)
 		user.emote("scream")
 		playsound(loc, 'sound/items/eatfood.ogg', 100, TRUE)
-		heretic_datum.knowledge_points++
+		heretic_datum.adjust_knowledge_points(1)
+
 		to_chat(user, span_danger("You feel something invisible tearing away at your very essence!"))
 		user.do_jitter_animation()
 		sleep(1 SECONDS)

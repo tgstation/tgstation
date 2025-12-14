@@ -50,7 +50,7 @@
 
 /datum/sprite_accessory/blank
 	name = SPRITE_ACCESSORY_NONE
-	icon_state = "None"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 ////////////////
 // Hair Masks //
@@ -2113,6 +2113,11 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 /datum/sprite_accessory/ears/cat/round
 	name = "Round"
 	icon_state = "round"
+
+/datum/sprite_accessory/ears/cat/cybernetic
+	name = "Cybernetic"
+	icon_state = "cyber"
+	locked = TRUE
 
 /datum/sprite_accessory/ears/fox
 	icon = 'icons/mob/human/fox_features.dmi'

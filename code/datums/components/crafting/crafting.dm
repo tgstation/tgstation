@@ -2,8 +2,9 @@
 #define CONTENTS_INSTANCES "instances"
 #define CONTENTS_MACHINERY "machinery"
 #define CONTENTS_STRUCTURES "structures"
-#define CONTENTS_REAGENTS "reagents"
+#define CONTENTS_REQS_COUNT "reqs_count"
 #define CONTENTS_TOOL_BEHAVIOUR "tool_behaviour"
+#define CONTENTS_POSSIBLE_TOOLS "tool_instances"
 
 /// The portion of time spent crafting that recipe dependant on the speed of the tools
 #define RECIPE_DYNAMIC_TIME_COEFF 0.85
@@ -61,7 +62,7 @@
 	var/list/item_instances = contents[CONTENTS_INSTANCES]
 	var/list/machines = contents[CONTENTS_MACHINERY]
 	var/list/structures = contents[CONTENTS_STRUCTURES]
-	contents = contents[CONTENTS_REAGENTS]
+	contents = contents[CONTENTS_REQS_COUNT]
 
 
 	var/list/requirements_list = list()
@@ -132,81 +133,68 @@
 				continue
 		. += AM
 
-/datum/component/personal_crafting/proc/get_surroundings(atom/a, list/blacklist=null)
+/datum/component/personal_crafting/proc/get_surroundings(atom/source, list/blacklist=null)
 	. = list()
 	.[CONTENTS_TOOL_BEHAVIOUR] = list()
-	.[CONTENTS_REAGENTS] = list()
+	.[CONTENTS_REQS_COUNT] = list()
 	.[CONTENTS_INSTANCES] = list()
 	.[CONTENTS_MACHINERY] = list()
 	.[CONTENTS_STRUCTURES] = list()
-	for(var/obj/object in get_environment(a, blacklist))
+	for(var/obj/object in get_environment(source, blacklist))
 		if(isitem(object))
 			var/obj/item/item = object
 			LAZYADDASSOCLIST(.[CONTENTS_INSTANCES], item.type, item)
 			if(isstack(item))
 				var/obj/item/stack/stack = item
-				.[CONTENTS_REAGENTS][item.type] += stack.amount
+				.[CONTENTS_REQS_COUNT][item.type] += stack.amount
 			else
-				.[CONTENTS_REAGENTS][item.type] += 1
+				.[CONTENTS_REQS_COUNT][item.type] += 1
 				if(is_reagent_container(item) && item.is_drainable() && length(item.reagents.reagent_list)) //some container that has some reagents inside it that can be drained
 					var/obj/item/reagent_containers/container = item
 					for(var/datum/reagent/reagent as anything in container.reagents.reagent_list)
-						.[CONTENTS_REAGENTS][reagent.type] += reagent.volume
-				else //a reagent container that is empty can also be used as a tool. e.g. glass bottle can be used as a rolling pin
-					if(item.tool_behaviour)
-						var/current_tool_speed = .[CONTENTS_TOOL_BEHAVIOUR][item.tool_behaviour]
-						if(current_tool_speed < item.toolspeed)
-							.[CONTENTS_TOOL_BEHAVIOUR][item.tool_behaviour] = item.toolspeed
+						.[CONTENTS_REQS_COUNT][reagent.type] += reagent.volume
+			if(item.tool_behaviour)
+				var/current_tool_speed = .[CONTENTS_TOOL_BEHAVIOUR][item.tool_behaviour]
+				if(current_tool_speed < item.toolspeed)
+					.[CONTENTS_TOOL_BEHAVIOUR][item.tool_behaviour] = item.toolspeed
 		else if (ismachinery(object))
 			LAZYADDASSOCLIST(.[CONTENTS_MACHINERY], object.type, object)
 		else if (isstructure(object))
 			LAZYADDASSOCLIST(.[CONTENTS_STRUCTURES], object.type, object)
+
+	var/list/within_source = list()
+	for(var/obj/item/item in source.contents)
+		within_source += item
+		if(item.atom_storage)
+			within_source += item.contents
+
+	for(var/obj/item/item as anything in within_source)
+		if(!item.tool_behaviour)
+			continue
+		var/current_tool_speed = .[CONTENTS_TOOL_BEHAVIOUR][item.tool_behaviour]
+		if(current_tool_speed < item.toolspeed)
+			.[CONTENTS_TOOL_BEHAVIOUR][item.tool_behaviour] = item.toolspeed
+
+	var/list/instances = .[CONTENTS_INSTANCES]
+	for(var/item_type in instances)
+		.[CONTENTS_POSSIBLE_TOOLS] += instances[item_type]
+	.[CONTENTS_POSSIBLE_TOOLS] += within_source
 
 /// Returns a boolean on whether the tool requirements of the input recipe are satisfied by the input source and surroundings.
 /datum/component/personal_crafting/proc/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings, final_check = FALSE)
 	if(!length(recipe.tool_behaviors) && !length(recipe.tool_paths))
 		return TRUE
 
-	var/list/available_tools = list()
-	var/list/present_qualities = list()
-
-	var/list/all_instances = list()
-	for(var/atom/movable/movable as anything in source.contents)
-		all_instances += movable
-		if(movable.atom_storage)
-			all_instances += movable.contents
-
-	for(var/obj/item/contained_item in all_instances) //fill the available tools list with available tool types and behaviours
-		available_tools[contained_item.type] = TRUE
-		if(contained_item.tool_behaviour)
-			present_qualities[contained_item.tool_behaviour] = TRUE
-
-	for(var/quality in surroundings[CONTENTS_TOOL_BEHAVIOUR])
-		present_qualities[quality] = TRUE
-
-	for(var/path in surroundings[CONTENTS_REAGENTS])
-		available_tools[path] = TRUE
-
 	for(var/required_quality in recipe.tool_behaviors)
-		if(!present_qualities[required_quality])
+		if(!(required_quality in surroundings[CONTENTS_TOOL_BEHAVIOUR]))
 			return FALSE
 
+	var/list/possible_tool_instances = surroundings[CONTENTS_POSSIBLE_TOOLS]
 	for(var/required_path in recipe.tool_paths)
-		var/found_this_tool = FALSE
-		for(var/tool_path in available_tools)
-			if(!ispath(tool_path, required_path))
-				continue
-			found_this_tool = TRUE
-			break
-		if(!found_this_tool)
+		if(!(locate(required_path) in possible_tool_instances))
 			return FALSE
 
-	//add the contents of the assoc list of the surrounding instances to all_instances for the recipe.check_tools() call
-	var/list/surrounding_instances = surroundings[CONTENTS_INSTANCES]
-	for(var/type_key in surrounding_instances)
-		all_instances |= surrounding_instances[type_key]
-
-	return recipe.check_tools(source, all_instances, final_check)
+	return recipe.check_tools(source, possible_tool_instances, final_check)
 
 /datum/component/personal_crafting/proc/construct_item(atom/crafter, datum/crafting_recipe/recipe)
 	if(!crafter)
@@ -233,10 +221,10 @@
 			//Then divide it by the number of tools used in the recipe, and recalculate it.
 			dynamic_recipe_time /= tools_used
 
-			var/instances = contents[CONTENTS_INSTANCES]
+			var/list/possible_tool_instances = contents[CONTENTS_POSSIBLE_TOOLS]
 			for(var/tool in recipe.tool_paths)
 				var/best_speed = 10 //failsafe-ish
-				for(var/obj/item/item as anything in instances)
+				for(var/obj/item/item as anything in possible_tool_instances)
 					if(!istype(item, tool) || best_speed < item.toolspeed)
 						continue
 					best_speed = item.toolspeed
@@ -256,15 +244,30 @@
 	//used to gather the material composition of the utilized requirements to transfer to the result
 	var/list/total_materials = list()
 	var/list/stuff_to_use = get_used_reqs(recipe, crafter, total_materials)
+
+	for(var/mat in recipe.removed_mats)
+		var/to_remove = recipe.removed_mats[mat]
+		var/datum/material/ref_mat = locate(mat) in total_materials
+		if(!ref_mat)
+			continue
+		if(total_materials[ref_mat] < to_remove)
+			total_materials -= ref_mat
+		else
+			total_materials[ref_mat] -= to_remove
+
 	var/atom/result
 	var/turf/craft_turf = get_turf(crafter.loc)
-	var/set_materials = TRUE
+	var/set_materials = !(recipe.crafting_flags & CRAFT_NO_MATERIALS)
 	if(ispath(recipe.result, /turf))
 		result = craft_turf.place_on_top(recipe.result)
 	else if(ispath(recipe.result, /obj/item/stack))
+		var/res_amount = recipe.result_amount || 1
 		//we don't merge the stack right away but try to put it in the hand of the crafter
-		result = new recipe.result(craft_turf, recipe.result_amount || 1, /*merge =*/FALSE)
-		set_materials = FALSE //stacks are bit too complex for it for now, but you're free to change that.
+		if(set_materials)
+			result = new recipe.result(craft_turf, res_amount, /*merge =*/ FALSE, /*mat_override =*/ total_materials, /*mat_amt =*/ 1 / res_amount)
+			set_materials = FALSE //We've already set the materials on init. Don't do it again
+		else
+			result = new recipe.result(craft_turf, res_amount, FALSE)
 	else
 		result = new recipe.result(craft_turf)
 		if(result.atom_storage && recipe.delete_contents)
@@ -384,21 +387,21 @@
 	if(recipe.structures)
 		requirements += recipe.structures
 
+	var/list/surroundings = get_environment(atom, recipe.blacklist)
 	for(var/path_key in requirements)
-		var/list/surroundings
 		var/amount = recipe.reqs?[path_key] || recipe.machinery?[path_key] || recipe.structures?[path_key]
 		if(!amount)//since machinery & structures can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
 			continue
-		surroundings = get_environment(atom, recipe.blacklist)
-		surroundings -= return_list
 		if(ispath(path_key, /datum/reagent))
 			if(!holder)
 				holder = new(INFINITY, NO_REACT) //an infinite volume holder than can store reagents without reacting
 				return_list += holder
+			var/list/checked = list()
 			while(amount > 0)
-				var/obj/item/reagent_containers/container = locate() in surroundings
+				var/obj/item/reagent_containers/container = locate() in ((surroundings | return_list) - checked)
 				if(isnull(container)) //This would only happen if the previous checks for contents and tools were flawed.
 					stack_trace("couldn't fulfill the required amount for [path_key]. Dangit")
+					break
 				if(QDELING(container)) //it's deleting...
 					surroundings -= container
 					continue
@@ -406,7 +409,7 @@
 				if(reagent_volume)
 					container.reagents.trans_to(holder, min(amount, reagent_volume), target_id = path_key, no_react = TRUE)
 					amount -= reagent_volume
-				surroundings -= container
+				checked += container
 				container.update_appearance(UPDATE_ICON)
 		else if(ispath(path_key, /obj/item/stack))
 			var/obj/item/stack/tally_stack
@@ -414,6 +417,7 @@
 				var/obj/item/stack/origin_stack = locate(path_key) in surroundings
 				if(isnull(origin_stack)) //This would only happen if the previous checks for contents and tools were flawed.
 					stack_trace("couldn't fulfill the required amount for [path_key]. Dangit")
+					break
 				if(QDELING(origin_stack))
 					continue
 				var/amount_to_give = min(origin_stack.amount, amount)
@@ -432,6 +436,7 @@
 				var/atom/movable/item = locate(path_key) in surroundings
 				if(isnull(item)) //This would only happen if the previous checks for contents and tools were flawed.
 					stack_trace("couldn't fulfill the required amount for [path_key]. Dangit")
+					break
 				if(QDELING(item))
 					continue
 				return_list += item
@@ -750,6 +755,7 @@
 #undef CONTENTS_INSTANCES
 #undef CONTENTS_MACHINERY
 #undef CONTENTS_STRUCTURES
-#undef CONTENTS_REAGENTS
+#undef CONTENTS_REQS_COUNT
 #undef CONTENTS_TOOL_BEHAVIOUR
 #undef RECIPE_DYNAMIC_TIME_COEFF
+#undef CONTENTS_POSSIBLE_TOOLS

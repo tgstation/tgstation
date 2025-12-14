@@ -112,12 +112,6 @@
 /turf/open/floor/iron/grimy,
 /area/awaymission/undergroundoutpost45/central)
 "az" = (
-/obj/structure/sign/warning/vacuum{
-	desc = "A beacon used by a teleporter.";
-	icon = 'icons/obj/devices/tracker.dmi';
-	icon_state = "beacon";
-	name = "tracking beacon"
-	},
 /obj/effect/landmark/awaystart/underground,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
@@ -1917,7 +1911,7 @@
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/gateway)
 "ig" = (
-/obj/machinery/computer/rdconsole{
+/obj/machinery/computer/rdconsole/unlocked{
 	dir = 4;
 	req_access = null
 	},
@@ -5840,11 +5834,8 @@
 /turf/open/floor/iron/checker,
 /area/awaymission/undergroundoutpost45/engineering)
 "vQ" = (
-/obj/structure/noticeboard{
-	dir = 1;
-	pixel_y = -27
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/noticeboard/directional/south,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
 "vR" = (
@@ -7312,6 +7303,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
+"Px" = (
+/obj/structure/sign/warning/vacuum{
+	desc = "A beacon used by a teleporter.";
+	icon = 'icons/obj/devices/tracker.dmi';
+	icon_state = "beacon";
+	name = "tracking beacon"
+	},
+/turf/closed/wall,
+/area/awaymission/undergroundoutpost45/central)
 "PB" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -37787,7 +37787,7 @@ aK
 aC
 aP
 aP
-aC
+Px
 aC
 bv
 aC

@@ -4,7 +4,6 @@
 		their time is up, issue equipment to security, be a security officer when \
 		they all eventually die."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
-	department_head = list(JOB_HEAD_OF_SECURITY)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -21,6 +20,7 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SEC
 
+	mind_traits = list(SECURITY_MIND_TRAITS)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM, TRAIT_PRETENDER_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_WARDEN

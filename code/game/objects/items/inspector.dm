@@ -22,6 +22,9 @@
 	interaction_flags_click = NEED_DEXTERITY
 	throw_range = 1
 	throw_speed = 1
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 	///How long it takes to print on time each mode, ordered NORMAL, FAST, HONK
 	var/list/time_list = list(5 SECONDS, 1 SECONDS, 0.1 SECONDS)
 	///Which print time mode we're on.
@@ -333,6 +336,7 @@
 	icon_state = "bananium_inspector"
 	w_class = WEIGHT_CLASS_SMALL
 	max_mode = BANANIUM_CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST
+	custom_materials = list(/datum/material/bananium = SHEET_MATERIAL_AMOUNT * 5)
 	///How many more times can we print?
 	var/paper_charges = 32
 	///Max value of paper_charges
@@ -462,11 +466,13 @@
 	var/datum/action/innate/origami/origami_action = locate() in user.actions
 	if(origami_action?.active) //Origami masters can fold water
 		make_plane(user, /obj/item/paperplane/syndicate)
-	else if(do_after(user, 1 SECONDS, target = src, progress=TRUE))
-		var/turf/open/target = get_turf(src)
-		target.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
-		to_chat(user, span_notice("As you try to fold [src] into the shape of a plane, it disintegrates into water!"))
-		qdel(src)
+		return CLICK_ACTION_SUCCESS
+	if(!do_after(user, 1 SECONDS, target = src, progress=TRUE))
+		return CLICK_ACTION_BLOCKING
+	var/turf/open/target = get_turf(src)
+	target.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
+	to_chat(user, span_notice("As you try to fold [src] into the shape of a plane, it disintegrates into water!"))
+	qdel(src)
 	return CLICK_ACTION_SUCCESS
 
 #undef ENERGY_TO_SPEAK

@@ -104,7 +104,14 @@
 		RegisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(on_set_anchored))
 	M.set_buckled(src)
 	buckled_mobs |= M
-	M.throw_alert(ALERT_BUCKLED, /atom/movable/screen/alert/buckled)
+
+	///If the icon is too big, don't add it to the screen alert
+	var/add_src_icon = TRUE
+	var/list/dim = get_icon_dimensions(icon)
+	if(dim["height"] > ICON_SIZE_Y || dim["width"] > ICON_SIZE_X)
+		add_src_icon = FALSE
+
+	M.throw_alert(ALERT_BUCKLED, /atom/movable/screen/alert/buckled, new_master = add_src_icon ? src : null)
 	M.set_glide_size(glide_size)
 
 	M.Move(loc)
@@ -351,7 +358,7 @@
  * user - The mob unbuckling buckled_mob
  */
 /atom/movable/proc/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
-	if(!(buckled_mob in buckled_mobs) || !user.CanReach(buckled_mob))
+	if(!(buckled_mob in buckled_mobs) || !buckled_mob.IsReachableBy(user))
 		return
 	var/mob/living/M = unbuckle_mob(buckled_mob)
 	if(M)

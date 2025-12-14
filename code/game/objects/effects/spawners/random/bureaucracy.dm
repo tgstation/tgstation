@@ -19,7 +19,7 @@
 	name = "stamp spawner"
 	icon_state = "stamp"
 	loot = list(
-		/obj/item/stamp = 3,
+		/obj/item/stamp/granted = 3,
 		/obj/item/stamp/denied = 1,
 	)
 
@@ -42,6 +42,7 @@
 	icon_state = "paper"
 	loot = list(
 		/obj/item/paper = 20,
+		/obj/item/paperplane = 2,
 		/obj/item/paper/crumpled = 2,
 		/obj/item/paper/crumpled/bloody = 2,
 		/obj/item/paper/crumpled/muddy = 2,

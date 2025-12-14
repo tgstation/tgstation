@@ -327,7 +327,7 @@ Versioning
 		first_death["role"] = null
 		first_death["role"] = L.mind.assigned_role.title
 		first_death["area"] = "[AREACOORD(L)]"
-		first_death["damage"] = "<font color='#FF5555'>[L.getBruteLoss()]</font>/<font color='orange'>[L.getFireLoss()]</font>/<font color='lightgreen'>[L.getToxLoss()]</font>/<font color='lightblue'>[L.getOxyLoss()]</font>"
+		first_death["damage"] = "<font color='#FF5555'>[L.get_brute_loss()]</font>/<font color='orange'>[L.get_fire_loss()]</font>/<font color='lightgreen'>[L.get_tox_loss()]</font>/<font color='lightblue'>[L.get_oxy_loss()]</font>"
 		first_death["last_words"] = L.last_words
 
 	if(!SSdbcore.Connect())
@@ -344,12 +344,12 @@ Versioning
 		"pod" = get_area_name(L, TRUE),
 		"laname" = L.lastattacker,
 		"lakey" = L.lastattackerckey,
-		"brute" = L.getBruteLoss(),
-		"fire" = L.getFireLoss(),
+		"brute" = L.get_brute_loss(),
+		"fire" = L.get_fire_loss(),
 		"brain" = L.get_organ_loss(ORGAN_SLOT_BRAIN) || BRAIN_DAMAGE_DEATH, //get_organ_loss returns null without a brain but a value is required for this column
-		"oxy" = L.getOxyLoss(),
-		"tox" = L.getToxLoss(),
-		"stamina" = L.getStaminaLoss(),
+		"oxy" = L.get_oxy_loss(),
+		"tox" = L.get_tox_loss(),
+		"stamina" = L.get_stamina_loss(),
 		"x_coord" = L.x,
 		"y_coord" = L.y,
 		"z_coord" = L.z,
@@ -419,7 +419,7 @@ Versioning
 /datum/controller/subsystem/blackbox/proc/ReportRoundstartManifest(list/characters)
 	var/list/query_rows = list()
 	var/list/special_columns = list("server_ip" = "INET_ATON(?)")
-	for(var/mob_ckey as anything in characters)
+	for(var/mob_ckey in characters)
 		var/mob/living/new_character = characters[mob_ckey]
 		query_rows += list(list(
 			"server_ip" = world.internet_address || 0,

@@ -54,8 +54,8 @@
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "an" = (
-/obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
+/obj/structure/sign/warning/vacuum/external/directional/south,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ao" = (
 /turf/open/floor/carpet/royalblack,
@@ -243,7 +243,7 @@
 	amount = 10
 	},
 /obj/item/stack/cable_coil,
-/obj/item/circuitboard/computer/rdconsole,
+/obj/item/circuitboard/computer/rdconsole/unlocked,
 /obj/item/storage/box/stockparts/deluxe,
 /obj/item/storage/box/stockparts/deluxe,
 /obj/item/storage/box/beakers,
@@ -442,7 +442,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bO" = (
 /obj/structure/bodycontainer/crematorium{
 	id = "fscremate"
@@ -568,10 +568,6 @@
 /obj/machinery/stasis,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"ck" = (
-/obj/structure/sign/departments/cargo,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "cm" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Syndicate Ship Airlock"
@@ -922,7 +918,7 @@
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dj" = (
 /turf/closed/mineral/random/high_chance,
-/area/template_noop)
+/area/space/nearstation)
 "dl" = (
 /obj/machinery/door/password/voice/sfc{
 	password = null
@@ -1050,11 +1046,11 @@
 /obj/machinery/turretid{
 	control_area = "/area/ruin/space/has_grav/syndicate_forgotten_ship";
 	enabled = 0;
-	icon_state = "control_kill";
 	lethal = 1;
 	name = "Ship turret control panel";
 	pixel_y = 32;
-	req_access = list("syndicate")
+	req_access = list("syndicate");
+	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -1107,6 +1103,7 @@
 /obj/structure/closet/crate/secure/engineering{
 	req_access = list("syndicate")
 	},
+/obj/structure/sign/departments/cargo/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "Cy" = (
@@ -1181,6 +1178,10 @@
 /obj/item/storage/box/firingpins/syndicate,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"OW" = (
+/obj/structure/sign/warning/vacuum/external/directional/north,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "VF" = (
 /obj/structure/table/reinforced,
@@ -2479,8 +2480,8 @@ aa
 bZ
 al
 al
-an
-al
+bZ
+OW
 at
 ah
 cA
@@ -2488,8 +2489,8 @@ cP
 ah
 ah
 aL
-al
 an
+bZ
 al
 bJ
 bZ
@@ -2500,7 +2501,7 @@ aa
 aa
 aY
 aY
-ck
+bb
 yv
 bj
 bj

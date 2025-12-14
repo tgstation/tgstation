@@ -19,8 +19,8 @@
 	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	maxHealth = 100
 	health = 100
-	pixel_y = -14
-	base_pixel_y = -14
+	pixel_z = -14
+	base_pixel_z = -14
 	pixel_x = -14
 	base_pixel_x = -14
 	response_harm_continuous = "strikes"
@@ -336,7 +336,7 @@
 		var/mob/living/living_target = target_atom
 		living_target.adjust_fire_stacks(0.2)
 		living_target.ignite_mob()
-		living_target.adjustFireLoss(30)
+		living_target.adjust_fire_loss(30)
 
 	playsound(target_turf, 'sound/effects/magic/lightningbolt.ogg', 50, TRUE)
 	if(!is_seedling)

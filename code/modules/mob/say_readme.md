@@ -67,7 +67,7 @@ global procs
 		Checks that our atom can vocally speak at all.
 		Does not (and should not) include any feedback on its own.
 
-	Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mods, message_range)
+	Hear(atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mods, message_range)
 		This proc handles hearing. What it does varies. For mobs, it treats the message with hearer-specific things
 		like language and deafness, then outputs it to the hearer.
 

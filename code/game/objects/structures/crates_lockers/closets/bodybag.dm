@@ -19,6 +19,7 @@
 	can_install_electronics = FALSE
 	paint_jobs = null
 	can_weld_shut = FALSE
+	door_anim_time = 0
 
 	var/foldedbag_path = /obj/item/bodybag
 	var/obj/item/bodybag/foldedbag_instance = null
@@ -39,6 +40,7 @@
 		rmb_text = "Fold up", \
 	)
 	AddElement(/datum/element/contextual_screentip_sharpness, lmb_text = "Remove Tag")
+	obj_flags |= UNIQUE_RENAME | RENAME_NO_DESC
 
 /obj/structure/closet/body_bag/Destroy()
 	// If we have a stored bag, and it's in nullspace (not in someone's hand), delete it.
@@ -47,28 +49,22 @@
 	return ..()
 
 /obj/structure/closet/body_bag/attackby(obj/item/interact_tool, mob/user, list/modifiers, list/attack_modifiers)
-	if (IS_WRITING_UTENSIL(interact_tool))
-		if(!user.can_write(interact_tool))
-			return
-		var/t = tgui_input_text(user, "What would you like the label to be?", name, max_length = 53)
-		if(user.get_active_held_item() != interact_tool)
-			return
-		if(!user.can_perform_action(src))
-			return
-		handle_tag("[t ? t : initial(name)]")
-		return
-	if(!tag_name)
-		return
 	if(interact_tool.tool_behaviour == TOOL_WIRECUTTER || interact_tool.get_sharpness())
 		to_chat(user, span_notice("You cut the tag off [src]."))
-		handle_tag()
+		playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+		tag_name = null
+		update_appearance()
+		qdel(src.GetComponent(/datum/component/rename))
 
-///Handles renaming of the bodybag's examine tag.
-/obj/structure/closet/body_bag/proc/handle_tag(new_name)
+/obj/structure/closet/body_bag/nameformat(input, user)
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-	tag_name = new_name
-	name = tag_name ? "[initial(name)] - [tag_name]" : initial(name)
-	update_appearance()
+	tag_name = input
+	update_icon()
+	return tag_name ? "[initial(name)] - [tag_name]" : initial(name)
+
+/obj/structure/closet/body_bag/rename_reset()
+	tag_name = null
+	update_icon()
 
 /obj/structure/closet/body_bag/update_overlays()
 	. = ..()

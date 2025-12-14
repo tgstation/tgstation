@@ -15,6 +15,7 @@
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_OFFLINE
 	use_power = NO_POWER_USE
+	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 10)
 
 	/// What is the lowest amount of time we can set the timer to?
 	var/minimum_timer = SYNDIEBOMB_MIN_TIMER_SECONDS
@@ -68,6 +69,12 @@
 /obj/machinery/syndicatebomb/process()
 	if(!active)
 		return PROCESS_KILL
+
+	for(var/obj/effect/forcefield/cosmic_field/potential_field as anything in GLOB.active_cosmic_fields)
+		if(get_dist(potential_field, src) < 3)
+			new /obj/effect/temp_visual/revenant(get_turf(src))
+			defuse()
+			return
 
 	if(!isnull(next_beep) && (next_beep <= world.time))
 		var/volume
@@ -350,6 +357,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 // We detonate upon being exploded.
 	resistance_flags = FLAMMABLE //Burnable (but the casing isn't)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.05)
 	var/adminlog = null
 	var/range_heavy = 3
 	var/range_medium = 9
@@ -446,7 +454,8 @@
 
 /obj/item/bombcore/badmin/summon/detonate()
 	var/obj/machinery/syndicatebomb/B = loc
-	spawn_and_random_walk(summon_path, src, amt_summon, walk_chance=50, admin_spawn=TRUE, cardinals_only = FALSE)
+	for(var/atom/spawned as anything in spawn_and_random_walk(summon_path, src, amt_summon, walk_chance=50, admin_spawn=TRUE, cardinals_only = FALSE))
+		ADD_TRAIT(spawned, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
 	qdel(B)
 	qdel(src)
 

@@ -38,7 +38,7 @@
 
 	///Are our siliconHUDs on? TRUE for yes, FALSE for no.
 	var/sensors_on = TRUE
-	var/list/silicon_huds = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_SECURITY_ADVANCED, DATA_HUD_DIAGNOSTIC)
+	var/list/silicon_huds = list(TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD, TRAIT_DIAGNOSTIC_HUD)
 
 	var/law_change_counter = 0
 	var/obj/machinery/camera/silicon/builtInCamera
@@ -60,8 +60,8 @@
 	faction += FACTION_SILICON
 	if(ispath(radio))
 		radio = new radio(src)
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_atom_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_atom_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
 	add_sensors()
@@ -417,15 +417,16 @@
 /mob/living/silicon/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt silicon units
 	return -10
 
+/// Innate, toggleable silicon HUDs
+#define SILICON_HUD_TRAIT "silicon_hud"
+
 /mob/living/silicon/proc/remove_sensors()
-	for (var/hud_type in silicon_huds)
-		var/datum/atom_hud/silicon_hud = GLOB.huds[hud_type]
-		silicon_hud.hide_from(src)
+	remove_traits(silicon_huds, SILICON_HUD_TRAIT)
 
 /mob/living/silicon/proc/add_sensors()
-	for (var/hud_type in silicon_huds)
-		var/datum/atom_hud/silicon_hud = GLOB.huds[hud_type]
-		silicon_hud.show_to(src)
+	add_traits(silicon_huds, SILICON_HUD_TRAIT)
+
+#undef SILICON_HUD_TRAIT
 
 /mob/living/silicon/proc/toggle_sensors()
 	if(incapacitated)
@@ -449,7 +450,7 @@
 	return
 
 /mob/living/silicon/rust_heretic_act()
-	adjustBruteLoss(500)
+	adjust_brute_loss(500)
 
 /mob/living/silicon/on_floored_start()
 	return // Silicons are always standing by default.

@@ -28,7 +28,7 @@
 /obj/item/clothing/shoes/workboots/mining,
 /obj/item/clothing/gloves/color/black,
 /obj/effect/mob_spawn/corpse/human/charredskeleton,
-/obj/item/borg/sight/meson,
+/obj/item/clothing/glasses/meson,
 /obj/item/pickaxe/improvised,
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/unpowered/no_grav)

@@ -1,4 +1,8 @@
-#define DOOR_CLOSE_WAIT 60 ///Default wait until doors autoclose
+///Default wait until doors autoclose
+#define DOOR_CLOSE_WAIT 60
+/// Trait for checking if a mob is currently activating an unrestricted airlock open and thus has pressure pushes blocked
+#define TRAIT_UNRESTRICTED_AIRLOCK_OPENING "trait_unrestricted_airlock_opening"
+
 /obj/machinery/door
 	name = "door"
 	desc = "It opens and closes."
@@ -56,10 +60,7 @@
 	var/real_explosion_block
 	///if TRUE, this door will always open on red alert
 	var/red_alert_access = FALSE
-	/// Checks to see if this airlock has an unrestricted "sensor" within (will set to TRUE if present).
-	var/unres_sensor = FALSE
-	/// Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
-	var/unres_sides = NONE
+
 	/// Whether or not the door can crush mobs.
 	var/can_crush = TRUE
 	/// Whether or not the door can be opened by hand (used for blast doors and shutters)
@@ -72,6 +73,19 @@
 	var/elevator_status
 	/// What specific lift ID do we link with?
 	var/transport_linked_id
+
+	/// Checks to see if this airlock has an unrestricted "latch" within (will set to TRUE if present).
+	var/unres_latch = FALSE
+	/// Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
+	var/unres_sides = NONE
+	/// Delayed open for unrestricted users. If there is an unrestricted side, we want to know if the door opening should be delayed for a bit to add tension and what-not
+	var/delayed_unres_open = FALSE
+	/// Lower range for random time to open for unrestricted users
+	var/delayed_unres_time_lower = 2 SECONDS
+	/// Upper range for random time to open for unrestricted users
+	var/delayed_unres_time_upper = 3 SECONDS
+	/// Cooldown tracker to prevent message spam when resisting pressure while opening via unrestricted latch
+	COOLDOWN_DECLARE(pressure_push_cooldown)
 
 /datum/armor/machinery_door
 	melee = 30
@@ -98,7 +112,6 @@
 		set_bounds()
 		set_filler()
 		update_overlays()
-	update_freelook_sight()
 	air_update_turf(TRUE, TRUE)
 	register_context()
 	if(elevator_mode)
@@ -163,7 +176,6 @@
 		layer = initial(layer)
 
 /obj/machinery/door/Destroy()
-	update_freelook_sight()
 	if(elevator_mode)
 		GLOB.elevator_doors -= src
 	if(spark_system)
@@ -336,15 +348,79 @@
 	if(density)
 		run_animation(DOOR_DENY_ANIMATION)
 
-/obj/machinery/door/allowed(mob/M)
+/obj/machinery/door/allowed(mob/accessor)
 	if(emergency)
 		return TRUE
-	if(unrestricted_side(M))
-		return TRUE
-	return ..()
 
-/obj/machinery/door/proc/unrestricted_side(mob/opener) //Allows for specific side of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
+	. = ..() // let's see if this user has any funny way to access this before we try unrestricted stuff as that will have potential delays
+
+	if(. == TRUE)
+		return TRUE
+
+	if(unrestricted_side(accessor))
+		if(!delayed_unres_open)
+			return TRUE
+
+		return attempt_delayed_unres_open(accessor)
+
+	return FALSE
+
+
+
+/// Allows for specific side of airlocks to be unrestricted (IE, can exit maint freely, but need access to enter)
+/obj/machinery/door/proc/unrestricted_side(mob/opener)
 	return get_dir(src, opener) & unres_sides
+
+/// Initiates a do_after to open the door after a delay for unrestricted openers
+/// Returns TRUE if we successfully finished the do_after, FALSE otherwise
+/obj/machinery/door/proc/attempt_delayed_unres_open(mob/opener)
+	if(opener.do_after_count() > 0) // not allowed to do this if you're doing something else. just wait lad.
+		return FALSE
+
+	var/do_after_time = rand(delayed_unres_time_lower, delayed_unres_time_upper)
+	ADD_TRAIT(opener, TRAIT_UNRESTRICTED_AIRLOCK_OPENING, REF(src))
+	RegisterSignal(opener, COMSIG_ATOM_PRE_PRESSURE_PUSH, PROC_REF(stop_pressure_during_unres_open))
+	addtimer(CALLBACK(src, PROC_REF(deregister_pressure_push_signal), opener), do_after_time + 0.5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) // extra half-second to be safe, else this is just a guarantee we remove the signal.
+
+	SSblackbox.record_feedback("tally", "unrestricted_airlock_usage", 1, "open attempt ([type])") // statcollecting on how often people try to use this.
+	balloon_alert(opener, "activating unrestricted latch...")
+
+	if(istype(get_area(src), /area/station/maintenance))
+		playsound(get_turf(src), 'sound/machines/airlock/airlock_latch_hiss.ogg', 45, vary = TRUE, falloff_exponent = (SOUND_FALLOFF_EXPONENT * 2)) // sound travels further in maintenance muahaha
+	else
+		playsound(get_turf(src), 'sound/machines/airlock/airlock_latch_hiss.ogg', 30, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE, falloff_exponent = (SOUND_FALLOFF_EXPONENT * 1.5))
+
+	if(do_after(opener, do_after_time, target = src))
+		SSblackbox.record_feedback("tally", "unrestricted_airlock_usage", 1, "open success ([type])") // no need to tally failures as we can assume it as long as we have this + the total
+		return TRUE
+
+	deregister_pressure_push_signal(opener) // if you fail the do_after early then you lose your pressure immunity, womp.
+	return FALSE
+
+/// While activating the door, we are able to block pressure pushes since we're "grasping the override handle" or something similar to that.
+/// This basically exists to prevent the door's delay from being SUPREMELY annoying when you're trying to escape pressure-based damage during the unrestricted latch do_after.
+/obj/machinery/door/proc/stop_pressure_during_unres_open(mob/source)
+	SIGNAL_HANDLER
+	if(QDELETED(source))
+		return
+
+	if(!COOLDOWN_FINISHED(src, pressure_push_cooldown)) // avoid spam
+		return COMSIG_ATOM_BLOCKS_PRESSURE
+
+	// have both since this is a newer mechanic and i want it to be a bit more obvious why for the time being
+	balloon_alert(source, "resisting pressure!")
+	to_chat(source, span_warning("You're holding onto the unrestricted latch, preventing pressure from pushing you away!"))
+	COOLDOWN_START(src, pressure_push_cooldown, 5 SECONDS)
+	return COMSIG_ATOM_BLOCKS_PRESSURE
+
+/// Exists to ensure that we always deregister the pressure push blocking signal. Can be called multiple times safely as we check the trait.
+/obj/machinery/door/proc/deregister_pressure_push_signal(mob/opener)
+	if(!HAS_TRAIT_FROM(opener, TRAIT_UNRESTRICTED_AIRLOCK_OPENING, REF(src)))
+		return
+
+	UnregisterSignal(opener, COMSIG_ATOM_PRE_PRESSURE_PUSH)
+	REMOVE_TRAIT(opener, TRAIT_UNRESTRICTED_AIRLOCK_OPENING, REF(src))
+
 
 /obj/machinery/door/proc/try_to_weld(obj/item/weldingtool/W, mob/user)
 	return
@@ -375,6 +451,9 @@
 		forced_open = crowbar.force_opens
 	try_to_crowbar(tool, user, forced_open)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/door/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
+	try_to_crowbar(null, user, FALSE)
 
 /obj/machinery/door/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/access_key))
@@ -508,7 +587,7 @@
 	operating = TRUE
 	use_energy(active_power_usage)
 	run_animation(DOOR_OPENING_ANIMATION)
-	set_opacity(0)
+	set_opacity(FALSE)
 	var/passable_delay = animation_segment_delay(DOOR_OPENING_PASSABLE)
 	SLEEP_NOT_DEL(passable_delay)
 	set_density(FALSE)
@@ -517,10 +596,9 @@
 	SLEEP_NOT_DEL(open_delay)
 	layer = initial(layer)
 	update_appearance()
-	set_opacity(0)
+	set_opacity(FALSE)
 	operating = FALSE
 	air_update_turf(TRUE, FALSE)
-	update_freelook_sight()
 	if(autoclose)
 		autoclose_in(DOOR_CLOSE_WAIT)
 	return TRUE
@@ -556,10 +634,9 @@
 	SLEEP_NOT_DEL(close_delay)
 	update_appearance()
 	if(visible && !glass)
-		set_opacity(1)
+		set_opacity(TRUE)
 	operating = FALSE
 	air_update_turf(TRUE, TRUE)
-	update_freelook_sight()
 
 	if(!can_crush)
 		return TRUE
@@ -618,10 +695,6 @@
 /obj/machinery/door/proc/hasPower()
 	return !(machine_stat & NOPOWER)
 
-/obj/machinery/door/proc/update_freelook_sight()
-	if(!glass && GLOB.cameranet)
-		GLOB.cameranet.updateVisibility(src, 0)
-
 /obj/machinery/door/block_superconductivity() // All non-glass airlocks block heat, this is intended.
 	if(opacity || heat_proof)
 		return 1
@@ -632,7 +705,13 @@
 
 /obj/machinery/door/morgue/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/redirect_attack_hand_from_turf)
+	AddComponent(/datum/component/redirect_attack_hand_from_turf, interact_check = CALLBACK(src, PROC_REF(drag_check)))
+
+// if dragging, block redirect_Attack_hand_from_turf
+/obj/machinery/door/morgue/proc/drag_check(mob/user)
+	if (user.pulling)
+		return FALSE
+	return TRUE
 
 /obj/machinery/door/get_dumping_location()
 	return null
@@ -706,3 +785,4 @@
 	return ..(0)
 
 #undef DOOR_CLOSE_WAIT
+#undef TRAIT_UNRESTRICTED_AIRLOCK_OPENING

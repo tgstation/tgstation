@@ -28,9 +28,9 @@
 	///If the gun is currently loaded with its maximum capacity.
 	var/fully_loaded_gun = TRUE
 	///delay in firing the gun after lighting
-	var/fire_delay = 5
+	var/fire_delay = 5 DECISECONDS
 	///Delay between shots
-	var/shot_delay = 3
+	var/shot_delay = 3 DECISECONDS
 	///If the gun shakes the camera when firing
 	var/firing_shakes_camera = TRUE
 	///sound of firing for all but last shot
@@ -111,9 +111,10 @@
 	projectile_type = /obj/projectile/bullet/junk
 	loaded_gun = TRUE
 	fully_loaded_gun = TRUE
-	fire_delay = 3
-	shot_delay = 2
+	fire_delay = 3 DECISECONDS
+	shot_delay = 2 DECISECONDS
 	firing_shakes_camera = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 24.5, /datum/material/wood = SHEET_MATERIAL_AMOUNT * 15, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 
 /obj/structure/mounted_gun/pipe/examine_more(mob/user)
 	. = ..()
@@ -174,8 +175,8 @@
 	projectile_type = /obj/projectile/bullet/shrapnel
 	loaded_gun = TRUE
 	fully_loaded_gun = TRUE
-	fire_delay = 3
-	shot_delay = 1
+	fire_delay = 3 DECISECONDS
+	shot_delay = 1 DECISECONDS
 	firing_shakes_camera = FALSE
 
 /obj/item/ammo_casing/canister_shot

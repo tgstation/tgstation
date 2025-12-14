@@ -28,24 +28,23 @@
 	icon_state = "intercom_prison"
 	icon_off = "intercom_prison-p"
 
-/obj/item/radio/intercom/prison/Initialize(mapload, ndir, building)
+/obj/item/radio/intercom/prison/Initialize(mapload)
 	. = ..()
 	wires?.cut(WIRE_TX)
 
-/obj/item/radio/intercom/Initialize(mapload, ndir, building)
+/obj/item/radio/intercom/Initialize(mapload)
 	. = ..()
 	var/area/current_area = get_area(src)
 	if(!current_area)
 		return
 	RegisterSignal(current_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(AreaPowerCheck))
+	if(mapload)
+		find_and_mount_on_atom()
 	GLOB.intercoms_list += src
-	if(!unscrewed)
-		find_and_hang_on_wall(directional = TRUE, \
-			custom_drop_callback = CALLBACK(src, PROC_REF(knock_down)))
 
 /obj/item/radio/intercom/Destroy()
-	. = ..()
 	GLOB.intercoms_list -= src
+	return ..()
 
 /obj/item/radio/intercom/examine(mob/user)
 	. = ..()
@@ -87,7 +86,7 @@
 	if(tool.use_tool(src, user, 80))
 		user.visible_message(span_notice("[user] unsecures [src]!"), span_notice("You detach [src] from the wall."))
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-		knock_down()
+		deconstruct(TRUE)
 
 /**
  * Override attack_tk_grab instead of attack_tk because we actually want attack_tk's
@@ -100,6 +99,9 @@
 
 
 /obj/item/radio/intercom/attack_ai(mob/user)
+	interact(user)
+
+/obj/item/radio/intercom/attack_robot(mob/user)
 	interact(user)
 
 /obj/item/radio/intercom/attack_hand(mob/user, list/modifiers)
@@ -123,7 +125,7 @@
 
 	return TRUE
 
-/obj/item/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
+/obj/item/radio/intercom/Hear(atom/movable/speaker, message_langs, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	if(message_mods[RADIO_EXTENSION] == MODE_INTERCOM)
 		return  // Avoid hearing the same thing twice
 	return ..()
@@ -184,9 +186,8 @@
 /**
  * Called by the wall mount component and reused during the tool deconstruction proc.
  */
-/obj/item/radio/intercom/proc/knock_down()
+/obj/item/radio/intercom/atom_deconstruct(disassembled)
 	new/obj/item/wallframe/intercom(get_turf(src))
-	qdel(src)
 
 //Created through the autolathe or through deconstructing intercoms. Can be applied to wall to make a new intercom on it!
 /obj/item/wallframe/intercom
@@ -196,7 +197,7 @@
 	icon_state = "intercom"
 	result_path = /obj/item/radio/intercom/unscrewed
 	pixel_shift = 26
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.75, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.25)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 
@@ -206,7 +207,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 	anonymize = TRUE
 	freqlock = RADIO_FREQENCY_EMAGGABLE_LOCK
 
-/obj/item/radio/intercom/chapel/Initialize(mapload, ndir, building)
+/obj/item/radio/intercom/chapel/Initialize(mapload)
 	. = ..()
 	set_frequency(1481)
 	set_broadcasting(TRUE)
@@ -230,8 +231,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 	desc = "A custom-made Syndicate-issue intercom used to transmit on all Nanotrasen frequencies. Particularly expensive."
 	freerange = TRUE
 
+/obj/item/radio/intercom/mi13
+	name = "intercom"
+	desc = "Talk through this to talk to whoever is in this facility with you."
+	freerange = TRUE
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 27)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 27)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, 27)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/syndicate, 27)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/syndicate/freerange, 27)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/mi13, 27)

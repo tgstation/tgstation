@@ -34,16 +34,13 @@
 	COOLDOWN_DECLARE(tantrum_time)
 	//length of aggro state
 	var/tantrum_time_duration = 3.5 SECONDS
-	var/list/remains = list(/obj/effect/gibspawner/robot)
 
 /mob/living/basic/mad_piano/Initialize(mapload)
 	. = ..()
-	if(length(remains))
-		remains = string_list(remains)
-		AddElement(/datum/element/death_drops, remains)
 	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(aggro_tantrum))
 	AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = 1, works_in_containers = FALSE)
 	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
+	AddElement(/datum/element/death_drops, /obj/effect/gibspawner/robot)
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_PACIFISM, TRAIT_GENERIC)
 	name_calm = name

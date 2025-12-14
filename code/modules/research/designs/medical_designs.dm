@@ -188,18 +188,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
-/datum/design/defibrillator
-	name = "Defibrillator"
-	desc = "A portable defibrillator, used for resuscitating recently deceased crew."
-	id = "defibrillator"
-	build_type = PROTOLATHE | AWAY_LATHE
-	build_path = /obj/item/defibrillator
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*4, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
-	category = list(
-		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-
 /datum/design/defibrillator_mount
 	name = "Defibrillator Wall Mount"
 	desc = "A mounted frame for holding defibrillators, providing easy security."
@@ -221,18 +209,6 @@
 	build_path = /obj/item/wallframe/defib_mount/charging
 	category = list(
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-
-/datum/design/defibrillator_compact
-	name = "Compact Defibrillator"
-	desc = "A compact defibrillator that can be worn on a belt."
-	id = "defibrillator_compact"
-	build_type = PROTOLATHE | AWAY_LATHE
-	build_path = /obj/item/defibrillator/compact
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6, /datum/material/glass = SHEET_MATERIAL_AMOUNT*4, /datum/material/silver = SHEET_MATERIAL_AMOUNT*3, /datum/material/gold =SHEET_MATERIAL_AMOUNT * 1.5)
-	category = list(
-		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -1043,6 +1019,23 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/cybernetic_ears_volume
+	name = "Volume-adjusting Cybernetic Ears"
+	desc = "A pair of volume-adjusting cybernetic ears"
+	id = "cybernetic_ears_volume"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 4 SECONDS
+	materials = list(
+			/datum/material/iron = SMALL_MATERIAL_AMOUNT*5,
+			/datum/material/glass = SMALL_MATERIAL_AMOUNT*5,
+			/datum/material/silver = SMALL_MATERIAL_AMOUNT*5,
+	)
+	build_path = /obj/item/organ/ears/cybernetic/volume
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_3
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /datum/design/cybernetic_ears_xray
 	name = "Wall-penetrating Cybernetic Ears"
 	desc = "A pair of wall-penetrating cybernetic ears."
@@ -1059,6 +1052,36 @@
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_3
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/cybernetic_ears/cat
+	name = "Basic Cybernetic Cat Ears"
+	desc = "A basic pair of cybernetic cat ears"
+	id = "cybernetic_ears_cat"
+	build_path = /obj/item/organ/ears/cat/cybernetic
+
+/datum/design/cybernetic_ears_u/cat
+	name = "Cybernetic Cat Ears"
+	desc = "A pair of cybernetic cat ears"
+	id = "cybernetic_ears_u_cat"
+	build_path = /obj/item/organ/ears/cat/cybernetic/upgraded
+
+/datum/design/cybernetic_ears_whisper/cat
+	name = "Whisper-sensitive Cybernetic Cat Ears"
+	desc = "A pair of whisper-sensitive cybernetic cat ears"
+	id = "cybernetic_ears_whisper_cat"
+	build_path = /obj/item/organ/ears/cat/cybernetic/whisper
+
+/datum/design/cybernetic_ears_volume/cat
+	name = "Volume-adjusting Cybernetic Cat Ears"
+	desc = "A pair of volume-adjusting cybernetic cat ears"
+	id = "cybernetic_ears_volume_cat"
+	build_path = /obj/item/organ/ears/cat/cybernetic/volume
+
+/datum/design/cybernetic_ears_xray/cat
+	name = "Wall-penetrating Cybernetic Cat Ears"
+	desc = "A pair of wall-penetrating cybernetic cat ears"
+	id = "cybernetic_ears_xray_cat"
+	build_path = /obj/item/organ/ears/cat/cybernetic/xray
 
 /datum/design/cybernetic_eyes
 	name = "Basic Cybernetic Eyes"

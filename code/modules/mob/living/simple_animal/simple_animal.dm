@@ -215,7 +215,7 @@
 /mob/living/simple_animal/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(staminaloss > 0)
-		adjustStaminaLoss(-stamina_recovery * seconds_per_tick, FALSE, TRUE)
+		adjust_stamina_loss(-stamina_recovery * seconds_per_tick, FALSE, TRUE)
 
 /mob/living/simple_animal/Destroy()
 	QDEL_NULL(access_card)
@@ -361,17 +361,18 @@
 	. += "Health: [round((health / maxHealth) * 100)]%"
 	. += "Combat Mode: [combat_mode ? "On" : "Off"]"
 
-/mob/living/simple_animal/proc/drop_loot()
+/mob/living/simple_animal/proc/drop_loot(drop_loc)
 	if (!length(loot))
 		return
 	for(var/i in loot)
-		new i(drop_location())
+		new i(drop_loc)
 	loot.Cut()
 
 /mob/living/simple_animal/death(gibbed)
-	drop_loot()
+	var/drop_loc = drop_location()
 	if(del_on_death)
 		..()
+		drop_loot(drop_loc)
 		//Prevent infinite loops if the mob Destroy() is overridden in such
 		//a manner as to cause a call to death() again //Pain
 		del_on_death = FALSE
@@ -383,7 +384,8 @@
 	if(flip_on_death)
 		transform = transform.Turn(180)
 	ADD_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
-	return ..()
+	. = ..()
+	drop_loot(drop_loc)
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(!isatom(the_target)) // no

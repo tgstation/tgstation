@@ -244,7 +244,7 @@
 		to_chat(owner, span_userdanger("You feel an explosion erupt inside your [parse_zone(zone)] as your implant breaks!"))
 		owner.adjust_fire_stacks(20)
 		owner.ignite_mob()
-		owner.adjustFireLoss(25)
+		owner.adjust_fire_loss(25)
 		organ_flags |= ORGAN_FAILING
 
 /obj/item/organ/cyberimp/arm/toolkit/gun/laser
@@ -287,14 +287,14 @@
 		/obj/item/taperecorder,
 		/obj/item/lighter,
 		/obj/item/laser_pointer,
-		/obj/item/stamp,
+		/obj/item/stamp/granted,
 		/obj/item/stamp/denied,
 	)
 
 /obj/item/organ/cyberimp/arm/toolkit/paperwork/emag_act(mob/user, obj/item/card/emag/emag_card)
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_tool = created_item.resolve()
-		if(istype(/obj/item/stamp/chameleon, potential_tool))
+		if(istype(potential_tool, /obj/item/stamp/chameleon))
 			return FALSE
 
 	balloon_alert(user, "experimental stamp unlocked")
@@ -304,7 +304,7 @@
 /obj/item/organ/cyberimp/arm/toolkit/toolset/emag_act(mob/user, obj/item/card/emag/emag_card)
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_knife = created_item.resolve()
-		if(istype(/obj/item/knife/combat/cyborg, potential_knife))
+		if(istype(potential_knife, /obj/item/knife/combat/cyborg))
 			return FALSE
 
 	balloon_alert(user, "integrated knife unlocked")
@@ -438,25 +438,31 @@
 	)
 	aug_overlay = "strongarm"
 
-	///The amount of damage the implant adds to our unarmed attacks.
-	var/punch_damage = 5
-	///Biotypes we apply an additional amount of damage too
-	var/biotype_bonus_targets = MOB_BEAST | MOB_SPECIAL | MOB_MINING
-	///Extra damage dealt to our targeted mobs
+	/// The amount of damage the implant adds to the lower punching force of our arm.
+	var/lower_punch_damage = 0
+	/// The amount of damage the implant adds to the upper punching force of our arm.
+	var/upper_punch_damage = 2
+	/// The amount of punch effectiveness (AKA accuracy and crit potential) the implant adds to our arm
+	var/punch_effectiveness_added = 10
+	/// How much extra damage does our implant allow the implanted while grabbing someone and they are unable to break the grapple?
+	var/bonus_grab_damage = 20
+	/// Biotypes we apply an additional amount of damage too
+	var/biotype_bonus_targets = MOB_SPECIAL | MOB_MINING
+	/// Extra damage dealt to our targeted mobs
 	var/biotype_bonus_damage = 20
-	///IF true, the throw attack will not smash people into walls
+	/// IF true, the throw attack will not smash people into walls
 	var/non_harmful_throw = TRUE
-	///How far away your attack will throw your oponent
+	/// How far away your attack will throw your oponent
 	var/attack_throw_range = 1
-	///Minimum throw power of the attack
+	/// Minimum throw power of the attack
 	var/throw_power_min = 1
-	///Maximum throw power of the attack
+	/// Maximum throw power of the attack
 	var/throw_power_max = 4
-	///How long will the implant malfunction if it is EMP'd
+	/// How long will the implant malfunction if it is EMP'd
 	var/emp_base_duration = 9 SECONDS
-	///How long before we get another slam punch; consider that these usually come in pairs of two
+	/// How long before we get another slam punch against a human; consider that these usually come in pairs
 	var/slam_cooldown_duration = 5 SECONDS
-	///Tracks how soon we can perform another slam attack
+	/// Tracks how soon we can perform another slam attack
 	COOLDOWN_DECLARE(slam_cooldown)
 
 /obj/item/organ/cyberimp/arm/strongarm/Initialize(mapload)
@@ -471,6 +477,20 @@
 /obj/item/organ/cyberimp/arm/strongarm/on_mob_remove(mob/living/carbon/arm_owner)
 	. = ..()
 	UnregisterSignal(arm_owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
+
+/obj/item/organ/cyberimp/arm/strongarm/on_bodypart_insert(obj/item/bodypart/arm)
+	. = ..()
+	arm.unarmed_damage_low += lower_punch_damage
+	arm.unarmed_damage_high += upper_punch_damage
+	arm.unarmed_effectiveness += punch_effectiveness_added
+	arm.unarmed_grab_damage_bonus += bonus_grab_damage
+
+/obj/item/organ/cyberimp/arm/strongarm/on_bodypart_remove(obj/item/bodypart/arm)
+	. = ..()
+	arm.unarmed_damage_low += lower_punch_damage
+	arm.unarmed_damage_high += upper_punch_damage
+	arm.unarmed_effectiveness += punch_effectiveness_added
+	arm.unarmed_grab_damage_bonus += bonus_grab_damage
 
 /obj/item/organ/cyberimp/arm/strongarm/emp_act(severity)
 	. = ..()
@@ -495,13 +515,12 @@
 		return NONE
 	if(HAS_TRAIT(source, TRAIT_HULK)) //NO HULK
 		return NONE
-	if(!COOLDOWN_FINISHED(src, slam_cooldown))
+	if(!COOLDOWN_FINISHED(src, slam_cooldown) && ishuman(target))
 		return NONE
 	if(!source.can_unarmed_attack())
 		return COMPONENT_SKIP_ATTACK
 
 	var/mob/living/living_target = target
-	source.changeNext_move(CLICK_CD_MELEE)
 	var/picked_hit_type = pick("punch", "smash", "pummel", "bash", "slam")
 
 	if(organ_flags & ORGAN_FAILING)
@@ -514,22 +533,28 @@
 			source.Paralyze(1 SECONDS)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(ishuman(target))
-		var/mob/living/carbon/human/human_target = target
-		if(human_target.check_block(source, punch_damage, "[source]'s' [picked_hit_type]"))
-			source.do_attack_animation(target)
-			playsound(living_target.loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
-			log_combat(source, target, "attempted to [picked_hit_type]", "muscle implant")
-			return COMPONENT_CANCEL_ATTACK_CHAIN
-
 	var/ground_bounce = FALSE // funny flavor. if you hit someone who's floored you slam them into the ground, breaking tiles
 	var/turf/target_turf = get_turf(living_target)
 
+	/* Damage calculations operate on the same math used in /datum/species/proc/harm():
+	* Unarmed damage is randomized between an upper and lower value.
+	* The lower value is determined by taking the damage value from the limb, and then increasing that value based on athletics level (min upper value)
+	* The upper value is determiend by taking the damage value from the limb, and then seeing if we have the strength trait, providing extra damage.
+	* The end result is that the more investment into athletics, the more precise the damage is, without necessarily increasing the potential damage.
+	*/
+
+	// Our attacking limb
 	var/obj/item/bodypart/attacking_bodypart = hand
-	var/potential_damage = punch_damage
+	// The upper damage, calculated first as it will be used to cap our potential lower damage.
+	var/potential_upper_damage = attacking_bodypart.unarmed_damage_high + (HAS_TRAIT(source, TRAIT_STRENGTH) ? 2 : 0)
+	// The lower damage, which is capped by potential_upper_damage
+	var/potential_lower_damage = min(attacking_bodypart.unarmed_damage_low + (source.mind?.get_skill_level(/datum/skill/athletics) || 0), potential_upper_damage)
+	// Finally, we determine the actual damage roll.
+	var/potential_damage = rand(potential_lower_damage, potential_upper_damage)
+	// This value is used to determine armour penetration.
 	var/potential_effectiveness = attacking_bodypart.unarmed_effectiveness
+	// This is a damage and penetration multiplier if our target is grabbed when we deliver our punch.
 	var/potential_pummel_bonus = attacking_bodypart.unarmed_pummeling_bonus
-	potential_damage += rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
 
 	if(living_target.pulledby && living_target.pulledby.grab_state >= GRAB_AGGRESSIVE) // get pummeled idiot
 		potential_damage *= potential_pummel_bonus
@@ -541,21 +566,18 @@
 	if(biotype_bonus_targets && is_correct_biotype) //If we are punching one of our special biotype targets, increase the damage floor by a factor of two.
 		potential_damage += biotype_bonus_damage
 
+	if(ishuman(target))
+		var/mob/living/carbon/human/human_target = target
+		if(human_target.check_block(source, potential_damage, "[source]'s' [picked_hit_type]"))
+			source.do_attack_animation(target)
+			playsound(living_target.loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
+			log_combat(source, target, "attempted to [picked_hit_type]", "muscle implant")
+			return COMPONENT_CANCEL_ATTACK_CHAIN
+
 	source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 	playsound(living_target.loc, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 
-	var/target_zone = living_target.get_random_valid_zone(source.zone_selected)
-	var/armor_block = living_target.run_armor_check(target_zone, MELEE, armour_penetration = potential_effectiveness)
-	living_target.apply_damage(potential_damage * 2, attacking_bodypart.attack_type, target_zone, armor_block)
-
-	if(source.body_position != LYING_DOWN) //Throw them if we are standing
-		var/atom/throw_target = get_edge_target_turf(living_target, source.dir)
-		living_target.throw_at(throw_target, attack_throw_range, rand(throw_power_min,throw_power_max), source, gentle = non_harmful_throw)
-		if(ground_bounce)
-			if(isfloorturf(target_turf))
-				var/turf/open/floor/crunched = target_turf
-				crunched.crush() // crunch
-
+	// Some mobs gib when killed, so we're logging early. At this point, we're definitely hitting, so...
 	living_target.visible_message(
 		span_danger("[source] [picked_hit_type]ed [living_target][ground_bounce ? " into [target_turf]" : ""]!"),
 		span_userdanger("You're [picked_hit_type]ed by [source][ground_bounce ? " into [target_turf]" : ""]!"),
@@ -568,7 +590,24 @@
 
 	log_combat(source, target, "[picked_hit_type]ed", "muscle implant")
 
-	COOLDOWN_START(src, slam_cooldown, slam_cooldown_duration)
+	if(ishuman(target))
+		COOLDOWN_START(src, slam_cooldown, slam_cooldown_duration)
+
+	var/target_zone = living_target.get_random_valid_zone(source.zone_selected)
+	var/armor_block = living_target.run_armor_check(target_zone, MELEE, armour_penetration = potential_effectiveness)
+	living_target.apply_damage(potential_damage * 2, attacking_bodypart.attack_type, target_zone, armor_block)
+
+	if(source.body_position != LYING_DOWN && !QDELETED(living_target)) //Throw them if we are standing and we didn't somehow just completely obliterate the target
+		var/atom/throw_target = get_edge_target_turf(living_target, source.dir)
+		living_target.throw_at(throw_target, attack_throw_range, rand(throw_power_min,throw_power_max), source, gentle = non_harmful_throw)
+		if(ground_bounce)
+			if(isfloorturf(target_turf))
+				var/turf/open/floor/crunched = target_turf
+				crunched.crush() // crunch
+	else if (ground_bounce) // Just in case our target mob somehow evaporated during this process, we still leave an obliterated tile in their wake
+		if(isfloorturf(target_turf))
+			var/turf/open/floor/crunched = target_turf
+			crunched.crush() // again, crunch
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

@@ -81,14 +81,19 @@
 	return real_name
 
 /mob/living/carbon/human/get_face_name(if_no_face = "Unknown")
-	if(HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
-		return if_no_face //We're Unknown, no face information for you
-	if(obscured_slots & HIDEFACE)
-		return if_no_face
-	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
-	if(isnull(head) || !real_name || HAS_TRAIT(src, TRAIT_DISFIGURED) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
+	if(!real_name || is_face_obscured())
 		return if_no_face
 	return real_name
+
+/mob/living/carbon/human/proc/is_face_obscured()
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
+		return TRUE //We're Unknown, no face information for you
+	if(obscured_slots & HIDEFACE)
+		return TRUE
+	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
+	if(isnull(head) || HAS_TRAIT(src, TRAIT_DISFIGURED) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
+		return TRUE
+	return FALSE
 
 /**
  * Gets whatever name is in our ID or PDA
@@ -280,6 +285,7 @@
 	mob_height = dna?.species?.update_species_heights(src) || base_mob_height
 	if(old_height != mob_height)
 		regenerate_icons()
+	SEND_SIGNAL(src, COMSIG_HUMAN_HEIGHT_UPDATED, old_height)
 
 /**
  * Makes a full copy of src and returns it.
@@ -305,6 +311,9 @@
 
 	for(var/datum/quirk/original_quircks as anything in quirks)
 		clone.add_quirk(original_quircks.type, override_client = client, announce = FALSE)
+
+	for(var/personality_type in personalities)
+		clone.add_personality(personality_type)
 
 	clone.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 

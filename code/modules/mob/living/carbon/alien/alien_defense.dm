@@ -1,9 +1,9 @@
 
 /mob/living/carbon/alien/get_eye_protection()
-	return ..() + 2 //potential cyber implants + natural eye protection
+	return ..() + FLASH_PROTECTION_WELDER //potential cyber implants + natural eye protection
 
-/mob/living/carbon/alien/get_ear_protection()
-	return 2 //no ears
+/mob/living/carbon/alien/get_ear_protection(ignore_deafness = FALSE)
+	return ..() + EAR_PROTECTION_HEAVY //no ears
 
 /mob/living/carbon/alien/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	..(AM, skipcatch = TRUE, hitpush = FALSE)
@@ -31,7 +31,7 @@ In all, this is a lot like the monkey code. /N
 		visible_message(span_danger("[user.name] bites [src]!"), \
 						span_userdanger("[user.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You bite [src]!"))
-		adjustBruteLoss(1)
+		adjust_brute_loss(1)
 		log_combat(user, src, "attacked")
 	else
 		to_chat(user, span_warning("[name] is too injured for that."))
@@ -71,28 +71,21 @@ In all, this is a lot like the monkey code. /N
 	if(!. || QDELETED(src))
 		return FALSE
 
-	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			gib(DROP_ALL_REMAINS)
 
 		if (EXPLODE_HEAVY)
 			take_overall_damage(60, 60)
-			if(ears)
-				ears.adjustEarDamage(30,120)
+			sound_damage(30, 240 SECONDS)
 
 		if(EXPLODE_LIGHT)
 			take_overall_damage(30,0)
 			if(prob(50))
 				Unconscious(20)
-			if(ears)
-				ears.adjustEarDamage(15,60)
+			sound_damage(15, 120 SECONDS)
 
 	return TRUE
-
-
-/mob/living/carbon/alien/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
-	return 0
 
 /mob/living/carbon/alien/acid_act(acidpwr, acid_volume)
 	return FALSE//aliens are immune to acid.

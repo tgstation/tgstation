@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 	inhand_icon_state = "sheet-runed"
 	icon = 'icons/obj/stack_objects.dmi'
 	mats_per_unit = list(/datum/material/runedmetal = SHEET_MATERIAL_AMOUNT)
-	sheettype = "runed"
+	construction_path_type = "runed"
 	merge_type = /obj/item/stack/sheet/runed_metal
 	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/blood = 15)
 	material_type = /datum/material/runedmetal

@@ -33,13 +33,17 @@
 	QDEL_NULL(core)
 	return ..()
 
+/obj/item/organ/heart/cybernetic/anomalock/examine(mob/user)
+	. = ..()
+	. += span_info("The voltaic boost will avoid healing toxin damage at all in slime-based humanoids, to prevent harmful side effects.")
+
 /obj/item/organ/heart/cybernetic/anomalock/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	if(!core)
 		return
 	add_lightning_overlay(30 SECONDS)
 	playsound(organ_owner, 'sound/items/eshield_recharge.ogg', 40)
-	organ_owner.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
+	organ_owner.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS|EMP_NO_EXAMINE)
 	RegisterSignal(organ_owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(activate_survival))
 	RegisterSignal(organ_owner, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 
@@ -48,7 +52,7 @@
 	if(!core)
 		return
 	UnregisterSignal(organ_owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION))
-	organ_owner.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
+	organ_owner.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS|EMP_NO_EXAMINE)
 	tesla_zap(source = organ_owner, zap_range = 20, power = 2.5e5, cutoff = 1e3)
 	qdel(src)
 
@@ -98,8 +102,7 @@
 	if(!core)
 		return
 
-	if(owner.blood_volume <= BLOOD_VOLUME_NORMAL)
-		owner.blood_volume += 5 * seconds_per_tick
+	owner.adjust_blood_volume(5 * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
 
 	if(owner.health <= owner.crit_threshold)
 		activate_survival(owner)
@@ -108,7 +111,7 @@
 		return
 
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/power_store/cell in owner.get_all_contents())
+	for(var/obj/item/stock_parts/power_store/cell in assoc_to_values(owner.get_all_cells()))
 		if(cell.used_charge())
 			batteries += cell
 
@@ -175,6 +178,7 @@
 /obj/item/organ/heart/cybernetic/anomalock/prebuilt/Initialize(mapload)
 	. = ..()
 	core = new /obj/item/assembly/signaler/anomaly/flux(src)
+	add_organ_trait(TRAIT_SHOCKIMMUNE)
 	update_icon_state()
 
 /datum/status_effect/voltaic_overdrive
@@ -182,14 +186,19 @@
 	duration = 30 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/anomalock_active
 	show_duration = TRUE
+	processing_speed = STATUS_EFFECT_PRIORITY
 
 /datum/status_effect/voltaic_overdrive/tick(seconds_between_ticks)
 	. = ..()
-
-	if(owner.health <= owner.crit_threshold)
-		owner.heal_overall_damage(5, 5)
-		owner.adjustOxyLoss(-5)
-		owner.adjustToxLoss(-5)
+	if(owner.health > owner.crit_threshold)
+		return
+	var/needs_update = FALSE
+	needs_update += owner.heal_overall_damage(brute = 5, burn = 5, updating_health = FALSE)
+	needs_update += owner.adjust_oxy_loss(-5, updating_health = FALSE)
+	if(!HAS_TRAIT(owner, TRAIT_TOXINLOVER))
+		needs_update += owner.adjust_tox_loss(-5, updating_health = FALSE)
+	if(needs_update)
+		owner.updatehealth()
 
 /datum/status_effect/voltaic_overdrive/on_apply()
 	. = ..()
@@ -209,7 +218,8 @@
 
 /atom/movable/screen/alert/status_effect/anomalock_active
 	name = "voltaic overdrive"
-	icon_state = "anomalock_heart"
+	use_user_hud_icon = TRUE
+	overlay_state = "anomalock_heart"
 	desc = "Voltaic energy is flooding your muscles, keeping your body upright. You have 30 seconds before it falters!"
 
 /obj/item/organ/heart/cybernetic/anomalock/hear_beat_noise(mob/living/hearer)

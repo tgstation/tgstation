@@ -16,6 +16,7 @@
 	blacklist = list(/obj/item/grown/log/steel)
 	result = /obj/structure/bonfire
 	category = CAT_TOOLS
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY
 
 /datum/crafting_recipe/boneshovel
 	name = "Serrated Bone Shovel"
@@ -115,6 +116,18 @@
 		/obj/item/universal_scanner = 1,
 		/obj/item/encryptionkey = 1,
 		/obj/item/stack/cable_coil = 5,
+	)
+	category = CAT_TOOLS
+
+/datum/crafting_recipe/jaws_of_recovery
+	name = "Modified Jaws of Recovery"
+	desc = "This one acts like regular jaws of life, letting you pry any door and doesn't announce doors you're prying open."
+	time = 10 SECONDS
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	result = /obj/item/crowbar/power/paramedic/silent
+	reqs = list(
+		/obj/item/crowbar/power = 1,
+		/obj/item/bonesetter = 1,
 	)
 	category = CAT_TOOLS
 

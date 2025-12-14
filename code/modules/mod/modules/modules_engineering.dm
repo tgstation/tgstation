@@ -26,16 +26,35 @@
 		head_cover.flash_protect = initial(head_cover.flash_protect)
 
 /obj/item/mod/module/welding/syndicate
+	name = "MODsuit flash-protected optical suite"
 	complexity = 0
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/welding, /obj/item/mod/module/welding/syndicate, /obj/item/mod/module/stealth/wraith)
-	overlay_state_inactive = "module_armorbooster_on"
+	overlay_state_inactive = "module_armorbooster_off"
 	use_mod_colors = TRUE
 	mask_worn_overlay = TRUE
 
 /obj/item/mod/module/welding/syndicate/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
-	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
+	if(!mod.wearer || !mod.wearer.combat_mode)
+		overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
+	else
+		overlay_state_inactive = "module_armorbooster_on-[mod.skin]"
 	return ..()
+
+
+/obj/item/mod/module/welding/syndicate/on_part_activation()
+	. = ..()
+	RegisterSignal(mod.wearer, COMSIG_COMBAT_MODE_TOGGLED, PROC_REF(on_combat_mode_toggle))
+
+/obj/item/mod/module/welding/syndicate/on_part_deactivation(deleting = FALSE)
+	. = ..()
+	UnregisterSignal(mod.wearer, COMSIG_COMBAT_MODE_TOGGLED)
+
+/// Changes which overlay state we're using depending on combat mode status.
+/obj/item/mod/module/welding/syndicate/proc/on_combat_mode_toggle(mob/living/carbon/human/toggler)
+	SIGNAL_HANDLER
+	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	update_clothing_slots()
 
 ///T-Ray Scan - Scans the terrain for undertile objects.
 /obj/item/mod/module/t_ray
@@ -237,6 +256,7 @@
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	max_integrity = 60
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.15, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
 	/// MODsuit tether module that created our projectile
 	var/obj/item/mod/module/tether/parent_module
 	/// Should we reset our pixel positions next time we move?
@@ -266,7 +286,7 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/tether_anchor/attack_hand_secondary(mob/user, list/modifiers)
-	if (!can_interact(user) || !user.CanReach(src) || !isturf(loc))
+	if (!can_interact(user) || !IsReachableBy(user) || !isturf(loc))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(HAS_TRAIT_FROM(user, TRAIT_TETHER_ATTACHED, REF(src)))
@@ -289,10 +309,10 @@
 		reset_pixel_pos = FALSE
 
 /obj/item/tether_anchor/mouse_drop_receive(atom/target, mob/user, params)
-	if (!can_interact(user) || !user.CanReach(src) || !isturf(loc))
+	if (!can_interact(user) || !IsReachableBy(user) || !isturf(loc))
 		return
 
-	if (!isliving(target) || !target.CanReach(src))
+	if (!isliving(target) || !IsReachableBy(target))
 		return
 
 	if(HAS_TRAIT_FROM(target, TRAIT_TETHER_ATTACHED, REF(src)))
@@ -378,7 +398,7 @@
 	.["is_user_irradiated"] = mod.wearer ? HAS_TRAIT(mod.wearer, TRAIT_IRRADIATED) : FALSE
 	.["background_radiation_level"] = perceived_threat_level
 	.["health_max"] = mod.wearer?.getMaxHealth() || 0
-	.["loss_tox"] = mod.wearer?.getToxLoss() || 0
+	.["loss_tox"] = mod.wearer?.get_tox_loss() || 0
 
 /obj/item/mod/module/rad_protection/proc/on_pre_potential_irradiation(datum/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)
 	SIGNAL_HANDLER

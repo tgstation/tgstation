@@ -6,6 +6,7 @@
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.05, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.05)
 	/// MOD unit we are powering.
 	var/obj/item/mod/control/mod
 
@@ -301,6 +302,7 @@
 		liquid electricity, this core makes it much more efficient, running all soft, hard, and wetware with several \
 		times less energy usage."
 	/// A modifier to all charge we use, ethereals don't need to spend as much energy as normal suits.
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.15, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.05)
 	var/charge_modifier = 0.1
 
 /obj/item/mod/core/ethereal/charge_source()
@@ -466,6 +468,7 @@
 
 /obj/item/mod/core/plasma/lavaland/Destroy()
 	QDEL_NULL(particle_effect)
+	QDEL_NULL(mob_spawner)
 	return ..()
 
 /obj/item/mod/core/plasma/lavaland/install(obj/item/mod/control/mod_unit)
@@ -480,17 +483,22 @@
 	SIGNAL_HANDLER
 	if(mod.active)
 		particle_effect = new(mod.wearer, /particles/pollen, PARTICLE_ATTACH_MOB)
-		mob_spawner = mod.wearer.AddComponent(/datum/component/spawner, spawn_types=list(spawned_mob_type), spawn_time=5 SECONDS, max_spawned=3, faction=mod.wearer.faction)
+		mob_spawner = mod.wearer.AddComponent(/datum/component/spawner, \
+			spawn_types = list(spawned_mob_type), \
+			spawn_time = 5 SECONDS, \
+			max_spawned = 3, \
+			faction = mod.wearer.faction, \
+		)
 		RegisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED, PROC_REF(new_mob))
 		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(spread_flowers))
+		return
 
-	else
-		QDEL_NULL(particle_effect)
-		UnregisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED)
-		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
-		for(var/datum/mob in mob_spawner.spawned_things)
-			qdel(mob)
-		qdel(mob_spawner)
+	QDEL_NULL(particle_effect)
+	UnregisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED)
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	for(var/datum/mob in mob_spawner.spawned_things)
+		qdel(mob)
+	QDEL_NULL(mob_spawner)
 
 /obj/item/mod/core/plasma/lavaland/proc/new_mob(spawner, mob/living/basic/butterfly/lavaland/temporary/spawned)
 	SIGNAL_HANDLER
@@ -499,6 +507,9 @@
 
 /obj/item/mod/core/plasma/lavaland/proc/spread_flowers(atom/source, atom/oldloc, dir, forced)
 	SIGNAL_HANDLER
+	if (!isturf(oldloc))
+		return
+
 	var/static/list/possible_flower_types = list(
 		/obj/structure/flora/bush/lavendergrass/style_random,
 		/obj/structure/flora/bush/flowers_yw/style_random,
@@ -506,7 +517,7 @@
 		/obj/structure/flora/bush/flowers_pp/style_random,
 	)
 	var/chosen_type = pick(possible_flower_types)
-	var/flower_boots = new chosen_type(get_turf(mod.wearer))
+	var/flower_boots = new chosen_type(oldloc)
 	animate(flower_boots, alpha = 0, 1 SECONDS)
 	QDEL_IN(flower_boots, 1 SECONDS)
 

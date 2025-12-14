@@ -69,6 +69,8 @@
 		update_appearance()
 	init_payment()
 	register_context()
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/machinery/wall_healer/Destroy()
 	clear_using_mob()
@@ -485,10 +487,10 @@
 		add_mob_blood(current_user)
 		return
 
-	var/brute_healing_now = round(min(initial(brute_healing) * 0.1, brute_healing, current_user.getBruteLoss()), DAMAGE_PRECISION)
-	var/burn_healing_now = round(min(initial(burn_healing) * 0.1, burn_healing, current_user.getFireLoss()), DAMAGE_PRECISION)
-	var/tox_healing_now = round(min(initial(tox_healing) * 0.1, tox_healing, current_user.getToxLoss()), DAMAGE_PRECISION)
-	var/blood_healing_now = HAS_TRAIT(current_user, TRAIT_NOBLOOD) ? 0 : round(min(initial(blood_healing) * 0.1, blood_healing, max(BLOOD_VOLUME_OKAY - current_user.blood_volume, 0)), 0.1)
+	var/brute_healing_now = round(min(initial(brute_healing) * 0.1, brute_healing, current_user.get_brute_loss()), DAMAGE_PRECISION)
+	var/burn_healing_now = round(min(initial(burn_healing) * 0.1, burn_healing, current_user.get_fire_loss()), DAMAGE_PRECISION)
+	var/tox_healing_now = round(min(initial(tox_healing) * 0.1, tox_healing, current_user.get_tox_loss()), DAMAGE_PRECISION)
+	var/blood_healing_now = round(min(initial(blood_healing) * 0.1, blood_healing, max(0, BLOOD_VOLUME_OKAY - current_user.get_blood_volume())), 0.1)
 
 	var/cost = round(per_heal_cost * (brute_healing_now + burn_healing_now + tox_healing_now + blood_healing_now), 1)
 	if(attempt_charge(src, current_user, extra_fees = cost) & COMPONENT_OBJ_CANCEL_CHARGE)
@@ -500,18 +502,17 @@
 
 	var/amount_healed = 0
 	if(brute_healing_now)
-		amount_healed += current_user.adjustBruteLoss(-brute_healing_now, required_bodytype = BODYTYPE_ORGANIC)
+		amount_healed += current_user.adjust_brute_loss(-brute_healing_now, required_bodytype = BODYTYPE_ORGANIC)
 		brute_healing -= brute_healing_now
 		add_mob_blood(current_user)
 	if(burn_healing_now)
-		amount_healed += current_user.adjustFireLoss(-burn_healing_now, required_bodytype = BODYTYPE_ORGANIC)
+		amount_healed += current_user.adjust_fire_loss(-burn_healing_now, required_bodytype = BODYTYPE_ORGANIC)
 		burn_healing -= burn_healing_now
 	if(tox_healing_now)
-		amount_healed += current_user.adjustToxLoss(-tox_healing_now, required_biotype = MOB_ORGANIC)
+		amount_healed += current_user.adjust_tox_loss(-tox_healing_now, required_biotype = MOB_ORGANIC)
 		tox_healing -= tox_healing_now
 	if(blood_healing_now)
-		current_user.blood_volume += blood_healing_now
-		amount_healed += blood_healing_now
+		amount_healed += current_user.adjust_blood_volume(blood_healing_now, maximum = BLOOD_VOLUME_OKAY)
 		blood_healing -= blood_healing_now
 		add_mob_blood(current_user)
 
@@ -526,10 +527,10 @@
 	playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(antispam_counter % 3 != 1)
 		return
-	var/missed_brute_healing = brute_healing_now > 0 && !current_user.getBruteLoss()
-	var/missed_burn_healing = burn_healing_now > 0 && !current_user.getFireLoss()
-	var/missed_tox_healing = tox_healing_now > 0 && !current_user.getToxLoss()
-	var/missed_blood_healing = blood_healing_now > 0 && current_user.blood_volume >= BLOOD_VOLUME_OKAY
+	var/missed_brute_healing = brute_healing_now > 0 && !current_user.get_brute_loss()
+	var/missed_burn_healing = burn_healing_now > 0 && !current_user.get_fire_loss()
+	var/missed_tox_healing = tox_healing_now > 0 && !current_user.get_tox_loss()
+	var/missed_blood_healing = blood_healing_now > 0 && current_user.get_blood_volume() >= BLOOD_VOLUME_OKAY
 	if(missed_brute_healing || missed_burn_healing || missed_tox_healing || missed_blood_healing)
 		to_chat(current_user, span_notice("Nothing happens. Seems like [src] needs to recharge."))
 		return

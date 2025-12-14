@@ -92,7 +92,7 @@ LINEN BINS
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/bedsheet/attack_self(mob/living/user)
-	if(!user.CanReach(src)) //No telekinetic grabbing.
+	if(!IsReachableBy(user)) //No telekinetic grabbing.
 		return
 	if(user.body_position != LYING_DOWN)
 		return
@@ -581,6 +581,7 @@ LINEN BINS
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 	anchored_tabletop_offset = 6
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	/// The number of bedsheets in the bin
 	var/amount = 10
 	/// A list of actual sheets within the bin

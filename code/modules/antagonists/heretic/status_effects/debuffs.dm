@@ -2,6 +2,7 @@
 /datum/status_effect/amok
 	id = "amok"
 	status_type = STATUS_EFFECT_REPLACE
+	remove_on_fullheal = TRUE
 	alert_type = null
 	duration = 10 SECONDS
 	tick_interval = 1 SECONDS
@@ -33,6 +34,7 @@
 /datum/status_effect/cloudstruck
 	id = "cloudstruck"
 	status_type = STATUS_EFFECT_REPLACE
+	remove_on_fullheal = TRUE
 	alert_type = null
 	duration = 3 SECONDS
 	on_remove_on_mob_delete = TRUE
@@ -78,31 +80,32 @@
 			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 		if(30 to 40)
 			// Don't fully kill liver that's important
-			human_owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 10, 90)
+			human_owner.adjust_organ_loss(ORGAN_SLOT_LIVER, 10, 90)
 		if(40 to 50)
 			// Don't fully kill heart that's important
-			human_owner.adjustOrganLoss(ORGAN_SLOT_HEART, 10, 90)
+			human_owner.adjust_organ_loss(ORGAN_SLOT_HEART, 10, 90)
 		if(50 to 60)
 			// You can fully kill the stomach that's not crucial
-			human_owner.adjustOrganLoss(ORGAN_SLOT_STOMACH, 10)
+			human_owner.adjust_organ_loss(ORGAN_SLOT_STOMACH, 10)
 		if(60 to 70)
 			// Same with eyes
-			human_owner.adjustOrganLoss(ORGAN_SLOT_EYES, 5)
+			human_owner.adjust_organ_loss(ORGAN_SLOT_EYES, 5)
 		if(70 to 80)
 			// And same with ears
-			human_owner.adjustOrganLoss(ORGAN_SLOT_EARS, 10)
+			human_owner.adjust_organ_loss(ORGAN_SLOT_EARS, 10)
 		if(80 to 90)
 			// But don't fully kill lungs that's usually important
-			human_owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 10, 90)
+			human_owner.adjust_organ_loss(ORGAN_SLOT_LUNGS, 10, 90)
 		if(90 to 95)
 			// And definitely don't fully kil brains
-			human_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 190)
+			human_owner.adjust_organ_loss(ORGAN_SLOT_BRAIN, 20, 190)
 		if(95 to 100)
 			human_owner.adjust_confusion_up_to(12 SECONDS, 24 SECONDS)
 
 /datum/status_effect/star_mark
 	id = "star_mark"
 	alert_type = /atom/movable/screen/alert/status_effect/star_mark
+	remove_on_fullheal = TRUE
 	duration = 30 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	///overlay used to indicate that someone is marked
@@ -130,7 +133,7 @@
 	return ..()
 
 /datum/status_effect/star_mark/on_apply()
-	if(istype(owner, /mob/living/basic/heretic_summon/star_gazer))
+	if(isstargazer(owner))
 		return FALSE
 	var/mob/living/spell_caster_resolved = spell_caster?.resolve()
 	var/datum/antagonist/heretic_monster/monster = owner.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
@@ -155,34 +158,14 @@
 /datum/status_effect/star_mark/extended
 	duration = 3 MINUTES
 
-// Last Resort
-/datum/status_effect/heretic_lastresort
-	id = "heretic_lastresort"
-	alert_type = /atom/movable/screen/alert/status_effect/heretic_lastresort
-	duration = 12 SECONDS
-	status_type = STATUS_EFFECT_REPLACE
-	tick_interval = STATUS_EFFECT_NO_TICK
-
-/atom/movable/screen/alert/status_effect/heretic_lastresort
-	name = "Last Resort"
-	desc = "Your head spins, heart pumping as fast as it can, losing the fight with the ground. Run to safety!"
-	icon_state = "lastresort"
-
-/datum/status_effect/heretic_lastresort/on_apply()
-	ADD_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
-	to_chat(owner, span_userdanger("You are on the brink of losing consciousness, run!"))
-	return TRUE
-
-/datum/status_effect/heretic_lastresort/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
-	owner.AdjustUnconscious(20 SECONDS, ignore_canstun = TRUE)
-
 /// Used by moon heretics to make people mad
 /datum/status_effect/moon_converted
 	id = "moon converted"
 	alert_type = /atom/movable/screen/alert/status_effect/moon_converted
 	duration = STATUS_EFFECT_PERMANENT
 	status_type = STATUS_EFFECT_REPLACE
+	remove_on_fullheal = TRUE
+	heal_flag_necessary = HEAL_ADMIN
 	///used to track damage
 	var/damage_sustained = 0
 	///overlay used to indicate that someone is marked
@@ -208,12 +191,12 @@
 /datum/status_effect/moon_converted/on_apply()
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
 	// Heals them so people who are in crit can have this affect applied on them and still be of some use for the heretic
-	owner.adjustBruteLoss( -150 + owner.mob_mood.sanity)
-	owner.adjustFireLoss(-150 + owner.mob_mood.sanity)
+	owner.adjust_brute_loss(-150 + owner.mob_mood.sanity)
+	owner.adjust_fire_loss(-150 + owner.mob_mood.sanity)
 
 	to_chat(owner, span_hypnophrase(("THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, SLAY THEM ALL!!!</span>")))
 	owner.balloon_alert(owner, "they lie..THEY ALL LIE!!!")
-	owner.AdjustUnconscious(7 SECONDS, ignore_canstun = FALSE)
+	owner.SetUnconscious(60 SECONDS, ignore_canstun = FALSE)
 	ADD_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
 	owner.update_appearance(UPDATE_OVERLAYS)
@@ -249,6 +232,20 @@
 	owner.update_appearance(UPDATE_OVERLAYS)
 	return ..()
 
+// exists to apply sleep and deny adding duplicates
+/datum/status_effect/moon_slept
+	id = "moon slept"
+	duration = 2 MINUTES
+	status_type = STATUS_EFFECT_UNIQUE
+	remove_on_fullheal = TRUE
+	alert_type = null
+
+/datum/status_effect/moon_slept/on_apply()
+	. = owner.SetUnconscious(duration * 0.5, ignore_canstun = FALSE)
+	if(!.)
+		owner.balloon_alert(owner, "sleep resisted!")
+	to_chat(owner, span_hypnophrase(("THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, w-wait no that's not right</span>")))
+	owner.balloon_alert(owner, "they lie..wait-what are they lying about?")
 
 /atom/movable/screen/alert/status_effect/moon_converted
 	name = "Moon Converted"
@@ -262,6 +259,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/eldritch_painting
 	duration = 10 MINUTES
 	status_type = STATUS_EFFECT_UNIQUE
+	remove_on_fullheal = TRUE
 
 /datum/status_effect/eldritch_painting/on_apply()
 	if(IS_HERETIC_OR_MONSTER(owner))
@@ -389,3 +387,64 @@
 	name = "Climb Over the Rusted Mountain"
 	desc = "Your every footfall erodes the ground beneath you! Everything crumbles away! Maybe if you looked closer at the mountain in that painting, the path might be clearer..."
 	icon_state = "eldritch_painting_rust"
+
+/atom/movable/screen/alert/status_effect/eldritch_parade
+	name = "Lunar Parade"
+	desc = "You MUST ENTER THE LUNAR PARADE! FOLLOW THE LIGHTS! LET THEM GUIDE YOU!"
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
+	icon_state = "lunar_parade"
+
+/datum/status_effect/moon_parade
+	id = "moon_parade"
+	remove_on_fullheal = TRUE
+	alert_type = /atom/movable/screen/alert/status_effect/eldritch_parade
+	duration = 20 SECONDS
+	tick_interval = -1
+	/// The component that leashes us to the parade
+	var/datum/component/leash/leash_component
+	/// what atom we are leashed to
+	var/atom/leashed_to
+	/// how much damage before we release the leash
+	var/damage_release_threshold = 50
+	/// how much damage we have received so far
+	var/damage_received = 0
+
+/datum/status_effect/moon_parade/on_creation(mob/living/new_owner, atom/leashed_by)
+	leashed_to = leashed_by
+	. = ..()
+
+/datum/status_effect/moon_parade/on_apply()
+	if(!istype(leashed_to))
+		return FALSE
+	owner.balloon_alert(owner, "you feel unable to move away from the [leashed_to]!")
+	leash_component = owner.AddComponent(/datum/component/leash, leashed_to, distance = 1)
+	RegisterSignal(leashed_to, COMSIG_QDELETING, PROC_REF(delete_self))
+	RegisterSignal(owner, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(block_move))
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damage_received))
+	return TRUE
+
+/datum/status_effect/moon_parade/on_remove()
+	. = ..()
+	QDEL_NULL(leash_component)
+	UnregisterSignal(owner, list(COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, COMSIG_MOB_APPLY_DAMAGE))
+	if(leashed_to)
+		UnregisterSignal(leashed_to, COMSIG_QDELETING)
+
+/datum/status_effect/moon_parade/proc/delete_self(datum/source)
+	SIGNAL_HANDLER
+	qdel(src)
+
+/datum/status_effect/moon_parade/proc/on_damage_received(mob/attacked, damage_amount, damagetype)
+	SIGNAL_HANDLER
+	if(damagetype == STAMINA)
+		return
+	damage_received += damage_amount
+	if(damage_received >= damage_release_threshold)
+		owner.balloon_alert(owner, "you are free!")
+		qdel(src)
+
+// Blocks movement in order to make it appear like the character is transfixed to the projectile and wandering after it
+// Coded this way because its a simple way to hold the illusion compared to other methods
+/datum/status_effect/moon_parade/proc/block_move(datum/source)
+	SIGNAL_HANDLER
+	return COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE

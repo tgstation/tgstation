@@ -31,6 +31,9 @@
 
 	shell_capacity = SHELL_CAPACITY_SMALL
 	action_slots = ALL
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
@@ -70,7 +73,7 @@
 		apps_to_download += default_programs + pda_programs
 	apps_to_download += starting_programs
 
-	for(var/programs as anything in apps_to_download)
+	for(var/programs in apps_to_download)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
 

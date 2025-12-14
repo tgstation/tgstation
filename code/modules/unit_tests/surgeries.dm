@@ -15,7 +15,7 @@
 /datum/unit_test/brain_surgery/Run()
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
 	patient.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_SURGERY)
-	patient.setOrganLoss(ORGAN_SLOT_BRAIN, 20)
+	patient.set_organ_loss(ORGAN_SLOT_BRAIN, 20)
 
 	TEST_ASSERT(patient.has_trauma_type(), "Patient does not have any traumas, despite being given one")
 
@@ -68,7 +68,7 @@
 	TEST_ASSERT_EQUAL(alice.facial_hair_color, COLOR_LIGHT_BROWN, "Bob's head was transplanted onto Alice's body, but their facial hair color is not COLOR_LIGHT_BROWN")
 
 /datum/unit_test/multiple_surgeries/Run()
-	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent/slow)
 	var/mob/living/carbon/human/patient_zero = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/patient_one = allocate(/mob/living/carbon/human/consistent)
 
@@ -113,11 +113,11 @@
 	// Test that tending wounds actually lowers damage
 	var/datum/surgery_step/heal/brute/basic/basic_brute_heal = new
 	basic_brute_heal.success(user, patient, BODY_ZONE_CHEST)
-	TEST_ASSERT(patient.getBruteLoss() < 100, "Tending brute wounds didn't lower brute damage ([patient.getBruteLoss()])")
+	TEST_ASSERT(patient.get_brute_loss() < 100, "Tending brute wounds didn't lower brute damage ([patient.get_brute_loss()])")
 
 	var/datum/surgery_step/heal/burn/basic/basic_burn_heal = new
 	basic_burn_heal.success(user, patient, BODY_ZONE_CHEST)
-	TEST_ASSERT(patient.getFireLoss() < 100, "Tending burn wounds didn't lower burn damage ([patient.getFireLoss()])")
+	TEST_ASSERT(patient.get_fire_loss() < 100, "Tending burn wounds didn't lower burn damage ([patient.get_fire_loss()])")
 
 	// Test that wearing clothing lowers heal amount
 	var/mob/living/carbon/human/naked_patient = allocate(/mob/living/carbon/human/consistent)
@@ -130,4 +130,26 @@
 	basic_brute_heal.success(user, naked_patient, BODY_ZONE_CHEST)
 	basic_brute_heal.success(user, clothed_patient, BODY_ZONE_CHEST)
 
-	TEST_ASSERT(naked_patient.getBruteLoss() < clothed_patient.getBruteLoss(), "Naked patient did not heal more from wounds tending than a clothed patient")
+	TEST_ASSERT(naked_patient.get_brute_loss() < clothed_patient.get_brute_loss(), "Naked patient did not heal more from wounds tending than a clothed patient")
+
+/// Tests items-as-prosthetic-limbs can apply
+/datum/unit_test/prosthetic_item
+
+/datum/unit_test/prosthetic_item/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/claymore/sword = allocate(/obj/item/claymore)
+
+	patient.make_item_prosthetic(sword)
+
+	TEST_ASSERT(HAS_TRAIT_FROM(sword, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT), "Prosthetic item attachment failed! Item does not have the nodrop trait")
+
+/// Specifically checks the chainsaw nullrod
+/datum/unit_test/prosthetic_item/nullrod
+
+/datum/unit_test/prosthetic_item/nullrod/Run()
+	var/mob/living/carbon/human/picker = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/nullrod/chainsaw/nullrod = allocate(/obj/item/nullrod/chainsaw)
+
+	nullrod.on_selected(null, null, picker)
+
+	TEST_ASSERT(HAS_TRAIT_FROM(nullrod, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT), "Chainsaw nullrod item attachment failed! Item does not have the nodrop trait")

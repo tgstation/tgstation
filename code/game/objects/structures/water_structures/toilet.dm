@@ -6,6 +6,7 @@
 	base_icon_state = "toilet"
 	density = FALSE
 	anchored = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 	/// Boolean if whether the toilet is currently flushing.
 	var/flushing = FALSE
@@ -17,10 +18,6 @@
 	var/w_items = 0
 	/// Reference to the mob being given a swirlie.
 	var/mob/living/swirlie
-	/// The type of material used to build the toilet.
-	var/buildstacktype = /obj/item/stack/sheet/iron
-	/// How much of the buildstacktype is needed to construct the toilet.
-	var/buildstackamount = 1
 	/// Lazylist of items in the cistern.
 	var/list/cistern_items
 	/// Lazylist of fish in the toilet, not to be mixed with the items in the cistern. Max of 3
@@ -119,7 +116,7 @@
 		playsound(src.loc, SFX_SWING_HIT, 25, TRUE)
 		swirlie.visible_message(span_danger("[user] slams the toilet seat onto [swirlie]'s head!"), span_userdanger("[user] slams the toilet seat onto your head!"), span_hear("You hear reverberating porcelain."))
 		log_combat(user, swirlie, "swirlied (brute)")
-		swirlie.adjustBruteLoss(5)
+		swirlie.adjust_brute_loss(5)
 		return
 
 	if(user.pulling && isliving(user.pulling))
@@ -151,10 +148,10 @@
 				var/mob/living/carbon/carbon_grabbed = grabbed_mob
 				if(!carbon_grabbed.internal)
 					log_combat(user, carbon_grabbed, "swirlied (oxy)")
-					carbon_grabbed.adjustOxyLoss(5)
+					carbon_grabbed.adjust_oxy_loss(5)
 			else
 				log_combat(user, grabbed_mob, "swirlied (oxy)")
-				grabbed_mob.adjustOxyLoss(5)
+				grabbed_mob.adjust_oxy_loss(5)
 			if(was_alive && swirlie.stat == DEAD && swirlie.client)
 				swirlie.client.give_award(/datum/award/achievement/misc/swirlie, swirlie) // just like space high school all over again!
 			swirlie = null
@@ -162,10 +159,10 @@
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, TRUE)
 			grabbed_mob.visible_message(span_danger("[user] slams [grabbed_mob.name] into [src]!"), span_userdanger("[user] slams you into [src]!"))
 			log_combat(user, grabbed_mob, "toilet slammed")
-			grabbed_mob.adjustBruteLoss(5)
+			grabbed_mob.adjust_brute_loss(5)
 		return
 
-	if(cistern_open && !cover_open && user.CanReach(src))
+	if(cistern_open && !cover_open && IsReachableBy(user))
 		if(!LAZYLEN(cistern_items))
 			to_chat(user, span_notice("The cistern is empty."))
 			return
@@ -232,18 +229,15 @@
 	if(!flushing && cover_open)
 		. += "[base_icon_state]-water"
 
-/obj/structure/toilet/atom_deconstruct(dissambled = TRUE)
-	for(var/obj/toilet_item in cistern_items)
+/obj/structure/toilet/dump_contents()
+	for(var/obj/toilet_item in (cistern_items + fishes))
 		toilet_item.forceMove(drop_location())
-	if(buildstacktype)
-		new buildstacktype(loc,buildstackamount)
-	else
-		for(var/datum/material/M as anything in custom_materials)
-			new M.sheet_type(loc, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
+
+/obj/structure/toilet/atom_deconstruct(dissambled = TRUE)
+	dump_contents()
+	drop_costum_materials()
 	if(has_water_reclaimer)
 		new /obj/item/stock_parts/water_recycler(drop_location())
-	if(stuck_item)
-		stuck_item.forceMove(drop_location())
 
 /obj/structure/toilet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)
@@ -395,7 +389,7 @@
 
 /obj/structure/toilet/greyscale
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
-	buildstacktype = null
+	custom_materials = null
 	has_water_reclaimer = FALSE
 
 /obj/structure/toilet/secret
@@ -408,3 +402,29 @@
 		secret.desc += " It's a secret!"
 		w_items += secret.w_class
 		LAZYADD(cistern_items, secret)
+
+///A toilet made of meat that only drops remains when deconstructed, often unleashed unto this cursed plane of existence by hopeless people off'ing themselves with experi-scanners.
+/obj/structure/toilet/greyscale/flesh
+	desc = "A horrendous mass of fused flesh resembling a standard-issue HT-451 model toilet. How it manages to function as one is beyond you. \
+	This one seems to be made out of the flesh of a devoted employee of the RnD department."
+
+/obj/structure/toilet/greyscale/flesh/Initialize(mapload, mob/living/carbon/suicide)
+	. = ..()
+	///The suicide victim's brain that will be placed inside the toilet's cistern
+	var/obj/item/organ/brain/toilet_brain
+	if(suicide)
+		toilet_brain = suicide.get_organ_slot(ORGAN_SLOT_BRAIN)
+		suicide.gib(DROP_BRAIN) //we delete everything but the brain, as it's going to be moved to the cistern
+		set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, suicide) = SHEET_MATERIAL_AMOUNT))
+	else
+		toilet_brain = new(drop_location())
+		set_custom_materials(list(/datum/material/meat = SHEET_MATERIAL_AMOUNT))
+
+	toilet_brain.forceMove(src)
+	w_items += toilet_brain.w_class
+
+//this also prevents the toilet from dropping meat sheets. if you want to cheese the meat exepriments, sacrifice more people
+/obj/structure/toilet/greyscale/flesh/atom_deconstruct(dissambled = TRUE)
+	for(var/obj/toilet_item in cistern_items)
+		toilet_item.forceMove(drop_location())
+	new /obj/effect/decal/remains/human(loc)

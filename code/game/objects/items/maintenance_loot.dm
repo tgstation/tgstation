@@ -39,6 +39,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	maxcharge = STANDARD_CELL_CHARGE * 60 // initial charge reduced on init
 	chargerate = STANDARD_CELL_RATE * 0.3 //charging is about 70% less efficient than lithium batteries.
+	emp_damage_modifier = 4 // 15 shots.
 	charge_light_type = null
 	connector_type = "leadacid"
 	grind_results = list(/datum/reagent/lead = 15, /datum/reagent/toxin/acid = 15, /datum/reagent/water = 20)
@@ -55,8 +56,8 @@
 	)
 
 // Give our owner shock touch when entering the digital realm
-/obj/item/stock_parts/power_store/cell/lead/proc/shockingly_improve_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
-	if(external_load_flags & DOMAIN_FORBIDS_ABILITIES)
+/obj/item/stock_parts/power_store/cell/lead/proc/shockingly_improve_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, domain_flags)
+	if(domain_flags & DOMAIN_FORBIDS_ABILITIES)
 		return BITRUNNER_GEAR_LOAD_BLOCKED
 
 	if(!avatar.can_mutate())

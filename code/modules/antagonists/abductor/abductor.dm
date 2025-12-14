@@ -74,11 +74,11 @@
 	objectives += team.objectives
 	finalize_abductor()
 	// We don't want abductors to be converted by other antagonists
-	owner.add_traits(list(TRAIT_ABDUCTOR_TRAINING, TRAIT_UNCONVERTABLE), ABDUCTOR_ANTAGONIST)
+	owner.add_traits(list(TRAIT_ABDUCTOR_TRAINING, TRAIT_ABDUCTOR_HUD, TRAIT_UNCONVERTABLE), ABDUCTOR_ANTAGONIST)
 	return ..()
 
 /datum/antagonist/abductor/on_removal()
-	owner.remove_traits(list(TRAIT_ABDUCTOR_TRAINING, TRAIT_UNCONVERTABLE), ABDUCTOR_ANTAGONIST)
+	owner.remove_traits(list(TRAIT_ABDUCTOR_TRAINING, TRAIT_ABDUCTOR_HUD, TRAIT_UNCONVERTABLE), ABDUCTOR_ANTAGONIST)
 	return ..()
 
 /datum/antagonist/abductor/greet()

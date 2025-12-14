@@ -8,12 +8,13 @@
 	antag_flags = ANTAG_FAKE|ANTAG_SKIP_GLOBAL_LIST
 	/// Traits we apply/remove to our target on-demand.
 	var/static/list/applicable_traits = list(
+		TRAIT_DESENSITIZED,
 		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
 		TRAIT_NOFIRE,
 		TRAIT_NOGUNS,
-		TRAIT_TOSS_GUN_HARD,
 		TRAIT_SHOCKIMMUNE,
+		TRAIT_TOSS_GUN_HARD,
 	)
 
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)

@@ -353,7 +353,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	. = ..()
 	if(prob(1))
 		desc = "IT'S PEPPER TIME, BITCH!"
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/structure/reagent_dispensers/water_cooler
 	name = "water cooler"
@@ -363,6 +364,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	tank_volume = 200
 	can_be_tanked = FALSE
 	max_integrity = 150
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 25)
 	///Paper cups left from the cooler.
 	var/paper_cups = 25
 	///Reference to our jug.
@@ -611,13 +613,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 
 /obj/structure/reagent_dispensers/wall/virusfood/Initialize(mapload)
 	. = ..()
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/structure/reagent_dispensers/cooking_oil
 	name = "vat of cooking oil"
 	desc = "A huge metal vat with a tap on the front. Filled with cooking oil for use in frying food."
 	icon_state = "vat"
-	anchored = TRUE
 	reagent_id = /datum/reagent/consumable/nutriment/fat/oil
 	openable = TRUE
 
@@ -626,7 +628,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	desc = "A dish full of food slop for your bowl."
 	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "serving"
-	anchored = TRUE
 	reagent_id = /datum/reagent/consumable/nutraslop
 
 /obj/structure/reagent_dispensers/plumbed

@@ -1,14 +1,3 @@
-/datum/crafting_recipe/bluespace_vendor_mount
-	name = "Bluespace Vendor Wall Mount"
-	result = /obj/item/wallframe/bluespace_vendor_mount
-	time = 6 SECONDS
-	reqs = list(
-		/obj/item/stack/sheet/iron = 15,
-		/obj/item/stack/sheet/glass = 10,
-		/obj/item/stack/cable_coil = 10,
-	)
-	category = CAT_ATMOSPHERIC
-
 /datum/crafting_recipe/pipe
 	name = "Smart pipe fitting"
 	tool_behaviors = list(TOOL_WRENCH)

@@ -3,7 +3,7 @@
 do { \
 	var/datum/action/item_action/chameleon/change/_action = locate() in item.actions; \
 	_action?.emp_randomise(INFINITY); \
-	item.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF); \
+	item.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_NO_EXAMINE); \
 } while(FALSE)
 
 // Cham jumpsuit
@@ -325,6 +325,7 @@ do { \
 
 // Cham Stamp
 /obj/item/stamp/chameleon
+	icon_state = "stamp-syndicate"
 	actions_types = list(/datum/action/item_action/chameleon/change/stamp)
 	action_slots = ALL
 

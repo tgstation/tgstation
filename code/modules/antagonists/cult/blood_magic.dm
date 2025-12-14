@@ -183,7 +183,7 @@
 	owner.whisper(invocation, language = /datum/language/common, forced = "cult invocation")
 	owner.visible_message(span_warning("[owner]'s hand flashes a bright blue!"), \
 		span_cult_italic("You speak the cursed words, emitting an EMP blast from your hand."))
-	empulse(owner, 2, 5)
+	empulse(owner, 2, 5, emp_source = src)
 	charges--
 	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
 	if(charges <= 0)
@@ -465,7 +465,7 @@
 
 		var/old_color = target.color
 		target.color = COLOR_HERETIC_GREEN
-		animate(target, color = old_color, time = 4 SECONDS, easing = EASE_IN)
+		animate(target, color = old_color, time = 4 SECONDS, easing = SINE_EASING|EASE_IN)
 		target.mob_light(range = 1.5, power = 2.5, color = COLOR_HERETIC_GREEN, duration = 0.5 SECONDS)
 		playsound(target, 'sound/effects/magic/magic_block_mind.ogg', 150, TRUE) // insanely quiet
 
@@ -572,7 +572,7 @@
 								span_userdanger("[user] begins shaping dark magic shackles around your wrists!"))
 		if(do_after(user, 3 SECONDS, C))
 			if(!C.handcuffed)
-				C.set_handcuffed(new /obj/item/restraints/handcuffs/energy/cult/used(C))
+				C.equip_to_slot_or_del(new /obj/item/restraints/handcuffs/cult, ITEM_SLOT_HANDCUFFED, indirect_action = TRUE)
 				C.adjust_silence(10 SECONDS)
 				to_chat(user, span_notice("You shackle [C]."))
 				log_combat(user, C, "shackled")
@@ -583,19 +583,6 @@
 			to_chat(user, span_warning("You fail to shackle [C]."))
 	else
 		to_chat(user, span_warning("[C] is already bound."))
-
-
-/obj/item/restraints/handcuffs/energy/cult //For the shackling spell
-	name = "shadow shackles"
-	desc = "Shackles that bind the wrists with sinister magic."
-	trashtype = /obj/item/restraints/handcuffs/energy/used
-	item_flags = DROPDEL
-
-/obj/item/restraints/handcuffs/energy/cult/used/dropped(mob/user)
-	user.visible_message(span_danger("[user]'s shackles shatter in a discharge of dark magic!"), \
-							span_userdanger("Your [src] shatters in a discharge of dark magic!"))
-	. = ..()
-
 
 //Construction: Converts 50 iron to a construct shell, plasteel to runed metal, airlock to brittle runed airlock, a borg to a construct, or borg shell to a construct shell
 /obj/item/melee/blood_magic/construction
@@ -765,7 +752,7 @@
 	if(!ishuman(target))
 		return
 	var/mob/living/carbon/human/human_bloodbag = target
-	if(HAS_TRAIT(human_bloodbag, TRAIT_NOBLOOD))
+	if(!CAN_HAVE_BLOOD(human_bloodbag))
 		human_bloodbag.balloon_alert(user, "no blood!")
 		return
 	if(human_bloodbag.stat == DEAD)
@@ -818,21 +805,22 @@
 
 	/// used to ensure the proc returns TRUE if we completely restore an undamaged persons blood
 	var/blood_donor = FALSE
-	if(human_bloodbag.blood_volume < BLOOD_VOLUME_SAFE)
-		var/blood_needed = BLOOD_VOLUME_SAFE - human_bloodbag.blood_volume
+	var/cached_blood_volume = human_bloodbag.get_blood_volume()
+	if(cached_blood_volume < BLOOD_VOLUME_SAFE)
+		var/blood_needed = BLOOD_VOLUME_SAFE - cached_blood_volume
 		/// how much blood we are capable of restoring, based on spell charges
 		var/blood_bank = USES_TO_BLOOD * uses
 		if(blood_bank < blood_needed)
-			human_bloodbag.blood_volume += blood_bank
+			human_bloodbag.adjust_blood_volume(blood_bank)
 			to_chat(user,span_danger("You use the last of your blood rites to restore what blood you could!"))
 			uses = 0
 			return TRUE
 		blood_donor = TRUE
-		human_bloodbag.blood_volume = BLOOD_VOLUME_SAFE
+		human_bloodbag.set_blood_volume(BLOOD_VOLUME_SAFE)
 		uses -= round(blood_needed / USES_TO_BLOOD)
 		to_chat(user,span_warning("Your blood rites have restored [human_bloodbag == user ? "your" : "[human_bloodbag.p_their()]"] blood to safe levels!"))
 
-	var/overall_damage = human_bloodbag.getBruteLoss() + human_bloodbag.getFireLoss() + human_bloodbag.getToxLoss() + human_bloodbag.getOxyLoss()
+	var/overall_damage = human_bloodbag.get_brute_loss() + human_bloodbag.get_fire_loss() + human_bloodbag.get_tox_loss() + human_bloodbag.get_oxy_loss()
 	if(overall_damage == 0)
 		if(blood_donor)
 			return TRUE
@@ -850,10 +838,10 @@
 	human_bloodbag.visible_message(span_warning("[human_bloodbag] is [uses == 0 ? "partially healed":"fully healed"] by [human_bloodbag == user ? "[human_bloodbag.p_their()]":"[human_bloodbag]'s"] blood magic!"))
 
 	var/need_mob_update = FALSE
-	need_mob_update += human_bloodbag.adjustOxyLoss(damage_healed * (human_bloodbag.getOxyLoss() / overall_damage), updating_health = FALSE)
-	need_mob_update += human_bloodbag.adjustToxLoss(damage_healed * (human_bloodbag.getToxLoss() / overall_damage), updating_health = FALSE)
-	need_mob_update += human_bloodbag.adjustFireLoss(damage_healed * (human_bloodbag.getFireLoss() / overall_damage), updating_health = FALSE)
-	need_mob_update += human_bloodbag.adjustBruteLoss(damage_healed * (human_bloodbag.getBruteLoss() / overall_damage), updating_health = FALSE)
+	need_mob_update += human_bloodbag.adjust_oxy_loss(damage_healed * (human_bloodbag.get_oxy_loss() / overall_damage), updating_health = FALSE)
+	need_mob_update += human_bloodbag.adjust_tox_loss(damage_healed * (human_bloodbag.get_tox_loss() / overall_damage), updating_health = FALSE)
+	need_mob_update += human_bloodbag.adjust_fire_loss(damage_healed * (human_bloodbag.get_fire_loss() / overall_damage), updating_health = FALSE)
+	need_mob_update += human_bloodbag.adjust_brute_loss(damage_healed * (human_bloodbag.get_brute_loss() / overall_damage), updating_health = FALSE)
 	if(need_mob_update)
 		human_bloodbag.updatehealth()
 	playsound(get_turf(human_bloodbag), 'sound/effects/magic/staff_healing.ogg', 25)
@@ -871,10 +859,10 @@
 	if(human_bloodbag.has_status_effect(/datum/status_effect/speech/slurring/cult))
 		to_chat(user,span_danger("[human_bloodbag.p_Their()] blood has been tainted by an even stronger form of blood magic, it's no use to us like this!"))
 		return FALSE
-	if(human_bloodbag.blood_volume <= BLOOD_VOLUME_SAFE)
+	if(human_bloodbag.get_blood_volume() <= BLOOD_VOLUME_SAFE)
 		to_chat(user,span_warning("[human_bloodbag.p_Theyre()] missing too much blood - you cannot drain [human_bloodbag.p_them()] further!"))
 		return FALSE
-	human_bloodbag.blood_volume -= BLOOD_DRAIN_GAIN * USES_TO_BLOOD
+	human_bloodbag.adjust_blood_volume(-BLOOD_DRAIN_GAIN * USES_TO_BLOOD)
 	uses += BLOOD_DRAIN_GAIN
 	user.Beam(human_bloodbag, icon_state="drainbeam", time = 1 SECONDS)
 	playsound(get_turf(human_bloodbag), 'sound/effects/magic/enter_blood.ogg', 50)

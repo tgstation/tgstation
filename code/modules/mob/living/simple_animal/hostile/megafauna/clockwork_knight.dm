@@ -33,7 +33,6 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 	ranged = TRUE
 	gps_name = "Clockwork Signal"
 	loot = list(/obj/item/clockwork_alloy)
-	crusher_loot = list(/obj/item/clockwork_alloy)
 	wander = FALSE
 	del_on_death = TRUE
 	death_message = "falls, quickly decaying into centuries old dust."

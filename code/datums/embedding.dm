@@ -313,7 +313,7 @@
 
 /// Someone attempted to pull us out! Either the owner by inspecting themselves, or someone else by examining the owner and clicking the link.
 /datum/embedding/proc/rip_out(mob/living/jack_the_ripper)
-	if (!jack_the_ripper.CanReach(owner))
+	if (!owner.IsReachableBy(jack_the_ripper))
 		return
 
 	if (!jack_the_ripper.can_perform_action(owner, FORBID_TELEKINESIS_REACH | NEED_HANDS | ALLOW_RESTING))

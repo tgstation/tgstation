@@ -3,6 +3,8 @@
 A Scientist will pay top dollar for your frogs!
 A thrown glass of water can make a slippery tile, allowing you to slow down your pursuers in a pinch.
 Anything you can light a cigarette with, you can use to cauterize a bleeding wound. Technically, that includes the Supermatter.
+As a Bitrunner, upgrading your quantum server will increase rewards and reduce downtime.
+As a Bitrunner, your avatar has a domain info ability which will give you clues to help complete virtual domains.
 As a Blobbernaut, you can communicate with overminds and other Blobbernauts via :b.
 As a Blobbernaut, your HUD shows your health and the core health of the overmind that created you.
 As a Botanist, you can combine production trait chemicals just like a Chemist. Hydrogen(grass) + water(peas) + sugar(grapes) equal mannitol!
@@ -13,13 +15,14 @@ As a Botanist, you should look into increasing the potency of your plants. This 
 As a Cargo Technician, you can earn more cargo points by shipping back crates from maintenance, liquid containers, plasma sheets, rare seeds from hydroponics, and more!
 As a Cargo Technician, you can hack MULEbots to make them faster, run over people in their way, and even let you ride them!
 As a Cargo Technician, you can order contraband items from the supply shuttle console by de-constructing it and using a multitool on the circuit board, the re-assembling it.
+As a Changeling, Repurposed Glands will break bolas, disable stuns, and give you a hefty speed boost at the cost of the use of your arms - which includes the ability to open restricted airlocks.
 As a Changeling, taking on someone else's appearance will also give you all of their scars. You can use Fleshmend to get rid of all scars.
 As a Changeling, the Extract DNA sting counts for your genome absorb objective, but does not let you respec your powers.
 As a Changeling, you can absorb someone by strangling them and using the Absorb verb; this gives you the ability to rechoose your powers, the DNA of whoever you absorbed, the memory of the absorbed, and some samples of things the absorbed said.
+As a Chemist, Holy Water and Potassium mixed together will create a HOLY explosion, with increased power scaling by amount used. If at least 75 units of both are used, the explosion will reveal, ignite, and paralyze any cultists, heretics, and revenants in sight. Do it!
 As a Chemist, some chemicals can only be synthesized by heating up the contents with a chemical heater or manually with lighters and similar tools.
 As a Chemist, there are dozens of chemicals that can heal, and even more that can cause harm. Experiment!
 As a Chemist, Water and Potassium mixed together will create an explosion, with power scaling by amount used. Don't do it.
-As a Chemist, Holy Water and Potassium mixed together will create a HOLY explosion, with increased power scaling by amount used. If at least 75 units of both are used, the explosion will reveal, ignite, and paralyze any cultists, heretics, and revenants in sight. Do it!
 As a Chemist, you can quickly make 100u plastic bottles directly from plastic sheets, alongside being able to make 120u plastic beakers in the lathe. The ChemMaster can produce infinite 30u glass bottles as well and if researched the medical techfab can make beakers with capacity ranging from 120u to 300u.
 As a Chemist, you can recharge your chemical dispenser with an inducer or by replacing its cell.
 As a Chemist, you will be expected to supply crew with certain chemicals. For example, Cryoxadone and Mannitol for the cryo tubes, Diethylamine and Saltpetre for botany, as well as healing pills and patches for the front desk.
@@ -31,7 +34,9 @@ As a Cook, you can load your food into smartfridges and custom vending machines.
 As a Cook, you can rename your custom made food with a pen.
 As a Cultist, check the alert in the upper-right of your screen for all the details about your cult's current status and objective.
 As a Cultist, do not cause too much chaos before your objective is completed. If the shuttle gets called too soon, you may not have enough time to win.
+As a Cultist, if you manage to sacrifice a Heretic, you will unlock one of three powerful and unique items to be created in every one of your cult's forges, archives, or altars.
 As a Cultist, the Blood Boil rune will deal massive amounts of brute damage to non-cultists, and some damage to fellow cultists of Nar'Sie nearby, but will create a fire where the rune stands on use.
+As a Cultist, when you sacrifice a Heretic, they will be bound inside a powerful haunted longsword. Anyone can then unbind the blade, unlocking its powers and abilities, but also allowing the blade to act of its own free will.
 As a Cultist, your team starts off very weak, but if necessary can quickly convert everything they have into raw power. Make sure you have the numbers and equipment to support going loud, or the cult will fall flat on its face.
 As a Curator, you earn a 22% cut (divided by number of curators) of all credits spent on painting patronages. Turn others' patience and artistry skills into your own income!
 As a Cyborg, choose your model carefully, as only cutting and mending your reset wire will let you re-pick it. If possible, refrain from choosing a model until a situation that requires one occurs.
@@ -41,22 +46,26 @@ As a Cyborg, you are impervious to fires and heat. If you are rogue, you can rel
 As a Drone, you can ping other drones to alert them of areas in the station in need of repair.
 As a Geneticist, becoming a hulk makes you capable of dealing high melee damage, stun-locking people, and punching through walls. However, you can't fire guns, will lose your hulk status if you go into critical condition, and are not considered a human by the AI while you are a hulk.
 As a Geneticist, T goes to A, and G goes to C.
+As a Geneticist, you should usually save all mutations you unlock. Negative mutations will increase your genetic stability, allowing you to keep more positive mutations.
 As a Ghost, you can both start and join capture the flag games through the minigames menu, or by clicking on one of the team spawners, which can be found under the "Misc" section of the orbit menu.
 As a Ghost, you can double click on just about anything to follow it. Or just warp around!
 As a Ghost, you can see the inside of a container on the ground by clicking on it.
-As a Heretic, you can locate an influence by dreaming about random objects around it when you sleep.
 As a Heretic, the Path of Ash focuses on stealth and disorientation, but as you progress, sheds this playstyle in favor of a more aggressive, fiery finale.
-As a Heretic, the Path of Moon will literally drive people around you crazy - perhaps crazy enough to become your allies should you succeed.
-As a Heretic, the Path of Lock is an Assistant's best friend, and can open many pathways. Including ones beyond the veil...
-As a Heretic, the Path of Flesh allows you to raise an army by summoning ghouls and monsters from beyond the veil. Through ascension, you become a one-man army yourself.
-As a Heretic, the Path of Void makes people wish they could scream in the vast emptiness of space or have a chance at escaping from you. In the end, the storm takes all.
 As a Heretic, the Path of Blade rewards your ability to fight, by making you better and better at it. Though ascension, you can become an ultimate dueling juggernaut.
-As a Heretic, the Path of Rust is quite overt, but allows you to shrug of a lot of damage as everything around you slowly decays into nothing but rot and rust.
 As a Heretic, the Path of Cosmos allows you to take rightful ownership of the very space the crew treads on. And if they don't respect your status, calling in a friend from beyond should show them.
+As a Heretic, the Path of Flesh allows you to raise an army by summoning ghouls and monsters from beyond the veil. Through ascension, you become a one-man army yourself.
+As a Heretic, the Path of Lock is an Assistant's best friend, and can open many pathways. Including ones beyond the veil...
+As a Heretic, the Path of Moon will literally drive people around you crazy - perhaps crazy enough to become your allies should you succeed.
+As a Heretic, the Path of Rust is quite overt, but allows you to shrug of a lot of damage as everything around you slowly decays into nothing but rot and rust.
+As a Heretic, the Path of Void makes people wish they could scream in the vast emptiness of space or have a chance at escaping from you. In the end, the storm takes all.
+As a Heretic, you can also sacrifice cultists, rewarding you with a knowledge point and one of three unique, powerful rewards.
+As a Heretic, you can locate an influence by dreaming about random objects around it when you sleep.
 As a Janitor Cyborg, you are the bane of all slaughter demons and even Bubblegum himself. Cleaning up blood stains will severely gimp them.
 As a Janitor, if someone steals your janicart, you can instead use your space cleaner spray, grenades, water sprayer, exact bloody revenge or order another from Cargo.
 As a Janitor, mousetraps can be used to create bombs or booby-trap containers.
 As a Janitor, you can command cleanbots by pointing at a tile and saying mop/clean.
+As a Lawyer, try to negotiate with the Warden if sentences seem too high for the crime.
+As a Lawyer, you can try to convince the Captain and Head of Security to hold trials for prisoners in the courtroom.
 As a Medical Cyborg, you can fully perform surgery and even augment people.
 As a Medical Doctor, a shower can be used to help recover from sleep, unconsciousness, confusion, drowsiness, jitters, dizziness, and drunkness.
 As a Medical Doctor, almost every type of wound can be treated at least temporarily with gauze. When in doubt, wrap it up!
@@ -65,19 +74,18 @@ As a Medical Doctor, corpses with the "...and their soul has departed" descripti
 As a Medical Doctor, Critical Slash wounds are one of the most dangerous conditions someone can have. Apply gauze, epipens, sutures, cauteries, whatever you can, as soon as possible!
 As a Medical Doctor, Saline-Glucose not only acts as a temporary boost to a patient's blood level, it also speeds blood regeneration! Perfect for drained patients!
 As a Medical Doctor, treating plasmamen is not impossible! Salbutamol stops them from suffocating and showers stop them from burning alive. You can even perform surgery on them by doing the procedure on a roller bed under a shower. Salbutamol and convermol do NOT heal their oxyloss damage.
+As a Medical Doctor, try messing with the virology lab sometime! Viruses can range from healing powers so great that you can heal out of critical status, or diseases so dangerous they can kill the entire crew with airborne spontaneous combustion. Experiment!
+As a Medical Doctor, when messing with viruses, remember that robotic organs can give immunity to disease effects and transmissibility. Make use of the inorganic biology symptom to bypass the protection.
+As a Medical Doctor, while there's an pandemic, you only require small amounts of vaccine to heal a sick patient. Work with the Chemist to distribute your cures more efficiently.
 As a Medical Doctor, you can attempt to drain blood from a husk with a syringe to determine the cause. If you can extract blood, it was caused by extreme temperatures or lasers, if there is no blood to extract, you have confirmed the presence of changelings.
+As a Medical Doctor, you can cure a heart attack by repeatedly shocking the victim with a defibrillator!
 As a Medical Doctor, you can deal with patients who have absurd amounts of wounds by putting them in cryo. This will slowly treat all of their wounds simultaneously, but is much slower than direct treatment.
 As a Medical Doctor, you can extract implants by holding an empty implant case in your offhand while performing the extraction step.
 As a Medical Doctor, you can point your penlight at people to create a medical hologram. This lets them know that you're coming to treat them.
 As a Medical Doctor, you can surgically implant or extract things from people's chests. This can range from putting in a bomb to pulling out an alien larva.
 As a Medical Doctor, you must target the correct limb and not be in combat mode when trying to perform surgery on someone. Right clicking your patient will intentionally fail the surgery step.
-As a Medical Doctor, when messing with viruses, remember that robotic organs can give immunity to disease effects and transmissibility. Make use of the inorganic biology symptom to bypass the protection.
-As a Medical Doctor, while there's an pandemic, you only require small amounts of vaccine to heal a sick patient. Work with the Chemist to distribute your cures more efficiently.
-As a Medical Doctor, try messing with the virology lab sometime! Viruses can range from healing powers so great that you can heal out of critical status, or diseases so dangerous they can kill the entire crew with airborne spontaneous combustion. Experiment!
-As a Medical Doctor, you can cure a heart attack by repeatedly shocking the victim with a defibrillator!
 As a Monkey, you can crawl through air or scrubber vents by alt+left clicking them. You must drop everything you are wearing and holding to do this, however.
 As a Monkey, you can still wear a few human items, such as backpacks, gas masks and hats, and still have two free hands.
-As a Morph, you can talk while disguised, but your words have a chance of being slurred, giving you away!
 As a Nuclear Operative, communication is key! Use ; to speak to your fellow operatives and coordinate an attack plan.
 As a Nuclear Operative, stick together! While your equipment is robust, your fellow operatives are much better at saving your life: they can drag you away from danger while stunned and provide cover fire.
 As a Nuclear Operative, you might end up in a situation where the AI has bolted you into a room. Having some spare C4 in your pocket can save your life.
@@ -109,15 +117,16 @@ As a Security Officer, examining someone while wearing sechuds or HUDsunglasses 
 As a Security Officer, mindshield implants can only prevent someone from being turned into a cultist: unlike revolutionaries, it will not de-cult them if they have already been converted.
 As a Security Officer, remember that correlation does not equal causation. Someone may have just been at the wrong place at the wrong time!
 As a Security Officer, remember that you can attach a sec-lite to your disabler or your helmet!
-As a Security Officer, your sechuds or HUDsunglasses can not only see crewmates' job assignments and criminal status, but also if they are mindshield implanted. You can tell by the flashing blue outline around their job icon. Use this to your advantage in a revolution to definitively tell who is on your side!
-As a Security Officer, you have a special pen in your PDA that you can use to prompt people to surrender. This will stun them without the need to use a baton!
 As a Security Officer, you can treat or even cure a heart attack with repeated blows from a stunbaton. Emphasis on *repeated*.
+As a Security Officer, you have a special pen in your PDA that you can use to prompt people to surrender. This will stun them without the need to use a baton!
+As a Security Officer, your sechuds or HUDsunglasses can not only see crewmates' job assignments and criminal status, but also if they are mindshield implanted. You can tell by the flashing blue outline around their job icon. Use this to your advantage in a revolution to definitively tell who is on your side!
 As a Service Cyborg, your spray can knocks people down. However, it is blocked by masks and glasses.
 As a Shaft Miner, always have a GPS on you, so a fellow miner or cyborg can come to save you if you die.
 As a Shaft Miner, every monster on Lavaland has a pattern you can exploit to minimize damage from the encounters.
 As a Shaft Miner, the northern side of Lavaland has a lot more rare minerals than on the south.
 As a Shaft Miner, you can craft a variety of equipment from the local fauna. Bone axes, lava boats and ash drake armour are just a few of them!
 As a Shaft Miner, you can harvest goliath plates from goliaths and upgrade your explorer's suit, greatly reducing incoming melee damage.
+As a Syndicate Monkey, you're explosively allergic to species transformations and should probably avoid them.
 As a Traitor, plasma can be injected into many things to sabotage them. Power cells, light bulbs, welding tools, cigars and e-cigs will all explode when used.
 As a Traitor, subverting the AI to serve you can make it an extremely powerful ally. However, be careful of the wording in the laws you give it, as it may use your poorly written laws against you!
 As a Traitor, the Captain and the Head of Security are two of the most difficult to kill targets on the station. If either one is your target, plan carefully.
@@ -163,9 +172,9 @@ As the AI, you can emote to change the status displays near your core. Some emot
 As the AI, you can quickly open and close doors by holding shift while clicking them, bolt them when holding ctrl, and even shock them while holding alt.
 As the AI, you can take pictures with your camera and upload them to newscasters.
 As the AI, you can use CTRL + 1-9 to set a location hotkey for your camera, allowing you to save the location and jump to it at will. Tilde and zero will return you to the last spot you jumped from, and the numpad numbers act as aliases to the regular number keys.
+As the Bartender, remember to set up the bar sign by walking up to it and clicking it!
 As the Bartender, the drinks you start with only give you the basics. If you want more advanced mixtures, look into working with chemistry, hydroponics, or even mining for things to grind up and throw in!
 As the Bartender, you can use a circular saw on your shotgun to make it easier to store.
-As the Bartender, remember to set up the bar sign by walking up to it and clicking it!
 As the Blob, don't neglect the creation of factories. These create spores that carry your reagent and can chase crew members far further than you. Spores can also be rallied to swarm the crew and cause panic, and can even take over corpses to create much more dangerous blob zombies!
 As the Blob, keep your core some distance from space, as it is both expensive to expand onto space, easy to be attacked from, and does not count towards your win condition. Emitter platforms built in space are especially dangerous.
 As the Blob, removing strong blobs, resource nodes, factories, and nodes will give you 4, 15, 25, and 25 resources back, respectively.
@@ -180,6 +189,7 @@ As the Captain, always take the nuclear disk and pinpointer with you every shift
 As the Captain, you are one of the highest priority targets on the station. Everything from revolutions, to nuclear operatives, to traitors that need to rob you of your unique lasgun or your life are things to worry about.
 As the Captain, you can purchase a new emergency shuttle using a communications console. Some require cash, while others give you cash in exchange. Keep in mind that purchasing dangerous shuttles may instigate the ire of your crew.
 As the Captain, you have absolute access and control over the station, but this does not mean that being a horrible person won't result in mutiny and a ban.
+As the Captain, your sabre deals extra damage to Assistants (as long as they have their original liver).
 As the Chaplain, you are much more likely to get a response by praying to the gods than most people. To boost your chances, make altars with colorful crayon runes, lit candles, and wire art.
 As the Chaplain, your bible is also a container that can store small items. Depending on your god, your starting bible may come with a surprise!
 As the Chaplain, your null rod has anti magic functions: it can destroy cultist runes by hitting them, and it makes you immune to wizard spells and cult magic.
@@ -188,17 +198,18 @@ As the Chief Engineer, you can rename areas or create entirely new ones using yo
 As the Chief Engineer, you can spy on and even forge PDA communications with the message monitor console! The key is in your office.
 As the Chief Medical Officer, coordinate and communicate with your doctors, chemists, and paramedics during a nuclear emergency, blob infestation, or some other crisis to keep people alive and fighting.
 As the Chief Medical Officer, your hypospray is like a refillable instant injection syringe that can hold 30 units as opposed to the standard 15.
+As the Clown, click with one long balloon in hand onto another to create a balloon animal! Each combination of colours has its own unique result.
 As the Clown, eating bananas heals you slightly. Honk!
 As the Clown, if you lose your banana peel, you can still slip people with your PDA! Honk!
 As the Clown, if you're a Traitor and get an emag on sale (or convince another traitor), you can emag your Clown Car to unlock a variety of new functions, including the Siege Mode, which will allow you to launch your passengers, preferably directly into the Supermatter! Or into space.
 As the Clown, spice your gimmicks up! Nobody likes a one-trick pony.
-As the Clown, click with one long balloon in hand onto another to create a balloon animal! Each combination of colours has its own unique result.
 As the Clown, you can use your stamp on a sheet of cardboard as the first step of making a honkbot. Fun for the whole crew!
 As the Clown, your Grail is the mineral bananium, which can be given to the Roboticist to build you a fun and robust mech beloved by everyone.
-As the Curator, be sure to keep the shelves stocked and the library clean for crew.
-As the Curator, you are not completely defenseless. Your whip easily disarms people, your laser pointer can blind humans and cyborgs, and you can hide items in wirecut books.
+As the Coroner, remember that your autopsy scanner also works as an advanced health analyzer on right-click, but only for corpses.
 As the Coroner, you are more comfortable working on cadavers. You can perform autopsies or harvest organs from corpses a lot faster than your Medical Doctor counterparts. Work in tandem with them by helping prepare bodies for revival.
 As the Coroner, you can perform autopsies on corpses recovered from strange circumstances with your handheld autopsy scanner to discover how they died. By teaming up with a Detective, you can solve several cases together!
+As the Curator, be sure to keep the shelves stocked and the library clean for crew.
+As the Curator, you are not completely defenseless. Your whip easily disarms people, your laser pointer can blind humans and cyborgs, and you can hide items in wirecut books.
 As the Detective, people leave fingerprints everywhere and on everything. With the exception of white latex, gloves will hide them. All is not lost, however, as gloves leave fibers specific to their kind such as black or nitrile, pointing to a general department.
 As the Detective, you can use your forensics scanner from a distance. Use this to scan boxes or other storage containers.
 As the Detective, your revolver can be loaded with .357 ammunition obtained from a hacked autolathe. Firing it has a decent chance to blow up your revolver.
@@ -206,8 +217,6 @@ As the Head of Personnel, you are not higher ranking than other heads of staff, 
 As the Head of Security, don't let the power go to your head. You may have high access, great equipment, and a miniature army at your side, but being a terrible person without a good reason is grounds for banning.
 As the Head of Security, you are expected to coordinate your security force to handle any threat that comes to the station. Sometimes it means making use of the armory to handle a blob, sometimes it means being ruthless during a revolution or cult.
 As the Head of Security, you can call for executions or forced cyborgization, but may require the Captain's approval.
-As the Lawyer, try to negotiate with the Warden if sentences seem too high for the crime.
-As the Lawyer, you can try to convince the Captain and Head of Security to hold trials for prisoners in the courtroom.
 As the Malfunctioning AI, look into flooding the station with plasma fires to kill off large portions of the crew, letting you pick off the remaining few with space suits who escaped.
 As the Malfunctioning AI, you can shunt to an APC if the situation gets bad. This disables your doomsday device if it is active.
 As the Malfunctioning AI, you should either order your cyborgs to dismantle the robotics console or blow it up yourself in order to protect them.
@@ -224,17 +233,18 @@ As the Warden, you can implant criminals you suspect might re-offend with device
 As the Warden, you can use handcuffs on orange prisoner shoes to turn them into cuffed shoes, forcing prisoners to walk and potentially thwarting an escape.
 As the Warden, your duty is to be the watchdog of the brig and handler of prisoners when little is happening, and to hand out equipment and weapons to the security officers when a crisis strikes.
 Basketball requires focus. If you don't click on your target (player or hoop) you are more likely to miss.
+Basketball requires skill. Spinning drains stamina, reduces accuracy, but gives resistance from disarm. Use it to dunk!
 Basketball requires stamina. The more you have, the less likely your ball will be stolen and the more likely you can steal from another player.
 Basketball requires strategy. The direction both players are facing affects disarms so having your back to another player that is trying to steal is ideal.
-Basketball requires skill. Spinning drains stamina, reduces accuracy, but gives resistance from disarm. Use it to dunk!
 Basketball requires teamwork. Passing the ball with LMB is instant and costs no stamina.
+Biological armor will protect your limb from a zombie's infective attack, unless the limb's more damaged than the armor value. Armor with thick material, such as firesuits and EVA suits, also partially protects, preventing at least the first attack from infection.
 Clicking on a windoor rather then bumping into it will keep it open, you can click it again to close it.
 Different weapons have different strengths. Some weapons, such as spears, floor tiles, and throwing stars, deal more damage when thrown compared to when attacked normally.
-Spears are capable of breaking into secure lockers by striking them in melee!
 Don't be afraid to ask for help, whether from your peers or from admins.
 Experiment with different setups of the Supermatter engine to maximize output, but don't risk the crew's safety to do so!
 Felinids get temporarily distracted by laser pointers. Use this to your advantage when being pursued by one.
 Firesuits and winter coats offer mild protection from the cold, allowing you to spend longer periods of time near breaches and space than if wearing nothing at all.
+First-aid analyzers double the speed of wound treatment on injuries, alongside giving out normal and improvised instructions for treatment.
 Glass shards can be welded to make glass, and iron rods can be welded to make iron. Ores can be welded too, but this takes a lot of fuel.
 Holding alt and left clicking a tile will allow you to see its contents in the top right window pane, which is much faster than holding shift and right clicking.
 If there's something you need from another department, try asking! This game isn't single-player and you'd be surprised what you can get accomplished together!
@@ -244,18 +254,26 @@ If you need to drag multiple people either to safety or to space, bring a locker
 If you're bleeding, you can apply pressure to the limb by grabbing yourself while targeting the bleeding limb. This will slow you down and take up a hand, but it'll slow down how fast you lose blood. Note this won't help the bleeding clot any faster.
 If you're using hotkey mode, you can stop pulling things using H.
 In a pinch, stripping yourself naked will give you a sizeable resistance to being tackled. What do you value more, your freedom or your dignity?
+In a pinch, you can reduce bleeding or burn infection with several commonplace reagents - flour, salt, saltwater can all be splashed onto the wound to stall for time, and tea can be drank for a boost to your body's defences.
 Laying down will help slow down bloodloss. Death will halt it entirely.
 Maintenance is full of equipment that is randomized every round. Look around and see if anything is worth using.
+Modular computers are compatible with integrated circuits, but most of the program-dependent circuits require them to be open/backgrounded to work. To install circuits on stationary consoles, you need to toggle interaction with the frame with right-click first.
 Most job-related suit slot clothing can fit job-related items into it, such as the atmospheric technician's winter coat holding an RPD, or labcoats holding most medicine.
+Most species have only 32 teeth for use in dental implants. Moths have none. Lizards have seventy five.
 Most things have special interactions with right, alt, shift, and control click. Experiment!
 On most clothing items that go in the suit slot, you can put certain small items into your suit storage, such as a spraycan, your emergency oxygen tank, or a flashlight.
 Remote devices will work when used through cameras. For example: Bluespace RPEDs and door remotes.
 Sleeping can be used to recover from minor injuries and organ damage. Sanity, darkness, blindfolds, earmuffs, tables, beds, and bedsheets affect the healing rate.
+Some areas of the station use simple nautical directions to indicate their respective locations, like Fore (Front of the ship), Aft (Back), Port (Left side), Starboard (Right), Quarter and Bow (Either sides of Aft and Fore, respectively). You can review these terms on the Notepad App of your PDA.
+Some items, when examined, are labeled as 'crafting components', which means you can smack them with another item to directly construct a recipe. Try using an igniter on a rod!
 Some roles cannot be antagonists by default, but antag selection is decided first. For instance, you can set Security Officer to High without affecting your chances of becoming an antag -- the game will just select a different role.
 Some weapons are better at taking down robots and structures than others. Don't try to break a window with a scalpel, try a toolbox.
+Spears are capable of breaking into secure lockers by striking them in melee!
 Standard epipens contain a potent coagulant that not only slow bloodloss, but also help clot whichever of your wounds is bleeding the most! If you're suffering multiple bad bleeding wounds, make sure to seek out additional treatment ASAP!
 Suit storage units not only remove blood and dirt from clothing, but also radiation!
+Syndicate Duffelbags are a lot quicker to zip and unzip, have significantly less slowdown, and can carry up to two of various bulky, objective-related items - such as fire axes, guns, or gibtonite. Examine them closely to see all the possibilities.
 The Chaplain can bless any container with water by hitting it with their bible. Holy water has a myriad of uses against both cults and large amounts of it are a great contributor to success against them.
+The Coroner's surgical tools are considered 'cruel implements', which speeds up surgery on corpses but slows it on not-yet-corpses. A few other items also have it.
 The P2P chat function found on tablet computers allows for a stealthy way to communicate with people.
 The resist button will allow you to resist out of handcuffs, being buckled to a chair or bed, out of locked lockers and more. Whenever you're stuck, try resisting!
 The station's self-destruct terminal is indestructible. Go find the disk instead of trying to destroy it.
@@ -272,49 +290,30 @@ When in doubt about technical issues, clear your cache (byond launcher > cogwhee
 When placing floor tiles in space, you don't need to place down lattice if there is a piece of plating nearby.
 Where the space map levels connect is randomized every round, but are otherwise kept consistent within rounds. Remember that they are not necessarily bidirectional!
 Working out improves your fitness which increases your size and faster times to fireman carry. Remember that a quality diet and sleep are essential!
+You can alt-click tank transfer valves to remove a tank from them.
+You can automatically extract and retract arm implants by 'activating' the empty hand they're on. This includes integrated toolsets, cursed katanas, and vorpal scythes.
+You can bake a birthday cake and then microwave it to create a legendary cake hat. You can then combine it with an energy sword to create an energy cake.
 You can catch thrown items by toggling on your throw mode with an empty hand active.
 You can change the control scheme by pressing tab. One is WASD, the other is the arrow keys. Keep in mind that hotkeys are also changed with this.
 You can cheat games by baking dice in microwaves to make them loaded. Cards can be seen with x-ray vision or be marked with either a pen or crayon to gain an edge.
 You can climb onto a table by dragging yourself onto one. This takes time and drops the items in your hands on the table. Clicking on a table that someone else is climbing onto will knock them down.
+You can combine the Carpet reagent with various different reagents, such as Oil and Cyanide, to create unique carpet types.
+You can craft peg limbs and crutches with wood for use in dire circumstances. The latter are also available in medical vendors.
 You can deconvert Cultists of Nar'Sie by feeding them large amounts of holy water. Unlike revolutionaries, implanting them with mindshield implants won't do it!
 You can drag other players onto yourself to open the strip menu, letting you remove their equipment or force them to wear something. Note that suits or helmets will block your access to the clothing beneath them, and that certain items take longer to strip or put on than others.
+You can further the cycle of life by having two adult plushies play with eachother, creating a smaller junior child plushie.
 You can grab someone by holding Ctrl and clicking on them, then upgrade the grab by Ctrl-clicking on them once more. An aggressive grab will momentarily stun someone, allow you to place them on a table by clicking on it, or throw them by toggling on throwing.
 You can light a cigar on a supermatter crystal.
 You can move an item out of the way by dragging it and then clicking on an adjacent tile with an empty hand.
 You can pin your MODsuit module buttons to your action bar in the suit UI.
+You can quickly remove radiation from items in a room by releasing water vapor into the air around them (including worn items).
 You can recolor certain items like jumpsuits and gloves in washing machines by also throwing in a crayon.
+You can right click someone with wire cutters, jaws of life, and box cutters to instantly snap cablecuffs or zipties. The jaws can even instantly break handcuffs!
 You can screwdriver any non-chemical grenade to shorten fuses from 5 seconds, to 3 seconds, to instant boom! Nobody ever expects this.
 You can spray a fire extinguisher, throw items or fire a gun while floating through space to change your direction. Simply fire opposite to where you want to go.
 You can swap floor tiles by holding a crowbar in one hand and a stack of tiles in the other.
 You can use a machine in the vault to deposit cash or rob Cargo's department funds.
-You can use an upgraded microwave to charge your PDA!
-You'll quickly lose your interest in the game if you play to win and kill. If you find yourself doing this, take a step back and talk to people - it's a much better experience!
-Some areas of the station use simple nautical directions to indicate their respective locations, like Fore (Front of the ship), Aft (Back), Port (Left side), Starboard (Right), Quarter and Bow (Either sides of Aft and Fore, respectively). You can review these terms on the Notepad App of your PDA.
-Modular computers are compatible with integrated circuits, but most of the program-dependent circuits require them to be open/backgrounded to work. To install circuits on stationary consoles, you need to toggle interaction with the frame with right-click first.
-You don't need to destroy a Spacecoin machine to make your funds stop draining. Swiping your ID on it will stop the withdrawal.
-As a Bitrunner, upgrading your quantum server will increase rewards and reduce downtime.
-As a Bitrunner, your avatar has a domain info ability which will give you clues to help complete virtual domains.
-You can right click someone with wire cutters, jaws of life, and box cutters to instantly snap cablecuffs or zipties. The jaws can even instantly break handcuffs!
-You can alt-click tank transfer valves to remove a tank from them.
 You can use a multitool in your hand to track the area's local APC.
-Some items, when examined, are labeled as 'crafting components', which means you can smack them with another item to directly construct a recipe. Try using an igniter on a rod!
-You can further the cycle of life by having two adult plushies play with eachother, creating a smaller junior child plushie.
-Most species have only 32 teeth for use in dental implants. Moths have none. Lizards have seventy five.
-As a Changeling, Repurposed Glands will break bolas, disable stuns, and give you a hefty speed boost at the cost of the use of your arms - which includes the ability to open restricted airlocks.
-As a Geneticist, you should usually save all mutations you unlock. Negative mutations will increase your genetic stability, allowing you to keep more positive mutations.
-You can craft peg limbs and crutches with wood for use in dire circumstances. The latter are also available in medical vendors.
-As a Heretic, you can also sacrifice cultists, rewarding you with a knowledge point and one of three unique, powerful rewards.
-As a Cultist, if you manage to sacrifice a Heretic, you will unlock one of three powerful and unique items to be created in every one of your cult's forges, archives, or altars.
-As a Cultist, when you sacrifice a Heretic, they will be bound inside a powerful haunted longsword. Anyone can then unbind the blade, unlocking its powers and abilities, but also allowing the blade to act of its own free will.
-As a Syndicate Monkey, you're explosively allergic to species transformations and should probably avoid them.
-Biological armor will protect your limb from a zombie's infective attack, unless the limb's more damaged than the armor value. Armor with thick material, such as firesuits and EVA suits, also partially protects, preventing at least the first attack from infection.
-In a pinch, you can reduce bleeding or burn infection with several commonplace reagents - flour, salt, saltwater can all be splashed onto the wound to stall for time, and tea can be drank for a boost to your body's defences.
-First-aid analyzers double the speed of wound treatment on injuries, alongside giving out normal and improvised instructions for treatment.
-Syndicate Duffelbags are a lot quicker to zip and unzip, have significantly less slowdown, and can carry up to two of various bulky, objective-related items - such as fire axes, guns, or gibtonite. Examine them closely to see all the possibilities.
-The Coroner's surgical tools are considered 'cruel implements', which speeds up surgery on corpses but slows it on not-yet-corpses. A few other items also have it.
-As a Coroner, remember that your autopsy scanner also works as an advanced health analyzer on right-click, but only for corpses.
-As the Captain, your sabre deals extra damage to Assistants (as long as they have their original liver).
-You can automatically extract and retract arm implants by 'activating' the empty hand they're on. This includes integrated toolsets, cursed katanas, and vorpal scythes.
-You can combine the Carpet reagent with various different reagents, such as Oil and Cyanide, to create unique carpet types.
-You can bake a birthday cake and then microwave it to create a legendary cake hat. You can then combine it with an energy sword to create an energy cake.
-You can quickly remove radiation from items in a room by releasing water vapor into the air around them (including worn items).
+You can use an upgraded microwave to charge your PDA!
+You don't need to destroy a Spacecoin machine to make your funds stop draining. Swiping your ID on it will stop the withdrawal.
+You'll quickly lose your interest in the game if you play to win and kill. If you find yourself doing this, take a step back and talk to people - it's a much better experience!

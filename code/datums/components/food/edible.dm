@@ -39,11 +39,11 @@ Behavior that's still missing from this component that original food items had t
 	///Last time we checked for food likes
 	var/last_check_time
 	///Assoc list of sources and their foodtypes
-	var/list/foodtypes_by_source = list()
+	var/list/foodtypes_by_source
 	///Assoc list of sources and their food flags
-	var/list/food_flags_by_source = list()
+	var/list/food_flags_by_source
 	///Assoc list of sources and their junkiness
-	var/list/junkiness_by_source = list()
+	var/list/junkiness_by_source
 
 /datum/component/edible/Initialize(
 	list/initial_reagents,
@@ -93,10 +93,6 @@ Behavior that's still missing from this component that original food items had t
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(UseFromHand))
 		RegisterSignal(parent, COMSIG_ITEM_USED_AS_INGREDIENT, PROC_REF(used_to_customize))
 
-		var/obj/item/item = parent
-		if(!item.grind_results)
-			item.grind_results = list() //If this doesn't already exist, add it as an empty list. This is needed for the grinder to accept it.
-
 	else if(isturf(parent) || isstructure(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(TryToEatIt))
 
@@ -145,16 +141,16 @@ Behavior that's still missing from this component that original food items had t
 
 	var/recalculate = FALSE
 	if(!isnull(foodtypes))
-		if(foodtypes_by_source[source]) //foodtypes being overriden
+		if(LAZYACCESS(foodtypes_by_source, source)) //foodtypes being overriden
 			recalculate = TRUE
-		foodtypes_by_source[source] = foodtypes
+		LAZYSET(foodtypes_by_source, source, foodtypes)
 	if(!isnull(food_flags))
-		if(food_flags_by_source[source]) //food_flags being overriden
+		if(LAZYACCESS(food_flags_by_source, source)) //food_flags being overridden
 			recalculate = TRUE
-		food_flags_by_source[source] = food_flags
+		LAZYSET(food_flags_by_source, source, food_flags)
 	if(!isnull(junkiness))
-		src.junkiness += junkiness - junkiness_by_source[source]
-		junkiness_by_source[source] = junkiness
+		src.junkiness += junkiness - LAZYACCESS(junkiness_by_source, source)
+		LAZYSET(junkiness_by_source, source, junkiness)
 
 	if(recalculate)
 		recalculate_food_flags()
@@ -194,10 +190,10 @@ Behavior that's still missing from this component that original food items had t
 
 /datum/component/edible/on_source_remove(source)
 	//rebuild the foodtypes and food_flags bitfields without the removed source
-	foodtypes_by_source -= source
-	food_flags_by_source -= source
-	junkiness -= junkiness_by_source[source]
-	junkiness_by_source -= source
+	LAZYREMOVE(foodtypes_by_source, source)
+	LAZYREMOVE(food_flags_by_source, source)
+	junkiness -= LAZYACCESS(junkiness_by_source, source)
+	LAZYREMOVE(junkiness_by_source, source)
 	recalculate_food_flags()
 	return ..()
 
@@ -205,8 +201,8 @@ Behavior that's still missing from this component that original food items had t
 	foodtypes = NONE
 	food_flags = NONE
 	for(var/source_key in foodtypes_by_source)
-		foodtypes |= foodtypes_by_source[source_key]
-		food_flags |= food_flags_by_source[source_key]
+		foodtypes |= LAZYACCESS(foodtypes_by_source, source_key)
+		food_flags |= LAZYACCESS(food_flags_by_source, source_key)
 	if(foodtypes & GORE)
 		ADD_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
 	else
@@ -287,7 +283,7 @@ Behavior that's still missing from this component that original food items had t
 			else
 				examine_list += span_notice("[owner] was bitten multiple times!")
 
-	if(GLOB.Debug2)
+	if(GLOB.debugging_enabled)
 		examine_list += span_notice("Reagent purities:")
 		for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
 			examine_list += span_notice("- [reagent.name] [reagent.volume]u: [round(reagent.purity * 100)]% pure")
@@ -329,8 +325,12 @@ Behavior that's still missing from this component that original food items had t
 	this_food.create_reagents(volume, this_food.reagents?.flags)
 	original_atom.reagents.trans_to(this_food, original_atom.reagents.total_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT], copy_only = TRUE)
 
-	if(original_atom.name != initial(original_atom.name))
+	if(!HAS_TRAIT(this_food, TRAIT_FOOD_DONT_INHERIT_NAME_FROM_PROCESSED) && original_atom.name != initial(original_atom.name))
 		this_food.name = "slice of [original_atom.name]"
+		//It inherits the name of the original, which may already have a prefix
+		//So we need to make sure we don't double up on prefixes
+		//This is called before set_custom_materials() anyway
+		this_food.material_flags &= ~MATERIAL_ADD_PREFIX
 	if(original_atom.desc != initial(original_atom.desc))
 		this_food.desc = "[original_atom.desc]"
 
@@ -491,6 +491,7 @@ Behavior that's still missing from this component that original food items had t
 	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	if(!owner.reagents.total_volume)
 		return
+	SEND_SIGNAL(eater, COMSIG_LIVING_EAT_FOOD, owner)
 	var/sig_return = SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder, bitecount, bite_consumption)
 	if(sig_return & DESTROY_FOOD)
 		qdel(owner)
@@ -508,6 +509,8 @@ Behavior that's still missing from this component that original food items had t
 
 	checkLiked(fraction, eater)
 
+	check_materials(eater, fraction)
+
 	if(!owner.reagents.total_volume)
 		On_Consume(eater, feeder)
 
@@ -522,6 +525,29 @@ Behavior that's still missing from this component that original food items had t
 			stomach.after_eat(owner)
 
 	return TRUE
+
+///Perform operations based on materials and/or if the parent object is a stack.
+/datum/component/edible/proc/check_materials(mob/living/carbon/eater, fraction)
+	var/atom/owner = parent
+	var/is_stack = isstack(owner)
+
+	//food may also apply golem buffs if it contains certain materials and the mob has the required trait
+	if(owner.custom_materials && HAS_TRAIT(eater, TRAIT_ROCK_EATER))
+		for(var/datum/material/material as anything in owner.custom_materials)
+			var/effect_stack_amount = (owner.custom_materials[material] * fraction) / SHEET_MATERIAL_AMOUNT
+			var/datum/golem_food_buff/effect
+			effect = GLOB.golem_stack_food_directory[material.sheet_type || material.ore_type]
+			if(effect?.can_consume(eater))
+				effect.on_consumption(eater, owner, effect_stack_amount)
+
+	if(fraction >= 1) //don't bother if the item is about to be deleted anyway...
+		return
+
+	if(is_stack) //stacks use up sheets, which recalulates the materials already.
+		var/obj/item/stack/stack = owner
+		stack.use(CEILING(stack.amount * fraction, 1))
+	else if(owner.custom_materials)
+		owner.set_custom_materials(owner.custom_materials, 1 - fraction)
 
 ///Checks whether or not the eater can actually consume the food
 /datum/component/edible/proc/CanConsume(mob/living/carbon/eater, mob/living/feeder)
@@ -603,10 +629,7 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/owner = parent
 	var/timeout_mod = owner.reagents.get_average_purity(/datum/reagent/consumable) * 2 // mood event duration is 100% at average purity of 50%
-	var/datum/mood_event/event = GLOB.food_quality_events[food_quality]
-	event = new event.type
-	event.timeout *= timeout_mod
-	gourmand.add_mood_event("quality_food", event)
+	gourmand.add_mood_event("quality_food", /datum/mood_event/food, food_quality, timeout_mod)
 	gourmand.adjust_disgust(-5 + -2 * food_quality * fraction)
 	var/quality_label = GLOB.food_quality_description[food_quality]
 	to_chat(gourmand, span_notice("That's \an [quality_label] meal."))
@@ -712,6 +735,8 @@ Behavior that's still missing from this component that original food items had t
 ///Ability to feed food to puppers
 /datum/component/edible/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
+	if(QDELETED(parent))
+		return
 	SEND_SIGNAL(parent, COMSIG_FOOD_CROSSED, arrived, bitecount)
 
 ///Response to being used to customize something

@@ -75,7 +75,7 @@
 
 /obj/item/hierophant_club/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	// If our target is the beacon and the hierostaff is next to the beacon, we're trying to pick it up.
-	if (interacting_with == beacon)
+	if (interacting_with == beacon || !isturf(interacting_with.loc))
 		return NONE
 
 	if (!blink_activated)

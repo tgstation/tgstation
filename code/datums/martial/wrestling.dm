@@ -326,11 +326,11 @@ DEFINE_PROC_VERB(/mob/living, wrestling_help, "Recall Teachings", "Remember how 
 
 			switch(rand(1,3))
 				if (2)
-					defender.adjustBruteLoss(rand(20,30))
+					defender.adjust_brute_loss(rand(20,30))
 				if (3)
 					EX_ACT(defender, EXPLODE_LIGHT)
 				else
-					defender.adjustBruteLoss(rand(10,20))
+					defender.adjust_brute_loss(rand(10,20))
 		else
 			EX_ACT(defender, EXPLODE_LIGHT)
 
@@ -364,7 +364,7 @@ DEFINE_PROC_VERB(/mob/living, wrestling_help, "Recall Teachings", "Remember how 
 		defender.visible_message(span_danger("[attacker] headbutts [defender]!"), \
 						span_userdanger("You're headbutted by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 		to_chat(attacker, span_danger("You headbutt [defender]!"))
-		defender.adjustBruteLoss(rand(10,20))
+		defender.adjust_brute_loss(rand(10,20))
 		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
 		defender.Unconscious(2 SECONDS)
 	log_combat(attacker, defender, "headbutted")
@@ -380,7 +380,7 @@ DEFINE_PROC_VERB(/mob/living, wrestling_help, "Recall Teachings", "Remember how 
 					span_userdanger("You're roundhouse-kicked by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 	to_chat(attacker, span_danger("You roundhouse-kick [defender]!"))
 	playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
-	defender.adjustBruteLoss(rand(10,20))
+	defender.adjust_brute_loss(rand(10,20))
 
 	var/turf/T = get_edge_target_turf(attacker, get_dir(attacker, get_step_away(defender, attacker)))
 	if (T && isturf(T))
@@ -424,7 +424,7 @@ DEFINE_PROC_VERB(/mob/living, wrestling_help, "Recall Teachings", "Remember how 
 			if (falling == 1)
 				attacker.visible_message(span_danger("...and dives head-first into the ground, ouch!"), \
 								span_userdanger("...and dive head-first into the ground, ouch!"))
-				attacker.adjustBruteLoss(rand(10,20))
+				attacker.adjust_brute_loss(rand(10,20))
 				attacker.Paralyze(60)
 			to_chat(attacker, span_warning("[defender] is too far away!"))
 			return
@@ -452,9 +452,9 @@ DEFINE_PROC_VERB(/mob/living, wrestling_help, "Recall Teachings", "Remember how 
 			if (prob(33) || defender.stat)
 				EX_ACT(defender, EXPLODE_LIGHT)
 			else
-				defender.adjustBruteLoss(rand(20,30))
+				defender.adjust_brute_loss(rand(20,30))
 		else
-			defender.adjustBruteLoss(rand(20,30))
+			defender.adjust_brute_loss(rand(20,30))
 
 		defender.Paralyze(4 SECONDS)
 

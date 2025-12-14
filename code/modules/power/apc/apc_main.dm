@@ -173,35 +173,13 @@
 	//. += NAMEOF(src, locked)
 	return .
 
-/obj/machinery/power/apc/Initialize(mapload, ndir)
+/obj/machinery/power/apc/Initialize(mapload)
 	. = ..()
+
 	//APCs get added to their own processing tasks for the machines subsystem.
 	if (!(datum_flags & DF_ISPROCESSING))
 		datum_flags |= DF_ISPROCESSING
 		SSmachines.processing_apcs += src
-
-	//Pixel offset its appearance based on its direction
-	dir = ndir
-	switch(dir)
-		if(NORTH)
-			offset_old = pixel_y
-			pixel_y = APC_PIXEL_OFFSET
-		if(SOUTH)
-			offset_old = pixel_y
-			pixel_y = -APC_PIXEL_OFFSET
-		if(EAST)
-			offset_old = pixel_x
-			pixel_x = APC_PIXEL_OFFSET
-		if(WEST)
-			offset_old = pixel_x
-			pixel_x = -APC_PIXEL_OFFSET
-
-	var/image/hud_image = image(icon = 'icons/mob/huds/hud.dmi', icon_state = "apc_hacked")
-	hud_image.pixel_w = pixel_x
-	hud_image.pixel_z = pixel_y
-	hud_list = list(
-		MALF_APC_HUD = hud_image
-	)
 
 	//Assign it to its area. If mappers already assigned an area string fast load the area from it else get the current area
 	var/area/our_area = get_area(loc)
@@ -236,8 +214,10 @@
 			cell.charge = start_charge * cell.maxcharge / 100 // (convert percentage to actual value)
 		make_terminal()
 		///This is how we test to ensure that mappers use the directional subtypes of APCs, rather than use the parent and pixel-shift it themselves.
+		setDir(dir)
 		if(abs(offset_old) != APC_PIXEL_OFFSET)
 			log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "y"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
+		find_and_mount_on_atom()
 	// For apcs created during the round players need to configure them from scratch
 	else
 		opened = APC_COVER_OPENED
@@ -261,7 +241,6 @@
 
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Toggle interface lock")
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
-	find_and_hang_on_wall()
 
 /obj/machinery/power/apc/Destroy()
 	if(malfai)
@@ -276,6 +255,30 @@
 	if(terminal)
 		disconnect_terminal()
 	return ..()
+
+/obj/machinery/power/apc/setDir(newdir)
+	. = ..()
+
+	switch(newdir)
+		if(NORTH)
+			offset_old = pixel_y
+			pixel_y = APC_PIXEL_OFFSET
+		if(SOUTH)
+			offset_old = pixel_y
+			pixel_y = -APC_PIXEL_OFFSET
+		if(EAST)
+			offset_old = pixel_x
+			pixel_x = APC_PIXEL_OFFSET
+		if(WEST)
+			offset_old = pixel_x
+			pixel_x = -APC_PIXEL_OFFSET
+
+	var/image/hud_image = image(icon = 'icons/mob/huds/hud.dmi', icon_state = "apc_hacked")
+	hud_image.pixel_w = pixel_x
+	hud_image.pixel_z = pixel_y
+	hud_list = list(
+		MALF_APC_HUD = hud_image
+	)
 
 /obj/machinery/power/apc/on_saboteur(datum/source, disrupt_duration)
 	. = ..()

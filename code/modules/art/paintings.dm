@@ -12,6 +12,7 @@
 	density = TRUE
 	resistance_flags = FLAMMABLE
 	max_integrity = 60
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
 	var/obj/item/canvas/painting = null
 
 //Adding canvases
@@ -258,7 +259,10 @@
 	LAZYREMOVE(zoom_by_observer, user.key)
 
 /obj/item/canvas/proc/finalize(mob/user)
-	if(painting_metadata.loaded_from_json || finalized)
+	if(finalized || painting_metadata.loaded_from_json)
+		return
+	if(!in_range(src, user))
+		user.balloon_alert(user, "too far away!")
 		return
 	if(!try_rename(user))
 		return
@@ -275,7 +279,7 @@
 #define CURATOR_PERCENTILE_CUT 0.225
 #define SERVICE_PERCENTILE_CUT 0.125
 
-/obj/item/canvas/proc/patron(mob/user)
+/obj/item/canvas/proc/patron(mob/living/user)
 	if(!finalized || !isliving(user))
 		return
 	if(!painting_metadata.loaded_from_json)
@@ -314,7 +318,7 @@
 			if(curator_cut)
 				for(var/datum/bank_account/curator as anything in curator_accounts)
 					curator.adjust_money(curator_cut, "Painting: Patronage cut")
-					curator.bank_card_talk("Cut on patronage received, account now holds [curator.account_balance] cr.")
+					curator.bank_card_talk("Cut on patronage received, account now holds [curator.account_balance] [MONEY_SYMBOL].")
 
 	if(istype(loc, /obj/structure/sign/painting))
 		var/obj/structure/sign/painting/frame = loc
@@ -327,6 +331,10 @@
 	last_patron = WEAKREF(user.mind)
 
 	to_chat(user, span_notice("Nanotrasen Trust Foundation thanks you for your contribution. You're now an official patron of this painting."))
+	if(HAS_PERSONALITY(user, /datum/personality/creative))
+		user.add_mood_event("creative_patronage", /datum/mood_event/creative_patronage)
+	if(HAS_PERSONALITY(user, /datum/personality/unimaginative))
+		user.add_mood_event("unimaginative_patronage", /datum/mood_event/unimaginative_patronage)
 	var/list/possible_frames = SSpersistent_paintings.get_available_frames(offer_amount)
 	if(possible_frames.len <= 1) // Not much room for choices here.
 		return
@@ -356,7 +364,7 @@
 /obj/item/canvas/proc/can_select_frame(mob/user)
 	if(!istype(loc, /obj/structure/sign/painting))
 		return FALSE
-	if(!user?.CanReach(loc) || IS_DEAD_OR_INCAP(user))
+	if(!loc.IsReachableBy(user) || IS_DEAD_OR_INCAP(user))
 		return FALSE
 	if(!last_patron || !IS_WEAKREF_OF(user?.mind, last_patron))
 		return FALSE
@@ -709,11 +717,9 @@
 /obj/structure/sign/painting/get_save_vars()
 	return ..() - NAMEOF(src, icon)
 
-/obj/structure/sign/painting/Initialize(mapload, dir, building)
+/obj/structure/sign/painting/Initialize(mapload)
 	. = ..()
 	SSpersistent_paintings.painting_frames += src
-	if(dir)
-		setDir(dir)
 
 /obj/structure/sign/painting/Destroy()
 	. = ..()
@@ -728,12 +734,8 @@
 	else
 		return ..()
 
-/obj/structure/sign/painting/knock_down(mob/living/user)
-	var/turf/drop_turf
-	if(user)
-		drop_turf = get_turf(user)
-	else
-		drop_turf = drop_location()
+/obj/structure/sign/painting/atom_deconstruct(disassembled)
+	var/turf/drop_turf = drop_location()
 	current_canvas?.forceMove(drop_turf)
 	var/obj/item/wallframe/frame = new wallframe_type(drop_turf)
 	frame.update_integrity(get_integrity()) //Transfer how damaged it is.
@@ -770,7 +772,7 @@
 	INVOKE_ASYNC(current_canvas, TYPE_PROC_REF(/obj/item/canvas, select_new_frame), user)
 	return CLICK_ACTION_SUCCESS
 
-/obj/structure/sign/painting/proc/frame_canvas(mob/user, obj/item/canvas/new_canvas)
+/obj/structure/sign/painting/proc/frame_canvas(mob/living/user, obj/item/canvas/new_canvas)
 	if(!(new_canvas.type in accepted_canvas_types))
 		to_chat(user, span_warning("[new_canvas] won't fit in this frame."))
 		return FALSE
@@ -781,6 +783,10 @@
 		to_chat(user,span_notice("You frame [current_canvas]."))
 		add_art_element()
 		update_appearance()
+		if(HAS_PERSONALITY(user, /datum/personality/creative))
+			user.add_mood_event("creative_framing", /datum/mood_event/creative_framing)
+		if(HAS_PERSONALITY(user, /datum/personality/unimaginative))
+			user.add_mood_event("unimaginative_framing", /datum/mood_event/unimaginative_framing)
 		return TRUE
 	return FALSE
 
@@ -922,7 +928,7 @@
 	var/our_dir = get_dir(user, on_wall)
 	var/check_dir = our_dir & (EAST|WEST) ? NORTH : EAST
 	var/turf/closed/wall/second_wall = get_step(on_wall, check_dir)
-	if(!istype(second_wall) || !user.CanReach(second_wall))
+	if(!istype(second_wall) || !second_wall.IsReachableBy(user))
 		to_chat(user, span_warning("You need a reachable wall to the [check_dir == EAST ? "right" : "left"] of this one to mount this frame!"))
 		return FALSE
 	if(check_wall_item(second_wall, our_dir, wall_external))
@@ -944,11 +950,11 @@
 	wallframe_type = /obj/item/wallframe/painting/large
 
 /obj/structure/sign/painting/large/Initialize(mapload)
-	. = ..()
 	// Necessary so that the painting is framed correctly by the frame overlay when flipped.
 	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 	if(mapload)
 		finalize_size()
+	return ..()
 
 /**
  * This frame is visually put between two wall turfs and it has an icon that's bigger than 32px, and because
@@ -971,7 +977,10 @@
 		if(EAST)
 			bound_height = 64
 
-/obj/structure/sign/painting/large/frame_canvas(mob/user, obj/item/canvas/new_canvas)
+/obj/structure/sign/painting/large/get_turfs_to_mount_on()
+	return (!pixel_x && !pixel_y) ? list(get_step(src, dir)) : ..()
+
+/obj/structure/sign/painting/large/frame_canvas(mob/living/user, obj/item/canvas/new_canvas)
 	. = ..()
 	if(.)
 		set_painting_offsets()

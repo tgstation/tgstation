@@ -23,6 +23,8 @@
 	var/active_force = 30
 	/// Throwforce while active.
 	var/active_throwforce = 20
+	/// The throw speed of the weapon when on
+	var/active_throw_speed = 4
 	/// Sharpness while active.
 	var/active_sharpness = SHARP_EDGED
 	/// Hitsound played attacking while active.
@@ -61,7 +63,7 @@
 		/datum/component/transforming, \
 		force_on = active_force, \
 		throwforce_on = active_throwforce, \
-		throw_speed_on = 4, \
+		throw_speed_on = active_throw_speed, \
 		sharpness_on = active_sharpness, \
 		hitsound_on = active_hitsound, \
 		w_class_on = active_w_class, \
@@ -156,6 +158,7 @@
 
 	active_force = 150
 	active_throwforce = 30
+	active_throw_speed = 3
 	active_w_class = WEIGHT_CLASS_HUGE
 
 /obj/item/melee/energy/axe/make_transformable()
@@ -163,7 +166,7 @@
 		/datum/component/transforming, \
 		force_on = active_force, \
 		throwforce_on = active_throwforce, \
-		throw_speed_on = throw_speed, \
+		throw_speed_on = active_throw_speed, \
 		sharpness_on = sharpness, \
 		w_class_on = active_w_class, \
 	)
@@ -209,6 +212,9 @@
 
 /obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return FALSE
+
+	if(attack_type == OVERWHELMING_ATTACK)
 		return FALSE
 
 	if(attack_type == LEAP_ATTACK)
@@ -329,6 +335,10 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	light_color = COLOR_RED
 
+/obj/item/melee/energy/sword/pirate/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item) //closed sword guard
+
 /// Energy blades, which are effectively perma-extended energy swords
 /obj/item/melee/energy/blade
 	name = "energy blade"
@@ -380,13 +390,9 @@
 	icon_angle = 0
 
 /obj/item/melee/energy/sword/surplus
-	name = "\improper Type I 'Iaito' energy sword"
-	desc = "Oversized, overengineered, and mass-produced. The two blades help make up for the poor cutting plane the emitter generates. Hopefully. \
-		Supposedly, this version of the energy sword was a Waffle Corp prototype that was first trialed in a variety of armed conflicts around the interstellar \
-		frontier. The success rate, and survival of its users, were abysmally low. To make matters worse, they had made so many of these swords (accidentally) that \
-		it would cost the company more disposing of them than trying to offload them to raise a quick buck. Thus, the 'Iaito' was 'born'. Often found in the hands of \
-		grunts, mooks, goons, criminals, wannabe assassins or lunatics. You may or may not fit into one of these categories if you are genuinely attempting to kill someone\
-		with this sword."
+	name = "\improper Pattern I 'Iaito' energy sword"
+	desc = "Oversized, overengineered, and somehow still mass-produced. The twin energy blades, theoretically, help make up for the poor cutting plane the emitter generates. \
+		When there are no more heroes in a desperate struggle, it's kill or be killed."
 	icon_state = "surplus_e_sword"
 	inhand_icon_state = "surplus_e_sword"
 	base_icon_state = "surplus_e_sword"
@@ -396,6 +402,7 @@
 	inhand_y_dimension = 64
 	active_force = 15 // This force is augmented by the state of our target.
 	active_throwforce = 15
+	active_throw_speed = 3
 	alt_continuous = list("whacks", "smacks", "bashes")
 	alt_simple = list("whack", "smack", "bash")
 	alt_sharpness = NONE
@@ -413,6 +420,19 @@
 /obj/item/melee/energy/sword/surplus/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TRANSFORMING_PRE_TRANSFORM, PROC_REF(check_power))
+	AddElement(/datum/element/examine_lore, \
+		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
+		lore = "This early iteration of the now infamous energy sword was, supposedly, a Waffle Corp prototype first trialed in a variety of armed conflicts \
+		around the interstellar frontier.<br>\
+		<br>\
+		Unfortunately, the success rate of the platform, along with the survival rate of its users, was abysmally low. \
+		To make matters worse, initial overestimation of its effectiveness meant that by the time its myriad flaws reared their heads, production had already \
+		reached such a level that the company behind its manufacture would have to pay more to properly disassemble and dispose of the swords, \
+		than if they started offloading them onto markets of various legitimacy to try and recoup costs. Thus, the Iaito was 'born'.<br><br>\
+		As a consequence of its haphazard proliferation and its low market price compared to later, improved energy sword models, examples of the Iaito are \
+		typically found in the hands of various grunts, mooks, goons, criminals, wannabe assassins, lunatics, or those otherwise embroiled in \
+		a desperate struggle. If you're actually trying to kill someone with this sword, you may or may not fit into one or more of those categories." \
+	)
 
 /obj/item/melee/energy/sword/surplus/examine(mob/user)
 	. = ..()
@@ -486,6 +506,26 @@
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) || charge <= 0)
 		return
 
+	expend_charge(user)
+
+/obj/item/melee/energy/sword/surplus/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return FALSE
+
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
+
+	if(attack_type == LEAP_ATTACK)
+		final_block_chance -= 25
+
+	if(prob(final_block_chance) && charge)
+		expend_charge(owner)
+		return TRUE
+
+/obj/item/melee/energy/sword/surplus/proc/expend_charge(mob/user)
+	if(!charge) // not that this will ever get here without charge, but...
+		return
+
 	charge--
 	if(charge <= 0)
 		user.balloon_alert(user, "out of charge!")
@@ -506,3 +546,49 @@
 	playsound(src, 'sound/items/baton/telescopic_baton_folded_pickup.ogg', 40, TRUE)
 	COOLDOWN_START(src, jiggle_cooldown, 1 SECONDS)
 	return TRUE
+
+// Null rod variants
+
+/obj/item/melee/energy/sword/nullrod
+	name = "light energy sword"
+	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
+	throw_speed = 3
+	throw_range = 4
+	block_chance = 30
+	armour_penetration = 0
+	wound_bonus = -10
+	demolition_mod = 1
+	sword_color_icon = "blue"
+	light_color = LIGHT_COLOR_LIGHT_CYAN
+	active_force = 18
+	active_throwforce = 10
+	active_throw_speed = 3
+	alt_force_mod = -3
+
+/obj/item/melee/energy/sword/nullrod/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/nullrod_core)
+
+/obj/item/melee/energy/sword/nullrod/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return FALSE
+
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
+
+	return ..()
+
+/obj/item/melee/energy/sword/nullrod/red
+	name = "dark energy sword"
+	desc = "Woefully ineffective when used on steep terrain."
+	sword_color_icon = "red"
+	light_color = COLOR_SOFT_RED
+
+/obj/item/melee/energy/sword/nullrod/pirate
+	name = "nautical energy cutlass"
+	desc = "Convincing HR that your religion involved piracy was no mean feat."
+	icon_state = "e_cutlass"
+	inhand_icon_state = "e_cutlass"
+	base_icon_state = "e_cutlass"
+	sword_color_icon = null
+	light_color = COLOR_RED

@@ -892,6 +892,12 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	charges = 200
 	max_charges = 200
 
+/obj/item/toner/infinite
+	name = "infinite toner cartridge"
+	desc = "...are you satisfied now?"
+	charges = INFINITY
+	max_charges = INFINITY
+
 #undef PHOTOCOPIER_FEE
 #undef BLANKS_FILE_NAME
 #undef PAPER_PAPER_USE

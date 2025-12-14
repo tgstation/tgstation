@@ -182,7 +182,8 @@
 	if(!use(1) || !repeating || amount <= 0)
 		var/atom/alert_loc = QDELETED(src) ? user : src
 		alert_loc.balloon_alert(user, repeating ? "all used up!" : "treated [parse_zone(healed_zone)]")
-		playsound(patient, heal_end_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+		if(heal_end_sound)
+			playsound(patient, heal_end_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 		return
 	if(heal_continuous_sound && (continuous || !silent))
 		playsound(patient, heal_continuous_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
@@ -337,7 +338,7 @@
 
 /// Healing a simple mob, just an adjustbruteloss call
 /obj/item/stack/medical/proc/heal_simplemob(mob/living/patient, mob/living/user)
-	patient.adjustBruteLoss(-1 * (heal_brute * patient.maxHealth / 100))
+	patient.adjust_brute_loss(-1 * (heal_brute * patient.maxHealth / 100))
 	user.visible_message(
 		span_green("[user] applies [src] on [patient]."),
 		span_green("You apply [src] on [patient]."),
@@ -500,7 +501,7 @@
 			balloon_alert(user, "not enough gauze!")
 			return
 		new /obj/item/stack/sheet/cloth(I.drop_location())
-		if(user.CanReach(src))
+		if(IsReachableBy(user))
 			user.visible_message(span_notice("[user] cuts [src] into pieces of cloth with [I]."), \
 				span_notice("You cut [src] into pieces of cloth with [I]."), \
 				span_hear("You hear cutting."))
@@ -548,7 +549,7 @@
 	max_amount = 10
 	repeating = TRUE
 	heal_brute = 10
-	stop_bleeding = 0.6
+	stop_bleeding = 0.5
 	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
 	merge_type = /obj/item/stack/medical/suture
 	apply_verb = "suturing"
@@ -772,7 +773,7 @@
 /obj/item/stack/medical/poultice/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/living/user)
 	. = ..()
 	playsound(src, 'sound/misc/soggy.ogg', 30, TRUE)
-	healed_mob.adjustOxyLoss(amount_healed)
+	healed_mob.adjust_oxy_loss(amount_healed)
 
 /obj/item/stack/medical/bandage
 	name = "first aid bandage"

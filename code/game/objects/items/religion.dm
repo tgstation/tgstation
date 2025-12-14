@@ -9,6 +9,7 @@
 	attack_verb_simple = list("forcefully inspire", "violently encourage", "relentlessly galvanize")
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	var/inspiration_available = TRUE //If this banner can be used to inspire crew
 	var/morale_time = 0
 	var/morale_cooldown = 600 //How many deciseconds between uses
@@ -66,8 +67,8 @@
 
 /obj/item/banner/proc/inspiration(mob/living/carbon/human/inspired_human)
 	var/need_mob_update = FALSE
-	need_mob_update += inspired_human.adjustBruteLoss(-15, updating_health = FALSE)
-	need_mob_update += inspired_human.adjustFireLoss(-15, updating_health = FALSE)
+	need_mob_update += inspired_human.adjust_brute_loss(-15, updating_health = FALSE)
+	need_mob_update += inspired_human.adjust_fire_loss(-15, updating_health = FALSE)
 	if(need_mob_update)
 		inspired_human.updatehealth()
 	inspired_human.AdjustStun(-4 SECONDS)
@@ -129,8 +130,8 @@
 
 /obj/item/banner/medical/special_inspiration(mob/living/carbon/human/inspired_human)
 	var/need_mob_update = FALSE
-	need_mob_update += inspired_human.adjustToxLoss(-15, updating_health = FALSE)
-	need_mob_update += inspired_human.setOxyLoss(0, updating_health = FALSE)
+	need_mob_update += inspired_human.adjust_tox_loss(-15, updating_health = FALSE)
+	need_mob_update += inspired_human.set_oxy_loss(0, updating_health = FALSE)
 	if(need_mob_update)
 		inspired_human.updatehealth()
 	inspired_human.reagents.add_reagent(/datum/reagent/medicine/inaprovaline, 5)
@@ -404,8 +405,8 @@
 
 /obj/item/claymore/weak
 	desc = "This one is rusted."
-	force = 24
-	armour_penetration = 10
+	force = 30
+	armour_penetration = 15
 
 /obj/item/claymore/weak/make_stabby()
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -9)

@@ -81,7 +81,7 @@
 		if (COOLDOWN_FINISHED(src, clack_cooldown))
 			click_clack()
 		return ..()
-	if (!IsEdible(attacked) || attacked.w_class > WEIGHT_CLASS_NORMAL || !isnull(tonged))
+	if (!IS_EDIBLE(attacked) || attacked.w_class > WEIGHT_CLASS_NORMAL || !isnull(tonged))
 		return ..()
 	tonged = attacked
 	attacked.do_pickup_animation(src)

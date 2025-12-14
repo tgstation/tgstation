@@ -183,7 +183,7 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 
 /// Checks if any of the armor values are non-zero, so this technically also counts negative armor!
 /datum/armor/proc/has_any_armor()
-	for(var/rating as anything in ARMOR_LIST_ALL())
+	for(var/rating in ARMOR_LIST_ALL())
 		if(vars[rating])
 			return TRUE
 	return FALSE

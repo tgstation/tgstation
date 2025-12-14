@@ -9,6 +9,13 @@
 		SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
 		layer = HIGH_TURF_LAYER
 
+/obj/structure/plaque/static_plaque/get_moutable_objects()
+	return list()
+
+/obj/structure/plaque/static_plaque/find_and_mount_on_atom(mark_for_late_init, late_init)
+	if(isProbablyWallMounted(src))
+		return ..()
+
 /obj/structure/plaque/static_plaque/atmos
 	name = "\improper FEA Atmospherics Division plaque"
 	desc = "This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands."
@@ -38,9 +45,9 @@
 
 //Current stations
 
-// Birdshot: added Apr 29, 2023 (#74371)
-/obj/structure/plaque/static_plaque/golden/commission/birdshot
-	desc = "Spinward Sector Station SS-13\n'Birdshot' Class Outpost\nCommissioned 29/04/2563\n'Shooting for the Stars'"
+// Catwalk: added Apr 10, 2025 (#90532)
+/obj/structure/plaque/static_plaque/golden/commission/catwalk
+	desc = "Spinward Sector Station SS-13\n'Catwalk' Class Outpost\nCommissioned 10/04/2565\n'The New Level'"
 
 // Deltastation: added Dec 17, 2016 (#22066)
 /obj/structure/plaque/static_plaque/golden/commission/delta
@@ -123,6 +130,10 @@
 // Uterusstation: added Sep 03, 2011 (bbd6db9ce2d6341892b89a620593fc8877f5a817), removed Jun 21, 2012 (72d72f7ce522c2d2ad4863f44ee9f5054413c489)- 9 months, 18 days
 /obj/structure/plaque/static_plaque/golden/commission/uterus
 	desc = "Spinward Sector Station SS-01\n'Uterus' Class Outpost\nCommissioned 03/09/2551\nDecommissioned 21/06/2552\n'Humanity's Vanguard'"
+
+// Birdshot: added Apr 29, 2023 (#74371), removed Jul 9, 2025 (#92022) — 2 years, 2 months, 10 days
+/obj/structure/plaque/static_plaque/golden/commission/birdshot
+	desc = "Spinward Sector Station SS-13\n'Birdshot' Class Outpost\nCommissioned 29/04/2563\nDecommissioned 09/07/2565\n'Shooting for the Stars'"
 
 // Other Stations
 

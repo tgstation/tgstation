@@ -41,8 +41,6 @@
 	var/mask_state = "lava-lightmask"
 	/// The type for the preset fishing spot of this type of turf.
 	var/fish_source_type = /datum/fish_source/lavaland
-	/// The color we use for our immersion overlay
-	var/immerse_overlay_color = "#a15e1b"
 	/// Whether the immerse element has been added yet or not
 	var/immerse_added = FALSE
 	/// Lazy list of atoms that we've checked that can/cannot burn
@@ -75,7 +73,7 @@
 		START_PROCESSING(SSobj, src)
 	if(immerse_added || is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
 		return
-	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color)
+	AddElement(/datum/element/immerse, "immerse", 215)
 	immerse_added = TRUE
 
 /**
@@ -86,7 +84,7 @@
 /turf/open/lava/Entered(atom/movable/arrived)
 	. = ..()
 	if(!immerse_added && !is_type_in_typecache(arrived, GLOB.immerse_ignored_movable))
-		AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color)
+		AddElement(/datum/element/immerse, "immerse", 215)
 		immerse_added = TRUE
 	if(burn_stuff(arrived))
 		START_PROCESSING(SSobj, src)
@@ -192,7 +190,7 @@
 	return FALSE
 
 /turf/open/lava/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF && rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_TURF && rcd_data[RCD_DESIGN_PATH] == /turf/open/floor/plating/rcd)
 		place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
 	return FALSE
@@ -215,14 +213,14 @@
 	..()
 	if(istype(C, /obj/item/stack/rods/lava))
 		var/obj/item/stack/rods/lava/R = C
-		var/obj/structure/lattice/lava/H = locate(/obj/structure/lattice/lava, src)
+		var/obj/structure/lattice/catwalk/lava/H = locate(/obj/structure/lattice/catwalk/lava, src)
 		if(H)
 			to_chat(user, span_warning("There is already a lattice here!"))
 			return
 		if(R.use(1))
 			to_chat(user, span_notice("You construct a lattice."))
 			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
-			new /obj/structure/lattice/lava(locate(x, y, z))
+			new /obj/structure/lattice/catwalk/lava(locate(x, y, z))
 		else
 			to_chat(user, span_warning("You need one rod to build a heatproof lattice."))
 		return
@@ -344,7 +342,7 @@
 			ADD_TRAIT(burn_living, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
 		burn_living.adjust_fire_stacks(lava_firestacks * seconds_per_tick)
 		burn_living.ignite_mob()
-		burn_living.adjustFireLoss(lava_damage * seconds_per_tick)
+		burn_living.adjust_fire_loss(lava_damage * seconds_per_tick)
 		return TRUE
 
 	return FALSE
@@ -378,7 +376,6 @@
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_LAVA
 	canSmoothWith = SMOOTH_GROUP_FLOOR_LAVA
 	underfloor_accessibility = 2 //This avoids strangeness when routing pipes / wires along catwalks over lava
-	immerse_overlay_color = "#F98511"
 
 /// Smooth lava needs to take after basalt in order to blend better. If you make a /turf/open/lava/smooth subtype for an area NOT surrounded by basalt; you should override this proc.
 /turf/open/lava/smooth/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
@@ -408,19 +405,10 @@
 	immunity_trait = TRAIT_SNOWSTORM_IMMUNE
 	immunity_resistance_flags = FREEZE_PROOF
 	lava_temperature = 100
-	immerse_overlay_color = "#CD4C9F"
 
-/turf/open/lava/plasma/examine(mob/user)
+/turf/open/lava/plasma/Initialize(mapload)
 	. = ..()
-	. += span_info("Some <b>liquid plasma<b> could probably be scooped up with a <b>container</b>.")
-
-/turf/open/lava/plasma/attackby(obj/item/I, mob/user, list/modifiers)
-	if(!I.is_open_container())
-		return ..()
-	if(!I.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 10)))
-		to_chat(user, span_warning("[I] is full."))
-		return
-	user.visible_message(span_notice("[user] scoops some plasma from the [src] with [I]."), span_notice("You scoop out some plasma from the [src] using [I]."))
+	AddElement(/datum/element/reagent_scoopable_atom, /datum/reagent/toxin/plasma)
 
 /turf/open/lava/plasma/do_burn(atom/movable/burn_target, seconds_per_tick = 1)
 	. = TRUE
@@ -430,8 +418,8 @@
 	var/mob/living/burn_living = burn_target
 	var/need_mob_update
 	// This is from plasma, so it should obey plasma biotype requirements
-	need_mob_update += burn_living.adjustToxLoss(15, updating_health = FALSE, required_biotype = MOB_ORGANIC)
-	need_mob_update += burn_living.adjustFireLoss(25, updating_health = FALSE)
+	need_mob_update += burn_living.adjust_tox_loss(15, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+	need_mob_update += burn_living.adjust_fire_loss(25, updating_health = FALSE)
 	if(need_mob_update)
 		burn_living.updatehealth()
 

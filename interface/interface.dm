@@ -40,6 +40,13 @@ DEFINE_VERB(/client, github, "github", "Visit Github", TRUE, "")
 		return
 	DIRECT_OUTPUT(src, link(githuburl))
 
+DEFINE_VERB(/client, config, "config", "View the server configuration files.", TRUE, "")
+	var/configurl = CONFIG_GET(string/configurl)
+	if(!configurl)
+		to_chat(src, span_danger("The Config URL is not set in the server configuration."))
+		return
+	DIRECT_OUTPUT(src, link(configurl))
+
 DEFINE_VERB(/client, reportissue, "report-issue", "Report an issue", TRUE, "")
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(!githuburl)

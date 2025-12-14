@@ -13,6 +13,7 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/glass= SMALL_MATERIAL_AMOUNT * 5)
+	obj_flags = UNIQUE_RENAME | RENAME_NO_DESC
 	///the implant within the case
 	var/obj/item/implant/imp = null
 	///Type of implant this will spawn as imp upon being spawned
@@ -36,18 +37,7 @@
 	return ..()
 
 /obj/item/implantcase/attackby(obj/item/used_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(IS_WRITING_UTENSIL(used_item))
-		if(!user.can_write(used_item))
-			return
-		var/new_name = tgui_input_text(user, "What would you like the label to be?", name, max_length = MAX_NAME_LEN)
-		if((user.get_active_held_item() != used_item) || !user.can_perform_action(src))
-			return
-		if(new_name)
-			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-			name = "implant case - '[new_name]'"
-		else
-			name = "implant case"
-	else if(istype(used_item, /obj/item/implanter))
+	if(istype(used_item, /obj/item/implanter))
 		var/obj/item/implanter/used_implanter = used_item
 		if(used_implanter.imp && !imp)
 			//implanter to case implant transfer
@@ -68,6 +58,8 @@
 	else
 		return ..()
 
+/obj/item/implantcase/nameformat(input, user)
+	return "implant case[input?  " - '[input]'" : null]"
 
 ///An implant case that spawns with a tracking implant, as well as an appropriate name and description.
 /obj/item/implantcase/tracking

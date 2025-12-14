@@ -39,10 +39,10 @@
 	name = ".310 Strilka ammo box (Surplus?)"
 	desc = "It contains a few clips. Goddamn, this thing smells awful. \
 		Has this been sitting in a warehouse for the last several centuries?"
-	ammo_to_spawn = /obj/item/ammo_box/strilka310
+	ammo_to_spawn = /obj/item/ammo_box/speedloader/strilka310
 
 /obj/item/storage/toolbox/ammobox/strilka310/surplus
-	ammo_to_spawn = /obj/item/ammo_box/strilka310/surplus
+	ammo_to_spawn = /obj/item/ammo_box/speedloader/strilka310/surplus
 
 /obj/item/storage/toolbox/ammobox/wt550m9
 	name = "4.6x30mm ammo box"
@@ -122,7 +122,7 @@
 
 	var/i_dont_even_think_once_about_blowing_stuff_up = tgui_alert(user, "Would you like to activate the evidence disposal bomb now?", "BYE BYE", list("Yes","No"))
 
-	if(i_dont_even_think_once_about_blowing_stuff_up != "Yes" || currently_exploding || QDELETED(user) || QDELETED(src) || user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING))
+	if(i_dont_even_think_once_about_blowing_stuff_up != "Yes" || currently_exploding || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING))
 		return
 
 	explosion_timer = addtimer(CALLBACK(src, PROC_REF(think_fast_chucklenuts)), 5 SECONDS, (TIMER_UNIQUE|TIMER_OVERRIDE))
@@ -196,7 +196,7 @@
 /obj/item/storage/toolbox/guncase/revolver
 	name = "revolver gun case"
 	weapon_to_spawn = /obj/item/gun/ballistic/revolver/badass/nuclear
-	extra_to_spawn = /obj/item/ammo_box/a357
+	extra_to_spawn = /obj/item/ammo_box/speedloader/c357
 
 /obj/item/storage/toolbox/guncase/sword_and_board
 	name = "energy sword and shield weapon case"

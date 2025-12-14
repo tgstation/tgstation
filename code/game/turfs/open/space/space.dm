@@ -44,7 +44,7 @@ GLOBAL_LIST_EMPTY(starlight)
 
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
-	MAP_SWITCH(icon_state = "space", icon_state = "space_map")
+	icon_state = MAP_SWITCH("space", "space_map")
 	name = "\proper space"
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(starlight)
 	force_no_gravity = TRUE
 
 /turf/open/space/basic
-	MAP_SWITCH(icon_state = "space", icon_state = "space_basic_map")
+	icon_state = MAP_SWITCH("space", "space_basic_map")
 
 /turf/open/space/basic/New() //Do not convert to Initialize
 	SHOULD_CALL_PARENT(FALSE)
@@ -174,10 +174,10 @@ GLOBAL_LIST_EMPTY(starlight)
 
 /turf/open/space/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	if(the_rcd.mode == RCD_TURF)
-		if(rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
+		if(rcd_data[RCD_DESIGN_PATH] == /turf/open/floor/plating/rcd)
 			place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
-		else if(rcd_data["[RCD_DESIGN_PATH]"] == /obj/structure/lattice/catwalk)
+		else if(rcd_data[RCD_DESIGN_PATH] == /obj/structure/lattice/catwalk)
 			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
 			if(lattice)
 				qdel(lattice)
@@ -191,6 +191,9 @@ GLOBAL_LIST_EMPTY(starlight)
 /turf/open/space/ChangeTurf(path, list/new_baseturfs, flags)
 	. = ..()
 	if (!. || isspaceturf(.))
+		return
+
+	if (flags & CHANGETURF_NO_AREA_CHANGE)
 		return
 
 	var/area/new_turf_area = get_area(.)

@@ -242,7 +242,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/item/ammo_box/strilka310,
+/obj/item/ammo_box/speedloader/strilka310,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing/corner/end/flip{
 	dir = 8

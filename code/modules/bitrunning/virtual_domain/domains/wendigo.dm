@@ -8,10 +8,10 @@
 	map_name = "wendigo"
 	reward_points = BITRUNNER_REWARD_HIGH
 
-/obj/effect/mob_spawn/corpse/human/bitrunner/special(mob/living/spawned_mob)
+/obj/effect/mob_spawn/corpse/human/bitrunner/special(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_mob.apply_status_effect(/datum/status_effect/gutted)
 
-/obj/effect/mob_spawn/corpse/human/cyber_police/special(mob/living/spawned_mob)
+/obj/effect/mob_spawn/corpse/human/cyber_police/special(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_mob.apply_status_effect(/datum/status_effect/gutted)

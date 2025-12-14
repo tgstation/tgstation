@@ -156,5 +156,4 @@
 
 /mob/living/basic/statue/frosty/Initialize(mapload)
 	. = ..()
-	var/static/list/death_loot = list(/obj/item/dnainjector/geladikinesis)
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, /obj/item/dnainjector/geladikinesis)
