@@ -61,6 +61,8 @@
 #define FISHING_LINE_STIFF (1 << 2)
 ///Skip the biting phase and go straight to the fishing phase.
 #define FISHING_LINE_AUTOREEL (1 << 3)
+///Allow the fishing line to be cast through dense objects and walls
+#define FISHING_LINE_PHASE (1 << 4)
 
 ///Keeps the bait from falling from gravity, instead allowing the player to move the bait down with right click.
 #define FISHING_MINIGAME_RULE_BIDIRECTIONAL (1 << 0)
