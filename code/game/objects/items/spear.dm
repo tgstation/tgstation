@@ -294,6 +294,68 @@
 	)
 
 /*
+ * Anti-big monster spear
+ * "WHERES MY DRAGONATOR?!"
+ */
+/obj/item/spear/dragonator
+	icon = 'icons/obj/weapons/48x.dmi'
+	icon_state = "speardragon0"
+	icon_prefix = "speardragon"
+	base_icon_state = "speardragon0"
+	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
+	name = "Giantslayer Spear"
+	desc = "An oversized multi-bladed spear designed to kill large hostile xenoforms such as space dragons or the creatures of lavaland. Capable of being launched from a ballista."
+	demolition_mod = 0.5
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	force = 13
+	throwforce = 23
+	throw_range = 9
+	throw_speed = 5
+	wound_bonus = 0
+	exposed_wound_bonus = 20
+	force_unwielded = 13
+	force_wielded = 21
+	armour_penetration = 15
+	custom_materials =  list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 42,
+		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 15,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 5)
+
+/obj/item/spear/dragonator/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/bane, mob_biotypes = MOB_MINING, damage_multiplier = 3.5) //For killing really big monsters,
+
+/*
+ * Untreated Giantslayer , needs to be thrown into lava
+ */
+/obj/item/spear/dragonator_untreated
+	icon = 'icons/obj/weapons/48x.dmi'
+	icon_state = "speardragonraw0"
+	icon_prefix = "speardragonraw"
+	base_icon_state = "speardragonraw0"
+	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
+	name = "Unfired Giantslayer Spear"
+	desc = "A half-finished giantslayer spear, needs to be thrown in lava to forge the metals to a killing edge."
+	demolition_mod = 0.5
+	wound_bonus = 0
+	exposed_wound_bonus = 0
+	force_unwielded = 5
+	force_wielded = 10
+	armour_penetration = 0
+	custom_materials =  list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 42,
+		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 15,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 5)
+
+/obj/item/spear/dragonator_untreated/fire_act(exposed_temperature, exposed_volume)
+	var/obj/item/spear/dragonator/dragonator = new(loc)
+	playsound(dragonator.loc, 'sound/effects/magic/staff_change.ogg',5)
+	qdel(src)
+
+
+/*
  * Bone Spear
  */
 /obj/item/spear/bonespear //Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
