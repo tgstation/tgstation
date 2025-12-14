@@ -19,7 +19,7 @@
 	severity = 1
 	symptom_delay_min = 18
 	symptom_delay_max = 36
-
+	symptom_cure = /datum/reagent/medicine/mannitol
 	var/list/beard_order = list("Beard (Jensen)", "Beard (Full)", "Beard (Dwarf)", "Beard (Very Long)")
 
 /datum/symptom/beard/Activate(datum/disease/advance/disease)
