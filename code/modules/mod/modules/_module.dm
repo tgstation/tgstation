@@ -35,10 +35,6 @@
 	var/overlay_state_use
 	/// Icon file for the overlay.
 	var/overlay_icon_file = 'icons/mob/clothing/modsuit/mod_modules.dmi'
-	/// Overlay given to the inhand icon of the control unit
-	var/overlay_state_inhand
-	/// Icon file for the inhand overlay.
-	var/inhand_overlay_icon_file = 'icons/mob/inhand/modsuit/mod_modules.dmi'
 	/// Overlay given to the item icon of the control unit
 	var/overlay_state_item
 	/// Icon file for the item overlay

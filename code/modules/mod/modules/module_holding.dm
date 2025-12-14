@@ -47,7 +47,7 @@
 
 /obj/item/mod/module/storage/holding/proc/recursive_core_insertion(datum/storage/bag_of_holding/bag_storage, obj/item/core, mob/user, list/modifiers)
 	possible_bag_bombs[core] = HOLDING_MODULE_PREVENT_DUPLICATE_CHECK
-	if(bag_storage.confirm_recursive_insertion(core, user) && !QDELETED(core) && user.is_holding(core) && user.CanReach(src, core))
+	if(bag_storage.confirm_recursive_insertion(core, user) && !QDELETED(core) && user.is_holding(core) && IsReachableBy(user))
 		possible_bag_bombs[core] = HOLDING_MODULE_CHECK_CONFIRMED
 		base_item_interaction(user, core, modifiers)
 	possible_bag_bombs -= core
@@ -84,7 +84,7 @@
 
 /obj/item/mod/module/storage/holding/proc/recursive_installation(datum/storage/bag_of_holding/bag_storage, obj/item/mod/control/suit, mob/user)
 	possible_bag_bombs[suit] = HOLDING_MODULE_PREVENT_DUPLICATE_CHECK
-	if(bag_storage.confirm_recursive_insertion(src, user) && !QDELETED(suit) && user.is_holding(src) && user.CanReach(suit, src))
+	if(bag_storage.confirm_recursive_insertion(src, user) && !QDELETED(suit) && user.is_holding(src) && suit.IsReachableBy(user))
 		possible_bag_bombs[suit] = HOLDING_MODULE_CHECK_CONFIRMED
 		suit.install(src, user)
 	possible_bag_bombs -= suit
@@ -92,7 +92,7 @@
 /obj/item/mod/module/storage/holding/prebuilt
 	prebuilt = TRUE
 
-/obj/item/mod/module/storage/holding/premade/locked
+/obj/item/mod/module/storage/holding/prebuilt/locked
 	core_removable = FALSE
 
 #undef HOLDING_MODULE_PREVENT_DUPLICATE_CHECK
