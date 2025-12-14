@@ -1,0 +1,4 @@
+/obj/item/ai_module/@SUBTYPES : /obj/item/ai_module/law/@SUBTYPES {@OLD}
+/obj/item/malf_upgrade : /obj/item/ai_module/combat {@OLD}
+/obj/machinery/computer/upload : /obj/machinery/ai_law_rack {@OLD}
+/obj/machinery/computer/upload/borg : @DELETE

@@ -91,7 +91,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 
 /////////// AI Laws
 
-/obj/item/ai_module/core/full/cybersun
+/obj/item/ai_module/law/core/full/cybersun
 	name = "'Cybersun' Core AI Module"
 	law_id = "cybersun"
 

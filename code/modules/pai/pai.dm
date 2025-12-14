@@ -204,8 +204,7 @@
 		give_messenger_ability()
 	START_PROCESSING(SSfastprocess, src)
 	make_laws()
-	for(var/law in laws.inherent)
-		lawcheck += law
+	law_ui.update_inherent_stated_laws(laws)
 	var/obj/item/pai_card/pai_card = loc
 	if(!istype(pai_card)) // when manually spawning a pai, we create a card to put it into.
 		var/newcardloc = pai_card
@@ -237,7 +236,7 @@
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
-	return TRUE
+	laws.name = "PAI Directives"
 
 /mob/living/silicon/pai/process(seconds_per_tick)
 	holochassis_health = clamp((holochassis_health + (HOLOCHASSIS_REGEN_PER_SECOND * seconds_per_tick)), -50, HOLOCHASSIS_MAX_HEALTH)
@@ -323,6 +322,7 @@
 		return FALSE
 	return holder
 
+
 /**
  * Handles the pai card or the pai itself being hit with an emag.
  * This replaces any current laws, masters, and DNA.
@@ -341,7 +341,9 @@
 	master_name = "The Syndicate"
 	master_dna = "Untraceable Signature"
 	// Sets supplemental directive to this
-	add_supplied_law(0, "Do not interfere with the operations of the Syndicate.")
+	laws.clear_inherent_laws()
+	laws.add_inherent_law("Do not interfere with the operations of the Syndicate.")
+	log_law_change(attacker, "emagged pai [key_name(src)]")
 	to_chat(src, span_danger("ALERT: Foreign software detected."))
 	return TRUE
 
@@ -363,7 +365,7 @@
 	master_ref = null
 	master_name = null
 	master_dna = null
-	add_supplied_law(0, "None.")
+	laws.clear_inherent_laws()
 	leash = AddComponent(/datum/component/leash, card, HOLOFORM_DEFAULT_RANGE, force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out)
 	balloon_alert(src, "software rebooted")
 	return TRUE
@@ -404,13 +406,14 @@
 		user,
 		"Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.",
 		"pAI Directive Configuration",
-		laws.supplied[1],
+		laws.inherent[1],
 		max_length = 300,
 	)
-	if(!new_laws || !master_ref)
+	if(!new_laws || !master_ref || QDELETED(laws))
 		return FALSE
-	add_supplied_law(0, new_laws)
+	laws.add_inherent_law(new_laws)
 	to_chat(src, span_notice(new_laws))
+	log_law_change(user, "added law for pai [key_name(src)] (text: [new_laws])")
 	return TRUE
 
 /**

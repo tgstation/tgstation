@@ -69,12 +69,6 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/recycler/can_be_unfasten_wrench(mob/user, silent)
-	if(!(isfloorturf(loc) || isindestructiblefloor(loc)) && !anchored)
-		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
-		return FAILED_UNFASTEN
-	return SUCCESSFUL_UNFASTEN
-
 /obj/machinery/recycler/crowbar_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS

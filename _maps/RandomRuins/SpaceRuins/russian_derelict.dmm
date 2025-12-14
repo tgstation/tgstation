@@ -137,6 +137,19 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/ks13/security/court)
+"ba" = (
+/obj/structure/rack,
+/obj/item/circuitboard/machine/circuit_imprinter/offstation{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/ai_module/law/core/full/drone,
+/obj/item/circuitboard/machine/ai_law_rack/core{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/ks13/ai/corridor)
 "bd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
@@ -4042,15 +4055,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/supermatter)
-"DK" = (
-/obj/structure/rack,
-/obj/item/circuitboard/machine/circuit_imprinter/offstation{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/ai_module/core/full/drone,
-/turf/open/floor/circuit/red/off,
-/area/ruin/space/ks13/ai/corridor)
 "DL" = (
 /obj/structure/table,
 /obj/item/stock_parts/power_store/cell/high{
@@ -5812,6 +5816,15 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
+"MQ" = (
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/obj/item/circuitboard/computer/rdconsole/unlocked,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/ai/vault)
 "MT" = (
 /obj/item/stack/cable_coil/cut,
 /obj/effect/decal/cleanable/dirt,
@@ -6985,15 +6998,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/sec)
-"SM" = (
-/obj/structure/frame/computer{
-	dir = 1
-	},
-/obj/item/circuitboard/computer/rdconsole/unlocked,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/ai/vault)
 "SN" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
@@ -13559,7 +13563,7 @@ Jy
 lq
 YC
 Yc
-DK
+ba
 Yc
 aa
 aa
@@ -14462,7 +14466,7 @@ xf
 zH
 ss
 Jk
-SM
+MQ
 Ym
 xf
 aa

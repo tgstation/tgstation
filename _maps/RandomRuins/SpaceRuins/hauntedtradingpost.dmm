@@ -438,6 +438,12 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/public)
+"dq" = (
+/mob/living/basic/viscerator,
+/obj/effect/turf_decal/bot_red,
+/obj/structure/sign/warning/directional/east,
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "dt" = (
 /obj/structure/chair/sofa/left/brown{
 	dir = 4
@@ -1047,6 +1053,16 @@
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
+"iL" = (
+/mob/living/basic/viscerator,
+/obj/effect/turf_decal/bot_red,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/button/door/directional/north{
+	id = "donk_aicore_door_bolts"
+	},
+/obj/structure/sign/warning/directional/west,
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "iS" = (
 /obj/effect/decal/cleanable/plastic,
 /obj/effect/decal/cleanable/dirt,
@@ -1722,20 +1738,6 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
-"pb" = (
-/obj/structure/cable/multilayer,
-/obj/structure/cable/layer1,
-/obj/structure/safe/floor,
-/obj/item/sticker/syndicate/apc,
-/obj/item/grenade/empgrenade,
-/obj/item/book/granter/crafting_recipe/donk_secret_recipe,
-/obj/item/ai_module/core/full/cybersun,
-/obj/item/reagent_containers/condiment/donksauce,
-/mob/living/basic/cybersun_ai_core{
-	donk_ai_master = 1
-	},
-/turf/open/floor/plating/reinforced,
-/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "pc" = (
 /obj/structure/table/wood,
 /obj/item/cardpack/series_one{
@@ -2983,16 +2985,6 @@
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
-"zQ" = (
-/mob/living/basic/viscerator,
-/obj/effect/turf_decal/bot_red,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/button/door/directional/north{
-	id = "donk_aicore_door_bolts"
-	},
-/obj/structure/sign/warning/directional/west,
-/turf/open/floor/circuit/red/off,
-/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "Ab" = (
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -4079,12 +4071,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/maint)
-"Ju" = (
-/mob/living/basic/viscerator,
-/obj/effect/turf_decal/bot_red,
-/obj/structure/sign/warning/directional/east,
-/turf/open/floor/circuit/red/off,
-/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "Jw" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/donk,
@@ -4126,6 +4112,16 @@
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
+"JR" = (
+/obj/structure/cable/layer1,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ai_module/law/supplied/protect_station{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/machinery/light/red/dim/directional/east,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "JX" = (
 /obj/structure/cable/layer1,
 /obj/structure/chair/office{
@@ -4281,16 +4277,6 @@
 /obj/effect/spawner/random/medical/minor_healing,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
-"Lz" = (
-/obj/structure/cable/layer1,
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/ai_module/supplied/protect_station{
-	pixel_x = 2;
-	pixel_y = 5
-	},
-/obj/machinery/light/red/dim/directional/east,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "LC" = (
 /obj/structure/cable/layer1,
 /obj/machinery/door/firedoor,
@@ -4652,6 +4638,10 @@
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
+"Oy" = (
+/obj/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "OD" = (
 /obj/structure/cable/layer1,
 /obj/machinery/duct,
@@ -4864,10 +4854,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/maint)
-"QA" = (
-/obj/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "QF" = (
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
@@ -5042,6 +5028,20 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/public)
+"RT" = (
+/obj/structure/cable/multilayer,
+/obj/structure/cable/layer1,
+/obj/structure/safe/floor,
+/obj/item/sticker/syndicate/apc,
+/obj/item/grenade/empgrenade,
+/obj/item/book/granter/crafting_recipe/donk_secret_recipe,
+/obj/item/ai_module/law/core/full/cybersun,
+/obj/item/reagent_containers/condiment/donksauce,
+/mob/living/basic/cybersun_ai_core{
+	donk_ai_master = 1
+	},
+/turf/open/floor/plating/reinforced,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "RU" = (
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -6673,7 +6673,7 @@ je
 Nw
 Ii
 ht
-QA
+Oy
 lA
 nE
 IL
@@ -6718,7 +6718,7 @@ Nw
 eN
 Oh
 MR
-zQ
+iL
 Gk
 iv
 qK
@@ -6767,7 +6767,7 @@ iv
 iv
 ot
 XW
-pb
+RT
 MR
 tl
 YR
@@ -6808,7 +6808,7 @@ BE
 yb
 Im
 MR
-Ju
+dq
 Gk
 iv
 PX
@@ -6853,7 +6853,7 @@ je
 Nw
 AB
 MR
-QA
+Oy
 kl
 nE
 SK
@@ -7029,7 +7029,7 @@ hV
 vx
 tm
 Gg
-Lz
+JR
 bu
 cv
 gb
