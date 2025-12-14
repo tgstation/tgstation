@@ -31,7 +31,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	create_reagents(100, NO_REACT)
 	if(has_water_reclaimer)
 		reagents.add_reagent(dispensedreagent, 100)
-	//AddComponent(/datum/component/plumbing/simple_demand/extended)
+	AddComponent(/datum/component/plumbing/simple_demand/extended)
 
 /obj/structure/sink/setDir(newdir)
 	. = ..()
@@ -208,7 +208,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 
 /obj/structure/sink/process(seconds_per_tick)
 	// Water reclamation complete?
-	if(!has_water_reclaimer || reagents.total_volume >= reagents.maximum_volume)
+	if(!has_water_reclaimer || QDELETED(reagents) || reagents.holder_full())
 		return PROCESS_KILL
 
 	reagents.add_reagent(dispensedreagent, reclaim_rate * seconds_per_tick)
@@ -222,7 +222,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 			new M.sheet_type(loc, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
 
 /obj/structure/sink/proc/begin_reclamation()
-	START_PROCESSING(SSplumbing, src)
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"

@@ -381,11 +381,11 @@
 	QDEL_LAZYLIST(fishes)
 
 /obj/structure/toilet/proc/begin_reclamation()
-	START_PROCESSING(SSplumbing, src)
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/toilet/process(seconds_per_tick)
 	// Water reclamation complete?
-	if(!has_water_reclaimer || reagents.total_volume >= reagents.maximum_volume)
+	if(!has_water_reclaimer || QDELETED(reagents) || reagents.holder_full())
 		return PROCESS_KILL
 	reagents.add_reagent(reagent_id, reclaim_rate * seconds_per_tick)
 

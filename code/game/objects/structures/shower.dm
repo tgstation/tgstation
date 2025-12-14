@@ -68,7 +68,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	create_reagents(reagent_capacity)
 	if(has_water_reclaimer)
 		reagents.add_reagent(reagent_id, reagent_capacity)
-	//AddComponent(/datum/component/plumbing/simple_demand/extended)
+	AddComponent(/datum/component/plumbing/simple_demand/extended)
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -311,6 +311,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	return TRUE
 
 /obj/machinery/shower/process(seconds_per_tick)
+	if(QDELETED(reagents))
+		return PROCESS_KILL
+
 	// the TIMED mode cutoff feature. User has to manually reactivate.
 	if(intended_on && mode == SHOWER_MODE_TIMED && COOLDOWN_FINISHED(src, timed_cooldown))
 		// the TIMED mode cutoff feature. User has to manually reactivate.
@@ -329,9 +332,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 	// Reclaim water
 	if(!actually_on)
-		if(has_water_reclaimer && reagents.total_volume < reagents.maximum_volume)
+		if(has_water_reclaimer && !reagents.holder_full())
 			reagents.add_reagent(reagent_id, refill_rate * seconds_per_tick)
-			return 0
+			return
 
 		// FOREVER mode stays processing so it can cycle back on.
 		return mode == SHOWER_MODE_FOREVER ? 0 : PROCESS_KILL
