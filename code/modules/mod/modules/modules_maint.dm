@@ -278,7 +278,7 @@
 /obj/item/mod/module/stamp
 	name = "MOD stamper module"
 	desc = "A module installed into the wrist of the suit, this functions as a high-power stamp, \
-		able to switch between accept and deny modes."
+		able to switch between accept, deny, and void modes."
 	icon_state = "stamp"
 	module_type = MODULE_ACTIVE
 	complexity = 1
@@ -290,14 +290,18 @@
 
 /obj/item/stamp/mod
 	name = "MOD electronic stamp"
-	desc = "A high-power stamp, able to switch between accept and deny mode when used."
+	desc = "A high-power stamp, able to switch between accept, deny, and void modes when used."
+	icon_state = "stamp-ok"
 
 /obj/item/stamp/mod/attack_self(mob/user, modifiers)
-	. = ..()
-	if(icon_state == "stamp-ok")
-		icon_state = "stamp-deny"
-	else
-		icon_state = "stamp-ok"
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE, -3)
+	switch(icon_state)
+		if("stamp-ok")
+			icon_state = "stamp-deny"
+		if("stamp-deny")
+			icon_state = "stamp-void"
+		if("stamp-void")
+			icon_state = "stamp-ok"
 	balloon_alert(user, "switched mode")
 
 ///Atrocinator - Flips your gravity.
