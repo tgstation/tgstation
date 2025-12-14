@@ -221,6 +221,9 @@ IPINTEL_REJECT_BAD
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://justanotherday.example.com
 
+## Config URL - Intended for servers that have a repository/public folder/etc. that show off the config that they are running
+# CONFIGURL https://github.com/tgstation-operations/server-config
+
 ## System command that invokes yt-dlp, used by Play Internet Sound.
 ## You can install yt-dlp with
 ## "pip install yt-dlp" if you have pip installed
