@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - config: "If you publicly host a copy of your server's config, you may now link to the public URL in the 'CONFIGURL' setting in the server config. It will show to players in the Escape Menu's Resources Carousel."
