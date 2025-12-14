@@ -76310,6 +76310,9 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
+/mob/living/basic/pet/cat/space{
+	name = "Tomas"
+	},
 /turf/open/openspace,
 /area/station/commons/fitness/recreation)
 "uDa" = (

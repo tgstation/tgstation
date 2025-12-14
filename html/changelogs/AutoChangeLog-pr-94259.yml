@@ -1,0 +1,4 @@
+author: "FalloutFalcon"
+delete-after: True
+changes:
+  - spellcheck: "minor cleanup on some usecases of \"credits\""
