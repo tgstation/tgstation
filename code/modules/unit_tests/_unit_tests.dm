@@ -148,6 +148,7 @@
 #include "damp_rag.dm"
 #include "dcs_check_list_arguments.dm"
 #include "dcs_get_id_from_elements.dm"
+#include "death_moodlets.dm"
 #include "designs.dm"
 #include "dismemberment.dm"
 #include "dna_infusion.dm"
