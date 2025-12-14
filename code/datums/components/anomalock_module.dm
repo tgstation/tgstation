@@ -25,6 +25,10 @@
 	var/obj/item/assembly/signaler/anomaly/core_type = pick(anomaly_types)
 	core = new core_type(parent)
 
+/datum/component/anomaly_locked_module/Destroy(force)
+	. = ..()
+	QDEL_NULL(core)
+
 /datum/component/anomaly_locked_module/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MODULE_TRIGGERED, PROC_REF(on_module_triggered))
 	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interact))
@@ -33,7 +37,6 @@
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_update_icon_state))
 
 /datum/component/anomaly_locked_module/UnregisterFromParent()
-	QDEL_NULL(core)
 	UnregisterSignal(parent, list(
 		COMSIG_MODULE_TRIGGERED,
 		COMSIG_ATOM_ITEM_INTERACTION,
