@@ -241,9 +241,13 @@
 		rank = "Silicon"
 
 	var/datum/bank_account/account
+	var/list/access
+	var/mob/living/living_user
+	var/obj/item/card/id/id_card
+
 	if(isliving(user))
-		var/mob/living/living_user = user
-		var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
+		living_user = user
+		id_card = living_user.get_idcard(TRUE)
 		account = id_card?.registered_account // We can still assign an account for request department purposes.
 		if(self_paid)
 			if(!istype(id_card))
@@ -255,7 +259,7 @@
 			if(!istype(account))
 				say("Invalid bank account.")
 				return
-			var/list/access = id_card.GetAccess()
+			access = id_card.GetAccess()
 			if(pack.access_view && !(pack.access_view in access))
 				say("[id_card] lacks the requisite access for this purchase.")
 				return
@@ -279,6 +283,17 @@
 					return
 				if(dept_choice == "Cargo Budget")
 					personal_department = null
+
+		if(!account || !id_card || !living_user || !access)
+			living_user = user
+			id_card = living_user.get_idcard(TRUE)
+			account = id_card?.registered_account
+			access = id_card.GetAccess()
+		if(pack.access_view && !(pack.access_view in access) && personal_department)
+			// We want to block cargo requests when a player is request access restricted content they don't have.
+			// BUT only when it's requested with non-cargo funds, as cargo had direct oversight over their own purchases with their own budget.
+			say("ERROR: User lacks the requisite access for this purchase request.")
+			return
 
 	if((pack.order_flags & ORDER_GOODY) && !self_paid)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
