@@ -1806,9 +1806,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "pG" = (
 /obj/structure/lattice/catwalk,
-/obj/effect/spawner/structure/electrified_grille{
-	spawn_list = list(/obj/structure/grille,/obj/structure/cable/layer1)
-	},
+/obj/effect/spawner/structure/electrified_grille/layer1,
 /turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "pN" = (
@@ -3036,9 +3034,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
 "At" = (
 /obj/structure/lattice/catwalk,
-/obj/effect/spawner/structure/electrified_grille{
-	spawn_list = list(/obj/structure/grille,/obj/structure/cable/layer1)
-	},
+/obj/effect/spawner/structure/electrified_grille/layer1,
 /turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
 "Au" = (
@@ -3449,9 +3445,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "EC" = (
 /obj/structure/lattice/catwalk,
-/obj/effect/spawner/structure/electrified_grille{
-	spawn_list = list(/obj/structure/grille,/obj/structure/cable/layer1)
-	},
+/obj/effect/spawner/structure/electrified_grille/layer1,
 /turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "EK" = (
@@ -5543,9 +5537,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "Wf" = (
 /obj/structure/lattice/catwalk,
-/obj/effect/spawner/structure/electrified_grille{
-	spawn_list = list(/obj/structure/grille,/obj/structure/cable/layer1)
-	},
+/obj/effect/spawner/structure/electrified_grille/layer1,
 /turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
 "Wg" = (

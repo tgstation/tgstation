@@ -1957,6 +1957,11 @@
 	},
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory)
+"kj" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory)
 "kk" = (
 /obj/structure/window/spawner/directional/south,
 /obj/structure/window/spawner/directional/north,
@@ -3629,6 +3634,10 @@
 /obj/item/crowbar,
 /obj/item/multitool,
 /turf/open/floor/wood,
+/area/awaymission/caves/heretic_laboratory_clean)
+"tc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
 "td" = (
 /obj/machinery/vending/wardrobe/chef_wardrobe,
@@ -23394,7 +23403,7 @@ OQ
 WY
 xW
 SP
-eJ
+kj
 eJ
 Ay
 CQ
@@ -26235,7 +26244,7 @@ xl
 xl
 WF
 dO
-Hz
+tc
 pU
 hI
 KB

@@ -748,14 +748,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood/large,
 /area/ruin/plasma_facility/commons)
-"lW" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron,
-/area/ruin/plasma_facility/commons)
 "lX" = (
 /obj/structure/table/reinforced,
 /obj/item/flashlight/lantern,
@@ -853,7 +845,6 @@
 	},
 /area/ruin/plasma_facility/commons)
 "nu" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/brown/half,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -978,7 +969,7 @@
 /area/ruin/plasma_facility/commons)
 "pl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/brown/half,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -1028,7 +1019,9 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
 "pX" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
 "qk" = (
@@ -1598,7 +1591,6 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "BZ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/mining{
 	name = "Processing Control"
@@ -1870,7 +1862,6 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
 "Ib" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_half{
@@ -2243,7 +2234,9 @@
 /turf/open/floor/iron/white/textured_half,
 /area/ruin/plasma_facility/commons)
 "Nm" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
 	},
@@ -2580,6 +2573,17 @@
 	},
 /turf/open/floor/stone,
 /area/ruin/plasma_facility/commons)
+"SI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/brown/half{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
+/area/ruin/plasma_facility/commons)
 "SR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -2598,6 +2602,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -2677,6 +2682,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/edge,
 /area/ruin/plasma_facility/commons)
 "VS" = (
@@ -2736,7 +2742,6 @@
 /turf/open/floor/iron/corner,
 /area/ruin/plasma_facility/commons)
 "WU" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light_switch/directional/east,
@@ -3317,7 +3322,7 @@ zX
 XI
 XI
 Nm
-lW
+DN
 pl
 Mc
 af
@@ -3351,8 +3356,8 @@ ri
 ri
 qW
 XW
-PB
-bM
+SI
+DN
 VD
 gj
 ac
