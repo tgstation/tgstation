@@ -506,13 +506,15 @@
 		var/obj/item/food/butter/tasty_butter = new(drop_location())
 		tasty_butter.reagents.set_all_reagents_purity(purity)
 
+	operating = FALSE
+
+	if (!beaker.reagents.total_volume)
+		return
+
 	//Recipe to make Mayonnaise
 	beaker.reagents.convert_reagent(/datum/reagent/consumable/eggyolk, /datum/reagent/consumable/mayonnaise)
-
 	//Recipe to make whipped cream
 	beaker.reagents.convert_reagent(/datum/reagent/consumable/cream, /datum/reagent/consumable/whipped_cream)
-
 	//power consumed based on the ratio of total reagents mixed
 	use_energy((active_power_usage * (duration / (1 SECONDS))) * (beaker.reagents.total_volume / beaker.reagents.maximum_volume))
 
-	operating = FALSE
