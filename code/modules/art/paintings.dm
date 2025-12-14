@@ -259,7 +259,10 @@
 	LAZYREMOVE(zoom_by_observer, user.key)
 
 /obj/item/canvas/proc/finalize(mob/user)
-	if(painting_metadata.loaded_from_json || finalized)
+	if(finalized || painting_metadata.loaded_from_json)
+		return
+	if(!in_range(src, user))
+		user.balloon_alert(user, "too far away!")
 		return
 	if(!try_rename(user))
 		return
