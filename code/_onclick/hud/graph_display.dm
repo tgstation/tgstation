@@ -1,4 +1,14 @@
+/**
+ * In Engine Graphing!
+ *
+ * Uses screen objects and alpha masks to well, graph stuff in game.
+ * Currently supports vertical bar graphs, including hover for extra information.
+ * if you want your own version make a subtype that feeds data in correctly for your usecase.
+ *
+ */
+
 INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_display)
+/// Parent graph "holder" for all sorts of graphs. Subtype this to implement trivial things like "something to display"
 /atom/movable/screen/graph_display
 	name = "graph"
 	del_on_map_removal = FALSE
@@ -83,6 +93,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_display)
 	dash_line.setDir(WEST)
 	return dash_line
 
+/// Bar graph, displays data as vertical bars trimmed off by an alpha mask that's positioned around to line up right
+/// Displays bars as a scrolling history of data, the oldest bar is lost, and all the older ones shift to the left
 /atom/movable/screen/graph_display/bars
 	/// The "root atom" of each bar in our pool. ordered first to last
 	var/list/atom/movable/screen/graph_part/bar/bars
@@ -182,6 +194,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_display)
 	return TRUE
 
 INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
+/// Thing that sits on a [/atom/movable/screen/graph_display] parent
 /atom/movable/screen/graph_part
 	icon = 'icons/ui/graph/graph_parts.dmi'
 	plane = CPU_DEBUG_PLANE
@@ -198,6 +211,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	parent_graph = null
 	return ..()
 
+/// Spans the whole screen by creating overlay copies of itself
 /atom/movable/screen/graph_part/span_screen
 
 /atom/movable/screen/graph_part/span_screen/Initialize(mapload, datum/hud/hud_owner, atom/movable/screen/graph_display/parent_graph)
@@ -230,6 +244,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 		extended_line.pixel_y = offsets[2] * i
 		. += extended_line
 
+/// Frames the graph
 /atom/movable/screen/graph_part/span_screen/frame
 	icon_state = "edge"
 	layer = CPU_GRAPH_FRAME_LAYER
@@ -240,10 +255,12 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 /atom/movable/screen/graph_part/span_screen/frame/get_width()
 	return ..() + 1
 
+/// Used to segment the graph so it's easier to judge scale
 /atom/movable/screen/graph_part/span_screen/dash
 	icon_state = "dash"
 	color = "#333333"
 
+/// Horizontal threshold line, for marking well, thresholds on the graph
 /atom/movable/screen/graph_part/span_screen/threshold
 	icon_state = "dash"
 	color = "#5BDC9C"
@@ -260,6 +277,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 /atom/movable/screen/graph_part/span_screen/threshold/proc/recalculate_position()
 	pixel_y = parent_graph.value_to_height(height_value) + 3 // I can't explain why this works but it does seem to
 
+/// Vertical bar, similar to screen spans chains overlays together to cover some amount of the screen
+/// Includes tooltip support, meant to be overriden.
 /atom/movable/screen/graph_part/bar
 	icon_state = null
 	appearance_flags = KEEP_TOGETHER
@@ -323,6 +342,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	. += bar_chain
 	. += border_chain
 
+/// Vertical bar that's meant to display a single value
 /atom/movable/screen/graph_part/bar/single_segment
 	/// The value this bar is currently holding
 	var/bar_value
@@ -350,6 +370,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	bar_chain.color = parent_graph.value_to_color(bar_value)
 	return ..()
 
+/// MC costs bar, subtype so we can tooltip subsystem costs
 /atom/movable/screen/graph_part/bar/single_segment/mc
 	var/list/subsystem_info = list()
 
@@ -382,6 +403,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	visual_output += "<b>Internal</b> -> ([bar_value - summed_usage]%)"
 	return visual_output.Join("<br>")
 
+/// Vertical bar that's meant to display many disconnected values, as floor/celings.
 /atom/movable/screen/graph_part/bar/multi_segment
 	/// List of list(floor, celing) segments for this bar
 	var/list/bar_boundaries = list()
@@ -433,6 +455,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	bar_chain.color = parent_graph.value_to_color(total_cost)
 	return ..()
 
+/// Displays verb costs as a multi segment bar (since verb execution is discontinuious)
 /atom/movable/screen/graph_part/bar/multi_segment/verbs
 	var/list/verb_info = list()
 
@@ -460,6 +483,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 		visual_output += "<b>[proc_path]</b> -> ([verb_info[proc_path]]%)"
 	return visual_output.Join("<br>")
 
+/// Displays tick costs as a multi segment bar (basically just becuase verbs are stupid)
 /atom/movable/screen/graph_part/bar/multi_segment/tick
 	var/list/tick_segments = list()
 
@@ -510,6 +534,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	up_dash_space = 10
 	screen_loc = "BOTTOM:24,LEFT+3:16"
 
+/// Displays cpu information. Capable of switching between several display modes, see [USAGE_DISPLAY_MC] and friends in [code/__DEFINES/_tick.dm]
 /atom/movable/screen/graph_display/bars/cpu_display
 	height = ICON_SIZE_Y * 11
 	width = ICON_SIZE_X * 11
