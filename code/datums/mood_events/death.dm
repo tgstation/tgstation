@@ -50,11 +50,11 @@
 		mood_change *= 1.5
 	return ..()
 
-/datum/mood_event/conditional/see_death/be_replaced(datum/mood/home, datum/mood_event/new_event, dusted, gibbed)
+/datum/mood_event/conditional/see_death/be_replaced(datum/mood/home, datum/mood_event/new_event, mob/dead_mob, dusted, gibbed)
 	. = ..()
 	// when blocking a new mood event (because it's lower priority), refresh ourselves instead
 	if(. == BLOCK_NEW_MOOD)
-		return be_refreshed(home)
+		return be_refreshed(home, dead_mob, dusted, gibbed)
 
 /// Checks if our mood can get worse by seeing another death (or better if we're weird like that)
 /datum/mood_event/conditional/see_death/proc/can_stack_effect(mob/dead_mob)
@@ -132,6 +132,14 @@
 		return TRUE
 	return FALSE
 
+/datum/mood_event/conditional/see_death/dontcare/update_effect(mob/dead_mob, dusted, gibbed)
+	if(gibbed)
+		description = "Oh, %DEAD_MOB% exploded. Now I have to get the mop."
+	else if(dusted)
+		description = "Oh, %DEAD_MOB% was vaporized. Now I have to get the dustpan."
+	else
+		description = "Oh, %DEAD_MOB% died. Shame, I guess."
+
 /// Pets take priority over normal death moodlets
 /datum/mood_event/conditional/see_death/pet
 	priority = 30
@@ -154,14 +162,6 @@
 	else if(!HAS_PERSONALITY(owner, /datum/personality/compassionate))
 		mood_change *= 0.25
 		timeout *= 0.5
-
-/datum/mood_event/conditional/see_death/dontcare/update_effect(mob/dead_mob, dusted, gibbed)
-	if(gibbed)
-		description = "Oh, %DEAD_MOB% exploded. Now I have to get the mop."
-	else if(dusted)
-		description = "Oh, %DEAD_MOB% was vaporized. Now I have to get the dustpan."
-	else
-		description = "Oh, %DEAD_MOB% died. Shame, I guess."
 
 /// Desensitized brings up the rear
 /datum/mood_event/conditional/see_death/desensitized
