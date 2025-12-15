@@ -503,22 +503,22 @@
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
 
-/atom/movable/screen/plane_master/cpu_debug
-	name = "CPU Debug"
-	documentation = "Debug CPU visualization/control maptext (and related junk)."
-	plane = CPU_DEBUG_PLANE
+/atom/movable/screen/plane_master/graphing
+	name = "Graphing"
+	documentation = "Displays graphed data and relevant screen objects. Primarially debug CPU visualization/control maptext (and related junk)."
+	plane = GRAPHING_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 	critical = PLANE_CRITICAL_DISPLAY
 
-/atom/movable/screen/plane_master/cpu_debug/show_to(mob/mymob)
+/atom/movable/screen/plane_master/graphing/show_to(mob/mymob)
 	. = ..()
 	if(!.)
 		return
 	update_visibility(mymob)
 
-/atom/movable/screen/plane_master/cpu_debug/proc/update_visibility(mob/viewer)
+/atom/movable/screen/plane_master/graphing/proc/update_visibility(mob/viewer)
 	if(viewer.client?.displaying_cpu_debug)
 		if(force_hidden == FALSE)
 			return

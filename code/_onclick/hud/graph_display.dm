@@ -15,7 +15,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_display)
 	clear_with_screen = FALSE
 	screen_loc = "BOTTOM,LEFT"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	plane = CPU_DEBUG_PLANE
+	plane = GRAPHING_PLANE
 	layer = CPU_DISPLAY_LAYER
 	var/atom/movable/screen/graph_part/span_screen/frame/frame_up
 	var/atom/movable/screen/graph_part/span_screen/frame/frame_right
@@ -197,7 +197,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 /// Thing that sits on a [/atom/movable/screen/graph_display] parent
 /atom/movable/screen/graph_part
 	icon = 'icons/ui/graph/graph_parts.dmi'
-	plane = CPU_DEBUG_PLANE
+	plane = GRAPHING_PLANE
 	layer = CPU_DISPLAY_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = KEEP_TOGETHER

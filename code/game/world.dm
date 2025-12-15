@@ -222,7 +222,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/usage_display)
 GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 /atom/movable/screen/usage_display
 	screen_loc = "LEFT:8, CENTER-6"
-	plane = CPU_DEBUG_PLANE
+	plane = GRAPHING_PLANE
 	layer = CPU_DISPLAY_LAYER
 	maptext_width = 512
 	maptext_height = 512
@@ -353,7 +353,7 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 		if(viewer_count == 1)
 			graph_display.clear_values()
 
-	for(var/atom/movable/screen/plane_master/cpu_debug/debuggin as anything in modify.mob?.hud_used?.get_true_plane_masters(CPU_DEBUG_PLANE))
+	for(var/atom/movable/screen/plane_master/graphing/debuggin as anything in modify.mob?.hud_used?.get_true_plane_masters(GRAPHING_PLANE))
 		debuggin.update_visibility(modify.mob)
 
 /atom/movable/screen/usage_display/proc/client_disconnected(client/disconnected)
@@ -362,7 +362,7 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 
 /atom/movable/screen/usage_display_controls
 	screen_loc = "LEFT+4:16, TOP:-8"
-	plane = CPU_DEBUG_PLANE
+	plane = GRAPHING_PLANE
 	layer = CPU_DISPLAY_LAYER
 	maptext_width = 512
 	maptext_height = 512
