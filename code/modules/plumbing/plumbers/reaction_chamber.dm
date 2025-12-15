@@ -197,11 +197,10 @@
 		if(!num_of_reagents)
 			return
 
-		/**
-		 * figure out which buffer to transfer to restore balance
-		 * if solution is getting too basic(high ph) add some acid to lower its value
-		 * else if solution is getting too acidic(low ph) add some base to increase its value
-		 */
+
+		//.figure out which buffer to transfer to restore balance
+		//if solution is getting too basic(high ph) add some acid to lower its value
+		//else if solution is getting too acidic(low ph) add some base to increase its value
 		var/datum/reagents/buffer = reagents.ph > alkaline_limit ? acidic_beaker : alkaline_beaker
 		if(!buffer.total_volume)
 			return
@@ -212,7 +211,7 @@
 		if(!buffer.trans_to(reagents, buffer_amount))
 			return
 
-		//some power for accurate ph balancing & keep track of attempts made
+		//some power for accurate ph balancing
 		use_energy(active_power_usage * 0.03 * buffer_amount)
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_interact(mob/user, datum/tgui/ui)
