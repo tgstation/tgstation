@@ -114,5 +114,19 @@
 #define apply_faction_and_allies_from(source, destination) \
 	do { \
 		(destination).set_faction((source).get_faction()); \
-		(destination).set_allies((LAZYLISTDUPLICATE(source).allies)); \
+		(destination).set_allies(LAZYLISTDUPLICATE((source).allies)); \
 	} while(FALSE)
+
+/**
+ * Compare two lists of factions, returning true if any match.
+ * If exact match is passed through we only return true if both faction lists match equally.
+ *
+ * Macro-ified version to avoid extra proc overhead.
+ */
+#define FAST_FACTION_CHECK(faction_A, faction_B, allies_A, allies_B, exact_match) \
+( \
+	!(exact_match) ? \
+		(LAZYLEN((faction_A) & (faction_B)) || LAZYLEN((allies_A) & (allies_B))) \
+	: \
+		((LAZYLEN((faction_A) & (faction_B)) == LAZYLEN(faction_A)) && LAZYLEN((allies_A) & (allies_B))) \
+)

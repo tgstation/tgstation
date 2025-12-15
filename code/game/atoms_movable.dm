@@ -1796,20 +1796,6 @@
 		return LAZYLEN(allies_A & allies_B)
 
 /**
- * Compare two lists of factions, returning true if any match.
- * If exact match is passed through we only return true if both faction lists match equally.
- *
- * Macro-ified version to avoid extra proc overhead.
- */
-#define FAST_FACTION_CHECK(faction_A, faction_B, allies_A, allies_B, exact_match) \
-( \
-	!(exact_match) ? \
-		(LAZYLEN((faction_A) & (faction_B)) || LAZYLEN((allies_A) & (allies_B))) \
-	: \
-		((LAZYLEN((faction_A) & (faction_B)) == LAZYLEN(faction_A)) && LAZYLEN((allies_A) & (allies_B))) \
-)
-
-/**
  * Check if the other atom/movable has any factions the same as us. Defined at the atom/movable level so it can be defined for just about anything.
  *
  * If exact match is set, then all our factions must match exactly
