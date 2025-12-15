@@ -1,16 +1,16 @@
 // Unrolled versions of DEFINE_VERB(), exists because src is set to client which fucks EVERYTHING up
 // I HATE it here dude SO MUCH
 /datum/verbs/menu/Preferences/verb/open_character_preferences()
-	set name = "Open Character Preferences"
-	set desc = "Open Character Preferences"
-	set category = "OOC"
+	VERBLIKE_SET(name, "Open Character Preferences")
+	VERBLIKE_SET(desc, "Open Character Preferences")
+	VERBLIKE_SET(category, "OOC")
 	SHOULD_NOT_OVERRIDE(TRUE)
 	VERB_QUEUE_OR_FIRE_CUSTOM_ARGS(__open_preferences_window, GLOBAL_PROC, GLOBAL_PROC_REF, SSverb_manager, PREFERENCE_TAB_CHARACTER_PREFERENCES)
 
 /datum/verbs/menu/Preferences/verb/open_game_preferences()
-	set name = "Open Game Preferences"
-	set desc = "Open Game Preferences"
-	set category = "OOC"
+	VERBLIKE_SET(name, "Open Game Preferences")
+	VERBLIKE_SET(desc, "Open Game Preferences")
+	VERBLIKE_SET(category, "OOC")
 	SHOULD_NOT_OVERRIDE(TRUE)
 	VERB_QUEUE_OR_FIRE_CUSTOM_ARGS(__open_preferences_window, GLOBAL_PROC, GLOBAL_PROC_REF, SSverb_manager, PREFERENCE_TAB_GAME_PREFERENCES)
 

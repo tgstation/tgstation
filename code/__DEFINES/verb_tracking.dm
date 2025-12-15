@@ -59,12 +59,12 @@
 // General case "verb like thing" definition, covervs verbs and also procs (which we can use as verbs sometimes)
 #define DEFINE_VERBLIKE(proc_type, parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, verb_instant, show_in_context_menu, queue_on, verb_args...) \
 ##parent_path/##proc_type/##verb_proc_name(##verb_args) { \
-	set name = ##verb_name; \
-	set desc = ##verb_desc; \
-	set hidden = ##verb_hidden;  \
-	set popup_menu = ##show_in_context_menu; \
-	set category = ##verb_category; \
-	set instant = ##verb_instant; \
+	VERBLIKE_SET(name, ##verb_name); \
+	VERBLIKE_SET(desc, ##verb_desc); \
+	VERBLIKE_SET(hidden, ##verb_hidden);  \
+	VERBLIKE_SET(popup_menu, ##show_in_context_menu); \
+	VERBLIKE_SET(category, ##verb_category); \
+	VERBLIKE_SET(instant, ##verb_instant); \
 	SHOULD_NOT_OVERRIDE(TRUE); \
 	VERB_QUEUE_OR_FIRE(__##verb_proc_name, src, PROC_REF, queue_on); \
 }; \
@@ -88,10 +88,10 @@
 #define DEFINE_WORLD_OBJECT_VERB(parent_path, verb_proc_name, src_value, verb_name, verb_desc, verb_hidden, verb_category, verb_args...) \
 ##parent_path/verb/##verb_proc_name(##verb_args) { \
 	set src in src_value; \
-	set name = ##verb_name; \
-	set desc = ##verb_desc; \
-	set hidden = ##verb_hidden;  \
-	set category = ##verb_category; \
+	VERBLIKE_SET(name, ##verb_name); \
+	VERBLIKE_SET(desc, ##verb_desc); \
+	VERBLIKE_SET(hidden, ##verb_hidden);  \
+	VERBLIKE_SET(category, ##verb_category); \
 	SHOULD_NOT_OVERRIDE(TRUE); \
 	VERB_QUEUE_OR_FIRE(__##verb_proc_name, src, PROC_REF, SSverb_manager); \
 }; \
@@ -103,10 +103,10 @@
 // you should probly never use this, it's only like this for legacy reasons and should be suspect for removal
 #define DEFINE_PROC_NO_PARENT_VERB(verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, verb_args...) \
 /proc/##verb_proc_name(##verb_args) { \
-	set name = ##verb_name; \
-	set desc = ##verb_desc; \
-	set hidden = ##verb_hidden;  \
-	set category = ##verb_category; \
+	VERBLIKE_SET(name, ##verb_name); \
+	VERBLIKE_SET(desc, ##verb_desc); \
+	VERBLIKE_SET(hidden, ##verb_hidden);  \
+	VERBLIKE_SET(category, ##verb_category); \
 	VERB_QUEUE_OR_FIRE(__##verb_proc_name, GLOBAL_PROC, GLOBAL_PROC_REF, SSverb_manager); \
 }; \
 \

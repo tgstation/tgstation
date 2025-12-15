@@ -1,7 +1,7 @@
 /*
 /datum/verbs/menu/Example/verb/Example()
-	set name = "" //if this starts with @ the verb is not created and name becomes the command to invoke.
-	set desc = "" //desc is the text given to this entry in the menu
+	VERBLIKE_SET(name, "" )//if this starts with @ the verb is not created and name becomes the command to invoke.
+	VERBLIKE_SET(desc, "" )//desc is the text given to this entry in the menu
 	//You can not use src in these verbs. It will be the menu at compile time, but the client at runtime.
 */
 

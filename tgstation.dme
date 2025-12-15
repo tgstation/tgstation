@@ -32,6 +32,7 @@
 #include "code\__DEFINES\_helpers.dm"
 #include "code\__DEFINES\_protect.dm"
 #include "code\__DEFINES\_tick.dm"
+#include "code\__DEFINES\_verbs.dm"
 #include "code\__DEFINES\access.dm"
 #include "code\__DEFINES\achievements.dm"
 #include "code\__DEFINES\acid.dm"
