@@ -471,3 +471,37 @@
   - rscadd: Added a counterattack for sheathed weapons. When used, an attack from
       your target within a one-second window will cause you to counterattack with
       a triple-damage strike.
+2025-12-15:
+  FalloutFalcon:
+  - spellcheck: minor cleanup on some usecases of "credits"
+  Gboster-0:
+  - code_imp: slightly cleaned up command headsets in-code
+  LT3:
+  - admin: Removed ability to enable Rock The Vote because RTV is no longer a thing
+  Melbert:
+  - qol: Stop drop and roll now has a progress bar
+  SmArtKar:
+  - bugfix: Fixed the brimdust status alert sprite
+  Thunder12345:
+  - map: Tomas once more haunts the dormitories of Catwalk Station
+  alien3301:
+  - bugfix: Just like the blood red modsuits, the elite version of them has a pathfinder
+      module
+  - spellcheck: fixed a typo in the moon heretic robe's attack messages
+  jlsnow301:
+  - bugfix: TGUI window drag and resize should be smoother on low end systems.
+  necromanceranne:
+  - bugfix: Fixes laser pistol charging instantly.
+  san7890:
+  - spellcheck: Nanotrasen has updated their Emergency Shuttle Authorization messaging.
+  - bugfix: Paintings can no longer be finalized if you are not adjacent to the painting.
+  - server: Round ID is now output to `log_world()`, so it'll show up stuff like world.log,
+      dd.log, etc.
+  - config: If you publicly host a copy of your server's config, you may now link
+      to the public URL in the 'CONFIGURL' setting in the server config. It will show
+      to players in the Escape Menu's Resources Carousel.
+  timothymtorres:
+  - bugfix: Fix map reader ignoring valid variable names. If a variable had a number
+      inside the name anywhere the map reader would ignore this value when a map was
+      loaded and use the initial value instead. This was due to a faulty regex pattern
+      that did not properly match variable names.
