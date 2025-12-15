@@ -1,0 +1,4 @@
+author: "alien3301"
+delete-after: True
+changes:
+  - bugfix: "Using the sabre parry prevents you from doing other actions in the same click"

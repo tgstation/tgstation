@@ -15,7 +15,7 @@
 	var/debt = PAYCHECK_CREW * rand(275, 325)
 	account.account_debt += debt
 	RegisterSignal(account, COMSIG_BANK_ACCOUNT_DEBT_PAID, PROC_REF(on_debt_paid))
-	to_chat(client_source.mob, span_warning("You remember, you've a hefty, [debt] credits debt to pay..."))
+	to_chat(client_source.mob, span_warning("You remember, you've a hefty, [debt] [MONEY_NAME_SINGULAR] debt to pay..."))
 
 ///Once the debt is extinguished, award an achievement and a pin for actually taking care of it.
 /datum/quirk/indebted/proc/on_debt_paid(datum/bank_account/source)

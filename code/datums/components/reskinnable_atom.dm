@@ -62,6 +62,13 @@
 		var/obj/item/item_clear_from = clear_from
 		RESET_INITIAL_IF_SET(item_clear_from, inhand_icon_state, new_icon_state)
 
+/// Gets a preview image for this skin based on the given atom's icon and icon_state
+/datum/atom_skin/proc/get_preview_icon(atom/for_atom)
+	return image(
+		icon = new_icon || for_atom.icon,
+		icon_state = new_icon_state || for_atom.icon_state,
+	)
+
 /**
  * ### Reskinnable atoms
  *
@@ -173,8 +180,7 @@
 
 	var/list/items = list()
 	for(var/reskin_name, reskin_typepath in get_skins_by_name())
-		var/datum/atom_skin/reskin = GLOB.atom_skins[reskin_typepath]
-		items[reskin_name] = image(icon = reskin.new_icon || atom_parent.icon, icon_state = reskin.new_icon_state || atom_parent.icon_state)
+		items[reskin_name] = GLOB.atom_skins[reskin_typepath].get_preview_icon(atom_parent)
 
 	sort_list(items)
 

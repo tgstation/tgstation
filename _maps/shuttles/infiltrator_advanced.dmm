@@ -253,10 +253,6 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
-"aL" = (
-/obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/shuttle/syndicate/airlock)
 "aM" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -285,6 +281,7 @@
 	dir = 9
 	},
 /obj/structure/cable,
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/airlock)
 "aQ" = (
@@ -582,6 +579,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
+/obj/structure/sign/warning/vacuum/external/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/airlock)
 "by" = (
@@ -1225,6 +1223,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/airlock)
 "dd" = (
@@ -1360,6 +1359,7 @@
 	dir = 6
 	},
 /obj/machinery/light/small/directional/south,
+/obj/structure/sign/warning/vacuum/external/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/airlock)
 "dr" = (
@@ -2139,7 +2139,7 @@ ad
 ad
 aO
 bp
-aL
+aO
 aO
 bD
 bD
@@ -2206,7 +2206,7 @@ ad
 ad
 aB
 aO
-aL
+aO
 bZ
 aO
 aO
@@ -2482,7 +2482,7 @@ ad
 ad
 aD
 aO
-aL
+aO
 bZ
 aO
 aO
@@ -2553,7 +2553,7 @@ ad
 ad
 aO
 cW
-aL
+aO
 aO
 bE
 bE
