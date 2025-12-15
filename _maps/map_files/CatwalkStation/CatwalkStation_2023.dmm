@@ -15528,10 +15528,7 @@
 /area/station/ai/satellite/chamber)
 "ejc" = (
 /obj/structure/cable,
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32;
-	dir = 1
-	},
+/obj/structure/sign/nanotrasen/directional/north,
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 1
 	},
@@ -29444,10 +29441,7 @@
 "hWN" = (
 /obj/structure/cable,
 /obj/effect/landmark/start/hangover,
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32;
-	dir = 1
-	},
+/obj/structure/sign/nanotrasen/directional/north,
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 4
 	},
@@ -48481,7 +48475,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/full,
-/obj/effect/mapping_helpers/airlock/unres{
+/obj/effect/mapping_helpers/airlock/unres/delayed{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -67136,7 +67130,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/blue/full,
-/obj/effect/mapping_helpers/airlock/unres{
+/obj/effect/mapping_helpers/airlock/unres/delayed{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -70445,7 +70439,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/blue/full,
-/obj/effect/mapping_helpers/airlock/unres{
+/obj/effect/mapping_helpers/airlock/unres/delayed{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,

@@ -994,7 +994,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Temporary Holding Cell"
 	},
-/obj/effect/mapping_helpers/airlock/unres{
+/obj/effect/mapping_helpers/airlock/unres/delayed{
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,

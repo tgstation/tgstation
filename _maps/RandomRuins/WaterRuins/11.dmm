@@ -9591,7 +9591,7 @@
 	pixel_y = 7
 	},
 /obj/item/pen,
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = 9;
 	pixel_y = 8
 	},
