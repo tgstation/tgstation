@@ -157,7 +157,7 @@ All the important duct code:
 	if(ispath(drop_on_wrench))
 		var/obj/item/stack/ducts/duct_stack = new drop_on_wrench(drop_location())
 		duct_stack.duct_color = GLOB.pipe_color_name[duct_color] || DUCT_COLOR_OMNI
-		duct_stack.duct_layer = GLOB.plumbing_layer_names["[duct_layer]"] || GLOB.plumbing_layer_names["[DUCT_LAYER_DEFAULT]"]
+		duct_stack.duct_layer = GLOB.plumbing_layer_names["[duct_layer]"] || GLOB.plumbing_layer_names[DUCT_LAYER_DEFAULT]
 		duct_stack.add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
 		drop_on_wrench = null
 	if(!QDELING(src))

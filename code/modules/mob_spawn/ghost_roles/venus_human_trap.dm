@@ -31,7 +31,7 @@
 		if(flower_bud.trait_flags & SPACEVINE_COLD_RESISTANT)
 			spawned_human_trap.unsuitable_cold_damage = 0
 
-/obj/effect/mob_spawn/ghost_role/venus_human_trap/special(mob/living/spawned_mob, mob/mob_possessor)
+/obj/effect/mob_spawn/ghost_role/venus_human_trap/special(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_mob.mind.add_antag_datum(/datum/antagonist/venus_human_trap)
 
@@ -54,3 +54,4 @@
 		if(!silent)
 			to_chat(user, span_warning("\The [src] has not borne fruit yet!"))
 		return FALSE
+	return TRUE

@@ -46,6 +46,31 @@
 		COMSIG_CARBON_GAIN_ORGAN,
 		COMSIG_CARBON_LOSE_ORGAN,
 	))
+	if(isnull(old_part))
+		quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_BODYPART)
+		quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_PEOPLE)
+		return
+
+	if(QDELETED(quirk_holder)) // We don't ever want to be adding organs to qdeleting mobs
+		QDEL_NULL(old_part)
+		return
+
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	if(isbodypart(old_part))
+		var/obj/item/bodypart/old_bodypart = old_part
+		human_holder.del_and_replace_bodypart(old_bodypart, special = TRUE)
+		old_bodypart = null
+	else if(isorgan(old_part))
+		var/obj/item/organ/old_organ = old_part
+		old_part = human_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+		old_organ.Insert(quirk_holder, special = TRUE)
+		old_part.moveToNullspace()
+		STOP_PROCESSING(SSobj, old_part)
+		old_organ = null
+		old_part = null
+
+	quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_BODYPART)
+	quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_PEOPLE)
 
 /datum/quirk/transhumanist/proc/get_bodypart_score(mob/living/carbon/target, limbs_only = FALSE)
 	var/organic_bodytypes = 0
@@ -141,29 +166,6 @@
 		to_chat(quirk_holder, span_bolddanger("You replaced your eyes with flashlights, not cameras. You can't see a thing!"))
 	else if (isorgan(old_part))
 		to_chat(quirk_holder, span_bolddanger("Your [slot_string] brings you one step closer to silicon perfection, but you feel you're not quite there yet."))
-
-/datum/quirk/transhumanist/remove()
-	if(isnull(old_part))
-		quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_BODYPART)
-		quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_PEOPLE)
-		return
-
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	if(isbodypart(old_part))
-		var/obj/item/bodypart/old_bodypart = old_part
-		human_holder.del_and_replace_bodypart(old_bodypart, special = TRUE)
-		old_bodypart = null
-	else if(isorgan(old_part))
-		var/obj/item/organ/old_organ = old_part
-		old_part = human_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
-		old_organ.Insert(quirk_holder, special = TRUE)
-		old_part.moveToNullspace()
-		STOP_PROCESSING(SSobj, old_part)
-		old_organ = null
-		old_part = null
-
-	quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_BODYPART)
-	quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_PEOPLE)
 
 /datum/quirk/transhumanist/process(seconds_per_tick)
 	var/organics_nearby = 0

@@ -72,7 +72,7 @@
 	. = ..()
 	if(!ishuman(exposed_mob))
 		if(issilicon(exposed_mob) || ismecha(exposed_mob) || isbot(exposed_mob))
-			exposed_mob.adjustBruteLoss(500)
+			exposed_mob.adjust_brute_loss(500)
 		return
 	if(IS_HERETIC(exposed_mob))
 		return

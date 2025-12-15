@@ -82,7 +82,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	owner.mind.add_antag_datum(/datum/antagonist/recovered_crew) //for tracking mostly
 
 	var/datum/bank_account/bank_account = new(owner.real_name, owner.mind.assigned_role, owner.dna.species.payday_modifier)
-	bank_account.adjust_money(starting_funds, "[starting_funds]cr given to [owner.name] as starting fund.")
+	bank_account.adjust_money(starting_funds, "[starting_funds][MONEY_SYMBOL] given to [owner.name] as starting fund.")
 	owner.account_id = bank_account.account_id
 	bank_account.replaceable = FALSE
 

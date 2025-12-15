@@ -107,7 +107,7 @@
 
 	if(iscarbon(cast_on))
 		var/mob/living/carbon/carbon_cast_on = cast_on
-		carbon_cast_on.adjustOrganLoss(ORGAN_SLOT_EYES, eye_damage)
+		carbon_cast_on.adjust_organ_loss(ORGAN_SLOT_EYES, eye_damage)
 
 ///X-ray Vision lets you see through walls.
 /datum/mutation/xray

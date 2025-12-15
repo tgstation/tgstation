@@ -513,7 +513,7 @@ GLOBAL_LIST_EMPTY(shuttle_frames_by_turf)
 		turfs = turfs.Copy()
 		for(var/turf/turf as anything in turfs)
 			var/move_mode = turf.fromShuttleMove(move_mode = MOVE_AREA)
-			if(move_mode & (MOVE_TURF | MOVE_CONTENTS))
+			if(move_mode & (MOVE_TURF | MOVE_CONTENTS | MOVE_SPECIAL))
 				continue
 			for(var/atom/movable/movable as anything in turf.contents)
 				//CHECK_TICK

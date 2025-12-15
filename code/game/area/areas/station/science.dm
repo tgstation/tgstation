@@ -114,23 +114,23 @@
 /area/station/science/ordnance/burnchamber
 	name = "\improper Ordnance Burn Chamber"
 	icon_state = "ord_burn"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 
 /area/station/science/ordnance/freezerchamber
 	name = "\improper Ordnance Freezer Chamber"
 	icon_state = "ord_freeze"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 
 // Room for equipments and such
 /area/station/science/ordnance/testlab
 	name = "\improper Ordnance Testing Lab"
 	icon_state = "ord_test"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 
 /area/station/science/ordnance/bomb
 	name = "\improper Ordnance Bomb Site"
 	icon_state = "ord_boom"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | NO_GRAVITY
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED | NO_GRAVITY
 
 /area/station/science/ordnance/bomb/planet
 	area_flags = /area/station/science/ordnance/bomb::area_flags & ~NO_GRAVITY

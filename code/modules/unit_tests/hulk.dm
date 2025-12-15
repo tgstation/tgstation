@@ -17,7 +17,7 @@
 
 	TEST_ASSERT_EQUAL(hulk_hits, 1, "Hulk should have hit the dummy once.")
 	TEST_ASSERT_EQUAL(hand_hits, 0, "Hulk should not have hit the dummy with attack_hand.")
-	TEST_ASSERT(dummy.getBruteLoss(), "Dummy should have taken brute damage from being hulk punched.")
+	TEST_ASSERT(dummy.get_brute_loss(), "Dummy should have taken brute damage from being hulk punched.")
 
 /datum/unit_test/hulk_attack/proc/hulk_sig_fire()
 	SIGNAL_HANDLER

@@ -114,6 +114,7 @@
 	fire_delay = 3 DECISECONDS
 	shot_delay = 2 DECISECONDS
 	firing_shakes_camera = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 24.5, /datum/material/wood = SHEET_MATERIAL_AMOUNT * 15, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 
 /obj/structure/mounted_gun/pipe/examine_more(mob/user)
 	. = ..()

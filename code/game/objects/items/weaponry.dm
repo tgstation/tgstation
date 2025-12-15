@@ -155,7 +155,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return BRUTELOSS
 
 /obj/item/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == (PROJECTILE_ATTACK || LEAP_ATTACK || OVERWHELMING_ATTACK))
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
 	return ..()
 
@@ -415,6 +415,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	alt_simple = string_list(alt_simple)
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -15)
 
+/obj/item/katana/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == OVERWHELMING_ATTACK)
+		final_block_chance = 0 //Not a high freuqnecy blade, sorry pal
+	return ..()
+
 /datum/armor/item_katana
 	fire = 100
 	acid = 50
@@ -623,6 +628,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/bambostaff/Initialize(mapload)
 	. = ..()
@@ -635,6 +641,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/bambostaff/update_icon_state()
 	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
+	return ..()
+
+/obj/item/bambostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
+		final_block_chance = 0 //Don't bring a staff to a gunfight, and also you aren't going to really block someone full body tackling you with a staff. Or a road roller, if one happened to hit you.
 	return ..()
 
 /obj/item/cane
@@ -735,7 +746,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A handmade crutch. Also makes a decent bludgeon if you need it."
 	icon_state = "crutch_wood"
 	inhand_icon_state = "crutch_wood"
-	custom_materials = list(/datum/material/wood = SMALL_MATERIAL_AMOUNT * 0.5)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/cane/white
 	name = "white cane"
@@ -863,6 +874,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_range = 1
 	attack_verb_continuous = list("clubs", "bludgeons")
 	attack_verb_simple = list("club", "bludgeon")
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/melee/baseball_bat
 	name = "baseball bat"
@@ -1061,6 +1073,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_type_in_typecache(target, splattable))
 		to_chat(user, span_warning("You easily splat [target]."))
+		if(QDELETED(target))
+			return
 		if(isliving(target))
 			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
 			var/mob/living/bug = target
@@ -1198,7 +1212,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			playsound(src, SFX_BULLET_MISS, 75, TRUE)
 			return TRUE
 		return FALSE
-	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)))
+	var/stop_that_blade = (final_block_chance + (attack_type == OVERWHELMING_ATTACK ? 25 : 0)) * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)
+	if(prob(stop_that_blade))
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 		return TRUE
 	return FALSE

@@ -15,6 +15,7 @@
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 	interaction_flags_mouse_drop = NEED_HANDS
+	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)
 
 	///How many pages the booklet holds
 	var/number_of_pages = 50
@@ -151,6 +152,7 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "burner"
 	grind_results = list(/datum/reagent/consumable/ethanol = 5, /datum/reagent/silicon = 10)
+	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)
 	item_flags = NOBLUDGEON
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
@@ -295,6 +297,7 @@
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
 	grind_results = list(/datum/reagent/mercury = 5)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	///The reagents datum that this object is attached to, so we know where we are when it's added to something.
 	var/datum/reagents/attached_to_reagents
 
@@ -352,6 +355,7 @@
 
 /obj/item/thermometer/pen
 	color = "#888888"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1)
 
 #undef DETAILED_CHEM_OUTPUT
 #undef SHORTENED_CHEM_OUTPUT

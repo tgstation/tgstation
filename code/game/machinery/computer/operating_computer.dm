@@ -126,10 +126,10 @@
 	data["patient"]["blood_type"] = patient.get_bloodtype()?.name || "UNKNOWN"
 	data["patient"]["maxHealth"] = patient.maxHealth
 	data["patient"]["minHealth"] = HEALTH_THRESHOLD_DEAD
-	data["patient"]["bruteLoss"] = patient.getBruteLoss()
-	data["patient"]["fireLoss"] = patient.getFireLoss()
-	data["patient"]["toxLoss"] = patient.getToxLoss()
-	data["patient"]["oxyLoss"] = patient.getOxyLoss()
+	data["patient"]["bruteLoss"] = patient.get_brute_loss()
+	data["patient"]["fireLoss"] = patient.get_fire_loss()
+	data["patient"]["toxLoss"] = patient.get_tox_loss()
+	data["patient"]["oxyLoss"] = patient.get_oxy_loss()
 	if(patient.surgeries.len)
 		for(var/datum/surgery/procedure in patient.surgeries)
 			var/datum/surgery_step/surgery_step = GLOB.surgery_steps[procedure.steps[procedure.status]]

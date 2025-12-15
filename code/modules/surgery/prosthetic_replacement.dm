@@ -134,7 +134,7 @@
 	if(bodypart_to_attach.check_for_frankenstein(target))
 		bodypart_to_attach.bodypart_flags |= BODYPART_IMPLANTED
 	if(organ_rejection_dam)
-		target.adjustToxLoss(organ_rejection_dam)
+		target.adjust_tox_loss(organ_rejection_dam)
 	display_results(
 		user, target,
 		span_notice("You succeed in replacing [target]'s [target.parse_zone_with_bodypart(target_zone)]."),

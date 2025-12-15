@@ -94,8 +94,8 @@ GLOBAL_LIST_INIT(autodrobe_entretainers_items, list(
 ))
 
 GLOBAL_LIST_INIT(autodrobe_fancy_items, list(
-	/obj/item/clothing/under/rank/captain/suit = 1,
-	/obj/item/clothing/under/rank/captain/suit/skirt = 1,
+	/obj/item/clothing/under/costume/captain = 1,
+	/obj/item/clothing/under/costume/captain/skirt = 1,
 	/obj/item/clothing/under/costume/seifuku = 3,
 	/obj/item/clothing/under/costume/seifuku/red = 3,
 	/obj/item/clothing/under/costume/seifuku/teal = 3,

@@ -108,6 +108,20 @@
 
 	SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_BLOOD_STATUS, had_blood, has_blood, old_blood_volume, new_blood_volume)
 
+/// A one-time coagulating effect of the mob's bloodiest cut/stab
+/// Returns TRUE if a wound was affected, FALSE if no wound was found
+/mob/living/proc/coagulant_effect(amount_to_heal = 1)
+	return FALSE
+
+/mob/living/carbon/coagulant_effect(amount_to_heal = 1)
+	var/datum/wound/bloodiest_wound
+	for(var/datum/wound/iter_wound as anything in all_wounds)
+		if(iter_wound.blood_flow && iter_wound.blood_flow > bloodiest_wound?.blood_flow)
+			bloodiest_wound = iter_wound
+
+	bloodiest_wound?.adjust_blood_flow(-1 * abs(amount_to_heal))
+	return !!bloodiest_wound
+
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood(seconds_per_tick, times_fired)
 	// Under these circumstances blood handling is not necessary
@@ -171,9 +185,9 @@
 				if(prob(50))
 					to_chat(src, span_danger("You feel [word]. It's getting a bit hard to breathe."))
 					losebreath += 0.5 * determined_mod * seconds_per_tick
-				else if(getStaminaLoss() < 25 * determined_mod)
+				else if(get_stamina_loss() < 25 * determined_mod)
 					to_chat(src, span_danger("You feel [word]. It's getting a bit hard to focus."))
-					adjustStaminaLoss(10 * determined_mod * REM * seconds_per_tick)
+					adjust_stamina_loss(10 * determined_mod * REM * seconds_per_tick)
 		// Pretty low blood, getting dangerous!
 		if(BLOOD_VOLUME_RISKY to BLOOD_VOLUME_OKAY)
 			if(SPT_PROB(5, seconds_per_tick))
@@ -182,9 +196,9 @@
 				if(prob(50))
 					to_chat(src, span_bolddanger("You feel very [word]. It's getting hard to breathe!"))
 					losebreath += 1 * determined_mod * seconds_per_tick
-				else if(getStaminaLoss() < 40 * determined_mod)
+				else if(get_stamina_loss() < 40 * determined_mod)
 					to_chat(src, span_bolddanger("You feel very [word]. It's getting hard to stay awake!"))
-					adjustStaminaLoss(15 * determined_mod * REM * seconds_per_tick)
+					adjust_stamina_loss(15 * determined_mod * REM * seconds_per_tick)
 		// Very low blood, danger!!
 		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_RISKY)
 			if(SPT_PROB(5, seconds_per_tick))
@@ -193,9 +207,9 @@
 				if(prob(50))
 					to_chat(src, span_userdanger("You feel extremely [word]! It's getting very hard to breathe!"))
 					losebreath += 1.5 * determined_mod * seconds_per_tick
-				else if(getStaminaLoss() < 80 * determined_mod)
+				else if(get_stamina_loss() < 80 * determined_mod)
 					to_chat(src, span_userdanger("You feel extremely [word]! It's getting very hard to stay awake!"))
-					adjustStaminaLoss(20 * determined_mod * REM * seconds_per_tick)
+					adjust_stamina_loss(20 * determined_mod * REM * seconds_per_tick)
 		// Critically low blood, death is near! Adrenaline won't help you here.
 		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 			if(SPT_PROB(7.5, seconds_per_tick))
@@ -214,10 +228,10 @@
 	// If your ratio is less than one (you're missing any blood) and your oxyloss is under missing blood %, start getting oxy damage.
 	// This damage accrues faster the less blood you have.
 	// If the damage surpasses the KO threshold for oxyloss, then we'll always tick up so you die eventually
-	if(target_oxyloss > 0 && (getOxyLoss() < target_oxyloss || (target_oxyloss >= OXYLOSS_PASSOUT_THRESHOLD && stat >= UNCONSCIOUS)))
+	if(target_oxyloss > 0 && (get_oxy_loss() < target_oxyloss || (target_oxyloss >= OXYLOSS_PASSOUT_THRESHOLD && stat >= UNCONSCIOUS)))
 		// At roughly half blood this equals to 3 oxyloss per tick. At 90% blood it's close to 0.5
 		var/rounded_oxyloss = round(0.01 * (BLOOD_VOLUME_NORMAL - modified_blood_volume), 0.25) * seconds_per_tick
-		adjustOxyLoss(rounded_oxyloss, updating_health = TRUE)
+		adjust_oxy_loss(rounded_oxyloss, updating_health = TRUE)
 
 /// Has each bodypart update its bleed/wound overlay icon states
 /mob/living/carbon/proc/update_bodypart_bleed_overlays()
@@ -625,7 +639,7 @@
 		return
 
 	var/base_bleed_rate = get_bleed_rate()
-	var/base_brute = getBruteLoss()
+	var/base_brute = get_brute_loss()
 
 	var/brute_ratio = round(base_brute / (maxHealth * 4), 0.1)
 	var/bleeding_rate = round(base_bleed_rate / 4, 0.1)
@@ -743,7 +757,7 @@
 
 /// Returns how much blood we're losing from being dragged a tile, from [/mob/living/proc/make_blood_trail]
 /mob/living/proc/bleed_drag_amount()
-	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
+	var/brute_ratio = round(get_brute_loss() / maxHealth, 0.1)
 	return max(1, brute_ratio * 2)
 
 /mob/living/carbon/bleed_drag_amount()

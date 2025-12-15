@@ -1,3 +1,20 @@
+// Clipboard skins
+/datum/atom_skin/clipboard
+	abstract_type = /datum/atom_skin/clipboard
+	change_inhand_icon_state = TRUE
+
+/datum/atom_skin/clipboard/brown
+	preview_name = "Brown"
+	new_icon_state = "clipboard"
+
+/datum/atom_skin/clipboard/black
+	preview_name = "Black"
+	new_icon_state = "clipboard_black"
+
+/datum/atom_skin/clipboard/white
+	preview_name = "White"
+	new_icon_state = "clipboard_white"
+
 /**
  * Clipboard
  */
@@ -14,12 +31,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
 
-	unique_reskin = list(
-		"Brown" = "clipboard",
-		"Black" = "clipboard_black",
-		"White" = "clipboard_white",
-	)
-	unique_reskin_changes_inhand = TRUE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 	/// The stored pen
 	var/obj/item/pen/pen
@@ -39,6 +51,7 @@
 /obj/item/clipboard/Initialize(mapload)
 	update_appearance()
 	. = ..()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/clipboard)
 
 /obj/item/clipboard/Destroy()
 	QDEL_NULL(pen)

@@ -166,7 +166,7 @@
 
 	if(issilicon(interacting_with))
 		var/mob/living/silicon/robotic_pal = interacting_with
-		var/robot_is_damaged = robotic_pal.getBruteLoss()
+		var/robot_is_damaged = robotic_pal.get_brute_loss()
 
 		if(!robot_is_damaged)
 			user.balloon_alert(user, "[robotic_pal] is not damaged!")
@@ -178,7 +178,7 @@
 		if(!do_after(user, 3 SECONDS, target = robotic_pal))
 			return ITEM_INTERACT_BLOCKING
 
-		robotic_pal.adjustBruteLoss(-object_repair_value)
+		robotic_pal.adjust_brute_loss(-object_repair_value)
 		use(1)
 		to_chat(user, span_notice("You finish repairing [interacting_with] with [src]."))
 		return ITEM_INTERACT_SUCCESS

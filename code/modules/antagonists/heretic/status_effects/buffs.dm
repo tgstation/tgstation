@@ -100,8 +100,8 @@
 		return
 	var/mob/living/carbon/carbie = owner
 
-	carbie.adjustBruteLoss(-0.5 * seconds_between_ticks, updating_health = FALSE)
-	carbie.adjustFireLoss(-0.5 * seconds_between_ticks, updating_health = FALSE)
+	carbie.adjust_brute_loss(-0.5 * seconds_between_ticks, updating_health = FALSE)
+	carbie.adjust_fire_loss(-0.5 * seconds_between_ticks, updating_health = FALSE)
 	for(var/BP in carbie.bodyparts)
 		var/obj/item/bodypart/part = BP
 		for(var/W in part.wounds)
@@ -117,9 +117,9 @@
 					heal_amt = 6
 			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound.type]
 			if (pregen_data.wounding_types_valid(WOUND_BURN))
-				carbie.adjustFireLoss(-heal_amt)
+				carbie.adjust_fire_loss(-heal_amt)
 			else
-				carbie.adjustBruteLoss(-heal_amt)
+				carbie.adjust_brute_loss(-heal_amt)
 				carbie.adjust_blood_volume(heal_amt * 3, maximum = BLOOD_VOLUME_NORMAL)
 
 

@@ -36,7 +36,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 		notices++
 	update_appearance(UPDATE_ICON)
 	if(mapload)
-		find_and_hang_on_atom()
+		find_and_mount_on_atom()
 
 //attaching papers!!
 /obj/structure/noticeboard/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)

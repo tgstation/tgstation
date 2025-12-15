@@ -290,17 +290,23 @@
 	var/list/boostable_nodes = list()
 
 /datum/scientific_partner/proc/purchase_boost(datum/techweb/purchasing_techweb, datum/techweb_node/node)
-	if(!allowed_to_boost(purchasing_techweb, node.id))
+	var/possible_boost = allowed_to_boost(purchasing_techweb, node.id)
+	if(!possible_boost)
 		return FALSE
 	purchasing_techweb.boost_techweb_node(node, list(TECHWEB_POINT_TYPE_GENERIC = boostable_nodes[node.id]))
 	purchasing_techweb.scientific_cooperation[type] -= boostable_nodes[node.id] * SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER
+	if(possible_boost == SCIPAPER_ALREADY_BOUGHT) /// Refund the original price
+		purchasing_techweb.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = boostable_nodes[node.id]))
+		return SCIPAPER_ALREADY_BOUGHT
 	return TRUE
 
 /datum/scientific_partner/proc/allowed_to_boost(datum/techweb/purchasing_techweb, node_id)
 	if(purchasing_techweb.scientific_cooperation[type] < (boostable_nodes[node_id] * SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER)) // Too expensive
 		return FALSE
-	if(!(node_id in purchasing_techweb.get_available_nodes())) // Not currently available
-		return FALSE
 	if((TECHWEB_POINT_TYPE_GENERIC in purchasing_techweb.boosted_nodes[node_id]) && (purchasing_techweb.boosted_nodes[node_id][TECHWEB_POINT_TYPE_GENERIC] >= boostable_nodes[node_id])) // Already bought or we have a bigger discount
+		return FALSE
+	if(node_id in purchasing_techweb.researched_nodes)
+		return SCIPAPER_ALREADY_BOUGHT
+	if(!(node_id in purchasing_techweb.get_available_nodes())) // Not currently available
 		return FALSE
 	return TRUE

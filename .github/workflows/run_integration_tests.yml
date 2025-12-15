@@ -26,17 +26,17 @@ jobs:
     # Otherwise, it will output `Run Tests (map; max)`.
     # For example, `Run Tests (runtimestation; 515)`.
     name: Run Tests (${{ inputs.major && format('{0}.{1}; ', inputs.major, inputs.minor) || '' }}${{ inputs.map }}; ${{ inputs.max_required_byond_client }})
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Restore BYOND from Cache
         uses: ./.github/actions/restore_or_install_byond
         with:
           major: ${{ inputs.major }}
           minor: ${{ inputs.minor }}
       - name: Download build outputs
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: build-artifact-${{ inputs.major || env.BYOND_MAJOR }}-${{ inputs.minor || env.BYOND_MINOR}}
           path: ./
@@ -63,7 +63,7 @@ jobs:
           bash tools/ci/run_server.sh ${{ inputs.map }}
       - name: Upload screenshot tests
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: test_artifacts_${{ inputs.map }}_${{ inputs.major }}_${{ inputs.minor }}
           path: data/screenshots_new/

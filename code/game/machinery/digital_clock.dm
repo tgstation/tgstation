@@ -81,7 +81,7 @@
 /obj/machinery/digital_clock/Initialize(mapload)
 	. = ..()
 	if(mapload)
-		find_and_hang_on_atom()
+		find_and_mount_on_atom()
 	AddElement(/datum/element/beauty, 200)
 
 /obj/machinery/digital_clock/process(seconds_per_tick)

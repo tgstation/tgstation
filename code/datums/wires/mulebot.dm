@@ -30,7 +30,7 @@
 			if(is_cut(WIRE_MOTOR1) && is_cut(WIRE_MOTOR2))
 				ADD_TRAIT(mule, TRAIT_IMMOBILIZED, MOTOR_LACK_TRAIT)
 				holder.audible_message(span_hear("The motors of [mule] go silent."), null,  1)
-			else
+			else if(HAS_TRAIT_FROM(mule, TRAIT_IMMOBILIZED, MOTOR_LACK_TRAIT))
 				REMOVE_TRAIT(mule, TRAIT_IMMOBILIZED, MOTOR_LACK_TRAIT)
 				holder.audible_message(span_hear("The motors of [mule] whir to life!"), null,  1)
 

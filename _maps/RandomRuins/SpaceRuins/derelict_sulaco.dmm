@@ -410,7 +410,7 @@
 "mC" = (
 /obj/item/stack/tile/iron/smooth_corner,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "na" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/computer/terminal/sulaco/map,
@@ -427,7 +427,7 @@
 /obj/structure/lattice,
 /obj/item/stack/tile/iron/smooth_half,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "nG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/tracks/xeno{
@@ -1127,7 +1127,7 @@
 "KI" = (
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "KS" = (
 /obj/machinery/door/window/brigdoor/left/directional/east,
 /obj/machinery/keycard_auth/wall_mounted/directional/north,
@@ -1234,7 +1234,7 @@
 "Ne" = (
 /obj/item/stack/tile/iron/smooth_half,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Ng" = (
 /obj/machinery/camera/directional/south{
 	network = list()
@@ -1311,7 +1311,7 @@
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "PZ" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/ids{
@@ -1375,7 +1375,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Sj" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
@@ -1516,7 +1516,7 @@
 /obj/item/stack/tile/iron/smooth_half,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "VO" = (
 /obj/structure/alien/weeds,
 /obj/structure/barricade/sandbags,
@@ -1565,7 +1565,7 @@
 	anchored = 1
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "WQ" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/red/fourcorners,
@@ -1583,7 +1583,7 @@
 /obj/structure/lattice,
 /obj/item/stack/tile/iron/smooth_corner,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "XC" = (
 /obj/structure/alien/weeds,
 /obj/machinery/atmospherics/components/unary/vent_pump/layer4{
@@ -1671,7 +1671,7 @@
 "ZZ" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 
 (1,1,1) = {"
 hi

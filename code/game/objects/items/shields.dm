@@ -54,7 +54,7 @@
 	if(attack_type == LEAP_ATTACK)
 		effective_block_chance = 100
 	if(attack_type == OVERWHELMING_ATTACK)
-		effective_block_chance -= 25
+		effective_block_chance = 0
 	final_block_chance = clamp(effective_block_chance, 0, 100)
 	. = ..()
 	if(.)
@@ -117,7 +117,7 @@
 	desc = "A medieval wooden buckler."
 	icon_state = "buckler"
 	inhand_icon_state = "buckler"
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 10)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 20)
 	resistance_flags = FLAMMABLE
 	block_chance = 30
 	max_integrity = 55
@@ -131,6 +131,7 @@
 	block_chance = 40
 	max_integrity = 40
 	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = null
 
 /obj/item/shield/kite
 	name = "kite shield"
@@ -167,7 +168,7 @@
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder, less so bullets and laser beams."
 	icon_state = "riot"
 	inhand_icon_state = "riot"
-	custom_materials = list(/datum/material/glass= SHEET_MATERIAL_AMOUNT * 3.75, /datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass= SHEET_MATERIAL_AMOUNT * 4.05, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.8)
 	transparent = TRUE
 	max_integrity = 75
 	shield_break_sound = 'sound/effects/glass/glassbr3.ogg'
@@ -203,6 +204,7 @@
 	icon_state = "flashshield"
 	inhand_icon_state = "flashshield"
 	var/obj/item/assembly/flash/handheld/embedded_flash = /obj/item/assembly/flash/handheld
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.1, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 4.35)
 
 /obj/item/shield/riot/flash/Initialize(mapload)
 	. = ..()
@@ -345,7 +347,7 @@
 
 	var/effective_block_chance = final_block_chance
 	if(attack_type == OVERWHELMING_ATTACK)
-		effective_block_chance -= 25
+		effective_block_chance = 0
 
 	if(attack_type == PROJECTILE_ATTACK)
 		var/obj/projectile/our_projectile = hitby
@@ -479,7 +481,7 @@
 	desc = "A crude shield made out of several sheets of iron taped together, not very durable."
 	icon_state = "improvised"
 	inhand_icon_state = "improvised"
-	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10)
 	max_integrity = 35
 	shield_break_leftover = /obj/item/stack/rods/two
 	armor_type = /datum/armor/item_shield/improvised

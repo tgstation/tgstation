@@ -1179,7 +1179,7 @@
 "QP" = (
 /obj/item/flashlight/flare/torch,
 /obj/item/flashlight/flare/torch,
-/obj/item/clothing/suit/hooded/cultrobes/eldritch,
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust,
 /obj/item/melee/sickly_blade,
 /obj/structure/rack,
 /turf/template_noop,

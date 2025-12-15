@@ -35,4 +35,4 @@
 	return ..()
 
 /datum/quirk/item_quirk/brainproblems/process(seconds_per_tick)
-	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * seconds_per_tick)
+	quirk_holder.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.2 * seconds_per_tick)

@@ -54,7 +54,7 @@ Bonus
 	var/get_damage = rand(15,25) * power
 	M.take_overall_damage(brute = get_damage, required_bodytype = BODYTYPE_ORGANIC)
 	if(pain)
-		M.adjustStaminaLoss(get_damage * 2)
+		M.adjust_stamina_loss(get_damage * 2)
 	if(bleed)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M

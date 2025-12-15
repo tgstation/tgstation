@@ -32,6 +32,7 @@
 		/datum/reagent/consumable/ethanol/hooch = 100
 	)
 	result = /obj/item/reagent_containers/cup/glass/bottle/hooch
+	requirements_mats_blacklist = list(/obj/item/storage/box/papersack)
 	category = CAT_DRINK
 
 /datum/crafting_recipe/blazaambottle

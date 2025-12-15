@@ -82,11 +82,6 @@
 	///break if moved, if false also makes it ignore if the wall its on breaks
 	var/break_if_moved = TRUE
 
-/obj/machinery/light/Move()
-	if(status != LIGHT_BROKEN && break_if_moved)
-		break_light_tube(TRUE)
-	return ..()
-
 // create a new lighting fixture
 /obj/machinery/light/Initialize(mapload)
 	. = ..()
@@ -119,9 +114,12 @@
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Remove bulb")
 	if(mapload)
-		find_and_hang_on_atom(mark_for_late_init = TRUE)
+		find_and_mount_on_atom(mark_for_late_init = TRUE)
 
-/obj/machinery/light/find_and_hang_on_atom(mark_for_late_init = FALSE, late_init = FALSE)
+/obj/machinery/light/get_turfs_to_mount_on()
+	return list(get_step(src, dir))
+
+/obj/machinery/light/find_and_mount_on_atom(mark_for_late_init, late_init)
 	if(break_if_moved)
 		return ..()
 
@@ -143,6 +141,11 @@
 	if(local_area)
 		on = FALSE
 	QDEL_NULL(cell)
+	return ..()
+
+/obj/machinery/light/Move()
+	if(status != LIGHT_BROKEN && break_if_moved)
+		break_light_tube(TRUE)
 	return ..()
 
 /obj/machinery/light/Exited(atom/movable/gone, direction)
@@ -734,8 +737,19 @@
 	nightshift_brightness = 4
 	fire_brightness = 4.5
 
-/obj/machinery/light/floor/find_and_hang_on_atom(mark_for_late_init = FALSE, late_init = FALSE)
-	return //its a floor light not a wall light
+/obj/machinery/light/floor/get_turfs_to_mount_on()
+	return list(get_turf(src))
+
+/obj/machinery/light/floor/is_mountable_turf(turf/target)
+	return !isgroundlessturf(target)
+
+/obj/machinery/light/floor/get_moutable_objects()
+	var/static/list/attachables = list(
+		/obj/structure/thermoplastic,
+		/obj/structure/lattice/catwalk,
+	)
+
+	return attachables
 
 /obj/machinery/light/floor/get_light_offset()
 	return list(0, 0)

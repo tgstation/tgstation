@@ -67,13 +67,13 @@
 	var/obj/effect/mob_spawn/corpse/spawner = new typepath(loot_loc, TRUE)
 	var/mob/living/body = spawner.create()
 	// done before the gib check so the bodyparts will be damaged
-	body.setBruteLoss(dead.getBruteLoss())
-	body.setFireLoss(dead.getFireLoss())
+	body.set_brute_loss(dead.get_brute_loss())
+	body.set_fire_loss(dead.get_fire_loss())
 	// if gibbed, dispose of the body
 	if(gibbed)
 		body.gib(DROP_ALL_REMAINS)
 		return null
 	// otherwise continue with the rest of the damage types
-	body.setToxLoss(dead.getToxLoss())
-	body.setOxyLoss(dead.getOxyLoss())
+	body.set_tox_loss(dead.get_tox_loss())
+	body.set_oxy_loss(dead.get_oxy_loss())
 	return body

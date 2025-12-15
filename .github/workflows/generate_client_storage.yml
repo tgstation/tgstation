@@ -10,7 +10,7 @@ jobs:
   dispatch_repo:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Repository Dispatch
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Generate App Token
         id: app-token-generation

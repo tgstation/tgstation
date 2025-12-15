@@ -1,6 +1,0 @@
-author: "trickyfox-inc"
-delete-after: True
-changes:
-  - rscadd: "Added centcom officer's access (cent_officer)"
-  - rscadd: "Added mapping helpers for cent_officer and cent_specops access"
-  - map: "Changed access on the administrative office doors (cent_officer)"

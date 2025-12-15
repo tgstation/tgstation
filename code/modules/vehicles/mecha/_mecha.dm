@@ -332,6 +332,7 @@
 	var/mob/living/silicon/ai/unlucky_ai
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
+			//FIXME: Nothiing about this block works
 			var/mob/living/silicon/ai/ai = occupant
 			if(!ai.linked_core && !ai.can_shunt) // we probably shouldnt gib AIs with a core or shunting abilities
 				unlucky_ai = occupant
@@ -549,20 +550,54 @@
 			. += span_warning("It's missing a capacitor.")
 		if(!scanmod)
 			. += span_warning("It's missing a scanning module.")
-	if(mecha_flags & IS_ENCLOSED)
-		return
-	if(mecha_flags & SILICON_PILOT)
-		. += span_notice("[src] appears to be piloting itself...")
-	else
-		for(var/occupante in occupants)
-			. += span_notice("You can see [occupante] inside.")
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			for(var/held_item in H.held_items)
-				if(!isgun(held_item))
-					continue
-				. += span_warning("It looks like you can hit the pilot directly if you target the center or above.")
-				break //in case user is holding two guns
+	if(!(mecha_flags & IS_ENCLOSED))
+		if(mecha_flags & SILICON_PILOT)
+			. += span_notice("[src] appears to be piloting itself...")
+		else
+			for(var/occupante in occupants)
+				. += span_notice("You can see [occupante] inside.")
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				for(var/held_item in H.held_items)
+					if(!isgun(held_item))
+						continue
+					. += span_warning("It looks like you can hit the pilot directly if you target the center or above.")
+					break //in case user is holding two guns
+	. += span_notice("It has a <a href='byond://?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
+
+/obj/vehicle/sealed/mecha/Topic(href, href_list)
+	. = ..()
+
+	if(href_list["list_armor"])
+		var/list/readout = list()
+
+		var/datum/armor/armor = get_armor()
+		var/added_damage_header = FALSE
+		for(var/damage_key in ARMOR_LIST_DAMAGE())
+			var/rating = armor.get_rating(damage_key)
+			if(!rating)
+				continue
+			if(!added_damage_header)
+				readout += "<b><u>ARMOR (I-X)</u></b>"
+				added_damage_header = TRUE
+			readout += "[armor_to_protection_name(damage_key)] [armor_to_protection_class(rating)]"
+
+		var/added_durability_header = FALSE
+		for(var/durability_key in ARMOR_LIST_DURABILITY())
+			var/rating = armor.get_rating(durability_key)
+			if(!rating)
+				continue
+			if(!added_durability_header)
+				readout += "<b><u>DURABILITY (I-X)</u></b>"
+				added_durability_header = TRUE
+			readout += "[armor_to_protection_name(durability_key)] [armor_to_protection_class(rating)]"
+
+		readout += "It can withstand temperatures up to [max_temperature]K."
+		if(mecha_flags & IS_ENCLOSED)
+			readout += "It fully encloses its occupants, protecting them from the atmosphere or lack thereof."
+
+		var/formatted_readout = span_notice("<b>PROTECTION CLASSES</b><hr>[jointext(readout, "\n")]")
+		to_chat(usr, boxed_message(formatted_readout))
 
 /obj/vehicle/sealed/mecha/generate_integrity_message()
 	var/examine_text = ""

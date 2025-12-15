@@ -65,7 +65,7 @@
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
 	if(credits_stored) // Prevents spamming empty holochips
 		new /obj/item/holochip(drop_location(), credits_stored)
-		to_chat(user,span_notice("You retrieve the siphoned credits!"))
+		to_chat(user,span_notice("You retrieve the siphoned [MONEY_NAME]!"))
 		credits_stored = 0
 	else
 		to_chat(user,span_notice("There's nothing to withdraw."))

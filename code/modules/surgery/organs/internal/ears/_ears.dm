@@ -191,10 +191,9 @@
 	desc = "A basic cybernetic organ designed to mimic the operation of ears."
 	damage_multiplier = 2.4
 	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears/cybernetic
-	sprite_accessory_override = /datum/sprite_accessory/ears/cat
+	sprite_accessory_override = /datum/sprite_accessory/ears/cat/cybernetic
 	organ_flags = ORGAN_ROBOTIC
 	failing_desc = "seems to be broken."
-
 
 /obj/item/organ/ears/cat/cybernetic/upgraded
 	name = "cybernetic cat ears"
@@ -215,6 +214,7 @@
 	desc = "Allows the user to more easily hear whispers. The user becomes extremely vulnerable to loud noises, however."
 	damage_multiplier = 3 // 4 would be excessive
 	organ_traits = list(TRAIT_GOOD_HEARING)
+	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears/cybernetic/green
 
 /obj/item/organ/ears/cat/cybernetic/xray
 	name = "wall-penetrating cybernetic cat ears"
@@ -222,10 +222,36 @@
 	desc = "Through the power of modern feline engineering, allows the user to hear speech through walls. The user becomes extremely vulnerable to loud noises, however."
 	damage_multiplier = 3 // As above, 4 would be excessive
 	organ_traits = list(TRAIT_XRAY_HEARING)
+	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears/cybernetic/blue
 
 /datum/bodypart_overlay/mutant/cat_ears/cybernetic
 	color_source = null
 	dyable = FALSE
+	/// Color of the inner ear
+	var/inner_color = "#F0004A"
+
+/datum/bodypart_overlay/mutant/cat_ears/cybernetic/get_image(image_layer, obj/item/bodypart/limb)
+	if (image_layer != bitflag_to_layer(inner_layer))
+		return ..()
+	var/mutable_appearance/ear_holder = ..()
+	var/mutable_appearance/inner = ear_holder.overlays[2]
+	inner.color = inner_color
+	return ear_holder
+
+/datum/bodypart_overlay/mutant/cat_ears/cybernetic/get_overlay(layer, obj/item/bodypart/limb)
+	if (layer != inner_layer)
+		return ..()
+	var/list/all_images = ..()
+	var/mutable_appearance/ear_holder = all_images[1]
+	var/mutable_appearance/inner = ear_holder.overlays[2]
+	all_images += emissive_appearance(inner.icon, inner.icon_state, limb, layer = inner.layer, alpha = inner.alpha * 0.75)
+	return all_images
+
+/datum/bodypart_overlay/mutant/cat_ears/cybernetic/green
+	inner_color = "#0079EA"
+
+/datum/bodypart_overlay/mutant/cat_ears/cybernetic/blue
+	inner_color = "#00D844"
 
 /obj/item/organ/ears/ghost
 	name = "ghost ears"

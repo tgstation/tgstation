@@ -72,7 +72,7 @@
 	if(!(living_target.mob_biotypes & MOB_PLANT))
 		return
 
-	living_target.adjustBruteLoss(20)
+	living_target.adjust_brute_loss(20)
 	playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
 	var/obj/item/bodypart/edible_bodypart
 

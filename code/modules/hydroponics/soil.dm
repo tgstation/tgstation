@@ -13,6 +13,7 @@
 	maxnutri = 15
 	tray_flags = SOIL
 	armor_type = /datum/armor/obj_soil
+	custom_materials = list(/datum/material/sand = SHEET_MATERIAL_AMOUNT * 3)
 	//which type of sack to create when shovled.
 	var/sack_type = /obj/item/soil_sack
 
@@ -174,6 +175,11 @@
 	stored_soil.on_place()
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/soil_sack/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
+	return ..()
 
 ///Remove slowdown and add block chance when wielded.
 /obj/item/soil_sack/proc/on_wield()

@@ -58,6 +58,7 @@
 	illustration = null
 	resistance_flags = FLAMMABLE
 	foldable_result = null
+	custom_materials = list(/datum/material/paper = SHEET_MATERIAL_AMOUNT * 1.25)
 	/// A list of all available papersack reskins
 	var/list/papersack_designs = list()
 	///What design from papersack_designs we are currently using.

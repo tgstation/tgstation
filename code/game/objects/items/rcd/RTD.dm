@@ -416,7 +416,7 @@
 	if(!borgy.cell)
 		balloon_alert(user, "no cell found!")
 		return FALSE
-	if(borgy.cell.charge >= (amount * RTD_BORG_ENERGY_FACTOR))
+	if(borgy.cell.charge < (amount * RTD_BORG_ENERGY_FACTOR))
 		balloon_alert(user, "insufficient charge!")
 		return FALSE
 	if(!dry_run)

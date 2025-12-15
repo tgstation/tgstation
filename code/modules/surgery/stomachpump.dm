@@ -71,5 +71,5 @@
 			span_warning("[user] screws up, brusing [target_human]'s chest!"),
 			span_warning("[user] screws up!"),
 		)
-		target_human.adjustOrganLoss(ORGAN_SLOT_STOMACH, 5)
-		target_human.adjustBruteLoss(5)
+		target_human.adjust_organ_loss(ORGAN_SLOT_STOMACH, 5)
+		target_human.adjust_brute_loss(5)

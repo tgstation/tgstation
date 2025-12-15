@@ -3,7 +3,7 @@
 	desc = "A market uplink. Usable with markets. You probably shouldn't have this!"
 	icon = 'icons/obj/devices/blackmarket.dmi'
 	icon_state = "uplink"
-
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.65, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3.3)
 	// UI variables.
 	/// What category is the current uplink viewing?
 	var/viewing_category
@@ -56,7 +56,7 @@
 		current_user = null
 	data["categories"] = market ? market.categories : null
 	data["delivery_methods"] = list()
-	data["money"] = "N/A cr"
+	data["money"] = "N/A [MONEY_SYMBOL]"
 	if(current_user)
 		data["money"] = current_user.account_balance
 	data["buying"] = buying

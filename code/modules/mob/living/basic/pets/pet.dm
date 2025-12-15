@@ -1,4 +1,5 @@
 /mob/living/basic/pet
+	abstract_type = /mob/living/basic/pet
 	icon = 'icons/mob/simple/pets.dmi'
 	mob_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST

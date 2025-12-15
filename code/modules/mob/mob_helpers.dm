@@ -174,9 +174,10 @@
 
 	if(C.prefs?.read_preference(/datum/preference/toggle/screen_shake_darken))
 		var/type = /atom/movable/screen/fullscreen/flash/black
+		var/shake_dur = max(duration, 2 SECONDS)
 
 		M.overlay_fullscreen("flash", type)
-		addtimer(CALLBACK(M, TYPE_PROC_REF(/mob, clear_fullscreen), "flash", 3 SECONDS), 3 SECONDS)
+		addtimer(CALLBACK(M, TYPE_PROC_REF(/mob, clear_fullscreen), "flash", 1 SECONDS), shake_dur)
 
 	//How much time to allot for each pixel moved
 	var/time_scalar = (1 / ICON_SIZE_ALL) * TILES_PER_SECOND
@@ -205,6 +206,31 @@
 	animate(pixel_x=oldx, pixel_y=oldy, time=3)
 
 #undef TILES_PER_SECOND
+
+/// Helper proc for a similar function to shake_camera, expect this one kicks the camera back at an opposite angle rather then skake_camera's irratic jittering.
+/proc/recoil_camera(mob/recoiled_mob, duration, backtime_duration, strength, angle)
+	if(!recoiled_mob || !recoiled_mob.client || duration < 1)
+		return
+	var/client/my_client = recoiled_mob.client
+	strength *= world.icon_size
+	var/client/client_to_shake = recoiled_mob.client
+	var/oldx = client_to_shake.pixel_x
+	var/oldy = client_to_shake.pixel_y
+
+	//get pixels to move the camera in an angle
+	var/mpx = sin(angle) * strength
+	var/mpy = cos(angle) * strength
+
+
+	if(my_client.prefs?.read_preference(/datum/preference/toggle/screen_shake_darken))
+		var/type = /atom/movable/screen/fullscreen/flash/black
+		var/shake_dur = max(duration, 2 SECONDS)
+		recoiled_mob.overlay_fullscreen("flash", type)
+		addtimer(CALLBACK(recoiled_mob, TYPE_PROC_REF(/mob, clear_fullscreen), "flash", 1 SECONDS), shake_dur)
+
+
+	animate(client_to_shake, pixel_x = oldx+mpx, pixel_y = oldy+mpy, time = duration, flags = ANIMATION_RELATIVE)
+	animate(pixel_x = oldx, pixel_y = oldy, time = backtime_duration, easing = BACK_EASING)
 
 ///Find if the message has the real name of any user mob in the mob_list
 /proc/findname(msg)

@@ -60,11 +60,11 @@
 			infected_mob.emote("gasp")
 
 /datum/symptom/choking/proc/Choke_stage_3_4(mob/living/M, datum/disease/advance/A)
-	M.adjustOxyLoss(rand(6,13))
+	M.adjust_oxy_loss(rand(6,13))
 	return 1
 
 /datum/symptom/choking/proc/Choke(mob/living/M, datum/disease/advance/A)
-	M.adjustOxyLoss(rand(10,18))
+	M.adjust_oxy_loss(rand(10,18))
 	return 1
 
 /*
@@ -128,25 +128,25 @@ Bonus
 			to_chat(M, span_userdanger("[pick("Your lungs hurt!", "It hurts to breathe!")]"))
 			Asphyxiate(M, A)
 			M.emote("gasp")
-			if(M.getOxyLoss() >= (M.maxHealth / (200/120)))
+			if(M.get_oxy_loss() >= (M.maxHealth / (200/120)))
 				M.visible_message(span_warning("[M] stops breathing, as if their lungs have totally collapsed!"))
 				Asphyxiate_death(M, A)
 	return
 
 /datum/symptom/asphyxiation/proc/Asphyxiate_stage_3_4(mob/living/M, datum/disease/advance/A)
 	var/get_damage = rand(10,15) * power
-	M.adjustOxyLoss(get_damage)
+	M.adjust_oxy_loss(get_damage)
 	return 1
 
 /datum/symptom/asphyxiation/proc/Asphyxiate(mob/living/M, datum/disease/advance/A)
 	var/get_damage = rand(15,21) * power
-	M.adjustOxyLoss(get_damage)
+	M.adjust_oxy_loss(get_damage)
 	if(paralysis)
 		M.reagents.add_reagent_list(list(/datum/reagent/toxin/pancuronium = 3, /datum/reagent/toxin/sodium_thiopental = 3))
 	return 1
 
 /datum/symptom/asphyxiation/proc/Asphyxiate_death(mob/living/M, datum/disease/advance/A)
 	var/get_damage = rand(25,35) * power
-	M.adjustOxyLoss(get_damage)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, get_damage/2)
+	M.adjust_oxy_loss(get_damage)
+	M.adjust_organ_loss(ORGAN_SLOT_BRAIN, get_damage/2)
 	return 1

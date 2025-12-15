@@ -111,8 +111,8 @@
 		back.on_arm_eaten()
 		return
 
-	adjustBruteLoss(-maxHealth * 0.5, FALSE)
-	adjustFireLoss(-maxHealth * 0.5, FALSE)
+	adjust_brute_loss(-maxHealth * 0.5, FALSE)
+	adjust_fire_loss(-maxHealth * 0.5, FALSE)
 
 	if(health < maxHealth * 0.8)
 		return

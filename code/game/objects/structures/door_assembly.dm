@@ -6,6 +6,7 @@
 	anchored = FALSE
 	density = TRUE
 	max_integrity = 200
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4)
 	/// Airlock's current construction state
 	var/state = AIRLOCK_ASSEMBLY_NEEDS_WIRES
 	var/base_name = "Airlock"
@@ -308,7 +309,7 @@
 		door.closeOtherId = electronics.passed_cycle_id
 		door.update_other_id()
 	if(door.unres_sides)
-		door.unres_sensor = TRUE
+		door.unres_latch = TRUE
 	door.previous_airlock = previous_assembly
 	electronics.forceMove(door)
 	door.autoclose = TRUE
@@ -377,7 +378,7 @@
 	return FALSE
 
 /obj/structure/door_assembly/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_DECONSTRUCT)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_DECONSTRUCT)
 		qdel(src)
 		return TRUE
 	return FALSE

@@ -9,6 +9,7 @@
 	fire_sound = 'sound/items/weapons/emitter.ogg'
 	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_HUGE
+	can_muzzle_flash = FALSE
 	///what kind of magic is this
 	var/school = SCHOOL_EVOCATION
 	var/antimagic_flags = MAGIC_RESISTANCE

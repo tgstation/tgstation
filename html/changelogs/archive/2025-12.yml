@@ -1,0 +1,507 @@
+2025-12-01:
+  Absolucy:
+  - bugfix: Voltaic combat cyberhearts no longer kill toxlovers (i.e jellypeople),
+      albeit they won't heal toxins for them either.
+  Aliceee2ch:
+  - bugfix: Added missing "require all" type of access for Bitrunning Den.
+  - map: Removes one (1) bush in NebulaStation warehouse.
+  - spellcheck: Plant produce spawner now correctly spawns plum instead of plum seeds.
+  - spellcheck: Removed cellular damage mention from Radioactive Resonance virus description.
+  - bugfix: Fixed missing access to ORM room for miners on CatwalkStation.
+  ArchBTW:
+  - bugfix: Fix crowbar combat mode right clicking an unpowered airlock
+  ArchBTW, WinterDarkraven:
+  - qol: Guns have a directional muzzle flash effect now
+  Ezel:
+  - bugfix: Removes rogue decal from catwalk station
+  FalloutFalcon:
+  - code_imp: standardized defines for currency symbols
+  - balance: Lattice now ignore the slowdowns of turfs
+  - bugfix: Lattice now stop you from dipping into water
+  Fghj240:
+  - bugfix: Durability header no longer appears twice when inspecting armor
+  - bugfix: Exosuit fabricator UI now shows the Savannah-Ivanov's supported equipment
+  - qol: you can swap beakers in a pandemic
+  - qol: pandemics now display overall virus severity
+  - admin: virus logs now include severity along with other stats
+  - qol: weapon rechargers don't wait an extra tick before announcing they've finished
+      recharging
+  - spellcheck: weapon rechargers no longer claim a battle rifle has "finished recharging"
+      when it's finished recalibrating.
+  Melbert:
+  - qol: Stairs now have an indicator that stepping beyond them will take you upwards.
+      You can disable it in accessibility settings if desired.
+  - image: Stairs blend in and together better.
+  SmArtKar:
+  - admin: Added jump and search functions to the planecube debugger
+  - qol: Bot assemblies will only be picked up if you held the medkit/toolbox/helmet/etc
+      in your hands when creating one.
+  - qol: Assembling med/repair/secbots will now put their assemblies in your main
+      hand instead of your offhand
+  - bugfix: Hulk and infusions no longer texture robotic limbs
+  - bugfix: Fixed raptor younglings going invisible when killed
+  SyncIt21:
+  - bugfix: all mounted objects on tables, fences, windows & walls should fall of
+      correctly when the atom it is placed on is destroyed
+  - bugfix: security telescreen now falls off when their mounted wall is destroyed
+  - bugfix: defib wall mount falls off when their mounted wall is destroyed
+  - bugfix: floor lights are mounted to the ground/catwalk/tram floor they are sitting
+      on meaning destroying it will destroy the light
+  - bugfix: wall mounted plaques now fall off when their mounted wall is destroyed
+  Xrmanser:
+  - bugfix: 'graft stat adjustments now apply even when the trait is rejected
+
+      :cl:'
+  ezel:
+  - bugfix: Removes a duplicate fire alarm in metastation botany
+  - bugfix: fixes catwalk atmos pipeline at the courtroom
+  - bugfix: removes random powerline going trough the walls
+  lelandkemble:
+  - spellcheck: abilities that check for consciousness will say you're dead rather
+      than unconscious if you're dead
+2025-12-02:
+  ArchBTW:
+  - bugfix: Click dragging something onto a tile with a decal (pool of oil/blood,
+      etc)
+  - code_imp: Add force_move_pulled element; replace respective code with the element
+  Fghj240:
+  - qol: Revolutionaires gain a positive moodlet instead of a negative one when they
+      see a dead head of staff
+  - balance: Regenerative Coma activation thresholds scales with your max hp
+  - balance: Regenerative Coma can be canceled by gaining nosoftcrit before it activates
+  - balance: Toxolysis food scales with the amount of reagents purged
+  - qol: Quick carry and fast medicine properties are now visible on gloves
+  - bugfix: Getting shoved into a wall while stun immune no longer sends a message
+      saying you were knocked down
+  - bugfix: Nooartrium patients and super hulks can no longer pass out from oxygen
+      damage
+  Melbert:
+  - refactor: Refactored item reskinning (the alt-click way), report any oddities
+      with that
+  - rscdel: Deleted the crusher retool kit, now you can just reskin your crusher with
+      alt-click. The Skull skin is still locked behind having the Ashen Skull trophy
+      applied.
+  - bugfix: Stunswords no longer have an incorrect lore blurb
+  - bugfix: Fixed loadout item reskinning's UI
+  ezel:
+  - rscadd: Compact Defibrillator is now a Spy objective
+  - balance: Compact Defib is CMO exclusive again
+  - balance: you can no longer print Defibrillators in techlathe (purchase them via
+      cargo if needed)
+  - map: catwalk defibs trimmed to 4 instead of 6
+  - map: metastation defib added from 3 to 4
+  - map: wawastation defib added from 3 to 4
+  - map: tramstation defib added from 3 to 4
+  - map: nebulastation defibs trimmed from 6 to 4
+2025-12-03:
+  Aliceee2ch:
+  - map: Added shutters in some of service areas on WawaStation.
+  Cyberboss:
+  - rscadd: Hygiene bots now extinguish when cleaning.
+  Ghommie:
+  - refactor: Follow-up to the crafting/material refactor from months ago. All objects
+      crafted with stacks now inherit their mat composition (not necessarily the effects
+      and color) by default, while previously only a few things like chair, sinks
+      and toilets did. Report any object looking or behaving weirdly as a result.
+  - bugfix: The material composition of ammo boxes is no longer a 1/10 of what it's
+      supposed to be. It was a shitty hack to make it harder to recycle empty ammo
+      boxes. Instead, they lose materials as they're emptied now.
+  Melbert:
+  - bugfix: Fix Flypeople's vomit interaction before anyone realizes it's broken but
+      me
+  - rscadd: Compact defib can be worn and used on the suit storage slot of labcoats,
+      surgical aprons, and medical MODsuits
+  - rscadd: Drones and Dex Holoparasites can (hypothetically) wear and use compact
+      defibs
+  - refactor: Refactored how mech icons update mid-construction, report any disappearing
+      mechs please
+  - bugfix: One of the Phazon's mid construction icons was not visible in the past,
+      now it is again. Yippee.
+  SyncIt21:
+  - qol: added mapping directional helper for warning, radiation & secure area sign
+      allowing them to interact with fire/acid on their mounted turf
+  - qol: adds mapping helper to create diagonally shifted objects
+  - qol: adds mapping directional helper for nanotrasen sign & replaces all var edited
+      instances
+  TealSeer:
+  - code_imp: makes /obj/item/stamp abstract, creates /obj/item/stamp/granted
+  alien3301:
+  - balance: The lethal injection locker is now accessible by the warden.
+  necromanceranne:
+  - balance: High frequency blades (both null rod and admin versions) are able to
+      block melee attacks from mechs.
+  - balance: High frequency blade null rods are now two-handed weapons.
+  - balance: Mech melee attacks can be blocked or avoided by a few rare sources.
+  tontyGH:
+  - refactor: Handling relating to AI cores has been overhauled. Please make an issue
+      report on the Github if unexpected behaviour occurs.
+  uaioy:
+  - bugfix: lavaland crash site ruin should properly be affected by ash storm now
+2025-12-04:
+  Aliceee2ch:
+  - bugfix: Fixes for MetaStation fire alarms.
+  - map: Removed one pair of firelocks in Brig cycling room - now it has fire sanity
+      marker instead. That should prevent trapping anyone without crowbar inside.
+  FalloutFalcon:
+  - bugfix: Cardboard crates are now made of cardboard
+  - bugfix: eyeless overlays with now display properly again
+  - rscadd: Added the medium sized cardboard boxes to random spawners
+  - qol: You can now craft the medium sized cardboard boxes
+  - rscadd: water and saltwater can be scooped from water turfs
+  - rscadd: mineral water (water with minor tox heal), scoop-able from hot-springs
+  - refactor: behavior for scooping reagents from plasma turfs has been made generic
+      and reusable
+  Hatterhat:
+  - bugfix: Non-virtual megafauna should no longer be dropping encrypted caches when
+      mulched with a crusher if their matching virtual domain was deployed.
+  - bugfix: Virtual megafauna no longer count as valid kills for achievement tracking.
+  Jacquerel:
+  - balance: The Captain's MODSuit pathfinder module now flies it directly to their
+      location rather than physically traversing the halls of the station.
+  LT3:
+  - qol: Silent jaws of recovery is now less obvious that it's modified
+  Melbert:
+  - qol: If you are within a disposal bin or chute, and drop an item, the item will
+      go into the bin, rather than onto the floor outside of the bin.
+  TealSeer:
+  - code_imp: ruin loading now logs placement coordinates
+  - bugfix: fixed molotov cocktails not lighting
+  Yobrocharlie:
+  - map: added the "heretic" gateway map (it has nothing related to heretics)
+  lelandkemble:
+  - rscadd: Added a modular SUIT, a deployable, one-piece three-piece suit. Purchasable
+      from the LawDrobe.
+  - balance: The MODsuit equipment techweb node has been split in two, with an offshoot
+      for civilian MODules.
+2025-12-05:
+  Aliceee2ch:
+  - image: Most of mapping spawner icons were updated to match latest version of sprites.
+  ArchBTW:
+  - bugfix: Fix sitting on stools (it's a chair)
+  - bugfix: Fix offset when sitting on a stool
+  FalloutFalcon:
+  - bugfix: You can toss things over cardboard crates
+  Fghj240:
+  - bugfix: Deathmatch felinids now spawn in with pet collars as intended
+  Gboster-0:
+  - balance: wabbajack robot transformations are now weighted like 3 years ago
+  Ghommie:
+  - refactor: Refactored inventory code a little to be hopefully more robust. Report
+      any possible new, quirky nit or outright problematic issue with it.
+  - bugfix: Storing objects with slowdown in a backpack or belt (or any such storage)
+      now properly updates your speed.
+  Melbert:
+  - balance: Tech storage access is no longer a "command level" access, meaning the
+      HoP can give it to crewmembers that have a normal ID card. Note, secure tech
+      storage still requires bridge access, which requires a silver ID card.
+  - bugfix: Tie names are verified
+  - bugfix: Fix mech construction
+  SomeRandomOwl:
+  - bugfix: The forked lizard tongue no longer makes you slur your S's if its in your
+      hands or pockets.
+  SyncIt21:
+  - bugfix: shards can be embedded in posters again
+  TealSeer:
+  - bugfix: fixed cargo manifests missing things in certain crates
+  lelandkemble:
+  - bugfix: Turret control wallframes visibly attach to the wall
+  necromanceranne:
+  - bugfix: Sleeping carp now actually lets you dodge melee attacks without filling
+      your hands with stuff.
+2025-12-07:
+  ArchBTW, Bisar:
+  - balance: Changeling's Biodegrade works against grabs.
+  - balance: Changeling's Biodegrade destroys all restraints instead of one single
+      restraint.
+  - bugfix: Changeling's Biodegrade shows the effect when used inside lockers.
+  - bugfix: Changeling's Biodegrade properly covers restraint types (cuffed prisoner
+      shoes, strait jackets, etc).
+  Fghj240:
+  - bugfix: inhalers no longer have infinite reach
+  - bugfix: using an inhaler no longer results in whacking the target with it afterwards
+  - qol: You can see whether you just locked or unlocked a cyborg
+  LT3:
+  - code_imp: Drag-drop activation can now be added as an element to objects
+  - qol: Portable crew monitor can now be drag-drop activated similar to a PDA
+  Melbert:
+  - rscadd: Readds Sent from my PDA Sent from my PDA
+  - bugfix: Summon animals relic makes you less depressed
+  - bugfix: Fix detached storage (modsuit storage)
+  - rscadd: '[Catwalk] Entirely new Dorms & Holodeck'
+  - rscadd: '[Catwalk] Modified Atmos, Gravity Generator, Engineering and Tech Storage
+      a fair bit'
+  - rscadd: '[Catwalk] Event locations were updated, meaning several random events
+      now trigger in more appropriate places'
+  - rscdel: '[Catwalk] Removed duplicate First Aid stations in a few places'
+  - qol: '[Catwalk] Changed around maint areas (not the actual layouts but the area
+      designations) to be a bit less monolithic'
+  - bugfix: '[Catwalk] Xenobio kill room uses a passive vent'
+  - bugfix: '[Catwalk] Fixes a few erroneous space tiles around sec'
+  - bugfix: Bolas don't slow while in hand
+  - balance: Ammo will no longer show up in the Spy loot pool until a weapon that
+      uses said ammo has been claimed. Some ammo for weapons easily obtainable on
+      station (shotgun shot) are not limited by this restriction. Also, there's a
+      rare chance ammo will show up anyways just to keep people on their toes.
+  - balance: Claiming a weapon will refresh ammo in the loot pool that has already
+      been claimed or cycled out.
+  - balance: Bounty rewards that no Spy claimed have a chance to re-enter the loot
+      pool after a bounty refresh, rather than being lost for the remainder of the
+      round.
+  - balance: When higher tier Spy bounties empty their loot pools, they will attempt
+      to draw from lower tier pools before defaulting to telecrystals.
+  - balance: Spies no longer are rewarded with gun cases for bounties; rather just
+      the gun itself
+  - spellcheck: Modified the Spy antag info text
+  RikuTheKiller:
+  - balance: R&D console boards sourced from printing or tech storage are now locked
+      by default. It's recommended to ask your respective head of department or the
+      science department to complete research for you. Heads of department can remotely
+      access the research network using their PDAs.
+  TealSeer:
+  - bugfix: fixed TRAIT_NO_UNDERWEAR not being respected in human rendering
+  Tostah:
+  - balance: increases mech damage to windows to feel more realistic
+  alien3301:
+  - bugfix: Captain starts with a command megaphone in their locker
+  - bugfix: Executing people with guns no longer makes you hit them with the gun
+  - bugfix: Trying to shoot a gun when it cant shoot doesn't make you melee with it
+  - bugfix: If trying to shoot would make a click sound then executing will also make
+      the sound
+  dungeon_vr, KnigTheThrasher, xPokee:
+  - image: The DNR ghost HUD icon has gotten a new look.
+  lelandkemble:
+  - bugfix: Malf AI "Destroy RCDs" power now properly destroys mech RCDs
+  san7890:
+  - balance: After noticing it was too easy for animals to crawl through maintenance
+      by abusing the Easy-Exit sensors, Nanotrasen has replaced all unrestricted door
+      sensors (like in maintenance) with a pull-down lever that should take around
+      2-3 seconds to engage. It has been designed to allow the employee to actuate
+      it despite any pressure differentials within an area.
+  - balance: The above change does not apply to select doors in the medical section
+      of the station, which will continue to use the "older" Ready-Exit system.
+  - sound: In order to ensure that staff in high-traffic areas don't go bonkers due
+      to this new change, sound dampeners have been installed to prevent the hydraulics
+      from being heard for super long distances. However, they skimped out on the
+      quality for the ones in maintenance...
+2025-12-08:
+  ArchBTW:
+  - balance: repairbot hp 100 -> 35
+  FalloutFalcon, rye-rice:
+  - rscadd: Adds a small cosmetic recoil to all ballistics (with an accompanying pref
+      option to tweak or disable it)
+  - balance: Changes recoil from an erratic shaking to a kicking of your screen relative
+      to your firing angle
+  - qol: Pref option for darkened screen has some scaling with duration of shake
+  Thunder12345:
+  - rscadd: Added a new set of chaplain armour based on the generic heretic robes
+      unavailable since the path rework.
+2025-12-09:
+  Aliceee2ch:
+  - image: Added 2 new contraband and 1 new official posters.
+  Fghj240:
+  - bugfix: mod pathfinder module no longer gets stuck after an interrupted launch
+  - bugfix: mod pathfinder module gives you a unique balloon alert on your position
+      if you try to recall a suit that's being held by another mob
+  Melbert:
+  - balance: Blood flow and clotting has universally been slashed by about 0.85x.
+      This means blood wounds kill you slightly slower, but heal slightly slower.
+  - balance: Sutures now heal 0.85x less blood flow and gauze's clotting bonus is
+      also 0.85x lower. Medicated sutures are unaffected.
+  - balance: Bloody Mary's blood healing effect now scales with how drunk you are.
+      Worse in low amounts, better in high amounts.
+  - balance: Epoetin Alfa no longer generates Sangurite. It now directly clots bleeding
+      wounds (at a rate ~3x worse than sangurite, but still ~4x better than the natural
+      clotting rate)
+  - balance: Epoetin Alfa no longer heals liver damage.
+  - balance: Epoetin Alfa regenerates 3x less blood. It's still 4x effective than
+      Saline Glucose or Iron.
+  - balance: Epoetin Alfa now causes minor heart damage (0.2 damage per tick).
+  - code_imp: All "coagulating" effects now use a shared function.
+  Rockdtben:
+  - bugfix: Secure Briefcase buttons no longer push column down.
+  lelandkemble:
+  - map: Powered catwalk library office
+  - rscadd: Syndicate Powerfist users and our most athletic employees have discovered
+      that if you punch a meteor with enough force, it can be redirected.
+  necromanceranne:
+  - balance: Boxing combos are now broader and user friendly. Alternating combinations
+      of buttons AND hands produces different results, but all of them good. Experiment!
+  - balance: Evil boxing now has a Sucker Punch. Hit someone from behind to potentially
+      knock them out cold!
+  - bugfix: Punching mitts no longer mention punching rocks.
+  san7890:
+  - admin: Multikeying Notice Messages have taken on a new form factor but should
+      still furnish the same information.
+2025-12-10:
+  ArcaneMusic:
+  - bugfix: Plasma sheets are once again immune to market elasticity, selling for
+      a static 80 credits each yet again.
+  ArchBTW:
+  - bugfix: 'Biodegrade: Fireman carry & knotted shoes works as intended, description
+      update'
+  - balance: Nightmare's light eater will snuff out dragged lights
+  Fghj240:
+  - qol: You can hotkey shockpaddles back into their defibs
+  - bugfix: Obscuring your face prevents people from noticing your facial expression
+      when you're using sign language
+  Melbert:
+  - rscadd: Wardens can alt-click-reskin their Kaza Ruk gloves to match their formal
+      attire
+  - rscadd: You can select a recolorable Santa Hat in the loadout during the festive
+      season (December 1st - 31st)
+  Rockdtben:
+  - bugfix: ScreenTip for Lockers will show "Unlock" or "Lock" instead of always showing
+      "Unlock"
+  SyncIt21:
+  - qol: added mapping directional helper for cargo & vacuum signs allowing them to
+      interact with fire/acid on their mounted turf
+  jlsnow301:
+  - rscdel: TGUI now defaults to fancy mode, there is only fancy mode. Welcome to
+      the future.
+  lelandkemble:
+  - map: Catwalk engi secpoint, prisoner education chamber, & starboard bow solar
+      maintenance repowered
+  - map: Catwalk Engineering Project Room accesses have been made consistent
+  - map: Many of Catwalk's useless pipes have been cut out
+  - map: Catwalk's waste line will no longer constantly vent into space
+  - map: Icebox morgue has been given an additional redundant power line
+  levels0:
+  - bugfix: make evolved lungs actually resistant to co2
+  timothymtorres:
+  - rscadd: Add new emotes "slit", "scratch_h",  "thumb_u", "thumb_d", "time", "tap",
+      "halt", "shush", "listen", "think", "beckon", "airquote", "crazy", "squint",
+      "rub".
+  - bugfix: Fix closets, crates, and drawers missing material tags
+2025-12-11:
+  ArchBTW:
+  - bugfix: Fix RMB crowbar consistency for doors
+  - spellcheck: Removed obsolete morph tip of the round
+  - balance: 'Canned ink: Remove uncatchable & paralyze. Lower stagger & blind'
+  Fghj240:
+  - bugfix: Rescue modsuit suit storage can hold anything the medical modsuit suit
+      storage can hold
+  - spellcheck: updated quadruple amputee to mention newer healing items
+  - spellcheck: fixed a missing e in sleeping carp's recall teachings verb
+  Melbert:
+  - balance: Romerol, when applied via touch or vapor, is now guaranteed to infect
+      when using >=1u. (Prior, it had a % chance of infecting equal to the amount
+      of chemicals use - so 1u meant 1% chance to infect.) Other methods of applying
+      Romerol are unaffected (ingesting or injecting any amount is still a guaranteed
+      infection).
+  MrMelbert, Zergspower:
+  - qol: The world is now heavily desaturated while blind, rather than pure monochrome,
+      to give players some visual stimulus
+  - qol: When blind, the brief flicker of the entire screen now only appears for mobs
+      temporarily blinded - ie, mobs blinded from quirk / trauma / genetic mutation
+      no longer experience it
+  Shadow-Quill:
+  - spellcheck: Corrected the spelling of department in the message monitor console.
+  TealSeer:
+  - bugfix: fixed mulebot speed wire max steps being swapped
+  lelandkemble:
+  - spellcheck: Tuberculosis no longer tells naked people to get naked
+  - bugfix: Revenant objectives can only target people that are actually present
+  timothymtorres:
+  - rscadd: Installing camera upgrades now consumes more power. Installing several
+      upgrades onto the same camera has a power multiplier effect that stacks.
+  - bugfix: Fix disabled cameras consuming power
+  xPokee:
+  - spellcheck: The Scrubs, MD abduction spy bounty now has the proper name.
+2025-12-13:
+  ArchBTW:
+  - bugfix: Fix clicking on things underneath directional firelocks
+  Ezel:
+  - map: Engineering deliveries now go to the techlathe room on Deltastation
+  Fghj240:
+  - qol: ear protection is visible on examine
+  - qol: hearing protection modsuit module is now built in
+  Jacquerel:
+  - rscadd: When the game considers it to be Christmas, Cargo can order additional
+      Christmas gifts pre-addressed to random crew members.
+  Rockdtben:
+  - qol: Hold ALT + CLICK and drag a UI window. Provides a work around for stuck uplink
+      UI
+  - qol: 'A new verb under OOC: Reset UI Positions -> Which you can use to fix a stuck
+      uplink UI as well.'
+  TealSeer:
+  - bugfix: fixed disposal unit light not turning on when dumping bag contents inside
+  Thunder12345:
+  - bugfix: Posters printed from the library are no longer poorly coded and ugly.
+  - bugfix: Posters printed from the library will no longer go up in the wrong places.
+  - bugfix: Posters now show their name correctly when rolled up.
+  - bugfix: Random posters will no longer remain random after being put up for the
+      first time.
+  - bugfix: Spacemen now know how to hang posters correctly, and the majority of poster
+      sprites will no longer sit on the floor.
+  alien3301:
+  - rscadd: '"Department Budget" access that lets someone place orders with the NT
+      shopping app'
+  - qol: Warden starts with the shopping app installed
+  - balance: Cargo techs and Warden can place orders with the shopping app by default
+  jlsnow301:
+  - rscdel: Removed the TGUI kitchensink component view
+  - rscadd: Added a new data explorer for TGUI dev mode
+2025-12-14:
+  ArchBTW:
+  - bugfix: Fix not being able to drag click things on tram floor
+  - bugfix: Fix stacking flash assemblies
+  - bugfix: Fix nightmare not properly snuffing dragged lights if other lights were
+      turned on simultaneously
+  - balance: Heavy pirate's armored pirate coat can hold the same items that standard
+      armor can.
+  - bugfix: Gives eligible sentient simplemobs a stamina hud
+  Geoengi:
+  - rscadd: Robot customers and mech wreckage destruction are messier. Bring a mop!
+  Hatterhat:
+  - bugfix: Non-base laser guns now attach their lore properly.
+  - spellcheck: Adjusted the names on the laser guns to have a slash between the numeric
+      type/version and the variant... abbreviation? Letter? One of the two.
+  - spellcheck: Fixed some typos and adjusted the now-visible lore on the laser guns
+      to read a little nicer, theoretically. Whether the grammar tweaks improved anything
+      or not is subjective.
+  LT3:
+  - code_imp: Clausophobia is now only triggered by a properly dressed Santa Claus
+  SmArtKar:
+  - bugfix: Fixed purple raptors' wings action background
+  TealSeer:
+  - rscadd: Added a key memory to the family heirloom quirk
+  krookodilehunter:
+  - qol: Wirecutters are now recolorable when purchasing from a vendor
+  lelandkemble:
+  - rscadd: Added a counterattack for sheathed weapons. When used, an attack from
+      your target within a one-second window will cause you to counterattack with
+      a triple-damage strike.
+2025-12-15:
+  FalloutFalcon:
+  - spellcheck: minor cleanup on some usecases of "credits"
+  Gboster-0:
+  - code_imp: slightly cleaned up command headsets in-code
+  LT3:
+  - admin: Removed ability to enable Rock The Vote because RTV is no longer a thing
+  Melbert:
+  - qol: Stop drop and roll now has a progress bar
+  SmArtKar:
+  - bugfix: Fixed the brimdust status alert sprite
+  Thunder12345:
+  - map: Tomas once more haunts the dormitories of Catwalk Station
+  alien3301:
+  - bugfix: Just like the blood red modsuits, the elite version of them has a pathfinder
+      module
+  - spellcheck: fixed a typo in the moon heretic robe's attack messages
+  jlsnow301:
+  - bugfix: TGUI window drag and resize should be smoother on low end systems.
+  necromanceranne:
+  - bugfix: Fixes laser pistol charging instantly.
+  san7890:
+  - spellcheck: Nanotrasen has updated their Emergency Shuttle Authorization messaging.
+  - bugfix: Paintings can no longer be finalized if you are not adjacent to the painting.
+  - server: Round ID is now output to `log_world()`, so it'll show up stuff like world.log,
+      dd.log, etc.
+  - config: If you publicly host a copy of your server's config, you may now link
+      to the public URL in the 'CONFIGURL' setting in the server config. It will show
+      to players in the Escape Menu's Resources Carousel.
+  timothymtorres:
+  - bugfix: Fix map reader ignoring valid variable names. If a variable had a number
+      inside the name anywhere the map reader would ignore this value when a map was
+      loaded and use the initial value instead. This was due to a faulty regex pattern
+      that did not properly match variable names.

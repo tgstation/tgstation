@@ -20,9 +20,9 @@
 	var/need_mob_update
 
 	if(liver)//Though, lets be safe
-		need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, liver_damage * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+		need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, liver_damage * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	else
-		need_mob_update = affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)//Incase of no liver!
+		need_mob_update = affected_mob.adjust_tox_loss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)//Incase of no liver!
 
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -41,7 +41,7 @@
 
 /datum/reagent/inverse/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(affected_mob.adjustToxLoss(tox_damage * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+	if(affected_mob.adjust_tox_loss(tox_damage * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 //Failed chems - generally use inverse if you want to use a impure subtype for it
@@ -106,30 +106,19 @@
 		holder.del_reagent(type)
 		return
 
-	human_thing.apply_status_effect(/datum/status_effect/frozenstasis/irresistable)
-	if(!human_thing.has_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT))
-		human_thing.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
+	human_thing.apply_status_effect(/datum/status_effect/reagent_effect/freeze, type)
 
 /datum/reagent/inverse/cryostylane/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(!affected_mob.has_status_effect(/datum/status_effect/frozenstasis/irresistable))
-		holder.remove_reagent(type, volume) // remove it all if we were broken out
-		return
 	metabolization_rate += 0.01 //speed up our metabolism over time. Chop chop.
 
 /datum/reagent/inverse/cryostylane/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(current_cycle >= 60)
 		holder.remove_reagent(type, volume) // remove it all if we're past 60 cycles
 		return
+
 	return ..()
 
 /datum/reagent/inverse/cryostylane/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
-	affected_mob.remove_status_effect(/datum/status_effect/frozenstasis/irresistable)
-	affected_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
-
-/datum/reagent/inverse/cryostylane/on_mob_delete(mob/living/affected_mob, amount)
-	. = ..()
-	affected_mob.remove_status_effect(/datum/status_effect/frozenstasis/irresistable)
-	affected_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
-
+	affected_mob.remove_status_effect(/datum/status_effect/reagent_effect/freeze)

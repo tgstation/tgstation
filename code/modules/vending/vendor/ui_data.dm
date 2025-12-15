@@ -70,7 +70,7 @@
 	data["jobDiscount"] = DEPARTMENT_DISCOUNT
 	data["product_records"] = list()
 	data["displayed_currency_icon"] = displayed_currency_icon
-	data["displayed_currency_name"] = displayed_currency_name
+	data["displayed_currency_name"] = " [displayed_currency_name]"
 
 	var/list/categories = list()
 

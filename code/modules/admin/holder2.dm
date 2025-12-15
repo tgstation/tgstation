@@ -38,6 +38,8 @@ GLOBAL_PROTECT(href_token)
 	var/datum/plane_master_debug/plane_debug
 	var/obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/library_manager
 	var/datum/pathfind_debug/path_debug
+	var/datum/spawn_menu/spawn_menu
+	var/datum/spawnpanel/spawn_panel
 
 	/// Whether or not the user tried to connect, but was blocked by 2FA
 	var/blocked_by_2fa = FALSE

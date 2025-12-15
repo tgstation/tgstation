@@ -256,7 +256,7 @@
 /mob/living/silicon/pai/updatehealth()
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
-	set_health(maxHealth - getBruteLoss() - getFireLoss())
+	set_health(maxHealth - get_brute_loss() - get_fire_loss())
 	update_stat()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 

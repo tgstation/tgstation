@@ -1295,14 +1295,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/medbay)
-"cW" = (
-/obj/structure/sign/departments/cargo,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/abandoned/cargo)
 "cX" = (
 /obj/machinery/light/small/empty/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/spider/stickyweb,
+/obj/structure/sign/departments/cargo/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/cargo)
 "db" = (
@@ -2281,7 +2278,7 @@ aa
 aa
 cx
 cy
-cW
+cx
 dr
 cy
 bv

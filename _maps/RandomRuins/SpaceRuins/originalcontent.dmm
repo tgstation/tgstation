@@ -5,23 +5,23 @@
 "ab" = (
 /obj/structure/fluff/paper/corner,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ac" = (
 /obj/structure/fluff/paper,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ad" = (
 /obj/structure/fluff/paper/corner{
 	dir = 8
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ae" = (
 /obj/structure/fluff/paper{
 	dir = 4
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "af" = (
 /turf/closed/indestructible/paper,
 /area/ruin/space/has_grav/powered)
@@ -30,20 +30,20 @@
 	dir = 10
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ah" = (
 /obj/structure/fluff/paper/corner,
 /obj/structure/fluff/paper/corner{
 	dir = 8
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ai" = (
 /obj/structure/fluff/paper{
 	dir = 6
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aj" = (
 /obj/machinery/door/airlock/freezer{
 	name = "Airlock";
@@ -137,7 +137,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ax" = (
 /obj/structure/fluff/paper/corner{
 	dir = 1
@@ -375,19 +375,19 @@
 	dir = 9
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bd" = (
 /obj/structure/fluff/paper{
 	dir = 1
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "be" = (
 /obj/structure/fluff/paper/corner{
 	dir = 4
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bf" = (
 /obj/structure/fluff/paper{
 	dir = 4
@@ -454,7 +454,7 @@
 	dir = 10
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bo" = (
 /obj/structure/fluff/paper/corner{
 	dir = 4
@@ -463,7 +463,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bp" = (
 /obj/structure/fluff/paper{
 	dir = 8
@@ -518,13 +518,13 @@
 	dir = 1
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bx" = (
 /obj/structure/fluff/paper{
 	dir = 5
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "by" = (
 /obj/structure/fluff/paper/corner,
 /turf/open/indestructible/paper,

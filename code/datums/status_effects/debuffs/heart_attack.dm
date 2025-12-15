@@ -47,12 +47,12 @@
 	if(time_until_stoppage > ATTACK_STAGE_THREE)
 		if(SPT_PROB(5, seconds_between_ticks))
 			owner.playsound_local(owner, 'sound/effects/singlebeat.ogg', 25, FALSE, use_reverb = FALSE)
-			owner.adjustStaminaLoss(5)
+			owner.adjust_stamina_loss(5)
 
 	if(time_until_stoppage <= ATTACK_STAGE_TWO && time_until_stoppage > ATTACK_STAGE_THREE)	//This coughing gets replaced with worse coughing, no need to stack it.
 		if(SPT_PROB(10, seconds_between_ticks))
 			owner.emote("cough")
-			owner.adjustStaminaLoss(10)
+			owner.adjust_stamina_loss(10)
 			oxyloss_sum += 4
 
 	if(time_until_stoppage <= ATTACK_STAGE_THREE) //At this point, we start with chat messages and make it clear that something is very wrong.
@@ -69,7 +69,7 @@
 		if(SPT_PROB(8, seconds_between_ticks))
 			to_chat(owner, span_danger("You feel very weak and dizzy..."))
 			owner.adjust_confusion_up_to(6 SECONDS, 10 SECONDS)
-			owner.adjustStaminaLoss(20)
+			owner.adjust_stamina_loss(20)
 			owner.emote("cough")
 			oxyloss_sum += 8
 
@@ -79,7 +79,7 @@
 			to_chat(owner, span_userdanger("It feels like you're shutting down..."))
 			owner.adjust_dizzy_up_to(4 SECONDS, 10 SECONDS)
 			owner.adjust_eye_blur_up_to(4 SECONDS, 20 SECONDS)
-			owner.adjustStaminaLoss(20)
+			owner.adjust_stamina_loss(20)
 
 		if(SPT_PROB(5, seconds_between_ticks))
 			owner.emote("cough")
@@ -94,8 +94,8 @@
 			owner.Paralyze(1 SECONDS)
 		oxyloss_sum += 3
 
-	if(owner.getOxyLoss() < OXYLOSS_MAXIMUM) //A bad enough roll on the verge of passing out might still push you over into unconciousness for a few seconds...?
-		owner.adjustOxyLoss(oxyloss_sum)
+	if(owner.get_oxy_loss() < OXYLOSS_MAXIMUM) //A bad enough roll on the verge of passing out might still push you over into unconciousness for a few seconds...?
+		owner.adjust_oxy_loss(oxyloss_sum)
 
 	if(time_until_stoppage <= 0)
 		if(owner.stat == CONSCIOUS)

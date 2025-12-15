@@ -81,9 +81,10 @@
 #define DOCKING_NULL_SOURCE (1<<4)
 
 //Docking turf movements
-#define MOVE_TURF 1
-#define MOVE_AREA 2
-#define MOVE_CONTENTS 4
+#define MOVE_TURF (1<<0)
+#define MOVE_AREA (1<<1)
+#define MOVE_CONTENTS (1<<2)
+#define MOVE_SPECIAL (1<<3)
 
 //Rotation params
 #define ROTATE_DIR 1

@@ -10,6 +10,7 @@
 	volume = 5
 	initial_reagent_flags = TRANSPARENT
 	custom_price = PAYCHECK_CREW
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/dropper/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(!target.reagents)

@@ -28,6 +28,8 @@
 	var/show_charge_as_alpha = FALSE
 	/// The item we use for recharging
 	var/recharge_path
+	/// The item can block OVERWHELMING_ATTACK, which is mostly used by mech melee attacks.
+	var/can_block_overwhelming = FALSE
 
 	/// The cooldown tracking when we were last hit
 	COOLDOWN_DECLARE(recently_hit_cd)
@@ -36,7 +38,7 @@
 	/// A callback for the sparks/message that play when a charge is used, see [/datum/component/shielded/proc/default_run_hit_callback]
 	var/datum/callback/on_hit_effects
 
-/datum/component/shielded/Initialize(max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, show_charge_as_alpha = FALSE, recharge_path = null, starting_charges = null, shield_icon_file = 'icons/effects/effects.dmi', shield_icon = "shield-old", shield_inhand = FALSE, run_hit_callback)
+/datum/component/shielded/Initialize(max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, show_charge_as_alpha = FALSE, recharge_path = null, can_block_overwhelming = FALSE, starting_charges = null, shield_icon_file = 'icons/effects/effects.dmi', shield_icon = "shield-old", shield_inhand = FALSE, run_hit_callback)
 	if(!isitem(parent) || max_charges <= 0)
 		return COMPONENT_INCOMPATIBLE
 
@@ -47,6 +49,7 @@
 	src.lose_multiple_charges = lose_multiple_charges
 	src.show_charge_as_alpha = show_charge_as_alpha
 	src.recharge_path = recharge_path
+	src.can_block_overwhelming = can_block_overwhelming
 	src.shield_icon_file = shield_icon_file
 	src.shield_icon = shield_icon
 	src.shield_inhand = shield_inhand
@@ -165,6 +168,11 @@
 
 	if(current_charges <= 0)
 		return
+
+	// if our shield is unable to block OVERWHELMING_ATTACK type attacks, we just let it pass.
+	if(attack_type == OVERWHELMING_ATTACK && !can_block_overwhelming)
+		return
+
 	. = COMPONENT_HIT_REACTION_BLOCK
 
 	var/charge_loss = 1 // how many charges do we lose
@@ -174,6 +182,9 @@
 
 	else if(damage < 3)
 		charge_loss = 0
+
+	else if(attack_type == OVERWHELMING_ATTACK && !lose_multiple_charges) // Always expend all charges when blocking an overwhelming attack unless we're using our shield like health.
+		charge_loss = max_charges
 
 	adjust_charge(-charge_loss)
 

@@ -56,8 +56,8 @@
 
 /obj/item/blood_scanner/proc/scan_blood(mob/living/scanner, mob/living/carbon/scanned_person)
 	var/render_list = list()
-	var/oxy_loss = scanned_person.getOxyLoss()
-	var/tox_loss = scanned_person.getToxLoss()
+	var/oxy_loss = scanned_person.get_oxy_loss()
+	var/tox_loss = scanned_person.get_tox_loss()
 	render_list += span_info("You read the [src]'s screen:\n")
 	render_list += "<span class='notice ml-1'>Blood Type: [scanned_person?.dna?.blood_type]</span>\n"
 	if(oxy_loss > 50)//if they have knockout levels of suffocation damage

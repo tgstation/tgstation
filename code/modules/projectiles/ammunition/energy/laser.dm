@@ -2,6 +2,7 @@
 	projectile_type = /obj/projectile/beam/laser
 	e_cost = LASER_SHOTS(12, STANDARD_CELL_CHARGE)
 	select_name = "kill"
+	muzzle_flash_color = COLOR_SOFT_RED
 
 /obj/item/ammo_casing/energy/laser/hellfire
 	projectile_type = /obj/projectile/beam/laser/hellfire
@@ -17,6 +18,7 @@
 	projectile_type = /obj/projectile/beam/laser
 	e_cost = LASER_SHOTS(16, STANDARD_CELL_CHARGE)
 	select_name = "kill"
+	muzzle_flash_color = COLOR_SOFT_RED
 
 /obj/item/ammo_casing/energy/lasergun/pistol
 	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
@@ -112,6 +114,7 @@
 	select_name = "DESTROY"
 	fire_sound = 'sound/items/weapons/pulse.ogg'
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
+	muzzle_flash_color = LIGHT_COLOR_BLUE
 
 /obj/item/ammo_casing/energy/laser/bluetag
 	projectile_type = /obj/projectile/beam/lasertag/bluetag

@@ -66,7 +66,7 @@
 		return
 
 	if (terror_buildup < TERROR_BUILDUP_HEART_ATTACK || !prob(15))
-		owner.adjustOxyLoss(8)
+		owner.adjust_oxy_loss(8)
 		if (terror_buildup < TERROR_BUILDUP_FEAR)
 			to_chat(owner, span_warning("Your heart skips a beat."))
 		else

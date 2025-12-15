@@ -27,6 +27,7 @@
 	underlay.layer = BELOW_MOB_LAYER
 	SET_PLANE_EXPLICIT(underlay, GAME_PLANE, src)
 	add_overlay(underlay)
+	ADD_TRAIT(src, TRAIT_DANGEROUS_BUCKLE, INNATE_TRAIT)
 
 /obj/structure/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BRUTE || damage_type == BURN)

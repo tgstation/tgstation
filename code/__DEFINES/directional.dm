@@ -45,3 +45,25 @@
 	dir = WEST; \
 	pixel_x = -offset; \
 }
+
+/// Create diagonal subtypes for a path to simplify mapping.
+#define MAPPING_DIAGONAL_HELPERS(path, offset) ##path/directional/northeast {\
+	dir = NORTHEAST; \
+	pixel_x = offset; \
+	pixel_y = offset; \
+} \
+##path/directional/northwest {\
+	dir = NORTHWEST; \
+	pixel_x = -offset; \
+	pixel_y = offset; \
+} \
+##path/directional/southeast {\
+	dir = SOUTHEAST; \
+	pixel_x = offset; \
+	pixel_y = -offset; \
+} \
+##path/directional/southwest {\
+	dir = SOUTHWEST; \
+	pixel_x = -offset; \
+	pixel_y = -offset; \
+}

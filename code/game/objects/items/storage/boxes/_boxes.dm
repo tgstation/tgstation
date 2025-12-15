@@ -19,6 +19,8 @@
 
 /obj/item/storage/box/Initialize(mapload)
 	. = ..()
+	if(foldable_result == /obj/item/stack/sheet/cardboard)
+		set_custom_materials(list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT))
 	update_appearance()
 
 /obj/item/storage/box/suicide_act(mob/living/carbon/user)

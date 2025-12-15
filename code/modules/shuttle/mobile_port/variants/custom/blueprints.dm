@@ -700,6 +700,7 @@
 	base_icon_state = "shuttle_blueprints_crude"
 	base_desc = "This is just a sheet of paper thoroughly covered in what could either be crayon or spraypaint."
 	linked_desc = "This is just a crude doodle of a shuttle drawn on a background of what could either be crayon or spraypaint."
+	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)
 
 /obj/item/shuttle_blueprints/borg
 	name = "shuttle blueprint database"

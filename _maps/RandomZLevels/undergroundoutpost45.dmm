@@ -1911,7 +1911,7 @@
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/gateway)
 "ig" = (
-/obj/machinery/computer/rdconsole{
+/obj/machinery/computer/rdconsole/unlocked{
 	dir = 4;
 	req_access = null
 	},

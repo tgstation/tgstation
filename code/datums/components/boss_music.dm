@@ -12,15 +12,12 @@
 	///List of callback timers, used to clear out mobs listening to boss music after `track_duration`.
 	var/list/music_callbacks = list()
 
-/datum/component/boss_music/Initialize(
-	boss_track,
-	track_duration,
-)
+/datum/component/boss_music/Initialize(boss_track)
 	. = ..()
 	if(!ishostile(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.boss_track = boss_track
-	src.track_duration = track_duration
+	track_duration = SSsounds.get_sound_length(boss_track)
 
 /datum/component/boss_music/Destroy(force)
 	. = ..()

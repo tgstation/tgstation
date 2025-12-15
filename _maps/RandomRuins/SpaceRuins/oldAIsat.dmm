@@ -5,7 +5,7 @@
 "ab" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ac" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
@@ -13,16 +13,16 @@
 /obj/structure/lattice,
 /obj/structure/grille/broken,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ae" = (
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "af" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/space/nearstation)
 "ag" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/tcommsat_oldaisat)
@@ -33,7 +33,7 @@
 "ai" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aj" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/airless,
@@ -78,7 +78,7 @@
 /obj/structure/lattice,
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "au" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
@@ -96,7 +96,7 @@
 /obj/structure/lattice,
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ay" = (
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/iron/airless,
@@ -160,7 +160,7 @@
 "aL" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aM" = (
 /obj/item/folder/yellow,
 /turf/open/floor/iron/airless,
@@ -177,14 +177,14 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aP" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aQ" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -194,22 +194,19 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aS" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aT" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/template_noop,
-/area/template_noop)
-"aU" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/r_wall,
-/area/ruin/space/tcommsat_oldaisat)
+/area/space/nearstation)
 "aV" = (
 /obj/machinery/light/small/directional/west,
+/obj/structure/sign/warning/secure_area/directional/west,
 /turf/open/floor/iron/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "aW" = (
@@ -326,16 +323,16 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "br" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bs" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bt" = (
 /obj/structure/table,
 /obj/item/gps/spaceruin,
@@ -361,7 +358,7 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bz" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/shard{
@@ -400,7 +397,7 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bG" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -562,12 +559,12 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ck" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "cl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -596,7 +593,7 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "cq" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -649,7 +646,7 @@
 	icon_state = "medium"
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "cz" = (
 /obj/structure/lattice,
 /obj/item/stack/rods,
@@ -657,7 +654,7 @@
 	icon_state = "medium"
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "cB" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
 /turf/open/floor/plating,
@@ -665,7 +662,7 @@
 "cC" = (
 /obj/structure/grille/broken,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "cD" = (
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/iron,
@@ -2354,7 +2351,7 @@ ag
 ag
 ag
 ag
-aU
+ag
 bf
 ag
 ag

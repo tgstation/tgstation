@@ -23,15 +23,15 @@
 	var/expected_stamina_damage = (7.5 * REM * SECONDS_PER_TICK)
 	var/expected_brute_damage = (0.5 * REM * SECONDS_PER_TICK)
 
-	TEST_ASSERT_EQUAL(mrbones.getStaminaLoss(), expected_stamina_damage,
-		"Skeleton took [mrbones.getStaminaLoss() > expected_stamina_damage ? "more" : "less"] stamina damage than expected")
-	TEST_ASSERT_EQUAL(mrbones.getBruteLoss(), expected_brute_damage,
-		"Skeleton took [mrbones.getBruteLoss() > expected_brute_damage ? "more" : "less"] brute damage than expected")
+	TEST_ASSERT_EQUAL(mrbones.get_stamina_loss(), expected_stamina_damage,
+		"Skeleton took [mrbones.get_stamina_loss() > expected_stamina_damage ? "more" : "less"] stamina damage than expected")
+	TEST_ASSERT_EQUAL(mrbones.get_brute_loss(), expected_brute_damage,
+		"Skeleton took [mrbones.get_brute_loss() > expected_brute_damage ? "more" : "less"] brute damage than expected")
 
 	mrbones.reagents.remove_all(mrbones.reagents.total_volume)
 	mrbones.fully_heal()
-	TEST_ASSERT_EQUAL(mrbones.getStaminaLoss(), 0, "Skeleton did not fully heal stamina damage")
-	TEST_ASSERT_EQUAL(mrbones.getBruteLoss(), 0, "Skeleton did not fully heal brute damage")
+	TEST_ASSERT_EQUAL(mrbones.get_stamina_loss(), 0, "Skeleton did not fully heal stamina damage")
+	TEST_ASSERT_EQUAL(mrbones.get_brute_loss(), 0, "Skeleton did not fully heal brute damage")
 
 	// Test milk reactions
 

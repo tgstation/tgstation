@@ -159,7 +159,7 @@
 /obj/structure/table,
 /obj/item/weldingtool/experimental,
 /obj/item/inducer,
-/obj/item/storage/belt/utility/chief/full,
+/obj/item/storage/belt/utility/full/powertools,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -254,7 +254,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bF" = (
-/obj/machinery/computer/rdconsole,
+/obj/machinery/computer/rdconsole/unlocked,
 /turf/open/floor/iron,
 /area/station/science)
 "bI" = (
@@ -905,9 +905,8 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "fn" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/vacuum/external,
-/turf/open/floor/plating,
+/obj/structure/sign/warning/vacuum/external/directional/west,
+/turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "fo" = (
 /obj/machinery/conveyor_switch/oneway{
@@ -1797,7 +1796,7 @@
 /area/station/command/bridge)
 "BG" = (
 /obj/structure/table,
-/obj/item/ammo_box/c10mm,
+/obj/item/ammo_box/c9mm,
 /obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/iron,
 /area/station/command/bridge)
@@ -5715,7 +5714,7 @@ ax
 eh
 dY
 dY
-fn
+en
 fs
 en
 dY
@@ -5807,7 +5806,7 @@ ax
 eh
 eh
 eV
-eh
+fn
 eh
 eh
 eV

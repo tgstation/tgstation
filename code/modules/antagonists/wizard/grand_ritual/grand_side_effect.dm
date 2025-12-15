@@ -353,10 +353,10 @@
 	/// Typepaths of mobs to create
 	var/static/list/permitted_mobs = list(
 		/mob/living/basic/carp,
+		/mob/living/basic/illusion,
 		/mob/living/basic/killer_tomato,
 		/mob/living/basic/skeleton,
 		/mob/living/basic/wumborian_fugu,
-		/mob/living/simple_animal/hostile/illusion,
 		/mob/living/simple_animal/hostile/ooze,
 	)
 

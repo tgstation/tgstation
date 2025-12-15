@@ -7,12 +7,14 @@
 	base_icon_state = "securecrate"
 	integrity_failure = 0 //no breaking open the crate
 	var/code = null
-	var/last_attempt = null
+	/// Associated list of previous attempts w/ bulls & cows
+	var/list/previous_attempts = list()
 	var/attempts = 10
 	var/code_length = 4
 	var/qdel_on_open = FALSE
 	var/spawned_loot = FALSE
 	tamperproof = 90
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
 
 	divable = FALSE // Stop people from "diving into" the crate accidentally, and then detonating it.
 
@@ -127,6 +129,7 @@
 			spawn_loot()
 		tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
 		togglelock(user)
+		SStgui.close_user_uis(user, src)
 		return
 
 	if(!validate_input(input))
@@ -134,7 +137,7 @@
 		return
 
 	to_chat(user, span_warning("A red light flashes."))
-	last_attempt = input
+	previous_attempts += list(bulls_and_cows(input))
 	attempts--
 
 	if(attempts <= 0)
@@ -160,16 +163,28 @@
 	attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
 	return CLICK_ACTION_SUCCESS
 
+/obj/structure/closet/crate/secure/loot/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
+
+	// Attempt to update tgui ui, open and update if needed.
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "AbandonedCrate", name)
+		ui.open()
+
+/obj/structure/closet/crate/secure/loot/ui_data(mob/user)
+	var/list/data = list()
+
+	data["previous_attempts"] = previous_attempts
+	data["attempts_left"] = attempts
+
+	return data
+
 /obj/structure/closet/crate/secure/loot/multitool_act(mob/living/user, obj/item/tool)
 	if(!locked)
 		return
-
-	to_chat(user, span_boldnotice("DECA-CODE LOCK REPORT:"))
-	to_chat(user, span_warning("* Anti-Tamper Bomb will activate [attempts == 1 ? span_boldwarning("on next failed access attempt") : "after [span_boldwarning("[attempts]")] failed access attempts"]."))
-
-	if(last_attempt)
-		var/list/bulls_cows = bulls_and_cows(last_attempt)
-		to_chat(user, span_notice("Last code attempt, [last_attempt], had [bulls_cows[1]] correct digits at correct positions and [bulls_cows[2]] correct digits at incorrect positions."))
+	if(Adjacent(user))
+		ui_interact(user)
 
 	return ITEM_INTERACT_SUCCESS
 
@@ -187,7 +202,7 @@
 		else if(findtext(code, guess_char))
 			cows++
 
-	return list(bulls, cows)
+	return list("attempt" = guess, "bulls" = bulls, "cows" = cows)
 
 /obj/structure/closet/crate/secure/loot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
@@ -204,7 +219,7 @@
 			//reset the anti-tampering, number of attempts and last attempt when the lock is re-enabled.
 			tamperproof = initial(tamperproof)
 			attempts = initial(attempts)
-			last_attempt = null
+			previous_attempts = list()
 		return
 	if(tamperproof)
 		return

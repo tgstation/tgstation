@@ -78,7 +78,7 @@ const Info = (props) => {
  */
 const Traits = (props) => {
   const {
-    virus: { resistance, stage_speed, stealth, transmission },
+    virus: { resistance, stage_speed, stealth, transmission, severity },
   } = props;
 
   return (
@@ -105,6 +105,14 @@ const Traits = (props) => {
             label="Transmissibility"
           >
             {transmission}
+          </LabeledList.Item>
+        </Tooltip>
+        <Tooltip content="Overall danger posed by the disease.">
+          <LabeledList.Item
+            color={getColor(severity)}
+            label="Severity"
+          >
+            {severity}
           </LabeledList.Item>
         </Tooltip>
       </LabeledList>

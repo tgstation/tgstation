@@ -93,12 +93,6 @@
 /turf/open/floor/engine/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/turf/open/floor/engine/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	user.Move_Pulled(src)
-
 //air filled floors; used in atmos pressure chambers
 
 /turf/open/floor/engine/n2o

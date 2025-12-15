@@ -80,7 +80,7 @@
 		to_chat(barbecued, span_userdanger("You're shocked by [source]'s electric breath!"))
 	else
 		to_chat(barbecued, span_userdanger("You are burned by [source]'s fire breath!"))
-	barbecued.adjustFireLoss(fire_damage)
+	barbecued.adjust_fire_loss(fire_damage)
 
 /// Shoot three lines of fire in a sort of fork pattern approximating a cone
 /datum/action/cooldown/mob_cooldown/fire_breath/cone

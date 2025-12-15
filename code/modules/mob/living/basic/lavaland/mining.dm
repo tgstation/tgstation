@@ -1,5 +1,6 @@
 ///prototype for mining mobs
 /mob/living/basic/mining
+	abstract_type = /mob/living/basic/mining
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	combat_mode = TRUE
 	status_flags = NONE //don't inherit standard basicmob flags

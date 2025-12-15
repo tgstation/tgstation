@@ -111,6 +111,7 @@ COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 	buildstacktype = /obj/item/stack/sheet/mineral/bamboo
 	buildstackamount = 3
 	has_armrest = FALSE
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/structure/chair/sofa/bamboo/left
 	icon_state = "bamboo_sofaend_left"

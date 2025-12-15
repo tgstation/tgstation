@@ -38,10 +38,6 @@
 	purchase_path = /obj/item/clothing/gloves/fingerless/punch_mitts
 	cost_per_order = 1000
 
-/datum/orderable_item/mining/crusher_retool_kit
-	purchase_path = /obj/item/crusher_trophy/retool_kit
-	cost_per_order = 150
-
 /datum/orderable_item/mining/resonator
 	purchase_path = /obj/item/resonator
 	cost_per_order = 710

@@ -59,15 +59,15 @@
 	outfit = /datum/outfit/job/assistant
 	icon_state = "corpsegreytider"
 
-/obj/effect/mob_spawn/corpse/human/assistant/beesease_infection/special(mob/living/spawned_mob, mob/mob_possessor)
+/obj/effect/mob_spawn/corpse/human/assistant/beesease_infection/special(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_mob.ForceContractDisease(new /datum/disease/beesease)
 
-/obj/effect/mob_spawn/corpse/human/assistant/brainrot_infection/special(mob/living/spawned_mob, mob/mob_possessor)
+/obj/effect/mob_spawn/corpse/human/assistant/brainrot_infection/special(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_mob.ForceContractDisease(new /datum/disease/brainrot)
 
-/obj/effect/mob_spawn/corpse/human/assistant/spanishflu_infection/special(mob/living/spawned_mob, mob/mob_possessor)
+/obj/effect/mob_spawn/corpse/human/assistant/spanishflu_infection/special(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_mob.ForceContractDisease(new /datum/disease/fluspanish)
 

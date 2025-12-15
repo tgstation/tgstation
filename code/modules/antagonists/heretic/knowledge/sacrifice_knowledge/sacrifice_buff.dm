@@ -66,10 +66,10 @@
 	owner.losebreath = max(owner.losebreath - (0.5 * seconds_between_ticks), 0)
 
 	var/damage_healed = 0
-	damage_healed += owner.adjustToxLoss(-amount, updating_health = FALSE, forced = TRUE)
-	damage_healed += owner.adjustOxyLoss(-amount, updating_health = FALSE)
-	damage_healed += owner.adjustBruteLoss(-amount, updating_health = FALSE)
-	damage_healed += owner.adjustFireLoss(-amount, updating_health = FALSE)
+	damage_healed += owner.adjust_tox_loss(-amount, updating_health = FALSE, forced = TRUE)
+	damage_healed += owner.adjust_oxy_loss(-amount, updating_health = FALSE)
+	damage_healed += owner.adjust_brute_loss(-amount, updating_health = FALSE)
+	damage_healed += owner.adjust_fire_loss(-amount, updating_health = FALSE)
 	if(damage_healed > 0)
 		owner.updatehealth()
 
@@ -94,21 +94,8 @@
  * Slow and stop any blood loss the owner's experiencing.
  */
 /datum/status_effect/unholy_determination/proc/adjust_bleed_wounds(seconds_between_ticks)
-	if(!iscarbon(owner) || !CAN_HAVE_BLOOD(owner))
-		return
-
 	owner.adjust_blood_volume(2 * seconds_between_ticks, maximum = BLOOD_VOLUME_NORMAL)
-
-	var/mob/living/carbon/carbon_owner = owner
-	var/datum/wound/bloodiest_wound
-	for(var/datum/wound/iter_wound as anything in carbon_owner.all_wounds)
-		if(iter_wound.blood_flow && (iter_wound.blood_flow > bloodiest_wound?.blood_flow))
-			bloodiest_wound = iter_wound
-
-	if(!bloodiest_wound)
-		return
-
-	bloodiest_wound.adjust_blood_flow(-0.5 * seconds_between_ticks)
+	owner.coagulant_effect(0.5 * seconds_between_ticks)
 
 /// Torment the target with a frightening hand
 /proc/fire_curse_hand(mob/living/carbon/victim, turf/forced_turf, range = 8, projectile_type = /obj/projectile/curse_hand/hel)
