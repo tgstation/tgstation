@@ -389,7 +389,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	var/summed_usage = 0
 	var/misc_usage = 0
 	var/misc_count = 0
-	for(var/subsystem_path as anything in subsystem_info)
+	for(var/subsystem_path in subsystem_info)
 		var/subsystem_usage = subsystem_info[subsystem_path]
 		summed_usage += subsystem_usage
 		if(subsystem_usage >= 1)
@@ -479,7 +479,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 
 /atom/movable/screen/graph_part/bar/multi_segment/verbs/get_tooltip_content()
 	var/list/visual_output = list()
-	for(var/proc_path as anything in verb_info)
+	for(var/proc_path in verb_info)
 		visual_output += "<b>[proc_path]</b> -> ([verb_info[proc_path]]%)"
 	return visual_output.Join("<br>")
 
@@ -507,7 +507,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 
 /atom/movable/screen/graph_part/bar/multi_segment/tick/get_tooltip_content()
 	var/list/visual_output = list()
-	for(var/segment as anything in tick_segments)
+	for(var/segment in tick_segments)
 		visual_output += "<b>[segment]</b> -> ([tick_segments[segment]]%)"
 	return visual_output.Join("<br>")
 
