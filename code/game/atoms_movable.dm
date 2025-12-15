@@ -1801,7 +1801,7 @@
  *
  * Macro-ified version to avoid extra proc overhead.
  */
-#define FACTION_CHECK(faction_A, faction_B, allies_A, allies_B, exact_match) \
+#define FAST_FACTION_CHECK(faction_A, faction_B, allies_A, allies_B, exact_match) \
 ( \
 	!(exact_match) ? \
 		(LAZYLEN((faction_A) & (faction_B)) || LAZYLEN((allies_A) & (allies_B))) \
@@ -1822,9 +1822,9 @@
 			allies_src -= "[REF(src)]" //if we don't do this, we'll never have an exact match.
 		if(!("[REF(target)]" in allies_src))
 			allies_target -= "[REF(target)]" //same thing here.
-		return FACTION_CHECK(faction, target.faction, allies, target.allies, TRUE)
+		return FAST_FACTION_CHECK(faction, target.faction, allies, target.allies, TRUE)
 	else
-		return FACTION_CHECK(faction, target.faction, allies, target.allies, FALSE)
+		return FAST_FACTION_CHECK(faction, target.faction, allies, target.allies, FALSE)
 
 /*
  * Sets atom's allies list to be the provided list of faction strings. Returns TRUE if successful.
@@ -1881,10 +1881,10 @@
 
 	if (islist(ally_or_allies))
 		if(match_all)
-			var/match_count = FACTION_CHECK(null, null, allies, ally_or_allies, TRUE)
+			var/match_count = FAST_FACTION_CHECK(null, null, allies, ally_or_allies, TRUE)
 			return (match_count == LAZYLEN(ally_or_allies))
 		else
-			return FACTION_CHECK(null, null, allies, ally_or_allies, FALSE)
+			return FAST_FACTION_CHECK(null, null, allies, ally_or_allies, FALSE)
 
 	else
 		return ally_or_allies in allies
@@ -1957,10 +1957,10 @@
 
 	if (islist(faction_or_factions))
 		if(match_all)
-			var/match_count = FACTION_CHECK(faction, faction_or_factions, null, null, TRUE)
+			var/match_count = FAST_FACTION_CHECK(faction, faction_or_factions, null, null, TRUE)
 			return (match_count == LAZYLEN(faction_or_factions))
 		else
-			return FACTION_CHECK(faction, faction_or_factions, null, null, FALSE)
+			return FAST_FACTION_CHECK(faction, faction_or_factions, null, null, FALSE)
 
 	else
 		return faction_or_factions in faction
@@ -1975,12 +1975,10 @@
 
 	if (islist(faction_or_factions))
 		if (match_all)
-			var/match_count = FACTION_CHECK(faction, faction_or_factions, allies, allies_list, TRUE)
+			var/match_count = FAST_FACTION_CHECK(faction, faction_or_factions, allies, allies_list, TRUE)
 			return (match_count == LAZYLEN(faction_or_factions) + LAZYLEN(allies_list))
 		else
-			return FACTION_CHECK(faction, faction_or_factions, allies, allies_list, FALSE)
+			return FAST_FACTION_CHECK(faction, faction_or_factions, allies, allies_list, FALSE)
 
 	else
-		return (faction_or_factions in faction) && FACTION_CHECK(null, null, allies, allies_list, match_all)
-
-#undef FACTION_CHECK
+		return (faction_or_factions in faction) && FAST_FACTION_CHECK(null, null, allies, allies_list, match_all)
