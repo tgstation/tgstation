@@ -114,5 +114,5 @@
 #define apply_faction_and_allies_from(source, destination) \
 	do { \
 		(destination).set_faction((source).get_faction()); \
-		(destination).set_allies((source).allies); \
+		LAZYLISTDUPLICATE((destination).set_allies((source).allies)); \
 	} while(FALSE)

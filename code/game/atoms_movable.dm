@@ -1826,28 +1826,50 @@
 	else
 		return FACTION_CHECK(faction, target.faction, allies, target.allies, FALSE)
 
+/*
+ * Sets atom's allies list to be the provided list of faction strings. Returns TRUE if successful.
+ */
 /atom/movable/proc/set_allies(ally_list)
-	if (!islist(ally_list))
+	if (!islist(ally_list) && !isnull(ally_list))
 		stack_trace("Tried to call set_allies on [src] with a non-list arg. Use add_ally([ally_list]) instead.")
 		return FALSE
 
-	if (!LAZYLEN(ally_list)) // empty list, should just null it in that case
+	if (!LAZYLEN(ally_list) && !isnull(ally_list)) // empty list, should just null it in that case
 		LAZYNULL(allies)
 		return TRUE
 
+	allies = ally_list
+
 	return TRUE
 
-/atom/movable/proc/add_ally(atom/movable/target)
+/*
+ * Adds an ally or list of allies to the allies list. Automatically converts target to ref if it is an atom.
+ * Returns TRUE if something was actually added, false otherwise
+ */
+/atom/movable/proc/add_ally(atom/target)
 	var/old_length = LAZYLEN(allies)
-	LAZYOR(allies, target)
-	return LAZYLEN(allies) > old_length
+	if(!istype(target))
+		LAZYOR(allies, target)
+	else
+		LAZYOR(allies, "[REF(target)]")
 
-/atom/movable/proc/remove_ally(atom/movable/target)
-	LAZYREMOVE(allies, target)
+	return LAZYLEN(allies) != old_length
 
-	// If nothing remains, do nothing
-	if (!LAZYLEN(allies))
-		return TRUE
+/*
+ * Removes an ally or list of allies from the allies list. Automatically converts target to ref if it is an atom.
+ * Returns TRUE if something was actually added, false otherwise
+ */
+/atom/movable/proc/remove_ally(atom/target)
+	var/old_length = LAZYLEN(allies)
+	if (!old_length)
+		return FALSE
+
+	if(!istype(target))
+		LAZYREMOVE(allies, target)
+	else
+		LAZYREMOVE(allies, "[REF(target)]")
+
+	return old_length != LAZYLEN(allies)
 
 /*
  * Returns TRUE if the ally or allies in list are in our allies list
@@ -1878,11 +1900,11 @@
 /atom/movable/proc/set_faction(factions)
 	if (factions == faction) // Same list in memory - early return
 		return TRUE
-	if (!islist(factions))
+	if (!islist(factions) && !isnull(factions))
 		stack_trace("Tried to call set_faction on [src] with a non-list arg. Use add_faction([factions]) instead.")
 		return FALSE
 
-	if (!length(factions)) // empty list, should just null it in that case
+	if (!LAZYLEN(factions)) // empty list, should just null it in that case
 		LAZYNULL(faction)
 		return TRUE
 
@@ -1897,7 +1919,7 @@
 	LAZYOR(faction_copy, faction_or_factions)
 
 	// If OR didn't add anything, do nothing
-	if (length(faction_copy) == length(faction))
+	if (LAZYLEN(faction_copy) == LAZYLEN(faction))
 		return FALSE
 
 	faction = string_list(faction_copy)
@@ -1907,7 +1929,8 @@
  * Removes a single faction string or list of faction strings from the atom's faction list. Returns TRUE if something was removed.
  */
 /atom/movable/proc/remove_faction(faction_or_factions)
-	if (!LAZYLEN(faction))
+	var/old_length = LAZYLEN(faction)
+	if (!old_length)
 		return FALSE
 
 	var/list/faction_copy = LAZYLISTDUPLICATE(faction) // Copy so we are not mutating the cached list
@@ -1917,7 +1940,11 @@
 	if (!LAZYLEN(faction_copy))
 		return TRUE
 
+	if (old_length == LAZYLEN(faction)) // Nothing was removed, also do nothing
+		return FALSE
+
 	faction = string_list(faction_copy)
+
 	return TRUE
 
 /**
@@ -1942,14 +1969,18 @@
  * Returns TRUE if any of the factions or allies are in our faction list.
  * If match_all is set, we have to match everything in the provided list arg.
  */
-/atom/movable/proc/has_faction_or_ally(factions, allies_list, match_all)
-	if (!LAZYLEN(faction))
+/atom/movable/proc/has_faction_or_allies(faction_or_factions, allies_list, match_all)
+	if (!LAZYLEN(faction_or_factions))
 		return FALSE
 
-	if (match_all)
-		var/match_count = FACTION_CHECK(faction, factions, allies, allies_list, TRUE)
-		return (match_count == LAZYLEN(factions) + LAZYLEN(allies_list))
+	if (islist(faction_or_factions))
+		if (match_all)
+			var/match_count = FACTION_CHECK(faction, faction_or_factions, allies, allies_list, TRUE)
+			return (match_count == LAZYLEN(faction_or_factions) + LAZYLEN(allies_list))
+		else
+			return FACTION_CHECK(faction, faction_or_factions, allies, allies_list, FALSE)
+
 	else
-		return FACTION_CHECK(faction, factions, allies, allies_list, FALSE)
+		return (faction_or_factions in faction) && FACTION_CHECK(null, null, allies, allies_list, match_all)
 
 #undef FACTION_CHECK

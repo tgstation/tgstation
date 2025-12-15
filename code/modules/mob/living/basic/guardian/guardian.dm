@@ -226,7 +226,7 @@
 		else //mindless guardian, manually give them factions
 			add_faction(summoner.get_faction())
 			add_ally(summoner.allies)
-			summoner.add_ally("[REF(src)]")
+			summoner.add_ally(src)
 	remove_all_languages(LANGUAGE_MASTER)
 	copy_languages(to_who, LANGUAGE_MASTER) // make sure holoparasites speak same language as master
 	RegisterSignal(to_who, COMSIG_QDELETING, PROC_REF(on_summoner_deletion))
@@ -251,7 +251,7 @@
 	unleash()
 	UnregisterSignal(summoner, list(COMSIG_QDELETING, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
 	if (different_person)
-		summoner.remove_ally("[REF(src)]")
+		summoner.remove_ally(src)
 		remove_faction(summoner.get_faction())
 		mind?.remove_all_antag_datums()
 	if (!length(summoner.get_all_linked_holoparasites() - src))

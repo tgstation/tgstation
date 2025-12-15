@@ -52,7 +52,7 @@
 /// Full setup for illusion mobs to lessen code duplication in the individual files.
 /mob/living/basic/illusion/proc/full_setup(mob/living/original, mob/living/target_mob = null, list/faction = null, life = 5 SECONDS, hp = 100, damage = 0, replicate = 0)
 	mock_as(original, life, hp, damage, replicate)
-	set_faction(list(FACTION_ILLUSION))
+	set_faction(faction)
 	set_target(target_mob)
 
 /// Gives the illusion a target to focus on in whatever behavior it wants to engage as.

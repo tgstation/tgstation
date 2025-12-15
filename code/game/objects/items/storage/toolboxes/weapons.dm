@@ -338,6 +338,7 @@
 
 /obj/item/storage/toolbox/emergency/turret/proc/set_toolbox_faction(obj/machinery/porta_turret/turret, mob/user)
 	turret.set_allies(list("[REF(user)]"))
+	turret.set_faction(null)
 
 /obj/item/storage/toolbox/emergency/turret/nukie/set_toolbox_faction(obj/machinery/porta_turret/turret, mob/user)
 	turret.set_faction(list(ROLE_SYNDICATE))
