@@ -196,7 +196,7 @@
 	decoy.full_setup(
 		owner,
 		target_mob = owner,
-		faction = owner.faction,
+		faction = owner.get_faction(),
 		life = 5 SECONDS,
 		hp = owner.health / 4,
 		damage = 5,

@@ -1795,7 +1795,12 @@
 			return FALSE //if they're not the same len(gth) or we don't have a len, then this isn't an exact match.
 		return LAZYLEN(allies_A & allies_B)
 
-// Macro-ified version to avoid extra proc overhead.
+/**
+ * Compare two lists of factions, returning true if any match.
+ * If exact match is passed through we only return true if both faction lists match equally.
+ *
+ * Macro-ified version to avoid extra proc overhead.
+ */
 #define FACTION_CHECK(faction_A, faction_B, allies_A, allies_B, exact_match) \
 ( \
 	!(exact_match) ? \

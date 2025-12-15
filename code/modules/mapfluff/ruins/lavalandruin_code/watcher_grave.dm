@@ -184,7 +184,7 @@
 	for (var/mob/living/potential_target in oview(5, src))
 		if (!ismining(potential_target) || potential_target.stat == DEAD)
 			continue
-		if (!faction_check(target_faction, potential_target.faction))
+		if (!potential_target.has_faction(target_faction))
 			continue
 		shoot_at(potential_target)
 		return

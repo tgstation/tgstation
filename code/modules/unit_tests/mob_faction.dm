@@ -14,5 +14,5 @@
 	ignored += typesof(/mob/eye/camera/remote/shuttle_docker)
 	for (var/mob_type in typesof(/mob) - ignored)
 		var/mob/mob_instance = allocate(mob_type)
-		if(!islist(mob_instance.faction))
+		if(!islist(mob_instance.get_faction()))
 			TEST_FAIL("[mob_type] faction variable is not a list")
