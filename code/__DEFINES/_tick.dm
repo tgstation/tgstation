@@ -6,7 +6,7 @@
 #define TICK_VERB_RESERVE 4
 #define TICK_EXPECTED_SAFE_MAX (100 - TICK_BYOND_RESERVE - TICK_VERB_RESERVE - MAPTICK_LAST_INTERNAL_TICK_USAGE)
 /// Tick limit while running normally
-#define TICK_LIMIT_RUNNING (max(GLOB.use_new_mc_limit ? GLOB.corrective_cpu_threshold : TICK_EXPECTED_SAFE_MAX, MAPTICK_MC_MIN_RESERVE))
+#define TICK_LIMIT_RUNNING (max(GLOB.use_dynamic_mc_limit ? GLOB.corrective_cpu_threshold : TICK_EXPECTED_SAFE_MAX, MAPTICK_MC_MIN_RESERVE))
 /// Tick limit used to resume things in stoplag
 #define TICK_LIMIT_TO_RUN 70
 /// Tick limit for MC while running
@@ -44,7 +44,7 @@
 /// Gets the current tick info index
 #define TICK_INFO_INDEX(...) TICK_INFO_TICK2INDEX(DS2TICKS(world.time))
 
-// All the different sorts of display types we can use for our cpu plotting graph 
+// All the different sorts of display types we can use for our cpu plotting graph
 #define USAGE_DISPLAY_EARLY_SLEEPERS "Early Sleep"
 #define USAGE_DISPLAY_MC "MC"
 #define USAGE_DISPLAY_LATE_SLEEPERS "Late Sleep"

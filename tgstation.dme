@@ -640,6 +640,7 @@
 #include "code\_onclick\hud\screen_objects.dm"
 #include "code\_onclick\hud\screentip.dm"
 #include "code\_onclick\hud\soulscythe.dm"
+#include "code\_onclick\hud\tick_control.dm"
 #include "code\_onclick\hud\voidwalkerhud.dm"
 #include "code\_onclick\hud\parallax\parallax.dm"
 #include "code\_onclick\hud\parallax\random_layer.dm"
