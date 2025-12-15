@@ -467,8 +467,8 @@ SUBSYSTEM_DEF(shuttle)
 		return FALSE
 
 	var/is_admin = !!user.client?.holder
-	if(is_admin && admin_recall(user))
-		return TRUE
+	if(is_admin)
+		return admin_recall(user)
 
 	if(admin_emergency_no_recall || emergency_no_recall)
 		return FALSE
