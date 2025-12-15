@@ -48,7 +48,7 @@
 	desc = "Instructions: DO NOT heat in microwave. Product will remove all hostile threats with cutting edge Donk Co. technology."
 	icon_state = "donkpocketboxshell"
 	donktype = /obj/item/ammo_casing/shotgun/flechette/donk
-	storage_type = /obj/item/ammo_casing/shotgun
+	storage_type = /datum/storage/box/donk_bullets
 
 /obj/item/storage/box/papersack
 	name = "paper sack"
