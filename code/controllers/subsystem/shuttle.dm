@@ -502,6 +502,7 @@ SUBSYSTEM_DEF(shuttle)
 			list("Yes", "No"),
 		)
 		if(admin_no_recall_alert == "Yes")
+			admin_emergency_no_recall = FALSE
 			return TRUE
 		return FALSE
 
@@ -513,6 +514,8 @@ SUBSYSTEM_DEF(shuttle)
 			list("Yes", "No"),
 		)
 		if(general_no_recall_alert == "Yes")
+			// we will not unset emergency_no_recall here, as it's game code enforced and I want it to stay active, admins can transiently override it through this though.
+			// they can always edit the variable on SSshuttle if desperate.
 			return TRUE
 		return FALSE
 
