@@ -5,7 +5,7 @@
 	///Stuff that can supply chems used by machines to retrive chems
 	var/list/datum/component/plumbing/suppliers
 	///Stuff that demands chems keep track of components that need their ducts updated as this net evolves
-	VAR_PRIVATE/list/datum/component/plumbing/demanders
+	var/list/datum/component/plumbing/demanders
 
 /datum/ductnet/New(obj/machinery/duct/parent)
 	ducts = parent ? list(parent) : list()
@@ -46,23 +46,3 @@
 
 	//return if this net has no ducts like when 2 machines are connected
 	return ducts.len == 0
-
-///we combine ductnets. this occurs when someone connects to separate sets of fluid ducts
-/datum/ductnet/proc/assimilate(datum/ductnet/D)
-	//Take all its suppliers & demanders
-	suppliers |= D.suppliers
-	demanders |= D.demanders
-	for(var/datum/component/plumbing/P as anything in D.suppliers + D.demanders)
-		for(var/s in P.ducts)
-			if(P.ducts[s] == D)
-				P.ducts[s] = src
-	D.suppliers.Cut()
-	D.demanders.Cut()
-
-	//Take all its ducts
-	ducts |= D.ducts
-	for(var/obj/machinery/duct/M as anything in D.ducts)
-		M.net = src
-
-	//destory it
-	qdel(D)

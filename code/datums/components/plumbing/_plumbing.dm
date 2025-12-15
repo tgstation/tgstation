@@ -111,16 +111,19 @@
 	for(var/direction in GLOB.cardinals)
 		if(!(direction & (demand_connects | supply_connects)))
 			continue
+
+		var/opposite_dir = REVERSE_DIR(direction)
 		for(var/atom/movable/found_atom in get_step(parent, direction))
-			if(istype(found_atom, /obj/machinery/duct))
-				var/obj/machinery/duct/duct = found_atom
-				if(duct.neighbours) //neighbours is initialized during late init. We use this to stop connecting during here at mapload because the duct does that for us
-					duct.attempt_connect()
+			var/obj/machinery/duct/duct = found_atom
+			if(istype(duct))
+				if(duct.neighbours && (duct.duct_layer & ducting_layer))
+					duct.neighbours[parent] = opposite_dir
+					duct.update_appearance(UPDATE_ICON_STATE)
+					duct.net.add_plumber(src, direction)
 				continue
 
 			for(var/datum/component/plumbing/plumber as anything in found_atom.GetComponents(/datum/component/plumbing))
 				if(plumber.active() && (plumber.ducting_layer & ducting_layer))
-					var/opposite_dir = REVERSE_DIR(direction)
 					if(plumber.demand_connects & opposite_dir && supply_connects & direction || plumber.supply_connects & opposite_dir && demand_connects & direction) //make sure we arent connecting two supplies or demands
 						var/datum/ductnet/net = new
 						net.add_plumber(src, direction)

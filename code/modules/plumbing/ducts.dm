@@ -35,8 +35,6 @@
 
 	. = ..()
 
-	net = new (src)
-
 	if(GLOB.pipe_color_name[color_of_duct])
 		duct_color = color_of_duct
 	add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
@@ -63,8 +61,88 @@
 
 /obj/machinery/duct/post_machine_initialize()
 	. = ..()
-	attempt_connect()
+
+	//can be initialized already during map init by its neighbours
+	if(!net)
+		net = new (src)
+
 	LAZYINITLIST(neighbours)
+	for(var/direction in GLOB.cardinals)
+		//we have already connected. happens in circular connections
+		var/connected = FALSE
+		for(var/atom/movable/neighbour as anything in neighbours)
+			if(direction & neighbours[neighbour])
+				connected = TRUE
+				break
+		if(connected)
+			continue
+
+		for(var/atom/movable/plumbable in get_step(src, direction))
+			var/opposite_dir = REVERSE_DIR(direction)
+
+			if(istype(plumbable, /obj/machinery/duct))
+				var/obj/machinery/duct/other = plumbable
+
+				//must be same duct color
+				if((duct_color != other.duct_color) && !(duct_color == ATMOS_COLOR_OMNI || other.duct_color == ATMOS_COLOR_OMNI))
+					continue
+				//must be same duct layer
+				if(!(duct_layer & other.duct_layer))
+					continue
+
+				//connect ductnets
+				if(!other.net) //will be null only for map loaded ducts
+					net.ducts += other
+					other.net = net
+				else if(net != other.net) //merge the nets
+					var/datum/ductnet/D = other.net
+					//Take all its suppliers & demanders
+					net.suppliers |= D.suppliers
+					net.demanders |= D.demanders
+					for(var/datum/component/plumbing/P as anything in D.suppliers + D.demanders)
+						for(var/s in P.ducts)
+							if(P.ducts[s] == D)
+								P.ducts[s] = net
+					D.suppliers.Cut()
+					D.demanders.Cut()
+
+					//Take all its ducts
+					net.ducts |= D.ducts
+					for(var/obj/machinery/duct/M as anything in D.ducts)
+						M.net = net
+
+					//destory it
+					qdel(D)
+
+				//connecting us to duct
+				neighbours[other] = direction
+				//connecting duct to us
+				LAZYADDASSOC(other.neighbours, src, opposite_dir)
+				other.update_appearance(UPDATE_ICON_STATE)
+
+				continue
+
+			for(var/datum/component/plumbing/plumbing as anything in plumbable.GetComponents(/datum/component/plumbing))
+				//not anchored
+				if(!plumbing.active())
+					continue
+
+				//not on the same layer
+				if(!(duct_layer & plumbing.ducting_layer))
+					continue
+
+				//does the duct backend connect to either supplier or demander
+				if(!(opposite_dir & (plumbing.supply_connects | plumbing.demand_connects)))
+					continue
+
+				//connect duct to plumber
+				if(!net.add_plumber(plumbing, opposite_dir))
+					continue
+
+				//assign neighbour
+				neighbours[plumbing.parent] = direction
+
+	update_appearance(UPDATE_ICON_STATE)
 
 ///we disconnect ourself from our neighbours. we also destroy our ductnet and tell our neighbours to make a new one
 /obj/machinery/duct/on_deconstruction()
@@ -87,7 +165,9 @@
 		return ..()
 
 	var/list/atom/movable/visited = list(src = TRUE)
-	for(var/atom/movable/neighbour as anything in neighbours)
+	while(neighbours.len)
+		var/atom/movable/neighbour = popleft(neighbours)
+
 		//disconnect ourself from our neighbours
 		var/obj/machinery/duct/pipe = neighbour
 		if(istype(pipe))
@@ -97,32 +177,28 @@
 		//find every node that can be reached from our neighbour making sure to not revisit it again in circles
 		if(visited[neighbour])
 			continue
-		var/list/atom/movable/network = list()
+		var/datum/ductnet/newnet
 		var/list/atom/movable/queue = list(neighbour)
 		while(queue.len)
-			var/atom/movable/target = popleft(queue)
-			if(visited[target])
+			var/atom/movable/node = popleft(queue)
+			if(visited[node])
 				continue
-			visited[target] = TRUE
-			network += target
+			visited[node] = TRUE
 
 			//visit all neighbours of this pipe as well
-			pipe = target
-			if(istype(pipe))
-				for(var/atom/movable/node in pipe.neighbours)
-					queue += node
-
-		//first move all ducts to the new network
-		var/datum/ductnet/newnet
-		for(var/atom/movable/node as anything in network)
-			//assign duct to new network
 			pipe = node
 			if(istype(pipe))
+				//assign to new pipenet
 				pipe.disconnect()
 				if(!newnet)
 					newnet = new
 				newnet.ducts += pipe
 				pipe.net = newnet
+
+				//go through its neighbours as well
+				for(var/atom/movable/subnode in pipe.neighbours)
+					queue += subnode
+
 				continue
 
 			//assign machines to new network
@@ -132,8 +208,6 @@
 						net.remove_plumber(plumbing)
 						if(newnet)
 							newnet.add_plumber(plumbing, text2num(dirtext))
-	neighbours.Cut()
-
 	disconnect()
 
 	return ..()
@@ -169,60 +243,6 @@
 				temp_icon += "_w"
 	icon_state = temp_icon
 	return ..()
-
-///start looking around us for stuff to connect to
-/obj/machinery/duct/proc/attempt_connect()
-	for(var/direction in GLOB.cardinals)
-		for(var/atom/movable/plumbable in get_step(src, direction))
-			var/opposite_dir = REVERSE_DIR(direction)
-
-			//we have already connected. happens in circular connections
-			if(LAZYACCESS(neighbours, plumbable))
-				continue
-
-			if(istype(plumbable, /obj/machinery/duct))
-				var/obj/machinery/duct/other = plumbable
-
-				//must be same duct color
-				if((duct_color != other.duct_color) && !(duct_color == ATMOS_COLOR_OMNI || other.duct_color == ATMOS_COLOR_OMNI))
-					continue
-				//must be same duct layer
-				if(!(duct_layer & other.duct_layer))
-					continue
-
-				//connecting ductnets but only for non circular connections where we don't merge ourselves
-				if(net != other.net)
-					net.assimilate(other.net)
-
-				//connecting us to duct
-				LAZYADDASSOC(neighbours, other, direction)
-				//connecting duct to us
-				LAZYADDASSOC(other.neighbours, src, opposite_dir)
-				other.update_appearance(UPDATE_ICON_STATE)
-
-				continue
-
-			for(var/datum/component/plumbing/plumbing as anything in plumbable.GetComponents(/datum/component/plumbing))
-				//not anchored
-				if(!plumbing.active())
-					continue
-
-				//not on the same layer
-				if(!(duct_layer & plumbing.ducting_layer))
-					continue
-
-				//does the duct backend connect to either supplier or demander
-				if(!(opposite_dir & (plumbing.supply_connects | plumbing.demand_connects)))
-					continue
-
-				//connect duct to plumber
-				if(!net.add_plumber(plumbing, opposite_dir))
-					continue
-
-				//assign neighbour
-				LAZYADDASSOC(neighbours, plumbing.parent, direction)
-
-	update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/duct/wrench_act(mob/living/user, obj/item/wrench) //I can also be the RPD
 	wrench.play_tool_sound(src)
