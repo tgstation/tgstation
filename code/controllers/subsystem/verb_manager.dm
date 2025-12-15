@@ -2,7 +2,7 @@
  * SSverb_manager, a subsystem that runs every tick and runs through its entire queue without yielding like SSinput.
  * this exists because of how the byond tick works and where user inputted verbs are put within it.
  *
- * see TICK_ORDER.md for more info on how the byond tick is structured.
+ * see [.github/guides/TICK_ORDER.md] for more info on how the byond tick is structured.
  *
  * The way the MC allots its time is via TICK_LIMIT_RUNNING, it simply subtracts the cost of SendMaps (MAPTICK_LAST_INTERNAL_TICK_USAGE)
  * plus TICK_BYOND_RESERVE from the tick and uses up to that amount of time (minus the percentage of the tick used by the time it executes subsystems)

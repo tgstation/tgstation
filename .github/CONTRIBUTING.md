@@ -124,6 +124,8 @@ Our team is entirely voluntary, as such we extend our thanks to maintainers, iss
 - [Splitting up pull requests, aka atomization](/.github/guides/ATOMIZATION.md)
 - [UI Development](/.github/tgui/README.md)
 - [Visual Effects and Systems](/.github/guides/VISUALS.md)
+- [Tick Order](/.github/guides/TICK_ORDER.md)
+- [Smooth Visuals](/.github/guides/SMOOTHNESS.md)
 
 ## Pull Request Process
 
