@@ -52,7 +52,7 @@ This means that if say, it takes 70% of the tick to get to sending maps on tick 
 
 There are ways for byond to fix this jumping "forward" (it could just hold the frame for a little while, though this would be weird with aforementioned network problems), but fixing the delay is harder and would in theory require some form of client-side prediction.
 
-This behavior menas we need to try to "pin" the time map sends to roughly the same % of the tick. In some cases we literally do nothing burning cpu time that could otherwise be spent on verbs because we NEED the mapsends to line up.
+This behavior means we need to try to "pin" the time map sends to roughly the same % of the tick. In some cases we literally do nothing burning cpu time that could otherwise be spent on verbs because we NEED the mapsends to line up.
 
 ### Asides
 
