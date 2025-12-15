@@ -372,6 +372,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/turf/open/space/openspace)
 	returnable_list += typesof(/turf/open/openspace)
 	returnable_list += typesof(/obj/item/robot_model) // These should never be spawned outside of a robot.
+	// By definition needs to be created with its parent graph passed in
+	// It's fine to do this we'll get coverage from said parent graphs anyhow
+	returnable_list += typesof(/atom/movable/screen/graph_part)
 
 	return returnable_list
 
