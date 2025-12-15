@@ -13,6 +13,8 @@
 /obj/effect/anomaly/weather/Initialize(mapload, new_lifespan, drops_core, forced_anomaly_type = src.weather_type, forced_thunder_chance = src.thunder_chance)
 	. = ..()
 
+	add_atom_colour(COLOR_MATRIX_INVERT, FIXED_COLOUR_PRIORITY)
+
 	weather_type = forced_anomaly_type || select_weather()
 	thunder_chance = forced_thunder_chance
 
