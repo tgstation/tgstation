@@ -148,6 +148,13 @@ if $grep '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' $code_files; then
 	st=1
 fi;
 
+part "manual verblike definition"
+if $grep '\tset\s*(name|desc|category|hidden|popup_menu|instant|invisibility|src)\s*=\s*(.*)\s' $code_files; then
+	echo
+	echo -e "${RED}ERROR: Found a manual verblike attribute set. Verbs are shimmed, use DEFINE_VERB() instead, or if this absolutely has to be manually defined, wrap it in UNLINT().${NC}"
+	st=1
+fi;
+
 part "improperly pathed static lists"
 if $grep -i 'var/list/static/.*' $code_files; then
 	echo
