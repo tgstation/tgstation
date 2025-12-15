@@ -27,6 +27,9 @@
 	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_THUNDER | WEATHER_BAROMETER)
 	whitelist_weather_reagents = list(/datum/reagent/water)
 
+/datum/weather/rain_storm/get_playlist_ref()
+	return GLOB.rain_storm_sounds
+
 /datum/weather/rain_storm/telegraph()
 	GLOB.rain_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)

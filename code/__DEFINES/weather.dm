@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(thunder_chance_options, list(
 	"Regular - Standard Storm Activity" = THUNDER_CHANCE_AVERAGE,
 	"Occasional - A polite amount of thunder" = THUNDER_CHANCE_RARE,
 	"Rare - Like finding a four-leaf clover, but in the sky" = THUNDER_CHANCE_VERY_RARE,
-	"None - Admin Safe Space (Thunder Disabled)" = NONE,
+	"None - Admin Safe Space (Thunder Disabled)" = 0,
 ))
 
 //WEATHER FLAGS

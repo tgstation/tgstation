@@ -192,6 +192,57 @@
 		send_alert(telegraph_message, telegraph_sound, telegraph_sound_vol)
 	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration, TIMER_UNIQUE)
 
+	// so /datum/element/weather_listener relies on z traits to determine when to set up sound managers
+	// thus if we force weather on a z level that doesn't match the target trait, we need to manually set up sound managers
+	if(target_trait)
+		manually_setup_sound_manager()
+
+/// Manually add a sound manager to all mobs
+/datum/weather/proc/manually_setup_sound_manager()
+	var/list/filtered_zs = get_impacted_zs_without_trait()
+	var/list/playlist = get_playlist_ref()
+	if(!length(filtered_zs) || isnull(playlist))
+		return
+
+	for(var/mob/living/affected as anything in GLOB.mob_living_list + GLOB.dead_mob_list)
+		manually_setup_sound_manager_on_mob(affected, playlist, filtered_zs)
+
+	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_CREATED, PROC_REF(manually_setup_sound_manager_on_mob))
+
+/// Returns a reference to the "sound playlist" for this weather type
+/datum/weather/proc/get_playlist_ref()
+	return null
+
+/// Returns a list of z-levels impacted that do not have the target trait
+/datum/weather/proc/get_impacted_zs_without_trait()
+	var/list/zs_without_trait = list()
+	for(var/z in impacted_z_levels)
+		if(!SSmapping.level_trait(z, target_trait))
+			zs_without_trait += z
+	return zs_without_trait
+
+/datum/weather/proc/handle_new_mob_sound_manage(datum/source, mob/the_mob)
+	SIGNAL_HANDLER
+
+	manually_setup_sound_manager_on_mob(the_mob)
+
+/datum/weather/proc/manually_setup_sound_manager_on_mob(mob/living/affected, list/playlist = get_playlist_ref(), list/filtered_zs = get_impacted_zs_without_trait())
+	PRIVATE_PROC(TRUE)
+
+	var/list/sound_change_signals = list(
+		COMSIG_WEATHER_TELEGRAPH(type),
+		COMSIG_WEATHER_START(type),
+		COMSIG_WEATHER_WINDDOWN(type),
+	)
+
+	var/datum/component/our_comp = affected.AddComponent( \
+		/datum/component/area_sound_manager, \
+		area_loop_pairs = playlist, \
+		acceptable_zs = filtered_zs, \
+	)
+	our_comp.RegisterSignals(SSdcs, sound_change_signals, TYPE_PROC_REF(/datum/component/area_sound_manager, handle_change))
+	our_comp.RegisterSignal(SSdcs, COMSIG_WEATHER_END(type), TYPE_PROC_REF(/datum/component/area_sound_manager, handle_removal))
+
 /datum/weather/proc/setup_weather_areas(list/forced_areas)
 	for(var/area/affected_area as anything in (forced_areas || get_areas(area_type)))
 		if(is_type_in_list(affected_area, protected_areas))
@@ -291,6 +342,7 @@
 	if(stage == END_STAGE)
 		return
 	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_END(type), src)
+	UnregisterSignal(SSdcs, COMSIG_GLOB_MOB_CREATED)
 	stage = END_STAGE
 	SSweather.processing -= src
 	update_areas()

@@ -10,10 +10,11 @@
 	/// List of active weathers spawned by this anomaly
 	VAR_PRIVATE/list/active_weathers
 
-/obj/effect/anomaly/weather/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/weather/Initialize(mapload, new_lifespan, drops_core, forced_anomaly_type = src.weather_type, forced_thunder_chance = src.thunder_chance)
 	. = ..()
 
-	weather_type ||= select_weather()
+	weather_type = forced_anomaly_type || select_weather()
+	thunder_chance = forced_thunder_chance
 
 	active_weathers = list()
 
@@ -23,9 +24,10 @@
 
 	var/list/affected_areas = list(impact_area)
 	var/list/num_turfs = length(impact_area.get_turfs_from_all_zlevels())
-	for(var/area/station/nearby in range(7, src))
+	for(var/spread_dir in GLOB.alldirs)
+		var/area/nearby = find_adjacent_impacted_area(spread_dir)
 		// prevents nearby the central hallway from basically always being included
-		if(length(nearby.get_turfs_from_all_zlevels()) > num_turfs * 1.5)
+		if(isnull(nearby) || length(nearby.get_turfs_from_all_zlevels()) > num_turfs * 1.5)
 			continue
 		affected_areas |= nearby
 
@@ -34,7 +36,7 @@
 		z_levels = z,
 		weather_data = list(
 			WEATHER_FORCED_AREAS = affected_areas,
-			WEATHER_FORCED_FLAGS = weather_type::weather_flags | WEATHER_INDOORS,
+			WEATHER_FORCED_FLAGS = weather_type::weather_flags | WEATHER_INDOORS | WEATHER_THUNDER,
 			WEATHER_FORCED_THUNDER = thunder_chance,
 			WEATHER_FORCED_TELEGRAPH = telegraph,
 			WEATHER_FORCED_END = end_dur,
@@ -54,6 +56,18 @@
 		/datum/weather/snow_storm,
 		/datum/weather/sand_storm,
 	)
+
+/// steps outward from src to find an area that is not the impact_area.
+/obj/effect/anomaly/weather/proc/find_adjacent_impacted_area(check_dir)
+	var/limit = 9
+	var/turf/next_turf = get_step(src, check_dir)
+	while(next_turf.loc == impact_area && limit > 0)
+		next_turf = get_step(next_turf, check_dir)
+		if(isnull(next_turf))
+			return null
+		limit -= 1
+
+	return next_turf.loc
 
 /obj/effect/anomaly/weather/anomalyNeutralize()
 	for(var/datum/weather/weather_datum as anything in active_weathers)

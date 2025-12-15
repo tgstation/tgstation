@@ -30,6 +30,9 @@
 	// snowstorms temperature ignores any clothing insulation
 	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER | WEATHER_TEMPERATURE_BYPASS_CLOTHING)
 
+/datum/weather/snow_storm/get_playlist_ref()
+	return GLOB.snowstorm_sounds
+
 /datum/weather/snow_storm/start()
 	GLOB.snowstorm_sounds.Cut() // it's passed by ref
 	for(var/area/impacted_area as anything in impacted_areas)
