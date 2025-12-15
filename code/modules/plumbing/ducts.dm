@@ -240,9 +240,21 @@
 	///Default layer of our duct
 	var/duct_layer = THIRD_DUCT_LAYER
 
+/obj/item/stack/ducts/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+	. = ..()
+
+	register_context()
+
+/obj/item/stack/ducts/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(held_item?.tool_behaviour == TOOL_WRENCH && isopenturf(loc))
+		context[SCREENTIP_CONTEXT_LMB] = "Wrench duct"
+		return CONTEXTUAL_SCREENTIP_SET
+
 /obj/item/stack/ducts/examine(mob/user)
 	. = ..()
 	. += span_notice("Its current color and layer are [GLOB.pipe_color_name[duct_color]] and [GLOB.plumbing_layer_names["[duct_layer]"]]. Use in-hand to change.")
+	. += span_notice("Place on ground & [EXAMINE_HINT("wrench")] to create duct.")
 
 /obj/item/stack/ducts/attack_self(mob/user)
 	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers, GLOB.plumbing_layer_names["[duct_layer]"])
@@ -281,7 +293,6 @@
 	if(isopenturf(open_turf) && use(1))
 		new /obj/machinery/duct(open_turf, duct_color, duct_layer)
 		playsound(open_turf, 'sound/machines/click.ogg', 50, TRUE)
-		qdel(src)
 		return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/ducts/fifty
