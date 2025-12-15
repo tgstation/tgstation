@@ -121,8 +121,9 @@
 \
 ##parent_path/proc/__##verb_proc_name(##verb_args)
 
-/// Returns true if this verb is being ran as a verb, false if it's being ran by some parent call
-#define VERB_JUST_FIRED(...) (caller.proc == GLOB.active_tracker?.proc_name)
+/// Returns true if this verb is being ran as a verb (or if it was just invoked by a verb manager)
+/// false if it's being ran by some parent call
+#define VERB_JUST_FIRED(...) (caller?.proc == GLOB.active_tracker?.proc_path || caller?.proc == /datum/callback/proc/InvokeAsync)
 
 // list keys because this code is decently hot
 #define VERB_LIST_COST 1
@@ -146,8 +147,8 @@ GLOBAL_DATUM(active_tracker, /datum/verb_cost_tracker)
 /datum/verb_cost_tracker
 	/// How to categorize ourselves when logging
 	var/name_to_use
-	/// Name of the proc this is running off
-	var/proc_name
+	/// Path of the proc this is running off
+	var/proc_path
 	/// Usage before the verb runs
 	var/usage_at_start = 0
 	/// Usage after the verb runs
@@ -158,8 +159,8 @@ GLOBAL_DATUM(active_tracker, /datum/verb_cost_tracker)
 	var/finished_on = -1
 
 /datum/verb_cost_tracker/New(usage_at_start, callee/proc_info)
-	proc_name = proc_info.proc
-	name_to_use = proc_name
+	proc_path = proc_info.proc
+	name_to_use = proc_path
 	src.usage_at_start = usage_at_start
 	invoked_on = world.time
 	GLOB.verb_trackers_this_tick += src

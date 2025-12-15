@@ -672,4 +672,4 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 		return gradient(overtime_gradient, clamp(scaled, 0, max_value))
 	return gradient(cpu_gradient, clamp(scaled, 0, 1))
 
-#define GRAPH_EDGE_SIZE
+#undef GRAPH_EDGE_SIZE

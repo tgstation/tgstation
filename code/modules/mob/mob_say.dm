@@ -7,8 +7,6 @@ DEFINE_VERBLIKE(verb, /mob, say_verb, "Say", "", FALSE, "IC", /* instant = */ TR
 		return
 
 	// If we're being called off something else, we should be allowed to requeue if we're gonna lag to shit
-	// This does risk double queuing, need to work out how to fix that
-	#warn above, need a way to tell that we are currently executing queued verbs (and THIS queued verb)
 	if(VERB_JUST_FIRED())
 		say(message)
 	else
