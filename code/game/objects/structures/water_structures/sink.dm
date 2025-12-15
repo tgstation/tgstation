@@ -177,9 +177,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		if(attacking_item.contents.len)
 			to_chat(user, span_notice("Looks like there's something left in the jar"))
 			return
-		new /obj/item/reagent_containers/cup/beaker/large(loc)
-		to_chat(user, span_notice("You washed the jar, ridding it of the brine."))
 		qdel(attacking_item)
+		to_chat(user, span_notice("You washed the jar, ridding it of the brine."))
+		user.put_in_active_hand(new /obj/item/reagent_containers/cup/beaker/large(loc))
 		return
 
 	if(!istype(attacking_item))
