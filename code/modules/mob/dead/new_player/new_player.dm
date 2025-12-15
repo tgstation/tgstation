@@ -70,7 +70,7 @@
 /// The assertion is that readiness must be an opted in TRUE, while all other states (e.g. not ready, broken, etc) are FALSE.
 /// We organize it this way to ensure the system is extensible for other possible ready states.
 /mob/dead/new_player/proc/is_ready_to_play()
-	return ready == PLAYER_READY
+	return ready == PLAYER_READY_TO_PLAY
 
 //When you cop out of the round (NB: this HAS A SLEEP FOR PLAYER INPUT IN IT)
 /mob/dead/new_player/proc/make_me_an_observer()
