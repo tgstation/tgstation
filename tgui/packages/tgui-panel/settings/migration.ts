@@ -14,6 +14,7 @@ import { generalSettingsHandler } from './helpers';
 import {
   type HighlightState,
   type MergedSettings,
+  type SettingsState,
   settingsSchema,
 } from './types';
 
@@ -69,6 +70,18 @@ const highlightKeys: (keyof typeof defaultHighlights)[] = [
 
 /** A bit of a chunky procedural function. Handles imported and loaded settings */
 export function startSettingsMigration(next: MergedSettings): void {
+  // No stored settings found, initialize with defaults
+  if (!next) {
+    console.log('Initializing panel settings with defaults.');
+    const initialized: SettingsState = {
+      ...defaultSettings,
+      initialized: true,
+    };
+    storage.set('panel-settings', initialized);
+    store.set(settingsAtom, initialized);
+    return;
+  }
+
   // Split the merged object as we save in two different atoms
   const settingsPart = omit(next, highlightKeys);
   const highlightPart = pick(next, highlightKeys);
@@ -87,8 +100,8 @@ export function startSettingsMigration(next: MergedSettings): void {
 
   const migratedHighlights = migrateHighlights(highlightPart);
 
-  // Just exit if no valid storage was found
-  if (!next?.version) {
+  // Just exit if no valid version was found
+  if (!next.version) {
     storage.set('panel-settings', { ...draftSettings, ...migratedHighlights });
     return;
   }
