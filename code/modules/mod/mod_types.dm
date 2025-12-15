@@ -54,6 +54,16 @@
 		/obj/item/mod/module/flashlight,
 	)
 
+/obj/item/mod/control/pre_equipped/portable_suit
+	theme = /datum/mod_theme/portable_suit
+	applied_modules = list(
+		/obj/item/mod/module/paper_dispenser,
+		/obj/item/mod/module/stamp,
+	)
+	default_pins = list(
+		/obj/item/mod/module/stamp,
+	)
+
 /obj/item/mod/control/pre_equipped/engineering
 	theme = /datum/mod_theme/engineering
 	applied_modules = list(
@@ -264,6 +274,7 @@
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
+		/obj/item/mod/module/pathfinder,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/dna_lock,
 		/obj/item/mod/module/hat_stabilizer/syndicate,
@@ -322,6 +333,7 @@
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
+		/obj/item/mod/module/pathfinder,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/hat_stabilizer/syndicate,
 		/obj/item/mod/module/quick_cuff,

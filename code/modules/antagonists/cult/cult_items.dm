@@ -55,7 +55,7 @@ Striking a noncultist, however, will tear their flesh."}
 	if(owner.get_active_held_item() != src)
 		block_message = "[owner] parries [attack_text] with [src] in their offhand"
 
-	if(IS_CULTIST(owner) && prob(final_block_chance) && attack_type != (PROJECTILE_ATTACK || OVERWHELMING_ATTACK))
+	if(IS_CULTIST(owner) && prob(final_block_chance) && (attack_type != PROJECTILE_ATTACK || attack_type != OVERWHELMING_ATTACK))
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 		owner.visible_message(span_danger("[block_message]"))
 		return TRUE
@@ -143,7 +143,7 @@ Striking a noncultist, however, will tear their flesh."}
 			var/mob/living/carbon/human/miscreant = user
 			miscreant.apply_damage(rand(force/2, force), BRUTE, pick(GLOB.arm_zones))
 		else
-			user.adjustBruteLoss(rand(force/2,force))
+			user.adjust_brute_loss(rand(force/2,force))
 		return
 	..()
 
@@ -686,7 +686,7 @@ Striking a noncultist, however, will tear their flesh."}
 	. = ..()
 	if(!IS_CULTIST(user) && isliving(user))
 		var/mob/living/living_user = user
-		living_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+		living_user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5)
 		. += span_danger("It hurts just to look at it. Better keep away.")
 	else
 		. += span_cult("It can be used to create a gateway to Nar'Sie's domain, which will summon weak, sentient constructs over time.")
@@ -1069,7 +1069,7 @@ Striking a noncultist, however, will tear their flesh."}
 					var/mob/living/L = target
 					if(L.density)
 						L.Paralyze(20)
-						L.adjustBruteLoss(45)
+						L.adjust_brute_loss(45)
 						playsound(L, 'sound/effects/hallucinations/wail.ogg', 50, TRUE)
 						L.emote("scream")
 		user.Beam(temp_target, icon_state="blood_beam", time = 7, beam_type = /obj/effect/ebeam/blood)

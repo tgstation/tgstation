@@ -59,7 +59,7 @@
 			span_warning("[user] accidentally stabs [target] right in the brain!"),
 		)
 		display_pain(target, "You feel a visceral stabbing pain right through your head, into your brain!")
-		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 70)
+		target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 70)
 	else
 		display_results(
 			user,

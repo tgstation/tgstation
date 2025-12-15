@@ -16,7 +16,7 @@
 			drone.visible_message(span_notice("[drone] begins to cannibalize parts from [src]."), span_notice("You begin to cannibalize parts from [src]..."))
 			if(do_after(drone, 6 SECONDS, 0, target = src))
 				drone.visible_message(span_notice("[drone] repairs itself using [src]'s remains!"), span_notice("You repair yourself using [src]'s remains."))
-				drone.adjustBruteLoss(-src.maxHealth)
+				drone.adjust_brute_loss(-src.maxHealth)
 				new /obj/effect/decal/cleanable/blood/splatter/oil(get_turf(src))
 				ghostize(can_reenter_corpse = FALSE)
 				qdel(src)
@@ -93,7 +93,7 @@
 		to_chat(user, span_warning("You need to remain still to tighten [src]'s screws!"))
 		return ITEM_INTERACT_SUCCESS
 
-	adjustBruteLoss(-getBruteLoss())
+	adjust_brute_loss(-get_brute_loss())
 	visible_message(span_notice("[user] tightens [src == user ? "[user.p_their()]" : "[src]'s"] loose screws!"), span_notice("[src == user ? "You tighten" : "[user] tightens"] your loose screws."))
 	return ITEM_INTERACT_SUCCESS
 

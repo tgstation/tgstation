@@ -49,7 +49,7 @@
 				hanging_object.pixel_x = pixel_shift
 			if(WEST)
 				hanging_object.pixel_x = -pixel_shift
-	if(!hanging_object.find_and_hang_on_atom())
+	if(!hanging_object.find_and_mount_on_atom())
 		to_chat(user, span_warning("[src] Could not find all to mount on!."))
 		return
 	after_attach(hanging_object)

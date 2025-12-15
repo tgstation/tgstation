@@ -264,10 +264,10 @@
 	.["health"] = mod.wearer?.health || 0
 	.["health_max"] = mod.wearer?.getMaxHealth() || 0
 	if(display_detailed_vitals)
-		.["loss_brute"] = mod.wearer?.getBruteLoss() || 0
-		.["loss_fire"] = mod.wearer?.getFireLoss() || 0
-		.["loss_tox"] = mod.wearer?.getToxLoss() || 0
-		.["loss_oxy"] = mod.wearer?.getOxyLoss() || 0
+		.["loss_brute"] = mod.wearer?.get_brute_loss() || 0
+		.["loss_fire"] = mod.wearer?.get_fire_loss() || 0
+		.["loss_tox"] = mod.wearer?.get_tox_loss() || 0
+		.["loss_oxy"] = mod.wearer?.get_oxy_loss() || 0
 		.["body_temperature"] = mod.wearer?.bodytemperature || 0
 		.["nutrition"] = mod.wearer?.nutrition || 0
 	if(display_dna)
@@ -1040,25 +1040,3 @@
 	var/datum/effect_system/lightning_spread/sparks = new /datum/effect_system/lightning_spread
 	sparks.set_up(number = 5, cardinals_only = TRUE, location = mod.wearer.loc)
 	sparks.start()
-
-/obj/item/mod/module/hearing_protection
-	name = "MOD hearing protection module"
-	desc = "A module that protects the users ears from loud sounds"
-	complexity = 0
-	removable = FALSE
-	incompatible_modules = list(/obj/item/mod/module/hearing_protection)
-	required_slots = list(ITEM_SLOT_HEAD)
-
-/obj/item/mod/module/hearing_protection/on_part_activation()
-	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
-	if(istype(head_cover))
-		head_cover.AddComponent(/datum/component/wearertargeting/earprotection)
-		var/datum/component/wearertargeting/earprotection/protection = head_cover.GetComponent(/datum/component/wearertargeting/earprotection)
-		protection.on_equip(src, mod.wearer, ITEM_SLOT_HEAD)
-
-/obj/item/mod/module/hearing_protection/on_part_deactivation(deleting = FALSE)
-	if(deleting)
-		return
-	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
-	if(istype(head_cover))
-		qdel(head_cover.GetComponent(/datum/component/wearertargeting/earprotection))

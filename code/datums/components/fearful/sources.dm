@@ -124,16 +124,18 @@
 
 	var/certified_jolly = FALSE
 
-	for(var/mob/living/carbon/human/possible_claus in view(5, owner))
-		if(istype(possible_claus.back, /obj/item/storage/backpack/santabag))
+	for (var/mob/living/carbon/human/possible_claus in view(5, owner))
+		if (possible_claus == owner)
+			continue  // imagine being scared of your own existence
+
+		if (!istype(possible_claus.wear_suit, /obj/item/clothing/suit/space/santa))
+			continue
+
+		if (istype(possible_claus.back, /obj/item/storage/backpack/santabag))
 			certified_jolly = TRUE
 			break
 
-		if(istype(possible_claus.head, /obj/item/clothing/head/costume/santa) || istype(possible_claus.head, /obj/item/clothing/head/helmet/space/santahat))
-			certified_jolly = TRUE
-			break
-
-		if(istype(possible_claus.wear_suit, /obj/item/clothing/suit/space/santa))
+		if (istype(possible_claus.head, /obj/item/clothing/head/costume/santa) || istype(possible_claus.head, /obj/item/clothing/head/helmet/space/santahat))
 			certified_jolly = TRUE
 			break
 

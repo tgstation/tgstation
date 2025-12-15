@@ -100,7 +100,7 @@
 				bozo.adjust_confusion(15 SECONDS)
 				bozo.set_eye_blur_if_lower(10 SECONDS)
 			// but the rest of the effects will happen either way
-			bozo.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20 - get_integrity())
+			bozo.adjust_organ_loss(ORGAN_SLOT_BRAIN, 20 - get_integrity())
 
 			sparks.set_up(5, cardinals_only = FALSE, location = get_turf(src))
 			sparks.start()

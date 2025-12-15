@@ -339,9 +339,9 @@
 /obj/effect/mob_spawn/corpse/special(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_mob.death(TRUE)
-	spawned_mob.adjustOxyLoss(oxy_damage)
-	spawned_mob.adjustBruteLoss(brute_damage)
-	spawned_mob.adjustFireLoss(burn_damage)
+	spawned_mob.adjust_oxy_loss(oxy_damage)
+	spawned_mob.adjust_brute_loss(brute_damage)
+	spawned_mob.adjust_fire_loss(burn_damage)
 	if (corpse_description)
 		spawned_mob.AddComponent(/datum/component/temporary_description, corpse_description, naive_corpse_description)
 

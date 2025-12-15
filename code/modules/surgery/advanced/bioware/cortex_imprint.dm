@@ -74,7 +74,7 @@
 			span_notice("[user] completes the surgery on [target]'s brain."),
 		)
 		display_pain(target, "Your brain throbs with intense pain; Thinking hurts!")
-		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60)
+		target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 60)
 		target.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 	else
 		user.visible_message(span_warning("[user] suddenly notices that the brain [user.p_they()] [user.p_were()] working on is not there anymore."), span_warning("You suddenly notice that the brain you were working on is not there anymore."))

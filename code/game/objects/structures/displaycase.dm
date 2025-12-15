@@ -227,6 +227,7 @@
 	resistance_flags = FLAMMABLE
 	anchored = TRUE
 	density = FALSE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
 	///The airlock electronics inserted into the chassis, to be moved to the finished product.
 	var/obj/item/electronics/airlock/electronics
 
@@ -562,7 +563,7 @@
 				if(payments_acc)
 					payments_acc.adjust_money(sale_price, "Display Case: [capitalize(showpiece.name)]")
 				usr.put_in_hands(showpiece)
-				to_chat(usr, span_notice("You purchase [showpiece] for [sale_price] credits."))
+				to_chat(usr, span_notice("You purchase [showpiece] for [sale_price] [MONEY_NAME]."))
 				playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
 				flick("[initial(icon_state)]_vend", src)
 				showpiece = null
@@ -665,7 +666,7 @@
 /obj/structure/displaycase/forsale/examine(mob/user)
 	. = ..()
 	if(showpiece && !open)
-		. += span_notice("[showpiece] is for sale for [sale_price] credits.")
+		. += span_notice("[showpiece] is for sale for [sale_price] [MONEY_NAME].")
 	if(broken)
 		. += span_notice("[src] is sparking and the hover field generator seems to be overloaded. Use a multitool to fix it.")
 

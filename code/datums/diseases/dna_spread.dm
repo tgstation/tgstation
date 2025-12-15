@@ -50,7 +50,7 @@
 			if(SPT_PROB(0.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("Your stomach hurts."))
 				if(prob(20))
-					affected_mob.adjustToxLoss(2, FALSE)
+					affected_mob.adjust_tox_loss(2, FALSE)
 		if(4)
 			if(!transformed && !carrier)
 				//Save original dna for when the disease is cured.

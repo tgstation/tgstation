@@ -188,6 +188,7 @@
 	buildstackamount = 3
 	item_chair = /obj/item/chair/wood
 	fishing_modifier = -6
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/structure/chair/wood/narsie_act()
 	return
@@ -207,6 +208,7 @@
 	item_chair = null
 	fishing_modifier = -7
 	has_armrest = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/chair/comfy/brown
 	color = rgb(70, 47, 28)
@@ -232,7 +234,7 @@
 	unbuckle_sound = SFX_SEATBELT_UNBUCKLE
 	resistance_flags = FIRE_PROOF
 	max_integrity = 120
-	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/chair/comfy/shuttle/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
@@ -286,6 +288,7 @@
 	icon_state = "carp_chair"
 	buildstacktype = /obj/item/stack/sheet/animalhide/carp
 	fishing_modifier = -12
+	custom_materials = null
 
 /obj/structure/chair/office
 	name = "office chair"
@@ -294,6 +297,7 @@
 	item_chair = null
 	fishing_modifier = -6
 	icon_state = "officechair_dark"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/structure/chair/office/Initialize(mapload)
 	. = ..()
@@ -320,10 +324,16 @@
 	name = "stool"
 	desc = "Apply butt."
 	icon_state = "stool"
-	can_buckle = FALSE
 	buildstackamount = 1
 	item_chair = /obj/item/chair/stool
 	max_integrity = 300
+
+/obj/structure/chair/stool/post_buckle_mob(mob/living/Mob)
+	Mob.add_offsets(type, z_add = 4)
+	. = ..()
+
+/obj/structure/chair/stool/post_unbuckle_mob(mob/living/Mob)
+	Mob.remove_offsets(type)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 
@@ -356,13 +366,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 	desc = "It has some unsavory stains on it..."
 	icon_state = "bar"
 	item_chair = /obj/item/chair/stool/bar
-	can_buckle = TRUE
 
-/obj/structure/chair/stool/bar/post_buckle_mob(mob/living/M)
-	M.pixel_y += 4
-
-/obj/structure/chair/stool/bar/post_unbuckle_mob(mob/living/M)
-	M.pixel_y -= 4
+/obj/structure/chair/stool/bar/post_buckle_mob(mob/living/Mob)
+	. = ..()
+	Mob.add_offsets(type, z_add = 7)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
@@ -375,6 +382,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	buildstacktype = /obj/item/stack/sheet/mineral/bamboo
 	buildstackamount = 2
 	item_chair = /obj/item/chair/stool/bamboo
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/chair
 	name = "chair"
@@ -393,7 +401,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	max_integrity = 100
 	hitsound = 'sound/items/trayhit/trayhit1.ogg'
 	hit_reaction_chance = 50
-	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	item_flags = SKIP_FANTASY_ON_SPAWN
 
 	// Duration of daze inflicted when the chair is smashed against someone from behind.
@@ -524,6 +532,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	origin_type = /obj/structure/chair/stool/bamboo
 	max_integrity = 40 //Submissive and breakable unlike the chad iron stool
 	daze_amount = 0 //Not hard enough to cause them to become dazed
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/chair/stool/narsie_act()
 	return //sturdy enough to ignore a god
@@ -538,6 +547,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	origin_type = /obj/structure/chair/wood
 	custom_materials = null
 	daze_amount = 0
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/item/chair/wood/narsie_act()
 	return
@@ -563,6 +573,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	item_chair = null
 	fishing_modifier = -13 //the pinnacle of Ratvarian technology.
 	has_armrest = TRUE
+	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT)
 	/// Total rotations made
 	var/turns = 0
 
@@ -606,6 +617,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	obj_flags = parent_type::obj_flags | NO_DEBRIS_AFTER_DECONSTRUCTION
 	alpha = 0
 	fishing_modifier = -21 //it only lives for 25 seconds, so we make them worth it.
+	custom_materials = null
 
 /obj/structure/chair/mime/wrench_act_secondary(mob/living/user, obj/item/weapon)
 	return NONE
@@ -622,7 +634,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	desc = "No matter how much you squirm, it'll still be uncomfortable."
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
-	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
 	buildstacktype = /obj/item/stack/sheet/plastic
 	buildstackamount = 2
 	item_chair = /obj/item/chair/plastic
@@ -656,7 +668,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 7
 	throw_range = 5 //Lighter Weight --> Flies Farther.
-	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
 	max_integrity = 70
 	daze_amount = 0
 	origin_type = /obj/structure/chair/plastic
