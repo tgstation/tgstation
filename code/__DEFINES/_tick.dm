@@ -35,11 +35,16 @@
 /// Size of the moving average byond stores {map_)cpu values in
 #define INTERNAL_CPU_SIZE 16
 
+/// How many tick's worth of cpu info to hold onto
 #define TICK_INFO_SIZE 30
+/// Nicely formats cpu usage values for user display
 #define FORMAT_CPU(cpu) round(cpu, 0.01)
+/// Converts a tick from the last TICK_INFO_SIZE ticks to an index to use to access that tick's cpu info
 #define TICK_INFO_TICK2INDEX(tick) ((round(tick, 1) % TICK_INFO_SIZE) + 1)
+/// Gets the current tick info index
 #define TICK_INFO_INDEX(...) TICK_INFO_TICK2INDEX(DS2TICKS(world.time))
 
+// All the different sorts of display types we can use for our cpu plotting graph 
 #define USAGE_DISPLAY_EARLY_SLEEPERS "Early Sleep"
 #define USAGE_DISPLAY_MC "MC"
 #define USAGE_DISPLAY_LATE_SLEEPERS "Late Sleep"
