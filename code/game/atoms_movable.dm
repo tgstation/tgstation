@@ -22,7 +22,7 @@
 	/// Holds all languages this mob can speak and understand
 	VAR_PRIVATE/datum/language_holder/language_holder
 	/// The list of factions this atom belongs to (used for cacheable faction strings - these tend to not change very often)
-	VAR_PRIVATE/list/faction
+	VAR_PROTECTED/list/faction
 	/// The list of allies this atom has (used for anything too dynamic for string_list() - typically mob refs, each mob starts with themselves as an ally)
 	var/list/allies
 
@@ -1810,7 +1810,9 @@
  * If exact match is set, then all our factions must match exactly
  */
 /atom/movable/proc/faction_check_atom(atom/movable/target, exact_match)
-	if(exact_match)
+	if(!exact_match)
+		return FACTION_CHECK(faction, target.faction, allies, target.allies, FALSE)
+	else
 		var/list/allies_src = LAZYCOPY(allies)
 		var/list/allies_target = LAZYCOPY(target.allies)
 		if(!("[REF(src)]" in allies_target)) //if they don't have our ref faction, remove it from our factions list.
@@ -1818,8 +1820,6 @@
 		if(!("[REF(target)]" in allies_src))
 			allies_target -= "[REF(target)]" //same thing here.
 		return FACTION_CHECK(faction, target.faction, allies, target.allies, TRUE)
-	else
-		return FACTION_CHECK(faction, target.faction, allies, target.allies, FALSE)
 
 /atom/movable/proc/set_allies(ally_list)
 	if (!islist(ally_list))
@@ -1946,3 +1946,5 @@
 		return (match_count == LAZYLEN(factions) + LAZYLEN(allies_list))
 	else
 		return FACTION_CHECK(faction, factions, allies, allies_list, FALSE)
+
+#undef FACTION_CHECK
