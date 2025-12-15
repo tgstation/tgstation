@@ -51,7 +51,8 @@
 				hanging_object.pixel_x = -pixel_shift
 	if(!hanging_object.find_and_mount_on_atom())
 		to_chat(user, span_warning("[src] Could not find all to mount on!."))
-		return
+		qdel(hanging_object)
+		return ITEM_INTERACT_FAILURE
 	after_attach(hanging_object)
 	qdel(src)
 
