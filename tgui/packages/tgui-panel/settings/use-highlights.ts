@@ -40,6 +40,7 @@ export function useHighlights() {
 
     // Reconstruct the overall highlight structure
     const newState: HighlightState = {
+      ...highlights,
       highlightSettings: Object.keys(draft),
       highlightSettingById: draft,
     };
@@ -67,6 +68,7 @@ export function useHighlights() {
 
     // Construct the updated highlight settings structure
     const newState: HighlightState = {
+      ...highlights,
       highlightSettingById: draft,
       highlightSettings: draftKeys,
     };
@@ -89,6 +91,7 @@ export function useHighlights() {
 
     // Reconstruct the overall highlight settings structure
     const newState: HighlightState = {
+      ...highlights,
       highlightSettings: [...highlights.highlightSettings, draft.id],
       highlightSettingById: updatedIds,
     };

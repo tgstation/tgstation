@@ -1,4 +1,5 @@
 import { storage } from 'common/storage';
+import { smoothMerge } from 'common/type-safety';
 import { omit, pick } from 'es-toolkit';
 import { chatRenderer } from '../chat/renderer';
 import { store } from '../events/store';
@@ -10,7 +11,11 @@ import {
   settingsAtom,
 } from './atoms';
 import { generalSettingsHandler } from './helpers';
-import type { HighlightState, SettingsState } from './types';
+import {
+  type HighlightState,
+  type MergedSettings,
+  settingsSchema,
+} from './types';
 
 /** Fixes issues with stored highlight settings */
 function migrateHighlights(next: HighlightState): HighlightState {
@@ -63,19 +68,18 @@ const highlightKeys: (keyof typeof defaultHighlights)[] = [
 ] as const;
 
 /** A bit of a chunky procedural function. Handles imported and loaded settings */
-export function startSettingsMigration(
-  next: SettingsState & HighlightState,
-): void {
-  // Split the merged object as we save them individually
+export function startSettingsMigration(next: MergedSettings): void {
+  // Split the merged object as we save in two different atoms
   const settingsPart = omit(next, highlightKeys);
   const highlightPart = pick(next, highlightKeys);
 
-  const draftSettings: SettingsState = {
-    ...defaultSettings,
-    ...settingsPart,
-    initialized: true,
-    view: defaultSettings.view, // Preserve view state
-  };
+  const draftSettings = smoothMerge({
+    source: settingsPart,
+    target: defaultSettings,
+    schema: settingsSchema,
+  });
+  draftSettings.initialized = true;
+  draftSettings.view = defaultSettings.view; // Preserve view state
 
   generalSettingsHandler(draftSettings);
   store.set(settingsAtom, draftSettings);

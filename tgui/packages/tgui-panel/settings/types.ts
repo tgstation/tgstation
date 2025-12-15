@@ -1,7 +1,24 @@
-type View = {
-  activeTab: string;
-  visible: boolean;
-};
+import * as z from 'zod';
+import type { ChatPages } from '../chat/types';
+
+const viewSchema = z.object({
+  activeTab: z.string(),
+  visible: z.boolean(),
+});
+
+export const settingsSchema = z.object({
+  adminMusicVolume: z.number(),
+  fontFamily: z.string(),
+  fontSize: z.number(),
+  initialized: z.boolean(),
+  lineHeight: z.number(),
+  statFontSize: z.number(),
+  statLinked: z.boolean(),
+  statTabsStyle: z.string(),
+  theme: z.string(),
+  version: z.number(),
+  view: viewSchema,
+});
 
 export type HighlightSetting = {
   highlightColor: string;
@@ -12,25 +29,19 @@ export type HighlightSetting = {
   matchWord: boolean;
 };
 
-export type SettingsState = {
-  adminMusicVolume: number;
-  fontFamily: string;
-  fontSize: number;
-  initialized: boolean;
-  lineHeight: number;
-  statFontSize: number;
-  statLinked: boolean;
-  statTabsStyle: string;
-  theme: 'light' | 'dark';
-  version: number;
-  view: View;
-};
-
 export type HighlightState = {
   /** Keep this for compatibility with other servers */
-  highlightColor?: string;
+  highlightColor: string;
   highlightSettings: string[];
   highlightSettingById: Record<string, HighlightSetting>;
   /** Keep this for compatibility with other servers */
-  highlightText?: string;
+  highlightText: string;
 };
+
+export type SettingsState = z.infer<typeof settingsSchema>;
+
+// Imported and loaded settings without chatpages
+export interface MergedSettings extends SettingsState, HighlightState {}
+
+// Full exported settings with chatpages
+export interface ExportedSettings extends MergedSettings, ChatPages {}
