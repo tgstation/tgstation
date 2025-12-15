@@ -15,8 +15,10 @@
 	for (var/mob_type in typesof(/mob) - ignored)
 		var/mob/mob_instance = allocate(mob_type)
 		var/list/mob_faction = mob_instance.get_faction()
-		if(!islist(mob_faction && !isnull(mob_faction)))
-			TEST_FAIL("[mob_type] faction variable is not a list")
-		else if(!LAZYLEN(mob_faction))
+		if(isnull(mob_faction))
+			continue
+		else if (!islist(mob_faction))
+			TEST_FAIL("[mob_type] faction variable is not a list or null! Only lazy lists are supported currently (currently set to [mob_faction]).")
+		else if (!LAZYLEN(mob_faction))
 			TEST_FAIL("[mob_type] faction variable is an empty list! Set to null instead, faction lists are lazy.")
 		qdel(mob_instance)
