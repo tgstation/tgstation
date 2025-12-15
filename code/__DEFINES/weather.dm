@@ -56,3 +56,11 @@ GLOBAL_LIST_INIT(thunder_chance_options, list(
 
 /// Does weather have any type of processing related to mobs, turfs, or thunder?
 #define FUNCTIONAL_WEATHER (WEATHER_TURFS|WEATHER_MOBS|WEATHER_THUNDER)
+
+#define WEATHER_FORCED_AREAS "Areas"
+#define WEATHER_FORCED_FLAGS "Flags"
+#define WEATHER_FORCED_REAGENT "Reagent"
+#define WEATHER_FORCED_THUNDER "Thunder Chance"
+#define WEATHER_FORCED_TELEGRAPH "Telegraph Duration"
+#define WEATHER_FORCED_END "End Duration"
+#define WEATHER_FORCED_DURATION "Weather Duration"

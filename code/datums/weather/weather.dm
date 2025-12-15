@@ -137,11 +137,12 @@
 	..()
 
 	impacted_z_levels = z_levels
-	area_type = weather_data?["area"] || area_type
-	weather_flags = weather_data?["weather_flags"] || weather_flags
-	turf_thunder_chance = isnull(weather_data?["thunder_chance"]) ? turf_thunder_chance : weather_data?["thunder_chance"]
+	weather_flags = isnull(weather_data?[WEATHER_FORCED_FLAGS]) ? weather_flags : weather_data?[WEATHER_FORCED_FLAGS]
+	turf_thunder_chance = isnull(weather_data?[WEATHER_FORCED_THUNDER]) ? turf_thunder_chance : weather_data?[WEATHER_FORCED_THUNDER]
+	telegraph_duration = isnull(weather_data?[WEATHER_FORCED_TELEGRAPH]) ? telegraph_duration : weather_data?[WEATHER_FORCED_TELEGRAPH]
+	end_duration = isnull(weather_data?[WEATHER_FORCED_END]) ? end_duration : weather_data?[WEATHER_FORCED_END]
 
-	var/datum/reagent/custom_reagent = weather_data?["reagent"]
+	var/datum/reagent/custom_reagent = weather_data?[WEATHER_FORCED_REAGENT]
 	var/reagent_id
 	if(custom_reagent)
 		reagent_id = custom_reagent
@@ -165,7 +166,7 @@
 	if(weather_flags & (WEATHER_THUNDER))
 		subsystem_tasks += SSWEATHER_THUNDER
 
-	setup_weather_areas()
+	setup_weather_areas(weather_data?[WEATHER_FORCED_AREAS])
 	setup_weather_turfs()
 
 /datum/weather/Destroy()
@@ -179,26 +180,22 @@
  * Calculates duration and hit areas, and makes a callback for the actual weather to start
  *
  */
-/datum/weather/proc/telegraph()
+/datum/weather/proc/telegraph(list/weather_data)
 	if(stage == STARTUP_STAGE)
 		return
 	stage = STARTUP_STAGE
 	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_TELEGRAPH(type), src)
-
-	weather_duration = rand(weather_duration_lower, weather_duration_upper)
+	weather_duration = isnull(weather_data?[WEATHER_FORCED_DURATION]) ? rand(weather_duration_lower, weather_duration_upper) : weather_data?[WEATHER_FORCED_DURATION]
 	SSweather.processing |= src
 	update_areas()
 	if(telegraph_duration)
 		send_alert(telegraph_message, telegraph_sound, telegraph_sound_vol)
-	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration)
+	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration, TIMER_UNIQUE)
 
-/datum/weather/proc/setup_weather_areas()
-	var/list/affectareas = list()
-	for(var/area/selected_area as anything in get_areas(area_type))
-		affectareas += selected_area
-	for(var/area/protected_area as anything in protected_areas)
-		affectareas -= get_areas(protected_area)
-	for(var/area/affected_area as anything in affectareas)
+/datum/weather/proc/setup_weather_areas(list/forced_areas)
+	for(var/area/affected_area as anything in (forced_areas || get_areas(area_type)))
+		if(is_type_in_list(affected_area, protected_areas))
+			continue
 		if(!(weather_flags & WEATHER_INDOORS) && !affected_area.outdoors)
 			continue
 
@@ -263,7 +260,7 @@
 	update_areas()
 	send_alert(weather_message, weather_sound)
 	if(!(weather_flags & (WEATHER_ENDLESS)))
-		addtimer(CALLBACK(src, PROC_REF(wind_down)), weather_duration)
+		addtimer(CALLBACK(src, PROC_REF(wind_down)), weather_duration, TIMER_UNIQUE)
 	for(var/area/impacted_area as anything in impacted_areas)
 		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_BEGAN_IN_AREA(type), src)
 
@@ -281,7 +278,7 @@
 	stage = WIND_DOWN_STAGE
 	update_areas()
 	send_alert(end_message, end_sound, end_sound_vol)
-	addtimer(CALLBACK(src, PROC_REF(end)), end_duration)
+	addtimer(CALLBACK(src, PROC_REF(end)), end_duration, TIMER_UNIQUE)
 
 /**
  * Fully ends the weather
