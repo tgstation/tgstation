@@ -1810,9 +1810,7 @@
  * If exact match is set, then all our factions must match exactly
  */
 /atom/movable/proc/faction_check_atom(atom/movable/target, exact_match)
-	if(!exact_match)
-		return FACTION_CHECK(faction, target.faction, allies, target.allies, FALSE)
-	else
+	if(exact_match)
 		var/list/allies_src = LAZYCOPY(allies)
 		var/list/allies_target = LAZYCOPY(target.allies)
 		if(!("[REF(src)]" in allies_target)) //if they don't have our ref faction, remove it from our factions list.
@@ -1820,6 +1818,8 @@
 		if(!("[REF(target)]" in allies_src))
 			allies_target -= "[REF(target)]" //same thing here.
 		return FACTION_CHECK(faction, target.faction, allies, target.allies, TRUE)
+	else
+		return FACTION_CHECK(faction, target.faction, allies, target.allies, FALSE)
 
 /atom/movable/proc/set_allies(ally_list)
 	if (!islist(ally_list))
