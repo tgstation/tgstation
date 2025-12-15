@@ -54,7 +54,7 @@
 
 /datum/event_admin_setup/listed_options/weather_anomaly
 	input_text = "Weather type? Be very careful with the dangerous ones!"
-	normal_run_option = "Random Safe"
+	normal_run_option = "Default"
 
 /datum/event_admin_setup/listed_options/weather_anomaly/get_list()
 	return valid_subtypesof(/datum/weather)
@@ -67,7 +67,7 @@
 	normal_run_option = "Default"
 
 /datum/event_admin_setup/listed_options/weather_thunder/get_list()
-	return GLOB.thunder_chance_options
+	return GLOB.thunder_chance_options.Copy()
 
 /datum/event_admin_setup/listed_options/weather_thunder/apply_to_event(datum/round_event/anomaly/anomaly_weather/event)
 	event.forced_thunder_chance = GLOB.thunder_chance_options[chosen]

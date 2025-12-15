@@ -553,11 +553,15 @@
 		new /obj/effect/temp_visual/electricity(adjacent_turf)
 
 	for(var/mob/living/hit_mob in target)
+		if(hit_mob == loc) // avoid hitting the wearer
+			continue
 		to_chat(hit_mob, span_userdanger("You've been struck by lightning!"))
 		hit_mob.electrocute_act(30, src, flags = SHOCK_TESLA|SHOCK_NOSTUN)
 		hit_mob.Knockdown(2.5 SECONDS, 10 SECONDS)
 
 	for(var/mob/living/nearby_target in oview(1, target))
+		if(nearby_target == loc) // avoid hitting the wearer
+			continue
 		to_chat(nearby_target, span_userdanger("You've been struck by an arc of lightning!"))
 		nearby_target.electrocute_act(10, src, flags = SHOCK_TESLA|SHOCK_NOSTUN)
 

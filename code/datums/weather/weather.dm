@@ -207,7 +207,7 @@
 	for(var/mob/living/affected as anything in GLOB.mob_living_list + GLOB.dead_mob_list)
 		manually_setup_sound_manager_on_mob(affected, playlist, filtered_zs)
 
-	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_CREATED, PROC_REF(manually_setup_sound_manager_on_mob))
+	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_CREATED, PROC_REF(handle_new_mob_sound_manage))
 
 /// Returns a reference to the "sound playlist" for this weather type
 /datum/weather/proc/get_playlist_ref()
