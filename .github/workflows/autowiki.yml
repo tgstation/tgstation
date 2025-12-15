@@ -28,6 +28,10 @@ jobs:
         if: steps.secrets_set.outputs.SECRETS_ENABLED
         run: |
           bash tools/ci/install_rust_g.sh
+      - name: Install auxcpu
+        if: steps.secrets_set.outputs.SECRETS_ENABLED
+        run: |
+          bash tools/ci/install_auxcpu.sh
       - name: Compile and generate Autowiki files
         if: steps.secrets_set.outputs.SECRETS_ENABLED
         run: |
