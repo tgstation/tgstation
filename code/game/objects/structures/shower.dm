@@ -398,6 +398,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		var/obj/machinery/shower/shower = new(loc)
 		shower.setDir(REVERSE_DIR(dir))
 		shower.has_water_reclaimer = TRUE
+		shower.reagents.add_reagent(shower.reagent_id, shower.reagent_capacity)
 		qdel(src)
 		playsound(shower, 'sound/machines/click.ogg', 20, TRUE)
 		return
@@ -413,7 +414,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 	return TRUE
 
-/obj/structure/sinkframe/wrench_act_secondary(mob/living/user, obj/item/tool)
+/obj/structure/showerframe/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	tool.play_tool_sound(src)
 	deconstruct()

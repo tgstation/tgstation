@@ -8,6 +8,8 @@
 	pixel_z = 1
 	///Something's being washed at the moment
 	var/busy = FALSE
+	///Capacity of reagents to create
+	var/capacity = 100
 	///What kind of reagent is produced by this sink by default? (We now have actual plumbing, Arcane, August 2020)
 	var/dispensedreagent = /datum/reagent/water
 	///Material to drop when broken or deconstructed.
@@ -28,9 +30,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	setDir(dir)
 
 	has_water_reclaimer = mapload
-	create_reagents(100, NO_REACT)
+	create_reagents(capacity)
 	if(has_water_reclaimer)
-		reagents.add_reagent(dispensedreagent, 100)
+		reagents.add_reagent(dispensedreagent, capacity)
 	AddComponent(/datum/component/plumbing/simple_demand/extended)
 
 /obj/structure/sink/setDir(newdir)
