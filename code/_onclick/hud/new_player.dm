@@ -605,7 +605,7 @@
 	var/blip_icon_state = "ready_blip"
 	if(blip_enabled && hud)
 		var/mob/dead/new_player/new_player = hud.mymob
-		blip_icon_state += "_[new_player.ready ? "" : "not_"]ready"
+		blip_icon_state += "_[new_player.is_ready_to_play() ? "" : "not_"]ready"
 	else
 		blip_icon_state += "_disabled"
 	var/mutable_appearance/ready_blip = mutable_appearance(icon, blip_icon_state)
