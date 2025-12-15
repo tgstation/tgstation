@@ -280,12 +280,11 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 
 	controls.maptext = "<div style=\"background-color:#FFFFFF; color:#000000;\">\
 		Toggles: \
-			<a href='byond://?src=[REF(src)];act=toggle_movement'>New Glide [GLOB.use_new_glide]</a> \
 			<a href='byond://?src=[REF(src)];act=toggle_compensation'>CPU Compensation [GLOB.attempt_corrective_cpu]</a> \
 			<a href='byond://?src=[REF(src)];act=toggle_mc_limit'>Dynamic MC Limit [GLOB.use_new_mc_limit]</a> \
 			<a href='byond://?src=[REF(src)];act=toggle_graph'>CPU Graphing [display_graph]</a> \
 			<a href='byond://?src=[REF(src)];act=toggle_verb_collection'>Verb Collection [GLOB.collect_verb_costs]</a>\n\
-		Glide: New ([GLOB.glide_size_multiplier]) Old ([GLOB.old_glide_size_multiplier])\n\
+		Glide: ([GLOB.glide_size_multiplier])\n\
 		Graph: \
 			Displaying \[<a href='byond://?src=[REF(src)];act=set_graph_mode'>[graph_display.display_mode]</a>\] \
 			<a href='byond://?src=[REF(src)];act=freeze_graph'>[graph_display.frozen ? "Thaw" : "Freeze"]</a> \
@@ -381,12 +380,9 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 /atom/movable/screen/usage_display/Topic(href, list/href_list)
 	if (..())
 		return
-	if(usr.ckey != "lemoninthedark" && (!check_rights(R_DEBUG) || !check_rights(R_SERVER)))
+	if(!check_rights(R_DEBUG) || !check_rights(R_SERVER))
 		return FALSE
 	switch(href_list["act"])
-		if("toggle_movement")
-			GLOB.use_new_glide = !GLOB.use_new_glide
-			return TRUE
 		if("toggle_compensation")
 			GLOB.attempt_corrective_cpu = !GLOB.attempt_corrective_cpu
 			return TRUE

@@ -317,8 +317,6 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
-	if(ckey == "lemoninthedark")
-		GLOB.use_new_glide = TRUE
 
 	var/reconnecting = FALSE
 	if(GLOB.persistent_clients_by_ckey[ckey])
