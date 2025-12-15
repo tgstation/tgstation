@@ -1,5 +1,6 @@
 INITIALIZE_IMMEDIATE(/atom/movable/screen/usage_display)
 GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
+/// Holds graphing/maptext stuff that displays/debugs cpu usage information
 /atom/movable/screen/usage_display
 	screen_loc = "LEFT:8, CENTER-6"
 	plane = GRAPHING_PLANE

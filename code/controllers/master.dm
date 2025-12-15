@@ -76,7 +76,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	///used by CHECK_TICK as well so that the procs subsystems call can obey that SS's tick limits
 	var/static/current_ticklimit = TICK_LIMIT_RUNNING
 
-	/// List of subsystems who ran in the last tick mapped against their cost
+	/// List of subsystems who ran in the last tick mapped against their cost (only populated when debugging, unused otherwise)
 	var/list/subsystems_to_cost
 	/// Whether the Overview UI will update as fast as possible for viewers.
 	var/overview_fast_update = FALSE
