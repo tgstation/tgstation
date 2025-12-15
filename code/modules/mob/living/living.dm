@@ -530,7 +530,7 @@ DEFINE_VERB(/mob/living, stop_pulling1, "Stop Pulling", "", FALSE, "IC")
 	stop_pulling()
 
 //same as above
-/mob/living/do_pointed(atom/pointing_at as mob|obj|turf in view(client.view, src))
+/mob/living/do_pointed(atom/pointing_at)
 	if(INCAPACITATED_IGNORING(src, INCAPABLE_RESTRAINTS))
 		return FALSE
 	if(!..())
