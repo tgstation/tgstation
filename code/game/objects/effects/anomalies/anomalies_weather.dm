@@ -46,6 +46,7 @@
 		)
 	)
 	RegisterSignal(weather, COMSIG_QDELETING, PROC_REF(clear_ref))
+	active_weathers += weather
 
 /obj/effect/anomaly/weather/proc/clear_ref(datum/weather/weather_datum)
 	SIGNAL_HANDLER
