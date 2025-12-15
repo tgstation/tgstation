@@ -59,6 +59,8 @@
 
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
+	register_context()
+
 /obj/machinery/duct/post_machine_initialize()
 	. = ..()
 	attempt_connect()
@@ -135,6 +137,17 @@
 	disconnect()
 
 	return ..()
+
+/obj/machinery/duct/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "Destroy duct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/duct/examine(mob/user)
+	. = ..()
+	. += span_notice("Its current color and layer are [GLOB.pipe_color_name[duct_color]] and [GLOB.plumbing_layer_names["[duct_layer]"]]. Use in-hand to change.")
+	. += span_notice("It can be [EXAMINE_HINT("wrenched")] apart.")
 
 /obj/machinery/duct/update_icon_state()
 	var/temp_icon = initial(icon_state)
@@ -243,12 +256,22 @@
 /obj/item/stack/ducts/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
 
+	//when wrench is over us
 	register_context()
+
+	//when we are over pipe
+	register_item_context()
 
 /obj/item/stack/ducts/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
 	if(held_item?.tool_behaviour == TOOL_WRENCH && isopenturf(loc))
 		context[SCREENTIP_CONTEXT_LMB] = "Wrench duct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/stack/ducts/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = NONE
+	if(istype(target, /obj/machinery/duct))
+		context[SCREENTIP_CONTEXT_LMB] = "Pick duct"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/stack/ducts/examine(mob/user)
@@ -275,15 +298,13 @@
 		. = ITEM_INTERACT_FAILURE
 
 /obj/item/stack/ducts/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	. = NONE
+	// Turn into a duct stack and then merge to the in-hand stack.
 	if(istype(interacting_with, /obj/machinery/duct))
-		var/obj/machinery/duct/duct = interacting_with
-
-		// Turn into a duct stack and then merge to the in-hand stack.
-		var/obj/item/stack/ducts/stack = new(duct.loc, 1, FALSE)
-		qdel(duct)
-		if(stack.can_merge(src))
-			stack.merge(src)
+		if(amount == max_amount)
+			balloon_alert(user, "stack full!")
+			return ITEM_INTERACT_FAILURE
+		qdel(interacting_with)
+		add(1)
 		return ITEM_INTERACT_SUCCESS
 
 	return check_attach_turf(interacting_with)
