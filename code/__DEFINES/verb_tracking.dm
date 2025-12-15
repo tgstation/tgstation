@@ -1,3 +1,20 @@
+/**
+ * Alright so like, I'm sorry, ok?
+ *
+ * This file enables us to track the cost of individual verbs, and queue them up if running them would push us into overtime.
+ * The reason we do this is because verbs are not tracked by byond's cpu profiling tools (world.cpu, etc) at all. They're in the profiler, and that's IT.
+ * This is a problem because it means we can't account for them when scheduling work, even if we wanted to. We also have no idea if they push us into overtime or not.
+ * This file fixes that.
+ * The idea is to shim all verb (or verb like, IE user input so Topic, Click, etc) calls with cost tracking and queuing code, which is what's below.
+ * We define a child proc for the actual verb to call, and use macro magic to make any code after a DEFINE_VERB**() line actually live in that child proc.
+ * The only reason this file is so messy and has so many variations is we need to shim verb attribute sets too because they have to be inline
+ * with the verb/proc they actually apply to
+ * Anyway the actual profiling is pretty simple, we're using the ability to shim to also detect and ignore sleeps. At that point it's just a matter of measuring
+ * the usage between the start and end of the verb's call, and boom we have the cost.
+ * There's some nuance here, verbs are tracked by name, if we don't want an execution time to "count" for a given verb
+ * we need to "change" that name. Some places also rename verbs based off context (Topic does this), etc.
+ * We need to be careful to only rename BEFORE checking if we need to queue, doing it after just creates unusable junk data (which is rarely something you want)
+**/
 #define VERB_QUEUE_OR_FIRE(proc_name, call_on, lookup_method, queue_on) \
 	if(caller) { \
 		proc_name(arglist(args)); \
@@ -18,6 +35,7 @@
 		__store_cost.enter_average(); \
 	}
 
+// For weird bespoke cases where we can't just use args in the same way
 #define VERB_QUEUE_OR_FIRE_CUSTOM_ARGS(proc_name, call_on, lookup_method, queue_on, arguments...) \
 	if(caller) { \
 		proc_name(arguments); \
@@ -38,6 +56,7 @@
 		__store_cost.enter_average(); \
 	}
 
+// General case "verb like thing" definition, covervs verbs and also procs (which we can use as verbs sometimes)
 #define DEFINE_VERBLIKE(proc_type, parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, verb_instant, show_in_context_menu, queue_on, verb_args...) \
 ##parent_path/##proc_type/##verb_proc_name(##verb_args) { \
 	set name = ##verb_name; \
@@ -52,6 +71,7 @@
 \
 ##parent_path/proc/__##verb_proc_name(##verb_args)
 
+// These are like this just to like, define common variations. The args to these macros are kind of hard to read, so it's useful to not make people type them all out
 #define DEFINE_VERB(parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, verb_args...) \
 	DEFINE_VERBLIKE(verb, parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, FALSE, TRUE, SSverb_manager, ##verb_args)
 
@@ -79,6 +99,8 @@
 ##parent_path/proc/__##verb_proc_name(##verb_args)
 
 // HHHHH WHY DOES THIS EXIST DOES IT EVEN DO ANYTHING WHAT THE FUCK
+// for "verb like" procs with NO SOURCE. I'm convinced this is pointless but I don't want to look into it
+// you should probly never use this, it's only like this for legacy reasons and should be suspect for removal
 #define DEFINE_PROC_NO_PARENT_VERB(verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, verb_args...) \
 /proc/##verb_proc_name(##verb_args) { \
 	set name = ##verb_name; \
@@ -90,6 +112,7 @@
 \
 /proc/__##verb_proc_name(##verb_args)
 
+// Allows us to shim internal verbs (topic, click, etc)
 #define OVERRIDE_INTERNAL_VERB(parent_path, verb_proc_name, verb_args...) \
 ##parent_path/##verb_proc_name(##verb_args) { \
 	SHOULD_NOT_OVERRIDE(TRUE); \
@@ -98,13 +121,15 @@
 \
 ##parent_path/proc/__##verb_proc_name(##verb_args)
 
+/// Returns true if this verb is being ran as a verb, false if it's being ran by some parent call
 #define VERB_JUST_FIRED(...) (caller.proc == GLOB.active_tracker?.proc_name)
 
+// list keys because this code is decently hot
 #define VERB_LIST_COST 1
 #define VERB_LIST_TIME 2
 /// List of verb path -> list(a running average of its cost, last time it ran)
 GLOBAL_LIST_EMPTY(average_verb_cost)
-/// Should we collect verb costs
+/// Should we collect verb costs into a list. Just in case something explodes
 GLOBAL_VAR_INIT(collect_verb_costs, TRUE)
 /// List of all the "marked nullifiers" (things like "nullified_verb" which mark the average cost of queuing a "thing")
 GLOBAL_LIST_INIT(nullifiying_verblikes, list("nullified_verb", "nullified_click", "nullified_topic", "nullified_act"))
@@ -117,13 +142,19 @@ GLOBAL_LIST_EMPTY(verb_trackers_this_tick)
 /// Verb cost tracker which is currently active
 GLOBAL_DATUM(active_tracker, /datum/verb_cost_tracker)
 
+/// Holder datum that tracks cpu usage/metadata about invoked verbs
 /datum/verb_cost_tracker
-	// How to categorize ourselves when logging
+	/// How to categorize ourselves when logging
 	var/name_to_use
+	/// Name of the proc this is running off
 	var/proc_name
+	/// Usage before the verb runs
 	var/usage_at_start = 0
+	/// Usage after the verb runs
 	var/usage_at_end = 0
+	/// world.time we invoked the verb on
 	var/invoked_on = -1
+	/// world.time we finished running the verb on
 	var/finished_on = -1
 
 /datum/verb_cost_tracker/New(usage_at_start, callee/proc_info)
@@ -138,7 +169,7 @@ GLOBAL_DATUM(active_tracker, /datum/verb_cost_tracker)
 	if(!category)
 		category = name_to_use
 	GLOB.active_tracker = null
-	if(!GLOB.average_verb_cost)
+	if(!GLOB.average_verb_cost || !GLOB.collect_verb_costs)
 		return
 
 	var/list/intel = GLOB.average_verb_cost[name_to_use]

@@ -1,3 +1,4 @@
+/// Keeps GLOB.average_verb_cost to a limited size, killing old data or entries which are redundant (they don't actually save time if queued)
 SUBSYSTEM_DEF(verb_maintinance)
 	name = "Verb Maintienance"
 	flags = SS_NO_INIT
@@ -10,7 +11,7 @@ SUBSYSTEM_DEF(verb_maintinance)
 	var/list/currentrun
 
 /datum/controller/subsystem/verb_maintinance/stat_entry(msg)
-	msg = "Count: [length(GLOB.average_verb_cost)]"
+	msg = "Enabled: [GLOB.collect_verb_costs] | Count: [length(GLOB.average_verb_cost)]"
 	return ..()
 
 /datum/controller/subsystem/verb_maintinance/fire(resumed)
