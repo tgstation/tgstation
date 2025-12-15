@@ -42,6 +42,8 @@
 	var/internal_volume_maximum = 100
 	/// If the blood draining tab should be greyed out
 	var/inject_only = FALSE
+	/// Does this IV drip have quick interactions like quick detachment/ejection on right click?
+	var/secondary_interaction = TRUE
 	/// Typecache of containers we accept.
 	var/static/list/drip_containers = typecacheof(list(
 		/obj/item/reagent_containers/blood,
@@ -276,7 +278,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!ishuman(user))
+	if(!ishuman(user) || !secondary_interaction)
 		return
 	if(attachment)
 		visible_message(span_notice("[attachment.attached_to] is detached from [src]."))

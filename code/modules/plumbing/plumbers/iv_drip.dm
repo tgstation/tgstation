@@ -7,17 +7,15 @@
 	density = TRUE
 	use_internal_storage = TRUE
 	processing_flags = START_PROCESSING_MANUALLY
+	secondary_interaction = FALSE
 
 /obj/machinery/iv_drip/plumbing/Initialize(mapload, bolt, layer)
 	. = ..()
 	AddComponent(/datum/component/plumbing/automated_iv, bolt, layer)
 	AddComponent(/datum/component/simple_rotation)
 
-/obj/machinery/iv_drip/attack_hand_secondary(mob/user, list/modifiers)
-	return FALSE
-
 /obj/machinery/iv_drip/plumbing/click_alt(mob/user)
-	return FALSE
+	return NONE
 
 /obj/machinery/iv_drip/plumbing/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
