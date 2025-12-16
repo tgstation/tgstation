@@ -123,7 +123,7 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	if(modify?.displaying_cpu_debug) // I am lazy and this is a cold path
 		viewer_count -= 1
 		modify.screen -= src
-		modify.screen -= 
+		modify.screen -= graph_display
 		modify.screen -= controls
 		UnregisterSignal(modify, COMSIG_QDELETING)
 		modify?.displaying_cpu_debug = FALSE
