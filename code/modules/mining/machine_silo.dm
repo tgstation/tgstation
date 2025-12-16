@@ -525,6 +525,7 @@
 #undef UNRESTRICT_FAILURE_SOULLESS_MACHINE
 #undef UNRESTRICT_CONFIRMATION
 #undef RESTRICT_CONFIRMATION
+#undef RESTRICT_FAILURE
 
 /**
  * Creates a log entry for depositing/withdrawing from the silo both ingame and in text based log
