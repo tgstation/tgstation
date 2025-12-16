@@ -78,6 +78,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 	/// List of subsystems who ran in the last tick mapped against their cost (only populated when debugging, unused otherwise)
 	var/list/subsystems_to_cost
+	/// List of subsystems who ran in the last tick mapped against their tick allocation (only populated when debugging, unused otherwise)
+	var/list/subsystems_to_allocations
 	/// Whether the Overview UI will update as fast as possible for viewers.
 	var/overview_fast_update = FALSE
 	/// Enables rolling usage averaging
@@ -667,7 +669,9 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 		GLOB.tick_info.mc_start_usage[tick_index] = TICK_USAGE
 		GLOB.tick_info.mc_finished_usage[tick_index] = TICK_USAGE // base state in case of sleep in loop() somehow
 		GLOB.tick_info.last_subsystem_usages = subsystems_to_cost
+		GLOB.tick_info.last_subsystem_allocations = subsystems_to_allocations
 		subsystems_to_cost = list()
+		subsystems_to_allocations = list()
 		var/newdrift = ((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, newdrift))
 		var/starting_tick_usage = TICK_USAGE
@@ -926,6 +930,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 				queue_node.rolling_usage += list(DS2TICKS(world.time), tick_usage)
 			if(GLOB?.cpu_tracker?.display_graph)
 				subsystems_to_cost[queue_node.type] = tick_usage
+				subsystems_to_allocations[queue_node.type] = tick_precentage
 
 			if(queue_node.profiler_focused)
 				world.Profile(PROFILE_STOP)

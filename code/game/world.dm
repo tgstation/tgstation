@@ -366,6 +366,8 @@ GLOBAL_VAR_INIT(spike_cpu, 0)
 	var/list/corrected_ticks = new /list(TICK_INFO_SIZE)
 	/// Subsystems fired in the previous tick, paired with thier usage
 	var/list/last_subsystem_usages = list()
+	/// Subsystems fired in the previous tick, paired with thier tick allocations
+	var/list/last_subsystem_allocations = list()
 	/// tick info index for the LAST tick, so we can fill in data we'd otherwise be missing
 	var/cpu_index = 1
 	/// last world.time refresh_cpu_values was ran

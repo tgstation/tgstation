@@ -549,6 +549,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	var/focused_mc_entry
 	var/atom/movable/screen/graph_part/span_screen/threshold/overtime_line
 	var/atom/movable/screen/graph_part/span_screen/threshold/mc_overtime_line
+	var/atom/movable/screen/graph_part/span_screen/threshold/subsystem_allocation_line
 	var/atom/movable/screen/graph_part/span_screen/threshold/consumption_limit_line
 
 /atom/movable/screen/graph_display/bars/cpu_display/setup()
@@ -556,6 +557,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	overtime_line = place_threshold(100)
 	mc_overtime_line = place_threshold(100)
 	mc_overtime_line.color = "#0035c7"
+	subsystem_allocation_line = place_threshold(100)
+	subsystem_allocation_line.color = "#ff5e00"
 	consumption_limit_line = place_threshold(100)
 	consumption_limit_line.color = "#b600c7"
 
@@ -571,6 +574,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	display_mode = new_display_mode
 	mc_overtime_line.alpha = 0
 	consumption_limit_line.alpha = 0
+	subsystem_allocation_line.alpha = 0
 	bar_type = /atom/movable/screen/graph_part/bar/single_segment
 	switch(display_mode)
 		if(USAGE_DISPLAY_MC)
@@ -612,6 +616,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 			if(!focused_mc_entry)
 				push_value(list(tick_info.mc_usage[last_index], usage_data, null))
 				return
+			var/allocated_time = tick_info.last_subsystem_allocations[focused_mc_entry]
+			if(!isnull(allocated_time))
+				subsystem_allocation_line.set_height(allocated_time)
+
 			var/list/focused_data = list()
 			focused_data[focused_mc_entry] = usage_data[focused_mc_entry] || 0
 			push_value(list(usage_data[focused_mc_entry] || 0, focused_data, focused_mc_entry))
@@ -656,6 +664,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 
 /atom/movable/screen/graph_display/bars/cpu_display/proc/set_focused_mc(focused_mc_entry)
 	src.focused_mc_entry = focused_mc_entry
+	if(!isnull(src.focused_mc_entry) && src.focused_mc_entry != "Internal")
+		subsystem_allocation_line.alpha = 255
+	else
+		subsystem_allocation_line.alpha = 0
 	clear_values()
 
 /atom/movable/screen/graph_display/bars/cpu_display/set_frozen(frozen)
