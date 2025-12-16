@@ -685,7 +685,7 @@
 
 /datum/action/innate/blade_counter/do_ability(mob/living/swordsman, mob/living/cast_on)
 	if(!final_checks(cast_on))
-		return FALSE
+		return TRUE
 	var/obj/item/storage/belt/sheath/used_sheath = target
 	RegisterSignal(swordsman, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(counter_attack))
 	swordsman.Immobilize(1 SECONDS)
@@ -694,6 +694,7 @@
 	addtimer(CALLBACK(src, PROC_REF(relax), swordsman), 1 SECONDS)
 	COOLDOWN_START(used_sheath, full_ability_cooldown, 60 SECONDS)
 	unset_ranged_ability(swordsman)
+	return TRUE
 
 #define COUNTERMULTIPLIER 3
 
