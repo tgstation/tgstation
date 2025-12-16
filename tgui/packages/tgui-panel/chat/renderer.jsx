@@ -206,7 +206,7 @@ class ChatRenderer {
     if (!highlightSettings) {
       return;
     }
-    highlightSettings.map((id) => {
+    highlightSettings.forEach((id) => {
       const setting = highlightSettingById[id];
       const text = setting.highlightText;
       const highlightColor = setting.highlightColor;
@@ -444,7 +444,7 @@ class ChatRenderer {
 
         // Highlight text
         if (!message.avoidHighlighting && this.highlightParsers) {
-          this.highlightParsers.map((parser) => {
+          this.highlightParsers.forEach((parser) => {
             const highlighted = highlightNode(
               node,
               parser.highlightRegex,
