@@ -94,7 +94,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_display)
 	return dash_line
 
 /// Bar graph, displays data as vertical bars trimmed off by an alpha mask that's positioned around to line up right
-/// Displays bars as a scrolling history of data, the oldest bar is lost, and all the older ones shift to the left
+/// Displays bars as a scrolling history of data, the oldest bar is lost, and all the older ones shift to the right
 /atom/movable/screen/graph_display/bars
 	/// The "root atom" of each bar in our pool. ordered first to last
 	var/list/atom/movable/screen/graph_part/bar/bars
