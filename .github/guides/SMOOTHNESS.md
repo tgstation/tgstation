@@ -26,7 +26,7 @@ There's a bunch of different things that can happen which can fuck up this cycle
 
 A series of tubes separates the client from the server, and if the packet of information containing appearance updates gets slowed down in transit then we'll see that as jitter on the client.
 
-There isn't a ton we can actually do about this, because sometimes the internet fucks up. We kind of just have to assume the network connection will be stable.
+There isn't a ton we can actually do about this, because sometimes the internet fucks up. We just have to assume the network connection will be stable.
 
 #### 2. Clientside Overrun
 
