@@ -373,26 +373,26 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 /// MC costs bar, subtype so we can tooltip subsystem costs
 /atom/movable/screen/graph_part/bar/single_segment/mc
 	var/list/subsystem_info = list()
+	var/focused_mc_entry
 
 /atom/movable/screen/graph_part/bar/single_segment/mc/refresh_bar(list/value)
 	subsystem_info = value[2]
+	focused_mc_entry = value[3]
 	return ..(value[1])
 
 /atom/movable/screen/graph_part/bar/single_segment/mc/make_default()
-	refresh_bar(list(0, list()))
+	refresh_bar(list(0, list(), null))
 
 /atom/movable/screen/graph_part/bar/single_segment/mc/get_tooltip_title()
 	return "Subsystem Cost Breakdown"
 
 /atom/movable/screen/graph_part/bar/single_segment/mc/get_tooltip_content()
 	var/list/visual_output = list()
-	var/summed_usage = 0
 	var/misc_usage = 0
 	var/misc_count = 0
 	for(var/subsystem_path in subsystem_info)
 		var/subsystem_usage = subsystem_info[subsystem_path]
-		summed_usage += subsystem_usage
-		if(subsystem_usage >= 1)
+		if(subsystem_usage >= 1 || focused_mc_entry)
 			var/trimmed_path = replacetext("[subsystem_path]", "/datum/controller/subsystem/", "")
 			visual_output += "<b>[trimmed_path]</b> -> ([subsystem_usage]%)"
 		else
@@ -400,7 +400,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 			misc_count += 1
 	if(misc_count)
 		visual_output += "<b>Misc [misc_count]x</b> -> ([misc_usage]%)"
-	visual_output += "<b>Internal</b> -> ([bar_value - summed_usage]%)"
 	return visual_output.Join("<br>")
 
 /// Vertical bar that's meant to display many disconnected values, as floor/celings.
@@ -546,6 +545,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	var/max_displayable_cpu = 130
 	// What is the graph currently displaying?
 	var/display_mode
+	// What MC entry (if any) are we currently focusing on
+	var/focused_mc_entry
 	var/atom/movable/screen/graph_part/span_screen/threshold/overtime_line
 	var/atom/movable/screen/graph_part/span_screen/threshold/mc_overtime_line
 	var/atom/movable/screen/graph_part/span_screen/threshold/consumption_limit_line
@@ -587,6 +588,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 			bar_type = /atom/movable/screen/graph_part/bar/multi_segment/tick
 	setup_bars()
 	set_frozen(FALSE)
+	set_focused_mc(null)
 
 /atom/movable/screen/graph_display/bars/cpu_display/proc/refresh_thresholds()
 	if(frozen)
@@ -597,8 +599,22 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 		if(USAGE_DISPLAY_EARLY_SLEEPERS)
 			push_value(tick_info.mc_start_usage[last_index])
 		if(USAGE_DISPLAY_MC)
-			push_value(list(tick_info.mc_usage[last_index], tick_info.last_subsystem_usages.Copy()))
+			var/list/subsystem_info = tick_info.last_subsystem_usages
+			var/list/usage_data = list()
+			var/total_usage = 0
+			for(var/subsystem_path in subsystem_info)
+				var/subsystem_usage = subsystem_info[subsystem_path]
+				total_usage += subsystem_usage
+				usage_data[subsystem_path] = subsystem_usage
+			usage_data["Internal"] = tick_info.mc_usage[last_index] - total_usage
+
 			mc_overtime_line.set_height(TICK_LIMIT_RUNNING - tick_info.mc_start_usage[last_index])
+			if(!focused_mc_entry)
+				push_value(list(tick_info.mc_usage[last_index], usage_data, null))
+				return
+			var/list/focused_data = list()
+			focused_data[focused_mc_entry] = usage_data[focused_mc_entry] || 0
+			push_value(list(usage_data[focused_mc_entry] || 0, focused_data, focused_mc_entry))
 		if(USAGE_DISPLAY_LATE_SLEEPERS)
 			push_value(tick_info.post_mc_usage[last_index])
 		if(USAGE_DISPLAY_SLEEPERS)
@@ -637,6 +653,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	consumption_limit_line.recalculate_position()
 	for(var/atom/movable/screen/graph_part/bar/displayed_bar as anything in bars)
 		displayed_bar.update_appearance()
+
+/atom/movable/screen/graph_display/bars/cpu_display/proc/set_focused_mc(focused_mc_entry)
+	src.focused_mc_entry = focused_mc_entry
+	clear_values()
 
 /atom/movable/screen/graph_display/bars/cpu_display/set_frozen(frozen)
 	. = ..()

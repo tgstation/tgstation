@@ -58,6 +58,8 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	var/list/last_verb_ran = tick_info.last_verb_ran
 	var/last_index = TICK_INFO_TICK2INDEX(DS2TICKS(world.time) - 1)
 	var/full_time = TICKS2DS(TICK_INFO_SIZE) / 10 // convert from ticks to seconds
+	var/focused_mc_entry = "[graph_display.focused_mc_entry]" || "None"
+	focused_mc_entry = replacetext(focused_mc_entry, "/datum/controller/subsystem/", "")
 
 	controls.maptext = "<div style=\"background-color:#FFFFFF; color:#000000;\">\
 		Toggles: \
@@ -70,6 +72,7 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 			Displaying \[<a href='byond://?src=[REF(src)];act=set_graph_mode'>[graph_display.display_mode]</a>\] \
 			<a href='byond://?src=[REF(src)];act=freeze_graph'>[graph_display.frozen ? "Thaw" : "Freeze"]</a> \
 			Max Displayable Value \[<a href='byond://?src=[REF(src)];act=set_graph_scale'>[graph_display.max_displayable_cpu]</a>\]\
+			[graph_display.display_mode == USAGE_DISPLAY_MC ? " Focused MC Entry \[<a href='byond://?src=[REF(src)];act=focus_mc'>[focused_mc_entry]</a>\]" : ""]\
 	</div>"
 	maptext = "<div style=\"background-color:#FFFFFF; color:#000000;\">\
 		Tick: [FORMAT_CPU(world.time / world.tick_lag)]\n\
@@ -192,6 +195,22 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 			return TRUE
 		if("freeze_graph")
 			graph_display.set_frozen(!graph_display.frozen)
+			return TRUE
+		if("focus_mc")
+			var/list/mc_options = list()
+			mc_options += "None in particular"
+			mc_options += "Internal"
+			for(var/datum/controller/subsystem/subsystem_path as anything in sortTim(subtypesof(/datum/controller/subsystem), GLOBAL_PROC_REF(cmp_text_asc)))
+				if(subsystem_path::flags & SS_NO_FIRE)
+					continue
+				mc_options += subsystem_path
+			var/focused_entry = tgui_input_list(usr, "What part of the MC do you want to focus on?", "Focused Entry?", mc_options)
+			if(!(focused_entry in mc_options))
+				return TRUE
+			if(focused_entry == "None in particular")
+				graph_display.set_focused_mc(null)
+				return TRUE
+			graph_display.set_focused_mc(focused_entry)
 			return TRUE
 		if("set_corrective_target")
 			var/target_cpu = tgui_input_number(usr, "What should we attempt to correct up to?", "Correct CPU", max_value = INFINITY, min_value = 0, default = GLOB.corrective_cpu_target) || 0
