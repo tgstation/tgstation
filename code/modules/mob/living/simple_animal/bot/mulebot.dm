@@ -93,9 +93,11 @@
 	if(gone == load)
 		unload(0)
 	if(gone == cell)
-		turn_off()
+		if(!QDELING(src))
+			turn_off()
 		cell = null
-		diag_hud_set_mulebotcell()
+		if(!QDELING(src))
+			diag_hud_set_mulebotcell()
 
 /mob/living/simple_animal/bot/mulebot/examine(mob/user)
 	. = ..()

@@ -1159,6 +1159,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
 		hud.remove_atom_from_hud(src)
 
+	if(QDELING(src))
+		stack_trace("Attempted to set_path on a deleting bot!")
+		return
+
 	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
 	LAZYCLEARLIST(path_images)
 	if(length(newpath))
