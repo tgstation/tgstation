@@ -19,6 +19,7 @@ SUBSYSTEM_DEF(greyscale_previews)
 	ExportMapPreviews()
 	return SS_INIT_SUCCESS
 
+/// Sets up the list of types to process for organizing icons into their respective .dmi.
 /datum/controller/subsystem/greyscale_previews/proc/build_type_category_map(list/types_that_get_their_own_file)
 	var/list/type_to_filename = list()
 
@@ -32,6 +33,7 @@ SUBSYSTEM_DEF(greyscale_previews)
 
 	return type_to_filename
 
+/// Builds a worklist of all the item types to try making a GAGS preview icon for.
 /datum/controller/subsystem/greyscale_previews/proc/build_preview_worklists(list/types_that_get_their_own_file)
 	var/list/type_to_filename = build_type_category_map(types_that_get_their_own_file)
 
@@ -82,6 +84,7 @@ SUBSYSTEM_DEF(greyscale_previews)
 
 	return worklists
 
+/// Goes through all the valid GAGS item types in subtypes that fall under the types specified in types_that_get_their_own_file, creating a .dmi for each.
 /datum/controller/subsystem/greyscale_previews/proc/ExportMapPreviews()
 	// Put subtypes before their parent or the parent file will take all the generated icons
 	var/list/types_that_get_their_own_file = list(
