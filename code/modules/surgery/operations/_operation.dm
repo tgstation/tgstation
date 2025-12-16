@@ -1236,8 +1236,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	. = ..()
 	if(required_bodytype & BODYTYPE_ROBOTIC)
 		. += "the limb must not be organic"
-	// Every limb (currently) that isn't organic is cybernetic, so we keep the messages simple here
-	else if(required_bodytype)
+	else if(required_bodytype & BODYTYPE_ORGANIC)
 		. += "the limb must not be cybernetic"
 
 /datum/surgery_operation/limb/get_operation_target(mob/living/patient, body_zone)

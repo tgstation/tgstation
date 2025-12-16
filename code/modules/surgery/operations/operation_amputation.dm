@@ -26,7 +26,7 @@
 	return TOOL_SAW
 
 /datum/surgery_operation/limb/amputate/get_default_radial_image()
-	return image(/obj/item/circular_saw)
+	return image(/obj/item/shears)
 
 /datum/surgery_operation/limb/amputate/state_check(obj/item/bodypart/limb)
 	if(limb.body_zone == BODY_ZONE_CHEST)
@@ -62,6 +62,7 @@
 
 /datum/surgery_operation/limb/amputate/mechanic
 	name = "disassemble limb"
+	rnd_name = "Dissassembly (Amputation)"
 	required_bodytype = BODYTYPE_ROBOTIC
 	operation_flags = parent_type::operation_flags | OPERATION_MECHANIC
 	implements = list(
@@ -76,12 +77,24 @@
 	preop_sound = 'sound/machines/airlock/doorclick.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 
+/datum/surgery_operation/limb/amputate/mechanic/state_check(obj/item/bodypart/limb)
+	// added requirement for bone sawed to prevent accidental head removals.
+	return ..() && (limb.body_zone != BODY_ZONE_HEAD || LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_SAWED))
+
+/datum/surgery_operation/limb/amputate/mechanic/any_required_strings()
+	return ..() + list(
+		"if operating on the head, the bone MUST be sawed",
+		"otherwise, the state of the bone doesn't matter",
+	)
+
 /datum/surgery_operation/limb/amputate/mechanic/get_recommended_tool()
 	return "[TOOL_WRENCH] / [TOOL_SAW]"
 
 /datum/surgery_operation/limb/amputate/pegleg
-	name = "detach peg leg"
+	name = "detach wooden limb"
+	rnd_name = "Detach Wooden Limb (Amputation)"
 	required_bodytype = BODYTYPE_PEG
+	operation_flags = parent_type::operation_flags | OPERATION_MECHANIC
 	implements = list(
 		TOOL_SAW = 1,
 		/obj/item/shovel/serrated = 1,
@@ -96,3 +109,7 @@
 	)
 	success_sound = 'sound/items/handling/materials/wood_drop.ogg'
 	all_surgery_states_required = NONE
+
+/datum/surgery_operation/limb/amputate/pegleg/all_required_strings()
+	. = ..()
+	. += "the limb must be wooden"
