@@ -88,8 +88,8 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 		Correction Cost: [FORMAT_CPU(GLOB.corrective_cpu_cost)]\n\
 		Frame Behind CPU: [FORMAT_CPU(cpu_values[last_index])]\n\
 		Frame Behind Sleep: [FORMAT_CPU(mc_start_usage[last_index])]\n\
-		Frame Behind MC: [FORMAT_CPU(min(mc_usage))]\n\
-		Frame Behind Post MC: [FORMAT_CPU(min(post_mc_usage))]\n\
+		Frame Behind MC: [FORMAT_CPU(mc_usage)]\n\
+		Frame Behind Post MC: [FORMAT_CPU(post_mc_usage)]\n\
 		Frame Behind Pre Tick: [FORMAT_CPU(pre_tick_cpu_usage[last_index])]\n\
 		Frame Behind Tick: [FORMAT_CPU(tick_cpu_usage[last_index])]\n\
 		Frame Behind Maptick: [FORMAT_CPU(maptick_usage[last_index])]\n\
