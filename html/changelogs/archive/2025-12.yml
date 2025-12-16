@@ -505,3 +505,11 @@
       inside the name anywhere the map reader would ignore this value when a map was
       loaded and use the initial value instead. This was due to a faulty regex pattern
       that did not properly match variable names.
+2025-12-16:
+  SmArtKar:
+  - bugfix: Fixed illusions not fleeing their targets and runtiming in place
+  alien3301:
+  - bugfix: Using the sabre parry prevents you from doing other actions in the same
+      click
+  san7890:
+  - server: The ready/not ready states of new players are logged when a shift starts.
