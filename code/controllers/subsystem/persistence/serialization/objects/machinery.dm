@@ -144,3 +144,16 @@
 		.[NAMEOF(src, storage_type)] = storage.type
 	return .
 
+/obj/machinery/power/portagrav/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, on)
+	. += NAMEOF(src, wire_mode)
+	. += NAMEOF(src, grav_strength)
+	. += NAMEOF(src, range)
+	return .
+
+/obj/machinery/power/portagrav/PersistentInitialize()
+	. = ..()
+	if(on)
+		turn_on()
+	return .
