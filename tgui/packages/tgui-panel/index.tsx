@@ -17,6 +17,11 @@ import { listeners } from './events/listeners';
 import { setupPanelFocusHacks } from './panelFocus';
 
 const bus = new EventBus(listeners);
+const ctx = import.meta.webpackContext('./', {
+  recursive: true,
+  regExp: /\.[jt]sx?$/,
+});
+const keys = ctx.keys().filter((k) => !k.includes('node_modules/'));
 const root = createRoot(document.getElementById('react-root')!);
 
 function render(component: React.ReactElement) {
@@ -58,7 +63,7 @@ function setupApp() {
   if (import.meta.webpackHot) {
     setupHotReloading();
 
-    import.meta.webpackHot.accept(['./Notifications', './Panel'], () => {
+    import.meta.webpackHot.accept(keys, () => {
       render(<App />);
     });
   }
