@@ -38,7 +38,7 @@ describe('captureExternalLinks', () => {
       parentElement: document.body,
     };
     const byond = { sendMessage: mock() };
-    // @ts-ignore
+    // @ts-expect-error
     global.Byond = byond;
 
     const evt = { target: externalLink, preventDefault: mock() };
@@ -58,7 +58,7 @@ describe('captureExternalLinks', () => {
       parentElement: document.body,
     };
     const byond = { sendMessage: mock() };
-    // @ts-ignore
+    // @ts-expect-error
     global.Byond = byond;
 
     const evt = { target: byondLink, preventDefault: mock() };
@@ -75,7 +75,7 @@ describe('captureExternalLinks', () => {
       parentElement: document.body,
     };
     const byond = { sendMessage: mock() };
-    // @ts-ignore
+    // @ts-expect-error
     global.Byond = byond;
 
     const evt = { target: wwwLink, preventDefault: mock() };

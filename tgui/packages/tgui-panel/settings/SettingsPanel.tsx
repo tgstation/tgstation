@@ -5,7 +5,7 @@
  */
 
 import { Section, Stack, Tabs } from 'tgui-core/components';
-import { ChatPageSettings } from '../chat';
+import { ChatPageSettings } from '../chat/ChatPageSettings';
 import { SETTINGS_TABS } from './constants';
 import { SettingsGeneral } from './SettingsGeneral';
 import { SettingsStatPanel } from './SettingsStatPanel';

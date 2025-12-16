@@ -1,0 +1,47 @@
+import { store } from '../events/store';
+import { lastPingedAtAtom } from './atoms';
+import { pingSuccess, pings, sendPing } from './helpers';
+
+let initialized = false;
+
+type SoftPingPayload = {
+  afk: boolean;
+};
+
+/**
+ * Soft ping from the server.
+ * It's intended to send periodic server-side metadata about the client,
+ * e.g. its AFK status.
+ */
+export function pingSoft(payload: SoftPingPayload): void {
+  const { afk } = payload;
+  if (!initialized) {
+    initialized = true;
+  }
+
+  // On each soft ping where client is not flagged as afk,
+  // initiate a new ping.
+  if (afk) return;
+
+  sendPing();
+  store.set(lastPingedAtAtom, Date.now());
+}
+
+type ReplyPingPayload = {
+  index: number;
+};
+
+export function pingReply(payload: ReplyPingPayload) {
+  const { index } = payload;
+  if (!initialized) {
+    initialized = true;
+  }
+
+  const ping = pings[index];
+  if (!ping) return; // This ping was already marked as failed due to timeout.
+
+  pings[index] = null;
+  const roundtrip = (Date.now() - ping.sentAt) * 0.5;
+
+  pingSuccess(roundtrip);
+}

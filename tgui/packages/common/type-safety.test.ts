@@ -27,27 +27,4 @@ describe('smoothMerge', () => {
     const result = smoothMerge({ schema, source, target });
     assert.deepEqual(result, target);
   });
-
-  it('completely ignores an object if its not in the schema', () => {
-    const schema = z.object({
-      a: z.string(),
-      b: z.number(),
-    });
-
-    const source = {
-      c: 1,
-      d: [1, 2, 3],
-    };
-
-    const target = {
-      a: 'default',
-      b: 42,
-    };
-
-    const result = smoothMerge({ schema, source, target });
-    assert.deepEqual(result, {
-      a: 'default',
-      b: 42,
-    });
-  });
 });

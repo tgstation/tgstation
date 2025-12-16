@@ -7,7 +7,7 @@
 /**
  * Prevents baby jailing the user when he clicks an external link.
  */
-export const captureExternalLinks = () => {
+export function captureExternalLinks(): void {
   // Subscribe to all document clicks
   document.addEventListener('click', (evt: MouseEvent) => {
     let target = evt.target as HTMLElement;
@@ -43,4 +43,4 @@ export const captureExternalLinks = () => {
       url,
     });
   });
-};
+}

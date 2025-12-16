@@ -1,11 +1,13 @@
-import { useDispatch } from 'tgui/backend';
-import type { Page } from '../chat/types';
+import { omit, pick } from 'es-toolkit';
+import { chatPagesRecordAtom } from '../chat/atom';
+import { importChatState } from '../chat/helpers';
 import { store } from '../events/store';
-import { importSettings } from './actions';
 import { storedSettingsAtom } from './atoms';
 import { startSettingsMigration } from './migration';
+import type { ExportedSettings } from './types';
 
-export function exportChatSettings(pages: Record<string, Page>): void {
+export function exportChatSettings(): void {
+  const chatPages = store.get(chatPagesRecordAtom);
   const settings = store.get(storedSettingsAtom);
 
   const opts: SaveFilePickerOptions = {
@@ -19,9 +21,7 @@ export function exportChatSettings(pages: Record<string, Page>): void {
     ],
   };
 
-  const pagesEntry = { chatPages: pages };
-
-  const exportObject = Object.assign(settings, pagesEntry);
+  const exportObject = { ...settings, chatPages };
 
   window
     .showSaveFilePicker(opts)
@@ -40,19 +40,21 @@ export function exportChatSettings(pages: Record<string, Page>): void {
 }
 
 export function importChatSettings(settings: string | string[]): void {
-  const dispatch = useDispatch();
-  if (Array.isArray(settings)) {
+  if (Array.isArray(settings)) return;
+
+  let ourImport: ExportedSettings;
+  try {
+    ourImport = JSON.parse(settings);
+  } catch (err) {
+    console.error(err);
     return;
   }
-  const ourImport = JSON.parse(settings);
-  if (!ourImport?.version) return;
 
-  let pageRecord: Record<string, Page>[] = [];
-  if ('chatPages' in ourImport) {
-    pageRecord = ourImport.chatPages;
-    delete ourImport.chatPages;
+  const chatPart = pick(ourImport, ['chatPages']);
+  const settingsPart = omit(ourImport, ['chatPages']);
+
+  if (chatPart) {
+    importChatState(chatPart as any);
   }
-
-  dispatch(importSettings(ourImport, pageRecord));
-  startSettingsMigration(ourImport);
+  startSettingsMigration(settingsPart as any);
 }

@@ -15,17 +15,22 @@ import { vecLength, vecSubtract } from 'tgui-core/vector';
 // text you can select with the mouse.
 const MIN_SELECTION_DISTANCE = 10;
 
-const deferredFocusMap = () => setTimeout(() => focusMap());
+function deferredFocusMap(): void {
+  setTimeout(focusMap);
+}
 
-export const setupPanelFocusHacks = () => {
+export function setupPanelFocusHacks(): void {
   let focusStolen = false;
   let clickStartPos: number[] | null = null;
+
   window.addEventListener('focusin', (e) => {
     focusStolen = canStealFocus(e.target as HTMLElement);
   });
+
   window.addEventListener('mousedown', (e) => {
     clickStartPos = [e.screenX, e.screenY];
   });
+
   window.addEventListener('mouseup', (e) => {
     if (clickStartPos) {
       const clickEndPos = [e.screenX, e.screenY];
@@ -41,10 +46,11 @@ export const setupPanelFocusHacks = () => {
       deferredFocusMap();
     }
   });
+
   globalEvents.on('keydown', (key) => {
     if (key.isModifierKey()) {
       return;
     }
     deferredFocusMap();
   });
-};
+}

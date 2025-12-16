@@ -8,10 +8,9 @@
 		"jotai": "^2.16.0",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
-		"tgui": "workspace:*",
 		"tgui-core": "^5.5.10",
 		"tgui-dev-server": "workspace:*",
-		"zod": "^4.1.13"
+		"zod": "^4.2.0"
 	},
 	"private": true
 }
