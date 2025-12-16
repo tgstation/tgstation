@@ -169,10 +169,10 @@ SUBSYSTEM_DEF(cameras)
 				continue
 			if(choice == REMOVE_CAMERA)
 				// Remove the camera.
-				chunk.cameras[chunk_turf.z] -= center_or_camera
+				chunk.cameras["[chunk_turf.z]"] -= center_or_camera
 			if(choice == ADD_CAMERA)
 				// You can't have the same camera in the list twice.
-				chunk.cameras[chunk_turf.z] |= center_or_camera
+				chunk.cameras["[chunk_turf.z]"] |= center_or_camera
 			chunk.queue_update(center_or_camera, update_delay_buffer)
 
 /// A faster, turf only version of [/datum/controller/subsystem/cameras/proc/major_chunk_change]

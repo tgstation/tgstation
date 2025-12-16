@@ -119,7 +119,7 @@
  * typepath - the type path of the component to be printed
  * user_data - data in the form rendered by ID_DATA(user), for print logging, see the proc on SSid_access
 */
-/obj/machinery/component_printer/proc/print_component(typepath, alist/user_data)
+/obj/machinery/component_printer/proc/print_component(typepath, list/user_data)
 	var/design_id = current_unlocked_designs[typepath]
 
 	var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
@@ -139,7 +139,7 @@
 	. = ..()
 	if (.)
 		return
-	var/alist/user_data = ID_DATA(usr)
+	var/list/user_data = ID_DATA(usr)
 
 	switch (action)
 		if ("print")
@@ -390,7 +390,7 @@
 	. = ..()
 	if (.)
 		return
-	var/alist/user_data = ID_DATA(usr)
+	var/list/user_data = ID_DATA(usr)
 
 	switch (action)
 		if ("print")

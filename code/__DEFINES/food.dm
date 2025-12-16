@@ -121,31 +121,31 @@ DEFINE_BITFIELD(foodtypes, list(
 #define FOOD_COMPLEXITY_5 5
 
 /// Labels for food quality
-GLOBAL_ALIST_INIT(food_quality_description, alist(
-	FOOD_QUALITY_NORMAL = "okay",
-	FOOD_QUALITY_NICE = "nice",
-	FOOD_QUALITY_GOOD = "good",
-	FOOD_QUALITY_VERYGOOD = "very good",
-	FOOD_QUALITY_FANTASTIC = "fantastic",
-	FOOD_QUALITY_AMAZING = "amazing",
-	FOOD_QUALITY_TOP = "godlike",
+GLOBAL_LIST_INIT(food_quality_description, list(
+	/*FOOD_QUALITY_NORMAL = */"okay",
+	/*FOOD_QUALITY_NICE = */"nice",
+	/*FOOD_QUALITY_GOOD = */"good",
+	/*FOOD_QUALITY_VERYGOOD = */"very good",
+	/*FOOD_QUALITY_FANTASTIC = */"fantastic",
+	/*FOOD_QUALITY_AMAZING = */"amazing",
+	/*FOOD_QUALITY_TOP = */"godlike",
 ))
 
 /// Weighted lists of crafted food buffs randomly given according to crafting_complexity unless the food has a specific buff
-GLOBAL_ALIST_INIT(food_buffs, alist(
-	FOOD_COMPLEXITY_1 = list(
+GLOBAL_LIST_INIT(food_buffs, list(
+	/*FOOD_COMPLEXITY_1 = */list(
 		/datum/status_effect/food/haste = 1,
 	),
-	FOOD_COMPLEXITY_2 = list(
+	/*FOOD_COMPLEXITY_2 = */list(
 		/datum/status_effect/food/haste = 1,
 	),
-	FOOD_COMPLEXITY_3 = list(
+	/*FOOD_COMPLEXITY_3 = */list(
 		/datum/status_effect/food/haste = 1,
 	),
-	FOOD_COMPLEXITY_4 = list(
+	/*FOOD_COMPLEXITY_4 = */list(
 		/datum/status_effect/food/haste = 1,
 	),
-	FOOD_COMPLEXITY_5 = list(
+	/*FOOD_COMPLEXITY_5 = */list(
 		/datum/status_effect/food/haste = 1,
 	),
 ))

@@ -171,7 +171,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	var/list/obj/machinery/camera/visible = list()
 	for (var/datum/camerachunk/chunk as anything in visibleCameraChunks)
 		for (var/z_key in chunk.cameras)
-			for(var/obj/machinery/camera/camera as anything in chunk.cameras[z_key])
+			for(var/obj/machinery/camera/camera as anything in chunk.cameras["[z_key]"])
 				if (!camera.can_use() || (get_dist(camera, src) > telegraph_range))
 					continue
 				visible |= camera

@@ -26,11 +26,11 @@
 	midround_type = HEAVY_MIDROUND
 	false_alarm_able = TRUE
 	ruleset_flags = RULESET_INVADER
-	weight = alist(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 0,
-		DYNAMIC_TIER_MEDIUMHIGH = 1,
-		DYNAMIC_TIER_HIGH = 2,
+	weight = list(
+		/*DYNAMIC_TIER_LOW = */0,
+		/*DYNAMIC_TIER_LOWMEDIUM = */0,
+		/*DYNAMIC_TIER_MEDIUMHIGH = */1,
+		/*DYNAMIC_TIER_HIGH = */2,
 	)
 	min_pop = 30
 	min_antag_cap = 0
@@ -271,11 +271,11 @@
 	pref_flag = ROLE_WIZARD_MIDROUND
 	jobban_flag = ROLE_WIZARD
 	ruleset_flags = RULESET_INVADER|RULESET_HIGH_IMPACT
-	weight = alist(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 0,
-		DYNAMIC_TIER_MEDIUMHIGH = 1,
-		DYNAMIC_TIER_HIGH = 2,
+	weight = list(
+		/*DYNAMIC_TIER_LOW = */0,
+		/*DYNAMIC_TIER_LOWMEDIUM = */0,
+		/*DYNAMIC_TIER_MEDIUMHIGH = */1,
+		/*DYNAMIC_TIER_HIGH = */2,
 	)
 	min_pop = 30
 	max_antag_cap = 1
@@ -294,11 +294,11 @@
 	pref_flag = ROLE_OPERATIVE_MIDROUND
 	jobban_flag = ROLE_OPERATIVE
 	ruleset_flags = RULESET_INVADER|RULESET_HIGH_IMPACT
-	weight = alist(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 1,
-		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 3,
+	weight = list(
+		/*DYNAMIC_TIER_LOW = */0,
+		/*DYNAMIC_TIER_LOWMEDIUM = */1,
+		/*DYNAMIC_TIER_MEDIUMHIGH = */3,
+		/*DYNAMIC_TIER_HIGH = */3,
 	)
 	min_pop = 30
 	min_antag_cap = list("denominator" = 18, "offset" = 1)
@@ -378,11 +378,11 @@
 	false_alarm_able = TRUE
 	pref_flag = ROLE_BLOB
 	ruleset_flags = RULESET_INVADER
-	weight = alist(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 1,
-		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 3,
+	weight = list(
+		/*DYNAMIC_TIER_LOW = */0,
+		/*DYNAMIC_TIER_LOWMEDIUM = */1,
+		/*DYNAMIC_TIER_MEDIUMHIGH = */3,
+		/*DYNAMIC_TIER_HIGH = */3,
 	)
 	min_pop = 30
 	max_antag_cap = 1
@@ -418,11 +418,11 @@
 	false_alarm_able = TRUE
 	pref_flag = ROLE_ALIEN
 	ruleset_flags = RULESET_INVADER
-	weight = alist(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 1,
-		DYNAMIC_TIER_MEDIUMHIGH = 5,
-		DYNAMIC_TIER_HIGH = 5,
+	weight = list(
+		/*DYNAMIC_TIER_LOW = */0,
+		/*DYNAMIC_TIER_LOWMEDIUM = */1,
+		/*DYNAMIC_TIER_MEDIUMHIGH = */5,
+		/*DYNAMIC_TIER_HIGH = */5,
 	)
 	min_pop = 30
 	max_antag_cap = 1
@@ -505,11 +505,11 @@
 	false_alarm_able = TRUE
 	pref_flag = ROLE_SPACE_DRAGON
 	ruleset_flags = RULESET_INVADER
-	weight = alist(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 3,
-		DYNAMIC_TIER_MEDIUMHIGH = 5,
-		DYNAMIC_TIER_HIGH = 5,
+	weight = list(
+		/*DYNAMIC_TIER_LOW = */0,
+		/*DYNAMIC_TIER_LOWMEDIUM = */3,
+		/*DYNAMIC_TIER_MEDIUMHIGH = */5,
+		/*DYNAMIC_TIER_HIGH = */5,
 	)
 	min_pop = 30
 	max_antag_cap = 1
@@ -575,11 +575,11 @@
 	midround_type = HEAVY_MIDROUND
 	pref_flag = ROLE_NINJA
 	ruleset_flags = RULESET_INVADER
-	weight = alist(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 0,
-		DYNAMIC_TIER_MEDIUMHIGH = 1,
-		DYNAMIC_TIER_HIGH = 2,
+	weight = list(
+		/*DYNAMIC_TIER_LOW = */0,
+		/*DYNAMIC_TIER_LOWMEDIUM = */0,
+		/*DYNAMIC_TIER_MEDIUMHIGH = */1,
+		/*DYNAMIC_TIER_HIGH = */2,
 	)
 	min_pop = 30
 	max_antag_cap = 1
@@ -678,11 +678,11 @@
 	min_antag_cap = 2
 	max_antag_cap = 3
 	repeatable_weight_decrease = 4
-	weight = alist(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 3,
-		DYNAMIC_TIER_MEDIUMHIGH = 4,
-		DYNAMIC_TIER_HIGH = 5,
+	weight = list(
+		/*DYNAMIC_TIER_LOW = */0,
+		/*DYNAMIC_TIER_LOWMEDIUM = */3,
+		/*DYNAMIC_TIER_MEDIUMHIGH = */4,
+		/*DYNAMIC_TIER_HIGH = */5,
 	)
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone
@@ -1104,11 +1104,11 @@
 	max_antag_cap = 4
 	repeatable_weight_decrease = 8
 	blacklisted_roles = list()
-	weight = alist(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 3,
-		DYNAMIC_TIER_MEDIUMHIGH = 8,
-		DYNAMIC_TIER_HIGH = 10,
+	weight = list(
+		/*DYNAMIC_TIER_LOW = */0,
+		/*DYNAMIC_TIER_LOWMEDIUM = */3,
+		/*DYNAMIC_TIER_MEDIUMHIGH = */8,
+		/*DYNAMIC_TIER_HIGH = */10,
 	)
 
 /datum/dynamic_ruleset/midround/from_living/malf_ai
@@ -1119,11 +1119,11 @@
 	pref_flag = ROLE_MALF_MIDROUND
 	jobban_flag = ROLE_MALF
 	ruleset_flags = RULESET_HIGH_IMPACT
-	weight = alist(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 1,
-		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 3,
+	weight = list(
+		/*DYNAMIC_TIER_LOW = */0,
+		/*DYNAMIC_TIER_LOWMEDIUM = */1,
+		/*DYNAMIC_TIER_MEDIUMHIGH = */3,
+		/*DYNAMIC_TIER_HIGH = */3,
 	)
 	min_pop = 30
 	repeatable = FALSE
@@ -1147,11 +1147,11 @@
 	midround_type = HEAVY_MIDROUND
 	pref_flag = ROLE_BLOB_INFECTION
 	jobban_flag = ROLE_BLOB
-	weight = alist(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 1,
-		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 3,
+	weight = list(
+		/*DYNAMIC_TIER_LOW = */0,
+		/*DYNAMIC_TIER_LOWMEDIUM = */1,
+		/*DYNAMIC_TIER_MEDIUMHIGH = */3,
+		/*DYNAMIC_TIER_HIGH = */3,
 	)
 	min_pop = 30
 	repeatable_weight_decrease = 3
@@ -1171,11 +1171,11 @@
 	midround_type = LIGHT_MIDROUND
 	pref_flag = ROLE_OBSESSED
 	blacklisted_roles = list()
-	weight = alist(
-		DYNAMIC_TIER_LOW = 5,
-		DYNAMIC_TIER_LOWMEDIUM = 5,
-		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 1,
+	weight = list(
+		/*DYNAMIC_TIER_LOW = */5,
+		/*DYNAMIC_TIER_LOWMEDIUM = */5,
+		/*DYNAMIC_TIER_MEDIUMHIGH = */3,
+		/*DYNAMIC_TIER_HIGH = */1,
 	)
 	min_pop = 5
 

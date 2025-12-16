@@ -387,7 +387,7 @@
 		material_cost_coefficient,
 		charge_per_item,
 		turf/target,
-		alist/user_data)
+		list/user_data)
 	PROTECTED_PROC(TRUE)
 
 	if(!items_remaining) // how

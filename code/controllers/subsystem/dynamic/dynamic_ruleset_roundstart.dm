@@ -49,11 +49,11 @@
 	pref_flag = ROLE_MALF
 	preview_antag_datum = /datum/antagonist/malf_ai
 	ruleset_flags = RULESET_HIGH_IMPACT
-	weight = alist(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 1,
-		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 3,
+	weight = list(
+		/*DYNAMIC_TIER_LOW = */0,
+		/*DYNAMIC_TIER_LOWMEDIUM = */1,
+		/*DYNAMIC_TIER_MEDIUMHIGH = */3,
+		/*DYNAMIC_TIER_HIGH = */3,
 	)
 	min_pop = 30
 	max_antag_cap = 1
@@ -116,11 +116,11 @@
 	preview_antag_datum = /datum/antagonist/wizard
 	pref_flag = ROLE_WIZARD
 	ruleset_flags = RULESET_INVADER|RULESET_HIGH_IMPACT
-	weight = alist(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 0,
-		DYNAMIC_TIER_MEDIUMHIGH = 1,
-		DYNAMIC_TIER_HIGH = 2,
+	weight = list(
+		/*DYNAMIC_TIER_LOW = */0,
+		/*DYNAMIC_TIER_LOWMEDIUM = */0,
+		/*DYNAMIC_TIER_MEDIUMHIGH = */1,
+		/*DYNAMIC_TIER_HIGH = */2,
 	)
 	max_antag_cap = 1
 	min_pop = 30
@@ -147,11 +147,11 @@
 	preview_antag_datum = /datum/antagonist/cult
 	pref_flag = ROLE_CULTIST
 	ruleset_flags = RULESET_HIGH_IMPACT
-	weight = alist(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 1,
-		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 3,
+	weight = list(
+		/*DYNAMIC_TIER_LOW = */0,
+		/*DYNAMIC_TIER_LOWMEDIUM = */1,
+		/*DYNAMIC_TIER_MEDIUMHIGH = */3,
+		/*DYNAMIC_TIER_HIGH = */3,
 	)
 	min_pop = 30
 	blacklisted_roles = list(
@@ -208,11 +208,11 @@
 	preview_antag_datum = /datum/antagonist/nukeop
 	pref_flag = ROLE_OPERATIVE
 	ruleset_flags = RULESET_INVADER|RULESET_HIGH_IMPACT
-	weight = alist(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 1,
-		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 3,
+	weight = list(
+		/*DYNAMIC_TIER_LOW = */0,
+		/*DYNAMIC_TIER_LOWMEDIUM = */1,
+		/*DYNAMIC_TIER_MEDIUMHIGH = */3,
+		/*DYNAMIC_TIER_HIGH = */3,
 	)
 	min_pop = 30
 	min_antag_cap = list("denominator" = 18, "offset" = 1)
@@ -292,11 +292,11 @@
 	preview_antag_datum = /datum/antagonist/rev/head
 	pref_flag = ROLE_REV_HEAD
 	ruleset_flags = RULESET_HIGH_IMPACT
-	weight = alist(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 1,
-		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 3,
+	weight = list(
+		/*DYNAMIC_TIER_LOW = */0,
+		/*DYNAMIC_TIER_LOWMEDIUM = */1,
+		/*DYNAMIC_TIER_MEDIUMHIGH = */3,
+		/*DYNAMIC_TIER_HIGH = */3,
 	)
 	min_pop = 30
 	min_antag_cap = 1
@@ -367,11 +367,11 @@
 	config_tag = "Roundstart Spies"
 	preview_antag_datum = /datum/antagonist/spy
 	pref_flag = ROLE_SPY
-	weight = alist(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 1,
-		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 3,
+	weight = list(
+		/*DYNAMIC_TIER_LOW = */0,
+		/*DYNAMIC_TIER_LOWMEDIUM = */1,
+		/*DYNAMIC_TIER_MEDIUMHIGH = */3,
+		/*DYNAMIC_TIER_HIGH = */3,
 	)
 	min_pop = 10
 	min_antag_cap = list("denominator" = 20, "offset" = 1)

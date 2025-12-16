@@ -541,9 +541,9 @@ SUBSYSTEM_DEF(id_access)
 /datum/controller/subsystem/id_access/proc/__in_character_record_id_information(
 	atom/movable/target_of_record,
 	bypass_chameleon = FALSE
-	) as /alist
+	) as /list
 
-	var/alist/returned_record = alist(
+	var/list/returned_record = list(
 		"name" = null,
 		"age" = null,
 		"assignment" = null,

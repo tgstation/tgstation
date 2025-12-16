@@ -1373,7 +1373,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 /// Returns the (isolated) security HUD icon for the given job.
 /proc/get_job_hud_icon(datum/job/job) as /icon
-	var/static/alist/icon_cache = alist()
+	var/static/list/icon_cache = list()
 	if(isnull(job))
 		return
 

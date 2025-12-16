@@ -202,9 +202,9 @@
 	if(!length(queue))
 		return FALSE
 
-	var/alist/queue_record = queue[1]
+	var/list/queue_record = queue[1]
 	var/datum/design/D = queue_record["design"]
-	var/alist/user_data = queue_record["user"]
+	var/list/user_data = queue_record["user"]
 	if(build_part(D, verbose, user_data))
 		remove_from_queue(1)
 		return TRUE
@@ -220,7 +220,7 @@
  * * verbose - Whether the machine should use say() procs. Set to FALSE to disable the machine saying reasons for failure to build.
  * * user_data - ID_DATA(user), see the proc on SSid_access
  */
-/obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D, verbose = TRUE, alist/user_data)
+/obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D, verbose = TRUE, list/user_data)
 	if(!D || length(D.reagents_list))
 		return FALSE
 
@@ -306,12 +306,12 @@
  * * D - Datum design to add to the queue.
  * user_data - user data in the form rendered by ID_DATA(user), see the proc on SSidaccess
  */
-/obj/machinery/mecha_part_fabricator/proc/add_to_queue(datum/design/D, alist/user_data)
+/obj/machinery/mecha_part_fabricator/proc/add_to_queue(datum/design/D, list/user_data)
 	if(!istype(queue))
 		queue = list()
 
 	if(D)
-		queue[++queue.len] = alist("design" = D, "user" = user_data)
+		queue[++queue.len] = list("design" = D, "user" = user_data)
 		return TRUE
 
 	return FALSE
@@ -396,7 +396,7 @@
 
 	var/offset = 0
 
-	for(var/alist/queue_item in queue)
+	for(var/list/queue_item in queue)
 		offset += 1
 		var/datum/design/design = queue_item["design"]
 

@@ -22,6 +22,8 @@
 #define UNRESTRICT_CONFIRMATION (1<<10)
 // Announced when a user restricts the ore silo to require a valid ID with bank account
 #define RESTRICT_CONFIRMATION (1<<11)
+/// ???
+#define RESTRICT_FAILURE (1<<12)
 
 /obj/machinery/ore_silo
 	name = "ore silo"
@@ -53,19 +55,19 @@
 		RADIO_CHANNEL_SECURITY = NONE,
 	)
 	///List of announcement messages for silo restrictions
-	var/static/alist/announcement_messages = alist(
-		BAN_ATTEMPT_FAILURE_NO_ACCESS = "ACCESS ENFORCEMENT FAILURE: $SILO_USER_NAME lacks supply command authority.",
-		BAN_ATTEMPT_FAILURE_CHALLENGING_DA_CHIEF = "ACCESS ENFORCEMENT FAILURE: $SILO_USER_NAME attempting subversion of supply command authority.",
-		BAN_ATTEMPT_FAILURE_SOULLESS_MACHINE = "$SILO_USER_NAME INTERFACE_EXCEPTION -> BANNED_USERS+=\[$TARGET_NAME\] => NO_OP",
-		BAN_CONFIRMATION = "ACCESS ENFORCEMENT CONFIRMATION\[$SILO_USER_NAME\]: $TARGET_NAME banned from ore silo access.",
-		UNBAN_CONFIRMATION = "ACCESS ENFORCEMENT CONFIRMATION\[$SILO_USER_NAME\]: $TARGET_NAME unbanned from ore silo access.",
-		FAILED_OPERATION_SUSPICIOUS = "NULL_ACCOUNT_RESOLVE_PTR_#?",
-		FAILED_OPERATION_NO_BANK_ID = "ACCESS ENFORCEMENT FAILURE: No account ID found. Please contact a banker.",
-		UNRESTRICT_FAILURE_NO_ACCESS = "ID ACCESS REQUIREMENT ENFORCED: $SILO_USER_NAME lacks supply command authority; ID ACCESS REQUIREMENT REMOVAL FAILED.",
-		UNRESTRICT_FAILURE_SOULLESS_MACHINE = "$SILO_USER_NAME INTERFACE_EXCEPTION -> ID_ACCESS_REQUIREMENT = !ID_ACCESS_REQUIREMENT => NO_OP",
-		RESTRICT_CONFIRMATION = "ID ACCESS REQUIREMENT ROUTINE STARTED: $SILO_USER_NAME has enforced ID read requirement for this ore silo.",
-		UNRESTRICT_CONFIRMATION = "ID ACCESS REQUIREMENT ROUTINE SUSPENDED: $SILO_USER_NAME has removed ID read requirement for this ore silo.",
-		RESTRICT_FAILURE = "ID ACCESS REQUIREMENT ROUTINE FAILED TO START: $SILO_USER_NAME()"
+	var/static/list/announcement_messages = list(
+		"[BAN_ATTEMPT_FAILURE_NO_ACCESS]" = "ACCESS ENFORCEMENT FAILURE: $SILO_USER_NAME lacks supply command authority.",
+		"[BAN_ATTEMPT_FAILURE_CHALLENGING_DA_CHIEF]" = "ACCESS ENFORCEMENT FAILURE: $SILO_USER_NAME attempting subversion of supply command authority.",
+		"[BAN_ATTEMPT_FAILURE_SOULLESS_MACHINE]" = "$SILO_USER_NAME INTERFACE_EXCEPTION -> BANNED_USERS+=\[$TARGET_NAME\] => NO_OP",
+		"[BAN_CONFIRMATION]" = "ACCESS ENFORCEMENT CONFIRMATION\[$SILO_USER_NAME\]: $TARGET_NAME banned from ore silo access.",
+		"[UNBAN_CONFIRMATION]" = "ACCESS ENFORCEMENT CONFIRMATION\[$SILO_USER_NAME\]: $TARGET_NAME unbanned from ore silo access.",
+		"[FAILED_OPERATION_SUSPICIOUS]" = "NULL_ACCOUNT_RESOLVE_PTR_#?",
+		"[FAILED_OPERATION_NO_BANK_ID]" = "ACCESS ENFORCEMENT FAILURE: No account ID found. Please contact a banker.",
+		"[UNRESTRICT_FAILURE_NO_ACCESS]" = "ID ACCESS REQUIREMENT ENFORCED: $SILO_USER_NAME lacks supply command authority; ID ACCESS REQUIREMENT REMOVAL FAILED.",
+		"[UNRESTRICT_FAILURE_SOULLESS_MACHINE]" = "$SILO_USER_NAME INTERFACE_EXCEPTION -> ID_ACCESS_REQUIREMENT = !ID_ACCESS_REQUIREMENT => NO_OP",
+		"[RESTRICT_CONFIRMATION]" = "ID ACCESS REQUIREMENT ROUTINE STARTED: $SILO_USER_NAME has enforced ID read requirement for this ore silo.",
+		"[UNRESTRICT_CONFIRMATION]" = "ID ACCESS REQUIREMENT ROUTINE SUSPENDED: $SILO_USER_NAME has removed ID read requirement for this ore silo.",
+		"[RESTRICT_FAILURE]" = "ID ACCESS REQUIREMENT ROUTINE FAILED TO START: $SILO_USER_NAME()"
 	)
 
 /obj/machinery/ore_silo/Initialize(mapload)
@@ -146,14 +148,14 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/ore_silo/proc/on_item_consumed(datum/component/material_container/container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context, alist/user_data)
+/obj/machinery/ore_silo/proc/on_item_consumed(datum/component/material_container/container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context, list/user_data)
 	SIGNAL_HANDLER
 
 	silo_log(context, "DEPOSITED", amount_inserted, item_inserted.name, mats_consumed, user_data)
 
 	SEND_SIGNAL(context, COMSIG_SILO_ITEM_CONSUMED, container, item_inserted, last_inserted_id, mats_consumed, amount_inserted)
 
-/obj/machinery/ore_silo/proc/log_sheets_ejected(datum/component/material_container/container, obj/item/stack/sheet/sheets, atom/context, alist/user_data)
+/obj/machinery/ore_silo/proc/log_sheets_ejected(datum/component/material_container/container, obj/item/stack/sheet/sheets, atom/context, list/user_data)
 	SIGNAL_HANDLER
 
 	silo_log(context, "WITHDRAWN", -sheets.amount * SHEET_MATERIAL_AMOUNT, "[sheets.name]", sheets.custom_materials, user_data)
@@ -204,7 +206,7 @@
 	holds -= receptacle
 	UnregisterSignal(physical_receptacle, COMSIG_ORE_SILO_PERMISSION_CHECKED)
 
-/obj/machinery/ore_silo/proc/check_permitted(datum/source, alist/user_data, atom/movable/physical_receptacle)
+/obj/machinery/ore_silo/proc/check_permitted(datum/source, list/user_data, atom/movable/physical_receptacle)
 	SIGNAL_HANDLER
 
 	if(!ID_required)
@@ -378,7 +380,7 @@
 			target_is_banned ? banned_users.Remove(target_bank_id) : banned_users.Add(target_bank_id)
 		return
 
-	var/alist/silo_user_data = ID_DATA(user)
+	var/list/silo_user_data = ID_DATA(user)
 	var/list/silo_user_accesses = astype(silo_user_data["accesses"], /list)
 	var/list/target_user_accesses = astype(target_user_data["accesses"], /list)
 
@@ -442,7 +444,7 @@
 	if(emagged)
 		ID_required = !ID_required
 		return
-	var/alist/silo_user_data = ID_DATA(user)
+	var/list/silo_user_data = ID_DATA(user)
 	var/is_a_robot = silo_user_data[SILICON_OVERRIDE]
 	if(is_a_robot)
 		handle_access_action_feedback(
@@ -500,8 +502,8 @@
 	// due to their usual purview of the ore silo
 	radio_channels[RADIO_CHANNEL_SUPPLY] = radio_channels[RADIO_CHANNEL_COMMAND]
 
-/obj/machinery/ore_silo/proc/handle_access_action_feedback(action, alist/silo_user_data, list/target_user_data = null)
-	var/message = announcement_messages[action]
+/obj/machinery/ore_silo/proc/handle_access_action_feedback(action, list/silo_user_data, list/target_user_data = null)
+	var/message = announcement_messages["[action]"]
 	message = replacetext(message, "$TARGET_NAME", target_user_data?["name"])
 	message = replacetext(message, "$SILO_USER_NAME", silo_user_data["name"])
 	say(message)
@@ -535,7 +537,7 @@
  * - [mats][list]: Assoc list in format (material datum = amount of raw materials). Wants the actual amount of raw (iron, glass...) materials involved in this action. If you have 10 metal sheets each worth 100 iron you would pass a list with the iron material datum = 1000
  * - user_data - ID_DATA(user), includes details (not currently) rendered to the player, such as bank account #, see the proc on SSid_access
  */
-/obj/machinery/ore_silo/proc/silo_log(obj/machinery/M, action, amount, noun, list/mats, alist/user_data)
+/obj/machinery/ore_silo/proc/silo_log(obj/machinery/M, action, amount, noun, list/mats, list/user_data)
 	if (!length(mats))
 		return
 
@@ -565,9 +567,9 @@
 	///List of individual materials used in the action
 	var/list/materials
 	///User data of the player doing material operations
-	var/alist/user_data
+	var/list/user_data
 
-/datum/ore_silo_log/New(obj/machinery/M, _action, _amount, _noun, list/mats=list(), alist/user_data)
+/datum/ore_silo_log/New(obj/machinery/M, _action, _amount, _noun, list/mats=list(), list/user_data)
 	timestamp = station_time_timestamp()
 	machine_name = M.name
 	area_name = get_area_name(M, TRUE)
