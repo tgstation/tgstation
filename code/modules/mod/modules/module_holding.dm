@@ -27,8 +27,8 @@
 	RegisterSignal(src, COMSIG_MODULE_TRY_INSTALL, PROC_REF(try_install))
 
 /obj/item/mod/module/storage/holding/Destroy()
-	. = ..()
 	possible_bag_bombs.Cut()
+	return ..()
 
 /obj/item/mod/module/storage/holding/proc/pre_core_inserted(mob/user, obj/item/core, list/modifiers)
 	if(possible_bag_bombs[core] == HOLDING_MODULE_PREVENT_DUPLICATE_CHECK)
@@ -38,21 +38,22 @@
 		if(istype(nested_loc.atom_storage, /datum/storage/bag_of_holding))
 			other_bag = nested_loc.atom_storage
 			break
-	if(other_bag)
-		if(possible_bag_bombs[core] == HOLDING_MODULE_CHECK_CONFIRMED)
-			other_bag.create_rift(core, user)
-		else
-			INVOKE_ASYNC(src, PROC_REF(recursive_core_insertion), other_bag, core, user, modifiers)
+	if(other_bag && !possible_bag_bombs[core])
+		INVOKE_ASYNC(src, PROC_REF(recursive_core_insertion), other_bag, user, core, modifiers)
 		return ITEM_INTERACT_BLOCKING
 
-/obj/item/mod/module/storage/holding/proc/recursive_core_insertion(datum/storage/bag_of_holding/bag_storage, obj/item/core, mob/user, list/modifiers)
+/obj/item/mod/module/storage/holding/proc/recursive_core_insertion(datum/storage/bag_of_holding/bag_storage, mob/user, obj/item/core, list/modifiers)
 	possible_bag_bombs[core] = HOLDING_MODULE_PREVENT_DUPLICATE_CHECK
 	if(bag_storage.confirm_recursive_insertion(core, user) && !QDELETED(core) && user.is_holding(core) && IsReachableBy(user))
-		possible_bag_bombs[core] = HOLDING_MODULE_CHECK_CONFIRMED
-		base_item_interaction(user, core, modifiers)
+		anomalock.insert_core(src, user, core, modifiers)
 	possible_bag_bombs -= core
 
 /obj/item/mod/module/storage/holding/proc/on_core_inserted(obj/item/core, mob/user)
+	for(var/atom/nested_loc in get_nested_locs(src))
+		var/datum/storage/bag_of_holding/boh = nested_loc.atom_storage
+		if(istype(boh))
+			boh.create_rift(core, user)
+			return
 	core.moveToNullspace() // Otherwise, the core would become part of the suit's inventory.
 	storage_type = /datum/storage/bag_of_holding
 	create_storage(storage_type = /datum/storage/bag_of_holding)
