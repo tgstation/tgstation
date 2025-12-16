@@ -34,6 +34,13 @@
 	GLOB.rain_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain/start
+
+	// change the message for if rain is triggered inside the station (no canopy of course)
+	for(var/z in impacted_z_levels)
+		if(is_station_level(z))
+			telegraph_message = span_warning("Thunder rumbles from above. You hear droplets hitting the floor around you.")
+			break
+
 	return ..()
 
 /datum/weather/rain_storm/start()

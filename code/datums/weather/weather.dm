@@ -201,13 +201,20 @@
 /datum/weather/proc/manually_setup_sound_manager()
 	var/list/filtered_zs = get_impacted_zs_without_trait()
 	var/list/playlist = get_playlist_ref()
+	// we only need to manually handle sound managers if there are zs without the trait being affected, fortunately
 	if(!length(filtered_zs) || isnull(playlist))
 		return
 
-	for(var/mob/living/affected as anything in GLOB.mob_living_list + GLOB.dead_mob_list)
+	// add in dead mobs so we can get observers covered too
+	for(var/mob/living/affected as anything in GLOB.mob_living_list | GLOB.dead_mob_list)
+		if(isnull(affected.client))
+			// this registers 400+ odd signals... maybe we should reconsider
+			RegisterSignal(affected, COMSIG_MOB_LOGIN, PROC_REF(handle_mob_log_in))
+			continue
+
 		manually_setup_sound_manager_on_mob(affected, playlist, filtered_zs)
 
-	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_CREATED, PROC_REF(handle_new_mob_sound_manage))
+	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_CREATED, PROC_REF(handle_new_mob_sound_manager))
 
 /// Returns a reference to the "sound playlist" for this weather type
 /datum/weather/proc/get_playlist_ref()
@@ -221,10 +228,24 @@
 			zs_without_trait += z
 	return zs_without_trait
 
-/datum/weather/proc/handle_new_mob_sound_manage(datum/source, mob/the_mob)
+/datum/weather/proc/handle_new_mob_sound_manager(datum/source, mob/the_mob)
 	SIGNAL_HANDLER
 
+	if(isnull(the_mob.client))
+		RegisterSignal(the_mob, COMSIG_MOB_LOGIN, PROC_REF(handle_mob_log_in))
+		return
+
 	manually_setup_sound_manager_on_mob(the_mob)
+
+/datum/weather/proc/handle_mob_log_in(mob/source)
+	SIGNAL_HANDLER
+
+	if(stage >= END_STAGE)
+		stack_trace("Attempted to add a sound manager to a mob after weather ended")
+		UnregisterSignal(source, COMSIG_MOB_LOGIN)
+		return
+
+	manually_setup_sound_manager_on_mob(source)
 
 /datum/weather/proc/manually_setup_sound_manager_on_mob(mob/living/affected, list/playlist = get_playlist_ref(), list/filtered_zs = get_impacted_zs_without_trait())
 	PRIVATE_PROC(TRUE)
@@ -348,6 +369,10 @@
 	update_areas()
 	for(var/area/impacted_area as anything in impacted_areas)
 		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_ENDED_IN_AREA(type), src)
+
+	if(target_trait)
+		for(var/mob/living/affected as anything in GLOB.mob_living_list | GLOB.dead_mob_list)
+			UnregisterSignal(affected, COMSIG_MOB_LOGIN)
 
 // handles sending all alerts
 /datum/weather/proc/send_alert(alert_msg, alert_sfx, alert_sfx_vol = 100)

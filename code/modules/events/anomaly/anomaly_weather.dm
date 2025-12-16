@@ -6,7 +6,7 @@
 	weight = 10
 	description = "This anomaly causes weather effects to manifest indoors. \
 		It can be cause completely harmless weather like light rain, or something which could harm unprotected individuals like snowstorms. \
-		This version will not trigger lightning strikes."
+		Note, triggering multiple at once will likely break weather sound effects."
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 5
 	admin_setup = list(
@@ -14,6 +14,10 @@
 		/datum/event_admin_setup/listed_options/weather_anomaly,
 		/datum/event_admin_setup/listed_options/weather_thunder,
 	)
+
+/datum/round_event_control/anomaly/anomaly_weather/can_spawn_event(players_amt, allow_magic = FALSE)
+	// weathers have some funky global state that may break if multiple are running. better safe than sorry.
+	return ..() && length(SSweather.processing)
 
 /datum/round_event/anomaly/anomaly_weather
 	start_when = ANOMALY_START_HARMFUL_TIME
