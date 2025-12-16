@@ -7,10 +7,10 @@
 import './styles/main.scss';
 import './styles/themes/light.scss';
 
-import { captureExternalLinks } from 'common/links';
 import { createRoot } from 'react-dom/client';
 import { EventBus } from 'tgui-core/eventbus';
 import { setupGlobalEvents } from 'tgui-core/events';
+import { captureExternalLinks } from 'tgui-core/links';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { App } from './app';
 import { listeners } from './events/listeners';
