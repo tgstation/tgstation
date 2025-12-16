@@ -67,14 +67,17 @@ As a Janitor, you can command cleanbots by pointing at a tile and saying mop/cle
 As a Lawyer, try to negotiate with the Warden if sentences seem too high for the crime.
 As a Lawyer, you can try to convince the Captain and Head of Security to hold trials for prisoners in the courtroom.
 As a Medical Cyborg, you can fully perform surgery and even augment people.
+As a Medical Doctor, Saline-Glucose not only acts as a temporary boost to a patient's blood level, it also speeds blood regeneration! Perfect for drained patients!
 As a Medical Doctor, a shower can be used to help recover from sleep, unconsciousness, confusion, drowsiness, jitters, dizziness, and drunkness.
 As a Medical Doctor, almost every type of wound can be treated at least temporarily with gauze. When in doubt, wrap it up!
+As a Medical Doctor, better environments make for faster surgeries. Perform surgery on an operating computer and using Sterilizine on the patient will speed up the process.
 As a Medical Doctor, corpses placed inside a freezer or morgue tray will have their organs frozen preventing decay. If you don't have time to revive multiple dead bodies, transfer them to the morgue temporarily!
-As a Medical Doctor, corpses with the "...and their soul has departed" description no longer have a ghost attached to them and can't be revived.
-As a Medical Doctor, Critical Slash wounds are one of the most dangerous conditions someone can have. Apply gauze, epipens, sutures, cauteries, whatever you can, as soon as possible!
-As a Medical Doctor, Saline-Glucose not only acts as a temporary boost to a patient's blood level, it also speeds blood regeneration! Perfect for drained patients!
-As a Medical Doctor, treating plasmamen is not impossible! Salbutamol stops them from suffocating and showers stop them from burning alive. You can even perform surgery on them by doing the procedure on a roller bed under a shower. Salbutamol and convermol do NOT heal their oxyloss damage.
-As a Medical Doctor, try messing with the virology lab sometime! Viruses can range from healing powers so great that you can heal out of critical status, or diseases so dangerous they can kill the entire crew with airborne spontaneous combustion. Experiment!
+As a Medical Doctor, corpses with the "...and their soul has departed" description no longer have a ghost attached to them - you can revive them, but no player will take control, making it largely pointless.
+As a Medical Doctor, critical slash wounds are one of the most dangerous conditions someone can have. Apply gauze, epipens, sutures, cauteries, whatever you can, as soon as possible!
+As a Medical Doctor, operating computers contain instructions on how to complete every surgery you could dream of. If you are ever confused, use one to guide you through the process.
+As a Medical Doctor, treating Plasmamen is not impossible! Stasis machines will keep them from burning and suffocating while you perform necessary surgeries. If you don't have the luxury of one, you can use Salbutamol to prevent suffocation and keep them under a running shower to prevent fire.
+As a Medical Doctor, try messing with the Virology lab sometime! Viruses can range from healing powers so great that you can heal out of critical status, or diseases so dangerous they can kill the entire crew with airborne spontaneous combustion. Experiment!
+As a Medical Doctor, unless your patient is in stasis, they will lose blood as you perform surgery on them - especially before you clamp bleeders. Keep an eye on their blood levels, work quickly, and most importantly don't forget to cauterize or suture them after you're finished!
 As a Medical Doctor, when messing with viruses, remember that robotic organs can give immunity to disease effects and transmissibility. Make use of the inorganic biology symptom to bypass the protection.
 As a Medical Doctor, while there's an pandemic, you only require small amounts of vaccine to heal a sick patient. Work with the Chemist to distribute your cures more efficiently.
 As a Medical Doctor, you can attempt to drain blood from a husk with a syringe to determine the cause. If you can extract blood, it was caused by extreme temperatures or lasers, if there is no blood to extract, you have confirmed the presence of changelings.
@@ -84,6 +87,7 @@ As a Medical Doctor, you can extract implants by holding an empty implant case i
 As a Medical Doctor, you can point your penlight at people to create a medical hologram. This lets them know that you're coming to treat them.
 As a Medical Doctor, you can surgically implant or extract things from people's chests. This can range from putting in a bomb to pulling out an alien larva.
 As a Medical Doctor, you must target the correct limb and not be in combat mode when trying to perform surgery on someone. Right clicking your patient will intentionally fail the surgery step.
+As a Medical doctor, note that some species - such as Plasmamen or Jellypeople - lack flesh or bones. This will change how you perform surgery on them, allowing you to skip steps such as making incisions or sawing bones.
 As a Monkey, you can crawl through air or scrubber vents by alt+left clicking them. You must drop everything you are wearing and holding to do this, however.
 As a Monkey, you can still wear a few human items, such as backpacks, gas masks and hats, and still have two free hands.
 As a Morph, you can talk while disguised, but your words have a chance of being slurred, giving you away!
@@ -206,9 +210,11 @@ As the Clown, if you're a Traitor and get an emag on sale (or convince another t
 As the Clown, spice your gimmicks up! Nobody likes a one-trick pony.
 As the Clown, you can use your stamp on a sheet of cardboard as the first step of making a honkbot. Fun for the whole crew!
 As the Clown, your Grail is the mineral bananium, which can be given to the Roboticist to build you a fun and robust mech beloved by everyone.
+As the Coroner, remember completing an autopsy on a body will speed up any further surgeries. As multiple people can operate on a body at once, consider teaming up with your Medical Doctors to get bodies revived faster!
 As the Coroner, remember that your autopsy scanner also works as an advanced health analyzer on right-click, but only for corpses.
 As the Coroner, you are more comfortable working on cadavers. You can perform autopsies or harvest organs from corpses a lot faster than your Medical Doctor counterparts. Work in tandem with them by helping prepare bodies for revival.
 As the Coroner, you can perform autopsies on corpses recovered from strange circumstances with your handheld autopsy scanner to discover how they died. By teaming up with a Detective, you can solve several cases together!
+As the Coroner, your unique surgical tools are considered 'cruel implements', which speeds up surgery on corpses - slows it on not-yet-corpses. A few other items also have this classification.
 As the Curator, be sure to keep the shelves stocked and the library clean for crew.
 As the Curator, you are not completely defenseless. Your whip easily disarms people, your laser pointer can blind humans and cyborgs, and you can hide items in wirecut books.
 As the Detective, people leave fingerprints everywhere and on everything. With the exception of white latex, gloves will hide them. All is not lost, however, as gloves leave fibers specific to their kind such as black or nitrile, pointing to a general department.
@@ -254,6 +260,7 @@ If you knock into somebody while doing a wicked grind on a skateboard, they will
 If you need to drag multiple people either to safety or to space, bring a locker or crate over and stuff them all in before hauling them off.
 If you're bleeding, you can apply pressure to the limb by grabbing yourself while targeting the bleeding limb. This will slow you down and take up a hand, but it'll slow down how fast you lose blood. Note this won't help the bleeding clot any faster.
 If you're using hotkey mode, you can stop pulling things using H.
+If you've come out of a surgery and your doctor forgot to cauterize or suture you, you can do it yourself - even with a lighter.
 In a pinch, stripping yourself naked will give you a sizeable resistance to being tackled. What do you value more, your freedom or your dignity?
 In a pinch, you can reduce bleeding or burn infection with several commonplace reagents - flour, salt, saltwater can all be splashed onto the wound to stall for time, and tea can be drank for a boost to your body's defences.
 Laying down will help slow down bloodloss. Death will halt it entirely.
@@ -272,9 +279,9 @@ Some weapons are better at taking down robots and structures than others. Don't 
 Spears are capable of breaking into secure lockers by striking them in melee!
 Standard epipens contain a potent coagulant that not only slow bloodloss, but also help clot whichever of your wounds is bleeding the most! If you're suffering multiple bad bleeding wounds, make sure to seek out additional treatment ASAP!
 Suit storage units not only remove blood and dirt from clothing, but also radiation!
+Surgery can be performed with a wide variety of tools not found in Medbay, but it'll drastically increase the time it takes and the risk of failure. However, you can offset the penalty by using sterilizing agents like alcohol or by performing it on a table or bed.
 Syndicate Duffelbags are a lot quicker to zip and unzip, have significantly less slowdown, and can carry up to two of various bulky, objective-related items - such as fire axes, guns, or gibtonite. Examine them closely to see all the possibilities.
 The Chaplain can bless any container with water by hitting it with their bible. Holy water has a myriad of uses against both cults and large amounts of it are a great contributor to success against them.
-The Coroner's surgical tools are considered 'cruel implements', which speeds up surgery on corpses but slows it on not-yet-corpses. A few other items also have it.
 The P2P chat function found on tablet computers allows for a stealthy way to communicate with people.
 The resist button will allow you to resist out of handcuffs, being buckled to a chair or bed, out of locked lockers and more. Whenever you're stuck, try resisting!
 The station's self-destruct terminal is indestructible. Go find the disk instead of trying to destroy it.
