@@ -1729,6 +1729,7 @@
 	VV_DROPDOWN_OPTION("", "---------")
 	VV_DROPDOWN_OPTION(VV_HK_OBSERVE_FOLLOW, "Observe Follow")
 	VV_DROPDOWN_OPTION(VV_HK_GET_MOVABLE, "Get Movable")
+	VV_DROPDOWN_OPTION(VV_HK_ADD_REMOVE_FACTION, "Add/Remove Faction")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_PARTICLES, "Edit Particles")
 	VV_DROPDOWN_OPTION(VV_HK_DEADCHAT_PLAYS, "Start/Stop Deadchat Plays")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_FANTASY_AFFIX, "Add Fantasy Affix")
@@ -1750,6 +1751,13 @@
 		if(QDELETED(src))
 			return
 		forceMove(get_turf(usr))
+
+	if(href_list[VV_HK_ADD_REMOVE_FACTION])
+		if(!check_rights(R_ADMIN))
+			return
+		if(QDELETED(src))
+			return
+		edit_faction(usr)
 
 	if(href_list[VV_HK_EDIT_PARTICLES] && check_rights(R_VAREDIT))
 		var/client/C = usr.client
@@ -1922,11 +1930,13 @@
 	var/list/faction_copy = LAZYLISTDUPLICATE(faction) // Copy so we are not mutating the cached list
 	LAZYREMOVE(faction_copy, faction_or_factions)
 
-	// If nothing remains, do nothing
-	if (!LAZYLEN(faction_copy))
+	var/new_length = LAZYLEN(faction_copy)
+	// If nothing remains in the copy, null the actual list too.
+	if (!new_length)
+		LAZYNULL(faction)
 		return TRUE
 
-	if (old_length == LAZYLEN(faction)) // Nothing was removed, also do nothing
+	if (old_length == new_length) // Nothing was removed, do nothing
 		return FALSE
 
 	faction = string_list(faction_copy)
@@ -1968,3 +1978,32 @@
 
 	else
 		return (faction_or_factions in faction) && FAST_FACTION_CHECK(null, null, allies, allies_list, match_all)
+
+/**
+ * Opens the modify faction ui.
+ */
+/atom/movable/proc/edit_faction(mob/user)
+	var/prompt = tgui_alert(usr, "Would you like to Add or Remove faction?", "Add/Remove?", list("Add", "Remove"))
+	if (isnull(prompt))
+		return FALSE
+
+	if (prompt == "Add")
+		var/faction_to_add = tgui_input_text(user, "Enter a faction name to add.", "Add Faction", max_length = MAX_NAME_LEN)
+		if(isnull(faction_to_add))
+			return FALSE
+
+		return add_faction(faction_to_add)
+
+	else if (prompt == "Remove")
+		var/list/current_factions = LAZYLISTDUPLICATE(faction)
+		if(!LAZYLEN(current_factions))
+			to_chat(user, span_warning("[src] has no factions left to remove!"))
+			return FALSE
+
+		current_factions = sort_list(current_factions, GLOBAL_PROC_REF(cmp_text_asc)) // sort alphabetically
+
+		var/faction_to_remove = tgui_input_list(user, "Select a faction to remove.", "Remove faction", current_factions)
+		if(isnull(faction_to_remove))
+			return FALSE
+
+		return remove_faction(faction_to_remove)
