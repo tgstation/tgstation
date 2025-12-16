@@ -19,12 +19,12 @@ export function pingSoft(payload: SoftPingPayload): void {
     initialized = true;
   }
 
+  store.set(lastPingedAtAtom, Date.now());
   // On each soft ping where client is not flagged as afk,
   // initiate a new ping.
-  if (afk) return;
-
-  sendPing();
-  store.set(lastPingedAtAtom, Date.now());
+  if (!afk) {
+    sendPing();
+  }
 }
 
 type ReplyPingPayload = {

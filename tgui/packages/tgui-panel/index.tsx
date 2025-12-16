@@ -40,10 +40,7 @@ function setupApp() {
   render(<App />);
 
   // Dispatch incoming messages as store actions
-  Byond.subscribe((type, payload) => {
-    console.log(type);
-    bus.dispatch({ type, payload });
-  });
+  Byond.subscribe((type, payload) => bus.dispatch({ type, payload }));
 
   // Unhide the panel
   Byond.winset('output_selector.legacy_output_selector', {
