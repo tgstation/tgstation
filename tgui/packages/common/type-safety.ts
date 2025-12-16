@@ -1,8 +1,14 @@
 import type { ZodObject } from 'zod';
 
 type MergeInput<TObj> = {
+  /**
+   * A zod object.
+   * @see Writing a Zod Schema: https://zod.dev/basics
+   */
   schema: ZodObject<any>;
+  /** The input getting merged */
   source: Record<string, unknown>;
+  /** The defaults, which is the shape of the output */
   target: TObj;
 };
 
@@ -10,8 +16,6 @@ type MergeInput<TObj> = {
  * Merges two objects together while validating the output against a zod schema.
  * Different than just parsing - it does not throw errors, it simply discards
  * invalid fields and invalid value types.
- *
- * @see Writing a Zod Schema: https://zod.dev/basics
  *
  * @example
  *
