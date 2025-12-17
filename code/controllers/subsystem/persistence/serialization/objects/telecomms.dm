@@ -48,59 +48,13 @@
 	. = ..()
 	. += NAMEOF(src, change_frequency)
 
-/// buses and hubs link to multiple machines
-
-/obj/machinery/telecomms/hub/get_custom_save_vars(save_flags=ALL)
+/obj/machinery/telecomms/get_custom_save_vars(save_flags=ALL)
 	. = ..()
-	var/list/autolinked_machines
-	for(var/obj/machinery/telecomms/machine in links)
-		LAZYADD(autolinked_machines, machine.id)
-
-	if(autolinked_machines)
-		.[NAMEOF(src, autolinkers)] = autolinked_machines
-	return .
-
-/obj/machinery/telecomms/bus/get_custom_save_vars(save_flags=ALL)
-	. = ..()
-	var/list/autolinked_machines
-	for(var/obj/machinery/telecomms/machine in links)
-		LAZYADD(autolinked_machines, machine.id)
-
-	if(autolinked_machines)
-		.[NAMEOF(src, autolinkers)] = autolinked_machines
-	return .
-
-/// these are isolated and use the autolinker as their own id for other machines to connect to
-
-/obj/machinery/telecomms/broadcaster/get_custom_save_vars(save_flags=ALL)
-	. = ..()
-	.[NAMEOF(src, autolinkers)] = list(id)
-	return .
-
-/obj/machinery/telecomms/processor/get_custom_save_vars(save_flags=ALL)
-	. = ..()
-	.[NAMEOF(src, autolinkers)] = list(id)
-	return .
-
-/obj/machinery/telecomms/receiver/get_custom_save_vars(save_flags=ALL)
-	. = ..()
-	.[NAMEOF(src, autolinkers)] = list(id)
-	return .
-
-/obj/machinery/telecomms/relay/get_custom_save_vars(save_flags=ALL)
-	. = ..()
-	.[NAMEOF(src, autolinkers)] = list(id)
-	return .
-
-/obj/machinery/telecomms/message_server/get_custom_save_vars(save_flags=ALL)
-	. = ..()
-	.[NAMEOF(src, autolinkers)] = list(id)
-	return .
-
-/obj/machinery/telecomms/server/get_custom_save_vars(save_flags=ALL)
-	. = ..()
-	.[NAMEOF(src, autolinkers)] = list(id)
-	return .
-
+	if(!length(links))
+		return
+	var/list/autolinked_machines = list()
+	for(var/obj/machinery/telecomms/machine as anything in links)
+		autolinked_machines |= machine.id
+	.[NAMEOF(src, autolinkers)] = autolinked_machines
 
 
