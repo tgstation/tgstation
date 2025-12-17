@@ -404,7 +404,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /// Returns a list of turfs in this camera's view.
 /// This includes turfs that are "obscured by darkness" from the camera's POV.
 /obj/machinery/camera/proc/can_see()
-	var/list/see = null
+	var/alist/see = null
 	var/turf/pos = get_turf(src)
 	var/turf/directly_above = GET_TURF_ABOVE(pos)
 	var/check_lower = pos != get_lowest_turf(pos)
@@ -428,7 +428,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 				while(above && istransparentturf(above))
 					see += RANGE_TURFS(1, above)
 					above = GET_TURF_ABOVE(above)
-	return see
+
+	var/alist/see_alist = alist()
+
+	for (var/turf/seen as anything in see)
+		see_alist[seen] = TRUE
+
+	return see_alist
 
 /obj/machinery/camera/proc/Togglelight(on=0)
 	for(var/mob/living/silicon/ai/A in GLOB.ai_list)
