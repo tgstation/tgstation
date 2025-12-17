@@ -181,7 +181,7 @@
 		I.do_pickup_animation(src)
 	if(get_item_for_held_index(hand_index))
 		dropItemToGround(get_item_for_held_index(hand_index), force = TRUE)
-	I.forceMove(src)
+	I.forceMove(src) //this has to come before has_equipped() is called
 	held_items[hand_index] = I
 	SET_PLANE_EXPLICIT(I, ABOVE_HUD_PLANE, src)
 	if(I.pulledby)
@@ -440,6 +440,7 @@
 	item_dropping.layer = initial(item_dropping.layer)
 	SET_PLANE_EXPLICIT(item_dropping, initial(item_dropping.plane), newloc)
 	item_dropping.appearance_flags &= ~NO_CLIENT_COLOR
+	item_dropping.item_flags &= ~IN_INVENTORY //This has to come before MoveToNullspace/forceMove is called
 	if(!no_move && !(item_dropping.item_flags & DROPDEL)) //item may be moved/qdel'd immedietely, don't bother moving it
 		if (isnull(newloc))
 			item_dropping.moveToNullspace()
@@ -458,7 +459,7 @@
  * * Optional - include_flags, (see obj.flags.dm) describes which optional things to include or not (pockets, accessories, held items)
  */
 
-/mob/living/proc/get_equipped_items(include_flags = NONE)
+/mob/proc/get_equipped_items(include_flags = NONE)
 	var/list/items = list()
 	for(var/obj/item/item_contents in contents)
 		if(item_contents.item_flags & IN_INVENTORY)
@@ -472,6 +473,12 @@
 
 	return items
 
+///Get all items in our possession that should affect our movespeed
+/mob/proc/get_equipped_speed_mod_items()
+	. = get_equipped_items(INCLUDE_ABSTRACT|INCLUDE_PROSTHETICS)
+	for(var/obj/item/thing in held_items)
+		if(thing.item_flags & SLOWS_WHILE_IN_HAND)
+			. += thing
 /**
  * Returns the items that were successfully unequipped.
  */
@@ -531,12 +538,16 @@
 /// This proc is called after an item has been successfully handled and equipped to a slot.
 /mob/proc/has_equipped(obj/item/item, slot, initial = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	return item.on_equipped(src, slot, initial)
+	item.item_flags |= IN_INVENTORY
+	. = item.on_equipped(src, slot, initial)
+	if(.)
+		update_equipment_speed_mods()
 
 /// This proc is called after an item has been removed from a mob but before it has been officially deslotted.
 /mob/proc/has_unequipped(obj/item/item, silent = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	item.dropped(src, silent)
+	update_equipment_speed_mods()
 	return TRUE
 
 /**

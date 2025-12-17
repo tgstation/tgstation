@@ -73,10 +73,6 @@
 /obj/structure/barricade/wooden,
 /turf/template_noop,
 /area/space/nearstation)
-"U" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/space/nearstation)
 "W" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
@@ -126,9 +122,9 @@ a
 "}
 (3,1,1) = {"
 a
-U
-U
-U
+C
+C
+C
 J
 x
 g
@@ -139,12 +135,12 @@ W
 (4,1,1) = {"
 a
 a
-U
+C
 a
-U
+C
 a
-U
-U
+C
+C
 q
 a
 "}
@@ -153,10 +149,10 @@ a
 a
 a
 a
-U
+C
 a
 a
-U
+C
 J
 a
 "}
@@ -165,7 +161,7 @@ a
 a
 a
 a
-U
+C
 a
 a
 M

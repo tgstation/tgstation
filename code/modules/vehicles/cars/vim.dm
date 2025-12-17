@@ -19,6 +19,7 @@
 	light_on = FALSE
 	engine_sound = 'sound/effects/servostep.ogg'
 	interaction_flags_mouse_drop = NONE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.55, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
 	///Maximum size of a mob trying to enter the mech
 	var/maximum_mob_size = MOB_SIZE_SMALL
 	COOLDOWN_DECLARE(sound_cooldown)

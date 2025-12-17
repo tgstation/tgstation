@@ -13,6 +13,7 @@
 	new /obj/item/radio/headset/heads/captain(src)
 	new /obj/item/door_remote/captain(src)
 	new /obj/item/storage/photo_album/captain(src)
+	new /obj/item/megaphone/command(src)
 
 /obj/structure/closet/secure_closet/captains/populate_contents_immediate()
 	new /obj/item/gun/energy/e_gun(src)
@@ -174,7 +175,7 @@
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections locker"
-	req_access = list(ACCESS_HOS)
+	req_access = list(ACCESS_ARMORY)
 
 /obj/structure/closet/secure_closet/injection/PopulateContents()
 	..()

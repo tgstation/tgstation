@@ -403,12 +403,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	// register for radio system
 	SSradio.add_object(src, frequency)
 	// Circuit USB
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/status_display,
-	))
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/status_display), only_root_path = TRUE))
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(on_sec_level_change))
 	if(mapload)
-		find_and_hang_on_atom()
+		find_and_mount_on_atom()
 
 /obj/machinery/status_display/evac/Destroy()
 	SSradio.remove_object(src,frequency)
@@ -745,7 +743,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 	// register for radio system to receive AI emote signals
 	SSradio.add_object(src, frequency)
 	if(mapload)
-		find_and_hang_on_atom()
+		find_and_mount_on_atom()
 
 /obj/machinery/status_display/ai/Destroy()
 	SSradio.remove_object(src, frequency)
