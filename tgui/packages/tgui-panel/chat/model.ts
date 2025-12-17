@@ -79,4 +79,6 @@ type SerializedMessage = {
   text: string;
   html: string;
   times: number;
+  node: HTMLElement;
+  avoidHighlighting: boolean;
 }>;
