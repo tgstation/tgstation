@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed sheet ejection on mechfabs"
+  - qol: "Miner ORM deposits are now logged in the ore silo"
