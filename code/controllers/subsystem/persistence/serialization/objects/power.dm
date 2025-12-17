@@ -34,7 +34,7 @@
 
 	return ..()
 
-/obj/machinery/power/apc/get_save_vars(save_flags=ALL)
+/obj/machinery/power/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, cable_layer)
 	return .
