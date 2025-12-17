@@ -79,32 +79,22 @@
 	return OXYLOSS
 
 /obj/item/rag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(iscarbon(interacting_with) && reagents?.total_volume)
-		var/mob/living/carbon/carbon_target = interacting_with
-		carbon_target.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
-		var/reagentlist = pretty_string_from_reagent_list(reagents.reagent_list)
-		var/log_object = "containing [reagentlist]"
-		if(!carbon_target.is_mouth_covered())
-			reagents.trans_to(carbon_target, reagents.total_volume, transferred_by = user, methods = INGEST)
-			carbon_target.visible_message(span_danger("[user] smothers \the [carbon_target] with \the [src]!"), span_userdanger("[user] smothers you with \the [src]!"), span_hear("You hear some struggling and muffled cries of surprise."))
-			log_combat(user, carbon_target, "smothered", src, log_object)
-		else
-			reagents.expose(carbon_target, TOUCH)
-			reagents.clear_reagents()
-			carbon_target.visible_message(span_notice("[user] touches \the [carbon_target] with \the [src]."))
-			log_combat(user, carbon_target, "touched", src, log_object)
-		return ITEM_INTERACT_SUCCESS
-	if(istype(interacting_with, /obj/structure/sink) && blood_level == 0)
-		var/obj/structure/sink/interacting_sink = interacting_with
-		if(interacting_sink.reagents.total_volume <= 0)
-			to_chat(user, span_notice("\The [src] is dry."))
-			return ITEM_INTERACT_BLOCKING
-		interacting_sink.reagents.trans_to(src, 5, transferred_by = user)
-		interacting_sink.begin_reclamation()
-		to_chat(user, span_notice("You wet [src] in [interacting_sink]."))
-		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
-		return ITEM_INTERACT_SUCCESS
-	return ..()
+	if(!iscarbon(interacting_with) || !reagents?.total_volume)
+		return ..()
+	var/mob/living/carbon/carbon_target = interacting_with
+	carbon_target.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
+	var/reagentlist = pretty_string_from_reagent_list(reagents.reagent_list)
+	var/log_object = "containing [reagentlist]"
+	if(!carbon_target.is_mouth_covered())
+		reagents.trans_to(carbon_target, reagents.total_volume, transferred_by = user, methods = INGEST)
+		carbon_target.visible_message(span_danger("[user] smothers \the [carbon_target] with \the [src]!"), span_userdanger("[user] smothers you with \the [src]!"), span_hear("You hear some struggling and muffled cries of surprise."))
+		log_combat(user, carbon_target, "smothered", src, log_object)
+	else
+		reagents.expose(carbon_target, TOUCH)
+		reagents.clear_reagents()
+		carbon_target.visible_message(span_notice("[user] touches \the [carbon_target] with \the [src]."))
+		log_combat(user, carbon_target, "touched", src, log_object)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/rag/wash(clean_types)
 	. = ..()
