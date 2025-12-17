@@ -411,14 +411,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		// Haha datum var access KILL ME
 		for(var/turf/seen as anything in see)
 			if(check_lower)
-				var/turf/below = GET_TURF_BELOW(seen)
+				var/turf/below = seen
 				while(below && istransparentturf(below))
-					see += below
 					below = GET_TURF_BELOW(below)
+					see += RANGE_TURFS(1, below)
 			if(check_higher)
 				var/turf/above = GET_TURF_ABOVE(seen)
 				while(above && istransparentturf(above))
-					see += above
+					see += RANGE_TURFS(1, above)
 					above = GET_TURF_ABOVE(above)
 	return see
 

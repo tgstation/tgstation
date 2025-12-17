@@ -117,6 +117,10 @@
 			if(!current_camera || !current_camera.can_use())
 				continue
 
+			var/turf/point = locate(src.x + (CHUNK_SIZE / 2), src.y + (CHUNK_SIZE / 2), z_level)
+			if(get_dist(point, current_camera) > MAX_CAMERA_RANGE + (CHUNK_SIZE / 2))
+				continue
+
 			for(var/turf/vis_turf as anything in turfs & current_camera.can_see())
 				updated_visible_turfs[vis_turf] = vis_turf
 

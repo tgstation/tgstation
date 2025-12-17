@@ -43,7 +43,7 @@ SUBSYSTEM_DEF(cameras)
 		for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 			for(var/y = y1; y <= y2; y += CHUNK_SIZE)
 				visibleChunks |= generate_chunk(x, y, z)
-	stat_tracking_export_to_csv_later("camera_chunks.csv", GLOB.camera_cost, GLOB.camera_count)
+	//stat_tracking_export_to_csv_later("camera_chunks.csv", GLOB.camera_cost, GLOB.camera_count)
 	SSticker.delay_end = FALSE
 	shutdown()
 
