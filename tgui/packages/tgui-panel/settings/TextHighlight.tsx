@@ -50,7 +50,7 @@ export function TextHighlightSettings(props) {
       </Stack>
       <Divider />
       <Box>
-        <Button icon="check" onClick={chatRenderer.rebuildChat}>
+        <Button icon="check" onClick={() => chatRenderer.rebuildChat()}>
           Apply now
         </Button>
         <Box inline fontSize="0.9em" ml={1} color="label">
