@@ -25,29 +25,6 @@ SUBSYSTEM_DEF(cameras)
 	/// Tracks current subsystem run
 	var/list/current_run = list()
 
-// TESTING
-/client/verb/update_all_chunks_verb()
-	set name = "Update All Chunks"
-	set category = "Testing"
-
-	SScameras.update_all_chunks()
-
-/datum/controller/subsystem/cameras/proc/update_all_chunks()
-    var/x1 = 1
-    var/y1 = 1
-    var/x2 = world.maxx
-    var/y2 = world.maxy
-
-    var/list/visibleChunks = list()
-    for(var/z_coord in 1 to world.maxz)
-        for(var/x = x1; x <= x2; x += CHUNK_SIZE)
-            for(var/y = y1; y <= y2; y += CHUNK_SIZE)
-                visibleChunks |= generate_chunk(x, y, z_coord)
-
-    for(var/datum/camerachunk/lad in visibleChunks)
-        lad.update()
-// TESTING
-
 /datum/controller/subsystem/cameras/Initialize()
 	update_offsets(SSmapping.max_plane_offset)
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_offset_growth))

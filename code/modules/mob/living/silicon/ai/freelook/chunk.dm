@@ -107,46 +107,30 @@ GLOBAL_LIST_EMPTY(camera_cost)
 GLOBAL_LIST_EMPTY(camera_count)
 /// The actual updating. It gathers the visible turfs from cameras and puts them into the appropiate lists.
 /datum/camerachunk/proc/update()
-	INIT_COST(GLOB.camera_cost, GLOB.camera_count)
-	EXPORT_STATS_TO_CSV_LATER("camera chunks.txt", GLOB.camera_cost, GLOB.camera_count)
 	if(SScameras.disable_camera_updates)
 		return
-	SET_COST("Update check")
 
 	update_sources.Cut()
-	SET_COST("Cut sources")
 
 	var/list/updated_visible_turfs = list()
-	SET_COST("List setup")
 
 	for(var/z_level in lower_z to upper_z)
 		for(var/obj/machinery/camera/current_camera as anything in cameras[z_level])
 			if(!current_camera || !current_camera.can_use())
 				continue
-			SET_COST("Validate camera")
 
 			var/turf/point = locate(src.x + (CHUNK_SIZE / 2), src.y + (CHUNK_SIZE / 2), z_level)
-			SET_COST("Locate point")
-
 			if(get_dist(point, current_camera) > CHUNK_SIZE + (CHUNK_SIZE / 2))
 				continue
-			SET_COST("Compare dist")
 
-			var/list/can_see = current_camera.can_see()
-			SET_COST("Collect turfs")
-
-			var/list/updating = can_see & turfs
-			SET_COST("The evil & operator")
-
-			for(var/turf/vis_turf as anything in updating)
+			// The return value of can_see being the left-hand operand here is a load-bearing performance pillar
+			for(var/turf/vis_turf as anything in current_camera.can_see() & turfs)
 				updated_visible_turfs[vis_turf] = vis_turf
-			SET_COST("Updating visible turfs")
 
 	///new turfs that we couldnt see last update but can now
 	var/list/newly_visible_turfs = updated_visible_turfs - visibleTurfs
 	///turfs that we could see last update but cant see now
 	var/list/newly_obscured_turfs = visibleTurfs - updated_visible_turfs
-	SET_COST("Turf list substractions")
 
 	for(var/mob/eye/camera/client_eye as anything in seenby)
 		var/client/client = client_eye.GetViewerClient()
@@ -154,7 +138,6 @@ GLOBAL_LIST_EMPTY(camera_count)
 			continue
 
 		client.images -= active_static_images
-	SET_COST("Removing old client images")
 
 	for(var/turf/visible_turf as anything in newly_visible_turfs)
 		var/image/static_image = obscuredTurfs[visible_turf]
@@ -163,7 +146,6 @@ GLOBAL_LIST_EMPTY(camera_count)
 
 		active_static_images -= static_image
 		obscuredTurfs -= visible_turf
-	SET_COST("Removing old static images")
 
 	for(var/turf/obscured_turf as anything in newly_obscured_turfs)
 		if(obscuredTurfs[obscured_turf] || istype(obscured_turf, /turf/open/ai_visible))
@@ -177,7 +159,6 @@ GLOBAL_LIST_EMPTY(camera_count)
 		obscuredTurfs[obscured_turf] = static_image
 		active_static_images += static_image
 	visibleTurfs = updated_visible_turfs
-	SET_COST("Adding new static images")
 
 	for(var/mob/eye/camera/client_eye as anything in seenby)
 		var/client/client = client_eye.GetViewerClient()
@@ -185,7 +166,6 @@ GLOBAL_LIST_EMPTY(camera_count)
 			continue
 
 		client.images += active_static_images
-	SET_COST("Adding new client images")
 
 /// Create a new camera chunk, since the chunks are made as they are needed.
 /datum/camerachunk/New(x, y, lower_z)
@@ -228,7 +208,7 @@ GLOBAL_LIST_EMPTY(camera_count)
 			if(!camera.can_use())
 				continue
 
-			for(var/turf/vis_turf as anything in turfs & camera.can_see())
+			for(var/turf/vis_turf as anything in camera.can_see() & turfs)
 				visibleTurfs[vis_turf] = vis_turf
 
 	for(var/turf/obscured_turf as anything in turfs - visibleTurfs)
