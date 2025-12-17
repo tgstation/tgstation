@@ -47,6 +47,7 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 			/obj/item/relic/lavaland, // lots of relic spam
 			/mob/living/carbon, // carbon mobs are very complex to save so skip
 			/mob/dead, // no dead ghosts
+			/mob/eye, // no eyes from cameras/blob/AI vision
 		))
 
 		GLOB.save_object_blacklist -= typecacheof(list(
