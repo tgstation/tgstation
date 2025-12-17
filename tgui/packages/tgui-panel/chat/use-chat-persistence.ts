@@ -1,6 +1,6 @@
 import { storage } from 'common/storage';
 import DOMPurify from 'dompurify';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 import * as z from 'zod';
 import { settingsLoadedAtom } from '../settings/atoms';
@@ -38,10 +38,10 @@ type StoredChatSettings = z.infer<typeof storedSettingsSchema>;
 export function useChatPersistence() {
   const allChat = useAtomValue(allChatAtom);
   const [version, setVersion] = useAtom(versionAtom);
-  const [, setScrollTracking] = useAtom(scrollTrackingAtom);
-  const [, setChatPages] = useAtom(chatPagesAtom);
-  const [, setCurrentPageId] = useAtom(currentPageIdAtom);
-  const [, setChatPagesRecord] = useAtom(chatPagesRecordAtom);
+  const setScrollTracking = useSetAtom(scrollTrackingAtom);
+  const setChatPages = useSetAtom(chatPagesAtom);
+  const setCurrentPageId = useSetAtom(currentPageIdAtom);
+  const setChatPagesRecord = useSetAtom(chatPagesRecordAtom);
 
   const [loaded, setLoaded] = useAtom(chatLoadedAtom);
   const settingsLoaded = useAtomValue(settingsLoadedAtom);

@@ -29,7 +29,7 @@ chatRenderer.events.on('scrollTrackingChanged', updateScrollTracking);
 function updateScrollTracking(value: boolean): void {
   store.set(scrollTrackingAtom, value);
 
-  // No need to reset unread counts when enabling scroll tracking
+  // We only need to reset unread counts when enabling scroll tracking
   if (!value) return;
 
   const pageId = store.get(currentPageIdAtom);
