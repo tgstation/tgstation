@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 import * as z from 'zod';
 import { settingsLoadedAtom } from '../settings/atoms';
 import {
-  allChatAtom,
   chatLoadedAtom,
   chatPagesAtom,
   chatPagesRecordAtom,
@@ -14,8 +13,9 @@ import {
   scrollTrackingAtom,
   versionAtom,
 } from './atom';
-import { MAX_PERSISTED_MESSAGES, MESSAGE_SAVE_INTERVAL } from './constants';
-import { createMessage, serializeMessage } from './model';
+import { MESSAGE_SAVE_INTERVAL } from './constants';
+import { saveChatToStorage } from './helpers';
+import { createMessage } from './model';
 import { chatRenderer } from './renderer';
 
 // List of blacklisted tags
@@ -36,7 +36,6 @@ type StoredChatSettings = z.infer<typeof storedSettingsSchema>;
  * it back
  */
 export function useChatPersistence() {
-  const allChat = useAtomValue(allChatAtom);
   const [version, setVersion] = useAtom(versionAtom);
   const setScrollTracking = useSetAtom(scrollTrackingAtom);
   const setChatPages = useSetAtom(chatPagesAtom);
@@ -46,37 +45,37 @@ export function useChatPersistence() {
   const [loaded, setLoaded] = useAtom(chatLoadedAtom);
   const settingsLoaded = useAtomValue(settingsLoadedAtom);
 
-  /** Loads or periodically saves chat + chat settings */
+  /** Loads chat + chat settings */
   useEffect(() => {
-    let saveInterval: NodeJS.Timeout;
-    if (!loaded && settingsLoaded) {
-      console.log('Initializing chat');
-      saveInterval = setInterval(saveChatToStorage, MESSAGE_SAVE_INTERVAL);
+    if (loaded || !settingsLoaded) return;
 
-      loadChatFromStorage();
-      setLoaded(true);
+    let cancelled = false;
+
+    async function fetchChat(): Promise<void> {
+      console.log('Initializing chat');
+      await loadChatFromStorage();
+
+      if (!cancelled) {
+        setLoaded(true);
+      }
     }
 
+    fetchChat();
+
     return () => {
-      if (saveInterval) {
-        clearInterval(saveInterval);
-      }
+      cancelled = true;
     };
-  }, [settingsLoaded]);
+  }, [loaded, settingsLoaded, setLoaded]);
 
-  function saveChatToStorage(): void {
-    const fromIndex = Math.max(
-      0,
-      chatRenderer.messages.length - MAX_PERSISTED_MESSAGES,
-    );
+  /** Periodically saves chat + chat settings */
+  useEffect(() => {
+    if (!loaded) {
+      return;
+    }
 
-    const messages = chatRenderer.messages
-      .slice(fromIndex)
-      .map((message) => serializeMessage(message));
-
-    storage.set('chat-state', allChat);
-    storage.set('chat-messages', messages);
-  }
+    const saveInterval = setInterval(saveChatToStorage, MESSAGE_SAVE_INTERVAL);
+    return () => clearInterval(saveInterval);
+  }, [loaded]);
 
   async function loadChatFromStorage(): Promise<void> {
     const [state, messages] = await Promise.all([

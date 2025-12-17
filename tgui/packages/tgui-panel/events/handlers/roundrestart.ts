@@ -1,8 +1,8 @@
-import { chatRenderer } from '../../chat/renderer';
+import { saveChatToStorage } from '../../chat/helpers';
 import { roundRestartedAtAtom } from '../../game/atoms';
 import { store } from '../store';
 
 export function roundrestart() {
-  chatRenderer.saveToDisk();
   store.set(roundRestartedAtAtom, Date.now());
+  saveChatToStorage();
 }

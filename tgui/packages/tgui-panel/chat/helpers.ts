@@ -1,5 +1,7 @@
+import { storage } from 'common/storage';
 import { store } from '../events/store';
 import {
+  allChatAtom,
   chatLoadedAtom,
   chatPagesAtom,
   chatPagesRecordAtom,
@@ -8,7 +10,8 @@ import {
   mainPage,
   scrollTrackingAtom,
 } from './atom';
-import { canPageAcceptType } from './model';
+import { MAX_PERSISTED_MESSAGES } from './constants';
+import { canPageAcceptType, serializeMessage } from './model';
 import { chatRenderer } from './renderer';
 import type { Page } from './types';
 
@@ -106,4 +109,20 @@ export function importChatState(pageRecord: Record<string, Page>): void {
   store.set(chatPagesRecordAtom, merged);
 
   chatRenderer.changePage(merged[first]);
+}
+
+export function saveChatToStorage(): void {
+  const fromIndex = Math.max(
+    0,
+    chatRenderer.messages.length - MAX_PERSISTED_MESSAGES,
+  );
+
+  const messages = chatRenderer.messages
+    .slice(fromIndex)
+    .map((message) => serializeMessage(message));
+
+  const allChat = store.get(allChatAtom);
+
+  storage.set('chat-state', allChat);
+  storage.set('chat-messages', messages);
 }
