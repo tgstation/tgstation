@@ -234,7 +234,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 		//they only made their money back, don't tell them they won anything.
 		if((money_won - text2num(winner[2])) == 0)
 			continue
-		winner_account.bank_card_talk("You won [money_won]cr from having a correct guess on [name]!")
+		winner_account.bank_card_talk("You won [money_won][MONEY_SYMBOL] from having a correct guess on [name]!")
 
 ///Puts a bank account's money bet on a given option.
 /datum/active_bet/proc/bet_money(datum/bank_account/better, money_betting, option_betting)
@@ -255,7 +255,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 						if(!better.adjust_money(-money_adding_in, "Gambling on [name]."))
 							return
 						total_amount_bet += money_adding_in
-						better.bank_card_talk("Additional [money_adding_in]cr deducted for your bet on [name].")
+						better.bank_card_talk("Additional [money_adding_in][MONEY_SYMBOL] deducted for your bet on [name].")
 						existing_bets[2] = "[money_betting]"
 						return
 					//taking it all out, we remove them from the list so they aren't a winner with bets of 0.
@@ -269,7 +269,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 					if(text2num(existing_bets[2]) > money_betting)
 						var/money_taking_out = text2num(existing_bets[2]) - money_betting
 						total_amount_bet -= money_taking_out
-						better.bank_card_talk("Refunded [money_taking_out]cr for taking money out of your bet on [name].")
+						better.bank_card_talk("Refunded [money_taking_out][MONEY_SYMBOL] for taking money out of your bet on [name].")
 						better.adjust_money(money_taking_out, "Refund from gambling on [name].")
 						existing_bets[2] = "[money_betting]"
 						return
@@ -278,7 +278,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 		return
 	total_amount_bet += money_betting
 	options[option_betting] += list(list(better, "[money_betting]"))
-	better.bank_card_talk("Deducted [money_betting]cr for your bet on [name].")
+	better.bank_card_talk("Deducted [money_betting][MONEY_SYMBOL] for your bet on [name].")
 
 ///Cancels your bet, removing your bet and refunding your money.
 /datum/active_bet/proc/cancel_bet(datum/bank_account/better)
@@ -287,7 +287,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 			if(existing_bets[1] == better)
 				var/money_refunding = text2num(existing_bets[2])
 				total_amount_bet -= money_refunding
-				better.bank_card_talk("Refunded [money_refunding]cr for cancelling your bet on [name].")
+				better.bank_card_talk("Refunded [money_refunding][MONEY_SYMBOL] for cancelling your bet on [name].")
 				better.adjust_money(money_refunding, "Refunded: changed bet for [name].")
 				options[option] -= list(existing_bets)
 

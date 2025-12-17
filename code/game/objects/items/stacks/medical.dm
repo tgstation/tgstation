@@ -328,7 +328,7 @@
 				break // one at a time
 		affecting.adjustBleedStacks(-1 * stop_bleeding, 0)
 	if(flesh_regeneration || sanitization)
-		for(var/datum/wound/burn/flesh/wound as anything in affecting.wounds)
+		for(var/datum/wound/burn/flesh/wound in affecting.wounds)
 			if(wound.can_be_ointmented_or_meshed())
 				wound.flesh_healing += flesh_regeneration
 				wound.sanitization += sanitization

@@ -859,7 +859,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	if(user == living_target)
 		return
 
-	if(living_target.stat == DEAD)
+	if(living_target.stat == DEAD || QDELETED(living_target))
 		return
 
 	sneak_attack(living_target, user)

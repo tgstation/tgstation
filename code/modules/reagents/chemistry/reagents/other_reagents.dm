@@ -2473,12 +2473,18 @@
 /datum/reagent/romerol/expose_mob(mob/living/carbon/human/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	// Silently add the zombie infection organ to be activated upon death
-	if(exposed_mob.get_organ_slot(ORGAN_SLOT_ZOMBIE))
-		return
-
-	if((methods & (PATCH|INGEST|INJECT|INHALE)) || ((methods & (VAPOR|TOUCH)) && prob(min(reac_volume,100)*(1 - touch_protection))))
+	if(can_infect(exposed_mob, reac_volume, methods))
 		var/obj/item/organ/zombie_infection/nodamage/zombie_infection = new()
 		zombie_infection.Insert(exposed_mob)
+
+/datum/reagent/romerol/proc/can_infect(mob/living/carbon/human/exposed_mob, reac_volume = 5, methods = INGEST)
+	if(exposed_mob.get_organ_slot(ORGAN_SLOT_ZOMBIE))
+		return FALSE
+	if(methods & (PATCH|INGEST|INJECT|INHALE))
+		return TRUE
+	if(reac_volume >= 1)
+		return TRUE
+	return FALSE
 
 /datum/reagent/magillitis
 	name = "Magillitis"

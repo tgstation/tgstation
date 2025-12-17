@@ -7,12 +7,12 @@
 	inhand_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-
+	flags_1 = IS_PLAYER_COLORABLE_1|NO_NEW_GAGS_PREVIEW_1
 	greyscale_config = /datum/greyscale_config/wirecutters
 	greyscale_config_belt = /datum/greyscale_config/wirecutters_belt_overlay
 	greyscale_config_inhand_left = /datum/greyscale_config/wirecutter_inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/wirecutter_inhand_right
-
+	greyscale_colors = COLOR_RED
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 6
@@ -72,6 +72,10 @@
 	icon_state = "cutters"
 	toolspeed = 0.1
 	random_color = FALSE
+	greyscale_config = null
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
+	greyscale_colors = null
 	snap_time_strong_handcuffs = 1 SECONDS
 
 /obj/item/wirecutters/cyborg
@@ -82,3 +86,5 @@
 	worn_icon_state = "cutters"
 	toolspeed = 0.5
 	random_color = FALSE
+	greyscale_config = null
+	greyscale_colors = null
