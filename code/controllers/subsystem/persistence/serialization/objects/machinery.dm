@@ -3,6 +3,9 @@
 	. += NAMEOF(src, panel_open)
 	return .
 
+//if(movable_atom in component_parts)
+//	continue
+
 /obj/machinery/PersistentInitialize()
 	. = ..()
 	update_appearance()
@@ -157,3 +160,13 @@
 	if(on)
 		turn_on()
 	return .
+
+/obj/machinery/biogenerator/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, biomass)
+	. += NAMEOF(src, welded_down)
+	return .
+
+/obj/machinery/biogenerator/PersistentInitialize()
+	. = ..()
+	update_appearance()
