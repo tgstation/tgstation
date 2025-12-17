@@ -17,7 +17,7 @@
 	. -= NAMEOF(src, color)
 	return .
 
-/obj/item/rwd/get_save_vars(save_flags)
+/obj/item/rwd/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, current_amount)
 	. += NAMEOF(src, cable_layer)
@@ -78,7 +78,7 @@
 	. += NAMEOF(src, rigged)
 	return .
 
-/obj/machinery/power/port_gen/pacman/get_save_vars(save_flags)
+/obj/machinery/power/port_gen/pacman/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, active)
 	. += NAMEOF(src, sheets)
@@ -92,12 +92,12 @@
 		TogglePower()
 	return .
 
-/obj/machinery/power/solar_control/get_save_vars(save_flags)
+/obj/machinery/power/solar_control/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, track)
 	return .
 
-/obj/machinery/power/solar_control/get_custom_save_vars(save_flags)
+/obj/machinery/power/solar_control/get_custom_save_vars(save_flags=ALL)
 	. = ..()
 	if(track == SOLAR_TRACK_TIMED)
 		.[NAMEOF(src, azimuth_rate)] = azimuth_rate
@@ -136,9 +136,21 @@
 	diskie = locate(/obj/item/emitter_disk) in contents
 	update_appearance()
 
-/obj/structure/reflector/get_save_vars(save_flags)
+/obj/structure/reflector/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, rotation_angle)
 	. += NAMEOF(src, finished)
 	. += NAMEOF(src, can_rotate)
 	return .
+
+/obj/machinery/atmos_shield_gen/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, locked)
+	. += NAMEOF(src, on)
+	. += NAMEOF(src, max_range)
+	return .
+
+/obj/machinery/atmos_shield_gen/PersistentInitialize()
+	. = ..()
+	diskie = locate(/obj/item/emitter_disk) in contents
+	update_appearance()
