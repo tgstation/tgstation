@@ -38,17 +38,16 @@
 	var/list/all_designs = list()
 	var/list/exceptions = list(
 		/datum/design/surgery/healing, // Ignored due to the above test
-		/datum/design/telescreen_monastery, // It's map-specific, so it doesn't always have a source.
 	)
 
 	for (var/datum/design/design as anything in subtypesof(/datum/design))
-		var/design_id = design::id
-		if (design_id == DESIGN_ID_IGNORE || (design in exceptions))
+		design = new design()
+		if (design.id == DESIGN_ID_IGNORE || (design.type in exceptions))
 			continue
-		if (design_id in all_designs)
-			TEST_FAIL("Design [design] shares an ID \"[design_id]\" with another design")
+		if (design.id in all_designs)
+			TEST_FAIL("Design [design.type] shares an ID \"[design.id]\" with another design")
 			continue
-		all_designs[design_id] = design
+		all_designs[design.id] = design.type
 
 	for (var/datum/techweb_node/node as anything in subtypesof(/datum/techweb_node))
 		node = new node()
