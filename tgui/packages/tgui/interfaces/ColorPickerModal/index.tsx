@@ -5,7 +5,7 @@
  */
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import { type HsvaColor, hexToHsva, hsvaToHex } from 'tgui-core/color';
+import { type HsvaColor, hexToHsva } from 'tgui-core/color';
 import { Autofocus, Box, Section, Stack } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
