@@ -566,6 +566,7 @@
 #define NIGHTVISION_LIGHT_HIG 3
 
 /obj/item/organ/eyes/night_vision
+	abstract_type = /obj/item/organ/eyes/night_vision
 	actions_types = list(/datum/action/item_action/organ_action/use)
 
 	// These lists are used as the color cutoff for the eye

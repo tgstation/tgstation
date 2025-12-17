@@ -1994,11 +1994,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/courtroom)
-"jb" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/vacuum/external,
-/turf/open/floor/plating,
-/area/centcom/central_command_areas/supply)
 "jc" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2055,6 +2050,7 @@
 	dir = 4;
 	id = "XCCQMLoad2"
 	},
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "jm" = (
@@ -2219,6 +2215,7 @@
 	id = "XCCQMLoad"
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/sign/warning/vacuum/external/directional/south,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "jK" = (
@@ -5534,9 +5531,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
@@ -6959,9 +6955,6 @@
 /turf/open/floor/iron/white,
 /area/centcom/tdome/observation)
 "Ff" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 8
-	},
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/evacuation/ship)
 "Fg" = (
@@ -50606,13 +50599,13 @@ aa
 aa
 aa
 aa
-jb
+iX
 jl
 js
 iX
 js
 jJ
-jb
+iX
 aa
 aa
 aa

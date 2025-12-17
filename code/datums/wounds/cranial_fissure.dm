@@ -50,7 +50,7 @@
 
 	RegisterSignal(victim, COMSIG_MOB_SLIPPED, PROC_REF(on_owner_slipped))
 
-/datum/wound/cranial_fissure/remove_wound(ignore_limb, replaced)
+/datum/wound/cranial_fissure/remove_wound(ignore_limb, replaced, destroying)
 	REMOVE_TRAIT(limb, TRAIT_IMMUNE_TO_CRANIAL_FISSURE, type)
 	if (!isnull(victim))
 		REMOVE_TRAIT(victim, TRAIT_HAS_CRANIAL_FISSURE, type)

@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Tech storage access is no longer a \"command level\" access, meaning the HoP can give it to crewmembers that have a normal ID card. Note, secure tech storage still requires bridge access, which requires a silver ID card."
