@@ -5,9 +5,9 @@
 		"common": "workspace:*",
 		"dateformat": "^5.0.3",
 		"dompurify": "^3.2.5",
-		"es-toolkit": "^1.39.3",
+		"es-toolkit": "^1.43.0",
 		"highlight.js": "^11.11.1",
-		"jotai": "^2.12.4",
+		"jotai": "^2.16.0",
 		"js-yaml": "^4.1.0",
 		"marked": "^15.0.11",
 		"marked-base-url": "^1.1.6",
@@ -15,7 +15,7 @@
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
 		"react-json-tree": "^0.20.0",
-		"tgui-core": "^5.3.1",
+		"tgui-core": "^5.5.10",
 		"tgui-dev-server": "workspace:*"
 	},
 	"private": true

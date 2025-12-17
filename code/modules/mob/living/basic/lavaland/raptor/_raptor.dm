@@ -280,7 +280,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		return partner.raptor_color.guaranteed_crossbreeds[raptor_color.type]
 
 	// We've got all the colors in our family tree and aren't rolling a guarantee, bingo
-	if (length(inherited_stats.parent_colors | partner.inherited_stats.parent_colors | raptor_color.type | partner.raptor_color.type) == length(GLOB.raptor_colors))
+	if (length(inherited_stats.parent_colors | partner.inherited_stats.parent_colors | raptor_color.type | partner.raptor_color.type) >= (length(GLOB.raptor_colors) - 1))
 		return /datum/raptor_color/black
 
 	var/list/prob_list = list()

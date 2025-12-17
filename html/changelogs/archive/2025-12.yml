@@ -505,3 +505,64 @@
       inside the name anywhere the map reader would ignore this value when a map was
       loaded and use the initial value instead. This was due to a faulty regex pattern
       that did not properly match variable names.
+2025-12-16:
+  SmArtKar:
+  - bugfix: Fixed illusions not fleeing their targets and runtiming in place
+  alien3301:
+  - bugfix: Using the sabre parry prevents you from doing other actions in the same
+      click
+  san7890:
+  - server: The ready/not ready states of new players are logged when a shift starts.
+2025-12-17:
+  Aliceee2ch:
+  - map: Access changed from "construction" to "tech storage" in respective room entrance
+      on Catwalk.
+  - bugfix: Fixed smacking ectoscopic sniffer after you unwrenched it.
+  - code_imp: Minor code improvements for ectoscopic sniffer.
+  - map: Changed access for ordnance shutters button on MetaStation (from RD -> Science)
+  BurgerBB:
+  - bugfix: Fix signal unregistration in grapple gun on hit.
+  DaCoolBoss:
+  - bugfix: The Donk Co. 'Donk Spike' boxes now properly store shotgun shells.
+  Ezel:
+  - bugfix: Fixes a oversight on deltastation where mining still get a boulder beacon.
+  - map: Nanotrasen now supplies deltastation mining employees with 3 instant meals
+      before doing their workshift
+  - map: Changes the location of catwalk gravgen APC to be outside the Generator room
+  - bugfix: Hos office on catwalk now includes an ID console
+  Kaltf4:
+  - bugfix: When all six non-rare colors of raptor are cross-bred, a black raptor
+      now consistently spawns (unless a guaranteed color-combo supersedes it).
+  MatrixOne500:
+  - rscadd: You can now craft a retro brown sofa!
+  SmArtKar:
+  - bugfix: Fixed runtimes upon trying to reload a shotgun with an empty chambered
+      shell
+  - bugfix: Fixes runtimes from throwing fishing lines into water
+  - bugfix: Fixed fire sound runtimes caused by incorrect arguments
+  - bugfix: Fixed wizard/timeline rewind sound runtimes
+  - bugfix: Fixed runechat offsets for stored mobs
+  - bugfix: Fixed runtimes caused by species changes with pre-existing wounds
+  - code_imp: Optimized deletion code for limbs with wounds
+  - bugfix: Fixed sheet ejection on mechfabs
+  - qol: Miner ORM deposits are now logged in the ore silo
+  - bugfix: Death moodlets no longer runtime when stacking
+  - bugfix: Fixed runtimes caused by auto-observing someone repeatedly
+  - bugfix: Fixed runtimes from stun batons impacting objects when thrown
+  - bugfix: Fixes runtimes caused by opportunistic melee AI behaviors
+  - bugfix: Fixed RMB interactions for IV drips
+  - bugfix: Fixed meshes runtiming when the target has a non-burn wound
+  - bugfix: Fixed damp rags not removing reagents other than space cleaner from themselves
+  - bugfix: Fixed runtimes caused by persistent scars trying to save bodyswapped people's
+      scars
+  Stalkeros:
+  - rscadd: Stack of fifty sandbags
+  codyman765:
+  - image: Ushanka now comes with extra fur lining!
+  lelandkemble:
+  - map: Several disconnected vents and scrubbers on Icebox have been reconnected
+  - map: Removed some inefficiencies in Wawa's piping and cabling.
+  - map: A great deal of offstation structures have been given more efficient piping
+      & cabling.
+  - map: Several offstation structures have had piping & cabling issues resolved.
+  - map: Assistants no longer have access to the tramstation security mechbay
