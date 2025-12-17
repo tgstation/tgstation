@@ -28533,7 +28533,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central/upper)
 "hLC" = (
-/obj/machinery/computer/prisoner/management,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
@@ -42514,7 +42513,9 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "lvE" = (
-/obj/machinery/roulette,
+/obj/machinery/modular_computer/preset/id{
+	dir = 4
+	},
 /turf/open/floor/carpet/royalblack,
 /area/station/command/heads_quarters/hos)
 "lvR" = (
