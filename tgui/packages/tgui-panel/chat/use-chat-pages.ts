@@ -7,6 +7,7 @@ import {
   mainPage,
 } from './atom';
 import { createPage } from './model';
+import { chatRenderer } from './renderer';
 import type { Page } from './types';
 
 /** Custom hook for handling chat pages state */
@@ -25,6 +26,7 @@ export function useChatPages() {
       ...prev,
       [draft.id]: draft,
     }));
+    chatRenderer.changePage(draft);
   }
 
   function changeChatPage(page: Page): void {
@@ -39,6 +41,7 @@ export function useChatPages() {
       ...pagesRecord,
       [page.id]: draft,
     });
+    chatRenderer.changePage(draft);
   }
 
   function moveChatLeft(): void {
@@ -93,6 +96,7 @@ export function useChatPages() {
     setPagesRecord(finalRecord);
     setPages(finalPages);
     setCurrentPageId(finalPages[0]);
+    chatRenderer.changePage(finalRecord[finalPages[0]]);
   }
 
   function toggleAcceptedType(type: string): void {
