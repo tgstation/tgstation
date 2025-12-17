@@ -1,0 +1,4 @@
+author: "DaCoolBoss"
+delete-after: True
+changes:
+  - bugfix: "The Donk Co. 'Donk Spike' boxes now properly store shotgun shells."
