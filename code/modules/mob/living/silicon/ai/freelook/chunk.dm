@@ -103,8 +103,6 @@
 		return
 	update()
 
-GLOBAL_LIST_EMPTY(camera_cost)
-GLOBAL_LIST_EMPTY(camera_count)
 /// The actual updating. It gathers the visible turfs from cameras and puts them into the appropiate lists.
 /datum/camerachunk/proc/update()
 	if(SScameras.disable_camera_updates)
