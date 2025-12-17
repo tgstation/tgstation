@@ -30,6 +30,23 @@ SUBSYSTEM_DEF(cameras)
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_offset_growth))
 	return SS_INIT_SUCCESS
 
+/datum/controller/subsystem/cameras/proc/update_all_chunks()
+	//Hell code, we're bound to end the round somehow so let's stop if from ending while we work
+	SSticker.delay_end = TRUE
+	var/x1 = 1
+	var/y1 = 1
+	var/x2 = world.maxx
+	var/y2 = world.maxy
+	var/list/visibleChunks = list()
+
+	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+		for(var/x = x1; x <= x2; x += CHUNK_SIZE)
+			for(var/y = y1; y <= y2; y += CHUNK_SIZE)
+				visibleChunks |= generate_chunk(x, y, z)
+	stat_tracking_export_to_csv_later("camera_chunks.csv", GLOB.camera_cost, GLOB.camera_count)
+	SSticker.delay_end = FALSE
+	shutdown()
+
 /datum/controller/subsystem/cameras/fire(resumed = FALSE)
 	if(!resumed)
 		src.current_run = chunks_to_update.Copy()
