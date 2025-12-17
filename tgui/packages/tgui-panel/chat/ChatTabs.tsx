@@ -4,10 +4,10 @@
  * @license MIT
  */
 
+import { useAtom } from 'jotai';
 import { useDispatch, useSelector } from 'tgui/backend';
 import { Box, Button, Stack, Tabs } from 'tgui-core/components';
-
-import { openChatSettings } from '../settings/actions';
+import { settingsVisibleAtom } from '../settings/atoms';
 import { addChatPage, changeChatPage } from './actions';
 import { selectChatPages, selectCurrentChatPage } from './selectors';
 
@@ -19,6 +19,8 @@ export function ChatTabs(props) {
   const pages = useSelector(selectChatPages);
   const currentPage = useSelector(selectCurrentChatPage);
   const dispatch = useDispatch();
+
+  const [, setSettingsVisible] = useAtom(settingsVisibleAtom);
 
   return (
     <Stack align="center">
@@ -50,7 +52,7 @@ export function ChatTabs(props) {
           icon="plus"
           onClick={() => {
             dispatch(addChatPage());
-            dispatch(openChatSettings());
+            setSettingsVisible(true);
           }}
         />
       </Stack.Item>

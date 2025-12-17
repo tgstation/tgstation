@@ -95,7 +95,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/layer4{
-	dir = 4
+	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/light,
@@ -283,7 +283,6 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron/tgmcemblem{
@@ -606,7 +605,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/layer4{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/derelictsulaco)
 "uk" = (
@@ -968,6 +966,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/floor/broken,
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/derelictsulaco)
 "GL" = (

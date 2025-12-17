@@ -191,6 +191,10 @@
 	var/floor_tile = /obj/item/stack/thermoplastic
 	var/mutable_appearance/damage_overlay
 
+/obj/structure/thermoplastic/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/force_move_pulled)
+
 /datum/armor/tram_floor
 	melee = 40
 	bullet = 10

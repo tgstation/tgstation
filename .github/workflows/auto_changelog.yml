@@ -10,7 +10,7 @@ permissions:
   contents: write
 jobs:
   auto_changelog:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: github.event.pull_request.merged == true
     steps:
       - name: Checkout

@@ -5,7 +5,7 @@ on:
 jobs:
   # labeler must run before gbp because gbp calculates itself based on labels
   labeler:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: github.event.action == 'opened' || github.event.action == 'synchronize'
     permissions:
       pull-requests: write # to apply labels
@@ -27,7 +27,7 @@ jobs:
             });
             console.log(`Labels updated: ${new_labels}`);
   gbp:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: github.event.action == 'opened' || github.event.action == 'closed'
     steps:
       - name: "Check for ACTION_ENABLER secret and pass true to output if it exists to be checked by later steps"

@@ -110,8 +110,8 @@
 		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
-	account.bank_card_talk("You have paid [amount]cr towards [target.name]'s fine of [warrant.fine]cr.")
-	log_econ("[amount]cr was transferred from [user]'s transaction to [target.name]'s [warrant.fine]cr fine")
+	account.bank_card_talk("You have paid [amount][MONEY_SYMBOL] towards [target.name]'s fine of [warrant.fine][MONEY_SYMBOL].")
+	log_econ("[amount][MONEY_SYMBOL] was transferred from [user]'s transaction to [target.name]'s [warrant.fine][MONEY_SYMBOL] fine")
 	SSblackbox.record_feedback("amount", "credits_transferred", amount)
 	warrant.pay_fine(amount)
 
@@ -124,7 +124,7 @@
 			"A friendly face",
 			"A helpful stranger",
 		)
-		warrant.alert_owner(user, src, target.name, "[pick(titles)] has paid [amount]cr towards your fine.")
+		warrant.alert_owner(user, src, target.name, "[pick(titles)] has paid [amount][MONEY_SYMBOL] towards your fine.")
 
 	var/datum/bank_account/sec_account = SSeconomy.get_dep_account(ACCOUNT_SEC)
 	sec_account.adjust_money(amount)
@@ -166,7 +166,7 @@
 	bounty_text += "<b>Issued to:</b><br>[usr]<br>"
 	bounty_text += "<b>Issued on:</b><br>[warrant.time]<br>"
 	bounty_text += "<b>Comments:</b><br>[!target.security_note ? "None." : target.security_note]<br><br>"
-	bounty_text += "<center><b>FINE:</b> [warrant.fine] credits</center>"
+	bounty_text += "<center><b>FINE:</b> [warrant.fine] [MONEY_NAME]</center>"
 
 	printing = TRUE
 	balloon_alert(user, "printing")
@@ -174,7 +174,7 @@
 
 	var/obj/item/paper/bounty = new(null)
 	bounty.name = "Bounty for [target.name]"
-	bounty.desc = "A [warrant.fine]cr bounty for [target.name]."
+	bounty.desc = "A [warrant.fine][MONEY_SYMBOL] bounty for [target.name]."
 	bounty.add_raw_text(bounty_text)
 	bounty.update_icon()
 

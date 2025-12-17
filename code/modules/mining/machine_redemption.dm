@@ -160,6 +160,7 @@
 		gathered_ores += tool
 	else if(tool.atom_storage && !tool.atom_storage.locked)
 		tool.atom_storage.remove_type(/obj/item/stack/ore, src, check_adjacent = TRUE, user = user, inserted = gathered_ores)
+
 	if(!gathered_ores.len)
 		return ..()
 
@@ -168,7 +169,7 @@
 		if(isnull(smelted_ore))
 			continue
 
-		if(materials.insert_item(smelted_ore, ore_multiplier) <= 0)
+		if(materials.insert_item(smelted_ore, ore_multiplier, ID_DATA(user)) <= 0)
 			unload_mineral(smelted_ore)
 
 	return ITEM_INTERACT_SUCCESS
@@ -176,9 +177,13 @@
 /obj/machinery/mineral/ore_redemption/pickup_item(datum/source, atom/movable/target, direction)
 	if(QDELETED(target))
 		return
+
 	if(!materials.mat_container || panel_open || !powered())
 		return
 
+	var/alist/user_data = null
+	if (isliving(target.pulledby))
+		user_data = ID_DATA(target.pulledby)
 	//gethering the ore
 	var/list/obj/item/stack/ore/ore_list = list()
 	if(istype(target, /obj/structure/ore_box))
@@ -196,7 +201,7 @@
 		if(isnull(smelted_ore))
 			continue
 
-		if(materials.insert_item(smelted_ore, ore_multiplier) <= 0)
+		if(materials.insert_item(smelted_ore, ore_multiplier, user_data) <= 0)
 			unload_mineral(smelted_ore) //if rejected unload
 
 	if(!console_notify_timer)

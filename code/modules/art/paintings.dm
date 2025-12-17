@@ -259,7 +259,10 @@
 	LAZYREMOVE(zoom_by_observer, user.key)
 
 /obj/item/canvas/proc/finalize(mob/user)
-	if(painting_metadata.loaded_from_json || finalized)
+	if(finalized || painting_metadata.loaded_from_json)
+		return
+	if(!in_range(src, user))
+		user.balloon_alert(user, "too far away!")
 		return
 	if(!try_rename(user))
 		return
@@ -315,7 +318,7 @@
 			if(curator_cut)
 				for(var/datum/bank_account/curator as anything in curator_accounts)
 					curator.adjust_money(curator_cut, "Painting: Patronage cut")
-					curator.bank_card_talk("Cut on patronage received, account now holds [curator.account_balance] cr.")
+					curator.bank_card_talk("Cut on patronage received, account now holds [curator.account_balance] [MONEY_SYMBOL].")
 
 	if(istype(loc, /obj/structure/sign/painting))
 		var/obj/structure/sign/painting/frame = loc

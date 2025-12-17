@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 jobs:
   gbp_collection:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: "Check for ACTION_ENABLER secret and pass true to output if it exists to be checked by later steps"
         id: value_holder

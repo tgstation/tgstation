@@ -143,7 +143,7 @@
 
 /datum/status_effect/stacking/brimdust_coating/on_creation(mob/living/new_owner, stacks_to_apply)
 	. = ..()
-	linked_alert?.icon_state = "brimdemon_[stacks]"
+	linked_alert?.overlay_state = "brimdemon_[stacks]"
 
 /datum/status_effect/stacking/brimdust_coating/on_apply()
 	. = ..()

@@ -122,7 +122,7 @@
 			var/obj/item/holochip/inserted_chip = inserted
 			if(!user.temporarilyRemoveItemFromInventory(inserted_chip))
 				return ITEM_INTERACT_BLOCKING
-			balloon_alert(user, "[inserted_chip.credits] credit[inserted_chip.credits == 1 ? "" : "s"] inserted")
+			balloon_alert(user, "[inserted_chip.credits] [MONEY_NAME_AUTOPURAL(inserted_chip.credits)] inserted")
 			balance += inserted_chip.credits
 			qdel(inserted_chip)
 			return ITEM_INTERACT_SUCCESS
@@ -309,7 +309,7 @@
 
 	else if(check_jackpot(JACKPOT_SEVENS))
 		var/prize = money + JACKPOT
-		visible_message("<b>[src]</b> says, 'JACKPOT! You win [prize] credits!'")
+		visible_message("<b>[src]</b> says, 'JACKPOT! You win [prize] [MONEY_NAME]!'")
 		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
 		if(isliving(user) && (user in viewers(src)))
 			var/mob/living/living_user = user
@@ -327,14 +327,14 @@
 				sleep(REEL_DEACTIVATE_DELAY)
 
 	else if(linelength == 5)
-		visible_message("<b>[src]</b> says, 'Big Winner! You win a thousand credits!'")
+		visible_message("<b>[src]</b> says, 'Big Winner! You win a thousand [MONEY_NAME]!'")
 		give_money(BIG_PRIZE)
 		if(isliving(user) && (user in viewers(src)))
 			var/mob/living/living_user = user
 			living_user.add_mood_event("slots", /datum/mood_event/slots/win/big)
 
 	else if(linelength == 4)
-		visible_message("<b>[src]</b> says, 'Winner! You win four hundred credits!'")
+		visible_message("<b>[src]</b> says, 'Winner! You win four hundred [MONEY_NAME]!'")
 		give_money(SMALL_PRIZE)
 		if(isliving(user) && (user in viewers(src)))
 			var/mob/living/living_user = user

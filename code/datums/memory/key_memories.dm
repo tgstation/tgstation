@@ -99,6 +99,30 @@
 /datum/memory/key/quirk_allergy/get_starts()
 	return list("[protagonist_name] sneezing after coming into contact with [allergy_string].")
 
+/// Tracks what kind of item the quirk user's heirloom is
+/datum/memory/key/quirk_heirloom
+	var/heirloom_name
+
+/datum/memory/key/quirk_heirloom/New(
+	datum/mind/memorizer_mind,
+	atom/protagonist,
+	atom/deuteragonist,
+	atom/antagonist,
+	heirloom_name,
+)
+	src.heirloom_name = heirloom_name
+	return ..()
+
+/datum/memory/key/quirk_heirloom/get_names()
+	return list("[protagonist_name]'s heirloom [heirloom_name].")
+
+/datum/memory/key/quirk_heirloom/get_starts()
+	return list(
+		"[protagonist_name] being bequeathed the heirloom [heirloom_name] by a dear relative.",
+		"[protagonist_name] discovering the heirloom [heirloom_name] in some long-forgotten boxes.",
+		"[protagonist_name] stealing the heirloom [heirloom_name] from an undeserving family member.",
+	)
+
 /// Tracks what brand a smoker quirk user likes
 /datum/memory/key/quirk_smoker
 	memory_flags = MEMORY_FLAG_NOLOCATION|MEMORY_FLAG_NOPERSISTENCE|MEMORY_SKIP_UNCONSCIOUS // Does not have nomood

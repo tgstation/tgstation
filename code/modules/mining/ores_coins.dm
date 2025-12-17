@@ -492,7 +492,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/coin/examine(mob/user)
 	. = ..()
-	. += span_info("It's worth [value] credit\s.")
+	. += span_info("It's worth [value] [MONEY_NAME_AUTOPURAL(value)].")
 
 /obj/item/coin/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/stack/cable_coil))

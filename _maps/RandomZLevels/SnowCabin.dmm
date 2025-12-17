@@ -4157,6 +4157,10 @@
 /obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"Gf" = (
+/obj/structure/sign/poster/official/soft_cap_pop_art/directional/north,
+/turf/open/floor/wood,
+/area/awaymission/cabin)
 "Gk" = (
 /obj/structure/closet/crate/bin,
 /obj/machinery/light/small/directional/east,
@@ -29144,8 +29148,8 @@ Yp
 aA
 jj
 an
-eg
 aq
+eg
 an
 cN
 aq
@@ -29401,8 +29405,8 @@ an
 an
 an
 an
-ct
-aq
+Gf
+eg
 an
 jE
 aq
@@ -29658,8 +29662,8 @@ sG
 au
 ji
 an
-eg
-bh
+aq
+ht
 an
 cO
 cO

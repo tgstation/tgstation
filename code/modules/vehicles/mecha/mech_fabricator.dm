@@ -486,7 +486,7 @@
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])
 			// SAFETY: eject_sheets checks for valid mats
-			rmat.eject_sheets(material, amount)
+			rmat.eject_sheets(material, amount, user_data = ID_DATA(usr))
 			return
 
 	return FALSE

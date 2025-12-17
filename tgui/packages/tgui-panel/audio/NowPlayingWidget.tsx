@@ -7,14 +7,13 @@
 import { useDispatch, useSelector } from 'tgui/backend';
 import { Button, Collapsible, Flex, Knob, Section } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
-
-import { useSettings } from '../settings';
+import { useSettings } from '../settings/use-settings';
 import { selectAudio } from './selectors';
 
 export const NowPlayingWidget = (props) => {
+  const { settings, updateSettings } = useSettings();
   const audio = useSelector(selectAudio),
     dispatch = useDispatch(),
-    settings = useSettings(),
     title = audio.meta?.title,
     URL = audio.meta?.link,
     Artist = audio.meta?.artist || 'Unknown Artist',
@@ -100,7 +99,7 @@ export const NowPlayingWidget = (props) => {
           stepPixelSize={1}
           format={(value) => `${toFixed(value * 100)}%`}
           onChange={(e, value) =>
-            settings.update({
+            updateSettings({
               adminMusicVolume: value,
             })
           }

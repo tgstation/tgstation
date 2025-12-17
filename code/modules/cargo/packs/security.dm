@@ -250,7 +250,7 @@
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
 /datum/supply_pack/security/armory/laser_carbine
-	name = "Type 5R Laser Carbine Crate"
+	name = "Type 5/R Laser Carbine Crate"
 	desc = "Contains three Type 5R laser carbines, developed by Nanotrasen. Fires a rapid burst of slightly weaker laser projectiles."
 	cost = CARGO_CRATE_VALUE * 9
 	contains = list(/obj/item/gun/energy/laser/carbine = 3)

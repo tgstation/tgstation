@@ -298,7 +298,10 @@
 		dam_mul *= iter_wound.damage_multiplier_penalty
 
 	if(!LAZYLEN(wounds) && current_gauze && !replaced) // no more wounds = no need for the gauze anymore
-		owner.visible_message(span_notice("\The [current_gauze.name] on [owner]'s [name] falls away."), span_notice("\The [current_gauze] on your [plaintext_zone] falls away."))
+		if (owner)
+			owner.visible_message(span_notice("\The [current_gauze.name] on [owner]'s [name] falls away."), span_notice("\The [current_gauze] on your [plaintext_zone] falls away."))
+		else
+			visible_message(span_notice("\The [current_gauze.name] on [name] falls away."))
 		QDEL_NULL(current_gauze)
 
 	wound_damage_multiplier = dam_mul

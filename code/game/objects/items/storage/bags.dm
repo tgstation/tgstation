@@ -327,6 +327,7 @@
 		/obj/item/stack/rods/fifty = null,
 		/obj/item/stack/sheet/mineral/plastitanium = 50,
 		/obj/item/stack/sheet/mineral/abductor = 50,
+		/obj/item/stack/sheet/mineral/sandbags/fifty = null,
 		/obj/item/stack/sheet/cardboard/fifty = null,
 	)
 	for(var/obj/item/stack/stack_type as anything in items_inside)

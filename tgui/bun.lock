@@ -23,7 +23,8 @@
       "name": "common",
       "version": "4.3.1",
       "dependencies": {
-        "es-toolkit": "^1.39.3",
+        "es-toolkit": "^1.43.0",
+        "zod": "^4.1.13",
       },
     },
     "packages/tgfont": {
@@ -41,9 +42,9 @@
         "common": "workspace:*",
         "dateformat": "^5.0.3",
         "dompurify": "^3.2.5",
-        "es-toolkit": "^1.39.3",
+        "es-toolkit": "^1.43.0",
         "highlight.js": "^11.11.1",
-        "jotai": "^2.12.4",
+        "jotai": "^2.16.0",
         "js-yaml": "^4.1.0",
         "marked": "^15.0.11",
         "marked-base-url": "^1.1.6",
@@ -51,7 +52,7 @@
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
         "react-json-tree": "^0.20.0",
-        "tgui-core": "^5.3.1",
+        "tgui-core": "^5.5.10",
         "tgui-dev-server": "workspace:*",
       },
     },
@@ -70,12 +71,14 @@
       "dependencies": {
         "common": "workspace:*",
         "dompurify": "^3.2.5",
-        "es-toolkit": "^1.39.3",
+        "es-toolkit": "^1.43.0",
+        "jotai": "^2.16.0",
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
         "tgui": "workspace:*",
-        "tgui-core": "^5.3.1",
+        "tgui-core": "^5.5.10",
         "tgui-dev-server": "workspace:*",
+        "zod": "^4.1.13",
       },
     },
     "packages/tgui-say": {
@@ -86,7 +89,7 @@
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
         "tgui": "workspace:*",
-        "tgui-core": "^5.3.1",
+        "tgui-core": "^5.5.10",
       },
     },
     "packages/tgui-setup": {
@@ -477,7 +480,7 @@
 
     "es-set-tostringtag": ["es-set-tostringtag@2.1.0", "", { "dependencies": { "es-errors": "^1.3.0", "get-intrinsic": "^1.2.6", "has-tostringtag": "^1.0.2", "hasown": "^2.0.2" } }, "sha512-j6vWzfrGVfyXxge+O0x5sh6cvxAog0a/4Rdd2K36zCMV5eJ+/+tOAngRO8cODMNWbVRdVlmGZQL2YS3yR8bIUA=="],
 
-    "es-toolkit": ["es-toolkit@1.39.7", "", {}, "sha512-ek/wWryKouBrZIjkwW2BFf91CWOIMvoy2AE5YYgUrfWsJQM2Su1LoLtrw8uusEpN9RfqLlV/0FVNjT0WMv8Bxw=="],
+    "es-toolkit": ["es-toolkit@1.43.0", "", {}, "sha512-SKCT8AsWvYzBBuUqMk4NPwFlSdqLpJwmy6AP322ERn8W2YLIB6JBXnwMI2Qsh2gfphT3q7EKAxKb23cvFHFwKA=="],
 
     "escalade": ["escalade@3.2.0", "", {}, "sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA=="],
 
@@ -647,7 +650,7 @@
 
     "jiti": ["jiti@2.4.2", "", { "bin": { "jiti": "lib/jiti-cli.mjs" } }, "sha512-rg9zJN+G4n2nfJl5MW3BMygZX56zKPNVEYYqq7adpmMh4Jn2QNEwhvQlFy6jPVdcod7txZtKHWnyZiA3a0zP7A=="],
 
-    "jotai": ["jotai@2.12.5", "", { "peerDependencies": { "@types/react": ">=17.0.0", "react": ">=17.0.0" }, "optionalPeers": ["@types/react", "react"] }, "sha512-G8m32HW3lSmcz/4mbqx0hgJIQ0ekndKWiYP7kWVKi0p6saLXdSoye+FZiOFyonnd7Q482LCzm8sMDl7Ar1NWDw=="],
+    "jotai": ["jotai@2.16.0", "", { "peerDependencies": { "@babel/core": ">=7.0.0", "@babel/template": ">=7.0.0", "@types/react": ">=17.0.0", "react": ">=17.0.0" }, "optionalPeers": ["@babel/core", "@babel/template", "@types/react", "react"] }, "sha512-NmkwPBet0SHQ28GBfEb10sqnbVOYyn6DL4iazZgGRDUKxSWL0iqcm+IK4TqTSFC2ixGk+XX2e46Wbv364a3cKg=="],
 
     "js-yaml": ["js-yaml@4.1.0", "", { "dependencies": { "argparse": "^2.0.1" }, "bin": { "js-yaml": "bin/js-yaml.js" } }, "sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA=="],
 
@@ -1009,7 +1012,7 @@
 
     "tgui": ["tgui@workspace:packages/tgui"],
 
-    "tgui-core": ["tgui-core@5.3.1", "", { "dependencies": { "@floating-ui/react": "^0.27.16", "@nozbe/microfuzz": "^1.0.0" }, "peerDependencies": { "react": "^19.1.0", "react-dom": "^19.1.0" } }, "sha512-+8dDM4R2G6T1SpzpkRXGYc7YD+9ohqYjTV/4Zgcqc1I4Ld8bJH9vKHCQVbEAsHTCIjHsTBW4xnOpKyAx1gRB5w=="],
+    "tgui-core": ["tgui-core@5.5.10", "", { "dependencies": { "@floating-ui/react": "^0.27.16", "@nozbe/microfuzz": "^1.0.0" }, "peerDependencies": { "react": "^19.1.0", "react-dom": "^19.1.0" } }, "sha512-/LrZOS9BXSGItzNWzqGpQSo+5BmXQiydbc95+vJGpO/44bW9PqZ2/AnyvP6JCSbBhHT/PQSGVJscJcBnqB+eiA=="],
 
     "tgui-dev-server": ["tgui-dev-server@workspace:packages/tgui-dev-server"],
 
@@ -1120,6 +1123,8 @@
     "yargs-parser": ["yargs-parser@21.1.1", "", {}, "sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw=="],
 
     "yerror": ["yerror@8.0.0", "", {}, "sha512-FemWD5/UqNm8ffj8oZIbjWXIF2KE0mZssggYpdaQkWDDgXBQ/35PNIxEuz6/YLn9o0kOxDBNJe8x8k9ljD7k/g=="],
+
+    "zod": ["zod@4.1.13", "", {}, "sha512-AvvthqfqrAhNH9dnfmrfKzX5upOdjUVJYFqNSlkmGf64gRaTzlPwz99IHYnVs28qYAybvAlBV+H7pn0saFY4Ig=="],
 
     "@isaacs/cliui/string-width": ["string-width@5.1.2", "", { "dependencies": { "eastasianwidth": "^0.2.0", "emoji-regex": "^9.2.2", "strip-ansi": "^7.0.1" } }, "sha512-HnLOCR3vjcY8beoNLtcjZ5/nxn2afmME6lhrDrebokqMap+XbeW8n9TXpPDOqdGK5qcI3oT0GKTW6wC7EMiVqA=="],
 

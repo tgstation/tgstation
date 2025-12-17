@@ -270,7 +270,7 @@
 	message.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
 	message.alpha = 0
 	message.pixel_z = starting_height
-	message.pixel_w = -target.base_pixel_w
+	message.pixel_w = -message_loc.base_pixel_w
 	message.maptext_width = CHAT_MESSAGE_WIDTH
 	message.maptext_height = mheight * 1.25 // We add extra because some characters are superscript, like actions
 	message.maptext_x = (CHAT_MESSAGE_WIDTH - owner.bound_width) * -0.5

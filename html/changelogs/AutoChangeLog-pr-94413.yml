@@ -1,4 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - bugfix: "fixed disposal unit light not turning on when dumping bag contents inside"

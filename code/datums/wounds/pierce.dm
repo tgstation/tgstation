@@ -339,7 +339,7 @@
 	RegisterSignal(limb, COMSIG_BODYPART_UPDATE_WOUND_OVERLAY, PROC_REF(wound_overlay))
 	limb.update_part_wound_overlay()
 
-/datum/wound/pierce/bleed/severe/eye/remove_wound(ignore_limb, replaced)
+/datum/wound/pierce/bleed/severe/eye/remove_wound(ignore_limb, replaced, destroying)
 	if (!isnull(limb))
 		UnregisterSignal(limb, COMSIG_BODYPART_UPDATE_WOUND_OVERLAY)
 	return ..()

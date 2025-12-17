@@ -7,16 +7,8 @@
 import type { Store } from 'common/redux';
 import { storage } from 'common/storage';
 import DOMPurify from 'dompurify';
-
-import {
-  addHighlightSetting,
-  importSettings,
-  loadSettings,
-  removeHighlightSetting,
-  updateHighlightSetting,
-  updateSettings,
-} from '../settings/actions';
-import { selectSettings } from '../settings/selectors';
+import { store as jotaiStore } from '../events/store';
+import { settingsAtom } from '../settings/atoms';
 import {
   addChatPage,
   changeChatPage,
@@ -101,7 +93,7 @@ export const chatMiddleware = (store: Store) => {
   });
   return (next) => (action) => {
     const { type, payload } = action;
-    const settings = selectSettings(store.getState());
+    const settings = jotaiStore.get(settingsAtom);
     // Load the chat once settings are loaded
     if (!initialized && settings.initialized) {
       setInterval(() => {
@@ -174,23 +166,6 @@ export const chatMiddleware = (store: Store) => {
       return next(action);
     }
 
-    if (
-      type === updateSettings.type ||
-      type === loadSettings.type ||
-      type === addHighlightSetting.type ||
-      type === removeHighlightSetting.type ||
-      type === updateHighlightSetting.type ||
-      type === importSettings.type
-    ) {
-      next(action);
-      const nextSettings = selectSettings(store.getState());
-      chatRenderer.setHighlight(
-        nextSettings.highlightSettings,
-        nextSettings.highlightSettingById,
-      );
-
-      return;
-    }
     if (type === 'roundrestart') {
       // Save chat as soon as possible
       saveChatToStorage(store);

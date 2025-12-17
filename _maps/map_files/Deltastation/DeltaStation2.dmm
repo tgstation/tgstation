@@ -77002,12 +77002,15 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table,
 /obj/machinery/light/directional/west,
-/obj/item/stack/conveyor/thirty,
-/obj/item/boulder_beacon{
-	pixel_x = -5
+/obj/item/food/ready_donk/donkrange_chicken,
+/obj/item/food/ready_donk/donkhiladas{
+	pixel_y = 5
 	},
-/obj/item/conveyor_switch_construct{
-	pixel_x = 10
+/obj/item/food/ready_donk/country_chicken{
+	pixel_y = 10
+	},
+/obj/structure/closet/mini_fridge{
+	name = "mini-fridge"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)

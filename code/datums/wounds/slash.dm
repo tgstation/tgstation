@@ -87,7 +87,7 @@
 	SIGNAL_HANDLER
 	set_highest_scar(null)
 
-/datum/wound/slash/flesh/remove_wound(ignore_limb, replaced)
+/datum/wound/slash/flesh/remove_wound(ignore_limb, replaced, destroying)
 	if(!replaced && highest_scar)
 		already_scarred = TRUE
 		highest_scar.lazy_attach(limb)

@@ -54,6 +54,17 @@
 		return
 	DIRECT_OUTPUT(src, link(githuburl))
 
+/client/verb/config()
+	set name = "config"
+	set desc = "View the server configuration files."
+	set hidden = TRUE
+
+	var/configurl = CONFIG_GET(string/configurl)
+	if(!configurl)
+		to_chat(src, span_danger("The Config URL is not set in the server configuration."))
+		return
+	DIRECT_OUTPUT(src, link(configurl))
+
 /client/verb/reportissue()
 	set name = "report-issue"
 	set desc = "Report an issue"

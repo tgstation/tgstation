@@ -766,15 +766,9 @@
 "eq" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
-"ev" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 5
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/deepstorage/armory)
 "ew" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
@@ -1530,6 +1524,14 @@
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
+"nh" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage/hydroponics)
 "oo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -2389,6 +2391,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "MV" = (
@@ -4381,7 +4384,7 @@ db
 dt
 dt
 pq
-ev
+dt
 xY
 fb
 fo
@@ -4425,8 +4428,8 @@ ag
 aQ
 vG
 bC
-zf
-sL
+nh
+bC
 Lg
 aQ
 wK
