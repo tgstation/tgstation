@@ -1729,6 +1729,7 @@
 	VV_DROPDOWN_OPTION("", "---------")
 	VV_DROPDOWN_OPTION(VV_HK_OBSERVE_FOLLOW, "Observe Follow")
 	VV_DROPDOWN_OPTION(VV_HK_GET_MOVABLE, "Get Movable")
+	VV_DROPDOWN_OPTION(VV_HK_GET_FACTIONS, "Get Factions")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_REMOVE_FACTION, "Add/Remove Faction")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_PARTICLES, "Edit Particles")
 	VV_DROPDOWN_OPTION(VV_HK_DEADCHAT_PLAYS, "Start/Stop Deadchat Plays")
@@ -1757,7 +1758,17 @@
 			return
 		if(QDELETED(src))
 			return
-		edit_faction(usr)
+		if(edit_faction(usr))
+			var/list/factions_printout = faction_to_text()
+			to_chat(usr, span_notice("Factions updated for [src]:[factions_printout]"))
+
+	if(href_list[VV_HK_GET_FACTIONS])
+		if(!check_rights(R_ADMIN))
+			return
+		if(QDELETED(src))
+			return
+		var/list/factions_printout = faction_to_text()
+		to_chat(usr, span_notice(span_notice("Factions for [src]:[factions_printout]")))
 
 	if(href_list[VV_HK_EDIT_PARTICLES] && check_rights(R_VAREDIT))
 		var/client/C = usr.client
@@ -2007,3 +2018,13 @@
 			return FALSE
 
 		return remove_faction(faction_to_remove)
+
+/**
+ * Outputs the factions list as text
+ */
+/atom/movable/proc/faction_to_text()
+	var/list/factions_printout = list()
+	for(var/faction_string in get_faction())
+		factions_printout += "\n[faction_string]"
+
+	return jointext(factions_printout, "")
