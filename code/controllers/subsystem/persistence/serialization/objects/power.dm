@@ -115,3 +115,23 @@
 				track = SOLAR_TRACK_OFF
 		if(SOLAR_TRACK_TIMED)
 			set_panels(azimuth_target)
+
+/obj/machinery/power/emitter/get_save_vars(save_flags)
+	. = ..()
+	. += NAMEOF(src, active)
+	. += NAMEOF(src, welded)
+	. += NAMEOF(src, locked)
+	. += NAMEOF(src, projectile_type)
+	. += NAMEOF(src, projectile_sound)
+	. += NAMEOF(src, fire_rate_mod)
+	. += NAMEOF(src, no_shot_counter)
+	return .
+
+/obj/machinery/power/emitter/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
+	if(diskie)
+		save_stored_contents(map_string, current_loc, obj_blacklist)
+
+/obj/machinery/power/emitter/PersistentInitialize()
+	. = ..()
+	diskie = locate(/obj/item/emitter_disk) in contents
+	update_appearance()
