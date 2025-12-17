@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed runtimes caused by species changes with pre-existing wounds"
+  - code_imp: "Optimized deletion code for limbs with wounds"
