@@ -1,0 +1,4 @@
+author: "Kaltf4"
+delete-after: True
+changes:
+  - bugfix: "When all six non-rare colors of raptor are cross-bred, a black raptor now consistently spawns (unless a guaranteed color-combo supersedes it)."
