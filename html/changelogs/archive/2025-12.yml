@@ -517,12 +517,46 @@
   Aliceee2ch:
   - map: Access changed from "construction" to "tech storage" in respective room entrance
       on Catwalk.
+  - bugfix: Fixed smacking ectoscopic sniffer after you unwrenched it.
+  - code_imp: Minor code improvements for ectoscopic sniffer.
+  - map: Changed access for ordnance shutters button on MetaStation (from RD -> Science)
+  BurgerBB:
+  - bugfix: Fix signal unregistration in grapple gun on hit.
+  DaCoolBoss:
+  - bugfix: The Donk Co. 'Donk Spike' boxes now properly store shotgun shells.
   Ezel:
   - bugfix: Fixes a oversight on deltastation where mining still get a boulder beacon.
   - map: Nanotrasen now supplies deltastation mining employees with 3 instant meals
       before doing their workshift
+  - map: Changes the location of catwalk gravgen APC to be outside the Generator room
+  - bugfix: Hos office on catwalk now includes an ID console
+  Kaltf4:
+  - bugfix: When all six non-rare colors of raptor are cross-bred, a black raptor
+      now consistently spawns (unless a guaranteed color-combo supersedes it).
   MatrixOne500:
   - rscadd: You can now craft a retro brown sofa!
+  SmArtKar:
+  - bugfix: Fixed runtimes upon trying to reload a shotgun with an empty chambered
+      shell
+  - bugfix: Fixes runtimes from throwing fishing lines into water
+  - bugfix: Fixed fire sound runtimes caused by incorrect arguments
+  - bugfix: Fixed wizard/timeline rewind sound runtimes
+  - bugfix: Fixed runechat offsets for stored mobs
+  - bugfix: Fixed runtimes caused by species changes with pre-existing wounds
+  - code_imp: Optimized deletion code for limbs with wounds
+  - bugfix: Fixed sheet ejection on mechfabs
+  - qol: Miner ORM deposits are now logged in the ore silo
+  - bugfix: Death moodlets no longer runtime when stacking
+  - bugfix: Fixed runtimes caused by auto-observing someone repeatedly
+  - bugfix: Fixed runtimes from stun batons impacting objects when thrown
+  - bugfix: Fixes runtimes caused by opportunistic melee AI behaviors
+  - bugfix: Fixed RMB interactions for IV drips
+  - bugfix: Fixed meshes runtiming when the target has a non-burn wound
+  - bugfix: Fixed damp rags not removing reagents other than space cleaner from themselves
+  - bugfix: Fixed runtimes caused by persistent scars trying to save bodyswapped people's
+      scars
+  Stalkeros:
+  - rscadd: Stack of fifty sandbags
   codyman765:
   - image: Ushanka now comes with extra fur lining!
   lelandkemble:
