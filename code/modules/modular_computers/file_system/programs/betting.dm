@@ -268,13 +268,15 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 					//taking money out
 					if(text2num(existing_bets[2]) > money_betting)
 						var/money_taking_out = text2num(existing_bets[2]) - money_betting
+						if(money_taking_out > text2num(existing_bets[2]))
+							money_taking_out = text2num(existing_bets[2])
 						total_amount_bet -= money_taking_out
 						better.bank_card_talk("Refunded [money_taking_out][MONEY_SYMBOL] for taking money out of your bet on [name].")
 						better.adjust_money(money_taking_out, "Refund from gambling on [name].")
-						existing_bets[2] = "[money_betting]"
+						existing_bets[2] = "[text2num(existing_bets[2]) - money_taking_out]"
 						return
 
-	if(!better.adjust_money(-money_betting, "Gambling on [name]"))
+	if(money_betting <= 0 || !better.adjust_money(-money_betting, "Gambling on [name]"))
 		return
 	total_amount_bet += money_betting
 	options[option_betting] += list(list(better, "[money_betting]"))
