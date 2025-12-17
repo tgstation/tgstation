@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed runtimes upon trying to reload a shotgun with an empty chambered shell"
