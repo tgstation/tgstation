@@ -26,6 +26,12 @@
 
 	/// List of atoms that caused the chunk to update - assoc atom ref() to opacity on queue
 	var/list/update_sources = list()
+	/// Are we currently being updated by the cameras subsystem?
+	var/currently_updating = FALSE
+	/// Alist of cameras that need to be processed. For use in yielding when being lazyupdated by the cameras subsystem
+	var/alist/processing_cameras = list()
+	/// List of newly visible turfs that are currently being generated. For use in lazyupdating.
+	var/list/processing_visible_turfs = list()
 
 /// Add a camera eye to the chunk, updating the chunk if necessary.
 /datum/camerachunk/proc/add(mob/eye/camera/eye)
@@ -58,6 +64,7 @@
 		addtimer(CALLBACK(src, PROC_REF(update)), update_delay_buffer || 1, TIMER_UNIQUE)
 		return
 
+	reset_update()
 	// Only start queue if this is the first thing to queue an update
 	var/start_queue = !length(update_sources)
 
@@ -76,6 +83,7 @@
 	// So we can safely remove this atom as a "source of update"
 	else if(update_sources[update_key] != update_source.opacity)
 		update_sources -= update_key
+		_attempt_dequeue_update()
 		return
 
 	if(!start_queue)
@@ -91,7 +99,15 @@
 	// Something forced an update during the delay
 	if(!length(update_sources))
 		return
-	SScameras.chunks_to_update[src] += 1
+	SScameras.chunks_to_update[src] = TRUE
+
+/datum/camerachunk/proc/_attempt_dequeue_update()
+	PRIVATE_PROC(TRUE)
+	// Whelp
+	if(length(update_sources))
+		return
+	SScameras.chunks_to_update -= src
+	SScameras.current_run -= src
 
 /**
  * Forces the chunk to update immediately
@@ -103,12 +119,61 @@
 		return
 	update()
 
-/// The actual updating. It gathers the visible turfs from cameras and puts them into the appropiate lists.
+/// Reset any in progress update
+/datum/camerachunk/proc/reset_update()
+	if(!currently_updating)
+		return
+
+	processing_visible_turfs = list()
+	processing_cameras = alist()
+	currently_updating = FALSE
+
+/// Updates our chunk in a lazy fashion, so large amounts of cameras don't lead to overtime spikes
+/// Returns FALSE if the update is unfinished, TRUE if it's complete
+/datum/camerachunk/proc/yield_update()
+	if(SScameras.disable_camera_updates)
+		return TRUE
+
+	if(!currently_updating)
+		currently_updating = TRUE
+		processing_cameras = alist()
+		for(var/z_level in lower_z to upper_z)
+			processing_cameras[z_level] = cameras[z_level].Copy()
+
+	var/list/updated_visible_turfs = src.processing_visible_turfs
+	for(var/z_level in lower_z to upper_z)
+		var/list/processing = processing_cameras[z_level]
+		while(length(processing))
+			var/obj/machinery/camera/current_camera = processing[length(processing)]
+			processing.len--
+			if(!current_camera || !current_camera.can_use())
+				if(TICK_CHECK)
+					return FALSE
+				continue
+
+			var/turf/point = locate(src.x + (CHUNK_SIZE / 2), src.y + (CHUNK_SIZE / 2), z_level)
+			if(get_dist(point, current_camera) > MAX_CAMERA_RANGE + (CHUNK_SIZE / 2))
+				continue
+
+			for(var/turf/vis_turf as anything in turfs & current_camera.can_see())
+				updated_visible_turfs[vis_turf] = vis_turf
+
+			if(TICK_CHECK)
+				return FALSE
+
+	update_with_turfs(updated_visible_turfs)
+	update_sources.Cut()
+	reset_update()
+	return TRUE
+
+/// Perfroms a full update of the chunk
 /datum/camerachunk/proc/update()
 	if(SScameras.disable_camera_updates)
 		return
 
 	update_sources.Cut()
+	_attempt_dequeue_update()
+	reset_update()
 
 	var/list/updated_visible_turfs = list()
 
@@ -124,6 +189,10 @@
 			for(var/turf/vis_turf as anything in turfs & current_camera.can_see())
 				updated_visible_turfs[vis_turf] = vis_turf
 
+	update_with_turfs(updated_visible_turfs)
+
+/// Takes a list of newly visible turfs, updates our static images to match
+/datum/camerachunk/proc/update_with_turfs(list/updated_visible_turfs)
 	///new turfs that we couldnt see last update but can now
 	var/list/newly_visible_turfs = updated_visible_turfs - visibleTurfs
 	///turfs that we could see last update but cant see now
@@ -163,7 +232,6 @@
 			continue
 
 		client.images += active_static_images
-
 
 /// Create a new camera chunk, since the chunks are made as they are needed.
 /datum/camerachunk/New(x, y, lower_z)

@@ -44,8 +44,8 @@ SUBSYSTEM_DEF(cameras)
 			for(var/y = y1; y <= y2; y += CHUNK_SIZE)
 				visibleChunks |= generate_chunk(x, y, z)
 	//stat_tracking_export_to_csv_later("camera_chunks.csv", GLOB.camera_cost, GLOB.camera_count)
-	SSticker.delay_end = FALSE
-	shutdown()
+//	SSticker.delay_end = FALSE
+//	shutdown()
 
 /datum/controller/subsystem/cameras/fire(resumed = FALSE)
 	if(!resumed)
@@ -55,8 +55,8 @@ SUBSYSTEM_DEF(cameras)
 	var/list/current_run = src.current_run
 	while(current_run.len)
 		var/datum/camerachunk/chunk = current_run[current_run.len]
-		chunk.force_update(only_if_necessary = TRUE) // Forces an update if necessary
-		current_run.len--
+		if(chunk.yield_update())
+			current_run.len--
 		if(MC_TICK_CHECK)
 			break
 
