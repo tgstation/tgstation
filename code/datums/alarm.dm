@@ -14,7 +14,7 @@
 ///Represents a single source of alarms, one alarm handler will only ever count for one alarm per listener
 /datum/alarm_handler
 	///A list of alarm type -> list of areas we currently have alarms in
-	var/list/sent_alarms = list()
+	var/list/sent_alarms
 	///Our source atom
 	var/atom/source_atom
 
@@ -27,8 +27,8 @@
 	return ..()
 
 /datum/alarm_handler/Destroy()
-	for(var/alarm_type in sent_alarms)
-		for(var/area/area_to_clear as anything in sent_alarms[alarm_type])
+	for(var/alarm_type, sent_alarm in sent_alarms)
+		for(var/area/area_to_clear as anything in sent_alarm)
 			//Yeet all connected alarms
 			clear_alarm_from_area(alarm_type, area_to_clear)
 	source_atom = null
@@ -46,13 +46,13 @@
 	var/area/our_area = get_area(use_as_source_atom)
 	var/our_z_level = use_as_source_atom.z
 
-	var/list/existing_alarms = sent_alarms[alarm_type]
+	var/list/existing_alarms = LAZYACCESS(sent_alarms, alarm_type)
 	if(existing_alarms)
 		if(our_area in existing_alarms)
 			return FALSE
 	else
-		sent_alarms[alarm_type] = list()
-		existing_alarms = sent_alarms[alarm_type]
+		LAZYSET(sent_alarms, alarm_type, list())
+		existing_alarms = sent_alarms[alarm_type] // List will definitely exist because of previous line, no need for lazy macro
 
 	existing_alarms += our_area
 
@@ -76,16 +76,16 @@
 ///Exists so we can request that the alarms from an area are cleared, even if our source atom is no longer in that area
 /datum/alarm_handler/proc/clear_alarm_from_area(alarm_type, area/our_area)
 
-	var/list/existing_alarms = sent_alarms[alarm_type]
-	if(!existing_alarms)
+	var/list/existing_alarms = LAZYACCESS(sent_alarms, alarm_type)
+	if(isnull(existing_alarms))
 		return FALSE
 
 	if(!(our_area in existing_alarms))
 		return FALSE
 
-	existing_alarms -= our_area
-	if(!length(existing_alarms))
-		sent_alarms -= alarm_type
+	LAZYREMOVE(existing_alarms, our_area)
+	if(!LAZYLEN(existing_alarms))
+		LAZYREMOVE(sent_alarms, alarm_type)
 
 	our_area.active_alarms[alarm_type] -= 1
 	if(!length(our_area.active_alarms))

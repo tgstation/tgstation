@@ -1,0 +1,4 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - map: "Changes the location of catwalk gravgen APC to be outside the Generator room"

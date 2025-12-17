@@ -28,7 +28,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	. = ..()
 	if(mapload)
 		bulb = new(src)
-		find_and_hang_on_atom()
+		find_and_mount_on_atom()
 
 /obj/machinery/flasher/vv_edit_var(vname, vval)
 	. = ..()
@@ -170,8 +170,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	. = ..()
 	proximity_monitor = new(src, 0)
 
-/obj/machinery/flasher/portable/find_and_hang_on_atom(mark_for_late_init = FALSE, late_init = FALSE)
-	return //its meant to be carried
+/obj/machinery/flasher/portable/find_and_mount_on_atom(mark_for_late_init, late_init)
+	return //its meant to be carried and mobile
 
 /obj/machinery/flasher/portable/HasProximity(atom/movable/proximity_check_mob)
 	if(!COOLDOWN_FINISHED(src, flash_cooldown))

@@ -139,7 +139,6 @@
 		message_in_a_bottle.forceMove(drop_location())
 
 	qdel(src)
-	target.Bumped(broken)
 	return TRUE
 
 /obj/item/reagent_containers/cup/glass/bottle/try_splash(mob/user, atom/target)
@@ -152,25 +151,25 @@
 		return
 
 	var/head_hitter = user.zone_selected == BODY_ZONE_HEAD && isliving(target)
-
-	// An attack that targets the head of a living mob will attempt to knock them down
-	if(head_hitter)
-		var/mob/living/living_target = target
-		var/knockdown_effectiveness = 0
-		if(!HAS_TRAIT(target, TRAIT_HEAD_INJURY_BLOCKED))
-			knockdown_effectiveness = bottle_knockdown_duration + ((force / 10) * 1 SECONDS) - living_target.getarmor(BODY_ZONE_HEAD, MELEE)
-		if(prob(knockdown_effectiveness))
-			living_target.Knockdown(min(knockdown_effectiveness, 20 SECONDS))
+	if(!QDELETED(target))
+		// An attack that targets the head of a living mob will attempt to knock them down
+		if(head_hitter)
+			var/mob/living/living_target = target
+			var/knockdown_effectiveness = 0
+			if(!HAS_TRAIT(target, TRAIT_HEAD_INJURY_BLOCKED))
+				knockdown_effectiveness = bottle_knockdown_duration + ((force / 10) * 1 SECONDS) - living_target.getarmor(BODY_ZONE_HEAD, MELEE)
+			if(prob(knockdown_effectiveness))
+				living_target.Knockdown(min(knockdown_effectiveness, 20 SECONDS))
 
 	// Displays a custom message which follows the attack
 	if(target == user)
-		target.visible_message(
+		user.visible_message(
 			span_warning("[user] smashes [src] [head_hitter ? "over [user.p_their()] head" : "against [user.p_them()]selves"]!"),
 			span_warning("You smash [src] [head_hitter ? "over your head" : "against yourself"]!"),
 		)
 
 	else
-		target.visible_message(
+		user.visible_message(
 			span_warning("[user] smashes [src] [head_hitter ? "over [target]'s head" : "against [target]"]!"),
 			span_warning("[user] smashes [src] [head_hitter ? "over your head" : "against you"]!"),
 		)
@@ -263,8 +262,7 @@
 		desc = "A carton with the bottom half burst open. Might give you a papercut."
 	else
 		if(prob(33))
-			var/obj/item/shard/stab_with = new(to_mimic.drop_location())
-			target.Bumped(stab_with)
+			new /obj/item/shard(to_mimic.drop_location())
 		playsound(src, SFX_SHATTER, 70, TRUE)
 	name = "broken [to_mimic.name]"
 	to_mimic.transfer_fingerprints_to(src)
@@ -882,6 +880,7 @@
 	desc = "A throwing weapon used to ignite things, typically filled with an accelerant. Recommended highly by rioters and revolutionaries. Light and toss."
 	icon_state = "vodkabottle"
 	list_reagents = list()
+	heatable = FALSE
 	var/active = FALSE
 	var/list/accelerants = list(
 		/datum/reagent/consumable/ethanol,
@@ -909,15 +908,16 @@
 	..(hit_atom, throwingdatum, do_splash = FALSE)
 
 /obj/item/reagent_containers/cup/glass/bottle/molotov/smash(atom/target, mob/thrower, datum/thrownthing/throwingdatum, break_top)
-	var/firestarter = 0
+	var/firestarter = FALSE
 	for(var/datum/reagent/contained_reagent in reagents.reagent_list)
 		for(var/accelerant_type in accelerants)
 			if(istype(contained_reagent, accelerant_type))
-				firestarter = 1
+				firestarter = TRUE
 				break
 	..()
 	if(firestarter && active)
-		target.fire_act()
+		if(!QDELETED(target))
+			target.fire_act()
 		new /obj/effect/hotspot(get_turf(target))
 
 /obj/item/reagent_containers/cup/glass/bottle/molotov/item_interaction(mob/living/user, obj/item/item, list/modifiers)
@@ -1022,6 +1022,7 @@
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
 	isGlass = FALSE
 	age_restricted = FALSE
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT * 1.5)
 
 /obj/item/reagent_containers/cup/glass/bottle/juice/orangejuice
 	name = "orange juice"

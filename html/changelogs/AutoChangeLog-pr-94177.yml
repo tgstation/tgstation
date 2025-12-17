@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Video game winning experiment no longer completes over and over"
