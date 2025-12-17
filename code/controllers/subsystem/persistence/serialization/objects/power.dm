@@ -116,7 +116,7 @@
 		if(SOLAR_TRACK_TIMED)
 			set_panels(azimuth_target)
 
-/obj/machinery/power/emitter/get_save_vars(save_flags)
+/obj/machinery/power/emitter/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, active)
 	. += NAMEOF(src, welded)
