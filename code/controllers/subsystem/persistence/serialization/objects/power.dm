@@ -135,3 +135,10 @@
 	. = ..()
 	diskie = locate(/obj/item/emitter_disk) in contents
 	update_appearance()
+
+/obj/structure/reflector/get_save_vars(save_flags)
+	. = ..()
+	. += NAMEOF(src, rotation_angle)
+	. += NAMEOF(src, finished)
+	. += NAMEOF(src, can_rotate)
+	return .
