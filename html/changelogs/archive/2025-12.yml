@@ -513,3 +513,22 @@
       click
   san7890:
   - server: The ready/not ready states of new players are logged when a shift starts.
+2025-12-17:
+  Aliceee2ch:
+  - map: Access changed from "construction" to "tech storage" in respective room entrance
+      on Catwalk.
+  Ezel:
+  - bugfix: Fixes a oversight on deltastation where mining still get a boulder beacon.
+  - map: Nanotrasen now supplies deltastation mining employees with 3 instant meals
+      before doing their workshift
+  MatrixOne500:
+  - rscadd: You can now craft a retro brown sofa!
+  codyman765:
+  - image: Ushanka now comes with extra fur lining!
+  lelandkemble:
+  - map: Several disconnected vents and scrubbers on Icebox have been reconnected
+  - map: Removed some inefficiencies in Wawa's piping and cabling.
+  - map: A great deal of offstation structures have been given more efficient piping
+      & cabling.
+  - map: Several offstation structures have had piping & cabling issues resolved.
+  - map: Assistants no longer have access to the tramstation security mechbay

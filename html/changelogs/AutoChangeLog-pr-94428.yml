@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - map: "Removed some inefficiencies in Wawa's piping and cabling."

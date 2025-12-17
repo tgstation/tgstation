@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - map: "Assistants no longer have access to the tramstation security mechbay"
