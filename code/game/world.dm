@@ -186,15 +186,6 @@ GLOBAL_VAR(restart_counter)
 	setup_autowiki()
 	#endif
 
-	//run_performance_tests()
-
-/world/proc/run_performance_tests()
-	//trigger things to run the whole process
-	Master.sleep_offline_after_initializations = FALSE
-	SSticker.start_immediately = TRUE
-	var/datum/callback/cb = CALLBACK(SScameras, TYPE_PROC_REF(/datum/controller/subsystem/cameras, update_all_chunks))
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), cb, 10 SECONDS))
-
 /world/proc/HandleTestRun()
 	//trigger things to run the whole process
 	Master.sleep_offline_after_initializations = FALSE
