@@ -71,7 +71,7 @@
 		if(need_mob_update)
 			owner.updatehealth()
 
-	if(totaldamage >= 0) // AdjustBruteLoss returns a negative value on successful damage adjustment
+	if(totaldamage >= 0) // adjust_brute_loss() returns a negative value on successful damage adjustment
 		our_slime.balloon_alert(our_slime, "not food!")
 		our_slime.stop_feeding()
 		return
