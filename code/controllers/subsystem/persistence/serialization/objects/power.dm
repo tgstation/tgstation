@@ -36,6 +36,11 @@
 
 /obj/machinery/power/apc/get_save_vars(save_flags=ALL)
 	. = ..()
+	. += NAMEOF(src, cable_layer)
+	return .
+
+/obj/machinery/power/apc/get_save_vars(save_flags=ALL)
+	. = ..()
 	. += NAMEOF(src, opened)
 	. += NAMEOF(src, locked)
 	. += NAMEOF(src, coverlocked)
@@ -48,7 +53,6 @@
 
 	// TODO save the wire data but need to include states for cute wires, signalers attached to wires, etc.
 	//. += NAMEOF(src, shorted)
-	//. += NAMEOF(src, locked)
 	return .
 
 /obj/machinery/power/apc/get_custom_save_vars(save_flags=ALL)
