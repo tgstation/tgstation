@@ -1,0 +1,4 @@
+author: "BurgerBB"
+delete-after: True
+changes:
+  - bugfix: "Fix signal unregistration in grapple gun on hit."
