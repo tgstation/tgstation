@@ -158,10 +158,11 @@ SUBSYSTEM_DEF(cameras)
 	if(isnull(chunk_turf))
 		return
 
-	var/x1 = max(1, chunk_turf.x - (CHUNK_SIZE / 2))
-	var/y1 = max(1, chunk_turf.y - (CHUNK_SIZE / 2))
-	var/x2 = min(world.maxx, chunk_turf.x + (CHUNK_SIZE / 2))
-	var/y2 = min(world.maxy, chunk_turf.y + (CHUNK_SIZE / 2))
+	var/range_difference = MAX_CAMERA_RANGE + 1
+	var/x1 = max(1, chunk_turf.x - range_difference)
+	var/y1 = max(1, chunk_turf.y - range_difference)
+	var/x2 = min(world.maxx, chunk_turf.x + range_difference)
+	var/y2 = min(world.maxy, chunk_turf.y + range_difference)
 	for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 		for(var/y = y1; y <= y2; y += CHUNK_SIZE)
 			var/datum/camerachunk/chunk = get_camera_chunk(x, y, chunk_turf.z)
@@ -178,10 +179,11 @@ SUBSYSTEM_DEF(cameras)
 /// A faster, turf only version of [/datum/controller/subsystem/cameras/proc/major_chunk_change]
 /// For use in sensitive code, be careful with it
 /datum/controller/subsystem/cameras/proc/bare_major_chunk_change(turf/changed)
-	var/x1 = max(1, changed.x - (CHUNK_SIZE / 2))
-	var/y1 = max(1, changed.y - (CHUNK_SIZE / 2))
-	var/x2 = min(world.maxx, changed.x + (CHUNK_SIZE / 2))
-	var/y2 = min(world.maxy, changed.y + (CHUNK_SIZE / 2))
+	var/range_difference = MAX_CAMERA_RANGE + 1
+	var/x1 = max(1, changed.x - range_difference)
+	var/y1 = max(1, changed.y - range_difference)
+	var/x2 = min(world.maxx, changed.x + range_difference)
+	var/y2 = min(world.maxy, changed.y + range_difference)
 	for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 		for(var/y = y1; y <= y2; y += CHUNK_SIZE)
 			var/datum/camerachunk/chunk = get_camera_chunk(x, y, changed.z)

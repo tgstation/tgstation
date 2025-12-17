@@ -117,10 +117,6 @@
 			if(!current_camera || !current_camera.can_use())
 				continue
 
-			var/turf/point = locate(src.x + (CHUNK_SIZE / 2), src.y + (CHUNK_SIZE / 2), z_level)
-			if(get_dist(point, current_camera) > CHUNK_SIZE + (CHUNK_SIZE / 2))
-				continue
-
 			for(var/turf/vis_turf as anything in turfs & current_camera.can_see())
 				updated_visible_turfs[vis_turf] = vis_turf
 
@@ -176,22 +172,18 @@
 	var/turf/upper_turf = get_highest_turf(locate(x, y, lower_z))
 	src.upper_z = upper_turf.z
 
+	var/alist/cameras = src.cameras
+	var/list/turfs = src.turfs
+	var/list/visibleTurfs = src.visibleTurfs
+	var/list/obscuredTurfs = src.obscuredTurfs
+	var/list/active_static_images = src.active_static_images
+	var/lower_x = x
+	var/lower_y = y
+	var/upper_x = min(lower_x + CHUNK_SIZE - 1, world.maxx)
+	var/upper_y = min(lower_y + CHUNK_SIZE - 1, world.maxy)
+	var/list/stack = SSmapping.get_connected_levels(lower_z)
 	for(var/z_level in lower_z to upper_z)
-		var/list/local_cameras = list()
-		for(var/obj/machinery/camera/camera in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z_level)))
-			if(camera.can_use())
-				local_cameras += camera
-
-		for(var/mob/living/silicon/sillycone in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z_level)))
-			if(sillycone.builtInCamera?.can_use())
-				local_cameras += sillycone.builtInCamera
-
-		for(var/obj/vehicle/sealed/mecha/mech in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z_level)))
-			if(mech.chassis_camera?.can_use())
-				local_cameras += mech.chassis_camera
-
-		cameras[z_level] = local_cameras
-
+		cameras[z_level] = list()
 		var/image/mirror_from = SScameras.obscured_images[GET_Z_PLANE_OFFSET(z_level) + 1]
 		var/turf/chunk_corner = locate(x, y, z_level)
 		for(var/turf/lad as anything in CORNER_BLOCK(chunk_corner, CHUNK_SIZE, CHUNK_SIZE)) //we use CHUNK_SIZE for width and height here as it handles subtracting 1 from those two parameters by itself
@@ -199,15 +191,21 @@
 			our_image.loc = lad
 			turfs[lad] = our_image
 
-		for(var/obj/machinery/camera/camera as anything in local_cameras)
-			if(!camera)
-				continue
+	for(var/obj/machinery/camera/camera as anything in SScameras.cameras)
+		var/turf/camera_loc = get_turf(camera)
+		// AABB
+		if(camera_loc.x + MAX_CAMERA_RANGE < lower_x || camera_loc.x - MAX_CAMERA_RANGE > upper_x)
+			continue
+		if(camera_loc.y + MAX_CAMERA_RANGE < lower_y || camera_loc.y - MAX_CAMERA_RANGE > upper_y)
+			continue
+		if(stack != SSmapping.get_connected_levels(camera_loc.z))
+			continue
+		if(!camera.can_use())
+			continue
 
-			if(!camera.can_use())
-				continue
-
-			for(var/turf/vis_turf as anything in turfs & camera.can_see())
-				visibleTurfs[vis_turf] = vis_turf
+		cameras[camera_loc.z] += camera
+		for(var/turf/vis_turf as anything in turfs & camera.can_see())
+			visibleTurfs[vis_turf] = vis_turf
 
 	for(var/turf/obscured_turf as anything in turfs - visibleTurfs)
 		var/image/new_static = turfs[obscured_turf]
