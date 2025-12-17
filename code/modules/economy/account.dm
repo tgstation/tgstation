@@ -152,7 +152,7 @@
 			return 0
 	else
 		add_log_to_history(-amount, "Other: Debt Collection")
-	log_econ("[amount_to_pay] credits were removed from [account_holder]'s bank account to pay a debt of [account_debt]")
+	log_econ("[amount_to_pay] [MONEY_NAME] were removed from [account_holder]'s bank account to pay a debt of [account_debt]")
 	account_debt -= amount_to_pay
 	SEND_SIGNAL(src, COMSIG_BANK_ACCOUNT_DEBT_PAID)
 	return amount_to_pay
@@ -180,7 +180,7 @@
 		adjust_money(amount, reason_to)
 		from.adjust_money(-amount, reason_from)
 		SSblackbox.record_feedback("amount", "credits_transferred", amount)
-		log_econ("[amount] credits were transferred from [from.account_holder]'s account to [src.account_holder]")
+		log_econ("[amount] [MONEY_NAME] were transferred from [from.account_holder]'s account to [src.account_holder]")
 		return TRUE
 	return FALSE
 
@@ -212,7 +212,7 @@
 		adjust_money(money_to_transfer, "Nanotrasen: Shift Payment")
 		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)
 		SSeconomy.station_target += money_to_transfer
-		log_econ("[money_to_transfer] credits were given to [src.account_holder]'s account from income.")
+		log_econ("[money_to_transfer] [MONEY_NAME] were given to [src.account_holder]'s account from income.")
 		return TRUE
 	var/datum/bank_account/department_account = SSeconomy.get_dep_account(account_job.paycheck_department)
 	if(isnull(department_account))
@@ -221,7 +221,7 @@
 	if(!transfer_money(department_account, money_to_transfer))
 		bank_card_talk("ERROR: [event] aborted, departmental funds insufficient.")
 		return FALSE
-	bank_card_talk("[event] processed, account now holds [account_balance] cr.")
+	bank_card_talk("[event] processed, account now holds [account_balance] [MONEY_SYMBOL].")
 	return TRUE
 
 /**
@@ -318,8 +318,11 @@
 
 /datum/bank_account/department/adjust_money(amount, reason)
 	. = ..()
+
+	SSblackbox.record_feedback("amount", "[department_id]_balance", account_balance, world.time) //Provides the cargo balance alongside a timestamp for comparison afterwards.
 	if(department_id != ACCOUNT_CAR)
 		return
+
 	// If we're under (or equal) 3 crates woth of money (600?) in the cargo department, we unlock the scrapheap, which gives us a buncha money. Useful in an emergency?
 	if(account_balance >= CARGO_CRATE_VALUE * 3)
 		return
