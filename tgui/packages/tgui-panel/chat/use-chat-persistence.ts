@@ -69,9 +69,7 @@ export function useChatPersistence() {
 
   /** Periodically saves chat + chat settings */
   useEffect(() => {
-    if (!loaded) {
-      return;
-    }
+    if (!loaded) return;
 
     const saveInterval = setInterval(saveChatToStorage, MESSAGE_SAVE_INTERVAL);
     return () => clearInterval(saveInterval);
