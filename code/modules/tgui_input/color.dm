@@ -106,7 +106,7 @@
 		return
 	switch(action)
 		if("submit")
-			var/raw_data = lowertext(params["entry"])
+			var/raw_data = LOWER_TEXT(params["entry"])
 			var/hex = sanitize_hexcolor(raw_data, desired_format = 6, include_crunch = TRUE)
 			if (!hex)
 				return
