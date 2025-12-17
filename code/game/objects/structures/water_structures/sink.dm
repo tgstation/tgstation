@@ -136,7 +136,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 			playsound(src, baton.on_stun_sound, 50, TRUE)
 			return
 
-	if(istype(attacking_item, /obj/item/mop) || istype(attacking_item, /obj/item/rag))
+	if(istype(attacking_item, /obj/item/mop))
 		if(reagents.total_volume <= 0)
 			to_chat(user, span_notice("\The [src] is dry."))
 			return FALSE
