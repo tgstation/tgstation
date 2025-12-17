@@ -1,0 +1,5 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - bugfix: "Fixes a oversight on deltastation where mining still get a boulder beacon."
+  - map: "Nanotrasen now supplies deltastation mining employees with 3 instant meals before doing their workshift"
