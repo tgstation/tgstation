@@ -441,3 +441,128 @@
   jlsnow301:
   - rscdel: Removed the TGUI kitchensink component view
   - rscadd: Added a new data explorer for TGUI dev mode
+2025-12-14:
+  ArchBTW:
+  - bugfix: Fix not being able to drag click things on tram floor
+  - bugfix: Fix stacking flash assemblies
+  - bugfix: Fix nightmare not properly snuffing dragged lights if other lights were
+      turned on simultaneously
+  - balance: Heavy pirate's armored pirate coat can hold the same items that standard
+      armor can.
+  - bugfix: Gives eligible sentient simplemobs a stamina hud
+  Geoengi:
+  - rscadd: Robot customers and mech wreckage destruction are messier. Bring a mop!
+  Hatterhat:
+  - bugfix: Non-base laser guns now attach their lore properly.
+  - spellcheck: Adjusted the names on the laser guns to have a slash between the numeric
+      type/version and the variant... abbreviation? Letter? One of the two.
+  - spellcheck: Fixed some typos and adjusted the now-visible lore on the laser guns
+      to read a little nicer, theoretically. Whether the grammar tweaks improved anything
+      or not is subjective.
+  LT3:
+  - code_imp: Clausophobia is now only triggered by a properly dressed Santa Claus
+  SmArtKar:
+  - bugfix: Fixed purple raptors' wings action background
+  TealSeer:
+  - rscadd: Added a key memory to the family heirloom quirk
+  krookodilehunter:
+  - qol: Wirecutters are now recolorable when purchasing from a vendor
+  lelandkemble:
+  - rscadd: Added a counterattack for sheathed weapons. When used, an attack from
+      your target within a one-second window will cause you to counterattack with
+      a triple-damage strike.
+2025-12-15:
+  FalloutFalcon:
+  - spellcheck: minor cleanup on some usecases of "credits"
+  Gboster-0:
+  - code_imp: slightly cleaned up command headsets in-code
+  LT3:
+  - admin: Removed ability to enable Rock The Vote because RTV is no longer a thing
+  Melbert:
+  - qol: Stop drop and roll now has a progress bar
+  SmArtKar:
+  - bugfix: Fixed the brimdust status alert sprite
+  Thunder12345:
+  - map: Tomas once more haunts the dormitories of Catwalk Station
+  alien3301:
+  - bugfix: Just like the blood red modsuits, the elite version of them has a pathfinder
+      module
+  - spellcheck: fixed a typo in the moon heretic robe's attack messages
+  jlsnow301:
+  - bugfix: TGUI window drag and resize should be smoother on low end systems.
+  necromanceranne:
+  - bugfix: Fixes laser pistol charging instantly.
+  san7890:
+  - spellcheck: Nanotrasen has updated their Emergency Shuttle Authorization messaging.
+  - bugfix: Paintings can no longer be finalized if you are not adjacent to the painting.
+  - server: Round ID is now output to `log_world()`, so it'll show up stuff like world.log,
+      dd.log, etc.
+  - config: If you publicly host a copy of your server's config, you may now link
+      to the public URL in the 'CONFIGURL' setting in the server config. It will show
+      to players in the Escape Menu's Resources Carousel.
+  timothymtorres:
+  - bugfix: Fix map reader ignoring valid variable names. If a variable had a number
+      inside the name anywhere the map reader would ignore this value when a map was
+      loaded and use the initial value instead. This was due to a faulty regex pattern
+      that did not properly match variable names.
+2025-12-16:
+  SmArtKar:
+  - bugfix: Fixed illusions not fleeing their targets and runtiming in place
+  alien3301:
+  - bugfix: Using the sabre parry prevents you from doing other actions in the same
+      click
+  san7890:
+  - server: The ready/not ready states of new players are logged when a shift starts.
+2025-12-17:
+  Aliceee2ch:
+  - map: Access changed from "construction" to "tech storage" in respective room entrance
+      on Catwalk.
+  - bugfix: Fixed smacking ectoscopic sniffer after you unwrenched it.
+  - code_imp: Minor code improvements for ectoscopic sniffer.
+  - map: Changed access for ordnance shutters button on MetaStation (from RD -> Science)
+  BurgerBB:
+  - bugfix: Fix signal unregistration in grapple gun on hit.
+  DaCoolBoss:
+  - bugfix: The Donk Co. 'Donk Spike' boxes now properly store shotgun shells.
+  Ezel:
+  - bugfix: Fixes a oversight on deltastation where mining still get a boulder beacon.
+  - map: Nanotrasen now supplies deltastation mining employees with 3 instant meals
+      before doing their workshift
+  - map: Changes the location of catwalk gravgen APC to be outside the Generator room
+  - bugfix: Hos office on catwalk now includes an ID console
+  Kaltf4:
+  - bugfix: When all six non-rare colors of raptor are cross-bred, a black raptor
+      now consistently spawns (unless a guaranteed color-combo supersedes it).
+  MatrixOne500:
+  - rscadd: You can now craft a retro brown sofa!
+  SmArtKar:
+  - bugfix: Fixed runtimes upon trying to reload a shotgun with an empty chambered
+      shell
+  - bugfix: Fixes runtimes from throwing fishing lines into water
+  - bugfix: Fixed fire sound runtimes caused by incorrect arguments
+  - bugfix: Fixed wizard/timeline rewind sound runtimes
+  - bugfix: Fixed runechat offsets for stored mobs
+  - bugfix: Fixed runtimes caused by species changes with pre-existing wounds
+  - code_imp: Optimized deletion code for limbs with wounds
+  - bugfix: Fixed sheet ejection on mechfabs
+  - qol: Miner ORM deposits are now logged in the ore silo
+  - bugfix: Death moodlets no longer runtime when stacking
+  - bugfix: Fixed runtimes caused by auto-observing someone repeatedly
+  - bugfix: Fixed runtimes from stun batons impacting objects when thrown
+  - bugfix: Fixes runtimes caused by opportunistic melee AI behaviors
+  - bugfix: Fixed RMB interactions for IV drips
+  - bugfix: Fixed meshes runtiming when the target has a non-burn wound
+  - bugfix: Fixed damp rags not removing reagents other than space cleaner from themselves
+  - bugfix: Fixed runtimes caused by persistent scars trying to save bodyswapped people's
+      scars
+  Stalkeros:
+  - rscadd: Stack of fifty sandbags
+  codyman765:
+  - image: Ushanka now comes with extra fur lining!
+  lelandkemble:
+  - map: Several disconnected vents and scrubbers on Icebox have been reconnected
+  - map: Removed some inefficiencies in Wawa's piping and cabling.
+  - map: A great deal of offstation structures have been given more efficient piping
+      & cabling.
+  - map: Several offstation structures have had piping & cabling issues resolved.
+  - map: Assistants no longer have access to the tramstation security mechbay

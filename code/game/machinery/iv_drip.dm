@@ -274,10 +274,12 @@
 
 /obj/machinery/iv_drip/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !ishuman(user))
 		return
-	if(!ishuman(user))
-		return
+	if (quick_toggle(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/iv_drip/proc/quick_toggle(mob/user)
 	if(attachment)
 		visible_message(span_notice("[attachment.attached_to] is detached from [src]."))
 		detach_iv()
@@ -285,7 +287,7 @@
 		eject_beaker(user)
 	else
 		toggle_mode()
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return TRUE
 
 ///called when an IV is attached
 /obj/machinery/iv_drip/proc/attach_iv(atom/target, mob/user)
