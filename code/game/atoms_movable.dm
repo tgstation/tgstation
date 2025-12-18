@@ -1853,7 +1853,7 @@
  */
 /atom/movable/proc/add_ally(atom/target)
 	var/old_length = LAZYLEN(allies)
-	if(!istype(target))
+	if(!isatom(target))
 		LAZYOR(allies, target)
 	else
 		LAZYOR(allies, "[REF(target)]")
@@ -1869,7 +1869,7 @@
 	if (!old_length)
 		return FALSE
 
-	if(!istype(target))
+	if(!isatom(target))
 		LAZYREMOVE(allies, target)
 	else
 		LAZYREMOVE(allies, "[REF(target)]")
@@ -1890,7 +1890,8 @@
 			return (match_count == LAZYLEN(ally_or_allies))
 		else
 			return FAST_FACTION_CHECK(null, null, allies, ally_or_allies, FALSE)
-	else if(ismob(ally_or_allies))
+
+	else if(isatom(ally_or_allies))
 		return "[REF(ally_or_allies)]" in allies
 	else
 		return ally_or_allies in allies
