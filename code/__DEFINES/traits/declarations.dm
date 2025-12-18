@@ -1193,6 +1193,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_SURVIVE_COOKING "fish_survive_cooking"
 ///This fish is healed by milk and hurt by bone hurting juice
 #define TRAIT_FISH_MADE_OF_BONE "fish_made_of_bone"
+///The traits of this fish have been edited by a fish gene-gun at least once. It'll die the next time the fish genegun is used on them.
+#define TRAIT_FISH_GENEGUNNED "fish_genegunned"
 /**
  * This fish has been fed teslium without the electrogenesis having trait.
  * Gives the electrogenesis, but at halved output, and it hurts the fish over time.
