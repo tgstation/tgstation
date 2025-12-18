@@ -284,10 +284,9 @@
 				if(dept_choice == "Cargo Budget")
 					personal_department = null
 
-		if(!account || !id_card || !living_user || !access)
+		if(!id_card || !living_user || !access)
 			living_user = user
 			id_card = living_user.get_idcard(TRUE)
-			account = id_card?.registered_account
 			access = id_card.GetAccess()
 		if(pack.access_view && !(pack.access_view in access) && personal_department)
 			// We want to block cargo requests when a player is request access restricted content they don't have.
