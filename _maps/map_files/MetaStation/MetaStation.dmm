@@ -5098,6 +5098,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"bMB" = (
+/obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/machinery/plumbing/reaction_chamber,
+/obj/machinery/duct,
+/turf/open/floor/iron/white,
+/area/station/medical/chemistry)
 "bMC" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on{
 	dir = 8
@@ -95875,7 +95881,7 @@ fvE
 hyh
 iqz
 tqd
-hFD
+bMB
 pbz
 vfU
 mAb
