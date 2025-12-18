@@ -113,6 +113,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///The typepath we use for lazy fishing on turfs, to save on world init time.
 	var/fish_source
 
+	/// The number of cameras viewing this turf
+	var/viewing_camera_count = 0
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list(NAMEOF_STATIC(src, x), NAMEOF_STATIC(src, y), NAMEOF_STATIC(src, z))

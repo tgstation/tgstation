@@ -1,47 +1,85 @@
-/// Manages the security cameras and camera chunks
+#define STAGE_CAMERAS 0
+#define STAGE_CHUNKS 1
+
+/// Manages camera visibility
 SUBSYSTEM_DEF(cameras)
 	name = "Cameras"
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_NO_INIT
 	priority = FIRE_PRIORITY_CAMERAS
-	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	wait = 2 MINUTES
-	dependencies = list(
-		// Required to get plane offset for static images
-		/datum/controller/subsystem/mapping,
-	)
+	wait = 0.2 SECONDS
 
-	/// The cameras on the map, no matter if they work or not.
-	/// Updated in obj/machinery/camera.dm in Initialize() and Destroy().
-	var/list/obj/machinery/camera/cameras = list()
-	/// The chunks of the map, mapping the areas that the cameras can see.
+	/// The stage of the current subsystem run.
+	var/stage = STAGE_CAMERAS
+
+	/// All cameras on the map.
+	var/list/cameras = list()
+	/// All camera chunks on the map. (list[chunk_coords] = chunk)
 	var/list/chunks = list()
-	/// Chunks that must be updated
-	var/list/chunks_to_update  = list()
-	/// List of images cloned by all chunk static images put onto turfs cameras cant see
-	/// Indexed by the plane offset to use
-	var/list/image/obscured_images = list()
-	/// Primarily for debugging, outright prevents all camera chunk updates
-	var/disable_camera_updates = FALSE
-	/// Tracks current subsystem run
-	var/list/current_run = list()
 
-/datum/controller/subsystem/cameras/Initialize()
-	update_offsets(SSmapping.max_plane_offset)
-	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_offset_growth))
-	return SS_INIT_SUCCESS
+	/// All cameras that must be updated.
+	var/list/camera_queue = list()
+	/// All camera chunks that must be updated.
+	var/list/chunk_queue = list()
 
 /datum/controller/subsystem/cameras/fire(resumed = FALSE)
-	if(!resumed)
-		src.current_run = chunks_to_update.Copy()
-		chunks_to_update = list()
+	if (stage == STAGE_CAMERAS)
+		run_cameras()
+		if (state != SS_RUNNING)
+			return
+		stage = STAGE_CHUNKS
 
-	var/list/current_run = src.current_run
-	while(current_run.len)
-		var/datum/camerachunk/chunk = current_run[current_run.len]
-		chunk.force_update(only_if_necessary = TRUE) // Forces an update if necessary
-		current_run.len--
-		if(MC_TICK_CHECK)
-			break
+	if (stage == STAGE_CHUNKS)
+		run_chunks()
+		if (state != SS_RUNNING)
+			return
+		stage = STAGE_CAMERAS
+
+#undef STAGE_CAMERAS
+#undef STAGE_CHUNKS
+
+/datum/controller/subsystem/cameras/run_cameras()
+	while (length(camera_queue))
+		var/obj/machinery/camera/camera = camera_queue[length(camera_queue)]
+		camera_queue.len--
+
+		var/view_size = camera.last_view_size
+		var/view_x = camera.last_view_x
+		var/view_y = camera.last_view_y
+		var/view_z = camera.last_view_z
+		var/list/view_turfs = camera.last_view_turfs
+
+		var/list/block = block(view_x, view_y, view_z, view_x + view_size - 1, view_y + view_size - 1)
+
+		for (var/i in 1 to length(block))
+			if (view_turfs[i])
+				var/turf/turf = block[i]
+				turf?.viewing_camera_count--
+
+		var/turf/source = get_turf(camera)
+
+		view_size = (camera.view_range * 2 + 1)
+		view_x = source.x - camera.view_range
+		view_y = source.y - camera.view_range
+		view_z = source.z
+		view_turfs.Cut()
+		view_turfs.len = view_size ** 2
+
+		var/luminosity = source.luminosity
+		source.luminosity = 6
+
+		for (var/turf/turf in view(camera.view_range, source))
+			view_turfs[1 + (turf.x - view_x) + (turf.y - view_y) * view_size] = TRUE
+			turf.viewing_camera_count++
+
+		source.luminosity = luminosity
+
+		camera.last_view_size = view_size
+		camera.last_view_x = view_x
+		camera.last_view_y = view_y
+		camera.last_view_z = view_z
+		camera.last_view_turfs = view_turfs
+
+/datum/controller/subsystem/cameras/run_chunks()
 
 /datum/controller/subsystem/cameras/stat_entry(msg)
 	msg = "Cams: [length(cameras)] | Chunks: [length(chunks)] | Updating: [length(chunks_to_update)]"
