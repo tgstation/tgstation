@@ -186,7 +186,7 @@ GLOBAL_VAR(restart_counter)
 	setup_autowiki()
 	#endif
 
-	#ifdef AUTOWIKI
+	#ifdef PERFORMANCE_TESTS
 	queue_performance_tests()
 	#endif
 
