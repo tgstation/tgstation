@@ -77,7 +77,7 @@
 	var/is_greyscale = apply_to.greyscale_config || apply_to.greyscale_colors
 	APPLY_VAR_OR_RESET_INITIAL(apply_to, name, new_name, reset_missing)
 	APPLY_VAR_OR_RESET_INITIAL(apply_to, desc, new_desc, reset_missing)
-	if(!is_greyscale)
+	if(!is_greyscale) // We do not want to be changing icons for GAGS
 		APPLY_VAR_OR_RESET_INITIAL(apply_to, icon, new_icon, reset_missing)
 	APPLY_VAR_OR_RESET_TO(apply_to, icon_state, new_icon_state, reset_missing, initial(apply_to.post_init_icon_state) || initial(apply_to.icon_state))
 	if(change_base_icon_state)
