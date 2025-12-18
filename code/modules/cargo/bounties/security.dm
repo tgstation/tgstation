@@ -108,7 +108,7 @@
 			Travel [needed_coverage] meters in the area to complete your patrol.", force = TRUE)
 		return
 
-	var/progress_percent = round(progress / needed_coverage, 0.05)
+	var/progress_percent = progress / needed_coverage
 	if(progress_percent >= 0.25 && alerted < 2)
 		alerted = 2
 		id_card.registered_account.bank_card_talk("Patrol 25% complete.", force = TRUE)

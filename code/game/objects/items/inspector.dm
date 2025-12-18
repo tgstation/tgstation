@@ -4,7 +4,7 @@
 /**
  * # N-spect scanner
  *
- * Creates reports for area inspection bounties.
+ * Determines if an item or its contents are contraband.
  */
 /obj/item/inspector
 	name = "\improper N-spect scanner"
@@ -49,23 +49,21 @@
 	return cell
 
 /obj/item/inspector/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(user.combat_mode)
-		return
 	cell_cover_open = !cell_cover_open
 	balloon_alert(user, "[cell_cover_open ? "opened" : "closed"] cell cover")
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/inspector/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(cell_cover_open && istype(I, /obj/item/stock_parts/power_store/cell))
+/obj/item/inspector/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(cell_cover_open && istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell installed."))
-			return
-		if(user.transferItemToLoc(I, src))
-			cell = I
+			return ITEM_INTERACT_BLOCKING
+		if(user.transferItemToLoc(tool, src))
+			cell = tool
 			to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
-			return
-	return ..()
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+	return NONE
 
 /obj/item/inspector/item_ctrl_click(mob/user)
 	if(!cell_cover_open || !cell)
@@ -96,22 +94,21 @@
 	if(cell_cover_open)
 		balloon_alert(user, "close cover first!")
 		return ITEM_INTERACT_BLOCKING
-	if(!cell || !cell.use(INSPECTOR_ENERGY_USAGE_LOW))
+	if(!cell || !cell.use(0.001 * STANDARD_CELL_CHARGE))
 		balloon_alert(user, "check cell!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(iscarbon(interacting_with)) // Prevents scanning people
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(contraband_scan(interacting_with, user))
 		playsound(src, 'sound/machines/uplink/uplinkerror.ogg', 40)
 		balloon_alert(user, "contraband detected!")
 		return ITEM_INTERACT_SUCCESS
-	else
-		playsound(src, 'sound/machines/ping.ogg', 20)
-		balloon_alert(user, "clear")
-		return ITEM_INTERACT_SUCCESS
 
+	playsound(src, 'sound/machines/ping.ogg', 20)
+	balloon_alert(user, "clear")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/inspector/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	var/update_context = FALSE
