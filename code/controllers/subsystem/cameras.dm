@@ -24,12 +24,12 @@ SUBSYSTEM_DEF(cameras)
 	/// All camera chunks that must be updated. (alist[chunk] = null)
 	var/alist/chunk_queue = alist()
 
-	/// All base static images, indexed by plane offset. (alist[offset] = image)
-	var/alist/static_images = alist()
+	/// All base static images, indexed by plane offset. (list[offset + 1] = image)
+	var/list/base_static_images = list()
 
 /datum/controller/subsystem/cameras/Initialize()
-	for (var/offset in 0 to SSmapping.max_plane_offset)
-		static_images[offset] = new()
+	update_static_images()
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(update_static_images))
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/cameras/fire(resumed = FALSE)
@@ -48,7 +48,21 @@ SUBSYSTEM_DEF(cameras)
 #undef STAGE_CAMERAS
 #undef STAGE_CHUNKS
 
-/datum/controller/subsystem/cameras/run_cameras()
+/// Updates the static images list to include all plane offsets.
+/datum/controller/subsystem/cameras/proc/update_static_images()
+	SIGNAL_HANDLER
+
+	var/old_max_index = length(base_static_images) + 1
+	base_static_images.len = SSmapping.max_plane_offset + 1
+
+	for(var/index in old_max_index to length(base_static_images))
+		var/image/static_image = new('icons/effects/cameravis.dmi')
+		SET_PLANE_W_SCALAR(static_image, CAMERA_STATIC_PLANE, index - 1)
+		static_image.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | KEEP_APART
+		static_image.override = TRUE
+		base_static_images[index] = static_image
+
+/datum/controller/subsystem/cameras/proc/run_cameras()
 	var/world_max_chunk_x = ceil(WORLD_TO_CHUNK(world.maxx))
 	var/world_max_chunk_y = ceil(WORLD_TO_CHUNK(world.maxy))
 
@@ -138,7 +152,7 @@ SUBSYSTEM_DEF(cameras)
 		camera.last_view_y = view_y
 		camera.last_view_z = view_z
 
-/datum/controller/subsystem/cameras/run_chunks()
+/datum/controller/subsystem/cameras/proc/run_chunks()
 	for (var/datum/camerachunk/chunk as anything in chunk_queue)
 		if (MC_TICK_CHECK)
 			return
@@ -148,13 +162,24 @@ SUBSYSTEM_DEF(cameras)
 
 		chunk_queue -= chunk
 
-		var/visibility = chunk.visibility
-		var/obscured = chunk.obscured
+		var/list/turfs = chunk.turfs
+		var/list/visibility = chunk.visibility
+		var/list/obscured = chunk.obscured
+		var/list/static_images = chunk.static_images
+
+		var/base_static_image = base_static_images[GET_Z_PLANE_OFFSET(chunk.z) + 1]
 
 		for (var/i in 1 to length(visibility))
-			if (visibility[i] && obscured[i])
-				var/image/static_image = new('')
-			else if (!visibility[i] && !obscured[i])
+			var/is_visible = visibility[i]
+			var/is_obscured = obscured[i]
+
+			if (!is_visible && !is_obscured)
+				var/image/static_image = new(base_static_image, turfs[i])
+				static_images += static_image
+				obscured[i] = static_image
+			else if (is_visible && is_obscured)
+				static_images -= obscured[i]
+				QDEL_NULL(obscured[i])
 
 /datum/controller/subsystem/cameras/proc/adjust_viewing_camera_counts(obj/machinery/camera/camera, view_x, view_y, view_size, list/view_chunks, list/view_turfs, adjust_amount)
 	for (var/datum/camerachunk/chunk in view_chunks)
@@ -173,14 +198,14 @@ SUBSYSTEM_DEF(cameras)
 		// Intersect the world space view bounds with the world space chunk bounds
 		var/int_min_x = max(view_x, chunk_min_x)
 		var/int_min_y = max(view_y, chunk_min_y)
-		var/int_max_x = min(view_x + view_size - 1, chunk_max_x)
-		var/int_max_y = min(view_y + view_size - 1, chunk_max_y)
+		var/int_max_x = min(view_x + view_size - 1, chunk_max_x) // -1 because the bounds are inclusive
+		var/int_max_y = min(view_y + view_size - 1, chunk_max_y) // ditto
 
 		// Transform the world space intersection back into local chunk space
-		var/start_x = int_min_x - chunk_min_x
-		var/start_y = int_min_y - chunk_min_y
-		var/end_x = int_max_x - chunk_min_x
-		var/end_y = int_max_y - chunk_min_y
+		var/start_x = int_min_x - chunk_min_x // 1-based -> 0-based
+		var/start_y = int_min_y - chunk_min_y // ditto
+		var/end_x = int_max_x - chunk_min_x // ditto
+		var/end_y = int_max_y - chunk_min_y // ditto
 
 		// Iterate over the intersection and remove the camera from visibility array camera counts
 		for (var/vis_y in start_y to end_y)

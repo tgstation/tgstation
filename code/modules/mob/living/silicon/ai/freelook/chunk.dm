@@ -6,7 +6,9 @@
 	/// List of turf visibility in this camera chunk. (list[coord_index] = viewing_camera_count)
 	var/list/visibility = list()
 	/// List of turfs covered by static in this camera chunk. (list[coord_index] = static_image)
-	var/alist/obscured = alist()
+	var/list/obscured = list()
+	/// List of static images in this camera chunk.
+	var/list/static_images = list()
 	/// List of atoms that caused this camera chunk to update.
 	var/list/sources = list()
 
@@ -21,19 +23,29 @@
 	src.x = x
 	src.y = y
 	src.z = z
+
 	src.world_x = CHUNK_TO_WORLD(x)
 	src.world_y = CHUNK_TO_WORLD(y)
-	turfs = block(x * CHUNK_SIZE - 1)
+
+	turfs.len = CHUNK_SIZE ** 2
+	obscured.len = CHUNK_SIZE ** 2
 	visibility.len = CHUNK_SIZE ** 2
+
+	for (var/turf/turf as anything in block(world_x, world_y, z, world_x + CHUNK_SIZE - 1, world_y + CHUNK_SIZE - 1))
+		turfs[1 + (turf.x - world_x) + (turf.y - world_y) * CHUNK_SIZE] = turf // +1 because lists are 1-based
+
 	SScameras.chunks[GET_CHUNK_COORDS(x, y, z)] = src
 
 /datum/camerachunk/Destroy(force)
 	SScameras.chunks -= src
 	SScameras.chunk_queue -= src
+
 	for (var/obj/machinery/camera/camera as anything in cameras)
 		camera.last_view_chunks -= src
+
 	cameras.Cut()
 	visibility.Cut()
 	obscured.Cut()
 	sources.Cut()
+
 	return ..()
