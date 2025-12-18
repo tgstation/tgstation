@@ -269,8 +269,7 @@
 	if(!id_account?.bounties?[choice])
 		playsound(loc, 'sound/machines/synth/synth_no.ogg', 40 , TRUE)
 		return
-	var/datum/bounty/picked = id_account.bounties[choice]
-	id_account.set_bounty(picked, inserted_scan_id)
+	id_account.set_bounty(id_account.bounties[choice], inserted_scan_id)
 	id_account.bounties = null
 	SSblackbox.record_feedback("tally", "bounties_assigned", 1, id_account.civilian_bounty.type)
 	return id_account.civilian_bounty
