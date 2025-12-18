@@ -22,10 +22,8 @@
 /datum/bounty/patrol/New()
 	demanded_area = pick(get_patrol_area_types() & GLOB.areas_by_type)
 
-	var/area/actual_area = GLOB.areas_by_type[demanded_area]
-
 	var/total_coverage = 0
-	for(var/turf/open/floor/walkable in actual_area.get_turfs_from_all_zlevels())
+	for(var/turf/open/floor/walkable in GLOB.areas_by_type[demanded_area].get_turfs_from_all_zlevels())
 		total_coverage += 1
 
 	needed_coverage = round(total_coverage * rand(4, 8) * 0.1, 1)
@@ -37,7 +35,11 @@
 	// scale the reward based on how big the area is, so you don't feel like you're wasting time
 	// central primary hallway can have somewhere in the ballpark of 500 turfs
 	// but something like the bar only sits around 100-200
-	reward = max(reward * (needed_coverage / 100), CARGO_CRATE_VALUE)
+	reward *= (needed_coverage / 100)
+
+/datum/bounty/patrol/can_get()
+	// only give out bounties worth completing.
+	return needed_coverage >= 20
 
 /datum/bounty/patrol/proc/get_patrol_area_types()
 	return typecacheof(list(
@@ -83,9 +85,10 @@
 		return
 
 	var/turf_id = "[new_turf.x],[new_turf.y],[new_turf.z]"
-	// especially large rooms will allow you to retread the same turf multiple times
-	// but particularly small rooms limit you to two counts - one going in, one going out
-	if(LAZYACCESS(walked_turfs, turf_id) >= clamp(round(needed_coverage / 50, 1), 2, 4))
+	// you can retread the same tiles, but only up to three times.
+	// prevents cheese (walking between the same two tiles over and over),
+	// but still allows smaller rooms to be completable without being frustrating.
+	if(LAZYACCESS(walked_turfs, turf_id) >= 3)
 		return
 
 	var/obj/item/card/id/id_card

@@ -183,19 +183,19 @@
 		var/datum/bounty/assistant_bounty = new random_assistant()
 		if(assistant_bounty.can_get())
 			rolling_list += assistant_bounty
-			bounty_rolls -= 1
 		else
 			qdel(assistant_bounty)
 
-	while(bounty_rolls > 0)
-		var/random_job = get_random_bounty_type(bounty_type)
+	var/attempts = 20
+	while(length(rolling_list) < bounty_rolls && attempts > 0)
+		var/random_job = get_random_bounty_type(attempts <= 5 ? CIV_JOB_BASIC : bounty_type)
 		var/datum/bounty/job_bounty = new random_job()
+		attempts -= 1
 		if(!job_bounty.can_get() || has_duplicate_bounty(rolling_list, job_bounty))
 			qdel(job_bounty)
 			continue
 
 		rolling_list += job_bounty
-		bounty_rolls -= 1
 
 	return rolling_list
 
