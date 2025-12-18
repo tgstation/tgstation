@@ -96,15 +96,6 @@
 		demand_connects = new_demand_connects
 		supply_connects = new_supply_connects
 
-	// Destroy any ducts under us on the same layer.
-	// Ducts also self-destruct if placed under a plumbing machine.
-	// Machines disable when they get moved
-	for(var/obj/machinery/duct/duct in parent_movable.loc)
-		if(duct.anchored && (duct.duct_layer & ducting_layer))
-			log_mapping("[duct.name] was found at [AREACOORD(parent_movable)] spawning on top of [parent_movable.name], \
-				which should not occur as it takes ducts itself!")
-			duct.deconstruct()
-
 	if(demand_connects)
 		START_PROCESSING(SSplumbing, src)
 
