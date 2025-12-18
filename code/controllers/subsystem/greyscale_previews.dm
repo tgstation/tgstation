@@ -141,13 +141,13 @@ SUBSYSTEM_DEF(greyscale_previews)
 	for (var/entry in entries)
 		var/atom/typepath
 		var/icon_state
-		var/skin_icon_state
+		var/reskin_icon_state
 
 		if (istype(entry, /datum/atom_skin))
 			var/datum/atom_skin/skin = entry
 			typepath = skin.greyscale_item_path
 			icon_state = skin.new_icon_state
-			skin_icon_state = TRUE
+			reskin_icon_state = TRUE
 		else
 			typepath = entry
 			icon_state = typepath::post_init_icon_state
@@ -162,7 +162,7 @@ SUBSYSTEM_DEF(greyscale_previews)
 			continue
 
 		// This is what the actual icon state will be in the map_icon .dmi
-		var/key = skin_icon_state ? "[typepath]--[icon_state]" : "[typepath]"
+		var/key = reskin_icon_state ? "[typepath]--[icon_state]" : "[typepath]"
 
 	#ifdef CHECK_SPRITESHEET_ICON_VALIDITY
 		var/icon/map_icon = icon(SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)) // No large icons, use icon_preview and icon_preview_state instead.
