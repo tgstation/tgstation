@@ -79,7 +79,7 @@ export function Panel(props) {
         )}
         <Stack.Item grow>
           <Section fill fitted position="relative">
-            <Pane.Content scrollable>
+            <Pane.Content scrollable id="chat-pane">
               <ChatPanel lineHeight={settings.lineHeight} />
             </Pane.Content>
             <Notifications>
