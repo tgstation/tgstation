@@ -399,7 +399,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	var/list/reskins = list()
 	var/list/atom_skins = get_atom_skins()
 	var/list/reskin_choices
-	if(reskin_datum::allow_abstract_subtypes_in_loadout)
+	if(reskin_datum::allow_all_subtypes_in_loadout)
 		reskin_choices = valid_subtypesof(reskin_datum)
 	else
 		reskin_choices = valid_direct_subtypesof(reskin_datum)
