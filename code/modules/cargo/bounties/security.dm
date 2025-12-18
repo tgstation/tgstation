@@ -124,7 +124,7 @@
 		id_card.registered_account.bank_card_talk("Patrol 75% complete.", force = TRUE)
 		return
 
-	if(progress === needed_coverage && alerted < 5)
+	if(progress == needed_coverage && alerted < 5)
 		alerted = 5
 		id_card.registered_account.bank_card_talk("Patrol complete. \
 			Return to the bounty terminal to claim your reward.", force = TRUE)
