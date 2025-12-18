@@ -1,7 +1,6 @@
 /obj/machinery/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, panel_open)
-	return .
 
 //if(movable_atom in component_parts)
 //	continue
@@ -9,7 +8,6 @@
 /obj/machinery/PersistentInitialize()
 	. = ..()
 	update_appearance()
-	return .
 
 /obj/machinery/camera/get_save_vars(save_flags=ALL)
 	. = ..()
@@ -17,7 +15,6 @@
 	. += NAMEOF(src, camera_construction_state)
 	. += NAMEOF(src, camera_upgrade_bitflags)
 	. += NAMEOF(src, camera_enabled)
-	return .
 
 /obj/machinery/camera/PersistentInitialize()
 	. = ..()
@@ -27,7 +24,6 @@
 		upgradeEmpProof()
 	if(camera_upgrade_bitflags & CAMERA_UPGRADE_MOTION)
 		upgradeMotion()
-	return .
 
 // in game built cameras spawn deconstructed
 /obj/machinery/camera/autoname/deconstructed/substitute_with_typepath(map_string)
@@ -74,7 +70,6 @@
 	. = ..()
 	. += NAMEOF(src, id)
 	. += NAMEOF(src, sync_doors)
-	return .
 
 /obj/machinery/button/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
 	// save the [/obj/item/assembly/control] inside the button that controls the id
@@ -93,7 +88,6 @@
 	. += NAMEOF(src, conveyor_speed)
 	. += NAMEOF(src, position)
 	. += NAMEOF(src, oneway)
-	return .
 
 /obj/machinery/conveyor_switch/PersistentInitialize()
 	. = ..()
@@ -105,23 +99,19 @@
 	. = ..()
 	. += NAMEOF(src, id)
 	. += NAMEOF(src, speed)
-	return .
 
 /obj/machinery/photocopier/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, paper_stack)
-	return .
 
 /// CHECK IF ID_TAGS ARE NEEDED FOR FIREDOOR/FIREALARMS
 /obj/machinery/door/firedoor/get_save_vars(save_flags=ALL)
 	. = ..()
 	. -= NAMEOF(src, id_tag)
-	return .
 
 /obj/machinery/firealarm/get_save_vars(save_flags=ALL)
 	. = ..()
 	. -= NAMEOF(src, id_tag)
-	return .
 
 /obj/machinery/suit_storage_unit/get_save_vars(save_flags=ALL)
 	. = ..()
@@ -130,7 +120,6 @@
 	. += NAMEOF(src, locked)
 	. += NAMEOF(src, safeties)
 	// ignore card reader stuff for now
-	return .
 
 /obj/machinery/suit_storage_unit/get_custom_save_vars(save_flags=ALL)
 	. = ..()
@@ -145,7 +134,6 @@
 		.[NAMEOF(src, mod_type)] = mod.type
 	if(storage)
 		.[NAMEOF(src, storage_type)] = storage.type
-	return .
 
 /obj/machinery/power/portagrav/get_save_vars(save_flags=ALL)
 	. = ..()
@@ -153,20 +141,32 @@
 	. += NAMEOF(src, wire_mode)
 	. += NAMEOF(src, grav_strength)
 	. += NAMEOF(src, range)
-	return .
 
 /obj/machinery/power/portagrav/PersistentInitialize()
 	. = ..()
 	if(on)
 		turn_on()
-	return .
 
 /obj/machinery/biogenerator/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, biomass)
 	. += NAMEOF(src, welded_down)
-	return .
 
 /obj/machinery/biogenerator/PersistentInitialize()
 	. = ..()
 	update_appearance()
+
+/obj/machinery/mecha_part_fabricator/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, drop_direction)
+
+/obj/machinery/autolathe/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, hacked)
+	. += NAMEOF(src, disabled)
+	. += NAMEOF(src, drop_direction)
+
+/obj/machinery/plumbing/synthesizer/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, reagent_id)
+	. += NAMEOF(src, amount)

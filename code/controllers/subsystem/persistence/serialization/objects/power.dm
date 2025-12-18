@@ -150,7 +150,7 @@
 	. += NAMEOF(src, max_range)
 	return .
 
-/obj/machinery/atmos_shield_gen/PersistentInitialize()
+/obj/machinery/power/emitter/PersistentInitialize()
 	. = ..()
 	diskie = locate(/obj/item/emitter_disk) in contents
 	update_appearance()

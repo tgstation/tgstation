@@ -20,3 +20,14 @@
 		begin_processing()
 
 	update_appearance()
+
+/obj/item/surgery_tray/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, is_portable)
+
+/obj/item/surgery_tray/get_custom_save_vars(save_flags=ALL)
+	. = ..()
+	.[NAMEOF(src, starting_items)] = list() //prevents duping
+
+/obj/item/surgery_tray/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
+	save_stored_contents(map_string, current_loc, obj_blacklist)
