@@ -1,9 +1,19 @@
 /// We only want chunk sizes that are to the power of 2. E.g: 2, 4, 8, 16, etc..
 #define CHUNK_SIZE 16
-/// The maximum number of chunks in any given direction. The maximum length of chunks on a z-level is CHUNK_SIZE * MAX_CHUNKS.
+/// The maximum number of chunks in each dimension. The maximum length of chunks on a z-level is CHUNK_SIZE * MAX_CHUNKS.
 #define MAX_CHUNKS 256
-/// Takes a position and transforms it into a chunk coordinate index. Supports up to 256 16x16 chunks in each dimension.
-#define GET_CHUNK_COORDS(x, y, z) ((z << 16) | (floor(x / CHUNK_SIZE) << 8) | floor(y / CHUNK_SIZE))
+/// Takes camera chunk coordinates and transforms them into a chunk coordinate index. Supports up to 256 16x16 chunks in each dimension.
+#define GET_CHUNK_COORDS(x, y, z) ((z << 16) | (x << 8) | y)
+/// Takes world coordinates and transforms them into a camera view coordinate index.
+#define GET_VIEW_COORDS(x, y, view_x, view_y, view_size) (1 + (x - view_x) + (y - view_y) * view_size)
+
+/// Converts a coordinate (x or y) from world space into chunk space.
+/// Returns a fraction, use floor(), round() or ceil() as needed.
+/// Only meant for positions. For lengths, use (v / CHUNK_SIZE).
+#define WORLD_TO_CHUNK(v) ((v - 1) / CHUNK_SIZE)
+/// Converts a coordinate (x or y) from chunk space to world space.
+/// Only meant for positions. For lengths, use (v * CHUNK_SIZE).
+#define CHUNK_TO_WORLD(v) (v * CHUNK_SIZE + 1)
 
 //List of different camera nets, cameras are given this in the map and camera consoles can only view them if
 //they share this network with them.
