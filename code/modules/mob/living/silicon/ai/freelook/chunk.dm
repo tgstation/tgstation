@@ -83,7 +83,7 @@
 	// So we can safely remove this atom as a "source of update"
 	else if(update_sources[update_key] != update_source.opacity)
 		update_sources -= update_key
-		_attempt_dequeue_update()
+		_dequeue_update()
 		return
 
 	if(!start_queue)
@@ -101,7 +101,7 @@
 		return
 	SScameras.chunks_to_update[src] = TRUE
 
-/datum/camerachunk/proc/_attempt_dequeue_update()
+/datum/camerachunk/proc/_dequeue_update()
 	PRIVATE_PROC(TRUE)
 	// Whelp
 	if(length(update_sources))
@@ -127,6 +127,9 @@
 	processing_visible_turfs = list()
 	processing_cameras = alist()
 	currently_updating = FALSE
+	// Not allowed to stick around in the list forever, that'd be dumb
+	SScameras.current_run -= src
+	_queue_update()
 
 /// Updates our chunk in a lazy fashion, so large amounts of cameras don't lead to overtime spikes
 /// Returns FALSE if the update is unfinished, TRUE if it's complete
@@ -172,7 +175,7 @@
 		return
 
 	update_sources.Cut()
-	_attempt_dequeue_update()
+	_dequeue_update()
 	reset_update()
 
 	var/list/updated_visible_turfs = list()
