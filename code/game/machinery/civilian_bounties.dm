@@ -158,35 +158,103 @@
 		var/time_left = DisplayTimeText(COOLDOWN_TIMELEFT(id_account, bounty_timer), round_seconds_to = 1)
 		balloon_alert(user, "try again in [time_left]!")
 		return FALSE
-	if(!id_account.account_job)
+	if(!inserted_scan_id.trim)
 		say("Requesting ID card has no job assignment registered!")
 		return FALSE
 
-	var/list/datum/bounty/crumbs = generate_bounty_list(id_account.account_job.bounty_types)
+	var/list/datum/bounty/crumbs = inserted_scan_id.trim.generate_bounty_list()
 	COOLDOWN_START(id_account, bounty_timer, (5 MINUTES) - cooldown_reduction)
 	id_account.bounties = crumbs
 
 /**
  * Generates a list of bounties for use with the civilian bounty pad.
+ *
  * @param bounty_types the define taken from a job for selection of a random_bounty() proc.
  * @param bounty_rolls the number of bounties to be selected from.
  * @param assistant_failsafe Do we guarentee one assistant bounty per generated list? Used for non-assistant jobs to give an easier alternative to that job's default bounties.
  */
-/obj/machinery/computer/piratepad_control/civilian/proc/generate_bounty_list(bounty_types, bounty_rolls = 3, assistant_failsafe = TRUE)
+/datum/id_trim/proc/generate_bounty_list(bounty_rolls = 3, assistant_failsafe = TRUE)
+	var/datum/job/our_job = find_job()
+	var/bounty_type = our_job?.bounty_types || CIV_JOB_RANDOM
+
 	var/list/rolling_list = list()
 	if(assistant_failsafe)
-		rolling_list += random_bounty(CIV_JOB_BASIC)
-	while(bounty_rolls > 1)
-		var/datum/bounty/potential_bounty = random_bounty(bounty_types)
-		var/repeats_bool = FALSE
-		for(var/datum/iterator in rolling_list)
-			if(iterator.type == potential_bounty.type)
-				repeats_bool = TRUE
-		if(repeats_bool)
+		var/random_assistant = get_random_bounty_type(CIV_JOB_BASIC)
+		var/datum/bounty/assistant_bounty = new random_assistant()
+		if(assistant_bounty.can_get())
+			rolling_list += assistant_bounty
+			bounty_rolls -= 1
+		else
+			qdel(assistant_bounty)
+
+	while(bounty_rolls > 0)
+		var/random_job = get_random_bounty_type(bounty_type)
+		var/datum/bounty/job_bounty = new random_job()
+		if(!job_bounty.can_get() || has_duplicate_bounty(rolling_list, job_bounty))
+			qdel(job_bounty)
 			continue
-		rolling_list += potential_bounty
+
+		rolling_list += job_bounty
 		bounty_rolls -= 1
+
 	return rolling_list
+
+/datum/id_trim/proc/has_duplicate_bounty(list/datum/bounty/bounty_list, datum/bounty/check_bounty)
+	PRIVATE_PROC(TRUE)
+
+	for(var/datum/bounty/existing as anything in bounty_list)
+		if(existing.type != check_bounty.type)
+			continue
+		if(existing.allow_duplicate && check_bounty.allow_duplicate)
+			continue
+		return TRUE
+
+	return FALSE
+
+/datum/id_trim/proc/get_random_bounty_type(input_bounty_type)
+	if(!input_bounty_type || input_bounty_type == CIV_JOB_RANDOM)
+		input_bounty_type = rand(1, MAXIMUM_BOUNTY_JOBS)
+
+	switch(input_bounty_type)
+		if(CIV_JOB_BASIC)
+			return pick(subtypesof(/datum/bounty/item/assistant))
+		if(CIV_JOB_ROBO)
+			return pick(subtypesof(/datum/bounty/item/mech))
+		if(CIV_JOB_CHEF)
+			return pick(subtypesof(/datum/bounty/item/chef) + subtypesof(/datum/bounty/reagent/chef))
+		if(CIV_JOB_SEC)
+			if(prob(75))
+				return /datum/bounty/patrol
+			return /datum/bounty/item/contraband
+		if(CIV_JOB_DRINK)
+			if(prob(50))
+				return /datum/bounty/reagent/simple_drink
+			return /datum/bounty/reagent/complex_drink
+		if(CIV_JOB_CHEM)
+			if(prob(50))
+				return /datum/bounty/reagent/chemical_simple
+			return/datum/bounty/reagent/chemical_complex
+		if(CIV_JOB_VIRO)
+			return pick(subtypesof(/datum/bounty/virus))
+		if(CIV_JOB_SCI)
+			if(prob(50))
+				return pick(subtypesof(/datum/bounty/item/science))
+			return pick(subtypesof(/datum/bounty/item/slime))
+		if(CIV_JOB_ENG)
+			return pick(subtypesof(/datum/bounty/item/engineering))
+		if(CIV_JOB_MINE)
+			return pick(subtypesof(/datum/bounty/item/mining))
+		if(CIV_JOB_MED)
+			return pick(subtypesof(/datum/bounty/item/medical))
+		if(CIV_JOB_GROW)
+			return pick(subtypesof(/datum/bounty/item/botany))
+		if(CIV_JOB_ATMOS)
+			return pick(subtypesof(/datum/bounty/item/atmospherics))
+		if(CIV_JOB_BITRUN)
+			return pick(subtypesof(/datum/bounty/item/bitrunning))
+
+	stack_trace("Failed to get random bounty type for input type [input_bounty_type]")
+	return null
 
 /**
  * Proc that assigned a civilian bounty to an ID card, from the list of potential bounties that that bank account currently has available.

@@ -1,11 +1,8 @@
-/// How many jobs have bounties, minus the random civ bounties. PLEASE INCREASE THIS NUMBER AS MORE DEPTS ARE ADDED TO BOUNTIES.
-#define MAXIMUM_BOUNTY_JOBS 14
-
 /datum/bounty
 	var/name
 	var/description
 	VAR_PROTECTED/reward = CARGO_CRATE_VALUE * 5 // In credits.
-	var/high_priority = FALSE
+	var/allow_duplicate = FALSE
 
 /// Can this bounty be claimed right now?
 /datum/bounty/proc/can_claim()
@@ -100,5 +97,3 @@
 		else
 			qdel(bounty_ref)
 	return bounty_ref
-
-#undef MAXIMUM_BOUNTY_JOBS

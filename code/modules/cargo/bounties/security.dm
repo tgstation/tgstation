@@ -5,6 +5,7 @@
 		You must travel at least %AREA_COVERAGE% meters within the area. \
 		Your ID card will update you as you progress."
 	reward = CARGO_CRATE_VALUE * 5
+	allow_duplicate = TRUE
 
 	/// Ref to the component applied to the ID card to track movement.
 	VAR_PRIVATE/datum/tracker
@@ -19,21 +20,7 @@
 	VAR_FINAL/alerted = 0
 
 /datum/bounty/patrol/New()
-	var/static/list/possible_areas
-	if(!possible_areas)
-		possible_areas = typecacheof(list(
-			/area/station/commons,
-			/area/station/hallway,
-			/area/station/maintenance,
-			/area/station/security/checkpoint,
-			/area/station/security/prison,
-			/area/station/service,
-		))
-		// filter out only areas that actually exist on the current station
-		possible_areas &= GLOB.areas_by_type
-
-	// maybe allow for certain jobs to get specific areas?
-	demanded_area = pick(possible_areas)
+	demanded_area = pick(get_patrol_area_types() & GLOB.areas_by_type)
 
 	var/area/actual_area = GLOB.areas_by_type[demanded_area]
 
@@ -52,13 +39,32 @@
 	// but something like the bar only sits around 100-200
 	reward = max(reward * (needed_coverage / 100), CARGO_CRATE_VALUE)
 
+/datum/bounty/patrol/proc/get_patrol_area_types()
+	return typecacheof(list(
+		/area/station/commons,
+		/area/station/hallway,
+		/area/station/maintenance,
+		/area/station/security/checkpoint,
+		/area/station/security/prison,
+		/area/station/service,
+	))
+
+/datum/bounty/patrol/proc/get_progress()
+	var/progress = 0
+	for(var/turf_id, count in walked_turfs)
+		progress += count
+	return progress
+
 /datum/bounty/patrol/print_required()
-	return "[LAZYLEN(walked_turfs)]/[needed_coverage] meters"
+	return "[get_progress()]/[needed_coverage] meters"
 
 /datum/bounty/patrol/can_claim()
-	return LAZYLEN(walked_turfs) >= needed_coverage
+	return get_progress() >= needed_coverage
 
 /datum/bounty/patrol/on_selected(obj/item/card/id/id_card)
+	start_tracking(id_card)
+
+/datum/bounty/patrol/proc/start_tracking(obj/item/card/id/id_card)
 	tracker = AddComponent(/datum/component/connect_containers, id_card, list(COMSIG_MOVABLE_MOVED = PROC_REF(on_card_moved)))
 	RegisterSignal(id_card, COMSIG_MOVABLE_MOVED, PROC_REF(on_card_moved))
 
@@ -79,7 +85,7 @@
 	var/turf_id = "[new_turf.x],[new_turf.y],[new_turf.z]"
 	// especially large rooms will allow you to retread the same turf multiple times
 	// but particularly small rooms limit you to two counts - one going in, one going out
-	if(LAZYACCESS(walked_turfs, turf_id) >= min(round(max_coverage / 25, 1), 2))
+	if(LAZYACCESS(walked_turfs, turf_id) >= clamp(round(needed_coverage / 50, 1), 2, 4))
 		return
 
 	var/obj/item/card/id/id_card
@@ -95,34 +101,117 @@
 		return
 
 	LAZYADDASSOC(walked_turfs, turf_id, 1)
-	var/progress = round(LAZYLEN(walked_turfs) / needed_coverage, 0.05)
+	var/progress = get_progress()
 	if(alerted == 0)
 		alerted = 1
 		id_card.registered_account.bank_card_talk("Patrol started. \
 			Travel [needed_coverage] meters in the area to complete your patrol.", force = TRUE)
 		return
 
-	if(progress >= 0.25 && alerted != 2)
+	var/progress_percent = round(progress / needed_coverage, 0.05)
+	if(progress_percent >= 0.25 && alerted < 2)
 		alerted = 2
 		id_card.registered_account.bank_card_talk("Patrol 25% complete.", force = TRUE)
 		return
 
-	if(progress >= 0.5 && alerted != 3)
+	if(progress_percent >= 0.5 && alerted < 3)
 		alerted = 3
 		id_card.registered_account.bank_card_talk("Patrol 50% complete.", force = TRUE)
 		return
 
-	if(progress >= 0.75 && alerted != 4)
+	if(progress_percent >= 0.75 && alerted < 4)
 		alerted = 4
 		id_card.registered_account.bank_card_talk("Patrol 75% complete.", force = TRUE)
 		return
 
-	if(progress >= 1.0 && alerted != 5)
+	if(progress === needed_coverage && alerted < 5)
 		alerted = 5
 		id_card.registered_account.bank_card_talk("Patrol complete. \
 			Return to the bounty terminal to claim your reward.", force = TRUE)
 		stop_tracking(id_card) // don't need this anymore
 		return
+
+/datum/bounty/patrol/supply
+	name = "Patrol Cargo"
+	allow_duplicate = FALSE
+
+/datum/bounty/patrol/supply/get_patrol_area_types()
+	return typecacheof(list(
+		/area/station/cargo/breakroom,
+		/area/station/cargo/lobby,
+		/area/station/cargo/lower,
+		/area/station/cargo/mining_breakroom,
+		/area/station/cargo/miningdock,
+		/area/station/cargo/miningfoundry,
+		/area/station/cargo/miningoffice,
+		/area/station/cargo/office,
+		/area/station/cargo/sorting,
+		/area/station/cargo/storage,
+		/area/station/cargo/warehouse,
+		/area/station/maintenance/department/cargo,
+	)) + list(
+		/area/station/cargo, // base cargo type as well
+		/area/mine/lounge, // and public mining on lavaland
+	)
+
+/datum/bounty/patrol/medical
+	name = "Patrol Medical"
+	allow_duplicate = FALSE
+
+/datum/bounty/patrol/medical/get_patrol_area_types()
+	return typecacheof(list(
+		/area/station/maintenance/department/medical,
+		/area/station/medical/abandoned,
+		/area/station/medical/break_room,
+		/area/station/medical/cryo,
+		/area/station/medical/exam_room,
+		/area/station/medical/lower,
+		/area/station/medical/medbay,
+		/area/station/medical/morgue,
+		/area/station/medical/office,
+		/area/station/medical/storage,
+		/area/station/medical/surgery,
+		/area/station/medical/treatment_center,
+	)) + list(
+		/area/station/medical, // base medical type as well
+	)
+
+/datum/bounty/patrol/science
+	name = "Patrol Science"
+	allow_duplicate = FALSE
+
+/datum/bounty/patrol/science/get_patrol_area_types()
+	return typecacheof(list(
+		/area/station/science/auxlab,
+		/area/station/science/breakroom,
+		/area/station/science/explab,
+		/area/station/science/lab,
+		/area/station/science/lobby,
+		/area/station/science/lower,
+		/area/station/science/research,
+		/area/station/science/research/abandoned,
+	)) + list(
+		/area/station/science, // base science type as well
+		/area/station/maintenance/department/science, // and only base sci maint - not xenobio maint
+	)
+
+/datum/bounty/patrol/engineering
+	name = "Patrol Engineering"
+	allow_duplicate = FALSE
+
+/datum/bounty/patrol/engineering/get_patrol_area_types()
+	return typecacheof(list(
+		/area/station/engineering/break_room,
+		/area/station/engineering/lobby,
+		/area/station/engineering/main,
+		/area/station/engineering/storage,
+		/area/station/engineering/storage_shared,
+		/area/station/maintenance/department/engine,
+		/area/station/maintenance/department/electrical,
+	)) + list(
+		/area/station/engineering, // plus base engineering
+		/area/station/engineering/atmos, // and base atmospherics
+	)
 
 /datum/bounty/item/contraband
 	name = "Confiscated Contraband"
