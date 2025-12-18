@@ -24,7 +24,7 @@ export function createPage(obj: Record<string, unknown> = {}): Page {
     isMain: false,
     id: createUuid(),
     name: 'New Tab',
-    acceptedTypes: acceptedTypes,
+    acceptedTypes,
     unreadCount: 0,
     hideUnreadCount: false,
     createdAt: Date.now(),
@@ -38,6 +38,7 @@ export function createMainPage(): Page {
     acceptedTypes[typeDef.type] = true;
   }
   return createPage({
+    id: 'main',
     isMain: true,
     name: 'Main',
     acceptedTypes,
