@@ -276,7 +276,7 @@
 
 /obj/item/clothing/head/helmet/balloon
 	name = "balloon helmet"
-	desc = "A helmet made out of balloons. Its like saw great usage in the Great Clown - Mime War. Surprisingly resistant to fire. Mimes were doing unspeakable things."
+	desc = "A helmet made out of balloons. The like saw great usage in the Great Clown - Mime War. Surprisingly resistant to fire. Mimes were doing unspeakable things."
 	icon_state = "helmet_balloon"
 	inhand_icon_state = "helmet_balloon"
 	armor_type = /datum/armor/balloon
