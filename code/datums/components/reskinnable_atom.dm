@@ -35,7 +35,7 @@
 	/// Optional, specifies the worn icon file.
 	var/new_worn_icon
 	/// When set true, will allow concrete subtypes of abstract subtypes (such as for organizational purposes) to be selectable as reskins in the loadout menu.
-	var/allow_abstract_subtypes_in_loadout
+	var/allow_all_subtypes_in_loadout
 	/// Mandatory for GAGs items. The path to the greyscale item this is to be applied to.
 	var/atom/greyscale_item_path
 	/// Auto populated. The greyscale_config from greyscale_item_path.
