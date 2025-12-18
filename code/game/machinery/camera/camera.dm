@@ -97,8 +97,8 @@
 	var/datum/motion_group/area_motion = null
 	var/alarm_delay = 30 // Don't forget, there's another 3 seconds in queueAlarm()
 
-	/// The list of relative flattened view coordinates from this camera during its last LoS update.
-	var/last_view_turfs = list()
+	/// Whether the camera was used in the last LoS update.
+	var/last_can_use = FALSE
 	/// The view size of this camera during its last LoS update.
 	var/last_view_size = 0
 	/// The x position of this camera during its last LoS update.
@@ -107,6 +107,10 @@
 	var/last_view_y = 0
 	/// The z position of this camera during its last LoS update.
 	var/last_view_z = 0
+	/// List of camera chunks within viewing range of this camera during the last LoS update.
+	var/list/last_view_chunks = list()
+	/// The list of relative flattened view coordinates from this camera during its last LoS update.
+	var/list/last_view_turfs = list()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname, 0)
