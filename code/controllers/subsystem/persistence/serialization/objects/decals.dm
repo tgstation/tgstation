@@ -1,4 +1,8 @@
-/obj/effect/decal/cleanable/is_saveable(turf/current_loc, list/obj_blacklist)
+/obj/effect/landmark/is_saveable(turf/current_loc, list/obj_blacklist)
+	// most landmarks get deleted except for latejoin arrivals shuttle
+	return TRUE
+
+/obj/effect/decal/is_saveable(turf/current_loc, list/obj_blacklist)
 	. = ..()
 	// this shouldn't be possible but just in case
 	return !isgroundlessturf(current_loc)
