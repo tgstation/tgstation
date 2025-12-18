@@ -199,6 +199,7 @@
 
 	return rolling_list
 
+/// Helper to see if there's a duplicate bounty in a list of bounties
 /datum/id_trim/proc/has_duplicate_bounty(list/datum/bounty/bounty_list, datum/bounty/check_bounty)
 	PRIVATE_PROC(TRUE)
 
@@ -211,6 +212,7 @@
 
 	return FALSE
 
+/// Returns a /datum/bounty typepath for a given bounty type
 /datum/id_trim/proc/get_random_bounty_type(input_bounty_type)
 	if(!input_bounty_type || input_bounty_type == CIV_JOB_RANDOM)
 		input_bounty_type = rand(1, MAXIMUM_BOUNTY_JOBS)

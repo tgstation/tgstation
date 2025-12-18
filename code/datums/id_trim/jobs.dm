@@ -1133,7 +1133,7 @@
 	var/department_access = list()
 	/// List of bonus departmental accesses that departmental security officers can in relation to how many overall security officers there are if the scaling system is set up. These can otherwise be granted via config settings.
 	var/elevated_access = list()
-
+	/// Typepath for unique patrol bounty available to this type of officer
 	var/patrol_type
 
 /datum/id_trim/job/security_officer/refresh_trim_access()
