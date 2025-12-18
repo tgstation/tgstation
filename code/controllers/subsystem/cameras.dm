@@ -163,7 +163,19 @@ SUBSYSTEM_DEF(cameras)
 		camera.last_view_z = view_z
 
 /datum/controller/subsystem/cameras/run_chunks()
+	for (var/datum/camerachunk/chunk as anything in chunk_queue)
+		if (MC_TICK_CHECK)
+			return
 
+		chunk_queue -= chunk
+
+		var/visibility = chunk.visibility
+		var/obscured = chunk.obscured
+
+		for (var/i in 1 to length(visibility))
+			if (visibility[i] && obscured[i])
+				var/image/static_image = new('')
+			else if (!visibility[i] && !obscured[i])
 
 /*
 

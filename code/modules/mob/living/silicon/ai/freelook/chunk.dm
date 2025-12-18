@@ -1,10 +1,14 @@
 /datum/camerachunk
 	/// List of cameras that are within viewing range of this camera chunk.
 	var/list/cameras = list()
+	/// List of turfs in this camera chunk. (list[coord_index] = turf)
+	var/list/turfs = list()
 	/// List of turf visibility in this camera chunk. (list[coord_index] = viewing_camera_count)
 	var/list/visibility = list()
-	/// List of turfs covered by static in this camera chunk. (list[coord_index] = TRUE)
+	/// List of turfs covered by static in this camera chunk. (list[coord_index] = static_image)
 	var/list/obscured = list()
+	/// List of all static images in this camera chunk.
+	var/list/static = list()
 	/// List of atoms that caused this camera chunk to update.
 	var/list/sources = list()
 
@@ -16,6 +20,7 @@
 	src.x = x
 	src.y = y
 	src.z = z
+	turfs = block()
 	visibility.len = CHUNK_SIZE ** 2
 	obscured.len = CHUNK_SIZE ** 2
 	SScameras.chunks[GET_CHUNK_COORDS(x, y, z)] = src
