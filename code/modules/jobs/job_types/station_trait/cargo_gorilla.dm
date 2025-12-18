@@ -40,7 +40,7 @@
 	var/obj/item/card/id/advanced/cargo_gorilla/gorilla_id = new(spawned.loc)
 	gorilla_id.registered_name = spawned.name
 	gorilla_id.update_label()
-	gorilla_id.registered_account = bank_account
+	gorilla_id.set_account(bank_account)
 	bank_account.bank_cards += gorilla_id
 	spawned.put_in_hands(gorilla_id, del_on_fail = TRUE)
 

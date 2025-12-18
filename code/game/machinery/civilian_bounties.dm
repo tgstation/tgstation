@@ -136,6 +136,7 @@
 		//Pay for the bounty with the ID's department funds.
 		status_report += "Bounty completed! Please give your bounty cube to cargo for your automated payout shortly."
 		SSblackbox.record_feedback("tally", "bounties_completed", 1, current_bounty.type)
+		current_bounty.on_claimed(inserted_scan_id)
 		id_account.reset_bounty()
 		SSeconomy.civ_bounty_tracker++
 
@@ -198,7 +199,8 @@
 	if(!id_account?.bounties?[choice])
 		playsound(loc, 'sound/machines/synth/synth_no.ogg', 40 , TRUE)
 		return
-	id_account.civilian_bounty = id_account.bounties[choice]
+	var/datum/bounty/picked = id_account.bounties[choice]
+	id_account.set_bounty(picked, inserted_scan_id)
 	id_account.bounties = null
 	SSblackbox.record_feedback("tally", "bounties_assigned", 1, id_account.civilian_bounty.type)
 	return id_account.civilian_bounty
@@ -218,18 +220,17 @@
 		if(inserted_scan_id.registered_account.civilian_bounty)
 			data["id_bounty_info"] = inserted_scan_id.registered_account.civilian_bounty.description
 			data["id_bounty_num"] = inserted_scan_id.registered_account.bounty_num()
-			data["id_bounty_value"] = (inserted_scan_id.registered_account.civilian_bounty.reward) * (CIV_BOUNTY_SPLIT/100)
+			data["id_bounty_value"] = (inserted_scan_id.registered_account.civilian_bounty.get_bounty_reward()) * (CIV_BOUNTY_SPLIT / 100)
 		if(inserted_scan_id.registered_account.bounties)
 			data["picking"] = TRUE
-			data["id_bounty_names"] = list(inserted_scan_id.registered_account.bounties[1].name,
-											inserted_scan_id.registered_account.bounties[2].name,
-											inserted_scan_id.registered_account.bounties[3].name)
-			data["id_bounty_infos"] = list(inserted_scan_id.registered_account.bounties[1].description,
-											inserted_scan_id.registered_account.bounties[2].description,
-											inserted_scan_id.registered_account.bounties[3].description)
-			data["id_bounty_values"] = list(inserted_scan_id.registered_account.bounties[1].reward * (CIV_BOUNTY_SPLIT/100),
-											inserted_scan_id.registered_account.bounties[2].reward * (CIV_BOUNTY_SPLIT/100),
-											inserted_scan_id.registered_account.bounties[3].reward * (CIV_BOUNTY_SPLIT/100))
+			data["id_bounty_names"] = list()
+			data["id_bounty_infos"] = list()
+			data["id_bounty_values"] = list()
+			for(var/datum/bounty/bounty as anything in inserted_scan_id.registered_account.bounties)
+				data["id_bounty_names"] += bounty.name
+				data["id_bounty_infos"] += bounty.description
+				data["id_bounty_values"] += bounty.get_bounty_reward() * (CIV_BOUNTY_SPLIT / 100)
+
 		else
 			data["picking"] = FALSE
 
@@ -367,7 +368,7 @@
 		COOLDOWN_START(src, next_nag_time, nag_cooldown)
 
 /obj/item/bounty_cube/proc/set_up(datum/bounty/my_bounty, obj/item/card/id/holder_id)
-	bounty_value = my_bounty.reward
+	bounty_value = my_bounty.get_bounty_reward()
 	bounty_name = my_bounty.name
 	bounty_holder = holder_id.registered_name
 	bounty_holder_job = holder_id.assignment
