@@ -1890,7 +1890,8 @@
 			return (match_count == LAZYLEN(ally_or_allies))
 		else
 			return FAST_FACTION_CHECK(null, null, allies, ally_or_allies, FALSE)
-
+	else if(ismob(ally_or_allies))
+		return "[REF(ally_or_allies)]" in allies
 	else
 		return ally_or_allies in allies
 /**

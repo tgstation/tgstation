@@ -490,7 +490,7 @@
 
 /datum/status_effect/stabilized/grey/tick(seconds_between_ticks)
 	for(var/mob/living/basic/slime/slimes_in_range in range(1, get_turf(owner)))
-		if(!slimes_in_range.has_ally(REF(owner)))
+		if(!slimes_in_range.has_ally(owner))
 			to_chat(owner, span_notice("[linked_extract] pulses gently as it communicates with [slimes_in_range]."))
 			slimes_in_range.befriend(owner)
 	return ..()
