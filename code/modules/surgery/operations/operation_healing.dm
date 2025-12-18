@@ -7,6 +7,7 @@
 
 /datum/surgery_operation/basic/tend_wounds
 	name = "tend wounds"
+	rnd_name = "Tend Wounds"
 	desc = "Perform superficial wound care on a patient's bruises and burns."
 	implements = list(
 		TOOL_HEMOSTAT = 1,
@@ -219,15 +220,18 @@
 	patient.take_bodypart_damage(brute_dealt, burn_dealt, wound_bonus = CANT_WOUND)
 
 /datum/surgery_operation/basic/tend_wounds/upgraded
+	rnd_name = parent_type::rnd_name + "+"
 	operation_flags = parent_type::operation_flags | OPERATION_LOCKED
 	replaced_by = /datum/surgery_operation/basic/tend_wounds/upgraded/master
 	healing_multiplier = 0.1
 
 /datum/surgery_operation/basic/tend_wounds/upgraded/master
+	rnd_name = parent_type::rnd_name + "+"
 	replaced_by = /datum/surgery_operation/basic/tend_wounds/combo/upgraded/master
 	healing_multiplier = 0.2
 
 /datum/surgery_operation/basic/tend_wounds/combo
+	rnd_name = "Advanced Tend Wounds"
 	operation_flags = parent_type::operation_flags | OPERATION_LOCKED
 	replaced_by = /datum/surgery_operation/basic/tend_wounds/combo/upgraded
 	can_heal = COMBO_SURGERY
@@ -235,11 +239,13 @@
 	time = 1 SECONDS
 
 /datum/surgery_operation/basic/tend_wounds/combo/upgraded
+	rnd_name = parent_type::rnd_name + "+"
 	operation_flags = parent_type::operation_flags | OPERATION_LOCKED
 	replaced_by = /datum/surgery_operation/basic/tend_wounds/combo/upgraded/master
 	healing_multiplier = 0.1
 
 /datum/surgery_operation/basic/tend_wounds/combo/upgraded/master
+	rnd_name = parent_type::rnd_name + "+"
 	healing_amount = 1
 	healing_multiplier = 0.4
 

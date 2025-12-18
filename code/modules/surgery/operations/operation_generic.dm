@@ -32,7 +32,12 @@
 
 /datum/surgery_operation/limb/incise_skin/tool_check(obj/item/tool)
 	// Require edged sharpness OR a tool behavior match
-	return ((tool.get_sharpness() & SHARP_EDGED) || implements[tool.tool_behaviour])
+	if((tool.get_sharpness() & SHARP_EDGED) || implements[tool.tool_behaviour])
+		return TRUE
+	// these are here by popular demand, even though they don't fit the above criteria
+	if(istype(tool, /obj/item/pen) || istype(tool, /obj/item/screwdriver))
+		return TRUE
+	return FALSE
 
 /datum/surgery_operation/limb/incise_skin/state_check(obj/item/bodypart/limb)
 	return !(limb.biological_state & biostate_blacklist)
