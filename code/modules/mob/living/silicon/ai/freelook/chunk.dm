@@ -27,11 +27,10 @@
 
 /datum/camerachunk/Destroy(force)
 	SScameras.chunks -= src
-
 	for (var/obj/machinery/camera/camera as anything in cameras)
 		camera.last_view_chunks -= src
-
 	cameras.Cut()
 	visibility.Cut()
 	obscured.Cut()
 	sources.Cut()
+	return ..()
