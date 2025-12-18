@@ -395,7 +395,6 @@
 	else
 		accessory_overlay = mutable_appearance()
 		for(var/obj/item/clothing/accessory/accessory as anything in attached_accessories)
-			to_chat(world, span_boldannounce("2"), MESSAGE_TYPE_DEBUG)
 			accessory_overlay.overlays += accessory.generate_accessory_overlay(src)
 	update_appearance() // so we update the suit inventory overlay too
 
