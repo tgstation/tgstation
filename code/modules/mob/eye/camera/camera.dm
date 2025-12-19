@@ -58,8 +58,9 @@
 /// Can be used as a signal handler.
 /mob/eye/camera/proc/update_visibility()
 	SIGNAL_HANDLER
-	PROTECTED_PROC(TRUE)
-	SHOULD_CALL_PARENT(TRUE)
+	var/client/viewer_client = GetViewerClient()
+	if (viewer_client)
+		SScameras.add_viewer_client(GetViewerClient(), REF(src))
 
 /mob/eye/camera/zMove(dir, turf/target, z_move_flags = NONE, recursions_left = 1, list/falling_movs)
 	. = ..()

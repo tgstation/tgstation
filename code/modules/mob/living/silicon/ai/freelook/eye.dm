@@ -104,12 +104,6 @@
 	if(ai.master_multicam)
 		ai.master_multicam.refresh_view()
 
-/mob/eye/camera/ai/update_visibility()
-	if(ai)
-		ai.camera_visibility(src)
-	else
-		..()
-
 /mob/eye/camera/ai/GetViewerClient()
 	if(ai)
 		return ai.client

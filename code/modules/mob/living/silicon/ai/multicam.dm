@@ -144,12 +144,6 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	if(screen?.ai)
 		return screen.ai.client
 
-/mob/eye/camera/ai/pic_in_pic/update_visibility()
-	if(screen?.ai)
-		screen.ai.camera_visibility(src)
-	else
-		..()
-
 /mob/eye/camera/ai/pic_in_pic/setLoc(turf/destination, force_update = FALSE)
 	if (destination)
 		abstract_move(destination)
