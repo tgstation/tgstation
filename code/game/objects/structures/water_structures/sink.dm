@@ -8,7 +8,7 @@
 	pixel_z = 1
 	///Something's being washed at the moment
 	var/busy = FALSE
-	///Capacity of reagents to create
+	///Capacity of this sink
 	var/capacity = 100
 	///What kind of reagent is produced by this sink by default? (We now have actual plumbing, Arcane, August 2020)
 	var/dispensedreagent = /datum/reagent/water
@@ -17,7 +17,7 @@
 	///Number of sheets of material to drop when broken or deconstructed.
 	var/buildstackamount = 1
 	///Does the sink have a water recycler to recollect its water supply?
-	var/has_water_reclaimer = FALSE
+	var/has_water_reclaimer = TRUE
 	///Units of water to reclaim per second
 	var/reclaim_rate = 0.5
 	///Amount of shift the pixel for placement
@@ -25,19 +25,16 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 
-/obj/structure/sink/Initialize(mapload)
+/obj/structure/sink/Initialize(mapload, ndir = 0, has_water_reclaimer = null)
 	. = ..()
-	setDir(dir)
 
-	has_water_reclaimer = mapload
-	create_reagents(capacity)
-	if(has_water_reclaimer)
-		reagents.add_reagent(dispensedreagent, capacity)
-	AddComponent(/datum/component/plumbing/simple_demand/extended)
+	if(ndir)
+		dir = ndir
 
-/obj/structure/sink/setDir(newdir)
-	. = ..()
-	switch(newdir)
+	if(has_water_reclaimer != null)
+		src.has_water_reclaimer = has_water_reclaimer
+
+	switch(dir)
 		if(NORTH)
 			pixel_x = 0
 			pixel_y = -pixel_shift
@@ -50,6 +47,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		if(WEST)
 			pixel_x = pixel_shift
 			pixel_y = 0
+
+	create_reagents(capacity, NO_REACT)
+	if(src.has_water_reclaimer)
+		reagents.add_reagent(dispensedreagent, capacity)
+	AddComponent(/datum/component/plumbing/simple_demand, extend_pipe_to_edge = TRUE)
 
 /obj/structure/sink/examine(mob/user)
 	. = ..()
@@ -210,7 +212,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 
 /obj/structure/sink/process(seconds_per_tick)
 	// Water reclamation complete?
-	if(!has_water_reclaimer || QDELETED(reagents) || reagents.holder_full())
+	if(!has_water_reclaimer || reagents.total_volume >= reagents.maximum_volume)
 		return PROCESS_KILL
 
 	reagents.add_reagent(dispensedreagent, reclaim_rate * seconds_per_tick)
@@ -261,9 +263,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 /obj/structure/sinkframe/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(tool, /obj/item/stock_parts/water_recycler))
 		qdel(tool)
-		var/obj/structure/sink/greyscale/new_sink = new(loc)
-		new_sink.setDir(REVERSE_DIR(dir))
-		new_sink.reagents.add_reagent(new_sink.dispensedreagent, new_sink.capacity)
+		var/obj/structure/sink/greyscale/new_sink = new(loc, REVERSE_DIR(dir), TRUE)
 		new_sink.set_custom_materials(custom_materials)
 		qdel(src)
 		playsound(new_sink, 'sound/machines/click.ogg', 20, TRUE)
