@@ -23,6 +23,9 @@
 	var/atom/thing = owner
 	thing.create_digital_aura()
 
+/datum/component/glitch/RegisterWithParent()
+	parent.AddComponent(/datum/component/holographic_nature)
+
 /// Sakujo
 /datum/component/glitch/proc/dust_mob()
 	if(QDELETED(parent))
