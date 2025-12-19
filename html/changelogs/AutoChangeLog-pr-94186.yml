@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Fixed oversize icon display in the crafting menu"
+  - spellcheck: "Tram door assembly is not classified as material airlock in the crafting menu"

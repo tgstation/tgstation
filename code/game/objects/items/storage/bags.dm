@@ -305,7 +305,7 @@
 // "Only 20 uranium 'cause of radiation"
 /obj/item/storage/bag/sheetsnatcher/debug/PopulateContents()
 	// amount should be null if it should spawn with the type's default amount
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/stack/sheet/iron/fifty = null,
 		/obj/item/stack/sheet/glass/fifty = null,
 		/obj/item/stack/sheet/rglass/fifty = null,

@@ -45,7 +45,6 @@
 
 /obj/item/clothing/head/costume/pirate/bandana
 	name = "pirate bandana"
-	desc = "Yarr."
 	icon_state = "bandana"
 	inhand_icon_state = null
 

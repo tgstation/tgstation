@@ -566,3 +566,36 @@
       & cabling.
   - map: Several offstation structures have had piping & cabling issues resolved.
   - map: Assistants no longer have access to the tramstation security mechbay
+2025-12-19:
+  Aliceee2ch:
+  - bugfix: Mapped missing security spawners in science outpost on TramStation to
+      prevent spawning in walls.
+  - rscadd: Engineering cyborg can now hold conveyor belts and place plastic signs
+      using screwdriver.
+  ArchBTW:
+  - bugfix: Clothing accessories fix
+  - bugfix: Fix training bomb ghost/admin notification
+  Fghj240:
+  - balance: Expanded storage modules are now unlocked much earlier
+  - balance: Regular storage modules require 1 complexity instead of 3
+  - spellcheck: Regular storage modules are now called compact storage modules and
+      the expanded ones are just called storage modules.
+  Ghommie:
+  - rscadd: 'Two items have been added to the The Marine Utility tech node: a fish-gene
+      gun to add and remove traits to/from fish, and a bluespace fishing reel.'
+  Jacquerel:
+  - rscadd: It takes a little bit longer for clowns to realise that they're about
+      to die when they enter a chasm
+  JohnFulpWillard:
+  - bugfix: The chat bar now scrolls as you type.
+  Melbert:
+  - bugfix: Fix inverted south stair icons
+  SmArtKar:
+  - admin: Added a warning for invalid dynamic config weights
+  leaKsi:
+  - bugfix: Fixed 2 infinite credit exploits.
+  lelandkemble:
+  - spellcheck: Resolved grammar issues with headwear
+  - rscadd: You can soak a rag in a sink
+  - bugfix: Departmental security officers will not spawn in walls
+  - bugfix: Empty TCG game decks will no longer appear in presents
