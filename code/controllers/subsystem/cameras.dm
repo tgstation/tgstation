@@ -81,7 +81,6 @@ SUBSYSTEM_DEF(cameras)
 		var/last_view_size = camera.last_view_size
 		var/last_view_x = camera.last_view_x
 		var/last_view_y = camera.last_view_y
-		var/last_view_z = camera.last_view_z
 
 		// Cache shared lists
 		var/list/view_chunks = camera.last_view_chunks
@@ -383,6 +382,60 @@ SUBSYSTEM_DEF(cameras)
 	// Add static images for chunks that are newly in view
 	for (var/datum/camerachunk/chunk as anything in (view_chunks - last_view_chunks))
 		viewer.images += chunk.static_images
+
+/// Returns list of available cameras, ready to use for UIs displaying list of them
+/// The format is: list("name" = "camera.c_tag", ref = REF(camera))
+/datum/controller/subsystem/cameras/proc/get_available_cameras_data(list/networks_available, list/z_levels_available)
+	var/list/available_cameras_data = list()
+	for(var/obj/machinery/camera/camera as anything in get_filtered_and_sorted_cameras(networks_available, z_levels_available))
+		available_cameras_data += list(list(
+			name = camera.c_tag,
+			ref = REF(camera),
+		))
+
+	return available_cameras_data
+
+/**
+ * get_available_camera_by_tag_list
+ *
+ * Builds a list of all available cameras that can be seen to networks_available and in z_levels_available.
+ * Entries are stored in `c_tag[camera.can_use() ? null : " (Deactivated)"]` => `camera` format
+ * Args:
+ *  networks_available - List of networks that we use to see which cameras are visible to it.
+ *  z_levels_available - List of z levels to filter camera by. If empty, all z levels are considered valid.
+ *  sort_by_ctag - If the resulting list should be sorted by `c_tag`.
+ */
+/datum/controller/subsystem/cameras/proc/get_available_camera_by_tag_list(list/networks_available, list/z_levels_available)
+	var/list/available_cameras_by_tag = list()
+	for(var/obj/machinery/camera/camera as anything in get_filtered_and_sorted_cameras(networks_available, z_levels_available))
+		available_cameras_by_tag["[camera.c_tag][camera.can_use() ? null : " (Deactivated)"]"] = camera
+
+	return available_cameras_by_tag
+
+/// Returns list of all cameras that passed `is_camera_available` filter and sorted by `cmp_camera_ctag_asc`
+/datum/controller/subsystem/cameras/proc/get_filtered_and_sorted_cameras(list/networks_available, list/z_levels_available)
+	PRIVATE_PROC(TRUE)
+
+	var/list/filtered_cameras = list()
+	for(var/obj/machinery/camera/camera as anything in cameras)
+		if(!is_camera_available(camera, networks_available, z_levels_available))
+			continue
+
+		filtered_cameras += camera
+
+	return sortTim(filtered_cameras, GLOBAL_PROC_REF(cmp_camera_ctag_asc))
+
+/// Checks if the `camera_to_check` meets the requirements of availability.
+/datum/controller/subsystem/cameras/proc/is_camera_available(obj/machinery/camera/camera_to_check, list/networks_available, list/z_levels_available)
+	PRIVATE_PROC(TRUE)
+
+	if(!camera_to_check.c_tag)
+		return FALSE
+
+	if(length(z_levels_available) && !(camera_to_check.z in z_levels_available))
+		return FALSE
+
+	return length(camera_to_check.network & networks_available) > 0
 
 /*
 
