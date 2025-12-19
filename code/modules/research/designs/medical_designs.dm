@@ -716,9 +716,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 4 SECONDS
 	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.2,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.2,
-		/datum/material/silver = SHEET_MATERIAL_AMOUNT,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.25,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75,
 	)
 	build_path = /obj/item/organ/cyberimp/brain/surgical_processor
 	category = list(
