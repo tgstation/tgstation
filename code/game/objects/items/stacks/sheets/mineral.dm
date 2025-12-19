@@ -312,7 +312,7 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	new /datum/stack_recipe("Titanium tile", /obj/item/stack/tile/mineral/titanium, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
 	new/datum/stack_recipe("Titanium Platform", /obj/structure/platform/titanium, 2, time = 3 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
 	new /datum/stack_recipe("Shuttle seat", /obj/structure/chair/comfy/shuttle, 2, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
-	new /datum/stack_recipe("Material tram door assembly", /obj/structure/door_assembly/multi_tile/door_assembly_tram, 8, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_DOORS), \
+	new /datum/stack_recipe("Tram door assembly", /obj/structure/door_assembly/multi_tile/door_assembly_tram, 8, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_DOORS), \
 	))
 
 /obj/item/stack/sheet/mineral/titanium/get_main_recipes()
