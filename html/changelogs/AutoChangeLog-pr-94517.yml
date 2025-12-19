@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - admin: "Added a warning for invalid dynamic config weights"
