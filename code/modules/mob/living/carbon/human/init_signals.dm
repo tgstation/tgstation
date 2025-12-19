@@ -34,8 +34,7 @@
 
 /mob/living/carbon/human/proc/on_fat(datum/source)
 	SIGNAL_HANDLER
-	hud_used?.hunger?.update_hunger_bar()
-	mob_mood?.update_nutrition_moodlets()
+	update_nutrition()
 
 	if(HAS_TRAIT(src, TRAIT_FAT) && !HAS_TRAIT(src, TRAIT_FAT_IGNORE_SLOWDOWN))
 		add_movespeed_modifier(/datum/movespeed_modifier/obesity)
@@ -51,8 +50,7 @@
 		overeatduration = 0
 		remove_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)
 	else
-		hud_used?.hunger?.update_hunger_bar()
-		mob_mood?.update_nutrition_moodlets()
+		update_nutrition()
 
 /// Signal proc for [COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED] to check if an item is suddenly too heavy for our pockets
 /mob/living/carbon/human/proc/check_pocket_weght(datum/source, obj/item/changed, old_w_class, new_w_class)

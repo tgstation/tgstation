@@ -16,7 +16,7 @@
 		TRAIT_UNHUSKABLE,
 	)
 
-	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
+	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL|MOB_SKELETAL
 	inherent_respiration_type = RESPIRATION_PLASMA
 	mutantlungs = /obj/item/organ/lungs/plasmaman
 	smoker_lungs = /obj/item/organ/lungs/plasmaman/plasmaman_smoker

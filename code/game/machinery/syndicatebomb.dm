@@ -277,7 +277,7 @@
 	activate()
 	add_fingerprint(user)
 	// We don't really concern ourselves with duds or fakes after this
-	if(isnull(payload) || istype(payload, /obj/machinery/syndicatebomb/training))
+	if(isnull(payload) || istype(payload, /obj/item/bombcore/training))
 		return
 
 	notify_ghosts(

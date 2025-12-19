@@ -105,13 +105,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	user.visible_message(span_notice("[user] washes [user.p_their()] [washing_face ? "face" : "hands"] using [src]."), \
 						span_notice("You wash your [washing_face ? "face" : "hands"] using [src]."))
 
-/obj/structure/sink/attackby(obj/item/O, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/structure/sink/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(busy)
 		to_chat(user, span_warning("Someone's already washing here!"))
 		return
 
-	if(is_reagent_container(O))
-		var/obj/item/reagent_containers/RG = O
+	if(is_reagent_container(attacking_item))
+		var/obj/item/reagent_containers/RG = attacking_item
 		if(reagents.total_volume <= 0)
 			to_chat(user, span_notice("\The [src] is dry."))
 			return FALSE
@@ -124,8 +124,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 			to_chat(user, span_notice("\The [RG] is full."))
 			return FALSE
 
-	if(istype(O, /obj/item/melee/baton/security))
-		var/obj/item/melee/baton/security/baton = O
+	if(istype(attacking_item, /obj/item/melee/baton/security))
+		var/obj/item/melee/baton/security/baton = attacking_item
 		if(baton.cell?.charge && baton.active)
 			flick("baton_active", src)
 			user.Paralyze(baton.knockdown_time)
@@ -136,69 +136,69 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 			playsound(src, baton.on_stun_sound, 50, TRUE)
 			return
 
-	if(istype(O, /obj/item/mop))
+	if(istype(attacking_item, /obj/item/mop) || astype(attacking_item, /obj/item/rag)?.blood_level == 0)
 		if(reagents.total_volume <= 0)
 			to_chat(user, span_notice("\The [src] is dry."))
 			return FALSE
-		reagents.trans_to(O, 5, transferred_by = user)
+		reagents.trans_to(attacking_item, 5, transferred_by = user)
 		begin_reclamation()
-		to_chat(user, span_notice("You wet [O] in [src]."))
+		to_chat(user, span_notice("You wet [attacking_item] in [src]."))
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
 
-	if(O.tool_behaviour == TOOL_WRENCH)
-		O.play_tool_sound(src)
+	if(attacking_item.tool_behaviour == TOOL_WRENCH)
+		attacking_item.play_tool_sound(src)
 		deconstruct()
 		return
 
-	if(O.tool_behaviour == TOOL_CROWBAR)
+	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 		if(!has_water_reclaimer)
 			to_chat(user, span_warning("There isn't a water recycler to remove."))
 			return
 
-		O.play_tool_sound(src)
+		attacking_item.play_tool_sound(src)
 		has_water_reclaimer = FALSE
 		new/obj/item/stock_parts/water_recycler(get_turf(loc))
 		to_chat(user, span_notice("You remove the water reclaimer from [src]."))
 		return
 
-	if(istype(O, /obj/item/stock_parts/water_recycler))
+	if(istype(attacking_item, /obj/item/stock_parts/water_recycler))
 		if(has_water_reclaimer)
 			to_chat(user, span_warning("There is already has a water recycler installed."))
 			return
 
 		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
-		qdel(O)
+		qdel(attacking_item)
 		has_water_reclaimer = TRUE
 		begin_reclamation()
 		return
 
-	if(istype(O, /obj/item/storage/fancy/pickles_jar))
-		if(O.contents.len)
+	if(istype(attacking_item, /obj/item/storage/fancy/pickles_jar))
+		if(attacking_item.contents.len)
 			to_chat(user, span_notice("Looks like there's something left in the jar"))
 			return
-		new /obj/item/reagent_containers/cup/beaker/large(loc)
+		qdel(attacking_item)
 		to_chat(user, span_notice("You washed the jar, ridding it of the brine."))
-		qdel(O)
+		user.put_in_active_hand(new /obj/item/reagent_containers/cup/beaker/large(loc))
 		return
 
-	if(!istype(O))
+	if(!istype(attacking_item))
 		return
-	if(O.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
+	if(attacking_item.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
 		return
 
-	if(!user.combat_mode || (O.item_flags & NOBLUDGEON))
-		to_chat(user, span_notice("You start washing [O]..."))
+	if(!user.combat_mode || (attacking_item.item_flags & NOBLUDGEON))
+		to_chat(user, span_notice("You start washing [attacking_item]..."))
 		playsound(src, 'sound/machines/sink-faucet.ogg', 50)
 		busy = TRUE
 		if(!do_after(user, 4 SECONDS, target = src))
 			busy = FALSE
 			return 1
 		busy = FALSE
-		O.wash(CLEAN_WASH)
-		reagents.expose(O, TOUCH, 5 / max(reagents.total_volume, 5))
-		user.visible_message(span_notice("[user] washes [O] using [src]."), \
-							span_notice("You wash [O] using [src]."))
+		attacking_item.wash(CLEAN_WASH)
+		reagents.expose(attacking_item, TOUCH, 5 / max(reagents.total_volume, 5))
+		user.visible_message(span_notice("[user] washes [attacking_item] using [src]."), \
+							span_notice("You wash [attacking_item] using [src]."))
 		return 1
 	else
 		return ..()

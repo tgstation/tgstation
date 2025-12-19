@@ -392,10 +392,10 @@
 /obj/item/clothing/under/proc/update_accessory_overlay()
 	if(!length(attached_accessories))
 		accessory_overlay = null
-		return
-	accessory_overlay = mutable_appearance()
-	for(var/obj/item/clothing/accessory/accessory as anything in attached_accessories)
-		accessory_overlay.overlays += accessory.generate_accessory_overlay(src)
+	else
+		accessory_overlay = mutable_appearance()
+		for(var/obj/item/clothing/accessory/accessory as anything in attached_accessories)
+			accessory_overlay.overlays += accessory.generate_accessory_overlay(src)
 	update_appearance() // so we update the suit inventory overlay too
 
 /obj/item/clothing/under/Exited(atom/movable/gone, direction)

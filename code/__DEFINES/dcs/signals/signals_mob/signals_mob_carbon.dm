@@ -97,8 +97,8 @@
 #define COMSIG_CARBON_MOOD_UPDATE "carbon_mood_update"
 ///Called when a carbon attempts to eat (eating)
 #define COMSIG_CARBON_ATTEMPT_EAT "carbon_attempt_eat"
-	// Prevents the breath
-	#define COMSIG_CARBON_BLOCK_EAT (1 << 0)
+	// Prevents eating the food
+	#define BLOCK_EAT_ATTEMPT (1 << 0)
 ///Called when a carbon vomits : (distance, force)
 #define COMSIG_CARBON_VOMITED "carbon_vomited"
 ///Called from apply_overlay(cache_index, overlay)
@@ -187,6 +187,10 @@
 /// From /mob/living/carbon/proc/can_defib() : ()
 /// Return a defib result flag to override default defib brain check
 #define COMSIG_CARBON_DEFIB_BRAIN_CHECK "carbon_defib_brain_check"
+
+/// From /mob/living/carbon/human/proc/defib_check() : ()
+/// Return a defib result flag to override default defib heart check
+#define COMSIG_CARBON_DEFIB_HEART_CHECK "carbon_defib_heart_check"
 
 /// From /mob/living/carbon/human/proc/smart_equip_targeted(): (mob/living/carbon/human/user, obj/item/possible_container)
 #define COMSIG_HUMAN_NON_STORAGE_HOTKEY "human_storage_hotkey"

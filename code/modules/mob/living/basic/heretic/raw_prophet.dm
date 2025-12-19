@@ -15,6 +15,7 @@
 	maxHealth = 65
 	health = 65
 	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
+	mob_biotypes = MOB_ORGANIC
 	/// List of innate abilities we have to add.
 	var/static/list/innate_abilities = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long = null,

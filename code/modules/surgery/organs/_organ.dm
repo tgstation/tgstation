@@ -88,12 +88,14 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponentFrom(
 			SOURCE_EDIBLE_INNATE, \
-			/datum/component/edible,\
-			initial_reagents = food_reagents,\
-			foodtypes = foodtype_flags,\
-			volume = reagent_vol,\
-			tastes = food_tastes,\
-			after_eat = CALLBACK(src, PROC_REF(OnEatFrom)))
+			/datum/component/edible, \
+			initial_reagents = food_reagents, \
+			foodtypes = foodtype_flags, \
+			volume = reagent_vol, \
+			tastes = food_tastes, \
+			after_eat = CALLBACK(src, PROC_REF(OnEatFrom)), \
+		)
+		RegisterSignal(src, COMSIG_FOOD_ATTEMPT_EAT, PROC_REF(block_nom))
 
 	if(bodypart_overlay)
 		setup_bodypart_overlay()
@@ -234,7 +236,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	on_death(seconds_per_tick, times_fired) //Kinda hate doing it like this, but I really don't want to call process directly.
 
 /obj/item/organ/proc/OnEatFrom(eater, feeder)
-	useable = FALSE //You can't use it anymore after eating it you spaztic
+	// You can't use it anymore after eating it
+	organ_flags |= ORGAN_UNUSABLE
 
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
@@ -341,6 +344,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	// Delegate to species if possible.
 	if(dna?.species)
 		for(var/obj/item/organ/organ as anything in organs)
+			if(organ.organ_flags & ORGAN_EMP)
+				organ.organ_flags &= ~ORGAN_EMP
 			if(remove_hazardous && (organ.organ_flags & ORGAN_HAZARDOUS))
 				qdel(organ)
 				continue
@@ -495,6 +500,16 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/replace_into(mob/living/carbon/new_owner)
 	Insert(new_owner, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
+/// Signal proc for [COMSIG_FOOD_ATTEMPT_EAT], block feeding an organ to a mob if they are marked as ready to operate - to prevent mistakenly feeding your patient
+/obj/item/organ/proc/block_nom(datum/source, mob/living/carbon/eater, mob/living/carbon/feeder)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(eater, TRAIT_READY_TO_OPERATE))
+		return NONE
+	if(eater == feeder)
+		to_chat(feeder, span_warning("You feel it unwise to eat [source] while you're undergoing surgery."))
+	else
+		to_chat(feeder, span_warning("The only thing you could think of doing with [source] right now is feeding it to [eater], but that doesn't seem right."))
+	return BLOCK_EAT_ATTEMPT
 
 /// Get all possible organ slots by checking every organ, and then store it and give it whenever needed
 /proc/get_all_slots()

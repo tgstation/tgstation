@@ -14,6 +14,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	basic_mob_flags = DEL_ON_DEATH
 	status_flags = CANPUSH
+	mob_biotypes = MOB_MINERAL
 
 	response_help_continuous = "rubs"
 	response_help_simple = "rub"

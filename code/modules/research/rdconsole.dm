@@ -243,16 +243,8 @@ Nothing else in the console has ID requirements.
 	var/list/exp_to_process = stored_research.available_experiments.Copy()
 	for (var/e in stored_research.completed_experiments)
 		exp_to_process += stored_research.completed_experiments[e]
-	for (var/e in exp_to_process)
-		var/datum/experiment/ex = e
-		data["experiments"][ex.type] = list(
-			"name" = ex.name,
-			"description" = ex.description,
-			"tag" = ex.exp_tag,
-			"progress" = ex.check_progress(),
-			"completed" = ex.completed,
-			"performance_hint" = ex.performance_hint,
-		)
+	for (var/datum/experiment/ex as anything in exp_to_process)
+		data["experiments"][ex.type] = ex.to_ui_data()
 	return data
 
 /**

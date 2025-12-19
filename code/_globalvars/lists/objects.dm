@@ -33,12 +33,6 @@ GLOBAL_LIST_EMPTY_TYPED(singularities, /datum/component/singularity)
 
 GLOBAL_LIST_EMPTY(item_to_design_list)
 
-/// list of all surgeries by name, associated with their path.
-GLOBAL_LIST_INIT(surgeries_list, init_surgeries())
-
-/// list of all surgery steps, associated by their path.
-GLOBAL_LIST_INIT(surgery_steps, init_subtypes_w_path_keys(/datum/surgery_step, list()))
-
 /// Global list of all non-cooking related crafting recipes.
 GLOBAL_LIST_EMPTY(crafting_recipes)
 /// This is a global list of typepaths, these typepaths are atoms or reagents that are associated with crafting recipes.
@@ -103,4 +97,3 @@ GLOBAL_LIST_INIT(prototype_organs, typecacheof(list(
 	/obj/item/organ/tongue/dullahan,
 	/obj/item/organ/eyes/dullahan,
 ), only_root_path = TRUE))
-

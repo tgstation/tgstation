@@ -98,7 +98,7 @@
 
 /obj/item/clothing/head/helmet/press
 	name = "press helmet"
-	desc = "A blue helmet used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
+	desc = "A blue helmet used to distinguish <i>non-combatant</i> \"PRESS\" members, like anyone cares."
 	icon_state = "helmet_press"
 	base_icon_state = "helmet_press"
 	sound_vary = TRUE
@@ -190,7 +190,7 @@
 
 /obj/item/clothing/head/helmet/marine/pmc
 	icon_state = "marine"
-	desc = "A tactical black helmet, designed to protect one's head from various injuries sustained in operations. Its stellar survivability making up is for its lack of space worthiness"
+	desc = "A tactical black helmet, designed to protect one's head from various injuries sustained in operations. Its stellar survivability makes up for its lack of space worthiness"
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	clothing_flags = null
@@ -276,7 +276,7 @@
 
 /obj/item/clothing/head/helmet/balloon
 	name = "balloon helmet"
-	desc = "A helmet made out of balloons. Its likes saw great usage in the Great Clown - Mime War. Surprisingly resistant to fire. Mimes were doing unspeakable things."
+	desc = "A helmet made out of balloons. The like saw great usage in the Great Clown - Mime War. Surprisingly resistant to fire. Mimes were doing unspeakable things."
 	icon_state = "helmet_balloon"
 	inhand_icon_state = "helmet_balloon"
 	armor_type = /datum/armor/balloon
@@ -295,8 +295,8 @@
 	icon_state = "justice"
 	base_icon_state = "justice"
 	inhand_icon_state = "justice_helmet"
-	toggle_message = "You turn off the lights on"
-	alt_toggle_message = "You turn on the lights on"
+	toggle_message = "You turn off the lights"
+	alt_toggle_message = "You turn on the lights"
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	///Cooldown for toggling the visor.
 	COOLDOWN_DECLARE(visor_toggle_cooldown)
@@ -624,7 +624,7 @@
 
 /obj/item/clothing/head/helmet/military
 	name = "Crude Helmet"
-	desc = "A cheaply made kettle helmet with an added faceplate to protect your eyes and mouth."
+	desc = "A cheaply made kettle helmet with an added faceplate to protect the eyes and mouth."
 	icon_state = "military"
 	inhand_icon_state = "knight_helmet"
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
@@ -674,7 +674,7 @@
 
 /obj/item/clothing/head/helmet/durability/watermelon
 	name = "watermelon helmet"
-	desc = "A helmet cut out from a watermelon. Might take a few hits, but don't expect it whitstand much."
+	desc = "A helmet cut out from a watermelon. Might take a few hits, but don't expect it to withstand much."
 	icon_state = "watermelon"
 	inhand_icon_state = "watermelon"
 	flags_inv = HIDEEARS
@@ -738,7 +738,7 @@
 
 /obj/item/clothing/head/helmet/durability/barrelmelon
 	name = "barrelmelon helmet"
-	desc = "A helmet from hollowed out barrelmelon. As sturdy as if made from actual wood, though its rigid structure makes it break up quicker."
+	desc = "A helmet made from a hollowed out barrelmelon. As sturdy as actual wood, though its rigid structure makes it break quicker."
 	icon_state = "barrelmelon"
 	inhand_icon_state = "barrelmelon"
 	flags_inv = HIDEEARS

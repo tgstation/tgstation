@@ -229,6 +229,9 @@
 	atom_integrity = max_integrity
 	return TRUE
 
+/obj/item/sign/screwdriver_act(mob/living/user, obj/item/tool)
+	return interact_with_atom(get_step(get_turf(user), user.dir), user)
+
 /obj/item/sign/proc/set_sign_type(obj/structure/sign/fake_type)
 	name = initial(fake_type.name)
 	if(fake_type != /obj/structure/sign/blank)

@@ -7,6 +7,9 @@
 /// From datum/component/edible/proc/TakeBite: (mob/living/eater, mob/feeder, bitecount, bitesize)
 #define COMSIG_FOOD_EATEN "food_eaten"
 	#define DESTROY_FOOD (1<<0)
+/// From datum/component/edible/proc/AttemptEat: (mob/living/eater, mob/feeder)
+#define COMSIG_FOOD_ATTEMPT_EAT "food_attempt_eat"
+	// #define BLOCK_EAT_ATTEMPT (1<<0)
 /// From base of datum/component/edible/on_entered: (mob/crosser, bitecount)
 #define COMSIG_FOOD_CROSSED "food_crossed"
 /// From base of Component/edible/On_Consume: (mob/living/eater, mob/living/feeder)

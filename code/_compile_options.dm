@@ -108,6 +108,9 @@
 /// Prefer the autowiki build target instead.
 // #define AUTOWIKI
 
+/// If defined, we boot up, run world.run_performance_tests() and then shut down the server
+// #define PERFORMANCE_TESTS
+
 /// If this is uncommented, will profile mapload atom initializations
 // #define PROFILE_MAPLOAD_INIT_ATOM
 
