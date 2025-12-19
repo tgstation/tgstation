@@ -45,6 +45,7 @@
 /obj/projectile/meteor/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.tool_behaviour == TOOL_MINING)
 		qdel(src)
+		return TRUE
 
 	else if	(istype(attacking_item, /obj/item/melee/baseball_bat))
 		if(user.mind?.get_skill_level(/datum/skill/athletics) >= SKILL_LEVEL_EXPERT)
