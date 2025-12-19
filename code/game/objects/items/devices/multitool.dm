@@ -258,6 +258,7 @@
 			detect_state = PROXIMITY_NEAR
 
 /obj/item/multitool/ai_detect/proc/scan_unseen(mob/user)
+	/*
 	if(isnull(user?.client)) // the monkey incident of 2564
 		return
 	if(!COOLDOWN_FINISHED(src, static_scan_cd))
@@ -283,9 +284,11 @@
 	balloon_alert(user, "nearby unseen spots shown")
 	static_disappear_timer = addtimer(CALLBACK(src, PROC_REF(cleanup_static)), 8 SECONDS, TIMER_STOPPABLE)
 	COOLDOWN_START(src, static_scan_cd, 4 SECONDS)
+	*/
 
 // copied from camera chunks but we are doing a really big edge case here though
 /obj/item/multitool/ai_detect/proc/surrounding_chunks(turf/epicenter)
+	/*
 	. = list()
 	var/static_range = /mob/eye/camera/ai::static_visibility_range
 	var/x1 = max(1, epicenter.x - static_range)
@@ -300,6 +303,7 @@
 			// unless we only want to see static in a jank manner only if an eye updates it
 			chunk?.force_update(only_if_necessary = FALSE) // UPDATE THE FUCK NOW
 			. |= chunk
+	*/
 
 /obj/item/multitool/ai_detect/proc/cleanup_static()
 	if(isnull(hud_obj)) //we never did anything

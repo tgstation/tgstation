@@ -6,9 +6,10 @@ SUBSYSTEM_DEF(cameras)
 	name = "Cameras"
 	flags = SS_BACKGROUND
 	priority = FIRE_PRIORITY_CAMERAS
-	wait = 0.2 SECONDS
+	wait = 1 SECONDS
 	dependencies = list(
 		/datum/controller/subsystem/mapping, // plane offsets
+		/datum/controller/subsystem/atoms, // opacity
 	)
 
 	/// The stage of the current subsystem run.
@@ -213,7 +214,19 @@ SUBSYSTEM_DEF(cameras)
 			var/world_y = chunk_min_y + vis_y
 			for (var/vis_x in start_x to end_x)
 				if (view_turfs[GET_VIEW_COORDS(chunk_min_x + vis_x, world_y, view_x, view_y, view_size)])
-					visibility[vis_x_start + vis_x + 1] += adjust_amount // +1 because bounds are 0-based while visibility is 1-based
+					visibility[vis_x_start + vis_x + 1] += adjust_amount // +1 because bounds are 0-based while visibility is 1-
+
+/// Checks if the atom is visible by any cameras on the map. Strictly returns TRUE or FALSE.
+/datum/controller/subsystem/cameras/proc/is_on_cameras(atom/atom_to_check)
+	var/turf/turf_to_check = get_turf(atom_to_check)
+	if (!turf_to_check)
+		return FALSE
+	var/datum/camerachunk/chunk = chunks[GET_TURF_CHUNK_COORDS(turf_to_check)]
+	return !isnull(chunk) && chunk.visibility[GET_CHUNK_TURF_COORDS(turf_to_check, chunk)] > 0
+
+/// Updates all of the cameras that might see this atom.
+/datum/controller/subsystem/cameras/proc/update_visibility(atom/source)
+
 
 /*
 
@@ -363,7 +376,7 @@ SUBSYSTEM_DEF(cameras)
 
 /// Will check if an atom is on a viewable turf.
 /// Returns TRUE if the atom is visible by any camera, FALSE otherwise.
-/datum/controller/subsystem/cameras/proc/is_visible_by_cameras(atom/target)
+/datum/controller/subsystem/cameras/proc/is_on_cameras(atom/target)
 	return turf_visible_by_cameras(get_turf(target))
 
 /// Checks if the passed turf is visible by any camera.

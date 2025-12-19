@@ -294,4 +294,4 @@
 //
 
 /mob/living/silicon/ai/TurfAdjacent(turf/target_turf)
-	return (SScameras.is_visible_by_cameras(target_turf))
+	return (SScameras.is_on_cameras(target_turf))

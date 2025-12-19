@@ -107,7 +107,7 @@
 	var/last_view_y = 0
 	/// The z position of this camera during its last LoS update.
 	var/last_view_z = 0
-	/// List of camera chunks within viewing range of this camera during the last LoS update.
+	/// List of camera chunks this camera was viewing during its last LoS update.
 	var/list/last_view_chunks = list()
 	/// The list of relative flattened view coordinates from this camera during its last LoS update.
 	var/list/last_view_turfs = list()
@@ -139,7 +139,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	myarea = get_room_area()
 
 	if(camera_enabled)
-		SScameras.add_camera_to_chunk(src)
 		LAZYADD(myarea.cameras, src)
 #ifdef MAP_TEST
 		update_appearance()
@@ -153,22 +152,34 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(mapload)
 		find_and_mount_on_atom(mark_for_late_init = TRUE)
 
+	if (can_use())
+		QUEUE_CAMERA_UPDATE(src)
+
 /obj/machinery/camera/get_turfs_to_mount_on()
 	return list(get_step(src, dir))
 
 /obj/machinery/camera/Destroy(force)
 	if(can_use())
-		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
-	SScameras.remove_camera_from_chunk(src)
+		toggle_cam(null, 0) //kick anyone viewing out
+
+	for (var/datum/camerachunk/chunk as anything in last_view_chunks)
+		chunk.cameras -= src
+		QUEUE_CHUNK_UPDATE(chunk)
+
 	SScameras.cameras -= src
+	SScameras.camera_queue -= src
+
 	cancelCameraAlarm()
+
 	if(isarea(myarea))
 		LAZYREMOVE(myarea.cameras, src)
+
 	QDEL_NULL(alarm_manager)
 	QDEL_NULL(last_shown_paper)
 	QDEL_NULL(xray_module)
 	QDEL_NULL(emp_module)
 	QDEL_NULL(proximity_monitor)
+
 	return ..()
 
 /obj/machinery/camera/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
@@ -245,7 +256,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(!prob(150 / severity))
 		return
 	network = list()
-	SScameras.remove_camera_from_chunk(src)
 	set_machine_stat(machine_stat | EMPED)
 	set_light(0)
 	emped++ //Increase the number of consecutive EMP's
@@ -272,11 +282,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	network = previous_network
 	set_machine_stat(machine_stat & ~EMPED)
 	update_appearance()
-	if(can_use())
-		SScameras.add_camera_to_chunk(src)
 	emped = 0 //Resets the consecutive EMP count
 	addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 10 SECONDS)
 	calculate_active_power()
+
+/obj/machinery/camera/on_set_machine_stat(old_value)
+	. = ..()
+	if ((old_value ^ machine_stat) & EMPED)
+		QUEUE_CAMERA_UPDATE(src)
 
 /obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
@@ -286,8 +299,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	user.switchCamera(src)
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
-	src.view_range = num
-	SScameras.update_visibility(src)
+	if (view_range != num)
+		QUEUE_CAMERA_UPDATE(src)
+	view_range = num
 
 /obj/machinery/camera/proc/shock(mob/living/user)
 	if(!istype(user))
@@ -363,8 +377,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = TRUE)
 	camera_enabled = !camera_enabled
-	if(can_use())
-		SScameras.add_camera_to_chunk(src)
+	var/can_use = can_use()
+	if (!QDELETED(src) && !last_can_use != !can_use)
+		QUEUE_CAMERA_UPDATE(src)
+	if(can_use)
 		if (isturf(loc))
 			myarea = get_area(src)
 			LAZYADD(myarea.cameras, src)
@@ -372,7 +388,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			myarea = null
 	else
 		set_light(0)
-		SScameras.remove_camera_from_chunk(src)
 		if (isarea(myarea))
 			LAZYREMOVE(myarea.cameras, src)
 	// We are not guarenteed that the camera will be on a turf. account for that

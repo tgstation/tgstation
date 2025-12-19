@@ -229,22 +229,6 @@ All ShuttleMove procs go here
 					INVOKE_ASYNC(cycle_pump, TYPE_PROC_REF(/obj/machinery/atmospherics/components/unary/airlock_pump, on_dock_request), ONE_ATMOSPHERE)
 					break
 
-
-/obj/machinery/camera/hypotheticalShuttleMove(rotation, move_mode, obj/docking_port/mobile/moving_dock)
-	. = ..()
-	if(. & MOVE_AREA)
-		. |= MOVE_CONTENTS
-
-/obj/machinery/camera/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
-	. = ..()
-	if(. & MOVE_AREA)
-		. |= MOVE_CONTENTS
-		SScameras.remove_camera_from_chunk(src)
-
-/obj/machinery/camera/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
-	. = ..()
-	SScameras.add_camera_to_chunk(src)
-
 /obj/machinery/mech_bay_recharge_port/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
 	recharging_turf = get_step(loc, dir)

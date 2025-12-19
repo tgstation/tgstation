@@ -700,7 +700,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		var/turf/T = turfs[n]
 		if(!isfloorturf(T))
 			success = FALSE
-		if(!SScameras.is_visible_by_cameras(T))
+		if(!SScameras.is_on_cameras(T))
 			alert_msg = "You don't have camera vision of this location!"
 			success = FALSE
 		for(var/atom/movable/AM in T.contents)

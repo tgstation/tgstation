@@ -1,5 +1,5 @@
 /datum/camerachunk
-	/// List of cameras that are within viewing range of this camera chunk.
+	/// List of cameras that are actively viewing this camera chunk.
 	var/list/cameras = list()
 	/// List of turfs in this camera chunk. (list[coord_index] = turf)
 	var/list/turfs = list()

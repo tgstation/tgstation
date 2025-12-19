@@ -189,26 +189,18 @@
 /obj/item/circuit_component/remotecam/proc/update_camera_location(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 	if(current_camera_state && current_cameranet_state)
-		SScameras.update_portable_camera(shell_camera, 0.5 SECONDS)
+		QUEUE_CAMERA_UPDATE(shell_camera)
 
 /**
  * Add camera from global cameranet
  */
 /obj/item/circuit_component/remotecam/proc/cameranet_add()
-	if(current_cameranet_state)
-		return
-	SScameras.cameras += shell_camera
-	SScameras.add_camera_to_chunk(shell_camera)
 	current_cameranet_state = TRUE
 
 /**
  * Remove camera from global cameranet
  */
 /obj/item/circuit_component/remotecam/proc/cameranet_remove()
-	if(!current_cameranet_state)
-		return
-	SScameras.remove_camera_from_chunk(shell_camera)
-	SScameras.cameras -= shell_camera
 	current_cameranet_state = FALSE
 
 /**
