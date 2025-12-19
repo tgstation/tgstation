@@ -164,14 +164,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 	if (last_can_use)
 		SScameras.adjust_viewing_camera_counts(src, last_view_x, last_view_y, last_view_size, last_view_chunks, last_view_turfs, adjust_amount = -1)
-		last_view_chunks.Cut()
-		last_view_turfs.Cut()
 
 	for (var/datum/camerachunk/chunk as anything in last_view_chunks)
 		chunk.cameras -= src
 
 	SScameras.cameras -= src
 	SScameras.camera_queue -= src
+
+	last_view_chunks.Cut()
+	last_view_turfs.Cut()
 
 	cancelCameraAlarm()
 
