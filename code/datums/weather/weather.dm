@@ -57,19 +57,19 @@
 	/// Types of area to affect
 	var/area_type = /area/space
 	/// Areas to be affected by the weather, calculated when the weather begins
-	var/list/impacted_areas = list()
+	VAR_FINAL/list/impacted_areas = list()
 	/// A weighted list of areas impacted by weather, where weights reflect the total turf count in each area.
-	var/list/impacted_areas_weighted = list()
+	VAR_FINAL/list/impacted_areas_weighted = list()
 	/// The total number of turfs impacted by weather across all z-levels and areas.
-	var/total_impacted_turfs = 0
+	VAR_FINAL/total_impacted_turfs = 0
 	/// Areas affected by weather have their blend modes changed
-	var/list/impacted_areas_blend_modes = list()
+	VAR_FINAL/list/impacted_areas_blend_modes = list()
 	/// Areas that are protected and excluded from the affected areas.
 	var/list/protected_areas = list()
 	/// The list of z-levels that this weather is actively affecting
-	var/impacted_z_levels
+	VAR_FINAL/impacted_z_levels
 	/// A weighted list of z-levels impacted by weather, where weights reflect the total turf count on each level
-	var/list/impacted_z_levels_weighted = list()
+	VAR_FINAL/list/impacted_z_levels_weighted = list()
 
 	/// Since it's above everything else, this is the layer used by default.
 	var/overlay_layer = AREA_LAYER
@@ -109,15 +109,15 @@
 	var/weather_flags = NONE
 
 	/// List of current mobs being processed by weather
-	var/list/current_mobs = list()
+	VAR_FINAL/list/current_mobs = list()
 	/// The weather turf counter to keep track of how many turfs we have processed so far
-	var/turf_iteration = 0
+	VAR_FINAL/turf_iteration = 0
 	/// The weather thunder counter to keep track of how much thunder we have processed so far
-	var/thunder_iteration = 0
+	VAR_FINAL/thunder_iteration = 0
 	/// Index of the current section our weather subsystem is processing from our subsystem_tasks
-	var/task_index = 1
+	VAR_FINAL/task_index = 1
 	/// The list of allowed tasks our weather subsystem is allowed to process (determined by weather_flags)
-	var/list/subsystem_tasks = list()
+	VAR_FINAL/list/subsystem_tasks = list()
 
 	/// The temperature of our weather that is applied to weather reagents and mobs using adjust_bodytemperature()
 	var/weather_temperature = T20C
@@ -389,7 +389,24 @@
 // the checks for if a mob should receive alerts, returns TRUE if can
 /datum/weather/proc/can_get_alert(mob/player)
 	var/turf/mob_turf = get_turf(player)
-	return !isnull(mob_turf)
+	if(isnull(mob_turf))
+		return FALSE
+
+	if((weather_flags & WEATHER_STRICT_ALERT) && !can_see_weather(player))
+		return FALSE
+
+	return TRUE
+
+/// Checks if the player is in or can see an area affected by the weather
+/datum/weather/proc/can_see_weather(mob/player)
+	if(HAS_MIND_TRAIT(player, TRAIT_DETECT_STORM))
+		return TRUE
+
+	for(var/area/nearby in view(player))
+		if(nearby in impacted_areas)
+			return TRUE
+
+	return FALSE
 
 /**
  * Returns TRUE if the living mob can be affected by the weather

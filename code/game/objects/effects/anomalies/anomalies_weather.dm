@@ -38,7 +38,7 @@
 		z_levels = z,
 		weather_data = list(
 			WEATHER_FORCED_AREAS = affected_areas,
-			WEATHER_FORCED_FLAGS = weather_type::weather_flags | WEATHER_INDOORS | WEATHER_THUNDER,
+			WEATHER_FORCED_FLAGS = weather_type::weather_flags | WEATHER_INDOORS | WEATHER_THUNDER | WEATHER_STRICT_ALERT,
 			WEATHER_FORCED_THUNDER = thunder_chance,
 			WEATHER_FORCED_TELEGRAPH = telegraph,
 			WEATHER_FORCED_END = end_dur,

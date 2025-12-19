@@ -53,6 +53,8 @@ GLOBAL_LIST_INIT(thunder_chance_options, list(
 #define WEATHER_BAROMETER (1<<5)
 /// If weather temperature ignores clothing insulation when adjusting bodytemperature
 #define WEATHER_TEMPERATURE_BYPASS_CLOTHING (1<<6)
+/// Alerts are only sent to people within affected area rather than on affected z-levels
+#define WEATHER_STRICT_ALERT (1<<7)
 
 /// Does weather have any type of processing related to mobs, turfs, or thunder?
 #define FUNCTIONAL_WEATHER (WEATHER_TURFS|WEATHER_MOBS|WEATHER_THUNDER)
