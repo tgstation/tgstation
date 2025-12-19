@@ -152,11 +152,13 @@
  *
  * Arguments:
  * * category - (text) category of the mood event - see /datum/mood_event for category explanation
- * * type - (path) any /datum/mood_event
+ * * type - (path) any /datum/mood_event (besides /datum/mood_event/conditional)
  */
 /datum/mood/proc/add_mood_event(category, new_type, ...)
 	if (!ispath(new_type, /datum/mood_event))
 		CRASH("A non path ([new_type]), was used to add a mood event. This shouldn't be happening.")
+	if (ispath(new_type, /datum/mood_event/conditional))
+		CRASH("A conditional mood event ([new_type]) was used in add_mood_event. Use add_conditional_mood_event instead.")
 	if (!istext(category))
 		category = REF(category)
 
@@ -166,6 +168,14 @@
 		qdel(new_event)
 		return
 
+	add_mood_event_instance(new_event, params)
+
+/**
+ * Handles adding a mood event instance, including replacing or refreshing existing events
+ */
+/datum/mood/proc/add_mood_event_instance(datum/mood_event/new_event, list/params)
+	PRIVATE_PROC(TRUE)
+	var/category = new_event.category
 	var/datum/mood_event/existing_event = mood_events[category]
 	if(existing_event)
 		var/continue_adding = FALSE
@@ -194,6 +204,43 @@
 			/datum/personality/empathetic = /datum/mood_event/empathetic_sad,
 			/datum/personality/misanthropic = /datum/mood_event/misanthropic_happy
 		), range = 4)
+
+/**
+ * Adds a conditional mood event to the mob
+ *
+ * Arguments:
+ * * category - (text) category of the mood event - see /datum/mood_event for category explanation
+ * * base_type - (path) any /datum/mood_event/conditional
+ */
+/datum/mood/proc/add_conditional_mood_event(category, datum/base_type, ...)
+	if (!ispath(base_type, /datum/mood_event/conditional))
+		if (ispath(base_type, /datum/mood_event))
+			CRASH("A non-conditional mood event ([base_type]) was used in add_conditional_mood_event. Use add_mood_event instead.")
+		CRASH("A non path ([base_type]), was used to add a mood event. This shouldn't be happening.")
+	if (!istext(category))
+		category = REF(category)
+
+	var/list/params = args.Copy(3)
+	var/list/datum/mood_event/conditional/all_valid_conditional_events = list()
+	for(var/event_subtype in valid_typesof(base_type))
+		var/datum/mood_event/potential_event = new event_subtype(category)
+		if(!potential_event.can_effect_mob(arglist(list(src, mob_parent) + params)))
+			qdel(potential_event)
+			continue
+
+		all_valid_conditional_events += potential_event
+
+	if(!length(all_valid_conditional_events))
+		return //no valid events to add
+
+	var/datum/mood_event/conditional/highest_priority_event
+	for(var/datum/mood_event/conditional/checked_event as anything in all_valid_conditional_events)
+		if(!highest_priority_event || checked_event.priority > highest_priority_event.priority)
+			highest_priority_event = checked_event
+
+	add_mood_event_instance(highest_priority_event, params)
+	all_valid_conditional_events -= highest_priority_event // you are the chosen one
+	QDEL_LIST(all_valid_conditional_events) // clean up the losers
 
 /**
  * Removes a mood event from the mob
@@ -599,7 +646,6 @@
 
 /**
  * Returns true if you already have a mood from a provided category.
- * You may think to yourself, why am I trying to get a boolean from a component? Well, this system probably should not be a component.
  *
  * Arguments
  * * category - Mood category to validate against.
