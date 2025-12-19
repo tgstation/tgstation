@@ -2,25 +2,24 @@
  * Component for meteors and meteor imitators that handles punching them, mining them, & examining them
  */
 
-
 /datum/component/meteor_combat
-    ///If the parent object can give the meteor punching achievement
-    var/achievement_enabled
-    ///Callback for the parent object's deflection logic
-    var/datum/callback/redirection_proc
-    ///Callback for the parent object's destruction logic
-    var/datum/callback/destruction_proc
+	///If the parent object can give the meteor punching achievement
+	var/achievement_enabled
+	///Callback for the parent object's deflection logic
+	var/datum/callback/redirection_proc
+	///Callback for the parent object's destruction logic
+	var/datum/callback/destruction_proc
 
 /datum/component/meteor_combat/Initialize(datum/callback/redirection_callback, datum/callback/destruction_callback, achievement_on = FALSE)
-    redirection_proc = redirection_callback
-    destruction_proc = destruction_callback
-    achievement_enabled = achievement_on
-    RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attacked))
-    RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_punched))
+	redirection_proc = redirection_callback
+	destruction_proc = destruction_callback
+	achievement_enabled = achievement_on
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attacked))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_punched))
 
 /datum/component/meteor_combat/UnregisterFromParent()
-    UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
-    UnregisterSignal(parent, COMSIG_ATOM_ATTACK_HAND)
+	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
+	UnregisterSignal(parent, COMSIG_ATOM_ATTACK_HAND)
 
 /datum/component/meteor_combat/proc/on_attacked(atom/owner, obj/item/attacking_item, mob/user, list/modifiers)
 	SIGNAL_HANDLER
