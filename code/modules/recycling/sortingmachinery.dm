@@ -137,31 +137,6 @@
 		note = item
 		update_appearance()
 
-	else if(istype(item, /obj/item/universal_scanner))
-		var/obj/item/universal_scanner/sales_tagger = item
-		if(sales_tagger.scanning_mode != SCAN_SALES_TAG)
-			return
-		if(sticker)
-			to_chat(user, span_warning("This package already has a barcode attached!"))
-			return
-		if(!(sales_tagger.payments_acc))
-			to_chat(user, span_warning("Swipe an ID on [sales_tagger] first!"))
-			return
-		if(sales_tagger.paper_count <= 0)
-			to_chat(user, span_warning("[sales_tagger] is out of paper!"))
-			return
-		user.visible_message(span_notice("[user] attaches a barcode to [src]."), span_notice("You attach a barcode to [src]."))
-		sales_tagger.paper_count -= 1
-		sticker = new /obj/item/barcode(src)
-		sticker.payments_acc = sales_tagger.payments_acc	//new tag gets the tagger's current account.
-		sticker.cut_multiplier = sales_tagger.cut_multiplier	//same, but for the percentage taken.
-
-		for(var/obj/wrapped_item in get_all_contents())
-			if(HAS_TRAIT(wrapped_item, TRAIT_NO_BARCODES))
-				continue
-			wrapped_item.AddComponent(/datum/component/pricetag, sticker.payments_acc, sales_tagger.cut_multiplier)
-		update_appearance()
-
 	else if(istype(item, /obj/item/barcode))
 		var/obj/item/barcode/stickerA = item
 		if(sticker)

@@ -1,4 +1,3 @@
-#define PAPER_PER_SHEET 10
 
 /obj/item/universal_scanner
 	name = "universal scanner"
@@ -15,10 +14,6 @@
 	var/scanning_mode = SCAN_EXPORTS
 	/// A list of all available export scanner modes.
 	var/list/scale_mode = list()
-	/// The paper currently stored by the export scanner.
-	var/paper_count = 10
-	/// The maximum paper to be stored by the export scanner.
-	var/max_paper_count = 20
 
 	/// The price of the item used by price tagger mode.
 	var/new_custom_price = 1
@@ -37,7 +32,6 @@
 	scale_mode = sort_list(list(
 		"export scanner" = image(icon = src.icon, icon_state = "export scanner"),
 		"price tagger" = image(icon = src.icon, icon_state = "price tagger"),
-		"sales tagger" = image(icon = src.icon, icon_state = "sales tagger"),
 ))
 	register_context()
 
@@ -53,8 +47,6 @@
 			scanning_mode = SCAN_EXPORTS
 		if("price tagger")
 			scanning_mode = SCAN_PRICE_TAG
-		if("sales tagger")
-			scanning_mode = SCAN_SALES_TAG
 	icon_state = "[choice]"
 	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 
@@ -69,49 +61,8 @@
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
-/obj/item/universal_scanner/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(scanning_mode == SCAN_SALES_TAG && isidcard(attacking_item))
-		var/obj/item/card/id/potential_acc = attacking_item
-		if(potential_acc.registered_account)
-			if(payments_acc == potential_acc.registered_account)
-				to_chat(user, span_notice("ID card already registered."))
-				return
-			else
-				payments_acc = potential_acc.registered_account
-				playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
-				to_chat(user, span_notice("[src] registers the ID card. Tag a wrapped item to create a barcode."))
-		else if(!potential_acc.registered_account)
-			to_chat(user, span_warning("This ID card has no account registered!"))
-			return
-	if(istype(attacking_item, /obj/item/paper))
-		if (!(paper_count >= max_paper_count))
-			paper_count += PAPER_PER_SHEET
-			qdel(attacking_item)
-			if (paper_count >= max_paper_count)
-				paper_count = max_paper_count
-				to_chat(user, span_notice("[src]'s paper supply is now full."))
-				return
-			to_chat(user, span_notice("You refill [src]'s paper supply, you have [paper_count] left."))
-		else
-			to_chat(user, span_notice("[src]'s paper supply is full."))
-
 /obj/item/universal_scanner/attack_self_secondary(mob/user, modifiers)
 	. = ..()
-	if(scanning_mode == SCAN_SALES_TAG)
-		if(paper_count <= 0)
-			to_chat(user, span_warning("You're out of paper!'."))
-			return
-		if(!payments_acc)
-			to_chat(user, span_warning("You need to swipe [src] with an ID card first."))
-			return
-		paper_count--
-		playsound(src, 'sound/machines/click.ogg', 40, TRUE)
-		to_chat(user, span_notice("You print a new barcode."))
-		var/obj/item/barcode/new_barcode = new /obj/item/barcode(src)
-		new_barcode.payments_acc = payments_acc		// The sticker gets the scanner's registered account.
-		new_barcode.cut_multiplier = cut_multiplier		// Also the registered percent cut.
-		user.put_in_hands(new_barcode)
 	if(scanning_mode == SCAN_PRICE_TAG)
 		if(loc != user)
 			to_chat(user, span_warning("You must be holding \the [src] to continue!"))
@@ -122,42 +73,13 @@
 		new_custom_price = chosen_price
 		to_chat(user, span_notice("[src] will now give things a [new_custom_price] [MONEY_SYMBOL] tag."))
 
-/obj/item/universal_scanner/item_ctrl_click(mob/user)
-	. = CLICK_ACTION_BLOCKING
-	if(scanning_mode == SCAN_SALES_TAG)
-		payments_acc = null
-		to_chat(user, span_notice("You clear the registered account."))
-		return CLICK_ACTION_SUCCESS
-
-/obj/item/universal_scanner/click_alt(mob/user)
-	if(!scanning_mode == SCAN_SALES_TAG)
-		return CLICK_ACTION_BLOCKING
-	var/potential_cut = input("How much would you like to pay out to the registered card?","Percentage Profit ([round(cut_min*100)]% - [round(cut_max*100)]%)") as num|null
-	if(!potential_cut)
-		cut_multiplier = initial(cut_multiplier)
-	cut_multiplier = clamp(round(potential_cut/100, cut_min), cut_min, cut_max)
-	to_chat(user, span_notice("[round(cut_multiplier*100)]% profit will be received if a package with a barcode is sold."))
-	return CLICK_ACTION_SUCCESS
-
 /obj/item/universal_scanner/examine(mob/user)
 	. = ..()
-	. += span_notice("It has [paper_count]/[max_paper_count] available barcodes. Refill with paper.")
-
-	if(scanning_mode == SCAN_SALES_TAG)
-		. += span_notice("Profit split on sale is currently set to [round(cut_multiplier*100)]%. <b>Alt-click</b> to change.")
-		if(payments_acc)
-			. += span_notice("<b>Ctrl-click</b> to clear the registered account.")
-
 	if(scanning_mode == SCAN_PRICE_TAG)
 		. += span_notice("The current custom price is set to [new_custom_price] [MONEY_SYMBOL]. <b>Right-click</b> to change.")
 
 /obj/item/universal_scanner/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	switch(scanning_mode)
-		if(SCAN_SALES_TAG)
-			context[SCREENTIP_CONTEXT_LMB] = "Tag package"
-			context[SCREENTIP_CONTEXT_ALT_LMB] = "Change price"
-			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Clear target account"
-			context[SCREENTIP_CONTEXT_ALT_LMB] = "Change payout %"
 		if(SCAN_PRICE_TAG)
 			context[SCREENTIP_CONTEXT_LMB] = "Price item"
 			context[SCREENTIP_CONTEXT_RMB] = "Set price"
@@ -263,7 +185,7 @@
 
 /obj/item/barcode
 	name = "barcode tag"
-	desc = "A tiny tag, associated with a crewmember's account. Attach to a wrapped item to give that account a portion of the wrapped item's profit."
+	desc = "Pass your ID over the tag. Press the barcode onto a wrapped item. Once it's sold on the cargo shuttle, you'll get a cut of the probit. These are the words of the TERMS AND CONDITIONS."
 	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "barcode"
 	w_class = WEIGHT_CLASS_TINY
@@ -271,6 +193,29 @@
 	///The bank account assigned to pay out to from the sales tagger.
 	var/datum/bank_account/payments_acc = null
 	///The percentage of profit to give to the payments_acc, from 0 to 1.
-	var/cut_multiplier = 0.5
+	var/cut_multiplier = 0.2
 
-#undef PAPER_PER_SHEET
+/obj/item/barcode/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(istype(interacting_with, /obj/item/card/id))
+		var/obj/item/card/id/id_card = interacting_with
+		if(!id_card?.registered_account)
+			return
+		payments_acc = id_card.registered_account
+		to_chat(user, "You register [id_card] to the barcode.")
+
+/obj/item/barcode/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	//Basically the same as the above, but for the reverse interaction chain.
+	if(istype(tool, /obj/item/card/id))
+		var/obj/item/card/id/id_card = tool
+		if(!id_card?.registered_account)
+			return
+		payments_acc = id_card.registered_account
+		to_chat(user, "You register [id_card] to the barcode.")
+
+/obj/item/barcode/gold
+	name = "golden barcode tag"
+	icon_state = "barcode_gold"
+	desc = "Pass your ID over the tag. Press the barcode onto a wrapped item. Experience profit like never before (Once it's sold on the cargo shuttle). SO IT IS WRITTEN ON THE BACK."
+	cut_multiplier = 0.5
