@@ -259,12 +259,13 @@ window "inputwindow"
 	elem "input"
 		type = INPUT
 		pos = 0,0
-		size = 805x20
+		size = 520x20
 		anchor1 = 0,0
 		anchor2 = 100,100
 		is-default = true
 		border = line
 		saved-params = "command"
+		can-scroll = true
 
 window "inputbuttons"
 	elem "inputbuttons"

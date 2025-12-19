@@ -950,13 +950,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	metabolized_traits = list(TRAIT_ANALGESIA)
 	tox_damage = 0
 
-/datum/reagent/inverse/krokodil/expose_mob(mob/living/carbon/exposed_carbon, methods=TOUCH, reac_volume)
+/datum/reagent/inverse/krokodil/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	if(!(methods & (TOUCH|VAPOR|PATCH)))
 		return
 
-	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
-		surgery.speed_modifier = min(0.7, surgery.speed_modifier)
+	exposed_mob.add_surgery_speed_mod(type, 0.7, min(reac_volume * 1 MINUTES, 5 MINUTES))
 
 /datum/reagent/inverse/krokodil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1023,7 +1022,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/aranesp
 	name = "Epoetin Alfa"
-	description = "Synthetic medication that induces blood regeneration, liver healing and wound clotting in patients. Causes adverse side effects when excessively used over time."
+	description = "Synthetic medication that induces blood regeneration and wound clotting in patients. \
+		Causes adverse side effects, including arterial damage and migraines when excessively used over time."
 	color = "#dee4ff"
 	metabolization_rate = 0.25 * REM
 	overdose_threshold = 20
@@ -1034,16 +1034,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	if(overdosed)
 		return
-	var/need_mob_update
-	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, -1 * REM * seconds_per_tick)
-	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
-		if(iter_wound.blood_flow)
-			if(holder.has_reagent(/datum/reagent/medicine/coagulant, 3))
-				return
-			else
-				holder.add_reagent(/datum/reagent/medicine/coagulant, 0.2 * REM * seconds_per_tick)
 
-	affected_mob.adjust_blood_volume(3 * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
+	affected_mob.coagulant_effect(0.1 * REM * seconds_per_tick)
+	affected_mob.adjust_blood_volume(1 * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
+	affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, 0.2 * REM * seconds_per_tick)
 
 	switch(current_cycle)
 		if(10)
@@ -1086,10 +1080,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 				to_chat(affected_mob, span_warning("Your breathing becomes weak and raspy, you can barely stay conscious!"))
 				holder.add_reagent(/datum/reagent/toxin/histamine, 6 * REM * seconds_per_tick)
 				affected_mob.losebreath += 3
-				need_mob_update = TRUE
-
-	if(need_mob_update)
-		return UPDATE_MOB_HEALTH
 
 /datum/reagent/inverse/aranesp/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

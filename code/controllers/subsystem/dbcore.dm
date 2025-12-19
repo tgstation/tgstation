@@ -335,6 +335,8 @@ SUBSYSTEM_DEF(dbcore)
 	GLOB.round_id = "[query_round_initialize.last_insert_id]"
 	qdel(query_round_initialize)
 
+	log_world("Round ID: [GLOB.round_id]")
+
 /datum/controller/subsystem/dbcore/proc/SetRoundStart()
 	if(!Connect())
 		return

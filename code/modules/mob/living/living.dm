@@ -45,7 +45,6 @@
 		imaginary_group -= src
 		QDEL_LIST(imaginary_group)
 	QDEL_LAZYLIST(diseases)
-	QDEL_LIST(surgeries)
 	QDEL_LAZYLIST(quirks)
 	return ..()
 
@@ -1431,6 +1430,34 @@
 /mob/living/proc/update_stamina()
 	SEND_SIGNAL(src, COMSIG_LIVING_STAMINA_UPDATE)
 	update_stamina_hud()
+
+/mob/living/update_stamina_hud(shown_stamina_loss)
+	if(!client || !hud_used?.stamina)
+		return
+
+	var/stam_crit_threshold = maxHealth - crit_threshold
+
+	if(stat == DEAD)
+		hud_used.stamina.icon_state = "stamina_dead"
+	else
+
+		if(shown_stamina_loss == null)
+			shown_stamina_loss = get_stamina_loss()
+
+		if(shown_stamina_loss >= stam_crit_threshold)
+			hud_used.stamina.icon_state = "stamina_crit"
+		else if(shown_stamina_loss > maxHealth*0.8)
+			hud_used.stamina.icon_state = "stamina_5"
+		else if(shown_stamina_loss > maxHealth*0.6)
+			hud_used.stamina.icon_state = "stamina_4"
+		else if(shown_stamina_loss > maxHealth*0.4)
+			hud_used.stamina.icon_state = "stamina_3"
+		else if(shown_stamina_loss > maxHealth*0.2)
+			hud_used.stamina.icon_state = "stamina_2"
+		else if(shown_stamina_loss > 0)
+			hud_used.stamina.icon_state = "stamina_1"
+		else
+			hud_used.stamina.icon_state = "stamina_full"
 
 /mob/living/carbon/alien/update_stamina()
 	return

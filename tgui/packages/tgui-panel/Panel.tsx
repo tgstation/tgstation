@@ -4,28 +4,24 @@
  * @license MIT
  */
 
+import { useAtom } from 'jotai';
 import { Pane } from 'tgui/layouts';
 import { Button, Section, Stack } from 'tgui-core/components';
-
 import { NowPlayingWidget, useAudio } from './audio';
 import { ChatPanel, ChatTabs } from './chat';
 import { useGame } from './game';
 import { Notifications } from './Notifications';
 import { PingIndicator } from './ping';
 import { ReconnectButton } from './reconnect';
-import { SettingsPanel, useSettings } from './settings';
+import { settingsVisibleAtom } from './settings/atoms';
+import { SettingsPanel } from './settings/SettingsPanel';
+import { useSettings } from './settings/use-settings';
 
 export const Panel = (props) => {
   const audio = useAudio();
-  const settings = useSettings();
+  const { settings } = useSettings();
   const game = useGame();
-  if (process.env.NODE_ENV !== 'production') {
-    const { useDebug, KitchenSink } = require('tgui/debug');
-    const debug = useDebug();
-    if (debug.kitchenSink) {
-      return <KitchenSink panel />;
-    }
-  }
+  const [settingsVisible, setSettingsVisible] = useAtom(settingsVisibleAtom);
 
   return (
     <Pane theme={settings.theme}>
@@ -51,13 +47,11 @@ export const Panel = (props) => {
               </Stack.Item>
               <Stack.Item>
                 <Button
-                  icon={settings.visible ? 'times' : 'cog'}
-                  selected={settings.visible}
-                  tooltip={
-                    settings.visible ? 'Close settings' : 'Open settings'
-                  }
+                  icon={settingsVisible ? 'times' : 'cog'}
+                  selected={settingsVisible}
+                  tooltip={settingsVisible ? 'Close settings' : 'Open settings'}
                   tooltipPosition="bottom-start"
-                  onClick={() => settings.toggle()}
+                  onClick={() => setSettingsVisible(!settingsVisible)}
                 />
               </Stack.Item>
             </Stack>
@@ -70,7 +64,7 @@ export const Panel = (props) => {
             </Section>
           </Stack.Item>
         )}
-        {settings.visible && (
+        {settingsVisible && (
           <Stack.Item>
             <SettingsPanel />
           </Stack.Item>

@@ -439,7 +439,7 @@
 
 
 ///Get the item on the mob in the storage slot identified by the id passed in
-/mob/proc/get_item_by_slot(slot_id)
+/mob/proc/get_item_by_slot(slot_id) as /obj/item
 	return null
 
 /// Gets what slot the item on the mob is held in.
@@ -870,6 +870,15 @@
 	set name = "Cancel Camera View"
 	set category = "OOC"
 	reset_perspective(null)
+
+/**
+ * Helpful for when a players uplink window gets glitched to above their screen.
+ * preventing them from moving the UPLINK window.
+ */
+/mob/verb/reset_ui_positions_for_mob()
+	set name = "Reset UI Positions"
+	set category = "OOC"
+	SStgui.reset_ui_position(src)
 
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
 /mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
