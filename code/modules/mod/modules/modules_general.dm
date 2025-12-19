@@ -61,7 +61,7 @@
 	desc = "A storage system using nanotechnology developed by Cybersun Industries, these compartments use \
 		esoteric technology to compress the physical matter of items put inside of them, \
 		essentially shrinking items for much easier and more portable storage."
-  complexity = 3
+	complexity = 3
 	icon_state = "storage_syndi"
 	storage_type = /datum/storage/mod_storage/syndicate
 
