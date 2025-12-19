@@ -1,4 +1,5 @@
 import { loadStyleSheet } from 'common/assets';
+import { EventBus } from 'tgui-core/eventbus';
 import { playMusic, stopMusic } from '../audio/handlers';
 import { chatMessage } from '../chat/handlers';
 import { pingReply, pingSoft } from '../ping/handlers';
@@ -10,7 +11,7 @@ import {
 import { handleLoadAssets } from './handlers/assets';
 import { roundrestart } from './handlers/roundrestart';
 
-export const listeners = {
+const listeners = {
   'asset/stylesheet': loadStyleSheet,
   'asset/mappings': handleLoadAssets,
   'audio/playMusic': playMusic,
@@ -23,3 +24,5 @@ export const listeners = {
   testTelemetryCommand,
   update: handleTelemetryData,
 } as const;
+
+export const bus = new EventBus(listeners);

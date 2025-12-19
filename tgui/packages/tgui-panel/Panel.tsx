@@ -30,7 +30,7 @@ export function Panel(props) {
   useKeepAlive();
 
   return (
-    <Pane theme={settings.theme}>
+    <Pane theme={settings.theme} canSuspend={false}>
       <Stack fill vertical>
         <Stack.Item>
           <Section fitted>
