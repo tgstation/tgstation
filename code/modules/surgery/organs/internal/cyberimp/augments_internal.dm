@@ -362,7 +362,7 @@
 	if(length(loaded_surgeries))
 		. += span_info("Load surgeries from an operating compuer or a disk containing surgery data. Loaded surgeries:")
 		for(var/datum/surgery_operation/downloaded_surgery as anything in GLOB.operations.get_instances_from(loaded_surgeries))
-			if(!(downloaded_surgery.opereation_flags & OPERATION_LOCKED))
+			if(!(downloaded_surgery.operation_flags & OPERATION_LOCKED))
 				continue
 			// for simplicitly, filters out mechanical subtypes of normal surgeries
 			if((downloaded_surgery.operation_flags & OPERATION_MECHANIC) && (downloaded_surgery.parent_type in loaded_surgeries))
