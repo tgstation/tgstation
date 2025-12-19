@@ -12,9 +12,12 @@ cd "$1"
 . dependencies.sh
 cd "$original_dir"
 
-# If Bun is not present or older than BUN_VERSION, install using the official installer.
 NEED_BUN_INSTALL=0
+if [ -x "$HOME/.bun/bin/bun" ]; then
+	export PATH="$HOME/.bun/bin:$PATH"
+fi
 
+# If Bun is not present or older than BUN_VERSION, install using the official installer.
 if ! command -v bun >/dev/null 2>&1; then
 	NEED_BUN_INSTALL=1
 else
