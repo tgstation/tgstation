@@ -351,7 +351,7 @@
 	name = "surgical processor implant"
 	desc = "A cybernetic brain implant that allows you to perform advanced operations anywhere, anytime."
 	icon_state = "brain_implant_antidrop"
-	slot = ORGAN_SLOT_HIPPOCAMPUS
+	slot = ORGAN_SLOT_BRAIN_HIPPOCAMPUS
 	emp_stun_duration = 0 SECONDS
 	emp_immobilize_duration = 4 SECONDS
 	/// Lazylist of surgeries this implant provides
