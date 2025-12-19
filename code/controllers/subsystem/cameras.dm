@@ -38,8 +38,8 @@ SUBSYSTEM_DEF(cameras)
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(update_static_images))
 	return SS_INIT_SUCCESS
 
-GLOBAL_LIST_EMPTY(camera_cost)
-GLOBAL_LIST_EMPTY(camera_count)
+//GLOBAL_LIST_EMPTY(camera_cost)
+//GLOBAL_LIST_EMPTY(camera_count)
 
 /datum/controller/subsystem/cameras/fire(resumed = FALSE)
 	//INIT_COST(GLOB.camera_cost, GLOB.camera_count)
@@ -291,7 +291,7 @@ GLOBAL_LIST_EMPTY(camera_count)
 
 /// Adds the mob to camera static viewers, causing it to see camera static over areas where cameras on the map can't see.
 /// The source variable is such that multiple sources can add the ability to view static without conflicting.
-/datum/controller/subsystem/cameras/proc/add_viewer(mob/viewer, source)
+/datum/controller/subsystem/cameras/proc/add_viewer_source(mob/viewer, source)
 	if (!source)
 		CRASH("Attempted to add the ability to view camera static to a mob without a source for it.")
 
@@ -310,7 +310,7 @@ GLOBAL_LIST_EMPTY(camera_count)
 	RegisterSignal(viewer, COMSIG_VIEWDATA_UPDATE, PROC_REF(on_viewdata_update))
 
 /// Removes the mob from camera static viewers, causing camera static that it sees to disappear. (if there are no more sources, that is)
-/datum/controller/subsystem/cameras/proc/remove_viewer(mob/viewer, source)
+/datum/controller/subsystem/cameras/proc/remove_viewer_source(mob/viewer, source)
 	if (!source)
 		CRASH("Attempted to remove the ability to view camera static from a mob without a source for it.")
 
@@ -322,6 +322,12 @@ GLOBAL_LIST_EMPTY(camera_count)
 	if (length(viewers[viewer]))
 		return
 
+	remove_viewer(viewer)
+
+/// Internal part of [proc/remove_viewer_source()]
+/datum/controller/subsystem/cameras/proc/remove_viewer(mob/viewer)
+	SIGNAL_HANDLER
+	PRIVATE_PROC(TRUE)
 	viewers -= viewer
 
 	if (viewer.client)
