@@ -11,9 +11,6 @@
 	interaction_range = INFINITY
 	/// If TRUE, the eye will cover turfs hidden to the cameranet with static.
 	var/use_visibility = TRUE
-	/// List of [camera chunks][/datum/camerachunk] visible to this camera.
-	/// Please don't interface with this directly. Use the [cameranet][/datum/cameranet].
-	VAR_FINAL/list/datum/camerachunk/visibleCameraChunks = list()
 	/// NxN Range of a single camera chunk.
 	var/static_visibility_range = 16
 
@@ -22,14 +19,8 @@
 	GLOB.camera_eyes += src
 
 /mob/eye/camera/Destroy()
-	clear_camera_chunks()
 	GLOB.camera_eyes -= src
 	return ..()
-
-/// Clears us from any visible camera chunks.
-/mob/eye/camera/proc/clear_camera_chunks()
-	for(var/datum/camerachunk/chunk in visibleCameraChunks)
-		chunk.remove(src)
 
 /**
  * Getter proc for getting the current user's client.
@@ -69,9 +60,6 @@
 	SIGNAL_HANDLER
 	PROTECTED_PROC(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
-
-	if(use_visibility)
-		SScameras.update_eye_chunk(src)
 
 /mob/eye/camera/zMove(dir, turf/target, z_move_flags = NONE, recursions_left = 1, list/falling_movs)
 	. = ..()

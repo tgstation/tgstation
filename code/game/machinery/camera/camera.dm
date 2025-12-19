@@ -107,7 +107,7 @@
 	var/last_view_y = 0
 	/// The z position of this camera during its last LoS update.
 	var/last_view_z = 0
-	/// List of camera chunks this camera was viewing during its last LoS update.
+	/// List of camera chunks this camera was within view range of during its last LoS update.
 	var/list/last_view_chunks = list()
 	/// The list of relative flattened view coordinates from this camera during its last LoS update.
 	var/list/last_view_turfs = list()

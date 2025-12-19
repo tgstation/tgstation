@@ -1,5 +1,5 @@
 /datum/camerachunk
-	/// List of cameras that are actively viewing this camera chunk.
+	/// List of cameras that are within view range of this camera chunk.
 	var/list/cameras = list()
 	/// List of turfs in this camera chunk. (list[coord_index] = turf)
 	var/list/turfs = list()
@@ -9,8 +9,8 @@
 	var/list/obscured = list()
 	/// List of static images in this camera chunk.
 	var/list/static_images = list()
-	/// List of atoms that caused this camera chunk to update.
-	var/list/sources = list()
+	/// List of clients viewing this camera chunk.
+	var/list/viewers = list()
 
 	var/x = 0
 	var/y = 0
@@ -42,10 +42,15 @@
 
 	for (var/obj/machinery/camera/camera as anything in cameras)
 		camera.last_view_chunks -= src
+	for (var/client/viewer as anything in viewers)
+		viewer.view_chunks -= src
+		viewer.images -= static_images
 
 	cameras.Cut()
+	turfs.Cut()
 	visibility.Cut()
 	obscured.Cut()
-	sources.Cut()
+	QDEL_LIST(static_images)
+	viewers.Cut()
 
 	return ..()

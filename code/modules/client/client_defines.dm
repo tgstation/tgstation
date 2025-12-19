@@ -267,3 +267,6 @@
 
 	/// The DPI scale of the client. 1 is equivalent to 100% window scaling, 2 will be 200% window scaling
 	var/window_scaling
+
+	/// The camera chunks this client is currently within view range of. Lazy list, only exists if we're viewing camera static.
+	var/view_chunks = null

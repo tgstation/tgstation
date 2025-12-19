@@ -28,6 +28,9 @@ SUBSYSTEM_DEF(cameras)
 	/// All base static images, indexed by plane offset. (list[offset + 1] = image)
 	var/list/base_static_images = list()
 
+	/// All viewer eye atoms to viewer clients.
+	var/alist/eyes_to_clients = alist()
+
 /datum/controller/subsystem/cameras/Initialize()
 	update_static_images()
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(update_static_images))
@@ -167,6 +170,7 @@ SUBSYSTEM_DEF(cameras)
 		var/list/visibility = chunk.visibility
 		var/list/obscured = chunk.obscured
 		var/list/static_images = chunk.static_images
+		var/list/viewers = chunk.viewers
 
 		var/base_static_image = base_static_images[GET_Z_PLANE_OFFSET(chunk.z) + 1]
 
@@ -178,6 +182,8 @@ SUBSYSTEM_DEF(cameras)
 				var/image/static_image = new(base_static_image, turfs[i])
 				static_images += static_image
 				obscured[i] = static_image
+				for (var/client/viewer as anything in viewers)
+					viewer.images += static_image
 			else if (is_visible && is_obscured)
 				static_images -= obscured[i]
 				QDEL_NULL(obscured[i])
@@ -221,12 +227,162 @@ SUBSYSTEM_DEF(cameras)
 	var/turf/turf_to_check = get_turf(atom_to_check)
 	if (!turf_to_check)
 		return FALSE
+
 	var/datum/camerachunk/chunk = chunks[GET_TURF_CHUNK_COORDS(turf_to_check)]
 	return !isnull(chunk) && chunk.visibility[GET_CHUNK_TURF_COORDS(turf_to_check, chunk)] > 0
 
+/// Returns the first camera found on which atom the is visible, if any.
+/datum/controller/subsystem/cameras/proc/get_first_viewing_camera(atom/atom_to_check)
+	var/turf/turf_to_check = get_turf(atom_to_check)
+	if (!turf_to_check)
+		return
+
+	var/datum/camerachunk/chunk = chunks[GET_TURF_CHUNK_COORDS(turf_to_check)]
+	if (!chunk?.visibility[GET_CHUNK_TURF_COORDS(turf_to_check, chunk)])
+		return
+
+	var/x = turf_to_check.x
+	var/y = turf_to_check.y
+
+	for (var/obj/machinery/camera/camera as anything in chunk.cameras)
+		if (camera.last_view_turfs[GET_VIEW_COORDS(x, y, camera.last_view_x, camera.last_view_y, camera.last_view_size)])
+			return camera
+
+/// Returns a list of all of the cameras on which the atom is visible.
+/datum/controller/subsystem/cameras/proc/get_all_viewing_cameras(atom/atom_to_check)
+	. = list()
+	var/turf/turf_to_check = get_turf(atom_to_check)
+	if (!turf_to_check)
+		return
+
+	var/datum/camerachunk/chunk = chunks[GET_TURF_CHUNK_COORDS(turf_to_check)]
+	if (!chunk?.visibility[GET_CHUNK_TURF_COORDS(turf_to_check, chunk)])
+		return
+
+	var/x = turf_to_check.x
+	var/y = turf_to_check.y
+
+	for (var/obj/machinery/camera/camera as anything in chunk.cameras)
+		if (camera.last_view_turfs[GET_VIEW_COORDS(x, y, camera.last_view_x, camera.last_view_y, camera.last_view_size)])
+			. += camera
+
 /// Updates all of the cameras that might see this atom.
 /datum/controller/subsystem/cameras/proc/update_visibility(atom/source)
+	var/turf/turf = get_turf(source)
+	if (!turf)
+		return
 
+	var/datum/camerachunk/chunk = chunks[GET_TURF_CHUNK_COORDS(turf)]
+	if (!chunk)
+		return
+
+	// Update every camera where the checked atom was within the bounds of the camera's last view
+	for (var/obj/machinery/camera/camera in chunk.cameras)
+		if (camera.last_view_x <= turf.x && camera.last_view_y <= turf.y && camera.last_view_x + camera.last_view_size > turf.x && camera.last_view_y + camera.last_view_size > turf.y)
+			camera_queue += camera
+
+/datum/controller/subsystem/cameras/proc/add_viewer_mob(mob/viewer)
+	if (viewer.client)
+		add_viewer_client(viewer)
+	RegisterSignal(viewer, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(add_viewer_client))
+	RegisterSignal(viewer, COMSIG_MOB_LOGOUT, PROC_REF(remove_viewer_client))
+	RegisterSignal(viewer, COMSIG_VIEWDATA_UPDATE, PROC_REF(on_viewdata_update))
+
+/datum/controller/subsystem/cameras/proc/remove_viewer_mob(mob/viewer)
+	if (viewer.client)
+		remove_viewer_client(viewer, viewer.client)
+	UnregisterSignal(viewer, list(COMSIG_MOB_CLIENT_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_VIEWDATA_UPDATE))
+
+/datum/controller/subsystem/cameras/proc/on_viewdata_update(mob/viewer, view_size)
+	if (viewer.client?.eye)
+		update_viewer_static(viewer.client, viewer.client.eye, view_size[1], view_size[2])
+
+/datum/controller/subsystem/cameras/proc/add_viewer_client(mob/viewer)
+	PRIVATE_PROC(TRUE)
+	viewer.client.view_chunks = list()
+	if (viewer.client.eye)
+		set_viewer_client_eye(viewer, null, viewer.client.eye)
+	RegisterSignal(viewer.client, COMSIG_CLIENT_SET_EYE, PROC_REF(set_viewer_client_eye))
+
+/datum/controller/subsystem/cameras/proc/remove_viewer_client(mob/viewer)
+	PRIVATE_PROC(TRUE)
+	if (viewer.canon_client.eye)
+		set_viewer_client_eye(viewer, viewer.canon_client.eye, null)
+	viewer.client.view_chunks = null
+	UnregisterSignal(viewer.client, COMSIG_CLIENT_SET_EYE)
+
+/datum/controller/subsystem/cameras/proc/set_viewer_client_eye(client/viewer, atom/old_eye, atom/new_eye)
+	PRIVATE_PROC(TRUE)
+	if (old_eye)
+		UnregisterSignal(old_eye, COMSIG_MOVABLE_MOVED)
+		eyes_to_clients -= old_eye
+	if (new_eye)
+		update_viewer_client(viewer, new_eye)
+		RegisterSignal(new_eye, COMSIG_MOVABLE_MOVED, PROC_REF(update_viewer_eye))
+		eyes_to_clients[new_eye] = viewer
+
+/datum/controller/subsystem/cameras/proc/update_viewer_eye(atom/eye)
+	PRIVATE_PROC(TRUE)
+	update_viewer_client(eyes_to_clients[eye], eye)
+
+/datum/controller/subsystem/cameras/proc/update_viewer_client(client/viewer, atom/eye)
+	PRIVATE_PROC(TRUE)
+	var/list/view_size = viewer.view_size?.getView() || getviewsize(viewer.view)
+	update_viewer_static(viewer, eye, view_size[1], view_size[2])
+
+/datum/controller/subsystem/cameras/proc/update_viewer_static(client/viewer, atom/eye, view_size_x, view_size_y)
+	PRIVATE_PROC(TRUE)
+
+	var/list/last_view_chunks = viewer.view_chunks
+
+	// Remove the viewer from last view chunks
+	for (var/datum/camerachunk/chunk as anything in last_view_chunks)
+		chunk.viewers -= viewer
+
+	var/turf/turf = get_turf(eye)
+
+	if (!turf)
+		last_view_chunks.Cut()
+		return
+
+	// Cache vars for speed and readability
+	var/view_x = turf.x
+	var/view_y = turf.y
+	var/view_z = turf.z
+
+	// Calculate the view bounds
+	var/min_view_x = view_x - floor((view_size_x - 1) / 2)
+	var/min_view_y = view_y - floor((view_size_y - 1) / 2)
+	var/max_view_x = min_view_x + view_size_x - 1
+	var/max_view_y = min_view_y + view_size_y - 1
+
+	// Calculate the chunk bounds
+	var/min_chunk_x = floor(WORLD_TO_CHUNK(min_view_x))
+	var/min_chunk_y = floor(WORLD_TO_CHUNK(min_view_y))
+	var/max_chunk_x = ceil(WORLD_TO_CHUNK(max_view_x))
+	var/max_chunk_y = ceil(WORLD_TO_CHUNK(max_view_y))
+
+	var/list/view_chunks = list()
+
+	// Add the viewer to new view chunks
+	for (var/chunk_x in min_chunk_x to max_chunk_x)
+		for (var/chunk_y in min_chunk_y to max_chunk_y)
+			var/datum/camerachunk/chunk = SScameras.chunks[GET_CHUNK_COORDS(chunk_x, chunk_y, view_z)]
+			if (!chunk)
+				continue
+
+			chunk.viewers += viewer
+			view_chunks += chunk
+
+	viewer.view_chunks = view_chunks
+
+	// Remove static images for chunks that are no longer in view
+	for (var/datum/camerachunk/chunk as anything in (last_view_chunks - view_chunks))
+		viewer.images -= chunk.static_images
+
+	// Add static images for chunks that are newly in view
+	for (var/datum/camerachunk/chunk as anything in (view_chunks - last_view_chunks))
+		viewer.images += chunk.static_images
 
 /*
 

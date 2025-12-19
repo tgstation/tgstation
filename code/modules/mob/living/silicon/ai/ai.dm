@@ -723,11 +723,10 @@
 	var/list/obj/machinery/camera/add = list()
 	var/list/obj/machinery/camera/remove = list()
 	var/list/obj/machinery/camera/visible = list()
-	for (var/datum/camerachunk/chunk as anything in eyeobj.visibleCameraChunks)
-		for (var/z_key in chunk.cameras)
-			for(var/obj/machinery/camera/camera as anything in chunk.cameras[z_key])
-				if(isnull(camera) || !camera.can_use() || get_dist(camera, eyeobj) > 7 || !camera.internal_light)
-					continue
+
+	for (var/datum/camerachunk/chunk as anything in client?.view_chunks)
+		for(var/obj/machinery/camera/camera as anything in chunk.cameras)
+			if(get_dist(camera, eyeobj) <= 7 && camera.internal_light)
 				visible |= camera
 
 	add = visible - lit_cameras
@@ -1037,7 +1036,7 @@
 	. = ..()
 
 /mob/living/silicon/ai/proc/camera_visibility(mob/eye/camera/ai/moved_eye)
-	SScameras.update_eye_chunk(moved_eye)
+	//SScameras.update_eye_chunk(moved_eye)
 
 /mob/living/silicon/ai/forceMove(atom/destination)
 	. = ..()
