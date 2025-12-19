@@ -11,7 +11,7 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	obj_flags = NONE
 
-/obj/projectile/meteor/Initialize()
+/obj/projectile/meteor/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/meteor_combat, CALLBACK(src, PROC_REF(deflect)))
 
