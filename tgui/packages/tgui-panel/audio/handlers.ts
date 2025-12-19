@@ -1,5 +1,5 @@
 import { store } from '../events/store';
-import { metaAtom, playingAtom, visibleAtom } from './atoms';
+import { type Meta, metaAtom, playingAtom, visibleAtom } from './atoms';
 import { AudioPlayer } from './player';
 
 export const player = new AudioPlayer();
@@ -8,6 +8,7 @@ player.onPlay(() => {
   store.set(playingAtom, true);
   store.set(visibleAtom, true);
 });
+
 player.onStop(() => {
   store.set(playingAtom, false);
   store.set(visibleAtom, false);
@@ -19,14 +20,13 @@ type PlayPayload = {
   pitch: number;
   start: number;
   end: number;
-};
+} & Meta;
 
 export function playMusic(payload: PlayPayload): void {
   const { url, ...options } = payload;
-  console.log('playMusic', payload);
 
   player.play(url, options);
-  store.set(metaAtom, payload as any);
+  store.set(metaAtom, options);
 }
 
 type SetVolumePayload = {
@@ -38,7 +38,7 @@ export function stopMusic(): void {
 }
 
 // settings/update and settings/load
-export function setMusicVolume(payload: SetVolumePayload) {
+export function setMusicVolume(payload: SetVolumePayload): void {
   const { adminMusicVolume: volume } = payload;
   if (typeof volume !== 'number') return;
   player.setVolume(volume);
