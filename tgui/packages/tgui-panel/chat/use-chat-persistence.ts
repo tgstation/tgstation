@@ -155,6 +155,8 @@ export function useChatPersistence() {
     setCurrentPageId(loaded.currentPageId);
     setPagesRecord(loaded.pageById);
 
+    chatRenderer.changePage(loaded.pageById[loaded.currentPageId]);
+
     console.log('Restored chat settings:', loaded);
   }
 }

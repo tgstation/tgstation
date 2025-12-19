@@ -1,5 +1,4 @@
 import { useAtom, useAtomValue } from 'jotai';
-import { useEffect } from 'react';
 import {
   chatPagesAtom,
   chatPagesRecordAtom,
@@ -18,12 +17,6 @@ export function useChatPages() {
   const [currentPageId, setCurrentPageId] = useAtom(currentPageIdAtom);
   const page = useAtomValue(currentPageAtom);
 
-  useEffect(() => {
-    if (page) {
-      chatRenderer.changePage(page);
-    }
-  }, [currentPageId, page]);
-
   function addChatPage(): void {
     const draft = createPage();
 
@@ -33,6 +26,8 @@ export function useChatPages() {
       ...prev,
       [draft.id]: draft,
     }));
+
+    chatRenderer.changePage(draft);
   }
 
   function changeChatPage(page: Page): void {
@@ -47,6 +42,8 @@ export function useChatPages() {
       ...pagesRecord,
       [page.id]: draft,
     });
+
+    chatRenderer.changePage(draft);
   }
 
   function moveChatLeft(): void {

@@ -9,6 +9,8 @@ import { createLogger } from 'tgui/logging';
 import { Tooltip } from 'tgui-core/components';
 import { EventEmitter } from 'tgui-core/events';
 import { classes } from 'tgui-core/react';
+import { store } from '../events/store';
+import { scrollTrackingAtom } from './atom';
 import {
   COMBINE_MAX_MESSAGES,
   COMBINE_MAX_TIME_WINDOW,
@@ -116,7 +118,6 @@ class ChatRenderer {
   lastScrollHeight: number;
   highlightParsers: Array<any> | null;
   handleScroll: (type: any) => void;
-  ensureScrollTracking: () => void;
 
   constructor() {
     this.loaded = false;
@@ -131,7 +132,7 @@ class ChatRenderer {
     this.scrollNode = null;
     this.scrollTracking = true;
     this.lastScrollHeight = 0;
-    this.handleScroll = (type) => {
+    this.handleScroll = (evt) => {
       const node = this.scrollNode;
       if (!node) {
         return;
@@ -143,13 +144,8 @@ class ChatRenderer {
         this.lastScrollHeight === 0;
       if (scrollTracking !== this.scrollTracking) {
         this.scrollTracking = scrollTracking;
-        this.events.emit('scrollTrackingChanged', scrollTracking);
+        store.set(scrollTrackingAtom, scrollTracking);
         logger.debug('tracking', this.scrollTracking);
-      }
-    };
-    this.ensureScrollTracking = () => {
-      if (this.scrollTracking) {
-        this.scrollToBottom();
       }
     };
     // Periodic message pruning

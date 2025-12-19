@@ -27,27 +27,6 @@ chatRenderer.events.on(
   },
 );
 
-chatRenderer.events.on('scrollTrackingChanged', updateScrollTracking);
-
-function updateScrollTracking(value: boolean): void {
-  store.set(scrollTrackingAtom, value);
-
-  // We only need to reset unread counts when enabling scroll tracking
-  if (!value) return;
-
-  const pageId = store.get(currentPageIdAtom);
-  const pagesRecord = store.get(chatPagesRecordAtom);
-  const draft = {
-    ...pagesRecord[pageId],
-    unreadCount: 0,
-  };
-
-  store.set(chatPagesRecordAtom, {
-    ...pagesRecord,
-    [pageId]: draft,
-  });
-}
-
 function updateMessageCount(countByType: Record<string, number>): void {
   const pagesRecord = store.get(chatPagesRecordAtom);
   const pages = store.get(chatPagesAtom);
