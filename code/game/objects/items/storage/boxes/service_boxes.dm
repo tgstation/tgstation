@@ -150,7 +150,7 @@
 	custom_premium_price = PAYCHECK_CREW * 3
 
 /obj/item/storage/box/dishdrive/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/circuitboard/machine/dish_drive = 1,
 		/obj/item/screwdriver = 1,
 		/obj/item/stack/cable_coil/five = 1,
