@@ -650,34 +650,6 @@
 	else
 		hud_used.healths.icon_state = "health6"
 
-/mob/living/carbon/update_stamina_hud(shown_stamina_loss)
-	if(!client || !hud_used?.stamina)
-		return
-
-	var/stam_crit_threshold = maxHealth - crit_threshold
-
-	if(stat == DEAD)
-		hud_used.stamina.icon_state = "stamina_dead"
-	else
-
-		if(shown_stamina_loss == null)
-			shown_stamina_loss = get_stamina_loss()
-
-		if(shown_stamina_loss >= stam_crit_threshold)
-			hud_used.stamina.icon_state = "stamina_crit"
-		else if(shown_stamina_loss > maxHealth*0.8)
-			hud_used.stamina.icon_state = "stamina_5"
-		else if(shown_stamina_loss > maxHealth*0.6)
-			hud_used.stamina.icon_state = "stamina_4"
-		else if(shown_stamina_loss > maxHealth*0.4)
-			hud_used.stamina.icon_state = "stamina_3"
-		else if(shown_stamina_loss > maxHealth*0.2)
-			hud_used.stamina.icon_state = "stamina_2"
-		else if(shown_stamina_loss > 0)
-			hud_used.stamina.icon_state = "stamina_1"
-		else
-			hud_used.stamina.icon_state = "stamina_full"
-
 /mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state = "empty")
 	hud_used?.spacesuit?.icon_state = "spacesuit_[cell_state]"
 
@@ -781,6 +753,8 @@
 
 	if(heal_flags & HEAL_LIMBS)
 		regenerate_limbs()
+		for(var/obj/item/bodypart/limb as anything in bodyparts)
+			limb.remove_surgical_state(ALL)
 
 	if(heal_flags & (HEAL_REFRESH_ORGANS|HEAL_ORGANS))
 		regenerate_organs(remove_hazardous = !!(heal_flags & HEAL_REFRESH_ORGANS))
@@ -825,7 +799,7 @@
 	if ((get_brute_loss() >= MAX_REVIVE_BRUTE_DAMAGE) || (get_fire_loss() >= MAX_REVIVE_FIRE_DAMAGE))
 		return DEFIB_FAIL_TISSUE_DAMAGE
 
-	var/heart_status = can_defib_heart(get_organ_by_type(/obj/item/organ/heart))
+	var/heart_status = SEND_SIGNAL(src, COMSIG_CARBON_DEFIB_HEART_CHECK) || can_defib_heart(get_organ_by_type(/obj/item/organ/heart))
 	if (heart_status)
 		return heart_status
 
@@ -927,6 +901,7 @@
 
 	synchronize_bodytypes()
 	synchronize_bodyshapes()
+
 ///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart, special)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -1023,7 +998,7 @@
 				if("replace")
 					var/limb2add = input(usr, "Select a bodypart type to add", "Add/Replace Bodypart") as null|anything in sort_list(limbtypes)
 					var/obj/item/bodypart/new_bp = new limb2add()
-					if(new_bp.replace_limb(src, special = TRUE))
+					if(new_bp.replace_limb(src))
 						admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [part.type] with [new_bp.type]")
 						qdel(part)
 					else

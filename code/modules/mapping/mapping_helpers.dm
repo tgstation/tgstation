@@ -238,7 +238,15 @@
 
 /obj/effect/mapping_helpers/airlock/unres/payload(obj/machinery/door/airlock/airlock)
 	airlock.unres_sides ^= dir
-	airlock.unres_sensor = TRUE
+	airlock.unres_latch = TRUE
+
+/obj/effect/mapping_helpers/airlock/unres/delayed
+	name = "airlock unrestricted side delayed helper"
+	icon_state = "airlock_unres_delayed_helper"
+
+/obj/effect/mapping_helpers/airlock/unres/delayed/payload(obj/machinery/door/airlock/airlock)
+	. = ..()
+	airlock.delayed_unres_open = TRUE
 
 /obj/effect/mapping_helpers/airlock/abandoned
 	name = "airlock abandoned helper"

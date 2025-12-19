@@ -157,7 +157,7 @@
 
 // This is where stun gets applied
 /obj/item/melee/baton/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
-	if(!isliving(target) || !active || !COOLDOWN_FINISHED(src, cooldown_check) || HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
+	if(!isliving(target) || !active || !COOLDOWN_FINISHED(src, cooldown_check) || HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)) || QDELETED(target))
 		return
 	// worst check in the chain but - right click = harmbaton
 	if(LAZYACCESS(modifiers, RIGHT_CLICK) && !stun_on_harmbaton)
@@ -732,7 +732,7 @@
 
 /obj/item/melee/baton/security/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(!. && active && prob(throw_stun_chance) && hit_atom)
+	if(!. && active && prob(throw_stun_chance) && isliving(hit_atom))
 		finalize_baton_attack(hit_atom, throwingdatum?.get_thrower())
 
 /obj/item/melee/baton/security/emp_act(severity)

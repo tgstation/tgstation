@@ -103,9 +103,7 @@
 
 	if(methods & (TOUCH|VAPOR|PATCH))
 		exposed_mob.adjust_fire_stacks(reac_volume / 15)
-		var/sterilizing_power = boozepwr / 650 // Weak alcohol has less sterilizing power
-		for(var/datum/surgery/surgery as anything in exposed_mob.surgeries)
-			surgery.speed_modifier = min(1 - sterilizing_power, surgery.speed_modifier)
+		exposed_mob.add_surgery_speed_mod("alcohol", round(1 - (boozepwr / 650), 0.05), min(reac_volume * 1 MINUTES, 5 MINUTES)) // Weak alcohol has less sterilizing power
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
@@ -673,7 +671,7 @@
 
 /datum/reagent/consumable/ethanol/bloody_mary/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	drinker.adjust_blood_volume(3 * REM * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL) // Bloody Mary quickly restores blood loss.
+	drinker.adjust_blood_volume((0.25 + round(2 * drinker.get_drunk_amount() / 40, 0.1)) * REM * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL) // Bloody Mary restores blood loss based on how drunk you are
 
 /datum/reagent/consumable/ethanol/brave_bull
 	name = "Brave Bull"
