@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "You can harm people with batons that are otherwise inoperable, like an Abductor's baton."
+  - refactor: "Batonning was refactored ever so slightly. Report any oddities, particularly involving harmbatonning."

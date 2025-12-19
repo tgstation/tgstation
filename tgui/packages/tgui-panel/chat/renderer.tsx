@@ -9,7 +9,8 @@ import { createLogger } from 'tgui/logging';
 import { Tooltip } from 'tgui-core/components';
 import { EventEmitter } from 'tgui-core/events';
 import { classes } from 'tgui-core/react';
-
+import { store } from '../events/store';
+import { scrollTrackingAtom } from './atom';
 import {
   COMBINE_MAX_MESSAGES,
   COMBINE_MAX_TIME_WINDOW,
@@ -44,42 +45,27 @@ export const TGUI_CHAT_ATTRIBUTES_TO_PROPS = {
   content: 'content',
 };
 
-const findNearestScrollableParent = (startingNode) => {
-  const body = document.body;
-  let node = startingNode;
-  while (node && node !== body) {
-    // This definitely has a vertical scrollbar, because it reduces
-    // scrollWidth of the element. Might not work if element uses
-    // overflow: hidden.
-    if (node.scrollWidth < node.offsetWidth) {
-      return node;
-    }
-    node = node.parentNode;
-  }
-  return window;
-};
-
-const createHighlightNode = (text, color) => {
+function createHighlightNode(text, color) {
   const node = document.createElement('span');
   node.className = 'Chat__highlight';
   node.setAttribute('style', `background-color:${color}`);
   node.textContent = text;
   return node;
-};
+}
 
-const createMessageNode = () => {
+function createMessageNode() {
   const node = document.createElement('div');
   node.className = 'ChatMessage';
   return node;
-};
+}
 
-const createReconnectedNode = () => {
+function createReconnectedNode() {
   const node = document.createElement('div');
   node.className = 'Chat__reconnected';
   return node;
-};
+}
 
-const handleImageError = (e) => {
+function handleImageError(e) {
   setTimeout(() => {
     /** @type {HTMLImageElement} */
     const node = e.target;
@@ -96,12 +82,12 @@ const handleImageError = (e) => {
     node.src = `${src}#${attempts}`;
     node.setAttribute('data-reload-n', attempts + 1);
   }, IMAGE_RETRY_DELAY);
-};
+}
 
 /**
  * Assigns a "times-repeated" badge to the message.
  */
-const updateMessageBadge = (message) => {
+function updateMessageBadge(message) {
   const { node, times } = message;
   if (!node || !times) {
     // Nothing to update
@@ -117,13 +103,24 @@ const updateMessageBadge = (message) => {
   if (!foundBadge) {
     node.appendChild(badge);
   }
-};
+}
 
 class ChatRenderer {
+  loaded: boolean;
+  rootNode: HTMLElement | null;
+  queue: Array<any>;
+  messages: Array<any>;
+  visibleMessages: Array<any>;
+  page: any;
+  events: EventEmitter;
+  scrollNode: HTMLElement | null;
+  scrollTracking: boolean;
+  lastScrollHeight: number;
+  highlightParsers: Array<any> | null;
+  handleScroll: (type: any) => void;
+
   constructor() {
-    /** @type {HTMLElement} */
     this.loaded = false;
-    /** @type {HTMLElement} */
     this.rootNode = null;
     this.queue = [];
     this.messages = [];
@@ -131,11 +128,11 @@ class ChatRenderer {
     this.page = null;
     this.events = new EventEmitter();
     // Scroll handler
-    /** @type {HTMLElement} */
+
     this.scrollNode = null;
     this.scrollTracking = true;
     this.lastScrollHeight = 0;
-    this.handleScroll = (type) => {
+    this.handleScroll = (evt) => {
       const node = this.scrollNode;
       if (!node) {
         return;
@@ -147,13 +144,8 @@ class ChatRenderer {
         this.lastScrollHeight === 0;
       if (scrollTracking !== this.scrollTracking) {
         this.scrollTracking = scrollTracking;
-        this.events.emit('scrollTrackingChanged', scrollTracking);
+        store.set(scrollTrackingAtom, scrollTracking);
         logger.debug('tracking', this.scrollTracking);
-      }
-    };
-    this.ensureScrollTracking = () => {
-      if (this.scrollTracking) {
-        this.scrollToBottom();
       }
     };
     // Periodic message pruning
@@ -174,8 +166,8 @@ class ChatRenderer {
       this.rootNode = node;
     }
     // Find scrollable parent
-    this.scrollNode = findNearestScrollableParent(this.rootNode);
-    this.scrollNode.addEventListener('scroll', this.handleScroll);
+    this.scrollNode = document.getElementById('chat-pane');
+    this.scrollNode?.addEventListener('scroll', this.handleScroll);
     setTimeout(() => {
       this.scrollToBottom();
     });
@@ -197,7 +189,7 @@ class ChatRenderer {
 
   assignStyle(style = {}) {
     for (const key of Object.keys(style)) {
-      this.rootNode.style.setProperty(key, style[key]);
+      this.rootNode!.style.setProperty(key, style[key]);
     }
   }
 
@@ -206,7 +198,7 @@ class ChatRenderer {
     if (!highlightSettings) {
       return;
     }
-    highlightSettings.map((id) => {
+    highlightSettings.forEach((id) => {
       const setting = highlightSettingById[id];
       const text = setting.highlightText;
       const highlightColor = setting.highlightColor;
@@ -238,7 +230,7 @@ class ChatRenderer {
       if (lines.length === 0) {
         return;
       }
-      const regexExpressions = [];
+      const regexExpressions: string[] = [];
       // Organize each highlight entry into regex expressions and words
       for (let line of lines) {
         // Regex expression syntax is /[exp]/
@@ -294,7 +286,7 @@ class ChatRenderer {
   scrollToBottom() {
     // scrollHeight is always bigger than scrollTop and is
     // automatically clamped to the valid range.
-    this.scrollNode.scrollTop = this.scrollNode.scrollHeight;
+    this.scrollNode!.scrollTop = this.scrollNode!.scrollHeight;
   }
 
   changePage(page) {
@@ -305,7 +297,7 @@ class ChatRenderer {
     }
     this.page = page;
     // Fast clear of the root node
-    this.rootNode.textContent = '';
+    this.rootNode!.textContent = '';
     this.visibleMessages = [];
     // Re-add message nodes
     const fragment = document.createDocumentFragment();
@@ -318,7 +310,7 @@ class ChatRenderer {
       }
     }
     if (node) {
-      this.rootNode.appendChild(fragment);
+      this.rootNode!.appendChild(fragment);
       node.scrollIntoView();
     }
   }
@@ -345,7 +337,10 @@ class ChatRenderer {
     return null;
   }
 
-  processBatch(batch, options = {}) {
+  processBatch(
+    batch,
+    options: { prepend?: boolean; notifyListeners?: boolean } = {},
+  ) {
     const { prepend, notifyListeners = true } = options;
     const now = Date.now();
     // Queue up messages until chat is ready
@@ -432,19 +427,17 @@ class ChatRenderer {
 
           const reactRoot = createRoot(childNode);
 
-          // biome-ignore-start lint/security/noDangerouslySetInnerHtml: ignore
           reactRoot.render(
             <Element {...outputProps}>
+              {/** biome-ignore lint/security/noDangerouslySetInnerHtml: its fine */}
               <span dangerouslySetInnerHTML={oldHtml} />
             </Element>,
-            childNode,
           );
-          // biome-ignore-end lint/security/noDangerouslySetInnerHtml: ignore
         }
 
         // Highlight text
         if (!message.avoidHighlighting && this.highlightParsers) {
-          this.highlightParsers.map((parser) => {
+          this.highlightParsers.forEach((parser) => {
             const highlighted = highlightNode(
               node,
               parser.highlightRegex,
@@ -492,11 +485,11 @@ class ChatRenderer {
       }
     }
     if (node) {
-      const firstChild = this.rootNode.childNodes[0];
+      const firstChild = this.rootNode!.childNodes[0];
       if (prepend && firstChild) {
-        this.rootNode.insertBefore(fragment, firstChild);
+        this.rootNode!.insertBefore(fragment, firstChild);
       } else {
-        this.rootNode.appendChild(fragment);
+        this.rootNode!.appendChild(fragment);
       }
       if (this.scrollTracking) {
         setTimeout(() => this.scrollToBottom());
@@ -526,7 +519,7 @@ class ChatRenderer {
         this.visibleMessages = messages.slice(fromIndex);
         for (let i = 0; i < fromIndex; i++) {
           const message = messages[i];
-          this.rootNode.removeChild(message.node);
+          this.rootNode!.removeChild(message.node);
           // Mark this message as pruned
           message.node = 'pruned';
         }
@@ -566,7 +559,7 @@ class ChatRenderer {
       message.node = undefined;
     }
     // Fast clear of the root node
-    this.rootNode.textContent = '';
+    this.rootNode!.textContent = '';
     this.messages = [];
     this.visibleMessages = [];
     // Repopulate the chat log
@@ -587,7 +580,7 @@ class ChatRenderer {
     this.visibleMessages = [];
     for (let i = 0; i < messages.length; i++) {
       const message = messages[i];
-      this.rootNode.removeChild(message.node);
+      this.rootNode!.removeChild(message.node);
       // Mark this message as pruned
       message.node = 'pruned';
     }
@@ -653,5 +646,4 @@ if (!window.__chatRenderer__) {
   window.__chatRenderer__ = new ChatRenderer();
 }
 
-/** @type {ChatRenderer} */
-export const chatRenderer = window.__chatRenderer__;
+export const chatRenderer: ChatRenderer = window.__chatRenderer__;

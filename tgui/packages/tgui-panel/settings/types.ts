@@ -30,12 +30,10 @@ export type HighlightSetting = {
 };
 
 export type HighlightState = {
-  /** Keep this for compatibility with other servers */
-  highlightColor: string;
   highlightSettings: string[];
   highlightSettingById: Record<string, HighlightSetting>;
-  /** Keep this for compatibility with other servers */
   highlightText: string;
+  highlightColor: string;
 };
 
 export type SettingsState = z.infer<typeof settingsSchema>;

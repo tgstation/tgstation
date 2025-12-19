@@ -5,11 +5,10 @@
 	abstract_type = /obj/item/abductor
 
 /obj/item/proc/AbductorCheck(mob/user)
-	if (HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING))
+	if (HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_TRAINING))
 		return TRUE
-	if (istype(user) && HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_TRAINING))
-		return TRUE
-	to_chat(user, span_warning("You can't figure out how this works!"))
+
+	balloon_alert(user, "no idea how this works!")
 	return FALSE
 
 /obj/item/abductor/proc/ScientistCheck(mob/user)
@@ -378,12 +377,10 @@ Return to step 11 of normal process."}
 			icon_state = "wonderprodProbe"
 			inhand_icon_state = "wonderprodProbe"
 
-/obj/item/melee/baton/abductor/can_baton(mob/living/target, mob/living/user)
-	if(!AbductorCheck(user))
-		return FALSE
-	return ..()
+/obj/item/melee/baton/abductor/try_stun(mob/living/target, mob/living/user, harmbatonning)
+	return AbductorCheck(user) && ..()
 
-/obj/item/melee/baton/abductor/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
+/obj/item/melee/baton/abductor/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override, clumsy)
 	switch (mode)
 		if(BATON_STUN)
 			target.visible_message(span_danger("[user] stuns [target] with [src]!"),

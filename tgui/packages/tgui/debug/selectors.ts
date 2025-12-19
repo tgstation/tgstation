@@ -5,5 +5,5 @@
  */
 
 export function selectDebug(state: Record<string, any>) {
-  return state.debug;
+  return state?.debug;
 }

@@ -24,7 +24,7 @@
       "version": "4.3.1",
       "dependencies": {
         "es-toolkit": "^1.43.0",
-        "zod": "^4.1.13",
+        "zod": "^4.2.0",
       },
     },
     "packages/tgfont": {
@@ -52,7 +52,7 @@
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
         "react-json-tree": "^0.20.0",
-        "tgui-core": "^5.5.10",
+        "tgui-core": "^5.6.0",
         "tgui-dev-server": "workspace:*",
       },
     },
@@ -75,10 +75,9 @@
         "jotai": "^2.16.0",
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
-        "tgui": "workspace:*",
-        "tgui-core": "^5.5.10",
+        "tgui-core": "^5.6.0",
         "tgui-dev-server": "workspace:*",
-        "zod": "^4.1.13",
+        "zod": "^4.2.0",
       },
     },
     "packages/tgui-say": {
@@ -89,7 +88,7 @@
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
         "tgui": "workspace:*",
-        "tgui-core": "^5.5.10",
+        "tgui-core": "^5.6.0",
       },
     },
     "packages/tgui-setup": {
@@ -1012,7 +1011,7 @@
 
     "tgui": ["tgui@workspace:packages/tgui"],
 
-    "tgui-core": ["tgui-core@5.5.10", "", { "dependencies": { "@floating-ui/react": "^0.27.16", "@nozbe/microfuzz": "^1.0.0" }, "peerDependencies": { "react": "^19.1.0", "react-dom": "^19.1.0" } }, "sha512-/LrZOS9BXSGItzNWzqGpQSo+5BmXQiydbc95+vJGpO/44bW9PqZ2/AnyvP6JCSbBhHT/PQSGVJscJcBnqB+eiA=="],
+    "tgui-core": ["tgui-core@5.6.0", "", { "dependencies": { "@floating-ui/react": "^0.27.16", "@nozbe/microfuzz": "^1.0.0" }, "peerDependencies": { "react": "^19.1.0", "react-dom": "^19.1.0" } }, "sha512-F1ezppIr0sLLaQDljOsp5lpESSnCzpnlTy0tY2U5y868it7Q5FpXKlpUeYHsRgVINWUi2O2KEOHBB7izJgIPAg=="],
 
     "tgui-dev-server": ["tgui-dev-server@workspace:packages/tgui-dev-server"],
 
@@ -1124,7 +1123,7 @@
 
     "yerror": ["yerror@8.0.0", "", {}, "sha512-FemWD5/UqNm8ffj8oZIbjWXIF2KE0mZssggYpdaQkWDDgXBQ/35PNIxEuz6/YLn9o0kOxDBNJe8x8k9ljD7k/g=="],
 
-    "zod": ["zod@4.1.13", "", {}, "sha512-AvvthqfqrAhNH9dnfmrfKzX5upOdjUVJYFqNSlkmGf64gRaTzlPwz99IHYnVs28qYAybvAlBV+H7pn0saFY4Ig=="],
+    "zod": ["zod@4.2.0", "", {}, "sha512-Bd5fw9wlIhtqCCxotZgdTOMwGm1a0u75wARVEY9HMs1X17trvA/lMi4+MGK5EUfYkXVTbX8UDiDKW4OgzHVUZw=="],
 
     "@isaacs/cliui/string-width": ["string-width@5.1.2", "", { "dependencies": { "eastasianwidth": "^0.2.0", "emoji-regex": "^9.2.2", "strip-ansi": "^7.0.1" } }, "sha512-HnLOCR3vjcY8beoNLtcjZ5/nxn2afmME6lhrDrebokqMap+XbeW8n9TXpPDOqdGK5qcI3oT0GKTW6wC7EMiVqA=="],
 
