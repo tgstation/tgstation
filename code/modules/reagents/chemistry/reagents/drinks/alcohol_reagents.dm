@@ -680,7 +680,7 @@
 	name = "Brave Bull"
 	description = "It's just as effective as Dutch-Courage!"
 	color = "#a79f98" // rgb: 167,159,152
-	boozepwr = 60
+	boozepwr = 70
 	quality = DRINK_NICE
 	taste_description = "alcoholic bravery"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -688,18 +688,32 @@
 	metabolized_traits = list(TRAIT_FEARLESS, TRAIT_ANALGESIA)
 	var/tough_text
 
+/atom/movable/screen/alert/brave_bull
+	name = "Brave Bull"
+	desc = "You feel tough and resilient, capable of pushing through pain!"
+	use_user_hud_icon = TRUE
+	overlay_icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	overlay_state = "bravebullglass"
+
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_metabolize(mob/living/drinker)
 	. = ..()
 	tough_text = pick("brawny", "tenacious", "tough", "hardy", "sturdy") //Tuff stuff
 	to_chat(drinker, span_notice("You feel [tough_text]!"))
-	drinker.maxHealth += 10 //Brave Bull makes you sturdier, and thus capable of withstanding a tiny bit more punishment.
-	drinker.health += 10
+	// Apply status effect to lower crit threshold (allows functioning at slightly lower health)
+	drinker.apply_status_effect(/datum/status_effect/crit_threshold_modifier, BRAVE_BULL_CRIT_THRESHOLD_REDUCTION)
+	send_alert(drinker)
 
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_end_metabolize(mob/living/drinker)
 	. = ..()
 	to_chat(drinker, span_notice("You no longer feel [tough_text]."))
-	drinker.maxHealth -= 10
-	drinker.health = min(drinker.health - 10, drinker.maxHealth) //This can indeed crit you if you're alive solely based on alchol ingestion
+	drinker.remove_status_effect(/datum/status_effect/crit_threshold_modifier)
+	remove_alert(drinker)
+
+/datum/reagent/consumable/ethanol/brave_bull/proc/send_alert(mob/living/affected_mob)
+	affected_mob.throw_alert("brave_bull", /atom/movable/screen/alert/brave_bull)
+
+/datum/reagent/consumable/ethanol/brave_bull/proc/remove_alert(mob/living/affected_mob)
+	affected_mob.clear_alert("brave_bull")
 
 /datum/reagent/consumable/ethanol/tequila_sunrise
 	name = "Tequila Sunrise"
