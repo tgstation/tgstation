@@ -36,15 +36,22 @@ SUBSYSTEM_DEF(cameras)
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(update_static_images))
 	return SS_INIT_SUCCESS
 
+GLOBAL_LIST_EMPTY(camera_cost)
+GLOBAL_LIST_EMPTY(camera_count)
+
 /datum/controller/subsystem/cameras/fire(resumed = FALSE)
+	INIT_COST(GLOB.camera_cost, GLOB.camera_count)
+	EXPORT_STATS_TO_CSV_LATER("camera-cost.txt", GLOB.camera_cost, GLOB.camera_count)
 	if (stage == STAGE_CAMERAS)
 		run_cameras()
+		SET_COST("Run cameras")
 		if (state != SS_RUNNING)
 			return
 		stage = STAGE_CHUNKS
 
 	if (stage == STAGE_CHUNKS)
 		run_chunks()
+		SET_COST("Run chunks")
 		if (state != SS_RUNNING)
 			return
 		stage = STAGE_CAMERAS

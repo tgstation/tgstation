@@ -162,12 +162,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(can_use())
 		toggle_cam(null, 0) //kick anyone viewing out
 
+	SScameras.adjust_viewing_camera_counts(src, last_view_x, last_view_y, last_view_size, last_view_chunks, last_view_turfs, adjust_amount = -1)
+
 	for (var/datum/camerachunk/chunk as anything in last_view_chunks)
 		chunk.cameras -= src
-		QUEUE_CHUNK_UPDATE(chunk)
 
 	SScameras.cameras -= src
 	SScameras.camera_queue -= src
+
+	last_view_chunks.Cut()
+	last_view_turfs.Cut()
 
 	cancelCameraAlarm()
 
