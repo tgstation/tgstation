@@ -185,8 +185,8 @@
 			)
 			consumer.set_eye_color("#FEE5A3")
 			consumer.set_species(/datum/species/lizard)
-			consumer.dna.add_mutation(/datum/mutation/firebreath,MUTATION_SOURCE_MUTATOR)
-			var/obj/item/organ/wings/functional/wings = new /obj/item/organ/wings/functional/dragon
+			consumer.dna.add_mutation(/datum/mutation/firebreath, MUTATION_SOURCE_MUTATOR)
+			var/obj/item/organ/wings/functional/dragon/wings = new()
 			wings.Insert(consumer)
 
 		if(2)
