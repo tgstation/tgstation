@@ -28,6 +28,8 @@ SUBSYSTEM_DEF(cameras)
 	/// All base static images, indexed by plane offset. (list[offset + 1] = image)
 	var/list/base_static_images = list()
 
+	/// All mobs that can currently see camera static. (alist[mob] = list(sources))
+	var/alist/viewers = alist()
 	/// All viewer eye atoms to viewer clients.
 	var/alist/eyes_to_clients = alist()
 
@@ -40,18 +42,18 @@ GLOBAL_LIST_EMPTY(camera_cost)
 GLOBAL_LIST_EMPTY(camera_count)
 
 /datum/controller/subsystem/cameras/fire(resumed = FALSE)
-	INIT_COST(GLOB.camera_cost, GLOB.camera_count)
-	EXPORT_STATS_TO_CSV_LATER("camera-cost.txt", GLOB.camera_cost, GLOB.camera_count)
+	//INIT_COST(GLOB.camera_cost, GLOB.camera_count)
+	//EXPORT_STATS_TO_CSV_LATER("camera-cost.txt", GLOB.camera_cost, GLOB.camera_count)
 	if (stage == STAGE_CAMERAS)
 		run_cameras()
-		SET_COST("Run cameras")
+		//SET_COST("Run cameras")
 		if (state != SS_RUNNING)
 			return
 		stage = STAGE_CHUNKS
 
 	if (stage == STAGE_CHUNKS)
 		run_chunks()
-		SET_COST("Run chunks")
+		//SET_COST("Run chunks")
 		if (state != SS_RUNNING)
 			return
 		stage = STAGE_CAMERAS
@@ -226,7 +228,7 @@ GLOBAL_LIST_EMPTY(camera_count)
 			var/world_y = chunk_min_y + vis_y
 			for (var/vis_x in start_x to end_x)
 				if (view_turfs[GET_VIEW_COORDS(chunk_min_x + vis_x, world_y, view_x, view_y, view_size)])
-					visibility[vis_x_start + vis_x + 1] += adjust_amount // +1 because bounds are 0-based while visibility is 1-
+					visibility[vis_x_start + vis_x + 1] += adjust_amount // +1 because bounds are 0-based while visibility is 1-based
 
 /// Checks if the atom is visible by any cameras on the map. Strictly returns TRUE or FALSE.
 /datum/controller/subsystem/cameras/proc/is_on_cameras(atom/atom_to_check)
@@ -287,17 +289,45 @@ GLOBAL_LIST_EMPTY(camera_count)
 		if (camera.last_view_x <= turf.x && camera.last_view_y <= turf.y && camera.last_view_x + camera.last_view_size > turf.x && camera.last_view_y + camera.last_view_size > turf.y)
 			camera_queue += camera
 
-/datum/controller/subsystem/cameras/proc/add_viewer_mob(mob/viewer)
+/// Adds the mob to camera static viewers, causing it to see camera static over areas where cameras on the map can't see.
+/// The source variable is such that multiple sources can add the ability to view static without conflicting.
+/datum/controller/subsystem/cameras/proc/add_viewer(mob/viewer, source)
+	if (!source)
+		CRASH("Attempted to add the ability to view camera static to a mob without a source for it.")
+
+	if (viewers[viewer])
+		viewers[viewer] |= source
+		return
+	else
+		viewers[viewer] = list(source)
+
 	if (viewer.client)
 		add_viewer_client(viewer)
+
+	RegisterSignal(viewer, COMSIG_QDELETING, PROC_REF(remove_viewer))
 	RegisterSignal(viewer, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(add_viewer_client))
 	RegisterSignal(viewer, COMSIG_MOB_LOGOUT, PROC_REF(remove_viewer_client))
 	RegisterSignal(viewer, COMSIG_VIEWDATA_UPDATE, PROC_REF(on_viewdata_update))
 
-/datum/controller/subsystem/cameras/proc/remove_viewer_mob(mob/viewer)
+/// Removes the mob from camera static viewers, causing camera static that it sees to disappear. (if there are no more sources, that is)
+/datum/controller/subsystem/cameras/proc/remove_viewer(mob/viewer, source)
+	if (!source)
+		CRASH("Attempted to remove the ability to view camera static from a mob without a source for it.")
+
+	if (!viewers[viewer])
+		return
+
+	viewers[viewer] -= source
+
+	if (length(viewers[viewer]))
+		return
+
+	viewers -= viewer
+
 	if (viewer.client)
-		remove_viewer_client(viewer, viewer.client)
-	UnregisterSignal(viewer, list(COMSIG_MOB_CLIENT_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_VIEWDATA_UPDATE))
+		remove_viewer_client(viewer)
+
+	UnregisterSignal(viewer, list(COMSIG_QDELETING, COMSIG_MOB_CLIENT_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_VIEWDATA_UPDATE))
 
 /datum/controller/subsystem/cameras/proc/on_viewdata_update(mob/viewer, view_size)
 	if (viewer.client?.eye)
@@ -314,8 +344,8 @@ GLOBAL_LIST_EMPTY(camera_count)
 	PRIVATE_PROC(TRUE)
 	if (viewer.canon_client.eye)
 		set_viewer_client_eye(viewer, viewer.canon_client.eye, null)
-	viewer.client.view_chunks = null
-	UnregisterSignal(viewer.client, COMSIG_CLIENT_SET_EYE)
+	UnregisterSignal(viewer.canon_client, COMSIG_CLIENT_SET_EYE)
+	viewer.canon_client.view_chunks = null
 
 /datum/controller/subsystem/cameras/proc/set_viewer_client_eye(client/viewer, atom/old_eye, atom/new_eye)
 	PRIVATE_PROC(TRUE)
@@ -323,9 +353,9 @@ GLOBAL_LIST_EMPTY(camera_count)
 		UnregisterSignal(old_eye, COMSIG_MOVABLE_MOVED)
 		eyes_to_clients -= old_eye
 	if (new_eye)
+		eyes_to_clients[new_eye] = viewer
 		update_viewer_client(viewer, new_eye)
 		RegisterSignal(new_eye, COMSIG_MOVABLE_MOVED, PROC_REF(update_viewer_eye))
-		eyes_to_clients[new_eye] = viewer
 
 /datum/controller/subsystem/cameras/proc/update_viewer_eye(atom/eye)
 	PRIVATE_PROC(TRUE)

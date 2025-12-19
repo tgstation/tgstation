@@ -23,7 +23,7 @@
 #define CHUNK_TO_WORLD(v) (v * CHUNK_SIZE + 1)
 
 /// Queues a camera for the next visibility update. (add it manually inside the subsystem)
-#define QUEUE_CAMERA_UPDATE(camera) SScameras.camera_queue += camera
+#define QUEUE_CAMERA_UPDATE(camera) if (!QDELETED(camera)) { SScameras.camera_queue += camera }
 /// Queues a camera chunk for the next visibility update. (add it manually inside the subsystem)
 #define QUEUE_CHUNK_UPDATE(chunk) SScameras.chunk_queue += chunk
 

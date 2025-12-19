@@ -382,7 +382,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = TRUE)
 	camera_enabled = !camera_enabled
 	var/can_use = can_use()
-	if (!QDELETED(src) && !last_can_use != !can_use)
+	if (!last_can_use != !can_use)
 		QUEUE_CAMERA_UPDATE(src)
 	if(can_use)
 		if (isturf(loc))
