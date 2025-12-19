@@ -46,7 +46,7 @@ export function NowPlayingWidget(props) {
           }}
         >
           {
-            <Collapsible title={title || 'Unknown Track'} color={'blue'}>
+            <Collapsible title={title || 'Unknown Track'} color="blue">
               <Section>
                 {link !== 'Song Link Hidden' && (
                   <Flex.Item grow={1} color="label">
@@ -84,7 +84,7 @@ export function NowPlayingWidget(props) {
       )}
       {playing && (
         <Flex.Item mx={0.5} fontSize="0.9em">
-          <Button tooltip="Stop" icon="stop" onClick={player.stop} />
+          <Button tooltip="Stop" icon="stop" onClick={() => player.stop()} />
         </Flex.Item>
       )}
       <Flex.Item mx={0.5} fontSize="0.9em">
@@ -95,11 +95,12 @@ export function NowPlayingWidget(props) {
           step={0.0025}
           stepPixelSize={1}
           format={(value) => `${toFixed(value * 100)}%`}
-          onChange={(e, value) =>
+          onChange={(e, value) => {
             updateSettings({
               adminMusicVolume: value,
-            })
-          }
+            });
+            player.setVolume(value);
+          }}
         />
       </Flex.Item>
     </Flex>

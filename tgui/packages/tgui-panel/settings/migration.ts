@@ -1,6 +1,7 @@
 import { storage } from 'common/storage';
 import { smoothMerge } from 'common/type-safety';
 import { omit, pick } from 'es-toolkit';
+import { setMusicVolume } from '../audio/handlers';
 import { chatRenderer } from '../chat/renderer';
 import { store } from '../events/store';
 import {
@@ -95,6 +96,7 @@ export function startSettingsMigration(next: MergedSettings): void {
   draftSettings.view = defaultSettings.view; // Preserve view state
 
   generalSettingsHandler(draftSettings);
+  setMusicVolume(draftSettings.adminMusicVolume);
   store.set(settingsAtom, draftSettings);
   console.log('Migrated panel settings:', draftSettings);
 

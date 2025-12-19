@@ -29,17 +29,11 @@ export function playMusic(payload: PlayPayload): void {
   store.set(metaAtom, options);
 }
 
-type SetVolumePayload = {
-  adminMusicVolume: number;
-};
-
 export function stopMusic(): void {
   player.stop();
 }
 
 // settings/update and settings/load
-export function setMusicVolume(payload: SetVolumePayload): void {
-  const { adminMusicVolume: volume } = payload;
-  if (typeof volume !== 'number') return;
+export function setMusicVolume(volume: number): void {
   player.setVolume(volume);
 }
