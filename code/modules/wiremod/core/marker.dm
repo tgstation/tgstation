@@ -56,7 +56,7 @@
 		carbon_target = target
 		visible_items = carbon_target.get_visible_items()
 	else
-		visible_items = target.get_equipped_items()
+		visible_items = target.get_equipped_items(INCLUDE_HELD)
 
 	visible_items -= src // the multitool cannot mark itself.
 
@@ -89,7 +89,7 @@
 		return
 
 	var/atom/movable/chosen = locate(picked_ref)
-	if(chosen == target || (chosen in (carbon_target ? carbon_target.get_visible_items() : target.get_equipped_items())))
+	if(chosen == target || (chosen in (carbon_target ? carbon_target.get_visible_items() : target.get_equipped_items(INCLUDE_HELD))))
 		mark_target(chosen)
 	else
 		balloon_alert(user, "cannot mark entity")

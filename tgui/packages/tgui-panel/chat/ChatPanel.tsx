@@ -12,7 +12,7 @@ import { chatRenderer } from './renderer';
 
 type Props = {
   fontSize?: string;
-  lineHeight: string;
+  lineHeight: string | number;
 };
 
 type State = {

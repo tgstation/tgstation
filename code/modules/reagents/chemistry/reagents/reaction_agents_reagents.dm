@@ -144,3 +144,47 @@
 		holder.update_total()
 
 #undef SPEED_REAGENT_STRENGTH
+
+/datum/reagent/reaction_agent/inversing_buffer
+	name = "Chiral Inversing Buffer"
+	description = "This reagent will consume itself and convert impure reagents into their inversed counterparts. Amount varies based on volume of added buffer."
+	ph = 7
+	color = "#b60046"
+
+/datum/reagent/reaction_agent/inversing_buffer/intercept_reagents_transfer(datum/reagents/target, amount, copy_only)
+	. = ..()
+	if(!.)
+		return
+
+	var/conversion_buffer = amount * 10 //Converts up to 10 units of reagent per 1 unit of inversing buffer.
+	var/converted = 0
+	var/list/cached_reagents = target.reagent_list.Copy()
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		if(!conversion_buffer)
+			return
+		if(reagent.purity <= reagent.inverse_chem_val)
+			//compute volume of reagent to be converted
+			converted = min(reagent.volume, conversion_buffer)
+			//remove original reagent from target
+			reagent.volume -= converted
+			target.update_total()
+			//add new inverse reagent to target
+			target.add_reagent(reagent.inverse_chem, converted, FALSE, added_purity = reagent.get_inverse_purity(reagent.purity))
+			//remove from buffer remaining
+			conversion_buffer -= converted
+
+	//audible feedback
+	if(conversion_buffer < amount * 10)
+		target.my_atom.audible_message(span_warning("The beaker goes into a rolling boil as the contents begin inversing!"))
+		playsound(target.my_atom, 'sound/effects/chemistry/catalyst.ogg', 50, TRUE)
+	else
+		target.my_atom.audible_message(span_warning("The buffer fizzles with no effect."))
+
+	//remove inversening reagent based on total buffer removed
+	var/volume_to_transfer = amount - (amount * (1 - (conversion_buffer / (amount * 10))))
+	if(volume_to_transfer)
+		target.add_reagent(type, volume_to_transfer, reagtemp = holder.chem_temp, added_purity = purity, added_ph = ph)
+	if(!copy_only)
+		volume -= amount
+		holder.update_total()
+

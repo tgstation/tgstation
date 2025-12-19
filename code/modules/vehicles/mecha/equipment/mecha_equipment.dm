@@ -37,6 +37,8 @@
 	var/harmful = FALSE
 	///Sound file: Sound to play when this equipment is destroyed while still attached to the mech
 	var/destroy_sound = 'sound/vehicles/mecha/critdestr.ogg'
+	///The action type to use for this equipment. Override for custom action buttons.
+	var/action_type = /datum/action/vehicle/sealed/mecha/equipment
 
 /obj/item/mecha_parts/mecha_equipment/Destroy()
 	if(chassis)
@@ -214,6 +216,7 @@
 	SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_ATTACHED)
 	forceMove(new_mecha)
 	log_message("[src] initialized.", LOG_MECHA)
+	chassis.on_equipment_attach(src)
 
 /**
  * called to detach this equipment
@@ -221,6 +224,7 @@
  * * moveto: optional target to move this equipment to
  */
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto)
+	chassis.on_equipment_detach(src)
 	moveto = moveto || get_turf(chassis)
 	forceMove(moveto)
 	playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
@@ -268,3 +272,4 @@
 /// AI mech pilot: returns TRUE if the Ai should try to reload the mecha
 /obj/item/mecha_parts/mecha_equipment/proc/needs_rearm()
 	return FALSE
+

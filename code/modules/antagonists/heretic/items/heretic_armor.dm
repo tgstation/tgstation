@@ -6,7 +6,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	name = "ominous armor"
 	desc = "A ragged, dusty set of robes. Strange eyes line the inside."
-	icon_state = "eldritch_armor"
+	icon_state = "armor"
 	inhand_icon_state = null
 	flags_inv = HIDESHOES | HIDEJUMPSUIT | HIDEBELT
 	body_parts_covered = CHEST | GROIN | LEGS | FEET | ARMS
@@ -71,7 +71,7 @@
 	name = "ominous hood"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
-	icon_state = "eldritch"
+	icon_state = "helmet"
 	desc = "A torn, dust-caked hood. Strange eyes line the inside."
 	flags_inv = HIDEMASK | HIDEEARS | HIDEEYES | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR | HIDESNOUT
 	flags_cover = HEADCOVERSEYES | PEPPERPROOF
@@ -551,7 +551,7 @@
 		//"You are needed in [area name]. You need to be there. %ATTACKER might want you to stay, but you are needed in [area name].",
 		//"You see %ATTACKER strike a [name of animal]. The face of the beast is a mirror of your own. How strange.",
 		"%ATTACKER bumps you and you spill your tea. It's fine. You've plenty of cups.",
-		"You hear a roaring crash. The waves hit the boat. The is sea vast and dark. You see %ATTACKER striking the water, cursing its master.",
+		"You hear a roaring crash. The waves hit the boat. The sea is vast and dark. You see %ATTACKER striking the water, cursing its master.",
 		"Sequins scatter into the air around %ATTACKER. The sequins...",
 		"You notice that a button has popped off your collar. How did that happen? Maybe %ATTACKER is to blame.",
 		"%ATTACKER isn't very funny, and you're struggling to see the punchline.",
@@ -584,6 +584,18 @@
 	RegisterSignal(human_user, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(on_apply_modifiers))
 	signal_registered += COMSIG_MOB_APPLY_DAMAGE_MODIFIERS
 
+	// adjust ignores damage modifiers so we listen to them separately
+	var/list/damage_adjust_signals = list(
+		COMSIG_LIVING_ADJUST_BRUTE_DAMAGE,
+		COMSIG_LIVING_ADJUST_BURN_DAMAGE,
+		COMSIG_LIVING_ADJUST_OXY_DAMAGE,
+		COMSIG_LIVING_ADJUST_TOX_DAMAGE,
+		COMSIG_LIVING_ADJUST_STAMINA_DAMAGE
+	)
+
+	RegisterSignals(human_user, damage_adjust_signals, PROC_REF(adjust_damage))
+	signal_registered += damage_adjust_signals
+
 	RegisterSignal(human_user, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	signal_registered += COMSIG_LIVING_DEATH
 
@@ -606,7 +618,8 @@
 
 	wearer.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
 	var/obj/item/organ/brain/our_brain = wearer.get_organ_slot(ORGAN_SLOT_BRAIN)
-	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
+	if(our_brain)
+		REMOVE_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
 	braindead = FALSE
 	if(health_hud in user.hud_used.infodisplay)
 		on_hud_remove(user)
@@ -616,7 +629,15 @@
 	if(braindead)
 		return
 	damage_mods += 0
-	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage * damage_modifier)
+	handle_damage(user, damage)
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/adjust_damage(mob/living/user, type, amount, forced)
+	SIGNAL_HANDLER
+	handle_damage(user, amount)
+	return COMPONENT_IGNORE_CHANGE
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/handle_damage(mob/living/user, damage)
+	user.adjust_organ_loss(ORGAN_SLOT_BRAIN, damage * damage_modifier)
 	check_braindeath(user)
 
 /// Gives the health HUD to the wearer
@@ -705,7 +726,7 @@
 	if(!istype(wearer) || wearer.wear_suit != src || wearer.stat == DEAD)
 		return ..()
 	if(!IS_HERETIC_OR_MONSTER(wearer))
-		wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
+		wearer.adjust_organ_loss(ORGAN_SLOT_BRAIN, 20)
 	var/brain_damage = wearer.get_organ_loss(ORGAN_SLOT_BRAIN)
 	var/emote_rng = 0
 	var/list/emote_list = list()
@@ -741,7 +762,7 @@
 		return
 
 	braindead = TRUE
-	wearer.setOrganLoss(ORGAN_SLOT_BRAIN, INFINITY)
+	wearer.set_organ_loss(ORGAN_SLOT_BRAIN, INFINITY)
 	playsound(wearer, 'sound/effects/pope_entry.ogg', 50)
 	to_chat(wearer, span_bold(span_hypnophrase("A terrible fate has befallen you.")))
 	addtimer(CALLBACK(src, PROC_REF(kill_wearer), wearer), 5 SECONDS)

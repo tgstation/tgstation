@@ -67,7 +67,8 @@
 /atom/movable/screen/alert/status_effect/in_love
 	name = "In Love"
 	desc = "You feel so wonderfully in love!"
-	icon_state = "in_love"
+	use_user_hud_icon = TRUE
+	overlay_state = "in_love"
 
 /datum/status_effect/in_love
 	id = "in_love"
@@ -151,10 +152,10 @@
 			spell.reset_spell_cooldown()
 
 		var/need_mob_update = FALSE
-		need_mob_update += rewarded.adjustBruteLoss(-25, updating_health = FALSE)
-		need_mob_update += rewarded.adjustFireLoss(-25, updating_health = FALSE)
-		need_mob_update += rewarded.adjustToxLoss(-25, updating_health = FALSE)
-		need_mob_update += rewarded.adjustOxyLoss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjust_brute_loss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjust_fire_loss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjust_tox_loss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjust_oxy_loss(-25, updating_health = FALSE)
 		if(need_mob_update)
 			rewarded.updatehealth()
 
@@ -169,7 +170,8 @@
 /atom/movable/screen/alert/status_effect/heldup
 	name = "Held Up"
 	desc = "Making any sudden moves would probably be a bad idea!"
-	icon_state = "aimed"
+	use_user_hud_icon = TRUE
+	overlay_state = "aimed"
 
 /datum/status_effect/grouped/heldup/on_apply()
 	owner.apply_status_effect(/datum/status_effect/grouped/surrender, REF(src))
@@ -190,7 +192,8 @@
 /atom/movable/screen/alert/status_effect/holdup
 	name = "Holding Up"
 	desc = "You're currently pointing a gun at someone. Click to cancel."
-	icon_state = "aimed"
+	use_user_hud_icon = TRUE
+	overlay_state = "aimed"
 	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/holdup/Click(location, control, params)
@@ -373,7 +376,8 @@
 /atom/movable/screen/alert/status_effect/surrender
 	name = "Surrender"
 	desc = "Looks like you're in trouble now, bud. Click here to surrender. (Warning: You will be incapacitated.)"
-	icon_state = "surrender"
+	use_user_hud_icon = TRUE
+	overlay_state = "surrender"
 	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/surrender/Click(location, control, params)
@@ -679,11 +683,11 @@
 
 		var/healed = 0
 		if(recovery) //very mild healing for those with the water adaptation trait (fish infusion)
-			healed += owner.adjustOxyLoss(recovery * (water_adaptation ? 1.5 : 1), updating_health = FALSE, required_biotype = MOB_ORGANIC)
-			healed += owner.adjustFireLoss(recovery, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-			healed += owner.adjustToxLoss(recovery, updating_health = FALSE, required_biotype = MOB_ORGANIC)
-			healed += owner.adjustBruteLoss(recovery, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-		healed += owner.adjustStaminaLoss(stam_recovery, updating_stamina = FALSE)
+			healed += owner.adjust_oxy_loss(recovery * (water_adaptation ? 1.5 : 1), updating_health = FALSE, required_biotype = MOB_ORGANIC)
+			healed += owner.adjust_fire_loss(recovery, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+			healed += owner.adjust_tox_loss(recovery, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+			healed += owner.adjust_brute_loss(recovery, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+		healed += owner.adjust_stamina_loss(stam_recovery, updating_stamina = FALSE)
 		if(healed)
 			owner.updatehealth()
 	else if(istype(shower_reagent, /datum/reagent/blood))

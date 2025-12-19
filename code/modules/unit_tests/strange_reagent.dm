@@ -74,15 +74,15 @@
 
 /datum/unit_test/strange_reagent/proc/damage_target_to_percentage(mob/living/target, percent)
 	var/damage = target_max_health * percent * 0.5
-	target.setBruteLoss(damage, updating_health=FALSE) // no point running health update logic here
-	target.setFireLoss(damage, updating_health=TRUE) // since we do it here
+	target.set_brute_loss(damage, updating_health=FALSE) // no point running health update logic here
+	target.set_fire_loss(damage, updating_health=TRUE) // since we do it here
 	update_amounts(target)
 	if(percent >= 1)
 		target.death()
 	return TRUE
 
 /datum/unit_test/strange_reagent/proc/get_target_organic_health_manual(mob/living/target)
-	return target.getMaxHealth() - (target.getBruteLoss() + target.getFireLoss())
+	return target.getMaxHealth() - (target.get_brute_loss() + target.get_fire_loss())
 
 /datum/unit_test/strange_reagent/proc/test_damage_but_no_death(target_type)
 	var/mob/living/target = allocate_new_target(target_type)

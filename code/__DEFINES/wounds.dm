@@ -80,12 +80,14 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 #define BIO_FLESH (1<<1)
 /// Has metal - allows the victim to suffer robotic blunt and burn wounds
 #define BIO_METAL (1<<2)
+/// Has wood - should probably be able to catch on fire, or something
+#define BIO_WOOD (1<<3)
 /// Is wired internally - allows the victim to suffer electrical wounds (robotic T1-T3 slash/pierce)
-#define BIO_WIRED (1<<3)
+#define BIO_WIRED (1<<4)
 /// Has bloodflow - can suffer bleeding wounds and can bleed
-#define BIO_BLOODED (1<<4)
+#define BIO_BLOODED (1<<5)
 /// Is connected by a joint - can suffer T1 bone blunt wounds (dislocation)
-#define BIO_JOINTED (1<<5)
+#define BIO_JOINTED (1<<6)
 /// Robotic - can suffer all metal/wired wounds, such as: UNIMPLEMENTED PLEASE UPDATE ONCE SYNTH WOUNDS 9/5/2023 ~Niko
 #define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
 /// Has flesh and bone - See BIO_BONE and BIO_FLESH

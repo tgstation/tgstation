@@ -60,6 +60,11 @@
 	SEND_SIGNAL(computer, COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT, payment_result)
 
 /datum/computer_file/program/nt_pay/proc/_pay(token, money_to_send, mob/user)
+	var/area/user_area = get_area(user)
+	if(user_area && is_area_virtual(user_area))
+		to_chat(user, span_notice("You cannot send virtual money to real accounts."))
+		return NT_PAY_STATUS_NO_ACCOUNT
+
 	money_to_send = round(money_to_send)
 
 	if(IS_DEPARTMENTAL_ACCOUNT(current_user))
@@ -78,7 +83,7 @@
 		return NT_PAY_STATUS_INVALID_MONEY
 	if(token == current_user.pay_token)
 		if(user)
-			to_chat(user, span_notice("You can't send credits to yourself."))
+			to_chat(user, span_notice("You can't send [MONEY_NAME] to yourself."))
 		return NT_PAY_SATUS_SENDER_IS_RECEIVER
 
 	for(var/account in SSeconomy.bank_accounts_by_id)
@@ -95,12 +100,12 @@
 		current_user.bank_card_talk("You cannot afford it.")
 		return NT_PAY_STATUS_INVALID_MONEY
 
-	recipient.bank_card_talk("You received [money_to_send] credit(s). Reason: transfer from [current_user.account_holder]")
+	recipient.bank_card_talk("You received [money_to_send] [MONEY_NAME](s). Reason: transfer from [current_user.account_holder]")
 	recipient.transfer_money(current_user, money_to_send)
 	for(var/obj/item/card/id/id_card as anything in recipient.bank_cards)
 		SEND_SIGNAL(id_card, COMSIG_ID_CARD_NTPAY_MONEY_RECEIVED, computer, money_to_send)
 
-	current_user.bank_card_talk("You send [money_to_send] credit(s) to [recipient.account_holder]. Now you have [current_user.account_balance] credit(s)")
+	current_user.bank_card_talk("You send [money_to_send] [MONEY_NAME](s) to [recipient.account_holder]. Now you have [current_user.account_balance] [MONEY_NAME](s)")
 
 	return NT_PAY_STATUS_SUCCESS
 

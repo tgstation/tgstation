@@ -66,7 +66,8 @@
 /atom/movable/screen/alert/status_effect/commanded
 	name = "Commanded"
 	desc = "You are inspired to do things faster!"
-	icon_state = "commanded"
+	use_user_hud_icon = TRUE
+	overlay_state = "commanded"
 
 /obj/item/melee/chainofcommand/tailwhip
 	name = "liz o' nine tails"
@@ -74,6 +75,7 @@
 	icon_state = "tailwhip"
 	inhand_icon_state = "tailwhip"
 	item_flags = NONE
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.1)
 
 /obj/item/melee/chainofcommand/tailwhip/kitty
 	name = "cat o' nine tails"

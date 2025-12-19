@@ -42,6 +42,7 @@
 	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_stopped))
 	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_no_longer_stopped))
 	target_turf = target
+	ADD_TRAIT(parent, TRAIT_AI_AVOID_TURF, REF(src))
 	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_ENTERED, PROC_REF(entered))
 	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(exited))
 	RegisterSignal(parent, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(initialized_on))
@@ -53,6 +54,7 @@
 	parent.AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/chasm])
 
 /datum/component/chasm/UnregisterFromParent()
+	REMOVE_TRAIT(parent, TRAIT_AI_AVOID_TURF, REF(src))
 	storage = null
 
 /datum/component/chasm/proc/entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -161,7 +163,7 @@
 		if(isliving(dropped_thing))
 			var/mob/living/fallen = dropped_thing
 			fallen.Paralyze(100)
-			fallen.adjustBruteLoss(30)
+			fallen.adjust_brute_loss(30)
 		falling_atoms -= falling_ref
 		return
 

@@ -336,11 +336,12 @@
 	return FALSE
 
 /**
- * Ensure a list of atoms/reagents exists inside this atom
+ * Called whenever an item is crafted, either via stack recipes or crafting recipes from the crafting menu
  *
- * Cycles through the list of movables used up in the recipe and calls used_in_craft() for each of them
- * then it either moves them inside the object or deletes
- * them depending on whether they're in the list of parts for the recipe or not
+ * By default, it just cycles through the list of movables used in the recipe and calls used_in_craft() for each of them,
+ * then it either moves them inside the object if they're in the list of parts for the recipe
+ * or deletes them if they're not.
+ * The proc can be overriden by subtypes, as long as it always call parent.
  */
 /atom/proc/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	SHOULD_CALL_PARENT(TRUE)
@@ -349,17 +350,17 @@
 	var/list/parts_by_type = remaining_parts?.Copy()
 	for(var/parttype in parts_by_type) //necessary for our is_type_in_list() call with the zebra arg set to true
 		parts_by_type[parttype] = parttype
-	for(var/obj/item/item in components) // machinery or structure objects in the list are guaranteed to be used up. We only check items.
-		item.used_in_craft(src, current_recipe)
-		var/matched_type = is_type_in_list(item, parts_by_type, zebra = TRUE)
+	for(var/atom/movable/movable as anything in components) // machinery or structure objects in the list are guaranteed to be used up. We only check items.
+		movable.used_in_craft(src, current_recipe)
+		var/matched_type = is_type_in_list(movable, parts_by_type, zebra = TRUE)
 		if(!matched_type)
 			continue
 
-		if(isliving(item.loc))
-			var/mob/living/living = item.loc
-			living.transferItemToLoc(item, src)
+		if(isliving(movable.loc) && isitem(movable))
+			var/mob/living/living = movable.loc
+			living.transferItemToLoc(movable, src)
 		else
-			item.forceMove(src)
+			movable.forceMove(src)
 
 		if(matched_type)
 			remaining_parts[matched_type] -= 1
@@ -428,7 +429,7 @@
 	for(var/datum/reagent/current_reagent as anything in reagents)
 		. |= current_reagent.expose_atom(src, reagents[current_reagent], methods)
 
-/// Are you allowed to drop this atom
+/// Are you allowed to drop stuff inside this atom
 /atom/proc/AllowDrop()
 	return FALSE
 
@@ -653,7 +654,10 @@
 
 /atom/proc/StartProcessingAtom(mob/living/user, obj/item/process_item, list/chosen_option)
 	var/processing_time = chosen_option[TOOL_PROCESSING_TIME]
+	var/sound_to_play = chosen_option[TOOL_PROCESSING_SOUND]
 	to_chat(user, span_notice("You start working on [src]."))
+	if(sound_to_play)
+		playsound(src, sound_to_play, 50, TRUE)
 	if(!process_item.use_tool(src, user, processing_time, volume=50))
 		return
 	var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]

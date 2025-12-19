@@ -20,6 +20,11 @@
 	blindfold.colored_before = TRUE
 	give_item_to_holder(blindfold, list(LOCATION_EYES, LOCATION_HANDS))
 
+/datum/quirk/item_quirk/blindness/is_species_appropriate(datum/species/mob_species)
+	if(ispath(mob_species, /datum/species/dullahan))
+		return FALSE
+	return ..()
+
 /datum/quirk/item_quirk/blindness/add(client/client_source)
 	quirk_holder.become_blind(QUIRK_TRAIT)
 

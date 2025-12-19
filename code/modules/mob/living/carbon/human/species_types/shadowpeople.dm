@@ -111,6 +111,7 @@
 	name = "shadowling tumor"
 	desc = "Something that was once a brain, before being remolded by a shadowling. It has adapted to the dark, irreversibly."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
+	shade_color = "grey-ish"
 
 /datum/species/shadow/get_scream_sound(mob/living/carbon/human/moth)
 	return 'sound/mobs/humanoids/shadow/shadow_wail.ogg'

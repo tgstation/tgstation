@@ -2,3 +2,5 @@
 	rust_sower_armbomb.ogg - EnterTheJake
 	rust_sower_explode.ogg - EnterTheJake
 }
+
+gun_mode_switch1.ogg made by grungussuss, license: CC-BY-SA

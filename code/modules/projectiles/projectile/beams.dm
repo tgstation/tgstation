@@ -28,17 +28,18 @@
 	damage = 25
 	exposed_wound_bonus = 40
 
-/obj/projectile/beam/laser/carbine
+/obj/projectile/beam/laser/rapid
+	name = "rapid fire laser"
 	icon_state = "carbine_laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
-	damage = 10
+	damage = 20
 
-/obj/projectile/beam/laser/carbine/practice
-	name = "practice laser"
+/obj/projectile/beam/laser/rapid/practice
+	name = "practice rapid fire laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
 	damage = 0
 
-/obj/projectile/beam/laser/carbine/cybersun
+/obj/projectile/beam/laser/cybersun
 	name = "red plasma beam"
 	icon_state = "lava"
 	light_color = COLOR_DARK_RED
@@ -46,6 +47,20 @@
 	damage = 9
 	wound_bonus = -40
 	speed = 0.9
+
+/obj/projectile/beam/laser/accelerator
+	name = "accelerator laser"
+	icon_state = "scatterlaser"
+	range = 255
+	damage = 6
+	var/size_per_tile = 0.1
+	var/max_scale = 4
+
+/obj/projectile/beam/laser/accelerator/reduce_range()
+	..()
+	damage += 7
+	transform = matrix()
+	transform *= min(1 + (maximum_range - range) * size_per_tile, max_scale)
 
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 /obj/projectile/beam/laser/hellfire
@@ -368,21 +383,14 @@
 	hitsound = null
 	damage = 0
 	damage_type = STAMINA
-	var/suit_types = list(/obj/item/clothing/suit/redtag, /obj/item/clothing/suit/bluetag)
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
-
-/obj/projectile/beam/lasertag/on_hit(atom/target, blocked = 0, pierce_hit)
-	. = ..()
-	if(ishuman(target))
-		var/mob/living/carbon/human/M = target
-		if(istype(M.wear_suit))
-			if(M.wear_suit.type in suit_types)
-				M.adjustStaminaLoss(34)
+	var/lasertag_team = LASERTAG_TEAM_NEUTRAL
+	var/lasertag_damage = 34
 
 /obj/projectile/beam/lasertag/redtag
 	icon_state = "laser"
-	suit_types = list(/obj/item/clothing/suit/bluetag)
+	lasertag_team = LASERTAG_TEAM_RED
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 	light_color = COLOR_SOFT_RED
 	tracer_type = /obj/effect/projectile/tracer/laser
@@ -395,7 +403,7 @@
 
 /obj/projectile/beam/lasertag/bluetag
 	icon_state = "bluelaser"
-	suit_types = list(/obj/item/clothing/suit/redtag)
+	lasertag_team = LASERTAG_TEAM_BLUE
 	tracer_type = /obj/effect/projectile/tracer/laser/blue
 	muzzle_type = /obj/effect/projectile/muzzle/laser/blue
 	impact_type = /obj/effect/projectile/impact/laser/blue

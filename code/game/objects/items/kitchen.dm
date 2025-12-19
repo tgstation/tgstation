@@ -38,6 +38,9 @@
 	sharpness = SHARP_POINTY
 	var/datum/reagent/forkload //used to eat omelette
 	custom_price = PAYCHECK_LOWER
+	sound_vary = TRUE
+	pickup_sound = SFX_CUTLERY_PICKUP
+	drop_sound = SFX_CUTLERY_DROP
 
 /datum/armor/kitchen_fork
 	fire = 50
@@ -77,6 +80,8 @@
 	throwforce = 0
 	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 0.8)
 	custom_price = PAYCHECK_LOWER * 1
+	pickup_sound = null
+	drop_sound = null
 
 /obj/item/kitchen/fork/plastic/Initialize(mapload)
 	. = ..()
@@ -100,6 +105,8 @@
 	attack_verb_simple = list("prod", "whiff", "scratch", "poke")
 	sharpness = SHARP_EDGED
 	custom_price = PAYCHECK_LOWER * 2
+	pickup_sound = null
+	drop_sound = null
 
 /obj/item/knife/plastic/Initialize(mapload)
 	. = ..()
@@ -124,7 +131,7 @@
 
 /obj/item/knife/kitchen/silicon/examine()
 	. = ..()
-	. += " It's fitted with a [tool_behaviour] head."
+	. += "It's fitted with a [tool_behaviour] head."
 
 /obj/item/knife/kitchen/silicon/attack_self(mob/user)
 	playsound(get_turf(user), 'sound/items/tools/change_drill.ogg', 50, TRUE)
@@ -160,13 +167,16 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 1.5)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
 	custom_price = PAYCHECK_CREW * 1.5
 	tool_behaviour = TOOL_ROLLINGPIN
+	sound_vary = TRUE
+	pickup_sound = SFX_ROLLING_PIN_PICKUP
+	drop_sound = SFX_ROLLING_PIN_DROP
 
 /obj/item/kitchen/rollingpin/illegal
 	name = "metal rolling pin"
@@ -202,6 +212,9 @@
 	custom_price = PAYCHECK_LOWER * 2
 	tool_behaviour = TOOL_MINING
 	toolspeed = 25 // Literally 25 times worse than the base pickaxe
+	sound_vary = TRUE
+	pickup_sound = SFX_CUTLERY_PICKUP
+	drop_sound = SFX_CUTLERY_DROP
 
 	var/spoon_sip_size = 5
 
@@ -316,6 +329,8 @@
 	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 1.2)
 	toolspeed = 75 // The plastic spoon takes 5 minutes to dig through a single mineral turf... It's one, continuous, breakable, do_after...
 	custom_price = PAYCHECK_LOWER * 1
+	pickup_sound = null
+	drop_sound = null
 
 /datum/armor/kitchen_spoon
 	fire = 50

@@ -7,6 +7,8 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket)
 	slot_flags = ITEM_SLOT_BACK
 	obj_flags = UNIQUE_RENAME
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.2, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.2)
+	light_color = COLOR_PURPLE
 
 /obj/item/gun/energy/laser/musket/add_bayonet_point()
 	AddComponent(/datum/component/bayonet_attachable, offset_x = 22, offset_y = 11)
@@ -34,6 +36,13 @@
 	inhand_icon_state = "musket_prime"
 	worn_icon_state = "las_musket_prime"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket/prime)
+	custom_materials = list(
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.4,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.35,
+		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2,
+	)
 
 
 /obj/item/gun/energy/disabler/smoothbore
@@ -45,6 +54,12 @@
 	charge_sections = 1
 	spread = 22.5
 	obj_flags = UNIQUE_RENAME
+	custom_materials = list(
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.25,
+		/datum/material/cardboard = SHEET_MATERIAL_AMOUNT,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.2,
+	)
 
 /obj/item/gun/energy/disabler/smoothbore/Initialize(mapload)
 	. = ..()
@@ -74,6 +89,12 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler/smoothbore/prime)
 	charge_sections = 2
 	spread = 0 //could be like 5, but having just very tiny spread kinda feels like bullshit
+	custom_materials = list(
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.25,
+		/datum/material/cardboard = SHEET_MATERIAL_AMOUNT,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 5.2)
 
 //Inferno and Cryo Pistols
 
@@ -118,6 +139,7 @@
 		While it doesn't manipulate temperature in and of itself, it does cause an violent eruption in anyone who is severely cold. Able to generate \
 		ammunition by manually spinning the weapon's nanite canister."
 	icon_state = "infernopistol"
+	light_color = COLOR_RED
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite/inferno)
 
 /obj/item/gun/energy/laser/thermal/cryo //the ice gun
@@ -126,4 +148,52 @@
 		While it doesn't manipulate temperature in and of itself, it does cause an internal explosion in anyone who is severely hot. Able to generate \
 		ammunition by manually spinning the weapon's nanite canister."
 	icon_state = "cryopistol"
+	light_color = COLOR_BLUE
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite/cryo)
+
+// The Deep Lore //
+
+// Laser Musket
+
+/obj/item/gun/energy/laser/musket/add_deep_lore()
+	AddElement(/datum/element/examine_lore, \
+		lore_hint = span_notice("You can [EXAMINE_HINT("think carefully")] to learn a little more about [src]."), \
+		lore = "The first examples of laser muskets emerged somewhat recently, even though improvised firearms have had \
+		a rich history throughout human, Mothic and Tiziran history.<br>\
+		<br>\
+		Laser muskets often started to emerge when conventional weaponry or ammunition started to grow scarcer, and the amount \
+		of scrap electronics and materials outpaced the speed at which engineering crews could repair structural defenses and \
+		infrastructure. They're regarded as weapons of extreme desperation, but also of unmatched grit in the face of a hopeless situation. <br>\
+		<br>\
+		Constructing one of these is sometimes seen as a rite of passage amongst militia groups and rebel forces. Each one as unique \
+		as the next. <br>\
+		<br>\
+		What will this one's name be? What history will it write? Time will surely tell." \
+	)
+
+// Thermal Pistols
+
+/obj/item/gun/energy/laser/thermal/add_deep_lore()
+	AddElement(/datum/element/examine_lore, \
+		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
+		lore = "A weapon with no name, more a pattern of design. Examples of thermal pistols vary heavily based on the \
+		manufacturer or craftsperson. However, the original inventor of the thermal pistol is largely clouded in mystery. \
+		Replica versions of the pistol were circulating long before weaponized nanites were banned by the \
+		TerraGov Subdermal Weapons Accord, and have continued to exist as a means of disposing of the self-replicating stocks \
+		of weaponized nanites.<br>\
+		<br>\
+		This is an example of Nanotrasen's Viper Classic model, based on earlier models of the weapon in appearance, but using \
+		up to date nanite breeding chambers that respond to user articulation. That is, the weapons can be charged with a vigorous \
+		shake. Though most users prefer to use the custom trick triggerguard to twirl them on their finger. Mostly for showmanship. <br>\
+		<br>\
+		Due to various movies and television programs, or perhaps spacer legends of fancy, the weapons are often associated with the \
+		'Space Rangers' that roam the periphery and Australicus regions of space. Polarizing tales of rugged gun fighters roaming \
+		from outpost to outpost, leaving justice, death or merely a large quantity of buzzing nanite clouds in their wake. \
+		Robber barons, frontier lawbringers. Even the occasional hard-boiled detective. These weapons are sometimes associated \
+		with cultural imagery around rugged individualism, tenacity and nonconformity, as well as a bygone age of noble warriors and \
+		ruthless villains. Using these weapons today is largely seen as a way to evoke this imagery, even if it comes across \
+		as mildly tacky. <br>\
+		<br>\
+		It isn't fully understood who started the practice of 'pairing' the pistols, though the custom has remained as long as \
+		living memory. Every thermal pistol has a mate, and it is considered ill fortune to separate them purposefully." \
+	)

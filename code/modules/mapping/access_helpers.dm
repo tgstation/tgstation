@@ -185,6 +185,11 @@
 	access_list += list(ACCESS_MEDICAL, ACCESS_MAINT_TUNNELS)
 	return access_list
 
+/obj/effect/mapping_helpers/airlock/access/any/medical/paramedic/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_PARAMEDIC
+	return access_list
+
 // -------------------- Science access helpers
 /obj/effect/mapping_helpers/airlock/access/any/science
 	icon_state = "access_helper_sci"
@@ -510,7 +515,17 @@
 
 /obj/effect/mapping_helpers/airlock/access/any/admin/bar/get_access()
 	var/list/access_list = ..()
-	access_list += list(ACCESS_CENT_CAPTAIN)
+	access_list += list(ACCESS_CENT_BAR)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/admin/officer/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_CENT_OFFICER)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/admin/specops/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_CENT_SPECOPS)
 	return access_list
 
 // -------------------- Req All (Requires ALL of the given accesses to open)
@@ -659,6 +674,11 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/psychology/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_PSYCHOLOGY
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/medical/paramedic/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_PARAMEDIC
 	return access_list
 
 // -------------------- Science access helpers
@@ -842,6 +862,11 @@
 	access_list += ACCESS_VAULT
 	return access_list
 
+/obj/effect/mapping_helpers/airlock/access/all/supply/bit_den/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_BIT_DEN
+	return access_list
+
 // -------------------- Syndicate access helpers
 /obj/effect/mapping_helpers/airlock/access/all/syndicate
 	icon_state = "access_helper_syn"
@@ -971,4 +996,14 @@
 /obj/effect/mapping_helpers/airlock/access/all/admin/bar/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_CENT_BAR
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/admin/officer/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_CENT_OFFICER
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/admin/specops/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_CENT_SPECOPS
 	return access_list

@@ -61,10 +61,11 @@
 		to_chat(user, span_notice("You add [attached_signaler] to [src]."))
 
 		qdel(attached_signaler)
-		var/obj/item/bot_assembly/secbot/secbot_frame = new(loc)
-		user.put_in_hands(secbot_frame)
-
+		var/obj/item/bot_assembly/secbot/secbot_frame = new(drop_location())
+		var/held_index = user.is_holding(src)
 		qdel(src)
+		if (held_index)
+			user.put_in_hand(secbot_frame, held_index)
 		return TRUE
 
 	return ..()
@@ -646,10 +647,6 @@
 	fire = 10
 	acid = 50
 	wound = 20
-
-/obj/item/clothing/head/helmet/military/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
 
 /obj/item/clothing/head/helmet/knight/warlord
 	name = "golden barbute helmet"

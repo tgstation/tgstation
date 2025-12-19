@@ -26,7 +26,7 @@
 	rate_up_lim = 12.5
 	purity_min = 0.5 //100u will natrually just dip under this w/ no buffer
 	reaction_flags = REACTION_HEAT_ARBITARY //Heating up is arbitary because of submechanics of this reaction.
-	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DRUG | REACTION_TAG_DANGEROUS
+	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DRUG | REACTION_TAG_DANGEROUS | REACTION_TAG_ORGAN
 
 //The less pure it is, the faster it heats up. tg please don't hate me for making your meth even more dangerous
 /datum/chemical_reaction/methamphetamine/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
@@ -77,8 +77,12 @@
 	e.start(holder.my_atom)
 	holder.clear_reagents()
 
+///Amount of meth required to make a crystal
+#define METH_REQUIRED (10)
+
 /datum/chemical_reaction/meth_crystal //Since the meth is a cooled pharmaceutical solvent, this precipitates it into a solid.
-	required_reagents = list(/datum/reagent/drug/methamphetamine = 10, /datum/reagent/toxin/acid = 2)
+	results = list(/datum/reagent/consumable/ethanol = 1) //we don't care what this reagent is. We only need to record its purity
+	required_reagents = list(/datum/reagent/drug/methamphetamine = METH_REQUIRED, /datum/reagent/toxin/acid = 2)
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
@@ -86,36 +90,24 @@
 /datum/chemical_reaction/meth_crystal/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 
-	// Calculate purity ignoring sulfuric acid
-	var/total_nonacid = 0
-	var/meth_amt_in_mix = 0
-	for(var/datum/reagent/R in holder.reagent_list)
-		if(istype(R, /datum/reagent/toxin/acid))
-			continue // acid doesn't count against purity
-		total_nonacid += R.volume
-		if(istype(R, /datum/reagent/drug/methamphetamine))
-			meth_amt_in_mix += R.volume
-
-	var/purity = (total_nonacid > 0) ? (meth_amt_in_mix / total_nonacid) : 0.5 //All this tints the crystal above blue purity.
-
+	var/datum/reagent/consumable/ethanol/dummy_reagent = holder.has_reagent(/datum/reagent/consumable/ethanol)
 	for(var/i in 1 to round(created_volume, CHEMICAL_VOLUME_ROUNDING))
 		var/obj/item/food/drug/meth_crystal/new_crystal = new(location)
 		new_crystal.pixel_x = rand(-6, 6)
 		new_crystal.pixel_y = rand(-6, 6)
+		new_crystal.color = gradient("#FAFAFA", "#78C8FA", dummy_reagent.creation_purity)
 
-		var/effective_purity = 0
-		if(purity > 0.9)
-			effective_purity = (purity - 0.9) / 0.1
+		var/datum/reagents/crystal_reagents = new_crystal.reagents
+		crystal_reagents.clear_reagents()
+		crystal_reagents.add_reagent(/datum/reagent/drug/methamphetamine, METH_REQUIRED)
+		var/imp_amt = METH_REQUIRED * (1 - dummy_reagent.creation_purity) * 0.25
+		if(imp_amt > 0)
+			crystal_reagents.add_reagent(/datum/reagent/consumable/failed_reaction, imp_amt)
 
-		new_crystal.color = BlendRGB("#FAFAFA", "#78C8FA", effective_purity)
+	dummy_reagent.volume = 0
+	holder.update_total()
 
-		if(new_crystal.reagents)
-			new_crystal.reagents.clear_reagents()
-			var/meth_amt = 10
-			new_crystal.reagents.add_reagent(/datum/reagent/drug/methamphetamine, meth_amt)
-			var/imp_amt = round(meth_amt * (1 - purity) * 0.25, 0.1)
-			if(imp_amt > 0)
-				new_crystal.reagents.add_reagent(/datum/reagent/consumable/failed_reaction, imp_amt)
+#undef METH_REQUIRED
 
 /datum/chemical_reaction/bath_salts
 	results = list(/datum/reagent/drug/bath_salts = 7)
@@ -168,7 +160,7 @@
 	required_reagents = list(/datum/reagent/kronkus_extract = 15, /datum/reagent/fuel = 5, /datum/reagent/ammonia = 3)
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/moon_rock/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -184,7 +176,7 @@
 	required_reagents = list(/datum/reagent/silver = 10, /datum/reagent/toxin/cyanide = 10, /datum/reagent/lye = 5)
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/blastoff_ampoule/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -197,7 +189,7 @@
 	required_reagents = list(/datum/reagent/lead = 5, /datum/reagent/consumable/nothing = 5, /datum/reagent/drug/maint/tar = 10)
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/saturnx_glob/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)

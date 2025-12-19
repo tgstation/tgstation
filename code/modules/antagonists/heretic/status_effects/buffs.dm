@@ -100,8 +100,8 @@
 		return
 	var/mob/living/carbon/carbie = owner
 
-	carbie.adjustBruteLoss(-0.5 * seconds_between_ticks, updating_health = FALSE)
-	carbie.adjustFireLoss(-0.5 * seconds_between_ticks, updating_health = FALSE)
+	carbie.adjust_brute_loss(-0.5 * seconds_between_ticks, updating_health = FALSE)
+	carbie.adjust_fire_loss(-0.5 * seconds_between_ticks, updating_health = FALSE)
 	for(var/BP in carbie.bodyparts)
 		var/obj/item/bodypart/part = BP
 		for(var/W in part.wounds)
@@ -117,10 +117,10 @@
 					heal_amt = 6
 			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound.type]
 			if (pregen_data.wounding_types_valid(WOUND_BURN))
-				carbie.adjustFireLoss(-heal_amt)
+				carbie.adjust_fire_loss(-heal_amt)
 			else
-				carbie.adjustBruteLoss(-heal_amt)
-				carbie.blood_volume += carbie.blood_volume >= BLOOD_VOLUME_NORMAL ? 0 : heal_amt*3
+				carbie.adjust_brute_loss(-heal_amt)
+				carbie.adjust_blood_volume(heal_amt * 3, maximum = BLOOD_VOLUME_NORMAL)
 
 
 /atom/movable/screen/alert/status_effect/crucible_soul
@@ -379,12 +379,12 @@
 
 /atom/movable/screen/alert/status_effect/heretic_lastresort
 	name = "Last Resort"
-	desc = "Your head spins, heart pumping as fast as it can, losing the fight with the ground. Run to safety!"
+	desc = "Your head spins, heart pumping as fast as it can!"
 	icon_state = "lastresort"
 
 /datum/status_effect/heretic_lastresort/on_apply()
 	ADD_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
-	to_chat(owner, span_userdanger("You won't give up that easily! Run to safety!"))
+	to_chat(owner, span_userdanger("You won't give up that easily!"))
 	return TRUE
 
 /datum/status_effect/heretic_lastresort/on_remove()

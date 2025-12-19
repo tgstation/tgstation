@@ -41,15 +41,18 @@
 	if (SEND_SIGNAL(target, COMSIG_LIVING_DROP_LOOT, spawn_loot, gibbed) & COMPONENT_NO_LOOT_DROP)
 		return
 
+	var/list/all_loot = list()
 	for(var/thing_to_spawn in spawn_loot)
 		for(var/i in 1 to (spawn_loot[thing_to_spawn] || 1))
-			create_loot(thing_to_spawn, loot_loc, target, gibbed, spread_px = spawn_loot.len * 3)
+			all_loot += create_loot(thing_to_spawn, loot_loc, target, gibbed, spread_px = spawn_loot.len * 3)
+
+	list_clear_nulls(all_loot) // in case of gibbed corpses
+	SEND_SIGNAL(target, COMSIG_LIVING_DROPPED_LOOT, all_loot, gibbed)
 
 /// Handles creating the loots
 /datum/element/death_drops/proc/create_loot(typepath, atom/loot_loc, mob/living/dead, gibbed, spread_px = 4)
 	if(ispath(typepath, /obj/effect/mob_spawn/corpse))
-		handle_corpse(typepath, loot_loc, dead, gibbed)
-		return
+		return handle_corpse(typepath, loot_loc, dead, gibbed)
 
 	var/drop = new typepath(loot_loc)
 	if(isitem(drop) && spread_px)
@@ -57,18 +60,20 @@
 		var/clamped_px = clamp(spread_px, 0, 16)
 		dropped_item.pixel_x = rand(-clamped_px, clamped_px)
 		dropped_item.pixel_y = rand(-clamped_px, clamped_px)
+	return drop
 
 /// Handles snowflake case of mob corpses
 /datum/element/death_drops/proc/handle_corpse(typepath, atom/loot_loc, mob/living/dead, gibbed)
 	var/obj/effect/mob_spawn/corpse/spawner = new typepath(loot_loc, TRUE)
 	var/mob/living/body = spawner.create()
 	// done before the gib check so the bodyparts will be damaged
-	body.setBruteLoss(dead.getBruteLoss())
-	body.setFireLoss(dead.getFireLoss())
+	body.set_brute_loss(dead.get_brute_loss())
+	body.set_fire_loss(dead.get_fire_loss())
 	// if gibbed, dispose of the body
 	if(gibbed)
 		body.gib(DROP_ALL_REMAINS)
-		return
+		return null
 	// otherwise continue with the rest of the damage types
-	body.setToxLoss(dead.getToxLoss())
-	body.setOxyLoss(dead.getOxyLoss())
+	body.set_tox_loss(dead.get_tox_loss())
+	body.set_oxy_loss(dead.get_oxy_loss())
+	return body

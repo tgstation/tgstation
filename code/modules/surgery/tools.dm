@@ -643,6 +643,9 @@
 	attack_verb_simple = list("pump", "siphon")
 	tool_behaviour = TOOL_BLOODFILTER
 	toolspeed = 1
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 	/// Assoc list of chem ids to names, used for deciding which chems to filter when used for surgery
 	var/list/whitelist = list()
 	var/surgical_tray_overlay = "filter"
@@ -744,6 +747,7 @@
 	desc = "A twisted blade for twisted purpose. Rip sinew and bone until your work is done."
 	icon_state = "cruelsaw"
 	inhand_icon_state = "cruelsaw"
+	icon_angle = 0
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	surgical_tray_overlay = "saw_cruel"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT

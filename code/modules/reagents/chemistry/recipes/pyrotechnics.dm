@@ -11,7 +11,7 @@
 	var/strengthdiv = 10
 	var/modifier = 0
 	reaction_flags = REACTION_INSTANT
-	reaction_tags = REACTION_TAG_EXPLOSIVE | REACTION_TAG_MODERATE | REACTION_TAG_DANGEROUS
+	reaction_tags = REACTION_TAG_EXPLOSIVE | REACTION_TAG_MODERATE | REACTION_TAG_DANGEROUS | REACTION_TAG_ACTIVE
 	required_temp = 0 //Prevent impromptu RPGs
 	// Only clear mob reagents in special cases
 	var/clear_mob_reagents = FALSE
@@ -189,7 +189,7 @@
 /datum/chemical_reaction/gunpowder
 	results = list(/datum/reagent/gunpowder = 3)
 	required_reagents = list(/datum/reagent/saltpetre = 1, /datum/reagent/medicine/c2/multiver = 1, /datum/reagent/sulfur = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_CHEMICAL
 
 /datum/chemical_reaction/reagent_explosion/gunpowder_explosion
 	required_reagents = list(/datum/reagent/gunpowder = 1)
@@ -208,20 +208,27 @@
 
 /datum/chemical_reaction/emp_pulse
 	required_reagents = list(/datum/reagent/uranium = 1, /datum/reagent/iron = 1, /datum/reagent/aluminium = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/emp_pulse/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	//pretending this reaction took two ingredients and not three for its effects
+	var/turf/turf = get_turf(holder.my_atom)
 	var/two_thirds = created_volume / 1.5
 	var/location = get_turf(holder.my_atom)
+	var/lastkey = holder.my_atom.fingerprintslast
 	// 100 created volume = 4 heavy range & 7 light range. A few tiles smaller than traitor EMP grandes.
 	// 200 created volume = 8 heavy range & 14 light range. 4 tiles larger than traitor EMP grenades.
-	empulse(location, round(two_thirds / 12), round(two_thirds / 7), 1)
+	empulse(location, round(two_thirds / 12), round(two_thirds / 7), 1, emp_source = src)
 	holder.clear_reagents()
+	if(lastkey)
+		var/mob/toucher = get_mob_by_key(lastkey)
+		toucher.log_message("triggered EMP reaction at [AREACOORD(turf)].", LOG_GAME, log_globally = FALSE)
+	..()
+
 
 /datum/chemical_reaction/beesplosion
 	required_reagents = list(/datum/reagent/consumable/honey = 1, /datum/reagent/medicine/strange_reagent = 1, /datum/reagent/uranium/radium = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/beesplosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = holder.my_atom.drop_location()
@@ -244,7 +251,7 @@
 /datum/chemical_reaction/stabilizing_agent
 	results = list(/datum/reagent/stabilizing_agent = 3)
 	required_reagents = list(/datum/reagent/iron = 1, /datum/reagent/oxygen = 1, /datum/reagent/hydrogen = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_CHEMICAL | REACTION_TAG_PLANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_CHEMICAL | REACTION_TAG_PLANT | REACTION_TAG_COMPONENT
 
 /datum/chemical_reaction/clf3
 	results = list(/datum/reagent/clf3 = 4)
@@ -293,7 +300,7 @@
 /datum/chemical_reaction/sorium_vortex
 	required_reagents = list(/datum/reagent/sorium = 1)
 	required_temp = 474
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/sorium_vortex/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
@@ -316,7 +323,7 @@
 /datum/chemical_reaction/ldm_vortex
 	required_reagents = list(/datum/reagent/liquid_dark_matter = 1)
 	required_temp = 474
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/ldm_vortex/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
@@ -349,7 +356,7 @@
 /datum/chemical_reaction/flash_powder_flash
 	required_reagents = list(/datum/reagent/flash_powder = 1)
 	required_temp = 374
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/flash_powder_flash/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -390,7 +397,7 @@
 	required_temp = 374
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/smoke_powder_smoke/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -414,19 +421,19 @@
 	holder.remove_reagent(/datum/reagent/sonic_powder, created_volume * 3)
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
-	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
-		C.soundbang_act(1, 100, rand(0, 5))
+	for(var/mob/living/living in get_hearers_in_view(created_volume/3, location))
+		living.soundbang_act(1, 10 SECONDS, rand(0, 5))
 
 /datum/chemical_reaction/sonic_powder_deafen
 	required_reagents = list(/datum/reagent/sonic_powder = 1)
 	required_temp = 374
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/sonic_powder_deafen/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
-	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
-		C.soundbang_act(1, 100, rand(0, 5))
+	for(var/mob/living/living in get_hearers_in_view(created_volume/10, location))
+		living.soundbang_act(1, 10 SECONDS, rand(0, 5))
 
 /datum/chemical_reaction/phlogiston
 	results = list(/datum/reagent/phlogiston = 3)

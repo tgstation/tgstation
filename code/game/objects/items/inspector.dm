@@ -22,6 +22,9 @@
 	interaction_flags_click = NEED_DEXTERITY
 	throw_range = 1
 	throw_speed = 1
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 	///How long it takes to print on time each mode, ordered NORMAL, FAST, HONK
 	var/list/time_list = list(5 SECONDS, 1 SECONDS, 0.1 SECONDS)
 	///Which print time mode we're on.
@@ -333,6 +336,7 @@
 	icon_state = "bananium_inspector"
 	w_class = WEIGHT_CLASS_SMALL
 	max_mode = BANANIUM_CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST
+	custom_materials = list(/datum/material/bananium = SHEET_MATERIAL_AMOUNT * 5)
 	///How many more times can we print?
 	var/paper_charges = 32
 	///Max value of paper_charges

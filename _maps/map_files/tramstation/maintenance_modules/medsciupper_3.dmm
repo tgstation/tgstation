@@ -271,7 +271,7 @@
 /obj/machinery/door/airlock/grunge{
 	name = "Medical Maintenance Access"
 	},
-/obj/effect/mapping_helpers/airlock/unres,
+/obj/effect/mapping_helpers/airlock/unres/delayed,
 /obj/effect/mapping_helpers/airlock/access/any/medical/morgue,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /obj/modular_map_connector,
@@ -468,6 +468,9 @@
 /obj/effect/spawner/random/contraband/narcotics,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
+"MY" = (
+/turf/closed/wall,
+/area/station/asteroid)
 "Ny" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -1466,7 +1469,7 @@ Pu
 gZ
 hQ
 JY
-wP
+MY
 wP
 LV
 wP

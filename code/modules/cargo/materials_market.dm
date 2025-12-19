@@ -17,16 +17,6 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
 	light_power = 3
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
-	/// What items can be converted into a stock block? Must be a stack subtype based on current implementation.
-	var/static/list/exportable_material_items = list(
-		/obj/item/stack/sheet/iron, //God why are we like this
-		/obj/item/stack/sheet/glass, //No really, God why are we like this
-		/obj/item/stack/sheet/mineral,
-		/obj/item/stack/tile/mineral,
-		/obj/item/stack/ore,
-		/obj/item/stack/sheet/bluespace_crystal,
-		/obj/item/stack/rods
-	)
 	/// Are we ordering sheets from our own card balance or the cargo budget?
 	var/ordering_private = TRUE
 
@@ -55,47 +45,41 @@
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/materials_market/attackby(obj/item/markable_object, mob/user, list/modifiers, list/attack_modifiers)
-	if(is_type_in_list(markable_object, exportable_material_items))
-		if(machine_stat & NOPOWER)
-			balloon_alert(user, "no power!")
-			return FALSE
-		var/material_to_export
-		var/obj/item/stack/exportable = markable_object
-		for(var/datum/material/mat as anything in SSstock_market.materials_prices)
-			if(exportable.has_material_type(mat))
-				material_to_export = mat
-				break //This is only for trading non-alloys, so we can break here
+/obj/machinery/materials_market/item_interaction(mob/living/user, obj/item/stack/exportable, list/modifiers)
+	. = NONE
+	if(!isstack(exportable))
+		return
 
+	if(!is_operational)
+		balloon_alert(user, "no power!")
+		return ITEM_INTERACT_FAILURE
 
-		var/datum/export_report/report = export_item_and_contents(exportable, apply_elastic = FALSE, dry_run = TRUE) // We'll apply elastic price reduction when fully sold.
-		var/price = 0
-		var/amount = 0
-		for(var/exported_datum in report.total_amount)
-			price += report.total_value[exported_datum]
-			amount += report.total_amount[exported_datum]
+	var/list/datum/material/materials = exportable.custom_materials
+	if(materials.len != 1)
+		balloon_alert(user, "alloy stacks not allowed")
+		return ITEM_INTERACT_FAILURE
 
-		if(amount <= 1)
-			balloon_alert(user, "stack too small!")
-			return FALSE
+	var/price = SSstock_market.materials_prices[materials[1].type]
+	if(!price)
+		balloon_alert(user, "materials in stack are worthless")
+		return ITEM_INTERACT_FAILURE
 
-		if(price <= 0)
-			balloon_alert(user, "not valuable enough to sell!")
-			return FALSE
+	if(!user.transferItemToLoc(exportable, src))
+		to_chat(user, span_warning("[exportable] is stuck in hand!"))
+		return ITEM_INTERACT_FAILURE
 
-		qdel(markable_object)
-		var/obj/item/stock_block/new_block = new /obj/item/stock_block(drop_location())
-		new_block.export_value = price
-		new_block.export_mat = material_to_export
-		new_block.quantity = amount / SHEET_MATERIAL_AMOUNT
-		to_chat(user, span_notice("You have created a stock block worth [new_block.export_value] cr! Sell it before it becomes liquid!"))
-		playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, FALSE)
-		return TRUE
-	return ..()
+	var/obj/item/stock_block/new_block = new /obj/item/stock_block(drop_location())
+	new_block.export_value = price
+	new_block.set_custom_materials(materials)
+	to_chat(user, span_notice("You have created a stock block worth [new_block.export_value * exportable.amount] [MONEY_SYMBOL]! Sell it before it becomes liquid!"))
+	playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, FALSE)
+	qdel(exportable)
+	use_energy(active_power_usage)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/materials_market/power_change()
 	. = ..()
-	if(machine_stat & NOPOWER)
+	if(!is_operational)
 		set_light(0, 0)
 	else
 		set_light(initial(light_range), initial(light_power))
@@ -192,7 +176,7 @@
 		//Pulling elastic modifier into data.
 		for(var/datum/export/material/market/export_est in GLOB.exports_list)
 			if(export_est.material_id == traded_mat)
-				elastic_mult = (export_est.cost / export_est.init_cost) * 100
+				elastic_mult = export_est.k_elasticity * 100
 
 		material_data += list(list(
 			"name" = initial(traded_mat.name),
@@ -288,7 +272,6 @@
 			var/cost = SSstock_market.materials_prices[material_bought] * quantity
 
 			var/list/things_to_order = list()
-			things_to_order += (sheet_to_buy)
 			things_to_order[sheet_to_buy] = quantity
 
 			// We want to count how many stacks of all sheets we're ordering to make sure they don't exceed the limit of 10
@@ -299,14 +282,14 @@
 				var/prior_sheets = current_order.pack.contains[sheet_to_buy]
 				if(prior_sheets + quantity > SSstock_market.materials_quantity[material_bought] )
 					say("There aren't enough sheets on the market! Please wait for more sheets to be traded before adding more.")
-					playsound(usr, 'sound/machines/synth/synth_no.ogg', 35, FALSE)
+					playsound(living_user, 'sound/machines/synth/synth_no.ogg', 35, FALSE)
 					return
 
 				// Check if the order exceeded the purchase limit
 				var/prior_stacks = ROUND_UP(prior_sheets / MAX_STACK_SIZE)
 				if(prior_stacks >= MAX_STACK_LIMIT)
 					say("There are already 10 stacks of sheets on order! Please wait for them to arrive before ordering more.")
-					playsound(usr, 'sound/machines/synth/synth_no.ogg', 35, FALSE)
+					playsound(living_user, 'sound/machines/synth/synth_no.ogg', 35, FALSE)
 					return
 
 				// Prevents you from ordering more than the available budget
@@ -334,7 +317,7 @@
 				orderer_rank = GALATIC_MATERIAL_ORDER,
 				orderer_ckey = living_user.ckey,
 				paying_account = is_ordering_private ? account_payable : null,
-				cost_type = "cr",
+				cost_type = MONEY_SYMBOL,
 				can_be_cancelled = FALSE
 			)
 			//first time order compute the correct cost and compare
@@ -367,10 +350,6 @@
 	icon_state = "stock_block"
 	/// How many credits was this worth when created?
 	var/export_value = 0
-	/// What is the name of the material this was made from?
-	var/datum/material/export_mat
-	/// Quantity of export material
-	var/quantity = 0
 	/// Is this stock block currently updating its value with the market (aka fluid)?
 	var/fluid = FALSE
 
@@ -381,7 +360,11 @@
 
 /obj/item/stock_block/examine(mob/user)
 	. = ..()
-	. += span_notice("\The [src] is worth [export_value] cr, from selling [quantity] sheets of [initial(export_mat?.name)].")
+
+	var/datum/material/export_mat = custom_materials[1]
+	var/quantity = custom_materials[export_mat] / SHEET_MATERIAL_AMOUNT
+	. += span_notice("\The [src] is worth [quantity * export_value] [MONEY_SYMBOL], from selling [quantity] sheets of [export_mat.name].")
+
 	if(fluid)
 		. += span_warning("\The [src] is currently liquid! Its value is based on the market price.")
 	else
@@ -393,9 +376,7 @@
 	update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/stock_block/proc/update_value()
-	if(!SSstock_market.materials_prices[export_mat])
-		return
-	export_value = quantity * SSstock_market.materials_prices[export_mat]
+	export_value = SSstock_market.materials_prices[custom_materials[1]]
 	icon_state = "stock_block_liquid"
 	update_appearance(UPDATE_ICON_STATE)
 	visible_message(span_warning("\The [src] becomes liquid!"))

@@ -327,6 +327,7 @@
 		/obj/item/stack/rods/fifty = null,
 		/obj/item/stack/sheet/mineral/plastitanium = 50,
 		/obj/item/stack/sheet/mineral/abductor = 50,
+		/obj/item/stack/sheet/mineral/sandbags/fifty = null,
 		/obj/item/stack/sheet/cardboard/fifty = null,
 	)
 	for(var/obj/item/stack/stack_type as anything in items_inside)
@@ -357,6 +358,9 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*1.5)
 	custom_price = PAYCHECK_CREW * 0.6
 	storage_type = /datum/storage/bag/tray
+	sound_vary = TRUE
+	pickup_sound = SFX_TRAY_PICKUP
+	drop_sound = SFX_TRAY_DROP
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -510,6 +514,7 @@
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE|ITEM_SLOT_NECK
 	resistance_flags = FLAMMABLE
 	storage_type = /datum/storage/bag/rebar_quiver
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 6.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
 
 /obj/item/storage/bag/rebar_quiver/syndicate
 	icon_state = "syndie_quiver_0"
@@ -563,7 +568,7 @@
 		return
 
 	var/obj/item/ammo_casing/rebar/ammo_to_load = contents[1]
-	held_crossbow.attackby(ammo_to_load, user)
+	held_crossbow.item_interaction(user, ammo_to_load)
 
 /obj/item/storage/bag/quiver
 	name = "quiver"
@@ -579,6 +584,7 @@
 
 /obj/item/storage/bag/quiver/lesser
 	storage_type = /datum/storage/bag/quiver/less
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/storage/bag/quiver/full/PopulateContents()
 	. = ..()

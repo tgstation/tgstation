@@ -165,17 +165,17 @@
 	switch(failure_time)
 		//After 60 seconds we begin to feel the effects
 		if(1 * LIVER_FAILURE_STAGE_SECONDS to 2 * LIVER_FAILURE_STAGE_SECONDS - 1)
-			owner.adjustToxLoss(0.2 * seconds_per_tick,forced = TRUE)
+			owner.adjust_tox_loss(0.2 * seconds_per_tick,forced = TRUE)
 			owner.adjust_disgust(0.1 * seconds_per_tick)
 
 		if(2 * LIVER_FAILURE_STAGE_SECONDS to 3 * LIVER_FAILURE_STAGE_SECONDS - 1)
-			owner.adjustToxLoss(0.4 * seconds_per_tick,forced = TRUE)
+			owner.adjust_tox_loss(0.4 * seconds_per_tick,forced = TRUE)
 			owner.adjust_drowsiness(0.5 SECONDS * seconds_per_tick)
 			owner.adjust_disgust(0.3 * seconds_per_tick)
 
 		if(3 * LIVER_FAILURE_STAGE_SECONDS to 4 * LIVER_FAILURE_STAGE_SECONDS - 1)
-			owner.adjustToxLoss(0.6 * seconds_per_tick,forced = TRUE)
-			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.2 * seconds_per_tick)
+			owner.adjust_tox_loss(0.6 * seconds_per_tick,forced = TRUE)
+			owner.adjust_organ_loss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.2 * seconds_per_tick)
 			owner.adjust_drowsiness(1 SECONDS * seconds_per_tick)
 			owner.adjust_disgust(0.6 * seconds_per_tick)
 
@@ -183,8 +183,8 @@
 				owner.emote("drool")
 
 		if(4 * LIVER_FAILURE_STAGE_SECONDS to INFINITY)
-			owner.adjustToxLoss(0.8 * seconds_per_tick,forced = TRUE)
-			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.5 * seconds_per_tick)
+			owner.adjust_tox_loss(0.8 * seconds_per_tick,forced = TRUE)
+			owner.adjust_organ_loss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.5 * seconds_per_tick)
 			owner.adjust_drowsiness(1.6 SECONDS * seconds_per_tick)
 			owner.adjust_disgust(1.2 * seconds_per_tick)
 
@@ -247,7 +247,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
-		owner.adjustToxLoss(10)
+		owner.adjust_tox_loss(10)
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
 		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
@@ -302,7 +302,7 @@
 	if(!(organ_owner.mob_biotypes & MOB_PLANT))
 		return
 	if(chem.type == /datum/reagent/toxin/plantbgone)
-		organ_owner.adjustToxLoss(3 * REM * seconds_per_tick)
+		organ_owner.adjust_tox_loss(3 * REM * seconds_per_tick)
 
 /obj/item/organ/liver/snail
 	name = "snail liver"
@@ -328,7 +328,7 @@
 		return
 	if(istype(chem, /datum/reagent/consumable/salt))
 		playsound(organ_owner, SFX_SEAR, 30, TRUE)
-		organ_owner.adjustFireLoss(2 * REM * seconds_per_tick)
+		organ_owner.adjust_fire_loss(2 * REM * seconds_per_tick)
 		organ_owner.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return COMSIG_MOB_STOP_REAGENT_TICK
 
@@ -357,8 +357,7 @@
 /obj/item/organ/liver/bloody/on_life(seconds_per_tick, times_fired)
 	. = ..()
 
-	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-		owner.blood_volume += 4 * seconds_per_tick
+	owner.adjust_blood_volume(4 * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
 
 /// Convert all non-alcoholic drinks into alcohol
 /obj/item/organ/liver/distillery

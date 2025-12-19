@@ -73,21 +73,6 @@ SUBSYSTEM_DEF(ticker)
 	var/reboot_timer = null
 
 /datum/controller/subsystem/ticker/Initialize()
-	var/list/byond_sound_formats = list(
-		"mid" = TRUE,
-		"midi" = TRUE,
-		"mod" = TRUE,
-		"it" = TRUE,
-		"s3m" = TRUE,
-		"xm" = TRUE,
-		"oxm" = TRUE,
-		"wav" = TRUE,
-		"ogg" = TRUE,
-		"raw" = TRUE,
-		"wma" = TRUE,
-		"aiff" = TRUE,
-	)
-
 	var/list/provisional_title_music = flist("[global.config.directory]/title_music/sounds/")
 	var/list/music = list()
 	var/use_rare_music = prob(1)
@@ -115,11 +100,8 @@ SUBSYSTEM_DEF(ticker)
 		music -= old_login_music
 
 	for(var/S in music)
-		var/list/L = splittext(S,".")
-		if(L.len >= 2)
-			var/ext = LOWER_TEXT(L[L.len]) //pick the real extension, no 'honk.ogg.exe' nonsense here
-			if(byond_sound_formats[ext])
-				continue
+		if(IS_SOUND_FILE(S))
+			continue
 		music -= S
 
 	if(!length(music))
@@ -234,9 +216,19 @@ SUBSYSTEM_DEF(ticker)
 		return TRUE
 	return FALSE
 
+/// Gets a list of players with their readied state so we can post it as a log
+/datum/controller/subsystem/ticker/proc/get_player_ready_states()
+	var/list/player_states = list()
+	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
+		player_states[player.ckey] = player.ready
+	return player_states
+
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, span_boldannounce("Starting game..."))
 	var/init_start = world.timeofday
+
+	var/list/players_and_readiness = get_player_ready_states()
+	log_game("Players and Readiness: [json_encode(players_and_readiness)]", players_and_readiness)
 
 	CHECK_TICK
 	//Configure mode and assign player to antagonists
@@ -247,7 +239,7 @@ SUBSYSTEM_DEF(ticker)
 	can_continue = can_continue && SSjob.divide_occupations() //Distribute jobs
 	CHECK_TICK
 
-	if(!GLOB.Debug2)
+	if(!GLOB.debugging_enabled)
 		if(!can_continue)
 			log_game("Game failed pre_setup")
 			to_chat(world, "<B>Error setting up game.</B> Reverting to pre-game lobby.")

@@ -46,6 +46,31 @@
 		COMSIG_CARBON_GAIN_ORGAN,
 		COMSIG_CARBON_LOSE_ORGAN,
 	))
+	if(isnull(old_part))
+		quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_BODYPART)
+		quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_PEOPLE)
+		return
+
+	if(QDELETED(quirk_holder)) // We don't ever want to be adding organs to qdeleting mobs
+		QDEL_NULL(old_part)
+		return
+
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	if(isbodypart(old_part))
+		var/obj/item/bodypart/old_bodypart = old_part
+		human_holder.del_and_replace_bodypart(old_bodypart, special = TRUE)
+		old_bodypart = null
+	else if(isorgan(old_part))
+		var/obj/item/organ/old_organ = old_part
+		old_part = human_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+		old_organ.Insert(quirk_holder, special = TRUE)
+		old_part.moveToNullspace()
+		STOP_PROCESSING(SSobj, old_part)
+		old_organ = null
+		old_part = null
+
+	quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_BODYPART)
+	quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_PEOPLE)
 
 /datum/quirk/transhumanist/proc/get_bodypart_score(mob/living/carbon/target, limbs_only = FALSE)
 	var/organic_bodytypes = 0
@@ -66,7 +91,7 @@
 			else if(organ.organ_flags & ORGAN_ORGANIC)
 				organic_bodytypes += 0.02
 
-	return list(
+	return alist(
 		BODYPART_SCORE_ORGANIC = organic_bodytypes,
 		BODYPART_SCORE_SILICON = silicon_bodytypes,
 		BODYPART_SCORE_OTHER_BODYTYPES = other_bodytypes,
@@ -76,7 +101,7 @@
 
 /datum/quirk/transhumanist/proc/calculate_bodypart_score()
 	SIGNAL_HANDLER
-	var/list/score = get_bodypart_score(quirk_holder)
+	var/alist/score = get_bodypart_score(quirk_holder)
 	var/organic_bodytypes = score[BODYPART_SCORE_ORGANIC]
 	var/silicon_bodytypes = score[BODYPART_SCORE_SILICON]
 	var/other_bodytypes = score[BODYPART_SCORE_OTHER_BODYTYPES]
@@ -142,29 +167,6 @@
 	else if (isorgan(old_part))
 		to_chat(quirk_holder, span_bolddanger("Your [slot_string] brings you one step closer to silicon perfection, but you feel you're not quite there yet."))
 
-/datum/quirk/transhumanist/remove()
-	if(isnull(old_part))
-		quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_BODYPART)
-		quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_PEOPLE)
-		return
-
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	if(isbodypart(old_part))
-		var/obj/item/bodypart/old_bodypart = old_part
-		human_holder.del_and_replace_bodypart(old_bodypart, special = TRUE)
-		old_bodypart = null
-	else if(isorgan(old_part))
-		var/obj/item/organ/old_organ = old_part
-		old_part = human_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
-		old_organ.Insert(quirk_holder, special = TRUE)
-		old_part.moveToNullspace()
-		STOP_PROCESSING(SSobj, old_part)
-		old_organ = null
-		old_part = null
-
-	quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_BODYPART)
-	quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_PEOPLE)
-
 /datum/quirk/transhumanist/process(seconds_per_tick)
 	var/organics_nearby = 0
 	var/silicons_nearby = 0
@@ -177,7 +179,7 @@
 			continue
 
 		if(iscarbon(target))
-			var/list/score = get_bodypart_score(target, limbs_only = TRUE)
+			var/alist/score = get_bodypart_score(target, limbs_only = TRUE)
 			// For an average human, they'll need 2 augmented limbs to not get counted as an organic nor a silicon.
 			// If some monstrosity has 20-30 organic limbs, they'll likely need more.
 			if(score[BODYPART_SCORE_OVERALL] < 1)

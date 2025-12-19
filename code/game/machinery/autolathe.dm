@@ -302,6 +302,13 @@
 			target_location = get_turf(src)
 	else
 		target_location = get_turf(src)
+
+	//give achievement for using unique material
+	if(design.materials[MAT_CATEGORY_ITEM_MATERIAL])
+		for(var/datum/material/material in materials_needed)
+			if(!istype(material, /datum/material/glass) && !istype(material, /datum/material/iron))
+				ui.user.client.give_award(/datum/award/achievement/misc/getting_an_upgrade, ui.user)
+				break
 	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, build_count, build_time_per_item, material_cost_coefficient, charge_per_item, materials_needed, target_location), build_time_per_item)
 
 	return TRUE

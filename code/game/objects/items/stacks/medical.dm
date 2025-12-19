@@ -328,7 +328,7 @@
 				break // one at a time
 		affecting.adjustBleedStacks(-1 * stop_bleeding, 0)
 	if(flesh_regeneration || sanitization)
-		for(var/datum/wound/burn/flesh/wound as anything in affecting.wounds)
+		for(var/datum/wound/burn/flesh/wound in affecting.wounds)
 			if(wound.can_be_ointmented_or_meshed())
 				wound.flesh_healing += flesh_regeneration
 				wound.sanitization += sanitization
@@ -338,7 +338,7 @@
 
 /// Healing a simple mob, just an adjustbruteloss call
 /obj/item/stack/medical/proc/heal_simplemob(mob/living/patient, mob/living/user)
-	patient.adjustBruteLoss(-1 * (heal_brute * patient.maxHealth / 100))
+	patient.adjust_brute_loss(-1 * (heal_brute * patient.maxHealth / 100))
 	user.visible_message(
 		span_green("[user] applies [src] on [patient]."),
 		span_green("You apply [src] on [patient]."),
@@ -549,7 +549,7 @@
 	max_amount = 10
 	repeating = TRUE
 	heal_brute = 10
-	stop_bleeding = 0.6
+	stop_bleeding = 0.5
 	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
 	merge_type = /obj/item/stack/medical/suture
 	apply_verb = "suturing"
@@ -773,7 +773,7 @@
 /obj/item/stack/medical/poultice/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/living/user)
 	. = ..()
 	playsound(src, 'sound/misc/soggy.ogg', 30, TRUE)
-	healed_mob.adjustOxyLoss(amount_healed)
+	healed_mob.adjust_oxy_loss(amount_healed)
 
 /obj/item/stack/medical/bandage
 	name = "first aid bandage"

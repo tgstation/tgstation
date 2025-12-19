@@ -10,9 +10,12 @@
 	/// Don't change this unless you know what you're doing.
 	var/config_tag
 
-	/// What flag to check for jobbans? Optional, if unset, uses pref_flag
+	/// What flag to check for jobbans?
+	/// Optional, if unset, uses pref_flag for jobbans instead
 	var/jobban_flag
-	/// What flag to check for prefs? Required if the antag has an associated preference
+	/// What flag to check for prefs?
+	/// Required if the antag has an associated preference, and must be unique
+	/// (unless RULESET_VARIATION is set in ruleset_flags)
 	var/pref_flag
 	/// Flags for this ruleset
 	var/ruleset_flags = NONE
@@ -30,7 +33,7 @@
 	 * Or
 	 * - A single weight for all tiers.
 	 */
-	var/list/weight = 0
+	var/alist/weight = 0
 	/**
 	 * The min population for which this ruleset is available.
 	 *
@@ -40,7 +43,7 @@
 	 * Or
 	 * - A single min population for all tiers.
 	 */
-	var/list/min_pop = 0
+	var/alist/min_pop = 0
 	/// List of roles that are blacklisted from this ruleset
 	/// For roundstart rulesets, it will prevent players from being selected for this ruleset if they have one of these roles
 	/// For latejoin or midround rulesets, it will prevent players from being assigned to this ruleset if they have one of these roles
@@ -118,46 +121,14 @@
 		return FALSE
 	return ..()
 
-/// Used to create tier lists for weights and min_pop values
+/// Used to create tier alists for weights and min_pop values
 /datum/dynamic_ruleset/proc/load_tier_list(list/incoming_list)
 	PRIVATE_PROC(TRUE)
 
-	var/list/tier_list = new /list(4)
-	// loads a list of list("2" = 1, "3" = 3) into a list(null, 1, 3, null)
+	var/alist/tier_list = alist()
+	// loads a list of list("2" = 1, "3" = 3) into an alist(2 = 1, 3 = 3)
 	for(var/tier in incoming_list)
 		tier_list[text2num(tier)] = incoming_list[tier]
-
-	// turn list(null, 1, 3, null) into list(1, 1, 3, null)
-	for(var/i in 1 to length(tier_list))
-		var/val = tier_list[i]
-		if(isnum(val))
-			break
-		for(var/j in i to length(tier_list))
-			var/other_val = tier_list[j]
-			if(!isnum(other_val))
-				continue
-			tier_list[i] = other_val
-			break
-
-	// turn list(1, 1, 3, null) into list(1, 1, 3, 3)
-	for(var/i in length(tier_list) to 1 step -1)
-		var/val = tier_list[i]
-		if(isnum(val))
-			break
-		for(var/j in i to 1 step -1)
-			var/other_val = tier_list[j]
-			if(!isnum(other_val))
-				continue
-			tier_list[i] = other_val
-			break
-
-	// we can assert that tier[1] and tier[4] are not null, but we cannot say the same for tier[2] and tier[3]
-	// this can be happen due to the following setup: list(1, null, null, 4)
-	// (which is an invalid config, and should be fixed by the operator)
-	if(isnull(tier_list[2]))
-		tier_list[2] = tier_list[1]
-	if(isnull(tier_list[3]))
-		tier_list[3] = tier_list[4]
 
 	return tier_list
 
@@ -166,6 +137,25 @@
  */
 /datum/dynamic_ruleset/proc/can_be_selected()
 	return TRUE
+
+/// Gets the list value for the given tier, otherwise use next highest tier,
+/// or failing that, next lowest
+/datum/dynamic_ruleset/proc/get_tier_specific_value(alist/values, tier)
+	PRIVATE_PROC(TRUE)
+	if(isnum(values[tier]))
+		return values[tier]
+
+	// search higher tiers
+	for(var/i in tier to 4)
+		if(isnum(values[i]))
+			return values[i]
+
+	// no dice, lower tiers?
+	for(var/i in tier to 1 step -1)
+		if(isnum(values[i]))
+			return values[i]
+
+	return 0
 
 /**
  * Calculates the weight of this ruleset for the given tier.
@@ -180,11 +170,11 @@
 		return 0
 	if(!can_be_selected())
 		return 0
-	var/final_minpop = islist(min_pop) ? min_pop[tier] : min_pop
+	var/final_minpop = islist(min_pop) ? get_tier_specific_value(min_pop, tier) : min_pop
 	if(final_minpop > population_size)
 		return 0
 
-	var/final_weight = islist(weight) ? weight[tier] : weight
+	var/final_weight = islist(weight) ? get_tier_specific_value(weight, tier) : weight
 	for(var/datum/dynamic_ruleset/other_ruleset as anything in SSdynamic.executed_rulesets)
 		if(other_ruleset == src)
 			continue
