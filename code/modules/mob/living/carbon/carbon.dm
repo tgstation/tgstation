@@ -799,7 +799,7 @@
 	if ((get_brute_loss() >= MAX_REVIVE_BRUTE_DAMAGE) || (get_fire_loss() >= MAX_REVIVE_FIRE_DAMAGE))
 		return DEFIB_FAIL_TISSUE_DAMAGE
 
-	var/heart_status = can_defib_heart(get_organ_by_type(/obj/item/organ/heart))
+	var/heart_status = SEND_SIGNAL(src, COMSIG_CARBON_DEFIB_HEART_CHECK) || can_defib_heart(get_organ_by_type(/obj/item/organ/heart))
 	if (heart_status)
 		return heart_status
 

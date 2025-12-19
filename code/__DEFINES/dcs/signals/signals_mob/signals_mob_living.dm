@@ -373,5 +373,8 @@
 /// From /mob/living/proc/update_blood_status(), sent when the return value of /mob/living/proc/can_have_blood() changes : (had_blood, has_blood, old_blood_volume, new_blood_volume)
 #define COMSIG_LIVING_UPDATE_BLOOD_STATUS "living_update_blood_status"
 
+/// From /mob/living/proc/update_nutrition()
+#define COMSIG_LIVING_UPDATE_NUTRITION "living_update_nutrition"
+
 /// Sent to a mob when one of their bodypart's surgery state changes, OR sent from the basic_surgery_state holder when its surgery state changes (old_state, new_state, changed_states)
 #define COMSIG_LIVING_UPDATING_SURGERY_STATE "carbon_updating_surgery_state"
