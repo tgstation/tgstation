@@ -82,8 +82,8 @@
 		return
 	to_chat(user, span_danger("[src] explodes into a shower of gore and blood, drenching your arm. You can feel the blood seeping into your skin. You inmediately feel better, but soon, the feeling turns hollow as your veins itch."))
 	new /obj/effect/gibspawner/generic(get_turf(src))
-	var/heal_amt = user.adjustBruteLoss(-50)
-	user.adjustFireLoss( -(50 - abs(heal_amt)) ) // no double dipping
+	var/heal_amt = user.adjust_brute_loss(-50)
+	user.adjust_fire_loss( -(50 - abs(heal_amt)) ) // no double dipping
 
 	// I want it to poison the user but I also think it'd be neat if they got their juice as well. But that cancels most of the damage out. So I dunno.
 	user.reagents?.add_reagent(/datum/reagent/fuel/unholywater, rand(6, 10))
@@ -232,7 +232,7 @@
 	var/mob/living/living_target = target
 
 	if(!ishuman(target))
-		living_target.adjustFireLoss(30)
+		living_target.adjust_fire_loss(30)
 		return TRUE
 	var/mob/living/carbon/human/human_target = target
 	if(IS_HERETIC_OR_MONSTER(human_target))
@@ -240,7 +240,7 @@
 		return FALSE
 	if(human_target.has_status_effect(/datum/status_effect/moon_slept) || human_target.has_status_effect(/datum/status_effect/moon_converted))
 		human_target.balloon_alert(living_user, "causing damage!")
-		human_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25)
+		human_target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 25)
 		return FALSE
 	if(human_target.can_block_magic(MAGIC_RESISTANCE_MOON))
 		return FALSE

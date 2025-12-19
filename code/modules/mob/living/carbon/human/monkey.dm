@@ -48,32 +48,20 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 	var/memory_saved = FALSE
 
 /mob/living/carbon/human/species/monkey/punpun/Initialize(mapload)
-	// 1 Pun Pun should exist
-	REGISTER_REQUIRED_MAP_ITEM(1, 1)
+	. = ..()
+
+	REGISTER_REQUIRED_MAP_ITEM(1, 1) // pun pun is required on maps.
 	if(mapload && (locate(/datum/station_trait/job/pun_pun) in SSstation.station_traits))
 		new /obj/effect/landmark/start/pun_pun(loc) //Pun Pun is a crewmember, and may late-join.
 		return INITIALIZE_HINT_QDEL
+
 	Read_Memory()
-
-	var/name_to_use = name
-
-	if(ancestor_name)
-		name_to_use = ancestor_name
-		if(ancestor_chain > 1)
-			name_to_use += " \Roman[ancestor_chain]"
-	else if(prob(10))
-		name_to_use = pick(list("Professor Bobo", "Deempisi's Revenge", "Furious George", "King Louie", "Dr. Zaius", "Jimmy Rustles", "Dinner", "Lanky"))
-		if(name_to_use == "Furious George")
-			ai_controller = /datum/ai_controller/monkey/angry //hes always mad
-
-	. = ..()
-
 	if(!GLOB.the_one_and_only_punpun && mapload)
 		GLOB.the_one_and_only_punpun = src
 	else if(GLOB.the_one_and_only_punpun)
 		ADD_TRAIT(src, TRAIT_DONT_WRITE_MEMORY, INNATE_TRAIT) //faaaaaaake!
 
-	fully_replace_character_name(real_name, name_to_use)
+	give_special_name()
 
 	//These have to be after the parent new to ensure that the monkey
 	//bodyparts are actually created before we try to equip things to
@@ -141,3 +129,20 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 		file_data["relic_mask"] = wear_mask ? wear_mask.type : null
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
+
+
+/// Gives pun pun a special name based on various factors
+/mob/living/carbon/human/species/monkey/punpun/proc/give_special_name()
+	var/name_to_use = name
+
+	if(ancestor_name)
+		name_to_use = ancestor_name
+		if(ancestor_chain > 1)
+			name_to_use += " \Roman[ancestor_chain]"
+	else if(prob(10))
+		name_to_use = pick(list("Professor Bobo", "Deempisi's Revenge", "Furious George", "King Louie", "Dr. Zaius", "Jimmy Rustles", "Dinner", "Lanky"))
+		if(name_to_use == "Furious George")
+			qdel(ai_controller)
+			ai_controller = new /datum/ai_controller/monkey/angry(src) //hes always mad
+
+	fully_replace_character_name(real_name, name_to_use)

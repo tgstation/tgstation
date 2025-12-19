@@ -18,6 +18,7 @@
 	density = TRUE
 	layer = ABOVE_MOB_LAYER
 	interaction_flags_click = NEED_DEXTERITY | NEED_HANDS | FORBID_TELEKINESIS_REACH
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.5)
 	/// Keeps track of the total points scored
 	var/total_score = 0
 	/// The chance to score a ball into the hoop based on distance
@@ -109,7 +110,7 @@
 	score(ball, baller, 2)
 
 	if(istype(ball, /obj/item/toy/basketball))
-		baller.adjustStaminaLoss(STAMINA_COST_DUNKING)
+		baller.adjust_stamina_loss(STAMINA_COST_DUNKING)
 
 /obj/structure/hoop/attack_hand(mob/living/baller, list/modifiers)
 	. = ..()
@@ -127,7 +128,7 @@
 	loser.Paralyze(100)
 	visible_message(span_danger("[baller] dunks [loser] into \the [src]!"))
 	playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100, FALSE)
-	baller.adjustStaminaLoss(STAMINA_COST_DUNKING_MOB)
+	baller.adjust_stamina_loss(STAMINA_COST_DUNKING_MOB)
 	baller.stop_pulling()
 
 /obj/structure/hoop/click_ctrl(mob/user)

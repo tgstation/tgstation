@@ -17,6 +17,7 @@
 	icon_state = "filingcabinet"
 	density = TRUE
 	anchored = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/filingcabinet/chestdrawer
 	name = "chest drawer"

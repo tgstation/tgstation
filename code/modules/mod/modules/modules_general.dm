@@ -2,11 +2,11 @@
 
 ///Storage - Adds a storage component to the suit.
 /obj/item/mod/module/storage
-	name = "MOD storage module"
+	name = "MOD compact storage module"
 	desc = "What amounts to a series of integrated storage compartments and specialized pockets installed across \
-		the surface of the suit, useful for storing various bits, and or bobs."
+		the surface of the suit, useful for storing various bits, and or bobs. This version has been trimmed down to save space."
 	icon_state = "storage"
-	complexity = 3
+	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/plate_compression)
 	required_slots = list(ITEM_SLOT_BACK)
 	/// The storage type to create for the module
@@ -48,10 +48,11 @@
 	mod.wearer.temporarilyRemoveItemFromInventory(mod.wearer.s_store)
 
 /obj/item/mod/module/storage/large_capacity
-	name = "MOD expanded storage module"
+	name = "MOD storage module"
 	desc = "Reverse engineered by Nakamura Engineering from Donk Company designs, this system of hidden compartments \
 		is entirely within the suit, distributing items and weight evenly to ensure a comfortable experience for the user; \
 		whether smuggling, or simply hauling."
+	complexity = 3
 	icon_state = "storage_large"
 	storage_type = /datum/storage/mod_storage/expanded
 
@@ -60,6 +61,7 @@
 	desc = "A storage system using nanotechnology developed by Cybersun Industries, these compartments use \
 		esoteric technology to compress the physical matter of items put inside of them, \
 		essentially shrinking items for much easier and more portable storage."
+  complexity = 3
 	icon_state = "storage_syndi"
 	storage_type = /datum/storage/mod_storage/syndicate
 
@@ -77,6 +79,7 @@
 	name = "MOD bluespace storage module"
 	desc = "A storage system developed by Nanotrasen, these compartments employ \
 		miniaturized bluespace pockets for the ultimate in storage technology; regardless of the weight of objects put inside."
+	complexity = 3
 	icon_state = "storage_large"
 	storage_type = /datum/storage/mod_storage/bluespace
 
@@ -250,10 +253,10 @@
 	.["health"] = mod.wearer?.health || 0
 	.["health_max"] = mod.wearer?.getMaxHealth() || 0
 	if(display_detailed_vitals)
-		.["loss_brute"] = mod.wearer?.getBruteLoss() || 0
-		.["loss_fire"] = mod.wearer?.getFireLoss() || 0
-		.["loss_tox"] = mod.wearer?.getToxLoss() || 0
-		.["loss_oxy"] = mod.wearer?.getOxyLoss() || 0
+		.["loss_brute"] = mod.wearer?.get_brute_loss() || 0
+		.["loss_fire"] = mod.wearer?.get_fire_loss() || 0
+		.["loss_tox"] = mod.wearer?.get_tox_loss() || 0
+		.["loss_oxy"] = mod.wearer?.get_oxy_loss() || 0
 		.["body_temperature"] = mod.wearer?.bodytemperature || 0
 		.["nutrition"] = mod.wearer?.nutrition || 0
 	if(display_dna)
@@ -1026,25 +1029,3 @@
 	var/datum/effect_system/lightning_spread/sparks = new /datum/effect_system/lightning_spread
 	sparks.set_up(number = 5, cardinals_only = TRUE, location = mod.wearer.loc)
 	sparks.start()
-
-/obj/item/mod/module/hearing_protection
-	name = "MOD hearing protection module"
-	desc = "A module that protects the users ears from loud sounds"
-	complexity = 0
-	removable = FALSE
-	incompatible_modules = list(/obj/item/mod/module/hearing_protection)
-	required_slots = list(ITEM_SLOT_HEAD)
-
-/obj/item/mod/module/hearing_protection/on_part_activation()
-	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
-	if(istype(head_cover))
-		head_cover.AddComponent(/datum/component/wearertargeting/earprotection)
-		var/datum/component/wearertargeting/earprotection/protection = head_cover.GetComponent(/datum/component/wearertargeting/earprotection)
-		protection.on_equip(src, mod.wearer, ITEM_SLOT_HEAD)
-
-/obj/item/mod/module/hearing_protection/on_part_deactivation(deleting = FALSE)
-	if(deleting)
-		return
-	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
-	if(istype(head_cover))
-		qdel(head_cover.GetComponent(/datum/component/wearertargeting/earprotection))

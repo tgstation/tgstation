@@ -350,7 +350,7 @@
 		dame.physique = FEMALE
 		dame.update_body()
 	if(prob(30))
-		back = /obj/item/nullrod/vibro/talking
+		back = /obj/item/nullrod/claymore/talking
 	else
 		back = /obj/item/shield/buckler
 		belt = /obj/item/nullrod/claymore
@@ -388,8 +388,8 @@
 /datum/outfit/consumed_heremoth
 	name = "Legion-Consumed Tribal Mothman"
 	uniform = /obj/item/clothing/under/costume/loincloth
-	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
-	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
+	suit = /obj/item/clothing/suit/chaplainsuit/armor/heretic
+	head = /obj/item/clothing/head/helmet/chaplain/heretic
 
 /datum/outfit/consumed_heremoth/pre_equip(mob/living/carbon/human/moth, visuals_only = FALSE)
 	if(!visuals_only)

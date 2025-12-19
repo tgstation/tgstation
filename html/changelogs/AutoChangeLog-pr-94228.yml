@@ -1,0 +1,6 @@
+author: "Fghj240"
+delete-after: True
+changes:
+  - balance: "Expanded storage modules are now unlocked much earlier"
+  - balance: "Regular storage modules require 1 complexity instead of 3"
+  - spellcheck: "Regular storage modules are now called compact storage modules and the expanded ones are just called storage modules."

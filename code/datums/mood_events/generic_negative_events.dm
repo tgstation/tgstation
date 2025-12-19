@@ -583,6 +583,12 @@
 		mood_change *= -0.5
 		description = "More souls for the Geometer!"
 		return
+	if(IS_REVOLUTIONARY(owner))
+		var/datum/job/possible_head_job = dead_mob.mind?.assigned_role
+		if(possible_head_job.job_flags & JOB_HEAD_OF_STAFF)
+			mood_change *= -0.5
+			description = "[possible_head_job.title ? "The [LOWER_TEXT(possible_head_job.title)]" : "Another head of staff"] is dead! Long live the revolution!"
+			return
 
 	var/ispet = istype(dead_mob, /mob/living/basic/pet) || ismonkey(dead_mob)
 	if(HAS_PERSONALITY(owner, /datum/personality/callous) || (ispet && HAS_PERSONALITY(owner, /datum/personality/animal_disliker)))
@@ -617,14 +623,14 @@
 		mood_change *= 1.5
 	return ..()
 
-/datum/mood_event/see_death/be_replaced(datum/mood/home, datum/mood_event/new_event, ...)
+/datum/mood_event/see_death/be_replaced(datum/mood/home, datum/mood_event/new_event, mob/dead_mob, ...)
 	// Only be replaced if the incoming event's base mood is worse than our base mood
 	// (IE: replace normal death events with gib events, but not the other way around)
 	if(initial(new_event.mood_change) > initial(mood_change))
 		new_event.mood_change = max(new_event.mood_change, mood_change * 1.5)
 		return ..()
 	// Otherwise if it's equivalent or worse, refresh it instead
-	return be_refreshed(home)
+	return be_refreshed(home, dead_mob)
 
 /// Changes "I saw Joe x" to "I saw the engineer x"
 /datum/mood_event/see_death/proc/get_descriptor(mob/dead_mob)

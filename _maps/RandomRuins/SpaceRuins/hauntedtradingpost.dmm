@@ -79,7 +79,7 @@
 /obj/structure/grille,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bd" = (
 /obj/structure/table/wood,
 /obj/structure/cable/layer1,
@@ -1246,7 +1246,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "kx" = (
 /mob/living/basic/bot/dedbot{
 	bot_mode_flags = 29
@@ -1806,9 +1806,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "pG" = (
 /obj/structure/lattice/catwalk,
-/obj/effect/spawner/structure/electrified_grille{
-	spawn_list = list(/obj/structure/grille,/obj/structure/cable/layer1)
-	},
+/obj/effect/spawner/structure/electrified_grille/layer1,
 /turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "pN" = (
@@ -2878,7 +2876,7 @@
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "yU" = (
 /obj/item/rack_parts{
 	pixel_y = 8;
@@ -2990,6 +2988,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "donk_aicore_door_bolts"
 	},
+/obj/structure/sign/warning/directional/west,
 /turf/open/floor/circuit/red/off,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "Ab" = (
@@ -3035,9 +3034,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
 "At" = (
 /obj/structure/lattice/catwalk,
-/obj/effect/spawner/structure/electrified_grille{
-	spawn_list = list(/obj/structure/grille,/obj/structure/cable/layer1)
-	},
+/obj/effect/spawner/structure/electrified_grille/layer1,
 /turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
 "Au" = (
@@ -3131,7 +3128,7 @@
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Bj" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/medical/minor_healing,
@@ -3448,9 +3445,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "EC" = (
 /obj/structure/lattice/catwalk,
-/obj/effect/spawner/structure/electrified_grille{
-	spawn_list = list(/obj/structure/grille,/obj/structure/cable/layer1)
-	},
+/obj/effect/spawner/structure/electrified_grille/layer1,
 /turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "EK" = (
@@ -4078,6 +4073,12 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/maint)
+"Ju" = (
+/mob/living/basic/viscerator,
+/obj/effect/turf_decal/bot_red,
+/obj/structure/sign/warning/directional/east,
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "Jw" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/donk,
@@ -4583,7 +4584,7 @@
 "NS" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "NY" = (
 /obj/structure/cable/layer1,
 /obj/machinery/vending/coffee{
@@ -4858,7 +4859,6 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/maint)
 "QA" = (
-/obj/structure/sign/warning,
 /obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
@@ -5014,7 +5014,7 @@
 	width = 35
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "RI" = (
 /obj/structure/chair/sofa/left/brown{
 	dir = 1
@@ -5278,7 +5278,7 @@
 	name = "external vent"
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "TU" = (
 /obj/structure/cable/layer1,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -5537,9 +5537,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "Wf" = (
 /obj/structure/lattice/catwalk,
-/obj/effect/spawner/structure/electrified_grille{
-	spawn_list = list(/obj/structure/grille,/obj/structure/cable/layer1)
-	},
+/obj/effect/spawner/structure/electrified_grille/layer1,
 /turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
 "Wg" = (
@@ -5986,7 +5984,7 @@
 /obj/structure/lattice,
 /obj/structure/grille/broken,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ZI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -6802,7 +6800,7 @@ BE
 yb
 Im
 MR
-kl
+Ju
 Gk
 iv
 PX
