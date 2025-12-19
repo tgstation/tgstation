@@ -197,7 +197,7 @@
 /datum/species/golem/proc/defib_check(mob/living/carbon/human/source, mob/living/carbon/human/defib_user)
 	SIGNAL_HANDLER
 
-	// golems can't be defibrillated, they have no heard and aren't even alive in the traditional sense
+	// golems can't be defibrillated, they have no heart and aren't even alive in the traditional sense
 	// you gotta rebuild them with materials if they fall apart
 	return DEFIB_FAIL_GOLEM
 

@@ -81,14 +81,19 @@
 	return real_name
 
 /mob/living/carbon/human/get_face_name(if_no_face = "Unknown")
-	if(HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
-		return if_no_face //We're Unknown, no face information for you
-	if(obscured_slots & HIDEFACE)
-		return if_no_face
-	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
-	if(isnull(head) || !real_name || HAS_TRAIT(src, TRAIT_DISFIGURED) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
+	if(!real_name || is_face_obscured())
 		return if_no_face
 	return real_name
+
+/mob/living/carbon/human/proc/is_face_obscured()
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
+		return TRUE //We're Unknown, no face information for you
+	if(obscured_slots & HIDEFACE)
+		return TRUE
+	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
+	if(isnull(head) || HAS_TRAIT(src, TRAIT_DISFIGURED) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
+		return TRUE
+	return FALSE
 
 /**
  * Gets whatever name is in our ID or PDA

@@ -268,12 +268,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/heads
 	command = TRUE
+	icon_state = "com_headset"
+	worn_icon_state = "com_headset"
 
 /obj/item/radio/headset/heads/captain
 	name = "\proper the captain's headset"
 	desc = "The headset of the king."
-	icon_state = "com_headset"
-	worn_icon_state = "com_headset"
 	keyslot = /obj/item/encryptionkey/heads/captain
 
 /obj/item/radio/headset/heads/captain/alt
@@ -289,22 +289,16 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /obj/item/radio/headset/heads/rd
 	name = "\proper the research director's headset"
 	desc = "Headset of the fellow who keeps society marching towards technological singularity."
-	icon_state = "com_headset"
-	worn_icon_state = "com_headset"
 	keyslot = /obj/item/encryptionkey/heads/rd
 
 /obj/item/radio/headset/heads/hos
 	name = "\proper the head of security's headset"
 	desc = "The headset of the man in charge of keeping order and protecting the station."
-	icon_state = "com_headset"
-	worn_icon_state = "com_headset"
 	keyslot = /obj/item/encryptionkey/heads/hos
 
 /obj/item/radio/headset/heads/hos/advisor
 	name = "\proper the veteran security advisor headset"
 	desc = "The headset of the man who was in charge of keeping order and protecting the station..."
-	icon_state = "com_headset"
-	worn_icon_state = "com_headset"
 	keyslot = /obj/item/encryptionkey/heads/hos
 	command = FALSE
 
@@ -321,29 +315,21 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /obj/item/radio/headset/heads/ce
 	name = "\proper the chief engineer's headset"
 	desc = "The headset of the guy in charge of keeping the station powered and undamaged."
-	icon_state = "com_headset"
-	worn_icon_state = "com_headset"
 	keyslot = /obj/item/encryptionkey/heads/ce
 
 /obj/item/radio/headset/heads/cmo
 	name = "\proper the chief medical officer's headset"
 	desc = "The headset of the highly trained medical chief."
-	icon_state = "com_headset"
-	worn_icon_state = "com_headset"
 	keyslot = /obj/item/encryptionkey/heads/cmo
 
 /obj/item/radio/headset/heads/hop
 	name = "\proper the head of personnel's headset"
 	desc = "The headset of the guy who will one day be captain."
-	icon_state = "com_headset"
-	worn_icon_state = "com_headset"
 	keyslot = /obj/item/encryptionkey/heads/hop
 
 /obj/item/radio/headset/heads/qm
 	name = "\proper the quartermaster's headset"
 	desc = "The headset of the guy who runs the cargo department."
-	icon_state = "com_headset"
-	worn_icon_state = "com_headset"
 	keyslot = /obj/item/encryptionkey/heads/qm
 
 /obj/item/radio/headset/headset_cargo
@@ -469,25 +455,23 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	return TRUE
 
 /obj/item/radio/headset/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/encryptionkey))
-		if(keyslot && keyslot2)
-			to_chat(user, span_warning("The headset can't hold another key!"))
-			return
-
-		if(!keyslot)
-			if(!user.transferItemToLoc(W, src))
-				return
-			keyslot = W
-
-		else
-			if(!user.transferItemToLoc(W, src))
-				return
-			keyslot2 = W
-
-
-		recalculateChannels()
-	else
+	if(!istype(W, /obj/item/encryptionkey))
 		return ..()
+
+	if(keyslot && keyslot2)
+		to_chat(user, span_warning("The headset can't hold another key!"))
+		return
+
+	if(!keyslot)
+		if(!user.transferItemToLoc(W, src))
+			return
+		keyslot = W
+	else
+		if(!user.transferItemToLoc(W, src))
+			return
+		keyslot2 = W
+
+	recalculateChannels()
 
 /obj/item/radio/headset/recalculateChannels()
 	. = ..()

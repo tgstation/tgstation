@@ -22,3 +22,6 @@
 	//mob health doll! assumes whatever sprite the mob is
 	healthdoll = new /atom/movable/screen/healthdoll/living(null, src)
 	infodisplay += healthdoll
+
+	stamina = new /atom/movable/screen/stamina(null, src)
+	infodisplay += stamina

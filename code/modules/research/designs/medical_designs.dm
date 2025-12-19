@@ -1152,240 +1152,213 @@
 	id = "ci-gloweyes-moth"
 	build_path = /obj/item/organ/eyes/robotic/glow/moth
 
+/datum/design/medibot_upgrade
+	name = "Medibot Upgrade"
+	desc = "Automatically upgrades the effectiveness of all medibots linked to the research network."
+	id = "medibot_upgrade"
+	research_icon = 'icons/mob/silicon/aibots.dmi'
+	research_icon_state = "medbot_generic_idle"
+	/// Medibot healing starts at a 1x multiplier. For every tech researched, it goes up by this amount additively.
+	var/additive_multiplier = 1
+
+/datum/design/medibot_upgrade/tier_two
+	id = "medibot_upgrade_two"
+	research_icon_state = "medbot_adv_idle"
+
+/datum/design/medibot_upgrade/tier_three
+	id = "medibot_upgrade_three"
+	research_icon_state = "medbot_adv_idle"
+
+/datum/design/medibot_upgrade/tier_four
+	id = "medibot_upgrade_four"
+	research_icon_state = "medbot_bezerk_idle" // alien tech
+
 /////////////////////
 ///Surgery Designs///
 /////////////////////
 
 /datum/design/surgery
-	name = "Surgery Design"
-	desc = "what"
+	abstract_type = /datum/design/surgery
+	id = DESIGN_ID_IGNORE
+	name = null
+	desc = null
 	research_icon = 'icons/obj/medical/surgery_ui.dmi'
 	research_icon_state = "surgery_any"
-	var/surgery
+	/// Typepath of what operation this design unlocks
+	var/datum/surgery_operation/surgery
+
+/datum/design/surgery/New()
+	. = ..()
+	if(isnull(name))
+		name = surgery::rnd_name || capitalize(surgery::name)
+	if(isnull(desc))
+		desc = surgery::rnd_desc || surgery::desc
 
 /datum/design/surgery/lobotomy
-	name = "Lobotomy"
-	desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
 	id = "surgery_lobotomy"
-	surgery = /datum/surgery/advanced/lobotomy
+	surgery = /datum/surgery_operation/organ/lobotomy
 	research_icon_state = "surgery_head"
 
 /datum/design/surgery/lobotomy/mechanic
-	name = "Wetware OS Destructive Defragmentation"
-	desc = "A destructive robotic defragmentation method which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
 	id = "surgery_lobotomy_mechanic"
-	surgery = /datum/surgery/advanced/lobotomy/mechanic
+	surgery = /datum/surgery_operation/organ/lobotomy/mechanic
 
 /datum/design/surgery/pacify
-	name = "Pacification"
-	desc = "A surgical procedure which permanently inhibits the aggression center of the brain, making the patient unwilling to cause direct harm."
 	id = "surgery_pacify"
-	surgery = /datum/surgery/advanced/pacify
+	surgery = /datum/surgery_operation/organ/pacify
 	research_icon_state = "surgery_head"
 
 /datum/design/surgery/pacify/mechanic
-	name = "Aggression Suppression Programming"
-	desc = "Malware which permanently inhibits the aggression programming of the patient's neural network, making the patient unwilling to cause direct harm."
 	id = "surgery_pacify_mechanic"
-	surgery = /datum/surgery/advanced/pacify/mechanic
+	surgery = /datum/surgery_operation/organ/pacify/mechanic
 
 /datum/design/surgery/viral_bonding
-	name = "Viral Bonding"
-	desc = "A surgical procedure that forces a symbiotic relationship between a virus and its host. The patient must be dosed with spaceacillin, virus food, and formaldehyde."
 	id = "surgery_viral_bond"
-	surgery = /datum/surgery/advanced/viral_bonding
+	surgery = /datum/surgery_operation/basic/viral_bonding
 	research_icon_state = "surgery_chest"
 
-/datum/design/surgery/healing //PLEASE ACCOUNT FOR UNIQUE HEALING BRANCHES IN THE hptech HREF (currently 2 for Brute/Burn; Combo is bonus)
-	name = "Tend Wounds"
-	desc = "An upgraded version of the original surgery."
-	id = "surgery_healing_base" //holder because CI cries otherwise. Not used in techweb unlocks.
-	surgery = /datum/surgery/healing
+/datum/design/surgery/tend_wounds_upgrade
+	name = "Tend Wounds Upgrade"
+	desc = "Upgrade the efficiency of the individual tend wound operations."
+	id = "surgery_heal_upgrade"
+	surgery = /datum/surgery_operation/basic/tend_wounds/upgraded
 	research_icon_state = "surgery_chest"
 
-/datum/design/surgery/healing/brute_upgrade
-	name = "Tend Wounds (Brute) Upgrade"
-	surgery = /datum/surgery/healing/brute/upgraded
-	id = "surgery_heal_brute_upgrade"
+/datum/design/surgery/tend_wounds_upgrade/femto
+	name = "Tend Wounds Upgrade"
+	surgery = /datum/surgery_operation/basic/tend_wounds/upgraded/master
+	id = "surgery_heal_upgrade_femto"
 
-/datum/design/surgery/healing/brute_upgrade_2
-	name = "Tend Wounds (Brute) Upgrade"
-	surgery = /datum/surgery/healing/brute/upgraded/femto
-	id = "surgery_heal_brute_upgrade_femto"
-
-/datum/design/surgery/healing/burn_upgrade
-	name = "Tend Wounds (Burn) Upgrade"
-	surgery = /datum/surgery/healing/burn/upgraded
-	id = "surgery_heal_burn_upgrade"
-
-/datum/design/surgery/healing/burn_upgrade_2
-	name = "Tend Wounds (Burn) Upgrade"
-	surgery = /datum/surgery/healing/burn/upgraded/femto
-	id = "surgery_heal_burn_upgrade_femto"
-
-/datum/design/surgery/healing/combo
-	name = "Tend Wounds (Physical)"
-	desc = "A surgical procedure that repairs both bruises and burns. Repair efficiency is not as high as the individual surgeries but it is faster."
-	surgery = /datum/surgery/healing/combo
+/datum/design/surgery/tend_wounds_combo
+	name = "Tend Wounds Combo"
+	desc = "An alternative wound treatment operation that treats both bruises and burns at the same time, albeit less effectively than their individual counterparts."
+	surgery = /datum/surgery_operation/basic/tend_wounds/combo
 	id = "surgery_heal_combo"
+	research_icon_state = "surgery_chest"
 
-/datum/design/surgery/healing/combo_upgrade
-	name = "Tend Wounds (Physical) Upgrade"
-	surgery = /datum/surgery/healing/combo/upgraded
+/datum/design/surgery/tend_wounds_combo/upgrade
+	name = "Tend Wounds Combo Upgrade"
+	surgery = /datum/surgery_operation/basic/tend_wounds/combo/upgraded
 	id = "surgery_heal_combo_upgrade"
 
-/datum/design/surgery/healing/combo_upgrade_2
-	name = "Tend Wounds (Physical) Upgrade"
-	desc = "A surgical procedure that repairs both bruises and burns faster than their individual counterparts. It is more effective than both the individual surgeries."
-	surgery = /datum/surgery/healing/combo/upgraded/femto
+/datum/design/surgery/tend_wounds_combo/upgrade/femto
+	name = "Tend Wounds Combo Upgrade"
+	desc = "The ultimate in wound treatment operations, treating both bruises and burns simultaneous and faster than their individual counterparts."
+	surgery = /datum/surgery_operation/basic/tend_wounds/combo/upgraded/master
 	id = "surgery_heal_combo_upgrade_femto"
 
 /datum/design/surgery/brainwashing
-	name = "Brainwashing"
-	desc = "A surgical procedure which directly implants a directive into the patient's brain, making it their absolute priority. It can be cleared using a mindshield implant."
 	id = "surgery_brainwashing"
-	surgery = /datum/surgery/advanced/brainwashing
+	surgery = /datum/surgery_operation/organ/brainwash
 	research_icon_state = "surgery_head"
 
 /datum/design/surgery/brainwashing/mechanic
-	name = "Reprogramming"
-	desc = "Malware which directly implants a directive into the robotic patient's operating system, making it their absolute priority. It can be cleared using a mindshield implant."
 	id = "surgery_brainwashing_mechanic"
-	surgery = /datum/surgery/advanced/brainwashing/mechanic
+	surgery = /datum/surgery_operation/organ/brainwash/mechanic
 
 /datum/design/surgery/nerve_splicing
-	name = "Nerve Splicing"
 	desc = "A surgical procedure which splices the patient's nerves, making them more resistant to stuns."
 	id = "surgery_nerve_splice"
-	surgery = /datum/surgery/advanced/bioware/nerve_splicing
+	surgery = /datum/surgery_operation/limb/bioware/nerve_splicing
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/nerve_splicing/mechanic
-	name = "System Automatic Reset Subroutine"
 	desc = "A robotic upgrade which upgrades a robotic patient's automatic systems, making them more resistant to stuns."
 	id = "surgery_nerve_splice_mechanic"
-	surgery = /datum/surgery/advanced/bioware/nerve_splicing/mechanic
+	surgery = /datum/surgery_operation/limb/bioware/nerve_splicing/mechanic
 
 /datum/design/surgery/nerve_grounding
-	name = "Nerve Grounding"
 	desc = "A surgical procedure which makes the patient's nerves act as grounding rods, protecting them from electrical shocks."
 	id = "surgery_nerve_ground"
-	surgery = /datum/surgery/advanced/bioware/nerve_grounding
+	surgery = /datum/surgery_operation/limb/bioware/nerve_grounding
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/nerve_grounding/mechanic
-	name = "System Shock Dampening"
 	desc = "A robotic upgrade which installs grounding rods into the robotic patient's system, protecting them from electrical shocks."
 	id = "surgery_nerve_ground_mechanic"
-	surgery = /datum/surgery/advanced/bioware/nerve_grounding/mechanic
+	surgery = /datum/surgery_operation/limb/bioware/nerve_grounding/mechanic
 
 /datum/design/surgery/vein_threading
-	name = "Vein Threading"
 	desc = "A surgical procedure which severely reduces the amount of blood lost in case of injury."
 	id = "surgery_vein_thread"
-	surgery = /datum/surgery/advanced/bioware/vein_threading
+	surgery = /datum/surgery_operation/limb/bioware/vein_threading
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/vein_threading/mechanic
-	name = "Hydraulics Routing Optimization"
 	desc = "A robotic upgrade which severely reduces the amount of hydraulic fluid lost in case of injury."
 	id = "surgery_vein_thread_mechanic"
-	surgery = /datum/surgery/advanced/bioware/vein_threading/mechanic
+	surgery = /datum/surgery_operation/limb/bioware/vein_threading/mechanic
 
 /datum/design/surgery/muscled_veins
-	name = "Vein Muscle Membrane"
 	desc = "A surgical procedure which adds a muscled membrane to blood vessels, allowing a patient to pump blood without a heart."
 	id = "surgery_muscled_veins"
-	surgery = /datum/surgery/advanced/bioware/muscled_veins
+	surgery = /datum/surgery_operation/limb/bioware/muscled_veins
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/muscled_veins/mechanic
-	name = "Hydraulics Redundancy Subroutine"
 	desc = "A robotic upgrade which adds sophisticated hydraulics redundancies, allowing a patient to pump hydraulic fluid without an engine."
 	id = "surgery_muscled_veins_mechanic"
-	surgery = /datum/surgery/advanced/bioware/muscled_veins/mechanic
+	surgery = /datum/surgery_operation/limb/bioware/muscled_veins/mechanic
 
 /datum/design/surgery/ligament_hook
-	name = "Ligament Hook"
 	desc = "A surgical procedure which reshapes the connections between torso and limbs, making it so limbs can be attached manually if severed. \
-	However this weakens the connection, making them easier to detach as well."
+		However, this weakens the connection, making them easier to detach as well."
 	id = "surgery_ligament_hook"
-	surgery = /datum/surgery/advanced/bioware/ligament_hook
+	surgery = /datum/surgery_operation/limb/bioware/ligament_hook
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/ligament_hook/mechanic
-	name = "Anchor Point Snaplocks"
 	desc = "A robotic upgrade which installs rapid detachment anchor points, making it so limbs can be attached manually if detached. \
-		However this weakens the connection, making them easier to detach as well."
+		However, this weakens the connection, making them easier to detach as well."
 	id = "surgery_ligament_hook_mechanic"
-	surgery = /datum/surgery/advanced/bioware/ligament_hook/mechanic
+	surgery = /datum/surgery_operation/limb/bioware/ligament_hook/mechanic
 
 /datum/design/surgery/ligament_reinforcement
-	name = "Ligament Reinforcement"
 	desc = "A surgical procedure which adds a protective tissue and bone cage around the connections between the torso and limbs, preventing dismemberment. \
-	However, the nerve connections as a result are more easily interrupted, making it easier to disable limbs with damage."
+		However, the nerve connections as a result are more easily interrupted, making it easier to disable limbs with damage."
 	id = "surgery_ligament_reinforcement"
-	surgery = /datum/surgery/advanced/bioware/ligament_reinforcement
+	surgery = /datum/surgery_operation/limb/bioware/ligament_reinforcement
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/ligament_reinforcement/mechanic
-	name = "Anchor Point Reinforcement"
 	desc = "A surgical procedure which adds reinforced limb anchor points to the patient's chassis, preventing dismemberment. \
 		However, the nerve connections as a result are more easily interrupted, making it easier to disable limbs with damage."
 	id = "surgery_ligament_reinforcement_mechanic"
-	surgery = /datum/surgery/advanced/bioware/ligament_reinforcement/mechanic
+	surgery = /datum/surgery_operation/limb/bioware/ligament_reinforcement/mechanic
 
 /datum/design/surgery/cortex_imprint
-	name = "Cortex Imprint"
 	desc = "A surgical procedure which modifies the cerebral cortex into a redundant neural pattern, making the brain able to bypass damage caused by minor brain traumas."
 	id = "surgery_cortex_imprint"
-	surgery = /datum/surgery/advanced/bioware/cortex_imprint
+	surgery = /datum/surgery_operation/limb/bioware/cortex_imprint
 	research_icon_state = "surgery_head"
 
 /datum/design/surgery/cortex_imprint/mechanic
-	name = "Wetware OS Ver 2.0"
-	desc = "A surgical procedure which updates the patient's operating system to the 'latest version', whatever that means, making the brain able to bypass damage caused by minor brain traumas. \
-		Shame about all the adware."
+	desc = "A surgical procedure which updates the patient's operating system to the 'latest version', whatever that means, making the brain able to bypass damage caused by minor brain traumas."
 	id = "surgery_cortex_imprint_mechanic"
-	surgery = /datum/surgery/advanced/bioware/cortex_imprint/mechanic
+	surgery = /datum/surgery_operation/limb/bioware/cortex_imprint/mechanic
 
 /datum/design/surgery/cortex_folding
-	name = "Cortex Folding"
 	desc = "A surgical procedure which modifies the cerebral cortex into a complex fold, giving space to non-standard neural patterns."
 	id = "surgery_cortex_folding"
-	surgery = /datum/surgery/advanced/bioware/cortex_folding
+	surgery = /datum/surgery_operation/limb/bioware/cortex_folding
 	research_icon_state = "surgery_head"
 
 /datum/design/surgery/cortex_folding/mechanic
-	name = "Wetware OS Labyrinthian Programming"
 	desc = "A robotic upgrade which reprograms the patient's neural network in a downright eldritch programming language, giving space to non-standard neural patterns."
 	id = "surgery_cortex_folding_mechanic"
-	surgery = /datum/surgery/advanced/bioware/cortex_folding/mechanic
+	surgery = /datum/surgery_operation/limb/bioware/cortex_folding/mechanic
 
 /datum/design/surgery/necrotic_revival
-	name = "Necrotic Revival"
-	desc = "An experimental surgical procedure that stimulates the growth of a Romerol tumor inside the patient's brain. Requires zombie powder or rezadone."
 	id = "surgery_zombie"
-	surgery = /datum/surgery/advanced/necrotic_revival
+	surgery = /datum/surgery_operation/limb/bionecrosis
 	research_icon_state = "surgery_head"
 
 /datum/design/surgery/wing_reconstruction
-	name = "Wing Reconstruction"
-	desc = "An experimental surgical procedure that reconstructs the damaged wings of moth people. Requires Synthflesh."
 	id = "surgery_wing_reconstruction"
-	surgery = /datum/surgery/advanced/wing_reconstruction
+	surgery = /datum/surgery_operation/organ/fix_wings
 	research_icon_state = "surgery_chest"
 
-/datum/design/surgery/advanced_plastic_surgery
-	name = "Advanced Plastic Surgery"
-	desc = "An advanced form of the plastic surgery, allowing oneself to remodel someone's face and voice based off a picture of someones face"
-	surgery = /datum/surgery/plastic_surgery/advanced
-	id = "surgery_advanced_plastic_surgery"
-	research_icon_state = "surgery_head"
-
 /datum/design/surgery/experimental_dissection
-	name = "Experimental Dissection"
-	desc = "An experimental surgical procedure that dissects bodies in exchange for research points at ancient R&D consoles."
 	id = "surgery_oldstation_dissection"
-	surgery = /datum/surgery/advanced/experimental_dissection
+	surgery = /datum/surgery_operation/basic/dissection
 	research_icon_state = "surgery_chest"
