@@ -4933,6 +4933,7 @@
 #include "code\modules\mapping\space_management\zlevel_manager.dm"
 #include "code\modules\meteors\meteor_changeling.dm"
 #include "code\modules\meteors\meteor_dark_matteor.dm"
+#include "code\modules\meteors\meteor_deflection.dm"
 #include "code\modules\meteors\meteor_mode_controller.dm"
 #include "code\modules\meteors\meteor_spawning.dm"
 #include "code\modules\meteors\meteor_types.dm"
