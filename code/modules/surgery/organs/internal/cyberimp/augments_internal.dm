@@ -359,8 +359,19 @@
 
 /obj/item/organ/cyberimp/brain/surgical_processor/examine(mob/user)
 	. = ..()
-	. += span_info("Must be loaded with surgeries <i>before</i> installation. \
-		Load surgeries from an operating compuer or a disk containing surgery data.")
+	if(length(loaded_surgeries))
+		. += span_info("Load surgeries from an operating compuer or a disk containing surgery data. Loaded surgeries:")
+		for(var/datum/surgery_operation/downloaded_surgery as anything in GLOB.operations.get_instances_from(loaded_surgeries))
+			if(!(downloaded_surgery.opereation_flags & OPERATION_LOCKED))
+				continue
+			// for simplicitly, filters out mechanical subtypes of normal surgeries
+			if((downloaded_surgery.operation_flags & OPERATION_MECHANIC) && (downloaded_surgery.parent_type in loaded_surgeries))
+				continue
+			. += span_info("&bull; [capitalize(downloaded_surgery.rnd_name || downloaded_surgery.name)]")
+
+	else
+		. += span_info("Load surgeries from an operating compuer or a disk containing surgery data.")
+		. += span_info("No surgeries loaded. Surgeries must be loaded <i>before</i> installation.")
 
 /obj/item/organ/cyberimp/brain/surgical_processor/proc/load_surgeries(mob/living/user, obj/design_holder)
 	balloon_alert(user, "copying designs...")
