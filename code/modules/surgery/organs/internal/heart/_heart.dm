@@ -247,20 +247,16 @@
 	if(stabilization_available && owner.health <= owner.crit_threshold)
 		stabilize_heart()
 
-	if(bleed_prevention && ishuman(owner) && owner.blood_volume < BLOOD_VOLUME_NORMAL)
+	// Wound healing is intentionally tied to blood volume.
+	if(bleed_prevention && ishuman(owner) && owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 		var/mob/living/carbon/human/wounded_owner = owner
-		wounded_owner.blood_volume += 2 * seconds_per_tick
+
+		wounded_owner.adjust_blood_volume(2 * seconds_per_tick)
+
 		if(toxification_probability && prob(toxification_probability))
-			wounded_owner.adjustToxLoss(1 * seconds_per_tick, updating_health = FALSE)
+			wounded_owner.adjust_tox_loss(1 * seconds_per_tick, updating_health = FALSE)
 
-		var/datum/wound/bloodiest_wound
-
-		for(var/datum/wound/iter_wound as anything in wounded_owner.all_wounds)
-			if(iter_wound.blood_flow && iter_wound.blood_flow > bloodiest_wound?.blood_flow)
-				bloodiest_wound = iter_wound
-
-		if(bloodiest_wound)
-			bloodiest_wound.adjust_blood_flow(-1 * seconds_per_tick)
+		wounded_owner.coagulant_effect(1 * seconds_per_tick)
 
 /obj/item/organ/heart/cybernetic/proc/stabilize_heart()
 	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT)

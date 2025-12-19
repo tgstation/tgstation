@@ -112,13 +112,13 @@
 	 * In most places we add + 1 because we're secretly keeping [max_volume_per_reagent + 1]
 	 * units, so that when this reagent runs out it's not wholesale removed from the reagents
 	 */
-	var/max_volume_per_reagent = 30
+	var/max_volume_per_reagent = 25
 	/// Cell cost for charging a reagent
-	var/charge_cost = 0.05 * STANDARD_CELL_CHARGE
+	var/charge_cost = 0.075 * STANDARD_CELL_CHARGE
 	/// Counts up to the next time we charge
 	var/charge_timer = 0
 	/// Time it takes for shots to recharge (in seconds)
-	var/recharge_time = 10
+	var/recharge_time = 12
 	///Optional variable to override the temperature add_reagent() will use
 	var/dispensed_temperature = DEFAULT_REAGENT_TEMPERATURE
 	/// If the hypospray can go through armor or thick material
@@ -178,10 +178,12 @@
 /obj/item/reagent_containers/borghypo/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!iscarbon(interacting_with))
 		return NONE
+
 	var/mob/living/carbon/injectee = interacting_with
 	if(!selected_reagent)
 		balloon_alert(user, "no reagent selected!")
 		return ITEM_INTERACT_BLOCKING
+
 	if(!stored_reagents.has_reagent(selected_reagent.type, amount_per_transfer_from_this))
 		balloon_alert(user, "not enough [selected_reagent.name]!")
 		return ITEM_INTERACT_BLOCKING
@@ -190,20 +192,16 @@
 		balloon_alert(user, "[injectee.parse_zone_with_bodypart(user.zone_selected)] is blocked!")
 		return ITEM_INTERACT_BLOCKING
 
-	// This is the in-between where we're storing the reagent we're going to inject the injectee with
-	// because we cannot specify a singular reagent to transfer in trans_to
-	var/datum/reagents/hypospray_injector = new()
-	stored_reagents.remove_reagent(selected_reagent.type, amount_per_transfer_from_this)
-	hypospray_injector.add_reagent(selected_reagent.type, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
+	if (!injectee.reagents)
+		balloon_alert(user, "unable to inject!")
+		return ITEM_INTERACT_BLOCKING
 
 	to_chat(injectee, span_warning("You feel a tiny prick!"))
 	to_chat(user, span_notice("You inject [injectee] with the injector ([selected_reagent.name])."))
 	user.changeNext_move(CLICK_CD_MELEE)
-
-	if(injectee.reagents)
-		hypospray_injector.trans_to(injectee, amount_per_transfer_from_this, transferred_by = user, methods = INJECT)
-		balloon_alert(user, "[amount_per_transfer_from_this] unit\s injected")
-		log_combat(user, injectee, "injected", src, "(CHEMICALS: [selected_reagent])")
+	stored_reagents.trans_to(injectee, amount_per_transfer_from_this, target_id = selected_reagent.type, transferred_by = user, methods = INJECT)
+	balloon_alert(user, "[amount_per_transfer_from_this] unit\s injected")
+	log_combat(user, injectee, "injected", src, "(CHEMICALS: [selected_reagent])")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/borghypo/ui_interact(mob/user, datum/tgui/ui)

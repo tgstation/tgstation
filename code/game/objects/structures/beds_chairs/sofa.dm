@@ -51,6 +51,27 @@ path/corner/color_name {\
 COLORED_SOFA(/obj/structure/chair/sofa, brown, SOFA_BROWN)
 COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 
+// Make crafted brown sofas use the "retro sofa" display name without changing map-spawned ones.
+/obj/structure/chair/sofa/middle/brown/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		name = "retro sofa"
+
+/obj/structure/chair/sofa/left/brown/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		name = "retro sofa"
+
+/obj/structure/chair/sofa/right/brown/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		name = "retro sofa"
+
+/obj/structure/chair/sofa/corner/brown/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		name = "retro sofa"
+
 // Original icon ported from Eris(?) and updated to work here.
 /obj/structure/chair/sofa/corp
 	name = "sofa"
@@ -111,6 +132,7 @@ COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 	buildstacktype = /obj/item/stack/sheet/mineral/bamboo
 	buildstackamount = 3
 	has_armrest = FALSE
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/structure/chair/sofa/bamboo/left
 	icon_state = "bamboo_sofaend_left"

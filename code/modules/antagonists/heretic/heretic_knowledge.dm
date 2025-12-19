@@ -231,7 +231,7 @@
 	return ..()
 
 /datum/heretic_knowledge/limited_amount/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(user)
 	if(our_heretic && our_heretic.unlimited_blades)
 		if(length(result_atoms & typesof(/obj/item/melee/sickly_blade)))
 			return TRUE

@@ -12,6 +12,8 @@
 #define COMSIG_MOB_REAGENT_TICK "mob_reagent_tick"
 	///stops the reagent check call
 	#define COMSIG_MOB_STOP_REAGENT_TICK (1<<0)
+	///Allows for most on_life calls BUT metabolize()
+	#define COMSIG_MOB_STOP_REAGENT_METABOLISM (1<<1)
 ///from base of mob/clickon(): (atom/A, list/modifiers)
 #define COMSIG_MOB_CLICKON "mob_clickon"
 ///from base of mob/MiddleClickOn(): (atom/A)

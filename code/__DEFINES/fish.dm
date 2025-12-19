@@ -61,6 +61,8 @@
 #define FISHING_LINE_STIFF (1 << 2)
 ///Skip the biting phase and go straight to the fishing phase.
 #define FISHING_LINE_AUTOREEL (1 << 3)
+///Allow the fishing line to be cast through dense objects and walls
+#define FISHING_LINE_PHASE (1 << 4)
 
 ///Keeps the bait from falling from gravity, instead allowing the player to move the bait down with right click.
 #define FISHING_MINIGAME_RULE_BIDIRECTIONAL (1 << 0)
@@ -182,9 +184,9 @@
 #define GET_FISH_WEIGHT_RANK(weighty) max(round(1 + log(2, max(weighty/FISH_WEIGHT_FORCE_DIVISOR, 1)), 1), 1)
 
 ///The breeding timeout for newly instantiated fish is multiplied by this.
-#define NEW_FISH_BREEDING_TIMEOUT_MULT 2
-///The last feeding timestamp of newly instantiated fish is multiplied by this: ergo, they spawn 50% hungry.
-#define NEW_FISH_LAST_FEEDING_MULT 0.33
+#define NEW_FISH_BREEDING_TIMEOUT_MULT 0.6
+///The last feeding timestamp of newly instantiated fish is multiplied by this.
+#define NEW_FISH_LAST_FEEDING_MULT 0.33 //Their hunger meter starts at 33%
 
 ///If get_hunger is above this value, the fish is considered to be starving and will slowly lose health because of it
 #define FISH_STARVING_THRESHOLD 1

@@ -162,8 +162,8 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	// The mansus celebrates your efforts
 	if(IS_HERETIC(owner))
 		owner.heal_overall_damage(60, 60, 60)
-		owner.adjustToxLoss(-60, forced = TRUE) // Slime heretics everywhere...
-		owner.adjustOxyLoss(-60)
+		owner.adjust_tox_loss(-60, forced = TRUE) // Slime heretics everywhere...
+		owner.adjust_oxy_loss(-60)
 		if(iscarbon(owner))
 			var/mob/living/carbon/carbon_owner = owner
 			for(var/datum/wound/wound as anything in carbon_owner.all_wounds)

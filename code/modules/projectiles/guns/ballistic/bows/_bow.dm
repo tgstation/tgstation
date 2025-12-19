@@ -22,6 +22,7 @@
 	bolt_type = BOLT_TYPE_NO_BOLT
 	click_on_low_ammo = FALSE
 	must_hold_to_load = TRUE
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 	/// whether the bow is drawn back
 	var/drawn = FALSE
 

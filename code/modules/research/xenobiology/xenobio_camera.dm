@@ -199,7 +199,7 @@
 
 /// Validates whether the target turf can be interacted with.
 /obj/machinery/computer/camera_advanced/xenobio/proc/validate_turf(mob/living/user, turf/open/target_turf)
-	if(!GLOB.cameranet.checkTurfVis(target_turf))
+	if(!SScameras.is_visible_by_cameras(target_turf))
 		target_turf.balloon_alert(user, "outside of view!")
 		return FALSE
 
@@ -442,7 +442,7 @@
 
 	for(var/mob/living/basic/slime/potioned_slime in eye_turf)
 		xeno_console.spit_atom(xeno_console.current_potion, eye_turf)
-		xeno_console.current_potion.attack(potioned_slime, living_owner)
+		xeno_console.current_potion.interact_with_slime(potioned_slime, living_owner)
 		xeno_console.xeno_hud.update_potion(xeno_console.current_potion)
 		break
 

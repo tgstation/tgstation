@@ -94,12 +94,11 @@
 	if(merge)
 		. = INITIALIZE_HINT_LATELOAD
 
-	var/materials_mult = amount
 	if(LAZYLEN(mat_override))
-		materials_mult *= mat_amt
 		mats_per_unit = mat_override
 	if(LAZYLEN(mats_per_unit))
-		initialize_materials(mats_per_unit, materials_mult)
+		mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(mats_per_unit, mat_amt)
+		initialize_materials(mats_per_unit, amount)
 
 	recipes = get_main_recipes().Copy()
 	if(material_type)
@@ -119,6 +118,10 @@
 
 /obj/item/stack/LateInitialize()
 	merge_with_loc()
+
+/obj/item/stack/Destroy()
+	mats_per_unit = null
+	return ..()
 
 /obj/item/stack/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -160,11 +163,6 @@
 		other_stack = find_other_stack(already_found, TRUE)
 	return TRUE
 
-/obj/item/stack/apply_material_effects(list/materials)
-	. = ..()
-	if(amount)
-		mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(materials, 1/amount)
-
 /obj/item/stack/blend_requirements()
 	if(is_cyborg)
 		to_chat(usr, span_warning("[src] is too integrated into your chassis and can't be ground up!"))
@@ -191,7 +189,7 @@
 		return FALSE
 
 	//Now transfer the grind results scaled by available_amount
-	var/list/grind_reagents = grind_results.Copy()
+	var/list/grind_reagents = LAZYCOPY(grind_results)
 	for(var/reagent in grind_reagents)
 		grind_reagents[reagent] *= available_amount
 	target_holder.add_reagent_list(grind_reagents)
@@ -417,7 +415,7 @@
 #undef FULL_LIST
 
 /// Makes the item with the given recipe.
-/obj/item/stack/proc/make_item(mob/builder, datum/stack_recipe/recipe, multiplier)
+/obj/item/stack/proc/make_item(mob/builder, datum/stack_recipe/recipe, multiplier = 1)
 	if(get_amount() < 1 && !is_cyborg) //sanity check as this shouldn't happen
 		qdel(src)
 		return
@@ -454,31 +452,42 @@
 		var/turf/covered_turf = builder.drop_location()
 		if(!isturf(covered_turf))
 			return
-		var/turf/created_turf = covered_turf.place_on_top(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
+		created = covered_turf.place_on_top(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
 		builder.balloon_alert(builder, "placed [ispath(recipe.result_type, /turf/open) ? "floor" : "wall"]")
-		if((recipe.crafting_flags & CRAFT_APPLIES_MATS) && LAZYLEN(mats_per_unit))
-			created_turf.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
 
 	else
 		created = new recipe.result_type(builder.drop_location())
 		builder.balloon_alert(builder, "built item")
 
-	if(created)
+	// split the material and use it for the craft
+	var/obj/item/stack/used_stack = split_stack(recipe.req_amount * multiplier)
+	if(ismovable(created))
 		created.setDir(builder.dir)
-		SEND_SIGNAL(created, COMSIG_ATOM_CONSTRUCTED, builder)
-		on_item_crafted(builder, created)
+	created.on_craft_completion(list(used_stack), null, builder)
 
-	// Use up the material
-	use(recipe.req_amount * multiplier)
 	builder.investigate_log("crafted [recipe.title]", INVESTIGATE_CRAFTING)
 
 	// Apply mat datums
-	if((recipe.crafting_flags & CRAFT_APPLIES_MATS) && LAZYLEN(mats_per_unit))
+	if(LAZYLEN(mats_per_unit) && !(recipe.crafting_flags & CRAFT_NO_MATERIALS))
+		var/list/result_mats = mats_per_unit.Copy()
+		for(var/mat in recipe.removed_mats)
+			var/to_remove = recipe.removed_mats[mat]
+			var/datum/material/ref_mat = locate(mat) in result_mats
+			if(!ref_mat)
+				continue
+			if(result_mats[ref_mat] < to_remove)
+				result_mats -= ref_mat
+			else
+				result_mats[ref_mat] -= to_remove
+
 		if(isstack(created))
 			var/obj/item/stack/crafted_stack = created
-			crafted_stack.set_custom_materials(mats_per_unit, (recipe.req_amount / recipe.res_amount) * crafted_stack.amount)
+			crafted_stack.mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(result_mats)
+			update_custom_materials()
 		else
-			created.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
+			created.set_custom_materials(result_mats, recipe.req_amount * multiplier)
+
+	qdel(used_stack) //you've outlived your purpose
 
 	// We could be qdeleted - like if it's a stack and has already been merged
 	if(QDELETED(created))
@@ -496,10 +505,6 @@
 	//BubbleWrap END
 
 	return TRUE
-
-/// Run special logic on created items after they've been successfully crafted.
-/obj/item/stack/proc/on_item_crafted(mob/builder, atom/created)
-	return
 
 /obj/item/stack/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, amount))
@@ -577,11 +582,10 @@
 	if (amount < used)
 		return FALSE
 	amount -= used
-	if(check && is_zero_amount(delete_if_zero = TRUE))
-		return TRUE
-	update_custom_materials()
-	update_appearance()
-	update_weight()
+	if(!is_zero_amount(delete_if_zero = check))
+		update_custom_materials()
+		update_appearance()
+		update_weight()
 	return TRUE
 
 /obj/item/stack/tool_use_check(mob/living/user, amount, heat_required)

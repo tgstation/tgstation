@@ -4,6 +4,7 @@
 	icon_state = "honkbot"
 	base_icon_state = "honkbot"
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.8, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	req_access = list(ACCESS_ROBOTICS, ACCESS_THEATRE, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	ai_controller = /datum/ai_controller/basic_controller/bot/honkbot
@@ -83,8 +84,7 @@
 	if(HAS_TRAIT(current_target, TRAIT_DEAF))
 		return
 
-	var/obj/item/organ/ears/target_ears = current_target.get_organ_slot(ORGAN_SLOT_EARS)
-	target_ears?.adjustEarDamage(0, 5)
+	sound_damage(deafen = 10 SECONDS)
 
 /mob/living/basic/bot/honkbot/ui_data(mob/user)
 	var/list/data = ..()

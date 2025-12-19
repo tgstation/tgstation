@@ -1,3 +1,12 @@
+/// Active power use of a regular default camera
+#define CAMERA_POWER_CONSUMPTION (BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02)
+/// Active power multiplier of the xray camera upgrade
+#define XRAY_POWER_MOD (10)
+/// Active power multiplier of the motion camera upgrade
+#define MOTION_POWER_MOD (4)
+/// Active power multiplier of the EMP camera upgrade
+#define EMP_POWER_MOD (1.25)
+
 /**
  * Camera assembly frame
  * Putting this on a wall will put a deconstructed camera machine on the wall.
@@ -7,12 +16,12 @@
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
 	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "cameracase"
-	custom_materials = list(
-		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 4,
-		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.5,
-	)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	result_path = /obj/machinery/camera/autoname/deconstructed
 	wall_external = TRUE
+
+/obj/item/wallframe/camera/find_support_structure(atom/structure)
+	return istype(structure, /obj/structure/window) ? structure : ..()
 
 /obj/machinery/camera
 	name = "security camera"
@@ -21,7 +30,7 @@
 	icon_state = "camera"
 	base_icon_state = "camera"
 	use_power = ACTIVE_POWER_USE
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
+	active_power_usage = CAMERA_POWER_CONSUMPTION
 	layer = WALL_OBJ_LAYER
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 12
@@ -85,7 +94,7 @@
 
 	var/list/datum/weakref/localMotionTargets = list()
 	var/detectTime = 0
-	var/area/station/ai_monitored/area_motion = null
+	var/datum/motion_group/area_motion = null
 	var/alarm_delay = 30 // Don't forget, there's another 3 seconds in queueAlarm()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera, 0)
@@ -103,22 +112,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	fire = 90
 	acid = 50
 
-/obj/machinery/camera/Initialize(mapload, ndir, building)
+/obj/machinery/camera/Initialize(mapload)
 	. = ..()
-
-	if(building)
-		setDir(ndir)
 
 	for(var/network_name in network)
 		network -= network_name
 		network += LOWER_TEXT(network_name)
 
-	GLOB.cameranet.cameras += src
+	SScameras.cameras += src
 
 	myarea = get_room_area()
 
 	if(camera_enabled)
-		GLOB.cameranet.addCamera(src)
+		SScameras.add_camera_to_chunk(src)
 		LAZYADD(myarea.cameras, src)
 #ifdef MAP_TEST
 		update_appearance()
@@ -128,16 +134,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		else //this is handled by toggle_camera, so no need to update it twice.
 			update_appearance()
 #endif
-
 	alarm_manager = new(src)
-	find_and_hang_on_wall(directional = TRUE, \
-		custom_drop_callback = CALLBACK(src, PROC_REF(deconstruct), FALSE))
+	if(mapload)
+		find_and_mount_on_atom(mark_for_late_init = TRUE)
+
+/obj/machinery/camera/get_turfs_to_mount_on()
+	return list(get_step(src, dir))
 
 /obj/machinery/camera/Destroy(force)
 	if(can_use())
 		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
-	GLOB.cameranet.removeCamera(src)
-	GLOB.cameranet.cameras -= src
+	SScameras.remove_camera_from_chunk(src)
+	SScameras.cameras -= src
 	cancelCameraAlarm()
 	if(isarea(myarea))
 		LAZYREMOVE(myarea.cameras, src)
@@ -181,8 +189,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	SIGNAL_HANDLER
 	proximity_monitor = null
 
-/obj/machinery/camera/proc/set_area_motion(area/A)
-	area_motion = A
+/obj/machinery/camera/proc/set_area_motion(datum/motion_group/group)
+	area_motion = group
 	create_prox_monitor()
 
 /obj/machinery/camera/examine(mob/user)
@@ -222,11 +230,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(!prob(150 / severity))
 		return
 	network = list()
-	GLOB.cameranet.removeCamera(src)
+	SScameras.remove_camera_from_chunk(src)
 	set_machine_stat(machine_stat | EMPED)
 	set_light(0)
 	emped++ //Increase the number of consecutive EMP's
 	update_appearance()
+	calculate_active_power()
 	addtimer(CALLBACK(src, PROC_REF(post_emp_reset), emped, network), reset_time)
 	for(var/mob/M as anything in GLOB.player_list)
 		if (M.client?.eye == src)
@@ -249,9 +258,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	set_machine_stat(machine_stat & ~EMPED)
 	update_appearance()
 	if(can_use())
-		GLOB.cameranet.addCamera(src)
+		SScameras.add_camera_to_chunk(src)
 	emped = 0 //Resets the consecutive EMP count
 	addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 10 SECONDS)
+	calculate_active_power()
 
 /obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
@@ -262,7 +272,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
 	src.view_range = num
-	GLOB.cameranet.updateVisibility(src, 0)
+	SScameras.update_visibility(src)
 
 /obj/machinery/camera/proc/shock(mob/living/user)
 	if(!istype(user))
@@ -339,7 +349,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = TRUE)
 	camera_enabled = !camera_enabled
 	if(can_use())
-		GLOB.cameranet.addCamera(src)
+		SScameras.add_camera_to_chunk(src)
 		if (isturf(loc))
 			myarea = get_area(src)
 			LAZYADD(myarea.cameras, src)
@@ -347,12 +357,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			myarea = null
 	else
 		set_light(0)
-		GLOB.cameranet.removeCamera(src)
+		SScameras.remove_camera_from_chunk(src)
 		if (isarea(myarea))
 			LAZYREMOVE(myarea.cameras, src)
 	// We are not guarenteed that the camera will be on a turf. account for that
-	var/turf/our_turf = get_turf(src)
-	GLOB.cameranet.updateChunk(our_turf.x, our_turf.y, our_turf.z)
 	var/change_msg = "deactivates"
 	if(camera_enabled)
 		change_msg = "reactivates"
@@ -368,6 +376,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 		playsound(src, 'sound/items/tools/wirecutter.ogg', 100, TRUE)
 	update_appearance() //update Initialize() if you remove this.
+	calculate_active_power()
 
 	// now disconnect anyone using the camera
 	//Apparently, this will disconnect anyone even if the camera was re-activated.
@@ -392,6 +401,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		return FALSE
 	return TRUE
 
+/// Returns a list of turfs in this camera's view.
+/// This includes turfs that are "obscured by darkness" from the camera's POV.
 /obj/machinery/camera/proc/can_see()
 	var/list/see = null
 	var/turf/pos = get_turf(src)
@@ -400,26 +411,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	var/check_higher = directly_above && istransparentturf(directly_above) && (pos != get_highest_turf(pos))
 
 	if(isXRay())
-		see = range(view_range, pos)
+		see = RANGE_TURFS(view_range, pos)
 	else
-		see = get_hear(view_range, pos)
+		see = get_hear_turfs(view_range, pos)
+
 	if(check_lower || check_higher)
 		// Haha datum var access KILL ME
-		for(var/turf/seen in see)
+		for(var/turf/seen as anything in see)
 			if(check_lower)
-				var/turf/visible = seen
-				while(visible && istransparentturf(visible))
-					var/turf/below = GET_TURF_BELOW(visible)
-					for(var/turf/adjacent in range(1, below))
-						see += adjacent
-						see += adjacent.contents
-					visible = below
+				var/turf/below = GET_TURF_BELOW(seen)
+				while(below && istransparentturf(below))
+					see += RANGE_TURFS(1, below)
+					below = GET_TURF_BELOW(below)
 			if(check_higher)
 				var/turf/above = GET_TURF_ABOVE(seen)
 				while(above && istransparentturf(above))
-					for(var/turf/adjacent in range(1, above))
-						see += adjacent
-						see += adjacent.contents
+					see += RANGE_TURFS(1, above)
 					above = GET_TURF_ABOVE(above)
 	return see
 
@@ -452,3 +459,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 ///Called when the camera stops being watched on a camera console.
 /obj/machinery/camera/proc/on_stop_watching()
 	return
+
+/obj/machinery/camera/proc/calculate_active_power()
+	if(!can_use())
+		active_power_usage = 0
+		return
+
+	var/xray_power_mod = (camera_upgrade_bitflags & CAMERA_UPGRADE_XRAY) && !malf_xray_firmware_present ? XRAY_POWER_MOD : 1
+	var/motion_power_mod = (camera_upgrade_bitflags & CAMERA_UPGRADE_MOTION) ? MOTION_POWER_MOD : 1
+	var/EMP_power_mod = (camera_upgrade_bitflags & CAMERA_UPGRADE_EMP_PROOF) && !malf_emp_firmware_present ? EMP_POWER_MOD : 1
+
+	active_power_usage = CAMERA_POWER_CONSUMPTION * xray_power_mod * motion_power_mod * EMP_power_mod
+
+#undef CAMERA_POWER_CONSUMPTION
+#undef XRAY_POWER_MOD
+#undef MOTION_POWER_MOD
+#undef EMP_POWER_MOD

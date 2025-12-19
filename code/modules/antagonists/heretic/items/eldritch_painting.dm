@@ -28,7 +28,7 @@
 	/// The range of the paintings effect
 	var/range = 7
 
-/obj/structure/sign/painting/eldritch/Initialize(mapload, dir, building)
+/obj/structure/sign/painting/eldritch/Initialize(mapload)
 	. = ..()
 	if(ispath(applied_status_effect))
 		var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(apply_status_effect))
@@ -123,7 +123,7 @@
 		// Gives them some nutrition
 		examiner.adjust_nutrition(50)
 		to_chat(examiner, span_warning("You feel a searing pain in your stomach!"))
-		examiner.adjustOrganLoss(ORGAN_SLOT_STOMACH, 5)
+		examiner.adjust_organ_loss(ORGAN_SLOT_STOMACH, 5)
 		to_chat(examiner, span_notice("You feel less hungry."))
 		to_chat(examiner, span_warning("You should stockpile raw meat and organs, before you get hungry again."))
 		examiner.add_mood_event("respite_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_examine)
@@ -177,7 +177,7 @@
 		/obj/item/food/grown/harebell,
 	)
 
-/obj/structure/sign/painting/eldritch/vines/Initialize(mapload, dir, building)
+/obj/structure/sign/painting/eldritch/vines/Initialize(mapload)
 	. = ..()
 	new /datum/spacevine_controller(get_turf(src), mutations, 0, 10)
 

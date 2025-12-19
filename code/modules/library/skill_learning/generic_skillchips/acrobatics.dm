@@ -11,7 +11,7 @@
 	/// set integrity to 1 when mapping for !!FUN!!
 	max_integrity = 100
 	/// list of emotes whose cd is overridden by this skillchip. can be edited in mapping or ingame
-	var/list/affected_emotes = list("spin", "flip")
+	var/list/affected_emotes = list("spin", "flip", "backflip")
 	var/datum/effect_system/spark_spread/sparks
 	/// you can use this without lowering integrity! let's be honest. nobody's doing that
 	var/allowed_usage = 5
@@ -100,7 +100,7 @@
 				bozo.adjust_confusion(15 SECONDS)
 				bozo.set_eye_blur_if_lower(10 SECONDS)
 			// but the rest of the effects will happen either way
-			bozo.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20 - get_integrity())
+			bozo.adjust_organ_loss(ORGAN_SLOT_BRAIN, 20 - get_integrity())
 
 			sparks.set_up(5, cardinals_only = FALSE, location = get_turf(src))
 			sparks.start()

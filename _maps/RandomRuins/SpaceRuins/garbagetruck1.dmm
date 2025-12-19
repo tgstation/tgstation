@@ -36,6 +36,7 @@
 /obj/item/paper/crumpled,
 /obj/item/restraints/handcuffs/cable/zipties/used,
 /obj/effect/decal/cleanable/blood/gibs/old,
+/obj/structure/sign/warning/directional/south,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "bx" = (
@@ -537,10 +538,6 @@
 /mob/living/basic/mouse,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
-"yi" = (
-/obj/structure/sign/warning,
-/turf/closed/wall/r_wall,
-/area/ruin/space/has_grav/garbagetruck/foodwaste)
 "yv" = (
 /obj/item/trash/can{
 	pixel_x = -8;
@@ -844,10 +841,8 @@
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "Ie" = (
-/obj/machinery/airalarm{
-	pixel_y = 25
-	},
 /obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/catwalk_floor/iron,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "II" = (
@@ -883,6 +878,7 @@
 /obj/item/fish/ratfish,
 /obj/structure/closet/crate/freezer,
 /obj/effect/spawner/random/medical/surgery_tool,
+/obj/structure/sign/warning/directional/south,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "KD" = (
@@ -1162,7 +1158,7 @@
 "VL" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Xi" = (
 /obj/item/food/badrecipe/moldy/bacteria,
 /obj/effect/decal/cleanable/food/egg_smudge,
@@ -1295,7 +1291,7 @@ nS
 fV
 Vb
 bs
-yi
+Sa
 "}
 (4,1,1) = {"
 og
@@ -1449,7 +1445,7 @@ uJ
 FL
 Nm
 JH
-yi
+Sa
 "}
 (11,1,1) = {"
 qM

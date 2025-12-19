@@ -65,7 +65,7 @@
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
 	if(credits_stored) // Prevents spamming empty holochips
 		new /obj/item/holochip(drop_location(), credits_stored)
-		to_chat(user,span_notice("You retrieve the siphoned credits!"))
+		to_chat(user,span_notice("You retrieve the siphoned [MONEY_NAME]!"))
 		credits_stored = 0
 	else
 		to_chat(user,span_notice("There's nothing to withdraw."))
@@ -143,8 +143,6 @@
 
 /// Looks across the station for items that are pirate specific exports
 /obj/machinery/loot_locator/proc/find_random_loot()
-	if(!GLOB.exports_list.len)
-		setupExports()
 	var/list/possible_loot = list()
 	for(var/datum/export/pirate/possible_export in GLOB.exports_list)
 		possible_loot += possible_export
@@ -402,6 +400,7 @@
 	deltimer(sending_timer)
 
 /datum/export/pirate
+	abstract_type = /datum/export/pirate
 	sales_market = EXPORT_MARKET_PIRACY
 
 /// Attempts to find the thing on station
@@ -421,8 +420,7 @@
 	if(head_mobs.len)
 		return pick(head_mobs)
 
-/datum/export/pirate/ransom/get_cost(atom/movable/exported_item)
-	var/mob/living/carbon/human/ransomee = exported_item
+/datum/export/pirate/ransom/get_base_cost(mob/living/carbon/human/ransomee)
 	if(ransomee.stat != CONSCIOUS || !ransomee.mind || HAS_TRAIT(ransomee.mind, TRAIT_HAS_BEEN_KIDNAPPED)) //mint condition only
 		return 0
 	else if(FACTION_PIRATE in ransomee.faction) //can't ransom your fellow pirates to CentCom!
@@ -472,18 +470,20 @@
 
 /datum/export/pirate/cash
 	cost = 1
+	k_hit_percentile = 0.1 / MAX_STACK_SIZE
 	unit_name = "bill"
 	export_types = list(/obj/item/stack/spacecash)
 
-/datum/export/pirate/cash/get_cost(obj/exported_item)
-	var/obj/item/stack/spacecash/cash = exported_item
-	return cash.value * cash.amount
+/datum/export/pirate/cash/get_amount(obj/item/stack/spacecash/cash)
+	return cash.amount
+
+/datum/export/pirate/cash/get_base_cost(obj/item/stack/spacecash/cash)
+	return cash.value
 
 /datum/export/pirate/holochip
 	cost = 1
 	unit_name = "holochip"
 	export_types = list(/obj/item/holochip)
 
-/datum/export/pirate/holochip/get_cost(atom/movable/exported_item)
-	var/obj/item/holochip/chip = exported_item
+/datum/export/pirate/holochip/get_base_cost(obj/item/holochip/chip)
 	return chip.credits

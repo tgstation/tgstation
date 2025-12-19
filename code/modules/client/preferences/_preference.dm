@@ -50,17 +50,13 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /proc/init_preference_entries()
 	var/list/output = list()
-	for (var/datum/preference/preference_type as anything in subtypesof(/datum/preference))
-		if (initial(preference_type.abstract_type) == preference_type)
-			continue
+	for (var/datum/preference/preference_type as anything in valid_subtypesof(/datum/preference))
 		output[preference_type] = new preference_type
 	return output
 
 /proc/init_preference_entries_by_key()
 	var/list/output = list()
-	for (var/datum/preference/preference_type as anything in subtypesof(/datum/preference))
-		if (initial(preference_type.abstract_type) == preference_type)
-			continue
+	for (var/datum/preference/preference_type as anything in valid_subtypesof(/datum/preference))
 		output[initial(preference_type.savefile_key)] = GLOB.preference_entries[preference_type]
 	return output
 
@@ -113,7 +109,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	/// If the selected species has this in its /datum/species/body_markings,
 	/// will show the feature as selectable.
-	var/relevant_body_markings = null
+	var/datum/bodypart_overlay/simple/body_marking/relevant_body_markings = null
 
 	/// If the selected species has this in its /datum/species/inherent_traits,
 	/// will show the feature as selectable.
@@ -121,7 +117,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	/// If the selected species has this in its /datum/species/var/external_organs,
 	/// will show the feature as selectable.
-	var/relevant_organ = null
+	var/obj/item/organ/relevant_organ = null
 
 	/// If the selected species has this head_flag by default,
 	/// will show the feature as selectable.
@@ -446,6 +442,42 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		data["name"] = main_feature_name
 
 	return data
+
+/// This subtype handles a lot of boilerplate for implementing a species preference tied to a feature key / sprite accessory
+/datum/preference/choiced/species_feature
+	abstract_type = /datum/preference/choiced/species_feature
+	/// What feature key does this feature represent?
+	/// Does not need to be set, it will infer it from either relevant_organ or relevant_body_markings.
+	/// However you can set it manually if you have a more complex feature.
+	var/feature_key
+
+/datum/preference/choiced/species_feature/New()
+	. = ..()
+	if(relevant_organ && relevant_organ::bodypart_overlay)
+		feature_key ||= relevant_organ::bodypart_overlay::feature_key
+		main_feature_name ||= capitalize(relevant_organ::name)
+	if(relevant_body_markings)
+		feature_key ||= relevant_body_markings::dna_feature_key
+		main_feature_name ||= "Body markings"
+	if(isnull(feature_key))
+		CRASH("`feature_key` was not set or inferable for [type]!")
+
+/datum/preference/choiced/species_feature/init_possible_values()
+	return assoc_to_keys_features(get_accessory_list())
+
+/datum/preference/choiced/species_feature/create_default_value()
+	return get_consistent_feature_entry(get_accessory_list())
+
+/datum/preference/choiced/species_feature/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features[feature_key] = value
+
+/// Returns what acessory list to draw from
+/datum/preference/choiced/species_feature/proc/get_accessory_list() as /list
+	return SSaccessories.feature_list[feature_key]
+
+/// Get a specific accessory for a given value
+/datum/preference/choiced/species_feature/proc/get_accessory_for_value(value)
+	return get_accessory_list()[value]
 
 /// A preference that represents an RGB color of something.
 /// Will give the value as 6 hex digits, without a hash.

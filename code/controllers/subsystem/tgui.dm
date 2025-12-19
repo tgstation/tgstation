@@ -39,6 +39,25 @@ SUBSYSTEM_DEF(tgui)
 
 	basehtml = replacetextEx(basehtml, "<!-- tgui:nt-copyright -->", "Nanotrasen (c) 2525-[CURRENT_STATION_YEAR]")
 
+/datum/controller/subsystem/tgui/OnConfigLoad()
+	var/storage_iframe = CONFIG_GET(string/storage_cdn_iframe)
+
+	if(storage_iframe && storage_iframe != /datum/config_entry/string/storage_cdn_iframe::default)
+		basehtml = replacetext(basehtml, "\[tgui:storagecdn\]", storage_iframe)
+		return
+
+	if(CONFIG_GET(string/asset_transport) == "webroot")
+		var/datum/asset_transport/webroot/webroot = SSassets.transport
+
+		var/datum/asset_cache_item/item = webroot.register_asset("iframe.html", file("tgui/public/iframe.html"))
+		basehtml = replacetext(basehtml, "\[tgui:storagecdn\]", webroot.get_asset_url("iframe.html", item))
+		return
+
+	if(!storage_iframe)
+		return
+
+	basehtml = replacetext(basehtml, "\[tgui:storagecdn\]", storage_iframe)
+
 
 /datum/controller/subsystem/tgui/Shutdown()
 	close_all_uis()
@@ -280,6 +299,27 @@ SUBSYSTEM_DEF(tgui)
 	for(var/datum/tgui/ui in user.tgui_open_uis)
 		if(isnull(src_object) || ui.src_object == src_object)
 			ui.close()
+			count++
+	return count
+
+
+/**
+ * public
+ *
+ * Resets position of all UIs to 0, 0.
+ *
+ * required user mob The mob who opened/is using the UI.
+ * optional src_object datum If provided, only close UIs belonging this src_object.
+ *
+ * return int The number of UIs reset.
+ */
+/datum/controller/subsystem/tgui/proc/reset_ui_position(mob/user, datum/src_object)
+	var/count = 0
+	if(length(user?.tgui_open_uis) == 0)
+		return count
+	for(var/datum/tgui/ui in user.tgui_open_uis)
+		if(isnull(src_object) || ui.src_object == src_object)
+			ui.reset_ui_position()
 			count++
 	return count
 

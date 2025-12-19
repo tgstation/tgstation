@@ -65,9 +65,7 @@
 /mob/living/carbon/proc/get_visible_items()
 	var/list/visible_items = list()
 	var/obscured_item_slots = hidden_slots_to_inventory_slots(obscured_slots)
-	for (var/obj/item/held in held_items)
-		visible_items += held
-	for(var/obj/item/thing in get_equipped_items())
+	for(var/obj/item/thing in get_equipped_items(INCLUDE_HELD|INCLUDE_PROSTHETICS))
 		if(!(get_slot_by_item(thing) & obscured_item_slots))
 			visible_items += thing
 	return visible_items
@@ -120,7 +118,7 @@
 	for(var/mob/dead/observe as anything in observers)
 		observe.client?.screen -= equipping
 
-	equipping.forceMove(src)
+	equipping.forceMove(src) //This has to come before has_equipped is called.
 	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
 	equipping.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
@@ -165,15 +163,11 @@
 
 	return not_handled
 
-/mob/living/carbon/get_equipped_speed_mod_items()
-	return ..() + get_equipped_items()
-
 /mob/living/carbon/has_equipped(obj/item/item, slot, initial = FALSE)
 	. = ..()
 	if(!.)
 		return
 
-	update_equipment_speed_mods()
 	hud_used?.update_locked_slots()
 	if(!(slot & item.slot_flags)) // Things below only update if slotted in (ie: not held)
 		return
@@ -182,11 +176,10 @@
 	add_item_coverage(item)
 
 /mob/living/carbon/has_unequipped(obj/item/item)
-	. = ..() // NB: ATP the item is still in the slot, but no longer has the IN_INVENTORY flag (so is not returned by get_equipped_items)
+	. = ..()
 	if(!.)
 		return
 
-	update_equipment_speed_mods()
 	hud_used?.update_locked_slots()
 	if(item.hair_mask)
 		update_body()
@@ -426,7 +419,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/covered_flags = NONE
-	var/list/all_worn_items = get_equipped_items()
+	var/list/all_worn_items = get_equipped_items(INCLUDE_ABSTRACT)
 	for(var/obj/item/worn_item in all_worn_items)
 		covered_flags |= worn_item.body_parts_covered
 
@@ -437,7 +430,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/covered_flags = NONE
-	var/list/all_worn_items = get_equipped_items()
+	var/list/all_worn_items = get_equipped_items(INCLUDE_ABSTRACT)
 	for(var/obj/item/worn_item in all_worn_items)
 		covered_flags |= worn_item.body_parts_covered
 

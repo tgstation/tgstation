@@ -19,6 +19,7 @@ Buildable meters
 	icon_state_preview = "manifold4w"
 	inhand_icon_state = "buildpipe"
 	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	///Piping layer that we are going to be on
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	///Type of pipe-object made, selected from the RPD
@@ -42,65 +43,100 @@ Buildable meters
 
 /obj/item/pipe/directional
 	RPD_type = PIPE_UNARY
+
 /obj/item/pipe/directional/he_junction
 	icon_state_preview = "junction"
 	pipe_type = /obj/machinery/atmospherics/pipe/heat_exchanging/junction
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
+
 /obj/item/pipe/directional/vent
 	name = "air vent fitting"
 	icon_state_preview = "uvent"
 	pipe_type = /obj/machinery/atmospherics/components/unary/vent_pump
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6 + SMALL_MATERIAL_AMOUNT / 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT / 2)
+
 /obj/item/pipe/directional/scrubber
 	name = "air scrubber fitting"
 	icon_state_preview = "scrubber"
 	pipe_type = /obj/machinery/atmospherics/components/unary/vent_scrubber
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6 + SMALL_MATERIAL_AMOUNT / 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT / 2)
+
 /obj/item/pipe/directional/connector
 	icon_state_preview = "connector"
 	pipe_type = /obj/machinery/atmospherics/components/unary/portables_connector
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
+
 /obj/item/pipe/directional/passive_vent
 	icon_state_preview = "pvent"
 	pipe_type = /obj/machinery/atmospherics/components/unary/passive_vent
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
+
 /obj/item/pipe/directional/injector
 	icon_state_preview = "injector"
 	pipe_type = /obj/machinery/atmospherics/components/unary/outlet_injector
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT / 2)
+
 /obj/item/pipe/directional/he_exchanger
 	icon_state_preview = "heunary"
 	pipe_type = /obj/machinery/atmospherics/components/unary/heat_exchanger
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT)
+
 /obj/item/pipe/directional/airlock_pump
 	icon_state_preview = "airlock_pump"
 	pipe_type = /obj/machinery/atmospherics/components/unary/airlock_pump
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
+
 /obj/item/pipe/binary
 	RPD_type = PIPE_STRAIGHT
+
 /obj/item/pipe/binary/layer_adapter
 	icon_state_preview = "manifoldlayer"
 	pipe_type = /obj/machinery/atmospherics/pipe/layer_manifold
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
+
 /obj/item/pipe/binary/color_adapter
 	icon_state_preview = "adapter_center"
 	pipe_type = /obj/machinery/atmospherics/pipe/color_adapter
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
+
 /obj/item/pipe/binary/pressure_pump
 	icon_state_preview = "pump"
 	pipe_type = /obj/machinery/atmospherics/components/binary/pump
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass = SMALL_MATERIAL_AMOUNT / 2)
+
 /obj/item/pipe/binary/manual_valve
 	icon_state_preview = "mvalve"
 	pipe_type = /obj/machinery/atmospherics/components/binary/valve
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
+
 /obj/item/pipe/binary/bendable
 	RPD_type = PIPE_BENDABLE
+
 /obj/item/pipe/trinary
 	RPD_type = PIPE_TRINARY
+
 /obj/item/pipe/trinary/flippable
 	RPD_type = PIPE_TRIN_M
 	var/flipped = FALSE
+
 /obj/item/pipe/trinary/flippable/filter
 	name = "gas filter fitting"
 	icon_state_preview = "filter"
 	pipe_type = /obj/machinery/atmospherics/components/trinary/filter
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass = SMALL_MATERIAL_AMOUNT / 2)
+
 /obj/item/pipe/trinary/flippable/mixer
 	icon_state_preview = "mixer"
 	pipe_type = /obj/machinery/atmospherics/components/trinary/mixer
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass = SMALL_MATERIAL_AMOUNT / 2)
+
 /obj/item/pipe/quaternary
 	RPD_type = PIPE_ONEDIR
+
 /obj/item/pipe/quaternary/pipe
 	icon_state_preview = "manifold4w"
 	pipe_type = /obj/machinery/atmospherics/pipe/smart
+
 /obj/item/pipe/quaternary/pipe/crafted
 
 /obj/item/pipe/quaternary/pipe/crafted/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from, device_color, device_init_dir = SOUTH)
@@ -114,6 +150,7 @@ Buildable meters
 /obj/item/pipe/quaternary/he_pipe
 	icon_state_preview = "he_manifold4w"
 	pipe_type = /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from, device_color, device_init_dir = SOUTH)
 	if(make_from)
@@ -393,7 +430,7 @@ Buildable meters
 			if(prob(20))
 				C.spew_organ()
 			sleep(0.5 SECONDS)
-		C.blood_volume = 0
+		C.set_blood_volume(0)
 	return(OXYLOSS|BRUTELOSS)
 
 /obj/item/pipe/examine(mob/user)

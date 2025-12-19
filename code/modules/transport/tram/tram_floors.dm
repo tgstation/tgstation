@@ -15,7 +15,7 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	rcd_proof = TRUE
 
 /turf/open/floor/tram/examine(mob/user)
@@ -186,9 +186,14 @@
 	plane = GAME_PLANE
 	obj_flags = BLOCK_Z_OUT_DOWN | BLOCK_Z_OUT_UP
 	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT / 2)
 	var/secured = TRUE
 	var/floor_tile = /obj/item/stack/thermoplastic
 	var/mutable_appearance/damage_overlay
+
+/obj/structure/thermoplastic/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/force_move_pulled)
 
 /datum/armor/tram_floor
 	melee = 40
@@ -294,6 +299,7 @@
 	max_amount = 60
 	novariants = TRUE
 	merge_type = /obj/item/stack/thermoplastic
+	mats_per_unit = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT / 2)
 	var/tile_type = /obj/structure/thermoplastic
 
 /obj/item/stack/thermoplastic/light

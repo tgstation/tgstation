@@ -43,6 +43,9 @@
 /// Ruleset can be configured by admins (implements /proc/configure_ruleset)
 /// Only implemented for midrounds currently
 #define RULESET_ADMIN_CONFIGURABLE (1<<2)
+/// Applied to rulesets which intentionally share a pref_flag with another rulesets
+/// Denotes multiple rulesets which abide by the same preference, but are each a variation of some base ruleset
+#define RULESET_VARIATION (1<<3)
 
 /// Href for cancelling midround rulesets before execution
 #define MIDROUND_CANCEL_HREF(...) "(<a href='byond://?src=[REF(src)];admin_cancel_midround=[REF(picked_ruleset)]'>CANCEL</a>)"

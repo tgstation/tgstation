@@ -72,12 +72,13 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
-/obj/machinery/newscaster/Initialize(mapload, ndir, building)
+/obj/machinery/newscaster/Initialize(mapload)
 	. = ..()
 	GLOB.allCasters += src
 	GLOB.allbountyboards += src
 	update_appearance()
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/machinery/newscaster/Destroy()
 	GLOB.allCasters -= src
@@ -877,7 +878,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return TRUE
 	payment_target.transfer_money(current_user, active_request.value, "Bounty Request")
-	say("Paid out [active_request.value] credits.")
+	say("Paid out [active_request.value] [MONEY_NAME].")
 	GLOB.request_list.Remove(active_request)
 	qdel(active_request)
 

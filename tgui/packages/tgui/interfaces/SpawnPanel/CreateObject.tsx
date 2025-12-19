@@ -1,5 +1,5 @@
 import { storage } from 'common/storage';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   Button,
   DmIcon,
@@ -55,10 +55,15 @@ export function CreateObject(props: CreateObjectProps) {
   const currentList = objList;
   const currentType = allObjects[data.copied_type ?? '']?.type || 'Objects';
 
+  const getSearchString = useCallback(
+    (key: string) => (searchBy ? key : allObjects[key]?.name || ''),
+    [searchBy, allObjects],
+  );
+
   const { query, setQuery, results } = useFuzzySearch({
     searchArray: Object.keys(allObjects),
     matchStrategy: 'smart',
-    getSearchString: (key) => (searchBy ? key : allObjects[key]?.name || ''),
+    getSearchString,
   });
 
   const filteredResults = results.filter((obj) => {

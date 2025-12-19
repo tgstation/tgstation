@@ -8,14 +8,15 @@
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	icon_angle = -45
 	force = 10
+	reach = 2
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	throwforce = 20
 	throw_speed = 4
-	demolition_mod = 0.75
+	demolition_mod = 0.75 // Note: This is significant, as this needs to be low enough that any possible force adjustments from better spears does not go over airlock deflection. See AIRLOCK_DAMAGE_DEFLECTION_N.
 	embed_type = /datum/embedding/spear
-	armour_penetration = 10
-	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass= HALF_SHEET_MATERIAL_AMOUNT * 2)
+	armour_penetration = 5
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.65, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 1.15)
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
@@ -32,6 +33,10 @@
 	var/force_unwielded = 10
 	/// How much damage to do wielded
 	var/force_wielded = 18
+	/// Whether or not hitting with this spear causes damage to the spear itself
+	var/improvised_construction = TRUE
+	/// What is left over when a spear breaks
+	var/spear_leftovers = /obj/item/stack/rods
 
 /datum/embedding/spear
 	impact_pain_mult = 2
@@ -59,6 +64,8 @@
 		force_unwielded = force_unwielded, \
 		force_wielded = force_wielded, \
 		icon_wielded = "[icon_prefix]1", \
+		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
+		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
 	add_headpike_component()
 	update_appearance()
@@ -89,37 +96,88 @@
 		if(/obj/item/shard/plasma)
 			force = 11
 			throwforce = 21
-			custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT, /datum/material/alloy/plasmaglass= HALF_SHEET_MATERIAL_AMOUNT * 2)
 			icon_prefix = "spearplasma"
+			modify_max_integrity(220)
+			wound_bonus = -10
 			force_unwielded = 11
 			force_wielded = 19
-			AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[icon_prefix]1")
+			AddComponent(/datum/component/two_handed, \
+				force_unwielded = force_unwielded, \
+				force_wielded = force_wielded, \
+				icon_wielded = "[icon_prefix]1", \
+				wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
+				unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
+			)
+
 		if(/obj/item/shard/titanium)
-			force = 13
-			throwforce = 21
+			force = 12
+			throwforce = 22
 			throw_range = 8
 			throw_speed = 5
-			custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT, /datum/material/alloy/titaniumglass= HALF_SHEET_MATERIAL_AMOUNT * 2)
-			wound_bonus = -10
-			force_unwielded = 13
-			force_wielded = 18
+			modify_max_integrity(230)
+			wound_bonus = -5
+			force_unwielded = 12
+			force_wielded = 20
+			armour_penetration = 10
 			icon_prefix = "speartitanium"
-			AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[icon_prefix]1")
+			AddComponent(/datum/component/two_handed, \
+				force_unwielded = force_unwielded, \
+				force_wielded = force_wielded, \
+				icon_wielded = "[icon_prefix]1", \
+				wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
+				unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
+			)
+
 		if(/obj/item/shard/plastitanium)
 			force = 13
-			throwforce = 22
+			throwforce = 23
 			throw_range = 9
 			throw_speed = 5
-			custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT, /datum/material/alloy/plastitaniumglass= HALF_SHEET_MATERIAL_AMOUNT * 2)
-			wound_bonus = -10
+			modify_max_integrity(240)
+			wound_bonus = 0
 			exposed_wound_bonus = 20
 			force_unwielded = 13
-			force_wielded = 20
+			force_wielded = 21
+			armour_penetration = 15
 			icon_prefix = "spearplastitanium"
-			AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[icon_prefix]1")
+			AddComponent(/datum/component/two_handed, \
+				force_unwielded = force_unwielded, \
+				force_wielded = force_wielded, \
+				icon_wielded = "[icon_prefix]1", \
+				wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
+				unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
+			)
 
 	update_appearance()
 	return ..()
+
+/obj/item/spear/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
+	if(improvised_construction)
+		return
+	take_damage(force/2, sound_effect = FALSE)
+
+/obj/item/spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if (.) //spear was caught
+		return
+	if(!improvised_construction)
+		return
+	take_damage(throwforce/2, sound_effect = FALSE)
+
+/obj/item/spear/atom_destruction(damage_flag)
+	playsound(src, 'sound/effects/grillehit.ogg', 50)
+	new spear_leftovers(get_turf(src))
+	if(isliving(loc))
+		loc.balloon_alert(loc, "spear broken!")
+	return ..()
+
+/obj/item/spear/proc/on_wield(obj/item/source, mob/living/carbon/user)
+	reach = 1
+	armour_penetration *= 2
+
+/obj/item/spear/proc/on_unwield(obj/item/source, mob/living/carbon/user)
+	reach = 2
+	armour_penetration /= 2
 
 /obj/item/spear/explosive
 	name = "explosive lance"
@@ -196,19 +254,18 @@
 	attack_verb_simple = list("gore")
 	force_unwielded = 15
 	force_wielded = 25
+	improvised_construction = FALSE
 
 /obj/item/spear/grey_tide/afterattack(atom/movable/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	user.faction |= "greytide([REF(user)])"
 	if(!isliving(target))
 		return
 	var/mob/living/stabbed = target
-	if(istype(stabbed, /mob/living/simple_animal/hostile/illusion))
+	if(istype(stabbed, /mob/living/basic/illusion))
 		return
 	if(stabbed.stat == CONSCIOUS && prob(50))
-		var/mob/living/simple_animal/hostile/illusion/fake_clone = new(user.loc)
-		fake_clone.faction = user.faction.Copy()
-		fake_clone.Copy_Parent(user, 100, user.health/2.5, 12, 30)
-		fake_clone.GiveTarget(stabbed)
+		var/mob/living/basic/illusion/fake_clone = new(user.loc)
+		fake_clone.full_setup(user, target_mob = stabbed, faction = user.faction, life = 10 SECONDS, hp = user.health / 2.5, damage = 12, replicate = 30)
 
 //MILITARY
 /obj/item/spear/military
@@ -226,6 +283,7 @@
 	throw_range = 9
 	throw_speed = 5
 	sharpness = NONE // we break bones instead of cutting flesh
+	improvised_construction = FALSE
 
 /obj/item/spear/military/add_headpike_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/headpikemilitary)
@@ -239,17 +297,17 @@
  * Bone Spear
  */
 /obj/item/spear/bonespear //Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
+	name = "bone spear"
+	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
 	icon_state = "bone_spear0"
 	base_icon_state = "bone_spear0"
 	icon_prefix = "bone_spear"
-	name = "bone spear"
-	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
-
 	throwforce = 22
-	armour_penetration = 15 //Enhanced armor piercing
-	custom_materials = list(/datum/material/bone = HALF_SHEET_MATERIAL_AMOUNT * 7)
+	armour_penetration = 20 //Enhanced armor piercing
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 4)
 	force_unwielded = 12
 	force_wielded = 20
+	spear_leftovers = /obj/item/stack/sheet/bone
 
 /obj/item/spear/bonespear/add_headpike_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/headpikebone)
@@ -262,18 +320,16 @@
 /*
  * Bamboo Spear
  */
-/obj/item/spear/bamboospear //Blatant imitation of spear, but all natural. Also not valid for explosive modification.
+/obj/item/spear/bamboospear //Blatant imitation of spear, but all natural.
 	icon_state = "bamboo_spear0"
 	base_icon_state = "bamboo_spear0"
 	icon_prefix = "bamboo_spear"
 	name = "bamboo spear"
 	desc = "A haphazardly-constructed bamboo stick with a sharpened tip, ready to poke holes into unsuspecting people."
 
-	throwforce = 22	//Better to throw
-	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 20)
-	force_unwielded = 10
-	force_wielded = 18
-
+	throwforce = 23	//Better to throw
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 25)
+	spear_leftovers = /obj/item/stack/sheet/mineral/bamboo
 
 /obj/item/spear/bamboospear/add_headpike_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/headpikebamboo)
@@ -305,6 +361,7 @@
 	)
 	action_slots = ITEM_SLOT_HANDS
 	actions_types = list(/datum/action/item_action/skybulge)
+	improvised_construction = FALSE
 
 ///The action button the spear gives, usable once a minute.
 /datum/action/item_action/skybulge

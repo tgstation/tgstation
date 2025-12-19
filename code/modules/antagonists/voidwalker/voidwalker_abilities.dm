@@ -61,7 +61,7 @@
 
 /datum/action/cooldown/spell/pointed/unsettle/proc/spookify(mob/living/carbon/human/target)
 	target.Paralyze(stun_time)
-	target.adjustStaminaLoss(stamina_damage)
+	target.adjust_stamina_loss(stamina_damage)
 	target.apply_status_effect(/datum/status_effect/speech/slurring/generic)
 	target.emote("scream")
 

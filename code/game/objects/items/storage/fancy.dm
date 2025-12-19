@@ -465,6 +465,9 @@
 	spawn_coupon = FALSE
 	open_status = FANCY_CONTAINER_OPEN
 
+/obj/item/storage/fancy/cigarettes/flash_powder
+	spawn_type = /obj/item/cigarette/flash_powder
+
 /obj/item/storage/fancy/rollingpapers
 	name = "rolling paper pack"
 	desc = "A pack of Nanotrasen brand rolling papers."
@@ -606,7 +609,7 @@
 	spawn_count = 10
 	contents_tag = "pickle"
 	foldable_result = /obj/item/reagent_containers/cup/beaker/large
-	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25)
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE
 	storage_type = /datum/storage/pickles_jar

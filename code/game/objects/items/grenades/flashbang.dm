@@ -32,24 +32,30 @@
 		return
 
 	update_mob()
-	var/flashbang_turf = get_turf(src)
+	var/turf/flashbang_turf = get_turf(src)
 	if(!flashbang_turf)
 		return
+
+	//Check that there's enough pressure on the detonation turf for the 'bang' part of the flashbang to work.
+	var/datum/gas_mixture/environment = flashbang_turf.return_air()
+	var/pressure = environment?.return_pressure()
+	var/soundbang = pressure >= SOUND_MINIMUM_PRESSURE
+
 	do_sparks(rand(5, 9), FALSE, src)
 	playsound(flashbang_turf, 'sound/items/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
 	new /obj/effect/dummy/lighting_obj (flashbang_turf, flashbang_range + 2, 4, COLOR_WHITE, 2)
 	for(var/mob/living/living_mob in get_hearers_in_view(flashbang_range, flashbang_turf))
-		bang(get_turf(living_mob), living_mob)
+		bang(get_turf(living_mob), living_mob, soundbang)
 	qdel(src)
 
-/obj/item/grenade/flashbang/proc/bang(turf/turf, mob/living/living_mob)
+/obj/item/grenade/flashbang/proc/bang(turf/turf, mob/living/living_mob, soundbang = TRUE)
 	if(living_mob.stat == DEAD) //They're dead!
 		return
 	living_mob.show_message(span_warning("BANG"), MSG_AUDIBLE)
-	var/distance = max(0, get_dist(get_turf(src), turf))
+	var/distance = get_dist(get_turf(src), turf)
 	var/sweetspot_range = clamp(CEILING(flashbang_range/sweetspot_divider, 1), 0, flashbang_range)
 
-//Flash
+	//Flash
 	var/attempt_flash = living_mob.flash_act(affect_silicon = 1)
 	if(attempt_flash == FLASH_COMPLETED)
 		if(distance <= sweetspot_range || issilicon(living_mob))
@@ -60,20 +66,23 @@
 		living_mob.dropItemToGround(living_mob.get_active_held_item())
 		living_mob.dropItemToGround(living_mob.get_inactive_held_item())
 
-//Bang
-	if(!distance || loc == living_mob || loc == living_mob.loc)
-		living_mob.soundbang_act(2, 20 SECONDS, 10, 15)
+	//Bang
+	if(!soundbang && distance)
+		return
+
+	if(!distance)
+		living_mob.soundbang_act(SOUNDBANG_OVERWHELMING, 20 SECONDS, 10, 15)
 		return
 
 	if(distance <= 1) // Adds more stun as to not prime n' pull (#45381)
-		living_mob.soundbang_act(2, 3 SECONDS, 5)
+		living_mob.soundbang_act(SOUNDBANG_STRONG, 3 SECONDS, 5)
 		return
 
 	if(distance <= sweetspot_range)
-		living_mob.soundbang_act(1, max(200 / max(1, distance), 60), rand(0, 5))
+		living_mob.soundbang_act(SOUNDBANG_NORMAL, max(20 SECONDS / max(1, distance), 60), rand(0, 5))
 		return
 
-	if(!living_mob.soundbang_act(1, 0, rand(0, 2)))
+	if(!living_mob.soundbang_act(SOUNDBANG_NORMAL, 0, rand(0, 2)))
 		return
 
 	living_mob.adjust_staggered_up_to(max(200/max(1, distance), 5), 10 SECONDS)
@@ -133,17 +142,17 @@
 	if(living_mob.stat == DEAD) //They're dead!
 		return
 	living_mob.show_message(span_warning("POP"), MSG_AUDIBLE)
-	var/distance = max(0, get_dist(get_turf(src), turf))
+	var/distance = get_dist(get_turf(src), turf)
 //Flash
 	if(living_mob.flash_act(affect_silicon = 1))
 		living_mob.Paralyze(max(10/max(1, distance), 5))
 		living_mob.Knockdown(max(100/max(1, distance), 60))
 
 //Bang
-	if(!distance || loc == living_mob || loc == living_mob.loc)
-		living_mob.Paralyze(20)
-		living_mob.Knockdown(200)
-		living_mob.soundbang_act(1, 200, 10, 15)
+	if(!distance)
+		living_mob.Paralyze(2 SECONDS)
+		living_mob.Knockdown(20 SECONDS)
+		living_mob.soundbang_act(SOUNDBANG_NORMAL, 200, 10, 15)
 		if(living_mob.apply_damages(brute = 10, burn = 10))
 			to_chat(living_mob, span_userdanger("The blast from \the [src] bruises and burns you!"))
 

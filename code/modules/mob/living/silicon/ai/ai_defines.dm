@@ -122,8 +122,8 @@
 	/* REMOTE CONTROL */
 	/// Equipment that the AI is controlling remotely, to determine whether to relaymove or use the AI eye
 	VAR_FINAL/obj/controlled_equipment
-	/// AI core that this AI is linked to, used when put into an exosuit
-	VAR_FINAL/obj/structure/ai_core/deactivated/linked_core
+	/// AI core that this AI is linked to. See [proc/create_core_link] [proc/resolve_core_link] [proc/break_core_link]
+	VAR_FINAL/obj/structure/ai_core/linked_core
 	/// Robot that this AI is currently using
 	VAR_FINAL/mob/living/silicon/robot/deployed_shell
 	/// Action to deploy to a shell from a list of options
@@ -163,6 +163,10 @@
 	/* UI */
 	/// UI for station alerts
 	VAR_FINAL/datum/station_alert/alert_control
+	/// UI for AI status display picker
+	VAR_FINAL/datum/ai_status_display_picker/status_display_picker
+	/// UI for AI core display picker
+	VAR_FINAL/datum/ai_core_display_picker/core_display_picker
 
 	/* I'M DUMB AND CAN'T SORT */
 	/// Used as a fake multitool in tcomms machinery

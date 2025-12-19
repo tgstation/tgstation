@@ -119,7 +119,7 @@
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
 "bg" = (
-/obj/structure/no_effect_signpost{
+/obj/structure/signpost{
 	name = "if youre reading this you stink and also made by jimmyl"
 	},
 /turf/open/floor/bluespace,
@@ -735,7 +735,8 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/sign/painting{
 	pixel_y = 32;
-	persistence_id = "museumgate"
+	persistence_id = "museumgate";
+	dir = 1
 	},
 /obj/machinery/light/floor,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1047,16 +1048,14 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/obj/machinery/button{
-	pixel_y = 32
-	},
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "iI" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/sign/painting{
 	pixel_y = 32;
-	persistence_id = "museumgate"
+	persistence_id = "museumgate";
+	dir = 1
 	},
 /obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
@@ -1760,7 +1759,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/food/sandwich/cheese/grilled,
+/obj/item/food/sandwich/grilled_cheese,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "of" = (
@@ -2464,8 +2463,9 @@
 	},
 /area/awaymission/museum)
 "tK" = (
-/obj/structure/sign/warning,
-/turf/closed/indestructible/reinforced,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/warning/directional/south,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "tM" = (
 /obj/structure/table/wood,
@@ -3250,6 +3250,7 @@
 /obj/machinery/door/window/elevator/left/directional/south{
 	transport_linked_id = "museum_cargo"
 	},
+/obj/structure/sign/warning/directional/east,
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
 "Ak" = (
@@ -4648,6 +4649,7 @@
 /obj/structure/broken_flooring/side/always_floorplane{
 	dir = 8
 	},
+/obj/structure/sign/warning/directional/east,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "Mv" = (
@@ -4756,6 +4758,7 @@
 	dir = 1
 	},
 /obj/structure/closet/crate/bin,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/museum)
 "NB" = (
@@ -5200,6 +5203,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/sign/warning/directional/west,
+/obj/structure/sign/warning/directional/east,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "Rl" = (
@@ -5371,8 +5376,8 @@
 /turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "Tr" = (
-/obj/structure/plaque/static_plaque/golden/commission/kilo,
 /obj/machinery/light/floor,
+/obj/structure/plaque/static_plaque/golden/commission/kilo,
 /turf/open/floor/mineral/gold,
 /area/awaymission/museum)
 "Tt" = (
@@ -5443,6 +5448,7 @@
 	dir = 1
 	},
 /obj/item/kirbyplants/random/fullysynthetic,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/museum)
 "TO" = (
@@ -5478,6 +5484,7 @@
 	transport_linked_id = "museum_cargo"
 	},
 /obj/effect/spawner/random/maintenance/no_decals/seven,
+/obj/structure/sign/warning/directional/west,
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
 "Um" = (
@@ -5759,6 +5766,7 @@
 "We" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/structure/sign/warning/directional/south,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "Wf" = (
@@ -6025,10 +6033,6 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/access/all/away/generic3,
 /turf/open/indestructible/plating,
-/area/awaymission/museum)
-"Ye" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/indestructible/reinforced/titanium/nodiagonal,
 /area/awaymission/museum)
 "Yg" = (
 /obj/effect/mob_spawn/cockroach,
@@ -29524,7 +29528,7 @@ iW
 go
 iW
 TN
-Ye
+fe
 FK
 FK
 FK
@@ -30072,7 +30076,7 @@ Qk
 Ma
 Ma
 Ma
-tK
+FK
 FK
 FK
 Kh
@@ -30295,7 +30299,7 @@ DU
 iW
 iW
 Ny
-Ye
+fe
 FK
 FK
 FK
@@ -30323,7 +30327,7 @@ FK
 bF
 FK
 We
-tK
+FK
 Ma
 VE
 zr
@@ -30586,7 +30590,7 @@ do
 Ma
 Ma
 Ma
-tK
+FK
 FK
 FK
 Kh
@@ -32120,8 +32124,8 @@ DY
 FK
 TB
 ZZ
-XK
 tK
+FK
 Kh
 Kh
 FK
@@ -32132,7 +32136,7 @@ FK
 lU
 lU
 lU
-tK
+FK
 FK
 FK
 Uq
@@ -33406,7 +33410,7 @@ FK
 FK
 FK
 FK
-tK
+FK
 FK
 FK
 FK
@@ -33417,7 +33421,7 @@ FK
 FK
 PB
 PB
-tK
+FK
 FK
 FK
 Uq

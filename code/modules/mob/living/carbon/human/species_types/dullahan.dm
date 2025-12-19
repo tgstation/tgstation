@@ -9,6 +9,7 @@
 		TRAIT_ADVANCEDTOOLUSER, // Normally applied by brain but we don't have one
 		TRAIT_LITERATE,
 		TRAIT_CAN_STRIP,
+		TRAIT_BRAINLESS_CARBON,
 	)
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left,
@@ -42,8 +43,12 @@
 	. = ..()
 	human.lose_hearing_sensitivity(TRAIT_GENERIC)
 	RegisterSignal(human, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(on_gained_part))
+	RegisterSignal(human, COMSIG_CARBON_DEFIB_BRAIN_CHECK, PROC_REF(defib_check))
 
 	var/obj/item/bodypart/head/head = human.get_bodypart(BODY_ZONE_HEAD)
+	head.speech_span = null
+	if(isnull(human.drop_location()))
+		return
 	head?.drop_limb()
 	if(QDELETED(head)) //drop_limb() deletes the limb if no drop location exists and character setup dummies are located in nullspace.
 		return
@@ -54,16 +59,20 @@
 	var/obj/item/organ/eyes/eyes = new /obj/item/organ/eyes(head)
 	eyes.eye_color_left = human.eye_color_left
 	eyes.eye_color_right = human.eye_color_right
-	eyes.bodypart_insert(my_head)
+	eyes.bodypart_insert(head)
 	human.update_body()
+	head.update_limb()
 	head.update_icon_dropped()
 	RegisterSignal(head, COMSIG_QDELETING, PROC_REF(on_head_destroyed))
+	RegisterSignal(my_head, COMSIG_MOVABLE_MOVED, PROC_REF(on_relay_move))
 
 /// If we gained a new body part, it had better not be a head
 /datum/species/dullahan/proc/on_gained_part(mob/living/carbon/human/dullahan, obj/item/bodypart/part)
 	SIGNAL_HANDLER
-	if (part.body_zone != BODY_ZONE_HEAD)
+	if(part.body_zone != BODY_ZONE_HEAD)
 		return
+	if(isnull(dullahan.drop_location()))
+		return // don't gib nullspace
 	my_head = null
 	dullahan.investigate_log("has been gibbed by having an illegal head put on [dullahan.p_their()] shoulders.", INVESTIGATE_DEATHS)
 	dullahan.gib(DROP_ALL_REMAINS) // Yeah so giving them a head on their body is really not a good idea, so their original head will remain but uh, good luck fixing it after that.
@@ -72,11 +81,23 @@
 /datum/species/dullahan/proc/on_head_destroyed()
 	SIGNAL_HANDLER
 	var/mob/living/human = my_head?.owner
-	if (QDELETED(human))
+	if(QDELETED(human))
 		return // guess we already died
 	my_head = null
 	human.investigate_log("has been gibbed by the loss of [human.p_their()] head.", INVESTIGATE_DEATHS)
 	human.gib(DROP_ALL_REMAINS)
+
+/// Head was butchered? No more dullahan
+/datum/species/dullahan/proc/on_relay_move()
+	SIGNAL_HANDLER
+	if(QDELETED(my_head?.owner) || !isdullahan(my_head?.owner))
+		return
+	my_head.owner.gib(DROP_ALL_REMAINS)
+	QDEL_NULL(my_head)
+
+/datum/species/dullahan/proc/defib_check(mob/living/carbon/human/human)
+	SIGNAL_HANDLER
+	return human.can_defib_brain(locate(/obj/item/organ/brain) in my_head.loc) || DEFIB_POSSIBLE
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/human)
 	. = ..()
@@ -89,6 +110,7 @@
 			qdel(detached_head)
 
 	UnregisterSignal(human, COMSIG_CARBON_ATTACH_LIMB)
+	UnregisterSignal(human, COMSIG_CARBON_DEFIB_BRAIN_CHECK)
 	human.regenerate_limb(BODY_ZONE_HEAD, FALSE)
 	human.become_hearing_sensitive()
 	prevent_perspective_change = FALSE
@@ -169,7 +191,8 @@
 	organ_flags = ORGAN_ORGANIC //not vital
 
 /obj/item/organ/tongue/dullahan
-	zone = "abstract"
+	zone = BODY_ZONE_CHEST
+	organ_flags = parent_type::organ_flags | ORGAN_UNREMOVABLE
 	modifies_speech = TRUE
 
 /obj/item/organ/tongue/dullahan/handle_speech(datum/source, list/speech_args)
@@ -179,17 +202,23 @@
 			var/datum/species/dullahan/dullahan_species = human.dna.species
 			if(isobj(dullahan_species.my_head.loc))
 				var/obj/head = dullahan_species.my_head.loc
-				head.say(speech_args[SPEECH_MESSAGE], spans = speech_args[SPEECH_SPANS], sanitize = FALSE, language = speech_args[SPEECH_LANGUAGE], message_range = speech_args[SPEECH_RANGE])
+				if(speech_args[SPEECH_MODS][WHISPER_MODE]) // whisper away
+					speech_args[SPEECH_SPANS] |= SPAN_ITALICS
+				head.say(speech_args[SPEECH_MESSAGE], spans = speech_args[SPEECH_SPANS], sanitize = FALSE, language = speech_args[SPEECH_LANGUAGE], message_range = speech_args[SPEECH_RANGE], message_mods = speech_args[SPEECH_MODS])
 	speech_args[SPEECH_MESSAGE] = ""
 
 /obj/item/organ/ears/dullahan
-	zone = "abstract"
+	zone = BODY_ZONE_CHEST
+	organ_flags = parent_type::organ_flags | ORGAN_UNREMOVABLE
+	decay_factor = 0
 
 /obj/item/organ/eyes/dullahan
 	name = "head vision"
 	desc = "An abstraction."
 	actions_types = list(/datum/action/item_action/organ_action/dullahan)
-	zone = "abstract"
+	zone = BODY_ZONE_CHEST
+	organ_flags = parent_type::organ_flags | ORGAN_UNREMOVABLE
+	decay_factor = 0
 	tint = INFINITY // to switch the vision perspective to the head on species_gain() without issue.
 
 /datum/action/item_action/organ_action/dullahan
@@ -223,7 +252,7 @@
 	START_PROCESSING(SSobj, src)
 	RegisterSignal(owner, COMSIG_CARBON_REGENERATE_LIMBS, PROC_REF(unlist_head))
 	RegisterSignal(owner, COMSIG_LIVING_REVIVE, PROC_REF(retrieve_head))
-	RegisterSignal(owner, COMSIG_HUMAN_PREFS_APPLIED, PROC_REF(update_prefs_name))
+	RegisterSignal(owner, COMSIG_HUMAN_PREFS_APPLIED, PROC_REF(on_prefs_loaded))
 	become_hearing_sensitive(ROUNDSTART_TRAIT)
 
 /obj/item/dullahan_relay/Destroy()
@@ -231,32 +260,33 @@
 	owner = null
 	return ..()
 
-/obj/item/dullahan_relay/process()
-	if(istype(loc, /obj/item/bodypart/head) && !QDELETED(owner))
-		return
-	qdel(src)
-	return PROCESS_KILL
-
 /// Updates our names after applying name prefs
-/obj/item/dullahan_relay/proc/update_prefs_name(mob/living/carbon/human/wearer)
+/obj/item/dullahan_relay/proc/on_prefs_loaded(mob/living/carbon/human/headless)
 	SIGNAL_HANDLER
 	var/obj/item/bodypart/head/detached_head = loc
 	if (!istype(detached_head))
 		return // It's so over
-	detached_head.real_name = wearer.real_name
-	detached_head.name = wearer.real_name
+	detached_head.real_name = headless.real_name
+	detached_head.name = headless.real_name
+	name = headless.real_name
+	detached_head.voice = headless.voice
+	detached_head.pitch = pitch
 	var/obj/item/organ/brain/brain = locate(/obj/item/organ/brain) in detached_head
-	brain.name = "[wearer.name]'s brain"
+	brain.name = "[headless.name]'s brain"
+
+	detached_head.copy_appearance_from(headless, overwrite_eyes = TRUE)
+	detached_head.update_icon_dropped()
 
 /obj/item/dullahan_relay/Hear(atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	. = ..()
-	owner?.Hear(speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, message_mods, message_range)
-
-///Adds the owner to the list of hearers in hearers_in_view(), for visible/hearable on top of say messages
-/obj/item/dullahan_relay/proc/include_owner(datum/source, list/hearers)
-	SIGNAL_HANDLER
-	if(!QDELETED(owner))
-		hearers += owner
+	var/dist = get_dist(speaker, src) - message_range
+	if(dist > 0 && dist <= EAVESDROP_EXTRA_RANGE)
+		raw_message = stars(raw_message)
+	if(message_range != INFINITY && dist > EAVESDROP_EXTRA_RANGE)
+		return FALSE
+	if(!owner)
+		return FALSE
+	return owner.Hear(speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, message_mods, message_range = INFINITY)
 
 ///Stops dullahans from gibbing when regenerating limbs
 /obj/item/dullahan_relay/proc/unlist_head(datum/source, list/excluded_zones)
@@ -273,13 +303,3 @@
 	var/turf/body_turf = get_turf(owner)
 	if(head && istype(head) && body_turf && !(head in owner.get_all_contents()))
 		head.forceMove(body_turf)
-
-/obj/item/dullahan_relay/Destroy()
-	if(!QDELETED(owner))
-		var/mob/living/carbon/human/human = owner
-		if(isdullahan(human))
-			var/datum/species/dullahan/dullahan_species = human.dna.species
-			dullahan_species.my_head = null
-			owner.gib(DROP_ALL_REMAINS)
-	owner = null
-	return ..()

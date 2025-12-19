@@ -9,7 +9,7 @@
 
 /obj/projectile/ion/on_hit(atom/target, blocked = 0, pierce_hit)
 	..()
-	empulse(target, emp_radius, emp_radius)
+	empulse(target, emp_radius, emp_radius, emp_source = src)
 	return BULLET_ACT_HIT
 
 /obj/projectile/ion/weak

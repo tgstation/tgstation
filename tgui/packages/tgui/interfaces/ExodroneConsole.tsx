@@ -18,6 +18,7 @@ import {
   ProgressBar,
   Section,
   Stack,
+  Tooltip,
 } from 'tgui-core/components';
 import { formatTime } from 'tgui-core/format';
 import { capitalize } from 'tgui-core/string';
@@ -215,11 +216,7 @@ const SignalLostModal = (props) => {
       </Box>
       <Icon name="exclamation-triangle" textColor="black" size={5} />
       <Box>
-        <Button
-          color="danger"
-          style={{ border: '1px solid black' }}
-          onClick={() => act('confirm_signal_lost')}
-        >
+        <Button color="orange" onClick={() => act('confirm_signal_lost')}>
           Confirm
         </Button>
       </Box>
@@ -279,39 +276,52 @@ const ToolSelectionModal = (props) => {
 
   const toolData = Object.keys(all_tools);
   return (
-    <Modal>
-      <Stack fill vertical pr={2}>
-        <Stack.Item>Select Tool:</Stack.Item>
-        <Stack.Item>
-          <Stack textAlign="center">
-            {(!!toolData &&
-              toolData.map((tool_name) => (
-                <Stack.Item key={tool_name}>
-                  <Button
-                    onClick={() => {
-                      setChoosingTools(false);
-                      act('add_tool', { tool_type: tool_name });
-                    }}
-                    width={6}
-                    height={6}
-                    tooltip={all_tools[tool_name].description}
-                  >
-                    <Stack vertical>
-                      <Stack.Item>{capitalize(tool_name)}</Stack.Item>
-                      <Stack.Item ml={2.5}>
-                        <Icon name={all_tools[tool_name].icon} size={3} />
-                      </Stack.Item>
-                    </Stack>
-                  </Button>
-                </Stack.Item>
-              ))) || (
-              <Stack.Item>
-                <Button onClick={() => setChoosingTools(false)}>Back</Button>
+    <Modal style={{ padding: '8px' }}>
+      <Section
+        title="Tool Selection"
+        buttons={
+          <Button
+            icon="xmark"
+            color="transparent"
+            onClick={() => {
+              setChoosingTools(false);
+            }}
+          />
+        }
+      >
+        <Stack textAlign="center">
+          {(!!toolData &&
+            toolData.map((tool_name) => (
+              <Stack.Item key={tool_name}>
+                <Stack vertical>
+                  <Stack.Item>
+                    {' '}
+                    <Button
+                      onClick={() => {
+                        setChoosingTools(false);
+                        act('add_tool', { tool_type: tool_name });
+                      }}
+                      height={6}
+                      tooltip={all_tools[tool_name].description}
+                      icon={all_tools[tool_name].icon}
+                      iconSize={3}
+                      style={{ paddingTop: '15px' }}
+                    />
+                  </Stack.Item>
+                  <Stack.Item>
+                    <span style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
+                      {capitalize(tool_name)}
+                    </span>
+                  </Stack.Item>
+                </Stack>
               </Stack.Item>
-            )}
-          </Stack>
-        </Stack.Item>
-      </Stack>
+            ))) || (
+            <Stack.Item>
+              <Button onClick={() => setChoosingTools(false)}>Back</Button>
+            </Stack.Item>
+          )}
+        </Stack>
+      </Section>
     </Modal>
   );
 };
@@ -325,32 +335,33 @@ const EquipmentBox = (props: { cargo: CargoData; drone: DroneData }) => {
     switch (cargo.type) {
       case 'tool': // Tool icon+Remove button if configurable
         return (
-          <Stack direction="column">
+          <Stack fill>
+            <Stack.Item>
+              <Icon
+                name={all_tools[cargo.name].icon}
+                size={1.5}
+                style={{ paddingTop: '4px' }}
+                mr="5px"
+                ml="5px"
+                width="20px"
+              />
+            </Stack.Item>
             <Stack.Item grow>
-              <Button
-                height={4.7}
-                width={4.7}
-                tooltip={capitalize(cargo.name)}
-                tooltipPosition="right"
-                color="transparent"
+              <span
+                style={{ width: '100%', fontSize: '16px', lineHeight: '26px' }}
               >
-                <Icon
-                  color="white"
-                  name={all_tools[cargo.name].icon}
-                  size={3}
-                  pl={1.5}
-                  pt={2}
-                />
-              </Button>
+                {capitalize(cargo.name)}
+              </span>
             </Stack.Item>
             {!!configurable && (
-              <Stack.Item textAlign="right">
+              <Stack.Item>
                 <Button
                   onClick={() => act('remove_tool', { tool_type: cargo.name })}
-                  color="danger"
-                  icon="minus"
-                  tooltipPosition="right"
-                  tooltip="Remove Tool"
+                  color="transparent"
+                  icon="eject"
+                  height={2.3}
+                  tooltip="Eject"
+                  style={{ paddingTop: '4px' }}
                 />
               </Stack.Item>
             )}
@@ -358,26 +369,32 @@ const EquipmentBox = (props: { cargo: CargoData; drone: DroneData }) => {
         );
       case 'cargo': // Jettison button.
         return (
-          <Stack direction="column">
+          <Stack fill>
+            <Stack.Item>
+              <Icon
+                name="box"
+                size={1.5}
+                style={{ paddingTop: '4px' }}
+                mr="5px"
+                ml="5px"
+                width="20px"
+              />
+            </Stack.Item>
+            <Stack.Item grow>
+              <span
+                style={{ width: '100%', fontSize: '16px', lineHeight: '26px' }}
+              >
+                {capitalize(cargo.name)}
+              </span>
+            </Stack.Item>
             <Stack.Item>
               <Button
-                mt={0}
-                height={4.7}
-                width={4.7}
-                tooltip={capitalize(cargo.name)}
-                tooltipPosition="right"
-                color="transparent"
-              >
-                <Icon color="white" name="box" size={3} pl={2.2} pt={2} />
-              </Button>
-            </Stack.Item>
-            <Stack.Item mt={-9.4} textAlign="right">
-              <Button
                 onClick={() => act('jettison', { target_ref: cargo.ref })}
-                color="danger"
-                icon="minus"
-                tooltipPosition="right"
+                color="transparent"
+                icon="eject"
+                height={2.3}
                 tooltip={`Jettison ${cargo.name}`}
+                style={{ paddingTop: '4px' }}
               />
             </Stack.Item>
           </Stack>
@@ -386,14 +403,48 @@ const EquipmentBox = (props: { cargo: CargoData; drone: DroneData }) => {
         return '';
     }
   };
-  return (
+  return boxContents(cargo) ? (
     <Box
-      width={5}
-      height={5}
-      style={{ border: '2px solid black' }}
-      textAlign="center"
+      width="100%"
+      height={3}
+      style={{
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        borderRadius: '5px',
+        alignItems: 'center',
+        padding: '5px',
+      }}
     >
       {boxContents(cargo)}
+    </Box>
+  ) : (
+    <Box
+      width="100%"
+      height={3}
+      style={{
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        borderRadius: '5px',
+        padding: '5px',
+      }}
+    >
+      <Box
+        width="100%"
+        height="100%"
+        style={{
+          border: '1px rgba(255, 255, 255, 0.3) dashed',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: '3px',
+        }}
+      >
+        <span
+          style={{
+            color: 'rgba(255, 255, 255, 0.2)',
+          }}
+        >
+          Empty slot
+        </span>
+      </Box>
     </Box>
   );
 };
@@ -406,15 +457,49 @@ const EquipmentGrid = (props: { drone: ActiveDrone & DroneData }) => {
 
   return (
     <Stack vertical fill>
-      <Stack.Item grow>
-        <Section fill title="Controls">
+      <Stack.Item>
+        <Section title="Master Controls" minWidth="200px">
           <Stack vertical textAlign="center">
+            <Stack.Item>
+              <LabeledList>
+                <LabeledList.Item label="Drone ID">
+                  {props.drone.drone_name}
+                </LabeledList.Item>
+                <LabeledList.Item label="Activity">
+                  {capitalize(props.drone.drone_status)}
+                </LabeledList.Item>
+                <LabeledList.Item label="Integrity">
+                  <Tooltip
+                    content={
+                      props.drone.drone_integrity +
+                      '/' +
+                      props.drone.drone_max_integrity
+                    }
+                  >
+                    <ProgressBar
+                      ranges={{
+                        good: [
+                          0.7 * props.drone.drone_max_integrity,
+                          props.drone.drone_max_integrity,
+                        ],
+                        average: [
+                          0.4 * props.drone.drone_max_integrity,
+                          0.7 * props.drone.drone_max_integrity,
+                        ],
+                        bad: [-Infinity, 0.4 * props.drone.drone_max_integrity],
+                      }}
+                      value={props.drone.drone_integrity}
+                      maxValue={props.drone.drone_max_integrity}
+                    />
+                  </Tooltip>
+                </LabeledList.Item>
+              </LabeledList>
+            </Stack.Item>
             <Stack.Item>
               <Button fluid icon="plug" onClick={() => act('end_control')}>
                 Disconnect
               </Button>
             </Stack.Item>
-            <Stack.Divider />
             <Stack.Item>
               <Button.Confirm
                 fluid
@@ -429,22 +514,22 @@ const EquipmentGrid = (props: { drone: ActiveDrone & DroneData }) => {
         </Section>
       </Stack.Item>
       <Stack.Item>
-        <Section title="Cargo">
+        <Section
+          title="Equipment"
+          buttons={
+            !!configurable && (
+              <Button
+                fluid
+                color="average"
+                icon="wrench"
+                onClick={() => setChoosingTools(true)}
+              />
+            )
+          }
+        >
           <Stack fill vertical>
             <Stack.Item>
-              {!!configurable && (
-                <Button
-                  fluid
-                  color="average"
-                  icon="wrench"
-                  onClick={() => setChoosingTools(true)}
-                >
-                  Install Tool
-                </Button>
-              )}
-            </Stack.Item>
-            <Stack.Item>
-              <Stack wrap="wrap" width={10}>
+              <Stack vertical>
                 {cargo.map((cargo_element, index) => (
                   <EquipmentBox
                     drone={props.drone}
@@ -456,33 +541,6 @@ const EquipmentGrid = (props: { drone: ActiveDrone & DroneData }) => {
             </Stack.Item>
           </Stack>
         </Section>
-      </Stack.Item>
-    </Stack>
-  );
-};
-
-const DroneStatus = (props: {
-  drone_integrity: number;
-  drone_max_integrity: number;
-}) => {
-  const { drone_integrity, drone_max_integrity } = props;
-
-  return (
-    <Stack ml={-45}>
-      <Stack.Item color="label" mt={0.2}>
-        Integrity:
-      </Stack.Item>
-      <Stack.Item grow>
-        <ProgressBar
-          width="200px"
-          ranges={{
-            good: [0.7 * drone_max_integrity, drone_max_integrity],
-            average: [0.4 * drone_max_integrity, 0.7 * drone_max_integrity],
-            bad: [-Infinity, 0.4 * drone_max_integrity],
-          }}
-          value={drone_integrity}
-          maxValue={drone_max_integrity}
-        />
       </Stack.Item>
     </Stack>
   );
@@ -560,12 +618,7 @@ const TravelTargetSelectionScreen = (props: {
                 Cancel
               </Button>
             )}
-            <Box mt={props.showCancelButton && -3.5}>
-              <DroneStatus
-                drone_integrity={drone.drone_integrity}
-                drone_max_integrity={drone.drone_max_integrity}
-              />
-            </Box>
+            <Box mt={props.showCancelButton && -3.5} />
           </>
         }
       >
@@ -582,8 +635,9 @@ const TravelTargetSelectionScreen = (props: {
                   ml={1}
                   onClick={() => travel_to(null)}
                   disabled={!can_travel}
+                  icon={can_travel ? 'rocket' : 'triangle-exclamation'}
                 >
-                  {can_travel ? 'Launch!' : travel_error}
+                  {can_travel ? 'Launch' : travel_error}
                 </Button>
               </Box>
             }
@@ -600,8 +654,9 @@ const TravelTargetSelectionScreen = (props: {
                   ml={1}
                   onClick={() => travel_to(destination.ref)}
                   disabled={!can_travel}
+                  icon={can_travel ? 'rocket' : 'triangle-exclamation'}
                 >
-                  {can_travel ? 'Launch!' : travel_error}
+                  {can_travel ? 'Launch' : travel_error}
                 </Button>
               </>
             }
@@ -681,16 +736,7 @@ const ExplorationScreen = (props: { drone: DroneExploration & DroneData }) => {
     );
   }
   return (
-    <Section
-      fill
-      title="Exploration"
-      buttons={
-        <DroneStatus
-          drone_integrity={drone.drone_integrity}
-          drone_max_integrity={drone.drone_max_integrity}
-        />
-      }
-    >
+    <Section fill title="Exploration">
       <Stack vertical fill>
         <Stack.Item grow>
           <LabeledList>
@@ -704,11 +750,21 @@ const ExplorationScreen = (props: { drone: DroneExploration & DroneData }) => {
           </LabeledList>
         </Stack.Item>
         <Stack.Item align="center">
-          <Button onClick={() => act('explore')}>Explore!</Button>
+          <Button
+            lineHeight="3"
+            width="75px"
+            textAlign="center"
+            onClick={() => act('explore')}
+          >
+            Explore
+          </Button>
         </Stack.Item>
         {site.events.map((e) => (
           <Stack.Item align="center" key={site.ref} grow>
             <Button
+              lineHeight="3"
+              minWidth="75px"
+              textAlign="center"
               onClick={() => act('explore_event', { target_event: e.ref })}
             >
               {capitalize(e.name)}
@@ -716,7 +772,14 @@ const ExplorationScreen = (props: { drone: DroneExploration & DroneData }) => {
           </Stack.Item>
         ))}
         <Stack.Item align="center" grow>
-          <Button onClick={() => setTravelDimmerShown(true)}>Travel</Button>
+          <Button
+            lineHeight="3"
+            width="75px"
+            textAlign="center"
+            onClick={() => setTravelDimmerShown(true)}
+          >
+            Travel
+          </Button>
         </Stack.Item>
       </Stack>
     </Section>
@@ -728,16 +791,7 @@ const EventScreen = (props: { drone: DroneData; event: FullEventData }) => {
   const { drone, event } = props;
 
   return (
-    <Section
-      fill
-      title="Exploration"
-      buttons={
-        <DroneStatus
-          drone_integrity={drone.drone_integrity}
-          drone_max_integrity={drone.drone_max_integrity}
-        />
-      }
-    >
+    <Section fill title="Exploration">
       <Stack vertical fill textAlign="center">
         <Stack.Item>
           <Stack fill>
@@ -749,7 +803,9 @@ const EventScreen = (props: { drone: DroneData; event: FullEventData }) => {
               />
             </Stack.Item>
             <Stack.Item>
-              <BlockQuote preserveWhitespace>{event.description}</BlockQuote>
+              <BlockQuote preserveWhitespace textAlign="start">
+                {event.description}
+              </BlockQuote>
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -791,18 +847,7 @@ export const AdventureScreen = (props: {
   const rawData = adventure_data.raw_image;
   const imgSource = rawData ? rawData : resolveAsset(adventure_data.image);
   return (
-    <Section
-      fill
-      title="Exploration"
-      buttons={
-        !props.hide_status && (
-          <DroneStatus
-            drone_integrity={drone_integrity}
-            drone_max_integrity={drone_max_integrity}
-          />
-        )
-      }
-    >
+    <Section fill title="Exploration">
       <Stack>
         <Stack.Item>
           <BlockQuote preserveWhitespace>
@@ -882,20 +927,24 @@ const ExodroneConsoleContent = (props) => {
             <EquipmentGrid drone={data} />
           </Stack.Item>
           <Stack.Item grow basis={0}>
-            <DroneScreen drone={data} />
+            <Stack vertical fill>
+              <Stack.Item grow>
+                <DroneScreen drone={data} />
+              </Stack.Item>
+              <Stack.Item grow>
+                <Section title="Drone Log" fill scrollable>
+                  <LabeledList>
+                    {drone_log.map((log_line, ix) => (
+                      <LabeledList.Item key={`log-${ix}`} label={`#${ix + 1}`}>
+                        {log_line}
+                      </LabeledList.Item>
+                    ))}
+                  </LabeledList>
+                </Section>
+              </Stack.Item>
+            </Stack>
           </Stack.Item>
         </Stack>
-      </Stack.Item>
-      <Stack.Item height={10}>
-        <Section title="Drone Log" fill scrollable>
-          <LabeledList>
-            {drone_log.map((log_line, ix) => (
-              <LabeledList.Item key={`log-${ix}`} label={`Entry ${ix + 1}`}>
-                {log_line}
-              </LabeledList.Item>
-            ))}
-          </LabeledList>
-        </Section>
       </Stack.Item>
     </Stack>
   );

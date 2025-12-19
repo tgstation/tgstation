@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/aoe/wave_of_desperation
 	name = "Wave Of Desperation"
 	desc = "Removes your restraints, repels and knocks down adjacent people, and applies certain effects of the Mansus Grasp upon everything nearby. \
-		Cannot be cast unless you are restrained, and the stress renders you unconscious 12 seconds later! (Can be casted without a focus)"
+		Cannot be cast unless you are restrained. (Can be casted without a focus)"
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
