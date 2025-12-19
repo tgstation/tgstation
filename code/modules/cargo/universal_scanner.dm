@@ -185,7 +185,7 @@
 
 /obj/item/barcode
 	name = "barcode tag"
-	desc = "Pass your ID over the tag. Press the barcode onto a wrapped item. Once it's sold on the cargo shuttle, you'll get a cut of the probit. These are the words of the TERMS AND CONDITIONS."
+	desc = "Pass your ID over the tag. Press the barcode onto a wrapped item. Once it's sold on the cargo shuttle, you'll get a cut of the profit. These are the words of the TERMS AND CONDITIONS."
 	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "barcode"
 	w_class = WEIGHT_CLASS_TINY
@@ -202,7 +202,8 @@
 		if(!id_card?.registered_account)
 			return
 		payments_acc = id_card.registered_account
-		to_chat(user, "You register [id_card] to the barcode.")
+		to_chat(user, "[span_notice("You register [id_card] to the barcode.")]")
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/barcode/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
@@ -212,10 +213,11 @@
 		if(!id_card?.registered_account)
 			return
 		payments_acc = id_card.registered_account
-		to_chat(user, "You register [id_card] to the barcode.")
+		to_chat(user, "[span_notice("You register [id_card] to the barcode.")]")
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/barcode/gold
 	name = "golden barcode tag"
 	icon_state = "barcode_gold"
-	desc = "Pass your ID over the tag. Press the barcode onto a wrapped item. Experience profit like never before (Once it's sold on the cargo shuttle). SO IT IS WRITTEN ON THE BACK."
+	desc = "Pass your ID over the tag. Press the barcode onto a wrapped item. Experience profit like never before (once it's sold on the cargo shuttle). SO IT IS WRITTEN ON THE BACK."
 	cut_multiplier = 0.5
