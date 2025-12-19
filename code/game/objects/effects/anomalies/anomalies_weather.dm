@@ -86,7 +86,8 @@
 		repulsed.safe_throw_at(throwtarget, 6, 2, src, force = MOVE_FORCE_EXTREMELY_STRONG)
 
 /obj/effect/anomaly/weather/Destroy()
-	active_weathers = null
+	for(var/datum/weather/weather_datum as anything in active_weathers)
+		clear_ref(weather_datum)
 	return ..()
 
 /obj/effect/anomaly/weather/thundering
