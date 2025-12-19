@@ -1612,4 +1612,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Object is dangerous to mobs buckled to it
 #define TRAIT_DANGEROUS_BUCKLE "dangerous_buckle"
 
+/// Mob or client can see camera static over areas that no cameras on the map can see
+#define TRAIT_SEES_CAMERA_STATIC "sees_camera_static"
+
 // END TRAIT DEFINES

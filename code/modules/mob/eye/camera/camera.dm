@@ -16,8 +16,6 @@
 
 /mob/eye/camera/Initialize(mapload)
 	. = ..()
-	if (use_visibility)
-		SScameras.add_viewer_source(src, INNATE_TRAIT)
 	GLOB.camera_eyes += src
 
 /mob/eye/camera/Destroy()
