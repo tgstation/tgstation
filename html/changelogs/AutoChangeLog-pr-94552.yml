@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Meteor gun projectile meteors can now be smacked, whacked, walloped and cracked just as normal meteors can."

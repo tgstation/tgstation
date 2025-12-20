@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Plasmamen no longer take flat 1.5x brute and burn damage"
-  - balance: "Plasmamen are now affected by weapon demolition modifier, meaning blunt attacks deal more damage but slashing or piercing deal less damage"
-  - balance: "Skeletons and Golems are also affected by weapon demolition modifier, as well as any mineral type mobs (of which none currently exist)"
