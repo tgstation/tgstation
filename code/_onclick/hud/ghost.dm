@@ -99,12 +99,6 @@
 
 	update_appearance(UPDATE_ICON_STATE)
 
-/atom/movable/screen/ghost/hudbox/ghost
-	name = "Ghost Vision"
-	desc = "Toggles whether you can see other ghosts."
-	hud_icon_state = "ghost_vision"
-	relevant_flag = GHOST_VISION
-
 /atom/movable/screen/ghost/hudbox/health_scanner
 	name = "Health Scanner"
 	desc = "Toggles your ability to health scan mobs on click."
@@ -122,6 +116,12 @@
 	desc = "Toggles your ability to gas scan objects on click."
 	hud_icon_state = "atmos_vision"
 	relevant_flag = GHOST_GAS
+
+/atom/movable/screen/ghost/hudbox/ghost
+	name = "Ghost Vision"
+	desc = "Toggles whether you can see other ghosts."
+	hud_icon_state = "ghost_vision"
+	relevant_flag = GHOST_VISION
 
 /atom/movable/screen/ghost/hudbox/data_huds
 	name = "Data HUDs"
