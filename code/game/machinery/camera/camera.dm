@@ -97,20 +97,12 @@
 	var/datum/motion_group/area_motion = null
 	var/alarm_delay = 30 // Don't forget, there's another 3 seconds in queueAlarm()
 
-	/// Whether the camera was used in the last LoS update.
-	var/last_can_use = FALSE
-	/// The view size of this camera during its last LoS update.
-	var/last_view_size = 0
-	/// The x position of this camera during its last LoS update.
-	var/last_view_x = 0
-	/// The y position of this camera during its last LoS update.
-	var/last_view_y = 0
-	/// The z position of this camera during its last LoS update.
-	var/last_view_z = 0
-	/// List of camera chunks this camera was within view range of during its last LoS update.
-	var/list/last_view_chunks = list()
-	/// The list of relative flattened view coordinates from this camera during its last LoS update.
-	var/list/last_view_turfs = list()
+	/// The bounds of this camera's view.
+	var/datum/bounds/view_bounds = null
+	/// List of camera chunks this camera is within viewing range of.
+	var/list/view_chunks = list()
+	/// List of turf visibility (null/TRUE) this camera is within viewing range of.
+	var/list/view_turfs = list()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname, 0)
@@ -162,17 +154,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(can_use())
 		toggle_cam(null, 0) //kick anyone viewing out
 
-	if (last_can_use)
-		SScameras.adjust_viewing_camera_counts(src, last_view_x, last_view_y, last_view_size, last_view_chunks, last_view_turfs, adjust_amount = -1)
-
-	for (var/datum/camerachunk/chunk as anything in last_view_chunks)
-		chunk.cameras -= src
-
 	SScameras.cameras -= src
 	SScameras.camera_queue -= src
 
-	last_view_chunks.Cut()
-	last_view_turfs.Cut()
+	if (view_bounds)
+		SScameras.adjust_viewing_camera_counts(src, -1)
+		view_chunks.Cut()
+
+		for (var/datum/camerachunk/chunk as anything in view_chunks)
+			chunk.cameras -= src
+		view_turfs.Cut()
 
 	cancelCameraAlarm()
 
@@ -382,10 +373,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = TRUE)
 	camera_enabled = !camera_enabled
-	var/can_use = can_use()
-	if (!last_can_use != !can_use)
-		QUEUE_CAMERA_UPDATE(src)
-	if(can_use)
+	QUEUE_CAMERA_UPDATE(src)
+	if(can_use())
 		if (isturf(loc))
 			myarea = get_area(src)
 			LAZYADD(myarea.cameras, src)

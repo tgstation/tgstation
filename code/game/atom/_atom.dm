@@ -141,6 +141,9 @@
 	/// Generally for niche objects, atoms blacklisted can spawn if enabled by spawner.
 	var/spawn_blacklisted = FALSE
 
+	/// A lazylist of clients that are currently using this atom as an eye.
+	var/client/eye_clients = null
+
 /**
  * Top level of the destroy chain for most atoms
  *

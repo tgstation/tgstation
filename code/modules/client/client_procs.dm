@@ -1005,12 +1005,18 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 /client/proc/rescale_view(change, min, max)
 	view_size.setTo(clamp(change, min, max), clamp(change, min, max))
 
-/client/proc/set_eye(new_eye)
+/client/proc/set_eye(atom/new_eye)
 	if(new_eye == eye)
 		return
 	var/atom/old_eye = eye
 	eye = new_eye
 	SEND_SIGNAL(src, COMSIG_CLIENT_SET_EYE, old_eye, new_eye)
+	if (old_eye)
+		LAZYREMOVE(old_eye.eye_clients, src)
+		SEND_SIGNAL(old_eye, COMSIG_ATOM_UNSET_AS_EYE, new_eye)
+	if (new_eye)
+		LAZYADD(new_eye.eye_clients, src)
+		SEND_SIGNAL(new_eye, COMSIG_ATOM_SET_AS_EYE, old_eye)
 /**
  * Updates the keybinds for special keys
  *

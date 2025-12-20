@@ -882,6 +882,8 @@
 		current = new_eye
 	if(!client)
 		return
+	if(eyeobj)
+		eyeobj.clear_visibility() // HAHAHA FUCK MY CHUD LIFE
 
 	if(ismovable(new_eye))
 		if(new_eye != GLOB.ai_camera_room_landmark)
@@ -894,6 +896,7 @@
 			if(eyeobj)
 				client.set_eye(eyeobj)
 				client.perspective = EYE_PERSPECTIVE
+				eyeobj.update_visibility()
 			else
 				client.set_eye(client.mob)
 				client.perspective = MOB_PERSPECTIVE

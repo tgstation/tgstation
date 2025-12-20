@@ -50,8 +50,6 @@
 	else
 		moveToNullspace()
 
-	if(use_visibility)
-		update_visibility()
 	update_parallax_contents()
 
 /// Sends a visibility query to the cameranet.
@@ -60,7 +58,12 @@
 	SIGNAL_HANDLER
 	var/client/viewer_client = GetViewerClient()
 	if (viewer_client)
-		SScameras.add_viewer_client(GetViewerClient(), REF(src))
+		SScameras.add_viewer_client(viewer_client, REF(src))
+
+/mob/eye/camera/proc/clear_visibility()
+	var/client/viewer_client = GetViewerClient()
+	if (viewer_client)
+		SScameras.remove_viewer_client(viewer_client, REF(src))
 
 /mob/eye/camera/zMove(dir, turf/target, z_move_flags = NONE, recursions_left = 1, list/falling_movs)
 	. = ..()

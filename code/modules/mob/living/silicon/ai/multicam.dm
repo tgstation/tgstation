@@ -149,7 +149,6 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 		abstract_move(destination)
 	else
 		moveToNullspace()
-	update_visibility()
 	update_camera_telegraphing()
 	update_ai_detect_hud()
 

@@ -4,7 +4,9 @@
 #define MAX_CHUNKS 256
 
 /// Takes camera chunk coordinates and transforms them into a chunk coordinate index. Supports up to 256 16x16 chunks in each dimension. (for indexing SScameras.chunks)
-#define GET_CHUNK_COORDS(x, y, z) ((z << 16) | (x << 8) | y)
+#define GET_CHUNK_COORDS(x, y, z) (x | (y << 8) | (z << 16))
+#define GET_CHUNK_Y_COORD(y) (y << 8)
+#define GET_CHUNK_Z_COORD(z) (z << 16)
 /// Takes world coordinates and transforms them into a chunk coordinate index. (for indexing SScameras.chunks)
 #define GET_TURF_CHUNK_COORDS(turf) GET_CHUNK_COORDS(floor(WORLD_TO_CHUNK(turf.x)), floor(WORLD_TO_CHUNK(turf.y)), turf.z)
 /// Takes world coordinates and transforms them into a chunk turf coordinate index. (for indexing chunk.turfs, chunk.visibility, etc.)
@@ -20,12 +22,10 @@
 #define WORLD_TO_CHUNK(v) ((v - 1) / CHUNK_SIZE)
 /// Converts a coordinate (x or y) from chunk space to world space.
 /// Only meant for positions. For lengths, use (v * CHUNK_SIZE).
-#define CHUNK_TO_WORLD(v) (v * CHUNK_SIZE + 1)
+#define CHUNK_TO_WORLD(v) (1 + v * CHUNK_SIZE)
 
 /// Queues a camera for the next visibility update. (add it manually inside the subsystem)
 #define QUEUE_CAMERA_UPDATE(camera) if (!QDELETED(camera)) { SScameras.camera_queue += camera }
-/// Queues a camera chunk for the next visibility update. (add it manually inside the subsystem)
-#define QUEUE_CHUNK_UPDATE(chunk) SScameras.chunk_queue += chunk
 
 //List of different camera nets, cameras are given this in the map and camera consoles can only view them if
 //they share this network with them.
