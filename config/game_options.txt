@@ -572,11 +572,12 @@ MAX_SHUTTLE_COUNT 6
 MAX_SHUTTLE_SIZE 300
 
 # How many character slots granted to byond non-members and members respectively.
-# I request that you keep the byond_memeber one a reasonible amount higher.
+# Member slots are ADDED to default max slots.
+# The byond member extra slots is a minimum of 5.
 # I've also capped the default slots to 10.. This is intentionally not enough for all players of all servers.
 # Its important to support byond as its the platform that has gifted us with this game <3.
 MAX_SAVE_SLOTS 3
-MAX_SAVE_SLOTS_BYOND_MEMBER 8
+EXTRA_SAVE_SLOTS_BYOND_MEMBER 5
 
 ### Spy config
 ## Changes refresh period between bounties - in deciseconds

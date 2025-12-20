@@ -573,4 +573,4 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	unlock_content = !!byond_member
 	if(unlock_content)
-		max_save_slots = CONFIG_GET(number/max_save_slots_byond_member)
+		max_save_slots = CONFIG_GET(number/max_save_slots) + CONFIG_GET(number/extra_save_slots_byond_member)
