@@ -209,6 +209,7 @@
 			to_chat(owner, span_warning("You lose your balance!"))
 			owner.adjust_staggered_up_to(2 SECONDS * (terror_buildup / TERROR_BUILDUP_FEAR), 20 SECONDS)
 			owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/spooked)
+			addtimer(CALLBACK(src, PROC_REF(speed_up)), 3 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME)
 
 /datum/terror_handler/startle/proc/speed_up()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/spooked)

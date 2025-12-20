@@ -95,6 +95,8 @@
 	return FALSE
 
 /datum/terror_handler/phobia_source/proc/handle_hearing(datum/source, list/hearing_args)
+	SIGNAL_HANDLER
+
 	if (!can_trigger() || !COOLDOWN_FINISHED(src, scare_cooldown))
 		return
 
@@ -108,6 +110,8 @@
 		hearing_args[HEARING_RAW_MESSAGE] = trigger_regex.Replace(hearing_args[HEARING_RAW_MESSAGE], "[span_phobia("$2")]$3")
 
 /datum/terror_handler/phobia_source/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
 	if (!can_trigger())
 		return
 
