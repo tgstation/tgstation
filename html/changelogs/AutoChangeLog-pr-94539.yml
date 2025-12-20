@@ -1,0 +1,4 @@
+author: "OrbisAnima"
+delete-after: True
+changes:
+  - bugfix: "fixes exploit with paystands that allows anyone with the cargo budget card (or any other departamental card) to leech budgets with ease."

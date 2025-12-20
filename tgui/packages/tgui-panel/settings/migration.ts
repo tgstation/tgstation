@@ -1,6 +1,7 @@
 import { storage } from 'common/storage';
 import { smoothMerge } from 'common/type-safety';
 import { omit, pick } from 'es-toolkit';
+import { setMusicVolume } from '../audio/handlers';
 import { chatRenderer } from '../chat/renderer';
 import { store } from '../events/store';
 import {
@@ -72,13 +73,13 @@ const highlightKeys: (keyof typeof defaultHighlights)[] = [
 export function startSettingsMigration(next: MergedSettings): void {
   // No stored settings found, initialize with defaults
   if (!next) {
-    console.log('Initializing panel settings with defaults.');
     const initialized: SettingsState = {
       ...defaultSettings,
       initialized: true,
     };
     storage.set('panel-settings', initialized);
     store.set(settingsAtom, initialized);
+    console.log('Initialized settings with defaults.');
     return;
   }
 
@@ -95,6 +96,7 @@ export function startSettingsMigration(next: MergedSettings): void {
   draftSettings.view = defaultSettings.view; // Preserve view state
 
   generalSettingsHandler(draftSettings);
+  setMusicVolume(draftSettings.adminMusicVolume);
   store.set(settingsAtom, draftSettings);
   console.log('Migrated panel settings:', draftSettings);
 

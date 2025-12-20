@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Weather anomalies, in four variants: Rain, snow, sand, and the rare lightning storm."
+  - rscadd: "Reactive Weather Armor"
