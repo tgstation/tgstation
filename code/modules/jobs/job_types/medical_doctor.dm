@@ -2,7 +2,6 @@
 	title = JOB_MEDICAL_DOCTOR
 	description = "Save lives, run around the station looking for victims, \
 		scan everyone in sight"
-	department_head = list(JOB_CHIEF_MEDICAL_OFFICER)
 	faction = FACTION_STATION
 	total_positions = 6
 	spawn_positions = 4

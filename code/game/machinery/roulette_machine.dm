@@ -263,7 +263,7 @@
 	var/account_balance = my_card?.registered_account?.account_balance
 	potential_payout = (account_balance >= potential_payout) ? potential_payout : account_balance
 
-	say("You have won [potential_payout] credits! Congratulations!")
+	say("You have won [potential_payout] [MONEY_NAME]! Congratulations!")
 	playsound(src, 'sound/machines/synth/synth_yes.ogg', 50)
 	if(isliving(user) && (user in viewers(src)))
 		var/mob/living/living_user = user

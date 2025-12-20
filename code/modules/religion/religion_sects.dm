@@ -276,7 +276,7 @@
 		return BLESSING_IGNORED
 
 	if(account.account_balance < GREEDY_HEAL_COST)
-		to_chat(chap, span_warning("Healing from [GLOB.deity] costs [GREEDY_HEAL_COST] credits for 30 health!"))
+		to_chat(chap, span_warning("Healing from [GLOB.deity] costs [GREEDY_HEAL_COST] [MONEY_NAME] for 30 health!"))
 		return BLESSING_IGNORED
 
 	var/mob/living/carbon/human/blessed = blessed_living
@@ -371,17 +371,17 @@
 			target.cure_husk(BURN)
 			chaplain.become_husk(BURN)
 
-	var/toxin_damage = target.getToxLoss()
+	var/toxin_damage = target.get_tox_loss()
 	if(toxin_damage && !HAS_TRAIT(chaplain, TRAIT_TOXIMMUNE))
 		transferred = TRUE
-		target.adjustToxLoss(-toxin_damage)
-		chaplain.adjustToxLoss(toxin_damage * burden_modifier, forced = TRUE)
+		target.adjust_tox_loss(-toxin_damage)
+		chaplain.adjust_tox_loss(toxin_damage * burden_modifier, forced = TRUE)
 
-	var/suffocation_damage = target.getOxyLoss()
+	var/suffocation_damage = target.get_oxy_loss()
 	if(suffocation_damage && !HAS_TRAIT(chaplain, TRAIT_NOBREATH))
 		transferred = TRUE
-		target.adjustOxyLoss(-suffocation_damage)
-		chaplain.adjustOxyLoss(suffocation_damage * burden_modifier, forced = TRUE)
+		target.adjust_oxy_loss(-suffocation_damage)
+		chaplain.adjust_oxy_loss(suffocation_damage * burden_modifier, forced = TRUE)
 
 	var/cached_blood_volume = target.get_blood_volume()
 	if (cached_blood_volume < BLOOD_VOLUME_SAFE)

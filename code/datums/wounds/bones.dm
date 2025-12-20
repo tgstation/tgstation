@@ -69,7 +69,7 @@
 
 	return ..()
 
-/datum/wound/blunt/bone/remove_wound(ignore_limb, replaced)
+/datum/wound/blunt/bone/remove_wound(ignore_limb, replaced, destroying)
 	limp_slowdown = 0
 	limp_chance = 0
 	QDEL_NULL(active_trauma)
@@ -88,7 +88,7 @@
 			active_trauma = victim.gain_trauma_type(brain_trauma_group, TRAUMA_RESILIENCE_WOUND)
 		next_trauma_cycle = world.time + (rand(100-WOUND_BONE_HEAD_TIME_VARIANCE, 100+WOUND_BONE_HEAD_TIME_VARIANCE) * 0.01 * trauma_cycle_cooldown)
 
-	var/is_bone_limb = ((limb.biological_state & BIO_BONE) && !(limb.biological_state & BIO_FLESH))
+	var/is_bone_limb = ((limb.biological_state & BIO_BONE) && !(limb.biological_state & (BIO_FLESH|BIO_CHITIN)))
 	if(!gelled || (!taped && !is_bone_limb))
 		return
 
@@ -101,7 +101,7 @@
 
 	if(!is_bone_limb && SPT_PROB(severity * 1.5, seconds_per_tick))
 		victim.take_bodypart_damage(rand(1, severity * 2), wound_bonus=CANT_WOUND)
-		victim.adjustStaminaLoss(rand(2, severity * 2.5))
+		victim.adjust_stamina_loss(rand(2, severity * 2.5))
 		if(prob(33))
 			to_chat(victim, span_danger("You feel a sharp pain in your body as your bones are reforming!"))
 
@@ -435,6 +435,9 @@
 	simple_treat_text = "<b>Bandaging</b> the wound will slightly reduce its impact until <b>surgically treated</b> with bone gel and surgical tape."
 	homemade_treat_text = "Although this is extremely difficult and slow to function, <b>Bone gel and surgical tape</b> may be applied directly to the wound, though this is nigh-impossible for most people to do so individually unless they've dosed themselves with one or more <b>painkillers</b> (Morphine and Miner's Salve have been known to help)"
 
+	/// Tracks if a surgeon has reset the bone (part one of the surgical treatment process)
+	VAR_FINAL/reset = FALSE
+
 /datum/wound_pregen_data/bone/compound
 	abstract = FALSE
 
@@ -452,7 +455,7 @@
 /// if someone is using bone gel on our wound
 /datum/wound/blunt/bone/proc/gel(obj/item/stack/medical/bone_gel/I, mob/user)
 	// skellies get treated nicer with bone gel since their "reattach dismembered limbs by hand" ability sucks when it's still critically wounded
-	if((limb.biological_state & BIO_BONE) && !(limb.biological_state & BIO_FLESH))
+	if((limb.biological_state & BIO_BONE) && !(limb.biological_state & (BIO_FLESH|BIO_CHITIN)))
 		return skelly_gel(I, user)
 
 	if(gelled)
@@ -532,6 +535,10 @@
 	processes = TRUE
 	return TRUE
 
+/datum/wound/blunt/bone/item_can_treat(obj/item/potential_treater, mob/user)
+	// assume that - if working on a ready-to-operate limb - the surgery wants to do the real surgery instead of bone regeneration
+	return ..() && !HAS_TRAIT(limb, TRAIT_READY_TO_OPERATE)
+
 /datum/wound/blunt/bone/treat(obj/item/tool, mob/user)
 	if(istype(tool, /obj/item/stack/medical/bone_gel))
 		gel(tool, user)
@@ -544,7 +551,7 @@
 	. += "<div class='ml-3'>"
 
 	if(severity > WOUND_SEVERITY_MODERATE)
-		if((limb.biological_state & BIO_BONE) && !(limb.biological_state & BIO_FLESH))
+		if((limb.biological_state & BIO_BONE) && !(limb.biological_state & (BIO_FLESH|BIO_CHITIN)))
 			if(!gelled)
 				. += "Recommended Treatment: Apply bone gel directly to injured limb. Creatures of pure bone don't seem to mind bone gel application nearly as much as fleshed individuals. Surgical tape will also be unnecessary.\n"
 			else

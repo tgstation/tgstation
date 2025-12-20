@@ -41,9 +41,11 @@
 	var/datum/martial_art/source = target
 	if (source.streak == "neck_chop")
 		owner.visible_message(span_danger("[owner] assumes a neutral stance."), "<b><i>Your next attack is cleared.</i></b>")
+		owner.balloon_alert(owner, "cleared")
 		source.streak = ""
 	else
 		owner.visible_message(span_danger("[owner] assumes the Neck Chop stance!"), "<b><i>Your next attack will be a Neck Chop.</i></b>")
+		owner.balloon_alert(owner, "neck chop")
 		source.streak = "neck_chop"
 
 /datum/action/low_sweep
@@ -60,9 +62,11 @@
 	var/datum/martial_art/source = target
 	if (source.streak == "low_sweep")
 		owner.visible_message(span_danger("[owner] assumes a neutral stance."), "<b><i>Your next attack is cleared.</i></b>")
+		owner.balloon_alert(owner, "cleared")
 		source.streak = ""
 	else
 		owner.visible_message(span_danger("[owner] assumes the Low Sweep stance!"), "<b><i>Your next attack will be a Low Sweep.</i></b>")
+		owner.balloon_alert(owner, "low sweep")
 		source.streak = "low_sweep"
 
 /datum/action/lung_punch//referred to internally as 'quick choke'
@@ -79,9 +83,11 @@
 	var/datum/martial_art/source = target
 	if (source.streak == "quick_choke")
 		owner.visible_message(span_danger("[owner] assumes a neutral stance."), "<b><i>Your next attack is cleared.</i></b>")
+		owner.balloon_alert(owner, "cleared")
 		source.streak = ""
 	else
 		owner.visible_message(span_danger("[owner] assumes the Lung Punch stance!"), "<b><i>Your next attack will be a Lung Punch.</i></b>")
+		owner.balloon_alert(owner, "lung punch")
 		source.streak = "quick_choke"//internal name for lung punch
 
 /datum/martial_art/kaza_ruk/activate_style(mob/living/new_holder)
@@ -161,7 +167,7 @@
 	playsound(attacker, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 	if(defender.losebreath <= 10)
 		defender.losebreath = clamp(defender.losebreath + 5, 0, 10)
-	defender.adjustOxyLoss(10)
+	defender.adjust_oxy_loss(10)
 	log_combat(attacker, defender, "quickchoked")
 	return MARTIAL_ATTACK_SUCCESS
 
@@ -264,6 +270,35 @@
 	. = ..()
 	AddComponent(/datum/component/martial_art_giver, /datum/martial_art/kaza_ruk)
 
+/datum/atom_skin/kaza_ruk
+	abstract_type = /datum/atom_skin/kaza_ruk
+	reset_missing = FALSE
+	/// Color (/matrix) applied with the skin. If null, no color is applied.
+	var/reskin_color
+
+/datum/atom_skin/kaza_ruk/apply(atom/apply_to)
+	. = ..()
+	if(reskin_color)
+		apply_to.add_atom_colour(color_matrix_filter(reskin_color), FIXED_COLOUR_PRIORITY)
+
+/datum/atom_skin/kaza_ruk/clear_skin(atom/clear_from)
+	. = ..()
+	if(reskin_color)
+		clear_from.remove_atom_colour(FIXED_COLOUR_PRIORITY, reskin_color)
+
+/datum/atom_skin/kaza_ruk/get_preview_icon(atom/for_atom)
+	var/image/generated = ..()
+	if(reskin_color)
+		generated.add_filter("preview_filter", 1, color_matrix_filter(reskin_color))
+	return generated
+
+/datum/atom_skin/kaza_ruk/red
+	preview_name = "Red"
+
+/datum/atom_skin/kaza_ruk/blue
+	preview_name = "Blue"
+	reskin_color = list(0.33, 0.33, 0.33, 0, 0, 0, 0, 0, 1)
+
 /obj/item/clothing/gloves/kaza_ruk/sec//more obviously named, given to sec
 	name = "kaza ruk gloves"
 	desc = "These gloves seem to guide you through a non-lizardperson friendly variant of the Tiziran martial art, Kaza Ruk. \
@@ -275,6 +310,10 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
+
+/obj/item/clothing/gloves/kaza_ruk/sec/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/kaza_ruk, infinite = TRUE)
 
 /obj/item/clothing/gloves/kaza_ruk/combatglovesplus
 	name = "combat gloves plus"

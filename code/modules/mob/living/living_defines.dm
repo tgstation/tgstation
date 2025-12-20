@@ -94,10 +94,8 @@
 	/// Lazylist of all typepaths of personalities the mob has.
 	var/list/personalities
 
-	///a list of surgery datums. generally empty, they're added when the player wants them.
-	var/list/surgeries = list()
-	///Mob specific surgery speed modifier
-	var/mob_surgery_speed_mod = 1
+	/// Lazylist of surgery speed modifiers - id to number - 2 = 2x faster, 0.5x = 0.5x slower
+	var/list/mob_surgery_speed_mods
 
 	/// Used by [living/Bump()][/mob/living/proc/Bump] and [living/PushAM()][/mob/living/proc/PushAM] to prevent potential infinite loop.
 	var/now_pushing = null
@@ -113,7 +111,7 @@
 	var/mob_size = MOB_SIZE_HUMAN
 	/// List of biotypes the mob belongs to. Used by diseases and reagents mainly.
 	var/mob_biotypes = MOB_ORGANIC
-	/// The type of respiration the mob is capable of doing. Used by adjustOxyLoss.
+	/// The type of respiration the mob is capable of doing. Used by adjust_oxy_loss.
 	var/mob_respiration_type = RESPIRATION_OXYGEN
 	///more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 	var/metabolism_efficiency = 1

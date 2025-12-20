@@ -70,6 +70,11 @@
 		for(var/datum/wound/iter_wound as anything in body_part.wounds)
 			. += span_danger(iter_wound.get_examine_description(user))
 
+		var/surgery_examine = body_part.get_surgery_examine()
+		if(surgery_examine)
+			. += surgery_examine
+
+
 	for(var/obj/item/bodypart/body_part as anything in disabled)
 		var/damage_text
 		if(HAS_TRAIT(body_part, TRAIT_DISABLED_BY_WOUND))
@@ -106,7 +111,7 @@
 		if(user == src && has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_crit))//fake damage
 			temp = 50
 		else
-			temp = getBruteLoss()
+			temp = get_brute_loss()
 		var/list/damage_desc = get_majority_bodypart_damage_desc()
 		if(temp)
 			if(temp < 25)
@@ -116,7 +121,7 @@
 			else
 				. += span_bolddanger("[t_He] [t_has] severe [damage_desc[BRUTE]]!")
 
-		temp = getFireLoss()
+		temp = get_fire_loss()
 		if(temp)
 			if(temp < 25)
 				. += span_danger("[t_He] [t_has] minor [damage_desc[BURN]].")

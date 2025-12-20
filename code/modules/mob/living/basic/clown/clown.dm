@@ -42,6 +42,7 @@
 
 /mob/living/basic/clown/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NAIVE, INNATE_TRAIT)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SHOE)
 	AddComponent(/datum/component/ai_retaliate_advanced, CALLBACK(src, PROC_REF(retaliate_callback)))
 	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, emotes)
@@ -470,10 +471,10 @@
 			health += 10
 		if(istype(eaten_atom, /obj/item/food/grown/banana))
 			var/obj/item/food/grown/banana/banana_morsel = eaten_atom
-			adjustBruteLoss(-(banana_morsel.seed.potency / 100 ) * maxHealth * 0.2)
+			adjust_brute_loss(-(banana_morsel.seed.potency / 100 ) * maxHealth * 0.2)
 			prank_pouch += banana_morsel.generate_trash(src)
 		else
-			adjustBruteLoss(-maxHealth * 0.1)
+			adjust_brute_loss(-maxHealth * 0.1)
 		qdel(eaten_atom)
 
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)

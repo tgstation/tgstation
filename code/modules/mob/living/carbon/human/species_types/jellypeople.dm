@@ -69,7 +69,7 @@
 	// Blood regen thresholds use your real amount of blood.
 	if(slime.get_blood_volume() <= 0)
 		slime.adjust_blood_volume(JELLY_REGEN_RATE_EMPTY * slime.physiology.blood_regen_mod * seconds_per_tick)
-		slime.adjustBruteLoss(2.5 * seconds_per_tick)
+		slime.adjust_brute_loss(2.5 * seconds_per_tick)
 		to_chat(slime, span_danger("You feel empty!"))
 
 	// Same logic applies here.

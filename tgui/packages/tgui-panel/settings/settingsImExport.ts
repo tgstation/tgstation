@@ -1,12 +1,15 @@
-import { useDispatch } from 'tgui/backend';
+import { omit, pick } from 'es-toolkit';
+import { chatPagesRecordAtom } from '../chat/atom';
+import { importChatState } from '../chat/helpers';
+import { store } from '../events/store';
+import { storedSettingsAtom } from './atoms';
+import { startSettingsMigration } from './migration';
+import type { ExportedSettings } from './types';
 
-import type { Page } from '../chat/types';
-import { importSettings } from './actions';
+export function exportChatSettings(): void {
+  const chatPages = store.get(chatPagesRecordAtom);
+  const settings = store.get(storedSettingsAtom);
 
-export function exportChatSettings(
-  settings: Record<string, any>,
-  pages: Record<string, Page>[],
-) {
   const opts: SaveFilePickerOptions = {
     id: `ss13-chatprefs-${Date.now()}`,
     suggestedName: `ss13-chatsettings-${new Date().toJSON().slice(0, 10)}.json`,
@@ -18,9 +21,7 @@ export function exportChatSettings(
     ],
   };
 
-  const pagesEntry = { chatPages: pages };
-
-  const exportObject = Object.assign(settings, pagesEntry);
+  const exportObject = { ...settings, chatPages };
 
   window
     .showSaveFilePicker(opts)
@@ -38,17 +39,22 @@ export function exportChatSettings(
     });
 }
 
-export function importChatSettings(settings: string | string[]) {
-  const dispatch = useDispatch();
-  if (Array.isArray(settings)) {
-    return;
-  }
-  const ourImport = JSON.parse(settings);
-  if (!ourImport?.version) {
-    return;
-  }
-  const pageRecord = ourImport.chatPages;
-  delete ourImport.chatPages;
+export function importChatSettings(settings: string | string[]): void {
+  if (Array.isArray(settings)) return;
 
-  dispatch(importSettings(ourImport, pageRecord));
+  let ourImport: ExportedSettings;
+  try {
+    ourImport = JSON.parse(settings);
+  } catch (err) {
+    console.error(err);
+    return;
+  }
+
+  const chatPart = pick(ourImport, ['chatPages']);
+  const settingsPart = omit(ourImport, ['chatPages']);
+
+  if (chatPart) {
+    importChatState(chatPart as any);
+  }
+  startSettingsMigration(settingsPart as any);
 }

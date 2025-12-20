@@ -11,11 +11,11 @@
 /datum/element/examine_lore/Attach(datum/target, lore_hint, lore)
 	. = ..()
 
-	src.lore_hint = lore_hint
+	src.lore_hint = lore_hint || span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [target].")
 	src.lore = lore
 
-	if(!lore_hint || !lore)
-		stack_trace("[type] initialized without lore or a lore hint! Double-check element addition?")
+	if(!lore)
+		stack_trace("[type] initialized without lore! Double-check element addition?")
 		return ELEMENT_INCOMPATIBLE
 
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))

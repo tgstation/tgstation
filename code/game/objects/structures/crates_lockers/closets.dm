@@ -20,6 +20,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	/// How insulated the thing is, for the purposes of calculating body temperature. Must be between 0 and 1!
 	contents_thermal_insulation = 0
 	pass_flags_self = PASSSTRUCTURE | LETPASSCLICKS
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 	/// The overlay for the closet's door
 	var/obj/effect/overlay/closet_door/door_obj
 	/// Whether or not this door is being animated
@@ -392,10 +393,20 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/screentip_change = FALSE
 
 	if(isnull(held_item))
-		if(secure && !broken)
-			context[SCREENTIP_CONTEXT_RMB] = opened ? "Lock" : "Unlock"
 		if(!welded)
 			context[SCREENTIP_CONTEXT_LMB] = opened ? "Close" : "Open"
+			context[SCREENTIP_CONTEXT_RMB] = opened ? "Close" : "Open"
+		if(secure && !broken)
+			if (opened)
+				context[SCREENTIP_CONTEXT_RMB] = "Close"
+			else
+				context[SCREENTIP_CONTEXT_RMB] = !locked ? "Lock" : "Unlock"
+				if (locked)
+					context[SCREENTIP_CONTEXT_LMB] = "Unlock"
+		screentip_change = TRUE
+	if(secure && !opened && istype(held_item, /obj/item/card/id))
+		context[SCREENTIP_CONTEXT_LMB] = !locked ? "Lock" : "Unlock"
+		context[SCREENTIP_CONTEXT_RMB] = !locked ? "Lock" : "Unlock"
 		screentip_change = TRUE
 
 	if(istype(held_item, cutting_tool))

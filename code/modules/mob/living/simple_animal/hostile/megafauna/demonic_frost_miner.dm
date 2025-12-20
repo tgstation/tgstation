@@ -81,7 +81,7 @@ Difficulty: Extremely Hard
 	AddElement(/datum/element/knockback, 7, FALSE, TRUE)
 	AddElement(/datum/element/lifesteal, 50)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
-	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg', 167 SECONDS)
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg')
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Destroy()
 	frost_orbs = null
@@ -158,7 +158,7 @@ Difficulty: Extremely Hard
 	adjustHealth(-maxHealth)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/ex_act(severity, target)
-	adjustBruteLoss(-30 * severity)
+	adjust_brute_loss(-30 * severity)
 	visible_message(span_danger("[src] absorbs the explosion!"), span_userdanger("You absorb the explosion!"))
 	return TRUE
 

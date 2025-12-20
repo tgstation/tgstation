@@ -439,7 +439,7 @@
 
 
 ///Get the item on the mob in the storage slot identified by the id passed in
-/mob/proc/get_item_by_slot(slot_id)
+/mob/proc/get_item_by_slot(slot_id) as /obj/item
 	return null
 
 /// Gets what slot the item on the mob is held in.
@@ -870,6 +870,15 @@
 	set name = "Cancel Camera View"
 	set category = "OOC"
 	reset_perspective(null)
+
+/**
+ * Helpful for when a players uplink window gets glitched to above their screen.
+ * preventing them from moving the UPLINK window.
+ */
+/mob/verb/reset_ui_positions_for_mob()
+	set name = "Reset UI Positions"
+	set category = "OOC"
+	SStgui.reset_ui_position(src)
 
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
 /mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
@@ -1510,8 +1519,7 @@
 	. = ..()
 	// Queue update if change is small enough (6 is 1% of nutrition softcap)
 	if(abs(change) >= 6)
-		mob_mood?.update_nutrition_moodlets()
-		hud_used?.hunger?.update_hunger_bar()
+		update_nutrition()
 	else
 		living_flags |= QUEUE_NUTRITION_UPDATE
 
@@ -1527,10 +1535,15 @@
 	. = ..()
 	// Queue update if change is small enough (6 is 1% of nutrition softcap)
 	if(abs(old_nutrition - nutrition) >= 6)
-		mob_mood?.update_nutrition_moodlets()
-		hud_used?.hunger?.update_hunger_bar()
+		update_nutrition()
 	else
 		living_flags |= QUEUE_NUTRITION_UPDATE
+
+/// Updates nutrition related effects
+/mob/living/proc/update_nutrition()
+	mob_mood?.update_nutrition_moodlets()
+	hud_used?.hunger?.update_hunger_bar()
+	SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_NUTRITION)
 
 /// Apply a proper movespeed modifier based on items we have equipped
 /mob/proc/update_equipment_speed_mods()
@@ -1561,13 +1574,6 @@
 		)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/equipment_speedmod)
-
-///Get all items in our possession that should affect our movespeed
-/mob/proc/get_equipped_speed_mod_items()
-	. = list()
-	for(var/obj/item/thing in held_items)
-		if(thing.item_flags & SLOWS_WHILE_IN_HAND)
-			. += thing
 
 /mob/proc/set_stat(new_stat)
 	if(new_stat == stat)

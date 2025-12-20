@@ -214,6 +214,9 @@
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return FALSE
 
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
+
 	if(attack_type == LEAP_ATTACK)
 		final_block_chance -= 25 //OH GOD GET IT OFF ME
 
@@ -418,7 +421,6 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_TRANSFORMING_PRE_TRANSFORM, PROC_REF(check_power))
 	AddElement(/datum/element/examine_lore, \
-		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
 		lore = "This early iteration of the now infamous energy sword was, supposedly, a Waffle Corp prototype first trialed in a variety of armed conflicts \
 		around the interstellar frontier.<br>\
 		<br>\
@@ -508,6 +510,12 @@
 /obj/item/melee/energy/sword/surplus/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return FALSE
+
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
+
+	if(attack_type == LEAP_ATTACK)
+		final_block_chance -= 25
 
 	if(prob(final_block_chance) && charge)
 		expend_charge(owner)

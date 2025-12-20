@@ -100,6 +100,20 @@
 /mob/living/proc/is_ears_covered()
 	return null
 
+/**
+ * Check if the passed body zone is covered by some clothes
+ *
+ * * location: body zone to check
+ * ([BODY_ZONE_CHEST], [BODY_ZONE_HEAD], etc)
+ * * exluded_equipment_slots: equipment slots to ignore when checking coverage
+ * (for example, if you want to ignore helmets, pass [ITEM_SLOT_HEAD])
+ *
+ * Returns TRUE if the location is accessible (not covered)
+ * Returns FALSE if the location is covered by something
+ */
+/mob/living/proc/is_location_accessible(location, exluded_equipment_slots = NONE)
+	return TRUE
+
 /mob/living/bullet_act(obj/projectile/proj, def_zone, piercing_hit = FALSE, blocked = 0)
 	. = ..()
 	if (. != BULLET_ACT_HIT)
@@ -459,13 +473,8 @@
 	if(.)
 		return TRUE
 
-	for(var/datum/surgery/operations as anything in surgeries)
-		if(user.combat_mode)
-			break
-		if(IS_IN_INVALID_SURGICAL_POSITION(src, operations))
-			continue
-		if(operations.next_step(user, modifiers))
-			return TRUE
+	if(!combat_mode && HAS_TRAIT(src, TRAIT_READY_TO_OPERATE) && user.perform_surgery(src))
+		return TRUE
 
 	return FALSE
 
@@ -581,12 +590,12 @@
 	if(shock_damage < 1)
 		return FALSE
 	if(!(flags & SHOCK_ILLUSION))
-		adjustFireLoss(shock_damage)
-		if(getFireLoss() > 100)
+		adjust_fire_loss(shock_damage)
+		if(get_fire_loss() > 100)
 			add_shared_particles(/particles/smoke/burning)
 			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, remove_shared_particles), /particles/smoke/burning), 10 SECONDS)
 	else
-		adjustStaminaLoss(shock_damage)
+		adjust_stamina_loss(shock_damage)
 	if(!(flags & SHOCK_SUPPRESS_MESSAGE))
 		visible_message(
 			span_danger("[src] was shocked by \the [source]!"), \
@@ -802,22 +811,22 @@
 		if(!(shove_flags & SHOVE_DIRECTIONAL_BLOCKED) && (SEND_SIGNAL(target_shove_turf, COMSIG_LIVING_DISARM_COLLIDE, src, target, shove_flags, weapon) & COMSIG_LIVING_SHOVE_HANDLED))
 			return
 		if((shove_flags & SHOVE_BLOCKED) && !(shove_flags & (SHOVE_KNOCKDOWN_BLOCKED|SHOVE_CAN_KICK_SIDE)))
-			target.Knockdown(SHOVE_KNOCKDOWN_SOLID, daze_amount = 3 SECONDS)
-			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
-				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-			to_chat(src, span_danger("You shove [target.name], knocking [target.p_them()] down!"))
-			log_combat(src, target, "shoved", "knocking them down[weapon ? " with [weapon]" : ""]")
+			var/knocked_down = target.Knockdown(SHOVE_KNOCKDOWN_SOLID, daze_amount = 3 SECONDS)
+			target.visible_message(span_danger("[name] shoves [target.name][knocked_down ? ", knocking [target.p_them()] down" : ""]!"),
+				span_userdanger("You[knocked_down ? "'re knocked down" : " resist falling down"] from a shove by [name]!"), span_hear("You hear aggressive shuffling [knocked_down ? "followed by a loud thud!" : ""]"), COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, span_danger("You shove [target.name][knocked_down ? ", knocking [target.p_them()] down" : ""]!"))
+			log_combat(src, target, "shoved", "[knocked_down ? "knocking them down[weapon ? " with [weapon]" : ""]" : ""]")
 			return
 
 	if(shove_flags & SHOVE_CAN_KICK_SIDE) //KICK HIM IN THE NUTS
-		target.Paralyze(SHOVE_CHAIN_PARALYZE)
-		target.apply_status_effect(/datum/status_effect/no_side_kick)
-		target.visible_message(span_danger("[name] kicks [target.name] onto [target.p_their()] side!"),
-						span_userdanger("You're kicked onto your side by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-		to_chat(src, span_danger("You kick [target.name] onto [target.p_their()] side!"))
-		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, SetKnockdown), 0), SHOVE_CHAIN_PARALYZE)
-		log_combat(src, target, "kicks", "onto their side (paralyzing)")
-		return
+		if(target.Paralyze(SHOVE_CHAIN_PARALYZE))
+			target.apply_status_effect(/datum/status_effect/no_side_kick)
+			target.visible_message(span_danger("[name] kicks [target.name] onto [target.p_their()] side!"),
+							span_userdanger("You're kicked onto your side by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, span_danger("You kick [target.name] onto [target.p_their()] side!"))
+			addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, SetKnockdown), 0), SHOVE_CHAIN_PARALYZE)
+			log_combat(src, target, "kicks", "onto their side (paralyzing)")
+			return
 
 	target.get_shoving_message(src, weapon, shove_flags)
 

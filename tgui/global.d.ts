@@ -189,7 +189,7 @@ type ByondType = {
  * Object that provides access to Byond Skin API and is available in
  * any tgui application.
  */
-const Byond: ByondType;
+const Byond: ByondType = {};
 
 interface Window {
   Byond: ByondType;
@@ -204,4 +204,6 @@ interface Window {
   hubStorage: Storage;
   domainStorage: Storage;
   serverStorage: Storage;
+
+  __chatRenderer__: any;
 }

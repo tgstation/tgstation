@@ -52,10 +52,10 @@
 			if(SPT_PROB(2, seconds_per_tick))
 				to_chat(owner, span_danger("Your stomach hurts."))
 				if(prob(20))
-					owner.adjustToxLoss(1)
+					owner.adjust_tox_loss(1)
 		if(6)
 			to_chat(owner, span_danger("You feel something tearing its way out of your chest..."))
-			owner.adjustToxLoss(5 * seconds_per_tick) // Why is this [TOX]?
+			owner.adjust_tox_loss(5 * seconds_per_tick) // Why is this [TOX]?
 
 /// Controls Xenomorph Embryo growth. If embryo is fully grown (or overgrown), stop the proc. If not, increase the stage by one and if it's not fully grown (stage 6), add a timer to do this proc again after however long the growth time variable is.
 /obj/item/organ/body_egg/alien_embryo/proc/advance_embryo_stage()
@@ -77,14 +77,8 @@
 
 /obj/item/organ/body_egg/alien_embryo/egg_process()
 	if(stage == 6 && prob(50))
-		for(var/datum/surgery/operations as anything in owner.surgeries)
-			if(operations.location != BODY_ZONE_CHEST)
-				continue
-			if(!ispath(operations.steps[operations.status], /datum/surgery_step/manipulate_organs/internal))
-				continue
-			attempt_grow(gib_on_success = FALSE)
-			return
-		attempt_grow()
+		// If we are mid surgery we won't gib the mob, isn't that neat?
+		attempt_grow(gib_on_success = !LIMB_HAS_SURGERY_STATE(bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED))
 
 /// Attempt to burst an alien outside of the host, getting a ghost to play as the xeno.
 /obj/item/organ/body_egg/alien_embryo/proc/attempt_grow(gib_on_success = TRUE)
@@ -143,7 +137,7 @@
 	else
 		new_xeno.visible_message(span_danger("[new_xeno] wriggles out of [owner]!"), span_userdanger("You exit [owner], your previous host."))
 		owner.log_message("had an alien larva within them escape (without being gibbed).", LOG_ATTACK, log_globally = FALSE)
-		owner.adjustBruteLoss(40)
+		owner.adjust_brute_loss(40)
 		owner.cut_overlay(overlay)
 	qdel(src)
 
