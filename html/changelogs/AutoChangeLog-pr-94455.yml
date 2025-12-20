@@ -1,0 +1,8 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Monophobia is now availible as a negative (-3) quirk."
+  - balance: "Phobias now have accumulating, and less debilitating effects due to conversion to the new fear system."
+  - qol: "Fear effects now have a cooldown between messages as to avoid chat spam."
+  - code_imp: "Cleaned up some of fear code."
+  - refactor: "Refactored phobias to use the fear system"
