@@ -525,5 +525,5 @@
 	protection = CONFIG_ENTRY_LOCKED
 	default = 5
 	min_val = 5
-	// I've seen people on a downstream use upwards of 25~ slots but those are the most deticated of our bunch. What are you even doing past 30.
-	max_val = 30
+	// I've seen people on a downstream use upwards of 25~ slots but those are the most deticated of our bunch.
+	max_val = 40
