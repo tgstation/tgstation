@@ -50,11 +50,11 @@ export function importChatSettings(settings: string | string[]): void {
     return;
   }
 
-  const chatPart = pick(ourImport, ['chatPages']);
   const settingsPart = omit(ourImport, ['chatPages']);
 
-  if (chatPart) {
-    importChatState(chatPart as any);
+  if ('chatPages' in ourImport && ourImport.chatPages) {
+    importChatState(ourImport.chatPages);
   }
-  startSettingsMigration(settingsPart as any);
+
+  startSettingsMigration(settingsPart);
 }
