@@ -68,7 +68,7 @@ function rebuildChatState(
   pageRecord: Record<string, Page>,
 ): StoredChatSettings | undefined {
   const newPageIds: string[] = Object.keys(pageRecord);
-  if (!newPageIds) return;
+  if (newPageIds.length === 0) return;
 
   // Correct any missing keys from the import
   const merged: Record<string, Page> = { ...pageRecord };
