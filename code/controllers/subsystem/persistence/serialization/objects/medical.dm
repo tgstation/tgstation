@@ -31,3 +31,12 @@
 
 /obj/item/surgery_tray/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
 	save_stored_contents(map_string, current_loc, obj_blacklist)
+
+/obj/machinery/scanner_gate/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, locked)
+	. += NAMEOF(src, scangate_mode)
+	. += NAMEOF(src, disease_threshold)
+	. += NAMEOF(src, detect_species_id)
+	. += NAMEOF(src, detect_nutrition)
+	. += NAMEOF(src, reverse)
