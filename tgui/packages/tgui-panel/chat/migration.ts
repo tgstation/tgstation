@@ -1,5 +1,18 @@
-import { mainPage } from './atom';
-import type { Page, StoredChatSettings } from './types';
+import { storage } from 'common/storage';
+import { store } from '../events/store';
+import {
+  chatPagesAtom,
+  chatPagesRecordAtom,
+  currentPageIdAtom,
+  mainPage,
+  versionAtom,
+} from './atom';
+import { chatRenderer } from './renderer';
+import {
+  type Page,
+  type StoredChatSettings,
+  storedSettingsSchema,
+} from './types';
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return !!value && typeof value === 'object' && !Array.isArray(value);
@@ -165,4 +178,30 @@ export function normalizeChatSettings(loaded: StoredChatSettings): {
     },
     dirty,
   };
+}
+
+export function startChatStateMigration(state: StoredChatSettings): void {
+  const parsed = storedSettingsSchema.safeParse(state);
+  if (!parsed.success) {
+    console.error('Failed to parse stored chat settings:', parsed.error);
+    return;
+  }
+  const { settings: loaded, dirty: wasInconsistent } = normalizeChatSettings(
+    parsed.data,
+  );
+
+  if (wasInconsistent) {
+    console.error('Chat settings were inconsistent, rewriting to storage');
+    console.log('Comparison, stored vs update:', state, loaded);
+    storage.set('chat-state', loaded);
+  }
+
+  store.set(versionAtom, loaded.version);
+  store.set(chatPagesAtom, loaded.pages);
+  store.set(currentPageIdAtom, loaded.currentPageId);
+  store.set(chatPagesRecordAtom, loaded.pageById);
+
+  chatRenderer.changePage(loaded.pageById[loaded.currentPageId]);
+
+  console.log('Restored chat settings:', loaded);
 }
