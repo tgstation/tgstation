@@ -23,41 +23,39 @@
 
 /datum/component/meteor_combat/proc/on_attacked(atom/owner, obj/item/attacking_item, mob/user, list/modifiers)
 	SIGNAL_HANDLER
-	. = FALSE
 	if(attacking_item.tool_behaviour == TOOL_MINING)
 		destruction_proc?.Invoke()
 		playsound(parent, 'sound/effects/pickaxe/picaxe1.ogg', 50, TRUE)
 		qdel(parent)
 		return TRUE
 
-	else if	(istype(attacking_item, /obj/item/melee/baseball_bat))
+	if(istype(attacking_item, /obj/item/melee/baseball_bat))
 		if(user.mind?.get_skill_level(/datum/skill/athletics) < SKILL_LEVEL_EXPERT)
 			to_chat(user, span_warning("\The [parent] is too heavy for you!"))
-			return
+			return FALSE
 		playsound(parent, 'sound/items/baseballhit.ogg', 100, TRUE)
 		redirection_proc.Invoke(user)
 		return TRUE
 
-	else if (istype(attacking_item, /obj/item/melee/powerfist))
+	if (istype(attacking_item, /obj/item/melee/powerfist))
 		var/obj/item/melee/powerfist/fist = attacking_item
 		if(!fist.tank)
 			to_chat(user, span_warning("\The [fist] has no gas tank!"))
-			return
+			return FALSE
 		var/datum/gas_mixture/gas_used = fist.tank.remove_air(fist.gas_per_fist * 3) // 3 is HIGH_PRESSURE setting on powerfist.
 		if(!gas_used || !molar_cmp_equals(gas_used.total_moles(), fist.gas_per_fist * 3))
 			to_chat(user, span_warning("\The [fist] didn't have enough gas to budge \the [parent]!"))
-			return
+			return FALSE
 		playsound(parent, 'sound/items/weapons/resonator_blast.ogg', 50, TRUE)
 		redirection_proc.Invoke(user)
 		return TRUE
 
-	return
+	return FALSE
 
 /datum/component/meteor_combat/proc/on_punched(atom/owner, mob/user, list/modifiers)
 	SIGNAL_HANDLER
-	. = FALSE
 	if(!isliving(user))
-		return
+		return FALSE
 	var/mob/living/livinguser = user
 
 	if(livinguser.combat_mode && livinguser.mind?.get_skill_level(/datum/skill/athletics) >= SKILL_LEVEL_LEGENDARY)
@@ -66,7 +64,7 @@
 		redirection_proc.Invoke(livinguser)
 		return TRUE
 
-	return
+	return FALSE
 
 /datum/component/meteor_combat/proc/check_punch_award(mob/user)
 	if(achievement_enabled && !(astype(parent, /atom).flags_1 & ADMIN_SPAWNED_1) && isliving(user))

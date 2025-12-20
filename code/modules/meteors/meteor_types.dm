@@ -42,7 +42,12 @@
 	SSaugury.register_doom(src, threat)
 	SpinAnimation()
 	chase_target(target)
-	AddComponent(/datum/component/meteor_combat, CALLBACK(src, PROC_REF(redirect)), CALLBACK(src, PROC_REF(make_debris)), achievement_on = !istype(src, /obj/effect/meteor/sand))
+	AddComponent(
+		/datum/component/meteor_combat, \
+		CALLBACK(src, PROC_REF(redirect)), \
+		CALLBACK(src, PROC_REF(make_debris)), \
+		achievement_on = !istype(src, /obj/effect/meteor/sand), \
+	)
 
 /obj/effect/meteor/Destroy()
 	GLOB.meteor_list -= src
@@ -122,6 +127,7 @@
 		. += span_notice("On second thought, it doesn't look too tough.")
 	check_examine_award(user)
 
+///Called by component/meteor_combat to send us moving to the edge of the map away from whoever punched us
 /obj/effect/meteor/proc/redirect(mob/athlete)
 	dest = spaceDebrisStartLoc(get_cardinal_dir(athlete, src), z)
 	chase_target(dest)

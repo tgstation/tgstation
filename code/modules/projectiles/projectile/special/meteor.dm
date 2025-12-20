@@ -35,6 +35,7 @@
 			shake_camera(onlookers_in_range, 3, 1)
 	qdel(src)
 
+///Called by component/meteor_combat to direct us away from whatever has punched us.
 /obj/projectile/meteor/proc/deflect(mob/user)
 	firer = user
 	set_angle(get_angle(user, src) + rand(-45, 45))
