@@ -71,7 +71,7 @@
 	. = ..()
 	owner.clear_mood_event("nyctophobia")
 
-// Nightmare spell version with quicker buildup that shadows the quirk one, also handles removing the status upon reaching 0 terror
+/// Nightmare spell version with quicker buildup that shadows the quirk one, also handles removing the status upon reaching 0 terror
 /datum/terror_handler/simple_source/nyctophobia/terrified
 	// Takes about 30 seconds to reach maximum if you include 100 from casting the spell
 	buildup_per_second = 15
@@ -87,6 +87,7 @@
 /// Makes the owner afraid of being stuck in closets, crates, mechs, etc
 /datum/terror_handler/simple_source/claustrophobia
 	buildup_per_second = 15
+	COOLDOWN_DECLARE(message_cd)
 
 /datum/terror_handler/simple_source/claustrophobia/Destroy(force)
 	owner.clear_mood_event("claustrophobia")
@@ -100,8 +101,9 @@
 	if (isturf(owner.loc))
 		return FALSE
 
-	if (SPT_PROB(15, seconds_per_tick))
+	if (COOLDOWN_FINISHED(src, message_cd) && SPT_PROB(15, seconds_per_tick))
 		to_chat(owner, span_warning("You feel trapped! Must escape... can't breathe..."))
+		COOLDOWN_START(src, message_cd, TERROR_MESSAGE_CD)
 
 	return TRUE
 
@@ -116,6 +118,7 @@
 /// Makes the owner afraid of certain jolly figures
 /datum/terror_handler/simple_source/clausophobia
 	buildup_per_second = 20
+	COOLDOWN_DECLARE(message_cd)
 
 /datum/terror_handler/simple_source/clausophobia/check_condition(seconds_per_tick, terror_buildup)
 	. = ..()
@@ -142,14 +145,16 @@
 	if (!certified_jolly)
 		return FALSE
 
-	if (SPT_PROB(15, seconds_per_tick))
+	if (COOLDOWN_FINISHED(src, message_cd) && SPT_PROB(15, seconds_per_tick))
 		to_chat(owner, span_warning("Santa Claus is here! I gotta get out of here!"))
+		COOLDOWN_START(src, message_cd, TERROR_MESSAGE_CD)
 
 	return TRUE
 
 /// Makes the owner afraid of being alone
 /datum/terror_handler/simple_source/monophobia
 	buildup_per_second = 2.5 // Pretty low, ~4 minutes to reach passive cap
+	COOLDOWN_DECLARE(message_cd)
 
 /datum/terror_handler/simple_source/monophobia/check_condition(seconds_per_tick, terror_buildup)
 	. = ..()
@@ -166,5 +171,9 @@
 
 		if (istype(friend, /mob/living/basic/pet) || friend.ckey)
 			return FALSE
+
+	if (COOLDOWN_FINISHED(src, message_cd) && SPT_PROB(10, seconds_per_tick))
+		to_chat(owner, span_warning("You feel terribly lonely..."))
+		COOLDOWN_START(src, message_cd, TERROR_MESSAGE_CD)
 
 	return TRUE
