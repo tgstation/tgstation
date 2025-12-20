@@ -1,4 +1,4 @@
-import { omit, pick } from 'es-toolkit';
+import { omit } from 'es-toolkit';
 import { chatPagesRecordAtom } from '../chat/atom';
 import { importChatState } from '../chat/helpers';
 import { store } from '../events/store';
