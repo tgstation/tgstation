@@ -323,9 +323,10 @@
 	shot_delay = 1
 	firing_shakes_camera = FALSE
 	custom_materials = list(
-	/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15.15,
-	/datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15.15,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5
 	)
+
 /obj/structure/mounted_gun/ballista/attackby(obj/item/ammo_casing/used_item, mob/user, params) //again its single shot so its kinda weird.
 	if(is_firing)
 		balloon_alert(user, "gun is firing")
