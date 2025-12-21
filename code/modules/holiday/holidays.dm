@@ -851,7 +851,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		/obj/item/clothing/head/beanie/christmas,
 		/obj/item/clothing/neck/scarf/christmas,
 		/obj/item/food/cookie/sugar,
-		/obj/item/gift,
+		/obj/item/gift/anything,
 		/obj/item/toy/xmas_cracker,
 	)
 	holiday_colors = list(
