@@ -678,3 +678,23 @@
       attacks deal more damage but slashing or piercing deal less damage
   - balance: Skeletons and Golems are also affected by weapon demolition modifier,
       as well as any mineral type mobs (of which none currently exist)
+2025-12-21:
+  Melbert:
+  - rscadd: 'Weather anomalies, in four variants: Rain, snow, sand, and the rare lightning
+      storm.'
+  - rscadd: Reactive Weather Armor
+  OrbisAnima:
+  - bugfix: fixes exploit with paystands that allows anyone with the cargo budget
+      card (or any other departamental card) to leech budgets with ease.
+  SmArtKar:
+  - rscadd: Monophobia is now availible as a negative (-3) quirk.
+  - balance: Phobias now have accumulating, and less debilitating effects due to conversion
+      to the new fear system.
+  - qol: Fear effects now have a cooldown between messages as to avoid chat spam.
+  - code_imp: Cleaned up some of fear code.
+  - refactor: Refactored phobias to use the fear system
+  - code_imp: Retyped headgear from /obj/item/clothing to /obj/item, fixing some runtimes
+      in the process
+  lelandkemble:
+  - bugfix: Meteor gun projectile meteors can now be smacked, whacked, walloped and
+      cracked just as normal meteors can.

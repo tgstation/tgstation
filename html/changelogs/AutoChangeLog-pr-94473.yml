@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - code_imp: "Retyped headgear from /obj/item/clothing to /obj/item, fixing some runtimes in the process"
