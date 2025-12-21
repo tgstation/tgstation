@@ -521,7 +521,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /datum/barsign/punpunspub
 	name = "Punpun's Pub"
-	icon_state = "punpunspub"
+	icon_state = "pun-puns-pub"
 	desc = "After everything he's been through? I'd want to be near booze too."
 	neon_color = ""
 
