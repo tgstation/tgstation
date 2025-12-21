@@ -12,7 +12,6 @@ import { capitalizeAll, createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { logger } from '../logging';
 import { getLayoutState, LAYOUT, LayoutToggle } from './common/LayoutToggle';
 
 type StockItem = {
@@ -72,8 +71,6 @@ export const Vending = () => {
     hidden_records = [],
     categories,
   } = data;
-
-  logger.log(categories);
 
   const [selectedCategory, setSelectedCategory] = useState(
     Object.keys(categories)[0],

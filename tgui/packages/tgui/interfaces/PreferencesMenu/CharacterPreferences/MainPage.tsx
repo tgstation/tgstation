@@ -2,6 +2,7 @@ import { sortBy } from 'es-toolkit';
 import { filter, map } from 'es-toolkit/compat';
 import { type ReactNode, useState } from 'react';
 import { useBackend } from 'tgui/backend';
+import { sendAct } from 'tgui/events/act';
 import {
   Box,
   Button,
@@ -13,7 +14,6 @@ import {
 } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
-import { sendAct } from '../../../events/act';
 import { CharacterPreview } from '../../common/CharacterPreview';
 import { RandomizationButton } from '../components/RandomizationButton';
 import { features } from '../preferences/features';
