@@ -1,0 +1,10 @@
+author: "Webcomicartist"
+delete-after: True
+changes:
+  - rscadd: "Added the ratvarian repeater, a craftable emplaced crank laser weapon that can be carried by hand, themed after clock cult."
+  - rscadd: "Added the improvised ballista, the rebar crossbow's bigger brother, that fires spears. Huge damage, terrible fire rate."
+  - rscadd: "Added the giant-slayer spear, a spear made at a necropolis tendril that does extra damage to lavaland creatures. (Ballista compatible)"
+  - image: "added sprites for the above."
+  - qol: "The pipe organ gun should be easier to light now."
+  - bugfix: "Fixed Pipe Organ Gun firing sprites not always going back to normal after finishing firing."
+  - refactor: "Mounted guns are now EVEN MORE flexible codewise, now supporting secondary ammo types."
