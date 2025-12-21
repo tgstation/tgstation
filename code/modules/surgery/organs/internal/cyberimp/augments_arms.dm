@@ -250,8 +250,9 @@
 /obj/item/organ/cyberimp/arm/toolkit/gun/laser
 	name = "arm-mounted laser implant"
 	desc = "A variant of the arm cannon implant that fires lethal laser beams. The cannon emerges from the subject's arm and remains inside when not in use."
-	icon_state = "arm_laser"
-	items_to_create = list(/obj/item/gun/energy/laser/mounted/augment)
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "laser_cyborg"
+	items_to_create = list(/obj/item/gun/energy/laser/mounted)
 
 /obj/item/organ/cyberimp/arm/toolkit/gun/taser
 	name = "arm-mounted taser implant"
