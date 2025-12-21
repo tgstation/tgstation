@@ -17,7 +17,6 @@ SUBSYSTEM_DEF(radioactive_nebula)
 		/obj/docking_port,
 		/obj/effect/landmark,
 		/obj/effect/abstract,
-		/obj/effect/mapping_error,
 	))
 
 /datum/controller/subsystem/radioactive_nebula/Initialize()
