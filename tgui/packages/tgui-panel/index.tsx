@@ -8,20 +8,13 @@ import './styles/main.scss';
 import './styles/themes/light.scss';
 
 import { createRoot } from 'react-dom/client';
-import { EventBus } from 'tgui-core/eventbus';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { captureExternalLinks } from 'tgui-core/links';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { App } from './app';
-import { listeners } from './events/listeners';
+import { bus } from './events/listeners';
 import { setupPanelFocusHacks } from './panelFocus';
 
-const bus = new EventBus(listeners);
-const ctx = import.meta.webpackContext('./', {
-  recursive: true,
-  regExp: /\.[jt]sx?$/,
-});
-const keys = ctx.keys().filter((k) => !k.includes('node_modules/'));
 const root = createRoot(document.getElementById('react-root')!);
 
 function render(component: React.ReactElement) {
@@ -63,7 +56,7 @@ function setupApp() {
   if (import.meta.webpackHot) {
     setupHotReloading();
 
-    import.meta.webpackHot.accept(keys, () => {
+    import.meta.webpackHot.accept(['./app'], () => {
       render(<App />);
     });
   }

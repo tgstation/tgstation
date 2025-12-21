@@ -182,7 +182,7 @@ export function SettingsGeneral(props) {
           <Button
             icon="save"
             tooltip="Export current tab history into HTML file"
-            onClick={chatRenderer.saveToDisk}
+            onClick={() => chatRenderer.saveToDisk()}
           >
             Save chat log
           </Button>
@@ -191,7 +191,7 @@ export function SettingsGeneral(props) {
           <Button.Confirm
             icon="trash"
             tooltip="Erase current tab history"
-            onClick={chatRenderer.clearChat}
+            onClick={() => chatRenderer.clearChat()}
           >
             Clear chat
           </Button.Confirm>
