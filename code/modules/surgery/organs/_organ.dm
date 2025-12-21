@@ -341,6 +341,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	// Delegate to species if possible.
 	if(dna?.species)
 		for(var/obj/item/organ/organ as anything in organs)
+			if(organ.organ_flags & ORGAN_EMP)
+				organ.organ_flags &= ~ORGAN_EMP
 			if(remove_hazardous && (organ.organ_flags & ORGAN_HAZARDOUS))
 				qdel(organ)
 				continue

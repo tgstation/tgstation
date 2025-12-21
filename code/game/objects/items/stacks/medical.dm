@@ -336,7 +336,7 @@
 	post_heal_effects(max(previous_damage - affecting.get_damage(), 0), patient, user)
 	return TRUE
 
-/// Healing a simple mob, just an adjustbruteloss call
+/// Healing a simple mob, just an adjust_brute_loss() call
 /obj/item/stack/medical/proc/heal_simplemob(mob/living/patient, mob/living/user)
 	patient.adjust_brute_loss(-1 * (heal_brute * patient.maxHealth / 100))
 	user.visible_message(

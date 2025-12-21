@@ -35,7 +35,7 @@
 
 /obj/structure/closet/secure_closet/engineering_electrical/PopulateContents()
 	..()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/inducer = 2,
 		/obj/item/storage/toolbox/electrical = 3,
 		/obj/item/electronics/apc = 3,
