@@ -12,6 +12,7 @@ SUBSYSTEM_DEF(radioactive_nebula)
 
 	VAR_PRIVATE
 		datum/station_trait/nebula/hostile/radiation/radioactive_nebula
+	// List of /atom/movable's that should never be irradiated
 	var/list/static/blacklisted_atoms = typecacheof(list(
 		/atom/movable/mirage_holder,
 		/obj/docking_port,
