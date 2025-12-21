@@ -335,7 +335,7 @@
 		return
 
 	if(fully_loaded_gun)
-		balloon_alert(user, "already fully loaded")
+		balloon_alert(user, "already fully loaded!")
 		return
 
 	if(istype(used_item, alt_ammo_type))
