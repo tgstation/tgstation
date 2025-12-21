@@ -2,7 +2,7 @@
 
 ## Philosophy
 
-In the previous TGUI backend state, both DM messages and UI actions were handled through an event message system using actions, selectors, reducers, and middleware. This event systems is designed to handle only DM messages - separating UI actions into direct state access (eg setSomeState(true)) or helpers (eg updateSetting({ thing: true})).
+In the previous TGUI backend state, both DM messages and UI actions were handled through an event message system using actions, selectors, reducers, and middleware. This event system is designed to handle only DM messages - separating UI actions into direct state access (eg setSomeState(true)) or helpers (eg updateSetting({ thing: true})).
 
 The idea behind this was to reduce the amount of abstractions needed and draw a clear line between what is a server message and what is a UI action.
 
