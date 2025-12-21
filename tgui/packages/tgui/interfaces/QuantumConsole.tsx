@@ -1,4 +1,3 @@
-import { use } from 'react';
 import {
   Button,
   Collapsible,
@@ -92,8 +91,6 @@ function getColor(difficulty: number) {
 }
 
 export function QuantumConsole(props) {
-  const backend = useBackend<Data>();
-  console.log(backend);
   const { data } = useBackend<Data>();
 
   return (

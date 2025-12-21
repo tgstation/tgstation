@@ -6,6 +6,7 @@ import {
 } from 'react';
 import { Window } from 'tgui/layouts';
 import { Stack } from 'tgui-core/components';
+
 import { VIEWMODE } from './constants';
 import { OrbitBlade } from './OrbitBlade';
 import { OrbitContent } from './OrbitContent';
