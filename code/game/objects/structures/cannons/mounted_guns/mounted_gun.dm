@@ -247,7 +247,7 @@
 		/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.29
 	)
-	
+
 /obj/structure/mounted_gun/ratvarian_repeater/dump_contents()
 	return // Stub because we don't want to do anything here
 
@@ -261,7 +261,7 @@
 		if(!do_after(user, load_delay, target = src))
 			return
 		shots_in_gun = shots_per_load //Add one to the shots in the gun
-		balloon_alert(user, "clockwork mechanism wound.")
+		balloon_alert(user, "mechanism wound.")
 		playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 50, FALSE, 5)
 		loaded_gun = TRUE // Make sure it registers theres ammo in there, so it can fire.
 		if(shots_in_gun >= max_shots_per_fire)
