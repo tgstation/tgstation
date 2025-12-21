@@ -15,7 +15,8 @@
 		/obj/effect/anomaly/hallucination = /obj/item/clothing/suit/armor/reactive/hallucinating,
 		/obj/effect/anomaly/dimensional = /obj/item/clothing/suit/armor/reactive/barricade,
 		/obj/effect/anomaly/ectoplasm = /obj/item/clothing/suit/armor/reactive/ectoplasm,
-		)
+		/obj/effect/anomaly/weather = /obj/item/clothing/suit/armor/reactive/weather,
+	)
 
 	if(istype(tool, /obj/item/assembly/signaler/anomaly))
 		var/obj/item/assembly/signaler/anomaly/anomaly = tool
@@ -496,3 +497,76 @@
 
 /obj/item/clothing/suit/armor/reactive/ectoplasm/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.reagents?.add_reagent(/datum/reagent/inverse/helgrasp, 20)
+
+/obj/item/clothing/suit/armor/reactive/weather
+	name = "reactive weather armor"
+	desc = "An experimental suit of armor that manipulates the weather around the wearer when in danger."
+	emp_message = span_warning("The reactive armor's weather control unit sputters and groans...")
+	cooldown_message = span_danger("The reactive weather system is still recharging! It fails to activate!")
+	reactivearmor_cooldown_duration = 30 SECONDS
+
+/obj/item/clothing/suit/armor/reactive/weather/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	owner.visible_message(span_danger("The reactive armor alters the weather around [owner], shielding [owner.p_them()] from [attack_text]!"))
+	playsound(src, 'sound/effects/magic/lightningshock.ogg', 33, TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+
+	var/datum/effect_system/steam_spread/steam = new()
+	steam.set_up(10, FALSE, owner.loc)
+	steam.start()
+
+	var/list/affected_turfs = list()
+	for(var/mob/living/attacker in oview(2, owner))
+		attacker.adjust_wet_stacks(5)
+		attacker.extinguish_mob()
+		if((attacker.loc in affected_turfs) || !isopenturf(attacker.loc))
+			continue
+
+		for(var/turf/open/to_affect in view(1, attacker.loc))
+			affected_turfs += to_affect
+
+		shock_turf_windup(attacker.loc)
+
+	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
+	return TRUE
+
+/obj/item/clothing/suit/armor/reactive/weather/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type)
+	owner.visible_message(span_danger("The reactive armor malfunctions, calling down a storm upon [owner.p_them()]!"))
+	playsound(src, 'sound/effects/magic/lightningshock.ogg', 33, TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+
+	var/datum/effect_system/steam_spread/steam = new()
+	steam.set_up(2, FALSE, owner.loc)
+	steam.start()
+
+	owner.adjust_wet_stacks(10)
+	owner.extinguish_mob()
+	if(!isopenturf(owner.loc))
+		return
+	shock_turf_windup(owner.loc)
+
+/obj/item/clothing/suit/armor/reactive/weather/proc/shock_turf_windup(turf/target)
+	new /obj/effect/temp_visual/telegraphing/thunderbolt(target)
+	addtimer(CALLBACK(src, PROC_REF(shock_turf), target), 1 SECONDS)
+
+/obj/item/clothing/suit/armor/reactive/weather/proc/shock_turf(turf/target)
+	playsound(target, 'sound/effects/magic/lightningbolt.ogg', 66, TRUE)
+	new /obj/effect/temp_visual/thunderbolt(target)
+	for(var/turf/open/adjacent_turf in oview(1, target))
+		new /obj/effect/temp_visual/electricity(adjacent_turf)
+
+	for(var/mob/living/hit_mob in target)
+		if(hit_mob == loc) // avoid hitting the wearer
+			continue
+		to_chat(hit_mob, span_userdanger("You've been struck by lightning!"))
+		hit_mob.electrocute_act(30, src, flags = SHOCK_TESLA|SHOCK_NOSTUN)
+		hit_mob.Knockdown(2.5 SECONDS, 10 SECONDS)
+
+	for(var/mob/living/nearby_target in oview(1, target))
+		if(nearby_target == loc) // avoid hitting the wearer
+			continue
+		to_chat(nearby_target, span_userdanger("You've been struck by an arc of lightning!"))
+		nearby_target.electrocute_act(10, src, flags = SHOCK_TESLA|SHOCK_NOSTUN)
+
+	for(var/obj/hit_thing in target)
+		hit_thing.take_damage(20, BURN, ENERGY, FALSE)
+
+	for(var/obj/nearby_thing in oview(1, target))
+		nearby_thing.take_damage(5, BURN, ENERGY, FALSE)

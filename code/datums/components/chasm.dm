@@ -168,11 +168,24 @@
 		return
 
 	// send to oblivion
-	dropped_thing.visible_message(span_boldwarning("[dropped_thing] falls into [parent]!"), span_userdanger("[oblivion_message]"))
+
 	if (isliving(dropped_thing))
 		var/mob/living/falling_mob = dropped_thing
 		ADD_TRAIT(falling_mob, TRAIT_NO_TRANSFORM, REF(src))
-		falling_mob.Paralyze(20 SECONDS)
+		falling_mob.Stun(20 SECONDS, ignore_canstun = TRUE)
+
+		if (HAS_MIND_TRAIT(falling_mob, TRAIT_NAIVE))
+			falling_mob.do_alert_animation()
+			dropped_thing.visible_message(span_boldwarning("[dropped_thing] kicks [dropped_thing.p_their()] legs in the air, as if running in place!"))
+			dropped_thing.Shake(1, 0, 2 SECONDS, 0.3 SECONDS)
+			sleep(3 SECONDS)
+
+		if (get_turf(falling_mob) != get_turf(parent))
+			REMOVE_TRAIT(falling_mob, TRAIT_NO_TRANSFORM, REF(src))
+			falling_mob.Paralyze(17 SECONDS, ignore_canstun = TRUE) // Wow nice job
+			return
+
+	dropped_thing.visible_message(span_boldwarning("[dropped_thing] falls into [parent]!"), span_userdanger("[oblivion_message]"))
 
 	var/oldtransform = dropped_thing.transform
 	var/oldcolor = dropped_thing.color

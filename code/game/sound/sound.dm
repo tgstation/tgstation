@@ -39,6 +39,9 @@
 	var/maxdistance = SOUND_RANGE + extrarange
 	var/source_z = turf_source.z
 
+	if (falloff_distance >= maxdistance)
+		CRASH("playsound(): falloff_distance is equal to or higher than maxdistance! Bump up extrarange or reduce the falloff_distance.")
+
 	if(vary && !frequency)
 		frequency = get_rand_frequency() // skips us having to do it per-sound later. should just make this a macro tbh
 
