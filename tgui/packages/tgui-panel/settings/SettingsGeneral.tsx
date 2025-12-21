@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'tgui/backend';
 import {
   Button,
   Collapsible,
@@ -12,8 +11,7 @@ import {
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 import { capitalize } from 'tgui-core/string';
-import { clearChat, saveChatToDisk } from '../chat/actions';
-import { selectChatPages } from '../chat/selectors';
+import { chatRenderer } from '../chat/renderer';
 import { FONTS, THEMES } from './constants';
 import { resetPaneSplitters, setEditPaneSplitters } from './scaling';
 import { exportChatSettings, importChatSettings } from './settingsImExport';
@@ -22,8 +20,6 @@ import { useSettings } from './use-settings';
 export function SettingsGeneral(props) {
   const { settings, updateSettings } = useSettings();
   const [freeFont, setFreeFont] = useState(false);
-  const dispatch = useDispatch();
-  const chat = useSelector(selectChatPages);
 
   const [editingPanes, setEditingPanes] = useState(false);
 
@@ -167,7 +163,7 @@ export function SettingsGeneral(props) {
           <Button
             icon="compact-disc"
             tooltip="Export chat settings"
-            onClick={() => exportChatSettings(chat)}
+            onClick={exportChatSettings}
           >
             Export settings
           </Button>
@@ -186,7 +182,7 @@ export function SettingsGeneral(props) {
           <Button
             icon="save"
             tooltip="Export current tab history into HTML file"
-            onClick={() => dispatch(saveChatToDisk())}
+            onClick={() => chatRenderer.saveToDisk()}
           >
             Save chat log
           </Button>
@@ -195,7 +191,7 @@ export function SettingsGeneral(props) {
           <Button.Confirm
             icon="trash"
             tooltip="Erase current tab history"
-            onClick={() => dispatch(clearChat())}
+            onClick={() => chatRenderer.clearChat()}
           >
             Clear chat
           </Button.Confirm>

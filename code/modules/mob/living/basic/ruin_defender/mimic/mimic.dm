@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	maxHealth = 250
 	health = 250
 	gender = NEUTER
-	mob_biotypes = NONE
+	mob_biotypes = MOB_MINERAL
 	pass_flags = PASSFLAPS
 	melee_damage_lower = 8
 	melee_damage_upper = 12

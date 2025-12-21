@@ -566,3 +566,135 @@
       & cabling.
   - map: Several offstation structures have had piping & cabling issues resolved.
   - map: Assistants no longer have access to the tramstation security mechbay
+2025-12-19:
+  Aliceee2ch:
+  - bugfix: Mapped missing security spawners in science outpost on TramStation to
+      prevent spawning in walls.
+  - rscadd: Engineering cyborg can now hold conveyor belts and place plastic signs
+      using screwdriver.
+  ArchBTW:
+  - bugfix: Clothing accessories fix
+  - bugfix: Fix training bomb ghost/admin notification
+  Fghj240:
+  - balance: Expanded storage modules are now unlocked much earlier
+  - balance: Regular storage modules require 1 complexity instead of 3
+  - spellcheck: Regular storage modules are now called compact storage modules and
+      the expanded ones are just called storage modules.
+  Ghommie:
+  - rscadd: 'Two items have been added to the The Marine Utility tech node: a fish-gene
+      gun to add and remove traits to/from fish, and a bluespace fishing reel.'
+  Jacquerel:
+  - rscadd: It takes a little bit longer for clowns to realise that they're about
+      to die when they enter a chasm
+  JohnFulpWillard:
+  - bugfix: The chat bar now scrolls as you type.
+  Melbert:
+  - bugfix: Fix inverted south stair icons
+  SmArtKar:
+  - admin: Added a warning for invalid dynamic config weights
+  leaKsi:
+  - bugfix: Fixed 2 infinite credit exploits.
+  lelandkemble:
+  - spellcheck: Resolved grammar issues with headwear
+  - rscadd: You can soak a rag in a sink
+  - bugfix: Departmental security officers will not spawn in walls
+  - bugfix: Empty TCG game decks will no longer appear in presents
+2025-12-20:
+  LT3:
+  - bugfix: Fixed oversize icon display in the crafting menu
+  - spellcheck: Tram door assembly is not classified as material airlock in the crafting
+      menu
+  Melbert:
+  - rscadd: Surgery has been REWORKED ENTIRELY
+  - rscadd: Surgery is now STATE BASED. What does this mean? Well, when you start
+      surgery, you apply drapes and then make an incision. Then you can either retract
+      skin or clamp bleeders. Once you retract skin you gain access to outer cavity
+      operations, then once you saw the bones, inner cavity operations.
+  - balance: If your vessels are unclamped, you bleed pretty fast. Clamp those blood
+      vessels fast to stop blood loss in surgery.
+  - balance: Species which lack skin or bones allow you to skip surgical steps. Skeletons
+      have no skin to incise, after all.
+  - qol: Nectrotic Revival now works with chemicals in the syringe used, rather than
+      only chemicals in the patient.
+  - qol: You can close a surgery with sutures, rather than only a cautery.
+  - qol: You can no longer feed someone an organ who is undergoing an operation.
+  - rscadd: Many surgeries have received new names or flavor.
+  - rscadd: The operating computer has received major tweaks. It now shows all potential
+      operations and the patient's current surgical state, highlighting any steps
+      you could take next.
+  - rscadd: New surgeries are now available immediately upon research. Syncing is
+      dead.
+  - rscadd: Organ fishing can now be complete in someone with an open cavity, rather
+      than someone undergoing organ manipulation.
+  - balance: You can no longer fish a vital organ (the brain) out of someone.
+  - rscadd: Organ thrower mod now works on people with open cavities, rather than
+      people undergoing organ manipulation.
+  - rscadd: Chestbursters now no longer gib people with open cavities, rather than
+      people undergoing organ manipulation.
+  - rscadd: Xenomorphs now have CHITIN rather than FLESH. This means little besides
+      indicating you need a saw to incise their skin.
+  - rscadd: Sterilizine and similar chemicals now have a set duration, 1 minute per
+      unit applied, up to 5 minutes.
+  - rscadd: Medibot upgrades are now applied automatically on research. Syncing is
+      dead.
+  - rscadd: Many mechanical surgeries targeting organs now require cybernetic organs
+      rather than a cybernetic bodypart.
+  - refactor: Surgery has literally be rewritten from the ground up. If you see anything
+      broken or weird looking, particularly with mechanical surgeries and medical
+      cyborgs, please report it
+  - qol: Examining yourself for injuries explains how to apply pressure to bleeding
+      limbs
+  - refactor: Refactored death moodlet, report any oddities
+  - balance: Golems have a whopping 0.5x modifier to brute and burn damage, but no
+      longer have a 0.9 modifier to tox / oxy damage.
+  - balance: Golems have a new 0.6x modifier to stamina damage and stun duration,
+      but also a new 1.2x modifier to knockdown duration.
+  - balance: Golems can no longer be defibrillated. Revival surgery is... untouched,
+      I guess.
+  - balance: Golems can be revived by applying materials to their body. Each sheet
+      restores some brute and burn damage, as well as some nutrition. When sufficient
+      brute, burn, and nutrition are restored, they are revived!
+  - balance: Golems can no longer fall into soft crit. They can still enter hard crit
+      and die when taking sufficient damage, though.
+  - balance: When a golem is attacked with brute or burn damage, they sustain direct
+      nutrition drain based on how much damage dealt.
+  - balance: Golems drain nutrition faster if near starving or below the normal soft
+      crit threshold.
+  - balance: Golems fall unconscious if starving.
+  - balance: When a golem's nutrition hits 0, they die!
+  - balance: Golems cannot get overweight, but are capped on the amount of nutrition
+      they can have
+  - balance: The strength of titanium's reduction to brute damage when consumed by
+      a golem or rock eater has been reduced (0.7x -> 0.8x)
+  - balance: Eating iron no longer heals tox or oxy for golems or rock eaters (still
+      heals brute and burn)
+  - balance: Golems now have a unique bodytype, making them ineligible for some surgeries
+  - bugfix: You can harm people with batons that are otherwise inoperable, like an
+      Abductor's baton.
+  - refactor: Batonning was refactored ever so slightly. Report any oddities, particularly
+      involving harmbatonning.
+  - balance: Plasmamen no longer take flat 1.5x brute and burn damage
+  - balance: Plasmamen are now affected by weapon demolition modifier, meaning blunt
+      attacks deal more damage but slashing or piercing deal less damage
+  - balance: Skeletons and Golems are also affected by weapon demolition modifier,
+      as well as any mineral type mobs (of which none currently exist)
+2025-12-21:
+  Melbert:
+  - rscadd: 'Weather anomalies, in four variants: Rain, snow, sand, and the rare lightning
+      storm.'
+  - rscadd: Reactive Weather Armor
+  OrbisAnima:
+  - bugfix: fixes exploit with paystands that allows anyone with the cargo budget
+      card (or any other departamental card) to leech budgets with ease.
+  SmArtKar:
+  - rscadd: Monophobia is now availible as a negative (-3) quirk.
+  - balance: Phobias now have accumulating, and less debilitating effects due to conversion
+      to the new fear system.
+  - qol: Fear effects now have a cooldown between messages as to avoid chat spam.
+  - code_imp: Cleaned up some of fear code.
+  - refactor: Refactored phobias to use the fear system
+  - code_imp: Retyped headgear from /obj/item/clothing to /obj/item, fixing some runtimes
+      in the process
+  lelandkemble:
+  - bugfix: Meteor gun projectile meteors can now be smacked, whacked, walloped and
+      cracked just as normal meteors can.

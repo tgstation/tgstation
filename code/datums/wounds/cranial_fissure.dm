@@ -40,6 +40,9 @@
 	severity = WOUND_SEVERITY_CRITICAL
 	sound_effect = 'sound/effects/dismember.ogg'
 
+	/// If TRUE we have been prepped for surgery (to repair)
+	VAR_FINAL/prepped = FALSE
+
 #define CRANIAL_FISSURE_FILTER_DISPLACEMENT "cranial_fissure_displacement"
 
 /datum/wound/cranial_fissure/wound_injury(datum/wound/old_wound = null, attack_direction = null)

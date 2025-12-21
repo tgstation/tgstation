@@ -43,7 +43,7 @@
 
 	. = ..()
 
-	AddComponent(/datum/component/plumbing/simple_demand)
+	AddComponent(/datum/component/plumbing/simple_demand, distinct_reagent_cap = 5)
 	AddComponent(/datum/component/simple_rotation)
 
 	register_context()

@@ -1,0 +1,6 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Add crafting recipes for: lamps, lanterns, strange closets, cabinets, and metal boxes."
+  - rscadd: "Add autolathe recipe for flares. (plastic, plasma, and iron)"
+  - rscadd: "Add washer machine board to Sanitation techweb. The beaker volume affects the total amount of items that can be washed and the servo tier affects how long the washing takes."
