@@ -10,7 +10,7 @@
 
 /obj/machinery/iv_drip/plumbing/Initialize(mapload, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/automated_iv, layer, distinct_reagent_cap = 3)
+	AddComponent(/datum/component/plumbing/automated_iv, layer)
 	AddComponent(/datum/component/simple_rotation)
 
 /obj/machinery/iv_drip/plumbing/quick_toggle(mob/living/user)
