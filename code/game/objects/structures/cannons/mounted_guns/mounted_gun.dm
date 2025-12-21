@@ -267,11 +267,11 @@
 		if(shots_in_gun >= max_shots_per_fire)
 			shots_in_gun = max_shots_per_fire // in case of somehow firing only some of a guns shots, and reloading, you still cant get above the maximum ammo size.
 			fully_loaded_gun = TRUE //So you cant load extra.
+		return
 
-	else
-		user.log_message("fired a ratvatian repeater", LOG_ATTACK)
-		log_game("[key_name(user)] fired a ratvatian repeater in [AREACOORD(src)]")
-		addtimer(CALLBACK(src, PROC_REF(fire)), fire_delay) //uses fire proc as shown below to shoot the gun
+	user.log_message("fired a ratvatian repeater", LOG_ATTACK)
+	log_game("[key_name(user)] fired a ratvatian repeater in [AREACOORD(src)]")
+	addtimer(CALLBACK(src, PROC_REF(fire)), fire_delay) //uses fire proc as shown below to shoot the gun
 
 /obj/structure/mounted_gun/ratvarian_repeater/fire()
 	if (!loaded_gun)
