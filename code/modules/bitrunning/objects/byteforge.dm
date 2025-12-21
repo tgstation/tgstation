@@ -35,7 +35,7 @@
 /obj/machinery/byteforge/examine(mob/user)
 	. = ..()
 
-	. += span_notice("Make sure this is 4 tiles from the quantum server")
+	. += span_notice("Must be within 4 tiles of the quantum server.")
 
 	. += span_notice("Its maintainance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
 	if(panel_open)
