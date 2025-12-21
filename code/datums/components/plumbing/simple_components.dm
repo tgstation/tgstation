@@ -3,6 +3,10 @@
 /datum/component/plumbing/simple_demand
 	demand_connects = SOUTH
 
+/datum/component/plumbing/simple_demand/Initialize(ducting_layer, distinct_reagent_cap = INFINITY)
+	src.distinct_reagent_cap = distinct_reagent_cap
+	return ..()
+
 ///Component for adding an extended overlay on wall mounts
 /datum/component/plumbing/simple_demand/extended/create_overlays(atom/movable/parent_movable, list/overlays)
 	. = ..()

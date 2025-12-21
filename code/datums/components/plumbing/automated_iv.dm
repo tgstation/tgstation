@@ -1,6 +1,7 @@
 /datum/component/plumbing/automated_iv
 	demand_connects = SOUTH
 	supply_connects = NORTH
+	distinct_reagent_cap = 3
 	///Temporary holder to store all the reagents from the iv drip before transferring to the ducts
 	var/datum/reagents/plumbing/holder
 
@@ -17,16 +18,13 @@
 	return ..()
 
 /datum/component/plumbing/automated_iv/can_give(amount, reagent)
-	. = ..()
-	if(!.)
-		return
 	var/obj/machinery/iv_drip/plumbing/drip = parent
-	return drip.mode == 0
+	return ..() && drip.mode == IV_TAKING
 
 /datum/component/plumbing/automated_iv/send_request(dir)
 	var/obj/machinery/iv_drip/plumbing/drip = parent
-	if(drip.mode == 1)
-		process_request(dir = dir)
+	if(drip.mode == IV_INJECTING)
+		return ..()
 
 /datum/component/plumbing/automated_iv/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net, round_robin = TRUE)
 	reagents.trans_to(holder, reagents.total_volume)

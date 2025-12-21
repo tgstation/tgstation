@@ -7,3 +7,8 @@
 #define DUCT_LAYER_DEFAULT THIRD_DUCT_LAYER
 
 #define MACHINE_REAGENT_TRANSFER 10 //the default max plumbing machinery transfers
+
+///IV drip operation mode when it sucks blood from the object
+#define IV_TAKING 0
+///IV drip operation mode when it injects reagents into the object
+#define IV_INJECTING 1

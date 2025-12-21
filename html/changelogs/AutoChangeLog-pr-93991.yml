@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Chem factory Bottlers, Presses, and IV drips are now limited to holding 3 distinct chemicals at once, meaning they can make patches/pills/bottles/etc. of at most 3 different types of chems. Manually created pills/patches/etc are unaffected."
+  - balance: " Chem factory Smoke Machines and Output Gates are now limited to holding 5 distinct chemicals at once, meaning they can accept at most 5 different types of chems from a chem factory. Manually filling the smoke machine is unaffected."
