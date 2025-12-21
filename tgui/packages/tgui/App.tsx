@@ -1,14 +1,13 @@
-import { globalStore } from './backend';
+import { Provider } from 'jotai';
+import { store } from './events/store';
 import { IconProvider } from './Icons';
+import { RoutedComponent } from './routes';
 
 export function App() {
-  const { getRoutedComponent } = require('./routes');
-  const Component = getRoutedComponent(globalStore);
-
   return (
-    <>
-      <Component />
+    <Provider store={store}>
+      <RoutedComponent />
       <IconProvider />
-    </>
+    </Provider>
   );
 }

@@ -12,6 +12,7 @@ import { capitalizeAll, createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { logger } from '../logging';
 import { getLayoutState, LAYOUT, LayoutToggle } from './common/LayoutToggle';
 
 type StockItem = {
@@ -72,6 +73,8 @@ export const Vending = () => {
     categories,
   } = data;
 
+  logger.log(categories);
+
   const [selectedCategory, setSelectedCategory] = useState(
     Object.keys(categories)[0],
   );
@@ -95,7 +98,7 @@ export const Vending = () => {
   }
 
   const filteredCategories = Object.fromEntries(
-    Object.entries(data.categories).filter(([categoryName]) => {
+    Object.entries(categories).filter(([categoryName]) => {
       return inventory.find((product) => {
         if ('category' in product) {
           return product.category === categoryName;
