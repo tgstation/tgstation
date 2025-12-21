@@ -163,9 +163,9 @@
 	charge_sections = 1
 	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 	custom_materials = list(
-	/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.25,
-	/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 5,
-	/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.29
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.25,
+		/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.29
 	)
 
 /obj/item/gun/energy/laser/musket/repeater/Initialize(mapload)
