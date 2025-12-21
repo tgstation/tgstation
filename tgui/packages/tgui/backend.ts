@@ -1,5 +1,4 @@
 import { sendAct } from './events/act';
-import { setSharedState } from './events/handlers/shared';
 import { backendStateAtom, sharedAtom, store } from './events/store';
 import type { BackendState } from './events/types';
 
@@ -43,7 +42,6 @@ type StateWithSetter<T> = [T, (nextState: T) => void];
  *
  * It is a lot more performant than `setSharedState`.
  *
- * @param context React context.
  * @param key Key which uniquely identifies this state in Zustand store.
  * @param initialState Initializes your global variable with this value.
  * @deprecated Use useState and useEffect when you can. Pass the state as a prop.
@@ -58,27 +56,25 @@ export const useLocalState = <TState>(
   return [
     sharedState,
     (nextState) => {
-      setSharedState({
-        key,
-        nextState:
-          typeof nextState === 'function' ? nextState(sharedState) : nextState,
-      });
+      store.set(sharedAtom, (prev) => ({
+        ...prev,
+        [key]: nextState,
+      }));
     },
   ];
 };
 
 /**
- * Allocates state on Zustand store, and **shares** it with other clients
+ * Allocates state on Jotai store, and **shares** it with other clients
  * in the game.
  *
  * Use it when you want to have a stateful variable in your component
  * that persists not only between renders, but also gets pushed to other
  * clients that observe this UI.
  *
- * This makes creation of observable s
+ * This makes creation of observable UIs easier.
  *
- * @param context React context.
- * @param key Key which uniquely identifies this state in Zustand store.
+ * @param key Key which uniquely identifies this state in Jotai store.
  * @param initialState Initializes your global variable with this value.
  */
 export const useSharedState = <TState>(
