@@ -519,6 +519,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	desc = "You don't feel lost. Nothing a few drinks cant fix, though."
 	neon_color = ""
 
+/datum/barsign/punpunspub
+	name = "Punpun's Pub"
+	icon_state = "punpunspub"
+	desc = "After everything he's been through? I'd want to be near booze too."
+	neon_color = ""
+
 // Hidden signs list below this point
 
 /datum/barsign/hiddensigns
