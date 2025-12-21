@@ -22,5 +22,19 @@
 	selfcharge = 1
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
+/obj/item/gun/energy/laser/mounted/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	user.balloon_alert(user, "projectile reset")
+	ammo_type = initial(ammo_type)
+	update_ammo_types()
+
+/obj/item/gun/energy/laser/mounted/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/gun/energy))
+		return ..()
+	user.balloon_alert(user, "projectile copied")
+	var/obj/item/gun/energy/energy_gun = tool
+	ammo_type = energy_gun.ammo_type[energy_gun.select]
+	update_ammo_types()
+
 /obj/item/gun/energy/laser/mounted/add_deep_lore()
 	return
