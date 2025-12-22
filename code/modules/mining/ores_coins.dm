@@ -632,7 +632,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	return list(/datum/reagent/ants = 2, /datum/reagent/consumable/eggyolk = 2)
 
 /obj/item/coin/iron/grind_results()
-	 return list(/datum/reagent/iron = 4)
+	return list(/datum/reagent/iron = 4)
 
 /obj/item/coin/gold/debug
 	custom_materials = list(/datum/material/gold = COIN_MATERIAL_AMOUNT)
