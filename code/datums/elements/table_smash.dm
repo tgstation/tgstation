@@ -16,7 +16,7 @@
 	RegisterSignal(target, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
 
 	var/static/list/loc_connections = list(
-		COMSIG_LIVING_DISARM_COLLIDE = TYPE_PROC_REF(obj/structure/table, on_pushed_into),
+		COMSIG_LIVING_DISARM_COLLIDE = TYPE_PROC_REF(/obj/structure/table, on_pushed_into),
 	)
 	target.AddComponent(/datum/component/connect_loc_behalf, target, loc_connections)
 
