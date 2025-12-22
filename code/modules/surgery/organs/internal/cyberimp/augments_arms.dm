@@ -262,7 +262,8 @@
 
 /obj/item/organ/cyberimp/arm/toolkit/gun/laser
 	name = "arm-mounted laser implant"
-	desc = "A variant of the arm cannon implant that fires lethal laser beams. The cannon emerges from the subject's arm and remains inside when not in use."
+	desc = "A variant of the arm cannon implant that fires lethal laser beams, or custom ones if copying another gun's bullet properties. \
+		The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_laser"
 	items_to_create = list(/obj/item/gun/energy/laser/mounted)
 

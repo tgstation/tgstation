@@ -241,7 +241,8 @@
 
 /datum/uplink_item/role_restricted/laser_arm
 	name = "Laser Arm Implant"
-	desc = "An implant that grants you a recharging laser gun inside your arm. Weak to EMPs. Comes in a syndicate autosurgeon for immediate self-application."
+	desc = "An implant that grants you a recharging laser gun inside your arm, which can also steal bullet types of other guns. Weak to EMPs. \
+		Comes in a syndicate autosurgeon for immediate self-application."
 	cost = 10
 	item = /obj/item/autosurgeon/syndicate/laser_arm
 	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
