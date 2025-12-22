@@ -14,7 +14,7 @@
 /datum/element/simple_rotation/Attach(datum/target, rotation_flags = NONE)
 	. = ..()
 	if(!ismovable(target))
-		return COMPONENT_INCOMPATIBLE
+		return ELEMENT_INCOMPATIBLE
 
 	var/atom/movable/source = target
 	source.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
