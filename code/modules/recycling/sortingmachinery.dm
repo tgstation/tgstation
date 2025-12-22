@@ -143,10 +143,10 @@
 			to_chat(user, span_warning("This package already has a barcode attached!"))
 			return
 		if(!(stickerA.payments_acc))
-			to_chat(user, span_warning("This barcode seems to be invalid. Guess it's trash now."))
+			to_chat(user, span_warning("This barcode seems to be invalid. Use an ID card on it first."))
 			return
 		if(!user.transferItemToLoc(item, src))
-			to_chat(user, span_warning("For some reason, you can't attach [item]!"))
+			to_chat(user, span_warning("You can't attach [item], as it's stuck to you!"))
 			return
 		sticker = stickerA
 		for(var/obj/wrapped_item in get_all_contents())
