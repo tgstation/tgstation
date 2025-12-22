@@ -16,7 +16,8 @@
 	. = ..()
 	UnregisterSignal(source, list(COMSIG_ATOM_TRIED_PASS, COMSIG_MOVABLE_MOVED))
 	for (var/atom/movable/climber in get_turf(source))
-		REMOVE_TRAIT(climber, TRAIT_ON_CLIMBABLE, ELEMENT_TRAIT(type))
+		if(HAS_TRAIT(climber, TRAIT_ON_CLIMBABLE))
+			REMOVE_TRAIT(climber, TRAIT_ON_CLIMBABLE, ELEMENT_TRAIT(type))
 	source.RemoveElement(/datum/element/connect_loc, turf_connections)
 
 /datum/element/climb_walkable/proc/can_allow_through(datum/source, atom/movable/mover, border_dir)
@@ -28,12 +29,15 @@
 /datum/element/climb_walkable/proc/on_climbable_moved(datum/source, atom/old_loc)
 	SIGNAL_HANDLER
 	for (var/atom/movable/climber in get_turf(old_loc))
-		REMOVE_TRAIT(climber, TRAIT_ON_CLIMBABLE, ELEMENT_TRAIT(type))
+		if(HAS_TRAIT(climber, TRAIT_ON_CLIMBABLE))
+			REMOVE_TRAIT(climber, TRAIT_ON_CLIMBABLE, ELEMENT_TRAIT(type))
 
 /obj/structure/proc/on_climb_enter(datum/source, atom/movable/arrived)
 	SIGNAL_HANDLER
-	ADD_TRAIT(arrived, TRAIT_ON_CLIMBABLE, ELEMENT_TRAIT(/datum/element/climb_walkable))
+	if(arrived.density)
+		ADD_TRAIT(arrived, TRAIT_ON_CLIMBABLE, ELEMENT_TRAIT(/datum/element/climb_walkable))
 
 /obj/structure/proc/on_climb_exit(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
-	REMOVE_TRAIT(gone, TRAIT_ON_CLIMBABLE, ELEMENT_TRAIT(/datum/element/climb_walkable))
+	if(HAS_TRAIT(gone, TRAIT_ON_CLIMBABLE))
+		REMOVE_TRAIT(gone, TRAIT_ON_CLIMBABLE, ELEMENT_TRAIT(/datum/element/climb_walkable))
