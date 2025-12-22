@@ -157,6 +157,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	return screen ? screen.get_visible_turfs() : list()
 
 /mob/eye/camera/ai/pic_in_pic/proc/update_camera_telegraphing()
+	/*
 	if(!telegraph_cameras)
 		return
 
@@ -164,7 +165,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	var/list/obj/machinery/camera/remove = list()
 	var/list/obj/machinery/camera/visible = list()
 
-	for (var/datum/camerachunk/chunk as anything in client?.view_chunks)
+	for (var/datum/camera_chunk/chunk as anything in client?.view_chunks)
 		for(var/obj/machinery/camera/camera as anything in chunk.cameras)
 			if (get_dist(camera, src) <= telegraph_range)
 				visible |= camera
@@ -184,6 +185,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 		cameras_telegraphed |= C
 		C.in_use_lights++
 		C.update_appearance()
+	*/
 
 /mob/eye/camera/ai/pic_in_pic/proc/disable_camera_telegraphing()
 	telegraph_cameras = FALSE

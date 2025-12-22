@@ -720,11 +720,12 @@
 //AI_CAMERA_LUMINOSITY
 
 /mob/living/silicon/ai/proc/light_cameras()
+	/*
 	var/list/obj/machinery/camera/add = list()
 	var/list/obj/machinery/camera/remove = list()
 	var/list/obj/machinery/camera/visible = list()
 
-	for (var/datum/camerachunk/chunk as anything in client?.view_chunks)
+	for (var/datum/camera_chunk/chunk as anything in client?.view_chunks)
 		for(var/obj/machinery/camera/camera as anything in chunk.cameras)
 			if(get_dist(camera, eyeobj) <= 7 && camera.internal_light)
 				visible |= camera
@@ -738,6 +739,7 @@
 	for (var/obj/machinery/camera/C in add)
 		C.Togglelight(1)
 		lit_cameras |= C
+	*/
 
 /mob/living/silicon/ai/proc/control_integrated_radio()
 	set name = "Transceiver Settings"

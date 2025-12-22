@@ -97,13 +97,6 @@
 	var/datum/motion_group/area_motion = null
 	var/alarm_delay = 30 // Don't forget, there's another 3 seconds in queueAlarm()
 
-	/// The bounds of this camera's view.
-	var/datum/bounds/view_bounds = null
-	/// List of camera chunks this camera is within viewing range of.
-	var/list/view_chunks = list()
-	/// List of turf visibility (null/TRUE) this camera is within viewing range of.
-	var/list/view_turfs = list()
-
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/motion, 0)
@@ -161,7 +154,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		SScameras.adjust_viewing_camera_counts(src, -1)
 		view_chunks.Cut()
 
-		for (var/datum/camerachunk/chunk as anything in view_chunks)
+		for (var/datum/camera_chunk/chunk as anything in view_chunks)
 			chunk.cameras -= src
 		view_turfs.Cut()
 

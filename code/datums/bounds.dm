@@ -1,3 +1,5 @@
+/*+
+
 /// An 2D/3D Axis-Aligned Bounding Box (or AABB) that is defined by a minimum vector and a maximum vector.
 /// The dimensions of the bounds are defined by the dimensions of the minimum and maximum vectors.
 /datum/bounds
@@ -159,3 +161,5 @@
 
 	return min.x < other_max.x && min.y < other_max.y && min.z < other_max.z && \
 		max.x > other_min.x && max.y > other_min.y && max.z > other_min.z
+
+*/

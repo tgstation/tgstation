@@ -1,9 +1,7 @@
-#define STAGE_CAMERAS 0
-
 /// Manages camera visibility
 SUBSYSTEM_DEF(cameras)
 	name = "Cameras"
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_NO_INIT
 	priority = FIRE_PRIORITY_CAMERAS
 	wait = 1 SECONDS
 	dependencies = list(
@@ -18,14 +16,8 @@ SUBSYSTEM_DEF(cameras)
 
 	/// All cameras that must be updated. (alist[camera] = null)
 	var/alist/camera_queue = alist()
-
-	/// All base static images, indexed by plane offset. (list[offset + 1] = image)
-	var/list/base_static_images = list()
-
-/datum/controller/subsystem/cameras/Initialize()
-	update_static_images()
-	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(update_static_images))
-	return SS_INIT_SUCCESS
+	/// All chunks that must be updated. (alist[chunk] = null)
+	var/alist/chunk_queue = alist()
 
 //GLOBAL_LIST_EMPTY(camera_cost)
 //GLOBAL_LIST_EMPTY(camera_count)
@@ -34,101 +26,77 @@ SUBSYSTEM_DEF(cameras)
 	//INIT_COST(GLOB.camera_cost, GLOB.camera_count)
 	//EXPORT_STATS_TO_CSV_LATER("camera-cost.txt", GLOB.camera_cost, GLOB.camera_count)
 
-	var/world_max_chunk_x = ceil(WORLD_TO_CHUNK(world.maxx))
-	var/world_max_chunk_y = ceil(WORLD_TO_CHUNK(world.maxy))
-
-	for (var/obj/machinery/camera/camera as anything in camera_queue)
+	for (var/datum/component/camera/camera as anything in camera_queue)
 		if (MC_TICK_CHECK)
 			return
 
 		camera_queue -= camera
 
 		// Cache for speed and readability
-		var/datum/bounds/view_bounds = camera.view_bounds
-		var/list/view_chunks = camera.view_chunks
-		var/list/view_turfs = camera.view_turfs
+		var/datum/camera_view_data/old_view = camera.view
 
-		// Rremove the camera from turfs and chunks that it's viewing
-		if (view_bounds)
-			adjust_viewing_camera_counts(camera, -1)
-			view_turfs.Cut()
+		// We're gonna use this after old_view is deleted
+		var/list/old_view_chunks = old_view.chunks
 
-			for (var/datum/camerachunk/chunk as anything in view_chunks)
-				chunk.cameras -= camera
-			view_chunks.Cut()
+		// Remove the camera from turfs that it's viewing
+		if (old_view)
+			adjust_viewing_camera_counts(old_view, -1)
+			QDEL_NULL(camera.view)
 
-		// If the camera can't be used, clear up view bounds and continue
-		if (QDELING(camera) || !camera.can_use())
-			camera.view_bounds = null
+		// If the camera can't be used, clear up view data and continue
+		if (QDELING(camera) || !camera.enabled || !get_turf(camera.parent))
+			remove_camera_from_chunks(camera, old_view_chunks)
 			continue
 
-		var/turf/source = get_turf(camera)
+		view = new(camera)
 
-		var/view_range = camera.view_range
-		var/view_size = view_range * 2 + 1
+		var/list/new_view_chunks = list()
 
-		if (!view_bounds)
-			view_bounds = BOUNDS_CENTER_AND_SIZE(vector(source.x, source.y, source.z), vector(view_size, view_size, 1))
-			camera.view_bounds = view_bounds
-		else
-			view_bounds.set_center(vector(source.x, source.y, source.z))
-			view_bounds.set_size(vector(view_size, view_size, 1))
+		populate_view_chunks(new_view_chunks, view_bounds)
 
-		var/view_min_x = view_bounds.min.x
-		var/view_min_y = view_bounds.min.y
-		var/view_z = source.z
+		add_camera_to_chunks(camera, new_view_chunks - old_view_chunks)
 
-		view_turfs.len = view_size ** 2
+		remove_camera_from_chunks(camera, old_view_chunks - new_view_chunks)
 
-		// Set the source turf luminosity to max to make view() ignore darkness
-		var/luminosity = source.luminosity
-		source.luminosity = 6
-
-		// Create a dense visibility mask indexed by view bound coordinates
-		// view(), turf.x, turf.y and view_turfs[] are the most expensive operations here
-		for (var/turf/turf in view(view_range, source))
-			view_turfs[1 + (turf.x - view_min_x) + (turf.y - view_min_y) * view_size] = TRUE
-
-		// Restore the previous luminosity
-		source.luminosity = luminosity
-
-		// Add chunks within view bounds
-		populate_view_chunks(view_chunks, view_bounds, create_new_if_null = TRUE)
-
-		for (var/datum/camerachunk/chunk as anything in view_chunks)
-			chunk.cameras += camera
+		camera.view_chunks = new_view_chunks
 
 		// Add the camera to turfs that it's viewing
 		adjust_viewing_camera_counts(camera, 1)
 
 	//SET_COST("Run cameras")
 
-/// Updates the static images list to include all plane offsets.
-/datum/controller/subsystem/cameras/proc/update_static_images()
-	SIGNAL_HANDLER
+/datum/controller/subsystem/cameras/proc/populate_view_turfs(datum/camera_view_data/view)
+	var/view_range = view.range
+	var/view_size = view.size
 
-	var/old_max_index = length(base_static_images) + 1
-	base_static_images.len = SSmapping.max_plane_offset + 1
+	var/view_min_x = view.min_x
+	var/view_min_y = view.min_y
 
-	for(var/index in old_max_index to length(base_static_images))
-		var/image/static_image = new('icons/effects/cameravis.dmi')
-		SET_PLANE_W_SCALAR(static_image, CAMERA_STATIC_PLANE, index - 1)
-		static_image.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | KEEP_APART
-		static_image.override = TRUE
-		base_static_images[index] = static_image
+	// Set the source turf luminosity to max to make view() ignore darkness
+	var/luminosity = source.luminosity
+	source.luminosity = 6
 
-/datum/controller/subsystem/cameras/proc/populate_view_chunks(list/view_chunks, datum/bounds/view_bounds, create_new_if_null)
-	var/vector/view_min = view_bounds.min
+	// Create a dense visibility mask indexed by view bound coordinates
+	// view(), turf.x, turf.y and view_turfs[] are the most expensive operations here
+	for (var/turf/turf in view(view_range, source))
+		view_turfs[1 + (turf.x - view_min_x) + (turf.y - view_min_y) * view_size] = TRUE
 
-	var/start_chunk_x = max(0, floor(WORLD_TO_CHUNK(view_min.x)))
-	var/start_chunk_y = max(0, floor(WORLD_TO_CHUNK(view_min.y)))
+	// Restore the previous luminosity
+	source.luminosity = luminosity
 
-	var/vector/view_size = view_bounds.get_size()
+/datum/controller/subsystem/cameras/proc/populate_view_chunks(datum/camera_view_data/view)
+	var/view_min_x = view.min_x
+	var/view_min_y = view.min_y
 
-	var/end_chunk_x = start_chunk_x + ceil(view_size.x / CHUNK_SIZE) - 1 // -1 because the bounds are inclusive
-	var/end_chunk_y = start_chunk_y + ceil(view_size.y / CHUNK_SIZE) - 1 // ditto
+	var/start_chunk_x = max(0, floor(WORLD_TO_CHUNK(view_min_x)))
+	var/start_chunk_y = max(0, floor(WORLD_TO_CHUNK(view_min_y)))
 
-	var/view_z = view_min.z
+	var/view_size = view.size
+
+	var/end_chunk_x = start_chunk_x + ceil(view_size / CHUNK_SIZE) - 1 // -1 because the bounds are inclusive
+	var/end_chunk_y = start_chunk_y + ceil(view_size / CHUNK_SIZE) - 1 // ditto
+
+	var/view_z = view.z
 
 	var/chunk_z_coord = GET_CHUNK_Z_COORD(view_z)
 
@@ -136,47 +104,57 @@ SUBSYSTEM_DEF(cameras)
 	for (var/chunk_y = start_chunk_y to end_chunk_y)
 		var/chunk_yz_coord = GET_CHUNK_Y_COORD(chunk_y) | chunk_z_coord
 		for (var/chunk_x = start_chunk_x to end_chunk_x)
-			var/datum/camerachunk/chunk = chunks[chunk_x | chunk_yz_coord] || (create_new_if_null && new /datum/camerachunk(chunk_x, chunk_y, view_z))
+			var/datum/camera_chunk/chunk = chunks[chunk_x | chunk_yz_coord] || new /datum/camera_chunk(chunk_x, chunk_y, view_z)
 			if (chunk)
 				view_chunks += chunk
 
-/datum/controller/subsystem/cameras/proc/adjust_viewing_camera_counts(obj/machinery/camera/camera, amount)
+/datum/controller/subsystem/cameras/proc/add_camera_to_chunks(obj/machinery/camera/camera, list/chunks)
+	for (var/datum/camera_chunk/chunk as anything in chunks)
+		if (!length(chunk.cameras))
+			chunk.init_cameras()
+
+		chunk.cameras += camera
+
+/datum/controller/subsystem/cameras/proc/remove_camera_from_chunks(obj/machinery/camera/camera, list/chunks)
+	for (var/datum/camera_chunk/chunk as anything in chunks)
+		chunk.cameras -= camera
+
+		if (!length(chunk.cameras))
+			chunk.deinit_cameras()
+
+/datum/controller/subsystem/cameras/proc/adjust_viewing_camera_counts(datum/camera_view/view, amount)
 	var/list/view_turfs = camera.view_turfs
 
-	var/datum/bounds/view_bounds = camera.view_bounds.get_copy_2D()
+	var/view_size = view.size
+	var/view_range = view.range
 
-	var/view_min_x = view_bounds.min.x
-	var/view_min_y = view_bounds.min.y
+	var/view_min_x = view.min_x
+	var/view_min_y = view.min.y
 
-	var/view_size_y = view_bounds.get_size().y
+	var/view_max_x = view_min_x + view.range
+	var/view_max_y = view_max_y + view.range
 
-	// Pre-allocate intersection bounds for speed
-	var/datum/bounds/intersection = new(vector(0, 0), vector(0, 0))
-
-	for (var/datum/camerachunk/chunk in camera.view_chunks)
+	for (var/datum/camera_chunk/chunk in camera.view_chunks)
 		var/list/visibility = chunk.visibility
 
-		var/datum/bounds/chunk_bounds = chunk.world_bounds
+		var/chunk_min_x = chunk.world_x
+		var/chunk_min_y = chunk.world_y
 
-		var/chunk_min_x = chunk_bounds.min.x
-		var/chunk_min_y = chunk_bounds.min.y
-
-		// Re-use the same intersection bounds, making them act like chunk bounds
-		intersection.set_copy_2D(chunk_bounds)
-
-		// Intersect the world space view bounds with the world space chunk bounds
-		intersection.intersect_unclamped(view_bounds)
+		// Get the intersection of the chunk and view bounds
+		var/int_min_x = max(chunk_min_x, view_min_x)
+		var/int_min_y = max(chunk_min_y, view_min_y)
 
 		var/start_x = intersection.min.x
-		var/end_x = intersection.max.x - 1 // inclusive
-
 		var/start_y = intersection.min.y
-		var/end_y = intersection.max.y - 1 // inclusive
+
+		var/end_x = intersection.max.x - 1 // inclusive
+		var/end_y = intersection.max.y - 1 // ditto
 
 		// Iterate over the intersection and remove the camera from visibility array camera counts
 		for (var/world_y in start_y to end_y)
 			var/view_row = (world_y - view_min_y) * view_size_y
 			var/chunk_row = (world_y - chunk_min_y) * CHUNK_SIZE
+
 			for (var/world_x in start_x to end_x)
 				if (view_turfs[1 + (world_x - view_min_x) + view_row])
 					visibility[1 + (world_x - chunk_min_x) + chunk_row] += amount
@@ -187,7 +165,7 @@ SUBSYSTEM_DEF(cameras)
 	if (!turf_to_check)
 		return FALSE
 
-	var/datum/camerachunk/chunk = chunks[GET_TURF_CHUNK_COORDS(turf_to_check)]
+	var/datum/camera_chunk/chunk = chunks[GET_TURF_CHUNK_COORDS(turf_to_check)]
 	return !isnull(chunk) && chunk.visibility[GET_CHUNK_TURF_COORDS(turf_to_check, chunk)] > 0
 
 /// Returns the first camera found on which atom the is visible, if any.
@@ -196,7 +174,7 @@ SUBSYSTEM_DEF(cameras)
 	if (!turf_to_check)
 		return
 
-	var/datum/camerachunk/chunk = chunks[GET_TURF_CHUNK_COORDS(turf_to_check)]
+	var/datum/camera_chunk/chunk = chunks[GET_TURF_CHUNK_COORDS(turf_to_check)]
 	if (!chunk?.visibility[GET_CHUNK_TURF_COORDS(turf_to_check, chunk)])
 		return
 
@@ -215,7 +193,7 @@ SUBSYSTEM_DEF(cameras)
 	if (!turf_to_check)
 		return
 
-	var/datum/camerachunk/chunk = chunks[GET_TURF_CHUNK_COORDS(turf_to_check)]
+	var/datum/camera_chunk/chunk = chunks[GET_TURF_CHUNK_COORDS(turf_to_check)]
 	if (!chunk?.visibility[GET_CHUNK_TURF_COORDS(turf_to_check, chunk)])
 		return
 
@@ -233,7 +211,7 @@ SUBSYSTEM_DEF(cameras)
 	if (!turf)
 		return
 
-	var/datum/camerachunk/chunk = chunks[GET_TURF_CHUNK_COORDS(turf)]
+	var/datum/camera_chunk/chunk = chunks[GET_TURF_CHUNK_COORDS(turf)]
 	if (!chunk)
 		return
 

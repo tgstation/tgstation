@@ -5,16 +5,15 @@
 
 /// Takes camera chunk coordinates and transforms them into a chunk coordinate index. Supports up to 256 16x16 chunks in each dimension. (for indexing SScameras.chunks)
 #define GET_CHUNK_COORDS(x, y, z) (x | (y << 8) | (z << 16))
+/// Takes a camera chunk y coordinate and transforms it into a partial chunk coordinate index. Supports up to 256 16x16 chunks in each dimension. (for indexing SScameras.chunks)
 #define GET_CHUNK_Y_COORD(y) (y << 8)
+/// Takes a camera chunk z coordinate and transforms it into a partial chunk coordinate index. Supports up to 256 16x16 chunks in each dimension. (for indexing SScameras.chunks)
 #define GET_CHUNK_Z_COORD(z) (z << 16)
+
 /// Takes world coordinates and transforms them into a chunk coordinate index. (for indexing SScameras.chunks)
 #define GET_TURF_CHUNK_COORDS(turf) GET_CHUNK_COORDS(floor(WORLD_TO_CHUNK(turf.x)), floor(WORLD_TO_CHUNK(turf.y)), turf.z)
 /// Takes world coordinates and transforms them into a chunk turf coordinate index. (for indexing chunk.turfs, chunk.visibility, etc.)
-#define GET_CHUNK_TURF_COORDS(turf, chunk) GET_CHUNK_TURF_COORDS_FAST(turf, chunk.world_x, chunk.world_y)
-/// A version of GET_CHUNK_TURF_COORDS that uses a cached world_x and world_y
-#define GET_CHUNK_TURF_COORDS_FAST(turf, world_x, world_y) (1 + (turf.x - world_x) + (turf.y - world_y) * CHUNK_SIZE)
-/// Takes world coordinates and transforms them into a camera view coordinate index. (for indexing camera.last_view_turfs)
-#define GET_VIEW_COORDS(x, y, view_x, view_y, view_size) (1 + (x - view_x) + (y - view_y) * view_size)
+#define GET_CHUNK_TURF_COORDS(turf, chunk) (1 + (turf.x - chunk.world_x) + (turf.y - chunk.world_y) * CHUNK_SIZE)
 
 /// Converts a coordinate (x or y) from world space into chunk space.
 /// Returns a fraction, use floor(), round() or ceil() as needed.
