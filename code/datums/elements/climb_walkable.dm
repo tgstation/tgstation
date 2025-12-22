@@ -32,8 +32,8 @@
 
 /obj/structure/proc/on_climb_enter(datum/source, atom/movable/arrived)
 	SIGNAL_HANDLER
-	ADD_TRAIT(arrived, TRAIT_ON_CLIMBABLE, ELEMENT_TRAIT(type))
+	ADD_TRAIT(arrived, TRAIT_ON_CLIMBABLE, ELEMENT_TRAIT(/datum/element/climb_walkable))
 
 /obj/structure/proc/on_climb_exit(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
-	REMOVE_TRAIT(gone, TRAIT_ON_CLIMBABLE, ELEMENT_TRAIT(type))
+	REMOVE_TRAIT(gone, TRAIT_ON_CLIMBABLE, ELEMENT_TRAIT(/datum/element/climb_walkable))
