@@ -129,6 +129,8 @@
 	animate(target, transform = m180, time = 3)
 	target.add_offsets(type, y_add = -6, animate = FALSE)
 	ADD_TRAIT(target, TRAIT_MOVE_UPSIDE_DOWN, REF(src))
+	// So you can butcher people too
+	ADD_TRAIT(target, TRAIT_READY_TO_OPERATE, REF(src))
 
 /obj/structure/kitchenspike/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if(buckled_mob != user)
@@ -161,6 +163,7 @@
 	animate(buckled_mob, transform = m180, time = 3)
 	buckled_mob.remove_offsets(type, animate = FALSE)
 	REMOVE_TRAIT(buckled_mob, TRAIT_MOVE_UPSIDE_DOWN, REF(src))
+	REMOVE_TRAIT(buckled_mob, TRAIT_READY_TO_OPERATE, REF(src))
 
 /obj/structure/kitchenspike/atom_deconstruct(disassembled = TRUE)
 	if(disassembled)

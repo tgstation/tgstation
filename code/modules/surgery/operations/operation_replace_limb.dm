@@ -50,7 +50,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/limb/replace_limb/pre_preop(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
+/datum/surgery_operation/limb/replace_limb/pre_preop(atom/movable/operating_on, mob/living/surgeon, obj/item/bodypart/tool, list/operation_args)
 	. = ..()
 	if(length(tool.contents))
 		to_chat(surgeon, span_warning("[tool] needs to be empty in order to be attached!"))

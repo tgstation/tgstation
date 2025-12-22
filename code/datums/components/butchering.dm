@@ -31,27 +31,32 @@
 		src.butchering_enabled = FALSE
 	src.can_be_blunt = can_be_blunt
 	src.butcher_callback = butcher_callback
-	if (isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
 
 /datum/component/butchering/Destroy(force)
 	butcher_callback = null
 	return ..()
 
-/datum/component/butchering/proc/on_item_attack(obj/item/source, atom/target, mob/living/user)
+/datum/component/butchering/RegisterWithParent()
+	if (!isitem(parent))
+		return
+	var/obj/item/item_parent = parent
+	item_parent.item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
+	RegisterSignal(parent, COMSIG_ITEM_INTERACTING_WITH_ATOM, PROC_REF(on_item_interaction))
+	RegisterSignal(parent, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, PROC_REF(add_item_context))
+
+/datum/component/butchering/UnregisterFromParent()
+	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_INTERACTING_WITH_ATOM))
+
+/datum/component/butchering/proc/on_item_attack(obj/item/source, mob/living/victim, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
 
 	if (!source.get_sharpness() && !can_be_blunt)
 		return
 
-	if (isbodypart(target))
-		INVOKE_ASYNC(src, PROC_REF(butcher_limb), source, target, user)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	if (!isliving(target) || !user.combat_mode)
+	if (!user.combat_mode)
 		return
 
-	var/mob/living/victim = target
 	// Can we butcher it?
 	if (victim.stat == DEAD && (victim.butcher_results || victim.guaranteed_butcher_results))
 		if (butchering_enabled)
@@ -60,6 +65,11 @@
 
 	if (!ishuman(victim) || !source.force)
 		return
+
+	if (victim.stat == DEAD && LAZYACCESS(modifiers, RIGHT_CLICK))
+		if (butchering_enabled)
+			INVOKE_ASYNC(src, PROC_REF(butcher_human), source, victim, user)
+			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	// Neckslicing requires aggro grabs
 	if (user.pulling != victim || user.grab_state < GRAB_AGGRESSIVE || user.zone_selected != BODY_ZONE_HEAD)
@@ -75,38 +85,102 @@
 	INVOKE_ASYNC(src, PROC_REF(start_neck_slice), source, victim, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/datum/component/butchering/proc/butcher_limb(obj/item/source, obj/item/bodypart/target, mob/living/user)
-	target.add_fingerprint(user)
+/datum/component/butchering/proc/on_item_interaction(obj/item/source, mob/living/user, atom/target)
+	SIGNAL_HANDLER
 
-	if (LIMB_HAS_SKIN(target) && !HAS_SURGERY_STATE(target.surgery_state, SURGERY_SKIN_CUT))
-		to_chat(user, span_warning("[src]'s skin is still intact!"))
+	if (!source.get_sharpness() && !can_be_blunt)
 		return
 
+	if (!user.combat_mode || !butchering_enabled)
+		return
+
+	if (isbodypart(target))
+		INVOKE_ASYNC(src, PROC_REF(butcher_limb), source, target, user)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/datum/component/butchering/proc/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	SIGNAL_HANDLER
+
+	if (!source.get_sharpness() && !can_be_blunt)
+		return NONE
+
+	if (!butchering_enabled)
+		return NONE
+
+	if (isbodypart(target))
+		context[SCREENTIP_CONTEXT_LMB] = "(Combat Mode) Butcher limb"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if (!isliving(target))
+		return NONE
+
+	var/mob/living/victim = target
+	if (victim.stat != DEAD && (victim.butcher_results || victim.guaranteed_butcher_results))
+		context[SCREENTIP_CONTEXT_LMB] = "(Combat Mode) Butcher"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if (ishuman(victim))
+		context[SCREENTIP_CONTEXT_RMB] = "(Combat Mode) Butcher"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
+/datum/component/butchering/proc/butcher_limb(obj/item/source, obj/item/bodypart/target, mob/living/user)
+	target.add_fingerprint(user)
 	if (LIMB_HAS_BONES(target) && !HAS_SURGERY_STATE(target.surgery_state, SURGERY_BONE_DRILLED | SURGERY_BONE_SAWED))
-		// We need to gut the limb before turning it into meat, otherwise just cut around the bone I guess
-		if (length(target.contents))
-			to_chat(user, span_warning("[src]'s bones are still intact!"))
+		if (LIMB_HAS_SKIN(target) && !HAS_SURGERY_STATE(target.surgery_state, SURGERY_SKIN_CUT))
+			to_chat(user, span_warning("[target]'s skin is still intact!"))
 			return
 
+		// We need to gut the limb before turning it into meat, otherwise just cut around the bone I guess
+		if (length(target.contents))
+			to_chat(user, span_warning("[target]'s bones are still intact!"))
+			return
+
+	var/speed_modifier = 1
+	if (!target.owner)
+		speed_modifier = 0.5
+	else if (target.owner.stat < UNCONSCIOUS)
+		speed_modifier = 1.5 // yeowch
+
+	var/limb_descriptor = (target.owner ? "[target.owner]'s [target.plaintext_zone]" : target)
+	// Okay *hopefully* they're already dead at this point
+	if (target.body_zone == BODY_ZONE_CHEST && target.owner)
+		// Cannot butcher the chest until we hack off all the limbs
+		if (length(target.owner.bodyparts) > 1)
+			to_chat(user, span_warning("You need to butcher the other limbs first!"))
+			return
+		// Butchering the chest gibs the victim
+		limb_descriptor = target.owner
+
+	if (target.owner)
+		log_combat(user, target.owner, "attempted to butcher", source)
+
 	if (length(target.contents))
-		user.visible_message(span_warning("[user] begins to gut [target]."), span_notice("You begin to gut [target]..."))
+		user.visible_message(span_warning("[user] begins to gut [limb_descriptor]!"), span_notice("You begin to gut [limb_descriptor]..."), ignored_mobs = target.owner)
+		if (target.owner)
+			to_chat(target.owner, span_warning("[user] begins to gut your [target.plaintext_zone]!"))
+
 		playsound(target.loc, butcher_sound, 50, TRUE, -1)
-		if (!do_after(user, speed * 0.5, target))
+		if (!do_after(user, speed * speed_modifier, target.owner || target))
 			return
 		target.drop_organs(user, TRUE)
 		return
 
 	if (!length(target.butcher_drops))
-		to_chat(user, span_warning("There is nothing left inside [target]!"))
+		to_chat(user, span_warning("There is nothing left inside [limb_descriptor]!"))
 		return
 
-	user.visible_message(span_warning("[user] begins to cut [target] apart."), span_notice("You begin to cut [target] apart..."))
+	user.visible_message(span_warning("[user] begins to cut [limb_descriptor] apart!"), span_notice("You begin to cut [limb_descriptor] apart..."), ignored_mobs = target.owner)
+	if (target.owner)
+		to_chat(target.owner, span_warning("[user] begins to cut your [target.plaintext_zone] apart!"))
+
 	playsound(target.loc, butcher_sound, 50, TRUE, -1)
-	if (!do_after(user, speed * 0.5, target))
+	if (!do_after(user, speed * speed_modifier, target.owner || target))
 		return
 
 	var/list/results = list()
-	var/turf/drop_loc = target.drop_location()
+	var/turf/drop_loc = target.owner?.drop_location() || target.drop_location()
 	var/bonus_chance = max(0, (effectiveness - 100) + bonus_modifier) //so 125 total effectiveness = 25% extra chance
 
 	var/list/failures = list()
@@ -158,14 +232,64 @@
 		for (var/obj/item/food/target_meat in results)
 			target.reagents.trans_to(target_meat, target.reagents.total_volume / meat_produced, remove_blacklisted = TRUE)
 
-	user.visible_message(span_notice("[user] butchers [target]."), span_notice("You butcher [target]."))
-	qdel(target)
+	user.visible_message(span_warning("[user] butchers [limb_descriptor]!"), span_notice("You butcher [limb_descriptor]."), ignored_mobs = target.owner)
+	if (!target.owner)
+		qdel(target)
+		return
+
+	var/wound_type = null
+	if (source.damtype == BURN)
+		wound_type = WOUND_BURN
+	else
+		switch (source.get_sharpness())
+			if (SHARP_EDGED)
+				wound_type = WOUND_SLASH
+			if (SHARP_POINTY)
+				wound_type = WOUND_PIERCE
+			else
+				wound_type = WOUND_BLUNT
+
+	to_chat(target.owner, span_userdanger("[user] hacks the meat off your [target.plaintext_zone]!"))
+	target.dismember(source.damtype, wound_type)
+	if (target.body_zone == BODY_ZONE_CHEST)
+		target.owner.gib(DROP_ALL_REMAINS)
+	else
+		qdel(target)
 
 /datum/component/butchering/proc/start_butcher(obj/item/source, mob/living/target, mob/living/user)
 	to_chat(user, span_notice("You begin to butcher [target]..."))
 	playsound(target.loc, butcher_sound, 50, TRUE, -1)
 	if (do_after(user, speed, target) && target.Adjacent(source))
 		on_butchering(user, target)
+
+/datum/component/butchering/proc/butcher_human(obj/item/source, mob/living/carbon/human/victim, mob/living/user)
+	if (DOING_INTERACTION_WITH_TARGET(user, victim))
+		to_chat(user, span_warning("You're already interacting with [victim]!"))
+		return
+
+	var/static/list/butcher_spots = typecacheof(list(
+		/obj/structure/table,
+		/obj/structure/bed,
+		/obj/machinery/stasis,
+		/obj/structure/kitchenspike,
+	))
+
+	var/found_spot = FALSE
+	for (var/obj/thing in victim.loc)
+		if (is_type_in_typecache(thing, butcher_spots))
+			found_spot = TRUE
+			break
+
+	if (!found_spot)
+		to_chat(user, span_warning("You need a better spot to butcher [victim]!"))
+		return
+
+	var/obj/item/bodypart/limb = victim.get_bodypart(deprecise_zone(user.zone_selected))
+	if (!limb)
+		to_chat(user, span_warning("[victim] doesn't have a [parse_zone(deprecise_zone(user.zone_selected))]!"))
+		return
+
+	butcher_limb(source, limb, user)
 
 /datum/component/butchering/proc/start_neck_slice(obj/item/source, mob/living/carbon/human/victim, mob/living/user)
 	if (DOING_INTERACTION_WITH_TARGET(user, victim))
