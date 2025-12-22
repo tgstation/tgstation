@@ -119,10 +119,10 @@
 
 	var/rotation_screentip = FALSE
 
-	if(can_be_rotated(user, ROTATION_CLOCKWISE, silent=TRUE))
+	if(can_be_rotated(user, source, ROTATION_CLOCKWISE, silent=TRUE))
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Rotate left"
 		rotation_screentip = TRUE
-	if(can_be_rotated(user, ROTATION_COUNTERCLOCKWISE, silent=TRUE))
+	if(can_be_rotated(user, source, ROTATION_COUNTERCLOCKWISE, silent=TRUE))
 		context[SCREENTIP_CONTEXT_ALT_RMB] = "Rotate right"
 		rotation_screentip = TRUE
 
