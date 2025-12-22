@@ -112,7 +112,10 @@
 
 	if(active_item == source)
 		Retract()
-	items_list -= WEAKREF(source)
+	for(var/datum/weakref/ref in items_list)
+		var/obj/item/to_del = ref.resolve()
+		if(QDELETED(to_del))
+			items_list -= ref
 
 /obj/item/organ/cyberimp/arm/toolkit/emp_act(severity)
 	. = ..()
