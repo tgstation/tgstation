@@ -89,6 +89,14 @@
 /// Used for cavity implants
 #define SURGERY_CAVITY_WIDENED (1<<9)
 
+/// List of states -> states that override them and prevent their addition
+GLOBAL_LIST_INIT(exclusive_surgery_states, list(
+	"[SURGERY_SKIN_CUT]" = SURGERY_SKIN_OPEN,
+	"[SURGERY_VESSELS_UNCLAMPED]" = SURGERY_VESSELS_CLAMPED,
+	"[SURGERY_BONE_SAWED]" = SURGERY_BONE_DRILLED,
+	"[SURGERY_BONE_DRILLED]" = SURGERY_BONE_SAWED,
+))
+
 DEFINE_BITFIELD(surgery_state, list(
 	"SKIN CUT" = SURGERY_SKIN_CUT,
 	"SKIN OPEN" = SURGERY_SKIN_OPEN,
@@ -174,3 +182,8 @@ DEFINE_BITFIELD(surgery_state, list(
 #define BIOSTATE_HAS_VESSELS (BIO_BLOODED|BIO_WIRED)
 /// Checks if a bodypart lacks both blood and wires, meaning it has no vessels to manipulate.
 #define LIMB_HAS_VESSELS(limb) (limb?.biological_state & BIOSTATE_HAS_VESSELS)
+
+/// How much blood is lost from unclamped vessels?
+#define UNCLAMPED_VESSELS_BLEEDING 1.5
+/// How much blood is lost from clamped vessels or cut organs?
+#define CLAMPED_VESSELS_BLEEDING 0.2

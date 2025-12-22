@@ -1316,7 +1316,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(required_bodytype && !(limb.bodytype & required_bodytype))
 		return FALSE
 
-	if(limb.owner && !HAS_TRAIT(limb, TRAIT_READY_TO_OPERATE))
+	if(limb.owner && !HAS_TRAIT(limb.owner, TRAIT_READY_TO_OPERATE))
 		return FALSE
 
 	return ..()

@@ -1469,14 +1469,14 @@
 
 	// In 99% of situations we won't get to this point if we aren't wired or blooded
 	// But I'm covering my ass in case someone adds some weird new species
+	var/surgery_bloodloss = 0
 	if(biological_state & BIOSTATE_HAS_VESSELS)
-		var/surgery_bloodloss = 0
 		// better clamp those up quick
 		if(HAS_ANY_SURGERY_STATE(surgery_state, SURGERY_VESSELS_UNCLAMPED))
-			surgery_bloodloss += 1.5
+			surgery_bloodloss += UNCLAMPED_VESSELS_BLEEDING
 		// better, but still not exactly ideal
 		else if(HAS_ANY_SURGERY_STATE(surgery_state, SURGERY_VESSELS_CLAMPED|SURGERY_ORGANS_CUT))
-			surgery_bloodloss += 0.2
+			surgery_bloodloss += CLAMPED_VESSELS_BLEEDING
 
 		// modify rate so cutting everything open won't nuke people
 		if(body_zone == BODY_ZONE_HEAD)
@@ -1495,6 +1495,12 @@
 
 	for(var/datum/wound/iter_wound as anything in wounds)
 		cached_bleed_rate += iter_wound.blood_flow
+		if (!(iter_wound.surgery_states & SURGERY_VESSELS_UNCLAMPED) || !surgery_bloodloss)
+			continue
+		// Consider it contirubuted by the wound itself
+		// Not -surgery_bloodloss as this way clamping the vessels reduces the overall bleeding
+		cached_bleed_rate -= UNCLAMPED_VESSELS_BLEEDING
+		surgery_bloodloss = 0
 
 	if(owner.body_position == LYING_DOWN)
 		cached_bleed_rate *= 0.75
@@ -1711,9 +1717,6 @@
 /obj/item/bodypart/proc/add_surgical_state(new_states)
 	if(!new_states)
 		CRASH("add_surgical_state called with no new states to add")
-	if((surgery_state & new_states) == new_states)
-		return
-
 	var/old_states = surgery_state
 	surgery_state |= new_states
 	update_surgical_state(old_states, new_states)
@@ -1741,11 +1744,16 @@
 
 /// Called when surgical state changes so we can react to it
 /obj/item/bodypart/proc/update_surgical_state(old_state, changed_states)
+	SEND_SIGNAL(src, COMSIG_BODYPART_UPDATING_SURGERY_STATE, old_state, surgery_state, changed_states)
+	if((surgery_state & new_states) == new_states)
+		return
+
 	if(HAS_ANY_SURGERY_STATE(changed_states, SURGERY_ORGANS_CUT|ALL_SURGERY_VESSEL_STATES))
 		refresh_bleed_rate()
 
 	if(isnull(owner))
 		return
+
 	SEND_SIGNAL(owner, COMSIG_LIVING_UPDATING_SURGERY_STATE, old_state, surgery_state, changed_states)
 	if(HAS_SURGERY_STATE(surgery_state, ALL_SURGERY_FISH_STATES(body_zone)))
 		owner.AddComponent(/datum/component/fishing_spot, /datum/fish_source/surgery) // no-op if they already have one
