@@ -103,3 +103,6 @@
 
 /// For how long projectile tracers linger
 #define PROJECTILE_TRACER_DURATION 0.3 SECONDS
+
+///This energy casing can't be copied by the mounted arm laser.
+#define PROJECTILE_CANT_COPY (1<<0)

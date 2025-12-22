@@ -42,15 +42,19 @@
 /obj/item/gun/energy/laser/mounted/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/gun/energy))
 		return ..()
-	user.balloon_alert(user, "projectile copied")
 	var/obj/item/gun/energy/energy_gun = tool
-	ammo_type = list(energy_gun.ammo_type[energy_gun.select])
+	var/obj/item/ammo_casing/energy/copied_projectile = energy_gun.ammo_type[energy_gun.select]
+	if(copied_projectile.energy_projectile_flags & PROJECTILE_CANT_COPY)
+		user.balloon_alert(user, "can't copy!")
+		return ..()
+	ammo_type = list(copied_projectile)
 	fire_sound = energy_gun.fire_sound
 	burst_size = energy_gun.burst_size
 	burst_delay = energy_gun.burst_delay
 	fire_delay = energy_gun.fire_delay
 	QDEL_NULL(chambered)
 	recharge_newshot(TRUE)
+	user.balloon_alert(user, "projectile copied")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/energy/laser/mounted/add_deep_lore()

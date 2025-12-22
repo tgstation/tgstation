@@ -294,6 +294,7 @@
 /obj/item/ammo_casing/energy/duel
 	e_cost = 0 // Can't use the macro
 	projectile_type = /obj/projectile/energy/duel
+	energy_projectile_flags = PROJECTILE_CANT_COPY
 	var/setting
 
 /obj/item/ammo_casing/energy/duel/ready_proj(atom/target, mob/living/user, quiet, zone_override)
