@@ -63,10 +63,12 @@
 	if(ispath(active_item))
 		active_item = new active_item(src)
 		items_list += WEAKREF(active_item)
+		RegisterSignal(active_item, COMSIG_QDELETING, PROC_REF(on_item_deleted))
 
 	for(var/typepath in items_to_create)
 		var/atom/new_item = new typepath(src)
 		items_list += WEAKREF(new_item)
+		RegisterSignal(new_item, COMSIG_QDELETING, PROC_REF(on_item_deleted))
 
 /obj/item/organ/cyberimp/arm/toolkit/Destroy()
 	hand = null
@@ -103,6 +105,14 @@
 /obj/item/organ/cyberimp/arm/toolkit/proc/on_item_attack_self()
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(ui_action_click))
+
+///If somehow your implant gets destroyed, it's gone.
+/obj/item/organ/cyberimp/arm/toolkit/proc/on_item_deleted(atom/source)
+	SIGNAL_HANDLER
+
+	if(active_item == source)
+		Retract()
+	items_list -= WEAKREF(source)
 
 /obj/item/organ/cyberimp/arm/toolkit/emp_act(severity)
 	. = ..()

@@ -49,6 +49,13 @@
 	e_cost = LASER_SHOTS(1, STANDARD_CELL_CHARGE)
 	fire_sound = 'sound/items/weapons/beam_sniper.ogg'
 
+/obj/item/ammo_casing/energy/event_horizon/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread, atom/fired_from)
+	. = ..()
+	if(fired_from && !istype(fired_from, /obj/item/gun/energy/event_horizon))
+		fired_from.visible_message("[fired_from] bursts as it fires under the weight of the projectile!")
+		explosion(fired_from, light_impact_range = 1, smoke = FALSE, explosion_cause = "[user]'s [fired_from]")
+		qdel(fired_from)
+
 /obj/projectile/beam/event_horizon
 	name = "anti-existential beam"
 	icon_state = null

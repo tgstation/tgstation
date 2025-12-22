@@ -47,6 +47,9 @@
 	if(copied_projectile.energy_projectile_flags & PROJECTILE_CANT_COPY)
 		user.balloon_alert(user, "can't copy!")
 		return ..()
+	user.balloon_alert(user, "copying schematics...")
+	if(!do_after(user, 3 SECONDS, tool))
+		return
 	ammo_type = list(copied_projectile)
 	fire_sound = energy_gun.fire_sound
 	burst_size = energy_gun.burst_size
@@ -54,7 +57,7 @@
 	fire_delay = energy_gun.fire_delay
 	QDEL_NULL(chambered)
 	recharge_newshot(TRUE)
-	user.balloon_alert(user, "projectile copied")
+	user.balloon_alert(user, "schematics copied")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/energy/laser/mounted/add_deep_lore()
