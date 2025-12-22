@@ -193,6 +193,6 @@
 	after_smash(target)
 	return COMSIG_LIVING_SHOVE_HANDLED
 
-/// What happens after something gets smashed onto this object
-/obj/proc/after_smash(mob/living/smashed_onto)
+/// What happens after something gets smashed onto this table
+/obj/structure/table/proc/after_smash(mob/living/smashed_onto)
 	return
