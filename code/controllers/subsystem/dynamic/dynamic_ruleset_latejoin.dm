@@ -47,7 +47,7 @@
 	blacklisted_roles = list(
 		JOB_HEAD_OF_PERSONNEL,
 		JOB_CHAPLAIN,
-	)
+	)//roundstart heretic chaplain is bad, dont let somethings counter just be their counter
 
 /datum/dynamic_ruleset/latejoin/heretic/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/heretic)
