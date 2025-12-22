@@ -1,5 +1,5 @@
-///This unique key decides how items are stacked on the UI. We separate them based on name,price & type
-#define ITEM_HASH(item)("[item.name][item.custom_price][item.type]")
+///This unique key decides how items are stacked on the UI. We separate them based on name, price & type
+#define ITEM_HASH(item)(sanitize_css_class_name("[item.name][item.custom_price][item.type]"))
 
 /obj/machinery/vending/custom
 	name = "Custom Vendor"
@@ -11,6 +11,7 @@
 	panel_type = "panel20"
 	refill_canister = /obj/item/vending_refill/custom
 	fish_source_path = /datum/fish_source/vending/custom
+	obj_flags = UNIQUE_RENAME
 
 	/// max number of items that the custom vendor can hold
 	var/max_loaded_items = 20
@@ -199,34 +200,24 @@
 			if(!linked_account)
 				linked_account = card_used.registered_account
 				speak("\The [src] has been linked to [card_used].")
+				return ITEM_INTERACT_SUCCESS
 			else if(linked_account == card_used.registered_account)
 				linked_account = null
 				speak("account unlinked.")
+				return ITEM_INTERACT_SUCCESS
 			else
 				to_chat(user, "verification failed. unlinking process has been cancelled.")
-			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_FAILURE
+	return ..()
 
-	if(!compartmentLoadAccessCheck(user) || !IS_WRITING_UTENSIL(attack_item))
-		return ..()
-
-	. ITEM_INTERACT_FAILURE
-	var/new_name = reject_bad_name(tgui_input_text(user, "Set name", "Name", name, max_length = 20), allow_numbers = TRUE, strict = TRUE, cap_after_symbols = FALSE)
-	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
-	if (new_name)
-		name = new_name
-	var/new_desc = reject_bad_text(tgui_input_text(user, "Set description", "Description", desc, max_length = 60))
-	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
-	if (new_desc)
-		desc = new_desc
+/obj/machinery/vending/custom/descformat(input, mob/living/user)
+	. = input
 	var/new_slogan = reject_bad_text(tgui_input_text(user, "Set slogan", "Slogan", "Epic", max_length = 60))
 	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if (new_slogan)
 		slogan_list += new_slogan
 		last_slogan = world.time + rand(0, slogan_delay)
-	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/vending/custom/collect_records_for_static_data(list/records, list/categories, premium)
 	. = list()
@@ -284,8 +275,6 @@
 		if(ITEM_HASH(product) == dispensed_item)
 			dispensed_item = product
 			break
-	if(QDELETED(dispensed_item))
-		return
 
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
 	if(QDELETED(id_card))
@@ -303,10 +292,10 @@
 		payee.adjust_money(-dispensed_item.custom_price, , "Vending: [dispensed_item]")
 		linked_account.adjust_money(dispensed_item.custom_price, "Vending: [dispensed_item] Bought")
 		linked_account.bank_card_talk("[payee.account_holder] made a [dispensed_item.custom_price] \
-		cr purchase at your custom vendor.")
+		[MONEY_SYMBOL] purchase at your custom vendor.")
 		/// Log the transaction
 		SSblackbox.record_feedback("amount", "vending_spent", dispensed_item.custom_price)
-		log_econ("[dispensed_item.custom_price] credits were spent on [src] buying a \
+		log_econ("[dispensed_item.custom_price] [MONEY_NAME] were spent on [src] buying a \
 		[dispensed_item] by [payee.account_holder], owned by [linked_account.account_holder].")
 		/// Make an alert
 		var/ref = REF(user)

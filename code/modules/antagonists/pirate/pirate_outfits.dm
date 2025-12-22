@@ -58,7 +58,17 @@
 
 /datum/outfit/pirate/space/captain/cardboard
 	name = "Space Pirate Captain (EVA)"
-	l_hand = /obj/item/nullrod/claymore/saber/pirate
+	l_hand = /obj/item/fake_e_cutlass
+
+/obj/item/fake_e_cutlass
+	name = "fake energy cutlass"
+	desc = "Damn, son, where'd you find this? (Tell a coder if you do)"
+	icon = 'icons/obj/weapons/transforming_energy.dmi'
+	icon_state = "e_cutlass_on"
+	inhand_icon_state = "e_cutlass_on"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	item_flags = ABSTRACT
 
 /datum/outfit/pirate/silverscale
 	name = "Silver Scale Member"

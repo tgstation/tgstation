@@ -8,12 +8,12 @@
 /* DATA HUD DATUMS */
 
 /atom/proc/add_to_all_human_data_huds()
-	for(var/datum/atom_hud/data/human/hud in GLOB.huds)
-		hud.add_atom_to_hud(src)
+	for(var/hud_key, hud_type in GLOB.huds)
+		astype(hud_type, /datum/atom_hud/data/human)?.add_atom_to_hud(src)
 
 /atom/proc/remove_from_all_data_huds()
-	for(var/datum/atom_hud/data/hud in GLOB.huds)
-		hud.remove_atom_from_hud(src)
+	for(var/hud_key, hud_type in GLOB.huds)
+		astype(hud_type, /datum/atom_hud/data)?.remove_atom_from_hud(src)
 
 /datum/atom_hud/data
 
@@ -367,11 +367,11 @@ Diagnostic HUDs!
 
 //Borgie battery tracking!
 /mob/living/silicon/robot/proc/diag_hud_set_borgcell()
-	if(cell)
+	if(QDELETED(cell) || (cell.maxcharge == 0))
+		set_hud_image_state(DIAG_BATT_HUD, "hudnobatt")
+	else
 		var/chargelvl = (cell.charge/cell.maxcharge)
 		set_hud_image_state(DIAG_BATT_HUD, "hudbatt[RoundDiagBar(chargelvl)]")
-	else
-		set_hud_image_state(DIAG_BATT_HUD, "hudnobatt")
 
 //borg-AI shell tracking
 /mob/living/silicon/robot/proc/diag_hud_set_aishell() //Shows if AI is controlling a cyborg via a BORIS module
@@ -400,11 +400,11 @@ Diagnostic HUDs!
 	set_hud_image_state(DIAG_MECH_HUD, "huddiag[RoundDiagBar(atom_integrity/max_integrity)]")
 
 /obj/vehicle/sealed/mecha/proc/diag_hud_set_mechcell()
-	if(cell)
+	if(QDELETED(cell) || (cell.maxcharge == 0))
+		set_hud_image_state(DIAG_BATT_HUD, "hudnobatt")
+	else
 		var/chargelvl = cell.charge/cell.maxcharge
 		set_hud_image_state(DIAG_BATT_HUD, "hudbatt[RoundDiagBar(chargelvl)]")
-	else
-		set_hud_image_state(DIAG_BATT_HUD, "hudnobatt")
 
 /obj/vehicle/sealed/mecha/proc/diag_hud_set_mechstat()
 	if(!internal_damage)
@@ -471,11 +471,11 @@ Diagnostic HUDs!
 			set_hud_image_state(DIAG_BOT_HUD, "")
 
 /mob/living/simple_animal/bot/mulebot/proc/diag_hud_set_mulebotcell()
-	if(cell)
+	if(QDELETED(cell) || (cell.maxcharge == 0))
+		set_hud_image_state(DIAG_BATT_HUD, "hudnobatt")
+	else
 		var/chargelvl = (cell.charge/cell.maxcharge)
 		set_hud_image_state(DIAG_BATT_HUD, "hudbatt[RoundDiagBar(chargelvl)]")
-	else
-		set_hud_image_state(DIAG_STAT_HUD, "hudnobatt")
 
 /*~~~~~~~~~~~~
 	Airlocks!

@@ -116,7 +116,7 @@
 
 GLOBAL_LIST_INIT(sand_recipes, list(\
 		new /datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 1 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_TOOLS), \
-		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50, crafting_flags = NONE, category = CAT_MISC),\
+		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50, crafting_flags = CRAFT_NO_MATERIALS, category = CAT_MISC),\
 		new /datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 1, 50, crafting_flags = NONE, category = CAT_TILES)\
 ))
 
@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		C.visible_message(span_danger("[C]'s eye protection blocks the sand!"), span_warning("Your eye protection blocks the sand!"))
 		return
 	C.adjust_eye_blur(12 SECONDS)
-	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
+	C.adjust_stamina_loss(15)//the pain from your eyes burning does stamina damage
 	C.adjust_confusion(5 SECONDS)
 	to_chat(C, span_userdanger("\The [src] gets into your eyes! The pain, it burns!"))
 	qdel(src)
@@ -214,6 +214,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 10
 	scan_state = "rock_diamond"
 	merge_type = /obj/item/stack/ore/diamond
+
+/obj/item/stack/ore/diamond/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/raptor_food, speed_modifier = 0.05, health_modifier = -1, color_chances = string_list(list(/datum/raptor_color/yellow = 3)))
 
 /obj/item/stack/ore/diamond/five
 	amount = 5
@@ -479,7 +483,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/index = sideslist.Find(coinflip)
 	if (index == 2)//tails
 		user.visible_message(span_suicide("\the [src] lands on [coinflip]! [user] promptly falls over, dead!"))
-		user.adjustOxyLoss(200)
+		user.adjust_oxy_loss(200)
 		user.death(FALSE)
 		user.set_suicide(TRUE)
 		user.suicide_log()
@@ -488,7 +492,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/coin/examine(mob/user)
 	. = ..()
-	. += span_info("It's worth [value] credit\s.")
+	. += span_info("It's worth [value] [MONEY_NAME_AUTOPURAL(value)].")
 
 /obj/item/coin/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/stack/cable_coil))
@@ -648,7 +652,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "eldritch coin"
 	desc = "A surprisingly heavy, ornate coin. Its sides seem to depict a different image each time you look."
 	icon_state = "coin_heretic"
-	custom_materials = list(/datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT)
 	sideslist = list("heretic", "blade")
 	heads_name = "heretic"
 	has_action = TRUE
@@ -660,7 +664,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/eldritch/heads_action(mob/user)
 	var/mob/living/living_user = user
 	if(!IS_HERETIC(user))
-		living_user.adjustBruteLoss(5)
+		living_user.adjust_brute_loss(5)
 		return
 	for(var/obj/machinery/door/airlock/target_airlock in range(airlock_range, user))
 		if(target_airlock.density)
@@ -671,25 +675,12 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/eldritch/tails_action(mob/user)
 	var/mob/living/living_user = user
 	if(!IS_HERETIC(user))
-		living_user.adjustFireLoss(5)
+		living_user.adjust_fire_loss(5)
 		return
 	for(var/obj/machinery/door/airlock/target_airlock in range(airlock_range, user))
 		if(target_airlock.locked)
 			target_airlock.unlock()
 			continue
 		target_airlock.lock()
-
-/obj/item/coin/eldritch/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!istype(interacting_with, /obj/machinery/door/airlock))
-		return NONE
-	if(!IS_HERETIC(user))
-		user.adjustBruteLoss(5)
-		user.adjustFireLoss(5)
-		return ITEM_INTERACT_BLOCKING
-	var/obj/machinery/door/airlock/target_airlock = interacting_with
-	to_chat(user, span_warning("You insert [src] into the airlock."))
-	target_airlock.emag_act(user, src)
-	qdel(src)
-	return ITEM_INTERACT_SUCCESS
 
 #undef ORESTACK_OVERLAYS_MAX

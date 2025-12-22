@@ -61,8 +61,7 @@
 		handle_gravity(seconds_per_tick, times_fired)
 
 	if(living_flags & QUEUE_NUTRITION_UPDATE)
-		mob_mood?.update_nutrition_moodlets()
-		hud_used?.hunger?.update_hunger_bar()
+		update_nutrition()
 		living_flags &= ~QUEUE_NUTRITION_UPDATE
 
 	if(stat != DEAD)
@@ -141,7 +140,7 @@
 		return
 
 	var/grav_strength = gravity - GRAVITY_DAMAGE_THRESHOLD
-	adjustBruteLoss(min(GRAVITY_DAMAGE_SCALING * grav_strength, GRAVITY_DAMAGE_MAXIMUM) * seconds_per_tick)
+	adjust_brute_loss(min(GRAVITY_DAMAGE_SCALING * grav_strength, GRAVITY_DAMAGE_MAXIMUM) * seconds_per_tick)
 
 /// Proc used for custom metabolization of reagents, if any
 /mob/living/proc/reagent_tick(datum/reagent/chem, seconds_per_tick, times_fired)

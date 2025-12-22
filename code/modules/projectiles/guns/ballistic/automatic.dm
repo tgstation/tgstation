@@ -329,7 +329,8 @@
 	inhand_icon_state = "arg"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge
 	empty_indicator = TRUE
-	fire_delay = 2
+	bolt_type = BOLT_TYPE_OPEN
+	fire_delay = 2 DECISECONDS
 	can_suppress = FALSE
 	burst_size = 0
 	actions_types = list()
@@ -358,7 +359,7 @@
 	mag_display = TRUE
 	projectile_damage_multiplier = 1.2
 	projectile_speed_multiplier = 1.2
-	fire_delay = 2
+	fire_delay = 2 DECISECONDS
 	burst_size = 1
 	actions_types = list()
 	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
@@ -391,7 +392,6 @@
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 2)
 	AddElement(/datum/element/examine_lore, \
-		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
 		lore = "The BR-38 is Nanotrasen's latest foray into entirely in-house, standard-issue-ready, accelerator-assisted ballistic firearms.<br>\
 		<br>\
 		The acceleration rail built into the barrel assembly boosts fired projectiles to higher velocities than unassisted bullets, \
@@ -470,29 +470,24 @@
 	balloon_alert(user, "system reset")
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/gun/ballistic/automatic/battle_rifle/try_fire_gun(atom/target, mob/living/user, params)
-	. = ..()
-	if(!chambered || (chambered && !chambered.loaded_projectile))
-		return
-
-	if(shots_before_degradation)
-		shots_before_degradation --
-		return
-
-	else if ((obj_flags & EMAGGED) && degradation_stage == degradation_stage_max && !explosion_timer)
-		perform_extreme_malfunction(user)
-
-	else
-		attempt_degradation(FALSE)
-
-
 /obj/item/gun/ballistic/automatic/battle_rifle/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(chambered.loaded_projectile && prob(75) && (emp_malfunction || degradation_stage == degradation_stage_max))
 		balloon_alert_to_viewers("*click*")
 		playsound(src, dry_fire_sound, dry_fire_sound_volume, TRUE)
 		return
 
-	return ..()
+	. = ..()
+	if(!.)
+		return
+
+	else if(shots_before_degradation)
+		shots_before_degradation --
+
+	else if ((obj_flags & EMAGGED) && degradation_stage == degradation_stage_max && !explosion_timer)
+		perform_extreme_malfunction(user)
+
+	else
+		attempt_degradation(FALSE)
 
 /// Proc to handle weapon degradation. Called when attempting to fire or immediately after an EMP takes place.
 /obj/item/gun/ballistic/automatic/battle_rifle/proc/attempt_degradation(force_increment = FALSE)

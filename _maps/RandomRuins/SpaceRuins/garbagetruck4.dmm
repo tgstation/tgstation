@@ -75,6 +75,7 @@
 /obj/item/clothing/shoes/kindle_kicks{
 	pixel_y = -10
 	},
+/obj/structure/sign/warning/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "hH" = (
@@ -196,10 +197,6 @@
 /obj/item/food/spidereggs,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
-"rb" = (
-/obj/structure/sign/warning,
-/turf/closed/wall/r_wall,
-/area/ruin/space/has_grav/garbagetruck/toystore)
 "rc" = (
 /obj/effect/decal/cleanable/blood/oil,
 /obj/item/flashlight/flare/torch,
@@ -314,10 +311,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "wu" = (
-/obj/machinery/airalarm{
-	pixel_y = 25
-	},
 /obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/catwalk_floor/iron,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "ww" = (
@@ -746,7 +741,7 @@
 /obj/item/coin/plastic,
 /obj/structure/safe,
 /obj/structure/spider/stickyweb,
-/obj/item/tank/jetpack/oxygen{
+/obj/item/tank/jetpack{
 	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas. It's blue, and has a triangle chiselled into the paint."
 	},
 /obj/item/switchblade,
@@ -798,6 +793,7 @@
 	},
 /obj/structure/mop_bucket,
 /obj/item/broken_bottle,
+/obj/structure/sign/warning/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "UD" = (
@@ -811,7 +807,7 @@
 "VL" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Wl" = (
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plating,
@@ -953,7 +949,7 @@ xC
 Ix
 dq
 TO
-rb
+Yr
 "}
 (4,1,1) = {"
 yP
@@ -1107,7 +1103,7 @@ ld
 Hy
 Rl
 hD
-rb
+Yr
 "}
 (11,1,1) = {"
 Zi

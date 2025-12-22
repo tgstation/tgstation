@@ -35,7 +35,7 @@
 	. += span_notice("It cannot make another selection.")
 
 /// Handles loading our stuff onto avatars
-/obj/item/bitrunning_disk/proc/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
+/obj/item/bitrunning_disk/proc/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, domain_flags)
 	return NONE
 
 
@@ -46,8 +46,8 @@
 	/// The list of actions that this can grant
 	var/list/datum/action/selectable_actions = list()
 
-/obj/item/bitrunning_disk/ability/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
-	if(external_load_flags & DOMAIN_FORBIDS_ABILITIES)
+/obj/item/bitrunning_disk/ability/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, domain_flags)
+	if(domain_flags & DOMAIN_FORBIDS_ABILITIES)
 		return BITRUNNER_GEAR_LOAD_BLOCKED
 
 	if(isnull(granted_action))
@@ -118,8 +118,8 @@
 	/// The list of actions that this can grant
 	var/list/obj/selectable_items = list()
 
-/obj/item/bitrunning_disk/item/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
-	if(external_load_flags & DOMAIN_FORBIDS_ITEMS)
+/obj/item/bitrunning_disk/item/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, domain_flags)
+	if(domain_flags & DOMAIN_FORBIDS_ITEMS)
 		return BITRUNNER_GEAR_LOAD_BLOCKED
 
 	if(isnull(granted_item))

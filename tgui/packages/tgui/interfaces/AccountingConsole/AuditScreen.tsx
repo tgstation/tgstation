@@ -8,7 +8,7 @@ export const AuditScreen = () => {
   const { crashing, audit_log } = data;
 
   return (
-    <Section scrollable height="320px">
+    <Section scrollable fill>
       {!!crashing && (
         <Modal width="300px" align="center">
           <Blink time={500} interval={500}>
@@ -18,14 +18,22 @@ export const AuditScreen = () => {
       )}
       <Table>
         <Table.Row>
-          <Table.Cell bold>Account</Table.Cell>
-          <Table.Cell bold>Cost</Table.Cell>
-          <Table.Cell bold>Location</Table.Cell>
-          <Table.Cell bold>Timestamp</Table.Cell>
+          <Table.Cell bold fontSize="14px">
+            Account
+          </Table.Cell>
+          <Table.Cell bold fontSize="14px">
+            Cost
+          </Table.Cell>
+          <Table.Cell bold fontSize="14px">
+            Location
+          </Table.Cell>
+          <Table.Cell bold fontSize="14px">
+            Timestamp
+          </Table.Cell>
         </Table.Row>
         {audit_log.map((purchase, index) => (
           <Table.Row key={`audit_${index}`} className="Accounting__TableHeader">
-            <Table.Cell p={0.5}>{purchase.account}</Table.Cell>
+            <Table.Cell p={0.5}>{purchase.account || '???'}</Table.Cell>
             <Table.Cell p={0.5} className="Accounting__TableCellSides">
               {purchase.cost} cr
             </Table.Cell>

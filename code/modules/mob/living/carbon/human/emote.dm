@@ -57,37 +57,17 @@
 	message_mime = "mumbles silently!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
-/datum/emote/living/carbon/human/scream
-	key = "scream"
-	key_third_person = "screams"
-	message = "screams!"
-	message_mime = "acts out a scream!"
-	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-	specific_emote_audio_cooldown = 10 SECONDS
-	vary = TRUE
-
-/datum/emote/living/carbon/human/scream/can_run_emote(mob/user, status_check = TRUE , intentional, params)
-	if(!intentional && HAS_TRAIT(user, TRAIT_ANALGESIA))
-		return FALSE
-	return ..()
-
-/datum/emote/living/carbon/human/scream/get_sound(mob/living/carbon/human/user)
-	if(!istype(user))
-		return
-	return user.dna.species.get_scream_sound(user)
-
-/datum/emote/living/carbon/human/scream/screech //If a human tries to screech it'll just scream.
+/datum/emote/living/carbon/human/screech // basically scream 2.0
 	key = "screech"
 	key_third_person = "screeches"
 	message = "screeches!"
 	message_mime = "screeches silently."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	specific_emote_audio_cooldown = 10 SECONDS
 	vary = FALSE
 
-/datum/emote/living/carbon/human/scream/screech/should_play_sound(mob/user, intentional)
-	if(ismonkey(user))
-		return TRUE
-	return ..()
+/datum/emote/living/carbon/human/screech/get_sound(mob/living/carbon/human/user)
+	return user.dna.species.get_scream_sound(user)
 
 /datum/emote/living/carbon/human/pale
 	key = "pale"
@@ -106,6 +86,89 @@
 	message_param = "salutes to %t."
 	hands_use_check = TRUE
 	sound = 'sound/mobs/humanoids/human/salute/salute.ogg'
+
+/datum/emote/living/carbon/human/slit
+	key = "slit"
+	key_third_person = "slits"
+	message = "drags a finger across their neck."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/scratch_h
+	key = "scratch_h"
+	message = "scratches their head."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/thumb_up
+	key = "thumb_u"
+	message = "gives a thumbs up."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/thumb_down
+	key = "thumb_d"
+	message = "gives a thumbs down."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/time
+	key = "time"
+	message = "checks the time."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/tap
+	key = "tap"
+	key_third_person = "taps"
+	message = "taps their foot impatiently."
+
+/datum/emote/living/carbon/human/halt
+	key = "halt"
+	key_third_person = "halts"
+	message = "holds up their palm, signaling to stop."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/shush
+	key = "shush"
+	key_third_person = "shushes"
+	message = "holds a finger to their lips."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/listen
+	key = "listen"
+	key_third_person = "listens"
+	message = "cups a hand to their ear."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/think
+	key = "think"
+	key_third_person = "thinks"
+	message = "taps their head, thinking."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/beckon
+	key = "beckon"
+	key_third_person = "beckons"
+	message = "waves a hand for someone to come closer."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/airquote
+	key = "airquote"
+	key_third_person = "airquotes"
+	message = "makes air quotes."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/crazy
+	key = "crazy"
+	message = "twirls a finger next to their head."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/squint
+	key = "squint"
+	key_third_person = "squints"
+	message = "squints."
+
+/datum/emote/living/carbon/human/rub
+	key = "rub"
+	key_third_person = "rubs"
+	message = "rubs their chin."
+	hands_use_check = TRUE
 
 /datum/emote/living/carbon/human/shrug
 	key = "shrug"

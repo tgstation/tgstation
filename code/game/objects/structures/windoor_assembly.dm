@@ -8,9 +8,10 @@
 	anchored = FALSE
 	density = FALSE
 	dir = NORTH
-	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR
+	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR | UNIQUE_RENAME | RENAME_NO_DESC
 	set_dir_on_move = FALSE
 	can_atmos_pass = ATMOS_PASS_PROC
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
 
 	/// Reference to the airlock electronics inside for determining window access.
 	var/obj/item/electronics/airlock/electronics = null
@@ -251,17 +252,6 @@
 					electronics = null
 					ae.forceMove(drop_location())
 
-			else if(IS_WRITING_UTENSIL(W))
-				var/t = tgui_input_text(user, "Enter the name for the door", "Windoor Renaming", created_name, max_length = MAX_NAME_LEN)
-				if(!t)
-					return
-				if(!in_range(src, usr) && loc != usr)
-					return
-				created_name = t
-				return
-
-
-
 			//Crowbar to complete the assembly, Step 7 complete.
 			else if(W.tool_behaviour == TOOL_CROWBAR)
 				if(!electronics)
@@ -335,7 +325,7 @@
 			if(EAST,WEST)
 				windoor.unres_sides &= ~NORTH
 				windoor.unres_sides &= ~SOUTH
-		windoor.unres_sensor = TRUE
+		windoor.unres_latch = TRUE
 	electronics.forceMove(windoor)
 	windoor.electronics = electronics
 	windoor.autoclose = TRUE
@@ -367,3 +357,10 @@
 
 	update_appearance()
 	return
+
+/obj/structure/windoor_assembly/nameformat(input, user)
+	created_name = input
+	return input
+
+/obj/structure/windoor_assembly/rename_reset()
+	created_name = initial(created_name)

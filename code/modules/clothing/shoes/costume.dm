@@ -7,6 +7,7 @@
 	equip_delay_other = 10 SECONDS
 	armor_type = /datum/armor/shoes_roman
 	fastening_type = SHOES_STRAPS
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/shoes/griffin
 	name = "griffon boots"
@@ -41,6 +42,7 @@
 	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "clockwork_treads"
 	fastening_type = SHOES_SLIPON
+	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/shoes/bronze/Initialize(mapload)
 	. = ..()
@@ -66,6 +68,7 @@
 	desc = "They got me for my foams!"
 	icon_state = "SwagShoes"
 	inhand_icon_state = null
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/shoes/glow
 	name = "glow shoes"

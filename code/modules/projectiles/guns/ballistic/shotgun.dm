@@ -46,10 +46,11 @@
 	desc = "A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control."
 	icon_state = "riotshotgun"
 	inhand_icon_state = "shotgun"
-	fire_delay = 8
+	fire_delay = 8 DECISECONDS
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
 	can_be_sawn_off = TRUE
+	chambered_attack_block = TRUE // necessary for riot shotgun due to fire_delay and wanting to shoot point blank without accidental melee
 
 //component for seclight attachment
 /obj/item/gun/ballistic/shotgun/riot/add_seclight_point()
@@ -284,6 +285,35 @@
 /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 	pin = /obj/item/firing_pin
 
+// Double barrel shotgun skins
+/datum/atom_skin/bar_shotgun
+	abstract_type = /datum/atom_skin/bar_shotgun
+	change_base_icon_state = TRUE
+
+/datum/atom_skin/bar_shotgun/default
+	preview_name = "Standard Finish"
+	new_icon_state = "dshotgun"
+
+/datum/atom_skin/bar_shotgun/dark_red
+	preview_name = "Dark Red Finish"
+	new_icon_state = "dshotgun_d"
+
+/datum/atom_skin/bar_shotgun/ash
+	preview_name = "Ash"
+	new_icon_state = "dshotgun_f"
+
+/datum/atom_skin/bar_shotgun/faded_grey
+	preview_name = "Faded Grey"
+	new_icon_state = "dshotgun_g"
+
+/datum/atom_skin/bar_shotgun/maple
+	preview_name = "Maple"
+	new_icon_state = "dshotgun_l"
+
+/datum/atom_skin/bar_shotgun/rosewood
+	preview_name = "Rosewood"
+	new_icon_state = "dshotgun_p"
+
 /////////////////////////////
 // DOUBLE BARRELED SHOTGUN //
 /////////////////////////////
@@ -303,17 +333,14 @@
 	sawn_desc = "Omar's coming!"
 	obj_flags = UNIQUE_RENAME
 	rack_sound_volume = 0
-	unique_reskin = list("Default" = "dshotgun",
-						"Dark Red Finish" = "dshotgun_d",
-						"Ash" = "dshotgun_f",
-						"Faded Grey" = "dshotgun_g",
-						"Maple" = "dshotgun_l",
-						"Rosewood" = "dshotgun_p"
-						)
 	semi_auto = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT
 	can_be_sawn_off = TRUE
 	pb_knockback = 3 // it's a super shotgun!
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/bar_shotgun)
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)
 	. = ..()

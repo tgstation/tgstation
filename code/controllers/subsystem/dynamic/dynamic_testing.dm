@@ -59,9 +59,9 @@ ADMIN_VERB(dynamic_tester, R_DEBUG, "Dynamic Tester", "See dynamic probabilities
 
 	data["tier"] = tier
 	data["num_players"] = num_players
-	data["roundstart_ruleset_report"] = flatten_list(roundstart_ruleset_report)
-	data["light_midround_ruleset_report"] = flatten_list(light_midround_ruleset_report)
-	data["heavy_midround_ruleset_report"] = flatten_list(heavy_midround_ruleset_report)
+	data["roundstart_ruleset_report"] = assoc_to_values(roundstart_ruleset_report)
+	data["light_midround_ruleset_report"] = assoc_to_values(light_midround_ruleset_report)
+	data["heavy_midround_ruleset_report"] = assoc_to_values(heavy_midround_ruleset_report)
 
 	return data
 

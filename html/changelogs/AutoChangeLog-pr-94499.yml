@@ -1,0 +1,6 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - code_imp: "improves code for placing posters and signs on walls"
+  - bugfix: "hand placed posters now interact with fire/acid on their mounted turf"
+  - bugfix: "wallframes in player hands gets consumed when mounted in shuttle areas"

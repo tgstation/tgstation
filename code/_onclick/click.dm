@@ -227,7 +227,9 @@
 	if(depth <= 0)
 		return FALSE
 
-	if(isnull(loc) || isarea(loc) || !loc.IsContainedAtomAccessible(src, user))
+	if(isnull(loc) || isarea(loc))
+		return FALSE
+	if(!HAS_TRAIT(src, TRAIT_SKIP_BASIC_REACH_CHECK) && !loc.IsContainedAtomAccessible(src, user))
 		return FALSE
 
 	return loc.IsReachableBy(user, reacher_range, depth, direct_access)

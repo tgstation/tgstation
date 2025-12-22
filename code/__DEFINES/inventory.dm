@@ -216,7 +216,7 @@ GLOBAL_LIST_INIT(any_suit_storage, typecacheof(list(
 	/obj/item/radio,
 	/obj/item/storage/bag/books,
 	/obj/item/storage/fancy/cigarettes,
-	/obj/item/tank/jetpack/oxygen/captain,
+	/obj/item/tank/jetpack/captain,
 	/obj/item/stack/spacecash,
 	/obj/item/storage/wallet,
 	/obj/item/folder,
@@ -289,6 +289,8 @@ GLOBAL_LIST_INIT(chaplain_suit_allowed, list(
 	/obj/item/tank/internals/plasmaman,
 	/obj/item/gun/ballistic/bow/divine,
 	/obj/item/gun/ballistic/revolver/chaplain,
+	/obj/item/toy/plush/carpplushie/nullrod,
+	/obj/item/melee/energy/sword/nullrod,
 ))
 
 //Allowed list for all mining suits

@@ -90,19 +90,19 @@
 	/// boolean that stands for if PHYSICAL damage being patched
 	var/body_damage_patched = FALSE
 	var/need_mob_update = FALSE
-	if(owner.getOxyLoss())
-		need_mob_update += owner.adjustOxyLoss(-5, updating_health = FALSE)
+	if(owner.get_oxy_loss())
+		need_mob_update += owner.adjust_oxy_loss(-5, updating_health = FALSE)
 		revive_cost += 5
-	if(owner.getBruteLoss())
-		need_mob_update += owner.adjustBruteLoss(-2, updating_health = FALSE)
+	if(owner.get_brute_loss())
+		need_mob_update += owner.adjust_brute_loss(-2, updating_health = FALSE)
 		revive_cost += 40
 		body_damage_patched = TRUE
-	if(owner.getFireLoss())
-		need_mob_update += owner.adjustFireLoss(-2, updating_health = FALSE)
+	if(owner.get_fire_loss())
+		need_mob_update += owner.adjust_fire_loss(-2, updating_health = FALSE)
 		revive_cost += 40
 		body_damage_patched = TRUE
-	if(owner.getToxLoss())
-		need_mob_update += owner.adjustToxLoss(-1, updating_health = FALSE)
+	if(owner.get_tox_loss())
+		need_mob_update += owner.adjust_tox_loss(-1, updating_health = FALSE)
 		revive_cost += 40
 	if(need_mob_update)
 		owner.updatehealth()
@@ -335,6 +335,7 @@
 	added_throw_speed = /obj/item/organ/cyberimp/chest/spine/atlas::added_throw_speed
 	strength_bonus = /obj/item/organ/cyberimp/chest/spine/atlas::strength_bonus
 	core_applied = TRUE
+	icon_state = "herculean_implant_core"
 	update_appearance()
 	qdel(tool)
 	return ITEM_INTERACT_SUCCESS

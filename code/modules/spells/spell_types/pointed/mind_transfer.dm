@@ -13,7 +13,6 @@
 
 	invocation = "GIN'YU CAPAN."
 	invocation_type = INVOCATION_WHISPER
-	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
 
 	active_msg = "You prepare to swap minds with a target..."
 	deactive_msg = "You dispel mind swap."

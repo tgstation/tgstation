@@ -12,7 +12,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT * 0.5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.05, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.8)
 	resistance_flags = FIRE_PROOF
 	trigger_guard = TRIGGER_GUARD_NORMAL
 	light_system = OVERLAY_LIGHT
@@ -25,7 +25,9 @@
 	var/lit = FALSE //on or off
 	var/operating = FALSE//cooldown
 	var/obj/item/weldingtool/weldtool = null
+	/// The igniter stored in the flamethrower
 	var/obj/item/assembly/igniter/igniter = null
+	/// The plasma tank that we shoot gas from
 	var/obj/item/tank/internals/plasma/ptank = null
 	var/warned_admins = FALSE //for the message_admins() when lit
 	//variables for prebuilt flamethrowers
@@ -94,9 +96,9 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/flamethrower/wrench_act(mob/living/user, obj/item/tool)
-	. = TRUE
+	. = ITEM_INTERACT_SUCCESS
 	if(status)
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	tool.play_tool_sound(src)
 	var/turf/T = get_turf(src)
 	if(weldtool)
@@ -119,34 +121,34 @@
 		update_appearance()
 		return TRUE
 
-/obj/item/flamethrower/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(isigniter(W))
-		var/obj/item/assembly/igniter/I = W
-		if(I.secured)
-			return
+/obj/item/flamethrower/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(isigniter(tool))
+		var/obj/item/assembly/igniter/inserting_igniter = tool
+		if(inserting_igniter.secured)
+			return ITEM_INTERACT_BLOCKING
 		if(igniter)
-			return
-		if(!user.transferItemToLoc(W, src))
-			return
-		igniter = I
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		igniter = inserting_igniter
 		update_appearance()
-		return
-
-	else if(istype(W, /obj/item/tank/internals/plasma))
+		balloon_alert(user, "attached")
+		return ITEM_INTERACT_SUCCESS
+	if(istype(tool, /obj/item/tank/internals/plasma))
 		if(ptank)
-			if(user.transferItemToLoc(W,src))
-				ptank.forceMove(get_turf(src))
-				ptank = W
-				to_chat(user, span_notice("You swap the plasma tank in [src]!"))
-			return
-		if(!user.transferItemToLoc(W, src))
-			return
-		ptank = W
+			if(!user.transferItemToLoc(tool, src))
+				return ITEM_INTERACT_BLOCKING
+			ptank.forceMove(get_turf(src))
+			ptank = tool
+			to_chat(user, span_notice("You swap the plasma tank in [src]!"))
+			return ITEM_INTERACT_SUCCESS
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		ptank = tool
 		update_appearance()
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	else
-		return ..()
+	return NONE
 
 /obj/item/flamethrower/return_analyzable_air()
 	if(ptank)

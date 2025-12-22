@@ -130,6 +130,7 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	alternate_worn_layer = UNDER_SUIT_LAYER
 	can_adjust = FALSE
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR //weebs are gonna love this
 
 /obj/item/clothing/under/costume/geisha
 	name = "geisha suit"
@@ -137,6 +138,7 @@
 	icon_state = "geisha"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/under/costume/yukata
 	name = "black yukata"
@@ -145,6 +147,8 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/costume/yukata/green
 	name = "green yukata"
@@ -164,6 +168,8 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/costume/kimono/red
 	name = "red kimono"
@@ -269,6 +275,26 @@
 	can_adjust = FALSE
 	resistance_flags = NONE
 
+// Mech suit skins
+/datum/atom_skin/mech_suit
+	abstract_type = /datum/atom_skin/mech_suit
+
+/datum/atom_skin/mech_suit/red
+	preview_name = "Red"
+	new_icon_state = "red_mech_suit"
+
+/datum/atom_skin/mech_suit/white
+	preview_name = "White"
+	new_icon_state = "white_mech_suit"
+
+/datum/atom_skin/mech_suit/blue
+	preview_name = "Blue"
+	new_icon_state = "blue_mech_suit"
+
+/datum/atom_skin/mech_suit/black
+	preview_name = "Black"
+	new_icon_state = "black_mech_suit"
+
 /obj/item/clothing/under/costume/mech_suit
 	name = "mech pilot's suit"
 	desc = "A mech pilot's suit. Might make your butt look big."
@@ -280,13 +306,9 @@
 	alternate_worn_layer = GLOVES_LAYER //covers hands but gloves can go over it. This is how these things work in my head.
 	can_adjust = FALSE
 
-	unique_reskin = list(
-						"Red" = "red_mech_suit",
-						"White" = "white_mech_suit",
-						"Blue" = "blue_mech_suit",
-						"Black" = "black_mech_suit",
-						)
-
+/obj/item/clothing/under/costume/mech_suit/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/mech_suit)
 
 /obj/item/clothing/under/costume/russian_officer
 	name = "\improper Russian officer's uniform"
@@ -316,6 +338,7 @@
 	species_exception = list(/datum/species/golem)
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/under/costume/buttondown/slacks
 	name = "button-down shirt with slacks"
@@ -391,6 +414,7 @@
 	icon_state = "SwagOutfit"
 	inhand_icon_state = null
 	can_adjust = FALSE
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/under/costume/referee
 	name = "referee uniform"
@@ -448,6 +472,7 @@
 	inhand_icon_state = null
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/under/costume/gi/Initialize(mapload)
 	. = ..()
@@ -504,3 +529,36 @@
 	armor_type = /datum/armor/clothing_under/rank_security
 	has_sensor = NO_SENSORS
 
+/obj/item/clothing/under/costume/captain
+	name = "captain's suit"
+	desc = "A green suit and yellow necktie. Exemplifies authority."
+	icon_state = "green_suit"
+	inhand_icon_state = "dg_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/captain/skirt
+	name = "green suitskirt"
+	desc = "A green suitskirt and yellow necktie. Exemplifies authority."
+	icon_state = "green_suit_skirt"
+	inhand_icon_state = "dg_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	dying_key = DYE_REGISTRY_JUMPSKIRT
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/costume/head_of_personnel
+	name = "head of personnel's suit"
+	desc = "A teal suit and yellow necktie. An authoritative yet tacky ensemble."
+	icon_state = "teal_suit"
+	inhand_icon_state = "g_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/head_of_personnel/skirt
+	name = "teal suitskirt"
+	desc = "A teal suitskirt and yellow necktie. An authoritative yet tacky ensemble."
+	icon_state = "teal_suit_skirt"
+	inhand_icon_state = "g_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	dying_key = DYE_REGISTRY_JUMPSKIRT
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON

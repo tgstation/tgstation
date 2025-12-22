@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fix Asclepius screen alert when the holder has a lantern"
+  - bugfix: "You can't click the Asclepius screen alert"

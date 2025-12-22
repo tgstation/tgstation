@@ -27,7 +27,7 @@
 	if(istype(eating, /obj/item/food/golem_food))
 		return
 	source.balloon_alert(source, "minerals only!")
-	return COMSIG_CARBON_BLOCK_EAT
+	return BLOCK_EAT_ATTEMPT
 
 /// Golem stomach cannot process nutriment except from minerals
 /obj/item/organ/stomach/golem/on_life(delta_time, times_fired)
@@ -63,7 +63,8 @@
 /atom/movable/screen/alert/status_effect/golem_statued
 	name = "Statued"
 	desc = "You no longer have the energy to move your body!"
-	icon_state = "golem_statued"
+	use_user_hud_icon = TRUE
+	overlay_state = "golem_statued"
 
 /datum/status_effect/golem_statued/on_apply()
 	. = ..()

@@ -542,6 +542,27 @@
 	list_to_pick[.]--
 
 /**
+* Picks n items from a list. The same index will not be chosen more than once.
+* e.g. pick_n(list_of_stuff, 10) would return a list of 10 items from the list, chosen randomly.
+*/
+/proc/pick_n(list/list_to_pick, n)
+	var/list_to_pick_length
+	if(islist(list_to_pick))
+		list_to_pick_length = length(list_to_pick)
+
+	if(!list_to_pick_length || n <= 0)
+		return list()
+
+	/// length of our list_to_pick
+	n = min(n, list_to_pick_length)
+
+	// Shuffle and slice the first n indices
+	var/list/copy_to_shuffle = list_to_pick.Copy()
+	shuffle_inplace(copy_to_shuffle)
+
+	return copy_to_shuffle.Copy(1, n + 1)
+
+/**
  * Given a list, return a copy where values without defined weights are given weight 1.
  * For example, fill_with_ones(list(A, B=2, C)) = list(A=1, B=2, C=1)
  * Useful for weighted random choices (loot tables, syllables in languages, etc.)
@@ -657,13 +678,15 @@
 
 	return inserted_list
 
-///same as shuffle, but returns nothing and acts on list in place
+///same as shuffle, but acts on list in place, and returns same list
 /proc/shuffle_inplace(list/inserted_list)
 	if(!inserted_list)
 		return
 
 	for(var/i in 1 to inserted_list.len - 1)
 		inserted_list.Swap(i, rand(i, inserted_list.len))
+
+	return inserted_list
 
 ///Return a list with no duplicate entries
 /proc/unique_list(list/inserted_list)
@@ -894,14 +917,6 @@
 		used_key_list[input_key] = 1
 	return input_key
 
-///Flattens a keyed list into a list of its contents
-/proc/flatten_list(list/key_list)
-	if(!islist(key_list))
-		return null
-	. = list()
-	for(var/key in key_list)
-		. |= LIST_VALUE_WRAP_LISTS(key_list[key])
-
 ///Make a normal list an associative one
 /proc/make_associative(list/flat_list)
 	. = list()
@@ -958,6 +973,14 @@
 			continue
 		UNTYPED_LIST_ADD(keys, key)
 	return keys
+
+/// Turns an associative list into a flat list of values
+/proc/assoc_to_values(list/key_list)
+	if(!islist(key_list))
+		return null
+	. = list()
+	for(var/key in key_list)
+		. |= LIST_VALUE_WRAP_LISTS(key_list[key])
 
 ///compare two lists, returns TRUE if they are the same
 /proc/compare_list(list/l,list/d)

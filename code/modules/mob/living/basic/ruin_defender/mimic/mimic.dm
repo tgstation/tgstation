@@ -8,6 +8,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 )))
 
 /mob/living/basic/mimic
+	abstract_type = /mob/living/basic/mimic
 	response_help_continuous = "touches"
 	response_help_simple = "touch"
 	response_disarm_continuous = "pushes"
@@ -16,7 +17,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	maxHealth = 250
 	health = 250
 	gender = NEUTER
-	mob_biotypes = NONE
+	mob_biotypes = MOB_MINERAL
 	pass_flags = PASSFLAPS
 	melee_damage_lower = 8
 	melee_damage_upper = 12
@@ -287,7 +288,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	if(!.) //dead or deleted
 		return
 	if(idledamage && !ckey && !ai_controller?.blackboard[BB_BASIC_MOB_CURRENT_TARGET]) //Objects eventually revert to normal if no one is around to terrorize
-		adjustBruteLoss(0.5 * seconds_per_tick)
+		adjust_brute_loss(0.5 * seconds_per_tick)
 	for(var/mob/living/victim in contents) //a fix for animated statues from the flesh to stone spell
 		death()
 		return

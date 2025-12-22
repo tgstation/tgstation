@@ -196,6 +196,9 @@
 /code/modules/atmospherics/ @Pickle-Coding
 /code/modules/power/ @Pickle-Coding
 
+# FalloutFalcon
+/code/__HELPERS/abstract_types.dm @FalloutFalcon
+/code/__HELPERS/random_items.dm @FalloutFalcon
 
 # MULTIPLE OWNERS
 
@@ -224,6 +227,8 @@
 
 /tools/build/ @scriptis @stylemistake
 /tools/tgs_scripts/ @Cyberboss @scriptis
+
+/code/modules/antagonists/heretic @Xander3359 @EnterTheJake
 
 # Host Hell
 

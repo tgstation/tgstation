@@ -1381,13 +1381,6 @@
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/rnd/production/techfab/department/service
 
-/obj/item/circuitboard/machine/vendatray
-	name = "Vend-A-Tray"
-	greyscale_colors = CIRCUIT_COLOR_SERVICE
-	build_path = /obj/structure/displaycase/forsale
-	req_components = list(
-		/datum/stock_part/card_reader = 1)
-
 /obj/item/circuitboard/machine/fishing_portal_generator
 	name = "Fishing Portal Generator"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
@@ -1892,4 +1885,15 @@
 	build_path = /obj/machinery/byteforge
 	req_components = list(
 		/datum/stock_part/micro_laser = 1,
+	)
+
+/obj/item/circuitboard/machine/washing_machine
+	name = "Washing Machine"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/washing_machine
+	req_components = list(
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/reagent_containers/cup/beaker = 2,
+		/datum/stock_part/water_recycler = 1,
+		/datum/stock_part/servo = 1,
 	)

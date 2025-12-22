@@ -23,6 +23,16 @@
 	master = null
 	return ..()
 
+/datum/antagonist/heretic_monster/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/target = mob_override || owner.current
+	ADD_TRAIT(target, TRAIT_HERETIC_SUMMON, REF(src))
+
+/datum/antagonist/heretic_monster/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/target = mob_override || owner.current
+	REMOVE_TRAIT(target, TRAIT_HERETIC_SUMMON, REF(src))
+	return ..()
+
 /*
  * Set our [master] var to a new mind.
  */

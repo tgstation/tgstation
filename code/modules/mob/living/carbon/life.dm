@@ -181,7 +181,7 @@
 		// Simulates breathing zero moles of gas.
 		has_moles = FALSE
 		// Extra damage, let God sort ’em out!
-		adjustOxyLoss(2)
+		adjust_oxy_loss(2)
 
 	/// Minimum O2 before suffocation.
 	var/safe_oxygen_min = 16
@@ -232,7 +232,7 @@
 		failed_last_breath = FALSE
 		// Vacuum-adapted lungs regenerate oxyloss even when breathing nothing.
 		if(health >= crit_threshold)
-			adjustOxyLoss(-5)
+			adjust_oxy_loss(-5)
 	else
 		// Can't breathe! Lungs are missing, and/or breath is empty.
 		. = FALSE
@@ -266,7 +266,7 @@
 			oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
 			// Heal mob if not in crit.
 			if(health >= crit_threshold)
-				adjustOxyLoss(-5)
+				adjust_oxy_loss(-5)
 	// Exhale equivalent amount of CO2.
 	if(o2_pp)
 		breath_gases[/datum/gas/oxygen][MOLES] -= oxygen_used
@@ -287,10 +287,10 @@
 				throw_alert(ALERT_TOO_MUCH_CO2, /atom/movable/screen/alert/too_much_co2)
 			Unconscious(6 SECONDS)
 			// Lets hurt em a little, let them know we mean business.
-			adjustOxyLoss(3)
+			adjust_oxy_loss(3)
 			// They've been in here 30s now, start to kill them for their own good!
 			if((world.time - co2overloadtime) > 30 SECONDS)
-				adjustOxyLoss(8)
+				adjust_oxy_loss(8)
 	else
 		// Reset side-effects.
 		co2overloadtime = 0
@@ -301,7 +301,7 @@
 	if(plasma_pp > safe_plas_max)
 		// Plasma side-effects.
 		var/ratio = (breath_gases[/datum/gas/plasma][MOLES] / safe_plas_max) * 10
-		adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
+		adjust_tox_loss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
 		if(!HAS_TRAIT(src, TRAIT_ANOSMIA))
 			throw_alert(ALERT_TOO_MUCH_PLASMA, /atom/movable/screen/alert/too_much_plas)
 	else
@@ -321,7 +321,7 @@
 
 	//-- FREON --//
 	if(freon_pp)
-		adjustFireLoss(freon_pp * 0.25)
+		adjust_fire_loss(freon_pp * 0.25)
 
 	//-- MIASMA --//
 	if(!miasma_pp)
@@ -385,9 +385,9 @@
 	if(nitrium_pp)
 		var/need_mob_update = FALSE
 		if(nitrium_pp > 0.5)
-			need_mob_update += adjustFireLoss(nitrium_pp * 0.15, updating_health = FALSE)
+			need_mob_update += adjust_fire_loss(nitrium_pp * 0.15, updating_health = FALSE)
 		if(nitrium_pp > 5)
-			need_mob_update += adjustToxLoss(nitrium_pp * 0.05, updating_health = FALSE)
+			need_mob_update += adjust_tox_loss(nitrium_pp * 0.05, updating_health = FALSE)
 		if(need_mob_update)
 			updatehealth()
 
@@ -426,13 +426,13 @@
 	// Low pressure.
 	if(breath_pp)
 		var/ratio = safe_breath_min / breath_pp
-		adjustOxyLoss(min(5 * ratio, 3))
+		adjust_oxy_loss(min(5 * ratio, 3))
 		return true_pp * ratio / 6
 	// Zero pressure.
 	if(health >= crit_threshold)
-		adjustOxyLoss(3)
+		adjust_oxy_loss(3)
 	else
-		adjustOxyLoss(1)
+		adjust_oxy_loss(1)
 
 /// Fourth and final link in a breath chain
 /mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
@@ -467,8 +467,9 @@
 	if(!blood_type)
 		return
 
-	if(chem.type == blood_type?.restoration_chem && blood_volume < BLOOD_VOLUME_NORMAL)
-		blood_volume += BLOOD_REGEN_FACTOR * seconds_per_tick
+	if(chem.type == blood_type?.restoration_chem && get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		// Don't clamp this to BLOOD_VOLUME_NORMAL. Reagents have quantization, making an clamped threshold janky.
+		adjust_blood_volume(BLOOD_REGEN_FACTOR * seconds_per_tick)
 		reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
 		return COMSIG_MOB_STOP_REAGENT_TICK
 
@@ -485,10 +486,8 @@
 	if(blood_type.reagent_type != chem.type)
 		return
 
-	var/blood_stream_volume = min(round(reac_volume, CHEMICAL_VOLUME_ROUNDING), BLOOD_VOLUME_MAXIMUM - blood_volume)
-	if(blood_stream_volume > 0) //remove reagents from mob that has now entered the bloodstream
-		reagents.remove_reagent(chem.type, blood_stream_volume)
-		blood_volume += blood_stream_volume
+	var/blood_added = adjust_blood_volume(round(reac_volume, CHEMICAL_VOLUME_ROUNDING))
+	reagents.remove_reagent(chem.type, blood_added)
 
 	if(chem.data?["blood_type"])
 		var/datum/blood_type/donor_type = chem.data["blood_type"]
@@ -771,8 +770,8 @@
 	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_LIVERLESS_METABOLISM))
 		return
 
-	adjustToxLoss(0.6 * seconds_per_tick, forced = TRUE)
-	adjustOrganLoss(pick(ORGAN_SLOT_HEART, ORGAN_SLOT_LUNGS, ORGAN_SLOT_STOMACH, ORGAN_SLOT_EYES, ORGAN_SLOT_EARS), 0.5* seconds_per_tick)
+	adjust_tox_loss(0.6 * seconds_per_tick, forced = TRUE)
+	adjust_organ_loss(pick(ORGAN_SLOT_HEART, ORGAN_SLOT_LUNGS, ORGAN_SLOT_STOMACH, ORGAN_SLOT_EYES, ORGAN_SLOT_EARS), 0.5* seconds_per_tick)
 
 /mob/living/carbon/proc/undergoing_liver_failure()
 	var/obj/item/organ/liver/liver = get_organ_slot(ORGAN_SLOT_LIVER)
@@ -803,7 +802,7 @@
 /mob/living/carbon/proc/needs_heart()
 	if(HAS_TRAIT(src, TRAIT_STABLEHEART))
 		return FALSE
-	if(dna && dna.species && (HAS_TRAIT(src, TRAIT_NOBLOOD) || isnull(dna.species.mutantheart))) //not all carbons have species!
+	if(dna && dna.species && (!CAN_HAVE_BLOOD(src) || isnull(dna.species.mutantheart))) //not all carbons have species!
 		return FALSE
 	return TRUE
 

@@ -87,6 +87,13 @@
 /obj/structure/microscope,
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
+"bV" = (
+/obj/structure/broken_flooring/corner/always_floorplane{
+	dir = 4
+	},
+/obj/structure/sign/warning/directional/west,
+/turf/open/indestructible/meat,
+/area/ruin/space/has_grav/powered/biooutpost)
 "ch" = (
 /turf/open/indestructible/white{
 	icon_state = "showroomfloor"
@@ -333,9 +340,11 @@
 /turf/open/indestructible/meat,
 /area/ruin/space/has_grav/powered/biooutpost)
 "hR" = (
-/obj/structure/sign/warning,
-/turf/closed/indestructible/reinforced,
-/area/ruin/space/has_grav/powered/biooutpost/vault)
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/directional/east,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
 "hW" = (
 /obj/effect/turf_decal/siding/purple,
 /obj/effect/decal/cleanable/blood/splatter,
@@ -1314,6 +1323,7 @@
 	dir = 5
 	},
 /obj/structure/sign/warning/chem_diamond/directional/west,
+/obj/structure/sign/warning/directional/south,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/biooutpost)
 "za" = (
@@ -1388,8 +1398,12 @@
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/biooutpost)
 "AT" = (
-/obj/structure/sign/warning,
-/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/obj/structure/puzzle_blockade{
+	id = "md_armory"
+	},
+/obj/effect/turf_decal/stripes/full,
+/obj/structure/sign/warning/directional/north,
+/turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
 "AV" = (
 /obj/effect/turf_decal/stripes/full,
@@ -1704,6 +1718,12 @@
 /obj/machinery/light/small/broken/directional/south,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/biooutpost)
+"Gq" = (
+/obj/structure/sign/directions/security/directional/south{
+	pixel_y = 0
+	},
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
 "GA" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
@@ -2528,9 +2548,6 @@
 /turf/open/indestructible/plating,
 /area/ruin/space/has_grav/powered/biooutpost)
 "XO" = (
-/obj/structure/sign/directions/security/directional/south{
-	pixel_x = 32
-	},
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /obj/structure/sign/poster/official/random/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -2984,7 +3001,7 @@ Jh
 AP
 DJ
 yU
-AT
+Jh
 vF
 ih
 hf
@@ -3262,7 +3279,7 @@ Jh
 wX
 wM
 DJ
-cp
+hR
 XO
 Ju
 op
@@ -3304,9 +3321,9 @@ UX
 UX
 EC
 xr
-hR
+EC
 UX
-UX
+Gq
 UX
 op
 Gd
@@ -3560,8 +3577,8 @@ EN
 EN
 eP
 EC
-hR
-IK
+EC
+AT
 IK
 IK
 PQ
@@ -3721,7 +3738,7 @@ Rb
 Sj
 EC
 Yc
-hR
+EC
 EC
 xr
 EC
@@ -3763,7 +3780,7 @@ UD
 qV
 ij
 Nz
-sJ
+bV
 OM
 Vu
 NE

@@ -78,6 +78,25 @@
 	return
 
 /obj/structure/destructible/eldritch_crucible/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/codex_cicatrix) || istype(tool, /obj/item/melee/touch_attack/mansus_fist))
+		playsound(src, 'sound/items/deconstruct.ogg', 30, TRUE, ignore_walls = FALSE)
+		set_anchored(!anchored)
+		balloon_alert(user, "[anchored ? "":"un"]anchored")
+		return ITEM_INTERACT_SUCCESS
+	if(istype(tool, /obj/item/reagent_containers/cup/beaker/eldritch))
+		if(current_mass < max_mass)
+			balloon_alert(user, "not full enough!")
+			return ITEM_INTERACT_SUCCESS
+		var/obj/item/reagent_containers/cup/beaker/eldritch/to_fill = tool
+		if(to_fill.reagents.total_volume >= to_fill.reagents.maximum_volume)
+			balloon_alert(user, "flask is full!")
+			return ITEM_INTERACT_SUCCESS
+		to_fill.reagents.add_reagent(/datum/reagent/eldritch, 50)
+		do_item_attack_animation(src, used_item = tool, animation_type = ATTACK_ANIMATION_BLUNT)
+		current_mass--
+		balloon_alert(user, "refilled flask")
+		return ITEM_INTERACT_SUCCESS
+
 	if(isbodypart(tool))
 		var/obj/item/bodypart/consumed = tool
 		if(!IS_ORGANIC_LIMB(consumed))
@@ -108,26 +127,6 @@
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE
-
-/obj/structure/destructible/eldritch_crucible/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/codex_cicatrix) || istype(tool, /obj/item/melee/touch_attack/mansus_fist))
-		playsound(src, 'sound/items/deconstruct.ogg', 30, TRUE, ignore_walls = FALSE)
-		set_anchored(!anchored)
-		balloon_alert(user, "[anchored ? "":"un"]anchored")
-		return ITEM_INTERACT_SUCCESS
-	if(istype(tool, /obj/item/reagent_containers/cup/beaker/eldritch))
-		if(current_mass < max_mass)
-			balloon_alert(user, "not full enough!")
-			return ITEM_INTERACT_SUCCESS
-		var/obj/item/reagent_containers/cup/beaker/eldritch/to_fill = tool
-		if(to_fill.reagents.total_volume >= to_fill.reagents.maximum_volume)
-			balloon_alert(user, "flask is full!")
-			return ITEM_INTERACT_SUCCESS
-		to_fill.reagents.add_reagent(/datum/reagent/eldritch, 50)
-		do_item_attack_animation(src, used_item = tool, animation_type = ATTACK_ANIMATION_BLUNT)
-		current_mass--
-		balloon_alert(user, "refilled flask")
-		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/destructible/eldritch_crucible/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -253,6 +252,8 @@
 	var/crucible_tip = "Doesn't do anything."
 	/// Typepath to the status effect this applies
 	var/status_effect
+	/// If you can drink the same potion while the effect is active
+	var/can_refresh = TRUE
 
 /obj/item/eldritch_potion/examine(mob/user)
 	. = ..()
@@ -267,6 +268,9 @@
 		return
 
 	if(!iscarbon(user))
+		return
+
+	if(!can_refresh && user.has_status_effect(status_effect))
 		return
 
 	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
@@ -297,7 +301,14 @@
 	desc = "A glass bottle containing a bright orange, translucent liquid."
 	icon_state = "crucible_soul"
 	status_effect = /datum/status_effect/crucible_soul
-	crucible_tip = "Allows you to walk through walls. After expiring, you are teleported to your original location. Lasts 15 seconds."
+	crucible_tip = "Allows you to walk through walls. After expiring, you are teleported to your original location. Lasts 40 seconds."
+	can_refresh = FALSE
+
+/obj/item/eldritch_potion/crucible_soul/attack_self(mob/user)
+	if(user.has_status_effect(/datum/status_effect/crucible_soul_cooldown))
+		balloon_alert(user, "on cooldown!")
+		return TRUE
+	return ..()
 
 /obj/item/eldritch_potion/duskndawn
 	name = "brew of dusk and dawn"

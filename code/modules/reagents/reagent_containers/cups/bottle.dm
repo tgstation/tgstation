@@ -7,6 +7,7 @@
 	fill_icon_state = "bottle"
 	inhand_icon_state = "atoxinbottle"
 	worn_icon_state = "bottle"
+	obj_flags = UNIQUE_RENAME | RENAME_NO_DESC
 	possible_transfer_amounts = list(5, 10, 15, 25, 50)
 	volume = 50
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
@@ -259,6 +260,11 @@
 	name = "Basic buffer bottle"
 	desc = "A small bottle of basic buffer."
 	list_reagents = list(/datum/reagent/reaction_agent/basic_buffer = 30)
+
+/obj/item/reagent_containers/cup/bottle/inversing_buffer
+	name = "Chiral inversing buffer bottle"
+	desc = "A small bottle of chiral inversing buffer."
+	list_reagents = list(/datum/reagent/reaction_agent/inversing_buffer = 30)
 
 /obj/item/reagent_containers/cup/bottle/romerol
 	name = "romerol bottle"
@@ -524,26 +530,14 @@
 
 //when you attack the syrup bottle with a container it refills it
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(IS_WRITING_UTENSIL(tool))
-		return writing_utensil_act(user, tool)
 	if(is_open_container() && tool.is_refillable())
 		return refillable_act(user, tool)
 	return ..()
 
-/obj/item/reagent_containers/cup/bottle/syrup_bottle/proc/writing_utensil_act(mob/user, obj/item/tool)
-	if(!user.can_write(tool))
-		return ITEM_INTERACT_BLOCKING
-
-	var/input_name = tgui_input_text(user, "What would you like to label the syrup bottle?", "Syrup Bottle Labelling", max_length = MAX_NAME_LEN)
-	if(!user.can_perform_action(src))
-		return ITEM_INTERACT_BLOCKING
-
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/nameformat(input, user)
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-	if(input_name)
-		name = "[input_name] bottle"
-	else
-		name = initial(name)
-	return ITEM_INTERACT_SUCCESS
+	return "[input? "[input] " : null]bottle"
+
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/proc/refillable_act(mob/user, obj/item/tool)
 	if(!reagents.total_volume)
@@ -554,7 +548,8 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/transfer_amount = round(reagents.trans_to(tool, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
-	balloon_alert(user, "transferred [transfer_amount] unit\s")
+	if(transfer_amount)
+		balloon_alert(user, "transferred [transfer_amount] unit\s")
 	flick("syrup_anim",src)
 	tool.update_appearance()
 	update_appearance()

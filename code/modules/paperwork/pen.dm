@@ -165,7 +165,7 @@
 	icon_state = "pen-charcoal"
 	colour = "#696969"
 	font = CHARCOAL_FONT
-	custom_materials = null
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 	grind_results = list(/datum/reagent/ash = 5, /datum/reagent/cellulose = 10)
 	requires_gravity = FALSE // this is technically a pencil
 	can_click = FALSE
@@ -177,6 +177,38 @@
 	time = 3 SECONDS
 	category = CAT_TOOLS
 
+// Skins for captain's fountain pen
+/datum/atom_skin/cap_pen
+	abstract_type = /datum/atom_skin/cap_pen
+
+/datum/atom_skin/cap_pen/apply(atom/apply_to)
+	. = ..()
+	apply_to.desc = "It's an expensive [preview_name] fountain pen. The nib is quite sharp."
+
+/datum/atom_skin/cap_pen/clear_skin(atom/clear_from)
+	. = ..()
+	clear_from.desc = initial(clear_from.desc)
+
+/datum/atom_skin/cap_pen/oak
+	preview_name = "Oak"
+	new_icon_state = "pen-fountain-o"
+
+/datum/atom_skin/cap_pen/gold
+	preview_name = "Gold"
+	new_icon_state = "pen-fountain-g"
+
+/datum/atom_skin/cap_pen/rosewood
+	preview_name = "Rosewood"
+	new_icon_state = "pen-fountain-r"
+
+/datum/atom_skin/cap_pen/black_silver
+	preview_name = "Black and Silver"
+	new_icon_state = "pen-fountain-b"
+
+/datum/atom_skin/cap_pen/command_blue
+	preview_name = "Command Blue"
+	new_icon_state = "pen-fountain-cb"
+
 /obj/item/pen/fountain/captain
 	name = "captain's fountain pen"
 	desc = "It's an expensive Oak fountain pen. The nib is quite sharp."
@@ -184,26 +216,18 @@
 	force = 5
 	throwforce = 5
 	throw_speed = 4
-	colour = "#DC143C"
 	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT*7.5)
 	sharpness = SHARP_EDGED
 	resistance_flags = FIRE_PROOF
-	unique_reskin = list(
-		"Oak" = "pen-fountain-o",
-		"Gold" = "pen-fountain-g",
-		"Rosewood" = "pen-fountain-r",
-		"Black and Silver" = "pen-fountain-b",
-		"Command Blue" = "pen-fountain-cb"
-	)
 	embed_type = /datum/embedding/pen/captain
 	dart_insert_casing_icon_state = "overlay_fountainpen_gold"
 	dart_insert_projectile_icon_state = "overlay_fountainpen_gold_proj"
 	var/list/overlay_reskin = list(
-		"Oak" = "overlay_fountainpen_gold",
-		"Gold" = "overlay_fountainpen_gold",
-		"Rosewood" = "overlay_fountainpen_gold",
-		"Black and Silver" = "overlay_fountainpen",
-		"Command Blue" = "overlay_fountainpen_gold"
+		/datum/atom_skin/cap_pen/black_silver::preview_name = "overlay_fountainpen",
+		/datum/atom_skin/cap_pen/command_blue::preview_name = "overlay_fountainpen_gold",
+		/datum/atom_skin/cap_pen/gold::preview_name = "overlay_fountainpen_gold",
+		/datum/atom_skin/cap_pen/oak::preview_name = "overlay_fountainpen_gold",
+		/datum/atom_skin/cap_pen/rosewood::preview_name = "overlay_fountainpen_gold",
 	)
 
 /datum/embedding/pen/captain
@@ -211,24 +235,21 @@
 
 /obj/item/pen/fountain/captain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, \
-	speed = 20 SECONDS, \
-	effectiveness = 115, \
+	AddComponent( \
+		/datum/component/butchering, \
+		speed = 20 SECONDS, \
+		effectiveness = 115, \
 	)
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/cap_pen)
 	//the pen is mightier than the sword
 	RegisterSignal(src, COMSIG_DART_INSERT_PARENT_RESKINNED, PROC_REF(reskin_dart_insert))
 
-/obj/item/pen/fountain/captain/reskin_obj(mob/M)
-	..()
-	if(current_skin)
-		desc = "It's an expensive [current_skin] fountain pen. The nib is quite sharp."
-
-
-/obj/item/pen/fountain/captain/proc/reskin_dart_insert(datum/component/dart_insert/insert_comp)
+/obj/item/pen/fountain/captain/proc/reskin_dart_insert(datum/component/dart_insert/insert_comp, skin)
+	SIGNAL_HANDLER
 	if(!istype(insert_comp)) //You really shouldn't be sending this signal from anything other than a dart_insert component
 		return
-	insert_comp.casing_overlay_icon_state = overlay_reskin[current_skin]
-	insert_comp.projectile_overlay_icon_state = "[overlay_reskin[current_skin]]_proj"
+	insert_comp.casing_overlay_icon_state = overlay_reskin[skin]
+	insert_comp.projectile_overlay_icon_state = "[overlay_reskin[skin]]_proj"
 
 /obj/item/pen/item_ctrl_click(mob/living/carbon/user)
 	if(loc != user)
@@ -445,9 +466,10 @@
 /datum/embedding/edagger_active
 	embed_chance = 100
 
-/obj/item/pen/edagger/proc/on_scan(datum/source, mob/user, list/extra_data)
+/obj/item/pen/edagger/proc/on_scan(datum/source, mob/user, datum/detective_scanner_log/entry)
 	SIGNAL_HANDLER
-	LAZYADD(extra_data[DETSCAN_CATEGORY_ILLEGAL], "Hard-light generator detected.")
+
+	entry.add_data_entry(DETSCAN_CATEGORY_ILLEGAL, "Hard-light generator detected.")
 
 /obj/item/pen/survival
 	name = "survival pen"

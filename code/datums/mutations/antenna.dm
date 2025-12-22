@@ -102,6 +102,13 @@
 		to_chat(owner, span_warning("You plunge into your mind... Yep, it's your mind."))
 		return
 
+	if(cast_on.has_status_effect(/datum/status_effect/heretic_passive/moon))
+		to_chat(owner, span_hypnophrase(span_bolddanger("YOU SEEK THE TRUTH? I WILL SHOW YOU EVERYTHING.")))
+		if(isliving(owner))
+			var/mob/living/reader = owner
+			reader.apply_status_effect(/datum/status_effect/moon_converted)
+		return
+
 	if(HAS_TRAIT(cast_on, TRAIT_EVIL))
 		to_chat(owner, span_warning("As you reach into [cast_on]'s mind, \
 			you feel the overwhelming emptiness within. A truly evil being. \

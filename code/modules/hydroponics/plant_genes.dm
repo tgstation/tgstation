@@ -354,7 +354,7 @@
 	to_chat(eater, span_notice("You feel energized as you bite into [our_plant]."))
 	var/batteries_recharged = FALSE
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	for(var/obj/item/stock_parts/power_store/found_cell in eater.get_all_cells())
+	for(var/obj/item/stock_parts/power_store/found_cell in assoc_to_values(eater.get_all_cells()))
 		var/newcharge = min(our_seed.potency * 0.01 * found_cell.maxcharge, found_cell.maxcharge)
 		if(found_cell.charge < newcharge)
 			found_cell.charge = newcharge

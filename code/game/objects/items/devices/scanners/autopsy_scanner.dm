@@ -13,6 +13,9 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*2)
 	custom_price = PAYCHECK_COMMAND
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 
 /obj/item/autopsy_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
@@ -64,10 +67,10 @@
 	autopsy_information += "Time of Death - <b>[scanned.station_timestamp_timeofdeath]</b></br>"
 	autopsy_information += "Subject has been dead for <b>[DisplayTimeText(round(world.time - scanned.timeofdeath))]</b>.<hr>"
 
-	var/oxy_loss = scanned.getOxyLoss()
-	var/tox_loss = scanned.getToxLoss()
-	var/fire_loss = scanned.getFireLoss()
-	var/brute_loss = scanned.getBruteLoss()
+	var/oxy_loss = scanned.get_oxy_loss()
+	var/tox_loss = scanned.get_tox_loss()
+	var/fire_loss = scanned.get_fire_loss()
+	var/brute_loss = scanned.get_brute_loss()
 	/// "Body Data" portion of the autopsy - damage, wounds, and limbs
 	var/dmgreport = "<u><b>Body Data:</b></u>\
 					<table class='ml-2'>\
@@ -184,31 +187,32 @@
 
 	// Blood Info
 	if(HAS_TRAIT(scanned, TRAIT_HUSK))
-		autopsy_information += "Blood can't be found, subject is husked by: "
-		if(HAS_TRAIT_FROM(scanned, TRAIT_HUSK, BURN))
-			autopsy_information += "Severe burns.</br>"
-		else if (HAS_TRAIT_FROM(scanned, TRAIT_HUSK, CHANGELING_DRAIN))
+		autopsy_information += "Subject is husked by: "
+		if(HAS_TRAIT_FROM(scanned, TRAIT_HUSK, CHANGELING_DRAIN))
 			autopsy_information += "Desiccation, commonly caused by Changelings.</br>"
-		else
+		else if(!HAS_TRAIT_FROM(scanned, TRAIT_HUSK, BURN)) // prioritize showing unknown causes over burns
 			autopsy_information += "Unknown causes.</br>"
-	else
-		var/datum/blood_type/blood_type = scanned.get_bloodtype()
-		if(blood_type)
-			var/blood_percent = round((scanned.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
-			var/blood_type_format
-			var/level_format
-			if(scanned.blood_volume <= BLOOD_VOLUME_SAFE && scanned.blood_volume > BLOOD_VOLUME_OKAY)
-				level_format = "LOW [blood_percent]%, [scanned.blood_volume] cl"
-			else if(scanned.blood_volume <= BLOOD_VOLUME_OKAY)
-				level_format = "<u>CRITICAL [blood_percent]%</u>, [scanned.blood_volume] cl"
-			else
-				level_format = "[blood_percent]%, [scanned.blood_volume] cl"
-			if(blood_type.get_type())
-				blood_type_format = "type: [blood_type.get_type()]"
-			autopsy_information += "<b>[blood_type.get_blood_name()] level:</b> [level_format], [blood_type_format]</br>"
-		var/blood_alcohol_content = scanned.get_blood_alcohol_content()
-		if(blood_alcohol_content > 0)
-			autopsy_information += "&rdsh; [blood_type?.get_blood_name() || "Blood"] alcohol content: [blood_alcohol_content]%</br>"
+		else
+			autopsy_information += "Severe burns.</br>"
+
+	var/datum/blood_type/blood_type = scanned.get_bloodtype()
+	if(blood_type)
+		var/cached_blood_volume = scanned.get_blood_volume(apply_modifiers = TRUE)
+		var/blood_percent = round((cached_blood_volume / BLOOD_VOLUME_NORMAL) * 100)
+		var/blood_type_format
+		var/level_format
+		if(cached_blood_volume <= BLOOD_VOLUME_SAFE && cached_blood_volume > BLOOD_VOLUME_OKAY)
+			level_format = "LOW [blood_percent]%, [cached_blood_volume] cl"
+		else if(cached_blood_volume <= BLOOD_VOLUME_OKAY)
+			level_format = "<u>CRITICAL [blood_percent]%</u>, [cached_blood_volume] cl"
+		else
+			level_format = "[blood_percent]%, [cached_blood_volume] cl"
+		if(blood_type.get_type())
+			blood_type_format = "type: [blood_type.get_type()]"
+		autopsy_information += "<b>[blood_type.get_blood_name()] level:</b> [level_format], [blood_type_format]</br>"
+	var/blood_alcohol_content = scanned.get_blood_alcohol_content()
+	if(blood_alcohol_content > 0)
+		autopsy_information += "&rdsh; [blood_type?.get_blood_name() || "Blood"] alcohol content: [blood_alcohol_content]%</br>"
 	autopsy_information += "<hr>"
 
 	autopsy_information += "<u>Chemical Data:</u></br>"

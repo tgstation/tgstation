@@ -74,6 +74,9 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
+/obj/machinery/disposal/AllowDrop()
+	return TRUE
+
 /// Checks if there a connecting trunk diposal pipe under the disposal
 /obj/machinery/disposal/proc/trunk_check()
 	var/obj/structure/disposalpipe/trunk/found_trunk = locate() in loc
@@ -172,6 +175,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	var/rat_cap = CONFIG_GET(number/ratcap)
 	if (LAZYLEN(SSmobs.cheeserats) < rat_cap && prob(33))
 		var/mob/living/basic/mouse/new_subject = new(king.drop_location())
+		ADD_TRAIT(new_subject, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
 		playsound(new_subject, 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg', 100)
 		visible_message(span_warning("[new_subject] climbs out of [src]!"))
 
@@ -361,6 +365,8 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 			continue
 		to_dump.pixel_x = to_dump.base_pixel_x + rand(-5, 5)
 		to_dump.pixel_y = to_dump.base_pixel_y + rand(-5, 5)
+
+	update_appearance()
 
 /obj/machinery/disposal/force_pushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	. = ..()
@@ -560,7 +566,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 /obj/machinery/disposal/bin/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(isitem(AM) && AM.CanEnterDisposals())
 		var/mob/thrower = throwingdatum?.get_thrower()
-		if((thrower && HAS_TRAIT(thrower, TRAIT_THROWINGARM)) || prob(75))
+		if((istype(thrower) && HAS_TRAIT(thrower, TRAIT_THROWINGARM)) || prob(75))
 			AM.forceMove(src)
 			visible_message(span_notice("[AM] lands in [src]."))
 			update_appearance()

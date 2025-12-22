@@ -42,6 +42,7 @@
 	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_stopped))
 	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_no_longer_stopped))
 	target_turf = target
+	ADD_TRAIT(parent, TRAIT_AI_AVOID_TURF, REF(src))
 	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_ENTERED, PROC_REF(entered))
 	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(exited))
 	RegisterSignal(parent, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(initialized_on))
@@ -53,6 +54,7 @@
 	parent.AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/chasm])
 
 /datum/component/chasm/UnregisterFromParent()
+	REMOVE_TRAIT(parent, TRAIT_AI_AVOID_TURF, REF(src))
 	storage = null
 
 /datum/component/chasm/proc/entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -161,16 +163,29 @@
 		if(isliving(dropped_thing))
 			var/mob/living/fallen = dropped_thing
 			fallen.Paralyze(100)
-			fallen.adjustBruteLoss(30)
+			fallen.adjust_brute_loss(30)
 		falling_atoms -= falling_ref
 		return
 
 	// send to oblivion
-	dropped_thing.visible_message(span_boldwarning("[dropped_thing] falls into [parent]!"), span_userdanger("[oblivion_message]"))
+
 	if (isliving(dropped_thing))
 		var/mob/living/falling_mob = dropped_thing
 		ADD_TRAIT(falling_mob, TRAIT_NO_TRANSFORM, REF(src))
-		falling_mob.Paralyze(20 SECONDS)
+		falling_mob.Stun(20 SECONDS, ignore_canstun = TRUE)
+
+		if (HAS_MIND_TRAIT(falling_mob, TRAIT_NAIVE))
+			falling_mob.do_alert_animation()
+			dropped_thing.visible_message(span_boldwarning("[dropped_thing] kicks [dropped_thing.p_their()] legs in the air, as if running in place!"))
+			dropped_thing.Shake(1, 0, 2 SECONDS, 0.3 SECONDS)
+			sleep(3 SECONDS)
+
+		if (get_turf(falling_mob) != get_turf(parent))
+			REMOVE_TRAIT(falling_mob, TRAIT_NO_TRANSFORM, REF(src))
+			falling_mob.Paralyze(17 SECONDS, ignore_canstun = TRUE) // Wow nice job
+			return
+
+	dropped_thing.visible_message(span_boldwarning("[dropped_thing] falls into [parent]!"), span_userdanger("[oblivion_message]"))
 
 	var/oldtransform = dropped_thing.transform
 	var/oldcolor = dropped_thing.color

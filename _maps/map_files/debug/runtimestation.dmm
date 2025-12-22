@@ -159,7 +159,7 @@
 /obj/structure/table,
 /obj/item/weldingtool/experimental,
 /obj/item/inducer,
-/obj/item/storage/belt/utility/chief/full,
+/obj/item/storage/belt/utility/full/powertools,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -254,7 +254,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bF" = (
-/obj/machinery/computer/rdconsole,
+/obj/machinery/computer/rdconsole/unlocked,
 /turf/open/floor/iron,
 /area/station/science)
 "bI" = (
@@ -905,9 +905,8 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "fn" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/vacuum/external,
-/turf/open/floor/plating,
+/obj/structure/sign/warning/vacuum/external/directional/west,
+/turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "fo" = (
 /obj/machinery/conveyor_switch/oneway{
@@ -960,21 +959,18 @@
 /turf/open/floor/iron,
 /area/station/cargo/bitrunning/den)
 "fM" = (
-/obj/structure/sign/directions/supply{
-	dir = 4;
-	pixel_x = 32
-	},
 /obj/structure/sign/directions/engineering{
 	dir = 1;
-	pixel_x = 32;
 	pixel_y = 7
 	},
+/obj/structure/sign/directions/supply{
+	dir = 4
+	},
 /obj/structure/sign/directions/evac{
-	pixel_x = 32;
 	pixel_y = -7
 	},
-/turf/open/floor/iron,
-/area/station/hallway/secondary/entry)
+/turf/closed/wall/r_wall,
+/area/station/commons/storage/primary)
 "fO" = (
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -985,9 +981,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "fQ" = (
 /obj/machinery/computer/communications,
-/obj/machinery/status_display/evac{
-	pixel_y = 32
-	},
+/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "fS" = (
@@ -996,21 +990,18 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "fX" = (
-/obj/structure/sign/directions/supply{
-	dir = 4;
-	pixel_x = -32
-	},
 /obj/structure/sign/directions/engineering{
 	dir = 1;
-	pixel_x = -32;
 	pixel_y = 7
 	},
+/obj/structure/sign/directions/supply{
+	dir = 4
+	},
 /obj/structure/sign/directions/evac{
-	pixel_x = -32;
 	pixel_y = -7
 	},
-/turf/open/floor/plating,
-/area/station/commons/storage/primary)
+/turf/closed/wall/r_wall,
+/area/station/construction)
 "fY" = (
 /obj/machinery/light/directional/west,
 /obj/structure/cable,
@@ -1035,19 +1026,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
 "gg" = (
-/obj/structure/sign/directions/supply{
-	dir = 4;
-	pixel_x = 32
-	},
-/obj/structure/sign/directions/engineering{
-	dir = 1;
-	pixel_x = 32;
-	pixel_y = 7
-	},
-/obj/structure/sign/directions/evac{
-	pixel_x = 32;
-	pixel_y = -7
-	},
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/plating,
 /area/station/commons/storage/primary)
 "gi" = (
@@ -1817,7 +1796,7 @@
 /area/station/command/bridge)
 "BG" = (
 /obj/structure/table,
-/obj/item/ammo_box/c10mm,
+/obj/item/ammo_box/c9mm,
 /obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/iron,
 /area/station/command/bridge)
@@ -2154,7 +2133,6 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "JV" = (
-/obj/machinery/camera/autoname/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -5736,7 +5714,7 @@ ax
 eh
 dY
 dY
-fn
+en
 fs
 en
 dY
@@ -5828,7 +5806,7 @@ ax
 eh
 eh
 eV
-eh
+fn
 eh
 eh
 eV
@@ -6007,7 +5985,7 @@ eh
 eh
 eF
 HW
-fM
+eh
 eh
 eh
 eh
@@ -6099,7 +6077,7 @@ cN
 cN
 cN
 cN
-cN
+fX
 ef
 ef
 cN
@@ -7295,7 +7273,7 @@ cS
 cS
 cS
 cS
-cS
+fM
 dG
 dG
 cS
@@ -7387,7 +7365,7 @@ Zz
 dp
 dl
 dl
-fX
+dl
 dE
 dB
 dl
@@ -8583,7 +8561,7 @@ cS
 cS
 cS
 cS
-cS
+fM
 Is
 Jd
 tz

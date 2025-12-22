@@ -83,7 +83,7 @@
 	if(stat != CONSCIOUS)
 		return COMPONENT_BULLET_PIERCED
 
-	///high penetration bullets should still go through. No goldgrub can save you from the colossus' death bolts.
+	/// High penetration bullets should still go through. No goldgrub can save you from the colossus' death bolts.
 	if(prob(hitting_projectile.armour_penetration))
 		return NONE
 
@@ -94,6 +94,7 @@
 	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 	for(var/obj/item/stack/ore/ore in src)
 		ore.forceMove(loc)
+
 	if(!gibbed)
 		visible_message(span_danger("[src] spits out its consumed ores!"))
 

@@ -132,9 +132,32 @@
 	var/snap_time_weak_handcuffs = 0 SECONDS
 	/// Used on Initialize, how much time to cut real handcuffs. Null means it can't.
 	var/snap_time_strong_handcuffs = 0 SECONDS
+	/// The text used for our jaws tool description while active
+	var/active_text = "cutting"
+	/// The text used for our jaws tool description while inactive
+	var/inactive_text = "prying"
+	/// The default tool behavior. This should match tool_behavior
+	var/first_tool_behavior = TOOL_CROWBAR
+	/// The active tool behavior. This should not match tool_behavior on init.
+	var/second_tool_behavior = TOOL_WIRECUTTER
+	/// Determines if we want to limit our jaws of life from opening certain doors or not.
+	var/limit_jaws_access = FALSE
+	/// The access on doors that block our jaws of life from opening if limit_jaws_access is TRUE. Does nothing if FALSE.
+	var/list/blacklisted_access = list()
+	/// Whether or not our jaws throw out an alert when we pry open a door. Default alert sends out a message to security comms.
+	var/radio_alert = FALSE
+	/// If radio_alert is TRUE, access in this list that is found on our pried open door is ignored.
+	var/list/ignored_access = list(
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_AUX_BASE,
+		ACCESS_EXTERNAL_AIRLOCKS,
+	)
+	COOLDOWN_DECLARE(alert_cooldown)
+	/// How long between announcements from our jaws of life. Keeps the jaws from getting too radio spammy.
+	var/alert_cooldown_time = 1 MINUTES
 
 /obj/item/crowbar/power/get_all_tool_behaviours()
-	return list(TOOL_CROWBAR, TOOL_WIRECUTTER)
+	return list(first_tool_behavior, second_tool_behavior)
 
 /obj/item/crowbar/power/Initialize(mapload)
 	. = ..()
@@ -148,6 +171,11 @@
 		inhand_icon_change = FALSE, \
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+	RegisterSignal(src, COMSIG_TOOL_FORCE_OPEN_AIRLOCK, PROC_REF(on_force_open))
+
+/obj/item/crowbar/power/examine()
+	. = ..()
+	. += "It's fitted with a [tool_behaviour == first_tool_behavior ? inactive_text : active_text] head."
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -157,27 +185,68 @@
 /obj/item/crowbar/power/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	tool_behaviour = (active ? TOOL_WIRECUTTER : TOOL_CROWBAR)
+	tool_behaviour = (active ? second_tool_behavior : first_tool_behavior)
 	if(user)
-		balloon_alert(user, "attached [active ? "cutting" : "prying"]")
+		balloon_alert(user, "attached [tool_behaviour == first_tool_behavior ? inactive_text : active_text]")
 	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_CROWBAR)
+	if(tool_behaviour != TOOL_WIRECUTTER)
 		RemoveElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)
 	else
 		AddElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
-/obj/item/crowbar/power/syndicate
-	name = "jaws of death"
-	desc = "An improved, faster, and smaller copy of Nanotrasen's standard jaws of life. Can be used to force open airlocks in its crowbar configuration."
-	icon_state = "jaws_syndie"
-	w_class = WEIGHT_CLASS_SMALL
-	toolspeed = 0.5
-	force_opens = TRUE
+/*
+ * Signal proc for [COMSIG_TOOL_FORCE_OPEN_AIRLOCK].
+ *
+ * Determines if our jaws of life is restricted from opening some doors, and whether or not we need to alert over the radio whenever they are used to
+ * pry open a door. Useful if you want to restrict jaws of life in some fashion.
+ */
 
-/obj/item/crowbar/power/examine()
-	. = ..()
-	. += " It's fitted with a [tool_behaviour == TOOL_CROWBAR ? "prying" : "cutting"] head."
+/obj/item/crowbar/power/proc/on_force_open(obj/item/source, mob/user, obj/machinery/door/airlock/target)
+	SIGNAL_HANDLER
+
+	var/list/collective_access = list()
+	collective_access += target.req_access
+	collective_access += target.req_one_access
+
+	if(limit_jaws_access)
+		for(var/possible_blacklisted_access in collective_access)
+			if(possible_blacklisted_access in blacklisted_access)
+				playsound(src.loc, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
+				user.balloon_alert(user, "cannot pry open!")
+				return COMPONENT_TOOL_DO_NOT_ALLOW_FORCE_OPEN
+
+	if(radio_alert && COOLDOWN_FINISHED(src, alert_cooldown))
+
+		if(!collective_access) //Return if the door has literally no access at all
+			return COMPONENT_TOOL_ALLOW_FORCE_OPEN
+
+		for(var/possible_public_access in collective_access) //Return if the door has otherwise unimportant access
+			if((possible_public_access in ignored_access))
+				return COMPONENT_TOOL_ALLOW_FORCE_OPEN
+
+		sound_the_alarms(user, target)
+		COOLDOWN_START(src, alert_cooldown, alert_cooldown_time)
+	return COMPONENT_TOOL_ALLOW_FORCE_OPEN
+
+///Our alert for our jaws of life.
+/obj/item/crowbar/power/proc/sound_the_alarms(mob/user, obj/machinery/door/airlock/target)
+		aas_config_announce(/datum/aas_config_entry/jaws_entry_alert, list(
+			"PERSON" = user.name,
+			"LOCATION" = get_area_name(target),
+			"TOOL" = name), src, list(RADIO_CHANNEL_SECURITY), RADIO_CHANNEL_SECURITY)
+
+/datum/aas_config_entry/jaws_entry_alert
+	// This tool screams into the radio whenever the user successfully pries open an airlock.
+	name = "Door Forced Entry Alert"
+	announcement_lines_map = list(
+		RADIO_CHANNEL_SECURITY = "SECURITY ALERT: %PERSON has forced open a door at %LOCATION using %TOOL. Confirm that this was done during an emergency by authorized staff.",
+	)
+	vars_and_tooltips_map = list(
+		"PERSON" = "will be replaced with the name of the user",
+		"LOCATION" = "with the area of the door",
+		"TOOL" = "replaced with the tool used",
+	)
 
 /obj/item/crowbar/power/suicide_act(mob/living/user)
 	if(tool_behaviour == TOOL_CROWBAR)
@@ -193,6 +262,82 @@
 				target_bodypart.drop_limb()
 				playsound(loc, SFX_DESECRATION, 50, TRUE, -1)
 	return BRUTELOSS
+
+/obj/item/crowbar/power/syndicate
+	name = "jaws of death"
+	desc = "An improved, faster, and smaller copy of Nanotrasen's standard jaws of life. Can be used to force open airlocks in its crowbar configuration."
+	icon_state = "jaws_syndie"
+	w_class = WEIGHT_CLASS_SMALL
+	toolspeed = 0.5
+
+/obj/item/crowbar/power/paramedic
+	name = "jaws of recovery"
+	desc = "A specialized version of the jaws of life, primarily to be used by paramedics to recover the injured and the recently deceased. Rather than a cutting arm, this tool has a bonesetting apparatus. \
+		Cannot access certain high security areas due to safety concerns."
+	icon_state = "jaws_paramedic"
+	inhand_icon_state = "jawsparamedic"
+	worn_icon_state = "jawsparamedic"
+	w_class = WEIGHT_CLASS_BULKY
+	toolspeed = 1
+	slot_flags = null
+	active_text = "bonesetting"
+	second_tool_behavior = TOOL_BONESET
+	limit_jaws_access = TRUE
+	blacklisted_access = list(
+		ACCESS_COMMAND,
+		ACCESS_AI_UPLOAD,
+		ACCESS_CAPTAIN,
+		ACCESS_HOP,
+		ACCESS_SECURITY,
+		ACCESS_BRIG,
+		ACCESS_ARMORY,
+		ACCESS_HOS,
+		ACCESS_DETECTIVE,
+		ACCESS_CE,
+		ACCESS_CMO,
+		ACCESS_QM,
+		ACCESS_VAULT,
+		ACCESS_RD,
+		ACCESS_SYNDICATE,
+	)
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4.75,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2.50,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 1.75,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25,
+	)
+	radio_alert = TRUE
+
+/obj/item/crowbar/power/paramedic/sound_the_alarms(mob/user, obj/machinery/door/airlock/target)
+		aas_config_announce(/datum/aas_config_entry/jaws_entry_alert_paramedic, list(
+			"PERSON" = user.name,
+			"LOCATION" = get_area_name(target),
+			"TOOL" = name), src, list(RADIO_CHANNEL_SECURITY), RADIO_CHANNEL_SECURITY)
+
+		aas_config_announce(/datum/aas_config_entry/jaws_entry_alert_paramedic, list(
+			"PERSON" = user.name,
+			"LOCATION" = get_area_name(target),
+			"TOOL" = name), src, list(RADIO_CHANNEL_MEDICAL), RADIO_CHANNEL_MEDICAL)
+
+/datum/aas_config_entry/jaws_entry_alert_paramedic
+	// This tool screams into the radio whenever the user successfully pries open an airlock.
+	name = "Door Forced Entry Medical Alert"
+	announcement_lines_map = list(
+		RADIO_CHANNEL_SECURITY = "SECURITY ALERT: %PERSON has forced open a door at %LOCATION using %TOOL. Confirm that this was done during an emergency by authorized staff.",
+		RADIO_CHANNEL_MEDICAL = "MEDICAL ALERT: %PERSON has forced open a door at %LOCATION using %TOOL. Confirm that this was done during an emergency by authorized staff.",
+	)
+	vars_and_tooltips_map = list(
+		"PERSON" = "will be replaced with the name of the user",
+		"LOCATION" = "with the area of the door",
+		"TOOL" = "replaced with the tool used",
+	)
+
+/obj/item/crowbar/power/paramedic/silent
+	desc = "A specialized version of the jaws of life, primarily to be used by paramedics to recover the injured and the recently deceased. Rather than a cutting arm, this tool has a bonesetting apparatus. \
+		This one looks upgraded."
+	w_class = WEIGHT_CLASS_NORMAL // it's a modified, normal jaws
+	limit_jaws_access = FALSE
+	radio_alert = FALSE
 
 /obj/item/crowbar/cyborg
 	name = "hydraulic crowbar"

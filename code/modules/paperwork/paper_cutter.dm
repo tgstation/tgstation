@@ -26,6 +26,7 @@
 	stored_blade = new /obj/item/hatchet/cutterblade(src)
 	register_context()
 	update_appearance()
+	AddElement(/datum/element/drag_pickup)
 
 /obj/item/papercutter/Destroy(force)
 	if(!isnull(stored_paper))
@@ -103,16 +104,16 @@
 /obj/item/papercutter/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!stored_blade && !blade_secured)
 		balloon_alert(user, "no blade!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	tool.play_tool_sound(src)
 	balloon_alert(user, "[blade_secured ? "un" : ""]secured")
 	blade_secured = !blade_secured
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/papercutter/attackby(obj/item/inserted_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(inserted_item, /obj/item/paper))
-		if(is_type_in_list(inserted_item, list(
+/obj/item/papercutter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/paper))
+		if(is_type_in_list(tool, list(
 				/obj/item/paper/fake_report,
 				/obj/item/paper/holy_writ,
 				/obj/item/paper/pamphlet,
@@ -120,29 +121,31 @@
 				/obj/item/paper/report,
 		)))
 			balloon_alert(user, "won't fit!")
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(stored_paper)
 			balloon_alert(user, "already paper inside!")
-			return
-		if(!user.transferItemToLoc(inserted_item, src))
-			return
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
 		playsound(loc, SFX_PAGE_TURN, 60, TRUE)
 		balloon_alert(user, "paper inserted")
-		stored_paper = inserted_item
+		stored_paper = tool
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(inserted_item, /obj/item/hatchet/cutterblade))
+	if(istype(tool, /obj/item/hatchet/cutterblade))
 		if(stored_blade)
 			balloon_alert(user, "already a blade inside!")
-			return
-		if(!user.transferItemToLoc(inserted_item, src))
-			return
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
 		balloon_alert(user, "blade inserted")
-		inserted_item.forceMove(src)
-		stored_blade = inserted_item
+		tool.forceMove(src)
+		stored_blade = tool
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	update_appearance()
-
-	return ..()
+	return NONE
 
 /obj/item/papercutter/click_alt(mob/user)
 	// can only remove one at a time; paper goes first, as its most likely what players will want to be taking out
@@ -180,15 +183,6 @@
 	new /obj/item/paper/paperslip(get_turf(src))
 	update_appearance()
 
-/obj/item/papercutter/mouse_drop_dragged(atom/over_object, mob/user)
-	if(over_object == user)
-		user.put_in_hands(src)
-
-	else if(istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/target_hand = over_object
-		user.putItemFromInventoryInHandIfPossible(src, target_hand.held_index)
-	add_fingerprint(user)
-
 /obj/item/paper/paperslip
 	name = "paper slip"
 	desc = "A little slip of paper left over after a larger piece was cut. Whoa."
@@ -210,6 +204,7 @@
 	desc = "A plastic card for confidential corporate matters. Can be written on with pen somehow."
 	icon_state = "corppaperslip"
 	grind_results = list(/datum/reagent/plastic_polymers = 1.5) //It's a plastic card after all
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3, /datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)
 	max_integrity = 130 //Slightly more sturdy because of being made out of a plastic
 	drop_sound = 'sound/items/handling/disk_drop.ogg'
 	pickup_sound = 'sound/items/handling/disk_pickup.ogg'

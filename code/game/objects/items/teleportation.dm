@@ -12,7 +12,7 @@
  */
 /obj/item/locator
 	name = "bluespace locator"
-	desc = "Used to track portable teleportation beacons and targets with embedded tracking implants."
+	desc = "A handheld device that locks onto the unique bluespace resonance of tracking implants, providing real-time directional and positional data."
 	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "locator"
 	var/temp = null
@@ -34,61 +34,35 @@
 
 /obj/item/locator/ui_data(mob/user)
 	var/list/data = list()
-
 	data["trackingrange"] = tracking_range;
 
-	// Get our current turf location.
-	var/turf/sr = get_turf(src)
+	var/turf/current_turf = get_turf(src) // Get our current turf location.
+	if(!current_turf)
+		return data
 
-	if (sr)
-		// Check every teleport beacon.
-		var/list/tele_beacons = list()
-		for(var/obj/item/beacon/W in GLOB.teleportbeacons)
+	var/list/track_implants = list()
+	for(var/obj/item/implant/tracking/tracking_implant in GLOB.tracked_implants)
+		if(!tracking_implant.imp_in || !isliving(tracking_implant.imp_in))
+			continue
 
-			// Get the tracking beacon's turf location.
-			var/turf/tr = get_turf(W)
-
-			// Make sure it's on a turf and that its Z-level matches the tracker's Z-level
-			if (tr && tr.z == sr.z)
-				// Get the distance between the beacon's turf and our turf
-				var/distance = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-
-				// If the target is too far away, skip over this beacon.
-				if(distance > tracking_range)
-					continue
-
-				var/beacon_name
-
-				if(W.renamed)
-					beacon_name = W.name
-				else
-					var/area/A = get_area(W)
-					beacon_name = A.name
-
-				var/D = dir2text(get_dir(sr, tr))
-				tele_beacons += list(list(name = beacon_name, direction = D, distance = distance))
-
-		data["telebeacons"] = tele_beacons
-
-		var/list/track_implants = list()
-
-		for (var/obj/item/implant/beacon/tracking_beacon in GLOB.tracked_implants)
-			if (!tracking_beacon.imp_in || !isliving(tracking_beacon.loc))
-				continue
-			else
-				var/mob/living/living_mob = tracking_beacon.loc
-				if (living_mob.stat == DEAD)
-					if (living_mob.timeofdeath + tracking_beacon.lifespan_postmortem < world.time)
-						continue
-			var/turf/tr = get_turf(tracking_beacon)
-			var/distance = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-
-			if(distance > tracking_range)
+		var/mob/living/tracked_mob = tracking_implant.imp_in
+		if(tracked_mob.stat == DEAD)
+			if(tracked_mob.timeofdeath + tracking_implant.lifespan_postmortem < world.time)
 				continue
 
-			var/D = dir2text(get_dir(sr, tr))
-			track_implants += list(list(name = tracking_beacon.imp_in.name, direction = D, distance = distance))
-		data["trackimplants"] = track_implants
+		var/turf/implant_turf = get_turf(tracking_implant)
+		if(!implant_turf  || implant_turf.z != current_turf.z)
+			continue
+
+		var/distance = max(abs(implant_turf.x - current_turf.x), abs(implant_turf.y - current_turf.y)) // get Chebyshev distance
+		if(distance > tracking_range)
+			continue
+
+		var/implant_direction = dir2text(get_dir(current_turf, implant_turf))
+		track_implants += list(list(name = tracking_implant.imp_in.name, direction = implant_direction, distance = distance))
+
+	data["trackimplants"] = track_implants
+
 	return data
 
 #define PORTAL_LOCATION_DANGEROUS "portal_location_dangerous"
@@ -113,6 +87,9 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	armor_type = /datum/armor/item_hand_tele
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 	///List of portal pairs created by this hand tele
 	var/list/active_portal_pairs = list()
 	///Maximum concurrent active portal pairs allowed
@@ -426,7 +403,7 @@
 	var/bagholdingcheck = FALSE
 	if(iscarbon(user))
 		var/mob/living/carbon/teleporting_guy = user
-		if(locate(/obj/item/storage/backpack/holding) in teleporting_guy.get_all_gear())
+		if(locate(/obj/item/storage/backpack/holding) in teleporting_guy.get_all_gear(INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT|INCLUDE_ACCESSORIES))
 			bagholdingcheck = TRUE
 
 	if(isclosedturf(destination))

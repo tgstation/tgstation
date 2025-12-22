@@ -1,0 +1,4 @@
+author: "omgovich, itsmeow, Absolucy, JohnFulpWillard, jlsnow301, TealSeer, lessthnthree"
+delete-after: True
+changes:
+  - rscadd: "Color selection panels now use TGUI (If you have TGUI enabled in settings)."

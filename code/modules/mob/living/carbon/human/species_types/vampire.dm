@@ -10,9 +10,6 @@
 	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
 		TRAIT_BLOOD_CLANS,
-		TRAIT_DRINKS_BLOOD,
-		TRAIT_NOBREATH,
-		TRAIT_NOHUNGER,
 		TRAIT_USES_SKINTONES,
 		TRAIT_NO_MIRROR_REFLECTION,
 	)
@@ -43,30 +40,32 @@
 	else
 		RegisterSignal(new_vampire, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
-/datum/species/human/vampire/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+/datum/species/human/vampire/on_species_loss(mob/living/carbon/human/old_vampire, datum/species/new_species, pref_load)
 	. = ..()
-	UnregisterSignal(C, COMSIG_ATOM_ATTACKBY)
-	QDEL_NULL(blood_display)
+	UnregisterSignal(old_vampire, COMSIG_ATOM_ATTACKBY)
+	if(blood_display)
+		old_vampire.hud_used.infodisplay -= blood_display
+		QDEL_NULL(blood_display)
 
 /datum/species/human/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick, times_fired)
 	. = ..()
 	if(istype(vampire.loc, /obj/structure/closet/crate/coffin))
 		var/need_mob_update = FALSE
 		need_mob_update += vampire.heal_overall_damage(brute = 2 * seconds_per_tick, burn = 2 * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-		need_mob_update += vampire.adjustToxLoss(-2 * seconds_per_tick, updating_health = FALSE,)
-		need_mob_update += vampire.adjustOxyLoss(-2 * seconds_per_tick, updating_health = FALSE,)
+		need_mob_update += vampire.adjust_tox_loss(-2 * seconds_per_tick, updating_health = FALSE,)
+		need_mob_update += vampire.adjust_oxy_loss(-2 * seconds_per_tick, updating_health = FALSE,)
 		if(need_mob_update)
 			vampire.updatehealth()
 		return
-	vampire.blood_volume -= 0.125 * seconds_per_tick
-	if(vampire.blood_volume <= BLOOD_VOLUME_SURVIVE)
+	vampire.adjust_blood_volume(-0.125 * seconds_per_tick)
+	if(vampire.get_blood_volume(apply_modifiers = TRUE) <= BLOOD_VOLUME_SURVIVE)
 		to_chat(vampire, span_danger("You ran out of blood!"))
 		vampire.investigate_log("has been dusted by a lack of blood (vampire).", INVESTIGATE_DEATHS)
 		vampire.dust()
 	var/area/A = get_area(vampire)
 	if(istype(A, /area/station/service/chapel))
 		to_chat(vampire, span_warning("You don't belong here!"))
-		vampire.adjustFireLoss(10 * seconds_per_tick)
+		vampire.adjust_fire_loss(10 * seconds_per_tick)
 		vampire.adjust_fire_stacks(3 * seconds_per_tick)
 		vampire.ignite_mob()
 
@@ -160,14 +159,63 @@
 	return to_add
 
 /obj/item/organ/tongue/vampire
-	name = "vampire tongue"
+	name = "vampire teeth"
+	desc = "The only thing with which it's acceptable to say \"I will suck you dry!\""
+	icon_state = "tongue_vampire"
 	actions_types = list(/datum/action/item_action/organ_action/vampire)
-	color = COLOR_CRAYON_BLACK
+	organ_traits = list(
+		TRAIT_SPEAKS_CLEARLY,
+		TRAIT_DRINKS_BLOOD,
+		// future todo : tie nobreath and nohunger to a vampire organ set bonus
+		TRAIT_NOBREATH,
+		TRAIT_NOHUNGER,
+	)
 	COOLDOWN_DECLARE(drain_cooldown)
+
+/obj/item/organ/tongue/vampire/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
+	. = ..()
+	RegisterSignal(receiver, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(stab_bloodbag))
+
+/obj/item/organ/tongue/vampire/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	UnregisterSignal(organ_owner, COMSIG_ATOM_ITEM_INTERACTION)
+
+/obj/item/organ/tongue/vampire/proc/stab_bloodbag(mob/living/source, mob/living/user,  obj/item/used_item, list/modifiers)
+	SIGNAL_HANDLER
+
+	if(user != source)
+		return NONE
+	if(!istype(used_item, /obj/item/reagent_containers/blood))
+		return NONE
+	if(used_item.reagents?.total_volume <= 0)
+		to_chat(user, span_warning("[src] is empty!"))
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(
+		span_notice("[user] stabs [used_item] with [user.p_their()] sharp teeth and drains its contents!"),
+		span_notice("You stab [used_item] with your sharp teeth and drain its contents!"),
+		span_hear("You hear a stabbing sound! ... Followed by slurping?"),
+		COMBAT_MESSAGE_RANGE,
+	)
+	INVOKE_ASYNC(src, PROC_REF(async_stab_bloodbag), user, used_item)
+	return ITEM_INTERACT_BLOCKING
+
+/obj/item/organ/tongue/vampire/proc/async_stab_bloodbag(mob/living/carbon/user, obj/item/reagent_containers/blood/bloodbag, time = 0.5 SECONDS)
+	if(!do_after(user, time, bloodbag))
+		return
+
+	to_chat(user, span_notice("You swallow a gulp of [src]."))
+	playsound(bloodbag, 'sound/items/drink.ogg', 50, TRUE) //slurp
+	bloodbag.reagents.trans_to(user, bloodbag.reagents.maximum_volume * 0.05, transferred_by = user, methods = INGEST)
+	if(bloodbag.reagents.total_volume > 0)
+		async_stab_bloodbag(user, bloodbag, 1 SECONDS)
 
 /datum/action/item_action/organ_action/vampire
 	name = "Drain Victim"
 	desc = "Leech blood from any carbon victim you are passively grabbing."
+	button_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "drain_victim"
+	background_icon_state = "bg_vampire"
 
 /datum/action/item_action/organ_action/vampire/do_effect(trigger_flags)
 	if(!iscarbon(owner))
@@ -183,14 +231,14 @@
 		return FALSE
 
 	var/mob/living/carbon/victim = user.pulling
-	if(user.blood_volume >= BLOOD_VOLUME_MAXIMUM)
+	if(user.get_blood_volume() >= BLOOD_VOLUME_MAXIMUM)
 		to_chat(user, span_warning("You're already full!"))
 		return FALSE
 	if(victim.stat == DEAD)
 		to_chat(user, span_warning("You need a living victim!"))
 		return FALSE
 	var/blood_name = LOWER_TEXT(user.get_bloodtype()?.get_blood_name())
-	if(!victim.blood_volume || victim.get_blood_reagent() != user.get_blood_reagent())
+	if(!victim.get_blood_volume() || victim.get_blood_reagent() != user.get_blood_reagent())
 		if (blood_name)
 			to_chat(user, span_warning("[victim] doesn't have [blood_name]!"))
 		else
@@ -207,20 +255,27 @@
 		return FALSE
 	if(!do_after(user, 3 SECONDS, target = victim, hidden = TRUE))
 		return FALSE
-	var/blood_volume_difference = BLOOD_VOLUME_MAXIMUM - user.blood_volume //How much capacity we have left to absorb blood
-	var/drained_blood = min(victim.blood_volume, VAMP_DRAIN_AMOUNT, blood_volume_difference)
+
 	victim.show_message(span_danger("[user] is draining your blood!"))
 	to_chat(user, span_notice("You drain some blood!"))
 	playsound(user, 'sound/items/drink.ogg', 30, TRUE, -2)
-	victim.blood_volume = clamp(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
-	user.blood_volume = clamp(user.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
-	if(!victim.blood_volume)
+
+	// Since we adjust the user first, we need to take the victim's blood volume into account.
+	var/amount_drained = min(VAMP_DRAIN_AMOUNT, victim.get_blood_volume())
+
+	// Takes into account how much blood the vampire can take.
+	amount_drained = user.adjust_blood_volume(amount_drained)
+
+	victim.adjust_blood_volume(-amount_drained)
+
+	if(!victim.get_blood_volume())
 		to_chat(user, span_notice("You finish off [victim]'s [blood_name] supply."))
 	return TRUE
 
 /obj/item/organ/heart/vampire
 	name = "vampire heart"
-	color = COLOR_CRAYON_BLACK
+	icon_state = "heart_vampire"
+	desc = "Some guy stabbed his brother 6,000 years ago so now you have this."
 
 #undef VAMPIRES_PER_HOUSE
 #undef VAMP_DRAIN_AMOUNT

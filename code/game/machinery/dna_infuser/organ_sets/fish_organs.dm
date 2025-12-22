@@ -134,7 +134,7 @@
 	if(!bonus_active || !HAS_TRAIT(owner, TRAIT_IS_WET))
 		return
 	owner.adjust_bodytemperature(-2 * seconds_between_ticks, min_temp = owner.get_body_temp_normal())
-	owner.adjustStaminaLoss(-1.5 * seconds_between_ticks)
+	owner.adjust_stamina_loss(-1.5 * seconds_between_ticks)
 
 /datum/status_effect/organ_set_bonus/fish/proc/update_wetness(datum/source)
 	SIGNAL_HANDLER
@@ -220,7 +220,7 @@
 	greyscale_colors = FISH_ORGAN_COLOR
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish
-	dna_block = /datum/dna_block/feature/tail_fish
+	dna_block = /datum/dna_block/feature/accessory/tail_fish
 	wag_flags = NONE
 	organ_traits = list(TRAIT_FLOPPING, TRAIT_SWIMMER)
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
@@ -288,9 +288,9 @@
 /datum/bodypart_overlay/mutant/tail/fish/on_mob_insert(obj/item/organ/parent, mob/living/carbon/receiver)
 	//Initialize the related dna feature block if we don't have any so it doesn't error out.
 	//This isn't tied to any species, but I kinda want it to be mutable instead of having a fixed sprite accessory.
-	if(imprint_on_next_insertion && !receiver.dna.features[FEATURE_TAIL_FISH])
-		receiver.dna.features[FEATURE_TAIL_FISH] = pick(SSaccessories.tails_list_fish)
-		receiver.dna.update_uf_block(/datum/dna_block/feature/tail_fish)
+	if(imprint_on_next_insertion && !receiver.dna.features[feature_key])
+		receiver.dna.features[feature_key] = pick(SSaccessories.feature_list[feature_key])
+		receiver.dna.update_uf_block(/datum/dna_block/feature/accessory/tail_fish)
 
 	return ..()
 
@@ -300,9 +300,6 @@
 		return bodypart_owner.draw_color
 	else //otherwise get one from a set of faded out blue and some greys colors.
 		return pick("#B4B8DD", "#85C7D0", "#67BBEE", "#2F4450", "#55CCBB", "#999FD0", "#345066", "#585B69", "#7381A0", "#B6DDE5", "#4E4E50")
-
-/datum/bodypart_overlay/mutant/tail/fish/get_global_feature_list()
-	return SSaccessories.tails_list_fish
 
 /datum/bodypart_overlay/mutant/tail/fish/get_image(image_layer, obj/item/bodypart/limb)
 	var/mutable_appearance/appearance = ..()
@@ -377,7 +374,7 @@
 		breathe_gas_volume(breath, /datum/gas/water_vapor, /datum/gas/carbon_dioxide)
 	// Heal mob if not in crit.
 	if(breather.health >= breather.crit_threshold && breather.oxyloss)
-		breather.adjustOxyLoss(-5)
+		breather.adjust_oxy_loss(-5)
 
 /// Called when there isn't enough water to breath
 /obj/item/organ/lungs/fish/proc/on_low_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp)
@@ -470,6 +467,37 @@
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "inky_tongue"
 	actions_types = list(/datum/action/cooldown/ink_spit)
+	/**
+	 * This is probably the most complex tts filter that won't require external files to be added to the tts image.
+	 * It works as follows:
+	 * 1. Increase the pitch of the input audio. Pitch increase is lower for higher speaker pitch and vice-versa.
+	 * 2. Apply a mid-heavy EQ curve.
+	 * 3. Using an oscillating target frequency:
+	 *   - Apply a low pass filter with its cutoff at the target frequency
+	 *   - Boost frequencies very close to the target frequency
+	 */
+	voice_filter = "\
+	rubberband=pitch='\
+		ifnot(%BLIPS%,\
+			2-(%PITCH%+if(%FEMALE%,4))/16\
+			,1)'\
+	:formant=preserved,\
+	highpass=f=1000:t=s:w=24,\
+	equalizer=f=1200:g=15,\
+	equalizer=f=4350:g=-15,\
+	highshelf=f=870:g=1,\
+	afftfilt=\
+		real='\
+			st(0,(b+0.5)/nb*sr);\
+			st(1,3000+1500*sin(9.3*2*PI*pts));\
+			st(2,ld(0)/ld(1));\
+			re*(1-ld(2)^2+2*gauss(log(ld(2)+1)))'\
+		:imag='\
+			st(0,(b+0.5)/nb*sr);\
+			st(1,3000+1500*sin(9.3*2*PI*pts));\
+			st(2,ld(0)/ld(1));\
+			im*(1-ld(2)^2+2*gauss(log(ld(2)+1)))'\
+		:win_size=1024"
 
 	// Seafood instead of meat, because it's a fish organ
 	foodtype_flags = RAW | SEAFOOD | GORE

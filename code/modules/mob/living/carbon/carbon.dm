@@ -30,16 +30,6 @@
 	QDEL_NULL(breathing_loop)
 	GLOB.carbon_list -= src
 
-/mob/living/carbon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
-	// Needs to happen after parent call otherwise wounds are prioritized over surgery
-	for(var/datum/wound/wound as anything in shuffle(all_wounds))
-		if(wound.try_treating(tool, user))
-			return ITEM_INTERACT_SUCCESS
-	return .
-
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	var/hurt = TRUE
@@ -344,14 +334,14 @@
 	var/turf/location = get_turf(src)
 	if(!blood)
 		adjust_nutrition(-lost_nutrition)
-		need_mob_update += adjustToxLoss(-3, updating_health = FALSE)
+		need_mob_update += adjust_tox_loss(-3, updating_health = FALSE)
 
 	for(var/i = 0 to distance)
 		if(blood)
 			if(location)
 				add_splatter_floor(location)
 			if(vomit_flags & MOB_VOMIT_HARM)
-				need_mob_update += adjustBruteLoss(3, updating_health = FALSE)
+				need_mob_update += adjust_brute_loss(3, updating_health = FALSE)
 		else
 			if(location)
 				location.add_vomit_floor(src, vomit_type, vomit_flags, purge_ratio) // call purge when doing detoxicfication to pump more chems out of the stomach.
@@ -423,7 +413,7 @@
 		var/obj/item/bodypart/BP = X
 		total_brute += (BP.brute_dam * BP.body_damage_coeff)
 		total_burn += (BP.burn_dam * BP.body_damage_coeff)
-	set_health(round(maxHealth - getOxyLoss() - getToxLoss() - total_burn - total_brute, DAMAGE_PRECISION))
+	set_health(round(maxHealth - get_oxy_loss() - get_tox_loss() - total_burn - total_brute, DAMAGE_PRECISION))
 	update_stat()
 	update_stamina()
 
@@ -512,7 +502,7 @@
  */
 /mob/living/carbon/proc/update_tint()
 	var/tint = 0
-	for(var/obj/item/clothing/worn_item in get_equipped_items())
+	for(var/obj/item/clothing/worn_item in get_equipped_items(INCLUDE_ABSTRACT))
 		tint += worn_item.tint
 
 	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
@@ -605,7 +595,7 @@
 		clear_fullscreen("oxy")
 
 	//Fire and Brute damage overlay (BSSR)
-	var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
+	var/hurtdamage = get_brute_loss() + get_fire_loss() + damageoverlaytemp
 	if(hurtdamage && !HAS_TRAIT(src, TRAIT_NO_DAMAGE_OVERLAY))
 		var/severity = 0
 		switch(hurtdamage)
@@ -659,34 +649,6 @@
 
 	else
 		hud_used.healths.icon_state = "health6"
-
-/mob/living/carbon/update_stamina_hud(shown_stamina_loss)
-	if(!client || !hud_used?.stamina)
-		return
-
-	var/stam_crit_threshold = maxHealth - crit_threshold
-
-	if(stat == DEAD)
-		hud_used.stamina.icon_state = "stamina_dead"
-	else
-
-		if(shown_stamina_loss == null)
-			shown_stamina_loss = getStaminaLoss()
-
-		if(shown_stamina_loss >= stam_crit_threshold)
-			hud_used.stamina.icon_state = "stamina_crit"
-		else if(shown_stamina_loss > maxHealth*0.8)
-			hud_used.stamina.icon_state = "stamina_5"
-		else if(shown_stamina_loss > maxHealth*0.6)
-			hud_used.stamina.icon_state = "stamina_4"
-		else if(shown_stamina_loss > maxHealth*0.4)
-			hud_used.stamina.icon_state = "stamina_3"
-		else if(shown_stamina_loss > maxHealth*0.2)
-			hud_used.stamina.icon_state = "stamina_2"
-		else if(shown_stamina_loss > 0)
-			hud_used.stamina.icon_state = "stamina_1"
-		else
-			hud_used.stamina.icon_state = "stamina_full"
 
 /mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state = "empty")
 	hud_used?.spacesuit?.icon_state = "spacesuit_[cell_state]"
@@ -745,8 +707,7 @@
 
 /mob/living/carbon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	if(excess_healing)
-		if(dna && !HAS_TRAIT(src, TRAIT_NOBLOOD))
-			blood_volume += (excess_healing * 2) //1 excess = 10 blood
+		adjust_blood_volume(excess_healing * 2)
 
 		for(var/obj/item/organ/target_organ as anything in organs)
 			if(!target_organ.damage)
@@ -792,6 +753,8 @@
 
 	if(heal_flags & HEAL_LIMBS)
 		regenerate_limbs()
+		for(var/obj/item/bodypart/limb as anything in bodyparts)
+			limb.remove_surgical_state(ALL)
 
 	if(heal_flags & (HEAL_REFRESH_ORGANS|HEAL_ORGANS))
 		regenerate_organs(remove_hazardous = !!(heal_flags & HEAL_REFRESH_ORGANS))
@@ -814,7 +777,9 @@
 	return ..()
 
 /mob/living/carbon/can_be_revived()
-	if(!get_organ_by_type(/obj/item/organ/brain) && (!IS_CHANGELING(src)) || HAS_TRAIT(src, TRAIT_HUSK))
+	if(HAS_TRAIT(src, TRAIT_HUSK))
+		return FALSE
+	if(!HAS_TRAIT(src, TRAIT_BRAINLESS_CARBON) && !get_organ_by_type(/obj/item/organ/brain))
 		return FALSE
 	return ..()
 
@@ -825,37 +790,50 @@
 	if (HAS_TRAIT(src, TRAIT_HUSK))
 		return DEFIB_FAIL_HUSK
 
+	if (IS_FAKE_KEY(key))
+		return DEFIB_NOGRAB_AGHOST
+
 	if (HAS_TRAIT(src, TRAIT_DEFIB_BLACKLISTED))
 		return DEFIB_FAIL_BLACKLISTED
 
-	if ((getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
+	if ((get_brute_loss() >= MAX_REVIVE_BRUTE_DAMAGE) || (get_fire_loss() >= MAX_REVIVE_FIRE_DAMAGE))
 		return DEFIB_FAIL_TISSUE_DAMAGE
 
-	// Only check for a heart if they actually need a heart. Who would've thunk
-	if (needs_heart())
-		var/obj/item/organ/heart = get_organ_by_type(/obj/item/organ/heart)
+	var/heart_status = SEND_SIGNAL(src, COMSIG_CARBON_DEFIB_HEART_CHECK) || can_defib_heart(get_organ_by_type(/obj/item/organ/heart))
+	if (heart_status)
+		return heart_status
 
-		if (!heart)
-			return DEFIB_FAIL_NO_HEART
-
-		if (heart.organ_flags & ORGAN_FAILING)
-			return DEFIB_FAIL_FAILING_HEART
-
-	var/obj/item/organ/brain/current_brain = get_organ_by_type(/obj/item/organ/brain)
-
-	if (QDELETED(current_brain))
-		return DEFIB_FAIL_NO_BRAIN
-
-	if (current_brain.organ_flags & ORGAN_FAILING)
-		return DEFIB_FAIL_FAILING_BRAIN
-
-	if (current_brain.suicided || (current_brain.brainmob && HAS_TRAIT(current_brain.brainmob, TRAIT_SUICIDED)))
-		return DEFIB_FAIL_NO_INTELLIGENCE
-
-	if(IS_FAKE_KEY(key))
-		return DEFIB_NOGRAB_AGHOST
+	var/brain_status = SEND_SIGNAL(src, COMSIG_CARBON_DEFIB_BRAIN_CHECK) || can_defib_brain(get_organ_by_type(/obj/item/organ/brain))
+	if (brain_status)
+		return brain_status
 
 	return DEFIB_POSSIBLE
+
+/// Return a defib status based on the heart organ provided
+/mob/living/carbon/proc/can_defib_heart(obj/item/organ/heart/heart_organ)
+	if (!needs_heart())
+		return NONE
+
+	if (QDELETED(heart_organ))
+		return DEFIB_FAIL_NO_HEART
+
+	if (heart_organ.organ_flags & ORGAN_FAILING)
+		return DEFIB_FAIL_FAILING_HEART
+
+	return NONE
+
+/// Return a defib status based on the brain organ provided
+/mob/living/carbon/proc/can_defib_brain(obj/item/organ/brain/brain_organ)
+	if (QDELETED(brain_organ))
+		return DEFIB_FAIL_NO_BRAIN
+
+	if (brain_organ.organ_flags & ORGAN_FAILING)
+		return DEFIB_FAIL_FAILING_BRAIN
+
+	if (brain_organ.suicided || (brain_organ.brainmob && HAS_TRAIT(brain_organ.brainmob, TRAIT_SUICIDED)))
+		return DEFIB_FAIL_NO_INTELLIGENCE
+
+	return NONE
 
 /mob/living/carbon/proc/can_defib_client()
 	return (client || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES)
@@ -923,6 +901,7 @@
 
 	synchronize_bodytypes()
 	synchronize_bodyshapes()
+
 ///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart, special)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -1019,7 +998,7 @@
 				if("replace")
 					var/limb2add = input(usr, "Select a bodypart type to add", "Add/Replace Bodypart") as null|anything in sort_list(limbtypes)
 					var/obj/item/bodypart/new_bp = new limb2add()
-					if(new_bp.replace_limb(src, special = TRUE))
+					if(new_bp.replace_limb(src))
 						admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [part.type] with [new_bp.type]")
 						qdel(part)
 					else
@@ -1077,18 +1056,6 @@
 /mob/living/carbon/can_resist()
 	return bodyparts.len > 2 && ..()
 
-/mob/living/carbon/proc/hypnosis_vulnerable()
-	if(HAS_MIND_TRAIT(src, TRAIT_UNCONVERTABLE))
-		return FALSE
-	if(has_status_effect(/datum/status_effect/hallucination) || has_status_effect(/datum/status_effect/drugginess))
-		return TRUE
-	if(IsSleeping() || IsUnconscious())
-		return TRUE
-	if(HAS_TRAIT(src, TRAIT_DUMB))
-		return TRUE
-	if(mob_mood.sanity < SANITY_UNSTABLE)
-		return TRUE
-
 /mob/living/carbon/wash(clean_types)
 	. = ..()
 	// Wash equipped stuff that cannot be covered
@@ -1108,12 +1075,17 @@
 
 /// if any of our bodyparts are bleeding
 /mob/living/carbon/proc/is_bleeding()
+	if(!CAN_HAVE_BLOOD(src))
+		return FALSE
 	for(var/obj/item/bodypart/part as anything in bodyparts)
 		if(part.cached_bleed_rate)
 			return TRUE
 
 /// get our total bleedrate
 /mob/living/carbon/proc/get_total_bleed_rate()
+	if(!CAN_HAVE_BLOOD(src))
+		return FALSE
+
 	var/total_bleed_rate = 0
 	for(var/obj/item/bodypart/part as anything in bodyparts)
 		total_bleed_rate += part.cached_bleed_rate
@@ -1347,4 +1319,6 @@
 
 /mob/living/carbon/get_bloodtype()
 	RETURN_TYPE(/datum/blood_type)
+	if(!CAN_HAVE_BLOOD(src))
+		return
 	return dna?.blood_type

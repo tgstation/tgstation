@@ -30,7 +30,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("attacks", "colours")
 	attack_verb_simple = list("attack", "colour")
-	grind_results = list()
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 
 	/// Icon state to use when capped
@@ -215,7 +214,10 @@
 	drawtype = pick(all_drawables)
 
 	AddElement(/datum/element/venue_price, FOOD_PRICE_EXOTIC)
-	if(can_change_colour)
+	//This makes sure that spraycans do not rename stuff instead of painting
+	if(!can_change_colour)
+		AddElement(/datum/element/tool_renaming)
+	else
 		AddComponent(/datum/component/palette, AVAILABLE_SPRAYCAN_SPACE, paint_color)
 
 	refill()
@@ -809,6 +811,10 @@
 	)
 	register_context()
 	register_item_context()
+	// If default crayon red colour, pick a more fun spraycan colour
+	if(!paint_color)
+		set_painting_tool_color(pick(COLOR_CRAYON_RED, COLOR_CRAYON_ORANGE, COLOR_CRAYON_YELLOW, COLOR_CRAYON_GREEN, COLOR_CRAYON_BLUE, COLOR_CRAYON_PURPLE))
+	refill()
 
 /obj/item/toy/crayon/spraycan/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
@@ -858,13 +864,6 @@
 		user.AddComponent(/datum/component/face_decal, "spray", EXTERNAL_ADJACENT, paint_color)
 	reagents.trans_to(user, used, volume_multiplier, transferred_by = user, methods = VAPOR)
 	return OXYLOSS
-
-/obj/item/toy/crayon/spraycan/Initialize(mapload)
-	. = ..()
-	// If default crayon red colour, pick a more fun spraycan colour
-	if(!paint_color)
-		set_painting_tool_color(pick(COLOR_CRAYON_RED, COLOR_CRAYON_ORANGE, COLOR_CRAYON_YELLOW, COLOR_CRAYON_GREEN, COLOR_CRAYON_BLUE, COLOR_CRAYON_PURPLE))
-	refill()
 
 /obj/item/toy/crayon/spraycan/examine(mob/user)
 	. = ..()

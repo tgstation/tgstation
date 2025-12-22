@@ -24,7 +24,7 @@
 	ammo_type = /obj/item/ammo_casing/c38
 	caliber = CALIBER_38
 	custom_materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 4,
 		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 1,
 	)
 	max_ammo = 15
@@ -58,7 +58,7 @@
 
 /obj/item/ammo_box/magazine/m38/true
 	name = "battle rifle magazine (.38 True Strike)"
-	desc = parent_type::desc + " Bullets bounce towards new targets with surprising accuracy."
+	desc = parent_type::desc + " Bullets bounce towards new targets with surprising accuracy and can strike through armored target"
 	ammo_type = /obj/item/ammo_casing/c38/match/true
 	ammo_band_color = COLOR_AMMO_TRUESTRIKE
 

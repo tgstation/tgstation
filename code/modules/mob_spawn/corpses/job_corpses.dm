@@ -59,15 +59,15 @@
 	outfit = /datum/outfit/job/assistant
 	icon_state = "corpsegreytider"
 
-/obj/effect/mob_spawn/corpse/human/assistant/beesease_infection/special(mob/living/spawned_mob)
+/obj/effect/mob_spawn/corpse/human/assistant/beesease_infection/special(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_mob.ForceContractDisease(new /datum/disease/beesease)
 
-/obj/effect/mob_spawn/corpse/human/assistant/brainrot_infection/special(mob/living/spawned_mob)
+/obj/effect/mob_spawn/corpse/human/assistant/brainrot_infection/special(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_mob.ForceContractDisease(new /datum/disease/brainrot)
 
-/obj/effect/mob_spawn/corpse/human/assistant/spanishflu_infection/special(mob/living/spawned_mob)
+/obj/effect/mob_spawn/corpse/human/assistant/spanishflu_infection/special(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_mob.ForceContractDisease(new /datum/disease/fluspanish)
 
@@ -88,3 +88,21 @@
 	name = JOB_BITRUNNER
 	outfit = /datum/outfit/job/bitrunner
 	icon_state = "corpsecargotech"
+
+/obj/effect/mob_spawn/corpse/human/cmo
+	name = JOB_CHIEF_MEDICAL_OFFICER
+	outfit = /datum/outfit/job/cmo
+	icon_state = "corpsedoctor"
+
+/obj/effect/mob_spawn/corpse/human/ce
+	name = JOB_CHIEF_ENGINEER
+	outfit = /datum/outfit/job/ce
+	icon_state = "corpseengineer"
+
+/obj/effect/mob_spawn/corpse/human/secoff
+	name = JOB_SECURITY_OFFICER
+	outfit = /datum/outfit/job/security
+
+/obj/effect/mob_spawn/corpse/human/hos
+	name = JOB_HEAD_OF_SECURITY
+	outfit = /datum/outfit/job/hos

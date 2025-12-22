@@ -27,7 +27,7 @@
 	icon_state = "corpseminer"
 
 // Gives the minesite corpses the gutted effect so that the boss ignores them
-/obj/effect/mob_spawn/corpse/human/minesite/special(mob/living/spawned_mob)
+/obj/effect/mob_spawn/corpse/human/minesite/special(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_mob.apply_status_effect(/datum/status_effect/gutted)
 

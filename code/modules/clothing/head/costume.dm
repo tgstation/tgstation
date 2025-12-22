@@ -64,6 +64,7 @@
 	greyscale_config_inhand_right = /datum/greyscale_config/maid_headband_inhands_right
 	inhand_icon_state = "maid"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/head/costume/chicken
 	name = "chicken suit head"
@@ -123,6 +124,7 @@
 	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 
 	dog_fashion = /datum/dog_fashion/head/cardborg
 
@@ -141,6 +143,7 @@
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEEARS|HIDEHAIR
 	armor_type = /datum/armor/costume_bronze
+	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/head/costume/fancy
 	name = "fancy hat"
@@ -172,6 +175,7 @@
 	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7)
 
 /datum/armor/costume_bronze
 	melee = 5
@@ -222,7 +226,7 @@
 	desc = "A delicate hairpin normally paired with traditional clothing"
 	icon_state = "hairpin_fancy"
 	inhand_icon_state = "hairpin_fancy"
-
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/head/costume/snakeeater
 	name = "strange bandana"
@@ -230,6 +234,7 @@
 	icon_state = "snake_eater"
 	inhand_icon_state = null
 	clothing_traits = list(TRAIT_FISH_EATER)
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/head/costume/knight
 	name = "fake medieval helmet"

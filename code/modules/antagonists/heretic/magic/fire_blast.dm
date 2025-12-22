@@ -15,12 +15,53 @@
 	invocation = "V'LC'N!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
-	channel_time = 5 SECONDS
-	target_radius = 5
+	channel_time = 2.5 SECONDS
+	target_radius = 7
 	max_beam_bounces = 4
 
 	/// How long the beam visual lasts, also used to determine time between jumps
 	var/beam_duration = 2 SECONDS
+	/// If our spell is empowered, it will have added effects
+	var/empowered_cast = FALSE
+
+/datum/action/cooldown/spell/charged/beam/fire_blast/Grant(mob/grant_to)
+	. = ..()
+	RegisterSignal(grant_to, COMSIG_FIRE_STACKS_UPDATED, PROC_REF(update_status_on_signal))
+
+/datum/action/cooldown/spell/charged/beam/fire_blast/Remove(mob/remove_from)
+	. = ..()
+	UnregisterSignal(remove_from, COMSIG_FIRE_STACKS_UPDATED)
+
+/datum/action/cooldown/spell/charged/beam/fire_blast/apply_button_overlay(atom/movable/screen/movable/action_button/current_button, force)
+	. = ..()
+	// Put an active border whenever our spell is able to be casted empowered
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/human_owner = owner
+	if(!istype(human_owner.wear_suit, /obj/item/clothing/suit/hooded/cultrobes/eldritch/ash))
+		return
+	if(human_owner.fire_stacks <= 3)
+		return
+
+	current_button.cut_overlay(current_button.button_overlay)
+	current_button.button_overlay = mutable_appearance(icon = overlay_icon, icon_state = "bg_spell_border_active_green")
+	current_button.add_overlay(current_button.button_overlay)
+
+/datum/action/cooldown/spell/charged/beam/fire_blast/before_cast(atom/cast_on)
+	empowered_cast = FALSE
+	channel_time = initial(channel_time)
+	// Wearing Ash heretic armor empowers your spells if you have over 3 fire stacks
+	if(!ishuman(owner))
+		return ..()
+	var/mob/living/carbon/human/human_owner = owner
+	if(human_owner.fire_stacks <= 3)
+		return ..()
+	if(!istype(human_owner.wear_suit, /obj/item/clothing/suit/hooded/cultrobes/eldritch/ash))
+		return ..()
+	empowered_cast = TRUE
+	channel_time = 0.1 SECONDS
+	human_owner.extinguish_mob()
+	return ..()
 
 /datum/action/cooldown/spell/charged/beam/fire_blast/cast(atom/cast_on)
 	var/mob/living/caster = get_caster_from_target(cast_on)
@@ -29,7 +70,7 @@
 		caster.apply_status_effect(/datum/status_effect/fire_blasted, beam_duration, -2)
 	return ..()
 
-/datum/action/cooldown/spell/charged/beam/fire_blast/send_beam(atom/origin, mob/living/carbon/to_beam, bounces = 4)
+/datum/action/cooldown/spell/charged/beam/fire_blast/send_beam(atom/origin, mob/living/carbon/to_beam, bounces = max_beam_bounces)
 	// Send a beam from the origin to the hit mob
 	origin.Beam(to_beam, icon_state = "solar_beam", time = beam_duration, beam_type = /obj/effect/ebeam/reacting/fire)
 
@@ -46,7 +87,7 @@
 	// Otherwise, if unblocked apply the damage and set them up
 	else
 		to_beam.apply_damage(20, BURN, wound_bonus = 5)
-		to_beam.adjust_fire_stacks(3)
+		to_beam.adjust_fire_stacks(empowered_cast ? 6 : 3)
 		to_beam.ignite_mob()
 		// Apply the fire blast status effect to show they got blasted
 		to_beam.apply_status_effect(/datum/status_effect/fire_blasted, beam_duration * 0.5)
@@ -66,7 +107,7 @@
 				continue
 			nearby_living.Knockdown(0.8 SECONDS)
 			nearby_living.apply_damage(15, BURN, wound_bonus = 5)
-			nearby_living.adjust_fire_stacks(2)
+			nearby_living.adjust_fire_stacks(empowered_cast ? 4 : 2)
 			nearby_living.ignite_mob()
 
 /// Timer callback to continue the chain, calling send_fire_bream recursively.
@@ -116,7 +157,7 @@
 	id = "fire_blasted"
 	alert_type = null
 	duration = 5 SECONDS
-	tick_interval = 0.5 SECONDS
+	tick_interval = 0.6 SECONDS
 	/// How much fire / stam to do per tick (stamina damage is doubled this)
 	var/tick_damage = 1
 	/// How long does the animation of the appearance last? If 0 or negative, we make no overlay
@@ -137,8 +178,8 @@
 	return TRUE
 
 /datum/status_effect/fire_blasted/tick(seconds_between_ticks)
-	owner.adjustFireLoss(tick_damage * seconds_between_ticks)
-	owner.adjustStaminaLoss(2 * tick_damage * seconds_between_ticks)
+	owner.adjust_fire_loss(tick_damage * seconds_between_ticks)
+	owner.adjust_stamina_loss(2 * tick_damage * seconds_between_ticks)
 
 // The beam fireblast spits out, causes people to walk through it to be on fire
 /obj/effect/ebeam/reacting/fire
