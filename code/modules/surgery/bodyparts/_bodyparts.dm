@@ -589,7 +589,7 @@
 		operation_zone = body_zone
 	for(var/datum/surgery_operation/operation as anything in operations)
 		if (!operation.requires_patient && operation.show_as_next_step(src, operation_zone))
-			. += span_notice("You could perform \a [operation] on [src] with \a [operation.get_recommended_tool()]...")
+			. += span_notice("You could perform [operation] on [src] with \a [operation.get_recommended_tool()]...")
 
 //empties the bodypart from its organs and other things inside it
 /obj/item/bodypart/proc/drop_organs(mob/user, violent_removal)

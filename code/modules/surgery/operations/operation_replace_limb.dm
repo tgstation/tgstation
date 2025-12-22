@@ -11,8 +11,6 @@
 	/// Radial slice datums for every augment type
 	VAR_PRIVATE/list/cached_augment_options
 
-#warn This should not allow to insert organs into chest/head
-
 /datum/surgery_operation/limb/replace_limb/get_recommended_tool()
 	return "cybernetic limb"
 
@@ -51,6 +49,12 @@
 	if(!IS_ROBOTIC_LIMB(limb))
 		return FALSE
 	return TRUE
+
+/datum/surgery_operation/limb/replace_limb/pre_preop(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
+	. = ..()
+	if(length(tool.contents))
+		to_chat(surgeon, span_warning("[tool] needs to be empty in order to be attached!"))
+		return FALSE
 
 /datum/surgery_operation/limb/replace_limb/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/bodypart/tool, list/operation_args)
 	// purposefully doesn't use plaintext zone for more context on what is being replaced with what

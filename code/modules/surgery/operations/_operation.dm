@@ -8,7 +8,7 @@
  *
  * Returns an ITEM_INTERACT_* flag
  */
-/mob/living/proc/perform_surgery(atom/movable/operating_on, potential_tool = IMPLEMENT_HAND, intentionally_fail = FALSE)
+/mob/living/proc/perform_surgery(atom/movable/operating_on, potential_tool = IMPLEMENT_HAND, intentionally_fail = FALSE, operating_zone = zone_selected)
 	if(DOING_INTERACTION(src, (HAS_TRAIT(src, TRAIT_HIPPOCRATIC_OATH) ? operating_on : DOAFTER_SOURCE_SURGERY)))
 		operating_on.balloon_alert(src, "already performing surgery!")
 		return ITEM_INTERACT_BLOCKING
@@ -17,7 +17,6 @@
 	if(istype(potential_tool, /obj/item/borg/cyborghug))
 		potential_tool = IMPLEMENT_HAND
 
-	var/operating_zone = zone_selected
 	var/list/operations = get_available_operations(operating_on, potential_tool, operating_zone)
 
 	// we failed to undertake any operations?
