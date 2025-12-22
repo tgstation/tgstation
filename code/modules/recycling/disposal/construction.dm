@@ -33,7 +33,7 @@
 
 	pipename = initial(pipe_type.name)
 
-	AddComponent(/datum/component/simple_rotation, post_rotation = CALLBACK(src, PROC_REF(post_rotation)))
+	AddElement(/datum/element/simple_rotation)
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
 	if(flip)
@@ -86,7 +86,7 @@
 			dpdir |= REVERSE_DIR(dir)
 	return dpdir
 
-/obj/structure/disposalconstruct/proc/post_rotation(mob/user, degrees)
+/obj/structure/disposalconstruct/post_rotation(mob/user, degrees)
 	if(degrees == ROTATION_FLIP)
 		var/obj/structure/disposalpipe/temp = pipe_type
 		if(initial(temp.flip_type))
