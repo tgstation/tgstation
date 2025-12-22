@@ -1,6 +1,6 @@
 /// Component which allows mobs to be smashed onto this surface like a wrestling move
 /datum/element/table_smash
-	element_flags = ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY
 	argument_hash_start_idx = 2
 	/// If true, mobs will be placed gently on the table even if they're in an aggressive grab
 	var/gentle_push
