@@ -340,6 +340,7 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_BACK)
 	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
+	RegisterSignal(src, COMSIG_HUMAN_NON_STORAGE_HOTKEY, PROC_REF(on_non_storage_hotkey))
 
 /obj/item/shockpaddles/Destroy()
 	defib = null
@@ -607,6 +608,8 @@
 						fail_reason = "Patient's brain is missing. Further attempts futile."
 					if (DEFIB_FAIL_BLACKLISTED)
 						fail_reason = "Patient has been blacklisted from revival. Further attempts futile."
+					if (DEFIB_FAIL_GOLEM)
+						fail_reason = "Patient is constructed from inorganic materials. Further attempts futile, though manual reconstruction is possible."
 
 				if(fail_reason)
 					user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - [fail_reason]"))
@@ -667,6 +670,13 @@
 
 /obj/item/shockpaddles/proc/is_wielded()
 	return HAS_TRAIT(src, TRAIT_WIELDED)
+
+/obj/item/shockpaddles/proc/on_non_storage_hotkey(datum/source,  mob/living/carbon/human/user, obj/item/possible_storage)
+	SIGNAL_HANDLER
+	if(possible_storage == defib)
+		user.dropItemToGround(src)
+		return COMPONENT_STORAGE_HOTKEY_HANDLED
+	return NONE
 
 /obj/item/shockpaddles/cyborg
 	name = "cyborg defibrillator paddles"

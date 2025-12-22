@@ -19,7 +19,7 @@
 #define COMSIG_CARBON_GAIN_WOUND "carbon_gain_wound" //from /datum/wound/proc/apply_wound() (/mob/living/carbon/C, /datum/wound/W, /obj/item/bodypart/L)
 #define COMSIG_CARBON_LOSE_WOUND "carbon_lose_wound" //from /datum/wound/proc/remove_wound() (/mob/living/carbon/C, /datum/wound/W, /obj/item/bodypart/L)
 /// Called after limb AND victim has been unset
-#define COMSIG_CARBON_POST_LOSE_WOUND "carbon_post_lose_wound" //from /datum/wound/proc/remove_wound() (/datum/wound/lost_wound, /obj/item/bodypart/part, ignore_limb, replaced)
+#define COMSIG_CARBON_POST_LOSE_WOUND "carbon_post_lose_wound" //from /datum/wound/proc/remove_wound() (/datum/wound/lost_wound, /obj/item/bodypart/part, ignore_limb, replaced, destroying)
 ///from base of /obj/item/bodypart/proc/can_attach_limb(): (new_limb, special) allows you to fail limb attachment
 #define COMSIG_ATTEMPT_CARBON_ATTACH_LIMB "attempt_carbon_attach_limb"
 	#define COMPONENT_NO_ATTACH (1<<0)
@@ -97,8 +97,8 @@
 #define COMSIG_CARBON_MOOD_UPDATE "carbon_mood_update"
 ///Called when a carbon attempts to eat (eating)
 #define COMSIG_CARBON_ATTEMPT_EAT "carbon_attempt_eat"
-	// Prevents the breath
-	#define COMSIG_CARBON_BLOCK_EAT (1 << 0)
+	// Prevents eating the food
+	#define BLOCK_EAT_ATTEMPT (1 << 0)
 ///Called when a carbon vomits : (distance, force)
 #define COMSIG_CARBON_VOMITED "carbon_vomited"
 ///Called from apply_overlay(cache_index, overlay)
@@ -187,3 +187,12 @@
 /// From /mob/living/carbon/proc/can_defib() : ()
 /// Return a defib result flag to override default defib brain check
 #define COMSIG_CARBON_DEFIB_BRAIN_CHECK "carbon_defib_brain_check"
+
+/// From /mob/living/carbon/human/proc/defib_check() : ()
+/// Return a defib result flag to override default defib heart check
+#define COMSIG_CARBON_DEFIB_HEART_CHECK "carbon_defib_heart_check"
+
+/// From /mob/living/carbon/human/proc/smart_equip_targeted(): (mob/living/carbon/human/user, obj/item/possible_container)
+#define COMSIG_HUMAN_NON_STORAGE_HOTKEY "human_storage_hotkey"
+	/// Return to prevent the storage fail message
+	#define COMPONENT_STORAGE_HOTKEY_HANDLED (1<<0)

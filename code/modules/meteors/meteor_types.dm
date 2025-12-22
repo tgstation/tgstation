@@ -42,6 +42,12 @@
 	SSaugury.register_doom(src, threat)
 	SpinAnimation()
 	chase_target(target)
+	AddComponent(
+		/datum/component/meteor_combat, \
+		CALLBACK(src, PROC_REF(redirect)), \
+		CALLBACK(src, PROC_REF(make_debris)), \
+		achievement_on = !istype(src, /obj/effect/meteor/sand), \
+	)
 
 /obj/effect/meteor/Destroy()
 	GLOB.meteor_list -= src
@@ -84,7 +90,8 @@
 
 /obj/effect/meteor/proc/on_loop_stopped(datum/source)
 	SIGNAL_HANDLER
-	qdel(src)
+	if(!move_packet || !length(move_packet.existing_loops))
+		qdel(src)
 
 ///Deals with what happens when we stop moving, IE we die
 /obj/effect/meteor/proc/moved_off_z()
@@ -116,14 +123,14 @@
 /obj/effect/meteor/examine(mob/user)
 	. = ..()
 
+	if((user.mind?.get_skill_level(/datum/skill/athletics) >= SKILL_LEVEL_LEGENDARY))
+		. += span_notice("On second thought, it doesn't look too tough.")
 	check_examine_award(user)
 
-/obj/effect/meteor/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(I.tool_behaviour == TOOL_MINING)
-		make_debris()
-		qdel(src)
-	else
-		. = ..()
+///Called by component/meteor_combat to send us moving to the edge of the map away from whoever punched us
+/obj/effect/meteor/proc/redirect(mob/athlete)
+	dest = spaceDebrisStartLoc(get_cardinal_dir(athlete, src), z)
+	chase_target(dest)
 
 /obj/effect/meteor/proc/make_debris()
 	for(var/throws = dropamt, throws > 0, throws--)
@@ -158,6 +165,7 @@
 /obj/effect/meteor/proc/check_examine_award(mob/user)
 	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
 		user.client.give_award(/datum/award/achievement/misc/meteor_examine, user)
+
 
 /**
  * Handles the meteor's interaction with meteor shields.

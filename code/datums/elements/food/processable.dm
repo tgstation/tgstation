@@ -49,7 +49,7 @@
 		//compose a text string containing the syntax and paths to use for editing the custom_materials var
 		if(result.custom_materials)
 			what_it_should_be += " (you can round values a bit)"
-		stack_trace("[warning]. custom_materials should be [what_it_should_be] (you can round values a bit).")
+		stack_trace("[warning]. should be: custom_materials = [what_it_should_be] (you can round values a bit).")
 	qdel(prototype)
 	qdel(result)
 

@@ -174,7 +174,7 @@ export function RecipeContent(props: FullProps) {
     <Section>
       <Stack>
         <Stack.Item>
-          <Box width="64px" height="64px" mr={1}>
+          <Box textAlign="center" minWidth="64px" minHeight="64px" mr={1}>
             <Box
               style={{
                 transform: 'scale(1.5)',

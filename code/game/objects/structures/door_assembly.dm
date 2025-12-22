@@ -309,7 +309,7 @@
 		door.closeOtherId = electronics.passed_cycle_id
 		door.update_other_id()
 	if(door.unres_sides)
-		door.unres_sensor = TRUE
+		door.unres_latch = TRUE
 	door.previous_airlock = previous_assembly
 	electronics.forceMove(door)
 	door.autoclose = TRUE
