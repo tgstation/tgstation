@@ -32,7 +32,6 @@ SUBSYSTEM_DEF(mobs)
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
-	var/times_fired = src.times_fired
 	var/seconds_per_tick = wait / (1 SECONDS)
 	while(currentrun.len)
 		var/mob/living/processing_mob = currentrun[currentrun.len]
