@@ -196,14 +196,14 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 					var/list/current_buyer_orders = goodies_by_buyer[spawning_order.paying_account]
 					if(LAZYLEN(current_buyer_orders) == GOODY_FREE_SHIPPING_MAX)
 						price = round(price + CRATE_TAX)
-						paying_for_this.bank_card_talk("Goody order size exceeds free shipping limit: Assessing [CRATE_TAX] credit S&H fee.")
+						paying_for_this.bank_card_talk("Goody order size exceeds free shipping limit: Assessing [CRATE_TAX] [MONEY_NAME_SINGULAR] S&H fee.")
 			else
 				paying_for_this = SSeconomy.get_dep_account(ACCOUNT_CAR)
 
 			if(paying_for_this)
 				if(!paying_for_this.adjust_money(-price, "Cargo: [spawning_order.pack.name]"))
 					if(spawning_order.paying_account)
-						paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] rejected due to lack of funds. Credits required: [price]")
+						paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] rejected due to lack of funds. [MONEY_NAME_CAPITALIZED] required: [price]")
 					if(!spawning_order.can_be_cancelled) //only if it absolutly cannot be canceled by the player do we cancel it for them
 						SSshuttle.shopping_list -= spawning_order
 						clean_up_orders += spawning_order
@@ -216,7 +216,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				LAZYADD(goodies_by_buyer[spawning_order.paying_account], spawning_order)
 			var/receiver_message = "Cargo order #[spawning_order.id] has shipped."
 			if(spawning_order.charge_on_purchase)
-				receiver_message += " [price] credits have been charged to your bank account"
+				receiver_message += " [price] [MONEY_NAME] have been charged to your bank account"
 			paying_for_this.bank_card_talk(receiver_message)
 			SSeconomy.add_audit_entry(paying_for_this, price, spawning_order.pack.name)
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
@@ -275,7 +275,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		qdel(completed_order)
 
 	var/datum/bank_account/cargo_budget = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	investigate_log("[purchases] orders in this shipment, worth [value] credits. [cargo_budget.account_balance] credits left.", INVESTIGATE_CARGO)
+	investigate_log("[purchases] orders in this shipment, worth [value] [MONEY_NAME]. [cargo_budget.account_balance] [MONEY_NAME] left.", INVESTIGATE_CARGO)
 
 /// Deletes and sells the items on the shuttle
 /obj/docking_port/mobile/supply/proc/sell()
@@ -306,7 +306,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	SSshuttle.centcom_message = msg
 	if(report.exported_atoms.len)
-		investigate_log("contents sold for [cargo_budget.account_balance - presale_points] credits. Contents: [report.exported_atoms.Join(",")]. Message: [msg]", INVESTIGATE_CARGO)
+		investigate_log("contents sold for [cargo_budget.account_balance - presale_points] [MONEY_NAME]. Contents: [report.exported_atoms.Join(",")]. Message: [msg]", INVESTIGATE_CARGO)
 
 /*
 	Generates a box of mail depending on our exports and imports.

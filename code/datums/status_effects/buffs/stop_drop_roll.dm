@@ -3,6 +3,8 @@
 	alert_type = null
 	tick_interval = 0.8 SECONDS
 	processing_speed = STATUS_EFFECT_PRIORITY
+	/// bar updates depending on how "on fire" you are
+	VAR_FINAL/datum/progressbar/bar
 
 /datum/status_effect/stop_drop_roll/on_apply()
 	if(!iscarbon(owner))
@@ -16,6 +18,7 @@
 	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(body_position_changed))
 	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id)) // they're kinda busy!
 
+	bar = new(owner, MAX_FIRE_STACKS, owner, get_bar_progress())
 	start_rolling()
 
 	for (var/obj/item/dropped in owner.loc)
@@ -25,6 +28,12 @@
 /datum/status_effect/stop_drop_roll/on_remove()
 	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_SET_BODY_POSITION))
 	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
+	bar.end_progress()
+	bar = null
+
+/// Get the current progress for the progress bar
+/datum/status_effect/stop_drop_roll/proc/get_bar_progress()
+	return MAX_FIRE_STACKS - max(0, owner.fire_stacks)
 
 /datum/status_effect/stop_drop_roll/proc/start_rolling()
 	owner.visible_message(
@@ -52,6 +61,7 @@
 /// Return TRUE to stop the us from rolling.
 /datum/status_effect/stop_drop_roll/proc/reduce_firestacks(amt = 1)
 	owner.adjust_fire_stacks(-1 * amt)
+	bar.update(get_bar_progress())
 	return owner.fire_stacks <= 0
 
 /// Called when we just, stop rolling, due to movement or other reasons. Maybe still on fire, maybe not.
@@ -85,6 +95,10 @@
 	src.hallucination_weakref = hallucination_weakref
 	return ..()
 
+/datum/status_effect/stop_drop_roll/hallucinating/get_bar_progress()
+	var/datum/hallucination/fire/hallucination = hallucination_weakref?.resolve()
+	return 20 - max(0, hallucination?.fake_firestacks)
+
 /datum/status_effect/stop_drop_roll/hallucinating/start_rolling()
 	owner.visible_message(
 		span_danger("[owner] starts rolling around on the floor, flailing about!"),
@@ -98,6 +112,7 @@
 		return TRUE
 
 	hallucination.fake_firestacks += (-1 * amt)
+	bar.update(get_bar_progress())
 	if(hallucination.fake_firestacks <= 0)
 		hallucination.clear_fire()
 		return TRUE
