@@ -46,6 +46,7 @@
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_HERETIC_SACRIFICE)
 	blacklisted_roles = list(
 		JOB_HEAD_OF_PERSONNEL,
+		JOB_CHAPLAIN,
 	)
 
 /datum/dynamic_ruleset/latejoin/heretic/assign_role(datum/mind/candidate)
