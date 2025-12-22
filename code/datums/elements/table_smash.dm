@@ -16,7 +16,7 @@
 	RegisterSignal(target, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
 
 	var/static/list/loc_connections = list(
-		COMSIG_LIVING_DISARM_COLLIDE = TYPE_PROC_REF(/obj, on_pushed_into),
+		COMSIG_LIVING_DISARM_COLLIDE = TYPE_PROC_REF(obj/structure/table, on_pushed_into),
 	)
 	target.AddComponent(/datum/component/connect_loc_behalf, target, loc_connections)
 
@@ -180,7 +180,7 @@
 	table.after_smash(pushed_mob)
 
 /// Called when someone is shoved into our tile
-/obj/proc/on_pushed_into(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
+/obj/structure/table/proc/on_pushed_into(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
 	SIGNAL_HANDLER
 	if((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED))
 		return
