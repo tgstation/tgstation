@@ -253,7 +253,8 @@
 /datum/surgery_operation/limb/organ_manipulation/internal/abductor
 	name = "experimental organ manipulation"
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED | OPERATION_NO_WIKI
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
+	all_surgery_states_required = SURGERY_SKIN_OPEN
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 	bone_locked_organs = "the brain or any chest organs EXCLUDING the heart"
 
 /datum/surgery_operation/limb/organ_manipulation/internal/abductor/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
@@ -264,7 +265,8 @@
 	name = "feature manipulation"
 	desc = "Manipulate features of the patient, such as a moth's wings or a lizard's tail."
 	replaced_by = /datum/surgery_operation/limb/organ_manipulation/external/abductor
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 
 /datum/surgery_operation/limb/organ_manipulation/external/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
 	return (organ.organ_flags & ORGAN_EXTERNAL)
@@ -284,6 +286,7 @@
 /datum/surgery_operation/limb/organ_manipulation/external/abductor
 	name = "experimental feature manipulation"
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED | OPERATION_NO_WIKI
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
+	all_surgery_states_required = SURGERY_SKIN_OPEN
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 
 #undef OPERATION_REMOVED_ORGAN

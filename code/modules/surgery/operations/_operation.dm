@@ -1300,7 +1300,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 /datum/surgery_operation/limb/get_operation_target(atom/movable/operating_on, body_zone)
 	if (isliving(operating_on))
-		var/mob/living/patient
+		var/mob/living/patient = operating_on
 		return patient.get_bodypart(deprecise_zone(body_zone))
 	if (!isbodypart(operating_on))
 		return null

@@ -327,7 +327,8 @@
 	time = 6.4 SECONDS
 	heal_to_percent = 0
 	repeatable = TRUE
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
+	all_surgery_states_required = SURGERY_SKIN_OPEN
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 
 /datum/surgery_operation/organ/repair/ears/all_blocked_strings()
 	return ..() + list("if the limb has bones, they must be intact")
@@ -401,7 +402,8 @@
 	target_type = /obj/item/organ/eyes
 	heal_to_percent = 0
 	repeatable = TRUE
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
+	all_surgery_states_required = SURGERY_SKIN_OPEN
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 
 /datum/surgery_operation/organ/repair/eyes/all_blocked_strings()
 	return ..() + list("if the limb has bones, they must be intact")
@@ -482,7 +484,8 @@
 	heal_to_percent = 0.25
 	failure_damage_percent = 0.3
 	repeatable = TRUE
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED|SURGERY_VESSELS_CLAMPED
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 
 /datum/surgery_operation/organ/repair/brain/state_check(obj/item/organ/brain/organ)
 	return TRUE // always available so you can intentionally fail it

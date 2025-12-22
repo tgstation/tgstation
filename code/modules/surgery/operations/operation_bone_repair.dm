@@ -57,7 +57,8 @@
 		/obj/item/stack/sticky_tape = 5,
 	)
 	time = 6 SECONDS
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
+	all_surgery_states_required = SURGERY_SKIN_OPEN
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 	requires_patient = FALSE
 
 /datum/surgery_operation/limb/reset_compound/get_default_radial_image()

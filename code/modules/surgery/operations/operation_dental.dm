@@ -5,7 +5,8 @@
 		/obj/item/reagent_containers/applicator/pill = 1,
 	)
 	time = 1.6 SECONDS
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_DRILLED
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_DRILLED
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 	requires_patient = FALSE
 
 /datum/surgery_operation/limb/add_dental_implant/all_required_strings()
@@ -68,7 +69,8 @@
 		IMPLEMENT_HAND = 1,
 	)
 	time = 3.2 SECONDS
-	all_surgery_states_required = SURGERY_BONE_DRILLED|SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
+	all_surgery_states_required = SURGERY_BONE_DRILLED|SURGERY_SKIN_OPEN
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 	requires_patient = FALSE
 
 /datum/surgery_operation/limb/remove_dental_implant/get_default_radial_image()

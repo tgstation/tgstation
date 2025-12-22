@@ -10,7 +10,9 @@
 	)
 	time = 3.2 SECONDS
 	operation_flags = OPERATION_STANDING_ALLOWED | OPERATION_PRIORITY_NEXT_STEP | OPERATION_NOTABLE | OPERATION_IGNORE_CLOTHES
-	all_surgery_states_required = SURGERY_SKIN_OPEN | SURGERY_VESSELS_CLAMPED
+	all_surgery_states_required = SURGERY_SKIN_OPEN
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
+	surgery_states_blacklisted
 	/// List of items that are always allowed to be an arm replacement, even if they fail another requirement.
 	var/list/always_accepted_prosthetics = list(
 		/obj/item/chainsaw, // the OG, too large otherwise

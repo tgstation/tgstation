@@ -15,7 +15,8 @@
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 	required_organ_flag = ORGAN_TYPE_FLAGS & ~ORGAN_ROBOTIC
 	target_type = /obj/item/organ/brain
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 	requires_patient = FALSE
 
 /datum/surgery_operation/organ/pacify/get_default_radial_image()

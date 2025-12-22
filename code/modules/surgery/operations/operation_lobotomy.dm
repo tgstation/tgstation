@@ -16,7 +16,8 @@
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 	requires_patient = FALSE
 
 /datum/surgery_operation/organ/lobotomy/get_any_tool()
