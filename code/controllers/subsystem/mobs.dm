@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(mobs)
 		var/mob/living/processing_mob = currentrun[currentrun.len]
 		currentrun.len--
 		if(processing_mob)
-			processing_mob.Life(seconds_per_tick, times_fired)
+			processing_mob.Life(seconds_per_tick)
 		else
 			GLOB.mob_living_list.Remove(processing_mob)
 		if (MC_TICK_CHECK)
