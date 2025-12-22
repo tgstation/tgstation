@@ -114,7 +114,18 @@
 	uses = 800 //In the Greek numeric system, Omega has a value of 800
 
 /obj/item/soap/omega/grind_results()
-	return list(/datum/reagent/consumable/potato_juice = 9, /datum/reagent/consumable/ethanol/lizardwine = 9, /datum/reagent/monkey_powder = 9, /datum/reagent/drug/krokodil = 9, /datum/reagent/toxin/acid/nitracid = 9, /datum/reagent/baldium = 9, /datum/reagent/consumable/ethanol/hooch = 9, /datum/reagent/bluespace = 9, /datum/reagent/drug/pumpup = 9, /datum/reagent/consumable/space_cola = 9)
+	return list(
+		/datum/reagent/consumable/potato_juice = 9,
+		/datum/reagent/consumable/ethanol/lizardwine = 9,
+		/datum/reagent/monkey_powder = 9,
+		/datum/reagent/drug/krokodil = 9,
+		/datum/reagent/toxin/acid/nitracid = 9,
+		/datum/reagent/baldium = 9,
+		/datum/reagent/consumable/ethanol/hooch = 9,
+		/datum/reagent/bluespace = 9,
+		/datum/reagent/drug/pumpup = 9,
+		/datum/reagent/consumable/space_cola = 9
+	)
 
 /obj/item/soap/omega/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is using [src] to scrub themselves from the timeline! It looks like [user.p_theyre()] trying to commit suicide!"))
