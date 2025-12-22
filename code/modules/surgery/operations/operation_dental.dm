@@ -6,6 +6,7 @@
 	)
 	time = 1.6 SECONDS
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_DRILLED
+	requires_patient = FALSE
 
 /datum/surgery_operation/limb/add_dental_implant/all_required_strings()
 	. = list()
@@ -36,9 +37,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to wedge [tool] in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to wedge \the [tool] in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to wedge something in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to wedge [tool] in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("[surgeon] begins to wedge \the [tool] in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] begins to wedge something in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 	display_pain(limb.owner, "Something's being jammed into your [limb.plaintext_zone]!")
 
@@ -54,9 +55,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You wedge [tool] into [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] wedges [tool] into [limb.owner]'s [limb.plaintext_zone]!"),
-		span_notice("[surgeon] wedges something into [limb.owner]'s [limb.plaintext_zone]!"),
+		span_notice("You wedge [tool] into [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] wedges [tool] into [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]!"),
+		span_notice("[surgeon] wedges something into [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]!"),
 	)
 
 /datum/surgery_operation/limb/remove_dental_implant
@@ -68,6 +69,7 @@
 	)
 	time = 3.2 SECONDS
 	all_surgery_states_required = SURGERY_BONE_DRILLED|SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
+	requires_patient = FALSE
 
 /datum/surgery_operation/limb/remove_dental_implant/get_default_radial_image()
 	return image(/obj/item/reagent_containers/applicator/pill)
@@ -85,9 +87,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin looking in [limb.owner]'s mouth for dental implants..."),
-		span_notice("[surgeon] begins to look in [limb.owner]'s mouth."),
-		span_notice("[surgeon] begins to examine [limb.owner]'s teeth."),
+		span_notice("You begin looking in [limb.owner || limb]'s mouth for dental implants..."),
+		span_notice("[surgeon] begins to look in [limb.owner || limb]'s mouth."),
+		span_notice("[surgeon] begins to examine [limb.owner || limb]'s teeth."),
 	)
 	display_pain(limb.owner, "You feel fingers poke around at your teeth.")
 
@@ -99,9 +101,9 @@
 		display_results(
 			surgeon,
 			limb.owner,
-			span_notice("You don't find any dental implants in [limb.owner]'s [limb.plaintext_zone]."),
-			span_notice("[surgeon] doesn't find any dental implants in [limb.owner]'s [limb.plaintext_zone]."),
-			span_notice("[surgeon] finishes examining [limb.owner]'s [limb.plaintext_zone]."),
+			span_notice("You don't find any dental implants in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+			span_notice("[surgeon] doesn't find any dental implants in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+			span_notice("[surgeon] finishes examining [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 		)
 		return
 
@@ -114,9 +116,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You carefully remove [yoinked] from [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] carefully removes [yoinked] from [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] carefully removes something from [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You carefully remove [yoinked] from [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] carefully removes [yoinked] from [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] carefully removes something from [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 
 // Teeth pill code

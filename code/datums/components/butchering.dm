@@ -77,19 +77,89 @@
 
 /datum/component/butchering/proc/butcher_limb(obj/item/source, obj/item/bodypart/target, mob/living/user)
 	target.add_fingerprint(user)
+
+	if (LIMB_HAS_SKIN(target) && !HAS_SURGERY_STATE(target.surgery_state, SURGERY_SKIN_CUT))
+		to_chat(user, span_warning("[src]'s skin is still intact!"))
+		return
+
+	if (LIMB_HAS_BONES(target) && !HAS_SURGERY_STATE(target.surgery_state, SURGERY_BONE_DRILLED | SURGERY_BONE_SAWED))
+		// We need to gut the limb before turning it into meat, otherwise just cut around the bone I guess
+		if (length(target.contents))
+			to_chat(user, span_warning("[src]'s bones are still intact!"))
+			return
+
 	if (length(target.contents))
-		user.visible_message(span_warning("[user] begins to cut open [target]."), span_notice("You begin to cut open [target]..."))
+		user.visible_message(span_warning("[user] begins to gut [target]."), span_notice("You begin to gut [target]..."))
 		playsound(target.loc, butcher_sound, 50, TRUE, -1)
-		if (!do_after(user, speed, target))
-			return ITEM_INTERACT_BLOCKING
+		if (!do_after(user, speed * 0.5, target))
+			return
 		target.drop_organs(user, TRUE)
 		return
 
-	if (!target.meat_type)
+	if (!length(target.butcher_drops))
 		to_chat(user, span_warning("There is nothing left inside [target]!"))
 		return
 
+	user.visible_message(span_warning("[user] begins to cut [target] apart."), span_notice("You begin to cut [target] apart..."))
+	playsound(target.loc, butcher_sound, 50, TRUE, -1)
+	if (!do_after(user, speed * 0.5, target))
+		return
 
+	var/list/results = list()
+	var/turf/drop_loc = target.drop_location()
+	var/bonus_chance = max(0, (effectiveness - 100) + bonus_modifier) //so 125 total effectiveness = 25% extra chance
+
+	var/list/failures = list()
+	var/list/bonuses = list()
+
+	for (var/obj/item/drop_type as anything in target.butcher_drops)
+		var/amount = target.butcher_drops[drop_type] || 1
+		var/is_stack = ispath(drop_type, /obj/item/stack)
+
+		for (var/i in 1 to amount)
+			if (!prob(effectiveness))
+				failures |= drop_type::name
+				amount -= 1
+				continue
+
+			if (prob(bonus_chance))
+				if (!is_stack)
+					if (ispath(drop_type, /obj/item/food/meat))
+						results += new drop_type(drop_loc, target.blood_dna_info?.Copy())
+					else
+						var/obj/item/butcher_result = new drop_type(drop_loc)
+						if (target.blood_dna_info)
+							butcher_result.add_blood_DNA(target.blood_dna_info.Copy())
+						results += butcher_result
+				amount += 1
+				bonuses |= drop_type::name
+
+			if (is_stack)
+				continue
+
+			if (ispath(drop_type, /obj/item/food/meat))
+				results += new drop_type(drop_loc, target.blood_dna_info?.Copy())
+				continue
+
+			var/obj/item/butcher_result = new drop_type(drop_loc)
+			butcher_result.add_blood_DNA(target.blood_dna_info.Copy())
+			results += butcher_result
+
+		if (is_stack && amount)
+			var/obj/item/stack/butcher_result = new drop_type(drop_loc, amount)
+			if (target.blood_dna_info)
+				butcher_result.add_blood_DNA(target.blood_dna_info.Copy())
+			results += butcher_result
+
+	if (target.reagents)
+		var/meat_produced = 0
+		for (var/obj/item/food/target_meat in results)
+			meat_produced += 1
+		for (var/obj/item/food/target_meat in results)
+			target.reagents.trans_to(target_meat, target.reagents.total_volume / meat_produced, remove_blacklisted = TRUE)
+
+	user.visible_message(span_notice("[user] butchers [target]."), span_notice("You butcher [target]."))
+	qdel(target)
 
 /datum/component/butchering/proc/start_butcher(obj/item/source, mob/living/target, mob/living/user)
 	to_chat(user, span_notice("You begin to butcher [target]..."))
@@ -148,12 +218,12 @@
 	var/list/failures = list()
 	var/list/bonuses = list()
 	for (var/obj/remains as anything in target.butcher_results)
-		var/amount = target.butcher_results[remains]
+		var/amount = target.butcher_results[remains] || 1
 		var/is_stack = ispath(remains, /obj/item/stack)
 
 		for (var/i in 1 to amount)
 			if (!prob(final_effectiveness))
-				failures |= result::name
+				failures |= remains::name
 				amount -= 1
 				continue
 
@@ -161,7 +231,7 @@
 				if (!is_stack)
 					results += new remains(location)
 				amount += 1
-				bonuses |= result::name
+				bonuses |= remains::name
 
 			if (!is_stack)
 				results += new remains(location)

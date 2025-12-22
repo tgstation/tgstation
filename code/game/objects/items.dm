@@ -884,7 +884,6 @@
 	. = ..()
 
 	if(!isliving(hit_atom)) //Living mobs handle hit sounds differently.
-
 		throw_drop_sound_chain(YEET_SOUND_VOLUME)
 		return
 

@@ -305,7 +305,7 @@
 /obj/item/organ/proc/on_surgical_removal(mob/living/user, obj/item/bodypart/limb, obj/item/tool)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ORGAN_SURGICALLY_REMOVED, user, limb.owner, limb.body_zone, tool)
-	RemoveElement(/datum/element/decal/blood, _color = limb.owner.get_bloodtype()?.get_color() || BLOOD_COLOR_RED)
+	RemoveElement(/datum/element/decal/blood, _color = limb.owner?.get_bloodtype()?.get_color() || BLOOD_COLOR_RED)
 
 /**
  * Proc that gets called when the organ is surgically inserted by someone. Seem familiar?

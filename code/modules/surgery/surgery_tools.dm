@@ -401,7 +401,7 @@
 	if(downloaded)
 		. += mutable_appearance(src.icon, "+downloaded")
 
-/obj/item/surgical_processor/proc/check_surgery(datum/source, mob/living/patient, list/operations)
+/obj/item/surgical_processor/proc/check_surgery(datum/source, atom/movable/operating_on, list/operations)
 	SIGNAL_HANDLER
 
 	operations |= loaded_surgeries

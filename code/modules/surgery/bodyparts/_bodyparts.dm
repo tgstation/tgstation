@@ -223,10 +223,9 @@
 	var/list/bodypart_effects
 	/// The cached info about the blood this organ belongs to, set during on_removal()
 	var/list/blood_dna_info
-	/// What item we drop whenever we're butchered
+	/// What items we drop whenever we're butchered
 	/// If unset, the bodyparot cannot be butchered
-	var/meat_type = null
-
+	var/list/butcher_drops = null
 	/// What state is the bodypart in for determining surgery availability
 	VAR_FINAL/surgery_state = NONE
 
@@ -328,6 +327,10 @@
 		var/wound_desc = wound.get_limb_examine_description()
 		if(wound_desc)
 			. += wound_desc
+
+	var/surgery_examine = get_surgery_examine()
+	if(surgery_examine)
+		. += surgery_examine
 
 /**
  * Called when a bodypart is checked for injuries.
@@ -478,8 +481,8 @@
 
 /// Returns surgery examine information for this bodypart
 /obj/item/bodypart/proc/get_surgery_examine()
-	var/t_his = owner.p_their()
-	var/t_His = owner.p_Their()
+	var/lowercase_zone = owner ? "[owner.p_their()] [plaintext_zone]" : "[src]"
+	var/capital_zone = owner ? "[owner.p_Their()] [plaintext_zone]" : capitalize("[src]")
 	var/single_message = ""
 	var/list/sub_messages = list()
 	var/reported_state = surgery_state
@@ -492,42 +495,42 @@
 
 	if(HAS_SURGERY_STATE(reported_state, SURGERY_SKIN_CUT))
 		sub_messages += "skin has been incised"
-		single_message = "The skin on [t_his] [plaintext_zone] has been incised."
+		single_message = "The skin on [lowercase_zone] has been incised."
 	if(HAS_SURGERY_STATE(reported_state, SURGERY_SKIN_OPEN))
 		sub_messages += "skin is opened"
-		single_message = "The skin on [t_his] [plaintext_zone] is opened."
+		single_message = "The skin on [lowercase_zone] is opened."
 
 	// We can only see these if the skin is open
 	// And we check the real state rather than reported_state
 	if(LIMB_HAS_ANY_SURGERY_STATE(src, ALL_SURGERY_SKIN_STATES))
 		if(HAS_SURGERY_STATE(reported_state, SURGERY_VESSELS_UNCLAMPED))
 			sub_messages += "blood vessels are unclamped[cached_bleed_rate ? " and bleeding" : ""]"
-			single_message = "The blood vessels in [t_his] [plaintext_zone] are unclamped[cached_bleed_rate ? " and bleeding!" : "."]"
+			single_message = "The blood vessels in [lowercase_zone] are unclamped[cached_bleed_rate ? " and bleeding!" : "."]"
 		if(HAS_SURGERY_STATE(reported_state, SURGERY_VESSELS_CLAMPED))
 			sub_messages += "blood vessels are clamped shut"
-			single_message = "The blood vessels in [t_his] [plaintext_zone] are clamped shut."
+			single_message = "The blood vessels in [lowercase_zone] are clamped shut."
 		if(HAS_SURGERY_STATE(reported_state, SURGERY_ORGANS_CUT))
 			sub_messages += "the organs within have been incised"
-			single_message = "The organs in [t_his] [plaintext_zone] have been incised."
+			single_message = "The organs in [lowercase_zone] have been incised."
 		if(HAS_SURGERY_STATE(reported_state, SURGERY_BONE_SAWED))
 			sub_messages += "the bones within have been sawed apart"
-			single_message = "The bones in [t_his] [plaintext_zone] have been sawed apart."
+			single_message = "The bones in [lowercase_zone] have been sawed apart."
 		if(HAS_SURGERY_STATE(reported_state, SURGERY_BONE_DRILLED))
 			sub_messages += "the bones within have been drilled through"
-			single_message = "The bones in [t_his] [plaintext_zone] have been drilled through."
+			single_message = "The bones in [lowercase_zone] have been drilled through."
 
 	if(HAS_SURGERY_STATE(reported_state, SURGERY_PROSTHETIC_UNSECURED))
 		sub_messages += "prosthetic item is unsecured"
-		single_message = "[t_His] [plaintext_zone] is unsecured and loose!"
+		single_message = "[capital_zone] is unsecured and loose!"
 	if(HAS_SURGERY_STATE(reported_state, SURGERY_PLASTIC_APPLIED))
 		sub_messages += "got a layer of plastic applied to it"
-		single_message = "A layer of plastic has been applied to [t_his] [plaintext_zone]."
+		single_message = "A layer of plastic has been applied to [lowercase_zone]."
 	if(HAS_SURGERY_STATE(reported_state, SURGERY_CAVITY_WIDENED))
 		sub_messages += "the chest cavity is wide open"
-		single_message = "[t_His] chest cavity is wide open!"
+		single_message = "[owner?.p_Their() || "The"] chest cavity is wide open!"
 
 	if(length(sub_messages) >= 2)
-		return span_danger("[t_His] [plaintext_zone]'s [english_list(sub_messages)].")
+		return span_danger("[capital_zone]'s [english_list(sub_messages)].")
 	if(single_message)
 		return span_danger(single_message)
 	return ""
@@ -561,11 +564,32 @@
 /obj/item/bodypart/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	SHOULD_CALL_PARENT(TRUE)
 
-	..()
+	. = ..()
 	if(IS_ORGANIC_LIMB(src))
 		playsound(get_turf(src), 'sound/misc/splort.ogg', 50, TRUE, -1)
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3)
+
+/obj/item/bodypart/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode)
+		return NONE
+
+	var/operation_zone = user.zone_selected
+	if (deprecise_zone(operation_zone) != body_zone)
+		operation_zone = body_zone
+	var/surgery_ret = user.perform_surgery(src, tool, LAZYACCESS(modifiers, RIGHT_CLICK), operation_zone)
+	if(surgery_ret)
+		return surgery_ret
+
+/obj/item/bodypart/examine_more(mob/user)
+	. = ..()
+	var/list/operations = GLOB.operations.get_instances_from(GLOB.operations.unlocked)
+	var/operation_zone = user.zone_selected
+	if (deprecise_zone(operation_zone) != body_zone)
+		operation_zone = body_zone
+	for(var/datum/surgery_operation/operation as anything in operations)
+		if (!operation.requires_patient && operation.show_as_next_step(src, operation_zone))
+			. += span_notice("You could perform \a [operation] on [src] with \a [operation.get_recommended_tool()]...")
 
 //empties the bodypart from its organs and other things inside it
 /obj/item/bodypart/proc/drop_organs(mob/user, violent_removal)

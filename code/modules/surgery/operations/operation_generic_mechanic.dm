@@ -16,6 +16,7 @@
 	preop_sound = 'sound/items/tools/screwdriver.ogg'
 	success_sound = 'sound/items/tools/screwdriver2.ogg'
 	any_surgery_states_blocked = ALL_SURGERY_SKIN_STATES
+	requires_patient = FALSE
 
 /datum/surgery_operation/limb/mechanical_incision/get_any_tool()
 	return "Any sharp item"
@@ -31,9 +32,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to unscrew the shell of [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to unscrew the shell of [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to unscrew the shell of [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to unscrew the shell of [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("[surgeon] begins to unscrew the shell of [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] begins to unscrew the shell of [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 	display_pain(limb.owner, "You feel your [limb.plaintext_zone] grow numb as the shell is unscrewed.", TRUE)
 
@@ -56,6 +57,7 @@
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
 	all_surgery_states_required = SURGERY_SKIN_CUT
+	requires_patient = FALSE
 
 /datum/surgery_operation/limb/mechanical_open/get_default_radial_image()
 	return image('icons/hud/screen_gen.dmi', "arrow_large_still")
@@ -64,9 +66,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to open the hatch holders in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to open the hatch holders in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to open the hatch holders in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to open the hatch holders in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("[surgeon] begins to open the hatch holders in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] begins to open the hatch holders in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 	display_pain(limb.owner, "The last faint pricks of tactile sensation fade from your [limb.plaintext_zone] as the hatch is opened.", TRUE)
 
@@ -93,6 +95,7 @@
 	preop_sound = 'sound/items/tools/screwdriver.ogg'
 	success_sound = 'sound/items/tools/screwdriver2.ogg'
 	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
+	requires_patient = FALSE
 
 /datum/surgery_operation/limb/mechanical_close/get_any_tool()
 	return "Any sharp item"
@@ -111,9 +114,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to screw the shell of [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to screw the shell of [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to screw the shell of [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to screw the shell of [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("[surgeon] begins to screw the shell of [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] begins to screw the shell of [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 	display_pain(limb.owner, "You feel the faint pricks of sensation return as your [limb.plaintext_zone]'s shell is screwed in.", TRUE)
 
@@ -137,6 +140,7 @@
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_ORGANS_CUT
+	requires_patient = FALSE
 
 /datum/surgery_operation/limb/prepare_electronics/get_default_radial_image()
 	return image(/obj/item/multitool)
@@ -145,9 +149,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to prepare electronics in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to prepare electronics in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to prepare electronics in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to prepare electronics in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("[surgeon] begins to prepare electronics in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] begins to prepare electronics in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 	display_pain(limb.owner, "You can feel a faint buzz in your [limb.plaintext_zone] as the electronics reboot.", TRUE)
 
@@ -170,6 +174,7 @@
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED
+	requires_patient = FALSE
 
 /datum/surgery_operation/limb/mechanic_unwrench/get_default_radial_image()
 	return image(/obj/item/wrench)
@@ -178,9 +183,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to unwrench some bolts in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to unwrench some bolts in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to unwrench some bolts in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to unwrench some bolts in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("[surgeon] begins to unwrench some bolts in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] begins to unwrench some bolts in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 	display_pain(limb.owner, "You feel a jostle in your [limb.plaintext_zone] as the bolts begin to loosen.", TRUE)
 
@@ -202,6 +207,7 @@
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
+	requires_patient = FALSE
 
 /datum/surgery_operation/limb/mechanic_wrench/state_check(obj/item/bodypart/limb)
 	return LIMB_HAS_BONES(limb)
@@ -216,9 +222,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to wrench some bolts in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to wrench some bolts in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to wrench some bolts in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to wrench some bolts in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("[surgeon] begins to wrench some bolts in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] begins to wrench some bolts in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 	display_pain(limb.owner, "You feel a jostle in your [limb.plaintext_zone] as the bolts begin to tighten.", TRUE)
 

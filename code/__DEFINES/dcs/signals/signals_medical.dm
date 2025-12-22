@@ -19,7 +19,7 @@
 /// From /obj/item/shockpaddles/proc/do_disarm(), sent to the shock-ee in non-revival scenarios: (obj/item/shockpaddles/source)
 #define COMSIG_HEARTATTACK_DEFIB "heartattack_defib"
 
-/// Sent from /mob/living/perform_surgery: (mob/living/patient, list/possible_operations)
+/// Sent from /mob/living/perform_surgery: (atom/movable/operating_on, list/possible_operations)
 #define COMSIG_LIVING_OPERATING_ON "living_operating_on"
-/// Sent from /mob/living/perform_surgery: (mob/living/patient, list/possible_operations)
-#define COMSIG_LIVING_BEING_OPERATED_ON "living_being_operated_on"
+/// Sent from /mob/living/perform_surgery: (mob/living/surgeon, list/possible_operations)
+#define COMSIG_ATOM_BEING_OPERATED_ON "atom_being_operated_on"

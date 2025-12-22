@@ -16,6 +16,7 @@
 	required_organ_flag = ORGAN_TYPE_FLAGS & ~ORGAN_ROBOTIC
 	target_type = /obj/item/organ/brain
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED
+	requires_patient = FALSE
 
 /datum/surgery_operation/organ/pacify/get_default_radial_image()
 	return image(/atom/movable/screen/alert/status_effect/high::overlay_icon, /atom/movable/screen/alert/status_effect/high::overlay_state)
@@ -24,9 +25,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to pacify [organ.owner]..."),
-		span_notice("[surgeon] begins to fix [organ.owner]'s brain."),
-		span_notice("[surgeon] begins to perform surgery on [organ.owner]'s brain."),
+		span_notice("You begin to pacify [organ.owner || organ.loc]..."),
+		span_notice("[surgeon] begins to fix [organ.owner || organ.loc]'s brain."),
+		span_notice("[surgeon] begins to perform surgery on [organ.owner || organ.loc]'s brain."),
 	)
 	display_pain(organ.owner, "Your head pounds with unimaginable pain!")
 
@@ -34,9 +35,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You succeed in pacifying [organ.owner]."),
-		span_notice("[surgeon] successfully fixes [organ.owner]!"),
-		span_notice("[surgeon] completes the surgery on [organ.owner]'s brain."),
+		span_notice("You succeed in pacifying [organ.owner || organ.loc]."),
+		span_notice("[surgeon] successfully fixes [organ.owner || organ.loc]!"),
+		span_notice("[surgeon] completes the surgery on [organ.owner || organ.loc]'s brain."),
 	)
 	display_pain(organ.owner, "Your head pounds... the concept of violence flashes in your head, and nearly makes you hurl!")
 	organ.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_LOBOTOMY)
@@ -45,9 +46,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You screw up, rewiring [organ.owner]'s brain the wrong way around..."),
+		span_notice("You screw up, rewiring [organ.owner || organ.loc]'s brain the wrong way around..."),
 		span_warning("[surgeon] screws up, causing brain damage!"),
-		span_notice("[surgeon] completes the surgery on [organ.owner]'s brain."),
+		span_notice("[surgeon] completes the surgery on [organ.owner || organ.loc]'s brain."),
 	)
 	display_pain(organ.owner, "Your head pounds, and it feels like it's getting worse!")
 	organ.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)

@@ -49,7 +49,10 @@
 
 	return option
 
-/datum/surgery_operation/prosthetic_replacement/get_operation_target(mob/living/patient, body_zone)
+/datum/surgery_operation/prosthetic_replacement/get_operation_target(atom/movable/operating_on, body_zone)
+	if (!isliving(operating_on))
+		return null
+	var/mob/living/patient = operating_on
 	// We always operate on the chest even if we're targeting left leg or w/e
 	return patient.get_bodypart(BODY_ZONE_CHEST)
 

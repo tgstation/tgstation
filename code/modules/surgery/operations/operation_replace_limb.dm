@@ -11,6 +11,8 @@
 	/// Radial slice datums for every augment type
 	VAR_PRIVATE/list/cached_augment_options
 
+#warn This should not allow to insert organs into chest/head
+
 /datum/surgery_operation/limb/replace_limb/get_recommended_tool()
 	return "cybernetic limb"
 

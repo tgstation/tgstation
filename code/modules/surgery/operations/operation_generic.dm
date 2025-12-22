@@ -21,6 +21,7 @@
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD
 	any_surgery_states_blocked = ALL_SURGERY_SKIN_STATES
+	requires_patient = FALSE
 	/// We can't cut mobs with this biostate
 	var/biostate_blacklist = BIO_CHITIN
 
@@ -46,9 +47,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to make an incision in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to make an incision in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to make an incision in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to make an incision in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("[surgeon] begins to make an incision in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] begins to make an incision in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 	display_pain(limb.owner, "You feel a stabbing in your [limb.plaintext_zone].")
 
@@ -58,13 +59,13 @@
 	if(!limb.can_bleed())
 		return
 
-	var/blood_name = limb.owner.get_bloodtype()?.get_blood_name() || "Blood"
+	var/blood_name = limb.owner?.get_bloodtype()?.get_blood_name() || "Blood"
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("[blood_name] pools around the incision in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[blood_name] pools around the incision in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[blood_name] pools around the incision in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("[blood_name] pools around the incision in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[blood_name] pools around the incision in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[blood_name] pools around the incision in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 
 /// Subtype for thick skinned creatures (Xenomorphs)
@@ -107,6 +108,7 @@
 	preop_sound = 'sound/items/handling/surgery/retractor1.ogg'
 	success_sound = 'sound/items/handling/surgery/retractor2.ogg'
 	all_surgery_states_required = SURGERY_SKIN_CUT
+	requires_patient = FALSE
 
 /datum/surgery_operation/limb/retract_skin/get_default_radial_image()
 	return image(/obj/item/retractor)
@@ -115,9 +117,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to retract the skin in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to retract the skin in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to retract the skin in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to retract the skin in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("[surgeon] begins to retract the skin in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] begins to retract the skin in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 	display_pain(limb.owner, "You feel a severe stinging pain spreading across your [limb.plaintext_zone] as the skin is pulled back.")
 
@@ -154,6 +156,7 @@
 		/obj/item = 'sound/items/handling/surgery/cautery2.ogg',
 	)
 	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
+	requires_patient = FALSE
 
 /datum/surgery_operation/limb/close_skin/get_any_tool()
 	return "Any heat source"
@@ -181,9 +184,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to mend the incision in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to mend the incision in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to mend the incision in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to mend the incision in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("[surgeon] begins to mend the incision in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] begins to mend the incision in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 	display_pain(limb.owner, "Your [limb.plaintext_zone] is being [istype(tool, /obj/item/stack/medical/suture) ? "pinched" : "burned"]!")
 
@@ -214,6 +217,7 @@
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_UNCLAMPED
+	requires_patient = FALSE
 
 /datum/surgery_operation/limb/clamp_bleeders/get_default_radial_image()
 	return image(/obj/item/hemostat)
@@ -222,9 +226,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to clamp bleeders in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to clamp bleeders in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to clamp bleeders in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to clamp bleeders in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("[surgeon] begins to clamp bleeders in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] begins to clamp bleeders in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 	display_pain(limb.owner, "You feel a pinch as the bleeding in your [limb.plaintext_zone] is slowed.")
 
@@ -256,6 +260,7 @@
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
+	requires_patient = FALSE
 
 /datum/surgery_operation/limb/unclamp_bleeders/get_default_radial_image()
 	return image(/obj/item/hemostat)
@@ -270,9 +275,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to unclamp bleeders in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to unclamp bleeders in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to unclamp bleeders in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to unclamp bleeders in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("[surgeon] begins to unclamp bleeders in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] begins to unclamp bleeders in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 	display_pain(limb.owner, "You feel a pressure release as blood starts flowing in your [limb.plaintext_zone] again.")
 
@@ -313,6 +318,7 @@
 	operation_flags = OPERATION_AFFECTS_MOOD
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED
+	requires_patient = FALSE
 
 /datum/surgery_operation/limb/saw_bones/get_any_tool()
 	return "Any sharp edged item with decent force"
@@ -328,9 +334,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to saw through the bone in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to saw through the bone in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to saw through the bone in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to saw through the bone in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("[surgeon] begins to saw through the bone in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] begins to saw through the bone in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 	display_pain(limb.owner, "You feel a horrid ache spread through the inside of your [limb.plaintext_zone]!")
 
@@ -341,9 +347,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You saw [limb.owner]'s [limb.plaintext_zone] open."),
-		span_notice("[surgeon] saws [limb.owner]'s [limb.plaintext_zone] open!"),
-		span_notice("[surgeon] saws [limb.owner]'s [limb.plaintext_zone] open!"),
+		span_notice("You saw [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb] open."),
+		span_notice("[surgeon] saws [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb] open!"),
+		span_notice("[surgeon] saws [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb] open!"),
 	)
 	display_pain(limb.owner, "It feels like something just broke in your [limb.plaintext_zone]!")
 
@@ -368,6 +374,7 @@
 	time = 4 SECONDS
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_required = SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED
+	requires_patient = FALSE
 
 /datum/surgery_operation/limb/fix_bones/get_default_radial_image()
 	return image(/obj/item/stack/medical/bone_gel)
@@ -382,9 +389,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to fix the bones in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to fix the bones in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to fix the bones in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to fix the bones in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("[surgeon] begins to fix the bones in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] begins to fix the bones in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 	display_pain(limb.owner, "You feel a grinding sensation in your [limb.plaintext_zone] as the bones are set back in place.")
 
@@ -411,6 +418,7 @@
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED
+	requires_patient = FALSE
 
 /datum/surgery_operation/limb/drill_bones/get_any_tool()
 	return "Any sharp pointed item with decent force"
@@ -426,9 +434,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to drill into the bone in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to drill into the bone in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to drill into the bone in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to drill into the bone in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("[surgeon] begins to drill into the bone in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] begins to drill into the bone in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 	display_pain(limb.owner, "You feel a horrible piercing pain in your [limb.plaintext_zone]!")
 
@@ -438,9 +446,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You drill into [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] drills into [limb.owner]'s [limb.plaintext_zone]!"),
-		span_notice("[surgeon] drills into [limb.owner]'s [limb.plaintext_zone]!"),
+		span_notice("You drill into [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] drills into [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]!"),
+		span_notice("[surgeon] drills into [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]!"),
 	)
 
 /datum/surgery_operation/limb/incise_organs
@@ -462,6 +470,7 @@
 	success_sound = 'sound/items/handling/surgery/organ1.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_ORGANS_CUT
+	requires_patient = FALSE
 
 /datum/surgery_operation/limb/incise_organs/get_any_tool()
 	return "Any sharp edged item"
@@ -477,9 +486,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to make an incision in the organs within [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to make an incision in the organs within [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to make an incision in the organs within [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to make an incision in the organs within [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("[surgeon] begins to make an incision in the organs within [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] begins to make an incision in the organs within [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 	display_pain(limb.owner, "You feel a stabbing in your [limb.plaintext_zone].")
 
@@ -490,9 +499,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You make an incision in the organs within [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] makes an incision in the organs within [limb.owner]'s [limb.plaintext_zone]!"),
-		span_notice("[surgeon] makes an incision in the organs within [limb.owner]'s [limb.plaintext_zone]!"),
+		span_notice("You make an incision in the organs within [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] makes an incision in the organs within [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]!"),
+		span_notice("[surgeon] makes an incision in the organs within [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]!"),
 	)
 	display_pain(limb.owner, "You feel a sharp pain from inside your [limb.plaintext_zone]!")
 

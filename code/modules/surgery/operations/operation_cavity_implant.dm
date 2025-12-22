@@ -10,6 +10,7 @@
 	success_sound = 'sound/items/handling/surgery/retractor2.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
 	any_surgery_states_blocked = SURGERY_CAVITY_WIDENED
+	requires_patient = FALSE
 
 /datum/surgery_operation/limb/prepare_cavity/get_default_radial_image()
 	return image(/obj/item/retractor)
@@ -24,9 +25,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to open [limb.owner]'s [limb.plaintext_zone] cavity wide..."),
-		span_notice("[surgeon] begins to open [limb.owner]'s [limb.plaintext_zone] cavity wide."),
-		span_notice("[surgeon] begins to open [limb.owner]'s [limb.plaintext_zone] cavity wide."),
+		span_notice("You begin to open [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb] cavity wide..."),
+		span_notice("[surgeon] begins to open [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb] cavity wide."),
+		span_notice("[surgeon] begins to open [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb] cavity wide."),
 	)
 	display_pain(limb.owner, "You can feel pressure as your [limb.plaintext_zone] is being opened wide!")
 
@@ -91,14 +92,14 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to insert [tool] into [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to insert [tool] into [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to insert [tool.w_class > WEIGHT_CLASS_SMALL ? tool : "something"] into [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to insert [tool] into [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("[surgeon] begins to insert [tool] into [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] begins to insert [tool.w_class > WEIGHT_CLASS_SMALL ? tool : "something"] into [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 	display_pain(limb.owner, "You can feel something being inserted into your [limb.plaintext_zone], it hurts like hell!")
 
 /datum/surgery_operation/limb/cavity_implant/on_success(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
-	if (!surgeon.transferItemToLoc(tool, limb.owner, force = TRUE)) // shouldn't fail but just in case
+	if (limb.owner && !surgeon.transferItemToLoc(tool, limb.owner, force = TRUE)) // shouldn't fail but just in case
 		display_results(
 			surgeon,
 			limb.owner,
@@ -113,9 +114,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You stuff [tool] into [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] stuffs [tool] into [limb.owner]'s [limb.plaintext_zone]!"),
-		span_notice("[surgeon] stuffs [tool.w_class > WEIGHT_CLASS_SMALL ? tool : "something"] into [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You stuff [tool] into [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] stuffs [tool] into [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]!"),
+		span_notice("[surgeon] stuffs [tool.w_class > WEIGHT_CLASS_SMALL ? tool : "something"] into [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 
 
@@ -133,6 +134,7 @@
 	preop_sound = 'sound/items/handling/surgery/organ1.ogg'
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_CAVITY_WIDENED
+	requires_patient = FALSE
 
 /datum/surgery_operation/limb/undo_cavity_implant/all_required_strings()
 	return list("operate on chest (target chest)") + ..()
@@ -163,9 +165,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to extract [limb.cavity_item] from [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to extract [limb.cavity_item] from [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to extract something from [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to extract [limb.cavity_item] from [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("[surgeon] begins to extract [limb.cavity_item] from [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] begins to extract something from [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 	)
 	display_pain(limb.owner, "You feel a serious pain in your [limb.plaintext_zone]!")
 
@@ -174,9 +176,9 @@
 		display_results(
 			surgeon,
 			limb.owner,
-			span_warning("You find nothing to remove from [limb.owner]'s [limb.plaintext_zone]."),
-			span_warning("[surgeon] finds nothing to remove from [limb.owner]'s [limb.plaintext_zone]."),
-			span_warning("[surgeon] finds nothing to remove from [limb.owner]'s [limb.plaintext_zone]."),
+			span_warning("You find nothing to remove from [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+			span_warning("[surgeon] finds nothing to remove from [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+			span_warning("[surgeon] finds nothing to remove from [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
 		)
 		return
 
@@ -186,9 +188,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You pull [implant] out of [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] pulls [implant] out of [limb.owner]'s [limb.plaintext_zone]!"),
-		span_notice("[surgeon] pulls something out of [limb.owner]'s [limb.plaintext_zone]!"),
+		span_notice("You pull [implant] out of [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("[surgeon] pulls [implant] out of [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]!"),
+		span_notice("[surgeon] pulls something out of [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]!"),
 	)
 	display_pain(limb.owner, "You can feel [implant.name] being pulled out of you!")
 	surgeon.put_in_hands(implant)
