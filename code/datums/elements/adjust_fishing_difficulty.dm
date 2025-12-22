@@ -17,14 +17,14 @@
 		if(!movable_target.can_buckle)
 			return COMPONENT_INCOMPATIBLE
 
-		RegisterSignal(target, COMSIG_MOVABLE_BUCKLE, PROC_REF(on_buckle))
-		RegisterSignal(target, COMSIG_MOVABLE_UNBUCKLE, PROC_REF(on_unbuckle))
-		RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_buckle_examine))
+		RegisterSignal(target, COMSIG_MOVABLE_BUCKLE, PROC_REF(on_buckle), override = TRUE)
+		RegisterSignal(target, COMSIG_MOVABLE_UNBUCKLE, PROC_REF(on_unbuckle), override = TRUE)
+		RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_buckle_examine), override = TRUE)
 
 	else
-		RegisterSignal(target, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
-		RegisterSignal(target, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
-		RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_item_examine))
+		RegisterSignal(target, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped), override = TRUE)
+		RegisterSignal(target, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped), override = TRUE)
+		RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_item_examine), override = TRUE)
 
 	src.modifier = modifier
 	src.slots = slots
