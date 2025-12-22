@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(trait_blockers_to_hud, list(
 	var/list/mob/hud_users_all_z_levels = list()
 
 	///these will be the indexes for the atom's hud_list
-	var/list/hud_icons = list()
+	var/list/hud_icons
 
 	///mobs associated with the next time this hud can be added to them
 	var/list/next_time_allowed = list()
@@ -77,6 +77,8 @@ GLOBAL_LIST_INIT(trait_blockers_to_hud, list(
 	for(var/z_level in 1 to world.maxz)
 		hud_atoms += list(list())
 		hud_users += list(list())
+	if(LAZYLEN(hud_icons))
+		hud_icons = string_list(hud_icons)
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_Z, PROC_REF(add_z_level_huds))
 

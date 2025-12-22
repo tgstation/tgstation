@@ -15250,6 +15250,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/structure/sign/warning/vacuum/external/directional/east,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
 "dMM" = (
@@ -53264,10 +53265,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
-"njz" = (
-/obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall,
-/area/station/maintenance/starboard/aft)
 "njA" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -68294,16 +68291,13 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "qUi" = (
-/obj/structure/disposalpipe/sorting/mail{
-	name = "Engineering Junction"
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/mail_sorting/engineering/general,
+/obj/structure/disposalpipe/junction,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "qUu" = (
@@ -71171,10 +71165,7 @@
 /area/station/service/kitchen/abandoned)
 "rIl" = (
 /obj/machinery/mass_driver/chapelgun,
-/obj/structure/sign/warning/vacuum/external{
-	pixel_y = 32;
-	dir = 1
-	},
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -77011,12 +77002,15 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table,
 /obj/machinery/light/directional/west,
-/obj/item/stack/conveyor/thirty,
-/obj/item/boulder_beacon{
-	pixel_x = -5
+/obj/item/food/ready_donk/donkrange_chicken,
+/obj/item/food/ready_donk/donkhiladas{
+	pixel_y = 5
 	},
-/obj/item/conveyor_switch_construct{
-	pixel_x = 10
+/obj/item/food/ready_donk/country_chicken{
+	pixel_y = 10
+	},
+/obj/structure/closet/mini_fridge{
+	name = "mini-fridge"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
@@ -96082,11 +96076,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/disposalpipe/junction{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
+	},
+/obj/effect/mapping_helpers/mail_sorting/engineering/general,
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 8;
+	name = "Engineering Junction"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
@@ -150732,7 +150728,7 @@ qOK
 nXH
 nXH
 nXH
-njz
+nXH
 mOH
 nXH
 nXH
