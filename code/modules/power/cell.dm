@@ -101,6 +101,10 @@
 	name = "laser pistol power cell"
 	chargerate = STANDARD_CELL_RATE * 0.15
 
+/obj/item/stock_parts/power_store/cell/meteor_gun
+	name = "meteor gun power cell"
+	maxcharge = STANDARD_CELL_CHARGE * 1.5
+
 /obj/item/stock_parts/power_store/cell/ninja
 	name = "black power cell"
 	icon_state = "bscell"

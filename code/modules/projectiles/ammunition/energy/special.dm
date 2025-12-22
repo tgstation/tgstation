@@ -50,6 +50,7 @@
 	projectile_type = /obj/projectile/meteor
 	select_name = "goddamn meteor"
 	newtonian_force = 3
+	e_cost = LASER_SHOTS(2, STANDARD_CELL_CHARGE)
 
 /obj/item/ammo_casing/energy/scatter
 	projectile_type = /obj/projectile/beam/disabler/scatter

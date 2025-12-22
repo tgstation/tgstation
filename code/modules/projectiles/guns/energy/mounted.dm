@@ -50,7 +50,7 @@
 	user.balloon_alert(user, "copying schematics...")
 	if(!do_after(user, 3 SECONDS, tool))
 		return
-	ammo_type = list(copied_projectile)
+	ammo_type = list(new copied_projectile.type)
 	fire_sound = energy_gun.fire_sound
 	burst_size = energy_gun.burst_size
 	burst_delay = energy_gun.burst_delay
