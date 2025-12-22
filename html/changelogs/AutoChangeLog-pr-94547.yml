@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Tgui text input modals now properly display the length of text inputs that contain unicode characters such as emojis."
