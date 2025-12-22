@@ -34,3 +34,11 @@
 /mob/living/simple_animal/PersistentInitialize()
 	. = ..()
 	updatehealth()
+
+/mob/living/silicon/robot/substitute_with_typepath(map_string)
+	TGM_MAP_BLOCK(map_string, /obj/item/robot_suit/prebuilt, null)
+	return /obj/item/robot_suit/prebuilt
+
+/mob/living/silicon/ai/substitute_with_typepath(map_string)
+	TGM_MAP_BLOCK(map_string, /obj/structure/ai_core/latejoin_inactive, null)
+	return /obj/structure/ai_core/latejoin_inactive
