@@ -80,6 +80,21 @@
 	)
 	generate_items_inside(items_inside,src)
 
+/obj/item/storage/box/stockparts/advanced
+	name = "box of advanced stock parts"
+	desc = "Contains a variety of advanced stock parts (Tier 2)."
+	illustration = "NT"
+
+/obj/item/storage/box/stockparts/advanced/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/stock_parts/capacitor/adv = 2,
+		/obj/item/stock_parts/servo/nano = 2,
+		/obj/item/stock_parts/matter_bin/adv = 2,
+		/obj/item/stock_parts/micro_laser/high = 2,
+		/obj/item/stock_parts/scanning_module/adv = 2,
+	)
+	generate_items_inside(items_inside, src)
+
 /obj/item/storage/box/stockparts/deluxe
 	name = "box of deluxe stock parts"
 	desc = "Contains a variety of deluxe stock parts."

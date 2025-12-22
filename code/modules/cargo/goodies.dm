@@ -434,3 +434,11 @@
 	desc = "If you in your carelessness lost the key to your golfcart you can purchase one. Unfortunately not covered by warranty."
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/key/golfcart)
+
+/datum/supply_pack/goody/tier_two_parts
+	name = "Advanced Machine Parts (Tier 2)"
+	desc = "Top of the line consumer stock parts, offered by Nanotrasen's in-house internal requision network."
+	cost = PAYCHECK_CREW * 8
+	contains = list(/obj/item/storage/box/stockparts/advanced)
+
+
