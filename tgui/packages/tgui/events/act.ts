@@ -7,7 +7,7 @@ import { createQueue } from './handlers/chunking';
  */
 export function sendAct(
   action: string,
-  payload?: Record<string, unknown>,
+  payload: Record<string, unknown> = {},
 ): void {
   // Validate that payload is an object
   const isObject =
