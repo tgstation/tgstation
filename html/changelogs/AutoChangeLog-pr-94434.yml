@@ -1,0 +1,4 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - balance: "cargo techs can now unlock underfloor nav beacons"
