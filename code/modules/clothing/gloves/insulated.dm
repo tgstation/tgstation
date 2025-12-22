@@ -26,7 +26,9 @@
 		RemoveElement(/datum/element/adjust_fishing_difficulty)
 
 /obj/item/clothing/gloves/color/yellow/remove_fantasy_bonuses(bonus)
-	AddElement(/datum/element/adjust_fishing_difficulty, 10)
+	if(bonus >= 10)
+		RemoveElement(/datum/element/adjust_fishing_difficulty)
+		AddElement(/datum/element/adjust_fishing_difficulty, 10)
 	return ..()
 
 /datum/armor/color_yellow

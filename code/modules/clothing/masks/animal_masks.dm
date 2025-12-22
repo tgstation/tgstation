@@ -158,10 +158,12 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 
 /obj/item/clothing/mask/animal/frog/make_cursed()
 	. = ..()
+	RemoveElement(/datum/element/adjust_fishing_difficulty, -4)
 	AddElement(/datum/element/adjust_fishing_difficulty, 4)
 
 /obj/item/clothing/mask/animal/frog/clear_curse()
 	. = ..()
+	RemoveElement(/datum/element/adjust_fishing_difficulty, 4)
 	AddElement(/datum/element/adjust_fishing_difficulty, -4)
 
 /obj/item/clothing/mask/animal/frog/cursed
@@ -248,10 +250,12 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 
 /obj/item/clothing/mask/animal/small/bear/make_cursed()
 	. = ..()
+	RemoveElement(/datum/element/adjust_fishing_difficulty, -4)
 	AddElement(/datum/element/adjust_fishing_difficulty, 4)
 
 /obj/item/clothing/mask/animal/small/bear/clear_curse()
 	. = ..()
+	RemoveElement(/datum/element/adjust_fishing_difficulty, 4)
 	AddElement(/datum/element/adjust_fishing_difficulty, -4)
 
 /obj/item/clothing/mask/animal/small/bear/cursed
@@ -308,10 +312,12 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 
 /obj/item/clothing/mask/animal/small/tribal/make_cursed()
 	. = ..()
+	RemoveElement(/datum/element/adjust_fishing_difficulty, -5)
 	AddElement(/datum/element/adjust_fishing_difficulty, 5)
 
 /obj/item/clothing/mask/animal/small/tribal/clear_curse()
 	. = ..()
+	RemoveElement(/datum/element/adjust_fishing_difficulty, 5)
 	AddElement(/datum/element/adjust_fishing_difficulty, -5)
 
 /obj/item/clothing/mask/animal/small/tribal/cursed //adminspawn only.
