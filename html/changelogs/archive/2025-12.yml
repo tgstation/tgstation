@@ -698,3 +698,62 @@
   lelandkemble:
   - bugfix: Meteor gun projectile meteors can now be smacked, whacked, walloped and
       cracked just as normal meteors can.
+2025-12-22:
+  Absolucy:
+  - bugfix: Tgui text input modals now properly display the length of text inputs
+      that contain unicode characters such as emojis.
+  Aliceee2ch:
+  - bugfix: Fixed spears breakability.
+  - spellcheck: Removed double "the" in smokey remains message.
+  ArchBTW:
+  - bugfix: Fix bodythrow hitting yourself
+  LT3:
+  - rscadd: Christmas season now includes Christmas themed goodies in the mail
+  Melbert:
+  - bugfix: Fix Asclepius screen alert when the holder has a lantern
+  - bugfix: You can't click the Asclepius screen alert
+  - balance: Chem factory Bottlers, Presses, and IV drips are now limited to holding
+      3 distinct chemicals at once, meaning they can make patches/pills/bottles/etc.
+      of at most 3 different types of chems. Manually created pills/patches/etc are
+      unaffected.
+  - balance: ' Chem factory Smoke Machines and Output Gates are now limited to holding
+      5 distinct chemicals at once, meaning they can accept at most 5 different types
+      of chems from a chem factory. Manually filling the smoke machine is unaffected.'
+  - rscadd: Adds "surgical processor implant", a cybernetic brain implant which grants
+      the user knowledge of whatever surgeries are installed in it.
+  Notamaniac:
+  - image: Shuttle and heat resistant (aka lavaproof) rods now have unique sprites.
+  SmArtKar:
+  - bugfix: Fixed runtimes from running mixing on an empty reagent grinder
+  SyncIt21:
+  - code_imp: improves code for placing posters and signs on walls
+  - bugfix: hand placed posters now interact with fire/acid on their mounted turf
+  - bugfix: wallframes in player hands gets consumed when mounted in shuttle areas
+  TealSeer:
+  - balance: cargo techs can now unlock underfloor nav beacons
+  Webcomicartist:
+  - rscadd: Added the ratvarian repeater, a craftable emplaced crank laser weapon
+      that can be carried by hand, themed after clock cult.
+  - rscadd: Added the improvised ballista, the rebar crossbow's bigger brother, that
+      fires spears. Huge damage, terrible fire rate.
+  - rscadd: Added the giant-slayer spear, a spear made at a necropolis tendril that
+      does extra damage to lavaland creatures. (Ballista compatible)
+  - image: added sprites for the above.
+  - qol: The pipe organ gun should be easier to light now.
+  - bugfix: Fixed Pipe Organ Gun firing sprites not always going back to normal after
+      finishing firing.
+  - refactor: Mounted guns are now EVEN MORE flexible codewise, now supporting secondary
+      ammo types.
+  lelandkemble:
+  - bugfix: Miners are no longer so dedicated they will pick up ores while dead
+  omgovich, itsmeow, Absolucy, JohnFulpWillard, jlsnow301, TealSeer, lessthnthree:
+  - rscadd: Color selection panels now use TGUI (If you have TGUI enabled in settings).
+  timothymtorres:
+  - rscadd: 'Add crafting recipes for: lamps, lanterns, strange closets, cabinets,
+      and metal boxes.'
+  - rscadd: Add autolathe recipe for flares. (plastic, plasma, and iron)
+  - rscadd: Add washer machine board to Sanitation techweb. The beaker volume affects
+      the total amount of items that can be washed and the servo tier affects how
+      long the washing takes.
+  vinylspiders:
+  - server: updates bun version to 1.3.5, and adds automated validation for tgs
