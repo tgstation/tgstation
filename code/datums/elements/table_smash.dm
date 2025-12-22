@@ -58,7 +58,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// We have a mob being pressed onto the table, but how strongly?
-/datum/element/table_smash/proc/perform_table_smash(obj/table, mob/living/user)
+/datum/element/table_smash/proc/perform_table_smash(obj/structure/table/table, mob/living/user)
 	var/mob/living/pushed_mob = user.pulling
 	if (user.combat_mode)
 		switch(user.grab_state)
@@ -83,7 +83,7 @@
 	user.stop_pulling()
 
 /// Called when someone clicks on our surface with an item
-/datum/element/table_smash/proc/on_item_interaction(obj/table, mob/living/user, obj/item/item, modifiers)
+/datum/element/table_smash/proc/on_item_interaction(obj/structure/table/table, mob/living/user, obj/item/item, modifiers)
 	SIGNAL_HANDLER
 	if (!istype(item, /obj/item/riding_offhand))
 		return NONE
@@ -97,7 +97,7 @@
 	return ITEM_INTERACT_BLOCKING
 
 /// Called when someone clicks on our surface using a fireman's carry
-/datum/element/table_smash/proc/riding_offhand_act(mob/living/user, obj/item/riding_offhand/riding_item, obj/table)
+/datum/element/table_smash/proc/riding_offhand_act(mob/living/user, obj/item/riding_offhand/riding_item, obj/structure/table/table)
 	var/mob/living/carried_mob = riding_item.rider
 	if (user.combat_mode)
 		user.unbuckle_mob(carried_mob)
@@ -126,7 +126,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /// Gently place the mob onto the table
-/datum/element/table_smash/proc/tableplace(mob/living/user, mob/living/pushed_mob, obj/table)
+/datum/element/table_smash/proc/tableplace(mob/living/user, mob/living/pushed_mob, obj/structure/table/table)
 	pushed_mob.forceMove(table.loc)
 	pushed_mob.set_resting(TRUE, TRUE)
 	pushed_mob.visible_message(span_notice("[user] places [pushed_mob] onto [table]."), \
@@ -134,7 +134,7 @@
 	log_combat(user, pushed_mob, "placed", null, "onto [table]")
 
 /// Aggressively smash the mob onto the table
-/datum/element/table_smash/proc/tablepush(mob/living/user, mob/living/pushed_mob, obj/table)
+/datum/element/table_smash/proc/tablepush(mob/living/user, mob/living/pushed_mob, obj/structure/table/table)
 	if (HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_danger("Throwing [pushed_mob] onto the table might hurt them!"))
 		return
@@ -162,7 +162,7 @@
 	table.after_smash(pushed_mob)
 
 /// Even more aggressively smash a single part of a mob onto the table
-/datum/element/table_smash/proc/tablelimbsmash(mob/living/user, mob/living/pushed_mob, obj/table)
+/datum/element/table_smash/proc/tablelimbsmash(mob/living/user, mob/living/pushed_mob, obj/structure/table/table)
 	pushed_mob.Knockdown(3 SECONDS)
 	var/obj/item/bodypart/banged_limb = pushed_mob.get_bodypart(user.zone_selected) || pushed_mob.get_bodypart(BODY_ZONE_HEAD)
 	var/extra_wound = 0
