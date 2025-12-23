@@ -13,6 +13,7 @@
 	sight = SEE_TURFS
 	speed = 1
 	ai_controller = /datum/ai_controller/basic_controller/rust_walker
+	mob_biotypes = MOB_ROBOTIC|MOB_MINERAL
 
 /mob/living/basic/heretic_summon/rust_walker/Initialize(mapload)
 	. = ..()

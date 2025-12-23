@@ -3,7 +3,7 @@
 	desc = "A real bonefied skeleton, doesn't seem like it wants to socialize."
 	gender = NEUTER
 	icon = 'icons/mob/simple/simple_human.dmi'
-	mob_biotypes = MOB_UNDEAD|MOB_HUMANOID
+	mob_biotypes = MOB_UNDEAD|MOB_HUMANOID|MOB_SKELETAL
 	speak_emote = list("rattles")
 	maxHealth = 40
 	health = 40
