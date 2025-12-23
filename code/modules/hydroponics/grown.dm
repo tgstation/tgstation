@@ -142,6 +142,8 @@
 
 /obj/item/food/grown/grind_atom(datum/reagents/target_holder, mob/user)
 	var/list/grind_reagents = grind_results()
+	for(var/datum/reagent/result as anything in grind_reagents)
+		grind_reagents[result] = round(seed.potency)
 
 	var/grind_results_num = length(grind_reagents)
 	if(grind_results_num)
