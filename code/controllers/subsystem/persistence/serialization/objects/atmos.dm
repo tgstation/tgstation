@@ -237,11 +237,15 @@
 	if((greyscale_colors != initial(greyscale_colors)) || (greyscale_config != initial(greyscale_config)))
 		set_greyscale(greyscale_colors, greyscale_config)
 
-	if(anchored)
-		var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
-		if(possible_port)
-			connect(possible_port)
-			update_appearance()
+	if(!anchored)
+		return
+
+	var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
+	if(!possible_port)
+		return
+
+	connect(possible_port)
+	update_appearance()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/get_save_vars(save_flags=ALL)
 	. = ..()
