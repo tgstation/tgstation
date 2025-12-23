@@ -89,7 +89,7 @@
 			APPLY_VAR_OR_RESET_INITIAL(item_apply_to, lefthand_file, new_lefthand_file, reset_missing)
 			APPLY_VAR_OR_RESET_INITIAL(item_apply_to, righthand_file, new_righthand_file, reset_missing)
 		APPLY_VAR_OR_RESET_INITIAL(item_apply_to, worn_icon_state, new_icon_state, reset_missing)
-		APPLY_VAR_OR_RESET_INITIAL(item_apply_to, inhand_icon_state, change_inhand_icon_state ? new_inhand_icon_state : new_icon_state, reset_missing)
+		APPLY_VAR_OR_RESET_INITIAL(item_apply_to, inhand_icon_state, change_inhand_icon_state ? new_inhand_icon_state || new_icon_state : new_icon_state, reset_missing)
 
 /**
  * Resets all changes this skin would have made to the given atom
