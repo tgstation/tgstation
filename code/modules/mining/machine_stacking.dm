@@ -123,6 +123,7 @@
 	if(!isnull(console))
 		console.machine = null
 		console = null
+	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(materials)
 	return ..()
 
