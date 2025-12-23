@@ -298,7 +298,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		if("fire")
 			var/obj/machinery/bsa/full/cannon = cannon_ref.resolve()
 			if(cannon.use_energy(cannon.power_used_per_shot, force = FALSE))
-				fire(usr)
+				fire(ui.user)
 			else
 				to_chat(ui.user, span_warning("Insufficient power!"))
 			. = TRUE
