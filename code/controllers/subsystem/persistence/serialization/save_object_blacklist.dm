@@ -11,7 +11,6 @@ GLOBAL_LIST_INIT(save_object_blacklist, typecacheof(list(
 	/obj/item/paper/fluff, // spammed by cargo mail
 	/obj/item/mail, // spammed by cargo mail
 	/obj/item/relic/lavaland, // lots of relic spam
-	/obj/item/storage/backpack/satchel/flat, // smuggler satchels spawn every round with a bunch of contraband, so later on we need to change place_satchels(satchel_amount) to be zero (but for now we need to delete all satchels off the map)
 	/mob/living/carbon, // carbon mobs are very complex to save so skip
 	/mob/dead, // no dead ghosts
 	/mob/eye, // no eyes from cameras/blob/AI vision
