@@ -82,6 +82,7 @@
 	if(change_base_icon_state)
 		APPLY_VAR_OR_RESET_INITIAL(apply_to, base_icon_state, new_icon_state, reset_missing)
 	if(isitem(apply_to))
+		var/obj/item/item_apply_to = apply_to
 		if(!item_apply_to.greyscale_config_worn)
 			APPLY_VAR_OR_RESET_INITIAL(item_apply_to, worn_icon, new_worn_icon, reset_missing)
 		if(!item_apply_to.greyscale_config_inhand_left)
