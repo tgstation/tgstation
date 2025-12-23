@@ -163,6 +163,7 @@
 	selected_material = GET_MATERIAL_REF(/datum/material/iron)
 
 /obj/machinery/mineral/processing_unit/Destroy()
+	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(materials)
 	mineral_machine = null
 	stored_research = null
