@@ -236,3 +236,48 @@
 	. = ..()
 	if((greyscale_colors != initial(greyscale_colors)) || (greyscale_config != initial(greyscale_config)))
 		set_greyscale(greyscale_colors, greyscale_config)
+
+/obj/machinery/atmospherics/components/binary/volume_pump/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, transfer_rate)
+	. += NAMEOF(src, overclocked)
+
+/obj/machinery/atmospherics/components/binary/pump/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, target_pressure)
+
+/obj/machinery/atmospherics/components/binary/temperature_pump/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, heat_transfer_rate)
+
+/obj/machinery/atmospherics/components/binary/temperature_gate/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, target_temperature)
+	. += NAMEOF(src, inverted)
+
+/obj/machinery/atmospherics/components/binary/pressure_valve/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, target_pressure)
+
+/obj/machinery/atmospherics/components/binary/passive_gate/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, target_pressure)
+
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, pump_direction)
+	. += NAMEOF(src, external_pressure_bound)
+	. += NAMEOF(src, input_pressure_min)
+	. += NAMEOF(src, output_pressure_max)
+	. += NAMEOF(src, pressure_checks)
+
+/obj/machinery/atmospherics/components/binary/circulator/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, active)
+	. += NAMEOF(src, flipped)
+	. += NAMEOF(src, mode)
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, volume_rate)
+
