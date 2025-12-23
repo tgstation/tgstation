@@ -37,7 +37,7 @@
 	var/list/wing_types = list(/obj/item/organ/wings/functional/angel)
 
 /obj/item/bodypart/chest/grind_results()
-	return list()
+	return null
 
 /obj/item/bodypart/chest/forced_removal(dismembered, special, move_to_floor)
 	var/mob/living/carbon/old_owner = owner

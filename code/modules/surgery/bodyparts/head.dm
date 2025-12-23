@@ -105,7 +105,7 @@
 	return ..()
 
 /obj/item/bodypart/head/grind_results()
-	return list()
+	return null
 
 /obj/item/bodypart/head/examine(mob/user)
 	. = ..()

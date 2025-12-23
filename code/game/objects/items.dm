@@ -1024,7 +1024,7 @@
 /obj/item/proc/grind_results()
 	RETURN_TYPE(/list/datum/reagent)
 
-	return list()
+	return null
 
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_grind()

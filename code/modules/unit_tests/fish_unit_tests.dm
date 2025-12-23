@@ -137,7 +137,7 @@
 	var/expected_num_fillets = 0
 
 /obj/item/fish/testdummy/fish_grind_results()
-	return list()
+	return null
 
 /obj/item/fish/testdummy/small
 	// The parent type is too big to reproduce inside the more compact fish tank

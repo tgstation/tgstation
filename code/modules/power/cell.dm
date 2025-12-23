@@ -249,7 +249,7 @@
 	custom_materials = null
 
 /obj/item/stock_parts/power_store/cell/crystal_cell/grind_results()
-	return list()
+	return null
 
 /obj/item/stock_parts/power_store/cell/ethereal
 	name = "ahelp it"
@@ -264,7 +264,7 @@
 	abstract_type = /obj/item/stock_parts/power_store/cell/ethereal
 
 /obj/item/stock_parts/power_store/cell/ethereal/grind_results()
-	return list()
+	return null
 
 /obj/item/stock_parts/power_store/cell/ethereal/examine(mob/user)
 	. = ..()
