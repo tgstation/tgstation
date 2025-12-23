@@ -92,6 +92,15 @@
 		TogglePower()
 	return .
 
+/obj/machinery/power/solar/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, material_type)
+	. += NAMEOF(src, power_tier)
+
+/obj/machinery/power/solar/PersistentInitialize()
+	. = ..()
+	update_appearance()
+
 /obj/machinery/power/solar_control/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, track)
