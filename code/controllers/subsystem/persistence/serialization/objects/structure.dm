@@ -18,3 +18,15 @@
 	. = ..()
 	if(opened)
 		update_appearance()
+
+/obj/structure/plaque/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, name)
+	. += NAMEOF(src, desc)
+	. += NAMEOF(src, engraved)
+
+/obj/item/plaque/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, name)
+	. += NAMEOF(src, desc)
+	. += NAMEOF(src, engraved)
