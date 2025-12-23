@@ -13,8 +13,8 @@
 	var/dirty = FALSE
 	/// Time from starting until meat appears
 	var/gibtime = 40
-	/// How much meat we meet when we meat the meat
-	var/meat_produced = 2
+	/// Multiplier for how much meat we meet when we meat the meat per meat of each of meat's meat limbs
+	var/efficiency = 0.25
 	/// If the gibber should give the 'Subject may not have abiotic items on' message
 	var/ignore_clothing = FALSE
 	/// The DNA info of the last gibbed mob
@@ -35,9 +35,9 @@
 /obj/machinery/gibber/RefreshParts()
 	. = ..()
 	gibtime = 40
-	meat_produced = initial(meat_produced)
+	efficiency = initial(efficiency)
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
-		meat_produced += matter_bin.tier
+		efficiency += matter_bin.tier * 0.25
 	for(var/datum/stock_part/servo/servo in component_parts)
 		gibtime -= 5 * servo.tier
 		if(servo.tier >= 2)
@@ -46,7 +46,7 @@
 /obj/machinery/gibber/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Outputting <b>[meat_produced]</b> meat slab(s) after <b>[gibtime*0.1]</b> seconds of processing.")
+		. += span_notice("The status display reads: Outputting <b>[efficiency]%</b> of meat after <b>[gibtime*0.1]</b> seconds of processing.")
 		for(var/datum/stock_part/servo/servo in component_parts)
 			if(servo.tier >= 2)
 				. += span_notice("[src] has been upgraded to process inorganic materials.")

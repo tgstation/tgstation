@@ -127,11 +127,11 @@
 
 /datum/component/butchering/proc/butcher_limb(obj/item/source, obj/item/bodypart/target, mob/living/user)
 	target.add_fingerprint(user)
-	if (LIMB_HAS_BONES(target) && !HAS_SURGERY_STATE(target.surgery_state, SURGERY_BONE_DRILLED | SURGERY_BONE_SAWED))
-		if (LIMB_HAS_SKIN(target) && !HAS_SURGERY_STATE(target.surgery_state, SURGERY_SKIN_CUT))
-			to_chat(user, span_warning("[target]'s skin is still intact!"))
-			return
+	if (LIMB_HAS_SKIN(target) && !HAS_ANY_SURGERY_STATE(target.surgery_state, SURGERY_SKIN_CUT | SURGERY_SKIN_OPEN))
+		to_chat(user, span_warning("[target]'s skin is still intact!"))
+		return
 
+	if (LIMB_HAS_BONES(target) && !HAS_ANY_SURGERY_STATE(target.surgery_state, SURGERY_BONE_DRILLED | SURGERY_BONE_SAWED))
 		// We need to gut the limb before turning it into meat, otherwise just cut around the bone I guess
 		if (length(target.contents))
 			to_chat(user, span_warning("[target]'s bones are still intact!"))
@@ -146,10 +146,6 @@
 	var/limb_descriptor = (target.owner ? "[target.owner]'s [target.plaintext_zone]" : target)
 	// Okay *hopefully* they're already dead at this point
 	if (target.body_zone == BODY_ZONE_CHEST && target.owner)
-		// Cannot butcher the chest until we hack off all the limbs
-		if (length(target.owner.bodyparts) > 1)
-			to_chat(user, span_warning("You need to butcher the other limbs first!"))
-			return
 		// Butchering the chest gibs the victim
 		limb_descriptor = target.owner
 
@@ -170,6 +166,13 @@
 	if (!length(target.butcher_drops))
 		to_chat(user, span_warning("There is nothing left inside [limb_descriptor]!"))
 		return
+
+	if (target.body_zone == BODY_ZONE_CHEST && target.owner)
+		// Cannot butcher the chest until we hack off all the other limbs
+		for (var/obj/item/bodypart/limb as anything in target.owner.bodyparts)
+			if (limb.butcher_drops && limb.butcher_replacement)
+				to_chat(user, span_warning("You need to butcher all other limbs first!"))
+				return
 
 	user.visible_message(span_warning("[user] begins to cut [limb_descriptor] apart!"), span_notice("You begin to cut [limb_descriptor] apart..."), ignored_mobs = target.owner)
 	if (target.owner)
@@ -229,8 +232,41 @@
 		var/meat_produced = 0
 		for (var/obj/item/food/target_meat in results)
 			meat_produced += 1
+
 		for (var/obj/item/food/target_meat in results)
 			target.reagents.trans_to(target_meat, target.reagents.total_volume / meat_produced, remove_blacklisted = TRUE)
+
+	if (target.owner)
+		var/reagents_in_produced = 0
+		for(var/obj/item/result as anything in results)
+			if(result.reagents)
+				reagents_in_produced += 1
+
+		var/list/diseases = target.owner.get_static_viruses
+
+		for(var/obj/item/result as anything in results)
+			target.owner.reagents.trans_to(result, occupant.reagents.total_volume / reagents_in_produced / length(target.owner.bodyparts), remove_blacklisted = TRUE)
+			result.reagents?.add_reagent(/datum/reagent/consumable/nutriment/fat, target.owner.nutrition / 15 / reagents_in_produced)
+
+			if(LAZYLEN(diseases))
+				var/list/datum/disease/diseases_to_add = list()
+				for(var/datum/disease/disease as anything in diseases)
+					// Admin or special viruses that should not be reproduced
+					if(disease.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
+						continue
+
+					diseases_to_add += disease
+
+				if(LAZYLEN(diseases_to_add))
+					result.AddComponent(/datum/component/infective, diseases_to_add)
+
+		for (var/obj/item/food/meat/meat in results)
+			meat.name = "[target.owner.real_name] [meat.name]"
+			meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, occupant) = 4 * SHEET_MATERIAL_AMOUNT))
+			meat.subjectname = target.owner.real_name
+			if(ishuman(target.owner))
+				var/mob/living/carbon/human/as_human = target.owner
+				meat.subjectjob = as_human.job
 
 	user.visible_message(span_warning("[user] butchers [limb_descriptor]!"), span_notice("You butcher [limb_descriptor]."), ignored_mobs = target.owner)
 	if (!target.owner)
@@ -257,18 +293,22 @@
 	if (!target.butcher_replacement)
 		target.dismember(source.damtype, wound_type)
 		target.drop_organs(violent_removal = TRUE) // Should not happen, but just in case
+		/*
 		if (target.body_zone == BODY_ZONE_CHEST)
 			victim.gib(DROP_ALL_REMAINS)
-		else
-			qdel(target)
+			return
+		*/
+		qdel(target)
 		return
 
 	var/obj/item/bodypart/replacement = create_replacement_limb(target, drop_loc)
 	target.dismember(source.damtype, wound_type)
 	target.drop_organs(violent_removal = TRUE)
+	/*
 	if (target.body_zone == BODY_ZONE_CHEST)
 		victim.gib(DROP_ALL_REMAINS)
 		return
+	*/
 
 	replacement.replace_limb(victim)
 	replacement.update_limb(is_creating = TRUE)

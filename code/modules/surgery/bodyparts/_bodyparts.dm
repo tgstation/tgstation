@@ -225,7 +225,7 @@
 	var/list/blood_dna_info
 	/// What items we drop whenever we're butchered
 	/// If unset, the bodyparot cannot be butchered
-	var/list/butcher_drops = null
+	var/list/butcher_drops = list(/obj/item/food/meat/slab/human = 1)
 	/// What skeleton limb, if any, we replace ourselves with when butchered?
 	var/obj/item/bodypart/butcher_replacement = null
 	/// What state is the bodypart in for determining surgery availability
@@ -606,12 +606,17 @@
 	for(var/obj/item/organ/bodypart_organ in contents)
 		if(bodypart_organ.organ_flags & ORGAN_UNREMOVABLE)
 			continue
+
+		if(violent_removal)
+			bodypart_organ.apply_organ_damage(bodypart_organ.maxHealth * 0.5)
+
 		if(owner)
 			bodypart_organ.Remove(bodypart_organ.owner)
-		else
-			if(bodypart_organ.bodypart_remove(src))
-				if(drop_loc) //can be null if being deleted
-					bodypart_organ.forceMove(get_turf(drop_loc))
+			continue
+
+		if(bodypart_organ.bodypart_remove(src))
+			if(drop_loc) //can be null if being deleted
+				bodypart_organ.forceMove(get_turf(drop_loc))
 
 	if(drop_loc) //can be null during deletion
 		for(var/atom/movable/movable as anything in src)

@@ -109,6 +109,7 @@
 		TOOL_SCREWDRIVER = 2.25,
 		TOOL_WIRECUTTER = 2.85,
 		/obj/item/stack/rods = 2.85,
+		/obj/item/kitchen/fork = 2.85,
 	)
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/retractor1.ogg'
