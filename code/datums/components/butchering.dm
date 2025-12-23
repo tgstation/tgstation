@@ -234,6 +234,8 @@
 
 	user.visible_message(span_warning("[user] butchers [limb_descriptor]!"), span_notice("You butcher [limb_descriptor]."), ignored_mobs = target.owner)
 	if (!target.owner)
+		target.drop_organs(violent_removal = TRUE) // Should not happen, but just in case
+		create_replacement_limb(target, drop_loc)
 		qdel(target)
 		return
 
@@ -250,11 +252,41 @@
 				wound_type = WOUND_BLUNT
 
 	to_chat(target.owner, span_userdanger("[user] hacks the meat off your [target.plaintext_zone]!"))
+	var/mob/living/carbon/victim = target.owner
+
+	if (!target.butcher_replacement)
+		target.dismember(source.damtype, wound_type)
+		target.drop_organs(violent_removal = TRUE) // Should not happen, but just in case
+		if (target.body_zone == BODY_ZONE_CHEST)
+			victim.gib(DROP_ALL_REMAINS)
+		else
+			qdel(target)
+		return
+
+	var/obj/item/bodypart/replacement = create_replacement_limb(target, drop_loc)
 	target.dismember(source.damtype, wound_type)
+	target.drop_organs(violent_removal = TRUE)
 	if (target.body_zone == BODY_ZONE_CHEST)
-		target.owner.gib(DROP_ALL_REMAINS)
-	else
-		qdel(target)
+		victim.gib(DROP_ALL_REMAINS)
+		return
+
+	replacement.replace_limb(victim)
+	replacement.update_limb(is_creating = TRUE)
+	qdel(target)
+
+/// Creates a replacement (usually skeleton) limb for the butchered one
+/datum/component/butchering/proc/create_replacement_limb(obj/item/bodypart/target, drop_loc)
+	var/drop_type = target.butcher_replacement
+	var/obj/item/bodypart/replacement = new drop_type(drop_loc)
+	replacement.set_initial_damage(target.brute_dam, target.burn_dam)
+	if (IS_ORGANIC_LIMB(replacement) && target.owner)
+		replacement.blood_dna_info = target.owner.get_blood_dna_list()
+
+	for (var/datum/wound/wound as anything in target.wounds)
+		wound.remove_wound()
+		wound.apply_wound(replacement, silent = TRUE)
+
+	return replacement
 
 /datum/component/butchering/proc/start_butcher(obj/item/source, mob/living/target, mob/living/user)
 	to_chat(user, span_notice("You begin to butcher [target]..."))

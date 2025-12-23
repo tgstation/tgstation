@@ -67,6 +67,9 @@
 #define BODYPART_OVERLAY_CSS_SUICIDE 3
 #define BODYPART_OVERLAY_VOIDWALKER_CURSE 4
 
+/// This limb cannot be disabled via damage thresholds
+#define LIMB_NO_DISABLE -1
+
 // Bodypart surgery state
 /// An incision has been made into the skin
 #define SURGERY_SKIN_CUT (1<<0)

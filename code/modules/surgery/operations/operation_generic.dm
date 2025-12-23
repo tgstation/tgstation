@@ -59,7 +59,13 @@
 	if(!limb.can_bleed())
 		return
 
-	var/blood_name = limb.owner?.get_bloodtype()?.get_blood_name() || "Blood"
+	var/blood_name = limb.owner?.get_bloodtype()?.get_blood_name()
+	if(!blood_name && length(limb.blood_dna_info))
+		var/datum/blood_type/blood_type = limb.blood_dna_info[limb.blood_dna_info[1]]
+		blood_name = blood_type?.get_blood_name()
+	if(!blood_name)
+		blood_name = "Blood"
+
 	display_results(
 		surgeon,
 		limb.owner,
