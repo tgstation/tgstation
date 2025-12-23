@@ -73,20 +73,18 @@
  */
 /datum/atom_skin/proc/apply(atom/apply_to, mob/user)
 	SHOULD_CALL_PARENT(TRUE)
-	// Never want to be resetting a GAGS icon back to initial.
-	var/is_greyscale = apply_to.greyscale_config || apply_to.greyscale_colors
 	if(!HAS_TRAIT(apply_to, TRAIT_WAS_RENAMED))
 		APPLY_VAR_OR_RESET_INITIAL(apply_to, name, new_name, reset_missing)
 		APPLY_VAR_OR_RESET_INITIAL(apply_to, desc, new_desc, reset_missing)
-	if(!is_greyscale) // We do not want to be changing icons for GAGS
+	if(!apply_to.greyscale_config) // Never want to be resetting a GAGS icon back to initial.
 		APPLY_VAR_OR_RESET_INITIAL(apply_to, icon, new_icon, reset_missing)
 	APPLY_VAR_OR_RESET_TO(apply_to, icon_state, new_icon_state, reset_missing, initial(apply_to.post_init_icon_state) || initial(apply_to.icon_state))
 	if(change_base_icon_state)
 		APPLY_VAR_OR_RESET_INITIAL(apply_to, base_icon_state, new_icon_state, reset_missing)
 	if(isitem(apply_to))
-		var/obj/item/item_apply_to = apply_to
-		if(!is_greyscale)
+		if(!item_apply_to.greyscale_config_worn)
 			APPLY_VAR_OR_RESET_INITIAL(item_apply_to, worn_icon, new_worn_icon, reset_missing)
+		if(!item_apply_to.greyscale_config_inhand_left)
 			APPLY_VAR_OR_RESET_INITIAL(item_apply_to, lefthand_file, new_lefthand_file, reset_missing)
 			APPLY_VAR_OR_RESET_INITIAL(item_apply_to, righthand_file, new_righthand_file, reset_missing)
 		APPLY_VAR_OR_RESET_INITIAL(item_apply_to, worn_icon_state, new_icon_state, reset_missing)
