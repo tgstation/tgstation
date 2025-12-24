@@ -26,8 +26,6 @@
 	var/new_icon_state
 	/// Specifies the icon state for the atom's appearance in hand. Should appear in both new_lefthand_file and new_righthand_file.
 	var/new_inhand_icon_state
-	/// Optional, specifies the icon state for the atom's appearance in teh back slot.
-	var/new_back_icon
 	/// Optional, specifies the left hand inhand icon file. Don't forget to set the right hand file as well.
 	var/new_lefthand_file
 	/// Optional, specifies the right hand inhand icon file. Don't forget to set the left hand file as well.
