@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Chameleon outfits now contribute to sleeping carp style factor. Most items are armored, so they're a bit less useful than other options."
+  - bugfix: "Carp masks actually contribute to sleeping carp style factor."
