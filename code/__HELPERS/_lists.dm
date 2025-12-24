@@ -982,7 +982,8 @@
 	for(var/key in key_list)
 		. |= LIST_VALUE_WRAP_LISTS(key_list[key])
 
-///compare two lists, returns TRUE if they are the same
+/// Compare two lists, returns TRUE if they are the same does not
+/// work with associative list values, use deep_compare_list() instead
 /proc/compare_list(list/l,list/d)
 	if(!islist(l) || !islist(d))
 		return FALSE

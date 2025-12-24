@@ -1,3 +1,5 @@
+#define IS_PERSISTENT_MAP_GRID_STATIC(persistent_save_z_levels) (CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_use_static_map_grid) && SSpersistence.map_configs_cache && persistent_save_z_levels[ZTRAIT_SPACE_RUINS] && persistent_save_z_levels[ZTRAIT_SPACE_EMPTY] && persistent_save_z_levels[ZTRAIT_ICE_RUINS])
+
 /datum/space_level/proc/set_linkage(new_linkage)
 	linkage = new_linkage
 	if(linkage == SELFLOOPING)
@@ -163,14 +165,17 @@
 	var/center = round(grid_diameter / 2)
 	if(transition_levels.len)
 		point = grid[CHORDS_TO_1D(center, center, grid_diameter)]
-	grid.Cut()
 
 	var/list/transition_pick = transition_levels.Copy()
 	var/list/possible_points = list()
 	var/list/used_points = list()
-
+	var/list/persistent_save_z_levels = CONFIG_GET(keyed_list/persistent_save_z_levels)
 	while(transition_pick.len)
 		var/datum/space_level/level = pick_n_take(transition_pick)
+
+		if(IS_PERSISTENT_MAP_GRID_STATIC(persistent_save_z_levels))
+			point = grid[CHORDS_TO_1D(level.xi, level.yi, grid_diameter)]
+
 		level.xi = point.x
 		level.yi = point.y
 		point.spl = level
@@ -180,6 +185,8 @@
 		level.set_neigbours(used_points)
 		point = pick(possible_points)
 		CHECK_TICK
+
+	grid.Cut()
 
 /// Connect the z-levels in a non-randomized grid
 /datum/controller/subsystem/mapping/proc/set_grid_linkages(list/transition_levels)
@@ -193,14 +200,22 @@
 			point = new /datum/space_transition_point(x, y, grid)
 			grid[CHORDS_TO_1D(x, y, grid_diameter)] = point
 
+	var/list/persistent_save_z_levels = CONFIG_GET(keyed_list/persistent_save_z_levels)
 	// Translate the grid we made to the z-levels
 	var/list/used_points = list()
 	for(var/i in 1 to transition_levels.len)
 		var/datum/space_level/level = transition_levels[i]
-		point = grid[i]
+
+		if(IS_PERSISTENT_MAP_GRID_STATIC(persistent_save_z_levels))
+			point = grid[CHORDS_TO_1D(level.xi, level.yi, grid_diameter)]
+		else
+			point = grid[i]
+
 		level.xi = point.x
 		level.yi = point.y
 		point.spl = level
 		used_points += point //this used_points list is kinda lame, you can remove it if you can find out what the slice function in byond is
 		level.set_neigbours(used_points)
+
 #undef CHORDS_TO_1D
+#undef IS_PERSISTENT_MAP_GRID_STATIC
