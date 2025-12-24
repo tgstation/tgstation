@@ -99,7 +99,7 @@ export default defineConfig({
     emitOnErrors: false,
   },
   output: {
-    path: 'public',
+    path: path.resolve(dirname, 'public'),
     filename: '[name].bundle.js',
     chunkFilename: '[name].bundle.js',
     chunkLoadTimeout: 15000,

@@ -24,6 +24,9 @@
 
 	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER)
 
+/datum/weather/sand_storm/get_playlist_ref()
+	return GLOB.sand_storm_sounds
+
 /datum/weather/sand_storm/telegraph()
 	GLOB.sand_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)

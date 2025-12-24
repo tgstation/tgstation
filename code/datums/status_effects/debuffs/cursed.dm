@@ -184,7 +184,7 @@
 /atom/movable/screen/alert/status_effect/cursed/update_desc()
 	. = ..()
 	var/datum/status_effect/slot_machine_curse/linked_effect = attached_effect
-	var/curses = linked_effect.curse_count
+	var/curses = linked_effect?.curse_count
 	switch(curses)
 		if(2)
 			desc = "Your greed is catching up to you..."

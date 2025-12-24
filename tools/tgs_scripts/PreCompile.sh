@@ -12,6 +12,36 @@ cd "$1"
 . dependencies.sh
 cd "$original_dir"
 
+NEED_BUN_INSTALL=0
+if [ -x "$HOME/.bun/bin/bun" ]; then
+	export PATH="$HOME/.bun/bin:$PATH"
+fi
+
+# If Bun is not present or older than BUN_VERSION, install using the official installer.
+if ! command -v bun >/dev/null 2>&1; then
+	NEED_BUN_INSTALL=1
+else
+	INSTALLED_BUN_VERSION=$(bun --version)
+	if [ "$(printf '%s\n' "$BUN_VERSION" "$INSTALLED_BUN_VERSION" | sort -V | head -n1)" != "$BUN_VERSION" ]; then
+		NEED_BUN_INSTALL=1
+	fi
+fi
+
+if [ "$NEED_BUN_INSTALL" = "1" ]; then
+	echo "Installing Bun $BUN_VERSION..."
+	curl -fsSL https://bun.sh/install | bash
+
+	if [ -x "$HOME/.bun/bin/bun" ]; then
+		export PATH="$HOME/.bun/bin:$PATH"
+	else
+		echo "ERROR: Bun installation failed; $HOME/.bun/bin/bun not found"
+		exit 1
+	fi
+fi
+
+INSTALLED_BUN_VERSION=$(bun --version)
+
+echo "Using bun $INSTALLED_BUN_VERSION (minimum required: $BUN_VERSION)"
 
 # update rust-g
 if [ ! -d "rust-g" ]; then

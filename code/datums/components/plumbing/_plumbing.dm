@@ -26,6 +26,9 @@
 	var/supply_color = COLOR_BLUE
 	///Extend the pipe to the edge for wall-mounted plumbed devices, like sinks and showers
 	var/extend_pipe_to_edge = FALSE
+	/// How many distinct reagents can we accept at once
+	/// Ex - if this was set to "3", our component would only request the first 3 reagents found, even if more are available
+	var/distinct_reagent_cap = INFINITY
 
 ///turn_connects is for wheter or not we spin with the object to change our pipes
 /datum/component/plumbing/Initialize(start=TRUE, ducting_layer, turn_connects=TRUE, datum/reagents/custom_receiver, extend_pipe_to_edge = FALSE)
@@ -55,10 +58,19 @@
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(create_overlays)) //called by lateinit on startup
 	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_parent_dir_change)) //called when placed on a shuttle and it moves, and other edge cases
 	RegisterSignal(parent, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, PROC_REF(change_ducting_layer))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/plumbing/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, COMSIG_OBJ_HIDE, \
-	COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_DIR_CHANGE, COMSIG_MOVABLE_CHANGE_DUCT_LAYER))
+	UnregisterSignal(parent, list(
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_QDELETING,
+		COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH,
+		COMSIG_OBJ_HIDE,
+		COMSIG_ATOM_UPDATE_OVERLAYS,
+		COMSIG_ATOM_DIR_CHANGE,
+		COMSIG_MOVABLE_CHANGE_DUCT_LAYER,
+		COMSIG_ATOM_EXAMINE,
+	))
 	REMOVE_TRAIT(parent, TRAIT_UNDERFLOOR, REF(src))
 
 /datum/component/plumbing/Destroy()
@@ -76,6 +88,12 @@
 			if(D & demand_connects)
 				send_request(D)
 
+/datum/component/plumbing/proc/on_examine(atom/movable/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(distinct_reagent_cap != INFINITY)
+		examine_list += span_notice("This plumbing component will only accept up to [distinct_reagent_cap] distinct reagents at once.")
+
 ///Can we be added to the ductnet?
 /datum/component/plumbing/proc/can_add(datum/ductnet/ductnet, dir)
 	if(!active)
@@ -89,22 +107,44 @@
 
 ///called from in process(). only calls process_request(), but can be overwritten for children with special behaviour
 /datum/component/plumbing/proc/send_request(dir)
-	process_request(dir = dir)
+	var/amount_to_give = MACHINE_REAGENT_TRANSFER
+	// infinite cap means we need to special handling, process_request will just grab as much as it wants.
+	if(distinct_reagent_cap == INFINITY)
+		process_request(amount_to_give, null, dir) // null for no specific reagent, we're not picky.
+		return
+
+	// we have a cap, so we need to figure out what reagents we want
+	var/list/all_allowed_reagents = get_all_network_reagents(ducts["[dir]"])
+	if(length(all_allowed_reagents) > distinct_reagent_cap)
+		all_allowed_reagents.Cut(distinct_reagent_cap + 1)
+	else if(!length(all_allowed_reagents))
+		return
+
+	// request an even amount of each allowed reagent
+	var/amount_per_reagent = round(amount_to_give / length(all_allowed_reagents), CHEMICAL_VOLUME_ROUNDING)
+	for(var/allowed_reagent in all_allowed_reagents)
+		process_request(amount_per_reagent, allowed_reagent, dir)
+
+/// Returns a list of all distinct reagent types available in the passed duct network.
+/// The passed net can be null, it is handled.
+/datum/component/plumbing/proc/get_all_network_reagents(datum/ductnet/net)
+	var/list/distinct_reagents = list()
+	for(var/datum/reagent/existing_regent as anything in reagents.reagent_list)
+		distinct_reagents |= existing_regent.type
+	for(var/datum/component/plumbing/supplier as anything in net?.suppliers)
+		for(var/datum/reagent/chemical as anything in supplier.reagents.reagent_list)
+			distinct_reagents |= chemical.type
+	return distinct_reagents
 
 ///check who can give us what we want, and how many each of them will give us
 /datum/component/plumbing/proc/process_request(amount = MACHINE_REAGENT_TRANSFER, reagent, dir, round_robin = TRUE)
-	//find the duct to take from
-	var/datum/ductnet/net
-	if(!ducts.Find(num2text(dir)))
-		return FALSE
-	net = ducts[num2text(dir)]
-
+	var/datum/ductnet/net = ducts["[dir]"]
 	//find all valid suppliers in the duct
 	var/list/valid_suppliers = list()
-	for(var/datum/component/plumbing/supplier as anything in net.suppliers)
+	for(var/datum/component/plumbing/supplier as anything in net?.suppliers)
 		if(supplier.can_give(amount, reagent, net))
 			valid_suppliers += supplier
-	var/suppliersLeft = valid_suppliers.len
+	var/suppliersLeft = length(valid_suppliers)
 	if(!suppliersLeft)
 		return FALSE
 
@@ -122,12 +162,10 @@
 	SHOULD_BE_PURE(TRUE)
 
 	if(amount <= 0)
-		return
+		return FALSE
 
 	if(reagent) //only asked for one type of reagent
-		for(var/datum/reagent/contained_reagent as anything in reagents.reagent_list)
-			if(contained_reagent.type == reagent)
-				return TRUE
+		return reagents.has_reagent(reagent)
 	else if(reagents.total_volume) //take whatever
 		return TRUE
 

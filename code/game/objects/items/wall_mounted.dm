@@ -49,9 +49,8 @@
 				hanging_object.pixel_x = pixel_shift
 			if(WEST)
 				hanging_object.pixel_x = -pixel_shift
-	if(!hanging_object.find_and_mount_on_atom())
-		to_chat(user, span_warning("[src] Could not find all to mount on!."))
-		return
+	if(!istype(get_area(user), /area/shuttle)) //due to turf changing issue we don't mount here for now
+		hanging_object.AddComponent(/datum/component/atom_mounted, support_structure)
 	after_attach(hanging_object)
 	qdel(src)
 

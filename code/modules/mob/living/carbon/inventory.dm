@@ -262,12 +262,12 @@
 
 /// Returns the helmet if an air tank compatible helmet is equipped.
 /mob/living/carbon/proc/can_breathe_helmet()
-	if (isclothing(head) && (head.clothing_flags & HEADINTERNALS))
+	if (astype(head, /obj/item/clothing)?.clothing_flags & HEADINTERNALS)
 		return head
 
 /// Returns the mask if an air tank compatible mask is equipped.
 /mob/living/carbon/proc/can_breathe_mask()
-	if (isclothing(wear_mask) && (wear_mask.clothing_flags & MASKINTERNALS))
+	if (astype(wear_mask, /obj/item/clothing)?.clothing_flags & MASKINTERNALS)
 		return wear_mask
 
 /// Returns the tube if a breathing tube is equipped.

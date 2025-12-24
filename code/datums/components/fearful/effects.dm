@@ -52,7 +52,7 @@
 /datum/terror_handler/heart_problems
 	handler_type = TERROR_HANDLER_EFFECT
 	default = TRUE
-	COOLDOWN_DECLARE(effect_cd)
+	COOLDOWN_DECLARE(message_cd)
 
 /datum/terror_handler/heart_problems/tick(seconds_per_tick, terror_buildup)
 	. = ..()
@@ -67,6 +67,9 @@
 
 	if (terror_buildup < TERROR_BUILDUP_HEART_ATTACK || !prob(15))
 		owner.adjust_oxy_loss(8)
+		if (!COOLDOWN_FINISHED(src, message_cd))
+			return
+		COOLDOWN_START(src, message_cd, TERROR_MESSAGE_CD)
 		if (terror_buildup < TERROR_BUILDUP_FEAR)
 			to_chat(owner, span_warning("Your heart skips a beat."))
 		else
@@ -166,5 +169,49 @@
 	active_attack = FALSE
 	deltimer(panic_end_timer)
 	panic_end_timer = null
+
+/datum/terror_handler/startle
+	handler_type = TERROR_HANDLER_EFFECT
+	COOLDOWN_DECLARE(startle_cd)
+
+/datum/terror_handler/startle/tick(seconds_per_tick, terror_buildup)
+	. = ..()
+	if (owner.stat >= UNCONSCIOUS || !COOLDOWN_FINISHED(src, startle_cd))
+		return
+
+	if (terror_buildup < TERROR_BUILDUP_FEAR || terror_buildup - component.last_tick_buildup < TERROR_STARTLE_MINIMUM_DIFFERENCE)
+		return
+
+	// The more scared we are, and the more fear we acquired at once last tick, the higher the probability of us being startled is
+	// Not SPT_PROB or FEAR_SCALING because this is only triggered during ticks when we actually acquire fear
+	if (!prob(15 * (terror_buildup - component.last_tick_buildup) / TERROR_STARTLE_MINIMUM_DIFFERENCE * terror_buildup / TERROR_BUILDUP_FEAR))
+		return
+
+	COOLDOWN_START(src, startle_cd, TERROR_STARTLE_COOLDOWN)
+	switch (rand(1, 3))
+		if (1)
+			to_chat(owner, span_warning("You are startled!"))
+			owner.emote("jump")
+			owner.Immobilize(0.1 SECONDS * (terror_buildup / TERROR_BUILDUP_FEAR))
+
+		if (2)
+			owner.emote("scream")
+			owner.say("AAAAH!!", forced = "phobia")
+			if (!prob(15 * (terror_buildup / TERROR_BUILDUP_FEAR)))
+				return
+			var/held_item = owner.get_active_held_item()
+			if (owner.dropItemToGround(held_item))
+				owner.visible_message(
+					span_danger("[owner.name] drops \the [held_item]!"),
+					span_warning("You drop \the [held_item]!"), null, COMBAT_MESSAGE_RANGE)
+
+		if (3)
+			to_chat(owner, span_warning("You lose your balance!"))
+			owner.adjust_staggered_up_to(2 SECONDS * (terror_buildup / TERROR_BUILDUP_FEAR), 20 SECONDS)
+			owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/spooked)
+			addtimer(CALLBACK(src, PROC_REF(speed_up)), 3 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME)
+
+/datum/terror_handler/startle/proc/speed_up()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/spooked)
 
 #undef FEAR_SCALING

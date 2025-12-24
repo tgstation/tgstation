@@ -1,6 +1,7 @@
-import { omit, pick } from 'es-toolkit';
-import { chatPagesRecordAtom } from '../chat/atom';
-import { importChatState } from '../chat/helpers';
+import { omit } from 'es-toolkit';
+import { chatPagesRecordAtom, mainPage } from '../chat/atom';
+import { startChatStateMigration } from '../chat/migration';
+import type { Page, StoredChatSettings } from '../chat/types';
 import { store } from '../events/store';
 import { storedSettingsAtom } from './atoms';
 import { startSettingsMigration } from './migration';
@@ -50,11 +51,42 @@ export function importChatSettings(settings: string | string[]): void {
     return;
   }
 
-  const chatPart = pick(ourImport, ['chatPages']);
   const settingsPart = omit(ourImport, ['chatPages']);
 
-  if (chatPart) {
-    importChatState(chatPart as any);
+  if ('chatPages' in ourImport && ourImport.chatPages) {
+    const chatPart = rebuildChatState(ourImport.chatPages);
+    if (chatPart) {
+      startChatStateMigration(chatPart);
+    }
   }
-  startSettingsMigration(settingsPart as any);
+
+  startSettingsMigration(settingsPart);
+}
+
+/** Reconstructs chat settings from just the record */
+function rebuildChatState(
+  pageRecord: Record<string, Page>,
+): StoredChatSettings | undefined {
+  const newPageIds: string[] = Object.keys(pageRecord);
+  if (newPageIds.length === 0) return;
+
+  // Correct any missing keys from the import
+  const merged: Record<string, Page> = { ...pageRecord };
+  for (const page of newPageIds) {
+    merged[page] = {
+      ...mainPage,
+      ...pageRecord[page],
+      unreadCount: 0,
+    };
+  }
+
+  const rebuiltState: StoredChatSettings = {
+    version: 1,
+    scrollTracking: true,
+    currentPageId: newPageIds[0],
+    pages: newPageIds,
+    pageById: merged,
+  };
+
+  return rebuiltState;
 }

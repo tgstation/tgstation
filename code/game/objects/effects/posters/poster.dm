@@ -73,6 +73,12 @@
 	if(!isclosedturf(wall_structure))
 		return NONE
 
+	var/turf/user_turf = get_turf(user)
+	var/dir = get_dir(user_turf, wall_structure)
+	if(!(dir in GLOB.cardinals))
+		balloon_alert(user, "stand in line with wall!")
+		return ITEM_INTERACT_BLOCKING
+
 	// Deny placing posters on currently-diagonal walls, although the wall may change in the future.
 	if (wall_structure.smoothing_flags & SMOOTH_DIAGONAL_CORNERS)
 		for(var/overlay in wall_structure.overlays)
@@ -93,11 +99,21 @@
 
 	balloon_alert(user, "hanging poster...")
 	var/obj/structure/sign/poster/placed_poster = poster_structure || new poster_type(src)
-	placed_poster.poster_item_type = type
-	placed_poster.forceMove(wall_structure)
+	placed_poster.forceMove(user_turf)
+	placed_poster.setDir(dir)
+	switch(dir)
+		if(NORTH)
+			placed_poster.pixel_y = 32
+		if(SOUTH)
+			placed_poster.pixel_y = -32
+		if(EAST)
+			placed_poster.pixel_x = 32
+		if(WEST)
+			placed_poster.pixel_x = -32
 	var/obj/item/shard/trap = locate() in contents
 	if(trap)
 		trap.forceMove(placed_poster)
+	placed_poster.poster_item_type = type
 	poster_structure = null
 	flick("poster_being_set", placed_poster)
 	playsound(src, 'sound/items/poster/poster_being_created.ogg', 100, TRUE)
@@ -108,8 +124,7 @@
 		placed_poster.roll_and_drop(user_drop_location, user)
 		return ITEM_INTERACT_FAILURE
 
-	placed_poster.setDir(get_dir(user_drop_location, wall_structure))
-	placed_poster.find_and_mount_on_atom()
+	placed_poster.AddComponent(/datum/component/atom_mounted, wall_structure)
 	placed_poster.on_placed_poster(user)
 	return ITEM_INTERACT_SUCCESS
 

@@ -255,3 +255,15 @@
 	)
 	time = 120 SECONDS
 	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/dragonator_spear_untreated
+	name = "Untreated Giant-Killer Spear"
+	result = /obj/item/spear/dragonator_untreated
+	reqs = list(
+		/obj/item/stack/sheet/plasteel = 15,
+		/obj/item/stack/sheet/mineral/titanium = 5,
+		/obj/item/knife = 7,
+	)
+	time = 5 SECONDS
+	category = CAT_WEAPON_MELEE
+

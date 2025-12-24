@@ -1354,7 +1354,7 @@
 	//They are moving! Wouldn't it be cool if we calculated their momentum and added it to the throw?
 	if(ismob(thrower))
 		var/mob/thrower_mob = thrower
-		if(thrower_mob.last_move && thrower_mob.client && thrower_mob.client.move_delay >= world.time + world.tick_lag*2)
+		if(thrower_mob.last_move && thrower_mob.client && thrower_mob.client.move_delay >= world.time)
 			var/user_momentum = thrower_mob.cached_multiplicative_slowdown
 			if (!user_momentum) //no movement_delay, this means they move once per byond tick, lets calculate from that instead.
 				user_momentum = world.tick_lag

@@ -33,9 +33,10 @@
 /datum/action/cooldown/spell/cone/staggered/entropic_plume/do_mob_cone_effect(mob/living/victim, atom/caster, level)
 	if(victim.can_block_magic(antimagic_flags) || IS_HERETIC_OR_MONSTER(victim) || victim == caster)
 		return
-	victim.apply_status_effect(/datum/status_effect/amok)
+	victim.apply_status_effect(/datum/status_effect/forced_combat/amok)
 	victim.apply_status_effect(/datum/status_effect/cloudstruck, 5 SECONDS)
 	victim.adjust_disgust(100)
+	to_chat(victim, span_boldwarning("You feel filled with a rage that is not your own!"))
 
 /datum/action/cooldown/spell/cone/staggered/entropic_plume/calculate_cone_shape(current_level)
 	// At the first level (that isn't level 1) we will be small

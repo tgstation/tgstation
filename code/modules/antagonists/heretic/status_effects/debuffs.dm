@@ -1,17 +1,19 @@
-// AMOK
-/datum/status_effect/amok
-	id = "amok"
+/// Forces the mob to attack nearby targets
+/datum/status_effect/forced_combat
+	id = "forced_combat"
 	status_type = STATUS_EFFECT_REPLACE
-	remove_on_fullheal = TRUE
 	alert_type = null
 	duration = 10 SECONDS
-	tick_interval = 1 SECONDS
+	tick_interval = CLICK_CD_MELEE
+	/// We stop attacking after this many successful attacks
+	var/num_attacks = INFINITY
 
-/datum/status_effect/amok/on_apply(mob/living/afflicted)
-	to_chat(owner, span_boldwarning("You feel filled with a rage that is not your own!"))
-	return TRUE
+/datum/status_effect/forced_combat/on_creation(mob/living/new_owner, duration = 10 SECONDS, num_attacks = INFINITY)
+	src.duration = duration
+	src.num_attacks = num_attacks
+	return ..()
 
-/datum/status_effect/amok/tick(seconds_between_ticks)
+/datum/status_effect/forced_combat/tick(seconds_between_ticks)
 	var/prev_combat_mode = owner.combat_mode
 	owner.set_combat_mode(TRUE)
 
@@ -19,17 +21,32 @@
 	// Otherwise, just look for adjacent targets
 	var/search_radius = isgun(owner.get_active_held_item()) ? 3 : 1
 
-	var/list/mob/living/targets = list()
+	var/list/mob/living/targets
 	for(var/mob/living/potential_target in oview(owner, search_radius))
-		if(IS_HERETIC_OR_MONSTER(potential_target))
+		if(!will_attack(potential_target))
 			continue
-		targets += potential_target
+		LAZYADD(targets, potential_target)
 
 	if(LAZYLEN(targets))
-		owner.log_message(" attacked someone due to the amok debuff.", LOG_ATTACK) //the following attack will log itself
+		owner.log_message(" attacked someone due to the [id] debuff.", LOG_ATTACK) //the following attack will log itself
 		owner.ClickOn(pick(targets))
+		num_attacks -= 1
 
 	owner.set_combat_mode(prev_combat_mode)
+
+	if(num_attacks <= 0)
+		qdel(src)
+
+/datum/status_effect/forced_combat/proc/will_attack(mob/living/friendly)
+	return TRUE
+
+/datum/status_effect/forced_combat/amok
+	id = "amok_forced_combat"
+	remove_on_fullheal = TRUE
+	alert_type = null
+
+/datum/status_effect/forced_combat/amok/will_attack(mob/living/friendly)
+	return !IS_HERETIC_OR_MONSTER(friendly)
 
 /datum/status_effect/cloudstruck
 	id = "cloudstruck"

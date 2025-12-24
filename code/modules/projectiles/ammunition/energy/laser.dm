@@ -61,6 +61,13 @@
 	pellets = 3
 	variance = 10
 
+/obj/item/ammo_casing/energy/laser/musket/repeater
+	projectile_type = /obj/projectile/beam/laser/musket/repeater
+	pellets = 2
+	variance = 10
+	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
+	e_cost = LASER_SHOTS(6, STANDARD_CELL_CHARGE)
+
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/projectile/beam/practice
 	select_name = "practice"

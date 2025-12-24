@@ -709,6 +709,23 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/cyberimp_surgery_brain
+	name = "Surgical Processor Implant"
+	desc = "A cybernetic brain implant that provides access to advanced surgeries."
+	id = "ci-surgery-brain"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 4 SECONDS
+	materials = list(
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.25,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75,
+	)
+	build_path = /obj/item/organ/cyberimp/brain/surgical_processor
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /////////////////////////////////////////
 ////////////Regular Implants/////////////
 /////////////////////////////////////////

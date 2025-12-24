@@ -91,8 +91,12 @@
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
 #define ORGAN_SLOT_APPENDIX "appendix"
 #define ORGAN_SLOT_BRAIN "brain"
-#define ORGAN_SLOT_BRAIN_CEREBELLUM "brain_antidrop"
-#define ORGAN_SLOT_BRAIN_CNS "brain_antistun"
+/// Brain implants that affect the mob's motor control (grabbing, moving, attacking)
+#define ORGAN_SLOT_BRAIN_CEREBELLUM "brain_motorcontrol"
+/// Brain implants that affect the mob's sensory systems (pain, vision, hearing, etc)
+#define ORGAN_SLOT_BRAIN_CNS "brain_cns"
+/// Brain implants that affect the mob's memory and cognition (skills, knowledge, etc)
+#define ORGAN_SLOT_BRAIN_HIPPOCAMPUS "brain_memory"
 #define ORGAN_SLOT_BREATHING_TUBE "breathing_tube"
 #define ORGAN_SLOT_EARS "ears"
 #define ORGAN_SLOT_EYES "eye_sight"

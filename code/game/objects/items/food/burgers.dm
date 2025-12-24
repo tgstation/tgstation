@@ -684,7 +684,12 @@
 	tastes = list("bun" = 2, "beef patty" = 4, "cheese" = 2, "beef soaked in chili" = 3, "a smoking flare" = 2)
 	foodtypes = GRAIN | MEAT | DAIRY | VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_4
-	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2, /datum/material/plastic= SMALL_MATERIAL_AMOUNT * 0.5)
+	custom_materials = list(
+		/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2,
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/plasma = SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 0.5,
+	)
 
 /obj/item/food/burger/crazy/Initialize(mapload)
 	. = ..()

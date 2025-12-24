@@ -28,9 +28,9 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 			return
 
 	var/list/area_choices = list()
-	if(!length(area_choices))
-		for(var/area/area_type as anything in typesof(/area))
-			area_choices[initial(area_type.type)] = area_type
+	for(var/area/area_instance as anything in GLOB.areas)
+		area_choices[area_instance.type] ||= list()
+		area_choices[area_instance.type] |= area_instance
 
 	var/area/area_choice = tgui_input_list(user, "Select an area for weather to target", "Target Area", area_choices)
 	if(!area_choice)
@@ -72,10 +72,10 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 		thunder_value = GLOB.thunder_chance_options[thunder_choice]
 
 	var/list/weather_data = list(
-		area = area_choice,
-		weather_flags = weather_bitflags,
-		thunder_chance = thunder_value,
-		reagent = reagent_choice,
+		WEATHER_FORCED_AREAS = area_choice,
+		WEATHER_FORCED_FLAGS = weather_bitflags,
+		WEATHER_FORCED_THUNDER = thunder_value,
+		WEATHER_FORCED_REAGENT = reagent_choice,
 	)
 
 	SSweather.run_weather(weather_choice, z_level, weather_data)

@@ -25,7 +25,7 @@
 	/// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 	var/codes_txt = ""
 
-	req_one_access = list(ACCESS_ENGINEERING, ACCESS_ROBOTICS)
+	req_one_access = list(ACCESS_CARGO, ACCESS_ENGINEERING, ACCESS_ROBOTICS)
 
 /datum/armor/machinery_navbeacon
 	melee = 70

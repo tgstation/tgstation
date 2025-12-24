@@ -30,7 +30,7 @@ export function Panel(props) {
   useKeepAlive();
 
   return (
-    <Pane theme={settings.theme}>
+    <Pane theme={settings.theme} canSuspend={false}>
       <Stack fill vertical>
         <Stack.Item>
           <Section fitted>
@@ -48,9 +48,7 @@ export function Panel(props) {
                   icon="music"
                   tooltip="Music player"
                   tooltipPosition="bottom-start"
-                  onClick={() => {
-                    setAudioVisible(false);
-                  }}
+                  onClick={() => setAudioVisible((v) => !v)}
                 />
               </Stack.Item>
               <Stack.Item>

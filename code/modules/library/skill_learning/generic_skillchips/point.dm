@@ -72,7 +72,7 @@
 		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON, force = TRUE)
 
 /datum/action/change_pointer_color/proc/pick_color(mob/user)
-	var/ncolor = input(owner, "Pick new color", "Pointer Color", arrow_color) as color|null
+	var/ncolor = tgui_color_picker(owner, "Pick new color", "Pointer Color", arrow_color)
 	if(user != owner || !IsAvailable(feedback = TRUE))
 		return
 	arrow_color = ncolor

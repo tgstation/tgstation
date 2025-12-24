@@ -6,14 +6,11 @@ import {
   chatPagesAtom,
   chatPagesRecordAtom,
   currentPageAtom,
-  currentPageIdAtom,
-  mainPage,
   scrollTrackingAtom,
 } from './atom';
 import { MAX_PERSISTED_MESSAGES } from './constants';
 import { canPageAcceptType, serializeMessage } from './model';
 import { chatRenderer } from './renderer';
-import type { Page } from './types';
 
 chatRenderer.events.on(
   'batchProcessed',
@@ -63,31 +60,6 @@ function updateMessageCount(countByType: Record<string, number>): void {
   }
 
   store.set(chatPagesRecordAtom, draftpagesRecord);
-}
-
-export function importChatState(pageRecord: Record<string, Page>): void {
-  if (!pageRecord) return;
-
-  const newPageIds: string[] = Object.keys(pageRecord);
-  if (!newPageIds) return;
-
-  // Correct any missing keys from the import
-  const merged: Record<string, Page> = { ...pageRecord };
-  for (const page of newPageIds) {
-    merged[page] = {
-      ...mainPage,
-      ...pageRecord[page],
-      unreadCount: 0,
-    };
-  }
-
-  const first = newPageIds[0];
-
-  store.set(currentPageIdAtom, first);
-  store.set(chatPagesAtom, newPageIds);
-  store.set(chatPagesRecordAtom, merged);
-
-  chatRenderer.changePage(merged[first]);
 }
 
 export function saveChatToStorage(): void {
