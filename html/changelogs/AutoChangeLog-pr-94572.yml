@@ -1,0 +1,4 @@
+author: "Frenjo"
+delete-after: True
+changes:
+  - bugfix: "Fixed the inability to shove an intellicarded AI into a Mauler-type exosuit."
