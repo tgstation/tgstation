@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Things that are supposed to be able to fail to draw enough power to operate are actually able to do so."
