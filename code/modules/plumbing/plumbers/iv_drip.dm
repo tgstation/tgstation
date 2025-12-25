@@ -11,7 +11,7 @@
 /obj/machinery/iv_drip/plumbing/Initialize(mapload, layer)
 	. = ..()
 	AddComponent(/datum/component/plumbing/automated_iv, layer)
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 
 /obj/machinery/iv_drip/plumbing/quick_toggle(mob/living/user)
 	return FALSE

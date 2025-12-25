@@ -152,7 +152,7 @@
 	return ..()
 
 /obj/item/spear/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
-	if(improvised_construction)
+	if(!improvised_construction)
 		return
 	take_damage(force/2, sound_effect = FALSE)
 

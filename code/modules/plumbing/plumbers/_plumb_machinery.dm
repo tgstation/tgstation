@@ -23,7 +23,7 @@
 	. = ..()
 	set_anchored(mapload)
 	create_reagents(buffer, reagent_flags)
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 	register_context()
 
 /obj/machinery/plumbing/create_reagents(max_vol, flags)

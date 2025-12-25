@@ -476,7 +476,7 @@
 /obj/item/mod/module/flashlight/configure_edit(key, value)
 	switch(key)
 		if("light_color")
-			value = input(usr, "Pick new light color", "Flashlight Color") as color|null
+			value = tgui_color_picker(usr, "Pick new light color", "Flashlight Color")
 			if(!value)
 				return
 			if(is_color_dark(value, 50))
@@ -830,7 +830,7 @@
 	)
 	/// Materials that will be extracted.
 	var/list/accepted_mats
-	var/datum/component/material_container/container
+	var/datum/material_container/container
 
 /obj/item/mod/module/recycler/Initialize(mapload)
 	. = ..()
@@ -838,8 +838,8 @@
 	if(!length(accepted_mats))
 		accepted_mats = SSmaterials.materials_by_category[MAT_CATEGORY_SILO]
 
-	container = AddComponent( \
-		/datum/component/material_container, \
+	container = new ( \
+		src, \
 		accepted_mats, \
 		50 * SHEET_MATERIAL_AMOUNT, \
 		MATCONTAINER_EXAMINE | MATCONTAINER_NO_INSERT, \
@@ -849,7 +849,7 @@
 	)
 
 /obj/item/mod/module/recycler/Destroy()
-	container = null
+	QDEL_NULL(container)
 	return ..()
 
 /obj/item/mod/module/recycler/on_activation(mob/activator)

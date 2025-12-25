@@ -207,7 +207,7 @@
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
 	placed_sign.update_integrity(get_integrity())
 	placed_sign.setDir(dir)
-	placed_sign.find_and_mount_on_atom()
+	placed_sign.AddComponent(/datum/component/atom_mounted, target_turf)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
