@@ -25,7 +25,7 @@
 		INFINITY, \
 		MATCONTAINER_NO_INSERT \
 	)
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 	AddComponent(
 		/datum/component/butchering/recycler, \
 		speed = 0.1 SECONDS, \
