@@ -40,6 +40,12 @@
 	var/stamp_offset_x = 0
 	/// Physical offset of stamps on the object. Y direction.
 	var/stamp_offset_y = 2
+	/// Message for player who tries to open somebody else's mail
+	var/mail_locked_message = "You can't open somebody else's mail! That's <em>illegal</em>!"
+	/// Should this letter unwrap without do_after() and unwrap sound?
+	var/unwrap_instantly = FALSE
+	/// Should this letter shrink on ground?
+	var/shrink_on_ground = TRUE
 
 	///mail will have the color of the department the recipient is in.
 	var/static/list/department_colors
@@ -54,7 +60,8 @@
 /obj/item/mail/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, PROC_REF(disposal_handling))
-	AddElement(/datum/element/item_scaling, 0.75, 1)
+	if(shrink_on_ground)
+		AddElement(/datum/element/item_scaling, 0.75, 1)
 	if(isnull(department_colors))
 		department_colors = list(
 			ACCOUNT_CIV = COLOR_WHITE,
@@ -129,12 +136,12 @@
 		// If the recipient's mind has gone, then anyone can open their mail
 		// whether a mind can actually be qdel'd is an exercise for the reader
 		if(recipient && recipient != user?.mind)
-			to_chat(user, span_notice("You can't open somebody else's mail! That's <em>illegal</em>!"))
+			to_chat(user, span_notice(mail_locked_message))
 			return FALSE
-
-	balloon_alert(user, "unwrapping...")
-	if(!do_after(user, 1.5 SECONDS, target = user))
-		return FALSE
+	if(!unwrap_instantly)
+		balloon_alert(user, "unwrapping...")
+		if(!do_after(user, 1.5 SECONDS, target = user))
+			return FALSE
 	return TRUE
 
 // proc that goes after unwrapping a mail.
@@ -145,7 +152,8 @@
 			user.put_in_hands(stuff)
 		else
 			stuff.forceMove(drop_location())
-	playsound(loc, 'sound/items/poster/poster_ripped.ogg', vol = 50, vary = TRUE)
+	if(!unwrap_instantly)
+		playsound(loc, 'sound/items/poster/poster_ripped.ogg', vol = 50, vary = TRUE)
 	qdel(src)
 	return TRUE
 
@@ -552,6 +560,101 @@
 	atom_storage.hide_contents(user)
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
 	shady_mail.contents += contents
+	shady_mail.armed = mail_armed
+	shady_mail.made_by_ref = WEAKREF(user.mind)
+	user.put_in_hands(shady_mail)
+	qdel(src)
+
+
+
+/obj/item/mail/traitor/shady_christmas_gift
+	name = "christmas gift"
+	desc = "It could be anything!"
+	icon = 'icons/obj/storage/wrapping.dmi'
+	inhand_icon_state = "gift"
+	mail_locked_message = "This gift isn't for you, and you don't want to get on Santa's bad side!"
+	drop_sound = null
+	pickup_sound = null
+	stamp_max = 0
+	unwrap_instantly = TRUE
+	w_class = WEIGHT_CLASS_NORMAL
+	stamped = FALSE
+	postmarked = FALSE
+	shrink_on_ground = FALSE
+	resistance_flags = FLAMMABLE
+
+/obj/item/storage/mail_counterfeit_device/xmas
+	name = "GGA-MC-2 present counterfeit device"
+	desc = "A modified single-use device for spoofing official Santa's Workshop presents instead of Nanotrasen mail. Can hold one normal sized object, and can be programmed to arm its contents when opened. "
+	w_class = WEIGHT_CLASS_NORMAL
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
+	icon_state = "mail_counterfeit_device-xmas"
+	storage_type = /datum/storage/mail_counterfeit
+
+/obj/item/storage/mail_counterfeit_device/xmas/examine_more(mob/user)
+	. = ..()
+	. += span_notice("<i>You notice the manufacturer information on the side of the device...</i>")
+	. += "\t[span_info("Guerilla Giftbox Assembler")]"
+	. += "\t[span_info("GGA Jolly Service, right on christmas.")]"
+	. += "\t[span_info("You can also see a little note on the back...</i>")]"
+	. += "\t[span_info("MC stands for Merry Christmas! HO HO HO!")]"
+	return .
+
+
+/obj/item/storage/mail_counterfeit_device/xmas/attack_self(mob/user, modifiers)
+	var/mail_type = tgui_input_list(user, "Select present size (Purely visual, does not affect storage or actual size)", "Present Counterfeiting", list("Tiny", "Small", "Normal", "Bulky", "Huge"))
+	if(isnull(mail_type))
+		return FALSE
+	if(loc != user)
+		return FALSE
+	mail_type = LOWER_TEXT(mail_type)
+
+	var/mail_armed = tgui_alert(user, "Arm it?", "Present Counterfeiting", list("Yes", "No")) == "Yes"
+	if(isnull(mail_armed))
+		return FALSE
+	if(loc != user)
+		return FALSE
+
+	var/list/mail_recipients = list("Anyone")
+	var/list/mail_recipients_for_input = list("Anyone")
+	var/list/used_names = list()
+	for(var/datum/record/locked/person in sort_record(GLOB.manifest.locked))
+		var/datum/mind/locked_mind = person.mind_ref.resolve()
+		if(isnull(locked_mind))
+			continue
+		mail_recipients += locked_mind
+		mail_recipients_for_input += avoid_assoc_duplicate_keys(person.name, used_names)
+
+	var/recipient = tgui_input_list(user, "Choose a recipient", "Present Counterfeiting", mail_recipients_for_input)
+	if(isnull(recipient))
+		return FALSE
+	if(!(src in user.contents))
+		return FALSE
+
+	var/index = mail_recipients_for_input.Find(recipient)
+
+	var/obj/item/mail/traitor/shady_christmas_gift/shady_mail = new
+
+	if(mail_type == "tiny")
+		shady_mail.icon_state = "giftdeliverypackage1"
+	if(mail_type == "small")
+		shady_mail.icon_state = "giftdeliverypackage2"
+	if(mail_type == "normal")
+		shady_mail.icon_state = "giftdeliverypackage3"
+	if(mail_type == "bulky")
+		shady_mail.icon_state = "giftdeliverypackage4"
+	if(mail_type == "huge")
+		shady_mail.icon_state = "giftdeliverypackage5"
+
+	shady_mail.made_by_cached_ckey = user.ckey
+	shady_mail.made_by_cached_name = user.mind.name
+	if(index != 1)
+		shady_mail.initialize_for_recipient(mail_recipients[index])
+
+	atom_storage.hide_contents(user)
+	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
+	shady_mail.contents += contents
+	shady_mail.name = replacetext(shady_mail.name, "mail", "christmas gift")
 	shady_mail.armed = mail_armed
 	shady_mail.made_by_ref = WEAKREF(user.mind)
 	user.put_in_hands(shady_mail)
