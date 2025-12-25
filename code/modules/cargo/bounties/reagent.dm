@@ -6,6 +6,9 @@
 /datum/bounty/reagent/can_claim()
 	return ..() && shipped_volume >= required_volume
 
+/datum/bounty/reagent/print_required()
+		return "[shipped_volume]/[required_volume] u"
+
 /datum/bounty/reagent/applies_to(obj/shipped)
 	if(!is_reagent_container(shipped))
 		return FALSE

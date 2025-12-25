@@ -1,4 +1,4 @@
-// When adding a new area to the security areas, make sure to add it to /datum/bounty/item/security/paperwork as well!
+// When adding a new area to the security areas, make sure to add it to /datum/bounty/patrol as well!
 
 /area/station/security
 	name = "Security"
