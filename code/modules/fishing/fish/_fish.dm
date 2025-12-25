@@ -249,6 +249,20 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		stack_trace("[type] has a stable_population of [stable_population] but has neither of these traits: [english_list(pick_one)]. \
 			Either increase its stable population or add one of these traits to it.")
 
+/obj/item/fish/grind_results()
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/list/grind_results = fish_grind_results()
+	for(var/reagent_type in grind_results)
+		grind_results[reagent_type] *= max(FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1), 0.1)
+
+	return grind_results
+
+/obj/item/fish/proc/fish_grind_results()
+	RETURN_TYPE(/list/datum/reagent)
+
+	return list()
+
 /obj/item/fish/suicide_act(mob/living/user)
 	if(force == 0)
 		user.visible_message(span_suicide("[user] slaps [user.p_them()]self with [src], but nothing happens!"))
@@ -651,8 +665,6 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 	var/make_edible = !weight
 	if(weight)
-		for(var/reagent_type in grind_results)
-			grind_results[reagent_type] /= max(FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1), 0.1)
 		if(reagents) //This fish has reagents. Adjust the maximum volume of the reagent holder and do some math to adjut the reagents too.
 			var/new_weight_ratio = new_weight / weight
 			var/volume_diff = reagents.maximum_volume * new_weight_ratio - reagents.maximum_volume
@@ -683,9 +695,6 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if(ismob(loc))
 		var/mob/mob = loc
 		mob.update_equipment_speed_mods()
-
-	for(var/reagent_type in grind_results)
-		grind_results[reagent_type] *= max(FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1), 0.1)
 
 	var/mats_len = length(custom_materials)
 	if(update_materials && mats_len)

@@ -5,9 +5,11 @@
 	icon_state = "pokerchip_white_black"
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/plastic = COIN_MATERIAL_AMOUNT)
-	grind_results = list(/datum/reagent/plastic_polymers = COIN_MATERIAL_AMOUNT * 0.2)
 	///How much credit this chip is worth when redeemed
 	var/redeem_value = 0
+
+/obj/item/poker_chip/grind_results()
+	return list(/datum/reagent/plastic_polymers = COIN_MATERIAL_AMOUNT * 0.2)
 
 /obj/item/poker_chip/get_item_credit_value()
 	return redeem_value

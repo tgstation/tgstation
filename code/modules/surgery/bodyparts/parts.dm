@@ -10,7 +10,6 @@
 	is_dimorphic = TRUE
 	px_x = 0
 	px_y = 0
-	grind_results = null
 	wound_resistance = 10
 	bodypart_trait_source = CHEST_TRAIT
 	base_meat_amount = 2
@@ -49,6 +48,9 @@
 	if (!islist(.))
 		. = list()
 	.[species.skinned_type] = 1
+
+/obj/item/bodypart/chest/grind_results()
+	return null
 
 /obj/item/bodypart/chest/forced_removal(dismembered, special, move_to_floor)
 	var/mob/living/carbon/old_owner = owner

@@ -15,7 +15,6 @@
 	wound_resistance = 5
 	disabled_wound_penalty = 25
 	scars_covered_by_clothes = FALSE
-	grind_results = null
 	is_dimorphic = TRUE
 	unarmed_attack_verbs = list("bite", "chomp")
 	unarmed_attack_verbs_continuous = list("bites", "chomps")
@@ -114,6 +113,9 @@
 	if (!species || !species.skinned_type)
 		return null
 	return list(species.skinned_type = 1)
+
+/obj/item/bodypart/head/grind_results()
+	return null
 
 /obj/item/bodypart/head/examine(mob/user)
 	. = ..()

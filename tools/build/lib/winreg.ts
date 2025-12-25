@@ -8,14 +8,14 @@
  * @license MIT
  */
 
-import { exec } from "node:child_process";
-import { promisify } from "node:util";
+import { exec } from 'node:child_process';
+import { promisify } from 'node:util';
 
 export async function regQuery(
   path: string,
   key: string,
-): Promise<string | string[] | undefined> {
-  if (process.platform !== "win32") {
+): Promise<string | undefined> {
+  if (process.platform !== 'win32') {
     return;
   }
   try {
@@ -26,11 +26,11 @@ export async function regQuery(
     if (indexOfKey === -1) {
       return;
     }
-    const indexOfEol = stdout.indexOf("\r\n", indexOfKey);
+    const indexOfEol = stdout.indexOf('\r\n', indexOfKey);
     if (indexOfEol === -1) {
       return;
     }
-    const indexOfValue = stdout.indexOf("    ", indexOfKey + keyPattern.length);
+    const indexOfValue = stdout.indexOf('    ', indexOfKey + keyPattern.length);
     if (indexOfValue === -1) {
       return;
     }
