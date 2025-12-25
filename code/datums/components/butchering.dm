@@ -433,7 +433,7 @@
 		if (is_stack && amount)
 			results += new remains(location, amount)
 
-	target.butcher_results.Cut()
+	target.butcher_results?.Cut()
 
 	if (butcher)
 		if (length(failures))
@@ -450,7 +450,7 @@
 		for (var/i in 1 to amount)
 			results += new guaranteed_remains(location)
 
-	target.guaranteed_butcher_results.Cut()
+	target.guaranteed_butcher_results?.Cut()
 
 	for (var/obj/item/carrion in results)
 		var/list/meat_mats = carrion.has_material_type(/datum/material/meat)
