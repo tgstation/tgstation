@@ -13,6 +13,7 @@
 	grind_results = null
 	wound_resistance = 10
 	bodypart_trait_source = CHEST_TRAIT
+	base_meat_amount = 2
 	butcher_replacement = /obj/item/bodypart/chest/skeleton/nonfunctional
 	///The bodyshape(s) allowed to attach to this chest.
 	var/acceptable_bodyshape = BODYSHAPE_HUMANOID
@@ -37,6 +38,17 @@
 	var/datum/worn_feature_offset/worn_neck_offset
 	/// Which functional (i.e. flightpotion) wing types (if any) does this bodypart support? If count is >1 a radial menu is used to choose between all icons in list
 	var/list/wing_types = list(/obj/item/organ/wings/functional/angel)
+
+/obj/item/bodypart/chest/get_butcher_drops()
+	. = ..()
+	if(butcher_drops)
+		return
+	var/datum/species/species = species_by_id(limb_id)
+	if (!species || !species.skinned_type)
+		return
+	if (!islist(.))
+		. = list()
+	.[species.skinned_type] = 1
 
 /obj/item/bodypart/chest/forced_removal(dismembered, special, move_to_floor)
 	var/mob/living/carbon/old_owner = owner

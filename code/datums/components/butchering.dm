@@ -58,18 +58,16 @@
 		return
 
 	// Can we butcher it?
-	if (victim.stat == DEAD && (victim.butcher_results || victim.guaranteed_butcher_results))
-		if (butchering_enabled)
-			INVOKE_ASYNC(src, PROC_REF(start_butcher), source, victim, user)
-			return COMPONENT_CANCEL_ATTACK_CHAIN
+	if (victim.stat == DEAD && (victim.butcher_results || victim.guaranteed_butcher_results) && butchering_enabled)
+		INVOKE_ASYNC(src, PROC_REF(start_butcher), source, victim, user)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if (!ishuman(victim) || !source.force)
 		return
 
-	if (victim.stat == DEAD && LAZYACCESS(modifiers, RIGHT_CLICK))
-		if (butchering_enabled)
-			INVOKE_ASYNC(src, PROC_REF(butcher_human), source, victim, user)
-			return COMPONENT_CANCEL_ATTACK_CHAIN
+	if (LAZYACCESS(modifiers, RIGHT_CLICK) && butchering_enabled)
+		INVOKE_ASYNC(src, PROC_REF(butcher_human), source, victim, user)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	// Neckslicing requires aggro grabs
 	if (user.pulling != victim || user.grab_state < GRAB_AGGRESSIVE || user.zone_selected != BODY_ZONE_HEAD)
@@ -170,7 +168,7 @@
 	if (target.body_zone == BODY_ZONE_CHEST && target.owner)
 		// Cannot butcher the chest until we hack off all the other limbs
 		for (var/obj/item/bodypart/limb as anything in target.owner.bodyparts)
-			if (limb.butcher_drops && limb.butcher_replacement)
+			if (limb != target && limb.butcher_drops && limb.butcher_replacement)
 				to_chat(user, span_warning("You need to butcher all other limbs first!"))
 				return
 
@@ -242,11 +240,13 @@
 			if(result.reagents)
 				reagents_in_produced += 1
 
-		var/list/diseases = target.owner.get_static_viruses
+		var/list/diseases = target.owner.get_static_viruses()
 
 		for(var/obj/item/result as anything in results)
-			target.owner.reagents.trans_to(result, occupant.reagents.total_volume / reagents_in_produced / length(target.owner.bodyparts), remove_blacklisted = TRUE)
-			result.reagents?.add_reagent(/datum/reagent/consumable/nutriment/fat, target.owner.nutrition / 15 / reagents_in_produced)
+			if (reagents_in_produced)
+				if (target.owner.reagents)
+					target.owner.reagents.trans_to(result, target.owner.reagents.total_volume / reagents_in_produced / length(target.owner.bodyparts), remove_blacklisted = TRUE)
+				result.reagents?.add_reagent(/datum/reagent/consumable/nutriment/fat, target.owner.nutrition / 15 / reagents_in_produced)
 
 			if(LAZYLEN(diseases))
 				var/list/datum/disease/diseases_to_add = list()
@@ -261,12 +261,10 @@
 					result.AddComponent(/datum/component/infective, diseases_to_add)
 
 		for (var/obj/item/food/meat/meat in results)
-			meat.name = "[target.owner.real_name] [meat.name]"
-			meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, occupant) = 4 * SHEET_MATERIAL_AMOUNT))
+			meat.name = "[target.owner.real_name]'s [meat.name]"
+			meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, target.owner) = 4 * SHEET_MATERIAL_AMOUNT))
 			meat.subjectname = target.owner.real_name
-			if(ishuman(target.owner))
-				var/mob/living/carbon/human/as_human = target.owner
-				meat.subjectjob = as_human.job
+			meat.subjectjob = target.owner.job
 
 	user.visible_message(span_warning("[user] butchers [limb_descriptor]!"), span_notice("You butcher [limb_descriptor]."), ignored_mobs = target.owner)
 	if (!target.owner)

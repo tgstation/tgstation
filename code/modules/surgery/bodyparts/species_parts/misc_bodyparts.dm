@@ -439,22 +439,14 @@
 	// These are always disabled
 	disabling_threshold_percentage = 0
 
-/obj/item/bodypart/head/skeleton/nonfunctional/on_adding(mob/living/carbon/new_owner)
-	. = ..()
-	// Treat people with bone heads/chests as husks for all purposes for now
-	// Ideally husking should be per-bodypart but this simplifies a lot of behaviors
-	new_owner.become_husk(REF(src))
-
-/obj/item/bodypart/head/skeleton/nonfunctional/on_removal(mob/living/carbon/old_owner)
-	. = ..()
-	old_owner.cure_husk(REF(src))
-
 /obj/item/bodypart/chest/skeleton/nonfunctional
 	limb_id = BODYPART_ID_BONE
 	disabling_threshold_percentage = 0
 
 /obj/item/bodypart/chest/skeleton/nonfunctional/on_adding(mob/living/carbon/new_owner)
 	. = ..()
+	// Treat people with bone chests as husks for all purposes for now
+	// Ideally husking should be per-bodypart but this simplifies a lot of behaviors
 	new_owner.become_husk(REF(src))
 
 /obj/item/bodypart/chest/skeleton/nonfunctional/on_removal(mob/living/carbon/old_owner)

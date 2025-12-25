@@ -225,9 +225,13 @@
 	var/list/blood_dna_info
 	/// What items we drop whenever we're butchered
 	/// If unset, the bodyparot cannot be butchered
-	var/list/butcher_drops = list(/obj/item/food/meat/slab/human = 1)
+	var/list/butcher_drops = null
 	/// What skeleton limb, if any, we replace ourselves with when butchered?
 	var/obj/item/bodypart/butcher_replacement = null
+	/// How much meat do we add to butcher_drops when automatically generating them from our species datum?
+	var/base_meat_amount = 1
+	/// Init cache for our butcher drops for sanic speed
+	var/static/list/butcher_drop_cache = list()
 	/// What state is the bodypart in for determining surgery availability
 	VAR_FINAL/surgery_state = NONE
 
@@ -275,6 +279,11 @@
 		add_surgical_state(innate_state)
 
 	name = "[limb_id] [parse_zone(body_zone)]"
+	// There's a lot of bodyparts in the world, and we don't need to have separate drops on each and every one of them
+	var/list/drop_results = get_butcher_drops()
+	if (length(drop_results))
+		butcher_drops = string_list(drop_results)
+		butcher_drop_cache[type] = butcher_drops
 	update_icon_dropped()
 	refresh_bleed_rate()
 
@@ -304,6 +313,16 @@
 	if(owner) //trust me bro you dont want this
 		return FALSE
 	return  ..()
+
+/obj/item/bodypart/proc/get_butcher_drops()
+	if(!isnull(butcher_drops))
+		return butcher_drops
+	if (butcher_drop_cache[type])
+		return butcher_drop_cache[type]
+	var/datum/species/species = species_by_id(limb_id)
+	if (!species || !species.meat || !base_meat_amount)
+		return null
+	return list(species.meat = base_meat_amount)
 
 /obj/item/bodypart/proc/on_forced_removal(atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
@@ -611,12 +630,13 @@
 			bodypart_organ.apply_organ_damage(bodypart_organ.maxHealth * 0.5)
 
 		if(owner)
-			bodypart_organ.Remove(bodypart_organ.owner)
+			if(!bodypart_organ.Remove(bodypart_organ.owner))
+				continue
+		else if(!bodypart_organ.bodypart_remove(src))
 			continue
 
-		if(bodypart_organ.bodypart_remove(src))
-			if(drop_loc) //can be null if being deleted
-				bodypart_organ.forceMove(get_turf(drop_loc))
+		if(drop_loc) //can be null if being deleted
+			bodypart_organ.forceMove(get_turf(drop_loc))
 
 	if(drop_loc) //can be null during deletion
 		for(var/atom/movable/movable as anything in src)
