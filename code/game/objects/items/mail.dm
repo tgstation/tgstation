@@ -595,7 +595,7 @@
 	. = ..()
 	. += span_notice("<i>You notice the manufacturer information on the side of the device...</i>")
 	. += "\t[span_info("Guerilla Giftbox Assembler")]"
-	. += "\t[span_info("GGA Jolly Service, right on christmas.")]"
+	. += "\t[span_info("GGA Jolly Service, right on Christmas.")]"
 	. += "\t[span_info("You can also see a little note on the back...</i>")]"
 	. += "\t[span_info("MC stands for Merry Christmas! HO HO HO!")]"
 	return .
