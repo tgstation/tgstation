@@ -115,6 +115,11 @@
 	cost = 4
 	surplus = 30
 
+/datum/uplink_item/stealthy_tools/mail_counterfeit/xmas/can_be_bought(mob/user)
+	if(!check_holidays(CHRISTMAS))
+		return FALSE
+	return ..()
+
 /datum/uplink_item/stealthy_tools/forensics_spofer
 	name = "Forensics Spoofing Kit"
 	desc = "A box that contains the forensics spoofer (and instructions) which can scan and replicate fingerprints and fibers \
