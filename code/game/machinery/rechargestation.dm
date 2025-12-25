@@ -16,14 +16,14 @@
 	var/datum/callback/charge_cell
 	///Whether we're sending iron and glass to a cyborg. Requires Silo connection.
 	var/sendmats = FALSE
-	var/datum/component/remote_materials/materials
+	var/datum/remote_materials/materials
 
 
 /obj/machinery/recharge_station/Initialize(mapload)
 	. = ..()
 
-	materials = AddComponent(
-		/datum/component/remote_materials, \
+	materials = new (
+		src, \
 		mapload, \
 		mat_container_flags = MATCONTAINER_NO_INSERT, \
 	)
@@ -46,7 +46,7 @@
 	GLOB.roundstart_station_borgcharger_areas += area_name
 
 /obj/machinery/recharge_station/Destroy()
-	materials = null
+	QDEL_NULL(materials)
 	charge_cell = null
 	return ..()
 
