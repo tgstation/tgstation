@@ -225,11 +225,6 @@
 	///What dye registry should be looked at when dying this item; see washing_machine.dm
 	var/dying_key
 
-	/// A lazy reagent list containing the reagents this item produces when ground up in a grinder
-	var/list/grind_results
-	///A reagent the nutriments are converted into when the item is juiced.
-	var/datum/reagent/consumable/juice_typepath
-
 	/// Used in obj/item/examine to give additional notes on what the weapon does, separate from the predetermined output variables
 	var/offensive_notes
 	/// Used in obj/item/examine to determines whether or not to detail an item's statistics even if it does not meet the force requirements
@@ -1025,6 +1020,12 @@
 /obj/item/proc/blend_requirements(obj/machinery/reagentgrinder/R)
 	return TRUE
 
+///Returns a reagent list containing the reagents this item produces when ground up in a grinder
+/obj/item/proc/grind_results()
+	RETURN_TYPE(/list/datum/reagent)
+
+	return null
+
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_grind()
 	PROTECTED_PROC(TRUE)
@@ -1058,18 +1059,26 @@
 /obj/item/proc/grind_atom(datum/reagents/target_holder, mob/user)
 	PROTECTED_PROC(TRUE)
 
+	var/list/datum/reagent/grind_reagents = grind_results()
+
 	. = FALSE
-	if(LAZYLEN(grind_results))
-		target_holder.add_reagent_list(grind_results)
+	if(length(grind_reagents))
+		target_holder.add_reagent_list(grind_reagents)
 		. = TRUE
 	if(reagents?.trans_to(target_holder, reagents.total_volume, transferred_by = user))
 		. = TRUE
+
+///Returns A reagent the nutriments are converted into when the item is juiced.
+/obj/item/proc/juice_typepath()
+	RETURN_TYPE(/datum/reagent)
+
+	return null
 
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_juice()
 	PROTECTED_PROC(TRUE)
 
-	if(!juice_typepath)
+	if(!juice_typepath())
 		return -1
 
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_JUICE)
@@ -1103,9 +1112,11 @@
 
 	. = FALSE
 
-	if(ispath(juice_typepath))
-		reagents.convert_reagent(/datum/reagent/consumable/nutriment, juice_typepath, include_source_subtypes = FALSE)
-		reagents.convert_reagent(/datum/reagent/consumable/nutriment/vitamin, juice_typepath, include_source_subtypes = FALSE)
+	var/juice_result = juice_typepath()
+
+	if(ispath(juice_result))
+		reagents.convert_reagent(/datum/reagent/consumable/nutriment, juice_result, include_source_subtypes = FALSE)
+		reagents.convert_reagent(/datum/reagent/consumable/nutriment/vitamin, juice_result, include_source_subtypes = FALSE)
 		. = TRUE
 
 	if(!QDELETED(target_holder))

@@ -871,9 +871,11 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "tonercartridge"
 	w_class = WEIGHT_CLASS_SMALL
-	grind_results = list(/datum/reagent/iodine = 40, /datum/reagent/iron = 10)
 	var/charges = 5
 	var/max_charges = 5
+
+/obj/item/toner/grind_results()
+	return list(/datum/reagent/iodine = 40, /datum/reagent/iron = 10)
 
 /obj/item/toner/examine(mob/user)
 	. = ..()
@@ -882,9 +884,11 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/item/toner/large
 	name = "large toner cartridge"
 	desc = "A hefty cartridge of Nanotrasen ValueBrand toner. Fits photocopiers and autopainters alike."
-	grind_results = list(/datum/reagent/iodine = 90, /datum/reagent/iron = 10)
 	charges = 25
 	max_charges = 25
+
+/obj/item/toner/large/grind_results()
+	return list(/datum/reagent/iodine = 90, /datum/reagent/iron = 10)
 
 /obj/item/toner/extreme
 	name = "extremely large toner cartridge"
