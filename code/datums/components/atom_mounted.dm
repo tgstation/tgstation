@@ -24,11 +24,6 @@
 	UnregisterSignal(parent, list(COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, COMSIG_MOVABLE_MOVED))
 
 /datum/component/atom_mounted/Destroy(force)
-	UnregisterSignal(hanging_support_atom, list(COMSIG_ATOM_EXAMINE))
-	if(isclosedturf(hanging_support_atom))
-		UnregisterSignal(hanging_support_atom, COMSIG_TURF_CHANGE)
-	else
-		UnregisterSignal(hanging_support_atom, COMSIG_QDELETING)
 	hanging_support_atom = null
 	return ..()
 
