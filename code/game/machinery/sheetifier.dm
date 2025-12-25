@@ -7,12 +7,12 @@
 	circuit = /obj/item/circuitboard/machine/sheetifier
 	layer = BELOW_OBJ_LAYER
 	var/busy_processing = FALSE
-	var/datum/component/material_container/materials
+	var/datum/material_container/materials
 
 /obj/machinery/sheetifier/Initialize(mapload)
 	. = ..()
-	materials = AddComponent( \
-		/datum/component/material_container, \
+	materials = new ( \
+		src, \
 		list(/datum/material/meat, /datum/material/hauntium), \
 		SHEET_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, \
 		MATCONTAINER_EXAMINE, \
@@ -24,7 +24,7 @@
 	)
 
 /obj/machinery/sheetifier/Destroy()
-	materials = null
+	QDEL_NULL(materials)
 	return ..()
 
 /obj/machinery/sheetifier/update_overlays()
