@@ -908,18 +908,18 @@
 	return brute_dam + burn_dam
 
 //Checks disabled status thresholds
-/obj/item/bodypart/proc/update_disabled()
+/obj/item/bodypart/proc/update_disabled(update_limbs = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(!owner)
 		return
 
 	if(!can_be_disabled)
-		set_disabled(FALSE)
+		set_disabled(FALSE, update_limbs)
 		CRASH("update_disabled called with can_be_disabled false")
 
 	if(HAS_TRAIT(src, TRAIT_PARALYSIS))
-		set_disabled(TRUE)
+		set_disabled(TRUE, update_limbs)
 		return
 
 	var/total_damage = brute_dam + burn_dam
@@ -932,7 +932,7 @@
 			if(!last_maxed && owner.stat < UNCONSCIOUS)
 				INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "scream")
 			last_maxed = TRUE
-		set_disabled(FALSE) // we only care about the paralysis trait
+		set_disabled(FALSE, update_limbs) // we only care about the paralysis trait
 		return
 
 	// we're now dealing solely with limbs that can be disabled through pure damage, AKA robot parts
@@ -941,15 +941,15 @@
 			if(owner.stat < UNCONSCIOUS)
 				INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "scream")
 			last_maxed = TRUE
-		set_disabled(TRUE)
+		set_disabled(TRUE, update_limbs)
 		return
 
 	if(bodypart_disabled && total_damage < max_damage * disabling_threshold_percentage * 0.5) // reenable the limb at 50% of the threshold
 		last_maxed = FALSE
-		set_disabled(FALSE)
+		set_disabled(FALSE, update_limbs)
 
 ///Proc to change the value of the `disabled` variable and react to the event of its change.
-/obj/item/bodypart/proc/set_disabled(new_disabled)
+/obj/item/bodypart/proc/set_disabled(new_disabled, update_limbs = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 	PROTECTED_PROC(TRUE)
 
@@ -1028,7 +1028,7 @@
 		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOBLOOD), PROC_REF(on_owner_nobleed_gain))
 
 	if(can_be_disabled)
-		update_disabled()
+		update_disabled(FALSE)
 
 	RegisterSignal(owner, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle_mob))
 	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_owner_clean))

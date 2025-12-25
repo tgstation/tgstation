@@ -212,6 +212,25 @@
 	var/atom/movable/screen/inventory/hand/hand = new_owner.hud_used.hand_slots["[held_index]"]
 	hand?.update_appearance()
 
+/obj/item/bodypart/arm/set_disabled(new_disabled)
+	. = ..()
+	if(isnull(.) || !owner)
+		return
+
+	if(!.)
+		if(bodypart_disabled)
+			owner.set_usable_hands(owner.usable_hands - 1)
+			if(owner.stat < UNCONSCIOUS)
+				to_chat(owner, span_userdanger("You lose control of your [plaintext_zone]!"))
+			if(held_index)
+				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+	else if(!bodypart_disabled)
+		owner.set_usable_hands(owner.usable_hands + 1)
+
+	if(owner.hud_used)
+		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
+		hand_screen_object?.update_appearance()
+
 /obj/item/bodypart/arm/left
 	name = "left arm"
 	desc = "Did you know that the word 'sinister' stems originally from the \
@@ -259,25 +278,6 @@
 	REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_L_ARM)
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_L_ARM))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_L_ARM), PROC_REF(on_owner_paralysis_gain))
-
-/obj/item/bodypart/arm/left/set_disabled(new_disabled)
-	. = ..()
-	if(isnull(.) || !owner)
-		return
-
-	if(!.)
-		if(bodypart_disabled)
-			owner.set_usable_hands(owner.usable_hands - 1)
-			if(owner.stat < UNCONSCIOUS)
-				to_chat(owner, span_userdanger("You lose control of your [plaintext_zone]!"))
-			if(held_index)
-				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
-	else if(!bodypart_disabled)
-		owner.set_usable_hands(owner.usable_hands + 1)
-
-	if(owner.hud_used)
-		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
-		hand_screen_object?.update_appearance()
 
 /obj/item/bodypart/arm/left/monkey
 	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
@@ -361,25 +361,6 @@
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_R_ARM))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_R_ARM), PROC_REF(on_owner_paralysis_gain))
 
-/obj/item/bodypart/arm/right/set_disabled(new_disabled)
-	. = ..()
-	if(isnull(.) || !owner)
-		return
-
-	if(!.)
-		if(bodypart_disabled)
-			owner.set_usable_hands(owner.usable_hands - 1)
-			if(owner.stat < UNCONSCIOUS)
-				to_chat(owner, span_userdanger("You lose control of your [plaintext_zone]!"))
-			if(held_index)
-				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
-	else if(!bodypart_disabled)
-		owner.set_usable_hands(owner.usable_hands + 1)
-
-	if(owner.hud_used)
-		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
-		hand_screen_object?.update_appearance()
-
 /obj/item/bodypart/arm/right/monkey
 	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/human/species/monkey/bodyparts.dmi'
@@ -462,6 +443,19 @@
 	QDEL_NULL(worn_foot_offset)
 	return ..()
 
+/obj/item/bodypart/leg/set_disabled(new_disabled, update_limbs = TRUE)
+	. = ..()
+	if(isnull(.) || !owner || !update_limbs)
+		return
+
+	if(!.)
+		if(bodypart_disabled)
+			owner.set_usable_legs(owner.usable_legs - 1)
+			if(owner.stat < UNCONSCIOUS)
+				to_chat(owner, span_userdanger("You lose control of your [plaintext_zone]!"))
+	else if(!bodypart_disabled)
+		owner.set_usable_legs(owner.usable_legs + 1)
+
 /obj/item/bodypart/leg/left
 	name = "left leg"
 	desc = "Some athletes prefer to tie their left shoelaces first for good \
@@ -506,19 +500,6 @@
 	REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_L_LEG)
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_L_LEG))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_L_LEG), PROC_REF(on_owner_paralysis_gain))
-
-/obj/item/bodypart/leg/left/set_disabled(new_disabled)
-	. = ..()
-	if(isnull(.) || !owner)
-		return
-
-	if(!.)
-		if(bodypart_disabled)
-			owner.set_usable_legs(owner.usable_legs - 1)
-			if(owner.stat < UNCONSCIOUS)
-				to_chat(owner, span_userdanger("You lose control of your [plaintext_zone]!"))
-	else if(!bodypart_disabled)
-		owner.set_usable_legs(owner.usable_legs + 1)
 
 /obj/item/bodypart/leg/left/monkey
 	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
@@ -599,19 +580,6 @@
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_R_LEG))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_R_LEG), PROC_REF(on_owner_paralysis_gain))
 
-
-/obj/item/bodypart/leg/right/set_disabled(new_disabled)
-	. = ..()
-	if(isnull(.) || !owner)
-		return
-
-	if(!.)
-		if(bodypart_disabled)
-			owner.set_usable_legs(owner.usable_legs - 1)
-			if(owner.stat < UNCONSCIOUS)
-				to_chat(owner, span_userdanger("You lose control of your [plaintext_zone]!"))
-	else if(!bodypart_disabled)
-		owner.set_usable_legs(owner.usable_legs + 1)
 
 /obj/item/bodypart/leg/right/monkey
 	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
