@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - refactor: "simple rotation component has been refactored into an element Please report any bugs to github."
