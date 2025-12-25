@@ -307,8 +307,7 @@
 	SEND_SIGNAL(src, COMSIG_ORGAN_SURGICALLY_REMOVED, user, limb.owner, limb.body_zone, tool)
 	var/blood_color = limb.owner?.get_bloodtype()?.get_color()
 	if(!blood_color && length(limb.blood_dna_info))
-		var/datum/blood_type/blood_type = limb.blood_dna_info[limb.blood_dna_info[1]]
-		blood_color = blood_type?.get_color()
+		blood_color = get_color_from_blood_list(limb.blood_dna_info)
 	RemoveElement(/datum/element/decal/blood, _color = blood_color || BLOOD_COLOR_RED)
 
 /**
