@@ -86,7 +86,6 @@
 
 /// Proc that handles sending the book information to the user, as well as some housekeeping stuff.
 /obj/item/book/proc/display_content(mob/living/user)
-	credit_book_to_reader(user)
 	ui_interact(user)
 
 /// Proc that checks if the user is capable of reading the book, for UI interactions and otherwise. Returns TRUE if they can, FALSE if they can't.
@@ -125,6 +124,7 @@
 		return
 
 	user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))
+	credit_book_to_reader(user)
 	display_content(user)
 
 /obj/item/book/proc/is_carving_tool(obj/item/tool)
