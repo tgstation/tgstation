@@ -240,3 +240,5 @@ sounds/mobs/humanoids/shadow/shadow_wail.ogg -- https://freesound.org/people/Rob
 sound/mobs/non-humanoids/roro/roro_warble.ogg -- Made by cutting, adjusting pitch, and adding echo of https://freesound.org/people/danlucaz/sounds/517734/ -- License: Creating Commons 0
 
 sound/effects/goresplat.ogg -- https://freesound.org/people/ThefitzyG/sounds/414296/ -- License: Creative Commons 0
+
+blobalert.ogg and blobattack.ogg are from "SlimeAtk.WAV" by Jamius https://freesound.org/people/Jamius/sounds/41530 (Attribution 4.0)
