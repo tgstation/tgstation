@@ -345,17 +345,6 @@
 	category = CAT_WEAPON_RANGED
 	crafting_flags = CRAFT_CHECK_DENSITY
 
-/datum/crafting_recipe/Detached_Ratvarian_Repeater
-	name = "Iconoclast's Repeater"
-	tool_behaviors = list(TOOL_WELDER)
-	result = /obj/item/gun/energy/laser/musket/repeater
-	structures = list(
-		/obj/structure/mounted_gun/ratvarian_repeater = CRAFTING_STRUCTURE_CONSUME,
-	)
-	time = 10 SECONDS
-	category = CAT_WEAPON_RANGED
-	crafting_flags = CRAFT_CHECK_DENSITY
-
 
 /datum/crafting_recipe/large_ballista
 	name = "Improvised Ballista"
