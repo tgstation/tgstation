@@ -181,7 +181,7 @@ export const Log = (props: LogProps) => {
         logger.warn(`unknown log status ${status}`);
     }
     if (output === undefined) {
-      return;
+      return null;
     }
     const { chunk } = element;
     if (chunk) {

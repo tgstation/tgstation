@@ -29,6 +29,7 @@ import { Log } from './Log';
 import { StateSelectModal } from './StateSelectModal';
 import { TaskManager } from './TaskManager';
 import type { CallInfo, LuaEditorData, LuaEditorModal } from './types';
+
 hljs.registerLanguage('lua', lua);
 
 export const LuaEditor = () => {
@@ -226,7 +227,7 @@ export const LuaEditor = () => {
                             }}
                           />
                         }*/
-                          /** @ts-ignore */
+                          /** @ts-expect-error */
                           onDrop={async (
                             event: React.DragEvent<HTMLDivElement>,
                           ) => {
