@@ -585,20 +585,20 @@
 
 /obj/item/storage/mail_counterfeit_device/xmas
 	name = "GGA-MC-2 present counterfeit device"
-	desc = "A modified single-use device for spoofing official Santa's Workshop presents instead of Nanotrasen mail. Can hold one normal sized object, and can be programmed to arm its contents when opened. "
+	desc = "A modified single-use device for spoofing official Santa's Workshop presents instead of Nanotrasen mail. Can hold one normal sized object, and can be programmed to arm its contents when opened. MC stands for Merry Christmas! HO HO HO! "
 	w_class = WEIGHT_CLASS_NORMAL
 	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "mail_counterfeit_device-xmas"
 	storage_type = /datum/storage/mail_counterfeit
 
+
+
 /obj/item/storage/mail_counterfeit_device/xmas/examine_more(mob/user)
-	. = ..()
 	. += span_notice("<i>You notice the manufacturer information on the side of the device...</i>")
-	. += "\t[span_info("Guerilla Giftbox Assembler")]"
+	. += "\t[span_info("Guerilla Giftbox Assembler:")]"
 	. += "\t[span_info("GGA Jolly Service, right on Christmas.")]"
-	. += "\t[span_info("You can also see a little note on the back...</i>")]"
-	. += "\t[span_info("MC stands for Merry Christmas! HO HO HO!")]"
 	return .
+
 
 
 /obj/item/storage/mail_counterfeit_device/xmas/attack_self(mob/user, modifiers)
@@ -635,16 +635,17 @@
 
 	var/obj/item/mail/traitor/shady_christmas_gift/shady_mail = new
 
-	if(mail_type == "tiny")
-		shady_mail.icon_state = "giftdeliverypackage1"
-	if(mail_type == "small")
-		shady_mail.icon_state = "giftdeliverypackage2"
-	if(mail_type == "normal")
-		shady_mail.icon_state = "giftdeliverypackage3"
-	if(mail_type == "bulky")
-		shady_mail.icon_state = "giftdeliverypackage4"
-	if(mail_type == "huge")
-		shady_mail.icon_state = "giftdeliverypackage5"
+	switch(mail_type)
+		if("tiny")
+			shady_mail.icon_state = "giftdeliverypackage1"
+		if("small")
+			shady_mail.icon_state = "giftdeliverypackage2"
+		if("normal")
+			shady_mail.icon_state = "giftdeliverypackage3"
+		if("bulky")
+			shady_mail.icon_state = "giftdeliverypackage4"
+		if("huge")
+			shady_mail.icon_state = "giftdeliverypackage5"
 
 	shady_mail.made_by_cached_ckey = user.ckey
 	shady_mail.made_by_cached_name = user.mind.name
