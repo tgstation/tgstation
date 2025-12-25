@@ -3,9 +3,9 @@
 	/// The closed turf our object is currently linked to.
 	var/atom/hanging_support_atom
 
-/datum/component/atom_mounted/Initialize(target_structure, on_drop_callback)
+/datum/component/atom_mounted/Initialize(target_structure)
 	. = ..()
-	if(!isobj(parent))
+	if(!isobj(parent) || !isatom(target_structure))
 		return COMPONENT_INCOMPATIBLE
 	hanging_support_atom = target_structure
 	RegisterSignal(hanging_support_atom, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
@@ -15,13 +15,17 @@
 		RegisterSignal(hanging_support_atom, COMSIG_QDELETING, PROC_REF(on_structure_delete))
 
 /datum/component/atom_mounted/RegisterWithParent()
-	ADD_TRAIT(parent, TRAIT_WALLMOUNTED, REF(src))
-	RegisterSignal(parent, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, PROC_REF(detach))
+	ADD_TRAIT(parent, TRAIT_WALLMOUNTED, INNATE_TRAIT)
+	if(is_area_shuttle(get_area(parent)))
+		RegisterSignal(parent, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, PROC_REF(detach))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 
 /datum/component/atom_mounted/UnregisterFromParent()
-	REMOVE_TRAIT(parent, TRAIT_WALLMOUNTED, REF(src))
-	UnregisterSignal(parent, list(COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, COMSIG_MOVABLE_MOVED))
+	REMOVE_TRAIT(parent, TRAIT_WALLMOUNTED, INNATE_TRAIT)
+	var/list/signals = list(COMSIG_MOVABLE_MOVED)
+	if(is_area_shuttle(get_area(parent)))
+		signals += COMSIG_ATOM_BEFORE_SHUTTLE_MOVE
+	UnregisterSignal(parent, signals)
 
 /datum/component/atom_mounted/Destroy(force)
 	hanging_support_atom = null
@@ -159,7 +163,8 @@
 					break
 		if(attachable_atom)
 			AddComponent(/datum/component/atom_mounted, attachable_atom)
-			RegisterSignal(src, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, PROC_REF(remount), override = TRUE)
+			if(is_area_shuttle(location))
+				RegisterSignal(src, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, PROC_REF(remount), override = TRUE)
 			return TRUE
 		if(msg)
 			msg += "([target.x],[target.y],[target.z]) "
@@ -170,7 +175,7 @@
 		obj_flags |= MOUNT_ON_LATE_INITIALIZE
 	return FALSE
 
-///Used to remount an object after shuttle rotate
+///Used to remount an object after shuttle move
 /obj/proc/remount(datum/source, oldT)
 	SIGNAL_HANDLER
 	PRIVATE_PROC(TRUE)
