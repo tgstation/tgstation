@@ -45,13 +45,13 @@
 
 /datum/element/adjust_fishing_difficulty/proc/update_check(atom/movable/movable_source, removing = FALSE)
 	for(var/mob/living/buckled_mob as anything in movable_source.buckled_mobs)
-		update_user(buckled_mob, removing)
+		update_user(buckled_mob, movable_source, removing)
 	if(!isitem(movable_source) || !isliving(movable_source.loc))
 		return
 	var/mob/living/holder = movable_source.loc
 	var/obj/item/item = movable_source
 	if(holder.get_slot_by_item(movable_source) & (slots || item.slot_flags))
-		update_user(holder, removing)
+		update_user(holder, movable_source, removing)
 
 /datum/element/adjust_fishing_difficulty/proc/on_item_examine(obj/item/item, mob/user, list/examine_text)
 	SIGNAL_HANDLER
@@ -76,37 +76,29 @@
 
 /datum/element/adjust_fishing_difficulty/proc/on_buckle(atom/movable/source, mob/living/buckled_mob, forced)
 	SIGNAL_HANDLER
-	update_user(buckled_mob)
+	update_user(buckled_mob, source)
 
 /datum/element/adjust_fishing_difficulty/proc/on_unbuckle(atom/movable/source, mob/living/buckled_mob, forced)
 	SIGNAL_HANDLER
-	update_user(buckled_mob, TRUE)
+	update_user(buckled_mob, source, TRUE)
 
 /datum/element/adjust_fishing_difficulty/proc/on_equipped(obj/item/source, mob/living/wearer, slot)
 	SIGNAL_HANDLER
 	if(slot & (slots || source.slot_flags))
-		update_user(wearer)
+		update_user(wearer, source)
 
 /datum/element/adjust_fishing_difficulty/proc/on_dropped(obj/item/source, mob/living/dropper)
 	SIGNAL_HANDLER
-	update_user(dropper, TRUE)
+	update_user(dropper, source, TRUE)
 
-/datum/element/adjust_fishing_difficulty/proc/update_user(mob/living/user, removing = FALSE)
-	var/datum/fishing_challenge/challenge = GLOB.fishing_challenges_by_user[user]
+/// Updates the user's tracked current fishing modifiers
+/datum/element/adjust_fishing_difficulty/proc/update_user(mob/living/user, obj/source_item, removing = FALSE)
 	if(removing)
-		UnregisterSignal(user, COMSIG_MOB_BEGIN_FISHING)
-		if(challenge)
-			UnregisterSignal(challenge, COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY)
+		LAZYREMOVE(user.fishing_difficulty_mods_by_source, source_item.type)
 	else
-		RegisterSignal(user, COMSIG_MOB_BEGIN_FISHING, PROC_REF(on_minigame_started), TRUE)
-		if(challenge)
-			RegisterSignal(challenge, COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY, PROC_REF(adjust_difficulty), TRUE)
-	challenge?.update_difficulty()
+		LAZYSET(user.fishing_difficulty_mods_by_source, source_item.type, modifier)
 
-/datum/element/adjust_fishing_difficulty/proc/on_minigame_started(mob/living/source, datum/fishing_challenge/challenge)
-	SIGNAL_HANDLER
-	RegisterSignal(challenge, COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY, PROC_REF(adjust_difficulty), TRUE)
-
-/datum/element/adjust_fishing_difficulty/proc/adjust_difficulty(datum/fishing_challenge/challenge, reward_path, obj/item/fishing_rod/rod, mob/living/user, list/holder)
-	SIGNAL_HANDLER
-	holder[1] += modifier
+	// Are we currently in a fishing challenge? If so, update that challenge as well
+	var/datum/fishing_challenge/challenge = GLOB.fishing_challenges_by_user[user]
+	if(challenge)
+		challenge.update_difficulty()
