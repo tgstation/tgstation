@@ -1,4 +1,0 @@
-author: "Yobrocharlie"
-delete-after: True
-changes:
-  - bugfix: "fixed being able to skip the first puzzle in the new gateway"
