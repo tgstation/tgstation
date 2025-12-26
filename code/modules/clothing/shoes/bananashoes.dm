@@ -14,13 +14,13 @@
 	/// Typepath of created banana
 	var/banana_type = /obj/item/grown/bananapeel/specialpeel
 	/// Material container for bananium
-	var/datum/component/material_container/bananium
+	var/datum/material_container/bananium
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	bananium = AddComponent(
-		/datum/component/material_container, \
+	bananium = new (
+		src, \
 		list(/datum/material/bananium), \
 		100 * SHEET_MATERIAL_AMOUNT, \
 		MATCONTAINER_EXAMINE | MATCONTAINER_ANY_INTENT | MATCONTAINER_SILENT, \
@@ -32,7 +32,7 @@
 		LAZYOR(clothing_traits, TRAIT_NO_SLIP_WATER)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/Destroy()
-	bananium = null
+	QDEL_NULL(bananium)
 	return ..()
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/proc/toggle_clowning_action()
