@@ -845,7 +845,7 @@
 
 	QDEL_IN(holder, breath_particle.lifespan)
 
-/obj/item/organ/lungs/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/lungs/on_life(seconds_per_tick)
 	. = ..()
 	if(failed && !(organ_flags & ORGAN_FAILING))
 		failed = FALSE

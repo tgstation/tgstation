@@ -11,7 +11,6 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
-
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 import { LoadingScreen } from './common/LoadingScreen';

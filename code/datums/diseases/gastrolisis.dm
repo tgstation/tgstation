@@ -12,7 +12,7 @@
 	bypasses_immunity = TRUE
 
 
-/datum/disease/gastrolosis/stage_act(seconds_per_tick, times_fired)
+/datum/disease/gastrolosis/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

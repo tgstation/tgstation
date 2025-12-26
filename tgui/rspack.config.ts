@@ -117,6 +117,10 @@ export default defineConfig({
     new rspack.EnvironmentPlugin({
       NODE_ENV: 'production',
     }),
+    new rspack.CircularDependencyRspackPlugin({
+      failOnError: true,
+      exclude: /node_modules/,
+    }),
   ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],

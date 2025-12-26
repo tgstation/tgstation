@@ -131,7 +131,7 @@
 	return TRUE
 
 /// Signal Handler Injection to handle Life() stuff for revenants
-/mob/living/basic/revenant/proc/on_life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/revenant/proc/on_life(seconds_per_tick = SSMOBS_DT)
 	SIGNAL_HANDLER
 
 	if(dormant)

@@ -1,6 +1,6 @@
 import type { BooleanLike } from 'tgui-core/react';
 
-import type { sendAct } from '../../backend';
+import type { sendAct } from '../../events/act';
 import type {
   LoadoutCategory,
   LoadoutList,

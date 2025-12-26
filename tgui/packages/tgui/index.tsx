@@ -7,20 +7,15 @@
 // Themes
 import './styles/main.scss';
 
-import { perf } from 'common/perf';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotKeys } from 'tgui-core/hotkeys';
 import { captureExternalLinks } from 'tgui-core/links';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { App } from './App';
-import { setGlobalStore } from './backend';
+import { setDebugHotKeys } from './debug/use-debug';
+import { bus } from './events/listeners';
 import { render } from './renderer';
-import { configureStore } from './store';
-
-perf.mark('inception', window.performance?.timeOrigin);
-perf.mark('init');
-
-const store = configureStore();
+import { createStackAugmentor } from './stack';
 
 function setupApp() {
   // Delay setup
@@ -28,8 +23,7 @@ function setupApp() {
     document.addEventListener('DOMContentLoaded', setupApp);
     return;
   }
-
-  setGlobalStore(store);
+  window.__augmentStack__ = createStackAugmentor();
 
   setupGlobalEvents();
   setupHotKeys({
@@ -40,19 +34,16 @@ function setupApp() {
   });
   captureExternalLinks();
 
-  store.subscribe(() => render(<App />));
+  Byond.subscribe((type, payload) => bus.dispatch({ type, payload }));
 
-  // Dispatch incoming messages as store actions
-  Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
+  render(<App />);
 
   // Enable hot module reloading
   if (import.meta.webpackHot) {
+    setDebugHotKeys();
     setupHotReloading();
-    import.meta.webpackHot.accept(
-      ['./debug', './layouts', './routes', './App'],
-      () => {
-        render(<App />);
-      },
+    import.meta.webpackHot.accept(['./layouts', './routes', './App'], () =>
+      render(<App />),
     );
   }
 }

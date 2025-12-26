@@ -8,7 +8,7 @@
 #define COMSIG_MOB_MIND_INITIALIZED "mob_mind_inited"
 ///from base of mob/set_stat(): (new_stat, old_stat)
 #define COMSIG_MOB_STATCHANGE "mob_statchange"
-///from base of mob/reagent_tick(): (datum/reagent/chem, seconds_per_tick, times_fired)
+///from base of mob/reagent_tick(): (datum/reagent/chem, seconds_per_tick)
 #define COMSIG_MOB_REAGENT_TICK "mob_reagent_tick"
 	///stops the reagent check call
 	#define COMSIG_MOB_STOP_REAGENT_TICK (1<<0)

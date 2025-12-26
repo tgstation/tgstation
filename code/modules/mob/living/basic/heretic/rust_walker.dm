@@ -39,7 +39,7 @@
 		icon_state = "[base_icon_state]_s"
 	icon_living = icon_state
 
-/mob/living/basic/heretic_summon/rust_walker/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/heretic_summon/rust_walker/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(!.) //dead or deleted
 		return

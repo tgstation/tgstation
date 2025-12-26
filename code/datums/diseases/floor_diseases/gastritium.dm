@@ -14,7 +14,7 @@
 	/// The chance of burped out tritium to be hot during max stage
 	var/tritium_burp_hot_chance = 10
 
-/datum/disease/gastritium/stage_act(seconds_per_tick, times_fired)
+/datum/disease/gastritium/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

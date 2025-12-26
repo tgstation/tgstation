@@ -11,7 +11,7 @@
 	gain_text = span_notice("You feel a higher power inside your mind...")
 	lose_text = span_warning("The divine presence leaves your head, no longer interested.")
 
-/datum/brain_trauma/special/godwoken/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/godwoken/on_life(seconds_per_tick)
 	..()
 	if(SPT_PROB(2, seconds_per_tick))
 		if(prob(33) && (owner.IsStun() || owner.IsParalyzed() || owner.IsUnconscious()))
@@ -57,7 +57,7 @@
 	/// Cooldown so we can't teleport literally everywhere on a whim
 	COOLDOWN_DECLARE(portal_cooldown)
 
-/datum/brain_trauma/special/bluespace_prophet/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/bluespace_prophet/on_life(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, portal_cooldown))
 		return
 
@@ -164,7 +164,7 @@
 	/// Cooldown for snapbacks
 	COOLDOWN_DECLARE(snapback_cooldown)
 
-/datum/brain_trauma/special/quantum_alignment/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/quantum_alignment/on_life(seconds_per_tick)
 	if(linked)
 		if(QDELETED(linked_target))
 			linked_target = null
@@ -309,7 +309,7 @@
 	/// A cooldown to prevent constantly erratic dolphining through the fabric of reality
 	COOLDOWN_DECLARE(crisis_cooldown)
 
-/datum/brain_trauma/special/existential_crisis/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/existential_crisis/on_life(seconds_per_tick)
 	..()
 	if(!veil && COOLDOWN_FINISHED(src, crisis_cooldown) && SPT_PROB(1.5, seconds_per_tick))
 		if(isturf(owner.loc))
@@ -449,7 +449,7 @@
 		/datum/hallucination/battle/stun_prod,
 	)
 
-/datum/brain_trauma/special/ptsd/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/ptsd/on_life(seconds_per_tick)
 	if(owner.stat != CONSCIOUS)
 		return
 
@@ -504,7 +504,7 @@
 		owner.ai_controller = new old_ai_controller_type(owner)
 	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
 
-/datum/brain_trauma/special/primal_instincts/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/primal_instincts/on_life(seconds_per_tick)
 	if(isnull(owner.ai_controller))
 		qdel(src)
 		return
@@ -558,7 +558,7 @@
 		"Ah!",
 	)
 
-/datum/brain_trauma/special/axedoration/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/axedoration/on_life(seconds_per_tick)
 	if(owner.stat != CONSCIOUS)
 		return
 

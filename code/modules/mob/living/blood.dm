@@ -123,13 +123,13 @@
 	return !!bloodiest_wound
 
 // Takes care blood loss and regeneration
-/mob/living/carbon/human/handle_blood(seconds_per_tick, times_fired)
+/mob/living/carbon/human/handle_blood(seconds_per_tick)
 	// Under these circumstances blood handling is not necessary
 	if(bodytemperature < BLOOD_STOP_TEMP || HAS_TRAIT(src, TRAIT_FAKEDEATH))
 		return
 
 	// Run the signal, still allowing mobs with noblood to "handle blood" in their own way
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_HUMAN_ON_HANDLE_BLOOD, seconds_per_tick, times_fired)
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_HUMAN_ON_HANDLE_BLOOD, seconds_per_tick)
 	if((sigreturn & HANDLE_BLOOD_HANDLED) || !CAN_HAVE_BLOOD(src))
 		return
 

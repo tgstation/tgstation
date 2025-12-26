@@ -18,7 +18,7 @@
 	affected_mob.remove_status_effect(/datum/status_effect/decloning)
 	return ..()
 
-/datum/disease/decloning/stage_act(seconds_per_tick, times_fired)
+/datum/disease/decloning/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

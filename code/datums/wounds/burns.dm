@@ -35,7 +35,7 @@
 	/// Once we reach infection beyond WOUND_INFECTION_SEPTIC, we get this many warnings before the limb is completely paralyzed (you'd have to ignore a really bad burn for a really long time for this to happen)
 	var/strikes_to_lose_limb = 3
 
-/datum/wound/burn/flesh/handle_process(seconds_per_tick, times_fired)
+/datum/wound/burn/flesh/handle_process(seconds_per_tick)
 
 	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
@@ -253,7 +253,7 @@
 		uv(tool, user)
 
 // people complained about burns not healing on stasis beds, so in addition to checking if it's cured, they also get the special ability to very slowly heal on stasis beds if they have the healing effects stored
-/datum/wound/burn/flesh/on_stasis(seconds_per_tick, times_fired)
+/datum/wound/burn/flesh/on_stasis(seconds_per_tick)
 	. = ..()
 	if(strikes_to_lose_limb <= 0) // we've already hit sepsis, nothing more to do
 		if(SPT_PROB(0.5, seconds_per_tick))

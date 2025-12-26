@@ -29,6 +29,7 @@ import { Log } from './Log';
 import { StateSelectModal } from './StateSelectModal';
 import { TaskManager } from './TaskManager';
 import type { CallInfo, LuaEditorData, LuaEditorModal } from './types';
+
 hljs.registerLanguage('lua', lua);
 
 export const LuaEditor = () => {
@@ -153,6 +154,13 @@ export const LuaEditor = () => {
     };
   };
 
+  async function onDropHandler(event: React.DragEvent<HTMLTextAreaElement>) {
+    if (event.dataTransfer?.files.length) {
+      event.preventDefault();
+      setScriptInput(await event.dataTransfer.files[0].text());
+    }
+  }
+
   return (
     <Window width={1280} height={720}>
       <Window.Content>
@@ -226,17 +234,8 @@ export const LuaEditor = () => {
                             }}
                           />
                         }*/
-                          /** @ts-ignore */
-                          onDrop={async (
-                            event: React.DragEvent<HTMLDivElement>,
-                          ) => {
-                            if (event.dataTransfer?.files.length) {
-                              event.preventDefault();
-                              setScriptInput(
-                                await event.dataTransfer.files[0].text(),
-                              );
-                            }
-                          }}
+
+                          onDrop={onDropHandler}
                         />
                       </Stack.Item>
                       <Stack.Item>

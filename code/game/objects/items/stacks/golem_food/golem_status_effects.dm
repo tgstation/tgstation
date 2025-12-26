@@ -311,7 +311,7 @@
 		set_arm_fluff(arm)
 	return TRUE
 
-/datum/status_effect/golem/diamond/tick(delta_time, times_fired)
+/datum/status_effect/golem/diamond/tick(delta_time)
 	owner.alpha = max(owner.alpha - alpha_per_tick, 0)
 
 /// Reset alpha to starting value

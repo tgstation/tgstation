@@ -16,7 +16,7 @@
 	bypasses_immunity = TRUE
 	stage_prob = 5
 
-/datum/disease/anaphylaxis/stage_act(seconds_per_tick, times_fired)
+/datum/disease/anaphylaxis/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

@@ -59,7 +59,7 @@
 		if(!QDELETED(bodypart))
 			qdel(bodypart)
 
-/mob/living/basic/living_limb_flesh/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/living_limb_flesh/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(stat == DEAD)
 		return

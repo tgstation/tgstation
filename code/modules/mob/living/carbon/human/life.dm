@@ -18,7 +18,7 @@
 #define THERMAL_PROTECTION_HAND_LEFT 0.025
 #define THERMAL_PROTECTION_HAND_RIGHT 0.025
 
-/mob/living/carbon/human/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/carbon/human/Life(seconds_per_tick = SSMOBS_DT)
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
@@ -28,10 +28,10 @@
 		return FALSE
 
 	// Body temperature stability and damage
-	dna.species.handle_body_temperature(src, seconds_per_tick, times_fired)
+	dna.species.handle_body_temperature(src, seconds_per_tick)
 	if(HAS_TRAIT(src, TRAIT_STASIS))
 		for(var/datum/wound/iter_wound as anything in all_wounds)
-			iter_wound.on_stasis(seconds_per_tick, times_fired)
+			iter_wound.on_stasis(seconds_per_tick)
 		return stat != DEAD
 
 	if(stat == DEAD)
@@ -39,14 +39,14 @@
 
 	// Handle active mutations
 	for(var/datum/mutation/mutation as anything in dna.mutations)
-		mutation.on_life(seconds_per_tick, times_fired)
+		mutation.on_life(seconds_per_tick)
 
 	// Heart attack stuff
-	handle_heart(seconds_per_tick, times_fired)
+	handle_heart(seconds_per_tick)
 	// Handles liver failure effects, if we lack a liver
-	handle_liver(seconds_per_tick, times_fired)
+	handle_liver(seconds_per_tick)
 	// For special species interactions
-	dna.species.spec_life(src, seconds_per_tick, times_fired)
+	dna.species.spec_life(src, seconds_per_tick)
 	return stat != DEAD
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
@@ -102,12 +102,12 @@
 	return FALSE
 
 /// Environment handlers for species
-/mob/living/carbon/human/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+/mob/living/carbon/human/handle_environment(datum/gas_mixture/environment, seconds_per_tick)
 	// If we are in a cryo bed do not process life functions
 	if(istype(loc, /obj/machinery/cryo_cell))
 		return
 
-	dna.species.handle_environment(src, environment, seconds_per_tick, times_fired)
+	dna.species.handle_environment(src, environment, seconds_per_tick)
 
 /**
  * Adjust the core temperature of a mob
@@ -287,7 +287,7 @@
 			return TRUE
 	return ..()
 
-/mob/living/carbon/human/proc/handle_heart(seconds_per_tick, times_fired)
+/mob/living/carbon/human/proc/handle_heart(seconds_per_tick)
 	var/we_breath = !HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT)
 
 	if(!undergoing_cardiac_arrest())

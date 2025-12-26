@@ -81,7 +81,7 @@
 	current_attack?.cure()
 	UnregisterSignal(quirk_holder, COMSIG_CARBON_EXPOSED_TO_SMOKE, COMSIG_CARBON_LOSE_ORGAN, COMSIG_ATOM_EXPOSE_REAGENTS, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_LIFE)
 
-/datum/quirk/item_quirk/asthma/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
+/datum/quirk/item_quirk/asthma/proc/on_life(mob/living/source, seconds_per_tick)
 	SIGNAL_HANDLER
 
 	if (quirk_holder.stat == DEAD)

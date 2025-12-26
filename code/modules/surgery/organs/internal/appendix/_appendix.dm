@@ -29,7 +29,7 @@
 	icon_state = "[base_icon_state][inflamation_stage ? "inflamed" : ""]"
 	return ..()
 
-/obj/item/organ/appendix/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/appendix/on_life(seconds_per_tick)
 	. = ..()
 	if(!owner)
 		return

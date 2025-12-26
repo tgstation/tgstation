@@ -72,7 +72,7 @@
 
 	return (locate(/datum/quirk/item_quirk/asthma) in target.quirks)
 
-/datum/disease/asthma_attack/stage_act(seconds_per_tick, times_fired)
+/datum/disease/asthma_attack/stage_act(seconds_per_tick)
 	. = ..()
 	if (!.)
 		return
@@ -116,7 +116,7 @@
 		"3" = 0.6,
 	)
 
-/datum/disease/asthma_attack/minor/stage_act(seconds_per_tick, times_fired)
+/datum/disease/asthma_attack/minor/stage_act(seconds_per_tick)
 	. = ..()
 	if (!.)
 		return FALSE
@@ -140,7 +140,7 @@
 		"4" = 4,
 	)
 
-/datum/disease/asthma_attack/moderate/stage_act(seconds_per_tick, times_fired)
+/datum/disease/asthma_attack/moderate/stage_act(seconds_per_tick)
 	. = ..()
 	if (!.)
 		return FALSE
@@ -174,7 +174,7 @@
 	visibility_flags = HIDDEN_SCANNER
 	alert_ghosts = TRUE
 
-/datum/disease/asthma_attack/severe/stage_act(seconds_per_tick, times_fired)
+/datum/disease/asthma_attack/severe/stage_act(seconds_per_tick)
 	. = ..()
 	if (!.)
 		return FALSE
@@ -216,7 +216,7 @@
 	/// Have we ever reached our max stage? If no, and we are at our max stage, we send a ominous message warning them of their imminent demise.
 	var/max_stage_reached = FALSE
 
-/datum/disease/asthma_attack/critical/stage_act(seconds_per_tick, times_fired)
+/datum/disease/asthma_attack/critical/stage_act(seconds_per_tick)
 	. = ..()
 	if (!.)
 		return FALSE

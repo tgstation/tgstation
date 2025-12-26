@@ -206,7 +206,7 @@
 
 // These aren't friends they're assholes
 // Don't let them be near you!
-/mob/living/basic/construct/harvester/heretic/Life(seconds_per_tick, times_fired)
+/mob/living/basic/construct/harvester/heretic/Life(seconds_per_tick)
 	. = ..()
 	if(!.) //dead or deleted
 		return

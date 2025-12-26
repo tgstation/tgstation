@@ -163,7 +163,7 @@
 		return
 	AddElement(/datum/element/attack_zone_randomiser)
 
-/mob/living/basic/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(staminaloss > 0)
 		adjust_stamina_loss(-stamina_recovery * seconds_per_tick, forced = TRUE)

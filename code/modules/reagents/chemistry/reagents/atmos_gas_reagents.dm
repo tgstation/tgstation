@@ -43,7 +43,7 @@
 	. = ..()
 	breather.SetSleeping(1 SECONDS)
 
-/datum/reagent/healium/on_mob_life(mob/living/breather, seconds_per_tick, times_fired)
+/datum/reagent/healium/on_mob_life(mob/living/breather, seconds_per_tick)
 	. = ..()
 	breather.SetSleeping(30 SECONDS)
 	var/need_mob_update
@@ -61,7 +61,7 @@
 	taste_description = "searingly cold"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/hypernoblium/on_mob_life(mob/living/carbon/breather, seconds_per_tick, times_fired)
+/datum/reagent/hypernoblium/on_mob_life(mob/living/carbon/breather, seconds_per_tick)
 	. = ..()
 	if(isplasmaman(breather))
 		breather.set_timed_status_effect(10 SECONDS * REM * seconds_per_tick, /datum/status_effect/hypernob_protection)
@@ -77,7 +77,7 @@
 	addiction_types = list(/datum/addiction/stimulants = 14)
 	metabolized_traits = list(TRAIT_SLEEPIMMUNE)
 
-/datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/breather, seconds_per_tick, times_fired)
+/datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/breather, seconds_per_tick)
 	. = ..()
 	var/need_mob_update
 	need_mob_update = breather.adjust_stamina_loss(-4 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
@@ -110,7 +110,7 @@
 	taste_description = "irradiated air"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/pluoxium/on_mob_life(mob/living/carbon/breather, seconds_per_tick, times_fired)
+/datum/reagent/pluoxium/on_mob_life(mob/living/carbon/breather, seconds_per_tick)
 	. = ..()
 	if(!HAS_TRAIT(breather, TRAIT_KNOCKEDOUT))
 		return
@@ -132,7 +132,7 @@
 	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // "toxic to all living beings"
 	affected_respiration_type = ALL
 
-/datum/reagent/zauker/on_mob_life(mob/living/breather, seconds_per_tick, times_fired)
+/datum/reagent/zauker/on_mob_life(mob/living/breather, seconds_per_tick)
 	. = ..()
 	var/need_mob_update
 	need_mob_update = breather.adjust_brute_loss(6 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
