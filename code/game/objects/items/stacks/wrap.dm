@@ -150,11 +150,11 @@
 				parcel.base_icon_state = "deliveryfloppy"
 				parcel.name = "floppy disk parcel"
 			else
-				var/size = round(item.w_class)
-				parcel.name = "[weight_class_to_text(size)] parcel"
-				parcel.update_weight_class(size)
-				size = min(size, 5)
 				parcel.base_icon_state = "deliverypackage[size]"
+				parcel.name = "[weight_class_to_text(size)] parcel"
+			var/size = round(item.w_class)
+			parcel.update_weight_class(size)
+			size = min(size, 5)
 			parcel.update_icon()
 		else
 			return ITEM_INTERACT_BLOCKING

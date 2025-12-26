@@ -115,6 +115,9 @@
 		if(!newdescription)
 			return ITEM_INTERACT_FAILURE
 
+		if(!can_interact(user))
+			return ITEM_INTERACT_FAILURE
+
 		playsound(src, SFX_WRITING_PEN, 30)
 		to_chat(user, span_notice("You sign the [src]."))
 
@@ -179,10 +182,10 @@
 		var/obj/item/disk_stack/held_stack = tool
 		var/obj/item/disk_stack/new_stack = new(get_turf(src))
 		var/should_put_in_hand = user.is_holding(src)
-		
+
 		new_stack.add_to_stack(user, src)
 		new_stack.merge_stacks(user, held_stack)
-		
+
 		if(should_put_in_hand)
 			user.put_in_hands(new_stack)
 		return ITEM_INTERACT_SUCCESS
