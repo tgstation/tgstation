@@ -129,7 +129,7 @@
 		if(!check_filters_for_atom(target) && should_use_filters)
 			return FALSE
 
-		if(interaction_mode != INTERACT_DROP) // we don't check for overflow if we're not putting anything on the turf silly
+		if(interaction_mode != INTERACT_DROP) // you don't check for overflow if you're not actually putting anything on the turf silly
 			return TRUE
 
 		switch(overflow_status)
@@ -138,8 +138,6 @@
 				// Hence if the atom filters are skipped, the point is available for dropoff
 				if(!should_use_filters)
 					return TRUE
-				// If filters are enabled and the target matched them above, it's available
-				return TRUE
 
 			if(POINT_OVERFLOW_FILTERS)
 				// We need to check if there are already items matching the filters on the turf
@@ -147,31 +145,23 @@
 					if(check_filters_for_atom(movable_atom))
 						return FALSE // the item on the turf was in the filters, hence the turf is considered overflowed
 
-				return TRUE
-
 			if(POINT_OVERFLOW_HELD)
 				// We need to check if any of the items on the turf match the item we're holding
 				for(var/atom/movable/movable_atom as anything in atoms_on_the_turf)
 					if(istype(movable_atom, target?.type))
 						return FALSE // one of the items on the turf was the same as the one we're holding
 
-				return TRUE
-
 			if(POINT_OVERFLOW_FORBIDDEN)
 				// We need to check if there are already ANY items on the turf
-				var/list/items_on_the_turf = list()
-				for(var/obj/item/each_item as anything in atoms_on_the_turf)
-					items_on_the_turf += each_item
-
-				if(length(items_on_the_turf))
+				if(locate(/obj/item) in atoms_on_the_turf)
 					return FALSE
 
-				return TRUE
+		return TRUE
 
-	// No interaction is possible - the interaction point is unavailable.
+	// Ambiguous interaction type — no interaction is possible, point is unavailable
 	return FALSE
 
-/// Checks if the interaction point is valid.
+/// Checks if the interaction point is valid — is not located on a closed turf.
 /datum/interaction_point/proc/is_valid()
 	if(!interaction_turf)
 		return FALSE
