@@ -90,10 +90,7 @@
 		return FALSE
 
 	// All atoms on the turf that can be interacted with.
-	var/list/atoms_on_the_turf = list()
-	if(interaction_turf)
-		for(var/atom/movable/movable_atom in interaction_turf.contents)
-			atoms_on_the_turf += movable_atom
+	var/list/atoms_on_the_turf = interaction_turf?.contents
 
 	// For pickup points, we want points that have atoms to pick up
 	if(transfer_type == TRANSFER_TYPE_PICKUP)
