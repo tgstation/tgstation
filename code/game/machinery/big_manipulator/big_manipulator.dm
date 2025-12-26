@@ -146,10 +146,11 @@
 		toggle_power_state(null)
 	set_wires(new /datum/wires/big_manipulator(src))
 	register_context()
-	prepare_huds()
+
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_atom_to_hud(src)
 
+	prepare_huds()
 	update_hud()
 	update_strategies()
 
@@ -507,10 +508,15 @@
 		SStgui.update_uis(src)
 
 /obj/machinery/big_manipulator/proc/validate_all_points()
-	for(var/datum/interaction_point/point in (pickup_points + dropoff_points))
+	for(var/datum/interaction_point/point in pickup_points)
 		if(!point.is_valid())
-			pickup_points.Remove(point)
-			dropoff_points.Remove(point)
+			pickup_points -= point
+			qdel(point)
+
+	for(var/datum/interaction_point/point in dropoff_points)
+		if(!point.is_valid())
+			dropoff_points -= point
+			qdel(point)
 
 	if(is_operational)
 		update_hud()

@@ -64,25 +64,43 @@
 
 /// Finds the type priority of the interaction point.
 /datum/interaction_point/proc/find_type_priority()
-	for(var/datum/manipulator_priority/each_priority in interaction_priorities)
-		if(!each_priority.active)
-			continue
+    var/list/turf_contents = interaction_turf.contents
 
-		if(each_priority.atom_typepath == /turf)
-			return interaction_turf
+    var/atom/movable/best_candidate = null
+    var/best_priority_index = INFINITY
 
-		for(var/type_in_priority in interaction_turf.contents)
-			if(!istype(type_in_priority, each_priority.atom_typepath))
-				continue
+    for(var/atom/movable/thing as anything in turf_contents)
+        for(var/i in 1 to length(interaction_priorities))
+            if(i >= best_priority_index)
+                break
 
-			if(isliving(type_in_priority))
-				var/mob/living/living_target = type_in_priority
-				if(living_target.stat == DEAD)
-					continue
+            var/datum/manipulator_priority/prio = interaction_priorities[i]
 
-			return type_in_priority
+            if(!prio.active)
+                continue
 
-	return null // all priorities on this point are disabled because whoever set em up is a dumdum
+            if(prio.atom_typepath == /turf)
+                if(i < best_priority_index)
+                    best_candidate = interaction_turf
+                    best_priority_index = i
+                continue
+
+            if(!istype(thing, prio.atom_typepath))
+                continue
+
+            if(isliving(thing))
+                var/mob/living/L = thing
+                if(L.stat == DEAD)
+                    continue
+
+            best_candidate = thing
+            best_priority_index = i
+
+            if(best_priority_index == 1)
+                return best_candidate
+            break
+
+    return best_candidate
 
 /// Checks if the interaction point is available - if it has items that can be interacted with.
 /datum/interaction_point/proc/is_available(transfer_type, atom/movable/target)
@@ -99,7 +117,7 @@
 			return FALSE // nothing to pick up
 
 		// If the atom filters are required, we need to check if any atom on the turf fits the filters. If not, the check will only determine whether it fits the category
-		for(var/atom/movable/movable_atom in atoms_on_the_turf)
+		for(var/atom/movable/movable_atom as anything in atoms_on_the_turf)
 			if(check_filters_for_atom(movable_atom))
 				return TRUE
 
@@ -110,6 +128,9 @@
 		// If filters are enabled, the held item itself must match them for any overflow mode
 		if(!check_filters_for_atom(target) && should_use_filters)
 			return FALSE
+
+		if(interaction_mode != INTERACT_DROP) // we don't check for overflow if we're not putting anything on the turf silly
+			return TRUE
 
 		switch(overflow_status)
 			if(POINT_OVERFLOW_ALLOWED)
@@ -122,7 +143,7 @@
 
 			if(POINT_OVERFLOW_FILTERS)
 				// We need to check if there are already items matching the filters on the turf
-				for(var/atom/movable/movable_atom in atoms_on_the_turf)
+				for(var/atom/movable/movable_atom as anything in atoms_on_the_turf)
 					if(check_filters_for_atom(movable_atom))
 						return FALSE // the item on the turf was in the filters, hence the turf is considered overflowed
 
@@ -130,7 +151,7 @@
 
 			if(POINT_OVERFLOW_HELD)
 				// We need to check if any of the items on the turf match the item we're holding
-				for(var/atom/movable/movable_atom in atoms_on_the_turf)
+				for(var/atom/movable/movable_atom as anything in atoms_on_the_turf)
 					if(istype(movable_atom, target?.type))
 						return FALSE // one of the items on the turf was the same as the one we're holding
 
@@ -224,4 +245,5 @@
 
 /datum/interaction_point/Destroy()
 	interaction_turf = null
+	QDEL_LIST(interaction_priorities)
 	return ..()

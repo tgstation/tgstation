@@ -8,14 +8,14 @@
 		return null
 
 	var/list/candidates = list()
-	for(var/atom/movable/candidate in pickup_turf.contents)
-		if(candidate.anchored || HAS_TRAIT(candidate, TRAIT_NODROP))
+	for(var/atom/movable/candidate as anything in pickup_turf.contents)
+		if(candidate.anchored || HAS_TRAIT(candidate, TRAIT_NODROP) || move_resist > MOVE_FORCE_STRONG)
 			continue
 
 		if(!pickup_point.check_filters_for_atom(candidate))
 			continue
 
-		for(var/datum/interaction_point/dest_point in dropoff_points)
+		for(var/datum/interaction_point/dest_point as anything in dropoff_points)
 			if(!dest_point || !dest_point.is_valid())
 				continue
 			if(!dest_point.check_filters_for_atom(candidate))
@@ -95,7 +95,7 @@
 	if(!pickup_turf)
 		return FALSE
 
-	for(var/atom/movable/candidate in pickup_turf.contents)
+	for(var/atom/movable/candidate as anything in pickup_turf.contents)
 		if(!candidate.anchored && !HAS_TRAIT(candidate, TRAIT_NODROP))
 			return TRUE
 
