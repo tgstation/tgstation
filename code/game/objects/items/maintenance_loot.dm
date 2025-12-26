@@ -21,11 +21,13 @@
 	w_class = WEIGHT_CLASS_BULKY
 	wound_bonus = 20
 	demolition_mod = 1.25
-	grind_results = list(/datum/reagent/lead = 20)
 	pickup_sound = 'sound/items/handling/lead_pipe/lead_pipe_pickup.ogg'
 	drop_sound = 'sound/items/handling/materials/metal_drop.ogg'
 	throw_drop_sound = 'sound/items/handling/lead_pipe/lead_pipe_drop.ogg'
 	hitsound = 'sound/items/lead_pipe_hit.ogg'
+
+/obj/item/lead_pipe/grind_results()
+	return list(/datum/reagent/lead = 20)
 
 //A good battery early in the shift. Source of lead & sulfuric acid reagents.
 //Add lead material to this once implemented.
@@ -42,7 +44,9 @@
 	emp_damage_modifier = 4 // 15 shots.
 	charge_light_type = null
 	connector_type = "leadacid"
-	grind_results = list(/datum/reagent/lead = 15, /datum/reagent/toxin/acid = 15, /datum/reagent/water = 20)
+
+/obj/item/stock_parts/power_store/cell/lead/grind_results()
+	return list(/datum/reagent/lead = 15, /datum/reagent/toxin/acid = 15, /datum/reagent/water = 20)
 
 //starts partially discharged
 /obj/item/stock_parts/power_store/cell/lead/Initialize(mapload)

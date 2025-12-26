@@ -38,9 +38,9 @@
 	/// List of all connected components that are on hold from accessing materials.
 	var/list/holds = list()
 	/// List of all components that are sharing ores with this silo.
-	var/list/datum/component/remote_materials/ore_connected_machines = list()
+	var/list/datum/remote_materials/ore_connected_machines = list()
 	/// Material Container
-	var/datum/component/material_container/materials
+	var/datum/material_container/materials
 	/// A list of names of bank account IDs that are banned from using this ore silo.
 	var/list/banned_users = list()
 	///The machine's internal radio, used to broadcast alerts.
@@ -71,8 +71,8 @@
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
 
-	materials = AddComponent( \
-		/datum/component/material_container, \
+	materials = new ( \
+		src, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		INFINITY, \
 		MATCONTAINER_EXAMINE, \
@@ -95,11 +95,11 @@
 	if (GLOB.ore_silo_default == src)
 		GLOB.ore_silo_default = null
 
-	for(var/datum/component/remote_materials/mats as anything in ore_connected_machines)
+	for(var/datum/remote_materials/mats as anything in ore_connected_machines)
 		mats.disconnect()
 
 	ore_connected_machines = null
-	materials = null
+	QDEL_NULL(materials)
 	QDEL_NULL(radio)
 
 	return ..()
@@ -146,14 +146,14 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/ore_silo/proc/on_item_consumed(datum/component/material_container/container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context, alist/user_data)
+/obj/machinery/ore_silo/proc/on_item_consumed(datum/material_container/container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context, alist/user_data)
 	SIGNAL_HANDLER
 
 	silo_log(context, "DEPOSITED", amount_inserted, item_inserted.name, mats_consumed, user_data)
 
 	SEND_SIGNAL(context, COMSIG_SILO_ITEM_CONSUMED, container, item_inserted, last_inserted_id, mats_consumed, amount_inserted)
 
-/obj/machinery/ore_silo/proc/log_sheets_ejected(datum/component/material_container/container, obj/item/stack/sheet/sheets, atom/context, alist/user_data)
+/obj/machinery/ore_silo/proc/log_sheets_ejected(datum/material_container/container, obj/item/stack/sheet/sheets, atom/context, alist/user_data)
 	SIGNAL_HANDLER
 
 	silo_log(context, "WITHDRAWN", -sheets.amount * SHEET_MATERIAL_AMOUNT, "[sheets.name]", sheets.custom_materials, user_data)
@@ -178,12 +178,12 @@
  * The logic for disconnecting a remote receptacle (RCD, fabricator, etc.) is collected here for sanity's sake
  * rather than being on specific types. Serves to agnosticize the remote_materials component somewhat rather than
  * snowflaking code for silos into the component.
- * * receptacle - The datum/component/remote_materials component that is getting connected.
+ * * receptacle - The datum/remote_materials component that is getting connected.
  * * physical_receptacle - the actual object in the game world that was connected to our material supply. Typed as atom/movable for
  *   future-proofing against anything that may conceivably one day have remote silo access, such as a cyborg, an implant, structures, vehicles,
  *   and so-on.
  */
-/obj/machinery/ore_silo/proc/connect_receptacle(datum/component/remote_materials/receptacle, atom/movable/physical_receptacle)
+/obj/machinery/ore_silo/proc/connect_receptacle(datum/remote_materials/receptacle, atom/movable/physical_receptacle)
 	ore_connected_machines += receptacle
 	receptacle.mat_container = src.materials
 	receptacle.silo = src
@@ -192,12 +192,12 @@
 /**
  * The logic for disconnecting a remote receptacle (RCD, fabricator, etc.) is collected here for sanity's sake
  * rather than being on specific types. Cleans up references to us and to the receptacle.
- * * receptacle - The datum/component/remote_materials component that is getting destroyed.
+ * * receptacle - The datum/remote_materials component that is getting destroyed.
  * * physical_receptacle - the actual object in the game world that was connected to our material supply. Typed as atom/movable for
  *   future-proofing against anything that may conceivably one day have remote silo access, such as a cyborg, an implant, structures, vehicles,
  *   and so-on.
  */
-/obj/machinery/ore_silo/proc/disconnect_receptacle(datum/component/remote_materials/receptacle, atom/movable/physical_receptacle)
+/obj/machinery/ore_silo/proc/disconnect_receptacle(datum/remote_materials/receptacle, atom/movable/physical_receptacle)
 	ore_connected_machines -= receptacle
 	receptacle.mat_container = null
 	receptacle.silo = null
@@ -249,7 +249,7 @@
 	data["materials"] =  materials.ui_data()
 
 	data["machines"] = list()
-	for(var/datum/component/remote_materials/remote as anything in ore_connected_machines)
+	for(var/datum/remote_materials/remote as anything in ore_connected_machines)
 		var/atom/parent = remote.parent
 		data["machines"] += list(
 			list(
@@ -294,7 +294,7 @@
 			if(isnull(index))
 				return
 
-			var/datum/component/remote_materials/remote = ore_connected_machines[index]
+			var/datum/remote_materials/remote = ore_connected_machines[index]
 			if(isnull(remote))
 				return
 
@@ -310,7 +310,7 @@
 			if(isnull(index))
 				return
 
-			var/datum/component/remote_materials/remote = ore_connected_machines[index]
+			var/datum/remote_materials/remote = ore_connected_machines[index]
 			if(isnull(remote))
 				return
 

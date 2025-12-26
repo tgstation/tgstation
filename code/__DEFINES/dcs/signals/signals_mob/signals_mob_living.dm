@@ -345,14 +345,6 @@
 /// From /obj/item/book/bible/attack() : (mob/living/user, obj/item/book/bible/bible, bless_result)
 #define COMSIG_LIVING_BLESSED "living_blessed"
 
-/// From /datum/surgery_step/initiate() : (mob/living/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, datum/surgery_step/step, list/modifiers)
-#define COMSIG_LIVING_INITIATE_SURGERY_STEP "living_initiate_surgery_step"
-#define COMSIG_LIVING_SURGERY_STEP_INITIATED_ON "living_surgery_step_initiated_on"
-	/// Index in modifiers containing the modifier to failure chance
-	#define FAIL_PROB_INDEX 1
-	/// Index in modifiers containing the modifer to surgery speed
-	#define SPEED_MOD_INDEX 2
-
 /// From /datum/status_effect/proc/on_creation() : (datum/status_effect/effect)
 #define COMSIG_LIVING_STATUS_APPLIED "living_status_applied"
 
@@ -380,3 +372,9 @@
 
 /// From /mob/living/proc/update_blood_status(), sent when the return value of /mob/living/proc/can_have_blood() changes : (had_blood, has_blood, old_blood_volume, new_blood_volume)
 #define COMSIG_LIVING_UPDATE_BLOOD_STATUS "living_update_blood_status"
+
+/// From /mob/living/proc/update_nutrition()
+#define COMSIG_LIVING_UPDATE_NUTRITION "living_update_nutrition"
+
+/// Sent to a mob when one of their bodypart's surgery state changes, OR sent from the basic_surgery_state holder when its surgery state changes (old_state, new_state, changed_states)
+#define COMSIG_LIVING_UPDATING_SURGERY_STATE "carbon_updating_surgery_state"

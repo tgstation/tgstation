@@ -49,9 +49,8 @@
 				hanging_object.pixel_x = pixel_shift
 			if(WEST)
 				hanging_object.pixel_x = -pixel_shift
-	if(!hanging_object.find_and_mount_on_atom())
-		to_chat(user, span_warning("[src] Could not find all to mount on!."))
-		return
+	if(!istype(get_area(user), /area/shuttle)) //due to turf changing issue we don't mount here for now
+		hanging_object.AddComponent(/datum/component/atom_mounted, support_structure)
 	after_attach(hanging_object)
 	qdel(src)
 
@@ -119,8 +118,10 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.5)
-	grind_results = list(/datum/reagent/iron = 10, /datum/reagent/silicon = 10)
 	custom_price = PAYCHECK_CREW * 0.5
 	sound_vary = TRUE
 	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
 	drop_sound = SFX_GENERIC_DEVICE_DROP
+
+/obj/item/electronics/grind_results()
+	return list(/datum/reagent/iron = 10, /datum/reagent/silicon = 10)

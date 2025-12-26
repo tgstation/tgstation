@@ -555,7 +555,6 @@
 /turf/open/floor/wood,
 /area/ruin/outpost31/kennel)
 "kP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
@@ -626,6 +625,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/iron/white/smooth_half,
 /area/ruin/outpost31/medical)
 "lW" = (
@@ -834,7 +834,6 @@
 /area/ruin/outpost31/recroom)
 "qt" = (
 /obj/machinery/door/airlock/external/glass/ruin,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "o31a"
@@ -1046,7 +1045,6 @@
 /turf/open/floor/catwalk_floor/iron,
 /area/ruin/outpost31)
 "uj" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1211,7 +1209,6 @@
 /area/ruin/outpost31/lootroom)
 "xP" = (
 /obj/machinery/door/airlock/external/glass/ruin,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "o31B"
@@ -1241,11 +1238,6 @@
 	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
 	},
 /area/ruin/outpost31/lab)
-"yQ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/turf/open/floor/pod/dark,
-/area/ruin/outpost31)
 "yW" = (
 /obj/structure/sign/warning/biohazard,
 /turf/closed/indestructible/reinforced,
@@ -1259,7 +1251,6 @@
 /area/ruin/outpost31/lab)
 "zd" = (
 /obj/machinery/door/airlock/grunge,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/autoname,
@@ -1380,12 +1371,6 @@
 /obj/item/ammo_box/c9mm,
 /turf/open/floor/carpet/green,
 /area/ruin/outpost31/commander_room)
-"AE" = (
-/obj/machinery/door/airlock/grunge,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/autoname,
-/turf/open/floor/carpet/green,
-/area/ruin/outpost31/commander_room)
 "AG" = (
 /obj/machinery/door/airlock/grunge,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
@@ -1399,6 +1384,14 @@
 /obj/item/paper_bin,
 /turf/open/floor/iron,
 /area/ruin/outpost31/radiomap)
+"AX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/outpost31)
 "Bb" = (
 /obj/machinery/light/warm/directional/south,
 /obj/effect/turf_decal/tile/neutral,
@@ -1594,6 +1587,14 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/ruin/outpost31)
+"EM" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
 "ES" = (
 /obj/item/kirbyplants/random/dead,
 /obj/effect/turf_decal/siding/white{
@@ -1633,6 +1634,12 @@
 /obj/structure/table,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/outpost31/kitchendiningroom)
+"Fy" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/outpost31)
 "FH" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/neutral{
@@ -1767,7 +1774,6 @@
 /area/ruin/outpost31/medical)
 "Ie" = (
 /obj/machinery/door/airlock/external/glass/ruin,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "o31d"
@@ -1859,6 +1865,11 @@
 	dir = 4
 	},
 /area/ruin/outpost31/medical)
+"JU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/outpost31)
 "Kh" = (
 /obj/structure/thing_boss_phase_depleter,
 /turf/open/floor/circuit/red/off{
@@ -2035,7 +2046,6 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/outpost31/crewquarters)
 "NP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
@@ -2122,7 +2132,6 @@
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/outpost31/kitchendiningroom)
 "PR" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
@@ -2587,6 +2596,12 @@
 "Yo" = (
 /turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
 /area/icemoon/underground/explored)
+"YC" = (
+/obj/machinery/door/airlock/grunge,
+/obj/effect/mapping_helpers/airlock/autoname,
+/obj/structure/cable,
+/turf/open/floor/carpet/green,
+/area/ruin/outpost31/commander_room)
 "YG" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -3016,7 +3031,7 @@ uB
 uB
 Sg
 Lf
-yQ
+lM
 qI
 Sg
 SN
@@ -3100,7 +3115,7 @@ yp
 ES
 aq
 Ht
-QU
+AX
 lO
 aV
 Wu
@@ -3142,7 +3157,7 @@ kh
 UH
 Ml
 vX
-ge
+Fy
 oN
 rO
 gu
@@ -3875,10 +3890,10 @@ Ly
 Ly
 Ly
 Ly
-uA
-AE
-vX
-YK
+Ly
+iA
+cp
+JU
 Uy
 xc
 xc
@@ -3918,9 +3933,9 @@ fM
 Ly
 Ly
 uA
-iA
-Ht
-qK
+YC
+EM
+JU
 Uy
 xc
 uB

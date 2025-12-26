@@ -7722,6 +7722,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "cbC" = (
@@ -28533,7 +28534,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central/upper)
 "hLC" = (
-/obj/machinery/computer/prisoner/management,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
@@ -31181,11 +31181,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/engineering/main)
-"iua" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/east,
-/turf/open/floor/iron/dark/textured_large,
-/area/station/engineering/gravity_generator)
 "iub" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -36652,7 +36647,6 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai/satellite/chamber)
 "jRQ" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured_large,
@@ -42514,7 +42508,9 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "lvE" = (
-/obj/machinery/roulette,
+/obj/machinery/modular_computer/preset/id{
+	dir = 4
+	},
 /turf/open/floor/carpet/royalblack,
 /area/station/command/heads_quarters/hos)
 "lvR" = (
@@ -46307,10 +46303,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /obj/machinery/door/airlock/engineering{
 	name = "Tech Storage"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tech_storage,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "muN" = (
@@ -64635,7 +64631,6 @@
 /area/station/science/xenobiology)
 "rvo" = (
 /obj/structure/table,
-/obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
@@ -64647,6 +64642,8 @@
 	pixel_y = -9;
 	pixel_x = -3
 	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "rvs" = (
@@ -76310,6 +76307,9 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
+/mob/living/basic/pet/cat/space{
+	name = "Tomas"
+	},
 /turf/open/openspace,
 /area/station/commons/fitness/recreation)
 "uDa" = (
@@ -76495,6 +76495,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "uFj" = (
@@ -78246,7 +78247,6 @@
 /turf/open/openspace,
 /area/station/engineering/atmos/upper)
 "vek" = (
-/obj/structure/cable,
 /obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark/textured_large,
@@ -84850,7 +84850,6 @@
 /turf/closed/wall,
 /area/station/security/prison/rec)
 "wVh" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/gravity_generator)
@@ -196670,7 +196669,7 @@ rvv
 unl
 eZC
 wyV
-iua
+eZC
 vek
 wVh
 jVB

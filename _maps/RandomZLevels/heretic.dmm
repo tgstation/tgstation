@@ -1957,6 +1957,11 @@
 	},
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory)
+"kj" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory)
 "kk" = (
 /obj/structure/window/spawner/directional/south,
 /obj/structure/window/spawner/directional/north,
@@ -3097,6 +3102,8 @@
 /obj/machinery/door/airlock/hatch,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/puzzle/keycard/heretic_entrance,
+/obj/effect/mapping_helpers/airlock/access/all/supply,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "qn" = (
@@ -3629,6 +3636,10 @@
 /obj/item/crowbar,
 /obj/item/multitool,
 /turf/open/floor/wood,
+/area/awaymission/caves/heretic_laboratory_clean)
+"tc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
 "td" = (
 /obj/machinery/vending/wardrobe/chef_wardrobe,
@@ -6143,6 +6154,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory)
+"Gk" = (
+/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/puzzle/keycard/heretic_entrance,
+/obj/effect/mapping_helpers/airlock/access/all/supply,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "Gm" = (
@@ -15439,7 +15456,7 @@ KB
 bl
 Ii
 DN
-Az
+Ka
 wn
 wh
 wn
@@ -15696,7 +15713,7 @@ KB
 Ii
 wn
 wn
-Az
+Ka
 wn
 wh
 wn
@@ -15953,7 +15970,7 @@ KB
 wn
 wn
 wn
-Az
+Ka
 wn
 wh
 wn
@@ -16210,7 +16227,7 @@ KB
 wn
 wn
 ji
-Az
+Ka
 wn
 wh
 wn
@@ -16467,7 +16484,7 @@ KB
 wn
 TL
 Oc
-Az
+Ka
 wn
 wh
 wn
@@ -16724,7 +16741,7 @@ KB
 wn
 wn
 AZ
-Az
+Ka
 wn
 wh
 wn
@@ -16981,7 +16998,7 @@ KB
 wn
 wn
 wn
-Az
+Ka
 wn
 wh
 wn
@@ -17238,7 +17255,7 @@ KB
 wn
 wn
 wn
-Az
+Ka
 wn
 wh
 wn
@@ -17495,7 +17512,7 @@ KB
 wn
 wn
 wn
-Az
+Ka
 wn
 wh
 wn
@@ -18245,7 +18262,7 @@ KB
 KB
 KB
 qm
-Xh
+Gk
 KB
 KB
 KB
@@ -23394,7 +23411,7 @@ OQ
 WY
 xW
 SP
-eJ
+kj
 eJ
 Ay
 CQ
@@ -26235,7 +26252,7 @@ xl
 xl
 WF
 dO
-Hz
+tc
 pU
 hI
 KB
