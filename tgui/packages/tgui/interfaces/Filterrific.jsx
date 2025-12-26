@@ -304,12 +304,15 @@ const FilterMatrixEntry = (props) => {
         selected={matrix.length}
         options={matrix_sizes.map((size) => `${size} elements`)}
         onSelected={(option) =>
-          matrix.length === parseInt(option.split(' '))
+          matrix.length === parseInt(option.split(' '), 10)
             ? null
             : act('modify_filter_value', {
                 name: filterName,
                 new_data: {
-                  [name]: resize_matrix(matrix, parseInt(option.split(' '))),
+                  [name]: resize_matrix(
+                    matrix,
+                    parseInt(option.split(' '), 10),
+                  ),
                 },
               })
         }

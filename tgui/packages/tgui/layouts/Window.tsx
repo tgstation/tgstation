@@ -12,11 +12,11 @@ import {
   useLayoutEffect,
   useState,
 } from 'react';
-import { KeyListener, type Box } from 'tgui-core/components';
+import { type Box, KeyListener } from 'tgui-core/components';
 import { UI_DISABLED, UI_INTERACTIVE } from 'tgui-core/constants';
+import { KEY_ALT } from 'tgui-core/keycodes';
 import { type BooleanLike, classes } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
-
 import { backendSuspendStart, globalStore, useBackend } from '../backend';
 import { useDebug } from '../debug';
 import {
@@ -25,13 +25,11 @@ import {
   resizeStartHandler,
   setWindowKey,
   setWindowPosition,
-  storeWindowGeometry
+  storeWindowGeometry,
 } from '../drag';
 import { createLogger } from '../logging';
 import { Layout } from './Layout';
 import { TitleBar } from './TitleBar';
-import { KeyEvent } from 'tgui-core/events';
-import { KEY_ALT } from 'tgui-core/keycodes';
 
 const logger = createLogger('Window');
 const DEFAULT_SIZE: [number, number] = [400, 600];
@@ -46,7 +44,7 @@ type Props = Partial<{
 }> &
   PropsWithChildren;
 
-export const Window = (props: Props) => {
+export function Window(props: Props) {
   const {
     canClose = true,
     theme,
@@ -146,7 +144,7 @@ export const Window = (props: Props) => {
       />
     </Layout>
   );
-};
+}
 
 type ContentProps = Partial<{
   className: string;
@@ -157,40 +155,46 @@ type ContentProps = Partial<{
   ComponentProps<typeof Box> &
   PropsWithChildren;
 
-const WindowContent = (props: ContentProps) => {
+function WindowContent(props: ContentProps) {
   const { className, fitted, children, ...rest } = props;
   const [altDown, setAltDown] = useState(false);
 
-  var dragStartIfAltHeld = (event) => {
-    if(altDown)
-    {
+  function dragStartIfAltHeld(event: React.MouseEvent<HTMLDivElement>): void {
+    if (altDown) {
       dragStartHandler(event);
     }
-  };
+  }
 
-  Byond.subscribeTo('resetposition', function (payload) {
+  Byond.subscribeTo('resetposition', (payload) => {
     setWindowPosition([0, 0]);
     storeWindowGeometry();
   });
+
   return (
-    <Layout.Content onMouseDown={dragStartIfAltHeld}
+    <Layout.Content
+      onMouseDown={dragStartIfAltHeld}
       className={classes(['Window__content', className])}
       {...rest}
     >
       <KeyListener
-        onKeyDown={(e: KeyEvent) => {
-          if(KEY_ALT === e.code) { setAltDown(true); logger.log(`alt on ${altDown}`) }
+        onKeyDown={(evt) => {
+          if (KEY_ALT === evt.code) {
+            setAltDown(true);
+          }
         }}
-        onKeyUp ={(e: KeyEvent) => {
-          if(KEY_ALT === e.code) { setAltDown(false); logger.log(`alt off ${altDown}`)}
+        onKeyUp={(evt) => {
+          if (KEY_ALT === evt.code) {
+            setAltDown(false);
+          }
         }}
-        />
-
-      {(fitted && children) || (
+      />
+      {fitted ? (
+        children
+      ) : (
         <div className="Window__contentPadding">{children}</div>
       )}
     </Layout.Content>
   );
-};
+}
 
 Window.Content = WindowContent;
