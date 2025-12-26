@@ -205,7 +205,7 @@
 
 /// Fills the interaction endpoint priority list for the current interaction mode.
 /datum/interaction_point/proc/fill_priority_list(manipulator_tier)
-	var/list/priorities_to_set = new /list(5)
+	var/list/priorities_to_set = new /list((manipulator_tier == 4 ? 5 : 4))
 
 	switch(interaction_mode)
 		if(INTERACT_DROP)
