@@ -133,9 +133,12 @@
 		user.balloon_alert(user, "incompatible implant!")
 		return FALSE
 	var/obj/item/implant/deathrattle/inserted_implant = inserted_case.imp
+	if(!istype(saved_deathrattle_group, inserted_implant.deathrattle_group_type))
+		user.balloon_alert(user, "incompatible deathrattle group!")
+		return FALSE
 	saved_deathrattle_group.register(inserted_implant)
 	user.balloon_alert(user, "registered to group [saved_deathrattle_group.name]")
-	inserted_case.name += " - [saved_deathrattle_group.name]"
+	inserted_case.name = "[initial(inserted_case.name)] - [saved_deathrattle_group.name]"
 	update_static_data_for_all_viewers()
 	return TRUE
 

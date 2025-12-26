@@ -14,6 +14,8 @@
 	var/area_list_mode = DEATHRATTLE_AREA_NOLIST
 	/// The area list. See `area_list_mode` for how this gets used.
 	var/list/area/area_list = list()
+	/// The prefix for this deathrattle group.
+	var/prefix
 
 /datum/deathrattle_group/New(name)
 	if(name)
@@ -21,7 +23,10 @@
 	else
 		// Give the group a unique name for debugging, and possible future
 		// use for making custom linked groups.
-		src.name = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
+		src.name = "[prefix ? "[prefix]-" : ""][rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
+
+/datum/deathrattle_group/standard
+	prefix = "STD"
 
 /// A deathrattle group subtype specifically for alerting people who die in the Lavaland or Icemoon Wastes.
 /// As per maintainer request, excludes... basically everything that isn't raw wasteland.
@@ -31,14 +36,7 @@
 		/area/lavaland,
 		/area/icemoon,
 	)
-
-/datum/deathrattle_group/lavaland/New(name)
-	if(name)
-		src.name = name
-	else
-		// Give the group a unique name for debugging, and possible future
-		// use for making custom linked groups.
-		src.name = "MIN-[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
+	prefix = "MIN"
 
 /*
  * Proc called by new implant being added to the group. Listens for the
@@ -117,7 +115,7 @@
 
 	actions_types = null
 	allow_multiple = TRUE
-	var/deathrattle_group_type = /datum/deathrattle_group
+	var/deathrattle_group_type = /datum/deathrattle_group/standard
 
 	/// Associated deathrattle group, for future configuration.
 	var/datum/deathrattle_group/current_group

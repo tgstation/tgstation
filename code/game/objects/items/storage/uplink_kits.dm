@@ -706,7 +706,7 @@
 /obj/item/storage/box/syndie_kit/imp_deathrattle/PopulateContents()
 	new /obj/item/implanter(src)
 
-	var/datum/deathrattle_group/group = new
+	var/datum/deathrattle_group/standard/group = new
 
 	var/implants = list()
 	for(var/j in 1 to 8)
