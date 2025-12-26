@@ -207,7 +207,7 @@
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
 	placed_sign.update_integrity(get_integrity())
 	placed_sign.setDir(dir)
-	placed_sign.find_and_mount_on_atom()
+	placed_sign.AddComponent(/datum/component/atom_mounted, target_turf)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -228,6 +228,9 @@
 		span_notice("You finish repairing [src]."))
 	atom_integrity = max_integrity
 	return TRUE
+
+/obj/item/sign/screwdriver_act(mob/living/user, obj/item/tool)
+	return interact_with_atom(get_step(get_turf(user), user.dir), user)
 
 /obj/item/sign/proc/set_sign_type(obj/structure/sign/fake_type)
 	name = initial(fake_type.name)

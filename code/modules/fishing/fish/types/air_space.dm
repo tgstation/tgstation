@@ -87,7 +87,6 @@
 	safe_air_limits = null
 	min_pressure = 0
 	max_pressure = INFINITY
-	grind_results = list(/datum/reagent/bluespace = 10)
 	fillet_type = null
 	fish_traits = list(/datum/fish_trait/antigrav, /datum/fish_trait/mixotroph)
 	compatible_types = list(/obj/item/fish/starfish/chrystarfish)
@@ -96,6 +95,9 @@
 /obj/item/fish/starfish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/fish/starfish/fish_grind_results()
+	return list(/datum/reagent/bluespace = 10)
 
 /obj/item/fish/starfish/update_overlays()
 	. = ..()

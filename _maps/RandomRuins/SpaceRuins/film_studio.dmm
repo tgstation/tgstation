@@ -348,6 +348,7 @@
 	name = "Cabin 3"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/dorms)
 "gl" = (
@@ -2263,7 +2264,6 @@
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/director)
 "Np" = (
@@ -3577,13 +3577,13 @@ dd
 XK
 bA
 NB
-NB
+Zd
 xd
 NB
-NB
+Zd
 On
 pY
-NB
+Zd
 gW
 NB
 aO
@@ -5202,7 +5202,7 @@ WC
 KP
 dg
 DP
-Wy
+zL
 zL
 ST
 Ym
