@@ -22,7 +22,7 @@
 	qdel(removed_from.GetComponent(/datum/component/echolocation))
 	qdel(removed_from.GetComponent(/datum/component/anti_magic))
 
-/obj/item/organ/brain/psyker/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/brain/psyker/on_life(seconds_per_tick)
 	. = ..()
 	var/obj/item/bodypart/head/psyker/psyker_head = owner.get_bodypart(zone)
 	if(istype(psyker_head))

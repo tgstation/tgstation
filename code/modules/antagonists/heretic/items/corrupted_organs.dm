@@ -167,7 +167,7 @@
 	deltimer(thirst_timer)
 	thirst_timer = addtimer(VARSET_CALLBACK(src, thirst_satiated, FALSE), 3 MINUTES, TIMER_STOPPABLE | TIMER_DELETE_ME)
 
-/obj/item/organ/stomach/corrupt/handle_hunger(mob/living/carbon/human/human, seconds_per_tick, times_fired)
+/obj/item/organ/stomach/corrupt/handle_hunger(mob/living/carbon/human/human, seconds_per_tick)
 	if (thirst_satiated || human.has_reagent(/datum/reagent/water/holywater))
 		return ..()
 
@@ -206,7 +206,7 @@
 	. = ..()
 	AddElement(/datum/element/corrupted_organ)
 
-/obj/item/organ/heart/corrupt/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/heart/corrupt/on_life(seconds_per_tick)
 	. = ..()
 	if (!COOLDOWN_FINISHED(src, hand_cooldown) || IS_IN_MANSUS(owner) || !owner.needs_heart() || !is_beating() || owner.has_reagent(/datum/reagent/water/holywater))
 		return
@@ -280,7 +280,7 @@
 	AddElement(/datum/element/corrupted_organ)
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their abdomen is distended... and wiggling.", BODY_ZONE_PRECISE_GROIN)
 
-/obj/item/organ/appendix/corrupt/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/appendix/corrupt/on_life(seconds_per_tick)
 	. = ..()
 	if (owner.stat != CONSCIOUS || owner.has_reagent(/datum/reagent/water/holywater) || IS_IN_MANSUS(owner) || !SPT_PROB(worm_chance, seconds_per_tick))
 		return
