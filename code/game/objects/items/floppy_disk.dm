@@ -364,6 +364,7 @@
 	. = ..()
 	new /obj/item/disk/data(src)
 
+#undef STARTING_STICKER
 #undef MAX_DISK_STACK_SIZE
 #undef STACK_PIXEL_STEP
 #undef MAX_TEXT_LENGTH
