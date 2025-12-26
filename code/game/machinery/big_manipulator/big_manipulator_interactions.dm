@@ -325,17 +325,15 @@
 	do_attack_animation(destination_turf)
 	manipulator_arm.do_attack_animation(destination_turf)
 
-	if(QDELETED(held_item) || !held_item)
+	// if we destroyed the item while using it OR something else uncanny happened to it and it's GONE
+	if(QDELETED(held_item) || !held_item || (held_item.loc != monkey_resolve && held_item.loc != original_loc))
 		held_object = null
 		manipulator_arm.update_claw(null)
 		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return TRUE
 
-	if(held_item.loc != monkey_resolve && held_item.loc != original_loc)
-		held_object = null
-		manipulator_arm.update_claw(null)
-		finish_manipulation(TRANSFER_TYPE_DROPOFF)
-		return TRUE
+	if(held_item.loc == monkey_resolve)
+		held_item.forceMove(original_loc)
 
 	check_for_cycle_end_drop(destination_point, TRUE, TRUE)
 
@@ -396,16 +394,16 @@
 	var/item_throw_range = drop_point.throw_range
 	var/atom/movable/held_atom = held_object?.resolve()
 
-	if((!(isitem(held_atom) || isliving(held_atom))) && !(obj_flags & EMAGGED))
-		held_atom.forceMove(drop_turf)
+	held_atom.forceMove(drop_turf)
+	do_attack_animation(drop_turf)
+	manipulator_arm.do_attack_animation(drop_turf)
+
+	if(((isliving(held_atom))) && !(obj_flags & EMAGGED))
 		held_atom.dir = get_dir(get_turf(held_atom), get_turf(src))
 		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return
 
-	held_atom.forceMove(drop_turf)
 	held_atom.throw_at(get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_turf(held_atom))), item_throw_range, 2)
-	do_attack_animation(drop_turf)
-	manipulator_arm.do_attack_animation(drop_turf)
 	finish_manipulation(TRANSFER_TYPE_DROPOFF)
 
 /// Uses the empty hand to interact with objects
