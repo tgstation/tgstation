@@ -757,3 +757,22 @@
       long the washing takes.
   vinylspiders:
   - server: updates bun version to 1.3.5, and adds automated validation for tgs
+2025-12-25:
+  Frenjo:
+  - bugfix: Fixed the inability to shove an intellicarded AI into a Mauler-type exosuit.
+  LT3:
+  - bugfix: Sugar sack now has the correct recipe for cake batter
+  SyncIt21:
+  - refactor: refactored material container code to reduce memory overhead. Report
+      bugs on github
+  Yobrocharlie:
+  - bugfix: fixed being able to skip the first puzzle in the new gateway
+  lelandkemble:
+  - bugfix: Things that are supposed to be able to fail to draw enough power to operate
+      are actually able to do so.
+  necromanceranne:
+  - balance: Chameleon outfits now contribute to sleeping carp style factor. Most
+      items are armored, so they're a bit less useful than other options.
+  - bugfix: Carp masks actually contribute to sleeping carp style factor.
+  vinylspiders:
+  - refactor: refactors table_smash component into an element
