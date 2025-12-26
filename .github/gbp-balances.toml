@@ -417,7 +417,7 @@
 24631139 = 7 # 2whatever2
 24719174 = 6 # PoeticIron
 24830358 = 7 # lbnesquik
-24854897 = 1 # improvedname
+24854897 = -4 # improvedname
 24857008 = 7 # SomeguyManperson
 24881678 = 28 # Arturlang
 24904657 = 6 # scrubs2009
@@ -953,7 +953,7 @@
 66052067 = 51 # Wallemations
 66163761 = 48 # Xander3359
 66227760 = 6 # exymian
-66234359 = 26 # Hardly3D
+66234359 = 29 # Hardly3D
 66303093 = 6 # Nidvex250
 66538683 = 7 # TaG2e
 66576896 = 122 # Maurukas
@@ -1251,6 +1251,7 @@
 118741303 = 6 # BumbertoEko
 118997813 = 3 # supergrog2
 
+119138311 = 1 # PlasmaRay10
 119829881 = 0 # TheWolfbringer
 119907639 = 7 # tonyhawq
 120136161 = 4 # Rex9001
