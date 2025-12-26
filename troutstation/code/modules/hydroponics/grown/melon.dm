@@ -25,7 +25,9 @@
 	hitsound = 'troutstation/sound/misc/gay3.ogg'
 	icon = 'troutstation/icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "gaywatermelon"
-	juice_typepath = /datum/reagent/medicine/gaywater
+
+/obj/item/food/grown/gaywatermelon/juice_typepath()
+	return /datum/reagent/medicine/gaywater
 
 /obj/item/food/grown/gaywatermelon/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is trying to swallow [src] whole!! It looks like [user.p_theyre()] trying to get a full dose of gay and are committing suicide in the process!"))

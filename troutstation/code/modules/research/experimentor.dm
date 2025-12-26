@@ -529,27 +529,29 @@
 	language = pick(subtypesof(/datum/language/))
 	percent = rand(1, 100)
 
-/datum/relic_node/tabled
-	desc = "This node slammed things onto a table!"
-	var/grapple_range
-	var/table_range
+// Taken out because the way table smashing works has been changed so thoroughly you can no longer access it
 
-/datum/relic_node/tabled/on_generate()
-	grapple_range = rand(1, 4)
-	table_range = rand(6, 15)
+// /datum/relic_node/tabled
+// 	desc = "This node slammed things onto a table!"
+// 	var/grapple_range
+// 	var/table_range
 
-/datum/relic_node/tabled/reaction_power(mob/user)
-	var/list/table_list = list()
-	for (var/obj/structure/table/t in range(table_range, parent_relic))
-		table_list.Add(t)
-	if (table_list.len == 0)
-		return;
-	var/obj/structure/table/chosen_table = pick(table_list)
-	var/datum/component/table_smash/smasher = chosen_table.GetComponent(/datum/component/table_smash)
-	for (var/mob/living/m in view(table_range, parent_relic))
-		smasher.tablepush(m, m)
-		if (parent_relic.embedded_mob == null)
-			do_teleport(teleatom = parent_relic, destination = get_turf(m))
+// /datum/relic_node/tabled/on_generate()
+// 	grapple_range = rand(1, 4)
+// 	table_range = rand(6, 15)
+
+// /datum/relic_node/tabled/reaction_power(mob/user)
+// 	var/list/table_list = list()
+// 	for (var/obj/structure/table/t in range(table_range, parent_relic))
+// 		table_list.Add(t)
+// 	if (table_list.len == 0)
+// 		return;
+// 	var/obj/structure/table/chosen_table = pick(table_list)
+// 	var/datum/component/table_smash/smasher = chosen_table.GetComponent(/datum/component/table_smash)
+// 	for (var/mob/living/m in view(table_range, parent_relic))
+// 		smasher.tablepush(m, m)
+// 		if (parent_relic.embedded_mob == null)
+// 			do_teleport(teleatom = parent_relic, destination = get_turf(m))
 
 /datum/relic_node/contraband
 	desc = "This node made something detectable that security would have problems with..."
@@ -620,7 +622,7 @@
 		/datum/relic_node/dimensional_shift = 10,
 		/datum/relic_node/blood		= 10,
 		/datum/relic_node/rosetta	= 10,
-		/datum/relic_node/tabled	= 10,
+//		/datum/relic_node/tabled	= 10, // they keep changing how table smashing works in the code
 		/datum/relic_node/contraband= 5,
 		/datum/relic_node/cloaking	= 5,
 		/datum/relic_node/embed		= 10,

@@ -36,13 +36,15 @@
 	eat_time = 30 SECONDS // nice work gnawing that coconut you dummy
 	foodtypes = FRUIT
 	tastes = list("coconut" = 1)
-	juice_typepath = /datum/reagent/consumable/coconut_milk
 	throw_speed = 1
 	throw_range = 6
 	force = 2
 	throwforce = 4
 	var/strike_sound = 'troutstation/sound/effects/bowling_strike.ogg'
 	var/cracked = FALSE
+
+/obj/item/food/grown/coconut/juice_typepath()
+	return /datum/reagent/consumable/coconut_milk
 
 /obj/item/food/grown/coconut/make_processable()
 	AddElement(/datum/element/processable_callback, TOOL_ROLLINGPIN, GLOBAL_PROC_REF(crack_coconut), 3 SECONDS, table_required = TRUE, screentip_verb = "Crack")
