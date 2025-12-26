@@ -23,10 +23,12 @@
 	icon_state = "carrot"
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
-	juice_typepath = /datum/reagent/consumable/carrotjuice
 	wine_power = 30
 	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
+
+/obj/item/food/grown/carrot/juice_typepath()
+	return /datum/reagent/consumable/carrotjuice
 
 /obj/item/food/grown/carrot/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!I.get_sharpness())
@@ -64,8 +66,10 @@
 	desc = "Closely related to carrots."
 	icon_state = "parsnip"
 	foodtypes = VEGETABLES
-	juice_typepath = /datum/reagent/consumable/parsnipjuice
 	wine_power = 35
+
+/obj/item/food/grown/parsnip/juice_typepath()
+	return /datum/reagent/consumable/parsnipjuice
 
 /obj/item/food/grown/parsnip/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!I.get_sharpness())
@@ -109,9 +113,11 @@
 	desc = "Heavily modified version of terran carrot, originally made to survive the scarciest of environments by an enterprising scientist of Moth Flotilla, Cahn'Mang."
 	icon_state = "cahn'root"
 	foodtypes = VEGETABLES
-	juice_typepath = null
 	tastes = list("sweet dirt" = 1)
 	distill_reagent = /datum/reagent/consumable/rootbeer
+
+/obj/item/food/grown/cahnroot/juice_typepath()
+	return null
 
 /obj/item/food/grown/cahnroot/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!I.get_sharpness())

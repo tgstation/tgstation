@@ -528,7 +528,6 @@
 	organ_traits = list(TRAIT_TETRODOTOXIN_HEALING, TRAIT_ALCOHOL_TOLERANCE) //drink like a fish :^)
 	liver_resistance = parent_type::liver_resistance * 1.5
 	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/iron = 5, /datum/reagent/toxin/tetrodotoxin = 5)
-	grind_results = list(/datum/reagent/consumable/nutriment/peptides = 5, /datum/reagent/toxin/tetrodotoxin = 5)
 
 	// Seafood instead of meat, because it's a fish organ
 	foodtype_flags = RAW | SEAFOOD | GORE
@@ -538,6 +537,9 @@
 /obj/item/organ/liver/fish/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fish)
+
+/obj/item/organ/liver/fish/grind_results()
+	return list(/datum/reagent/consumable/nutriment/peptides = 5, /datum/reagent/toxin/tetrodotoxin = 5)
 
 #undef FISH_ORGAN_COLOR
 #undef FISH_SCLERA_COLOR

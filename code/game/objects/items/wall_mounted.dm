@@ -118,8 +118,10 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.5)
-	grind_results = list(/datum/reagent/iron = 10, /datum/reagent/silicon = 10)
 	custom_price = PAYCHECK_CREW * 0.5
 	sound_vary = TRUE
 	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
 	drop_sound = SFX_GENERIC_DEVICE_DROP
+
+/obj/item/electronics/grind_results()
+	return list(/datum/reagent/iron = 10, /datum/reagent/silicon = 10)

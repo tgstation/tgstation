@@ -73,7 +73,7 @@
 	)
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
-	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
+	AddElement(/datum/element/simple_rotation, ROTATION_NEEDS_ROOM)
 
 /obj/structure/railing/examine(mob/user)
 	. = ..()

@@ -103,11 +103,11 @@
 	INVOKE_ASYNC(src, PROC_REF(blend), AM)
 
 
-/obj/machinery/plumbing/grinder_chemical/blended(obj/item/blended_item, grinded)
+/obj/machinery/plumbing/grinder_chemical/blended(obj/item/slime_extract/blended_item, grinded)
 	//don't delete slime extracts
-	if(istype(blended_item, /obj/item/slime_extract))
+	if(istype(blended_item))
 		//so you can't regrind them for extra stuff
-		blended_item.grind_results = null
+		blended_item.can_grind = FALSE
 
 		blended_item.forceMove(drop_location())
 
@@ -135,7 +135,7 @@
 
 	if(!grinding)
 		item_to_blend.juice(reagents, usr, src)
-	else if(LAZYLEN(item_to_blend.grind_results) || item_to_blend.reagents?.total_volume)
+	else if(length(item_to_blend.grind_results()) || item_to_blend.reagents?.total_volume)
 		item_to_blend.grind(reagents, usr, src)
 
 	use_energy(active_power_usage)

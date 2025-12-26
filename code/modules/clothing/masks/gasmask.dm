@@ -446,6 +446,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	icon_state = "carp_mask"
 	inhand_icon_state = null
 	flags_cover = MASKCOVERSEYES
+	clothing_flags = CARP_STYLE_FACTOR
 	fishing_modifier = -4
 
 /obj/item/clothing/mask/gas/tiki_mask

@@ -16,7 +16,7 @@
 	/// Coefficient applied to consumed materials. Lower values result in lower material consumption.
 	var/creation_efficiency = 2
 	///The container to hold materials
-	var/datum/component/material_container/materials
+	var/datum/material_container/materials
 	/// The inserted board
 	var/obj/item/circuitboard/machine/inserted_board
 	/// List of components that need to be packed along with the circuitboard
@@ -33,8 +33,8 @@
 /obj/machinery/flatpacker/Initialize(mapload)
 	register_context()
 
-	materials = AddComponent( \
-		/datum/component/material_container, \
+	materials = new ( \
+		src, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		0, \
 		MATCONTAINER_EXAMINE, \
@@ -44,10 +44,10 @@
 	return ..()
 
 /obj/machinery/flatpacker/Destroy()
-	materials = null
+	QDEL_NULL(materials)
 	QDEL_NULL(inserted_board)
 	QDEL_LIST(flatpacked_components)
-	. = ..()
+	return ..()
 
 /obj/machinery/flatpacker/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE

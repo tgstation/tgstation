@@ -5,16 +5,18 @@ fallback to a local material storage in case remote storage is unavailable, and
 handles linking back and forth.
 */
 
-/datum/component/remote_materials
+/datum/remote_materials
 	// Three possible states:
 	// 1. silo exists, materials is parented to silo
 	// 2. silo is null, materials is parented to parent
 	// 3. silo is null, materials is null
 
+	///Movable this connection is attached to
+	var/atom/movable/parent
 	///The silo machine this container is connected to
 	var/obj/machinery/ore_silo/silo
 	///Material container. the value is either the silo or local
-	var/datum/component/material_container/mat_container
+	var/datum/material_container/mat_container
 	///Should we create a local storage if we can't connect to silo
 	var/allow_standalone
 	///Local size of container when silo = null
@@ -26,15 +28,15 @@ handles linking back and forth.
 	///Callback for round start silo connections. Have to cancel this if the parent gets destroyed before round start
 	VAR_PRIVATE/datum/callback/connection
 
-/datum/component/remote_materials/Initialize(
+/datum/remote_materials/New(
+	parent,
 	mapload,
 	allow_standalone = TRUE,
 	force_connect = FALSE,
 	mat_container_flags = NONE,
 	list/mat_container_signals = null,
 )
-	if (!isatom(parent))
-		return COMPONENT_INCOMPATIBLE
+	src.parent = parent
 
 	src.allow_standalone = allow_standalone
 	src.mat_container_flags = mat_container_flags
@@ -60,7 +62,7 @@ handles linking back and forth.
  * connect_to_silo- if true connect to global silo. If not successfull then go to local storage
  * only if allow_standalone = TRUE, else you a null mat_container
  */
-/datum/component/remote_materials/proc/_PrepareStorage(connect_to_silo)
+/datum/remote_materials/proc/_PrepareStorage(connect_to_silo)
 	PRIVATE_PROC(TRUE)
 
 	connection = null
@@ -75,25 +77,24 @@ handles linking back and forth.
 	if (!mat_container && allow_standalone)
 		_MakeLocal()
 
-/datum/component/remote_materials/Destroy()
+/datum/remote_materials/Destroy()
 	if(connection)
 		LAZYREMOVE(SSticker.round_start_events, connection)
 		connection = null
 	if(silo)
 		allow_standalone = FALSE
 		disconnect()
-	if(mat_container)
-		mat_container = null
+	QDEL_NULL(mat_container)
 
 	return ..()
 
-/datum/component/remote_materials/proc/_MakeLocal()
+/datum/remote_materials/proc/_MakeLocal()
 	PRIVATE_PROC(TRUE)
 
 	silo = null
 
-	mat_container = parent.AddComponent( \
-		/datum/component/material_container, \
+	mat_container = new ( \
+		parent, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		local_size, \
 		mat_container_flags, \
@@ -102,7 +103,7 @@ handles linking back and forth.
 	)
 
 /// Adds/Removes this connection from the silo
-/datum/component/remote_materials/proc/toggle_holding()
+/datum/remote_materials/proc/toggle_holding()
 	if(isnull(silo))
 		return
 
@@ -117,13 +118,13 @@ handles linking back and forth.
  *
  * * size - the new size for local storage. measured in SHEET_MATERIAL_SIZE units
  */
-/datum/component/remote_materials/proc/set_local_size(size)
+/datum/remote_materials/proc/set_local_size(size)
 	local_size = size
 	if (!silo && mat_container)
 		mat_container.max_amount = size
 
 ///Disconnects this component from the silo
-/datum/component/remote_materials/proc/disconnect()
+/datum/remote_materials/proc/disconnect()
 	if(isnull(silo))
 		return
 
@@ -133,7 +134,7 @@ handles linking back and forth.
 	if (allow_standalone)
 		_MakeLocal()
 
-/datum/component/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/multitool/M)
+/datum/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/multitool/M)
 	SIGNAL_HANDLER
 
 	. = NONE
@@ -146,7 +147,7 @@ handles linking back and forth.
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/machinery/ore_silo/new_silo = M.buffer
-		var/datum/component/material_container/new_container = new_silo.GetComponent(/datum/component/material_container)
+		var/datum/material_container/new_container = new_silo.materials
 		if (silo)
 			silo.disconnect_receptacle(src, parent)
 		else if (mat_container)
@@ -166,18 +167,18 @@ handles linking back and forth.
 		to_chat(user, span_notice("You connect [parent] to [silo] from the multitool's buffer."))
 		return ITEM_INTERACT_SUCCESS
 
-/datum/component/remote_materials/proc/on_item_insert(datum/source, mob/living/user, obj/item/target)
+/datum/remote_materials/proc/on_item_insert(datum/source, mob/living/user, obj/item/target)
 	SIGNAL_HANDLER
 	// Only insert stacks with left click
 	if(isstack(target))
 		return attempt_insert(user, target)
 
-/datum/component/remote_materials/proc/on_secondary_insert(datum/source, mob/living/user, obj/item/target)
+/datum/remote_materials/proc/on_secondary_insert(datum/source, mob/living/user, obj/item/target)
 	SIGNAL_HANDLER
 	return attempt_insert(user, target)
 
 /// Insert mats into silo
-/datum/component/remote_materials/proc/attempt_insert(mob/living/user, obj/item/target)
+/datum/remote_materials/proc/attempt_insert(mob/living/user, obj/item/target)
 	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
 		return
 
@@ -194,14 +195,14 @@ handles linking back and forth.
  *
  * Returns true if both are on the station or same z level
  */
-/datum/component/remote_materials/proc/check_z_level(obj/silo_to_check = silo)
+/datum/remote_materials/proc/check_z_level(obj/silo_to_check = silo)
 	if(isnull(silo_to_check))
 		return FALSE
 
 	return is_valid_z_level(get_turf(silo_to_check), get_turf(parent))
 
 /// returns TRUE if this connection put on hold by the silo
-/datum/component/remote_materials/proc/on_hold()
+/datum/remote_materials/proc/on_hold()
 	return check_z_level() ? silo.holds[src] : FALSE
 
 /**
@@ -214,7 +215,7 @@ handles linking back and forth.
  * * check_hold - should we check if the silo is on hold
  * * user_data - in the form rendered by ID_DATA(user); used as a reference for silo bans and access checks
  */
-/datum/component/remote_materials/proc/can_use_resource(check_hold = TRUE, alist/user_data)
+/datum/remote_materials/proc/can_use_resource(check_hold = TRUE, alist/user_data)
 	var/atom/movable/movable_parent = parent
 	if (!istype(movable_parent))
 		return FALSE
@@ -240,7 +241,7 @@ handles linking back and forth.
  * name- For logging only. the design you are trying to build e.g. matter bin, etc.
  * user_data - in the form rendered by ID_DATA(user), for material logging and (if this component is connected to a silo), permission checking
  */
-/datum/component/remote_materials/proc/use_materials(list/mats, coefficient = 1, multiplier = 1, action = "processed", name = "design", alist/user_data)
+/datum/remote_materials/proc/use_materials(list/mats, coefficient = 1, multiplier = 1, action = "processed", name = "design", alist/user_data)
 	if(!can_use_resource(user_data = user_data))
 		return 0
 
@@ -263,7 +264,7 @@ handles linking back and forth.
  * [drop_target][atom]- optional where to drop the sheets. null means it is dropped at this components parent location
  * user_data - in the form rendered by ID_DATA(user), for material logging and (if this component is connected to a silo), permission checking
  */
-/datum/component/remote_materials/proc/eject_sheets(datum/material/material_ref, eject_amount, atom/drop_target = null, alist/user_data)
+/datum/remote_materials/proc/eject_sheets(datum/material/material_ref, eject_amount, atom/drop_target = null, alist/user_data)
 	if(!can_use_resource(user_data = user_data))
 		return 0
 
@@ -281,7 +282,7 @@ handles linking back and forth.
  * * multiplier - the multiplier applied on the materials consumed
  * * user_data - an alist in the form rendered by ID_DATA(user), for logging who/where/when the item was inserted
  */
-/datum/component/remote_materials/proc/insert_item(obj/item/weapon, multiplier = 1, alist/user_data)
+/datum/remote_materials/proc/insert_item(obj/item/weapon, multiplier = 1, alist/user_data)
 	// Inserting materials automatically shouldn't be permission-restricted
 	if(!islist(user_data))
 		user_data = ID_DATA(null)

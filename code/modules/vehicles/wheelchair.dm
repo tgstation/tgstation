@@ -41,7 +41,7 @@
 	. = ..()
 	make_ridable()
 	ADD_TRAIT(src, TRAIT_NO_IMMOBILIZE, INNATE_TRAIT)
-	AddComponent(/datum/component/simple_rotation) //Since it's technically a chair I want it to have chair properties
+	AddElement(/datum/element/simple_rotation) //Since it's technically a chair I want it to have chair properties
 	AddElement(/datum/element/noisy_movement, volume = 75)
 
 /obj/vehicle/ridden/wheelchair/handle_deconstruct(disassembled)

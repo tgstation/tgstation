@@ -24,7 +24,6 @@
 	var/theme = THEME_CULT
 	/// Role check, if any needed
 	var/required_role = /datum/antagonist/cult
-	grind_results = list(/datum/reagent/hauntium = 25, /datum/reagent/silicon = 10) //can be ground into hauntium
 
 /obj/item/soulstone/Initialize(mapload)
 	. = ..()
@@ -32,6 +31,9 @@
 		RegisterSignal(src, COMSIG_BIBLE_SMACKED, PROC_REF(on_bible_smacked))
 	if(!base_name)
 		base_name = initial(name)
+
+/obj/item/soulstone/grind_results()
+	return list(/datum/reagent/hauntium = 25, /datum/reagent/silicon = 10) //can be ground into hauntium
 
 /obj/item/soulstone/update_appearance(updates)
 	. = ..()

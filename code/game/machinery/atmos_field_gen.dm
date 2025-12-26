@@ -39,7 +39,7 @@
 /obj/machinery/atmos_shield_gen/Initialize(mapload)
 	. = ..()
 	register_context()
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 	set_wires(new /datum/wires/atmosshieldgen(src))
 	SSmachines.processing_early += src
 	if(on)

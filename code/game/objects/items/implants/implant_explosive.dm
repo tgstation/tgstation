@@ -143,16 +143,13 @@
 	if(imp_in && !imp_in.stat && !no_paralyze)
 		imp_in.visible_message(span_warning("[imp_in] doubles over in pain!"))
 		imp_in.Paralyze(14 SECONDS)
-	//total of 4 bomb beeps, and we've already beeped once
-	var/bomb_beeps_until_boom = 3
+
 	if(!panic_beep_sound)
-		while(bomb_beeps_until_boom > 0)
+		for(var/index in 1 to 3) // Total of 4 bomb beeps, and we've already beeped once
 			//for extra spice
-			var/beep_volume = 35
+			var/beep_volume = 30 + (5 * index)
 			playsound(loc, 'sound/items/timer.ogg', beep_volume, vary = FALSE)
 			sleep(delay * 0.25)
-			bomb_beeps_until_boom--
-			beep_volume += 5
 		explode()
 	else
 		addtimer(CALLBACK(src, PROC_REF(explode)), delay)
@@ -166,9 +163,9 @@
 
 ///When called, just explodes
 /obj/item/implant/explosive/proc/explode(atom/override_explode_target = null)
-	explosion_devastate = round(explosion_devastate)
-	explosion_heavy = round(explosion_heavy)
-	explosion_light = round(explosion_light)
+	explosion_devastate = floor(explosion_devastate)
+	explosion_heavy = floor(explosion_heavy)
+	explosion_light = floor(explosion_light)
 	explosion(override_explode_target || src, devastation_range = explosion_devastate, heavy_impact_range = explosion_heavy, light_impact_range = explosion_light, flame_range = explosion_light, flash_range = explosion_light, explosion_cause = src)
 	var/mob/living/kill_mob = isliving(override_explode_target) ? override_explode_target : imp_in
 	if(!isnull(kill_mob))

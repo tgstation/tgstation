@@ -25,7 +25,6 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	armor_type = /datum/armor/sheet_glass
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/glass
-	grind_results = list(/datum/reagent/silicon = 20)
 	material_type = /datum/material/glass
 	table_type = /obj/structure/table/glass
 	matter_amount = 4
@@ -38,6 +37,9 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 /datum/armor/sheet_glass
 	fire = 50
 	acid = 100
+
+/obj/item/stack/sheet/glass/grind_results()
+	return list(/datum/reagent/silicon = 20)
 
 /obj/item/stack/sheet/glass/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to slice [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -101,11 +103,13 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	armor_type = /datum/armor/sheet_plasmaglass
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plasmaglass
-	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10)
 	material_flags = NONE
 	table_type = /obj/structure/table/glass/plasmaglass
 	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
+
+/obj/item/stack/sheet/plasmaglass/grind_results()
+	return list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10)
 
 /obj/item/stack/sheet/plasmaglass/fifty
 	amount = 50
@@ -161,11 +165,13 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	armor_type = /datum/armor/sheet_rglass
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/rglass
-	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/iron = 10)
 	matter_amount = 6
 	table_type = /obj/structure/table/reinforced/rglass
 	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
+
+/obj/item/stack/sheet/rglass/grind_results()
+	return list(/datum/reagent/silicon = 20, /datum/reagent/iron = 10)
 
 /obj/item/stack/sheet/rglass/fifty
 	amount = 50
@@ -200,12 +206,14 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	resistance_flags = ACID_PROOF
 	material_flags = NONE
 	merge_type = /obj/item/stack/sheet/plasmarglass
-	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10, /datum/reagent/iron = 10)
 	gulag_valid = TRUE
 	matter_amount = 8
 	table_type = /obj/structure/table/reinforced/plasmarglass
 	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
+
+/obj/item/stack/sheet/plasmarglass/grind_results()
+	return list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10, /datum/reagent/iron = 10)
 
 /datum/armor/sheet_plasmarglass
 	melee = 20

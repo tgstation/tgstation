@@ -24,11 +24,13 @@
 	gender = PLURAL
 	icon_state = "soybeans"
 	foodtypes = VEGETABLES
-	juice_typepath = /datum/reagent/consumable/soymilk
 	tastes = list("soy" = 1)
 	distill_reagent = /datum/reagent/consumable/soysauce
 	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
+
+/obj/item/food/grown/soybeans/juice_typepath()
+	return /datum/reagent/consumable/soymilk
 
 // Koibean
 /obj/item/seeds/soya/koi

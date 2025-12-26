@@ -459,7 +459,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	attack_verb_simple = list("whip", "lash", "discipline", "flog")
 	singular_name = "cable piece"
 	full_w_class = WEIGHT_CLASS_SMALL
-	grind_results = list(/datum/reagent/copper = 2) //2 copper per cable in the coil
 	usesound = 'sound/items/deconstruct.ogg'
 	cost = 1
 	source = /datum/robot_energy_storage/wire
@@ -475,6 +474,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 	update_appearance()
+
+/obj/item/stack/cable_coil/grind_results()
+	return list(/datum/reagent/copper = 2)
 
 /obj/item/stack/cable_coil/examine(mob/user)
 	. = ..()

@@ -197,7 +197,7 @@
 	if(!istype(charger))
 		return
 
-	var/datum/component/material_container/mat_container = charger.materials.mat_container
+	var/datum/material_container/mat_container = charger.materials.mat_container
 	if(!mat_container || charger.materials.on_hold())
 		charger.sendmats = FALSE
 		return

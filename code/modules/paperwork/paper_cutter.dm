@@ -190,7 +190,9 @@
 	inhand_icon_state = "silver_id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	grind_results = list(/datum/reagent/cellulose = 1.5) //It's a normal paper sheet divided in 2. 3 divided by 2 equals 1.5, this way you can't magically dupe cellulose
+
+/obj/item/paper/paperslip/grind_results()
+	return list(/datum/reagent/cellulose = 1.5)
 
 /obj/item/paper/paperslip/fortune
 	name = "fortune slip"
@@ -199,17 +201,20 @@
 	default_raw_text = pick(GLOB.wisdoms)
 	return ..()
 
-/obj/item/paper/paperslip/corporate //More fancy and sturdy paper slip which is a "plastic card", used for things like spare ID safe code
+///More fancy and sturdy paper slip which is a "plastic card", used for things like spare ID safe code
+/obj/item/paper/paperslip/corporate
 	name = "corporate plastic card"
 	desc = "A plastic card for confidential corporate matters. Can be written on with pen somehow."
 	icon_state = "corppaperslip"
-	grind_results = list(/datum/reagent/plastic_polymers = 1.5) //It's a plastic card after all
 	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3, /datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)
 	max_integrity = 130 //Slightly more sturdy because of being made out of a plastic
 	drop_sound = 'sound/items/handling/disk_drop.ogg'
 	pickup_sound = 'sound/items/handling/disk_pickup.ogg'
 	throw_range = 6
 	throw_speed = 2
+
+/obj/item/paper/paperslip/corporate/grind_results()
+	return list(/datum/reagent/plastic_polymers = 1.5)
 
 /obj/item/hatchet/cutterblade
 	name = "paper cutter blade"

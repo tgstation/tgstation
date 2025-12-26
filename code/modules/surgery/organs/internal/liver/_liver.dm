@@ -16,7 +16,6 @@
 	decay_factor = STANDARD_ORGAN_DECAY // smack in the middle of decay times
 
 	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/iron = 5)
-	grind_results = list(/datum/reagent/consumable/nutriment/peptides = 5)
 
 	cell_line = CELL_LINE_ORGAN_LIVER
 	cells_minimum = 1
@@ -37,6 +36,9 @@
 	// Don't think about it too much.
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_COMEDY_METABOLISM), PROC_REF(on_add_comedy_metabolism))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_COMEDY_METABOLISM), PROC_REF(on_remove_comedy_metabolism))
+
+/obj/item/organ/liver/grind_results()
+	return list(/datum/reagent/consumable/nutriment/peptides = 5)
 
 /* Signal handler for the liver gaining the TRAIT_COMEDY_METABOLISM trait
  *

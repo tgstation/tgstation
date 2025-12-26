@@ -1,0 +1,4 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - balance: "All protolathes can now print out a expiri science scanner"

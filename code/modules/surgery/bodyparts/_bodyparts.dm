@@ -21,7 +21,6 @@
 	///The color to multiply the greyscaled husk sprites by. Can be null. Old husk sprite chest color is #A6A6A6
 	var/husk_color = "#A6A6A6"
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
-	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/consumable/liquidgibs = 5) // robotic bodyparts and chests/heads cannot be ground
 	/// The mob that "owns" this limb
 	/// DO NOT MODIFY DIRECTLY. Use update_owner()
 	var/mob/living/carbon/owner
@@ -255,9 +254,7 @@
 		texture_bodypart_overlay = new texture_bodypart_overlay()
 		add_bodypart_overlay(texture_bodypart_overlay, update = FALSE)
 
-	if(!IS_ORGANIC_LIMB(src))
-		grind_results = null
-	else
+	if(IS_ORGANIC_LIMB(src))
 		blood_dna_info = list("Unknown DNA" = get_blood_type(BLOOD_TYPE_O_PLUS))
 
 	var/innate_state = NONE
@@ -295,6 +292,9 @@
 	QDEL_LIST_ASSOC_VAL(feature_offsets)
 
 	return ..()
+
+/obj/item/bodypart/grind_results()
+	return IS_ORGANIC_LIMB(src) ? list() : list(/datum/reagent/bone_dust = 10, /datum/reagent/consumable/liquidgibs = 5)
 
 /obj/item/bodypart/ex_act(severity, target)
 	if(owner) //trust me bro you dont want this

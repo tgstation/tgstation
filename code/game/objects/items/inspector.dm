@@ -459,8 +459,10 @@
  * If it is ground, it will turn into 5u water.
  */
 /obj/item/paper/fake_report/water
-	grind_results = list(/datum/reagent/water = 5)
 	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
+
+/obj/item/paper/fake_report/water/grind_results()
+	return list(/datum/reagent/water = 5)
 
 /obj/item/paper/fake_report/water/click_alt(mob/living/user)
 	var/datum/action/innate/origami/origami_action = locate() in user.actions

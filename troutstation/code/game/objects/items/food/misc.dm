@@ -33,9 +33,11 @@
 	tastes = list("gay" = 1)
 	foodtypes = FRUIT
 	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE
-	juice_typepath = /datum/reagent/medicine/gaywater
 	w_class = WEIGHT_CLASS_SMALL
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH
+
+/obj/item/food/gaywatermelonslice/juice_typepath()
+	return /datum/reagent/medicine/gaywater
 
 /obj/item/food/gaywatermelonmush
 	name = "gaywatermelon mush"
@@ -50,6 +52,8 @@
 	tastes = list("gay" = 1)
 	foodtypes = FRUIT
 	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE
-	juice_typepath = /datum/reagent/medicine/gaywater
 	w_class = WEIGHT_CLASS_SMALL
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH
+
+/obj/item/food/gaywatermelonmush/juice_typepath()
+	return /datum/reagent/medicine/gaywater

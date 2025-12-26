@@ -464,7 +464,7 @@
 	if(!tool.blend_requirements(src))
 		to_chat(user, span_warning("Cannot grind this!"))
 		return ITEM_INTERACT_BLOCKING
-	if((length(tool.grind_results) || tool.reagents?.total_volume) && user.transferItemToLoc(tool, src))
+	if((length(tool.grind_results()) || tool.reagents?.total_volume) && user.transferItemToLoc(tool, src))
 		grinded = tool
 		return ITEM_INTERACT_SUCCESS
 	return NONE

@@ -176,14 +176,16 @@
 	if(current_amount <= 0 || QDELETED(src)) //just to get rid of this 0 amount/deleted stack we return success
 		return TRUE
 
+	var/list/grind_reagents = grind_results()
+
 	if(reagents)
 		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 	var/available_volume = target_holder.maximum_volume - target_holder.total_volume
 
 	//compute total volume of reagents that will be occupied by grind_results
 	var/total_volume = 0
-	for(var/reagent in grind_results)
-		total_volume += grind_results[reagent]
+	for(var/reagent in grind_reagents)
+		total_volume += grind_reagents[reagent]
 
 	//compute number of pieces(or sheets) from available_volume
 	var/available_amount = min(current_amount, round(available_volume / total_volume))
@@ -191,7 +193,6 @@
 		return FALSE
 
 	//Now transfer the grind results scaled by available_amount
-	var/list/grind_reagents = LAZYCOPY(grind_results)
 	for(var/reagent in grind_reagents)
 		grind_reagents[reagent] *= available_amount
 	target_holder.add_reagent_list(grind_reagents)

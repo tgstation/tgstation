@@ -25,11 +25,13 @@
 	icon_state = "berrypile"
 	gender = PLURAL
 	foodtypes = FRUIT
-	juice_typepath = /datum/reagent/consumable/berryjuice
 	tastes = list("berry" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/gin
 	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
+
+/obj/item/food/grown/berries/juice_typepath()
+	return /datum/reagent/consumable/berryjuice
 
 // Poison Berries
 /obj/item/seeds/berry/poison
@@ -50,12 +52,14 @@
 	icon_state = "poisonberrypile"
 	bite_consumption_mod = 3
 	foodtypes = FRUIT | TOXIC
-	juice_typepath = /datum/reagent/consumable/poisonberryjuice
 	tastes = list("poison-berry" = 1)
 	distill_reagent = null
 	wine_power = 35
 	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
+
+/obj/item/food/grown/berries/poison/juice_typepath()
+	return /datum/reagent/consumable/poisonberryjuice
 
 // Death Berries
 /obj/item/seeds/berry/death
@@ -78,12 +82,14 @@
 	icon_state = "deathberrypile"
 	bite_consumption_mod = 3
 	foodtypes = FRUIT | TOXIC
-	juice_typepath = /datum/reagent/consumable/poisonberryjuice
 	tastes = list("death-berry" = 1)
 	distill_reagent = null
 	wine_power = 50
 	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
+
+/obj/item/food/grown/berries/death/juice_typepath()
+	return /datum/reagent/consumable/poisonberryjuice
 
 // Glow Berries
 /obj/item/seeds/berry/glow
@@ -142,11 +148,13 @@
 	icon_state = "grapes"
 	bite_consumption_mod = 2
 	foodtypes = FRUIT
-	juice_typepath = /datum/reagent/consumable/grapejuice
 	tastes = list("grape" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/wine
 	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
+
+/obj/item/food/grown/grapes/juice_typepath()
+	return /datum/reagent/consumable/grapejuice
 
 /obj/item/food/grown/grapes/make_dryable()
 	AddElement(/datum/element/dryable, /obj/item/food/no_raisin/healthy)
@@ -195,11 +203,13 @@
 	desc = "A branch with töchtaüse berries on it. They're a favourite on the Mothic Fleet, but not in this form."
 	icon_state = "toechtauese_branch"
 	foodtypes = FRUIT
-	juice_typepath = /datum/reagent/consumable/toechtauese_juice
 	tastes = list("fiery itchy pain" = 1)
 	distill_reagent = /datum/reagent/toxin/itching_powder
 	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
+
+/obj/item/food/grown/toechtauese/juice_typepath()
+	return /datum/reagent/consumable/toechtauese_juice
 
 /obj/item/seeds/lanternfruit
 	name = "lanternfruit seed pack"

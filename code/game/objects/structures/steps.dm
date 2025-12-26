@@ -17,7 +17,7 @@
 
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddComponent(/datum/component/climb_walkable)
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 	register_context()
 
 /obj/structure/steps/add_context(atom/source, list/context, obj/item/held_item, mob/user)

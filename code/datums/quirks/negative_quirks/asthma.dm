@@ -1,6 +1,6 @@
 /datum/quirk/item_quirk/asthma
 	name = "Asthma"
-	desc = "You suffer from asthma, a inflammatory disorder that causes your airpipe to squeeze shut! Be careful around smoke!"
+	desc = "You suffer from asthma, an inflammatory disorder that causes your airpipe to squeeze shut! Be careful around smoke!"
 	icon = FA_ICON_LUNGS_VIRUS
 	value = -4 // trivialized by NOBREATH but still quite dangerous
 	gain_text = span_danger("You have a harder time breathing.")

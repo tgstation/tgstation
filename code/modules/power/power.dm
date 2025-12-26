@@ -177,7 +177,7 @@
 	if((amount > grid_used) && !ignore_apc && !QDELETED(local_apc.cell)) // Use from the APC's cell if there isn't enough energy from the grid.
 		apc_used = local_apc.cell.use(amount - grid_used, force = force)
 
-	if(!force && (amount < grid_used + apc_used)) // If we aren't forcing it and there isn't enough energy to supply demand, return nothing.
+	if(!force && (amount > grid_used + apc_used)) // If we aren't forcing it and there isn't enough energy to supply demand, return nothing.
 		return FALSE
 
 	// Use the grid's and APC's energy.

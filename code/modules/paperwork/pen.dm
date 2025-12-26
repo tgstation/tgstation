@@ -25,7 +25,6 @@
 	throw_range = 7
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.1)
 	pressure_resistance = 2
-	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	var/colour = COLOR_BLACK //what colour the ink is!
 	var/degrees = 0
 	var/font = PEN_FONT
@@ -57,6 +56,9 @@
 		return
 	create_transform_component()
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+
+/obj/item/pen/grind_results()
+	return list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 
 /// Proc that child classes can override to have custom transforms, like edaggers or pendrivers
 /obj/item/pen/proc/create_transform_component()
@@ -166,9 +168,11 @@
 	colour = "#696969"
 	font = CHARCOAL_FONT
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
-	grind_results = list(/datum/reagent/ash = 5, /datum/reagent/cellulose = 10)
 	requires_gravity = FALSE // this is technically a pencil
 	can_click = FALSE
+
+/obj/item/pen/charcoal/grind_results()
+	return list(/datum/reagent/ash = 5, /datum/reagent/cellulose = 10)
 
 /datum/crafting_recipe/charcoal_stylus
 	name = "Charcoal Stylus"
@@ -482,7 +486,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.1, /datum/material/diamond=SMALL_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT*0.1)
 	pressure_resistance = 2
-	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	tool_behaviour = TOOL_MINING //For the classic "digging out of prison with a spoon but you're in space so this analogy doesn't work" situation.
 	toolspeed = 10 //You will never willingly choose to use one of these over a shovel.
 	font = FOUNTAIN_PEN_FONT
@@ -490,6 +493,9 @@
 	dart_insert_casing_icon_state = "overlay_survivalpen"
 	dart_insert_projectile_icon_state = "overlay_survivalpen_proj"
 	can_click = FALSE
+
+/obj/item/pen/survival/grind_results()
+	return list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 
 /obj/item/pen/survival/on_inserted_into_dart(datum/source, obj/item/ammo_casing/dart, mob/user)
 	. = ..()

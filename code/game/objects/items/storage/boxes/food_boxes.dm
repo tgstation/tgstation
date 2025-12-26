@@ -379,7 +379,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	item_flags = NOBLUDGEON|SKIP_FANTASY_ON_SPAWN
-	grind_results = list(/datum/reagent/aluminium = 1)
 
 	///The typepath of the type of gum that will spawn in our PopulateContents,
 	///this is set in Initialize by the gum box if there is one.
@@ -393,6 +392,9 @@
 	atom_storage.max_slots = 1
 	atom_storage.display_contents = FALSE
 	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/storage/bubblegum_wrapper/grind_results()
+	return list(/datum/reagent/aluminium = 1)
 
 /obj/item/storage/bubblegum_wrapper/PopulateContents()
 	new gum_to_spawn(src)

@@ -35,7 +35,7 @@
 	/// bitflags for banned upgrades
 	var/banned_upgrades = NONE
 	/// remote connection to the silo
-	var/datum/component/remote_materials/silo_mats
+	var/datum/remote_materials/silo_mats
 	/// switch to use internal or remote storage
 	var/silo_link = FALSE
 	/// has the blueprint design changed
@@ -51,8 +51,12 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	if(construction_upgrades & RCD_UPGRADE_SILO_LINK)
-		silo_mats = AddComponent(/datum/component/remote_materials, mapload, FALSE)
+		silo_mats = new (src, mapload, FALSE)
 	update_appearance()
+
+/obj/item/construction/Destroy()
+	QDEL_NULL(silo_mats)
+	return ..()
 
 ///An do_after() specially designed for rhd devices
 /obj/item/construction/proc/build_delay(mob/user, delay, atom/target)
@@ -122,7 +126,7 @@
 		return FALSE
 	construction_upgrades |= design_disk.upgrade
 	if((design_disk.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
-		silo_mats = AddComponent(/datum/component/remote_materials, FALSE, FALSE)
+		silo_mats = new (src, FALSE, FALSE)
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(design_disk)
 	update_static_data_for_all_viewers()

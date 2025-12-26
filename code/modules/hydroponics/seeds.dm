@@ -294,7 +294,7 @@
 			T.reagents.add_reagent(rid, amount, data, added_purity = reagent_purity)
 
 		//Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist. Mutually exclusive with distilling.
-		if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_typepath)
+		if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_typepath())
 			grown_edible.juice(juicer = FALSE) //we pass FALSE & not null because Byond default args will subtitute it with the default value
 		else if(get_gene(/datum/plant_gene/trait/brewing))
 			grown_edible.ferment()

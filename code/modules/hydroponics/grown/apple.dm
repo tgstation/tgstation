@@ -22,9 +22,11 @@
 	desc = "It's a little piece of Eden."
 	icon_state = "apple"
 	foodtypes = FRUIT
-	juice_typepath = /datum/reagent/consumable/applejuice
 	tastes = list("apple" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/hcider
+
+/obj/item/food/grown/apple/juice_typepath()
+	return /datum/reagent/consumable/applejuice
 
 /obj/item/food/grown/apple/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/appleslice, 5, 20, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
