@@ -62,11 +62,11 @@
 	taste_description = "french cuisine"
 	taste_mult = 1.3
 
-/datum/reagent/toxin/leaper_venom/on_mob_life(mob/living/carbon/poisoned_mob, seconds_per_tick)
+/datum/reagent/toxin/leaper_venom/on_mob_life(mob/living/carbon/poisoned_mob, seconds_per_tick, metabolized_volume)
 	. = ..()
 	if(volume <= 5)
 		return
-	if(poisoned_mob.adjust_tox_loss(2.5 * REM * seconds_per_tick, updating_health = FALSE))
+	if(poisoned_mob.adjust_tox_loss(1.25 * REM * metabolized_volume * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 // bubble ability structure

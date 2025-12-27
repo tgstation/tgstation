@@ -11,18 +11,18 @@
 	ph = 3
 	inverse_chem = null
 	inverse_chem_val = 0
-	metabolization_rate = 0.1 * REM //default impurity is 0.75, so we get 25% converted. Default metabolisation rate is 0.4, so we're 4 times slower.
+	metabolization_rate = 0.05//default impurity is 0.75, so we get 25% converted. Default metabolisation rate is 0.4, so we're 4 times slower.
 	var/liver_damage = 0.5
 
-/datum/reagent/impurity/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
+/datum/reagent/impurity/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
 	. = ..()
 	var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	var/need_mob_update
 
 	if(liver)//Though, lets be safe
-		need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, liver_damage * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+		need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, 0.5 * liver_damage * REM * metabolized_volume * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	else
-		need_mob_update = affected_mob.adjust_tox_loss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)//Incase of no liver!
+		need_mob_update = affected_mob.adjust_tox_loss(0.5 * REM * metabolized_volume * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)//Incase of no liver!
 
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -39,9 +39,9 @@
 	var/tox_damage = 1
 
 
-/datum/reagent/inverse/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
+/datum/reagent/inverse/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
 	. = ..()
-	if(affected_mob.adjust_tox_loss(tox_damage * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+	if(affected_mob.adjust_tox_loss(0.5 * tox_damage * REM * metabolized_volume * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 //Failed chems - generally use inverse if you want to use a impure subtype for it
@@ -67,7 +67,7 @@
 	chemical_flags = NONE
 	tox_damage = 0
 
-/datum/reagent/inverse/eigenswap/on_mob_life(mob/living/carbon/affected_mob)
+/datum/reagent/inverse/eigenswap/on_mob_life(mob/living/carbon/affected_mob, metabolized_volume)
 	. = ..()
 	if(!prob(creation_purity * 100))
 		return
@@ -95,7 +95,7 @@
 	taste_description = "your tongue freezing, shortly followed by your thoughts. Brr!"
 	ph = 14
 	chemical_flags = REAGENT_DEAD_PROCESS | REAGENT_IGNORE_STASIS | REAGENT_UNAFFECTED_BY_METABOLISM
-	metabolization_rate = 1 * REM
+	metabolization_rate = 0.5
 
 /datum/reagent/inverse/cryostylane/expose_mob(mob/living/carbon/human/human_thing, methods, reac_volume, show_message, touch_protection)
 	. = ..()
@@ -108,11 +108,11 @@
 
 	human_thing.apply_status_effect(/datum/status_effect/reagent_effect/freeze, type)
 
-/datum/reagent/inverse/cryostylane/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
+/datum/reagent/inverse/cryostylane/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
 	. = ..()
 	metabolization_rate += 0.01 //speed up our metabolism over time. Chop chop.
 
-/datum/reagent/inverse/cryostylane/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick)
+/datum/reagent/inverse/cryostylane/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
 	if(current_cycle >= 60)
 		holder.remove_reagent(type, volume) // remove it all if we're past 60 cycles
 		return
