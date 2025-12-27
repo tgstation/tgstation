@@ -635,8 +635,8 @@
 "JI" = (
 /obj/item/dice/d10,
 /obj/structure/filingcabinet/chestdrawer,
-/obj/item/computer_disk/maintenance/modsuit_control,
-/obj/item/computer_disk/maintenance/modsuit_control,
+/obj/item/disk/computer/maintenance/modsuit_control,
+/obj/item/disk/computer/maintenance/modsuit_control,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "KR" = (

@@ -276,7 +276,7 @@
 				return FALSE
 
 			if(sending_virus)
-				var/obj/item/computer_disk/virus/disk = computer.inserted_disk
+				var/obj/item/disk/computer/virus/disk = computer.inserted_disk
 				if(!istype(disk))
 					return FALSE
 
@@ -376,7 +376,7 @@
 	data["selected_photo_path"] = !isnull(selected_image) ? SSassets.transport.get_asset_url(selected_image) : null
 	data["on_spam_cooldown"] = !can_send_everyone_message()
 
-	var/obj/item/computer_disk/virus/disk = computer.inserted_disk
+	var/obj/item/disk/computer/virus/disk = computer.inserted_disk
 	if(istype(disk))
 		data["virus_attach"] = TRUE
 		data["sending_virus"] = sending_virus

@@ -207,7 +207,7 @@
 	pixel_y = 4
 	},
 /obj/machinery/firealarm/directional/east,
-/obj/item/computer_disk/quartermaster{
+/obj/item/disk/computer/quartermaster{
 	pixel_x = -6;
 	pixel_y = 4
 	},
@@ -16102,7 +16102,7 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
-/obj/item/computer_disk/ordnance,
+/obj/item/disk/computer/ordnance,
 /obj/machinery/light/warm/directional/south,
 /obj/item/coffee_cartridge/fancy,
 /turf/open/floor/iron/dark,
@@ -23195,11 +23195,11 @@
 /obj/item/radio/intercom/directional/east,
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = 7;
 	pixel_y = 2
 	},
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = -5;
 	pixel_y = 8
 	},
@@ -36622,7 +36622,7 @@
 /turf/open/floor/iron,
 /area/station/security)
 "mEN" = (
-/obj/item/computer_disk/maintenance/spectre_meter,
+/obj/item/disk/computer/maintenance/spectre_meter,
 /turf/open/misc/asteroid/airless,
 /area/station/asteroid)
 "mEQ" = (
@@ -49449,7 +49449,7 @@
 /obj/machinery/modular_computer/preset/civilian{
 	dir = 1
 	},
-/obj/item/computer_disk/ordnance{
+/obj/item/disk/computer/ordnance{
 	pixel_x = 1
 	},
 /turf/open/floor/iron/dark,
@@ -64419,7 +64419,7 @@
 "whG" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/folder/blue,
-/obj/item/computer_disk/medical,
+/obj/item/disk/computer/medical,
 /obj/item/stamp/head/cmo,
 /turf/open/floor/holofloor/dark,
 /area/station/command/heads_quarters/cmo)

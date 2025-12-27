@@ -74,7 +74,7 @@
  * the same filename (disregarding extension), will return it.
  * If a computer disk is passed instead, it will check the disk over the computer.
  */
-/obj/item/modular_computer/proc/find_file_by_name(filename, obj/item/computer_disk/target_disk)
+/obj/item/modular_computer/proc/find_file_by_name(filename, obj/item/disk/computer/target_disk)
 	if(!istext(filename))
 		return null
 	if(isnull(target_disk))
@@ -94,7 +94,7 @@
  * A file's uid is always unique to them, so this proc is sometimes preferable over find_file_by_name.
  * If a computer disk is passed instead, it will check the disk over the computer.
  */
-/obj/item/modular_computer/proc/find_file_by_uid(uid, obj/item/computer_disk/target_disk)
+/obj/item/modular_computer/proc/find_file_by_uid(uid, obj/item/disk/computer/target_disk)
 	if(!isnum(uid))
 		return null
 	if(isnull(target_disk))
