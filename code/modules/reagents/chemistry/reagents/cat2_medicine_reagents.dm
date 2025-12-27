@@ -41,7 +41,7 @@
 		else //no convert
 			thou_shall_heal = round(death_is_coming/10, 0.1)
 			good_kind_of_healing = TRUE
-	need_mob_update += affected_mob.adjust_brute_loss(0.5 * -thou_shall_heal * metabolization_ratio * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjust_brute_loss(-0.5 * thou_shall_heal * metabolization_ratio * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 
