@@ -49,7 +49,7 @@
 	max_plasma = 100
 	actions_types = list(/datum/action/cooldown/alien/transfer)
 
-/obj/item/organ/alien/plasmavessel/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/alien/plasmavessel/on_life(seconds_per_tick)
 	var/delta_time = DELTA_WORLD_TIME(SSmobs)
 	//Instantly healing to max health in a single tick would be silly. If it takes 8 seconds to fire, then something's fucked.
 	var/delta_time_capped = min(delta_time, 8)
@@ -62,9 +62,9 @@
 			if(!isalien(owner))
 				heal_amt *= 0.2
 			owner.adjustPlasma(0.5 * plasma_rate * delta_time_capped)
-			owner.adjustBruteLoss(-heal_amt * delta_time_capped)
-			owner.adjustFireLoss(-heal_amt * delta_time_capped)
-			owner.adjustOxyLoss(-heal_amt * delta_time_capped)
+			owner.adjust_brute_loss(-heal_amt * delta_time_capped)
+			owner.adjust_fire_loss(-heal_amt * delta_time_capped)
+			owner.adjust_oxy_loss(-heal_amt * delta_time_capped)
 	else
 		owner.adjustPlasma(0.1 * plasma_rate * delta_time)
 

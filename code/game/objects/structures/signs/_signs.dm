@@ -23,8 +23,11 @@
 /obj/structure/sign/Initialize(mapload)
 	. = ..()
 	register_context()
-	if(mapload)
-		find_and_hang_on_wall()
+	if(mapload && !find_and_mount_on_atom(mark_for_late_init = TRUE))
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/sign/LateInitialize()
+	find_and_mount_on_atom(late_init = TRUE)
 
 /obj/structure/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -48,17 +51,17 @@
 /obj/structure/sign/wrench_act(mob/living/user, obj/item/wrench/I)
 	. = ..()
 	if(!buildable_sign)
-		return TRUE
+		return ITEM_INTERACT_FAILURE
 	user.visible_message(span_notice("[user] starts removing [src]..."), \
 		span_notice("You start unfastening [src]."))
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 4 SECONDS))
-		return TRUE
+		return ITEM_INTERACT_FAILURE
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	user.visible_message(span_notice("[user] unfastens [src]."), \
 		span_notice("You unfasten [src]."))
 	deconstruct(TRUE)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/sign/welder_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -126,19 +129,6 @@
 	is_editable = TRUE
 	sign_change_name = "Blank Sign"
 
-/obj/structure/sign/nanotrasen
-	name = "\improper Nanotrasen logo sign"
-	sign_change_name = "Corporate Logo - Nanotrasen"
-	desc = "A sign with the Nanotrasen logo on it. Glory to Nanotrasen!"
-	icon_state = "nanotrasen"
-	is_editable = TRUE
-
-/obj/structure/sign/logo
-	name = "\improper Nanotrasen logo sign"
-	desc = "The Nanotrasen corporate logo."
-	icon_state = "nanotrasen_sign1"
-	buildable_sign = FALSE
-
 /obj/item/sign
 	name = "sign backing"
 	desc = "A plastic sign backing, use a pen to change the decal. It can be placed on a wall."
@@ -175,35 +165,35 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Change design"
 		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/sign/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(is_editable && IS_WRITING_UTENSIL(I))
-		if(!length(GLOB.editable_sign_types))
-			CRASH("GLOB.editable_sign_types failed to populate")
-		var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
-		if(isnull(choice))
-			return
-		if(!Adjacent(user)) //Make sure user is adjacent still.
-			to_chat(user, span_warning("You need to stand next to the sign to change it!"))
-			return
-		user.visible_message(span_notice("You begin changing [src]."))
-		if(!do_after(user, 4 SECONDS, target = src))
-			return
-		set_sign_type(GLOB.editable_sign_types[choice])
-		user.visible_message(span_notice("You finish changing the sign."))
-		return
-	return ..()
+/obj/item/sign/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!is_editable || !IS_WRITING_UTENSIL(tool))
+		return ..()
+	if(!length(GLOB.editable_sign_types))
+		CRASH("GLOB.editable_sign_types failed to populate")
+	var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
+	if(isnull(choice))
+		return ITEM_INTERACT_BLOCKING
+	if(!Adjacent(user)) //Make sure user is adjacent still.
+		to_chat(user, span_warning("You need to stand next to the sign to change it!"))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("You begin changing [src]."))
+	if(!do_after(user, 4 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+	set_sign_type(GLOB.editable_sign_types[choice])
+	user.visible_message(span_notice("You finish changing the sign."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/sign/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!iswallturf(interacting_with) && !istype(interacting_with, /obj/structure/tram))
 		return NONE
 	var/turf/target_turf = interacting_with
 	var/turf/user_turf = get_turf(user)
-	var/obj/structure/sign/placed_sign = new sign_path(user_turf) //We place the sign on the turf the user is standing, and pixel shift it to the target wall, as below.
-	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
 	var/dir = get_dir(user_turf, target_turf)
 	if(!(dir in GLOB.cardinals))
 		balloon_alert(user, "stand in line with wall!")
-		return
+		return ITEM_INTERACT_BLOCKING
+	var/obj/structure/sign/placed_sign = new sign_path(user_turf) //We place the sign on the turf the user is standing, and pixel shift it to the target wall, as below.
+	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
 	if(dir & NORTH)
 		placed_sign.pixel_y = 32
 	else if(dir & SOUTH)
@@ -217,7 +207,7 @@
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
 	placed_sign.update_integrity(get_integrity())
 	placed_sign.setDir(dir)
-	placed_sign.find_and_hang_on_wall()
+	placed_sign.AddComponent(/datum/component/atom_mounted, target_turf)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -238,6 +228,9 @@
 		span_notice("You finish repairing [src]."))
 	atom_integrity = max_integrity
 	return TRUE
+
+/obj/item/sign/screwdriver_act(mob/living/user, obj/item/tool)
+	return interact_with_atom(get_step(get_turf(user), user.dir), user)
 
 /obj/item/sign/proc/set_sign_type(obj/structure/sign/fake_type)
 	name = initial(fake_type.name)

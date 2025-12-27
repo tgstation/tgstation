@@ -52,7 +52,7 @@
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_allergy, allergy_string = allergy_string)
 	to_chat(quirk_holder, span_boldnotice("You are allergic to [allergy_string], make sure not to consume any of these!"))
 
-/datum/quirk/item_quirk/allergic/proc/block_metab(mob/living/carbon/source, datum/reagent/chem, seconds_per_tick, times_fired)
+/datum/quirk/item_quirk/allergic/proc/block_metab(mob/living/carbon/source, datum/reagent/chem, seconds_per_tick)
 	SIGNAL_HANDLER
 
 	if(!is_type_in_list(chem, allergies))
@@ -65,5 +65,5 @@
 	source.reagents.add_reagent(/datum/reagent/toxin/histamine, 3 * seconds_per_tick)
 	if(SPT_PROB(10, seconds_per_tick))
 		source.vomit(VOMIT_CATEGORY_DEFAULT)
-		source.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN, ORGAN_SLOT_APPENDIX, ORGAN_SLOT_LUNGS, ORGAN_SLOT_HEART, ORGAN_SLOT_LIVER, ORGAN_SLOT_STOMACH), 10)
+		source.adjust_organ_loss(pick(ORGAN_SLOT_BRAIN, ORGAN_SLOT_APPENDIX, ORGAN_SLOT_LUNGS, ORGAN_SLOT_HEART, ORGAN_SLOT_LIVER, ORGAN_SLOT_STOMACH), 10)
 	return NONE

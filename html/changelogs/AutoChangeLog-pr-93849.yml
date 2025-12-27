@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Regal rats can now attack FAKEDEATH species mobs, like zombies and skeletons."

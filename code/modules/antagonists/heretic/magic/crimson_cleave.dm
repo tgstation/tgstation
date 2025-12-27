@@ -53,12 +53,9 @@
 		)
 
 		victim.apply_damage(15, BRUTE, wound_bonus = CANT_WOUND)
-		living_owner.adjustBruteLoss(-15)
+		living_owner.adjust_brute_loss(-15)
 
-		if(victim.blood_volume)
-			victim.blood_volume -= 15
-			if(living_owner.blood_volume && living_owner.blood_volume < (BLOOD_VOLUME_MAXIMUM - 50))
-				living_owner.blood_volume += 15
+		victim.transfer_blood_to(living_owner, 15, ignore_low_blood = TRUE, ignore_incompatibility = TRUE, transfer_viruses = FALSE)
 
 		new /obj/effect/temp_visual/cleave(get_turf(victim))
 

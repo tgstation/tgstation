@@ -777,15 +777,13 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 
 /datum/centcom_podlauncher/proc/clearBay() //Clear all objs and mobs from the selected bay
 	for (var/obj/object in bay.get_all_contents())
-		if (istype(object.type, /obj/effect/light_emitter/podbay))
+		if (istype(object, /obj/effect/light_emitter/podbay))
 			continue
 		qdel(object)
-	for (var/mob/mob in bay.get_all_contents())
+	for (var/mob/living/mob in bay.get_all_contents())
+		mob.ghostize(FALSE)
 		qdel(mob)
-	for (var/bayturf in bay)
-		var/turf/turf_to_clear = bayturf
-		if (istype(turf_to_clear, /obj/effect/light_emitter/podbay))
-			continue
+	for (var/turf/turf_to_clear in bay)
 		turf_to_clear.ChangeTurf(/turf/open/floor/iron)
 
 /datum/centcom_podlauncher/Destroy() //The Destroy() proc. This is called by ui_close proc, or whenever the user leaves the game

@@ -14,6 +14,7 @@
 
 //Misc Medal hub IDs
 #define MEDAL_METEOR "Your Life Before Your Eyes"
+#define MEDAL_METEOR_PUNCH "Your Life In Your Hands"
 #define MEDAL_PULSE "Jackpot"
 #define MEDAL_TIMEWASTE "Overextended The Joke"
 #define MEDAL_RODSUPLEX "Feat of Strength"

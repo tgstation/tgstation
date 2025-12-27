@@ -36,7 +36,7 @@
 	RegisterSignal(owner, COMSIG_CARBON_HELPED, PROC_REF(on_hug))
 	ADD_TRAIT(owner, TRAIT_DESENSITIZED, REF(src))
 
-/datum/brain_trauma/special/obsessed/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/obsessed/on_life(seconds_per_tick)
 	if(!obsession || obsession.stat == DEAD)
 		viewing = FALSE//important, makes sure you no longer stutter when happy if you murdered them while viewing
 		return
@@ -104,7 +104,7 @@
 		if(41 to 80)
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "pale")
 			shake_camera(owner, 15, 1)
-			owner.adjustStaminaLoss(70)
+			owner.adjust_stamina_loss(70)
 			to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
 		if(81 to 100)
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "cough")

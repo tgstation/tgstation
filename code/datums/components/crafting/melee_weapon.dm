@@ -62,6 +62,7 @@
 		/obj/item/melee/baton/security = 1,
 	)
 	tool_behaviors = list(TOOL_WELDER)
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY
 	time = 10 SECONDS
 	category = CAT_WEAPON_MELEE
 
@@ -73,6 +74,7 @@
 		/obj/item/melee/baton/telescopic/contractor_baton = 1,
 	)
 	tool_behaviors = list(TOOL_WELDER)
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY
 	time = 10 SECONDS
 	category = CAT_WEAPON_MELEE
 
@@ -253,3 +255,15 @@
 	)
 	time = 120 SECONDS
 	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/dragonator_spear_untreated
+	name = "Untreated Giant-Killer Spear"
+	result = /obj/item/spear/dragonator_untreated
+	reqs = list(
+		/obj/item/stack/sheet/plasteel = 15,
+		/obj/item/stack/sheet/mineral/titanium = 5,
+		/obj/item/knife = 7,
+	)
+	time = 5 SECONDS
+	category = CAT_WEAPON_MELEE
+

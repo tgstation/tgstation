@@ -27,10 +27,10 @@
 
 /datum/material/hauntium/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
-	if(!isobj(source))
+	if(!isitem(source))
 		return
-	var/obj/obj = source
-	obj.make_haunted(INNATE_TRAIT, "#f8f8ff")
+	var/obj/item/source_item = source
+	source_item.make_haunted(INNATE_TRAIT, "#f8f8ff")
 	if(isbodypart(source))
 		var/obj/item/bodypart/bodypart = source
 		if(!(bodypart::bodytype & BODYTYPE_GHOST))
@@ -42,10 +42,10 @@
 
 /datum/material/hauntium/on_main_removed(atom/source, mat_amount, multiplier)
 	. = ..()
-	if(!isobj(source))
+	if(!isitem(source))
 		return
-	var/obj/obj = source
-	obj.remove_haunted(INNATE_TRAIT)
+	var/obj/item/source_item = source
+	source_item.remove_haunted(INNATE_TRAIT)
 	if(isbodypart(source))
 		var/obj/item/bodypart/bodypart = source
 		if(!(bodypart::bodytype & BODYTYPE_GHOST))

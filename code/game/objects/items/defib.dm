@@ -121,17 +121,10 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/defibrillator/attack_hand(mob/user, list/modifiers)
 	if(loc == user)
-		if(slot_flags & ITEM_SLOT_BACK)
-			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
-				ui_action_click()
-			else
-				to_chat(user, span_warning("Put the defibrillator on your back first!"))
-
-		else if(slot_flags & ITEM_SLOT_BELT)
-			if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
-				ui_action_click()
-			else
-				to_chat(user, span_warning("Strap the defibrillator's belt on first!"))
+		if(user.get_slot_by_item(src) & slot_flags)
+			ui_action_click()
+		else
+			balloon_alert(user, "equip the unit first!")
 		return
 	else if(istype(loc, /obj/machinery/defibrillator_mount))
 		ui_action_click() //checks for this are handled in defibrillator.mount.dm
@@ -266,9 +259,10 @@
 	desc = "A belt-equipped defibrillator that can be rapidly deployed."
 	icon_state = "defibcompact"
 	inhand_icon_state = null
+	slot_flags = ITEM_SLOT_BELT|ITEM_SLOT_SUITSTORE|ITEM_SLOT_DEX_STORAGE
+	worn_icon = 'icons/mob/clothing/belt.dmi'
 	worn_icon_state = "defibcompact"
 	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = ITEM_SLOT_BELT
 	paddle_state = "defibcompact-paddles"
 	powered_state = "defibcompact-powered"
 	charge_state = "defibcompact-charge"
@@ -279,6 +273,11 @@
 	. = ..()
 	cell = new(src)
 	update_power()
+
+/obj/item/defibrillator/compact/loaded/cmo // subtype for the spy steal objective
+	name = "chief medical officer's compact defibrillator"
+	icon_state = "defibcmo"
+	resistance_flags = INDESTRUCTIBLE // So no cheesy getting rid of like other steal/head items
 
 /obj/item/defibrillator/compact/combat
 	name = "combat defibrillator"
@@ -341,6 +340,7 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_BACK)
 	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
+	RegisterSignal(src, COMSIG_HUMAN_NON_STORAGE_HOTKEY, PROC_REF(on_non_storage_hotkey))
 
 /obj/item/shockpaddles/Destroy()
 	defib = null
@@ -508,7 +508,7 @@
 	busy = TRUE
 	M.visible_message(span_danger("[user] touches [M] with [src]!"), \
 			span_userdanger("[user] touches [M] with [src]!"))
-	M.adjustStaminaLoss(60)
+	M.adjust_stamina_loss(60)
 	M.Knockdown(75)
 	M.set_jitter_if_lower(100 SECONDS)
 	M.apply_status_effect(/datum/status_effect/convulsing)
@@ -608,25 +608,27 @@
 						fail_reason = "Patient's brain is missing. Further attempts futile."
 					if (DEFIB_FAIL_BLACKLISTED)
 						fail_reason = "Patient has been blacklisted from revival. Further attempts futile."
+					if (DEFIB_FAIL_GOLEM)
+						fail_reason = "Patient is constructed from inorganic materials. Further attempts futile, though manual reconstruction is possible."
 
 				if(fail_reason)
 					user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - [fail_reason]"))
 					playsound(src, 'sound/machines/defib/defib_failed.ogg', 50, FALSE)
 				else
-					var/total_brute = H.getBruteLoss()
-					var/total_burn = H.getFireLoss()
+					var/total_brute = H.get_brute_loss()
+					var/total_burn = H.get_fire_loss()
 
 					var/need_mob_update = FALSE
 					//If the body has been fixed so that they would not be in crit when defibbed, give them oxyloss to put them back into crit
 					if (H.health > HALFWAYCRITDEATH)
-						need_mob_update += H.adjustOxyLoss(H.health - HALFWAYCRITDEATH, updating_health = FALSE)
+						need_mob_update += H.adjust_oxy_loss(H.health - HALFWAYCRITDEATH, updating_health = FALSE)
 					else
-						var/overall_damage = total_brute + total_burn + H.getToxLoss() + H.getOxyLoss()
+						var/overall_damage = total_brute + total_burn + H.get_tox_loss() + H.get_oxy_loss()
 						var/mobhealth = H.health
-						need_mob_update += H.adjustOxyLoss((mobhealth - HALFWAYCRITDEATH) * (H.getOxyLoss() / overall_damage), updating_health = FALSE)
-						need_mob_update += H.adjustToxLoss((mobhealth - HALFWAYCRITDEATH) * (H.getToxLoss() / overall_damage), updating_health = FALSE, forced = TRUE) // force tox heal for toxin lovers too
-						need_mob_update += H.adjustFireLoss((mobhealth - HALFWAYCRITDEATH) * (total_burn / overall_damage), updating_health = FALSE)
-						need_mob_update += H.adjustBruteLoss((mobhealth - HALFWAYCRITDEATH) * (total_brute / overall_damage), updating_health = FALSE)
+						need_mob_update += H.adjust_oxy_loss((mobhealth - HALFWAYCRITDEATH) * (H.get_oxy_loss() / overall_damage), updating_health = FALSE)
+						need_mob_update += H.adjust_tox_loss((mobhealth - HALFWAYCRITDEATH) * (H.get_tox_loss() / overall_damage), updating_health = FALSE, forced = TRUE) // force tox heal for toxin lovers too
+						need_mob_update += H.adjust_fire_loss((mobhealth - HALFWAYCRITDEATH) * (total_burn / overall_damage), updating_health = FALSE)
+						need_mob_update += H.adjust_brute_loss((mobhealth - HALFWAYCRITDEATH) * (total_brute / overall_damage), updating_health = FALSE)
 					if(need_mob_update)
 						H.updatehealth() // Previous "adjust" procs don't update health, so we do it manually.
 					user.visible_message(span_notice("[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful."))
@@ -668,6 +670,13 @@
 
 /obj/item/shockpaddles/proc/is_wielded()
 	return HAS_TRAIT(src, TRAIT_WIELDED)
+
+/obj/item/shockpaddles/proc/on_non_storage_hotkey(datum/source,  mob/living/carbon/human/user, obj/item/possible_storage)
+	SIGNAL_HANDLER
+	if(possible_storage == defib)
+		user.dropItemToGround(src)
+		return COMPONENT_STORAGE_HOTKEY_HANDLED
+	return NONE
 
 /obj/item/shockpaddles/cyborg
 	name = "cyborg defibrillator paddles"

@@ -264,7 +264,7 @@
  * Signal proc for [COMSIG_LIVING_LIFE].
  * Handles regenerating chemicals on life ticks.
  */
-/datum/antagonist/changeling/proc/on_life(datum/source, seconds_per_tick, times_fired)
+/datum/antagonist/changeling/proc/on_life(datum/source, seconds_per_tick)
 	SIGNAL_HANDLER
 
 	var/delta_time = DELTA_WORLD_TIME(SSmobs)

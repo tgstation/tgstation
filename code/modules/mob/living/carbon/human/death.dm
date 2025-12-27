@@ -29,12 +29,12 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 
 	if(SSticker.HasRoundStarted())
 		SSblackbox.ReportDeath(src)
-		log_message("has died (BRUTE: [src.getBruteLoss()], BURN: [src.getFireLoss()], TOX: [src.getToxLoss()], OXY: [src.getOxyLoss()]", LOG_ATTACK)
+		log_message("has died (BRUTE: [src.get_brute_loss()], BURN: [src.get_fire_loss()], TOX: [src.get_tox_loss()], OXY: [src.get_oxy_loss()]", LOG_ATTACK)
 		if(key) // Prevents log spamming of keyless mob deaths (like xenobio monkeys)
 			investigate_log("has died at [loc_name(src)].<br>\
-				BRUTE: [src.getBruteLoss()] BURN: [src.getFireLoss()] TOX: [src.getToxLoss()] OXY: [src.getOxyLoss()] STAM: [src.getStaminaLoss()]<br>\
+				BRUTE: [src.get_brute_loss()] BURN: [src.get_fire_loss()] TOX: [src.get_tox_loss()] OXY: [src.get_oxy_loss()] STAM: [src.get_stamina_loss()]<br>\
 				<b>Brain damage</b>: [src.get_organ_loss(ORGAN_SLOT_BRAIN) || "0"]<br>\
-				<b>[get_bloodtype()?.get_blood_name() || "Blood"] volume</b>: [src.blood_volume]cl ([round((src.blood_volume / BLOOD_VOLUME_NORMAL) * 100, 0.1)]%)<br>\
+				<b>[get_bloodtype()?.get_blood_name() || "Blood"] volume</b>: [src.get_blood_volume(apply_modifiers = TRUE)]cl ([round((src.get_blood_volume(apply_modifiers = TRUE) / BLOOD_VOLUME_NORMAL) * 100, 0.1)]%)<br>\
 				<b>Reagents</b>:<br>[reagents_readout()]", INVESTIGATE_DEATHS)
 	to_chat(src, span_warning("You have died. Barring complete bodyloss, you can in most cases be revived by other players. \
 		If you do not wish to be brought back, use the \"Do Not Resuscitate\" button at the bottom of your screen."))
@@ -60,5 +60,5 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 /mob/living/carbon/proc/Drain()
 	become_husk(CHANGELING_DRAIN)
 	ADD_TRAIT(src, TRAIT_BADDNA, CHANGELING_DRAIN)
-	blood_volume = 0
+	set_blood_volume(0)
 	return TRUE

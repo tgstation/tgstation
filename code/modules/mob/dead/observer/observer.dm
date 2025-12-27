@@ -22,9 +22,11 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	light_on = FALSE
 	shift_to_open_context_menu = FALSE
 	var/can_reenter_corpse
-	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
-							//If you died in the game and are a ghost - this will remain as null.
-							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
+	///This variable is set to 1 when you enter the game as an observer.
+	///If you died in the game and are a ghost - this will remain as FALSE.
+	///Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
+	var/started_as_observer = FALSE
+
 	var/atom/movable/following = null
 
 	///The time between being able to use boo(), if fun_verbs is TRUE.
@@ -148,6 +150,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	SSpoints_of_interest.make_point_of_interest(src)
 	ADD_TRAIT(src, TRAIT_HEAR_THROUGH_DARKNESS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_GOOD_HEARING, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_DETECT_STORM, INNATE_TRAIT)
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)

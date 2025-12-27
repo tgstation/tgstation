@@ -228,3 +228,43 @@
 	desc = "doink!"
 	damage_type = BRUTE
 	icon_state = "paperball"
+
+//Big Ballista Mounted gun Spear
+/obj/projectile/bullet/ballista_spear
+	name = "Spear"
+	icon_state = "ballista_spear"
+	damage = 80
+	speed = 3
+	catastropic_dismemberment = TRUE
+	projectile_piercing = PASSMOB
+	dismemberment = 3
+	embed_type = null
+	armour_penetration = 25
+	wound_bonus = 15
+	exposed_wound_bonus = 30
+	damage_type = BRUTE
+	shrapnel_type = /obj/item/spear
+
+/obj/projectile/bullet/ballista_spear/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/projectile_drop, shrapnel_type)
+
+/obj/projectile/bullet/ballista_spear_dragon
+	name = "Dragon-Slaying Spear"
+	icon_state = "ballista_spear_dragon"
+	damage = 120
+	speed = 4
+	catastropic_dismemberment = TRUE
+	projectile_piercing = PASSMOB
+	dismemberment = 3
+	embed_type = null
+	armour_penetration = 25
+	wound_bonus = 15
+	exposed_wound_bonus = 30
+	damage_type = BRUTE
+	shrapnel_type = /obj/item/spear/dragonator
+
+/obj/projectile/bullet/ballista_spear_dragon/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/projectile_drop, shrapnel_type)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_MINING, damage_multiplier = 2)

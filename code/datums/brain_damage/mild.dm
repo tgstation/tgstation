@@ -14,7 +14,7 @@
 	/// Whether the hallucinations we give are uncapped, ie all the wacky ones
 	var/uncapped = FALSE
 
-/datum/brain_trauma/mild/hallucinations/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/mild/hallucinations/on_life(seconds_per_tick)
 	if(owner.stat >= UNCONSCIOUS)
 		return
 	if(HAS_TRAIT(owner, TRAIT_RDS_SUPPRESSED))
@@ -38,7 +38,7 @@
 	gain_text = span_warning("Speaking clearly is getting harder.")
 	lose_text = span_notice("You feel in control of your speech.")
 
-/datum/brain_trauma/mild/stuttering/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/mild/stuttering/on_life(seconds_per_tick)
 	owner.adjust_stutter_up_to(5 SECONDS * seconds_per_tick, 50 SECONDS)
 
 /datum/brain_trauma/mild/stuttering/on_lose()
@@ -57,7 +57,7 @@
 	owner.add_mood_event("dumb", /datum/mood_event/oblivious)
 	return ..()
 
-/datum/brain_trauma/mild/dumbness/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/mild/dumbness/on_life(seconds_per_tick)
 	owner.adjust_derpspeech_up_to(5 SECONDS * seconds_per_tick, 50 SECONDS)
 	if(SPT_PROB(1.5, seconds_per_tick))
 		owner.emote("drool")
@@ -92,7 +92,7 @@
 	gain_text = span_warning("Your head hurts!")
 	lose_text = span_notice("The pressure inside your head starts fading.")
 
-/datum/brain_trauma/mild/concussion/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/mild/concussion/on_life(seconds_per_tick)
 	if(SPT_PROB(2.5, seconds_per_tick))
 		switch(rand(1,11))
 			if(1)
@@ -124,8 +124,8 @@
 	owner.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 	return ..()
 
-/datum/brain_trauma/mild/healthy/on_life(seconds_per_tick, times_fired)
-	owner.adjustStaminaLoss(-6 * seconds_per_tick) //no pain, no fatigue
+/datum/brain_trauma/mild/healthy/on_life(seconds_per_tick)
+	owner.adjust_stamina_loss(-6 * seconds_per_tick) //no pain, no fatigue
 
 /datum/brain_trauma/mild/healthy/on_lose()
 	owner.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
@@ -138,7 +138,7 @@
 	gain_text = span_warning("Your muscles feel oddly faint.")
 	lose_text = span_notice("You feel in control of your muscles again.")
 
-/datum/brain_trauma/mild/muscle_weakness/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/mild/muscle_weakness/on_life(seconds_per_tick)
 	var/fall_chance = 1
 	if(owner.move_intent == MOVE_INTENT_RUN)
 		fall_chance += 2
@@ -155,7 +155,7 @@
 
 	else if(SPT_PROB(1.5, seconds_per_tick))
 		to_chat(owner, span_warning("You feel a sudden weakness in your muscles!"))
-		owner.adjustStaminaLoss(50)
+		owner.adjust_stamina_loss(50)
 	..()
 
 /datum/brain_trauma/mild/muscle_spasms
@@ -180,7 +180,7 @@
 	gain_text = span_warning("Your throat itches incessantly...")
 	lose_text = span_notice("Your throat stops itching.")
 
-/datum/brain_trauma/mild/nervous_cough/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/mild/nervous_cough/on_life(seconds_per_tick)
 	if(SPT_PROB(6, seconds_per_tick) && !HAS_TRAIT(owner, TRAIT_SOOTHED_THROAT))
 		if(prob(5))
 			to_chat(owner, span_warning("[pick("You have a coughing fit!", "You can't stop coughing!")]"))
@@ -217,7 +217,7 @@
 				word = copytext(word, 1, suffix_foundon)
 			word = html_decode(word)
 
-			if(GLOB.most_common_words[LOWER_TEXT(word)])
+			if(GLOB.most_common_words_alphabetical[LOWER_TEXT(word)])
 				new_message += word + suffix
 			else
 				if(prob(30) && message_split.len > 2)
@@ -299,7 +299,7 @@
 	for(var/obj/item/thing in owner.held_items)
 		clear_trait(thing)
 
-/datum/brain_trauma/mild/possessive/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/mild/possessive/on_life(seconds_per_tick)
 	if(!SPT_PROB(5, seconds_per_tick))
 		return
 

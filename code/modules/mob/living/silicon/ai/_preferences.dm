@@ -4,7 +4,6 @@ GLOBAL_LIST_INIT(ai_status_display_emotes, list(
 	AI_EMOTION_AWESOME = "ai_awesome",
 	AI_EMOTION_BLANK = AI_DISPLAY_DONT_GLOW,
 	AI_EMOTION_BLUE_GLOW = "ai_sal",
-	AI_EMOTION_BSOD = "ai_bsod",
 	AI_EMOTION_CONFUSED = "ai_confused",
 	AI_EMOTION_DORFY = "ai_urist",
 	AI_EMOTION_FACEPALM = "ai_facepalm",
@@ -17,6 +16,8 @@ GLOBAL_LIST_INIT(ai_status_display_emotes, list(
 	AI_EMOTION_THINKING = "ai_thinking",
 	AI_EMOTION_UNSURE = "ai_unsure",
 	AI_EMOTION_VERY_HAPPY = "ai_veryhappy",
+	AI_EMOTION_DEAD = "ai_dead",
+	AI_EMOTION_DOWNLOAD = "ai_download",
 ))
 
 // Mapping from AI core display options to new status display icon states

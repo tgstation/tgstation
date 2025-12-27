@@ -57,19 +57,19 @@
 	/// Types of area to affect
 	var/area_type = /area/space
 	/// Areas to be affected by the weather, calculated when the weather begins
-	var/list/impacted_areas = list()
+	VAR_FINAL/list/impacted_areas = list()
 	/// A weighted list of areas impacted by weather, where weights reflect the total turf count in each area.
-	var/list/impacted_areas_weighted = list()
+	VAR_FINAL/list/impacted_areas_weighted = list()
 	/// The total number of turfs impacted by weather across all z-levels and areas.
-	var/total_impacted_turfs = 0
+	VAR_FINAL/total_impacted_turfs = 0
 	/// Areas affected by weather have their blend modes changed
-	var/list/impacted_areas_blend_modes = list()
+	VAR_FINAL/list/impacted_areas_blend_modes = list()
 	/// Areas that are protected and excluded from the affected areas.
 	var/list/protected_areas = list()
 	/// The list of z-levels that this weather is actively affecting
-	var/impacted_z_levels
+	VAR_FINAL/impacted_z_levels
 	/// A weighted list of z-levels impacted by weather, where weights reflect the total turf count on each level
-	var/list/impacted_z_levels_weighted = list()
+	VAR_FINAL/list/impacted_z_levels_weighted = list()
 
 	/// Since it's above everything else, this is the layer used by default.
 	var/overlay_layer = AREA_LAYER
@@ -109,15 +109,15 @@
 	var/weather_flags = NONE
 
 	/// List of current mobs being processed by weather
-	var/list/current_mobs = list()
+	VAR_FINAL/list/current_mobs = list()
 	/// The weather turf counter to keep track of how many turfs we have processed so far
-	var/turf_iteration = 0
+	VAR_FINAL/turf_iteration = 0
 	/// The weather thunder counter to keep track of how much thunder we have processed so far
-	var/thunder_iteration = 0
+	VAR_FINAL/thunder_iteration = 0
 	/// Index of the current section our weather subsystem is processing from our subsystem_tasks
-	var/task_index = 1
+	VAR_FINAL/task_index = 1
 	/// The list of allowed tasks our weather subsystem is allowed to process (determined by weather_flags)
-	var/list/subsystem_tasks = list()
+	VAR_FINAL/list/subsystem_tasks = list()
 
 	/// The temperature of our weather that is applied to weather reagents and mobs using adjust_bodytemperature()
 	var/weather_temperature = T20C
@@ -137,11 +137,12 @@
 	..()
 
 	impacted_z_levels = z_levels
-	area_type = weather_data?["area"] || area_type
-	weather_flags = weather_data?["weather_flags"] || weather_flags
-	turf_thunder_chance = isnull(weather_data?["thunder_chance"]) ? turf_thunder_chance : weather_data?["thunder_chance"]
+	weather_flags = isnull(weather_data?[WEATHER_FORCED_FLAGS]) ? weather_flags : weather_data?[WEATHER_FORCED_FLAGS]
+	turf_thunder_chance = isnull(weather_data?[WEATHER_FORCED_THUNDER]) ? turf_thunder_chance : weather_data?[WEATHER_FORCED_THUNDER]
+	telegraph_duration = isnull(weather_data?[WEATHER_FORCED_TELEGRAPH]) ? telegraph_duration : weather_data?[WEATHER_FORCED_TELEGRAPH]
+	end_duration = isnull(weather_data?[WEATHER_FORCED_END]) ? end_duration : weather_data?[WEATHER_FORCED_END]
 
-	var/datum/reagent/custom_reagent = weather_data?["reagent"]
+	var/datum/reagent/custom_reagent = weather_data?[WEATHER_FORCED_REAGENT]
 	var/reagent_id
 	if(custom_reagent)
 		reagent_id = custom_reagent
@@ -165,7 +166,7 @@
 	if(weather_flags & (WEATHER_THUNDER))
 		subsystem_tasks += SSWEATHER_THUNDER
 
-	setup_weather_areas()
+	setup_weather_areas(weather_data?[WEATHER_FORCED_AREAS])
 	setup_weather_turfs()
 
 /datum/weather/Destroy()
@@ -179,26 +180,94 @@
  * Calculates duration and hit areas, and makes a callback for the actual weather to start
  *
  */
-/datum/weather/proc/telegraph()
+/datum/weather/proc/telegraph(list/weather_data)
 	if(stage == STARTUP_STAGE)
 		return
 	stage = STARTUP_STAGE
 	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_TELEGRAPH(type), src)
-
-	weather_duration = rand(weather_duration_lower, weather_duration_upper)
+	weather_duration = isnull(weather_data?[WEATHER_FORCED_DURATION]) ? rand(weather_duration_lower, weather_duration_upper) : weather_data?[WEATHER_FORCED_DURATION]
 	SSweather.processing |= src
 	update_areas()
 	if(telegraph_duration)
 		send_alert(telegraph_message, telegraph_sound, telegraph_sound_vol)
-	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration)
+	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration, TIMER_UNIQUE)
 
-/datum/weather/proc/setup_weather_areas()
-	var/list/affectareas = list()
-	for(var/area/selected_area as anything in get_areas(area_type))
-		affectareas += selected_area
-	for(var/area/protected_area as anything in protected_areas)
-		affectareas -= get_areas(protected_area)
-	for(var/area/affected_area as anything in affectareas)
+	// so /datum/element/weather_listener relies on z traits to determine when to set up sound managers
+	// thus if we force weather on a z level that doesn't match the target trait, we need to manually set up sound managers
+	if(target_trait)
+		manually_setup_sound_manager()
+
+/// Manually add a sound manager to all mobs
+/datum/weather/proc/manually_setup_sound_manager()
+	var/list/filtered_zs = get_impacted_zs_without_trait()
+	var/list/playlist = get_playlist_ref()
+	// we only need to manually handle sound managers if there are zs without the trait being affected, fortunately
+	if(!length(filtered_zs) || isnull(playlist))
+		return
+
+	// add in dead mobs so we can get observers covered too
+	for(var/mob/living/affected as anything in GLOB.mob_living_list | GLOB.dead_mob_list)
+		if(isnull(affected.client))
+			// this registers 400+ odd signals... maybe we should reconsider
+			RegisterSignal(affected, COMSIG_MOB_LOGIN, PROC_REF(handle_mob_log_in))
+			continue
+
+		manually_setup_sound_manager_on_mob(affected, playlist, filtered_zs)
+
+	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_CREATED, PROC_REF(handle_new_mob_sound_manager))
+
+/// Returns a reference to the "sound playlist" for this weather type
+/datum/weather/proc/get_playlist_ref()
+	return null
+
+/// Returns a list of z-levels impacted that do not have the target trait
+/datum/weather/proc/get_impacted_zs_without_trait()
+	var/list/zs_without_trait = list()
+	for(var/z in impacted_z_levels)
+		if(!SSmapping.level_trait(z, target_trait))
+			zs_without_trait += z
+	return zs_without_trait
+
+/datum/weather/proc/handle_new_mob_sound_manager(datum/source, mob/the_mob)
+	SIGNAL_HANDLER
+
+	if(isnull(the_mob.client))
+		RegisterSignal(the_mob, COMSIG_MOB_LOGIN, PROC_REF(handle_mob_log_in))
+		return
+
+	manually_setup_sound_manager_on_mob(the_mob)
+
+/datum/weather/proc/handle_mob_log_in(mob/source)
+	SIGNAL_HANDLER
+
+	if(stage >= END_STAGE)
+		stack_trace("Attempted to add a sound manager to a mob after weather ended")
+		UnregisterSignal(source, COMSIG_MOB_LOGIN)
+		return
+
+	manually_setup_sound_manager_on_mob(source)
+
+/datum/weather/proc/manually_setup_sound_manager_on_mob(mob/living/affected, list/playlist = get_playlist_ref(), list/filtered_zs = get_impacted_zs_without_trait())
+	PRIVATE_PROC(TRUE)
+
+	var/list/sound_change_signals = list(
+		COMSIG_WEATHER_TELEGRAPH(type),
+		COMSIG_WEATHER_START(type),
+		COMSIG_WEATHER_WINDDOWN(type),
+	)
+
+	var/datum/component/our_comp = affected.AddComponent( \
+		/datum/component/area_sound_manager, \
+		area_loop_pairs = playlist, \
+		acceptable_zs = filtered_zs, \
+	)
+	our_comp.RegisterSignals(SSdcs, sound_change_signals, TYPE_PROC_REF(/datum/component/area_sound_manager, handle_change))
+	our_comp.RegisterSignal(SSdcs, COMSIG_WEATHER_END(type), TYPE_PROC_REF(/datum/component/area_sound_manager, handle_removal))
+
+/datum/weather/proc/setup_weather_areas(list/forced_areas)
+	for(var/area/affected_area as anything in (forced_areas || get_areas(area_type)))
+		if(is_type_in_list(affected_area, protected_areas))
+			continue
 		if(!(weather_flags & WEATHER_INDOORS) && !affected_area.outdoors)
 			continue
 
@@ -263,7 +332,7 @@
 	update_areas()
 	send_alert(weather_message, weather_sound)
 	if(!(weather_flags & (WEATHER_ENDLESS)))
-		addtimer(CALLBACK(src, PROC_REF(wind_down)), weather_duration)
+		addtimer(CALLBACK(src, PROC_REF(wind_down)), weather_duration, TIMER_UNIQUE)
 	for(var/area/impacted_area as anything in impacted_areas)
 		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_BEGAN_IN_AREA(type), src)
 
@@ -281,7 +350,7 @@
 	stage = WIND_DOWN_STAGE
 	update_areas()
 	send_alert(end_message, end_sound, end_sound_vol)
-	addtimer(CALLBACK(src, PROC_REF(end)), end_duration)
+	addtimer(CALLBACK(src, PROC_REF(end)), end_duration, TIMER_UNIQUE)
 
 /**
  * Fully ends the weather
@@ -294,11 +363,16 @@
 	if(stage == END_STAGE)
 		return
 	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_END(type), src)
+	UnregisterSignal(SSdcs, COMSIG_GLOB_MOB_CREATED)
 	stage = END_STAGE
 	SSweather.processing -= src
 	update_areas()
 	for(var/area/impacted_area as anything in impacted_areas)
 		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_ENDED_IN_AREA(type), src)
+
+	if(target_trait)
+		for(var/mob/living/affected as anything in GLOB.mob_living_list | GLOB.dead_mob_list)
+			UnregisterSignal(affected, COMSIG_MOB_LOGIN)
 
 // handles sending all alerts
 /datum/weather/proc/send_alert(alert_msg, alert_sfx, alert_sfx_vol = 100)
@@ -315,7 +389,24 @@
 // the checks for if a mob should receive alerts, returns TRUE if can
 /datum/weather/proc/can_get_alert(mob/player)
 	var/turf/mob_turf = get_turf(player)
-	return !isnull(mob_turf)
+	if(isnull(mob_turf))
+		return FALSE
+
+	if((weather_flags & WEATHER_STRICT_ALERT) && !can_see_weather(player))
+		return FALSE
+
+	return TRUE
+
+/// Checks if the player is in or can see an area affected by the weather
+/datum/weather/proc/can_see_weather(mob/player)
+	if(HAS_MIND_TRAIT(player, TRAIT_DETECT_STORM))
+		return TRUE
+
+	for(var/area/nearby in view(player))
+		if(nearby in impacted_areas)
+			return TRUE
+
+	return FALSE
 
 /**
  * Returns TRUE if the living mob can be affected by the weather

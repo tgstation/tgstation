@@ -1,4 +1,5 @@
 /mob/living/carbon/alien
+	abstract_type = /mob/living/carbon/alien
 	name = "alien"
 	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	gender = FEMALE //All xenos are girls!!
@@ -69,7 +70,7 @@
 /mob/living/carbon/alien/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) // beepsky won't hunt aliums
 	return -10
 
-/mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+/mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment, seconds_per_tick)
 	// Run base mob body temperature proc before taking damage
 	// this balances body temp to the environment and natural stabilization
 	. = ..()

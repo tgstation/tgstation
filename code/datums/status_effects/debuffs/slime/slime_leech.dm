@@ -60,18 +60,18 @@
 	var/totaldamage = 0 //total damage done to this unfortunate soul
 
 	if(iscarbon(owner))
-		totaldamage += owner.adjustBruteLoss(rand(2, 4) * 0.5 * seconds_between_ticks)
-		totaldamage += owner.adjustToxLoss(rand(1, 2) * 0.5 * seconds_between_ticks)
+		totaldamage += owner.adjust_brute_loss(rand(2, 4) * 0.5 * seconds_between_ticks)
+		totaldamage += owner.adjust_tox_loss(rand(1, 2) * 0.5 * seconds_between_ticks)
 
 	if(isanimal_or_basicmob(owner))
 
 		var/need_mob_update
-		need_mob_update = totaldamage += owner.adjustBruteLoss(rand(2, 4) * 0.5 * seconds_between_ticks, updating_health = FALSE)
-		need_mob_update += totaldamage += owner.adjustToxLoss(rand(1, 2) * 0.5 * seconds_between_ticks, updating_health = FALSE)
+		need_mob_update = totaldamage += owner.adjust_brute_loss(rand(2, 4) * 0.5 * seconds_between_ticks, updating_health = FALSE)
+		need_mob_update += totaldamage += owner.adjust_tox_loss(rand(1, 2) * 0.5 * seconds_between_ticks, updating_health = FALSE)
 		if(need_mob_update)
 			owner.updatehealth()
 
-	if(totaldamage >= 0) // AdjustBruteLoss returns a negative value on successful damage adjustment
+	if(totaldamage >= 0) // adjust_brute_loss() returns a negative value on successful damage adjustment
 		our_slime.balloon_alert(our_slime, "not food!")
 		our_slime.stop_feeding()
 		return
@@ -95,4 +95,4 @@
 	our_slime.adjust_nutrition(-1 * 1.8 * totaldamage) //damage is already modified by seconds_between_ticks
 
 	//Heal yourself.
-	our_slime.adjustBruteLoss(-1.5 * seconds_between_ticks)
+	our_slime.adjust_brute_loss(-1.5 * seconds_between_ticks)

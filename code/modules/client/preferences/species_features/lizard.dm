@@ -4,7 +4,7 @@
 
 	if (isnull(lizard))
 		lizard = uni_icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_head", EAST)
-		var/datum/universal_icon/eyes = uni_icon('icons/mob/human/human_face.dmi', "eyes_l", EAST)
+		var/datum/universal_icon/eyes = uni_icon(/obj/item/organ/eyes/lizard::eye_icon, "[/obj/item/organ/eyes/lizard::eye_icon_state]_l", EAST)
 		eyes.blend_color(COLOR_GRAY, ICON_MULTIPLY)
 		lizard.blend_icon(eyes, ICON_OVERLAY)
 
@@ -102,7 +102,7 @@
 		if(!path)
 			continue
 		var/obj/item/bodypart/new_part = new path()
-		new_part.replace_limb(target, TRUE)
+		new_part.replace_limb(target)
 		new_part.update_limb(is_creating = TRUE)
 		qdel(old_part)
 

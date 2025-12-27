@@ -198,7 +198,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /// Create a blob spore and link it to us
 /mob/eye/blob/proc/create_spore(turf/spore_turf, spore_type = /mob/living/basic/blob_minion/spore/minion)
-	var/mob/living/basic/blob_minion/spore/spore = new spore_type(spore_turf)
+	var/mob/living/basic/blob_minion/spore/spore = new spore_type(spore_turf, blob_borne = TRUE)
 	spore.AddComponent(/datum/component/blob_minion, src)
 	return spore
 

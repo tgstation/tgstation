@@ -11,7 +11,7 @@
 	///How many shots per volley.
 	var/rapid = 0
 	///Time between rapid fire shots
-	var/rapid_fire_delay = 2
+	var/rapid_fire_delay = 2 DECISECONDS
 
 	///Are we dodging?
 	var/dodging = FALSE
@@ -102,7 +102,7 @@
 	GiveTarget(null)
 	return ..()
 
-/mob/living/simple_animal/hostile/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(!.) //dead
 		GLOB.move_manager.stop_looping(src)

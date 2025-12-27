@@ -330,7 +330,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge
 	empty_indicator = TRUE
 	bolt_type = BOLT_TYPE_OPEN
-	fire_delay = 2
+	fire_delay = 2 DECISECONDS
 	can_suppress = FALSE
 	burst_size = 0
 	actions_types = list()
@@ -359,7 +359,7 @@
 	mag_display = TRUE
 	projectile_damage_multiplier = 1.2
 	projectile_speed_multiplier = 1.2
-	fire_delay = 2
+	fire_delay = 2 DECISECONDS
 	burst_size = 1
 	actions_types = list()
 	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
@@ -392,7 +392,6 @@
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 2)
 	AddElement(/datum/element/examine_lore, \
-		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
 		lore = "The BR-38 is Nanotrasen's latest foray into entirely in-house, standard-issue-ready, accelerator-assisted ballistic firearms.<br>\
 		<br>\
 		The acceleration rail built into the barrel assembly boosts fired projectiles to higher velocities than unassisted bullets, \

@@ -25,6 +25,7 @@
 	anchored = TRUE
 	integrity_failure = 0.5
 	max_integrity = 200
+	custom_materials = /obj/item/wallframe/mirror::custom_materials
 	///Can this mirror be removed from walls with tools?
 	var/deconstructable = TRUE
 	var/list/mirror_options = INERT_MIRROR_OPTIONS
@@ -55,7 +56,7 @@
 		check_reflect_signals = list(SIGNAL_ADDTRAIT(TRAIT_NO_MIRROR_REFLECTION), SIGNAL_REMOVETRAIT(TRAIT_NO_MIRROR_REFLECTION)), \
 	)
 	if(mapload)
-		find_and_hang_on_wall()
+		find_and_mount_on_atom()
 	update_choices()
 	register_context()
 
@@ -206,7 +207,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 			race_changer.skin_tone = new_s_tone
 			race_changer.dna.update_ui_block(/datum/dna_block/identity/skin_tone)
 	else if(HAS_TRAIT(race_changer, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(race_changer, TRAIT_FIXED_MUTANT_COLORS))
-		var/new_mutantcolor = input(race_changer, "Choose your skin color:", "Race change", race_changer.dna.features[FEATURE_MUTANT_COLOR]) as color|null
+		var/new_mutantcolor = tgui_color_picker(race_changer, "Choose your skin color:", "Race change", race_changer.dna.features[FEATURE_MUTANT_COLOR])
 		if(new_mutantcolor && can_use_mirror(race_changer))
 			var/list/mutant_hsv = rgb2hsv(new_mutantcolor)
 			if(mutant_hsv[3] >= 50) // mutantcolors must be bright
@@ -256,7 +257,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	sexy.update_clothing(ITEM_SLOT_ICLOTHING) // update gender shaped clothing
 
 /obj/structure/mirror/proc/change_eyes(mob/living/carbon/human/user)
-	var/new_eye_color = input(user, "Choose your eye color", "Eye Color", user.eye_color_left) as color|null
+	var/new_eye_color = tgui_color_picker(user, "Choose your eye color", "Eye Color", user.eye_color_left)
 	if(isnull(new_eye_color) || !can_use_mirror(user))
 		return
 	user.set_eye_color(sanitize_hexcolor(new_eye_color))
@@ -350,10 +351,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	desc = "An unmounted mirror. Attach it to a wall to use."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
-	custom_materials = list(
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
-		/datum/material/silver = SHEET_MATERIAL_AMOUNT,
-	)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2)
 	result_path = /obj/structure/mirror
 	pixel_shift = 28
 
@@ -389,14 +387,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if(hairchoice == "Style") //So you just want to use a mirror then?
 		return ..()
 
-	var/new_hair_color = input(user, "Choose your hair color", "Hair Color", user.hair_color) as color|null
+	var/new_hair_color = tgui_color_picker(user, "Choose your hair color", "Hair Color", user.hair_color)
 	if(!new_hair_color || !can_use_mirror(user))
 		return
 	if(new_hair_color)
 		user.set_haircolor(sanitize_hexcolor(new_hair_color))
 		user.dna.update_ui_block(/datum/dna_block/identity/hair_color)
 	if(user.physique == MALE)
-		var/new_face_color = input(user, "Choose your facial hair color", "Hair Color", user.facial_hair_color) as color|null
+		var/new_face_color = tgui_color_picker(user, "Choose your facial hair color", "Hair Color", user.facial_hair_color)
 		if(new_face_color && can_use_mirror(user))
 			user.set_facial_haircolor(sanitize_hexcolor(new_face_color))
 			user.dna.update_ui_block(/datum/dna_block/identity/facial_color)
