@@ -3,7 +3,7 @@ import DOMPurify from 'dompurify';
 import { useAtom, useAtomValue } from 'jotai';
 import { useEffect } from 'react';
 import { settingsLoadedAtom } from '../settings/atoms';
-import { allChatAtom, chatLoadedAtom, versionAtom } from './atom';
+import { chatLoadedAtom, versionAtom } from './atom';
 import { MESSAGE_SAVE_INTERVAL } from './constants';
 import { saveChatToStorage } from './helpers';
 import { startChatStateMigration } from './migration';
@@ -19,7 +19,6 @@ const FORBID_TAGS = ['a', 'iframe', 'link', 'video'];
  */
 export function useChatPersistence() {
   const version = useAtomValue(versionAtom);
-  const allChat = useAtomValue(allChatAtom);
 
   const [loaded, setLoaded] = useAtom(chatLoadedAtom);
   const settingsLoaded = useAtomValue(settingsLoadedAtom);
@@ -50,33 +49,6 @@ export function useChatPersistence() {
     return () => clearInterval(saveInterval);
   }, [loaded]);
 
-  /** Saves chat settings shortly after any settings change */
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-
-    if (loaded) {
-      timeout = setTimeout(() => {
-        // Avoid persisting frequently-changing unread counts.
-        const pageById = Object.fromEntries(
-          Object.entries(allChat.pageById).map(([id, page]) => [
-            id,
-            {
-              ...page,
-              unreadCount: 0,
-            },
-          ]),
-        );
-
-        storage.set('chat-state', {
-          ...allChat,
-          pageById,
-        });
-      }, 750);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [loaded, allChat]);
-
   async function loadChatFromStorage(): Promise<void> {
     const [state, messages] = await Promise.all([
       storage.get('chat-state'),
@@ -90,7 +62,7 @@ export function useChatPersistence() {
     // Empty settings, set defaults
     if (!state) {
       console.log('Initialized chat with default settings');
-    } else if (state && 'version' in state && state.version === version) {
+    } else if (state && 'version' in state && state.version >= version) {
       console.log('Loaded chat state from storage:', state);
       startChatStateMigration(state);
     } else {
