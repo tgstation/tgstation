@@ -1111,7 +1111,9 @@
 	if(holder.has_reagent(/datum/reagent/medicine/calomel) || holder.has_reagent(/datum/reagent/medicine/pen_acid))
 		remove_amt = 0.5
 	. = ..()
-	affected_mob.reagents.remove_all(0.5 * remove_amt * reagent.purge_multiplier * normalise_creation_purity() * metabolization_ratio * seconds_per_tick)
+	for(var/datum/reagent/medicine/reagent in affected_mob.reagents.reagent_list)
+		reagent.volume -= remove_amt * reagent.purge_multiplier * normalise_creation_purity() * metabolization_ratio * seconds_per_tick
+	affected_mob.reagents.update_total()
 
 //ACID
 
