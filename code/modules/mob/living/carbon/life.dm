@@ -530,7 +530,7 @@
 			disease.stage_act(seconds_per_tick)
 
 /mob/living/carbon/handle_mutations(time_since_irradiated, seconds_per_tick)
-	if(!dna?.temporary_mutations.len)
+	if(!LAZYLEN(dna?.temporary_mutations))
 		return
 
 	for(var/mut, mut_data in dna.temporary_mutations)
