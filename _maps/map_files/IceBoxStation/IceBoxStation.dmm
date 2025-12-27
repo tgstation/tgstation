@@ -20782,9 +20782,9 @@
 	},
 /obj/structure/table,
 /obj/item/coin/silver,
-obj/item/disk/computer/quartermaster,
-obj/item/disk/computer/quartermaster,
-obj/item/disk/computer/quartermaster,
+/obj/item/disk/computer/quartermaster,
+/obj/item/disk/computer/quartermaster,
+/obj/item/disk/computer/quartermaster,
 /obj/item/clipboard,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
@@ -22970,15 +22970,15 @@ obj/item/disk/computer/quartermaster,
 	},
 /obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-obj/item/disk/computer/engineering{
+/obj/item/disk/computer/engineering{
 	pixel_x = 4;
 	pixel_y = 3
 	},
-obj/item/disk/computer/engineering{
+/obj/item/disk/computer/engineering{
 	pixel_x = 4;
 	pixel_y = 3
 	},
-obj/item/disk/computer/engineering{
+/obj/item/disk/computer/engineering{
 	pixel_x = 4;
 	pixel_y = 3
 	},
@@ -23683,8 +23683,8 @@ obj/item/disk/computer/engineering{
 /area/station/engineering/storage_shared)
 "gEy" = (
 /obj/structure/table,
-obj/item/disk/computer/ordnance,
-obj/item/disk/computer/ordnance{
+/obj/item/disk/computer/ordnance,
+/obj/item/disk/computer/ordnance{
 	pixel_x = -5;
 	pixel_y = 4
 	},
@@ -61319,8 +61319,8 @@ obj/item/disk/computer/ordnance{
 /area/station/medical/virology)
 "rjt" = (
 /obj/structure/table/glass,
-obj/item/disk/computer/medical,
-obj/item/disk/computer/medical,
+/obj/item/disk/computer/medical,
+/obj/item/disk/computer/medical,
 /obj/machinery/status_display/evac/directional/north,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
@@ -76825,7 +76825,7 @@ obj/item/disk/computer/medical,
 /obj/item/disk/computer{
 	pixel_x = -2
 	},
-obj/item/disk/computer/ordnance{
+/obj/item/disk/computer/ordnance{
 	pixel_x = -5;
 	pixel_y = 6
 	},

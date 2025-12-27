@@ -13971,9 +13971,9 @@
 /area/station/maintenance/disposal/incinerator)
 "dvF" = (
 /obj/structure/table/reinforced,
-obj/item/disk/computer/quartermaster,
-obj/item/disk/computer/quartermaster,
-obj/item/disk/computer/quartermaster,
+/obj/item/disk/computer/quartermaster,
+/obj/item/disk/computer/quartermaster,
+/obj/item/disk/computer/quartermaster,
 /obj/item/gps/mining,
 /obj/item/paper_bin/carbon,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -46321,7 +46321,7 @@ obj/item/disk/computer/quartermaster,
 	pixel_y = 2
 	},
 /obj/item/disk/computer,
-obj/item/disk/computer/ordnance{
+/obj/item/disk/computer/ordnance{
 	pixel_x = -4;
 	pixel_y = -1
 	},
@@ -59055,9 +59055,9 @@ obj/item/disk/computer/ordnance{
 "oIL" = (
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/bot,
-obj/item/disk/computer/engineering,
-obj/item/disk/computer/engineering,
-obj/item/disk/computer/engineering,
+/obj/item/disk/computer/engineering,
+/obj/item/disk/computer/engineering,
+/obj/item/disk/computer/engineering,
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -66183,10 +66183,10 @@ obj/item/disk/computer/engineering,
 /area/station/service/chapel)
 "qtq" = (
 /obj/structure/table,
-obj/item/disk/computer/medical{
+/obj/item/disk/computer/medical{
 	pixel_x = 3
 	},
-obj/item/disk/computer/medical{
+/obj/item/disk/computer/medical{
 	pixel_x = -3
 	},
 /obj/item/toy/figure/cmo,
@@ -94883,13 +94883,13 @@ obj/item/disk/computer/medical{
 /area/station/science/xenobiology)
 "xzq" = (
 /obj/structure/table/reinforced,
-obj/item/disk/computer/ordnance{
+/obj/item/disk/computer/ordnance{
 	pixel_x = 3
 	},
-obj/item/disk/computer/ordnance{
+/obj/item/disk/computer/ordnance{
 	pixel_x = -2
 	},
-obj/item/disk/computer/ordnance{
+/obj/item/disk/computer/ordnance{
 	pixel_y = 2
 	},
 /obj/item/toy/figure/rd,

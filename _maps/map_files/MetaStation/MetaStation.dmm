@@ -10494,9 +10494,9 @@
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
 /obj/item/paper/monitorkey,
-obj/item/disk/computer/engineering,
-obj/item/disk/computer/engineering,
-obj/item/disk/computer/engineering,
+/obj/item/disk/computer/engineering,
+/obj/item/disk/computer/engineering,
+/obj/item/disk/computer/engineering,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
@@ -26804,7 +26804,7 @@ obj/item/disk/computer/engineering,
 	name = "Dud Rocket";
 	desc = "An 84mm High Explosive rocket. This one's a dud. Pretty sure."
 	},
-obj/item/disk/computer/quartermaster{
+/obj/item/disk/computer/quartermaster{
 	pixel_x = 9;
 	pixel_y = 13
 	},
@@ -33099,9 +33099,9 @@ obj/item/disk/computer/quartermaster{
 /obj/effect/turf_decal/siding{
 	dir = 4
 	},
-obj/item/disk/computer/ordnance,
-obj/item/disk/computer/ordnance,
-obj/item/disk/computer/ordnance,
+/obj/item/disk/computer/ordnance,
+/obj/item/disk/computer/ordnance,
+/obj/item/disk/computer/ordnance,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
@@ -41881,7 +41881,7 @@ obj/item/disk/computer/ordnance,
 	dir = 9
 	},
 /obj/machinery/airalarm/directional/west,
-obj/item/disk/computer/ordnance{
+/obj/item/disk/computer/ordnance{
 	pixel_x = 1
 	},
 /turf/open/floor/iron/white,
@@ -51565,8 +51565,8 @@ obj/item/disk/computer/ordnance{
 	pixel_x = -7;
 	pixel_y = 8
 	},
-obj/item/disk/computer/medical,
-obj/item/disk/computer/medical,
+/obj/item/disk/computer/medical,
+/obj/item/disk/computer/medical,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "rHn" = (
