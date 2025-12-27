@@ -34,7 +34,7 @@
 	///Cooldown timer between pings.
 	COOLDOWN_DECLARE(ping_cooldown)
 
-/datum/computer_file/program/chatclient/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
+/datum/computer_file/program/chatclient/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	if(!username)
 		username = "DefaultUser[rand(100, 999)]"

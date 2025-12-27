@@ -71,7 +71,7 @@
 			if(!computer.can_store_file(F))
 				return FALSE
 			var/datum/computer_file/C = F.clone(FALSE)
-			computer.store_file(C)
+			computer.store_file(C, usr)
 			return TRUE
 		if("PRG_togglesilence")
 			var/datum/computer_file/program/binary = computer.find_file_by_name(params["name"])

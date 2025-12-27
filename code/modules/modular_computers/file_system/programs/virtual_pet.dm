@@ -121,7 +121,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	///cooldown till we can alter our pet's appearance again
 	COOLDOWN_DECLARE(alter_appearance_cooldown)
 
-/datum/computer_file/program/virtual_pet/on_install()
+/datum/computer_file/program/virtual_pet/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	profile_picture = getFlatIcon(image(icon = 'icons/ui/virtualpet/pet_state.dmi', icon_state = "pet_preview"))
 	GLOB.virtual_pets_list += src
