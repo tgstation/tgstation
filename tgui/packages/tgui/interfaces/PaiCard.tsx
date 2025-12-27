@@ -206,23 +206,23 @@ const PaiOptions = (props) => {
           </Button>
         </LabeledList.Item>
         <LabeledList.Item label="Holoform Range">
-            <Stack>
-              <Stack.Item>
-                <Button
-                  icon="fa-circle-minus"
-                  onClick={() => act('decrease_range')}
-                  disabled={range === range_min}
-                />
-              </Stack.Item>
-              <Stack.Item mt={0.5}>{range}</Stack.Item>
-              <Stack.Item>
-                <Button
-                  icon="fa-circle-plus"
-                  onClick={() => act('increase_range')}
-                  disabled={range === range_max}
-                />
-              </Stack.Item>
-            </Stack>
+          <Stack>
+            <Stack.Item>
+              <Button
+                icon="fa-circle-minus"
+                onClick={() => act('decrease_range')}
+                disabled={range === range_min}
+              />
+            </Stack.Item>
+            <Stack.Item mt={0.5}>{range}</Stack.Item>
+            <Stack.Item>
+              <Button
+                icon="fa-circle-plus"
+                onClick={() => act('increase_range')}
+                disabled={range === range_max}
+              />
+            </Stack.Item>
+          </Stack>
         </LabeledList.Item>
         <LabeledList.Item label="Transmit">
           <Button

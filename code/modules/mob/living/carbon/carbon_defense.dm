@@ -10,7 +10,8 @@
 	else
 		return INFINITY //Can't get flashed without eyes
 	if(isclothing(head)) //Adds head protection
-		. += head.flash_protect
+		var/obj/item/clothing/helmet = head
+		. += helmet.flash_protect
 	if(isclothing(glasses)) //Glasses
 		. += glasses.flash_protect
 	if(isclothing(wear_mask)) //Mask
@@ -688,7 +689,7 @@
 		if (picked_user_part && BODYTYPE_CAN_BE_BIOSCRAMBLED(picked_user_part.bodytype))
 			changed_something = TRUE
 			new_part = new new_part()
-			new_part.replace_limb(src, special = TRUE)
+			new_part.replace_limb(src)
 			if (picked_user_part)
 				qdel(picked_user_part)
 
