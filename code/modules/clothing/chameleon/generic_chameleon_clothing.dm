@@ -30,6 +30,7 @@ do { \
 	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = FALSE
 	resistance_flags = NONE
+	clothing_flags = CARP_STYLE_FACTOR
 	can_adjust = FALSE
 	armor_type = /datum/armor/clothing_under/chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/jumpsuit)
@@ -58,6 +59,7 @@ do { \
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
 	resistance_flags = NONE
+	clothing_flags = CARP_STYLE_FACTOR
 	armor_type = /datum/armor/suit_chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/suit)
 	action_slots = ALL
@@ -87,6 +89,7 @@ do { \
 	icon_state = "meson"
 	inhand_icon_state = "meson"
 	resistance_flags = NONE
+	clothing_flags = CARP_STYLE_FACTOR
 	armor_type = /datum/armor/glasses_chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/glasses)
 	action_slots = ALL
@@ -106,13 +109,14 @@ do { \
 	acid = 50
 
 /obj/item/clothing/gloves/chameleon
-	desc = "These gloves provide protection against electric shock."
 	name = "insulated gloves"
+	desc = "These gloves provide protection against electric shock."
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
 	greyscale_colors = null
 
 	resistance_flags = NONE
+	clothing_flags = CARP_STYLE_FACTOR
 	body_parts_covered = HANDS|ARMS
 	armor_type = /datum/armor/gloves_chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/gloves)
@@ -140,6 +144,7 @@ do { \
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 	icon_state = "greysoft"
 	resistance_flags = NONE
+	clothing_flags = CARP_STYLE_FACTOR
 	armor_type = /datum/armor/head_chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/hat)
 	action_slots = ALL
@@ -179,7 +184,7 @@ do { \
 	inhand_icon_state = "gas_alt"
 	resistance_flags = NONE
 	armor_type = /datum/armor/mask_chameleon
-	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | CARP_STYLE_FACTOR
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
@@ -240,6 +245,7 @@ do { \
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
 	greyscale_colors = "#545454#ffffff"
 	resistance_flags = NONE
+	clothing_flags = CARP_STYLE_FACTOR
 	armor_type = /datum/armor/shoes_chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/shoes)
 	action_slots = ALL

@@ -53,8 +53,8 @@
 		set_greyscale(colors = list(generated_base_color, generated_ribbon_color))
 
 /obj/item/stack/wrapping_paper/click_alt(mob/user)
-	var/new_base = input(user, "", "Select a base color", color) as color
-	var/new_ribbon = input(user, "", "Select a ribbon color", color) as color
+	var/new_base = tgui_color_picker(user, "", "Select a base color", color)
+	var/new_ribbon = tgui_color_picker(user, "", "Select a ribbon color", color)
 	if(!new_base || !new_ribbon)
 		return CLICK_ACTION_BLOCKING
 
@@ -93,8 +93,10 @@
 	amount = 25
 	max_amount = 25
 	resistance_flags = FLAMMABLE
-	grind_results = list(/datum/reagent/cellulose = 5)
 	merge_type = /obj/item/stack/package_wrap
+
+/obj/item/stack/package_wrap/grind_results()
+	return list(/datum/reagent/cellulose = 5)
 
 /obj/item/stack/package_wrap/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins wrapping [user.p_them()]self in \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

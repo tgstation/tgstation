@@ -12,7 +12,7 @@
 	severity = DISEASE_SEVERITY_MINOR
 	required_organ = ORGAN_SLOT_LUNGS
 
-/datum/disease/flu/stage_act(seconds_per_tick, times_fired)
+/datum/disease/flu/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

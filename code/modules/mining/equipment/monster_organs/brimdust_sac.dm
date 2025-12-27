@@ -35,7 +35,7 @@
 	qdel(src)
 
 // Every x seconds, if on lavaland, add one stack
-/obj/item/organ/monster_core/brimdust_sac/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/monster_core/brimdust_sac/on_life(seconds_per_tick)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, brimdust_auto_apply_cooldown))
 		return
@@ -143,7 +143,7 @@
 
 /datum/status_effect/stacking/brimdust_coating/on_creation(mob/living/new_owner, stacks_to_apply)
 	. = ..()
-	linked_alert?.icon_state = "brimdemon_[stacks]"
+	linked_alert?.overlay_state = "brimdemon_[stacks]"
 
 /datum/status_effect/stacking/brimdust_coating/on_apply()
 	. = ..()

@@ -41,7 +41,7 @@
 	/// References the alloys the smelter can create
 	var/datum/techweb/stored_research
 	/// Linkage to the ORM silo
-	var/datum/component/remote_materials/materials
+	var/datum/remote_materials/materials
 
 /obj/machinery/mineral/ore_redemption/offstation
 	circuit = /obj/item/circuitboard/machine/ore_redemption/offstation
@@ -59,8 +59,8 @@
 		local_signals = list(
 			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/mineral/ore_redemption, local_redeem_points)
 		)
-	materials = AddComponent( \
-		/datum/component/remote_materials, \
+	materials = new ( \
+		src, \
 		mapload, \
 		mat_container_signals = local_signals \
 	)
@@ -70,7 +70,7 @@
 
 /obj/machinery/mineral/ore_redemption/Destroy()
 	stored_research = null
-	materials = null
+	QDEL_NULL(materials)
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
@@ -92,7 +92,7 @@
 
 /// Returns the amount of a specific alloy design, based on the accessible materials
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
-	var/datum/component/material_container/mat_container = materials.mat_container
+	var/datum/material_container/mat_container = materials.mat_container
 	if(!mat_container || D.make_reagent)
 		return FALSE
 
@@ -119,7 +119,7 @@
 
 /// Sends a message to the request consoles that signed up for ore updates
 /obj/machinery/mineral/ore_redemption/proc/send_console_message()
-	var/datum/component/material_container/mat_container = materials.mat_container
+	var/datum/material_container/mat_container = materials.mat_container
 	if(!mat_container || !is_station_level(z))
 		return
 
@@ -160,6 +160,7 @@
 		gathered_ores += tool
 	else if(tool.atom_storage && !tool.atom_storage.locked)
 		tool.atom_storage.remove_type(/obj/item/stack/ore, src, check_adjacent = TRUE, user = user, inserted = gathered_ores)
+
 	if(!gathered_ores.len)
 		return ..()
 
@@ -168,7 +169,7 @@
 		if(isnull(smelted_ore))
 			continue
 
-		if(materials.insert_item(smelted_ore, ore_multiplier) <= 0)
+		if(materials.insert_item(smelted_ore, ore_multiplier, ID_DATA(user)) <= 0)
 			unload_mineral(smelted_ore)
 
 	return ITEM_INTERACT_SUCCESS
@@ -176,9 +177,13 @@
 /obj/machinery/mineral/ore_redemption/pickup_item(datum/source, atom/movable/target, direction)
 	if(QDELETED(target))
 		return
+
 	if(!materials.mat_container || panel_open || !powered())
 		return
 
+	var/alist/user_data = null
+	if (isliving(target.pulledby))
+		user_data = ID_DATA(target.pulledby)
 	//gethering the ore
 	var/list/obj/item/stack/ore/ore_list = list()
 	if(istype(target, /obj/structure/ore_box))
@@ -196,7 +201,7 @@
 		if(isnull(smelted_ore))
 			continue
 
-		if(materials.insert_item(smelted_ore, ore_multiplier) <= 0)
+		if(materials.insert_item(smelted_ore, ore_multiplier, user_data) <= 0)
 			unload_mineral(smelted_ore) //if rejected unload
 
 	if(!console_notify_timer)
@@ -245,7 +250,7 @@
 	var/list/data = list()
 	data["unclaimedPoints"] = points
 	data["materials"] = list()
-	var/datum/component/material_container/mat_container = materials.mat_container
+	var/datum/material_container/mat_container = materials.mat_container
 	if (mat_container)
 		for(var/datum/material/material as anything in mat_container.materials)
 			var/amount = mat_container.materials[material]
@@ -305,7 +310,7 @@
 	. = ..()
 	if(.)
 		return
-	var/datum/component/material_container/mat_container = materials.mat_container
+	var/datum/material_container/mat_container = materials.mat_container
 	switch(action)
 		if("Claim")
 			//requires silo but silo not in range

@@ -429,7 +429,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 /// Can be provided to choices in radial menus if you want to provide more information
 /datum/radial_menu_choice
 	/// Required -- what to display for this button
-	var/image
+	var/image/image
 
 	/// If provided, this will be the name the radial slice hud button. This has priority over everything else.
 	var/name

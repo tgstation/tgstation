@@ -263,7 +263,7 @@
 	INVOKE_ASYNC(convertee, TYPE_PROC_REF(/mob, emote), "laugh")
 	return TRUE
 
-/datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
+/datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick)
 	SIGNAL_HANDLER
 	visible_hallucination_pulse(
 		center = get_turf(source),

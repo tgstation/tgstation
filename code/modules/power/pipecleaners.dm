@@ -201,13 +201,15 @@ By design, d1 is the smallest direction and d2 is the highest
 	attack_verb_simple = list("whip", "lash", "discipline", "flog")
 	singular_name = "pipe cleaner piece"
 	full_w_class = WEIGHT_CLASS_SMALL
-	grind_results = list(/datum/reagent/copper = 2) //2 copper per pipe_cleaner in the coil
 	usesound = 'sound/items/deconstruct.ogg'
 	cost = 1
 	source = /datum/robot_energy_storage/pipe_cleaner
 	color = CABLE_HEX_COLOR_RED
 	///For updating inhand icons.
 	var/pipecleaner_color = CABLE_COLOR_RED
+
+/obj/item/stack/pipe_cleaner_coil/grind_results()
+	return list(/datum/reagent/copper = 2)
 
 /obj/item/stack/pipe_cleaner_coil/cyborg/attack_self(mob/user)
 	var/list/pipe_cleaner_colors = GLOB.cable_colors
