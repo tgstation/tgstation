@@ -124,7 +124,7 @@
 		need_mob_update += reagent.on_mob_dead(owner, seconds_per_tick, metabolization_ratio)
 
 	if(!QDELETED(owner) && !QDELETED(reagent) && !(tick_return & COMSIG_MOB_STOP_REAGENT_METABOLISM))
-		reagent.metabolize_reagent(owner, seconds_per_tick, metabolization_ratio)
+		reagent.metabolize_reagent(owner, seconds_per_tick, metabolized_volume)
 
 	return need_mob_update
 
