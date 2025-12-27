@@ -45,7 +45,7 @@
 	id = "ai_power_upgrade"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5)
-	build_path = /obj/item/ai_module/upgrade/surveillance
+	build_path = /obj/item/ai_module/upgrade/power_transfer
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_UPGRADES
 	)

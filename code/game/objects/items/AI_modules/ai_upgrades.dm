@@ -19,6 +19,10 @@
 	QDEL_NULL(gift)
 	return ..()
 
+/obj/item/ai_module/upgrade/examine(mob/user)
+	. = ..()
+	. += span_info("Must be inserted into a module rack to function.")
+
 /obj/item/ai_module/upgrade/silicon_linked_to_installed(mob/living/silicon/lawed)
 	if(!isAI(lawed))
 		return
@@ -49,14 +53,18 @@
 
 /// AI module which gives some ALL malf ai abilities when installed in a law rack
 /obj/item/ai_module/combat
-	name = "combat software upgrade"
-	desc = "A highly illegal, highly dangerous upgrade for artificial intelligence units, granting them a variety of powers as well as the ability to hack APCs.<br>This upgrade does not override any active laws, and must be applied directly to an active AI core."
+	name = "combat software module"
+	desc = "A highly illegal, highly dangerous upgrade for artificial intelligence units, granting them a variety of powers as well as the ability to hack APCs."
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "secmodschematic"
 
 /obj/item/ai_module/combat/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
+
+/obj/item/ai_module/combat/examine(mob/user)
+	. = ..()
+	. += span_warning("Must be inserted into a module rack to function.")
 
 /obj/item/ai_module/combat/log_install(mob/living/user, obj/machinery/ai_law_rack/rack)
 	. = ..()
