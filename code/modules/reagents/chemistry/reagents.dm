@@ -179,14 +179,14 @@
  * * times_fired - the number of times the owner's Life() tick has been called aka The number of times SSmobs has fired
  *
  */
-/datum/reagent/proc/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/proc/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	SHOULD_CALL_PARENT(TRUE)
 
 ///Metabolizes a portion of the reagent after on_mob_life() is called
-/datum/reagent/proc/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/proc/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	if(isnull(holder))
 		return
-	holder.remove_reagent(type, metabolized_volume)
+	holder.remove_reagent(type, metabolization_ratio)
 
 
 /// Called in burns.dm *if* the reagent has the REAGENT_AFFECTS_WOUNDS process flag
@@ -225,7 +225,7 @@
 		affected_mob.add_traits(metabolized_traits, "metabolize:[type]")
 
 /// Called when this reagent stops being metabolized by a liver
-/datum/reagent/proc/on_mob_end_metabolize(mob/living/affected_mob, metabolized_volume)
+/datum/reagent/proc/on_mob_end_metabolize(mob/living/affected_mob, metabolization_ratio)
 	SHOULD_CALL_PARENT(TRUE)
 	REMOVE_TRAITS_IN(affected_mob, "metabolize:[type]")
 
@@ -253,11 +253,11 @@
 	SEND_SIGNAL(src, COMSIG_REAGENT_ON_MERGE, mix_data, amount)
 
 /// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
-/datum/reagent/proc/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/proc/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	return
 
 /// Called when an overdose starts. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
-/datum/reagent/proc/overdose_start(mob/living/affected_mob, metabolized_volume)
+/datum/reagent/proc/overdose_start(mob/living/affected_mob, metabolization_ratio)
 	to_chat(affected_mob, span_userdanger("You feel like you took too much of [name]!"))
 	affected_mob.add_mood_event("[type]_overdose", /datum/mood_event/overdose, name)
 	return

@@ -35,7 +35,7 @@
 	affected_respiration_type = ALL
 
 //Random healing of the 4 main groups
-/datum/reagent/impurity/healing/medicine_failure/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/impurity/healing/medicine_failure/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
 	var/pick = pick("brute", "burn", "tox", "oxy")
@@ -83,7 +83,7 @@ Then I attempt to calculate the how many hands to created based off the current 
 I take the 2s interval period and divide it by the number of hands I want to make (i.e. the current seconds_per_tick) and I keep track of how many hands I'm creating (since I always create one on a tick, then I start at 1 hand). For each hand I then use this time value multiplied by the number of hands. Since we're spawning one now, and it checks to see if hands is less than, but not less than or equal to, seconds_per_tick, no hands will be created on the next expected tick.
 Basically, we fill the time between now and 2s from now with hands based off the current lag.
 */
-/datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	spawn_hands(affected_mob)
 	lag_remainder += seconds_per_tick - FLOOR(seconds_per_tick, 1)
@@ -130,9 +130,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	addiction_types = list(/datum/addiction/medicine = 4)
 	tox_damage = 0
 
-/datum/reagent/inverse/libitoil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/libitoil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, 0.05 * REM * metabolized_volume * seconds_per_tick)
+	affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, 0.05 * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/inverse/libitoil/on_mob_add(mob/living/affected_mob, amount)
 	. = ..()
@@ -180,7 +180,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	addiction_types = list(/datum/addiction/medicine = 5)
 	liver_damage = 0
 
-/datum/reagent/impurity/probital_failed/overdose_start(mob/living/carbon/M, metabolized_volume)
+/datum/reagent/impurity/probital_failed/overdose_start(mob/living/carbon/M, metabolization_ratio)
 	. = ..()
 	metabolization_rate = 4  * REAGENTS_METABOLISM
 
@@ -190,7 +190,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "These inhibitory peptides drains nutrition and causes brain damage in the patient!"
 	ph = 2.1
 
-/datum/reagent/peptides_failed/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/peptides_failed/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.25 * seconds_per_tick, 170))
 		. = UPDATE_MOB_HEALTH
@@ -223,8 +223,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/amount_of_blur_applied = 1.25 SECONDS
 	tox_damage = 0
 
-/datum/reagent/inverse/aiuri/on_mob_life(mob/living/carbon/owner, seconds_per_tick, metabolized_volume)
-	owner.adjust_organ_loss(ORGAN_SLOT_EYES, 0.05 * REM * metabolized_volume * seconds_per_tick)
+/datum/reagent/inverse/aiuri/on_mob_life(mob/living/carbon/owner, seconds_per_tick, metabolization_ratio)
+	owner.adjust_organ_loss(ORGAN_SLOT_EYES, 0.05 * metabolization_ratio * seconds_per_tick)
 	owner.adjust_eye_blur(amount_of_blur_applied * seconds_per_tick)
 	. = ..()
 	return TRUE
@@ -242,9 +242,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	taste_description = "heat! Ouch!"
 	addiction_types = list(/datum/addiction/medicine = 2.5)
 
-/datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	var/heating = 0.5 * rand(5, 25) * creation_purity * REM * metabolized_volume * seconds_per_tick
+	var/heating = 0.5 * rand(5, 25) * creation_purity * metabolization_ratio * seconds_per_tick
 	var/datum/reagents/mob_reagents = affected_mob.reagents
 	if(mob_reagents)
 		mob_reagents.expose_temperature(mob_reagents.chem_temp + heating, 1)
@@ -262,11 +262,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	exposed_mob.adjust_bodytemperature(reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT)
 	exposed_mob.adjust_fire_stacks(reac_volume / 2)
 
-/datum/reagent/inverse/hercuri/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/hercuri/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, 1 * REM * metabolized_volume * seconds_per_tick, required_organ_flag = affected_organ_flags)) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
+	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, 1 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
 		. = UPDATE_MOB_HEALTH
-	var/heating = 5 * creation_purity * REM * metabolized_volume * seconds_per_tick * TEMPERATURE_DAMAGE_COEFFICIENT
+	var/heating = 5 * creation_purity * metabolization_ratio * seconds_per_tick * TEMPERATURE_DAMAGE_COEFFICIENT
 	affected_mob.adjust_bodytemperature(heating) //hot hot
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/human = affected_mob
@@ -282,7 +282,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	addiction_types = list(/datum/addiction/medicine = 5)
 
 //Makes patients fall asleep, then boosts the purirty of their medicine reagents if they're asleep
-/datum/reagent/inverse/healing/tirimol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/healing/tirimol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	switch(current_cycle)
 		if(2 to 11)//same delay as chloral hydrate
@@ -404,7 +404,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 	var/poison_interval = (9 SECONDS)
 
-/datum/reagent/inverse/technetium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/technetium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	time_until_next_poison -= seconds_per_tick * (1 SECONDS)
 	if (time_until_next_poison <= 0)
@@ -457,13 +457,13 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	addiction_types = list(/datum/addiction/medicine = 3.5)
 
 //Heals toxins if it's the only thing present - kinda the oposite of multiver! Maybe that's why it's inverse!
-/datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
 	if(length(affected_mob.reagents.reagent_list) > 1)
 		need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LUNGS, 0.5 * seconds_per_tick, required_organ_flag = affected_organ_flags) //Hey! It's everyone's favourite drawback from multiver!
 	else
-		need_mob_update = affected_mob.adjust_tox_loss(-1 * REM * metabolized_volume * creation_purity * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update = affected_mob.adjust_tox_loss(-1 * metabolization_ratio * creation_purity * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -495,7 +495,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		TRAIT_NO_OXYLOSS_PASSOUT,
 	)
 
-/datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if (HAS_TRAIT(affected_mob, TRAIT_SUICIDED))
 		return
@@ -517,7 +517,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	affected_mob.emote("gasp")
 	affected_mob.playsound_local(affected_mob, 'sound/effects/health/fastbeat.ogg', 65)
 
-/datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(!back_from_the_dead)
 		return
@@ -526,10 +526,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
 	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
-		iter_wound.adjust_blood_flow(0.5 * creation_impurity * REM * metabolized_volume * seconds_per_tick)
+		iter_wound.adjust_blood_flow(0.5 * creation_impurity * metabolization_ratio * seconds_per_tick)
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_brute_loss(2.5 * creation_impurity * REM * metabolized_volume * seconds_per_tick, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, 0.5 * ((1 + creation_impurity) * REM * metabolized_volume * seconds_per_tick), required_organ_flag = affected_organ_flags)
+	need_mob_update = affected_mob.adjust_brute_loss(2.5 * creation_impurity * metabolization_ratio * seconds_per_tick, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, 0.5 * ((1 + creation_impurity) * metabolization_ratio * seconds_per_tick), required_organ_flag = affected_organ_flags)
 	if(affected_mob.health < HEALTH_THRESHOLD_CRIT)
 		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	if(affected_mob.health < HEALTH_THRESHOLD_FULLCRIT)
@@ -549,7 +549,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		qdel(heart)
 		affected_mob.visible_message(span_boldwarning("[affected_mob]'s heart explodes!"))
 
-/datum/reagent/inverse/penthrite/overdose_start(mob/living/carbon/affected_mob, metabolized_volume)
+/datum/reagent/inverse/penthrite/overdose_start(mob/living/carbon/affected_mob, metabolization_ratio)
 	. = ..()
 	if(!back_from_the_dead)
 		return ..()
@@ -624,11 +624,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	//The temporary trauma passed to the affected mob
 	var/datum/brain_trauma/temp_trauma
 
-/datum/reagent/inverse/neurine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/neurine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(temp_trauma)
 		return
-	if(!(SPT_PROB(creation_purity*10, seconds_per_tick)))
+	if(!(SPT_PROB(creation_purity * 10, seconds_per_tick)))
 		return
 	var/static/list/traumalist
 	if (!traumalist)
@@ -721,7 +721,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	color = "#4C8000"
 	tox_damage = 0
 
-/datum/reagent/inverse/antihol/on_mob_life(mob/living/carbon/C, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/antihol/on_mob_life(mob/living/carbon/C, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	for(var/datum/reagent/consumable/ethanol/alcohol in C.reagents.reagent_list)
 		alcohol.boozepwr += seconds_per_tick
@@ -739,7 +739,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	///Did we get a headache?
 	var/headache = FALSE
 
-/datum/reagent/inverse/oculine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/oculine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(headache)
 		return ..()
@@ -817,18 +817,18 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	ph = 12.2
 	tox_damage = 0
 
-/datum/reagent/inverse/oxandrolone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/oxandrolone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/high_message = pick("You feel unstoppable.", "Giving it EVERYTHING!!", "You feel ready for anything.", "You feel like doing a thousand jumping jacks!")
 	if(SPT_PROB(2, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[high_message]"))
 
-/datum/reagent/inverse/oxandrolone/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/oxandrolone/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(SPT_PROB(25, seconds_per_tick))
-		affected_mob.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * metabolized_volume * seconds_per_tick)
+		affected_mob.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT * metabolization_ratio)
 		affected_mob.set_jitter_if_lower(3 SECONDS)
-		affected_mob.adjust_stamina_loss(2.5 * REM * metabolized_volume * seconds_per_tick)
+		affected_mob.adjust_stamina_loss(2.5 * metabolization_ratio)
 	else if(SPT_PROB(5, seconds_per_tick))
 		affected_mob.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 0, distance = 3)
 		affected_mob.Paralyze(3 SECONDS)
@@ -852,15 +852,15 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	metabolization_rate = 0.125
 	tox_damage = 0
 
-/datum/reagent/inverse/pen_acid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
-	holder.remove_reagent(/datum/reagent/medicine/c2/seiver, 2.5 * REM * metabolized_volume * seconds_per_tick)
-	holder.remove_reagent(/datum/reagent/medicine/potass_iodide, 2.5 * REM * metabolized_volume * seconds_per_tick)
-	holder.remove_reagent(/datum/reagent/medicine/c2/multiver, 2.5 * REM * metabolized_volume * seconds_per_tick)
+/datum/reagent/inverse/pen_acid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	holder.remove_reagent(/datum/reagent/medicine/c2/seiver, 2.5 * metabolization_ratio * seconds_per_tick)
+	holder.remove_reagent(/datum/reagent/medicine/potass_iodide, 2.5 * metabolization_ratio * seconds_per_tick)
+	holder.remove_reagent(/datum/reagent/medicine/c2/multiver, 2.5 * metabolization_ratio * seconds_per_tick)
 
 	. = ..()
 	if(HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
 		affected_mob.set_jitter_if_lower(10 SECONDS)
-		affected_mob.adjust_disgust(1.5 * REM * metabolized_volume * seconds_per_tick)
+		affected_mob.adjust_disgust(1.5 * metabolization_ratio * seconds_per_tick)
 		if(SPT_PROB(2.5, seconds_per_tick))
 			to_chat(affected_mob, span_warning("A horrible ache spreads in your insides!"))
 			affected_mob.adjust_confusion_up_to(10 SECONDS, 15 SECONDS)
@@ -874,17 +874,17 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	tox_damage = 0
 	overdose_threshold = 40
 
-/datum/reagent/inverse/atropine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/atropine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_STOMACH, -0.5 * REM * metabolized_volume * seconds_per_tick)
-	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, -0.5 * REM * metabolized_volume * seconds_per_tick)
+	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_STOMACH, -0.5 * metabolization_ratio * seconds_per_tick)
+	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, -0.5 * metabolization_ratio * seconds_per_tick)
 	if(affected_mob.get_tox_loss() <= 25)
 		need_mob_update = affected_mob.adjust_tox_loss(-0.5, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
-/datum/reagent/inverse/atropine/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/atropine/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/static/list/possible_organs = list(
 		ORGAN_SLOT_HEART,
@@ -898,7 +898,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		ORGAN_SLOT_TONGUE,
 	)
 	affected_mob.adjust_organ_loss(pick(possible_organs) ,2 * seconds_per_tick)
-	affected_mob.reagents.remove_reagent(type, 0.5 * REM * metabolized_volume * seconds_per_tick)
+	affected_mob.reagents.remove_reagent(type, 0.5 * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/inverse/ammoniated_mercury
 	name = "Ammoniated Sludge"
@@ -908,7 +908,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	metabolization_rate = 0.2
 	tox_damage = 0
 
-/datum/reagent/inverse/ammoniated_mercury/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/ammoniated_mercury/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(SPT_PROB(7.5, seconds_per_tick))
 		affected_mob.emote("scream")
@@ -957,11 +957,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 	exposed_mob.add_surgery_speed_mod(type, 0.7, min(reac_volume * 1 MINUTES, 5 MINUTES))
 
-/datum/reagent/inverse/krokodil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/krokodil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	affected_mob.add_mood_event("smacked out", /datum/mood_event/narcotic_heavy)
 
-/datum/reagent/inverse/krokodil/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/krokodil/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	affected_mob.set_jitter_if_lower(10 SECONDS)
 	affected_mob.set_dizzy_if_lower(5 SECONDS)
@@ -1001,7 +1001,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		affected_mob.remove_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED), type)
 		affected_mob.Sleeping(30 SECONDS)
 
-/datum/reagent/inverse/bath_salts/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/bath_salts/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(holder.has_reagent(/datum/reagent/drug/bath_salts))
 		holder.remove_reagent(type, volume)
@@ -1009,10 +1009,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 	if(is_simian(affected_mob))
 		var/need_mob_update
-		need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 2.5 * REM * metabolized_volume * seconds_per_tick, required_organ_flag = affected_organ_flags)
+		need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 2.5 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
 
 		if(holder.has_reagent(/datum/reagent/consumable/monkey_energy))
-			need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 2.5 * REM * metabolized_volume * seconds_per_tick, required_organ_flag = affected_organ_flags)
+			need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 2.5 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
 
 		if(need_mob_update)
 			. = UPDATE_MOB_HEALTH
@@ -1030,24 +1030,24 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	ph = 6.1
 	tox_damage = 0
 
-/datum/reagent/inverse/aranesp/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/aranesp/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(overdosed)
 		return
 
-	affected_mob.coagulant_effect(0.05 * REM * metabolized_volume * seconds_per_tick)
+	affected_mob.coagulant_effect(0.05 * metabolization_ratio * seconds_per_tick)
 	affected_mob.adjust_blood_volume(1 * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
-	affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, 0.1 * REM * metabolized_volume * seconds_per_tick)
+	affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, 0.1 * metabolization_ratio * seconds_per_tick)
 
 	switch(current_cycle)
 		if(10)
 			to_chat(affected_mob, span_warning("You feel a migraine coming on..."))
-			affected_mob.adjust_eye_blur(1 SECONDS * REM * metabolized_volume * seconds_per_tick)
+			affected_mob.adjust_eye_blur(1 SECONDS * metabolization_ratio * seconds_per_tick)
 
 		if(15 to 30)
 			if(SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_warning("Your head aches as your vision blurs."))
-				affected_mob.adjust_eye_blur(2.5 SECONDS * REM * metabolized_volume * seconds_per_tick)
+				affected_mob.adjust_eye_blur(2.5 SECONDS * metabolization_ratio)
 			if(SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_warning("Your face contorts as a sudden pain forms in your head."))
 				affected_mob.Stun(1 SECONDS)
@@ -1055,7 +1055,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		if(31 to 45)
 			if(SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_warning("Intense pressure forms in your head, you can barely see!"))
-				affected_mob.adjust_eye_blur(5 SECONDS * REM * metabolized_volume * seconds_per_tick)
+				affected_mob.adjust_eye_blur(5 SECONDS * metabolization_ratio)
 				affected_mob.adjust_confusion_up_to(5 SECONDS, 20 SECONDS)
 				affected_mob.adjust_hallucinations(10 SECONDS)
 			if(SPT_PROB(5, seconds_per_tick))
@@ -1064,12 +1064,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 				affected_mob.emote(pick("stare","drool","moan","look"))
 			if(SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_warning("Your inhaling becomes more stressed, it's getting harder to breathe!"))
-				holder.add_reagent(/datum/reagent/toxin/histamine, 2 * REM * metabolized_volume * seconds_per_tick)
+				holder.add_reagent(/datum/reagent/toxin/histamine, 2 * metabolization_ratio)
 
 		if(46 to INFINITY)
 			if(SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_warning("It feels like your head is going to implode!"))
-				affected_mob.adjust_eye_blur(5 SECONDS * REM * metabolized_volume * seconds_per_tick)
+				affected_mob.adjust_eye_blur(5 SECONDS * metabolization_ratio)
 				affected_mob.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
 				affected_mob.adjust_hallucinations(30 SECONDS)
 			if(SPT_PROB(5, seconds_per_tick))
@@ -1078,15 +1078,15 @@ Basically, we fill the time between now and 2s from now with hands based off the
 				affected_mob.emote(pick("stare","drool","tremble","shake"))
 			if(SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_warning("Your breathing becomes weak and raspy, you can barely stay conscious!"))
-				holder.add_reagent(/datum/reagent/toxin/histamine, 3 * REM * metabolized_volume * seconds_per_tick)
+				holder.add_reagent(/datum/reagent/toxin/histamine, 3 * metabolization_ratio)
 				affected_mob.losebreath += 3
 
-/datum/reagent/inverse/aranesp/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/aranesp/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
 	if(SPT_PROB(10, seconds_per_tick))
 		to_chat(affected_mob, span_warning("It feels like your head is going to implode!"))
-		affected_mob.adjust_eye_blur(5 SECONDS * REM * metabolized_volume * seconds_per_tick)
+		affected_mob.adjust_eye_blur(5 SECONDS * metabolization_ratio)
 		affected_mob.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
 		affected_mob.adjust_hallucinations(30 SECONDS)
 	if(SPT_PROB(10, seconds_per_tick))
@@ -1095,7 +1095,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		affected_mob.emote(pick("stare","drool","tremble","shake"))
 	if(SPT_PROB(10, seconds_per_tick))
 		to_chat(affected_mob, span_warning("Your breathing becomes weak and raspy, you can barely stay conscious!"))
-		holder.add_reagent(/datum/reagent/toxin/histamine, 3 * REM * metabolized_volume * seconds_per_tick)
+		holder.add_reagent(/datum/reagent/toxin/histamine, 3 * metabolization_ratio)
 		affected_mob.losebreath += 3
 		need_mob_update = TRUE
 
@@ -1128,16 +1128,16 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		exposed_mob.emote("cry")
 		return
 
-/datum/reagent/inverse/happiness/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/happiness/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(affected_mob.mob_mood?.has_mood_of_category("friendly_hug") && !HAS_TRAIT(affected_mob, TRAIT_BADTOUCH))
 		holder.remove_reagent(type, volume)
 		return
 
-	holder.remove_reagent(/datum/reagent/drug/happiness, 2.5 * REM * metabolized_volume * seconds_per_tick)
-	holder.remove_reagent(/datum/reagent/medicine/psicodine, 2.5 * REM * metabolized_volume * seconds_per_tick)
+	holder.remove_reagent(/datum/reagent/drug/happiness, 2.5 * metabolization_ratio * seconds_per_tick)
+	holder.remove_reagent(/datum/reagent/medicine/psicodine, 2.5 * metabolization_ratio * seconds_per_tick)
 
-	affected_mob.mob_mood.adjust_sanity(-3.25 * REM * metabolized_volume * seconds_per_tick, minimum = SANITY_INSANE)
+	affected_mob.mob_mood.adjust_sanity(-3.25 * metabolization_ratio * seconds_per_tick, minimum = SANITY_INSANE)
 	if(affected_mob.mob_mood != null && affected_mob.mob_mood.sanity < (SANITY_CRAZY))
 		affected_mob.adjust_drowsiness_up_to(5 SECONDS, 30 SECONDS)
 		if(SPT_PROB(25, seconds_per_tick))
@@ -1167,12 +1167,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	affected_mob.manual_emote("exhales sharply.")
 	to_chat(affected_mob, span_warning("You feel an intense burning sensation as your anger subsides!"))
 
-/datum/reagent/inverse/baldium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/baldium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	delayed_burn_damage += (seconds_per_tick * 1)
 	if(holder.has_reagent(/datum/reagent/consumable/salt))
-		holder.remove_reagent(/datum/reagent/inverse/baldium, 1.5 * REM * metabolized_volume * seconds_per_tick)
-		holder.remove_reagent(/datum/reagent/consumable/salt, 0.5 * REM * metabolized_volume * seconds_per_tick)
+		holder.remove_reagent(/datum/reagent/inverse/baldium, 1.5 * metabolization_ratio * seconds_per_tick)
+		holder.remove_reagent(/datum/reagent/consumable/salt, 0.5 * metabolization_ratio * seconds_per_tick)
 
 	switch(current_cycle)
 		if(5)
@@ -1222,7 +1222,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	affected_mob.cure_trauma_type(/datum/brain_trauma/mild/color_blindness, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
 
-/datum/reagent/inverse/colorful_reagent/overdose_start(mob/living/affected_mob, metabolized_volume)
+/datum/reagent/inverse/colorful_reagent/overdose_start(mob/living/affected_mob, metabolization_ratio)
 	. = ..()
 	metabolization_rate = 0.02
 
@@ -1271,7 +1271,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	for (var/obj/item/bodypart/part as anything in exposed_carbon.bodyparts)
 		part.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
 
-/datum/reagent/inverse/colorful_reagent/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/colorful_reagent/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 
 	if (!iscarbon(affected_mob))
@@ -1312,7 +1312,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	affected_mob.RemoveElement(/datum/element/forced_gravity, gravity = 5, ignore_turf_gravity = TRUE, can_override = FALSE)
 
-/datum/reagent/inverse/gravitum/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
+/datum/reagent/inverse/gravitum/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 
 	switch(current_cycle)
@@ -1331,7 +1331,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 				affected_mob.cause_wound_of_type_and_severity(WOUND_BLUNT, leg, WOUND_SEVERITY_CRITICAL)
 			to_chat(affected_mob, span_warning("The gravity of this situation makes your bones snap like popsicle sticks!"))
 
-/datum/reagent/inverse/gravitum/overdose_start(mob/living/carbon/affected_mob, metabolized_volume)
+/datum/reagent/inverse/gravitum/overdose_start(mob/living/carbon/affected_mob, metabolization_ratio)
 	. = ..()
 	affected_mob.AddElement(/datum/element/squish, 120 SECONDS)
 	for(var/obj/item/bodypart/leg/leg in affected_mob.bodyparts)

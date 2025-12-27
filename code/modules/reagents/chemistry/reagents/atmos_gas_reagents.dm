@@ -43,13 +43,13 @@
 	. = ..()
 	breather.SetSleeping(1 SECONDS)
 
-/datum/reagent/healium/on_mob_life(mob/living/breather, seconds_per_tick, metabolized_volume)
+/datum/reagent/healium/on_mob_life(mob/living/breather, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	breather.SetSleeping(30 SECONDS)
 	var/need_mob_update
-	need_mob_update = breather.adjust_fire_loss(-1 * REM * metabolized_volume * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += breather.adjust_tox_loss(-2.5 * REM * metabolized_volume * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-	need_mob_update += breather.adjust_brute_loss(-1 * REM * metabolized_volume * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update = breather.adjust_fire_loss(-1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += breather.adjust_tox_loss(-2.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update += breather.adjust_brute_loss(-1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -61,10 +61,10 @@
 	taste_description = "searingly cold"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/hypernoblium/on_mob_life(mob/living/carbon/breather, seconds_per_tick, metabolized_volume)
+/datum/reagent/hypernoblium/on_mob_life(mob/living/carbon/breather, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(isplasmaman(breather))
-		breather.set_timed_status_effect(5 SECONDS * REM * metabolized_volume * seconds_per_tick, /datum/status_effect/hypernob_protection)
+		breather.set_timed_status_effect(5 SECONDS * metabolization_ratio * seconds_per_tick, /datum/status_effect/hypernob_protection)
 
 /datum/reagent/nitrium_high_metabolization
 	name = "Nitrosyl plasmide"
@@ -77,11 +77,11 @@
 	addiction_types = list(/datum/addiction/stimulants = 14)
 	metabolized_traits = list(TRAIT_SLEEPIMMUNE)
 
-/datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/breather, seconds_per_tick, metabolized_volume)
+/datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/breather, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = breather.adjust_stamina_loss(-2 * REM * metabolized_volume * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
-	need_mob_update += breather.adjust_tox_loss(0.05 * (current_cycle-1) * REM * metabolized_volume * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype) // 1 toxin damage per cycle at cycle 10
+	need_mob_update = breather.adjust_stamina_loss(-2 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+	need_mob_update += breather.adjust_tox_loss(0.05 * (current_cycle-1) * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype) // 1 toxin damage per cycle at cycle 10
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -110,7 +110,7 @@
 	taste_description = "irradiated air"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/pluoxium/on_mob_life(mob/living/carbon/breather, seconds_per_tick, metabolized_volume)
+/datum/reagent/pluoxium/on_mob_life(mob/living/carbon/breather, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(!HAS_TRAIT(breather, TRAIT_KNOCKEDOUT))
 		return
@@ -119,7 +119,7 @@
 		if(!organ_being_healed.damage)
 			continue
 
-		if(organ_being_healed.apply_organ_damage(-0.5 * REM * metabolized_volume * seconds_per_tick, required_organ_flag = ORGAN_ORGANIC))
+		if(organ_being_healed.apply_organ_damage(-0.5 * metabolization_ratio * seconds_per_tick, required_organ_flag = ORGAN_ORGANIC))
 			. = UPDATE_MOB_HEALTH
 
 /datum/reagent/zauker
@@ -132,12 +132,12 @@
 	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // "toxic to all living beings"
 	affected_respiration_type = ALL
 
-/datum/reagent/zauker/on_mob_life(mob/living/breather, seconds_per_tick, metabolized_volume)
+/datum/reagent/zauker/on_mob_life(mob/living/breather, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = breather.adjust_brute_loss(3 * REM * metabolized_volume * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += breather.adjust_oxy_loss(0.5 * REM * metabolized_volume * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	need_mob_update += breather.adjust_fire_loss(1 * REM * metabolized_volume * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += breather.adjust_tox_loss(1 * REM * metabolized_volume * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update = breather.adjust_brute_loss(3 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += breather.adjust_oxy_loss(0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update += breather.adjust_fire_loss(1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += breather.adjust_tox_loss(1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
