@@ -27,8 +27,6 @@
 
 /// Universal Scanner mode for export scanning.
 #define SCAN_EXPORTS 1
-/// Universal Scanner mode for using the sales tagger.
-#define SCAN_SALES_TAG 2
 /// Universal Scanner mode for using the price tagger.
 #define SCAN_PRICE_TAG 3
 
