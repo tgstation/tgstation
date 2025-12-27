@@ -39,7 +39,7 @@
 		else if (isliving(operating_on))
 			var/mob/living/patient = operating_on
 			operating = patient.get_bodypart(operating_zone)
-		if(operating && !HAS_TRAIT(operating, TRAIT_READY_TO_OPERATE) && !HAS_TRAIT(operating_on, TRAIT_FREE_OPERATION))
+		if(operating && !HAS_TRAIT(operating, TRAIT_READY_TO_OPERATE))
 			return NONE
 		// at this point we can be relatively sure they messed up so let's give a feedback message...
 		if (isliving(operating_on))
@@ -1309,9 +1309,6 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		return FALSE
 
 	if(required_bodytype && !(limb.bodytype & required_bodytype))
-		return FALSE
-
-	if(limb.owner && !HAS_TRAIT(limb.owner, TRAIT_READY_TO_OPERATE))
 		return FALSE
 
 	return ..()

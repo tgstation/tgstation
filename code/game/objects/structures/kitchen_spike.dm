@@ -133,8 +133,7 @@
 	target.set_lying_angle(buckle_lying)
 	ADD_TRAIT(target, TRAIT_MOVE_UPSIDE_DOWN, REF(src))
 	// So you can butcher people too
-	ADD_TRAIT(target, TRAIT_READY_TO_OPERATE, REF(src))
-	ADD_TRAIT(target, TRAIT_FREE_OPERATION, REF(src))
+	target.AddComponentFrom(REF(src), /datum/component/free_operation)
 
 /obj/structure/kitchenspike/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if(buckled_mob != user)
@@ -164,8 +163,7 @@
 	buckled_mob.AdjustParalyzed(20)
 	buckled_mob.remove_offsets(type)
 	REMOVE_TRAIT(buckled_mob, TRAIT_MOVE_UPSIDE_DOWN, REF(src))
-	REMOVE_TRAIT(buckled_mob, TRAIT_READY_TO_OPERATE, REF(src))
-	REMOVE_TRAIT(buckled_mob, TRAIT_FREE_OPERATION, REF(src))
+	buckled_mob.RemoveComponentSource(REF(src), /datum/component/free_operation)
 
 /obj/structure/kitchenspike/atom_deconstruct(disassembled = TRUE)
 	if(disassembled)
