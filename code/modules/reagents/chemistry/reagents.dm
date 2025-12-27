@@ -149,7 +149,7 @@
 	return
 
 
-/// Called to begin metabolization and return the volume of reagent to metabolize
+///Called to begin metabolization and return the volume of reagent to metabolize
 /datum/reagent/proc/compute_metabolization(mob/living/carbon/affected_mob, seconds_per_tick)
 	var/metabolizing_out = metabolization_rate * seconds_per_tick
 	if(!(chemical_flags & REAGENT_UNAFFECTED_BY_METABOLISM))
