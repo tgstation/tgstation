@@ -10,9 +10,9 @@
 	/// Are we grinding or juicing
 	var/grinding = TRUE
 
-/obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt, layer)
+/obj/machinery/plumbing/grinder_chemical/Initialize(mapload, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
+	AddComponent(/datum/component/plumbing/simple_supply, layer)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)

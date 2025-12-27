@@ -15,9 +15,9 @@
 	//the maximum you can set the transfer to
 	var/max_transfer = 9
 
-/obj/machinery/plumbing/splitter/Initialize(mapload, bolt, layer)
+/obj/machinery/plumbing/splitter/Initialize(mapload, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/splitter, bolt, layer)
+	AddComponent(/datum/component/plumbing/splitter, layer)
 
 /obj/machinery/plumbing/splitter/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

@@ -19,9 +19,9 @@
 	///Flags for reagents, like INJECTABLE, TRANSPARENT bla bla everything thats in DEFINES/reagents.dm
 	var/reagent_flags = TRANSPARENT
 
-/obj/machinery/plumbing/Initialize(mapload, bolt = TRUE)
+/obj/machinery/plumbing/Initialize(mapload)
 	. = ..()
-	set_anchored(bolt)
+	set_anchored(mapload)
 	create_reagents(buffer, reagent_flags)
 	AddElement(/datum/element/simple_rotation)
 	register_context()

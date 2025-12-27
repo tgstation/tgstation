@@ -1,13 +1,14 @@
 /datum/component/plumbing/automated_iv
 	demand_connects = SOUTH
 	supply_connects = NORTH
-	///Temporary holder to store all the reagents from the iv drip before transferring it to the ducts
+	distinct_reagent_cap = 3
+	///Temporary holder to store all the reagents from the iv drip before transferring to the ducts
 	var/datum/reagents/plumbing/holder
 
-/datum/component/plumbing/automated_iv/Initialize(start = TRUE, _ducting_layer, _turn_connects = TRUE, datum/reagents/custom_receiver, distinct_reagent_cap = 3)
-	. = ..()
+/datum/component/plumbing/automated_iv/Initialize(ducting_layer)
 	if(!istype(parent, /obj/machinery/iv_drip/plumbing))
 		return COMPONENT_INCOMPATIBLE
+	. = ..()
 	var/obj/machinery/iv_drip/plumbing/drip = parent
 	holder = new(drip.reagents.maximum_volume, drip.reagents.flags)
 	holder.my_atom = drip
