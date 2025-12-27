@@ -211,7 +211,7 @@
 	if((unsuitable_cold_damage || unsuitable_heat_damage) && (minbodytemp > 0 || maxbodytemp < INFINITY))
 		AddElement(/datum/element/body_temp_sensitive, minbodytemp, maxbodytemp, unsuitable_cold_damage, unsuitable_heat_damage, mapload)
 
-/mob/living/simple_animal/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(staminaloss > 0)
 		adjust_stamina_loss(-stamina_recovery * seconds_per_tick, FALSE, TRUE)
@@ -313,7 +313,7 @@
 					else
 						manual_emote(pick(emote_hear))
 
-/mob/living/simple_animal/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+/mob/living/simple_animal/handle_environment(datum/gas_mixture/environment, seconds_per_tick)
 	var/atom/A = loc
 	if(isturf(A))
 		var/areatemp = get_temperature(environment)

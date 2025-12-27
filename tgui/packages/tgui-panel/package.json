@@ -9,9 +9,9 @@
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
 		"tgui": "workspace:*",
-		"tgui-core": "^5.5.10",
+		"tgui-core": "^5.6.0",
 		"tgui-dev-server": "workspace:*",
-		"zod": "^4.1.13"
+		"zod": "^4.2.1"
 	},
 	"private": true
 }

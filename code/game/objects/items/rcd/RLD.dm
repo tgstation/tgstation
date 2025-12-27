@@ -69,7 +69,7 @@
 			mode = GLOW_MODE
 			to_chat(user, span_notice("You change RLD's mode to 'Light Launcher'."))
 		if("Color Pick")
-			var/new_choice = input(user,"","Choose Color",color_choice) as color
+			var/new_choice = tgui_color_picker(user, "", "Choose Color", color_choice)
 			if(new_choice == null)
 				return
 

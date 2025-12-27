@@ -36,6 +36,11 @@
 #define ORGAN_GHOST (1<<14)
 /// This is a mutant organ, having this makes you a -derived mutant to health analyzers.
 #define ORGAN_MUTANT (1<<15)
+/// The organ has been chomped or otherwise rendered unusable.
+#define ORGAN_UNUSABLE (1<<16)
+
+/// Organ flags that correspond to bodytypes
+#define ORGAN_TYPE_FLAGS (ORGAN_ORGANIC | ORGAN_ROBOTIC | ORGAN_MINERAL | ORGAN_GHOST)
 
 /// Scarring on the right eye
 #define RIGHT_EYE_SCAR (1<<0)
@@ -85,28 +90,83 @@
 /// Default for most heads
 #define HEAD_DEFAULT_FEATURES (HEAD_HAIR|HEAD_FACIAL_HAIR|HEAD_LIPS|HEAD_EYESPRITES|HEAD_EYECOLOR|HEAD_EYEHOLES|HEAD_DEBRAIN)
 
-/// Return value when the surgery step fails :(
-#define SURGERY_STEP_FAIL -1
+/// Checks if the mob is lying down if they can lie down, otherwise always passes
+#define IS_LYING_OR_CANNOT_LIE(mob) ((mob.mobility_flags & MOBILITY_LIEDOWN) ? (mob.body_position == LYING_DOWN) : TRUE)
 
-// Flags for surgery_flags on surgery datums
-///Will allow the surgery to bypass clothes
-#define SURGERY_IGNORE_CLOTHES (1<<0)
-///Will allow the surgery to be performed by the user on themselves.
-#define SURGERY_SELF_OPERABLE (1<<1)
-///Will allow the surgery to work on mobs that aren't lying down.
-#define SURGERY_REQUIRE_RESTING (1<<2)
-///Will allow the surgery to work only if there's a limb.
-#define SURGERY_REQUIRE_LIMB (1<<3)
-///Will allow the surgery to work only if there's a real (eg. not pseudopart) limb.
-#define SURGERY_REQUIRES_REAL_LIMB (1<<4)
-///Will grant a bonus during surgery steps to users with TRAIT_MORBID while they're using tools with CRUEL_IMPLEMENT
-#define SURGERY_MORBID_CURIOSITY (1<<5)
-/**
- * Instead of checking if the tool used is an actual surgery tool to avoid accidentally whacking patients with the wrong tool,
- * it'll check if it has a defined tool behaviour instead. Useful for surgeries that use mechanical tools instead of medical ones,
- * like hardware manipulation.
- */
-#define SURGERY_CHECK_TOOL_BEHAVIOUR (1<<6)
+/// Applies moodlets after the surgical operation is complete
+#define OPERATION_AFFECTS_MOOD (1<<0)
+/// Notable operations are specially logged and also leave memories
+#define OPERATION_NOTABLE (1<<1)
+/// Operation will automatically repeat until it can no longer be performed
+#define OPERATION_LOOPING (1<<2)
+/// Grants a speed bonus if the user is morbid and their tool is morbid
+#define OPERATION_MORBID (1<<3)
+/// Not innately available to doctors, must be added via COMSIG_MOB_ATTEMPT_SURGERY to show up
+#define OPERATION_LOCKED (1<<4)
+/// A surgeon can perform this operation on themselves
+#define OPERATION_SELF_OPERABLE (1<<5)
+/// Operation can be performed on standing patients - note: mobs that cannot lie down are *always* considered lying down for surgery
+#define OPERATION_STANDING_ALLOWED (1<<6)
+/// Some traits may cause operations to be infalliable - this flag disables that behavior, always allowing it to be failed
+#define OPERATION_ALWAYS_FAILABLE (1<<7)
+/// If set, the operation will ignore clothing when checking for access to the target body part.
+#define OPERATION_IGNORE_CLOTHES (1<<8)
+/// This operation should be prioritized as the next step in a surgery sequence. (In the operating computer it will flash red)
+#define OPERATION_PRIORITY_NEXT_STEP (1<<9)
+/// Operation is a mechanic / robotic surgery
+#define OPERATION_MECHANIC (1<<10)
+/// Hides the operation from autowiki generation
+#define OPERATION_NO_WIKI (1<<11)
 
-///Return true if target is not in a valid body position for the surgery
-#define IS_IN_INVALID_SURGICAL_POSITION(target, surgery) ((surgery.surgery_flags & SURGERY_REQUIRE_RESTING) && (target.mobility_flags & MOBILITY_LIEDOWN && target.body_position != LYING_DOWN))
+DEFINE_BITFIELD(operation_flags, list(
+	"AFFECTS MOOD" = OPERATION_AFFECTS_MOOD,
+	"NOTABLE" = OPERATION_NOTABLE,
+	"LOOPING" = OPERATION_LOOPING,
+	"MORBID" = OPERATION_MORBID,
+	"LOCKED" = OPERATION_LOCKED,
+	"SELF OPERABLE" = OPERATION_SELF_OPERABLE,
+	"STANDING ALLOWED" = OPERATION_STANDING_ALLOWED,
+	"ALWAYS FAILABLE" = OPERATION_ALWAYS_FAILABLE,
+	"IGNORE CLOTHES" = OPERATION_IGNORE_CLOTHES,
+	"PRIORITY NEXT STEP" = OPERATION_PRIORITY_NEXT_STEP,
+	"MECHANIC" = OPERATION_MECHANIC,
+))
+
+/// All of these equipment slots are ignored when checking for clothing coverage during surgery
+#define IGNORED_OPERATION_CLOTHING_SLOTS (ITEM_SLOT_NECK)
+
+// Surgery related mood defines
+#define SURGERY_STATE_STARTED "surgery_started"
+#define SURGERY_STATE_FAILURE "surgery_failed"
+#define SURGERY_STATE_SUCCESS "surgery_success"
+#define SURGERY_MOOD_CATEGORY "surgery"
+
+/// Dummy "tool" for surgeries which use hands
+#define IMPLEMENT_HAND "hands"
+
+/// Surgery speed modifiers are soft-capped at this value
+/// The actual modifier can exceed this but it gets
+#define SURGERY_MODIFIER_FAILURE_THRESHOLD 2.5
+/// There is an x percent chance of failure per second beyond 2.5x the base surgery time
+#define FAILURE_CHANCE_PER_SECOND 10
+/// Calculates failure chance of an operation based on the base time and the effective speed modifier
+/// This may look something like: Base time 1 second and 4x effective multiplier -> 4 seconds - 2.5 seconds = 1.5 seconds * 10 = 15% failure chance
+/// Or: Base time 2 seconds and 1x effective multiplier -> 2 seconds - 5 seconds = -3 seconds * 10 = -30% failure chance (clamped to 0%)
+#define GET_FAILURE_CHANCE(base_time, speed_mod) (FAILURE_CHANCE_PER_SECOND * (((speed_mod * (base_time)) - (SURGERY_MODIFIER_FAILURE_THRESHOLD * (base_time))) / (1 SECONDS)))
+
+// Operation argument indexes
+/// Total speed/failure modifier applied to the operation
+#define OPERATION_SPEED "speed_modifier"
+/// The action being performed, simply "default" for 95% of surgeries
+#define OPERATION_ACTION "action"
+/// Whether the operation should automatically fail
+#define OPERATION_FORCE_FAIL "force_fail"
+/// The body zone being targeted by the operation
+#define OPERATION_TARGET_ZONE "target_zone"
+/// The specific target of the operation, usually a bodypart or organ, generally redundant
+#define OPERATION_TARGET "target"
+// For tend wounds - only reason these aren't local is we use them in unit testing
+#define OPERATION_BRUTE_HEAL "brute_heal"
+#define OPERATION_BURN_HEAL "burn_heal"
+#define OPERATION_BRUTE_MULTIPLIER "brute_multiplier"
+#define OPERATION_BURN_MULTIPLIER "burn_multiplier"

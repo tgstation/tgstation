@@ -91,8 +91,6 @@
 
 	/// What status effect we assign on application
 	var/status_effect_type
-	/// If we're operating on this wound and it gets healed, we'll nix the surgery too
-	var/datum/surgery/attached_surgery
 	/// if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * [base_xadone_progress_to_qdel] power
 	var/cryo_progress
 
@@ -121,7 +119,6 @@
 	update_actionspeed_modifier()
 
 /datum/wound/Destroy()
-	QDEL_NULL(attached_surgery)
 	if (limb)
 		remove_wound(destroying = QDELING(limb))
 
@@ -512,18 +509,6 @@
 
 /// Returns TRUE if the item can be used to treat our wounds. Hooks into treat() - only things that return TRUE here may be used there.
 /datum/wound/proc/item_can_treat(obj/item/potential_treater, mob/user)
-	// surgeries take priority
-	for(var/datum/surgery/operation as anything in victim.surgeries)
-		if(isnull(operation.operated_bodypart) || operation.operated_bodypart != limb)
-			continue
-		var/datum/surgery_step/next_step = operation.get_surgery_next_step()
-		if(isnull(next_step))
-			continue
-		if(potential_treater.tool_behaviour in next_step.implements)
-			return FALSE
-		if(is_type_in_list(potential_treater, next_step.implements))
-			return FALSE
-
 	// check if we have a valid treatable tool
 	if(potential_treater.tool_behaviour in treatable_tools)
 		return TRUE
@@ -551,7 +536,7 @@
 	return
 
 /// If var/processing is TRUE, this is run on each life tick
-/datum/wound/proc/handle_process(seconds_per_tick, times_fired)
+/datum/wound/proc/handle_process(seconds_per_tick)
 	return
 
 /// For use in do_after callback checks
@@ -584,7 +569,7 @@
 	return
 
 /// Called when the patient is undergoing stasis, so that having fully treated a wound doesn't make you sit there helplessly until you think to unbuckle them
-/datum/wound/proc/on_stasis(seconds_per_tick, times_fired)
+/datum/wound/proc/on_stasis(seconds_per_tick)
 	return
 
 /// Sets our blood flow

@@ -9,7 +9,3 @@
 //DIGITIGRADE PATHS
 ///The dmi containing digitigrade uniforms
 #define DIGITIGRADE_UNIFORM_FILE 'icons/mob/human/species/misc/digitigrade.dmi'
-///The dmi containing digitigrade shoes
-#define DIGITIGRADE_SHOES_FILE 'icons/mob/human/species/misc/digitigrade_shoes.dmi'
-///The dmi containing digitigrade oversuits
-#define DIGITIGRADE_SUIT_FILE 'icons/mob/human/species/misc/digitigrade_suits.dmi'
