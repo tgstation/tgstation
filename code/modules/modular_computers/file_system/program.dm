@@ -14,9 +14,9 @@
 	var/power_cell_use = PROGRAM_BASIC_CELL_USE
 	///List of required accesses to *run* the program. Any match will do.
 	///This also acts as download_access if that is not set, making this more draconic and restrictive.
-	var/list/run_access = list()
+	var/list/run_access
 	///List of required access to download or file host the program. Any match will do.
-	var/list/download_access = list()
+	var/list/download_access
 	/// User-friendly name of this program.
 	var/filedesc = "Unknown Program"
 	/// Short description of this program's function.
@@ -51,6 +51,10 @@
 
 /datum/computer_file/program/New()
 	..()
+	if(LAZYLEN(run_access))
+		run_access = string_list(run_access)
+	if(LAZYLEN(download_access))
+		download_access = string_list(download_access)
 	///We need to ensure that different programs (subtypes mostly) won't try to load in the same circuit comps into the shell or usb port of the modpc.
 	if(circuit_comp_type && initial(circuit_comp_type.associated_program) != type)
 		stack_trace("circuit comp type mismatch: [type] has circuit comp type \[[circuit_comp_type]\], while \[[circuit_comp_type]\] has associated program \[[initial(circuit_comp_type.associated_program)]\].")

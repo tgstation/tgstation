@@ -51,7 +51,7 @@
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 
 	///Verbs used for speaking e.g. "Says" or "Chitters". This can be elementized
-	var/list/speak_emote = list()
+	var/list/speak_emote
 
 	///When someone interacts with the simple animal.
 	///Help-intent verb in present continuous tense.
@@ -120,8 +120,9 @@
 	apply_target_randomisation()
 	make_stamina_slowable()
 
-	if(speak_emote)
+	if(LAZYLEN(speak_emote))
 		speak_emote = string_list(speak_emote)
+	damage_coeff = string_assoc_list(damage_coeff)
 
 	///We need to wait for SSair to be initialized before we can check atmos/temp requirements.
 	if(PERFORM_ALL_TESTS(focus_only/atmos_and_temp_requirements) && mapload && !SSair.initialized)
