@@ -117,6 +117,8 @@
 #define OPERATION_MECHANIC (1<<10)
 /// Hides the operation from autowiki generation
 #define OPERATION_NO_WIKI (1<<11)
+/// This operation can be performed on a detached limb
+#define OPERATION_NO_PATIENT_REQUIRED (1<<12)
 
 DEFINE_BITFIELD(operation_flags, list(
 	"AFFECTS MOOD" = OPERATION_AFFECTS_MOOD,
@@ -170,3 +172,6 @@ DEFINE_BITFIELD(operation_flags, list(
 #define OPERATION_BURN_HEAL "burn_heal"
 #define OPERATION_BRUTE_MULTIPLIER "brute_multiplier"
 #define OPERATION_BURN_MULTIPLIER "burn_multiplier"
+
+#define FORMAT_LIMB_OWNER(limb) (limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb)
+#define FORMAT_ORGAN_OWNER(organ) (organ.owner || organ.loc)

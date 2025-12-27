@@ -1,7 +1,7 @@
 /datum/surgery_operation/limb/repair_hairline
 	name = "repair hairline fracture"
 	desc = "Mend a hairline fracture in a patient's bone."
-	operation_flags = OPERATION_PRIORITY_NEXT_STEP
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		TOOL_BONESET = 1,
 		/obj/item/stack/medical/bone_gel = 1,
@@ -11,7 +11,6 @@
 	)
 	time = 4 SECONDS
 	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
-	requires_patient = FALSE
 
 /datum/surgery_operation/limb/repair_hairline/get_default_radial_image()
 	return image(/obj/item/bonesetter)
@@ -28,9 +27,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to repair the fracture in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
-		span_notice("[surgeon] begins to repair the fracture in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb] with [tool]."),
-		span_notice("[surgeon] begins to repair the fracture in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("You begin to repair the fracture in [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to repair the fracture in [FORMAT_LIMB_OWNER(limb)] with [tool]."),
+		span_notice("[surgeon] begins to repair the fracture in [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "Your [limb.plaintext_zone] aches with pain!")
 
@@ -41,15 +40,15 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully repair the fracture in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
-		span_notice("[surgeon] successfully repairs the fracture in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]!"),
-		span_notice("[surgeon] successfully repairs the fracture in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]!"),
+		span_notice("You successfully repair the fracture in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully repairs the fracture in [FORMAT_LIMB_OWNER(limb)]!"),
+		span_notice("[surgeon] successfully repairs the fracture in [FORMAT_LIMB_OWNER(limb)]!"),
 	)
 
 /datum/surgery_operation/limb/reset_compound
 	name = "reset compound fracture"
 	desc = "Reset a compound fracture in a patient's bone, preparing it for proper healing."
-	operation_flags = OPERATION_PRIORITY_NEXT_STEP
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		TOOL_BONESET = 1,
 		/obj/item/stack/sticky_tape/surgical = 1.66,
@@ -59,7 +58,6 @@
 	time = 6 SECONDS
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
-	requires_patient = FALSE
 
 /datum/surgery_operation/limb/reset_compound/get_default_radial_image()
 	return image(/obj/item/bonesetter)
@@ -77,9 +75,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to reset the bone in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
-		span_notice("[surgeon] begins to reset the bone in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb] with [tool]."),
-		span_notice("[surgeon] begins to reset the bone in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("You begin to reset the bone in [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to reset the bone in [FORMAT_LIMB_OWNER(limb)] with [tool]."),
+		span_notice("[surgeon] begins to reset the bone in [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "The aching pain in your [limb.plaintext_zone] is overwhelming!")
 
@@ -90,15 +88,15 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully reset the bone in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
-		span_notice("[surgeon] successfully resets the bone in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb] with [tool]!"),
-		span_notice("[surgeon] successfully resets the bone in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]!"),
+		span_notice("You successfully reset the bone in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully resets the bone in [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
+		span_notice("[surgeon] successfully resets the bone in [FORMAT_LIMB_OWNER(limb)]!"),
 	)
 
 /datum/surgery_operation/limb/repair_compound
 	name = "repair compound fracture"
 	desc = "Mend a compound fracture in a patient's bone."
-	operation_flags = OPERATION_PRIORITY_NEXT_STEP
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		/obj/item/stack/medical/bone_gel = 1,
 		/obj/item/stack/sticky_tape/surgical = 1,
@@ -107,7 +105,6 @@
 	)
 	time = 4 SECONDS
 	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
-	requires_patient = FALSE
 
 /datum/surgery_operation/limb/repair_compound/get_default_radial_image()
 	return image(/obj/item/stack/medical/bone_gel)
@@ -125,9 +122,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to repair the fracture in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
-		span_notice("[surgeon] begins to repair the fracture in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb] with [tool]."),
-		span_notice("[surgeon] begins to repair the fracture in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("You begin to repair the fracture in [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to repair the fracture in [FORMAT_LIMB_OWNER(limb)] with [tool]."),
+		span_notice("[surgeon] begins to repair the fracture in [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "The aching pain in your [limb.plaintext_zone] is overwhelming!")
 
@@ -137,15 +134,15 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully repair the fracture in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
-		span_notice("[surgeon] successfully repairs the fracture in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb] with [tool]!"),
-		span_notice("[surgeon] successfully repairs the fracture in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]!"),
+		span_notice("You successfully repair the fracture in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully repairs the fracture in [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
+		span_notice("[surgeon] successfully repairs the fracture in [FORMAT_LIMB_OWNER(limb)]!"),
 	)
 
 /datum/surgery_operation/limb/prepare_cranium_repair
 	name = "discard skull debris"
 	desc = "Clear away bone fragments and debris from a patient's cranial fissure in preparation for repair."
-	operation_flags = OPERATION_PRIORITY_NEXT_STEP
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_WIRECUTTER = 2.5,
@@ -153,7 +150,6 @@
 	)
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
-	requires_patient = FALSE
 
 /datum/surgery_operation/limb/prepare_cranium_repair/get_default_radial_image()
 	return image(/obj/item/hemostat)
@@ -171,9 +167,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to discard the smaller skull debris in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
-		span_notice("[surgeon] begins to discard the smaller skull debris in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
-		span_notice("[surgeon] begins to poke around in [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+		span_notice("You begin to discard the smaller skull debris in [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to discard the smaller skull debris in [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to poke around in [FORMAT_LIMB_OWNER(limb)]..."),
 	)
 	display_pain(limb.owner, "Your brain feels like it's getting stabbed by little shards of glass!")
 
@@ -185,7 +181,7 @@
 /datum/surgery_operation/limb/repair_cranium
 	name = "repair cranium"
 	desc = "Mend a cranial fissure in a patient's skull."
-	operation_flags = OPERATION_PRIORITY_NEXT_STEP
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		/obj/item/stack/medical/bone_gel = 1,
 		/obj/item/stack/sticky_tape/surgical = 1,
@@ -193,7 +189,6 @@
 		/obj/item/stack/sticky_tape = 3.33,
 	)
 	time = 4 SECONDS
-	requires_patient = FALSE
 
 /datum/surgery_operation/limb/repair_cranium/get_default_radial_image()
 	return image(/obj/item/stack/medical/bone_gel)

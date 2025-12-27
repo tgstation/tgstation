@@ -92,14 +92,6 @@
 /// Used for cavity implants
 #define SURGERY_CAVITY_WIDENED (1<<9)
 
-/// List of states -> states that override them and prevent their addition
-GLOBAL_LIST_INIT(exclusive_surgery_states, list(
-	"[SURGERY_SKIN_CUT]" = SURGERY_SKIN_OPEN,
-	"[SURGERY_VESSELS_UNCLAMPED]" = SURGERY_VESSELS_CLAMPED,
-	"[SURGERY_BONE_SAWED]" = SURGERY_BONE_DRILLED,
-	"[SURGERY_BONE_DRILLED]" = SURGERY_BONE_SAWED,
-))
-
 DEFINE_BITFIELD(surgery_state, list(
 	"SKIN CUT" = SURGERY_SKIN_CUT,
 	"SKIN OPEN" = SURGERY_SKIN_OPEN,

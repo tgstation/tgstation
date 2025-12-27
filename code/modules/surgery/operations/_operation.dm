@@ -463,9 +463,6 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	/// Lasts muuuuuch longer.
 	var/datum/mood_event/surgery/surgery_failure_mood_event = /datum/mood_event/surgery/failure
 
-	/// Can this operation be performaed directly on a limb, or does it require a patient?
-	var/requires_patient = TRUE
-
 /**
  * Checks to see if this operation can be performed
  * This is the main entry point for checking availability
@@ -485,7 +482,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		return FALSE
 
 	if(isnull(patient))
-		if(!requires_patient)
+		if(operation_flags & OPERATION_NO_PATIENT_REQUIRED)
 			return snowflake_check_availability(operating_on, surgeon, tool, operated_zone)
 		return FALSE
 
@@ -556,7 +553,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 	var/mob/living/patient = get_patient(operating_on)
 	if(isnull(patient))
-		if (requires_patient)
+		if (!(operation_flags & OPERATION_NO_PATIENT_REQUIRED))
 			return FALSE
 		return state_check(operating_on)
 
@@ -744,11 +741,11 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	total_mod *= get_tool_quality(tool) || 1.0
 	// Ignore alllll the penalties (but also all the bonuses)
 	if(!HAS_TRAIT(surgeon, TRAIT_IGNORE_SURGERY_MODIFIERS))
-		var/atom/movable/subject = get_patient(operating_on) || operating_on
+		var/mob/living/patient = get_patient(operating_on)
 		total_mod *= get_morbid_modifier(surgeon, tool)
-		if (isliving(subject))
-			total_mod *= get_location_modifier(get_turf(subject))
-			total_mod *= get_mob_surgery_speed_mod(subject)
+		if(!isnull(patient)) // Some surgeries can lack patients
+			total_mod *= get_location_modifier(get_turf(patient))
+			total_mod *= get_mob_surgery_speed_mod(patient)
 		// Using TRAIT_SELF_SURGERY on a surgery which doesn't normally allow self surgery imparts a penalty
 		if(operating_on == surgeon && HAS_TRAIT(surgeon, TRAIT_SELF_SURGERY) && !(operation_flags & OPERATION_SELF_OPERABLE))
 			total_mod *= 1.5
@@ -843,7 +840,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(patient)
 		was_sleeping = (patient.stat != DEAD && HAS_TRAIT(patient, TRAIT_KNOCKEDOUT))
 		update_surgery_mood(patient, SURGERY_STATE_STARTED)
-		SEND_SIGNAL(patient, COMSIG_LIVING_SURGERY_STARTED, src, operating_on, tool)
+		SEND_SIGNAL(patient, COMSIG_ATOM_SURGERY_STARTED, src, operating_on, tool)
 
 	do
 		operation_args[OPERATION_SPEED] = get_time_modifiers(operating_on, surgeon, tool)
@@ -862,27 +859,13 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 				update_surgery_mood(patient, SURGERY_STATE_FAILURE)
 			break
 
-		if (patient)
+		var/list/patient_dna = get_patient_blood_dna(patient, operating_on)
+		if (patient_dna)
 			if (ishuman(surgeon))
 				var/mob/living/carbon/human/surgeon_human = surgeon
-				surgeon_human.add_blood_DNA_to_items(patient.get_blood_dna_list(), ITEM_SLOT_GLOVES)
+				surgeon_human.add_blood_DNA_to_items(patient_dna, ITEM_SLOT_GLOVES)
 			else
-				surgeon.add_mob_blood(patient)
-		else
-			var/list/dna_info = null
-			if (isbodypart(operating_on))
-				var/obj/item/bodypart/limb = operating_on
-				dna_info = limb.blood_dna_info?.Copy()
-			else if (isorgan(operating_on))
-				var/obj/item/organ/guts = operating_on
-				dna_info = guts.blood_dna_info?.Copy()
-
-			if (length(dna_info))
-				if (ishuman(surgeon))
-					var/mob/living/carbon/human/surgeon_human = surgeon
-					surgeon_human.add_blood_DNA_to_items(dna_info.Copy(), ITEM_SLOT_GLOVES)
-				else
-					surgeon.add_blood_DNA(dna_info.Copy())
+				surgeon.add_blood_DNA(patient_dna)
 
 		// This will annoy doctors immensely
 		// if(isitem(tool))
@@ -921,11 +904,23 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if (!patient)
 		return result
 
-	SEND_SIGNAL(patient, COMSIG_LIVING_SURGERY_FINISHED, src, operating_on, tool)
+	SEND_SIGNAL(patient, COMSIG_ATOM_SURGERY_FINISHED, src, operating_on, tool)
 	if(patient.stat == DEAD && was_sleeping)
 		surgeon.client?.give_award(/datum/award/achievement/jobs/sandman, surgeon)
 
 	return result
+
+/datum/surgery_operation/proc/get_patient_blood_dna(mob/living/patient, atom/movable/operating_on)
+	if (patient)
+		return patient.get_blood_dna_list()
+
+	if (isbodypart(operating_on))
+		var/obj/item/bodypart/limb = operating_on
+		return limb.blood_dna_info?.Copy()
+
+	if (isorgan(operating_on))
+		var/obj/item/organ/guts = operating_on
+		return guts.blood_dna_info?.Copy()
 
 /// Called after an operation to check if it can be repeated/looped
 /datum/surgery_operation/proc/can_loop(mob/living/patient, atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
@@ -941,7 +936,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		if(tool_stack.amount <= 0)
 			return FALSE
 
-	if(!surgeon.surgery_check(tool, requires_patient ? patient : (patient || operating_on)))
+	if(!surgeon.surgery_check(tool, (operation_flags & OPERATION_NO_PATIENT_REQUIRED) ? patient : (patient || operating_on)))
 		return FALSE
 
 	if(!check_availability(patient, operating_on, surgeon, tool, operation_args[OPERATION_TARGET_ZONE]))
@@ -982,7 +977,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		return
 
 	if (!target)
-		if (!requires_patient)
+		if (operation_flags & OPERATION_NO_PATIENT_REQUIRED)
 			return
 		CRASH("[type] operation attempted to call display_results without a patient, despite requiring one!")
 
@@ -1002,7 +997,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		return
 
 	if (!target)
-		if (!requires_patient)
+		if (operation_flags & OPERATION_NO_PATIENT_REQUIRED)
 			return
 		CRASH("[type] operation attempted to call display_pain without a patient, despite requiring one!")
 
@@ -1114,14 +1109,14 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  */
 /datum/surgery_operation/proc/on_preop(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
 	PROTECTED_PROC(TRUE)
-	var/mob/living/patient = get_patient(operating_on) || operating_on
-
+	var/mob/living/patient = get_patient(operating_on)
+	var/atom/movable/display_target = patient || operating_on
 	display_results(
 		surgeon,
 		patient,
-		span_notice("You begin to operate on [patient]..."),
-		span_notice("[surgeon] begins to operate on [patient]."),
-		span_notice("[surgeon] begins to operate on [patient]."),
+		span_notice("You begin to operate on [display_target]..."),
+		span_notice("[surgeon] begins to operate on [display_target]."),
+		span_notice("[surgeon] begins to operate on [display_target]."),
 	)
 
 /**
@@ -1137,7 +1132,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
 		surgeon.add_mob_memory(/datum/memory/surgery, deuteragonist = surgeon, surgery_type = name)
 
-	SEND_SIGNAL(surgeon, COMSIG_LIVING_SURGERY_SUCCESS, src, operating_on, tool)
+	SEND_SIGNAL(surgeon, COMSIG_ATOM_SURGERY_SUCCESS, src, operating_on, tool)
 	play_operation_sound(operating_on, surgeon, tool, success_sound)
 	on_success(operating_on, surgeon, tool, operation_args)
 
@@ -1168,7 +1163,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(operation_flags & OPERATION_NOTABLE)
 		SSblackbox.record_feedback("tally", "surgeries_failed", 1, type)
 
-	SEND_SIGNAL(surgeon, COMSIG_LIVING_SURGERY_FAILED, src, operating_on, tool)
+	SEND_SIGNAL(surgeon, COMSIG_ATOM_SURGERY_FAILED, src, operating_on, tool)
 	play_operation_sound(operating_on, surgeon, tool, failure_sound)
 	on_failure(operating_on, surgeon, tool, operation_args)
 

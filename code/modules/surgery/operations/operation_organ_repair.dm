@@ -4,9 +4,8 @@
 	name = "repair organ"
 	desc = "Repair a patient's damaged organ."
 	required_organ_flag = ORGAN_TYPE_FLAGS & ~ORGAN_ROBOTIC
-	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE
+	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE | OPERATION_NO_PATIENT_REQUIRED
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED
-	requires_patient = FALSE
 	/// What % damage do we heal the organ to on success
 	/// Note that 0% damage = 100% health
 	var/heal_to_percent = 0.6
@@ -66,9 +65,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to make an incision in [organ.owner || organ.loc]'s lungs..."),
-		span_notice("[surgeon] begins to make an incision in [organ.owner || organ.loc]."),
-		span_notice("[surgeon] begins to make an incision in [organ.owner || organ.loc]."),
+		span_notice("You begin to make an incision in [FORMAT_ORGAN_OWNER(organ)]'s lungs..."),
+		span_notice("[surgeon] begins to make an incision in [FORMAT_ORGAN_OWNER(organ)]."),
+		span_notice("[surgeon] begins to make an incision in [FORMAT_ORGAN_OWNER(organ)]."),
 	)
 	display_pain(organ.owner, "You feel a stabbing pain in your chest!")
 
@@ -77,9 +76,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You successfully excise [organ.owner || organ.loc]'s most damaged lobe."),
-		span_notice("[surgeon] successfully excises [organ.owner || organ.loc]'s most damaged lobe."),
-		span_notice("[surgeon] successfully excises [organ.owner || organ.loc]'s most damaged lobe."),
+		span_notice("You successfully excise [FORMAT_ORGAN_OWNER(organ)]'s most damaged lobe."),
+		span_notice("[surgeon] successfully excises [FORMAT_ORGAN_OWNER(organ)]'s most damaged lobe."),
+		span_notice("[surgeon] successfully excises [FORMAT_ORGAN_OWNER(organ)]'s most damaged lobe."),
 	)
 
 /datum/surgery_operation/organ/repair/lobectomy/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
@@ -88,7 +87,7 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_warning("You screw up, failing to excise [organ.owner || organ.loc]'s damaged lobe!"),
+		span_warning("You screw up, failing to excise [FORMAT_ORGAN_OWNER(organ)]'s damaged lobe!"),
 		span_warning("[surgeon] screws up!"),
 		span_warning("[surgeon] screws up!"),
 	)
@@ -131,9 +130,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to cut out a damaged piece of [organ.owner || organ.loc]'s liver..."),
-		span_notice("[surgeon] begins to make an incision in [organ.owner || organ.loc]."),
-		span_notice("[surgeon] begins to make an incision in [organ.owner || organ.loc]."),
+		span_notice("You begin to cut out a damaged piece of [FORMAT_ORGAN_OWNER(organ)]'s liver..."),
+		span_notice("[surgeon] begins to make an incision in [FORMAT_ORGAN_OWNER(organ)]."),
+		span_notice("[surgeon] begins to make an incision in [FORMAT_ORGAN_OWNER(organ)]."),
 	)
 	display_pain(organ.owner, "Your abdomen burns in horrific stabbing pain!")
 
@@ -142,9 +141,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You successfully remove the damaged part of [organ.owner || organ.loc]'s liver."),
-		span_notice("[surgeon] successfully removes the damaged part of [organ.owner || organ.loc]'s liver."),
-		span_notice("[surgeon] successfully removes the damaged part of [organ.owner || organ.loc]'s liver."),
+		span_notice("You successfully remove the damaged part of [FORMAT_ORGAN_OWNER(organ)]'s liver."),
+		span_notice("[surgeon] successfully removes the damaged part of [FORMAT_ORGAN_OWNER(organ)]'s liver."),
+		span_notice("[surgeon] successfully removes the damaged part of [FORMAT_ORGAN_OWNER(organ)]'s liver."),
 	)
 	display_pain(organ.owner, "The pain receeds slightly!")
 
@@ -153,9 +152,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_warning("You cut the wrong part of [organ.owner || organ.loc]'s liver!"),
-		span_warning("[surgeon] cuts the wrong part of [organ.owner || organ.loc]'s liver!"),
-		span_warning("[surgeon] cuts the wrong part of [organ.owner || organ.loc]'s liver!"),
+		span_warning("You cut the wrong part of [FORMAT_ORGAN_OWNER(organ)]'s liver!"),
+		span_warning("[surgeon] cuts the wrong part of [FORMAT_ORGAN_OWNER(organ)]'s liver!"),
+		span_warning("[surgeon] cuts the wrong part of [FORMAT_ORGAN_OWNER(organ)]'s liver!"),
 	)
 	display_pain(organ.owner, "The pain in your abdomen intensifies!")
 
@@ -194,9 +193,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to graft a bypass onto [organ.owner || organ.loc]'s heart..."),
-		span_notice("[surgeon] begins to graft a bypass onto [organ.owner || organ.loc]'s heart."),
-		span_notice("[surgeon] begins to graft a bypass onto [organ.owner || organ.loc]'s heart."),
+		span_notice("You begin to graft a bypass onto [FORMAT_ORGAN_OWNER(organ)]'s heart..."),
+		span_notice("[surgeon] begins to graft a bypass onto [FORMAT_ORGAN_OWNER(organ)]'s heart."),
+		span_notice("[surgeon] begins to graft a bypass onto [FORMAT_ORGAN_OWNER(organ)]'s heart."),
 	)
 	display_pain(organ.owner, "The pain in your chest is unbearable! You can barely take it anymore!")
 
@@ -205,9 +204,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You successfully graft a bypass onto [organ.owner || organ.loc]'s heart."),
-		span_notice("[surgeon] successfully grafts a bypass onto [organ.owner || organ.loc]'s heart."),
-		span_notice("[surgeon] successfully grafts a bypass onto [organ.owner || organ.loc]'s heart."),
+		span_notice("You successfully graft a bypass onto [FORMAT_ORGAN_OWNER(organ)]'s heart."),
+		span_notice("[surgeon] successfully grafts a bypass onto [FORMAT_ORGAN_OWNER(organ)]'s heart."),
+		span_notice("[surgeon] successfully grafts a bypass onto [FORMAT_ORGAN_OWNER(organ)]'s heart."),
 	)
 	display_pain(organ.owner, "The pain in your chest throbs, but your heart feels better than ever!")
 
@@ -219,8 +218,8 @@
 		surgeon,
 		organ.owner,
 		span_warning("You screw up in attaching the graft, and it tears off, tearing part of the heart!"),
-		span_warning("[surgeon] screws up, causing [blood_name] to spurt out of [organ.owner || organ.loc]'s chest profusely!"),
-		span_warning("[surgeon] screws up, causing [blood_name] to spurt out of [organ.owner || organ.loc]'s chest profusely!"),
+		span_warning("[surgeon] screws up, causing [blood_name] to spurt out of [FORMAT_ORGAN_OWNER(organ)]'s chest profusely!"),
+		span_warning("[surgeon] screws up, causing [blood_name] to spurt out of [FORMAT_ORGAN_OWNER(organ)]'s chest profusely!"),
 	)
 	display_pain(organ.owner, "Your chest burns; you feel like you're going insane!")
 
@@ -269,9 +268,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to cut out a damaged piece of [organ.owner || organ.loc]'s stomach..."),
-		span_notice("[surgeon] begins to make an incision in [organ.owner || organ.loc]."),
-		span_notice("[surgeon] begins to make an incision in [organ.owner || organ.loc]."),
+		span_notice("You begin to cut out a damaged piece of [FORMAT_ORGAN_OWNER(organ)]'s stomach..."),
+		span_notice("[surgeon] begins to make an incision in [FORMAT_ORGAN_OWNER(organ)]."),
+		span_notice("[surgeon] begins to make an incision in [FORMAT_ORGAN_OWNER(organ)]."),
 	)
 	display_pain(organ.owner, "You feel a horrible stab in your gut!")
 
@@ -280,9 +279,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You successfully remove the damaged part of [organ.owner || organ.loc]'s stomach."),
-		span_notice("[surgeon] successfully removes the damaged part of [organ.owner || organ.loc]'s stomach."),
-		span_notice("[surgeon] successfully removes the damaged part of [organ.owner || organ.loc]'s stomach."),
+		span_notice("You successfully remove the damaged part of [FORMAT_ORGAN_OWNER(organ)]'s stomach."),
+		span_notice("[surgeon] successfully removes the damaged part of [FORMAT_ORGAN_OWNER(organ)]'s stomach."),
+		span_notice("[surgeon] successfully removes the damaged part of [FORMAT_ORGAN_OWNER(organ)]'s stomach."),
 	)
 	display_pain(organ.owner, "The pain in your gut receeds slightly!")
 
@@ -291,9 +290,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_warning("You cut the wrong part of [organ.owner || organ.loc]'s stomach!"),
-		span_warning("[surgeon] cuts the wrong part of [organ.owner || organ.loc]'s stomach!"),
-		span_warning("[surgeon] cuts the wrong part of [organ.owner || organ.loc]'s stomach!"),
+		span_warning("You cut the wrong part of [FORMAT_ORGAN_OWNER(organ)]'s stomach!"),
+		span_warning("[surgeon] cuts the wrong part of [FORMAT_ORGAN_OWNER(organ)]'s stomach!"),
+		span_warning("[surgeon] cuts the wrong part of [FORMAT_ORGAN_OWNER(organ)]'s stomach!"),
 	)
 	display_pain(organ.owner, "The pain in your gut intensifies!")
 
@@ -343,9 +342,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to fix [organ.owner || organ.loc]'s ears..."),
-		span_notice("[surgeon] begins to fix [organ.owner || organ.loc]'s ears."),
-		span_notice("[surgeon] begins to perform surgery on [organ.owner || organ.loc]'s ears."),
+		span_notice("You begin to fix [FORMAT_ORGAN_OWNER(organ)]'s ears..."),
+		span_notice("[surgeon] begins to fix [FORMAT_ORGAN_OWNER(organ)]'s ears."),
+		span_notice("[surgeon] begins to perform surgery on [FORMAT_ORGAN_OWNER(organ)]'s ears."),
 	)
 	display_pain(organ.owner, "You feel a dizzying pain in your head!")
 
@@ -356,37 +355,33 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You successfully fix [organ.owner || organ.loc]'s ears."),
-		span_notice("[surgeon] successfully fixes [organ.owner || organ.loc]'s ears."),
-		span_notice("[surgeon] successfully fixes [organ.owner || organ.loc]'s ears."),
+		span_notice("You successfully fix [FORMAT_ORGAN_OWNER(organ)]'s ears."),
+		span_notice("[surgeon] successfully fixes [FORMAT_ORGAN_OWNER(organ)]'s ears."),
+		span_notice("[surgeon] successfully fixes [FORMAT_ORGAN_OWNER(organ)]'s ears."),
 	)
 	display_pain(organ.owner, "Your head swims, but it seems like you can feel your hearing coming back!")
 
 /datum/surgery_operation/organ/repair/ears/on_failure(obj/item/organ/ears/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/obj/item/organ/brain/brain = locate() in organ.bodypart_owner
-	if(!brain)
+	if(isnull(brain))
 		display_results(
 			surgeon,
 			organ.owner,
-			span_warning("You accidentally stab [organ.owner || organ.loc] right in the brain! Or would have, if [organ.owner || organ.loc] had a brain."),
-			span_warning("[surgeon] accidentally stabs [organ.owner || organ.loc] right in the brain! Or would have, if [organ.owner || organ.loc] had a brain."),
-			span_warning("[surgeon] accidentally stabs [organ.owner || organ.loc] right in the brain!"),
+			span_warning("You accidentally stab [FORMAT_ORGAN_OWNER(organ)] right in the brain! Or would have, if [FORMAT_ORGAN_OWNER(organ)] had a brain."),
+			span_warning("[surgeon] accidentally stabs [FORMAT_ORGAN_OWNER(organ)] right in the brain! Or would have, if [FORMAT_ORGAN_OWNER(organ)] had a brain."),
+			span_warning("[surgeon] accidentally stabs [FORMAT_ORGAN_OWNER(organ)] right in the brain!"),
 		)
 		return
 
 	display_results(
 		surgeon,
 		organ.owner,
-		span_warning("You accidentally stab [organ.owner || organ.loc] right in the brain!"),
-		span_warning("[surgeon] accidentally stabs [organ.owner || organ.loc] right in the brain!"),
-		span_warning("[surgeon] accidentally stabs [organ.owner || organ.loc] right in the brain!"),
+		span_warning("You accidentally stab [FORMAT_ORGAN_OWNER(organ)] right in the brain!"),
+		span_warning("[surgeon] accidentally stabs [FORMAT_ORGAN_OWNER(organ)] right in the brain!"),
+		span_warning("[surgeon] accidentally stabs [FORMAT_ORGAN_OWNER(organ)] right in the brain!"),
 	)
 	display_pain(organ.owner, "You feel a visceral stabbing pain right through your head, into your brain!")
-
-	if (organ.owner)
-		organ.owner.adjust_organ_loss(ORGAN_SLOT_BRAIN, 70)
-	else
-		organ.apply_organ_damage(70)
+	organ.apply_organ_damage(70)
 
 /datum/surgery_operation/organ/repair/eyes
 	name = "eye surgery"
@@ -421,9 +416,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to fix [organ.owner || organ.loc]'s eyes..."),
-		span_notice("[surgeon] begins to fix [organ.owner || organ.loc]'s eyes."),
-		span_notice("[surgeon] begins to perform surgery on [organ.owner || organ.loc]'s eyes."),
+		span_notice("You begin to fix [FORMAT_ORGAN_OWNER(organ)]'s eyes..."),
+		span_notice("[surgeon] begins to fix [FORMAT_ORGAN_OWNER(organ)]'s eyes."),
+		span_notice("[surgeon] begins to perform surgery on [FORMAT_ORGAN_OWNER(organ)]'s eyes."),
 	)
 	display_pain(organ.owner, "You feel a stabbing pain in your eyes!")
 
@@ -434,37 +429,33 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You successfully fix [organ.owner || organ.loc]'s eyes."),
-		span_notice("[surgeon] successfully fixes [organ.owner || organ.loc]'s eyes."),
-		span_notice("[surgeon] successfully fixes [organ.owner || organ.loc]'s eyes."),
+		span_notice("You successfully fix [FORMAT_ORGAN_OWNER(organ)]'s eyes."),
+		span_notice("[surgeon] successfully fixes [FORMAT_ORGAN_OWNER(organ)]'s eyes."),
+		span_notice("[surgeon] successfully fixes [FORMAT_ORGAN_OWNER(organ)]'s eyes."),
 	)
 	display_pain(organ.owner, "Your vision blurs, but it seems like you can see a little better now!")
 
 /datum/surgery_operation/organ/repair/eyes/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/obj/item/organ/brain/brain = locate() in organ.bodypart_owner
-	if(!brain)
+	if(isnull(brain))
 		display_results(
 			surgeon,
 			organ.owner,
-			span_warning("You accidentally stab [organ.owner || organ.loc] right in the brain! Or would have, if [organ.owner || organ.loc] had a brain."),
-			span_warning("[surgeon] accidentally stabs [organ.owner || organ.loc] right in the brain! Or would have, if [organ.owner || organ.loc] had a brain."),
-			span_warning("[surgeon] accidentally stabs [organ.owner || organ.loc] right in the brain!"),
+			span_warning("You accidentally stab [FORMAT_ORGAN_OWNER(organ)] right in the brain! Or would have, if [FORMAT_ORGAN_OWNER(organ)] had a brain."),
+			span_warning("[surgeon] accidentally stabs [FORMAT_ORGAN_OWNER(organ)] right in the brain! Or would have, if [FORMAT_ORGAN_OWNER(organ)] had a brain."),
+			span_warning("[surgeon] accidentally stabs [FORMAT_ORGAN_OWNER(organ)] right in the brain!"),
 		)
 		return
 
 	display_results(
 		surgeon,
 		organ.owner,
-		span_warning("You accidentally stab [organ.owner || organ.loc] right in the brain!"),
-		span_warning("[surgeon] accidentally stabs [organ.owner || organ.loc] right in the brain!"),
-		span_warning("[surgeon] accidentally stabs [organ.owner || organ.loc] right in the brain!"),
+		span_warning("You accidentally stab [FORMAT_ORGAN_OWNER(organ)] right in the brain!"),
+		span_warning("[surgeon] accidentally stabs [FORMAT_ORGAN_OWNER(organ)] right in the brain!"),
+		span_warning("[surgeon] accidentally stabs [FORMAT_ORGAN_OWNER(organ)] right in the brain!"),
 	)
 	display_pain(organ.owner, "You feel a visceral stabbing pain right through your head, into your brain!")
-
-	if (organ.owner)
-		organ.owner.adjust_organ_loss(ORGAN_SLOT_BRAIN, 70)
-	else
-		organ.apply_organ_damage(70)
+	organ.apply_organ_damage(70)
 
 /datum/surgery_operation/organ/repair/brain
 	name = "brain surgery"
@@ -494,9 +485,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to fix [organ.owner || organ.loc]'s brain..."),
-		span_notice("[surgeon] begins to fix [organ.owner || organ.loc]'s brain."),
-		span_notice("[surgeon] begins to perform surgery on [organ.owner || organ.loc]'s brain."),
+		span_notice("You begin to fix [FORMAT_ORGAN_OWNER(organ)]'s brain..."),
+		span_notice("[surgeon] begins to fix [FORMAT_ORGAN_OWNER(organ)]'s brain."),
+		span_notice("[surgeon] begins to perform surgery on [FORMAT_ORGAN_OWNER(organ)]'s brain."),
 	)
 	display_pain(organ.owner, "Your head pounds with unimaginable pain!")
 
@@ -505,9 +496,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You succeed in fixing [organ.owner || organ.loc]'s brain."),
-		span_notice("[surgeon] successfully fixes [organ.owner || organ.loc]'s brain!"),
-		span_notice("[surgeon] completes the surgery on [organ.owner || organ.loc]'s brain."),
+		span_notice("You succeed in fixing [FORMAT_ORGAN_OWNER(organ)]'s brain."),
+		span_notice("[surgeon] successfully fixes [FORMAT_ORGAN_OWNER(organ)]'s brain!"),
+		span_notice("[surgeon] completes the surgery on [FORMAT_ORGAN_OWNER(organ)]'s brain."),
 	)
 	display_pain(organ.owner, "The pain in your head receeds, thinking becomes a bit easier!")
 	if (organ.owner)
@@ -516,7 +507,7 @@
 		organ.brainmob.mind?.remove_antag_datum(/datum/antagonist/brainwashed)
 	organ.cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
 	if(organ.damage > organ.maxHealth * 0.1)
-		to_chat(surgeon, "[organ.owner || organ.loc]'s brain looks like it could be fixed further.")
+		to_chat(surgeon, "[FORMAT_ORGAN_OWNER(organ)]'s brain looks like it could be fixed further.")
 
 /datum/surgery_operation/organ/repair/brain/on_failure(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
@@ -525,7 +516,7 @@
 		organ.owner,
 		span_warning("You screw up, causing more damage!"),
 		span_warning("[surgeon] screws up, causing brain damage!"),
-		span_notice("[surgeon] completes the surgery on [organ.owner || organ.loc]'s brain."),
+		span_notice("[surgeon] completes the surgery on [FORMAT_ORGAN_OWNER(organ)]'s brain."),
 	)
 	display_pain(organ.owner, "Your head throbs with horrible pain; thinking hurts!")
 	organ.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)

@@ -329,3 +329,6 @@
 
 /// Permanent trait from an overdose effect
 #define OVERDOSE_TRAIT "overdose"
+
+/// Trait gained from bioware surgeries
+#define BIOWARE_TRAIT "bioware"

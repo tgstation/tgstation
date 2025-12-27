@@ -114,6 +114,14 @@
 	/// The actionspeed modifier we will use in case we are on the arms and have a interaction penalty. Qdelled on destroy.
 	var/datum/actionspeed_modifier/wound_interaction_inefficiency/actionspeed_mod
 
+	/// List of states -> other states that override them and prevent them from being added by wounds
+	var/static/list/exclusive_surgery_states = list(
+		"[SURGERY_SKIN_CUT]" = SURGERY_SKIN_OPEN,
+		"[SURGERY_VESSELS_UNCLAMPED]" = SURGERY_VESSELS_CLAMPED,
+		"[SURGERY_BONE_SAWED]" = SURGERY_BONE_DRILLED,
+		"[SURGERY_BONE_DRILLED]" = SURGERY_BONE_SAWED,
+	)
+
 /datum/wound/New()
 	. = ..()
 
@@ -298,8 +306,8 @@
 			limb.remove_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 
 		if(surgery_states)
-			for (var/state in GLOB.exclusive_surgery_states)
-				if (!(limb.surgery_state & GLOB.exclusive_surgery_states[state]))
+			for (var/state in exclusive_surgery_states)
+				if (!(limb.surgery_state & exclusive_surgery_states[state]))
 					continue
 				var/actual_state = text2num(state)
 				if (actual_state & surgery_states)
@@ -320,8 +328,8 @@
 			limb.add_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 
 		if(surgery_states)
-			for (var/state in GLOB.exclusive_surgery_states)
-				if (!(limb.surgery_state & GLOB.exclusive_surgery_states[state]))
+			for (var/state in exclusive_surgery_states)
+				if (!(limb.surgery_state & exclusive_surgery_states[state]))
 					continue
 				var/actual_state = text2num(state)
 				if (actual_state & surgery_states)

@@ -4,9 +4,8 @@
 /datum/surgery_operation/limb/organ_manipulation
 	name = "organ manipulation"
 	abstract_type = /datum/surgery_operation/limb/organ_manipulation
-	operation_flags = OPERATION_MORBID | OPERATION_NOTABLE
+	operation_flags = OPERATION_MORBID | OPERATION_NOTABLE | OPERATION_NO_PATIENT_REQUIRED
 	required_bodytype = ~BODYTYPE_ROBOTIC
-	requires_patient = FALSE
 	/// Radial slice datums for every organ type we can manipulate
 	VAR_PRIVATE/list/cached_organ_manipulation_options
 
@@ -156,7 +155,7 @@
 			display_results(
 				surgeon,
 				limb.owner,
-				span_notice("You begin to remove [organ.name] from [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+				span_notice("You begin to remove [organ.name] from [FORMAT_LIMB_OWNER(limb)]..."),
 				span_notice("[surgeon] begins to remove [organ.name] from [limb.owner || limb]."),
 				span_notice("[surgeon] begins to remove something from [limb.owner || limb]."),
 			)
@@ -166,7 +165,7 @@
 			display_results(
 				surgeon,
 				limb.owner,
-				span_notice("You begin to insert [tool.name] into [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]..."),
+				span_notice("You begin to insert [tool.name] into [FORMAT_LIMB_OWNER(limb)]..."),
 				span_notice("[surgeon] begins to insert [tool.name] into [limb.owner || limb]."),
 				span_notice("[surgeon] begins to insert something into [limb.owner || limb]."),
 			)
@@ -187,9 +186,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully extract [organ.name] from [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
-		span_notice("[surgeon] successfully extracts [organ.name] from [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]!"),
-		span_notice("[surgeon] successfully extracts something from [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]!"),
+		span_notice("You successfully extract [organ.name] from [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully extracts [organ.name] from [FORMAT_LIMB_OWNER(limb)]!"),
+		span_notice("[surgeon] successfully extracts something from [FORMAT_LIMB_OWNER(limb)]!"),
 	)
 	display_pain(limb.owner, "Your [limb.plaintext_zone] throbs with pain, you can't feel your [organ.name] anymore!")
 	log_combat(surgeon, limb.owner || limb, "surgically removed [organ.name] from")
@@ -211,9 +210,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully insert [organ.name] into [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
-		span_notice("[surgeon] successfully inserts [organ.name] into [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
-		span_notice("[surgeon] successfully inserts something into [limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb]."),
+		span_notice("You successfully insert [organ.name] into [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully inserts [organ.name] into [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully inserts something into [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "Your [limb.plaintext_zone] throbs with pain as your new [organ.name] comes to life!")
 
