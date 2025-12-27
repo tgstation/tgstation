@@ -223,7 +223,7 @@
 	var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver?.damage && !IS_ROBOTIC_ORGAN(liver) && !(liver.organ_flags & ORGAN_FAILING))
 		var/healing_bonus = liver.healing_factor * liver.maxHealth
-		liver.apply_organ_damage(0.5 * -healing_bonus * metabolization_ratio * seconds_per_tick)
+		liver.apply_organ_damage(-0.5 * healing_bonus * metabolization_ratio * seconds_per_tick)
 
 	var/water_adaptation = HAS_TRAIT(affected_mob, TRAIT_WATER_ADAPTATION)
 	var/blood_restored = water_adaptation ? 0.3 : 0.1
@@ -2890,7 +2890,7 @@
 		var/obj/item/bodypart/wounded_part = W.limb
 		if(wounded_part)
 			wounded_part.heal_damage(0.125 * metabolization_ratio * seconds_per_tick, 0.25 * metabolization_ratio * seconds_per_tick)
-		if(affected_mob.adjust_stamina_loss(-2 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)) // the more wounds, the more stamina regen
+		if(affected_mob.adjust_stamina_loss(-0.5 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)) // the more wounds, the more stamina regen
 			return UPDATE_MOB_HEALTH
 
 // unholy water, but for heretics.

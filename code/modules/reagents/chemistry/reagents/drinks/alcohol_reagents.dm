@@ -302,7 +302,7 @@
 /datum/reagent/consumable/ethanol/bilk/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(drinker.get_brute_loss() && SPT_PROB(5, seconds_per_tick))
-		if(drinker.heal_bodypart_damage(brute = 1 * metabolization_ratio, updating_health = FALSE))
+		if(drinker.heal_bodypart_damage(brute = 0.5 * metabolization_ratio, updating_health = FALSE))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/threemileisland
@@ -1276,7 +1276,7 @@
 	. = ..()
 	var/obj/item/organ/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	if((liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM)) || is_simian(drinker))
-		if(drinker.heal_bodypart_damage(brute = 0.5 * metabolization_ratio * seconds_per_tick, burn = 1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
+		if(drinker.heal_bodypart_damage(brute = 0.5 * metabolization_ratio * seconds_per_tick, burn = 0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/silencer
@@ -1293,7 +1293,7 @@
 	. = ..()
 	if(ishuman(drinker) && HAS_MIND_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
-		if(drinker.heal_bodypart_damage(brute = 0.5 * metabolization_ratio * seconds_per_tick, burn = 1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
+		if(drinker.heal_bodypart_damage(brute = 0.5 * metabolization_ratio * seconds_per_tick, burn = 0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/drunkenblumpkin
@@ -1587,7 +1587,7 @@
 	//Securidrink in line with the Screwdriver for engineers or Nothing for mimes
 	var/obj/item/organ/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		if(drinker.heal_bodypart_damage(brute = 0.5 * metabolization_ratio * seconds_per_tick, burn = 1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
+		if(drinker.heal_bodypart_damage(brute = 0.5 * metabolization_ratio * seconds_per_tick, burn = 0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/quintuple_sec
@@ -1605,7 +1605,7 @@
 	var/obj/item/organ/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		var/need_mob_update
-		need_mob_update = drinker.heal_bodypart_damage(1 * metabolization_ratio * seconds_per_tick, 2 * metabolization_ratio *  seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update = drinker.heal_bodypart_damage(1 * metabolization_ratio * seconds_per_tick, 1 * metabolization_ratio *  seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		need_mob_update += drinker.adjust_stamina_loss(-2.5 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 		if(need_mob_update)
 			return UPDATE_MOB_HEALTH
@@ -1946,7 +1946,7 @@
 	. = ..()
 	if(ishuman(drinker) && HAS_MIND_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
-		if(drinker.heal_bodypart_damage(brute = 0.5 * metabolization_ratio * seconds_per_tick, burn = 1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
+		if(drinker.heal_bodypart_damage(brute = 0.5 * metabolization_ratio * seconds_per_tick, burn = 0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/fruit_wine
@@ -2078,7 +2078,7 @@
 	//A healing drink similar to Quadruple Sec, Ling Stings, and Screwdrivers for the Wizznerds; the check is consistent with the changeling sting
 	if(drinker?.mind?.has_antag_datum(/datum/antagonist/wizard))
 		var/need_mob_update
-		need_mob_update = drinker.heal_bodypart_damage(0.5 * metabolization_ratio * seconds_per_tick, 1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+		need_mob_update = drinker.heal_bodypart_damage(0.5 * metabolization_ratio * seconds_per_tick, 0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
 		need_mob_update += drinker.adjust_oxy_loss(-0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		need_mob_update += drinker.adjust_tox_loss(-0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		need_mob_update += drinker.adjust_stamina_loss(-2.5  * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)

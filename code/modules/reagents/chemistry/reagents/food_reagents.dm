@@ -372,7 +372,7 @@
 			heating = 15
 		if(35 to INFINITY)
 			heating = 20
-	affected_mob.adjust_bodytemperature(0.5 * heating * TEMPERATURE_DAMAGE_COEFFICIENT * metabolization_ratio * seconds_per_tick)
+	affected_mob.adjust_bodytemperature(0.5 * TEMPERATURE_DAMAGE_COEFFICIENT * heating * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/consumable/frostoil
 	name = "Frost Oil"
@@ -403,7 +403,7 @@
 			cooling = -40
 			if(prob(5))
 				affected_mob.emote("shiver")
-	affected_mob.adjust_bodytemperature(0.5 * cooling * TEMPERATURE_DAMAGE_COEFFICIENT * metabolization_ratio * seconds_per_tick, 50)
+	affected_mob.adjust_bodytemperature(0.5 * TEMPERATURE_DAMAGE_COEFFICIENT * cooling * metabolization_ratio * seconds_per_tick, 50)
 
 /datum/reagent/consumable/frostoil/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -556,7 +556,7 @@
 		var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 		if(liver && HAS_TRAIT(liver, TRAIT_CULINARY_METABOLISM))
 			if(SPT_PROB(10, seconds_per_tick)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
-				if(affected_mob.heal_bodypart_damage(brute = 0.5 * metabolization_ratio, burn = 1 * metabolization_ratio, updating_health = FALSE))
+				if(affected_mob.heal_bodypart_damage(brute = 0.5 * metabolization_ratio, burn = 0.5 * metabolization_ratio, updating_health = FALSE))
 					return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/tearjuice
@@ -821,10 +821,10 @@
 	holder.add_reagent(/datum/reagent/consumable/sugar, 1.5 * metabolization_ratio * seconds_per_tick)
 	var/need_mob_update
 	if(SPT_PROB(33, seconds_per_tick))
-		need_mob_update = affected_mob.adjust_brute_loss(-1 * metabolization_ratio, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += affected_mob.adjust_fire_loss(-1 * metabolization_ratio, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += affected_mob.adjust_oxy_loss(-1 * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype)
-		need_mob_update += affected_mob.adjust_tox_loss(-1 * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update = affected_mob.adjust_brute_loss(-0.5 * metabolization_ratio, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.adjust_fire_loss(-0.5 * metabolization_ratio, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.adjust_oxy_loss(-0.5 * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += affected_mob.adjust_tox_loss(-0.5 * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -908,9 +908,9 @@
 		affected_mob.Unconscious(20 * metabolization_ratio * seconds_per_tick, FALSE)
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.losebreath += 4
-		affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 2 * metabolization_ratio, 150, affected_biotype)
-		affected_mob.adjust_tox_loss(3 * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype)
-		affected_mob.adjust_stamina_loss(10 * metabolization_ratio, updating_stamina = FALSE, required_biotype = affected_biotype)
+		affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 1 * metabolization_ratio, 150, affected_biotype)
+		affected_mob.adjust_tox_loss(1.5 * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype)
+		affected_mob.adjust_stamina_loss(5 * metabolization_ratio, updating_stamina = FALSE, required_biotype = affected_biotype)
 		affected_mob.set_eye_blur_if_lower(10 SECONDS)
 		need_mob_update = TRUE
 	if(need_mob_update)

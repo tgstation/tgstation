@@ -153,9 +153,9 @@
 	var/power = -0.00003 * (affected_mob.bodytemperature ** 2) + 3
 	var/need_mob_update
 	need_mob_update = affected_mob.adjust_oxy_loss(-1.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	need_mob_update += affected_mob.adjust_brute_loss(0.5 * -power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjust_fire_loss(0.5 * -power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjust_tox_loss(0.5 * -power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype) //heals TOXINLOVERs
+	need_mob_update += affected_mob.adjust_brute_loss(-0.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjust_fire_loss(-0.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjust_tox_loss(-0.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype) //heals TOXINLOVERs
 	for(var/i in affected_mob.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_xadone(0.5 * power * metabolization_ratio * seconds_per_tick)
@@ -192,9 +192,9 @@
 
 		var/need_mob_update
 		need_mob_update = affected_mob.adjust_oxy_loss(-1 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		need_mob_update += affected_mob.adjust_brute_loss(0.5 * -power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += affected_mob.adjust_fire_loss(-075 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += affected_mob.adjust_tox_loss(0.5 * -power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype)
+		need_mob_update += affected_mob.adjust_brute_loss(-0.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.adjust_fire_loss(-0.75 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.adjust_tox_loss(-0.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype)
 		if(need_mob_update)
 			. = UPDATE_MOB_HEALTH
 		for(var/i in affected_mob.all_wounds)
@@ -400,10 +400,10 @@
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_tox_loss(0.5 * -healing * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-	need_mob_update += affected_mob.adjust_oxy_loss(0.5 * -healing * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	need_mob_update += affected_mob.adjust_brute_loss(0.5 * -healing * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjust_fire_loss(0.5 * -healing * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update = affected_mob.adjust_tox_loss(-0.5 * healing * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update += affected_mob.adjust_oxy_loss(-0.5 * healing * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update += affected_mob.adjust_brute_loss(-0.5 * healing * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjust_fire_loss(-0.5 * healing * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -712,7 +712,7 @@
 	. = ..()
 	if(SPT_PROB(5, seconds_per_tick))
 		affected_mob.adjust_drowsiness(2 SECONDS)
-	affected_mob.adjust_jitter(-1 SECONDS * metabolization_ratio)
+	affected_mob.adjust_jitter(-1 SECONDS * metabolization_ratio * seconds_per_tick)
 	holder.remove_reagent(/datum/reagent/toxin/histamine, 1 * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/medicine/morphine
@@ -1347,8 +1347,8 @@
 /datum/reagent/medicine/stimulants/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(SPT_PROB(18, seconds_per_tick))
-		affected_mob.adjust_stamina_loss(2.5 * metabolization_ratio, updating_stamina = FALSE, required_biotype = affected_biotype)
-		affected_mob.adjust_tox_loss(1 * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype)
+		affected_mob.adjust_stamina_loss(1.25 * metabolization_ratio, updating_stamina = FALSE, required_biotype = affected_biotype)
+		affected_mob.adjust_tox_loss(0.5 * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype)
 		affected_mob.losebreath++
 		return UPDATE_MOB_HEALTH
 
@@ -1641,7 +1641,7 @@
 	. = ..()
 	if(overdosed) // We do not want any effects on OD
 		return
-	overdose_threshold = 0.5 * overdose_threshold + ((rand(-10, 10) / 10) * metabolization_ratio * seconds_per_tick) // for extra fun
+	overdose_threshold = overdose_threshold + 0.5 * ((rand(-10, 10) / 10) * metabolization_ratio * seconds_per_tick) // for extra fun
 	metabolizer.AdjustAllImmobility(-2.5 * metabolization_ratio * seconds_per_tick)
 	metabolizer.adjust_stamina_loss(-1.5 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	metabolizer.set_jitter_if_lower(0.5 SECONDS * metabolization_ratio * seconds_per_tick)
@@ -1666,8 +1666,8 @@
 				affected_mob.losebreath++
 				need_mob_update = TRUE
 		if(41 to 80)
-			need_mob_update = affected_mob.adjust_oxy_loss(0.1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-			need_mob_update += affected_mob.adjust_stamina_loss(0.1 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+			need_mob_update = affected_mob.adjust_oxy_loss(0.05 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+			need_mob_update += affected_mob.adjust_stamina_loss(0.05 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 			affected_mob.adjust_jitter_up_to(1 SECONDS * metabolization_ratio * seconds_per_tick, 40 SECONDS)
 			affected_mob.adjust_stutter_up_to(1 SECONDS * metabolization_ratio * seconds_per_tick, 40 SECONDS)
 			affected_mob.set_dizzy_if_lower(10 SECONDS * metabolization_ratio * seconds_per_tick)
@@ -1788,8 +1788,8 @@
 	. = ..()
 	var/healamount = max(0.5 - round(0.01 * (affected_mob.get_brute_loss() + affected_mob.get_fire_loss()), 0.1), 0) //base of 0.5 healing per cycle and loses 0.1 healing for every 10 combined brute/burn damage you have
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_brute_loss(0.5 * -healamount * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjust_fire_loss(0.5 * -healamount * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update = affected_mob.adjust_brute_loss(-0.5 * healamount * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjust_fire_loss(-0.5 * healamount * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 

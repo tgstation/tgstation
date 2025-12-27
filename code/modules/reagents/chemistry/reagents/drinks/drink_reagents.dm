@@ -115,7 +115,7 @@
 	. = ..()
 	var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	if((liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM)) || is_simian(affected_mob))
-		if(affected_mob.heal_bodypart_damage(brute = 0.5 * metabolization_ratio * seconds_per_tick, burn = 1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
+		if(affected_mob.heal_bodypart_damage(brute = 0.5 * metabolization_ratio * seconds_per_tick, burn = 0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/nothing
@@ -132,7 +132,7 @@
 	. = ..()
 	if(ishuman(drinker) && HAS_MIND_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
-		if(drinker.heal_bodypart_damage(brute = 0.5 * metabolization_ratio * seconds_per_tick, burn = 1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
+		if(drinker.heal_bodypart_damage(brute = 0.5 * metabolization_ratio * seconds_per_tick, burn = 0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/laughter
@@ -280,7 +280,7 @@
 	affected_mob.adjust_drowsiness(-3 SECONDS * metabolization_ratio * seconds_per_tick)
 	affected_mob.AdjustSleeping(-2 SECONDS * metabolization_ratio * seconds_per_tick)
 	//310.15 is the normal bodytemp.
-	affected_mob.adjust_bodytemperature(25 * metabolization_ratio * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
+	affected_mob.adjust_bodytemperature(12.5 * metabolization_ratio * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	if(holder.has_reagent(/datum/reagent/consumable/frostoil))
 		holder.remove_reagent(/datum/reagent/consumable/frostoil, 2.5 * metabolization_ratio * seconds_per_tick)
 
@@ -378,7 +378,7 @@
 	affected_mob.adjust_dizzy(-5 SECONDS * metabolization_ratio * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-3 SECONDS * metabolization_ratio * seconds_per_tick)
 	affected_mob.AdjustSleeping(-2 SECONDS * metabolization_ratio * seconds_per_tick)
-	affected_mob.adjust_bodytemperature(-2.5 * metabolization_ratio * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
+	affected_mob.adjust_bodytemperature(-2.5 * TEMPERATURE_DAMAGE_COEFFICIENT * metabolization_ratio * seconds_per_tick, affected_mob.get_body_temp_normal())
 
 /datum/reagent/consumable/hot_ice_coffee
 	name = "Hot Ice Coffee"
@@ -420,7 +420,7 @@
 	if(affected_mob.get_tox_loss() && SPT_PROB(10, seconds_per_tick))
 		if(affected_mob.adjust_tox_loss(-0.5 * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype))
 			. = UPDATE_MOB_HEALTH
-	affected_mob.adjust_bodytemperature(-2.5 * metabolization_ratio * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
+	affected_mob.adjust_bodytemperature(-2.5 * TEMPERATURE_DAMAGE_COEFFICIENT * metabolization_ratio * seconds_per_tick, affected_mob.get_body_temp_normal())
 
 /datum/reagent/consumable/space_cola
 	name = "Cola"
@@ -432,7 +432,7 @@
 /datum/reagent/consumable/space_cola/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	affected_mob.adjust_drowsiness(-5 SECONDS * metabolization_ratio * seconds_per_tick)
-	affected_mob.adjust_bodytemperature(-2.5 * metabolization_ratio * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
+	affected_mob.adjust_bodytemperature(-2.5 * TEMPERATURE_DAMAGE_COEFFICIENT * metabolization_ratio * seconds_per_tick, affected_mob.get_body_temp_normal())
 
 /datum/reagent/consumable/roy_rogers
 	name = "Roy Rogers"
@@ -471,7 +471,7 @@
 	affected_mob.adjust_dizzy(1.5 SECONDS * metabolization_ratio * seconds_per_tick)
 	affected_mob.remove_status_effect(/datum/status_effect/drowsiness)
 	affected_mob.AdjustSleeping(-2 SECONDS * metabolization_ratio * seconds_per_tick)
-	affected_mob.adjust_bodytemperature(-2.5 * metabolization_ratio * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
+	affected_mob.adjust_bodytemperature(-2.5 * TEMPERATURE_DAMAGE_COEFFICIENT * metabolization_ratio * seconds_per_tick, affected_mob.get_body_temp_normal())
 	if (SSradiation.can_irradiate_basic(affected_mob))
 		affected_mob.AddComponent(/datum/component/irradiated)
 
@@ -629,7 +629,7 @@
 	. = ..()
 	affected_mob.adjust_dizzy(-5 SECONDS * metabolization_ratio * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-3 SECONDS * metabolization_ratio * seconds_per_tick)
-	affected_mob.adjust_bodytemperature(-2.5 * metabolization_ratio * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
+	affected_mob.adjust_bodytemperature(-2.5 * TEMPERATURE_DAMAGE_COEFFICIENT * metabolization_ratio * seconds_per_tick, affected_mob.get_body_temp_normal())
 
 /datum/reagent/consumable/tonic
 	name = "Tonic Water"
@@ -643,7 +643,7 @@
 	affected_mob.adjust_dizzy(-5 SECONDS * metabolization_ratio * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-3 SECONDS * metabolization_ratio * seconds_per_tick)
 	affected_mob.AdjustSleeping(-2 SECONDS * metabolization_ratio * seconds_per_tick)
-	affected_mob.adjust_bodytemperature(-2.5 * metabolization_ratio * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
+	affected_mob.adjust_bodytemperature(-2.5 * TEMPERATURE_DAMAGE_COEFFICIENT * metabolization_ratio * seconds_per_tick, affected_mob.get_body_temp_normal())
 
 /datum/reagent/consumable/wellcheers
 	name = "Wellcheers"
@@ -681,7 +681,7 @@
 	affected_mob.adjust_dizzy(1 SECONDS * metabolization_ratio * seconds_per_tick)
 	affected_mob.remove_status_effect(/datum/status_effect/drowsiness)
 	affected_mob.AdjustSleeping(-2 SECONDS * metabolization_ratio * seconds_per_tick)
-	affected_mob.adjust_bodytemperature(-2.5 * metabolization_ratio * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
+	affected_mob.adjust_bodytemperature(-2.5 * TEMPERATURE_DAMAGE_COEFFICIENT * metabolization_ratio * seconds_per_tick, affected_mob.get_body_temp_normal())
 
 /datum/reagent/consumable/monkey_energy/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -707,7 +707,7 @@
 
 /datum/reagent/consumable/ice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_bodytemperature(-2.5 * metabolization_ratio * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, FALSE, affected_mob.get_body_temp_normal()))
+	if(affected_mob.adjust_bodytemperature(-2.5 * TEMPERATURE_DAMAGE_COEFFICIENT * metabolization_ratio * seconds_per_tick, FALSE, affected_mob.get_body_temp_normal()))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/soy_latte
@@ -731,7 +731,7 @@
 	affected_mob.adjust_drowsiness(-3 SECONDS * metabolization_ratio * seconds_per_tick)
 	var/need_mob_update
 	need_mob_update = affected_mob.SetSleeping(0)
-	affected_mob.adjust_bodytemperature(2.5 * metabolization_ratio * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
+	affected_mob.adjust_bodytemperature(2.5 * TEMPERATURE_DAMAGE_COEFFICIENT * metabolization_ratio * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	if(affected_mob.get_brute_loss() && SPT_PROB(10, seconds_per_tick))
 		need_mob_update += affected_mob.heal_bodypart_damage(brute = 0.5 * metabolization_ratio, burn = 0, updating_health = FALSE)
 	if(need_mob_update)
@@ -973,7 +973,7 @@
 
 /datum/reagent/consumable/italian_coco/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.adjust_bodytemperature(2.5 * metabolization_ratio * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
+	affected_mob.adjust_bodytemperature(2.5 * TEMPERATURE_DAMAGE_COEFFICIENT * metabolization_ratio * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 
 /datum/reagent/consumable/menthol
 	name = "Menthol"
@@ -1129,7 +1129,7 @@
 	. = ..()
 	affected_mob.adjust_bodytemperature(-4 * metabolization_ratio * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 	if(affected_mob.get_tox_loss() && SPT_PROB(10, seconds_per_tick))
-		if(affected_mob.adjust_tox_loss(-0.5 * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype))
+		if(affected_mob.adjust_tox_loss(-0.25 * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/mushroom_tea
@@ -1231,7 +1231,7 @@
 	. = ..()
 	doll.adjust_bodytemperature(-4 * metabolization_ratio * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, doll.get_body_temp_normal())
 	if(doll.get_tox_loss() && SPT_PROB(10, seconds_per_tick))
-		if(doll.adjust_tox_loss(-0.5 * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype))
+		if(doll.adjust_tox_loss(-0.25 * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/mississippi_queen

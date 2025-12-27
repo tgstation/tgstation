@@ -119,7 +119,7 @@
 		if(!organ_being_healed.damage)
 			continue
 
-		if(organ_being_healed.apply_organ_damage(-0.5 * metabolization_ratio * seconds_per_tick, required_organ_flag = ORGAN_ORGANIC))
+		if(organ_being_healed.apply_organ_damage(-0.25 * metabolization_ratio * seconds_per_tick, required_organ_flag = ORGAN_ORGANIC))
 			. = UPDATE_MOB_HEALTH
 
 /datum/reagent/zauker
