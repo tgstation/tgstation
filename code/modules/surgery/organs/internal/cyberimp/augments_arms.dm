@@ -63,10 +63,12 @@
 	if(ispath(active_item))
 		active_item = new active_item(src)
 		items_list += WEAKREF(active_item)
+		RegisterSignal(active_item, COMSIG_QDELETING, PROC_REF(on_item_deleted))
 
 	for(var/typepath in items_to_create)
 		var/atom/new_item = new typepath(src)
 		items_list += WEAKREF(new_item)
+		RegisterSignal(new_item, COMSIG_QDELETING, PROC_REF(on_item_deleted))
 
 /obj/item/organ/cyberimp/arm/toolkit/Destroy()
 	hand = null
@@ -103,6 +105,17 @@
 /obj/item/organ/cyberimp/arm/toolkit/proc/on_item_attack_self()
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(ui_action_click))
+
+///If somehow your implant gets destroyed, it's gone.
+/obj/item/organ/cyberimp/arm/toolkit/proc/on_item_deleted(atom/source)
+	SIGNAL_HANDLER
+
+	if(active_item == source)
+		Retract()
+	for(var/datum/weakref/ref in items_list)
+		var/obj/item/to_del = ref.resolve()
+		if(QDELETED(to_del))
+			items_list -= ref
 
 /obj/item/organ/cyberimp/arm/toolkit/emp_act(severity)
 	. = ..()
@@ -249,9 +262,10 @@
 
 /obj/item/organ/cyberimp/arm/toolkit/gun/laser
 	name = "arm-mounted laser implant"
-	desc = "A variant of the arm cannon implant that fires lethal laser beams. The cannon emerges from the subject's arm and remains inside when not in use."
+	desc = "A variant of the arm cannon implant that fires lethal laser beams, or custom ones if copying another gun's bullet properties. \
+		The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_laser"
-	items_to_create = list(/obj/item/gun/energy/laser/mounted/augment)
+	items_to_create = list(/obj/item/gun/energy/laser/mounted)
 
 /obj/item/organ/cyberimp/arm/toolkit/gun/taser
 	name = "arm-mounted taser implant"

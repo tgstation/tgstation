@@ -54,8 +54,8 @@
 	inhand_icon_state = "c20r"
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
-	cell_type = /obj/item/stock_parts/power_store/cell/potato
-	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
+	cell_type = /obj/item/stock_parts/power_store/cell/meteor_gun
+	clumsy_check = FALSE //Admin spawn only, might as well let clowns use it.
 	selfcharge = 1
 	automatic_charge_overlays = FALSE
 

@@ -6,7 +6,7 @@
 	inhand_icon_state = "armcannonstun4"
 	display_empty = FALSE
 	force = 5
-	selfcharge = 1
+	selfcharge = TRUE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL // Has no trigger at all, uses neural signals instead
 
 /obj/item/gun/energy/e_gun/advtaser/mounted/add_seclight_point()
@@ -14,17 +14,63 @@
 
 /obj/item/gun/energy/laser/mounted
 	name = "mounted laser"
-	desc = "An arm mounted cannon that fires lethal lasers."
+	desc = "An arm mounted cannon that fires lethal lasers or custom projectiles."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "laser_cyborg"
 	inhand_icon_state = "armcannonlase"
 	force = 5
-	selfcharge = 1
+	selfcharge = TRUE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+
+/obj/item/gun/energy/laser/mounted/examine(mob/user)
+	. = ..()
+	. += span_notice("[src] can copy other gun projectiles by using a gun on it, and reset back to the default with [EXAMINE_HINT("right-click.")]")
+
+/obj/item/gun/energy/laser/mounted/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/gun/energy))
+		return ..()
+	var/obj/item/gun/energy/energy_gun = tool
+	var/obj/item/ammo_casing/energy/copied_projectile = energy_gun.ammo_type[energy_gun.select]
+	if(copied_projectile.energy_projectile_flags & PROJECTILE_CANT_COPY)
+		user.balloon_alert(user, "can't copy!")
+		return ..()
+	user.balloon_alert(user, "copying schematics...")
+	if(!do_after(user, 3 SECONDS, tool))
+		return
+	user.balloon_alert(user, "schematics copied")
+	ammo_type = list(new copied_projectile.type)
+	fire_sound = energy_gun.fire_sound
+	burst_size = energy_gun.burst_size
+	burst_delay = energy_gun.burst_delay
+	fire_delay = energy_gun.fire_delay
+	QDEL_NULL(chambered)
+	recharge_newshot(TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/gun/energy/laser/mounted/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	reset_projectile_type(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/gun/energy/laser/mounted/emp_act(severity)
+	. = ..()
+	if(!(. & EMP_PROTECT_SELF))
+		reset_projectile_type()
 
 /obj/item/gun/energy/laser/mounted/add_deep_lore()
 	return
 
-/obj/item/gun/energy/laser/mounted/augment
-	icon = 'icons/obj/medical/organs/organs.dmi'
-	icon_state = "arm_laser"
+///Resets the laser gun back to the default state.
+///We take a mob as an arg for feedback so we don't send it for cases like EMPs where
+///we don't want it obvious.
+/obj/item/gun/energy/laser/mounted/proc/reset_projectile_type(mob/user)
+	if(user)
+		user.balloon_alert(user, "projectile reset")
+	ammo_type = /obj/item/gun/energy/laser/mounted::ammo_type
+	burst_size = initial(burst_size)
+	burst_delay = initial(burst_delay)
+	update_ammo_types()
+	QDEL_NULL(chambered)
+	recharge_newshot(TRUE)

@@ -77,6 +77,7 @@
 	projectile_type = /obj/projectile/energy/chameleon
 	e_cost = 0 // Can't really use the macro here, unfortunately
 	harmful = FALSE
+	energy_projectile_flags = PROJECTILE_CANT_COPY
 	var/projectile_vars = list()
 
 /obj/item/ammo_casing/energy/chameleon/ready_proj()

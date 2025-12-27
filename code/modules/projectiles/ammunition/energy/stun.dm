@@ -6,6 +6,7 @@
 	harmful = FALSE
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
 	muzzle_flash_color = LIGHT_COLOR_DIM_YELLOW
+	energy_projectile_flags = PROJECTILE_CANT_COPY
 
 /obj/item/ammo_casing/energy/electrode/spec
 	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)

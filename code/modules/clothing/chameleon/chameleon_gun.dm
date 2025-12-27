@@ -51,6 +51,7 @@
 
 	fire_sound = gun_to_set.fire_sound
 	burst_size = gun_to_set.burst_size
+	burst_delay = gun_to_set.burst_delay
 	fire_delay = gun_to_set.fire_delay
 	inhand_x_dimension = gun_to_set.inhand_x_dimension
 	inhand_y_dimension = gun_to_set.inhand_y_dimension
