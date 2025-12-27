@@ -1,8 +1,8 @@
 /**Spontaneous Combustion
- * Slightly hidden.
- * Lowers resistance tremendously.
- * Decreases stage speed tremendously.
- * Decreases transmittability tremendously.
+ * No effect to stealth.
+ * No effect to resistance.
+ * Decreases stage speed slightly.
+ * Decreases transmittability greatly.
  * Fatal level
  * Bonus: Ignites infected mob.
  */
@@ -11,15 +11,16 @@
 	name = "Spontaneous Combustion"
 	desc = "The virus turns fat into an extremely flammable compound, and raises the body's temperature, making the host burst into flames spontaneously."
 	illness = "Spontaneous Combustion"
-	stealth = -1
-	resistance = -4
-	stage_speed = -3
-	transmittable = -4
+	stealth = 0
+	resistance = 0
+	stage_speed = -1
+	transmittable = -2
 	level = 6
 	severity = 5
 	base_message_chance = 20
 	symptom_delay_min = 20
 	symptom_delay_max = 75
+	symptom_cure = /datum/reagent/medicine/leporazine // See, this one's tricky. You gotta convince them you don't have fever or chills in the same virus.
 	var/infective = FALSE
 	threshold_descs = list(
 		"Stage Speed 4" = "Increases the intensity of the flames.",
@@ -102,6 +103,8 @@ Bonus
 	base_message_chance = 100
 	symptom_delay_min = 30
 	symptom_delay_max = 90
+	symptom_cure = /datum/reagent/consumable/frostoil
+	cure_color = "red"
 	var/chems = FALSE
 	var/explosion_power = 1
 	threshold_descs = list(
