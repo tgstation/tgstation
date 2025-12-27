@@ -64,43 +64,43 @@
 
 /// Finds the type priority of the interaction point.
 /datum/interaction_point/proc/find_type_priority()
-    var/list/turf_contents = interaction_turf.contents
+	var/list/turf_contents = interaction_turf.contents
 
-    var/atom/movable/best_candidate = null
-    var/best_priority_index = INFINITY
+	var/atom/movable/best_candidate = null
+	var/best_priority_index = INFINITY
 
-    for(var/atom/movable/thing as anything in turf_contents)
-        for(var/i in 1 to length(interaction_priorities))
-            if(i >= best_priority_index)
-                break
+	for(var/atom/movable/thing as anything in turf_contents)
+		for(var/i in 1 to length(interaction_priorities))
+			if(i >= best_priority_index)
+				break
 
-            var/datum/manipulator_priority/prio = interaction_priorities[i]
+			var/datum/manipulator_priority/prio = interaction_priorities[i]
 
-            if(!prio.active)
-                continue
+			if(!prio.active)
+				continue
 
-            if(prio.atom_typepath == /turf)
-                if(i < best_priority_index)
-                    best_candidate = interaction_turf
-                    best_priority_index = i
-                continue
+			if(prio.atom_typepath == /turf)
+				if(i < best_priority_index)
+					best_candidate = interaction_turf
+					best_priority_index = i
+				continue
 
-            if(!istype(thing, prio.atom_typepath))
-                continue
+			if(!istype(thing, prio.atom_typepath))
+				continue
 
-            if(isliving(thing))
-                var/mob/living/L = thing
-                if(L.stat == DEAD)
-                    continue
+			if(isliving(thing))
+				var/mob/living/L = thing
+				if(L.stat == DEAD)
+					continue
 
-            best_candidate = thing
-            best_priority_index = i
+			best_candidate = thing
+			best_priority_index = i
 
-            if(best_priority_index == 1)
-                return best_candidate
-            break
+			if(best_priority_index == 1)
+				return best_candidate
+			break
 
-    return best_candidate
+	return best_candidate
 
 /// Checks if the interaction point is available - if it has items that can be interacted with.
 /datum/interaction_point/proc/is_available(transfer_type, atom/movable/target)
