@@ -25,8 +25,8 @@
 // I am so sorry
 /turf/open/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
-	if(PERFORM_ALL_TESTS(focus_only/openspace_clear) && !GET_TURF_BELOW(src))
-		stack_trace("[src] was inited as openspace with nothing below it at ([x], [y], [z])")
+	if(PERFORM_ALL_TESTS(maptest_log_mapping) && !GET_TURF_BELOW(src))
+		log_mapping("[src] was inited as openspace with nothing below it at ([x], [y], [z])")
 	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_created))
 	var/area/our_area = loc
 	if(istype(our_area, /area/space))
