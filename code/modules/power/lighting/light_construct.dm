@@ -153,7 +153,10 @@
 					if("floor")
 						new_light = new /obj/machinery/light/floor/empty(loc)
 				new_light.setDir(dir)
-				new_light.find_and_mount_on_atom()
+				var/atom/support = get_step(src, dir)
+				if(!isclosedturf(support))
+					support = locate(/obj/structure/window) in support
+				new_light.AddComponent(/datum/component/atom_mounted, support)
 				transfer_fingerprints_to(new_light)
 				if(!QDELETED(cell))
 					new_light.cell = cell

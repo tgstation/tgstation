@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Escaped bitrunning glitches will visually distort when interacted with"
+  - bugfix: "Escaped bitrunning glitches will not stick around as holographic corpses after they die"

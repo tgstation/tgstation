@@ -45,7 +45,7 @@
 	var/link_on_init = TRUE
 
 	/// Reference to a remote material inventory, such as an ore silo.
-	var/datum/component/remote_materials/rmat
+	var/datum/remote_materials/rmat
 
 	/// All designs in the techweb that can be fabricated by this machine, since the last update.
 	var/list/datum/design/cached_designs
@@ -58,11 +58,12 @@
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
 	print_sound = new(src,  FALSE)
-	rmat = AddComponent(/datum/component/remote_materials, mapload && link_on_init)
+	rmat = new (src, mapload && link_on_init)
 	cached_designs = list()
 	return ..()
 
 /obj/machinery/mecha_part_fabricator/Destroy()
+	QDEL_NULL(rmat)
 	QDEL_NULL(print_sound)
 	return ..()
 
@@ -224,7 +225,7 @@
 	if(!D || length(D.reagents_list))
 		return FALSE
 
-	var/datum/component/material_container/materials = rmat.mat_container
+	var/datum/material_container/materials = rmat.mat_container
 	if (!materials)
 		if(verbose)
 			say("No access to material storage, please contact the quartermaster.")
