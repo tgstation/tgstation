@@ -81,7 +81,7 @@ function rebuildChatState(
   }
 
   const rebuiltState: StoredChatSettings = {
-    version: 4,
+    version: 5,
     scrollTracking: true,
     currentPageId: newPageIds[0],
     pages: newPageIds,

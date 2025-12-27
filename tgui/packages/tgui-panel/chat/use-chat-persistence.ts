@@ -62,7 +62,7 @@ export function useChatPersistence() {
     // Empty settings, set defaults
     if (!state) {
       console.log('Initialized chat with default settings');
-    } else if (state && 'version' in state && state.version >= version) {
+    } else if (state && 'version' in state && state.version === version) {
       console.log('Loaded chat state from storage:', state);
       startChatStateMigration(state);
     } else {
