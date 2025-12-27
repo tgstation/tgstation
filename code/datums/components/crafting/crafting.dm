@@ -673,8 +673,8 @@
 			data["structures"] += atoms.Find(req_atom)
 
 	// Ingredients / Materials
+	data["reqs"] = list()
 	if(recipe.reqs.len)
-		data["reqs"] = list()
 		for(var/req_atom in recipe.reqs)
 			var/id = atoms.Find(req_atom)
 			data["reqs"]["[id]"] = recipe.reqs[req_atom]
