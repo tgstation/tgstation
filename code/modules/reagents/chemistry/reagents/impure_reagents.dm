@@ -112,9 +112,10 @@
 	. = ..()
 	metabolization_rate += 0.01 //speed up our metabolism over time. Chop chop.
 
-/datum/reagent/inverse/cryostylane/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+/datum/reagent/inverse/cryostylane/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
 	if(current_cycle >= 60)
-		holder.remove_reagent(type, volume) // remove it all if we're past 60 cycles
+		volume = 0 // remove it all if we're past 60 cycles
+		holder.update_total()
 		return
 
 	return ..()

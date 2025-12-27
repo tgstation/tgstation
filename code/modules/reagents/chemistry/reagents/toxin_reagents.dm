@@ -728,7 +728,7 @@
 		holder.remove_reagent(/datum/reagent/toxin/formaldehyde, 1.2)
 	return ..()
 
-/datum/reagent/toxin/formaldehyde/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+/datum/reagent/toxin/formaldehyde/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
 	if(HAS_TRAIT(affected_mob, TRAIT_BLOCK_FORMALDEHYDE_METABOLISM))
 		return
 
