@@ -646,7 +646,7 @@
 				return FALSE
 	if(ignored_factions?.len && ismob(target) && !direct_target)
 		var/mob/target_mob = target
-		if(faction_check(target_mob.faction, ignored_factions))
+		if(target_mob.has_faction(ignored_factions))
 			return FALSE
 	if(target.density || cross_failed) //This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
 		return TRUE

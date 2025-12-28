@@ -172,7 +172,7 @@
 		visible_message(span_boldwarning("[src]'s head flies off!"))
 		var/mob/living/simple_animal/hostile/asteroid/elite/legionnairehead/newhead = new /mob/living/simple_animal/hostile/asteroid/elite/legionnairehead(loc)
 		newhead.GiveTarget(target)
-		newhead.faction = faction.Copy()
+		apply_faction_and_allies_from(src, newhead)
 		myhead = newhead
 		myhead.body = src
 		if(health < maxHealth * 0.25)
@@ -257,7 +257,7 @@
 	move_to_delay = 2
 	del_on_death = 1
 	death_message = "crumbles away!"
-	faction = list()
+	faction = null
 	ranged = FALSE
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/body = null
 

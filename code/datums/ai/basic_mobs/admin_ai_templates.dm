@@ -62,7 +62,8 @@
 	target.ai_controller = new controller_type(target)
 
 	if (make_hostile)
-		target.faction = list(FACTION_HOSTILE, REF(target))
+		target.set_faction(list(FACTION_HOSTILE))
+		target.set_allies(list(REF(target)))
 
 	var/datum/ai_controller/controller = target.ai_controller
 	controller.set_blackboard_key(BB_BASIC_MOB_IDLE_WALK_CHANCE, idle_chance)

@@ -131,7 +131,7 @@
 		cybernetic.Insert(equipped, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 		//you only get respect if you go all the way, man.
 		ADD_TRAIT(equipped, TRAIT_COMMISSIONED, INNATE_TRAIT)
-	equipped.faction |= list(FACTION_SILICON, FACTION_TURRET)
+	equipped.add_faction(list(FACTION_SILICON, FACTION_TURRET))
 
 /obj/item/paper/default_lawset_list
 	name = "Lawset Note"

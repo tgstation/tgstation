@@ -59,7 +59,7 @@
 /// Spawns a worm on the specified turf
 /mob/living/basic/mining/hivelord/proc/complete_spawn(turf/spawn_turf)
 	var/mob/living/brood = new death_spawn_type(spawn_turf)
-	brood.faction = faction
+	apply_faction_and_allies_from(src, brood)
 	brood.ai_controller?.set_blackboard_key(ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
 	brood.dir = get_dir(src, spawn_turf)
 

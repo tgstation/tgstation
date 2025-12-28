@@ -166,7 +166,7 @@
 		ctf_game.add_player(team, player_mob.ckey, player_component)
 	else
 		player_mob.mind.TakeComponent(ctf_player_component)
-	player_mob.faction += team
+	player_mob.add_faction(team)
 	player_mob.equipOutfit(chosen_class)
 	player_mob.add_traits(player_traits, CAPTURE_THE_FLAG_TRAIT)
 	return player_mob //used in medisim_game.dm
@@ -249,7 +249,7 @@
 	if(!is_ctf_target(user) && !anyonecanpickup)
 		to_chat(user, span_warning("Non-players shouldn't be moving the flag!"))
 		return
-	if(team in user.faction)
+	if(user.has_faction(team))
 		to_chat(user, span_warning("You can't move your own flag!"))
 		return
 	if(loc == user)
@@ -408,7 +408,7 @@
 /obj/structure/trap/ctf/trap_effect(mob/living/living)
 	if(!is_ctf_target(living))
 		return
-	if(!(src.team in living.faction))
+	if(!living.has_faction(team))
 		to_chat(living, span_bolddanger("Stay out of the enemy spawn!"))
 		living.investigate_log("has died from entering the enemy spawn in CTF.", INVESTIGATE_DEATHS)
 		living.apply_damage(200) //Damage instead of instant death so we trigger the damage signal.

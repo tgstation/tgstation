@@ -69,7 +69,7 @@
 	// for fireman carries, check if the ridden is stunned/restrained
 	else if((ride_check_flags & CARRIER_NEEDS_ARM) && (HAS_TRAIT(living_parent, TRAIT_RESTRAINED) || INCAPACITATED_IGNORING(living_parent, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB)))
 		. = FALSE
-	else if((ride_check_flags & JUST_FRIEND_RIDERS) && !(living_parent.faction.Find(REF(rider))))
+	else if((ride_check_flags & JUST_FRIEND_RIDERS) && !(living_parent.has_ally(rider)))
 		. = FALSE
 
 	if(. || !consequences)
@@ -222,7 +222,7 @@
 /datum/component/riding/creature/handle_buckle(mob/living/rider)
 	. = ..()
 	var/mob/living/ridden = parent
-	if(!require_minigame || ridden.faction.Find(REF(rider)))
+	if(!require_minigame || ridden.has_ally(rider))
 		return
 	ridden.Shake(pixelshiftx = 1, pixelshifty = 0, duration = 1 SECONDS)
 	ridden.spin(spintime = 1 SECONDS, speed = 1)

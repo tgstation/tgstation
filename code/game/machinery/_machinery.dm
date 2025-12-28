@@ -813,7 +813,7 @@
 /obj/machinery/attack_ai(mob/user)
 	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !isAdminGhostAI(user))
 		return FALSE
-	if(!(ROLE_SYNDICATE in user.faction))
+	if(!user.has_faction(ROLE_SYNDICATE))
 		if((ACCESS_SYNDICATE in req_access) || (ACCESS_SYNDICATE_LEADER in req_access) || (ACCESS_SYNDICATE in req_one_access) || (ACCESS_SYNDICATE_LEADER in req_one_access))
 			return FALSE
 		if((onSyndieBase() && loc != user))

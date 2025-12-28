@@ -22,7 +22,7 @@
 	var/obj/effect/temp_visual/explosion/fast/effect = new /obj/effect/temp_visual/explosion/fast(get_turf(dead_spore))
 	effect.alpha = 150
 	for(var/mob/living/actor in orange(get_turf(dead_spore), death_cloud_size))
-		if(ROLE_BLOB in actor.faction) // No friendly fire
+		if(actor.has_faction(ROLE_BLOB)) // No friendly fire
 			continue
 		//increases damage to mobs if death_cloud_size is increased, but the damage falls off with distance.
 		var/damage_total = (10 + 10 * death_cloud_size) / max(1, get_dist(get_turf(dead_spore), get_turf(actor)))
@@ -59,7 +59,7 @@
 		exposed_mob.take_overall_damage(brute_loss, burn_loss)
 
 		for(var/mob/living/nearby_mob in orange(epicenter_turf, 1))
-			if(ROLE_BLOB in nearby_mob.faction) // No friendly fire.
+			if(nearby_mob.has_faction(ROLE_BLOB)) // No friendly fire.
 				continue
 			if(nearby_mob == exposed_mob) // We've already hit the epicenter mob
 				continue

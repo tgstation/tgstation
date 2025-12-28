@@ -100,3 +100,33 @@
 
 /// Generates a mob faction for the passed owner, used by stabilized pink extracts
 #define FACTION_PINK_EXTRACT(owner) "pink_[owner]"
+
+/**
+ * apply_faction_and_allies_from(source, destination)
+ * Sets the atom's faction and allies to match that of the provided type's.
+ *
+ * This is equivalent to:
+ *   destination.set_faction(source.get_faction())
+ *    destination.set_allies(source.allies)
+ *
+ * This is a macro (not a proc) to avoid proc call overhead in hot paths.
+ */
+#define apply_faction_and_allies_from(source, destination) \
+	do { \
+		(destination).set_faction((source).get_faction()); \
+		(destination).set_allies(LAZYLISTDUPLICATE((source).allies)); \
+	} while(FALSE)
+
+/**
+ * Compare two lists of factions, returning true if any match.
+ * If exact match is passed through we only return true if both faction lists match equally.
+ *
+ * Macro-ified version to avoid extra proc overhead.
+ */
+#define FAST_FACTION_CHECK(faction_A, faction_B, allies_A, allies_B, exact_match) \
+( \
+	!(exact_match) ? \
+		(LAZYLEN((faction_A) & (faction_B)) || LAZYLEN((allies_A) & (allies_B))) \
+	: \
+		((LAZYLEN((faction_A) & (faction_B)) == LAZYLEN(faction_A)) && LAZYLEN((allies_A) & (allies_B))) \
+)
