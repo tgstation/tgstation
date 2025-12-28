@@ -296,3 +296,6 @@
 
 /// Cooldown between patch reagent messages
 #define PATCH_MESSAGE_COOLDOWN 10 SECONDS
+
+/// Amount by which brave bull reduces critical health threshold
+#define BRAVE_BULL_CRIT_THRESHOLD_REDUCTION 10
