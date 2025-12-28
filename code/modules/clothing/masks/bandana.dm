@@ -73,11 +73,7 @@
 		transform = widen
 		user.visible_message(span_notice("[user] ties [src] up like a neckerchief."), span_notice("You tie [src] up like a neckerchief."))
 		flags_inv = NONE
-		visor_flags_inv = NONE
 		flags_cover = NONE
-		visor_flags_cover = NONE
-		if (up)
-			visor_toggling()
 		return CLICK_ACTION_SUCCESS
 
 	undyeable = initial(undyeable)
@@ -86,9 +82,7 @@
 	transform = initial(transform)
 	user.visible_message(span_notice("[user] unties the neckercheif."), span_notice("You untie the neckercheif."))
 	flags_inv = initial(flags_inv)
-	visor_flags_inv = initial(visor_flags_inv)
 	flags_cover = initial(flags_cover)
-	visor_flags_cover = initial(visor_flags_cover)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/bandana/red
