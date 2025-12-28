@@ -91,11 +91,7 @@
 	make_climbable()
 	AddElement(/datum/element/give_turf_traits, string_list(turf_traits))
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
-	AddElement(/datum/element/table_smash, gentle_push = slam_gently)
-
-/// Called after someone is harmfully smashed into us
-/obj/structure/table/after_smash(mob/living/smashed_onto)
-	return // This is mostly for our children
+	AddElement(/datum/element/table_smash, gentle_push = slam_gently, after_smash_proccall = PROC_REF(after_smash))
 
 /// Applies additional properties based on the frame used to construct this table.
 /obj/structure/table/proc/apply_frame_properties(obj/structure/table_frame/frame_used)
