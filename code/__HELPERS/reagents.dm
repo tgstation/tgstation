@@ -1,6 +1,5 @@
-///Helper to ensure an reagent affect operates at a constant 100% even with varying metabolization rates
+///Helper to ensure a constant is applied regardless of reagent metabolization rate to get 100% effect
 ///Use for parent reagent types when subtypes alter metabolization rates
-///This constant is still dependent on the mobs metabolziation rate & the volume of reagent available
 #define METABOLIZE_FREE_CONSTANT(value)((value * REAGENTS_METABOLISM) / metabolization_rate)
 
 /proc/chem_recipes_do_conflict(datum/chemical_reaction/r1, datum/chemical_reaction/r2)
