@@ -186,25 +186,5 @@
 //We only call a camera static update if we have successfully moved and have a camera installed
 /obj/vehicle/sealed/mecha/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	if(chassis_camera)
-		update_camera_location(old_loc)
-
-/obj/vehicle/sealed/mecha/proc/update_camera_location(oldLoc)
-	oldLoc = get_turf(oldLoc)
-	if(!updating && oldLoc != get_turf(src))
-		updating = TRUE
-		do_camera_update(oldLoc)
-
-///The static update delay on movement of the camera in a mech we use
-#define MECH_CAMERA_BUFFER 0.5 SECONDS
-
-/**
- * The actual update - also passes our unique update buffer. This makes our static update faster than stationary cameras,
- * helping us to avoid running out of the camera's FoV. An EMPd mecha with a lowered view_range on its camera can still
- * sometimes run out into static before updating, however.
-*/
-/obj/vehicle/sealed/mecha/proc/do_camera_update(oldLoc)
-	if(oldLoc != get_turf(src))
-		SScameras.update_portable_camera(chassis_camera, MECH_CAMERA_BUFFER)
-	updating = FALSE
-#undef MECH_CAMERA_BUFFER
+	if(chassis_camera && get_turf(old_loc) != get_turf(src))
+		QUEUE_CAMERA_UPDATE(chassis_camera)

@@ -187,14 +187,15 @@
 
 	camera_upgrade_bitflags |= CAMERA_UPGRADE_XRAY
 	update_appearance()
-	SScameras.update_visibility(src)
 	calculate_active_power()
+	QUEUE_CAMERA_UPDATE(src)
 
 /obj/machinery/camera/proc/removeXRay(ignore_malf_upgrades)
 	if(!ignore_malf_upgrades) //don't downgrade it if malf software is forced onto it.
 		camera_upgrade_bitflags &= ~CAMERA_UPGRADE_XRAY
 	update_appearance()
 	calculate_active_power()
+	QUEUE_CAMERA_UPDATE(src)
 
 /obj/machinery/camera/proc/isMotion()
 	return camera_upgrade_bitflags & CAMERA_UPGRADE_MOTION

@@ -258,6 +258,7 @@
 			detect_state = PROXIMITY_NEAR
 
 /obj/item/multitool/ai_detect/proc/scan_unseen(mob/user)
+	/*
 	if(isnull(user?.client)) // the monkey incident of 2564
 		return
 	if(!COOLDOWN_FINISHED(src, static_scan_cd))
@@ -265,14 +266,14 @@
 		return
 	cleanup_static()
 	var/turf/our_turf = get_turf(src)
-	var/list/datum/camerachunk/chunks = surrounding_chunks(our_turf)
+	var/list/datum/camera_chunk/chunks = surrounding_chunks(our_turf)
 
 	if(!hud_obj)
 		hud_obj = new()
 		SET_PLANE_W_SCALAR(hud_obj, PLANE_TO_TRUE(hud_obj.plane), GET_TURF_PLANE_OFFSET(our_turf))
 
 	var/list/new_images = list()
-	for(var/datum/camerachunk/chunk as anything in chunks)
+	for(var/datum/camera_chunk/chunk as anything in chunks)
 		for(var/turf/seen_turf as anything in chunk.obscuredTurfs)
 			var/image/img = image(loc = seen_turf, layer = ABOVE_ALL_MOB_LAYER)
 			img.vis_contents += hud_obj
@@ -283,9 +284,11 @@
 	balloon_alert(user, "nearby unseen spots shown")
 	static_disappear_timer = addtimer(CALLBACK(src, PROC_REF(cleanup_static)), 8 SECONDS, TIMER_STOPPABLE)
 	COOLDOWN_START(src, static_scan_cd, 4 SECONDS)
+	*/
 
 // copied from camera chunks but we are doing a really big edge case here though
 /obj/item/multitool/ai_detect/proc/surrounding_chunks(turf/epicenter)
+	/*
 	. = list()
 	var/static_range = /mob/eye/camera/ai::static_visibility_range
 	var/x1 = max(1, epicenter.x - static_range)
@@ -295,11 +298,12 @@
 
 	for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 		for(var/y = y1; y <= y2; y += CHUNK_SIZE)
-			var/datum/camerachunk/chunk = SScameras.generate_chunk(x, y, epicenter.z)
+			var/datum/camera_chunk/chunk = SScameras.generate_chunk(x, y, epicenter.z)
 			// removing cameras in build mode didnt affect it and i guess it needs an AI eye to update so we have to do this manually
 			// unless we only want to see static in a jank manner only if an eye updates it
 			chunk?.force_update(only_if_necessary = FALSE) // UPDATE THE FUCK NOW
 			. |= chunk
+	*/
 
 /obj/item/multitool/ai_detect/proc/cleanup_static()
 	if(isnull(hud_obj)) //we never did anything

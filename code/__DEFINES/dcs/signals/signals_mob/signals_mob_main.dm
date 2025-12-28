@@ -61,6 +61,10 @@
 #define COMSIG_MOB_RESET_PERSPECTIVE "mob_reset_perspective"
 /// from base of /client/proc/set_eye() : (atom/old_eye, atom/new_eye)
 #define COMSIG_CLIENT_SET_EYE "client_set_eye"
+/// from base of /client/proc/set_eye() : (client/eye_user, atom/new_eye)
+#define COMSIG_ATOM_UNSET_AS_EYE "atom_unset_as_eye"
+/// from base of /client/proc/set_eye() : (client/eye_user, atom/old_eye)
+#define COMSIG_ATOM_SET_AS_EYE "atom_set_as_eye"
 /// from base of /datum/view_data/proc/afterViewChange() : (view)
 #define COMSIG_VIEWDATA_UPDATE "viewdata_update"
 

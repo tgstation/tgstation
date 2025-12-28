@@ -191,7 +191,7 @@
 
 /// Check whether an AI could take a picture of the target turf.
 /obj/item/camera/proc/can_ai_target(turf/target_turf)
-	return SScameras.is_visible_by_cameras(target_turf)
+	return SScameras.is_on_cameras(target_turf)
 
 /// Check whether a mob could take a picture of the target turf.
 /obj/item/camera/proc/can_mob_target(turf/target_turf, mob/user)
@@ -272,7 +272,7 @@
 		if(isnull(seen_placeholder))
 			continue
 
-		if(cameranet_user && !SScameras.is_visible_by_cameras(seen_placeholder))
+		if(cameranet_user && !SScameras.is_on_cameras(seen_placeholder))
 			continue
 		if(!cameranet_user && !(seen_placeholder in seen))
 			continue

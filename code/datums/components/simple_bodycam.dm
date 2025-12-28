@@ -56,7 +56,7 @@
 		do_update_cam()
 
 /datum/component/simple_bodycam/proc/do_update_cam()
-	SScameras.update_portable_camera(bodycam, camera_update_time)
+	QUEUE_CAMERA_UPDATE(bodycam)
 
 /datum/component/simple_bodycam/proc/rotate_cam(datum/source, old_dir, new_dir)
 	SIGNAL_HANDLER
