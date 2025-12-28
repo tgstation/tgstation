@@ -2,7 +2,7 @@
 	name = "Drug"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
-	var/trippy = TRUE //Does this drug make you trip?
+	var/trippy = TRUE
 
 /datum/reagent/drug/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -20,7 +20,7 @@
 
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.set_drugginess(15 SECONDS * metabolization_ratio * seconds_per_tick)
+	affected_mob.set_drugginess(30 SECONDS * metabolization_ratio * seconds_per_tick)
 	if(isturf(affected_mob.loc) && !isspaceturf(affected_mob.loc) && !HAS_TRAIT(affected_mob, TRAIT_IMMOBILIZED) && SPT_PROB(5, seconds_per_tick))
 		step(affected_mob, pick(GLOB.cardinals))
 	if(SPT_PROB(3.5, seconds_per_tick))
@@ -54,7 +54,7 @@
 		to_chat(affected_mob, span_notice("[smoke_message]"))
 	if(SPT_PROB(2, seconds_per_tick))
 		affected_mob.emote(pick("smile","laugh","giggle"))
-	affected_mob.adjust_nutrition(-0.075 * metabolization_ratio * seconds_per_tick) //munchies
+	affected_mob.adjust_nutrition(-0.6 * metabolization_ratio * seconds_per_tick) //munchies
 	if(SPT_PROB(4, seconds_per_tick) && affected_mob.body_position == LYING_DOWN && !affected_mob.IsSleeping()) //chance to fall asleep if lying down
 		to_chat(affected_mob, span_warning("You doze off..."))
 		affected_mob.Sleeping(10 SECONDS)
@@ -86,7 +86,7 @@
 		to_chat(affected_mob, span_notice("[smoke_message]"))
 	affected_mob.add_mood_event("smoked", /datum/mood_event/smoked)
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
-	affected_mob.AdjustAllImmobility(-25 * metabolization_ratio * seconds_per_tick)
+	affected_mob.AdjustAllImmobility(-200 * metabolization_ratio * seconds_per_tick)
 
 	return UPDATE_MOB_HEALTH
 
@@ -128,8 +128,8 @@
 /datum/reagent/drug/krokodil/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.125 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
-	need_mob_update = affected_mob.adjust_tox_loss(0.125 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.25 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	need_mob_update = affected_mob.adjust_tox_loss(0.25 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -174,11 +174,11 @@
 	if(SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[high_message]"))
 	affected_mob.add_mood_event("tweaking", /datum/mood_event/stimulant_medium)
-	affected_mob.AdjustAllImmobility(-20 * metabolization_ratio * seconds_per_tick)
+	affected_mob.AdjustAllImmobility(-26.67 * metabolization_ratio * seconds_per_tick)
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_stamina_loss(-2.5 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
-	affected_mob.set_jitter_if_lower(2 SECONDS * metabolization_ratio * seconds_per_tick)
-	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.5 * rand(1, 4) * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	need_mob_update = affected_mob.adjust_stamina_loss(-3.34 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+	affected_mob.set_jitter_if_lower(2.67 SECONDS * metabolization_ratio * seconds_per_tick)
+	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.67 * rand(1, 4) * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 	if(SPT_PROB(2.5, seconds_per_tick))
@@ -187,7 +187,7 @@
 /datum/reagent/drug/methamphetamine/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(!HAS_TRAIT(affected_mob, TRAIT_IMMOBILIZED) && !ismovable(affected_mob.loc))
-		for(var/i in 1 to round(2 * metabolization_ratio * seconds_per_tick, 1))
+		for(var/i in 1 to round(2.67 * metabolization_ratio * seconds_per_tick, 1))
 			step(affected_mob, pick(GLOB.cardinals))
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.emote("laugh")
@@ -195,8 +195,8 @@
 		affected_mob.visible_message(span_danger("[affected_mob]'s hands flip out and flail everywhere!"))
 		affected_mob.drop_all_held_items()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_tox_loss(0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.5 * (rand(5, 10) / 10) * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	need_mob_update = affected_mob.adjust_tox_loss(0.67 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.67 * (rand(5, 10) / 10) * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -233,9 +233,9 @@
 		to_chat(affected_mob, span_notice("[high_message]"))
 	affected_mob.add_mood_event("salted", /datum/mood_event/stimulant_heavy)
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_stamina_loss(-3 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
-	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 2 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
-	affected_mob.adjust_hallucinations(5 SECONDS * metabolization_ratio * seconds_per_tick)
+	need_mob_update = affected_mob.adjust_stamina_loss(-6 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 4 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	affected_mob.adjust_hallucinations(10 SECONDS * metabolization_ratio * seconds_per_tick)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 	if(!HAS_TRAIT(affected_mob, TRAIT_IMMOBILIZED) && !ismovable(affected_mob.loc))
@@ -244,9 +244,9 @@
 
 /datum/reagent/drug/bath_salts/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.adjust_hallucinations(5 SECONDS * metabolization_ratio * seconds_per_tick)
+	affected_mob.adjust_hallucinations(10 SECONDS * metabolization_ratio * seconds_per_tick)
 	if(!HAS_TRAIT(affected_mob, TRAIT_IMMOBILIZED) && !ismovable(affected_mob.loc))
-		for(var/i in 1 to round(4 * metabolization_ratio * seconds_per_tick, 1))
+		for(var/i in 1 to round(8 * metabolization_ratio * seconds_per_tick, 1))
 			step(affected_mob, pick(GLOB.cardinals))
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.emote(pick("twitch","drool","moan"))
@@ -269,8 +269,8 @@
 	if(SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[high_message]"))
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_stamina_loss(-9 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
-	need_mob_update += affected_mob.adjust_tox_loss(0.25 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update = affected_mob.adjust_stamina_loss(-18 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+	need_mob_update += affected_mob.adjust_tox_loss(0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(SPT_PROB(30, seconds_per_tick))
 		affected_mob.losebreath++
 		need_mob_update += affected_mob.adjust_oxy_loss(1, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
@@ -302,7 +302,7 @@
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
 	affected_mob.remove_status_effect(/datum/status_effect/confusion)
 	affected_mob.disgust = 0
-	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.1 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
+	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.2 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/happiness/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -319,7 +319,7 @@
 			if(3)
 				affected_mob.emote("frown")
 				affected_mob.add_mood_event("happiness_drug", /datum/mood_event/happiness_drug_bad_od)
-	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.25 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
+	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.5 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/pumpup
@@ -341,7 +341,7 @@
 
 /datum/reagent/drug/pumpup/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.set_jitter_if_lower(5 SECONDS * metabolization_ratio * seconds_per_tick)
+	affected_mob.set_jitter_if_lower(2.5 SECONDS * metabolization_ratio * seconds_per_tick)
 
 	if(SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[pick("Go! Go! GO!", "You feel ready...", "You feel invincible...")]"))
@@ -356,7 +356,7 @@
 
 /datum/reagent/drug/pumpup/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.set_jitter_if_lower(5 SECONDS * metabolization_ratio * seconds_per_tick)
+	affected_mob.set_jitter_if_lower(2.5 SECONDS * metabolization_ratio * seconds_per_tick)
 	var/need_mob_update
 	if(SPT_PROB(2.5, seconds_per_tick))
 		affected_mob.drop_all_held_items()
@@ -397,11 +397,11 @@
 
 /datum/reagent/drug/maint/powder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.05 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.1 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	// 5x if you want to OD, you can potentially go higher, but good luck managing the brain damage.
 	var/amt = max(round(volume/3, 0.1), 1)
 	affected_mob?.mind?.experience_multiplier_reasons |= type
-	affected_mob?.mind?.experience_multiplier_reasons[type] = 0.5 * amt * metabolization_ratio * seconds_per_tick
+	affected_mob?.mind?.experience_multiplier_reasons[type] = 1 * amt * metabolization_ratio * seconds_per_tick
 
 /datum/reagent/drug/maint/powder/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -410,7 +410,7 @@
 
 /datum/reagent/drug/maint/powder/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 3 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
+	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 6 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/maint/sludge
@@ -425,7 +425,7 @@
 
 /datum/reagent/drug/maint/sludge/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_tox_loss(0.25 * metabolization_ratio * seconds_per_tick, required_biotype = affected_biotype))
+	if(affected_mob.adjust_tox_loss(0.125 * metabolization_ratio * seconds_per_tick, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/maint/sludge/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -437,7 +437,7 @@
 	var/need_mob_update
 	need_mob_update = carbie.adjust_tox_loss(0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(SPT_PROB(5, seconds_per_tick))
-		need_mob_update += carbie.adjust_tox_loss(5, required_biotype = affected_biotype, updating_health = FALSE)
+		need_mob_update += carbie.adjust_tox_loss(5 * metabolization_ratio, required_biotype = affected_biotype, updating_health = FALSE)
 		carbie.vomit(VOMIT_CATEGORY_DEFAULT)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -452,15 +452,15 @@
 
 /datum/reagent/drug/maint/tar/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.AdjustAllImmobility(-5 * metabolization_ratio * seconds_per_tick)
-	affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, 0.75 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	affected_mob.AdjustAllImmobility(-10 * metabolization_ratio * seconds_per_tick)
+	affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, 1.5 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/maint/tar/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_update
-	need_update = affected_mob.adjust_tox_loss(2.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-	need_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, 1.5 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	need_update = affected_mob.adjust_tox_loss(5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, 3 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	if(need_update)
 		return UPDATE_MOB_HEALTH
 
@@ -477,18 +477,18 @@
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/psychonaut, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	psychonaut.set_slurring_if_lower(0.5 SECONDS * metabolization_ratio * seconds_per_tick)
+	psychonaut.set_slurring_if_lower(2.5 SECONDS * metabolization_ratio * seconds_per_tick)
 
 	switch(current_cycle)
 		if(2 to 6)
 			if(SPT_PROB(5, seconds_per_tick))
 				psychonaut.emote(pick("twitch","giggle"))
 		if(6 to 11)
-			psychonaut.set_jitter_if_lower(10 SECONDS * metabolization_ratio * seconds_per_tick)
+			psychonaut.set_jitter_if_lower(50 SECONDS * metabolization_ratio * seconds_per_tick)
 			if(SPT_PROB(10, seconds_per_tick))
 				psychonaut.emote(pick("twitch","giggle"))
 		if (11 to INFINITY)
-			psychonaut.set_jitter_if_lower(20 SECONDS * metabolization_ratio * seconds_per_tick)
+			psychonaut.set_jitter_if_lower(100 SECONDS * metabolization_ratio * seconds_per_tick)
 			if(SPT_PROB(16, seconds_per_tick))
 				psychonaut.emote(pick("twitch","giggle"))
 
@@ -613,7 +613,7 @@
 
 /datum/reagent/drug/blastoff/on_mob_life(mob/living/carbon/dancer, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(dancer.adjust_organ_loss(ORGAN_SLOT_LUNGS, 0.15 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
+	if(dancer.adjust_organ_loss(ORGAN_SLOT_LUNGS, 0.3 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		. = UPDATE_MOB_HEALTH
 	dancer.AdjustKnockdown(-20)
 
@@ -622,7 +622,7 @@
 
 /datum/reagent/drug/blastoff/overdose_process(mob/living/dancer, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(dancer.adjust_organ_loss(ORGAN_SLOT_LUNGS, 0.15 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
+	if(dancer.adjust_organ_loss(ORGAN_SLOT_LUNGS, 0.3 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		. = UPDATE_MOB_HEALTH
 
 	if(SPT_PROB(BLASTOFF_DANCE_MOVE_CHANCE_PER_UNIT * volume, seconds_per_tick))
@@ -678,14 +678,13 @@
 	taste_description = "metallic bitterness"
 	color = "#638b9b"
 	overdose_threshold = 25
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/maintenance_drugs = 20)
 
 /datum/reagent/drug/saturnx/on_mob_life(mob/living/carbon/invisible_man, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(invisible_man.adjust_organ_loss(ORGAN_SLOT_LIVER, 0.15 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
+	if(invisible_man.adjust_organ_loss(ORGAN_SLOT_LIVER, 0.3 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/saturnx/on_mob_metabolize(mob/living/invisible_man)
@@ -761,7 +760,7 @@
 		invisible_man.emote("giggle")
 	if(SPT_PROB(5, seconds_per_tick))
 		invisible_man.emote("laugh")
-	if(invisible_man.adjust_organ_loss(ORGAN_SLOT_LIVER, 0.2 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
+	if(invisible_man.adjust_organ_loss(ORGAN_SLOT_LIVER, ((0.2 * REAGENTS_METABOLISM) / metabolization_rate) * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/saturnx/stable
@@ -840,14 +839,14 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 	. = ..()
 	var/need_mob_update
 	kronkaine_fiend.add_mood_event("tweaking", /datum/mood_event/stimulant_medium)
-	if(kronkaine_fiend.adjust_organ_loss(ORGAN_SLOT_HEART, 0.5 * (0.1 + 0.04 * volume) * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
+	if(kronkaine_fiend.adjust_organ_loss(ORGAN_SLOT_HEART, 0.67 * (0.1 + 0.04 * volume) * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		need_mob_update = UPDATE_MOB_HEALTH
 		if(kronkaine_fiend.get_organ_loss(ORGAN_SLOT_HEART) >= 75 && prob(15))
 			to_chat(kronkaine_fiend, span_userdanger("You feel like your heart is about to explode!"))
 			playsound(kronkaine_fiend, 'sound/effects/singlebeat.ogg', 200, TRUE)
-	kronkaine_fiend.set_jitter_if_lower(10 SECONDS * metabolization_ratio * seconds_per_tick)
-	kronkaine_fiend.AdjustSleeping(-1 SECONDS * metabolization_ratio * seconds_per_tick)
-	kronkaine_fiend.adjust_drowsiness(-5 SECONDS * metabolization_ratio * seconds_per_tick)
+	kronkaine_fiend.set_jitter_if_lower(13.34 SECONDS * metabolization_ratio * seconds_per_tick)
+	kronkaine_fiend.AdjustSleeping(-1.34 SECONDS * metabolization_ratio * seconds_per_tick)
+	kronkaine_fiend.adjust_drowsiness(-6.67 SECONDS * metabolization_ratio * seconds_per_tick)
 	/* Do not try to cheese the overdose threshhold with purging chems to become stamina immune, if you purge and take stamina damage you will be punished!
 
 	The reason why I choose to add the adrenal crisis anti-cheese mechanic is because the main combat benefit is so front loaded, you could easily negate all the risk and downsides by mixing it with a small amount of a purger like haloperidol.
@@ -860,15 +859,15 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 				kronkaine_fiend.visible_message(span_bolddanger("[kronkaine_fiend.name] suddenly tenses up, it looks like the shock is causing their body to shut down!"), span_userdanger("The sudden shock in combination with the cocktail of drugs and purgatives in your body makes your adrenal system go haywire. Uh oh!"))
 				kronkaine_fiend.ForceContractDisease(new /datum/disease/adrenal_crisis(), FALSE, TRUE) //We punish players for purging, since unchecked purging would allow players to reap the stamina healing benefits without any drawbacks. This also has the benefit of making haloperidol a counter, like it is supposed to be.
 				break
-	need_mob_update = kronkaine_fiend.adjust_stamina_loss(-0.4 * volume * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+	need_mob_update = kronkaine_fiend.adjust_stamina_loss(-0.54 * volume * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/kronkaine/overdose_process(mob/living/kronkaine_fiend, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(kronkaine_fiend.adjust_organ_loss(ORGAN_SLOT_HEART, 0.25 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
+	if(kronkaine_fiend.adjust_organ_loss(ORGAN_SLOT_HEART, 0.34 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		. = UPDATE_MOB_HEALTH
-	kronkaine_fiend.set_jitter_if_lower(10 SECONDS * metabolization_ratio * seconds_per_tick)
+	kronkaine_fiend.set_jitter_if_lower(13.34 SECONDS * metabolization_ratio * seconds_per_tick)
 	if(SPT_PROB(10, seconds_per_tick))
 		to_chat(kronkaine_fiend, span_danger(pick("Your heart is racing!", "Your ears are ringing!", "You sweat like a pig!", "You clench your jaw and grind your teeth.", "You feel prickles of pain in your chest.")))
 
@@ -913,7 +912,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 	if(isnull(liver) || !(liver.organ_flags & affected_organ_flags))
 		return
 	// non-trivial but not immediately dangerous liver damage
-	liver.apply_organ_damage(0.25 * metabolization_ratio * seconds_per_tick)
+	liver.apply_organ_damage(0.5 * metabolization_ratio * seconds_per_tick)
 	// anti-hallucinogens can counteract the effects
 	if(HAS_TRAIT(affected_mob, TRAIT_HALLUCINATION_IMMUNE) || affected_mob.reagents.has_reagent(/datum/reagent/medicine/haloperidol, amount = 3, needs_metabolizing = TRUE))
 		QDEL_NULL(active_hallucination_weakref)
@@ -933,7 +932,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 		active_hallucination_weakref = WEAKREF(affected_mob.cause_hallucination(greatest_fear, name, duration = 5 MINUTES, skip_nearby = !overdosed))
 	else
 		// if they're just some random schmuck, give them random hallucinations
-		affected_mob.adjust_hallucinations_up_to(2 SECONDS * metabolization_ratio * seconds_per_tick, 30 SECONDS)
+		affected_mob.adjust_hallucinations_up_to(4 SECONDS * metabolization_ratio * seconds_per_tick, 30 SECONDS)
 
 /datum/reagent/drug/syndol/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()

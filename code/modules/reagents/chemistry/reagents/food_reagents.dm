@@ -313,7 +313,7 @@
 
 /datum/reagent/consumable/sugar/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.adjust_drowsiness_up_to((2.5 SECONDS * metabolization_ratio * seconds_per_tick), 60 SECONDS)
+	affected_mob.adjust_drowsiness_up_to((0.5 SECONDS * metabolization_ratio * seconds_per_tick), 60 SECONDS)
 
 /datum/reagent/consumable/sugar/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -556,7 +556,7 @@
 		var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 		if(liver && HAS_TRAIT(liver, TRAIT_CULINARY_METABOLISM))
 			if(SPT_PROB(10, seconds_per_tick)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
-				if(affected_mob.heal_bodypart_damage(brute = 0.5 * metabolization_ratio, burn = 0.5 * metabolization_ratio, updating_health = FALSE))
+				if(affected_mob.heal_bodypart_damage(brute = 3.34 * metabolization_ratio, burn = 3.34 * metabolization_ratio, updating_health = FALSE))
 					return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/tearjuice
@@ -795,14 +795,13 @@
 
 /datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	holder.add_reagent(/datum/reagent/consumable/sugar, 1.5 * metabolization_ratio * seconds_per_tick)
+	holder.add_reagent(/datum/reagent/consumable/sugar, 0.5 * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/consumable/honey
 	name = "Honey"
 	description = "Sweet sweet honey that decays into sugar. Has antibacterial and natural healing properties."
 	color = "#d3a308"
 	nutriment_factor = 15
-	metabolization_rate = REAGENTS_METABOLISM
 	taste_description = "sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/honey
@@ -869,7 +868,7 @@
 		var/food_factor = food.get_nutriment_factor(affected_mob)
 		if(food_factor <= 0)
 			continue
-		affected_mob.adjust_nutrition(0.5 * food_factor * metabolization_ratio * seconds_per_tick)
+		affected_mob.adjust_nutrition(20 * food_factor * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/consumable/eggrot
 	name = "Rotten Eggyolk"
@@ -1002,7 +1001,7 @@
 /datum/reagent/consumable/astrotame/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(affected_mob.disgust < 80)
-		affected_mob.adjust_disgust(5 * metabolization_ratio * seconds_per_tick)
+		affected_mob.adjust_disgust(2.5 * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/consumable/secretsauce
 	name = "Secret Sauce"
@@ -1141,7 +1140,6 @@
 	description = "A sweet, sugary syrup made from crushed sweet korta nuts."
 	color = "#d3a308"
 	nutriment_factor = 5
-	metabolization_rate = REAGENTS_METABOLISM
 	taste_description = "peppery sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 

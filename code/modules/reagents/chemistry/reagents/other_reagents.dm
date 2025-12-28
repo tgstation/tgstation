@@ -465,23 +465,22 @@
 
 	var/need_mob_update = FALSE
 	if(IS_CULTIST(affected_mob))
-		affected_mob.adjust_drowsiness(-5 SECONDS * metabolization_ratio * seconds_per_tick)
-		affected_mob.AdjustAllImmobility(-20 * metabolization_ratio * seconds_per_tick)
-		need_mob_update += affected_mob.adjust_stamina_loss(-5 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)
-		need_mob_update += affected_mob.adjust_tox_loss(-1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += affected_mob.adjust_oxy_loss(-1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += affected_mob.adjust_brute_loss(-1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += affected_mob.adjust_fire_loss(-1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-		need_mob_update = TRUE
-		affected_mob.adjust_blood_volume(1.5 * metabolization_ratio * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
-		affected_mob.coagulant_effect(1 * metabolization_ratio * seconds_per_tick)
+		affected_mob.adjust_drowsiness(-2 SECONDS * metabolization_ratio * seconds_per_tick)
+		affected_mob.AdjustAllImmobility(-8 * metabolization_ratio * seconds_per_tick)
+		need_mob_update += affected_mob.adjust_stamina_loss(-2 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)
+		need_mob_update += affected_mob.adjust_tox_loss(-0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.adjust_oxy_loss(-0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.adjust_brute_loss(-0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.adjust_fire_loss(-0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+		affected_mob.adjust_blood_volume(0.6 * metabolization_ratio * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
+		affected_mob.coagulant_effect(0.4 * metabolization_ratio * seconds_per_tick)
 
 	else  // Will deal about 90 damage when 50 units are thrown
-		need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 1.5 * metabolization_ratio * seconds_per_tick, 150)
-		need_mob_update += affected_mob.adjust_tox_loss(0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += affected_mob.adjust_fire_loss(0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += affected_mob.adjust_oxy_loss(0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += affected_mob.adjust_brute_loss(0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.6 * metabolization_ratio * seconds_per_tick, 150)
+		need_mob_update += affected_mob.adjust_tox_loss(0.2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.adjust_fire_loss(0.2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.adjust_oxy_loss(0.2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.adjust_brute_loss(0.2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -1362,9 +1361,9 @@
 /datum/reagent/space_cleaner/ez_clean/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_brute_loss(1.665*seconds_per_tick, updating_health = FALSE)
-	need_mob_update += affected_mob.adjust_fire_loss(1.665*seconds_per_tick, updating_health = FALSE)
-	need_mob_update += affected_mob.adjust_tox_loss(1.665*seconds_per_tick, updating_health = FALSE)
+	need_mob_update = affected_mob.adjust_brute_loss(1.1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += affected_mob.adjust_fire_loss(1.1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += affected_mob.adjust_tox_loss(1.1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -1581,7 +1580,7 @@
 
 /datum/reagent/nitrous_oxide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.adjust_drowsiness(2 SECONDS * metabolization_ratio * seconds_per_tick)
+	affected_mob.adjust_drowsiness(1.34 SECONDS * metabolization_ratio * seconds_per_tick)
 
 	if(!HAS_TRAIT(affected_mob, TRAIT_BLOOD_FOUNTAIN) && !HAS_TRAIT(affected_mob, TRAIT_COAGULATING)) //So long as they do not have a coagulant, if they did not have the bloody mess trait, they do now
 		ADD_TRAIT(affected_mob, TRAIT_BLOOD_FOUNTAIN, type)
@@ -2632,9 +2631,9 @@
 
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/carbon/target, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	target.adjust_hallucinations(2.5 SECONDS * metabolization_ratio * seconds_per_tick)
+	target.adjust_hallucinations(12.5 SECONDS * metabolization_ratio * seconds_per_tick)
 	var/datum/antagonist/changeling/changeling = IS_CHANGELING(target)
-	changeling?.adjust_chemicals(-1 * metabolization_ratio * seconds_per_tick)
+	changeling?.adjust_chemicals(-5 * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/pax/peaceborg
 	name = "Synthpax"
@@ -2651,8 +2650,8 @@
 
 /datum/reagent/peaceborg/confuse/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.adjust_confusion_up_to(1.5 SECONDS * metabolization_ratio * seconds_per_tick, 5 SECONDS)
-	affected_mob.adjust_dizzy_up_to(3 SECONDS * metabolization_ratio * seconds_per_tick, 12 SECONDS)
+	affected_mob.adjust_confusion_up_to(1 SECONDS * metabolization_ratio * seconds_per_tick, 5 SECONDS)
+	affected_mob.adjust_dizzy_up_to(2 SECONDS * metabolization_ratio * seconds_per_tick, 12 SECONDS)
 
 	if(SPT_PROB(10, seconds_per_tick))
 		to_chat(affected_mob, "You feel confused and disoriented.")
@@ -2669,7 +2668,7 @@
 	var/healthcomp = (100 - affected_mob.health) //DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
 	. = FALSE
 	if(affected_mob.get_stamina_loss() < (45 - healthcomp)) //At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
-		if(affected_mob.adjust_stamina_loss(5 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))
+		if(affected_mob.adjust_stamina_loss(3.34 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))
 			. = UPDATE_MOB_HEALTH
 	if(SPT_PROB(16, seconds_per_tick))
 		to_chat(affected_mob, "You should sit down and take a rest...")
@@ -2889,8 +2888,8 @@
 		var/datum/wound/W = thing
 		var/obj/item/bodypart/wounded_part = W.limb
 		if(wounded_part)
-			wounded_part.heal_damage(0.125 * metabolization_ratio * seconds_per_tick, 0.25 * metabolization_ratio * seconds_per_tick)
-		if(affected_mob.adjust_stamina_loss(-0.5 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)) // the more wounds, the more stamina regen
+			wounded_part.heal_damage(0.167 * metabolization_ratio * seconds_per_tick, 0.25 * metabolization_ratio * seconds_per_tick)
+		if(affected_mob.adjust_stamina_loss(-0.67 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)) // the more wounds, the more stamina regen
 			return UPDATE_MOB_HEALTH
 
 // unholy water, but for heretics.
@@ -2912,25 +2911,25 @@
 	. = ..()
 	var/need_mob_update = FALSE
 	if(IS_HERETIC_OR_MONSTER(drinker))
-		drinker.adjust_drowsiness(-5 * metabolization_ratio * seconds_per_tick)
-		drinker.AdjustAllImmobility(-20 * metabolization_ratio * seconds_per_tick)
-		need_mob_update += drinker.adjust_stamina_loss(-5 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)
-		need_mob_update += drinker.adjust_tox_loss(-1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, forced = TRUE)
-		need_mob_update += drinker.adjust_oxy_loss(-1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += drinker.adjust_brute_loss(-1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += drinker.adjust_fire_loss(-1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-		drinker.adjust_blood_volume(1.5 * metabolization_ratio * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
+		drinker.adjust_drowsiness(-2 * metabolization_ratio * seconds_per_tick)
+		drinker.AdjustAllImmobility(-8 * metabolization_ratio * seconds_per_tick)
+		need_mob_update += drinker.adjust_stamina_loss(-2 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)
+		need_mob_update += drinker.adjust_tox_loss(-0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, forced = TRUE)
+		need_mob_update += drinker.adjust_oxy_loss(-0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += drinker.adjust_brute_loss(-0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += drinker.adjust_fire_loss(-0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+		drinker.adjust_blood_volume(0.6 * metabolization_ratio * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
 		// Slowly regulates your body temp
 		drinker.adjust_bodytemperature((drinker.get_body_temp_normal() - drinker.bodytemperature) / 5)
 		for(var/datum/reagent/reagent as anything in drinker.reagents.reagent_list)
 			if(reagent != src)
-				drinker.reagents.remove_reagent(reagent.type, 2 * reagent.purge_multiplier * metabolization_ratio * seconds_per_tick)
+				drinker.reagents.remove_reagent(reagent.type, 0.8 * reagent.purge_multiplier * metabolization_ratio * seconds_per_tick)
 	else
-		need_mob_update = drinker.adjust_organ_loss(ORGAN_SLOT_BRAIN, 1.5 * metabolization_ratio * seconds_per_tick, 150)
-		need_mob_update += drinker.adjust_tox_loss(1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += drinker.adjust_fire_loss(1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += drinker.adjust_oxy_loss(1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += drinker.adjust_brute_loss(1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+		need_mob_update = drinker.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.6 * metabolization_ratio * seconds_per_tick, 150)
+		need_mob_update += drinker.adjust_tox_loss(0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += drinker.adjust_fire_loss(0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += drinker.adjust_oxy_loss(0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += drinker.adjust_brute_loss(0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -2989,7 +2988,7 @@
 
 /datum/reagent/ants/on_mob_life(mob/living/carbon/victim, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	victim.adjust_brute_loss(max(0.1, round((ant_ticks * ant_damage),0.1))) //Scales with time. Roughly 32 brute with 100u.
+	victim.adjust_brute_loss(0.2 * max(0.1, round((ant_ticks * ant_damage),0.1)) * metabolization_ratio * seconds_per_tick) //Scales with time. Roughly 32 brute with 100u.
 	ant_ticks++
 	if(ant_ticks < 5) // Makes ant food a little more appetizing, since you won't be screaming as much.
 		return
@@ -3090,8 +3089,8 @@
 /datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = kronkus_enjoyer.adjust_organ_loss(ORGAN_SLOT_HEART, 0.1 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
-	need_mob_update += kronkus_enjoyer.adjust_stamina_loss(-6, updating_stamina = FALSE)
+	need_mob_update = kronkus_enjoyer.adjust_organ_loss(ORGAN_SLOT_HEART, 0.2 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	need_mob_update += kronkus_enjoyer.adjust_stamina_loss(-12 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -3183,13 +3182,13 @@
 	. = ..()
 	if(affected_mob.mob_biotypes & MOB_UNDEAD || HAS_MIND_TRAIT(affected_mob, TRAIT_MORBID)) //if morbid or undead,acts like an addiction-less drug
 		affected_mob.remove_status_effect(/datum/status_effect/jitter)
-		affected_mob.AdjustStun(-2.5 SECONDS * metabolization_ratio * seconds_per_tick)
-		affected_mob.AdjustKnockdown(-2.5 SECONDS * metabolization_ratio * seconds_per_tick)
-		affected_mob.AdjustUnconscious(-2.5 SECONDS * metabolization_ratio * seconds_per_tick)
-		affected_mob.AdjustParalyzed(-2.5 SECONDS * metabolization_ratio * seconds_per_tick)
-		affected_mob.AdjustImmobilized(-2.5 SECONDS * metabolization_ratio * seconds_per_tick)
+		affected_mob.AdjustStun(-3.34 SECONDS * metabolization_ratio * seconds_per_tick)
+		affected_mob.AdjustKnockdown(-3.34 SECONDS * metabolization_ratio * seconds_per_tick)
+		affected_mob.AdjustUnconscious(-3.34 SECONDS * metabolization_ratio * seconds_per_tick)
+		affected_mob.AdjustParalyzed(-3.34 SECONDS * metabolization_ratio * seconds_per_tick)
+		affected_mob.AdjustImmobilized(-3.34 SECONDS * metabolization_ratio * seconds_per_tick)
 	else
-		if(affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, metabolization_ratio * seconds_per_tick)) //1 heart damage per tick
+		if(affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, 1.34 * metabolization_ratio * seconds_per_tick)) //1 heart damage per tick
 			. = UPDATE_MOB_HEALTH
 		if(SPT_PROB(10, seconds_per_tick))
 			affected_mob.emote(pick("twitch","choke","shiver","gag"))
@@ -3258,7 +3257,7 @@
 		added_light = TRUE
 
 	if (SPT_PROB(8, seconds_per_tick))
-		if(affected_mob.adjust_tox_loss(1 * metabolization_ratio, updating_health = FALSE))
+		if(affected_mob.adjust_tox_loss(3.34 * metabolization_ratio, updating_health = FALSE))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/luminescent_fluid/proc/on_organ_added(mob/living/source, obj/item/organ/eyes/new_eyes)

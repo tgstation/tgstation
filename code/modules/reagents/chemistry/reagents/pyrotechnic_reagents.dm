@@ -51,8 +51,8 @@
 
 /datum/reagent/clf3/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.adjust_fire_stacks(1 * metabolization_ratio * seconds_per_tick)
-	if(affected_mob.adjust_fire_loss(0.15 * max(affected_mob.fire_stacks, 1) * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
+	affected_mob.adjust_fire_stacks(0.1 * metabolization_ratio * seconds_per_tick)
+	if(affected_mob.adjust_fire_loss(0.015 * max(affected_mob.fire_stacks, 1) * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/clf3/expose_turf(turf/exposed_turf, reac_volume)
@@ -240,17 +240,17 @@
 //Pauses decay! Does do something, I promise.
 /datum/reagent/cryostylane/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	metabolization_rate = 0.05 * REM //slower consumption when dead
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM //slower consumption when dead
 
 /datum/reagent/cryostylane/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	metabolization_rate = 0.25 * REM//faster consumption when alive
 	if(affected_mob.reagents.has_reagent(/datum/reagent/oxygen))
-		affected_mob.reagents.remove_reagent(/datum/reagent/oxygen, 0.25 * metabolization_ratio * seconds_per_tick)
-		affected_mob.adjust_bodytemperature(-7.5 * metabolization_ratio * seconds_per_tick)
+		affected_mob.reagents.remove_reagent(/datum/reagent/oxygen, 1 * metabolization_ratio * seconds_per_tick)
+		affected_mob.adjust_bodytemperature(-30 * metabolization_ratio * seconds_per_tick)
 		if(ishuman(affected_mob))
 			var/mob/living/carbon/human/humi = affected_mob
-			humi.adjust_coretemperature(-7.5 * metabolization_ratio * seconds_per_tick)
+			humi.adjust_coretemperature(-30 * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/cryostylane/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -276,11 +276,11 @@
 /datum/reagent/pyrosium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(holder.has_reagent(/datum/reagent/oxygen))
-		holder.remove_reagent(/datum/reagent/oxygen, 0.25 * metabolization_ratio * seconds_per_tick)
-		affected_mob.adjust_bodytemperature(7.5 * metabolization_ratio * seconds_per_tick)
+		holder.remove_reagent(/datum/reagent/oxygen, 0.5 * metabolization_ratio * seconds_per_tick)
+		affected_mob.adjust_bodytemperature(15 * metabolization_ratio * seconds_per_tick)
 		if(ishuman(affected_mob))
 			var/mob/living/carbon/human/affected_human = affected_mob
-			affected_human.adjust_coretemperature(7.5 * metabolization_ratio * seconds_per_tick)
+			affected_human.adjust_coretemperature(15 * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/pyrosium/burn(datum/reagents/holder)
 	if(holder.has_reagent(/datum/reagent/oxygen))

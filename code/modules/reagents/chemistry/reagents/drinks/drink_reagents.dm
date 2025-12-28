@@ -502,11 +502,11 @@
 		ADD_TRAIT(affected_mob, TRAIT_DOUBLE_TAP, type)
 		effect_enabled = TRUE
 
-	affected_mob.set_jitter_if_lower(2 SECONDS * metabolization_ratio * seconds_per_tick)
+	affected_mob.set_jitter_if_lower(1 SECONDS * metabolization_ratio * seconds_per_tick)
 	if(prob(50))
-		affected_mob.adjust_dizzy(1 SECONDS * metabolization_ratio * seconds_per_tick)
+		affected_mob.adjust_dizzy(0.5 SECONDS * metabolization_ratio * seconds_per_tick)
 	if(current_cycle > 10)
-		affected_mob.adjust_dizzy(1.5 SECONDS * metabolization_ratio * seconds_per_tick)
+		affected_mob.adjust_dizzy(0.75 SECONDS * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/consumable/grey_bull
 	name = "Grey Bull"
@@ -1394,12 +1394,12 @@
 
 /datum/reagent/consumable/lean/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.adjust_jitter(1.25 SECONDS * metabolization_ratio * seconds_per_tick)
-	affected_mob.adjust_stutter(1.125 SECONDS * metabolization_ratio * seconds_per_tick)
-	affected_mob.adjust_drugginess(1 SECONDS * metabolization_ratio * seconds_per_tick)
+	affected_mob.adjust_jitter(2.5 SECONDS * metabolization_ratio * seconds_per_tick)
+	affected_mob.adjust_stutter(2.25 SECONDS * metabolization_ratio * seconds_per_tick)
+	affected_mob.adjust_drugginess(2 SECONDS * metabolization_ratio * seconds_per_tick)
 	if(SPT_PROB(15, seconds_per_tick))
 		affected_mob.emote(pick("taunt","twitch","shiver","laugh","moan","blush","stare"))
 	if(current_cycle > 16 && SPT_PROB(3.5, seconds_per_tick))
-		affected_mob.adjust_dizzy(7.5 SECONDS * metabolization_ratio)
-		affected_mob.adjust_drowsiness(3.25 SECONDS * metabolization_ratio)
+		affected_mob.adjust_dizzy(15 SECONDS * metabolization_ratio)
+		affected_mob.adjust_drowsiness(6.5 SECONDS * metabolization_ratio)
 		affected_mob.emote("drool")

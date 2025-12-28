@@ -74,7 +74,7 @@
 			booze_power *= (total_alcohol_volume / combined_dilute_volume)
 
 		// Volume, power, and server alcohol rate effect how quickly one gets drunk
-		drinker.adjust_drunk_effect(0.5 * sqrt(volume) * booze_power * ALCOHOL_RATE * metabolization_ratio * seconds_per_tick)
+		drinker.adjust_drunk_effect(1 * sqrt(volume) * booze_power * ALCOHOL_RATE * metabolization_ratio * seconds_per_tick)
 		if(boozepwr > 0)
 			var/obj/item/organ/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 			var/heavy_drinker_multiplier = (HAS_TRAIT(drinker, TRAIT_HEAVY_DRINKER) ? 0.5 : 1)
@@ -1354,10 +1354,10 @@
 	. = ..()
 	if(drinker.health <= 0)
 		var/need_mob_update
-		need_mob_update = drinker.adjust_brute_loss(-1.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += drinker.adjust_fire_loss(-1.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += drinker.adjust_oxy_loss(-2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		need_mob_update += drinker.adjust_tox_loss(-1.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update = drinker.adjust_brute_loss(-3.75 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += drinker.adjust_fire_loss(-3.75 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += drinker.adjust_oxy_loss(-5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		need_mob_update += drinker.adjust_tox_loss(-3.75 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		if(need_mob_update)
 			return UPDATE_MOB_HEALTH
 
@@ -1477,34 +1477,34 @@
 
 /datum/reagent/consumable/ethanol/hippies_delight/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	drinker.set_slurring_if_lower(0.5 SECONDS * metabolization_ratio * seconds_per_tick)
+	drinker.set_slurring_if_lower(2.5 SECONDS * metabolization_ratio * seconds_per_tick)
 
 	switch(current_cycle)
 		if(2 to 6)
-			drinker.set_dizzy_if_lower(10 SECONDS * metabolization_ratio * seconds_per_tick)
-			drinker.set_drugginess(30 SECONDS * metabolization_ratio * seconds_per_tick)
+			drinker.set_dizzy_if_lower(20 SECONDS * metabolization_ratio * seconds_per_tick)
+			drinker.set_drugginess(150 SECONDS * metabolization_ratio * seconds_per_tick)
 			if(SPT_PROB(5, seconds_per_tick))
 				drinker.emote(pick("twitch","giggle"))
 		if(6 to 11)
-			drinker.set_jitter_if_lower(20 SECONDS * metabolization_ratio * seconds_per_tick)
-			drinker.set_dizzy_if_lower(20 SECONDS * metabolization_ratio * seconds_per_tick)
-			drinker.set_drugginess(45 SECONDS * metabolization_ratio * seconds_per_tick)
+			drinker.set_jitter_if_lower(100 SECONDS * metabolization_ratio * seconds_per_tick)
+			drinker.set_dizzy_if_lower(100 SECONDS * metabolization_ratio * seconds_per_tick)
+			drinker.set_drugginess(225 SECONDS * metabolization_ratio * seconds_per_tick)
 			if(SPT_PROB(10, seconds_per_tick))
 				drinker.emote(pick("twitch","giggle"))
 		if (11 to 201)
-			drinker.set_jitter_if_lower(40 SECONDS * metabolization_ratio * seconds_per_tick)
-			drinker.set_dizzy_if_lower(40 SECONDS * metabolization_ratio * seconds_per_tick)
-			drinker.set_drugginess(1 MINUTES * metabolization_ratio * seconds_per_tick)
+			drinker.set_jitter_if_lower(200 SECONDS * metabolization_ratio * seconds_per_tick)
+			drinker.set_dizzy_if_lower(200 SECONDS * metabolization_ratio * seconds_per_tick)
+			drinker.set_drugginess(5 MINUTES * metabolization_ratio * seconds_per_tick)
 			if(SPT_PROB(16, seconds_per_tick))
 				drinker.emote(pick("twitch","giggle"))
 		if(201 to INFINITY)
-			drinker.set_jitter_if_lower(60 SECONDS * metabolization_ratio * seconds_per_tick)
-			drinker.set_dizzy_if_lower(60 SECONDS * metabolization_ratio * seconds_per_tick)
-			drinker.set_drugginess(1.25 MINUTES * metabolization_ratio * seconds_per_tick)
+			drinker.set_jitter_if_lower(300 SECONDS * metabolization_ratio * seconds_per_tick)
+			drinker.set_dizzy_if_lower(300 SECONDS * metabolization_ratio * seconds_per_tick)
+			drinker.set_drugginess(6.25 MINUTES * metabolization_ratio * seconds_per_tick)
 			if(SPT_PROB(23, seconds_per_tick))
 				drinker.emote(pick("twitch","giggle"))
 			if(SPT_PROB(16, seconds_per_tick))
-				if(drinker.adjust_tox_loss(1 * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype))
+				if(drinker.adjust_tox_loss(5 * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype))
 					return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/eggnog
@@ -1663,11 +1663,11 @@
 	. = ..()
 	if(drinker.health > 0)
 		var/need_mob_update
-		need_mob_update = drinker.adjust_brute_loss(-0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += drinker.adjust_fire_loss(-0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += drinker.adjust_tox_loss(-0.25 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-		need_mob_update += drinker.adjust_oxy_loss(-1.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		need_mob_update += drinker.adjust_stamina_loss(-2.5 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+		need_mob_update = drinker.adjust_brute_loss(-0.25 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += drinker.adjust_fire_loss(-0.25 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += drinker.adjust_tox_loss(-0.125 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += drinker.adjust_oxy_loss(-0.75 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		need_mob_update += drinker.adjust_stamina_loss(-1.25 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 		if(need_mob_update)
 			return UPDATE_MOB_HEALTH
 
