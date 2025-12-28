@@ -49,7 +49,7 @@ GLOBAL_VAR(department_cd_override)
 	linked_department = department
 	var/datum/job_department/linked_department_real = SSjob.get_department_type(linked_department)
 	// Heads of staff can download
-	download_access |= linked_department_real.head_of_staff_access
+	LAZYOR(download_access, linked_department_real.head_of_staff_access)
 	// Heads of staff + anyone in the dept can run it
 	use_access |= linked_department_real.head_of_staff_access
 	use_access |= linked_department_real.department_access
@@ -164,7 +164,7 @@ GLOBAL_VAR(department_cd_override)
 	if(action == "override_order")
 		if(isnull(department_order) || !(department_order in SSshuttle.shopping_list))
 			return TRUE
-		if(length(download_access & id_card_access) <= 0)
+		if(LAZYLEN(download_access & id_card_access) <= 0)
 			computer.physical.balloon_alert(orderer, "requires head of staff access!")
 			playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 			return TRUE
