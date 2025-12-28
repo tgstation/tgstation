@@ -281,11 +281,17 @@
 			C.electrocute_act(shock_damage*0.75, src, 1, flags, jitter_time, stutter_time, stun_duration)
 	//Stun
 	var/should_stun = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
-	var/paralyze = !(flags & SHOCK_KNOCKDOWN)
+	var/stun = !(flags & SHOCK_KNOCKDOWN)
 	var/immediately_stun = should_stun && !(flags & SHOCK_DELAY_STUN)
 	if (immediately_stun)
-		if (paralyze)
-			Paralyze(stun_duration)
+		if (stun)
+			// intended effect here is to floor you immediately if you are shocked twice in quick succession
+			// or to keep you floored if you are already incapacitated otherwise
+			if(incapacitated)
+				Paralyze(stun_duration)
+			// otherwise it just stuns you upright - until the second shock, which floors you
+			else
+				Stun(stun_duration)
 		else
 			Knockdown(stun_duration)
 	//Jitter and other fluff.
@@ -293,12 +299,12 @@
 	adjust_jitter(jitter_time)
 	adjust_stutter(stutter_time)
 	if (should_stun)
-		addtimer(CALLBACK(src, PROC_REF(secondary_shock), paralyze, stun_duration * 1.5), 2 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(secondary_shock), stun, stun_duration * 1.5), 2 SECONDS)
 	return shock_damage
 
 ///Called slightly after electrocute act to apply a secondary stun.
-/mob/living/carbon/proc/secondary_shock(paralyze, stun_duration)
-	if (paralyze)
+/mob/living/carbon/proc/secondary_shock(stun, stun_duration)
+	if (stun)
 		Paralyze(stun_duration)
 	else
 		Knockdown(stun_duration)
