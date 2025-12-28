@@ -11,7 +11,8 @@
 	operation_flags = OPERATION_LOCKED | OPERATION_NOTABLE
 	time = 20 SECONDS
 	target_type = /obj/item/organ/wings/moth
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
+	all_surgery_states_required = SURGERY_SKIN_OPEN
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 
 /datum/surgery_operation/organ/fix_wings/get_default_radial_image()
 	return image(icon = 'icons/mob/human/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_monarch_BEHIND")

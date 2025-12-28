@@ -209,6 +209,7 @@
 #define BODYPART_ID_PSYKER "psyker"
 #define BODYPART_ID_MEAT "meat"
 #define BODYPART_ID_PEG "peg"
+#define BODYPART_ID_BONE "bone"
 
 
 //See: datum/species/var/digitigrade_customization
