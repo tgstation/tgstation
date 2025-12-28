@@ -571,7 +571,7 @@
 	name = "christmas gift"
 	desc = "It could be anything!"
 	icon = 'icons/obj/storage/wrapping.dmi'
-	iconstate = "giftdeliverypackage1"
+	icon_state = "giftdeliverypackage1"
 	inhand_icon_state = "gift"
 	mail_locked_message = "This gift isn't for you, and you don't want to get on Santa's bad side!"
 	drop_sound = null
