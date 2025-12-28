@@ -131,7 +131,7 @@
 	name = "Modified Syringe Gun"
 	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
 	item = /obj/item/gun/syringe/dna
-	cost = 14
+	cost = 10
 	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
 
 /datum/uplink_item/role_restricted/meathook
