@@ -52,7 +52,7 @@
 		return
 
 	// pick ghost, create AI and transfer
-	var/mob/living/silicon/ai/weak_syndie/new_ai = new /mob/living/silicon/ai/weak_syndie(null, new /datum/ai_laws/syndicate_override, ghost)
+	var/mob/living/silicon/ai/weak_syndie/new_ai = new(null, ghost, /datum/ai_laws/syndicate_override)
 	// create and apply syndie datum
 	var/datum/antagonist/nukeop/nuke_datum = new()
 	nuke_datum.send_to_spawnpoint = FALSE
