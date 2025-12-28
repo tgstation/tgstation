@@ -48,6 +48,10 @@
 	req_access = list("syndicate");
 	specialfunctions = 4
 	},
+/obj/machinery/camera/xray/directional/north{
+	c_tag = "External View";
+	network = list("caravansyndicate1")
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/ruin/caravan/syndicate1)
 "Jv" = (
@@ -58,14 +62,6 @@
 	dir = 8
 	},
 /turf/closed/wall/mineral/plastitanium,
-/area/shuttle/ruin/caravan/syndicate1)
-"Ve" = (
-/obj/machinery/camera/xray/directional/west{
-	c_tag = "External View";
-	network = list("caravansyndicate1");
-	pixel_x = 32
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/ruin/caravan/syndicate1)
 "Yi" = (
 /obj/effect/mapping_helpers/airlock/locked,
@@ -138,7 +134,7 @@ qu
 ie
 Jv
 cZ
-Ve
+qu
 cZ
 Jv
 ie
