@@ -20,8 +20,8 @@
 
 	mrbones.reagents.add_reagent(bonehurting, 40)
 	mrbones.Life(SSMOBS_DT)
-	var/expected_stamina_damage = (7.5 * REM * SECONDS_PER_TICK)
-	var/expected_brute_damage = (0.5 * REM * SECONDS_PER_TICK)
+	var/expected_stamina_damage = (3.25 * SECONDS_PER_TICK)
+	var/expected_brute_damage = (0.25 * SECONDS_PER_TICK)
 
 	TEST_ASSERT_EQUAL(mrbones.get_stamina_loss(), expected_stamina_damage,
 		"Skeleton took [mrbones.get_stamina_loss() > expected_stamina_damage ? "more" : "less"] stamina damage than expected")
@@ -47,7 +47,7 @@
 
 	mrbones.reagents.add_reagent(calcium, 50)
 	mrbones.Life(SSMOBS_DT)
-	var/expected_remaining_damage = DAMAGE_AMOUNT - (2.5 * REM * SECONDS_PER_TICK)
+	var/expected_remaining_damage = DAMAGE_AMOUNT - (1.25 * SECONDS_PER_TICK)
 	// Milk also heals brute on its own, so we may be more healed than expected
 	TEST_ASSERT(damaged_parts[1].brute_dam <= expected_remaining_damage,
 		"Milk did not heal the expected amount of damage (expected at least [expected_remaining_damage], got [damaged_parts[1].brute_dam])")
@@ -73,7 +73,7 @@
 
 	var/obj/item/bodypart/r_arm = mrbones.get_bodypart(BODY_ZONE_R_ARM)
 	var/obj/item/bodypart/l_arm = mrbones.get_bodypart(BODY_ZONE_L_ARM)
-	var/expected_wound_healing = 4 * REM * SECONDS_PER_TICK
+	var/expected_wound_healing = 2 * SECONDS_PER_TICK
 
 	// Test plasma
 

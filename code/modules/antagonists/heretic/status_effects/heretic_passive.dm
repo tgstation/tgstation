@@ -537,7 +537,8 @@
 	// Heals blood loss
 	source.adjust_blood_volume(2.5 * delta_time, maximum = BLOOD_VOLUME_NORMAL)
 	for(var/datum/reagent/reagent as anything in source.reagents.reagent_list)
-		source.reagents.remove_reagent(reagent.type, 2 * reagent.purge_multiplier * REM * seconds_per_tick)
+		reagent.volume -= 1 * reagent.purge_multiplier * seconds_per_tick
+	source.reagents.update_total()
 
 	if(!iscarbon(source))
 		return

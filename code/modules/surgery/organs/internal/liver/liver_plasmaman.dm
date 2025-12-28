@@ -18,7 +18,7 @@
 	// plasmamen use plasma to reform their bones or whatever
 	if(istype(chem, /datum/reagent/toxin/plasma) || istype(chem, /datum/reagent/toxin/hot_ice))
 		for(var/datum/wound/iter_wound as anything in organ_owner.all_wounds)
-			iter_wound.on_xadone(4 * REM * seconds_per_tick)
+			iter_wound.on_xadone(2 * seconds_per_tick)
 		return // Do normal metabolism
 	// plasmamen get high on gunpowder lol
 	if(istype(chem, /datum/reagent/gunpowder))

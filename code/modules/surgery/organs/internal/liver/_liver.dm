@@ -304,7 +304,7 @@
 	if(!(organ_owner.mob_biotypes & MOB_PLANT))
 		return
 	if(chem.type == /datum/reagent/toxin/plantbgone)
-		organ_owner.adjust_tox_loss(3 * REM * seconds_per_tick)
+		organ_owner.adjust_tox_loss(1.5 * seconds_per_tick)
 
 /obj/item/organ/liver/snail
 	name = "snail liver"
@@ -330,7 +330,7 @@
 		return
 	if(istype(chem, /datum/reagent/consumable/salt))
 		playsound(organ_owner, SFX_SEAR, 30, TRUE)
-		organ_owner.adjust_fire_loss(2 * REM * seconds_per_tick)
+		organ_owner.adjust_fire_loss(1 * seconds_per_tick)
 		organ_owner.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return COMSIG_MOB_STOP_REAGENT_TICK
 
