@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		AddComponent(/datum/component/clothing_dirt, dirt_state)
 
 	if(fishing_modifier)
-		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 
 	if(!max_filters || !starting_filter_type)
 		return
@@ -249,9 +249,9 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	if(!fishing_modifier)
 		return
 	if(up)
-		qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
+		RemoveElement(/datum/element/adjust_fishing_difficulty)
 	else
-		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 
 /obj/item/clothing/mask/gas/welding/update_icon_state()
 	. = ..()

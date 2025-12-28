@@ -26,7 +26,7 @@
 
 /obj/structure/hoop/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/simple_rotation, ROTATION_REQUIRE_WRENCH|ROTATION_IGNORE_ANCHORED)
+	AddElement(/datum/element/simple_rotation, ROTATION_REQUIRE_WRENCH|ROTATION_IGNORE_ANCHORED, post_rotation_proccall = PROC_REF(post_rotation))
 	update_appearance()
 	register_context()
 
@@ -34,7 +34,7 @@
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Reset score"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/structure/hoop/post_rotation(mob/user, degrees)
+/obj/structure/hoop/proc/post_rotation(mob/user, degrees)
 	update_appearance()
 
 /obj/structure/hoop/proc/score(obj/item/toy/basketball/ball, mob/living/baller, points)

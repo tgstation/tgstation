@@ -60,7 +60,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	/// The last time we clicked during the baiting phase
 	var/last_baiting_click
 	/// Fishing mob
-	var/mob/user
+	var/mob/living/user
 	/// Rod that is used for the challenge
 	var/obj/item/fishing_rod/used_rod
 	/// float visual
@@ -120,7 +120,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	///Keep track of the fish source from which we're pulling the reward
 	var/datum/fish_source/fish_source
 
-/datum/fishing_challenge/New(datum/component/fishing_spot/comp, obj/item/fishing_rod/rod, mob/user)
+/datum/fishing_challenge/New(datum/component/fishing_spot/comp, obj/item/fishing_rod/rod, mob/living/user)
 	src.user = user
 	used_rod = rod
 	location = comp.parent
@@ -200,12 +200,10 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	if(fish_source)
 		fish_source.UnregisterSignal(src, list(
 			COMSIG_FISHING_CHALLENGE_ROLL_REWARD,
-			COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY,
 		))
 		fish_source.UnregisterSignal(user, COMSIG_MOB_COMPLETE_FISHING)
 	fish_source = new_fish_source
 	fish_source.RegisterSignal(src, COMSIG_FISHING_CHALLENGE_ROLL_REWARD, TYPE_PROC_REF(/datum/fish_source, roll_reward_minigame))
-	fish_source.RegisterSignal(src, COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY, TYPE_PROC_REF(/datum/fish_source, calculate_difficulty_minigame))
 	fish_source.RegisterSignal(user, COMSIG_MOB_COMPLETE_FISHING, TYPE_PROC_REF(/datum/fish_source, on_challenge_completed))
 
 /datum/fishing_challenge/proc/send_alert(message)
@@ -302,7 +300,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	user.balloon_alert(user, "interrupted!")
 	interrupt()
 
-/datum/fishing_challenge/proc/handle_click(mob/source, atom/target, modifiers)
+/datum/fishing_challenge/proc/handle_click(mob/living/source, atom/target, modifiers)
 	SIGNAL_HANDLER
 	if(HAS_TRAIT(source, TRAIT_HANDS_BLOCKED)) //blocked, can't do stuff
 		return
@@ -337,11 +335,11 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		experience_multiplier *= 0.5
 		complete(FALSE)
 
-/datum/fishing_challenge/proc/on_attack_self(obj/item/source, mob/user)
+/datum/fishing_challenge/proc/on_attack_self(obj/item/source, mob/living/user)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(stop_fishing), source, user)
 
-/datum/fishing_challenge/proc/stop_fishing(obj/item/rod, mob/user)
+/datum/fishing_challenge/proc/stop_fishing(obj/item/rod, mob/living/user)
 	if((phase != MINIGAME_PHASE || do_after(user, 3 SECONDS, rod)) && !QDELETED(src) && !completed)
 		experience_multiplier *= 0.5
 		send_alert("stopped fishing")
@@ -378,11 +376,11 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		playsound(location, 'sound/effects/bigsplash.ogg', 100)
 
 	var/valid_achievement_catch = FALSE
-	if (ispath(reward_path, /obj/item/fish))
+	if(ispath(reward_path, /obj/item/fish))
 		valid_achievement_catch = TRUE
-	else if (isfish(reward_path))
+	else if(isfish(reward_path))
 		var/obj/item/fish/fishy_individual = reward_path
-		if (!HAS_TRAIT(fishy_individual, TRAIT_NO_FISHING_ACHIEVEMENT) && fishy_individual.status == FISH_ALIVE)
+		if(!HAS_TRAIT(fishy_individual, TRAIT_NO_FISHING_ACHIEVEMENT) && fishy_individual.status == FISH_ALIVE)
 			valid_achievement_catch = TRUE
 
 	if(valid_achievement_catch)
@@ -515,14 +513,16 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		reward.damage_fish(damage)
 
 /datum/fishing_challenge/proc/get_difficulty()
-	var/list/difficulty_holder = list(0)
-	SEND_SIGNAL(src, COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY, reward_path, used_rod, user, difficulty_holder)
-	difficulty = difficulty_holder[1]
+	var/new_difficulty = fish_source?.calculate_difficulty_minigame(src, reward_path, used_rod, user) || initial(difficulty)
+	for(var/source, modifier in user?.fishing_difficulty_mods_by_source)
+		new_difficulty += modifier
+
 	//If you manage to be so well-equipped and skilled to completely crush the difficulty, just skip to the reward.
-	if(difficulty <= 0)
+	if(new_difficulty <= 0)
 		complete(TRUE)
 		return FALSE
-	difficulty = clamp(round(difficulty), FISHING_MINIMUM_DIFFICULTY, 100)
+
+	difficulty = clamp(round(new_difficulty), FISHING_MINIMUM_DIFFICULTY, 100)
 	return TRUE
 
 /datum/fishing_challenge/proc/update_difficulty()

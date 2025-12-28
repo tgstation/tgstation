@@ -30,7 +30,7 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, PROC_REF(on_speed_potioned))
 	if(fishing_modifier)
-		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 
 /// Signal handler for [COMSIG_SPEED_POTION_APPLIED]. Speed potion removes the active slowdown
 /obj/item/clothing/shoes/magboots/proc/on_speed_potioned(datum/source)
@@ -40,9 +40,9 @@
 	slowdown_active = 0
 
 	if(magpulse && magpulse_fishing_modifier)
-		qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
+		RemoveElement(/datum/element/adjust_fishing_difficulty)
 		if(fishing_modifier)
-			AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+			AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 	magpulse_fishing_modifier = fishing_modifier
 
 /obj/item/clothing/shoes/magboots/verb/toggle()
@@ -60,14 +60,14 @@
 		attach_clothing_traits(active_traits)
 		slowdown += slowdown_active
 		if(magpulse_fishing_modifier)
-			AddComponent(/datum/component/adjust_fishing_difficulty, magpulse_fishing_modifier)
+			AddElement(/datum/element/adjust_fishing_difficulty, magpulse_fishing_modifier)
 		else if(magpulse_fishing_modifier != fishing_modifier)
-			qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
+			RemoveElement(/datum/element/adjust_fishing_difficulty)
 	else
 		if(fishing_modifier)
-			AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+			AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 		else if(magpulse_fishing_modifier != fishing_modifier)
-			qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
+			RemoveElement(/datum/element/adjust_fishing_difficulty)
 		detach_clothing_traits(active_traits)
 		slowdown -= slowdown_active
 

@@ -41,7 +41,7 @@
 
 	register_item_context()
 	update_appearance()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -3, ITEM_SLOT_HANDS)
+	AddElement(/datum/element/adjust_fishing_difficulty, -3, ITEM_SLOT_HANDS)
 
 /obj/item/fish_analyzer/Destroy()
 	scanned_object = null

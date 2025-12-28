@@ -214,7 +214,6 @@
 	offered_item.do_pickup_animation(src, offerer)
 	put_in_hands(offered_item)
 
-
 /mob/living/click_ctrl_shift(mob/user)
 	if(HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS))
 		var/mob/living/living_user = user
