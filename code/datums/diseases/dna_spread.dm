@@ -15,7 +15,7 @@
 	bypasses_immunity = TRUE
 
 
-/datum/disease/dnaspread/stage_act(seconds_per_tick, times_fired)
+/datum/disease/dnaspread/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

@@ -645,7 +645,7 @@
 	update_icon_dropped()
 
 //Return TRUE to get whatever mob this is in to update health.
-/obj/item/bodypart/proc/on_life(seconds_per_tick, times_fired)
+/obj/item/bodypart/proc/on_life(seconds_per_tick)
 	SHOULD_CALL_PARENT(TRUE)
 
 /**

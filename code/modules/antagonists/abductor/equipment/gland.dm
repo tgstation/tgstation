@@ -99,7 +99,7 @@
 	hud.add_atom_to_hud(gland_owner)
 	update_gland_hud()
 
-/obj/item/organ/heart/gland/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/heart/gland/on_life(seconds_per_tick)
 	if(!active)
 		return
 	if(!ownerCheck())

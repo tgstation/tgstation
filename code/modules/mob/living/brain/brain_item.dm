@@ -337,7 +337,7 @@
 	owner?.mind?.set_current(null) //You aren't allowed to return to brains that don't exist
 	return ..()
 
-/obj/item/organ/brain/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/brain/on_life(seconds_per_tick)
 	if(HAS_TRAIT(src, TRAIT_BRAIN_DAMAGE_NODEATH))
 		return
 	if(damage >= BRAIN_DAMAGE_DEATH) //rip

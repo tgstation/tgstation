@@ -97,7 +97,7 @@
 		return BLOOD_FLOW_INCREASING
 	return BLOOD_FLOW_STEADY
 
-/datum/wound/pierce/bleed/handle_process(seconds_per_tick, times_fired)
+/datum/wound/pierce/bleed/handle_process(seconds_per_tick)
 	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
