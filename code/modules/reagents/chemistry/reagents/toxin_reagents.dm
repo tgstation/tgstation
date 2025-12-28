@@ -26,7 +26,7 @@
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(toxpwr && affected_mob.health > health_required)
-		if(affected_mob.adjust_tox_loss(METABOLIZE_FREE_CONSTANT(0.5) * toxpwr * metabolization_ratio * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+		if(affected_mob.adjust_tox_loss(METABOLIZE_FREE_CONSTANT(0.5) * toxpwr * normalise_creation_purity() * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/amatoxin
