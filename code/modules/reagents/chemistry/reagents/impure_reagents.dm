@@ -41,7 +41,7 @@
 /datum/reagent/inverse/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 
-	if(affected_mob.adjust_tox_loss(METABOLIZE_FREE_CONSTANT(0.5) * tox_damage * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+	if(affected_mob.adjust_tox_loss((0.5 / metabolization_rate) * tox_damage * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 //Failed chems - generally use inverse if you want to use a impure subtype for it
