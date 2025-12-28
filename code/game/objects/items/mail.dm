@@ -592,16 +592,6 @@
 	icon_state = "mail_counterfeit_device-xmas"
 	storage_type = /datum/storage/mail_counterfeit
 
-
-
-/obj/item/storage/mail_counterfeit_device/xmas/examine_more(mob/user)
-	. += span_notice("<i>You notice the manufacturer information on the side of the device...</i>")
-	. += "\t[span_info("Guerilla Giftbox Assembler:")]"
-	. += "\t[span_info("GGA Jolly Service, right on Christmas.")]"
-	return .
-
-
-
 /obj/item/storage/mail_counterfeit_device/xmas/attack_self(mob/user, modifiers)
 	var/mail_type = tgui_input_list(user, "Select present size (Purely visual, does not affect storage or actual size)", "Present Counterfeiting", list("Tiny", "Small", "Normal", "Bulky", "Huge"))
 	if(isnull(mail_type))
