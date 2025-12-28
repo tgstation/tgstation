@@ -293,6 +293,8 @@
 		return
 
 	var/mob/living/carbon/human/wearer = loc
+	if(wearer.get_item_by_slot(ITEM_SLOT_ICLOTHING) != src)
+		return
 
 	if(has_sensor >= HAS_SENSORS && sensor_mode >= SENSOR_LIVING)
 		GLOB.suit_sensors_list |= wearer
