@@ -1020,7 +1020,7 @@
 
 /obj/item/mod/module/shock_absorber
 	name = "MOD shock absorption module"
-	desc = "A module that makes the user resistant to the knockdown inflicted by Stun Batons."
+	desc = "A module that makes the user resistant to the knockdown and CNS disruption inflicted by Stun Batons."
 	icon_state = "no_baton"
 	complexity = 1
 	use_energy_cost = DEFAULT_CHARGE_DRAIN
