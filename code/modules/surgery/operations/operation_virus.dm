@@ -27,7 +27,7 @@
 	. = ..()
 	. += "the patient must have a virus to bond"
 	for(var/datum/reagent/chem as anything in required_chems)
-		. += "the patient must be dosed with >1u [chem::name]"
+		. += "the patient must be dosed with >=1u [chem::name]"
 
 /datum/surgery_operation/basic/viral_bonding/get_default_radial_image()
 	return image(/obj/item/clothing/mask/surgical)
