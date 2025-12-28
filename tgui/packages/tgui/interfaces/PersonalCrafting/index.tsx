@@ -97,7 +97,7 @@ export function PersonalCrafting(props: any) {
             recipe.foodtypes?.includes(activeType))) ||
         // Is material mode and the active material or catalysts match
         (tabMode === TABS.material &&
-          Object.keys(recipe.reqs).includes(activeMaterial)) ||
+          activeMaterial in (recipe.reqs ?? {})) ||
         // Is category mode and the active categroy matches
         (tabMode === TABS.category &&
           ((activeCategory === 'Can Make' &&
