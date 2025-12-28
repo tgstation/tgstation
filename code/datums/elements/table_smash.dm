@@ -198,6 +198,6 @@
 	after_smash(target)
 	return COMSIG_LIVING_SHOVE_HANDLED
 
-/// Called after someone is harmfully smashed into us
+/// Called after someone is harmfully smashed onto us
 /obj/structure/proc/after_smash(mob/living/smashed_onto)
 	return // This is mostly for our children
