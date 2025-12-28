@@ -613,7 +613,7 @@
 
 /datum/reagent/spraytan/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	metabolization_rate = 1 * REAGENTS_METABOLISM
+	metabolization_rate = REAGENTS_METABOLISM
 
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/affected_human = affected_mob

@@ -1207,19 +1207,18 @@
 	name = "Toxin Microcapsules"
 	description = "Causes heavy toxin damage after a brief time of inactivity."
 	metabolization_rate = 0 //stays in the system until active.
-	var/actual_metaboliztion_rate = REAGENTS_METABOLISM
 	toxpwr = 0
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	var/actual_toxpwr = 5
 	var/delay = 31
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/delayed/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(current_cycle <= delay)
 		return
 	if(holder)
-		holder.remove_reagent(type, actual_metaboliztion_rate * affected_mob.metabolism_efficiency * seconds_per_tick)
-	if(affected_mob.adjust_tox_loss(0.5 * actual_toxpwr * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+		holder.remove_reagent(type, REAGENTS_METABOLISM * affected_mob.metabolism_efficiency * seconds_per_tick)
+	if(affected_mob.adjust_tox_loss(0.5 * actual_toxpwr * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		. = UPDATE_MOB_HEALTH
 	if(SPT_PROB(5, seconds_per_tick))
 		affected_mob.Paralyze(20)

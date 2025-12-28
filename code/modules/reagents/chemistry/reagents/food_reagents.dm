@@ -802,7 +802,7 @@
 	description = "Sweet sweet honey that decays into sugar. Has antibacterial and natural healing properties."
 	color = "#d3a308"
 	nutriment_factor = 15
-	metabolization_rate = 1 * REAGENTS_METABOLISM
+	metabolization_rate = REAGENTS_METABOLISM
 	taste_description = "sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/honey
@@ -1141,7 +1141,7 @@
 	description = "A sweet, sugary syrup made from crushed sweet korta nuts."
 	color = "#d3a308"
 	nutriment_factor = 5
-	metabolization_rate = 1 * REAGENTS_METABOLISM
+	metabolization_rate = REAGENTS_METABOLISM
 	taste_description = "peppery sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 

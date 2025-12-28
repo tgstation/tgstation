@@ -774,7 +774,7 @@
 	name = "Oculine"
 	description = "Quickly restores eye damage, cures nearsightedness, and has a chance to restore vision to the blind."
 	color = "#404040" //oculine is dark grey, inacusiate is light grey
-	metabolization_rate = 1 * REAGENTS_METABOLISM
+	metabolization_rate = REAGENTS_METABOLISM
 	overdose_threshold = 30
 	taste_description = "earthy bitterness"
 	purity = REAGENT_STANDARD_PURITY
@@ -1917,7 +1917,7 @@
 	name = "Naloxone"
 	description = "Opioid antagonist that purges drowsiness and narcotics from the patient, restores breath loss and accelerates addiction recovery."
 	color = "#f5f5dc"
-	metabolization_rate = 0.1
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	ph = 4
 	penetrates_skin = TOUCH|VAPOR
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

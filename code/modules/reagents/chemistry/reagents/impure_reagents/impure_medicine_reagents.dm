@@ -28,7 +28,7 @@
 /datum/reagent/impurity/healing/medicine_failure
 	name = "Insolvent Medicinal Precipitate"
 	description = "A viscous mess of various medicines. Will heal a damage type at random"
-	metabolization_rate = 0.5//This is fast
+	metabolization_rate = 2.5 * REAGENTS_METABOLISM
 	addiction_types = list(/datum/addiction/medicine = 7.5)
 	ph = 11
 	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // no healing ghosts
@@ -57,7 +57,7 @@
 /datum/reagent/inverse/helgrasp
 	name = "Helgrasp"
 	description = "This rare and forbidden concoction is thought to bring you closer to the grasp of the Norse goddess Hel."
-	metabolization_rate = 0.5 //This is fast
+	metabolization_rate = 2.5 * REAGENTS_METABOLISM
 	tox_damage = 0.25
 	ph = 14
 	//Compensates for seconds_per_tick lag by spawning multiple hands at the end
@@ -116,7 +116,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/helgrasp/heretic
 	name = "Grasp of the Mansus"
 	description = "The Hand of the Mansus is at your neck."
-	metabolization_rate = 0.5
+	metabolization_rate = 2.5 * REAGENTS_METABOLISM
 	tox_damage = 0
 
 //libital
@@ -396,7 +396,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/technetium
 	name = "Technetium 99"
 	description = "A radioactive tracer agent that can improve a scanner's ability to detect internal organ damage. Will poison the patient when present very slowly, purging or using a low dose is recommended after use."
-	metabolization_rate = 0.15
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	chemical_flags = NONE //Do show this on scanner
 	tox_damage = 0
 
@@ -476,7 +476,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	name = "Nooartrium"
 	description = "A reagent that is known to stimulate the heart in a dead patient, temporarily bringing back recently dead patients at great cost to their heart."
 	ph = 14
-	metabolization_rate = 0.025
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	addiction_types = list(/datum/addiction/medicine = 12)
 	overdose_threshold = 20
 	self_consuming = TRUE //No pesky liver shenanigans
@@ -502,7 +502,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/obj/item/organ/heart/heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		return
-	metabolization_rate = 0.2 * REM
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	affected_mob.add_traits(trait_buffs, type)
 	affected_mob.set_stat(CONSCIOUS) //This doesn't touch knocked out
 	affected_mob.updatehealth()
@@ -619,7 +619,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	color = "#DCDCAA"
 	ph = 13.4
 	addiction_types = list(/datum/addiction/medicine = 8)
-	metabolization_rate = 0.0125
+	metabolization_rate = 0.0625 * REAGENTS_METABOLISM
 	tox_damage = 0
 	//The temporary trauma passed to the affected mob
 	var/datum/brain_trauma/temp_trauma
@@ -690,7 +690,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	self_consuming = TRUE
 	ph = 13.5
 	addiction_types = list(/datum/addiction/medicine = 2.5)
-	metabolization_rate = 0.5
+	metabolization_rate = 2.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_DEAD_PROCESS
 	tox_damage = 0
 
@@ -716,7 +716,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "Promotes alcoholic substances within the patients body, making their effects more potent."
 	taste_description = "alcohol" //mostly for sneaky slips
 	chemical_flags = REAGENT_INVISIBLE
-	metabolization_rate = 0.025//This is fast
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	addiction_types = list(/datum/addiction/medicine = 4.5)
 	color = "#4C8000"
 	tox_damage = 0
@@ -730,12 +730,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	name = "Oculater"
 	description = "Temporarily blinds the patient."
 	color = "#DDDDDD"
-	metabolization_rate = 0.05
 	addiction_types = list(/datum/addiction/medicine = 3)
 	taste_description = "funky toxin"
 	ph = 13
 	tox_damage = 0
-	metabolization_rate = 0.1
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	///Did we get a headache?
 	var/headache = FALSE
 
@@ -762,7 +761,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	taste_description = "the heat evaporating from your mouth."
 	ph = 1
 	liver_damage = 0.1
-	metabolization_rate = 0.02
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	///The random span we start hearing in
 	var/random_span
 
@@ -812,7 +811,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "Anabolic steroid that promotes the growth of muscle during and after exercise."
 	color = "#520c23"
 	taste_description = "sweat"
-	metabolization_rate = 0.2
+	metabolization_rate = REAGENTS_METABOLISM
 	overdose_threshold = 25
 	ph = 12.2
 	tox_damage = 0
@@ -839,7 +838,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	color = "#ecd4d6"
 	taste_description = "paint thinner"
 	ph = 4.5
-	metabolization_rate = 0.04
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	tox_damage = 0
 	metabolized_traits = list(TRAIT_EASYBLEED)
 
@@ -849,7 +848,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	color = "#09ff00"
 	ph = 3.7
 	taste_description = "venom"
-	metabolization_rate = 0.125
+	metabolization_rate = 0.0625 * REAGENTS_METABOLISM
 	tox_damage = 0
 
 /datum/reagent/inverse/pen_acid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -870,7 +869,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "Slowly regenerates all damaged organs, but cannot restore non-functional organs."
 	color = "#273333"
 	ph = 13.6
-	metabolization_rate = 0.1
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	tox_damage = 0
 	overdose_threshold = 40
 
@@ -905,7 +904,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "A ghastly looking mess of mercury by-product. Causes bursts of manic hysteria."
 	color = "#353535"
 	ph = 10.2
-	metabolization_rate = 0.2
+	metabolization_rate = REAGENTS_METABOLISM
 	tox_damage = 0
 
 /datum/reagent/inverse/ammoniated_mercury/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -919,7 +918,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "Makes the user horribly afraid of all things related to fish."
 	color = "#c92eb4"
 	ph = 13.9
-	metabolization_rate = 0.025
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	tox_damage = 0
 
 /datum/reagent/inverse/rezadone/on_mob_metabolize(mob/living/carbon/affected_mob)
@@ -935,7 +934,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "Weakens the immune system, acclerating the effects of bacteria, viruses, and parasites while negating the effects of immunity boosters." //it's like spacacillin but evil muahaha
 	color = "#002f06" //Gross green-black. Seemed fitting.
 	ph = 8.1
-	metabolization_rate = 0.05
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	tox_damage = 0
 	metabolized_traits = list(TRAIT_IMMUNODEFICIENCY)
 
@@ -943,7 +942,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	name = "Permonid"
 	description = "Highly potent sedative that provides the best benefits for pain management and surgery. Extremely addictive."
 	color = "#15b5dd55"
-	metabolization_rate = 0.05
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 20
 	ph = 2.5
 	addiction_types = list(/datum/addiction/opioids = 30)
@@ -979,7 +978,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "Oop aak chee aak eek chee. Eek aak oop chee oop aak aak!!"
 	color = "#7e3900"
 	ph = 14
-	metabolization_rate = 0.1
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	tox_damage = 0
 	/// The martial art we teach (to monkies)
 	var/datum/martial_art/jungle_arts/jungle_arts
@@ -1025,7 +1024,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "Synthetic medication that induces blood regeneration and wound clotting in patients. \
 		Causes adverse side effects, including arterial damage and migraines when excessively used over time."
 	color = "#dee4ff"
-	metabolization_rate = 0.125
+	metabolization_rate = 0.625 * REAGENTS_METABOLISM
 	overdose_threshold = 20
 	ph = 6.1
 	tox_damage = 0
@@ -1107,7 +1106,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "Causes severe depressive behavior in users, and actively purges other antidepressants."
 	color = "#0004ff"
 	ph = 12
-	metabolization_rate = 0.05
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	tox_damage = 0
 	penetrates_skin = TOUCH|VAPOR
 
@@ -1150,7 +1149,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "Potent psychotropic that causes intense anger within users."
 	color = "#ff0000"
 	ph = 1
-	metabolization_rate = 0.2
+	metabolization_rate = REAGENTS_METABOLISM
 	tox_damage = 0
 	var/delayed_burn_damage = 0
 
@@ -1201,7 +1200,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "Extremely drab coloring pigment that is favored by corporations who wish to maximize suffering."
 	color = COLOR_GRAY
 	ph = 10
-	metabolization_rate = 0.2
+	metabolization_rate = REAGENTS_METABOLISM
 	tox_damage = 0
 	/// Whenever this reagent can color mob limbs and organs upon exposure
 	var/can_color_mobs = TRUE
@@ -1224,7 +1223,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/colorful_reagent/overdose_start(mob/living/affected_mob, metabolization_ratio)
 	. = ..()
-	metabolization_rate = 0.02
+	metabolization_rate = REAGENTS_METABOLISM
 
 /datum/reagent/inverse/colorful_reagent/New()
 	color_callback = CALLBACK(src, PROC_REF(UpdateColor))
@@ -1300,7 +1299,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "Experimental reagent that induces heavy gravokinetic effects on users."
 	color = "#4b0082"
 	ph = 2.3
-	metabolization_rate = 0.5
+	metabolization_rate = 2.5 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	tox_damage = 0
 

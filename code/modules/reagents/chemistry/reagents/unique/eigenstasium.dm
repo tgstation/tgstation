@@ -15,7 +15,7 @@
 	taste_description = "wiggly cosmic dust."
 	color = "#5020F4"
 	overdose_threshold = 15
-	metabolization_rate = 1 * REAGENTS_METABOLISM
+	metabolization_rate = REAGENTS_METABOLISM
 	ph = 3.7
 	purity = 0.5
 	creation_purity = 0.5

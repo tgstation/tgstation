@@ -157,7 +157,7 @@
 
 /datum/reagent/consumable/ethanol/beer/green/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	metabolization_rate = 1 * REAGENTS_METABOLISM
+	metabolization_rate = REAGENTS_METABOLISM
 
 	if(!ishuman(affected_mob))
 		return
@@ -756,7 +756,7 @@
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_metabolize(mob/living/carbon/drinker)
 	. = ..()
 	if(HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
-		metabolization_rate = 0.8
+		metabolization_rate = 4 * REAGENTS_METABOLISM
 	// if you don't have a liver, or your liver isn't an officer's liver
 	var/obj/item/organ/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(!liver || !HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
@@ -1425,7 +1425,7 @@
 	boozepwr = 50
 	quality = DRINK_VERYGOOD
 	taste_description = "a numbing sensation"
-	metabolization_rate = 1 * REAGENTS_METABOLISM
+	metabolization_rate = REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/neurotoxin/proc/pick_paralyzed_limb()

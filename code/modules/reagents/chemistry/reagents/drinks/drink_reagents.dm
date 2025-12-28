@@ -1390,7 +1390,7 @@
 	taste_description = "purple and a hint of opioid."
 	addiction_types = list(/datum/addiction/opioids = 6)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	metabolization_rate = 0.1
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/consumable/lean/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()

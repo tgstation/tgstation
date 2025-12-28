@@ -11,7 +11,7 @@
 	ph = 3
 	inverse_chem = null
 	inverse_chem_val = 0
-	metabolization_rate = 0.05//default impurity is 0.75, so we get 25% converted. Default metabolisation rate is 0.4, so we're 4 times slower.
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	var/liver_damage = 0.5
 
 /datum/reagent/impurity/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -95,7 +95,7 @@
 	taste_description = "your tongue freezing, shortly followed by your thoughts. Brr!"
 	ph = 14
 	chemical_flags = REAGENT_DEAD_PROCESS | REAGENT_IGNORE_STASIS | REAGENT_UNAFFECTED_BY_METABOLISM
-	metabolization_rate = 0.5
+	metabolization_rate = 2.5 * REAGENTS_METABOLISM
 
 /datum/reagent/inverse/cryostylane/expose_mob(mob/living/carbon/human/human_thing, methods, reac_volume, show_message, touch_protection)
 	. = ..()
