@@ -104,6 +104,22 @@
 	cost = 1
 	surplus = 30
 
+/datum/uplink_item/stealthy_tools/mail_counterfeit/xmas
+	name = "GLA Brand Present Counterfeit Device"
+	desc = "A modified device capable of counterfeiting Santa's Workshop Christmas presents instead of mail. Can be used to store items within as an easy means of gifting something. \
+			Additionally, you may choose to \"arm\" the item inside, causing the item to be used the moment the present is opened as if the person had just used it in hand. \
+			The most common usage of this feature is with Christmas fireworks, as it forces the firework to launch. Bonus points if the firework is set to spread Christmas joy. (Fireworks not included.) \
+			Comes with an integrated micro-computer for configuration purposes. Though almost pointless not on Christmas, but still can be useful in certain circumstances. \
+			The presents are labeled as Christmas gifts, so only the most gullible crew will believe that after Christmas ends."
+	item = /obj/item/storage/mail_counterfeit_device/xmas
+	cost = 4
+	surplus = 30
+
+/datum/uplink_item/stealthy_tools/mail_counterfeit/xmas/can_be_bought()
+	if(!check_holidays(CHRISTMAS))
+		return FALSE
+	return ..()
+
 /datum/uplink_item/stealthy_tools/forensics_spofer
 	name = "Forensics Spoofing Kit"
 	desc = "A box that contains the forensics spoofer (and instructions) which can scan and replicate fingerprints and fibers \
