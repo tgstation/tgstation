@@ -8,7 +8,7 @@
 
 /obj/structure/frame/computer/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 	register_context()
 
 /obj/structure/frame/computer/atom_deconstruct(disassembled = TRUE)

@@ -10,8 +10,8 @@
 
 /obj/machinery/iv_drip/plumbing/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/automated_iv, bolt, layer)
-	AddComponent(/datum/component/simple_rotation)
+	AddComponent(/datum/component/plumbing/automated_iv, bolt, layer, distinct_reagent_cap = 3)
+	AddElement(/datum/element/simple_rotation)
 
 /obj/machinery/iv_drip/plumbing/quick_toggle(mob/living/user)
 	return FALSE

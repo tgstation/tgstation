@@ -181,7 +181,7 @@
  * Goes through hud_possible list and adds the images to the hud_list variable (if not already cached)
  */
 /atom/proc/prepare_huds()
-	if(hud_list) // I choose to be lienient about people calling this proc more then once
+	if(hud_list) // I choose to be lenient about people calling this proc more then once
 		return
 	hud_list = list()
 	for(var/hud in hud_possible)
@@ -1519,8 +1519,7 @@
 	. = ..()
 	// Queue update if change is small enough (6 is 1% of nutrition softcap)
 	if(abs(change) >= 6)
-		mob_mood?.update_nutrition_moodlets()
-		hud_used?.hunger?.update_hunger_bar()
+		update_nutrition()
 	else
 		living_flags |= QUEUE_NUTRITION_UPDATE
 
@@ -1536,10 +1535,15 @@
 	. = ..()
 	// Queue update if change is small enough (6 is 1% of nutrition softcap)
 	if(abs(old_nutrition - nutrition) >= 6)
-		mob_mood?.update_nutrition_moodlets()
-		hud_used?.hunger?.update_hunger_bar()
+		update_nutrition()
 	else
 		living_flags |= QUEUE_NUTRITION_UPDATE
+
+/// Updates nutrition related effects
+/mob/living/proc/update_nutrition()
+	mob_mood?.update_nutrition_moodlets()
+	hud_used?.hunger?.update_hunger_bar()
+	SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_NUTRITION)
 
 /// Apply a proper movespeed modifier based on items we have equipped
 /mob/proc/update_equipment_speed_mods()

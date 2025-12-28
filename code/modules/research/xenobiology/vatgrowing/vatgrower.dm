@@ -23,7 +23,7 @@
 	create_reagents(reagent_volume, reagent_flags)
 
 	if(use_plumbing)
-		AddComponent(/datum/component/simple_rotation)
+		AddElement(/datum/element/simple_rotation)
 		AddComponent(/datum/component/plumbing/simple_demand)
 
 	var/static/list/hovering_item_typechecks = list(

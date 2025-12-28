@@ -8,7 +8,7 @@
 	/// design id we print
 	var/design_id
 	///The container to hold materials
-	var/datum/component/material_container/materials
+	var/datum/material_container/materials
 	//looping sound for printing items
 	var/datum/looping_sound/lathe_print/print_sound
 	///Designs related to the autolathe
@@ -20,8 +20,8 @@
 
 /obj/machinery/power/manufacturing/lathe/Initialize(mapload)
 	print_sound = new(src,  FALSE)
-	materials = AddComponent( \
-		/datum/component/material_container, \
+	materials = new ( \
+		src, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
 		0, \
 		MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, \
@@ -31,6 +31,10 @@
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe])
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe] = new /datum/techweb/autounlocking/autolathe
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe]
+
+/obj/machinery/power/manufacturing/lathe/Destroy()
+	QDEL_NULL(materials)
+	return ..()
 
 /obj/machinery/power/manufacturing/lathe/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE

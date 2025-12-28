@@ -252,7 +252,7 @@
 						dmgreport += "</tr>"
 						dmgreport += "<tr><td colspan=6><span class='alert ml-2'>&rdsh; Physical trauma: [conditional_tooltip("Dismembered", "Reattach or replace surgically.", tochat)]</span></td></tr>"
 						continue
-					var/has_any_embeds = length(limb.embedded_objects) >= 1
+					var/has_any_embeds = LAZYLEN(limb.embedded_objects) >= 1
 					var/has_any_wounds = length(limb.wounds) >= 1
 					var/is_damaged = limb.burn_dam > 0 || limb.brute_dam > 0
 					if(!is_damaged && (zone != BODY_ZONE_CHEST || (tox_loss <= 0 && oxy_loss <= 0)) && !has_any_embeds && !has_any_wounds)

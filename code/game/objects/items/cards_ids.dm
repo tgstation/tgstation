@@ -164,10 +164,8 @@
 		ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, ROUNDSTART_TRAIT)
 
 /obj/item/card/id/Destroy()
-	if (registered_account)
-		registered_account.bank_cards -= src
-	if (my_store)
-		QDEL_NULL(my_store)
+	clear_account()
+	QDEL_NULL(my_store)
 	if (isitem(loc))
 		UnregisterSignal(loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	return ..()
@@ -479,25 +477,27 @@
 /obj/item/card/id/proc/set_account(datum/bank_account/account, transfer_funds = FALSE)
 	if(registered_account == account)
 		return
-	if(registered_account)
+	if(!isnull(registered_account))
 		if(transfer_funds)
-			account.transfer_money(registered_account, registered_account.account_balance, "Account transfer")
+			account?.transfer_money(registered_account, registered_account.account_balance, "Account transfer")
 		clear_account()
+	if(isnull(account))
+		return
 
 	if(src in account.bank_cards)
 		stack_trace("Despite [src] not being registered to [account], the account already has it within the bank_cards list.")
 
 	registered_account = account
-	registered_account.bank_cards |= src
+	LAZYOR(registered_account.bank_cards, src)
 	registered_account.civilian_bounty?.on_selected(src)
 
 /// Clears the economy account from the ID card.
 /obj/item/card/id/proc/clear_account()
-	if(!registered_account)
+	if(isnull(registered_account))
 		return
 
 	registered_account.civilian_bounty?.on_reset(src)
-	registered_account.bank_cards -= src
+	LAZYREMOVE(registered_account.bank_cards, src)
 	registered_account = null
 
 
@@ -1111,9 +1111,9 @@
 
 /obj/item/card/id/departmental_budget/Initialize(mapload)
 	. = ..()
-	var/datum/bank_account/B = SSeconomy.get_dep_account(department_ID)
-	if(B)
-		set_account(B)
+	var/datum/bank_account/department_account = SSeconomy.get_dep_account(department_ID)
+	if(department_account)
+		set_account(department_account)
 		name = "departmental card ([department_name])"
 		desc = "Provides access to the [department_name]."
 	SSeconomy.dep_cards += src

@@ -20,13 +20,13 @@ import type {
   SpawnPanelPreferences,
 } from './types';
 
-interface SpawnPanelData {
+type SpawnPanelData = {
   icon: string;
   iconState: string;
   selected_object?: string;
   copied_type?: string;
   preferences?: SpawnPanelPreferences;
-}
+};
 
 interface SpawnPreferences {
   hide_icons: boolean;

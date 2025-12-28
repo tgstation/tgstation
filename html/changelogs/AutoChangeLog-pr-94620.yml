@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - code_imp: "Fixes up some of the code and grammar for the giantslayer spears."
+  - bugfix: "Giantslayer spears are not improvised and therefore do not break when used to attack things."

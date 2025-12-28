@@ -26252,7 +26252,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/central)
 "hgu" = (
-/obj/structure/sign/poster/contraband/eat/directional/north,
+/obj/machinery/barsign{
+	pixel_y = 32;
+	dir = 1
+	},
 /turf/open/floor/iron/stairs/medium{
 	dir = 8
 	},
@@ -56018,10 +56021,6 @@
 	pixel_x = -7;
 	pixel_y = -3
 	},
-/obj/machinery/barsign{
-	pixel_y = 32;
-	dir = 1
-	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/service/kitchen)
 "pen" = (
@@ -72397,6 +72396,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/structure/sign/poster/contraband/eat/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/commons/lounge)
 "tEU" = (

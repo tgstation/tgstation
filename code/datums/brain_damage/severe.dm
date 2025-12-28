@@ -149,7 +149,7 @@
 	var/sleep_time_minimum = 6 SECONDS
 	var/sleep_time_maximum = 6 SECONDS
 
-/datum/brain_trauma/severe/narcolepsy/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/severe/narcolepsy/on_life(seconds_per_tick)
 	if(owner.IsSleeping())
 		return
 
@@ -204,7 +204,6 @@
 	scan_desc = "monophobia"
 	gain_text = span_warning("You feel really lonely...")
 	lose_text = span_notice("You feel like you could be safe on your own.")
-	var/stress = 0
 
 /datum/brain_trauma/severe/monophobia/on_gain()
 	. = ..()
@@ -255,7 +254,7 @@
 	..()
 	owner.remove_status_effect(/datum/status_effect/trance)
 
-/datum/brain_trauma/severe/hypnotic_stupor/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/severe/hypnotic_stupor/on_life(seconds_per_tick)
 	..()
 	if(SPT_PROB(0.5, seconds_per_tick) && !owner.has_status_effect(/datum/status_effect/trance))
 		owner.apply_status_effect(/datum/status_effect/trance, rand(100,300), FALSE)
@@ -330,7 +329,7 @@
 	if(damage_amount >= 5 && (damage_type == BRUTE || damage_type == BURN || damage_type == STAMINA))
 		COOLDOWN_START(src, steal_cd, 12 SECONDS)
 
-/datum/brain_trauma/severe/kleptomaniac/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/severe/kleptomaniac/on_life(seconds_per_tick)
 	if(owner.usable_hands <= 0)
 		return
 	if(!SPT_PROB(5, seconds_per_tick))

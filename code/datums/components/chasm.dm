@@ -6,7 +6,7 @@
 	var/oblivion_message = "You stumble and stare into the abyss before you. It stares back, and you fall into the enveloping dark."
 
 	/// List of refs to falling objects -> how many levels deep we've fallen
-	var/static/list/falling_atoms = list()
+	var/static/list/falling_atoms
 	var/static/list/forbidden_types = typecacheof(list(
 		/obj/docking_port,
 		/obj/effect/abstract,
@@ -106,7 +106,8 @@
 /datum/component/chasm/proc/droppable(atom/movable/dropped_thing)
 	var/datum/weakref/falling_ref = WEAKREF(dropped_thing)
 	// avoid an infinite loop, but allow falling a large distance
-	if(falling_atoms[falling_ref] && falling_atoms[falling_ref] > 30)
+	var/falling_atom = LAZYACCESS(falling_atoms, falling_ref)
+	if(falling_atom && falling_atom > 30)
 		return CHASM_NOT_DROPPING
 	if(is_type_in_typecache(dropped_thing, forbidden_types) || (!isliving(dropped_thing) && !isobj(dropped_thing)))
 		return CHASM_NOT_DROPPING
@@ -133,14 +134,14 @@
 	var/datum/weakref/falling_ref = WEAKREF(dropped_thing)
 	//Make sure the item is still there after our sleep
 	if(!dropped_thing || !falling_ref?.resolve())
-		falling_atoms -= falling_ref
+		LAZYREMOVE(falling_atoms, falling_ref)
 		return
 
-	falling_atoms[falling_ref] = (falling_atoms[falling_ref] || 0) + 1
+	LAZYSET(falling_atoms, falling_ref, (falling_atoms[falling_ref] || 0) + 1)
 	var/turf/below_turf = target_turf
 	var/atom/parent = src.parent
 
-	if(falling_atoms[falling_ref] > 1)
+	if(LAZYACCESS(falling_atoms, falling_ref) > 1)
 		return // We're already handling this
 
 	if(SEND_SIGNAL(dropped_thing, COMSIG_MOVABLE_CHASM_DROPPED, parent) & COMPONENT_NO_CHASM_DROP)
@@ -164,15 +165,28 @@
 			var/mob/living/fallen = dropped_thing
 			fallen.Paralyze(100)
 			fallen.adjust_brute_loss(30)
-		falling_atoms -= falling_ref
+		LAZYREMOVE(falling_atoms, falling_ref)
 		return
 
 	// send to oblivion
-	dropped_thing.visible_message(span_boldwarning("[dropped_thing] falls into [parent]!"), span_userdanger("[oblivion_message]"))
+
 	if (isliving(dropped_thing))
 		var/mob/living/falling_mob = dropped_thing
 		ADD_TRAIT(falling_mob, TRAIT_NO_TRANSFORM, REF(src))
-		falling_mob.Paralyze(20 SECONDS)
+		falling_mob.Stun(20 SECONDS, ignore_canstun = TRUE)
+
+		if (HAS_MIND_TRAIT(falling_mob, TRAIT_NAIVE))
+			falling_mob.do_alert_animation()
+			dropped_thing.visible_message(span_boldwarning("[dropped_thing] kicks [dropped_thing.p_their()] legs in the air, as if running in place!"))
+			dropped_thing.Shake(1, 0, 2 SECONDS, 0.3 SECONDS)
+			sleep(3 SECONDS)
+
+		if (get_turf(falling_mob) != get_turf(parent))
+			REMOVE_TRAIT(falling_mob, TRAIT_NO_TRANSFORM, REF(src))
+			falling_mob.Paralyze(17 SECONDS, ignore_canstun = TRUE) // Wow nice job
+			return
+
+	dropped_thing.visible_message(span_boldwarning("[dropped_thing] falls into [parent]!"), span_userdanger("[oblivion_message]"))
 
 	var/oldtransform = dropped_thing.transform
 	var/oldcolor = dropped_thing.color
@@ -222,7 +236,7 @@
 			fallen_mob.death(TRUE)
 			fallen_mob.apply_damage(300)
 
-	falling_atoms -= falling_ref
+	LAZYREMOVE(falling_atoms, falling_ref)
 
 /**
  * Called when something has left the chasm depths storage.
