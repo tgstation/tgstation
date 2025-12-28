@@ -776,3 +776,33 @@
   - bugfix: Carp masks actually contribute to sleeping carp style factor.
   vinylspiders:
   - refactor: refactors table_smash component into an element
+2025-12-26:
+  Gboster-0:
+  - code_imp: explosive implant code was made a tiny bit easier to read
+  L0pz:
+  - image: Resprited a bunch of swords
+  vinylspiders:
+  - refactor: simple rotation component has been refactored into an element Please
+      report any bugs to github.
+2025-12-27:
+  Ezel:
+  - balance: All protolathes can now print out a expiri science scanner
+  PlasmaRay10:
+  - spellcheck: fixed asthma.dm typo
+  Sapphoqueer, Seijan_Etroix:
+  - rscadd: Added 4 new bar signs, Pun Pun's Pub, Doctor's Orders, Wrong Turn, and
+      Cold Ones.
+  SyncIt21:
+  - code_imp: removes an unused parameter `times_fired` from mob life procs. Making
+      them function slightly faster
+  lelandkemble:
+  - balance: The BSA now always requires its full power cost paid in order to fire
+  san7890:
+  - admin: It should now be far easier (as well as be a better experience) for an
+      admin to recall the shuttle regardless of game state (up until the shuttle actually
+      docks, that is).
+2025-12-28:
+  Jacquerel:
+  - rscadd: Escaped bitrunning glitches will visually distort when interacted with
+  - bugfix: Escaped bitrunning glitches will not stick around as holographic corpses
+      after they die

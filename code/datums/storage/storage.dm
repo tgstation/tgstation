@@ -26,7 +26,7 @@
 	///The type of storage interface this datum uses.
 	var/datum/storage_interface/storage_type = /datum/storage_interface
 	/// Associated list that keeps track of all storage UI datums per person.
-	VAR_PRIVATE/list/datum/storage_interface/storage_interfaces = null
+	VAR_PRIVATE/list/datum/storage_interface/storage_interfaces
 
 	/// Typecache of items that can be inserted into this storage.
 	/// By default, all item types can be inserted (assuming other conditions are met).
@@ -1107,7 +1107,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		var/atom/movable/movable_loc = real_location
 		movable_loc.lose_active_storage(src)
 
-	if (!length(storage_interfaces) || isnull(storage_interfaces[to_hide]))
+	if (!LAZYLEN(storage_interfaces) || isnull(storage_interfaces[to_hide]))
 		return TRUE
 
 	if(LAZYLEN(is_using))

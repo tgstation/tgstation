@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - refactor: "crafting menu should be slightly faster now with searching the area for items that are blacklisted, and uses less memory than it did previously"

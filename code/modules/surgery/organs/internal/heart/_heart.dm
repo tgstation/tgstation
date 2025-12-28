@@ -108,7 +108,7 @@
 	// Always show if the guy needs a heart (so its status can be monitored)
 	return ..() || owner.needs_heart()
 
-/obj/item/organ/heart/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/heart/on_life(seconds_per_tick)
 	..()
 
 	// If the owner doesn't need a heart, we don't need to do anything with it.
@@ -238,7 +238,7 @@
 				span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"),
 			)
 
-/obj/item/organ/heart/cybernetic/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/heart/cybernetic/on_life(seconds_per_tick)
 	. = ..()
 
 	if(organ_flags & ORGAN_EMP)
@@ -320,7 +320,7 @@
 	/// The cooldown until the next time this heart can give the host an adrenaline boost.
 	COOLDOWN_DECLARE(adrenaline_cooldown)
 
-/obj/item/organ/heart/freedom/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/heart/freedom/on_life(seconds_per_tick)
 	. = ..()
 	if(owner.health < 5 && COOLDOWN_FINISHED(src, adrenaline_cooldown))
 		COOLDOWN_START(src, adrenaline_cooldown, rand(25 SECONDS, 1 MINUTES))
@@ -350,7 +350,7 @@
 	/// Base healing we receive per tick at 0 damage and for standard versions
 	var/base_healing = 1
 
-/obj/item/organ/heart/evolved/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/heart/evolved/on_life(seconds_per_tick)
 	. = ..()
 
 	if(prob(healing_probability * seconds_per_tick))
@@ -374,7 +374,7 @@
 	// How much damage each magic block deals to us
 	var/damage_per_block = 50
 
-/obj/item/organ/heart/evolved/sacred/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/heart/evolved/sacred/on_life(seconds_per_tick)
 	. = ..()
 
 	if(IS_CULTIST(owner))

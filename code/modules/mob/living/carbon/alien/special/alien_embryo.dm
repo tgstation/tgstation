@@ -25,7 +25,7 @@
 		if(prob(10))
 			attempt_grow(gib_on_success = FALSE)
 
-/obj/item/organ/body_egg/alien_embryo/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/body_egg/alien_embryo/on_life(seconds_per_tick)
 	. = ..()
 	if(QDELETED(src) || QDELETED(owner))
 		return
