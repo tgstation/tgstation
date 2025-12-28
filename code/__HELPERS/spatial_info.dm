@@ -406,7 +406,7 @@
 /// get_hear that only gets turfs so we can use as_anything
 /proc/get_hear_turfs(range, atom/source)
 	var/lum = source.luminosity
-	source.luminosity = 6
+	source.luminosity = range + 2
 	. = list()
 	for(var/turf/turf in view(range, source))
 		. += turf
