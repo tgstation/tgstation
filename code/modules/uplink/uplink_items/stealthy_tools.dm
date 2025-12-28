@@ -115,7 +115,7 @@
 	cost = 4
 	surplus = 30
 
-/datum/uplink_item/stealthy_tools/mail_counterfeit/xmas/can_be_bought(mob/user)
+/datum/uplink_item/stealthy_tools/mail_counterfeit/xmas/can_be_bought()
 	if(!check_holidays(CHRISTMAS))
 		return FALSE
 	return ..()
