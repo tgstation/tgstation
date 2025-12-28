@@ -417,10 +417,14 @@ SUBSYSTEM_DEF(shuttle)
 		var/datum/signal/status_signal = new(list("command" = "update"))
 		frequency.post_signal(src, status_signal)
 
-/datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
-	if(emergency.mode != SHUTTLE_CALL || emergency.timer != old_timer)
-		return
-	emergency.cancel()
+/// Does a fluffy CentCom recall of the emergency shuttle with additional message as desired.
+/// Returns TRUE on success, FALSE otherwise.
+/datum/controller/subsystem/shuttle/proc/centcom_recall(mob/user, old_timer, admiral_message)
+	if(emergency.timer != old_timer)
+		return FALSE
+
+	if(!cancel_evac(user))
+		return FALSE //feedback handled in cancel_evac()
 
 	if(!admiral_message)
 		admiral_message = pick(GLOB.admiral_messages)
@@ -437,6 +441,8 @@ SUBSYSTEM_DEF(shuttle)
 						[admiral_message]"
 	print_command_report(intercepttext, announce = TRUE)
 
+	return TRUE
+
 // Called when an emergency shuttle mobile docking port is
 // destroyed, which will only happen with admin intervention
 /datum/controller/subsystem/shuttle/proc/emergencyDeregister()
@@ -444,29 +450,76 @@ SUBSYSTEM_DEF(shuttle)
 	// backup shuttle.
 	src.emergency = src.backup_shuttle
 
-/datum/controller/subsystem/shuttle/proc/cancelEvac(mob/user)
-	if(canRecall())
-		emergency.cancel(get_area(user))
-		log_shuttle("[key_name(user)] has recalled the shuttle.")
-		message_admins("[ADMIN_LOOKUPFLW(user)] has recalled the shuttle.")
-		deadchat_broadcast(" has recalled the shuttle from [span_name("[get_area_name(user, TRUE)]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
-		return 1
+/// Actually work on canceling the emergency shuttle recall. Returns TRUE if successful, FALSE otherwise.
+/datum/controller/subsystem/shuttle/proc/cancel_evac(mob/user)
+	if(!can_recall(user))
+		return FALSE
 
-/datum/controller/subsystem/shuttle/proc/canRecall()
-	if(!emergency || emergency.mode != SHUTTLE_CALL || admin_emergency_no_recall || emergency_no_recall)
-		return
+	emergency.cancel(get_area(user))
+	log_shuttle("[key_name(user)] has recalled the shuttle.")
+	message_admins("[ADMIN_LOOKUPFLW(user)] has recalled the shuttle.")
+	deadchat_broadcast(" has recalled the shuttle from [span_name("[get_area_name(user, TRUE)]")].", span_name("[user.real_name]"), user, message_type = DEADCHAT_ANNOUNCEMENT)
+	return TRUE
+
+/// Can this user recall the emergency shuttle? Returns TRUE if they can, otherwise returns FALSE.
+/datum/controller/subsystem/shuttle/proc/can_recall(mob/user)
+	if(isnull(emergency) || emergency.mode != SHUTTLE_CALL)
+		return FALSE
+
+	var/is_admin = !!user.client?.holder
+	if(is_admin)
+		return admin_recall(user)
+
+	if(admin_emergency_no_recall || emergency_no_recall)
+		return FALSE
+
+	return past_restriction_point()
+
+/// Are we past the restriction point (i.e. more than half of the shuttle timer has elapsed) for recalling the shuttle? Returns TRUE if we are, FALSE otherwise.
+/datum/controller/subsystem/shuttle/proc/past_restriction_point()
 	var/security_num = SSsecurity_level.get_current_level_as_number()
 	switch(security_num)
 		if(SEC_LEVEL_GREEN)
 			if(emergency.timeLeft(1) < emergency_call_time)
-				return
+				return FALSE
 		if(SEC_LEVEL_BLUE)
 			if(emergency.timeLeft(1) < emergency_call_time * 0.5)
-				return
+				return FALSE
 		else
 			if(emergency.timeLeft(1) < emergency_call_time * 0.25)
-				return
-	return 1
+				return FALSE
+
+	return TRUE
+
+/// Handle admin level overrides of recalling the shuttle. We assume that the user passed is an admin.
+/// If a special state exists, we prompt the admin to confirm they want to override the wishes of other admins/game code. Returns TRUE if they elect to do so, FALSE otherwise.
+/datum/controller/subsystem/shuttle/proc/admin_recall(mob/user)
+	if(admin_emergency_no_recall)
+		var/admin_no_recall_alert = tgui_alert(
+			user,
+			"An administrator has disabled the emergency shuttle recall function, are you sure you want to proceed with the recall?",
+			"Admin Level Recall Confirmation",
+			list("Yes", "No"),
+		)
+		if(admin_no_recall_alert == "Yes")
+			admin_emergency_no_recall = FALSE
+			return TRUE
+		return FALSE
+
+	if(emergency_no_recall)
+		var/general_no_recall_alert = tgui_alert(
+			user,
+			"The emergency shuttle recall function is currently disabled by game code, are you sure you want to proceed with the recall?",
+			"Recall Confirmation",
+			list("Yes", "No"),
+		)
+		if(general_no_recall_alert == "Yes")
+			// we will not unset emergency_no_recall here, as it's game code enforced and I want it to stay active, admins can transiently override it through this though.
+			// they can always edit the variable on SSshuttle if desperate.
+			return TRUE
+		return FALSE
+
+	return TRUE // we assume that they've seen other warnings at earlier points if they got here from a verb or something like that
 
 /datum/controller/subsystem/shuttle/proc/autoEvac()
 	if (!SSticker.IsRoundInProgress() || supermatter_cascade)

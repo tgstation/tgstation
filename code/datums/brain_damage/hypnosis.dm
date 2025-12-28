@@ -60,7 +60,7 @@
 	owner.mind.remove_antag_datum(/datum/antagonist/hypnotized)
 	antagonist = null
 
-/datum/brain_trauma/hypnosis/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/hypnosis/on_life(seconds_per_tick)
 	..()
 	if(SPT_PROB(1, seconds_per_tick))
 		if(prob(50))

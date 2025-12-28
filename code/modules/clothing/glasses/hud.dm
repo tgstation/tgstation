@@ -270,7 +270,7 @@
 /obj/item/clothing/glasses/hud/toggle/thermal/attack_self(mob/user)
 	..()
 	var/hud_type
-	if (!isnull(clothing_traits) && clothing_traits.len)
+	if (LAZYLEN(clothing_traits))
 		hud_type = clothing_traits[1]
 	switch (hud_type)
 		if (TRAIT_MEDICAL_HUD)

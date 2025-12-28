@@ -15,7 +15,6 @@
 	wound_resistance = 5
 	disabled_wound_penalty = 25
 	scars_covered_by_clothes = FALSE
-	grind_results = null
 	is_dimorphic = TRUE
 	unarmed_attack_verbs = list("bite", "chomp")
 	unarmed_attack_verbs_continuous = list("bites", "chomps")
@@ -104,6 +103,9 @@
 	QDEL_NULL(worn_head_offset)
 	QDEL_NULL(worn_face_offset)
 	return ..()
+
+/obj/item/bodypart/head/grind_results()
+	return null
 
 /obj/item/bodypart/head/examine(mob/user)
 	. = ..()

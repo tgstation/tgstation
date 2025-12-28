@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Add wooden crafting recipes for gavel hammer and gavel blocks. (aka the judge's hammer in the courtroom)"

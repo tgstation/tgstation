@@ -48,7 +48,7 @@
 	source.set_fire_stacks(0, remove_wet_stacks = FALSE)
 
 /// Maintain our summoner at a stable body temperature
-/mob/living/basic/guardian/gaseous/proc/on_summoner_life(mob/living/source, seconds_per_tick, times_fired)
+/mob/living/basic/guardian/gaseous/proc/on_summoner_life(mob/living/source, seconds_per_tick)
 	SIGNAL_HANDLER
 	source.adjust_bodytemperature(get_temp_change_amount((summoner.get_body_temp_normal() - summoner.bodytemperature), temp_stabilization_rate * seconds_per_tick))
 
@@ -152,7 +152,7 @@
 	UnregisterSignal(owner, COMSIG_LIVING_LIFE)
 
 /// Release gas every life tick while active
-/datum/action/cooldown/mob_cooldown/expel_gas/proc/on_life(datum/source, seconds_per_tick, times_fired)
+/datum/action/cooldown/mob_cooldown/expel_gas/proc/on_life(datum/source, seconds_per_tick)
 	SIGNAL_HANDLER
 	if (isnull(active_gas))
 		return // We shouldn't even be registered at this point but just in case
