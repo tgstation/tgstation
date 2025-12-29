@@ -217,7 +217,7 @@
 		need_mob_update = affected_mob.adjust_fire_loss(-3 * metabolization_ratio * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
 	else
 		need_mob_update = affected_mob.adjust_fire_loss(-2.25 * metabolization_ratio * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
-	affected_mob.adjust_bodytemperature(0.5 * rand(-25,-5) * TEMPERATURE_DAMAGE_COEFFICIENT * metabolization_ratio * seconds_per_tick, 50)
+	affected_mob.adjust_bodytemperature(rand(-25,-5) * TEMPERATURE_DAMAGE_COEFFICIENT * metabolization_ratio * seconds_per_tick, 50)
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/humi = affected_mob
 		humi.adjust_coretemperature(1 * rand(-25,-5) * TEMPERATURE_DAMAGE_COEFFICIENT * metabolization_ratio * seconds_per_tick, 50)
@@ -374,7 +374,7 @@
 	if(creation_purity >= 1) //Perfectly pure multivers gives a bonus of 2!
 		medibonus += 1
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_tox_loss(-0.25 * min(medibonus, 6 * normalise_creation_purity()) * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype) //not great at healing but if you have nothing else it will work
+	need_mob_update = affected_mob.adjust_tox_loss(-0.5 * min(medibonus, 6 * normalise_creation_purity()) * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype) //not great at healing but if you have nothing else it will work
 	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_LUNGS, 0.5 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags) //kills at 40u
 	if(!holder.has_reagent(/datum/reagent/toxin/anacea))
 		for(var/datum/reagent/second_reagent as anything in affected_mob.reagents.reagent_list)
@@ -426,7 +426,8 @@
 	for(var/datum/reagent/R in affected_mob.reagents.reagent_list)
 		if(issyrinormusc(R))
 			continue
-		affected_mob.reagents.remove_reagent(R.type, 0.27 * metabolization_ratio * seconds_per_tick)
+		R.volume -= 0.27 * metabolization_ratio * seconds_per_tick
+	affected_mob.reagents.update_total()
 
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
