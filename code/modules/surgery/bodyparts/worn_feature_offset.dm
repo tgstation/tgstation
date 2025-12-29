@@ -19,7 +19,6 @@
 	list/offset_y = list("south" = 0),
 )
 	attached_part.feature_offsets[feature_key] = src
-	owner = attached_part.owner
 	src.attached_part = attached_part
 	src.feature_key = feature_key
 	src.offset_x = offset_x
@@ -28,8 +27,7 @@
 	if (length(offset_x) <= 1 && length(offset_y) <= 1)
 		return // We don't need to do any extra signal handling
 
-	if (!isnull(owner))
-		changed_owner(owner)
+	changed_owner(owner, attached_part.owner)
 	RegisterSignal(attached_part, COMSIG_BODYPART_CHANGED_OWNER, PROC_REF(changed_owner))
 
 /// Returns the current offset which should be used for this feature
@@ -51,7 +49,7 @@
 	SIGNAL_HANDLER
 	owner = new_owner
 	if (!isnull(old_owner))
-		UnregisterSignal(old_owner, COMSIG_ATOM_POST_DIR_CHANGE)
+		UnregisterSignal(old_owner, list(COMSIG_ATOM_POST_DIR_CHANGE, COMSIG_QDELETING))
 	if (!isnull(new_owner))
 		RegisterSignal(new_owner, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(on_dir_change))
 		RegisterSignal(new_owner, COMSIG_QDELETING, PROC_REF(on_owner_deleted))
