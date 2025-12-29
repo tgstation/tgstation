@@ -6,7 +6,7 @@
 	desc = "A prototype storage module utilizing the power of anomalous bluespace phenomena \
 		to store copious amounts of matter. Unfortunately, it suffers from the same drawbacks as its standalone counterpart, \
 		including <b>tearing catastrophic rifts in reality</b> when nested inside bluespace pockets produced through similar means."
-	icon_state = "antigrav"
+	icon_state = "storage_holding"
 	complexity = 4
 	storage_type = null // core-less modules should be safe to insert into bags of holding
 	var/prebuilt = FALSE
