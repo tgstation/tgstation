@@ -123,7 +123,6 @@
 	icon_state = "laser_repeater"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
 	damage = 15
-	stamina = 20
 	light_color = COLOR_DARK_ORANGE
 
 /obj/projectile/beam/weak
