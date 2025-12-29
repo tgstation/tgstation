@@ -173,7 +173,6 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 			attached_part = limb,
 			feature_key = OFFSET_FACEMASK,
 			offset_x = list("east" = 1, "west" = -1),
-			offset_y = list("east" = 1, "west" = 1),
 		)
 
 /obj/item/organ/snout/on_bodypart_remove(obj/item/bodypart/head/limb, movement_flags)
