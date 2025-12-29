@@ -43,11 +43,11 @@
 		if("brute")
 			need_mob_update = affected_mob.adjust_brute_loss(-0.2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		if("burn")
-			need_mob_update += affected_mob.adjust_fire_loss(-0.2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+			need_mob_update = affected_mob.adjust_fire_loss(-0.2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		if("tox")
-			need_mob_update += affected_mob.adjust_tox_loss(-0.2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+			need_mob_update = affected_mob.adjust_tox_loss(-0.2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		if("oxy")
-			need_mob_update += affected_mob.adjust_oxy_loss(-0.2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+			need_mob_update = affected_mob.adjust_oxy_loss(-0.2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -192,9 +192,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/peptides_failed/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 4 * metabolization_ratio * seconds_per_tick, 170))
+	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.125 * metabolization_ratio * seconds_per_tick, 170))
 		. = UPDATE_MOB_HEALTH
-	affected_mob.adjust_nutrition(-80 * metabolization_ratio * seconds_per_tick)
+	affected_mob.adjust_nutrition(-2.5 * metabolization_ratio * seconds_per_tick)
 
 //Lenturi
 //inverse
@@ -809,7 +809,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "Anabolic steroid that promotes the growth of muscle during and after exercise."
 	color = "#520c23"
 	taste_description = "sweat"
-	metabolization_rate = REAGENTS_METABOLISM
 	overdose_threshold = 25
 	ph = 12.2
 	tox_damage = 0
@@ -857,7 +856,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	if(HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
 		affected_mob.set_jitter_if_lower(10 SECONDS)
-		affected_mob.adjust_disgust(24 * metabolization_ratio * seconds_per_tick)
+		affected_mob.adjust_disgust(2.4 * metabolization_ratio * seconds_per_tick)
 		if(SPT_PROB(2.5, seconds_per_tick))
 			to_chat(affected_mob, span_warning("A horrible ache spreads in your insides!"))
 			affected_mob.adjust_confusion_up_to(10 SECONDS, 15 SECONDS)
@@ -877,7 +876,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_STOMACH, -1 * metabolization_ratio * seconds_per_tick)
 	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, -1 * metabolization_ratio * seconds_per_tick)
 	if(affected_mob.get_tox_loss() <= 25)
-		need_mob_update = affected_mob.adjust_tox_loss(-1, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update = affected_mob.adjust_tox_loss(-0.5, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -902,7 +901,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "A ghastly looking mess of mercury by-product. Causes bursts of manic hysteria."
 	color = "#353535"
 	ph = 10.2
-	metabolization_rate = REAGENTS_METABOLISM
 	tox_damage = 0
 
 /datum/reagent/inverse/ammoniated_mercury/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -1033,7 +1031,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return
 
 	affected_mob.coagulant_effect(0.08 * metabolization_ratio * seconds_per_tick)
-	affected_mob.adjust_blood_volume(1.6 * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
+	affected_mob.adjust_blood_volume(1.6 * metabolization_ratio * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
 	affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, 0.16 * metabolization_ratio * seconds_per_tick)
 
 	switch(current_cycle)
@@ -1147,7 +1145,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "Potent psychotropic that causes intense anger within users."
 	color = "#ff0000"
 	ph = 1
-	metabolization_rate = REAGENTS_METABOLISM
 	tox_damage = 0
 	var/delayed_burn_damage = 0
 
@@ -1211,14 +1208,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	/// Used when applying colors on valid things
 	var/list/random_color_list = list("#1a1a1a","#2e2e2e","#424242","#565656","#6a6a6a","#7e7e7e","#929292","#a6a6a6","#bababa","#cecece")
 
-/datum/reagent/inverse/colorful_reagent/on_mob_metabolize(mob/living/carbon/affected_mob)
-	. = ..()
-	affected_mob.gain_trauma(/datum/brain_trauma/mild/color_blindness, TRAUMA_RESILIENCE_ABSOLUTE)
-
-/datum/reagent/inverse/colorful_reagent/on_mob_end_metabolize(mob/living/carbon/affected_mob)
-	. = ..()
-	affected_mob.cure_trauma_type(/datum/brain_trauma/mild/color_blindness, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
-
 /datum/reagent/inverse/colorful_reagent/New()
 	color_callback = CALLBACK(src, PROC_REF(UpdateColor))
 	SSticker.OnRoundstart(color_callback)
@@ -1228,6 +1217,18 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	LAZYREMOVE(SSticker.round_end_events, color_callback)
 	color_callback = null
 	return ..()
+
+/datum/reagent/inverse/colorful_reagent/overdose_start(mob/living/affected_mob)
+	. = ..()
+	metabolization_rate = 0.04 * REM
+
+/datum/reagent/inverse/colorful_reagent/on_mob_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	affected_mob.gain_trauma(/datum/brain_trauma/mild/color_blindness, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/reagent/inverse/colorful_reagent/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	affected_mob.cure_trauma_type(/datum/brain_trauma/mild/color_blindness, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/reagent/inverse/colorful_reagent/proc/UpdateColor()
 	color_callback = null

@@ -93,8 +93,8 @@
 /datum/reagent/drug/nicotine/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_tox_loss(0.05 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-	need_mob_update += affected_mob.adjust_oxy_loss(0.55 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update = affected_mob.adjust_tox_loss(0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update += affected_mob.adjust_oxy_loss(4.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -435,9 +435,9 @@
 	var/mob/living/carbon/carbie = affected_mob
 	//You will be vomiting so the damage is really for a few ticks before you flush it out of your system
 	var/need_mob_update
-	need_mob_update = carbie.adjust_tox_loss(0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update = carbie.adjust_tox_loss(0.25 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(SPT_PROB(5, seconds_per_tick))
-		need_mob_update += carbie.adjust_tox_loss(5 * metabolization_ratio, required_biotype = affected_biotype, updating_health = FALSE)
+		need_mob_update += carbie.adjust_tox_loss(2.5 * metabolization_ratio, required_biotype = affected_biotype, updating_health = FALSE)
 		carbie.vomit(VOMIT_CATEGORY_DEFAULT)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -760,7 +760,7 @@
 		invisible_man.emote("giggle")
 	if(SPT_PROB(5, seconds_per_tick))
 		invisible_man.emote("laugh")
-	if(invisible_man.adjust_organ_loss(ORGAN_SLOT_LIVER, ((0.2 * REAGENTS_METABOLISM) / metabolization_rate) * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
+	if(invisible_man.adjust_organ_loss(ORGAN_SLOT_LIVER, METABOLIZE_FREE_CONSTANT(0.2) * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/saturnx/stable

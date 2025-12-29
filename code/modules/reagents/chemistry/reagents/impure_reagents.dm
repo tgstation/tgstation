@@ -20,7 +20,7 @@
 	var/need_mob_update
 
 	if(liver)//Though, lets be safe
-		need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, 0.5 * liver_damage * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
+		need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, METABOLIZE_FREE_CONSTANT(0.5) * liver_damage * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	else
 		need_mob_update = affected_mob.adjust_tox_loss(1 * liver_damage * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)//Incase of no liver!
 
