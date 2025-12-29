@@ -806,3 +806,18 @@
   - rscadd: Escaped bitrunning glitches will visually distort when interacted with
   - bugfix: Escaped bitrunning glitches will not stick around as holographic corpses
       after they die
+2025-12-29:
+  Aliceee2ch:
+  - map: Moved bar sign on Catwalk's kitchen.
+  jlsnow301:
+  - bugfix: Fixed a bluescreen in the personal crafting menu
+  necromanceranne:
+  - code_imp: Fixes up some of the code and grammar for the giantslayer spears.
+  - bugfix: Giantslayer spears are not improvised and therefore do not break when
+      used to attack things.
+  timothymtorres:
+  - rscadd: Add wooden crafting recipes for gavel hammer and gavel blocks. (aka the
+      judge's hammer in the courtroom)
+  vinylspiders:
+  - refactor: crafting menu should be slightly faster now with searching the area
+      for items that are blacklisted, and uses less memory than it did previously
