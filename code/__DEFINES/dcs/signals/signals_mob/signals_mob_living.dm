@@ -60,7 +60,7 @@
 #define COMSIG_LIVING_TRY_SYRINGE_WITHDRAW "living_try_syringe_withdraw"
 ///from base of mob/living/set_usable_legs()
 #define COMSIG_LIVING_LIMBLESS_SLOWDOWN  "living_limbless_slowdown"
-///From living/Life(). (deltatime, times_fired)
+///From living/Life(). (deltatime)
 #define COMSIG_LIVING_LIFE "living_life"
 	/// Block the Life() proc from proceeding... this should really only be done in some really wacky situations.
 	#define COMPONENT_LIVING_CANCEL_LIFE_PROCESSING (1<<0)
@@ -146,7 +146,7 @@
 	#define COMPONENT_CANT_TRACK (1<<0)
 ///from end of fully_heal(): (heal_flags)
 #define COMSIG_LIVING_POST_FULLY_HEAL "living_post_fully_heal"
-/// from start of /mob/living/handle_breathing(): (seconds_per_tick, times_fired)
+/// from start of /mob/living/handle_breathing(): (seconds_per_tick)
 #define COMSIG_LIVING_HANDLE_BREATHING "living_handle_breathing"
 ///from /obj/item/hand_item/slapper/attack_atom(): (source=mob/living/slammer, obj/structure/table/slammed_table)
 #define COMSIG_LIVING_SLAM_TABLE "living_slam_table"

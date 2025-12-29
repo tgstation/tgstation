@@ -36,7 +36,7 @@
 	RegisterSignal(owner, COMSIG_CARBON_HELPED, PROC_REF(on_hug))
 	ADD_TRAIT(owner, TRAIT_DESENSITIZED, REF(src))
 
-/datum/brain_trauma/special/obsessed/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/obsessed/on_life(seconds_per_tick)
 	if(!obsession || obsession.stat == DEAD)
 		viewing = FALSE//important, makes sure you no longer stutter when happy if you murdered them while viewing
 		return

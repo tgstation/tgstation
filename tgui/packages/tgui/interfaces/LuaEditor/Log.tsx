@@ -59,6 +59,7 @@ export const Log = (props: LogProps) => {
   const { act, data } = useBackend<LuaEditorData>();
   const { stateLog } = data;
   const { setViewedChunk, setModal } = props;
+
   return stateLog.map((element, i) => {
     const { status, repeats } = element;
     let output;

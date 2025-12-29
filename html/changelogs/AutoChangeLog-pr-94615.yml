@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "When you are shocked, you remain standing for a short period of time before being forced to the ground. You are still stunned for the duration of this effect, that remains unchanged."

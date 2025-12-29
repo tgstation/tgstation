@@ -17,8 +17,7 @@ import { UI_DISABLED, UI_INTERACTIVE } from 'tgui-core/constants';
 import { KEY_ALT } from 'tgui-core/keycodes';
 import { type BooleanLike, classes } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
-import { backendSuspendStart, globalStore, useBackend } from '../backend';
-import { useDebug } from '../debug';
+import { useBackend } from '../backend';
 import {
   dragStartHandler,
   recallWindowGeometry,
@@ -27,6 +26,7 @@ import {
   setWindowPosition,
   storeWindowGeometry,
 } from '../drag';
+import { suspendStart } from '../events/handlers/suspense';
 import { createLogger } from '../logging';
 import { Layout } from './Layout';
 import { TitleBar } from './TitleBar';
@@ -55,8 +55,8 @@ export function Window(props: Props) {
     height,
   } = props;
 
-  const { config, suspended } = useBackend();
-  const { debugLayout = false } = useDebug();
+  const { config, suspended, debug } = useBackend();
+
   const [isReadyToRender, setIsReadyToRender] = useState(false);
 
   // We need to set the window to be invisible before we can set its geometry
@@ -68,7 +68,7 @@ export function Window(props: Props) {
     setIsReadyToRender(true);
   }, []);
 
-  const { scale } = config.window;
+  const { scale } = config?.window || false;
 
   useEffect(() => {
     if (!suspended && isReadyToRender) {
@@ -96,14 +96,11 @@ export function Window(props: Props) {
       });
       logger.log('mounting');
       updateGeometry();
-
-      return () => {
-        logger.log('unmounting');
-      };
     }
+    return () => {
+      logger.log('unmounting');
+    };
   }, [isReadyToRender, width, height, scale]);
-
-  const dispatch = globalStore.dispatch;
 
   // Determine when to show dimmer
   const showDimmer =
@@ -118,15 +115,17 @@ export function Window(props: Props) {
         title={title || decodeHtmlEntities(config.title)}
         status={config.status}
         onDragStart={dragStartHandler}
-        onClose={() => {
-          logger.log('pressed close');
-          dispatch(backendSuspendStart());
-        }}
+        onClose={suspendStart}
         canClose={canClose}
       >
         {buttons}
       </TitleBar>
-      <div className={classes(['Window__rest', debugLayout && 'debug-layout'])}>
+      <div
+        className={classes([
+          'Window__rest',
+          debug.debugLayout && 'debug-layout',
+        ])}
+      >
         {!suspended && children}
         {showDimmer && <div className="Window__dimmer" />}
       </div>

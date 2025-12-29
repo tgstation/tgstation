@@ -447,7 +447,6 @@
 	light_color = LIGHT_COLOR_FLARE
 	light_system = OVERLAY_LIGHT
 	light_power = 2
-	grind_results = list(/datum/reagent/sulfur = 15)
 	sound_on = 'sound/items/match_strike.ogg'
 	toggle_context = FALSE
 	has_closed_handle = FALSE
@@ -478,6 +477,9 @@
 		force = on_damage
 		damtype = BURN
 		update_brightness()
+
+/obj/item/flashlight/flare/grind_results()
+	return list(/datum/reagent/sulfur = 15)
 
 /obj/item/flashlight/flare/init_slapcrafting()
 	return
@@ -864,7 +866,6 @@
 	base_icon_state = "glowstick"
 	inhand_icon_state = null
 	worn_icon_state = "lightstick"
-	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
 	sound_on = 'sound/effects/wounds/crack2.ogg' // the cracking sound isn't just for wounds silly
 	toggle_context = FALSE
 	ignore_base_color = TRUE
@@ -897,6 +898,11 @@
 		bite_consumption = round(reagents.total_volume / (rand(20, 30) * 0.1)),\
 	)
 	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
+
+/obj/item/flashlight/glowstick/grind_results()
+	. = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10)
+	if(!light_on)
+		.[/datum/reagent/oxygen] = 5
 
 /obj/item/flashlight/glowstick/proc/get_fuel()
 	return reagents.get_reagent_amount(fuel_type)
@@ -937,7 +943,6 @@
 
 /obj/item/flashlight/glowstick/proc/turn_on()
 	reagents.add_reagent(/datum/reagent/oxygen, oxygen_added)
-	grind_results -= /datum/reagent/oxygen
 	set_light_on(TRUE) // Just in case
 	var/datum/action/toggle = locate(/datum/action/item_action/toggle_light) in actions
 	// No sense having a toggle light action that we don't use eh?
