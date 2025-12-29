@@ -30,6 +30,11 @@
 	changed_owner(owner, attached_part.owner)
 	RegisterSignal(attached_part, COMSIG_BODYPART_CHANGED_OWNER, PROC_REF(changed_owner))
 
+/datum/worn_feature_offset/Destroy(force)
+	attached_part.feature_offsets -= feature_key
+	changed_owner(null, null)
+	return ..()
+
 /// Returns the current offset which should be used for this feature
 /datum/worn_feature_offset/proc/get_offset()
 	var/current_dir = owner ? owner.dir : SOUTH
@@ -47,6 +52,8 @@
 /// When the owner of the bodypart changes, update our signal registrations
 /datum/worn_feature_offset/proc/changed_owner(obj/item/bodypart/part, mob/living/new_owner, mob/living/old_owner)
 	SIGNAL_HANDLER
+	if(isnull(old_owner))
+		old_owner = owner
 	owner = new_owner
 	if (!isnull(old_owner))
 		UnregisterSignal(old_owner, list(COMSIG_ATOM_POST_DIR_CHANGE, COMSIG_QDELETING))
