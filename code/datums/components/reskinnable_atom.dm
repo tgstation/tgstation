@@ -139,14 +139,11 @@
 	/// Currently applied skin preview_name
 	VAR_PRIVATE/current_skin
 
-/datum/component/reskinable_item/Initialize(base_reskin_type, infinite = FALSE, initial_skin, list/blacklisted_subtypes = list())
+/datum/component/reskinable_item/Initialize(base_reskin_type, infinite = FALSE, initial_skin, list/blacklisted_subtypes)
 	if(!isatom(parent) || isarea(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	var/atom/atom_parent = parent
-	if(!atom_parent.can_reskin)
-		return COMPONENT_REDUNDANT
-
 #ifdef UNIT_TESTS
 	if(atom_parent.greyscale_config && (atom_parent.type in GLOB.all_loadout_datums)) // We only care about these when they're in the loadout
 		var/datum/atom_skin/reskin_type = base_reskin_type
@@ -176,19 +173,19 @@
 	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE_TAGS)
 	UnregisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM)
 
-/datum/component/reskinable_item/CheckDupeComponent(datum/component/comp, base_reskin_type, infinite = FALSE, initial_skin, list/blacklisted_subtypes = list())
-	if(src.base_reskin_type != base_reskin_type)
-		return FALSE // new comp - though the alt-click behavior will collide
-
+/datum/component/reskinable_item/CheckDupeComponent(datum/component/comp, base_reskin_type, infinite = FALSE, initial_skin, list/blacklisted_subtypes)
+	// Always absorb added components
+	src.base_reskin_type = base_reskin_type
 	src.infinite_reskin = infinite
 	src.blacklisted_subtypes = blacklisted_subtypes
 
-	set_skin_by_name(initial_skin)
-	return TRUE // same comp
+	if(initial_skin)
+		set_skin_by_name(initial_skin)
+	return TRUE
 
 /datum/component/reskinable_item/proc/get_skins_by_name()
 	var/list/reskin_options = list()
-	for(var/datum/atom_skin/reskin_option as anything in valid_subtypesof(base_reskin_type) - blacklisted_subtypes)
+	for(var/datum/atom_skin/reskin_option as anything in valid_subtypesof(base_reskin_type) - (blacklisted_subtypes || list()))
 		reskin_options[reskin_option::preview_name] = reskin_option
 
 	return reskin_options

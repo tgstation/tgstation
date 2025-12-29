@@ -241,9 +241,11 @@
 		speed = 20 SECONDS, \
 		effectiveness = 115, \
 	)
-	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/cap_pen)
 	//the pen is mightier than the sword
 	RegisterSignal(src, COMSIG_DART_INSERT_PARENT_RESKINNED, PROC_REF(reskin_dart_insert))
+
+/obj/item/pen/fountain/captain/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/cap_pen)
 
 /obj/item/pen/fountain/captain/proc/reskin_dart_insert(datum/component/dart_insert/insert_comp, skin)
 	SIGNAL_HANDLER
