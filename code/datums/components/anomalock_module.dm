@@ -53,20 +53,21 @@
 
 /datum/component/anomaly_locked_module/proc/on_item_interact(obj/item/mod/module/source, mob/living/user, obj/item/tool, list/modifiers)
 	SIGNAL_HANDLER
-	if(tool.type in accepted_anomalies)
-		if(core)
-			source.balloon_alert(user, "already has core!")
-			return ITEM_INTERACT_FAILURE
-		if(pre_insert_callback)
-			var/callback_return
-			if(istype(pre_insert_callback, /datum/callback))
-				var/datum/callback/pre_insert_callback_datum = pre_insert_callback
-				callback_return = pre_insert_callback_datum.Invoke(user, tool, modifiers)
-			else
-				callback_return = call(source, pre_insert_callback)(user, tool, modifiers)
-			if(callback_return)
-				return callback_return
-		return insert_core(source, user, tool, modifiers)
+	if(!(tool.type in accepted_anomalies))
+		return 0
+	if(core)
+		source.balloon_alert(user, "already has core!")
+		return ITEM_INTERACT_FAILURE
+	if(pre_insert_callback)
+		var/callback_return
+		if(istype(pre_insert_callback, /datum/callback))
+			var/datum/callback/pre_insert_callback_datum = pre_insert_callback
+			callback_return = pre_insert_callback_datum.Invoke(user, tool, modifiers)
+		else
+			callback_return = call(source, pre_insert_callback)(user, tool, modifiers)
+		if(callback_return)
+			return callback_return
+	return insert_core(source, user, tool, modifiers)
 
 /datum/component/anomaly_locked_module/proc/insert_core(obj/item/mod/module/source, mob/living/user, obj/item/tool, list/modifiers)
 	if(!user.transferItemToLoc(tool, source))
@@ -116,13 +117,13 @@
 		return
 	if(core)
 		examine_list += span_notice("There is a [core.name] installed in it. [core_removable ? "You could remove it with a <b>screwdriver</b>..." : "Unfortunately, due to a design quirk, it's unremovable."]")
-	else
-		var/list/core_list = list()
-		for(var/atom/core_path as anything in accepted_anomalies)
-			core_list += initial(core_path.name)
-		examine_list += span_notice("You need to insert \a [english_list(core_list, and_text = " or ")] for this module to function.")
-		if(!core_removable)
-			examine_list += span_notice("Due to some design quirk, once a core is inserted, it won't be removable.")
+		return
+	var/list/core_list = list()
+	for(var/atom/core_path as anything in accepted_anomalies)
+		core_list += initial(core_path.name)
+	examine_list += span_notice("You need to insert \a [english_list(core_list, and_text = " or ")] for this module to function.")
+	if(!core_removable)
+		examine_list += span_notice("Due to some design quirk, once a core is inserted, it won't be removable.")
 
 /datum/component/anomaly_locked_module/proc/on_update_icon_state(obj/item/mod/module/source)
 	SIGNAL_HANDLER
