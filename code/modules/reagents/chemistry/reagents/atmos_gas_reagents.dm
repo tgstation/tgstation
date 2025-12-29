@@ -1,7 +1,7 @@
 /datum/reagent/freon
 	name = "Freon"
 	description = "A powerful heat absorbent."
-	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM  // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
 	taste_description = "burning"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
@@ -17,7 +17,7 @@
 /datum/reagent/halon
 	name = "Halon"
 	description = "A fire suppression gas that removes oxygen and cools down the area"
-	metabolization_rate = REAGENTS_METABOLISM * 0.5
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	color = "90560B"
 	taste_description = "minty"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
@@ -34,7 +34,7 @@
 /datum/reagent/healium
 	name = "Healium"
 	description = "A powerful sleeping agent with healing properties"
-	metabolization_rate = REAGENTS_METABOLISM * 0.5
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	color = "90560B"
 	taste_description = "rubbery"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
@@ -56,7 +56,7 @@
 /datum/reagent/hypernoblium
 	name = "Hyper-Noblium"
 	description = "A suppressive gas that stops gas reactions on those who inhale it."
-	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hyper-nob are handled through gas breathing, metabolism must be lower for breathcode to keep up
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM // Because nitrium/freon/hyper-nob are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
 	taste_description = "searingly cold"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
@@ -69,7 +69,7 @@
 /datum/reagent/nitrium_high_metabolization
 	name = "Nitrosyl plasmide"
 	description = "A highly reactive byproduct that stops you from sleeping, while dealing increasing toxin damage over time."
-	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM  // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "E1A116"
 	taste_description = "sourness"
 	ph = 1.8
@@ -88,7 +88,7 @@
 /datum/reagent/nitrium_low_metabolization
 	name = "Nitrium"
 	description = "A highly reactive gas that makes you feel faster."
-	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
 	taste_description = "burning"
 	ph = 2
@@ -105,7 +105,7 @@
 /datum/reagent/pluoxium
 	name = "Pluoxium"
 	description = "A gas that is eight times more efficient than O2 at lung diffusion with organ healing properties on sleeping patients."
-	metabolization_rate = REAGENTS_METABOLISM * 0.5
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	color = COLOR_GRAY
 	taste_description = "irradiated air"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
@@ -125,7 +125,7 @@
 /datum/reagent/zauker
 	name = "Zauker"
 	description = "An unstable gas that is toxic to all living beings."
-	metabolization_rate = REAGENTS_METABOLISM * 0.5
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	color = "90560B"
 	taste_description = "bitter"
 	chemical_flags = REAGENT_NO_RANDOM_RECIPE
