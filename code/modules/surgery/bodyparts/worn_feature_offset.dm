@@ -32,6 +32,7 @@
 
 /datum/worn_feature_offset/Destroy(force)
 	attached_part.feature_offsets -= feature_key
+	attached_part = null
 	changed_owner(null, null)
 	return ..()
 
