@@ -294,15 +294,24 @@
 	icon_state = "stamp-ok"
 
 /obj/item/stamp/mod/attack_self(mob/user, modifiers)
-	playsound(src, 'sound/machines/click.ogg', 30, TRUE, -3)
-	switch(icon_state)
-		if("stamp-ok")
-			icon_state = "stamp-deny"
-		if("stamp-deny")
-			icon_state = "stamp-void"
-		if("stamp-void")
-			icon_state = "stamp-ok"
-	balloon_alert(user, "switched mode")
+
+	var/choices = list()
+	var/icon_states = list()
+	icon_states["Granted"] = "stamp-ok"
+	icon_states["Denied"] = "stamp-deny"
+	icon_states["Void"] = "stamp-void"
+	for(var/possible_icon_state in icon_states)
+		if(!(src.icon_state == icon_states[possible_icon_state]))
+			choices[possible_icon_state] = image(src.icon, icon_states[possible_icon_state])
+	var/chosen_icon_state = show_radial_menu(user, user, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), src, user), require_near = TRUE)
+	if(chosen_icon_state)
+		playsound(src, 'sound/machines/click.ogg', 30, TRUE, -3)
+		src.icon_state = icon_states[chosen_icon_state]
+
+/obj/item/stamp/mod/proc/check_menu(datum/target, mob/user)
+	if(user.incapacitated || !user.is_holding(target))
+		return FALSE
+	return TRUE
 
 ///Atrocinator - Flips your gravity.
 /obj/item/mod/module/atrocinator
