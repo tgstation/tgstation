@@ -338,7 +338,7 @@
 /datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	if(!isjellyperson(affected_mob)) //everyone but jellypeople get shocked as normal.
 		return ..()
-	affected_mob.AdjustAllImmobility(-20  *metabolization_ratio * seconds_per_tick)
+	affected_mob.AdjustAllImmobility(-20  * metabolization_ratio * seconds_per_tick)
 	if(affected_mob.adjust_stamina_loss(-5 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))
 		. = UPDATE_MOB_HEALTH
 	if(is_species(affected_mob, /datum/species/jelly/luminescent))

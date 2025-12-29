@@ -696,10 +696,11 @@
 
 /datum/reagent/toxin/histamine/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
+	var/heal = 4 * metabolization_ratio * seconds_per_tick
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_oxy_loss(4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	need_mob_update += affected_mob.adjust_brute_loss(4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjust_tox_loss(4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update = affected_mob.adjust_oxy_loss(heal, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update += affected_mob.adjust_brute_loss(heal, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjust_tox_loss(heal, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -923,7 +924,7 @@
 /datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(current_cycle > 10)
-		affected_mob.Sleeping(80 * metabolization_ratio * seconds_per_tick)
+		affected_mob.Sleeping(26.67 * metabolization_ratio * seconds_per_tick)
 	if(affected_mob.adjust_stamina_loss(0.67 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))
 		return UPDATE_MOB_HEALTH
 
@@ -1041,7 +1042,7 @@
 	. = ..()
 	if(current_cycle > 11)
 		affected_mob.Paralyze(240 * metabolization_ratio * seconds_per_tick)
-	if(affected_mob.adjust_oxy_loss(0.5*REM*seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
+	if(affected_mob.adjust_oxy_loss(2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/heparin //Based on a real-life anticoagulant. I'm not a doctor, so this won't be realistic.
@@ -1111,7 +1112,7 @@
 		remove_amt = 0.5
 	. = ..()
 	for(var/datum/reagent/medicine/reagent in affected_mob.reagents.reagent_list)
-		reagent.volume -= 12.5 * remove_amt * reagent.purge_multiplier * normalise_creation_purity() * metabolization_ratio * seconds_per_tick
+		reagent.volume -= 6.25 * remove_amt * reagent.purge_multiplier * normalise_creation_purity() * metabolization_ratio * seconds_per_tick
 	affected_mob.reagents.update_total()
 
 //ACID
@@ -1208,16 +1209,14 @@
 	metabolization_rate = 0 //stays in the system until active.
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-	var/actual_toxpwr = 5
-	var/delay = 31
 
 /datum/reagent/toxin/delayed/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(current_cycle <= delay)
+	if(current_cycle <= 31)
 		return
 	if(holder)
 		holder.remove_reagent(type, REAGENTS_METABOLISM * affected_mob.metabolism_efficiency * seconds_per_tick)
-	if(affected_mob.adjust_tox_loss(0.5 * actual_toxpwr * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+	if(affected_mob.adjust_tox_loss(0.5 * 5 * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		. = UPDATE_MOB_HEALTH
 	if(SPT_PROB(5, seconds_per_tick))
 		affected_mob.Paralyze(20)

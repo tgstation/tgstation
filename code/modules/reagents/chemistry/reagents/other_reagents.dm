@@ -108,9 +108,9 @@
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 	taste_description = "water"
-	var/cooling_temperature = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
 	default_container = /obj/item/reagent_containers/cup/glass/waterbottle
+	var/cooling_temperature = 2
 
 /datum/glass_style/shot_glass/water
 	required_drink_type = /datum/reagent/water
@@ -405,7 +405,6 @@
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen and oxygen." //intended intended
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 	taste_description = "burning water"
-	var/cooling_temperature = 2
 	ph = 6.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -1317,9 +1316,9 @@
 	taste_description = "sourness"
 	reagent_weight = 0.6 //so it sprays further
 	penetrates_skin = VAPOR
-	var/clean_types = CLEAN_WASH
 	ph = 5.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS|REAGENT_AFFECTS_WOUNDS
+	var/clean_types = CLEAN_WASH
 
 /datum/reagent/space_cleaner/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
@@ -1360,10 +1359,11 @@
 
 /datum/reagent/space_cleaner/ez_clean/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
+	var/heal = 1.1 * metabolization_ratio * seconds_per_tick
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_brute_loss(1.1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-	need_mob_update += affected_mob.adjust_fire_loss(1.1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-	need_mob_update += affected_mob.adjust_tox_loss(1.1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+	need_mob_update = affected_mob.adjust_brute_loss(heal, updating_health = FALSE)
+	need_mob_update += affected_mob.adjust_fire_loss(heal, updating_health = FALSE)
+	need_mob_update += affected_mob.adjust_tox_loss(heal, updating_health = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -1729,9 +1729,9 @@
 	name = "Generic Nutriment"
 	description = "Some kind of nutriment. You can't really tell what it is. You should probably report it, along with how you obtained it."
 	color = COLOR_BLACK // RBG: 0, 0, 0
-	var/tox_prob = 0
 	taste_description = "plant food"
 	ph = 3
+	var/tox_prob = 0
 
 /datum/reagent/plantnutriment/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -2909,15 +2909,16 @@
 
 /datum/reagent/eldritch/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	. = ..()
+	var/common = 0.4 * metabolization_ratio * seconds_per_tick
 	var/need_mob_update = FALSE
 	if(IS_HERETIC_OR_MONSTER(drinker))
 		drinker.adjust_drowsiness(-2 * metabolization_ratio * seconds_per_tick)
 		drinker.AdjustAllImmobility(-8 * metabolization_ratio * seconds_per_tick)
 		need_mob_update += drinker.adjust_stamina_loss(-2 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)
-		need_mob_update += drinker.adjust_tox_loss(-0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, forced = TRUE)
-		need_mob_update += drinker.adjust_oxy_loss(-0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += drinker.adjust_brute_loss(-0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += drinker.adjust_fire_loss(-0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += drinker.adjust_tox_loss(-common, updating_health = FALSE, forced = TRUE)
+		need_mob_update += drinker.adjust_oxy_loss(-common, updating_health = FALSE)
+		need_mob_update += drinker.adjust_brute_loss(-common, updating_health = FALSE)
+		need_mob_update += drinker.adjust_fire_loss(-common, updating_health = FALSE)
 		drinker.adjust_blood_volume(0.6 * metabolization_ratio * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
 		// Slowly regulates your body temp
 		drinker.adjust_bodytemperature((drinker.get_body_temp_normal() - drinker.bodytemperature) / 5)
@@ -2926,10 +2927,10 @@
 				drinker.reagents.remove_reagent(reagent.type, 0.8 * reagent.purge_multiplier * metabolization_ratio * seconds_per_tick)
 	else
 		need_mob_update = drinker.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.6 * metabolization_ratio * seconds_per_tick, 150)
-		need_mob_update += drinker.adjust_tox_loss(0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += drinker.adjust_fire_loss(0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += drinker.adjust_oxy_loss(0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += drinker.adjust_brute_loss(0.4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += drinker.adjust_tox_loss(common, updating_health = FALSE)
+		need_mob_update += drinker.adjust_fire_loss(common, updating_health = FALSE)
+		need_mob_update += drinker.adjust_oxy_loss(common, updating_health = FALSE)
+		need_mob_update += drinker.adjust_brute_loss(common, updating_health = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -3090,7 +3091,7 @@
 	. = ..()
 	var/need_mob_update
 	need_mob_update = kronkus_enjoyer.adjust_organ_loss(ORGAN_SLOT_HEART, 0.2 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
-	need_mob_update += kronkus_enjoyer.adjust_stamina_loss(-12 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)
+	need_mob_update += kronkus_enjoyer.adjust_stamina_loss(-6 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -3181,12 +3182,13 @@
 /datum/reagent/hauntium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(affected_mob.mob_biotypes & MOB_UNDEAD || HAS_MIND_TRAIT(affected_mob, TRAIT_MORBID)) //if morbid or undead,acts like an addiction-less drug
+		var/common = -3.34 SECONDS * metabolization_ratio * seconds_per_tick
 		affected_mob.remove_status_effect(/datum/status_effect/jitter)
-		affected_mob.AdjustStun(-3.34 SECONDS * metabolization_ratio * seconds_per_tick)
-		affected_mob.AdjustKnockdown(-3.34 SECONDS * metabolization_ratio * seconds_per_tick)
-		affected_mob.AdjustUnconscious(-3.34 SECONDS * metabolization_ratio * seconds_per_tick)
-		affected_mob.AdjustParalyzed(-3.34 SECONDS * metabolization_ratio * seconds_per_tick)
-		affected_mob.AdjustImmobilized(-3.34 SECONDS * metabolization_ratio * seconds_per_tick)
+		affected_mob.AdjustStun(common)
+		affected_mob.AdjustKnockdown(common)
+		affected_mob.AdjustUnconscious(common)
+		affected_mob.AdjustParalyzed(common)
+		affected_mob.AdjustImmobilized(common)
 	else
 		if(affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, 1.34 * metabolization_ratio * seconds_per_tick)) //1 heart damage per tick
 			. = UPDATE_MOB_HEALTH
