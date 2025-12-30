@@ -53,7 +53,7 @@
 
 /datum/component/anomaly_locked_module/proc/on_item_interact(obj/item/mod/module/source, mob/living/user, obj/item/tool, list/modifiers)
 	SIGNAL_HANDLER
-	if(!is_type_in_typecache(tool))
+	if(!is_type_in_typecache(tool, accepted_anomalies))
 		return 0
 	if(core)
 		source.balloon_alert(user, "already has core!")
