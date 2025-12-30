@@ -15,7 +15,7 @@
 	. = ..()
 	if(!istype(parent, /obj/item/mod/module))
 		return COMPONENT_INCOMPATIBLE
-	accepted_anomalies = anomaly_types
+	accepted_anomalies = typecacheof(anomaly_types)
 	core_removable = removable
 	src.pre_insert_callback = pre_insert_callback
 	core_insert_callback = insert_callback
@@ -53,7 +53,7 @@
 
 /datum/component/anomaly_locked_module/proc/on_item_interact(obj/item/mod/module/source, mob/living/user, obj/item/tool, list/modifiers)
 	SIGNAL_HANDLER
-	if(!(tool.type in accepted_anomalies))
+	if(!is_type_in_typecache(tool))
 		return 0
 	if(core)
 		source.balloon_alert(user, "already has core!")
