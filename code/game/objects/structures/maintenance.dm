@@ -11,6 +11,8 @@ at the cost of risking a vicious bite.**/
 	var/obj/item/hidden_item
 	///This var determines if there is a chance to receive a bite when sticking your hand into the water.
 	var/critter_infested = TRUE
+	///A subtle loop which plays a drop of water sound every once in a while
+	var/datum/looping_sound/drip/drip_sfx
 	///weighted loot table for what loot you can find inside the moisture trap.
 	///the actual loot isn't that great and should probably be improved and expanded later.
 	var/static/list/loot_table = list(
@@ -45,11 +47,14 @@ at the cost of risking a vicious bite.**/
 		fish_source.fish_table[picked_item] = 5
 		fish_source.fish_counts[picked_item] = 1;
 	AddComponent(/datum/component/fishing_spot, fish_source)
+	drip_sfx = new(src)
+	drip_sfx.start()
 
 
 /obj/structure/moisture_trap/Destroy()
 	if(hidden_item)
 		QDEL_NULL(hidden_item)
+	drip_sfx?.stop(TRUE)
 	return ..()
 
 
