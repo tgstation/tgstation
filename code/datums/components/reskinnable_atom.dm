@@ -161,6 +161,10 @@
 	if(initial_skin)
 		set_skin_by_name(initial_skin)
 
+	var/list/reskin_options = get_skins_by_name()
+	if(length(reskin_options) <= 1) // Check that we actually have reskin options - if not there's no point to existing past this point.
+		return COMPONENT_REDUNDANT
+
 	atom_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 /datum/component/reskinable_item/RegisterWithParent()
