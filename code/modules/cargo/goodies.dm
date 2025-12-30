@@ -441,4 +441,11 @@
 	cost = PAYCHECK_CREW * 8
 	contains = list(/obj/item/storage/box/stockparts/advanced)
 
-
+/datum/supply_pack/goody/offbrand_powerdrill
+	name = "Offbranf Powertoolz" // Intentional Typo
+	desc = "These power tools looks similar to the ones Nanotrasen's researching, and appears to function to the same specifications. However, it seems they neglected to test them as well as we would. Buyer beware."
+	cost = PAYCHECK_CREW * 14
+	contains = list(
+		/obj/item/screwdriver/power/offbrand,
+		/obj/item/crowbar/power/offbrand,
+		)

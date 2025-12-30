@@ -339,6 +339,31 @@
 	limit_jaws_access = FALSE
 	radio_alert = FALSE
 
+#define JAWS_INTEGRITY 30
+
+/obj/item/crowbar/power/offbrand
+	name = "hand-e clampz"
+	desc = "These offbrand jaws of 'life' look like they've lived a short but incredibly hard one. You risk pinching your hands just by holding them."
+	icon_state = "jaws_offbrand"
+	max_integrity = JAWS_INTEGRITY
+
+/obj/item/crowbar/power/offbrand/tool_use_check(mob/living/user, amount, heat_required)
+	. = ..()
+	if(prob(20))
+		do_sparks(1, FALSE, src)
+	if(prob(5))
+		to_chat(user, "[span_warning("[src] slips and pinches you!")]")
+		user.adjust_brute_loss(amount = 1, forced = TRUE)
+		take_damage(1)
+
+/obj/item/crowbar/power/offbrand/atom_break(damage_flag)
+	. = ..()
+	new /obj/effect/decal/cleanable/generic(drop_location())
+	visible_message(span_danger("[src] shreds itself apart!"))
+	qdel(src)
+
+#undef JAWS_INTEGRITY
+
 /obj/item/crowbar/cyborg
 	name = "hydraulic crowbar"
 	desc = "A hydraulic prying tool, simple but powerful."
