@@ -842,6 +842,8 @@
   - bugfix: Bandanas tied around your neck no longer hide your identity or your snout
   TealSeer:
   - bugfix: fixed cargo PDA app missing currency name
+  TheNobodyofimportance:
+  - bugfix: Adds midround clownops to the antag pref
   arbuzik456:
   - rscadd: Added casual way of wearing jeans and different pants.
   archbtw0:
