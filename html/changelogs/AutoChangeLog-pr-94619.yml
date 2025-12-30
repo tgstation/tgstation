@@ -1,0 +1,8 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "The iconoclast repeater, the handheld version, no longer fires two pellets but instead fires in a two round burst."
+  - balance: "The iconoclast repeater now charges two shots (one trigger pull) every crank, and the crank takes 0.4 seconds (letting you outpace your shot rate). However, you cannot charge the gun while moving."
+  - balance: "Reduces the damage of the repeater's shots (both versions). Now it does 15 lethal force per shot. Since this is coming out in bursts of two, this means that it deals 30 lethal force in a single pull."
+  - bugfix: "Laser musket type weapons are now heavy weapons."
+  - code_imp: "Cleans up some of the code and grammar on the repeater."
