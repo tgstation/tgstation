@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Bandanas tied around your neck no longer hide your identity or your snout"
