@@ -1,0 +1,4 @@
+author: "ElGitificador"
+delete-after: True
+changes:
+  - spellcheck: "fixed typo in syndol description."
