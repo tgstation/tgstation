@@ -76,6 +76,7 @@ at the cost of risking a vicious bite.**/
 		to_chat(user, span_warning("You need to lie down to reach into [src]."))
 		return
 	to_chat(user, span_notice("You reach down into the cold water of the basin."))
+	playsound(src,'sound/effects/splash.ogg', 45, TRUE)
 	if(!do_after(user, 2 SECONDS, target = src))
 		return
 	if(hidden_item)
@@ -114,6 +115,7 @@ at the cost of risking a vicious bite.**/
 		return
 	hidden_item = I
 	to_chat(user, span_notice("You hide [I] inside the basin."))
+	playsound(src,'sound/effects/submerge.ogg', 45, TRUE)
 
 #define ALTAR_INACTIVE 0
 #define ALTAR_STAGEONE 1
