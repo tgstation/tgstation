@@ -62,7 +62,7 @@
 	variance = 10
 
 /obj/item/ammo_casing/energy/laser/musket/repeater
-	projectile_type = /obj/projectile/beam/laser/musket/repeater
+	projectile_type = /obj/projectile/beam/laser/repeater
 	pellets = 2
 	variance = 10
 	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
