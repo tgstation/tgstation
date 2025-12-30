@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes a pushed crate not removing on_climbable trait properly off the mob standing atop it"
