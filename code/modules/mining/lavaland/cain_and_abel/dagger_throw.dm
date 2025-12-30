@@ -11,6 +11,10 @@
 		user.balloon_alert(user, "unable!")
 		return
 
+	if(!check_wield(user))
+		user.balloon_alert(user, "offhand busy!")
+		return
+
 	if(get_dist(target, user) > 9)
 		user.balloon_alert(user, "too far away!")
 		return
