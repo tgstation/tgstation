@@ -689,6 +689,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	else
 		return ..()
 
+/obj/structure/closet/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if (attack_hand(user, modifiers))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
 /// check if we can install airlock electronics in this closet
 /obj/structure/closet/proc/can_install_airlock_electronics(mob/user)
 	if(secure || !can_install_electronics || opened)
@@ -980,14 +985,15 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	. = ..()
 	if(.)
 		return
+
 	if(user.body_position == LYING_DOWN && get_dist(src, user) > 0)
 		return
 
 	if(toggle(user))
-		return
+		return TRUE
 
 	if(!opened)
-		togglelock(user)
+		return togglelock(user)
 
 /obj/structure/closet/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
