@@ -6,3 +6,4 @@
 	volume = 45
 	vary = TRUE
 	ignore_walls = FALSE
+	falloff_distance = 5
