@@ -52,7 +52,8 @@
 	set_dagger_icon(thrown = FALSE)
 
 /obj/item/cain_and_abel/proc/set_dagger_icon(thrown = FALSE)
-	inhand_icon_state = "[src::inhand_icon_state][thrown ? "_thrown" : ""]"
+	dagger_thrown = thrown
+	update_dagger_icon()
 	update_inhand_icon()
 
 /obj/item/cain_and_abel/proc/reset_dagger_icon(datum/source)
