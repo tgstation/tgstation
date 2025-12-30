@@ -12,6 +12,13 @@ SUBSYSTEM_DEF(radioactive_nebula)
 
 	VAR_PRIVATE
 		datum/station_trait/nebula/hostile/radiation/radioactive_nebula
+	// List of /atom/movable's that should never be irradiated
+	var/static/list/blacklisted_atoms = typecacheof(list(
+		/atom/movable/mirage_holder,
+		/obj/docking_port,
+		/obj/effect/landmark,
+		/obj/effect/abstract,
+	))
 
 /datum/controller/subsystem/radioactive_nebula/Initialize()
 	radioactive_nebula = locate() in SSstation.station_traits
@@ -29,6 +36,10 @@ SUBSYSTEM_DEF(radioactive_nebula)
 /// Makes something appear irradiated for the purposes of the Radioactive Nebula
 /datum/controller/subsystem/radioactive_nebula/proc/fake_irradiate(atom/movable/target)
 	if (HAS_TRAIT(target, TRAIT_RADIOACTIVE_NEBULA_FAKE_IRRADIATED))
+		return
+
+	/// Things that should not be irradiated, like mirage_holders
+	if(is_type_in_typecache(target, blacklisted_atoms))
 		return
 
 	ADD_TRAIT(target, TRAIT_RADIOACTIVE_NEBULA_FAKE_IRRADIATED, REF(src))
