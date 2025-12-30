@@ -60,8 +60,8 @@
 /obj/item/clipboard/examine()
 	. = ..()
 	if(!integrated_pen && pen)
-		. += span_notice("Alt-click to remove [pen].")
-	if(top_paper)
+		. += span_notice("Right-click to remove [pen].")
+	else if(top_paper)
 		. += span_notice("Right-click to remove [top_paper].")
 
 /// Take out the topmost paper
@@ -91,17 +91,6 @@
 	top_paper = locate(/obj/item/paper) in src
 	update_icon()
 
-/obj/item/clipboard/click_alt(mob/user)
-	if(isnull(pen))
-		return CLICK_ACTION_BLOCKING
-
-	if(integrated_pen)
-		to_chat(user, span_warning("You can't seem to find a way to remove [src]'s [pen]."))
-		return CLICK_ACTION_BLOCKING
-
-	remove_pen(user)
-	return CLICK_ACTION_SUCCESS
-
 /obj/item/clipboard/update_overlays()
 	. = ..()
 	var/paper_to_add = get_paper_overlay()
@@ -122,7 +111,10 @@
 
 /obj/item/clipboard/attack_hand(mob/user, list/modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		remove_paper(top_paper, user)
+		if(!integrated_pen && pen)
+			remove_pen(user)
+		else
+			remove_paper(top_paper, user)
 		return TRUE
 	. = ..()
 
