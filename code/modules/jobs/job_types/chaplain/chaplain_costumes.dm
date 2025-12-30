@@ -107,6 +107,7 @@
 	inhand_icon_state = null
 	body_parts_covered = GROIN|LEGS
 	flags_inv = HIDEJUMPSUIT|HIDEBELT
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/suit/chaplainsuit/whiterobe
 	name = "white robe"
@@ -245,6 +246,21 @@
 
 /obj/item/clothing/suit/chaplainsuit/armor/crusader/blue
 	icon_state = "crusader-blue"
+
+/obj/item/clothing/head/helmet/chaplain/heretic
+	name = "occultist's hood"
+	desc = "Conceals your features from the things that look back at you."
+	icon_state = "heretichood"
+	inhand_icon_state = null
+	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+
+/obj/item/clothing/suit/chaplainsuit/armor/heretic
+	name = "occultist's robes"
+	desc = "Shields your body from the things others fail to notice."
+	icon_state = "hereticrobe"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|LEGS
 
 /obj/item/clothing/suit/hooded/chaplain_hoodie
 	name = "follower hoodie"

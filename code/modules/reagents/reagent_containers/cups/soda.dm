@@ -5,6 +5,8 @@
 #define SODA_FIZZINESS_THROWN 15
 /// How much fizziness is added to the can of soda by shaking it, in percentage points
 #define SODA_FIZZINESS_SHAKE 5
+/// At what atmospheric pressure do we burst a soda can? Empirical evidance (one googled experiment video) states that ~67.458 kPa is where a can bursts.
+#define SODA_EXPLOSION_PRESSURE 67.458
 
 /obj/item/reagent_containers/cup/soda_cans
 	name = "soda can"
@@ -24,6 +26,7 @@
 /obj/item/reagent_containers/cup/soda_cans/Initialize(mapload, vol)
 	. = ..()
 	AddElement(/datum/element/slapcrafting, string_list(list(/datum/crafting_recipe/improv_explosive)))
+	AddElement(/datum/element/atmos_sensitive, mapload) //Enables soda cans to explode in vaccuum.
 
 /obj/item/reagent_containers/cup/soda_cans/random/Initialize(mapload)
 	..()
@@ -170,8 +173,16 @@
 		. += span_notice("<i>You examine [src] closer, and note the following...</i>")
 		. += "\t[span_warning("You get a menacing aura of fizziness from it...")]"
 
+/obj/item/reagent_containers/cup/soda_cans/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return ((air.return_pressure() <= SODA_EXPLOSION_PRESSURE) && !(reagents.flags & OPENCONTAINER))
+
+/obj/item/reagent_containers/cup/soda_cans/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	if(reagents.total_volume && !(reagents.flags & OPENCONTAINER))
+		burst_soda(loc)
+
 #undef SODA_FIZZINESS_THROWN
 #undef SODA_FIZZINESS_SHAKE
+#undef SODA_EXPLOSION_PRESSURE
 
 /obj/item/reagent_containers/cup/soda_cans/cola
 	name = "Space Cola"

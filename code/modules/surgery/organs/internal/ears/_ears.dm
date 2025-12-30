@@ -22,11 +22,11 @@
 	// without external aid (earmuffs, drugs)
 
 	/// Resistance against loud noises
-	var/bang_protect = 0
+	var/bang_protect = EAR_PROTECTION_NONE
 	/// Multiplier for both long term and short term ear damage
 	var/damage_multiplier = 1
 
-/obj/item/organ/ears/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/ears/on_life(seconds_per_tick)
 	// only inform when things got worse, needs to happen before we heal
 	if((damage > low_threshold && prev_damage < low_threshold) || (damage > high_threshold && prev_damage < high_threshold))
 		to_chat(owner, span_warning("The ringing in your ears grows louder, blocking out any external noises for a moment."))
@@ -147,7 +147,7 @@
 
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
-	dna_block = /datum/dna_block/feature/ears
+	dna_block = /datum/dna_block/feature/accessory/ears
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears
 
@@ -160,9 +160,6 @@
 
 	/// Layer upon which we add the inner ears overlay
 	var/inner_layer = EXTERNAL_FRONT
-
-/datum/bodypart_overlay/mutant/cat_ears/get_global_feature_list()
-	return SSaccessories.ears_list
 
 /datum/bodypart_overlay/mutant/cat_ears/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
 	return !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
@@ -186,6 +183,75 @@
 
 /datum/bodypart_overlay/mutant/cat_ears/color_image(image/overlay, layer, obj/item/bodypart/limb)
 	return // We color base ears manually above in get_image
+
+/obj/item/organ/ears/cat/cybernetic
+	name = "basic cybernetic cat ears"
+	icon = 'icons/obj/medical/organs/organs.dmi'
+	icon_state = "ears-c-cat"
+	desc = "A basic cybernetic organ designed to mimic the operation of ears."
+	damage_multiplier = 2.4
+	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears/cybernetic
+	sprite_accessory_override = /datum/sprite_accessory/ears/cat/cybernetic
+	organ_flags = ORGAN_ROBOTIC
+	failing_desc = "seems to be broken."
+
+/obj/item/organ/ears/cat/cybernetic/upgraded
+	name = "cybernetic cat ears"
+	icon_state = "ears-c-cat-u"
+	desc = "A cybernetic cat ear, still less durable than human ears."
+	damage_multiplier = 1.5
+
+/obj/item/organ/ears/cat/cybernetic/volume
+	name = "volume-adjusting cybernetic cat ears"
+	icon_state = "ears-c-cat-u2"
+	desc = "Advanced cybernetic cat ears capable of dampening loud noises to protect their user."
+	damage_multiplier = 1
+	bang_protect = 1
+
+/obj/item/organ/ears/cat/cybernetic/whisper
+	name = "whisper-sensiive cybernetic cat ears"
+	icon_state = "ears-c-cat-green"
+	desc = "Allows the user to more easily hear whispers. The user becomes extremely vulnerable to loud noises, however."
+	damage_multiplier = 3 // 4 would be excessive
+	organ_traits = list(TRAIT_GOOD_HEARING)
+	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears/cybernetic/green
+
+/obj/item/organ/ears/cat/cybernetic/xray
+	name = "wall-penetrating cybernetic cat ears"
+	icon_state = "ears-c-cat-blue"
+	desc = "Through the power of modern feline engineering, allows the user to hear speech through walls. The user becomes extremely vulnerable to loud noises, however."
+	damage_multiplier = 3 // As above, 4 would be excessive
+	organ_traits = list(TRAIT_XRAY_HEARING)
+	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears/cybernetic/blue
+
+/datum/bodypart_overlay/mutant/cat_ears/cybernetic
+	color_source = null
+	dyable = FALSE
+	/// Color of the inner ear
+	var/inner_color = "#F0004A"
+
+/datum/bodypart_overlay/mutant/cat_ears/cybernetic/get_image(image_layer, obj/item/bodypart/limb)
+	if (image_layer != bitflag_to_layer(inner_layer))
+		return ..()
+	var/mutable_appearance/ear_holder = ..()
+	var/mutable_appearance/inner = ear_holder.overlays[2]
+	inner.color = inner_color
+	return ear_holder
+
+/datum/bodypart_overlay/mutant/cat_ears/cybernetic/get_overlay(layer, obj/item/bodypart/limb)
+	if (layer != inner_layer)
+		return ..()
+	var/list/all_images = ..()
+	var/mutable_appearance/ear_holder = all_images[1]
+	var/mutable_appearance/inner = ear_holder.overlays[2]
+	all_images += emissive_appearance(inner.icon, inner.icon_state, limb, layer = inner.layer, alpha = inner.alpha * 0.75)
+	return all_images
+
+/datum/bodypart_overlay/mutant/cat_ears/cybernetic/green
+	inner_color = "#0079EA"
+
+/datum/bodypart_overlay/mutant/cat_ears/cybernetic/blue
+	inner_color = "#00D844"
 
 /obj/item/organ/ears/ghost
 	name = "ghost ears"
@@ -225,7 +291,7 @@
 /obj/item/organ/ears/cybernetic/whisper
 	name = "whisper-sensitive cybernetic ears"
 	icon_state = "ears-c-u"
-	desc = "Allows the user to more easily hear whispers. The user becomes extra vulnerable to loud noises, however"
+	desc = "Allows the user to more easily hear whispers. The user becomes extra vulnerable to loud noises, however."
 	// Same sensitivity as felinid ears
 	damage_multiplier = 2
 	// The original idea was to use signals to do this not traits. Unfortunately, the star effect used for whispers applies before any relevant signals
@@ -236,14 +302,14 @@
 	name = "volume-adjusting cybernetic ears"
 	icon_state = "ears-c-u"
 	desc = "Advanced cybernetic ears capable of dampening loud noises to protect their user."
-	bang_protect = 1
+	bang_protect = EAR_PROTECTION_NORMAL
 	damage_multiplier = 0.5
 
 // "X-ray ears" that let you hear through walls
 /obj/item/organ/ears/cybernetic/xray
 	name = "wall-penetrating cybernetic ears"
 	icon_state = "ears-c-u"
-	desc = "Through the power of modern engineering, allows the user to hear speech through walls. The user becomes extra vulnerable to loud noises, however"
+	desc = "Through the power of modern engineering, allows the user to hear speech through walls. The user becomes extra vulnerable to loud noises, however."
 	// Same sensitivity as felinid ears
 	damage_multiplier = 2
 	organ_traits = list(TRAIT_XRAY_HEARING)

@@ -133,6 +133,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/budgetorders,
 	)
 
 /**
@@ -259,6 +260,7 @@
 	greyscale_colors = "#927444#8b4c31#4c202d"
 	starting_programs = list(
 		/datum/computer_file/program/skill_tracker,
+		/datum/computer_file/program/raptordex,
 	)
 
 /obj/item/modular_computer/pda/bitrunner
@@ -499,7 +501,7 @@
 	var/datum/computer_file/program/themeify/theme_app = locate() in stored_files
 	if(theme_app)
 		for(var/theme_key in GLOB.pda_name_to_theme - GLOB.default_pda_themes)
-			theme_app.imported_themes += theme_key
+			LAZYADD(theme_app.imported_themes, theme_key)
 
 /obj/item/modular_computer/pda/clear/get_messenger_ending()
 	return "Sent from my crystal PDA"

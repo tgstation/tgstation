@@ -10,11 +10,11 @@ on:
 jobs:
   compile_all_stations:
     name: Compile All Station Maps
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup Bun
         uses: ./.github/actions/setup_bun
       - name: Restore BYOND from Cache
@@ -31,11 +31,11 @@ jobs:
 
   compile_all_templates:
     name: Compile All Templates
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup Bun
         uses: ./.github/actions/setup_bun
       - name: Restore BYOND from Cache

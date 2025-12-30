@@ -111,13 +111,6 @@
 	cost = 2
 	is_final_knowledge = TRUE
 
-/datum/heretic_knowledge/mark/rust_mark
-	name = "Mark of Rust"
-	desc = "Your Mansus Grasp now applies the Mark of Rust. The mark is triggered from an attack with your Rusty Blade. \
-		When triggered, your victim will suffer heavy disgust and confusion. \
-		Allows you to rust reinforced walls and floors as well as plasteel."
-	gain_text = "The Blacksmith looks away. To a place lost long ago. \"Rusted Hills help those in dire need... at a cost.\""
-
 /datum/heretic_knowledge/spell/rust_construction
 	name = "Rust Construction"
 	desc = "Grants you Rust Construction, a spell that allows you to raise a wall out of a rusted floor. \
@@ -300,7 +293,7 @@
  *
  * Gradually heals the heretic ([source]) on rust.
  */
-/datum/heretic_knowledge/ultimate/rust_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
+/datum/heretic_knowledge/ultimate/rust_final/proc/on_life(mob/living/source, seconds_per_tick)
 	SIGNAL_HANDLER
 
 	var/turf/our_turf = get_turf(source)
@@ -309,12 +302,13 @@
 
 	var/need_mob_update = FALSE
 	var/base_heal_amt = 1 * DELTA_WORLD_TIME(SSmobs)
-	need_mob_update += source.adjustBruteLoss(-base_heal_amt, updating_health = FALSE)
-	need_mob_update += source.adjustFireLoss(-base_heal_amt, updating_health = FALSE)
-	need_mob_update += source.adjustToxLoss(-base_heal_amt, updating_health = FALSE, forced = TRUE)
-	need_mob_update += source.adjustOxyLoss(-base_heal_amt, updating_health = FALSE)
-	need_mob_update += source.adjustStaminaLoss(-base_heal_amt * 4, updating_stamina = FALSE)
-	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
-		source.blood_volume += base_heal_amt
+	need_mob_update += source.adjust_brute_loss(-base_heal_amt, updating_health = FALSE)
+	need_mob_update += source.adjust_fire_loss(-base_heal_amt, updating_health = FALSE)
+	need_mob_update += source.adjust_tox_loss(-base_heal_amt, updating_health = FALSE, forced = TRUE)
+	need_mob_update += source.adjust_oxy_loss(-base_heal_amt, updating_health = FALSE)
+	need_mob_update += source.adjust_stamina_loss(-base_heal_amt * 4, updating_stamina = FALSE)
+
+	source.adjust_blood_volume(base_heal_amt, maximum = BLOOD_VOLUME_NORMAL)
+
 	if(need_mob_update)
 		source.updatehealth()

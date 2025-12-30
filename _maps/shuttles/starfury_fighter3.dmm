@@ -49,7 +49,6 @@
 /obj/machinery/turretid{
 	ailock = 1;
 	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
-	icon_state = "control_kill";
 	lethal = 1;
 	name = "Ship Turret Control";
 	pixel_x = -32;

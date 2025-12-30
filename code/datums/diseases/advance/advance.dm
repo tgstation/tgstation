@@ -142,7 +142,7 @@
 
 
 // Randomly pick a symptom to activate.
-/datum/disease/advance/stage_act(seconds_per_tick, times_fired)
+/datum/disease/advance/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
@@ -542,6 +542,9 @@
 
 /datum/disease/advance/proc/totalTransmittable()
 	return properties["transmittable"]
+
+/datum/disease/advance/proc/totalSeverity()
+	return properties["severity"]
 
 /**
  *  If the disease has an incubation time (such as event diseases) start the timer, let properties determine if there's no timer set.

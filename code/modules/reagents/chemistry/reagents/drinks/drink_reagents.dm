@@ -7,10 +7,10 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/orangejuice
 
-/datum/reagent/consumable/orangejuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/orangejuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
-	if(affected_mob.getOxyLoss() && SPT_PROB(16, seconds_per_tick))
-		if(affected_mob.adjustOxyLoss(-1 * REM * seconds_per_tick, FALSE, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
+	if(affected_mob.get_oxy_loss() && SPT_PROB(16, seconds_per_tick))
+		if(affected_mob.adjust_oxy_loss(-1 * REM * seconds_per_tick, FALSE, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/tomatojuice
@@ -21,9 +21,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/tomatojuice
 
-/datum/reagent/consumable/tomatojuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/tomatojuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
-	if(affected_mob.getFireLoss() && SPT_PROB(10, seconds_per_tick))
+	if(affected_mob.get_fire_loss() && SPT_PROB(10, seconds_per_tick))
 		if(affected_mob.heal_bodypart_damage(brute = 0, burn = 1 * REM * seconds_per_tick, updating_health = FALSE))
 			return UPDATE_MOB_HEALTH
 
@@ -36,10 +36,10 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/limejuice
 
-/datum/reagent/consumable/limejuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/limejuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
-	if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
-		if(affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+	if(affected_mob.get_tox_loss() && SPT_PROB(10, seconds_per_tick))
+		if(affected_mob.adjust_tox_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/carrotjuice
@@ -49,7 +49,7 @@
 	taste_description = "carrots"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/carrotjuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/carrotjuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_eye_blur(-2 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_temp_blindness(-2 SECONDS * REM * seconds_per_tick)
@@ -57,9 +57,9 @@
 	switch(current_cycle)
 		if(21 to 110)
 			if(SPT_PROB(100 * (1 - (sqrt(110 - current_cycle) / 10)), seconds_per_tick))
-				need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, -2 * REM * seconds_per_tick)
+				need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_EYES, -2 * REM * seconds_per_tick)
 		if(110 to INFINITY)
-			need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, -2 * REM * seconds_per_tick)
+			need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_EYES, -2 * REM * seconds_per_tick)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -84,9 +84,9 @@
 	taste_description = "berries"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/poisonberryjuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/poisonberryjuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
-	if(affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+	if(affected_mob.adjust_tox_loss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/watermelonjuice
@@ -111,7 +111,7 @@
 	taste_description = "banana"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/banana/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/banana/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	if((liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM)) || is_simian(affected_mob))
@@ -128,7 +128,7 @@
 	required_drink_type = /datum/reagent/consumable/nothing
 	icon_state = "shotglass"
 
-/datum/reagent/consumable/nothing/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+/datum/reagent/consumable/nothing/on_mob_life(mob/living/carbon/drinker, seconds_per_tick)
 	. = ..()
 	if(ishuman(drinker) && HAS_MIND_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
@@ -143,7 +143,7 @@
 	taste_description = "laughter"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/laughter/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/laughter/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.emote("laugh")
 	affected_mob.add_mood_event("chemical_laughter", /datum/mood_event/chemical_laughter)
@@ -156,7 +156,7 @@
 	taste_description = "laughter"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/superlaughter/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/superlaughter/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	if(SPT_PROB(16, seconds_per_tick))
 		affected_mob.visible_message(span_danger("[affected_mob] bursts out into a fit of uncontrollable laughter!"), span_userdanger("You burst out in a fit of uncontrollable laughter!"))
@@ -179,11 +179,11 @@
 	taste_description = "vinegar brine"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/pickle/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/pickle/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	if((liver && HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM)))
-		if(affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+		if(affected_mob.adjust_tox_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/grapejuice
@@ -218,8 +218,8 @@
 		return
 	myseed.adjust_potency(-round(volume * 0.5))
 
-/datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
+/datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
+	if(affected_mob.get_brute_loss() && SPT_PROB(10, seconds_per_tick))
 		if(affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 0, updating_health = FALSE))
 			. = UPDATE_MOB_HEALTH
 	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
@@ -240,9 +240,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/soymilk
 
-/datum/reagent/consumable/soymilk/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/soymilk/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
-	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
+	if(affected_mob.get_brute_loss() && SPT_PROB(10, seconds_per_tick))
 		if(affected_mob.heal_bodypart_damage(1, 0))
 			return UPDATE_MOB_HEALTH
 
@@ -254,7 +254,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/cream
 
-/datum/reagent/consumable/cream/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/cream/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	if(SPT_PROB(10, seconds_per_tick) && affected_mob.heal_bodypart_damage(1, 0))
 		return UPDATE_MOB_HEALTH
@@ -270,11 +270,11 @@
 	glass_price = DRINK_PRICE_STOCK
 	metabolized_traits = list(TRAIT_STIMULATED)
 
-/datum/reagent/consumable/coffee/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/coffee/overdose_process(mob/living/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
-/datum/reagent/consumable/coffee/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/coffee/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
@@ -295,14 +295,14 @@
 	default_container = /obj/item/reagent_containers/cup/glass/mug/tea
 	metabolized_traits = list(TRAIT_STIMULATED)
 
-/datum/reagent/consumable/tea/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/tea/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_dizzy(-4 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-2 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_jitter(-6 SECONDS * REM * seconds_per_tick)
 	affected_mob.AdjustSleeping(-2 SECONDS * REM * seconds_per_tick)
-	if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
-		if(affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+	if(affected_mob.get_tox_loss() && SPT_PROB(10, seconds_per_tick))
+		if(affected_mob.adjust_tox_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			. = UPDATE_MOB_HEALTH
 	affected_mob.adjust_bodytemperature(20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 
@@ -333,7 +333,7 @@
 /datum/wound/burn/flesh/tea_life_process()
 	// Sanitizes and heals, but with a limit
 	flesh_healing = (flesh_healing > 0.1) ? flesh_healing : flesh_healing + 0.02
-	infestation_rate = max(infestation_rate - 0.005, 0)
+	infection_rate = max(infection_rate - 0.005, 0)
 	return TRUE
 
 /datum/reagent/consumable/lemonade
@@ -354,7 +354,7 @@
 	taste_description = "bitter tea"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/tea/arnold_palmer/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/tea/arnold_palmer/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	if(SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[pick("You remember to square your shoulders.","You remember to keep your head down.","You can't decide between squaring your shoulders and keeping your head down.","You remember to relax.","You think about how someday you'll get two strokes off your golf game.")]"))
@@ -369,11 +369,11 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_STIMULATED)
 
-/datum/reagent/consumable/icecoffee/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/icecoffee/overdose_process(mob/living/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
-/datum/reagent/consumable/icecoffee/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/icecoffee/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
@@ -390,17 +390,17 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_STIMULATED)
 
-/datum/reagent/consumable/hot_ice_coffee/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/hot_ice_coffee/overdose_process(mob/living/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
-/datum/reagent/consumable/hot_ice_coffee/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/hot_ice_coffee/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
 	affected_mob.AdjustSleeping(-6 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_bodytemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
-	if(affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+	if(affected_mob.adjust_tox_loss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/icetea
@@ -412,13 +412,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_STIMULATED)
 
-/datum/reagent/consumable/icetea/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/icetea/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_dizzy(-4 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-2 SECONDS * REM * seconds_per_tick)
 	affected_mob.AdjustSleeping(-4 SECONDS * REM * seconds_per_tick)
-	if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
-		if(affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+	if(affected_mob.get_tox_loss() && SPT_PROB(10, seconds_per_tick))
+		if(affected_mob.adjust_tox_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			. = UPDATE_MOB_HEALTH
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 
@@ -429,7 +429,7 @@
 	taste_description = "cola"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/space_cola/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/space_cola/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_drowsiness(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
@@ -442,7 +442,7 @@
 	taste_description = "fruity overlysweet cola"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/roy_rogers/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/roy_rogers/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	affected_mob.set_jitter_if_lower(12 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
@@ -464,7 +464,7 @@
 	. = ..()
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nuka_cola)
 
-/datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.set_jitter_if_lower(40 SECONDS * REM * seconds_per_tick)
 	affected_mob.set_drugginess(1 MINUTES * REM * seconds_per_tick)
@@ -492,10 +492,10 @@
 	REMOVE_TRAIT(affected_mob, TRAIT_DOUBLE_TAP, type)
 	if(current_cycle > 10)
 		to_chat(affected_mob, span_warning("You feel kinda tired as your sugar rush wears off..."))
-		affected_mob.adjustStaminaLoss(min(80, current_cycle * 3), required_biotype = affected_biotype)
+		affected_mob.adjust_stamina_loss(min(80, current_cycle * 3), required_biotype = affected_biotype)
 		affected_mob.adjust_drowsiness((current_cycle-1) * 2 SECONDS)
 
-/datum/reagent/consumable/rootbeer/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/rootbeer/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	if(current_cycle > 3 && !effect_enabled) // takes a few seconds for the bonus to kick in to prevent microdosing
 		to_chat(affected_mob, span_notice("You feel your trigger finger getting itchy..."))
@@ -524,7 +524,7 @@
 		affected_atom.add_mood_event("maintenance_fun", /datum/mood_event/maintenance_high)
 		metabolization_rate *= 0.8
 
-/datum/reagent/consumable/grey_bull/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/grey_bull/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.set_jitter_if_lower(40 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_dizzy(2 SECONDS * REM * seconds_per_tick)
@@ -540,7 +540,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_STIMULATED)
 
-/datum/reagent/consumable/spacemountainwind/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/spacemountainwind/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_drowsiness(-14 SECONDS * REM * seconds_per_tick)
 	affected_mob.AdjustSleeping(-2 SECONDS * REM * seconds_per_tick)
@@ -554,7 +554,7 @@
 	taste_description = "cherry soda" // FALSE ADVERTISING
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/dr_gibb/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/dr_gibb/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_drowsiness(-12 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
@@ -566,7 +566,7 @@
 	taste_description = "cherry soda"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/space_up/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/space_up/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 
@@ -577,7 +577,7 @@
 	taste_description = "tangy lime and lemon soda"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/lemon_lime/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/lemon_lime/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 
@@ -595,7 +595,7 @@
 		to_chat(exposed_mob, span_nicegreen("As you imbibe the Pwr Game, your gamer third eye opens... \
 		You feel as though a great secret of the universe has been made known to you..."))
 
-/datum/reagent/consumable/pwr_game/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/pwr_game/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 	if(SPT_PROB(5, seconds_per_tick))
@@ -608,7 +608,7 @@
 	taste_description = "carbonated metallic soda"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/shamblers/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/shamblers/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 
@@ -625,7 +625,7 @@
 	mytray.adjust_waterlevel(round(volume))
 	mytray.adjust_plant_health(round(volume * 0.1))
 
-/datum/reagent/consumable/sodawater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/sodawater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
@@ -638,7 +638,7 @@
 	taste_description = "tart and fresh"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/tonic/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/tonic/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
@@ -652,17 +652,17 @@
 	taste_description = "grapes and the fresh open sea"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/wellcheers/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/wellcheers/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_drowsiness(3 SECONDS * REM * seconds_per_tick)
 	var/need_mob_update
 	switch(affected_mob.mob_mood.sanity_level)
 		if (SANITY_LEVEL_GREAT to SANITY_LEVEL_NEUTRAL)
-			need_mob_update = affected_mob.adjustBruteLoss(-1.5 * REM * seconds_per_tick, updating_health = FALSE)
+			need_mob_update = affected_mob.adjust_brute_loss(-1.5 * REM * seconds_per_tick, updating_health = FALSE)
 		if (SANITY_LEVEL_DISTURBED to SANITY_LEVEL_UNSTABLE)
 			affected_mob.add_mood_event("wellcheers", /datum/mood_event/wellcheers)
 		if (SANITY_LEVEL_CRAZY to SANITY_LEVEL_INSANE)
-			need_mob_update = affected_mob.adjustStaminaLoss(3 * REM * seconds_per_tick, updating_stamina = FALSE)
+			need_mob_update = affected_mob.adjust_stamina_loss(3 * REM * seconds_per_tick, updating_stamina = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -675,7 +675,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_STIMULATED)
 
-/datum/reagent/consumable/monkey_energy/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/monkey_energy/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.set_jitter_if_lower(80 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_dizzy(2 SECONDS * REM * seconds_per_tick)
@@ -692,7 +692,7 @@
 	. = ..()
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/monkey_energy)
 
-/datum/reagent/consumable/monkey_energy/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/monkey_energy/overdose_process(mob/living/affected_mob, seconds_per_tick)
 	. = ..()
 	if(SPT_PROB(7.5, seconds_per_tick))
 		affected_mob.say(pick_list_replacements(BOOMER_FILE, "boomer"), forced = /datum/reagent/consumable/monkey_energy)
@@ -705,7 +705,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/cup/glass/ice
 
-/datum/reagent/consumable/ice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/ice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	if(affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, FALSE, affected_mob.get_body_temp_normal()))
 		return UPDATE_MOB_HEALTH
@@ -721,18 +721,18 @@
 	glass_price = DRINK_PRICE_EASY
 	metabolized_traits = list(TRAIT_STIMULATED)
 
-/datum/reagent/consumable/soy_latte/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/soy_latte/overdose_process(mob/living/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
-/datum/reagent/consumable/soy_latte/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/soy_latte/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
 	var/need_mob_update
 	need_mob_update = affected_mob.SetSleeping(0)
 	affected_mob.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
-	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
+	if(affected_mob.get_brute_loss() && SPT_PROB(10, seconds_per_tick))
 		need_mob_update += affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 0, updating_health = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -748,18 +748,18 @@
 	glass_price = DRINK_PRICE_EASY
 	metabolized_traits = list(TRAIT_STIMULATED)
 
-/datum/reagent/consumable/cafe_latte/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/cafe_latte/overdose_process(mob/living/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
-/datum/reagent/consumable/cafe_latte/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/cafe_latte/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-12 SECONDS * REM * seconds_per_tick)
 	var/need_mob_update
 	need_mob_update = affected_mob.SetSleeping(0)
 	affected_mob.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
-	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
+	if(affected_mob.get_brute_loss() && SPT_PROB(10, seconds_per_tick))
 		need_mob_update += affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 0, updating_health = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -772,13 +772,13 @@
 	taste_description = "homely fruit"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustBruteLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjustFireLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjustToxLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-	need_mob_update += affected_mob.adjustOxyLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update = affected_mob.adjust_brute_loss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjust_fire_loss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjust_tox_loss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update += affected_mob.adjust_oxy_loss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if(affected_mob.nutrition && (affected_mob.nutrition - 2 > 0))
 		var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 		if(!(HAS_TRAIT(liver, TRAIT_MEDICAL_METABOLISM)))
@@ -795,7 +795,7 @@
 	taste_description = "sweet tangy fruit"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/cinderella/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/cinderella/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_disgust(-5 * REM * seconds_per_tick)
 
@@ -879,18 +879,18 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_STIMULATED)
 
-/datum/reagent/consumable/pumpkin_latte/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/pumpkin_latte/overdose_process(mob/living/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
-/datum/reagent/consumable/pumpkin_latte/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/pumpkin_latte/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
 	var/need_mob_update
 	need_mob_update = affected_mob.SetSleeping(0)
 	affected_mob.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
-	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
+	if(affected_mob.get_brute_loss() && SPT_PROB(10, seconds_per_tick))
 		need_mob_update += affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 0, updating_health = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -933,7 +933,7 @@
 	taste_description = "grape soda"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/grape_soda/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/grape_soda/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 
@@ -953,9 +953,9 @@
 	taste_description = "creamy chocolate"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	affected_mob.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
-	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
+	if(affected_mob.get_brute_loss() && SPT_PROB(10, seconds_per_tick))
 		if(affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 0, updating_health = FALSE))
 			. = UPDATE_MOB_HEALTH
 	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
@@ -971,7 +971,7 @@
 	taste_description = "thick creamy chocolate"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/italian_coco/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/italian_coco/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 
@@ -983,7 +983,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/menthol
 
-/datum/reagent/consumable/menthol/on_mob_life(mob/living/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/menthol/on_mob_life(mob/living/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.apply_status_effect(/datum/status_effect/throat_soothed)
 
@@ -999,12 +999,12 @@
 	if(IS_REVOLUTIONARY(drinker))
 		to_chat(drinker, span_warning("Antioxidants are weakening your radical spirit!"))
 
-/datum/reagent/consumable/grenadine/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+/datum/reagent/consumable/grenadine/on_mob_life(mob/living/carbon/drinker, seconds_per_tick)
 	. = ..()
 	if(IS_REVOLUTIONARY(drinker))
 		drinker.set_dizzy_if_lower(10 SECONDS * REM * seconds_per_tick)
-		if(drinker.getStaminaLoss() < 80)
-			drinker.adjustStaminaLoss(12, required_biotype = affected_biotype) //The pomegranate stops free radicals! Har har.
+		if(drinker.get_stamina_loss() < 80)
+			drinker.adjust_stamina_loss(12, required_biotype = affected_biotype) //The pomegranate stops free radicals! Har har.
 
 /datum/reagent/consumable/parsnipjuice
 	name = "Parsnip Juice"
@@ -1036,7 +1036,7 @@
 	taste_description = "fizzy vanilla"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/cream_soda/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/cream_soda/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 
@@ -1048,7 +1048,7 @@
 	taste_description = "sweet ginger spice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/sol_dry/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/sol_dry/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_disgust(-5 * REM * seconds_per_tick)
 
@@ -1060,7 +1060,7 @@
 	taste_description = "sweet cherry syrup and ginger spice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/shirley_temple/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/shirley_temple/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	affected_mob.adjust_disgust(-3 * REM * seconds_per_tick)
 	return ..()
 
@@ -1073,7 +1073,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	var/current_size = RESIZE_DEFAULT_SIZE
 
-/datum/reagent/consumable/red_queen/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/red_queen/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	if(SPT_PROB(50, seconds_per_tick))
 		return
@@ -1111,10 +1111,10 @@
 	taste_description = "vegetable"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/aloejuice/on_mob_life(mob/living/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/aloejuice/on_mob_life(mob/living/affected_mob, seconds_per_tick)
 	. = ..()
-	if(affected_mob.getToxLoss() && SPT_PROB(16, seconds_per_tick))
-		if(affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+	if(affected_mob.get_tox_loss() && SPT_PROB(16, seconds_per_tick))
+		if(affected_mob.adjust_tox_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/agua_fresca
@@ -1125,11 +1125,11 @@
 	taste_description = "cool refreshing watermelon"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/agua_fresca/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/agua_fresca/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
-	if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
-		if(affected_mob.adjustToxLoss(-0.5, updating_health = FALSE, required_biotype = affected_biotype))
+	if(affected_mob.get_tox_loss() && SPT_PROB(10, seconds_per_tick))
+		if(affected_mob.adjust_tox_loss(-0.5, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/mushroom_tea
@@ -1140,10 +1140,10 @@
 	taste_description = "mushrooms"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/mushroom_tea/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/mushroom_tea/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	if(islizard(affected_mob))
-		if(affected_mob.adjustOxyLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
+		if(affected_mob.adjust_oxy_loss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
 			return UPDATE_MOB_HEALTH
 
 //Moth Stuff
@@ -1164,7 +1164,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/strawberry_banana
-	name = "strawberry banana smoothie"
+	name = "Strawberry Banana Smoothie"
 	description = "A classic smoothie made from strawberries and bananas."
 	color = "#FF9999"
 	nutriment_factor = 0
@@ -1172,7 +1172,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/berry_blast
-	name = "berry blast smoothie"
+	name = "Berry Blast Smoothie"
 	description = "A classic smoothie made from mixed berries."
 	color = "#A76DC5"
 	nutriment_factor = 0
@@ -1180,7 +1180,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/funky_monkey
-	name = "funky monkey smoothie"
+	name = "Funky Monkey Smoothie"
 	description = "A classic smoothie made from chocolate and bananas."
 	color = COLOR_BROWNER_BROWN
 	nutriment_factor = 0
@@ -1188,7 +1188,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/green_giant
-	name = "green giant smoothie"
+	name = "Green Giant Smoothie"
 	description = "A green vegetable smoothie, made without vegetables."
 	color = COLOR_VERY_DARK_LIME_GREEN
 	nutriment_factor = 0
@@ -1196,7 +1196,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/melon_baller
-	name = "melon baller smoothie"
+	name = "Melon Baller Smoothie"
 	description = "A classic smoothie made from melons."
 	color = "#D22F55"
 	nutriment_factor = 0
@@ -1204,7 +1204,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/vanilla_dream
-	name = "vanilla dream smoothie"
+	name = "Vanilla Dream Smoothie"
 	description = "A classic smoothie made from vanilla and fresh cream."
 	color = "#FFF3DD"
 	nutriment_factor = 0
@@ -1227,11 +1227,11 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_HIGH
 
-/datum/reagent/consumable/cucumberlemonade/on_mob_life(mob/living/carbon/doll, seconds_per_tick, times_fired)
+/datum/reagent/consumable/cucumberlemonade/on_mob_life(mob/living/carbon/doll, seconds_per_tick)
 	. = ..()
 	doll.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, doll.get_body_temp_normal())
-	if(doll.getToxLoss() && SPT_PROB(10, seconds_per_tick))
-		if(doll.adjustToxLoss(-0.5, updating_health = FALSE, required_biotype = affected_biotype))
+	if(doll.get_tox_loss() && SPT_PROB(10, seconds_per_tick))
+		if(doll.adjust_tox_loss(-0.5, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/mississippi_queen
@@ -1241,7 +1241,7 @@
 	taste_description = "sludge seeping down your throat"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/mississippi_queen/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+/datum/reagent/consumable/mississippi_queen/on_mob_life(mob/living/carbon/drinker, seconds_per_tick)
 	. = ..()
 	switch(current_cycle)
 		if(11 to 21)
@@ -1260,15 +1260,15 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_STIMULATED)
 
-/datum/reagent/consumable/t_letter/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/t_letter/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	if(!HAS_MIND_TRAIT(affected_mob, TRAIT_MIMING))
 		return
 	affected_mob.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
 	affected_mob.AdjustSleeping(-4 SECONDS * REM * seconds_per_tick)
-	if(affected_mob.getToxLoss() && SPT_PROB(25, seconds_per_tick))
-		if(affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+	if(affected_mob.get_tox_loss() && SPT_PROB(25, seconds_per_tick))
+		if(affected_mob.adjust_tox_loss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/hakka_mate
@@ -1333,9 +1333,9 @@
 	if(found_valid_cooler)
 		affected_mob.clear_alert("punch_bad")
 		affected_mob.throw_alert("punch_good", /atom/movable/screen/alert/fruit_punch_good)
-		need_mob_update = affected_mob.adjustToxLoss(-0.6 * REM * seconds_per_tick, updating_health = FALSE)
-		need_mob_update = affected_mob.adjustBruteLoss(-0.6 * REM * seconds_per_tick, updating_health = FALSE)
-		need_mob_update = affected_mob.adjustFireLoss(-0.6 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update = affected_mob.adjust_tox_loss(-0.6 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update = affected_mob.adjust_brute_loss(-0.6 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update = affected_mob.adjust_fire_loss(-0.6 * REM * seconds_per_tick, updating_health = FALSE)
 		affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/punch_punishment)
 	else
 		affected_mob.clear_alert("punch_good")
@@ -1360,12 +1360,14 @@
 /atom/movable/screen/alert/fruit_punch_good
 	name = "Fruit Punch Blessing"
 	desc = "The sweetness of the fruit punch and the friendly company of the liquid cooler are slowly restoring your health..."
-	icon_state = "punch_blessing"
+	use_user_hud_icon = TRUE
+	overlay_state = "punch_blessing"
 
 /atom/movable/screen/alert/fruit_punch_bad
 	name = "Fruit Punishment"
 	desc = "The unbearable sweetness of the fruit punch is too much to bear without the soothing aura of a liquid cooler! Your body is going into shock!"
-	icon_state = "punch_punishment"
+	use_user_hud_icon = TRUE
+	overlay_state = "punch_punishment"
 
 /datum/reagent/consumable/ethanol/bitters_soda
 	name = "Bitters and Soda"
@@ -1376,7 +1378,7 @@
 	taste_description = "mild aromatics"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/bitters_soda/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/ethanol/bitters_soda/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_disgust(-5 * REM * seconds_per_tick)
 
@@ -1390,7 +1392,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolization_rate = 0.2 * REM
 
-/datum/reagent/consumable/lean/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/consumable/lean/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	affected_mob.adjust_jitter(2.5 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_stutter(2.25 SECONDS * REM * seconds_per_tick)

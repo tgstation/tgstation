@@ -617,9 +617,7 @@
 /area/shuttle/escape)
 "ry" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
-	},
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "sn" = (
@@ -935,7 +933,6 @@
 /obj/machinery/turretid{
 	control_area = "/area/shuttle/escape";
 	desc = "Used to control the Lance's automated defenses.";
-	icon_state = "control_kill";
 	lethal = 1;
 	pixel_y = -26;
 	req_access = list("command")
@@ -1340,9 +1337,6 @@
 	},
 /area/shuttle/escape)
 "Pe" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
 /obj/machinery/button/door/directional/south{
 	id = "lance_psych";
 	name = "Panic Room Bolt Control";
@@ -1350,6 +1344,7 @@
 	specialfunctions = 4
 	},
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron/white/textured_large,
 /area/shuttle/escape)
 "Px" = (

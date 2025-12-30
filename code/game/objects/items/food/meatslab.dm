@@ -211,6 +211,10 @@
 	foodtypes = RAW | MEAT | BUGS
 	blood_decal_type = /obj/effect/decal/cleanable/insectguts
 
+/obj/item/food/meat/slab/bugmeat/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/raptor_food, health_modifier = 2, color_chances = string_list(list(/datum/raptor_color/green = 2)))
+
 /obj/item/food/meat/slab/mouse
 	name = "mouse meat"
 	desc = "A slab of mouse meat. Best not eat it raw."
@@ -336,6 +340,10 @@
 	icon_state = "goliathmeat"
 	tastes = list("meat" = 1)
 	foodtypes = RAW | MEAT | TOXIC
+
+/obj/item/food/meat/slab/goliath/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/raptor_food, attack_modifier = 0.5, speed_modifier = -0.05, color_chances = string_list(list(/datum/raptor_color/red = 5)))
 
 /obj/item/food/meat/slab/goliath/burn()
 	visible_message(span_notice("[src] finishes cooking!"))
@@ -568,6 +576,10 @@
 	icon_state = "goliathsteak"
 	trash_type = null
 	tastes = list("meat" = 1, "rock" = 1)
+
+/obj/item/food/meat/steak/goliath/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/raptor_food, attack_modifier = 1, speed_modifier = -0.075, color_chances = string_list(list(/datum/raptor_color/red = 7)))
 
 /obj/item/food/meat/steak/gondola
 	name = "gondola steak"

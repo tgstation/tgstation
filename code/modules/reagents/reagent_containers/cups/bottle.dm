@@ -548,7 +548,8 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/transfer_amount = round(reagents.trans_to(tool, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
-	balloon_alert(user, "transferred [transfer_amount] unit\s")
+	if(transfer_amount)
+		balloon_alert(user, "transferred [transfer_amount] unit\s")
 	flick("syrup_anim",src)
 	tool.update_appearance()
 	update_appearance()

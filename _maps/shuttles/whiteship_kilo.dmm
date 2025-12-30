@@ -539,7 +539,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/turretid{
-	icon_state = "control_kill";
 	lethal = 1;
 	locked = 0;
 	name = "NTMS-037 Mining Turret control panel";

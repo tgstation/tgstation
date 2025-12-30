@@ -41,7 +41,7 @@
 
 	if(seconds_in_nograv >= 3 MINUTES)
 		// This has some interesting side effects with gravitum or similar negating effects that may be worth nothing
-		owner.adjustStaminaLoss(-1 * stamina_heal_per_tick)
+		owner.adjust_stamina_loss(-1 * stamina_heal_per_tick)
 		owner.AdjustAllImmobility(-1 * stun_heal_per_tick)
 		// For comparison: Ephedrine heals 4 stamina per tick / 2 per second
 		// and Nicotine heals 5 seconds of stun per tick / 2.5 per second
@@ -74,8 +74,8 @@
 
 	var/minutes_active = round(seconds_active / (1 MINUTES))
 	// Sit at a passive amount of stamina damage depending on how long it's been
-	if(!the_spacer.getStaminaLoss())
-		the_spacer.adjustStaminaLoss(min(25, 5 * minutes_active))
+	if(!the_spacer.get_stamina_loss())
+		the_spacer.adjust_stamina_loss(min(25, 5 * minutes_active))
 	// Max disgust increases over time as well
 	max_disgust = min(DISGUST_LEVEL_VERYGROSS + 5, initial(max_disgust) + 5 * minutes_active)
 	// And your lungs can't really handle it good
@@ -85,7 +85,8 @@
 /atom/movable/screen/alert/status_effect/gravity_sickness
 	name = "Gravity Sickness"
 	desc = "The gravity of the planet around you is making you feel sick and tired."
-	icon_state = "paralysis"
+	use_user_hud_icon = TRUE
+	overlay_state = "paralysis"
 
 /datum/mood_event/spacer
 

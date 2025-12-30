@@ -7,7 +7,7 @@ GLOBAL_LIST_EMPTY(all_huds)
 GLOBAL_LIST_EMPTY(huds_by_category)
 
 //GLOBAL HUD LIST
-GLOBAL_LIST_INIT(huds, list(
+GLOBAL_ALIST_INIT(huds, alist(
 	DATA_HUD_SECURITY_BASIC = new /datum/atom_hud/data/human/security/basic(),
 	DATA_HUD_SECURITY_ADVANCED = new /datum/atom_hud/data/human/security/advanced(),
 	DATA_HUD_MEDICAL_BASIC = new /datum/atom_hud/data/human/medical/basic(),
@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(trait_blockers_to_hud, list(
 	var/list/mob/hud_users_all_z_levels = list()
 
 	///these will be the indexes for the atom's hud_list
-	var/list/hud_icons = list()
+	var/list/hud_icons
 
 	///mobs associated with the next time this hud can be added to them
 	var/list/next_time_allowed = list()
@@ -75,6 +75,8 @@ GLOBAL_LIST_INIT(trait_blockers_to_hud, list(
 	for(var/z_level in 1 to world.maxz)
 		hud_atoms += list(list())
 		hud_users += list(list())
+	if(LAZYLEN(hud_icons))
+		hud_icons = string_list(hud_icons)
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_Z, PROC_REF(add_z_level_huds))
 

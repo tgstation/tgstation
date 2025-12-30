@@ -80,12 +80,12 @@
 
 /obj/machinery/suit_storage_unit/captain
 	mask_type = /obj/item/clothing/mask/gas/atmos/captain
-	storage_type = /obj/item/tank/jetpack/oxygen/captain
+	storage_type = /obj/item/tank/jetpack/captain
 	mod_type = /obj/item/mod/control/pre_equipped/magnate
 
 /obj/machinery/suit_storage_unit/centcom
 	mask_type = /obj/item/clothing/mask/gas/atmos/centcom
-	storage_type = /obj/item/tank/jetpack/oxygen/captain
+	storage_type = /obj/item/tank/jetpack/captain
 	mod_type = /obj/item/mod/control/pre_equipped/corporate
 
 /obj/machinery/suit_storage_unit/engine
@@ -137,7 +137,7 @@
 
 /obj/machinery/suit_storage_unit/syndicate
 	mask_type = /obj/item/clothing/mask/gas/syndicate
-	storage_type = /obj/item/tank/jetpack/oxygen/harness
+	storage_type = /obj/item/tank/jetpack/harness
 	mod_type = /obj/item/mod/control/pre_equipped/nuclear
 
 /obj/machinery/suit_storage_unit/syndicate/lavaland
@@ -493,9 +493,9 @@
 		update_appearance()
 		if(mob_occupant)
 			if(uv_super)
-				mob_occupant.adjustFireLoss(rand(20, 36))
+				mob_occupant.adjust_fire_loss(rand(20, 36))
 			else
-				mob_occupant.adjustFireLoss(rand(10, 16))
+				mob_occupant.adjust_fire_loss(rand(10, 16))
 			if(iscarbon(mob_occupant) && mob_occupant.stat < UNCONSCIOUS)
 				//Awake, organic and screaming
 				mob_occupant.emote("scream")

@@ -83,6 +83,7 @@
 #define TECHWEB_NODE_MOD_ENGI_ADV "mod_engi_adv"
 #define TECHWEB_NODE_MOD_ENTERTAINMENT "mod_entertainment"
 #define TECHWEB_NODE_MOD_EQUIP "mod_equip"
+#define TECHWEB_NODE_MOD_SERVICE "mod_service"
 #define TECHWEB_NODE_MOD_EXPERIMENTAL "mod_experimental"
 #define TECHWEB_NODE_MOD_MEDICAL "mod_medical"
 #define TECHWEB_NODE_MOD_MEDICAL_ADV "mod_medical_adv"

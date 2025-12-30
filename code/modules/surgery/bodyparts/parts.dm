@@ -10,7 +10,6 @@
 	is_dimorphic = TRUE
 	px_x = 0
 	px_y = 0
-	grind_results = null
 	wound_resistance = 10
 	bodypart_trait_source = CHEST_TRAIT
 	///The bodyshape(s) allowed to attach to this chest.
@@ -36,6 +35,9 @@
 	var/datum/worn_feature_offset/worn_neck_offset
 	/// Which functional (i.e. flightpotion) wing types (if any) does this bodypart support? If count is >1 a radial menu is used to choose between all icons in list
 	var/list/wing_types = list(/obj/item/organ/wings/functional/angel)
+
+/obj/item/bodypart/chest/grind_results()
+	return null
 
 /obj/item/bodypart/chest/forced_removal(dismembered, special, move_to_floor)
 	var/mob/living/carbon/old_owner = owner
@@ -116,6 +118,7 @@
 	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
 	acceptable_bodyshape = BODYSHAPE_HUMANOID
 	wing_types = null
+	biological_state = BIO_STANDARD_ALIEN
 
 /obj/item/bodypart/chest/larva
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
@@ -297,6 +300,7 @@
 	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
 	should_draw_greyscale = FALSE
 	appendage_noun = "scythe-like hand"
+	biological_state = BIO_STANDARD_ALIEN
 
 /obj/item/bodypart/arm/right
 	name = "right arm"
@@ -396,6 +400,7 @@
 	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
 	should_draw_greyscale = FALSE
 	appendage_noun = "scythe-like hand"
+	biological_state = BIO_STANDARD_ALIEN
 
 /// Parent Type for legs, should not appear in game.
 /obj/item/bodypart/leg
@@ -532,6 +537,7 @@
 	max_damage = LIMB_MAX_HP_ALIEN_LIMBS
 	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
 	should_draw_greyscale = FALSE
+	biological_state = BIO_STANDARD_ALIEN
 
 /obj/item/bodypart/leg/right
 	name = "right leg"
@@ -623,3 +629,4 @@
 	max_damage = LIMB_MAX_HP_ALIEN_LIMBS
 	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
 	should_draw_greyscale = FALSE
+	biological_state = BIO_STANDARD_ALIEN

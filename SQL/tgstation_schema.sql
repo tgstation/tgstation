@@ -655,7 +655,7 @@ CREATE TABLE `ticket` (
   KEY `idx_ticket_act_time_rid` (`action`, `timestamp`, `round_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-DELIMITER $$
+DELIMITER //
 CREATE PROCEDURE `set_poll_deleted`(
 	IN `poll_id` INT
 )
@@ -666,16 +666,16 @@ UPDATE `poll_option` SET deleted = 1 WHERE pollid = poll_id;
 UPDATE `poll_vote` SET deleted = 1 WHERE pollid = poll_id;
 UPDATE `poll_textreply` SET deleted = 1 WHERE pollid = poll_id;
 END
-$$
+//
 CREATE TRIGGER `role_timeTlogupdate` AFTER UPDATE ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (NEW.CKEY, NEW.job, NEW.minutes-OLD.minutes);
 END
-$$
+//
 CREATE TRIGGER `role_timeTloginsert` AFTER INSERT ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (NEW.ckey, NEW.job, NEW.minutes);
 END
-$$
+//
 CREATE TRIGGER `role_timeTlogdelete` AFTER DELETE ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (OLD.ckey, OLD.job, 0-OLD.minutes);
 END
-$$
+//
 DELIMITER ;
 
 --

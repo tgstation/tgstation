@@ -205,3 +205,21 @@ The all node may be added as a child to the when node to specify that it will be
 	required_neighbors:
 	- /obj/dogbed
 ```
+
+### `skip_files`
+
+To skip processing this rule when the current filename start with a given path, either the start of a path, the full path (with extension), or regex matched.
+
+```yml
+/area/template_noop:
+  banned_neighbors:
+    - /turf/open
+    - /obj
+  skip_files:
+    - _maps/templates
+    - _maps/minigame/deathmatch/OSHA_Violator.dmm
+    - pattern: "^_maps/templates/holodeck.*"
+```
+
+In this example, all files in '_maps/templates' (recursively), 'OSHA_Violator.dmm', and any regex matched files for 'temples/holodeck.' will be skipped for any other rules defined in this yml.
+

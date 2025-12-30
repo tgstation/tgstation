@@ -149,6 +149,7 @@
 	if(internal_cell)
 		internal_cell = new internal_cell(src)
 
+	AddElement(/datum/element/drag_to_activate)
 	install_default_programs()
 	register_context()
 	update_appearance()
@@ -398,10 +399,6 @@
 	update_appearance()
 	return TRUE
 
-/obj/item/modular_computer/mouse_drop_dragged(atom/over_object, mob/user)
-	if(!istype(over_object, /atom/movable/screen))
-		return attack_self(user)
-
 /obj/item/modular_computer/attack_ai(mob/user)
 	return attack_self(user)
 
@@ -628,7 +625,7 @@
 	physical.loc.visible_message(span_notice("[icon2html(physical, viewers(physical.loc))] \The [src] displays a [call_source.filedesc] notification: [alerttext]"))
 
 /obj/item/modular_computer/proc/ring(ringtone, list/balloon_alertees) // bring bring
-	if(!use_energy())
+	if(!use_energy(check_programs = FALSE))
 		return
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
 		playsound(src, pick(

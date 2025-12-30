@@ -28,7 +28,7 @@
 	if(!theme_app)
 		return FALSE
 	//don't get the same one twice
-	if(theme_app.imported_themes.Find(theme_name))
+	if(LAZYFIND(theme_app.imported_themes, theme_name))
 		return FALSE
 	return TRUE
 
@@ -39,7 +39,7 @@
 	var/datum/computer_file/program/themeify/theme_app = locate() in computer.stored_files
 	if(!theme_app)
 		return
-	theme_app.imported_themes += theme_name
+	LAZYADD(theme_app.imported_themes, theme_name)
 	theme_app.size += size
 	user?.client?.give_award(/datum/award/score/progress/pda_themes, user, theme_id, theme_name)
 	qdel(src)

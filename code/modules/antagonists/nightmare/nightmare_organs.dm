@@ -8,6 +8,7 @@
 	desc = "A fleshy growth that was dug out of the skull of a Nightmare."
 	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "brain-x-d"
+	shade_color = "black, somehow"
 
 	///Our associated shadow jaunt spell, for all nightmares
 	var/datum/action/cooldown/spell/jaunt/shadow_walk/our_jaunt
@@ -33,7 +34,7 @@
 	QDEL_NULL(our_jaunt)
 	QDEL_NULL(terrorize_spell)
 
-/obj/item/organ/brain/shadow/nightmare/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/brain/shadow/nightmare/on_life(seconds_per_tick)
 	. = ..()
 
 	var/turf/owner_turf = owner.loc
@@ -124,7 +125,7 @@
 /obj/item/organ/heart/nightmare/Stop()
 	return FALSE
 
-/obj/item/organ/heart/nightmare/on_death(seconds_per_tick, times_fired)
+/obj/item/organ/heart/nightmare/on_death(seconds_per_tick)
 	if(!owner)
 		return
 	var/turf/T = get_turf(owner)

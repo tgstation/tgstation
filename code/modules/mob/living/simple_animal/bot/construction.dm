@@ -74,7 +74,7 @@
 	if(!can_finish_build(item_attached, user))
 		return
 	var/mob/living/basic/bot/cleanbot/bot = new(drop_location())
-	bot.apply_custom_bucket(bucket_obj)
+	bucket_obj.forceMove(bot)
 	bot.name = created_name
 	bot.robot_arm = item_attached.type
 	to_chat(user, span_notice("You add [item_attached] to [src]. Beep boop!"))
@@ -499,6 +499,7 @@
 	desc = "Clear out the swamp once and for all"
 	icon_state = "hygienebot"
 	created_name = "Hygienebot"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/bot_assembly/hygienebot/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()

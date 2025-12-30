@@ -171,8 +171,26 @@
 
 /obj/golfcart_rear/mouse_drop_receive(atom/dropped, mob/user, params)
 	if (!can_load(dropped))
+		if (!isliving(dropped) || (has_buckled_mobs() && buckled_mobs.len >= max_buckled_mobs))
+			balloon_alert_to_viewers("blocked!")
+			return
+		//Allow either 2 standing mobs or 1 lying down mob
+		//If a mob is already lying down it's obviously blocked.
 		if (has_buckled_mobs())
-			balloon_alert(user, "blocked!")
+			for (var/mob/living/carbon/carbon_sitter in buckled_mobs)
+				if (carbon_sitter.body_position == LYING_DOWN)
+					balloon_alert_to_viewers("blocked!")
+					return
+		var/mob/living/dropped_liver = dropped
+		if (dropped_liver.has_buckled_mobs())
+			//This sucks
+			balloon_alert_to_viewers("blocked!")
+			return
+		if (iscarbon(dropped_liver))
+			var/mob/living/carbon/dropped_carbon = dropped_liver
+			if (dropped_carbon.body_position == LYING_DOWN && has_buckled_mobs())
+				balloon_alert_to_viewers("stand up!")
+				return
 		return ..()
 	var/obj/dropped_obj = dropped
 	return load(dropped_obj)
@@ -333,16 +351,15 @@
 	unbuckle_mob(passenger, TRUE)
 
 /obj/golfcart_rear/is_buckle_possible(mob/living/target, force, check_loc)
-	. = ..()
 	// these are to_viewers because you can buckle someone on their behalf
-	if (parent && cargo)
+	if (cargo)
 		balloon_alert_to_viewers("blocked!")
 		return FALSE
 	if (target.body_position != STANDING_UP)
-		if (!has_buckled_mobs())
-			return TRUE
-		balloon_alert_to_viewers("stand up!")
-		return FALSE
+		if (has_buckled_mobs())
+			balloon_alert_to_viewers("stand up!")
+			return FALSE
+		return ..()
 	for (var/mob/blocker in buckled_mobs)
 		if (!isliving(blocker))
 			balloon_alert_to_viewers("blocked!")
@@ -351,18 +368,26 @@
 		if (living_blocker.body_position != STANDING_UP)
 			balloon_alert_to_viewers("blocked!")
 			return FALSE
-	return TRUE
+	return ..()
+
+///Called on COMSIG_MOVABLE_PREBUCKLE for anything that's buckled to us. Disallows stacking buckles
+/obj/golfcart_rear/proc/on_attempted_bucklestack()
+	SIGNAL_HANDLER
+
+	return COMPONENT_BLOCK_BUCKLE
 
 /obj/golfcart_rear/post_buckle_mob(mob/living/buckled_mob)
 	buckled_mob.pulledby?.stop_pulling()
 	RegisterSignal(buckled_mob, COMSIG_ATOM_TRIED_PASS, PROC_REF(allow_movement_between_bed_passengers))
 	RegisterSignal(buckled_mob, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(passenger_falling_down))
+	RegisterSignal(buckled_mob, COMSIG_MOVABLE_PREBUCKLE, PROC_REF(on_attempted_bucklestack))
 	. = ..()
 	update_passenger_layers()
 
 /obj/golfcart_rear/post_unbuckle_mob(mob/living/buckled_mob)
 	UnregisterSignal(buckled_mob, COMSIG_ATOM_TRIED_PASS)
 	UnregisterSignal(buckled_mob, COMSIG_LIVING_SET_BODY_POSITION)
+	UnregisterSignal(buckled_mob, COMSIG_MOVABLE_PREBUCKLE)
 	buckled_mob.remove_offsets(GOLFCART_RIDING_SOURCE)
 	if (buckled_mob.body_position == LYING_DOWN)
 		buckled_mob.layer = LYING_MOB_LAYER

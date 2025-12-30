@@ -30,7 +30,7 @@
 /obj/effect/spawner/costume/madscientist
 	name = "mad scientist costume spawner"
 	items = list(
-		/obj/item/clothing/under/rank/captain/suit,
+		/obj/item/clothing/under/costume/captain,
 		/obj/item/clothing/head/flatcap,
 		/obj/item/clothing/suit/toggle/labcoat/mad,
 	)
@@ -38,7 +38,7 @@
 /obj/effect/spawner/costume/elpresidente
 	name = "el presidente costume spawner"
 	items = list(
-		/obj/item/clothing/under/rank/captain/suit,
+		/obj/item/clothing/under/costume/captain,
 		/obj/item/clothing/head/flatcap,
 		/obj/item/cigarette/cigar/havana,
 		/obj/item/clothing/shoes/jackboots,

@@ -2,31 +2,45 @@
 	projectile_type = /obj/projectile/beam/laser
 	e_cost = LASER_SHOTS(12, STANDARD_CELL_CHARGE)
 	select_name = "kill"
+	muzzle_flash_color = COLOR_SOFT_RED
 
 /obj/item/ammo_casing/energy/laser/hellfire
 	projectile_type = /obj/projectile/beam/laser/hellfire
 	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
 	select_name = "maim"
 
+/obj/item/ammo_casing/energy/laser/accelerator
+	projectile_type = /obj/projectile/beam/laser/accelerator
+	select_name = "accelerator"
+	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
+
 /obj/item/ammo_casing/energy/lasergun
 	projectile_type = /obj/projectile/beam/laser
 	e_cost = LASER_SHOTS(16, STANDARD_CELL_CHARGE)
 	select_name = "kill"
+	muzzle_flash_color = COLOR_SOFT_RED
+
+/obj/item/ammo_casing/energy/lasergun/pistol
+	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
+
+/obj/item/ammo_casing/energy/lasergun/assault
+	projectile_type = /obj/projectile/beam/laser/rapid
+	e_cost = LASER_SHOTS(40, STANDARD_CELL_CHARGE)
 
 /obj/item/ammo_casing/energy/lasergun/carbine
-	projectile_type = /obj/projectile/beam/laser/carbine
-	e_cost = LASER_SHOTS(40, STANDARD_CELL_CHARGE)
+	projectile_type = /obj/projectile/beam/laser/rapid
+	e_cost = LASER_SHOTS(26, STANDARD_CELL_CHARGE)
 	select_name = "kill"
 	fire_sound = 'sound/items/weapons/laser2.ogg'
 
-/obj/item/ammo_casing/energy/lasergun/carbine/cybersun
-	projectile_type = /obj/projectile/beam/laser/carbine/cybersun
+/obj/item/ammo_casing/energy/lasergun/cybersun
+	projectile_type = /obj/projectile/beam/laser/cybersun
 	e_cost = LASER_SHOTS(54, STANDARD_CELL_CHARGE)
 	select_name = "rapid fire"
 	fire_sound = 'sound/items/weapons/laser2.ogg'
 
 /obj/item/ammo_casing/energy/lasergun/carbine/practice
-	projectile_type = /obj/projectile/beam/laser/carbine/practice
+	projectile_type = /obj/projectile/beam/laser/rapid/practice
 	select_name = "practice"
 	harmful = FALSE
 
@@ -46,6 +60,13 @@
 	projectile_type = /obj/projectile/beam/laser/musket/prime
 	pellets = 3
 	variance = 10
+
+/obj/item/ammo_casing/energy/laser/musket/repeater
+	projectile_type = /obj/projectile/beam/laser/musket/repeater
+	pellets = 2
+	variance = 10
+	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
+	e_cost = LASER_SHOTS(6, STANDARD_CELL_CHARGE)
 
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/projectile/beam/practice
@@ -100,6 +121,7 @@
 	select_name = "DESTROY"
 	fire_sound = 'sound/items/weapons/pulse.ogg'
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
+	muzzle_flash_color = LIGHT_COLOR_BLUE
 
 /obj/item/ammo_casing/energy/laser/bluetag
 	projectile_type = /obj/projectile/beam/lasertag/bluetag

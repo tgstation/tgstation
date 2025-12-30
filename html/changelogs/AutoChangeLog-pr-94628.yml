@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "PDA messenger will no longer force itself as your active program when sending/receiving PDA messages."

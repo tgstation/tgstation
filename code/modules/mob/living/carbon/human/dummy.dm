@@ -16,7 +16,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	in_use = FALSE
 	return ..()
 
-/mob/living/carbon/human/dummy/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/carbon/human/dummy/Life(seconds_per_tick = SSMOBS_DT)
 	return
 
 /mob/living/carbon/human/dummy/attach_rot(mapload)
@@ -33,14 +33,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		var/obj/item/organ/current_organ = get_organ_slot(slot) //Time to cache it lads
 		if(current_organ)
 			current_organ.Remove(src, special = TRUE) //Please don't somehow kill our dummy
-			SSwardrobe.stash_object(current_organ)
+			SSwardrobe.recycle_object(current_organ)
 
 	var/datum/species/current_species = dna.species
 	for(var/organ_path in current_species.mutant_organs)
 		var/obj/item/organ/current_organ = get_organ_by_type(organ_path)
 		if(current_organ)
 			current_organ.Remove(src, special = TRUE) //Please don't somehow kill our dummy
-			SSwardrobe.stash_object(current_organ)
+			SSwardrobe.recycle_object(current_organ)
 
 //Instead of just deleting our equipment, we save what we can and reinsert it into SSwardrobe's store
 //Hopefully this makes preference reloading not the worst thing ever
@@ -66,7 +66,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(ismob(checking.loc))
 			var/mob/checkings_owner = checking.loc
 			checkings_owner.temporarilyRemoveItemFromInventory(checking, TRUE) //Clear out of there yeah?
-		SSwardrobe.stash_object(checking)
+		SSwardrobe.recycle_object(checking)
 
 	for(var/obj/item/delete as anything in to_nuke)
 		qdel(delete)
@@ -113,21 +113,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /proc/create_consistent_human_dna(mob/living/carbon/human/target)
 	target.dna.features[FEATURE_MUTANT_COLOR] = COLOR_VIBRANT_LIME
 	target.dna.features[FEATURE_ETHEREAL_COLOR] = COLOR_WHITE
-	target.dna.features[FEATURE_LIZARD_MARKINGS] = get_consistent_feature_entry(SSaccessories.lizard_markings_list)
-	target.dna.features[FEATURE_EARS] = get_consistent_feature_entry(SSaccessories.ears_list)
-	target.dna.features[FEATURE_FRILLS] = get_consistent_feature_entry(SSaccessories.frills_list)
-	target.dna.features[FEATURE_HORNS] = get_consistent_feature_entry(SSaccessories.horns_list)
-	target.dna.features[FEATURE_MOTH_ANTENNAE] = get_consistent_feature_entry(SSaccessories.moth_antennae_list)
-	target.dna.features[FEATURE_MOTH_MARKINGS] = get_consistent_feature_entry(SSaccessories.moth_markings_list)
-	target.dna.features[FEATURE_MOTH_WINGS] = get_consistent_feature_entry(SSaccessories.moth_wings_list)
-	target.dna.features[FEATURE_SNOUT] = get_consistent_feature_entry(SSaccessories.snouts_list)
-	target.dna.features[FEATURE_SPINES] = get_consistent_feature_entry(SSaccessories.spines_list)
-	target.dna.features[FEATURE_TAIL_CAT] = get_consistent_feature_entry(SSaccessories.tails_list_felinid) // it's a lie
-	target.dna.features[FEATURE_TAIL_LIZARD] = get_consistent_feature_entry(SSaccessories.tails_list_lizard)
-	target.dna.features[FEATURE_TAIL_MONKEY] = get_consistent_feature_entry(SSaccessories.tails_list_monkey)
-	target.dna.features[FEATURE_TAIL_FISH] = get_consistent_feature_entry(SSaccessories.tails_list_fish)
-	target.dna.features[FEATURE_POD_HAIR] = get_consistent_feature_entry(SSaccessories.pod_hair_list)
-	target.dna.features[FEATURE_MUSH_CAP] = get_consistent_feature_entry(SSaccessories.caps_list)
+	for(var/feature_key in SSaccessories.feature_list)
+		target.dna.features[feature_key] = get_consistent_feature_entry(SSaccessories.feature_list[feature_key])
 	target.dna.initialize_dna(newblood_type = get_blood_type(BLOOD_TYPE_O_MINUS), create_mutation_blocks = FALSE, randomize_features = FALSE)
 	// UF and UI are nondeterministic, even though the features are the same some blocks will randomize slightly
 	// In practice this doesn't matter, but this is for the sake of 100%(ish) consistency

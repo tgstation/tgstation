@@ -57,7 +57,7 @@
 	damage = 15 //very low
 
 /obj/projectile/bullet/cannonball/emp/on_hit(atom/target, blocked = 0, pierce_hit)
-	empulse(src, 4, 10)
+	empulse(src, 4, 10, emp_source = src)
 	. = ..()
 
 /obj/projectile/bullet/cannonball/biggest_one

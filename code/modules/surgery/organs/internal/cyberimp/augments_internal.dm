@@ -83,15 +83,20 @@
 	desc = "Injectors of extra sub-routines for the brain."
 	zone = BODY_ZONE_HEAD
 	w_class = WEIGHT_CLASS_TINY
+	/// Duration of stun when hit with worst-case emp
+	var/emp_stun_duration = 20 SECONDS
+	/// Duration of immobilization when hit with worst-case emp
+	var/emp_immobilize_duration = 0 SECONDS
 
 /obj/item/organ/cyberimp/brain/emp_act(severity)
 	. = ..()
-	if(!owner || . & EMP_PROTECT_SELF)
+	if(isnull(owner) || (. & EMP_PROTECT_SELF))
 		return
-	var/stun_amount = 200/severity
-	owner.Stun(stun_amount)
-	to_chat(owner, span_warning("Your body seizes up!"))
-
+	if(emp_immobilize_duration > 0)
+		owner.Immobilize(emp_immobilize_duration / severity)
+	if(emp_stun_duration > 0)
+		owner.Stun(emp_stun_duration / severity)
+		to_chat(owner, span_warning("Your body seizes up!"))
 
 /obj/item/organ/cyberimp/brain/anti_drop
 	name = "anti-drop implant"
@@ -202,8 +207,8 @@
 	owner.SetKnockdown(0)
 	owner.SetImmobilized(0)
 	owner.SetParalyzed(0)
-	owner.setStaminaLoss(0)
-	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, setStaminaLoss), 0), stun_resistance_time)
+	owner.set_stamina_loss(0)
+	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, set_stamina_loss), 0), stun_resistance_time)
 
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 	sparks.set_up(5, 1, src)
@@ -341,6 +346,129 @@
 
 /obj/item/organ/cyberimp/brain/connector/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING
+
+/obj/item/organ/cyberimp/brain/surgical_processor
+	name = "surgical processor implant"
+	desc = "A cybernetic brain implant that allows you to perform advanced operations anywhere, anytime."
+	icon_state = "brain_implant_antidrop"
+	slot = ORGAN_SLOT_BRAIN_HIPPOCAMPUS
+	emp_stun_duration = 0 SECONDS
+	emp_immobilize_duration = 4 SECONDS
+	/// Lazylist of surgeries this implant provides
+	var/list/loaded_surgeries
+
+/obj/item/organ/cyberimp/brain/surgical_processor/examine(mob/user)
+	. = ..()
+	if(length(loaded_surgeries))
+		. += span_info("Load surgeries from an operating compuer or a disk containing surgery data. Loaded surgeries:")
+		for(var/datum/surgery_operation/downloaded_surgery as anything in GLOB.operations.get_instances_from(loaded_surgeries))
+			if(!(downloaded_surgery.operation_flags & OPERATION_LOCKED))
+				continue
+			// for simplicitly, filters out mechanical subtypes of normal surgeries
+			if((downloaded_surgery.operation_flags & OPERATION_MECHANIC) && (downloaded_surgery.parent_type in loaded_surgeries))
+				continue
+			. += span_info("&bull; [capitalize(downloaded_surgery.rnd_name || downloaded_surgery.name)]")
+
+	else
+		. += span_info("Load surgeries from an operating compuer or a disk containing surgery data.")
+		. += span_info("No surgeries loaded. Surgeries must be loaded <i>before</i> installation.")
+
+/obj/item/organ/cyberimp/brain/surgical_processor/proc/load_surgeries(mob/living/user, obj/design_holder)
+	balloon_alert(user, "copying designs...")
+	playsound(src, 'sound/machines/terminal/terminal_processing.ogg', 25, TRUE)
+	if(do_after(user, 1 SECONDS, target = design_holder))
+		if(istype(design_holder, /obj/item/disk/surgery))
+			var/obj/item/disk/surgery/surgery_disk = design_holder
+			LAZYOR(loaded_surgeries, surgery_disk.surgeries)
+		else
+			var/obj/machinery/computer/operating/surgery_computer = design_holder
+			LAZYOR(loaded_surgeries, surgery_computer.advanced_surgeries)
+		playsound(src, 'sound/machines/terminal/terminal_success.ogg', 25, TRUE)
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+/obj/item/organ/cyberimp/brain/surgical_processor/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/item/disk/surgery) || istype(interacting_with, /obj/machinery/computer/operating))
+		return load_surgeries(user, interacting_with)
+	return NONE
+
+/obj/item/organ/cyberimp/brain/surgical_processor/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/disk/surgery))
+		return load_surgeries(user, tool)
+	return NONE
+
+/obj/item/organ/cyberimp/brain/surgical_processor/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	RegisterSignal(organ_owner, COMSIG_LIVING_OPERATING_ON, PROC_REF(check_surgery))
+
+/obj/item/organ/cyberimp/brain/surgical_processor/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	UnregisterSignal(organ_owner, COMSIG_LIVING_OPERATING_ON)
+
+/obj/item/organ/cyberimp/brain/surgical_processor/proc/check_surgery(datum/source, mob/living/patient, list/operations)
+	SIGNAL_HANDLER
+
+	if(organ_flags & (ORGAN_FAILING|ORGAN_EMP))
+		return
+
+	operations |= loaded_surgeries
+
+/obj/item/organ/cyberimp/brain/surgical_processor/emp_act(severity)
+	. = ..()
+	if(isnull(owner) || (. & EMP_PROTECT_SELF))
+		return
+
+	var/obj/item/organ/surgeon_brain = owner.get_organ_by_type(/obj/item/organ/brain)
+	surgeon_brain.apply_organ_damage(20 / severity, maximum = 120)
+
+
+	var/duration = (30 SECONDS) / severity
+	if(owner.mob_mood?.mood_modifier > 0)
+		// forced insanity - reset to "only a little crazy" after
+		owner.mob_mood.set_sanity(SANITY_INSANE)
+		addtimer(CALLBACK(owner.mob_mood, TYPE_PROC_REF(/datum/mood, reset_sanity), SANITY_UNSTABLE + 10), duration, TIMER_DELETE_ME)
+		// and some moodlets to sell the sanity loss
+		owner.add_mood_event("surgery_emp", /datum/mood_event/surgery_emp_active)
+		addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, add_mood_event), "surgery_emp", /datum/mood_event/surgery_emp_expired), duration, TIMER_DELETE_ME)
+
+	// causes the surgeon to go crazy and start stabbing people
+	owner.apply_status_effect(/datum/status_effect/forced_combat, duration, (rand(8, 16) / severity))
+	to_chat(owner, span_boldwarning("Your surgical processor malfunctions, giving you an overwhelming urge to incise, saw, and stitch!"))
+
+/datum/mood_event/surgery_emp_active
+	description = "THE PATIENT WILL NOT SURVIVE UNLESS THE OPERATION IS COMPLETE!"
+	mood_change = -90
+	timeout = 1 MINUTES
+	special_screen_obj = "mood_despair"
+
+/datum/mood_event/surgery_emp_expired
+	description = "I lost control - Thankfully it's over now."
+	timeout = 5 MINUTES
+
+/obj/item/organ/cyberimp/brain/surgical_processor/pre_loaded
+	loaded_surgeries = list(
+		/datum/surgery_operation/basic/tend_wounds/combo/upgraded/master,
+		/datum/surgery_operation/limb/bioware/cortex_folding,
+		/datum/surgery_operation/limb/bioware/cortex_folding/mechanic,
+		/datum/surgery_operation/limb/bioware/cortex_imprint,
+		/datum/surgery_operation/limb/bioware/cortex_imprint/mechanic,
+		/datum/surgery_operation/limb/bioware/ligament_hook,
+		/datum/surgery_operation/limb/bioware/ligament_hook/mechanic,
+		/datum/surgery_operation/limb/bioware/ligament_reinforcement,
+		/datum/surgery_operation/limb/bioware/ligament_reinforcement/mechanic,
+		/datum/surgery_operation/limb/bioware/muscled_veins,
+		/datum/surgery_operation/limb/bioware/muscled_veins/mechanic,
+		/datum/surgery_operation/limb/bioware/nerve_grounding,
+		/datum/surgery_operation/limb/bioware/nerve_grounding/mechanic,
+		/datum/surgery_operation/limb/bioware/nerve_splicing,
+		/datum/surgery_operation/limb/bioware/nerve_splicing/mechanic,
+		/datum/surgery_operation/limb/bioware/vein_threading,
+		/datum/surgery_operation/limb/bioware/vein_threading/mechanic,
+		/datum/surgery_operation/organ/brainwash,
+		/datum/surgery_operation/organ/brainwash/mechanic,
+		/datum/surgery_operation/organ/pacify,
+		/datum/surgery_operation/organ/pacify/mechanic,
+	)
 
 //[[[[MOUTH]]]]
 /obj/item/organ/cyberimp/mouth

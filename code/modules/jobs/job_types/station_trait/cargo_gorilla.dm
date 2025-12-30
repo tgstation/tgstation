@@ -1,7 +1,6 @@
 /datum/job/cargo_gorilla
 	title = JOB_CARGO_GORILLA
 	description = "Assist the supply department by moving freight and disposing of unwanted fruits."
-	department_head = list(JOB_QUARTERMASTER)
 	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 0
@@ -42,7 +41,7 @@
 	gorilla_id.registered_name = spawned.name
 	gorilla_id.update_label()
 	gorilla_id.registered_account = bank_account
-	bank_account.bank_cards += gorilla_id
+	LAZYADD(bank_account.bank_cards, gorilla_id)
 	spawned.put_in_hands(gorilla_id, del_on_fail = TRUE)
 
 	to_chat(spawned, span_boldnotice("You are Cargorilla, a pacifist friend of the station and carrier of freight."))

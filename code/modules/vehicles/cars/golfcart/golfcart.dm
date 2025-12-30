@@ -151,6 +151,8 @@
 	if(!isliving(bumped_atom))
 		return
 	var/mob/living/mob = bumped_atom
+	if (mob in child.buckled_mobs)
+		return
 	mob.throw_at(get_edge_target_turf(mob, dir), 2, 3)
 	RegisterSignal(mob, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(thrown_mob_landed))
 	mob.visible_message(
@@ -199,7 +201,8 @@
 	if (!is_hotrod())
 		return
 	for(var/mob/living/future_pancake in loc)
-		run_over(future_pancake)
+		if (!(future_pancake in child.buckled_mobs))
+			run_over(future_pancake)
 
 /obj/vehicle/ridden/golfcart/mouse_drop_receive(atom/dropped, mob/user, params)
 	if (child.can_load(dropped))

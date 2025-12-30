@@ -119,8 +119,7 @@
 		return COMPONENT_DRIVER_BLOCK_MOVE
 	var/mob/living/living_parent = parent
 	step(living_parent, direction)
-	var/datum/movespeed_modifier/slowdown = get_cached_movespeed_modifier(living_parent.get_move_intent_slowdown())
-	var/modified_move_delay = uses_native_speed ? living_parent.cached_multiplicative_slowdown - slowdown?.multiplicative_slowdown : vehicle_move_delay
+	var/modified_move_delay = uses_native_speed ? living_parent.cached_multiplicative_slowdown : vehicle_move_delay
 	if(HAS_TRAIT(user, TRAIT_ROUGHRIDER)) // YEEHAW!
 		switch(HAS_TRAIT(user, TRAIT_PRIMITIVE) ? SANITY_LEVEL_GREAT : user.mob_mood?.sanity_level)
 			if(SANITY_LEVEL_GREAT)
@@ -133,6 +132,8 @@
 				modified_move_delay *= 1.1
 			if(SANITY_LEVEL_INSANE)
 				modified_move_delay *= 1.2
+	if(NSCOMPONENT(direction) && EWCOMPONENT(direction))
+		modified_move_delay = FLOOR(modified_move_delay * sqrt(2), world.tick_lag)
 	COOLDOWN_START(src, vehicle_move_cooldown, modified_move_delay)
 	return ..()
 
@@ -675,18 +676,11 @@
 		force_dismount(buckled_mob, throw_range = 2, gentle = TRUE)
 
 /datum/component/riding/creature/raptor/get_rider_offsets_and_layers(pass_index, mob/offsetter)
-	if(!SSmapping.is_planetary())
-		return list(
-			TEXT_NORTH = list(-1, 7),
-			TEXT_SOUTH = list(2, 10),
-			TEXT_EAST =  list(0, 7),
-			TEXT_WEST =  list(0, 7),
-		)
 	return list(
-		TEXT_NORTH = list(0, 7),
-		TEXT_SOUTH = list(0, 10),
-		TEXT_EAST =  list(-3, 9),
-		TEXT_WEST =  list(3, 9),
+		TEXT_NORTH = list(-1, 7),
+		TEXT_SOUTH = list(2, 10),
+		TEXT_EAST =  list(0, 7),
+		TEXT_WEST =  list(0, 7),
 	)
 
 /datum/component/riding/creature/raptor/get_parent_offsets_and_layers()
@@ -705,3 +699,43 @@
 
 /datum/component/riding/creature/raptor/combat
 	ai_behavior_while_ridden = RIDING_PAUSE_AI_MOVEMENT
+
+/datum/component/riding/creature/raptor/healer/vehicle_mob_buckle(mob/living/ridden, mob/living/rider, force)
+	RegisterSignal(rider, COMSIG_MOB_STATCHANGE, PROC_REF(on_buckled_stat_change))
+	return ..()
+
+/datum/component/riding/creature/raptor/healer/vehicle_mob_unbuckle(mob/living/formerly_ridden, mob/living/former_rider, force)
+	UnregisterSignal(former_rider, COMSIG_MOB_STATCHANGE)
+	return ..()
+
+/datum/component/riding/creature/raptor/healer/proc/on_buckled_stat_change(mob/living/source, new_stat, old_stat)
+	SIGNAL_HANDLER
+
+	var/mob/living/basic/raptor/raptor = source.buckled
+	if (!istype(raptor)) // what
+		UnregisterSignal(source, COMSIG_MOB_STATCHANGE)
+		return
+
+	// Heal the owner and flee whatever might've attacked them
+	if (new_stat == CONSCIOUS || new_stat == DEAD || old_stat != CONSCIOUS || !raptor.ai_controller)
+		ADD_TRAIT(raptor, TRAIT_AI_PAUSED, REF(src))
+		return
+
+	REMOVE_TRAIT(raptor, TRAIT_AI_PAUSED, REF(src))
+	// Rip bozo, but you're not our friend
+	if (source in raptor.ai_controller.blackboard[BB_FRIENDS_LIST])
+		raptor.ai_controller.set_blackboard_key(BB_INJURED_RAPTOR, source)
+
+	for (var/mob/living/possible_hostile in view(5, raptor))
+		if (possible_hostile.stat || possible_hostile.invisibility > raptor.see_invisible || source.faction_check_atom(possible_hostile))
+			continue
+		raptor.ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEE_TARGET, possible_hostile)
+		break
+
+/datum/component/riding/creature/raptor/small/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list(-1, 5),
+		TEXT_SOUTH = list(2, 8),
+		TEXT_EAST =  list(0, 5),
+		TEXT_WEST =  list(0, 5),
+	)

@@ -15,6 +15,7 @@
 		"cybernetic_eyes",
 		"cybernetic_eyes_moth",
 		"cybernetic_ears",
+		"cybernetic_ears_cat",
 		"cybernetic_lungs",
 		"cybernetic_stomach",
 		"cybernetic_liver",
@@ -193,8 +194,9 @@
 	prereq_ids = list(TECHWEB_NODE_COMBAT_IMPLANTS, TECHWEB_NODE_EXP_TOOLS)
 	design_ids = list(
 		"ci-nutrimentplus",
-		"ci-toolset",
 		"ci-surgery",
+		"ci-surgery-brain",
+		"ci-toolset",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
@@ -208,6 +210,7 @@
 		"cybernetic_eyes_improved",
 		"cybernetic_eyes_improved_moth",
 		"cybernetic_ears_u",
+		"cybernetic_ears_u_cat",
 		"cybernetic_lungs_tier2",
 		"cybernetic_stomach_tier2",
 		"cybernetic_liver_tier2",
@@ -227,7 +230,9 @@
 		"ci-gloweyes-moth",
 		"ci-welding-moth",
 		"cybernetic_ears_whisper",
+		"cybernetic_ears_whisper_cat",
 		"cybernetic_ears_volume",
+		"cybernetic_ears_volume_cat",
 		"cybernetic_lungs_tier3",
 		"cybernetic_stomach_tier3",
 		"cybernetic_liver_tier3",
@@ -244,6 +249,7 @@
 	prereq_ids = list(TECHWEB_NODE_CYBER_ORGANS_UPGRADED, TECHWEB_NODE_NIGHT_VISION)
 	design_ids = list(
 		"cybernetic_ears_xray",
+		"cybernetic_ears_xray_cat",
 		"ci-thermals",
 		"ci-xray",
 		"ci-thermals-moth",

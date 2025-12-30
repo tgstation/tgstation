@@ -25,7 +25,7 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 		available_faxes += WEAKREF(fax)
 
 	//Get all stamps
-	for(var/stamp in subtypesof(/obj/item/stamp))
+	for(var/stamp in valid_subtypesof(/obj/item/stamp))
 		var/obj/item/stamp/real_stamp = new stamp()
 		if(!istype(real_stamp, /obj/item/stamp/chameleon) && !istype(real_stamp, /obj/item/stamp/mod))
 			var/stamp_detail = real_stamp.get_writing_implement_details()

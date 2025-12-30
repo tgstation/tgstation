@@ -47,12 +47,12 @@
 	)
 
 /// Lizards are cold blooded and do not stabilize body temperature naturally
-/datum/species/lizard/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick, times_fired)
+/datum/species/lizard/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick)
 	return
 
 /datum/species/lizard/randomize_features()
 	var/list/features = ..()
-	features[FEATURE_LIZARD_MARKINGS] = pick(SSaccessories.lizard_markings_list)
+	features[FEATURE_LIZARD_MARKINGS] = pick(SSaccessories.feature_list[FEATURE_LIZARD_MARKINGS])
 	return features
 
 /datum/species/lizard/get_scream_sound(mob/living/carbon/human/lizard)

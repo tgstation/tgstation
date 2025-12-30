@@ -290,11 +290,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(invoker, span_warning("Something is shielding [convertee]'s mind!"))
 		return FALSE
 
-	var/brutedamage = convertee.getBruteLoss()
-	var/burndamage = convertee.getFireLoss()
+	var/brutedamage = convertee.get_brute_loss()
+	var/burndamage = convertee.get_fire_loss()
 	if(brutedamage || burndamage)
-		convertee.adjustBruteLoss(-(brutedamage * 0.75))
-		convertee.adjustFireLoss(-(burndamage * 0.75))
+		convertee.adjust_brute_loss(-(brutedamage * 0.75))
+		convertee.adjust_fire_loss(-(burndamage * 0.75))
 
 	convertee.visible_message(
 		span_warning("[convertee] writhes in pain [(brutedamage || burndamage) \
@@ -930,7 +930,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	color = "#FC9B54"
 	set_light(6, 1, color)
 	for(var/mob/living/target in viewers(T))
-		if(!IS_CULTIST(target) && target.blood_volume)
+		if(!IS_CULTIST(target) && CAN_HAVE_BLOOD(target))
 			if(target.can_block_magic(charge_cost = 0))
 				continue
 			to_chat(target, span_cult_large("Your blood boils in your veins!"))
@@ -955,7 +955,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 /obj/effect/rune/blood_boil/proc/do_area_burn(turf/T, multiplier)
 	set_light(6, 1, color)
 	for(var/mob/living/target in viewers(T))
-		if(!IS_CULTIST(target) && target.blood_volume)
+		if(!IS_CULTIST(target) && target.get_blood_volume())
 			if(target.can_block_magic(charge_cost = 0))
 				continue
 			target.take_overall_damage(tick_damage*multiplier, tick_damage*multiplier)
@@ -1148,7 +1148,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 
 	for(var/mob/living/target in range(src, 3))
 		target.Paralyze(30)
-	empulse(T, 0.42*(intensity), 1)
+	empulse(T, 0.42*(intensity), 1, emp_source = src)
 
 	var/list/images = list()
 	for(var/mob/living/M in GLOB.alive_mob_list)

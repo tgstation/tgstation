@@ -1,0 +1,5 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - admin: "Changing suit sensors from the strip menu is now logged"
+  - bugfix: "Fixed a case where your suit sensor status could be desynced from what your suit sensors appear to be set to"

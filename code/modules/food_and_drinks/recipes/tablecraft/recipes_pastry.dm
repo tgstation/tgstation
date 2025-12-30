@@ -555,6 +555,7 @@
 	result = /obj/item/food/fortunecookie
 	added_foodtypes = SUGAR
 	category = CAT_PASTRY
+	requirements_mats_blacklist = list(/obj/item/paper)
 
 /datum/crafting_recipe/food/poppypretzel
 	time = 1.5 SECONDS

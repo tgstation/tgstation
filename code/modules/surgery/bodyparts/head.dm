@@ -15,7 +15,6 @@
 	wound_resistance = 5
 	disabled_wound_penalty = 25
 	scars_covered_by_clothes = FALSE
-	grind_results = null
 	is_dimorphic = TRUE
 	unarmed_attack_verbs = list("bite", "chomp")
 	unarmed_attack_verbs_continuous = list("bites", "chomps")
@@ -57,15 +56,9 @@
 	var/facial_hair_hidden = FALSE
 
 	/// Gradient styles, if any
-	var/list/gradient_styles = list(
-		"None",	//Hair gradient style
-		"None",	//Facial hair gradient style
-	)
+	var/list/gradient_styles
 	/// Gradient colors, if any
-	var/list/gradient_colors = list(
-		COLOR_BLACK,	//Hair gradient color
-		COLOR_BLACK,	//Facial hair gradient color
-	)
+	var/list/gradient_colors
 
 	/// An override color that can be cleared later, affects both hair and facial hair
 	var/override_hair_color = null
@@ -110,6 +103,9 @@
 	QDEL_NULL(worn_head_offset)
 	QDEL_NULL(worn_face_offset)
 	return ..()
+
+/obj/item/bodypart/head/grind_results()
+	return null
 
 /obj/item/bodypart/head/examine(mob/user)
 	. = ..()
@@ -182,7 +178,7 @@
 	if(!eyes)
 		if (!(head_flags & HEAD_EYEHOLES))
 			return
-		var/image/no_eyes = image('icons/mob/human/human_face.dmi', "eyes_missing", -EYES_LAYER, SOUTH)
+		var/image/no_eyes = image('icons/mob/human/human_eyes.dmi', "eyes_missing", -EYES_LAYER, SOUTH)
 		worn_face_offset?.apply_offset(no_eyes)
 		. += no_eyes
 		return
@@ -191,8 +187,8 @@
 		return
 
 	// This is a bit of copy/paste code from eyes.dm:generate_body_overlay
-	var/image/eye_left = image('icons/mob/human/human_face.dmi', "[eyes.eye_icon_state]_l", -EYES_LAYER, SOUTH)
-	var/image/eye_right = image('icons/mob/human/human_face.dmi', "[eyes.eye_icon_state]_r", -EYES_LAYER, SOUTH)
+	var/image/eye_left = image(eyes.eye_icon, "[eyes.eye_icon_state]_l", -EYES_LAYER, SOUTH)
+	var/image/eye_right = image(eyes.eye_icon, "[eyes.eye_icon_state]_r", -EYES_LAYER, SOUTH)
 	if(head_flags & HEAD_EYECOLOR)
 		if(eyes.eye_color_left)
 			eye_left.color = eyes.eye_color_left
@@ -273,6 +269,7 @@
 	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
 	bodytype = BODYTYPE_ALIEN | BODYTYPE_ORGANIC
 	bodyshape = BODYSHAPE_HUMANOID
+	biological_state = BIO_STANDARD_ALIEN
 
 /obj/item/bodypart/head/larva
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'

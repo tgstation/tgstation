@@ -26,7 +26,7 @@
 	///Designs imported from technology disks that we can print.
 	var/list/imported_designs = list()
 	///The container to hold materials
-	var/datum/component/material_container/materials
+	var/datum/material_container/materials
 	///direction we output onto (if 0, on top of us)
 	var/drop_direction = 0
 	//looping sound for printing items
@@ -34,8 +34,8 @@
 
 /obj/machinery/autolathe/Initialize(mapload)
 	print_sound = new(src,  FALSE)
-	materials = AddComponent( \
-		/datum/component/material_container, \
+	materials = new ( \
+		src, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
 		0, \
 		MATCONTAINER_EXAMINE|MATCONTAINER_ACCEPT_ALLOYS, \
@@ -52,7 +52,7 @@
 
 /obj/machinery/autolathe/Destroy()
 	QDEL_NULL(print_sound)
-	materials = null
+	QDEL_NULL(materials)
 	return ..()
 
 /obj/machinery/autolathe/examine(mob/user)

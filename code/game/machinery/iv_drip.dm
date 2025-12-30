@@ -1,7 +1,3 @@
-///IV drip operation mode when it sucks blood from the object
-#define IV_TAKING 0
-///IV drip operation mode when it injects reagents into the object
-#define IV_INJECTING 1
 ///What the transfer rate value is rounded to
 #define IV_TRANSFER_RATE_STEP 0.01
 ///Minimum possible IV drip transfer rate in units per second
@@ -24,6 +20,7 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	use_power = NO_POWER_USE
 	interaction_flags_mouse_drop = NEED_HANDS
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.1, /datum/material/plastic = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2)
 
 	/// Information and effects about where the IV drip is attached to
 	var/datum/iv_drip_attachment/attachment
@@ -264,7 +261,7 @@
 			return
 
 		// If the human is losing too much blood, beep.
-		if(attached_mob.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
+		if(attached_mob.get_blood_volume(apply_modifiers = TRUE) < BLOOD_VOLUME_SAFE && prob(5))
 			audible_message(span_hear("[src] beeps loudly."))
 			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 		var/atom/movable/target = use_internal_storage ? src : reagent_container
@@ -273,10 +270,12 @@
 
 /obj/machinery/iv_drip/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !ishuman(user))
 		return
-	if(!ishuman(user))
-		return
+	if (quick_toggle(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/iv_drip/proc/quick_toggle(mob/user)
 	if(attachment)
 		visible_message(span_notice("[attachment.attached_to] is detached from [src]."))
 		detach_iv()
@@ -284,7 +283,7 @@
 		eject_beaker(user)
 	else
 		toggle_mode()
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return TRUE
 
 ///called when an IV is attached
 /obj/machinery/iv_drip/proc/attach_iv(atom/target, mob/user)
@@ -456,10 +455,8 @@
 /atom/movable/screen/alert/iv_connected
 	name = "IV Connected"
 	desc = "You have an IV connected to your arm. Remember to remove it or drag the IV stand with you before moving, or else it will rip out!"
-	icon_state = ALERT_IV_CONNECTED
-
-#undef IV_TAKING
-#undef IV_INJECTING
+	use_user_hud_icon = TRUE
+	overlay_state = "iv_connected"
 
 #undef MIN_IV_TRANSFER_RATE
 #undef MAX_IV_TRANSFER_RATE
