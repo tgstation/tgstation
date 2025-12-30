@@ -44,8 +44,8 @@
 	var/mail_locked_message = "You can't open somebody else's mail! That's <em>illegal</em>!"
 	/// Should this letter unwrap without do_after() and unwrap sound?
 	var/unwrap_instantly = FALSE
-	/// Should this letter shrink on ground?
-	var/shrink_on_ground = TRUE
+	/// Should this letter change on ground?
+	var/change_on_ground = TRUE
 
 	///mail will have the color of the department the recipient is in.
 	var/static/list/department_colors
@@ -60,18 +60,18 @@
 /obj/item/mail/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, PROC_REF(disposal_handling))
-	if(shrink_on_ground)
+	if(change_on_ground)
 		AddElement(/datum/element/item_scaling, 0.75, 1)
-	if(isnull(department_colors))
-		department_colors = list(
-			ACCOUNT_CIV = COLOR_WHITE,
-			ACCOUNT_ENG = COLOR_PALE_ORANGE,
-			ACCOUNT_SCI = COLOR_PALE_PURPLE_GRAY,
-			ACCOUNT_MED = COLOR_PALE_BLUE_GRAY,
-			ACCOUNT_SRV = COLOR_PALE_GREEN_GRAY,
-			ACCOUNT_CAR = COLOR_BEIGE,
-			ACCOUNT_SEC = COLOR_PALE_RED_GRAY,
-		)
+		if(isnull(department_colors))
+			department_colors = list(
+				ACCOUNT_CIV = COLOR_WHITE,
+				ACCOUNT_ENG = COLOR_PALE_ORANGE,
+				ACCOUNT_SCI = COLOR_PALE_PURPLE_GRAY,
+				ACCOUNT_MED = COLOR_PALE_BLUE_GRAY,
+				ACCOUNT_SRV = COLOR_PALE_GREEN_GRAY,
+				ACCOUNT_CAR = COLOR_BEIGE,
+				ACCOUNT_SEC = COLOR_PALE_RED_GRAY,
+			)
 
 	// Icons
 	// Add some random stamps.
@@ -581,7 +581,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	stamped = FALSE
 	postmarked = FALSE
-	shrink_on_ground = FALSE
+	change_on_ground = FALSE
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/mail_counterfeit_device/xmas
