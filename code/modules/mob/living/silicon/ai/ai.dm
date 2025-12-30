@@ -957,7 +957,7 @@
 	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
 	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
 
-/mob/living/silicon/ai/verb/deploy()
+/mob/living/silicon/ai/verb/deploy_shell()
 	set category = "AI Commands"
 	set desc = "Transfer to an available remote body."
 	set name = "Deploy to Shell"
