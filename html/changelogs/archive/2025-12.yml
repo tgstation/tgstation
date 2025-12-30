@@ -836,6 +836,16 @@
   - balance: When you are shocked, you remain standing for a short period of time
       before being forced to the ground. You are still stunned for the duration of
       this effect, that remains unchanged.
+  - rscdel: Wardens no longer spawn with an evidence bag
+  - bugfix: Naive and Desensitized people get less sad at death
+  SmArtKar:
+  - bugfix: Bandanas tied around your neck no longer hide your identity or your snout
+  TealSeer:
+  - bugfix: fixed cargo PDA app missing currency name
+  arbuzik456:
+  - rscadd: Added casual way of wearing jeans and different pants.
+  archbtw0:
+  - spellcheck: Fix a duplicate 'the'
   jlsnow301:
   - bugfix: Fixed importing chat tabs from a file. They should still exist on reload
   lelandkemble:
@@ -854,3 +864,4 @@
   vinylspiders:
   - bugfix: fixes a pushed crate not removing on_climbable trait properly off the
       mob standing atop it
+  - bugfix: fixes tablesmashing onto platforms

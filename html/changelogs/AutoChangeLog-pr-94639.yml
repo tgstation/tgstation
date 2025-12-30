@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscdel: "Wardens no longer spawn with an evidence bag"
