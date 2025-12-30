@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Moth wing repair surgery correctly checks that bones are intact rather than bones are sawed"
