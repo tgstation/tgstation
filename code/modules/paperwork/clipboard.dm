@@ -73,6 +73,7 @@
 	to_chat(user, span_notice("You remove [paper] from [src]."))
 
 /obj/item/clipboard/proc/remove_pen(mob/user)
+	var/obj/item/pen/pen = src.pen
 	pen.forceMove(user.loc)
 	user.put_in_hands(pen)
 	to_chat(user, span_notice("You remove [pen] from [src]."))
