@@ -55,6 +55,7 @@ type QuirkProps = {
   randomBodyEnabled: boolean;
   selected: boolean;
   serverData: ServerData;
+  quirkActionLocked: boolean;
 };
 
 function QuirkList(props: QuirkProps & QuirkListProps) {
@@ -64,6 +65,7 @@ function QuirkList(props: QuirkProps & QuirkListProps) {
     handleClick,
     serverData,
     randomBodyEnabled,
+    quirkActionLocked,
   } = props;
 
   return (
@@ -77,6 +79,7 @@ function QuirkList(props: QuirkProps & QuirkListProps) {
             randomBodyEnabled={randomBodyEnabled}
             selected={selected}
             serverData={serverData}
+            quirkActionLocked={quirkActionLocked}
           />
         </Stack.Item>
       ))}
@@ -91,7 +94,7 @@ type QuirkDisplayProps = {
 } & QuirkProps;
 
 function QuirkDisplay(props: QuirkDisplayProps) {
-  const { quirk, quirkKey, handleClick, selected } = props;
+  const { quirk, quirkKey, handleClick, selected, quirkActionLocked } = props;
   const { icon, value, name, description, customizable, failTooltip } = quirk;
 
   const [customizationExpanded, setCustomizationExpanded] = useState(false);
@@ -101,14 +104,20 @@ function QuirkDisplay(props: QuirkDisplayProps) {
   const child = (
     <Box
       className={className}
-      onClick={(event) => {
-        event.stopPropagation();
-        if (selected) {
-          setCustomizationExpanded(false);
-        }
-
-        handleClick(quirkKey, quirk);
+      style={{
+        opacity: props.quirkActionLocked ? 0.6 : 1,
+        pointerEvents: props.quirkActionLocked ? 'none' : 'auto',
       }}
+        onClick={(event) => {
+          if (quirkActionLocked) return;
+
+          event.stopPropagation();
+          if (selected) {
+            setCustomizationExpanded(false);
+          }
+
+          handleClick(quirkKey, quirk);
+        }}
     >
       <Stack fill g={0}>
         <Stack.Item
@@ -303,6 +312,19 @@ function QuirkPage() {
     data.selected_quirks = selected_quirks;
   }
 
+  const [quirkActionLocked, setQuirkActionLocked] = useState(false);
+
+  function withQuirkDebounce(debounce: () => void, delay = 250) {
+    if (quirkActionLocked) return;
+
+    setQuirkActionLocked(true);
+    debounce();
+
+    setTimeout(() => {
+      setQuirkActionLocked(false);
+    }, delay);
+  }
+
   const [searchQuery, setSearchQuery] = useState('');
   const server_data = useServerPrefs();
   if (!server_data) return;
@@ -422,14 +444,16 @@ function QuirkPage() {
           <Stack.Item grow className="PreferencesMenu__Quirks__QuirkList">
             <QuirkList
               selected={false}
+              quirkActionLocked={quirkActionLocked}
               handleClick={(quirkName, quirk) => {
                 if (getReasonToNotAdd(quirkName) !== undefined) {
                   return;
                 }
 
-                setSelectedQuirks(selectedQuirks.concat(quirkName));
-
-                act('give_quirk', { quirk: quirk.name });
+                withQuirkDebounce(() => {
+                  setSelectedQuirks(selectedQuirks.concat(quirkName));
+                  act('give_quirk', { quirk: quirk.name });
+                });
               }}
               quirks={quirks
                 .filter(([quirkName, _]) => {
@@ -483,18 +507,19 @@ function QuirkPage() {
           <Stack.Item grow className="PreferencesMenu__Quirks__QuirkList">
             <QuirkList
               selected
+              quirkActionLocked={quirkActionLocked}
               handleClick={(quirkName, quirk) => {
                 if (getReasonToNotRemove(quirkName) !== undefined) {
                   return;
                 }
 
-                setSelectedQuirks(
-                  selectedQuirks.filter(
-                    (otherQuirk) => quirkName !== otherQuirk,
-                  ),
-                );
+                withQuirkDebounce(() => {
+                  setSelectedQuirks(
+                    selectedQuirks.filter((otherQuirk) => quirkName !== otherQuirk),
+                  );
 
-                act('remove_quirk', { quirk: quirk.name });
+                  act('remove_quirk', { quirk: quirk.name });
+                });
               }}
               quirks={quirks
                 .filter(([quirkName, _]) => {
