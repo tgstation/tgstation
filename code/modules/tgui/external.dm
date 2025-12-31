@@ -61,7 +61,7 @@
 	if(!ui)
 		ui = SStgui.get_open_ui(user, src)
 	if(ui)
-		ui.send_full_update(always_instant)
+		ui.send_full_update(always_instant = always_instant)
 
 /**
  * public
