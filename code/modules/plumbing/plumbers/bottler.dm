@@ -19,9 +19,9 @@
 	///Does the plumbing machine have a correct tile setup
 	var/valid_output_configuration = FALSE
 
-/obj/machinery/plumbing/bottler/Initialize(mapload, bolt, layer)
+/obj/machinery/plumbing/bottler/Initialize(mapload, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer, distinct_reagent_cap = 3)
+	AddComponent(/datum/component/plumbing/simple_demand, layer, distinct_reagent_cap = 3)
 	setDir(dir)
 
 /obj/machinery/plumbing/bottler/examine(mob/user)
