@@ -1,7 +1,7 @@
-GLOBAL_DATUM_INIT(eigenstate_manager, /datum/eigenstate_manager, new)
+GLOBAL_DATUM_INIT(closet_teleport_controller, /datum/closet_teleport_controller, new)
 
 ///A singleton used to teleport people to a linked web of itterative entries. If one entry is deleted, the 2 around it will forge a link instead.
-/datum/eigenstate_manager
+/datum/closet_teleport_controller
 	///The list of objects that something is linked to indexed by UID
 	var/list/eigen_targets = list()
 	///UID to object reference
@@ -12,7 +12,7 @@ GLOBAL_DATUM_INIT(eigenstate_manager, /datum/eigenstate_manager, new)
 	var/spark_time = 0
 
 ///Creates a new link of targets unique to their own id
-/datum/eigenstate_manager/proc/create_new_link(targets, subtle = TRUE)
+/datum/closet_teleport_controller/proc/create_new_link(targets, subtle = TRUE)
 	if(length(targets) <= 1)
 		return FALSE
 	for(var/atom/target as anything in targets) //Clear out any connected
@@ -57,7 +57,7 @@ GLOBAL_DATUM_INIT(eigenstate_manager, /datum/eigenstate_manager, new)
 	return TRUE
 
 ///reverts everything back to start
-/datum/eigenstate_manager/eigenstates/Destroy()
+/datum/closet_teleport_controller/eigenstates/Destroy()
 	for(var/index in 1 to id_counter)
 		for(var/entry in eigen_targets["[index]"])
 			remove_eigen_entry(entry)
@@ -67,7 +67,7 @@ GLOBAL_DATUM_INIT(eigenstate_manager, /datum/eigenstate_manager, new)
 	return ..()
 
 ///removes an object reference from the master list
-/datum/eigenstate_manager/proc/remove_eigen_entry(atom/entry)
+/datum/closet_teleport_controller/proc/remove_eigen_entry(atom/entry)
 	SIGNAL_HANDLER
 	var/id = eigen_id[entry]
 	eigen_targets[id] -= entry
@@ -87,7 +87,7 @@ GLOBAL_DATUM_INIT(eigenstate_manager, /datum/eigenstate_manager, new)
 			eigen_targets -= targets
 
 ///Finds the object within the master list, then sends the thing to the object's location
-/datum/eigenstate_manager/proc/use_eigenlinked_atom(atom/object_sent_from, atom/movable/thing_to_send)
+/datum/closet_teleport_controller/proc/use_eigenlinked_atom(atom/object_sent_from, atom/movable/thing_to_send)
 	SIGNAL_HANDLER
 
 	var/id = eigen_id[object_sent_from]
@@ -106,7 +106,7 @@ GLOBAL_DATUM_INIT(eigenstate_manager, /datum/eigenstate_manager, new)
 	if(!eigen_target)
 		stack_trace("No eigen target set for the eigenstate component!")
 		return FALSE
-	if(check_teleport_valid(thing_to_send, eigen_target, TELEPORT_CHANNEL_EIGENSTATE))
+	if(check_teleport_valid(thing_to_send, eigen_target, TELEPORT_CHANNEL_QUANTUM))
 		thing_to_send.forceMove(get_turf(eigen_target))
 	else
 		if(!subtle)
@@ -122,7 +122,7 @@ GLOBAL_DATUM_INIT(eigenstate_manager, /datum/eigenstate_manager, new)
 	return COMPONENT_CLOSET_INSERT_INTERRUPT
 
 ///Prevents tool use on the item
-/datum/eigenstate_manager/proc/tool_interact(atom/source, mob/user, obj/item/item)
+/datum/closet_teleport_controller/proc/tool_interact(atom/source, mob/user, obj/item/item)
 	SIGNAL_HANDLER
 	to_chat(user, span_notice("The unstable nature of [source] makes it impossible to use [item] on [source.p_them()]!"))
 	return ITEM_INTERACT_BLOCKING

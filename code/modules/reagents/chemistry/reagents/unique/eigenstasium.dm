@@ -107,15 +107,3 @@
 	do_sparks(5, FALSE, living_mob)
 
 //FOR ADDICTION-LIKE EFFECTS, SEE datum/status_effect/eigenstasium
-
-///Lets you link lockers together
-/datum/reagent/eigenstate/expose_turf(turf/exposed_turf, reac_volume)
-	. = ..()
-	if(creation_purity < 0.8)
-		return
-	var/list/lockers = list()
-	for(var/obj/structure/closet/closet in exposed_turf.contents)
-		lockers += closet
-	if(!lockers.len)
-		return
-	GLOB.eigenstate_manager.create_new_link(lockers, subtle = FALSE)
