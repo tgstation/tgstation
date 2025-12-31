@@ -73,17 +73,13 @@
 		do_sparks(5,FALSE,living_mob)
 		do_teleport(living_mob, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
 		do_sparks(5,FALSE,living_mob)
-	var/datum/reagent/stabilizing_agent/stabilizer = living_mob.reagents.has_reagent(/datum/reagent/stabilizing_agent)
-	if(stabilizer)
-		living_mob.reagents.remove_reagent(/datum/reagent/stabilizing_agent, stabilizer.volume)
+	living_mob.reagents.del_reagent(/datum/reagent/stabilizing_agent)
 	if(iscarbon(living_mob))
 		var/mob/living/carbon/carbon_mob = living_mob
 		var/obj/item/organ/stomach/carbonstomach = carbon_mob.get_organ_slot(ORGAN_SLOT_STOMACH)
 		if(!carbonstomach)
 			return ..()
-		stabilizer = carbonstomach.reagents.has_reagent(/datum/reagent/stabilizing_agent)
-		if(stabilizer)
-			carbonstomach.reagents.remove_reagent(/datum/reagent/stabilizing_agent, stabilizer.volume)
+		carbonstomach.reagents.del_reagent(/datum/reagent/stabilizing_agent)
 
 	return ..()
 
