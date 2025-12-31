@@ -102,8 +102,8 @@
 					net.demanders |= othernet.demanders
 					for(var/datum/component/plumbing/component as anything in othernet.suppliers + othernet.demanders)
 						for(var/obj/machinery/duct/duct as anything in component.ducts)
-							if(component .ducts[s] == othernet)
-								component .ducts[s] = net
+							if(component.ducts[duct] == othernet)
+								component.ducts[duct] = net
 					othernet.suppliers.Cut()
 					othernet.demanders.Cut()
 
@@ -113,7 +113,7 @@
 						duct.net = net
 
 					//destory it
-					qdel(D)
+					qdel(othernet)
 
 				//connecting us to duct
 				neighbours[other] = direction

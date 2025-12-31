@@ -242,7 +242,7 @@
 	if(!receiver.holder_full())
 		for(var/dir in GLOB.cardinals)
 			if(dir & demand_connects)
-				send_request(D)
+				send_request(dir)
 
 /datum/component/plumbing/proc/on_examine(atom/movable/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
