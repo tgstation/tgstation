@@ -1,0 +1,6 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - qol: "added examines & screentips for ducts & stack of ducts"
+  - qol: "you can wrench a stack of ducts on the ground to create a pipe"
+  - refactor: "plumbing code has been improved overall. Report bugs on github"
