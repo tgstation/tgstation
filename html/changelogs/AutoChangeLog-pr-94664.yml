@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "AI shell deployment verb no longer requires you to select yourself from a list first"
