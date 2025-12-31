@@ -37,6 +37,17 @@
 	reagents = parent_movable.reagents
 
 	if(parent_movable.anchored)
+		if(PERFORM_ALL_TESTS(maptest_log_mapping))
+			var/datum/overlap = ducting_layer_check(parent_movable, ducting_layer)
+			if(!isnull(overlap))
+				var/message = GLOB.plumbing_layer_names["[ducting_layer]"]
+				if(istype(overlap, /obj/machinery/duct))
+					message = "duct on [message]"
+				else
+					message = "machine on [message]"
+				log_mapping("Overlapping [message] detected at [AREACOORD(parent_movable)]")
+				parent_movable.set_anchored(FALSE)
+				return
 		enable()
 
 /datum/component/plumbing/RegisterWithParent()
