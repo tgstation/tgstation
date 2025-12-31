@@ -53,8 +53,8 @@
 	eigen.data["ingested"] = TRUE
 
 //Main functions
-/datum/reagent/eigenstate/proc/make_appearance(mob/living/living_mob)
-	var/obj/effect/overlay/holo_pad_hologram/spirit = new (living_mob.loc)
+/datum/reagent/eigenstate/proc/make_appearance(mob/living/living_mob, spawn_loc)
+	var/obj/effect/overlay/holo_pad_hologram/spirit = new (spawn_loc)
 	spirit.appearance = living_mob.appearance
 	spirit.alpha = 170
 	spirit.add_atom_colour(LIGHT_COLOR_LIGHT_CYAN, FIXED_COLOUR_PRIORITY)
@@ -67,7 +67,7 @@
 
 /datum/reagent/eigenstate/on_mob_add(mob/living/living_mob, amount)
 	//make hologram at return point to indicate where someone will go back to
-	eigenstate = make_appearance(living_mob)
+	eigenstate = make_appearance(living_mob, living_mob.loc)
 
 	location_return = get_turf(living_mob)	//sets up return point
 	to_chat(living_mob, span_userdanger("You feel like part of yourself has split off!"))
@@ -87,7 +87,7 @@
 	. = ..()
 	to_chat(living_mob, span_userdanger("You feel strangely whole again."))
 	if(living_mob.reagents.has_reagent(/datum/reagent/stabilizing_agent))
-		var/obj/effect/overlay/holo_pad_hologram/remaining_spirit = make_appearance(living_mob)
+		var/obj/effect/overlay/holo_pad_hologram/remaining_spirit = make_appearance(living_mob, eigenstate.loc)
 		var/spirit_duration = max(5 MINUTES - (current_cycle * 5 SECONDS), 10 SECONDS)
 		remaining_spirit.fade_into_nothing(spirit_duration, spirit_duration)
 	else
