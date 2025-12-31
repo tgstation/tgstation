@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Adds screen hud elements for ghost toggles"

@@ -867,3 +867,12 @@
   - bugfix: fixes a pushed crate not removing on_climbable trait properly off the
       mob standing atop it
   - bugfix: fixes tablesmashing onto platforms
+2025-12-31:
+  ElGitificador:
+  - spellcheck: fixed typo in syndol description.
+  Melbert:
+  - rscadd: Adds screen hud elements for ghost toggles
+  SmArtKar:
+  - balance: Changed Coveroli in Albuterol's recipe to standard Convermol
+  necromanceranne:
+  - bugfix: Batons respect chest armor specifically once again.
