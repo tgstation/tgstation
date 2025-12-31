@@ -129,7 +129,7 @@ GLOBAL_DATUM_INIT(closet_teleport_controller, /datum/closet_teleport_controller,
 // Spawns a closet that will auto-link to the next one spawned
 /obj/structure/closet/eigenlinked
 	/// Whether or not this closet subtle links (no messages/effects)
-	var/subtle = TRUE
+	var/subtle = FALSE
 
 /obj/structure/closet/eigenlinked/Initialize(mapload)
 	. = ..()
@@ -148,4 +148,4 @@ GLOBAL_DATUM_INIT(closet_teleport_controller, /datum/closet_teleport_controller,
 	GLOB.closet_teleport_controller.create_new_link(list(src, other), subtle = src.subtle)
 
 /obj/structure/closet/eigenlinked/stealth
-	subtle = FALSE
+	subtle = TRUE
