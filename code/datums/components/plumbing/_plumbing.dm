@@ -56,7 +56,7 @@
 		COMSIG_ATOM_UPDATE_OVERLAYS,
 		COMSIG_ATOM_DIR_CHANGE,
 		COMSIG_MOVABLE_CHANGE_DUCT_LAYER,
-		COMSIG_ATOM_EXAMINE
+		COMSIG_ATOM_EXAMINE,
 	))
 
 /datum/component/plumbing/Destroy()
@@ -65,7 +65,7 @@
 	reagents = null
 	return ..()
 
-///Returns if the machine is anchored or not
+///Returns if the machine is active or not
 /datum/component/plumbing/proc/active()
 	var/atom/movable/parent_movable = parent
 	return parent_movable.anchored
@@ -120,7 +120,7 @@
 
 			for(var/datum/component/plumbing/plumber as anything in found_atom.GetComponents(/datum/component/plumbing))
 				if(plumber.active() && (plumber.ducting_layer & ducting_layer))
-					if(plumber.demand_connects & opposite_dir && supply_connects & direction || plumber.supply_connects & opposite_dir && demand_connects & direction) //make sure we arent connecting two supplies or demands
+					if((plumber.demand_connects & opposite_dir) && (supply_connects & direction) || (plumber.supply_connects & opposite_dir) && (demand_connects & direction)) //make sure we arent connecting two supplies or demands
 						var/datum/ductnet/net = new
 						net.add_plumber(src, direction)
 						net.add_plumber(plumber, opposite_dir)
@@ -240,8 +240,8 @@
 		return PROCESS_KILL
 
 	if(!receiver.holder_full())
-		for(var/D in GLOB.cardinals)
-			if(D & demand_connects)
+		for(var/dir in GLOB.cardinals)
+			if(dir & demand_connects)
 				send_request(D)
 
 /datum/component/plumbing/proc/on_examine(atom/movable/source, mob/user, list/examine_list)

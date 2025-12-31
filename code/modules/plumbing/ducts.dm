@@ -96,21 +96,21 @@
 					net.ducts += other
 					other.net = net
 				else if(net != other.net) //merge the nets
-					var/datum/ductnet/D = other.net
+					var/datum/ductnet/othernet = other.net
 					//Take all its suppliers & demanders
-					net.suppliers |= D.suppliers
-					net.demanders |= D.demanders
-					for(var/datum/component/plumbing/P as anything in D.suppliers + D.demanders)
-						for(var/s in P.ducts)
-							if(P.ducts[s] == D)
-								P.ducts[s] = net
-					D.suppliers.Cut()
-					D.demanders.Cut()
+					net.suppliers |= othernet.suppliers
+					net.demanders |= othernet.demanders
+					for(var/datum/component/plumbing/component as anything in othernet.suppliers + othernet.demanders)
+						for(var/obj/machinery/duct/duct as anything in component.ducts)
+							if(component .ducts[s] == othernet)
+								component .ducts[s] = net
+					othernet.suppliers.Cut()
+					othernet.demanders.Cut()
 
 					//Take all its ducts
-					net.ducts |= D.ducts
-					for(var/obj/machinery/duct/M as anything in D.ducts)
-						M.net = net
+					net.ducts |= othernet.ducts
+					for(var/obj/machinery/duct/duct as anything in othernet.ducts)
+						duct.net = net
 
 					//destory it
 					qdel(D)
@@ -229,8 +229,8 @@
 
 	//compute connections
 	var/connects = NONE
-	for(var/A in neighbours)
-		connects |= neighbours[A]
+	for(var/neighbour in neighbours)
+		connects |= neighbours[neighbour]
 
 	for(var/direction in GLOB.cardinals)
 		switch(direction & connects)
