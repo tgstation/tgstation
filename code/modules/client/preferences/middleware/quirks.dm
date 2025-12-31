@@ -27,7 +27,6 @@
 	if(response != "Yes")
 		return TRUE
 
-
 /datum/preference_middleware/quirks/post_set_preference(mob/user, preference, value)
 	if(preference != "species")
 		return
@@ -112,7 +111,7 @@
 
 	preferences.all_quirks = new_quirks
 	preferences.character_preview_view?.update_body()
-	preferences.update_static_data(user)
+	preferences.update_static_data(user, always_instant = TRUE)
 
 	return TRUE
 
@@ -132,6 +131,7 @@
 
 	preferences.all_quirks = new_quirks
 	preferences.character_preview_view?.update_body()
+	preferences.update_static_data(user, always_instant = TRUE)
 
 	return TRUE
 
