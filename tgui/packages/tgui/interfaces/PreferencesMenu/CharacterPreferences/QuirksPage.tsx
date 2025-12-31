@@ -108,16 +108,15 @@ function QuirkDisplay(props: QuirkDisplayProps) {
         opacity: props.quirkActionLocked ? 0.6 : 1,
         pointerEvents: props.quirkActionLocked ? 'none' : 'auto',
       }}
-        onClick={(event) => {
-          if (quirkActionLocked) return;
+      onClick={() => {
+        if (quirkActionLocked)
+          return;
+        if (selected) {
+          setCustomizationExpanded(false);
+        }
 
-          event.stopPropagation();
-          if (selected) {
-            setCustomizationExpanded(false);
-          }
-
-          handleClick(quirkKey, quirk);
-        }}
+        handleClick(quirkKey, quirk);
+      }}
     >
       <Stack fill g={0}>
         <Stack.Item
