@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - bugfix: "If, for some godforsaken reason, you find yourself with a weapon that has more than 100% armor penetration, it will now properly ignore armor in its entirety instead of ENHANCING it, which it used to do."
