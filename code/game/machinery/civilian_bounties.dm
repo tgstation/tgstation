@@ -134,10 +134,10 @@
 		stop_sending()
 	if(current_bounty.can_claim())
 		//Pay for the bounty with the ID's department funds.
-		status_report += "Bounty completed! Please give your bounty cube to cargo for your automated payout shortly."
+		status_report += " Bounty completed! Please give your bounty cube to cargo for your automated payout shortly."
 		SSblackbox.record_feedback("tally", "bounties_completed", 1, current_bounty.type)
 		current_bounty.on_claimed(inserted_scan_id)
-		id_account.reset_bounty()
+		id_account.reset_bounty(inserted_scan_id)
 		SSeconomy.civ_bounty_tracker++
 
 		var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
