@@ -13,6 +13,20 @@
 	AddComponent(/datum/component/plumbing/automated_iv, layer)
 	AddElement(/datum/element/simple_rotation)
 
+/obj/machinery/iv_drip/plumbing/post_machine_initialize()
+	. = ..()
+
+	if(PERFORM_ALL_TESTS(maptest_log_mapping))
+		var/datum/overlap = ducting_layer_check(src, DUCT_LAYER_DEFAULT)
+		if(!isnull(overlap))
+			var/message = GLOB.plumbing_layer_names["[DUCT_LAYER_DEFAULT]"]
+			if(istype(overlap, /obj/machinery/duct))
+				message = "duct on [message]"
+			else
+				message = "machine on [message]"
+			log_mapping("Overlapping [message] detected at [AREACOORD(src)]")
+			set_anchored(FALSE)
+
 /obj/machinery/iv_drip/plumbing/quick_toggle(mob/living/user)
 	return FALSE
 

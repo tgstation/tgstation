@@ -26,6 +26,24 @@
 	AddElement(/datum/element/simple_rotation)
 	register_context()
 
+/obj/machinery/plumbing/post_machine_initialize()
+	. = ..()
+
+	if(PERFORM_ALL_TESTS(maptest_log_mapping))
+		var/list/ducting_layers = list()
+		for(var/datum/component/plumbing/plumber as anything in src.GetComponents(/datum/component/plumbing))
+			ducting_layers += plumber.ducting_layer
+
+		var/datum/overlap = ducting_layer_check(src, ducting_layers)
+		if(!isnull(overlap))
+			var/message
+			if(istype(overlap, /obj/machinery/duct))
+				message = "duct"
+			else
+				message = "machine"
+			log_mapping("Overlapping [message] detected at [AREACOORD(src)]")
+			set_anchored(FALSE)
+
 /obj/machinery/plumbing/create_reagents(max_vol, flags)
 	if(!ispath(reagents))
 		qdel(reagents)
