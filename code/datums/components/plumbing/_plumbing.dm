@@ -161,12 +161,8 @@
 
 	if(!active())
 		var/datum/overlap = ducting_layer_check(parent_obj, ducting_layer)
-		if(istype(overlap, /obj/machinery/duct))
-			parent_obj.balloon_alert(user, "overlapping duct detected!")
-			return ITEM_INTERACT_FAILURE
-
-		if(istype(overlap, /datum/component/plumbing))
-			parent_obj.balloon_alert(user, "overlapping machine detected!")
+		if(!isnull(overlap))
+			parent_obj.balloon_alert(user, "overlapping [istype(overlap, /obj/machinery/duct) ? "duct" : "machine"] detected!")
 			return ITEM_INTERACT_FAILURE
 
 /datum/component/plumbing/proc/toggle_active(obj/parent_obj, new_state)
