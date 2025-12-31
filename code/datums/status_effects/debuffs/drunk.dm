@@ -158,10 +158,10 @@
 
 /datum/status_effect/inebriated/drunk/on_tick_effects()
 	// Handle the Ballmer Peak.
-	// If our owner is a scientist (has the trait "TRAIT_BALLMER_SCIENTIST"), there's a 5% chance
+	// If our owner is a scientist (has the trait "TRAIT_SCIENTIST_LIVER"), there's a 5% chance
 	// that they'll say one of the special "ballmer message" lines, depending their drunk-ness level.
 	var/obj/item/organ/liver/liver_organ = owner.get_organ_slot(ORGAN_SLOT_LIVER)
-	if(liver_organ && HAS_TRAIT(liver_organ, TRAIT_BALLMER_SCIENTIST) && prob(5))
+	if(liver_organ && HAS_TRAIT(liver_organ, TRAIT_SCIENTIST_LIVER) && prob(5) && HAS_PERSONALITY(owner, /datum/personality/whimsical))
 		if(drunk_value >= BALLMER_PEAK_LOW_END && drunk_value <= BALLMER_PEAK_HIGH_END)
 			owner.say(pick_list_replacements(VISTA_FILE, "ballmer_good_msg"), forced = "ballmer")
 

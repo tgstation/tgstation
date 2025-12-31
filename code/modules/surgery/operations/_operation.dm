@@ -726,6 +726,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		total_mod *= get_location_modifier(get_turf(patient))
 		total_mod *= get_morbid_modifier(surgeon, tool)
 		total_mod *= get_mob_surgery_speed_mod(patient)
+		total_mod *= get_surgeon_surgery_speed_mod(surgeon)
 		// Using TRAIT_SELF_SURGERY on a surgery which doesn't normally allow self surgery imparts a penalty
 		if(patient == surgeon && HAS_TRAIT(surgeon, TRAIT_SELF_SURGERY) && !(operation_flags & OPERATION_SELF_OPERABLE))
 			total_mod *= 1.5
@@ -753,6 +754,18 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		basemod *= 0.8
 	if(HAS_TRAIT(patient, TRAIT_ANALGESIA))
 		basemod *= 0.8
+	return basemod
+
+/// Returns a time modifier based on the surgeon's status
+/datum/surgery_operation/proc/get_surgeon_surgery_speed_mod(mob/living/surgeon)
+	PROTECTED_PROC(TRUE)
+	var/basemod = 1.0
+	var/drunkness = surgeon.get_drunk_amount()
+	// being drunk gives upwards of a 12x speed penalty - unless you land in the ballmer peak
+	if(drunkness >= BALLMER_PEAK_LOW_END && drunkness <= BALLMER_PEAK_HIGH_END)
+		basemod *= 0.8
+	else
+		basemod *= round((drunkness ** 1.2) / 20, 0.1)
 	return basemod
 
 /// Gets the surgery speed modifier for a given mob, based off what sort of table/bed/whatever is on their turf.
