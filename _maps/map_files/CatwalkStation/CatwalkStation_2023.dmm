@@ -5884,25 +5884,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/captain/private)
-"bCD" = (
-/obj/structure/sign/directions/command{
-	dir = 1;
-	pixel_y = 10
-	},
-/obj/structure/sign/directions/dorms{
-	dir = 1;
-	pixel_y = 4
-	},
-/obj/structure/sign/directions/medical{
-	dir = 1;
-	pixel_y = -2
-	},
-/obj/structure/sign/directions/evac{
-	dir = 1;
-	pixel_y = -8
-	},
-/turf/closed/wall,
-/area/station/science/lab)
 "bDq" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -7820,6 +7801,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/iron/white,
 /area/station/hallway/secondary/entry)
 "cbT" = (
@@ -30152,6 +30134,17 @@
 /obj/effect/turf_decal/tile/green/full,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
+"icx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/light/floor,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=2-Upload";
+	location = "1-Arrival"
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/hallway/secondary/entry)
 "icz" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
@@ -44283,12 +44276,12 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "lPw" = (
-/obj/structure/sign/directions/engineering{
-	dir = 4
-	},
 /obj/structure/sign/directions/supply{
 	dir = 4;
 	pixel_y = -10
+	},
+/obj/structure/sign/directions/engineering{
+	dir = 4
 	},
 /turf/closed/wall/r_wall,
 /area/station/science/lab)
@@ -64958,15 +64951,13 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "rtD" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=2-Upload";
-	location = "1-Arrival"
+/obj/effect/turf_decal/siding/wideplating_new/dark/end{
+	dir = 1
 	},
-/obj/effect/landmark/start/assistant,
-/turf/open/floor/iron/dark/smooth_large,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/goonplaque,
 /area/station/hallway/secondary/entry)
 "rtL" = (
 /obj/machinery/light/small/directional/west,
@@ -75724,10 +75715,6 @@
 /obj/effect/turf_decal/tile/brown/full,
 /turf/open/floor/iron/large,
 /area/station/maintenance/starboard/central)
-"uqo" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/station/hallway/primary/aft)
 "uqy" = (
 /obj/structure/table,
 /obj/item/flashlight/lamp/green{
@@ -123143,7 +123130,7 @@ kAh
 ahN
 wWS
 rtD
-wWS
+icx
 cbP
 jyK
 iHu
@@ -123648,7 +123635,7 @@ ryM
 pHl
 pHl
 wgS
-uqo
+tiX
 pJS
 pJS
 pJS
@@ -123905,7 +123892,7 @@ cPY
 tNP
 tNP
 fAl
-bCD
+jkr
 pJS
 pJS
 pJS
