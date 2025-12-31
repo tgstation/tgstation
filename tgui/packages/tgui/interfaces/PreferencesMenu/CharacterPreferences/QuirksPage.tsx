@@ -35,7 +35,7 @@ function getColorValueClass(quirk: Quirk) {
 
 function getCorrespondingPreferences(
   customization_options: string[],
-  relevant_preferences: Record<string, string>,
+  relevant_preferences: Record<string, string> = {},
 ) {
   return Object.fromEntries(
     filter(Object.entries(relevant_preferences), ([key, value]) =>
@@ -51,7 +51,7 @@ type QuirkListProps = {
 };
 
 type QuirkProps = {
-  onClick: (quirkName: string, quirk: Quirk) => void;
+  handleClick: (quirkName: string, quirk: Quirk) => void;
   randomBodyEnabled: boolean;
   selected: boolean;
   serverData: ServerData;
@@ -61,7 +61,7 @@ function QuirkList(props: QuirkProps & QuirkListProps) {
   const {
     quirks = [],
     selected,
-    onClick,
+    handleClick,
     serverData,
     randomBodyEnabled,
   } = props;
@@ -71,7 +71,7 @@ function QuirkList(props: QuirkProps & QuirkListProps) {
       {quirks.map(([quirkKey, quirk]) => (
         <Stack.Item key={quirkKey} m={0}>
           <QuirkDisplay
-            onClick={onClick}
+            handleClick={handleClick}
             quirk={quirk}
             quirkKey={quirkKey}
             randomBodyEnabled={randomBodyEnabled}
@@ -91,7 +91,7 @@ type QuirkDisplayProps = {
 } & QuirkProps;
 
 function QuirkDisplay(props: QuirkDisplayProps) {
-  const { quirk, quirkKey, onClick, selected } = props;
+  const { quirk, quirkKey, handleClick, selected } = props;
   const { icon, value, name, description, customizable, failTooltip } = quirk;
 
   const [customizationExpanded, setCustomizationExpanded] = useState(false);
@@ -107,7 +107,7 @@ function QuirkDisplay(props: QuirkDisplayProps) {
           setCustomizationExpanded(false);
         }
 
-        onClick(quirkKey, quirk);
+        handleClick(quirkKey, quirk);
       }}
     >
       <Stack fill g={0}>
@@ -422,7 +422,7 @@ function QuirkPage() {
           <Stack.Item grow className="PreferencesMenu__Quirks__QuirkList">
             <QuirkList
               selected={false}
-              onClick={(quirkName, quirk) => {
+              handleClick={(quirkName, quirk) => {
                 if (getReasonToNotAdd(quirkName) !== undefined) {
                   return;
                 }
@@ -483,7 +483,7 @@ function QuirkPage() {
           <Stack.Item grow className="PreferencesMenu__Quirks__QuirkList">
             <QuirkList
               selected
-              onClick={(quirkName, quirk) => {
+              handleClick={(quirkName, quirk) => {
                 if (getReasonToNotRemove(quirkName) !== undefined) {
                   return;
                 }
