@@ -260,7 +260,7 @@
 			var/mob/living/carbon/human/human_target = target
 			if(prob(force_say_chance))
 				human_target.force_say()
-		var/armour_block = target.run_armor_check(null, armour_type_against_stun, null, null, stun_armour_penetration)
+		var/armour_block = target.run_armor_check(BODY_ZONE_CHEST, armour_type_against_stun, null, null, stun_armour_penetration)
 		target.apply_damage(stamina_damage, STAMINA, blocked = armour_block)
 		if(!trait_check)
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
