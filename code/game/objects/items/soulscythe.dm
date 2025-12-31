@@ -265,7 +265,7 @@
 	add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_LAVA_IMMUNE), INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
-/mob/living/basic/soulscythe/proc/on_life(datum/source, seconds_per_tick, times_fired) // done like this because there's no need to go through all of life since the item does the work anyways
+/mob/living/basic/soulscythe/proc/on_life(datum/source, seconds_per_tick) // done like this because there's no need to go through all of life since the item does the work anyways
 	if(stat == CONSCIOUS)
 		adjust_blood_volume(round(1 * seconds_per_tick), maximum = MAX_BLOOD_LEVEL)
 	return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING

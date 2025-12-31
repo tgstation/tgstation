@@ -230,7 +230,6 @@ sound/items/weapons/crystal_dagger_sound.ogg -- https://pixabay.com/sound-effect
 'sound/items/weapons/effects/blood_wisp_explode.ogg' -- https://pixabay.com/sound-effects/fire-sound-effects-224089/ by Alice-soundz
 sound/effect/plasticflaps.ogg -- door_plastic_tapes.wav by estupe -- https://freesound.org/s/186357/ -- License: Creative Commons 0
 
-
 sound/effects/siren.ogg -- siren.wav by IFartInUrGeneralDirection -- https://freesound.org/s/46092/ -- License: Attribution 4.0
 
 sound/mobs/non-humanoids/stoats/stoat_sound.ogg -- https://suche.tierstimmenarchiv.de/
@@ -240,3 +239,5 @@ sounds/mobs/humanoids/shadow/shadow_wail.ogg -- https://freesound.org/people/Rob
 sound/mobs/non-humanoids/roro/roro_warble.ogg -- Made by cutting, adjusting pitch, and adding echo of https://freesound.org/people/danlucaz/sounds/517734/ -- License: Creating Commons 0
 
 sound/effects/goresplat.ogg -- https://freesound.org/people/ThefitzyG/sounds/414296/ -- License: Creative Commons 0
+
+sound/music/antag/blobalert.ogg and sound/effects/blob/blobattack.ogg -- "SlimeAtk.WAV" by Jamius -- https://freesound.org/people/Jamius/sounds/41530/ -- License: Attribution 4.0

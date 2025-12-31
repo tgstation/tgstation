@@ -21,7 +21,6 @@
 	///The color to multiply the greyscaled husk sprites by. Can be null. Old husk sprite chest color is #A6A6A6
 	var/husk_color = "#A6A6A6"
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
-	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/consumable/liquidgibs = 5) // robotic bodyparts and chests/heads cannot be ground
 	/// The mob that "owns" this limb
 	/// DO NOT MODIFY DIRECTLY. Use update_owner()
 	var/mob/living/carbon/owner
@@ -68,7 +67,7 @@
 	/// bitflag used to check which clothes cover this bodypart
 	var/body_part
 	/// List of obj/item's embedded inside us. Managed by embedded components, do not modify directly
-	var/list/embedded_objects = list()
+	var/list/embedded_objects
 	/// are we a hand? if so, which one!
 	var/held_index = 0
 	/// A speed modifier we apply to the owner when attached, if any. Positive numbers make it move slower, negative numbers make it move faster.
@@ -255,9 +254,7 @@
 		texture_bodypart_overlay = new texture_bodypart_overlay()
 		add_bodypart_overlay(texture_bodypart_overlay, update = FALSE)
 
-	if(!IS_ORGANIC_LIMB(src))
-		grind_results = null
-	else
+	if(IS_ORGANIC_LIMB(src))
 		blood_dna_info = list("Unknown DNA" = get_blood_type(BLOOD_TYPE_O_PLUS))
 
 	var/innate_state = NONE
@@ -295,6 +292,9 @@
 	QDEL_LIST_ASSOC_VAL(feature_offsets)
 
 	return ..()
+
+/obj/item/bodypart/grind_results()
+	return IS_ORGANIC_LIMB(src) ? list() : list(/datum/reagent/bone_dust = 10, /datum/reagent/consumable/liquidgibs = 5)
 
 /obj/item/bodypart/ex_act(severity, target)
 	if(owner) //trust me bro you dont want this
@@ -607,7 +607,7 @@
 	update_icon_dropped()
 
 //Return TRUE to get whatever mob this is in to update health.
-/obj/item/bodypart/proc/on_life(seconds_per_tick, times_fired)
+/obj/item/bodypart/proc/on_life(seconds_per_tick)
 	SHOULD_CALL_PARENT(TRUE)
 
 /**
@@ -1395,14 +1395,14 @@
 	if(embed in embedded_objects) // go away
 		return
 	// We don't need to do anything with projectile embedding, because it will never reach this point
-	embedded_objects += embed
+	LAZYADD(embedded_objects, embed)
 	RegisterSignal(embed, COMSIG_ITEM_EMBEDDING_UPDATE, PROC_REF(embedded_object_changed))
 	refresh_bleed_rate()
 
 /// INTERNAL PROC, DO NOT USE
 /// Cleans up any attachment we have to the embedded object, removes it from our list
 /obj/item/bodypart/proc/_unembed_object(obj/item/unembed)
-	embedded_objects -= unembed
+	LAZYREMOVE(embedded_objects, unembed)
 	UnregisterSignal(unembed, COMSIG_ITEM_EMBEDDING_UPDATE)
 	refresh_bleed_rate()
 

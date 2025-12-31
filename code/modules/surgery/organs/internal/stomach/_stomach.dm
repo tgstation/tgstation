@@ -56,14 +56,14 @@
 	QDEL_LAZYLIST(stomach_contents)
 	return ..()
 
-/obj/item/organ/stomach/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/stomach/on_life(seconds_per_tick)
 	. = ..()
 
 	//Manage species digestion
 	if(ishuman(owner))
 		var/mob/living/carbon/human/humi = owner
 		if(!(organ_flags & ORGAN_FAILING))
-			handle_hunger(humi, seconds_per_tick, times_fired)
+			handle_hunger(humi, seconds_per_tick)
 
 	var/mob/living/carbon/body = owner
 
@@ -99,7 +99,7 @@
 
 	//Handle disgust
 	if(body)
-		handle_disgust(body, seconds_per_tick, times_fired)
+		handle_disgust(body, seconds_per_tick)
 
 	//If the stomach is not damage exit out
 	if(damage < low_threshold)
@@ -132,7 +132,7 @@
 		body.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = damage)
 		to_chat(body, span_warning("Your stomach reels in pain as you're incapable of holding down all that food!"))
 
-/obj/item/organ/stomach/proc/handle_hunger(mob/living/carbon/human/human, seconds_per_tick, times_fired)
+/obj/item/organ/stomach/proc/handle_hunger(mob/living/carbon/human/human, seconds_per_tick)
 	if(HAS_TRAIT(human, TRAIT_NOHUNGER))
 		return //hunger is for BABIES
 
@@ -266,7 +266,7 @@
 		owner.apply_damage(damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
 	return emptied
 
-/obj/item/organ/stomach/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/stomach/on_life(seconds_per_tick)
 	. = ..()
 	if (!owner || SSmobs.times_fired % 3 != 0)
 		return
@@ -339,7 +339,7 @@
 		return 10
 	return 0
 
-/obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, seconds_per_tick, times_fired)
+/obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, seconds_per_tick)
 	var/old_disgust = disgusted.old_disgust
 	var/disgust = disgusted.disgust
 

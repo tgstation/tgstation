@@ -66,7 +66,7 @@
 	. = ..()
 	update_appearance(UPDATE_ICON_STATE)
 	update_anomaly_state()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -7) // PSYCHIC FISHING
+	AddElement(/datum/element/adjust_fishing_difficulty, -7) // PSYCHIC FISHING
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
 
 /obj/item/clothing/head/helmet/perceptomatrix/equipped(mob/living/user, slot)

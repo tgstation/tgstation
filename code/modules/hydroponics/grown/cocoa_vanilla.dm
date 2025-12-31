@@ -80,9 +80,11 @@
 	bite_consumption_mod = 2
 	trash_type = /obj/item/food/grown/bungopit
 	foodtypes = FRUIT
-	juice_typepath = /datum/reagent/consumable/bungojuice
 	tastes = list("bungo" = 2, "tropical fruitiness" = 1)
 	distill_reagent = null
+
+/obj/item/food/grown/bungofruit/juice_typepath()
+	return /datum/reagent/consumable/bungojuice
 
 /obj/item/food/grown/bungopit
 	seed = /obj/item/seeds/cocoapod/bungotree
