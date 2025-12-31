@@ -74,7 +74,7 @@
 
 	//Teleports you home if it's pure enough
 	if(creation_purity > 0.9 && location_created && data["ingested"])
-		do_teleport(living_mob, location_created, 3, asoundin = 'sound/effects/phasein.ogg')
+		do_teleport(living_mob, location_created, 3, asoundin = 'sound/effects/phasein.ogg', asoundout = 'sound/effects/phaseout.ogg')
 
 	return ..()
 
@@ -88,10 +88,10 @@
 	to_chat(living_mob, span_userdanger("You feel strangely whole again."))
 	if(living_mob.reagents.has_reagent(/datum/reagent/stabilizing_agent))
 		var/obj/effect/overlay/holo_pad_hologram/remaining_spirit = make_appearance(living_mob)
-		var/spirit_duration = max(4 MINUTES - (current_cycle * 5 SECOND), 10 SECONDS)
+		var/spirit_duration = max(5 MINUTES - (current_cycle * 5 SECONDS), 10 SECONDS)
 		remaining_spirit.fade_into_nothing(spirit_duration, spirit_duration)
 	else
-		do_teleport(living_mob, location_return, 3, asoundin = 'sound/effects/phasein.ogg') //Teleports home
+		do_teleport(living_mob, location_return, 3, asoundin = 'sound/effects/phasein.ogg', asoundout = 'sound/effects/phaseout.ogg') //Teleports home
 
 	qdel(eigenstate)
 
