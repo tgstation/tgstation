@@ -314,7 +314,7 @@ function QuirkPage() {
 
   const [quirkActionLocked, setQuirkActionLocked] = useState(false);
 
-  function withQuirkDebounce(debounce: () => void, delay = 250) {
+  function withQuirkDebounce(debounce: () => void, delay = 200) {
     if (quirkActionLocked) return;
 
     setQuirkActionLocked(true);
