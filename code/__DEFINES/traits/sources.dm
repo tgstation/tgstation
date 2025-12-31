@@ -332,3 +332,6 @@
 
 /// Trait gained from bioware surgeries
 #define BIOWARE_TRAIT "bioware"
+
+/// Trait gained from skeleton "limbs", such as husking from a butchered chest
+#define SKELETON_TRAIT "skeleton"

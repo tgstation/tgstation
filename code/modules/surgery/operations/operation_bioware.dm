@@ -252,19 +252,19 @@
 	required_zone = BODY_ZONE_HEAD
 
 /datum/surgery_operation/limb/bioware/cortex_folding/state_check(obj/item/bodypart/limb)
-	if(limb.body_zone != required_zone)
-		return FALSE
+	. = ..()
+	if (!.)
+		return
 	var/obj/item/organ/brain/brain = locate() in limb
 	if(isnull(brain))
 		return FALSE
 	return !HAS_TRAIT_FROM(brain, TRAIT_SPECIAL_TRAUMA_BOOST, BIOWARE_TRAIT)
 
 /datum/surgery_operation/limb/bioware/cortex_folding/on_success(obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
+	. = ..()
 	var/obj/item/organ/brain/brain = locate() in limb
 	if(!isnull(brain))
 		ADD_TRAIT(brain, TRAIT_SPECIAL_TRAUMA_BOOST, BIOWARE_TRAIT)
-	if(limb.owner.ckey)
-		SSblackbox.record_feedback("tally", "bioware", 1, "cortex_folding")
 
 /datum/surgery_operation/limb/bioware/cortex_folding/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	display_results(
@@ -289,7 +289,7 @@
 
 /datum/surgery_operation/limb/bioware/cortex_folding/on_failure(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	var/obj/item/organ/brain/brain = locate() in limb
-	if(!brain)
+	if(isnull(brain))
 		return ..()
 	display_results(
 		surgeon,

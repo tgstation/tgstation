@@ -291,23 +291,12 @@
 	if (!target.butcher_replacement)
 		target.dismember(source.damtype, wound_type)
 		target.drop_organs(violent_removal = TRUE) // Should not happen, but just in case
-		/*
-		if (target.body_zone == BODY_ZONE_CHEST)
-			victim.gib(DROP_ALL_REMAINS)
-			return
-		*/
 		qdel(target)
 		return
 
 	var/obj/item/bodypart/replacement = create_replacement_limb(target, drop_loc)
 	target.dismember(source.damtype, wound_type)
 	target.drop_organs(violent_removal = TRUE)
-	/*
-	if (target.body_zone == BODY_ZONE_CHEST)
-		victim.gib(DROP_ALL_REMAINS)
-		return
-	*/
-
 	replacement.replace_limb(victim)
 	replacement.update_limb(is_creating = TRUE)
 	qdel(target)

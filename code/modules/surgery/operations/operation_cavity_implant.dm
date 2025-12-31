@@ -1,7 +1,6 @@
 /datum/surgery_operation/limb/prepare_cavity
 	name = "widen chest cavity"
 	desc = "Widen a patient's chest cavity to allow for implanting of larger items."
-	operation_flags = OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		TOOL_RETRACTOR = 1,
 		TOOL_CROWBAR = 1.5,
@@ -99,7 +98,7 @@
 	display_pain(limb.owner, "You can feel something being inserted into your [limb.plaintext_zone], it hurts like hell!")
 
 /datum/surgery_operation/limb/cavity_implant/on_success(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
-	if (limb.owner && !surgeon.transferItemToLoc(tool, limb.owner, force = TRUE)) // shouldn't fail but just in case
+	if (!surgeon.transferItemToLoc(tool, limb.owner, force = TRUE)) // shouldn't fail but just in case
 		display_results(
 			surgeon,
 			limb.owner,
@@ -123,7 +122,6 @@
 /datum/surgery_operation/limb/undo_cavity_implant
 	name = "remove cavity implant"
 	desc = "Remove an item from a body cavity."
-	operation_flags = OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		IMPLEMENT_HAND = 1,
 		TOOL_HEMOSTAT = 2,

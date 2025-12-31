@@ -42,7 +42,7 @@
 	. = ..()
 	if(butcher_drops)
 		return
-	var/datum/species/species = species_by_id(limb_id)
+	var/datum/species/species = GLOB.species_list[limb_id]
 	if (!species || !species.skinned_type)
 		return
 	if (!islist(.))

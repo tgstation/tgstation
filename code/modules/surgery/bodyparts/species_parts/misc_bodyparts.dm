@@ -447,11 +447,11 @@
 	. = ..()
 	// Treat people with bone chests as husks for all purposes for now
 	// Ideally husking should be per-bodypart but this simplifies a lot of behaviors
-	new_owner.become_husk(REF(src))
+	new_owner.become_husk(SKELETON_TRAIT)
 
 /obj/item/bodypart/chest/skeleton/nonfunctional/on_removal(mob/living/carbon/old_owner)
 	. = ..()
-	old_owner.cure_husk(REF(src))
+	old_owner.cure_husk(SKELETON_TRAIT)
 
 /obj/item/bodypart/arm/left/skeleton/nonfunctional
 	limb_id = BODYPART_ID_BONE

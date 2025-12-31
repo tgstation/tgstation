@@ -417,9 +417,3 @@
 
 	update_body_parts()
 	return TRUE
-
-/// Returns a species typepath by limb_id if one matches
-/proc/species_by_id(limb_id)
-	for (var/datum/species/species_type as anything in subtypesof(/datum/species))
-		if (species_type::id == limb_id)
-			return species_type

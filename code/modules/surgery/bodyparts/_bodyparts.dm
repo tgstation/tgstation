@@ -319,7 +319,7 @@
 		return butcher_drops
 	if (butcher_drop_cache[type])
 		return butcher_drop_cache[type]
-	var/datum/species/species = species_by_id(limb_id)
+	var/datum/species/species = GLOB.species_list[limb_id]
 	if (!species || !species.meat || !base_meat_amount)
 		return null
 	return list(species.meat = base_meat_amount)
@@ -598,9 +598,7 @@
 	var/operation_zone = user.zone_selected
 	if (deprecise_zone(operation_zone) != body_zone)
 		operation_zone = body_zone
-	var/surgery_ret = user.perform_surgery(src, tool, LAZYACCESS(modifiers, RIGHT_CLICK), operation_zone)
-	if(surgery_ret)
-		return surgery_ret
+	return user.perform_surgery(src, tool, LAZYACCESS(modifiers, RIGHT_CLICK), operation_zone)
 
 /obj/item/bodypart/examine_more(mob/user)
 	. = ..()

@@ -109,7 +109,7 @@
 /obj/item/bodypart/head/get_butcher_drops()
 	if(butcher_drops)
 		return butcher_drops
-	var/datum/species/species = species_by_id(limb_id)
+	var/datum/species/species = GLOB.species_list[limb_id]
 	if (!species || !species.skinned_type)
 		return null
 	return list(species.skinned_type = 1)
