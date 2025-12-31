@@ -7506,6 +7506,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "bZt" = (
@@ -16264,7 +16265,6 @@
 "eru" = (
 /obj/structure/stairs/east,
 /obj/structure/railing,
-/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/stairs/medium{
 	dir = 8
 	},
@@ -18196,6 +18196,9 @@
 /obj/machinery/modular_computer/preset/cargochat/medical{
 	dir = 4
 	},
+/obj/machinery/requests_console/directional/north,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "eUT" = (
@@ -31882,6 +31885,9 @@
 /obj/machinery/plumbing/receiver{
 	dir = 1
 	},
+/obj/machinery/requests_console/auto_name/directional/south,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "izl" = (
@@ -40105,7 +40111,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 2
 	},
-/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "kHD" = (
@@ -44336,6 +44341,9 @@
 /area/station/security/warden)
 "lQc" = (
 /obj/structure/table/optable,
+/obj/machinery/requests_console/directional/west,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/morgue)
 "lQd" = (
@@ -44404,6 +44412,8 @@
 	},
 /obj/structure/railing,
 /obj/machinery/door/firedoor/border_only,
+/obj/machinery/requests_console/auto_name/directional/west,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "lRj" = (
@@ -47283,7 +47293,8 @@
 /obj/machinery/modular_computer/preset/cargochat/cargo{
 	dir = 1
 	},
-/obj/structure/sign/poster/random/directional/south,
+/obj/machinery/requests_console/auto_name/directional/south,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "mDX" = (
@@ -48493,6 +48504,14 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/air_output,
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos/upper)
+"mWf" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/machinery/requests_console/auto_name/directional/north,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/turf/open/floor/iron/textured,
+/area/station/cargo/storage)
 "mWg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -51259,6 +51278,8 @@
 /obj/machinery/firealarm/directional/east,
 /obj/structure/rack,
 /obj/item/pushbroom,
+/obj/machinery/requests_console/auto_name/directional/north,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "nKs" = (
@@ -52216,8 +52237,8 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/atmos)
 "nXw" = (
-/obj/structure/disposalpipe/trunk/multiz/down{
-	dir = 4
+/obj/structure/disposalpipe/segment{
+	dir = 6
 	},
 /turf/open/floor/plating,
 /area/station/medical/medbay/central)
@@ -53815,10 +53836,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/carbon_output,
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos/upper)
-"ovx" = (
-/obj/structure/disposalpipe/segment,
-/turf/closed/wall,
-/area/station/maintenance/port)
 "ovE" = (
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "n";
@@ -67614,6 +67631,12 @@
 /obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty,
 /turf/open/openspace,
 /area/station/commons/fitness/recreation)
+"seI" = (
+/obj/structure/disposalpipe/trunk/multiz/down{
+	dir = 1
+	},
+/turf/closed/wall,
+/area/station/medical/medbay/central)
 "seS" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -76461,7 +76484,8 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
-/obj/machinery/newscaster/directional/north,
+/obj/machinery/requests_console/auto_name/directional/north,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "uxK" = (
@@ -117999,7 +118023,7 @@ hHs
 lQc
 bvH
 bFJ
-ovx
+jNe
 uEl
 xkx
 xkx
@@ -136234,7 +136258,7 @@ gdt
 rYQ
 vLx
 cjh
-etp
+mWf
 qAx
 qAx
 qip
@@ -183534,7 +183558,7 @@ swX
 qEI
 fbC
 nXw
-pEO
+seI
 hbc
 jkd
 jkd
