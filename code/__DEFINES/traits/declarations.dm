@@ -470,8 +470,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PERCEPTUAL_TRAUMA_BYPASS "trauma_bypass"
 /// mob is immune to hallucinations
 #define TRAIT_HALLUCINATION_IMMUNE "hallucination_immune"
-/// Increases chance of getting special traumas, makes them harder to cure
-#define TRAIT_SPECIAL_TRAUMA_BOOST "special_trauma_boost"
 
 //---- Brain trauma resists
 /// Unable to gain any brain trauma whatsoever
@@ -977,6 +975,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DUCT_TAPE_UNREPAIRABLE "duct_tape_unrepairable"
 /// An item is ALWAYS considered baseline reachable and will pipe into CanBeReached().
 #define TRAIT_SKIP_BASIC_REACH_CHECK "skip_basic_reach_check"
+/// Increases chance of this brain getting special traumas, makes them harder to cure
+#define TRAIT_SPECIAL_TRAUMA_BOOST "special_trauma_boost"
 
 //---- Heretic Traits
 /// Hides the heretic overlay that outs them as the heretic

@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "dimensional anomaly transformed airlocks save their cycling id"

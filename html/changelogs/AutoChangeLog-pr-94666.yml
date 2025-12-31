@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Meat toilets will now contain all of the belongings they were wearing prior to transformation, which can be retrieved if the cistern is open and the lid is closed."
