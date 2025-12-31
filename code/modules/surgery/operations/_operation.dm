@@ -765,7 +765,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(drunkness >= BALLMER_PEAK_LOW_END && drunkness <= BALLMER_PEAK_HIGH_END)
 		basemod *= 0.8
 	else
-		basemod *= round((drunkness ** 1.2) / 20, 0.1)
+		basemod *= 1 + round((drunkness ** 1.5) / 90, 0.1)
 	return basemod
 
 /// Gets the surgery speed modifier for a given mob, based off what sort of table/bed/whatever is on their turf.
