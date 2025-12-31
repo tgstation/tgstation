@@ -107,9 +107,7 @@
 
 /datum/reagent/eigenstate/overdose_process(mob/living/living_mob) //Overdose, makes you teleport randomly
 	. = ..()
-	do_sparks(5, FALSE, living_mob)
-	do_teleport(living_mob, get_turf(living_mob), 10, asoundin = 'sound/effects/phasein.ogg')
-	do_sparks(5, FALSE, living_mob)
+	do_teleport(living_mob, get_turf(living_mob), 10, asoundin = 'sound/effects/phasein.ogg', asoundout = 'sound/effects/phaseout.ogg')
 
 //FOR ADDICTION-LIKE EFFECTS, SEE datum/status_effect/eigenstasium
 
