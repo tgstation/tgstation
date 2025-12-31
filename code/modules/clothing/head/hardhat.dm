@@ -246,7 +246,7 @@
 	light_color = "#fff2bf"
 	worn_y_offset = 1
 	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
-	clothing_traits = list()
+	clothing_traits = null
 	pickup_sound = null
 	drop_sound = null
 	equip_sound = null
@@ -312,6 +312,6 @@
 	hair_mask = ""
 	armor_type = /datum/armor/none
 	light_range = 1 //luminosity when on
-	clothing_traits = list()
+	clothing_traits = null
 
 	dog_fashion = /datum/dog_fashion/head/reindeer
