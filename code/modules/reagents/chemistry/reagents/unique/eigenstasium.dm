@@ -73,7 +73,7 @@
 	to_chat(living_mob, span_userdanger("You feel like part of yourself has split off!"))
 
 	//Teleports you home if it's pure enough
-	if(location_created && data["ingested"])
+	if(creation_purity > 0.75 && location_created && data["ingested"])
 		do_teleport(living_mob, location_created, 3, asoundin = 'sound/effects/phasein.ogg')
 
 	return ..()
