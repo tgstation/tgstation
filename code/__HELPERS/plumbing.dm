@@ -18,4 +18,5 @@
 
 		//check for overlapping machines
 		for(var/datum/component/plumbing/plumber as anything in other.GetComponents(/datum/component/plumbing))
-			return plumber
+			if(!ducting_layer || (plumber.ducting_layer & ducting_layer))
+				return plumber

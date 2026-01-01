@@ -26,7 +26,7 @@
 				message = "duct on [message]"
 			else
 				message = "machine on [message]"
-			log_mapping("Overlapping [message] detected at [AREACOORD(src)]")
+			log_mapping("Overlapping plumbing [message] detected at [AREACOORD(src)]")
 			return INITIALIZE_HINT_QDEL
 
 	. = ..()
