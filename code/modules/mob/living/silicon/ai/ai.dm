@@ -53,7 +53,10 @@
 		INVOKE_ASYNC(src, PROC_REF(apply_pref_hologram_display), client)
 		set_gender(client)
 
-	INVOKE_ASYNC(src, PROC_REF(set_core_display_icon))
+		var/preferred_icon = client.prefs.read_preference(/datum/preference/choiced/ai_core_display)
+		set_core_display_icon(preferred_icon, client)
+	else
+		set_core_display_icon(null, null)
 
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -170,14 +173,25 @@
 /mob/living/silicon/ai/ignite_mob(silent)
 	return FALSE
 
+/mob/living/silicon/ai
+	var/selected_display_name
+
 /mob/living/silicon/ai/proc/set_core_display_icon(input, client/C)
-	if(client && !C)
-		C = client
-	if(!input && !C?.prefs?.read_preference(/datum/preference/choiced/ai_core_display))
-		icon_state = initial(icon_state)
-	else
-		var/preferred_icon = input ? input : C.prefs.read_preference(/datum/preference/choiced/ai_core_display)
-		icon_state = resolve_ai_icon(preferred_icon)
+	var/preferred_choice
+	if(input)
+		preferred_choice = input
+	else if(C && C.prefs)
+		preferred_choice = C.prefs.read_preference(/datum/preference/choiced/ai_core_display)
+	else if(client && client.prefs)
+		preferred_choice = client.prefs.read_preference(/datum/preference/choiced/ai_core_display)
+
+	display_icon_override = resolve_ai_icon(preferred_choice)
+
+	update_appearance()
+
+	if(istype(loc, /obj/item/aicard))
+		var/obj/item/aicard/card = loc
+		card.update_appearance()
 
 /// Apply an AI's hologram preference
 /mob/living/silicon/ai/proc/apply_pref_hologram_display(client/player_client)
@@ -220,6 +234,10 @@
 	if(!core_display_picker)
 		core_display_picker = new(src)
 	core_display_picker.ui_interact(src)
+
+	if(istype(loc, /obj/item/aicard))
+		var/obj/item/aicard/card = loc
+		card.update_appearance()
 
 /mob/living/silicon/ai/verb/pick_status_display()
 	set category = "AI Commands"
@@ -734,7 +752,7 @@
 	remove = lit_cameras - visible
 
 	for (var/obj/machinery/camera/C in remove)
-		lit_cameras -= C //Removed from list before turning off the light so that it doesn't check the AI looking away.
+		lit_cameras -= C //Removed from list before turning off the light so that it doesn't check the AI looking away.)
 		C.Togglelight(0)
 	for (var/obj/machinery/camera/C in add)
 		C.Togglelight(1)
@@ -913,10 +931,11 @@
 
 /mob/living/silicon/ai/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
-	if(!.) //successfully ressuscitated from death
+	if(!.)
 		return
 
-	set_core_display_icon(display_icon_override)
+	update_appearance()
+
 	set_eyeobj_visible(TRUE)
 
 /mob/living/silicon/ai/proc/malfhacked(obj/machinery/power/apc/apc)
@@ -1198,6 +1217,68 @@
 			///which in this case would be somewhere else, so we drop their MMI at the core instead
 			mind?.transfer_to(mmi_gone.brainmob)
 			qdel(src)
+
+
+/mob/living/silicon/ai/update_icon_state()
+	icon_state = "ai-core"
+	return ..()
+
+/mob/living/silicon/ai/update_overlays()
+	. = ..()
+
+	var/screen_state
+	var/lights_state // Lights
+
+	if(!client && !mind)
+		screen_state = "ai-empty"
+
+		lights_state = "lights_active"
+
+		set_light(0.3, 0.3, LIGHT_COLOR_FAINT_CYAN)
+
+	else if(stat == DEAD)
+		var/base = display_icon_override || "ai"
+		var/dead_state = "[base]_dead"
+
+		if(icon_exists(icon, dead_state))
+			screen_state = dead_state
+		else
+			screen_state = "ai_dead"
+
+		lights_state = "lights_dead"
+
+		set_light(0.2, 0.2, LIGHT_COLOR_FAINT_CYAN)
+
+	else
+		screen_state = display_icon_override || "ai"
+
+		lights_state = "lights_active"
+
+		set_light(0.3, 0.3, LIGHT_COLOR_CYAN)
+
+
+	// Lights
+	var/mutable_appearance/lights_overlay = mutable_appearance(icon, lights_state)
+	lights_overlay.layer = FLOAT_LAYER
+	lights_overlay.appearance_flags = RESET_COLOR | KEEP_APART
+	. += lights_overlay
+
+	. += emissive_appearance(icon, lights_state, src)
+
+
+	// Display
+	var/mutable_appearance/screen_overlay = mutable_appearance(icon, screen_state)
+	screen_overlay.layer = FLOAT_LAYER + 0.1
+	screen_overlay.appearance_flags = RESET_COLOR | KEEP_APART
+	. += screen_overlay
+
+	. += emissive_appearance(icon, screen_state, src)//AI glow!
+
+
+#undef HOLOGRAM_CHOICE_CHARACTER
+#undef CHARACTER_TYPE_SELF
+#undef CHARACTER_TYPE_CREWMEMBER
+
 
 #undef HOLOGRAM_CHOICE_CHARACTER
 #undef CHARACTER_TYPE_SELF
