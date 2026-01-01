@@ -1,0 +1,4 @@
+author: "SpaceSmithers"
+delete-after: True
+changes:
+  - rscadd: "Card readers can now be printed at cargo techfabs"
