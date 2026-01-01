@@ -329,8 +329,8 @@
 
 /**
  * Removes our brain from the skull which results in either gibs or an damaged brain on the floor
- * Arguments
  *
+ * Arguments
  * * severity - the scale of damage to apply to the brain
 */
 /obj/item/organ/cyberimp/brain/connector/proc/remove_brain(severity = 1)
