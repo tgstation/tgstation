@@ -331,7 +331,7 @@
 		var/datum/overlap = ducting_layer_check(open_turf, duct_layer)
 		if(!isnull(overlap))
 			if(user)
-				open_turf.balloon_alert(user, "Overlapping [istype(overlap, /obj/machinery/duct) ? "duct" : "machine"] detected!")
+				open_turf.balloon_alert(user, "overlapping [istype(overlap, /obj/machinery/duct) ? "duct" : "machine"] detected!")
 			return ITEM_INTERACT_FAILURE
 
 		new /obj/machinery/duct(open_turf, duct_color, duct_layer)

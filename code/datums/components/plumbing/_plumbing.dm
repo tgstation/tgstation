@@ -38,7 +38,7 @@
 
 	if(parent_movable.anchored)
 		if(PERFORM_ALL_TESTS(maptest_log_mapping))
-			var/datum/overlap = ducting_layer_check(parent_movable, ducting_layer)
+			var/datum/overlap = ducting_layer_check(parent_movable)
 			if(!isnull(overlap))
 				var/message = GLOB.plumbing_layer_names["[ducting_layer]"]
 				if(istype(overlap, /obj/machinery/duct))
@@ -160,7 +160,7 @@
 	SIGNAL_HANDLER
 
 	if(!active())
-		var/datum/overlap = ducting_layer_check(parent_obj, ducting_layer)
+		var/datum/overlap = ducting_layer_check(parent_obj)
 		if(!isnull(overlap))
 			parent_obj.balloon_alert(user, "overlapping [istype(overlap, /obj/machinery/duct) ? "duct" : "machine"] detected!")
 			return ITEM_INTERACT_FAILURE

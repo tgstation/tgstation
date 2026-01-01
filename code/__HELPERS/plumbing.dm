@@ -1,9 +1,9 @@
 /**
- * Finds a duct or machinery located at the same layer in the target loc
+ * Finds a duct or plumbing machinery located at the destination
  *
  * Arguments
  * * atom/destination - the target loc we are checking for
- * * ducting_layer - the ducting layer the machinery is occupying
+ * * ducting_layer - the ducting layer to check for. Pass 0 to ignore all layer checks
 */
 /proc/ducting_layer_check(atom/destination, ducting_layer)
 	. = null
@@ -13,10 +13,9 @@
 
 		//check for overlapping ducts
 		var/obj/machinery/duct/pipe = other
-		if(istype(pipe) && (pipe.duct_layer & ducting_layer))
+		if(istype(pipe) && (!ducting_layer || (pipe.duct_layer & ducting_layer)))
 			return pipe
 
 		//check for overlapping machines
 		for(var/datum/component/plumbing/plumber as anything in other.GetComponents(/datum/component/plumbing))
-			if(plumber.ducting_layer & ducting_layer)
-				return plumber
+			return plumber
