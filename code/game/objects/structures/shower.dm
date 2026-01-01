@@ -96,6 +96,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 	find_and_mount_on_atom()
 
+/obj/machinery/shower/get_turfs_to_mount_on()
+	return list(get_step(src, dir))
+
 /obj/machinery/shower/examine(mob/user)
 	. = ..()
 	. += span_notice("It looks like the thermostat has an adjustment screw.")

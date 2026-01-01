@@ -17,6 +17,6 @@
 			return pipe
 
 		//check for overlapping machines that are not wallmounts cause they are allowed on the same turf
-		if(!HAS_TRAIT(target, TRAIT_WALLMOUNTED))
+		if(!HAS_TRAIT(destination, TRAIT_WALLMOUNTED))
 			for(var/datum/component/plumbing/plumber as anything in other.GetComponents(/datum/component/plumbing))
 				return plumber
