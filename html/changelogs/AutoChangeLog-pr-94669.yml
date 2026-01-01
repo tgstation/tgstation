@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Killing yourself with a Gullion fish in an oxygenated environment will correctly turn you into a statue"
+  - bugfix: "Killing yourself with a Gullion fish will kill you rather than leaving you as a living statue that can't do anything and forcing you to Ghost manually"

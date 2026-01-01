@@ -209,6 +209,7 @@
 
 /datum/chemical_reaction/food/cakebatter/vegan
 	required_reagents = list(/datum/reagent/consumable/soymilk = 15, /datum/reagent/consumable/flour = 15, /datum/reagent/consumable/sugar = 5)
+	resulting_food_path = /obj/item/food/cakebatter/vegan
 
 /datum/chemical_reaction/food/pancakebatter
 	results = list(/datum/reagent/consumable/pancakebatter = 15)
