@@ -617,7 +617,7 @@
 		mail_recipients_for_input += avoid_assoc_duplicate_keys(person.name, used_names)
 
 	var/recipient = tgui_input_list(user, "Choose a recipient", "Present Counterfeiting", mail_recipients_for_input)
-	if(isnull(recipient))
+	if(isnull(recipient) || QDELETED(src))
 		return FALSE
 	if(!(src in user.contents))
 		return FALSE
