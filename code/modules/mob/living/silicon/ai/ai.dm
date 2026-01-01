@@ -44,7 +44,7 @@
 
 	job = "AI"
 
-	create_modularInterface()
+	INVOKE_ASYNC(src, PROC_REF(create_modularInterface))
 
 	// /mob/living/silicon/ai/apply_prefs_job() uses these to set these procs at mapload
 	// this is used when a person is being inserted into an AI core during a round
@@ -1104,10 +1104,10 @@
 
 	switchCamera(chosen_camera)
 
-/mob/living/silicon/on_handsblocked_start()
+/mob/living/silicon/ai/on_handsblocked_start()
 	return // AIs have no hands
 
-/mob/living/silicon/on_handsblocked_end()
+/mob/living/silicon/ai/on_handsblocked_end()
 	return // AIs have no hands
 
 /mob/living/silicon/ai/get_exp_list(minutes)
