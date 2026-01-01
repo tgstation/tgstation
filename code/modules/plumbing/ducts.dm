@@ -19,7 +19,7 @@
 		duct_layer = layer_of_duct
 
 	if(PERFORM_ALL_TESTS(maptest_log_mapping))
-		var/datum/overlap = ducting_layer_check(src, duct_layer, TRUE)
+		var/datum/overlap = ducting_layer_check(src, duct_layer)
 		if(!isnull(overlap))
 			var/message = GLOB.plumbing_layer_names["[duct_layer]"]
 			if(istype(overlap, /obj/machinery/duct))
