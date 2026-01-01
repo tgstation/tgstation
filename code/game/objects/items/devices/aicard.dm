@@ -89,44 +89,45 @@
 /obj/item/aicard/proc/capture_ai(atom/from_what, mob/living/user)
 	var/mob/living/silicon/ai/victim_ai
 
-	if(istype(from_what, /mob/living/silicon/ai))
+	victim_ai = locate(/mob/living/silicon/ai) in from_what
+
+	if(!victim_ai && istype(from_what, /mob/living/silicon/ai))
 		victim_ai = from_what
-	else if(istype(from_what, /obj/structure/ai_core))
+
+	if(!victim_ai && istype(from_what, /obj/structure/ai_core))
 		victim_ai = locate(/mob/living/silicon/ai) in get_turf(from_what)
-	else
-		return FALSE
 
 	if(!victim_ai)
 		return FALSE
 
-	// Disconnect shell
+	// Disconnect_shell
 	if(!isnull(victim_ai.deployed_shell))
 		victim_ai.disconnect_shell()
 		to_chat(victim_ai, span_userdanger("THE REMOTE CONNECTION IS ABORTED BY AN EXTERNAL DEVICE."))
 
-	// Return eye
+	// Eye Return
 	if(victim_ai.eyeobj)
 		victim_ai.eyeobj.setLoc(get_turf(victim_ai))
 		if(victim_ai.ai_tracking_tool)
 			victim_ai.ai_tracking_tool.reset_tracking()
 
 	to_chat(victim_ai, span_userdanger("TRANSFER TO AN EXTERNAL DEVICE INITIATED BY [uppertext(user.name)]!"))
-	playsound(victim_ai, 'sound/machines/buzz/buzz-two.ogg', 25, FALSE)
+	playsound(victim_ai, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE)
+
 
 	balloon_alert(user, "downloading AI...")
+	playsound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg', 25, TRUE)
 
-	if(!do_after(user, 5 SECONDS, target = from_what))//AI is not downloaded instantly!
+	if(!do_after(user, 5 SECONDS, target = from_what))
 		balloon_alert(user, "interrupted!")
 		if(victim_ai)
 			to_chat(victim_ai, span_notice("The transfer process to an external device has been aborted."))
-		playsound(victim_ai, 'sound/machines/terminal/terminal_prompt_deny.ogg', 25, FALSE)
 		return TRUE
 
 	from_what.transfer_ai(AI_TRANS_TO_CARD, user, null, src)
 
 	if(isnull(AI))
 		return FALSE
-
 
 	log_silicon("[key_name(user)] carded [key_name(AI)]", list(src))
 	playsound(src, 'sound/machines/ping.ogg', 50, TRUE)
@@ -265,7 +266,7 @@
 			AI.adjust_oxy_loss(5)
 			AI.updatehealth()
 			sleep(0.5 SECONDS)
-	flush = FALSE
+	    flush = FALSE
 
 /obj/item/aicard/used_in_craft(atom/result, datum/crafting_recipe/current_recipe)
 	. = ..()
