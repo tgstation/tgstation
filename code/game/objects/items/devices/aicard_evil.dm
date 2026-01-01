@@ -10,15 +10,12 @@
 
 /obj/item/aicard/syndie/update_icon_state()
 	if(AI)
-		// Если ИИ мертв -> syndicard-404, если жив -> syndicard-full
 		icon_state = "[base_icon_state][AI.stat == DEAD ? "-404" : "-full"]"
 	else
 		icon_state = base_icon_state
-	// ВАЖНО: Мы НЕ вызываем ..(), потому что родительский aicard сбросит icon_state обратно!
 	return
 
 /obj/item/aicard/syndie/update_overlays()
-	// НЕ вызываем ..(), чтобы не накладывать лицо ИИ
 	. = list()
 
 	if(!AI)
