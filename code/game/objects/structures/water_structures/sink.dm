@@ -55,9 +55,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 
 	find_and_mount_on_atom()
 
-/obj/structure/sink/get_turfs_to_mount_on()
-	return list(get_step(src, dir))
-
 /obj/structure/sink/examine(mob/user)
 	. = ..()
 	if(has_water_reclaimer)
