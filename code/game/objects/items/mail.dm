@@ -594,7 +594,7 @@
 
 /obj/item/storage/mail_counterfeit_device/xmas/attack_self(mob/user, modifiers)
 	var/mail_type = tgui_input_list(user, "Select present size (Purely visual, does not affect storage or actual size)", "Present Counterfeiting", list("Tiny", "Small", "Normal", "Bulky", "Huge"))
-	if(isnull(mail_type))
+	if(isnull(mail_type) || QDELETED(src))
 		return FALSE
 	if(loc != user)
 		return FALSE
