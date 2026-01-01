@@ -51,10 +51,8 @@
 	if(client)
 		INVOKE_ASYNC(src, PROC_REF(apply_pref_name), /datum/preference/name/ai, client)
 		INVOKE_ASYNC(src, PROC_REF(apply_pref_hologram_display), client)
-		set_gender(client)
-
-		var/preferred_icon = client.prefs.read_preference(/datum/preference/choiced/ai_core_display)
-		set_core_display_icon(preferred_icon, client)
+		INVOKE_ASYNC(src, PROC_REF(set_gender), client)
+		INVOKE_ASYNC(src, PROC_REF(set_core_display_icon), null, client)
 	else
 		set_core_display_icon(null, null)
 

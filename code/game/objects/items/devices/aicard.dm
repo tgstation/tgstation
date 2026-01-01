@@ -56,87 +56,29 @@
 			return ITEM_INTERACT_SUCCESS
 	return NONE
 
-/// Tries to upload the AI we have captured to the atom clicked
-/obj/item/aicard/proc/upload_ai(atom/to_what, mob/living/user)
-	if(!istype(to_what, /obj/structure/ai_core))
-		return FALSE
-
-	var/mob/living/silicon/ai/old_ai = AI
-
-	balloon_alert(user, "uploading AI...")
-	playsound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg', 25, TRUE)
-
-	if(!do_after(user, 5 SECONDS, target = to_what))
-		balloon_alert(user, "interrupted!")
-		return FALSE
-
-	to_what.transfer_ai(AI_TRANS_FROM_CARD, user, AI, src)
-
-	if(!isnull(AI))
-		return FALSE
-
-	log_combat(user, old_ai, "uploaded", src, "to [to_what].")
-	playsound(src, 'sound/machines/ping.ogg', 50, TRUE)
-	balloon_alert(user, "upload complete")
-
-	update_appearance()
-	old_ai.cancel_camera()
-	UnregisterSignal(old_ai, COMSIG_MOB_STATCHANGE)
-	UnregisterSignal(old_ai, COMSIG_ATOM_UPDATE_ICON)
-	return TRUE
-
 /// Tries to get an AI from the atom clicked
 /obj/item/aicard/proc/capture_ai(atom/from_what, mob/living/user)
-	var/mob/living/silicon/ai/victim_ai
-
-	victim_ai = locate(/mob/living/silicon/ai) in from_what
-
-	if(!victim_ai && istype(from_what, /mob/living/silicon/ai))
-		victim_ai = from_what
-
-	if(!victim_ai && istype(from_what, /obj/structure/ai_core))
-		victim_ai = locate(/mob/living/silicon/ai) in get_turf(from_what)
-
-	if(!victim_ai)
-		return FALSE
-
-	// Disconnect_shell
-	if(!isnull(victim_ai.deployed_shell))
-		victim_ai.disconnect_shell()
-		to_chat(victim_ai, span_userdanger("THE REMOTE CONNECTION IS ABORTED BY AN EXTERNAL DEVICE."))
-
-	// Eye Return
-	if(victim_ai.eyeobj)
-		victim_ai.eyeobj.setLoc(get_turf(victim_ai))
-		if(victim_ai.ai_tracking_tool)
-			victim_ai.ai_tracking_tool.reset_tracking()
-
-	to_chat(victim_ai, span_userdanger("TRANSFER TO AN EXTERNAL DEVICE INITIATED BY [uppertext(user.name)]!"))
-	playsound(victim_ai, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE)
-
-
-	balloon_alert(user, "downloading AI...")
-	playsound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg', 25, TRUE)
-
-	if(!do_after(user, 5 SECONDS, target = from_what))
-		balloon_alert(user, "interrupted!")
-		if(victim_ai)
-			to_chat(victim_ai, span_notice("The transfer process to an external device has been aborted."))
-		return TRUE
-
 	from_what.transfer_ai(AI_TRANS_TO_CARD, user, null, src)
-
 	if(isnull(AI))
 		return FALSE
 
 	log_silicon("[key_name(user)] carded [key_name(AI)]", list(src))
-	playsound(src, 'sound/machines/ping.ogg', 50, TRUE)
-	balloon_alert(user, "download complete")
-
 	update_appearance()
 	AI.cancel_camera()
 	RegisterSignal(AI, COMSIG_MOB_STATCHANGE, PROC_REF(on_ai_stat_change))
-	RegisterSignal(AI, COMSIG_ATOM_UPDATE_ICON, PROC_REF(on_ai_icon_update))
+	return TRUE
+
+/// Tries to upload the AI we have captured to the atom clicked
+/obj/item/aicard/proc/upload_ai(atom/to_what, mob/living/user)
+	var/mob/living/silicon/ai/old_ai = AI
+	to_what.transfer_ai(AI_TRANS_FROM_CARD, user, AI, src)
+	if(!isnull(AI))
+		return FALSE
+
+	log_combat(user, old_ai, "uploaded", src, "to [to_what].")
+	update_appearance()
+	old_ai.cancel_camera()
+	UnregisterSignal(old_ai, COMSIG_MOB_STATCHANGE)
 	return TRUE
 
 /obj/item/aicard/proc/on_ai_stat_change(datum/source, new_stat, old_stat)
@@ -266,7 +208,7 @@
 			AI.adjust_oxy_loss(5)
 			AI.updatehealth()
 			sleep(0.5 SECONDS)
-	    flush = FALSE
+		flush = FALSE
 
 /obj/item/aicard/used_in_craft(atom/result, datum/crafting_recipe/current_recipe)
 	. = ..()
@@ -285,6 +227,7 @@
 	return ..()
 
 /obj/item/aicard/aitater/update_overlays()
+	..()
 	. = list()
 
 	if(!AI)
@@ -304,6 +247,7 @@
 	return ..()
 
 /obj/item/aicard/aispook/update_overlays()
+	..()
 	. = list()
 
 	if(!AI)

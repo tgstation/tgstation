@@ -9,13 +9,14 @@
 	force = 7
 
 /obj/item/aicard/syndie/update_icon_state()
+	. = ..()
 	if(AI)
 		icon_state = "[base_icon_state][AI.stat == DEAD ? "-404" : "-full"]"
 	else
 		icon_state = base_icon_state
-	return
 
 /obj/item/aicard/syndie/update_overlays()
+	. = ..()
 	. = list()
 
 	if(!AI)
