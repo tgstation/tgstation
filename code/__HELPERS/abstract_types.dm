@@ -25,12 +25,12 @@
 	var/list/seen_abstract_parents = list()
 
 	for (var/datum/sometype as anything in subtypesof(root))
-		if (sometype in abstracts)
+		if (abstracts[sometype)
 			continue
 
 		var/datum/parenttype = sometype.parent_type
 		while (parenttype && parenttype != root)
-			if (seen_abstract_parents[parenttype] || (parenttype in abstracts))
+			if (seen_abstract_parents[parenttype] || (abstracts[parenttype]))
 				seen_abstract_parents[parenttype] = TRUE
 				to_remove += sometype
 				break
