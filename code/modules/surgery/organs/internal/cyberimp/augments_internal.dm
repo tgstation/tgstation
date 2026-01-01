@@ -324,22 +324,26 @@
 			skillchip.forceMove(owner.drop_location())
 			playsound(owner, 'sound/machines/terminal/terminal_eject.ogg', 25, TRUE)
 		else
-			remove_brain()
+			remove_brain(severity)
 	addtimer(CALLBACK(src, PROC_REF(reboot)), 90 / severity)
 
-/obj/item/organ/cyberimp/brain/connector/proc/remove_brain(obj/item/organ/brain/chippy_brain, severity = 1)
+/**
+ * Removes our brain from the skull which results in either gibs or an damaged brain on the floor
+ * Arguments
+ *
+ * * severity - the scale of damage to apply to the brain
+*/
+/obj/item/organ/cyberimp/brain/connector/proc/remove_brain(severity = 1)
 	playsound(owner, 'sound/effects/meatslap.ogg', 25, TRUE)
-	if(!chippy_brain)
-		return
-	chippy_brain.apply_organ_damage(20 * severity)
-	chippy_brain.maxHealth -= 15 * severity // a bit of your brain fell off. again.
-	if(chippy_brain.damage >= chippy_brain.maxHealth)
-		chippy_brain.forceMove(owner.drop_location())
+	apply_organ_damage(20 * severity)
+	maxHealth -= 15 * severity // a bit of your brain fell off. again.
+	if(damage >= maxHealth)
+		forceMove(owner.drop_location())
 		owner.visible_message(span_userdanger("[owner]'s brain falls off the back of [owner.p_their()] head!!!"), span_boldwarning("You feel like you're missing something."))
-		return chippy_brain
+		return src
 
 	var/gib_type = /obj/effect/decal/cleanable/blood/gibs/up
-	if (IS_ROBOTIC_ORGAN(chippy_brain))
+	if (IS_ROBOTIC_ORGAN(src))
 		gib_type = /obj/effect/decal/cleanable/blood/gibs/robot_debris/up
 	new gib_type(get_turf(owner), owner.get_static_viruses(), owner.get_blood_dna_list())
 	return FALSE
