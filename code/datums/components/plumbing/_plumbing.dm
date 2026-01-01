@@ -150,7 +150,7 @@
 		for(var/obj/machinery/duct/pipe as anything in net.ducts)
 			if(pipe.neighbours[parent])
 				pipe.neighbours -= parent
-				pipe.update_appearance()
+				pipe.update_appearance(UPDATE_ICON_STATE)
 
 		//remove ourself from this network and delete it if emtpy
 		if(net.remove_plumber(src))

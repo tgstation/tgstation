@@ -1,13 +1,14 @@
 /**
- * Finds a duct or machinery located at the same layer as the the param obj
+ * Finds a duct or machinery located at the same layer in the target loc
  *
  * Arguments
- * * obj/machinery/parent_obj - the machinery we are checking for
+ * * atom/destination - the target loc we are checking for
  * * ducting_layer - the ducting layer the machinery is occupying
 */
-/proc/ducting_layer_check(obj/machinery/parent_obj, ducting_layer)
-	for(var/obj/machinery/other in parent_obj.loc)
-		if(other == parent_obj)
+/proc/ducting_layer_check(atom/destination, ducting_layer)
+	. = null
+	for(var/obj/machinery/other in get_turf(destination))
+		if(other == destination)
 			continue
 
 		//check for overlapping ducts
