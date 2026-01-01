@@ -25,7 +25,7 @@
 	var/list/seen_abstract_parents = list()
 
 	for (var/datum/sometype as anything in subtypesof(root))
-		if (abstracts[sometype)
+		if (abstracts[sometype])
 			continue
 
 		var/datum/parenttype = sometype.parent_type
