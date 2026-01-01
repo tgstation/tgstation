@@ -601,7 +601,7 @@
 	mail_type = LOWER_TEXT(mail_type)
 
 	var/mail_armed = tgui_alert(user, "Arm it?", "Present Counterfeiting", list("Yes", "No")) == "Yes"
-	if(isnull(mail_armed))
+	if(isnull(mail_armed) || QDELETED(src))
 		return FALSE
 	if(loc != user)
 		return FALSE
