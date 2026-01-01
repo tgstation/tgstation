@@ -53,6 +53,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		reagents.add_reagent(dispensedreagent, capacity)
 	AddComponent(/datum/component/plumbing/simple_demand/extended)
 
+	find_and_mount_on_atom()
+
 /obj/structure/sink/examine(mob/user)
 	. = ..()
 	if(has_water_reclaimer)
