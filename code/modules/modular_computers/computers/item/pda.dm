@@ -251,9 +251,9 @@
 	if(theme_app)
 		var/list/unlocked_themes = owner_client.get_award_status(/datum/award/score/progress/pda_themes)
 		for(var/theme_id in unlocked_themes)
-			var/theme_name = GLOB.pda_id_to_theme[theme_id]
+			var/theme_name = GLOB.pda_id_to_name[theme_id]
 			if(theme_name)
-				theme_app.imported_themes |= theme_name
+				LAZYOR(theme_app.imported_themes, theme_name)
 
 	var/new_theme = owner_client.prefs.read_preference(/datum/preference/choiced/pda_theme)
 	if(new_theme)

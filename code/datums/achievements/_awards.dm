@@ -272,9 +272,10 @@
 		holder.data[type] = entries
 	entries |= value
 
-	if(progress_string)
-		to_chat(user, get_progress_string(progress_string))
+	if(!progress_string)
+		return
 
+	to_chat(user, get_progress_string(progress_string))
 	var/sound/sound_pref = LAZYACCESS(GLOB.achievement_sounds, user.client.prefs.read_preference(/datum/preference/choiced/sound_achievement))
 	if(!sound_pref)
 		return
@@ -299,10 +300,11 @@
 	holder.original_cached_data[type] = holder.data[type] = results
 	if(!length(results))
 		return results
-	///This list will be populated on validate_entries()
-	var/list/validated_results = list()
+	///This list will be checked on validate_entries() to see if the entries are valid.
+	var/list/validated_results = unique_list(entries)
 	if(!validate_entries(results, validated_results))
 		holder.data[type] = validated_results
+		stack_trace("aaaaaa")
 	return validated_results
 
 ///Along with the changed rows for the main table, this also populates changed_entries with the entries list
@@ -352,7 +354,6 @@
  * ensuring that the original data and the new data aren't the same, allowing the new data will be saved.
  */
 /datum/award/score/progress/proc/validate_entries(list/entries, list/validated_entries)
-	validated_entries = unique_list(entries)
 	return length(validated_entries) == length(entries)
 
 ////Returns a list of data that we can use to make an index of contents that progress this award/score.
