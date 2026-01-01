@@ -94,8 +94,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-	find_and_mount_on_atom()
-
 /obj/machinery/shower/examine(mob/user)
 	. = ..()
 	. += span_notice("It looks like the thermostat has an adjustment screw.")
