@@ -130,4 +130,3 @@
 		if(!valid_themes[id])
 			validated_entries -= id
 			. = FALSE
-			stack_trace("aaaa [id]")

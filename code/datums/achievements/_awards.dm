@@ -301,10 +301,9 @@
 	if(!length(results))
 		return results
 	///This list will be checked on validate_entries() to see if the entries are valid.
-	var/list/validated_results = unique_list(entries)
+	var/list/validated_results = unique_list(results)
 	if(!validate_entries(results, validated_results))
 		holder.data[type] = validated_results
-		stack_trace("aaaaaa")
 	return validated_results
 
 ///Along with the changed rows for the main table, this also populates changed_entries with the entries list
