@@ -1,0 +1,26 @@
+2026-01-01:
+  Jacquerel:
+  - bugfix: AI shell deployment verb no longer requires you to select yourself from
+      a list first
+  - bugfix: Meat toilets will now contain all of the belongings they were wearing
+      prior to transformation, which can be retrieved if the cistern is open and the
+      lid is closed.
+  LT3:
+  - qol: Keybindings page now tells you how to clear a keybind
+  SmArtKar:
+  - rscadd: You can now butcher individual limbs and people by right clicking with
+      a knife on combat mode. Doing so requires cut and open skin, as well as sawed
+      bone and no organs inside the limb.
+  - rscadd: Gibbers now source their meat from the victim's limbs and not species
+  - rscadd: Meat spikes in the freezer now allow their victims to be operated on
+  - balance: Butcher's knives are now a bit faster.
+  - bugfix: Fixed incorrect leg number calculations for disabled limbs.
+  - bugfix: Skeleton limbs can no longer get scars.
+  - refactor: Refactored gibbers, butchering and meat spikes.
+  - bugfix: Fixed population lock text in uplinks
+  - qol: Right-clicking closets with an item now opens/closes them
+  SyncIt21:
+  - qol: added examines & screentips for ducts & stack of ducts
+  - qol: you can wrench a stack of ducts on the ground to create a pipe
+  - refactor: plumbing code has been improved overall. Report bugs on github
+  - bugfix: dimensional anomaly transformed airlocks save their cycling id
