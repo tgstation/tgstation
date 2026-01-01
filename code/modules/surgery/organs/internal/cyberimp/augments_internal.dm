@@ -324,7 +324,7 @@
 			skillchip.forceMove(owner.drop_location())
 			playsound(owner, 'sound/machines/terminal/terminal_eject.ogg', 25, TRUE)
 		else
-			remove_brain(chippy_brain, severity)
+			remove_brain(chippy_brain, severity == EMP_LIGHT ? 1 : 2)
 	addtimer(CALLBACK(src, PROC_REF(reboot)), 90 / severity)
 
 /obj/item/organ/cyberimp/brain/connector/proc/remove_brain(obj/item/organ/brain/chippy_brain, severity = 1)
