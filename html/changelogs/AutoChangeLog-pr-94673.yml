@@ -1,0 +1,6 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes a bug where the quirk menu does not update when adding/removing quirks"
+  - bugfix: "fixes some fontawesome ui icons displaying as unicode literals instead of the actual icons"
+  - bugfix: "nearsightedness and other quirk prefs that use iconned dropdowns will no longer be cut off"
