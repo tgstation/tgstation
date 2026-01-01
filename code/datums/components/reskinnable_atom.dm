@@ -194,7 +194,7 @@
 
 /datum/component/reskinable_item/proc/get_skins_by_name()
 	var/list/reskin_options = list()
-	for(var/datum/atom_skin/reskin_option as anything in valid_subtypesof(base_reskin_type) - (blacklisted_subtypes || list()))
+	for(var/datum/atom_skin/reskin_option as anything in valid_subtypesof(base_reskin_type) - blacklisted_subtypes)
 		reskin_options[reskin_option::preview_name] = reskin_option
 
 	return reskin_options
