@@ -8,8 +8,6 @@
 	item_flags = null
 	force = 7
 
-// --- ИСПРАВЛЕНИЕ: Убран вызов ..() чтобы родитель не сбрасывал иконку ---
-
 /obj/item/aicard/syndie/update_icon_state()
 	if(AI)
 		// Если ИИ мертв -> syndicard-404, если жив -> syndicard-full
@@ -26,7 +24,6 @@
 	if(!AI)
 		return
 
-	// Добавляем только индикаторы связи и их свечение
 	if(AI.control_disabled)
 		var/indicator_state = "[base_icon_state]-off"
 		. += mutable_appearance(icon, indicator_state)
@@ -36,7 +33,6 @@
 		. += mutable_appearance(icon, indicator_state)
 		. += emissive_appearance(icon, indicator_state, src, alpha = src.alpha)
 
-// -----------------------------------------------------
 
 /obj/item/aicard/syndie/loaded
 	/// Set to true while we're waiting for ghosts to sign up
@@ -93,7 +89,6 @@
 	// Make it look evil!!!
 	new_ai.hologram_appearance = mutable_appearance('icons/mob/silicon/ai.dmi',"xeno_queen") //good enough
 
-	// Используем новую систему дисплеев
 	new_ai.set_core_display_icon("hades")
 
 	// Hide PDA from messenger
@@ -102,7 +97,6 @@
 		msg.invisible = TRUE
 
 	// Transfer the AI from the core we created into the card, then delete the core
-	// Используем мгновенный трансфер
 	new_ai.transfer_ai(AI_TRANS_TO_CARD, user, null, src)
 	update_appearance()
 
