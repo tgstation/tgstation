@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Emergency shuttle purchase menu now lists the shuttle prices"
