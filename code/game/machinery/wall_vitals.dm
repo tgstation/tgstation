@@ -245,14 +245,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 			. = CONTEXTUAL_SCREENTIP_SET
 	return .
 
-/obj/machinery/vitals_reader/AIShiftClick(mob/user)
-	// Lets AIs perform healthscans on people indirectly (they can't examine)
-	if(is_operational && !(machine_stat & EMPED) && !isnull(patient))
-		var/entire_printout = ""
-		entire_printout += healthscan(user, patient, mode = SCANNER_CONDENSED, advanced = src.advanced, tochat = FALSE)
-		entire_printout += chemscan(user, patient, tochat = FALSE)
-		to_chat(user, custom_boxed_message("blue_box", entire_printout), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
-
 #define LOWER_BAR_OFFSET -3
 
 /**
