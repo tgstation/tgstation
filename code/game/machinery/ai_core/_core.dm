@@ -57,7 +57,7 @@
 
 		add_overlay(screen)
 
-		add_overlay(emissive_appearance(icon, "ai-empty", src, alpha = 100))
+		add_overlay(emissive_appearance(icon, "ai-empty", src, alpha = 255))
 
 		set_light(0.3, 0.3, LIGHT_COLOR_FAINT_CYAN)
 

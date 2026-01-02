@@ -39,7 +39,9 @@
 	to_chat(src, "To use something, simply click on it.")
 	to_chat(src, "For department channels, use the following say commands:")
 	to_chat(src, ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science, :h - Holopad.")
-	show_laws()
+
+	INVOKE_ASYNC(src, PROC_REF(show_laws))
+
 	to_chat(src, span_bold("These laws may be changed by other players, random events, or by you becoming malfunctioning."))
 
 	job = "AI"
@@ -51,10 +53,9 @@
 	if(client)
 		INVOKE_ASYNC(src, PROC_REF(apply_pref_name), /datum/preference/name/ai, client)
 		INVOKE_ASYNC(src, PROC_REF(apply_pref_hologram_display), client)
-		INVOKE_ASYNC(src, PROC_REF(set_gender), client)
-		INVOKE_ASYNC(src, PROC_REF(set_core_display_icon), null, client)
-	else
-		set_core_display_icon(null, null)
+		set_gender(client)
+
+	INVOKE_ASYNC(src, PROC_REF(set_core_display_icon), null, client)
 
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -750,7 +751,7 @@
 	remove = lit_cameras - visible
 
 	for (var/obj/machinery/camera/C in remove)
-		lit_cameras -= C //Removed from list before turning off the light so that it doesn't check the AI looking away.)
+		lit_cameras -= C //Removed from list before turning off the light so that it doesn't check the AI looking away.
 		C.Togglelight(0)
 	for (var/obj/machinery/camera/C in add)
 		C.Togglelight(1)
