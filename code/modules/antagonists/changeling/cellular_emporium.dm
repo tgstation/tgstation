@@ -47,7 +47,7 @@
 				"genetic_point_required" = dna_cost,
 				"absorbs_required" = initial(ability_path.req_absorbs),
 				"dna_required" = initial(ability_path.req_dna),
-				"category" = initial(ability_path.category), // ← КЛЮЧЕВОЕ ИЗМЕНЕНИЕ
+				"category" = initial(ability_path.category),
 			)
 
 			abilities += list(ability_data)
