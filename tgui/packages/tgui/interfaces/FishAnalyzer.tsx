@@ -142,7 +142,7 @@ const FishItem = (props) => {
                 />
               </Stack.Item>
               <Stack.Item style={{ fontSize: '10px' }}>
-                {fish.fish_weight} kKr
+                {fish.fish_weight} kiloclam
               </Stack.Item>
               <Stack.Item style={{ fontSize: '10px' }}>
                 {fish.fish_size} cm
