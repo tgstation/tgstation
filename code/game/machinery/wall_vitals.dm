@@ -184,7 +184,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 /// Find and connects to a nearby machine
 /// If prioritize_by_id is TRUE, will first try to find a machine with the same id_tag as this vitals reader
 /obj/machinery/vitals_reader/proc/find_machine(prioritize_by_id = FALSE)
-	for(var/obj/machinery/nearby_thing in view(connection_range, src))
+	for(var/obj/nearby_thing in view(connection_range, src))
 		if(prioritize_by_id && nearby_thing.id_tag != src.id_tag)
 			continue
 		if(!is_type_in_typecache(nearby_thing, connectable_typecache))
