@@ -30923,6 +30923,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/directional/west,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "kDb" = (
@@ -52284,7 +52285,7 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "rUp" = (
-/obj/item/radio/intercom/directional/east,
+/obj/structure/sign/eyechart/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "rUE" = (
@@ -53817,11 +53818,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/wood/large,
 /area/station/service/theater)
-"syc" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/eyechart/directional/west,
-/turf/open/floor/iron/white,
-/area/station/medical/treatment_center)
 "syh" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "maintwarehouse"
@@ -92782,7 +92778,7 @@ sAv
 pSl
 eUN
 jpU
-syc
+jpU
 heY
 qXh
 ehg
