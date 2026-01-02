@@ -1,6 +1,6 @@
 
 /obj/machinery/reagentgrinder
-	name = "\improper All-In-One Grinder"
+	name = "all-in-one grinder"
 	desc = "From BlenderTech. Will It Blend? Let's test it out!"
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "juicer"
