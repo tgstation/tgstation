@@ -46,7 +46,7 @@
 	)
 	grant_actions_by_list(innate_actions)
 
-	update_appearance() // Обновляем внешний вид сразу при спавне
+	update_appearance()
 
 	if(mapload && donk_ai_master)
 		return INITIALIZE_HINT_LATELOAD
