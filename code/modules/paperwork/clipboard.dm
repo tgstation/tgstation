@@ -228,3 +228,6 @@
 /obj/item/clipboard/proc/on_top_paper_change()
 	SIGNAL_HANDLER
 	update_appearance()
+
+/obj/item/clipboard/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return ..() || (contained == top_paper)
