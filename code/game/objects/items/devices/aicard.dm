@@ -61,11 +61,11 @@
 	from_what.transfer_ai(AI_TRANS_TO_CARD, user, null, src)
 	if(isnull(AI))
 		return FALSE
-
 	log_silicon("[key_name(user)] carded [key_name(AI)]", list(src))
 	update_appearance()
 	AI.cancel_camera()
 	RegisterSignal(AI, COMSIG_MOB_STATCHANGE, PROC_REF(on_ai_stat_change))
+	RegisterSignal(AI, COMSIG_ATOM_UPDATE_ICON, PROC_REF(on_ai_icon_update))
 	return TRUE
 
 /// Tries to upload the AI we have captured to the atom clicked
@@ -74,11 +74,11 @@
 	to_what.transfer_ai(AI_TRANS_FROM_CARD, user, AI, src)
 	if(!isnull(AI))
 		return FALSE
-
 	log_combat(user, old_ai, "uploaded", src, "to [to_what].")
 	update_appearance()
 	old_ai.cancel_camera()
 	UnregisterSignal(old_ai, COMSIG_MOB_STATCHANGE)
+	UnregisterSignal(old_ai, COMSIG_ATOM_UPDATE_ICON)
 	return TRUE
 
 /obj/item/aicard/proc/on_ai_stat_change(datum/source, new_stat, old_stat)
@@ -86,7 +86,7 @@
 	if(new_stat == DEAD || old_stat == DEAD)
 		update_appearance()
 
-/obj/item/aicard/proc/on_ai_icon_update(datum/source, updates)
+/obj/item/aicard/proc/on_ai_icon_update(datum/source)
 	SIGNAL_HANDLER
 	update_appearance()
 

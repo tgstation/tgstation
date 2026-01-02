@@ -1233,7 +1233,7 @@
 
 		lights_state = "lights_active"
 
-		set_light(0.3, 0.3, LIGHT_COLOR_FAINT_CYAN)
+		set_light(0.2, 0.2, LIGHT_COLOR_FAINT_CYAN)
 
 	else if(stat == DEAD)
 		var/base = display_icon_override || "ai"
