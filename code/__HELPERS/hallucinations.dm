@@ -38,11 +38,11 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 /// Unless you need this for an explicit reason, use the cause_hallucination wrapper.
 /mob/living/proc/_cause_hallucination(list/raw_args)
 	if(!length(raw_args))
-		return
+		CRASH("cause_hallucination called with no arguments.")
 
 	var/datum/hallucination/hallucination_type = raw_args[HALLUCINATION_ARG_TYPE] // first arg is the type always
 	if(!ispath(hallucination_type, /datum/hallucination))
-		return
+		CRASH("cause_hallucination was given a non-hallucination type. (Got: [hallucination_type || "null"])")
 
 	var/hallucination_source = raw_args[HALLUCINATION_ARG_SOURCE] // and second arg, the source
 	var/datum/hallucination/new_hallucination
