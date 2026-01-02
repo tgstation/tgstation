@@ -89,7 +89,7 @@
 
 /obj/effect/temp_visual/cybersun_ai_core_death
 	icon = 'icons/mob/silicon/ai.dmi'
-	icon_state = "ai-core" // База - пустой корпус
+	icon_state = "ai-core"
 	duration = 2 SECONDS
 
 /obj/effect/temp_visual/cybersun_ai_core_death/Initialize(mapload)
