@@ -484,10 +484,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 		unset_patient()
 
 	patient = new_patient
-	RegisterSignals(patient, list(
-		COMSIG_QDELETING,
-		COMSIG_MOVABLE_MOVED,
-	), PROC_REF(unset_patient))
+	RegisterSignal(patient, COMSIG_QDELETING, PROC_REF(unset_patient))
 	RegisterSignals(patient, list(
 		COMSIG_CARBON_POST_REMOVE_LIMB,
 		COMSIG_CARBON_POST_ATTACH_LIMB,
@@ -507,7 +504,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 
 	UnregisterSignal(patient, list(
 		COMSIG_QDELETING,
-		COMSIG_MOVABLE_MOVED,
 		COMSIG_CARBON_POST_REMOVE_LIMB,
 		COMSIG_CARBON_POST_ATTACH_LIMB,
 		COMSIG_LIVING_HEALTH_UPDATE,
