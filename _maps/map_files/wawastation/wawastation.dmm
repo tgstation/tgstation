@@ -6004,6 +6004,7 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/table/glass,
 /obj/machinery/light/cold/dim/directional/south,
+/obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "ceD" = (
@@ -17770,6 +17771,7 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/iv_drip,
 /obj/machinery/light/cold/dim/directional/north,
+/obj/machinery/vitals_reader/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "gkt" = (
@@ -22400,9 +22402,9 @@
 "hPp" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/light_switch/directional/west,
 /obj/item/wrench/medical,
 /obj/machinery/light/cold/dim/directional/west,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "hPs" = (
@@ -23401,7 +23403,6 @@
 "ifE" = (
 /obj/machinery/vending/medical,
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/firealarm/directional/south,
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
@@ -43587,6 +43588,13 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"pek" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
 "peo" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -44038,7 +44046,6 @@
 	dir = 4
 	},
 /obj/machinery/duct,
-/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "pmp" = (
@@ -63424,6 +63431,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "vOu" = (
@@ -84884,7 +84892,7 @@ lcM
 isy
 isy
 lJo
-crz
+pek
 bui
 yit
 yit
