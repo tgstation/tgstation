@@ -24,3 +24,22 @@
   - qol: you can wrench a stack of ducts on the ground to create a pipe
   - refactor: plumbing code has been improved overall. Report bugs on github
   - bugfix: dimensional anomaly transformed airlocks save their cycling id
+2026-01-02:
+  Jacquerel:
+  - bugfix: Killing yourself with a Gullion fish in an oxygenated environment will
+      correctly turn you into a statue
+  - bugfix: Killing yourself with a Gullion fish will kill you rather than leaving
+      you as a living statue that can't do anything and forcing you to Ghost manually
+  LT3:
+  - bugfix: Emergency shuttle purchase menu now lists the shuttle prices
+  SpaceSmithers:
+  - rscadd: Card readers can now be printed at cargo techfabs
+  SyncIt21:
+  - bugfix: vegan cake batter is correctly vegan and has no dairy.
+  vinylspiders:
+  - bugfix: fixes a bug where the quirk menu does not update when adding/removing
+      quirks
+  - bugfix: fixes some fontawesome ui icons displaying as unicode literals instead
+      of the actual icons
+  - bugfix: nearsightedness and other quirk prefs that use iconned dropdowns will
+      no longer be cut off
