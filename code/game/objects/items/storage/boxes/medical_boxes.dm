@@ -250,22 +250,19 @@
 	. += "&bull; Otherwise, mark as <b>delayed</b>."
 
 /obj/item/paper/triage/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
 	if(!isliving(interacting_with))
-		return .
+		return NONE
 
 	var/px = text2num(LAZYACCESS(modifiers, ICON_X))
 	var/py = text2num(LAZYACCESS(modifiers, ICON_Y))
 
 	if(isnull(px) || isnull(py))
-		return .
+		return NONE
 
 	user.do_attack_animation(interacting_with, used_item = src)
 	interacting_with.balloon_alert(user, "card attached")
 	interacting_with.AddComponent(/datum/component/sticker, src, get_dir(interacting_with, src), px, py)
-	return . | ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/paper/triage/minor
 	color = COLOR_ASSEMBLY_GREEN
