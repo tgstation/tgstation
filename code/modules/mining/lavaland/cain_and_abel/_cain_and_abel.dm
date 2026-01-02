@@ -205,7 +205,8 @@
 	if (!istype(user))
 		return TRUE
 	var/active_item = (src == user.get_active_held_item())
-	if (active_item ? user.get_inactive_held_item() : user.get_active_held_item())
+	var/obj/item/other_held = active_item ? user.get_inactive_held_item() : user.get_active_held_item()
+	if (!isnull(other_held))
 		return FALSE
 	var/obj/item/bodypart/hand = active_item ? user.get_inactive_hand() : user.get_active_hand()
 	if (!hand || hand.bodypart_disabled)
