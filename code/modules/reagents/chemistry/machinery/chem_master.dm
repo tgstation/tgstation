@@ -89,7 +89,7 @@
 			. += span_warning("Missing input beaker.")
 
 		. += span_notice("It can be [EXAMINE_HINT("wrenched")] [anchored ? "loose" : "in place"].")
-		. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
+		. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
 		if(panel_open)
 			. += span_notice("The machine can be [EXAMINE_HINT("pried")] apart.")
 

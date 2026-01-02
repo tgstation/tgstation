@@ -81,7 +81,7 @@
 	. += span_notice("Storing up to <b>[materials.max_amount]</b> material units.")
 	. += span_notice("Material consumption at <b>[creation_efficiency * 100]%</b>")
 
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"]")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"]")
 	if(panel_open)
 		. += span_notice("It can be [EXAMINE_HINT("pried")] apart")
 	if(!QDELETED(inserted_board))

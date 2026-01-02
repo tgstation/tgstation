@@ -117,7 +117,7 @@
 		. += span_notice("It can be [EXAMINE_HINT("wrenched")] loose.")
 	else
 		. += span_warning("Needs to be [EXAMINE_HINT("wrenched")] in place to work.")
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 	if(panel_open)
 		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
 
