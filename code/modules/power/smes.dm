@@ -70,6 +70,14 @@
 	terminal.master = src
 	update_appearance(UPDATE_OVERLAYS)
 
+/obj/machinery/power/smes/get_cell()
+	var/obj/item/stock_parts/power_store/lowest_charged_part
+	for(var/obj/item/stock_parts/power_store/power_cell in component_parts)
+		if(lowest_charged_part && (power_cell.charge >= lowest_charged_part.charge || (power_cell.charge == power_cell.maxcharge)))
+			continue
+		lowest_charged_part = power_cell
+	return lowest_charged_part
+
 /obj/machinery/power/smes/on_construction(mob/user)
 	var/obj/structure/cable/C = locate() in loc
 	if(!QDELETED(C))

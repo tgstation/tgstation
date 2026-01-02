@@ -7,7 +7,8 @@
 	operation_flags = OPERATION_LOOPING
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	success_sound = 'sound/machines/card_slide.ogg'
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
+	all_surgery_states_required = SURGERY_SKIN_OPEN
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 
 /datum/surgery_operation/limb/filter_blood/all_required_strings()
 	. = list()

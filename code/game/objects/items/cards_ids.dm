@@ -165,7 +165,7 @@
 
 /obj/item/card/id/Destroy()
 	if (registered_account)
-		registered_account.bank_cards -= src
+		LAZYREMOVE(registered_account.bank_cards, src)
 	if (my_store)
 		QDEL_NULL(my_store)
 	if (isitem(loc))
@@ -768,9 +768,9 @@
 		to_chat(user, span_warning("The account ID number provided is invalid."))
 		return FALSE
 	if(old_account)
-		old_account.bank_cards -= src
+		LAZYREMOVE(old_account.bank_cards, src)
 		account.account_balance += old_account.account_balance
-	account.bank_cards += src
+	LAZYADD(account.bank_cards, src)
 	registered_account = account
 	to_chat(user, span_notice("The provided account has been linked to this ID card. It contains [account.account_balance] [MONEY_NAME]."))
 	return TRUE
@@ -1095,11 +1095,10 @@
 
 /obj/item/card/id/departmental_budget/Initialize(mapload)
 	. = ..()
-	var/datum/bank_account/B = SSeconomy.get_dep_account(department_ID)
-	if(B)
-		registered_account = B
-		if(!B.bank_cards.Find(src))
-			B.bank_cards += src
+	var/datum/bank_account/department_account = SSeconomy.get_dep_account(department_ID)
+	if(department_account)
+		registered_account = department_account
+		LAZYOR(department_account.bank_cards, src)
 		name = "departmental card ([department_name])"
 		desc = "Provides access to the [department_name]."
 	SSeconomy.dep_cards += src
@@ -1972,7 +1971,7 @@
 
 	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[owner.account_id]"]
 	if(account)
-		account.bank_cards += src
+		LAZYADD(account.bank_cards, src)
 		registered_account = account
 		to_chat(user, span_notice("Your account number has been automatically assigned."))
 

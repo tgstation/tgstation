@@ -89,7 +89,6 @@
 	time = 4 SECONDS
 	category = CAT_WEAPON_MELEE
 
-
 /datum/crafting_recipe/balloon_mallet
 	name = "Balloon Mallet"
 	result = /obj/item/balloon_mallet

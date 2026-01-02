@@ -141,7 +141,7 @@
 		return FALSE
 
 	var/msg
-	if(PERFORM_ALL_TESTS(focus_only/atom_mounted) && !mark_for_late_init)
+	if(PERFORM_ALL_TESTS(maptest_log_mapping) && !mark_for_late_init)
 		msg = "[type] Could not find attachable object at [location.type] "
 
 	var/list/turf/attachable_turfs = get_turfs_to_mount_on()
@@ -161,7 +161,7 @@
 		if(msg)
 			msg += "([target.x],[target.y],[target.z]) "
 	if(msg)
-		stack_trace(msg)
+		log_mapping(msg)
 
 	if(mark_for_late_init)
 		obj_flags |= MOUNT_ON_LATE_INITIALIZE

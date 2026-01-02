@@ -406,7 +406,7 @@
 
 		if(account && account.account_id == equipped.account_id)
 			card.registered_account = account
-			account.bank_cards += card
+			LAZYADD(account.bank_cards, card)
 
 		equipped.update_ID_card()
 

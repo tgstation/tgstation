@@ -9,7 +9,7 @@
 
 /obj/item/clothing/gloves/fingerless/punch_mitts/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -6)
+	AddElement(/datum/element/adjust_fishing_difficulty, -6)
 	AddComponent(/datum/component/martial_art_giver, /datum/martial_art/boxing/hunter)
 
 /datum/armor/gloves_mitts

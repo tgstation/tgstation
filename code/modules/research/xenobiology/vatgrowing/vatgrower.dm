@@ -18,7 +18,7 @@
 	/// Whether or not to add the plumbing component and related stuff
 	var/use_plumbing = TRUE
 
-/obj/machinery/vatgrower/Initialize(mapload, bolt, layer)
+/obj/machinery/vatgrower/Initialize(mapload)
 	. = ..()
 	create_reagents(reagent_volume, reagent_flags)
 

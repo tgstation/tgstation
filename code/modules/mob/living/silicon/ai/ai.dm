@@ -957,10 +957,14 @@
 	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
 	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
 
-/mob/living/silicon/ai/verb/deploy_to_shell(mob/living/silicon/robot/target)
+/mob/living/silicon/ai/verb/deploy_to_shell()
 	set category = "AI Commands"
+	set desc = "Transfer to an available remote body."
 	set name = "Deploy to Shell"
 
+	select_shell()
+
+/mob/living/silicon/ai/proc/select_shell(mob/living/silicon/robot/target)
 	if(incapacitated)
 		return
 	if(control_disabled)
@@ -976,6 +980,7 @@
 
 	if(!LAZYLEN(possible))
 		to_chat(src, "No usable AI shell beacons detected.")
+		return
 
 	if(!target || !(target in possible)) //If the AI is looking for a new shell, or its pre-selected shell is no longer valid
 		target = tgui_input_list(src, "Which body to control?", "Direct Control", sort_names(possible))
@@ -1003,7 +1008,7 @@
 	var/mob/living/silicon/ai/AI = owner
 	if(!AI)
 		return
-	AI.deploy_to_shell()
+	AI.select_shell()
 
 /datum/action/innate/deploy_last_shell
 	name = "Reconnect to shell"
@@ -1017,7 +1022,7 @@
 		return
 	if(last_used_shell)
 		var/mob/living/silicon/ai/AI = owner
-		AI.deploy_to_shell(last_used_shell)
+		AI.select_shell(last_used_shell)
 	else
 		Remove(owner) //If the last shell is blown, destroy it.
 

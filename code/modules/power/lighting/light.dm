@@ -87,15 +87,15 @@
 	. = ..()
 
 	// Detect and scream about double stacked lights
-	if(PERFORM_ALL_TESTS(focus_only/stacked_lights))
+	if(PERFORM_ALL_TESTS(maptest_log_mapping))
 		var/turf/our_location = get_turf(src)
 		for(var/obj/machinery/light/on_turf in our_location)
 			if(on_turf == src)
 				continue
 			if(on_turf.dir != dir)
 				continue
-			stack_trace("Conflicting double stacked light [on_turf.type] found at [get_area(our_location)] ([our_location.x],[our_location.y],[our_location.z])")
-			qdel(on_turf)
+			log_mapping("Conflicting double stacked light [on_turf.type] found at [AREACOORD(src)]")
+			return INITIALIZE_HINT_QDEL
 
 	if(!mapload) //sync up nightshift lighting for player made lights
 		var/area/our_area = get_room_area()

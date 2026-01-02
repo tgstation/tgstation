@@ -159,16 +159,7 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 	user.update_sight()
 
 /datum/ghost_menu/proc/toggle_hud_type(mob/dead/observer/user, hud_type)
-	user.ghost_hud_flags ^= hud_type
-	//special aftereffects for specific flags.
-	switch(hud_type)
-		if(GHOST_VISION)
-			user.update_sight()
-		if(GHOST_DATA_HUDS)
-			if(user.ghost_hud_flags & GHOST_DATA_HUDS)
-				user.show_data_huds()
-			else
-				user.remove_data_huds()
+	user.toggle_ghost_hud_flag(hud_type)
 
 /datum/ghost_menu/proc/restore_ghost_appearance(mob/dead/observer/user)
 	user.set_ghost_appearance()

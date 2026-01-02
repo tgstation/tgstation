@@ -21,12 +21,12 @@
 	VAR_FINAL/atom/real_location
 
 	/// List of all the mobs currently viewing the contents of this storage.
-	VAR_PRIVATE/list/mob/is_using = list()
+	VAR_PRIVATE/list/mob/is_using
 
 	///The type of storage interface this datum uses.
 	var/datum/storage_interface/storage_type = /datum/storage_interface
 	/// Associated list that keeps track of all storage UI datums per person.
-	VAR_PRIVATE/list/datum/storage_interface/storage_interfaces = null
+	VAR_PRIVATE/list/datum/storage_interface/storage_interfaces
 
 	/// Typecache of items that can be inserted into this storage.
 	/// By default, all item types can be inserted (assuming other conditions are met).
@@ -158,7 +158,7 @@
 	for(var/mob/person as anything in is_using)
 		hide_contents(person)
 
-	is_using.Cut()
+	LAZYCLEARLIST(is_using)
 	QDEL_LIST_ASSOC_VAL(storage_interfaces)
 
 	parent = null
@@ -1084,7 +1084,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	orient_storage()
 
-	is_using |= to_show
+	LAZYOR(is_using, to_show)
 
 	to_show.hud_used.open_containers |= storage_interfaces[to_show].list_ui_elements()
 	to_show.client.screen |= storage_interfaces[to_show].list_ui_elements()
@@ -1103,14 +1103,15 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(to_hide.active_storage == src)
 		to_hide.active_storage = null
 
-	if(!length(is_using) && ismovable(real_location))
+	if(!LAZYLEN(is_using) && ismovable(real_location))
 		var/atom/movable/movable_loc = real_location
 		movable_loc.lose_active_storage(src)
 
-	if (!length(storage_interfaces) || isnull(storage_interfaces[to_hide]))
+	if (!LAZYLEN(storage_interfaces) || isnull(storage_interfaces[to_hide]))
 		return TRUE
 
-	is_using -= to_hide
+	if(LAZYLEN(is_using))
+		is_using -= to_hide
 
 	if(to_hide.client)
 		to_hide.client.screen -= storage_interfaces[to_hide].list_ui_elements()

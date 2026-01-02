@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - code_imp: "removes an unused parameter `times_fired` from mob life procs. Making them function slightly faster"

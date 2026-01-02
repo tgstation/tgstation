@@ -101,7 +101,7 @@
 
 /obj/item/clothing/under/suit/tuxedo/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 4) //You aren't going to fish with this are you?
+	AddElement(/datum/element/adjust_fishing_difficulty, 4) //You aren't going to fish with this are you?
 
 /obj/item/clothing/under/suit/carpskin
 	name = "carpskin suit"
@@ -112,4 +112,4 @@
 
 /obj/item/clothing/under/suit/carpskin/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+	AddElement(/datum/element/adjust_fishing_difficulty, -4)

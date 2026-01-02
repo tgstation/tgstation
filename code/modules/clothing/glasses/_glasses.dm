@@ -503,7 +503,7 @@
 /obj/item/clothing/glasses/welding/Initialize(mapload)
 	. = ..()
 	if(!up)
-		AddComponent(/datum/component/adjust_fishing_difficulty, 8)
+		AddElement(/datum/element/adjust_fishing_difficulty, 8)
 
 /obj/item/clothing/glasses/welding/attack_self(mob/living/user)
 	adjust_visor(user)
@@ -511,9 +511,9 @@
 /obj/item/clothing/glasses/welding/adjust_visor(mob/user)
 	. = ..()
 	if(up)
-		qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
+		RemoveElement(/datum/element/adjust_fishing_difficulty)
 	else
-		AddComponent(/datum/component/adjust_fishing_difficulty, 8)
+		AddElement(/datum/element/adjust_fishing_difficulty, 8)
 
 /obj/item/clothing/glasses/welding/update_icon_state()
 	. = ..()
@@ -536,7 +536,7 @@
 
 /obj/item/clothing/glasses/blindfold/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 8)
+	AddElement(/datum/element/adjust_fishing_difficulty, 8)
 
 /obj/item/clothing/glasses/trickblindfold
 	name = "blindfold"
@@ -711,7 +711,7 @@
 
 /obj/item/clothing/glasses/debug/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -15)
+	AddElement(/datum/element/adjust_fishing_difficulty, -15)
 
 /obj/item/clothing/glasses/debug/click_alt(mob/user)
 	if(!ishuman(user))
@@ -784,7 +784,7 @@
 
 /obj/item/clothing/glasses/nightmare_vision/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 13)
+	AddElement(/datum/element/adjust_fishing_difficulty, 13)
 
 /obj/item/clothing/glasses/nightmare_vision/Destroy()
 	QDEL_NULL(stored_hallucination)

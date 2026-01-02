@@ -3,6 +3,8 @@
 	argument_hash_start_idx = 2
 	/// Rotation flags for special behavior
 	var/rotation_flags
+	/// Optional proc to call()() after the thing is successfully rotated
+	var/post_rotation_proccall
 
 /**
  * Adds the ability to rotate an object by Alt-click or using Right-click verbs.
@@ -11,7 +13,7 @@
  * * rotation_flags (optional) Bitflags that determine behavior for rotation (defined at the top of this file)
  * * post_rotation (optional) Callback proc that is used after the object is rotated (sound effects, balloon alerts, etc.)
  **/
-/datum/element/simple_rotation/Attach(datum/target, rotation_flags = NONE)
+/datum/element/simple_rotation/Attach(datum/target, rotation_flags = NONE, post_rotation_proccall)
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
@@ -20,6 +22,7 @@
 	source.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 	src.rotation_flags = rotation_flags
+	src.post_rotation_proccall = post_rotation_proccall
 
 	RegisterSignal(target, COMSIG_CLICK_ALT, PROC_REF(rotate_left))
 	RegisterSignal(target, COMSIG_CLICK_ALT_SECONDARY, PROC_REF(rotate_right))
@@ -66,7 +69,8 @@
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
 		playsound(object_to_rotate, 'sound/items/tools/ratchet.ogg', 50, TRUE)
 
-	object_to_rotate.post_rotation(user, degrees)
+	if(post_rotation_proccall)
+		call(object_to_rotate, post_rotation_proccall)(user, degrees)
 
 /datum/element/simple_rotation/proc/can_user_rotate(mob/user, obj/object_to_rotate, degrees)
 	if(isliving(user) && user.can_perform_action(object_to_rotate, NEED_DEXTERITY))
@@ -130,7 +134,3 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE
-
-/// Calld on the atom after it has been successfully rotated
-/atom/movable/proc/post_rotation(mob/user, degrees)
-	return

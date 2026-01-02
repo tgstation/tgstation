@@ -2,10 +2,10 @@
 	demand_connects = NORTH
 	supply_connects = SOUTH | EAST
 
-/datum/component/plumbing/splitter/Initialize(start=TRUE, _ducting_layer, _turn_connects=TRUE, datum/reagents/custom_receiver)
-	. = ..()
-	if(. && !istype(parent, /obj/machinery/plumbing/splitter))
-		return FALSE
+/datum/component/plumbing/splitter/Initialize(ducting_layer)
+	if(!istype(parent, /obj/machinery/plumbing/splitter))
+		return COMPONENT_INCOMPATIBLE
+	return ..()
 
 /datum/component/plumbing/splitter/can_give(amount, reagent, datum/ductnet/net)
 	. = ..()

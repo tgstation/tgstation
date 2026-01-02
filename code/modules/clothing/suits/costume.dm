@@ -280,7 +280,7 @@
 
 /obj/item/clothing/suit/hooded/carp_costume/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+	AddElement(/datum/element/adjust_fishing_difficulty, -4)
 
 /obj/item/clothing/head/hooded/carp_hood
 	name = "carp hood"
@@ -296,7 +296,7 @@
 
 /obj/item/clothing/head/hooded/carp_hood/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
+	AddElement(/datum/element/adjust_fishing_difficulty, -5)
 
 /obj/item/clothing/head/hooded/carp_hood/equipped(mob/living/carbon/human/user, slot)
 	..()
@@ -416,7 +416,7 @@
 
 /obj/item/clothing/suit/hooded/shark_costume/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+	AddElement(/datum/element/adjust_fishing_difficulty, -4)
 
 /obj/item/clothing/head/hooded/shark_hood
 	name = "shark hood"
@@ -430,7 +430,7 @@
 
 /obj/item/clothing/head/hooded/shark_hood/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
+	AddElement(/datum/element/adjust_fishing_difficulty, -5)
 
 /obj/item/clothing/suit/hooded/shork_costume // Oh God Why
 	name = "shork costume"
@@ -445,7 +445,7 @@
 
 /obj/item/clothing/suit/hooded/shork_costume/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 4)
+	AddElement(/datum/element/adjust_fishing_difficulty, 4)
 
 /obj/item/clothing/head/hooded/shork_hood
 	name = "shork hood"
@@ -459,7 +459,7 @@
 
 /obj/item/clothing/head/hooded/shork_hood/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+	AddElement(/datum/element/adjust_fishing_difficulty, 5)
 
 /obj/item/clothing/suit/hooded/bloated_human //OH MY GOD WHAT HAVE YOU DONE!?!?!?
 	name = "bloated human suit"
@@ -630,7 +630,7 @@
 
 /obj/item/clothing/suit/costume/hawaiian/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
+	AddElement(/datum/element/adjust_fishing_difficulty, -5)
 	allowed += GLOB.personal_carry_allowed
 
 /obj/item/clothing/suit/costume/football_armor

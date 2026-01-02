@@ -29,7 +29,7 @@
 /obj/structure/aquarium/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/aquarium, aquarium_zone_min_pw, aquarium_zone_max_pw, aquarium_zone_min_pz, aquarium_zone_max_pz, default_beauty, init_mode = init_mode)
-	AddComponent(/datum/component/plumbing/aquarium, start = anchored)
+	AddComponent(/datum/component/plumbing/aquarium)
 	RegisterSignal(src, COMSIG_AQUARIUM_FLUID_CHANGED, PROC_REF(on_aquarium_liquid_changed))
 	update_appearance()
 
@@ -173,7 +173,7 @@
 		max_fluid_temp = src.max_fluid_temp,\
 		init_mode = init_mode,\
 	)
-	AddComponent(/datum/component/plumbing/aquarium, start = anchored)
+	AddComponent(/datum/component/plumbing/aquarium)
 	RegisterSignal(src, COMSIG_AQUARIUM_FLUID_CHANGED, PROC_REF(on_aquarium_liquid_changed))
 	RegisterSignal(src, COMSIG_AQUARIUM_CAN_INSERT, PROC_REF(can_insert))
 	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_new_fish))

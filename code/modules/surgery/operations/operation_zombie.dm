@@ -9,7 +9,8 @@
 	)
 	time = 5 SECONDS
 	operation_flags = OPERATION_MORBID | OPERATION_LOCKED | OPERATION_NOTABLE
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 	var/list/zombie_chems = list(
 		/datum/reagent/medicine/rezadone,
 		/datum/reagent/toxin/zombiepowder,

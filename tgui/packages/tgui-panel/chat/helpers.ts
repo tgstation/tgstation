@@ -11,6 +11,7 @@ import {
 import { MAX_PERSISTED_MESSAGES } from './constants';
 import { canPageAcceptType, serializeMessage } from './model';
 import { chatRenderer } from './renderer';
+import type { StoredChatSettings } from './types';
 
 chatRenderer.events.on(
   'batchProcessed',
@@ -63,6 +64,12 @@ function updateMessageCount(countByType: Record<string, number>): void {
 }
 
 export function saveChatToStorage(): void {
+  saveChatMessages();
+  const allChat = store.get(allChatAtom);
+  saveChatState(allChat);
+}
+
+function saveChatMessages(): void {
   const fromIndex = Math.max(
     0,
     chatRenderer.messages.length - MAX_PERSISTED_MESSAGES,
@@ -72,8 +79,23 @@ export function saveChatToStorage(): void {
     .slice(fromIndex)
     .map((message) => serializeMessage(message));
 
-  const allChat = store.get(allChatAtom);
-
-  storage.set('chat-state', allChat);
   storage.set('chat-messages', messages);
+}
+
+export function saveChatState(state: StoredChatSettings): void {
+  // Avoid persisting frequently-changing unread counts.
+  const pageById = Object.fromEntries(
+    Object.entries(state.pageById).map(([id, page]) => [
+      id,
+      {
+        ...page,
+        unreadCount: 0,
+      },
+    ]),
+  );
+
+  storage.set('chat-state', {
+    ...state,
+    pageById,
+  });
 }

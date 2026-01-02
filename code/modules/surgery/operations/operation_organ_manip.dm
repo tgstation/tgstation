@@ -4,7 +4,7 @@
 /datum/surgery_operation/limb/organ_manipulation
 	name = "organ manipulation"
 	abstract_type = /datum/surgery_operation/limb/organ_manipulation
-	operation_flags = OPERATION_MORBID | OPERATION_NOTABLE
+	operation_flags = OPERATION_MORBID | OPERATION_NOTABLE | OPERATION_NO_PATIENT_REQUIRED
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	/// Radial slice datums for every organ type we can manipulate
 	VAR_PRIVATE/list/cached_organ_manipulation_options
@@ -109,7 +109,7 @@
 			option.image = get_generic_limb_radial_image(limb.body_zone)
 			option.image.overlays += add_radial_overlays(organ.type)
 			option.name = "remove [initial(organ.name)]"
-			option.info = "Remove [initial(organ.name)] from the patient."
+			option.info = "Remove [initial(organ.name)] from the [limb.owner ? "patient" : "limb"]."
 			LAZYSET(cached_organ_manipulation_options, "[organ.type]_remove", option)
 
 		options[option] = list("[OPERATION_ACTION]" = "remove", "[OPERATION_REMOVED_ORGAN]" = organ)
@@ -123,7 +123,7 @@
 		option.image = get_generic_limb_radial_image(limb.body_zone)
 		option.image.overlays += add_radial_overlays(list(image('icons/hud/screen_gen.dmi', "arrow_large_still"), organ.type))
 		option.name = "insert [initial(organ.name)]"
-		option.info = "insert [initial(organ.name)] into the patient."
+		option.info = "insert [initial(organ.name)] into the [limb.owner ? "patient" : "limb"]."
 		LAZYSET(cached_organ_manipulation_options, "[organ.type]_insert", option)
 
 	var/list/result = list()
@@ -155,9 +155,9 @@
 			display_results(
 				surgeon,
 				limb.owner,
-				span_notice("You begin to remove [organ.name] from [limb.owner]'s [limb.plaintext_zone]..."),
-				span_notice("[surgeon] begins to remove [organ.name] from [limb.owner]."),
-				span_notice("[surgeon] begins to remove something from [limb.owner]."),
+				span_notice("You begin to remove [organ.name] from [FORMAT_LIMB_OWNER(limb)]..."),
+				span_notice("[surgeon] begins to remove [organ.name] from [limb.owner || limb]."),
+				span_notice("[surgeon] begins to remove something from [limb.owner || limb]."),
 			)
 			display_pain(limb.owner, "You feel a tugging sensation in your [limb.plaintext_zone]!")
 		if("insert")
@@ -165,9 +165,9 @@
 			display_results(
 				surgeon,
 				limb.owner,
-				span_notice("You begin to insert [tool.name] into [limb.owner]'s [limb.plaintext_zone]..."),
-				span_notice("[surgeon] begins to insert [tool.name] into [limb.owner]."),
-				span_notice("[surgeon] begins to insert something into [limb.owner]."),
+				span_notice("You begin to insert [tool.name] into [FORMAT_LIMB_OWNER(limb)]..."),
+				span_notice("[surgeon] begins to insert [tool.name] into [limb.owner || limb]."),
+				span_notice("[surgeon] begins to insert something into [limb.owner || limb]."),
 			)
 			display_pain(limb.owner, "You can feel something being placed in your [limb.plaintext_zone]!")
 
@@ -186,27 +186,33 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully extract [organ.name] from [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] successfully extracts [organ.name] from [limb.owner]'s [limb.plaintext_zone]!"),
-		span_notice("[surgeon] successfully extracts something from [limb.owner]'s [limb.plaintext_zone]!"),
+		span_notice("You successfully extract [organ.name] from [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully extracts [organ.name] from [FORMAT_LIMB_OWNER(limb)]!"),
+		span_notice("[surgeon] successfully extracts something from [FORMAT_LIMB_OWNER(limb)]!"),
 	)
 	display_pain(limb.owner, "Your [limb.plaintext_zone] throbs with pain, you can't feel your [organ.name] anymore!")
-	log_combat(surgeon, limb.owner, "surgically removed [organ.name] from")
-	organ.Remove(limb.owner)
-	organ.forceMove(limb.owner.drop_location())
+	log_combat(surgeon, limb.owner || limb, "surgically removed [organ.name] from")
+	if (limb.owner)
+		organ.Remove(limb.owner)
+	else
+		organ.bodypart_remove(limb)
+	organ.forceMove(limb.owner ? limb.owner.drop_location() : limb.drop_location())
 	organ.on_surgical_removal(surgeon, limb, tool)
 
 /datum/surgery_operation/limb/organ_manipulation/proc/on_success_insert_organ(obj/item/bodypart/limb, mob/living/surgeon, obj/item/organ/organ)
 	surgeon.temporarilyRemoveItemFromInventory(organ, TRUE)
 	organ.pre_surgical_insertion(surgeon, limb, limb.body_zone)
-	organ.Insert(limb.owner)
+	if (limb.owner)
+		organ.Insert(limb.owner)
+	else
+		organ.bodypart_insert(limb)
 	organ.on_surgical_insertion(surgeon, limb, organ)
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully insert [organ.name] into [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] successfully inserts [organ.name] into [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] successfully inserts something into [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You successfully insert [organ.name] into [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully inserts [organ.name] into [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully inserts something into [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "Your [limb.plaintext_zone] throbs with pain as your new [organ.name] comes to life!")
 
@@ -246,7 +252,8 @@
 /datum/surgery_operation/limb/organ_manipulation/internal/abductor
 	name = "experimental organ manipulation"
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED | OPERATION_NO_WIKI
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
+	all_surgery_states_required = SURGERY_SKIN_OPEN
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 	bone_locked_organs = "the brain or any chest organs EXCLUDING the heart"
 
 /datum/surgery_operation/limb/organ_manipulation/internal/abductor/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
@@ -257,7 +264,8 @@
 	name = "feature manipulation"
 	desc = "Manipulate features of the patient, such as a moth's wings or a lizard's tail."
 	replaced_by = /datum/surgery_operation/limb/organ_manipulation/external/abductor
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 
 /datum/surgery_operation/limb/organ_manipulation/external/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
 	return (organ.organ_flags & ORGAN_EXTERNAL)
@@ -277,6 +285,7 @@
 /datum/surgery_operation/limb/organ_manipulation/external/abductor
 	name = "experimental feature manipulation"
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED | OPERATION_NO_WIKI
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
+	all_surgery_states_required = SURGERY_SKIN_OPEN
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 
 #undef OPERATION_REMOVED_ORGAN

@@ -14,7 +14,6 @@ import {
 } from 'react';
 import { type Box, KeyListener } from 'tgui-core/components';
 import { UI_DISABLED, UI_INTERACTIVE } from 'tgui-core/constants';
-import type { KeyEvent } from 'tgui-core/events';
 import { KEY_ALT } from 'tgui-core/keycodes';
 import { type BooleanLike, classes } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
@@ -45,7 +44,7 @@ type Props = Partial<{
 }> &
   PropsWithChildren;
 
-export const Window = (props: Props) => {
+export function Window(props: Props) {
   const {
     canClose = true,
     theme,
@@ -144,7 +143,7 @@ export const Window = (props: Props) => {
       />
     </Layout>
   );
-};
+}
 
 type ContentProps = Partial<{
   className: string;
@@ -155,20 +154,21 @@ type ContentProps = Partial<{
   ComponentProps<typeof Box> &
   PropsWithChildren;
 
-const WindowContent = (props: ContentProps) => {
+function WindowContent(props: ContentProps) {
   const { className, fitted, children, ...rest } = props;
   const [altDown, setAltDown] = useState(false);
 
-  var dragStartIfAltHeld = (event) => {
+  function dragStartIfAltHeld(event: React.MouseEvent<HTMLDivElement>): void {
     if (altDown) {
       dragStartHandler(event);
     }
-  };
+  }
 
   Byond.subscribeTo('resetposition', (payload) => {
     setWindowPosition([0, 0]);
     storeWindowGeometry();
   });
+
   return (
     <Layout.Content
       onMouseDown={dragStartIfAltHeld}
@@ -176,25 +176,24 @@ const WindowContent = (props: ContentProps) => {
       {...rest}
     >
       <KeyListener
-        onKeyDown={(e: KeyEvent) => {
-          if (KEY_ALT === e.code) {
+        onKeyDown={(evt) => {
+          if (KEY_ALT === evt.code) {
             setAltDown(true);
-            logger.log(`alt on ${altDown}`);
           }
         }}
-        onKeyUp={(e: KeyEvent) => {
-          if (KEY_ALT === e.code) {
+        onKeyUp={(evt) => {
+          if (KEY_ALT === evt.code) {
             setAltDown(false);
-            logger.log(`alt off ${altDown}`);
           }
         }}
       />
-
-      {(fitted && children) || (
+      {fitted ? (
+        children
+      ) : (
         <div className="Window__contentPadding">{children}</div>
       )}
     </Layout.Content>
   );
-};
+}
 
 Window.Content = WindowContent;

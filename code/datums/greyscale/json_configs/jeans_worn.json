@@ -1,0 +1,43 @@
+{
+	"jeans": [
+		{
+			"type": "icon_state",
+			"icon_state": "buckle",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "belt",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "jeans",
+			"blend_mode": "overlay",
+			"color_ids": [3]
+		}
+	],
+	"jeans_d": [
+		{
+			"type": "icon_state",
+			"icon_state": "buckle",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "belt_d",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "jeans_d",
+			"blend_mode": "overlay",
+			"color_ids": [3]
+		}
+	]
+}
+

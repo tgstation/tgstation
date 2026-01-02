@@ -68,12 +68,17 @@
 	var/list/requirements_list = list()
 
 	// Process all requirements
-	for(var/requirement_path in recipe.reqs)
+	var/recipe_result
+	if(recipe.blacklist_result)
+		recipe_result = recipe.result
+	for(var/requirement_path, needed_amount in recipe.reqs)
 		// Check we have the appropriate amount available in the contents list
-		var/needed_amount = recipe.reqs[requirement_path]
 		for(var/content_item_path in contents)
 			// Right path and not blacklisted
-			if(!ispath(content_item_path, requirement_path) || recipe.blacklist.Find(content_item_path))
+			if(!ispath(content_item_path, requirement_path) || (content_item_path in recipe.blacklist) || is_type_in_typecache(recipe.global_blacklist, content_item_path))
+				continue
+			// If we are a recipe that is blacklisting its result, make sure we skip that path
+			if(recipe_result && content_item_path == recipe_result)
 				continue
 
 			needed_amount -= contents[content_item_path]
@@ -85,14 +90,14 @@
 
 		// Store the instances of what we will use for recipe.check_requirements() for requirement_path
 		var/list/instances_list = list()
-		for(var/instance_path in item_instances)
+		for(var/instance_path, item_instance in item_instances)
 			if(ispath(instance_path, requirement_path))
-				instances_list += item_instances[instance_path]
+				instances_list += item_instance
 
 		requirements_list[requirement_path] = instances_list
 
-	for(var/requirement_path in recipe.chem_catalysts)
-		if(contents[requirement_path] < recipe.chem_catalysts[requirement_path])
+	for(var/requirement_path, chem_amount in recipe.chem_catalysts)
+		if(contents[requirement_path] < chem_amount)
 			return FALSE
 
 	var/mech_found = FALSE
@@ -245,8 +250,7 @@
 	var/list/total_materials = list()
 	var/list/stuff_to_use = get_used_reqs(recipe, crafter, total_materials)
 
-	for(var/mat in recipe.removed_mats)
-		var/to_remove = recipe.removed_mats[mat]
+	for(var/mat, to_remove in recipe.removed_mats)
 		var/datum/material/ref_mat = locate(mat) in total_materials
 		if(!ref_mat)
 			continue
@@ -673,18 +677,18 @@
 			data["structures"] += atoms.Find(req_atom)
 
 	// Ingredients / Materials
+	data["reqs"] = list()
 	if(recipe.reqs.len)
-		data["reqs"] = list()
 		for(var/req_atom in recipe.reqs)
 			var/id = atoms.Find(req_atom)
 			data["reqs"]["[id]"] = recipe.reqs[req_atom]
 
 	// Catalysts
-	if(recipe.chem_catalysts.len)
+	if(LAZYLEN(recipe.chem_catalysts))
 		data["chem_catalysts"] = list()
-		for(var/req_atom in recipe.chem_catalysts)
+		for(var/req_atom, chem_amount in recipe.chem_catalysts)
 			var/id = atoms.Find(req_atom)
-			data["chem_catalysts"]["[id]"] = recipe.chem_catalysts[req_atom]
+			data["chem_catalysts"]["[id]"] = chem_amount
 
 	// Reaction data
 	if(ispath(recipe.reaction))

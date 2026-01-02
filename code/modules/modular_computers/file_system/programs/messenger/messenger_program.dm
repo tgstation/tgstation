@@ -34,7 +34,7 @@
 	var/spam_mode = FALSE
 
 	/// An asssociative list of chats we have started, format: chatref -> pda_chat.
-	var/list/saved_chats = list()
+	var/list/saved_chats
 	/// Whose chatlogs we currently have open. If we are in the contacts list, this is null.
 	var/viewing_messages_of = null
 
@@ -74,7 +74,7 @@
 /datum/computer_file/program/messenger/proc/on_imprint_reset(sender)
 	SIGNAL_HANDLER
 	remove_messenger(src)
-	saved_chats = list()
+	LAZYNULL(saved_chats)
 	selected_image = null
 	viewing_messages_of = null
 
@@ -117,7 +117,7 @@
 		data |= photo.picture_name
 
 	if(viewing_messages_of in saved_chats)
-		var/datum/pda_chat/chat = saved_chats[viewing_messages_of]
+		var/datum/pda_chat/chat = LAZYACCESS(saved_chats, viewing_messages_of)
 		for(var/datum/pda_message/message as anything in chat.messages)
 			if(isnull(message.photo_name))
 				continue
@@ -180,13 +180,13 @@
 
 		if("PDA_viewMessages")
 			if(viewing_messages_of in saved_chats)
-				var/datum/pda_chat/chat = saved_chats[viewing_messages_of]
+				var/datum/pda_chat/chat = LAZYACCESS(saved_chats, viewing_messages_of)
 				chat.unread_messages = 0
 
 			viewing_messages_of = params["ref"]
 
 			if (viewing_messages_of in saved_chats)
-				var/datum/pda_chat/chat = saved_chats[viewing_messages_of]
+				var/datum/pda_chat/chat = LAZYACCESS(saved_chats, viewing_messages_of)
 				chat.visible_in_recents = TRUE
 
 			selected_image = null
@@ -198,7 +198,7 @@
 			if(!(target in saved_chats))
 				return FALSE
 
-			var/datum/pda_chat/chat = saved_chats[target]
+			var/datum/pda_chat/chat = LAZYACCESS(saved_chats, target)
 			chat.visible_in_recents = FALSE
 			if(viewing_messages_of == target)
 				viewing_messages_of = null
@@ -208,9 +208,9 @@
 			var/chat_ref = params["ref"]
 
 			if(chat_ref in saved_chats)
-				saved_chats.Remove(chat_ref)
+				LAZYREMOVE(saved_chats, chat_ref)
 			else if(isnull(chat_ref))
-				saved_chats = list()
+				LAZYNULL(saved_chats)
 
 			viewing_messages_of = null
 			return TRUE
@@ -240,7 +240,7 @@
 			if(!(target_chat_ref in saved_chats))
 				return FALSE
 
-			var/datum/pda_chat/chat = saved_chats[target_chat_ref]
+			var/datum/pda_chat/chat = LAZYACCESS(saved_chats, target_chat_ref)
 
 			chat.message_draft = message_draft
 
@@ -252,7 +252,7 @@
 			if(!(target_chat_ref in saved_chats))
 				return FALSE
 
-			var/datum/pda_chat/chat = saved_chats[target_chat_ref]
+			var/datum/pda_chat/chat = LAZYACCESS(saved_chats, target_chat_ref)
 			chat.unread_messages = 0
 
 			return TRUE
@@ -269,7 +269,7 @@
 			var/target = null
 
 			if(target_ref in saved_chats)
-				target = saved_chats[target_ref]
+				target = LAZYACCESS(saved_chats, target_ref)
 			else if(target_ref in GLOB.pda_messengers)
 				target = GLOB.pda_messengers[target_ref]
 			else
@@ -357,7 +357,7 @@
 			"job" = computer.saved_job,
 			"ref" = REF(src)
 		) : null)
-	data["saved_chats"] = chats_data
+	data["saved_chats"] = chats_data || list()
 	data["messengers"] = messengers
 	data["sort_by_job"] = sort_by_job
 	data["alert_silenced"] = alert_silenced
@@ -412,8 +412,8 @@
 	for(var/mc in get_messengers())
 		messenger_targets += mc
 
-	for(var/chatref in saved_chats)
-		var/datum/pda_chat/chat = saved_chats[chatref]
+	for(var/chatref, data in saved_chats)
+		var/datum/pda_chat/chat = data
 		if(!(chat.recipient?.reference in messenger_targets)) // if its in messenger_targets, it's valid
 			continue
 		messenger_targets -= chat.recipient.reference
@@ -443,14 +443,14 @@
 		new_chat.cached_job = job
 		new_chat.can_reply = FALSE
 
-	saved_chats[REF(new_chat)] = new_chat
+	LAZYSET(saved_chats, REF(new_chat), new_chat)
 
 	return new_chat
 
 /// Gets the chat by the recipient, either by their name or messenger ref
 /datum/computer_file/program/messenger/proc/find_chat_by_recipient(recipient, fake_user = FALSE)
-	for(var/chat_ref in saved_chats)
-		var/datum/pda_chat/chat = saved_chats[chat_ref]
+	for(var/chat_ref, data in saved_chats)
+		var/datum/pda_chat/chat = data
 		if(fake_user && chat.cached_name == recipient)
 			return chat
 		else if(chat.recipient?.reference == recipient)
@@ -752,7 +752,7 @@
 		if("message")
 			if(!(target_href in saved_chats))
 				return
-			quick_reply_prompt(usr, saved_chats[target_href])
+			quick_reply_prompt(usr, LAZYACCESS(saved_chats, target_href))
 
 		if("open")
 			if(target_href in saved_chats)

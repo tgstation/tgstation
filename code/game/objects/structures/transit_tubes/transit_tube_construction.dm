@@ -27,7 +27,7 @@
 			return FALSE
 	return TRUE
 
-/obj/structure/c_transit_tube/post_rotation(mob/user, degrees)
+/obj/structure/c_transit_tube/proc/post_rotation(mob/user, degrees)
 	if(flipped_build_type && degrees == ROTATION_FLIP)
 		setDir(turn(dir, degrees)) //Turn back we don't actually flip
 		flipped = !flipped

@@ -419,7 +419,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/medical/paramedic/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //mirrored from jacket
+	AddElement(/datum/element/adjust_fishing_difficulty, -3) //mirrored from jacket
 	allowed += /obj/item/crowbar/power/paramedic
 
 /obj/item/clothing/head/hooded/winterhood/medical/paramedic

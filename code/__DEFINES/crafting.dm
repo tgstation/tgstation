@@ -37,6 +37,14 @@
 /// This craft won't change the materials of the resulting item to match that of the combined components
 #define CRAFT_NO_MATERIALS (1<<10)
 
+//Crafting blacklist behaviors
+/// By default, blacklist the result if it's not in reqs
+#define BLACKLIST_RESULT_IF_NOT_IN_REQS null
+/// Always blacklist - override default behavior
+#define ALWAYS_BLACKLIST_RESULT TRUE
+/// Never blacklist - override default behavior
+#define NEVER_BLACKLIST_RESULT FALSE
+
 //food/drink crafting defines
 //When adding new defines, please make sure to also add them to the encompassing list
 #define CAT_FOOD "Foods"

@@ -14,7 +14,7 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_glove_equip))
 	RegisterSignal(src, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(on_glove_unequip))
-	AddComponent(/datum/component/adjust_fishing_difficulty, 19)
+	AddElement(/datum/element/adjust_fishing_difficulty, 19)
 
 /// Called when the glove is equipped. Adds a component to the equipper and stores a weak reference to it.
 /obj/item/clothing/gloves/cargo_gauntlet/proc/on_glove_equip(datum/source, mob/equipper, slot)
@@ -60,7 +60,7 @@
 /obj/item/clothing/gloves/rapid/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/punchcooldown)
-	AddComponent(/datum/component/adjust_fishing_difficulty, -9)
+	AddElement(/datum/element/adjust_fishing_difficulty, -9)
 
 /obj/item/clothing/gloves/radio
 	name = "translation gloves"
@@ -79,7 +79,7 @@
 
 /obj/item/clothing/gloves/race/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -9)
+	AddElement(/datum/element/adjust_fishing_difficulty, -9)
 
 /obj/item/clothing/gloves/captain
 	desc = "Regal blue gloves, with a nice gold trim, a diamond anti-shock coating, and an integrated thermal barrier. Swanky."
@@ -99,7 +99,7 @@
 
 /obj/item/clothing/gloves/captain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -6)
+	AddElement(/datum/element/adjust_fishing_difficulty, -6)
 
 /datum/armor/captain_gloves
 	bio = 90
@@ -131,7 +131,7 @@
 
 /obj/item/clothing/gloves/latex/nitrile/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -6)
+	AddElement(/datum/element/adjust_fishing_difficulty, -6)
 
 /obj/item/clothing/gloves/latex/coroner
 	name = "coroner's gloves"
@@ -174,7 +174,7 @@
 
 /obj/item/clothing/gloves/atmos/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 6)
+	AddElement(/datum/element/adjust_fishing_difficulty, 6)
 
 ///A pair of gloves that both allow the user to fish without the need of a held fishing rod and provides athletics experience.
 /obj/item/clothing/gloves/fishing
@@ -187,7 +187,7 @@
 /obj/item/clothing/gloves/fishing/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/profound_fisher, new /obj/item/fishing_rod/mob_fisher/athletic(src))
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4) //on top of the extra that you get from the athletics skill.
+	AddElement(/datum/element/adjust_fishing_difficulty, -4) //on top of the extra that you get from the athletics skill.
 
 /obj/item/clothing/gloves/fishing/equipped(mob/user, slot)
 	. = ..()

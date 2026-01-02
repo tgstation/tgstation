@@ -236,7 +236,7 @@
 	shots_in_gun = 12
 	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
 	last_fire_sound = 'sound/items/weapons/thermalpistol.ogg'
-	projectile_type = /obj/projectile/beam/laser/musket/repeater
+	projectile_type = /obj/projectile/beam/laser/repeater
 	loaded_gun = TRUE
 	fully_loaded_gun = TRUE
 	fire_delay = 1

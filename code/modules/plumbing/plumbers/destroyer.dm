@@ -7,9 +7,9 @@
 	///we remove 5 reagents per second
 	var/disposal_rate = 5
 
-/obj/machinery/plumbing/disposer/Initialize(mapload, bolt, layer)
+/obj/machinery/plumbing/disposer/Initialize(mapload, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
+	AddComponent(/datum/component/plumbing/simple_demand, layer)
 
 /obj/machinery/plumbing/disposer/process(seconds_per_tick)
 	if(!is_operational)

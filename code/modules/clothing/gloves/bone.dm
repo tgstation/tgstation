@@ -15,7 +15,7 @@
 
 /obj/item/clothing/gloves/bracer/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 2)
+	AddElement(/datum/element/adjust_fishing_difficulty, 2)
 
 /datum/armor/gloves_bracer
 	melee = 15
