@@ -895,7 +895,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 
 /datum/reagent/drug/syndol
 	name = "Syndol"
-	description = "A potent and addictive hallucinogen used by syndicate agents disorient certain targets. \
+	description = "A potent and addictive hallucinogen used by syndicate agents to disorient certain targets. \
 		It is said that the hallucinations it causes are tailored to the user's fears, but tests have been inconclusive, \
 		with subjects in security and assistants reporting wildly different experiences."
 	color = "#c90000"
