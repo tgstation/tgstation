@@ -7,7 +7,7 @@
 	name = "\improper Cybersun AI Core"
 	desc = "An evil looking computer."
 	icon = 'icons/mob/silicon/ai.dmi'
-	icon_state = "ai-core" // Базовый спрайт - пустой корпус
+	icon_state = "ai-core"
 	icon_living = "ai-core"
 	gender = NEUTER
 	status_flags = NONE
@@ -54,7 +54,7 @@
 /mob/living/basic/cybersun_ai_core/update_overlays()
 	. = ..()
 
-	// 1. Lights (Огни по бокам корпуса)
+	// Lights
 	var/lights_state = "lights_active"
 	var/mutable_appearance/lights_overlay = mutable_appearance(icon, lights_state)
 	lights_overlay.layer = FLOAT_LAYER
@@ -62,7 +62,7 @@
 	. += lights_overlay
 	. += emissive_appearance(icon, lights_state, src)
 
-	// 2. Screen (Экран с лицом)
+	// Display
 	var/screen_state = "ai-red"
 	if(stat == DEAD)
 		screen_state = "ai-red_dead"
@@ -94,7 +94,6 @@
 
 /obj/effect/temp_visual/cybersun_ai_core_death/Initialize(mapload)
 	. = ..()
-	// Накладываем разбитый экран поверх корпуса, иначе это будет просто пустая коробка
 	add_overlay("ai-red_dead")
 
 	playsound(src, 'sound/misc/metal_creak.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
