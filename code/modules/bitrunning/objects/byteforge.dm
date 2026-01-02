@@ -37,7 +37,7 @@
 
 	. += span_notice("Must be within 4 tiles of the quantum server.")
 
-	. += span_notice("Its maintainance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
 	if(panel_open)
 		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
 

@@ -85,10 +85,10 @@
 	if(locked)
 		. += span_boldwarning("LOCKED")
 		return
-	. += span_notice("Maximum field length: [max_range] tiles")
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"]")
+	. += span_notice("Maximum field length: [max_range] tiles.")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
 	if(panel_open)
-		. += span_notice("It can be [EXAMINE_HINT("pried")] apart")
+		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
 
 /obj/machinery/atmos_shield_gen/RefreshParts()
 	. = ..()
