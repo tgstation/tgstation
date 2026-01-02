@@ -71,7 +71,7 @@
 	return data
 
 /datum/award/score/progress/fish/get_progress_string(progress_string)
-	return span_greenannounce("You've caught a <B>[progress_string]</B> for the first time!")
+	return span_greenannounce("This is the first time you've caught a <B>[progress_string]</B>!")
 
 /datum/award/score/progress/pda_themes
 	name = "Unlocked PDA Themes"
