@@ -43,3 +43,11 @@
       of the actual icons
   - bugfix: nearsightedness and other quirk prefs that use iconned dropdowns will
       no longer be cut off
+2026-01-03:
+  ElGitificador:
+  - balance: Reduced haunted eightball spawnrate on surplus and removed bee smoker
+      from syndi surplus pools. Added advanced mimery guide.
+  - balance: Increased the amount of TC contained inside surplus crates by 10, and
+      super surplus by 20.
+  carpotoxin:
+  - sound: Added more atmospheric sounds to moisture traps
