@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed lingering language holders caused by the sleeping carp"
