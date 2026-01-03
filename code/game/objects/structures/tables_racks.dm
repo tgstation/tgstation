@@ -1033,7 +1033,8 @@
 // surgical tools cannot be placed on the op table while a patient is also on it
 /obj/structure/table/optable/table_place_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(!isnull(patient) && (tool.item_flags & SURGICAL_TOOL))
-		return tool.melee_attack_chain(user, src, modifiers)
+		tool.melee_attack_chain(user, patient, modifiers)
+		return ITEM_INTERACT_SUCCESS
 
 	return ..()
 
