@@ -182,7 +182,7 @@
 			continue
 
 		//Nothing would come from grinding or juicing
-		if(!length(ingredient.grind_results) && !ingredient.reagents.total_volume)
+		if(!length(ingredient.grind_results()) && !ingredient.reagents.total_volume)
 			to_chat(user, span_warning("You cannot grind/juice [ingredient] into reagents!"))
 			continue
 
@@ -253,7 +253,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 	//add item directly
-	else if(length(tool.grind_results) || tool.reagents?.total_volume)
+	else if(length(tool.grind_results()) || tool.reagents?.total_volume)
 		if(tool.atom_storage && length(tool.contents)) //anything that has internal storage would be too much recursion for us to handle
 			to_chat(user, span_notice("Drag this item onto [src] to dump its contents, or empty it to grind the container."))
 			return ITEM_INTERACT_BLOCKING

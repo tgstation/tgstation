@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - balance: "Cain & Abel no longer forces dual-wielding and instead requires an empty offhand"

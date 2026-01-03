@@ -116,7 +116,7 @@
 	success_sound = 'sound/effects/blob/attackblob.ogg'
 	failure_sound = 'sound/effects/blob/blobattack.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN
-	any_surgery_states_blocked = SURGERY_PLASTIC_APPLIED
+	any_surgery_states_blocked = SURGERY_PLASTIC_APPLIED|SURGERY_VESSELS_UNCLAMPED
 
 /datum/surgery_operation/limb/add_plastic/get_default_radial_image()
 	return image(/obj/item/stack/sheet/plastic)
