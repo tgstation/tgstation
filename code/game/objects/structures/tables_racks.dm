@@ -1030,6 +1030,13 @@
 /obj/structure/table/optable/make_climbable()
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
+// surgical tools cannot be placed on the op table while a patient is also on it
+/obj/structure/table/optable/table_place_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isnull(patient) && (tool.item_flags & SURGICAL_TOOL))
+		return NONE
+
+	return ..()
+
 ///Align the mob with the table when buckled.
 /obj/structure/table/optable/post_buckle_mob(mob/living/buckled)
 	buckled.add_offsets(type, z_add = 6)
