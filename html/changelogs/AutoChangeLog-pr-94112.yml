@@ -1,0 +1,8 @@
+author: "mcbalaam"
+delete-after: True
+changes:
+  - rscadd: "New unique wraps for floppy disks"
+  - qol: "Floppy disks can now be stacked"
+  - image: "New sprites and stickers for floppy disks"
+  - map: "Added and ran an updatepaths script"
+  - refactor: "Most disks are now under the base disk item type"
