@@ -14194,15 +14194,15 @@
 /area/station/engineering/engine_smes)
 "dNH" = (
 /obj/structure/table,
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = -8;
 	pixel_y = -3
 	},
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = -5;
 	pixel_y = 8
 	},
-/obj/item/computer_disk/ordnance{
+/obj/item/disk/computer/ordnance{
 	pixel_x = 1
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -18341,8 +18341,8 @@
 /area/station/security/brig)
 "foD" = (
 /obj/structure/table/glass,
-/obj/item/computer_disk/medical,
-/obj/item/computer_disk/medical,
+/obj/item/disk/computer/medical,
+/obj/item/disk/computer/medical,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
@@ -38965,9 +38965,9 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/item/computer_disk/engineering,
-/obj/item/computer_disk/engineering,
-/obj/item/computer_disk/engineering,
+/obj/item/disk/computer/engineering,
+/obj/item/disk/computer/engineering,
+/obj/item/disk/computer/engineering,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "myc" = (
@@ -43745,10 +43745,10 @@
 /area/station/construction/mining/aux_base)
 "okA" = (
 /obj/structure/table,
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = -2
 	},
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = 7;
 	pixel_y = 2
 	},
@@ -48336,8 +48336,8 @@
 "pUV" = (
 /obj/structure/table,
 /obj/item/clipboard,
-/obj/item/computer_disk/quartermaster,
-/obj/item/computer_disk/quartermaster,
+/obj/item/disk/computer/quartermaster,
+/obj/item/disk/computer/quartermaster,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
@@ -62314,15 +62314,15 @@
 	pixel_x = 7;
 	pixel_y = -2
 	},
-/obj/item/computer_disk/ordnance{
+/obj/item/disk/computer/ordnance{
 	pixel_x = -4;
 	pixel_y = 10
 	},
-/obj/item/computer_disk/ordnance{
+/obj/item/disk/computer/ordnance{
 	pixel_x = 5;
 	pixel_y = 10
 	},
-/obj/item/computer_disk/ordnance{
+/obj/item/disk/computer/ordnance{
 	pixel_x = 1;
 	pixel_y = 10
 	},

@@ -14,7 +14,7 @@
 		/obj/item/clothing/shoes/sandal = 1,
 		/obj/item/clothing/glasses/sunglasses = 1,
 		/obj/item/gun/energy/laser/chameleon/ballistic_only = 1,
-		/obj/item/bitrunning_disk/item/mini_uzi = 1,
+		/obj/item/disk/bitrunning/item/mini_uzi = 1,
 	)
 
 /datum/lazy_template/virtual_domain/island_brawl/setup_domain(list/created_atoms)
