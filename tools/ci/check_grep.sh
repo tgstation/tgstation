@@ -99,7 +99,7 @@ if $grep -i 'eciev' $map_files; then
     echo -e "${RED}ERROR: Common I-before-E typo detected in maps.${NC}"
     st=1
 fi;
-if $grep -i 'maintainance|maintainence' $map_files; then
+if $grep -i 'maintainance|maintainence|maintenence' $map_files; then
     echo
     echo -e "${RED}ERROR: Misspelling(s) of 'maintenance' detected in maps, please fix.${NC}";
     st=1
@@ -258,7 +258,7 @@ if $grep -i 'eciev' $code_files; then
     echo -e "${RED}ERROR: Common I-before-E typo detected in code.${NC}"
     st=1
 fi;
-if $grep -i 'maintainance|maintainence' $code_files; then
+if $grep -i 'maintainance|maintainence|maintenence' $code_files; then
     echo
     echo -e "${RED}ERROR: Misspelling(s) of 'maintenance' detected in code, please fix.${NC}";
     st=1
