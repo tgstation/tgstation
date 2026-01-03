@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscdel: "Eigenstasium can no longer create Eigenlockers"
+  - rscadd: "Rarely, maintenance lockers will spawn as Eigenlockers, potentially linked to any other locker on the station - yes, even the Captain's."
+  - rscadd: "Teleporting via an Eigenlocker doesn't auto-open the destination locker, allowing you to hide in them."
