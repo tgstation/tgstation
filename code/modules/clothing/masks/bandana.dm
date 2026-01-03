@@ -72,12 +72,17 @@
 		widen.Scale(1.25, 1)
 		transform = widen
 		user.visible_message(span_notice("[user] ties [src] up like a neckerchief."), span_notice("You tie [src] up like a neckerchief."))
-	else
-		undyeable = initial(undyeable)
-		slot_flags = initial(slot_flags)
-		worn_y_offset = initial(worn_y_offset)
-		transform = initial(transform)
-		user.visible_message(span_notice("[user] unties the neckercheif."), span_notice("You untie the neckercheif."))
+		flags_inv = NONE
+		flags_cover = NONE
+		return CLICK_ACTION_SUCCESS
+
+	undyeable = initial(undyeable)
+	slot_flags = initial(slot_flags)
+	worn_y_offset = initial(worn_y_offset)
+	transform = initial(transform)
+	user.visible_message(span_notice("[user] unties the neckercheif."), span_notice("You untie the neckercheif."))
+	flags_inv = initial(flags_inv)
+	flags_cover = initial(flags_cover)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/bandana/red

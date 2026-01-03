@@ -180,6 +180,8 @@
 		if(advanced)
 			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
 				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("desiccation", "Irreparable. Under normal circumstances, revival can only proceed via brain transplant.", tochat)].</span><br>"
+			else if(HAS_TRAIT_FROM(target, TRAIT_HUSK, SKELETON_TRAIT))
+				render_list += "<span class='alert ml-1'>Subject has been husked due to severe flesh loss.</span><br>"
 			else if(!HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN)) // prioritize showing unknown causes over burns
 				render_list += "<span class='alert ml-1'>Subject has been husked by mysterious causes.</span><br>"
 			else

@@ -219,8 +219,8 @@ GLOBAL_LIST_EMPTY(starlight)
 
 /turf/open/space/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
-	if(PERFORM_ALL_TESTS(focus_only/openspace_clear) && !GET_TURF_BELOW(src))
-		stack_trace("[src] was inited as openspace with nothing below it at ([x], [y], [z])")
+	if(PERFORM_ALL_TESTS(maptest_log_mapping) && !GET_TURF_BELOW(src))
+		log_mapping("[src] was inited as openspace with nothing below it at ([x], [y], [z])")
 	icon_state = "pure_white"
 	// We make the assumption that the space plane will never be blacklisted, as an optimization
 	if(SSmapping.max_plane_offset)
