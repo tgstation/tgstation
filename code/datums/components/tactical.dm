@@ -48,6 +48,8 @@
 	ADD_TRAIT(user, TRAIT_UNKNOWN_APPEARANCE, REF(src))
 
 	current_slot = slot
+	source.pixel_x = source.base_pixel_x
+	source.pixel_y = source.base_pixel_y
 
 	on_icon_update(source)
 
