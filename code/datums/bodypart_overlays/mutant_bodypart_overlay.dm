@@ -63,6 +63,8 @@
 		var/datum/sprite_accessory/accessory_datum = feature_list[accessory]
 		if(initial(accessory_datum.locked)) //locked is for stuff that shouldn't appear here
 			continue
+		if(!initial(accessory_datum.factual)) // we don't want stuff like "None" accessories spawning and being invisible.
+			continue
 		if(!initial(accessory_datum.natural_spawn))
 			continue
 		valid_restyles += accessory_datum
