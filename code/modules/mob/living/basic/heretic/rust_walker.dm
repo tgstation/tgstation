@@ -29,6 +29,9 @@
 	. = ..()
 	update_appearance(UPDATE_ICON_STATE)
 
+/mob/living/basic/heretic_summon/rust_walker/do_rust_heretic_act(atom/target)
+	target.rust_heretic_act(RUST_RESISTANCE_TITANIUM)
+
 /mob/living/basic/heretic_summon/rust_walker/update_icon_state()
 	. = ..()
 	if(stat == DEAD) // We usually delete on death but just in case
