@@ -70,6 +70,19 @@
 	if(target.stat == DEAD || (target.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(target, TRAIT_NODEATH)))
 		devour(target)
 
+/mob/living/basic/boss/ex_act(severity, target)
+	switch (severity)
+		if (EXPLODE_DEVASTATE)
+			adjust_brute_loss(250)
+
+		if (EXPLODE_HEAVY)
+			adjust_brute_loss(100)
+
+		if (EXPLODE_LIGHT)
+			adjust_brute_loss(50)
+
+	return TRUE
+
 /// Devours a target and restores health to the megafauna
 /mob/living/basic/boss/proc/devour(mob/living/victim)
 	if(isnull(victim) || victim.has_status_effect(/datum/status_effect/gutted))
@@ -87,25 +100,16 @@
 	victim.apply_status_effect(/datum/status_effect/gutted)
 	return TRUE
 
+/// Small little taunt when we epically troll someone
 /mob/living/basic/boss/proc/celebrate_kill(mob/living/poor_sap)
 	visible_message(
 		span_danger("[src] disembowels [poor_sap]!"),
-		span_userdanger("You feast on [poor_sap]'s organs, restoring your health!"))
+		span_userdanger("You feast on [poor_sap]'s organs, restoring your health!"),
+	)
 
 /// Handles adding all relevant achievements when applicable (probably when we are defeated)
 /// Achievements being null/no length is handled in the element itself.
 /mob/living/basic/boss/proc/handle_achievements()
 	AddElement(/datum/element/kill_achievement, achievements, crusher_achievement_type, victor_memory_type)
 
-/mob/living/basic/boss/ex_act(severity, target)
-	switch (severity)
-		if (EXPLODE_DEVASTATE)
-			adjust_brute_loss(250)
 
-		if (EXPLODE_HEAVY)
-			adjust_brute_loss(100)
-
-		if (EXPLODE_LIGHT)
-			adjust_brute_loss(50)
-
-	return TRUE

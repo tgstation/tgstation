@@ -76,15 +76,6 @@ Difficulty: Medium
 	RegisterSignal(miner_saw, COMSIG_PREQDELETED, PROC_REF(on_saw_deleted))
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
-	var/static/list/achievements = list(
-		/datum/award/achievement/boss/boss_killer,
-		/datum/award/achievement/boss/blood_miner_kill,
-		/datum/award/achievement/boss/blood_miner_crusher,
-		/datum/award/score/blood_miner_score,
-	)
-
-	AddElement(/datum/element/kill_achievement, string_list(achievements), /datum/award/achievement/boss/blood_miner_crusher, /datum/memory/megafauna_slayer)
-
 	dash = new /datum/action/cooldown/mob_cooldown/dash
 	kinetic_accelerator = new /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator
 	dash_attack = new /datum/action/cooldown/mob_cooldown/dash_attack
