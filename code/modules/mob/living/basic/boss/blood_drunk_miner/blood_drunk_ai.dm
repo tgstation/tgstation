@@ -24,11 +24,23 @@
 		/datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/dash_attack,
 	)
 
+/// Parent type that contains key logic important for subsequent abilities
+/datum/ai_planning_subtree/targeted_mob_ability/blood_drunk
+	/// Key for transforming our weapon whenever we need to
+	var/transform_weapon_key = BB_BDM_TRANSFORM_WEAPON_ABILITY
+	/// Range where we determine what distance we're at. If higher, we consider ourselves out of PKA range and will dash attack instead. Inclusive when it comes to choosing to shoot PKA.
+	var/pka_range = 3
+
+/// Transform our weapon as needed after an attack
+/datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/SelectBehaviors(datum/ai_controller/controller, datum/action/cooldown/using_action)
+	. = ..()
+	var/datum/action/cooldown/transform_weapon = controller.blackboard[transform_weapon_key]
+	transform_weapon.Trigger()
+
+
 /// The BDM will preferentially shoot its PKA within range over other abilities
 /datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/shoot_pka
 	ability_key = BB_BDM_KINETIC_ACCELERATOR_ABILITY
-	/// The range at which we are able to shoot our PKA at, inclusive.
-	var/pka_range = 3
 
 /datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/shoot_pka/additional_ability_checks(datum/ai_controller/controller, datum/action/cooldown/using_action)
 	. = ..()
@@ -38,4 +50,18 @@
 	if(get_dist(pawn, victim) >= pka_range)
 		return FALSE
 	return TRUE
+
+/// The BDM will dash attack if not in PKA range
+/datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/dash_attack
+	ability_key = BB_BDM_DASH_ATTACK_ABILITY
+
+/datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/dash_attack/additional_ability_checks(datum/ai_controller/controller, datum/action/cooldown/using_action)
+	. = ..()
+	// only dash attack if we are out of PKA range
+	var/mob/living/pawn = controller.pawn
+	var/mob/living/victim = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	if(get_dist(pawn, victim) < pka_range)
+		return FALSE
+	return TRUE
+
 

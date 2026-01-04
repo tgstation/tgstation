@@ -88,10 +88,6 @@ Difficulty: Medium
 		return TRUE
 
 /mob/living/basic/boss/blood_drunk_miner/Destroy(force)
-	dash = null
-	kinetic_accelerator = null
-	dash_attack = null
-	transform_weapon = null
 	UnregisterSignal(miner_saw, COMSIG_PREQDELETED) // unblock deletion, we are dead.
 	QDEL_NULL(miner_saw)
 	return ..()
@@ -106,7 +102,7 @@ Difficulty: Medium
 	return innate_abilities
 
 /mob/living/basic/boss/blood_drunk_miner/ex_act(severity, target)
-	var/dash_ability = ai_controller[BB_BDM_DASH_ABILITY]
+	var/dash_ability = ai_controller.blackboard[BB_BDM_DASH_ABILITY]
 	if(dash_ability.Trigger(target = target))
 		return FALSE
 	return ..()
@@ -152,7 +148,7 @@ Difficulty: Medium
 		addtimer(melee_callback, (i - 1) * delay, timer_subsystem = SSmobs)
 
 	if(guidance)
-		adjustHealth(-2)
+		adjust_health(-2)
 
 	return COMPONENT_HOSTILE_NO_ATTACK
 

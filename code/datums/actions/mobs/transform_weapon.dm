@@ -10,12 +10,12 @@
 
 /datum/action/cooldown/mob_cooldown/transform_weapon/Activate(atom/target_atom)
 	disable_cooldown_actions()
-	do_transform(target_atom)
+	do_transform()
 	StartCooldown(rand(cooldown_time, max_cooldown_time), 0)
 	enable_cooldown_actions()
 	return TRUE
 
-/datum/action/cooldown/mob_cooldown/transform_weapon/proc/do_transform(atom/target)
+/datum/action/cooldown/mob_cooldown/transform_weapon/proc/do_transform()
 	if(!istype(owner, /mob/living/basic/boss/blood_drunk_miner))
 		return
 	var/mob/living/basic/boss/blood_drunk_miner/blood_drunk_miner = owner
