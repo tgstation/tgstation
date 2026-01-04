@@ -16,9 +16,9 @@
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/transform_weapon/proc/do_transform(atom/target)
-	if(!istype(owner, /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner))
+	if(!istype(owner, /mob/living/basic/boss/blood_drunk_miner))
 		return
-	var/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/blood_drunk_miner = owner
+	var/mob/living/basic/boss/blood_drunk_miner/blood_drunk_miner = owner
 	blood_drunk_miner.miner_saw.attack_self(owner)
 	var/saw_open = HAS_TRAIT(blood_drunk_miner.miner_saw, TRAIT_TRANSFORM_ACTIVE)
 	blood_drunk_miner.rapid_melee = saw_open ? 3 : 5

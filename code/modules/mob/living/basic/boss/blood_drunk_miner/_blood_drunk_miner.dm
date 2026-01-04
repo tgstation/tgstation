@@ -17,8 +17,7 @@ When the blood-drunk miner dies, it leaves behind the cleaving saw it was using 
 Difficulty: Medium
 
 */
-
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner
+/mob/living/basic/boss/blood_drunk_miner
 	name = "blood-drunk miner"
 	desc = "A miner destined to wander forever, engaged in an endless hunt."
 	health = 900
@@ -63,7 +62,7 @@ Difficulty: Medium
 	/// Their little saw
 	var/obj/item/melee/cleaving_saw/miner/miner_saw
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Initialize(mapload)
+/mob/living/basic/boss/blood_drunk_miner/Initialize(mapload)
 	. = ..()
 	miner_saw = new(src)
 	RegisterSignal(miner_saw, COMSIG_PREQDELETED, PROC_REF(on_saw_deleted))
@@ -81,13 +80,13 @@ Difficulty: Medium
 	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg')
 
 /// Block deletion of their saw under normal circumstances. It is fused to their hands as far as we're concerned.
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/on_saw_deleted(datum/source, force)
+/mob/living/basic/boss/blood_drunk_miner/proc/on_saw_deleted(datum/source, force)
 	SIGNAL_HANDLER
 
 	if(!force)
 		return TRUE
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Destroy(force)
+/mob/living/basic/boss/blood_drunk_miner/Destroy(force)
 	dash = null
 	kinetic_accelerator = null
 	dash_attack = null
@@ -96,7 +95,7 @@ Difficulty: Medium
 	QDEL_NULL(miner_saw)
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()
+/mob/living/basic/boss/blood_drunk_miner/OpenFire()
 	if(client)
 		return
 
@@ -121,27 +120,27 @@ Difficulty: Medium
 	icon_state = "ka_tracer"
 	range = 4
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/basic/boss/blood_drunk_miner/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	var/adjustment_amount = amount * 0.1
 	if(world.time + adjustment_amount > next_move)
 		changeNext_move(adjustment_amount) //attacking it interrupts it attacking, but only briefly
 	. = ..()
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/drop_loot(drop_loc)
+/mob/living/basic/boss/blood_drunk_miner/drop_loot(drop_loc)
 	new /obj/effect/temp_visual/dir_setting/miner_death(loc, dir)
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Move(atom/newloc)
+/mob/living/basic/boss/blood_drunk_miner/Move(atom/newloc)
 	if(newloc && newloc.z == z && ischasm(newloc)) //we're not stupid!
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/ex_act(severity, target)
+/mob/living/basic/boss/blood_drunk_miner/ex_act(severity, target)
 	if(dash.Trigger(target = target))
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/AttackingTarget(atom/attacked_target)
+/mob/living/basic/boss/blood_drunk_miner/AttackingTarget(atom/attacked_target)
 	if(QDELETED(target))
 		return
 	face_atom(target)
@@ -161,12 +160,12 @@ Difficulty: Medium
 		adjustHealth(-2)
 	return TRUE
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect)
+/mob/living/basic/boss/blood_drunk_miner/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!used_item && !isturf(attacked_atom))
 		used_item = miner_saw
 	..()
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/GiveTarget(new_target)
+/mob/living/basic/boss/blood_drunk_miner/GiveTarget(new_target)
 	var/targets_the_same = (new_target == target)
 	. = ..()
 	if(. && target && !targets_the_same)
@@ -193,21 +192,21 @@ Difficulty: Medium
 	sleep(0.4 SECONDS)
 	animate(src, alpha = 0, time = 6, easing = SINE_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance
+/mob/living/basic/boss/blood_drunk_miner/guidance
 	guidance = TRUE
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter/AttackingTarget(atom/attacked_target)
+/mob/living/basic/boss/blood_drunk_miner/hunter/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(. && prob(12))
 		INVOKE_ASYNC(dash, TYPE_PROC_REF(/datum/action, Trigger), src, NONE, target)
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom
+/mob/living/basic/boss/blood_drunk_miner/doom
 	name = "hostile-environment miner"
 	desc = "A miner destined to hop across dimensions for all eternity, hunting anomalous creatures."
 	speed = 8
 	move_to_delay = 8
 	ranged_cooldown_time = 0.8 SECONDS
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom/Initialize(mapload)
+/mob/living/basic/boss/blood_drunk_miner/doom/Initialize(mapload)
 	. = ..()
 	dash.cooldown_time = 0.8 SECONDS
