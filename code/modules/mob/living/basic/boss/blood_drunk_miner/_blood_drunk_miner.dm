@@ -108,26 +108,14 @@ Difficulty: Medium
 	)
 	return innate_abilities
 
-/mob/living/basic/boss/blood_drunk_miner/OpenFire()
-	if(client)
-		return
-
-	Goto(target, move_to_delay, minimum_distance)
-	if(get_dist(src, target) > 4 && dash_attack.IsAvailable())
-		dash_attack.Trigger(target = target)
-	else
-		kinetic_accelerator.Trigger(target = target)
-	transform_weapon.Trigger(target = target)
-
-/mob/living/basic/boss/blood_drunk_miner/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	var/adjustment_amount = amount * 0.1
-	if(world.time + adjustment_amount > next_move)
-		changeNext_move(adjustment_amount) //attacking it interrupts it attacking, but only briefly
-	. = ..()
-
 /mob/living/basic/boss/blood_drunk_miner/ex_act(severity, target)
 	if(dash.Trigger(target = target))
 		return FALSE
+	return ..()
+
+/mob/living/basic/boss/blood_drunk_miner/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect)
+	if(!used_item && !isturf(attacked_atom))
+		used_item = miner_saw
 	return ..()
 
 /// Handles spawning a death effect when the blood-drunk miner dies. Tied to COMSIG_LIVING_DROP_LOOT so the timings of spawning the effect should approximately work out with the loot appearing.
@@ -159,12 +147,6 @@ Difficulty: Medium
 	if(guidance)
 		adjustHealth(-2)
 	return TRUE
-
-/mob/living/basic/boss/blood_drunk_miner/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect)
-	if(!used_item && !isturf(attacked_atom))
-		used_item = miner_saw
-	..()
-
 /mob/living/basic/boss/blood_drunk_miner/GiveTarget(new_target)
 	var/targets_the_same = (new_target == target)
 	. = ..()
@@ -172,3 +154,19 @@ Difficulty: Medium
 		wander = TRUE
 
 
+/mob/living/basic/boss/blood_drunk_miner/OpenFire()
+	if(client)
+		return
+
+	Goto(target, move_to_delay, minimum_distance)
+	if(get_dist(src, target) > 4 && dash_attack.IsAvailable())
+		dash_attack.Trigger(target = target)
+	else
+		kinetic_accelerator.Trigger(target = target)
+	transform_weapon.Trigger(target = target)
+
+/mob/living/basic/boss/blood_drunk_miner/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	var/adjustment_amount = amount * 0.1
+	if(world.time + adjustment_amount > next_move)
+		changeNext_move(adjustment_amount) //attacking it interrupts it attacking, but only briefly
+	. = ..()
