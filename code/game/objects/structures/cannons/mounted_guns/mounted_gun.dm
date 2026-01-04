@@ -44,6 +44,12 @@
 	var/is_firing = FALSE
 	/// How many degrees to vary fire angle if the gun is not anchored
 	var/unanchored_variance = 20
+	/// What items to spawn when destroyed
+	var/list/debris = list(
+		/obj/item/stack/sheet/iron = 4,
+		/obj/item/stack/rods = 3,
+		/obj/item/assembly/igniter = 1,
+	)
 
 /obj/structure/mounted_gun/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -53,30 +59,40 @@
 	return ITEM_INTERACT_SUCCESS
 
 ///Covers Reloading and lighting of the gun
-/obj/structure/mounted_gun/attackby(obj/item/used_item, mob/user, params)
+/obj/structure/mounted_gun/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!uses_ammo || user.combat_mode || !istype(tool, ammo_type)) //see if the gun needs to be loaded in some way.
+		return NONE
+
 	if(is_firing)
 		balloon_alert(user, "gun firing!")
-		return
-
-	if(!uses_ammo || !istype(used_item, ammo_type)) //see if the gun needs to be loaded in some way.
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	var/fully_loaded = shots_in_gun >= max_shots_per_fire
 	if(fully_loaded)
 		balloon_alert(user, "already loaded!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(load_delay > 0 && !do_after(user, load_delay, target = src))
-		return
+	if (load_delay > 0)
+		user.visible_message(span_warning("[user] starts loading [src]."))
+		if(!do_after(user, load_delay, target = src))
+			return ITEM_INTERACT_BLOCKING
 
 	shots_in_gun = min(shots_in_gun + shots_per_load, max_shots_per_fire)
 	balloon_alert(user, loading_message)
-	QDEL_NULL(used_item)
+	QDEL_NULL(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/mounted_gun/attack_hand(mob/living/user, list/modifiers)
-	if(is_firing)
+	. = ..()
+	if (.)
+		return
+	if (is_firing)
 		balloon_alert(user, "gun firing!")
 		return
+	try_firing(user)
+
+/// Start firing the weapon on interaction
+/obj/structure/mounted_gun/proc/try_firing(mob/living/user)
 	user.log_message("fired a mounted gun", LOG_ATTACK)
 	log_game("[key_name(user)] fired a mounted gun in [AREACOORD(src)]")
 	addtimer(CALLBACK(src, PROC_REF(fire_sequence), user), fire_delay) //uses fire proc as shown below to shoot the gun
@@ -98,6 +114,16 @@
 	shots_in_gun = 0
 	is_firing = FALSE
 	icon_state = base_icon_state
+
+/obj/structure/mounted_gun/atom_deconstruct(disassembled = TRUE)
+	. = ..()
+	dump_contents()
+	for (var/type in debris)
+		for (var/i in 1 to debris[type])
+			new type(drop_location())
+
+/obj/structure/mounted_gun/dump_contents()
+	return // Generally we don't have contents to dump but some children do.
 
 /// Perform the contents of the loop
 /obj/structure/mounted_gun/proc/fire_loop()
@@ -121,6 +147,7 @@
 /obj/structure/mounted_gun/proc/get_fired_projectile()
 	return new projectile_type(get_turf(src))
 
+/// Rapidly fires a barrage of random junk ammo
 /obj/structure/mounted_gun/organ_gun
 	name = "Pipe Organ Gun"
 	desc = "To become master over one who has killed, one must become a better killer. This engine of destruction is one of many things made to that end."
@@ -139,6 +166,13 @@
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 24.5,
 		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 15,
 		/datum/material/glass = SMALL_MATERIAL_AMOUNT
+	)
+	debris = list(
+		/obj/item/pipe = 1,
+		/obj/item/stack/sheet/mineral/wood = 3,
+		/obj/item/storage/toolbox = 1,
+		/obj/item/stack/rods = 4,
+		/obj/item/assembly/igniter = 1,
 	)
 	/// Different kinds of bullet we can fire
 	var/static/list_of_projectiles = list(
@@ -165,7 +199,8 @@
 	var/random_type = pick_weight(list_of_projectiles)
 	return new random_type(get_turf(src))
 
-/obj/structure/mounted_gun/canister_gatling //for the funny skeleton pirates!
+/// Rapidly sprays a large amount of bullets, used by pirates
+/obj/structure/mounted_gun/canister_gatling
 	name = "Canister Gatling Gun"
 	desc = "''Quantity has a quality of its own.''"
 	icon_state = "canister_gatling"
@@ -179,6 +214,12 @@
 	fire_delay = 3 DECISECONDS
 	shot_delay = 1 DECISECONDS
 	firing_shakes_camera = FALSE
+	debris = list(
+		/obj/item/pipe = 1,
+		/obj/item/stack/sheet/mineral/wood = 3,
+		/obj/item/stack/rods = 4,
+		/obj/item/assembly/igniter = 1,
+	)
 
 /obj/item/ammo_casing/canister_shot
 	name = "Canister Shot"
@@ -189,6 +230,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	projectile_type = /obj/projectile/bullet/shrapnel
 
+/// Hand-cranked laser repeater which does not need to be reloaded
 /obj/structure/mounted_gun/ratvarian_repeater
 	name = "Ratvarian Repeater"
 	desc = "''Brains? Bronze? Why not both?''"
@@ -212,33 +254,35 @@
 		/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.29
 	)
+	debris = list(
+		/obj/item/stack/cable_coil = 4,
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/shard = 2,
+		/obj/item/stack/sheet/bronze = 2,
+		/obj/item/stack/rods = 3,
+	)
 
-/obj/structure/mounted_gun/ratvarian_repeater/dump_contents()
-	return // Stub because we don't want to do anything here
-
-/obj/structure/mounted_gun/ratvarian_repeater/attack_hand(mob/user, params)
-	if(is_firing)
-		balloon_alert(user, "gun firing!")
-		return
-
+// Charge the gun instead of firing it if it's not loaded
+/obj/structure/mounted_gun/ratvarian_repeater/try_firing(mob/user)
 	var/fully_loaded = shots_in_gun >= max_shots_per_fire
-	if(!fully_loaded)
+	if(fully_loaded)
+		return ..()
+
+	if (load_delay > 0)
+		user.visible_message(span_warning("[user] starts winding [src]."))
 		if(!do_after(user, load_delay, target = src))
 			return
 
-		shots_in_gun = min(shots_in_gun + shots_per_load, max_shots_per_fire)
-		playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 50, FALSE, 5)
-		return
-
-	user.log_message("fired a ratvatian repeater", LOG_ATTACK)
-	log_game("[key_name(user)] fired a ratvatian repeater in [AREACOORD(src)]")
-	addtimer(CALLBACK(src, PROC_REF(fire_sequence), user), fire_delay)
+	shots_in_gun = min(shots_in_gun + shots_per_load, max_shots_per_fire)
+	playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 50, FALSE, 5)
 
 /obj/structure/mounted_gun/ratvarian_repeater/fire_loop()
 	. = ..()
 	if(shots_in_gun % 2 != 1) // Extra delay every other shot for burst fire
 		sleep(shot_delay)
 
+/// A makeshift structure for firing spears with increased force
 /obj/structure/mounted_gun/ballista
 	name = "Improvised Ballista"
 	desc = "''Engineers like to solve problems. If there are no problems handily available, they will create their own problems.''"
@@ -262,35 +306,43 @@
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15.15,
 		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5
 	)
+	debris = list(
+		/obj/item/stack/cable_coil = 3,
+		/obj/item/stack/sheet/iron = 2,
+		/obj/item/stack/rods = 3,
+	)
 	/// Suffix added to base icon state when loaded
 	var/loaded_suffix = "_loaded"
 	/// What spear has someone put in us?
 	var/obj/item/loaded_spear
 
-/obj/structure/mounted_gun/ballista/attackby(obj/item/used_item, mob/user, params) //again its single shot so its kinda weird.
-	if(is_firing)
-		balloon_alert(user, "gun firing")
-		return
+/obj/structure/mounted_gun/ballista/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, ammo_type) || user.combat_mode)
+		return NONE
 
-	if(!istype(used_item, ammo_type))
-		return
+	if(is_firing)
+		balloon_alert(user, "gun firing!")
+		return ITEM_INTERACT_BLOCKING
 
 	if(loaded_spear)
 		balloon_alert(user, "already loaded!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	playsound(src, 'sound/items/weapons/draw_bow.ogg', 50, FALSE, 5)
-	if (!do_after(user, load_delay, target = src))
-		return
+	if (load_delay > 0)
+		user.visible_message(span_warning("[user] starts loading [src]."))
+		if (!do_after(user, load_delay, target = src))
+			return ITEM_INTERACT_BLOCKING
 
 	shots_in_gun = 1
 	icon_state = base_icon_state + loaded_suffix
 
-	loaded_spear = used_item
+	loaded_spear = tool
 	loaded_spear.forceMove(src)
 	RegisterSignals(loaded_spear, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(on_spear_left))
 
 	balloon_alert(user, loading_message)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/mounted_gun/ballista/get_fired_projectile()
 	if (istype(loaded_spear, /obj/item/spear/dragonator))
@@ -308,3 +360,7 @@
 	icon_state = base_icon_state
 	loaded_spear = null
 	shots_in_gun = 0
+
+/obj/structure/mounted_gun/ballista/dump_contents()
+	. = ..()
+	loaded_spear?.forceMove(drop_location())
