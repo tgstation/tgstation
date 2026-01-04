@@ -630,7 +630,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return
 
 /// Check if the heretic is strong enough to rust this turf, and if so, rusts the turf with an added visual effect.
-/turf/rust_heretic_act(rust_strength = 1)
+/turf/rust_heretic_act(rust_strength = RUST_RESISTANCE_BASIC)
 	if((rust_strength < rust_resistance))
 		return
 
