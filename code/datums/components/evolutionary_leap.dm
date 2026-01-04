@@ -23,7 +23,7 @@
 		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(comp_on_round_start))
 		return
 
-	//if the round has already taken long enough, evolve in five seconds.
+	//if the round has already taken long enough, evolve in three seconds.
 	if((world.time - SSticker.round_start_time) > evolve_mark)
 		addtimer(CALLBACK(src, PROC_REF(leap)), 3 SECONDS, TIMER_DELETE_ME)
 		return
