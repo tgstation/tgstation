@@ -8,10 +8,9 @@
 	anchored = FALSE
 	icon = 'icons/obj/weapons/cannons.dmi'
 	icon_state = "falconet_patina"
-	var/icon_state_base = "falconet_patina"
-	var/icon_state_loaded = "falconet_patina"
-	var/icon_state_fire = "falconet_patina_fire"
 	max_integrity = 300
+	/// Suffix added to base icon state when firing
+	var/fire_suffix = "_fire"
 	///whether the cannon can be unwrenched from the ground. Anchorable_cannon equivalent.
 	var/anchorable_gun = TRUE
 	/// does this thing need ammo at all or does it just make ammo?
@@ -19,7 +18,7 @@
 	///Max shots per firing of the gun.
 	var/max_shots_per_fire = 1
 	///Delay it takes to load the gun. Set to 0 if none.
-	var/load_delay = 0
+	var/load_delay = 0 SECONDS
 	///Message displayed when loading gun
 	var/loading_message = "gun loaded"
 	///Shots currently loaded. Should never be more than max_shots_per_fire.
@@ -54,6 +53,8 @@
 	var/last_fire_sound = 'sound/items/weapons/gun/general/mountedgunend.ogg'
 	///So you can't reload it mid-firing
 	var/is_firing = FALSE
+	/// How many degrees to vary fire angle if the gun is not anchored
+	var/unanchored_variance = 20
 
 /obj/structure/mounted_gun/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -65,74 +66,79 @@
 ///Covers Reloading and lighting of the gun
 /obj/structure/mounted_gun/attackby(obj/item/ammo_casing/used_item, mob/user, params)
 	if(is_firing)
-		balloon_alert(user, "gun is firing!")
+		balloon_alert(user, "gun firing!")
 		return
-	if(istype(used_item, ammo_type) && (uses_ammo == TRUE)) //see if the gun needs to be loaded in some way.
-		if(fully_loaded_gun)
-			balloon_alert(user, "already fully loaded!")
-			return
 
-		if(load_delay > 0 && !do_after(user, load_delay, target = src))
-			return
-
-		shots_in_gun = shots_in_gun + shots_per_load //Add one to the shots in the gun
-		balloon_alert(user, loading_message)
-		loaded_gun = TRUE // Make sure it registers theres ammo in there, so it can fire.
-		QDEL_NULL(used_item)
-		if(shots_in_gun >= max_shots_per_fire)
-			shots_in_gun = max_shots_per_fire // in case of somehow firing only some of a guns shots, and reloading, you still cant get above the maximum ammo size.
-			fully_loaded_gun = TRUE //So you cant load extra.
-		icon_state = icon_state_loaded
+	if(!uses_ammo || !istype(used_item, ammo_type)) //see if the gun needs to be loaded in some way.
 		return
+
+	if(fully_loaded_gun)
+		balloon_alert(user, "already loaded!")
+		return
+
+	if(load_delay > 0 && !do_after(user, load_delay, target = src))
+		return
+
+	shots_in_gun = shots_in_gun + shots_per_load //Add one to the shots in the gun
+	balloon_alert(user, loading_message)
+	loaded_gun = TRUE // Make sure it registers theres ammo in there, so it can fire.
+	QDEL_NULL(used_item)
+	if(shots_in_gun >= max_shots_per_fire)
+		shots_in_gun = max_shots_per_fire // in case of somehow firing only some of a guns shots, and reloading, you still cant get above the maximum ammo size.
+		fully_loaded_gun = TRUE //So you cant load extra.
 
 /obj/structure/mounted_gun/attack_hand(mob/living/user, list/modifiers)
 	if(is_firing)
-		balloon_alert(user, "gun is firing!")
+		balloon_alert(user, "gun firing!")
 		return
 	user.log_message("fired a mounted gun", LOG_ATTACK)
 	log_game("[key_name(user)] fired a mounted gun in [AREACOORD(src)]")
 	addtimer(CALLBACK(src, PROC_REF(fire)), fire_delay) //uses fire proc as shown below to shoot the gun
-	return
 
 /obj/structure/mounted_gun/proc/fire()
 	if (!loaded_gun)
-		balloon_alert_to_viewers("gun is not loaded!","",2)
+		balloon_alert_to_viewers("not loaded!", vision_distance = 2)
 		return
+
 	is_firing = TRUE
-	for(var/times_fired = 1, times_fired <= shots_in_gun, times_fired++) //The normal DM for loop structure since the times it has fired is changing in the loop itself.
+	for(var/times_fired = 1, times_fired <= shots_in_gun, times_fired++)
 		for(var/mob/shaken_mob in urange(10, src))
 			if(shaken_mob.stat == CONSCIOUS && firing_shakes_camera == TRUE) //is the mob awake to feel the shaking?
 				shake_camera(shaken_mob, 3, 1)
-			icon_state = icon_state_fire
-		if(loaded_gun)
+			icon_state = base_icon_state + fire_suffix
 
+		if(loaded_gun)
 			if (times_fired < shots_in_gun)
 				playsound(src, fire_sound, 50, FALSE, 5)
 			else
 				playsound(src, last_fire_sound, 50, TRUE, 5) //for the empty fire sound
+			fire_gun()
 
-			var/obj/projectile/fired_projectile = (use_alt_ammo) ? new alt_projectile_type(get_turf(src)) : new projectile_type(get_turf(src))
-			fired_projectile.firer = src
-			fired_projectile.fired_from = src
-			fired_projectile.fire(dir2angle(dir))
 		sleep(shot_delay)
 
-	if(uses_ammo == TRUE)
+	if(uses_ammo)
 		loaded_gun = FALSE
 		use_alt_ammo = FALSE
 		shots_in_gun = 0
 		fully_loaded_gun = FALSE
 		is_firing = FALSE
-	icon_state = icon_state_base
+
+	icon_state = base_icon_state
+
+/// Actually finally shoot the thing
+/obj/structure/mounted_gun/proc/fire_gun()
+	var/obj/projectile/fired_projectile = (use_alt_ammo) ? new alt_projectile_type(get_turf(src)) : new projectile_type(get_turf(src))
+	fired_projectile.firer = src
+	fired_projectile.fired_from = src
+	var/fire_angle = dir2angle(dir) + (anchored ? 0 : rand(-unanchored_variance, unanchored_variance))
+	fired_projectile.fire(fire_angle)
+	return fired_projectile
 
 /obj/structure/mounted_gun/organ_gun
-
 	name = "Pipe Organ Gun"
 	desc = "To become master over one who has killed, one must become a better killer. This engine of destruction is one of many things made to that end."
 	icon_state = "pipeorgangun"
-	icon_state_base = "pipeorgangun"
-	icon_state_loaded = "pipeorgangun"
-	icon_state_fire = "pipeorgangun_fire"
+	base_icon_state = "pipeorgangun"
 	anchored = FALSE
 	anchorable_gun = TRUE
 	max_shots_per_fire = 8
@@ -145,7 +151,21 @@
 	fire_delay = 3 DECISECONDS
 	shot_delay = 2 DECISECONDS
 	firing_shakes_camera = FALSE
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 24.5, /datum/material/wood = SHEET_MATERIAL_AMOUNT * 15, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 24.5,
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 15,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT
+	)
+	/// Different kinds of bullet we can fire
+	var/static/list_of_projectiles = list(
+		/obj/projectile/bullet/junk = 40,
+		/obj/projectile/bullet/incendiary/fire/junk = 25,
+		/obj/projectile/bullet/junk/shock = 25,
+		/obj/projectile/bullet/junk/hunter = 20,
+		/obj/projectile/bullet/junk/phasic = 8,
+		/obj/projectile/bullet/junk/ripper = 8,
+		/obj/projectile/bullet/junk/reaper = 3,
+	)
 
 /obj/structure/mounted_gun/organ_gun/examine_more(mob/user)
 	. = ..()
@@ -159,45 +179,32 @@
 
 /obj/structure/mounted_gun/organ_gun/fire()
 	if (!loaded_gun)
-		balloon_alert_to_viewers("Gun is not loaded!","",2)
+		balloon_alert_to_viewers("not loaded!", vision_distance = 2)
 		return
-	for(var/times_fired = 1, times_fired <= shots_in_gun, times_fired++) //The normal DM for loop structure since the times it has fired is changing in the loop itself.
+
+	for(var/times_fired = 1, times_fired <= shots_in_gun, times_fired++)
 		for(var/mob/shaken_mob in urange(10, src))
 			if((shaken_mob.stat == CONSCIOUS)&&(firing_shakes_camera == TRUE))
 				shake_camera(shaken_mob, 3, 1)
-			icon_state = icon_state_fire
+			icon_state = base_icon_state + fire_suffix
+
 		if(loaded_gun)
 			playsound(src, fire_sound, 50, TRUE, 5)
-
-			var/list_of_projectiles = list(
-			/obj/projectile/bullet/junk = 40,
-			/obj/projectile/bullet/incendiary/fire/junk = 25,
-			/obj/projectile/bullet/junk/shock = 25,
-			/obj/projectile/bullet/junk/hunter = 20,
-			/obj/projectile/bullet/junk/phasic = 8,
-			/obj/projectile/bullet/junk/ripper = 8,
-			/obj/projectile/bullet/junk/reaper = 3,
-			)
 			projectile_type = pick_weight(list_of_projectiles)
+			fire_gun()
 
-			var/obj/projectile/fired_projectile = new projectile_type(get_turf(src))
-			fired_projectile.firer = src
-			fired_projectile.fired_from = src
-			fired_projectile.fire(dir2angle(dir))
 		sleep(shot_delay)
+
 	loaded_gun = FALSE
 	shots_in_gun = 0
 	fully_loaded_gun = FALSE
-	icon_state = icon_state_base
+	icon_state = base_icon_state
 
 /obj/structure/mounted_gun/canister_gatling //for the funny skeleton pirates!
-
 	name = "Canister Gatling Gun"
 	desc = "''Quantity has a quality of its own.''"
 	icon_state = "canister_gatling"
-	icon_state_base = "canister_gatling"
-	icon_state_loaded = "canister_gatling"
-	icon_state_fire = "canister_gatling_fire"
+	base_icon_state = "canister_gatling"
 	anchored = FALSE
 	anchorable_gun = TRUE
 	max_shots_per_fire = 50
@@ -224,13 +231,12 @@
 	name = "Ratvarian Repeater"
 	desc = "''Brains? Bronze? Why not both?''"
 	icon_state = "ratvarian_repeater"
-	icon_state_base = "ratvarian_repeater"
-	icon_state_fire = "ratvarian_repeater_fire"
+	base_icon_state = "ratvarian_repeater"
 	loading_message = "gun charged"
 	anchored = FALSE
 	anchorable_gun = TRUE
 	uses_ammo = FALSE
-	load_delay = 30
+	load_delay = 3 SECONDS
 	max_shots_per_fire = 12
 	shots_per_load = 12
 	shots_in_gun = 12
@@ -277,38 +283,37 @@
 	if (!loaded_gun)
 		balloon_alert_to_viewers("needs winding!", vision_distance = 2)
 		return
+
 	is_firing = TRUE
-	for(var/times_fired = 1, times_fired <= shots_in_gun, times_fired++) //The normal DM for loop structure since the times it has fired is changing in the loop itself.
+	for(var/times_fired = 1, times_fired <= shots_in_gun, times_fired++)
 		if(loaded_gun)
-			icon_state = icon_state_fire
+			icon_state = base_icon_state + fire_suffix
 			if (times_fired < shots_in_gun)
 				playsound(src, fire_sound, 50, FALSE, 5)
 			else
 				playsound(src, last_fire_sound, 50, TRUE, 5) //for the empty fire sound
-			var/obj/projectile/fired_projectile = new projectile_type(get_turf(src))
-			fired_projectile.firer = src
-			fired_projectile.fired_from = src
-			fired_projectile.fire(dir2angle(dir))
+			fire_gun()
+
 		if(times_fired % 2 != 1)//Burst Fire.
 			sleep(shot_delay)
 		sleep(shot_delay)
+
 	loaded_gun = FALSE
 	shots_in_gun = 0
 	fully_loaded_gun = FALSE
 	is_firing = FALSE
-	icon_state = icon_state_base
+	icon_state = base_icon_state
 
 /obj/structure/mounted_gun/ballista
 	name = "Improvised Ballista"
 	desc = "''Engineers like to solve problems. If there are no problems handily available, they will create their own problems.''"
 	icon_state = "Improvised_Ballista"
-	icon_state_base = "Improvised_Ballista"
-	icon_state_loaded = "Improvised_Ballista_Loaded"
-	icon_state_fire = "Improvised_Ballista"
+	base_icon_state = "Improvised_Ballista"
+	throwforce = 30
 	anchored = FALSE
 	anchorable_gun = TRUE
 	uses_ammo = TRUE
-	load_delay = 60
+	load_delay = 6 SECONDS
 	max_shots_per_fire = 1
 	shots_per_load = 1
 	shots_in_gun = 1
@@ -318,7 +323,7 @@
 	ammo_type = /obj/item/spear
 	projectile_type = /obj/projectile/bullet/ballista_spear
 	alt_ammo_type = /obj/item/spear/dragonator
-	alt_projectile_type = /obj/projectile/bullet/ballista_spear_dragon
+	alt_projectile_type = /obj/projectile/bullet/ballista_spear/dragonator
 	loaded_gun = FALSE
 	fully_loaded_gun = FALSE
 	fire_delay = 1
@@ -328,27 +333,39 @@
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15.15,
 		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5
 	)
+	/// Suffix added to base icon state when loaded
+	var/loaded_suffix = "_Loaded"
+	/// What spear has someone put in us?
+	var/obj/item/loaded_spear
 
 /obj/structure/mounted_gun/ballista/attackby(obj/item/ammo_casing/used_item, mob/user, params) //again its single shot so its kinda weird.
 	if(is_firing)
-		balloon_alert(user, "gun is firing")
+		balloon_alert(user, "gun firing")
 		return
 
 	if(!istype(used_item, ammo_type))
 		return
 
 	if(fully_loaded_gun)
-		balloon_alert(user, "already fully loaded!")
+		balloon_alert(user, "already loaded!")
 		return
 
 	if(istype(used_item, alt_ammo_type))
 		use_alt_ammo = TRUE
+	loaded_spear = used_item
+	loaded_spear.forceMove(src)
 
 	playsound(src, 'sound/items/weapons/draw_bow.ogg', 50, FALSE, 5)
 	do_after(user, load_delay, target = src)
 	shots_in_gun = 1 //MAX OF ONE SHOT.
 	balloon_alert(user, loading_message)
 	loaded_gun = TRUE
-	QDEL_NULL(used_item)
 	fully_loaded_gun = TRUE
-	icon_state = icon_state_loaded
+	icon_state = base_icon_state + loaded_suffix
+
+/obj/structure/mounted_gun/ballista/fire_gun()
+	var/obj/projectile/bullet/ballista_spear/fired_projectile = . = ..()
+	fired_projectile.attach_spear(loaded_spear)
+	loaded_spear = null
+	if (!anchored)
+		throw_at(get_edge_target_turf(src, REVERSE_DIR(dir)), 2, 5)

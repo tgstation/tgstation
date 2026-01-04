@@ -87,3 +87,43 @@
 	object_damage_decreases = TRUE
 	object_damage_decrease_on_hit = 40
 	range = 7 //let's keep it a bit sane, okay?
+
+
+/// Mounted ballista projectile, not exactly a cannonball but it's close enough
+/obj/projectile/bullet/ballista_spear
+	name = "spear"
+	icon_state = "ballista_spear"
+	damage = 60
+	speed = 3
+	catastropic_dismemberment = TRUE
+	projectile_piercing = PASSMOB
+	dismemberment = 3
+	embed_type = null
+	shrapnel_type = null
+	wound_bonus = 40
+	exposed_wound_bonus = 30
+	damage_type = BRUTE
+
+/// Set statistics based on provided spear
+/obj/projectile/bullet/ballista_spear/proc/attach_spear(obj/item/spear)
+	damage = spear.throwforce * 2.5
+	armour_penetration = spear.armour_penetration * 2
+	wound_bonus += spear.wound_bonus // Most spears have a negative wound bonus so this actually goes down
+	AddComponent(/datum/component/projectile_instance_drop, spear)
+
+/// An even bigger ballista projectile designed for taking down monsters
+/obj/projectile/bullet/ballista_spear/dragonator
+	name = "dragon-slaying spear"
+	icon_state = "ballista_spear_dragon"
+	damage = 120
+	speed = 4
+	armour_penetration = 25
+	wound_bonus = 15
+	exposed_wound_bonus = 30
+
+/obj/projectile/bullet/ballista_spear/dragonator/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/bane, mob_biotypes = MOB_MINING, damage_multiplier = 2)
+
+/obj/projectile/bullet/ballista_spear/dragonator/attach_spear(obj/item/spear)
+	AddComponent(/datum/component/projectile_instance_drop, spear)

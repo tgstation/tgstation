@@ -1253,6 +1253,7 @@
 #include "code\datums\components\pricetag.dm"
 #include "code\datums\components\proficient_miner.dm"
 #include "code\datums\components\profound_fisher.dm"
+#include "code\datums\components\projectile_instance_drop.dm"
 #include "code\datums\components\prosthetic_item.dm"
 #include "code\datums\components\punchcooldown.dm"
 #include "code\datums\components\puzzgrid.dm"
