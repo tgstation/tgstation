@@ -308,7 +308,7 @@ export class Changelog extends Component {
             <Box ml={3}>
               {Object.entries(authors).map(([name, changes]) => {
                 let isTroutstationEntry = false;
-                changes.map((change) => {
+                changes.forEach((change) => {
                   const changeType = Object.keys(change)[0];
                   if (isTroutstationEntry) {
                     // already figured it out
@@ -335,7 +335,7 @@ export class Changelog extends Component {
                         {changes.map((change) => {
                           const changeType = Object.keys(change)[0];
                           if (changeType === TROUTSTATION_IDENT) {
-                            return; // do not actually display anything
+                            return ''; // do not actually display anything
                           }
                           return (
                             <Table.Row key={changeType + change[changeType]}>
