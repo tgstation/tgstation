@@ -98,7 +98,13 @@
 		return
 	if (isnull(transform_action))
 		transform_action = add_item_action(/datum/action/cooldown/spell/shapeshift/polymorph_belt)
+		RegisterSignal(transform_action, COMSIG_BELT_MOB_TYPE_CHANGED, PROC_REF(on_belt_mob_changed))
 	transform_action.update_type(stored_mob_type)
+
+/// If anything else changes our belt transform type we should track it
+/obj/item/polymorph_belt/proc/on_belt_mob_changed(typepath)
+	SIGNAL_HANDLER
+	stored_mob_type = typepath
 
 /// Pre-activated polymorph belt
 /obj/item/polymorph_belt/functioning
@@ -115,6 +121,7 @@
 	spell_requirements = NONE
 	possible_shapes = list(/mob/living/basic/cockroach)
 	can_be_shared = FALSE
+	shapechange_type = /datum/status_effect/shapechange_mob/from_spell/polymorph_belt
 	/// Amount of time it takes us to transform back or forth
 	var/channel_time = 3 SECONDS
 
@@ -172,3 +179,27 @@
 	var/mob/living/will_become = transform_type
 	desc = "Assume your [initial(will_become.name)] form!"
 	build_all_button_icons(update_flags = UPDATE_BUTTON_NAME)
+	SEND_SIGNAL(src, COMSIG_BELT_MOB_TYPE_CHANGED, shapeshift_type)
+
+/// Subtype of the polymorph status effect which tracks arbitrary mob transformation
+/datum/status_effect/shapechange_mob/from_spell/polymorph_belt
+
+/datum/status_effect/shapechange_mob/from_spell/polymorph_belt/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOB_CHANGED_TYPE, PROC_REF(on_type_change))
+
+/datum/status_effect/shapechange_mob/from_spell/polymorph_belt/on_pre_type_change(mob/living/source)
+	return // Stub out base effect because we don't want to cancel if they transform
+
+/// If our mob transforms (via aging usually) then move the status effect across to the new mob
+/datum/status_effect/shapechange_mob/from_spell/polymorph_belt/proc/on_type_change(mob/living/source, mob/living/new_mob)
+	SIGNAL_HANDLER
+	var/caster = caster_mob // Will be unset when the mob is unshifted
+	var/datum/action/cooldown/spell/shapeshift/polymorph_belt/transform_action = source_weakref?.resolve()
+
+	if (istype(transform_action))
+		transform_action.update_type(new_mob.type)
+	else
+		restore_caster()
+
+	new_mob.apply_status_effect(type, caster, transform_action)
