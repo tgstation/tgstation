@@ -2,15 +2,7 @@
 
 BLOOD-DRUNK MINER
 
-Effectively a highly aggressive miner, the blood-drunk miner has very few attacks but compensates by being highly aggressive.
-
-The blood-drunk miner's attacks are as follows
-- If not in KA range, it will rapidly dash at its target
-- If in KA range, it will fire its kinetic accelerator
-- If in melee range, will rapidly attack, akin to an actual player
-- After any of these attacks, may transform its cleaving saw:
-	Untransformed, it attacks very rapidly for smaller amounts of damage
-	Transformed, it attacks at normal speed for higher damage and cleaves enemies hit
+Effectively a highly aggressive miner, the blood-drunk miner has very few attacks but compensates by being highly aggressive in its AI as well as damage.
 
 When the blood-drunk miner dies, it leaves behind the cleaving saw it was using and its kinetic accelerator.
 
@@ -140,8 +132,12 @@ Difficulty: Medium
 	if(!istype(target, /mob/living))
 		return
 
-	changeNext_move(CLICK_CD_MELEE)
 	var/mob/living/victim = target
+	if(should_devour(target))
+		devour(target)
+		return COMPONENT_HOSTILE_NO_ATTACK
+
+	changeNext_move(CLICK_CD_MELEE)
 	victim.visible_message(
 		span_danger("[src] slashes at [victim] with [p_their()] cleaving saw!"),
 		span_userdanger("You are slashed at by [src]'s cleaving saw!"),

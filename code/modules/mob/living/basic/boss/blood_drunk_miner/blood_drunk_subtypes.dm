@@ -3,20 +3,21 @@
 
 /mob/living/basic/boss/blood_drunk_miner/guidance/attack_override(mob/living/source, atom/target, proximity, modifiers)
 	. = ..()
-	adjust_health(-2)
+	if(. & COMPONENT_HOSTILE_NO_ATTACK)
+		adjust_health(-2)
 
 /// Better at dash attacking
 /mob/living/basic/boss/blood_drunk_miner/hunter
 
 /mob/living/basic/boss/blood_drunk_miner/hunter/attack_override(mob/living/source, atom/target, proximity, modifiers)
 	. = ..()
-	if(. & COMPONENT_HOSTILE_NO_ATTACK)
-		return .
+	if((. & COMPONENT_HOSTILE_NO_ATTACK) && prob(12))
+		if(prob(12))
+			var/dash_attack = get_ability_from_blackboard(BB_BDM_DASH_ATTACK_ABILITY)
+			if(!isnull(dash_attack))
+				INVOKE_ASYNC(dash_attack, TYPE_PROC_REF(/datum/action, Trigger), src, NONE, target)
 
-	if(prob(12))
-		var/dash_attack = get_ability_from_blackboard(BB_BDM_DASH_ATTACK_ABILITY)
-		if(!isnull(dash_attack))
-			INVOKE_ASYNC(dash_attack, TYPE_PROC_REF(/datum/action, Trigger), src, NONE, target)
+	return .
 
 /mob/living/basic/boss/blood_drunk_miner/doom
 	name = "hostile-environment miner"

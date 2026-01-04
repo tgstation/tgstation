@@ -63,13 +63,6 @@
 		return
 	return ..()
 
-/mob/living/basic/boss/early_melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
-	. = ..()
-	if(!. || !istype(target))
-		return
-	if(target.stat == DEAD || (target.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(target, TRAIT_NODEATH)))
-		devour(target)
-
 /mob/living/basic/boss/ex_act(severity, target)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
@@ -82,6 +75,17 @@
 			adjust_brute_loss(50)
 
 	return TRUE
+
+/mob/living/basic/boss/early_melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!. || !istype(target))
+		return
+	if(should_devour(target))
+		devour(target)
+
+/// Determines if this mob is worth devouring
+/mob/living/basic/boss/proc/should_devour(mob/living/victim)
+	return victim.state == DEAD || (victim.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(victim, TRAIT_NODEATH))
 
 /// Devours a target and restores health to the megafauna
 /mob/living/basic/boss/proc/devour(mob/living/victim)
