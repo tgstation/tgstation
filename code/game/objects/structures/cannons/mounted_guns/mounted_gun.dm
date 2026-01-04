@@ -218,7 +218,7 @@
 
 /obj/structure/mounted_gun/ratvarian_repeater/attack_hand(mob/user, params)
 	if(is_firing)
-		balloon_alert(user, "gun is firing!")
+		balloon_alert(user, "gun firing!")
 		return
 
 	var/fully_loaded = shots_in_gun >= max_shots_per_fire
