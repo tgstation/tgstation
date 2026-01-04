@@ -204,7 +204,7 @@
 		. += span_notice("Use [EXAMINE_HINT("Alt-Click")] to [state_open ? "Close" : "Open"] the machine.")
 		. += span_notice("Use [EXAMINE_HINT("Ctrl-Click")] to turn [on ? "Off" : "On"] the machine.")
 
-		. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] open.")
+		. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] open.")
 		if(panel_open)
 			. += span_notice("[src] can be [EXAMINE_HINT("pried")] apart.")
 			. += span_notice("[src] can be rotated with a [EXAMINE_HINT("wrench")].")

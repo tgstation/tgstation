@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Killing yourself via starfish no longer causes a runtime error when you float onto another Z level"
+  - bugfix: "Killing yourself via starfish now unequips your pants before turning you into an astral being"

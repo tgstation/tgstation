@@ -153,12 +153,14 @@
 	if(stasis_running() && check_nap_violations())
 		chill_out(L)
 	update_appearance()
+	L.AddComponentFrom(type, /datum/component/free_operation)
 
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
 	thaw_them(L)
 	if(L == occupant)
 		set_occupant(null)
 	update_appearance()
+	L.RemoveComponentSource(type, /datum/component/free_operation)
 
 /obj/machinery/stasis/process()
 	if(!(occupant && isliving(occupant) && check_nap_violations()))

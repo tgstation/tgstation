@@ -95,7 +95,7 @@
 		. += span_notice("\The [installed_part] can be [EXAMINE_HINT("pried")] out.")
 	else
 		. += span_warning("Is missing a [initial(part_path.name)].")
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 	if(panel_open)
 		. += span_notice("It can rotated with a [EXAMINE_HINT("wrench")]")
 		. += span_notice("The full machine can be [EXAMINE_HINT("pried")] apart")

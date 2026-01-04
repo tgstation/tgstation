@@ -457,7 +457,7 @@
 	update_appearance()
 
 /obj/structure/flora/tree/pine/xmas
-	name = "xmas tree"
+	name = "\improper Christmas tree"
 	desc = "A wondrous decorated Christmas tree."
 	icon_state = "pine_c"
 

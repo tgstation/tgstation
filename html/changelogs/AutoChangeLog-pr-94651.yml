@@ -1,0 +1,4 @@
+author: "arbuzik456"
+delete-after: True
+changes:
+  - bugfix: "warden and hos got spare starting clothes in their garment bag"

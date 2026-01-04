@@ -3318,7 +3318,7 @@
 /obj/effect/turf_decal/weather/snow,
 /obj/item/modular_computer/pda/syndicate{
 	desc = "A portable microcomputer by Thinktronic Systems, LTD.";
-	inserted_disk = /obj/item/computer_disk/virus/clown;
+	inserted_disk = /obj/item/disk/computer/virus/clown;
 	name = "soviet tablet"
 	},
 /obj/effect/decal/remains/human{
@@ -5321,7 +5321,7 @@
 /obj/structure/table/reinforced,
 /obj/item/modular_computer/pda/syndicate{
 	desc = "A portable microcomputer by Thinktronic Systems, LTD.";
-	inserted_disk = /obj/item/computer_disk/virus/mime;
+	inserted_disk = /obj/item/disk/computer/virus/mime;
 	name = "soviet tablet"
 	},
 /obj/effect/light_emitter{

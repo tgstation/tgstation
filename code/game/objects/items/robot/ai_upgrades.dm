@@ -2,7 +2,7 @@
 /obj/item/aiupgrade
 	name = "ai upgrade disk"
 	desc = "You really shouldn't be seeing this"
-	icon = 'icons/obj/devices/circuitry_n_data.dmi'
+	icon = 'icons/obj/devices/floppy_disks.dmi'
 	icon_state = "datadisk3"
 	///The upgrade that will be applied to the AI when installed
 	var/datum/ai_module/to_gift = /datum/ai_module
@@ -44,7 +44,7 @@
 /obj/item/malf_upgrade
 	name = "combat software upgrade"
 	desc = "A highly illegal, highly dangerous upgrade for artificial intelligence units, granting them a variety of powers as well as the ability to hack APCs.<br>This upgrade does not override any active laws, and must be applied directly to an active AI core."
-	icon = 'icons/obj/devices/circuitry_n_data.dmi'
+	icon = 'icons/obj/devices/floppy_disks.dmi'
 	icon_state = "datadisk3"
 
 /obj/item/malf_upgrade/Initialize(mapload)

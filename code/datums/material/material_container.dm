@@ -304,6 +304,7 @@
 			if(!(mat_container_flags & MATCONTAINER_SILENT))
 				var/list/status_data = chat_msgs["[MATERIAL_INSERT_ITEM_FAILURE]"] || list()
 				var/list/item_data = status_data[target_item.name] || list()
+				item_data["item"] = target_item
 				item_data["count"] += 1
 				status_data[target_item.name] = item_data
 				chat_msgs["[MATERIAL_INSERT_ITEM_FAILURE]"] = status_data
@@ -366,9 +367,8 @@
 		var/item_name = target_item.name
 		var/item_count = 1
 		var/is_stack = FALSE
-		var/obj/item/stack/the_stack
 		if(isstack(target_item))
-			the_stack = target_item
+			var/obj/item/stack/the_stack = target_item
 			item_name = the_stack.singular_name
 			item_count = the_stack.amount
 			is_stack = TRUE
@@ -382,9 +382,9 @@
 			//collect all messages to print later
 			var/list/status_data = chat_msgs["[MATERIAL_INSERT_ITEM_SUCCESS]"] || list()
 			var/list/item_data = status_data[item_name] || list()
+			item_data["item"] = target_item
 			item_data["count"] += item_count
 			item_data["amount"] += inserted
-			item_data["stack"] = is_stack
 			status_data[item_name] = item_data
 			chat_msgs["[MATERIAL_INSERT_ITEM_SUCCESS]"] = status_data
 
@@ -409,6 +409,7 @@
 			//collect all messages to print later
 			var/list/status_data = chat_msgs["[inserted]"] || list()
 			var/list/item_data = status_data[item_name] || list()
+			item_data["item"] = target_item
 			item_data["count"] += item_count
 			status_data[item_name] = item_data
 			chat_msgs["[inserted]"] = status_data
@@ -450,23 +451,39 @@
 			for(var/item_name in status_data)
 				//read the params
 				var/list/chat_data = status_data[item_name]
+				var/obj/item/item = chat_data["item"]
 				var/count = chat_data["count"]
 				var/amount = chat_data["amount"]
 
 				//decode the message
 				switch(text2num(status))
 					if(MATERIAL_INSERT_ITEM_SUCCESS) //no problems full item was consumed
-						if(chat_data["stack"])
+						if(isstack(item))
+							var/obj/item/stack/stack = item
 							var/sheets = min(count, amount) //minimum between sheets inserted vs sheets consumed(values differ for alloys)
-							to_chat(user, span_notice("[sheets > 1 ? "[sheets] " : ""][item_name][sheets > 1 ? "s were" : " was"] added to [parent]."))
+							if (sheets > 1)
+								to_chat(user, span_notice("[sheets] [stack.singular_name][plural_s(stack.singular_name)] were added to [parent]."))
+							else
+								to_chat(user, span_notice("The [stack.singular_name] was added to [parent]."))
 						else
-							to_chat(user, span_notice("[count > 1 ? "[count] " : ""][item_name][count > 1 ? "s" : ""], worth [amount] sheets, [count > 1 ? "were" : "was"] added to [parent]."))
+							if (count > 1)
+								to_chat(user, span_notice("[count] [item.name][plural_s(item.name)], worth [amount] sheet\s, were added to [parent]."))
+							else
+								to_chat(user, span_notice("\The [item], worth [amount] sheet\s, [item.p_were()] added to [parent]."))
 					if(MATERIAL_INSERT_ITEM_NO_SPACE) //no space
-						to_chat(user, span_warning("[parent] has no space to accept [item_name]!"))
+						to_chat(user, span_warning("[parent] has no space to accept \the [item]!"))
 					if(MATERIAL_INSERT_ITEM_NO_MATS) //no materials inside these items
-						to_chat(user, span_warning("[item_name][count > 1 ? "s have" : " has"] no materials that can be accepted by [parent]!"))
+						if(isstack(item))
+							var/obj/item/stack/stack = item
+							to_chat(user, span_warning("The [stack.singular_name] has no materials that can be accepted by [parent]!"))
+						else
+							to_chat(user, span_warning("\The [item][count > 1 ? "[plural_s(item.name)] have" : " [item.p_have()]"] no materials that can be accepted by [parent]!"))
 					if(MATERIAL_INSERT_ITEM_FAILURE) //could be because the material type was not accepted or other stuff
-						to_chat(user, span_warning("[item_name][count > 1 ? "s were" : " was"] rejected by [parent]!"))
+						if (isstack(item))
+							var/obj/item/stack/stack = item
+							to_chat(user, span_warning("The [stack.singular_name] was rejected by [parent]!"))
+						else
+							to_chat(user, span_warning("\The [item][count > 1 ? "[plural_s(item.name)] were" : " [item.p_were()]"] rejected by [parent]!"))
 
 	//finally delete the items
 	for(var/obj/item/deleting as anything in to_delete)

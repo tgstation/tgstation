@@ -37,11 +37,23 @@
 	reagents = parent_movable.reagents
 
 	if(parent_movable.anchored)
+		if(PERFORM_ALL_TESTS(maptest_log_mapping))
+			var/datum/overlap = ducting_layer_check(parent_movable, ducting_layer)
+			if(!isnull(overlap))
+				var/message = GLOB.plumbing_layer_names["[ducting_layer]"]
+				if(istype(overlap, /obj/machinery/duct))
+					message = "plumbing duct on [message]"
+				else
+					message = "plumbing machine on [message]"
+				log_mapping("Overlapping [message] detected at [AREACOORD(parent_movable)]")
+				parent_movable.set_anchored(FALSE)
+				return
 		enable()
 
 /datum/component/plumbing/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(disable))
-	RegisterSignal(parent, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, PROC_REF(toggle_active))
+	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH), PROC_REF(check_wrench))
+	RegisterSignal(parent, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(toggle_active))
 	RegisterSignal(parent, COMSIG_OBJ_HIDE, PROC_REF(hide))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(create_overlays)) //called by lateinit on startup
 	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_parent_dir_change)) //called when placed on a shuttle and it moves, and other edge cases
@@ -51,7 +63,8 @@
 /datum/component/plumbing/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH,
+		COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH),
+		COMSIG_MOVABLE_SET_ANCHORED,
 		COMSIG_OBJ_HIDE,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
 		COMSIG_ATOM_DIR_CHANGE,
@@ -137,11 +150,20 @@
 		for(var/obj/machinery/duct/pipe as anything in net.ducts)
 			if(pipe.neighbours[parent])
 				pipe.neighbours -= parent
-				pipe.update_appearance()
+				pipe.update_appearance(UPDATE_ICON_STATE)
 
 		//remove ourself from this network and delete it if emtpy
 		if(net.remove_plumber(src))
 			qdel(net)
+
+/datum/component/plumbing/proc/check_wrench(obj/parent_obj, mob/user, tool, processing_recipes)
+	SIGNAL_HANDLER
+
+	if(!active())
+		var/datum/overlap = ducting_layer_check(parent_obj)
+		if(!isnull(overlap))
+			parent_obj.balloon_alert(user, "overlapping [istype(overlap, /obj/machinery/duct) ? "duct" : "machine"] detected!")
+			return ITEM_INTERACT_FAILURE
 
 /datum/component/plumbing/proc/toggle_active(obj/parent_obj, new_state)
 	SIGNAL_HANDLER

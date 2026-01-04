@@ -14,7 +14,7 @@
 	///The modular computer hosting the file.
 	var/obj/item/modular_computer/computer
 	///The computer disk hosting the file.
-	var/obj/item/computer_disk/disk_host
+	var/obj/item/disk/computer/disk_host
 
 /datum/computer_file/New()
 	..()

@@ -128,14 +128,13 @@
 	Succeed and you will receive a coveted green highlight on your record for this assignment. Fail us and red's the last colour you'll ever see.<br>\
 	Do not disappoint us.<br>"
 
-/obj/item/computer_disk/hdd_theft
+/obj/item/disk/computer/hdd_theft
 	name = "r&d server hard disk drive"
 	desc = "For some reason, people really seem to want to steal this. The source code on this drive is probably used for something awful!"
-	icon = 'icons/obj/antags/syndicate_tools.dmi'
-	icon_state = "something_awful"
 	max_capacity = 512
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	sticker_icon_state = "o_nt"
 
 // STEALING SUPERMATTER
 

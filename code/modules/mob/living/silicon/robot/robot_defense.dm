@@ -206,7 +206,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		balloon_alert(user, "headlamp repaired")
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(tool, /obj/item/computer_disk))
+	if(istype(tool, /obj/item/disk/computer))
 		if(!modularInterface)
 			stack_trace("Cyborg [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 			create_modularInterface()

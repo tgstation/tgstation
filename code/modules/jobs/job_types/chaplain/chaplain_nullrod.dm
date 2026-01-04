@@ -220,7 +220,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	hitsound = 'sound/items/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which provides a low chance of blocking incoming melee attacks. Able to awaken a friendly spirit to provide guidance. Can be worn on the back."
 
-/obj/item/nullrod/spellblade/talking/Initialize(mapload)
+/obj/item/nullrod/claymore/talking/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/spirit_holding)
 
@@ -239,7 +239,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	toolspeed = 0.5 //same speed as an active chainsaw
 	chaplain_spawnable = FALSE //prevents being pickable as a chaplain weapon (it has 30 force)
 
-/obj/item/nullrod/spellblade/talking/chainsword/Initialize(mapload)
+/obj/item/nullrod/claymore/talking/chainsword/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/cuffable_item) //Thanks goodness it cannot be selected by chappies
 	AddComponent(

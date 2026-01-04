@@ -405,8 +405,8 @@
 
 		if(INVOCATION_EMOTE)
 			invoker.visible_message(
-				capitalize(REPLACE_PRONOUNS(replacetext(used_invocation_message, "%CASTER", invoker.name), invoker)),
-				capitalize(REPLACE_PRONOUNS(replacetext(invocation_self_message, "%CASTER", invoker.name), invoker)),
+				capitalize(REPLACE_PRONOUNS(replacetext(used_invocation_message, "%CASTER", "[invoker]"), invoker)),
+				capitalize(REPLACE_PRONOUNS(replacetext(invocation_self_message, "%CASTER", "[invoker]"), invoker)),
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
 

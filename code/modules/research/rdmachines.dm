@@ -43,7 +43,7 @@
 		return
 
 	. += span_notice("A [EXAMINE_HINT("multitool")] with techweb designs can be uploaded here.")
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 	if(panel_open)
 		. += span_notice("Use a [EXAMINE_HINT("multitool")] or [EXAMINE_HINT("wirecutters")] to interact with wires.")
 		. += span_notice("The machine can be [EXAMINE_HINT("pried")] apart.")

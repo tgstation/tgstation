@@ -212,7 +212,7 @@
 	desc = "Clamp bleeding blood vessels in the patient's body to prevent blood loss. \
 		Causes \"vessels clamped\" surgical state."
 	required_bodytype = ~BODYTYPE_ROBOTIC
-	operation_flags = OPERATION_PRIORITY_NEXT_STEP
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	replaced_by = /datum/surgery_operation/limb/clamp_bleeders/abductor
 	implements = list(
 		TOOL_HEMOSTAT = 1,
@@ -255,7 +255,7 @@
 	desc = "Unclamp blood vessels in the patient's body to allow blood flow again. \
 		Clears \"vessels clamped\" surgical state."
 	required_bodytype = ~BODYTYPE_ROBOTIC
-	operation_flags = OPERATION_PRIORITY_NEXT_STEP
+	operation_flags = OPERATION_NO_PATIENT_REQUIRED
 	replaced_by = /datum/surgery_operation/limb/unclamp_bleeders/abductor
 	implements = list(
 		TOOL_HEMOSTAT = 1,
@@ -363,7 +363,7 @@
 	desc = "Repair a patient's cut or broken bones. \
 		Clears \"bone sawed\" and \"bone drilled\" surgical states."
 	required_bodytype = ~BODYTYPE_ROBOTIC
-	operation_flags = OPERATION_PRIORITY_NEXT_STEP
+	operation_flags = OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		/obj/item/stack/medical/bone_gel = 1,
 		/obj/item/stack/sticky_tape/surgical = 1,
@@ -409,7 +409,7 @@
 	desc = "Drill through a patient's bones. \
 		Causes \"bone drilled\" surgical state."
 	required_bodytype = ~BODYTYPE_ROBOTIC
-	operation_flags = OPERATION_PRIORITY_NEXT_STEP
+	operation_flags = OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		TOOL_DRILL = 1,
 		/obj/item/screwdriver/power = 1.25,
@@ -460,7 +460,7 @@
 	desc = "Make an incision in patient's internal organ tissue to allow for manipulation or repair. \
 		Causes \"organs cut\" surgical state."
 	required_bodytype = ~BODYTYPE_ROBOTIC
-	operation_flags = OPERATION_PRIORITY_NEXT_STEP
+	operation_flags = OPERATION_NO_PATIENT_REQUIRED
 	replaced_by = /datum/surgery_operation/limb/incise_organs/abductor
 	implements = list(
 		TOOL_SCALPEL = 1,

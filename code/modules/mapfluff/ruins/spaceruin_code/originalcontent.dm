@@ -18,7 +18,7 @@
 
 /obj/item/paper/pamphlet/ruin/originalcontent/pennywise
 	name = "Painting - 'Pennywise'"
-	default_raw_text = "<i>This picture depicts a smiling clown. Something doesn't feel right about this..</i>"
+	default_raw_text = "<i>This picture depicts a smiling clown. Something doesn't feel right about this...</i>"
 	icon_state = "painting3"
 
 /obj/item/paper/pamphlet/ruin/originalcontent/yelling

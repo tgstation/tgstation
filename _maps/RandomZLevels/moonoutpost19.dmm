@@ -2644,8 +2644,8 @@
 /area/awaymission/moonoutpost19/arrivals)
 "rc" = (
 /obj/structure/table,
-/obj/item/computer_disk/ordnance,
-/obj/item/computer_disk/ordnance{
+/obj/item/disk/computer/ordnance,
+/obj/item/disk/computer/ordnance{
 	pixel_x = -4;
 	pixel_y = 2
 	},

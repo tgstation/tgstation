@@ -102,8 +102,8 @@
 
 /obj/item/door_remote/captain
 	name = "command door remote"
-	desc = "A remote for controlling a set of airlocks. Despite its gaudy insignia denoting the Captain as its owner, some fine print\
-		indicates that its access is exclusively relegated to the Bridge and high-security command areas -- an additional byline\
+	desc = "A remote for controlling a set of airlocks. Despite its gaudy insignia denoting the Captain as its owner, some fine print \
+		indicates that its access is exclusively relegated to the Bridge and high-security command areas -- an additional byline \
 		specifically excludes Security from the high-security areas. Ironic."
 	department = "command"
 	region_access = REGION_COMMAND
@@ -132,7 +132,7 @@
 
 /obj/item/door_remote/head_of_security
 	name = "security door remote"
-	desc = "A remote for controlling a set of airlocks. This one smells like sweat, blood, resentment, and coffee.\
+	desc = "A remote for controlling a set of airlocks. This one smells like sweat, blood, resentment, and coffee. \
 		Someone appears to have tampered with the identifier."
 	department = "security"
 	region_access = REGION_SECURITY
@@ -149,7 +149,7 @@
 
 /obj/item/door_remote/chief_medical_officer
 	name = "medical door remote"
-	desc = "A remote for controlling a set of airlocks. It has the overpowering odor of blood and, despite its medical insignia,\
+	desc = "A remote for controlling a set of airlocks. It has the overpowering odor of blood and, despite its medical insignia, \
 		has absolutely no accompanying odor of disinfectant."
 	department = "med"
 	region_access = REGION_MEDBAY
@@ -157,7 +157,7 @@
 
 /obj/item/door_remote/head_of_personnel
 	name = "service door remote"
-	desc = "A remote for controlling a set of airlocks. This one smells like printer ink, and fills its holder with the urge\
+	desc = "A remote for controlling a set of airlocks. This one smells like printer ink, and fills its holder with the urge \
 		to mysteriously vanish."
 	department = "civilian"
 	region_access = REGION_GENERAL

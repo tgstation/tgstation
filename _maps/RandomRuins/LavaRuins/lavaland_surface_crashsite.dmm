@@ -54,7 +54,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/item/bitrunning_disk/item/pka_mods,
+/obj/item/disk/bitrunning/item/pka_mods,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "k" = (

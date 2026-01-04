@@ -6,7 +6,7 @@
 	desc = "I cry I pray mon Dieu."
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi' //same sprite as lefthand
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	icon_state = "cain_and_abel"
 	inhand_icon_state = "cain_and_abel"
 	attack_verb_continuous = list("attacks", "saws", "slices", "tears", "lacerates", "rips", "dices", "cuts")
@@ -36,12 +36,13 @@
 	var/throw_mode = THROW_MODE_CRYSTALS
 	/// Flames we have up!
 	var/list/current_wisps = list()
+	/// Have we thrown the second dagger yet?
+	var/dagger_thrown = FALSE
 	/// Cooldown till we can throw blades again
 	COOLDOWN_DECLARE(throw_cooldown)
 
 /obj/item/cain_and_abel/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = force, force_wielded = force)
 	if (length(animation_steps))
 		return
 
@@ -64,11 +65,10 @@
 		source.RemoveElement(/datum/element/relay_attackers)
 
 	set_combo(new_value = 0, user = source)
-	UnregisterSignal(source, list(COMSIG_ATOM_WAS_ATTACKED))
+	UnregisterSignal(source, list(COMSIG_ATOM_WAS_ATTACKED, COMSIG_MOB_UPDATE_HELD_ITEMS))
 
 /obj/item/cain_and_abel/equipped(mob/user, slot)
 	. = ..()
-
 	if(!(slot & ITEM_SLOT_HANDS))
 		unset_user(user)
 		return
@@ -77,6 +77,7 @@
 		user.AddElement(/datum/element/relay_attackers)
 
 	RegisterSignal(user, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
+	RegisterSignal(user, COMSIG_MOB_UPDATE_HELD_ITEMS, PROC_REF(on_updated_held_items))
 
 /obj/item/cain_and_abel/proc/on_attacked(datum/source, atom/attacker, attack_flags)
 	SIGNAL_HANDLER
@@ -86,6 +87,10 @@
 	if(get_dist(interacting_with, user) > 9 || interacting_with.z != user.z)
 		return NONE
 
+	if(!check_wield(user))
+		user.balloon_alert(user, "offhand busy!")
+		return ITEM_INTERACT_BLOCKING
+
 	if(!length(current_wisps))
 		user.balloon_alert(user, "no wisps!")
 		return ITEM_INTERACT_BLOCKING
@@ -93,6 +98,14 @@
 	for(var/index in 0 to (length(current_wisps) - 1))
 		addtimer(CALLBACK(src, PROC_REF(fire_wisp), user, interacting_with), index * 0.15 SECONDS)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/cain_and_abel/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	if (.)
+		return
+	if(!check_wield(user))
+		user.balloon_alert(user, "offhand busy!")
+		return TRUE
 
 /obj/item/cain_and_abel/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!istype(target) || target.mob_size < MOB_SIZE_LARGE || target.stat == DEAD)
@@ -128,6 +141,13 @@
 			remove_wisp(current_wisps[i], instant)
 
 	combo_count = new_value
+
+/obj/item/cain_and_abel/proc/on_updated_held_items(mob/living/source)
+	SIGNAL_HANDLER
+	update_dagger_icon()
+
+/obj/item/cain_and_abel/proc/update_dagger_icon()
+	inhand_icon_state = "[src::inhand_icon_state][(dagger_thrown || !check_wield(loc)) ? "_thrown" : ""]"
 
 /obj/item/cain_and_abel/proc/add_wisp(mob/living/user)
 	var/obj/effect/overlay/blood_wisp/new_wisp = new(src)
@@ -180,6 +200,18 @@
 		return
 	animate(wisp_to_remove, alpha = 0, time = 0.2 SECONDS)
 	QDEL_IN(wisp_to_remove, 0.2 SECONDS)
+
+/obj/item/cain_and_abel/proc/check_wield(mob/living/user)
+	if (!istype(user))
+		return TRUE
+	var/active_item = (src == user.get_active_held_item())
+	var/obj/item/other_held = active_item ? user.get_inactive_held_item() : user.get_active_held_item()
+	if (!isnull(other_held))
+		return FALSE
+	var/obj/item/bodypart/hand = active_item ? user.get_inactive_hand() : user.get_active_hand()
+	if (!hand || hand.bodypart_disabled)
+		return FALSE
+	return TRUE
 
 /// Frame data for cain & abel wisps so we don't have to make list monstrocities
 /datum/abel_wisp_frame

@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - spellcheck: "When your skillchips are turned off from shapeshifting, you will now be told."

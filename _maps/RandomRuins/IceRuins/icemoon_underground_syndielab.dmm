@@ -680,7 +680,7 @@
 /area/ruin/syndielab)
 "QO" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/computer_disk/syndicate/camera_app{
+/obj/item/disk/computer/syndicate/camera_app{
 	pixel_y = 4;
 	pixel_x = -5
 	},

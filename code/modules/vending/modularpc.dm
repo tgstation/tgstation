@@ -8,7 +8,7 @@
 	product_ads = "Get your gamer gear!;The best GPUs for all of your space-crypto needs!;The most robust cooling!;The finest RGB in space!"
 	vend_reply = "Game on!"
 	products = list(
-		/obj/item/computer_disk = 8,
+		/obj/item/disk/computer = 8,
 		/obj/item/modular_computer/laptop = 4,
 		/obj/item/modular_computer/pda = 4,
 	)

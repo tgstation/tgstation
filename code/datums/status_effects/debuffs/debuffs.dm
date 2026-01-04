@@ -752,18 +752,25 @@
 /datum/status_effect/go_away/deletes_mob
 	id = "go_away_deletes_mob"
 	duration = 30 SECONDS
+	/// Timer that tracks when we should vanish
+	var/deletion_timer
 
 /datum/status_effect/go_away/deletes_mob/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
-	RegisterSignal(new_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(wipe_bozo))
+	deletion_timer = addtimer(CALLBACK(src, PROC_REF(wipe_bozo)), duration - 5 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME)
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, REF(src))
+	RegisterSignals(new_owner, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH), PROC_REF(wipe_bozo))
 
 /datum/status_effect/go_away/deletes_mob/proc/wipe_bozo()
-	qdel(src)
+	deltimer(deletion_timer)
+	owner.fade_into_nothing()
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH))
 
 /datum/status_effect/go_away/deletes_mob/on_remove()
 	. = ..()
-	if(!QDELETED(owner))
-		qdel(owner)
+	deltimer(deletion_timer)
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, REF(src))
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH))
 
 /atom/movable/screen/alert/status_effect/go_away
 	name = "TO THE STARS AND BEYOND!"

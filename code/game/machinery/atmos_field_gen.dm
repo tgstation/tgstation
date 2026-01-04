@@ -6,7 +6,7 @@
 #define GENERATOR_ACTIVE 2
 
 /obj/machinery/atmos_shield_gen
-	name = "Atmospheric Shield Generator"
+	name = "atmospheric shield generator"
 	desc = "Produces an atmos shield in a line between itself and another generator with both facing the other, while active. Powered by APC. Field must not be obstructed by wall, or an atmos shield field. Will turn on after gaining power if turned off due to power loss."
 	icon = 'icons/obj/machines/atmosshieldgen.dmi'
 	base_icon_state = "atmosshield"
@@ -85,10 +85,10 @@
 	if(locked)
 		. += span_boldwarning("LOCKED")
 		return
-	. += span_notice("Maximum field length: [max_range] tiles")
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"]")
+	. += span_notice("Maximum field length: [max_range] tiles.")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
 	if(panel_open)
-		. += span_notice("It can be [EXAMINE_HINT("pried")] apart")
+		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
 
 /obj/machinery/atmos_shield_gen/RefreshParts()
 	. = ..()

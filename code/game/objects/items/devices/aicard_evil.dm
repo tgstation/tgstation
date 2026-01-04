@@ -87,15 +87,14 @@
 	qdel(src)
 
 /// Upgrade disk used to increase the range of a syndicate AI
-/obj/item/computer_disk/syndie_ai_upgrade
+/obj/item/disk/computer/syndie_ai_upgrade
 	name = "AI interaction range upgrade"
 	desc = "A NT data chip containing information that a syndiCard AI can utilize to improve its wireless interfacing abilities. Simply slap it on top of an intelliCard, MODsuit, or AI core and watch it do its work! It's rumoured that there's something 'pretty awful' in it."
-	icon = 'icons/obj/antags/syndicate_tools.dmi'
-	icon_state = "something_awful"
 	max_capacity = 1000
 	w_class = WEIGHT_CLASS_NORMAL
+	sticker_icon_state = "o_syndicate"
 
-/obj/item/computer_disk/syndie_ai_upgrade/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/item/disk/computer/syndie_ai_upgrade/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	var/mob/living/silicon/ai/AI
 	if(isAI(target))
 		AI = target
