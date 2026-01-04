@@ -1,0 +1,5 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - bugfix: "midi2piano handles some wierd midi files a tad better"
+  - rscadd: "midi2piano can now be used via cli only and prints to stdout"
