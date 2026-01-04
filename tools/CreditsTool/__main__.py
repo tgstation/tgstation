@@ -1,4 +1,6 @@
-#!/usr/bin/env python3
+#!/bin/sh
+"exec" """$(dirname "$0")/../bootstrap/python""" "$0" "$@"
+# -----------------------------------------------------------------------------
 import io
 import os
 import argparse
