@@ -1,4 +1,8 @@
 /// AI for handling blood-drunk miner behavior
+/// General consideration is as follows:
+/// - If in PKA range, shoot PKA
+/// - If not in PKA range, dash attack on the target
+/// - If in melee range, use melee attacks (depending on saw state)
 /datum/ai_controller/blood_drunk_miner
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/no_gutted_mobs,
@@ -15,6 +19,23 @@
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		///datum/ai_planning_subtree/thing_boss_aoe,
-		///datum/ai_planning_subtree/thing_boss_melee,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/shoot_pka,
+		/datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/dash_attack,
 	)
+
+/// The BDM will preferentially shoot its PKA within range over other abilities
+/datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/shoot_pka
+	ability_key = BB_BDM_KINETIC_ACCELERATOR_ABILITY
+	/// The range at which we are able to shoot our PKA at, inclusive.
+	var/pka_range = 3
+
+/datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/shoot_pka/additional_ability_checks(datum/ai_controller/controller, datum/action/cooldown/using_action)
+	. = ..()
+	// do not shoot the PKA if we are not in the right range
+	var/mob/living/pawn = controller.pawn
+	var/mob/living/victim = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	if(get_dist(pawn, victim) >= pka_range)
+		return FALSE
+	return TRUE
+

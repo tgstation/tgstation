@@ -33,7 +33,6 @@ Difficulty: Medium
 	move_to_delay = 3
 	ranged = TRUE
 	ranged_cooldown_time = 1.6 SECONDS
-	rapid_melee = 5 // starts fast because the saw's closed. gets reduced appropriately when extended, see their transform_weapon ability
 	pixel_x = -16
 	base_pixel_x = -16
 	crusher_loot = list(/obj/item/crusher_trophy/miner_eye, /obj/item/knife/hunting/wildhunter)
@@ -57,32 +56,29 @@ Difficulty: Medium
 
 	/// Does this blood-drunk miner heal slightly while attacking and heal more when gibbing people?
 	var/guidance = FALSE
-	/// Dash ability
-	var/datum/action/cooldown/mob_cooldown/dash/dash
-	/// Kinetic accelerator ability
-	var/datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator/kinetic_accelerator
-	/// Dash Attack Ability
-	var/datum/action/cooldown/mob_cooldown/dash_attack/dash_attack
-	/// Transform weapon ability
-	var/datum/action/cooldown/mob_cooldown/transform_weapon/transform_weapon
 	/// Their little saw
 	var/obj/item/melee/cleaving_saw/miner/miner_saw
+	/// How many hits of our saw we inflict on the target when we melee on them. Get mutated via the transform weapon ability.
+	var/rapid_melee_hits = 5
 
 /mob/living/basic/boss/blood_drunk_miner/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_premove))
 	AddElement(/datum/element/relay_attackers)
+	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_HEAVY)
+
+	RegisterSignals(src, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET), PROC_REF(attack_override))
 
 	miner_saw = new(src)
 	RegisterSignal(miner_saw, COMSIG_PREQDELETED, PROC_REF(on_saw_deleted))
 
 	grant_actions_by_list(get_innate_actions())
 
-	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg')
 	AddElement(/datum/element/death_drops, string_list(list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator)))
 	RegisterSignal(src, COMSIG_LIVING_DROP_LOOT, PROC_REF(death_effect))
-	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_HEAVY)
+
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg')
 
 /// Block deletion of their saw under normal circumstances. It is fused to their hands as far as we're concerned.
 /mob/living/basic/boss/blood_drunk_miner/proc/on_saw_deleted(datum/source, force)
@@ -110,13 +106,20 @@ Difficulty: Medium
 	return innate_abilities
 
 /mob/living/basic/boss/blood_drunk_miner/ex_act(severity, target)
-	if(dash.Trigger(target = target))
+	var/dash_ability = ai_controller[BB_BDM_DASH_ABILITY]
+	if(dash_ability.Trigger(target = target))
 		return FALSE
 	return ..()
 
 /mob/living/basic/boss/blood_drunk_miner/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!used_item && !isturf(attacked_atom))
 		used_item = miner_saw
+	return ..()
+
+/mob/living/basic/boss/blood_drunk_miner/adjust_health(amount, updating_health = TRUE, forced = FALSE)
+	var/adjustment_amount = amount * 0.1
+	if(world.time + adjustment_amount > next_move)
+		changeNext_move(adjustment_amount) //attacking it interrupts it attacking, but only briefly
 	return ..()
 
 /// Handles spawning a death effect when the blood-drunk miner dies. Tied to COMSIG_LIVING_DROP_LOOT so the timings of spawning the effect should approximately work out with the loot appearing.
@@ -129,12 +132,29 @@ Difficulty: Medium
 	if(new_location && new_location.z == z && ischasm(new_location)) //we're not stupid!
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
-/mob/living/basic/boss/blood_drunk_miner/AttackingTarget(atom/attacked_target)
+/// Handles our attack behavior when we're doing melee attacks to override the default basic melee attack behavior when our AI calls upon us to use it.
+/// Namely, we just use the miner saw to rapidly hit the target multiple times
+/mob/living/basic/boss/blood_drunk_miner/proc/attack_override(mob/living/source, atom/target, proximity, modifiers)
+	SIGNAL_HANDLER
+	if(!istype(target, /mob/living))
+		return
+
 	changeNext_move(CLICK_CD_MELEE)
-	miner_saw.melee_attack_chain(src, target)
+	var/mob/living/victim = target
+	victim.visible_message(
+		span_danger("[src] slashes at [victim] with [p_their()] cleaving saw!"),
+		span_userdanger("You are slashed at by [src]'s cleaving saw!"),
+	)
+
+	var/datum/callback/melee_callback = CALLBACK(miner_saw, PROC_REF(melee_attack_chain))
+	var/delay = 0.2 SECONDS
+	for(var/i in 1 to rapid_melee_hits)
+		addtimer(melee_callback, (i - 1) * delay, timer_subsystem = SSmobs)
+
 	if(guidance)
 		adjustHealth(-2)
-	return TRUE
+
+	return COMPONENT_HOSTILE_NO_ATTACK
 
 
 /mob/living/basic/boss/blood_drunk_miner/OpenFire()
@@ -148,8 +168,4 @@ Difficulty: Medium
 		kinetic_accelerator.Trigger(target = target)
 	transform_weapon.Trigger(target = target)
 
-/mob/living/basic/boss/blood_drunk_miner/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	var/adjustment_amount = amount * 0.1
-	if(world.time + adjustment_amount > next_move)
-		changeNext_move(adjustment_amount) //attacking it interrupts it attacking, but only briefly
-	. = ..()
+
