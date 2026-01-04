@@ -17,11 +17,11 @@
 	name = "hostile-environment miner"
 	desc = "A miner destined to hop across dimensions for all eternity, hunting anomalous creatures."
 	speed = 8
-	ranged_cooldown_time = 0.8 SECONDS
+	ranged_attack_cooldown_duration = 0.8 SECONDS
 	ai_controller = /datum/ai_controller/blood_drunk_miner/doom
 
 /mob/living/basic/boss/blood_drunk_miner/doom/Initialize(mapload)
 	. = ..()
-	var/dash_ability = get_ability_from_blackboard(BB_BDM_DASH_ABILITY)
+	var/datum/action/cooldown/dash_ability = get_ability_from_blackboard(BB_BDM_DASH_ABILITY)
 	if(!isnull(dash_ability))
 		dash_ability.cooldown_time = 0.8 SECONDS

@@ -342,3 +342,5 @@
 #define BB_BDM_TRANSFORM_WEAPON_ABILITY "BB_bdm_transform_weapon_ability"
 /// Shared cooldown group for blood drunk miner ranged abilities
 #define BB_BDM_RANGED_ATTACK_COOLDOWN "BB_bdm_ranged_attack_cooldown"
+/// Cooldown duration for blood drunk miner ranged abilities
+#define BB_BDM_RANGED_ATTACK_COOLDOWN_DURATION "BB_bdm_ranged_attack_cooldown_duration"

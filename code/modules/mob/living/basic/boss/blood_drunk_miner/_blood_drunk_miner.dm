@@ -58,7 +58,7 @@ Difficulty: Medium
 	/// How many hits of our saw we inflict on the target when we melee on them. Get mutated via the transform weapon ability.
 	var/rapid_melee_hits = 5
 	/// How long must we wait between ranged attacks
-	var/ranged_attack_cooldown = 1.6 SECONDS
+	var/ranged_attack_cooldown_duration = 1.6 SECONDS
 
 /mob/living/basic/boss/blood_drunk_miner/Initialize(mapload)
 	. = ..()
@@ -73,7 +73,7 @@ Difficulty: Medium
 	RegisterSignal(miner_saw, COMSIG_PREQDELETED, PROC_REF(on_saw_deleted))
 
 	grant_actions_by_list(get_innate_actions())
-	ai_controller.set_blackboard_key(BB_BDM_RANGED_ATTACK_COOLDOWN, ranged_attack_cooldown)
+	ai_controller.set_blackboard_key(BB_BDM_RANGED_ATTACK_COOLDOWN, ranged_attack_cooldown_duration)
 
 	AddElement(/datum/element/death_drops, string_list(list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator)))
 	RegisterSignal(src, COMSIG_LIVING_DROP_LOOT, PROC_REF(death_effect))

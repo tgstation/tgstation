@@ -9,6 +9,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/no_gutted_mobs,
 		BB_TARGET_MINIMUM_STAT = DEAD,
 		BB_AGGRO_RANGE = 18, // oh fuck oh shit
+		BB_BDM_RANGED_ATTACK_COOLDOWN = 0,
 	)
 
 	movement_delay = 0.3 SECONDS
@@ -36,7 +37,12 @@
 	var/datum/action/cooldown/transform_weapon = controller.blackboard[transform_weapon_key]
 	transform_weapon.Trigger()
 
-/// Check our blackboard to see if we are able to use our transform weapon ability
+/// Check our blackboard to see if we are able to use a ranged ability in the first place
+/datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/additional_ability_checks(datum/ai_controller/controller, datum/action/cooldown/using_action)
+	. = ..()
+	if(controller.blackboard[BB_BDM_RANGED_ATTACK_COOLDOWN] > world.time)
+		return FALSE
+	controller.override_blackboard_key(BB_BDM_RANGED_ATTACK_COOLDOWN, world.time + controller.blackboard[BB_BDM_RANGED_ATTACK_COOLDOWN_DURATION])
 
 /// The BDM will preferentially shoot its PKA within range over other abilities
 /datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/shoot_pka
