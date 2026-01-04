@@ -12,11 +12,15 @@
 	///List of callback timers, used to clear out mobs listening to boss music after `track_duration`.
 	var/list/music_callbacks = list()
 
-/datum/component/boss_music/Initialize(boss_track)
+	/// Signal that we listen to on our parent to know when to start boss music.
+	var/list/signal = null
+
+/datum/component/boss_music/Initialize(boss_track, signal)
 	. = ..()
-	if(!ishostile(parent))
+	if(!ismob(parent) || isnull(signal))
 		return COMPONENT_INCOMPATIBLE
 	src.boss_track = boss_track
+	src.signal = signal
 	track_duration = SSsounds.get_sound_length(boss_track)
 
 /datum/component/boss_music/Destroy(force)
@@ -31,10 +35,10 @@
 
 /datum/component/boss_music/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_HOSTILE_FOUND_TARGET, PROC_REF(on_target_found))
+	RegisterSignal(parent, signal, PROC_REF(on_target_found))
 
 /datum/component/boss_music/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_HOSTILE_FOUND_TARGET)
+	UnregisterSignal(parent, signal)
 	return ..()
 
 ///Handles giving the boss music to a new target the fauna has received.
