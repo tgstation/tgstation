@@ -42,6 +42,9 @@ Difficulty: Medium
 	gps_name = "Resonant Signal"
 	death_message = "falls to the ground, decaying into glowing particles."
 	death_sound = SFX_BODYFALL
+	move_force = MOVE_FORCE_NORMAL //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
+
+	ai_controller = /datum/ai_controller/blood_drunk_miner
 
 	achievements = list(
 		/datum/award/achievement/boss/boss_killer,
@@ -51,8 +54,6 @@ Difficulty: Medium
 	)
 	crusher_achievement_type = /datum/award/achievement/boss/blood_miner_crusher
 	victor_memory_type = /datum/memory/megafauna_slayer
-
-	move_force = MOVE_FORCE_NORMAL //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
 
 	/// Does this blood-drunk miner heal slightly while attacking and heal more when gibbing people?
 	var/guidance = FALSE
@@ -72,20 +73,10 @@ Difficulty: Medium
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_premove))
 
-	dash = new /datum/action/cooldown/mob_cooldown/dash
-	kinetic_accelerator = new /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator
-	dash_attack = new /datum/action/cooldown/mob_cooldown/dash_attack
-	transform_weapon = new /datum/action/cooldown/mob_cooldown/transform_weapon
-	dash.Grant(src)
-	kinetic_accelerator.Grant(src)
-	dash_attack.Grant(src)
-	transform_weapon.Grant(src)
-	//todo grant_actions_by_list
-
 	miner_saw = new(src)
 	RegisterSignal(miner_saw, COMSIG_PREQDELETED, PROC_REF(on_saw_deleted))
 
-
+	grant_actions_by_list(get_innate_actions())
 
 	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg')
 	AddElement(/datum/element/death_drops, string_list(list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator)))
@@ -108,6 +99,15 @@ Difficulty: Medium
 	QDEL_NULL(miner_saw)
 	return ..()
 
+/mob/living/basic/boss/blood_drunk_miner/proc/get_innate_actions()
+	var/static/list/innate_abilities = list(
+		/datum/action/cooldown/mob_cooldown/dash = BB_BDM_DASH_ABILITY,
+		/datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator = BB_BDM_KINETIC_ACCELERATOR_ABILITY,
+		/datum/action/cooldown/mob_cooldown/dash_attack = BB_BDM_DASH_ATTACK_ABILITY,
+		/datum/action/cooldown/mob_cooldown/transform_weapon = BB_BDM_TRANSFORM_WEAPON_ABILITY,
+	)
+	return innate_abilities
+
 /mob/living/basic/boss/blood_drunk_miner/OpenFire()
 	if(client)
 		return
@@ -125,8 +125,6 @@ Difficulty: Medium
 		changeNext_move(adjustment_amount) //attacking it interrupts it attacking, but only briefly
 	. = ..()
 
-
-
 /mob/living/basic/boss/blood_drunk_miner/ex_act(severity, target)
 	if(dash.Trigger(target = target))
 		return FALSE
@@ -141,7 +139,6 @@ Difficulty: Medium
 /mob/living/basic/boss/blood_drunk_miner/proc/on_premove(datum/source, atom/new_location)
 	if(new_location && new_location.z == z && ischasm(new_location)) //we're not stupid!
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
-
 
 /mob/living/basic/boss/blood_drunk_miner/AttackingTarget(atom/attacked_target)
 	if(QDELETED(target))
