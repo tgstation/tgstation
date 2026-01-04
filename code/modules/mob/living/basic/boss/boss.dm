@@ -114,6 +114,7 @@
 /// Handles adding all relevant achievements when applicable (probably when we are defeated)
 /// Achievements being null/no length is handled in the element itself.
 /mob/living/basic/boss/proc/handle_achievements()
+	if(length(achievements) <= 0)
+		return
 	AddElement(/datum/element/kill_achievement, string_list(achievements), crusher_achievement_type, victor_memory_type)
-
 
