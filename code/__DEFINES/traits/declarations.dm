@@ -1292,6 +1292,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This should not be used on clothing_traits, but should be applied to the clothing itself.
 #define TRAIT_RADIATION_PROTECTED_CLOTHING "radiation_protected_clothing"
 
+/// Immune to the effects of rust
+#define TRAIT_RUSTIMMUNE "rust_immune"
+
 /// Whether or not this item will allow the radiation SS to go through standard
 /// radiation processing as if this wasn't already irradiated.
 /// Basically, without this, COMSIG_IN_RANGE_OF_IRRADIATION won't fire once the object is irradiated.

@@ -637,7 +637,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Override this to change behaviour when being rusted by a heretic
 /turf/proc/rust_turf()
-	if(HAS_TRAIT(src, TRAIT_RUSTY))
+	if(HAS_TRAIT(src, TRAIT_RUSTIMMUNE) || HAS_TRAIT(src, TRAIT_RUSTY))
 		return
 
 	AddElement(/datum/element/rust/heretic)
