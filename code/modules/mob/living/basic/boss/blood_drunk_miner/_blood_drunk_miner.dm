@@ -145,7 +145,7 @@ Difficulty: Medium
 	var/datum/callback/melee_callback = CALLBACK(miner_saw, TYPE_PROC_REF(/obj/item/melee/cleaving_saw/miner, melee_attack_chain), src, victim, modifiers)
 	var/delay = 0.2 SECONDS
 	for(var/i in 1 to rapid_melee_hits)
-		addtimer(melee_callback, (i - 1) * delay, timer_subsystem = SSmobs)
+		addtimer(melee_callback, (i - 1) * delay)
 
 	if(guidance)
 		adjust_health(-2)
