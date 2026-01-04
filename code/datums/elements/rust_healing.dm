@@ -7,7 +7,7 @@
 	/// How much stamina to heal per second
 	var/stamina_heal_amount
 
-/datum/element/rust_healing/Attach(datum/target, baton_resistance = TRUE, heal_amount = 3, stamina_heal_amount = 10)
+/datum/element/rust_healing/Attach(atom/target, baton_resistance = TRUE, heal_amount = 3, stamina_heal_amount = 10)
 	. = ..()
 	if (!isliving(target))
 		return ELEMENT_INCOMPATIBLE
@@ -20,7 +20,7 @@
 	src.stamina_heal_amount = stamina_heal_amount
 	ADD_TRAIT(target, TRAIT_RUSTIMMUNE, REF(src))
 
-/datum/element/rust_healing/Detach(datum/source)
+/datum/element/rust_healing/Detach(atom/source)
 	. = ..()
 	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_LIFE))
 	REMOVE_TRAIT(target, TRAIT_RUSTIMMUNE, REF(src))
