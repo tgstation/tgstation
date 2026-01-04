@@ -300,11 +300,11 @@
 /obj/structure/mounted_gun/ballista/fire_gun()
 	var/obj/projectile/bullet/ballista_spear/fired_projectile = . = ..()
 	fired_projectile.attach_spear(loaded_spear)
-	loaded_spear = null
 
 /// Called when our spear is not inside us any more
 /obj/structure/mounted_gun/ballista/proc/on_spear_left()
 	SIGNAL_HANDLER
-	shots_in_gun = 0
-	loaded_spear = null
+	UnregisterSignal(loaded_spear, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 	icon_state = base_icon_state
+	loaded_spear = null
+	shots_in_gun = 0
