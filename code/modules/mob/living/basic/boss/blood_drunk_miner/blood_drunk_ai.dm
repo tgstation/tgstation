@@ -1,9 +1,11 @@
+#define TRANSFORM_WEAPON_ABILITY_KEY BB_BDM_TRANSFORM_WEAPON_ABILITY
+
 /// AI for handling blood-drunk miner behavior
 /// General consideration is as follows:
 /// - If in PKA range, shoot PKA
 /// - If not in PKA range, dash attack on the target
 /// - If in melee range, use melee attacks (depending on saw state)
-/// - After ranged attacks, consider transforming saw state
+/// - After attacks, transform saw state from open to closed.
 /datum/ai_controller/blood_drunk_miner
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/no_gutted_mobs,
@@ -24,18 +26,22 @@
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 
+/// Simple proc that just accesses the transform weapon action and triggers it.
+/proc/handle_bdm_weapon_transformation(datum/ai_controller/controller)
+	var/datum/action/cooldown/transform_weapon = controller.blackboard[TRANSFORM_WEAPON_ABILITY_KEY]
+	transform_weapon.Trigger()
+
 /// Parent type that contains key logic important for subsequent abilities
 /datum/ai_planning_subtree/targeted_mob_ability/blood_drunk
 	/// Key for transforming our weapon whenever we need to
-	var/transform_weapon_key = BB_BDM_TRANSFORM_WEAPON_ABILITY
+	var/transform_weapon_key = TRANSFORM_WEAPON_ABILITY_KEY
 	/// Range where we determine what distance we're at. If higher, we consider ourselves out of PKA range and will dash attack instead. Inclusive when it comes to choosing to shoot PKA.
 	var/pka_range = 3
 
 /// Transform our weapon as needed after a ranged attack
 /datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/SelectBehaviors(datum/ai_controller/controller, datum/action/cooldown/using_action)
 	. = ..()
-	var/datum/action/cooldown/transform_weapon = controller.blackboard[transform_weapon_key]
-	transform_weapon.Trigger()
+	handle_bdm_weapon_transformation(controller)
 
 /// Check our blackboard to see if we are able to use a ranged ability in the first place
 /datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/additional_ability_checks(datum/ai_controller/controller, datum/action/cooldown/using_action)
@@ -70,5 +76,14 @@
 		return FALSE
 	return TRUE
 
+/// Handles saw switching after melee attacks
+/datum/ai_planning_subtree/basic_melee_attack_subtree/blood_drunk
+
+/datum/ai_planning_subtree/basic_melee_attack_subtree/blood_drunk/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	. = ..()
+	handle_bdm_weapon_transformation(controller)
+
 /datum/ai_controller/blood_drunk_miner/doom
 	movement_delay = 0.8 SECONDS
+
+#undef TRANSFORM_WEAPON_ABILITY_KEY

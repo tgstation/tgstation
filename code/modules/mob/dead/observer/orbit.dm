@@ -300,10 +300,10 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		if(!mob_allowed_typecache)
 			mob_allowed_typecache = typecacheof(list(
 				/mob/eye,
+				/mob/living/basic/boss,
 				/mob/living/basic/regal_rat,
 				/mob/living/simple_animal/bot,
 				/mob/living/simple_animal/hostile/megafauna,
-				/mob/living/basic/boss,
 			))
 		if(!is_type_in_typecache(potential_mob_poi, mob_allowed_typecache) && !potential_mob_poi.GetComponent(/datum/component/deadchat_control))
 			return FALSE
