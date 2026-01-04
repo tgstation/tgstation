@@ -115,10 +115,6 @@
 
 	actions_types = null
 	allow_multiple = TRUE
-	var/deathrattle_group_type = /datum/deathrattle_group/standard
-
-	/// Associated deathrattle group, for future configuration.
-	var/datum/deathrattle_group/current_group
 
 	implant_info = "Requires configuration before implanting. Automatically activates upon implantation. \
 		Notifies the host of deaths that occur in other deathrattle implant hosts linked to the same deathrattle group."
@@ -128,6 +124,12 @@
 		designed to communicate with other FNS units implanted within other hosts. Upon detecting a lack of vital signs, \
 		the FNS will relay the fatality and its rough estimated location to the other hosts. How it can communicate \
 		over such long distances is a trade secret that both Nanotrasen and the Syndicate are quite curious about."
+
+	/// What deathrattle group type do we create? Group types dictate area whitelisting/blacklisting.
+	var/deathrattle_group_type = /datum/deathrattle_group/standard
+
+	/// Associated deathrattle group, for future configuration.
+	var/datum/deathrattle_group/current_group
 
 /obj/item/implant/deathrattle/can_be_implanted_in(mob/living/target)
 	if(!current_group)
