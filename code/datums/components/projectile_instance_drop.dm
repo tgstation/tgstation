@@ -26,7 +26,7 @@
 /// When we hit something check if we should hit the floor
 /datum/component/projectile_instance_drop/proc/on_projectile_hit(obj/projectile/source, atom/movable/firer, atom/target, angle, hit_limb_zone, blocked, pierce_hit)
 	SIGNAL_HANDLER
-	if (!pierce_hit)
+	if (blocked < 100 && !pierce_hit)
 		drop_item(source)
 
 /// Drop item to ground
