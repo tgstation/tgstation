@@ -1,5 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Nullrod possessed swords will talk"
-  - bugfix: "Nullrod variant selection menu will no longer have three normal nullrods as options"
