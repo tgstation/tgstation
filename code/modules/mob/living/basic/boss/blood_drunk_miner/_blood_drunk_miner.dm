@@ -72,6 +72,7 @@ Difficulty: Medium
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_premove))
+	AddElement(/datum/element/relay_attackers)
 
 	miner_saw = new(src)
 	RegisterSignal(miner_saw, COMSIG_PREQDELETED, PROC_REF(on_saw_deleted))
@@ -129,29 +130,11 @@ Difficulty: Medium
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 /mob/living/basic/boss/blood_drunk_miner/AttackingTarget(atom/attacked_target)
-	if(QDELETED(target))
-		return
-	face_atom(target)
-	if(isliving(target))
-		var/mob/living/living_target = target
-		if(living_target.stat == DEAD)
-			if(!is_station_level(z) || client) //NPC monsters won't heal while on station
-				if(guidance)
-					adjustHealth(-living_target.maxHealth)
-				else
-					adjustHealth(-(living_target.maxHealth * 0.5))
-			devour(living_target)
-			return TRUE
 	changeNext_move(CLICK_CD_MELEE)
 	miner_saw.melee_attack_chain(src, target)
 	if(guidance)
 		adjustHealth(-2)
 	return TRUE
-/mob/living/basic/boss/blood_drunk_miner/GiveTarget(new_target)
-	var/targets_the_same = (new_target == target)
-	. = ..()
-	if(. && target && !targets_the_same)
-		wander = TRUE
 
 
 /mob/living/basic/boss/blood_drunk_miner/OpenFire()

@@ -43,7 +43,7 @@
 			drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
 		)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE, TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE, TRAIT_NO_FLOATING_ANIM), MEGAFAUNA_TRAIT)
+	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE, TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_NO_FLOATING_ANIM), MEGAFAUNA_TRAIT)
 	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/simple_flying)
 	handle_achievements()
@@ -110,6 +110,6 @@
 /// Handles adding all relevant achievements when applicable (probably when we are defeated)
 /// Achievements being null/no length is handled in the element itself.
 /mob/living/basic/boss/proc/handle_achievements()
-	AddElement(/datum/element/kill_achievement, achievements, crusher_achievement_type, victor_memory_type)
+	AddElement(/datum/element/kill_achievement, string_list(achievements), crusher_achievement_type, victor_memory_type)
 
 
