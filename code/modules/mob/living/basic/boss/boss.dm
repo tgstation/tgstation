@@ -20,8 +20,9 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	/// Name for the GPS signal of the megafauna
 	var/gps_name = null
-	/// What crusher trophy this mob drops, if any
-	var/crusher_loot
+	/// What crusher trophy/trophies this mob drops, if any
+	/// Should be wrapped in a list for sanity when we pass it to the element.
+	var/list/crusher_loot = null
 
 	/// What achievements do we give our defeater?
 	var/list/achievements = null
@@ -35,17 +36,11 @@
 	AddElement(/datum/element/wall_tearer, tear_time = 1 SECONDS)
 	if(gps_name)
 		AddComponent(/datum/component/gps, gps_name)
-	if(crusher_loot)
-		AddElement(\
-			/datum/element/crusher_loot,\
-			trophy_type = crusher_loot,\
-			guaranteed_drop = 0.6,\
-			drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
-		)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE, TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_NO_FLOATING_ANIM), MEGAFAUNA_TRAIT)
 	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/simple_flying)
+	handle_crusher_loot()
 	handle_achievements()
 
 /mob/living/basic/boss/gib()
@@ -117,4 +112,15 @@
 	if(length(achievements) <= 0)
 		return
 	AddElement(/datum/element/kill_achievement, string_list(achievements), crusher_achievement_type, victor_memory_type)
+
+/// Handles adding crusher loot when applicable (probably when we are defeated)
+/mob/living/basic/boss/proc/handle_crusher_loot()
+	if(isnull(crusher_loot))
+		return
+	AddElement(\
+		/datum/element/crusher_loot,\
+		trophy_type = string_list(crusher_loot),\
+		guaranteed_drop = 0.6,\
+		drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
+	)
 

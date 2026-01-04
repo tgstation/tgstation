@@ -21,7 +21,7 @@
 	speed = 3.5 //dont make this any faster PLEASE
 	gps_name = "L-4 Biohazard Beacon"
 	ai_controller = /datum/ai_controller/basic_controller/thing_boss
-	crusher_loot = /obj/item/crusher_trophy/flesh_glob
+	crusher_loot = list(/obj/item/crusher_trophy/flesh_glob)
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 
 	achievements = list(

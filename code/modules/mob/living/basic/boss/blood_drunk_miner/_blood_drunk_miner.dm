@@ -24,7 +24,6 @@ Difficulty: Medium
 	speed = 3
 	pixel_x = -16
 	base_pixel_x = -16
-	crusher_loot = list(/obj/item/crusher_trophy/miner_eye, /obj/item/knife/hunting/wildhunter)
 	basic_mob_flags = DEL_ON_DEATH
 	default_blood_volume = BLOOD_VOLUME_NORMAL
 	gps_name = "Resonant Signal"
@@ -43,6 +42,11 @@ Difficulty: Medium
 	crusher_achievement_type = /datum/award/achievement/boss/blood_miner_crusher
 	victor_memory_type = /datum/memory/megafauna_slayer
 
+	crusher_loot = list(/obj/item/crusher_trophy/miner_eye, /obj/item/knife/hunting/wildhunter)
+
+	/// Loot dropped on death in normal circumstances
+	var/list/regular_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator)
+
 	/// Their little saw
 	var/obj/item/melee/cleaving_saw/miner/miner_saw
 	/// How many hits of our saw we inflict on the target when we melee on them. Get mutated via the transform weapon ability.
@@ -57,7 +61,6 @@ Difficulty: Medium
 	AddElement(/datum/element/relay_attackers)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_HEAVY)
 
-	AddComponent(/datum/component/seethrough_mob)
 	AddComponent(\
 		/datum/component/basic_mob_attack_telegraph,\
 		display_telegraph_overlay = FALSE,\
@@ -72,7 +75,7 @@ Difficulty: Medium
 	grant_actions_by_list(get_innate_actions())
 	ai_controller.set_blackboard_key(BB_BDM_RANGED_ATTACK_COOLDOWN, ranged_attack_cooldown_duration)
 
-	AddElement(/datum/element/death_drops, string_list(list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator)))
+	AddElement(/datum/element/death_drops, string_list(regular_loot))
 	RegisterSignal(src, COMSIG_LIVING_DROP_LOOT, PROC_REF(death_effect))
 
 	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg', COMSIG_AI_BLACKBOARD_KEY_SET(BB_BASIC_MOB_CURRENT_TARGET))
