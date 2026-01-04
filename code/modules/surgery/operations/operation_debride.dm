@@ -22,6 +22,12 @@
 	/// How much sanitization is added per step
 	var/sanitization_added = 0.5 // just enough to stop infestation from worsening
 
+/datum/surgery_operation/limb/debride/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, tool)
+	. = ..()
+	for(var/datum/wound/burn/flesh/wound in limb.wounds)
+		if(HAS_TRAIT(wound, TRAIT_WOUND_SCANNED))
+			. *= 0.5
+
 /datum/surgery_operation/limb/debride/get_default_radial_image()
 	return image(/obj/item/reagent_containers/applicator/patch/aiuri)
 
