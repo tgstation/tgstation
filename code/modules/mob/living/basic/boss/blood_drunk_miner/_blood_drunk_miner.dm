@@ -147,10 +147,14 @@ Difficulty: Medium
 		span_userdanger("You are slashed at by [src]'s cleaving saw!"),
 	)
 
+	victim.add_movespeed_modifier(/datum/movespeed_modifier/blood_drunk_melee)
+
 	var/datum/callback/melee_callback = CALLBACK(miner_saw, TYPE_PROC_REF(/obj/item/melee/cleaving_saw/miner, melee_attack_chain), src, victim, modifiers)
 	var/delay = 0.2 SECONDS
 	for(var/i in 1 to rapid_melee_hits)
 		addtimer(melee_callback, (i - 1) * delay)
+
+	addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob/living, remove_movespeed_modifier), /datum/movespeed_modifier/blood_drunk_melee), rapid_melee_hits * delay + 0.1 SECONDS)
 
 	return COMPONENT_HOSTILE_NO_ATTACK
 
