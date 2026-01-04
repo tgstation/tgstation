@@ -23,7 +23,7 @@
 /datum/element/rust_healing/Detach(atom/source)
 	. = ..()
 	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_LIFE))
-	REMOVE_TRAIT(target, TRAIT_RUSTIMMUNE, REF(src))
+	REMOVE_TRAIT(source, TRAIT_RUSTIMMUNE, REF(src))
 
 /*
  * Signal proc for [COMSIG_MOVABLE_MOVED].
