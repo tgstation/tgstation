@@ -90,7 +90,6 @@
 		balloon_alert(user, "gun is firing!")
 		return
 	user.log_message("fired a mounted gun", LOG_ATTACK)
-	log_game("[key_name(user)] fired a mounted gun in [AREACOORD(src)]")
 	addtimer(CALLBACK(src, PROC_REF(fire)), fire_delay) //uses fire proc as shown below to shoot the gun
 	return
 
@@ -270,7 +269,6 @@
 		return
 
 	user.log_message("fired a ratvatian repeater", LOG_ATTACK)
-	log_game("[key_name(user)] fired a ratvatian repeater in [AREACOORD(src)]")
 	addtimer(CALLBACK(src, PROC_REF(fire)), fire_delay) //uses fire proc as shown below to shoot the gun
 
 /obj/structure/mounted_gun/ratvarian_repeater/fire()
