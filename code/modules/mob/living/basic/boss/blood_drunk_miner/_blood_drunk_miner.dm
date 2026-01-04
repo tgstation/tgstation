@@ -37,15 +37,11 @@ Difficulty: Medium
 	pixel_x = -16
 	base_pixel_x = -16
 	crusher_loot = list(/obj/item/crusher_trophy/miner_eye, /obj/item/knife/hunting/wildhunter)
-	loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator)
-	wander = FALSE
-	del_on_death = TRUE
+	basic_mob_flags = DEL_ON_DEATH
 	default_blood_volume = BLOOD_VOLUME_NORMAL
 	gps_name = "Resonant Signal"
 	death_message = "falls to the ground, decaying into glowing particles."
 	death_sound = SFX_BODYFALL
-	footstep_type = FOOTSTEP_MOB_HEAVY
-	move_force = MOVE_FORCE_NORMAL
 
 	achievements = list(
 		/datum/award/achievement/boss/boss_killer,
@@ -56,7 +52,8 @@ Difficulty: Medium
 	crusher_achievement_type = /datum/award/achievement/boss/blood_miner_crusher
 	victor_memory_type = /datum/memory/megafauna_slayer
 
-	 //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
+	move_force = MOVE_FORCE_NORMAL //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
+
 	/// Does this blood-drunk miner heal slightly while attacking and heal more when gibbing people?
 	var/guidance = FALSE
 	/// Dash ability
@@ -72,9 +69,8 @@ Difficulty: Medium
 
 /mob/living/basic/boss/blood_drunk_miner/Initialize(mapload)
 	. = ..()
-	miner_saw = new(src)
-	RegisterSignal(miner_saw, COMSIG_PREQDELETED, PROC_REF(on_saw_deleted))
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_premove))
 
 	dash = new /datum/action/cooldown/mob_cooldown/dash
 	kinetic_accelerator = new /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator
@@ -84,10 +80,17 @@ Difficulty: Medium
 	kinetic_accelerator.Grant(src)
 	dash_attack.Grant(src)
 	transform_weapon.Grant(src)
-
 	//todo grant_actions_by_list
 
+	miner_saw = new(src)
+	RegisterSignal(miner_saw, COMSIG_PREQDELETED, PROC_REF(on_saw_deleted))
+
+
+
 	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg')
+	AddElement(/datum/element/death_drops, string_list(list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator)))
+	RegisterSignal(src, COMSIG_LIVING_DROP_LOOT, PROC_REF(death_effect))
+	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_HEAVY)
 
 /// Block deletion of their saw under normal circumstances. It is fused to their hands as far as we're concerned.
 /mob/living/basic/boss/blood_drunk_miner/proc/on_saw_deleted(datum/source, force)
@@ -116,39 +119,29 @@ Difficulty: Medium
 		kinetic_accelerator.Trigger(target = target)
 	transform_weapon.Trigger(target = target)
 
-/obj/item/melee/cleaving_saw/miner //nerfed saw because it is very murdery
-	force = 6
-	open_force = 10
-
-/obj/item/melee/cleaving_saw/miner/attack(mob/living/target, mob/living/carbon/human/user)
-	target.add_stun_absorption(source = "miner", duration = 1 SECONDS, priority = INFINITY)
-	return ..()
-
-/obj/projectile/kinetic/miner
-	damage = 20
-	speed = 1.1
-	icon_state = "ka_tracer"
-	range = 4
-
 /mob/living/basic/boss/blood_drunk_miner/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	var/adjustment_amount = amount * 0.1
 	if(world.time + adjustment_amount > next_move)
 		changeNext_move(adjustment_amount) //attacking it interrupts it attacking, but only briefly
 	. = ..()
 
-/mob/living/basic/boss/blood_drunk_miner/drop_loot(drop_loc)
-	new /obj/effect/temp_visual/dir_setting/miner_death(loc, dir)
-	return ..()
 
-/mob/living/basic/boss/blood_drunk_miner/Move(atom/newloc)
-	if(newloc && newloc.z == z && ischasm(newloc)) //we're not stupid!
-		return FALSE
-	return ..()
 
 /mob/living/basic/boss/blood_drunk_miner/ex_act(severity, target)
 	if(dash.Trigger(target = target))
 		return FALSE
 	return ..()
+
+/// Handles spawning a death effect when the blood-drunk miner dies. Tied to COMSIG_LIVING_DROP_LOOT so the timings of spawning the effect should approximately work out with the loot appearing.
+/mob/living/basic/boss/blood_drunk_miner/proc/death_effect(datum/source, list/spawn_loot, gibbed)
+	SIGNAL_HANDLER
+	new /obj/effect/temp_visual/dir_setting/miner_death(loc, dir)
+
+/// Prevent running into a chasm and other undesirable movements.
+/mob/living/basic/boss/blood_drunk_miner/proc/on_premove(datum/source, atom/new_location)
+	if(new_location && new_location.z == z && ischasm(new_location)) //we're not stupid!
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+
 
 /mob/living/basic/boss/blood_drunk_miner/AttackingTarget(atom/attacked_target)
 	if(QDELETED(target))
@@ -181,42 +174,4 @@ Difficulty: Medium
 	if(. && target && !targets_the_same)
 		wander = TRUE
 
-/obj/effect/temp_visual/dir_setting/miner_death
-	icon_state = "miner_death"
-	duration = 15
 
-/obj/effect/temp_visual/dir_setting/miner_death/Initialize(mapload, set_dir)
-	. = ..()
-	INVOKE_ASYNC(src, PROC_REF(fade_out))
-
-/obj/effect/temp_visual/dir_setting/miner_death/proc/fade_out()
-	var/matrix/our_matrix = new
-	our_matrix.Turn(pick(90, 270))
-	var/final_dir = dir
-	if(dir & (EAST|WEST)) //Facing east or west
-		final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
-
-	animate(src, transform = our_matrix, pixel_y = -6, dir = final_dir, time = 2, easing = QUAD_EASING)
-	sleep(0.5 SECONDS)
-	animate(src, color = list("#A7A19E", "#A7A19E", "#A7A19E", list(0, 0, 0)), time = 10, easing = SINE_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
-	sleep(0.4 SECONDS)
-	animate(src, alpha = 0, time = 6, easing = SINE_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
-
-/mob/living/basic/boss/blood_drunk_miner/guidance
-	guidance = TRUE
-
-/mob/living/basic/boss/blood_drunk_miner/hunter/AttackingTarget(atom/attacked_target)
-	. = ..()
-	if(. && prob(12))
-		INVOKE_ASYNC(dash, TYPE_PROC_REF(/datum/action, Trigger), src, NONE, target)
-
-/mob/living/basic/boss/blood_drunk_miner/doom
-	name = "hostile-environment miner"
-	desc = "A miner destined to hop across dimensions for all eternity, hunting anomalous creatures."
-	speed = 8
-	move_to_delay = 8
-	ranged_cooldown_time = 0.8 SECONDS
-
-/mob/living/basic/boss/blood_drunk_miner/doom/Initialize(mapload)
-	. = ..()
-	dash.cooldown_time = 0.8 SECONDS
