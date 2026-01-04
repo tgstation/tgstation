@@ -19,9 +19,9 @@
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/shoot_pka,
 		/datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/dash_attack,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 
 /// Parent type that contains key logic important for subsequent abilities

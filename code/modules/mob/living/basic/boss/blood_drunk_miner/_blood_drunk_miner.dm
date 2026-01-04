@@ -67,6 +67,13 @@ Difficulty: Medium
 	AddElement(/datum/element/relay_attackers)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_HEAVY)
 
+	AddComponent(/datum/component/seethrough_mob)
+	AddComponent(\
+		/datum/component/basic_mob_attack_telegraph,\
+		display_telegraph_overlay = FALSE,\
+		telegraph_duration =  0.25 SECONDS,\
+	)
+
 	RegisterSignals(src, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET), PROC_REF(attack_override))
 
 	miner_saw = new(src)
