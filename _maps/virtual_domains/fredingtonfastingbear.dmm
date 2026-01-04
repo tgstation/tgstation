@@ -28,9 +28,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/structure/table,
-/obj/item/food/pizza{
-	pixel_y = 6
-	},
+/obj/item/food/pizza/margheritapixel_y = 6},
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "cn" = (
@@ -226,8 +224,7 @@
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/structure/table,
-/obj/item/food/pizza,
-/turf/open/floor/iron/kitchen,
+/obj/item/food/pizza/margherita/turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "mX" = (
 /obj/machinery/computer/arcade/amputation{
