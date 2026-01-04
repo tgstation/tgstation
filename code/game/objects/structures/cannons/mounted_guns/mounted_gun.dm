@@ -113,7 +113,7 @@
 	var/obj/projectile/fired_projectile = get_fired_projectile()
 	fired_projectile.firer = src
 	fired_projectile.fired_from = src
-	var/fire_angle = dir2angle(dir) + (anchored ? 0 : rand(-unanchored_variance, unanchored_variance))
+	var/fire_angle = dir2angle(dir) + (!anchorable_gun || anchored ? 0 : rand(-unanchored_variance, unanchored_variance))
 	fired_projectile.fire(fire_angle)
 	return fired_projectile
 
@@ -127,7 +127,6 @@
 	icon_state = "pipeorgangun"
 	base_icon_state = "pipeorgangun"
 	anchored = FALSE
-	anchorable_gun = TRUE
 	max_shots_per_fire = 8
 	shots_in_gun = 8
 	shots_per_load = 2
@@ -172,7 +171,6 @@
 	icon_state = "canister_gatling"
 	base_icon_state = "canister_gatling"
 	anchored = FALSE
-	anchorable_gun = TRUE
 	max_shots_per_fire = 50
 	shots_per_load = 50
 	shots_in_gun = 50
@@ -198,7 +196,6 @@
 	base_icon_state = "ratvarian_repeater"
 	loading_message = "gun charged"
 	anchored = FALSE
-	anchorable_gun = TRUE
 	uses_ammo = FALSE
 	load_delay = 3 SECONDS
 	max_shots_per_fire = 12
@@ -249,7 +246,6 @@
 	base_icon_state = "improvised_ballista"
 	throwforce = 30
 	anchored = FALSE
-	anchorable_gun = TRUE
 	uses_ammo = TRUE
 	load_delay = 6 SECONDS
 	max_shots_per_fire = 1
