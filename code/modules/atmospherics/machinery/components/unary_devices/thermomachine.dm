@@ -246,8 +246,11 @@
 	return FALSE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/wrench_act_secondary(mob/living/user, obj/item/tool)
-	if(!panel_open || check_pipe_on_turf())
-		visible_message(span_warning("A pipe is hogging the port, remove the obstruction or change the machine piping layer."))
+	if(!panel_open)
+		balloon_alert(user, "open panel!")
+		return ITEM_INTERACT_SUCCESS
+	if(!anchored && check_pipe_on_turf())
+		visible_message(span_warning("A pipe is hogging the port. Remove the obstruction or change the machine piping layer."))
 		return ITEM_INTERACT_SUCCESS
 	if(default_unfasten_wrench(user, tool))
 		change_pipe_connection(!anchored)

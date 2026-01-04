@@ -158,7 +158,7 @@
 	for(var/mob/person as anything in is_using)
 		hide_contents(person)
 
-	LAZYNULL(is_using)
+	LAZYCLEARLIST(is_using)
 	QDEL_LIST_ASSOC_VAL(storage_interfaces)
 
 	parent = null
@@ -1110,7 +1110,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if (!LAZYLEN(storage_interfaces) || isnull(storage_interfaces[to_hide]))
 		return TRUE
 
-	LAZYREMOVE(is_using, to_hide)
+	if(LAZYLEN(is_using))
+		is_using -= to_hide
 
 	if(to_hide.client)
 		to_hide.client.screen -= storage_interfaces[to_hide].list_ui_elements()

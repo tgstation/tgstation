@@ -32163,11 +32163,11 @@
 /obj/item/radio/intercom/directional/east,
 /obj/structure/cable,
 /obj/machinery/keycard_auth/wall_mounted/directional/south,
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = -6
 	},
-/obj/item/computer_disk,
-/obj/item/computer_disk{
+/obj/item/disk/computer,
+/obj/item/disk/computer{
 	pixel_x = 6
 	},
 /turf/open/floor/wood,

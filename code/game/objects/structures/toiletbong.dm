@@ -12,7 +12,7 @@
 
 /obj/structure/toiletbong/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/simple_rotation)
+	AddElement(/datum/element/simple_rotation, post_rotation_proccall = PROC_REF(post_rotation))
 	create_storage(storage_type = /datum/storage/toiletbong)
 
 	weed_overlay = mutable_appearance('icons/obj/watercloset.dmi', "[base_icon_state]_overlay")
@@ -83,7 +83,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 ///Called in the simple rotation's post_rotation callback, playing a sound cue to players.
-/obj/structure/toiletbong/post_rotation(mob/user, degrees)
+/obj/structure/toiletbong/proc/post_rotation(mob/user, degrees)
 	playsound(src, 'sound/items/deconstruct.ogg', 50)
 
 /obj/structure/toiletbong/crowbar_act(mob/living/user, obj/item/tool)
