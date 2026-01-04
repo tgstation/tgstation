@@ -1,6 +1,11 @@
+/// heals slightly on melee hits
 /mob/living/basic/boss/blood_drunk_miner/guidance
-	guidance = TRUE
 
+/mob/living/basic/boss/blood_drunk_miner/guidance/attack_override
+	. = ..()
+	adjust_health(-2)
+
+/// Better at dash attacking
 /mob/living/basic/boss/blood_durnk_miner/hunter
 
 /mob/living/basic/boss/blood_drunk_miner/hunter/attack_override(mob/living/source, atom/target, proximity, modifiers)
@@ -9,9 +14,9 @@
 		return .
 
 	if(prob(12))
-		var/dash_ability = get_ability_from_blackboard(BB_BDM_DASH_ABILITY)
-		if(!isnull(dash_ability))
-			INVOKE_ASYNC(dash_ability, TYPE_PROC_REF(/datum/action, Trigger), src, NONE, target)
+		var/dash_attack = get_ability_from_blackboard(BB_BDM_DASH_ATTACK_ABILITY)
+		if(!isnull(dash_attack))
+			INVOKE_ASYNC(dash_attack, TYPE_PROC_REF(/datum/action, Trigger), src, NONE, target)
 
 /mob/living/basic/boss/blood_drunk_miner/doom
 	name = "hostile-environment miner"

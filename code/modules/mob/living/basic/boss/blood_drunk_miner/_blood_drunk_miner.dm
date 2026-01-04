@@ -51,8 +51,6 @@ Difficulty: Medium
 	crusher_achievement_type = /datum/award/achievement/boss/blood_miner_crusher
 	victor_memory_type = /datum/memory/megafauna_slayer
 
-	/// Does this blood-drunk miner heal slightly while attacking and heal more when gibbing people?
-	var/guidance = FALSE
 	/// Their little saw
 	var/obj/item/melee/cleaving_saw/miner/miner_saw
 	/// How many hits of our saw we inflict on the target when we melee on them. Get mutated via the transform weapon ability.
@@ -153,9 +151,6 @@ Difficulty: Medium
 	var/delay = 0.2 SECONDS
 	for(var/i in 1 to rapid_melee_hits)
 		addtimer(melee_callback, (i - 1) * delay)
-
-	if(guidance)
-		adjust_health(-2)
 
 	return COMPONENT_HOSTILE_NO_ATTACK
 
