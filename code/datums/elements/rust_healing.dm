@@ -18,12 +18,12 @@
 
 	src.heal_amount = heal_amount
 	src.stamina_heal_amount = stamina_heal_amount
-	ADD_TRAIT(target, TRAIT_RUSTIMMUNE, REF(src))
+	ADD_TRAIT(target, TRAIT_RUSTIMMUNE, ELEMENT_TRAIT(type))
 
 /datum/element/rust_healing/Detach(atom/source)
 	. = ..()
 	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_LIFE))
-	REMOVE_TRAIT(source, TRAIT_RUSTIMMUNE, REF(src))
+	REMOVE_TRAIT(source, TRAIT_RUSTIMMUNE, ELEMENT_TRAIT(type))
 
 /*
  * Signal proc for [COMSIG_MOVABLE_MOVED].
