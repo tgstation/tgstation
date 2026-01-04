@@ -13,7 +13,7 @@
 	. = ..()
 	if((. & COMPONENT_HOSTILE_NO_ATTACK) && prob(12))
 		if(prob(12))
-			var/dash_attack = get_ability_from_blackboard(BB_BDM_DASH_ATTACK_ABILITY)
+			var/dash_attack = ai_controller.blackboard[BB_BDM_DASH_ATTACK_ABILITY]
 			if(!isnull(dash_attack))
 				INVOKE_ASYNC(dash_attack, TYPE_PROC_REF(/datum/action, Trigger), src, NONE, target)
 
@@ -28,6 +28,6 @@
 
 /mob/living/basic/boss/blood_drunk_miner/doom/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/dash_ability = get_ability_from_blackboard(BB_BDM_DASH_ABILITY)
+	var/datum/action/cooldown/dash_ability = ai_controller.blackboard[BB_BDM_DASH_ABILITY]
 	if(!isnull(dash_ability))
 		dash_ability.cooldown_time = 0.8 SECONDS
