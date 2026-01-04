@@ -245,6 +245,7 @@ GLOBAL_LIST_INIT(vox_sounds, list(
 	"combat" = 'sound/announcer/vox_fem/combat.ogg',
 	"combatant" = 'sound/announcer/vox_fem/combatant.ogg',
 	"come" = 'sound/announcer/vox_fem/come.ogg',
+	"scome" = 'troutstation/sound/announcer/vox_fem/scome.ogg', // Troutstation edit
 	"command" = 'sound/announcer/vox_fem/command.ogg',
 	"communication" = 'sound/announcer/vox_fem/communication.ogg',
 	"complete" = 'sound/announcer/vox_fem/complete.ogg',
@@ -534,6 +535,7 @@ GLOBAL_LIST_INIT(vox_sounds, list(
 	"green" = 'sound/announcer/vox_fem/green.ogg',
 	"grenade" = 'sound/announcer/vox_fem/grenade.ogg',
 	"guard" = 'sound/announcer/vox_fem/guard.ogg',
+	"sguardian" = 'troutstation/sound/announcer/vox_fem/sguardian.ogg', // Troutstation edit
 	"gulf" = 'sound/announcer/vox_fem/gulf.ogg',
 	"gun" = 'sound/announcer/vox_fem/gun.ogg',
 	"guthrie" = 'sound/announcer/vox_fem/guthrie.ogg',
