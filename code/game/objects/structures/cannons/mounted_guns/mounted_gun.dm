@@ -51,6 +51,26 @@
 		/obj/item/assembly/igniter = 1,
 	)
 
+/obj/structure/mounted_gun/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/simple_rotation)
+	register_context()
+
+/obj/structure/mounted_gun/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!isliving(user))
+		return
+
+	if(anchorable_gun && held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unanchor" : "Anchor"
+
+	if(uses_ammo && istype(held_item, ammo_type))
+		context[SCREENTIP_CONTEXT_LMB] = "Load weapon"
+
+	if (!held_item)
+		context[SCREENTIP_CONTEXT_LMB] = "Fire weapon"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
 /obj/structure/mounted_gun/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!anchorable_gun) /// Can't anchor an unanchorable gun.
@@ -262,6 +282,18 @@
 		/obj/item/stack/sheet/bronze = 2,
 		/obj/item/stack/rods = 3,
 	)
+
+/obj/structure/mounted_gun/ratvarian_repeater/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!isliving(user))
+		return
+
+	if(anchorable_gun && held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unanchor" : "Anchor"
+
+	if (!held_item)
+		context[SCREENTIP_CONTEXT_LMB] = shots_in_gun >= max_shots_per_fire ? "Fire weapon" : "Crank weapon"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 // Charge the gun instead of firing it if it's not loaded
 /obj/structure/mounted_gun/ratvarian_repeater/try_firing(mob/user)
