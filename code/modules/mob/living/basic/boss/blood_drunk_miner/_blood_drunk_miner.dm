@@ -22,8 +22,6 @@ Difficulty: Medium
 	light_color = COLOR_LIGHT_GRAYISH_RED
 	speak_emote = list("roars")
 	speed = 3
-	pixel_x = -16
-	base_pixel_x = -16
 	crusher_loot = list(/obj/item/crusher_trophy/miner_eye, /obj/item/knife/hunting/wildhunter)
 	basic_mob_flags = DEL_ON_DEATH
 	default_blood_volume = BLOOD_VOLUME_NORMAL
