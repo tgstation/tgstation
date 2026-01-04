@@ -42,13 +42,21 @@ Difficulty: Medium
 	del_on_death = TRUE
 	default_blood_volume = BLOOD_VOLUME_NORMAL
 	gps_name = "Resonant Signal"
-	achievement_type = /datum/award/achievement/boss/blood_miner_kill
-	crusher_achievement_type = /datum/award/achievement/boss/blood_miner_crusher
-	score_achievement_type = /datum/award/score/blood_miner_score
 	death_message = "falls to the ground, decaying into glowing particles."
 	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
-	move_force = MOVE_FORCE_NORMAL //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
+	move_force = MOVE_FORCE_NORMAL
+
+	achievements = list(
+		/datum/award/achievement/boss/boss_killer,
+		/datum/award/achievement/boss/blood_miner_kill,
+		/datum/award/achievement/boss/blood_miner_crusher,
+		/datum/award/score/blood_miner_score,
+	)
+	crusher_achievement_type = /datum/award/achievement/boss/blood_miner_crusher
+	victor_memory_type = /datum/memory/megafauna_slayer
+
+	 //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
 	/// Does this blood-drunk miner heal slightly while attacking and heal more when gibbing people?
 	var/guidance = FALSE
 	/// Dash ability
@@ -68,6 +76,15 @@ Difficulty: Medium
 	RegisterSignal(miner_saw, COMSIG_PREQDELETED, PROC_REF(on_saw_deleted))
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
+	var/static/list/achievements = list(
+		/datum/award/achievement/boss/boss_killer,
+		/datum/award/achievement/boss/blood_miner_kill,
+		/datum/award/achievement/boss/blood_miner_crusher,
+		/datum/award/score/blood_miner_score,
+	)
+
+	AddElement(/datum/element/kill_achievement, string_list(achievements), /datum/award/achievement/boss/blood_miner_crusher, /datum/memory/megafauna_slayer)
+
 	dash = new /datum/action/cooldown/mob_cooldown/dash
 	kinetic_accelerator = new /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator
 	dash_attack = new /datum/action/cooldown/mob_cooldown/dash_attack
@@ -76,6 +93,8 @@ Difficulty: Medium
 	kinetic_accelerator.Grant(src)
 	dash_attack.Grant(src)
 	transform_weapon.Grant(src)
+
+	//todo grant_actions_by_list
 
 	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg')
 

@@ -23,6 +23,13 @@
 	/// What crusher trophy this mob drops, if any
 	var/crusher_loot
 
+	/// What achievements do we give our defeater?
+	var/list/achievements = null
+	/// What type of achievement we give for crusher kills, if any.
+	var/crusher_achievement_type = null
+	/// What memory to give to victor who have killed us, if any.
+	var/victor_memory_type = null
+
 /mob/living/basic/boss/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/wall_tearer, tear_time = 1 SECONDS)
@@ -39,6 +46,7 @@
 	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE, TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE, TRAIT_NO_FLOATING_ANIM), MEGAFAUNA_TRAIT)
 	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/simple_flying)
+	handle_achievements()
 
 /mob/living/basic/boss/gib()
 	if(health > 0)
@@ -83,6 +91,11 @@
 	visible_message(
 		span_danger("[src] disembowels [poor_sap]!"),
 		span_userdanger("You feast on [poor_sap]'s organs, restoring your health!"))
+
+/// Handles adding all relevant achievements when applicable (probably when we are defeated)
+/// Achievements being null/no length is handled in the element itself.
+/mob/living/basic/boss/proc/handle_achievements()
+	AddElement(/datum/element/kill_achievement, achievements, crusher_achievement_type, victor_memory_type)
 
 /mob/living/basic/boss/ex_act(severity, target)
 	switch (severity)
