@@ -1,12 +1,12 @@
 /// heals slightly on melee hits
 /mob/living/basic/boss/blood_drunk_miner/guidance
 
-/mob/living/basic/boss/blood_drunk_miner/guidance/attack_override
+/mob/living/basic/boss/blood_drunk_miner/guidance/attack_override(mob/living/source, atom/target, proximity, modifiers)
 	. = ..()
 	adjust_health(-2)
 
 /// Better at dash attacking
-/mob/living/basic/boss/blood_durnk_miner/hunter
+/mob/living/basic/boss/blood_drunk_miner/hunter
 
 /mob/living/basic/boss/blood_drunk_miner/hunter/attack_override(mob/living/source, atom/target, proximity, modifiers)
 	. = ..()
