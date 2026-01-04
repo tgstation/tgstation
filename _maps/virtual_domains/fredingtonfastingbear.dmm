@@ -29,7 +29,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/structure/table,
 /obj/item/food/pizza/margherita{
-	    pixel_y = 6    
+	pixel_y = 6
 	},
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
