@@ -124,6 +124,3 @@
 	#define COMPONENT_ITEM_CHARGED (1 << 0)
 	/// Return if the item had a negative side effect occur while recharging
 	#define COMPONENT_ITEM_BURNT_OUT (1 << 1)
-
-/// Sent from /datum/action/cooldown/spell/shapeshift/polymorph_belt/proc/update_type with the new typepath the belt turns you into
-#define COMSIG_BELT_MOB_TYPE_CHANGED "belt_mob_type_changed"

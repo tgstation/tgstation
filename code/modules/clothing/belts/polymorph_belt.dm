@@ -98,13 +98,7 @@
 		return
 	if (isnull(transform_action))
 		transform_action = add_item_action(/datum/action/cooldown/spell/shapeshift/polymorph_belt)
-		RegisterSignal(transform_action, COMSIG_BELT_MOB_TYPE_CHANGED, PROC_REF(on_belt_mob_changed))
 	transform_action.update_type(stored_mob_type)
-
-/// If anything else changes our belt transform type we should track it
-/obj/item/polymorph_belt/proc/on_belt_mob_changed(typepath)
-	SIGNAL_HANDLER
-	stored_mob_type = typepath
 
 /// Pre-activated polymorph belt
 /obj/item/polymorph_belt/functioning
@@ -179,7 +173,6 @@
 	var/mob/living/will_become = transform_type
 	desc = "Assume your [initial(will_become.name)] form!"
 	build_all_button_icons(update_flags = UPDATE_BUTTON_NAME)
-	SEND_SIGNAL(src, COMSIG_BELT_MOB_TYPE_CHANGED, shapeshift_type)
 
 /// Subtype of the polymorph status effect which tracks arbitrary mob transformation
 /datum/status_effect/shapechange_mob/from_spell/polymorph_belt
@@ -195,11 +188,7 @@
 /datum/status_effect/shapechange_mob/from_spell/polymorph_belt/proc/on_type_change(mob/living/source, mob/living/new_mob)
 	SIGNAL_HANDLER
 	var/caster = caster_mob // Will be unset when the mob is unshifted
-	var/datum/action/cooldown/spell/shapeshift/polymorph_belt/transform_action = source_weakref?.resolve()
-
-	if (istype(transform_action))
-		transform_action.update_type(new_mob.type)
-	else
-		restore_caster()
-
+	var/datum/action/cooldown/spell/shapeshift/transform_action = source_weakref?.resolve()
+	transform_action.possible_shapes |= new_mob.type
+	restore_caster()
 	new_mob.apply_status_effect(type, caster, transform_action)
