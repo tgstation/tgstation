@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "If a surgery table has a patient on it, and you click it with a surgical tool, it redirects the click to the patient instead of placing the tool on the table"
