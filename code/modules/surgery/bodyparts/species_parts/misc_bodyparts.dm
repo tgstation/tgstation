@@ -364,15 +364,11 @@
 
 /obj/item/bodypart/arm/left/shadow/nightmare
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
-
 	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/nyxosynthesis)
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_SHADOW
 
 /obj/item/bodypart/arm/right/shadow/nightmare
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
-
 	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/nyxosynthesis)
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_SHADOW
 
 ///SKELETON
 /obj/item/bodypart/head/skeleton
