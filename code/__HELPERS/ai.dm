@@ -35,5 +35,4 @@
 	var/datum/ai_controller/controller = ai_controller
 	if(isnull(controller))
 		return null
-	var/datum/action/action_ability = controller.blackboard[key]
-	return action_ability
+	return controller.blackboard[key]
