@@ -1,5 +1,5 @@
 /obj/item/raptor_dex
-	name = "RaptorDex"
+	name = "\improper RaptorDex"
 	desc = "A device used to analyze lavaland raptors!"
 	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "raptor_dex"
