@@ -3,6 +3,7 @@
 /// - If in PKA range, shoot PKA
 /// - If not in PKA range, dash attack on the target
 /// - If in melee range, use melee attacks (depending on saw state)
+/// - After ranged attacks, consider transforming saw state
 /datum/ai_controller/blood_drunk_miner
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/no_gutted_mobs,
@@ -31,12 +32,11 @@
 	/// Range where we determine what distance we're at. If higher, we consider ourselves out of PKA range and will dash attack instead. Inclusive when it comes to choosing to shoot PKA.
 	var/pka_range = 3
 
-/// Transform our weapon as needed after an attack
+/// Transform our weapon as needed after a ranged attack
 /datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/SelectBehaviors(datum/ai_controller/controller, datum/action/cooldown/using_action)
 	. = ..()
 	var/datum/action/cooldown/transform_weapon = controller.blackboard[transform_weapon_key]
 	transform_weapon.Trigger()
-
 
 /// The BDM will preferentially shoot its PKA within range over other abilities
 /datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/shoot_pka

@@ -142,7 +142,7 @@ Difficulty: Medium
 		span_userdanger("You are slashed at by [src]'s cleaving saw!"),
 	)
 
-	var/datum/callback/melee_callback = CALLBACK(miner_saw, PROC_REF(melee_attack_chain))
+	var/datum/callback/melee_callback = CALLBACK(miner_saw, TYPE_PROC_REF(melee_attack_chain))
 	var/delay = 0.2 SECONDS
 	for(var/i in 1 to rapid_melee_hits)
 		addtimer(melee_callback, (i - 1) * delay, timer_subsystem = SSmobs)
@@ -151,17 +151,5 @@ Difficulty: Medium
 		adjust_health(-2)
 
 	return COMPONENT_HOSTILE_NO_ATTACK
-
-
-/mob/living/basic/boss/blood_drunk_miner/OpenFire()
-	if(client)
-		return
-
-	Goto(target, move_to_delay, minimum_distance)
-	if(get_dist(src, target) > 4 && dash_attack.IsAvailable())
-		dash_attack.Trigger(target = target)
-	else
-		kinetic_accelerator.Trigger(target = target)
-	transform_weapon.Trigger(target = target)
 
 
