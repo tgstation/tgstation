@@ -340,3 +340,5 @@
 #define BB_BDM_DASH_ATTACK_ABILITY "BB_bdm_dash_attack_ability"
 /// key for transform weapon ability
 #define BB_BDM_TRANSFORM_WEAPON_ABILITY "BB_bdm_transform_weapon_ability"
+/// Shared cooldown group for blood drunk miner ranged abilities
+#define BB_BDM_RANGED_ATTACK_COOLDOWN "BB_bdm_ranged_attack_cooldown"

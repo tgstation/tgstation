@@ -30,9 +30,6 @@ Difficulty: Medium
 	light_color = COLOR_LIGHT_GRAYISH_RED
 	speak_emote = list("roars")
 	speed = 3
-	move_to_delay = 3
-	ranged = TRUE
-	ranged_cooldown_time = 1.6 SECONDS
 	pixel_x = -16
 	base_pixel_x = -16
 	crusher_loot = list(/obj/item/crusher_trophy/miner_eye, /obj/item/knife/hunting/wildhunter)
@@ -60,6 +57,8 @@ Difficulty: Medium
 	var/obj/item/melee/cleaving_saw/miner/miner_saw
 	/// How many hits of our saw we inflict on the target when we melee on them. Get mutated via the transform weapon ability.
 	var/rapid_melee_hits = 5
+	/// How long must we wait between ranged attacks
+	var/ranged_attack_cooldown = 1.6 SECONDS
 
 /mob/living/basic/boss/blood_drunk_miner/Initialize(mapload)
 	. = ..()
@@ -74,6 +73,7 @@ Difficulty: Medium
 	RegisterSignal(miner_saw, COMSIG_PREQDELETED, PROC_REF(on_saw_deleted))
 
 	grant_actions_by_list(get_innate_actions())
+	ai_controller.set_blackboard_key(BB_BDM_RANGED_ATTACK_COOLDOWN, ranged_attack_cooldown)
 
 	AddElement(/datum/element/death_drops, string_list(list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator)))
 	RegisterSignal(src, COMSIG_LIVING_DROP_LOOT, PROC_REF(death_effect))
@@ -102,7 +102,7 @@ Difficulty: Medium
 	return innate_abilities
 
 /mob/living/basic/boss/blood_drunk_miner/ex_act(severity, target)
-	var/dash_ability = ai_controller.blackboard[BB_BDM_DASH_ABILITY]
+	var/datum/action/cooldown/mob_cooldown/dash_ability = ai_controller.blackboard[BB_BDM_DASH_ABILITY]
 	if(dash_ability.Trigger(target = target))
 		return FALSE
 	return ..()
@@ -142,7 +142,7 @@ Difficulty: Medium
 		span_userdanger("You are slashed at by [src]'s cleaving saw!"),
 	)
 
-	var/datum/callback/melee_callback = CALLBACK(miner_saw, TYPE_PROC_REF(melee_attack_chain))
+	var/datum/callback/melee_callback = CALLBACK(miner_saw, TYPE_PROC_REF(/obj/item/melee/cleaving_saw/miner, melee_attack_chain), src, victim, modifiers)
 	var/delay = 0.2 SECONDS
 	for(var/i in 1 to rapid_melee_hits)
 		addtimer(melee_callback, (i - 1) * delay, timer_subsystem = SSmobs)

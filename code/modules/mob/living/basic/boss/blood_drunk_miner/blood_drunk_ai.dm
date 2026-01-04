@@ -9,11 +9,9 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/no_gutted_mobs,
 		BB_TARGET_MINIMUM_STAT = DEAD,
 		BB_AGGRO_RANGE = 18, // oh fuck oh shit
-		//BB_THETHING_ATTACKMODE = TRUE, //Whether we are using our melee abilities right now
-		//BB_THETHING_NOAOE = TRUE, // Restricts us to only melee abilities
-		//BB_THETHING_LASTAOE = null, // Last AOE ability key executed
 	)
 
+	movement_delay = 0.3 SECONDS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
@@ -37,6 +35,8 @@
 	. = ..()
 	var/datum/action/cooldown/transform_weapon = controller.blackboard[transform_weapon_key]
 	transform_weapon.Trigger()
+
+/// Check our blackboard to see if we are able to use our transform weapon ability
 
 /// The BDM will preferentially shoot its PKA within range over other abilities
 /datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/shoot_pka
@@ -64,4 +64,5 @@
 		return FALSE
 	return TRUE
 
-
+/datum/ai_controller/blood_drunk_miner/doom
+	movement_delay = 0.8 SECONDS

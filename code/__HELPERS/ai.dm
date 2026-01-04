@@ -28,3 +28,12 @@
 		top_force = item.force
 
 	return top_force_item
+
+
+/// Gets the ability from the blackboard given the key, else null
+/atom/proc/get_ability_from_blackboard(key)
+	var/datum/ai_controller/controller = ai_controller
+	if(isnull(controller))
+		return null
+	var/datum/action/action_ability = controller.blackboard[key]
+	return action_ability
