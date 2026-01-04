@@ -190,6 +190,3 @@
 
 /datum/movespeed_modifier/tail_dragger
 	multiplicative_slowdown = 4
-
-/datum/movespeed_modifier/blood_drunk_melee
-	multiplicative_slowdown = 2.5
