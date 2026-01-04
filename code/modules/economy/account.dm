@@ -16,7 +16,7 @@
 	///The job datum of the account owner.
 	var/datum/job/account_job
 	///List of the physical ID card objects that are associated with this bank_account
-	var/list/bank_cards = list()
+	var/list/bank_cards
 	///Should this ID be added to the global list of accounts? If true, will be subject to station-bound economy effects as well as income.
 	var/add_to_accounts = TRUE
 	///The Unique ID number code associated with the owner's bank account, assigned at round start.
@@ -34,7 +34,7 @@
 	///A special semi-tandom token for tranfering money from NT pay app
 	var/pay_token
 	///List with a transaction history for NT pay app
-	var/list/transaction_history = list()
+	var/list/transaction_history
 	///A lazylist of coupons redeemed with the Coupon Master pda app associated with this account.
 	var/list/redeemed_coupons
 	/// How many paychecks to skip when payday is called.
@@ -232,7 +232,7 @@
  * * force - if TRUE ignore checks on client and client prefernces.
  */
 /datum/bank_account/proc/bank_card_talk(message, force)
-	if(!message || !bank_cards.len)
+	if(!message || !LAZYLEN(bank_cards))
 		return
 	for(var/obj/card in bank_cards)
 		var/icon_source = card
@@ -344,12 +344,12 @@
  * * reason - The reason of interact with balance, for example, "Bought chips" or "Payday".
  */
 /datum/bank_account/proc/add_log_to_history(adjusted_money, reason)
-	if(transaction_history.len >= 20)
+	if(LAZYLEN(transaction_history) >= 20)
 		transaction_history.Cut(1,2)
 
-	transaction_history += list(list(
+	LAZYADD(transaction_history, list(list(
 		"adjusted_money" = adjusted_money,
 		"reason" = reason,
-	))
+	)))
 
 #undef DUMPTIME

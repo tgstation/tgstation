@@ -14,7 +14,7 @@
 	cost = 2
 	restricted_roles = list(JOB_CURATOR)
 	limited_stock = 1 //please don't spam deadchat
-	surplus = 0 //currently non-functional
+	surplus = 1 
 
 /datum/uplink_item/role_restricted/mail_counterfeit_kit
 	name = "GLA Brand Mail Counterfeit Kit"

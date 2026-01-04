@@ -194,7 +194,7 @@
 					if(H.move_intent == MOVE_INTENT_RUN)
 						INVOKE_ASYNC(src, PROC_REF(triggered), H)
 						H.visible_message(span_warning("[H] accidentally steps on [src]."), \
-							span_warning("You accidentally step on [src]"))
+							span_warning("You accidentally step on [src]."))
 				else if(ismouse(MM) || isregalrat(MM))
 					INVOKE_ASYNC(src, PROC_REF(triggered), MM)
 		else if(AM.density) // For mousetrap grenades, set off by anything heavy

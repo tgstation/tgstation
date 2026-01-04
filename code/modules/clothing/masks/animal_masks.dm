@@ -154,15 +154,17 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 
 /obj/item/clothing/mask/animal/frog/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, cursed ? 4 : -4)
+	AddElement(/datum/element/adjust_fishing_difficulty, cursed ? 4 : -4)
 
 /obj/item/clothing/mask/animal/frog/make_cursed()
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 4)
+	RemoveElement(/datum/element/adjust_fishing_difficulty, -4)
+	AddElement(/datum/element/adjust_fishing_difficulty, 4)
 
 /obj/item/clothing/mask/animal/frog/clear_curse()
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+	RemoveElement(/datum/element/adjust_fishing_difficulty, 4)
+	AddElement(/datum/element/adjust_fishing_difficulty, -4)
 
 /obj/item/clothing/mask/animal/frog/cursed
 	cursed = TRUE
@@ -244,15 +246,17 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 
 /obj/item/clothing/mask/animal/small/bear/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, cursed ? 4 : -4)
+	AddElement(/datum/element/adjust_fishing_difficulty, cursed ? 4 : -4)
 
 /obj/item/clothing/mask/animal/small/bear/make_cursed()
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 4)
+	RemoveElement(/datum/element/adjust_fishing_difficulty, -4)
+	AddElement(/datum/element/adjust_fishing_difficulty, 4)
 
 /obj/item/clothing/mask/animal/small/bear/clear_curse()
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+	RemoveElement(/datum/element/adjust_fishing_difficulty, 4)
+	AddElement(/datum/element/adjust_fishing_difficulty, -4)
 
 /obj/item/clothing/mask/animal/small/bear/cursed
 	cursed = TRUE
@@ -304,15 +308,17 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 
 /obj/item/clothing/mask/animal/small/tribal/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, cursed ? 5 : -5)
+	AddElement(/datum/element/adjust_fishing_difficulty, cursed ? 5 : -5)
 
 /obj/item/clothing/mask/animal/small/tribal/make_cursed()
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+	RemoveElement(/datum/element/adjust_fishing_difficulty, -5)
+	AddElement(/datum/element/adjust_fishing_difficulty, 5)
 
 /obj/item/clothing/mask/animal/small/tribal/clear_curse()
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
+	RemoveElement(/datum/element/adjust_fishing_difficulty, 5)
+	AddElement(/datum/element/adjust_fishing_difficulty, -5)
 
 /obj/item/clothing/mask/animal/small/tribal/cursed //adminspawn only.
 	cursed = TRUE
