@@ -91,7 +91,6 @@
 	icon_state = "puddle-oil"
 	capacity = 20
 	dispensedreagent = /datum/reagent/fuel/oil
-	pixel_shift = 0
 
 /obj/structure/sink/oil_well/Initialize(mapload)
 	. = ..()
