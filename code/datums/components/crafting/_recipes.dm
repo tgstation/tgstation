@@ -130,3 +130,7 @@
 /// Additional UI data to be passed to the crafting UI for this recipe
 /datum/crafting_recipe/proc/crafting_ui_data()
 	return list()
+
+/// An action to be taken after crafting an item
+/datum/crafting_recipe/proc/after_crafting(atom/result, list/stuff_to_use)
+	return

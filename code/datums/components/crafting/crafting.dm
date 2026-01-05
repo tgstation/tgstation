@@ -277,6 +277,7 @@
 		if(result.atom_storage && recipe.delete_contents)
 			for(var/obj/item/thing in result)
 				qdel(thing)
+	recipe.after_crafting(result, stuff_to_use)
 	result.setDir(crafter.dir)
 	var/datum/reagents/holder = locate() in stuff_to_use
 	if(holder) //transfer reagents from ingredients to result

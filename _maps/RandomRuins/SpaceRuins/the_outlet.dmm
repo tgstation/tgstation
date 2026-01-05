@@ -207,11 +207,7 @@
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "fX" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/animalhide/lizard,
-/obj/item/stack/sheet/animalhide/lizard,
-/obj/item/stack/sheet/animalhide/lizard,
-/obj/item/stack/sheet/animalhide/lizard,
-/obj/item/stack/sheet/animalhide/lizard,
+/obj/item/stack/sheet/animalhide/lizard/five,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "gc" = (

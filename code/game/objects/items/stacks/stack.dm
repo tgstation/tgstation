@@ -80,7 +80,7 @@
 	///What type of wall does this sheet spawn
 	var/walltype
 
-/obj/item/stack/Initialize(mapload, new_amount = amount, merge = TRUE, list/mat_override=null, mat_amt=1)
+/obj/item/stack/Initialize(mapload, new_amount = amount, merge = TRUE, list/mat_override = null, mat_amt = 1)
 	amount = new_amount
 	if(amount <= 0)
 		stack_trace("invalid amount [amount]!")
