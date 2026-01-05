@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - qol: "Keybindings page now tells you how to clear a keybind"

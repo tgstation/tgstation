@@ -306,8 +306,7 @@
 	alternate_worn_layer = GLOVES_LAYER //covers hands but gloves can go over it. This is how these things work in my head.
 	can_adjust = FALSE
 
-/obj/item/clothing/under/costume/mech_suit/Initialize(mapload)
-	. = ..()
+/obj/item/clothing/under/costume/mech_suit/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/mech_suit)
 
 /obj/item/clothing/under/costume/russian_officer

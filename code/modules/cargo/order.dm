@@ -158,7 +158,7 @@
 					container_contents -= missing_item
 
 	for(var/item in container_contents)
-		manifest_text += "<li> [container_contents[item]] [item][container_contents[item] == 1 ? "" : "s"]</li>"
+		manifest_text += "<li> [container_contents[item]] [item][container_contents[item] == 1 ? "" : plural_s(item)]</li>"
 	manifest_text += "</ul>"
 	manifest_text += "<h4>Stamp below to confirm receipt of goods:</h4>"
 

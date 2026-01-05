@@ -23,16 +23,13 @@
 	/// We will explode if we're not in here after a set time
 	var/list/limited_areas = list()
 
-/obj/item/implant/explosive/battle_royale/get_data()
-	return "<b>Implant Specifications:</b><BR> \
-		<b>Name:</b> Donk Co. 'Rumble Royale' Contestant Motivation Implant<BR> \
-		<b>Life:</b> Activates upon death, or expiry of an internal timer.<BR> \
-		<b>Important Notes:</b> Explodes.<BR> \
-		<HR> \
-		<b>Implant Details:</b><BR> \
-		<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death. \
-		Upon triggering the timer, the implant will begin to broadcast the surrounding area for the purposes of televised entertainment. This signal can be detected by GPS trackers.<BR> \
-		<b>Special Features:</b> Exploding.<BR>"
+	implant_info = "Forcibly inducts the host into televised bloodsport by threatening their life via electrically-detonated microexplosive. \
+		Detonates upon death, expiry of an internal timer, or attempted removal."
+
+	implant_lore = "The Donk Co. 'Rumble Royale' Contestant Motivation Implant is a licensed copy of the Robust Corp RX-78 Employee Management Implant, \
+		featuring the very same microbomb that has provided plausible deniability, evidence disposal, and equipment denial for numerous non-state actors. \
+		The Rumble Royale variant also features additional nervous system interception functionality, allowing for broadcasting the host's field of view \
+		to compatible entertainment monitors, and a GPS-compatible tracking beacon for the sake of allowing contestants to locate each other more easily."
 
 /obj/item/implant/explosive/battle_royale/on_death(datum/source, gibbed)
 	if (!battle_started)

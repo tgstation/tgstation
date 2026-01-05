@@ -742,7 +742,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	// Ignore alllll the penalties (but also all the bonuses)
 	if(!HAS_TRAIT(surgeon, TRAIT_IGNORE_SURGERY_MODIFIERS))
 		var/mob/living/patient = get_patient(operating_on)
-		total_mod *= get_morbid_modifier(surgeon, tool)
+		total_mod *= get_surgeon_surgery_speed_mod(surgeon, tool)
 		if(!isnull(patient)) // Some surgeries can lack patients
 			total_mod *= get_location_modifier(get_turf(patient))
 			total_mod *= get_mob_surgery_speed_mod(patient)
@@ -750,18 +750,6 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		if(operating_on == surgeon && HAS_TRAIT(surgeon, TRAIT_SELF_SURGERY) && !(operation_flags & OPERATION_SELF_OPERABLE))
 			total_mod *= 1.5
 	return round(total_mod, 0.01)
-
-/// Returns a time modifier for morbid operations
-/datum/surgery_operation/proc/get_morbid_modifier(mob/living/surgeon, obj/item/tool)
-	PROTECTED_PROC(TRUE)
-	if(!(operation_flags & OPERATION_MORBID))
-		return 1.0
-	if(!HAS_MIND_TRAIT(surgeon, TRAIT_MORBID))
-		return 1.0
-	if(!isitem(tool) || !(tool.item_flags & CRUEL_IMPLEMENT))
-		return 1.0
-
-	return 0.7
 
 /// Returns a time modifier based on the mob's status
 /datum/surgery_operation/proc/get_mob_surgery_speed_mod(mob/living/patient)
@@ -773,6 +761,24 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		basemod *= 0.8
 	if(HAS_TRAIT(patient, TRAIT_ANALGESIA))
 		basemod *= 0.8
+	return basemod
+
+/// Returns a time modifier based on the surgeon's status
+/datum/surgery_operation/proc/get_surgeon_surgery_speed_mod(mob/living/surgeon, tool)
+	PROTECTED_PROC(TRUE)
+	var/basemod = 1.0
+	if((operation_flags & OPERATION_MORBID) && HAS_MIND_TRAIT(surgeon, TRAIT_MORBID) && isitem(tool))
+		var/obj/item/realtool = tool
+		if(realtool.item_flags & CRUEL_IMPLEMENT)
+			basemod *= 0.7
+
+	var/drunkness = surgeon.get_drunk_amount()
+	// being drunk gives upwards of a 12x speed penalty - unless you land in the ballmer peak
+	if(drunkness >= BALLMER_PEAK_LOW_END && drunkness <= BALLMER_PEAK_HIGH_END)
+		basemod *= 0.8
+	else
+		basemod *= 1 + round((drunkness ** 1.5) / 90, 0.1)
+
 	return basemod
 
 /// Gets the surgery speed modifier for a given mob, based off what sort of table/bed/whatever is on their turf.
