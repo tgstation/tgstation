@@ -86,6 +86,15 @@
 		/obj/item/clothing/gloves/color/rainbow,
 	)
 
+/obj/effect/spawner/random/clothing/lizardboots
+	name = "random lizard boot quality"
+	desc = "Which ever gets picked, the lizard race loses"
+	icon_state = "lizard_boots"
+	loot = list(
+		/obj/item/clothing/shoes/cowboy/lizard = 7,
+		/obj/item/clothing/shoes/cowboy/lizard/masterwork = 1
+	)
+
 /obj/effect/spawner/random/clothing/wardrobe_closet
 	name = "wardrobe closet spawner"
 	icon_state = "locker_clothing"
