@@ -42,6 +42,10 @@
 	purchase_path = /obj/item/storage/box/minertracker
 	cost_per_order = 600
 
+/datum/orderable_item/consumables/deathrattle_implants
+	purchase_path = /obj/item/storage/box/minerdeathrattle
+	cost_per_order = 900
+
 /datum/orderable_item/consumables/space_cash
 	purchase_path = /obj/item/stack/spacecash/c1000
 	desc = "A stack of space cash worth 1000 credits."

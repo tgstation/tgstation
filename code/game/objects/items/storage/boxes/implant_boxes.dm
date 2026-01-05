@@ -28,6 +28,20 @@
 	)
 	generate_items_inside(items_inside,src)
 
+/obj/item/storage/box/minerdeathrattle
+	name = "boxed expeditionary deathrattle implant kit"
+	desc = "For realizing that your coworkers are dead instead of actively ignoring comms. Requires manual setup. \
+		Only works for deaths in raw Lavaland or Icemoon wastelands."
+	illustration = "implant"
+
+/obj/item/storage/box/minerdeathrattle/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/implantcase/deathrattle/lavaland = 5, // 3 miners 1 QM/paramed/etc, 1 for saving config, presumably
+		/obj/item/implanter = 1,
+		/obj/item/implantpad = 1,
+	)
+	generate_items_inside(items_inside,src)
+
 /obj/item/storage/box/chemimp
 	name = "boxed chemical implant kit"
 	desc = "Box of stuff used to implant chemicals."

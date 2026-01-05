@@ -4,18 +4,29 @@
 	icon_state = "auth"
 	actions_types = null
 
-/obj/item/implant/weapons_auth/get_data()
-	return "<b>Implant Specifications:</b><BR> \
-		<b>Name:</b> Firearms Authentication Implant<BR> \
-		<b>Life:</b> 4 hours after death of host<BR> \
-		<b>Implant Details:</b> <BR> \
-		<b>Function:</b> Allows operation of implant-locked weaponry, preventing equipment from falling into enemy hands."
+	implant_info = "Automatically activates upon implantation. Provides authentication for weapons with \
+		appropriate security systems, typically in the firing pin."
+
+	implant_lore = "The Cybersun Equipment Authentication Implant is a subdermal RFID authentication module \
+		and paired transmitter, designed to interface with equipment that has appropriate security systems, \
+		such as implant-locked firing pins popular with associated covert operatives and non-state actors. \
+		Equipment with such authentication systems is noteworthy for inconveniencing those trying to \
+		pilfer equipment from fallen enemies' hands, preventing their equipment from easily being used. \
+		However, it should be noted that the weakest link in a digital authentication scheme is oftentimes the physical layer."
 
 /obj/item/implant/emp
 	name = "\improper EMP implant"
 	desc = "Triggers an EMP."
 	icon_state = "emp"
 	uses = 3
+
+	implant_info = "Activated manually. Generates an indiscriminate electromagnetic pulse of moderate size when triggered."
+
+	implant_lore = "The Cybersun Subdermal Electromagnetic Pulse Generator is, true to its name, \
+		a subdermal implant designed to generate indiscriminate electromagnetic pulses when triggered, \
+		disrupting electronic equipment, such as energy weaponry, and lifeforms, \
+		such as stationbound silicon units, within the user's radius. \
+		Prospective users are reminded that the S-EPG does not protect the host from their own electromagnetic pulses."
 
 /obj/item/implant/emp/activate()
 	. = ..()
@@ -33,6 +44,14 @@
 	desc = "Releases a plume of smoke."
 	icon_state = "smoke"
 	uses = 3
+
+	implant_info = "Activated manually. Generates an indiscriminate cloud of smoke of moderate size when triggered."
+
+	implant_lore = "The Cybersun Subdermal Visual Obstruction Generator is, true to its name, \
+		a subdermal implant designed to generate visual obstructions in the form of smoke clouds when triggered, \
+		disrupting lines of sight to the user. \
+		Prospective users are reminded that the S-VOG does not protect the host particularly well from \
+		thermal imaging, nor does it actually stop blind fire into the smoke, nor does it stop movement."
 
 /obj/item/implant/smoke/activate()
 	. = ..()
@@ -54,6 +73,13 @@
 	var/subspace_transmission = FALSE
 	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "walkietalkie"
+
+	implant_info = "Automatically activates upon implantation. Provides radio transmission and reception capabilities."
+
+	implant_lore = "The Internal Radio Implant, a long open-sourced design manufactured by \
+		just about everyone from Nanotrasen to Cybersun, is a subdermal two-way radio system designed \
+		to interface with telecommunications networks. It's mainly useful for those who expect either \
+		equipment loss or lack the ability to use standalone radio equipment easily."
 
 /obj/item/implant/radio/activate()
 	. = ..()
@@ -91,12 +117,6 @@
 	icon_state = "adamantine_resonator"
 	radio_key = /obj/item/encryptionkey/headset_sci
 	subspace_transmission = TRUE
-
-/obj/item/implant/radio/get_data()
-	return "<b>Implant Specifications:</b><BR> \
-		<b>Name:</b> Internal Radio Implant<BR> \
-		<b>Life:</b> 24 hours<BR> \
-		<b>Implant Details:</b> Allows user to use an internal radio, useful if user expects equipment loss, or cannot equip conventional radios."
 
 /obj/item/implanter/radio
 	name = "implanter (internal radio)"

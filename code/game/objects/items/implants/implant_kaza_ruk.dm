@@ -6,13 +6,11 @@
 	/// The martial art style this implant teaches.
 	var/datum/martial_art/kaza_ruk/style
 
-/obj/item/implant/kaza_ruk/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Kaza Ruk Implant<BR>
-				<b>Life:</b> 4 hours after death of host<BR>
-				<b>Implant Details:</b> <BR>
-				<b>Function:</b> Teaches even the clumsiest host the arts of Kaza Ruk."}
-	return dat
+	implant_info = "Automatically activates upon implantation. Teaches the Tiziran martial arts of Kaza Ruk."
+
+	implant_lore = "The Kaza Ruk Implant is an integrated training database consisting of five short instructional videos \
+		beamed directly into the eyeballs, capable of being replayed on demand in order to review the fundamentals of the Tiziran \
+		martial arts of Kaza Ruk, regardless of the host's previous martial arts skills or a distinct lack thereof."
 
 /obj/item/implant/kaza_ruk/Initialize(mapload)
 	. = ..()

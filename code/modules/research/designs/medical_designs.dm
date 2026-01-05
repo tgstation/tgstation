@@ -1379,3 +1379,31 @@
 	id = "surgery_oldstation_dissection"
 	surgery = /datum/surgery_operation/basic/dissection
 	research_icon_state = "surgery_chest"
+
+/datum/design/vitals_monitor
+	name = "Vitals Monitor"
+	desc = "A wall mounted computer that displays the vitals of a patient nearby. \
+		Links to stasis beds, operating tables, and other machines that can hold patients \
+		such as cryo cells, sleepers, and more."
+	id = "vitals_monitor"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT * 0.5,
+	)
+	build_path = /obj/item/wallframe/status_display/vitals
+	category = list(RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_MEDICAL)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/vitals_monitor/advanced
+	name = "Advanced Vitals Monitor"
+	desc = "An updated vitals display which performs a more detailed scan of the patient than the basic display."
+	id = "vitals_monitor_advanced"
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 0.5,
+	)
+	build_path = /obj/item/wallframe/status_display/vitals/advanced

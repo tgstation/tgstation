@@ -335,3 +335,6 @@
 
 /// Trait gained from skeleton "limbs", such as husking from a butchered chest
 #define SKELETON_TRAIT "skeleton"
+
+/// Trait gained by a guardian who is recalled
+#define GUARDIAN_RECALLED "guardian_recalled"

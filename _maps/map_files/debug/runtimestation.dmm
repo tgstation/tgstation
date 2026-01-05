@@ -2522,6 +2522,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/iron/white/corner,
 /area/station/medical/medbay)
 "SC" = (
