@@ -10730,7 +10730,7 @@
 /area/station/security/prison/rec)
 "cTz" = (
 /obj/machinery/door/airlock/maintenance,
-/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /obj/effect/mapping_helpers/airlock/unres/delayed{
 	dir = 4
@@ -36897,7 +36897,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "kuR" = (
-/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/plating,
@@ -41144,9 +41144,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/barricade/wooden{
-	name = "wooden barricade (CLOSED)"
-	},
+/obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "lCY" = (
@@ -74503,7 +74501,7 @@
 /area/station/commons/dorms/laundry)
 "vah" = (
 /obj/machinery/door/airlock/maintenance,
-/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /obj/effect/mapping_helpers/airlock/unres/delayed{
