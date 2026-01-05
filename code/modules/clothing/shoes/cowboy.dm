@@ -85,9 +85,14 @@
 	bio = 95
 
 /obj/item/clothing/shoes/cowboy/lizard
-	name = "lizard skin boots"
+	name = "lizardskin boots"
 	desc = "You can hear a faint hissing from inside the boots; you hope it is just a mournful ghost."
-	icon_state = "lizardboots_green"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	icon_state = "/obj/item/clothing/shoes/cowboy/lizard"
+	post_init_icon_state = "lizardboots"
+	greyscale_config = /datum/greyscale_config/lizard_shoes
+	greyscale_config_worn = /datum/greyscale_config/lizard_shoes/worn
+	greyscale_colors = "#859333"
 	armor_type = /datum/armor/cowboy_lizard
 
 /datum/armor/cowboy_lizard
@@ -95,9 +100,9 @@
 	fire = 40
 
 /obj/item/clothing/shoes/cowboy/lizard/masterwork
-	name = "\improper Hugs-The-Feet lizard skin boots"
+	name = "\improper Hugs-The-Feet lizardskin boots"
 	desc = "A pair of masterfully crafted lizard skin boots. Finally a good application for the station's most bothersome inhabitants."
-	icon_state = "lizardboots_blue"
+	greyscale_colors = "#3e76a7"
 
 /// Shoes for the nuke-ops cowboy fit
 /obj/item/clothing/shoes/cowboy/black/syndicate

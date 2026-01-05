@@ -22,7 +22,7 @@
 	else if (!skin_color)
 		skin_color = get_random_skin_color()
 
-	if (skin_color)
+	if (skin_color && uses_skin_color)
 		add_atom_colour(skin_color, FIXED_COLOUR_PRIORITY)
 
 /obj/item/stack/sheet/animalhide/carbon/can_merge(obj/item/stack/sheet/animalhide/carbon/check, inhand)
@@ -30,6 +30,20 @@
 	if (!. || !uses_skin_color)
 		return
 	return check.skin_color == skin_color // segregation, in my human butcher shop? how queer!
+
+/obj/item/stack/sheet/animalhide/carbon/proc/set_skin_color(new_skin_color)
+	skin_color = new_skin_color
+	if (skin_color && uses_skin_color)
+		add_atom_colour(skin_color, FIXED_COLOUR_PRIORITY)
+	else
+		remove_atom_colour(FIXED_COLOUR_PRIORITY)
+
+/obj/item/stack/sheet/animalhide/carbon/split_stack(amount)
+	var/obj/item/stack/sheet/animalhide/carbon/new_stack = ..()
+	if (!new_stack)
+		return
+	new_stack.set_skin_color(skin_color)
+	return new_stack
 
 /// Select a random skin color to spawn
 /obj/item/stack/sheet/animalhide/carbon/proc/get_random_skin_color()
