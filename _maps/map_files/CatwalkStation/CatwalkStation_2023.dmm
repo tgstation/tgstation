@@ -38505,8 +38505,7 @@
 	linked_elevator_id = "catwalk_ai";
 	pixel_x = -8;
 	pixel_y = 36;
-	preset_destination_names = list("2"="AI  Maintenance","3"="AI             Stowed");
-	req_access = list(ACCESS_CAPTAIN)
+	preset_destination_names = list("2"="AI  Maintenance","3"="AI             Stowed")
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/cable,
