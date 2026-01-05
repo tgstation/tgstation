@@ -49,6 +49,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	if(has_water_reclaimer)
 		new /obj/item/stock_parts/water_recycler(drop_location())
 
+/obj/structure/sink/get_turfs_to_mount_on()
+	return list(get_step(src, dir))
+
 /obj/structure/sink/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = NONE
 	if(isnull(held_item))
