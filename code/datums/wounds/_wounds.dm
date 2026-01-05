@@ -78,6 +78,8 @@
 	var/limp_chance
 	/// How much we're contributing to this limb's bleed_rate
 	var/blood_flow
+	/// Surgical states we're applying to our limb
+	var/surgery_states = NONE
 
 	/// How much having this wound will add to all future check_wounding() rolls on this limb, to allow progression to worse injuries with repeated damage
 	var/threshold_penalty
@@ -91,8 +93,6 @@
 
 	/// What status effect we assign on application
 	var/status_effect_type
-	/// If we're operating on this wound and it gets healed, we'll nix the surgery too
-	var/datum/surgery/attached_surgery
 	/// if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * [base_xadone_progress_to_qdel] power
 	var/cryo_progress
 
@@ -114,6 +114,14 @@
 	/// The actionspeed modifier we will use in case we are on the arms and have a interaction penalty. Qdelled on destroy.
 	var/datum/actionspeed_modifier/wound_interaction_inefficiency/actionspeed_mod
 
+	/// List of states -> other states that override them and prevent them from being added by wounds
+	var/static/list/exclusive_surgery_states = list(
+		"[SURGERY_SKIN_CUT]" = SURGERY_SKIN_OPEN,
+		"[SURGERY_VESSELS_UNCLAMPED]" = SURGERY_VESSELS_CLAMPED,
+		"[SURGERY_BONE_SAWED]" = SURGERY_BONE_DRILLED,
+		"[SURGERY_BONE_DRILLED]" = SURGERY_BONE_SAWED,
+	)
+
 /datum/wound/New()
 	. = ..()
 
@@ -121,9 +129,8 @@
 	update_actionspeed_modifier()
 
 /datum/wound/Destroy()
-	QDEL_NULL(attached_surgery)
 	if (limb)
-		remove_wound()
+		remove_wound(destroying = QDELING(limb))
 
 	QDEL_NULL(actionspeed_mod)
 
@@ -282,17 +289,32 @@
 			add_or_remove_actionspeed_mod()
 
 /// Proc called to change the variable `limb` and react to the event.
-/datum/wound/proc/set_limb(obj/item/bodypart/new_value, replaced = FALSE)
+/// * replaced - Is the wound being overriden by another (stronger) wound?
+/// * destroying - Is this coming from a limb's Destroy() call? If so, cut down on updates we cause
+/datum/wound/proc/set_limb(obj/item/bodypart/new_value, replaced = FALSE, destroying = FALSE)
 	if(limb == new_value)
 		return FALSE //Limb can either be a reference to something or `null`. Returning the number variable makes it clear no change was made.
+
 	. = limb
+
 	if(limb) // if we're nulling limb, we're basically detaching from it, so we should remove ourselves in that case
-		UnregisterSignal(limb, COMSIG_QDELETING)
-		UnregisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_UNGAUZED))
+		UnregisterSignal(limb, list(COMSIG_QDELETING, COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_UNGAUZED, COMSIG_BODYPART_UPDATING_SURGERY_STATE))
 		LAZYREMOVE(limb.wounds, src)
-		limb.update_wounds(replaced)
+		if (!destroying)
+			limb.update_wounds(replaced)
 		if (disabling)
 			limb.remove_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
+
+		if(surgery_states)
+			for (var/state in exclusive_surgery_states)
+				if (!(limb.surgery_state & exclusive_surgery_states[state]))
+					continue
+				var/actual_state = text2num(state)
+				if (actual_state & surgery_states)
+					surgery_states &= ~actual_state
+
+		if (surgery_states)
+			limb.remove_surgical_state(surgery_states)
 
 	limb = new_value
 
@@ -301,14 +323,31 @@
 	if (limb)
 		RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(source_died))
 		RegisterSignals(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_UNGAUZED), PROC_REF(gauze_state_changed))
+		RegisterSignal(limb, COMSIG_BODYPART_UPDATING_SURGERY_STATE, PROC_REF(on_surgery_state_change))
 		if (disabling)
 			limb.add_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
+
+		if(surgery_states)
+			for (var/state in exclusive_surgery_states)
+				if (!(limb.surgery_state & exclusive_surgery_states[state]))
+					continue
+				var/actual_state = text2num(state)
+				if (actual_state & surgery_states)
+					surgery_states &= ~actual_state
+
+		if (surgery_states)
+			limb.add_surgical_state(surgery_states)
 
 		if (victim)
 			start_limping_if_we_should() // the status effect already handles removing itself
 			add_or_remove_actionspeed_mod()
 
 		update_inefficiencies(replaced)
+
+/// Used to remove states applied or removed by operations from ourselves as to not remove them if we heal mid-surgery
+/datum/wound/proc/on_surgery_state_change(old_state, surgery_state, changed_states)
+	SIGNAL_HANDLER
+	surgery_states &= ~changed_states
 
 /datum/wound/proc/add_or_remove_actionspeed_mod()
 	update_actionspeed_modifier()
@@ -326,14 +365,17 @@
 	SIGNAL_HANDLER
 	qdel(src)
 
-/// Remove the wound from whatever it's afflicting, and cleans up whatever status effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim
-/datum/wound/proc/remove_wound(ignore_limb, replaced = FALSE)
+/// Remove the wound from whatever it's afflicting, and cleans up whatever status effects it had or modifiers it had on interaction times.
+/// * ignore_limb - Used for detachments where we only want to forget the victim
+/// * replaced - If the wound is being replaced by another type
+/// * destroying - If we're being removed by a limb getting destroyed
+/datum/wound/proc/remove_wound(ignore_limb, replaced = FALSE, destroying = FALSE)
 	//TODO: have better way to tell if we're getting removed without replacement (full heal) scar stuff
 	var/old_victim = victim
 	var/old_limb = limb
 
 	set_disabling(FALSE)
-	if(limb && can_scar && !already_scarred && !replaced)
+	if(limb && can_scar && !already_scarred && !replaced && !destroying)
 		already_scarred = TRUE
 		var/datum/scar/new_scar = new
 		new_scar.generate(limb, src)
@@ -343,12 +385,12 @@
 	null_victim() // we use the proc here because some behaviors may depend on changing victim to some new value
 
 	if(limb && !ignore_limb)
-		set_limb(null, replaced) // since we're removing limb's ref to us, we should do the same
+		set_limb(null, replaced, destroying) // since we're removing limb's ref to us, we should do the same
 		// if you want to keep the ref, do it externally, there's no reason for us to remember it
 
 	if (ismob(old_victim))
 		var/mob/mob_victim = old_victim
-		SEND_SIGNAL(mob_victim, COMSIG_CARBON_POST_LOSE_WOUND, src, old_limb, ignore_limb, replaced)
+		SEND_SIGNAL(mob_victim, COMSIG_CARBON_POST_LOSE_WOUND, src, old_limb, ignore_limb, replaced, destroying)
 		if(!replaced && !limb)
 			mob_victim.update_health_hud()
 
@@ -506,18 +548,6 @@
 
 /// Returns TRUE if the item can be used to treat our wounds. Hooks into treat() - only things that return TRUE here may be used there.
 /datum/wound/proc/item_can_treat(obj/item/potential_treater, mob/user)
-	// surgeries take priority
-	for(var/datum/surgery/operation as anything in victim.surgeries)
-		if(isnull(operation.operated_bodypart) || operation.operated_bodypart != limb)
-			continue
-		var/datum/surgery_step/next_step = operation.get_surgery_next_step()
-		if(isnull(next_step))
-			continue
-		if(potential_treater.tool_behaviour in next_step.implements)
-			return FALSE
-		if(is_type_in_list(potential_treater, next_step.implements))
-			return FALSE
-
 	// check if we have a valid treatable tool
 	if(potential_treater.tool_behaviour in treatable_tools)
 		return TRUE
@@ -545,7 +575,7 @@
 	return
 
 /// If var/processing is TRUE, this is run on each life tick
-/datum/wound/proc/handle_process(seconds_per_tick, times_fired)
+/datum/wound/proc/handle_process(seconds_per_tick)
 	return
 
 /// For use in do_after callback checks
@@ -578,7 +608,7 @@
 	return
 
 /// Called when the patient is undergoing stasis, so that having fully treated a wound doesn't make you sit there helplessly until you think to unbuckle them
-/datum/wound/proc/on_stasis(seconds_per_tick, times_fired)
+/datum/wound/proc/on_stasis(seconds_per_tick)
 	return
 
 /// Sets our blood flow

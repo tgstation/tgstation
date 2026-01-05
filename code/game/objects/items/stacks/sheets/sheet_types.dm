@@ -31,18 +31,20 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		new/datum/stack_recipe("lime comfy chair", /obj/structure/chair/comfy/lime, 2, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
 		new/datum/stack_recipe("teal comfy chair", /obj/structure/chair/comfy/teal, 2, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
 		)), \
-	new/datum/stack_recipe_list("sofas", list(
-		new /datum/stack_recipe("sofa (middle)", /obj/structure/chair/sofa/middle, 1, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE),
-		new /datum/stack_recipe("sofa (left)", /obj/structure/chair/sofa/left, 1, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE),
-		new /datum/stack_recipe("sofa (right)", /obj/structure/chair/sofa/right, 1, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE),
-		new /datum/stack_recipe("sofa (corner)", /obj/structure/chair/sofa/corner, 1, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE)
-		)), \
-	new/datum/stack_recipe_list("corporate sofas", list( \
-		new /datum/stack_recipe("sofa (middle)", /obj/structure/chair/sofa/corp, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
-		new /datum/stack_recipe("sofa (left)", /obj/structure/chair/sofa/corp/left, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
-		new /datum/stack_recipe("sofa (right)", /obj/structure/chair/sofa/corp/right, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
-		new /datum/stack_recipe("sofa (corner)", /obj/structure/chair/sofa/corp/corner, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
-		)), \
+	new/datum/stack_recipe_list("sofas", list( \
+		new /datum/stack_recipe("corporate sofa (middle)", /obj/structure/chair/sofa/corp, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("corporate sofa (left)", /obj/structure/chair/sofa/corp/left, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("corporate sofa (right)", /obj/structure/chair/sofa/corp/right, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("corporate sofa (corner)", /obj/structure/chair/sofa/corp/corner, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("sofa (middle)", /obj/structure/chair/sofa/middle, 1, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("sofa (left)", /obj/structure/chair/sofa/left, 1, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("sofa (right)", /obj/structure/chair/sofa/right, 1, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("sofa (corner)", /obj/structure/chair/sofa/corner, 1, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("retro sofa (middle)", /obj/structure/chair/sofa/middle/brown, 1, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("retro sofa (left)", /obj/structure/chair/sofa/left/brown, 1, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("retro sofa (right)", /obj/structure/chair/sofa/right/brown, 1, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+		new /datum/stack_recipe("retro sofa (corner)", /obj/structure/chair/sofa/corner/brown, 1, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE) \
+	)), \
 	new /datum/stack_recipe_list("benches", list( \
 		new /datum/stack_recipe("bench (middle)", /obj/structure/chair/sofa/bench, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
 		new /datum/stack_recipe("bench (left)", /obj/structure/chair/sofa/bench/left, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
@@ -167,7 +169,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	obj_flags = CONDUCTS_ELECTRICITY
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/iron
-	grind_results = list(/datum/reagent/iron = 20)
 	gulag_valid = TRUE
 	table_type = /obj/structure/table
 	material_type = /datum/material/iron
@@ -186,6 +187,9 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		),
 	)
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+
+/obj/item/stack/sheet/iron/grind_results()
+	return list(/datum/reagent/iron = 20)
 
 /obj/item/stack/sheet/iron/examine(mob/user)
 	. = ..()
@@ -294,6 +298,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	new/datum/stack_recipe("bomb assembly", /obj/machinery/syndicatebomb/empty, 10, time = 5 SECONDS, crafting_flags = NONE, category = CAT_CHEMISTRY),
 	new/datum/stack_recipe("Large Gas Tank", /obj/structure/tank_frame, 4, time=1 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF, category = CAT_ATMOSPHERIC),
 	new/datum/stack_recipe("shutter assembly", /obj/machinery/door/poddoor/shutters/preopen/deconstructed, 5, time = 5 SECONDS, crafting_flags = CRAFT_ONE_PER_TURF, category = CAT_DOORS),
+	new/datum/stack_recipe("large metal box", /obj/structure/closet/cardboard/metal, 4, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_CONTAINERS),
 	null,
 	new /datum/stack_recipe_list("airlock assemblies", list( \
 		new/datum/stack_recipe("high security airlock assembly", /obj/structure/door_assembly/door_assembly_highsecurity, 4, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_DOORS),
@@ -314,7 +319,6 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	armor_type = /datum/armor/sheet_plasteel
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
-	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
 	gulag_valid = TRUE
 	table_type = /obj/structure/table/reinforced
 	material_flags = NONE
@@ -323,6 +327,9 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 /datum/armor/sheet_plasteel
 	fire = 100
 	acid = 80
+
+/obj/item/stack/sheet/plasteel/grind_results()
+	return list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
 
 /obj/item/stack/sheet/plasteel/get_main_recipes()
 	. = ..()
@@ -359,7 +366,10 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("drying rack", /obj/machinery/smartfridge/drying/rack, 10, time = 1.5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_TOOLS), \
 	new/datum/stack_recipe("wooden barrel", /obj/structure/fermenting_barrel, 8, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_CONTAINERS), \
 	new/datum/stack_recipe("dog bed", /obj/structure/bed/dogbed, 10, time = 1 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("gavel hammer", /obj/item/gavelhammer, 2, time = 3 SECONDS, crafting_flags = NONE, category = CAT_ENTERTAINMENT), \
+	new/datum/stack_recipe("gavel block", /obj/item/gavelblock, 1, time = 2 SECONDS, crafting_flags = NONE, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("dresser", /obj/structure/dresser, 10, time = 1.5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("cabinet", /obj/structure/closet/cabinet, 2, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_CONTAINERS), \
 	new/datum/stack_recipe("picture frame", /obj/item/wallframe/picture, 1, time = 1 SECONDS, crafting_flags = NONE, category = CAT_ENTERTAINMENT),\
 	new/datum/stack_recipe("painting frame", /obj/item/wallframe/painting, 1, time = 1 SECONDS, crafting_flags = NONE, category = CAT_ENTERTAINMENT),\
 	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
@@ -411,7 +421,6 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/wood
 	material_type = /datum/material/wood
-	grind_results = list(/datum/reagent/cellulose = 20) //no lignocellulose or lignin reagents yet,
 	walltype = /turf/closed/wall/mineral/wood
 	stairs_type = /obj/structure/stairs/wood
 	pickup_sound = 'sound/items/handling/materials/wood_pick_up.ogg'
@@ -419,6 +428,9 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 
 /datum/armor/mineral_wood
 	fire = 50
+
+/obj/item/stack/sheet/mineral/wood/grind_results()
+	return list(/datum/reagent/cellulose = 20)
 
 /obj/item/stack/sheet/mineral/wood/get_main_recipes()
 	. = ..()
@@ -477,7 +489,6 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	armor_type = /datum/armor/mineral_bamboo
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/bamboo
-	grind_results = list(/datum/reagent/cellulose = 10)
 	material_type = /datum/material/bamboo
 	walltype = /turf/closed/wall/mineral/bamboo
 	drop_sound = null
@@ -485,6 +496,9 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 
 /datum/armor/mineral_bamboo
 	fire = 50
+
+/obj/item/stack/sheet/mineral/bamboo/grind_results()
+	return list(/datum/reagent/cellulose = 10)
 
 /obj/item/stack/sheet/mineral/bamboo/get_main_recipes()
 	. = ..()
@@ -547,9 +561,11 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/cloth
 	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
 	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
-	grind_results = list(/datum/reagent/cellulose = 20)
 	pickup_sound = SFX_CLOTH_PICKUP
 	drop_sound = SFX_CLOTH_DROP
+
+/obj/item/stack/sheet/cloth/grind_results()
+	return list(/datum/reagent/cellulose = 20)
 
 /obj/item/stack/sheet/cloth/get_main_recipes()
 	. = ..()
@@ -607,15 +623,18 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cotton
-	grind_results = list(/datum/reagent/cellulose = 20)
-	var/loom_result = /obj/item/stack/sheet/cloth
-	var/loom_time = 1 SECONDS
 	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
 	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
+
+	var/loom_result = /obj/item/stack/sheet/cloth
+	var/loom_time = 1 SECONDS
 
 /obj/item/stack/sheet/cotton/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/loomable, resulting_atom = loom_result, loom_time = loom_time)
+
+/obj/item/stack/sheet/cotton/grind_results()
+	return list(/datum/reagent/cellulose = 20)
 
 /obj/item/stack/sheet/cotton/durathread
 	name = "raw durathread bundle"
@@ -703,7 +722,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	null, \
 ))
 
-/obj/item/stack/sheet/cardboard //BubbleWrap //it's cardboard you fuck
+/obj/item/stack/sheet/cardboard
 	name = "cardboard"
 	desc = "Large sheets of card, like boxes folded flat."
 	singular_name = "cardboard sheet"
@@ -714,7 +733,6 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cardboard
-	grind_results = list(/datum/reagent/cellulose = 10)
 	material_type = /datum/material/cardboard
 	pickup_sound = 'sound/items/handling/materials/cardboard_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/cardboard_drop.ogg'
@@ -727,6 +745,9 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
+
+/obj/item/stack/sheet/cardboard/grind_results()
+	return list(/datum/reagent/cellulose = 10)
 
 /obj/item/stack/sheet/cardboard/get_main_recipes()
 	. = ..()
@@ -790,12 +811,14 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	throw_speed = 1
 	throw_range = 3
 	novariants = FALSE
-	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/copper = 12) //we have no "tin" reagent so this is the closest thing
 	merge_type = /obj/item/stack/sheet/bronze
 	table_type = /obj/structure/table/bronze
 	material_type = /datum/material/bronze
 	walltype = /turf/closed/wall/mineral/bronze
 	has_unique_girder = TRUE
+
+/obj/item/stack/sheet/bronze/grind_results()
+	return list(/datum/reagent/iron = 20, /datum/reagent/copper = 12)
 
 /obj/item/stack/sheet/bronze/get_main_recipes()
 	. = ..()
@@ -842,7 +865,6 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 1
 	throw_range = 3
-	grind_results = list(/datum/reagent/carbon = 10)
 	merge_type = /obj/item/stack/sheet/bone
 	material_type = /datum/material/bone
 	drop_sound = null
@@ -867,6 +889,10 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
+
+/obj/item/stack/sheet/bone/grind_results()
+	return list(/datum/reagent/carbon = 10)
+
 GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("plastic floor tile", /obj/item/stack/tile/plastic, 1, 4, 20, time = 2 SECONDS, crafting_flags = NONE, category = CAT_TILES), \
 	new /datum/stack_recipe("light tram tile", /obj/item/stack/thermoplastic/light, 1, 4, 20, time = 2 SECONDS, crafting_flags = NONE, category = CAT_TILES), \
@@ -922,10 +948,12 @@ GLOBAL_LIST_INIT(paperframe_recipes, list(
 	mats_per_unit = list(/datum/material/paper = SHEET_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/paperframes
 	resistance_flags = FLAMMABLE
-	grind_results = list(/datum/reagent/cellulose = 20)
 	material_type = /datum/material/paper
 	drop_sound = null
 	pickup_sound = null
+
+/obj/item/stack/sheet/paperframes/grind_results()
+	return list(/datum/reagent/cellulose = 20)
 
 /obj/item/stack/sheet/paperframes/get_main_recipes()
 	. = ..()
@@ -994,7 +1022,9 @@ GLOBAL_LIST_INIT(pizza_sheet_recipes, list(
 	merge_type = /obj/item/stack/sheet/hauntium
 	material_type = /datum/material/hauntium
 	material_modifier = 1 //None of that wussy stuff
-	grind_results = list(/datum/reagent/hauntium = 20)
+
+/obj/item/stack/sheet/hauntium/grind_results()
+	return list(/datum/reagent/hauntium = 20)
 
 /obj/item/stack/sheet/hauntium/fifty
 	amount = 50

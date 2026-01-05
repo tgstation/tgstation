@@ -538,7 +538,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	return new_features
 
-/datum/species/proc/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
+/datum/species/proc/spec_life(mob/living/carbon/human/H, seconds_per_tick)
 	SHOULD_CALL_PARENT(TRUE)
 	if(HAS_TRAIT(H, TRAIT_NOBREATH) && (H.health < H.crit_threshold) && !HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
 		H.adjust_brute_loss(0.5 * seconds_per_tick)
@@ -1037,9 +1037,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * environment (required) The environment gas mix
  * * humi (required)(type: /mob/living/carbon/human) The mob we will target
  */
-/datum/species/proc/handle_environment(mob/living/carbon/human/humi, datum/gas_mixture/environment, seconds_per_tick, times_fired)
-	handle_environment_pressure(humi, environment, seconds_per_tick, times_fired)
-	handle_gas_interaction(humi, environment, seconds_per_tick, times_fired)
+/datum/species/proc/handle_environment(mob/living/carbon/human/humi, datum/gas_mixture/environment, seconds_per_tick)
+	handle_environment_pressure(humi, environment, seconds_per_tick)
+	handle_gas_interaction(humi, environment, seconds_per_tick)
 
 /**
  * Body temperature handler for species
@@ -1049,22 +1049,22 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * vars:
  * * humi (required)(type: /mob/living/carbon/human) The mob we will target
  */
-/datum/species/proc/handle_body_temperature(mob/living/carbon/human/humi, seconds_per_tick, times_fired)
+/datum/species/proc/handle_body_temperature(mob/living/carbon/human/humi, seconds_per_tick)
 	// When in a cryo unit we suspend all natural body regulation
 	if(istype(humi.loc, /obj/machinery/cryo_cell))
 		return
 
 	// Only stabilise core temp when alive and not in statis
 	if(humi.stat < DEAD && !HAS_TRAIT(humi, TRAIT_STASIS))
-		body_temperature_core(humi, seconds_per_tick, times_fired)
+		body_temperature_core(humi, seconds_per_tick)
 
 	// These do run in statis
-	body_temperature_skin(humi, seconds_per_tick, times_fired)
-	body_temperature_alerts(humi, seconds_per_tick, times_fired)
+	body_temperature_skin(humi, seconds_per_tick)
+	body_temperature_alerts(humi, seconds_per_tick)
 
 	// Do not cause more damage in statis
 	if(!HAS_TRAIT(humi, TRAIT_STASIS))
-		body_temperature_damage(humi, seconds_per_tick, times_fired)
+		body_temperature_damage(humi, seconds_per_tick)
 
 /**
  * Used to stabilize the core temperature back to normal on living mobs
@@ -1073,7 +1073,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * vars:
  * * humi (required) The mob we will stabilize
  */
-/datum/species/proc/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick, times_fired)
+/datum/species/proc/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick)
 	var/natural_change = get_temp_change_amount(humi.get_body_temp_normal() - humi.coretemperature, 0.06 * seconds_per_tick)
 	humi.adjust_coretemperature(humi.metabolism_efficiency * natural_change)
 
@@ -1087,7 +1087,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * - seconds_per_tick: The amount of time that is considered as elapsing
  * - times_fired: The number of times SSmobs has fired
  */
-/datum/species/proc/body_temperature_skin(mob/living/carbon/human/humi, seconds_per_tick, times_fired)
+/datum/species/proc/body_temperature_skin(mob/living/carbon/human/humi, seconds_per_tick)
 
 	// change the core based on the skin temp
 	var/skin_core_diff = humi.bodytemperature - humi.coretemperature
@@ -1199,7 +1199,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * vars:
  * * humi (required) The mob we will targeting
  */
-/datum/species/proc/body_temperature_damage(mob/living/carbon/human/humi, seconds_per_tick, times_fired)
+/datum/species/proc/body_temperature_damage(mob/living/carbon/human/humi, seconds_per_tick)
 
 	//If the body temp is above the wound limit start adding exposure stacks
 	if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT)
@@ -1209,7 +1209,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	//when exposure stacks are greater then 10 + rand20 try to apply wounds and reset stacks
 	if(humi.heat_exposure_stacks > (10 + rand(0, 20)))
-		apply_burn_wounds(humi, seconds_per_tick, times_fired)
+		apply_burn_wounds(humi, seconds_per_tick)
 		humi.heat_exposure_stacks = 0
 
 	// Body temperature is too hot, and we do not have resist traits
@@ -1260,7 +1260,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * vars:
  * * humi (required) The mob we will targeting
  */
-/datum/species/proc/apply_burn_wounds(mob/living/carbon/human/humi, seconds_per_tick, times_fired)
+/datum/species/proc/apply_burn_wounds(mob/living/carbon/human/humi, seconds_per_tick)
 	// If we are resistant to heat exit
 	if(HAS_TRAIT(humi, TRAIT_RESISTHEAT))
 		return
@@ -1302,7 +1302,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	humi.apply_damage(burn_damage * seconds_per_tick, BURN, bodypart, wound_clothing = FALSE)
 
 /// Handle the air pressure of the environment
-/datum/species/proc/handle_environment_pressure(mob/living/carbon/human/H, datum/gas_mixture/environment, seconds_per_tick, times_fired)
+/datum/species/proc/handle_environment_pressure(mob/living/carbon/human/H, datum/gas_mixture/environment, seconds_per_tick)
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure)
 
@@ -1346,11 +1346,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /**
  *	Handles exposure to the skin of various gases.
  */
-/datum/species/proc/handle_gas_interaction(mob/living/carbon/human/human, datum/gas_mixture/environment, seconds_per_tick, times_fired)
+/datum/species/proc/handle_gas_interaction(mob/living/carbon/human/human, datum/gas_mixture/environment, seconds_per_tick)
 	/// Some non-clothing items may end up in these slots, e.g. flowers worn on the head, so we should consider clothing_flags as potentially nonexistant as a var.
 	/// Otherwise we will get a very spammy runtime.
-	var/suit_flags = istype(human?.wear_suit, /obj/item/clothing) ? human.wear_suit.clothing_flags : NONE
-	var/head_flags = istype(human?.head, /obj/item/clothing) ? human.head.clothing_flags : NONE
+	var/suit_flags = astype(human?.wear_suit, /obj/item/clothing)?.clothing_flags
+	var/head_flags = astype(human?.head, /obj/item/clothing)?.clothing_flags
 
 	if((suit_flags & STOPSPRESSUREDAMAGE) && (head_flags & STOPSPRESSUREDAMAGE))
 		return
@@ -1674,6 +1674,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_DESC = "[plural_form] are resilient to being shocked.",
 		))
 
+	if(inherent_biotypes & (MOB_ROBOTIC|MOB_MINERAL))
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = FA_ICON_HAMMER,
+			SPECIES_PERK_NAME = "Tough Frame",
+			SPECIES_PERK_DESC = "[plural_form] are more resistant to slashing and stabbing, but more vulnerable to impacts.",
+		))
+
 	return to_add
 
 /**
@@ -1973,7 +1981,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/obj/item/bodypart/new_part
 		if(path)
 			new_part = new path()
-			new_part.replace_limb(target, TRUE)
+			new_part.replace_limb(target)
 			new_part.update_limb(is_creating = TRUE)
 			new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)
 		qdel(old_part)

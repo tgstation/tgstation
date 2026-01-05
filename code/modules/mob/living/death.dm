@@ -17,7 +17,7 @@
 
 	if(stat != DEAD)
 		death(TRUE)
-	send_death_moodlets(/datum/mood_event/see_death)
+	send_death_moodlets(gibbed = TRUE)
 
 	ghostize()
 	spill_organs(drop_bitflags)
@@ -103,7 +103,7 @@
 		// keep us upright so the animation fits.
 		ADD_TRAIT(src, TRAIT_FORCED_STANDING, TRAIT_GENERIC)
 
-	send_death_moodlets(/datum/mood_event/see_death/dusted)
+	send_death_moodlets(dusted = TRUE)
 
 	if(drop_items)
 		unequip_everything()
@@ -171,38 +171,37 @@
  * Note: If the mob has a death moodlet, and a worse moodlet is applied, the worse moodlet will take priority.
  *
  * Arguments:
- * * moodlet - The type of moodlet to send. Defaults to [/datum/mood_event/see_death]
+ * * dusted - Was the mob dusted?
+ * * gibbed - Was the mob gibbed?
  */
-/mob/living/proc/send_death_moodlets(datum/mood_event/moodlet = /datum/mood_event/see_death)
+/mob/living/proc/send_death_moodlets(dusted = FALSE, gibbed = FALSE)
 	if(flags_1 & HOLOGRAM_1)
 		return
 
 	for(var/mob/living/nearby in viewers(src))
 		if(nearby.stat >= UNCONSCIOUS || nearby.is_blind())
 			continue
-		nearby.add_mood_event("saw_death", moodlet, src)
+		nearby.add_mood_event("saw_death", /datum/mood_event/conditional/see_death, src, dusted, gibbed)
 
-/mob/living/silicon/send_death_moodlets(datum/mood_event/moodlet)
-	return // You are a machine
+/mob/living/silicon/send_death_moodlets(dusted = FALSE, gibbed = FALSE)
+	return // You are a machine (Future todo, roboticists feel sad though)
 
-/mob/living/basic/send_death_moodlets(datum/mood_event/moodlet)
+/mob/living/basic/send_death_moodlets(dusted = FALSE, gibbed = FALSE)
 	if(!(basic_mob_flags & SENDS_DEATH_MOODLETS))
 		return
 	. = ..()
-	add_memory_in_range(src, 7, /datum/memory/pet_died, deuteragonist = src) //Protagonist is the person memorizing it
+	add_memory_in_range(src, 7, /datum/memory/pet_died, deuteragonist = src)
 
-/mob/living/simple_animal/send_death_moodlets(datum/mood_event/moodlet)
+/mob/living/simple_animal/send_death_moodlets(dusted = FALSE, gibbed = FALSE)
 	return // I don't care about you anymore
 
-/mob/living/carbon/human/send_death_moodlets(datum/mood_event/moodlet)
-	for(var/datum/surgery/organ_manipulation/manipulation in surgeries)
-		// This check exists so debraining someone doesn't make the surgeon super sad
-		if(manipulation.location == BODY_ZONE_HEAD && body_position == LYING_DOWN)
-			return
-
+/mob/living/carbon/human/send_death_moodlets(dusted = FALSE, gibbed = FALSE)
+	// Deaths of people undergoing surgery don't count
+	// otherwise surgeons would be depressed and that would be too realistic
+	if(HAS_TRAIT(src, TRAIT_READY_TO_OPERATE))
+		return
 	. = ..()
-	var/memory_type = ispath(moodlet, /datum/mood_event/see_death/gibbed) ? /datum/memory/witness_gib : /datum/memory/witnessed_death
-	add_memory_in_range(src, 7, memory_type, protagonist = src)
+	add_memory_in_range(src, 7, (gibbed ? /datum/memory/witness_gib : /datum/memory/witnessed_death), protagonist = src)
 
 /*
  * Called when the mob dies. Can also be called manually to kill a mob.
@@ -217,7 +216,7 @@
 	if(!gibbed)
 		if(death_sound || death_message || (living_flags & ALWAYS_DEATHGASP))
 			INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "deathgasp")
-		send_death_moodlets(/datum/mood_event/see_death)
+		send_death_moodlets()
 
 	set_stat(DEAD)
 	timeofdeath = world.time

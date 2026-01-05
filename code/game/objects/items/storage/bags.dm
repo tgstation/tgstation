@@ -161,6 +161,8 @@
 	INVOKE_ASYNC(src, PROC_REF(handle_move), user)
 
 /obj/item/storage/bag/ore/proc/handle_move(mob/living/user)
+	if(user.stat != CONSCIOUS)
+		return
 	var/turf/tile = get_turf(user)
 	var/obj/structure/ore_box/box = null
 	if(istype(user.pulling, /obj/structure/ore_box))
@@ -305,7 +307,7 @@
 // "Only 20 uranium 'cause of radiation"
 /obj/item/storage/bag/sheetsnatcher/debug/PopulateContents()
 	// amount should be null if it should spawn with the type's default amount
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/stack/sheet/iron/fifty = null,
 		/obj/item/stack/sheet/glass/fifty = null,
 		/obj/item/stack/sheet/rglass/fifty = null,
@@ -327,6 +329,7 @@
 		/obj/item/stack/rods/fifty = null,
 		/obj/item/stack/sheet/mineral/plastitanium = 50,
 		/obj/item/stack/sheet/mineral/abductor = 50,
+		/obj/item/stack/sheet/mineral/sandbags/fifty = null,
 		/obj/item/stack/sheet/cardboard/fifty = null,
 	)
 	for(var/obj/item/stack/stack_type as anything in items_inside)

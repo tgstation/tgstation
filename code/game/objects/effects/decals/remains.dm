@@ -48,7 +48,7 @@
 
 ///Releases a cloud of smoke based on the randomly generated reagent in Initialize().
 /obj/effect/decal/remains/human/smokey/proc/release_smoke(mob/living/smoke_releaser)
-	visible_message(span_warning("[smoke_releaser] disturbs the [src], which releases a huge cloud of gas!"))
+	visible_message(span_warning("[smoke_releaser] disturbs [src], which releases a huge cloud of gas!"))
 	var/datum/effect_system/fluid_spread/smoke/chem/cigarette_puff = new()
 	cigarette_puff.chemholder.add_reagent(that_shit_that_killed_saddam, 15)
 	cigarette_puff.attach(get_turf(src))

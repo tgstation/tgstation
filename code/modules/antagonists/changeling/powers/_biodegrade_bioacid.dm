@@ -19,7 +19,7 @@
 	exposed_mob.adjust_fire_loss(round(reac_volume * min(1 - touch_protection), 0.1) * 3, required_bodytype = BODYTYPE_ORGANIC) // full bio protection = 100% damage reduction
 	exposed_mob.acid_act(10, 50)
 
-/datum/reagent/toxin/acid/bio_acid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/acid/bio_acid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	if(SPT_PROB(50, seconds_per_tick))
 		affected_mob.emote(pick("screech", "cry"))

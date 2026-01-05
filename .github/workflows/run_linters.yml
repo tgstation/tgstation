@@ -5,7 +5,7 @@ on:
 
 jobs:
   linters:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
 
     steps:
@@ -23,14 +23,14 @@ jobs:
         uses: actions/cache@v5
         with:
           path: tools/bootstrap/.cache
-          key: ${{ runner.os }}-bootstrap-${{ hashFiles('tools/requirements.txt') }}
+          key: ${{ runner.os }}-bootstrap-${{ hashFiles('/tools/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-bootstrap-
       - name: Restore Rust cache
         uses: actions/cache@v5
         with:
           path: ~/.cargo
-          key: ${{ runner.os }}-rust-${{ hashFiles('tools/ci/ci_dependencies.sh')}}
+          key: ${{ runner.os }}-rust-${{ hashFiles('/tools/ci/ci_dependencies.sh')}}
           restore-keys: |
             ${{ runner.os }}-rust-
       - name: Restore Cutter cache

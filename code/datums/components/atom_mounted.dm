@@ -38,7 +38,7 @@
 	SIGNAL_HANDLER
 
 	if (parent in view(user.client?.view || world.view, user))
-		examine_list += span_notice("\The [hanging_support_atom] is currently supporting [span_bold("[parent]")]. Deconstruction or excessive damage would cause it to [span_bold("fall to the ground")].")
+		examine_list += span_notice("\The [hanging_support_atom] is currently supporting [span_bold("\the [parent]")]. Deconstruction or excessive damage would cause it to [span_bold("fall to the ground")].")
 
 /// When the type of turf changes, if it is changing into a floor we should drop our contents
 /datum/component/atom_mounted/proc/on_turf_changing(datum/source, path, new_baseturfs, flags, post_change_callbacks)
@@ -141,7 +141,7 @@
 		return FALSE
 
 	var/msg
-	if(PERFORM_ALL_TESTS(focus_only/atom_mounted) && !mark_for_late_init)
+	if(PERFORM_ALL_TESTS(maptest_log_mapping) && !mark_for_late_init)
 		msg = "[type] Could not find attachable object at [location.type] "
 
 	var/list/turf/attachable_turfs = get_turfs_to_mount_on()
@@ -161,7 +161,7 @@
 		if(msg)
 			msg += "([target.x],[target.y],[target.z]) "
 	if(msg)
-		stack_trace(msg)
+		log_mapping(msg)
 
 	if(mark_for_late_init)
 		obj_flags |= MOUNT_ON_LATE_INITIALIZE

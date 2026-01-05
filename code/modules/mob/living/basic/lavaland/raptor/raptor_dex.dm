@@ -1,5 +1,5 @@
 /obj/item/raptor_dex
-	name = "RaptorDex"
+	name = "\improper RaptorDex"
 	desc = "A device used to analyze lavaland raptors!"
 	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "raptor_dex"
@@ -32,6 +32,8 @@
 	scan_data["raptor_speed"] = my_raptor.speed + intent_mod?.multiplicative_slowdown
 	scan_data["raptor_color"] = my_raptor.name
 	scan_data["raptor_gender"] = my_raptor.gender
+	scan_data["raptor_growth"] = my_raptor.growth_progress
+	scan_data["can_grow"] = my_raptor.growth_stage != RAPTOR_ADULT
 	scan_data["raptor_description"] = my_raptor.raptor_color.description
 
 	var/happiness_percentage = my_raptor.ai_controller?.blackboard[BB_BASIC_HAPPINESS]

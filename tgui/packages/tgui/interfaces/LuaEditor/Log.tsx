@@ -59,6 +59,7 @@ export const Log = (props: LogProps) => {
   const { act, data } = useBackend<LuaEditorData>();
   const { stateLog } = data;
   const { setViewedChunk, setModal } = props;
+
   return stateLog.map((element, i) => {
     const { status, repeats } = element;
     let output;
@@ -181,7 +182,7 @@ export const Log = (props: LogProps) => {
         logger.warn(`unknown log status ${status}`);
     }
     if (output === undefined) {
-      return;
+      return null;
     }
     const { chunk } = element;
     if (chunk) {

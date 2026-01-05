@@ -16,6 +16,7 @@
 	cost = 250
 	source = /datum/robot_energy_storage/medical
 	merge_type = /obj/item/stack/medical
+	apply_verb = "treating"
 	/// How long it takes to apply it to yourself
 	var/self_delay = 5 SECONDS
 	/// How long it takes to apply it to someone else
@@ -32,8 +33,6 @@
 	var/sanitization
 	/// How much we add to flesh_healing for burn wounds on application
 	var/flesh_regeneration
-	/// Verb used when applying this object to someone
-	var/apply_verb = "treating"
 	/// Whether this item can be used on dead bodies
 	var/works_on_dead = FALSE
 	/// The sound this makes when starting healing with this item
@@ -328,7 +327,7 @@
 				break // one at a time
 		affecting.adjustBleedStacks(-1 * stop_bleeding, 0)
 	if(flesh_regeneration || sanitization)
-		for(var/datum/wound/burn/flesh/wound as anything in affecting.wounds)
+		for(var/datum/wound/burn/flesh/wound in affecting.wounds)
 			if(wound.can_be_ointmented_or_meshed())
 				wound.flesh_healing += flesh_regeneration
 				wound.sanitization += sanitization
@@ -336,7 +335,7 @@
 	post_heal_effects(max(previous_damage - affecting.get_damage(), 0), patient, user)
 	return TRUE
 
-/// Healing a simple mob, just an adjustbruteloss call
+/// Healing a simple mob, just an adjust_brute_loss() call
 /obj/item/stack/medical/proc/heal_simplemob(mob/living/patient, mob/living/user)
 	patient.adjust_brute_loss(-1 * (heal_brute * patient.maxHealth / 100))
 	user.visible_message(
@@ -360,9 +359,11 @@
 	heal_brute = 40
 	self_delay = 4 SECONDS
 	other_delay = 2 SECONDS
-	grind_results = list(/datum/reagent/medicine/c2/libital = 10)
 	merge_type = /obj/item/stack/medical/bruise_pack
 	apply_verb = "applying to"
+
+/obj/item/stack/medical/bruise_pack/grind_results()
+	return list(/datum/reagent/medicine/c2/libital = 10)
 
 /obj/item/stack/medical/bruise_pack/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is bludgeoning [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -378,10 +379,11 @@
 	other_delay = 2 SECONDS
 	max_amount = 12
 	amount = 6
-	grind_results = list(/datum/reagent/cellulose = 2)
 	custom_price = PAYCHECK_CREW * 2
 	absorption_rate = 0.125
 	absorption_capacity = 5
+	sanitization = 3
+	flesh_regeneration = 5
 	splint_factor = 0.7
 	burn_cleanliness_bonus = 0.35
 	merge_type = /obj/item/stack/medical/gauze
@@ -396,6 +398,9 @@
 /obj/item/stack/medical/gauze/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
 	register_context()
+
+/obj/item/stack/medical/gauze/grind_results()
+	return list(/datum/reagent/cellulose = 2)
 
 /obj/item/stack/medical/gauze/Destroy(force)
 	. = ..()
@@ -490,6 +495,13 @@
 
 	if(limb.cached_bleed_rate)
 		add_mob_blood(patient)
+
+	// Dressing burns provides a "one-time" bonus to sanitization and healing
+	// However, any notable infection will reduce the effectiveness of this bonus
+	for(var/datum/wound/burn/flesh/wound in limb.wounds)
+		wound.sanitization += sanitization * (wound.infection > 0.1 ? 0.2 : 1)
+		wound.flesh_healing += flesh_regeneration * (wound.infection > 0.1 ? 0 : 1)
+
 	limb.apply_gauze(src)
 
 /obj/item/stack/medical/gauze/twelve
@@ -527,6 +539,8 @@
 	burn_cleanliness_bonus = 0.7
 	absorption_rate = 0.075
 	absorption_capacity = 4
+	sanitization = 1
+	flesh_regeneration = 3
 	merge_type = /obj/item/stack/medical/gauze/improvised
 
 	/*
@@ -550,7 +564,6 @@
 	repeating = TRUE
 	heal_brute = 10
 	stop_bleeding = 0.5
-	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
 	merge_type = /obj/item/stack/medical/suture
 	apply_verb = "suturing"
 	drop_sound = SFX_SUTURE_DROP
@@ -559,14 +572,19 @@
 	heal_continuous_sound = SFX_SUTURE_CONTINUOUS
 	heal_end_sound = SFX_SUTURE_END
 
+/obj/item/stack/medical/suture/grind_results()
+	return list(/datum/reagent/medicine/spaceacillin = 2)
+
 /obj/item/stack/medical/suture/medicated
 	name = "medicated suture"
 	icon_state = "suture_purp"
 	desc = "A suture infused with drugs that speed up wound healing of the treated laceration."
 	heal_brute = 15
 	stop_bleeding = 0.75
-	grind_results = list(/datum/reagent/medicine/polypyr = 1)
 	merge_type = /obj/item/stack/medical/suture/medicated
+
+/obj/item/stack/medical/suture/medicated/grind_results()
+	return list(/datum/reagent/medicine/polypyr = 1)
 
 /obj/item/stack/medical/ointment
 	name = "ointment"
@@ -580,13 +598,14 @@
 	max_amount = 8
 	self_delay = 4 SECONDS
 	other_delay = 2 SECONDS
-
 	heal_burn = 5
 	flesh_regeneration = 2.5
 	sanitization = 0.25
-	grind_results = list(/datum/reagent/medicine/c2/lenturi = 10)
 	merge_type = /obj/item/stack/medical/ointment
 	apply_verb = "applying to"
+
+/obj/item/stack/medical/ointment/grind_results()
+	return list(/datum/reagent/medicine/c2/lenturi = 10)
 
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is squeezing [src] into [user.p_their()] mouth! [user.p_do(TRUE)]n't [user.p_they()] know that stuff is toxic?"))
@@ -611,16 +630,19 @@
 	heal_begin_sound = SFX_REGEN_MESH_BEGIN
 	heal_continuous_sound = SFX_REGEN_MESH_CONTINUOUS
 	heal_end_sound = SFX_REGEN_MESH_END
-
-	var/is_open = TRUE ///This var determines if the sterile packaging of the mesh has been opened.
-	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
 	merge_type = /obj/item/stack/medical/mesh
+
+	///This var determines if the sterile packaging of the mesh has been opened.
+	var/is_open = TRUE
 
 /obj/item/stack/medical/mesh/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	if(amount == max_amount)  //only seal full mesh packs
 		is_open = FALSE
 		update_appearance()
+
+/obj/item/stack/medical/mesh/grind_results()
+	return list(/datum/reagent/medicine/spaceacillin = 2)
 
 /obj/item/stack/medical/mesh/update_icon_state()
 	if(is_open)
@@ -658,14 +680,15 @@
 /obj/item/stack/medical/mesh/advanced
 	name = "advanced regenerative mesh"
 	desc = "An advanced mesh made with aloe extracts and sterilizing chemicals, used to treat burns."
-
 	gender = PLURAL
 	icon_state = "aloe_mesh"
 	heal_burn = 15
 	sanitization = 1.25
 	flesh_regeneration = 3.5
-	grind_results = list(/datum/reagent/consumable/aloejuice = 1)
 	merge_type = /obj/item/stack/medical/mesh/advanced
+
+/obj/item/stack/medical/mesh/advanced/grind_results()
+	return list(/datum/reagent/consumable/aloejuice = 1)
 
 /obj/item/stack/medical/mesh/advanced/update_icon_state()
 	if(is_open)
@@ -675,7 +698,6 @@
 /obj/item/stack/medical/aloe
 	name = "aloe cream"
 	desc = "A healing paste for minor cuts and burns."
-
 	gender = PLURAL
 	singular_name = "aloe cream"
 	icon_state = "aloe_paste"
@@ -687,13 +709,15 @@
 	repeating = TRUE
 	heal_brute = 3
 	heal_burn = 3
-	grind_results = list(/datum/reagent/consumable/aloejuice = 1)
 	merge_type = /obj/item/stack/medical/aloe
 	apply_verb = "applying to"
 
 /obj/item/stack/medical/aloe/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
 	AddComponent(/datum/component/bakeable, /obj/item/food/badrecipe, rand(10 SECONDS, 15 SECONDS), FALSE)
+
+/obj/item/stack/medical/aloe/grind_results()
+	return list(/datum/reagent/consumable/aloejuice = 1)
 
 /obj/item/stack/medical/aloe/fresh
 	amount = 2
@@ -702,19 +726,19 @@
 	name = "bone gel"
 	singular_name = "bone gel"
 	desc = "A potent medical gel that, when applied to a damaged bone in a proper surgical setting, triggers an intense melding reaction to repair the wound. Can be directly applied alongside surgical sticky tape to a broken bone in dire circumstances, though this is very harmful to the patient and not recommended."
-
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "bone-gel"
 	inhand_icon_state = "bone-gel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-
 	amount = 5
 	self_delay = 20
-	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/carbon = 10)
 	novariants = TRUE
 	merge_type = /obj/item/stack/medical/bone_gel
 	apply_verb = "applying to"
+
+/obj/item/stack/medical/bone_gel/grind_results()
+	return list(/datum/reagent/bone_dust = 10, /datum/reagent/carbon = 10)
 
 /obj/item/stack/medical/bone_gel/get_surgery_tool_overlay(tray_extended)
 	return "gel" + (tray_extended ? "" : "_out")
@@ -789,10 +813,11 @@
 	stop_bleeding = 0.2
 	self_delay = 3 SECONDS
 	other_delay = 1 SECONDS
-	grind_results = list(/datum/reagent/medicine/c2/libital = 2)
 	apply_verb = "applying to"
 	pickup_sound = SFX_CLOTH_PICKUP
-	// add a better drop sound more fitting for a lil' itty bitty band-aid
+
+/obj/item/stack/medical/bandage/grind_results()
+	return list(/datum/reagent/medicine/c2/libital = 2)
 
 /obj/item/stack/medical/bandage/makeshift
 	name = "makeshift bandage"
