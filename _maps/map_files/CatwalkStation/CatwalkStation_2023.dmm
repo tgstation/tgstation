@@ -16259,6 +16259,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
 "esr" = (
@@ -26572,7 +26573,6 @@
 /turf/open/floor/engine/hull/air,
 /area/station/hallway/secondary/exit/departure_lounge)
 "hiv" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/structure/table/glass,
 /obj/machinery/computer/records/medical/laptop{
@@ -28745,7 +28745,6 @@
 	pixel_x = 8;
 	pixel_y = 0
 	},
-/obj/structure/cable,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
@@ -31415,7 +31414,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
@@ -34841,7 +34839,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -38828,7 +38825,6 @@
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/red_alert_access,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -62143,6 +62139,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
 "qFO" = (
@@ -73610,10 +73607,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
-"tMX" = (
-/obj/structure/lattice,
-/turf/open/space/openspace,
-/area/space)
 "tMY" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -77921,6 +77914,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
 "uQl" = (
@@ -83352,7 +83346,6 @@
 /turf/open/floor/grass/fairy,
 /area/station/maintenance/hallway/abandoned_recreation)
 "wpG" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -86950,7 +86943,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/structure/table/glass,
 /obj/item/storage/medkit/regular,
-/obj/structure/cable,
 /obj/machinery/wall_healer/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
@@ -172326,7 +172318,7 @@ nlm
 nlm
 nlm
 nlm
-tMX
+dcE
 xIe
 nlm
 nlm
@@ -172583,7 +172575,7 @@ nlm
 vof
 nlm
 nlm
-tMX
+nlm
 xIe
 dDL
 dDL
@@ -172840,7 +172832,7 @@ nlm
 nlm
 nlm
 nlm
-tMX
+nlm
 xIe
 nlm
 nlm
@@ -176965,9 +176957,9 @@ cRn
 cRn
 cRn
 aBm
-hYf
 jOH
-rrk
+jOH
+jOH
 wpG
 wFC
 lji
@@ -177222,9 +177214,9 @@ sQd
 lZl
 qdo
 iGQ
+hYf
 jOH
-jOH
-jOH
+rrk
 jpA
 lhg
 uBy
