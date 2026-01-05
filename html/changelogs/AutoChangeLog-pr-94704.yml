@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Adds vitals monitors, mapped into the medbay treatment center, cryogenics, and every surgical theatre. They act as wall mounted health scanners, providing visual feedback for a patient's health."

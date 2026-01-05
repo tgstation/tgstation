@@ -1,7 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "Support Guardians cannot heal their owner while recalled."
-  - balance: "Dextrous Guardians cannot use their hands while recalled."
-  - bugfix: "Gaseous Guardian particles will correctly dismiss when you recall."
-  - bugfix: "Guardian health hud will display the correct value when you are first summoned."

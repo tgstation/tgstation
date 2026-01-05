@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Stack items have a number indicating stack size while held or in inventory."

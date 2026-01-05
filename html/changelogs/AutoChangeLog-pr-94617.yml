@@ -1,4 +1,0 @@
-author: "Geoengi"
-delete-after: True
-changes:
-  - balance: "Baton resistance now reduces the jitter, confusion, and stutter of electric baton strikes by half."
