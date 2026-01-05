@@ -107,7 +107,8 @@
 
 ///Check that the type of restraints can be cut by this element.
 /datum/element/cuffsnapping/proc/check_cuffs_strength(obj/item/cutter, mob/living/target, mob/living/cutter_user, obj/item/restraints/handcuffs/cuffs, message)
-	if(!isnull(cuffs.restraint_strength ? snap_time_strong : snap_time_weak))
+	var/snap_time = cuffs.restraint_strength ? snap_time_strong : snap_time_weak
+	if(!isnull(snap_time))
 		return TRUE
 	cutter_user.visible_message(message)
 	playsound(source = get_turf(cutter), soundin = cutter.usesound || cutter.hitsound, vol = cutter.get_clamped_volume(), vary = TRUE)
