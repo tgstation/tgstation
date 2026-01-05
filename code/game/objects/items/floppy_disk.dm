@@ -83,14 +83,13 @@
 	var/sticker_icon_state = STARTING_STICKER
 	/// Custom description
 	var/custom_description
-	/// Whether this disk can be reskinned
-	var/reskin_allowed = TRUE
 
 /obj/item/disk/Initialize(mapload)
 	. = ..()
-	if(reskin_allowed)
-		AddComponent(/datum/component/reskinable_item, /datum/atom_skin/floppy_disk, infinite = FALSE)
 	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/disk/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/floppy_disk, infinite = TRUE)
 
 /obj/item/disk/update_overlays()
 	. = ..()

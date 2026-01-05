@@ -176,9 +176,6 @@
 		if(blood_type)
 			blood_type = get_blood_type(blood_type) || random_human_blood_type()
 
-/obj/item/disk/data/setup_reskins()
-	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/dna_disk, infinite = TRUE)
-
 /obj/item/disk/data/debug
 	name = "\improper CentCom DNA disk"
 	desc = "A debug item for genetics"
