@@ -2,7 +2,7 @@
 /// The default priority level
 #define PREFERENCE_PRIORITY_DEFAULT 1
 
-/// The priority at which species runs, needed for external organs to apply properly.
+/// For things that should be applied after the default prio, but before species to apply properly.
 #define PREFERENCE_PRIORITY_PRE_SPECIES 2
 
 /// The priority at which species runs, needed for external organs to apply properly.
