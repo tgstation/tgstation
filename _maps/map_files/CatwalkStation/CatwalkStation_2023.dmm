@@ -38359,17 +38359,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/large,
 /area/station/service/library)
-"klw" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "aicorewindow";
-	name = "AI Core Shutters";
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/ai/satellite/chamber)
 "kly" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -216702,7 +216691,7 @@ kNf
 mfi
 mfi
 ibI
-klw
+mfi
 mfi
 kNf
 kNf
