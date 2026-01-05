@@ -8459,12 +8459,10 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "cmj" = (
-/obj/structure/chair{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
+/obj/structure/chair/stool/directional/north,
 /turf/open/floor/wood/large,
 /area/station/service/chapel)
 "cmp" = (
@@ -13845,12 +13843,10 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "dLQ" = (
-/obj/structure/chair{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/structure/chair/stool/directional/north,
 /turf/open/floor/wood/large,
 /area/station/service/chapel)
 "dLS" = (
@@ -20564,9 +20560,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/obj/structure/chair{
-	dir = 1
-	},
+/obj/structure/chair/stool/directional/north,
 /turf/open/floor/wood/large,
 /area/station/service/chapel)
 "fEc" = (
@@ -24172,12 +24166,10 @@
 /turf/open/floor/iron/white/textured_half,
 /area/station/ai/satellite/interior)
 "gzI" = (
-/obj/structure/chair{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
+/obj/structure/chair/stool/directional/north,
 /turf/open/floor/wood/large,
 /area/station/service/chapel)
 "gzJ" = (
@@ -33457,9 +33449,6 @@
 /turf/open/floor/iron/dark/smooth_edge,
 /area/station/commons/lounge)
 "iVS" = (
-/obj/machinery/door/airlock/external{
-	name = "Docking Bay 2"
-	},
 /obj/machinery/door/airlock/external{
 	name = "Docking Bay 2"
 	},
@@ -44656,16 +44645,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/textured,
 /area/station/cargo/warehouse)
-"lWn" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/wood,
-/turf/open/floor/wood/large,
-/area/station/service/chapel)
 "lWs" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
@@ -45169,9 +45148,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
 "mdM" = (
@@ -45876,6 +45852,9 @@
 "mne" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
 "mnf" = (
@@ -50481,9 +50460,6 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/armory)
 "nBz" = (
-/obj/machinery/door/airlock/external{
-	name = "Auxiliary Airlock"
-	},
 /obj/machinery/door/airlock/external{
 	name = "Auxiliary Dock"
 	},
@@ -57612,9 +57588,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
-/obj/structure/chair{
-	dir = 1
-	},
+/obj/structure/chair/stool/directional/north,
 /turf/open/floor/wood/large,
 /area/station/service/chapel)
 "pwj" = (
@@ -63183,10 +63157,8 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/security/prison)
 "qVM" = (
-/obj/structure/chair{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood,
+/obj/structure/chair/stool/directional/north,
 /turf/open/floor/wood/large,
 /area/station/service/chapel)
 "qVO" = (
@@ -84254,9 +84226,6 @@
 "wEN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/public/glass{
-	name = "Chapel Office"
-	},
 /obj/machinery/door/airlock/public/glass{
 	name = "Chapel Office"
 	},
@@ -119904,7 +119873,7 @@ dcE
 dcE
 hQO
 dLQ
-lWn
+qVM
 vYn
 mOZ
 dgB
