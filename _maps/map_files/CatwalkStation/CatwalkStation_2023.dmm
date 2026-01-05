@@ -78028,6 +78028,14 @@
 	dir = 1
 	},
 /area/station/medical/morgue)
+"uLp" = (
+/obj/structure/showcase/cyborg/old{
+	dir = 8;
+	pixel_x = 9;
+	pixel_y = 2
+	},
+/turf/open/floor/engine/hull/reinforced,
+/area/space/nearstation)
 "uLt" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/dark/half/contrasted{
@@ -208978,11 +208986,11 @@ nlm
 dDL
 gPb
 qCR
-mDG
+uLp
 bht
 dYb
 bht
-mDG
+uLp
 qCR
 mIj
 dDL
