@@ -51,6 +51,8 @@
 /obj/item/clipboard/Initialize(mapload)
 	update_appearance()
 	. = ..()
+
+/obj/item/clipboard/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/clipboard)
 
 /obj/item/clipboard/Destroy()
