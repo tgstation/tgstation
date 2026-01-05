@@ -10317,7 +10317,7 @@
 "cJM" = (
 /obj/machinery/camera/motion/directional/south,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "cJZ" = (
 /obj/structure/chair/pew/right{
 	dir = 4
@@ -13563,7 +13563,7 @@
 "dGl" = (
 /obj/machinery/camera/motion/directional/south,
 /turf/open/space/openspace,
-/area/space)
+/area/space/nearstation)
 "dGu" = (
 /obj/structure/frame/computer{
 	anchored = 1
@@ -14957,7 +14957,7 @@
 "eaq" = (
 /obj/machinery/camera/motion/directional/west,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "eaL" = (
 /obj/structure/table/reinforced,
 /obj/structure/displaycase/forsale{
@@ -16287,7 +16287,7 @@
 "erI" = (
 /obj/machinery/camera/motion/directional/north,
 /turf/open/space/openspace,
-/area/space)
+/area/space/nearstation)
 "erM" = (
 /obj/machinery/vending/autodrobe,
 /obj/item/clothing/head/cone{
@@ -27396,7 +27396,7 @@
 "hsZ" = (
 /obj/machinery/camera/motion/directional/west,
 /turf/open/space/openspace,
-/area/space)
+/area/space/nearstation)
 "htj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/machinery/light/floor{
@@ -66361,7 +66361,7 @@
 "rHs" = (
 /obj/machinery/camera/motion/directional/north,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "rHB" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
