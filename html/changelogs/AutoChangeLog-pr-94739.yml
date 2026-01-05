@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Species that aren't supposed to have blood will no longer report feeling dizzy from bloodloss on account of how they have no blood."
+  - bugfix: "The \"I am stood in the dark\" indicator for Shadows and Nightmares will no longer flicker on and off."
