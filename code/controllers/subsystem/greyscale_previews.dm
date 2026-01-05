@@ -49,8 +49,9 @@ SUBSYSTEM_DEF(greyscale_previews)
 	for (var/skin_path, atom_skin in get_atom_skins())
 		var/datum/atom_skin/skin = atom_skin
 		var/atom/typepath = skin.greyscale_item_path
-		if (!GLOB.all_loadout_datums[typepath]) // We don't need reskin previews for non-loadout items
+		if (isnull(typepath))
 			continue
+		if (isnull(GLOB.all_loadout_datums[typepath])) // We don't need reskin previews for non-loadout items
 		if (isnull(skin.new_icon_state)) // This is the same as the default icon, which we will be generating below.
 			continue
 		if (!typepath::greyscale_config || !typepath::greyscale_colors)
