@@ -476,7 +476,7 @@
 /obj/item/mod/module/flashlight/configure_edit(key, value)
 	switch(key)
 		if("light_color")
-			value = input(usr, "Pick new light color", "Flashlight Color") as color|null
+			value = tgui_color_picker(usr, "Pick new light color", "Flashlight Color")
 			if(!value)
 				return
 			if(is_color_dark(value, 50))
@@ -830,7 +830,7 @@
 	)
 	/// Materials that will be extracted.
 	var/list/accepted_mats
-	var/datum/component/material_container/container
+	var/datum/material_container/container
 
 /obj/item/mod/module/recycler/Initialize(mapload)
 	. = ..()
@@ -838,8 +838,8 @@
 	if(!length(accepted_mats))
 		accepted_mats = SSmaterials.materials_by_category[MAT_CATEGORY_SILO]
 
-	container = AddComponent( \
-		/datum/component/material_container, \
+	container = new ( \
+		src, \
 		accepted_mats, \
 		50 * SHEET_MATERIAL_AMOUNT, \
 		MATCONTAINER_EXAMINE | MATCONTAINER_NO_INSERT, \
@@ -849,7 +849,7 @@
 	)
 
 /obj/item/mod/module/recycler/Destroy()
-	container = null
+	QDEL_NULL(container)
 	return ..()
 
 /obj/item/mod/module/recycler/on_activation(mob/activator)
@@ -1008,19 +1008,19 @@
 	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
 	if(!gloves)
 		return
-	gloves.AddComponent(/datum/component/adjust_fishing_difficulty, -5)
+	gloves.AddElement(/datum/element/adjust_fishing_difficulty, -5)
 	if(equipped)
 		gloves.AddComponent(/datum/component/profound_fisher, equipped, delete_rod_when_deleted = FALSE)
 
 /obj/item/mod/module/fishing_glove/on_part_deactivation(deleting = FALSE)
 	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
 	if(gloves && !deleting)
-		qdel(gloves.GetComponent(/datum/component/adjust_fishing_difficulty))
+		gloves.RemoveElement(/datum/element/adjust_fishing_difficulty)
 		qdel(gloves.GetComponent(/datum/component/profound_fisher))
 
 /obj/item/mod/module/shock_absorber
 	name = "MOD shock absorption module"
-	desc = "A module that makes the user resistant to the knockdown inflicted by Stun Batons."
+	desc = "A module that makes the user resistant to the knockdown and CNS disruption inflicted by Stun Batons."
 	icon_state = "no_baton"
 	complexity = 1
 	use_energy_cost = DEFAULT_CHARGE_DRAIN

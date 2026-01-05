@@ -346,8 +346,8 @@
 /atom/proc/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_ON_CRAFT, components, current_recipe)
-	var/list/remaining_parts = current_recipe?.parts?.Copy()
-	var/list/parts_by_type = remaining_parts?.Copy()
+	var/list/remaining_parts = LAZYLISTDUPLICATE(current_recipe?.parts)
+	var/list/parts_by_type = LAZYLISTDUPLICATE(remaining_parts)
 	for(var/parttype in parts_by_type) //necessary for our is_type_in_list() call with the zebra arg set to true
 		parts_by_type[parttype] = parttype
 	for(var/atom/movable/movable as anything in components) // machinery or structure objects in the list are guaranteed to be used up. We only check items.

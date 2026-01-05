@@ -6,7 +6,7 @@
  */
 /obj/item/surgery_tray
 	name = "surgery tray"
-	desc = "A Deforest brand medical cart. It is a folding model, meaning the wheels on the bottom can be retracted and the body used as a tray."
+	desc = "A DeForest-brand medical cart. It is a folding model, meaning the wheels on the bottom can be retracted and the body used as a tray."
 	icon = 'icons/obj/medical/medicart.dmi'
 	icon_state = "tray"
 	w_class = WEIGHT_CLASS_BULKY
@@ -188,7 +188,7 @@
 
 /obj/item/surgery_tray/full/morgue
 	name = "autopsy tray"
-	desc = "A Deforest brand surgery tray, made for use in morgues. It is a folding model, \
+	desc = "A DeForest-brand surgery tray, made for use in morgues. It is a folding model, \
 		meaning the wheels on the bottom can be extended outwards, making it a cart."
 	starting_items = list(
 		/obj/item/blood_filter/cruel,

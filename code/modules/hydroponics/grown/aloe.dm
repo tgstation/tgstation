@@ -23,8 +23,10 @@
 	icon_state = "aloe"
 	bite_consumption_mod = 3
 	foodtypes = VEGETABLES
-	juice_typepath = /datum/reagent/consumable/aloejuice
 	distill_reagent = /datum/reagent/consumable/ethanol/tequila
+
+/obj/item/food/grown/aloe/juice_typepath()
+	return /datum/reagent/consumable/aloejuice
 
 /obj/item/food/grown/aloe/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/stack/medical/aloe/fresh, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)

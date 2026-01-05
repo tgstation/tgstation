@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/silicon/ai/Life(seconds_per_tick = SSMOBS_DT)
 	if (stat == DEAD)
 		return
 	//Being dead doesn't mean your temperature never changes

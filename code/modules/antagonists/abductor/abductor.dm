@@ -129,7 +129,7 @@
 	var/mob/living/glorp = mob_override || owner.current
 	UnregisterSignal(glorp, COMSIG_LIVING_OPERATING_ON)
 
-/datum/antagonist/abductor/scientist/proc/add_surgery(datum/source, mob/living/patient, list/possible_operations)
+/datum/antagonist/abductor/scientist/proc/add_surgery(datum/source, atom/movable/operating_on, list/possible_operations)
 	SIGNAL_HANDLER
 
 	var/static/list/ayy_operations
@@ -166,7 +166,7 @@
 			// Keep in mind the darker colors don't look all that great, but it's easier to just reference an existing color list than make a new one
 			var/colorchoice = tgui_input_list(admin, "Select Which Color?", "Alien Spraypainter", GLOB.color_list_ethereal + "Custom Color")
 			if(colorchoice == "Custom Color")
-				colorchoice = input(admin, "Pick new color", "Alien Spraypainter", COLOR_WHITE) as color|null
+				colorchoice = tgui_color_picker(admin, "Pick new color", "Alien Spraypainter", COLOR_WHITE)
 			else
 				colorchoice = GLOB.color_list_ethereal[colorchoice]
 			team.team_skincolor = colorchoice

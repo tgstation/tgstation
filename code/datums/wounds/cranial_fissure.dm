@@ -39,6 +39,7 @@
 
 	severity = WOUND_SEVERITY_CRITICAL
 	sound_effect = 'sound/effects/dismember.ogg'
+	surgery_states = SURGERY_SKIN_OPEN | SURGERY_BONE_SAWED // Literally a cracked open skull, no vessels as it... doesn't bleed?
 
 	/// If TRUE we have been prepped for surgery (to repair)
 	VAR_FINAL/prepped = FALSE

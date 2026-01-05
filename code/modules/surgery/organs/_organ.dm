@@ -156,7 +156,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(!IS_ROBOTIC_ORGAN(src) && (clean_types & CLEAN_TYPE_BLOOD))
 		add_blood_DNA(blood_dna_info)
 
-/obj/item/organ/proc/on_death(seconds_per_tick, times_fired) //runs decay when outside of a person
+/obj/item/organ/proc/on_death(seconds_per_tick) //runs decay when outside of a person
 	if(organ_flags & (ORGAN_ROBOTIC | ORGAN_FROZEN))
 		return
 
@@ -170,7 +170,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			var/air_temperature_factor = min((exposed_air.temperature - T0C) / 20, 1)
 			apply_organ_damage(decay_factor * maxHealth * seconds_per_tick * air_temperature_factor)
 
-/obj/item/organ/proc/on_life(seconds_per_tick, times_fired) //repair organ damage if the organ is not failing
+/obj/item/organ/proc/on_life(seconds_per_tick) //repair organ damage if the organ is not failing
 	if(organ_flags & ORGAN_FAILING)
 		handle_failing_organs(seconds_per_tick)
 		return
@@ -232,8 +232,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/enter_wardrobe()
 	STOP_PROCESSING(SSobj, src)
 
-/obj/item/organ/process(seconds_per_tick, times_fired)
-	on_death(seconds_per_tick, times_fired) //Kinda hate doing it like this, but I really don't want to call process directly.
+/obj/item/organ/process(seconds_per_tick)
+	on_death(seconds_per_tick) //Kinda hate doing it like this, but I really don't want to call process directly.
 
 /obj/item/organ/proc/OnEatFrom(eater, feeder)
 	// You can't use it anymore after eating it
