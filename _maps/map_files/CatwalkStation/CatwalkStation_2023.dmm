@@ -4254,6 +4254,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/item/kirbyplants/random,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
 "bio" = (
@@ -4983,7 +4984,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/external,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -21866,6 +21866,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/vacant_room/office)
+"fVJ" = (
+/obj/machinery/door/firedoor,
+/turf/closed/wall,
+/area/station/service/chapel/office)
 "fVQ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/left/directional/east{
@@ -38088,7 +38092,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/service/crematorium,
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/grunge{
 	name = "Crematorium"
 	},
 /turf/open/floor/iron/dark,
@@ -57544,8 +57548,8 @@
 	id = "armouryaccess";
 	name = "Armory Shutters"
 	},
-/obj/machinery/light_switch/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/armory)
 "psK" = (
@@ -70215,12 +70219,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "sQW" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Crematorium"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/grunge{
+	name = "Crematorium"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
 "sQY" = (
@@ -75322,6 +75327,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
 "ukt" = (
@@ -84401,6 +84407,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
 "wER" = (
@@ -90113,6 +90120,7 @@
 /obj/effect/turf_decal/bot_white,
 /obj/structure/rack,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/armory)
 "ydc" = (
@@ -118053,7 +118061,7 @@ ixF
 mLB
 hOP
 vef
-qPX
+fVJ
 mne
 dYa
 qPX
