@@ -333,6 +333,7 @@
 	dir = 4
 	},
 /obj/structure/lattice/catwalk,
+/obj/machinery/flasher/directional/east,
 /turf/open/openspace,
 /area/station/ai/satellite/chamber)
 "aft" = (
@@ -1942,6 +1943,9 @@
 /obj/structure/lattice/catwalk,
 /obj/machinery/porta_turret/ai{
 	dir = 4
+	},
+/obj/machinery/flasher/directional/north{
+	id = "AI"
 	},
 /turf/open/openspace,
 /area/station/ai/satellite/chamber)
@@ -3874,6 +3878,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/circuit,
 /area/station/ai/satellite/chamber)
 "bcH" = (
@@ -8992,6 +8997,8 @@
 /obj/machinery/porta_turret/ai{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
+/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -14234,6 +14241,18 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
+"dPS" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/structure/cable/layer3,
+/obj/structure/cable/layer1,
+/turf/open/floor/circuit,
+/area/station/ai/satellite/chamber)
 "dQk" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/segment{
@@ -16065,6 +16084,17 @@
 /obj/machinery/computer/records/medical,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/office)
+"eok" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/turf/open/floor/circuit,
+/area/station/ai/satellite/chamber)
 "eoq" = (
 /obj/machinery/newscaster/directional/south,
 /obj/structure/table/wood,
@@ -20261,6 +20291,19 @@
 /obj/item/radio/off,
 /turf/open/floor/wood,
 /area/station/command/teleporter)
+"fwN" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/flasher/directional/east,
+/turf/open/floor/circuit,
+/area/station/ai/satellite/chamber)
 "fwP" = (
 /obj/machinery/door/window/brigdoor/right/directional/north{
 	req_access = list("command");
@@ -20806,6 +20849,7 @@
 /obj/structure/cable,
 /obj/structure/cable/layer1,
 /obj/structure/cable/layer3,
+/obj/structure/cable/layer1,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai/satellite/chamber)
 "fFE" = (
@@ -48500,6 +48544,18 @@
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
+"mSf" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/flasher/directional/east,
+/turf/open/floor/circuit,
+/area/station/ai/satellite/chamber)
 "mSt" = (
 /obj/effect/landmark/start/mime,
 /turf/open/floor/carpet/black,
@@ -50420,6 +50476,7 @@
 /obj/machinery/porta_turret/ai{
 	dir = 4
 	},
+/obj/machinery/flasher/directional/west,
 /turf/open/openspace,
 /area/station/ai/satellite/chamber)
 "nvt" = (
@@ -75700,6 +75757,7 @@
 /obj/machinery/camera/autoname/directional/east{
 	network = list("aicore")
 	},
+/obj/machinery/flasher/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai/satellite/chamber)
 "ukI" = (
@@ -88830,6 +88888,14 @@
 	},
 /turf/closed/wall,
 /area/station/commons/locker)
+"xHI" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/porta_turret/ai{
+	dir = 4
+	},
+/obj/machinery/flasher/directional/south,
+/turf/open/openspace,
+/area/station/ai/satellite/chamber)
 "xHS" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/sign/clock/directional/east,
@@ -150903,11 +150969,11 @@ ibI
 ibI
 yak
 equ
-nXY
+mSf
 nXY
 oOb
 xBZ
-xBZ
+fwN
 wHE
 bsx
 ibI
@@ -152445,9 +152511,9 @@ ibI
 ibI
 kMU
 eak
-bcl
-bcl
-bcl
+eok
+eok
+dPS
 bcl
 bcl
 ejP
@@ -217209,7 +217275,7 @@ dGl
 ibI
 ibI
 wnA
-aAN
+xHI
 ibI
 kmF
 cIF
