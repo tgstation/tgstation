@@ -20847,7 +20847,6 @@
 "fFA" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/cable,
-/obj/structure/cable/layer1,
 /obj/structure/cable/layer3,
 /obj/structure/cable/layer1,
 /turf/open/floor/catwalk_floor/iron_dark,
