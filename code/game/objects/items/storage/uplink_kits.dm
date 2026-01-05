@@ -57,7 +57,7 @@
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
 			new /obj/item/clothing/shoes/chameleon/noslip(src) // 2 tc
-			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
+			new /obj/item/disk/computer/syndicate/camera_app(src) // 1 tc
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
 			new /obj/item/storage/box/syndie_kit/mulligan(src) // 4 tc
@@ -122,7 +122,7 @@
 			new /obj/item/ai_module/toy_ai(src) // ~6 tc
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
-			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
+			new /obj/item/disk/computer/syndicate/camera_app(src) // 1 tc
 			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
 			new /obj/item/card/id/advanced/chameleon/elite(src) // 2 tc
 
@@ -143,9 +143,9 @@
 
 		if(KIT_SABOTAGE)
 			new /obj/item/storage/backpack/duffelbag/syndie/sabotage(src) // 5 tc for 3 c4 and 2 x4
-			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
+			new /obj/item/disk/computer/syndicate/camera_app(src) // 1 tc
 			new /obj/item/sbeacondrop/powersink(src) // 11 tc
-			new /obj/item/computer_disk/virus/detomatix(src) // 6 tc
+			new /obj/item/disk/computer/virus/detomatix(src) // 6 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/pizzabox/bomb(src) // 6 tc
 			new /obj/item/storage/box/syndie_kit/emp(src) // 2 tc
@@ -706,7 +706,7 @@
 /obj/item/storage/box/syndie_kit/imp_deathrattle/PopulateContents()
 	new /obj/item/implanter(src)
 
-	var/datum/deathrattle_group/group = new
+	var/datum/deathrattle_group/standard/group = new
 
 	var/implants = list()
 	for(var/j in 1 to 8)
@@ -772,13 +772,6 @@
 	name = "nuclear operative implant"
 	desc = "Registers you as a member of a Syndicate nuclear operative team."
 	implant_color = "r"
-
-/obj/item/implant/nuclear_operative/get_data()
-	return "<b>Implant Specifications:</b><BR> \
-		<b>Name:</b> Suspicious Implant<BR> \
-		<b>Life:</b> UNKNOWN <BR> \
-		<b>Implant Details:</b> <BR> \
-		<b>Function:</b> Strange implant that seems to resist any attempts at scanning it."
 
 /obj/item/implant/nuclear_operative/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()

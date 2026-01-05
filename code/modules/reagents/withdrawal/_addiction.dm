@@ -55,7 +55,7 @@
 	end_withdrawal(victim_mind.current)
 	LAZYREMOVE(victim_mind.active_addictions, type)
 
-/datum/addiction/proc/process_addiction(mob/living/carbon/affected_carbon, seconds_per_tick, times_fired)
+/datum/addiction/proc/process_addiction(mob/living/carbon/affected_carbon, seconds_per_tick)
 	// Acts as if you're on the drug at all times, while also forcibly preventing the effects of withdrawal by returning early.
 	if(HAS_TRAIT(affected_carbon, TRAIT_NO_WITHDRAWALS))
 		end_withdrawal(affected_carbon)

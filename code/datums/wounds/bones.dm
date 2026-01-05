@@ -75,7 +75,7 @@
 	QDEL_NULL(active_trauma)
 	return ..()
 
-/datum/wound/blunt/bone/handle_process(seconds_per_tick, times_fired)
+/datum/wound/blunt/bone/handle_process(seconds_per_tick)
 	. = ..()
 
 	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
@@ -430,6 +430,7 @@
 	internal_bleeding_chance = 60
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_INTERIOR)
 	regen_ticks_needed = 240 // ticks every 2 seconds, 480 seconds, so roughly 8 minutes default
+	surgery_states = SURGERY_SKIN_CUT | SURGERY_BONE_SAWED // Bad enough to count as a busted skull/ribcage
 
 	simple_desc = "Patient's bones have effectively shattered completely, causing total immobilization of the limb."
 	simple_treat_text = "<b>Bandaging</b> the wound will slightly reduce its impact until <b>surgically treated</b> with bone gel and surgical tape."

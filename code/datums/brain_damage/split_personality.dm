@@ -62,7 +62,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
 
 
-/datum/brain_trauma/severe/split_personality/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/severe/split_personality/on_life(seconds_per_tick)
 	if(owner.stat == DEAD)
 		if(current_controller != OWNER)
 			switch_personalities(TRUE)
@@ -155,7 +155,7 @@
 		trauma = _trauma
 	return ..()
 
-/mob/living/split_personality/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/split_personality/Life(seconds_per_tick = SSMOBS_DT)
 	if(QDELETED(body))
 		qdel(src) //in case trauma deletion doesn't already do it
 
@@ -227,7 +227,7 @@
 	else
 		qdel(src)
 
-/datum/brain_trauma/severe/split_personality/brainwashing/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/severe/split_personality/brainwashing/on_life(seconds_per_tick)
 	return //no random switching
 
 /datum/brain_trauma/severe/split_personality/brainwashing/handle_hearing(datum/source, list/hearing_args)
@@ -298,7 +298,7 @@
 	if(prob(20))//we don't want every single splash to wake them up now do we
 		qdel(src)
 
-/datum/brain_trauma/severe/split_personality/blackout/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/severe/split_personality/blackout/on_life(seconds_per_tick)
 	if(current_controller == OWNER && stranger_backseat)//we should only start transitioning after the other personality has entered
 		owner.overlay_fullscreen("fade_to_black", /atom/movable/screen/fullscreen/blind)
 		owner.clear_fullscreen("fade_to_black", animated = 4 SECONDS)

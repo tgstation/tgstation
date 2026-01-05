@@ -129,7 +129,7 @@
 	var/mob/living/glorp = mob_override || owner.current
 	UnregisterSignal(glorp, COMSIG_LIVING_OPERATING_ON)
 
-/datum/antagonist/abductor/scientist/proc/add_surgery(datum/source, mob/living/patient, list/possible_operations)
+/datum/antagonist/abductor/scientist/proc/add_surgery(datum/source, atom/movable/operating_on, list/possible_operations)
 	SIGNAL_HANDLER
 
 	var/static/list/ayy_operations
