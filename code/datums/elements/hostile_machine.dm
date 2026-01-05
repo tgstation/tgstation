@@ -28,8 +28,8 @@
 
 	if(same_z_layer)
 		return
-	remove_from_z(old_turf.z)
-	add_to_z(new_turf.z)
+	remove_from_z(source, old_turf.z)
+	add_to_z(source, new_turf.z)
 
 /datum/element/hostile_machine/proc/add_to_z(atom/target, z)
 	if(isnull(z))
@@ -39,7 +39,7 @@
 		return
 	if(!GLOB.hostile_machines_by_z[z])
 		GLOB.hostile_machines_by_z[z] = list()
-	GLOB.hostile_machines_by_z[z] += target
+	GLOB.hostile_machines_by_z[z] |= target
 
 /datum/element/hostile_machine/proc/remove_from_z(atom/target, z)
 	if(isnull(z))
