@@ -64180,6 +64180,7 @@
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/contraband/armory,
 /obj/effect/turf_decal/bot_white,
+/obj/structure/sign/poster/official/random/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/armory)
 "rgL" = (
@@ -84811,10 +84812,6 @@
 	dir = 1
 	},
 /area/station/service/library/printer)
-"wIc" = (
-/obj/structure/sign/poster/official/random/directional/east,
-/turf/open/space/openspace,
-/area/space)
 "wIf" = (
 /obj/machinery/button/door/directional/east{
 	id = "qm_cargobay";
@@ -172245,7 +172242,7 @@ dDL
 nlm
 nlm
 dDL
-wIc
+nlm
 nlm
 heR
 nlm
