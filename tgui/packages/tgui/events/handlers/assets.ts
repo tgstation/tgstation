@@ -7,7 +7,11 @@ import { loadedMappings } from '../../assets';
 export function handleLoadAssets(payload: Record<string, string>): void {
   loadMappings(payload, loadedMappings);
 
-  if ('icon_ref_map.json' in payload) {
+  if (
+    'icon_ref_map.json' in payload &&
+    Byond.iconRefMap &&
+    Object.keys(Byond.iconRefMap).length === 0
+  ) {
     fetchRetry(payload['icon_ref_map.json'])
       .then((res) => res.json())
       .then(setIconRefMap)
