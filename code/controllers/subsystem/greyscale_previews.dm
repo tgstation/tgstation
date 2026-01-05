@@ -158,7 +158,7 @@ SUBSYSTEM_DEF(greyscale_previews)
 		var/greyscale_config = typepath::greyscale_config
 		var/greyscale_colors = typepath::greyscale_colors
 
-		if (!greyscale_config || !greyscale_colors || typepath::flags_1 & NO_NEW_GAGS_PREVIEW_1)
+		if (!greyscale_config || !greyscale_colors || (typepath::flags_1 & NO_NEW_GAGS_PREVIEW_1))
 			continue
 
 		// This is what the actual icon state will be in the map_icon .dmi
