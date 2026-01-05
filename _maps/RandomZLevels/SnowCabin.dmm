@@ -1582,7 +1582,7 @@
 "ip" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/hatch,
-/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},

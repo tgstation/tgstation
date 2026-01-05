@@ -1,0 +1,7 @@
+help: "Please use crude barricades on top of dense objects."
+=/obj/structure/barricade/wooden:
+  banned_neighbors:
+    /obj/machinery/door/airlock:
+    /obj/effect/spawner/structure/window:
+    FULLTILE_WINDOW:
+      pattern: ^/obj/structure/window[/\w]*?fulltile$
