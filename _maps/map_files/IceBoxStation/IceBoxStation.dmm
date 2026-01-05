@@ -11942,7 +11942,7 @@
 	},
 /area/station/science/ordnance/office)
 "djH" = (
-/obj/item/stack/sheet/animalhide/lizard{
+/obj/item/stack/sheet/animalhide/carbon/lizard{
 	desc = "Landssslidessss, the landssslidesss...";
 	name = "Tanks-The-Floor"
 	},
@@ -56822,7 +56822,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
 "pXe" = (
-/obj/item/stack/sheet/animalhide/monkey,
+/obj/item/stack/sheet/animalhide/carbon/monkey,
 /obj/effect/decal/cleanable/blood,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)

@@ -1,0 +1,3 @@
+/obj/item/stack/sheet/animalhide/lizard : /obj/item/stack/sheet/animalhide/carbon/lizard{@OLD}
+/obj/item/stack/sheet/animalhide/human : /obj/item/stack/sheet/animalhide/carbon/human{@OLD}
+/obj/item/stack/sheet/animalhide/monkey : /obj/item/stack/sheet/animalhide/carbon/monkey{@OLD}
