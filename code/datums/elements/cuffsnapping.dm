@@ -140,7 +140,7 @@
 		target_was_restrained = carbon_target.handcuffed
 
 	if(!isnull(snap_time) && snap_time > 0)
-		if(!do_after(cutter_user, snap_time, target, interaction_key = cutter))
+		if(!do_after(cutter_user, snap_time, target, interaction_key = cutter)) //No doafter if time = 0
 			return
 		if(target_was_restrained) //Removing restraints takes priority over cuffed items. This only applies for carbon mobs, but we need to make sure the restraints are still the same.
 			var/mob/living/carbon/carbon_target = target
