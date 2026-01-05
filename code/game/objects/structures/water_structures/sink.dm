@@ -55,7 +55,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 /obj/structure/sink/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = NONE
 	if(isnull(held_item))
-		return
+		context[SCREENTIP_CONTEXT_LMB] = "Wash hands"
+		return CONTEXTUAL_SCREENTIP_SET
 
 	if(is_reagent_container(held_item) && held_item.is_refillable() && !held_item.reagents.holder_full())
 		context[SCREENTIP_CONTEXT_LMB] = "Fill container"
