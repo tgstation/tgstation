@@ -13,6 +13,6 @@
 		/obj/item/stack/sheet/animalhide,
 	)
 
-	for(var/obj/item/stack/stack_check as anything in subtypesof(/obj/item/stack) - blacklist)
+	for(var/obj/item/stack/stack_check as anything in valid_subtypesof(/obj/item/stack))
 		if(!initial(stack_check.singular_name))
 			TEST_FAIL("[stack_check] is missing a singular name!")

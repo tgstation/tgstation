@@ -7,9 +7,11 @@
 	merge_type = /obj/item/stack/sheet/animalhide
 	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/skin_drop.ogg'
+	abstract_type = /obj/item/stack/sheet/animalhide
 
 /// Subtype of skin to be dropped by carbon mobs as a result of being butchered, potentially inheriting their body color
 /obj/item/stack/sheet/animalhide/carbon
+	abstract_type = /obj/item/stack/sheet/animalhide/carbon
 	/// Color of our skin, if we were created from a mob being butchered
 	var/skin_color = null
 	/// Should we recolor our sprite and prevent merging of stacks of different skin colors?
