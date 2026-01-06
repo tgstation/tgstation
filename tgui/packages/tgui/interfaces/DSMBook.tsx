@@ -198,7 +198,7 @@ const PageTurn = (props: PageTurnProps) => {
 
   return (
     <Stack>
-      <Stack.Item fontSize="16px">
+      <Stack.Item>
         <Button
           icon="angles-left"
           onClick={() => {
@@ -221,7 +221,7 @@ const PageTurn = (props: PageTurnProps) => {
         />
       </Stack.Item>
       <Stack.Item textAlign="center" grow>
-        <Stack fill>
+        <Stack fill fontSize="15px">
           <Stack.Item grow bold>
             {page}
           </Stack.Item>
@@ -389,7 +389,7 @@ export const DSMBook = () => {
                 page={page}
                 setPage={setPage}
                 maxPage={lastPage}
-                title={page <= finalTOCPage ? `Table of Contents` : `SDSM 35`}
+                title={page <= finalTOCPage ? `Table of Contents` : `SDSM-35`}
               />
             </Section>
           </Stack.Item>
