@@ -113,11 +113,15 @@
 
 /obj/item/fish/starfish/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] swallows [src], and looks upwards..."))
-	user.say("I must go. My people need me.", forced = "starfish suicide")
+	if (prob(20))
+		user.say("I must go. My people need me.", forced = "starfish suicide")
 	addtimer(CALLBACK(src, PROC_REF(ascension), user), 1 SECONDS)
 	return MANUAL_SUICIDE
 
 /obj/item/fish/starfish/proc/ascension(mob/living/user)
+	user.visible_message(span_suicide("[user] abandons [user.p_their()] corporeal form!"))
+	user.drop_everything()
+	user.add_filter("space", 1, layering_filter(icon = icon('icons/mob/human/textures.dmi', "spacey"), blend_mode = BLEND_INSET_OVERLAY))
 	user.apply_status_effect(/datum/status_effect/go_away/deletes_mob)
 	qdel(src)
 

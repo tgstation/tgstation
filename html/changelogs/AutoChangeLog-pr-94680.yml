@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "You can skip the \"apply drapes\" step of surgery if the patient is buckled to an operating table or stasis bed!"
