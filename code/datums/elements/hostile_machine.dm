@@ -14,7 +14,7 @@
 #endif
 
 	if(ismovable(target))
-		RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED)
+		RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_change))
 
 	add_to_z(target)
 
