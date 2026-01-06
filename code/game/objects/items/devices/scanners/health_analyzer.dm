@@ -525,7 +525,7 @@
 	REMOVE_TRAIT(target, TRAIT_RECENTLY_TREATED, ANALYZER_TRAIT)
 	return TRUE
 
-/proc/chemscan(mob/living/user, mob/living/target, reagent_types_to_check = null)
+/proc/chemscan(mob/living/user, mob/living/target, reagent_types_to_check = null, tochat = TRUE)
 	if(user.incapacitated)
 		return
 
@@ -594,7 +594,10 @@
 				render_list += "<span class='alert ml-2'>[allergies]</span><br>"
 
 		// we handled the last <br> so we don't need handholding
-		to_chat(user, custom_boxed_message("blue_box", jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
+		if(tochat)
+			to_chat(user, custom_boxed_message("blue_box", jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
+		else
+			return jointext(render_list, "")
 
 /obj/item/healthanalyzer/click_alt(mob/user)
 	if(mode == SCANNER_NO_MODE)

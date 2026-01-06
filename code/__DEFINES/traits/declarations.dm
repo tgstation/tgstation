@@ -734,7 +734,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ENGINEER_METABOLISM "engineer_metabolism"
 #define TRAIT_ROYAL_METABOLISM "royal_metabolism"
 #define TRAIT_PRETENDER_ROYAL_METABOLISM "pretender_royal_metabolism"
-#define TRAIT_BALLMER_SCIENTIST "ballmer_scientist"
+#define TRAIT_SCIENTIST_LIVER "ballmer_scientist"
 #define TRAIT_MAINTENANCE_METABOLISM "maintenance_metabolism"
 #define TRAIT_CORONER_METABOLISM "coroner_metabolism"
 #define TRAIT_HUMAN_AI_METABOLISM "human_ai_metabolism"
@@ -1203,6 +1203,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_QUICK_GROWTH "fish_quick_growth"
 /// This fish has been fed mutagen or something. Evolutions will have more than twice the probability
 #define TRAIT_FISH_MUTAGENIC "fish_mutagenic"
+/// This fish has just been spawned as a result of the fishing minigame - Check for this trait when doing anything that shouldn't be done when catching the fish from an aquarium.
+#define TRAIT_FISH_JUST_SPAWNED "fish_just_spawned"
 
 /// Trait given to angelic constructs to let them purge cult runes
 #define TRAIT_ANGELIC "angelic"

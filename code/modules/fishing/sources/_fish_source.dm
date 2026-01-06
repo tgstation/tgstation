@@ -285,6 +285,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = reward.name)
 	SEND_SIGNAL(challenge.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, reward, user)
 	challenge.used_rod.on_reward_caught(reward, user)
+	REMOVE_TRAIT(reward, TRAIT_FISH_JUST_SPAWNED, TRAIT_GENERIC)
 
 /// Gives out the reward if possible
 /datum/fish_source/proc/dispense_reward(reward_path, mob/fisherman, atom/fishing_spot, obj/item/fishing_rod/rod)
@@ -349,6 +350,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/atom/movable/reward = new reward_path(spawn_location)
 	if(isfish(reward))
 		var/obj/item/fish/caught_fish = reward
+		ADD_TRAIT(caught_fish, TRAIT_FISH_JUST_SPAWNED, TRAIT_GENERIC)
 		caught_fish.randomize_size_and_weight()
 	return reward
 
