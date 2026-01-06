@@ -111,15 +111,23 @@ def find_lone_arrays(src: str):
 
 
 def main():
-    root = Path(sys.argv[1]) if len(sys.argv) > 1 else Path.cwd()
+    path = Path(sys.argv[1]) if len(sys.argv) > 1 else Path.cwd()
 
-    if not root.exists():
-        print(f"Path does not exist: {root}")
+    if not path.exists():
+        print(f"Path does not exist: {path}")
         sys.exit(2)
 
     violations = 0
 
-    for dm_file in root.rglob("*.dm"):
+    if path.is_file() and path.suffix == ".dm":
+        files_to_scan = [path]
+    elif path.is_dir():
+        files_to_scan = path.rglob("*.dm")
+    else:
+        print(f"Invalid path: {path}. Must be a .dm file or a directory.")
+        sys.exit(2)
+
+    for dm_file in files_to_scan:
         try:
             src = dm_file.read_text(encoding="utf-8", errors="replace")
         except Exception as e:
