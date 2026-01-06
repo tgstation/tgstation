@@ -12148,6 +12148,7 @@
 /obj/machinery/computer/operating{
 	dir = 8
 	},
+/obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
@@ -12402,6 +12403,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "dpR" = (
@@ -32907,6 +32909,7 @@
 /obj/machinery/computer/operating{
 	dir = 4
 	},
+/obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 4
 	},
@@ -73589,6 +73592,7 @@
 	dir = 8
 	},
 /obj/item/stack/medical/mesh,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "tHQ" = (
