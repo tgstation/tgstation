@@ -307,14 +307,8 @@
 	if(!density || (obj_flags & EMAGGED))
 		return
 
-	if(HAS_TRAIT(src, TRAIT_UNRESTRICTED_AIRLOCK_OPENING))
-		if(!HAS_TRAIT(user, TRAIT_UNRESTRICTED_AIRLOCK_OPENING))
-			balloon_alert(user, "delayed open in progress!")
-		return // Someone is turning the unrestricted latch
-
 	if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)
 		open()
-
 	else if(requiresID())
 		if(allowed(user)) // You
 			open()
