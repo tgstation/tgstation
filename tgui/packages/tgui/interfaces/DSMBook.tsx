@@ -188,7 +188,7 @@ const TOCEntryComponent = (props: TocEntryComponentProps) => {
 type PageTurnProps = {
   page: number;
   setPage: (page: number) => void;
-  title?: string;
+  title: string;
   maxPage: number;
 };
 
@@ -198,7 +198,7 @@ const PageTurn = (props: PageTurnProps) => {
 
   return (
     <Stack>
-      <Stack.Item>
+      <Stack.Item fontSize="16px">
         <Button
           icon="angles-left"
           onClick={() => {
@@ -225,7 +225,7 @@ const PageTurn = (props: PageTurnProps) => {
           <Stack.Item grow bold>
             {page}
           </Stack.Item>
-          <Stack.Item color="label">{title}</Stack.Item>
+          <Stack.Item color="label">~ {title} ~</Stack.Item>
           <Stack.Item grow bold>
             {page + 1}
           </Stack.Item>
