@@ -6323,6 +6323,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/depsec/medical,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "bJj" = (
@@ -35994,6 +35995,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "jGl" = (
@@ -38772,6 +38774,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/wood,
 /area/station/security/courtroom)
 "ksX" = (
@@ -39352,7 +39355,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/science/xenobiology)
 "kzi" = (
-/obj/item/radio/intercom/directional/west,
+/obj/machinery/button/door/directional/west{
+	id = "courtlockdown";
+	name = "Court lockdown"
+	},
 /turf/open/floor/wood,
 /area/station/security/courtroom)
 "kzm" = (
@@ -44235,12 +44241,6 @@
 	pixel_x = 7;
 	pixel_y = 6
 	},
-/obj/machinery/button/door/directional/south{
-	id = "courtlockdown";
-	name = "Court lockdown";
-	pixel_x = -6;
-	pixel_y = -27
-	},
 /obj/machinery/firealarm/directional/south{
 	pixel_x = 5
 	},
@@ -45942,6 +45942,7 @@
 /area/station/maintenance/department/medical)
 "mnu" = (
 /obj/structure/chair,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/courtroom)
 "mnE" = (
@@ -47113,7 +47114,8 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "courtlockdown";
-	name = "Lockdown Shutters"
+	name = "Lockdown Shutters";
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/station/security/courtroom)
@@ -47219,6 +47221,7 @@
 	dir = 4
 	},
 /obj/machinery/computer/security/telescreen/med_sec/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "mFT" = (
@@ -49457,6 +49460,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/floor,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "nny" = (
@@ -62289,6 +62293,7 @@
 /area/station/command/heads_quarters/hop)
 "qKV" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/checkpoint/medical)
 "qKW" = (
@@ -64674,7 +64679,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "courtlockdown";
-	name = "Lockdown Shutters"
+	name = "Lockdown Shutters";
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/station/security/courtroom)
