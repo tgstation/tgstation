@@ -237,7 +237,6 @@
 
 /// Wrapper for calling "stun()" and doing relevant vfx/sfx
 /obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, clumsy = FALSE)
-	PROTECTED_PROC(TRUE)
 	COOLDOWN_START(src, cooldown_check, cooldown)
 	if(on_stun_sound)
 		playsound(src, on_stun_sound, on_stun_volume, TRUE, -1)
