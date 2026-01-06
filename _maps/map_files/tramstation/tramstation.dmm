@@ -14194,15 +14194,15 @@
 /area/station/engineering/engine_smes)
 "dNH" = (
 /obj/structure/table,
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = -8;
 	pixel_y = -3
 	},
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = -5;
 	pixel_y = 8
 	},
-/obj/item/computer_disk/ordnance{
+/obj/item/disk/computer/ordnance{
 	pixel_x = 1
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -15128,6 +15128,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
+"edV" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/medical/treatment_center)
 "eep" = (
 /turf/open/floor/plating,
 /area/station/service/barber)
@@ -18341,8 +18349,8 @@
 /area/station/security/brig)
 "foD" = (
 /obj/structure/table/glass,
-/obj/item/computer_disk/medical,
-/obj/item/computer_disk/medical,
+/obj/item/disk/computer/medical,
+/obj/item/disk/computer/medical,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
@@ -27540,6 +27548,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "iOi" = (
@@ -30474,7 +30483,6 @@
 	dir = 5
 	},
 /obj/item/radio/intercom/directional/east,
-/obj/machinery/status_display/evac/directional/north,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
@@ -33626,6 +33634,9 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
+/obj/machinery/vitals_reader/directional/south{
+	id_tag = "lowersurgery"
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "kIi" = (
@@ -38965,9 +38976,9 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/item/computer_disk/engineering,
-/obj/item/computer_disk/engineering,
-/obj/item/computer_disk/engineering,
+/obj/item/disk/computer/engineering,
+/obj/item/disk/computer/engineering,
+/obj/item/disk/computer/engineering,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "myc" = (
@@ -39844,7 +39855,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
-/obj/machinery/status_display/ai/directional/north,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
@@ -40155,7 +40165,9 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "mXd" = (
-/obj/structure/table/optable,
+/obj/structure/table/optable{
+	id_tag = "uppersurgery"
+	},
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
@@ -40589,7 +40601,9 @@
 /turf/open/floor/glass/reinforced,
 /area/station/security/brig)
 "neE" = (
-/obj/structure/table/optable,
+/obj/structure/table/optable{
+	id_tag = "lowersurgery"
+	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
@@ -41724,13 +41738,13 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
-/obj/item/radio/intercom/directional/west,
 /obj/machinery/light/directional/west,
 /obj/item/storage/medkit/regular,
 /obj/item/storage/medkit/regular{
 	pixel_x = 4;
 	pixel_y = 4
 	},
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "nyM" = (
@@ -43745,10 +43759,10 @@
 /area/station/construction/mining/aux_base)
 "okA" = (
 /obj/structure/table,
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = -2
 	},
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = 7;
 	pixel_y = 2
 	},
@@ -48329,15 +48343,15 @@
 	network = list("ss13","medbay");
 	c_tag = "Medical - Treatment South-East"
 	},
-/obj/machinery/wall_healer/directional/east,
 /obj/machinery/light/directional/east,
+/obj/machinery/wall_healer/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "pUV" = (
 /obj/structure/table,
 /obj/item/clipboard,
-/obj/item/computer_disk/quartermaster,
-/obj/item/computer_disk/quartermaster,
+/obj/item/disk/computer/quartermaster,
+/obj/item/disk/computer/quartermaster,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
@@ -53516,6 +53530,7 @@
 	network = list("ss13","medbay");
 	c_tag = "Medical - Treatment North-West"
 	},
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "rNt" = (
@@ -62296,6 +62311,13 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
+"uId" = (
+/obj/machinery/cryo_cell{
+	dir = 4
+	},
+/obj/machinery/status_display/ai/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/medical/treatment_center)
 "uIk" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -62314,15 +62336,15 @@
 	pixel_x = 7;
 	pixel_y = -2
 	},
-/obj/item/computer_disk/ordnance{
+/obj/item/disk/computer/ordnance{
 	pixel_x = -4;
 	pixel_y = 10
 	},
-/obj/item/computer_disk/ordnance{
+/obj/item/disk/computer/ordnance{
 	pixel_x = 5;
 	pixel_y = 10
 	},
-/obj/item/computer_disk/ordnance{
+/obj/item/disk/computer/ordnance{
 	pixel_x = 1;
 	pixel_y = 10
 	},
@@ -65148,6 +65170,9 @@
 	},
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/vitals_reader/directional/north{
+	id_tag = "uppersurgery"
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "vGd" = (
@@ -168973,7 +168998,7 @@ aMG
 xdx
 gBt
 uVW
-gBt
+uId
 jtr
 dSZ
 aOO
@@ -170515,7 +170540,7 @@ brx
 uem
 dqe
 dlN
-dqe
+edV
 jtr
 dSZ
 aOO

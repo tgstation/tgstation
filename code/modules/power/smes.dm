@@ -124,7 +124,7 @@
 /obj/machinery/power/smes/examine(user)
 	. = ..()
 
-	. += span_notice("it's maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "opened"]")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "opened"].")
 	if(panel_open)
 		if(!terminal)
 			. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")

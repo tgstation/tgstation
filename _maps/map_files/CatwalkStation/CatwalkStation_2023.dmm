@@ -2620,7 +2620,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
 	dir = 8
 	},
-/obj/machinery/status_display/evac/directional/west,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "aKJ" = (
@@ -5968,10 +5968,10 @@
 "bEU" = (
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/machinery/camera/autoname/directional/south,
-/obj/machinery/light_switch/directional/south,
 /obj/machinery/computer/operating{
 	dir = 4
 	},
+/obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 4
 	},
@@ -16264,10 +16264,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
-/obj/structure/sign/warning/cold_temp/directional/east{
-	name = "Cryogenics";
-	pixel_x = 26
-	},
+/obj/structure/sign/warning/cold_temp/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "eta" = (
@@ -20589,7 +20586,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner,
-/obj/machinery/newscaster/directional/west,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "fFq" = (
@@ -22772,7 +22769,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
 	dir = 8
 	},
-/obj/machinery/status_display/ai/directional/west,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "ghV" = (
@@ -32163,11 +32160,11 @@
 /obj/item/radio/intercom/directional/east,
 /obj/structure/cable,
 /obj/machinery/keycard_auth/wall_mounted/directional/south,
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = -6
 	},
-/obj/item/computer_disk,
-/obj/item/computer_disk{
+/obj/item/disk/computer,
+/obj/item/disk/computer{
 	pixel_x = 6
 	},
 /turf/open/floor/wood,
@@ -32467,9 +32464,6 @@
 /obj/machinery/camera/autoname/directional/west{
 	network = list("ss13","medbay");
 	c_tag = "Medbay - Lower Central Hallway"
-	},
-/obj/machinery/firealarm/directional/west{
-	pixel_x = -20
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
@@ -38122,9 +38116,6 @@
 	},
 /obj/structure/tank_holder/extinguisher,
 /obj/structure/cable,
-/obj/machinery/light_switch/directional/west{
-	pixel_x = -22
-	},
 /turf/open/floor/iron/dark,
 /area/station/medical/cryo)
 "knj" = (
@@ -46936,17 +46927,15 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "mDX" = (
-/obj/structure/bed/pod{
-	desc = "An old medical bed, just waiting for replacement with something up to date.";
-	name = "medical bed";
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
 /obj/machinery/defibrillator_mount/directional/west,
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
 	dir = 8
+	},
+/obj/machinery/stasis{
+	dir = 4
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
@@ -52406,8 +52395,13 @@
 	},
 /area/station/hallway/primary/fore)
 "ofr" = (
-/obj/machinery/firealarm/directional/east,
+/obj/machinery/firealarm/directional/east{
+	pixel_y = -6
+	},
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
+/obj/machinery/light_switch/directional/east{
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/cryo)
 "ofs" = (
@@ -55231,7 +55225,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
-/obj/machinery/airalarm/directional/west,
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
 	dir = 1
@@ -55240,6 +55233,7 @@
 	dir = 8
 	},
 /obj/item/stack/medical/mesh,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "oTZ" = (
@@ -71461,6 +71455,7 @@
 	dir = 1
 	},
 /obj/machinery/computer/crew,
+/obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "tqv" = (
@@ -73952,10 +73947,8 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/firealarm/directional/east{
-	pixel_x = 20
-	},
 /obj/machinery/disposal/bin,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/surgery)
 "tYE" = (
@@ -78116,6 +78109,17 @@
 /obj/effect/turf_decal/trimline/dark_green,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/upper)
+"vcG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/central)
 "vcH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -82752,7 +82756,10 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/cryo)
 "wqq" = (
-/obj/machinery/stasis,
+/obj/structure/bed/pod{
+	desc = "An old medical bed, just waiting for replacement with something up to date.";
+	name = "medical bed"
+	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "wqB" = (
@@ -83753,6 +83760,7 @@
 /obj/machinery/computer/operating{
 	dir = 8
 	},
+/obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
@@ -86459,6 +86467,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/blue,
+/obj/structure/tank_holder/extinguisher,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "xsh" = (
@@ -88691,10 +88700,10 @@
 /obj/item/storage/box/gloves{
 	pixel_y = 10
 	},
-/obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
 	dir = 8
 	},
+/obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "xUT" = (
@@ -119131,7 +119140,7 @@ tYC
 qdd
 uSP
 wER
-oZn
+ccN
 xeM
 fYF
 kLI
@@ -119643,8 +119652,8 @@ xsD
 viV
 iKa
 uNT
-pMm
 xeM
+pMm
 xeM
 xeM
 siR
@@ -119902,7 +119911,7 @@ oOS
 aJR
 pTV
 eZE
-gPC
+vcG
 gPC
 ovh
 ljq

@@ -101,6 +101,9 @@
 	. = ..()
 	if(gone in cistern_items)
 		LAZYREMOVE(cistern_items, gone)
+		if (isitem(gone))
+			var/obj/item/removed_item = gone
+			w_items -= removed_item.w_class
 		return
 	if(gone in fishes)
 		LAZYREMOVE(fishes, gone)
@@ -172,7 +175,6 @@
 		else
 			random_cistern_item.forceMove(drop_location())
 		to_chat(user, span_notice("You find [random_cistern_item] in the cistern."))
-		w_items -= random_cistern_item.w_class
 		return
 
 	if(!flushing && LAZYLEN(fishes) && cover_open)
@@ -245,7 +247,7 @@
 
 	add_fingerprint(user)
 	if(cover_open && istype(tool, /obj/item/fish))
-		if(fishes >= 3)
+		if(LAZYLEN(fishes) >= 3)
 			to_chat(user, span_warning("There's too many fishes, flush them down first."))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
@@ -280,8 +282,7 @@
 		if(!user.transferItemToLoc(tool, src))
 			to_chat(user, span_warning("\The [tool] is stuck to your hand, you cannot put it in the cistern!"))
 			return ITEM_INTERACT_BLOCKING
-		LAZYADD(cistern_items, tool)
-		w_items += tool.w_class
+		add_cistern_item(tool)
 		to_chat(user, span_notice("You carefully place [tool] into the cistern."))
 		return ITEM_INTERACT_SUCCESS
 
@@ -325,6 +326,12 @@
 	begin_reclamation()
 	to_chat(user, span_notice("You fill [container] from [src]. Gross."))
 	return ITEM_INTERACT_SUCCESS
+
+/// Hides an item inside the toilet for later retrievalk
+/obj/structure/toilet/proc/add_cistern_item(obj/item/thing)
+	if (isitem(thing))
+		w_items += thing.w_class
+	LAZYADD(cistern_items, thing)
 
 /obj/structure/toilet/crowbar_act(mob/living/user, obj/item/tool)
 	to_chat(user, span_notice("You start to [cistern_open ? "replace the lid on" : "lift the lid off"] the cistern..."))
@@ -397,11 +404,11 @@
 
 /obj/structure/toilet/secret/Initialize(mapload)
 	. = ..()
-	if(secret_type)
-		var/obj/item/secret = new secret_type(src)
-		secret.desc += " It's a secret!"
-		w_items += secret.w_class
-		LAZYADD(cistern_items, secret)
+	if(!secret_type)
+		return
+	var/obj/item/secret = new secret_type(src)
+	secret.desc += " It's a secret!"
+	add_cistern_item(secret)
 
 ///A toilet made of meat that only drops remains when deconstructed, often unleashed unto this cursed plane of existence by hopeless people off'ing themselves with experi-scanners.
 /obj/structure/toilet/greyscale/flesh
@@ -414,6 +421,9 @@
 	var/obj/item/organ/brain/toilet_brain
 	if(suicide)
 		toilet_brain = suicide.get_organ_slot(ORGAN_SLOT_BRAIN)
+		for(var/obj/item/thing in suicide)
+			if (suicide.transferItemToLoc(thing, newloc = src, silent = TRUE))
+				add_cistern_item(thing)
 		suicide.gib(DROP_BRAIN) //we delete everything but the brain, as it's going to be moved to the cistern
 		set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, suicide) = SHEET_MATERIAL_AMOUNT))
 	else
@@ -421,7 +431,7 @@
 		set_custom_materials(list(/datum/material/meat = SHEET_MATERIAL_AMOUNT))
 
 	toilet_brain.forceMove(src)
-	w_items += toilet_brain.w_class
+	add_cistern_item(toilet_brain)
 
 //this also prevents the toilet from dropping meat sheets. if you want to cheese the meat exepriments, sacrifice more people
 /obj/structure/toilet/greyscale/flesh/atom_deconstruct(dissambled = TRUE)

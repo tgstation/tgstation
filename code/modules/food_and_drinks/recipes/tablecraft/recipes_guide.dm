@@ -131,6 +131,7 @@
 /datum/crafting_recipe/food/reaction/cakebatter/vegan
 	name = "Cake batter (vegan)"
 	reaction = /datum/chemical_reaction/food/cakebatter/vegan
+	result = /obj/item/food/cakebatter/vegan
 
 /datum/crafting_recipe/food/reaction/pancakebatter
 	result = /datum/reagent/consumable/pancakebatter

@@ -17,5 +17,5 @@
 	if(.)
 		return
 	var/mob/living/silicon/ai/our_ai = user.mob
-	our_ai.deploy_to_shell(our_ai.redeploy_action.last_used_shell)
+	our_ai.select_shell(our_ai.redeploy_action.last_used_shell)
 	return TRUE
