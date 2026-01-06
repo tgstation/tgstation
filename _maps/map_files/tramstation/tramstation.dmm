@@ -13870,6 +13870,10 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
+/obj/item/wrench/medical{
+	pixel_y = 1;
+	pixel_x = 18
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "dHF" = (
@@ -29832,6 +29836,10 @@
 /area/station/commons/dorms/laundry)
 "jzt" = (
 /obj/structure/bookcase/random/reference,
+/obj/item/tgui_book/manual/dsm{
+	pixel_y = -5;
+	pixel_x = -1
+	},
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
 "jzz" = (
@@ -43119,9 +43127,13 @@
 /area/station/command/heads_quarters/cmo)
 "nXM" = (
 /obj/structure/table/glass,
-/obj/item/storage/briefcase/secure,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/light/cold/directional/south,
+/obj/item/tgui_book/manual/dsm{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/storage/briefcase/secure,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "nXP" = (
@@ -56178,7 +56190,18 @@
 /area/station/hallway/primary/tram/center)
 "sIq" = (
 /obj/structure/table/glass,
-/obj/item/wrench/medical,
+/obj/item/book/manual/wiki/surgery{
+	pixel_y = 0;
+	pixel_x = 3
+	},
+/obj/item/book/manual/wiki/medicine{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/tgui_book/manual/dsm{
+	pixel_y = 6;
+	pixel_x = 3
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "sIx" = (
@@ -59040,7 +59063,7 @@
 	pixel_x = -7;
 	pixel_y = 7
 	},
-/obj/item/infuser_book{
+/obj/item/tgui_book/manual/infuser{
 	pixel_x = 5;
 	pixel_y = 3
 	},

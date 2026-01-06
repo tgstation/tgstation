@@ -5123,6 +5123,7 @@
 	name = "privacy shutters control"
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/item/book/manual/wiki/surgery,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
 "bMY" = (
@@ -16353,7 +16354,7 @@
 	dir = 1
 	},
 /obj/machinery/dna_infuser,
-/obj/item/infuser_book,
+/obj/item/tgui_book/manual/infuser,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark,
@@ -17818,6 +17819,11 @@
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/status_display/evac/directional/west,
+/obj/item/tgui_book/manual/dsm{
+	pixel_y = 3;
+	pixel_x = -2
+	},
+/obj/item/book/manual/wiki/medicine,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "gmS" = (
@@ -26267,6 +26273,11 @@
 /obj/structure/table,
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/shard,
+/obj/item/tgui_book/manual/dsm,
+/obj/item/book/manual/wiki/chemistry{
+	pixel_y = 4;
+	pixel_x = 3
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "jbM" = (
@@ -26422,7 +26433,6 @@
 /area/station/science/ordnance/storage)
 "jeL" = (
 /obj/structure/table/glass,
-/obj/item/book/manual/wiki/medicine,
 /obj/item/clothing/neck/stethoscope,
 /obj/item/wrench/medical,
 /obj/effect/turf_decal/stripes/line{
@@ -51099,6 +51109,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
+/obj/item/tgui_book/manual/dsm,
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
 "rym" = (

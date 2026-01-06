@@ -15810,6 +15810,10 @@
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
 	dir = 4
 	},
+/obj/item/tgui_book/manual/dsm{
+	pixel_x = 5;
+	pixel_y = -2
+	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "emE" = (
@@ -25384,6 +25388,10 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
+/obj/item/tgui_book/manual/dsm{
+	pixel_y = -3;
+	pixel_x = -5
+	},
 /obj/item/storage/briefcase/secure{
 	pixel_x = 5;
 	pixel_y = 9
@@ -26116,6 +26124,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/commons/vacant_room/office)
+"hdF" = (
+/obj/structure/bookcase/random/reference,
+/obj/item/tgui_book/manual/dsm,
+/turf/open/floor/wood/large,
+/area/station/medical/psychology)
 "hdJ" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Prison Community Center"
@@ -49664,7 +49677,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "nsW" = (
-/obj/item/infuser_book{
+/obj/item/tgui_book/manual/infuser{
 	pixel_x = -7;
 	pixel_y = 4
 	},
@@ -186148,7 +186161,7 @@ hoj
 hoj
 dVn
 umH
-ipQ
+hdF
 cjv
 hsL
 umH

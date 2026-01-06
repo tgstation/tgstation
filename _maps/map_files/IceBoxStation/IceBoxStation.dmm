@@ -10148,6 +10148,7 @@
 /area/station/maintenance/port/fore)
 "cKF" = (
 /obj/structure/bookcase/random/reference,
+/obj/item/tgui_book/manual/dsm,
 /turf/open/floor/carpet/blue,
 /area/station/medical/psychology)
 "cKL" = (
@@ -27413,13 +27414,18 @@
 	pixel_y = 3
 	},
 /obj/item/book/manual/wiki/medicine{
-	pixel_x = -2;
-	pixel_y = -1
+	pixel_x = -4;
+	pixel_y = 7
 	},
 /obj/item/book/manual/wiki/chemistry{
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 8
 	},
 /obj/effect/turf_decal/tile/blue/full,
+/obj/item/tgui_book/manual/dsm{
+	pixel_x = -4;
+	pixel_y = 12
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/heads_quarters/cmo)
 "hKu" = (
@@ -33686,7 +33692,7 @@
 /area/station/maintenance/space_hut/cabin)
 "jBc" = (
 /obj/machinery/dna_infuser,
-/obj/item/infuser_book,
+/obj/item/tgui_book/manual/infuser,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
@@ -42559,6 +42565,11 @@
 /area/station/medical/virology)
 "lYT" = (
 /obj/structure/table,
+/obj/item/tgui_book/manual/dsm{
+	pixel_y = 5;
+	pixel_x = 3
+	},
+/obj/item/book/manual/wiki/tgc,
 /turf/open/floor/wood,
 /area/station/maintenance/aft/greater)
 "lZe" = (
@@ -50447,6 +50458,7 @@
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/blue/full,
+/obj/item/tgui_book/manual/dsm,
 /turf/open/floor/iron/large,
 /area/station/medical/treatment_center)
 "olM" = (

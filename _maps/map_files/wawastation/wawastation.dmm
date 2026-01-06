@@ -20625,6 +20625,10 @@
 /obj/structure/table/reinforced/rglass,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/book/manual/wiki/medicine,
+/obj/item/tgui_book/manual/dsm{
+	pixel_y = 3;
+	pixel_x = 3
+	},
 /obj/item/clothing/neck/stethoscope{
 	pixel_y = 4
 	},
@@ -46017,6 +46021,10 @@
 "pTw" = (
 /obj/structure/table/glass,
 /obj/item/radio/intercom/directional/south,
+/obj/item/tgui_book/manual/dsm{
+	pixel_x = -6;
+	pixel_y = 4
+	},
 /obj/item/food/sandwich/cheese,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/cmo)
@@ -61017,7 +61025,7 @@
 /area/station/science/xenobiology)
 "uUx" = (
 /obj/machinery/dna_infuser,
-/obj/item/infuser_book,
+/obj/item/tgui_book/manual/infuser,
 /turf/open/floor/iron/white/textured,
 /area/station/science/genetics)
 "uUA" = (
@@ -62311,6 +62319,10 @@
 /area/station/science/lobby)
 "vuZ" = (
 /obj/structure/bookcase/random/reference,
+/obj/item/tgui_book/manual/dsm{
+	pixel_y = 3;
+	pixel_x = 3
+	},
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
 "vvC" = (
