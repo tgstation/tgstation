@@ -2256,6 +2256,7 @@
 #include "code\game\machinery\teleporter.dm"
 #include "code\game\machinery\transformer.dm"
 #include "code\game\machinery\wall_healer.dm"
+#include "code\game\machinery\wall_vitals.dm"
 #include "code\game\machinery\washing_machine.dm"
 #include "code\game\machinery\wishgranter.dm"
 #include "code\game\machinery\ai_core\_core.dm"

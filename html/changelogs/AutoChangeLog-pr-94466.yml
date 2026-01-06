@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - code_imp: "item spawning menu should be somewhat faster now"
+  - refactor: "extended atom_skins to be more customizable. Please report any bugs to github."

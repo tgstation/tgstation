@@ -734,7 +734,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ENGINEER_METABOLISM "engineer_metabolism"
 #define TRAIT_ROYAL_METABOLISM "royal_metabolism"
 #define TRAIT_PRETENDER_ROYAL_METABOLISM "pretender_royal_metabolism"
-#define TRAIT_BALLMER_SCIENTIST "ballmer_scientist"
+#define TRAIT_SCIENTIST_LIVER "ballmer_scientist"
 #define TRAIT_MAINTENANCE_METABOLISM "maintenance_metabolism"
 #define TRAIT_CORONER_METABOLISM "coroner_metabolism"
 #define TRAIT_HUMAN_AI_METABOLISM "human_ai_metabolism"
