@@ -1,11 +1,11 @@
 // Pizza (Whole)
 /obj/item/food/pizza
-	name = "pizza"
+	name = "bugged pizza"
+	desc = "This pizza should not be."
 	icon = 'icons/obj/food/pizza.dmi'
 	abstract_type = /obj/item/food/pizza
 	w_class = WEIGHT_CLASS_NORMAL
 	max_volume = 80
-	icon_state = "pizzamargherita"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 28,
 		/datum/reagent/consumable/nutriment/protein = 3,
@@ -103,6 +103,10 @@
 	slice.pixel_x += rand(-6, 6)
 	slice.pixel_y += rand(-6, 6)
 	user?.put_in_active_hand(slice)
+
+	slice.reagents.remove_all()
+	reagents.trans_to(slice, amount = reagents.total_volume / slices_left, no_react = TRUE)
+
 	slices_left--
 	if(slices_left <= 0)
 		qdel(src)
@@ -123,11 +127,11 @@
 
 // Pizza Slice
 /obj/item/food/pizzaslice
-	name = "pizza slice"
+	name = "bugged pizza slice"
+	desc = "This slice of pizza should not be"
 	icon = 'icons/obj/food/pizza.dmi'
 	abstract_type = /obj/item/food/pizzaslice
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
-	icon_state = "pizzamargheritaslice"
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	decomp_type = /obj/item/food/pizzaslice/moldy

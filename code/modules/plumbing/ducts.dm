@@ -19,20 +19,15 @@
 		duct_layer = layer_of_duct
 
 	if(PERFORM_ALL_TESTS(maptest_log_mapping))
-		var/turf/destination = get_turf(src)
-
-		//check for overlapping ducts
-		for(var/obj/machinery/duct/other in destination)
-			if(other != src && (duct_layer & other.duct_layer))
-				log_mapping("Overlapping ducts at [GLOB.plumbing_layer_names["[duct_layer]"]] detected at [AREACOORD(src)].")
-				return INITIALIZE_HINT_QDEL
-
-		//check for overlapping machines
-		for(var/obj/machinery/machine in destination)
-			for(var/datum/component/plumbing/plumber as anything in machine.GetComponents(/datum/component/plumbing))
-				if(plumber.ducting_layer & duct_layer)
-					log_mapping("Overlapping machine at [GLOB.plumbing_layer_names["[duct_layer]"]] detected at [AREACOORD(src)].")
-					return INITIALIZE_HINT_QDEL
+		var/datum/overlap = ducting_layer_check(src, duct_layer)
+		if(!isnull(overlap))
+			var/message = GLOB.plumbing_layer_names["[duct_layer]"]
+			if(istype(overlap, /obj/machinery/duct))
+				message = "duct on [message]"
+			else
+				message = "machine on [message]"
+			log_mapping("Overlapping plumbing [message] detected at [AREACOORD(src)]")
+			return INITIALIZE_HINT_QDEL
 
 	. = ..()
 
@@ -333,20 +328,11 @@
 /obj/item/stack/ducts/proc/check_attach_turf(turf/open_turf, mob/user)
 	. = NONE
 	if(isopenturf(open_turf))
-		//check for overlapping ducts
-		for(var/obj/machinery/duct/other in open_turf)
-			if(other != src && (duct_layer & other.duct_layer))
-				if(user)
-					balloon_alert(user, "overlapping duct detected!")
-				return ITEM_INTERACT_FAILURE
-
-		//check for overlapping machines
-		for(var/obj/machinery/machine in open_turf)
-			for(var/datum/component/plumbing/plumber as anything in machine.GetComponents(/datum/component/plumbing))
-				if(plumber.ducting_layer & duct_layer)
-					if(user)
-						balloon_alert(user, "overlapping machine detected!")
-					return ITEM_INTERACT_FAILURE
+		var/datum/overlap = ducting_layer_check(open_turf, duct_layer)
+		if(!isnull(overlap))
+			if(user)
+				open_turf.balloon_alert(user, "overlapping [istype(overlap, /obj/machinery/duct) ? "duct" : "machine"] detected!")
+			return ITEM_INTERACT_FAILURE
 
 		new /obj/machinery/duct(open_turf, duct_color, duct_layer)
 		playsound(open_turf, 'sound/machines/click.ogg', 50, TRUE)

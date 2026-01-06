@@ -1030,13 +1030,23 @@
 /obj/structure/table/optable/make_climbable()
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
+// surgical tools cannot be placed on the op table while a patient is also on it
+/obj/structure/table/optable/table_place_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isnull(patient) && (tool.item_flags & SURGICAL_TOOL))
+		tool.melee_attack_chain(user, patient, modifiers)
+		return ITEM_INTERACT_SUCCESS
+
+	return ..()
+
 ///Align the mob with the table when buckled.
 /obj/structure/table/optable/post_buckle_mob(mob/living/buckled)
 	buckled.add_offsets(type, z_add = 6)
+	buckled.AddComponentFrom(type, /datum/component/free_operation)
 
 ///Disalign the mob with the table when unbuckled.
 /obj/structure/table/optable/post_unbuckle_mob(mob/living/buckled)
 	buckled.remove_offsets(type)
+	buckled.RemoveComponentSource(type, /datum/component/free_operation)
 
 /// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
 /obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/potential_patient)
@@ -1093,6 +1103,7 @@
 		if (patient.external && patient.external == air_tank)
 			patient.close_externals()
 
+	SEND_SIGNAL(src, COMSIG_OPERATING_TABLE_SET_PATIENT, new_patient)
 	patient = new_patient
 	update_appearance()
 	computer?.update_static_data_for_all_viewers()
