@@ -5,6 +5,9 @@
 	name = "Split Personality"
 	desc = "Patient's brain is split into two personalities, which randomly switch control of the body."
 	scan_desc = "complete lobe separation"
+	symptoms = "Exhibits two distinct personalities that alternate control over the same body, \
+		each with its own memories, behaviors, and preferences. While both personalities are aware of each other, \
+		they may have conflicting desires and actions, leading to confusion and disorientation for the host."
 	gain_text = span_warning("You feel like your mind was split in two.")
 	lose_text = span_notice("You feel alone again.")
 	var/current_controller = OWNER
@@ -266,6 +269,7 @@
 	lose_text = "You wake up very, very confused and hungover. All you can remember is drinking a lot of alcohol... what happened?"
 	poll_role = "blacked out drunkard"
 	random_gain = FALSE
+	known_trauma = FALSE
 	poll_time = 10 SECONDS
 	/// Duration of effect, tracked in seconds, not deciseconds. qdels when reaching 0.
 	var/duration_in_seconds = 180
