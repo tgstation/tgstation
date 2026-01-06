@@ -256,9 +256,9 @@
 /obj/item/book/proc/gen_random_icon_state()
 	icon_state = "book[rand(1, maximum_book_state)]"
 
-/// Base type for a book that opens a TUGI
-/// Does not inherit from /obj/item/book because the only similarities between the two are the concept of being a book
-/// When designing a UI book you can use send a "play_flip_sound" act to play the page turn sound
+/// Base type for a book that opens a bespoke TUGI
+/// Does not inherit from /obj/item/book because the only similarities between the two are the concept of "being a book"
+/// When designing a UI book you can send a "play_flip_sound" act to play the page turn sound
 /obj/item/tgui_book
 	name = "book"
 	desc = "Must be one of those new fangled electronic books."
@@ -273,7 +273,7 @@
 	resistance_flags = FLAMMABLE
 	drop_sound = 'sound/items/handling/book_drop.ogg'
 	pickup_sound = 'sound/items/handling/book_pickup.ogg'
-	/// The name of the UI to open for ease
+	/// The name of the UI to open
 	var/ui_name
 
 /obj/item/tgui_book/ui_interact(mob/user, datum/tgui/ui)
