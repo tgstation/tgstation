@@ -1,4 +1,0 @@
-author: "Ezel"
-delete-after: True
-changes:
-  - bugfix: "fixes the armour value of the magus helm to be the same as all other wizard gear"

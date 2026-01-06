@@ -142,3 +142,45 @@
   lelandkemble:
   - spellcheck: When your skillchips are turned off from shapeshifting, you will now
       be told.
+2026-01-06:
+  Ben10Omintrix:
+  - bugfix: makes sure slimes and other animals immediately cease attacking their
+      tamers
+  ElGitificador:
+  - admin: siege weapons log in attack instead of attack and game.
+  Ezel:
+  - bugfix: fixes the armour value of the magus helm to be the same as all other wizard
+      gear
+  Jacquerel:
+  - bugfix: Pizza slices now contain a proportional amount of whatever the pizza contained,
+      so sliced poisoned pizza will still be poisonous and sliced robo pizza will
+      still turn people into robots.
+  - bugfix: Removed a bugged pizza from the pizza ruin and replaced it with a margherita
+      pizza.
+  - bugfix: Bugged pizza no longer looks identical to functional margherita pizza;
+      it's a big error graphic.
+  - bugfix: Species that aren't supposed to have blood will no longer report feeling
+      dizzy from bloodloss on account of how they have no blood.
+  - bugfix: The "I am stood in the dark" indicator for Shadows and Nightmares will
+      no longer flicker on and off.
+  Melbert:
+  - rscadd: Scientists only say Balmer voicelines if they are whimsical
+  - rscadd: Surgery gets slower if the surgeon is drunk, UNLESS you land in the Balmer
+      Peak, then it's actually faster.
+  - rscadd: Adds "reset dislocation" operation, which is a surgical analog to resetting
+      a dislocated limb. Same tools, same steps, but if you go through the effort
+      of doing it surgically, it's faster and safer.
+  - rscadd: All wound surgeries now gain a speed bonus from being wound scanned.
+  SmArtKar:
+  - bugfix: Fixed chat hallucination runtimes caused by gibbed crew
+  - qol: Added a preference to adjust emissive bloom size
+  SpaceManiac:
+  - bugfix: Removing the pen from a clipboard is now done by right-clicking, instead
+      of alt-clicking which conflicted with restyling.
+  - bugfix: Removing the pen from a clipboard now puts it in your hand instead of
+      on the floor.
+  vinylspiders:
+  - code_imp: item spawning menu should be somewhat faster now
+  - refactor: extended atom_skins to be more customizable. Please report any bugs
+      to github.
+  - bugfix: switching characters in the prefs menu should be less laggy now
