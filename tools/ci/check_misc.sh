@@ -6,11 +6,16 @@ find . -name "*.json" -not -path "*/node_modules/*" -print0 | xargs -0 python3 .
 tools/bootstrap/python -m CatchUnescapedBrackets "$@"
 
 if ! tools/bootstrap/python -m CatchUnescapedBrackets tools/CatchUnescapedBrackets/pass.dm; then
-	echo "Error: CatchUnescapedBrackets/pass.dm failed validation."
-	exit 1
+    echo "Error: CatchUnescapedBrackets/pass.dm failed validation."
+    exit 1
 fi
 
-if tools/bootstrap/python -m CatchUnescapedBrackets tools/CatchUnescapedBrackets/fail.dm; then
-	echo "Error: CatchUnescapedBrackets/fail.dm passed validation."
-	exit 1
+set +e
+tools/bootstrap/python -m CatchUnescapedBrackets tools/CatchUnescapedBrackets/fail.dm >/dev/null 2>&1
+status=$?
+set -e
+
+if [ $status -eq 0 ]; then
+    echo "Error: CatchUnescapedBrackets/fail.dm passed validation."
+    exit 1
 fi
