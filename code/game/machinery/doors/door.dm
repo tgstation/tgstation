@@ -307,11 +307,23 @@
 	if(!density || (obj_flags & EMAGGED))
 		return
 
+	if(HAS_TRAIT(src, TRAIT_UNRESTRICTED_AIRLOCK_OPENING))
+		if(!HAS_TRAIT(user, TRAIT_UNRESTRICTED_AIRLOCK_OPENING))
+			balloon_alert(user, "delayed open in progress!")
+		return // Someone is turning the unrestricted latch
+
 	if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)
 		open()
-	else if(requiresID() && allowed(user))
-		open()
-	else
+
+	else if(requiresID())
+		if(allowed(user)) // You
+			open()
+		else if(astype(user.buckled, /mob/living)?.allowed()) // Your partner in crime
+			open()
+		else if(!operating && density)
+			run_animation(DOOR_DENY_ANIMATION)
+
+	else if(!operating && density)
 		run_animation(DOOR_DENY_ANIMATION)
 
 /obj/machinery/door/attack_hand(mob/user, list/modifiers)
@@ -377,7 +389,9 @@
 	if(opener.do_after_count() > 0) // not allowed to do this if you're doing something else. just wait lad.
 		return FALSE
 
+	stoplag(1) // allow the door to process any allow/deny responses first
 	var/do_after_time = rand(delayed_unres_time_lower, delayed_unres_time_upper)
+	ADD_TRAIT(src, TRAIT_UNRESTRICTED_AIRLOCK_OPENING, INNATE_TRAIT)
 	ADD_TRAIT(opener, TRAIT_UNRESTRICTED_AIRLOCK_OPENING, REF(src))
 	RegisterSignal(opener, COMSIG_ATOM_PRE_PRESSURE_PUSH, PROC_REF(stop_pressure_during_unres_open))
 	addtimer(CALLBACK(src, PROC_REF(deregister_pressure_push_signal), opener), do_after_time + 0.5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) // extra half-second to be safe, else this is just a guarantee we remove the signal.
@@ -392,9 +406,11 @@
 
 	if(do_after(opener, do_after_time, target = src))
 		SSblackbox.record_feedback("tally", "unrestricted_airlock_usage", 1, "open success ([type])") // no need to tally failures as we can assume it as long as we have this + the total
+		REMOVE_TRAIT(src, TRAIT_UNRESTRICTED_AIRLOCK_OPENING, INNATE_TRAIT)
 		return TRUE
 
 	deregister_pressure_push_signal(opener) // if you fail the do_after early then you lose your pressure immunity, womp.
+	REMOVE_TRAIT(src, TRAIT_UNRESTRICTED_AIRLOCK_OPENING, INNATE_TRAIT)
 	return FALSE
 
 /// While activating the door, we are able to block pressure pushes since we're "grasping the override handle" or something similar to that.
