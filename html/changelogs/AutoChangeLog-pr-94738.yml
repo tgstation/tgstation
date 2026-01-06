@@ -1,0 +1,5 @@
+author: "SpaceManiac"
+delete-after: True
+changes:
+  - bugfix: "Wiki books such as \"Barman Recipes\" and \"Space Law\" no longer have terrible formatting."
+  - bugfix: "Wiki books now properly give book nerd moodlets."
