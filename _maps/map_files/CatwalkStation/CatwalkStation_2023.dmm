@@ -44500,9 +44500,6 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
 /obj/structure/cable,
 /turf/open/floor/iron/white/side{
 	dir = 5
@@ -61181,9 +61178,6 @@
 /obj/structure/flora/bush/pale/style_random,
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/ferny/style_random,
-/obj/structure/flora/bush/pale/style_random,
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/entry)
 "qtv" = (
@@ -74190,8 +74184,6 @@
 /turf/open/floor/carpet/cyan,
 /area/station/command/heads_quarters/cmo)
 "tQf" = (
-/obj/structure/flora/bush/ferny/style_random,
-/obj/structure/flora/bush/fullgrass/style_random,
 /obj/machinery/light/floor,
 /obj/structure/flora/bush/ferny/style_random,
 /obj/structure/flora/bush/fullgrass/style_random,
@@ -82416,9 +82408,6 @@
 /turf/open/floor/iron/textured,
 /area/station/cargo/storage)
 "vVr" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
