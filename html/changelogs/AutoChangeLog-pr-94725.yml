@@ -1,5 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes:
-  - bugfix: "Removing the pen from a clipboard is now done by right-clicking, instead of alt-clicking which conflicted with restyling."
-  - bugfix: "Removing the pen from a clipboard now puts it in your hand instead of on the floor."

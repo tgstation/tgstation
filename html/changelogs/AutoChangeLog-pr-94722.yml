@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "Added a preference to adjust emissive bloom size"
