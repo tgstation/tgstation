@@ -98,7 +98,7 @@
 			. += span_info("Marks of stress and a faint whiff of medicinal alcohol, imply that this is the liver of a <em>medical worker</em>.")
 		if(HAS_TRAIT(src, TRAIT_ENGINEER_METABOLISM))
 			. += span_info("Signs of radiation exposure and space adaption, implies that this is the liver of an <em>engineer</em>.")
-		if(HAS_TRAIT(src, TRAIT_BALLMER_SCIENTIST))
+		if(HAS_TRAIT(src, TRAIT_SCIENTIST_LIVER))
 			. += span_info("Strange glowing residues, sprinklings of congealed solid plasma, and what seem to be tumors indicate this is the radiated liver of a <em>scientist</em>.")
 		if(HAS_TRAIT(src, TRAIT_MAINTENANCE_METABOLISM))
 			. += span_info("A half-digested rat's tail (somehow), disgusting sludge, and the faint smell of Grey Bull imply this is what remains of an <em>assistant</em>'s liver.")

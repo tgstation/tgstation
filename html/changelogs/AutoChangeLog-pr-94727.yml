@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Adds \"reset dislocation\" operation, which is a surgical analog to resetting a dislocated limb. Same tools, same steps, but if you go through the effort of doing it surgically, it's faster and safer."
+  - rscadd: "All wound surgeries now gain a speed bonus from being wound scanned."

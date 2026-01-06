@@ -91,8 +91,10 @@
 
 /obj/item/clothing/head/wizard/magus
 	name = "\improper Magus helm"
-	desc = "A mysterious helmet that hums with an unearthly power."
 	icon_state = "magus"
+	desc = "A mysterious helmet that hums with an unearthly power."
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	inhand_icon_state = null
 	dog_fashion = null
 
@@ -176,12 +178,14 @@
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusblue"
 	inhand_icon_state = null
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/suit/wizrobe/magusred
 	name = "\improper Magus robe"
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusred"
 	inhand_icon_state = null
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/suit/wizrobe/santa
 	name = "Santa's suit"

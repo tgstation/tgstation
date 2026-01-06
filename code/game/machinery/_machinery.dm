@@ -119,7 +119,7 @@
 	var/is_operational = TRUE
 	///list of all the parts used to build it, if made from certain kinds of frames.
 	var/list/component_parts = null
-	///Is the machines maintainence panel open.
+	///Is the machines maintenance panel open.
 	var/panel_open = FALSE
 	///Is the machine open or closed
 	var/state_open = FALSE

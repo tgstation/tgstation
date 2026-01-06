@@ -1,0 +1,4 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - bugfix: "makes sure slimes and other animals immediately cease attacking their tamers"

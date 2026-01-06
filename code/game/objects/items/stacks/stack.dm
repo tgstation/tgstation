@@ -125,10 +125,16 @@
 	mats_per_unit = null
 	return ..()
 
+/obj/item/stack/update_name(updates)
+	. = ..()
+	maptext = (ismob(loc) || loc?.atom_storage) ? MAPTEXT("<font color='white'>[amount]</font>") : ""
+
 /obj/item/stack/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	if((!throwing || throwing.target_turf == loc) && old_loc != loc && (flags_1 & INITIALIZED_1))
 		merge_with_loc(merge_into_ourselves = !isnull(pulledby))
+	if(ismob(loc) || ismob(old_loc) || loc?.atom_storage || old_loc?.atom_storage)
+		update_appearance(UPDATE_NAME)
 
 ///Called to lazily update the materials of the item whenever the used or if more is added
 /obj/item/stack/proc/update_custom_materials()
