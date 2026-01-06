@@ -336,7 +336,7 @@
 			trauma_data["full_name"] = quirk_type::name
 			trauma_data["scan_name"] = LOWER_TEXT(quirk_type::name)
 			trauma_data["desc"] = quirk_type::medical_record_text
-			trauma_data["symptoms"] = "A persistent behavioral or psychological pattern that is considered to be unusual or maladaptive."
+			trauma_data["symptoms"] = quirk_type::medical_symptom_text
 			trauma_data["id"] = quirk_type
 			trauma_info += list(trauma_data)
 
@@ -357,6 +357,15 @@
 			trauma_data["symptoms"] = /datum/brain_trauma/mild/phobia::symptoms
 			trauma_data["id"] = "[/datum/brain_trauma/mild/phobia]/[phobia_type]"
 			trauma_info += list(trauma_data)
+
+		// validate
+		for(var/list/trauma_data as anything in trauma_info)
+			if(isnull(trauma_data["desc"]))
+				trauma_data["desc"] = "No description recorded - this is an error. Report this lack of research."
+				stack_trace("[type] - [trauma_data["id"]] lacks a description!")
+			if(isnull(trauma_data["symptoms"]))
+				trauma_data["symptoms"] = "No symptoms recorded - this is an error. Report this lack of research."
+				stack_trace("[type] - [trauma_data["id"]] lacks symptom information!")
 
 	data["traumas"] = trauma_info
 	return data

@@ -4,7 +4,7 @@
 	icon = FA_ICON_LIGHTBULB
 	value = -3
 	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
-	medical_record_text = "Experiences panic attacks and shortness of breath when in dark environments. \
+	medical_symptom_text = "Experiences panic attacks and shortness of breath when in dark environments. \
 		Medication such as Psicodine may lessen the severity of the reaction."
 	hardcore_value = 5
 	mail_goodies = list(/obj/effect/spawner/random/engineering/flashlight)
