@@ -1,4 +1,9 @@
-
+/**
+ * tgui state: book_state
+ *
+ * A state specifically intended for book or book-like objects.
+ * Checks for state related to being able to read.
+ */
 GLOBAL_DATUM_INIT(book_state, /datum/ui_state/book, new)
 
 /datum/ui_state/book/can_use_topic(src_object, mob/user)
