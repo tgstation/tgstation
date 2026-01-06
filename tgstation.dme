@@ -1867,7 +1867,6 @@
 #include "code\datums\quirks\negative_quirks\anosmia.dm"
 #include "code\datums\quirks\negative_quirks\asthma.dm"
 #include "code\datums\quirks\negative_quirks\bad_back.dm"
-#include "code\datums\quirks\negative_quirks\big_hands.dm"
 #include "code\datums\quirks\negative_quirks\blindness.dm"
 #include "code\datums\quirks\negative_quirks\blood_deficiency.dm"
 #include "code\datums\quirks\negative_quirks\body_purist.dm"
