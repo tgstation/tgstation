@@ -11,22 +11,37 @@
 const FPS = 60;
 const FRAME_DURATION = 1000 / FPS;
 
-// True if Performance API is supported
-const supportsPerf = !!window.performance?.now;
-// High precision markers
-const hpMarkersByName: Record<string, number> = {};
-// Low precision markers
-const lpMarkersByName: Record<string, number> = {};
+const supportsUserTiming =
+  typeof globalThis.performance?.mark === 'function' &&
+  typeof globalThis.performance?.measure === 'function' &&
+  typeof globalThis.performance?.getEntriesByName === 'function' &&
+  typeof globalThis.performance?.clearMarks === 'function' &&
+  typeof globalThis.performance?.clearMeasures === 'function';
+
+// Internal fallback markers (also used for log formatting).
+const markersByName: Record<string, number> = {};
+
+const now = (): number =>
+  typeof globalThis.performance?.now === 'function' ? performance.now() : Date.now();
 
 /**
  * Marks a certain spot in the code for later measurements.
  */
 function mark(name: string, timestamp?: number): void {
   if (process.env.NODE_ENV !== 'production') {
-    if (supportsPerf && !timestamp) {
-      hpMarkersByName[name] = performance.now();
+    // Always keep our own marker so `perf.measure()` can return a formatted string.
+    markersByName[name] = timestamp ?? now();
+
+    // Also emit a real User Timing mark so it shows up in Chromium DevTools.
+    if (supportsUserTiming) {
+      try {
+        // Keep only the most recent mark with this name.
+        performance.clearMarks(name);
+        performance.mark(name);
+      } catch {
+        // Ignore User Timing errors (e.g. invalid name constraints).
+      }
     }
-    lpMarkersByName[name] = timestamp || Date.now();
   }
 }
 
@@ -38,13 +53,26 @@ function mark(name: string, timestamp?: number): void {
 function measure(markerNameA: string, markerNameB: string): string | undefined {
   if (process.env.NODE_ENV === 'production') return;
 
-  let markerA = hpMarkersByName[markerNameA];
-  let markerB = hpMarkersByName[markerNameB];
+  if (supportsUserTiming) {
+    const measureName = `${markerNameA}→${markerNameB}`;
+    try {
+      performance.clearMeasures(measureName);
+      performance.measure(measureName, markerNameA, markerNameB);
 
-  if (!markerA || !markerB) {
-    markerA = lpMarkersByName[markerNameA];
-    markerB = lpMarkersByName[markerNameB];
+      const entries = performance.getEntriesByName(measureName, 'measure');
+      const entry = entries[entries.length - 1];
+      if (entry) {
+        return formatDuration(entry.duration);
+      }
+    } catch {
+      // Ignore if marks don't exist in User Timing; internal fallback still works.
+    }
   }
+
+  const markerA = markersByName[markerNameA];
+  const markerB = markersByName[markerNameB];
+
+  if (markerA === undefined || markerB === undefined) return;
 
   const duration = Math.abs(markerB - markerA);
 
