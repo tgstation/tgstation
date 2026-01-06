@@ -321,11 +321,32 @@
 				continue
 
 			var/list/trauma_data = list()
-			trauma_data["full_name"] = trauma_type.name
-			trauma_data["scan_name"] = trauma_type.scan_desc
-			trauma_data["desc"] = trauma_type.desc
-			trauma_data["symptoms"] = trauma_type.symptoms
+			trauma_data["full_name"] = trauma_type::name
+			trauma_data["scan_name"] = trauma_type::scan_desc
+			trauma_data["desc"] = trauma_type::desc
+			trauma_data["symptoms"] = trauma_type::symptoms
 			trauma_data["id"] = trauma_type
+			trauma_info += list(trauma_data)
+
+		for(var/datum/quirk/quirk_type as anything in valid_subtypesof(/datum/quirk))
+			if(!(quirk_type::quirk_flags & QUIRK_TRAUMALIKE))
+				continue
+
+			var/list/trauma_data = list()
+			trauma_data["full_name"] = quirk_type::name
+			trauma_data["scan_name"] = LOWER_TEXT(quirk_type::name)
+			trauma_data["desc"] = quirk_type::medical_record_text
+			trauma_data["symptoms"] = "A persistent behavioral or psychological pattern that is considered to be unusual or maladaptive."
+			trauma_data["id"] = quirk_type
+			trauma_info += list(trauma_data)
+
+		for(var/datum/addiction/addiction_type as anything in valid_subtypesof(/datum/addiction))
+			var/list/trauma_data = list()
+			trauma_data["full_name"] = "[capitalize(addiction_type::name)] Addiction"
+			trauma_data["scan_name"] = "[addiction_type::name] addiction"
+			trauma_data["desc"] = addiction_type::description
+			trauma_data["symptoms"] = addiction_type::symptoms
+			trauma_data["id"] = addiction_type
 			trauma_info += list(trauma_data)
 
 		for(var/phobia_type, phobia_name in GLOB.phobia_types)

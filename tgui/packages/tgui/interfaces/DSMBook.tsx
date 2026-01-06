@@ -1,26 +1,25 @@
-import { capitalize } from 'es-toolkit';
 import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Box, Button, Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
+import deforest_logo from '../styles/assets/bg-deforest.svg';
 
 type Trauma = {
-  full_name: string;
-  scan_name: string;
-  desc: string;
-  symptoms: string;
-  id: string;
-  page: number;
+  full_name: string; // full "medical" name
+  scan_name: string; // shortened name shown on scan
+  desc: string; // short description of trauma effect
+  symptoms: string; // longer description of how it affects people
+  id: string; // typepath
 };
 
-type TraumaPage = Trauma & { page: number };
+type TraumaPage = Trauma & {
+  page: number; // page to put the trauma on
+};
 
 type TOCEntry = {
-  full_name: string;
-  scan_name: string;
-  id: string;
-  displayed_page: number;
-  entry_page: number;
+  trauma: Trauma;
+  displayed_page: number; // page to put the toc entry on
+  entry_page: number; // page the trauma is on
 };
 
 type TraumaData = {
@@ -45,9 +44,7 @@ function getTOCWithPages(traumas: Trauma[], windowheight: number) {
     }
 
     const pageentry: TOCEntry = {
-      full_name: trauma.full_name,
-      scan_name: trauma.scan_name,
-      id: trauma.id,
+      trauma: trauma,
       displayed_page: current_page,
       entry_page: -1, // to be filled later
     };
@@ -73,10 +70,10 @@ function getTraumasWithPages(
   for (const trauma of traumas) {
     // estimate height of trauma entry
     const title_height = 40;
-    const subttitle_height = 20;
+    const subttitle_height = checkIdenticalTraumaNames(trauma) ? 0 : 20;
     const desc_height = Math.ceil(trauma.desc.length / 50) * 12.5;
     const symptoms_height = Math.ceil(trauma.symptoms.length / 50) * 12.5;
-    const extra_spacing = 30;
+    const extra_spacing = 40;
 
     const estimated_height =
       title_height +
@@ -104,7 +101,15 @@ function getTraumasWithPages(
   return pages;
 }
 
-const DSMEntryComponent = (props: { trauma: Trauma }) => {
+function checkIdenticalTraumaNames(traumas: Trauma) {
+  return traumas.full_name.toLowerCase() === traumas.scan_name.toLowerCase();
+}
+
+type DSMEntryComponentProps = {
+  trauma: TraumaPage;
+};
+
+const DSMEntryComponent = (props: DSMEntryComponentProps) => {
   const { trauma } = props;
 
   return (
@@ -113,9 +118,9 @@ const DSMEntryComponent = (props: { trauma: Trauma }) => {
       title={
         <Stack vertical>
           <Stack.Item>{trauma.full_name}</Stack.Item>
-          <Stack.Item fontSize="10px">
-            ...aka "{capitalize(trauma.scan_name)}"
-          </Stack.Item>
+          {!checkIdenticalTraumaNames(trauma) && (
+            <Stack.Item fontSize="10px">...aka "{trauma.scan_name}"</Stack.Item>
+          )}
         </Stack>
       }
     >
@@ -149,19 +154,21 @@ const TOCEntryComponent = (props: TocEntryComponentProps) => {
     <Stack textAlign="center" fontSize="13px">
       <Stack.Item>
         <Stack align="end">
-          <Stack.Item>{entry.full_name}</Stack.Item>
-          <Stack.Item
-            fontSize="10px"
-            italic
-            maxWidth={`${(50 - entry.full_name.length) * 5}px`}
-            style={{
-              overflow: 'hidden',
-              whiteSpace: 'nowrap',
-              textOverflow: 'ellipsis',
-            }}
-          >
-            ({entry.scan_name})
-          </Stack.Item>
+          <Stack.Item>{entry.trauma.full_name}</Stack.Item>
+          {!checkIdenticalTraumaNames(entry.trauma) && (
+            <Stack.Item
+              fontSize="10px"
+              italic
+              maxWidth={`${(50 - entry.trauma.full_name.length) * 5}px`}
+              style={{
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              ({entry.trauma.scan_name})
+            </Stack.Item>
+          )}
         </Stack>
       </Stack.Item>
       <Stack.Item grow>
@@ -259,7 +266,7 @@ const PageTurn = (props: PageTurnProps) => {
 
 type FakePageProps = {
   tocDisplay?: TOCEntry[];
-  traumaDisplay?: Trauma[];
+  traumaDisplay?: TraumaPage[];
   setPage: (page: number) => void;
 };
 
@@ -268,9 +275,9 @@ const FakePage = (props: FakePageProps) => {
 
   return (
     <Section fill>
-      <Stack vertical>
+      <Stack vertical fill>
         {tocDisplay?.map((entry) => (
-          <Stack.Item key={entry.id}>
+          <Stack.Item key={entry.trauma.id}>
             <TOCEntryComponent entry={entry} setPage={setPage} />
           </Stack.Item>
         ))}
@@ -279,6 +286,11 @@ const FakePage = (props: FakePageProps) => {
             <DSMEntryComponent trauma={trauma} />
           </Stack.Item>
         ))}
+        {!tocDisplay?.length && !traumaDisplay?.length && (
+          <Stack.Item textAlign="center" color="label" grow mt={13}>
+            <img src={deforest_logo} width={256} height={256} />
+          </Stack.Item>
+        )}
       </Stack>
     </Section>
   );
@@ -286,7 +298,7 @@ const FakePage = (props: FakePageProps) => {
 
 type FakePagesProps = {
   tocDisplay?: TOCEntry[];
-  traumaDisplay?: Trauma[];
+  traumaDisplay?: TraumaPage[];
   page: number;
   setPage: (page: number) => void;
 };
@@ -344,7 +356,7 @@ export const DSMBook = () => {
 
   // if final toc page is odd, make it even, so traumas start on the left
   if (finalTOCPage % 2 !== 0) {
-    finalTOCPage += 2;
+    finalTOCPage += 1;
   }
 
   const allTraumaWithPages = getTraumasWithPages(
@@ -356,7 +368,7 @@ export const DSMBook = () => {
   // determine final page number for each TOC entry
   for (const trauma of traumas) {
     const traumaPage = allTraumaWithPages.find((t) => t.id === trauma.id);
-    const tocEntry = allTOCWithPages.find((e) => e.id === trauma.id);
+    const tocEntry = allTOCWithPages.find((e) => e.trauma.id === trauma.id);
     if (traumaPage && tocEntry) {
       tocEntry.entry_page = traumaPage.page;
     }

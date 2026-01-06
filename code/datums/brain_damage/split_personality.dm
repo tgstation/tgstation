@@ -197,6 +197,7 @@
 	gain_text = ""
 	lose_text = span_notice("You are free of your brainwashing.")
 	can_gain = FALSE
+	known_trauma = FALSE
 	var/codeword
 	var/objective
 
@@ -265,11 +266,13 @@
 	name = "Alcohol-Induced CNS Impairment"
 	desc = "Patient's CNS has been temporarily impaired by imbibed alcohol, blocking memory formation, and causing reduced cognition and stupefaction."
 	scan_desc = "alcohol-induced CNS impairment"
+	symptoms = "Excessive alcohol consumption leading to a temporary blackout, followed by confusion, disorientation, and an almost \
+		completely altered state of consciousness upon waking for several minutes - during which the individual may exhibit \
+		impaired fine motor skills, an incredible resistance to pain, and a complete lack of memory."
 	gain_text = span_warning("Crap, that was one drink too many. You black out...")
 	lose_text = "You wake up very, very confused and hungover. All you can remember is drinking a lot of alcohol... what happened?"
 	poll_role = "blacked out drunkard"
 	random_gain = FALSE
-	known_trauma = FALSE
 	poll_time = 10 SECONDS
 	/// Duration of effect, tracked in seconds, not deciseconds. qdels when reaching 0.
 	var/duration_in_seconds = 180
