@@ -35,7 +35,7 @@ function getTOCWithPages(traumas: Trauma[], windowheight: number) {
   let current_page_height = 0;
 
   for (const trauma of traumas) {
-    // estimate height of trauma entry
+    // estimate height of toc entry
     const estimated_height = 30;
 
     if (current_page_height + estimated_height > page_height) {
@@ -100,9 +100,6 @@ function getTraumasWithPages(
 
     current_page_height += estimated_height;
   }
-
-  // sort alpha
-  pages.sort((a, b) => (a.full_name > b.full_name ? 1 : -1));
 
   return pages;
 }
@@ -331,6 +328,7 @@ export const DSMBook = () => {
   const { data } = useBackend<TraumaData>();
   const { traumas } = data;
 
+  // abc it up
   const traumasSorted = [...traumas].sort((a, b) =>
     a.full_name > b.full_name ? 1 : -1,
   );
