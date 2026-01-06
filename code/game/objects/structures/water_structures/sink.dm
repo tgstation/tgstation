@@ -33,24 +33,32 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 
 	register_context()
 
-	if(mapload)
-		find_and_mount_on_atom()
+	if(mapload && !find_and_mount_on_atom(mark_for_late_init = TRUE))
+		return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/sink/proc/drop_materials()
+/obj/structure/sink/LateInitialize()
+	find_and_mount_on_atom(late_init = TRUE)
+
+/obj/structure/sink/atom_deconstruct(dissambled = TRUE)
 	if(buildstacktype)
 		new buildstacktype(loc,buildstackamount)
 	else
 		for(var/i in custom_materials)
 			var/datum/material/M = i
 			new M.sheet_type(loc, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
-
-/obj/structure/sink/atom_deconstruct(dissambled = TRUE)
-	drop_materials()
 	if(has_water_reclaimer)
 		new /obj/item/stock_parts/water_recycler(drop_location())
 
 /obj/structure/sink/get_turfs_to_mount_on()
 	return list(get_step(src, REVERSE_DIR(dir)))
+
+/obj/structure/sink/get_moutable_objects()
+	var/static/list/sink_structures = null
+	if(isnull(sink_structures))
+		sink_structures = list()
+		sink_structures += ..()
+		sink_structures += /obj/machinery/smartfridge //medbay sometimes have sinks attached to fridges
+	return sink_structures
 
 /obj/structure/sink/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = NONE
