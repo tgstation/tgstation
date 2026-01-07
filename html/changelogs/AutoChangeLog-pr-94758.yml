@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "When you spawn as a plasmaman ninja, you will also have some breathable air in your pocket"
+  - qol: "When you spawn as a ghost role plasmaman your internals should be enabled"
