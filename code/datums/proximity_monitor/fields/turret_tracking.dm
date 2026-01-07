@@ -53,7 +53,6 @@
 	LAZYADD(tracking, thing)
 	RegisterSignal(thing, COMSIG_QDELETING, PROC_REF(stop_tracking))
 	turret.check_should_process()
-	testing("interesting thing [thing] ([AREACOORD(thing)]) now being tracked by [turret] ([AREACOORD(turret)])")
 
 /datum/proximity_monitor/advanced/turret_tracking/proc/stop_tracking(atom/movable/thing)
 	SIGNAL_HANDLER
@@ -66,4 +65,3 @@
 		LAZYNULL(tracking)
 		var/obj/machinery/porta_turret/turret = host
 		turret.check_should_process()
-		testing("interesting thing [thing] ([AREACOORD(thing)]) no longer being tracked by [turret] ([AREACOORD(turret)])")
