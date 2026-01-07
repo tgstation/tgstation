@@ -47,7 +47,7 @@
 	name = "Kitchen"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
 /turf/template_noop,
 /area/space/nearstation)
 "L" = (
@@ -58,7 +58,7 @@
 	name = "Kitchen"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
 /turf/template_noop,
 /area/space/nearstation)
 "S" = (
