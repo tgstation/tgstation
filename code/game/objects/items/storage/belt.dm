@@ -677,7 +677,7 @@
 	var/mob/living/target = cast_on
 	if(!target.mind)
 		to_chat(owner, span_warning("They are too unpredictable to counterattack!"))
-		//return FALSE
+		return FALSE
 	var/obj/item/storage/belt/sheath/oursheath = target
 	if(!length(oursheath.contents))
 		return FALSE
