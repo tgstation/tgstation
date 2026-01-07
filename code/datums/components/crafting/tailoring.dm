@@ -144,6 +144,7 @@
 	)
 	time = 15 SECONDS
 	category = CAT_EQUIPMENT
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY
 
 /datum/crafting_recipe/grass_gunsheath
 	name = "Gun Powered Grass Sabre Sheath"
@@ -156,6 +157,7 @@
 	)
 	time = 15 SECONDS
 	category = CAT_EQUIPMENT
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY
 
 /datum/crafting_recipe/hudsunsec
 	name = "Security HUDsunglasses"
