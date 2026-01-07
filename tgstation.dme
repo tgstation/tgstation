@@ -3522,7 +3522,6 @@
 #include "code\modules\antagonists\space_ninja\equipment\energy_katana.dm"
 #include "code\modules\antagonists\space_ninja\equipment\ninja_clothing.dm"
 #include "code\modules\antagonists\space_ninja\equipment\ninja_explosive.dm"
-#include "code\modules\antagonists\space_ninja\mod\modules_ninja.dm"
 #include "code\modules\antagonists\space_ninja\mod\ninjaDrainAct.dm"
 #include "code\modules\antagonists\spiders\spiders.dm"
 #include "code\modules\antagonists\spy\spy.dm"
