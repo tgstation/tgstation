@@ -6,12 +6,13 @@
 	icon_state = "viral"
 	mind_control_uses = 3
 	mind_control_duration = 1200
-	var/list/possible_reagents = list()
+	var/static/list/possible_reagents
 
 /obj/item/organ/heart/gland/chem/Initialize(mapload)
 	. = ..()
-	for(var/R in subtypesof(/datum/reagent/drug) + subtypesof(/datum/reagent/medicine) + typesof(/datum/reagent/toxin))
-		possible_reagents += R
+	if(isnull(possible_reagents))
+		for(var/R in subtypesof(/datum/reagent/drug) + subtypesof(/datum/reagent/medicine) + typesof(/datum/reagent/toxin))
+			possible_reagents += R
 
 /obj/item/organ/heart/gland/chem/activate()
 	var/chem_to_add = pick(possible_reagents)
