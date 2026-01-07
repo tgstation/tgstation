@@ -83,7 +83,6 @@
 	return pick(GLOB.nukeop_leader_start)
 
 /datum/antagonist/nukeop/create_team(datum/team/nuclear/new_team)
-	spawn_infiltrator()
 	if(!new_team)
 		// Find the first leader to join up
 		for(var/datum/antagonist/nukeop/leader/leader in GLOB.antagonists)
