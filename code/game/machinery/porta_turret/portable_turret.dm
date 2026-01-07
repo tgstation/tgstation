@@ -40,6 +40,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	armor_type = /datum/armor/machinery_porta_turret
 	base_icon_state = "standard"
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	subsystem_type = /datum/controller/subsystem/processing/turrets
+	processing_flags = START_PROCESSING_MANUALLY
 	// Same faction mobs will never be shot at, no matter the other settings
 	faction = list(FACTION_TURRET)
 
@@ -103,6 +105,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/datum/action/turret_toggle/toggle_action
 	/// Mob that is remotely controlling the turret
 	var/mob/remote_controller
+	/// Proximity tracker used to activate/deactivate the turret's processing.
+	var/datum/proximity_monitor/advanced/turret_tracking/tracker
 	/// While the cooldown is still going on, it cannot be re-enabled.
 	COOLDOWN_DECLARE(disabled_time)
 
@@ -125,6 +129,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
+	tracker = new(src, scan_range)
+	tracker.recalculate_field(full_recalc = TRUE) // manually call this so that our tracker var is set before we set anything up
 	setup()
 	if(has_cover)
 		cover = new /obj/machinery/porta_turret_cover(loc)
@@ -136,6 +142,16 @@ DEFINE_BITFIELD(turret_flags, list(
 		INVOKE_ASYNC(src, PROC_REF(popUp))
 
 	AddElement(/datum/element/hostile_machine)
+
+/obj/machinery/porta_turret/Destroy()
+	QDEL_NULL(tracker)
+	//deletes its own cover with it
+	QDEL_NULL(cover)
+	base = null
+	QDEL_NULL(stored_gun)
+	QDEL_NULL(spark_system)
+	remove_control()
+	return ..()
 
 ///Toggles the turret on or off depending on the value of the turn_on arg.
 /obj/machinery/porta_turret/proc/toggle_on(turn_on = TRUE)
@@ -162,10 +178,10 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/proc/check_should_process()
 	if (datum_flags & DF_ISPROCESSING)
-		if (!on || !anchored || (machine_stat & BROKEN) || !powered())
+		if (!on || !anchored || !LAZYLEN(tracker.tracking) || (machine_stat & BROKEN) || !powered())
 			end_processing()
 	else
-		if (on && anchored && !(machine_stat & BROKEN) && powered())
+		if (on && anchored && LAZYLEN(tracker.tracking) && !(machine_stat & BROKEN) && powered())
 			begin_processing()
 
 /obj/machinery/porta_turret/update_icon_state()
@@ -222,15 +238,6 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/proc/null_gun()
 	SIGNAL_HANDLER
 	stored_gun = null
-
-/obj/machinery/porta_turret/Destroy()
-	//deletes its own cover with it
-	QDEL_NULL(cover)
-	base = null
-	QDEL_NULL(stored_gun)
-	QDEL_NULL(spark_system)
-	remove_control()
-	return ..()
 
 /obj/machinery/porta_turret/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -610,10 +617,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	return threatcount
 
 /obj/machinery/porta_turret/proc/in_faction(mob/target)
-	for(var/faction1 in faction)
-		if(faction1 in target.faction)
-			return TRUE
-	return FALSE
+	return length(faction & target.faction)
 
 /obj/machinery/porta_turret/proc/target(atom/movable/target)
 	if(target)
