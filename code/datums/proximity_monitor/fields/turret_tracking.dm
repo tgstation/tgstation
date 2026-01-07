@@ -48,7 +48,7 @@
 	if(thing in tracking) // check this last
 		return
 	var/obj/machinery/porta_turret/turret = host
-	if(isliving(thing) && turret.in_faction(thing))
+	if(isliving(thing) && turret.in_faction(thing)) // hopefully no weird edge-cases where something's faction changes while its in range... right???
 		return
 	LAZYADD(tracking, thing)
 	RegisterSignal(thing, COMSIG_QDELETING, PROC_REF(stop_tracking))
