@@ -794,7 +794,7 @@
 
 	if(IS_ROBOTIC_LIMB(worthless_hand))
 		holder.visible_message(span_danger("[holder]'s arm is mutilated as they misfire [p_their(holder)] sheathed blade!"),
-										span_danger("Your arm is mutilated as you fail to safely fire your blade!"))
+								span_danger("Your arm is mutilated as you fail to safely fire your blade!"))
 		holder.apply_damage(
 			damage = 50,
 			damagetype = BRUTE,
@@ -806,7 +806,7 @@
 
 	worthless_hand.dismember(BRUTE, FALSE, WOUND_BLUNT)
 	holder.visible_message(span_danger("[holder]'s arm is violently torn off as they misfire [p_their(holder)] sheathed blade!"),
-									span_danger("Your arm is torn off as you fail to safely fire your blade!"))
+							span_danger("Your arm is torn off as you fail to safely fire your blade!"))
 
 #undef COUNTERMULTIPLIER
 
