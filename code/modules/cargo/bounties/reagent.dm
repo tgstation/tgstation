@@ -29,7 +29,7 @@
 
 /datum/bounty/reagent/simple_drink/New()
 	// Don't worry about making this comprehensive. It doesn't matter if some drinks are skipped.
-	var/static/list/possible_reagents = list(\
+	var/list/possible_reagents = list(\
 		/datum/reagent/consumable/ethanol/antifreeze,\
 		/datum/reagent/consumable/ethanol/andalusia,\
 		/datum/reagent/consumable/tea/arnold_palmer,\
@@ -94,7 +94,7 @@
 
 /datum/bounty/reagent/complex_drink/New()
 	// Don't worry about making this comprehensive. It doesn't matter if some drinks are skipped.
-	var/static/list/possible_reagents = list(\
+	var/list/possible_reagents = list(\
 		/datum/reagent/consumable/ethanol/atomicbomb,\
 		/datum/reagent/consumable/ethanol/bacchus_blessing,\
 		/datum/reagent/consumable/ethanol/bastion_bourbon,\
@@ -132,7 +132,7 @@
 
 /datum/bounty/reagent/chemical_simple/New()
 	// Chemicals that can be mixed by a single skilled Chemist.
-	var/static/list/possible_reagents = list(\
+	var/list/possible_reagents = list(\
 		/datum/reagent/medicine/leporazine,\
 		/datum/reagent/medicine/mine_salve,\
 		/datum/reagent/medicine/c2/convermol,\
@@ -169,23 +169,24 @@
 
 /datum/bounty/reagent/chemical_complex/New()
 	// Reagents that require interaction with multiple departments or are a pain to mix. Lower required_volume since acquiring 30u of some is unrealistic
-	var/static/list/possible_reagents = list(\
-		/datum/reagent/medicine/pyroxadone,\
-		/datum/reagent/medicine/rezadone,\
-		/datum/reagent/medicine/regen_jelly,\
-		/datum/reagent/drug/bath_salts,\
-		/datum/reagent/hair_dye,\
-		/datum/reagent/consumable/honey,\
-		/datum/reagent/consumable/frostoil,\
-		/datum/reagent/toxin/slimejelly,\
-		/datum/reagent/teslium/energized_jelly,\
-		/datum/reagent/toxin/mimesbane,\
-		/datum/reagent/medicine/strange_reagent,\
-		/datum/reagent/nitroglycerin,\
-		/datum/reagent/medicine/rezadone,\
-		/datum/reagent/toxin/zombiepowder,\
-		/datum/reagent/toxin/ghoulpowder,\
-		/datum/reagent/mulligan)
+	var/list/possible_reagents = list(
+		/datum/reagent/medicine/pyroxadone,
+		/datum/reagent/medicine/rezadone,
+		/datum/reagent/medicine/regen_jelly,
+		/datum/reagent/drug/bath_salts,
+		/datum/reagent/hair_dye,
+		/datum/reagent/consumable/honey,
+		/datum/reagent/consumable/frostoil,
+		/datum/reagent/toxin/slimejelly,
+		/datum/reagent/teslium/energized_jelly,
+		/datum/reagent/toxin/mimesbane,
+		/datum/reagent/medicine/strange_reagent,
+		/datum/reagent/nitroglycerin,
+		/datum/reagent/medicine/rezadone,
+		/datum/reagent/toxin/zombiepowder,
+		/datum/reagent/toxin/ghoulpowder,
+		/datum/reagent/mulligan,
+	)
 
 	var/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
@@ -227,7 +228,7 @@
 
 /datum/bounty/pill/simple_pill/New()
 	//reagent that are possible to be chem factory'd
-	var/static/list/possible_reagents = list(\
+	var/list/possible_reagents = list(\
 		/datum/reagent/medicine/spaceacillin,\
 		/datum/reagent/medicine/c2/synthflesh,\
 		/datum/reagent/medicine/pen_acid,\
