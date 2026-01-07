@@ -170,19 +170,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(tool, /obj/item/melee/baton/security))
-		var/obj/item/melee/baton/security/baton = tool
-		if(baton.cell?.charge && baton.active)
-			flick("baton_active", src)
-			user.Paralyze(baton.knockdown_time)
-			user.set_stutter(baton.knockdown_time)
-			baton.cell.use(baton.cell_hit_cost)
-			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"), \
-								span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
-			playsound(src, baton.on_stun_sound, 50, TRUE)
-			return ITEM_INTERACT_SUCCESS
-		return ITEM_INTERACT_FAILURE
-
 	if(istype(tool, /obj/item/stock_parts/water_recycler))
 		if(has_water_reclaimer)
 			to_chat(user, span_warning("There is already has a water recycler installed."))
@@ -206,13 +193,27 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	if(!user.combat_mode || (tool.item_flags & NOBLUDGEON))
 		to_chat(user, span_notice("You start washing [tool]..."))
 		playsound(src, 'sound/machines/sink-faucet.ogg', 50)
+
+		var/obj/item/melee/baton/security/baton = tool
+		if(istype(baton) && baton.active && baton.cell?.use(baton.cell_hit_cost, force = TRUE))
+			flick("baton_active", src)
+			user.Paralyze(baton.knockdown_time)
+			user.set_stutter(baton.knockdown_time)
+			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"), \
+								span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
+			playsound(src, baton.on_stun_sound, 50, TRUE)
+			return ITEM_INTERACT_FAILURE
+
 		busy = TRUE
 		if(!do_after(user, 4 SECONDS, target = src))
 			busy = FALSE
 			return ITEM_INTERACT_FAILURE
 		busy = FALSE
 		tool.wash(CLEAN_WASH)
-		reagents.expose(tool, TOUCH, 5 / max(reagents.total_volume, 5))
+
+		var/remove = 5 / max(reagents.total_volume, 5)
+		reagents.expose(tool, TOUCH, remove)
+		reagents.remove_all(remove, TRUE)
 		user.visible_message(span_notice("[user] washes [tool] using [src]."), \
 							span_notice("You wash [tool] using [src]."))
 		return ITEM_INTERACT_SUCCESS
