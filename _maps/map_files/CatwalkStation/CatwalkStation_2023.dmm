@@ -11146,6 +11146,14 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
+"cXw" = (
+/obj/structure/window{
+	dir = 4
+	},
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
+/area/station/hallway/primary/central)
 "cXF" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -23839,9 +23847,7 @@
 /turf/open/floor/plating,
 /area/station/service/kitchen/abandoned)
 "gwK" = (
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/engine/hull/air,
 /area/station/security/courtroom)
 "gwN" = (
@@ -60658,9 +60664,7 @@
 /area/station/engineering/atmos/upper)
 "qly" = (
 /obj/machinery/camera/autoname/directional/north,
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/engine/hull/air,
 /area/station/security/courtroom)
 "qlF" = (
@@ -121347,7 +121351,7 @@ dnH
 khi
 chO
 qiH
-idO
+cXw
 iLm
 vXt
 qKV
