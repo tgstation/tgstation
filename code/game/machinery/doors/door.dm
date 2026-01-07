@@ -387,7 +387,6 @@
 
 	if(do_after(opener, do_after_time, target = src))
 		SSblackbox.record_feedback("tally", "unrestricted_airlock_usage", 1, "open success ([type])") // no need to tally failures as we can assume it as long as we have this + the total
-		REMOVE_TRAIT(src, TRAIT_UNRESTRICTED_AIRLOCK_OPENING, INNATE_TRAIT)
 		return TRUE
 
 	deregister_pressure_push_signal(opener) // if you fail the do_after early then you lose your pressure immunity, womp.
