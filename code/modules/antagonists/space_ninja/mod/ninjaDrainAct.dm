@@ -1,20 +1,3 @@
-/// Minimum amount of energy we can drain in a single drain action
-#define NINJA_MIN_DRAIN (0.2 * STANDARD_CELL_CHARGE)
-/// Maximum amount of energy we can drain in a single drain action
-#define NINJA_MAX_DRAIN (0.4 * STANDARD_CELL_CHARGE)
-
-/**
- * Atom level proc for space ninja's glove interactions.
- *
- * Proc which only occurs when space ninja uses his gloves on an atom.
- * Does nothing by default, but effects will vary.
- * Arguments:
- * * ninja_suit - The offending space ninja's suit.
- * * ninja - The human mob wearing the suit.
- * * hacking_module - The offending space ninja's gloves.
- */
-/atom/proc/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	return NONE
 
 //APC//
 /obj/machinery/power/apc/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
@@ -147,42 +130,6 @@
 	if(objective)
 		objective.completed = TRUE
 
-//SECURITY CONSOLE//
-/obj/machinery/computer/records/security/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!ninja || !hacking_module)
-		return NONE
-	if(!can_hack(ninja, feedback = TRUE))
-		return NONE
-
-	AI_notify_hack()
-	INVOKE_ASYNC(src, PROC_REF(ninjadrain_charge), ninja, hacking_module)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
-
-/obj/machinery/computer/records/security/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!do_after(ninja, 20 SECONDS, src, extra_checks = CALLBACK(src, PROC_REF(can_hack), ninja), hidden = TRUE))
-		return
-	for(var/datum/record/crew/target in GLOB.manifest.general)
-		target.wanted_status = WANTED_ARREST
-	update_all_security_huds()
-
-	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
-	if(!ninja_antag)
-		return
-	var/datum/objective/security_scramble/objective = locate() in ninja_antag.objectives
-	if(objective)
-		objective.completed = TRUE
-
-/obj/machinery/computer/records/security/proc/can_hack(mob/living/hacker, feedback = FALSE)
-	if(machine_stat & (NOPOWER|BROKEN))
-		if(feedback && hacker)
-			balloon_alert(hacker, "can't hack!")
-		return FALSE
-	var/area/console_area = get_area(src)
-	if(!console_area || !(console_area.area_flags & VALID_TERRITORY))
-		if(feedback && hacker)
-			balloon_alert(hacker, "signal too weak!")
-		return FALSE
-	return TRUE
 
 //COMMUNICATIONS CONSOLE//
 /obj/machinery/computer/communications/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
@@ -474,5 +421,4 @@
 /obj/machinery/door/firedoor/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	crack_open()
 
-#undef NINJA_MIN_DRAIN
-#undef NINJA_MAX_DRAIN
+

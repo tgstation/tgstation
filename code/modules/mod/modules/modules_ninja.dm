@@ -1,5 +1,10 @@
 //Ninja modules for MODsuits
 
+/// Minimum amount of energy we can drain in a single drain action
+#define NINJA_MIN_DRAIN (0.2 * STANDARD_CELL_CHARGE)
+/// Maximum amount of energy we can drain in a single drain action
+#define NINJA_MAX_DRAIN (0.4 * STANDARD_CELL_CHARGE)
+
 ///Cloaking - Lowers the user's visibility, can be interrupted by being touched or attacked.
 /obj/item/mod/module/stealth
 	name = "MOD prototype cloaking module"
@@ -188,6 +193,9 @@
 	var/communication_console_hack_success = FALSE
 	/// How many times the module has been used to force open doors.
 	var/door_hack_counter = 0
+
+/atom/proc/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	return NONE
 
 /obj/item/mod/module/hacker/on_part_activation()
 	RegisterSignal(mod.wearer, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(hack))
@@ -550,3 +558,6 @@
 		return
 	reagents.trans_to(affected_mob, reagents.total_volume)
 	to_chat(affected_mob, span_danger("You are beginning to feel the after-effect of the injection."))
+
+#undef NINJA_MIN_DRAIN
+#undef NINJA_MAX_DRAIN
