@@ -387,45 +387,6 @@
 	return TRUE
 
 /**
- * Ninja hacking, this sets everyone on arrest
- */
-/obj/machinery/computer/records/security/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!ninja || !hacking_module)
-		return NONE
-	if(!can_hack(ninja, feedback = TRUE))
-		return NONE
-
-	AI_notify_hack()
-	INVOKE_ASYNC(src, PROC_REF(ninjadrain_charge), ninja, hacking_module)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
-
-/obj/machinery/computer/records/security/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!do_after(ninja, 20 SECONDS, src, extra_checks = CALLBACK(src, PROC_REF(can_hack), ninja), hidden = TRUE))
-		return
-	for(var/datum/record/crew/target in GLOB.manifest.general)
-		target.wanted_status = WANTED_ARREST
-	update_all_security_huds()
-
-	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
-	if(!ninja_antag)
-		return
-	var/datum/objective/security_scramble/objective = locate() in ninja_antag.objectives
-	if(objective)
-		objective.completed = TRUE
-
-/obj/machinery/computer/records/security/proc/can_hack(mob/living/hacker, feedback = FALSE)
-	if(machine_stat & (NOPOWER|BROKEN))
-		if(feedback && hacker)
-			balloon_alert(hacker, "can't hack!")
-		return FALSE
-	var/area/console_area = get_area(src)
-	if(!console_area || !(console_area.area_flags & VALID_TERRITORY))
-		if(feedback && hacker)
-			balloon_alert(hacker, "signal too weak!")
-		return FALSE
-	return TRUE
-
-/**
  * Security circuit component
  */
 /obj/item/circuit_component/arrest_console_data
