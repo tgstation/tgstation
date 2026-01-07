@@ -96,7 +96,7 @@
 	pike.victim = head
 	forceMove(pike)
 	pike.spear = src
-	pike.update_appearance(UPDATE_OVERLAYS)
+	pike.update_appearance(UPDATE_NAME | UPDATE_OVERLAYS)
 	return BRUTELOSS // Just in case they survived losing the head
 
 /obj/item/spear/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
