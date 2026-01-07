@@ -9,27 +9,23 @@
 	force = 7
 
 /obj/item/aicard/syndie/update_icon_state()
-	. = ..()
-	if(AI)
-		icon_state = "[base_icon_state][AI.stat == DEAD ? "-404" : "-full"]"
-	else
-		icon_state = base_icon_state
+	icon_state = base_icon_state
+	return ..()
 
 /obj/item/aicard/syndie/update_overlays()
-	. = ..()
+	..()
 	. = list()
 
 	if(!AI)
 		return
 
-	if(AI.control_disabled)
-		var/indicator_state = "[base_icon_state]-off"
-		. += mutable_appearance(icon, indicator_state)
-		. += emissive_appearance(icon, indicator_state, src, alpha = src.alpha)
-	else
-		var/indicator_state = "[base_icon_state]-on"
-		. += mutable_appearance(icon, indicator_state)
-		. += emissive_appearance(icon, indicator_state, src, alpha = src.alpha)
+	var/face_state = "[base_icon_state][AI.stat == DEAD ? "-404" : "-full"]"
+	. += mutable_appearance(icon, face_state)
+	. += emissive_appearance(icon, face_state, src, alpha = src.alpha)
+
+	var/indicator_state = "[base_icon_state][AI.control_disabled ? "-off" : "-on"]"
+	. += mutable_appearance(icon, indicator_state)
+	. += emissive_appearance(icon, indicator_state, src, alpha = src.alpha)
 
 
 /obj/item/aicard/syndie/loaded
