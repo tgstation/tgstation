@@ -124,6 +124,55 @@
 	dispense_type = /obj/item/throwing_star/stamina/ninja
 	cooldown_time = 0.5 SECONDS
 
+/obj/item/throwing_star/stamina/ninja
+	name = "energy throwing star"
+	desc = "An evolution of the traditional steel shuriken, commonly used by Spider Clan initiates. \
+		When thrown or embedded, its internal energy emitter releases an electromagnetic pulse."
+	icon_state = "eshuriken"
+	force = 8
+	throwforce = 12
+	armour_penetration = 75
+	item_flags = DROPDEL
+	embed_type = /datum/embedding/throwing_star/stamina/energy
+	custom_materials = null
+	resistance_flags = FIRE_PROOF | ACID_PROOF | UNACIDABLE
+
+/obj/item/throwing_star/stamina/ninja/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_UNCATCHABLE, INNATE_TRAIT)
+
+/obj/item/throwing_star/stamina/ninja/on_thrown(mob/living/carbon/user, atom/target)
+	item_flags &= ~DROPDEL // Throwing = dropping = dropdel, not ideal. Remove it before that happens
+	return ..()
+
+/obj/item/throwing_star/stamina/ninja/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	item_flags |= DROPDEL // Just in case, re-apply drop del now
+	hit_atom.emp_act(EMP_HEAVY)
+	new /obj/effect/temp_visual/emp/pulse(get_turf(src))
+	new /obj/effect/temp_visual/emp(get_turf(hit_atom))
+	playsound(src, 'sound/effects/empulse.ogg', 60, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+	visible_message("[src] emits an electromagnetic pulse upon impact!")
+	if(isturf(loc)) // if we didn't embed in anything, go away
+		qdel(src)
+
+/datum/embedding/throwing_star/stamina/energy
+	COOLDOWN_DECLARE(emp_cd)
+
+/datum/embedding/throwing_star/stamina/energy/on_successful_embed(mob/living/carbon/victim, obj/item/bodypart/target_limb)
+	COOLDOWN_START(src, emp_cd, 6 SECONDS)
+	parent.item_flags |= DROPDEL // Just in case again, re-apply drop del now
+
+/datum/embedding/throwing_star/stamina/energy/process_effect(seconds_per_tick)
+	if(!COOLDOWN_FINISHED(src, emp_cd))
+		return
+
+	owner.emp_act(EMP_LIGHT)
+	COOLDOWN_START(src, emp_cd, 6 SECONDS)
+	playsound(owner, 'sound/effects/empulse.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	owner.show_message("[parent] flares brightly, releasing an electromagnetic pulse!", MSG_VISUAL)
+	new /obj/effect/temp_visual/emp(get_turf(owner))
+
 ///Hacker - This module hooks onto your right-clicks with empty hands and causes ninja actions.
 /obj/item/mod/module/hacker
 	name = "MOD hacker module"
@@ -387,6 +436,46 @@
 /obj/projectile/energy_net/Destroy()
 	QDEL_NULL(line)
 	return ..()
+
+/obj/structure/energy_net
+	name = "energy net"
+	desc = "It's a net made of green energy."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "energynet"
+	density = TRUE //Can't pass through.
+	anchored = TRUE //Can't drag/grab the net.
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
+	max_integrity = 60 //How much health it has.
+	can_buckle = TRUE
+	buckle_lying = 0
+	buckle_prevents_pull = TRUE
+
+/obj/structure/energy_net/Initialize(mapload)
+	. = ..()
+	var/image/underlay = image(icon, "energynet_underlay")
+	underlay.layer = BELOW_MOB_LAYER
+	SET_PLANE_EXPLICIT(underlay, GAME_PLANE, src)
+	add_overlay(underlay)
+	ADD_TRAIT(src, TRAIT_DANGEROUS_BUCKLE, INNATE_TRAIT)
+
+/obj/structure/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
+	if(damage_type == BRUTE || damage_type == BURN)
+		playsound(src, 'sound/items/weapons/slash.ogg', 80, TRUE)
+
+/obj/structure/energy_net/atom_destruction(damage_flag)
+	for(var/mob/recovered_mob as anything in buckled_mobs)
+		recovered_mob.visible_message(span_notice("[recovered_mob] is recovered from the energy net!"), span_notice("You are recovered from the energy net!"), span_hear("You hear a grunt."))
+	return ..()
+
+/obj/structure/energy_net/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
+
+/obj/structure/energy_net/user_buckle_mob(mob/living/buckled_mob, mob/user, check_loc = TRUE)
+	return//We only want our target to be buckled
+
+/obj/structure/energy_net/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
+	return//The net must be destroyed to free the target
 
 ///Adrenaline Boost - Stops all stuns the ninja is affected with, increases his speed.
 /obj/item/mod/module/adrenaline_boost
