@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "probability reagent affects scale correctly"
+  - balance: "reagent affects now scale with the volume of reagent metabolized meaning lower metabolization rates (from like cybernetic organs) yield lower effects & higher rates yield higher effects"
