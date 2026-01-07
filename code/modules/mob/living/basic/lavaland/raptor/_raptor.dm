@@ -176,7 +176,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		if (0.8 to 0.999)
 			. += span_notice("[p_They()] [p_have()] a few minor bruises and scratches.")
 
-/mob/living/basic/raptor/Life(seconds_per_tick, times_fired)
+/mob/living/basic/raptor/Life(seconds_per_tick)
 	. = ..()
 	if (growth_stage != RAPTOR_BABY || HAS_TRAIT(src, TRAIT_STASIS) || stat == DEAD)
 		return

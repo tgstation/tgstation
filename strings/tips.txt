@@ -74,6 +74,7 @@ As a Medical Doctor, better environments make for faster surgeries. Perform surg
 As a Medical Doctor, corpses placed inside a freezer or morgue tray will have their organs frozen preventing decay. If you don't have time to revive multiple dead bodies, transfer them to the morgue temporarily!
 As a Medical Doctor, corpses with the "...and their soul has departed" description no longer have a ghost attached to them - you can revive them, but no player will take control, making it largely pointless.
 As a Medical Doctor, critical slash wounds are one of the most dangerous conditions someone can have. Apply gauze, epipens, sutures, cauteries, whatever you can, as soon as possible!
+As a Medical Doctor, note that some species - such as Plasmamen or Jellypeople - lack flesh or bones. This will change how you perform surgery on them, allowing you to skip steps such as making incisions or sawing bones.
 As a Medical Doctor, operating computers contain instructions on how to complete every surgery you could dream of. If you are ever confused, use one to guide you through the process.
 As a Medical Doctor, treating Plasmamen is not impossible! Stasis machines will keep them from burning and suffocating while you perform necessary surgeries. If you don't have the luxury of one, you can use Salbutamol to prevent suffocation and keep them under a running shower to prevent fire.
 As a Medical Doctor, try messing with the Virology lab sometime! Viruses can range from healing powers so great that you can heal out of critical status, or diseases so dangerous they can kill the entire crew with airborne spontaneous combustion. Experiment!
@@ -86,8 +87,8 @@ As a Medical Doctor, you can deal with patients who have absurd amounts of wound
 As a Medical Doctor, you can extract implants by holding an empty implant case in your offhand while performing the extraction step.
 As a Medical Doctor, you can point your penlight at people to create a medical hologram. This lets them know that you're coming to treat them.
 As a Medical Doctor, you can surgically implant or extract things from people's chests. This can range from putting in a bomb to pulling out an alien larva.
+As a Medical Doctor, you only need surgical drapes when doing field surgery. Patients buckled to stasis beds or operating tables do not require drapes to be operated on.
 As a Medical Doctor, you must target the correct limb and not be in combat mode when trying to perform surgery on someone. Right clicking your patient will intentionally fail the surgery step.
-As a Medical doctor, note that some species - such as Plasmamen or Jellypeople - lack flesh or bones. This will change how you perform surgery on them, allowing you to skip steps such as making incisions or sawing bones.
 As a Monkey, you can crawl through air or scrubber vents by alt+left clicking them. You must drop everything you are wearing and holding to do this, however.
 As a Monkey, you can still wear a few human items, such as backpacks, gas masks and hats, and still have two free hands.
 As a Nuclear Operative, communication is key! Use ; to speak to your fellow operatives and coordinate an attack plan.

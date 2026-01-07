@@ -10,7 +10,7 @@
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_danger("You feel nervous.")
 
-/datum/mutation/nervousness/on_life(seconds_per_tick, times_fired)
+/datum/mutation/nervousness/on_life(seconds_per_tick)
 	if(SPT_PROB(5, seconds_per_tick))
 		owner.set_stutter_if_lower(20 SECONDS)
 
@@ -208,7 +208,7 @@
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = strings("elvis_replacement.json", "elvis"))
 
-/datum/mutation/elvis/on_life(seconds_per_tick, times_fired)
+/datum/mutation/elvis/on_life(seconds_per_tick)
 	switch(pick(1,2))
 		if(1)
 			if(SPT_PROB(7.5, seconds_per_tick))

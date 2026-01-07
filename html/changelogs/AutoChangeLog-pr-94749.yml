@@ -1,0 +1,4 @@
+author: "FalloutFalcon"
+delete-after: True
+changes:
+  - bugfix: "Brains, a few implants, glands, and all other organs now heal and fail as intended"

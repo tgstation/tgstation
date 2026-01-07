@@ -43,7 +43,7 @@
 		UnregisterSignal(source, COMSIG_LIVING_LIFE)
 	return ..()
 
-/datum/element/body_temp_sensitive/proc/on_life(datum/target, seconds_per_tick, times_fired)
+/datum/element/body_temp_sensitive/proc/on_life(datum/target, seconds_per_tick)
 	SIGNAL_HANDLER
 
 	var/mob/living/living_mob = target

@@ -59,7 +59,7 @@
 /// Checks if our mood can get worse by seeing another death (or better if we're weird like that)
 /datum/mood_event/conditional/see_death/proc/can_stack_effect(mob/dead_mob)
 	// if we're desensitized, don't stack unless it's a buff
-	if(HAS_TRAIT(owner, TRAIT_DESENSITIZED) && mood_change > 0)
+	if(HAS_MIND_TRAIT(owner, TRAIT_DESENSITIZED) && mood_change > 0)
 		return FALSE
 	// if we're seeing a spawned mob die, don't stack
 	if(HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB))
@@ -80,7 +80,7 @@
 	mood_change = 0
 
 /datum/mood_event/conditional/see_death/naive/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
-	return HAS_TRAIT(who, TRAIT_NAIVE) && !dusted && !gibbed
+	return HAS_MIND_TRAIT(who, TRAIT_NAIVE) && !dusted && !gibbed
 
 /datum/mood_event/conditional/see_death/naive/update_effect(mob/dead_mob)
 	description = "Have a good nap, [get_descriptor(dead_mob)]."
@@ -170,7 +170,7 @@
 	timeout = parent_type::timeout * 0.5
 
 /datum/mood_event/conditional/see_death/desensitized/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
-	return HAS_TRAIT(who, TRAIT_DESENSITIZED)
+	return HAS_MIND_TRAIT(who, TRAIT_DESENSITIZED)
 
 /datum/mood_event/conditional/see_death/desensitized/update_effect(mob/dead_mob, dusted, gibbed)
 	if(gibbed)

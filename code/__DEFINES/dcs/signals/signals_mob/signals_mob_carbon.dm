@@ -60,6 +60,15 @@
 /// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, special, dismembered)
 #define COMSIG_BODYPART_REMOVED "bodypart_removed"
 
+/// Sent to a limb when something *attempts* to change its surgery state (old_state, new_state, changed_states)
+#define COMSIG_BODYPART_UPDATING_SURGERY_STATE "bodypart_updating_surgery_state"
+
+/// Called from /obj/item/bodypart/proc/get_limb_icon(dropped, mob/living/carbon/update_on) : (list/limb_icons, dropped, mob/living/carbon/update_on)
+#define COMSIG_BODYPART_GET_LIMB_ICON "bodypart_get_limb_icon"
+
+/// Called from /obj/item/bodypart/proc/generate_icon_key() : (list/icon_keys)
+#define COMSIG_BODYPART_GENERATE_ICON_KEY "bodypart_generate_icon_key"
+
 ///from /item/organ/proc/Insert() (/obj/item/organ/)
 #define COMSIG_CARBON_GAIN_ORGAN "carbon_gain_organ"
 ///from /item/organ/proc/Remove() (/obj/item/organ/)
@@ -144,7 +153,7 @@
 ///from base of /mob/living/carbon/regenerate_limbs(): (excluded_limbs)
 #define COMSIG_CARBON_REGENERATE_LIMBS "living_regen_limbs"
 
-/// Sent from /mob/living/carbon/human/handle_blood(): (seconds_per_tick, times_fired)
+/// Sent from /mob/living/carbon/human/handle_blood(): (seconds_per_tick)
 #define COMSIG_HUMAN_ON_HANDLE_BLOOD "human_on_handle_blood"
 	/// Return to prevent all default blood handling
 	#define HANDLE_BLOOD_HANDLED (1<<0)

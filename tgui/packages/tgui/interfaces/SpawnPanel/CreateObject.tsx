@@ -20,13 +20,13 @@ import type {
   SpawnPanelPreferences,
 } from './types';
 
-interface SpawnPanelData {
+type SpawnPanelData = {
   icon: string;
   iconState: string;
   selected_object?: string;
   copied_type?: string;
   preferences?: SpawnPanelPreferences;
-}
+};
 
 interface SpawnPreferences {
   hide_icons: boolean;
@@ -202,7 +202,7 @@ export function CreateObject(props: CreateObjectProps) {
       if (!offsetStr.trim()) return [0, 0, 0];
 
       const parts = offsetStr.split(',').map((part) => {
-        return parseInt(part.trim());
+        return parseInt(part.trim(), 10);
       });
 
       while (parts.length < 3) {

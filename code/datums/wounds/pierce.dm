@@ -97,7 +97,7 @@
 		return BLOOD_FLOW_INCREASING
 	return BLOOD_FLOW_STEADY
 
-/datum/wound/pierce/bleed/handle_process(seconds_per_tick, times_fired)
+/datum/wound/pierce/bleed/handle_process(seconds_per_tick)
 	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
@@ -404,6 +404,7 @@
 	threshold_penalty = 15
 	status_effect_type = /datum/status_effect/wound/pierce/critical
 	scar_keyword = "piercecritical"
+	surgery_states = SURGERY_SKIN_CUT | SURGERY_VESSELS_UNCLAMPED // Bad enough to count
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR | CAN_BE_GRASPED)
 
 	simple_treat_text = "<b>Bandaging</b> the wound is of utmost importance, as is seeking direct medical attention - <b>Death</b> will ensue if treatment is delayed whatsoever, with lack of <b>oxygen</b> killing the patient, thus <b>Food, Iron, and saline solution</b> is always recommended after treatment. This wound will not naturally seal itself."

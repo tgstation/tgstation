@@ -25,11 +25,11 @@
 		exposed_mob.reagents.add_reagent(/datum/reagent/blob/cryogenic_poison, 0.3*reac_volume)
 	exposed_mob.apply_damage(0.2*reac_volume, BRUTE, wound_bonus=CANT_WOUND)
 
-/datum/reagent/blob/cryogenic_poison/on_mob_life(mob/living/carbon/exposed_mob, seconds_per_tick, times_fired)
+/datum/reagent/blob/cryogenic_poison/on_mob_life(mob/living/carbon/exposed_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = exposed_mob.adjust_brute_loss(0.5 * REM * seconds_per_tick, updating_health = FALSE)
-	need_mob_update += exposed_mob.adjust_fire_loss(0.5 * REM * seconds_per_tick, updating_health = FALSE)
-	need_mob_update += exposed_mob.adjust_tox_loss(0.5 * REM * seconds_per_tick, updating_health = FALSE)
+	need_mob_update = exposed_mob.adjust_brute_loss(0.25 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += exposed_mob.adjust_fire_loss(0.25 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += exposed_mob.adjust_tox_loss(0.25 * metabolization_ratio * seconds_per_tick, updating_health = FALSE)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH

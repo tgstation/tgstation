@@ -144,7 +144,7 @@
 	offerer.say("For you, it's on the mouse.")
 	taker.add_mood_event("it_was_on_the_mouse", /datum/mood_event/it_was_on_the_mouse)
 
-/obj/item/organ/tongue/rat/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/tongue/rat/on_life(seconds_per_tick)
 	. = ..()
 	if(prob(5))
 		owner.emote("squeaks")
