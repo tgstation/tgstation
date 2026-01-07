@@ -216,6 +216,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		tool.wash(CLEAN_WASH)
 		reagents.expose(tool, TOUCH, 5 / max(reagents.total_volume, 5))
 		reagents.remove_all(5)
+		START_PROCESSING(SSobj, src)
 		user.visible_message(span_notice("[user] washes [tool] using [src]."), \
 							span_notice("You wash [tool] using [src]."))
 		return ITEM_INTERACT_SUCCESS
