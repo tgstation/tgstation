@@ -37,29 +37,27 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ALLOW_DARK_PAINTS_1 (1<<8)
 /// Should this object be unpaintable?
 #define UNPAINTABLE_1 (1<<9)
-/// Is this atom on top of another atom, and as such has click priority?
-#define IS_ONTOP_1 (1<<10)
 /// Is this atom immune to being dusted by the supermatter?
-#define SUPERMATTER_IGNORES_1 (1<<11)
+#define SUPERMATTER_IGNORES_1 (1<<10)
 /// If a turf can be made dirty at roundstart. This is also used in areas.
-#define CAN_BE_DIRTY_1 (1<<12)
+#define CAN_BE_DIRTY_1 (1<<11)
 /// Should we use the initial icon for display? Mostly used by overlay only objects
-#define HTML_USE_INITAL_ICON_1 (1<<13)
+#define HTML_USE_INITAL_ICON_1 (1<<12)
 /// Can players recolor this in-game via vendors (and maybe more if support is added)?
-#define IS_PLAYER_COLORABLE_1 (1<<14)
+#define IS_PLAYER_COLORABLE_1 (1<<13)
 /// Whether or not this atom has contextual screentips when hovered OVER
-#define HAS_CONTEXTUAL_SCREENTIPS_1 (1<<15)
+#define HAS_CONTEXTUAL_SCREENTIPS_1 (1<<14)
 /// Whether or not this atom is storing contents for a disassociated storage object
-#define HAS_DISASSOCIATED_STORAGE_1 (1<<16)
+#define HAS_DISASSOCIATED_STORAGE_1 (1<<15)
 /// If this atom has experienced a decal element "init finished" sourced appearance update
 /// We use this to ensure stacked decals don't double up appearance updates for no reason
 /// Flag as an optimization, don't make this a trait without profiling
 /// Yes I know this is a stupid flag, no you can't take him from me
-#define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<17)
+#define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<16)
 /// This atom always returns its turf in get_turf_pixel instead of the turf from its offsets
-#define IGNORE_TURF_PIXEL_OFFSET_1 (1<<18)
+#define IGNORE_TURF_PIXEL_OFFSET_1 (1<<17)
 /// This atom does not need to generate its own preview icon for GAGS
-#define NO_NEW_GAGS_PREVIEW_1 (1<<19)
+#define NO_NEW_GAGS_PREVIEW_1 (1<<18)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
@@ -102,52 +100,55 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// This atom is a pseudo-floor that blocks map generation's checkPlaceAtom() from placing things like trees ontop of it.
 #define TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES (1<<8)
 
-
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
 #define VALID_TERRITORY (1<<0)
 /// If blobs can spawn there and if it counts towards their score.
 #define BLOBS_ALLOWED (1<<1)
-/// If mining tunnel generation is allowed in this area
-#define CAVES_ALLOWED (1<<2)
-/// If flora are allowed to spawn in this area randomly through tunnel generation
-#define FLORA_ALLOWED (1<<3)
-/// If mobs can be spawned by natural random generation
-#define MOB_SPAWN_ALLOWED (1<<4)
-/// If megafauna can be spawned by natural random generation
-#define MEGAFAUNA_SPAWN_ALLOWED (1<<5)
 /// Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
-#define NOTELEPORT (1<<6)
+#define NOTELEPORT (1<<2)
 /// Hides area from player Teleport function.
-#define HIDDEN_AREA (1<<7)
-/// If false, loading multiple maps with this area type will create multiple instances.
-#define UNIQUE_AREA (1<<8)
+#define HIDDEN_AREA (1<<3)
 /// If people are allowed to suicide in it. Mostly for OOC stuff like minigames
-#define BLOCK_SUICIDE (1<<9)
+#define BLOCK_SUICIDE (1<<5)
 /// If set, this area will be innately traversable by Xenobiology camera consoles.
-#define XENOBIOLOGY_COMPATIBLE (1<<10)
+#define XENOBIOLOGY_COMPATIBLE (1<<6)
 /// If blood cultists can draw runes or build structures on this AREA.
-#define CULT_PERMITTED (1<<11)
-/// If engravings are persistent in this area
-#define PERSISTENT_ENGRAVINGS (1<<12)
+#define CULT_PERMITTED (1<<7)
 /// Mobs that die in this area don't produce a dead chat message
-#define NO_DEATH_MESSAGE (1<<13)
+#define NO_DEATH_MESSAGE (1<<8)
 /// This area should have extra shielding from certain event effects
-#define EVENT_PROTECTED (1<<14)
+#define EVENT_PROTECTED (1<<9)
 /// This Area Doesn't have Flood or Bomb Admin Messages, but will still log
-#define QUIET_LOGS (1<<15)
-/// This area does not allow virtual entities to enter.
-#define VIRTUAL_SAFE_AREA (1<<16)
+#define QUIET_LOGS (1<<10)
 /// This area does not allow the Binary channel
-#define BINARY_JAMMING (1<<17)
+#define BINARY_JAMMING (1<<11)
 /// This area prevents Bag of Holding rifts from being opened.
-#define NO_BOH (1<<18)
+#define NO_BOH (1<<12)
 /// This area prevents fishing from removing unique/limited loot from sources that're also used outside of it.
-#define UNLIMITED_FISHING (1<<19)
+#define UNLIMITED_FISHING (1<<13)
 /// This area is prevented from having gravity (ie. space, nearstation, or outside solars)
-#define NO_GRAVITY (1<<20)
+#define NO_GRAVITY (1<<14)
 /// This area can be teleported in, but -only- to locations within that same area.
-#define LOCAL_TELEPORT (1<<21)
+#define LOCAL_TELEPORT (1<<15)
+
+////////////////Area Mapping Flags\\\\\\\\\\\\\\
+/// If false, loading multiple maps with this area type will create multiple instances.
+#define UNIQUE_AREA (1<<0)
+/// If mining tunnel generation is allowed in this area
+#define CAVES_ALLOWED (1<<1)
+/// If flora are allowed to spawn in this area randomly through tunnel generation
+#define FLORA_ALLOWED (1<<2)
+/// If mobs can be spawned by natural random generation
+#define MOB_SPAWN_ALLOWED (1<<3)
+/// If megafauna can be spawned by natural random generation
+#define MEGAFAUNA_SPAWN_ALLOWED (1<<4)
+/// If engravings are persistent in this area
+#define PERSISTENT_ENGRAVINGS (1<<5)
+/// This is a virtual/bitrunning area
+#define VIRTUAL_AREA (1<<6)
+/// This area does not allow virtual entities to enter.
+#define VIRTUAL_SAFE_AREA (1<<7)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
@@ -234,12 +235,14 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ZAP_FUSION_FLAGS ZAP_OBJ_DAMAGE | ZAP_MOB_DAMAGE | ZAP_MOB_STUN
 #define ZAP_SUPERMATTER_FLAGS ZAP_GENERATES_POWER
 
-///EMP will protect itself.
+///Object will protect itself.
 #define EMP_PROTECT_SELF (1<<0)
-///EMP will protect the contents from also being EMPed.
+///Object will protect its contents from being EMPed.
 #define EMP_PROTECT_CONTENTS (1<<1)
-///EMP will protect the wires.
+///Object will protect its wiring from being EMPed.
 #define EMP_PROTECT_WIRES (1<<2)
+///Don't indicate EMP protection in object examine text.
+#define EMP_NO_EXAMINE (1<<3)
 
 ///Protects against all EMP types.
 #define EMP_PROTECT_ALL (EMP_PROTECT_SELF | EMP_PROTECT_CONTENTS | EMP_PROTECT_WIRES)
@@ -336,3 +339,23 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMOTE_IMPORTANT (1<<2)
 /// Emote only prints to runechat, not to the chat window
 #define EMOTE_RUNECHAT (1<<3)
+
+// Flags for the empath component
+/// Can the empath see if a living mob has combat mode on
+#define EMPATH_SEE_COMBAT (1<<0)
+/// Can the empath see if living mob has over 10 oxyloss
+#define EMPATH_SEE_OXY (1<<1)
+/// Can the empath see if living mob has over 10 toxloss
+#define EMPATH_SEE_TOX (1<<2)
+/// Can the empath see if living mob's sanity is at distressed or below
+#define EMPATH_SEE_SANITY (1<<3)
+/// Can the empath see if living mob is blind
+#define EMPATH_SEE_BLIND (1<<4)
+/// Can the empath see if living mob is deaf
+#define EMPATH_SEE_DEAF (1<<5)
+/// Can the empath see if living mob's body temperature is too hot for their species
+#define EMPATH_SEE_HOT (1<<6)
+/// Can the empath see if living mob's body temperature is too low for their species
+#define EMPATH_SEE_COLD (1<<7)
+/// Can the empath see if living mob has the fundamentally evil trait
+#define EMPATH_SEE_EVIL (1<<8)

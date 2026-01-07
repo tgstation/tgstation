@@ -1,7 +1,11 @@
 /datum/component/orbiter
 	can_transfer = TRUE
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+	/// Assoc list of all orbiters -> their initial matrix
 	var/list/orbiter_list
+	/// Assoc list of orbiters -> their orbiting parameters
+	var/list/orbiter_params
+	/// Movement tracker used to check when our owner moves
 	var/datum/movement_detector/tracker
 
 //radius: range to orbit at, radius of the circle formed by orbiting (in pixels)
@@ -14,6 +18,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	orbiter_list = list()
+	orbiter_params = list()
 
 	begin_orbit(orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 
@@ -39,6 +44,7 @@
 	for(var/i in orbiter_list)
 		end_orbit(i)
 	orbiter_list = null
+	orbiter_params = null
 	return ..()
 
 /datum/component/orbiter/InheritComponent(datum/component/orbiter/newcomp, original, atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
@@ -50,11 +56,14 @@
 		var/atom/movable/incoming_orbiter = o
 		incoming_orbiter.orbiting = src
 		// It is important to transfer the signals so we don't get locked to the new orbiter component for all time
-		newcomp.UnregisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED)
+		newcomp.UnregisterSignal(incoming_orbiter, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, COMSIG_ATOM_AFTER_SHUTTLE_MOVE))
 		RegisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED, PROC_REF(orbiter_move_react))
+		RegisterSignal(incoming_orbiter, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, PROC_REF(orbiter_before_shuttle_move))
 
 	orbiter_list += newcomp.orbiter_list
+	orbiter_params += newcomp.orbiter_params
 	newcomp.orbiter_list = null
+	newcomp.orbiter_params = null
 
 /datum/component/orbiter/PostTransfer(datum/new_parent)
 	if(!isatom(new_parent) || isarea(new_parent) || !get_turf(new_parent))
@@ -67,11 +76,14 @@
 			orbiter.orbiting.end_orbit(orbiter, TRUE)
 		else
 			orbiter.orbiting.end_orbit(orbiter)
+
+	orbiter_params[orbiter] = args.Copy(2)
 	orbiter_list[orbiter] = TRUE
 	orbiter.orbiting = src
 
 	ADD_TRAIT(orbiter, TRAIT_NO_FLOATING_ANIM, ORBITING_TRAIT)
 	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED, PROC_REF(orbiter_move_react))
+	RegisterSignal(orbiter, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, PROC_REF(orbiter_before_shuttle_move))
 
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_BEGIN, orbiter)
 
@@ -103,15 +115,28 @@
 	orbiter.abstract_move(get_turf(parent))
 	to_chat(orbiter, span_notice("Now orbiting [parent]."))
 
+/datum/component/orbiter/proc/orbiter_before_shuttle_move(atom/source)
+	SIGNAL_HANDLER
+	// We need to detach ourselves before the shuttle moves and reattach afterwards
+	end_orbit(source, TRUE)
+	RegisterSignal(source, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, PROC_REF(orbiter_after_shuttle_move))
+
+/datum/component/orbiter/proc/orbiter_after_shuttle_move(atom/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, COMSIG_ATOM_AFTER_SHUTTLE_MOVE)
+	begin_orbit(arglist(list(source) + orbiter_params[source]))
+
 /datum/component/orbiter/proc/end_orbit(atom/movable/orbiter, refreshing=FALSE)
 	if(!orbiter_list[orbiter])
 		return
-	UnregisterSignal(orbiter, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(orbiter, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, COMSIG_ATOM_AFTER_SHUTTLE_MOVE))
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_STOP, orbiter)
 	orbiter.SpinAnimation(0, 0)
 	if(istype(orbiter_list[orbiter],/matrix)) //This is ugly.
 		orbiter.transform = orbiter_list[orbiter]
 	orbiter_list -= orbiter
+	if(!refreshing)
+		orbiter_params -= orbiter
 	orbiter.stop_orbit(src)
 	orbiter.orbiting = null
 

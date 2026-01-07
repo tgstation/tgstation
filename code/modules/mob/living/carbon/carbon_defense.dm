@@ -10,21 +10,29 @@
 	else
 		return INFINITY //Can't get flashed without eyes
 	if(isclothing(head)) //Adds head protection
-		. += head.flash_protect
+		var/obj/item/clothing/helmet = head
+		. += helmet.flash_protect
 	if(isclothing(glasses)) //Glasses
 		. += glasses.flash_protect
 	if(isclothing(wear_mask)) //Mask
 		. += wear_mask.flash_protect
 
-/mob/living/carbon/get_ear_protection()
-	. = ..()
-	if(HAS_TRAIT(src, TRAIT_DEAF))
-		return INFINITY //For all my homies that can not hear in the world
-	var/obj/item/organ/ears/E = get_organ_slot(ORGAN_SLOT_EARS)
-	if(!E)
+/mob/living/carbon/sound_damage(damage, deafen)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
+		return
+	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
+	if(QDELETED(ears))
+		return
+	if(damage)
+		ears.apply_organ_damage(damage * ears.damage_multiplier)
+	if(deafen)
+		ears.adjust_temporary_deafness(deafen)
+
+/mob/living/carbon/get_ear_protection(ignore_deafness = FALSE)
+	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
+	if(!ears)
 		return INFINITY
-	else
-		. += E.bang_protect
+	return ..() + ears.bang_protect
 
 /mob/living/carbon/is_mouth_covered(check_flags = ALL)
 	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & HEADCOVERSMOUTH))
@@ -56,7 +64,7 @@
 	return null
 
 /mob/living/carbon/is_ears_covered()
-	for(var/obj/item/worn_thing as anything in get_equipped_items())
+	for(var/obj/item/worn_thing as anything in get_equipped_items(INCLUDE_ABSTRACT))
 		if(worn_thing.flags_cover & EARS_COVERED)
 			return worn_thing
 
@@ -85,6 +93,12 @@
 	return ..()
 
 /mob/living/carbon/send_item_attack_message(obj/item/weapon, mob/living/user, hit_area, def_zone)
+	// In the future replace these with parent call if the item attack message proc is ever unshittified
+	if(SEND_SIGNAL(weapon, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT, src, user) & SIGNAL_MESSAGE_MODIFIED)
+		return TRUE
+	if(SEND_SIGNAL(src, COMSIG_SEND_ITEM_ATTACK_MESSAGE_CARBON, weapon, user) & SIGNAL_MESSAGE_MODIFIED)
+		return TRUE
+
 	if(!weapon.force && !length(weapon.attack_verb_simple) && !length(weapon.attack_verb_continuous))
 		return
 	var/obj/item/bodypart/hit_bodypart = get_bodypart(def_zone)
@@ -240,7 +254,7 @@
 		return
 	else
 		show_message(span_userdanger("The blob attacks!"))
-		adjustBruteLoss(10)
+		adjust_brute_loss(10)
 
 ///Adds to the parent by also adding functionality to propagate shocks through pulling and doing some fluff effects.
 /mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE, jitter_time = 20 SECONDS, stutter_time = 4 SECONDS, stun_duration = 4 SECONDS)
@@ -267,11 +281,17 @@
 			C.electrocute_act(shock_damage*0.75, src, 1, flags, jitter_time, stutter_time, stun_duration)
 	//Stun
 	var/should_stun = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
-	var/paralyze = !(flags & SHOCK_KNOCKDOWN)
+	var/stun = !(flags & SHOCK_KNOCKDOWN)
 	var/immediately_stun = should_stun && !(flags & SHOCK_DELAY_STUN)
 	if (immediately_stun)
-		if (paralyze)
-			Paralyze(stun_duration)
+		if (stun)
+			// intended effect here is to floor you immediately if you are shocked twice in quick succession
+			// or to keep you floored if you are already incapacitated otherwise
+			if(incapacitated)
+				Paralyze(stun_duration)
+			// otherwise it just stuns you upright - until the second shock, which floors you
+			else
+				Stun(stun_duration)
 		else
 			Knockdown(stun_duration)
 	//Jitter and other fluff.
@@ -279,12 +299,12 @@
 	adjust_jitter(jitter_time)
 	adjust_stutter(stutter_time)
 	if (should_stun)
-		addtimer(CALLBACK(src, PROC_REF(secondary_shock), paralyze, stun_duration * 1.5), 2 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(secondary_shock), stun, stun_duration * 1.5), 2 SECONDS)
 	return shock_damage
 
 ///Called slightly after electrocute act to apply a secondary stun.
-/mob/living/carbon/proc/secondary_shock(paralyze, stun_duration)
-	if (paralyze)
+/mob/living/carbon/proc/secondary_shock(stun, stun_duration)
+	if (stun)
 		Paralyze(stun_duration)
 	else
 		Knockdown(stun_duration)
@@ -452,6 +472,9 @@
 	return embeds
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
+	if(SEND_SIGNAL(src, COMSIG_MOB_FLASH_OVERRIDE_CHECK, src) & FLASH_OVERRIDDEN) //Check for behavior overrides before doing the act itself. If we have a behavior override, we handle everything there and skip the rest
+		return FLASH_COMPLETED
+
 	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes) //can't flash what can't see!
 		return
@@ -497,37 +520,6 @@
 	else if(damage == 0 && prob(20)) // just enough protection
 		to_chat(src, span_notice("Something bright flashes in the corner of your vision!"))
 
-
-/mob/living/carbon/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
-	var/list/reflist = list(intensity) // Need to wrap this in a list so we can pass a reference
-	SEND_SIGNAL(src, COMSIG_CARBON_SOUNDBANG, reflist)
-	intensity = reflist[1]
-	var/ear_safety = get_ear_protection()
-	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
-	var/effect_amount = intensity - ear_safety
-	if(effect_amount > 0)
-		if(stun_pwr)
-			Paralyze((stun_pwr*effect_amount)*0.1)
-			Knockdown(stun_pwr*effect_amount)
-
-		if(ears && (deafen_pwr || damage_pwr))
-			var/ear_damage = damage_pwr * effect_amount
-			var/deaf = deafen_pwr * effect_amount
-			ears.adjustEarDamage(ear_damage,deaf)
-
-			if(ears.damage >= 15)
-				to_chat(src, span_warning("Your ears start to ring badly!"))
-				if(prob(ears.damage - 5))
-					to_chat(src, span_userdanger("You can't hear anything!"))
-					// Makes you deaf, enough that you need a proper source of healing, it won't self heal
-					// you need earmuffs, inacusiate, or replacement
-					ears.set_organ_damage(ears.maxHealth)
-			else if(ears.damage >= 5)
-				to_chat(src, span_warning("Your ears start to ring!"))
-			SEND_SOUND(src, sound('sound/items/weapons/flash_ring.ogg',0,1,0,250))
-		return effect_amount //how soundbanged we are
-
-
 /mob/living/carbon/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
 	if(damage_type != BRUTE && damage_type != BURN)
 		return
@@ -552,7 +544,7 @@
 		. = FALSE
 
 
-/mob/living/carbon/adjustOxyLoss(amount, updating_health = TRUE, forced, required_biotype, required_respiration_type)
+/mob/living/carbon/adjust_oxy_loss(amount, updating_health = TRUE, forced, required_biotype, required_respiration_type)
 	if(!forced && HAS_TRAIT(src, TRAIT_NOBREATH))
 		amount = min(amount, 0) //Prevents oxy damage but not healing
 
@@ -564,7 +556,7 @@
 	if(!limb)
 		return
 
-/mob/living/carbon/setOxyLoss(amount, updating_health = TRUE, forced, required_biotype, required_respiration_type)
+/mob/living/carbon/set_oxy_loss(amount, updating_health = TRUE, forced, required_biotype, required_respiration_type)
 	. = ..()
 	check_passout()
 
@@ -572,8 +564,8 @@
 * Check to see if we should be passed out from oxyloss
 */
 /mob/living/carbon/proc/check_passout()
-	var/mob_oxyloss = getOxyLoss()
-	if(mob_oxyloss >= OXYLOSS_PASSOUT_THRESHOLD)
+	var/mob_oxyloss = get_oxy_loss()
+	if(mob_oxyloss >= OXYLOSS_PASSOUT_THRESHOLD && !HAS_TRAIT(src, TRAIT_NO_OXYLOSS_PASSOUT))
 		if(!HAS_TRAIT_FROM(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT))
 			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
 	else if(mob_oxyloss < OXYLOSS_PASSOUT_THRESHOLD)
@@ -598,7 +590,7 @@
 		to_chat(src, span_danger("You can't grasp your [grasped_part.name] with itself!"))
 		return
 
-	var/bleed_rate = grasped_part.get_modified_bleed_rate()
+	var/bleed_rate = grasped_part.cached_bleed_rate
 	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")
 	to_chat(src, span_warning("You try grasping at your [grasped_part.name][bleeding_text]..."))
 	if(!do_after(src, 0.75 SECONDS))
@@ -614,7 +606,7 @@
 
 /// If TRUE, the owner of this bodypart can try grabbing it to slow bleeding, as well as various other effects.
 /obj/item/bodypart/proc/can_be_grasped()
-	if (get_modified_bleed_rate())
+	if (cached_bleed_rate)
 		return TRUE
 
 	for (var/datum/wound/iterated_wound as anything in wounds)
@@ -667,7 +659,7 @@
 	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(qdel_void))
 	RegisterSignals(grasped_part, list(COMSIG_CARBON_REMOVE_LIMB, COMSIG_QDELETING), PROC_REF(qdel_void))
 
-	var/bleed_rate = grasped_part.get_modified_bleed_rate()
+	var/bleed_rate = grasped_part.cached_bleed_rate
 	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")
 	user.visible_message(span_danger("[user] grasps at [user.p_their()] [grasped_part.name][bleeding_text]."), span_notice("You grab hold of your [grasped_part.name] tightly."), vision_distance=COMBAT_MESSAGE_RANGE)
 	playsound(get_turf(src), 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
@@ -697,14 +689,15 @@
 		new_organ.replace_into(src)
 		new_organ.organ_flags |= ORGAN_MUTANT
 
-	var/obj/item/bodypart/new_part = pick(GLOB.bioscrambler_valid_parts)
-	var/obj/item/bodypart/picked_user_part = get_bodypart(initial(new_part.body_zone))
-	if (picked_user_part && BODYTYPE_CAN_BE_BIOSCRAMBLED(picked_user_part.bodytype))
-		changed_something = TRUE
-		new_part = new new_part()
-		new_part.replace_limb(src, special = TRUE)
-		if (picked_user_part)
-			qdel(picked_user_part)
+	if (!HAS_TRAIT(src, TRAIT_NODISMEMBER))
+		var/obj/item/bodypart/new_part = pick(GLOB.bioscrambler_valid_parts)
+		var/obj/item/bodypart/picked_user_part = get_bodypart(initial(new_part.body_zone))
+		if (picked_user_part && BODYTYPE_CAN_BE_BIOSCRAMBLED(picked_user_part.bodytype))
+			changed_something = TRUE
+			new_part = new new_part()
+			new_part.replace_limb(src)
+			if (picked_user_part)
+				qdel(picked_user_part)
 
 	if (!changed_something)
 		to_chat(src, span_notice("Your augmented body protects you from [scramble_source]!"))

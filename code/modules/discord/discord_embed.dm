@@ -70,7 +70,7 @@
 		)
 	if(fields)
 		data_to_list["fields"] = list()
-		for(var/data as anything in fields)
+		for(var/data in fields)
 			if(!fields[data])
 				continue
 			data_to_list["fields"] += list(list(

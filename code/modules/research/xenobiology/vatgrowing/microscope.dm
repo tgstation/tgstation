@@ -3,6 +3,7 @@
 	desc = "A simple microscope, allowing you to examine micro-organisms."
 	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "microscope"
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 	///Analyzed dish
 	var/obj/item/petri_dish/current_dish
 
@@ -120,10 +121,13 @@
 	balloon_alert(user, "dish removed")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/obj/structure/microscope/unanchored
+	anchored = FALSE
+
 /datum/crafting_recipe/microscope
 	name = "Microscope"
 	result = /obj/structure/microscope
-	time = 30
+	time = 3 SECONDS
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	reqs = list(
 		/obj/item/stack/sheet/glass = 1,

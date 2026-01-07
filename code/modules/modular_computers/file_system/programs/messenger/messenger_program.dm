@@ -34,7 +34,7 @@
 	var/spam_mode = FALSE
 
 	/// An asssociative list of chats we have started, format: chatref -> pda_chat.
-	var/list/saved_chats = list()
+	var/list/saved_chats
 	/// Whose chatlogs we currently have open. If we are in the contacts list, this is null.
 	var/viewing_messages_of = null
 
@@ -74,7 +74,7 @@
 /datum/computer_file/program/messenger/proc/on_imprint_reset(sender)
 	SIGNAL_HANDLER
 	remove_messenger(src)
-	saved_chats = list()
+	LAZYNULL(saved_chats)
 	selected_image = null
 	viewing_messages_of = null
 
@@ -88,10 +88,9 @@
 /datum/computer_file/program/messenger/proc/get_messengers()
 	var/list/dictionary = list()
 
-	var/list/messengers_sorted = sort_by_job ? get_messengers_sorted_by_job() : get_messengers_sorted_by_name()
+	var/list/messengers_sorted = sort_by_job ? GLOB.pda_messengers_by_job : GLOB.pda_messengers_by_name
 
-	for(var/messenger_ref in messengers_sorted)
-		var/datum/computer_file/program/messenger/messenger = messengers_sorted[messenger_ref]
+	for(var/datum/computer_file/program/messenger/messenger as anything in messengers_sorted)
 		if(!istype(messenger) || !istype(messenger.computer))
 			continue
 		if(messenger == src || messenger.invisible)
@@ -118,7 +117,7 @@
 		data |= photo.picture_name
 
 	if(viewing_messages_of in saved_chats)
-		var/datum/pda_chat/chat = saved_chats[viewing_messages_of]
+		var/datum/pda_chat/chat = LAZYACCESS(saved_chats, viewing_messages_of)
 		for(var/datum/pda_message/message as anything in chat.messages)
 			if(isnull(message.photo_name))
 				continue
@@ -181,13 +180,13 @@
 
 		if("PDA_viewMessages")
 			if(viewing_messages_of in saved_chats)
-				var/datum/pda_chat/chat = saved_chats[viewing_messages_of]
+				var/datum/pda_chat/chat = LAZYACCESS(saved_chats, viewing_messages_of)
 				chat.unread_messages = 0
 
 			viewing_messages_of = params["ref"]
 
 			if (viewing_messages_of in saved_chats)
-				var/datum/pda_chat/chat = saved_chats[viewing_messages_of]
+				var/datum/pda_chat/chat = LAZYACCESS(saved_chats, viewing_messages_of)
 				chat.visible_in_recents = TRUE
 
 			selected_image = null
@@ -199,7 +198,7 @@
 			if(!(target in saved_chats))
 				return FALSE
 
-			var/datum/pda_chat/chat = saved_chats[target]
+			var/datum/pda_chat/chat = LAZYACCESS(saved_chats, target)
 			chat.visible_in_recents = FALSE
 			if(viewing_messages_of == target)
 				viewing_messages_of = null
@@ -209,9 +208,9 @@
 			var/chat_ref = params["ref"]
 
 			if(chat_ref in saved_chats)
-				saved_chats.Remove(chat_ref)
+				LAZYREMOVE(saved_chats, chat_ref)
 			else if(isnull(chat_ref))
-				saved_chats = list()
+				LAZYNULL(saved_chats)
 
 			viewing_messages_of = null
 			return TRUE
@@ -241,7 +240,7 @@
 			if(!(target_chat_ref in saved_chats))
 				return FALSE
 
-			var/datum/pda_chat/chat = saved_chats[target_chat_ref]
+			var/datum/pda_chat/chat = LAZYACCESS(saved_chats, target_chat_ref)
 
 			chat.message_draft = message_draft
 
@@ -253,7 +252,7 @@
 			if(!(target_chat_ref in saved_chats))
 				return FALSE
 
-			var/datum/pda_chat/chat = saved_chats[target_chat_ref]
+			var/datum/pda_chat/chat = LAZYACCESS(saved_chats, target_chat_ref)
 			chat.unread_messages = 0
 
 			return TRUE
@@ -270,14 +269,14 @@
 			var/target = null
 
 			if(target_ref in saved_chats)
-				target = saved_chats[target_ref]
+				target = LAZYACCESS(saved_chats, target_ref)
 			else if(target_ref in GLOB.pda_messengers)
 				target = GLOB.pda_messengers[target_ref]
 			else
 				return FALSE
 
 			if(sending_virus)
-				var/obj/item/computer_disk/virus/disk = computer.inserted_disk
+				var/obj/item/disk/computer/virus/disk = computer.inserted_disk
 				if(!istype(disk))
 					return FALSE
 
@@ -358,7 +357,7 @@
 			"job" = computer.saved_job,
 			"ref" = REF(src)
 		) : null)
-	data["saved_chats"] = chats_data
+	data["saved_chats"] = chats_data || list()
 	data["messengers"] = messengers
 	data["sort_by_job"] = sort_by_job
 	data["alert_silenced"] = alert_silenced
@@ -377,7 +376,7 @@
 	data["selected_photo_path"] = !isnull(selected_image) ? SSassets.transport.get_asset_url(selected_image) : null
 	data["on_spam_cooldown"] = !can_send_everyone_message()
 
-	var/obj/item/computer_disk/virus/disk = computer.inserted_disk
+	var/obj/item/disk/computer/virus/disk = computer.inserted_disk
 	if(istype(disk))
 		data["virus_attach"] = TRUE
 		data["sending_virus"] = sending_virus
@@ -413,8 +412,8 @@
 	for(var/mc in get_messengers())
 		messenger_targets += mc
 
-	for(var/chatref in saved_chats)
-		var/datum/pda_chat/chat = saved_chats[chatref]
+	for(var/chatref, data in saved_chats)
+		var/datum/pda_chat/chat = data
 		if(!(chat.recipient?.reference in messenger_targets)) // if its in messenger_targets, it's valid
 			continue
 		messenger_targets -= chat.recipient.reference
@@ -444,14 +443,14 @@
 		new_chat.cached_job = job
 		new_chat.can_reply = FALSE
 
-	saved_chats[REF(new_chat)] = new_chat
+	LAZYSET(saved_chats, REF(new_chat), new_chat)
 
 	return new_chat
 
 /// Gets the chat by the recipient, either by their name or messenger ref
 /datum/computer_file/program/messenger/proc/find_chat_by_recipient(recipient, fake_user = FALSE)
-	for(var/chat_ref in saved_chats)
-		var/datum/pda_chat/chat = saved_chats[chat_ref]
+	for(var/chat_ref, data in saved_chats)
+		var/datum/pda_chat/chat = data
 		if(fake_user && chat.cached_name == recipient)
 			return chat
 		else if(chat.recipient?.reference == recipient)
@@ -599,6 +598,13 @@
 	for(var/datum/computer_file/program/messenger/messenger as anything in targets)
 		stringified_targets += get_messenger_name(messenger)
 
+	var/sent_prob = 0
+	if(ishuman(source))
+		var/mob/living/carbon/human/oldie = source
+		sent_prob = (0.025 * oldie.age) ** 3 // 25 y/o = ~0.25% chance, 85 y/o = ~10% chance
+	if (computer && prob(sent_prob))
+		message = "[message] [computer.get_messenger_ending()]"
+
 	var/datum/signal/subspace/messaging/tablet_message/signal = new(computer, list(
 		"ref" = REF(src),
 		"message" = message,
@@ -724,6 +730,7 @@
 	SStgui.update_uis(computer)
 	update_pictures_for_all()
 
+
 /// topic call that answers to people pressing "(Reply)" in chat
 /datum/computer_file/program/messenger/Topic(href, href_list)
 	..()
@@ -745,7 +752,7 @@
 		if("message")
 			if(!(target_href in saved_chats))
 				return
-			quick_reply_prompt(usr, saved_chats[target_href])
+			quick_reply_prompt(usr, LAZYACCESS(saved_chats, target_href))
 
 		if("open")
 			if(target_href in saved_chats)
@@ -758,6 +765,12 @@
 
 			var/obj/item/modular_computer/pda/comp = computer
 			comp.explode(usr, from_message_menu = TRUE)
+
+/datum/computer_file/program/messenger/proc/compare_name(datum/computer_file/program/messenger/rhs)
+	return sorttext(rhs.computer?.saved_identification, computer?.saved_identification)
+
+/datum/computer_file/program/messenger/proc/compare_job(datum/computer_file/program/messenger/rhs)
+	return sorttext(rhs.computer?.saved_job, computer?.saved_job)
 
 #undef PDA_MESSAGE_TIMESTAMP_FORMAT
 #undef MAX_PDA_MESSAGE_LEN

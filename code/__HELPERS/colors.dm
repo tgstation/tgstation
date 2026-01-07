@@ -173,11 +173,10 @@
 		saturation = min(saturation, 1 - added_saturation)
 
 	var/list/new_matrix = list(
-		0, 0, 0, 0, // Ignore original hue
-		0, saturation, 0, 0, // Multiply the saturation by ours
-		0, 0, 1 - deducted_light, 0, // If we're highly saturated then remove a bit of lightness to keep some color in
-		0, 0, 0, 1, // Preserve alpha
-		hue, added_saturation, 0, 0, // And apply our preferred hue and some saturation if we're oversaturated
+		0, 0, 0, // Ignore original hue
+		0, saturation, 0, // Multiply the saturation by ours
+		0, 0, 1 - deducted_light, // If we're highly saturated then remove a bit of lightness to keep some color in
+		hue, added_saturation, 0, // And apply our preferred hue and some saturation if we're oversaturated
 	)
 	return color_matrix_filter(new_matrix, FILTER_COLOR_HSL)
 

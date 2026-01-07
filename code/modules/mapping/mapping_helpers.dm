@@ -179,7 +179,7 @@
 				qdel(src)
 				return
 			if(9 to 11)
-				airlock.lights = FALSE
+				airlock.feedback = FALSE
 				// These do not use airlock.bolt() because we want to pretend it was always locked. That means no sound effects.
 				airlock.locked = TRUE
 			if(12 to 15)
@@ -238,7 +238,15 @@
 
 /obj/effect/mapping_helpers/airlock/unres/payload(obj/machinery/door/airlock/airlock)
 	airlock.unres_sides ^= dir
-	airlock.unres_sensor = TRUE
+	airlock.unres_latch = TRUE
+
+/obj/effect/mapping_helpers/airlock/unres/delayed
+	name = "airlock unrestricted side delayed helper"
+	icon_state = "airlock_unres_delayed_helper"
+
+/obj/effect/mapping_helpers/airlock/unres/delayed/payload(obj/machinery/door/airlock/airlock)
+	. = ..()
+	airlock.delayed_unres_open = TRUE
 
 /obj/effect/mapping_helpers/airlock/abandoned
 	name = "airlock abandoned helper"
@@ -953,7 +961,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 		body_bag.insert(new_human, TRUE)
 		body_bag.close()
-		body_bag.handle_tag("[new_human.real_name][new_human.dna?.species ? " - [new_human.dna.species.name]" : " - Human"]")
+		body_bag.tag_name = "[new_human.real_name][new_human.dna?.species ? " - [new_human.dna.species.name]" : " - Human"]"
+		body_bag.AddComponent(/datum/component/rename, "[initial(body_bag.name)][body_bag.tag_name? " - [body_bag.tag_name]" : null]", body_bag.desc)
+		body_bag.update_icon()
 		body_bag.forceMove(morgue_tray)
 
 		morgue_tray.update_appearance()
@@ -1094,7 +1104,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	if(locate(/obj/machinery/door/airlock) in turf)
 		var/obj/machinery/door/airlock/found_airlock = locate(/obj/machinery/door/airlock) in turf
 		if(note_path)
-			found_airlock.note = note_path
+			var/obj/item/paper/paper = new note_path(src)
+			found_airlock.note = paper
+			paper.forceMove(found_airlock)
 			found_airlock.update_appearance()
 			qdel(src)
 			return

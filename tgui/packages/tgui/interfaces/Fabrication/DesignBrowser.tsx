@@ -1,5 +1,5 @@
 import { sortBy } from 'es-toolkit';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import {
   Dimmer,
   Icon,
@@ -11,7 +11,7 @@ import { classes } from 'tgui-core/react';
 
 import { useSharedState } from '../../backend';
 import { SearchBar } from '../common/SearchBar';
-import { Design, MaterialMap } from './Types';
+import type { Design, MaterialMap } from './Types';
 
 /**
  * A function that does nothing.
@@ -500,7 +500,7 @@ const CategoryView = <T extends Design = Design>(
       title={category.title}
       key={category.anchorKey}
       container_id={category.anchorKey}
-      buttons={categoryButtons && categoryButtons(category)}
+      buttons={categoryButtons?.(category)}
     >
       {body}
     </Section>

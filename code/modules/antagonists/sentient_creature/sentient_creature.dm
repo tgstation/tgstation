@@ -23,6 +23,11 @@
 	var/mob/living/master = owner.enslaved_to?.resolve()
 	if(master)
 		owner.current.copy_languages(master, LANGUAGE_MASTER)
+		ADD_TRAIT(owner, TRAIT_UNCONVERTABLE, REF(src))
+	return ..()
+
+/datum/antagonist/sentient_creature/on_removal()
+	REMOVE_TRAIT(owner, TRAIT_UNCONVERTABLE, REF(src))
 	return ..()
 
 /datum/antagonist/sentient_creature/ui_static_data(mob/user)

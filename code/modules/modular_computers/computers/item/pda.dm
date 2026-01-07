@@ -31,6 +31,9 @@
 
 	shell_capacity = SHELL_CAPACITY_SMALL
 	action_slots = ALL
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
@@ -70,13 +73,13 @@
 		apps_to_download += default_programs + pda_programs
 	apps_to_download += starting_programs
 
-	for(var/programs as anything in apps_to_download)
+	for(var/programs in apps_to_download)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
 
 /obj/item/modular_computer/pda/update_overlays()
 	. = ..()
-	if(computer_id_slot)
+	if(stored_id)
 		. += mutable_appearance(overlays_icon, "id_overlay")
 	if(light_on)
 		. += mutable_appearance(overlays_icon, "light_overlay")
@@ -109,9 +112,9 @@
 	if(!target_machine.panel_open && !istype(target, /obj/machinery/computer))
 		return ..()
 
-	if(!istype(inserted_disk, /obj/item/computer_disk/virus/clown))
+	if(!istype(inserted_disk, /obj/item/disk/computer/virus/clown))
 		return ..()
-	var/obj/item/computer_disk/virus/clown/installed_cartridge = inserted_disk
+	var/obj/item/disk/computer/virus/clown/installed_cartridge = inserted_disk
 	if(!installed_cartridge.charges)
 		to_chat(user, span_notice("Out of virus charges."))
 		return ..()
@@ -222,7 +225,7 @@
 
 	if(current_turf)
 		current_turf.hotspot_expose(700,125)
-		if(istype(inserted_disk, /obj/item/computer_disk/virus/detomatix))
+		if(istype(inserted_disk, /obj/item/disk/computer/virus/detomatix))
 			explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 4)
 		else
 			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flash_range = 3)

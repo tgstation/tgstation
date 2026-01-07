@@ -3,6 +3,8 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 
 ///Base class of station traits. These are used to influence rounds in one way or the other by influencing the levers of the station.
 /datum/station_trait
+	/// Trait should not be instantiated in a round if its type matches this type
+	abstract_type = /datum/station_trait
 	///Name of the trait
 	var/name = "unnamed station trait"
 	///The type of this trait. Used to classify how this trait influences the station
@@ -33,8 +35,6 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	var/list/lobby_buttons = list()
 	/// The ID that we look for in dynamic.json. Not synced with 'name' because I can already see this go wrong
 	var/dynamic_threat_id
-	/// Trait should not be instantiated in a round if its type matches this type
-	var/abstract_type = /datum/station_trait
 
 /datum/station_trait/New()
 	. = ..()

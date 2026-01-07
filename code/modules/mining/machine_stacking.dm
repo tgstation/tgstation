@@ -99,7 +99,7 @@
 	var/stk_amt = list()
 	var/stack_list[0] //Key: Type. Value: Instance of type.
 	var/stack_amt = 50 //amount to stack before releassing
-	var/datum/component/remote_materials/materials
+	var/datum/remote_materials/materials
 	var/force_connect = FALSE
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
@@ -112,8 +112,8 @@
 /obj/machinery/mineral/stacking_machine/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 1)
-	materials = AddComponent(
-		/datum/component/remote_materials, \
+	materials = new (
+		src, \
 		mapload, \
 		FALSE, \
 		(mapload && force_connect) \
@@ -123,7 +123,8 @@
 	if(!isnull(console))
 		console.machine = null
 		console = null
-	materials = null
+	QDEL_NULL(proximity_monitor)
+	QDEL_NULL(materials)
 	return ..()
 
 /obj/machinery/mineral/stacking_machine/HasProximity(atom/movable/entered)

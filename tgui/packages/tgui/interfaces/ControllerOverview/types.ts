@@ -1,4 +1,4 @@
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 export type SubsystemData = {
   can_fire: BooleanLike;
@@ -11,7 +11,7 @@ export type SubsystemData = {
   name: string;
   next_fire: number;
   ref: string;
-  tick_overrun: number;
+  overtime: number;
   tick_usage: number;
   usage_per_tick: number;
 };

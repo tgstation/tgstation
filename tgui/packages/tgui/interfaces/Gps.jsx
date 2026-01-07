@@ -1,4 +1,4 @@
-import { vecLength, vecSubtract } from 'common/vector';
+import { vecLength, vecSubtract } from 'tgui-core/vector';
 import { sortBy } from 'es-toolkit';
 import { map } from 'es-toolkit/compat';
 import {
@@ -122,7 +122,7 @@ export const Gps = (props) => {
                           rotation={signal.degrees}
                         />
                       )}
-                      {signal.dist !== undefined && signal.dist + 'm'}
+                      {signal.dist !== undefined && `${signal.dist}m`}
                     </Table.Cell>
                     <Table.Cell collapsing>{signal.coords}</Table.Cell>
                   </Table.Row>

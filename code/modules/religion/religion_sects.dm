@@ -235,11 +235,10 @@
 /datum/religion_sect/pyre/on_select()
 	. = ..()
 	AddComponent(/datum/component/sect_nullrod_bonus, list(
-		/obj/item/gun/ballistic/bow/divine/with_quiver = list(
+		/obj/item/gun/ballistic/bow/divine = list(
 			/datum/religion_rites/blazing_star,
 		),
 	))
-
 
 /datum/religion_sect/pyre/on_sacrifice(obj/item/flashlight/flare/candle/offering, mob/living/user)
 	if(!istype(offering))
@@ -277,7 +276,7 @@
 		return BLESSING_IGNORED
 
 	if(account.account_balance < GREEDY_HEAL_COST)
-		to_chat(chap, span_warning("Healing from [GLOB.deity] costs [GREEDY_HEAL_COST] credits for 30 health!"))
+		to_chat(chap, span_warning("Healing from [GLOB.deity] costs [GREEDY_HEAL_COST] [MONEY_NAME] for 30 health!"))
 		return BLESSING_IGNORED
 
 	var/mob/living/carbon/human/blessed = blessed_living
@@ -372,25 +371,25 @@
 			target.cure_husk(BURN)
 			chaplain.become_husk(BURN)
 
-	var/toxin_damage = target.getToxLoss()
+	var/toxin_damage = target.get_tox_loss()
 	if(toxin_damage && !HAS_TRAIT(chaplain, TRAIT_TOXIMMUNE))
 		transferred = TRUE
-		target.adjustToxLoss(-toxin_damage)
-		chaplain.adjustToxLoss(toxin_damage * burden_modifier, forced = TRUE)
+		target.adjust_tox_loss(-toxin_damage)
+		chaplain.adjust_tox_loss(toxin_damage * burden_modifier, forced = TRUE)
 
-	var/suffocation_damage = target.getOxyLoss()
+	var/suffocation_damage = target.get_oxy_loss()
 	if(suffocation_damage && !HAS_TRAIT(chaplain, TRAIT_NOBREATH))
 		transferred = TRUE
-		target.adjustOxyLoss(-suffocation_damage)
-		chaplain.adjustOxyLoss(suffocation_damage * burden_modifier, forced = TRUE)
+		target.adjust_oxy_loss(-suffocation_damage)
+		chaplain.adjust_oxy_loss(suffocation_damage * burden_modifier, forced = TRUE)
 
-	if(!HAS_TRAIT(chaplain, TRAIT_NOBLOOD))
-		if(target.blood_volume < BLOOD_VOLUME_SAFE)
-			var/transferred_blood_amount = min(chaplain.blood_volume, BLOOD_VOLUME_SAFE - target.blood_volume)
-			if(transferred_blood_amount && target.get_blood_compatibility(chaplain))
-				transferred = chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
-		else if(target.blood_volume > BLOOD_VOLUME_EXCESS)
-			transferred = target.transfer_blood_to(chaplain, target.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE)
+	var/cached_blood_volume = target.get_blood_volume()
+	if (cached_blood_volume < BLOOD_VOLUME_SAFE)
+		if (target.get_blood_compatibility(chaplain))
+			var/amount_to_transfer = BLOOD_VOLUME_SAFE - cached_blood_volume
+			transferred |= chaplain.transfer_blood_to(target, amount_to_transfer, ignore_low_blood = TRUE)
+	else if (cached_blood_volume > BLOOD_VOLUME_EXCESS)
+		transferred |= target.transfer_blood_to(chaplain, cached_blood_volume - BLOOD_VOLUME_EXCESS)
 
 	target.update_damage_overlays()
 	chaplain.update_damage_overlays()

@@ -15,6 +15,14 @@
 	///Whether or not this ninja will obtain objectives
 	var/give_objectives = TRUE
 
+/datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
+	var/mob/ninja = mob_override || owner.current
+	ADD_TRAIT(ninja, TRAIT_DESENSITIZED, REF(src))
+
+/datum/antagonist/ninja/remove_innate_effects(mob/living/mob_override)
+	var/mob/ninja = mob_override || owner.current
+	REMOVE_TRAIT(ninja, TRAIT_DESENSITIZED, REF(src))
+
 /**
  * Proc that equips the space ninja outfit on a given individual.  By default this is the owner of the antagonist datum.
  *
@@ -24,7 +32,7 @@
  * * Returns a proc call on the given human which will equip them with all the gear.
  */
 /datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/ninja = owner.current)
-	return ninja.equipOutfit(/datum/outfit/ninja)
+	return ninja.equip_species_outfit(/datum/outfit/ninja)
 
 /**
  * Proc that adds the proper memories to the antag datum

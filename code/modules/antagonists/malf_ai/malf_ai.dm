@@ -40,7 +40,6 @@
 	malfunction_flavor = strings(MALFUNCTION_FLAVOR_FILE, employer)
 
 	add_law_zero()
-	RegisterSignal(owner.current, COMSIG_SILICON_AI_CORE_STATUS, PROC_REF(core_status))
 	if(malf_sound)
 		owner.current.playsound_local(get_turf(owner.current), malf_sound, 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	owner.current.grant_language(/datum/language/codespeak, source = LANGUAGE_MALF)
@@ -57,7 +56,6 @@
 		malf_ai.remove_malf_abilities()
 		QDEL_NULL(malf_ai.malf_picker)
 
-	UnregisterSignal(owner, COMSIG_SILICON_AI_CORE_STATUS)
 	return ..()
 
 /// Generates a complete set of malf AI objectives up to the traitor objective limit.
@@ -168,6 +166,7 @@
 	var/list/data = list()
 	data["processingTime"] = malf_ai.malf_picker.processing_time
 	data["compactMode"] = module_picker_compactmode
+	data["hackedAPCs"] = malf_ai.hacked_apcs.len
 	return data
 
 /datum/antagonist/malf_ai/ui_static_data(mob/living/silicon/ai/malf_ai)
@@ -199,6 +198,7 @@
 					"name" = mod.name,
 					"cost" = mod.cost,
 					"desc" = mod.description,
+					"minimum_apcs" = mod.minimum_apcs,
 				))
 			data["categories"] += list(cat)
 
@@ -268,14 +268,6 @@
 	malf_ai_icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
 	return malf_ai_icon
-
-/datum/antagonist/malf_ai/proc/core_status(datum/source)
-	SIGNAL_HANDLER
-
-	var/mob/living/silicon/ai/malf_owner = owner.current
-	if(malf_owner?.linked_core)
-		return COMPONENT_CORE_ALL_GOOD
-	return COMPONENT_CORE_DISCONNECTED
 
 //Subtype of Malf AI datum, used for one of the traitor final objectives
 /datum/antagonist/malf_ai/infected

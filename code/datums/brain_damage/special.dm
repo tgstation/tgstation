@@ -11,7 +11,7 @@
 	gain_text = span_notice("You feel a higher power inside your mind...")
 	lose_text = span_warning("The divine presence leaves your head, no longer interested.")
 
-/datum/brain_trauma/special/godwoken/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/godwoken/on_life(seconds_per_tick)
 	..()
 	if(SPT_PROB(2, seconds_per_tick))
 		if(prob(33) && (owner.IsStun() || owner.IsParalyzed() || owner.IsUnconscious()))
@@ -57,7 +57,7 @@
 	/// Cooldown so we can't teleport literally everywhere on a whim
 	COOLDOWN_DECLARE(portal_cooldown)
 
-/datum/brain_trauma/special/bluespace_prophet/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/bluespace_prophet/on_life(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, portal_cooldown))
 		return
 
@@ -164,7 +164,7 @@
 	/// Cooldown for snapbacks
 	COOLDOWN_DECLARE(snapback_cooldown)
 
-/datum/brain_trauma/special/quantum_alignment/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/quantum_alignment/on_life(seconds_per_tick)
 	if(linked)
 		if(QDELETED(linked_target))
 			linked_target = null
@@ -309,7 +309,7 @@
 	/// A cooldown to prevent constantly erratic dolphining through the fabric of reality
 	COOLDOWN_DECLARE(crisis_cooldown)
 
-/datum/brain_trauma/special/existential_crisis/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/existential_crisis/on_life(seconds_per_tick)
 	..()
 	if(!veil && COOLDOWN_FINISHED(src, crisis_cooldown) && SPT_PROB(1.5, seconds_per_tick))
 		if(isturf(owner.loc))
@@ -392,7 +392,7 @@
 	if(get_dist(owner, beepsky) <= 1)
 		owner.playsound_local(owner, 'sound/items/weapons/egloves.ogg', 50)
 		owner.visible_message(span_warning("[owner]'s body jerks as if it was shocked."), span_userdanger("You feel the fist of the LAW."))
-		owner.adjustStaminaLoss(rand(40, 70))
+		owner.adjust_stamina_loss(rand(40, 70))
 		QDEL_NULL(beepsky)
 
 	if(prob(20) && get_dist(owner, beepsky) <= 8)
@@ -449,7 +449,7 @@
 		/datum/hallucination/battle/stun_prod,
 	)
 
-/datum/brain_trauma/special/ptsd/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/ptsd/on_life(seconds_per_tick)
 	if(owner.stat != CONSCIOUS)
 		return
 
@@ -463,12 +463,14 @@
 	owner.add_mood_event("combat_ptsd", /datum/mood_event/desentized)
 	owner.mob_mood?.mood_modifier -= 1 //Basically nothing can change your mood
 	owner.mob_mood?.sanity_level = SANITY_DISTURBED //Makes sanity on a unstable level unless cured
+	ADD_TRAIT(owner, TRAIT_DESENSITIZED, REF(src))
 	. = ..()
 
 /datum/brain_trauma/special/ptsd/on_lose()
 	owner.clear_mood_event("combat_ptsd")
 	owner.mob_mood?.mood_modifier += 1
 	owner.mob_mood?.sanity_level = SANITY_GREAT
+	REMOVE_TRAIT(owner, TRAIT_DESENSITIZED, REF(src))
 	return ..()
 
 /datum/brain_trauma/special/primal_instincts
@@ -502,7 +504,7 @@
 		owner.ai_controller = new old_ai_controller_type(owner)
 	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
 
-/datum/brain_trauma/special/primal_instincts/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/primal_instincts/on_life(seconds_per_tick)
 	if(isnull(owner.ai_controller))
 		qdel(src)
 		return
@@ -556,7 +558,7 @@
 		"Ah!",
 	)
 
-/datum/brain_trauma/special/axedoration/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/axedoration/on_life(seconds_per_tick)
 	if(owner.stat != CONSCIOUS)
 		return
 
@@ -690,7 +692,7 @@
 	talk_tuah(pick(hurt_lines))
 
 /datum/brain_trauma/special/axedoration/proc/talk_tuah(sent_message = "Hello World.")
-	owner.Hear(null, GLOB.bridge_axe, owner.get_selected_language(), sent_message)
+	owner.Hear(GLOB.bridge_axe, owner.get_selected_language(), sent_message)
 
 /datum/brain_trauma/special/axedoration/proc/get_axe_location()
 	if(!GLOB.bridge_axe)

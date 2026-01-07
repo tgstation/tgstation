@@ -12,20 +12,23 @@
 	amount = 5
 	max_amount = 5
 	resistance_flags = FLAMMABLE
-	grind_results = list(/datum/reagent/cellulose = 5)
 	splint_factor = 0.65
 	merge_type = /obj/item/stack/sticky_tape
+	greyscale_config = /datum/greyscale_config/tape
+	greyscale_colors = "#B2B2B2#BD6A62"
+
 	var/conferred_embed = /datum/embedding/sticky_tape
 	///The tape type you get when ripping off a piece of tape.
 	var/obj/tape_gag = /obj/item/clothing/mask/muzzle/tape
-	greyscale_config = /datum/greyscale_config/tape
-	greyscale_colors = "#B2B2B2#BD6A62"
 
 /datum/embedding/sticky_tape
 	pain_mult = 0
 	jostle_pain_mult = 0
 	ignore_throwspeed_threshold = TRUE
 	immune_traits = null
+
+/obj/item/stack/sticky_tape/grind_results()
+	return list(/datum/reagent/cellulose = 5)
 
 /obj/item/stack/sticky_tape/attack_hand(mob/user, list/modifiers)
 	if(user.get_inactive_held_item() == src)
@@ -166,7 +169,7 @@
 
 	if(issilicon(interacting_with))
 		var/mob/living/silicon/robotic_pal = interacting_with
-		var/robot_is_damaged = robotic_pal.getBruteLoss()
+		var/robot_is_damaged = robotic_pal.get_brute_loss()
 
 		if(!robot_is_damaged)
 			user.balloon_alert(user, "[robotic_pal] is not damaged!")
@@ -178,13 +181,17 @@
 		if(!do_after(user, 3 SECONDS, target = robotic_pal))
 			return ITEM_INTERACT_BLOCKING
 
-		robotic_pal.adjustBruteLoss(-object_repair_value)
+		robotic_pal.adjust_brute_loss(-object_repair_value)
 		use(1)
 		to_chat(user, span_notice("You finish repairing [interacting_with] with [src]."))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!isobj(interacting_with) || iseffect(interacting_with))
 		return NONE
+
+	if(HAS_TRAIT(interacting_with, TRAIT_DUCT_TAPE_UNREPAIRABLE))
+		user.balloon_alert(user, "cannot be repaired with duct tape!")
+		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/object_to_repair = interacting_with
 	var/object_is_damaged = object_to_repair.get_integrity() < object_to_repair.max_integrity

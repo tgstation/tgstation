@@ -15,9 +15,9 @@
 	wound_resistance = 5
 	disabled_wound_penalty = 25
 	scars_covered_by_clothes = FALSE
-	grind_results = null
 	is_dimorphic = TRUE
 	unarmed_attack_verbs = list("bite", "chomp")
+	unarmed_attack_verbs_continuous = list("bites", "chomps")
 	unarmed_attack_effect = ATTACK_EFFECT_BITE
 	unarmed_attack_sound = 'sound/items/weapons/bite.ogg'
 	unarmed_miss_sound = 'sound/items/weapons/bite.ogg'
@@ -25,6 +25,8 @@
 	unarmed_damage_high = 3
 	unarmed_effectiveness = 0
 	bodypart_trait_source = HEAD_TRAIT
+	butcher_replacement = /obj/item/bodypart/head/skeleton/nonfunctional
+	base_meat_amount = 0
 
 	/// Do we show the information about missing organs upon being examined? Defaults to TRUE, useful for Dullahan heads.
 	var/show_organs_on_examine = TRUE
@@ -33,7 +35,7 @@
 	/// Replacement name
 	var/real_name = ""
 	/// Flags related to appearance, such as hair, lips, etc
-	var/head_flags = HEAD_ALL_FEATURES
+	var/head_flags = HEAD_DEFAULT_FEATURES
 
 	/// Hair style
 	var/hairstyle = "Bald"
@@ -56,15 +58,9 @@
 	var/facial_hair_hidden = FALSE
 
 	/// Gradient styles, if any
-	var/list/gradient_styles = list(
-		"None",	//Hair gradient style
-		"None",	//Facial hair gradient style
-	)
+	var/list/gradient_styles
 	/// Gradient colors, if any
-	var/list/gradient_colors = list(
-		COLOR_BLACK,	//Hair gradient color
-		COLOR_BLACK,	//Facial hair gradient color
-	)
+	var/list/gradient_colors
 
 	/// An override color that can be cleared later, affects both hair and facial hair
 	var/override_hair_color = null
@@ -109,6 +105,17 @@
 	QDEL_NULL(worn_head_offset)
 	QDEL_NULL(worn_face_offset)
 	return ..()
+
+/obj/item/bodypart/head/get_butcher_drops()
+	if(butcher_drops)
+		return butcher_drops
+	var/datum/species/species = GLOB.species_list[limb_id]
+	if (!species || !species.skinned_type)
+		return null
+	return list(species.skinned_type = 1)
+
+/obj/item/bodypart/head/grind_results()
+	return null
 
 /obj/item/bodypart/head/examine(mob/user)
 	. = ..()
@@ -172,45 +179,65 @@
 
 /obj/item/bodypart/head/get_limb_icon(dropped, mob/living/carbon/update_on)
 	. = ..()
-
 	. += get_hair_and_lips_icon(dropped)
 	// We need to get the eyes if we are dropped (ugh)
-	if(dropped)
-		var/obj/item/organ/eyes/eyes = locate(/obj/item/organ/eyes) in src
-		// This is a bit of copy/paste code from eyes.dm:generate_body_overlay
-		if(eyes?.eye_icon_state && (head_flags & HEAD_EYESPRITES))
-			var/image/eye_left = image('icons/mob/human/human_face.dmi', "[eyes.eye_icon_state]_l", -BODY_LAYER, SOUTH)
-			var/image/eye_right = image('icons/mob/human/human_face.dmi', "[eyes.eye_icon_state]_r", -BODY_LAYER, SOUTH)
-			if(head_flags & HEAD_EYECOLOR)
-				if(eyes.eye_color_left)
-					eye_left.color = eyes.eye_color_left
-				if(eyes.eye_color_right)
-					eye_right.color = eyes.eye_color_right
-			if(eyes.overlay_ignore_lighting)
-				eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, src, alpha = eye_left.alpha)
-				eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, src, alpha = eye_right.alpha)
-			else if(blocks_emissive != EMISSIVE_BLOCK_NONE)
-				var/atom/location = loc || owner || src
-				eye_left.overlays += emissive_blocker(eye_left.icon, eye_left.icon_state, location, alpha = eye_left.alpha)
-				eye_right.overlays += emissive_blocker(eye_right.icon, eye_right.icon_state, location, alpha = eye_right.alpha)
-			if(worn_face_offset)
-				worn_face_offset.apply_offset(eye_left)
-				worn_face_offset.apply_offset(eye_right)
-			. += eye_left
-			. += eye_right
-		else if(!eyes && (head_flags & HEAD_EYEHOLES))
-			var/image/no_eyes = image('icons/mob/human/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
-			worn_face_offset?.apply_offset(no_eyes)
-			. += no_eyes
+	if(!dropped)
+		return
 
-	return
+	var/obj/item/organ/eyes/eyes = locate(/obj/item/organ/eyes) in src
+	if(!eyes)
+		if (!(head_flags & HEAD_EYEHOLES))
+			return
+		var/image/no_eyes = image('icons/mob/human/human_eyes.dmi', "eyes_missing", -EYES_LAYER, SOUTH)
+		worn_face_offset?.apply_offset(no_eyes)
+		. += no_eyes
+		return
+
+	if(!eyes.eye_icon_state || !(head_flags & HEAD_EYESPRITES))
+		return
+
+	// This is a bit of copy/paste code from eyes.dm:generate_body_overlay
+	var/image/eye_left = image(eyes.eye_icon, "[eyes.eye_icon_state]_l", -EYES_LAYER, SOUTH)
+	var/image/eye_right = image(eyes.eye_icon, "[eyes.eye_icon_state]_r", -EYES_LAYER, SOUTH)
+	if(head_flags & HEAD_EYECOLOR)
+		if(eyes.eye_color_left)
+			eye_left.color = eyes.eye_color_left
+		if(eyes.eye_color_right)
+			eye_right.color = eyes.eye_color_right
+
+	var/list/emissive_overlays = eyes.get_emissive_overlays(eye_left, eye_right, src)
+	if(length(emissive_overlays))
+		eye_left.overlays += image(emissive_overlays[1], dir = SOUTH)
+		eye_right.overlays += image(emissive_overlays[2], dir = SOUTH)
+	else if(blocks_emissive != EMISSIVE_BLOCK_NONE)
+		eye_left.overlays += image(emissive_blocker(eye_left.icon, eye_left.icon_state, src, alpha = eye_left.alpha), dir = SOUTH)
+		eye_right.overlays += image(emissive_blocker(eye_right.icon, eye_right.icon_state, src, alpha = eye_right.alpha), dir = SOUTH)
+
+	if(worn_face_offset)
+		worn_face_offset.apply_offset(eye_left)
+		worn_face_offset.apply_offset(eye_right)
+
+	. += eye_left
+	. += eye_right
 
 /obj/item/bodypart/head/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/toy_talk)
 
-/obj/item/bodypart/head/GetVoice()
+/obj/item/bodypart/head/get_voice(add_id_name)
 	return "The head of [real_name]"
+
+/obj/item/bodypart/head/update_bodypart_damage_state()
+	if (head_flags & HEAD_NO_DISFIGURE)
+		return ..()
+
+	var/old_states = brutestate + burnstate
+	. = ..()
+	var/new_states = brutestate + burnstate
+	if(new_states >= HUMAN_DISFIGURATION_HEAD_DAMAGE_STATES)
+		add_bodypart_trait(TRAIT_DISFIGURED)
+	else if(old_states >= HUMAN_DISFIGURATION_HEAD_DAMAGE_STATES)
+		remove_bodypart_trait(TRAIT_DISFIGURED)
 
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
@@ -252,6 +279,7 @@
 	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
 	bodytype = BODYTYPE_ALIEN | BODYTYPE_ORGANIC
 	bodyshape = BODYSHAPE_HUMANOID
+	biological_state = BIO_STANDARD_ALIEN
 
 /obj/item/bodypart/head/larva
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'

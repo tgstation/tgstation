@@ -29,6 +29,7 @@
 	average_size = 60
 	average_weight = 1000
 	weight_size_deviation = 0.1
+	stable_population = 5
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	required_temperature_min = MIN_AQUARIUM_TEMP+20
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
@@ -86,7 +87,6 @@
 	safe_air_limits = null
 	min_pressure = 0
 	max_pressure = INFINITY
-	grind_results = list(/datum/reagent/bluespace = 10)
 	fillet_type = null
 	fish_traits = list(/datum/fish_trait/antigrav, /datum/fish_trait/mixotroph)
 	compatible_types = list(/obj/item/fish/starfish/chrystarfish)
@@ -96,13 +96,16 @@
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
 
+/obj/item/fish/starfish/fish_grind_results()
+	return list(/datum/reagent/bluespace = 10)
+
 /obj/item/fish/starfish/update_overlays()
 	. = ..()
 	. += add_emissive()
 
 /obj/item/fish/starfish/proc/add_emissive()
 	if(status == FISH_ALIVE)
-		return emissive_appearance(icon, "starfish_emissive", src)
+		return emissive_appearance(icon, "starfish_emissive", src, effect_type = EMISSIVE_NO_BLOOM)
 
 ///It spins, and dimly glows in the dark.
 /obj/item/fish/starfish/flop_animation()
@@ -110,11 +113,15 @@
 
 /obj/item/fish/starfish/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] swallows [src], and looks upwards..."))
-	user.say("I must go. My people need me.", forced = "starfish suicide")
+	if (prob(20))
+		user.say("I must go. My people need me.", forced = "starfish suicide")
 	addtimer(CALLBACK(src, PROC_REF(ascension), user), 1 SECONDS)
 	return MANUAL_SUICIDE
 
 /obj/item/fish/starfish/proc/ascension(mob/living/user)
+	user.visible_message(span_suicide("[user] abandons [user.p_their()] corporeal form!"))
+	user.drop_everything()
+	user.add_filter("space", 1, layering_filter(icon = icon('icons/mob/human/textures.dmi', "spacey"), blend_mode = BLEND_INSET_OVERLAY))
 	user.apply_status_effect(/datum/status_effect/go_away/deletes_mob)
 	qdel(src)
 
@@ -215,7 +222,7 @@
 /obj/item/fish/baby_carp/proc/growth_checks(datum/source, seconds_per_tick, growth, result_path)
 	SIGNAL_HANDLER
 	var/hunger = CLAMP01((world.time - last_feeding) / feeding_frequency)
-	if(health <= initial(health) * 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
+	if(get_health_percentage() <= 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
 		return COMPONENT_DONT_GROW
 
 	if(!loc || !HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))

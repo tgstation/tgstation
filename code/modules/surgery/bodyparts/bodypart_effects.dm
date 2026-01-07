@@ -30,7 +30,7 @@
 		activate()
 
 /// Remove a bodypart from the effect. Deleting = TRUE is used during clean-up phase
-/datum/status_effect/grouped/bodypart_effect/proc/remove_bodypart(obj/item/bodypart/bodypart, deleting = FALSE)
+/datum/status_effect/grouped/bodypart_effect/proc/remove_bodypart(mob/living/carbon/old_owner, obj/item/bodypart/bodypart, deleting)
 	UnregisterSignal(bodypart, COMSIG_BODYPART_REMOVED)
 
 	bodyparts.Remove(bodypart)
@@ -38,14 +38,14 @@
 	if(deleting)
 		return
 
-	if(bodyparts.len == 0)
+	if(bodyparts.len == 0 && !QDELETED(old_owner))
 		qdel(src)
 
 	else if(is_active && bodyparts.len < minimum_bodyparts)
 		deactivate()
 
 /// Signal called when a bodypart is removed
-/datum/status_effect/grouped/bodypart_effect/proc/on_bodypart_removed(obj/item/bodypart/bodypart)
+/datum/status_effect/grouped/bodypart_effect/proc/on_bodypart_removed(obj/item/bodypart/bodypart, special)
 	SIGNAL_HANDLER
 
 	remove_bodypart(owner, bodypart)
@@ -54,7 +54,7 @@
 /datum/status_effect/grouped/bodypart_effect/proc/on_bodypart_destroyed(obj/item/bodypart/bodypart)
 	SIGNAL_HANDLER
 
-	remove_bodypart(bodypart)
+	remove_bodypart(bodypart.owner, bodypart)
 
 /// Activate some sort of effect when a threshold is reached
 /datum/status_effect/grouped/bodypart_effect/proc/activate()
@@ -75,7 +75,7 @@
 /datum/status_effect/grouped/bodypart_effect/Destroy()
 	deactivate()
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		remove_bodypart(bodypart, deleting = TRUE)
+		remove_bodypart(bodypart.owner, bodypart, deleting = TRUE)
 
 	return ..()
 
@@ -104,8 +104,8 @@
 		var/need_mob_update = FALSE
 		need_mob_update += owner.heal_overall_damage(brute = 0.5 * bodypart_coefficient, \
 			burn = 0.5 * bodypart_coefficient, updating_health = FALSE, required_bodytype = BODYTYPE_PLANT)
-		need_mob_update += owner.adjustToxLoss(-0.5 * bodypart_coefficient, updating_health = FALSE)
-		need_mob_update += owner.adjustOxyLoss(-0.5 * bodypart_coefficient, updating_health = FALSE)
+		need_mob_update += owner.adjust_tox_loss(-0.5 * bodypart_coefficient, updating_health = FALSE)
+		need_mob_update += owner.adjust_oxy_loss(-0.5 * bodypart_coefficient, updating_health = FALSE)
 		if(need_mob_update)
 			owner.updatehealth()
 
@@ -132,7 +132,9 @@
 
 	// Heal in the dark
 	owner.heal_overall_damage(brute = 0.5 * bodypart_coefficient, burn = 0.5 * bodypart_coefficient, required_bodytype = BODYTYPE_SHADOW)
-	if(!owner.has_status_effect(/datum/status_effect/shadow/nightmare)) // Somewhat awkward, but let's not duplicate the alerts
+
+	var/mob/living/carbon/carbon_owner = owner
+	if(carbon_owner.dna.species.id != SPECIES_NIGHTMARE) // Somewhat awkward, but let's not duplicate the alerts
 		// This only appears when in shadows, don't move to bodypart effect so people with nightvision can still tell if they're in light or not
 		owner.apply_status_effect(/datum/status_effect/shadow)
 

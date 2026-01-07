@@ -3,6 +3,7 @@
 	name = "ammo box (null_reference_exception)"
 	desc = "A box of ammo."
 	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	abstract_type = /obj/item/ammo_box
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	inhand_icon_state = "syringe_kit"
@@ -29,23 +30,31 @@
 	var/multiple_sprite_use_base = FALSE
 	///String, used for checking if ammo of different types but still fits can fit inside it; generally used for magazines
 	var/caliber
-	///Allows multiple bullets to be loaded in from one click of another box/magazine
-	var/multiload = TRUE
+	/// Determines whether ammo boxes can multiload in or out. See code/__DEFINES/combat.dm for details.
+	var/ammo_box_multiload = AMMO_BOX_MULTILOAD_BOTH
+
 	///Whether the magazine should start with nothing in it
 	var/start_empty = FALSE
 
 	/// If this and ammo_band_icon aren't null, run update_ammo_band(). Is the color of the band, such as blue on the detective's Iceblox.
 	var/ammo_band_color
-	/// If this and ammo_band_color aren't null, run update_ammo_band() Is the greyscale icon used for the ammo band.
+	/// If this and ammo_band_color aren't null, run update_ammo_band(). Is the greyscale icon used for the ammo band.
 	var/ammo_band_icon
 	/// Is the greyscale icon used for the ammo band when it's empty of bullets, only if it's not null.
 	var/ammo_band_icon_empty
 
 /obj/item/ammo_box/Initialize(mapload)
 	. = ..()
-	custom_materials = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.1)
 	if(!start_empty)
 		top_off(starting=TRUE)
+	else if(custom_materials && !(item_flags & ABSTRACT)) //internal magazines are abstract
+		var/obj/item/ammo_casing/prototype = new ammo_type
+		var/list/new_materials = custom_materials?.Copy()
+		for(var/mat in prototype.custom_materials)
+			new_materials[mat] -= prototype.custom_materials[mat] * max_ammo
+		qdel(prototype)
+		set_custom_materials(new_materials)
+
 	update_icon_state()
 
 /obj/item/ammo_box/Destroy(force)
@@ -62,6 +71,11 @@
 
 /obj/item/ammo_box/proc/remove_from_stored_ammo(atom/movable/gone)
 	stored_ammo -= gone
+	if(gone.custom_materials && custom_materials && !(item_flags & ABSTRACT))
+		var/list/new_materials = custom_materials?.Copy()
+		for(var/mat in gone.custom_materials)
+			new_materials[mat] -= gone.custom_materials[mat]
+		set_custom_materials(new_materials)
 	update_appearance()
 
 /obj/item/ammo_box/add_weapon_description()
@@ -106,8 +120,21 @@
 		stack_trace("Tried loading unsupported ammocasing type [load_type] into ammo box [type].")
 		return
 
+	var/list/new_materials = null
+	if(!(item_flags & ABSTRACT))
+		new_materials = custom_materials?.Copy() || list()
 	for(var/i in max(1, stored_ammo.len + 1) to max_ammo)
-		stored_ammo += starting ? round_check : new round_check(src)
+		var/obj/item/ammo_casing/casing = round_check
+		if(!starting)
+			casing = new round_check(src)
+			if(new_materials)
+				for(var/mat in casing.custom_materials)
+					new_materials[mat] += casing.custom_materials[mat]
+		stored_ammo += casing
+
+	if(!starting && length(new_materials))
+		set_custom_materials(new_materials)
+
 	update_appearance()
 
 ///gets a round from the magazine
@@ -139,6 +166,11 @@
 	if (stored_ammo.len < max_ammo)
 		stored_ammo += new_round
 		new_round.forceMove(src)
+		if(new_round.custom_materials && !(item_flags & ABSTRACT))
+			var/list/new_materials = custom_materials?.Copy() || list()
+			for(var/mat in new_round.custom_materials)
+				new_materials[mat] += new_round.custom_materials[mat]
+			set_custom_materials(new_materials)
 		return TRUE
 
 	if(!replace_spent)
@@ -161,18 +193,21 @@
 /obj/item/ammo_box/proc/can_load(mob/user)
 	return TRUE
 
-/obj/item/ammo_box/attackby(obj/item/tool, mob/user, params, silent = FALSE, replace_spent = 0)
-
+/obj/item/ammo_box/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(IS_WRITING_UTENSIL(tool))
 		if(!ammo_band_icon)
 			balloon_alert(user, "no indicator support!")
 			return
-		var/new_color = input(user, "Set a new ammo band color, cancel to remove indicator", "Ammo Box Indicator Color", ammo_band_color) as color|null
+		var/new_color = tgui_color_picker(user, "Set a new ammo band color, cancel to remove indicator", "Ammo Box Indicator Color", ammo_band_color)
 		ammo_band_color = new_color
 		balloon_alert(user, "indicator updated")
 		update_appearance()
 		return
 
+	if(try_load(user, tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/item/ammo_box/proc/try_load(mob/living/user, obj/item/tool, silent = FALSE, replace_spent = FALSE)
 	var/num_loaded = 0
 	if(!can_load(user))
 		return
@@ -184,7 +219,17 @@
 			if(did_load)
 				other_box.stored_ammo -= casing
 				num_loaded++
-			if(!did_load || !multiload)
+			// failed to load (full already? ran out of ammo?)
+			if(!did_load)
+				break
+			// this box can't accept being multiloaded into
+			if(!(ammo_box_multiload & AMMO_BOX_MULTILOAD_IN))
+				break
+			// the other box can't give multiple bullets in one go to an unloaded magazine
+			if(!isgun(loc) && !(other_box.ammo_box_multiload & AMMO_BOX_MULTILOAD_OUT))
+				break
+			// the other box can't give multiple bullets in one go to a loaded magazine
+			if(isgun(loc) && !(other_box.ammo_box_multiload & AMMO_BOX_MULTILOAD_OUT_LOADED))
 				break
 
 		if(num_loaded)
@@ -253,7 +298,9 @@
 
 /obj/item/ammo_box/magazine
 	name = "A magazine (what?)"
-	desc = "A magazine of rounds, they look like error signs..."
+	desc = "A magazine of rounds, they look like error signs... this should probably be reported somewhere."
+	abstract_type = /obj/item/ammo_box/magazine
+	ammo_box_multiload = AMMO_BOX_MULTILOAD_IN // so you can't use a magazine like a bootleg speedloader
 	drop_sound = 'sound/items/handling/gun/ballistics/magazine/magazine_drop1.ogg'
 	pickup_sound = 'sound/items/handling/gun/ballistics/magazine/magazine_pickup1.ogg'
 

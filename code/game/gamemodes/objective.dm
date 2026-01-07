@@ -196,7 +196,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	button_icon = 'icons/obj/devices/tracker.dmi'
 	button_icon_state = "beacon"
 
-/datum/action/special_equipment_fallback/Trigger(trigger_flags)
+/datum/action/special_equipment_fallback/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -649,7 +649,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 	if(item)
 		targetinfo = item
 		steal_target = targetinfo.targetitem
-		explanation_text = "Steal [targetinfo.name]"
+		explanation_text = "Steal [targetinfo.name]."
 		give_special_equipment(targetinfo.special_equipment)
 		return steal_target
 	else

@@ -108,7 +108,8 @@
  * See: [/obj/item/proc/melee_attack_chain]
  */
 /obj/item/proc/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers) //do stuff before attackby!
-	if(SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, target, user, modifiers, attack_modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
+	var/signal_result = SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, target, user, modifiers, attack_modifiers) | SEND_SIGNAL(user, COMSIG_USER_PRE_ITEM_ATTACK, src, target, modifiers, attack_modifiers)
+	if(signal_result & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	return FALSE //return TRUE to avoid calling attackby after this proc does stuff
 
@@ -124,7 +125,7 @@
  * See: [/obj/item/proc/melee_attack_chain]
  */
 /obj/item/proc/pre_attack_secondary(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
-	var/signal_result = SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK_SECONDARY, target, user, modifiers, attack_modifiers)
+	var/signal_result = SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK_SECONDARY, target, user, modifiers, attack_modifiers) | SEND_SIGNAL(user, COMSIG_USER_PRE_ITEM_ATTACK_SECONDARY, src, target, modifiers, attack_modifiers)
 
 	if(signal_result & COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -180,13 +181,18 @@
 	return attacking_item.attack_atom(src, user, modifiers, attack_modifiers)
 
 /mob/living/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	for(var/datum/surgery/operation as anything in surgeries)
-		if(IS_IN_INVALID_SURGICAL_POSITION(src, operation))
-			continue
-		if(!(operation.surgery_flags & SURGERY_SELF_OPERABLE) && (user == src) && !HAS_TRAIT(user, TRAIT_SELF_SURGERY))
-			continue
-		if(operation.next_step(user, modifiers))
-			return ITEM_INTERACT_SUCCESS
+	if(user.combat_mode)
+		return NONE
+
+	if(HAS_TRAIT(src, TRAIT_READY_TO_OPERATE))
+		var/surgery_ret = user.perform_surgery(src, tool, LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(surgery_ret)
+			return surgery_ret
+
+	if(src == user)
+		var/manual_cauterization = try_manual_cauterize(tool)
+		if(manual_cauterization & ITEM_INTERACT_ANY_BLOCKER)
+			return manual_cauterization
 
 	return NONE
 
@@ -246,7 +252,7 @@
 
 	if(get(src, /mob/living) == user) // telekinesis.
 		user.do_attack_animation(target_mob)
-	if(!target_mob.attacked_by(src, user, modifiers, attack_modifiers))
+	if(target_mob.attacked_by(src, user, modifiers, attack_modifiers) == ATTACK_FAILED)
 		return TRUE
 
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target_mob, user, modifiers, attack_modifiers)
@@ -281,7 +287,8 @@
 	user.changeNext_move(attack_speed)
 	if(get(src, /mob/living) == user) // telekinesis.
 		user.do_attack_animation(attacked_atom)
-	attacked_atom.attacked_by(src, user, modifiers, attack_modifiers)
+	if(attacked_atom.attacked_by(src, user, modifiers, attack_modifiers) == ATTACK_FAILED)
+		return TRUE
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, attacked_atom, user, modifiers, attack_modifiers)
 	SEND_SIGNAL(attacked_atom, COMSIG_ATOM_AFTER_ATTACKEDBY, src, user, modifiers, attack_modifiers)
 	afterattack(attacked_atom, user, modifiers, attack_modifiers)
@@ -290,7 +297,8 @@
 /// Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds
 /atom/proc/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!uses_integrity)
-		CRASH("attacked_by() was called on an object that doesn't use integrity!")
+		stack_trace("attacked_by() was called on an object that doesn't use integrity!")
+		return ATTACK_FAILED
 
 	var/final_force = CALCULATE_FORCE(attacking_item, attack_modifiers)
 	if(final_force <= 0)
@@ -304,7 +312,8 @@
 	return damage
 
 /area/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	CRASH("areas are NOT supposed to have attacked_by() called on them!")
+	stack_trace("areas are NOT supposed to have attacked_by() called on them!")
+	return ATTACK_FAILED
 
 /mob/living/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 
@@ -329,26 +338,26 @@
 		), ARMOR_MAX_BLOCK)
 
 	var/final_force = CALCULATE_FORCE(attacking_item, attack_modifiers)
-	if(mob_biotypes & MOB_ROBOTIC)
+	if(mob_biotypes & (MOB_ROBOTIC|MOB_MINERAL|MOB_SKELETAL)) // this should probably check hit bodypart for humanoids
 		final_force *= attacking_item.get_demolition_modifier(src)
 
 	var/wounding = attacking_item.wound_bonus
-	if((attacking_item.item_flags & SURGICAL_TOOL) && !user.combat_mode && body_position == LYING_DOWN && (LAZYLEN(surgeries) > 0))
+	if((attacking_item.item_flags & SURGICAL_TOOL) && !user.combat_mode && HAS_TRAIT(user, TRAIT_READY_TO_OPERATE))
 		wounding = CANT_WOUND
 
 	if(user != src)
 		// This doesn't factor in armor, or most damage modifiers (physiology). Your mileage may vary
 		if(check_block(attacking_item, final_force, "\the [attacking_item]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype))
-			return 0
+			return ATTACK_FAILED
 
 	SEND_SIGNAL(attacking_item, COMSIG_ITEM_ATTACK_ZONE, src, user, targeting)
 
 	if(final_force <= 0)
-		return 1 // Pretend like we did 1 damage so afterattack still runs
+		return 0
 
 	if(ishuman(src) || client) // istype(src) is kinda bad, but it's to avoid spamming the blackbox
 		SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
-		SSblackbox.record_feedback("tally", "zone_targeted", 1, targeting_human_readable)
+		SSblackbox.record_feedback("tally", "zone_targeted", 1, user.zone_selected)
 
 	var/damage_done = apply_damage(
 		damage = final_force,
@@ -417,7 +426,7 @@
 
 			if(!attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_HEAD_INJURY_BLOCKED) && attacking_item.damtype == BRUTE)
 				if(prob(damage_done))
-					adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
+					adjust_organ_loss(ORGAN_SLOT_BRAIN, 20)
 					if(stat == CONSCIOUS)
 						visible_message(
 							span_danger("[src] is knocked senseless!"),
@@ -428,7 +437,7 @@
 					if(prob(10))
 						gain_trauma(/datum/brain_trauma/mild/concussion)
 				else
-					adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_done * 0.2)
+					adjust_organ_loss(ORGAN_SLOT_BRAIN, damage_done * 0.2)
 
 				// rev deconversion through blunt trauma.
 				// this can be signalized to the rev datum
@@ -475,6 +484,11 @@
 			return clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
 /mob/living/proc/send_item_attack_message(obj/item/weapon, mob/living/user, hit_area, def_zone)
+	if(SEND_SIGNAL(weapon, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT, src, user) & SIGNAL_MESSAGE_MODIFIED)
+		return TRUE
+	if(SEND_SIGNAL(src, COMSIG_SEND_ITEM_ATTACK_MESSAGE_CARBON, weapon, user) & SIGNAL_MESSAGE_MODIFIED)
+		return TRUE
+
 	if(!weapon.force && !length(weapon.attack_verb_simple) && !length(weapon.attack_verb_continuous))
 		return
 

@@ -94,9 +94,16 @@
 		animate(alpha = 50, time = 7.5 SECONDS, loop = -1, easing = SINE_EASING)
 	return TRUE
 
-/datum/status_effect/golem/on_creation(mob/living/new_owner)
+/datum/status_effect/golem/on_creation(mob/living/new_owner, multiplier = 1)
+	///instead of straight out multiplying the duration, we use exponents to flatten the duration so it doesn't become exceedingly long for golems
+	var/exponent = 0.2
 	if(!isgolem(new_owner))
 		duration *= 0.1
+		exponent = 0.5 //non-golem benefit more from higher multipliers since it normally only lasts for 30 seconds for them.
+	if(multiplier > 1)
+		duration *= multiplier ** exponent
+	else // if the multiplier is lower than 1, don't bother using powers.
+		duration *= multiplier
 	var/buff_duration = duration
 	. = ..()
 	if (!.)
@@ -286,6 +293,10 @@
 	var/moving_alpha = 200
 	/// List of arms we have updated
 	var/list/modified_arms
+	/// Arm -> original attack verbs assoc list
+	var/list/initial_unarmed_verbs = list()
+	/// Arm -> original past attack verbs assocl ist
+	var/list/initial_unarmed_verbs_past = list()
 
 /datum/status_effect/golem/diamond/on_apply()
 	. = ..()
@@ -300,7 +311,7 @@
 		set_arm_fluff(arm)
 	return TRUE
 
-/datum/status_effect/golem/diamond/tick(delta_time, times_fired)
+/datum/status_effect/golem/diamond/tick(delta_time)
 	owner.alpha = max(owner.alpha - alpha_per_tick, 0)
 
 /// Reset alpha to starting value
@@ -310,8 +321,12 @@
 
 /// Make our arm do slashing effects
 /datum/status_effect/golem/diamond/proc/set_arm_fluff(obj/item/bodypart/arm/arm)
+	initial_unarmed_verbs[arm] = arm.unarmed_attack_verbs
+	initial_unarmed_verbs_past[arm] = arm.unarmed_attack_verbs_continuous
 	arm.unarmed_attack_verbs = list("slash")
+	arm.unarmed_attack_verbs_continuous = list("slashes")
 	arm.grappled_attack_verb = "lacerate"
+	arm.grappled_attack_verb_continuous = "lacerates"
 	arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	arm.unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
 	arm.unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
@@ -325,13 +340,18 @@
 	for (var/obj/item/bodypart/arm/arm as anything in modified_arms)
 		reset_arm_fluff(arm)
 	LAZYCLEARLIST(modified_arms)
+	initial_unarmed_verbs.Cut()
+	initial_unarmed_verbs_past.Cut()
 	return ..()
 
 /// Make our arm do whatever it originally did
 /datum/status_effect/golem/diamond/proc/reset_arm_fluff(obj/item/bodypart/arm/arm)
 	if (!arm)
 		return
-	arm.unarmed_attack_verbs = initial(arm.unarmed_attack_verbs)
+	arm.unarmed_attack_verbs = initial_unarmed_verbs[arm]
+	arm.unarmed_attack_verbs_continuous = initial_unarmed_verbs_past[arm]
+	arm.grappled_attack_verb = initial(arm.grappled_attack_verb)
+	arm.grappled_attack_verb_continuous = initial(arm.grappled_attack_verb_continuous)
 	arm.unarmed_attack_effect = initial(arm.unarmed_attack_effect)
 	arm.unarmed_attack_sound = initial(arm.unarmed_attack_sound)
 	arm.unarmed_miss_sound = initial(arm.unarmed_miss_sound)
@@ -341,6 +361,8 @@
 /datum/status_effect/golem/diamond/proc/on_arm_destroyed(obj/item/bodypart/arm/arm)
 	SIGNAL_HANDLER
 	modified_arms -= arm
+	initial_unarmed_verbs -= arm
+	initial_unarmed_verbs_past -= arm
 
 /// Makes you tougher
 /datum/status_effect/golem/titanium
@@ -351,7 +373,7 @@
 	alert_desc = "You are more resistant to physical blows, and pack more of a punch yourself."
 	filter_color = LIGHT_COLOR_HALOGEN
 	/// Amount to reduce brute damage by
-	var/brute_modifier = 0.7
+	var/brute_modifier = 0.8 // golems already have an innate 0.5 brute resistance - this is multiplicate on top of that
 	/// How much extra damage do we do with our fists?
 	var/damage_increase = 3
 	/// Deal this much extra damage to mining mobs, most of which take 0 unarmed damage usually

@@ -3,10 +3,6 @@
 	var/name = "Crate"
 	/// The group that the supply pack is sorted into within the cargo purchasing UI.
 	var/group = ""
-	/// Is this cargo supply pack visible to the cargo purchasing UI.
-	var/hidden = FALSE
-	/// Is this supply pack purchasable outside of the standard purchasing band? Contraband is available by multitooling the cargo purchasing board.
-	var/contraband = FALSE
 	/// Cost of the crate. DO NOT GO ANY LOWER THAN X1.4 the "CARGO_CRATE_VALUE" value if using regular crates, or infinite profit will be possible!
 	var/cost = CARGO_CRATE_VALUE * 1.4
 	/// What access is required to open the crate when spawned?
@@ -25,24 +21,14 @@
 	var/desc = ""
 	/// What typepath of crate do you spawn?
 	var/crate_type = /obj/structure/closet/crate
-	/// Should we message admins?
-	var/dangerous = FALSE
-	/// Event/Station Goals/Admin enabled packs
-	var/special = FALSE
-	/// When a cargo pack can be unlocked by special events (as seen in special), this toggles if it's been enabled in the round yet (For example, after the station alert, we can now enable buying the station goal pack).
-	var/special_enabled = FALSE
-	/// Only usable by the Bluespace Drop Pod via the express cargo console
-	var/drop_pod_only = FALSE
 	/// If this pack comes shipped in a specific pod when launched from the express console
 	var/special_pod
-	/// Was this spawned through an admin proc?
-	var/admin_spawned = FALSE
-	/// Goodies can only be purchased by private accounts and can have coupons apply to them. They also come in a lockbox instead of a full crate, so the crate price min doesn't apply
-	var/goody = FALSE
 	/// Can coupons target this pack? If so, how rarely?
 	var/discountable = SUPPLY_PACK_NOT_DISCOUNTABLE
 	/// Is this supply pack considered unpredictable for the purposes of testing unit testing? Examples include the stock market, or miner supply crates. If true, exempts from unit testing
 	var/test_ignored = FALSE
+	/// Various properties for cargo order mostly used to determine which consoles can see it
+	var/order_flags = NONE
 
 /datum/supply_pack/New()
 	id = type
@@ -95,7 +81,7 @@
 			contains[item] = 1
 		for(var/iteration = 1 to contains[item])
 			var/atom/A = new item(C)
-			if(!admin_spawned)
+			if(!(order_flags & ORDER_ADMIN_SPAWNED))
 				continue
 			A.flags_1 |= ADMIN_SPAWNED_1
 
@@ -126,7 +112,7 @@
  */
 /datum/supply_pack/custom
 	name = "mining order"
-	hidden = TRUE
+	order_flags = ORDER_INVISIBLE
 	crate_name = "shaft mining delivery crate"
 	access = ACCESS_MINING
 	test_ignored = TRUE
@@ -149,24 +135,26 @@
 	src.cost = cost
 	src.contains = contains
 
-/datum/supply_pack/custom/minerals/fill(obj/structure/closet/crate/C)
+///Alters material amrkey & adjust order quantities if they exceed whats on the market
+/datum/supply_pack/custom/minerals/proc/adjust_market()
+	. = list()
 	for(var/obj/item/stack/sheet/possible_stack as anything in contains)
-		var/material_type = initial(possible_stack.material_type)
+		var/material_type = possible_stack.material_type
 		//in case we ordered more than what's in the market at the time due to market fluctuations
 		//we find the min of what was ordered & what's actually available in the market at this point of time
 		var/market_quantity = SSstock_market.materials_quantity[material_type]
-		var/available_quantity = min(contains[possible_stack], market_quantity)
-		if(!available_quantity)
-			continue
+		var/available_quantity = contains[possible_stack]
+		if(available_quantity > market_quantity)
+			var/message = "[possible_stack::singular_name]: requested=[available_quantity] sheets, available=[market_quantity] sheets, adjusted=[market_quantity - available_quantity] sheets."
+			available_quantity = market_quantity
+			if(!available_quantity)
+				. += "[possible_stack::singular_name]: order cancelled due to insufficient sheets in the market."
+				contains -= possible_stack
+				continue
+			. += message
 
-		//spawn the ordered stack inside the crate
-		var/sheets_to_spawn = available_quantity
-		while(sheets_to_spawn)
-			var/spawn_quantity = min(sheets_to_spawn, MAX_STACK_SIZE)
-			var/obj/item/stack/sheet/ordered_stack = new possible_stack(C, spawn_quantity)
-			if(admin_spawned)
-				ordered_stack.flags_1 |= ADMIN_SPAWNED_1
-			sheets_to_spawn -= spawn_quantity
+		//adjust the order based ont the available quantity
+		contains[possible_stack] = available_quantity
 
 		//Prices go up as material quantity becomes scarce
 		var/fraction = available_quantity
@@ -176,3 +164,14 @@
 
 		//We decrease the quantity only after adjusting our prices for accurate values
 		SSstock_market.adjust_material_quantity(material_type, -available_quantity)
+
+/datum/supply_pack/custom/minerals/fill(obj/structure/closet/crate/C)
+	for(var/obj/item/stack/sheet/possible_stack as anything in contains)
+		//spawn the ordered stack inside the crate
+		var/sheets_to_spawn = contains[possible_stack]
+		while(sheets_to_spawn)
+			var/spawn_quantity = min(sheets_to_spawn, MAX_STACK_SIZE)
+			var/obj/item/stack/sheet/ordered_stack = new possible_stack(C, spawn_quantity)
+			if(order_flags & ORDER_ADMIN_SPAWNED)
+				ordered_stack.flags_1 |= ADMIN_SPAWNED_1
+			sheets_to_spawn -= spawn_quantity

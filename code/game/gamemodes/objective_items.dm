@@ -295,11 +295,10 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	steal_hint = "A self-defense weapon standard-issue for all heads of staffs barring the Head of Security. Rarely found off of their person."
 
 /datum/objective_item/steal/traitor/telebaton/check_special_completion(obj/item/thing)
-	return thing.type == /obj/item/melee/baton/telescopic
+	return !istype(thing, /obj/item/melee/baton/telescopic/contractor_baton)
 
 /obj/item/melee/baton/telescopic/add_stealing_item_objective()
-	if(type == /obj/item/melee/baton/telescopic)
-		return add_item_to_steal(src, /obj/item/melee/baton/telescopic)
+	return add_item_to_steal(src, /obj/item/melee/baton/telescopic)
 
 /datum/objective_item/steal/traitor/cargo_budget
 	name = "cargo's departmental budget"
@@ -402,15 +401,15 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 
 /datum/objective_item/steal/jetpack
 	name = "the Captain's jetpack"
-	targetitem = /obj/item/tank/jetpack/oxygen/captain
+	targetitem = /obj/item/tank/jetpack/captain
 	excludefromjob = list(JOB_CAPTAIN)
 	item_owner = list(JOB_CAPTAIN)
 	exists_on_map = TRUE
 	difficulty = 3
 	steal_hint = "A special yellow jetpack found in the Suit Storage Unit in the Captain's Quarters."
 
-/obj/item/tank/jetpack/oxygen/captain/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/tank/jetpack/oxygen/captain)
+/obj/item/tank/jetpack/captain/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/tank/jetpack/captain)
 
 /datum/objective_item/steal/magboots
 	name = "the chief engineer's advanced magnetic boots"
@@ -521,15 +520,15 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 
 /datum/objective_item/steal/hdd_extraction
 	name = "the source code for Project Goon from the master R&D server mainframe"
-	targetitem = /obj/item/computer_disk/hdd_theft
+	targetitem = /obj/item/disk/computer/hdd_theft
 	excludefromjob = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST)
 	item_owner = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 	exists_on_map = TRUE
 	difficulty = 4
 	steal_hint = "The hard drive of the master research server, found in R&D's server room."
 
-/obj/item/computer_disk/hdd_theft/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/computer_disk/hdd_theft)
+/obj/item/disk/computer/hdd_theft/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/disk/computer/hdd_theft)
 
 /datum/objective_item/steal/hdd_extraction/New()
 	special_equipment += /obj/item/paper/guides/antag/hdd_extraction
@@ -912,6 +911,17 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 /obj/item/mod/control/pre_equipped/rescue/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/mod/control/pre_equipped/rescue)
 
+/datum/objective_item/steal/spy/cmo_defib
+	name = "Chief Medical Officer's Compact Defibrillator"
+	targetitem = /obj/item/defibrillator/compact/loaded/cmo
+	excludefromjob = list(JOB_CHIEF_MEDICAL_OFFICER)
+	exists_on_map = TRUE
+	difficulty = 2
+	steal_hint = "The Compact Defibrillator, found on their person, or in their closet."
+
+/obj/item/defibrillator/compact/loaded/cmo/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/defibrillator/compact/loaded/cmo)
+
 /datum/objective_item/steal/spy/hos_modsuit
 	name = "the head of security's safeguard MOD control unit"
 	targetitem = /obj/item/mod/control/pre_equipped/safeguard
@@ -964,11 +974,11 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 
 /datum/objective_item/steal/spy/captain_sabre_sheathe
 	name = "the captain's sabre sheathe"
-	targetitem = /obj/item/storage/belt/sabre
+	targetitem = /obj/item/storage/belt/sheath/sabre
 	excludefromjob = list(JOB_CAPTAIN)
 	exists_on_map = TRUE
 	difficulty = 3
 	steal_hint = "The sheathe for the captain's sabre, found in their closet or strapped to their waist at all times."
 
-/obj/item/storage/belt/sabre/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/storage/belt/sabre)
+/obj/item/storage/belt/sheath/sabre/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/storage/belt/sheath/sabre)

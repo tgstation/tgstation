@@ -1,4 +1,5 @@
 /mob/living/simple_animal/hostile
+	abstract_type = /mob/living/simple_animal/hostile
 	faction = list(FACTION_HOSTILE)
 	stop_automated_movement_when_pulled = 0
 	obj_damage = 40
@@ -10,7 +11,7 @@
 	///How many shots per volley.
 	var/rapid = 0
 	///Time between rapid fire shots
-	var/rapid_fire_delay = 2
+	var/rapid_fire_delay = 2 DECISECONDS
 
 	///Are we dodging?
 	var/dodging = FALSE
@@ -48,7 +49,7 @@
 	///What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
 	var/ranged_cooldown = 0
 	///How long, in deciseconds, the cooldown of ranged attacks is
-	var/ranged_cooldown_time = 30
+	var/ranged_cooldown_time = 3 SECONDS
 	///if it'll fire ranged attacks even if it lacks vision on its target, only works with environment smash
 	var/ranged_ignores_vision = FALSE
 	///Should the ranged mob check for friendlies when shooting
@@ -71,9 +72,7 @@
 	///Timer for regaining our old search_objects value after being attacked
 	var/search_objects_timer_id
 	///The delay between being attacked and gaining our old search_objects value back
-	var/search_objects_regain_time = 30
-	///A typecache of objects types that will be checked against to attack, should we have search_objects enabled
-	var/list/wanted_objects = list()
+	var/search_objects_regain_time = 3 SECONDS
 	///Mobs ignore mob/living targets with a stat lower than that of stat_attack. If set to DEAD, then they'll include corpses in their targets, if to HARD_CRIT they'll keep attacking until they kill, and so on.
 	var/stat_attack = CONSCIOUS
 	///Mobs with this set to TRUE will exclusively attack things defined by stat_attack, stat_attack DEAD means they will only attack corpses
@@ -85,23 +84,17 @@
 	//Attempting to call GET_TARGETS_FROM(mob) when this var is null will just return mob as a base
 	///all range/attack/etc. calculations should be done from the atom this weakrefs, useful for Vehicles and such.
 	var/datum/weakref/targets_from
-	///if true, equivalent to having a wanted_objects list containing ALL objects.
-	var/attack_all_objects = FALSE
 	///id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
 	var/lose_patience_timer_id
 	///30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
-	var/lose_patience_timeout = 300
-
-/mob/living/simple_animal/hostile/Initialize(mapload)
-	. = ..()
-	wanted_objects = typecacheof(wanted_objects)
+	var/lose_patience_timeout = 30 SECONDS
 
 /mob/living/simple_animal/hostile/Destroy()
 	//We can't use losetarget here because fucking cursed blobs override it to do nothing the motherfuckers
 	GiveTarget(null)
 	return ..()
 
-/mob/living/simple_animal/hostile/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(!.) //dead
 		GLOB.move_manager.stop_looping(src)
@@ -292,10 +285,6 @@
 				return FALSE
 			if(P.machine_stat & BROKEN) //Or turrets that are already broken
 				return FALSE
-			return TRUE
-
-	if(isobj(the_target))
-		if(attack_all_objects || is_type_in_typecache(the_target, wanted_objects))
 			return TRUE
 
 	return FALSE

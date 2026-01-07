@@ -25,7 +25,7 @@ type Data = {
   pet_options: PetOptions[];
   pet_carrier: string;
   carrier_options: CarrierOptions[];
-  pet_possible_emotes: String[];
+  pet_possible_emotes: string[];
 };
 
 enum PetGender {

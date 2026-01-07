@@ -8,6 +8,7 @@
 	armor_type = /datum/armor/structure_fireaxecabinet
 	max_integrity = 150
 	integrity_failure = 0.33
+	custom_materials = /obj/item/wallframe/fireaxecabinet::custom_materials
 	/// Do we need to be unlocked to be opened.
 	var/locked = TRUE
 	/// Are we opened, can someone take the held item out.
@@ -20,6 +21,8 @@
 	var/item_overlay = "axe"
 	/// Whether we should populate our own contents on Initialize()
 	var/populate_contents = TRUE
+	/// The tool behavior necessary to unlock the cabinet
+	var/unlocking_tool_behavior = TOOL_MULTITOOL
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
@@ -36,7 +39,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	if(populate_contents)
 		held_item = new item_path(src)
 	update_appearance()
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/structure/fireaxecabinet/Destroy()
 	if(held_item)
@@ -44,7 +48,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	return ..()
 
 /obj/structure/fireaxecabinet/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(iscyborg(user) || attacking_item.tool_behaviour == TOOL_MULTITOOL)
+	if(iscyborg(user) || attacking_item.tool_behaviour == unlocking_tool_behavior)
 		toggle_lock(user)
 	else if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
 		if(atom_integrity < max_integrity)
@@ -218,6 +222,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/empty, 32)
 	icon_state = "fireaxe"
 	result_path = /obj/structure/fireaxecabinet/empty
 	pixel_shift = 32
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5.1, /datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 5, /datum/material/iron = SMALL_MATERIAL_AMOUNT)
 
 /obj/structure/fireaxecabinet/mechremoval
 	name = "mech removal tool cabinet"
@@ -243,3 +248,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval/empty, 32)
 	desc = "Home to a very special crowbar. Apply to wall to use."
 	icon_state = "mechremoval"
 	result_path = /obj/structure/fireaxecabinet/mechremoval/empty
+
+/obj/structure/fireaxecabinet/jawsofrecovery
+	name = "jaws of recovery tool cabinet"
+	desc = "There is a small label that reads \"For Emergency use only\" along with details for safe use of the jaws of recovery. \
+		The lock seems to require...a surgical drill bit to unlock? You have no idea who thought this was a good idea."
+	icon_state = "jaws_of_recovery"
+	item_path = /obj/item/crowbar/power/paramedic
+	item_overlay = "jaws"
+	unlocking_tool_behavior = TOOL_DRILL
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/jawsofrecovery, 32)
+
+/obj/structure/fireaxecabinet/jawsofrecovery/atom_deconstruct(disassembled = TRUE)
+	if(held_item && loc)
+		held_item.forceMove(loc)
+	new /obj/item/wallframe/fireaxecabinet/jawsofrecovery(loc)
+
+/obj/structure/fireaxecabinet/jawsofrecovery/empty
+	populate_contents = FALSE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/jawsofrecovery/empty, 32)
+
+/obj/item/wallframe/fireaxecabinet/jawsofrecovery
+	name = "jaws of recovery tool cabinet"
+	desc = "Home to the paramedic's jaws of recovery. Apply to wall to use."
+	icon_state = "jaws_of_recovery"
+	result_path = /obj/structure/fireaxecabinet/jawsofrecovery/empty

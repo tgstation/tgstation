@@ -47,7 +47,7 @@
 		return
 
 	mob_occupant.flash_act(override_blindness_check = TRUE, visual = TRUE)
-	mob_occupant.adjustOrganLoss(ORGAN_SLOT_BRAIN, disconnect_damage)
+	mob_occupant.adjust_organ_loss(ORGAN_SLOT_BRAIN, disconnect_damage)
 	INVOKE_ASYNC(mob_occupant, TYPE_PROC_REF(/mob/living, emote), "scream")
 	to_chat(mob_occupant, span_danger("You've been forcefully disconnected from your avatar! Your thoughts feel scrambled!"))
 
@@ -77,7 +77,16 @@
 		return
 
 	balloon_alert(neo, "establishing connection...")
-	if(!do_after(neo, 2 SECONDS, src))
+
+	// Prevent hand interactions during loading to stop smuggling exploits into virtual domain
+	ADD_TRAIT(neo, TRAIT_HANDS_BLOCKED, TRAIT_GENERIC)
+
+	var/connection_successful = do_after(neo, 2 SECONDS, src)
+
+	// Re-enable hand interactions after loading attempt
+	REMOVE_TRAIT(neo, TRAIT_HANDS_BLOCKED, TRAIT_GENERIC)
+
+	if(!connection_successful)
 		open_machine()
 		return
 
@@ -102,6 +111,7 @@
 		server = server, \
 		pod = src, \
 		help_text = generated_domain.help_text, \
+		copy_body = copy_body, \
 	)
 
 	connected = TRUE

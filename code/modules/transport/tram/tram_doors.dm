@@ -54,7 +54,6 @@
 	set_density(FALSE)
 	if(!isnull(filler))
 		filler.set_density(FALSE)
-	update_freelook_sight()
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, FALSE)
 	var/open_delay = animation_segment_delay(AIRLOCK_OPENING_FINISHED) - passable_delay
@@ -113,7 +112,6 @@
 	set_density(TRUE)
 	if(!isnull(filler))
 		filler.set_density(TRUE)
-	update_freelook_sight()
 	flags_1 |= PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, TRUE)
 	crush()
@@ -159,19 +157,14 @@
 	for(var/turf/checked_turf in locs)
 		for(var/mob/living/future_pancake in checked_turf)
 			future_pancake.visible_message(span_warning("[src] beeps angrily and closes on [future_pancake]!"), span_userdanger("[src] beeps angrily and closes on you!"))
-			SEND_SIGNAL(future_pancake, COMSIG_LIVING_DOORCRUSHED, src)
+			var/sig_return = SEND_SIGNAL(future_pancake, COMSIG_LIVING_DOORCRUSHED, src)
+			future_pancake.add_splatter_floor(loc)
+			log_combat(src, future_pancake, "crushed")
+			var/door_wounding = (sig_return & DOORCRUSH_NO_WOUND) ? CANT_WOUND : 10
+			future_pancake.apply_damage(DOOR_CRUSH_DAMAGE * 2, BRUTE, BODY_ZONE_CHEST, wound_bonus = door_wounding, attacking_item = src)
+			future_pancake.Paralyze(2 SECONDS)
 			if(ishuman(future_pancake))
 				future_pancake.emote("scream")
-				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 2)
-				future_pancake.Paralyze(2 SECONDS)
-
-			else //for simple_animals & borgs
-				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 2)
-				var/turf/location = get_turf(src)
-				//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
-				future_pancake.add_splatter_floor(location)
-
-			log_combat(src, future_pancake, "crushed")
 
 		for(var/obj/vehicle/sealed/mecha/mech in checked_turf) // Your fancy metal won't save you here!
 			mech.take_damage(DOOR_CRUSH_DAMAGE)

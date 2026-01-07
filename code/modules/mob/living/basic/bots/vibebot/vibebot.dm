@@ -9,12 +9,14 @@
 	light_range = 6
 	ai_controller = /datum/ai_controller/basic_controller/bot/vibebot
 	light_power = 2
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.8, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
+
 
 	hackables = "vibing scanners"
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE
 	bot_type = VIBE_BOT
-	data_hud_type = DATA_HUD_DIAGNOSTIC
+	data_hud_type = TRAIT_DIAGNOSTIC_HUD
 	path_image_color = "#2cac12"
 	possessed_message = "You are a vibebot! Maintain the station's vibes to the best of your ability!"
 

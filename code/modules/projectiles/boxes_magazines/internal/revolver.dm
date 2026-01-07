@@ -15,7 +15,7 @@
 	ammo_type = /obj/item/ammo_casing/c357
 	caliber = CALIBER_357
 	max_ammo = 6
-	multiload = FALSE
+	ammo_box_multiload = AMMO_BOX_MULTILOAD_NONE // presumably so you don't teleport in a full cylinder and end up shooting yourself immediately
 	start_empty = TRUE
 
 /obj/item/ammo_box/magazine/internal/cylinder/rus357/Initialize(mapload)

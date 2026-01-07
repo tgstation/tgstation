@@ -1,55 +1,84 @@
 import {
+  Box,
+  Button,
   DmIcon,
-  Icon,
   LabeledList,
+  NoticeBox,
   ProgressBar,
   Section,
   Stack,
   Table,
-  Tooltip,
 } from 'tgui-core/components';
 import { capitalizeFirst } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { Fallback } from './Fallback';
-import { PlantAnalyzerData } from './types';
+import type { PlantAnalyzerData } from './types';
 
-export function PlantAnalyzerTray(props) {
+export function PlantAnalyzerTrayStats(props) {
   const { data } = useBackend<PlantAnalyzerData>();
   const { tray_data } = data;
 
+  if (!tray_data) {
+    // This shouldn't be rendered if tray_data is null
+    return null;
+  }
+
   return (
-    <Section
-      title={capitalizeFirst(tray_data.name)}
-      buttons={
-        <>
-          {!!tray_data.self_sustaining && (
-            <Tooltip content="Self sustaining active, providing light, reclaiming water and reducing weed and pest levels.">
-              <Icon name="hand-holding-droplet" m={0.5} />
-            </Tooltip>
-          )}
-          {!!tray_data.being_pollinated && (
-            <Tooltip content="Cross pollinating nearby plants, potentially sharing plant reagents.">
-              <Icon name="wind" m={0.5} />
-            </Tooltip>
-          )}
-          {tray_data.yield_mod > 1 && (
-            <Tooltip content="Pollinated by bees, doubling the yield.">
-              <Icon name="sun" m={0.5} />
-            </Tooltip>
-          )}
-        </>
-      }
-    >
+    <Section title={capitalizeFirst(tray_data.name)}>
       <Stack>
         <Stack.Item mx={2}>
-          <DmIcon
-            fallback={Fallback}
-            icon={tray_data.icon}
-            icon_state={tray_data.icon_state}
-            height="64px"
-            width="64px"
-          />
+          <Stack vertical align="center" width="100px">
+            <Stack.Item>
+              <DmIcon
+                fallback={Fallback}
+                icon={tray_data.icon}
+                icon_state={tray_data.icon_state}
+                height="64px"
+                width="64px"
+              />
+            </Stack.Item>
+            <Stack.Item>
+              <Stack>
+                <Stack.Item>
+                  <Button
+                    icon="hand-holding-droplet"
+                    color={tray_data.self_sustaining ? 'yellow' : 'transparent'}
+                    tooltip={
+                      tray_data.self_sustaining
+                        ? 'Autogrow active - providing light, reclaiming water and reducing weed and pest levels.'
+                        : 'Autogrow inactive'
+                    }
+                    disabled={1}
+                  />
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    icon="wind"
+                    color={tray_data.being_pollinated ? 'teal' : 'transparent'}
+                    tooltip={
+                      tray_data.being_pollinated
+                        ? 'Cross pollinating nearby plants - potentially sharing plant reagents.'
+                        : 'Not cross pollinating'
+                    }
+                    disabled={1}
+                  />
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    icon="sun"
+                    color={tray_data.yield_mod > 1 ? 'olive' : 'transparent'}
+                    tooltip={
+                      tray_data.yield_mod > 1
+                        ? 'Pollinated by bees - doubling yield.'
+                        : 'No yield modifier'
+                    }
+                    disabled={1}
+                  />
+                </Stack.Item>
+              </Stack>
+            </Stack.Item>
+          </Stack>
         </Stack.Item>
         <Stack.Item width="100%">
           <LabeledList>
@@ -73,15 +102,32 @@ export function PlantAnalyzerTray(props) {
               label="Nutrients"
               tooltip="The plant starts withering without nutrients, unless it is a weed. Nutrients may affect plant and tray stats."
             >
-              <Tooltip
-                content={
-                  tray_data.reagents.length > 0 ? (
-                    <ReagentList reagents={tray_data.reagents} />
-                  ) : (
-                    'No reagents detected.'
-                  )
-                }
-              >
+              {tray_data.reagents.length > 0 ? (
+                <Box>
+                  <ProgressBar
+                    width="234px" // why won't you scale??
+                    position="absolute"
+                    value={0}
+                    color="transparent"
+                    style={{
+                      zIndex: 3,
+                      border: `1px solid ${nutriToColor(tray_data.nutri, tray_data.nutri_max)}`,
+                    }}
+                  >
+                    {tray_data.nutri} / {tray_data.nutri_max}
+                  </ProgressBar>
+                  {tray_data.reagents.map((reagent, i) => (
+                    <ProgressBar
+                      key={`${i}-${reagent.name}`}
+                      mb={-0.5}
+                      width={`${(reagent.volume / tray_data.nutri_max) * 234}px`}
+                      value={1}
+                      color={reagent.color}
+                      empty
+                    />
+                  ))}
+                </Box>
+              ) : (
                 <ProgressBar
                   value={tray_data.nutri / tray_data.nutri_max}
                   ranges={{
@@ -92,7 +138,7 @@ export function PlantAnalyzerTray(props) {
                 >
                   {tray_data.nutri} / {tray_data.nutri_max}
                 </ProgressBar>
-              </Tooltip>
+              )}
             </LabeledList.Item>
 
             <LabeledList.Item
@@ -169,22 +215,43 @@ export function PlantAnalyzerTray(props) {
   );
 }
 
-function ReagentList(props) {
-  const { reagents = [] } = props;
+export function PlantAnalyzerTrayChems(props) {
+  const { data } = useBackend<PlantAnalyzerData>();
+  const { tray_data } = data;
+
+  if (!tray_data) {
+    // This shouldn't be rendered if tray_data is null
+    return null;
+  }
 
   return (
-    <Table>
-      <Table.Row header>
-        <Table.Cell colSpan={2}>Reagents:</Table.Cell>
-      </Table.Row>
-      {reagents.map((reagent, i) => (
-        <Table.Row key={i}>
-          <Table.Cell>{reagent.name}</Table.Cell>
-          <Table.Cell py={0.5} pl={2} textAlign="right">
-            {reagent.volume}u
-          </Table.Cell>
-        </Table.Row>
-      ))}
-    </Table>
+    <Section title={capitalizeFirst(`${tray_data.name} Nutrients`)}>
+      {tray_data.reagents.length === 0 ? (
+        <NoticeBox color="red" align="center">
+          No reagents detected
+        </NoticeBox>
+      ) : (
+        <Table>
+          <Table.Row header>
+            <Table.Cell>Reagent</Table.Cell>
+            <Table.Cell>Volume</Table.Cell>
+          </Table.Row>
+          {tray_data.reagents.map((reagent, i) => (
+            <Table.Row key={i} className="candystripe">
+              <Table.Cell py={0.5} pl={1}>
+                {reagent.name}
+              </Table.Cell>
+              <Table.Cell>{reagent.volume}u</Table.Cell>
+            </Table.Row>
+          ))}
+        </Table>
+      )}
+    </Section>
   );
+}
+
+function nutriToColor(nutri: number, maxNutri: number) {
+  if (nutri < maxNutri * 0.3) return 'red';
+  if (nutri < maxNutri * 0.7) return 'yellow';
+  return 'green';
 }

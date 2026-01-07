@@ -972,7 +972,7 @@
 /obj/machinery/shower/directional/west{
 	name = "emergency shower"
 	},
-/obj/machinery/vending/wallmed/directional/east{
+/obj/machinery/wall_healer/free/directional/east{
 	name = "Hooper's First Medical Kit"
 	},
 /obj/machinery/light/small/directional/east,

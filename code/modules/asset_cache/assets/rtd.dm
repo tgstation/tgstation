@@ -11,7 +11,7 @@
 					populate_rtd_datums()
 				var/datum/tile_info/tile_data = design["datum"]
 				var/list/directions = tile_data.tile_directions_numbers || list(SOUTH)
-				for(var/direction as anything in directions)
+				for(var/direction in directions)
 					var/sprite_name = sanitize_css_class_name("[tile_data.icon_file]-[tile_data.icon_state]-[dir2text(direction)]")
 					if(registered[sprite_name])
 						continue

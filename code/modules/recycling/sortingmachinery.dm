@@ -1,6 +1,7 @@
 /obj/item/delivery
 	icon = 'icons/obj/storage/wrapping.dmi'
 	inhand_icon_state = "deliverypackage"
+	obj_flags = UNIQUE_RENAME | RENAME_NO_DESC
 	var/giftwrapped = 0
 	var/sort_tag = 0
 	var/obj/item/paper/note
@@ -73,22 +74,22 @@
 	if(!hasmob)
 		disposal_holder.destinationTag = sort_tag
 
-/obj/item/delivery/relay_container_resist_act(mob/living/user, obj/object)
+/obj/item/delivery/relay_container_resist_act(mob/living/user, obj/container)
 	if(ismovable(loc))
 		var/atom/movable/movable_loc = loc //can't unwrap the wrapped container if it's inside something.
-		movable_loc.relay_container_resist_act(user, object)
+		movable_loc.relay_container_resist_act(user, container)
 		return
-	to_chat(user, span_notice("You lean on the back of [object] and start pushing to rip the wrapping around it."))
-	if(do_after(user, 5 SECONDS, target = object))
-		if(!user || user.stat != CONSCIOUS || user.loc != object || object.loc != src)
+	to_chat(user, span_notice("You lean on the back of [container] and start pushing to rip the wrapping around it."))
+	if(do_after(user, 5 SECONDS, target = container))
+		if(!user || user.stat != CONSCIOUS || user.loc != container || container.loc != src)
 			return
-		to_chat(user, span_notice("You successfully removed [object]'s wrapping!"))
-		object.forceMove(loc)
+		to_chat(user, span_notice("You successfully removed [container]'s wrapping!"))
+		container.forceMove(loc)
 		unwrap_contents()
 		post_unwrap_contents(user)
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
-			to_chat(user, span_warning("You fail to remove [object]'s wrapping!"))
+			to_chat(user, span_warning("You fail to remove [container]'s wrapping!"))
 
 /obj/item/delivery/update_icon_state()
 	. = ..()
@@ -113,18 +114,6 @@
 			sort_tag = dest_tagger.currTag
 			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 100, TRUE)
 			update_appearance()
-	else if(IS_WRITING_UTENSIL(item))
-		if(!user.can_write(item))
-			return
-		var/str = tgui_input_text(user, "Label text?", "Set label", max_length = MAX_NAME_LEN)
-		if(!user.can_perform_action(src))
-			return
-		if(!str || !length(str))
-			to_chat(user, span_warning("Invalid text!"))
-			return
-		playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-		user.visible_message(span_notice("[user] labels [src] as [str]."))
-		name = "[name] ([str])"
 
 	else if(istype(item, /obj/item/stack/wrapping_paper) && !giftwrapped)
 		var/obj/item/stack/wrapping_paper/wrapping_paper = item
@@ -205,6 +194,10 @@
 	else
 		return ..()
 
+/obj/item/delivery/nameformat(input, user)
+	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	return "[name] ([input])" // This just repeatedly adds new labels, but i think that's intentional?
+
 /**
  * # Wrapped up crates and lockers - too big to carry.
  */
@@ -270,6 +263,9 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 
 /obj/item/dest_tagger/borg
 	name = "cyborg destination tagger"

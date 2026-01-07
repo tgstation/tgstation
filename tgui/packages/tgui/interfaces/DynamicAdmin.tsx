@@ -13,7 +13,7 @@ import {
   Tabs,
   Tooltip,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
@@ -380,21 +380,21 @@ const StatusPanel = () => {
 
 // This just reports the entire config
 const ConfigPanel = () => {
-  const { data, act } = useBackend<Data>();
-  const { full_config } = data;
+  const { data } = useBackend<Data>();
+  const { full_config = {} } = data;
+
+  const configKeys = Object.keys(full_config);
+  const [shownConfig, setShownConfig] = useState(configKeys[0]);
   // Config given to us is basically just a big json object
   // Future TODO make this a whole functional config editor
 
-  if (!full_config) {
+  if (configKeys.length === 0) {
     return (
       <NoticeBox>
         No config loaded - refer to repo defaults for reference.
       </NoticeBox>
     );
   }
-
-  const configKeys = Object.keys(full_config);
-  const [shownConfig, setShownConfig] = useState(configKeys[0]);
 
   return (
     <Stack vertical fill>

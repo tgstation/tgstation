@@ -433,8 +433,6 @@
 /obj/structure/barricade/security/ctf
 	name = "barrier"
 	desc = "A barrier. Provides cover in fire fights."
-	deploy_time = 0
-	deploy_message = 0
 
 /obj/structure/barricade/security/ctf/make_debris()
 	new /obj/effect/ctf/dead_barricade(get_turf(src))

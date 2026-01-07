@@ -72,7 +72,7 @@ If you make a derivative work from this code, you must include this notification
 	button_icon_state = "wrassle_slam"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 
-/datum/action/slam/Trigger(trigger_flags)
+/datum/action/slam/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -85,7 +85,7 @@ If you make a derivative work from this code, you must include this notification
 	button_icon_state = "wrassle_throw"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 
-/datum/action/throw_wrassle/Trigger(trigger_flags)
+/datum/action/throw_wrassle/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -98,7 +98,7 @@ If you make a derivative work from this code, you must include this notification
 	button_icon_state = "wrassle_kick"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_CONSCIOUS // This is supposed to be usable while cuffed but it probably isn't
 
-/datum/action/kick/Trigger(trigger_flags)
+/datum/action/kick/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -111,7 +111,7 @@ If you make a derivative work from this code, you must include this notification
 	button_icon_state = "wrassle_strike"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 
-/datum/action/strike/Trigger(trigger_flags)
+/datum/action/strike/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -124,7 +124,7 @@ If you make a derivative work from this code, you must include this notification
 	button_icon_state = "wrassle_drop"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED
 
-/datum/action/drop/Trigger(trigger_flags)
+/datum/action/drop/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -330,11 +330,11 @@ If you make a derivative work from this code, you must include this notification
 
 			switch(rand(1,3))
 				if (2)
-					defender.adjustBruteLoss(rand(20,30))
+					defender.adjust_brute_loss(rand(20,30))
 				if (3)
 					EX_ACT(defender, EXPLODE_LIGHT)
 				else
-					defender.adjustBruteLoss(rand(10,20))
+					defender.adjust_brute_loss(rand(10,20))
 		else
 			EX_ACT(defender, EXPLODE_LIGHT)
 
@@ -368,7 +368,7 @@ If you make a derivative work from this code, you must include this notification
 		defender.visible_message(span_danger("[attacker] headbutts [defender]!"), \
 						span_userdanger("You're headbutted by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 		to_chat(attacker, span_danger("You headbutt [defender]!"))
-		defender.adjustBruteLoss(rand(10,20))
+		defender.adjust_brute_loss(rand(10,20))
 		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
 		defender.Unconscious(2 SECONDS)
 	log_combat(attacker, defender, "headbutted")
@@ -384,7 +384,7 @@ If you make a derivative work from this code, you must include this notification
 					span_userdanger("You're roundhouse-kicked by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 	to_chat(attacker, span_danger("You roundhouse-kick [defender]!"))
 	playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
-	defender.adjustBruteLoss(rand(10,20))
+	defender.adjust_brute_loss(rand(10,20))
 
 	var/turf/T = get_edge_target_turf(attacker, get_dir(attacker, get_step_away(defender, attacker)))
 	if (T && isturf(T))
@@ -428,7 +428,7 @@ If you make a derivative work from this code, you must include this notification
 			if (falling == 1)
 				attacker.visible_message(span_danger("...and dives head-first into the ground, ouch!"), \
 								span_userdanger("...and dive head-first into the ground, ouch!"))
-				attacker.adjustBruteLoss(rand(10,20))
+				attacker.adjust_brute_loss(rand(10,20))
 				attacker.Paralyze(60)
 			to_chat(attacker, span_warning("[defender] is too far away!"))
 			return
@@ -456,9 +456,9 @@ If you make a derivative work from this code, you must include this notification
 			if (prob(33) || defender.stat)
 				EX_ACT(defender, EXPLODE_LIGHT)
 			else
-				defender.adjustBruteLoss(rand(20,30))
+				defender.adjust_brute_loss(rand(20,30))
 		else
-			defender.adjustBruteLoss(rand(20,30))
+			defender.adjust_brute_loss(rand(20,30))
 
 		defender.Paralyze(4 SECONDS)
 

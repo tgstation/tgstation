@@ -209,6 +209,7 @@
 /obj/item/storage/box/holy/adept/PopulateContents()
 	new /obj/item/clothing/suit/chaplainsuit/armor/adept(src)
 	new /obj/item/clothing/head/helmet/chaplain/adept(src)
+	new /obj/item/clothing/gloves/bracer(src)
 
 /obj/item/storage/box/holy/follower
 	name = "Followers of the Chaplain Kit"
@@ -230,6 +231,14 @@
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie/divine_archer(src)
 	new /obj/item/clothing/gloves/divine_archer(src)
 	new /obj/item/clothing/shoes/divine_archer(src)
+
+/obj/item/storage/box/holy/heretic
+	name = "Occult Practitioner Kit"
+	typepath_for_preview = /obj/item/clothing/suit/chaplainsuit/armor/heretic
+
+/obj/item/storage/box/holy/heretic/PopulateContents()
+	new /obj/item/clothing/suit/chaplainsuit/armor/heretic(src)
+	new /obj/item/clothing/head/helmet/chaplain/heretic(src)
 
 /obj/item/storage/box/floor_camo
 	name = "floor tile camo box"

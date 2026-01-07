@@ -15,7 +15,7 @@
 		return FALSE
 	return TRUE
 
-/datum/action/push_weights/Trigger(trigger_flags)
+/datum/action/push_weights/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return FALSE

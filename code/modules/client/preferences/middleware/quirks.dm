@@ -27,7 +27,6 @@
 	if(response != "Yes")
 		return TRUE
 
-
 /datum/preference_middleware/quirks/post_set_preference(mob/user, preference, value)
 	if(preference != "species")
 		return
@@ -49,6 +48,7 @@
 	var/list/data = list()
 
 	data["selected_quirks"] = get_selected_quirks()
+	data["default_quirk_balance"] = CONFIG_GET(number/default_quirk_points)
 	data["species_disallowed_quirks"] = get_species_compatibility()
 
 	return data
@@ -106,11 +106,12 @@
 		// If the client is sending an invalid give_quirk, that means that
 		// something went wrong with the client prediction, so we should
 		// catch it back up to speed.
-		preferences.update_static_data(user)
+		preferences.update_static_data(user, always_instant = TRUE)
 		return TRUE
 
 	preferences.all_quirks = new_quirks
 	preferences.character_preview_view?.update_body()
+	preferences.update_static_data(user, always_instant = TRUE)
 
 	return TRUE
 
@@ -125,11 +126,12 @@
 		// If the client is sending an invalid remove_quirk, that means that
 		// something went wrong with the client prediction, so we should
 		// catch it back up to speed.
-		preferences.update_static_data(user)
+		preferences.update_static_data(user, always_instant = TRUE)
 		return TRUE
 
 	preferences.all_quirks = new_quirks
 	preferences.character_preview_view?.update_body()
+	preferences.update_static_data(user, always_instant = TRUE)
 
 	return TRUE
 

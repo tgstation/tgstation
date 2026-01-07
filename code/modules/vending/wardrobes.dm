@@ -46,6 +46,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	products = list(
 		/obj/item/clothing/head/beret/sec = 3,
 		/obj/item/clothing/head/soft/sec = 3,
+		/obj/item/clothing/head/costume/ushanka/sec = 3,
 		/obj/item/clothing/mask/bandana/striped/security = 3,
 		/obj/item/clothing/under/rank/security/officer = 3,
 		/obj/item/clothing/under/rank/security/officer/skirt = 3,
@@ -155,7 +156,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "AtmosDrobe"
 	desc = "This relatively unknown vending machine delivers clothing for Atmospherics Technicians, an equally unknown job."
 	icon_state = "atmosdrobe"
-	product_ads = "Get your inflammable clothing right here!!!"
+	product_slogans = "Get your inflammable clothing right here!!!"
 	vend_reply = "Thank you for using the AtmosDrobe!"
 	products = list(
 		/obj/item/clothing/accessory/pocketprotector = 3,
@@ -314,7 +315,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "CuraDrobe"
 	desc = "A low-stock vendor only capable of vending clothing for curators and librarians."
 	icon_state = "curadrobe"
-	product_ads = "Glasses for your eyes and literature for your soul, Curadrobe has it all!; Impress & enthrall your library guests with Curadrobe's extended line of pens!"
+	product_slogans = "Glasses for your eyes and literature for your soul, Curadrobe has it all!; Impress & enthrall your library guests with Curadrobe's extended line of pens!"
 	vend_reply = "Thank you for using the CuraDrobe!"
 	products = list(
 		/obj/item/clothing/accessory/pocketprotector = 2,
@@ -327,10 +328,10 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/glasses/regular/jamjar = 1,
 		/obj/item/clothing/under/rank/civilian/curator = 1,
 		/obj/item/clothing/under/rank/civilian/curator/skirt = 1,
-		/obj/item/clothing/under/rank/captain/suit = 1,
-		/obj/item/clothing/under/rank/captain/suit/skirt = 1,
-		/obj/item/clothing/under/rank/civilian/head_of_personnel/suit = 1,
-		/obj/item/clothing/under/rank/civilian/head_of_personnel/suit/skirt = 1,
+		/obj/item/clothing/under/costume/captain = 1,
+		/obj/item/clothing/under/costume/captain/skirt = 1,
+		/obj/item/clothing/under/costume/head_of_personnel = 1,
+		/obj/item/clothing/under/costume/head_of_personnel/skirt = 1,
 		/obj/item/clothing/suit/toggle/lawyer/greyscale = 1,
 		/obj/item/storage/backpack/satchel/explorer = 1,
 		/obj/item/storage/backpack/messenger/explorer = 1,
@@ -421,10 +422,12 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	)
 	premium = list(
 		/obj/item/storage/box/dishdrive = 1,
+		/obj/item/construction/plumbing/service = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
 	payment_department = ACCOUNT_MED
 	extra_price = PAYCHECK_COMMAND
+
 /obj/item/vending_refill/wardrobe/bar_wardrobe
 	machine_name = "BarDrobe"
 
@@ -503,6 +506,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	icon_state = "lawdrobe"
 	product_ads = "OBJECTION! Get the rule of law for yourself!"
 	vend_reply = "Thank you for using the LawDrobe!"
+	extra_price = PAYCHECK_COMMAND * 3
 	products = list(
 		/obj/item/clothing/accessory/lawyers_badge = 2,
 		/obj/item/clothing/neck/tie = 3,
@@ -532,6 +536,9 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/radio/headset/headset_srv = 2,
 		/obj/item/storage/box/evidence = 2,
 		/obj/item/reagent_containers/cup/fish_feed = 1,
+	)
+	premium = list(
+		/obj/item/mod/control/pre_equipped/portable_suit = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -567,6 +574,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/radio/headset/headset_srv = 2,
 		/obj/item/clothing/suit/chaplainsuit/habit = 1,
 		/obj/item/clothing/head/chaplain/habit_veil = 1,
+		/obj/item/storage/box/purity_seal_box = 2,
 	)
 	contraband = list(
 		/obj/item/toy/plush/ratplush = 1,
@@ -645,7 +653,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	name = "ViroDrobe"
 	desc = "An unsterilized machine for dispensing virology related clothing."
 	icon_state = "virodrobe"
-	product_ads = " Viruses getting you down? Then upgrade to sterilized clothing today!"
+	product_slogans = " Viruses getting you down? Then upgrade to sterilized clothing today!"
 	vend_reply = "Thank you for using the ViroDrobe"
 	products = list(
 		/obj/item/clothing/mask/surgical = 2,
@@ -698,7 +706,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/under/rank/security/detective/kim = 1,
 		/obj/item/clothing/suit/jacket/det_suit/kim = 1,
 		/obj/item/clothing/gloves/kim = 1,
-		/obj/item/clothing/shoes/kim = 1,
+		/obj/item/clothing/shoes/jackboots/kim = 1,
 		/obj/item/reagent_containers/cup/glass/flask/det = 2,
 		/obj/item/storage/fancy/cigarettes = 5,
 		/obj/item/storage/fancy/cigarettes/cigpack_candy = 5,
@@ -742,6 +750,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 
 /obj/item/vending_refill/wardrobe/cent_wardrobe
 	machine_name = "CentDrobe"
+	icon_state = "refill_centdrobe"
 	light_color = LIGHT_COLOR_ELECTRIC_GREEN
 
 #undef MOTHROACH_START_CHANCE

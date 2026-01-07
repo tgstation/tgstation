@@ -93,7 +93,7 @@
 
 /obj/item/storage/box/seccarts/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/computer_disk/security(src)
+		new /obj/item/disk/computer/security(src)
 
 /obj/item/storage/box/firingpins
 	name = "box of standard firing pins"
@@ -219,7 +219,7 @@
 
 /obj/item/storage/box/large_dart
 	name = "box of XL shotgun darts"
-	name = "A box full of shotgun darts with increased chemical storage capacity."
+	desc = "A box full of shotgun darts with increased chemical storage capacity."
 	icon_state = "shotdart_box"
 	illustration = null
 

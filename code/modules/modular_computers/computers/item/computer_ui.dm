@@ -97,9 +97,9 @@
 	)
 
 	data["proposed_login"] = list(
-		IDInserted = computer_id_slot ? TRUE : FALSE,
-		IDName = computer_id_slot?.registered_name,
-		IDJob = computer_id_slot?.assignment,
+		IDInserted = stored_id ? TRUE : FALSE,
+		IDName = stored_id?.registered_name,
+		IDJob = stored_id?.assignment,
 	)
 
 	data["removable_media"] = list()
@@ -176,7 +176,7 @@
 			var/mob/user = usr
 			var/new_color
 			while(!new_color)
-				new_color = input(user, "Choose a new color for [src]'s flashlight.", "Light Color",light_color) as color|null
+				new_color = tgui_color_picker(user, "Choose a new color for [src]'s flashlight.", "Light Color",light_color)
 				if(!new_color)
 					return
 				if(is_color_dark(new_color, 50) ) //Colors too dark are rejected
@@ -211,7 +211,7 @@
 						return TRUE
 
 				if("ID")
-					if(RemoveID(user))
+					if(remove_id(user))
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 						return TRUE
 

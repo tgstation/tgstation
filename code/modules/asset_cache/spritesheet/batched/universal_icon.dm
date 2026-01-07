@@ -10,7 +10,7 @@
 	var/datum/icon_transformer/transform
 
 /// Don't instantiate these yourself, use uni_icon.
-/datum/universal_icon/New(icon/icon_file, icon_state="", dir=SOUTH, frame=1, datum/icon_transformer/transform=null, color=null)
+/datum/universal_icon/New(icon/icon_file, icon_state="", dir=null, frame=null, datum/icon_transformer/transform=null, color=null)
 	#ifdef UNIT_TESTS
 	// This check is kinda slow and shouldn't fail unless a developer makes a mistake. So it'll get caught in unit tests.
 	if(!isicon(icon_file) || !isfile(icon_file) || "[icon_file]" == "/icon" || !length("[icon_file]"))
@@ -44,10 +44,10 @@
 	transform.blend_color(color, blend_mode)
 	return src
 
-/datum/universal_icon/proc/blend_icon(datum/universal_icon/icon_object, blend_mode)
+/datum/universal_icon/proc/blend_icon(datum/universal_icon/icon_object, blend_mode, x=1, y=1)
 	if(!transform)
 		transform = new
-	transform.blend_icon(icon_object, blend_mode)
+	transform.blend_icon(icon_object, blend_mode, x, y)
 	return src
 
 /datum/universal_icon/proc/scale(width, height)
@@ -62,14 +62,116 @@
 	transform.crop(x1, y1, x2, y2)
 	return src
 
-/// Internally performs a crop.
-/datum/universal_icon/proc/shift(dir, amount, icon_width, icon_height)
+/datum/universal_icon/proc/flip(dir)
 	if(!transform)
 		transform = new
-	var/list/offsets = dir2offset(dir)
-	var/shift_x = -offsets[1] * amount
-	var/shift_y = -offsets[2] * amount
-	transform.crop(1 + shift_x, 1 + shift_y, icon_width + shift_x, icon_height + shift_y)
+	transform.flip(dir)
+	return src
+
+/datum/universal_icon/proc/rotate(angle)
+	if(!transform)
+		transform = new
+	transform.rotate(angle)
+	return src
+
+/datum/universal_icon/proc/shift(dir, offset, wrap=0)
+	if(!transform)
+		transform = new
+	transform.shift(dir, offset, wrap)
+	return src
+
+/datum/universal_icon/proc/swap_color(src_color, dst_color)
+	if(!transform)
+		transform = new
+	transform.swap_color(src_color, dst_color)
+	return src
+
+/datum/universal_icon/proc/draw_box(color, x1, y1, x2=x1, y2=y1)
+	if(!transform)
+		transform = new
+	transform.draw_box(color, x1, y1, x2, y2)
+	return src
+
+/datum/universal_icon/proc/map_colors_inferred(list/color_args)
+	var/num_args = length(color_args)
+	if(num_args <= 20 || num_args >= 16)
+		src.map_colors_rgba(arglist(color_args))
+	else if(num_args <= 12 || num_args >= 9)
+		src.map_colors_rgb(arglist(color_args))
+	else if(num_args == 5)
+		src.map_colors_rgba_hex(arglist(color_args))
+	else if(num_args == 4)
+		// is there alpha in the hex?
+		if(length(color_args[3]) == 7 || length(color_args[3]) == 4)
+			src.map_colors_rgb_hex(arglist(color_args))
+		else
+			src.map_colors_rgba_hex(arglist(color_args))
+	else if(num_args == 3)
+		src.map_colors_rgb_hex(arglist(color_args))
+
+/datum/universal_icon/proc/map_colors_rgba(rr, rg, rb, ra, gr, gg, gb, ga, br, bg, bb, ba, ar, ag, ab, aa, r0=0, g0=0, b0=0, a0=0)
+	if(!transform)
+		transform = new
+	transform.map_colors(rr, rg, rb, ra, gr, gg, gb, ga, br, bg, bb, ba, ar, ag, ab, aa, r0, g0, b0, a0)
+	return src
+
+/datum/universal_icon/proc/map_colors_rgb(rr, rg, rb, gr, gg, gb, br, bg, bb, r0=0, g0=0, b0=0)
+	if(!transform)
+		transform = new
+	transform.map_colors(rr, rg, rb, 0, gr, gg, gb, 0, br, bg, bb, 0, 0, 0, 0, 1, r0, g0, b0, 0)
+	return src
+
+/datum/universal_icon/proc/map_colors_rgb_hex(r_rgb, g_rgb, b_rgb, rgb0=rgb(0,0,0))
+	if(!transform)
+		transform = new
+	var/rr = hex2num(copytext(r_rgb, 2, 4)) / 255
+	var/rg = hex2num(copytext(r_rgb, 4, 6)) / 255
+	var/rb = hex2num(copytext(r_rgb, 6, 8)) / 255
+
+	var/gr = hex2num(copytext(g_rgb, 2, 4)) / 255
+	var/gg = hex2num(copytext(g_rgb, 4, 6)) / 255
+	var/gb = hex2num(copytext(g_rgb, 6, 8)) / 255
+
+	var/br = hex2num(copytext(b_rgb, 2, 4)) / 255
+	var/bg = hex2num(copytext(b_rgb, 4, 6)) / 255
+	var/bb = hex2num(copytext(b_rgb, 6, 8)) / 255
+
+	var/r0 = hex2num(copytext(rgb0, 2, 4)) / 255
+	var/b0 = hex2num(copytext(rgb0, 4, 6)) / 255
+	var/g0 = hex2num(copytext(rgb0, 6, 8)) / 255
+
+	transform.map_colors(rr, rg, rb, 0, gr, gg, gb, 0, br, bg, bb, 0, 0, 0, 0, 1, r0, b0, g0, 0)
+	return src
+
+/datum/universal_icon/proc/map_colors_rgba_hex(r_rgba, g_rgba, b_rgba, a_rgba, rgba0="#00000000")
+	if(!transform)
+		transform = new
+	var/rr = hex2num(copytext(r_rgba, 2, 4)) / 255
+	var/rg = hex2num(copytext(r_rgba, 4, 6)) / 255
+	var/rb = hex2num(copytext(r_rgba, 6, 8)) / 255
+	var/ra = hex2num(copytext(r_rgba, 8, 10)) / 255
+
+	var/gr = hex2num(copytext(g_rgba, 2, 4)) / 255
+	var/gg = hex2num(copytext(g_rgba, 4, 6)) / 255
+	var/gb = hex2num(copytext(g_rgba, 6, 8)) / 255
+	var/ga = hex2num(copytext(g_rgba, 8, 10)) / 255
+
+	var/br = hex2num(copytext(b_rgba, 2, 4)) / 255
+	var/bg = hex2num(copytext(b_rgba, 4, 6)) / 255
+	var/bb = hex2num(copytext(b_rgba, 6, 8)) / 255
+	var/ba = hex2num(copytext(b_rgba, 8, 10)) / 255
+
+	var/ar = hex2num(copytext(a_rgba, 2, 4)) / 255
+	var/ag = hex2num(copytext(a_rgba, 4, 6)) / 255
+	var/ab = hex2num(copytext(a_rgba, 6, 8)) / 255
+	var/aa = hex2num(copytext(a_rgba, 8, 10)) / 255
+
+	var/r0 = hex2num(copytext(rgba0, 2, 4)) / 255
+	var/b0 = hex2num(copytext(rgba0, 4, 6)) / 255
+	var/g0 = hex2num(copytext(rgba0, 6, 8)) / 255
+	var/a0 = hex2num(copytext(rgba0, 8, 10)) / 255
+
+	transform.map_colors(rr, rg, rb, ra, gr, gg, gb, ga, br, bg, bb, ba, ar, ag, ab, aa, r0, b0, g0, a0)
 	return src
 
 /// Internally performs a color blend.
@@ -118,11 +220,29 @@
 				if(!istype(icon_object))
 					stack_trace("Invalid icon found in icon transformer during apply()! [icon_object]")
 					continue
-				target.Blend(icon_object.to_icon(), transform["blend_mode"])
+				target.Blend(icon_object.to_icon(), transform["blend_mode"], transform["x"], transform["y"])
 			if(RUSTG_ICONFORGE_SCALE)
 				target.Scale(transform["width"], transform["height"])
 			if(RUSTG_ICONFORGE_CROP)
 				target.Crop(transform["x1"], transform["y1"], transform["x2"], transform["y2"])
+			if(RUSTG_ICONFORGE_MAP_COLORS)
+				target.MapColors(
+					transform["rr"], transform["rg"], transform["rb"], transform["ra"],
+					transform["gr"], transform["gg"], transform["gb"], transform["ga"],
+					transform["br"], transform["bg"], transform["bb"], transform["ba"],
+					transform["ar"], transform["ag"], transform["ab"], transform["aa"],
+					transform["r0"], transform["g0"], transform["b0"], transform["a0"],
+				)
+			if(RUSTG_ICONFORGE_FLIP)
+				target.Flip(transform["dir"])
+			if(RUSTG_ICONFORGE_TURN)
+				target.Turn(transform["angle"])
+			if(RUSTG_ICONFORGE_SHIFT)
+				target.Shift(transform["dir"], transform["offset"], transform["wrap"])
+			if(RUSTG_ICONFORGE_SWAP_COLOR)
+				target.SwapColor(transform["src_color"], transform["dst_color"])
+			if(RUSTG_ICONFORGE_DRAW_BOX)
+				target.DrawBox(transform["color"], transform["x1"], transform["y1"], transform["x2"], transform["y2"])
 	return target
 
 /datum/icon_transformer/proc/copy()
@@ -142,13 +262,17 @@
 	#endif
 	transforms += list(list("type" = RUSTG_ICONFORGE_BLEND_COLOR, "color" = color, "blend_mode" = blend_mode))
 
-/datum/icon_transformer/proc/blend_icon(datum/universal_icon/icon_object, blend_mode)
+/datum/icon_transformer/proc/blend_icon(datum/universal_icon/icon_object, blend_mode, x=1, y=1)
 	#ifdef UNIT_TESTS
 	// icon_object's type is checked later in to_list
 	if(!isnum(blend_mode))
 		CRASH("Invalid blend_mode provided to blend_icon: [blend_mode]")
+	if(!isnum(x))
+		CRASH("Invalid x offset provided to blend_icon: [x]")
+	if(!isnum(y))
+		CRASH("Invalid y offset provided to blend_icon: [y]")
 	#endif
-	transforms += list(list("type" = RUSTG_ICONFORGE_BLEND_ICON, "icon" = icon_object, "blend_mode" = blend_mode))
+	transforms += list(list("type" = RUSTG_ICONFORGE_BLEND_ICON, "icon" = icon_object, "blend_mode" = blend_mode, "x" = x, "y" = y))
 
 /datum/icon_transformer/proc/scale(width, height)
 	#ifdef UNIT_TESTS
@@ -163,6 +287,51 @@
 		CRASH("Invalid arguments provided to crop: [x1],[y1],[x2],[y2]")
 	#endif
 	transforms += list(list("type" = RUSTG_ICONFORGE_CROP, "x1" = x1, "y1" = y1, "x2" = x2, "y2" = y2))
+
+/datum/icon_transformer/proc/flip(dir)
+	#ifdef UNIT_TESTS
+	if(!isnum(dir))
+		CRASH("Invalid arguments provided to flip: [dir]")
+	#endif
+	transforms += list(list("type" = RUSTG_ICONFORGE_FLIP, "dir" = dir))
+
+/datum/icon_transformer/proc/rotate(angle)
+	#ifdef UNIT_TESTS
+	if(!isnum(angle))
+		CRASH("Invalid arguments provided to rotate: [angle]")
+	#endif
+	transforms += list(list("type" = RUSTG_ICONFORGE_TURN, "angle" = angle))
+
+/datum/icon_transformer/proc/shift(dir, offset, wrap=FALSE)
+	#ifdef UNIT_TESTS
+	if(!isnum(dir) || !isnum(offset) || (wrap != FALSE && wrap != TRUE))
+		CRASH("Invalid arguments provided to shift: [dir],[offset],[wrap]")
+	#endif
+	transforms += list(list("type" = RUSTG_ICONFORGE_SHIFT, "dir" = dir, "offset" = offset, "wrap" = wrap))
+
+/datum/icon_transformer/proc/swap_color(src_color, dst_color)
+	#ifdef UNIT_TESTS
+	if(!istext(src_color) || !istext(dst_color))
+		CRASH("Invalid arguments provided to swap_color: [src_color],[dst_color]")
+	#endif
+	transforms += list(list("type" = RUSTG_ICONFORGE_SWAP_COLOR, "src_color" = src_color, "dst_color" = dst_color))
+
+/datum/icon_transformer/proc/draw_box(color, x1, y1, x2=x1, y2=y1)
+	#ifdef UNIT_TESTS
+	if(!istext(color) || !isnum(x1) || !isnum(y1) || !isnum(x2) || !isnum(y2))
+		CRASH("Invalid arguments provided to draw_box: [color],[x1],[y1],[x2],[y2]")
+	#endif
+	transforms += list(list("type" = RUSTG_ICONFORGE_DRAW_BOX, "color" = color, "x1" = x1, "y1" = y1, "x2" = x2, "y2" = y2))
+
+/datum/icon_transformer/proc/map_colors(rr, rg, rb, ra, gr, gg, gb, ga, br, bg, bb, ba, ar, ag, ab, aa, r0=0, g0=0, b0=0, a0=0)
+	transforms += list(list(
+		"type" = RUSTG_ICONFORGE_MAP_COLORS,
+		"rr" = rr, "rg" = rg, "rb" = rb, "ra" = ra,
+		"gr" = gr, "gg" = gg, "gb" = gb, "ga" = ga,
+		"br" = br, "bg" = bg, "bb" = bb, "ba" = ba,
+		"ar" = ar, "ag" = ag, "ab" = ab, "aa" = aa,
+		"r0" = r0, "g0" = g0, "b0" = b0, "a0" = a0,
+	))
 
 /// Recursively converts all contained [/datum/universal_icon]s and their associated [/datum/icon_transformer]s into list form so the transforms can be JSON encoded.
 /datum/icon_transformer/proc/to_list()
@@ -218,21 +387,19 @@
 /proc/get_display_icon_for(atom/atom_path)
 	if (!ispath(atom_path, /atom))
 		return FALSE
-	var/icon_file = initial(atom_path.icon)
-	var/icon_state = initial(atom_path.icon_state)
-	if(initial(atom_path.greyscale_config) && initial(atom_path.greyscale_colors))
+	var/icon_file = atom_path::icon
+	var/icon_state = atom_path::icon_state
+	if(atom_path::greyscale_config && atom_path::greyscale_colors)
 		return gags_to_universal_icon(atom_path)
 	if(ispath(atom_path, /obj))
 		var/obj/obj_path = atom_path
-		if(initial(obj_path.icon_state_preview))
-			icon_state = initial(obj_path.icon_state_preview)
-	return uni_icon(icon_file, icon_state, color=initial(atom_path.color))
+		if(obj_path::icon_state_preview)
+			icon_state = obj_path::icon_state_preview
+	return uni_icon(icon_file, icon_state, color=atom_path::color)
 
 /// getFlatIcon for [/datum/universal_icon]s
-/// Only supports 32x32 icons facing south
-/// Tough luck if you want anything else
 /// Still fairly slow for complex appearances due to filesystem operations. Try to avoid using it
-/proc/get_flat_uni_icon(image/appearance, deficon, defstate, defblend, start = TRUE, parentcolor)
+/proc/get_flat_uni_icon(image/appearance, defdir, deficon, defstate, defblend, start = TRUE, parentcolor)
 	// Loop through the underlays, then overlays, sorting them into the layers list
 	#define PROCESS_OVERLAYS_OR_UNDERLAYS(flat, process, base_layer) \
 		for (var/i in 1 to process.len) { \
@@ -283,7 +450,7 @@
 	var/curstate = appearance.icon_state || defstate
 	// Filter out 'runtime' icons (server-generated RSC cache icons)
 	// Write the icon to the filesystem so it can be used by iconforge
-	if(!isfile(curicon) || string_curicon == "/icon" || string_curicon == "/image" || !length(string_curicon))
+	if(!isfile(curicon) || !length(string_curicon))
 		var/file_path_tmp = "tmp/uni_icon-tmp-[rand(1, 999)].dmi" // this filename is temporary.
 		fcopy(curicon, file_path_tmp)
 		var/file_hash = rustg_hash_file(RUSTG_HASH_MD5, file_path_tmp)
@@ -293,13 +460,43 @@
 		fdel(file_path_tmp) // delete the old one
 		curicon = file(file_path)
 
-	var/curblend = appearance.blend_mode || defblend
-	var/list/curstates = icon_states(curicon)
-	if(!(curstate in curstates))
-		if("" in curstates) // BYOND defaulting functionality
+	if(!icon_exists(curicon, curstate))
+		if("" in icon_states_fast(curicon)) // BYOND defaulting functionality
 			curstate = ""
 		else
 			should_display = FALSE
+
+	var/curdir = (!appearance.dir || appearance.dir == SOUTH) ? defdir : appearance.dir
+	var/base_icon_dir //We'll use this to get the icon state to display if not null BUT NOT pass it to overlays as the dir we have
+
+	if(should_display)
+		//Determines if there're directionals.
+		if (curdir != SOUTH)
+			// icon states either have 1, 4 or 8 dirs. We only have to check
+			// one of NORTH, EAST or WEST to know that this isn't a 1-dir icon_state since they just have SOUTH.
+			var/list/metadata = icon_metadata(curicon)
+			if(islist(metadata))
+				for(var/list/state_data as anything in metadata["states"])
+					var/name = state_data["name"]
+					if(name != curstate)
+						continue
+					var/dir_count = state_data["dirs"]
+					if(dir_count == 1)
+						base_icon_dir = SOUTH
+			else if(!length(icon_states(icon(curicon, curstate, NORTH))))
+				base_icon_dir = SOUTH
+
+		var/list/icon_dimensions = get_icon_dimensions(curicon)
+		var/icon_width = icon_dimensions["width"]
+		var/icon_height = icon_dimensions["height"]
+		if(icon_width != 32 || icon_height != 32)
+			flat.scale(icon_width, icon_height)
+
+	if(!base_icon_dir)
+		base_icon_dir = curdir
+
+	var/curblend = appearance.blend_mode || defblend
+
 
 	if(appearance.overlays.len || appearance.underlays.len)
 		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
@@ -307,7 +504,7 @@
 		var/image/copy
 		if(should_display)
 			// Add the atom's icon itself, without pixel_x/y offsets.
-			copy = image(icon=curicon, icon_state=curstate, layer=appearance.layer, dir=SOUTH)
+			copy = image(icon=curicon, icon_state=curstate, layer=appearance.layer, dir=base_icon_dir)
 			copy.color = appearance.color
 			copy.alpha = appearance.alpha
 			copy.blend_mode = curblend
@@ -318,15 +515,26 @@
 
 		var/datum/universal_icon/add // Icon of overlay being added
 
+		var/list/flat_dimensions = get_icon_dimensions(flat)
+		var/flatX1 = 1
+		var/flatX2 = flat_dimensions["width"]
+		var/flatY1 = 1
+		var/flatY2 = flat_dimensions["height"]
+
+		var/addX1 = 0
+		var/addX2 = 0
+		var/addY1 = 0
+		var/addY2 = 0
+
 		if(appearance.color)
 			if(islist(appearance.color))
-				stack_trace("Unsupported color map appearance provided to get_flat_uni_icon, ignoring it.")
+				flat.map_colors_inferred(appearance.color)
 			else
 				flat.blend_color(appearance.color, ICON_MULTIPLY)
 
 		if(parentcolor && !(appearance.appearance_flags & RESET_COLOR))
 			if(islist(parentcolor))
-				stack_trace("Unsupported color map appearance provided to get_flat_uni_icon, ignoring it.")
+				flat.map_colors_inferred(parentcolor)
 			else
 				flat.blend_color(parentcolor, ICON_MULTIPLY)
 
@@ -338,19 +546,45 @@
 
 			if(layer_image == copy && length("[layer_image.icon]")) // 'layer_image' is an /image based on the object being flattened, and isn't a 'runtime' icon.
 				curblend = BLEND_OVERLAY
-				add = uni_icon(layer_image.icon, layer_image.icon_state, SOUTH)
+				add = uni_icon(layer_image.icon, layer_image.icon_state, base_icon_dir)
 				if(appearance.color)
 					if(islist(appearance.color))
-						stack_trace("Unsupported color map appearance provided to get_flat_uni_icon, ignoring it.")
+						add.map_colors_inferred(appearance.color)
 					else
 						add.blend_color(appearance.color, ICON_MULTIPLY)
 			else // 'layer_image' is an appearance object.
-				add = get_flat_uni_icon(layer_image, curicon, curstate, curblend, FALSE, next_parentcolor)
+				add = get_flat_uni_icon(layer_image, curdir, curicon, curstate, curblend, FALSE, next_parentcolor)
 			if(!add || !length(add.icon_file))
 				continue
 
+			// Find the new dimensions of the flat icon to fit the added overlay
+			var/list/add_dimensions = get_icon_dimensions(add)
+			addX1 = min(flatX1, layer_image.pixel_x + layer_image.pixel_w + 1)
+			addX2 = max(flatX2, layer_image.pixel_x + layer_image.pixel_w + add_dimensions["width"]) // assuming 32x32
+			addY1 = min(flatY1, layer_image.pixel_y + layer_image.pixel_z + 1)
+			addY2 = max(flatY2, layer_image.pixel_y + layer_image.pixel_z + add_dimensions["height"])
+
+			if (
+				addX1 != flatX1 \
+				&& addX2 != flatX2 \
+				&& addY1 != flatY1 \
+				&& addY2 != flatY2 \
+			)
+				// Resize the flattened icon so the new icon fits
+				flat.crop(
+					addX1 - flatX1 + 1,
+					addY1 - flatY1 + 1,
+					addX2 - flatX1 + 1,
+					addY2 - flatY1 + 1
+				)
+
+				flatX1 = addX1
+				flatX2 = addY1
+				flatY1 = addX2
+				flatY2 = addY2
+
 			// Blend the overlay into the flattened icon
-			flat.blend_icon(add, blendMode2iconMode(curblend))
+			flat.blend_icon(add, blendMode2iconMode(curblend), layer_image.pixel_x + layer_image.pixel_w + 2 - flatX1, layer_image.pixel_y + layer_image.pixel_z + 2 - flatY1)
 
 		if(appearance.alpha < 255)
 			flat.blend_color(rgb(255, 255, 255, appearance.alpha), ICON_MULTIPLY)
@@ -358,14 +592,14 @@
 		return flat
 
 	else if(should_display) // There's no overlays.
-		var/datum/universal_icon/final_icon = uni_icon(curicon, curstate, SOUTH)
+		var/datum/universal_icon/final_icon = uni_icon(curicon, curstate, base_icon_dir)
 
 		if (appearance.alpha < 255)
 			final_icon.blend_color(rgb(255,255,255, appearance.alpha), ICON_MULTIPLY)
 
 		if (appearance.color)
 			if (islist(appearance.color))
-				stack_trace("Unsupported color map appearance provided to get_flat_uni_icon, ignoring it.")
+				final_icon.map_colors_inferred(appearance.color)
 			else
 				final_icon.blend_color(appearance.color, ICON_MULTIPLY)
 

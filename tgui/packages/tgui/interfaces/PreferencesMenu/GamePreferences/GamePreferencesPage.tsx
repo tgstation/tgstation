@@ -1,12 +1,12 @@
 import { binaryInsertWith } from 'common/collections';
 import { sortBy } from 'es-toolkit';
-import { ReactNode } from 'react';
+import { type ReactNode, useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Box, Flex, Tooltip } from 'tgui-core/components';
 
 import { features } from '../preferences/features';
 import { FeatureValueInput } from '../preferences/features/base';
-import { PreferencesMenuData } from '../types';
+import type { PreferencesMenuData } from '../types';
 import { TabbedMenu } from './TabbedMenu';
 
 type PreferenceChild = {
@@ -97,10 +97,23 @@ export function GamePreferencesPage(props) {
     );
   }
 
-  const gamePreferenceEntries: [string, ReactNode][] = sortByName(
+  const [searchText, setSearchText] = useState('');
+
+  const gamePreferenceEntries: [string, ReactNode[]][] = sortByName(
     Object.entries(gamePreferences),
   ).map(([category, preferences]) => {
-    return [category, preferences.map((entry) => entry.children)];
+    return [
+      category,
+      preferences
+        .filter((entry) => {
+          return (
+            !searchText ||
+            searchText.length < 2 ||
+            entry.name.toLowerCase().includes(searchText.toLowerCase())
+          );
+        })
+        .map((entry) => entry.children),
+    ];
   });
 
   return (
@@ -109,6 +122,8 @@ export function GamePreferencesPage(props) {
       contentProps={{
         fontSize: 1.5,
       }}
+      searchText={searchText}
+      setSearchText={setSearchText}
     />
   );
 }

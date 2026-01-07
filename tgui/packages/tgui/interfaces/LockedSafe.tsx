@@ -1,5 +1,5 @@
 import { Box, Flex } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -26,7 +26,7 @@ export const LockedSafe = (props) => {
             {!lock_code && 'No password set.'}
             {!!lock_code && (!locked ? 'Unlocked' : 'Locked')}
           </Box>
-          <Flex ml="3px">
+          <Flex ml="3px" mt="10px">
             <Flex.Item>
               <NukeKeypad />
             </Flex.Item>

@@ -1,11 +1,12 @@
 /obj/item/clothing/neck
 	name = "necklace"
 	icon = 'icons/obj/clothing/neck.dmi'
+	abstract_type = /obj/item/clothing/neck
 	body_parts_covered = NECK
 	slot_flags = ITEM_SLOT_NECK
 	interaction_flags_click = NEED_DEXTERITY
-	strip_delay = 40
-	equip_delay_other = 40
+	strip_delay = 4 SECONDS
+	equip_delay_other = 4 SECONDS
 
 /obj/item/clothing/neck/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
@@ -131,7 +132,7 @@
 		icon_state = "tie_greyscale_untied"
 		strip_delay = 1 SECONDS
 		equip_delay_other = 1 SECONDS
-		equip_delay_self = 0
+		equip_delay_self = 0 SECONDS
 
 /obj/item/clothing/neck/tie/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -201,16 +202,23 @@
 	greyscale_config_worn = null
 	greyscale_colors = null
 
-/obj/item/clothing/neck/tie/disco
-	name = "horrific necktie"
+/obj/item/clothing/neck/robe_cape
+	name = "robe cape"
+	desc = "A comfortable cape, draped down your back and held around your neck with a brooch."
 	icon = 'icons/obj/clothing/neck.dmi'
-	icon_state = "eldritch_tie"
-	post_init_icon_state = null
-	desc = "The necktie is adorned with a garish pattern. It's disturbingly vivid. Somehow you feel as if it would be wrong to ever take it off. It's your friend now. You will betray it if you change it for some boring scarf."
-	clip_on = TRUE
-	greyscale_config = null
-	greyscale_config_worn = null
-	greyscale_colors = null
+	icon_state = "/obj/item/clothing/neck/robe_cape"
+	post_init_icon_state = "robe_cape"
+	worn_icon = 'icons/mob/clothing/neck.dmi'
+	worn_icon_state = "robe_cape"
+	abstract_type = /obj/item/clothing/neck
+	greyscale_config = /datum/greyscale_config/robe_cape
+	greyscale_config_worn = /datum/greyscale_config/robe_cape/worn
+	greyscale_colors = "#2a2844"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/neck/robe_cape/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/surgery_aid, "cape")
 
 /obj/item/clothing/neck/tie/detective
 	name = "loose tie"
@@ -230,7 +238,7 @@
 
 /obj/item/clothing/neck/stethoscope/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
+	AddElement(/datum/element/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /obj/item/clothing/neck/stethoscope/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] won't hear much!"))
@@ -244,11 +252,11 @@
 
 	var/mob/living/carbon/carbon_patient = target
 	var/body_part = carbon_patient.parse_zone_with_bodypart(user.zone_selected)
-	var/oxy_loss = carbon_patient.getOxyLoss()
+	var/oxy_loss = carbon_patient.get_oxy_loss()
 
 	var/heart_strength
 	var/pulse_pressure
-
+	var/having_heart_attack = carbon_patient.has_status_effect(/datum/status_effect/heart_attack)
 	var/heart_noises = TRUE
 
 	var/obj/item/organ/heart/heart = carbon_patient.get_organ_slot(ORGAN_SLOT_HEART)
@@ -292,7 +300,9 @@
 				if(isnull(heart) || !heart.is_beating() || carbon_patient.stat == DEAD)
 					render_list += "<span class='danger ml-1'>You don't hear a heartbeat!</span>\n"//they're dead or their heart isn't beating
 					heart_noises = FALSE
-				else if(heart.damage > 10 || carbon_patient.blood_volume <= BLOOD_VOLUME_OKAY)
+				else if(having_heart_attack)
+					render_list += "<span class='danger ml-1'>You hear a rapid, irregular heartbeat.</span>\n"
+				else if(heart.damage > 10 || carbon_patient.get_blood_volume(apply_modifiers = TRUE) <= BLOOD_VOLUME_OKAY)
 					render_list += "<span class='danger ml-1'>You hear a weak heartbeat.</span>\n"//their heart is damaged, or they have critical blood
 				else
 					render_list += "<span class='notice ml-1'>You hear a healthy heartbeat.</span>\n"//they're okay :D
@@ -304,28 +314,25 @@
 			user.visible_message(span_notice("[user] presses their hands against [carbon_patient]'s abdomen."), ignored_mobs = user)
 
 			//assess abdominal organs
-			if(body_part == BODY_ZONE_PRECISE_GROIN)
-				var/appendix_okay = TRUE
-				var/liver_okay = TRUE
-				if(!liver)//sanity check, ensure the patient actually has a liver
-					render_list += "<span class='danger ml-1'>You can't feel anything where [target.p_their()] liver would be.</span>\n"
+			var/appendix_okay = TRUE
+			var/liver_okay = TRUE
+			if(!liver)//sanity check, ensure the patient actually has a liver
+				render_list += "<span class='danger ml-1'>You can't feel anything where [target.p_their()] liver would be.</span>\n"
+				liver_okay = FALSE
+			else
+				if(liver.damage > 10)
+					render_list += "<span class='danger ml-1'>[target.p_Their()] liver feels firm.</span>\n"//their liver is damaged
 					liver_okay = FALSE
-				else
-					if(liver.damage > 10)
-						render_list += "<span class='danger ml-1'>[target.p_Their()] liver feels firm.</span>\n"//their liver is damaged
-						liver_okay = FALSE
-
-				if(!appendix)//sanity check, ensure the patient actually has an appendix
-					render_list += "<span class='danger ml-1'>You can't feel anything where [target.p_their()] appendix would be.</span>\n"
+			if(!appendix)//sanity check, ensure the patient actually has an appendix
+				render_list += "<span class='danger ml-1'>You can't feel anything where [target.p_their()] appendix would be.</span>\n"
+				appendix_okay = FALSE
+			else
+				if(appendix.damage > 10 && carbon_patient.stat == CONSCIOUS)
+					render_list += "<span class='danger ml-1'>[target] screams when you lift your hand from [target.p_their()] appendix!</span>\n"//scream if their appendix is damaged and they're awake
+					target.emote("scream")
 					appendix_okay = FALSE
-				else
-					if(appendix.damage > 10 && carbon_patient.stat == CONSCIOUS)
-						render_list += "<span class='danger ml-1'>[target] screams when you lift your hand from [target.p_their()] appendix!</span>\n"//scream if their appendix is damaged and they're awake
-						target.emote("scream")
-						appendix_okay = FALSE
-
-				if(liver_okay && appendix_okay)//if they have all their organs and have no detectable damage
-					render_list += "<span class='notice ml-1'>You don't find anything abnormal.</span>\n"//they're okay :D
+			if(liver_okay && appendix_okay)//if they have all their organs and have no detectable damage
+				render_list += "<span class='notice ml-1'>You don't find anything abnormal.</span>\n"//they're okay :D
 
 		if(BODY_ZONE_PRECISE_EYES)
 			balloon_alert(user, "can't do that!")
@@ -343,16 +350,20 @@
 				render_list += span_info("You carefully press your fingers to [carbon_patient]'s [body_part]:\n")
 				user.visible_message(span_notice("[user] presses their fingers against [carbon_patient]'s [body_part]."), ignored_mobs = user)
 
+			var/cached_blood_volume = carbon_patient.get_blood_volume(apply_modifiers = TRUE)
+
 			//assess pulse (heart & blood level)
-			if(isnull(heart) || !heart.is_beating() || carbon_patient.blood_volume <= BLOOD_VOLUME_OKAY || carbon_patient.stat == DEAD)
+			if(isnull(heart) || !heart.is_beating() || cached_blood_volume <= BLOOD_VOLUME_OKAY || carbon_patient.stat == DEAD)
 				render_list += "<span class='danger ml-1'>You can't find a pulse!</span>\n"//they're dead, their heart isn't beating, or they have critical blood
 			else
-				if(heart.damage > 10)
-					heart_strength = span_danger("irregular")//their heart is damaged
+				if(having_heart_attack)
+					heart_strength = span_danger("irregular")
+				else if(heart.damage > 10)
+					heart_strength = span_danger("weak")//their heart is damaged
 				else
 					heart_strength = span_notice("regular")//they're okay :D
 
-				if(carbon_patient.blood_volume <= BLOOD_VOLUME_SAFE && carbon_patient.blood_volume > BLOOD_VOLUME_OKAY)
+				if((cached_blood_volume <= BLOOD_VOLUME_SAFE && cached_blood_volume > BLOOD_VOLUME_OKAY) || having_heart_attack)
 					pulse_pressure = span_danger("thready")//low blood
 				else
 					pulse_pressure = span_notice("strong")//they're okay :D
@@ -485,15 +496,19 @@
 	desc = "It's for pets."
 	icon_state = "petcollar"
 	var/tagname = null
+	var/human_wearable = FALSE
 
 /datum/armor/large_scarf_syndie
 	fire = 50
 	acid = 40
 
 /obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
-	if(!ismonkey(M))
+	if(!ismonkey(M) && !human_wearable)
 		return FALSE
 	return ..()
+
+/obj/item/clothing/neck/petcollar/wearable
+	human_wearable = TRUE
 
 /obj/item/clothing/neck/petcollar/attack_self(mob/user)
 	tagname = sanitize_name(tgui_input_text(user, "Would you like to change the name on the tag?", "Pet Naming", "Spot", MAX_NAME_LEN))
@@ -533,7 +548,8 @@
 
 	if(price)
 		var/true_price = round(price*profit_scaling)
-		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [interacting_with], value: <b>[true_price]</b> credits[interacting_with.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]"))
+		var/fee_display = round(price-true_price)
+		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [interacting_with], value: <b>[true_price]</b> [MONEY_NAME][interacting_with.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[fee_display]</b> [MONEY_NAME_AUTOPURAL(fee_display)] taken as processing fee\s." : ""]"))
 		if(selling)
 			new /obj/item/holochip(get_turf(user), true_price)
 	else
@@ -562,6 +578,7 @@
 	worn_y_offset = 10
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 2, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/clothing/neck/wreath/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -573,3 +590,4 @@
 	desc = "An elaborate crown made from the twisted flesh and sinew of an icewing watcher. \
 		Wearing it sends shivers down your spine just from being near it."
 	icon_state = "icewing_wreath"
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2)

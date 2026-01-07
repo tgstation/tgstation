@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import {
   BlockQuote,
   Box,
@@ -7,7 +7,7 @@ import {
   Section,
   TextArea,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -48,7 +48,7 @@ const linkifyText = (text: string) => {
     if (!match) continue;
 
     parts[i] = (
-      <a key={'link' + i} href={match[2]}>
+      <a key={`link${i}`} href={match[2]}>
         {match[1]}
       </a>
     );

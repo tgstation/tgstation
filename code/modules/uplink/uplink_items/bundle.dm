@@ -18,8 +18,7 @@
 
 /datum/uplink_item/bundles_tc/random/purchase(mob/user, datum/uplink_handler/handler, atom/movable/source)
 	var/list/possible_items = list()
-	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
-		var/datum/uplink_item/uplink_item = SStraitor.uplink_items_by_type[item_path]
+	for(var/datum/uplink_item/uplink_item as anything in SStraitor.uplink_items)
 		if(src == uplink_item || !uplink_item.item)
 			continue
 		if(!handler.can_purchase_item(user, uplink_item))
@@ -74,15 +73,14 @@
 	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	/// Value of items inside the crate in TC
-	var/crate_tc_value = 30
+	var/crate_tc_value = 40
 	/// crate that will be used for the surplus crate
 	var/crate_type = /obj/structure/closet/crate
 
 /// generates items that can go inside crates, edit this proc to change what items could go inside your specialized crate
 /datum/uplink_item/bundles_tc/surplus/proc/generate_possible_items(mob/user, datum/uplink_handler/handler)
 	var/list/possible_items = list()
-	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
-		var/datum/uplink_item/uplink_item = SStraitor.uplink_items_by_type[item_path]
+	for(var/datum/uplink_item/uplink_item as anything in SStraitor.uplink_items)
 		if(src == uplink_item || !uplink_item.item)
 			continue
 		if(!handler.check_if_restricted(uplink_item))
@@ -138,7 +136,7 @@
 	cost = 20
 	item = /obj/structure/closet/crate/secure/syndicrate
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
-	crate_tc_value = 80
+	crate_tc_value = 100
 	crate_type = /obj/structure/closet/crate/secure/syndicrate
 
 /// edited version of fill crate for super surplus to ensure it can only be unlocked with the syndicrate key

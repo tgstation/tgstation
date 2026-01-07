@@ -20,7 +20,7 @@
 	/// Armor type attached to the owner's physiology
 	var/datum/armor/given_armor = /datum/armor/roach_internal_armor
 
-/datum/status_effect/organ_set_bonus/roach/enable_bonus()
+/datum/status_effect/organ_set_bonus/roach/enable_bonus(obj/item/organ/inserted_organ)
 	. = ..()
 	if(!ishuman(owner))
 		return
@@ -28,7 +28,7 @@
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.armor = human_owner.physiology.armor.add_other_armor(given_armor)
 
-/datum/status_effect/organ_set_bonus/roach/disable_bonus()
+/datum/status_effect/organ_set_bonus/roach/disable_bonus(obj/item/organ/removed_organ)
 	. = ..()
 	if(!ishuman(owner) || QDELETED(owner))
 		return

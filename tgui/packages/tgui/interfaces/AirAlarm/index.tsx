@@ -7,7 +7,7 @@ import { InterfaceLockNoticeBox } from '../common/InterfaceLockNoticeBox';
 import { AirAlarmControl } from './AlarmControl';
 import { AlarmEditingModal } from './AlarmModal';
 import { AirAlarmStatus } from './AlarmStatus';
-import { ActiveModal, AirAlarmData } from './types';
+import type { ActiveModal, AirAlarmData } from './types';
 import { ModalContext } from './useModal';
 
 export function AirAlarm(props) {
@@ -35,7 +35,7 @@ export function AirAlarm(props) {
           {activeModal && (
             <AlarmEditingModal
               oldValue={
-                (tlvSettings.find((tlv) => tlv.id === activeModal.id) || {})[
+                tlvSettings.find((tlv) => tlv.id === activeModal.id)?.[
                   activeModal.typeVar
                 ]
               }

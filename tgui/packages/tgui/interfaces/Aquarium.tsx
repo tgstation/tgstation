@@ -13,7 +13,7 @@ import {
   Stack,
   Tooltip,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { capitalizeFirst } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
@@ -44,7 +44,7 @@ type FishData = {
   fish_happiness: number;
   fish_icon: string;
   fish_icon_state: string;
-  fish_health: number;
+  fish_alive: BooleanLike;
 };
 
 type PropData = {
@@ -129,8 +129,8 @@ const FishInfo = (props: FishInfoProps) => {
               >
                 {fish.fish_name}
               </Stack.Item>
-              <Stack.Item mt={fish.fish_health > 0 ? -4 : 1}>
-                {fish.fish_health > 0 ? (
+              <Stack.Item mt={fish.fish_alive ? -4 : 1}>
+                {fish.fish_alive ? (
                   <CalculateHappiness happiness={fish.fish_happiness} />
                 ) : (
                   <Icon ml={2} name="skull-crossbones" textColor="white" />

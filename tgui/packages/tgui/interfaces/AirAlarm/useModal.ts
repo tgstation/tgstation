@@ -1,6 +1,11 @@
-import { createContext, Dispatch, SetStateAction, useContext } from 'react';
+import {
+  createContext,
+  type Dispatch,
+  type SetStateAction,
+  useContext,
+} from 'react';
 
-import { ActiveModal } from './types';
+import type { ActiveModal } from './types';
 
 type ModalContextType = [ActiveModal, Dispatch<SetStateAction<ActiveModal>>];
 

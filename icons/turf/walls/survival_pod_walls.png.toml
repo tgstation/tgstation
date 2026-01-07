@@ -1,0 +1,2 @@
+output_name = "survival_pod_walls"
+template = "bitmask/diagonal_corner_32x32"

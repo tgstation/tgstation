@@ -847,7 +847,13 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	begin_month = DECEMBER
 	end_day = 27
 	holiday_hat = /obj/item/clothing/head/costume/santa
-	no_mail_holiday = TRUE
+	holiday_mail = list(
+		/obj/item/clothing/head/beanie/christmas,
+		/obj/item/clothing/neck/scarf/christmas,
+		/obj/item/food/cookie/sugar,
+		/obj/item/gift/anything,
+		/obj/item/toy/xmas_cracker,
+	)
 	holiday_colors = list(
 		COLOR_CHRISTMAS_GREEN,
 		COLOR_CHRISTMAS_RED,
@@ -875,6 +881,27 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"
+
+/datum/holiday/xmas/celebrate()
+	. = ..()
+	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(roundstart_celebrate)))
+	GLOB.maintenance_loot += list(
+		list(
+			/obj/item/clothing/head/costume/santa = 1,
+			/obj/item/gift/anything = 1,
+			/obj/item/toy/xmas_cracker = 3,
+		) = maint_holiday_weight,
+	)
+
+/datum/holiday/xmas/proc/roundstart_celebrate()
+	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/security/telescreen/entertainment))
+		Monitor.icon_state_on = "entertainment_xmas"
+
+	for(var/mob/living/basic/pet/dog/corgi/ian/Ian in GLOB.mob_living_list)
+		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
+
+	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/costumes_toys/christmas]
+	pack.order_flags |= ORDER_SPECIAL_ENABLED
 
 /datum/holiday/boxing
 	name = "Boxing Day"
@@ -983,27 +1010,6 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 
 /datum/holiday/hebrew/passover/getStationPrefix()
 	return pick("Matzah", "Moses", "Red Sea")
-
-// HOLIDAY ADDONS
-
-/datum/holiday/xmas/celebrate()
-	. = ..()
-	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(roundstart_celebrate)))
-	GLOB.maintenance_loot += list(
-		list(
-			/obj/item/clothing/head/costume/santa = 1,
-			/obj/item/gift/anything = 1,
-			/obj/item/toy/xmas_cracker = 3,
-		) = maint_holiday_weight,
-	)
-
-/datum/holiday/xmas/proc/roundstart_celebrate()
-	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/security/telescreen/entertainment))
-		Monitor.icon_state_on = "entertainment_xmas"
-
-	for(var/mob/living/basic/pet/dog/corgi/ian/Ian in GLOB.mob_living_list)
-		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
-
 
 // EASTER (this having its own spot should be understandable)
 

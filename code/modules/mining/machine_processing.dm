@@ -142,7 +142,7 @@
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
 	///Material container for materials
-	var/datum/component/material_container/materials
+	var/datum/material_container/materials
 	/// What can be input into the machine?
 	var/accepted_type = /obj/item/stack
 
@@ -150,8 +150,8 @@
 	. = ..()
 	proximity_monitor = new(src, 1)
 
-	materials = AddComponent( \
-		/datum/component/material_container, \
+	materials = new ( \
+		src, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		INFINITY, \
 		MATCONTAINER_EXAMINE, \
@@ -163,7 +163,8 @@
 	selected_material = GET_MATERIAL_REF(/datum/material/iron)
 
 /obj/machinery/mineral/processing_unit/Destroy()
-	materials = null
+	QDEL_NULL(proximity_monitor)
+	QDEL_NULL(materials)
 	mineral_machine = null
 	stored_research = null
 	return ..()
@@ -248,7 +249,7 @@
 		on = FALSE
 	else
 		var/out = get_step(src, output_dir)
-		materials.retrieve_sheets(sheets_to_remove, mat, out)
+		materials.retrieve_stack(sheets_to_remove, mat, out)
 
 /obj/machinery/mineral/processing_unit/proc/smelt_alloy(seconds_per_tick = 2)
 	var/datum/design/alloy = stored_research.isDesignResearchedID(selected_alloy) //check if it's a valid design

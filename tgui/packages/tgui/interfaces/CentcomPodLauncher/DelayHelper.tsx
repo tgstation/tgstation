@@ -2,7 +2,7 @@ import { Knob, LabeledControls } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../../backend';
-import { PodDelay, PodLauncherData } from './types';
+import type { PodDelay, PodLauncherData } from './types';
 
 type Props = {
   delay_list: PodDelay[];
@@ -34,7 +34,7 @@ export function DelayHelper(props: Props) {
             onChange={(e, value) => {
               act('editTiming', {
                 reverse: reverse,
-                timer: '' + (i + 1),
+                timer: `${i + 1}`,
                 value: Math.max(value, 0),
               });
             }}

@@ -395,3 +395,11 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 	if(breaks.Find(given_name))
 		return FALSE
 	return TRUE
+
+/// Generates and returns a list of both arabic and roman numerals for 1 through 99
+/proc/generate_number_strings()
+	var/list/numbers = list()
+	for(var/i in 1 to 99)
+		numbers += "[i]"
+		numbers += "\Roman[i]"
+	return numbers

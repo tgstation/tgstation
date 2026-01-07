@@ -1,11 +1,4 @@
-import { CheckboxInput, FeatureToggle } from '../base';
-
-export const tgui_fancy: FeatureToggle = {
-  name: 'Enable fancy TGUI',
-  category: 'UI',
-  description: 'Makes TGUI windows look better, at the cost of compatibility.',
-  component: CheckboxInput,
-};
+import { CheckboxInput, type FeatureToggle } from '../base';
 
 export const tgui_input: FeatureToggle = {
   name: 'Input: Enable TGUI',

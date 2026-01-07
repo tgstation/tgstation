@@ -142,9 +142,19 @@
 	if(!gibbed)
 		var/make_a_corpse = TRUE
 		var/place_to_make_corpse = loc
+		var/must_equip = FALSE
+		var/equip_slot
+		var/mob/holding_mob
+		var/obj/item/mob_holder/found_holder
 		if(istype(loc, /obj/item/mob_holder))//If our mouse is dying in place holder we want to put the dead mouse where the place holder was
-			var/obj/item/mob_holder/found_holder = loc
+			found_holder = loc
 			place_to_make_corpse = found_holder.loc
+			if(istype(found_holder.loc,/mob/living/carbon))
+				holding_mob = found_holder.loc
+				place_to_make_corpse = get_turf(holding_mob)
+				equip_slot = holding_mob.get_slot_by_item(found_holder)
+				if(equip_slot == ITEM_SLOT_HANDS || equip_slot == ITEM_SLOT_RPOCKET || equip_slot == ITEM_SLOT_LPOCKET)
+					must_equip = TRUE
 			if(istype(found_holder.loc, /obj/machinery/microwave))//Microwaves gib things that die when cooked, so we don't need to make a dead body too
 				make_a_corpse = FALSE
 		if(make_a_corpse)
@@ -153,6 +163,11 @@
 			if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
 				mouse.desc = "They're toast."
 				mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
+			found_holder?.release(FALSE)
+			if(must_equip)
+				if(equip_slot == ITEM_SLOT_HANDS)
+					holding_mob.dropItemToGround(found_holder)
+				holding_mob.equip_to_slot(mouse,equip_slot)
 	qdel(src)
 
 /mob/living/basic/mouse/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
@@ -327,7 +342,6 @@
 	eatverbs = list("devour")
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtypes = GORE | MEAT | RAW
-	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/consumable/liquidgibs = 5)
 	decomp_req_handle = TRUE
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/deadmouse/moldy
@@ -338,6 +352,9 @@
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
+
+/obj/item/food/deadmouse/grind_results()
+	return list(/datum/reagent/blood = 20, /datum/reagent/consumable/liquidgibs = 5)
 
 /// Copy properties from an imminently dead mouse
 /obj/item/food/deadmouse/proc/copy_corpse(mob/living/basic/mouse/dead_critter)
@@ -400,8 +417,10 @@
 	icon_state = "mouse_gray_dead"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/mold = 10)
 	foodtypes = GORE | MEAT | RAW | GROSS
-	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/consumable/liquidgibs = 5, /datum/reagent/consumable/mold = 10)
 	preserved_food = TRUE
+
+/obj/item/food/deadmouse/moldy/grind_results()
+	return list(/datum/reagent/blood = 20, /datum/reagent/consumable/liquidgibs = 5, /datum/reagent/consumable/mold = 10)
 
 /// The mouse AI controller
 /datum/ai_controller/basic_controller/mouse

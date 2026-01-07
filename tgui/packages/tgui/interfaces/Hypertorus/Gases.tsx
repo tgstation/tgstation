@@ -12,7 +12,7 @@ import {
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 
-import { HypertorusFuel, HypertorusGas } from '.';
+import type { HypertorusFuel, HypertorusGas } from '.';
 import { HelpDummy, HoverHelp } from './helpers';
 
 type GasListProps = {
@@ -118,12 +118,13 @@ const GasList = (props: GasListProps) => {
         />
         <NumberInput
           animated
+          tickWhileDragging
           step={1}
           value={parseFloat(data[input_rate])}
           unit="mol/s"
           minValue={input_min}
           maxValue={input_max}
-          onDrag={(v) => act(input_rate, { [input_rate]: v })}
+          onChange={(v) => act(input_rate, { [input_rate]: v })}
         />
       </LabeledList.Item>
       {gases.map((gas) => {
@@ -147,7 +148,7 @@ const GasList = (props: GasListProps) => {
               minValue={0}
               maxValue={minimumScale}
             >
-              {toFixed(gas.amount, 2) + ' moles'}
+              {`${toFixed(gas.amount, 2)} moles`}
             </ProgressBar>
           </LabeledList.Item>
         );

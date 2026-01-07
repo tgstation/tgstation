@@ -12,8 +12,8 @@
 	var/datum/antagonist/obsessed/antagonist
 	var/viewing = FALSE //it's a lot better to store if the owner is watching the obsession than checking it twice between two procs
 
-	var/total_time_creeping = 0 //just for round end fun
-	var/time_spent_away = 0
+	var/total_time_creeping = 0 SECONDS //just for round end fun
+	var/time_spent_away = 0 SECONDS
 	var/obsession_hug_count = 0
 
 /datum/brain_trauma/special/obsessed/on_gain()
@@ -34,8 +34,9 @@
 	antagonist.greet()
 	log_game("[key_name(antagonist)] has developed an obsession with [key_name(obsession)].")
 	RegisterSignal(owner, COMSIG_CARBON_HELPED, PROC_REF(on_hug))
+	ADD_TRAIT(owner, TRAIT_DESENSITIZED, REF(src))
 
-/datum/brain_trauma/special/obsessed/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/obsessed/on_life(seconds_per_tick)
 	if(!obsession || obsession.stat == DEAD)
 		viewing = FALSE//important, makes sure you no longer stutter when happy if you murdered them while viewing
 		return
@@ -50,15 +51,15 @@
 	if(viewing)
 		owner.add_mood_event("creeping", /datum/mood_event/creeping, obsession.name)
 		total_time_creeping += seconds_per_tick SECONDS
-		time_spent_away = 0
+		time_spent_away = 0 SECONDS
 		if(attachedobsessedobj)//if an objective needs to tick down, we can do that since traumas coexist with the antagonist datum
 			attachedobsessedobj.timer -= seconds_per_tick SECONDS //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
 	else
 		out_of_view()
 
 /datum/brain_trauma/special/obsessed/proc/out_of_view()
-	time_spent_away += 20
-	if(time_spent_away > 1800) //3 minutes
+	time_spent_away += 2 SECONDS
+	if(time_spent_away > 3 MINUTES) //3 minutes
 		owner.add_mood_event("creeping", /datum/mood_event/notcreepingsevere, obsession.name)
 	else
 		owner.add_mood_event("creeping", /datum/mood_event/notcreeping, obsession.name)
@@ -71,6 +72,7 @@
 	if(obsession)
 		log_game("[key_name(owner)] is no longer obsessed with [key_name(obsession)].")
 		UnregisterSignal(obsession, COMSIG_MOB_EYECONTACT)
+	REMOVE_TRAIT(owner, TRAIT_DESENSITIZED, REF(src))
 
 /datum/brain_trauma/special/obsessed/handle_speech(datum/source, list/speech_args)
 	if(!viewing)
@@ -102,7 +104,7 @@
 		if(41 to 80)
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "pale")
 			shake_camera(owner, 15, 1)
-			owner.adjustStaminaLoss(70)
+			owner.adjust_stamina_loss(70)
 			to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
 		if(81 to 100)
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "cough")

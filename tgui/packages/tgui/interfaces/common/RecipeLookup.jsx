@@ -68,7 +68,7 @@ export const RecipeLookup = (props) => {
               key={product.name}
               icon="vial"
               disabled={product.hasProduct}
-              content={product.ratio + 'u ' + product.name}
+              content={`${product.ratio}u ${product.name}`}
               onClick={() =>
                 act('reagent_click', {
                   id: product.id,
@@ -84,7 +84,7 @@ export const RecipeLookup = (props) => {
             <Button
               icon="vial"
               color={reactant.color}
-              content={reactant.ratio + 'u ' + reactant.name}
+              content={`${reactant.ratio}u ${reactant.name}`}
               onClick={() =>
                 act('reagent_click', {
                   id: reactant.id,
@@ -115,7 +115,7 @@ export const RecipeLookup = (props) => {
                 <Button
                   icon="vial"
                   color={catalyst.color}
-                  content={catalyst.ratio + 'u ' + catalyst.name}
+                  content={`${catalyst.ratio}u ${catalyst.name}`}
                   tooltip={catalyst.tooltip}
                   tooltipPosition={'right'}
                   onClick={() =>
@@ -128,7 +128,7 @@ export const RecipeLookup = (props) => {
                 <Button
                   icon="vial"
                   color={catalyst.color}
-                  content={catalyst.ratio + 'u ' + catalyst.name}
+                  content={`${catalyst.ratio}u ${catalyst.name}`}
                   onClick={() =>
                     act('reagent_click', {
                       id: catalyst.id,
@@ -156,7 +156,7 @@ export const RecipeLookup = (props) => {
           <LabeledList.Item label="Optimal pH range">
             <Box position="relative">
               <Tooltip content="If your reaction is kept within these bounds then the purity of your product will be 100%">
-                {recipe.lowerpH + '-' + recipe.upperpH}
+                {`${recipe.lowerpH}-${recipe.upperpH}`}
               </Tooltip>
             </Box>
           </LabeledList.Item>
@@ -221,8 +221,8 @@ export const RecipeLookup = (props) => {
               textColor={recipe.isColdRecipe && 'red'}
             >
               {recipe.isColdRecipe
-                ? recipe.explodeTemp + 'K'
-                : recipe.tempMin + 'K'}
+                ? `${recipe.explodeTemp}K`
+                : `${recipe.tempMin}K`}
             </Flex.Item>
           </Tooltip>
 
@@ -239,8 +239,8 @@ export const RecipeLookup = (props) => {
                 textColor={!recipe.isColdRecipe && 'red'}
               >
                 {recipe.isColdRecipe
-                  ? recipe.tempMin + 'K'
-                  : recipe.explodeTemp + 'K'}
+                  ? `${recipe.tempMin}K`
+                  : `${recipe.explodeTemp}K`}
               </Flex.Item>
             </Tooltip>
           )}
@@ -250,7 +250,7 @@ export const RecipeLookup = (props) => {
         <LabeledList>
           <LabeledList.Item label="Optimal rate">
             <Tooltip content="The fastest rate the reaction can go, in units per second. This is the plateu region shown in the rate profile above.">
-              <Box position="relative">{recipe.thermoUpper + 'u/s'}</Box>
+              <Box position="relative">{`${recipe.thermoUpper}u/s`}</Box>
             </Tooltip>
           </LabeledList.Item>
         </LabeledList>

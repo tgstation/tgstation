@@ -28,7 +28,7 @@
 	average_weight = 1500
 	food = /datum/reagent/bluespace
 	feeding_frequency = 10 MINUTES
-	health = 50
+	max_integrity = 100
 	death_text = "%SRC splinters apart into shards!"
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	fillet_type = /obj/item/stack/ore/bluespace_crystal
@@ -136,7 +136,8 @@
 	required_temperature_min = BODYTEMP_COLD_DAMAGE_LIMIT // you mean just like a human? that's odd...
 	required_temperature_max = BODYTEMP_HEAT_DAMAGE_LIMIT
 	food = /datum/reagent/blood
-	health = 600 // apex predator
+	max_integrity = 800 // apex predator
+	integrity_failure = 0.25
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	fillet_type = /obj/item/food/fishmeat/fish_tail
 	num_fillets = 1
@@ -339,7 +340,7 @@
 
 	for(var/mob/living/fallen_mob in falling_movables)
 		visible_message(span_danger("[src] flattens like a pancake as [fallen_mob] lands on top of it!"))
-		adjust_health(initial(health) * 0.1) // very durable
+		damage_fish(max_integrity * integrity_failure * 0.9) // very "durable"
 		AddElement(/datum/element/squish, 15 SECONDS)
 		fallen_mob.Paralyze(0.5 SECONDS)
 		playsound(src, 'sound/effects/cartoon_sfx/cartoon_splat.ogg', 75)
@@ -349,7 +350,7 @@
 /obj/item/fish/gullion
 	name = "gullion"
 	fish_id = "gullion"
-	desc = "This crystalline fish is actually one of only two known silicon-based lifeforms.\
+	desc = "This crystalline fish is actually one of only two known silicon-based lifeforms. \
 		It avoids death via oxygen-silicate reactions by organically shielding its exterior, allowing the thick scales to calcify into quartz and diamond, at the cost of rendering the fish functionally blind. \
 		How xenomorphs manage is a complete mystery bordering on bullshit."
 	icon = 'icons/obj/aquarium/rift.dmi'
@@ -367,7 +368,7 @@
 
 	food = /datum/reagent/silicon
 	feeding_frequency = 30 SECONDS
-	health = 160
+	max_integrity = 320
 	death_text = "%SRC calcifies."
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	fillet_type = /obj/item/stack/sheet/mineral/diamond
@@ -395,12 +396,13 @@
 	visible_message(span_suicide("[user] swallows [src] whole! It looks like they're trying to commit suicide!"))
 	forceMove(user)
 	var/datum/gas_mixture/environment = user.loc.return_air()
-	var/oxygen_in_air = check_gases(environment.gases, list(/datum/gas/oxygen))
+	var/oxygen_in_air = locate(/datum/gas/oxygen) in environment.gases
 	if(!oxygen_in_air || (status == FISH_DEAD))
 		visible_message(span_suicide("[user] chokes and dies! (Wait, from the fish or from lack of air?)"))
 		return OXYLOSS
 
 	user.petrify(statue_timer = INFINITY)
+	user.death()
 	visible_message(span_suicide("[user]'s skin turns into quartz upon contact with the oxygen in the air!'"))
 	qdel(src)
 	return MANUAL_SUICIDE
@@ -429,7 +431,8 @@
 	sprite_width = 12
 	sprite_height = 13
 
-	health = 500
+	max_integrity = 750
+	integrity_failure = 0.33
 	death_text = "%SRC decomposes."
 	random_case_rarity = FISH_RARITY_NOPE
 	// hand-tuned to be a your worst enemy
@@ -452,7 +455,7 @@
 	max_pressure = INFINITY
 	safe_air_limits = list()
 	fillet_type = /obj/item/food/badrecipe/moldy/bacteria
-	stable_population = 0
+	stable_population = 2
 
 /obj/item/fish/mossglob/Initialize(mapload, apply_qualities)
 	. = ..()
@@ -521,7 +524,7 @@
 
 	death_text = span_big(span_alertalien("%SRC emits a horrendous wailing as it perishes!"))
 	random_case_rarity = FISH_RARITY_NOPE
-	health = 250
+	max_integrity = 500
 	average_size = 30
 	average_weight = 2000
 	fillet_type = /obj/item/food/fishmeat/quality
@@ -586,7 +589,7 @@
 
 	voice_of_god(psychic_speech, user, list("big", "alertalien"), base_multiplier = 5, include_speaker = TRUE, forced = TRUE, ignore_spam = TRUE)
 	psy_wail()
-	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, INFINITY, INFINITY, ORGAN_SLOT_BRAIN)
+	user.adjust_organ_loss(ORGAN_SLOT_BRAIN, INFINITY, INFINITY, ORGAN_SLOT_BRAIN)
 	user.death()
 	return MANUAL_SUICIDE
 
@@ -650,7 +653,7 @@
 		if(iscarbon(screeched))
 			var/mob/living/carbon/carbon_screeched = screeched
 			carbon_screeched.vomit(MOB_VOMIT_MESSAGE)
-			carbon_screeched.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50)
+			carbon_screeched.adjust_organ_loss(ORGAN_SLOT_BRAIN, 50)
 
 	var/affected = 0
 	for(var/obj/item/fish/fishie in range(7, src))
@@ -703,7 +706,7 @@
 	now_fixed = span_noticealien("The psychic noise starts to fade.")
 	low_threshold_cleared = span_noticealien("The whispers leave you alone.")
 
-	bang_protect = 5
+	bang_protect = EAR_PROTECTION_VACUUM
 	damage_multiplier = 0.1
 	visual = TRUE
 	/// Overlay for the mob sprite because actual organ overlays are a fucking unusable nightmare
@@ -720,12 +723,7 @@
 	icon_state = "babbearfish"
 
 /datum/bodypart_overlay/simple/babbearfish/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	var/mob/living/carbon/human/human = bodypart_owner.owner
-	if(!istype(human))
-		return TRUE
-	if((human.head?.flags_inv & HIDEEARS) || (human.wear_mask?.flags_inv & HIDEEARS))
-		return FALSE
-	return TRUE
+	return !(bodypart_owner.owner?.obscured_slots & HIDEEARS)
 
 /obj/item/organ/ears/babbelfish/Initialize(mapload)
 	. = ..()
@@ -772,7 +770,7 @@
 		antimagic_flags = MAGIC_RESISTANCE_MIND, \
 		inventory_flags = null, \
 		charges = maxHealth * 0.1, \
-		drain_antimagic = CALLBACK(src, PROC_REF(on_drain_magic)), \
+		block_magic = CALLBACK(src, PROC_REF(on_drain_magic)), \
 		expiration = CALLBACK(src, PROC_REF(on_expire)), \
 	)
 
@@ -818,7 +816,7 @@
 
 /obj/item/organ/ears/babbelfish/proc/on_drain_magic(mob/user)
 	to_chat(user, span_noticealien("Your [src] pop as they protect your mind from psychic phenomena!"))
-	adjustEarDamage(ddeaf = 20)
+	adjust_temporary_deafness(40 SECONDS)
 
 /obj/item/organ/ears/babbelfish/proc/on_expire(mob/user)
 	to_chat(user, span_noticealien("Your [src] suddenly burst apart!"))

@@ -4,7 +4,7 @@
 	icon_state = "foilhat"
 	inhand_icon_state = null
 	armor_type = /datum/armor/costume_foilhat
-	equip_delay_other = 140
+	equip_delay_other = 14 SECONDS
 	clothing_flags = ANTI_TINFOIL_MANEUVER
 	var/datum/brain_trauma/mild/phobia/conspiracies/paranoia
 	var/warped = FALSE
@@ -25,7 +25,7 @@
 		antimagic_flags = MAGIC_RESISTANCE_MIND, \
 		inventory_flags = ITEM_SLOT_HEAD, \
 		charges = 6, \
-		drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
+		block_magic = CALLBACK(src, PROC_REF(drain_antimagic)), \
 		expiration = CALLBACK(src, PROC_REF(warp_up)) \
 	)
 

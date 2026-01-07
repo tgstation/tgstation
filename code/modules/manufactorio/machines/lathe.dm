@@ -8,7 +8,7 @@
 	/// design id we print
 	var/design_id
 	///The container to hold materials
-	var/datum/component/material_container/materials
+	var/datum/material_container/materials
 	//looping sound for printing items
 	var/datum/looping_sound/lathe_print/print_sound
 	///Designs related to the autolathe
@@ -20,8 +20,8 @@
 
 /obj/machinery/power/manufacturing/lathe/Initialize(mapload)
 	print_sound = new(src,  FALSE)
-	materials = AddComponent( \
-		/datum/component/material_container, \
+	materials = new ( \
+		src, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
 		0, \
 		MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, \
@@ -31,6 +31,10 @@
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe])
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe] = new /datum/techweb/autounlocking/autolathe
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe]
+
+/obj/machinery/power/manufacturing/lathe/Destroy()
+	QDEL_NULL(materials)
+	return ..()
 
 /obj/machinery/power/manufacturing/lathe/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
@@ -143,7 +147,14 @@
 	var/atom/movable/created
 	if(is_stack)
 		var/obj/item/stack/stack_item = initial(design.build_path)
-		created = new stack_item(null, 1)
+		var/max_stack_amount = initial(stack_item.max_amount)
+		var/amount = initial(stack_item.amount)
+		while(amount > max_stack_amount)
+			var/obj/item/stack/new_stack = new stack_item(null, max_stack_amount)
+			if(!send_resource(new_stack, dir))
+				withheld = new_stack
+			amount -= max_stack_amount
+		created = new stack_item(null, amount)
 	else
 		created = new design.build_path(null)
 		split_materials_uniformly(materials_needed, target_object = created)
@@ -154,7 +165,6 @@
 
 	if(!send_resource(created, dir))
 		withheld = created
-
 
 /obj/machinery/power/manufacturing/lathe/proc/finalize_build()
 	print_sound.stop()

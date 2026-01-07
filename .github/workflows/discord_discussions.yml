@@ -18,7 +18,7 @@ concurrency:
 jobs:
   manage-discord-discussion:
     name: Manage Discord Discussion
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: contains(github.event.pull_request.labels.*.name, 'Discord Discussion')
     steps:
       - name: Fail if vars.DISCORD_DISCUSSIONS_CHANNEL_ID is unset
@@ -28,13 +28,13 @@ jobs:
           exit 1
 
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 8.0.x
           dotnet-quality: ga
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Build Tgstation.DiscordDiscussions
         run: dotnet publish -c Release -o discord_discussions_bins tools/Tgstation.DiscordDiscussions/Tgstation.DiscordDiscussions.csproj

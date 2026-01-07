@@ -68,7 +68,7 @@ export const FishCatalog = (props) => {
               title={
                 currentFish
                   ? capitalize(currentFish.name)
-                  : sponsored_by + ' Fish Index'
+                  : `${sponsored_by} Fish Index`
               }
             >
               {currentFish && (
@@ -92,7 +92,7 @@ export const FishCatalog = (props) => {
                     {currentFish.size} cm
                   </LabeledList.Item>
                   <LabeledList.Item label="Average weight">
-                    {currentFish.weight} g
+                    {currentFish.weight} kiloclam
                   </LabeledList.Item>
                   <LabeledList.Item label="Aquarium Beauty Score">
                     {currentFish.beauty}

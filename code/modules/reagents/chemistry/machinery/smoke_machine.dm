@@ -35,7 +35,7 @@
 	src.location = get_turf(location)
 	src.amount = amount
 	if(carry)
-		carry.copy_to(chemholder, 20)
+		carry.trans_to(chemholder, 20, copy_only = TRUE)
 		carry.remove_all(amount / efficiency)
 
 /obj/machinery/smoke_machine/Initialize(mapload)
@@ -43,8 +43,8 @@
 
 	. = ..()
 
-	AddComponent(/datum/component/plumbing/simple_demand)
-	AddComponent(/datum/component/simple_rotation)
+	AddComponent(/datum/component/plumbing/simple_demand, distinct_reagent_cap = 5)
+	AddElement(/datum/element/simple_rotation)
 
 	register_context()
 
@@ -77,7 +77,7 @@
 	. += span_notice("Reagent capacity <b>[reagents.total_volume]/[reagents.maximum_volume]</b>.")
 	. += span_notice("Operating at <b>[round((efficiency / 26) * 100)]%</b> efficiency.")
 
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 	if(panel_open)
 		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
 

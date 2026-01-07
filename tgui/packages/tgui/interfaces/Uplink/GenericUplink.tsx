@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Tooltip } from 'tgui-core/components';
 import {
   Box,
   Button,
@@ -10,8 +9,9 @@ import {
   Section,
   Stack,
   Tabs,
+  Tooltip,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
 
@@ -155,7 +155,7 @@ const ItemList = (props: ItemListProps) => {
       <Stack vertical mt={compactMode ? -0.5 : -1}>
         {items.map((item, index) => (
           <Stack.Item key={index} mt={compactMode ? 0.5 : 1}>
-            <Section key={item.name} fitted={compactMode ? true : false}>
+            <Section key={item.name} fitted={!!compactMode}>
               <Stack>
                 <Stack.Item>
                   <Box
@@ -229,14 +229,21 @@ const ItemList = (props: ItemListProps) => {
                     >
                       {item.insufficient_population ? (
                         <Box
-                          mt="-12px"
-                          mb="-6px"
                           style={{
                             opacity: '0.5',
                           }}
+                          mt="-12px"
+                          mb="-8px"
                         >
-                          <Icon name="lock" lineHeight="36px" />{' '}
-                          {item.population_tooltip}
+                          <Icon
+                            name="lock"
+                            lineHeight="36px"
+                            position="absolute"
+                            top="-2px"
+                          />
+                          <p style={{ textIndent: '1.5em' }}>
+                            {item.population_tooltip}
+                          </p>
                         </Box>
                       ) : (
                         ''

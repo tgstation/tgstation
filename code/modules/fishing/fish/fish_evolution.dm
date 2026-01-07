@@ -56,7 +56,7 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 /datum/fish_evolution/proc/growth_checks(obj/item/fish/source, seconds_per_tick, growth)
 	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
-	if(source.health < initial(source.health) * 0.5)
+	if(source.get_health_percentage() < 0.5)
 		return COMPONENT_DONT_GROW
 	if(source.get_hunger() >= 0.5) //too hungry to grow
 		return COMPONENT_DONT_GROW

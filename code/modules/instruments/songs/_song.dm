@@ -8,6 +8,9 @@
 	/// Name of the song
 	var/name = "Untitled"
 
+	/// ID for syncing songs together
+	var/id = ""
+
 	/// The atom we're attached to/playing from
 	var/atom/parent
 
@@ -212,6 +215,32 @@
 	current_chord = 1
 	music_player = user
 	START_PROCESSING(SSinstruments, src)
+	if(id)
+		sync_play()
+
+/**
+ * Attempts to find other instruments with the same ID and syncs them to our song.
+ */
+/datum/song/proc/sync_play()
+	for(var/datum/song/other_instrument as anything in SSinstruments.songs)
+		if(other_instrument == src || other_instrument.id != id)
+			continue
+		if(other_instrument.playing)
+			continue
+		var/atom/other_player = other_instrument.find_sync_player()
+		if(isnull(other_player) || !(other_player in view(parent)))
+			continue
+		// copies the main song info to target songs
+		other_instrument.lines = lines.Copy()
+		other_instrument.max_repeats = max_repeats
+		other_instrument.tempo = tempo
+		other_instrument.start_playing(other_player)
+
+/**
+ * Finds a player which would reasonably be able to play this song.
+ */
+/datum/song/proc/find_sync_player()
+	return null
 
 /**
  * Stops playing, terminating all sounds if in synthesized mode. Clears hearing_mobs.
@@ -388,7 +417,14 @@
 	if(. == STOP_PLAYING || . == IGNORE_INSTRUMENT_CHECKS)
 		return
 	var/obj/item/instrument/I = parent
-	return I.should_stop_playing(player)
+	return I.can_play(player) ? NONE : STOP_PLAYING
+
+/datum/song/handheld/find_sync_player()
+	var/obj/item/instrument/instrument = parent
+	var/mob/living/player = get(parent, /mob/living)
+	if(instrument.can_play(player))
+		return player
+	return null
 
 // subtype for stationary structures, like pianos
 /datum/song/stationary
@@ -398,4 +434,12 @@
 	if(. == STOP_PLAYING || . == IGNORE_INSTRUMENT_CHECKS)
 		return TRUE
 	var/obj/structure/musician/M = parent
-	return M.should_stop_playing(player)
+	return M.can_play(player) ? NONE : STOP_PLAYING
+
+/datum/song/stationary/find_sync_player()
+	var/obj/structure/musician/piano = parent
+	for(var/mob/living/player in view(parent, 1))
+		if(piano.can_play(player))
+			return player
+
+	return null

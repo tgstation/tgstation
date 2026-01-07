@@ -155,7 +155,7 @@
 	contains = list(/obj/item/transfer_valve = 2)
 	crate_name = "tank transfer valves crate"
 	crate_type = /obj/structure/closet/crate/secure/science
-	dangerous = TRUE
+	order_flags = ORDER_DANGEROUS
 
 /datum/supply_pack/science/monkey_helmets
 	name = "Monkey Mind Magnification Helmet crate"
@@ -169,7 +169,7 @@
 	name = "Cytology supplies crate"
 	desc = "Did out-of-control specimens pulverize xenobiology? Here's some more \
 		supplies for further testing. Contains a microscope, biopsy tool, two petri dishes, \
-		a box of swabs, and a plumbing tool."
+		and a box of swabs."
 	cost = CARGO_CRATE_VALUE * 3
 	access_view = ACCESS_XENOBIOLOGY
 	contains = list(/obj/structure/microscope,

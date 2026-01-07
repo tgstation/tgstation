@@ -28,15 +28,17 @@
 		return NONE
 
 	var/obj/renamed_obj = interacting_with
+	var/obj/item/tool = source
 
-	if(!(renamed_obj.obj_flags & UNIQUE_RENAME))
+	if(!(renamed_obj.obj_flags & UNIQUE_RENAME) || !user.can_write(tool))
 		return NONE
-
-	INVOKE_ASYNC(src, PROC_REF(async_rename), user, renamed_obj)
+	INVOKE_ASYNC(src, PROC_REF(async_rename), user, renamed_obj, !(renamed_obj.obj_flags & RENAME_NO_DESC))
 	return ITEM_INTERACT_SUCCESS
 
-/datum/element/tool_renaming/proc/async_rename(mob/living/user, obj/renamed_obj)
-	var/custom_choice = tgui_input_list(user, "What would you like to edit?", "Customization", list(OPTION_RENAME, OPTION_DESCRIPTION, OPTION_RESET))
+/datum/element/tool_renaming/proc/async_rename(mob/living/user, obj/renamed_obj, description_option)
+	if(!renamed_obj.rename_checks(user))
+		return
+	var/custom_choice = tgui_input_list(user, "What would you like to edit?", "Customization", list(OPTION_RENAME, description_option? OPTION_DESCRIPTION : null, OPTION_RESET))
 	if(QDELETED(renamed_obj) || !user.can_perform_action(renamed_obj) || isnull(custom_choice))
 		return
 
@@ -49,7 +51,7 @@
 			if(input == old_name || !input)
 				to_chat(user, span_notice("You changed [renamed_obj] to... well... [renamed_obj]."))
 				return
-			renamed_obj.AddComponent(/datum/component/rename, input, renamed_obj.desc)
+			renamed_obj.AddComponent(/datum/component/rename, renamed_obj.nameformat(input, user), renamed_obj.desc)
 			to_chat(user, span_notice("You have successfully renamed \the [old_name] to [renamed_obj]."))
 			renamed_obj.update_appearance(UPDATE_NAME)
 
@@ -61,13 +63,14 @@
 			if(input == old_desc || !input)
 				to_chat(user, span_notice("You decide against changing [renamed_obj]'s description."))
 				return
-			renamed_obj.AddComponent(/datum/component/rename, renamed_obj.name, input)
+			renamed_obj.AddComponent(/datum/component/rename, renamed_obj.name, renamed_obj.descformat(input, user))
 			to_chat(user, span_notice("You have successfully changed [renamed_obj]'s description."))
 			renamed_obj.update_appearance(UPDATE_DESC)
 
 		if(OPTION_RESET)
 			qdel(renamed_obj.GetComponent(/datum/component/rename))
-			to_chat(user, span_notice("You have successfully reset [renamed_obj]'s name and description."))
+			to_chat(user, span_notice("You have successfully reset [renamed_obj]'s name[renamed_obj.obj_flags & RENAME_NO_DESC? "." : " and description."]"))
+			renamed_obj.rename_reset()
 			renamed_obj.update_appearance(UPDATE_NAME | UPDATE_DESC)
 
 #undef OPTION_RENAME

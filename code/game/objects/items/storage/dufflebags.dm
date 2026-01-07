@@ -132,6 +132,12 @@
 	icon_state = "duffel-medical"
 	inhand_icon_state = "duffel-med"
 
+/obj/item/storage/backpack/duffelbag/chief_medic
+	name = "chief medical officer's duffel bag"
+	desc = "A large duffel bag for handling the duties of the entire medical department at once."
+	icon_state = "duffel-chiefmedical"
+	inhand_icon_state = "duffel-med"
+
 /obj/item/storage/backpack/duffelbag/coroner
 	name = "coroner duffel bag"
 	desc = "A large duffel bag for holding large amounts of organs at once."
@@ -347,7 +353,7 @@
 		new /obj/item/grenade/c4(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/x4/PopulateContents()
-	for(var/i in 1 to 3)
+	for(var/i in 1 to 10)
 		new /obj/item/grenade/c4/x4(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/firestarter

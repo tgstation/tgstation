@@ -307,7 +307,7 @@ xxx xxx xxx
 			SOUTH_JUNCTION|WEST_JUNCTION|SOUTHWEST_JUNCTION,
 			SOUTH_JUNCTION|EAST_JUNCTION|SOUTHEAST_JUNCTION,
 		)
-			icon_state = "[base_icon_state]-[smoothing_junction]-d"
+			icon_state = "[base_icon_state]-[smoothing_junction]-diagonal"
 			if(new_junction == old_junction || fixed_underlay) // Mutable underlays?
 				return
 

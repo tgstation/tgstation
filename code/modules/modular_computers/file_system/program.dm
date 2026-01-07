@@ -14,9 +14,9 @@
 	var/power_cell_use = PROGRAM_BASIC_CELL_USE
 	///List of required accesses to *run* the program. Any match will do.
 	///This also acts as download_access if that is not set, making this more draconic and restrictive.
-	var/list/run_access = list()
+	var/list/run_access
 	///List of required access to download or file host the program. Any match will do.
-	var/list/download_access = list()
+	var/list/download_access
 	/// User-friendly name of this program.
 	var/filedesc = "Unknown Program"
 	/// Short description of this program's function.
@@ -51,6 +51,10 @@
 
 /datum/computer_file/program/New()
 	..()
+	if(LAZYLEN(run_access))
+		run_access = string_list(run_access)
+	if(LAZYLEN(download_access))
+		download_access = string_list(download_access)
 	///We need to ensure that different programs (subtypes mostly) won't try to load in the same circuit comps into the shell or usb port of the modpc.
 	if(circuit_comp_type && initial(circuit_comp_type.associated_program) != type)
 		stack_trace("circuit comp type mismatch: [type] has circuit comp type \[[circuit_comp_type]\], while \[[circuit_comp_type]\] has associated program \[[initial(circuit_comp_type.associated_program)]\].")
@@ -173,7 +177,7 @@
 	if(!length(access))
 		var/obj/item/card/id/accesscard
 		if(computer)
-			accesscard = computer.computer_id_slot?.GetID()
+			accesscard = computer.stored_id?.GetID()
 
 		if(!accesscard)
 			if(loud && user)
@@ -202,7 +206,7 @@
 	if(!can_run(user, loud = TRUE))
 		return FALSE
 	if(program_flags & PROGRAM_REQUIRES_NTNET)
-		var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
+		var/obj/item/card/id/ID = computer.stored_id?.GetID()
 		generate_network_log("Connection opened -- Program ID:[filename] User:[ID?"[ID.registered_name]":"None"]")
 	SEND_SIGNAL(src, COMSIG_COMPUTER_PROGRAM_START, user)
 	return TRUE
@@ -228,7 +232,7 @@
 		return FALSE
 
 	if(program_flags & PROGRAM_REQUIRES_NTNET)
-		var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
+		var/obj/item/card/id/ID = computer.stored_id?.GetID()
 		generate_network_log("Connection closed -- Program ID: [filename] User:[ID ? "[ID.registered_name]" : "None"]")
 
 	computer.update_appearance(UPDATE_ICON)

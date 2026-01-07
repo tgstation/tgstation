@@ -10,9 +10,9 @@ import {
   Section,
   Tooltip,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
-import { HypertorusFilter } from '.';
+import type { HypertorusFilter } from '.';
 import { HelpDummy, HoverHelp } from './helpers';
 
 type ComboProps = {
@@ -235,12 +235,13 @@ export const HypertorusWasteRemove = (props) => {
         >
           <NumberInput
             animated
+            tickWhileDragging
             value={mod_filtering_rate}
             unit="mol/s"
             step={1}
             minValue={5}
             maxValue={200}
-            onDrag={(value) =>
+            onChange={(value) =>
               act('mod_filtering_rate', {
                 mod_filtering_rate: value,
               })

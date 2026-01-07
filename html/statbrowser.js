@@ -236,6 +236,7 @@ function tab_change(tab) {
     document.getElementById(tab).className = "button active"; // make current button active
   var spell_tabs_thingy = spell_tabs.includes(tab);
   var verb_tabs_thingy = verb_tabs.includes(tab);
+  statcontentdiv.className = "statcontent";
   if (tab == "Status") {
     draw_status();
   } else if (tab == "MC") {
@@ -389,22 +390,27 @@ function draw_status() {
 
 function draw_mc() {
   statcontentdiv.textContent = "";
+  statcontentdiv.className = "mcstatcontent";
   var table = document.createElement("table");
   for (var i = 0; i < mc_tab_parts.length; i++) {
     var part = mc_tab_parts[i];
     var tr = document.createElement("tr");
+    var td0 = document.createElement("td");
+    td0.className = "monospace";
+    td0.textContent = part[0];
     var td1 = document.createElement("td");
-    td1.textContent = part[0];
+    td1.textContent = part[1];
     var td2 = document.createElement("td");
-    if (part[2]) {
+    if (part[3]) {
       var a = document.createElement("a");
       a.href =
-        "byond://?_src_=vars;admin_token=" + href_token + ";Vars=" + part[2];
-      a.textContent = part[1];
+        "byond://?_src_=vars;admin_token=" + href_token + ";Vars=" + part[3];
+      a.textContent = part[2];
       td2.appendChild(a);
     } else {
-      td2.textContent = part[1];
+      td2.textContent = part[2];
     }
+    tr.appendChild(td0);
     tr.appendChild(td1);
     tr.appendChild(td2);
     table.appendChild(tr);
@@ -746,11 +752,9 @@ function set_theme(which) {
   if (which == "light") {
     document.body.className = "";
     document.documentElement.className = "light";
-    set_style_sheet("browserOutput_white");
   } else if (which == "dark") {
     document.body.className = "dark";
     document.documentElement.className = "dark";
-    set_style_sheet("browserOutput");
   }
 }
 
@@ -769,21 +773,6 @@ function set_tabs_style(style) {
     menu.classList.remove("menu-wrap");
     menu.classList.remove("tabs-classic");
   }
-}
-
-function set_style_sheet(sheet) {
-  if (document.getElementById("goonStyle")) {
-    var currentSheet = document.getElementById("goonStyle");
-    currentSheet.parentElement.removeChild(currentSheet);
-  }
-  var head = document.getElementsByTagName("head")[0];
-  var sheetElement = document.createElement("link");
-  sheetElement.id = "goonStyle";
-  sheetElement.rel = "stylesheet";
-  sheetElement.type = "text/css";
-  sheetElement.href = sheet + ".css";
-  sheetElement.media = "all";
-  head.appendChild(sheetElement);
 }
 
 function restoreFocus() {
@@ -931,7 +920,7 @@ Byond.subscribeTo("update_stat", function (payload) {
 
 Byond.subscribeTo("update_mc", function (payload) {
   mc_tab_parts = payload.mc_data;
-  mc_tab_parts.splice(0, 0, ["Location:", payload.coord_entry]);
+  mc_tab_parts.splice(0, 0, ["", "Location:", payload.coord_entry]);
 
   if (!verb_tabs.includes("MC")) {
     verb_tabs.push("MC");

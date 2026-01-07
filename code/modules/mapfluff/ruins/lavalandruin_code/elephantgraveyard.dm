@@ -6,7 +6,7 @@
 	impressiveness = 18 // Carved from the bones of a massive creature, it's going to be a specticle to say the least
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
-	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/bone= SHEET_MATERIAL_AMOUNT * 5)
 	abstract_type = /obj/structure/statue/bone
 
 /obj/structure/statue/bone/Initialize(mapload)
@@ -17,7 +17,7 @@
 /obj/structure/statue/bone/rib
 	name = "colossal rib"
 	desc = "It's staggering to think that something this big could have lived, let alone died."
-	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*4)
+	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT * 10)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "rib"
 	icon_preview = 'icons/obj/fluff/previews.dmi'
@@ -26,7 +26,7 @@
 /obj/structure/statue/bone/skull
 	name = "colossal skull"
 	desc = "The gaping maw of a dead, titanic monster."
-	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*12)
+	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT * 6)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "skull"
 	icon_preview = 'icons/obj/fluff/previews.dmi'
@@ -34,7 +34,7 @@
 
 /obj/structure/statue/bone/skull/half
 	desc = "The gaping maw of a dead, titanic monster. This one is cracked in half."
-	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*6)
+	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT * 3)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "skull-half"
 	icon_preview = 'icons/obj/fluff/previews.dmi'
@@ -89,13 +89,12 @@
 	desc = "A bubbling pool of oil. This would probably be valuable, had bluespace technology not destroyed the need for fossil fuels 200 years ago."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "puddle-oil"
+	capacity = 20
 	dispensedreagent = /datum/reagent/fuel/oil
 	pixel_shift = 0
 
 /obj/structure/sink/oil_well/Initialize(mapload)
-	.=..()
-	create_reagents(20)
-	reagents.add_reagent(dispensedreagent, 20)
+	. = ..()
 	//I'm pretty much aware that, because how oil wells and sinks work, attackby() won't work unless in combat mode.
 	//Thankfully, the user can cast the line from a distance.
 	AddComponent(/datum/component/fishing_spot, /datum/fish_source/oil_well)
@@ -254,16 +253,14 @@
 		if(!weapon.use_tool(src, user, delay = 15, volume = 40))
 			return TRUE
 
+		var/is_chill_with_robbing = HAS_MIND_TRAIT(user, TRAIT_MORBID) || HAS_PERSONALITY(user, /datum/personality/callous) || HAS_PERSONALITY(user, /datum/personality/misanthropic)
 		if(opened)
 			dug_closed = TRUE
 			close(user)
 		else if(open(user, force = TRUE) && affect_mood)
-			if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
-				user.add_mood_event("morbid_graverobbing", /datum/mood_event/morbid_graverobbing)
-			else
-				user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
+			user.add_mood_event("graverobbing", is_chill_with_robbing ? /datum/mood_event/morbid_graverobbing : /datum/mood_event/graverobbing)
 			if(lead_tomb && first_open)
-				if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
+				if(is_chill_with_robbing)
 					to_chat(user, span_notice("Did someone say something? I'm sure it was nothing."))
 				else
 					user.gain_trauma(/datum/brain_trauma/magic/stalker)
@@ -332,6 +329,14 @@
 	..()
 	new /obj/effect/decal/cleanable/blood/gibs/old(src)
 	new /obj/item/book/granter/crafting_recipe/boneyard_notes(src)
+
+/obj/structure/closet/crate/grave/skeleton
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	affect_mood = TRUE
+
+/obj/structure/closet/crate/grave/skeleton/PopulateContents()
+	. = ..()
+	new /mob/living/carbon/human/species/skeleton(src)
 
 //***Fluff items for lore/intrigue
 /obj/item/paper/crumpled/muddy/fluff/elephant_graveyard

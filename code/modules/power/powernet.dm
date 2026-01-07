@@ -106,30 +106,26 @@
  * * flicker_source - The center of the flicker. If null the whole powernet will flicker
  * * falloff_distance - Only relevant if you passed a source. Areas beyond this distance will be less and less likely to flicker.
  */
-/datum/powernet/proc/propagate_light_flicker(atom/flicker_source, falloff_distance = 64)
+/datum/powernet/proc/propagate_light_flicker(atom/flicker_source, falloff_distance = 32)
 	if(flickering || !length(nodes))
 		return
 
 	flickering = TRUE
-	var/most_flickers = 1
 	for(var/obj/machinery/power/terminal/terminal in nodes)
 		if(!istype(terminal.master, /obj/machinery/power/apc))
 			continue
 
-		if(isnull(flicker_source))
-			if(!prob(95))
-				continue
-		else
-			var/flicker_prob = 95 + (3 * (falloff_distance - get_dist(flicker_source, terminal)))
-			if(!prob(min(95, flicker_prob)))
-				continue
+		var/flicker_prob = 85
+		if(!isnull(flicker_source))
+			flicker_prob = 85 + min(3 * (falloff_distance - get_dist(flicker_source, terminal)), 0)
 
-		var/flicker_count = rand(1, 3)
-		most_flickers = max(most_flickers, flicker_count)
+		if(!prob(flicker_prob))
+			continue
+
 		var/obj/machinery/power/apc/apc = terminal.master
 		for(var/obj/machinery/light/light as anything in apc.get_lights())
-			light.flicker(flicker_count)
-		CHECK_TICK
+			light.flicker(amount = 1)
+			CHECK_TICK
 
 	// don't let another flicker propagation until our slowest area is done (with some added leeway)
-	addtimer(VARSET_CALLBACK(src, flickering, FALSE), most_flickers * 2 SECONDS)
+	addtimer(VARSET_CALLBACK(src, flickering, FALSE), 9 SECONDS)

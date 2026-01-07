@@ -19,12 +19,11 @@
 	cult_team = null
 	return ..()
 
-/obj/structure/destructible/cult/Initialize(mapload)
+/obj/structure/destructible/cult/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_CONSTRUCTED, PROC_REF(on_constructed))
-
-/obj/structure/destructible/cult/proc/on_constructed(datum/source, mob/builder)
-	SIGNAL_HANDLER
+	if(!ismob(crafter))
+		return
+	var/mob/living/builder = crafter
 	var/datum/antagonist/cult/cultist = builder.mind?.has_antag_datum(/datum/antagonist/cult, TRUE)
 	cult_team = cultist?.get_team()
 
@@ -172,7 +171,12 @@
 
 	var/list/choices = list()
 	for(var/item in options)
-		choices[item] = options[item][PREVIEW_IMAGE]
+		var/datum/radial_menu_choice/cultitem = new()
+		cultitem.name = item
+		cultitem.info = span_cult_italic(options[item][RADIAL_DESC])
+		cultitem.image = options[item][PREVIEW_IMAGE]
+		cultitem.tooltip_theme = "cult"
+		choices[item] = cultitem
 
 	var/picked_choice = show_radial_menu(
 		user,
@@ -181,7 +185,7 @@
 		custom_check = CALLBACK(src, PROC_REF(check_menu), user),
 		require_near = TRUE,
 		tooltips = TRUE,
-		)
+	)
 
 	if(!picked_choice)
 		return

@@ -58,7 +58,7 @@
 	name = "Smoke"
 	button_icon_state = "mech_smoke"
 
-/datum/action/vehicle/sealed/mecha/mech_smoke/Trigger(trigger_flags)
+/datum/action/vehicle/sealed/mecha/mech_smoke/Trigger(mob/clicker, trigger_flags)
 	if(!..())
 		return
 	if(!chassis || !(owner in chassis.occupants))
@@ -72,7 +72,7 @@
 	name = "Zoom"
 	button_icon_state = "mech_zoom_off"
 
-/datum/action/vehicle/sealed/mecha/mech_zoom/Trigger(trigger_flags)
+/datum/action/vehicle/sealed/mecha/mech_zoom/Trigger(mob/clicker, trigger_flags)
 	if(!..())
 		return
 	if(!owner.client || !chassis || !(owner in chassis.occupants))
@@ -133,7 +133,7 @@
 	armor_type = /datum/armor/mecha_mauler
 	accesses = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/mauler
-	mecha_flags = ID_LOCK_ON | CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = ID_LOCK_ON | CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | AI_COMPATIBLE
 	max_equip_by_category = list(
 		MECHA_L_ARM = 1,
 		MECHA_R_ARM = 1,

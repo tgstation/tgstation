@@ -9,7 +9,6 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FIRE_PROOF
-	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/fuel/oil = 5)
 	custom_price = PAYCHECK_CREW * 1.1
 	light_system = OVERLAY_LIGHT
 	light_range = 2
@@ -37,11 +36,14 @@
 		"thirteen",
 		"snake",
 	)
+	/// Whether the lighter starts with fuel
+	var/spawns_with_reagent = TRUE
 
 /obj/item/lighter/Initialize(mapload)
 	. = ..()
 	create_reagents(maximum_fuel, REFILLABLE | DRAINABLE)
-	reagents.add_reagent(/datum/reagent/fuel, maximum_fuel)
+	if(spawns_with_reagent)
+		reagents.add_reagent(/datum/reagent/fuel, maximum_fuel)
 	if(!overlay_state)
 		overlay_state = pick(overlay_list)
 	AddComponent(\
@@ -51,6 +53,9 @@
 		on_intercepted = CALLBACK(src, PROC_REF(on_intercepted_bullet)),\
 	)
 	update_appearance()
+
+/obj/item/lighter/grind_results()
+	return list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/fuel/oil = 5)
 
 /obj/item/lighter/examine(mob/user)
 	. = ..()
@@ -227,11 +232,10 @@
 
 /obj/item/lighter/process(seconds_per_tick)
 	if(lit)
+		open_flame(heat)
 		burned_fuel_for += seconds_per_tick
 		if(burned_fuel_for >= TOOL_FUEL_BURN_INTERVAL)
 			use(used = 0.25)
-
-	open_flame(heat)
 
 /obj/item/lighter/get_temperature()
 	return lit * heat
@@ -313,7 +317,9 @@
 	heat_while_on = parent_type::heat_while_on + 1000 //Blue flame is hotter, this means this does act as a welding tool.
 	light_color = LIGHT_COLOR_CYAN
 	overlay_state = "slime"
-	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/medicine/pyroxadone = 5)
+
+/obj/item/lighter/slime/grind_results()
+	return list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/medicine/pyroxadone = 5)
 
 /obj/item/lighter/skull
 	name = "badass zippo"
@@ -325,12 +331,14 @@
 	desc = "In lieu of fuel, performative spirit can be used to light cigarettes."
 	icon_state = "mlighter" //These ones don't show a flame.
 	light_color = LIGHT_COLOR_HALOGEN
-	heat_while_on = 0 //I swear it's a real lighter dude you just can't see the flame dude I promise
+	heat_while_on = TCMB //I swear it's a real lighter dude you just can't see the flame dude I promise
 	overlay_state = "mime"
-	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/toxin/mutetoxin = 5, /datum/reagent/consumable/nothing = 10)
 	light_range = 0
 	light_power = 0
 	fancy = FALSE
+
+/obj/item/lighter/mime/grind_results()
+	return list(/datum/reagent/iron = 1, /datum/reagent/toxin/mutetoxin = 5, /datum/reagent/consumable/nothing = 10)
 
 /obj/item/lighter/mime/ignition_effect(atom/A, mob/user)
 	. = span_infoplain("[user] lifts \the [src] to the [A], which miraculously lights!")
@@ -341,10 +349,12 @@
 	icon_state = "slighter"
 	light_color = LIGHT_COLOR_ELECTRIC_CYAN
 	overlay_state = "bright"
-	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/flash_powder = 10)
 	light_range = 8
 	light_power = 3 //Irritatingly bright and large enough to cover a small room.
 	fancy = FALSE
+
+/obj/item/lighter/bright/grind_results()
+	return list(/datum/reagent/iron = 1, /datum/reagent/flash_powder = 10)
 
 /obj/item/lighter/bright/examine(mob/user)
 	. = ..()
@@ -367,3 +377,9 @@
 		/obj/item/lighter/mime,
 		/obj/item/lighter/bright,
 	)
+
+/obj/item/lighter/empty
+	spawns_with_reagent = FALSE
+
+/obj/item/lighter/greyscale/empty
+	spawns_with_reagent = FALSE

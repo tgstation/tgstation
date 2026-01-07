@@ -249,86 +249,89 @@ SUBSYSTEM_DEF(id_access)
 
 /// Setup dictionary that converts access levels to text descriptions.
 /datum/controller/subsystem/id_access/proc/setup_access_descriptions()
-	desc_by_access["[ACCESS_CARGO]"] = "Cargo Bay"
-	desc_by_access["[ACCESS_SECURITY]"] = "Security"
-	desc_by_access["[ACCESS_BRIG]"] = "Holding Cells"
-	desc_by_access["[ACCESS_COURT]"] = "Courtroom"
-	desc_by_access["[ACCESS_DETECTIVE]"] = "Detective Office"
-	desc_by_access["[ACCESS_MEDICAL]"] = "Medical"
-	desc_by_access["[ACCESS_GENETICS]"] = "Genetics Lab"
-	desc_by_access["[ACCESS_MORGUE]"] = "Morgue"
-	desc_by_access["[ACCESS_MORGUE_SECURE]"] = "Coroner"
-	desc_by_access["[ACCESS_SCIENCE]"] = "R&D Lab"
-	desc_by_access["[ACCESS_ORDNANCE]"] = "Ordnance Lab"
-	desc_by_access["[ACCESS_ORDNANCE_STORAGE]"] = "Ordnance Storage"
-	desc_by_access["[ACCESS_PLUMBING]"] = "Chemistry Lab"
-	desc_by_access["[ACCESS_RD]"] = "RD Office"
-	desc_by_access["[ACCESS_BAR]"] = "Bar"
-	desc_by_access["[ACCESS_JANITOR]"] = "Custodial Closet"
-	desc_by_access["[ACCESS_ENGINEERING]"] = "Engineering"
-	desc_by_access["[ACCESS_ENGINE_EQUIP]"] = "Power and Engineering Equipment"
-	desc_by_access["[ACCESS_MAINT_TUNNELS]"] = "Maintenance"
-	desc_by_access["[ACCESS_EXTERNAL_AIRLOCKS]"] = "External Airlocks"
-	desc_by_access["[ACCESS_CHANGE_IDS]"] = "ID Console"
-	desc_by_access["[ACCESS_AI_UPLOAD]"] = "AI Chambers"
-	desc_by_access["[ACCESS_TELEPORTER]"] = "Teleporter"
-	desc_by_access["[ACCESS_EVA]"] = "EVA"
-	desc_by_access["[ACCESS_COMMAND]"] = "Command"
-	desc_by_access["[ACCESS_CAPTAIN]"] = "Captain"
-	desc_by_access["[ACCESS_ALL_PERSONAL_LOCKERS]"] = "Personal Lockers"
-	desc_by_access["[ACCESS_CHAPEL_OFFICE]"] = "Chapel Office"
-	desc_by_access["[ACCESS_TECH_STORAGE]"] = "Technical Storage"
-	desc_by_access["[ACCESS_ATMOSPHERICS]"] = "Atmospherics"
-	desc_by_access["[ACCESS_CREMATORIUM]"] = "Crematorium"
-	desc_by_access["[ACCESS_ARMORY]"] = "Armory"
-	desc_by_access["[ACCESS_CONSTRUCTION]"] = "Construction"
-	desc_by_access["[ACCESS_KITCHEN]"] = "Kitchen"
-	desc_by_access["[ACCESS_HYDROPONICS]"] = "Hydroponics"
-	desc_by_access["[ACCESS_LIBRARY]"] = "Library"
-	desc_by_access["[ACCESS_LAWYER]"] = "Law Office"
-	desc_by_access["[ACCESS_ROBOTICS]"] = "Robotics"
-	desc_by_access["[ACCESS_VIROLOGY]"] = "Virology"
-	desc_by_access["[ACCESS_PSYCHOLOGY]"] = "Psychology"
-	desc_by_access["[ACCESS_CMO]"] = "CMO Office"
-	desc_by_access["[ACCESS_QM]"] = "QM Office"
-	desc_by_access["[ACCESS_SURGERY]"] = "Surgery"
-	desc_by_access["[ACCESS_THEATRE]"] = "Theatre"
-	desc_by_access["[ACCESS_RESEARCH]"] = "Science"
-	desc_by_access["[ACCESS_MINING]"] = "Mining Dock"
-	desc_by_access["[ACCESS_SHIPPING]"] = "Cargo Shipping"
-	desc_by_access["[ACCESS_VAULT]"] = "Main Vault"
-	desc_by_access["[ACCESS_MINING_STATION]"] = "Mining Outpost"
-	desc_by_access["[ACCESS_XENOBIOLOGY]"] = "Xenobiology Lab"
-	desc_by_access["[ACCESS_HOP]"] = "HoP Office"
-	desc_by_access["[ACCESS_HOS]"] = "HoS Office"
-	desc_by_access["[ACCESS_CE]"] = "CE Office"
-	desc_by_access["[ACCESS_PHARMACY]"] = "Pharmacy"
-	desc_by_access["[ACCESS_RC_ANNOUNCE]"] = "RC Announcements"
-	desc_by_access["[ACCESS_KEYCARD_AUTH]"] = "Keycode Auth."
-	desc_by_access["[ACCESS_TCOMMS]"] = "Telecommunications"
-	desc_by_access["[ACCESS_GATEWAY]"] = "Gateway"
-	desc_by_access["[ACCESS_BRIG_ENTRANCE]"] = "Brig"
-	desc_by_access["[ACCESS_MINERAL_STOREROOM]"] = "Mineral Storage"
-	desc_by_access["[ACCESS_MINISAT]"] = "AI Satellite"
-	desc_by_access["[ACCESS_WEAPONS]"] = "Weapon Permit"
-	desc_by_access["[ACCESS_NETWORK]"] = "Network Access"
-	desc_by_access["[ACCESS_MECH_MINING]"] = "Mining Mech Access"
-	desc_by_access["[ACCESS_MECH_MEDICAL]"] = "Medical Mech Access"
-	desc_by_access["[ACCESS_MECH_SECURITY]"] = "Security Mech Access"
-	desc_by_access["[ACCESS_MECH_SCIENCE]"] = "Science Mech Access"
-	desc_by_access["[ACCESS_MECH_ENGINE]"] = "Engineering Mech Access"
-	desc_by_access["[ACCESS_AUX_BASE]"] = "Auxiliary Base"
-	desc_by_access["[ACCESS_SERVICE]"] = "Service Hallway"
-	desc_by_access["[ACCESS_CENT_GENERAL]"] = "Code Grey"
-	desc_by_access["[ACCESS_CENT_THUNDER]"] = "Code Yellow"
-	desc_by_access["[ACCESS_CENT_STORAGE]"] = "Code Orange"
-	desc_by_access["[ACCESS_CENT_LIVING]"] = "Code Green"
-	desc_by_access["[ACCESS_CENT_MEDICAL]"] = "Code White"
-	desc_by_access["[ACCESS_CENT_TELEPORTER]"] = "Code Blue"
-	desc_by_access["[ACCESS_CENT_SPECOPS]"] = "Code Black"
-	desc_by_access["[ACCESS_CENT_CAPTAIN]"] = "Code Gold"
-	desc_by_access["[ACCESS_CENT_BAR]"] = "Code Scotch"
-	desc_by_access["[ACCESS_BIT_DEN]"] = "Bitrunner Den"
+	desc_by_access[ACCESS_CARGO] = "Cargo Bay"
+	desc_by_access[ACCESS_SECURITY] = "Security"
+	desc_by_access[ACCESS_BRIG] = "Holding Cells"
+	desc_by_access[ACCESS_COURT] = "Courtroom"
+	desc_by_access[ACCESS_DETECTIVE] = "Detective Office"
+	desc_by_access[ACCESS_MEDICAL] = "Medical"
+	desc_by_access[ACCESS_GENETICS] = "Genetics Lab"
+	desc_by_access[ACCESS_MORGUE] = "Morgue"
+	desc_by_access[ACCESS_MORGUE_SECURE] = "Coroner"
+	desc_by_access[ACCESS_SCIENCE] = "R&D Lab"
+	desc_by_access[ACCESS_ORDNANCE] = "Ordnance Lab"
+	desc_by_access[ACCESS_ORDNANCE_STORAGE] = "Ordnance Storage"
+	desc_by_access[ACCESS_PLUMBING] = "Chemistry Lab"
+	desc_by_access[ACCESS_RD] = "RD Office"
+	desc_by_access[ACCESS_BAR] = "Bar"
+	desc_by_access[ACCESS_JANITOR] = "Custodial Closet"
+	desc_by_access[ACCESS_ENGINEERING] = "Engineering"
+	desc_by_access[ACCESS_ENGINE_EQUIP] = "Power and Engineering Equipment"
+	desc_by_access[ACCESS_MAINT_TUNNELS] = "Maintenance"
+	desc_by_access[ACCESS_EXTERNAL_AIRLOCKS] = "External Airlocks"
+	desc_by_access[ACCESS_CHANGE_IDS] = "ID Console"
+	desc_by_access[ACCESS_AI_UPLOAD] = "AI Chambers"
+	desc_by_access[ACCESS_TELEPORTER] = "Teleporter"
+	desc_by_access[ACCESS_EVA] = "EVA"
+	desc_by_access[ACCESS_BUDGET] = "Department Budget"
+	desc_by_access[ACCESS_COMMAND] = "Command"
+	desc_by_access[ACCESS_CAPTAIN] = "Captain"
+	desc_by_access[ACCESS_ALL_PERSONAL_LOCKERS] = "Personal Lockers"
+	desc_by_access[ACCESS_CHAPEL_OFFICE] = "Chapel Office"
+	desc_by_access[ACCESS_TECH_STORAGE] = "Technical Storage"
+	desc_by_access[ACCESS_ATMOSPHERICS] = "Atmospherics"
+	desc_by_access[ACCESS_CREMATORIUM] = "Crematorium"
+	desc_by_access[ACCESS_ARMORY] = "Armory"
+	desc_by_access[ACCESS_CONSTRUCTION] = "Construction"
+	desc_by_access[ACCESS_KITCHEN] = "Kitchen"
+	desc_by_access[ACCESS_HYDROPONICS] = "Hydroponics"
+	desc_by_access[ACCESS_LIBRARY] = "Library"
+	desc_by_access[ACCESS_LAWYER] = "Law Office"
+	desc_by_access[ACCESS_ROBOTICS] = "Robotics"
+	desc_by_access[ACCESS_VIROLOGY] = "Virology"
+	desc_by_access[ACCESS_PSYCHOLOGY] = "Psychology"
+	desc_by_access[ACCESS_CMO] = "CMO Office"
+	desc_by_access[ACCESS_PARAMEDIC] = "Paramedic Office"
+	desc_by_access[ACCESS_QM] = "QM Office"
+	desc_by_access[ACCESS_SURGERY] = "Surgery"
+	desc_by_access[ACCESS_THEATRE] = "Theatre"
+	desc_by_access[ACCESS_RESEARCH] = "Science"
+	desc_by_access[ACCESS_MINING] = "Mining Dock"
+	desc_by_access[ACCESS_SHIPPING] = "Cargo Shipping"
+	desc_by_access[ACCESS_VAULT] = "Main Vault"
+	desc_by_access[ACCESS_MINING_STATION] = "Mining Outpost"
+	desc_by_access[ACCESS_XENOBIOLOGY] = "Xenobiology Lab"
+	desc_by_access[ACCESS_HOP] = "HoP Office"
+	desc_by_access[ACCESS_HOS] = "HoS Office"
+	desc_by_access[ACCESS_CE] = "CE Office"
+	desc_by_access[ACCESS_PHARMACY] = "Pharmacy"
+	desc_by_access[ACCESS_RC_ANNOUNCE] = "RC Announcements"
+	desc_by_access[ACCESS_KEYCARD_AUTH] = "Keycode Auth."
+	desc_by_access[ACCESS_TCOMMS] = "Telecommunications"
+	desc_by_access[ACCESS_GATEWAY] = "Gateway"
+	desc_by_access[ACCESS_BRIG_ENTRANCE] = "Brig"
+	desc_by_access[ACCESS_MINERAL_STOREROOM] = "Mineral Storage"
+	desc_by_access[ACCESS_MINISAT] = "AI Satellite"
+	desc_by_access[ACCESS_WEAPONS] = "Weapon Permit"
+	desc_by_access[ACCESS_NETWORK] = "Network Access"
+	desc_by_access[ACCESS_MECH_MINING] = "Mining Mech Access"
+	desc_by_access[ACCESS_MECH_MEDICAL] = "Medical Mech Access"
+	desc_by_access[ACCESS_MECH_SECURITY] = "Security Mech Access"
+	desc_by_access[ACCESS_MECH_SCIENCE] = "Science Mech Access"
+	desc_by_access[ACCESS_MECH_ENGINE] = "Engineering Mech Access"
+	desc_by_access[ACCESS_AUX_BASE] = "Auxiliary Base"
+	desc_by_access[ACCESS_SERVICE] = "Service Hallway"
+	desc_by_access[ACCESS_CENT_GENERAL] = "CentCom General Access"
+	desc_by_access[ACCESS_CENT_THUNDER] = "CentCom Thunderdome"
+	desc_by_access[ACCESS_CENT_STORAGE] = "CentCom Storage"
+	desc_by_access[ACCESS_CENT_LIVING] = "CentCom Living Quarters"
+	desc_by_access[ACCESS_CENT_MEDICAL] = "CentCom Medical"
+	desc_by_access[ACCESS_CENT_TELEPORTER] = "CentCom Teleporter"
+	desc_by_access[ACCESS_CENT_SPECOPS] = "CentCom SpecOps"
+	desc_by_access[ACCESS_CENT_CAPTAIN] = "CentCom Captain"
+	desc_by_access[ACCESS_CENT_BAR] = "CentCom Bar"
+	desc_by_access[ACCESS_CENT_OFFICER] = "CentCom Officer"
+	desc_by_access[ACCESS_BIT_DEN] = "Bitrunner Den"
 
 /**
  * Returns the access bitflags associated with any given access level.
@@ -417,6 +420,9 @@ SUBSYSTEM_DEF(id_access)
 	id_card.update_label()
 	id_card.update_icon()
 
+	// Apply any currently active RETA grants to this newly trimmed card
+	apply_active_reta_grants_to_card(id_card)
+
 	return TRUE
 
 /**
@@ -457,7 +463,10 @@ SUBSYSTEM_DEF(id_access)
 
 	if (ishuman(id_card.loc))
 		var/mob/living/carbon/human/owner = id_card.loc
-		owner.sec_hud_set_ID()
+		owner.update_ID_card()
+
+	// Apply any currently active RETA grants to this card with updated trim override
+	apply_active_reta_grants_to_card(id_card)
 
 /**
  * Removes a trim from a ID card.
@@ -478,7 +487,7 @@ SUBSYSTEM_DEF(id_access)
 
 	if (ishuman(id_card.loc))
 		var/mob/living/carbon/human/owner = id_card.loc
-		owner.sec_hud_set_ID()
+		owner.update_ID_card()
 
 /**
  * Adds the accesses associated with a trim to an ID card.
@@ -500,6 +509,9 @@ SUBSYSTEM_DEF(id_access)
 	if(istype(trim, /datum/id_trim/job))
 		var/datum/id_trim/job/job_trim = trim // Here is where we update a player's paycheck department for the purposes of discounts/paychecks.
 		id_card.registered_account.account_job.paycheck_department = job_trim.job.paycheck_department
+
+	// Apply any currently active RETA grants to this card with updated trim access
+	apply_active_reta_grants_to_card(id_card)
 
 /**
  * Tallies up all accesses the card has that have flags greater than or equal to the access_flag supplied.
@@ -533,62 +545,63 @@ SUBSYSTEM_DEF(id_access)
 	) as /alist
 
 	var/alist/returned_record = alist(
-		"Name" = null,
-		"Age" = null,
-		"Assignment" = null,
-		"Account ID" = null,
-		"Account Holder" = null,
-		"Account Assignment" = null,
-		"Accesses" = null,
+		"name" = null,
+		"age" = null,
+		"assignment" = null,
+		"account_id" = null,
+		"account_holder" = null,
+		"account_assignment" = null,
+		"accesses" = null,
 	)
 	. = returned_record
 	if(isnull(target_of_record))
-		.["Name"] = ID_READ_FAILURE
-		.["Age"] = ID_READ_FAILURE
-		.["Assignment"] = ID_READ_FAILURE
-		.["Account ID"] = ID_READ_FAILURE
-		.["Account Holder"] = ID_READ_FAILURE
-		.["Account Assignment"] = ID_READ_FAILURE
+		.["name"] = ID_READ_FAILURE
+		.["age"] = ID_READ_FAILURE
+		.["assignment"] = ID_READ_FAILURE
+		.["account_id"] = ID_READ_FAILURE
+		.["account_holder"] = ID_READ_FAILURE
+		.["account_assignment"] = ID_READ_FAILURE
+		.["accesses"] = ID_READ_FAILURE
 		.[ID_READ_FAILURE] = ID_READ_FAILURE
 		return .
 	var/mob/living/target = astype(target_of_record, /mob/living)
 	if(target)
-		if(!issilicon(target))
+		if(!issilicon(target) && !isdrone(target))
 			. = __in_character_record_id_information(astype(target.get_idcard(), /obj/item/card/id/advanced))
 			return .
-		.["Name"] = target.name
-		.["Age"] = "INSPECT MANUFACTURER MANIFEST"
-		.["Account ID"] = 0
-		.["Account Holder"] = "NO ACCOUNT."
-		.["Account Assignment"] = "NO ACCOUNT."
-		.["Bank Account"] = "N/A"
-		.["Assignment"] = target.mind?.assigned_role?.title
+		.["name"] = target.name
+		.["age"] = 0
+		.["assignment"] = "Silicon"
+		.["account_id"] = null
+		.["account_holder"] = null
+		.["account_assignment"] = null
+		.["accesses"] = null
 		.[SILICON_OVERRIDE] = SILICON_OVERRIDE
 		return .
 	var/obj/item/card/id/advanced/id_card = astype(target_of_record, /obj/item/card/id/advanced)
 	if(id_card)
-		.["Name"] = id_card.registered_name || "Unknown"
-		.["Age"] = id_card.registered_age || "Unknown"
-		.["Assignment"] = id_card.assignment || "Unassigned"
-		.["Accesses"] = id_card.access
+		.["name"] = id_card.registered_name || "Unknown"
+		.["age"] = id_card.registered_age || "Unknown"
+		.["assignment"] = id_card.assignment || "Unassigned"
+		.["accesses"] = id_card.access
 		var/datum/bank_account/id_account = id_card.registered_account
 		if(istype(id_card, /obj/item/card/id/advanced/chameleon) && !bypass_chameleon)
 			// Generate a bogey record based only on the ID card
 			// Generates a random bank account number every time as a 'spot the thread' for anyone who
 			// went through records for this entry for whatever reason.
-			.["Account ID"] = rand(111111, 999999)
-			.["Account Holder"] = .["Name"]
-			.["Account Assignment"] = .["Assignment"]
+			.["account_id"] = rand(111111, 999999)
+			.["account_holder"] = .["name"]
+			.["account_assignment"] = .["assignment"]
 			.[CHAMELEON_OVERRIDE] = CHAMELEON_OVERRIDE
 			return .
 		if(!id_account)
-			.["Account ID"] = 0
-			.["Account Holder"] = "NO ACCOUNT."
-			.["Account Assignment"] = "NO ACCOUNT."
+			.["account_id"] = 0
+			.["account_holder"] = "NO ACCOUNT."
+			.["account_assignment"] = "NO ACCOUNT."
 			return .
-		.["Account ID"] = id_account.account_id
-		.["Account Holder"] = id_account.account_holder
-		.["Account Assignment"] = id_account.account_job?.title || "Unassigned"
+		.["account_id"] = id_account.account_id
+		.["account_holder"] = id_account.account_holder
+		.["account_assignment"] = id_account.account_job?.title || "Unassigned"
 		return .
 	else
 		. = ID_DATA(null)

@@ -24,18 +24,18 @@
 	addtimer(CALLBACK(src, PROC_REF(create_navigation)), world.tick_lag)
 
 /mob/living/proc/create_navigation()
-	var/can_go_down = SSmapping.level_trait(z, ZTRAIT_DOWN)
-	var/can_go_up = SSmapping.level_trait(z, ZTRAIT_UP)
 	var/list/destination_list = list()
 	for(var/atom/destination as anything in GLOB.navigate_destinations)
 		if(get_dist(destination, src) > MAX_NAVIGATE_RANGE)
 			continue
 		var/destination_name = GLOB.navigate_destinations[destination]
-		if(destination.z != z && (can_go_down || can_go_up)) // up or down is just a good indicator "we're on the station", we don't need to check specifics
+		if(destination.z != z && is_multi_z_level(z)) // up or down is just a good indicator "we're on the station", we don't need to check specifics
 			destination_name += ((get_dir_multiz(src, destination) & UP) ? " (Above)" : " (Below)")
 
 		destination_list[destination_name] = destination
 
+	var/can_go_down = SSmapping.level_trait(z, ZTRAIT_DOWN)
+	var/can_go_up = SSmapping.level_trait(z, ZTRAIT_UP)
 	if(can_go_down)
 		destination_list["Nearest Way Down"] = DOWN
 	if(can_go_up)

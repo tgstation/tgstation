@@ -8,7 +8,7 @@
 	/// The efficiency coefficient. Material costs and print times are multiplied by this number;
 	var/efficiency_coeff = 1
 	/// The material storage used by this fabricator.
-	var/datum/component/remote_materials/materials
+	var/datum/remote_materials/materials
 	/// Which departments are allowed to process this design
 	var/allowed_department_flags = ALL
 	/// Icon state when production has started
@@ -28,8 +28,8 @@
 
 /obj/machinery/rnd/production/Initialize(mapload)
 	print_sound = new(src,  FALSE)
-	materials = AddComponent(
-		/datum/component/remote_materials, \
+	materials = new (
+		src, \
 		mapload, \
 		mat_container_signals = list( \
 			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/rnd/production, local_material_insert)
@@ -53,9 +53,9 @@
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/machinery/rnd/production/Destroy()
-	QDEL_NULL(print_sound)
-	materials = null
 	cached_designs = null
+	QDEL_NULL(print_sound)
+	QDEL_NULL(materials)
 	return ..()
 
 // Stuff for the stripe on the department machines
@@ -79,8 +79,8 @@
 	if(!in_range(user, src) && !isobserver(user))
 		return
 
-	. += span_notice("Material usage cost at <b>[efficiency_coeff * 100]%</b>")
-	. += span_notice("Build time at <b>[efficiency_coeff * 100]%</b>")
+	. += span_notice("Material usage cost at <b>[efficiency_coeff * 100]%</b>.")
+	. += span_notice("Build time at <b>[efficiency_coeff * 100]%</b>.")
 	if(drop_direction)
 		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
 		. += span_notice("[EXAMINE_HINT("Alt-click")] to reset.")
@@ -303,7 +303,7 @@
 				say("No power to dispense sheets")
 				return
 
-			materials.eject_sheets(material, amount)
+			materials.eject_sheets(material_ref = material, eject_amount = amount, user_data = ID_DATA(usr))
 			return TRUE
 
 		if("build")
@@ -338,7 +338,7 @@
 			var/coefficient = build_efficiency(design.build_path)
 
 			//check for materials
-			if(!materials.can_use_resource())
+			if(!materials.can_use_resource(user_data = ID_DATA(usr)))
 				return
 			if(!materials.mat_container.has_materials(design.materials, coefficient, print_quantity))
 				say("Not enough materials to complete prototype[print_quantity > 1 ? "s" : ""].")
@@ -364,7 +364,7 @@
 					target_location = get_turf(src)
 			else
 				target_location = get_turf(src)
-			addtimer(CALLBACK(src, PROC_REF(do_make_item), design, print_quantity, build_time_per_item, coefficient, charge_per_item, target_location), build_time_per_item)
+			addtimer(CALLBACK(src, PROC_REF(do_make_item), design, print_quantity, build_time_per_item, coefficient, charge_per_item, target_location, ID_DATA(usr)), build_time_per_item)
 
 			return TRUE
 
@@ -378,8 +378,16 @@
  * * material_cost_coefficient - the cost efficiency to print 1 design
  * * charge_per_item - the amount of power to print 1 item
  * * turf/target - the location to drop the printed item on
+ * * user_data - ID_DATA(user), see the proc on SSid_access, served for logging
 */
-/obj/machinery/rnd/production/proc/do_make_item(datum/design/design, items_remaining, build_time_per_item, material_cost_coefficient, charge_per_item, turf/target)
+/obj/machinery/rnd/production/proc/do_make_item(
+		datum/design/design,
+		items_remaining,
+		build_time_per_item,
+		material_cost_coefficient,
+		charge_per_item,
+		turf/target,
+		alist/user_data)
 	PROTECTED_PROC(TRUE)
 
 	if(!items_remaining) // how
@@ -405,8 +413,7 @@
 		finalize_build()
 		return
 
-	if(!materials.can_use_resource())
-		say("Unable to continue production, materials on hold.")
+	if(!materials.can_use_resource(user_data = user_data))
 		finalize_build()
 		return
 
@@ -416,7 +423,7 @@
 		say("Unable to continue production, missing materials.")
 		finalize_build()
 		return
-	materials.use_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1, "built", "[design.name]")
+	materials.use_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1, "processed", "[design.name]", user_data = user_data)
 
 	var/atom/movable/created
 	if(is_stack)
@@ -450,7 +457,7 @@
 	if(!items_remaining)
 		finalize_build()
 		return
-	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, items_remaining, build_time_per_item, material_cost_coefficient, charge_per_item, target), build_time_per_item)
+	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, items_remaining, build_time_per_item, material_cost_coefficient, charge_per_item, target, user_data), build_time_per_item)
 
 /// Resets the busy flag
 /// Called at the end of do_make_item's timer loop

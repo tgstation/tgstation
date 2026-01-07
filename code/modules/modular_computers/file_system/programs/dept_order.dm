@@ -49,7 +49,7 @@ GLOBAL_VAR(department_cd_override)
 	linked_department = department
 	var/datum/job_department/linked_department_real = SSjob.get_department_type(linked_department)
 	// Heads of staff can download
-	download_access |= linked_department_real.head_of_staff_access
+	LAZYOR(download_access, linked_department_real.head_of_staff_access)
 	// Heads of staff + anyone in the dept can run it
 	use_access |= linked_department_real.head_of_staff_access
 	use_access |= linked_department_real.department_access
@@ -64,7 +64,7 @@ GLOBAL_VAR(department_cd_override)
 /datum/computer_file/program/department_order/ui_data(mob/user)
 	var/list/data = list()
 	data["no_link"] = !linked_department
-	data["id_inside"] = !!computer.computer_id_slot
+	data["id_inside"] = !!computer.stored_id
 	data["time_left"] = department_cooldowns[linked_department] ? DisplayTimeText(max(department_cooldowns[linked_department] - world.time, 0), 1) : null
 	data["can_override"] = !!department_order
 	return data
@@ -105,13 +105,11 @@ GLOBAL_VAR(department_cd_override)
 /// Checks if we can "see" the passed supply pack
 /datum/computer_file/program/department_order/proc/can_see_pack(datum/supply_pack/to_check)
 	PROTECTED_PROC(TRUE)
-	if(to_check.hidden && !(computer.obj_flags & EMAGGED))
+	if((to_check.order_flags & ORDER_EMAG_ONLY) && !(computer.obj_flags & EMAGGED))
 		return FALSE
-	if(to_check.special && !to_check.special_enabled)
+	if((to_check.order_flags & ORDER_SPECIAL) && !(to_check.order_flags & ORDER_SPECIAL_ENABLED))
 		return FALSE
-	if(to_check.drop_pod_only)
-		return FALSE
-	if(to_check.goody)
+	if(to_check.order_flags & (ORDER_INVISIBLE | ORDER_POD_ONLY | ORDER_GOODY | ORDER_NOT_DEPARTMENTAL))
 		return FALSE
 	return TRUE
 
@@ -142,7 +140,7 @@ GLOBAL_VAR(department_cd_override)
 		if(!isnull(linked_department))
 			return TRUE
 
-		var/new_dept_type = find_department_to_link(computer.computer_id_slot)
+		var/new_dept_type = find_department_to_link(computer.stored_id)
 		if(isnull(new_dept_type))
 			computer.physical.balloon_alert(orderer, "no department found!")
 			playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
@@ -155,7 +153,7 @@ GLOBAL_VAR(department_cd_override)
 	if(isnull(linked_department))
 		return TRUE
 
-	var/obj/item/card/id/id_card = computer.computer_id_slot || orderer.get_idcard(hand_first = TRUE)
+	var/obj/item/card/id/id_card = computer.stored_id || orderer.get_idcard(hand_first = TRUE)
 	var/list/id_card_access = id_card?.GetAccess() || list()
 
 	if(length(use_access & id_card_access) <= 0)
@@ -166,7 +164,7 @@ GLOBAL_VAR(department_cd_override)
 	if(action == "override_order")
 		if(isnull(department_order) || !(department_order in SSshuttle.shopping_list))
 			return TRUE
-		if(length(download_access & id_card_access) <= 0)
+		if(LAZYLEN(download_access & id_card_access) <= 0)
 			computer.physical.balloon_alert(orderer, "requires head of staff access!")
 			playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 			return TRUE
@@ -266,7 +264,7 @@ GLOBAL_VAR(department_cd_override)
 	return FALSE
 
 /datum/aas_config_entry/department_orders
-	name = "Departmental Order Announcement"
+	name = "Departmental: Order Announcement"
 	announcement_lines_map = list(
 		"Order Placed" = "A department order has been placed by %PERSON for %ORDER.",
 		"Cooldown Reset" = "Department order cooldown has expired! A new order may now be placed!",

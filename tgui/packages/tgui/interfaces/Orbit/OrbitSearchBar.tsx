@@ -5,7 +5,7 @@ import { useBackend } from '../../backend';
 import { OrbitContext } from '.';
 import { VIEWMODE } from './constants';
 import { isJobCkeyOrNameMatch, sortByOrbiters } from './helpers';
-import { OrbitData } from './types';
+import type { OrbitData } from './types';
 
 /** Search bar for the orbit ui. Has a few buttons to switch between view modes and auto-observe */
 export function OrbitSearchBar(props) {

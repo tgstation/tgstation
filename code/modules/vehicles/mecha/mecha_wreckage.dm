@@ -42,6 +42,11 @@
 	if(AI)
 		QDEL_NULL(AI)
 	QDEL_LIST(crowbar_salvage)
+	src.visible_message(span_danger("[src]'s superstructure folds in on itself, collapsing into a heap of unsalvageable scrap!"))
+	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+	for(var/mob/living/witness in range(2, src))
+		shake_camera(witness, 2, 1)
+	new /obj/effect/decal/cleanable/blood/gibs/robot_debris(get_turf(src))
 	return ..()
 
 /obj/structure/mecha_wreckage/examine(mob/user)
@@ -245,8 +250,3 @@
 			/obj/item/mecha_parts/part/odysseus_right_arm,
 			/obj/item/mecha_parts/part/odysseus_left_leg,
 			/obj/item/mecha_parts/part/odysseus_right_leg)
-
-/obj/structure/mecha_wreckage/justice
-	name = "\improper Justice wreckage"
-	icon_state = "justice-broken"
-	welder_salvage = list(/obj/item/stack/sheet/iron, /obj/item/stack/rods)

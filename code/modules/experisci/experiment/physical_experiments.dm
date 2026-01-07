@@ -24,9 +24,10 @@
 /datum/experiment/physical/meat_wall_explosion/proc/check_experiment(datum/source, obj/projectile/proj)
 	SIGNAL_HANDLER
 	if(istype(proj, /obj/projectile/beam/emitter))
+		UnregisterSignal(currently_scanned_atom, COMSIG_ATOM_BULLET_ACT)
 		finish_experiment(linked_experiment_handler)
 
-/datum/experiment/physical/meat_wall_explosion/finish_experiment(datum/component/experiment_handler/experiment_handler)
+/datum/experiment/physical/meat_wall_explosion/finish_experiment(datum/component/experiment_handler/experiment_handler, datum/techweb/linked_web_override)
 	. = ..()
 	new /obj/effect/gibspawner/generic(currently_scanned_atom)
 	var/turf/meat_wall = currently_scanned_atom
@@ -43,16 +44,17 @@
 		linked_experiment_handler.announce_message("Incorrect object for experiment.")
 		return FALSE
 
-	RegisterSignal(currently_scanned_atom, COMSIG_ARCADE_PRIZEVEND, PROC_REF(win_arcade))
+	RegisterSignal(currently_scanned_atom, COMSIG_ARCADE_VICTORY, PROC_REF(win_arcade))
 	linked_experiment_handler.announce_message("Experiment ready to start.")
 	return TRUE
 
 /datum/experiment/physical/arcade_winner/unregister_events()
-	UnregisterSignal(currently_scanned_atom, COMSIG_ARCADE_PRIZEVEND)
+	UnregisterSignal(currently_scanned_atom, COMSIG_ARCADE_VICTORY)
 
 /datum/experiment/physical/arcade_winner/check_progress()
 	. += EXPERIMENT_PROG_BOOL("Win an arcade game at a tracked arcade cabinet.", is_complete())
 
 /datum/experiment/physical/arcade_winner/proc/win_arcade(datum/source)
 	SIGNAL_HANDLER
+	UnregisterSignal(currently_scanned_atom, COMSIG_ARCADE_VICTORY)
 	finish_experiment(linked_experiment_handler)

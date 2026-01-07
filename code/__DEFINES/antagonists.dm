@@ -101,14 +101,52 @@
 #define HKT_NEXT "next"
 #define HKT_BAN "ban"
 #define HKT_DEPTH "depth"
+#define HKT_PURCHASED_DEPTH "purchased_depth"
 #define HKT_ROUTE "route"
 #define HKT_UI_BGR "ui_bgr"
+#define HKT_COST "cost"
+#define HKT_CATEGORY "category"
+/// Only present for already researched knowledge.
+#define HKT_INSTANCE "instance"
+/// unique identifier most commonly used for identifying what knowledge is researchable
+#define HKT_ID "id"
 
+#define BGR_SIDE "node_side"
+
+#define MAGIC_RESISTANCE_MOON (MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND)
 
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1
 #define HERETIC_NO_LIVING_HEART 0
 #define HERETIC_HAS_LIVING_HEART 1
+
+#define HERETIC_DRAFT_TIER_MAX 5
+
+/// The default drain speed for heretic rift's, anything below this will be considered a fast drain, and be very noticeable and cause a overlay
+#define HERETIC_RIFT_DEFAULT_DRAIN_SPEED 10 SECONDS
+
+/// Sources of knowledge purchased for heretics, used for positioning in the UI
+#define HERETIC_KNOWLEDGE_TREE "tree"
+#define HERETIC_KNOWLEDGE_SHOP "shop"
+#define HERETIC_KNOWLEDGE_DRAFT "draft"
+#define HERETIC_KNOWLEDGE_START "start"
+
+/// defines for the depths of the heretic knowledge tree nodes
+#define HKT_DEPTH_START 2
+#define HKT_DEPTH_TIER_1 3
+#define HKT_DEPTH_DRAFT_1 4
+#define HKT_DEPTH_TIER_2 5
+#define HKT_DEPTH_DRAFT_2 6
+#define HKT_DEPTH_ROBES 7
+#define HKT_DEPTH_TIER_3 8
+#define HKT_DEPTH_DRAFT_3 9
+#define HKT_DEPTH_ARMOR 10
+#define HKT_DEPTH_TIER_4 11
+#define HKT_DEPTH_DRAFT_4 12
+#define HKT_DEPTH_ASCENSION 13
+
+#define HERETIC_CAN_ASCEND "can_ascend"
+
 
 /// A define used in ritual priority for heretics.
 #define MAX_KNOWLEDGE_PRIORITY 100
@@ -334,6 +372,8 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define DESTROY_AI_PROB(denominator) (100 / denominator)
 /// If the destroy AI objective doesn't roll, chance that we'll get a maroon instead. If this prob fails, they will get a generic assassinate objective instead.
 #define MAROON_PROB 30
+/// Probability that any job related objective is picked
+#define JOB_PROB 40
 
 /// How many telecrystals a normal traitor starts with
 #define TELECRYSTALS_DEFAULT 20
@@ -404,6 +444,8 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_FAKE (1 << 0)
 /// Antag is not added to the global list of antags
 #define ANTAG_SKIP_GLOBAL_LIST (1 << 1)
+/// Antag's panel action button and the UI therein is viewable by observers
+#define ANTAG_OBSERVER_VISIBLE_PANEL (1 << 2)
 
 #define HUNTER_PACK_COPS "Spacepol Fugitive Hunters"
 #define HUNTER_PACK_RUSSIAN "Russian Fugitive Hunters"
@@ -451,3 +493,11 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 
 /// Camera net used by battle royale objective
 #define BATTLE_ROYALE_CAMERA_NET "battle_royale_camera_net"
+
+#define MALF_MAX_PP 400
+
+//Uplink spawn loc
+#define UPLINK_PDA "PDA"
+#define UPLINK_RADIO "Radio"
+#define UPLINK_PEN "Pen" //like a real spy!
+#define UPLINK_IMPLANT "Implant"

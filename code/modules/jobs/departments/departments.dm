@@ -18,6 +18,8 @@
 	var/list/department_jobs = list()
 	/// For separatists, what independent name prefix does their nation get named?
 	var/list/nation_prefixes = list()
+	/// Root type for the area that people in this department primarily work in.
+	var/primary_work_area
 	/// List of /area types that are considered part of this department's "delivery" area.
 	/// Acts as a priority system, where first items are picked first.
 	var/list/department_delivery_areas = list()
@@ -43,6 +45,10 @@
 			job_datum.spawn_positions = 0
 			job_datum.total_positions = 0
 
+/// Returns all jobs that are in this category for jobbans
+/datum/job_department/proc/get_jobban_jobs()
+	return department_jobs.Copy()
+
 /// Returns a nation name for this department.
 /datum/job_department/proc/generate_nation_name()
 	var/static/list/nation_suffixes = list("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotzka")
@@ -64,6 +70,7 @@
 	department_name = DEPARTMENT_CAPTAIN
 	department_bitflags = DEPARTMENT_BITFLAG_CAPTAIN
 	department_head = /datum/job/captain
+	primary_work_area = /area/station/command
 
 /datum/job_department/command
 	department_name = DEPARTMENT_COMMAND
@@ -73,7 +80,7 @@
 	display_order = 1
 	label_class = "command"
 	ui_color = "#6681a5"
-
+	primary_work_area = /area/station/command
 
 /datum/job_department/security
 	department_name = DEPARTMENT_SECURITY
@@ -84,6 +91,7 @@
 	label_class = "security"
 	ui_color = "#d46a78"
 	nation_prefixes = list("Securi", "Beepski", "Shitcuri", "Red", "Stunba", "Flashbango", "Flasha", "Stanfordi")
+	primary_work_area = /area/station/security
 	department_delivery_areas = list(
 		/area/station/security/office,
 		/area/station/security/brig,
@@ -92,6 +100,10 @@
 	associated_cargo_groups = list("Security", "Armory")
 	head_of_staff_access = ACCESS_HOS
 	department_access = REGION_ACCESS_SECURITY
+
+/datum/job_department/security/get_jobban_jobs()
+	// Captains often fulfill security duties so they are considered part of the security department for jobbans
+	return ..() | SSjob.get_job_type(/datum/job/captain)
 
 /datum/job_department/engineering
 	department_name = DEPARTMENT_ENGINEERING
@@ -102,6 +114,7 @@
 	label_class = "engineering"
 	ui_color = "#dfb567"
 	nation_prefixes = list("Atomo", "Engino", "Power", "Teleco")
+	primary_work_area = /area/station/engineering
 	department_delivery_areas = list(
 		/area/station/engineering/main,
 		/area/station/engineering/lobby,
@@ -119,6 +132,7 @@
 	label_class = "medical"
 	ui_color = "#65b2bd"
 	nation_prefixes = list("Mede", "Healtha", "Recova", "Chemi", "Viro", "Psych")
+	primary_work_area = /area/station/medical
 	department_delivery_areas = list(
 		/area/station/medical/medbay/central,
 		/area/station/medical/medbay,
@@ -138,6 +152,7 @@
 	label_class = "science"
 	ui_color = "#c973c9"
 	nation_prefixes = list("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno", "Nani", "Cyto")
+	primary_work_area = /area/station/science
 	department_delivery_areas = list(
 		/area/station/science/research,
 		/area/station/science/lobby,
@@ -157,6 +172,7 @@
 	label_class = "supply"
 	ui_color = "#cf9c6c"
 	nation_prefixes = list("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
+	primary_work_area = /area/station/cargo
 	head_of_staff_access = ACCESS_QM
 	department_access = REGION_ACCESS_SUPPLY
 
@@ -169,6 +185,7 @@
 	label_class = "service"
 	ui_color = "#7cc46a"
 	nation_prefixes = list("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
+	primary_work_area = /area/station/service
 	department_delivery_areas = list(/area/station/hallway/secondary/service, /area/station/service/bar/atrium)
 	associated_cargo_groups = list("Service", "Food & Hydroponics", "Livestock", "Costumes & Toys")
 	head_of_staff_access = ACCESS_HOP

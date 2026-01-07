@@ -26,7 +26,7 @@
 	pressure_resistance = 50
 	mob_size = MOB_SIZE_LARGE
 	ai_controller = /datum/ai_controller/basic_controller/blobbernaut
-	loot = list()
+	loot = null
 	///The HUD given to blobbernauts, updated by the Blob itself
 	var/atom/movable/screen/healths/blob/overmind/overmind_hud
 	///The overlay for veins.
@@ -117,7 +117,7 @@
 	/// Is our factory dead?
 	var/orphaned = FALSE
 
-/mob/living/basic/blob_minion/blobbernaut/minion/Life(seconds_per_tick, times_fired)
+/mob/living/basic/blob_minion/blobbernaut/minion/Life(seconds_per_tick)
 	. = ..()
 	if (!.)
 		return FALSE

@@ -1,8 +1,7 @@
 /datum/job/coroner
 	title = JOB_CORONER
-	description = "Perform Autopsies whenever needed, \
-		Update medical records accordingly, apply formaldehyde."
-	department_head = list(JOB_CHIEF_MEDICAL_OFFICER)
+	description = "Perform autopsies whenever needed, \
+		update medical records accordingly, apply formaldehyde."
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -13,7 +12,7 @@
 	outfit = /datum/outfit/job/coroner
 	plasmaman_outfit = /datum/outfit/plasmaman/coroner
 
-	mind_traits = list(TRAIT_MORBID)
+	mind_traits = list(TRAIT_MORBID, MEDICAL_MIND_TRAITS)
 	liver_traits = list(TRAIT_CORONER_METABOLISM)
 
 	paycheck = PAYCHECK_CREW
@@ -33,7 +32,7 @@
 		/obj/item/healthanalyzer = 10,
 		/obj/item/shovel/serrated/dull = 5,
 		/obj/effect/spawner/random/medical/organs = 5,
-		/obj/item/reagent_containers/cup/organ_jar/brain_in_a_jar = 5,
+		/obj/item/reagent_containers/cup/beaker/organ_jar/brain_in_a_jar = 5,
 		/obj/effect/spawner/random/medical/memeorgans = 1,
 		/obj/item/scythe = 1,
 	)

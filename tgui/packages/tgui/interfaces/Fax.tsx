@@ -68,10 +68,7 @@ export const Fax = (props) => {
         <Section
           title="Paper"
           buttons={
-            <Button
-              onClick={() => act('remove')}
-              disabled={data.has_paper ? false : true}
-            >
+            <Button onClick={() => act('remove')} disabled={!data.has_paper}>
               Remove
             </Button>
           }
@@ -131,7 +128,7 @@ export const Fax = (props) => {
           buttons={
             <Button
               onClick={() => act('history_clear')}
-              disabled={data.fax_history ? false : true}
+              disabled={!data.fax_history}
             >
               Clear
             </Button>

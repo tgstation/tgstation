@@ -235,7 +235,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	built_in_his_image.add_mood_event("blessing", /datum/mood_event/blessing)
 	return BLESSING_SUCCESS
 
-/obj/item/book/bible/attack(mob/living/target_mob, mob/living/carbon/human/user, params, heal_mode = TRUE)
+/obj/item/book/bible/attack(mob/living/target_mob, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers, heal_mode = TRUE)
 	if(!ISADVANCEDTOOLUSER(user))
 		balloon_alert(user, "not dextrous enough!")
 		return
@@ -277,7 +277,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	if(iscarbon(target_mob))
 		var/mob/living/carbon/carbon_target = target_mob
 		if(!istype(carbon_target.head, /obj/item/clothing/head/helmet))
-			carbon_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 60)
+			carbon_target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5, 60)
 			carbon_target.balloon_alert(carbon_target, "you feel dumber!")
 	target_mob.visible_message(span_danger("[user] beats [target_mob] over the head with [src]!"), \
 			span_userdanger("[user] beats [target_mob] over the head with [src]!"))
@@ -393,7 +393,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	if(uses)
 		return "Read"
 
-/obj/item/book/bible/syndicate/attack(mob/living/target_mob, mob/living/carbon/human/user, params, heal_mode = TRUE)
+/obj/item/book/bible/syndicate/attack(mob/living/target_mob, mob/living/carbon/human/user,  list/modifiers, list/attack_modifiers, heal_mode = TRUE)
 	if(!user.combat_mode)
 		return ..()
-	return ..(target_mob, user, heal_mode = FALSE)
+	return ..(target_mob, user, modifiers, attack_modifiers, heal_mode = FALSE)

@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 /datum/chasm_detritus/proc/get_chasm_contents(turf/fishing_spot)
 	. = list()
 	for(var/obj/effect/abstract/chasm_storage/storage in range(5, fishing_spot))
-		for (var/thing as anything in storage.contents)
+		for (var/thing in storage.contents)
 			. += thing
 
 /// Variant of the chasm detritus that allows for an easier time at fishing out
@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 /datum/chasm_detritus/restricted/get_chasm_contents(turf/fishing_spot)
 	. = list()
 	for(var/obj/effect/abstract/chasm_storage/storage in range(5, fishing_spot))
-		for (var/thing as anything in storage.contents)
+		for (var/thing in storage.contents)
 			if(!istype(thing, chasm_storage_restricted_type))
 				continue
 			. += thing

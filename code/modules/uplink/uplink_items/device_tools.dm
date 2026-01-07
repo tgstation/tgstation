@@ -22,6 +22,14 @@
 	cost = 2
 	surplus = 50
 
+/datum/uplink_item/device_tools/tactical_medkit
+	name = "combat first aid kit"
+	desc = "An medkit meant for combat support, it contains. Two medicated sutures and mesh, Gauze, Advanced health analyzer, And as last atropine medipen"
+	item = /obj/item/storage/medkit/tactical_lite
+	cost = 3
+	surplus = 72
+	purchasable_from = UPLINK_TRAITORS
+
 /datum/uplink_item/device_tools/surgery_syndie
 	name = "Full Syndicate Surgery Medkit"
 	desc = "The Syndicate surgery medkit is a toolkit containing all surgery tools, surgical drapes, \
@@ -96,7 +104,7 @@
 /datum/uplink_item/device_tools/camera_app
 	name = "SyndEye Program"
 	desc = "A data disk containing a unique PC app that allows you to watch cameras and track crewmembers."
-	item = /obj/item/computer_disk/syndicate/camera_app
+	item = /obj/item/disk/computer/syndicate/camera_app
 	cost = 1
 	surplus = 90
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
@@ -129,14 +137,14 @@
 			when used cause the targeted tablet to become a new uplink with zero TCs, and immediately become unlocked. \
 			You will receive the unlock code upon activating the virus, and the new uplink may be charged with \
 			telecrystals normally."
-	item = /obj/item/computer_disk/virus/frame
+	item = /obj/item/disk/computer/virus/frame
 	cost = 4
 	restricted = TRUE
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/device_tools/frame/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	. = ..()
-	var/obj/item/computer_disk/virus/frame/target = .
+	var/obj/item/disk/computer/virus/frame/target = .
 	if(!target)
 		return
 	target.current_progression = uplink_handler.progression_points
@@ -266,6 +274,7 @@
 	progression_minimum = 20 MINUTES
 	item = /obj/item/powersink
 	cost = 11
+	limited_stock = 1
 
 /datum/uplink_item/device_tools/syndicate_contacts
 	name = "Polarized Contact Lenses"

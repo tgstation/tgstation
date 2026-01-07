@@ -1,7 +1,7 @@
 /datum/outfit/ninja
 	name = "Space Ninja"
 	uniform = /obj/item/clothing/under/syndicate/ninja
-	glasses = /obj/item/clothing/glasses/night/colorless
+	glasses = /obj/item/clothing/glasses/night
 	mask = /obj/item/clothing/mask/gas/ninja
 	ears = /obj/item/radio/headset
 	shoes = /obj/item/clothing/shoes/jackboots
@@ -33,3 +33,8 @@
 	uniform = /obj/item/clothing/under/syndicate/ninja
 	back = /obj/item/mod/control/pre_equipped/empty/ninja
 	belt = /obj/item/energy_katana
+
+/datum/outfit/ninja/plasmaman
+	name = "Space Ninja (Plasmaman)"
+	mask = /obj/item/clothing/mask/gas/ninja/plasmaman
+	r_pocket = /obj/item/tank/internals/plasmaman/belt/full

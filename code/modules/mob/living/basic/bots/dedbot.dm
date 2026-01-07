@@ -39,13 +39,10 @@
 	var/exenteration_cooldown_duration = 0.5 SECONDS
 	//aoe slash ability
 	var/datum/action/cooldown/mob_cooldown/bot/exenterate
-	var/list/remains = list(/obj/effect/gibspawner/robot)
 
 /mob/living/basic/bot/dedbot/Initialize(mapload)
 	. = ..()
-	if(length(remains))
-		remains = string_list(remains)
-		AddElement(/datum/element/death_drops, remains)
+	AddElement(/datum/element/death_drops, /obj/effect/gibspawner/robot)
 	var/static/list/innate_actions = list(
 	SPIN_SLASH_ABILITY_TYPEPATH = BB_DEDBOT_SLASH,
 	)
@@ -112,7 +109,7 @@
 
 /datum/action/cooldown/mob_cooldown/exenterate/proc/slash_em(atom/caster)
 	for(var/mob/living/victim in range(ability_range, caster))
-		if(faction_check(victim.faction, immune_factions) && owner.CanReach(victim))
+		if(faction_check(victim.faction, immune_factions) && victim.IsReachableBy(owner))
 			continue
 		to_chat(caster, span_warning("You slice [victim]!"))
 		to_chat(victim, span_warning("You are cut by [caster]'s blades!"))

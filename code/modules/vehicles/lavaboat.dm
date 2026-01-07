@@ -28,19 +28,20 @@
 	force = 12
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 2)
 
 /datum/crafting_recipe/oar
 	name = "Goliath Bone Oar"
 	result = /obj/item/oar
 	reqs = list(/obj/item/stack/sheet/bone = 2)
-	time = 15
+	time = 1.5 SECONDS
 	category = CAT_TOOLS
 
 /datum/crafting_recipe/boat
 	name = "Goliath Hide Boat"
 	result = /obj/vehicle/ridden/lavaboat
 	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide = 3)
-	time = 50
+	time = 5 SECONDS
 	category = CAT_TOOLS
 
 /obj/vehicle/ridden/lavaboat/plasma

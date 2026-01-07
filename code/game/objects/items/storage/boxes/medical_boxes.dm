@@ -45,6 +45,14 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/cup/beaker( src )
 
+/obj/item/storage/box/beakers/big
+	name = "box of big beakers"
+	illustration = "beaker"
+
+/obj/item/storage/box/beakers/big/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/cup/beaker/large(src)
+
 /obj/item/storage/box/beakers/bluespace
 	name = "box of bluespace beakers"
 	illustration = "beaker"
@@ -79,7 +87,7 @@
 	illustration = "dna"
 
 /obj/item/storage/box/injectors/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/dnainjector/h2m = 3,
 		/obj/item/dnainjector/m2h = 3,
 	)
@@ -119,7 +127,7 @@
 	illustration = "beaker"
 
 /obj/item/storage/box/evilmeds/PopulateContents()
-	var/static/list/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/reagent_containers/cup/beaker/meta/omnizine = 1,
 		/obj/item/reagent_containers/cup/beaker/meta/sal_acid = 1,
 		/obj/item/reagent_containers/cup/beaker/meta/oxandrolone = 1,

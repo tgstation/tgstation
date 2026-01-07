@@ -19,13 +19,12 @@
 	var/obj/item/toy/plush/plush_child
 	var/obj/item/toy/plush/paternal_parent //who initiated creation
 	var/obj/item/toy/plush/maternal_parent //who owns, see love()
-	var/static/list/breeding_blacklist = typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp) // you cannot have sexual relations with this plush
 	var/list/scorned = list() //who the plush hates
 	var/list/scorned_by = list() //who hates the plush, to remove external references on Destroy()
 	var/heartbroken = FALSE
 	var/vowbroken = FALSE
 	var/young = FALSE
-///Prevents players from cutting stuffing out of a plushie if true
+	///Prevents players from cutting stuffing out of a plushie if true
 	var/divine = FALSE
 	var/mood_message
 	var/list/love_message
@@ -34,6 +33,9 @@
 	var/list/vowbroken_message
 	var/list/parent_message
 	var/normal_desc
+	/// The type of offspring this plush generates. If not set, it'll default to the type itself on init.
+	var/offspring_type
+
 	//--end of love :'(--
 
 /*
@@ -47,6 +49,7 @@
 	AddComponent(/datum/component/squeak, squeak_override)
 	AddElement(/datum/element/bed_tuckable, mapload, 6, -5, 90)
 	AddElement(/datum/element/toy_talk)
+	AddElement(/datum/element/cuffable_item)
 
 	//have we decided if Pinocchio goes in the blue or pink aisle yet?
 	if(gender == NEUTER)
@@ -54,6 +57,9 @@
 			gender = FEMALE
 		else
 			gender = MALE
+
+	if(!offspring_type)
+		offspring_type = type
 
 	love_message = list("\n[src] is so happy, \he could rip a seam!")
 	partner_message = list("\n[src] has a ring on \his finger! It says bound to my dear [partner].")
@@ -290,19 +296,15 @@
 	mood_message = pick(partner_message)
 	update_desc()
 
-/obj/item/toy/plush/proc/plop(obj/item/toy/plush/Daddy)
-	if(partner != Daddy)
+/obj/item/toy/plush/proc/plop(obj/item/toy/plush/daddy)
+	if(partner != daddy)
 		return FALSE //we do not have bastards in our toyshop
 
-	if(is_type_in_typecache(Daddy, breeding_blacklist))
-		return FALSE // some love is forbidden
+	// Ask the RNG if it looks more like mommy or daddy.
+	var/chosen_type = pick(offspring_type, daddy.offspring_type)
 
-	if(prob(50)) //it has my eyes
-		plush_child = new type(get_turf(loc))
-	else //it has your eyes
-		plush_child = new Daddy.type(get_turf(loc))
-
-	plush_child.make_young(src, Daddy)
+	plush_child = new chosen_type(get_turf(loc))
+	plush_child.make_young(src, daddy)
 
 /obj/item/toy/plush/proc/make_young(obj/item/toy/plush/Mama, obj/item/toy/plush/Dada)
 	if(Mama == Dada)
@@ -674,64 +676,6 @@
 	attack_verb_simple = list("sting")
 	gender = FEMALE
 	squeak_override = list('sound/mobs/humanoids/moth/scream_moth.ogg'=1)
-
-/obj/item/toy/plush/goatplushie
-	name = "strange goat plushie"
-	icon_state = "goat"
-	desc = "Despite its cuddly appearance and plush nature, it will beat you up all the same. Goats never change."
-	squeak_override = list('sound/items/weapons/punch1.ogg'=1)
-	/// Whether or not this goat is currently taking in a monsterous doink
-	var/going_hard = FALSE
-	/// Whether or not this goat has been flattened like a funny pancake
-	var/splat = FALSE
-
-/obj/item/toy/plush/goatplushie/Initialize(mapload)
-	. = ..()
-	var/static/list/loc_connections = list(
-		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = PROC_REF(splat),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
-
-/obj/item/toy/plush/goatplushie/attackby(obj/item/cigarette/rollie/fat_dart, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(fat_dart))
-		return ..()
-	if(splat)
-		to_chat(user, span_notice("[src] doesn't seem to be able to go hard right now."))
-		return
-	if(going_hard)
-		to_chat(user, span_notice("[src] is already going too hard!"))
-		return
-	if(!fat_dart.lit)
-		to_chat(user, span_notice("You'll have to light that first!"))
-		return
-	to_chat(user, span_notice("You put [fat_dart] into [src]'s mouth."))
-	qdel(fat_dart)
-	going_hard = TRUE
-	update_icon(UPDATE_OVERLAYS)
-
-/obj/item/toy/plush/goatplushie/proc/splat(datum/source)
-	SIGNAL_HANDLER
-	if(splat)
-		return
-	if(going_hard)
-		going_hard = FALSE
-		update_icon(UPDATE_OVERLAYS)
-	icon_state = "goat_splat"
-	playsound(src, SFX_DESECRATION, 50, TRUE)
-	visible_message(span_danger("[src] gets absolutely flattened!"))
-	splat = TRUE
-
-/obj/item/toy/plush/goatplushie/examine()
-	. = ..()
-	if(splat)
-		. += span_notice("[src] might need medical attention.")
-	if(going_hard)
-		. += span_notice("[src] is going so hard, feel free to take a picture.")
-
-/obj/item/toy/plush/goatplushie/update_overlays()
-	. = ..()
-	if(going_hard)
-		. += "goat_dart"
 
 /obj/item/toy/plush/moth
 	name = "moth plushie"

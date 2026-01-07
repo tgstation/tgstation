@@ -1,9 +1,18 @@
-import { ComponentProps, ReactNode, useEffect, useState } from 'react';
+import {
+  type ComponentProps,
+  type ReactNode,
+  useEffect,
+  useState,
+} from 'react';
 import { Box, Dropdown, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import { capitalizeFirst } from 'tgui-core/string';
 
-import { Feature, FeatureChoicedServerData, FeatureValueProps } from './base';
+import type {
+  Feature,
+  FeatureChoicedServerData,
+  FeatureValueProps,
+} from './base';
 
 type DropdownInputProps = FeatureValueProps<
   string,
@@ -127,6 +136,7 @@ export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
       options={dropdownOptions}
       selected={value}
       width="100%"
+      menuWidth="max-content"
     />
   );
 }

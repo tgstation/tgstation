@@ -6,7 +6,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -64,7 +64,7 @@ export function ManufacturingSorter(props) {
               <LabeledList>
                 {filters.map((filter, i) => (
                   <LabeledList.Item
-                    label={i + 1 + '. ' + filter.name}
+                    label={`${i + 1}. ${filter.name}`}
                     key={filter.ref}
                   >
                     <Button

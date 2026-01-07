@@ -10,7 +10,7 @@
 	description = "Ask an admin for help."
 	keybind_signal = COMSIG_KB_CLIENT_GETHELP_DOWN
 
-/datum/keybinding/client/admin_help/down(client/user, turf/target)
+/datum/keybinding/client/admin_help/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -25,7 +25,7 @@
 	description = "Take a screenshot."
 	keybind_signal = COMSIG_KB_CLIENT_SCREENSHOT_DOWN
 
-/datum/keybinding/client/screenshot/down(client/user, turf/target)
+/datum/keybinding/client/screenshot/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -39,7 +39,7 @@
 	description = "Makes the game window fullscreen."
 	keybind_signal = COMSIG_KB_CLIENT_FULLSCREEN_DOWN
 
-/datum/keybinding/client/toggle_fullscreen/down(client/user, turf/target)
+/datum/keybinding/client/toggle_fullscreen/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -53,9 +53,23 @@
 	description = "Hide most HUD features"
 	keybind_signal = COMSIG_KB_CLIENT_MINIMALHUD_DOWN
 
-/datum/keybinding/client/minimal_hud/down(client/user, turf/target)
+/datum/keybinding/client/minimal_hud/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
 	user.mob.button_pressed_F12()
+	return TRUE
+
+/datum/keybinding/client/close_every_ui
+	hotkey_keys = list("Northwest") // HOME key
+	name = "close_every_ui"
+	full_name = "Close Open UIs"
+	description = "Closes all UI windows you have open."
+	keybind_signal = COMSIG_KB_CLIENT_CLOSEUI_DOWN
+
+/datum/keybinding/client/close_every_ui/down(client/user, turf/target, mousepos_x, mousepos_y)
+	. = ..()
+	if(.)
+		return
+	SStgui.close_user_uis(user.mob)
 	return TRUE

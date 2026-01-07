@@ -271,7 +271,7 @@
 /area/shuttle/escape)
 "bz" = (
 /obj/machinery/stasis,
-/obj/machinery/vending/wallmed/directional/east{
+/obj/machinery/wall_healer/free/directional/east{
 	use_power = 0
 	},
 /turf/open/floor/mineral/titanium/white,
@@ -387,7 +387,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "JM" = (
-/obj/machinery/vending/wallmed{
+/obj/machinery/wall_healer/free{
 	name = "Emergency NanoMed";
 	use_power = 0
 	},

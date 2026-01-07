@@ -67,24 +67,20 @@
 	item_reactions = list()
 	valid_items = list()
 
-	for(var/I in typesof(/obj/item))
-		if(ispath(I, /obj/item/relic))
-			item_reactions["[I]"] = SCANTYPE_DISCOVER
+	for(var/obj/item/item_path as anything in valid_subtypesof(/obj/item))
+		if(ispath(item_path, /obj/item/relic))
+			item_reactions["[item_path]"] = SCANTYPE_DISCOVER
 		else
-			item_reactions["[I]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
+			item_reactions["[item_path]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
 
-		if(is_type_in_typecache(I, banned_typecache))
+		if(is_type_in_typecache(item_path, banned_typecache))
 			continue
 
-		if(ispath(I, /obj/item/stock_parts) || ispath(I, /obj/item/grenade/chem_grenade) || ispath(I, /obj/item/knife))
-			var/obj/item/tempCheck = I
-			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
-				valid_items["[I]"] += 15
+		if(ispath(item_path, /obj/item/stock_parts) || ispath(item_path, /obj/item/grenade/chem_grenade) || ispath(item_path, /obj/item/knife))
+			valid_items["[item_path]"] += 15
 
-		if(ispath(I, /obj/item/food))
-			var/obj/item/tempCheck = I
-			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
-				valid_items["[I]"] += rand(1,4)
+		if(ispath(item_path, /obj/item/food))
+			valid_items["[item_path]"] += rand(1,4)
 
 /obj/machinery/rnd/experimentor/Initialize(mapload)
 	. = ..()
@@ -339,7 +335,7 @@
 			throwSmoke(loc)
 		else if(prob(EFFECT_PROB_MEDIUM * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_warning("[src] melts [exp_on], ionizing the air around it!"))
-			empulse(loc, 4, 6)
+			empulse(loc, 4, 6, emp_source = src)
 			investigate_log("Experimentor has generated an Electromagnetic Pulse.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -690,7 +686,8 @@
 	)
 	for(var/counter in 1 to rand(1, 25))
 		var/animal_spawn = pick(valid_animals)
-		new animal_spawn(get_turf(src))
+		var/mob/living/animal = new animal_spawn(get_turf(src))
+		ADD_TRAIT(animal, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
 	warn_admins(user, "Mass Mob Spawn")
 	if(prob(60))
 		to_chat(user, span_warning("[src] falls apart!"))
@@ -778,30 +775,21 @@
 		user.electrocute_act(15, src, flags = SHOCK_NOGLOVES)
 	playsound(user, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
-	var/list/chargeable_batteries = list()
-	for(var/obj/item/stock_parts/power_store/C in user.get_all_contents())
-		if(C.charge < (C.maxcharge * 0.95)) // otherwise the PDA always gets recharged
-			chargeable_batteries |= C
+	var/list/chargeable_items = user.get_all_cells(max_percent = 0.95) // otherwise the PDA always gets recharged
 
 	lightning_fx(user, stunner)
 	var/recharges = rand(1, 2)
-	if(!length(chargeable_batteries))
+	if(!length(chargeable_items))
 		to_chat(user, span_notice("You have a strange feeling for a moment, but then it passes."))
 		return
-	for(var/obj/item/stock_parts/power_store/to_charge as anything in chargeable_batteries)
-		if(!recharges)
-			return
+	while(length(chargeable_items) && recharges)
 		recharges--
-		to_charge = pick(chargeable_batteries)
+		var/obj/item/to_charge_base = pick_n_take(chargeable_items)
+		var/obj/item/stock_parts/power_store/to_charge = chargeable_items[to_charge_base]
 		to_charge.charge = to_charge.maxcharge
-		// The device powered by the cell is assumed to be its location.
-		var/obj/device = to_charge.loc
-		// If it's not an object, or the loc's assigned power_store isn't the cell, undo.
-		if(!istype(device) || (device.get_cell() != to_charge))
-			device = to_charge
-		device.update_appearance(UPDATE_ICON|UPDATE_OVERLAYS)
-		to_chat(user, span_notice("[device] feels energized!"))
-		lightning_fx(device, 0.8 SECONDS)
+		to_charge_base.update_appearance(UPDATE_ICON|UPDATE_OVERLAYS)
+		to_chat(user, span_notice("[to_charge_base] feels energized!"))
+		lightning_fx(to_charge_base, 0.8 SECONDS)
 
 /obj/item/relic/proc/lightning_fx(atom/shocker, time)
 	var/lightning = mutable_appearance('icons/effects/effects.dmi', "electricity3", layer = ABOVE_MOB_LAYER)

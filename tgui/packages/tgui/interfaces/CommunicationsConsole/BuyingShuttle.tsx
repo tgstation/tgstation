@@ -3,7 +3,7 @@ import { Box, Button, Icon, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { EMAG_SHUTTLE_NOTICE } from './constants';
-import { CommsConsoleData, Shuttle, ShuttleState } from './types';
+import { type CommsConsoleData, type Shuttle, ShuttleState } from './types';
 
 function sortShuttles(shuttles: CommsConsoleData['shuttles']) {
   return sortBy(shuttles, [
@@ -51,7 +51,7 @@ function ShuttleCard(props: ShuttleCardProps) {
   const { shuttle } = props;
 
   const { act, data } = useBackend<CommsConsoleData>();
-  const { budget } = data;
+  const { budget, displayed_currency_name, displayed_currency_full_name} = data;
 
   return (
     <Section
@@ -76,14 +76,14 @@ function ShuttleCard(props: ShuttleCardProps) {
           }
           tooltip={
             budget < shuttle.creditCost
-              ? `You need ${shuttle.creditCost - budget} more credits.`
+              ? `You need ${shuttle.creditCost - budget} more ${displayed_currency_full_name}.`
               : shuttle.emagOnly
                 ? EMAG_SHUTTLE_NOTICE
                 : undefined
           }
           tooltipPosition="left"
         >
-          {shuttle.emagOnly ? 'Buy' : 'Purchase'}
+          {shuttle.emagOnly ? 'Buy' : `${shuttle.creditCost} ${displayed_currency_name}`}
         </Button>
       }
     >

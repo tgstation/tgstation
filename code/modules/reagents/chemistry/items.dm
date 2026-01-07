@@ -15,6 +15,7 @@
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 	interaction_flags_mouse_drop = NEED_HANDS
+	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)
 
 	///How many pages the booklet holds
 	var/number_of_pages = 50
@@ -124,12 +125,21 @@
 	out_message += "Chemicals found in [interacting_with.name]:</b>\n"
 	if(cont.reagents.is_reacting)
 		out_message += "[span_warning("A reaction appears to be occuring currently.")]<span class='notice'>\n"
-	for(var/datum/reagent/reagent in cont.reagents.reagent_list)
+	for(var/datum/reagent/reagent as anything in cont.reagents.reagent_list) // bloodtyping if blood present in container
+		var/blood_info = null
+		if(reagent.data)
+			var/blood = reagent.data["blood_type"]
+			if(istype(blood, /datum/blood_type))
+				var/datum/blood_type/blood_type = blood
+				var/type = blood_type.get_type()
+				blood_info = "[blood_type.get_blood_name()] [type ? "(type: [type])" : ""]"
+			else if(blood)
+				blood_info = "[reagent.name] (type: [blood])"
 		if(reagent.purity < reagent.inverse_chem_val && reagent.inverse_chem) //If the reagent is impure
 			var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
 			out_message += "[span_warning("Inverted reagent detected: ")]<span class='notice'><b>[round(reagent.volume, 0.01)]u of [inverse_reagent.name]</b>, <b>Purity:</b> [round(1 - reagent.purity, 0.000001)*100]%, [(scanmode?"[(inverse_reagent.overdose_threshold?"<b>Overdose:</b> [inverse_reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(inverse_reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
 		else
-			out_message += "<b>[round(reagent.volume, 0.01)]u of [reagent.name]</b>, <b>Purity:</b> [round(reagent.purity, 0.000001)*100]%, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
+			out_message += "<b>[round(reagent.volume, CHEMICAL_VOLUME_ROUNDING)]u of [blood_info || reagent.name]</b>, <b>Purity:</b> [round(reagent.purity, 0.000001)*100]%, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
 		if(scanmode)
 			out_message += "<b>Analysis:</b> [reagent.description]\n"
 	to_chat(user, boxed_message(span_notice("[out_message.Join()]")))
@@ -141,7 +151,7 @@
 	desc = "A small table size burner used for heating up beakers."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "burner"
-	grind_results = list(/datum/reagent/consumable/ethanol = 5, /datum/reagent/silicon = 10)
+	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)
 	item_flags = NOBLUDGEON
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
@@ -158,6 +168,9 @@
 	create_reagents(max_volume, TRANSPARENT)//We have our own refillable - since we want to heat and pour
 	if(reagent_type)
 		reagents.add_reagent(reagent_type, 15)
+
+/obj/item/burner/grind_results()
+	return list(/datum/reagent/consumable/ethanol = 5, /datum/reagent/silicon = 10)
 
 /obj/item/burner/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
@@ -272,11 +285,15 @@
 
 /obj/item/burner/oil
 	reagent_type = /datum/reagent/fuel/oil
-	grind_results = list(/datum/reagent/fuel/oil = 5, /datum/reagent/silicon = 10)
+
+/obj/item/burner/oil/grind_results()
+	return list(/datum/reagent/fuel/oil = 5, /datum/reagent/silicon = 10)
 
 /obj/item/burner/fuel
 	reagent_type = /datum/reagent/fuel
-	grind_results = list(/datum/reagent/fuel = 5, /datum/reagent/silicon = 10)
+
+/obj/item/burner/fuel/grind_results()
+	return list(/datum/reagent/fuel = 5, /datum/reagent/silicon = 10)
 
 /obj/item/thermometer
 	name = "thermometer"
@@ -285,13 +302,16 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
-	grind_results = list(/datum/reagent/mercury = 5)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	///The reagents datum that this object is attached to, so we know where we are when it's added to something.
 	var/datum/reagents/attached_to_reagents
 
 /obj/item/thermometer/Destroy()
 	attached_to_reagents = null
 	return ..()
+
+/obj/item/thermometer/grind_results()
+	return list(/datum/reagent/mercury = 5)
 
 /obj/item/thermometer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(isnull(interacting_with.reagents))
@@ -343,6 +363,7 @@
 
 /obj/item/thermometer/pen
 	color = "#888888"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1)
 
 #undef DETAILED_CHEM_OUTPUT
 #undef SHORTENED_CHEM_OUTPUT

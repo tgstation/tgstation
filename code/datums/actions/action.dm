@@ -27,6 +27,8 @@
 	/// If TRUE, this action button will be shown to observers / other mobs who view from this action's owner's eyes.
 	/// Used in [/mob/proc/show_other_mob_action_buttons]
 	var/show_to_observers = TRUE
+	/// If observers can click this action at any time, regardless of the owner
+	var/allow_observer_click = FALSE
 
 	/// The style the button's tooltips appear to be
 	var/buttontooltipstyle = ""
@@ -160,7 +162,7 @@
 
 /// Actually triggers the effects of the action.
 /// Called when the on-screen button is clicked, for example.
-/datum/action/proc/Trigger(trigger_flags)
+/datum/action/proc/Trigger(mob/clicker, trigger_flags)
 	if(!(trigger_flags & TRIGGER_FORCE_AVAILABLE) && !IsAvailable(feedback = TRUE))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER, src) & COMPONENT_ACTION_BLOCK_TRIGGER)
@@ -175,6 +177,10 @@
 	if(!owner)
 		return FALSE
 	if(action_disabled)
+		return FALSE
+	if((check_flags & AB_CHECK_CONSCIOUS) && owner.stat != CONSCIOUS)
+		if (feedback)
+			owner.balloon_alert(owner, "[owner.stat == DEAD ? "dead" : "unconscious"]!")
 		return FALSE
 	if((check_flags & AB_CHECK_HANDS_BLOCKED) && HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
 		if (feedback)
@@ -194,10 +200,6 @@
 			if (feedback)
 				owner.balloon_alert(owner, "must stand up!")
 			return FALSE
-	if((check_flags & AB_CHECK_CONSCIOUS) && owner.stat != CONSCIOUS)
-		if (feedback)
-			owner.balloon_alert(owner, "unconscious!")
-		return FALSE
 	if((check_flags & AB_CHECK_PHASED) && HAS_TRAIT(owner, TRAIT_MAGICALLY_PHASED))
 		if (feedback)
 			owner.balloon_alert(owner, "incorporeal!")
@@ -228,6 +230,8 @@
 /datum/action/proc/build_button_icon(atom/movable/screen/movable/action_button/button, update_flags = ALL, force = FALSE)
 	if(!button)
 		return
+
+	button.actiontooltipstyle = buttontooltipstyle
 
 	if(update_flags & UPDATE_BUTTON_NAME)
 		update_button_name(button, force)
@@ -371,6 +375,7 @@
 /datum/action/proc/create_button()
 	var/atom/movable/screen/movable/action_button/button = new()
 	button.linked_action = src
+	button.allow_observer_click = allow_observer_click
 	build_button_icon(button, ALL, TRUE)
 	return button
 
@@ -426,6 +431,16 @@
 /// Checks if our action is actively selected. Used for selecting icons primarily.
 /datum/action/proc/is_action_active(atom/movable/screen/movable/action_button/current_button)
 	return FALSE
+
+/datum/action/proc/begin_creating_bind(atom/movable/screen/movable/action_button/current_button, mob/user)
+	if(!current_button || user != owner)
+		return
+	if(!isnull(full_key))
+		full_key = null
+		update_button_status(current_button)
+		return
+	full_key = tgui_input_keycombo(user, "Please bind a key for this action.")
+	update_button_status(current_button)
 
 /datum/action/proc/keydown(mob/source, key, client/client, full_key)
 	SIGNAL_HANDLER

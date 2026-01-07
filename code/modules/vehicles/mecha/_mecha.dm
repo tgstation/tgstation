@@ -249,8 +249,8 @@
 	log_message("[src.name] created.", LOG_MECHA)
 	GLOB.mechas_list += src //global mech list
 	prepare_huds()
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_atom_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_atom_to_hud(src)
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
@@ -305,8 +305,8 @@
 	QDEL_NULL(chassis_camera)
 
 	GLOB.mechas_list -= src //global mech list
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.remove_atom_from_hud(src) //YEET
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.remove_atom_from_hud(src) //YEET
 	return ..()
 
 ///Add parts on mech spawning. Skipped in manual construction.
@@ -332,6 +332,7 @@
 	var/mob/living/silicon/ai/unlucky_ai
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
+			//FIXME: Nothiing about this block works
 			var/mob/living/silicon/ai/ai = occupant
 			if(!ai.linked_core && !ai.can_shunt) // we probably shouldnt gib AIs with a core or shunting abilities
 				unlucky_ai = occupant
@@ -416,6 +417,81 @@
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/strafe, VEHICLE_CONTROL_DRIVE)
 
+/obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags, forced)
+	if(..())
+		generate_equipment_actions(M)
+
+/obj/vehicle/sealed/mecha/remove_occupant(mob/M)
+	remove_all_equipment_actions(M)
+	return ..()
+
+///Generates action buttons for all eligible equipment and grants them to the occupant with VEHICLE_CONTROL_SETTINGS flag.
+/obj/vehicle/sealed/mecha/proc/generate_equipment_actions(mob/occupant)
+	if(!(occupant in occupants) || !(occupants[occupant] & VEHICLE_CONTROL_SETTINGS))
+		return
+	for(var/obj/item/mecha_parts/mecha_equipment/equipment in flat_equipment)
+		if(!is_equipment_valid_for_action(equipment))
+			continue
+
+		grant_equipment_action(occupant, equipment)
+
+///Removes all equipment actions from a specific occupant.
+/obj/vehicle/sealed/mecha/proc/remove_all_equipment_actions(mob/occupant)
+	var/list/actions = LAZYACCESS(occupant_actions, occupant)
+	if(!actions)
+		return
+
+	for(var/equipment_type in actions)
+		if(!ispath(equipment_type, /obj/item/mecha_parts/mecha_equipment))
+			continue
+
+		remove_action_type_from_mob(equipment_type, occupant)
+
+/**
+ * Grants a specific equipment action to an occupant.
+ * Creates a new action, sets up the chassis and equipment references, and grants it to the mob.
+ */
+/obj/vehicle/sealed/mecha/proc/grant_equipment_action(mob/occupant, obj/item/mecha_parts/mecha_equipment/equipment)
+	var/datum/action/vehicle/sealed/mecha/equipment/action = new equipment.action_type // We cannot use grant_action_type_to_mob() because:
+	action.set_chassis(src) 									  					  // 1. grant_action_type_to_mob() works with a single predefined action type
+	action.set_equipment(equipment) 							 					 // 2. We create unique action instances for each equipment with specific equipment references
+
+	action.Grant(occupant)
+	LAZYINITLIST(occupant_actions[occupant])
+	// Use equipment type as actiontype for remove_action_type_from_mob() compatibility
+	occupant_actions[occupant][equipment.type] = action
+
+/**
+ * Called when equipment is attached to the mecha.
+ * Grants equipment actions to current occupants with VEHICLE_CONTROL_SETTINGS flag.
+ */
+/obj/vehicle/sealed/mecha/proc/on_equipment_attach(obj/item/mecha_parts/mecha_equipment/equipment)
+	if(!is_equipment_valid_for_action(equipment))
+		return
+
+	for(var/mob/occupant in occupants)
+		if(!(occupants[occupant] & VEHICLE_CONTROL_SETTINGS))
+			continue
+		grant_equipment_action(occupant, equipment)
+
+/**
+ * Called when equipment is detached from the mecha.
+ * Removes equipment actions from all current occupants.
+ */
+/obj/vehicle/sealed/mecha/proc/on_equipment_detach(obj/item/mecha_parts/mecha_equipment/equipment)
+	for(var/mob/occupant in occupants)
+		remove_action_type_from_mob(equipment.type, occupant)
+
+/// Create actions only for equipment that can be toggled or triggered, excluding air tanks.
+/obj/vehicle/sealed/mecha/proc/is_equipment_valid_for_action(obj/item/mecha_parts/mecha_equipment/equipment)
+	if(!(equipment.can_be_toggled || equipment.can_be_triggered))
+		return FALSE
+
+	if(istype(equipment, /obj/item/mecha_parts/mecha_equipment/air_tank)) // this thing has its own button
+		return FALSE
+
+	return TRUE
+
 /obj/vehicle/sealed/mecha/proc/get_mecha_occupancy_state()
 	if((mecha_flags & SILICON_PILOT) && silicon_icon_state)
 		return silicon_icon_state
@@ -474,20 +550,54 @@
 			. += span_warning("It's missing a capacitor.")
 		if(!scanmod)
 			. += span_warning("It's missing a scanning module.")
-	if(mecha_flags & IS_ENCLOSED)
-		return
-	if(mecha_flags & SILICON_PILOT)
-		. += span_notice("[src] appears to be piloting itself...")
-	else
-		for(var/occupante in occupants)
-			. += span_notice("You can see [occupante] inside.")
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			for(var/held_item in H.held_items)
-				if(!isgun(held_item))
-					continue
-				. += span_warning("It looks like you can hit the pilot directly if you target the center or above.")
-				break //in case user is holding two guns
+	if(!(mecha_flags & IS_ENCLOSED))
+		if(mecha_flags & SILICON_PILOT)
+			. += span_notice("[src] appears to be piloting itself...")
+		else
+			for(var/occupante in occupants)
+				. += span_notice("You can see [occupante] inside.")
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				for(var/held_item in H.held_items)
+					if(!isgun(held_item))
+						continue
+					. += span_warning("It looks like you can hit the pilot directly if you target the center or above.")
+					break //in case user is holding two guns
+	. += span_notice("It has a <a href='byond://?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
+
+/obj/vehicle/sealed/mecha/Topic(href, href_list)
+	. = ..()
+
+	if(href_list["list_armor"])
+		var/list/readout = list()
+
+		var/datum/armor/armor = get_armor()
+		var/added_damage_header = FALSE
+		for(var/damage_key in ARMOR_LIST_DAMAGE())
+			var/rating = armor.get_rating(damage_key)
+			if(!rating)
+				continue
+			if(!added_damage_header)
+				readout += "<b><u>ARMOR (I-X)</u></b>"
+				added_damage_header = TRUE
+			readout += "[armor_to_protection_name(damage_key)] [armor_to_protection_class(rating)]"
+
+		var/added_durability_header = FALSE
+		for(var/durability_key in ARMOR_LIST_DURABILITY())
+			var/rating = armor.get_rating(durability_key)
+			if(!rating)
+				continue
+			if(!added_durability_header)
+				readout += "<b><u>DURABILITY (I-X)</u></b>"
+				added_durability_header = TRUE
+			readout += "[armor_to_protection_name(durability_key)] [armor_to_protection_class(rating)]"
+
+		readout += "It can withstand temperatures up to [max_temperature]K."
+		if(mecha_flags & IS_ENCLOSED)
+			readout += "It fully encloses its occupants, protecting them from the atmosphere or lack thereof."
+
+		var/formatted_readout = span_notice("<b>PROTECTION CLASSES</b><hr>[jointext(readout, "\n")]")
+		to_chat(usr, boxed_message(formatted_readout))
 
 /obj/vehicle/sealed/mecha/generate_integrity_message()
 	var/examine_text = ""
@@ -523,6 +633,10 @@
 	if(length(occupants))
 		process_occupants(seconds_per_tick)
 	process_constant_power_usage(seconds_per_tick)
+	//Diagnostic HUD updates
+	diag_hud_set_mechhealth()
+	diag_hud_set_mechcell()
+	diag_hud_set_mechstat()
 
 /obj/vehicle/sealed/mecha/proc/process_overclock_effects(seconds_per_tick)
 	if(!overclock_mode && overclock_temp > 0)
@@ -622,10 +736,6 @@
 			else if (checking == src)
 				break  // all good
 			checking = checking.loc
-	//Diagnostic HUD updates
-	diag_hud_set_mechhealth()
-	diag_hud_set_mechcell()
-	diag_hud_set_mechstat()
 
 /obj/vehicle/sealed/mecha/proc/process_constant_power_usage(seconds_per_tick)
 	if(mecha_flags & LIGHTS_ON && !use_energy(light_power_drain * seconds_per_tick))

@@ -221,7 +221,7 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Security Maintenance Hatch"
 	},
-/obj/effect/mapping_helpers/airlock/unres{
+/obj/effect/mapping_helpers/airlock/unres/delayed{
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
@@ -468,8 +468,8 @@
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/security)
 "VW" = (
-/obj/machinery/light/small/directional/south,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "Wo" = (
@@ -823,7 +823,7 @@ Py
 (9,1,1) = {"
 Py
 Wo
-VW
+uw
 Py
 Py
 Py
@@ -863,7 +863,7 @@ Py
 (10,1,1) = {"
 Sc
 RO
-fV
+VW
 Py
 Py
 Py

@@ -49,6 +49,8 @@
 	RegisterSignal(overmind, COMSIG_QDELETING, PROC_REF(overmind_deleted))
 	RegisterSignal(overmind, COMSIG_BLOB_SELECTED_STRAIN, PROC_REF(strain_properties_changed))
 	strain_properties_changed(overmind, overmind.blobstrain)
+	var/mob/living_parent = parent
+	living_parent.pass_flags |= PASSBLOB
 
 /// Our overmind is gone, uh oh!
 /datum/component/blob_minion/proc/overmind_deleted()
@@ -70,7 +72,6 @@
 
 /datum/component/blob_minion/RegisterWithParent()
 	var/mob/living/living_parent = parent
-	living_parent.pass_flags |= PASSBLOB
 	living_parent.faction |= ROLE_BLOB
 	ADD_TRAIT(parent, TRAIT_BLOB_ALLY, REF(src))
 	remove_verb(parent, /mob/living/verb/pulled) // No dragging people into the blob
@@ -113,6 +114,7 @@
 		COMSIG_HOSTILE_PRE_ATTACKINGTARGET,
 	))
 	GLOB.blob_telepathy_mobs -= parent
+	living_parent.pass_flags &= ~PASSBLOB
 
 /// Become blobpilled when we gain a mind
 /datum/component/blob_minion/proc/on_mind_init(mob/living/minion, datum/mind/new_mind)
@@ -152,9 +154,9 @@
 /datum/component/blob_minion/proc/on_burned(mob/living/minion, exposed_temperature, exposed_volume)
 	SIGNAL_HANDLER
 	if(isnull(exposed_temperature))
-		minion.adjustFireLoss(5)
+		minion.adjust_fire_loss(5)
 		return
-	minion.adjustFireLoss(clamp(0.01 * exposed_temperature, 1, 5))
+	minion.adjust_fire_loss(clamp(0.01 * exposed_temperature, 1, 5))
 
 /// Someone is attempting to move through us, allow it if it is a blob tile
 /datum/component/blob_minion/proc/on_attempted_pass(mob/living/minion, atom/movable/incoming)
@@ -172,11 +174,17 @@
 /// We only speak telepathically to blobs
 /datum/component/blob_minion/proc/on_try_speech(mob/living/minion, message, ignore_spam, forced)
 	SIGNAL_HANDLER
-	minion.log_talk(message, LOG_SAY, tag = "blob hivemind telepathy")
-	var/spanned_message = minion.say_quote(message)
+	INVOKE_ASYNC(src, PROC_REF(send_blob_telepathy), minion, message)
+	return COMPONENT_CANNOT_SPEAK
+
+/datum/component/blob_minion/proc/send_blob_telepathy(mob/living/minion, message)
+	var/list/message_mods = list()
+	// Note: check_for_custom_say_emote can sleep.
+	var/adjusted_message = minion.check_for_custom_say_emote(message, message_mods)
+	minion.log_sayverb_talk(message, message_mods, tag = "blob hivemind telepathy")
+	var/spanned_message = minion.generate_messagepart(adjusted_message, message_mods = message_mods)
 	var/rendered = span_blob("<b>\[Blob Telepathy\] [minion.real_name]</b> [spanned_message]")
 	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, minion, MESSAGE_TYPE_RADIO)
-	return COMPONENT_CANNOT_SPEAK
 
 /// Called when a blob minion is transformed into something else, hopefully a spore into a zombie
 /datum/component/blob_minion/proc/on_transformed(mob/living/minion, mob/living/replacement)

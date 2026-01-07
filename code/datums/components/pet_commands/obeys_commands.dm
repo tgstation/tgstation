@@ -52,13 +52,14 @@
 	SIGNAL_HANDLER
 	RegisterSignal(new_friend, COMSIG_KB_LIVING_VIEW_PET_COMMANDS, PROC_REF(on_key_pressed))
 	RegisterSignal(new_friend, DEACTIVATE_KEYBIND(COMSIG_KB_LIVING_VIEW_PET_COMMANDS), PROC_REF(on_key_unpressed))
-	for (var/command_name as anything in available_commands)
+	for (var/command_name in available_commands)
 		var/datum/pet_command/command = available_commands[command_name]
 		INVOKE_ASYNC(command, TYPE_PROC_REF(/datum/pet_command, add_new_friend), new_friend)
 
 /datum/component/obeys_commands/proc/on_key_unpressed(mob/living/source)
 	SIGNAL_HANDLER
 	UnregisterSignal(source, COMSIG_ATOM_MOUSE_ENTERED)
+	remove_from_viewers(source)
 
 /datum/component/obeys_commands/proc/remove_from_viewers(mob/living/source)
 	radial_viewers -= REF(source)
@@ -70,7 +71,7 @@
 		COMSIG_KB_LIVING_VIEW_PET_COMMANDS,
 		DEACTIVATE_KEYBIND(COMSIG_KB_LIVING_VIEW_PET_COMMANDS),
 	))
-	for (var/command_name as anything in available_commands)
+	for (var/command_name in available_commands)
 		var/datum/pet_command/command = available_commands[command_name]
 		INVOKE_ASYNC(command, TYPE_PROC_REF(/datum/pet_command, remove_friend), old_friend)
 
@@ -93,7 +94,9 @@
 	if(mouse_hovered == parent)
 		display_menu(friend)
 		return
-	if(isliving(mouse_hovered))
+
+	var/mob/living/owner = parent
+	if(isliving(mouse_hovered) && mouse_hovered.loc != owner.loc)
 		remove_from_viewers(friend)
 
 /// Displays a radial menu of commands
@@ -113,7 +116,7 @@
 /// Actually display the radial menu and then do something with the result
 /datum/component/obeys_commands/proc/display_radial_menu(mob/living/friend)
 	var/list/radial_options = list()
-	for (var/command_name as anything in available_commands)
+	for (var/command_name in available_commands)
 		var/datum/pet_command/command = available_commands[command_name]
 		var/datum/radial_menu_choice/choice = command.provide_radial_data()
 		if (!choice)

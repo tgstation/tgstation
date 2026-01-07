@@ -3,6 +3,7 @@
 	icon = 'icons/obj/clothing/shoes.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/shoes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/shoes_righthand.dmi'
+	abstract_type = /obj/item/clothing/shoes
 	desc = "Comfortable-looking shoes."
 	pickup_sound = 'sound/items/handling/shoes/sneakers_pickup1.ogg'
 	drop_sound = 'sound/items/handling/shoes/sneakers_drop1.ogg'
@@ -77,7 +78,7 @@
 		. += "The [fastening_type] are all knotted together."
 
 /obj/item/clothing/shoes/visual_equipped(mob/user, slot)
-	..()
+	. = ..()
 	if(offset && (slot_flags & slot))
 		user.pixel_z += offset
 		worn_y_dimension -= (offset * 2)

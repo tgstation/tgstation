@@ -17,7 +17,7 @@
 	///list of headlight colors we use to pick through when we have party mode due to emag
 	var/headlight_colors = list(COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_LIME, COLOR_BRIGHT_BLUE, COLOR_CYAN, COLOR_PURPLE)
 	///Cooldown time inbetween [/obj/vehicle/sealed/car/clowncar/proc/roll_the_dice()] usages
-	var/dice_cooldown_time = 150
+	var/dice_cooldown_time = 15 SECONDS
 	///How many times kidnappers in the clown car said thanks
 	var/thankscount = 0
 	///Current status of the cannon, alternates between CLOWN_CANNON_INACTIVE, CLOWN_CANNON_BUSY and CLOWN_CANNON_READY
@@ -157,7 +157,7 @@
 			carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
 
 	hittarget_living.add_splatter_floor(small_drip = FALSE)
-	hittarget_living.adjustBruteLoss(200)
+	hittarget_living.adjust_brute_loss(200)
 	log_combat(src, hittarget_living, "rammed into", null, "injuring all passengers and killing the [hittarget_living]")
 	dump_mobs(TRUE)
 	playsound(src, 'sound/vehicles/car_crash.ogg', 100)

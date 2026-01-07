@@ -352,10 +352,10 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bL" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32;
-	pixel_y = 32
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
 	},
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bM" = (
@@ -511,7 +511,7 @@
 "cu" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/stasis,
-/obj/machinery/vending/wallmed/directional/north{
+/obj/machinery/wall_healer/free/directional/north{
 	use_power = 0
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
@@ -1541,7 +1541,7 @@ bn
 bn
 ac
 ad
-aZ
+bL
 bc
 bc
 ba
@@ -1585,7 +1585,7 @@ aZ
 aZ
 aZ
 ME
-bL
+bc
 bc
 bT
 bW

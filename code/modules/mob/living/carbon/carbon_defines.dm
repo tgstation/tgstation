@@ -1,5 +1,6 @@
 /mob/living/carbon
-	blood_volume = BLOOD_VOLUME_NORMAL
+	abstract_type = /mob/living/carbon
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 	gender = MALE
 	pressure_resistance = 15
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,GLAND_HUD)
@@ -37,7 +38,7 @@
 	var/obj/item/tank/internal = null
 	/// "External" air tank. Never set this manually. Not required to stay directly equipped on the mob (i.e. could be a machine or MOD suit module).
 	var/obj/item/tank/external = null
-	var/obj/item/clothing/head = null
+	var/obj/item/head = null
 
 	///only used by humans
 	var/obj/item/clothing/gloves = null
@@ -48,7 +49,7 @@
 	///only used by humans.
 	var/obj/item/clothing/ears = null
 
-	/// Carbon, you should really only be accessing this through has_dna() but it's your life
+	/// DNA is carbon-only, and ideally you should be accessing it through has_dna(), but you can access it directly if you know you're working with a carbon mob
 	var/datum/dna/dna = null
 	///last mind to control this mob, for blood-based cloning
 	var/datum/mind/last_mind = null
@@ -125,3 +126,8 @@
 	var/bodyshape = BODYSHAPE_HUMANOID
 
 	COOLDOWN_DECLARE(bleeding_message_cd)
+
+	/// Obscured hide flags (hideflags that can't be seen AND can't be interacted with)
+	var/obscured_slots = NONE
+	/// Covered hide flags (hideflags that can be seen, BUT can't be interacted with)
+	var/covered_slots = NONE

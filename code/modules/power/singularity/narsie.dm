@@ -146,8 +146,11 @@
 	log_admin("[key_name(usr)] has triggered the Nar'Sie roundender.")
 	start_ending_the_round()
 
-/obj/narsie/attack_ghost(mob/user)
-	make_new_construct(/mob/living/basic/construct/harvester, user, cultoverride = TRUE, loc_override = loc)
+/obj/narsie/attack_ghost(mob/dead/observer/user)
+	if(is_banned_from(user.ckey, ROLE_CULTIST))
+		return
+	if(tgui_alert(user, "Do you wish to become an occult harvester?", "Become Harvester?", list("Yes", "No"), timeout = 10 SECONDS) == "Yes")
+		make_new_construct(/mob/living/basic/construct/harvester, user, cultoverride = TRUE, loc_override = loc, ghost_activated = TRUE)
 
 /obj/narsie/process()
 	var/datum/component/singularity/singularity_component = singularity.resolve()

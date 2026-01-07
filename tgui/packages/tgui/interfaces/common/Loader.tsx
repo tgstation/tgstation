@@ -8,7 +8,7 @@ export const Loader = (props) => {
     <div className="AlertModal__Loader">
       <Box
         className="AlertModal__LoaderProgress"
-        style={{ width: clamp01(value) * 100 + '%' }}
+        style={{ width: `${clamp01(value) * 100}%` }}
       />
     </div>
   );

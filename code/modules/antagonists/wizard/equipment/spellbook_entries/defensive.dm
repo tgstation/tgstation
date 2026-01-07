@@ -147,12 +147,7 @@
 	if(!user.dropItemToGround(user.wear_suit) || !user.dropItemToGround(user.head))
 		return
 	mod.quick_activation()
-
-/datum/spellbook_entry/item/battlemage_charge
-	name = "Battlemage Armour Charges"
-	desc = "A powerful defensive rune, it will grant eight additional charges to a battlemage shield."
-	item_path = /obj/item/wizard_armour_charge
-	category = SPELLBOOK_CATEGORY_DEFENSIVE
-	cost = 1
+	var/obj/item/mod/module/eradication_lock/lock_module = locate() in mod.modules
+	lock_module.used()
 
 #undef SPELLBOOK_CATEGORY_DEFENSIVE

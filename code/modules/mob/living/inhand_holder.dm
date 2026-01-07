@@ -8,8 +8,6 @@
 	slot_flags = NONE
 	/// Mob inside of us
 	var/mob/living/held_mob
-	/// True if we've started being destroyed
-	var/destroying = FALSE
 	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	body_parts_covered = HEAD
@@ -31,9 +29,9 @@
 	return ..()
 
 /obj/item/mob_holder/Destroy()
-	destroying = TRUE
-	if(held_mob)
+	if(held_mob?.loc == src)
 		release()
+	held_mob = null
 	return ..()
 
 /obj/item/mob_holder/proc/insert_mob(mob/living/new_prisoner)
@@ -78,11 +76,10 @@
 
 /obj/item/mob_holder/proc/release(display_messages = TRUE)
 	if(!held_mob)
-		if(!destroying)
+		if(!QDELETED(src))
 			qdel(src)
 		return FALSE
 	var/mob/living/released_mob = held_mob
-	held_mob = null // stops the held mob from being release()'d twice.
 	if(isliving(loc))
 		var/mob/living/captor = loc
 		if(display_messages)
@@ -93,7 +90,7 @@
 	released_mob.setDir(SOUTH)
 	if(display_messages)
 		released_mob.visible_message(span_warning("[released_mob] uncurls!"))
-	if(!destroying)
+	if(!QDELETED(src))
 		qdel(src)
 	return TRUE
 
@@ -159,3 +156,6 @@
 	if(. || !held_mob) // Another interaction was performed
 		return
 	tool.melee_attack_chain(user, held_mob, modifiers) //Interact with the mob with our tool
+
+/obj/item/mob_holder/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return TRUE

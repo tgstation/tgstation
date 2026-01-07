@@ -86,7 +86,6 @@
 
 /// Proc that handles sending the book information to the user, as well as some housekeeping stuff.
 /obj/item/book/proc/display_content(mob/living/user)
-	credit_book_to_reader(user)
 	ui_interact(user)
 
 /// Proc that checks if the user is capable of reading the book, for UI interactions and otherwise. Returns TRUE if they can, FALSE if they can't.
@@ -125,6 +124,7 @@
 		return
 
 	user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))
+	credit_book_to_reader(user)
 	display_content(user)
 
 /obj/item/book/proc/is_carving_tool(obj/item/tool)
@@ -138,7 +138,7 @@
 /// Checks for whether we can vandalize this book, to ensure we still can after each input.
 /// Uses to_chat over balloon alerts to give more detailed information as to why.
 /obj/item/book/proc/can_vandalize(mob/living/user, obj/item/tool)
-	if(!user.can_perform_action(src) || !user.can_write(tool))
+	if(!user.can_perform_action(src) || !user.can_write(tool, TRUE))
 		return FALSE
 	if(user.is_blind())
 		to_chat(user, span_warning("As you are trying to write on the book, you suddenly feel very stupid!"))

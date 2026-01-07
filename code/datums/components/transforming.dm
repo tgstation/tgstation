@@ -114,10 +114,10 @@
 /datum/component/transforming/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_SHARPEN_ACT, COMSIG_DETECTIVE_SCANNED))
 
-/datum/component/transforming/proc/on_scan(datum/source, mob/user, list/extra_data)
+/datum/component/transforming/proc/on_scan(datum/source, mob/user, datum/detective_scanner_log/entry)
 	SIGNAL_HANDLER
-	LAZYADD(extra_data[DETSCAN_CATEGORY_NOTES], "Readings suggest some form of state changing.")
 
+	entry.add_data_entry(DETSCAN_CATEGORY_NOTES, "Readings suggest some form of state changing.")
 
 /*
  * Called on [COMSIG_ITEM_ATTACK_SELF].
@@ -273,11 +273,11 @@
 		var/obj/item/item_parent = parent
 		switch(item_parent.damtype)
 			if(STAMINA)
-				user.adjustStaminaLoss(clumsy_damage)
+				user.adjust_stamina_loss(clumsy_damage)
 			if(OXY)
-				user.adjustOxyLoss(clumsy_damage)
+				user.adjust_oxy_loss(clumsy_damage)
 			if(TOX)
-				user.adjustToxLoss(clumsy_damage)
+				user.adjust_tox_loss(clumsy_damage)
 			if(BRUTE)
 				user.take_bodypart_damage(brute=clumsy_damage)
 			if(BURN)

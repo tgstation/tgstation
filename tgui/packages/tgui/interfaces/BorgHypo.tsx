@@ -58,7 +58,7 @@ const ReagentDisplay = (props) => {
             <Flex.Item grow textAlign={'left'}>
               {reagent.name}
             </Flex.Item>
-            <Flex.Item>{toFixed(reagent.volume) + 'u'}</Flex.Item>
+            <Flex.Item>{`${toFixed(reagent.volume)}u`}</Flex.Item>
           </Flex>
         </ProgressBar>
       </Flex.Item>

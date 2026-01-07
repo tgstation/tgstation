@@ -201,7 +201,7 @@
 	linked_venue = null
 	return ..()
 
-/obj/machinery/restaurant_portal/on_construction(mob/user, from_flatpack = FALSE)
+/obj/machinery/restaurant_portal/on_construction(mob/user)
 	. = ..()
 	circuit.configure_machine(src)
 
@@ -217,7 +217,7 @@
 		return ..()
 
 	if(!(linked_venue.req_access in used_id.GetAccess()))
-		to_chat(user, span_warning("This card lacks the access to change this venues status."))
+		to_chat(user, span_warning("This card lacks the access to change this venue's status."))
 		return
 
 	linked_venue.toggle_open()

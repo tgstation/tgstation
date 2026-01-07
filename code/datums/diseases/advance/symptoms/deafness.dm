@@ -45,7 +45,6 @@
 		return
 
 	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
-	var/obj/item/organ/ears/ears = infected_mob.get_organ_slot(ORGAN_SLOT_EARS)
 
 	switch(advanced_disease.stage)
 		if(3, 4)
@@ -53,15 +52,18 @@
 				to_chat(infected_mob, span_warning("[pick("You hear a ringing in your ear.", "Your ears pop.")]"))
 		if(5)
 			if(causes_permanent_deafness)
-				if(ears.damage < ears.maxHealth)
+				if(!HAS_TRAIT_FROM(infected_mob, TRAIT_DEAF, DISEASE_TRAIT))
 					to_chat(infected_mob, span_userdanger("Your ears pop painfully and start bleeding!"))
 					// Just absolutely murder me man
-					ears.apply_organ_damage(ears.maxHealth)
+					infected_mob.adjust_organ_loss(ORGAN_SLOT_EARS, INFINITY)
 					infected_mob.emote("scream")
 					ADD_TRAIT(infected_mob, TRAIT_DEAF, DISEASE_TRAIT)
 			else
 				to_chat(infected_mob, span_userdanger("Your ears pop and begin ringing loudly!"))
-				ears.deaf = min(20, ears.deaf + 15)
+				var/obj/item/organ/ears/ears = infected_mob.get_organ_slot(ORGAN_SLOT_EARS)
+				var/deafness_to_add = min(40 SECONDS - ears.temporary_deafness, 30 SECONDS)
+				if(deafness_to_add > 0)
+					ears.adjust_temporary_deafness(deafness_to_add)
 
 /datum/symptom/deafness/on_stage_change(datum/disease/advance/advanced_disease)
 	. = ..()

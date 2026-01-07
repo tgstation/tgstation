@@ -1,7 +1,3 @@
-///IV drip operation mode when it sucks blood from the object
-#define IV_TAKING 0
-///IV drip operation mode when it injects reagents into the object
-#define IV_INJECTING 1
 ///What the transfer rate value is rounded to
 #define IV_TRANSFER_RATE_STEP 0.01
 ///Minimum possible IV drip transfer rate in units per second
@@ -24,23 +20,30 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	use_power = NO_POWER_USE
 	interaction_flags_mouse_drop = NEED_HANDS
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.1, /datum/material/plastic = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2)
 
 	/// Information and effects about where the IV drip is attached to
 	var/datum/iv_drip_attachment/attachment
-	///Are we donating or injecting?
+	/// Are we donating or injecting?
 	var/mode = IV_INJECTING
-	///The chemicals flow speed
+	/// The chemicals flow speed
 	var/transfer_rate = DEFAULT_IV_TRANSFER_RATE
-	///Internal beaker
+	/// Internal beaker
 	var/obj/item/reagent_container
-	///Set false to block beaker use and instead use an internal reagent holder
+	/// Set false to block beaker use and instead use an internal reagent holder
 	var/use_internal_storage = FALSE
-	///If we're using the internal container, fill us UP with the below : list(/datum/reagent/water = 5000)
+	/// If we're using the internal container, fill us UP with the below : list(/datum/reagent/water = 5000)
 	var/internal_list_reagents
-	///How many reagents can we hold?
+	/// How many reagents can we hold?
 	var/internal_volume_maximum = 100
-	// If the blood draining tab should be greyed out
+	/// If the blood draining tab should be greyed out
 	var/inject_only = FALSE
+	/// Typecache of containers we accept.
+	var/static/list/drip_containers = typecacheof(list(
+		/obj/item/reagent_containers/blood,
+		/obj/item/reagent_containers/cup,
+		/obj/item/reagent_containers/chem_pack,
+	))
 
 /obj/machinery/iv_drip/Initialize(mapload)
 	. = ..()
@@ -65,12 +68,17 @@
 		ui.open()
 
 /obj/machinery/iv_drip/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(attachment)
-		context[SCREENTIP_CONTEXT_RMB] = "Take needle out"
-	else if(reagent_container && !use_internal_storage)
-		context[SCREENTIP_CONTEXT_RMB] = "Eject container"
-	else if(!inject_only)
-		context[SCREENTIP_CONTEXT_RMB] = "Change direction"
+	if(isnull(held_item))
+		if(attachment)
+			context[SCREENTIP_CONTEXT_RMB] = "Take needle out"
+		else if(reagent_container && !use_internal_storage)
+			context[SCREENTIP_CONTEXT_RMB] = "Eject container"
+		else if(!inject_only)
+			context[SCREENTIP_CONTEXT_RMB] = "Set to [mode == IV_INJECTING ? "take blood" : "inject"]"
+	else
+		if(!use_internal_storage)
+			if(is_type_in_typecache(held_item, drip_containers) || IS_EDIBLE(held_item))
+				context[SCREENTIP_CONTEXT_LMB] = "Load container"
 
 	if(transfer_rate > MIN_IV_TRANSFER_RATE)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Set flow to min"
@@ -179,35 +187,32 @@
 	user.visible_message(span_warning("[user] attaches [src] to [target]."), span_notice("You attach [src] to [target]."))
 	attach_iv(target, user)
 
-/obj/machinery/iv_drip/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/iv_drip/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(use_internal_storage)
-		return ..()
+		return NONE
+	if(!is_type_in_typecache(tool, drip_containers) && !IS_EDIBLE(tool))
+		return NONE
+	if(reagent_container)
+		balloon_alert(user, "not empty!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
 
-	//Typecache of containers we accept
-	var/static/list/drip_containers = typecacheof(list(
-		/obj/item/reagent_containers/blood,
-		/obj/item/reagent_containers/cup,
-		/obj/item/reagent_containers/chem_pack,
-	))
-
-	if(is_type_in_typecache(item, drip_containers) || IS_EDIBLE(item))
-		if(reagent_container)
-			to_chat(user, span_warning("[reagent_container] is already loaded on [src]!"))
-			return
-		if(!user.transferItemToLoc(item, src))
-			return
-		reagent_container = item
-		to_chat(user, span_notice("You attach [item] to [src]."))
-		user.log_message("attached a [item] to [src] at [AREACOORD(src)] containing ([reagent_container.reagents.get_reagent_log_string()])", LOG_ATTACK)
-		add_fingerprint(user)
-		update_appearance(UPDATE_ICON)
-		return
-	else
-		return ..()
-
+	reagent_container = tool
+	balloon_alert(user, "attached")
+	user.log_message("attached a [tool] to [src] at [AREACOORD(src)] containing ([reagent_container.reagents.get_reagent_log_string()])", LOG_ATTACK)
+	add_fingerprint(user)
+	update_appearance(UPDATE_ICON)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/iv_drip/click_alt(mob/user)
-	set_transfer_rate(transfer_rate > MIN_IV_TRANSFER_RATE ? MIN_IV_TRANSFER_RATE : MAX_IV_TRANSFER_RATE)
+	if(transfer_rate > MIN_IV_TRANSFER_RATE)
+		balloon_alert(user, "flow minimized")
+		set_transfer_rate(MIN_IV_TRANSFER_RATE)
+	else
+		balloon_alert(user, "flow maximized")
+		set_transfer_rate(MAX_IV_TRANSFER_RATE)
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/iv_drip/on_deconstruction(disassembled = TRUE)
@@ -256,7 +261,7 @@
 			return
 
 		// If the human is losing too much blood, beep.
-		if(attached_mob.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
+		if(attached_mob.get_blood_volume(apply_modifiers = TRUE) < BLOOD_VOLUME_SAFE && prob(5))
 			audible_message(span_hear("[src] beeps loudly."))
 			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 		var/atom/movable/target = use_internal_storage ? src : reagent_container
@@ -265,10 +270,12 @@
 
 /obj/machinery/iv_drip/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !ishuman(user))
 		return
-	if(!ishuman(user))
-		return
+	if (quick_toggle(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/iv_drip/proc/quick_toggle(mob/user)
 	if(attachment)
 		visible_message(span_notice("[attachment.attached_to] is detached from [src]."))
 		detach_iv()
@@ -276,7 +283,7 @@
 		eject_beaker(user)
 	else
 		toggle_mode()
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return TRUE
 
 ///called when an IV is attached
 /obj/machinery/iv_drip/proc/attach_iv(atom/target, mob/user)
@@ -420,7 +427,7 @@
 /datum/crafting_recipe/iv_drip
 	name = "IV drip"
 	result = /obj/machinery/iv_drip
-	time = 30
+	time = 3 SECONDS
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	reqs = list(
 		/obj/item/stack/rods = 2,
@@ -448,10 +455,8 @@
 /atom/movable/screen/alert/iv_connected
 	name = "IV Connected"
 	desc = "You have an IV connected to your arm. Remember to remove it or drag the IV stand with you before moving, or else it will rip out!"
-	icon_state = ALERT_IV_CONNECTED
-
-#undef IV_TAKING
-#undef IV_INJECTING
+	use_user_hud_icon = TRUE
+	overlay_state = "iv_connected"
 
 #undef MIN_IV_TRANSFER_RATE
 #undef MAX_IV_TRANSFER_RATE

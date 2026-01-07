@@ -14,9 +14,16 @@
 #define COMSIG_ORGAN_SURGICALLY_REMOVED "organ_surgically_removed"
 /// Called when an organ gets surgically removed (mob/living/user, mob/living/carbon/new_owner, target_zone, obj/item/tool)
 #define COMSIG_ORGAN_SURGICALLY_INSERTED "organ_surgically_inserted"
+/// Called when an organ finishes inserting into a bodypart (obj/item/bodypart/limb, movement_flags)
+#define COMSIG_ORGAN_BODYPART_INSERTED "organ_bodypart_inserted"
+/// Called when a organ's damage is adjusted apply_organ_damage (damage_amount, maximum, required_organ_flag)
+#define COMSIG_ORGAN_ADJUST_DAMAGE "organ_adjust_damage"
 
 ///Called when movement intent is toggled.
 #define COMSIG_MOVE_INTENT_TOGGLED "move_intent_toggled"
+
+/// Called when combat mode is toggled.
+#define COMSIG_COMBAT_MODE_TOGGLED "combat_mode_toggled"
 
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
@@ -25,6 +32,8 @@
 #define COMSIG_LIVING_ENTER_STAMCRIT "living_enter_stamcrit"
 ///from /obj/structure/door/crush(): (mob/living/crushed, /obj/machinery/door/crushing_door)
 #define COMSIG_LIVING_DOORCRUSHED "living_doorcrush"
+	/// Stop the door from causing wounds (damage still applies though)
+	#define DOORCRUSH_NO_WOUND (1<<0)
 ///from base of mob/living/resist() (/mob/living)
 #define COMSIG_LIVING_RESIST "living_resist"
 ///from base of mob/living/ignite_mob() (/mob/living)
@@ -51,7 +60,7 @@
 #define COMSIG_LIVING_TRY_SYRINGE_WITHDRAW "living_try_syringe_withdraw"
 ///from base of mob/living/set_usable_legs()
 #define COMSIG_LIVING_LIMBLESS_SLOWDOWN  "living_limbless_slowdown"
-///From living/Life(). (deltatime, times_fired)
+///From living/Life(). (deltatime)
 #define COMSIG_LIVING_LIFE "living_life"
 	/// Block the Life() proc from proceeding... this should really only be done in some really wacky situations.
 	#define COMPONENT_LIVING_CANCEL_LIFE_PROCESSING (1<<0)
@@ -137,7 +146,7 @@
 	#define COMPONENT_CANT_TRACK (1<<0)
 ///from end of fully_heal(): (heal_flags)
 #define COMSIG_LIVING_POST_FULLY_HEAL "living_post_fully_heal"
-/// from start of /mob/living/handle_breathing(): (seconds_per_tick, times_fired)
+/// from start of /mob/living/handle_breathing(): (seconds_per_tick)
 #define COMSIG_LIVING_HANDLE_BREATHING "living_handle_breathing"
 ///from /obj/item/hand_item/slapper/attack_atom(): (source=mob/living/slammer, obj/structure/table/slammed_table)
 #define COMSIG_LIVING_SLAM_TABLE "living_slam_table"
@@ -145,6 +154,8 @@
 #define COMSIG_LIVING_SLAP_MOB "living_slap_mob"
 ///from /obj/item/hand_item/slapper/attack(): (source=mob/living/slapper, mob/living/slapped)
 #define COMSIG_LIVING_SLAPPED "living_slapped"
+///from /obj/item/hand_item/attack(): (source=mob/living/attacker, mob/living/attacked)
+#define COMSIG_LIVING_HAND_ITEM_ATTACK "living_hand_item_attack"
 /// from /mob/living/*/UnarmedAttack(), before sending [COMSIG_LIVING_UNARMED_ATTACK]: (mob/living/source, atom/target, proximity, modifiers)
 /// The only reason this exists is so hulk can fire before Fists of the North Star.
 /// Note that this is called before [/mob/living/proc/can_unarmed_attack] is called, so be wary of that.
@@ -185,6 +196,9 @@
 	#define TREAT_TTS_MESSAGE_ARG 2
 	#define TREAT_TTS_FILTER_ARG 3
 	#define TREAT_CAPITALIZE_MESSAGE 4
+
+/// From mob/living/send_speech(): (atom/source, list/listeners)
+#define COMSIG_LIVING_SEND_SPEECH "living_send_speech"
 
 ///From obj/item/toy/crayon/spraycan
 #define COMSIG_LIVING_MOB_PAINTED "living_mob_painted"
@@ -304,8 +318,12 @@
 /// From /obj/item/melee/baton/baton_effect(): (datum/source, mob/living/user, /obj/item/melee/baton)
 #define COMSIG_MOB_BATONED "mob_batoned"
 
-/// From /obj/machinery/gibber/startgibbing(): (mob/living/user, /obj/machinery/gibber, list/results)
+/// From /obj/machinery/gibber/start_gibbing(): (mob/living/user, /obj/machinery/gibber, list/results)
 #define COMSIG_LIVING_GIBBER_ACT "living_gibber_act"
+
+/// From /mob/living/get_eye_protection() (list/reflist)
+#define COMSIG_LIVING_GET_EAR_PROTECTION "living_get_ear_protection"
+	#define EAR_PROTECTION_ARG 1
 
 /// Sent to the mob when their mind is slaved
 #define COMSIG_MOB_ENSLAVED_TO "mob_enslaved_to"
@@ -327,10 +345,36 @@
 /// From /obj/item/book/bible/attack() : (mob/living/user, obj/item/book/bible/bible, bless_result)
 #define COMSIG_LIVING_BLESSED "living_blessed"
 
-/// From /datum/surgery_step/initiate() : (mob/living/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, datum/surgery_step/step, list/modifiers)
-#define COMSIG_LIVING_INITIATE_SURGERY_STEP "living_initiate_surgery_step"
-#define COMSIG_LIVING_SURGERY_STEP_INITIATED_ON "living_surgery_step_initiated_on"
-	/// Index in modifiers containing the modifier to failure chance
-	#define FAIL_PROB_INDEX 1
-	/// Index in modifiers containing the modifer to surgery speed
-	#define SPEED_MOD_INDEX 2
+/// From /datum/status_effect/proc/on_creation() : (datum/status_effect/effect)
+#define COMSIG_LIVING_STATUS_APPLIED "living_status_applied"
+
+/// From /datum/status_effect/proc/Destroy() : (datum/status_effect/effect)
+#define COMSIG_LIVING_STATUS_REMOVED "living_status_removed"
+
+/// From /datum/spawners_menu/ui_static_data(mob/user) : (list/string_info)
+#define COMSIG_LIVING_GHOSTROLE_INFO "living_ghostrole_info"
+
+///from mob/living/befriend()
+#define COMSIG_LIVING_MADE_NEW_FRIEND "living_made_new_friend"
+
+/// From /mob/living/update_offsets(animate) : (new_x, new_y, new_w, new_z, animate)
+#define COMSIG_LIVING_UPDATE_OFFSETS "living_update_offsets"
+
+/// From /datum/element/death_drops/on_death(mob/living/target, gibbed) : (list/loot, gibbed)
+#define COMSIG_LIVING_DROP_LOOT "living_drop_loot"
+	/// Prevent loot from being dropped
+	#define COMPONENT_NO_LOOT_DROP (1<<0)
+/// From /datum/element/death_drops/on_death(mob/living/target, gibbed) : (list/loot, gibbed)
+#define COMSIG_LIVING_DROPPED_LOOT "living_dropped_loot"
+
+/// From /mob/living/proc/mob_pickup() : (mob/living/user, obj/item/mob_holder/holder)
+#define COMSIG_LIVING_SCOOPED_UP "living_scooped_up"
+
+/// From /mob/living/proc/update_blood_status(), sent when the return value of /mob/living/proc/can_have_blood() changes : (had_blood, has_blood, old_blood_volume, new_blood_volume)
+#define COMSIG_LIVING_UPDATE_BLOOD_STATUS "living_update_blood_status"
+
+/// From /mob/living/proc/update_nutrition()
+#define COMSIG_LIVING_UPDATE_NUTRITION "living_update_nutrition"
+
+/// Sent to a mob when one of their bodypart's surgery state changes, OR sent from the basic_surgery_state holder when its surgery state changes (old_state, new_state, changed_states)
+#define COMSIG_LIVING_UPDATING_SURGERY_STATE "carbon_updating_surgery_state"

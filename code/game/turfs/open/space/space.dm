@@ -44,7 +44,7 @@ GLOBAL_LIST_EMPTY(starlight)
 
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
-	icon_state = "space"
+	icon_state = MAP_SWITCH("space", "space_map")
 	name = "\proper space"
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
@@ -53,10 +53,6 @@ GLOBAL_LIST_EMPTY(starlight)
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
-
-	var/destination_z
-	var/destination_x
-	var/destination_y
 
 	var/static/datum/gas_mixture/immutable/space/space_gas = new
 	// We do NOT want atmos adjacent turfs
@@ -75,6 +71,9 @@ GLOBAL_LIST_EMPTY(starlight)
 
 	force_no_gravity = TRUE
 
+/turf/open/space/basic
+	icon_state = MAP_SWITCH("space", "space_basic_map")
+
 /turf/open/space/basic/New() //Do not convert to Initialize
 	SHOULD_CALL_PARENT(FALSE)
 	//This is used to optimize the map loader
@@ -83,12 +82,6 @@ GLOBAL_LIST_EMPTY(starlight)
 /turf/open/space/Destroy()
 	GLOB.starlight -= src
 	return ..()
-
-//ATTACK GHOST IGNORING PARENT RETURN VALUE
-/turf/open/space/attack_ghost(mob/dead/observer/user)
-	if(destination_z)
-		var/turf/T = locate(destination_x, destination_y, destination_z)
-		user.forceMove(T)
 
 /turf/open/space/TakeTemperature(temp)
 
@@ -129,11 +122,6 @@ GLOBAL_LIST_EMPTY(starlight)
 /turf/open/space/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/turf/open/space/proc/CanBuildHere()
-	if(destination_z)
-		return FALSE
-	return TRUE
-
 /turf/open/space/handle_slip()
 	return
 
@@ -146,40 +134,6 @@ GLOBAL_LIST_EMPTY(starlight)
 	else if(ismetaltile(attacking_item))
 		build_with_floor_tiles(attacking_item, user)
 
-
-/turf/open/space/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	if(!arrived || src != arrived.loc)
-		return
-
-	if(destination_z && destination_x && destination_y && !arrived.pulledby && !arrived.currently_z_moving)
-		var/tx = destination_x
-		var/ty = destination_y
-		var/turf/DT = locate(tx, ty, destination_z)
-		var/itercount = 0
-		while(DT.density || istype(DT.loc,/area/shuttle)) // Extend towards the center of the map, trying to look for a better place to arrive
-			if (itercount++ >= 100)
-				log_game("SPACE Z-TRANSIT ERROR: Could not find a safe place to land [arrived] within 100 iterations.")
-				break
-			if (tx < 128)
-				tx++
-			else
-				tx--
-			if (ty < 128)
-				ty++
-			else
-				ty--
-			DT = locate(tx, ty, destination_z)
-
-		arrived.zMove(null, DT, ZMOVE_ALLOW_BUCKLED)
-
-		var/atom/movable/current_pull = arrived.pulling
-		while (current_pull)
-			var/turf/target_turf = get_step(current_pull.pulledby.loc, REVERSE_DIR(current_pull.pulledby.dir)) || current_pull.pulledby.loc
-			current_pull.zMove(null, target_turf, ZMOVE_ALLOW_BUCKLED)
-			current_pull = current_pull.pulling
-
-
 /turf/open/space/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
@@ -191,11 +145,6 @@ GLOBAL_LIST_EMPTY(starlight)
 		return TRUE
 	return FALSE
 
-/turf/open/space/is_transition_turf()
-	if(destination_x || destination_y || destination_z)
-		return TRUE
-
-
 /turf/open/space/acid_act(acidpwr, acid_volume)
 	return FALSE
 
@@ -205,9 +154,6 @@ GLOBAL_LIST_EMPTY(starlight)
 
 
 /turf/open/space/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(!CanBuildHere())
-		return FALSE
-
 	if(the_rcd.mode == RCD_TURF)
 		if(the_rcd.rcd_design_path == /turf/open/floor/plating/rcd)
 			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
@@ -228,10 +174,10 @@ GLOBAL_LIST_EMPTY(starlight)
 
 /turf/open/space/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	if(the_rcd.mode == RCD_TURF)
-		if(rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
+		if(rcd_data[RCD_DESIGN_PATH] == /turf/open/floor/plating/rcd)
 			place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
-		else if(rcd_data["[RCD_DESIGN_PATH]"] == /obj/structure/lattice/catwalk)
+		else if(rcd_data[RCD_DESIGN_PATH] == /obj/structure/lattice/catwalk)
 			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
 			if(lattice)
 				qdel(lattice)
@@ -245,6 +191,9 @@ GLOBAL_LIST_EMPTY(starlight)
 /turf/open/space/ChangeTurf(path, list/new_baseturfs, flags)
 	. = ..()
 	if (!. || isspaceturf(.))
+		return
+
+	if (flags & CHANGETURF_NO_AREA_CHANGE)
 		return
 
 	var/area/new_turf_area = get_area(.)
@@ -270,8 +219,8 @@ GLOBAL_LIST_EMPTY(starlight)
 
 /turf/open/space/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
-	if(PERFORM_ALL_TESTS(focus_only/openspace_clear) && !GET_TURF_BELOW(src))
-		stack_trace("[src] was inited as openspace with nothing below it at ([x], [y], [z])")
+	if(PERFORM_ALL_TESTS(maptest_log_mapping) && !GET_TURF_BELOW(src))
+		log_mapping("[src] was inited as openspace with nothing below it at ([x], [y], [z])")
 	icon_state = "pure_white"
 	// We make the assumption that the space plane will never be blacklisted, as an optimization
 	if(SSmapping.max_plane_offset)

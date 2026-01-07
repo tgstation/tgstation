@@ -12,23 +12,25 @@
 	wait_time_range = list(6 SECONDS, 12 SECONDS)
 
 /datum/fish_source/surgery/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot, obj/item/fishing_rod/used_rod)
+	if(reward_path != FISHING_RANDOM_ORGAN)
+		return ..()
+
 	if(istype(fishing_spot, /obj/machinery/fishing_portal_generator))
 		var/obj/machinery/fishing_portal_generator/portal = fishing_spot
 		fishing_spot = portal.current_linked_atom
+
 	if(!iscarbon(fishing_spot))
 		var/random_type = pick(subtypesof(/obj/item/organ) - GLOB.prototype_organs)
 		return new random_type(spawn_location)
 
 	var/mob/living/carbon/carbon = fishing_spot
 	var/list/possible_organs = list()
-	for(var/datum/surgery/organ_manipulation/operation in carbon.surgeries)
-		var/datum/surgery_step/manipulate_organs/manip_step = GLOB.surgery_steps[operation.steps[operation.status]]
-		if(!istype(manip_step))
+	for(var/obj/item/organ/fishable as anything in carbon.organs)
+		if(fishable.organ_flags & (ORGAN_UNREMOVABLE|ORGAN_EXTERNAL|ORGAN_VITAL))
 			continue
-		for(var/obj/item/organ/organ in operation.operated_bodypart)
-			if(organ.organ_flags & ORGAN_UNREMOVABLE || !manip_step.can_use_organ(organ))
-				continue
-			possible_organs |= organ
+		if(!LIMB_HAS_SURGERY_STATE(fishable.bodypart_owner, ALL_SURGERY_FISH_STATES(fishable.zone)))
+			continue
+		possible_organs += fishable
 
 	if(!length(possible_organs))
 		return null
@@ -44,7 +46,7 @@
 		FISH_SOURCE_AUTOWIKI_NAME = "Organs",
 		FISH_SOURCE_AUTOWIKI_DUD = "",
 		FISH_SOURCE_AUTOWIKI_WEIGHT = 100,
-		FISH_SOURCE_AUTOWIKI_NOTES = "A random organ from an ongoing organ manipulation surgery.",
+		FISH_SOURCE_AUTOWIKI_NOTES = "A random organ from an ongoing surgical operation.",
 	))
 
 	return data

@@ -21,6 +21,10 @@
 	// Love is stored in the heart.
 	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/love = 2.5)
 
+	cell_line = CELL_LINE_ORGAN_HEART
+	cells_minimum = 1
+	cells_maximum = 2
+
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 
 	/// Whether the heart is currently beating.
@@ -93,7 +97,7 @@
 /obj/item/organ/heart/proc/is_beating()
 	return beating
 
-/obj/item/organ/heart/get_status_text(advanced, add_tooltips)
+/obj/item/organ/heart/get_status_text(advanced, add_tooltips, colored)
 	if(owner.has_status_effect(/datum/status_effect/heart_attack))
 		return conditional_tooltip("<font color='#cc3333'>Myocardial Infarction</font>", "Apply defibrillation immediately. Similar electric shocks may work in emergencies.", add_tooltips)
 	if((!beating && !(organ_flags & ORGAN_FAILING) && owner.needs_heart() && owner.stat != DEAD))
@@ -104,8 +108,8 @@
 	// Always show if the guy needs a heart (so its status can be monitored)
 	return ..() || owner.needs_heart()
 
-/obj/item/organ/heart/on_life(seconds_per_tick, times_fired)
-	..()
+/obj/item/organ/heart/on_life(seconds_per_tick)
+	. = ..()
 
 	// If the owner doesn't need a heart, we don't need to do anything with it.
 	if(!owner.needs_heart())
@@ -234,7 +238,7 @@
 				span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"),
 			)
 
-/obj/item/organ/heart/cybernetic/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/heart/cybernetic/on_life(seconds_per_tick)
 	. = ..()
 
 	if(organ_flags & ORGAN_EMP)
@@ -243,20 +247,16 @@
 	if(stabilization_available && owner.health <= owner.crit_threshold)
 		stabilize_heart()
 
-	if(bleed_prevention && ishuman(owner) && owner.blood_volume < BLOOD_VOLUME_NORMAL)
+	// Wound healing is intentionally tied to blood volume.
+	if(bleed_prevention && ishuman(owner) && owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 		var/mob/living/carbon/human/wounded_owner = owner
-		wounded_owner.blood_volume += 2 * seconds_per_tick
+
+		wounded_owner.adjust_blood_volume(2 * seconds_per_tick)
+
 		if(toxification_probability && prob(toxification_probability))
-			wounded_owner.adjustToxLoss(1 * seconds_per_tick, updating_health = FALSE)
+			wounded_owner.adjust_tox_loss(1 * seconds_per_tick, updating_health = FALSE)
 
-		var/datum/wound/bloodiest_wound
-
-		for(var/datum/wound/iter_wound as anything in wounded_owner.all_wounds)
-			if(iter_wound.blood_flow && iter_wound.blood_flow > bloodiest_wound?.blood_flow)
-				bloodiest_wound = iter_wound
-
-		if(bloodiest_wound)
-			bloodiest_wound.adjust_blood_flow(-1 * seconds_per_tick)
+		wounded_owner.coagulant_effect(1 * seconds_per_tick)
 
 /obj/item/organ/heart/cybernetic/proc/stabilize_heart()
 	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT)
@@ -291,6 +291,7 @@
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	stabilization_available = TRUE
 	toxification_probability = 0
+	bleed_prevention = TRUE
 	emp_vulnerability = 20
 
 /obj/item/organ/heart/cybernetic/surplus
@@ -319,7 +320,7 @@
 	/// The cooldown until the next time this heart can give the host an adrenaline boost.
 	COOLDOWN_DECLARE(adrenaline_cooldown)
 
-/obj/item/organ/heart/freedom/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/heart/freedom/on_life(seconds_per_tick)
 	. = ..()
 	if(owner.health < 5 && COOLDOWN_FINISHED(src, adrenaline_cooldown))
 		COOLDOWN_START(src, adrenaline_cooldown, rand(25 SECONDS, 1 MINUTES))
@@ -334,3 +335,69 @@
 	beat_noise = "the power of the podperson" // makes sense
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
 	color = COLOR_LIME
+
+/// An improved version of the organic heart, with more health and more "keeping you alive" potential
+/obj/item/organ/heart/evolved
+	name = "evolved heart"
+	desc = "It beats ever strong."
+	icon_state = "heart-evolved-on"
+	base_icon_state = "heart-evolved"
+
+	maxHealth = STANDARD_ORGAN_THRESHOLD * 1.2
+
+	/// Chance to heal per on_life
+	var/healing_probability = 10
+	/// Base healing we receive per tick at 0 damage and for standard versions
+	var/base_healing = 1
+
+/obj/item/organ/heart/evolved/on_life(seconds_per_tick)
+	. = ..()
+
+	if(prob(healing_probability * seconds_per_tick))
+		var/damage_to_heal = base_healing * ((maxHealth - damage) / initial(maxHealth)) * seconds_per_tick
+		owner.heal_overall_damage(damage_to_heal, damage_to_heal, required_bodytype = BODYTYPE_ORGANIC)
+
+		if(owner.stat == HARD_CRIT && !owner.has_reagent(/datum/reagent/medicine/atropine, 5))
+			owner.reagents.add_reagent(/datum/reagent/medicine/atropine, 1 * seconds_per_tick)
+
+/// A weaker evolved heart, but can block magic in exchange for our organs health!
+/obj/item/organ/heart/evolved/sacred
+	name = "sacred heart"
+	desc = "Your foul magics stand no chance against the power of LOVE!!!"
+
+	icon_state = "heart-sacred-on"
+	base_icon_state = "heart-sacred"
+
+	healing_probability = 5
+	base_healing = 0.5
+
+	// How much damage each magic block deals to us
+	var/damage_per_block = 50
+
+/obj/item/organ/heart/evolved/sacred/on_life(seconds_per_tick)
+	. = ..()
+
+	if(IS_CULTIST(owner))
+		owner.reagents.add_reagent(/datum/reagent/water/holywater, 5 * seconds_per_tick)
+
+/obj/item/organ/heart/evolved/sacred/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
+	. = ..()
+
+	receiver.AddComponent(/datum/component/anti_magic, block_magic = CALLBACK(src, PROC_REF(on_blocked)), check_blocking = CALLBACK(src, PROC_REF(check_block)))
+
+/obj/item/organ/heart/evolved/sacred/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+
+	qdel(organ_owner.GetComponent(/datum/component/anti_magic))
+
+/// When we blocked damage, do PAIN on us
+/obj/item/organ/heart/evolved/sacred/proc/on_blocked()
+	apply_organ_damage(damage_per_block)
+	owner.vomit(VOMIT_CATEGORY_BLOOD)
+	playsound(owner, 'sound/effects/health/slowbeat.ogg', 80)
+
+/// We don't block magic if it would kill our heart
+/obj/item/organ/heart/evolved/sacred/proc/check_block()
+	if(maxHealth - damage <= damage_per_block)
+		return FALSE
+	return TRUE

@@ -189,7 +189,7 @@
 /area/deathmatch)
 "hY" = (
 /mob/living/carbon/human/species/monkey,
-/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch/red/on,
 /turf/open/misc/grass/jungle,
 /area/deathmatch)
 "ih" = (
@@ -392,7 +392,7 @@
 "qk" = (
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/turf_decal/weather/dirt,
-/obj/item/flashlight/flare/culttorch,
+/obj/item/flashlight/flare/torch/red/on,
 /turf/open/floor/cult,
 /area/deathmatch)
 "qp" = (
@@ -550,7 +550,7 @@
 /area/deathmatch)
 "xx" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/flashlight/flare/culttorch,
+/obj/item/flashlight/flare/torch/red/on,
 /turf/open/floor/cult,
 /area/deathmatch)
 "xC" = (
@@ -595,7 +595,7 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/weather/dirt,
-/obj/item/flashlight/flare/culttorch,
+/obj/item/flashlight/flare/torch/red/on,
 /turf/open/floor/cult,
 /area/deathmatch)
 "An" = (
@@ -712,7 +712,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
 	},
-/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch/red/on,
 /turf/open/misc/asteroid/moon,
 /area/deathmatch)
 "DA" = (
@@ -794,7 +794,7 @@
 /area/deathmatch)
 "HN" = (
 /obj/structure/flora/rock/pile/jungle/large/style_random,
-/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch/red/on,
 /turf/open/misc/grass/jungle,
 /area/deathmatch)
 "HS" = (
@@ -1119,7 +1119,7 @@
 /obj/item/clothing/suit/costume/bronze,
 /obj/item/clothing/head/costume/bronze,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch/red/on,
 /turf/open/floor/bronze/flat,
 /area/deathmatch)
 "VZ" = (

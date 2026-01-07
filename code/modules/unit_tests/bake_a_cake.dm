@@ -32,16 +32,31 @@
 	human.mind = new /datum/mind(null) // Add brain for the food buff
 
 	// It's a piece of cake to bake a pretty cake
+	var/sanity = 0
 	while(beaker.reagents.get_reagent_amount(/datum/reagent/consumable/sugar) < sugar_required && beaker.reagents.total_volume < total_volume)
 		sugar_bag.melee_attack_chain(human, beaker)
+		sanity++
+		if(sanity > 50)
+			TEST_FAIL("Failed to add sugar to beaker!")
+			return
+	sanity = 0
 	while(beaker.reagents.get_reagent_amount(/datum/reagent/consumable/flour) < flour_required && beaker.reagents.total_volume < total_volume)
 		flour_bag.melee_attack_chain(human, beaker)
+		sanity++
+		if(sanity > 50)
+			TEST_FAIL("Failed to add flour to beaker!")
+			return
+	sanity = 0
 	while((beaker.reagents.get_reagent_amount(/datum/reagent/consumable/eggyolk) < eggyolk_required \
 	|| beaker.reagents.get_reagent_amount(/datum/reagent/consumable/eggwhite) < eggwhite_required) \
 	&& beaker.reagents.total_volume < total_volume \
 	&& beaker.reagents.total_volume >= (sugar_required + flour_required)) // Make sure that we won't miss the reaction
 		var/obj/item/egg = egg_box.contents[1]
 		egg.melee_attack_chain(human, beaker, list(RIGHT_CLICK = TRUE))
+		sanity++
+		if(sanity > 50)
+			TEST_FAIL("Failed to add egg to beaker!")
+			return
 	var/obj/item/food/cake_batter = locate(/obj/item/food/cakebatter) in table_loc
 	TEST_ASSERT_NOTNULL(cake_batter, "Failed making cake batter!")
 	TEST_ASSERT_EQUAL(beaker.reagents.total_volume, 0, "Cake batter did not consume all beaker reagents!")

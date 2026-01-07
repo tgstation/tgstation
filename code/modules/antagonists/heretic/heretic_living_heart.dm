@@ -101,7 +101,7 @@
 
 	return TRUE
 
-/datum/action/cooldown/track_target/Trigger(trigger_flags, atom/target)
+/datum/action/cooldown/track_target/Trigger(mob/clicker, trigger_flags, atom/target)
 	right_clicked = !!(trigger_flags & TRIGGER_SECONDARY_ACTION)
 	return ..()
 

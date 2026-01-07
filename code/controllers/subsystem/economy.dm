@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(economy)
 	var/techweb_bounty = 250
 	/**
 	  * List of normal (no department ones) accounts' identifiers with associated datum accounts, for big O performance.
-	  * A list of sole account datums can be obtained with flatten_list(), another variable would be redundant rn.
+	  * A list of sole account datums can be obtained with assoc_to_values(), another variable would be redundant rn.
 	  */
 	var/list/bank_accounts_by_id = list()
 	/// A list of bank accounts indexed by their assigned job typepath.
@@ -157,7 +157,7 @@ SUBSYSTEM_DEF(economy)
 		var/datum/bank_account/bank_account = cached_processing[cached_processing[i]]
 		if(bank_account?.account_job && !ispath(bank_account.account_job))
 			temporary_total += (bank_account.account_job.paycheck * STARTING_PAYCHECKS)
-		bank_account.payday(1)
+		bank_account.payday(1, skippable = TRUE)
 		station_total += bank_account.account_balance
 		if(MC_TICK_CHECK)
 			cached_processing.Cut(1, i + 1)
@@ -173,9 +173,9 @@ SUBSYSTEM_DEF(economy)
 		fluff_string = ", but company countermeasures protect <b>YOU</b> from being affected!"
 	else
 		fluff_string = ", and company countermeasures are failing to protect <b>YOU</b> from being affected. We're all doomed!"
-	earning_report = "<b>Sector Economic Report</b><br><br> Sector vendor prices is currently at <b>[SSeconomy.inflation_value()*100]%</b>[fluff_string]<br><br> The station spending power is currently <b>[station_total] Credits</b>, and the crew's targeted allowance is at <b>[station_target] Credits</b>.<br><br>[SSstock_market.news_string]"
+	earning_report = "<b>Sector Economic Report</b><br><br> Sector vendor prices is currently at <b>[SSeconomy.inflation_value()*100]%</b>[fluff_string]<br><br> The station spending power is currently <b>[station_total] [MONEY_NAME_CAPITALIZED]</b>, and the crew's targeted allowance is at <b>[station_target] [MONEY_NAME_CAPITALIZED]</b>.<br><br>[SSstock_market.news_string]"
 	var/update_alerts = FALSE
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_ECONOMY_ALERTS))
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_ECONOMY_ALERTS) && (living_player_count() > 1))
 		var/datum/bank_account/moneybags
 		var/static/list/typecache_bank = typecacheof(list(/datum/bank_account/department, /datum/bank_account/remote))
 		for(var/i in bank_accounts_by_id)
@@ -185,7 +185,7 @@ SUBSYSTEM_DEF(economy)
 			if(!moneybags || moneybags.account_balance < current_acc.account_balance)
 				moneybags = current_acc
 		if (moneybags)
-			earning_report += "Our GMM Spotlight would like to alert you that <b>[moneybags.account_holder]</b> is your station's most affulent crewmate! They've hit it big with [moneybags.account_balance] credits saved. "
+			earning_report += "Our GMM Spotlight would like to alert you that <b>[moneybags.account_holder]</b> is your station's most affulent crewmate! They've hit it big with [moneybags.account_balance] [MONEY_NAME] saved. "
 			update_alerts = TRUE
 			inflict_moneybags(moneybags)
 	earning_report += "That's all from the <i>Nanotrasen Economist Division</i>."
@@ -214,14 +214,15 @@ SUBSYSTEM_DEF(economy)
  * * price_to_use: The cost of the purchase made for this transaction.
  * * vendor: The object or structure medium that is charging the user. For Vending machines that's the machine, for payment component that's the parent, cargo that's the crate, etc.
  */
-/datum/controller/subsystem/economy/proc/track_purchase(datum/bank_account/account, price_to_use, vendor)
-	if(!account || isnull(price_to_use) || !vendor)
+/datum/controller/subsystem/economy/proc/add_audit_entry(datum/bank_account/account, price_to_use, vendor)
+	if(isnull(account) || isnull(price_to_use) || !vendor)
 		CRASH("Track purchases was missing an argument! (Account, Price, or Vendor.)")
 
 	audit_log += list(list(
 		"account" = "[account.account_holder]",
 		"cost" = price_to_use,
 		"vendor" = "[vendor]",
+		"stationtime" = station_time_timestamp("hh:mm"),
 	))
 
 /**
@@ -246,6 +247,32 @@ SUBSYSTEM_DEF(economy)
 	for(var/i in 1 to length(prices_to_update))
 		var/obj/machinery/vending/vending = prices_to_update[i]
 		vending.reset_prices(vending.product_records, vending.coin_records + vending.hidden_records)
+
+/**
+ * Reassign the prices of the vending machine as a result of the inflation value, as provided by SSeconomy
+ *
+ * This rebuilds both /datum/data/vending_products lists for premium and standard products based on their most relevant pricing values.
+ * Arguments:
+ * * recordlist - the list of standard product datums in the vendor to refresh their prices.
+ * * premiumlist - the list of premium product datums in the vendor to refresh their prices.
+ */
+/obj/machinery/vending/proc/reset_prices(list/recordlist, list/premiumlist)
+	var/inflation_value = HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING) ? SSeconomy.inflation_value() : 1
+	default_price = round(initial(default_price) * inflation_value)
+	extra_price = round(initial(extra_price) * inflation_value)
+
+	for(var/datum/data/vending_product/record as anything in recordlist)
+		var/obj/item/potential_product = record.product_path
+		var/custom_price = round(initial(potential_product.custom_price) * inflation_value)
+		record.price = custom_price | default_price
+	for(var/datum/data/vending_product/premium_record as anything in premiumlist)
+		var/obj/item/potential_product = premium_record.product_path
+		var/premium_custom_price = round(initial(potential_product.custom_premium_price) * inflation_value)
+		var/custom_price = initial(potential_product.custom_price)
+		if(!premium_custom_price && custom_price) //For some ungodly reason, some premium only items only have a custom_price
+			premium_record.price = extra_price + round(custom_price * inflation_value)
+		else
+			premium_record.price = premium_custom_price || extra_price
 
 /datum/controller/subsystem/economy/proc/inflict_moneybags(datum/bank_account/moneybags)
 	if(!moneybags)

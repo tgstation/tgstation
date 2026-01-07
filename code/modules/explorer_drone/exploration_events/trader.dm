@@ -1,6 +1,6 @@
 /// Trader events - If drone is loaded with X exchanges it for Y, might require translator tool.
 /datum/exploration_event/simple/trader
-	root_abstract_type = /datum/exploration_event/simple/trader
+	abstract_type = /datum/exploration_event/simple/trader
 	action_text = "Trade"
 	/// Obj path we'll take or list of paths ,one path will be picked from it at init
 	var/required_path

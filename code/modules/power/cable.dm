@@ -459,7 +459,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	attack_verb_simple = list("whip", "lash", "discipline", "flog")
 	singular_name = "cable piece"
 	full_w_class = WEIGHT_CLASS_SMALL
-	grind_results = list(/datum/reagent/copper = 2) //2 copper per cable in the coil
 	usesound = 'sound/items/deconstruct.ogg'
 	cost = 1
 	source = /datum/robot_energy_storage/wire
@@ -475,6 +474,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 	update_appearance()
+
+/obj/item/stack/cable_coil/grind_results()
+	return list(/datum/reagent/copper = 2)
 
 /obj/item/stack/cable_coil/examine(mob/user)
 	. = ..()
@@ -603,7 +605,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 /obj/item/stack/cable_coil/proc/try_heal_loop(atom/interacting_with, mob/living/user, repeating = FALSE)
 	var/mob/living/carbon/human/attacked_humanoid = interacting_with
 	var/obj/item/clothing/under/uniform = attacked_humanoid.w_uniform
-	if(uniform?.repair_sensors(src, user))
+	if(uniform?.repair_sensors(user))
 		return ITEM_INTERACT_SUCCESS
 
 	var/obj/item/bodypart/affecting = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))
