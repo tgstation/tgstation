@@ -68932,7 +68932,7 @@
 /obj/structure/ladder,
 /obj/machinery/door/window/brigdoor/right/directional/east{
 	name = "Telecomms Access";
-	req_access = list("tcoms")
+	req_access = list("tcomms")
 	},
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/server)
