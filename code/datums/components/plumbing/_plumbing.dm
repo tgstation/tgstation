@@ -36,6 +36,7 @@
 
 	reagents = parent_movable.reagents
 
+	on_parent_dir_change(parent_movable, NONE, parent_movable.dir)
 	if(parent_movable.anchored)
 		if(PERFORM_ALL_TESTS(maptest_log_mapping))
 			var/datum/overlap = ducting_layer_check(parent_movable, ducting_layer)
@@ -48,7 +49,6 @@
 				log_mapping("Overlapping [message] detected at [AREACOORD(parent_movable)]")
 				parent_movable.set_anchored(FALSE)
 				return
-		on_parent_dir_change(parent_movable, NONE, parent_movable.dir)
 		enable()
 
 /datum/component/plumbing/RegisterWithParent()
