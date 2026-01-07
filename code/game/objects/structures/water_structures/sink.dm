@@ -103,7 +103,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	if(!Adjacent(user))
 		return
 	if(reagents.total_volume < 5)
-		to_chat(user, span_warning("The sink has no more contents left!"))
+		to_chat(user, span_warning("The sink is dry!"))
 		return
 	if(busy)
 		to_chat(user, span_warning("Someone's already washing here!"))
@@ -124,8 +124,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		return
 
 	busy = FALSE
-	reagents.remove_all(5)
 	reagents.expose(user, TOUCH, 5 / max(reagents.total_volume, 5))
+	reagents.remove_all(5)
 	START_PROCESSING(SSobj, src)
 	if(washing_face)
 		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_FACE_ACT, CLEAN_WASH)
@@ -191,8 +191,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!user.combat_mode || (tool.item_flags & NOBLUDGEON))
-		if(!reagents.total_volume)
-			to_chat(user, span_warning("Sink is dry!"))
+		if(reagents.total_volume < 5)
+			to_chat(user, span_warning("The sink is dry!"))
 			return ITEM_INTERACT_FAILURE
 
 		to_chat(user, span_notice("You start washing [tool]..."))
@@ -214,10 +214,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 			return ITEM_INTERACT_FAILURE
 		busy = FALSE
 		tool.wash(CLEAN_WASH)
-
-		var/remove = 5 / max(reagents.total_volume, 5)
-		reagents.expose(tool, TOUCH, remove)
-		reagents.remove_all(remove, TRUE)
+		reagents.expose(tool, TOUCH, 5 / max(reagents.total_volume, 5))
+		reagents.remove_all(5)
 		user.visible_message(span_notice("[user] washes [tool] using [src]."), \
 							span_notice("You wash [tool] using [src]."))
 		return ITEM_INTERACT_SUCCESS
