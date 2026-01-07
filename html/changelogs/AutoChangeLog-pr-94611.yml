@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "objects mounted in shuttle areas deconstruct when their support structure is destroyed"
-  - bugfix: "fixes runtime in arrivals shuttle when its request console is destroyed"
-  - map: "moved around some objects in shuttles so they can be mounted on its walls again"

@@ -192,14 +192,30 @@
       be more performant.
   Jacquerel:
   - rscdel: It's no longer considered quirky to have Big Hands.
+  - balance: Nightmares are Light Drinkers in addition to being Light Eaters.
+  - bugfix: When you pick up a plant pot and hide behind it you will now also move
+      it in front of you, in case it is visually far away from your position
   L0pz:
   - image: Claymore inhans are girthier
   SapphoQueer:
   - bugfix: Jaws of life can cuffsnap again.
+  SmArtKar:
+  - image: Sinew on bones from butchered limbs now inherits its owner's blood color
   SpaceManiac:
   - bugfix: Wiki books such as "Barman Recipes" and "Space Law" no longer have terrible
       formatting.
   - bugfix: Wiki books now properly give book nerd moodlets.
+  SyncIt21:
+  - bugfix: objects mounted in shuttle areas deconstruct when their support structure
+      is destroyed
+  - bugfix: fixes runtime in arrivals shuttle when its request console is destroyed
+  - map: moved around some objects in shuttles so they can be mounted on its walls
+      again
+  - bugfix: removing implant in cybernetic brain works again
+  - bugfix: probability reagent affects scale correctly
+  - balance: reagent affects now scale with the volume of reagent metabolized meaning
+      lower metabolization rates (from like cybernetic organs) yield lower effects
+      & higher rates yield higher effects
   Y0SH1M4S73R:
   - bugfix: A fishing rod's materials can only be applied to fish when they are initially
       spawned from a fishing spot. This means you cannot repeatedly apply a fishing

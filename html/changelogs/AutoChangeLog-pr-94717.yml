@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "When you pick up a plant pot and hide behind it you will now also move it in front of you, in case it is visually far away from your position"
