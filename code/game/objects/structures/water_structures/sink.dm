@@ -191,6 +191,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!user.combat_mode || (tool.item_flags & NOBLUDGEON))
+		if(!reagents.total_volume)
+			to_chat(user, span_notice("Sink is empty"))
+			return ITEM_INTERACT_FAILURE
+
 		to_chat(user, span_notice("You start washing [tool]..."))
 		playsound(src, 'sound/machines/sink-faucet.ogg', 50)
 
