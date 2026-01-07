@@ -63,7 +63,7 @@
 ///Add an item to the list if not already present, if the list is null it will initialize it
 #define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
 ///Returns the key of the submitted item in the list
-#define LAZYFIND(L, V) (L?.Find(V) || 0)
+#define LAZYFIND(L, V) (L?.Find(V))
 ///returns L[I] if L exists and I is a valid index of L, runtimes if L is not a list
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 ///Sets the item K to the value V, if the list is null it will initialize it
