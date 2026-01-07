@@ -3510,7 +3510,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "aWu" = (
-/obj/structure/barricade/wooden/snowed,
+/obj/structure/barricade/wooden/crude/snow,
 /obj/machinery/light/small/red/directional/north,
 /obj/machinery/door/poddoor/shutters{
 	dir = 4;
@@ -66531,7 +66531,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
 /obj/effect/mapping_helpers/airlock/access/any/service/hydroponics,
-/obj/structure/barricade/wooden/snowed,
+/obj/structure/barricade/wooden/crude/snow,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "sGH" = (
