@@ -5641,6 +5641,7 @@
 #include "code\modules\mod\modules\modules_general.dm"
 #include "code\modules\mod\modules\modules_maint.dm"
 #include "code\modules\mod\modules\modules_medical.dm"
+#include "code\modules\mod\modules\modules_ninja.dm"
 #include "code\modules\mod\modules\modules_science.dm"
 #include "code\modules\mod\modules\modules_security.dm"
 #include "code\modules\mod\modules\modules_service.dm"
