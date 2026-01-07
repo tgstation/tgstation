@@ -19,6 +19,8 @@
 	slot_flags = NONE
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NOBLUDGEON
+	/// Whether the icon_state is also the worn_icon_state. If false, don't forget to set worn_icon_state.
+	var/icon_state_is_worn = TRUE
 	/// Whether or not the accessory displays through suits and the like.
 	var/above_suit = TRUE
 	/// TRUE if shown as a small icon in corner, FALSE if overlayed
@@ -119,7 +121,8 @@
 
 /obj/item/clothing/accessory/proc/generate_accessory_overlay(obj/item/clothing/under/attached_to)
 	SHOULD_CALL_PARENT(TRUE)
-	var/mutable_appearance/appearance = mutable_appearance(worn_icon, icon_state)
+	var/mutable_appearance/appearance = mutable_appearance(worn_icon, (icon_state_is_worn ? icon_state : worn_icon_state))
+	appearance.overlays += worn_overlays(appearance, FALSE, worn_icon) // we're assuming it's being worn.
 	appearance.alpha = alpha
 	appearance.color = color
 	return appearance

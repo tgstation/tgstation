@@ -283,7 +283,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	copied_ref = null
 	return ..()
 
-/mob/living/basic/mimic/copy/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/mimic/copy/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(!.) //dead or deleted
 		return

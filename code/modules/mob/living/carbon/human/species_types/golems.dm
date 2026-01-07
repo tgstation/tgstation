@@ -87,7 +87,7 @@
 	human_who_lost_species.physiology.stun_mod /= 0.6
 	human_who_lost_species.physiology.knockdown_mod /= 1.2
 
-/datum/species/golem/spec_life(mob/living/carbon/human/source, seconds_per_tick, times_fired)
+/datum/species/golem/spec_life(mob/living/carbon/human/source, seconds_per_tick)
 	. = ..()
 	if(source.nutrition <= 20)
 		// this is "hard crit" for golems

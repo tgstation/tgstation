@@ -19,13 +19,13 @@ import {
 } from './constants';
 import type { IconSettings } from './index';
 
-export interface SpawnPanelData {
+export type SpawnPanelData = {
   icon: string;
   iconState: string;
   iconStates: string[];
   selected_object?: string;
   precise_mode: string;
-}
+};
 
 interface CreateObjectSettingsProps {
   onCreateObject?: (obj: Record<string, unknown>) => void;
@@ -87,7 +87,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
       if (!offsetStr.trim()) return [0, 0, 0];
 
       const parts = offsetStr.split(',').map((part) => {
-        return parseInt(part.trim());
+        return parseInt(part.trim(), 10);
       });
 
       while (parts.length < 3) {
@@ -107,7 +107,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
       if (!offsetStr.trim()) return [0, 0, 0];
 
       const parts = offsetStr.split(',').map((part) => {
-        return parseInt(part.trim());
+        return parseInt(part.trim(), 10);
       });
 
       while (parts.length < 3) {
@@ -207,7 +207,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
       if (!offsetStr.trim()) return [0, 0, 0];
 
       const parts = offsetStr.split(',').map((part) => {
-        return parseInt(part.trim());
+        return parseInt(part.trim(), 10);
       });
 
       while (parts.length < 3) {

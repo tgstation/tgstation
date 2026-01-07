@@ -6753,7 +6753,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/newscaster/directional/south,
 /obj/machinery/camera/directional/south{
 	c_tag = "Medbay North";
 	network = list("ss13","medbay")
@@ -9300,6 +9299,7 @@
 	c_tag = "Surgery A";
 	network = list("ss13","medbay")
 	},
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "cyA" = (
@@ -13277,7 +13277,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "dDV" = (
@@ -20782,9 +20782,9 @@
 	},
 /obj/structure/table,
 /obj/item/coin/silver,
-/obj/item/computer_disk/quartermaster,
-/obj/item/computer_disk/quartermaster,
-/obj/item/computer_disk/quartermaster,
+/obj/item/disk/computer/quartermaster,
+/obj/item/disk/computer/quartermaster,
+/obj/item/disk/computer/quartermaster,
 /obj/item/clipboard,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
@@ -22303,6 +22303,7 @@
 	},
 /obj/item/reagent_containers/syringe,
 /obj/effect/turf_decal/tile/blue/full,
+/obj/machinery/vitals_reader/directional/north,
 /turf/open/floor/iron/large,
 /area/station/medical/treatment_center)
 "gkY" = (
@@ -22970,15 +22971,15 @@
 	},
 /obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/computer_disk/engineering{
+/obj/item/disk/computer/engineering{
 	pixel_x = 4;
 	pixel_y = 3
 	},
-/obj/item/computer_disk/engineering{
+/obj/item/disk/computer/engineering{
 	pixel_x = 4;
 	pixel_y = 3
 	},
-/obj/item/computer_disk/engineering{
+/obj/item/disk/computer/engineering{
 	pixel_x = 4;
 	pixel_y = 3
 	},
@@ -23683,12 +23684,12 @@
 /area/station/engineering/storage_shared)
 "gEy" = (
 /obj/structure/table,
-/obj/item/computer_disk/ordnance,
-/obj/item/computer_disk/ordnance{
+/obj/item/disk/computer/ordnance,
+/obj/item/disk/computer/ordnance{
 	pixel_x = -5;
 	pixel_y = 4
 	},
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = 7;
 	pixel_y = 2
 	},
@@ -41573,6 +41574,7 @@
 /area/station/tcommsat/computer)
 "lIP" = (
 /obj/effect/mapping_helpers/trapdoor_placer,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/station/medical/medbay/central)
 "lIQ" = (
@@ -43221,10 +43223,10 @@
 /area/station/hallway/secondary/entry)
 "mjH" = (
 /obj/structure/table/optable,
-/obj/machinery/newscaster/directional/east,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "mjI" = (
@@ -47054,10 +47056,10 @@
 /area/icemoon/surface/outdoors/less_spawns)
 "nqd" = (
 /obj/structure/table/optable,
-/obj/machinery/newscaster/directional/east,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "nqn" = (
@@ -49062,7 +49064,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/machinery/airalarm/directional/south,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "nRm" = (
@@ -54201,6 +54203,7 @@
 	c_tag = "Surgery B";
 	network = list("ss13","medbay")
 	},
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "pkf" = (
@@ -57463,6 +57466,7 @@
 /obj/item/reagent_containers/syringe,
 /obj/effect/turf_decal/tile/blue/full,
 /obj/item/radio/intercom/directional/west,
+/obj/machinery/vitals_reader/directional/north,
 /turf/open/floor/iron/large,
 /area/station/medical/treatment_center)
 "qfs" = (
@@ -61319,8 +61323,8 @@
 /area/station/medical/virology)
 "rjt" = (
 /obj/structure/table/glass,
-/obj/item/computer_disk/medical,
-/obj/item/computer_disk/medical,
+/obj/item/disk/computer/medical,
+/obj/item/disk/computer/medical,
 /obj/machinery/status_display/evac/directional/north,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
@@ -71052,12 +71056,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"tXc" = (
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/cable,
-/obj/item/radio/intercom/directional/south,
-/turf/open/floor/iron/white,
-/area/station/medical/medbay/central)
 "tXh" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -71218,10 +71216,10 @@
 /area/station/service/theater)
 "tZw" = (
 /obj/structure/table,
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = -2
 	},
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = 2;
 	pixel_y = 8
 	},
@@ -76818,14 +76816,14 @@
 /area/station/medical/break_room)
 "vIg" = (
 /obj/structure/table,
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = 7;
 	pixel_y = 2
 	},
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = -2
 	},
-/obj/item/computer_disk/ordnance{
+/obj/item/disk/computer/ordnance{
 	pixel_x = -5;
 	pixel_y = 6
 	},
@@ -254872,7 +254870,7 @@ mjI
 fCM
 dIL
 hDq
-tXc
+pZm
 lwQ
 gkX
 oeW

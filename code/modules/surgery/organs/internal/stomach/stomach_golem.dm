@@ -30,7 +30,7 @@
 	return BLOCK_EAT_ATTEMPT
 
 /// Golem stomach cannot process nutriment except from minerals
-/obj/item/organ/stomach/golem/on_life(delta_time, times_fired)
+/obj/item/organ/stomach/golem/on_life(delta_time)
 	for(var/datum/reagent/consumable/food in reagents.reagent_list)
 		if (istype(food, /datum/reagent/consumable/nutriment/mineral))
 			continue
@@ -38,7 +38,7 @@
 	return ..()
 
 /// Slow down based on how full you are
-/obj/item/organ/stomach/golem/handle_hunger(mob/living/carbon/human/human, delta_time, times_fired)
+/obj/item/organ/stomach/golem/handle_hunger(mob/living/carbon/human/human, delta_time)
 	// the effects are all negative, so just don't run them if you have the trait
 	. = ..()
 	if(HAS_TRAIT(human, TRAIT_NOHUNGER))

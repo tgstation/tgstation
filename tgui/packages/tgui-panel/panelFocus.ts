@@ -7,7 +7,7 @@
  * @license MIT
  */
 
-import { vecLength, vecSubtract } from 'common/vector';
+import { vecLength, vecSubtract } from 'tgui-core/vector';
 import { focusMap } from 'tgui/focus';
 import { canStealFocus, globalEvents } from 'tgui-core/events';
 

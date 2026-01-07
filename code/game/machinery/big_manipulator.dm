@@ -25,7 +25,7 @@
 
 /// The Big Manipulator's core. Main part of the mechanism that carries out the entire process.
 /obj/machinery/big_manipulator
-	name = "Big Manipulator"
+	name = "big manipulator"
 	desc = "Operates different objects. Truly, a groundbreaking innovation..."
 	icon = 'icons/map_icons/objects.dmi'
 	icon_state = "/obj/machinery/big_manipulator"
