@@ -618,7 +618,7 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/belt/sheath/update_icon_state()
-	icon_state = initial(inhand_icon_state)
+	icon_state = initial(icon_state)
 	inhand_icon_state = initial(inhand_icon_state)
 	worn_icon_state = initial(worn_icon_state)
 	if(contents.len)
@@ -677,7 +677,7 @@
 	var/mob/living/target = cast_on
 	if(!target.mind)
 		to_chat(owner, span_warning("They are too unpredictable to counterattack!"))
-		return FALSE
+		//return FALSE
 	var/obj/item/storage/belt/sheath/oursheath = target
 	if(!length(oursheath.contents))
 		return FALSE
@@ -691,7 +691,7 @@
 	swordsman.Immobilize(1 SECONDS)
 	eyed_fool = WEAKREF(cast_on)
 	swordsman.visible_message(span_danger("[swordsman] widens [p_their(swordsman)] stance, [p_their(swordsman)] hand hovering over \the [used_sheath]!"), span_notice("You prepare to counterattack [cast_on]!"))
-	addtimer(CALLBACK(src, PROC_REF(relax), swordsman), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(relax), swordsman, used_sheath), 1 SECONDS)
 	COOLDOWN_START(used_sheath, full_ability_cooldown, 60 SECONDS)
 	unset_ranged_ability(swordsman)
 	return TRUE
@@ -708,6 +708,13 @@
 	var/mob/living/fool = isliving(attackingthing) ? attackingthing : attackingthing.loc
 	if(used_sheath.loc != forward_thinker || fool != eyed_fool.resolve() || !forward_thinker.put_in_active_hand(justicetool))
 		return FAILED_BLOCK
+	do_strike(fool, forward_thinker, justicetool)
+	playsound(forward_thinker, 'sound/items/unsheath.ogg', 50, TRUE)
+	forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [p_their(fool)] attack!"), span_notice("You swiftly draw \the [justicetool] and counter-attack [fool]!"))
+	COOLDOWN_RESET(used_sheath, full_ability_cooldown)
+	return SUCCESSFUL_BLOCK
+
+/datum/action/innate/blade_counter/proc/do_strike(mob/living/fool, mob/living/forward_thinker, obj/item/justicetool)
 	var/obj/item/bodypart/offending_hand = fool.get_active_hand()
 	fool.apply_damage(
 		damage = justicetool.force * COUNTERMULTIPLIER,
@@ -720,15 +727,88 @@
 		attack_direction = get_dir(forward_thinker, fool),
 		attacking_item = justicetool,
 	)
-	playsound(forward_thinker, 'sound/items/unsheath.ogg', 50, TRUE)
-	forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [p_their(fool)] attack!"), span_notice("You swiftly draw \the [justicetool] and counter-attack [fool]!"))
-	COOLDOWN_RESET(used_sheath, full_ability_cooldown)
-	return SUCCESSFUL_BLOCK
+
+
+/datum/action/innate/blade_counter/proc/relax(mob/living/holder, obj/item/storage/belt/sheath/active_sheath)
+	UnregisterSignal(holder, COMSIG_LIVING_CHECK_BLOCK)
+
+/datum/action/innate/blade_counter/gunpowered
+	name = "Powered Counterattack"
+	desc = "Anticipate an enemy's attack and attempt to strike back, at great risk to yourself."
+
+	/// Whether the currently relevant counterattack succeeded.
+	var/succeeded_attempt = FALSE
+
+/datum/action/innate/blade_counter/gunpowered/do_ability(mob/living/swordsman, mob/living/cast_on)
+	. = ..()
+	succeeded_attempt = FALSE
+
+
+/datum/action/innate/blade_counter/gunpowered/do_strike(mob/living/fool, mob/living/forward_thinker, obj/item/justicetool)
+	succeeded_attempt = TRUE
+	var/obj/item/bodypart/offending_hand = fool.get_active_hand()
+	var/obj/item/bodypart/risked_hand = forward_thinker.get_active_hand()
+	if(iscarbon(fool))
+		offending_hand.dismember(BRUTE, FALSE, WOUND_SLASH)
+	else
+		fool.apply_damage(
+			damage = justicetool.force * COUNTERMULTIPLIER,
+			damagetype = justicetool.damtype,
+			def_zone = offending_hand,
+			blocked = fool.run_armor_check(offending_hand, MELEE, armour_penetration = justicetool.armour_penetration, silent = TRUE),
+			wound_bonus = justicetool.wound_bonus * COUNTERMULTIPLIER,
+			exposed_wound_bonus = justicetool.exposed_wound_bonus * COUNTERMULTIPLIER,
+			sharpness = justicetool.sharpness,
+			attack_direction = get_dir(forward_thinker, fool),
+			attacking_item = justicetool,
+		)
+	forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [p_their(fool)] attack, sending [p_their(fool)] arm flying!"),
+									span_notice("You swiftly draw \the [justicetool] and cut off [fool]'s arm!"))
+	if(!IS_ROBOTIC_LIMB(risked_hand))
+		forward_thinker.visible_message(span_danger("[forward_thinker]'s arm is unable to withstand the force of the attack!"),
+										span_danger("You feel a sharp pain as your arm is mutilated by the force of the attack!"))
+		forward_thinker.apply_damage(
+		damage = 50,
+		damagetype = BRUTE,
+		def_zone = risked_hand,
+		wound_bonus = 50,
+		wound_clothing = FALSE,
+	)
+
+
+/datum/action/innate/blade_counter/gunpowered/relax(mob/living/holder, obj/item/storage/belt/sheath/active_sheath)
+	..()
+	if(succeeded_attempt)
+		succeeded_attempt = FALSE
+		return
+
+	if(length(active_sheath.contents))
+		var/obj/item/denied_weapon = active_sheath.contents[1]
+		denied_weapon.forceMove(get_turf(holder))
+		denied_weapon.throw_at(pick(RANGE_TURFS(3, denied_weapon)), 3, 3)
+
+	// We can assume that the holder is a carbon, and thus has an actual arm, because they have a belt slot.
+	var/obj/item/bodypart/worthless_hand = holder.get_active_hand()
+	if(!worthless_hand)
+		worthless_hand = holder.get_inactive_hand()
+
+	if(IS_ROBOTIC_LIMB(worthless_hand))
+		holder.visible_message(span_danger("[holder]'s arm is mutilated as they misfire [p_their(holder)] sheathed blade!"),
+										span_danger("Your arm is mutilated as you fail to safely fire your blade!"))
+		holder.apply_damage(
+			damage = 50,
+			damagetype = BRUTE,
+			def_zone = worthless_hand,
+			wound_bonus = 50,
+			wound_clothing = FALSE,
+		)
+		return
+
+	worthless_hand.dismember(BRUTE, FALSE, WOUND_BLUNT)
+	holder.visible_message(span_danger("[holder]'s arm is violently torn off as they misfire [p_their(holder)] sheathed blade!"),
+									span_danger("Your arm is torn off as you fail to safely fire your blade!"))
 
 #undef COUNTERMULTIPLIER
-
-/datum/action/innate/blade_counter/proc/relax(mob/living/holder)
-	UnregisterSignal(holder, COMSIG_LIVING_CHECK_BLOCK)
 
 /obj/item/storage/belt/sheath/sabre
 	name = "sabre sheath"
@@ -764,3 +844,17 @@
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
 	storage_type = /datum/storage/plant_belt
+
+/obj/item/storage/belt/sheath/sabre/gunpowered
+	name = "modified sabre sheath"
+	desc = "An imitation of a design made by the infamous Cold Space Wind. Has a trigger mechanism to more forcefully draw the blade."
+	icon_state = "gunsheath"
+	actions_types = list(/datum/action/innate/blade_counter/gunpowered)
+	stored_blade = null
+
+/obj/item/storage/belt/sheath/grass_sabre/gunpowered
+	name = "modified sabre sheath"
+	desc = "An imitation of a design grown by the infamous Tiziran Plasma Fire. Has a trigger mechanism to more forcefully draw the blade."
+	icon_state = "grass_gunsheath"
+	actions_types = list(/datum/action/innate/blade_counter/gunpowered)
+
