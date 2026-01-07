@@ -11146,14 +11146,6 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
-"cXw" = (
-/obj/structure/window{
-	dir = 4
-	},
-/turf/open/floor/iron/edge{
-	dir = 1
-	},
-/area/station/hallway/primary/central)
 "cXF" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -121351,7 +121343,7 @@ dnH
 khi
 chO
 qiH
-cXw
+idO
 iLm
 vXt
 qKV
