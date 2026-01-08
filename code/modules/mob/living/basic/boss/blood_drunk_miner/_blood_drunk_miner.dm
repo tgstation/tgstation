@@ -69,7 +69,7 @@ Difficulty: Medium
 
 	grant_actions_by_list(get_innate_actions())
 	ai_controller.set_blackboard_key(BB_BDM_RANGED_ATTACK_COOLDOWN, ranged_attack_cooldown_duration)
-	RegisterSignals(src, list(AI_CONTROLLER_BEHAVIOR_QUEUED(/datum/ai_behavior/basic_melee_attack), AI_CONTROLLER_BEHAVIOR_QUEUED(/datum/ai_behavior/targeted_mob_ability)), PROC_REF(handle_saw_transformation))
+	RegisterSignals(ai_controller, list(AI_CONTROLLER_BEHAVIOR_QUEUED(/datum/ai_behavior/basic_melee_attack), AI_CONTROLLER_BEHAVIOR_QUEUED(/datum/ai_behavior/targeted_mob_ability)), PROC_REF(handle_saw_transformation))
 
 	AddElement(/datum/element/death_drops, string_list(regular_loot))
 	RegisterSignal(src, COMSIG_LIVING_DROP_LOOT, PROC_REF(death_effect))
