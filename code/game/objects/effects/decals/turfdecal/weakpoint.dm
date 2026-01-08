@@ -7,7 +7,7 @@
 	name = "weakpoint crack"
 	desc = "A suspicious crack runs along the ground."
 	icon = 'icons/effects/effects.dmi'
-	icon_state = "blueshatter" //WIP
+	icon_state = "blueshatter2" //WIP
 
 	/// The required strength of explosion for a weakpoint to propogate
 	var/required_strength = EXPLODE_LIGHT
@@ -15,6 +15,11 @@
 	var/crack_length = 8
 	/// How many split off cracks are expected?
 	var/crack_split_count = 2
+
+	/// When the crack is finished expanding, will it spawn more cracks?
+	var/spawns_children = TRUE
+	/// How many children weakpoints will this crack spawn when it propagates?
+	var/new_weakpoints = 2
 
 /obj/effect/weakpoint/Initialize(mapload)
 	. = ..()
@@ -35,6 +40,21 @@
 		playsound(source = crack_turf, soundin = sound(get_sfx(SFX_HULL_CREAKING)), vol = 35, vary = TRUE, pressure_affected = FALSE, ignore_walls = TRUE)
 		if(prob(33))
 			crack_delay++
+
+	if(spawns_children)
+		var/static/list/skip_turfs = typecacheof(list(
+			/turf/space,
+			/turf/open/misc/asteroid,
+			/turf/open/misc/snow,
+		))
+		chain_turfs = typecache_filter_list_reverse(chain_turfs, skip_turfs) //Filter out things that we don't want to spawn new weakpoints onto.
+
+		for(var/i in 1 to new_weakpoints)
+			var/obj/effect/weakpoint/newpoint = new(pick(chain_turfs))
+			//inherit parent var values in case of var-editing.
+			newpoint.new_weakpoints =  new_weakpoints
+			newpoint.crack_length = crack_length
+			newpoint.crack_split_count = crack_split_count
 	qdel(src)
 
 
@@ -61,10 +81,10 @@
 			direction = turn(direction, pick(-90, -45, 45, 90))
 		current = get_turf(get_step(current, direction))
 		if(!isturf(current))
-			break
+			CRASH("Crack propagation was handed a non-turf.")
 	if(add_splits)
 		for(var/subcrack in 1 to crack_split_count)
-			cracked_turfs += get_crack_chain(pick(cracked_turfs), max(round( length/2 ), 1), FALSE) //Stop recursion here
+			cracked_turfs += get_crack_chain(pick(cracked_turfs), max(round(length/2 ), 1), FALSE) //Stop recursion here
 
 	message_admins("Station weakpoint triggered, affecting [length(cracked_turfs)] turfs in [loc_name(start_location)].")
 	log_game("Station weakpoint triggered, affecting [length(cracked_turfs)] turfs in [loc_name(start_location)].")
@@ -73,10 +93,11 @@
 
 /obj/effect/weakpoint/big
 	name = "dangerous weakpoint"
-	desc = "A suspicious crack runs along the ground. This one makes you uneasy."
+	desc = "A suspicious crack runs along the ground. This one makes you feel particuarly uneasy."
 	icon_state = "greenshatter" //also WIP
 	crack_length = 15
 	crack_split_count = 6
+	new_weakpoints = 3
 
 #undef CRACK_PROPAGATION_DELAY
 #undef CRACK_TURN_CHANCE

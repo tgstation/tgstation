@@ -1,4 +1,5 @@
 #define PROB_SPIDER_REPLACEMENT 50
+#define PROB_WEAKPOINT_SPAWNS 15
 
 SUBSYSTEM_DEF(minor_mapping)
 	name = "Minor Mapping"
@@ -23,6 +24,12 @@ SUBSYSTEM_DEF(minor_mapping)
 #else
 	trigger_migration(CONFIG_GET(number/mice_roundstart))
 	place_satchels(satchel_amount = 2)
+	var/weakpoint_spawns = 0
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_SPAWN_WEAKPOINTS))
+		weakpoint_spawns = rand(4,8)
+	else if(prob(PROB_WEAKPOINT_SPAWNS))
+		weakpoint_spawns = 1
+	place_weakpoints(weakpoint_spawns)
 	return SS_INIT_SUCCESS
 #endif
 
@@ -97,4 +104,25 @@ SUBSYSTEM_DEF(minor_mapping)
 
 	return shuffle(suitable)
 
+/// This behaves nearly the same as spawning underfloot satchels, but instead spawns weakpoints.
+/datum/controller/subsystem/minor_mapping/proc/place_weakpoints(weakpoint_amount)
+	var/list/turfs = find_satchel_suitable_turfs()
+	///List of areas where weakpoints should not be placed.
+	var/list/blacklisted_area_types = list(
+		/area/station/holodeck,
+		/area/space/nearstation,
+		/area/station/solars,
+		/area/station/maintenance, // We want weakpoints to spawn in visible areas where players are more likely to actually interact in.
+	)
+	while(turfs.len && weakpoint_amount > 0)
+		var/turf/turf = pick_n_take(turfs)
+		if(is_type_in_list(get_area(turf), blacklisted_area_types))
+			continue
+		var/obj/effect/weakpoint/new_point = new(turf)
+
+		SEND_SIGNAL(new_point, COMSIG_OBJ_HIDE, turf.underfloor_accessibility)
+		weakpoint_amount--
+
+
 #undef PROB_SPIDER_REPLACEMENT
+#undef PROB_WEAKPOINT_SPAWNS

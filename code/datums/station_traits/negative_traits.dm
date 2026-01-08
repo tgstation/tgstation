@@ -754,4 +754,12 @@
 	report_message = "Due to a mishap at the Robust Softdrinks Megafactory, some drinks may contain traces of ethanol or psychoactive chemicals."
 	trait_to_give = STATION_TRAIT_SPIKED_DRINKS
 
+/datum/station_trait/structural_weakness
+	name = "Structural weaknesses"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 5
+	show_in_report = TRUE
+	report_message = "A post-mortem breakdown of materials used has informed us that the station may have been built with a number of structural weaknesses. Be on the look out for them, and try not to let anything explode."
+	trait_to_give = STATION_TRAIT_SPAWN_WEAKPOINTS
+
 #undef GLOW_NEBULA
