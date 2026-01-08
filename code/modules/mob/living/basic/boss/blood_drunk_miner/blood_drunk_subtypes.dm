@@ -1,3 +1,5 @@
+#define HUNTER_DASH_PROBABILITY 12
+
 /// heals slightly on melee hits
 /mob/living/basic/boss/blood_drunk_miner/guidance
 
@@ -9,15 +11,13 @@
 /// Better at dash attacking
 /mob/living/basic/boss/blood_drunk_miner/hunter
 
-/mob/living/basic/boss/blood_drunk_miner/hunter/attack_override(mob/living/source, atom/target, proximity, modifiers)
-	. = ..()
-	if((. & COMPONENT_HOSTILE_NO_ATTACK) && prob(12))
-		if(prob(12))
-			var/dash_attack = ai_controller.blackboard[BB_BDM_DASH_ATTACK_ABILITY]
-			if(!isnull(dash_attack))
-				INVOKE_ASYNC(dash_attack, TYPE_PROC_REF(/datum/action, Trigger), src, NONE, target)
+/mob/living/basic/boss/blood_drunk_miner/hunter/post_attack_effects(mob/living/victim, list/modifiers)
+	if(!prob(HUNTER_DASH_PROBABILITY))
+		return
 
-	return .
+	var/dash_attack = ai_controller.blackboard[BB_BDM_DASH_ATTACK_ABILITY]
+	if(!isnull(dash_attack))
+		INVOKE_ASYNC(dash_attack, TYPE_PROC_REF(/datum/action, Trigger), src, NONE, victim)
 
 /mob/living/basic/boss/blood_drunk_miner/doom
 	name = "hostile-environment miner"
@@ -31,3 +31,5 @@
 	var/datum/action/cooldown/dash_ability = ai_controller.blackboard[BB_BDM_DASH_ABILITY]
 	if(!isnull(dash_ability))
 		dash_ability.cooldown_time = 0.8 SECONDS
+
+#undef HUNTER_DASH_PROBABILITY

@@ -159,6 +159,10 @@ Difficulty: Medium
 	for(var/i in 1 to rapid_melee_hits)
 		addtimer(melee_callback, (i - 1) * delay)
 
+	post_attack_effects(victim, modifiers)
+
 	return COMPONENT_HOSTILE_NO_ATTACK
 
-
+/// Hook for potential additional behaviors after attacking
+/mob/living/basic/boss/blood_drunk_miner/proc/post_attack_effects(mob/living/victim, list/modifiers)
+	return
