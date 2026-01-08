@@ -65,6 +65,7 @@ Difficulty: Medium
 
 	miner_saw = new(src)
 	RegisterSignal(miner_saw, COMSIG_PREQDELETED, PROC_REF(on_saw_deleted))
+	RegisterSignal(miner_saw, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_saw_premove))
 
 	grant_actions_by_list(get_innate_actions())
 	ai_controller.set_blackboard_key(BB_BDM_RANGED_ATTACK_COOLDOWN, ranged_attack_cooldown_duration)
@@ -82,7 +83,7 @@ Difficulty: Medium
 		return TRUE
 
 /mob/living/basic/boss/blood_drunk_miner/Destroy(force)
-	UnregisterSignal(miner_saw, COMSIG_PREQDELETED) // unblock deletion, we are dead.
+	UnregisterSignal(miner_saw, list(COMSIG_PREQDELETED, COMSIG_MOVABLE_PRE_MOVE)) // unblock deletion, we are dead.
 	QDEL_NULL(miner_saw)
 	return ..()
 
@@ -129,6 +130,10 @@ Difficulty: Medium
 	if(!ischasm(locus) || locus.can_cross_safely(src)) // if it's not a chasm we don't care to check the proc.
 		return
 
+	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+
+/// Prevent their saw from being moved at all
+/mob/living/basic/boss/blood_drunk_miner/proc/on_saw_premove(datum/source, atom/new_location)
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 /// Handles our attack behavior when we're doing melee attacks to override the default basic melee attack behavior when our AI calls upon us to use it.
