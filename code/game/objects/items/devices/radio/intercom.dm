@@ -69,11 +69,13 @@
 		if(tool.use_tool(src, user, 30, volume=50))
 			user.visible_message(span_notice("[user] tightens [src]'s screws!"), span_notice("You tighten [src]'s screws."))
 			unscrewed = FALSE
+			update_appearance(UPDATE_OVERLAYS)
 	else
 		user.visible_message(span_notice("[user] starts loosening [src]'s screws..."), span_notice("You start unscrewing [src]..."))
 		if(tool.use_tool(src, user, 40, volume=50))
 			user.visible_message(span_notice("[user] loosens [src]'s screws!"), span_notice("You unscrew [src], loosening it from the wall."))
 			unscrewed = TRUE
+			update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
 /obj/item/radio/intercom/wrench_act(mob/living/user, obj/item/tool)

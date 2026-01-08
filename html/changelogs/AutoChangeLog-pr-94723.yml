@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "If you use the polymorph belt to turn into a mob which transforms into another mob, it won't ghost you or kick you out upon transformation."
