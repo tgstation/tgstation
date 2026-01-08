@@ -119,8 +119,17 @@ Difficulty: Medium
 
 /// Prevent running into a chasm and other undesirable movements.
 /mob/living/basic/boss/blood_drunk_miner/proc/on_premove(datum/source, atom/new_location)
-	if(new_location && new_location.z == z && ischasm(new_location)) //we're not stupid!
-		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+	if(isnull(new_location))
+		return
+
+	if(new_location.z != z)
+		return
+
+	var/turf/open/locus = get_turf(new_location)
+	if(!ischasm(locus) || locus.can_cross_safely(src)) // if it's not a chasm we don't care to check the proc.
+		return
+
+	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 /// Handles our attack behavior when we're doing melee attacks to override the default basic melee attack behavior when our AI calls upon us to use it.
 /// Namely, we just use the miner saw to rapidly hit the target multiple times
