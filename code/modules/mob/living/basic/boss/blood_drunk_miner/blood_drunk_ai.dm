@@ -1,5 +1,10 @@
 #define TRANSFORM_WEAPON_ABILITY_KEY BB_BDM_TRANSFORM_WEAPON_ABILITY
 
+/// Helper macro for handling blood-drunk miner weapon transformations
+#define HANDLE_BDM_TRANSFORM(controller) \
+	var/datum/action/cooldown/transform_weapon = controller.blackboard[TRANSFORM_WEAPON_ABILITY_KEY];\
+	transform_weapon.Trigger()
+
 /// AI for handling blood-drunk miner behavior
 /// General consideration is as follows:
 /// - If in PKA range, shoot PKA
@@ -26,11 +31,6 @@
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 
-/// Simple proc that just accesses the transform weapon action and triggers it.
-/proc/handle_bdm_weapon_transformation(datum/ai_controller/controller)
-	var/datum/action/cooldown/transform_weapon = controller.blackboard[TRANSFORM_WEAPON_ABILITY_KEY]
-	transform_weapon.Trigger()
-
 /// Parent type that contains key logic important for subsequent abilities
 /datum/ai_planning_subtree/targeted_mob_ability/blood_drunk
 	/// Key for transforming our weapon whenever we need to
@@ -41,7 +41,7 @@
 /// Transform our weapon as needed after a ranged attack
 /datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/SelectBehaviors(datum/ai_controller/controller, datum/action/cooldown/using_action)
 	. = ..()
-	handle_bdm_weapon_transformation(controller)
+	HANDLE_BDM_TRANSFORM(controller)
 
 /// Check our blackboard to see if we are able to use a ranged ability in the first place
 /datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/additional_ability_checks(datum/ai_controller/controller, datum/action/cooldown/using_action)
@@ -81,9 +81,10 @@
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/blood_drunk/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
-	handle_bdm_weapon_transformation(controller)
+	HANDLE_BDM_TRANSFORM(controller)
 
 /datum/ai_controller/blood_drunk_miner/doom
 	movement_delay = 0.8 SECONDS
 
 #undef TRANSFORM_WEAPON_ABILITY_KEY
+#undef HANDLE_BDM_TRANSFORM
