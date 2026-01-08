@@ -17320,12 +17320,6 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "eMK" = (
-/obj/structure/showcase/cyborg/old{
-	dir = 4;
-	pixel_x = -9;
-	pixel_y = 2
-	},
-/obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/turf_decal/stripes/line,
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/plating,
@@ -21316,6 +21310,15 @@
 /obj/machinery/keycard_auth/wall_mounted/directional/south,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
+"fVB" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/structure/showcase/cyborg/old{
+	dir = 4;
+	pixel_x = -9;
+	pixel_y = 2
+	},
+/turf/open/floor/plating,
+/area/station/ai/satellite/service)
 "fVD" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/engineering{
@@ -76681,9 +76684,7 @@
 /area/station/security/brig/upper)
 "vAn" = (
 /obj/machinery/status_display/ai/directional/south,
-/obj/structure/table,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/turf/closed/wall/r_wall,
 /area/station/ai/satellite/interior)
 "vAq" = (
 /obj/effect/decal/cleanable/dirt,
@@ -77607,6 +77608,8 @@
 	c_tag = "MiniSat Foyer";
 	network = list("minisat")
 	},
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai/satellite/interior)
 "vQO" = (
@@ -256376,7 +256379,7 @@ jsq
 ben
 iol
 oiy
-oiy
+fVB
 eMK
 lsU
 apn
