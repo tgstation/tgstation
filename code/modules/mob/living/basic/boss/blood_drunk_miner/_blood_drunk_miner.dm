@@ -88,6 +88,7 @@ Difficulty: Medium
 	QDEL_NULL(miner_saw)
 	return ..()
 
+/// Returns a list of innate actions for the blood-drunk miner.
 /mob/living/basic/boss/blood_drunk_miner/proc/get_innate_actions()
 	var/static/list/innate_abilities = list(
 		/datum/action/cooldown/mob_cooldown/dash = BB_BDM_DASH_ABILITY,
@@ -97,11 +98,11 @@ Difficulty: Medium
 	)
 	return innate_abilities
 
+/// Invokes the transform weapon ability when signaled by the AI controller.
 /mob/living/basic/boss/blood_drunk_miner/proc/handle_saw_transformation()
 	SIGNAL_HANDLER
 
-	var/datum/action/cooldown/mob_cooldown/transform_weapon/melee_switch = ai_controller.blackboard[BB_BDM_TRANSFORM_WEAPON_ABILITY]
-	melee_switch.Trigger()
+	INVOKE_ASYNC(ai_controller.blackboard[BB_BDM_TRANSFORM_WEAPON_ABILITY], TYPE_PROC_REF(/datum/action, Trigger), src, NONE)
 
 /mob/living/basic/boss/blood_drunk_miner/ex_act(severity, target)
 	var/datum/action/cooldown/mob_cooldown/dash_ability = ai_controller.blackboard[BB_BDM_DASH_ABILITY]
