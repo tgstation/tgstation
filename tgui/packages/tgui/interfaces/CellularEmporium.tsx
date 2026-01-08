@@ -92,8 +92,17 @@ export const CellularEmporium = (props) => {
   };
 
   return (
-    <Window width={900} height={520} theme="dark">
-      <Window.Content>
+    <Window width={900} height={520}>
+      <Window.Content
+        scrollable={false}
+        style={{
+          backgroundImage: "url('tgui-core/assets/bg-nanotrasen.svg')",
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundColor: '#1A1A1A',
+          overflowY: 'auto',
+        }}
+      >
         <Section
           fill
           scrollable={false}
