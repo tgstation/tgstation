@@ -6273,6 +6273,9 @@
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "bHJ" = (
@@ -8427,6 +8430,10 @@
 	},
 /turf/open/floor/carpet,
 /area/station/service/lawoffice)
+"ckH" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/plating,
+/area/station/engineering/storage_shared)
 "ckM" = (
 /turf/closed/wall/r_wall,
 /area/station/medical/virology)
@@ -27376,10 +27383,10 @@
 /area/station/science/robotics)
 "hsz" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "hsB" = (
@@ -33689,11 +33696,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
-"iVc" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/structure/sign/warning/vacuum/external/directional/east,
-/turf/open/floor/plating,
-/area/station/engineering/storage_shared)
 "iVr" = (
 /obj/structure/sign/warning/directional/south,
 /turf/open/floor/engine/hull/reinforced,
@@ -36790,6 +36792,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore/upper)
+"jMK" = (
+/obj/structure/sign/warning/vacuum/external/directional/east,
+/turf/open/floor/plating,
+/area/station/engineering/storage_shared)
 "jML" = (
 /obj/effect/decal/cleanable/confetti,
 /turf/open/floor/plating,
@@ -42864,6 +42870,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/structure/reagent_dispensers/fueltank,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "lsv" = (
@@ -43327,7 +43336,6 @@
 /turf/open/floor/iron/dark/textured_half,
 /area/station/medical/surgery)
 "lzZ" = (
-/obj/item/radio/intercom/directional/north,
 /obj/structure/broken_flooring/corner/directional/west,
 /obj/effect/spawner/random/trash/bin,
 /turf/open/floor/plating,
@@ -49649,6 +49657,12 @@
 	},
 /turf/open/openspace,
 /area/station/ai/satellite/chamber)
+"nlJ" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/structure/sign/warning/vacuum/external/directional/east,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating,
+/area/station/engineering/storage_shared)
 "nlO" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -60191,6 +60205,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/sign/warning/no_smoking/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "qbI" = (
@@ -64435,6 +64450,10 @@
 /obj/structure/table,
 /turf/open/floor/wood,
 /area/station/service/library)
+"rjV" = (
+/obj/structure/sign/poster/random/directional/south,
+/turf/open/floor/plating,
+/area/station/engineering/storage_shared)
 "rki" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/engine,
@@ -71399,6 +71418,7 @@
 	pixel_x = -4;
 	pixel_y = 2
 	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/station/engineering/storage_shared)
 "tdH" = (
@@ -80972,9 +80992,6 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/entry)
-"vDb" = (
-/turf/closed/wall,
-/area/station/engineering/circuit_workshop)
 "vDd" = (
 /obj/structure/cable/layer3,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -83914,6 +83931,10 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/space/openspace,
 /area/space/nearstation)
+"wum" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/plating,
+/area/station/engineering/storage_shared)
 "wuo" = (
 /obj/structure/table/wood,
 /obj/machinery/light_switch/directional/north,
@@ -200536,7 +200557,7 @@ shi
 shi
 gPv
 shi
-sus
+ckH
 bDY
 fmO
 sus
@@ -200797,9 +200818,9 @@ sus
 bzL
 fmO
 sus
+sus
+sus
 sQp
-ksJ
-ksJ
 ksJ
 ksJ
 ksJ
@@ -201054,10 +201075,10 @@ lzZ
 yiY
 sus
 oLL
-sus
+fmO
+fmO
+rjV
 ksJ
-oBl
-oBl
 oBl
 oBl
 oBl
@@ -201311,13 +201332,13 @@ hYb
 fJv
 gzm
 sus
+sus
+sus
 rcl
 ksJ
 oBl
 oyp
-oyp
 iNn
-oyp
 oyp
 ksJ
 lDH
@@ -201568,13 +201589,13 @@ hYb
 tdF
 tTg
 sus
+gzm
+sus
 tPY
 ksJ
 oyp
 oyp
-oyp
 oBl
-oyp
 oyp
 ksJ
 mwK
@@ -201825,13 +201846,13 @@ hYb
 hYb
 sus
 sus
+sus
+lIA
 fsj
 ksJ
 oBl
 oyp
-oyp
 oBl
-oyp
 oyp
 ksJ
 lDH
@@ -202082,13 +202103,13 @@ vMz
 hYb
 rcl
 fmO
+sus
+fmO
 xRg
 ksJ
 oBl
 oyp
-oyp
 oBl
-oyp
 oyp
 ksJ
 lDH
@@ -202339,13 +202360,13 @@ vRc
 hYb
 sus
 fmO
+sus
+sus
 bEp
 ksJ
 oBl
 oyp
-oyp
 oBl
-oyp
 oyp
 mDE
 lDH
@@ -202596,10 +202617,10 @@ kpQ
 hYb
 gzm
 lIA
+jMK
+fmO
 nTg
 ksJ
-oBl
-oBl
 oBl
 oBl
 oBl
@@ -202850,14 +202871,14 @@ fYb
 rIh
 rIh
 vNd
-vDb
+hYb
+wum
+jzz
 jzz
 ekY
 jzz
 ksJ
 oBl
-oyp
-oyp
 oyp
 oyp
 oyp
@@ -203107,14 +203128,14 @@ hYb
 dVl
 dVl
 hYb
-vDb
-iVc
+hYb
+jzz
+jzz
+nlJ
 sus
 eqm
 ksJ
 iNn
-oyp
-oyp
 oyp
 oyp
 oyp
@@ -203364,17 +203385,17 @@ dDL
 dDL
 dDL
 dDL
+bWY
+bWY
 jzz
 jzz
 qXI
 jzz
 ksJ
-ksJ
 jUW
 jUW
 jUW
 jUW
-ksJ
 ksJ
 ksJ
 ksJ
