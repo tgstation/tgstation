@@ -31,9 +31,9 @@
 	if(isnull(myseed))
 		return
 
-	if(prob(min(80, 40 * modifier)))
-		myseed.adjust_instability(round(4 * modifier))
-		adjust_toxic(round(2 * modifier)) // It is still toxic, mind you
+	if(prob(min(75, 25 * modifier)))
+		myseed.adjust_instability(round(2 * modifier))
+		adjust_toxic(round(1.5 * modifier)) // It is still toxic, mind you
 		return
 
 	switch(rand(0, 50))
