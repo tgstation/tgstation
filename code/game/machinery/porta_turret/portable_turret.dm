@@ -176,13 +176,18 @@ DEFINE_BITFIELD(turret_flags, list(
 	INVOKE_ASYNC(src, PROC_REF(set_disabled), disrupt_duration)
 	return TRUE
 
+/// Checks to see if this should be processing, and starts/stops processing if so.
+/// Returns TRUE if processing began, FALSE if processing ended, or null if the processing state was not changed.
 /obj/machinery/porta_turret/proc/check_should_process()
 	if (datum_flags & DF_ISPROCESSING)
 		if (!on || !anchored || !LAZYLEN(tracker.tracking) || (machine_stat & BROKEN) || !powered())
 			end_processing()
+			return FALSE
 	else
 		if (on && anchored && LAZYLEN(tracker.tracking) && !(machine_stat & BROKEN) && powered())
 			begin_processing()
+			return TRUE
+	return null
 
 /obj/machinery/porta_turret/update_icon_state()
 	if(!anchored)

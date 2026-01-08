@@ -52,7 +52,7 @@
 		return
 	LAZYADD(tracking, thing)
 	RegisterSignal(thing, COMSIG_QDELETING, PROC_REF(stop_tracking))
-	turret.check_should_process()
+	refresh_turret_processing()
 
 /datum/proximity_monitor/advanced/turret_tracking/proc/stop_tracking(atom/movable/thing)
 	SIGNAL_HANDLER
@@ -63,5 +63,11 @@
 	tracking -= thing
 	if(!LAZYLEN(tracking))
 		LAZYNULL(tracking)
-		var/obj/machinery/porta_turret/turret = host
-		turret.check_should_process()
+		refresh_turret_processing()
+
+/datum/proximity_monitor/advanced/turret_tracking/proc/refresh_turret_processing()
+	var/obj/machinery/porta_turret/turret = host
+	if(turret.check_should_process() != FALSE) // if check_should_process did something other than end processing, we have nothing more to do here.
+		return
+	if(turret.raised && !turret.always_up) // if its cover is up, then we'll pop the turret's cover down.
+		INVOKE_ASYNC(turret, TYPE_PROC_REF(/obj/machinery/porta_turret, popDown))
