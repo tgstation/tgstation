@@ -996,7 +996,7 @@
 /datum/plant_gene/trait/plant_type/toxin_adaptation
 	name = "Toxin Adaptation"
 	description = "It is a toxic plant that thrives in poisonous environments."
-	icon = FA_ICON_POISON_BOTTLE
+	icon = FA_ICON_SKULL_CROSSBONES
 
 /// Currently unused and does nothing. Appears in strange seeds.
 /datum/plant_gene/trait/plant_type/alien_properties
