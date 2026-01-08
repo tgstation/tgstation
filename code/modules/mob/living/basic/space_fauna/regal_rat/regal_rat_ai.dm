@@ -16,19 +16,9 @@
 		/datum/ai_planning_subtree/flee_target/from_flee_key,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/use_mob_ability/domain,
 	)
 
 /datum/ai_planning_subtree/targeted_mob_ability/riot
 	target_key = BB_BASIC_MOB_FLEE_TARGET // we only want to trigger this when provoked, manpower is low nowadays
 	ability_key = BB_RAISE_HORDE_ABILITY
 	finish_planning = FALSE
-
-/datum/ai_planning_subtree/use_mob_ability/domain
-	ability_key = BB_DOMAIN_ABILITY
-
-/datum/ai_planning_subtree/use_mob_ability/domain/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/datum/action/cooldown/mob_cooldown/domain/domain = controller.blackboard[ability_key]
-	if (!istype(domain) || domain.is_active)
-		return
-	return ..()
