@@ -333,18 +333,18 @@
 //Toxins/////////////////////////////////////////////////////////////////
 
 			// Too much toxins cause harm, but when the plant drinks the contaiminated water, the toxins disappear slowly
-			if(toxic >= 40 && !myseed.get_gene(/datum/plant_gene/trait/tox_resistance))
-				if(toxic < 80)
-					adjust_plant_health(-1 / rating)
-					adjust_toxic(-rating * 2)
-				else
-					adjust_plant_health(-3)
-					adjust_toxic(-rating * 3)
+			if(toxic >= 10)
+				if(myseed.get_gene(/datum/plant_gene/trait/plant_type/toxin_adaptation))
+					adjust_plant_health(round(toxin / rand(10, 16)))
+					myseed.adjust_potency(round(toxic / rand(20, 30)))
 
-			else if(toxin >= 10 && myseed.get_gene(/datum/plant_gene/trait/plant_type/toxin_adaptation))
-				adjust_plant_health(round(toxin / rand(10, 16)))
-				myseed.adjust_potency(round(toxic / rand(20, 30)))
-
+				else if(toxin >= 40 && !myseed.get_gene(/datum/plant_gene/trait/tox_resistance))
+					if(toxic < 80)
+						adjust_plant_health(-1 / rating)
+						adjust_toxic(-rating * 2)
+					else
+						adjust_plant_health(-3)
+						adjust_toxic(-rating * 3)
 
 //Pests & Weeds//////////////////////////////////////////////////////////
 
