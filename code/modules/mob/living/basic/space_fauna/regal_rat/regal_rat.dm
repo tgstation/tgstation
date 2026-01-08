@@ -67,11 +67,15 @@
 	)
 
 	var/static/list/innate_actions = list(
-		/datum/action/cooldown/mob_cooldown/domain = null,
 		/datum/action/cooldown/mob_cooldown/riot = BB_RAISE_HORDE_ABILITY,
 	)
 
 	grant_actions_by_list(innate_actions)
+
+/mob/living/basic/regal_rat/Login()
+	. = ..()
+	var/datum/action/cooldown/mob_cooldown/domain/domainaction = new(src)
+	domainaction.Grant(src)
 
 /mob/living/basic/regal_rat/death(gibbed)
 	var/datum/component/potential_component = GetComponent(/datum/component/ghost_direct_control)
