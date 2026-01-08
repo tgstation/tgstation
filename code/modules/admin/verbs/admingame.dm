@@ -198,7 +198,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupan
 			options["[M.name] ([M.tag])"] = "\ref[M]"
 
 	else
-		tgui_alert(user,"Unsupported type! Supported types: /obj/vehicle; /obj/structure/closet; /obj/structure/bodycontainer; /obj/machinery; /obj/item/bodybag.")
+		tgui_alert(user,"Unsupported object type! Supported types: /obj/vehicle; /obj/structure/closet; /obj/structure/bodycontainer; /obj/machinery; /obj/item/bodybag.")
 		return
 
 	if(!options.len)
