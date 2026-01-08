@@ -205,6 +205,12 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupan
 		tgui_alert(user, "No occupants found!")
 		return
 
+	if(options.len == 1)
+		var/mob/selected_mob = locate(options[options[1]])
+		if(selected_mob)
+			SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/show_player_panel, selected_mob)
+		return
+
 	var/choice = tgui_input_list(user, "Select mob", "Player Panel", options)
 
 	if(choice)
