@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Scientists only say Balmer voicelines if they are whimsical"
-  - rscadd: "Surgery gets slower if the surgeon is drunk, UNLESS you land in the Balmer Peak, then it's actually faster."

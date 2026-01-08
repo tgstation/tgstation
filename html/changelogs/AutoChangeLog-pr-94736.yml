@@ -1,6 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Pizza slices now contain a proportional amount of whatever the pizza contained, so sliced poisoned pizza will still be poisonous and sliced robo pizza will still turn people into robots."
-  - bugfix: "Removed a bugged pizza from the pizza ruin and replaced it with a margherita pizza."
-  - bugfix: "Bugged pizza no longer looks identical to functional margherita pizza; it's a big error graphic."
