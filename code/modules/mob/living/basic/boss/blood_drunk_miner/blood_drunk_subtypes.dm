@@ -4,7 +4,7 @@
 /mob/living/basic/boss/blood_drunk_miner/guidance/attack_override(mob/living/source, atom/target, proximity, modifiers)
 	. = ..()
 	if(. & COMPONENT_HOSTILE_NO_ATTACK)
-		adjust_health(-2)
+		adjust_health(-2 * rapid_melee_hits)
 
 /// Better at dash attacking
 /mob/living/basic/boss/blood_drunk_miner/hunter
