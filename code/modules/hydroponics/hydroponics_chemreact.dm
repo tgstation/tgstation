@@ -27,25 +27,31 @@
 	update_appearance()
 
 /// Called when a radioactive reagent is applied to the tray
-/obj/machinery/hydroponics/proc/radioactive_exposure()
+/obj/machinery/hydroponics/proc/radioactive_exposure(modifier = 1)
 	if(isnull(myseed))
 		return
 
-	if(prob(50))
-		myseed.adjust_instability(4)
-		adjust_toxic(2) // It is still toxic, mind you
+	if(prob(min(80, 40 * modifier)))
+		myseed.adjust_instability(4 * modifier)
+		adjust_toxic(2 * modifier) // It is still toxic, mind you
 		return
 
 	switch(rand(0, 50))
 		if(41 to 50)
-			adjust_plant_health(-5)
+			adjust_plant_health(-5 * modifier)
 			visible_message(span_warning("\The [myseed.plantname] starts to wilt and burn!"))
 
 		if(21 to 40)
 			visible_message(span_notice("\The [myseed.plantname] appears unusually reactive..."))
 
 		if(11 to 20)
-			mutateweed()
+			if(modifier >= 0.5)
+				mutateweed()
+			else
+				adjust_weedlevel(1)
 
 		if(0 to 10)
-			mutatepest()
+			if(modifier >= 0.5)
+				mutatepest()
+			else
+				adjust_pestlevel(1)
