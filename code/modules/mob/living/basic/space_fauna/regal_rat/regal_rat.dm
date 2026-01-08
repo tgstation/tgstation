@@ -67,7 +67,7 @@
 	)
 
 	var/static/list/innate_actions = list(
-		/datum/action/cooldown/mob_cooldown/domain,
+		/datum/action/cooldown/mob_cooldown/domain = null,
 		/datum/action/cooldown/mob_cooldown/riot = BB_RAISE_HORDE_ABILITY,
 	)
 
