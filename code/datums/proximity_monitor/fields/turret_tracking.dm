@@ -67,6 +67,8 @@
 
 /datum/proximity_monitor/advanced/turret_tracking/proc/refresh_turret_processing()
 	var/obj/machinery/porta_turret/turret = host
+	if(QDELETED(src) || QDELETED(turret))
+		return
 	if(turret.check_should_process() != FALSE) // if check_should_process did something other than end processing, we have nothing more to do here.
 		return
 	if(turret.raised && !turret.always_up) // if its cover is up, then we'll pop the turret's cover down.
