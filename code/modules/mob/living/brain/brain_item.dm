@@ -338,6 +338,8 @@
 	return ..()
 
 /obj/item/organ/brain/on_life(seconds_per_tick)
+	. = ..()
+
 	if(HAS_TRAIT(src, TRAIT_BRAIN_DAMAGE_NODEATH))
 		return
 	if(damage >= BRAIN_DAMAGE_DEATH) //rip
@@ -438,7 +440,7 @@
 
 	// If we have some sort of brain type or subtype change and have skillchips, engage the failsafe procedure!
 	if(owner && length(skillchips) && (replacement_brain.type != type))
-		activate_skillchip_failsafe(silent = TRUE)
+		activate_skillchip_failsafe()
 
 	// Check through all our skillchips, remove them from this brain, add them to the replacement brain.
 	for(var/chip in skillchips)

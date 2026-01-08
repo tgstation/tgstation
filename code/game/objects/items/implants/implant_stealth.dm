@@ -3,6 +3,15 @@
 	desc = "Allows you to be hidden in plain sight."
 	actions_types = list(/datum/action/item_action/agent_box)
 
+	implant_info = "Activated manually. \
+		Fabricates a horrifically fragile cardboard box around the user that has integrated gradual optical camouflage."
+
+	implant_lore = "The Cybersun S3 Implant, colloquially the \"stealth\" implant, allows users to fabricate, \
+		on the spot, a \"stealth\" box around them, which sacrifices most of its (miniscule) strength as a cardboard box \
+		in order to support an optical camouflage weave. Unfortunately, the optical camouflage cannot instantly initialize; \
+		bumping into living beings will disrupt the camouflage, and after disruption or upon initial activation, \
+		the camouflage system has to recalibrate to its surroundings. However, once calibrated, it is invisible to the naked eye."
+
 /obj/item/implanter/stealth
 	name = "implanter (stealth)"
 	imp_type = /obj/item/implant/stealth

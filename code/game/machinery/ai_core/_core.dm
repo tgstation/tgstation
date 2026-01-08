@@ -41,12 +41,26 @@
 	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/ai_core/update_icon_state()
+	cut_overlays()
+
 	if(state != CORE_STATE_FINISHED)
 		icon_state = "[base_icon_state][state]"
 		if(state == CORE_STATE_CABLED && core_mmi)
 			icon_state += "b"
 	else
-		icon_state = "ai-empty"
+
+		icon_state = "ai-core"
+
+		var/mutable_appearance/screen = mutable_appearance(icon, "ai-empty")
+		screen.layer = FLOAT_LAYER
+		screen.appearance_flags = RESET_COLOR | KEEP_APART
+
+		add_overlay(screen)
+
+		add_overlay(emissive_appearance(icon, "ai-empty", src, alpha = 255))
+
+		set_light(0.2, 0.2, LIGHT_COLOR_FAINT_CYAN)
+
 	return ..()
 
 /obj/structure/ai_core/Exited(atom/movable/gone, direction)

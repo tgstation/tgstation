@@ -3,7 +3,7 @@
  * Bitrunning gimmick loadouts themed around dungeon crawling.
  * Mostly for fun, have niche but not insignificant advantages.
  */
-/obj/item/bitrunning_disk/gimmick/dungeon
+/obj/item/disk/bitrunning/gimmick/dungeon
 	name = "bitrunning gimmick: dungeon crawling"
 	selectable_loadouts = list(
 		/datum/bitrunning_gimmick/alchemist,
