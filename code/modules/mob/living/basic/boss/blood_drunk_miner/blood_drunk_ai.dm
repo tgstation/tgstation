@@ -1,10 +1,5 @@
 #define TRANSFORM_WEAPON_ABILITY_KEY BB_BDM_TRANSFORM_WEAPON_ABILITY
 
-/// Helper macro for handling blood-drunk miner weapon transformations
-#define HANDLE_BDM_TRANSFORM(controller) \
-	var/datum/action/cooldown/transform_weapon = controller.blackboard[TRANSFORM_WEAPON_ABILITY_KEY];\
-	transform_weapon.Trigger()
-
 /// AI for handling blood-drunk miner behavior
 /// General consideration is as follows:
 /// - If in PKA range, shoot PKA
@@ -37,11 +32,6 @@
 	var/transform_weapon_key = TRANSFORM_WEAPON_ABILITY_KEY
 	/// Range where we determine what distance we're at. If higher, we consider ourselves out of PKA range and will dash attack instead. Inclusive when it comes to choosing to shoot PKA.
 	var/pka_range = 3
-
-/// Transform our weapon as needed after a ranged attack
-/datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/SelectBehaviors(datum/ai_controller/controller, datum/action/cooldown/using_action)
-	. = ..()
-	HANDLE_BDM_TRANSFORM(controller)
 
 /// Check our blackboard to see if we are able to use a ranged ability in the first place
 /datum/ai_planning_subtree/targeted_mob_ability/blood_drunk/additional_ability_checks(datum/ai_controller/controller, datum/action/cooldown/using_action)
@@ -76,15 +66,7 @@
 		return FALSE
 	return TRUE
 
-/// Handles saw switching after melee attacks
-/datum/ai_planning_subtree/basic_melee_attack_subtree/blood_drunk
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/blood_drunk/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	. = ..()
-	HANDLE_BDM_TRANSFORM(controller)
-
 /datum/ai_controller/blood_drunk_miner/doom
 	movement_delay = 0.8 SECONDS
 
 #undef TRANSFORM_WEAPON_ABILITY_KEY
-#undef HANDLE_BDM_TRANSFORM

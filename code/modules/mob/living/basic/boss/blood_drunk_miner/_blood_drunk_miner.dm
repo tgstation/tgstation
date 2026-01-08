@@ -69,6 +69,7 @@ Difficulty: Medium
 
 	grant_actions_by_list(get_innate_actions())
 	ai_controller.set_blackboard_key(BB_BDM_RANGED_ATTACK_COOLDOWN, ranged_attack_cooldown_duration)
+	RegisterSignals(src, list(AI_CONTROLLER_BEHAVIOR_QUEUED(/datum/ai_behavior/basic_melee_attack), AI_CONTROLLER_BEHAVIOR_QUEUED(/datum/ai_behavior/targeted_mob_ability)), PROC_REF(handle_saw_transformation))
 
 	AddElement(/datum/element/death_drops, string_list(regular_loot))
 	RegisterSignal(src, COMSIG_LIVING_DROP_LOOT, PROC_REF(death_effect))
@@ -95,6 +96,12 @@ Difficulty: Medium
 		/datum/action/cooldown/mob_cooldown/transform_weapon = BB_BDM_TRANSFORM_WEAPON_ABILITY,
 	)
 	return innate_abilities
+
+/mob/living/basic/boss/blood_drunk_miner/proc/handle_saw_transformation()
+	SIGNAL_HANDLER
+
+	var/datum/action/cooldown/transform_weapon = ai_controller.blackboard[TRANSFORM_WEAPON_ABILITY_KEY]
+	transform_weapon.Trigger()
 
 /mob/living/basic/boss/blood_drunk_miner/ex_act(severity, target)
 	var/datum/action/cooldown/mob_cooldown/dash_ability = ai_controller.blackboard[BB_BDM_DASH_ABILITY]
