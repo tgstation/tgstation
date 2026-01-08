@@ -1,5 +1,3 @@
-#define TRANSFORM_WEAPON_ABILITY_KEY BB_BDM_TRANSFORM_WEAPON_ABILITY
-
 /// AI for handling blood-drunk miner behavior
 /// General consideration is as follows:
 /// - If in PKA range, shoot PKA
@@ -28,8 +26,6 @@
 
 /// Parent type that contains key logic important for subsequent abilities
 /datum/ai_planning_subtree/targeted_mob_ability/blood_drunk
-	/// Key for transforming our weapon whenever we need to
-	var/transform_weapon_key = TRANSFORM_WEAPON_ABILITY_KEY
 	/// Range where we determine what distance we're at. If higher, we consider ourselves out of PKA range and will dash attack instead. Inclusive when it comes to choosing to shoot PKA.
 	var/pka_range = 3
 
@@ -68,5 +64,3 @@
 
 /datum/ai_controller/blood_drunk_miner/doom
 	movement_delay = 0.8 SECONDS
-
-#undef TRANSFORM_WEAPON_ABILITY_KEY

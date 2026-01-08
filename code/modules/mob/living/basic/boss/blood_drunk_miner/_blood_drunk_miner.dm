@@ -100,8 +100,8 @@ Difficulty: Medium
 /mob/living/basic/boss/blood_drunk_miner/proc/handle_saw_transformation()
 	SIGNAL_HANDLER
 
-	var/datum/action/cooldown/transform_weapon = ai_controller.blackboard[TRANSFORM_WEAPON_ABILITY_KEY]
-	transform_weapon.Trigger()
+	var/datum/action/cooldown/mob_cooldown/transform_weapon/melee_switch = ai_controller.blackboard[BB_BDM_TRANSFORM_WEAPON_ABILITY]
+	melee_switch.Trigger()
 
 /mob/living/basic/boss/blood_drunk_miner/ex_act(severity, target)
 	var/datum/action/cooldown/mob_cooldown/dash_ability = ai_controller.blackboard[BB_BDM_DASH_ABILITY]
