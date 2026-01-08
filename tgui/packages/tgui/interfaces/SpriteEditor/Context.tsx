@@ -1,8 +1,21 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import {
+  createContext,
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { Box, Button, Popper, Stack } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 import { capitalize } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
+import {
+  colorsAreEqual,
+  colorToHexString,
+  parseHexColorString,
+} from './colorSpaces';
 import {
   AdvancedCanvas,
   AdvancedCanvasPropsBase,
@@ -12,6 +25,7 @@ import { LayerManager, LayerManagerProps } from './Components/LayerManager';
 import { Palette, PaletteProps } from './Components/Palette';
 import { getFlattenedSpriteDir, localizeCoords } from './helpers';
 import { Tool } from './Types/Tool';
+import { Bucket } from './Types/Tools/Bucket';
 import { Eraser } from './Types/Tools/Eraser';
 import { Eyedropper } from './Types/Tools/Eyedropper';
 import { Pencil } from './Types/Tools/Pencil';
@@ -20,6 +34,7 @@ import {
   EditorColor,
   SpriteData,
   SpriteEditorContextType,
+  SpriteEditorToolFlags,
   StringLayer,
 } from './Types/types';
 
@@ -31,6 +46,7 @@ type ToolbarButtonProps = Omit<
 type ToolbarProps = {
   toolButtonProps?: ToolbarButtonProps;
   perButtonProps?: (tool: Tool, i: number) => ToolbarButtonProps;
+  toolFlags?: SpriteEditorToolFlags;
 } & Parameters<typeof Stack>[0];
 
 type TransactionType = 'undo' | 'redo';
@@ -127,20 +143,72 @@ const colorPicker = (
   );
 };
 
-const palette = (
-  props: Omit<
+type ServerColorProps = {
+  serverPalette: string[];
+  maxServerColors: number;
+  onAddServerColor: string;
+  onRemoveServerColor: string;
+};
+
+type ContextPaletteProps = ({} | ServerColorProps) &
+  Omit<
     PaletteProps,
-    'colors' | 'selectedColor' | 'onClickColor' | 'onClickAddColor'
-  >,
-) => {
+    | 'colors'
+    | 'selectedColor'
+    | 'onClickColor'
+    | 'onClickAddColor'
+    | 'onRemoveColor'
+    | 'canAddColor'
+  >;
+
+function HasServerColorProps(
+  props: ContextPaletteProps,
+): props is ContextPaletteProps & ServerColorProps {
+  return Object.hasOwn(props, 'serverPalette');
+}
+
+const palette = (props: ContextPaletteProps) => {
   const { colors, setColors, currentColor, setCurrentColor } =
     useSpriteEditorContext('SpriteEditor.Palette');
+  const {
+    serverPalette,
+    maxServerColors,
+    onAddServerColor,
+    onRemoveServerColor,
+  } = HasServerColorProps(props) ? props : {};
+  const { act } = useBackend();
+  const parsedServerColors = serverPalette?.map(parseHexColorString);
+  if (parsedServerColors?.length) {
+    useEffect(() => {
+      if (
+        !parsedServerColors.find((serverColor) =>
+          colorsAreEqual(serverColor, currentColor),
+        )
+      ) {
+        setCurrentColor(parsedServerColors[0]);
+      }
+    }, [JSON.stringify(parsedServerColors)]);
+  }
   return (
     <Palette
-      colors={colors}
+      colors={parsedServerColors ?? colors}
       selectedColor={currentColor}
       onClickColor={setCurrentColor}
-      onClickAddColor={() => setColors((colors) => [...colors, currentColor])}
+      onClickAddColor={() => {
+        if (onAddServerColor) {
+          act(onAddServerColor, { color: colorToHexString(currentColor) });
+        } else {
+          setColors((colors) => [...colors, currentColor]);
+        }
+      }}
+      onRemoveColor={(index) => {
+        if (onRemoveServerColor) {
+          act(onRemoveServerColor, { index });
+        } else {
+          setColors(colors.toSpliced(index, 1));
+        }
+      }}
+      maxColors={maxServerColors}
       {...props}
     />
   );
@@ -150,64 +218,85 @@ const undoButton = undoRedoFactory('undo');
 const redoButton = undoRedoFactory('redo');
 
 const toolbar = (props: ToolbarProps) => {
-  const { tools, currentTool, setCurrentTool } = useContext(
-    SpriteEditorContextObject,
-  )!;
-  const { toolButtonProps, perButtonProps, ...rest } = props;
+  const { tools, currentTool, setCurrentTool } = useSpriteEditorContext(
+    'SpriteEditor.Toolbar',
+  );
+  const {
+    toolButtonProps,
+    perButtonProps,
+    toolFlags = SpriteEditorToolFlags.All,
+    ...rest
+  } = props;
+  useEffect(() => {
+    if (!(toolFlags & (1 << tools.indexOf(currentTool)))) {
+      setCurrentTool(tools.find((_, i) => toolFlags & (1 << i))!);
+    }
+  }, [toolFlags]);
   return (
     <Stack {...rest}>
-      {tools.map((tool, i) => (
-        <Stack.Item key={i}>
-          <Button
-            icon={tool.icon}
-            selected={currentTool === tool}
-            onClick={() => setCurrentTool(tool)}
-            {...toolButtonProps}
-            {...perButtonProps?.(tool, i)}
-          />
-        </Stack.Item>
-      ))}
+      {tools.map((tool, i) =>
+        toolFlags & (1 << i) ? (
+          <Stack.Item key={i}>
+            <Button
+              icon={tool.icon}
+              selected={currentTool === tool}
+              onClick={() => setCurrentTool(tool)}
+              {...toolButtonProps}
+              {...perButtonProps?.(tool, i)}
+            />
+          </Stack.Item>
+        ) : undefined,
+      )}
     </Stack>
   );
 };
 
-const canvas = (
-  props: { data: SpriteData } & Omit<AdvancedCanvasPropsBase, 'data'>,
-) => {
-  const { data, ...rest } = props;
-  const { width, height } = data;
+type ContextCanvasProps = {
+  data: SpriteData;
+  disabled?: BooleanLike;
+} & Omit<AdvancedCanvasPropsBase, 'data' | 'backdropColor'>;
+
+const canvas = (props: ContextCanvasProps) => {
+  const { data, disabled, ...rest } = props;
+  const { width, height, backdrop } = data;
   const context = useSpriteEditorContext('SpriteEditor.Canvas');
-  const {
-    currentTool,
-    selectedDir,
-    selectedLayer,
-    visibleLayers,
-    previewLayer,
-    previewData,
-  } = context;
+  const { currentTool, selectedDir, selectedLayer, previewLayer, previewData } =
+    context;
+  useEffect(() => {
+    if (disabled) {
+      currentTool.cancel?.();
+    }
+  }, [disabled, currentTool]);
   return (
     <AdvancedCanvas
       data={getFlattenedSpriteDir(
         data,
         selectedDir,
-        visibleLayers.toSpliced(selectedLayer, 1, true),
+        selectedLayer,
         previewLayer,
         previewData,
       )}
-      onMouseDown={(ev, ref) => {
-        const [x, y] = localizeCoords(ev, ref, width, height);
-        if (!currentTool.onMouseDown(context, data, x, y, ev.button === 2)) {
-          ev.preventDefault();
-        }
-      }}
-      onMouseMove={(ev, ref) => {
-        const [x, y] = localizeCoords(ev, ref, width, height);
-        currentTool.onMouseMove?.(context, data, x, y);
-      }}
-      onMouseUp={(ev, ref) => {
-        const [x, y] = localizeCoords(ev, ref, width, height);
-        currentTool.onMouseUp?.(context, data, x, y);
-      }}
+      backdropColor={backdrop}
+      {...(disabled
+        ? {}
+        : {
+            onMouseDown: (ev, ref) => {
+              const [x, y] = localizeCoords(ev, ref, width, height);
+              if (
+                !currentTool.onMouseDown(context, data, x, y, ev.button === 2)
+              ) {
+                ev.preventDefault();
+              }
+            },
+            onMouseMove: (ev, ref) => {
+              const [x, y] = localizeCoords(ev, ref, width, height);
+              currentTool.onMouseMove?.(context, data, x, y);
+            },
+            onMouseUp: (ev, ref) => {
+              const [x, y] = localizeCoords(ev, ref, width, height);
+              currentTool.onMouseUp?.(context, data, x, y);
+            },
+          })}
       {...rest}
     />
   );
@@ -220,9 +309,12 @@ const layerManager = (props: Omit<LayerManagerProps, 'context'>) => (
   />
 );
 
-const getSpriteEditorContext = () => {
+const getSpriteEditorContext = (
+  serverSelectedColor?: string,
+  onSelectServerColor?: string,
+) => {
   const [colors, setColors] = useState<EditorColor[]>([]);
-  const [currentColor, setCurrentColor] = useState<EditorColor>({
+  const [currentColor, setCurrentColorInternal] = useState<EditorColor>({
     r: 255,
     g: 255,
     b: 255,
@@ -231,18 +323,35 @@ const getSpriteEditorContext = () => {
     new Pencil(),
     new Eraser(),
     new Eyedropper(),
+    new Bucket(),
   ]);
   const [currentTool, setCurrentTool] = useState(tools[0]);
   const [selectedDir, setSelectedDir] = useState(Dir.SOUTH);
   const [selectedLayer, setSelectedLayer] = useState(0);
-  const [visibleLayers, setVisibleLayers] = useState<boolean[]>([]);
   const [previewLayer, setPreviewLayer] = useState<number>();
   const [previewData, setPreviewData] = useState<StringLayer>();
+  useEffect(() => {
+    if (serverSelectedColor) {
+      const parsedColor = parseHexColorString(serverSelectedColor);
+      if (!colorsAreEqual(parsedColor, currentColor)) {
+        setCurrentColorInternal(parsedColor);
+      }
+    }
+  }, [serverSelectedColor]);
+  const { act } = useBackend();
   return {
     colors,
     setColors,
     currentColor,
-    setCurrentColor,
+    setCurrentColor: useCallback(
+      (color) => {
+        if (onSelectServerColor) {
+          act(onSelectServerColor, { color: colorToHexString(color) });
+        }
+        setCurrentColorInternal(color);
+      },
+      [onSelectServerColor, setCurrentColorInternal, act],
+    ),
     tools,
     currentTool,
     setCurrentTool,
@@ -250,8 +359,6 @@ const getSpriteEditorContext = () => {
     setSelectedDir,
     selectedLayer,
     setSelectedLayer,
-    visibleLayers,
-    setVisibleLayers,
     previewLayer,
     setPreviewLayer,
     previewData,
@@ -260,11 +367,21 @@ const getSpriteEditorContext = () => {
 };
 
 export namespace SpriteEditorContext {
-  export const Root = ({ children }: { children: ReactNode }) => (
-    <SpriteEditorContextObject.Provider value={getSpriteEditorContext()}>
-      {children}
-    </SpriteEditorContextObject.Provider>
-  );
+  export const Root = (
+    props: PropsWithChildren<{
+      serverSelectedColor?: string;
+      onSelectServerColor?: string;
+    }>,
+  ) => {
+    const { children, serverSelectedColor, onSelectServerColor } = props;
+    return (
+      <SpriteEditorContextObject.Provider
+        value={getSpriteEditorContext(serverSelectedColor, onSelectServerColor)}
+      >
+        {children}
+      </SpriteEditorContextObject.Provider>
+    );
+  };
   export const ColorPicker = colorPicker;
   export const Palette = palette;
   export const Undo = undoButton;

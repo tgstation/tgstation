@@ -92,6 +92,16 @@ GLOBAL_LIST_INIT(alldirs, list(
 	SOUTHEAST,
 	SOUTHWEST,
 ))
+GLOBAL_LIST_INIT(alldirs_dmi_order, list(
+	SOUTH,
+	NORTH,
+	EAST,
+	WEST,
+	SOUTHEAST,
+	SOUTHWEST,
+	NORTHEAST,
+	NORTHWEST,
+))
 
 GLOBAL_LIST_INIT(cardinal_angles, list(
 	"[NORTH]" = 0,

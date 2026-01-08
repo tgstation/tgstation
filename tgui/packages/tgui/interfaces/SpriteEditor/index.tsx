@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { Button, Input, Stack } from 'tgui-core/components';
+import { Button, Dropdown, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { SpriteEditorContext } from './Context';
-import { SpriteEditorData } from './Types/types';
+import { SpriteEditorColorMode, SpriteEditorData } from './Types/types';
 
 export const SpriteEditor = () => {
-  const { data } = useBackend<SpriteEditorData>();
+  const { act, data } = useBackend<SpriteEditorData>();
   const [showGrid, setShowGrid] = useState(false);
-  const [bg, setBg] = useState<string>('');
   const { undoStack, redoStack, sprite } = data;
+  const [colorMode, setColorMode] = useState<SpriteEditorColorMode>(
+    SpriteEditorColorMode.Rgba,
+  );
   return (
     <Window width={1200} height={675}>
       <SpriteEditorContext.Root>
@@ -18,6 +20,19 @@ export const SpriteEditor = () => {
           <Stack fill vertical>
             <Stack.Item>
               <Stack fill backgroundColor="rgba(0, 0, 0, 33%)">
+                <Stack.Item>
+                  <Dropdown
+                    options={Object.entries(SpriteEditorColorMode).map(
+                      ([display, value]) => {
+                        return { displayText: display, value };
+                      },
+                    )}
+                    selected={Object.keys(SpriteEditorColorMode).find(
+                      (k) => SpriteEditorColorMode[k] === colorMode,
+                    )}
+                    onSelected={setColorMode}
+                  />
+                </Stack.Item>
                 <Stack.Item grow />
                 <Stack.Item>
                   <Stack>
@@ -45,24 +60,17 @@ export const SpriteEditor = () => {
                   </Button.Checkbox>
                 </Stack.Item>
                 <Stack.Item grow />
-                <Stack.Item grow>
-                  <Input
-                    fluid
-                    value={bg}
-                    onChange={(_, value) => setBg(value)}
-                  />
-                </Stack.Item>
               </Stack>
             </Stack.Item>
             <Stack.Item grow>
               <Stack fill>
                 <Stack.Item grow>
                   <Stack fill vertical>
-                    <Stack.Item>
+                    <Stack.Item shrink maxHeight="275px">
                       <SpriteEditorContext.ColorPicker
-                        height="275px"
+                        colorMode={colorMode}
+                        height="100%"
                         hslWidth="33%"
-                        alpha
                       />
                     </Stack.Item>
                     <Stack.Item>
@@ -73,6 +81,7 @@ export const SpriteEditor = () => {
                         }}
                       />
                     </Stack.Item>
+                    <Stack.Item grow shrink basis="33%" />
                   </Stack>
                 </Stack.Item>
                 <Stack.Item align="stretch" grow>
@@ -92,6 +101,13 @@ export const SpriteEditor = () => {
                 </Stack.Item>
               </Stack>
             </Stack.Item>
+            <Stack justify="flex-end">
+              <Stack.Item>
+                <Button.Confirm onClick={() => act('save')}>
+                  Save
+                </Button.Confirm>
+              </Stack.Item>
+            </Stack>
           </Stack>
         </Window.Content>
       </SpriteEditorContext.Root>

@@ -55,3 +55,7 @@
 
 ///from /datum/component/bubble_icon_override/get_bubble_icon(): (list/holder)
 #define COMSIG_GET_BUBBLE_ICON "get_bubble_icon"
+
+///from /datum/sprite_editor_workspace/is_valid_color(): (color)
+#define COMSIG_SPRITE_EDITOR_VALIDATE_COLOR "sprite_editor_validate_color"
+	#define COLOR_IS_INVALID (1<<0)

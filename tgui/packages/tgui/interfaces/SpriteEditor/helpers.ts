@@ -1,5 +1,5 @@
 import { normal } from 'color-blend';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import {
   hsv2rgb,
@@ -12,7 +12,9 @@ import {
   EditorColor,
   Layer,
   RGBA,
+  ServerColorData,
   SpriteData,
+  SpriteEditorData,
   StringLayer,
 } from './Types/types';
 
@@ -29,7 +31,7 @@ export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 export const invLerp = (a: number, b: number, x: number) => (x - a) / (b - a);
 
 export function useResizeObserver<T extends Element>(
-  ref: React.RefObject<T>,
+  ref: React.RefObject<T | null>,
   observerCallback: (element: ResizeObserverEntry) => void,
 ) {
   useEffect(() => {
@@ -44,13 +46,19 @@ export function useResizeObserver<T extends Element>(
 }
 
 export const useDimensions = (
-  ref: React.RefObject<HTMLElement>,
+  ref: React.RefObject<HTMLElement | null>,
 ): [number, number] => {
   const [dimensions, setDimensions] = useState<[number, number]>([0, 0]);
-  useResizeObserver(ref, (element) => {
-    const { width, height } = element.contentRect;
-    setDimensions([width, height]);
-  });
+  useResizeObserver(
+    ref,
+    useCallback(
+      (element) => {
+        const { width, height } = element.contentRect;
+        setDimensions([width, height]);
+      },
+      [setDimensions],
+    ),
+  );
   return dimensions;
 };
 
@@ -90,7 +98,7 @@ export const constrainToIconGrid = (
 
 export const localizeCoords = (
   ev: MouseEvent,
-  ref: React.RefObject<HTMLCanvasElement>,
+  ref: React.RefObject<HTMLCanvasElement | null>,
   imageWidth: number,
   imageHeight: number,
 ) => {
@@ -113,7 +121,7 @@ export const getDataPixel = (
 export const getFlattenedSpriteDir = (
   data: SpriteData,
   dir: Dir,
-  visibility: boolean[],
+  selectedLayer: number,
   previewLayer?: number,
   previewData?: StringLayer,
   backdrop: EditorColor = { r: 0, g: 0, b: 0, a: 0 },
@@ -124,8 +132,8 @@ export const getFlattenedSpriteDir = (
     width,
     height,
   )() as Layer;
-  layers.forEach(({ data: layer }, i) => {
-    if (!visibility[i]) return;
+  layers.forEach(({ data: layer, visible }, i) => {
+    if (!visible && i !== selectedLayer) return;
     (previewLayer === i ? previewData : layer[dir])!.forEach((row, y) => {
       row.forEach((frontPixelstring, x) => {
         const frontPixel = parseHexColorString(frontPixelstring);
@@ -144,4 +152,10 @@ export const getFlattenedSpriteDir = (
 
 export function copyLayer<T>(layer: T[][]) {
   return [...layer.map((row) => [...row])];
+}
+
+export function hasServerColorData(
+  data: SpriteEditorData,
+): data is ServerColorData & SpriteEditorData {
+  return Object.hasOwn(data, 'serverPalette');
 }

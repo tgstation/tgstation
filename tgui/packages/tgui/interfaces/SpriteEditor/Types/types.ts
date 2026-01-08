@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useSyncExternalStore } from 'react';
 import { Box } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { Tool } from './Tool';
 
@@ -52,14 +53,6 @@ type PickByType<T, V> = {
   [K in keyof T as T[K] extends V ? K : never]: T[K];
 };
 
-type Substitute<T, K extends keyof T, U extends T[K]> = Omit<T, K> & {
-  [key in K]: U;
-};
-
-type WithDispatch<T, K extends string & keyof T> = T & {
-  [key in K as `set${Capitalize<key>}`]: Dispatch<SetStateAction<T[key]>>;
-};
-
 export type InlineStyle = Pick<Parameters<typeof Box>[0], 'style'>;
 
 export type BorderStyleProps = Omit<
@@ -76,26 +69,11 @@ export type BorderStyleProps = Omit<
 
 export type SubscribeFn = Parameters<typeof useSyncExternalStore>[0];
 
-export type SerializedIconState = {
-  name: string;
-  dirs: IconDirCount;
-  delay?: number[];
-  rewind?: boolean;
-  movement?: boolean;
-  loop?: number;
-  samples: Uint8Array | string;
-};
-
-export type SerializedIcon = {
-  width: number;
-  height: number;
-  states: SerializedIconState[];
-};
-
 export type StringLayer = string[][];
 
 export type SpriteDataLayer = {
   name: string;
+  visible: BooleanLike;
   data: {
     [key in Dir]: key extends Dir.SOUTH ? StringLayer : StringLayer | undefined;
   };
@@ -105,12 +83,38 @@ export type SpriteData = {
   width: number;
   height: number;
   dirs: IconDirCount;
+  backdrop: string;
   layers: SpriteDataLayer[];
 };
 
-export type SpriteEditorData = {
+export enum SpriteEditorColorMode {
+  Rgba = 'rgba',
+  Rgb = 'rgb',
+  Greyscale = 'greyscale',
+}
+
+export enum SpriteEditorToolFlags {
+  Pencil = 1 << 0,
+  Eraser = 1 << 1,
+  Dropper = 1 << 2,
+  Bucket = 1 << 3,
+  All = (1 << 4) - 1,
+}
+
+export type ServerColorData = {
+  serverSelectedColor: string;
+  serverPalette: string[];
+  maxServerColors: number;
+  onSelectServerColor?: string;
+  onAddServerColor?: string;
+  onRemoveServerColor?: string;
+};
+
+export type SpriteEditorData = ({} | ServerColorData) & {
+  colorMode: SpriteEditorColorMode;
   undoStack: string[];
   redoStack: string[];
+  toolFlags?: SpriteEditorToolFlags;
   sprite: SpriteData;
 };
 
@@ -126,8 +130,6 @@ export type SpriteEditorContextType = {
   setSelectedDir: Dispatch<SetStateAction<Dir>>;
   selectedLayer: number;
   setSelectedLayer: Dispatch<SetStateAction<number>>;
-  visibleLayers: boolean[];
-  setVisibleLayers: Dispatch<SetStateAction<boolean[]>>;
   previewLayer?: number;
   setPreviewLayer: Dispatch<SetStateAction<number | undefined>>;
   previewData?: StringLayer;

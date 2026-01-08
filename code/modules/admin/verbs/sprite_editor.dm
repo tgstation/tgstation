@@ -25,10 +25,15 @@
 			switch(command)
 				if("transaction")
 					workspace.new_transaction(params["transaction"])
+				if("toggleVisible")
+					workspace.toggle_layer_visible(params["layer"])
 				if("undo")
 					workspace.undo()
 				if("redo")
 					workspace.redo()
+			return TRUE
+		if("save")
+			fcopy(workspace.to_icon(), "tmp/sprite_editor_result.dmi")
 			return TRUE
 
 ADMIN_VERB(test_sprite_editor, R_DEBUG, "Test Sprite Editor", "Test the Sprite Editor", ADMIN_CATEGORY_DEBUG)

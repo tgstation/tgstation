@@ -50,6 +50,7 @@ export class Pencil extends Tool {
   icon = 'pencil';
   name = 'Pencil';
   currentTransaction: PencilTransaction | null;
+
   onMouseDown(
     context: SpriteEditorContextType,
     data: SpriteData,
@@ -81,33 +82,40 @@ export class Pencil extends Tool {
     );
     return true;
   }
+
   onMouseMove(
     context: SpriteEditorContextType,
     data: SpriteData,
     x: number,
     y: number,
   ) {
-    const { selectedDir, selectedLayer, setPreviewData } = context;
-    const { width, height, layers } = data;
     const { currentTransaction } = this;
-    const { dir, layer } = currentTransaction!;
+    if (!currentTransaction) return;
+    const { setPreviewData } = context;
+    const { width, height, layers } = data;
+    const { dir, layer } = currentTransaction;
     const [px, py, inBounds] = constrainToIconGrid(x, y, width, height);
     if (!inBounds) return;
-    currentTransaction!.addPoint(px, py);
+    currentTransaction.addPoint(px, py);
     setPreviewData(
-      currentTransaction!.getPreviewLayer(layers[layer].data[dir]!),
+      currentTransaction.getPreviewLayer(layers[layer].data[dir]!),
     );
   }
+
   onMouseUp(
     context: SpriteEditorContextType,
     data: SpriteData,
     x: number,
     y: number,
   ) {
+    if (!this.currentTransaction) return;
     const { setPreviewLayer, setPreviewData } = context;
     setPreviewLayer(undefined);
     setPreviewData(undefined);
-    this.currentTransaction!.commit();
+    this.currentTransaction.commit();
+    this.currentTransaction = null;
+  }
+  cancel() {
     this.currentTransaction = null;
   }
 }

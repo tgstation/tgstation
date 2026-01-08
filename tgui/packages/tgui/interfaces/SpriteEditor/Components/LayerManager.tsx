@@ -14,12 +14,7 @@ export type LayerManagerProps = {
   data: SpriteData;
   context: Pick<
     SpriteEditorContextType,
-    | 'selectedDir'
-    | 'setSelectedDir'
-    | 'selectedLayer'
-    | 'setSelectedLayer'
-    | 'visibleLayers'
-    | 'setVisibleLayers'
+    'selectedDir' | 'setSelectedDir' | 'selectedLayer' | 'setSelectedLayer'
   >;
 } & Partial<BooleanStyleMap & StringStyleMap & InlineStyle>;
 
@@ -30,14 +25,8 @@ const dirIcons = ['arrow-down', 'arrow-up', 'arrow-right', 'arrow-left'];
 export const LayerManager = (props: LayerManagerProps) => {
   const { act } = useBackend();
   const { data, context, ...rest } = props;
-  const {
-    selectedDir,
-    setSelectedDir,
-    selectedLayer,
-    setSelectedLayer,
-    visibleLayers,
-    setVisibleLayers,
-  } = context;
+  const { selectedDir, setSelectedDir, selectedLayer, setSelectedLayer } =
+    context;
   const { width, height, dirs: iconDirs, layers } = data;
   const layerCount = layers.length;
   const cells = [
@@ -93,8 +82,7 @@ export const LayerManager = (props: LayerManagerProps) => {
             />
           </Box>
           {layers.map((layer, i) => {
-            const { name, data } = layer;
-            const visible = visibleLayers[i];
+            const { name, data, visible } = layer;
             return (
               <>
                 <Box
@@ -106,8 +94,7 @@ export const LayerManager = (props: LayerManagerProps) => {
                     inline
                     width="10rem"
                     value={name}
-                    updateOnPropsChange
-                    onChange={(_, value) => {
+                    onChange={(value) => {
                       if (name === value) return;
                       act('spriteEditorCommand', {
                         command: 'transaction',
@@ -125,7 +112,10 @@ export const LayerManager = (props: LayerManagerProps) => {
                     inline
                     icon={visible ? 'eye' : 'eye-slash'}
                     onClick={() =>
-                      setVisibleLayers(visibleLayers.toSpliced(i, 1, !visible))
+                      act('spriteEditorCommand', {
+                        command: 'toggleVisible',
+                        layer: i + 1,
+                      })
                     }
                   />
                 </Box>

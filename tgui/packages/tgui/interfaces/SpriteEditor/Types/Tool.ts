@@ -22,4 +22,5 @@ export abstract class Tool {
     x?: number,
     y?: number,
   ): void;
+  cancel?();
 }

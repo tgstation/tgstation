@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { BooleanStyleMap, computeBoxProps, StringStyleMap } from 'tgui-core/ui';
 
 import transparency_checkerboard from '../../../assets/transparency_checkerboard.svg';
@@ -7,13 +7,14 @@ import { useClickAndDragEventHandler, useDimensions } from '../helpers';
 import {
   BorderStyleProps,
   EditorColor,
+  InlineStyle,
   Layer,
   StringLayer,
 } from '../Types/types';
 
 type AdvancedCanvasMouseEventHandler = (
   event: MouseEvent,
-  ref: React.RefObject<HTMLCanvasElement>,
+  ref: React.RefObject<HTMLCanvasElement | null>,
 ) => void;
 
 type AdvancedCanvasNoHandlers = {};
@@ -36,7 +37,8 @@ export type AdvancedCanvasPropsBase = {
   showGrid?: boolean;
   border?: BorderStyleProps;
   background?: string | string[];
-} & Partial<BooleanStyleMap & StringStyleMap>;
+  backdropColor?: string;
+} & Partial<BooleanStyleMap & StringStyleMap & InlineStyle>;
 
 type AdvancedCanvasProps = AdvancedCanvasPropsBase &
   AdvancedCanvasEventHandlers;
@@ -73,6 +75,7 @@ export const AdvancedCanvas = (props: AdvancedCanvasProps) => {
     showGrid,
     border: borderProps,
     background,
+    backdropColor,
     ...rest
   } = extractBaseProps(props);
   const { onClick } = propsHaveClickHandler(props) ? props : {};
@@ -80,7 +83,10 @@ export const AdvancedCanvas = (props: AdvancedCanvasProps) => {
   const imageWidth = data.at(0)?.length ?? 0;
   const parentRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const parentDimensions = useDimensions(parentRef);
+  const [parentWidth, parentHeight] = useDimensions(parentRef);
+  const [[canvasWidth, canvasHeight], setCanvasDimensions] = useState<
+    [number, number]
+  >([0, 0]);
   const mouseDownHandler = propsHaveClickAndDragHandlers(props)
     ? useClickAndDragEventHandler(
         canvasRef,
@@ -91,17 +97,28 @@ export const AdvancedCanvas = (props: AdvancedCanvasProps) => {
     : undefined;
   useLayoutEffect(() => {
     const parent = parentRef.current;
-    const canvas = canvasRef.current;
-    if (parent === null || canvas === null) {
-      return;
-    }
-    const [parentWidth, parentHeight] = parentDimensions;
+    if (!parent) return;
+    const { width: parentWidth, height: parentHeight } =
+      parent.getBoundingClientRect();
     const scalingFactor = Math.floor(
       Math.min(parentWidth / imageWidth, parentHeight / imageHeight),
     );
-    const canvasWidth = (canvas.width = imageWidth * scalingFactor);
-    const canvasHeight = (canvas.height = imageHeight * scalingFactor);
+    setCanvasDimensions([
+      imageWidth * scalingFactor,
+      imageHeight * scalingFactor,
+    ]);
+  }, [imageWidth, imageHeight, parentWidth, parentHeight, parentRef]);
+  useLayoutEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      return;
+    }
+    const scalingFactor = canvasWidth / imageWidth;
     const context = canvas.getContext('2d')!;
+    if (backdropColor) {
+      context.fillStyle = backdropColor;
+      context.fillRect(0, 0, canvasWidth, canvasHeight);
+    }
     data.forEach((row: string[] | EditorColor[], y) =>
       row.forEach((pixel: string | EditorColor, x) => {
         context.fillStyle =
@@ -128,7 +145,14 @@ export const AdvancedCanvas = (props: AdvancedCanvasProps) => {
       }
       context.stroke();
     }
-  }, [parentDimensions, canvasRef, showGrid]);
+  }, [
+    JSON.stringify(data),
+    canvasWidth,
+    canvasHeight,
+    canvasRef,
+    showGrid,
+    backdropColor,
+  ]);
   return (
     <div
       ref={parentRef}
@@ -136,10 +160,12 @@ export const AdvancedCanvas = (props: AdvancedCanvasProps) => {
         ...rest,
         inline: true,
         align: 'center',
-        verticalAlign: 'center',
+        verticalAlign: 'middle',
       })}
     >
       <canvas
+        width={canvasWidth}
+        height={canvasHeight}
         ref={canvasRef}
         onClick={onClick && ((ev) => onClick(ev.nativeEvent, canvasRef))}
         onMouseDown={mouseDownHandler}
@@ -151,7 +177,7 @@ export const AdvancedCanvas = (props: AdvancedCanvasProps) => {
                 ? [background]
                 : []),
             `url(${transparency_checkerboard})`,
-          ].join(', '),
+          ].join(','),
           outline: '2px solid black',
           ...borderProps,
         }}

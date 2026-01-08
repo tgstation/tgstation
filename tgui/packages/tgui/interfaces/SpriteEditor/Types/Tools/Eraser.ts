@@ -53,6 +53,7 @@ export class Eraser extends Tool {
   icon = 'eraser';
   name = 'Eraser';
   currentTransaction: EraserTransaction | null;
+
   onMouseDown(
     context: SpriteEditorContextType,
     data: SpriteData,
@@ -79,37 +80,45 @@ export class Eraser extends Tool {
     );
     return true;
   }
+
   onMouseMove(
     context: SpriteEditorContextType,
     data: SpriteData,
     x: number,
     y: number,
   ) {
+    const { currentTransaction } = this;
+    if (!currentTransaction) return;
     const { selectedDir, selectedLayer, setPreviewData } = context;
     const { width, height, layers } = data;
-    const { currentTransaction } = this;
-    const { dir, layer } = currentTransaction!;
+    const { dir, layer } = currentTransaction;
     const [px, py, inBounds] = constrainToIconGrid(x, y, width, height);
     if (!inBounds) return;
-    currentTransaction!.addPoint(
+    currentTransaction.addPoint(
       px,
       py,
       getDataPixel(data, selectedLayer, selectedDir, px, py),
     );
     setPreviewData(
-      currentTransaction!.getPreviewLayer(layers[layer].data[dir]!),
+      currentTransaction.getPreviewLayer(layers[layer].data[dir]!),
     );
   }
+
   onMouseUp(
     context: SpriteEditorContextType,
     data: SpriteData,
     x: number,
     y: number,
   ) {
+    if (!this.currentTransaction) return;
     const { setPreviewLayer, setPreviewData } = context;
     setPreviewLayer(undefined);
     setPreviewData(undefined);
-    this.currentTransaction!.commit();
+    this.currentTransaction.commit();
+    this.currentTransaction = null;
+  }
+
+  cancel() {
     this.currentTransaction = null;
   }
 }
