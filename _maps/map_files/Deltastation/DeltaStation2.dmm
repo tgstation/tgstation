@@ -35048,9 +35048,6 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Engineering Break Room"
-	},
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 8
 	},
@@ -35060,6 +35057,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/door/airlock/engineering/glass,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
