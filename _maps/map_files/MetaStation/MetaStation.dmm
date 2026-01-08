@@ -36839,6 +36839,9 @@
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
+/obj/machinery/firealarm/directional/south{
+	pixel_x = 28
+	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "mEL" = (

@@ -24055,10 +24055,6 @@
 /turf/open/floor/plating,
 /area/station/commons/dorms/laundry)
 "gJN" = (
-/obj/machinery/requests_console/directional/east{
-	department = "Engineering";
-	name = "Engineering Requests Console"
-	},
 /obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	color = "#0000ff";
 	dir = 8;
@@ -24073,6 +24069,7 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 6
 	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/large,
 /area/station/engineering/lobby)
 "gJT" = (
@@ -39004,8 +39001,6 @@
 /area/station/maintenance/department/medical/morgue)
 "kVM" = (
 /obj/machinery/rnd/production/circuit_imprinter,
-/obj/effect/mapping_helpers/requests_console/supplies,
-/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "kVN" = (
@@ -82684,7 +82679,6 @@
 /area/station/ai/satellite/atmos)
 "xpc" = (
 /obj/effect/turf_decal/siding/yellow/corner,
-/obj/machinery/status_display/evac/directional/south,
 /obj/structure/table,
 /obj/item/flatpack{
 	board = /obj/item/circuitboard/machine/flatpacker;
@@ -82696,6 +82690,9 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
 	},
+/obj/machinery/requests_console/directional/south,
+/obj/effect/mapping_helpers/requests_console/supplies,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "xpm" = (
