@@ -151,6 +151,68 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 	user << browse(body, "window=adminplayeropts-[REF(player)];size=550x540")
 	BLACKBOX_LOG_ADMIN_VERB("Player Panel")
 
+ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupants PP", obj/target in world)
+	var/list/options = list()
+
+	// Vehicles
+	if(istype(target, /obj/vehicle))
+		var/obj/vehicle/V = target
+		if(istype(V.occupants, /list) && V.occupants.len)
+			for(var/mob/M in V.occupants)
+				options["[M.name] ([M.tag])[V.is_driver(M) ? " (Driver)" : ""]"] = "\ref[M]"
+
+	// Closets, crates, bodybags, coffins, etc.
+	else if(istype(target, /obj/structure/closet))
+		for(var/mob/M in target.contents)
+			options["[M.name] ([M.tag])"] = "\ref[M]"
+		// Searching for mobs in bodybags placed inside body closet
+		for(var/obj/structure/closet/B in target.contents)
+			for(var/mob/MB in B.contents)
+				options["[MB.name] ([MB.tag])"] = "\ref[MB]"
+		// That's basically the same for folded bodybags (e.g. bluespace bodybags with mobs inside)
+		for(var/obj/item/bodybag in target.contents)
+			for(var/mob/MI in bodybag.contents)
+				options["[MI.name] ([MI.tag])"] = "\ref[MI]"
+
+	// Folded bodybags (e.g. bluespace bodybags with mobs inside)
+	else if(istype(target, /obj/item/bodybag))
+		for(var/mob/M in target.contents)
+			options["[M.name] ([M.tag])"] = "\ref[M]"
+
+	// Body containers
+	else if(istype(target, /obj/structure/bodycontainer))
+		for(var/mob/M in target.contents)
+			options["[M.name] ([M.tag])"] = "\ref[M]"
+		// Searching for mobs in bodybags placed inside body container
+		for(var/obj/structure/closet/B in target.contents)
+			for(var/mob/MB in B.contents)
+				options["[MB.name] ([MB.tag])"] = "\ref[MB]"
+		// That's basically the same for folded bodybags (e.g. bluespace bodybags with mobs inside)
+		for(var/obj/item/bodybag in target.contents)
+			for(var/mob/MI in bodybag.contents)
+				options["[MI.name] ([MI.tag])"] = "\ref[MI]"
+
+	// Machinery
+	else if(istype(target, /obj/machinery))
+		for(var/mob/M in target.contents)
+			options["[M.name] ([M.tag])"] = "\ref[M]"
+
+	else
+		tgui_alert(user,"Unsupported object type! Supported types: /obj/vehicle; /obj/structure/closet; /obj/structure/bodycontainer; /obj/machinery; /obj/item/bodybag.")
+		return
+
+	if(!options.len)
+		tgui_alert(user, "No occupants found!")
+		return
+
+	var/choice = tgui_input_list(user, "Select mob", "Player Panel", options)
+
+	if(choice)
+		var/mob/selected_mob = locate(options[choice])
+		if(selected_mob)
+			SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/show_player_panel, selected_mob)
+		return
+
 /client/proc/cmd_admin_godmode(mob/mob in GLOB.mob_list)
 	set category = "Admin.Game"
 	set name = "Godmode"
