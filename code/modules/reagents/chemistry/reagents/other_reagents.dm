@@ -1207,7 +1207,8 @@
 
 //Mutagenic chem side-effects.
 /datum/reagent/uranium/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	mytray.radioactive_exposure()
+	if(volume >= 2.5)
+		mytray.radioactive_exposure()
 	mytray.myseed?.adjust_instability(round(volume * 0.1))
 	mytray.adjust_toxic(round(0.5 * volume / tox_damage)) // more damage = more
 
