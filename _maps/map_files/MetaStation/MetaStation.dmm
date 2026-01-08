@@ -8094,6 +8094,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"cRQ" = (
+/obj/structure/lattice,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "cRU" = (
 /obj/structure/bed,
 /obj/item/bedsheet/captain,
@@ -117443,7 +117448,7 @@ aye
 dgv
 aye
 dgv
-lMJ
+fJy
 gHI
 eXo
 gHI
@@ -117700,7 +117705,7 @@ aaa
 aaa
 aaa
 aaa
-lMJ
+fJy
 mim
 diD
 gqf
@@ -117957,7 +117962,7 @@ lMJ
 lMJ
 lMJ
 lMJ
-lMJ
+fJy
 gHI
 boq
 gHI
@@ -118214,7 +118219,7 @@ aaa
 aaa
 aaa
 aaa
-cpH
+fJy
 aaa
 dBV
 aaa
@@ -118728,7 +118733,7 @@ rrt
 rrt
 rrt
 lMJ
-lMJ
+cRQ
 aaa
 aaa
 aaa
@@ -118985,7 +118990,7 @@ aaa
 aaa
 lMJ
 aaa
-aaa
+lMJ
 aaa
 aaa
 aaa
@@ -119242,7 +119247,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cpH
 aaa
 nXK
 aaa

@@ -24069,7 +24069,7 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 6
 	},
-/obj/machinery/firealarm/directional/east,
+/obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/large,
 /area/station/engineering/lobby)
 "gJT" = (

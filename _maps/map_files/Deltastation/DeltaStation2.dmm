@@ -4041,6 +4041,7 @@
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/status_display/ai/directional/north,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/engineering/circuit_workshop)
 "aYN" = (
@@ -8720,6 +8721,7 @@
 /obj/item/multitool/circuit{
 	pixel_x = 7
 	},
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/engineering/circuit_workshop)
 "cec" = (
@@ -15191,13 +15193,13 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Break Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
@@ -20127,7 +20129,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/sign/departments/aiupload/directional/south,
 /obj/effect/turf_decal/tile/blue,
-/obj/structure/closet/firecloset,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -22345,7 +22346,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
-/obj/machinery/newscaster/directional/west,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
@@ -24667,7 +24667,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/vending/coffee,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -43984,18 +43983,18 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "kOw" = (
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Circuit Workshop"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/landmark/navigate_destination,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
-/obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Circuit Workshop"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /turf/open/floor/iron/dark,
 /area/station/engineering/circuit_workshop)
@@ -67904,6 +67903,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/item/kirbyplants/photosynthetic,
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "qKO" = (
@@ -93064,6 +93064,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
+"wXR" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/machinery/vending/coffee,
+/turf/open/floor/iron,
+/area/station/engineering/hallway)
 "wXU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -93243,7 +93250,6 @@
 /obj/structure/table,
 /obj/item/clipboard,
 /obj/item/folder/white,
-/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/engineering/circuit_workshop)
 "xaZ" = (
@@ -94340,6 +94346,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
+"xoW" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/engineering/circuit_workshop)
 "xoX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/wood,
@@ -95872,7 +95883,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/item/kirbyplants/photosynthetic,
+/obj/structure/closet/firecloset,
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "xGC" = (
@@ -115858,9 +115869,9 @@ qYo
 ixk
 xZI
 xZI
-xZI
-xZI
-xZI
+xoW
+xoW
+xoW
 xZI
 xZI
 ixk
@@ -118941,7 +118952,7 @@ iME
 pxN
 qYo
 xUy
-tfZ
+wXR
 gaO
 rQp
 mNF
