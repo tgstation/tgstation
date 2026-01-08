@@ -72,7 +72,7 @@
 
 /datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.radioactive_exposure(modifier = volume / 10)
-	mytray.myseed?.adjust_instability(round(volume * 0.2))
+	mytray.myseed?.adjust_instability(round(volume * 0.1))
 
 /datum/reagent/toxin/mutagen/used_on_fish(obj/item/fish/fish)
 	ADD_TRAIT(fish, TRAIT_FISH_MUTAGENIC, type)

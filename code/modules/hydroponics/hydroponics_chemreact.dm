@@ -32,13 +32,13 @@
 		return
 
 	if(prob(min(80, 40 * modifier)))
-		myseed.adjust_instability(4 * modifier)
-		adjust_toxic(2 * modifier) // It is still toxic, mind you
+		myseed.adjust_instability(round(4 * modifier))
+		adjust_toxic(round(2 * modifier)) // It is still toxic, mind you
 		return
 
 	switch(rand(0, 50))
 		if(41 to 50)
-			adjust_plant_health(-5 * modifier)
+			adjust_plant_health(round(-5 * modifier))
 			visible_message(span_warning("\The [myseed.plantname] starts to wilt and burn!"))
 
 		if(21 to 40)
@@ -48,10 +48,10 @@
 			if(modifier >= 0.5)
 				mutateweed()
 			else
-				adjust_weedlevel(1)
+				adjust_weedlevel(max(1, round(modifier)))
 
 		if(0 to 10)
 			if(modifier >= 0.5)
 				mutatepest()
 			else
-				adjust_pestlevel(1)
+				adjust_pestlevel(max(1, round(modifier)))
