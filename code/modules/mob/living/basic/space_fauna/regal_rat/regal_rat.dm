@@ -74,8 +74,7 @@
 
 /mob/living/basic/regal_rat/Login()
 	. = ..()
-	var/datum/action/cooldown/mob_cooldown/domain/domainaction = new(src)
-	domainaction.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/domain)
 
 /mob/living/basic/regal_rat/death(gibbed)
 	var/datum/component/potential_component = GetComponent(/datum/component/ghost_direct_control)
