@@ -227,3 +227,22 @@
   loganuk:
   - map: CATWALK - Mega list of tweaks and changes, review the Pull Request for all
       of them
+2026-01-08:
+  Arceniu:
+  - bugfix: ert commander card properly appear in game, no longer overriding basetype
+      ert card
+  Co0kie-GG:
+  - rscadd: "Glow on AI \u0421ores and IntelliCards"
+  - rscadd: New displays on IntelliCards
+  FalloutFalcon:
+  - bugfix: Brains, a few implants, glands, and all other organs now heal and fail
+      as intended
+  Jacquerel:
+  - bugfix: When you spawn as a plasmaman ninja, you will also have some breathable
+      air in your pocket
+  - qol: When you spawn as a ghost role plasmaman your internals should be enabled
+  lelandkemble:
+  - bugfix: Taking keys out of vehicles puts them in your hands if possible
+  - balance: You can't smell monkeys unless you're next to them, or have a good nose.
+  - balance: wooden barricades mapped on top of objects are now crude barricades,
+      preventing them from materializing when you open a door.

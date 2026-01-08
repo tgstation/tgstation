@@ -52,6 +52,7 @@
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c
 
 	outfit_override_registry = list(
+		/datum/outfit/ninja = /datum/outfit/ninja/plasmaman,
 		/datum/outfit/syndicate = /datum/outfit/syndicate/plasmaman,
 		/datum/outfit/syndicate/full = /datum/outfit/syndicate/full/plasmaman,
 		/datum/outfit/syndicate/leader = /datum/outfit/syndicate/leader/plasmaman,
