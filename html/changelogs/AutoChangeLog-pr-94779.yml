@@ -1,6 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Fixed airlock responses while carrying another mob"
-  - bugfix: "Airlock checks for all possible permits before delaying"
-  - bugfix: "Throwing items at unrestricted airlocks opens them"
