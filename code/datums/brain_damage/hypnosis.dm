@@ -2,6 +2,8 @@
 	name = "Hypnosis"
 	desc = "Patient's unconscious is completely enthralled by a word or sentence, focusing their thoughts and actions on it."
 	scan_desc = "looping thought pattern"
+	symptoms = "Fixates on a specific word or phrase. This fixation can lead to altered behavior, \
+		such as prioritizing actions related to the phrase over other tasks while neglecting work, needs, or social interactions."
 	gain_text = ""
 	lose_text = ""
 	resilience = TRAUMA_RESILIENCE_SURGERY
