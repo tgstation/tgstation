@@ -209,7 +209,6 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupan
 		tgui_alert(user, "No occupants found!")
 		return
 
-
 	var/choice
 	if(options.len == 1)
 		choice = options[1]
