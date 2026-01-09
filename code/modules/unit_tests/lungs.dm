@@ -191,6 +191,11 @@
 
 /// Set up an Lavaland gas mix which is "ideal" for Ashwalker life.
 /datum/unit_test/lungs/proc/create_lavaland_mix()
+	if(!SSair.planetary[LAVALAND_DEFAULT_ATMOS])
+		var/datum/gas_mixture/immutable/planetary/mix = new
+		mix.parse_string_immutable(LAVALAND_DEFAULT_ATMOS)
+		SSair.planetary[LAVALAND_DEFAULT_ATMOS] = mix
+
 	var/datum/gas_mixture/immutable/planetary/lavaland_mix = SSair.planetary[LAVALAND_DEFAULT_ATMOS]
 	var/datum/gas_mixture/test_mix = allocate(/datum/gas_mixture, 2500)
 	test_mix.copy_from(lavaland_mix)

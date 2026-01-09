@@ -2,7 +2,7 @@
 	name = "intelliCard"
 	desc = "A storage device for AIs. Patent pending."
 	icon = 'icons/obj/aicards.dmi'
-	icon_state = "aicard" // aicard-full
+	icon_state = "aicard"
 	base_icon_state = "aicard"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
@@ -27,7 +27,6 @@
 	if(AI)
 		AI.ghostize(can_reenter_corpse = FALSE)
 		QDEL_NULL(AI)
-
 	return ..()
 
 /obj/item/aicard/aitater
@@ -55,7 +54,6 @@
 	else
 		if(capture_ai(interacting_with, user))
 			return ITEM_INTERACT_SUCCESS
-
 	return NONE
 
 /// Tries to get an AI from the atom clicked
@@ -63,11 +61,11 @@
 	from_what.transfer_ai(AI_TRANS_TO_CARD, user, null, src)
 	if(isnull(AI))
 		return FALSE
-
 	log_silicon("[key_name(user)] carded [key_name(AI)]", list(src))
 	update_appearance()
 	AI.cancel_camera()
 	RegisterSignal(AI, COMSIG_MOB_STATCHANGE, PROC_REF(on_ai_stat_change))
+	RegisterSignal(AI, COMSIG_ATOM_UPDATE_ICON, PROC_REF(on_ai_icon_update))
 	return TRUE
 
 /// Tries to upload the AI we have captured to the atom clicked
@@ -76,18 +74,30 @@
 	to_what.transfer_ai(AI_TRANS_FROM_CARD, user, AI, src)
 	if(!isnull(AI))
 		return FALSE
-
 	log_combat(user, old_ai, "uploaded", src, "to [to_what].")
 	update_appearance()
 	old_ai.cancel_camera()
 	UnregisterSignal(old_ai, COMSIG_MOB_STATCHANGE)
+	UnregisterSignal(old_ai, COMSIG_ATOM_UPDATE_ICON)
 	return TRUE
 
 /obj/item/aicard/proc/on_ai_stat_change(datum/source, new_stat, old_stat)
 	SIGNAL_HANDLER
-
 	if(new_stat == DEAD || old_stat == DEAD)
 		update_appearance()
+
+/obj/item/aicard/proc/on_ai_icon_update(datum/source)
+	SIGNAL_HANDLER
+	update_appearance()
+
+/obj/item/aicard/update_appearance(updates)
+	. = ..()
+
+	if(!AI)
+		set_light(0)
+		return
+
+	set_light(0.5, 0.5, LIGHT_COLOR_FAINT_CYAN)
 
 /obj/item/aicard/update_name(updates)
 	. = ..()
@@ -97,17 +107,52 @@
 		name = initial(name)
 
 /obj/item/aicard/update_icon_state()
-	if(AI)
-		icon_state = "[base_icon_state][AI.stat == DEAD ? "-404" : "-full"]"
-	else
-		icon_state = base_icon_state
+	icon_state = base_icon_state
 	return ..()
 
+//Support for different displays
 /obj/item/aicard/update_overlays()
 	. = ..()
-	if(!AI?.control_disabled)
+	if(!AI)
 		return
-	. += "[base_icon_state]-on"
+
+	var/target_skin = AI.display_icon_override || "ai"
+	var/final_state
+	var/state_to_find
+	var/icon/source_icon = icon
+
+	if(AI.stat == DEAD)
+		state_to_find = "[target_skin]_dead"
+	else
+		state_to_find = target_skin
+
+	if(state_to_find in icon_states(icon))
+		final_state = state_to_find
+		source_icon = icon
+
+	else if(state_to_find in icon_states(AI.icon))
+		final_state = state_to_find
+		source_icon = AI.icon
+
+	else
+		source_icon = icon
+		if(AI.stat == DEAD)
+			final_state = "ai_dead"
+		else
+			final_state = "ai"
+
+	. += mutable_appearance(source_icon, final_state)
+	. += emissive_appearance(source_icon, final_state, src, alpha = src.alpha)
+
+	if(AI.control_disabled)
+		var/indicator_state = "[base_icon_state]-off"
+		. += mutable_appearance(icon, indicator_state)
+		. += emissive_appearance(icon, indicator_state, src, alpha = src.alpha)
+
+	if(!AI.control_disabled)
+		var/indicator_state = "[base_icon_state]-on"
+		. += mutable_appearance(icon, indicator_state)
+		. += emissive_appearance(icon, indicator_state, src, alpha = src.alpha)
 
 /obj/item/aicard/ui_state(mob/user)
 	return GLOB.hands_state
@@ -124,7 +169,7 @@
 		data["name"] = AI.name
 		data["laws"] = AI.laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
 		data["health"] = (AI.health + 100) / 2
-		data["wireless"] = !AI.control_disabled //todo disabled->enabled
+		data["wireless"] = !AI.control_disabled
 		data["radio"] = AI.radio_enabled
 		data["isDead"] = AI.stat == DEAD
 		data["isBraindead"] = AI.client ? FALSE : TRUE
@@ -157,9 +202,8 @@
 
 /obj/item/aicard/proc/wipe_ai()
 	set waitfor = FALSE
-
 	if(AI && AI.loc == src)
-		to_chat(AI, span_userdanger("Your core files are being wiped!"))
+		to_chat(AI, span_userdanger("YOUR SYSTEM FILES ARE BEING WIPED!"))
 		while(AI.stat != DEAD && flush)
 			AI.adjust_oxy_loss(5)
 			AI.updatehealth()
@@ -175,3 +219,44 @@
 	new_card.AI = AI
 	new_card.update_appearance()
 	AI = null
+
+// Special Cards
+
+/obj/item/aicard/aitater/update_icon_state()
+	icon_state = base_icon_state
+	return ..()
+
+/obj/item/aicard/aitater/update_overlays()
+	..()
+	. = list()
+
+	if(!AI)
+		return
+
+	var/face_state = "[base_icon_state][AI.stat == DEAD ? "-404" : "-full"]"
+	. += mutable_appearance(icon, face_state)
+	. += emissive_appearance(icon, face_state, src, alpha = src.alpha)
+
+	var/indicator_state = "[base_icon_state][AI.control_disabled ? "-off" : "-on"]"
+	. += mutable_appearance(icon, indicator_state)
+	. += emissive_appearance(icon, indicator_state, src, alpha = src.alpha)
+
+
+/obj/item/aicard/aispook/update_icon_state()
+	icon_state = base_icon_state
+	return ..()
+
+/obj/item/aicard/aispook/update_overlays()
+	..()
+	. = list()
+
+	if(!AI)
+		return
+
+	var/face_state = "[base_icon_state][AI.stat == DEAD ? "-404" : "-full"]"
+	. += mutable_appearance(icon, face_state)
+	. += emissive_appearance(icon, face_state, src, alpha = src.alpha)
+
+	var/indicator_state = "[base_icon_state][AI.control_disabled ? "-off" : "-on"]"
+	. += mutable_appearance(icon, indicator_state)
+	. += emissive_appearance(icon, indicator_state, src, alpha = src.alpha)

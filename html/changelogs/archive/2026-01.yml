@@ -227,3 +227,35 @@
   loganuk:
   - map: CATWALK - Mega list of tweaks and changes, review the Pull Request for all
       of them
+2026-01-08:
+  Arceniu:
+  - bugfix: ert commander card properly appear in game, no longer overriding basetype
+      ert card
+  Co0kie-GG:
+  - rscadd: "Glow on AI \u0421ores and IntelliCards"
+  - rscadd: New displays on IntelliCards
+  FalloutFalcon:
+  - bugfix: Brains, a few implants, glands, and all other organs now heal and fail
+      as intended
+  Jacquerel:
+  - bugfix: When you spawn as a plasmaman ninja, you will also have some breathable
+      air in your pocket
+  - qol: When you spawn as a ghost role plasmaman your internals should be enabled
+  lelandkemble:
+  - bugfix: Taking keys out of vehicles puts them in your hands if possible
+  - balance: You can't smell monkeys unless you're next to them, or have a good nose.
+  - balance: wooden barricades mapped on top of objects are now crude barricades,
+      preventing them from materializing when you open a door.
+2026-01-09:
+  Fghj240:
+  - rscadd: The void stamp is now obtainable
+  - rscadd: The lawdrobe now sells a box of stamps
+  - rscadd: The head of personnel's locker now contains a box of stamps
+  - bugfix: The mod stamper module is now visible
+  Jacquerel:
+  - bugfix: If you use the polymorph belt to turn into a mob which transforms into
+      another mob, it won't ghost you or kick you out upon transformation.
+  LT3:
+  - bugfix: Fixed airlock responses while carrying another mob
+  - bugfix: Airlock checks for all possible permits before delaying
+  - bugfix: Throwing items at unrestricted airlocks opens them
