@@ -113,11 +113,8 @@
 	if (user.zone_selected != BODY_ZONE_HEAD)
 		return ..()
 
-	if(HAS_TRAIT(target_mob, TRAIT_NODISMEMBER))
-		return ..()
-
 	var/obj/item/bodypart/head = target_mob.get_bodypart(BODY_ZONE_HEAD)
-	if (isnull(head))
+	if (!head?.can_dismember())
 		return ..()
 
 	playsound(user, 'sound/items/weapons/slice.ogg', vol = 80, vary = TRUE)
