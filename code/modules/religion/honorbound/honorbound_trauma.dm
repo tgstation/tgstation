@@ -6,6 +6,10 @@
 	name = "Dogmatic Compulsions"
 	desc = "Patient feels compelled to follow supposed \"rules of combat\"."
 	scan_desc = "damaged frontal lobe"
+	symptoms = "Gains a strict code of honor that governs their behavior, \
+		forbidding them from attacking those who are unready, just, or innocent. \
+		This code often leads to strife, both external and internal, \
+		as the patient struggles to reconcile their beliefs with the realities of combat and survival."
 	gain_text = span_notice("You feel honorbound!")
 	lose_text = span_warning("You feel unshackled from your code of honor!")
 	random_gain = FALSE

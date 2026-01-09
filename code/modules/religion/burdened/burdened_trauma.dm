@@ -1,8 +1,12 @@
 ///Burdened grants some mutations upon injuring yourself sufficiently
 /datum/brain_trauma/special/burdened
 	name = "Flagellating Compulsions"
-	desc = "Patient feels compelled to injure themselves in various incapacitating and horrific ways. There seems to be an odd genetic... trigger, following these compulsions may lead to?"
+	desc = "Patient feels compelled to injure themselves in various incapacitating and horrific ways. \
+		There seems to be an odd genetic... trigger, following these compulsions may lead to?"
 	scan_desc = "damaged frontal lobe"
+	symptoms = "Experiences an overwhelming compulsion to self-harm, often engaging in behaviors that lead to significant physical injury. \
+		This compulsion is driven by an intense psychological need to feel pain and suffering, \
+		believing that through this self-inflicted harm, they can achieve a deeper understanding of universal truths and the nature of existence."
 	gain_text = span_notice("You feel burdened!")
 	lose_text = span_warning("You no longer feel the need to burden yourself!")
 	random_gain = FALSE
