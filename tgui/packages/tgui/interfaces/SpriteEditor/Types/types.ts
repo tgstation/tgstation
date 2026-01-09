@@ -51,10 +51,6 @@ export type ClickAndDragEventHandler<T> = (
 
 export type IncludeOrOmitEntireType<T, V> = V | (T & V);
 
-export type CanReturnVoid<F extends (...args: any) => any> =
-  | ((...args: Parameters<F>) => ReturnType<F>)
-  | ((...args: Parameters<F>) => void);
-
 type PickByType<T, V> = {
   [K in keyof T as T[K] extends V ? K : never]: T[K];
 };
