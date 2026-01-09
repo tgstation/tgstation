@@ -36577,6 +36577,7 @@
 /obj/structure/table,
 /obj/item/paper_bin,
 /obj/item/pen,
+/obj/machinery/light/cold/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/engineering/circuit_workshop)
 "iZU" = (
@@ -47214,7 +47215,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
-/obj/machinery/light/cold/directional/west,
 /obj/machinery/bci_implanter,
 /turf/open/floor/iron/dark,
 /area/station/engineering/circuit_workshop)
@@ -75968,6 +75968,7 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/power_store/cell/high,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/circuit_workshop)
 "sJZ" = (
