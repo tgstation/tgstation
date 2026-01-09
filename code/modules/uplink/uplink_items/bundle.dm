@@ -136,7 +136,7 @@
 	name = "United Surplus Crate"
 	desc = "A shiny and large crate to be delivered directly to you via Supply Pod. It has an advanced locking mechanism with an anti-tampering protocol. \
 			It is recommended that you only attempt to open it by having another agent purchase a Surplus Crate Key. Unite and fight. \
-			Rumored to contain a valuable assortment of items based on your current reputation. Contents are sorted to always be worth TC_VALUE_SURPLUS_UNITED TC. \
+			Rumored to contain a valuable assortment of items based on your current reputation. Contents are sorted to always be worth [TC_VALUE_SURPLUS_UNITED] TC. \
 			The Syndicate will only provide one surplus item per agent."
 	cost = 20
 	item = /obj/structure/closet/crate/secure/syndicrate
