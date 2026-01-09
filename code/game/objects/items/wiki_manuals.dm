@@ -40,7 +40,9 @@
 
 // A book that links to the wiki
 /obj/item/book/manual/wiki
-	starting_content = "Nanotrasen presently does not have any resources on this topic. If you would like to know more, contact your local Central Command representative." // safety
+	starting_content = "Nanotrasen presently does not have any resources on this topic. \
+		If you would like to know more, contact your local Central Command representative." // safety
+	abstract_type = /obj/item/book/manual/wiki
 	/// The ending URL of the page that we link to.
 	var/page_link = ""
 
