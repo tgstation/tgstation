@@ -186,3 +186,76 @@
   - refactor: extended atom_skins to be more customizable. Please report any bugs
       to github.
   - bugfix: switching characters in the prefs menu should be less laggy now
+2026-01-07:
+  Absolucy:
+  - refactor: Refactored how mobs target turrets and mechs, which should hopefully
+      be more performant.
+  Jacquerel:
+  - rscdel: It's no longer considered quirky to have Big Hands.
+  - balance: Nightmares are Light Drinkers in addition to being Light Eaters.
+  - bugfix: When you pick up a plant pot and hide behind it you will now also move
+      it in front of you, in case it is visually far away from your position
+  L0pz:
+  - image: Claymore inhans are girthier
+  SapphoQueer:
+  - bugfix: Jaws of life can cuffsnap again.
+  SmArtKar:
+  - image: Sinew on bones from butchered limbs now inherits its owner's blood color
+  SpaceManiac:
+  - bugfix: Wiki books such as "Barman Recipes" and "Space Law" no longer have terrible
+      formatting.
+  - bugfix: Wiki books now properly give book nerd moodlets.
+  SyncIt21:
+  - bugfix: objects mounted in shuttle areas deconstruct when their support structure
+      is destroyed
+  - bugfix: fixes runtime in arrivals shuttle when its request console is destroyed
+  - map: moved around some objects in shuttles so they can be mounted on its walls
+      again
+  - bugfix: removing implant in cybernetic brain works again
+  - bugfix: probability reagent affects scale correctly
+  - balance: reagent affects now scale with the volume of reagent metabolized meaning
+      lower metabolization rates (from like cybernetic organs) yield lower effects
+      & higher rates yield higher effects
+  Y0SH1M4S73R:
+  - bugfix: A fishing rod's materials can only be applied to fish when they are initially
+      spawned from a fishing spot. This means you cannot repeatedly apply a fishing
+      rod's materials to the same single fish to increase its mass without limits.
+  jlsnow301:
+  - bugfix: Fixed an issue in TGUI that caused icons to not load sometimes
+  lelandkemble:
+  - bugfix: intercoms will now visibly have their mic on when constructed manually
+  loganuk:
+  - map: CATWALK - Mega list of tweaks and changes, review the Pull Request for all
+      of them
+2026-01-08:
+  Arceniu:
+  - bugfix: ert commander card properly appear in game, no longer overriding basetype
+      ert card
+  Co0kie-GG:
+  - rscadd: "Glow on AI \u0421ores and IntelliCards"
+  - rscadd: New displays on IntelliCards
+  FalloutFalcon:
+  - bugfix: Brains, a few implants, glands, and all other organs now heal and fail
+      as intended
+  Jacquerel:
+  - bugfix: When you spawn as a plasmaman ninja, you will also have some breathable
+      air in your pocket
+  - qol: When you spawn as a ghost role plasmaman your internals should be enabled
+  lelandkemble:
+  - bugfix: Taking keys out of vehicles puts them in your hands if possible
+  - balance: You can't smell monkeys unless you're next to them, or have a good nose.
+  - balance: wooden barricades mapped on top of objects are now crude barricades,
+      preventing them from materializing when you open a door.
+2026-01-09:
+  Fghj240:
+  - rscadd: The void stamp is now obtainable
+  - rscadd: The lawdrobe now sells a box of stamps
+  - rscadd: The head of personnel's locker now contains a box of stamps
+  - bugfix: The mod stamper module is now visible
+  Jacquerel:
+  - bugfix: If you use the polymorph belt to turn into a mob which transforms into
+      another mob, it won't ghost you or kick you out upon transformation.
+  LT3:
+  - bugfix: Fixed airlock responses while carrying another mob
+  - bugfix: Airlock checks for all possible permits before delaying
+  - bugfix: Throwing items at unrestricted airlocks opens them

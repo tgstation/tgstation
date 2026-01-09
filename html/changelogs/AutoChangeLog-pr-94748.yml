@@ -1,4 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "Fixed an issue in TGUI that caused icons to not load sometimes"

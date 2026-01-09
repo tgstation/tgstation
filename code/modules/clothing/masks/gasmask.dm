@@ -284,6 +284,9 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	fishing_modifier = 0
 	pepper_tint = FALSE
 
+/obj/item/clothing/mask/gas/syndicate/plasmaman
+	starting_filter_type = /obj/item/gas_filter/plasmaman
+
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
