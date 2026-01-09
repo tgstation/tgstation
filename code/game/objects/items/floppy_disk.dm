@@ -311,8 +311,7 @@
 	to_chat(user, span_notice("You merge two stacks of disks together."))
 
 	if(!length(diskstack.stacked_disks))
-		QDEL_IN(diskstack, 0)
-
+		qdel(diskstack)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/disk_stack/proc/on_throw_land()
