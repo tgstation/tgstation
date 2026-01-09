@@ -1,41 +1,45 @@
 import {
   createContext,
-  PropsWithChildren,
+  type PropsWithChildren,
   useCallback,
   useContext,
   useEffect,
   useState,
 } from 'react';
 import { Box, Button, Popper, Stack } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { capitalize } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
+import {
+  AdvancedCanvas,
+  type AdvancedCanvasPropsBase,
+} from './Components/AdvancedCanvas';
+import { ColorPicker, type ColorPickerProps } from './Components/ColorPicker';
+import {
+  LayerManager,
+  type LayerManagerProps,
+} from './Components/LayerManager';
+import { Palette, type PaletteProps } from './Components/Palette';
 import {
   colorsAreEqual,
   colorToHexString,
   parseHexColorString,
 } from './colorSpaces';
-import {
-  AdvancedCanvas,
-  AdvancedCanvasPropsBase,
-} from './Components/AdvancedCanvas';
-import { ColorPicker, ColorPickerProps } from './Components/ColorPicker';
-import { LayerManager, LayerManagerProps } from './Components/LayerManager';
-import { Palette, PaletteProps } from './Components/Palette';
 import { getFlattenedSpriteDir, localizeCoords } from './helpers';
-import { Tool } from './Types/Tool';
+import type { Tool } from './Types/Tool';
 import { Bucket } from './Types/Tools/Bucket';
 import { Eraser } from './Types/Tools/Eraser';
 import { Eyedropper } from './Types/Tools/Eyedropper';
 import { Pencil } from './Types/Tools/Pencil';
 import {
   Dir,
-  EditorColor,
-  SpriteData,
-  SpriteEditorContextType,
+  type EditorColor,
+  type IncludeOrOmitEntireType,
+  type SpriteData,
+  type SpriteEditorContextType,
   SpriteEditorToolFlags,
-  StringLayer,
+  type StringLayer,
 } from './Types/types';
 
 type ToolbarButtonProps = Omit<
@@ -91,7 +95,7 @@ const undoRedoFactory = (type: TransactionType) => {
           mr={0}
           icon={type}
           disabled={stackEmpty}
-          tooltip={`${capitalize(type)}${stackEmpty ? '' : ' ' + stack[stack.length - 1]}`}
+          tooltip={`${capitalize(type)}${stackEmpty ? '' : ` ${stack[stack.length - 1]}`}`}
           onClick={() => action()}
           style={{
             borderTopRightRadius: 0,
@@ -150,7 +154,8 @@ type ServerColorProps = {
   onRemoveServerColor: string;
 };
 
-type ContextPaletteProps = ({} | ServerColorProps) &
+type ContextPaletteProps = IncludeOrOmitEntireType<
+  ServerColorProps,
   Omit<
     PaletteProps,
     | 'colors'
@@ -159,7 +164,8 @@ type ContextPaletteProps = ({} | ServerColorProps) &
     | 'onClickAddColor'
     | 'onRemoveColor'
     | 'canAddColor'
-  >;
+  >
+>;
 
 function HasServerColorProps(
   props: ContextPaletteProps,

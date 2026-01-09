@@ -1,8 +1,8 @@
-import { Dispatch, SetStateAction, useSyncExternalStore } from 'react';
-import { Box } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { Dispatch, SetStateAction, useSyncExternalStore } from 'react';
+import type { Box } from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
 
-import { Tool } from './Tool';
+import type { Tool } from './Tool';
 
 export type RGB = {
   r: number;
@@ -48,6 +48,12 @@ export type ClickAndDragEventHandler<T> = (
   event: MouseEvent,
   ref: React.Ref<T>,
 ) => void;
+
+export type IncludeOrOmitEntireType<T, V> = V | (T & V);
+
+export type CanReturnVoid<F extends (...args: any) => any> =
+  | ((...args: Parameters<F>) => ReturnType<F>)
+  | ((...args: Parameters<F>) => void);
 
 type PickByType<T, V> = {
   [K in keyof T as T[K] extends V ? K : never]: T[K];
@@ -110,13 +116,16 @@ export type ServerColorData = {
   onRemoveServerColor?: string;
 };
 
-export type SpriteEditorData = ({} | ServerColorData) & {
-  colorMode: SpriteEditorColorMode;
-  undoStack: string[];
-  redoStack: string[];
-  toolFlags?: SpriteEditorToolFlags;
-  sprite: SpriteData;
-};
+export type SpriteEditorData = IncludeOrOmitEntireType<
+  ServerColorData,
+  {
+    colorMode: SpriteEditorColorMode;
+    undoStack: string[];
+    redoStack: string[];
+    toolFlags?: SpriteEditorToolFlags;
+    sprite: SpriteData;
+  }
+>;
 
 export type SpriteEditorContextType = {
   colors: EditorColor[];

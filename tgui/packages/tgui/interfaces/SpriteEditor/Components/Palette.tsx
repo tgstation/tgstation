@@ -1,10 +1,10 @@
 import transparency_checkerboard from 'tgui/assets/transparency_checkerboard.svg';
 import { Button, Section, Stack } from 'tgui-core/components';
 import { KEY_DELETE } from 'tgui-core/keycodes';
-import { BooleanStyleMap, StringStyleMap } from 'tgui-core/ui';
+import type { BooleanStyleMap, StringStyleMap } from 'tgui-core/ui';
 
 import { colorsAreEqual, colorToCssString } from '../colorSpaces';
-import { EditorColor } from '../Types/types';
+import type { EditorColor } from '../Types/types';
 
 export type PaletteProps = {
   colors: EditorColor[];

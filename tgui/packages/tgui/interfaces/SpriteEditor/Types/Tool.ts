@@ -1,4 +1,4 @@
-import { SpriteData, SpriteEditorContextType } from './types';
+import type { SpriteData, SpriteEditorContextType } from './types';
 
 export abstract class Tool {
   abstract icon: string;
@@ -9,7 +9,7 @@ export abstract class Tool {
     x: number,
     y: number,
     isRightClick?: boolean,
-  ): boolean | void;
+  ): boolean | undefined;
   onMouseMove?(
     context: SpriteEditorContextType,
     data: SpriteData,

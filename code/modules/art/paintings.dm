@@ -372,9 +372,9 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 /obj/item/canvas/proc/get_data_string()
 	var/list/data = list()
 	var/list/grid = workspace.layers[1]["data"]["[SOUTH]"]
-	for(var/x in 1 to width)
-		for(var/y in 1 to height)
-			data += grid[x][y]
+	for(var/y in 1 to height)
+		for(var/x in 1 to width)
+			data += grid[y][x]
 	return data.Join("")
 
 //Todo make this element ?
@@ -392,7 +392,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 		return pen.colour
 	else if (istype(painting_implement, /obj/item/airlock_painter/decal))
 		var/obj/item/airlock_painter/decal/painter = painting_implement
-		return painter.stored_custom_color
+		return painter.selected_custom_color
 	else if(istype(painting_implement, /obj/item/soap) || istype(painting_implement, /obj/item/rag))
 		return canvas_color
 

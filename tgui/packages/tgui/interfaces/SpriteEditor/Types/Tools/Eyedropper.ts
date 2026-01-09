@@ -1,7 +1,7 @@
 import { parseHexColorString } from '../../colorSpaces';
 import { constrainToIconGrid, getDataPixel } from '../../helpers';
 import { Tool } from '../Tool';
-import { SpriteData, SpriteEditorContextType } from '../types';
+import type { SpriteData, SpriteEditorContextType } from '../types';
 
 export class Eyedropper extends Tool {
   icon = 'eye-dropper';
@@ -14,11 +14,11 @@ export class Eyedropper extends Tool {
     y: number,
     isRightClick?: boolean,
   ) {
-    if (isRightClick) return;
+    if (isRightClick) return undefined;
     const { selectedDir, selectedLayer, setCurrentColor } = context;
     const { width, height } = data;
     const [px, py, inBounds] = constrainToIconGrid(x, y, width, height);
-    if (!inBounds) return;
+    if (!inBounds) return undefined;
     setCurrentColor(
       parseHexColorString(
         getDataPixel(data, selectedLayer, selectedDir, px, py),

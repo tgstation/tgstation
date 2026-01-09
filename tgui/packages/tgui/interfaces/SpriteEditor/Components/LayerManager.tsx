@@ -1,12 +1,12 @@
 import { Box, Button, Icon, Input, Section, Stack } from 'tgui-core/components';
-import { BooleanStyleMap, StringStyleMap } from 'tgui-core/ui';
+import type { BooleanStyleMap, StringStyleMap } from 'tgui-core/ui';
 
 import { useBackend } from '../../../backend';
 import {
   Dir,
-  InlineStyle,
-  SpriteData,
-  SpriteEditorContextType,
+  type InlineStyle,
+  type SpriteData,
+  type SpriteEditorContextType,
 } from '../Types/types';
 import { AdvancedCanvas } from './AdvancedCanvas';
 

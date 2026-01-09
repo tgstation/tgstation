@@ -1,12 +1,8 @@
 import { normal } from 'color-blend';
 import { useCallback, useEffect, useState } from 'react';
 
-import {
-  hsv2rgb,
-  isRgb,
-  parseHexColorString as parseHexColorString,
-} from './colorSpaces';
-import {
+import { hsv2rgb, isRgb, parseHexColorString } from './colorSpaces';
+import type {
   ClickAndDragEventHandler,
   Dir,
   EditorColor,

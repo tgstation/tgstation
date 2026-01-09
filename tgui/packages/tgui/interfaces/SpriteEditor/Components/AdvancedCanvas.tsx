@@ -1,12 +1,17 @@
 import { useLayoutEffect, useRef, useState } from 'react';
-import { BooleanStyleMap, computeBoxProps, StringStyleMap } from 'tgui-core/ui';
+import {
+  type BooleanStyleMap,
+  computeBoxProps,
+  type StringStyleMap,
+} from 'tgui-core/ui';
 
 import transparency_checkerboard from '../../../assets/transparency_checkerboard.svg';
 import { colorToCssString } from '../colorSpaces';
 import { useClickAndDragEventHandler, useDimensions } from '../helpers';
-import {
+import type {
   BorderStyleProps,
   EditorColor,
+  IncludeOrOmitEntireType,
   InlineStyle,
   Layer,
   StringLayer,
@@ -17,7 +22,6 @@ type AdvancedCanvasMouseEventHandler = (
   ref: React.RefObject<HTMLCanvasElement | null>,
 ) => void;
 
-type AdvancedCanvasNoHandlers = {};
 type AdvancedCanvasClickHandler = {
   onClick: AdvancedCanvasMouseEventHandler;
 };
@@ -28,7 +32,6 @@ type AdvancedCanvasClickAndDragHandlers = Partial<{
 }>;
 
 type AdvancedCanvasEventHandlers =
-  | AdvancedCanvasNoHandlers
   | AdvancedCanvasClickHandler
   | AdvancedCanvasClickAndDragHandlers;
 
@@ -40,8 +43,10 @@ export type AdvancedCanvasPropsBase = {
   backdropColor?: string;
 } & Partial<BooleanStyleMap & StringStyleMap & InlineStyle>;
 
-type AdvancedCanvasProps = AdvancedCanvasPropsBase &
-  AdvancedCanvasEventHandlers;
+type AdvancedCanvasProps = IncludeOrOmitEntireType<
+  AdvancedCanvasEventHandlers,
+  AdvancedCanvasPropsBase
+>;
 
 const propsHaveClickHandler = (
   props: AdvancedCanvasProps,

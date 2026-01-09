@@ -1,4 +1,4 @@
-import { EditorColor, HSV, HSVA, RGB, RGBA } from './Types/types';
+import type { EditorColor, HSV, HSVA, RGB, RGBA } from './Types/types';
 
 const rem = (n: number, d: number) => ((n % d) + d) % d;
 
@@ -90,7 +90,7 @@ export const parseHexColorString = (color: string): EditorColor => ({
   r: Number.parseInt(color.substring(1, 3), 16),
   g: Number.parseInt(color.substring(3, 5), 16),
   b: Number.parseInt(color.substring(5, 7), 16),
-  a: color.length >= 9 ? Number.parseInt(color.substring(7, 9), 16)/255 : 1,
+  a: color.length >= 9 ? Number.parseInt(color.substring(7, 9), 16) / 255 : 1,
 });
 
 type BothSpaces = RGBA & HSVA;

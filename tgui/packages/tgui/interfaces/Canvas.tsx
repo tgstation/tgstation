@@ -48,7 +48,7 @@ const ZoomButtons = ({ zoom, setZoom, pixelsPerUnit }: ZoomProps) => (
     <Stack.Item>
       <Button
         icon="search-minus"
-        tooltip="Zoom Out"
+        tooltip="Zoom Out (Shift + Scroll Down)"
         disabled={zoom <= 1}
         onClick={() => setZoom(Math.max(1, zoom - 1 / pixelsPerUnit))}
       />
@@ -56,8 +56,8 @@ const ZoomButtons = ({ zoom, setZoom, pixelsPerUnit }: ZoomProps) => (
     <Stack.Item>
       <Button
         icon="search-plus"
-        tooltip="Zoom In"
-        disabled={zoom >= 2}
+        tooltip="Zoom In (Shift + Scroll Up)"
+        disabled={zoom >= 3}
         onClick={() => setZoom(Math.min(3, zoom + 1 / pixelsPerUnit))}
       />
     </Stack.Item>

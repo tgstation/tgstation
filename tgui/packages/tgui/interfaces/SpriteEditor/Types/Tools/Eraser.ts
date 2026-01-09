@@ -2,8 +2,8 @@ import { useBackend } from '../../../../backend';
 import { parseHexColorString } from '../../colorSpaces';
 import { constrainToIconGrid, copyLayer, getDataPixel } from '../../helpers';
 import { Tool } from '../Tool';
-import { LayerTransaction } from '../Transaction';
-import {
+import type { LayerTransaction } from '../Transaction';
+import type {
   Dir,
   SpriteData,
   SpriteEditorContextType,
@@ -30,7 +30,9 @@ class EraserTransaction implements LayerTransaction {
 
   getPreviewLayer(layer: StringLayer) {
     const outLayer = copyLayer(layer);
-    this.points.values().forEach(([x, y]) => (outLayer[y][x] = '#00000000'));
+    this.points.values().forEach(([x, y]) => {
+      outLayer[y][x] = '#00000000';
+    });
     return outLayer;
   }
 

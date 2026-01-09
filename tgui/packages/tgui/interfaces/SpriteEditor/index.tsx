@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Dropdown, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { SpriteEditorContext } from './Context';
-import { SpriteEditorColorMode, SpriteEditorData } from './Types/types';
+import { SpriteEditorColorMode, type SpriteEditorData } from './Types/types';
 
 export const SpriteEditor = () => {
   const { act, data } = useBackend<SpriteEditorData>();

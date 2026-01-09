@@ -1,4 +1,4 @@
-import { Dir, StringLayer } from './types';
+import type { Dir, StringLayer } from './types';
 
 export interface LayerTransaction {
   dir: Dir;

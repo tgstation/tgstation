@@ -2,9 +2,13 @@ import { useBackend } from '../../../../backend';
 import { colorToHexString } from '../../colorSpaces';
 import { constrainToIconGrid, copyLayer } from '../../helpers';
 import { Tool } from '../Tool';
-import { LayerTransaction } from '../Transaction';
-import { SpriteData, SpriteEditorContextType, StringLayer } from '../types';
-import { Dir } from '../types';
+import type { LayerTransaction } from '../Transaction';
+import type {
+  Dir,
+  SpriteData,
+  SpriteEditorContextType,
+  StringLayer,
+} from '../types';
 
 class PencilTransaction implements LayerTransaction {
   color: string;
@@ -26,7 +30,9 @@ class PencilTransaction implements LayerTransaction {
 
   getPreviewLayer(layer: StringLayer) {
     const outLayer = copyLayer(layer);
-    this.points.values().forEach(([x, y]) => (outLayer[y][x] = this.color));
+    this.points.values().forEach(([x, y]) => {
+      outLayer[y][x] = this.color;
+    });
     return outLayer;
   }
 

@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useRef, useState } from 'react';
+import { type ReactNode, useCallback, useRef, useState } from 'react';
 import transparency_checkerboard from 'tgui/assets/transparency_checkerboard.svg';
 import {
   Box,
@@ -9,8 +9,12 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { clamp01 } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
-import { BooleanStyleMap, computeBoxProps, StringStyleMap } from 'tgui-core/ui';
+import type { BooleanLike } from 'tgui-core/react';
+import {
+  type BooleanStyleMap,
+  computeBoxProps,
+  type StringStyleMap,
+} from 'tgui-core/ui';
 
 import {
   AsBothSpaces,
@@ -18,9 +22,17 @@ import {
   parseHexColorString,
   rgb2hexstring,
 } from '../colorSpaces';
-import { useClickAndDragEventHandler, useDimensions } from '../helpers';
-import { EditorColor, SpriteEditorColorMode } from '../Types/types';
-import { InlineStyle } from '../Types/types';
+import {
+  invLerp,
+  lerp,
+  useClickAndDragEventHandler,
+  useDimensions,
+} from '../helpers';
+import {
+  type EditorColor,
+  type InlineStyle,
+  SpriteEditorColorMode,
+} from '../Types/types';
 
 type TouchpadEventHandler = (
   event: MouseEvent,
@@ -259,6 +271,68 @@ const SatValPad = (props: SatValPadProps) => {
   );
 };
 
+type PickerComponentRowProps = {
+  markerColor: string;
+  whiteMarkerBorder?: boolean;
+  backgroundImage: string;
+  value: number;
+  max: number;
+  unit?: string;
+  numberInputMultiplier?: number;
+  numberInputFormat?: (value: number) => string;
+  onDrag: (number) => void;
+  onRelease: (number) => void;
+};
+
+const PickerComponentRow = (props: PickerComponentRowProps) => {
+  const {
+    markerColor,
+    whiteMarkerBorder = false,
+    backgroundImage,
+    value,
+    max,
+    unit,
+    numberInputMultiplier = 1,
+    numberInputFormat,
+    onDrag,
+    onRelease,
+  } = props;
+
+  return (
+    <Stack fill ml="-3em">
+      <Stack.Item grow>
+        <Slider
+          length="100%"
+          crossLength="1.5em"
+          markerPosition={invLerp(0, max, value)}
+          markerColor={markerColor}
+          markerOutlineColor={whiteMarkerBorder ? 'white' : 'black'}
+          backgroundImage={backgroundImage}
+          onDrag={useCallback((value) => onDrag(lerp(0, max, value)), [onDrag])}
+          onRelease={useCallback(
+            (value) => onRelease(lerp(0, max, value)),
+            [onRelease],
+          )}
+        />
+      </Stack.Item>
+      <Stack.Item>
+        <NumberInput
+          width="5em"
+          minValue={0}
+          maxValue={max * numberInputMultiplier}
+          step={1}
+          onChange={(value) => {
+            onRelease(value / numberInputMultiplier);
+          }}
+          value={value * numberInputMultiplier}
+          format={numberInputFormat}
+          unit={unit}
+        />
+      </Stack.Item>
+    </Stack>
+  );
+};
+
 type ColorPickerCallback = (color: EditorColor) => void;
 
 export type ColorPickerProps = {
@@ -337,293 +411,137 @@ export const ColorPicker = (props: ColorPickerProps) => {
                     maxLength={alpha ? 9 : 7}
                     onChange={(value) => {
                       if (!value.startsWith('#') || value.length < 7) return;
-                      setColor(parseHexColorString(value));
+                      onSelectColor(parseHexColorString(value));
                     }}
                   />
                 </LabeledList.Item>
                 <LabeledList.Divider />
                 <LabeledList.Item verticalAlign="middle" label="H">
-                  <Stack fill ml="-3em">
-                    <Stack.Item grow>
-                      <Slider
-                        length="100%"
-                        crossLength="1.5em"
-                        markerPosition={h / 360}
-                        markerColor={hsva2hslString({ h, s: 1, v: 1, a: 1 })}
-                        backgroundImage="linear-gradient(to right in hsl longer hue, red, red)"
-                        onDrag={(value) =>
-                          setColor({ h: Math.round(value * 360), s, v, a })
-                        }
-                        onRelease={(value) => {
-                          setColor(null);
-                          onSelectColor({
-                            h: Math.round(value * 360),
-                            s,
-                            v,
-                            a,
-                          });
-                        }}
-                      />
-                    </Stack.Item>
-                    <Stack.Item>
-                      <NumberInput
-                        width="5em"
-                        minValue={0}
-                        maxValue={360}
-                        step={1}
-                        onDrag={(value) => setColor({ h: value, s, v, a })}
-                        onChange={(value) => {
-                          setColor(null);
-                          onSelectColor({ h: value, s, v, a });
-                        }}
-                        value={h}
-                        unit="°"
-                      />
-                    </Stack.Item>
-                  </Stack>
+                  <PickerComponentRow
+                    markerColor={hsva2hslString({ h, s: 1, v: 1, a: 1 })}
+                    backgroundImage="linear-gradient(to right in hsl longer hue, red, red)"
+                    value={h}
+                    max={360}
+                    unit="°"
+                    numberInputFormat={(value) => `${Math.round(value)}`}
+                    onDrag={(value) => setColor({ h: value, s, v, a })}
+                    onRelease={(value) => {
+                      setColor(null);
+                      onSelectColor({ h: value, s, v, a });
+                    }}
+                  />
                 </LabeledList.Item>
                 <LabeledList.Item verticalAlign="middle" label="S">
-                  <Stack fill ml="-3em">
-                    <Stack.Item grow>
-                      <Slider
-                        length="100%"
-                        crossLength="1.5em"
-                        markerPosition={s}
-                        markerColor={hsva2hslString({ h, s, v: 1, a: 1 })}
-                        backgroundImage={`linear-gradient(to right, ${hsva2hslString({ h, s: 0, v: 1 })}, ${hsva2hslString({ h, s: 1, v: 1 })})`}
-                        onDrag={(value) => setColor({ h, s: value, v, a })}
-                        onRelease={(value) => {
-                          setColor(null);
-                          onSelectColor({ h, s: value, v, a });
-                        }}
-                      />
-                    </Stack.Item>
-                    <Stack.Item>
-                      <NumberInput
-                        width="5em"
-                        minValue={0}
-                        maxValue={100}
-                        step={1}
-                        onDrag={(value) =>
-                          setColor({ h, s: value / 100, v, a })
-                        }
-                        onChange={(value) => {
-                          setColor(null);
-                          onSelectColor({ h, s: value / 100, v, a });
-                        }}
-                        value={Math.round(s * 1000) / 10}
-                        unit="%"
-                      />
-                    </Stack.Item>
-                  </Stack>
+                  <PickerComponentRow
+                    markerColor={hsva2hslString({ h, s, v: 1, a: 1 })}
+                    backgroundImage={`linear-gradient(to right, ${hsva2hslString({ h, s: 0, v: 1 })}, ${hsva2hslString({ h, s: 1, v: 1 })})`}
+                    value={s}
+                    max={1}
+                    numberInputMultiplier={100}
+                    unit="%"
+                    numberInputFormat={(value) =>
+                      `${Math.round(value * 10) / 10}`
+                    }
+                    onDrag={(value) => setColor({ h, s: value, v, a })}
+                    onRelease={(value) => {
+                      setColor(null);
+                      onSelectColor({ h, s: value, v, a });
+                    }}
+                  />
                 </LabeledList.Item>
                 <LabeledList.Item verticalAlign="middle" label="V">
-                  <Stack fill ml="-3em">
-                    <Stack.Item grow>
-                      <Slider
-                        length="100%"
-                        crossLength="1.5em"
-                        markerPosition={v}
-                        markerColor={hsva2hslString({ h, s, v, a: 1 })}
-                        markerOutlineColor={v > 0.5 ? 'black' : 'white'}
-                        backgroundImage={`linear-gradient(to right, ${hsva2hslString({ h, s, v: 0 })}, ${hsva2hslString({ h, s, v: 1 })})`}
-                        onDrag={(value) => setColor({ h, s, v: value, a })}
-                        onRelease={(value) => {
-                          setColor(null);
-                          onSelectColor({ h, s, v: value, a });
-                        }}
-                      />
-                    </Stack.Item>
-                    <Stack.Item>
-                      <NumberInput
-                        width="5em"
-                        minValue={0}
-                        maxValue={100}
-                        step={1}
-                        onDrag={(value) =>
-                          setColor({ h, s, v: value / 100, a })
-                        }
-                        onChange={(value) => {
-                          setColor(null);
-                          onSelectColor({ h, s, v: value / 100, a });
-                        }}
-                        value={Math.round(v * 1000) / 10}
-                        unit="%"
-                      />
-                    </Stack.Item>
-                  </Stack>
+                  <PickerComponentRow
+                    markerColor={hsva2hslString({ h, s, v, a: 1 })}
+                    whiteMarkerBorder={v < 0.5}
+                    backgroundImage={`linear-gradient(to right, ${hsva2hslString({ h, s, v: 0 })}, ${hsva2hslString({ h, s, v: 1 })})`}
+                    value={v}
+                    max={1}
+                    numberInputMultiplier={100}
+                    unit="%"
+                    numberInputFormat={(value) =>
+                      `${Math.round(value * 10) / 10}`
+                    }
+                    onDrag={(value) => setColor({ h, s, v: value, a })}
+                    onRelease={(value) => {
+                      setColor(null);
+                      onSelectColor({ h, s, v: value, a });
+                    }}
+                  />
                 </LabeledList.Item>
                 <LabeledList.Divider />
                 <LabeledList.Item verticalAlign="middle" label="R">
-                  <Stack fill ml="-3em">
-                    <Stack.Item grow>
-                      <Slider
-                        length="100%"
-                        crossLength="1.5em"
-                        markerPosition={r / 255}
-                        markerColor={`rgb(${r}, 0, 0)`}
-                        markerOutlineColor={r > 128 ? 'black' : 'white'}
-                        backgroundImage="linear-gradient(to right, black, rgb(255, 0, 0))"
-                        onDrag={(value) =>
-                          setColor({ r: Math.round(value * 255), g, b, a })
-                        }
-                        onRelease={(value) => {
-                          setColor(null);
-                          onSelectColor({
-                            r: Math.round(value * 255),
-                            g,
-                            b,
-                            a,
-                          });
-                        }}
-                      />
-                    </Stack.Item>
-                    <Stack.Item>
-                      <NumberInput
-                        width="3.3em"
-                        minValue={0}
-                        maxValue={255}
-                        step={1}
-                        onDrag={(value) => setColor({ r: value, g, b, a })}
-                        onChange={(value) => {
-                          setColor(null);
-                          onSelectColor({ r: value, g, b, a });
-                        }}
-                        value={r}
-                      />
-                    </Stack.Item>
-                  </Stack>
+                  <PickerComponentRow
+                    markerColor={`rgb(${r}, 0, 0)`}
+                    whiteMarkerBorder={r < 128}
+                    backgroundImage="linear-gradient(to right, black, rgb(255, 0, 0))"
+                    value={r}
+                    max={255}
+                    onDrag={(value) =>
+                      setColor({ r: Math.round(value), g, b, a })
+                    }
+                    onRelease={(value) => {
+                      setColor(null);
+                      onSelectColor({ r: Math.round(value), g, b, a });
+                    }}
+                  />
                 </LabeledList.Item>
                 <LabeledList.Item verticalAlign="middle" label="G">
-                  <Stack fill ml="-3em">
-                    <Stack.Item grow>
-                      <Slider
-                        length="100%"
-                        crossLength="1.5em"
-                        markerPosition={g / 255}
-                        markerColor={`rgb(0, ${g}, 0)`}
-                        markerOutlineColor={g > 128 ? 'black' : 'white'}
-                        backgroundImage="linear-gradient(to right, black, rgb(0, 255, 0))"
-                        onDrag={(value) =>
-                          setColor({ r, g: Math.round(value * 255), b, a })
-                        }
-                        onRelease={(value) => {
-                          setColor(null);
-                          onSelectColor({
-                            r,
-                            g: Math.round(value * 255),
-                            b,
-                            a,
-                          });
-                        }}
-                      />
-                    </Stack.Item>
-                    <Stack.Item>
-                      <NumberInput
-                        width="3.3em"
-                        minValue={0}
-                        maxValue={255}
-                        step={1}
-                        onDrag={(value) => setColor({ r, g: value, b, a })}
-                        onChange={(value) => {
-                          setColor(null);
-                          onSelectColor({ r, g: value, b, a });
-                        }}
-                        value={g}
-                      />
-                    </Stack.Item>
-                  </Stack>
+                  <PickerComponentRow
+                    markerColor={`rgb(0, ${g}, 0)`}
+                    whiteMarkerBorder={g < 128}
+                    backgroundImage="linear-gradient(to right, black, rgb(0, 255, 0))"
+                    value={g}
+                    max={255}
+                    onDrag={(value) =>
+                      setColor({ r, g: Math.round(value), b, a })
+                    }
+                    onRelease={(value) => {
+                      setColor(null);
+                      onSelectColor({ r, g: Math.round(value), b, a });
+                    }}
+                  />
                 </LabeledList.Item>
                 <LabeledList.Item verticalAlign="middle" label="B">
-                  <Stack fill ml="-3em">
-                    <Stack.Item grow>
-                      <Slider
-                        length="100%"
-                        crossLength="1.5em"
-                        markerPosition={b / 255}
-                        markerColor={`rgb(0, 0, ${b})`}
-                        markerOutlineColor={b > 128 ? 'black' : 'white'}
-                        backgroundImage="linear-gradient(to right, black, rgb(0, 0, 255))"
-                        onDrag={(value) =>
-                          setColor({ r, g, b: Math.round(value * 255), a })
-                        }
-                        onRelease={(value) => {
-                          setColor(null);
-                          onSelectColor({
-                            r,
-                            g,
-                            b: Math.round(value * 255),
-                            a,
-                          });
-                        }}
-                      />
-                    </Stack.Item>
-                    <Stack.Item>
-                      <NumberInput
-                        width="3.3em"
-                        minValue={0}
-                        maxValue={255}
-                        step={1}
-                        onDrag={(value) => setColor({ r, g, b: value, a })}
-                        onChange={(value) => {
-                          setColor(null);
-                          onSelectColor({ r, g, b: value, a });
-                        }}
-                        value={b}
-                      />
-                    </Stack.Item>
-                  </Stack>
+                  <PickerComponentRow
+                    markerColor={`rgb( 0, 0, ${b})`}
+                    whiteMarkerBorder={b < 128}
+                    backgroundImage="linear-gradient(to right, black, rgb(0, 0, 255))"
+                    value={b}
+                    max={255}
+                    onDrag={(value) =>
+                      setColor({ r, g, b: Math.round(value), a })
+                    }
+                    onRelease={(value) => {
+                      setColor(null);
+                      onSelectColor({ r, g, b: Math.round(value), a });
+                    }}
+                  />
                 </LabeledList.Item>
                 {alpha && (
                   <>
                     <LabeledList.Divider />
                     <LabeledList.Item verticalAlign="middle" label="A">
-                      <Stack fill ml="-3em">
-                        <Stack.Item grow>
-                          <Slider
-                            length="100%"
-                            crossLength="1.5em"
-                            markerPosition={a}
-                            markerColor={`rgba(${r}, ${g}, ${b}, ${a})`}
-                            markerOutlineColor={
-                              Math.max(v, 1 - a) > 0.5 ? 'black' : 'white'
-                            }
-                            backgroundImage={`linear-gradient(to right, rgba(${r}, ${g}, ${b}, 0), rgba(${r}, ${g}, ${b}, 1)), url(${transparency_checkerboard})`}
-                            onDrag={(value) =>
-                              setColor({ ...(color ?? initialColor), a: value })
-                            }
-                            onRelease={(value) => {
-                              setColor(null);
-                              onSelectColor({
-                                ...(color ?? initialColor),
-                                a: value,
-                              });
-                            }}
-                          />
-                        </Stack.Item>
-                        <Stack.Item>
-                          <NumberInput
-                            width="3.3em"
-                            minValue={0}
-                            maxValue={255}
-                            step={1}
-                            onDrag={(value) =>
-                              setColor({
-                                ...(color ?? { r: 0, g: 0, b: 0 }),
-                                a: value / 255,
-                              })
-                            }
-                            onChange={(value) => {
-                              setColor(null);
-                              onSelectColor({
-                                ...(color ?? { r: 0, g: 0, b: 0 }),
-                                a: value / 255,
-                              });
-                            }}
-                            value={Math.round((a ?? 1) * 255)}
-                          />
-                        </Stack.Item>
-                      </Stack>
+                      <PickerComponentRow
+                        markerColor={`rgba(${r}, ${g}, ${b}, ${a})`}
+                        whiteMarkerBorder={Math.max(v, 1 - a) < 0.5}
+                        backgroundImage={`linear-gradient(to right, rgba(${r}, ${g}, ${b}, 0), rgba(${r}, ${g}, ${b}, 1)), url(${transparency_checkerboard})`}
+                        value={a}
+                        max={1}
+                        numberInputMultiplier={255}
+                        onDrag={(value) =>
+                          setColor({
+                            ...(color ?? initialColor),
+                            a: value,
+                          })
+                        }
+                        onRelease={(value) => {
+                          setColor(null);
+                          onSelectColor({
+                            ...(color ?? initialColor),
+                            a: value,
+                          });
+                        }}
+                      />
                     </LabeledList.Item>
                   </>
                 )}
@@ -637,38 +555,19 @@ export const ColorPicker = (props: ColorPickerProps) => {
         <Section {...rest}>
           <LabeledList>
             <LabeledList.Item verticalAlign="middle" label="V">
-              <Stack fill ml="-3em">
-                <Stack.Item grow>
-                  <Slider
-                    length="100%"
-                    crossLength="1.5em"
-                    markerPosition={v}
-                    markerColor={hsva2hslString({ h, s, v, a: 1 })}
-                    markerOutlineColor={v > 0.5 ? 'black' : 'white'}
-                    backgroundImage={`linear-gradient(to right, ${hsva2hslString({ h, s, v: 0 })}, ${hsva2hslString({ h, s, v: 1 })})`}
-                    onDrag={(value) => setColor({ h, s, v: value, a })}
-                    onRelease={(value) => {
-                      setColor(null);
-                      onSelectColor({ h, s, v: value, a });
-                    }}
-                  />
-                </Stack.Item>
-                <Stack.Item>
-                  <NumberInput
-                    width="5em"
-                    minValue={0}
-                    maxValue={100}
-                    step={1}
-                    onDrag={(value) => setColor({ h, s, v: value / 100, a })}
-                    onChange={(value) => {
-                      setColor(null);
-                      onSelectColor({ h, s, v: value / 100, a });
-                    }}
-                    value={Math.round(v * 1000) / 10}
-                    unit="%"
-                  />
-                </Stack.Item>
-              </Stack>
+              <PickerComponentRow
+                markerColor={hsva2hslString({ h, s, v, a: 1 })}
+                whiteMarkerBorder={v < 0.5}
+                backgroundImage={`linear-gradient(to right, ${hsva2hslString({ h, s, v: 0 })}, ${hsva2hslString({ h, s, v: 1 })})`}
+                value={v}
+                max={100}
+                unit="%"
+                onDrag={(value) => setColor({ h, s, v: value, a })}
+                onRelease={(value) => {
+                  setColor(null);
+                  onSelectColor({ h, s, v: value, a });
+                }}
+              />
             </LabeledList.Item>
           </LabeledList>
         </Section>
