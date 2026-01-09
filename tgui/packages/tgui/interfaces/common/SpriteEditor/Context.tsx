@@ -10,7 +10,7 @@ import { Box, Button, Popper, Stack } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 import { capitalize } from 'tgui-core/string';
 
-import { useBackend } from '../../backend';
+import { useBackend } from '../../../backend';
 import {
   AdvancedCanvas,
   type AdvancedCanvasPropsBase,

@@ -1,7 +1,7 @@
 import { Box, Button, Icon, Input, Section, Stack } from 'tgui-core/components';
 import type { BooleanStyleMap, StringStyleMap } from 'tgui-core/ui';
 
-import { useBackend } from '../../../backend';
+import { useBackend } from '../../../../backend';
 import {
   Dir,
   type InlineStyle,

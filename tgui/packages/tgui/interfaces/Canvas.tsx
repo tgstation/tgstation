@@ -9,10 +9,10 @@ import { Window } from '../layouts';
 import {
   AdvancedCanvas,
   type AdvancedCanvasPropsBase,
-} from './SpriteEditor/Components/AdvancedCanvas';
-import { SpriteEditorContext } from './SpriteEditor/Context';
-import { hasServerColorData } from './SpriteEditor/helpers';
-import { Dir, type SpriteEditorData } from './SpriteEditor/Types/types';
+} from './common/SpriteEditor/Components/AdvancedCanvas';
+import { SpriteEditorContext } from './common/SpriteEditor/Context';
+import { hasServerColorData } from './common/SpriteEditor/helpers';
+import { Dir, type SpriteEditorData } from './common/SpriteEditor/Types/types';
 
 type CanvasMetadata = {
   title: string;

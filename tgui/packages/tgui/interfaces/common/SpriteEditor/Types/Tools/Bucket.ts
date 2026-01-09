@@ -1,4 +1,4 @@
-import { useBackend } from '../../../../backend';
+import { useBackend } from '../../../../../backend';
 import { colorToHexString } from '../../colorSpaces';
 import { constrainToIconGrid } from '../../helpers';
 import { Tool } from '../Tool';
