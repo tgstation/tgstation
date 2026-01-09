@@ -124,7 +124,7 @@ export const AdvancedCanvas = (props: AdvancedCanvasProps) => {
       context.fillStyle = backdropColor;
       context.fillRect(0, 0, canvasWidth, canvasHeight);
     }
-    data.forEach((row: string[] | EditorColor[], y) =>
+    data.forEach((row: string[] | EditorColor[], y) => {
       row.forEach((pixel: string | EditorColor, x) => {
         context.fillStyle =
           typeof pixel === 'string' ? pixel : colorToCssString(pixel);
@@ -134,8 +134,8 @@ export const AdvancedCanvas = (props: AdvancedCanvasProps) => {
           scalingFactor,
           scalingFactor,
         );
-      }),
-    );
+      });
+    });
     if (showGrid && scalingFactor >= 5) {
       context.beginPath();
       context.strokeStyle = 'black';
