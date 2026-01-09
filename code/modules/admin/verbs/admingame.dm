@@ -156,46 +156,46 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupan
 
 	// Vehicles
 	if(istype(target, /obj/vehicle))
-		var/obj/vehicle/V = target
-		if(istype(V.occupants, /list) && V.occupants.len)
-			for(var/mob/M in V.occupants)
-				options["[M.name] ([M.tag])[V.is_driver(M) ? " (Driver)" : ""]"] = "\ref[M]"
+		var/obj/vehicle/target_vehicle = target
+		if(istype(target_vehicle.occupants, /list) && target_vehicle.occupants.len)
+			for(var/mob/mob_occupant in target_vehicle.occupants)
+				options["[mob_occupant.name] ([mob_occupant.tag])[target_vehicle.is_driver(mob_occupant) ? " (Driver)" : ""]"] = "\ref[mob_occupant]"
 
 	// Closets, crates, bodybags, coffins, etc.
 	else if(istype(target, /obj/structure/closet))
-		for(var/mob/M in target.contents)
-			options["[M.name] ([M.tag])"] = "\ref[M]"
-		// Searching for mobs in bodybags placed inside body closet
-		for(var/obj/structure/closet/B in target.contents)
-			for(var/mob/MB in B.contents)
-				options["[MB.name] ([MB.tag])"] = "\ref[MB]"
+		for(var/mob/mob_occupant in target.contents)
+			options["[mob_occupant.name] ([mob_occupant.tag])"] = "\ref[mob_occupant]"
+		// Searching for mobs in bodybags placed inside closet
+		for(var/obj/structure/closet/obj_contents in target.contents)
+			for(var/mob/mob_in_bodybag in obj_contents.contents)
+				options["[mob_in_bodybag.name] ([mob_in_bodybag.tag])"] = "\ref[mob_in_bodybag]"
 		// That's basically the same for folded bodybags (e.g. bluespace bodybags with mobs inside)
-		for(var/obj/item/bodybag in target.contents)
-			for(var/mob/MI in bodybag.contents)
-				options["[MI.name] ([MI.tag])"] = "\ref[MI]"
+		for(var/obj/item/bodybag/obj_contents_folded in target.contents)
+			for(var/mob/mob_in_bodybag_folded in obj_contents_folded.contents)
+				options["[mob_in_bodybag_folded.name] ([mob_in_bodybag_folded.tag])"] = "\ref[mob_in_bodybag_folded]"
 
 	// Folded bodybags (e.g. bluespace bodybags with mobs inside)
 	else if(istype(target, /obj/item/bodybag))
-		for(var/mob/M in target.contents)
-			options["[M.name] ([M.tag])"] = "\ref[M]"
+		for(var/mob/mob_occupant in target.contents)
+			options["[mob_occupant.name] ([mob_occupant.tag])"] = "\ref[mob_occupant]"
 
 	// Body containers
 	else if(istype(target, /obj/structure/bodycontainer))
-		for(var/mob/M in target.contents)
-			options["[M.name] ([M.tag])"] = "\ref[M]"
+		for(var/mob/mob_occupant in target.contents)
+			options["[mob_occupant.name] ([mob_occupant.tag])"] = "\ref[mob_occupant]"
 		// Searching for mobs in bodybags placed inside body container
-		for(var/obj/structure/closet/B in target.contents)
-			for(var/mob/MB in B.contents)
-				options["[MB.name] ([MB.tag])"] = "\ref[MB]"
+		for(var/obj/structure/closet/obj_contents in target.contents)
+			for(var/mob/mob_in_bodybag in obj_contents.contents)
+				options["[mob_in_bodybag.name] ([mob_in_bodybag.tag])"] = "\ref[mob_in_bodybag]"
 		// That's basically the same for folded bodybags (e.g. bluespace bodybags with mobs inside)
-		for(var/obj/item/bodybag in target.contents)
-			for(var/mob/MI in bodybag.contents)
-				options["[MI.name] ([MI.tag])"] = "\ref[MI]"
+		for(var/obj/item/bodybag/obj_contents_folded in target.contents)
+			for(var/mob/mob_in_bodybag_folded in obj_contents_folded.contents)
+				options["[mob_in_bodybag_folded.name] ([mob_in_bodybag_folded.tag])"] = "\ref[mob_in_bodybag_folded]"
 
 	// Machinery
 	else if(istype(target, /obj/machinery))
-		for(var/mob/M in target.contents)
-			options["[M.name] ([M.tag])"] = "\ref[M]"
+		for(var/mob/mob_occupant in target.contents)
+			options["[mob_occupant.name] ([mob_occupant.tag])"] = "\ref[mob_occupant]"
 
 	else
 		tgui_alert(user,"Unsupported object type! Supported types: /obj/vehicle; /obj/structure/closet; /obj/structure/bodycontainer; /obj/machinery; /obj/item/bodybag.")
