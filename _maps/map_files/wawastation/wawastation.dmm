@@ -7605,6 +7605,7 @@
 	dir = 9
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/engineering/circuit_workshop)
 "cLd" = (
@@ -17416,7 +17417,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/circuit_workshop)
 "gbv" = (
@@ -60458,7 +60458,7 @@
 /obj/structure/table,
 /obj/item/mmi,
 /obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/engineering/circuit_workshop)
 "uDZ" = (
