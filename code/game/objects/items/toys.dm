@@ -16,7 +16,7 @@
  * Toy big red button
  * Beach ball
  * Toy xeno
- *      Kitty toys!
+ * Kitty toys!
  * Snowballs
  * Clockwork Watches
  * Toy Daggers
@@ -25,6 +25,7 @@
  * Fake heretic codex
  * Fake Pierced Reality
  * Intento
+ * Extendo hand
  */
 /obj/item/toy
 	abstract_type = /obj/item/toy
@@ -1846,3 +1847,27 @@ GLOBAL_LIST_EMPTY(intento_players)
 	attack_verb_simple = list("smack", "club", "wack", "vendor")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
+
+/obj/item/extendohand
+	name = "extendo-hand"
+	desc = "Futuristic tech has allowed these classic spring-boxing toys to essentially act as a fully functional hand-operated hand prosthetic."
+	icon = 'icons/obj/toys/toy.dmi'
+	icon_state = "extendohand"
+	inhand_icon_state = "extendohand"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	force = 0
+	throwforce = 5
+	reach = 2
+	var/min_reach = 2
+
+/obj/item/extendohand/acme
+	name = "\improper ACME Extendo-Hand"
+	desc = "A novelty extendo-hand produced by the ACME corporation. Originally designed to knock out roadrunners."
+
+/obj/item/extendohand/attack(atom/M, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
+	var/dist = get_dist(M, user)
+	if(dist < min_reach)
+		to_chat(user, span_warning("[M] is too close to use [src] on."))
+		return
+	M.attack_hand(user, modifiers)
