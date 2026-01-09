@@ -78,7 +78,7 @@
 	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	/// Value of items inside the crate in TC
-	var/crate_tc_value = TC_VALUE_SURPLUS_INDIVIDUAL
+	var/crate_tc_value = [TC_VALUE_SURPLUS_INDIVIDUAL]
 	/// crate that will be used for the surplus crate
 	var/crate_type = /obj/structure/closet/crate
 
@@ -141,7 +141,7 @@
 	cost = 20
 	item = /obj/structure/closet/crate/secure/syndicrate
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
-	crate_tc_value = TC_VALUE_SURPLUS_UNITED
+	crate_tc_value = [TC_VALUE_SURPLUS_UNITED]
 	crate_type = /obj/structure/closet/crate/secure/syndicrate
 
 /// edited version of fill crate for super surplus to ensure it can only be unlocked with the syndicrate key
