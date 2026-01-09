@@ -1,7 +1,0 @@
-author: "Fghj240"
-delete-after: True
-changes:
-  - rscadd: "The void stamp is now obtainable"
-  - rscadd: "The lawdrobe now sells a box of stamps"
-  - rscadd: "The head of personnel's locker now contains a box of stamps"
-  - bugfix: "The mod stamper module is now visible"
