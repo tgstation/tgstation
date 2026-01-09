@@ -50,7 +50,7 @@
 			"name" = full_capitalize(escape_value(fish::name)),
 			"icon" = filename,
 			"description" = description,
-			"size_weight" = "[fish::average_size]cm / [fish::average_weight]g",
+			"size_weight" = "[fish::average_size] cm / [fish::average_weight] kiloclam",
 			"fluid" = escape_value(fish::required_fluid_type),
 			"temperature" = "Doesn't matter",
 			"stable_population" = fish::stable_population,

@@ -7,6 +7,10 @@
 	name = "Imaginary Friend"
 	desc = "Patient can see and hear an imaginary person."
 	scan_desc = "partial schizophrenia"
+	symptoms = "Exhibits signs of interacting with an unseen individual, including talking to themselves, \
+		responding to unheard stimuli, and displaying behaviors that suggest the presence of a companion. \
+		This \"imaginary friend\" may influence the patient's actions and emotional state, \
+		leading to social withdrawal, altered perceptions of reality, or atypical activities."
 	gain_text = span_notice("You feel in good company, for some reason.")
 	lose_text = span_warning("You feel lonely again.")
 	var/mob/eye/imaginary_friend/friend
@@ -20,7 +24,7 @@
 	make_friend()
 	get_ghost()
 
-/datum/brain_trauma/special/imaginary_friend/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/imaginary_friend/on_life(seconds_per_tick)
 	if(get_dist(owner, friend) > 9)
 		friend.recall()
 	if(!friend)
@@ -509,6 +513,7 @@
 	gain_text = ""
 	lose_text = ""
 	random_gain = FALSE
+	known_trauma = FALSE
 
 /datum/brain_trauma/special/imaginary_friend/trapped_owner/make_friend()
 	friend = new /mob/eye/imaginary_friend/trapped(get_turf(owner), src)

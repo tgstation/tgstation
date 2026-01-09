@@ -87,7 +87,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	if(src.has_water_reclaimer)
 		reagents.add_reagent(reagent_id, reagent_capacity)
 	soundloop = new(src, FALSE)
-	AddComponent(/datum/component/plumbing/simple_demand, extend_pipe_to_edge = TRUE)
+	AddComponent(/datum/component/plumbing/simple_demand/extended)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 		COMSIG_ATOM_EXITED = PROC_REF(on_exited),
@@ -388,7 +388,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 /obj/structure/showerframe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 
 /obj/structure/showerframe/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(tool, /obj/item/stock_parts/water_recycler))

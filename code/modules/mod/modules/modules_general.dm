@@ -2,11 +2,11 @@
 
 ///Storage - Adds a storage component to the suit.
 /obj/item/mod/module/storage
-	name = "MOD storage module"
+	name = "MOD compact storage module"
 	desc = "What amounts to a series of integrated storage compartments and specialized pockets installed across \
-		the surface of the suit, useful for storing various bits, and or bobs."
+		the surface of the suit, useful for storing various bits, and or bobs. This version has been trimmed down to save space."
 	icon_state = "storage"
-	complexity = 3
+	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/plate_compression)
 	required_slots = list(ITEM_SLOT_BACK)
 	/// Max weight class of items in the storage.
@@ -55,10 +55,11 @@
 	mod.wearer.temporarilyRemoveItemFromInventory(mod.wearer.s_store)
 
 /obj/item/mod/module/storage/large_capacity
-	name = "MOD expanded storage module"
+	name = "MOD storage module"
 	desc = "Reverse engineered by Nakamura Engineering from Donk Company designs, this system of hidden compartments \
 		is entirely within the suit, distributing items and weight evenly to ensure a comfortable experience for the user; \
 		whether smuggling, or simply hauling."
+	complexity = 3
 	icon_state = "storage_large"
 	max_combined_w_class = 21
 	max_items = 14
@@ -69,6 +70,7 @@
 		esoteric technology to compress the physical matter of items put inside of them, \
 		essentially shrinking items for much easier and more portable storage."
 	icon_state = "storage_syndi"
+	complexity = 3
 	max_combined_w_class = 30
 	max_items = 21
 
@@ -88,6 +90,7 @@
 	name = "MOD bluespace storage module"
 	desc = "A storage system developed by Nanotrasen, these compartments employ \
 		miniaturized bluespace pockets for the ultimate in storage technology; regardless of the weight of objects put inside."
+	complexity = 3
 	icon_state = "storage_large"
 	max_w_class = WEIGHT_CLASS_GIGANTIC
 	max_combined_w_class = 60
@@ -473,7 +476,7 @@
 /obj/item/mod/module/flashlight/configure_edit(key, value)
 	switch(key)
 		if("light_color")
-			value = input(usr, "Pick new light color", "Flashlight Color") as color|null
+			value = tgui_color_picker(usr, "Pick new light color", "Flashlight Color")
 			if(!value)
 				return
 			if(is_color_dark(value, 50))
@@ -827,7 +830,7 @@
 	)
 	/// Materials that will be extracted.
 	var/list/accepted_mats
-	var/datum/component/material_container/container
+	var/datum/material_container/container
 
 /obj/item/mod/module/recycler/Initialize(mapload)
 	. = ..()
@@ -835,8 +838,8 @@
 	if(!length(accepted_mats))
 		accepted_mats = SSmaterials.materials_by_category[MAT_CATEGORY_SILO]
 
-	container = AddComponent( \
-		/datum/component/material_container, \
+	container = new ( \
+		src, \
 		accepted_mats, \
 		50 * SHEET_MATERIAL_AMOUNT, \
 		MATCONTAINER_EXAMINE | MATCONTAINER_NO_INSERT, \
@@ -846,7 +849,7 @@
 	)
 
 /obj/item/mod/module/recycler/Destroy()
-	container = null
+	QDEL_NULL(container)
 	return ..()
 
 /obj/item/mod/module/recycler/on_activation(mob/activator)
@@ -1005,19 +1008,19 @@
 	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
 	if(!gloves)
 		return
-	gloves.AddComponent(/datum/component/adjust_fishing_difficulty, -5)
+	gloves.AddElement(/datum/element/adjust_fishing_difficulty, -5)
 	if(equipped)
 		gloves.AddComponent(/datum/component/profound_fisher, equipped, delete_rod_when_deleted = FALSE)
 
 /obj/item/mod/module/fishing_glove/on_part_deactivation(deleting = FALSE)
 	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
 	if(gloves && !deleting)
-		qdel(gloves.GetComponent(/datum/component/adjust_fishing_difficulty))
+		gloves.RemoveElement(/datum/element/adjust_fishing_difficulty)
 		qdel(gloves.GetComponent(/datum/component/profound_fisher))
 
 /obj/item/mod/module/shock_absorber
 	name = "MOD shock absorption module"
-	desc = "A module that makes the user resistant to the knockdown inflicted by Stun Batons."
+	desc = "A module that makes the user resistant to the knockdown and CNS disruption inflicted by Stun Batons."
 	icon_state = "no_baton"
 	complexity = 1
 	use_energy_cost = DEFAULT_CHARGE_DRAIN

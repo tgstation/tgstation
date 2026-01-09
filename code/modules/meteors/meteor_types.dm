@@ -42,6 +42,12 @@
 	SSaugury.register_doom(src, threat)
 	SpinAnimation()
 	chase_target(target)
+	AddComponent(
+		/datum/component/meteor_combat, \
+		CALLBACK(src, PROC_REF(redirect)), \
+		CALLBACK(src, PROC_REF(make_debris)), \
+		achievement_on = !istype(src, /obj/effect/meteor/sand), \
+	)
 
 /obj/effect/meteor/Destroy()
 	GLOB.meteor_list -= src
@@ -121,46 +127,7 @@
 		. += span_notice("On second thought, it doesn't look too tough.")
 	check_examine_award(user)
 
-/obj/effect/meteor/attack_hand(mob/user, list/modifiers)
-	if(!isliving(user))
-		return ..()
-	var/mob/living/livinguser = user
-
-	if(livinguser.combat_mode && livinguser.mind?.get_skill_level(/datum/skill/athletics) >= SKILL_LEVEL_LEGENDARY)
-		check_punch_award(livinguser)
-		playsound(loc, SFX_PUNCH, 50, TRUE)
-		redirect(livinguser)
-		return TRUE
-
-	return ..()
-
-/obj/effect/meteor/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour == TOOL_MINING)
-		make_debris()
-		qdel(src)
-
-	else if	(istype(attacking_item, /obj/item/melee/baseball_bat))
-		if(user.mind?.get_skill_level(/datum/skill/athletics) >= SKILL_LEVEL_EXPERT)
-			playsound(src, 'sound/items/baseballhit.ogg', 100, TRUE)
-			redirect(user)
-			return TRUE
-		to_chat(user, span_warning("\The [src] is too heavy for you!"))
-
-	else if (istype(attacking_item, /obj/item/melee/powerfist))
-		var/obj/item/melee/powerfist/fist = attacking_item
-		if(!fist.tank)
-			to_chat(user, span_warning("\The [fist] has no gas tank!"))
-			return ..()
-		var/datum/gas_mixture/gas_used = fist.tank.remove_air(fist.gas_per_fist * 3) // 3 is HIGH_PRESSURE setting on powerfist.
-		if(!gas_used || !molar_cmp_equals(gas_used.total_moles(), fist.gas_per_fist * 3))
-			to_chat(user, span_warning("\The [fist] didn't have enough gas to budge \the [src]!"))
-			return ..()
-		playsound(src, 'sound/items/weapons/resonator_blast.ogg', 50, TRUE)
-		redirect(user)
-		return TRUE
-
-	return ..()
-
+///Called by component/meteor_combat to send us moving to the edge of the map away from whoever punched us
 /obj/effect/meteor/proc/redirect(mob/athlete)
 	dest = spaceDebrisStartLoc(get_cardinal_dir(athlete, src), z)
 	chase_target(dest)
@@ -199,10 +166,6 @@
 	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
 		user.client.give_award(/datum/award/achievement/misc/meteor_examine, user)
 
-
-/obj/effect/meteor/proc/check_punch_award(mob/user)
-	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
-		user.client.give_award(/datum/award/achievement/misc/meteor_punch, user)
 
 /**
  * Handles the meteor's interaction with meteor shields.
@@ -246,9 +209,6 @@
 	return ..()
 
 /obj/effect/meteor/sand/check_examine_award(mob/user) //Too insignificant and predictable to warrant an award.
-	return
-
-/obj/effect/meteor/sand/check_punch_award(mob/user)
 	return
 
 //Dust

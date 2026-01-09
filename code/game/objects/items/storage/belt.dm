@@ -343,7 +343,7 @@
 /obj/item/storage/belt/champion/Initialize(mapload)
 	. = ..()
 
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
+	AddElement(/datum/element/adjust_fishing_difficulty, -2)
 
 /obj/item/storage/belt/military
 	name = "chest rig"
@@ -454,7 +454,7 @@
 		/obj/item/grenade/syndieminibomb = 2,
 		/obj/item/multitool = 1,
 		/obj/item/screwdriver = 1,
-	),src)
+	), src)
 
 
 /obj/item/storage/belt/wands

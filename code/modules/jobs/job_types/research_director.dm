@@ -1,7 +1,7 @@
 /datum/job/research_director
 	title = JOB_RESEARCH_DIRECTOR
 	description = "Supervise research efforts, ensure Robotics is in working \
-		order, make sure the AI and its Cyborgs aren't rogue, replacing them if \
+		order, make sure the AI and its Cyborgs aren't rogue, replace them if \
 		they are."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	head_announce = RADIO_CHANNEL_SCIENCE
@@ -28,7 +28,7 @@
 	paycheck_department = ACCOUNT_SCI
 
 	mind_traits = list(HEAD_OF_STAFF_MIND_TRAITS)
-	liver_traits = list(TRAIT_ROYAL_METABOLISM, TRAIT_BALLMER_SCIENTIST)
+	liver_traits = list(TRAIT_ROYAL_METABOLISM, TRAIT_SCIENTIST_LIVER)
 
 	display_order = JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR
 	bounty_types = CIV_JOB_SCI
