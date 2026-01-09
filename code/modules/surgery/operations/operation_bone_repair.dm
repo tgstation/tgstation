@@ -1,3 +1,70 @@
+// Surgical analog to manual dislocation treatment
+/datum/surgery_operation/limb/repair_dislocation
+	name = "reset dislocation"
+	desc = "Reset a dislocated bone in a patient's limb. \
+		Similar to the field procedure, but quicker and safer due to being performed in a controlled environment."
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED | OPERATION_AFFECTS_MOOD | OPERATION_STANDING_ALLOWED
+	implements = list(
+		TOOL_BONESET = 1,
+		TOOL_CROWBAR = 2,
+		IMPLEMENT_HAND = 5,
+	)
+	time = 2.4 SECONDS
+
+/datum/surgery_operation/limb/repair_dislocation/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, tool)
+	. = ..()
+	for(var/datum/wound/blunt/bone/bone_wound in limb.wounds)
+		if(HAS_TRAIT(bone_wound, TRAIT_WOUND_SCANNED) && (TOOL_BONESET in bone_wound.treatable_tools))
+			. *= 0.5
+
+/datum/surgery_operation/limb/repair_dislocation/get_default_radial_image()
+	return image(/obj/item/bonesetter)
+
+/datum/surgery_operation/limb/repair_dislocation/all_required_strings()
+	return list("the limb must be dislocated") + ..()
+
+/datum/surgery_operation/limb/repair_dislocation/state_check(obj/item/bodypart/limb)
+	for(var/datum/wound/blunt/bone/bone_wound in limb.wounds)
+		if(TOOL_BONESET in bone_wound.treatable_tools)
+			return TRUE
+
+	return FALSE
+
+/datum/surgery_operation/limb/repair_dislocation/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+	display_results(
+		surgeon,
+		limb.owner,
+		span_notice("You begin to reset the dislocation in [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to reset the dislocation in [FORMAT_LIMB_OWNER(limb)] with [tool]."),
+		span_notice("[surgeon] begins to reset the dislocation in [FORMAT_LIMB_OWNER(limb)]."),
+	)
+	display_pain(limb.owner, "Your [limb.plaintext_zone] aches with pain!")
+
+/datum/surgery_operation/limb/repair_dislocation/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+	for(var/datum/wound/blunt/bone/bone_wound in limb.wounds)
+		if(TOOL_BONESET in bone_wound.treatable_tools)
+			qdel(bone_wound)
+
+	display_results(
+		surgeon,
+		limb.owner,
+		span_notice("You successfully reset the dislocation in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully resets the dislocation in [FORMAT_LIMB_OWNER(limb)]!"),
+		span_notice("[surgeon] successfully resets the dislocation in [FORMAT_LIMB_OWNER(limb)]!"),
+	)
+	display_pain(limb.owner, "Your [limb.plaintext_zone] feels much better now!")
+
+/datum/surgery_operation/limb/repair_dislocation/on_failure(obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
+	display_results(
+		surgeon,
+		limb.owner,
+		span_notice("You fail to reset the dislocation in [FORMAT_LIMB_OWNER(limb)], causing further damage!"),
+		span_notice("[surgeon] fails to reset the dislocation in [FORMAT_LIMB_OWNER(limb)], causing further damage!"),
+		span_notice("[surgeon] fails to reset the dislocation in [FORMAT_LIMB_OWNER(limb)]!"),
+	)
+	display_pain(limb.owner, "The pain in your [limb.plaintext_zone] intensifies!")
+	limb.receive_damage(25, damage_source = tool)
+
 /datum/surgery_operation/limb/repair_hairline
 	name = "repair hairline fracture"
 	desc = "Mend a hairline fracture in a patient's bone."
@@ -11,6 +78,12 @@
 	)
 	time = 4 SECONDS
 	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
+
+/datum/surgery_operation/limb/repair_hairline/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, tool)
+	. = ..()
+	for(var/datum/wound/blunt/bone/critical/bone_wound in limb.wounds)
+		if(HAS_TRAIT(bone_wound, TRAIT_WOUND_SCANNED))
+			. *= 0.5
 
 /datum/surgery_operation/limb/repair_hairline/get_default_radial_image()
 	return image(/obj/item/bonesetter)
@@ -59,6 +132,12 @@
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 
+/datum/surgery_operation/limb/reset_compound/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, tool)
+	. = ..()
+	for(var/datum/wound/blunt/bone/severe/bone_wound in limb.wounds)
+		if(HAS_TRAIT(bone_wound, TRAIT_WOUND_SCANNED))
+			. *= 0.5
+
 /datum/surgery_operation/limb/reset_compound/get_default_radial_image()
 	return image(/obj/item/bonesetter)
 
@@ -106,6 +185,12 @@
 	time = 4 SECONDS
 	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
 
+/datum/surgery_operation/limb/repair_compound/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, tool)
+	. = ..()
+	for(var/datum/wound/blunt/bone/critical/bone_wound in limb.wounds)
+		if(HAS_TRAIT(bone_wound, TRAIT_WOUND_SCANNED))
+			. *= 0.5
+
 /datum/surgery_operation/limb/repair_compound/get_default_radial_image()
 	return image(/obj/item/stack/medical/bone_gel)
 
@@ -151,6 +236,12 @@
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 
+/datum/surgery_operation/limb/prepare_cranium_repair/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, tool)
+	. = ..()
+	for(var/datum/wound/cranial_fissure/fissure in limb.wounds)
+		if(HAS_TRAIT(fissure, TRAIT_WOUND_SCANNED))
+			. *= 0.5
+
 /datum/surgery_operation/limb/prepare_cranium_repair/get_default_radial_image()
 	return image(/obj/item/hemostat)
 
@@ -189,6 +280,12 @@
 		/obj/item/stack/sticky_tape = 3.33,
 	)
 	time = 4 SECONDS
+
+/datum/surgery_operation/limb/repair_cranium/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, tool)
+	. = ..()
+	for(var/datum/wound/cranial_fissure/fissure in limb.wounds)
+		if(HAS_TRAIT(fissure, TRAIT_WOUND_SCANNED))
+			. *= 0.5
 
 /datum/surgery_operation/limb/repair_cranium/get_default_radial_image()
 	return image(/obj/item/stack/medical/bone_gel)

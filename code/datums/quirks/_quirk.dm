@@ -17,6 +17,8 @@
 	var/lose_text
 	///This text will appear on medical records for the trait.
 	var/medical_record_text
+	///Appears in medical guides for this quirk, but only if the quirk has QUIRK_TRAUMALIKE flag.
+	var/medical_symptom_text
 	/// if applicable, apply and remove this mob trait
 	var/mob_trait
 	/// Amount of points this trait is worth towards the hardcore character mode.

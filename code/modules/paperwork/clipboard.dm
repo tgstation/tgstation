@@ -51,6 +51,8 @@
 /obj/item/clipboard/Initialize(mapload)
 	update_appearance()
 	. = ..()
+
+/obj/item/clipboard/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/clipboard)
 
 /obj/item/clipboard/Destroy()
@@ -60,8 +62,8 @@
 /obj/item/clipboard/examine()
 	. = ..()
 	if(!integrated_pen && pen)
-		. += span_notice("Alt-click to remove [pen].")
-	if(top_paper)
+		. += span_notice("Right-click to remove [pen].")
+	else if(top_paper)
 		. += span_notice("Right-click to remove [top_paper].")
 
 /// Take out the topmost paper
@@ -73,6 +75,7 @@
 	to_chat(user, span_notice("You remove [paper] from [src]."))
 
 /obj/item/clipboard/proc/remove_pen(mob/user)
+	var/obj/item/pen/pen = src.pen
 	pen.forceMove(user.loc)
 	user.put_in_hands(pen)
 	to_chat(user, span_notice("You remove [pen] from [src]."))
@@ -90,17 +93,6 @@
 	UnregisterSignal(top_paper, COMSIG_ATOM_UPDATED_ICON)
 	top_paper = locate(/obj/item/paper) in src
 	update_icon()
-
-/obj/item/clipboard/click_alt(mob/user)
-	if(isnull(pen))
-		return CLICK_ACTION_BLOCKING
-
-	if(integrated_pen)
-		to_chat(user, span_warning("You can't seem to find a way to remove [src]'s [pen]."))
-		return CLICK_ACTION_BLOCKING
-
-	remove_pen(user)
-	return CLICK_ACTION_SUCCESS
 
 /obj/item/clipboard/update_overlays()
 	. = ..()
@@ -122,7 +114,10 @@
 
 /obj/item/clipboard/attack_hand(mob/user, list/modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		remove_paper(top_paper, user)
+		if(!integrated_pen && pen)
+			remove_pen(user)
+		else
+			remove_paper(top_paper, user)
 		return TRUE
 	. = ..()
 

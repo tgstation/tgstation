@@ -1,7 +1,7 @@
 /mob/living/silicon/ai/examine(mob/user)
 	. = list()
 	if(stat == DEAD)
-		. += span_deadsay("[p_They()] appear[p_s()] to be powered-down.")
+		. += span_warning("[p_They()] appear[p_s()] to be non functional.")
 	. += span_notice("[p_Their()] floor <b>bolts</b> are [is_anchored ? "tightened" : "loose"].")
 	if(is_anchored)
 		if(!opened)

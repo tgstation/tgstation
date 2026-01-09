@@ -1,4 +1,4 @@
-import { vecLength, vecSubtract } from 'common/vector';
+import { vecLength, vecSubtract } from 'tgui-core/vector';
 import { sortBy } from 'es-toolkit';
 import { map } from 'es-toolkit/compat';
 import {

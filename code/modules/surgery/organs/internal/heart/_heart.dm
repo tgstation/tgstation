@@ -109,7 +109,7 @@
 	return ..() || owner.needs_heart()
 
 /obj/item/organ/heart/on_life(seconds_per_tick)
-	..()
+	. = ..()
 
 	// If the owner doesn't need a heart, we don't need to do anything with it.
 	if(!owner.needs_heart())

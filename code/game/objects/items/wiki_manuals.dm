@@ -3,32 +3,46 @@
 /// The size of the window that the wiki books open in.
 #define BOOK_WINDOW_BROWSE_SIZE "970x710"
 /// This macro will resolve to code that will open up the associated wiki page in the window.
-#define WIKI_PAGE_IFRAME(wikiurl, link_identifier) {"
-	<html>
+#define WIKI_PAGE_IFRAME(title, wikiurl, link_identifier) {"
+<html>
 	<head>
-	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-	<style>
-		iframe {
-			display: none;
-		}
-	</style>
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+		<title>[html_encode(title)]</title>
+		<style>
+			body {
+				margin: 0;
+			}
+			p {
+				margin: 8px;
+			}
+			iframe {
+				border: 0;
+				margin-left: -177px;
+				margin-top: -80px;
+				width: calc(100% + 177px);
+				height: calc(100% + 80px);
+				display: none;
+			}
+			body.loaded p {
+				display: none;
+			}
+			body.loaded iframe {
+				display: inline;
+			}
+		</style>
 	</head>
 	<body>
-	<script type="text/javascript">
-		function pageloaded(myframe) {
-			document.getElementById("loading").style.display = "none";
-			myframe.style.display = "inline";
-	}
-	</script>
-	<p id='loading'>You start skimming through the manual...</p>
-	<iframe width='100%' height='97%' onload="pageloaded(this)" src="[##wikiurl]/[##link_identifier]?printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		<p>You start skimming through the manual...</p>
+		<iframe src="[wikiurl]/[link_identifier]?useskin=vector" onload="document.body.classList.add('loaded')"></iframe>
 	</body>
-	</html>
-	"}
+</html>
+"}
 
 // A book that links to the wiki
 /obj/item/book/manual/wiki
-	starting_content = "Nanotrasen presently does not have any resources on this topic. If you would like to know more, contact your local Central Command representative." // safety
+	starting_content = "Nanotrasen presently does not have any resources on this topic. \
+		If you would like to know more, contact your local Central Command representative." // safety
+	abstract_type = /obj/item/book/manual/wiki
 	/// The ending URL of the page that we link to.
 	var/page_link = ""
 
@@ -43,7 +57,7 @@
 			return
 		DIRECT_OUTPUT(user, link("[wiki_url]/[page_link]"))
 	else
-		DIRECT_OUTPUT(user, browse(WIKI_PAGE_IFRAME(wiki_url, page_link), "window=manual;size=[BOOK_WINDOW_BROWSE_SIZE]")) // if you change this GUARANTEE that it works.
+		DIRECT_OUTPUT(user, browse(WIKI_PAGE_IFRAME(name, wiki_url, page_link), "window=manual;size=[BOOK_WINDOW_BROWSE_SIZE]")) // if you change this GUARANTEE that it works.
 
 /obj/item/book/manual/wiki/chemistry
 	name = "Chemistry Textbook"

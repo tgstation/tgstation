@@ -17,6 +17,8 @@
 	flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
 	pepper_tint = FALSE
 
+/obj/item/clothing/mask/gas/ninja/plasmaman
+	starting_filter_type = /obj/item/gas_filter/plasmaman
 
 /obj/item/clothing/under/syndicate/ninja
 	name = "ninja suit"

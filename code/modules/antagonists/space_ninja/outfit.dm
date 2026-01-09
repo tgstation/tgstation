@@ -33,3 +33,8 @@
 	uniform = /obj/item/clothing/under/syndicate/ninja
 	back = /obj/item/mod/control/pre_equipped/empty/ninja
 	belt = /obj/item/energy_katana
+
+/datum/outfit/ninja/plasmaman
+	name = "Space Ninja (Plasmaman)"
+	mask = /obj/item/clothing/mask/gas/ninja/plasmaman
+	r_pocket = /obj/item/tank/internals/plasmaman/belt/full

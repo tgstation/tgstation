@@ -47,7 +47,6 @@
 		to_chat(user, span_warning("You must be riding the [src] to remove [src]'s key!"))
 		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice("You remove \the [inserted_key] from \the [src]."))
-	inserted_key.forceMove(drop_location())
 	user.put_in_hands(inserted_key)
 	inserted_key = null
 	return CLICK_ACTION_SUCCESS

@@ -6,8 +6,11 @@
 	gain_text = span_danger("You seem to make a big deal out of everything.")
 	lose_text = span_notice("You don't seem to make a big deal out of everything anymore.")
 	medical_record_text = "Patient demonstrates a high level of emotional volatility."
+	medical_symptom_text = "Exhibits heightened emotional responses to stimuli, \
+		leading to greatly increased sensitivity and reactivity in social situations."
 	hardcore_value = 3
 	mail_goodies = list(/obj/effect/spawner/random/entertainment/plushie_delux)
+	quirk_flags = QUIRK_TRAUMALIKE
 
 /datum/quirk/hypersensitive/add(client/client_source)
 	if (quirk_holder.mob_mood)

@@ -47,8 +47,6 @@
 
 /datum/status_effect/shadow/nightmare
 	id = "nightmare"
-	duration = 2 SECONDS
-	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/shadow_regeneration/nightmare
 
 /datum/status_effect/shadow/nightmare/on_apply()
@@ -88,6 +86,8 @@
 	decay_factor = 0
 	// No love is to be found in a heart so twisted.
 	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5)
+	// In case you want to drink light as well as eat it
+	organ_traits = list(TRAIT_LIGHT_DRINKER)
 	/// How many life ticks in the dark the owner has been dead for. Used for nightmare respawns.
 	var/respawn_progress = 0
 	/// The armblade granted to the host of this heart.

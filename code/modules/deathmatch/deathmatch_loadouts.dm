@@ -868,6 +868,7 @@
 	gloves = /obj/item/clothing/gloves/color/plasmaman/atmos
 	shoes = /obj/item/clothing/shoes/workboots
 	r_pocket = /obj/item/tank/internals/plasmaman/belt/full
+	internals_slot = ITEM_SLOT_RPOCKET
 
 	back = /obj/item/storage/backpack/industrial
 

@@ -38,9 +38,9 @@
 
 	// this only gets used by pipes created by RPDs or pipe dispensers
 	if(flip)
-		// Simulate two right clicks to flip this thing upside down
-		usr.base_click_alt_secondary(src)
-		usr.base_click_alt_secondary(src)
+		// Rotate, bypassing simple_rotation for 180 degrees at once
+		setDir(turn(dir, ROTATION_FLIP))
+		post_rotation(usr, ROTATION_FLIP)
 
 	update_appearance(UPDATE_ICON)
 

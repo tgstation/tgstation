@@ -10,6 +10,8 @@
 	var/desc = "A trauma caused by brain damage, which causes issues to the patient."
 	/// Description when detected by a health scanner
 	var/scan_desc = "generic brain trauma"
+	/// A string listing potential symptoms caused by this trauma
+	var/symptoms = ""
 	/// The poor bastard
 	var/mob/living/carbon/owner
 	/// The poor bastard's brain
@@ -24,6 +26,8 @@
 	var/random_gain = TRUE
 	/// How hard is this to cure?
 	var/resilience = TRAUMA_RESILIENCE_BASIC
+	/// If FALSE, hide the trauma in medical guides
+	var/known_trauma = TRUE
 
 /datum/brain_trauma/Destroy()
 	// Handles our references with our brain

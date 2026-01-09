@@ -794,8 +794,7 @@
 
 	obj_flags = UNIQUE_RENAME
 
-/obj/item/melee/baton/security/stunsword/Initialize(mapload)
-	. = ..()
+/obj/item/melee/baton/security/stunsword/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/stunsword)
 
 /obj/item/melee/baton/security/stunsword/add_deep_lore()

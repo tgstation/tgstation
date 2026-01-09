@@ -435,8 +435,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	volume = 100
 
-/obj/item/reagent_containers/spray/medical/Initialize(mapload, vol)
-	. = ..()
+/obj/item/reagent_containers/spray/medical/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/med_spray)
 
 /obj/item/reagent_containers/spray/hercuri

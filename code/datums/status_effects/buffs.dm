@@ -647,7 +647,7 @@
 /// Throw an alert we're in darkness!! Nightvision can make it hard to tell so this is useful
 /datum/status_effect/shadow
 	id = "shadow"
-	duration = 2 SECONDS
+	duration = 2.2 SECONDS // One status effect tick longer than the life tick
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/shadow_regeneration
 

@@ -7,3 +7,5 @@
 	gain_text = span_danger("You feel your IQ sink like your brain is liquid.")
 	lose_text = span_notice("You feel like your IQ went up to at least average.")
 	medical_record_text = "Patient has demonstrated an extreme difficulty with high motor skill paired with an inability to demonstrate critical thinking."
+	medical_symptom_text = "Exhibits poor coordination and frequent accidents, along with difficulty in problem-solving and decision-making tasks."
+	quirk_flags = QUIRK_TRAUMALIKE

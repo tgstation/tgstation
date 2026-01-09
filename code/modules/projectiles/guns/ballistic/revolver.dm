@@ -167,8 +167,7 @@
 
 	obj_flags = UNIQUE_RENAME
 
-/obj/item/gun/ballistic/revolver/c38/detective/Initialize(mapload)
-	. = ..()
+/obj/item/gun/ballistic/revolver/c38/detective/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/det_revolver)
 
 /obj/item/gun/ballistic/revolver/badass

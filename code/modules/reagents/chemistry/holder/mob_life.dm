@@ -103,30 +103,28 @@
 		return FALSE
 
 	var/need_mob_update = FALSE
-	if(!reagent.metabolizing)
-		reagent.metabolizing = TRUE
-		reagent.on_mob_metabolize(owner)
-
+	var/metabolized_volume = reagent.compute_metabolization(owner, seconds_per_tick)
+	var/metabolization_ratio = REM * metabolized_volume
 	if(can_overdose && !HAS_TRAIT(owner, TRAIT_OVERDOSEIMMUNE))
 		if(reagent.overdose_threshold && reagent.volume >= reagent.overdose_threshold && !reagent.overdosed)
 			reagent.overdosed = TRUE
-			need_mob_update += reagent.overdose_start(owner)
+			need_mob_update += reagent.overdose_start(owner, metabolization_ratio)
 			owner.log_message("has started overdosing on [reagent.name] at [reagent.volume] units.", LOG_GAME)
 
 		for(var/addiction in reagent.addiction_types)
 			owner.mind?.add_addiction_points(addiction, reagent.addiction_types[addiction] * REAGENTS_METABOLISM)
 
 		if(reagent.overdosed)
-			need_mob_update += reagent.overdose_process(owner, seconds_per_tick)
+			need_mob_update += reagent.overdose_process(owner, seconds_per_tick, metabolization_ratio)
 
 	reagent.current_cycle++
-	need_mob_update += reagent.on_mob_life(owner, seconds_per_tick)
+	need_mob_update += reagent.on_mob_life(owner, seconds_per_tick, metabolization_ratio)
 
 	if(dead && !QDELETED(owner) && !QDELETED(reagent))
-		need_mob_update += reagent.on_mob_dead(owner, seconds_per_tick)
+		need_mob_update += reagent.on_mob_dead(owner, seconds_per_tick, metabolization_ratio)
 
 	if(!QDELETED(owner) && !QDELETED(reagent) && !(tick_return & COMSIG_MOB_STOP_REAGENT_METABOLISM))
-		reagent.metabolize_reagent(owner, seconds_per_tick)
+		reagent.metabolize_reagent(owner, seconds_per_tick, metabolized_volume)
 
 	return need_mob_update
 

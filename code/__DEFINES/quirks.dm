@@ -14,3 +14,6 @@
 #define QUIRK_MOODLET_BASED (1<<3)
 /// This quirk shouldn't be shown by health analyzers and hud, perhaps as considering it medical condition is a far stretch.
 #define QUIRK_HIDE_FROM_SCAN (1<<4)
+/// Quirk is similar to brain trauma and should be shown in medical guides as one.
+/// You don't need to set this on quirks that apply a trauma, that's redundant.
+#define QUIRK_TRAUMALIKE (1<<5)

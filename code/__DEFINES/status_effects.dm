@@ -65,6 +65,11 @@
 
 #define STASIS_NETPOD_EFFECT "stasis_netpod"
 
+// Defines for the ballmer peak.
+#define BALLMER_PEAK_LOW_END 12.9
+#define BALLMER_PEAK_HIGH_END 13.8
+#define BALLMER_PEAK_WINDOWS_ME 26
+
 /// Causes the mob to become blind via the passed source
 #define become_blind(source) apply_status_effect(/datum/status_effect/grouped/blindness, source)
 /// Cures the mob's blindness from the passed source, removing blindness wholesale if no sources are left

@@ -907,7 +907,7 @@
 /area/shuttle/escape)
 "pd" = (
 /obj/machinery/camera/autoname{
-	dir = 9
+	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)

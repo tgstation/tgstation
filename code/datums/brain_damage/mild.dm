@@ -9,6 +9,8 @@
 	name = "Hallucinations"
 	desc = "Patient suffers constant hallucinations."
 	scan_desc = "schizophrenia"
+	symptoms = "Experiences frequent hallucinations (either visual or auditory) or delusions \
+		which subside on being administered Mindbreaker Toxin."
 	gain_text = span_warning("You feel your grip on reality slipping...")
 	lose_text = span_notice("You feel more grounded.")
 	/// Whether the hallucinations we give are uncapped, ie all the wacky ones
@@ -35,6 +37,7 @@
 	name = "Stuttering"
 	desc = "Patient can't speak properly."
 	scan_desc = "reduced mouth coordination"
+	symptoms = "Has difficulty speaking fluently, often repeating or prolonging sounds or syllables."
 	gain_text = span_warning("Speaking clearly is getting harder.")
 	lose_text = span_notice("You feel in control of your speech.")
 
@@ -48,6 +51,7 @@
 /datum/brain_trauma/mild/dumbness
 	name = "Dumbness"
 	desc = "Patient has reduced brain activity, making them less intelligent."
+	symptoms = "Exhibits a noticeable decline in cognitive functions, including speech, memory, motorics, and problem-solving abilities."
 	scan_desc = "reduced brain activity"
 	gain_text = span_warning("You feel dumber.")
 	lose_text = span_notice("You feel smart again.")
@@ -74,6 +78,7 @@
 	name = "Speech Impediment"
 	desc = "Patient is unable to form coherent sentences."
 	scan_desc = "communication disorder"
+	symptoms = "Struggles to articulate thoughts into coherent speech, often resulting in jumbled or nonsensical sentences."
 	gain_text = span_danger("You can't seem to form any coherent thoughts!")
 	lose_text = span_danger("Your mind feels more clear.")
 
@@ -88,6 +93,7 @@
 /datum/brain_trauma/mild/concussion
 	name = "Concussion"
 	desc = "Patient's brain is concussed."
+	symptoms = "Experiences headaches, dizziness, nausea, confusion, and occasional loss of consciousness."
 	scan_desc = "concussion"
 	gain_text = span_warning("Your head hurts!")
 	lose_text = span_notice("The pressure inside your head starts fading.")
@@ -117,6 +123,8 @@
 	name = "Anosognosia"
 	desc = "Patient always feels healthy, regardless of their condition."
 	scan_desc = "self-awareness deficit"
+	symptoms = "Exhibits a lack of awareness or denial of their own medical conditions, \
+		often insisting they are perfectly healthy despite clear evidence to the contrary."
 	gain_text = span_notice("You feel great!")
 	lose_text = span_warning("You no longer feel perfectly healthy.")
 
@@ -135,6 +143,7 @@
 	name = "Muscle Weakness"
 	desc = "Patient experiences occasional bouts of muscle weakness."
 	scan_desc = "weak motor nerve signal"
+	symptoms = "Experiences sudden episodes of muscle weakness, resulting in weak grip strength, difficulty moving, and occasional falls."
 	gain_text = span_warning("Your muscles feel oddly faint.")
 	lose_text = span_notice("You feel in control of your muscles again.")
 
@@ -162,6 +171,7 @@
 	name = "Muscle Spasms"
 	desc = "Patient has occasional muscle spasms, causing them to move unintentionally."
 	scan_desc = "nervous fits"
+	symptoms = "Experiences involuntary muscle contractions leading to sudden, brief movements or twitches, which can interfere with normal motor functions."
 	gain_text = span_warning("Your muscles feel oddly faint.")
 	lose_text = span_notice("You feel in control of your muscles again.")
 
@@ -177,6 +187,7 @@
 	name = "Nervous Cough"
 	desc = "Patient feels a constant need to cough."
 	scan_desc = "nervous cough"
+	symptoms = "Experiences a persistent, uncontrollable urge to cough, which may disrupt normal activities and social interactions."
 	gain_text = span_warning("Your throat itches incessantly...")
 	lose_text = span_notice("Your throat stops itching.")
 
@@ -195,6 +206,7 @@
 	name = "Expressive Aphasia"
 	desc = "Patient is affected by partial loss of speech leading to a reduced vocabulary."
 	scan_desc = "inability to form complex sentences"
+	symptoms = "Struggles to express thoughts verbally, often substituting complex words with simpler alternatives or nonsensical sounds."
 	gain_text = span_warning("You lose your grasp on complex words.")
 	lose_text = span_notice("You feel your vocabulary returning to normal again.")
 
@@ -237,6 +249,7 @@
 	name = "Mind Echo"
 	desc = "Patient's language neurons do not terminate properly, causing previous speech patterns to occasionally resurface spontaneously."
 	scan_desc = "looping neural pattern"
+	symptoms = "Experiences involuntary repetition of previously heard or spoken phrases, leading to persistent moments of déjà vu in both hearing and speech."
 	gain_text = span_warning("You feel a faint echo of your thoughts...")
 	lose_text = span_notice("The faint echo fades away.")
 	var/list/hear_dejavu = list()
@@ -276,6 +289,7 @@
 	name = "Achromatopsia"
 	desc = "Patient's occipital lobe is unable to recognize and interpret color, rendering the patient completely colorblind."
 	scan_desc = "colorblindness"
+	symptoms = "Exhibits a complete inability to perceive colors, seeing the world in shades of gray, black, and white."
 	gain_text = span_warning("The world around you seems to lose its color.")
 	lose_text = span_notice("The world feels bright and colorful again.")
 
@@ -291,6 +305,8 @@
 	name = "Possessive"
 	desc = "Patient is extremely possessive of their belongings."
 	scan_desc = "possessiveness"
+	symptoms = "Exhibits an overwhelming need to keep personal belongings close, \
+		often resulting in an intense grip on held items that persists even when forced to let go."
 	gain_text = span_warning("You start to worry about your belongings.")
 	lose_text = span_notice("You worry less about your belongings.")
 

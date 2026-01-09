@@ -172,7 +172,7 @@
 		return
 	to_chat(affected_mob, span_notice("This food has a funny taste!"))
 
-/datum/reagent/rat_spit/overdose_start(mob/living/affected_mob)
+/datum/reagent/rat_spit/overdose_start(mob/living/affected_mob, metabolization_ratio)
 	. = ..()
 	var/mob/living/carbon/victim = affected_mob
 	if (istype(victim) && !(FACTION_RAT in victim.faction))
@@ -181,7 +181,7 @@
 		victim.vomit(VOMIT_CATEGORY_DEFAULT)
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 
-/datum/reagent/rat_spit/on_mob_life(mob/living/carbon/affected_mob)
+/datum/reagent/rat_spit/on_mob_life(mob/living/carbon/affected_mob, metabolization_ratio)
 	. = ..()
 	if(prob(15))
 		to_chat(affected_mob, span_notice("You feel queasy!"))

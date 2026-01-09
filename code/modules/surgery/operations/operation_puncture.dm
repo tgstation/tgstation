@@ -11,6 +11,12 @@
 	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
 
+/datum/surgery_operation/limb/repair_puncture/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, tool)
+	. = ..()
+	for(var/datum/wound/pierce/bleed/pierce_wound in limb.wounds)
+		if(HAS_TRAIT(pierce_wound, TRAIT_WOUND_SCANNED))
+			. *= 0.5
+
 /datum/surgery_operation/limb/repair_puncture/get_default_radial_image()
 	return image(/obj/item/hemostat)
 
@@ -81,6 +87,12 @@
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
+
+/datum/surgery_operation/limb/seal_veins/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, tool)
+	. = ..()
+	for(var/datum/wound/pierce/bleed/pierce_wound in limb.wounds)
+		if(HAS_TRAIT(pierce_wound, TRAIT_WOUND_SCANNED))
+			. *= 0.5
 
 /datum/surgery_operation/limb/seal_veins/get_default_radial_image()
 	return image(/obj/item/cautery)

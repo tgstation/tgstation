@@ -7,5 +7,7 @@
 	gain_text = span_danger("There's a lot on your mind right now.")
 	lose_text = span_notice("Your mind finally feels calm.")
 	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
+	medical_symptom_text = "Exhibits severe mood instability and an inability to recover from psychological stressors."
 	hardcore_value = 9
 	mail_goodies = list(/obj/effect/spawner/random/entertainment/plushie)
+	quirk_flags = QUIRK_TRAUMALIKE

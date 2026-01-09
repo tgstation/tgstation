@@ -9,7 +9,6 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	read_only = TRUE
 	read_only_locked = TRUE
-	reskin_allowed = FALSE
 	/// Whether we're a real nuke disk or not.
 	var/fake = FALSE
 
@@ -29,6 +28,9 @@
 	else
 		// Ensure fake disks still have examine text, but dont actually do anything
 		AddComponent(/datum/component/keep_me_secure)
+
+/obj/item/disk/nuclear/setup_reskins()
+	return
 
 /obj/item/disk/nuclear/proc/secured_process(last_move)
 	var/turf/new_turf = get_turf(src)
