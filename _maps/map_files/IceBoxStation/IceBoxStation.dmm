@@ -41265,7 +41265,7 @@
 	name = "Ordnance Launch Room"
 	},
 /obj/effect/mapping_helpers/airlock/unres/delayed,
-/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
 "lEz" = (
@@ -56380,7 +56380,7 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Cytology Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/science/general,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "pQo" = (
@@ -79114,7 +79114,7 @@
 /obj/effect/mapping_helpers/airlock/unres/delayed{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
 "wvw" = (
