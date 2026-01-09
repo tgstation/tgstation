@@ -2855,6 +2855,7 @@
 #include "code\game\objects\items\tools\engineering_tools\painter\decal_painter.dm"
 #include "code\game\objects\items\tools\engineering_tools\painter\paintable_decals.dm"
 #include "code\game\objects\items\tools\janitorial_tools\broom.dm"
+#include "code\game\objects\items\tools\janitorial_tools\janitor_key.dm"
 #include "code\game\objects\items\tools\medical_tools\bodybag.dm"
 #include "code\game\objects\items\tools\medical_tools\cane.dm"
 #include "code\game\objects\items\tools\medical_tools\defib.dm"
