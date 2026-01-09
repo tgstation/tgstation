@@ -160,6 +160,10 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupan
 		if(istype(target_vehicle.occupants, /list) && target_vehicle.occupants.len)
 			for(var/mob/mob_occupant in target_vehicle.occupants)
 				options["[mob_occupant.name] ([mob_occupant.tag])[target_vehicle.is_driver(mob_occupant) ? " (Driver)" : ""]"] = "\ref[mob_occupant]"
+		// Searching for mobs in exosuit equipment (e.g. seccage, sleepers)
+		for(var/obj/item/mecha_parts/mecha_equipment/obj_contents in target.contents)
+			for(var/mob/mob_in_mecha_equipment in obj_contents.contents)
+				options["[mob_in_mecha_equipment.name] ([mob_in_mecha_equipment.tag])"] = "\ref[mob_in_mecha_equipment]"
 
 	// Closets, crates, bodybags, coffins, etc.
 	else if(istype(target, /obj/structure/closet))
@@ -179,7 +183,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupan
 		for(var/mob/mob_occupant in target.contents)
 			options["[mob_occupant.name] ([mob_occupant.tag])"] = "\ref[mob_occupant]"
 
-	// Body containers
+	// Body containers (morgue trays, crematoriums)
 	else if(istype(target, /obj/structure/bodycontainer))
 		for(var/mob/mob_occupant in target.contents)
 			options["[mob_occupant.name] ([mob_occupant.tag])"] = "\ref[mob_occupant]"
