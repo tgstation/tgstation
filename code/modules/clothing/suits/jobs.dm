@@ -72,7 +72,8 @@
 		/obj/item/cigarette,
 		/obj/item/disk,
 		/obj/item/lighter,
-		/obj/item/melee,
+		/obj/item/storage/belt/sheath/sabre
+		/obj/item/melee/baton
 		/obj/item/reagent_containers/cup/glass/flask,
 		/obj/item/stamp,
 		/obj/item/storage/box/matches,
