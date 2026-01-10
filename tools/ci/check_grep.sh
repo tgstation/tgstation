@@ -189,6 +189,13 @@ if $grep -i 'lowertext\(.+\)' $code_files | $grep -v 'UNLINT\(.+\)' | $grep -v '
 	st=1
 fi;
 
+part "ensure mob_mood valid access"
+if $grep -i 'mob_mood\.' $code_files | $grep -v 'UNLINT'; then
+    echo
+    echo -e "${RED}ERROR: Found direct access to mob_mood variable. Ensure that you are using a ?, as it is possible for this datum to not exist in config. If you know what you are doing, wrap your access in UNLINT().${NC}"
+    st=1
+fi;
+
 part "balloon_alert sanity"
 if $grep 'balloon_alert\(".*"\)' $code_files; then
 	echo
