@@ -39,6 +39,11 @@
 /// Returns the current offset which should be used for this feature
 /datum/worn_feature_offset/proc/get_offset()
 	var/current_dir = owner ? owner.dir : SOUTH
+	switch(current_dir)
+		if(NORTHWEST, SOUTHWEST)
+			current_dir = WEST
+		if(NORTHEAST, SOUTHEAST)
+			current_dir = EAST
 	current_dir = dir2text(current_dir)
 	var/x = length(offset_x) ? ((current_dir in offset_x) ? offset_x[current_dir] : offset_x["south"]) : 0
 	var/y = length(offset_y) ? ((current_dir in offset_y) ? offset_y[current_dir] : offset_y["south"]) : 0
