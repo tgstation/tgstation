@@ -855,7 +855,8 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/docking_port/mobile/pirate{
-	dir = 8
+	dir = 8;
+	preferred_direction = 4
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/pod/light,

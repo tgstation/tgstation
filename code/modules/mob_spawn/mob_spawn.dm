@@ -298,7 +298,7 @@
 
 /// Checks if the spawner has zero uses left, if so, delete yourself... NOW!
 /obj/effect/mob_spawn/ghost_role/proc/check_uses()
-	if(!uses && deletes_on_zero_uses_left)
+	if(uses <= 0 && deletes_on_zero_uses_left)
 		qdel(src)
 
 ///override this to add special spawn conditions to a ghost role
