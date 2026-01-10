@@ -208,10 +208,10 @@
 /datum/status_effect/moon_converted/on_apply()
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
 	// Heals them so people who are in crit can have this affect applied on them and still be of some use for the heretic
-	owner.adjust_brute_loss(-150 + owner.mob_mood.sanity)
-	owner.adjust_fire_loss(-150 + owner.mob_mood.sanity)
+	owner.adjust_brute_loss(-SANITY_MAXIMUM + (owner.mob_mood?.sanity || SANITY_MINIMUM))
+	owner.adjust_fire_loss(-SANITY_MAXIMUM + (owner.mob_mood?.sanity || SANITY_MINIMUM))
 
-	to_chat(owner, span_hypnophrase(("THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, SLAY THEM ALL!!!</span>")))
+	to_chat(owner, span_hypnophrase("THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, SLAY THEM ALL!!!"))
 	owner.balloon_alert(owner, "they lie..THEY ALL LIE!!!")
 	owner.SetUnconscious(60 SECONDS, ignore_canstun = FALSE)
 	ADD_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))

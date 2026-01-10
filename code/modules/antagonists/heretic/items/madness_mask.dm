@@ -60,7 +60,7 @@
 		if(human_in_range.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
 			continue
 
-		human_in_range.mob_mood.direct_sanity_drain(rand(-2, -20) * seconds_per_tick)
+		human_in_range.mob_mood?.direct_sanity_drain(rand(-2, -20) * seconds_per_tick)
 
 		if(SPT_PROB(60, seconds_per_tick))
 			human_in_range.adjust_hallucinations_up_to(10 SECONDS, 120 SECONDS)

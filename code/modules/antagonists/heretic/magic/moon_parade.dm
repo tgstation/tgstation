@@ -82,7 +82,7 @@
 
 	victim.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
 	victim.cause_hallucination(/datum/hallucination/delusion/preset/moon, name)
-	victim.mob_mood.adjust_sanity(-20)
+	victim.mob_mood?.adjust_sanity(-20)
 
 /obj/projectile/moon_parade/proc/was_hit_already(mob/living/victim)
 	for(var/datum/weakref/ref as anything in mobs_hit)

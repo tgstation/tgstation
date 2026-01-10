@@ -419,11 +419,12 @@
 		else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			to_chat(helper, span_warning("It feels like [src] is freezing as you hug [p_them()]."))
 
-		if(HAS_TRAIT(helper, TRAIT_FRIENDLY) || force_friendly)
-			if (helper.mob_mood.sanity >= SANITY_GREAT)
+		var/helper_sanity = helper.mob_mood?.sanity
+		if(!isnull(helper_sanity) && (HAS_TRAIT(helper, TRAIT_FRIENDLY) || force_friendly))
+			if (helper_sanity >= SANITY_GREAT)
 				new /obj/effect/temp_visual/heart(loc)
 				add_mood_event("friendly_hug", /datum/mood_event/besthug, helper)
-			else if (helper.mob_mood.sanity >= SANITY_DISTURBED)
+			else if (helper_sanity >= SANITY_DISTURBED)
 				add_mood_event("friendly_hug", /datum/mood_event/betterhug, helper)
 
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))

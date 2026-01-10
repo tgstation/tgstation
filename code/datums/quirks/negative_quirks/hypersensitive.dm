@@ -13,9 +13,7 @@
 	quirk_flags = QUIRK_TRAUMALIKE
 
 /datum/quirk/hypersensitive/add(client/client_source)
-	if (quirk_holder.mob_mood)
-		quirk_holder.mob_mood.mood_modifier += 0.5
+	quirk_holder.mob_mood?.mood_modifier += 0.5
 
 /datum/quirk/hypersensitive/remove()
-	if (quirk_holder.mob_mood)
-		quirk_holder.mob_mood.mood_modifier -= 0.5
+	quirk_holder.mob_mood?.mood_modifier -= 0.5

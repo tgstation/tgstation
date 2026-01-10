@@ -2728,45 +2728,48 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if (!admin || !check_rights(NONE))
 		return
 
+	if (CONFIG_GET(flag/disable_human_mood))
+		tgui_alert(admin, "Human mood system is disabled on this server.", "Mood System Disabled")
+		return
+
 	var/list/mood_events = typesof(/datum/mood_event)
 
 	var/chosen = tgui_input_list(admin, "What mood event?", "Add Mood Event", mood_events)
 	if (!chosen || QDELETED(src) || !check_rights(NONE))
 		return
 
-	mob_mood.add_mood_event("[rand(1, 50)]", chosen)
+	UNLINT(mob_mood.add_mood_event("[rand(1, 50)]", chosen)) // we want errors to show up here because mood being null without the config set is peculiar
 
 /mob/living/proc/admin_remove_mood_event(mob/admin)
 	if (!admin || !check_rights(NONE))
 		return
 
-	var/list/mood_events = list()
-	for (var/category in mob_mood.mood_events)
-		var/datum/mood_event/event = mob_mood.mood_events[category]
-		mood_events[event] = category
+	if (CONFIG_GET(flag/disable_human_mood))
+		tgui_alert(admin, "Human mood system is disabled on this server.", "Mood System Disabled")
+		return
 
+	var/list/mood_events = list()
+
+	for (UNLINT(var/category in mob_mood.mood_events))
+		var/datum/mood_event/event = UNLINT(mob_mood.mood_events[category])
+		mood_events[event] = category
 
 	var/datum/mood_event/chosen = tgui_input_list(admin, "What mood event?", "Remove Mood Event", mood_events)
 	if (!chosen || QDELETED(src) || !check_rights(NONE))
 		return
 
-	mob_mood.clear_mood_event(mood_events[chosen])
+	UNLINT(mob_mood.clear_mood_event(mood_events[chosen]))
 
 /// Adds a mood event to the mob
 /mob/living/proc/add_mood_event(category, type, ...)
-	if(QDELETED(mob_mood))
-		return
-
 	if(ispath(type, /datum/mood_event/conditional))
-		mob_mood.add_conditional_mood_event(arglist(args))
+		mob_mood?.add_conditional_mood_event(arglist(args))
 	else
-		mob_mood.add_mood_event(arglist(args))
+		mob_mood?.add_mood_event(arglist(args))
 
 /// Clears a mood event from the mob
 /mob/living/proc/clear_mood_event(category)
-	if(QDELETED(mob_mood))
-		return
-	mob_mood.clear_mood_event(category)
+	mob_mood?.clear_mood_event(category)
 
 /// This should be called by games when the gamer reaches a winning state, just sends a signal
 /mob/living/proc/won_game()

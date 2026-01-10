@@ -151,8 +151,10 @@
 	if (human.nutrition > 0 && human.stat != DEAD)
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
-		if(human.mob_mood && human.mob_mood.sanity > SANITY_DISTURBED)
-			hunger_rate *= max(1 - 0.002 * human.mob_mood.sanity, 0.5) //0.85 to 0.75
+		var/current_sanity = human.mob_mood?.sanity || SANITY_MAXIMUM
+		if(current_sanity > SANITY_DISTURBED)
+			hunger_rate *= max(1 - 0.002 * current_sanity, 0.5) //0.85 to 0.75
+
 		// Whether we cap off our satiety or move it towards 0
 		if(human.satiety > MAX_SATIETY)
 			human.satiety = MAX_SATIETY

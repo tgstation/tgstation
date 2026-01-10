@@ -20,7 +20,7 @@
 	bad_man.mind_initialize()
 	bad_man.mind.add_antag_datum(antag_heretic)
 
-	var/list/mob_mood_list = bad_man.mob_mood.mood_events
+	var/list/mob_mood_list = UNLINT(bad_man.mob_mood.mood_events)
 	var/result = NONE
 
 	// Check for heretic moodlet

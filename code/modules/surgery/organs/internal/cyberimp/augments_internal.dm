@@ -423,10 +423,12 @@
 
 
 	var/duration = (30 SECONDS) / severity
-	if(owner.mob_mood?.mood_modifier > 0)
+	var/datum/mood/owner_mood = owner.mob_mood
+	if(!isnull(owner_mood) && owner_mood.mood_modifier > 0)
 		// forced insanity - reset to "only a little crazy" after
-		owner.mob_mood.set_sanity(SANITY_INSANE)
-		addtimer(CALLBACK(owner.mob_mood, TYPE_PROC_REF(/datum/mood, reset_sanity), SANITY_UNSTABLE + 10), duration, TIMER_DELETE_ME)
+		owner_mood.set_sanity(SANITY_INSANE)
+		addtimer(CALLBACK(owner_mood, TYPE_PROC_REF(/datum/mood, reset_sanity), SANITY_UNSTABLE + 10), duration, TIMER_DELETE_ME)
+
 		// and some moodlets to sell the sanity loss
 		owner.add_mood_event("surgery_emp", /datum/mood_event/surgery_emp_active)
 		addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, add_mood_event), "surgery_emp", /datum/mood_event/surgery_emp_expired), duration, TIMER_DELETE_ME)

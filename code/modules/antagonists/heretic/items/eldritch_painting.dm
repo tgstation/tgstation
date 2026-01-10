@@ -95,7 +95,7 @@
 /obj/structure/sign/painting/eldritch/weeping/examine_effects(mob/living/carbon/examiner)
 	if(!IS_HERETIC(examiner))
 		to_chat(examiner, span_hypnophrase("Respite, for now...."))
-		examiner.mob_mood.mood_events.Remove("eldritch_weeping")
+		examiner.mob_mood?.mood_events.Remove("eldritch_weeping")
 		examiner.add_mood_event("weeping_withdrawal", /datum/mood_event/eldritch_painting/weeping_withdrawal)
 		return
 

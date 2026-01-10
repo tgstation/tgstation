@@ -19,11 +19,11 @@
 
 /datum/antagonist/nightmare/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/nightmare = mob_override || owner.current
-	nightmare.mob_mood.mood_modifier -= 1
+	nightmare.mob_mood?.mood_modifier -= 1
 
 /datum/antagonist/nightmare/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/nightmare = mob_override || owner.current
-	nightmare.mob_mood.mood_modifier += 1
+	nightmare.mob_mood?.mood_modifier += 1
 
 /datum/outfit/nightmare
 	name = "Nightmare (Preview only)"

@@ -85,7 +85,7 @@
 	var/mob/living/carbon/carbon_target = target
 	to_chat(carbon_target, span_danger("You hear echoing laughter from above"))
 	carbon_target.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by mansus grasp")
-	carbon_target.mob_mood.adjust_sanity(-30)
+	carbon_target.mob_mood?.adjust_sanity(-30)
 
 /datum/heretic_knowledge/spell/mind_gate
 	name = "Mind Gate"
@@ -272,7 +272,7 @@
 	)
 
 	for(var/mob/living/carbon/carbon_view in range(7, source))
-		var/carbon_sanity = carbon_view.mob_mood.sanity
+		var/carbon_sanity = carbon_view.mob_mood?.sanity || SANITY_MAXIMUM
 		if(carbon_view.stat != CONSCIOUS)
 			continue
 		if(IS_HERETIC_OR_MONSTER(carbon_view))
@@ -283,7 +283,7 @@
 		if(carbon_view.has_status_effect(/datum/status_effect/confusion))
 			to_chat(carbon_view, span_big(span_hypnophrase("YOUR HEAD RATTLES WITH A THOUSAND VOICES JOINED IN A MADDENING CACOPHONY OF SOUND AND MUSIC. EVERY FIBER OF YOUR BEING SAYS 'RUN'.")))
 		carbon_view.adjust_confusion(2 SECONDS)
-		carbon_view.mob_mood.adjust_sanity(-20)
+		carbon_view.mob_mood?.adjust_sanity(-20)
 
 		if(carbon_sanity >= 10)
 			return

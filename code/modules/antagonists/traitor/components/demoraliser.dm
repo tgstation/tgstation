@@ -71,10 +71,11 @@
  * * viewer - Whoever just saw the parent.
  */
 /datum/proximity_monitor/advanced/demoraliser/proc/should_demoralise(mob/living/viewer)
-	if (!viewer.mob_mood)
+	var/datum/mood/viewer_mood = viewer.mob_mood
+	if (isnull(viewer_mood))
 		return FALSE
 
-	return !viewer.mob_mood.has_mood_of_category(moods.mood_category)
+	return !viewer_mood.has_mood_of_category(moods.mood_category)
 
 /// Mood application categories for this objective
 /// Used to reduce duplicate code for applying moods to players based on their state

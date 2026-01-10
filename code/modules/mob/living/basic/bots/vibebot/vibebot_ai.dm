@@ -84,4 +84,5 @@
 /datum/ai_behavior/bot_search/party_friends/valid_target(datum/ai_controller/basic_controller/bot/controller, mob/living/carbon/human/my_target)
 	if(my_target.stat != CONSCIOUS || isnull(my_target.mind))
 		return FALSE
-	return (my_target.mob_mood.mood_level < MOOD_LEVEL_NEUTRAL || HAS_TRAIT(my_target, TRAIT_BIRTHDAY_BOY))
+	var/mood_level = my_target.mob_mood?.mood_level || MOOD_LEVEL_NEUTRAL
+	return (mood_level < MOOD_LEVEL_NEUTRAL || HAS_TRAIT(my_target, TRAIT_BIRTHDAY_BOY))

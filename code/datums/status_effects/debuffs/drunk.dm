@@ -147,7 +147,7 @@
 		owner.apply_status_effect(/datum/status_effect/inebriated/tipsy, drunk_value)
 		return
 
-	var/datum/mood_event/drunk/moodlet = owner.mob_mood.mood_events[id]
+	var/datum/mood_event/drunk/moodlet = owner.mob_mood?.mood_events[id]
 	if(istype(moodlet))
 		moodlet.update_change(drunk_value)
 

@@ -94,7 +94,7 @@
 		return
 	if(!viewer.can_read(host, READING_CHECK_LIGHT, TRUE))
 		return
-	if (viewer.mob_mood.has_mood_of_category(POSTER_MOOD_CAT))
+	if (viewer.mob_mood?.has_mood_of_category(POSTER_MOOD_CAT))
 		return
 	var/viewer_department = viewer.mind.assigned_role.paycheck_department
 	if(department != NONE && viewer_department != department)

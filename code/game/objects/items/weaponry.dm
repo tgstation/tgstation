@@ -72,7 +72,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	playsound(loc, 'sound/mobs/non-humanoids/clown/hehe.ogg', 20)
 	if (!isliving(target))
 		return
-	switch(target.mob_mood.sanity)
+	switch(target.mob_mood?.sanity)
 		if (SANITY_INSANE to SANITY_CRAZY)
 			force = 8
 		if (SANITY_UNSTABLE to SANITY_DISTURBED)

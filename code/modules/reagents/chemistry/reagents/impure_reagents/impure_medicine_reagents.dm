@@ -1132,8 +1132,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	holder.remove_reagent(/datum/reagent/drug/happiness, 10 * metabolization_ratio * seconds_per_tick)
 	holder.remove_reagent(/datum/reagent/medicine/psicodine, 10 * metabolization_ratio * seconds_per_tick)
 
-	affected_mob.mob_mood.adjust_sanity(-13 * metabolization_ratio * seconds_per_tick, minimum = SANITY_INSANE)
-	if(affected_mob.mob_mood != null && affected_mob.mob_mood.sanity < (SANITY_CRAZY))
+	var/datum/mood/victim_mood = affected_mob.mob_mood
+	if(isnull(victim_mood))
+		return
+
+	victim_mood.adjust_sanity(-13 * metabolization_ratio * seconds_per_tick, minimum = SANITY_INSANE)
+	if(victim_mood.sanity < (SANITY_CRAZY))
 		affected_mob.adjust_drowsiness_up_to(5 SECONDS, 30 SECONDS)
 		if(SPT_PROB(25, seconds_per_tick))
 			affected_mob.emote(pick("cry","frown","pout","whimper","sigh"))

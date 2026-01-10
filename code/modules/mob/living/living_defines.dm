@@ -232,6 +232,7 @@
 	var/atom/movable/looking_holder/looking_holder
 
 	/// Living mob's mood datum
+	/// We support this being turned off in configuration, as such it is important to validate that this can be null.
 	var/datum/mood/mob_mood
 
 	// Multiple imaginary friends!

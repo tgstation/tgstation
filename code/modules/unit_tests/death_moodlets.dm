@@ -12,7 +12,7 @@
 	prepare_dying_mob(dying)
 	dying.death()
 
-	var/datum/mood_event/moodlet = dummy.mob_mood.mood_events["saw_death"]
+	var/datum/mood_event/moodlet = UNLINT(dummy.mob_mood.mood_events["saw_death"])
 	TEST_ASSERT_EQUAL(moodlet?.type, desired_moodlet, "Dummy did not receive the correct moodlet upon witnessing a death.")
 
 /// Override to prepare the dummy as needed

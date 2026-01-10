@@ -651,7 +651,7 @@
 			original_hud.infodisplay -= removing
 			QDEL_NULL(removing)
 
-	wearer.mob_mood.unmodify_hud()
+	wearer.mob_mood?.unmodify_hud()
 	// Add the moon health hud element
 	health_hud = new(null, original_hud)
 	original_hud.infodisplay += health_hud
@@ -671,7 +671,7 @@
 	original_hud.infodisplay += stamina_hud
 	original_hud.infodisplay += old_health_hud
 	original_hud.infodisplay += health_doll_hud
-	wearer.mob_mood.modify_hud()
+	wearer.mob_mood?.modify_hud()
 	original_hud.show_hud(original_hud.hud_version)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/can_mob_unequip(mob/user)

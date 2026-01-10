@@ -37,7 +37,7 @@
 	if(HAS_PERSONALITY(owner, /datum/personality/bibulous))
 		mood_change *= 1.5
 	if(old_mood != mood_change)
-		owner.mob_mood.update_mood()
+		UNLINT(owner.mob_mood.update_mood()) // mood_events shouldn't be added if mob_mood is disabled in config so it's important to know if this errors
 
 /datum/mood_event/drunk/remove_effects()
 	QDEL_NULL(blush_overlay)

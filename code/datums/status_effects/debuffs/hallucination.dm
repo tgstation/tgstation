@@ -147,7 +147,11 @@
 
 /// Updates our upper and lower intervals based on our owner's current sanity level.
 /datum/status_effect/hallucination/sanity/proc/update_intervals()
-	switch(owner.mob_mood.sanity_level)
+	var/datum/mood/owner_mood = owner.mob_mood
+	if(isnull(owner_mood))
+		return
+
+	switch(owner_mood.sanity_level)
 		if(SANITY_LEVEL_CRAZY)
 			upper_tick_interval = 8 MINUTES
 			lower_tick_interval = 4 MINUTES
@@ -157,7 +161,7 @@
 			lower_tick_interval = 2 MINUTES
 
 		else
-			stack_trace("[type] was assigned a mob which was not crazy or insane. (was: [owner.mob_mood.sanity_level])")
+			stack_trace("[type] was assigned a mob which was not crazy or insane. (was: [UNLINT(owner_mood.sanity_level)])")
 			qdel(src)
 
 /datum/status_effect/hallucination/perceptomatrix

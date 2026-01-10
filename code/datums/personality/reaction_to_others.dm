@@ -53,7 +53,7 @@
 		return
 
 	new /obj/effect/temp_visual/annoyed(source.loc)
-	if(source.mob_mood.sanity <= SANITY_NEUTRAL)
+	if(source.mob_mood?.sanity <= SANITY_NEUTRAL)
 		source.add_mood_event("bad_touch", /datum/mood_event/very_bad_touch)
 	else
 		source.add_mood_event("bad_touch", /datum/mood_event/bad_touch)

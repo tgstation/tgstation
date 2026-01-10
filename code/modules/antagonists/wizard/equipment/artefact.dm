@@ -106,6 +106,7 @@
 
 #define TEAR_IN_REALITY_CONSUME_RANGE 3
 #define TEAR_IN_REALITY_SINGULARITY_SIZE STAGE_FOUR
+#define TEAR_IN_REALITY_TRAIT "tear_in_reality"
 
 /// Tear in reality, spawned by the veil render
 /obj/tear_in_reality
@@ -141,12 +142,29 @@
 		return
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	var/mob/living/carbon/jedi = user
-	if(jedi.mob_mood.sanity < 15)
-		return //they've already seen it and are about to die, or are just too insane to care
+
+	if(HAS_TRAIT(jedi, TEAR_IN_REALITY_TRAIT))
+		return .
+
+	var/datum/mood/jedi_mood = jedi.mob_mood
+	if(isnull(jedi_mood)) // if mood is null we still want to derange them
+		begin_derangement(jedi)
+		return .
+
+	if(jedi_mood.sanity < 15) // they're already nearly insane so we won't bother
+		return .
+
+	jedi_mood.sanity = SANITY_INSANE
+	begin_derangement(jedi)
+	return .
+
+/// Begins the process of deranging the user for having seen past the veil of reality
+/obj/tear_in_reality/proc/begin_derangement(mob/living/carbon/victim)
+	ADD_TRAIT(jedi, TEAR_IN_REALITY_TRAIT, REF(src))
 	to_chat(jedi, span_userdanger("OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!"))
-	jedi.mob_mood.sanity = 0
 	for(var/lore in typesof(/datum/brain_trauma/severe))
 		jedi.gain_trauma(lore)
+
 	addtimer(CALLBACK(src, PROC_REF(deranged), jedi), 10 SECONDS)
 
 /obj/tear_in_reality/proc/deranged(mob/living/carbon/C)
@@ -159,6 +177,7 @@
 
 #undef TEAR_IN_REALITY_CONSUME_RANGE
 #undef TEAR_IN_REALITY_SINGULARITY_SIZE
+#undef TEAR_IN_REALITY_TRAIT
 
 /////////////////////////////////////////Scrying///////////////////
 

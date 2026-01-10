@@ -346,7 +346,7 @@
 	if(!isliving(target))
 		return
 	var/mob/living/siphoned = target
-	siphoned.mob_mood.adjust_sanity(-25)
+	siphoned.mob_mood?.adjust_sanity(-25)
 	to_chat(siphoned, span_warning("Suddenly, everything feels just a little bit worse!"))
 
 /obj/projectile/beam/emitter/hitscan/magnetic

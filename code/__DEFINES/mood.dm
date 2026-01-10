@@ -28,13 +28,14 @@
 #define MOOD_LEVEL_SAD4 1
 
 // Sanity values for humans
+#define SANITY_MINIMUM 0
 #define SANITY_MAXIMUM 150
 #define SANITY_GREAT 125
 #define SANITY_NEUTRAL 100
 #define SANITY_DISTURBED 75
 #define SANITY_UNSTABLE 50
 #define SANITY_CRAZY 25
-#define SANITY_INSANE 0
+#define SANITY_INSANE SANITY_MINIMUM
 
 // Sanity levels for humans
 #define SANITY_LEVEL_GREAT 1

@@ -1711,8 +1711,13 @@
 	affected_mob.adjust_dizzy(-24 SECONDS * metabolization_ratio * seconds_per_tick)
 	affected_mob.adjust_confusion(-12 SECONDS * metabolization_ratio * seconds_per_tick)
 	affected_mob.disgust = max(affected_mob.disgust - (12 * metabolization_ratio * seconds_per_tick), 0)
-	if(affected_mob.mob_mood != null && affected_mob.mob_mood.sanity <= SANITY_NEUTRAL) // only take effect if in negative sanity and then...
-		affected_mob.mob_mood.adjust_sanity(10 * metabolization_ratio * seconds_per_tick, maximum = SANITY_NEUTRAL) // set minimum to prevent unwanted spiking over neutral
+
+	var/datum/mood/victim_mood = affected_mob.mob_mood
+	if(isnull(victim_mood))
+		return
+
+	if(victim_mood.sanity <= SANITY_NEUTRAL) // only take effect if in negative sanity and then...
+		victim_mood.adjust_sanity(10 * metabolization_ratio * seconds_per_tick, maximum = SANITY_NEUTRAL) // set minimum to prevent unwanted spiking over neutral
 
 /datum/reagent/medicine/psicodine/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()

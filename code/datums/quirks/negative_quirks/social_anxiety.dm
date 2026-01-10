@@ -32,8 +32,9 @@
 			nearby_people++
 
 	var/mod = 1
-	if(quirk_holder.mob_mood)
-		mod = 1 + 0.02 * (50 - (max(50, quirk_holder.mob_mood.mood_level * (SANITY_LEVEL_MAX + 1 - quirk_holder.mob_mood.sanity_level)))) //low sanity levels are better, they max at 6
+	var/datum/mood/holder_mood = quirk_holder.mob_mood
+	if(holder_mood)
+		mod = 1 + 0.02 * (50 - (max(50, holder_mood.mood_level * (SANITY_LEVEL_MAX + 1 - holder_mood.sanity_level)))) //low sanity levels are better, they max at 6
 	else
 		mod = 1 + 0.02 * (50 - (max(50, 0.1 * quirk_holder.nutrition)))
 

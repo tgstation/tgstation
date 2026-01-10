@@ -46,6 +46,10 @@
  */
 /datum/mood_event/proc/can_effect_mob(datum/mood/home, mob/living/who, ...)
 	SHOULD_CALL_PARENT(TRUE)
+	if(CONFIG_GET(flag/disable_human_mood)) // whole purpose of this framework is defeated should we have gotten this far somehow, which should be guarded on higher procs but let's catch it here also.
+		stack_trace("Somehow got mood event applied dispite DISABLE_HUMAN_MOOD set in config.")
+		return FALSE
+
 	if(LAZYLEN(required_job) && !is_type_in_list(who.mind?.assigned_role, required_job))
 		return FALSE
 

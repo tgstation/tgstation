@@ -881,5 +881,7 @@
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_DUMB))
 		return TRUE
-	if(mob_mood && mob_mood.sanity < SANITY_UNSTABLE)
+
+	var/current_sanity = mob_mood?.sanity
+	if(!isnull(current_sanity) && current_sanity < SANITY_UNSTABLE)
 		return TRUE

@@ -171,20 +171,19 @@
 		var/sleep_quality = HEALING_SLEEP_DEFAULT
 
 		// having high spirits helps us recover
-		if(owner.mob_mood)
-			switch(owner.mob_mood.sanity_level)
-				if(SANITY_LEVEL_GREAT)
-					sleep_quality = 0.2
-				if(SANITY_LEVEL_NEUTRAL)
-					sleep_quality = 0.1
-				if(SANITY_LEVEL_DISTURBED)
-					sleep_quality = 0
-				if(SANITY_LEVEL_UNSTABLE)
-					sleep_quality = 0
-				if(SANITY_LEVEL_CRAZY)
-					sleep_quality = -0.1
-				if(SANITY_LEVEL_INSANE)
-					sleep_quality = -0.2
+		switch(owner.mob_mood?.sanity_level)
+			if(SANITY_LEVEL_GREAT)
+				sleep_quality = 0.2
+			if(SANITY_LEVEL_NEUTRAL)
+				sleep_quality = 0.1
+			if(SANITY_LEVEL_DISTURBED)
+				sleep_quality = 0
+			if(SANITY_LEVEL_UNSTABLE)
+				sleep_quality = 0
+			if(SANITY_LEVEL_CRAZY)
+				sleep_quality = -0.1
+			if(SANITY_LEVEL_INSANE)
+				sleep_quality = -0.2
 
 		var/turf/rest_turf = get_turf(owner)
 		var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
