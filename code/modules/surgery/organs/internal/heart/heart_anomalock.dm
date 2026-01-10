@@ -226,8 +226,6 @@
 /datum/status_effect/voltaic_overdrive/proc/on_organ_lost(mob/living/carbon/source, obj/item/organ/organ, special)
 	SIGNAL_HANDLER
 	if(istype(organ, /obj/item/organ/heart/cybernetic/anomalock))
-		var/obj/item/organ/heart/cybernetic/anomalock/just_fell_out = organ
-		just_fell_out.clear_lightning_overlay()
 		qdel(src)
 
 /atom/movable/screen/alert/status_effect/anomalock_active
