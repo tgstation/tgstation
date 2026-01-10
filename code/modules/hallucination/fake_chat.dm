@@ -56,7 +56,7 @@
 	var/is_radio = force_radio || isnull(speaker)
 	if(is_radio)
 		for(var/datum/mind/crew_mind in shuffle(get_crewmember_minds()))
-			if(crew_mind == hallucinator.mind)
+			if(crew_mind == hallucinator.mind || !crew_mind.current)
 				continue
 			var/list/shared_languages = get_hallucinating_spoken_languages(crew_mind.current) & understood_languages
 			if(!length(shared_languages))

@@ -1,0 +1,271 @@
+2026-01-01:
+  Jacquerel:
+  - bugfix: AI shell deployment verb no longer requires you to select yourself from
+      a list first
+  - bugfix: Meat toilets will now contain all of the belongings they were wearing
+      prior to transformation, which can be retrieved if the cistern is open and the
+      lid is closed.
+  LT3:
+  - qol: Keybindings page now tells you how to clear a keybind
+  SmArtKar:
+  - rscadd: You can now butcher individual limbs and people by right clicking with
+      a knife on combat mode. Doing so requires cut and open skin, as well as sawed
+      bone and no organs inside the limb.
+  - rscadd: Gibbers now source their meat from the victim's limbs and not species
+  - rscadd: Meat spikes in the freezer now allow their victims to be operated on
+  - balance: Butcher's knives are now a bit faster.
+  - bugfix: Fixed incorrect leg number calculations for disabled limbs.
+  - bugfix: Skeleton limbs can no longer get scars.
+  - refactor: Refactored gibbers, butchering and meat spikes.
+  - bugfix: Fixed population lock text in uplinks
+  - qol: Right-clicking closets with an item now opens/closes them
+  SyncIt21:
+  - qol: added examines & screentips for ducts & stack of ducts
+  - qol: you can wrench a stack of ducts on the ground to create a pipe
+  - refactor: plumbing code has been improved overall. Report bugs on github
+  - bugfix: dimensional anomaly transformed airlocks save their cycling id
+2026-01-02:
+  Jacquerel:
+  - bugfix: Killing yourself with a Gullion fish in an oxygenated environment will
+      correctly turn you into a statue
+  - bugfix: Killing yourself with a Gullion fish will kill you rather than leaving
+      you as a living statue that can't do anything and forcing you to Ghost manually
+  LT3:
+  - bugfix: Emergency shuttle purchase menu now lists the shuttle prices
+  SpaceSmithers:
+  - rscadd: Card readers can now be printed at cargo techfabs
+  SyncIt21:
+  - bugfix: vegan cake batter is correctly vegan and has no dairy.
+  vinylspiders:
+  - bugfix: fixes a bug where the quirk menu does not update when adding/removing
+      quirks
+  - bugfix: fixes some fontawesome ui icons displaying as unicode literals instead
+      of the actual icons
+  - bugfix: nearsightedness and other quirk prefs that use iconned dropdowns will
+      no longer be cut off
+2026-01-03:
+  ElGitificador:
+  - balance: Reduced haunted eightball spawnrate on surplus and removed bee smoker
+      from syndi surplus pools. Added advanced mimery guide.
+  - balance: Increased the amount of TC contained inside surplus crates by 10, and
+      super surplus by 20.
+  carpotoxin:
+  - sound: Added more atmospheric sounds to moisture traps
+2026-01-04:
+  Melbert:
+  - balance: Eigenstasium teleportation now has a precision of 3, up from 0 - meaning
+      the teleport now picks a random tile up to 3 tiles away from the creation spot
+  - balance: If Eigenstasium return teleportation fails - due to stabillizing agent
+      - it leaves an echo behind. The echo lasts for 5 minutes, but is reduced the
+      longer the Eigenstasium metabolized in your body.
+  - rscdel: Eigenstasium can no longer create Eigenlockers
+  - rscadd: Rarely, maintenance lockers will spawn as Eigenlockers, potentially linked
+      to any other locker on the station - yes, even the Captain's.
+  - rscadd: Teleporting via an Eigenlocker doesn't auto-open the destination locker,
+      allowing you to hide in them.
+  - rscadd: You can skip the "apply drapes" step of surgery if the patient is buckled
+      to an operating table or stasis bed!
+  SmArtKar:
+  - balance: Cain & Abel no longer forces dual-wielding and instead requires an empty
+      offhand
+  - bugfix: Fixed lingering language holders caused by the sleeping carp
+  lelandkemble:
+  - bugfix: Nullrod possessed swords will talk
+  - bugfix: Nullrod variant selection menu will no longer have three normal nullrods
+      as options
+  - bugfix: Ebow sprites appear loaded after reloading
+  mcbalaam:
+  - rscadd: New unique wraps for floppy disks
+  - qol: Floppy disks can now be stacked
+  - image: New sprites and stickers for floppy disks
+  - map: Added and ran an updatepaths script
+  - refactor: Most disks are now under the base disk item type
+2026-01-05:
+  Arturlang:
+  - bugfix: midi2piano handles some wierd midi files a tad better
+  - rscadd: midi2piano can now be used via cli only and prints to stdout
+  ElGitificador:
+  - bugfix: fixed permanently animated bloodsplash in lavaland battle site ruin
+  Geoengi:
+  - balance: Baton resistance now reduces the jitter, confusion, and stutter of electric
+      baton strikes by half.
+  Ghommie:
+  - spellcheck: fish weight is now measured in "kiloclam" instead of grams. Like,
+      imagine being slown down by a big lake fish that only weighs "800 grams", bruh...
+  - bugfix: The Themeify PDA app no longer has an empty checkbox in its options.
+  Hatterhat:
+  - rscadd: Nanotrasen has begun rolling out (unconfigured) expeditionary deathrattle
+      implant kits for their mining teams for 900 points (585 points, if manually
+      delivered). These only alert for deaths on raw mining wasteland, and will not
+      work in space, ruins, or on-station.
+  - balance: Kheiral cuffs can now be attached to uniforms as accessories. They retain
+      their suit sensor extension/GPS functionality (still only when off station Z-levels,
+      though).
+  - bugfix: Beacon implants now turn off (hide themselves on prisoner management consoles)
+      after ten minutes, matching the tracking implant's functionality.
+  - qol: Made the implant pad UI a little nicer to look at, with dropdowns and demarcated
+      sections.
+  - code_imp: Implants now have separated "immediately useful" information and "extended
+      lore tidbits" information as variables instead of one unchangeable get_info()
+      block.
+  Jacquerel:
+  - bugfix: Killing yourself via starfish no longer causes a runtime error when you
+      float onto another Z level
+  - bugfix: Killing yourself via starfish now unequips your pants before turning you
+      into an astral being
+  - balance: Support Guardians cannot heal their owner while recalled.
+  - balance: Dextrous Guardians cannot use their hands while recalled.
+  - bugfix: Gaseous Guardian particles will correctly dismiss when you recall.
+  - bugfix: Guardian health hud will display the correct value when you are first
+      summoned.
+  Melbert:
+  - qol: If a surgery table has a patient on it, and you click it with a surgical
+      tool, it redirects the click to the patient instead of placing the tool on the
+      table
+  - rscadd: Adds vitals monitors, mapped into the medbay treatment center, cryogenics,
+      and every surgical theatre. They act as wall mounted health scanners, providing
+      visual feedback for a patient's health.
+  - bugfix: Fixes more surgeries being marked as a priority operation that intended
+  - qol: Stack items have a number indicating stack size while held or in inventory.
+  SmArtKar:
+  - bugfix: Fixed spy items from the black market being absolutely miniscule
+  - bugfix: Added some safeties to ensure that hotspots don't cause an infinite infectious
+      runtime and crash clients
+  - bugfix: Fixed TTS filters (sometimes) not working
+  - qol: Added raptor growth progress bar to RaptorDex
+  SyncIt21:
+  - bugfix: plumbing machinery can't be anchored on top of machines that have other
+      ducts/plumbing machines on them
+  - code_imp: improved plumbing layer overlap code to report early bugs
+  arbuzik456:
+  - bugfix: warden and hos got spare starting clothes in their garment bag
+  lelandkemble:
+  - spellcheck: When your skillchips are turned off from shapeshifting, you will now
+      be told.
+2026-01-06:
+  Ben10Omintrix:
+  - bugfix: makes sure slimes and other animals immediately cease attacking their
+      tamers
+  ElGitificador:
+  - admin: siege weapons log in attack instead of attack and game.
+  Ezel:
+  - bugfix: fixes the armour value of the magus helm to be the same as all other wizard
+      gear
+  Jacquerel:
+  - bugfix: Pizza slices now contain a proportional amount of whatever the pizza contained,
+      so sliced poisoned pizza will still be poisonous and sliced robo pizza will
+      still turn people into robots.
+  - bugfix: Removed a bugged pizza from the pizza ruin and replaced it with a margherita
+      pizza.
+  - bugfix: Bugged pizza no longer looks identical to functional margherita pizza;
+      it's a big error graphic.
+  - bugfix: Species that aren't supposed to have blood will no longer report feeling
+      dizzy from bloodloss on account of how they have no blood.
+  - bugfix: The "I am stood in the dark" indicator for Shadows and Nightmares will
+      no longer flicker on and off.
+  Melbert:
+  - rscadd: Scientists only say Balmer voicelines if they are whimsical
+  - rscadd: Surgery gets slower if the surgeon is drunk, UNLESS you land in the Balmer
+      Peak, then it's actually faster.
+  - rscadd: Adds "reset dislocation" operation, which is a surgical analog to resetting
+      a dislocated limb. Same tools, same steps, but if you go through the effort
+      of doing it surgically, it's faster and safer.
+  - rscadd: All wound surgeries now gain a speed bonus from being wound scanned.
+  Mewchild:
+  - map: Minor re-arranging of nebula station psych office
+  SmArtKar:
+  - bugfix: Fixed chat hallucination runtimes caused by gibbed crew
+  - qol: Added a preference to adjust emissive bloom size
+  SpaceManiac:
+  - bugfix: Removing the pen from a clipboard is now done by right-clicking, instead
+      of alt-clicking which conflicted with restyling.
+  - bugfix: Removing the pen from a clipboard now puts it in your hand instead of
+      on the floor.
+  vinylspiders:
+  - code_imp: item spawning menu should be somewhat faster now
+  - refactor: extended atom_skins to be more customizable. Please report any bugs
+      to github.
+  - bugfix: switching characters in the prefs menu should be less laggy now
+2026-01-07:
+  Absolucy:
+  - refactor: Refactored how mobs target turrets and mechs, which should hopefully
+      be more performant.
+  Jacquerel:
+  - rscdel: It's no longer considered quirky to have Big Hands.
+  - balance: Nightmares are Light Drinkers in addition to being Light Eaters.
+  - bugfix: When you pick up a plant pot and hide behind it you will now also move
+      it in front of you, in case it is visually far away from your position
+  L0pz:
+  - image: Claymore inhans are girthier
+  SapphoQueer:
+  - bugfix: Jaws of life can cuffsnap again.
+  SmArtKar:
+  - image: Sinew on bones from butchered limbs now inherits its owner's blood color
+  SpaceManiac:
+  - bugfix: Wiki books such as "Barman Recipes" and "Space Law" no longer have terrible
+      formatting.
+  - bugfix: Wiki books now properly give book nerd moodlets.
+  SyncIt21:
+  - bugfix: objects mounted in shuttle areas deconstruct when their support structure
+      is destroyed
+  - bugfix: fixes runtime in arrivals shuttle when its request console is destroyed
+  - map: moved around some objects in shuttles so they can be mounted on its walls
+      again
+  - bugfix: removing implant in cybernetic brain works again
+  - bugfix: probability reagent affects scale correctly
+  - balance: reagent affects now scale with the volume of reagent metabolized meaning
+      lower metabolization rates (from like cybernetic organs) yield lower effects
+      & higher rates yield higher effects
+  Y0SH1M4S73R:
+  - bugfix: A fishing rod's materials can only be applied to fish when they are initially
+      spawned from a fishing spot. This means you cannot repeatedly apply a fishing
+      rod's materials to the same single fish to increase its mass without limits.
+  jlsnow301:
+  - bugfix: Fixed an issue in TGUI that caused icons to not load sometimes
+  lelandkemble:
+  - bugfix: intercoms will now visibly have their mic on when constructed manually
+  loganuk:
+  - map: CATWALK - Mega list of tweaks and changes, review the Pull Request for all
+      of them
+2026-01-08:
+  Arceniu:
+  - bugfix: ert commander card properly appear in game, no longer overriding basetype
+      ert card
+  Co0kie-GG:
+  - rscadd: "Glow on AI \u0421ores and IntelliCards"
+  - rscadd: New displays on IntelliCards
+  FalloutFalcon:
+  - bugfix: Brains, a few implants, glands, and all other organs now heal and fail
+      as intended
+  Jacquerel:
+  - bugfix: When you spawn as a plasmaman ninja, you will also have some breathable
+      air in your pocket
+  - qol: When you spawn as a ghost role plasmaman your internals should be enabled
+  lelandkemble:
+  - bugfix: Taking keys out of vehicles puts them in your hands if possible
+  - balance: You can't smell monkeys unless you're next to them, or have a good nose.
+  - balance: wooden barricades mapped on top of objects are now crude barricades,
+      preventing them from materializing when you open a door.
+2026-01-09:
+  Fghj240:
+  - rscadd: The void stamp is now obtainable
+  - rscadd: The lawdrobe now sells a box of stamps
+  - rscadd: The head of personnel's locker now contains a box of stamps
+  - bugfix: The mod stamper module is now visible
+  Jacquerel:
+  - bugfix: If you use the polymorph belt to turn into a mob which transforms into
+      another mob, it won't ghost you or kick you out upon transformation.
+  LT3:
+  - bugfix: Fixed airlock responses while carrying another mob
+  - bugfix: Airlock checks for all possible permits before delaying
+  - bugfix: Throwing items at unrestricted airlocks opens them
+2026-01-10:
+  Jacquerel:
+  - rscadd: If you kill yourself with a spear you will impale your head on that spear.
+  Melbert:
+  - rscadd: You can now find the SDMS-35 in Medbay, the CMO's office, the Psychologist's
+      office, and possibly the Library. Quite simply, it's a reference book for all
+      the brain trauma's you may experience.
+  lelandkemble:
+  - bugfix: Disposal pipe previews within the RPD ui will now be correct
+  - map: Icebox science now requires science access to enter

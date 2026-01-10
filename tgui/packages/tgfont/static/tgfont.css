@@ -7,25 +7,25 @@
 [class*=" tg-"] {
 	/* biome-ignore lint/complexity/noImportantStyles: Just leave it */
 	font-family: "tgfont" !important;
-	font-size: undefined;
+	font-size: inherit;
 	font-style: normal;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
 :root {
-	--tg-air-tank-slash: "ea01";
-	--tg-air-tank: "ea02";
-	--tg-bad-touch: "ea03";
-	--tg-image-minus: "ea04";
-	--tg-image-plus: "ea05";
-	--tg-nanotrasen-logo: "ea06";
-	--tg-non-binary: "ea07";
-	--tg-prosthetic-full: "ea08";
-	--tg-prosthetic-leg: "ea09";
-	--tg-sound-minus: "ea0a";
-	--tg-sound-plus: "ea0b";
-	--tg-syndicate-logo: "ea0c";
+	--tg-air-tank-slash: "\ea01";
+	--tg-air-tank: "\ea02";
+	--tg-bad-touch: "\ea03";
+	--tg-image-minus: "\ea04";
+	--tg-image-plus: "\ea05";
+	--tg-nanotrasen-logo: "\ea06";
+	--tg-non-binary: "\ea07";
+	--tg-prosthetic-full: "\ea08";
+	--tg-prosthetic-leg: "\ea09";
+	--tg-sound-minus: "\ea0a";
+	--tg-sound-plus: "\ea0b";
+	--tg-syndicate-logo: "\ea0c";
 }
 .tg-air-tank-slash::before {
 	content: var(--tg-air-tank-slash);
