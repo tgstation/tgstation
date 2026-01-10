@@ -328,13 +328,15 @@
 /obj/item/stack/ducts/proc/check_attach_turf(turf/open_turf, mob/user)
 	. = NONE
 	if(isopenturf(open_turf))
-		var/datum/overlap = ducting_layer_check(open_turf, duct_layer)
+		var/layer_of_duct = GLOB.plumbing_layers[duct_layer]
+
+		var/datum/overlap = ducting_layer_check(open_turf, layer_of_duct)
 		if(!isnull(overlap))
 			if(user)
 				open_turf.balloon_alert(user, "overlapping [istype(overlap, /obj/machinery/duct) ? "duct" : "machine"] detected!")
 			return ITEM_INTERACT_FAILURE
 
-		new /obj/machinery/duct(open_turf, duct_color, duct_layer)
+		new /obj/machinery/duct(open_turf, duct_color, layer_of_duct)
 		playsound(open_turf, 'sound/machines/click.ogg', 50, TRUE)
 		use(1)
 		return ITEM_INTERACT_SUCCESS
