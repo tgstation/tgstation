@@ -15,7 +15,6 @@
 		begin_processing()
 	AddComponent(/datum/component/plumbing/automated_iv, layer)
 	AddElement(/datum/element/simple_rotation)
-	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/iv_drip/plumbing/quick_toggle(mob/living/user)
 	return FALSE
