@@ -337,7 +337,9 @@
 	owner?.mind?.set_current(null) //You aren't allowed to return to brains that don't exist
 	return ..()
 
-/obj/item/organ/brain/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/brain/on_life(seconds_per_tick)
+	. = ..()
+
 	if(HAS_TRAIT(src, TRAIT_BRAIN_DAMAGE_NODEATH))
 		return
 	if(damage >= BRAIN_DAMAGE_DEATH) //rip
@@ -362,7 +364,7 @@
 	if(prob(delta_dam * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
 		gain_trauma_type(BRAIN_TRAUMA_MILD, natural_gain = TRUE)
 
-	var/is_boosted = (owner && HAS_TRAIT(owner, TRAIT_SPECIAL_TRAUMA_BOOST))
+	var/is_boosted = (owner && HAS_TRAIT(src, TRAIT_SPECIAL_TRAUMA_BOOST))
 	if(damage < BRAIN_DAMAGE_SEVERE)
 		return
 	if(prob(delta_dam * (1 + max(0, (damage - BRAIN_DAMAGE_SEVERE)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1%
@@ -438,7 +440,7 @@
 
 	// If we have some sort of brain type or subtype change and have skillchips, engage the failsafe procedure!
 	if(owner && length(skillchips) && (replacement_brain.type != type))
-		activate_skillchip_failsafe(silent = TRUE)
+		activate_skillchip_failsafe()
 
 	// Check through all our skillchips, remove them from this brain, add them to the replacement brain.
 	for(var/chip in skillchips)

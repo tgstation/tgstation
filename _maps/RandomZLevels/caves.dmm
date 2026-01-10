@@ -762,7 +762,7 @@
 /obj/machinery/door/airlock/medical{
 	name = "Medical"
 	},
-/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "fH" = (

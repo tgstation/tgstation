@@ -25,8 +25,6 @@
 	armor_type = /datum/armor/item_spear
 	wound_bonus = -15
 	exposed_wound_bonus = 15
-	/// For explosive spears, what we cry out when we use this to bap someone
-	var/war_cry = "AAAAARGH!!!"
 	/// The icon prefix for this flavor of spear
 	var/icon_prefix = "spearglass"
 	/// How much damage to do unwielded
@@ -37,6 +35,8 @@
 	var/improvised_construction = TRUE
 	/// What is left over when a spear breaks
 	var/spear_leftovers = /obj/item/stack/rods
+	/// What pike do we construct if someone kills themselves with us?
+	var/pike_type = /obj/structure/headpike
 
 /datum/embedding/spear
 	impact_pain_mult = 2
@@ -85,7 +85,19 @@
 
 /obj/item/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return BRUTELOSS
+	if (!do_after(user, 4 SECONDS, target = src))
+		return SHAME
+	var/obj/item/bodypart/head/head = user.get_bodypart(BODY_ZONE_HEAD)
+	if (!head)
+		return BRUTELOSS // No head?
+	var/obj/structure/headpike/pike = new pike_type(drop_location())
+	head.dismember(silent = FALSE, wounding_type = WOUND_PIERCE)
+	head.forceMove(pike)
+	pike.victim = head
+	forceMove(pike)
+	pike.spear = src
+	pike.update_appearance(UPDATE_NAME | UPDATE_OVERLAYS)
+	return BRUTELOSS // Just in case they survived losing the head
 
 /obj/item/spear/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	var/obj/item/shard/tip = locate() in components
@@ -185,6 +197,8 @@
 	base_icon_state = "spearbomb"
 	icon_prefix = "spearbomb"
 	var/obj/item/grenade/explosive = null
+	/// What we cry out when we use this to bap someone
+	var/war_cry = "AAAAARGH!!!"
 
 /obj/item/spear/explosive/Initialize(mapload)
 	. = ..()
@@ -284,6 +298,7 @@
 	throw_speed = 5
 	sharpness = NONE // we break bones instead of cutting flesh
 	improvised_construction = FALSE
+	pike_type = /obj/structure/headpike/military
 
 /obj/item/spear/military/add_headpike_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/headpikemilitary)
@@ -298,14 +313,14 @@
  * "WHERES MY DRAGONATOR?!"
  */
 /obj/item/spear/dragonator
+	name = "giantslayer spear"
+	desc = "An oversized multi-bladed spear designed to kill large hostile xenoforms such as space dragons or the creatures of Indecipheres. Capable of being launched from a ballista."
 	icon = 'icons/obj/weapons/48x.dmi'
 	icon_state = "speardragon0"
 	icon_prefix = "speardragon"
-	base_icon_state = "speardragon0"
+	base_icon_state = "speardragon"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	name = "Giantslayer Spear"
-	desc = "An oversized multi-bladed spear designed to kill large hostile xenoforms such as space dragons or the creatures of lavaland. Capable of being launched from a ballista."
 	demolition_mod = 0.5
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	force = 13
@@ -317,6 +332,7 @@
 	force_unwielded = 13
 	force_wielded = 21
 	armour_penetration = 15
+	improvised_construction = FALSE
 	custom_materials =  list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 42,
 		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 15,
@@ -330,14 +346,12 @@
  * Untreated Giantslayer , needs to be thrown into lava
  */
 /obj/item/spear/dragonator_untreated
+	name = "unfired giantslayer spear"
+	desc = "A half-finished giantslayer spear, needs to be thrown in lava to forge the metals to a killing edge."
 	icon = 'icons/obj/weapons/48x.dmi'
 	icon_state = "speardragonraw0"
 	icon_prefix = "speardragonraw"
-	base_icon_state = "speardragonraw0"
-	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	name = "Unfired Giantslayer Spear"
-	desc = "A half-finished giantslayer spear, needs to be thrown in lava to forge the metals to a killing edge."
+	base_icon_state = "speardragonraw"
 	demolition_mod = 0.5
 	wound_bonus = 0
 	exposed_wound_bonus = 0
@@ -354,7 +368,6 @@
 	playsound(dragonator.loc, 'sound/effects/magic/staff_change.ogg',5)
 	qdel(src)
 
-
 /*
  * Bone Spear
  */
@@ -370,6 +383,7 @@
 	force_unwielded = 12
 	force_wielded = 20
 	spear_leftovers = /obj/item/stack/sheet/bone
+	pike_type = /obj/structure/headpike/bone
 
 /obj/item/spear/bonespear/add_headpike_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/headpikebone)
@@ -392,6 +406,7 @@
 	throwforce = 23	//Better to throw
 	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 25)
 	spear_leftovers = /obj/item/stack/sheet/mineral/bamboo
+	pike_type = /obj/structure/headpike/bamboo
 
 /obj/item/spear/bamboospear/add_headpike_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/headpikebamboo)

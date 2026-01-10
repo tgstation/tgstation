@@ -10,6 +10,7 @@
 	name = "Mutism"
 	desc = "Patient is completely unable to speak."
 	scan_desc = "extensive damage to the brain's speech center"
+	symptoms = "Completley incapable of producing sound or speech verbally."
 	gain_text = span_warning("You forget how to speak!")
 	lose_text = span_notice("You suddenly remember how to speak.")
 
@@ -25,6 +26,7 @@
 	name = "Aphasia"
 	desc = "Patient is unable to speak or understand any language."
 	scan_desc = "extensive damage to the brain's language center"
+	symptoms = "Completely incapable of understanding or producing language besides incomprehensible utterances."
 	gain_text = span_warning("You have trouble forming words in your head...")
 	lose_text = span_notice("You suddenly remember how languages work.")
 
@@ -44,6 +46,7 @@
 	name = "Cerebral Blindness"
 	desc = "Patient's brain is no longer connected to its eyes."
 	scan_desc = "extensive damage to the brain's occipital lobe"
+	symptoms = "Exhibits a complete loss of vision despite having fully functional eyes."
 	gain_text = span_warning("You can't see!")
 	lose_text = span_notice("Your vision returns.")
 
@@ -59,6 +62,7 @@
 	name = "Paralysis"
 	desc = "Patient's brain can no longer control part of its motor functions."
 	scan_desc = "cerebral paralysis"
+	symptoms = "Experience a complete loss of voluntary movement in specific body parts."
 	gain_text = ""
 	lose_text = ""
 	var/paralysis_type
@@ -117,11 +121,13 @@
 
 /datum/brain_trauma/severe/paralysis/paraplegic
 	random_gain = FALSE
+	known_trauma = FALSE
 	paralysis_type = "legs"
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 
 /datum/brain_trauma/severe/paralysis/hemiplegic
 	random_gain = FALSE
+	known_trauma = FALSE
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 
 /datum/brain_trauma/severe/paralysis/hemiplegic/left
@@ -134,6 +140,7 @@
 	name = "Narcolepsy"
 	desc = "Patient may involuntarily fall asleep during normal activities."
 	scan_desc = "traumatic narcolepsy"
+	symptoms = "Experiences sudden and uncontrollable episodes of drowsiness or sleepiness during regular activities."
 	gain_text = span_warning("You have a constant feeling of drowsiness...")
 	lose_text = span_notice("You feel awake and aware again.")
 	/// Odds seconds_per_tick the user falls asleep
@@ -149,7 +156,7 @@
 	var/sleep_time_minimum = 6 SECONDS
 	var/sleep_time_maximum = 6 SECONDS
 
-/datum/brain_trauma/severe/narcolepsy/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/severe/narcolepsy/on_life(seconds_per_tick)
 	if(owner.IsSleeping())
 		return
 
@@ -197,11 +204,14 @@
 	sleep_chance_drowsy = 1
 	sleep_time_minimum = 20 SECONDS
 	sleep_time_maximum = 30 SECONDS
+	known_trauma = FALSE
 
 /datum/brain_trauma/severe/monophobia
 	name = "Monophobia"
 	desc = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
 	scan_desc = "monophobia"
+	symptoms = "Experiences intense fear and anxiety when alone, often leading to panic attacks, \
+		nausea, rapid heartbeat, and in severe cases, fainting, vomiting, or heart failure."
 	gain_text = span_warning("You feel really lonely...")
 	lose_text = span_notice("You feel like you could be safe on your own.")
 
@@ -217,6 +227,7 @@
 	name = "Discoordination"
 	desc = "Patient is unable to use complex tools or machinery."
 	scan_desc = "extreme discoordination"
+	symptoms = "Completely incapable of performing tasks that require fine motor skills or coordination, such as using tools or operating machinery."
 	gain_text = span_warning("You can barely control your hands!")
 	lose_text = span_notice("You feel in control of your hands again.")
 
@@ -232,6 +243,8 @@
 	name = "Traumatic Non-Violence"
 	desc = "Patient is extremely unwilling to harm others in violent ways."
 	scan_desc = "pacific syndrome"
+	symptoms = "Completely incapable of willing themselves to commit acts of violence or harm towards others, \
+		often going to great lengths to avoid confrontations or situations that may lead to violence."
 	gain_text = span_notice("You feel oddly peaceful.")
 	lose_text = span_notice("You no longer feel compelled to not harm.")
 
@@ -247,6 +260,8 @@
 	name = "Hypnotic Stupor"
 	desc = "Patient is prone to episodes of extreme stupor that leaves them extremely suggestible."
 	scan_desc = "oneiric feedback loop"
+	symptoms = "Experiences sudden episodes of deep stupor or trance-like states, during which the patient becomes highly suggestible to external influences, \
+		often leading to altered perceptions or behaviors, memories imposed by others, or in severe cases, danger to self or others."
 	gain_text = span_warning("You feel somewhat dazed.")
 	lose_text = span_notice("You feel like a fog was lifted from your mind.")
 
@@ -254,7 +269,7 @@
 	..()
 	owner.remove_status_effect(/datum/status_effect/trance)
 
-/datum/brain_trauma/severe/hypnotic_stupor/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/severe/hypnotic_stupor/on_life(seconds_per_tick)
 	..()
 	if(SPT_PROB(0.5, seconds_per_tick) && !owner.has_status_effect(/datum/status_effect/trance))
 		owner.apply_status_effect(/datum/status_effect/trance, rand(100,300), FALSE)
@@ -266,6 +281,7 @@
 	gain_text = span_warning("You feel odd, like you just forgot something important.")
 	lose_text = span_notice("You feel like a weight was lifted from your mind.")
 	random_gain = FALSE
+	known_trauma = FALSE
 	var/trigger_phrase = "Nanotrasen"
 
 /datum/brain_trauma/severe/hypnotic_trigger/New(phrase)
@@ -295,6 +311,8 @@
 	name = "Dyslexia"
 	desc = "Patient is unable to read or write."
 	scan_desc = "dyslexia"
+	symptoms = "Experiences significant difficulties in reading and writing, often confusing letters and words, \
+		leading to challenges in literacy-related tasks such as reading scanners or completing paperwork."
 	gain_text = span_warning("You have trouble reading or writing...")
 	lose_text = span_notice("You suddenly remember how to read and write.")
 
@@ -310,6 +328,8 @@
 	name = "Kleptomania"
 	desc = "Patient is prone to stealing things."
 	scan_desc = "kleptomania"
+	symptoms = "Experiences an uncontrollable urge to steal nearby items, often without need or reason, \
+		leading to compulsive theft behaviors that can interfere with daily life and social interactions."
 	gain_text = span_warning("You feel a sudden urge to take that. Surely no one will notice.")
 	lose_text = span_notice("You no longer feel the urge to take things.")
 	/// Cooldown between allowing steal attempts
@@ -329,7 +349,7 @@
 	if(damage_amount >= 5 && (damage_type == BRUTE || damage_type == BURN || damage_type == STAMINA))
 		COOLDOWN_START(src, steal_cd, 12 SECONDS)
 
-/datum/brain_trauma/severe/kleptomaniac/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/severe/kleptomaniac/on_life(seconds_per_tick)
 	if(owner.usable_hands <= 0)
 		return
 	if(!SPT_PROB(5, seconds_per_tick))

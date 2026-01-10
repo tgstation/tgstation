@@ -13,7 +13,7 @@
  * * can_overdose - Allows overdosing
  * * liverless - Stops reagents that aren't set as [/datum/reagent/var/self_consuming] from metabolizing
  */
-/datum/reagents/proc/metabolize(mob/living/carbon/owner, seconds_per_tick, times_fired, can_overdose = FALSE, liverless = FALSE, dead = FALSE)
+/datum/reagents/proc/metabolize(mob/living/carbon/owner, seconds_per_tick, can_overdose = FALSE, liverless = FALSE, dead = FALSE)
 	var/list/cached_reagents = reagent_list
 	if(owner)
 		expose_temperature(owner.bodytemperature, 0.25)
@@ -44,7 +44,7 @@
 				owner.reagents.remove_reagent(toxin.type, toxin.metabolization_rate * owner.metabolism_efficiency * seconds_per_tick)
 				continue
 
-		need_mob_update += metabolize_reagent(owner, reagent, seconds_per_tick, times_fired, can_overdose, liverless, dead)
+		need_mob_update += metabolize_reagent(owner, reagent, seconds_per_tick, can_overdose, liverless, dead)
 
 		// If applicable, calculate any toxin-related liver damage
 		// Note: we have to do this AFTER metabolize_reagent, because we want handle_reagent to run before we make the determination.
@@ -85,7 +85,7 @@
  * * can_overdose - Allows overdosing
  * * liverless - Stops reagents that aren't set as [/datum/reagent/var/self_consuming] from metabolizing
  */
-/datum/reagents/proc/metabolize_reagent(mob/living/carbon/owner, datum/reagent/reagent, seconds_per_tick, times_fired, can_overdose = FALSE, liverless = FALSE, dead = FALSE)
+/datum/reagents/proc/metabolize_reagent(mob/living/carbon/owner, datum/reagent/reagent, seconds_per_tick, can_overdose = FALSE, liverless = FALSE, dead = FALSE)
 	if(QDELETED(reagent.holder))
 		return FALSE
 
@@ -95,7 +95,7 @@
 	if(!owner || !reagent || (dead && !(reagent.chemical_flags & REAGENT_DEAD_PROCESS)))
 		return FALSE
 
-	var/tick_return = owner.reagent_tick(reagent, seconds_per_tick, times_fired)
+	var/tick_return = owner.reagent_tick(reagent, seconds_per_tick)
 	if(tick_return & COMSIG_MOB_STOP_REAGENT_TICK)
 		return FALSE
 
@@ -103,30 +103,28 @@
 		return FALSE
 
 	var/need_mob_update = FALSE
-	if(!reagent.metabolizing)
-		reagent.metabolizing = TRUE
-		reagent.on_mob_metabolize(owner)
-
+	var/metabolized_volume = reagent.compute_metabolization(owner, seconds_per_tick)
+	var/metabolization_ratio = REM * metabolized_volume
 	if(can_overdose && !HAS_TRAIT(owner, TRAIT_OVERDOSEIMMUNE))
 		if(reagent.overdose_threshold && reagent.volume >= reagent.overdose_threshold && !reagent.overdosed)
 			reagent.overdosed = TRUE
-			need_mob_update += reagent.overdose_start(owner)
+			need_mob_update += reagent.overdose_start(owner, metabolization_ratio)
 			owner.log_message("has started overdosing on [reagent.name] at [reagent.volume] units.", LOG_GAME)
 
 		for(var/addiction in reagent.addiction_types)
 			owner.mind?.add_addiction_points(addiction, reagent.addiction_types[addiction] * REAGENTS_METABOLISM)
 
 		if(reagent.overdosed)
-			need_mob_update += reagent.overdose_process(owner, seconds_per_tick, times_fired)
+			need_mob_update += reagent.overdose_process(owner, seconds_per_tick, metabolization_ratio)
 
 	reagent.current_cycle++
-	need_mob_update += reagent.on_mob_life(owner, seconds_per_tick, times_fired)
+	need_mob_update += reagent.on_mob_life(owner, seconds_per_tick, metabolization_ratio)
 
 	if(dead && !QDELETED(owner) && !QDELETED(reagent))
-		need_mob_update += reagent.on_mob_dead(owner, seconds_per_tick)
+		need_mob_update += reagent.on_mob_dead(owner, seconds_per_tick, metabolization_ratio)
 
 	if(!QDELETED(owner) && !QDELETED(reagent) && !(tick_return & COMSIG_MOB_STOP_REAGENT_METABOLISM))
-		reagent.metabolize_reagent(owner, seconds_per_tick, times_fired)
+		reagent.metabolize_reagent(owner, seconds_per_tick, metabolized_volume)
 
 	return need_mob_update
 
@@ -186,14 +184,13 @@
  *
  * * [owner][mob/living/carbon] - the mob we are doing stasis handlng on
  * * seconds_per_tick - passed from process
- * * times_fired - number of times to metabolize this reagent
  */
-/datum/reagents/proc/handle_stasis_chems(mob/living/carbon/owner, seconds_per_tick, times_fired)
+/datum/reagents/proc/handle_stasis_chems(mob/living/carbon/owner, seconds_per_tick)
 	var/need_mob_update = FALSE
 	for(var/datum/reagent/reagent as anything in reagent_list)
 		if(!(reagent.chemical_flags & REAGENT_IGNORE_STASIS))
 			continue
-		need_mob_update += metabolize_reagent(owner, reagent, seconds_per_tick, times_fired, can_overdose = TRUE)
+		need_mob_update += metabolize_reagent(owner, reagent, seconds_per_tick, can_overdose = TRUE)
 	if(owner && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		owner.updatehealth()
 	update_total()

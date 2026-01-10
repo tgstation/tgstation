@@ -16,7 +16,7 @@
 
 /obj/item/food/bait/worm
 	name = "worm"
-	desc = "It's a wriggling worm from a can of fishing bait. You're not going to eat it are you ?"
+	desc = "It's a wriggling worm from a can of fishing bait. You're not going to eat it, are you?"
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "worm"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 1)

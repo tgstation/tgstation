@@ -265,7 +265,7 @@
 /area/station/command/bridge)
 "bJ" = (
 /obj/structure/table,
-/obj/item/card/id/advanced/centcom/ert{
+/obj/item/card/id/advanced/centcom/ert/commander{
 	pixel_x = 6;
 	pixel_y = -6
 	},
@@ -2522,6 +2522,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/iron/white/corner,
 /area/station/medical/medbay)
 "SC" = (

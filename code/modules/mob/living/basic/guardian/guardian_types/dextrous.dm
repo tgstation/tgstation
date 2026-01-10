@@ -30,9 +30,14 @@
 		return
 	. += span_info("It is holding [internal_storage.examine_title(user)] in its internal storage.")
 
+/mob/living/basic/guardian/dextrous/manifest_effects()
+	. = ..()
+	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, GUARDIAN_RECALLED)
+
 /mob/living/basic/guardian/dextrous/recall_effects()
 	. = ..()
 	drop_all_held_items()
+	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, GUARDIAN_RECALLED)
 
 // Bullshit related to having a fake pocket begins here
 
