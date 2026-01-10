@@ -48,6 +48,9 @@
 	RegisterSignal(organ_owner, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 
 /obj/item/organ/heart/cybernetic/anomalock/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	organ_owner.cut_overlay(lightning_overlay) // necessary because clear_lightning_overlay() assumes we still have an owner, which we unassign upon removal
+	deltimer(lightning_timer)
+	lightning_overlay = null
 	. = ..()
 	if(!core)
 		return
@@ -79,15 +82,16 @@
 
 /obj/item/organ/heart/cybernetic/anomalock/proc/add_lightning_overlay(time_to_last = 10 SECONDS)
 	if(lightning_overlay)
-		lightning_timer = addtimer(CALLBACK(src, PROC_REF(clear_lightning_overlay)), time_to_last, (TIMER_UNIQUE|TIMER_OVERRIDE))
+		lightning_timer = addtimer(CALLBACK(src, PROC_REF(clear_lightning_overlay)), time_to_last, (TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME))
 		return
 	lightning_overlay = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "lightning")
 	owner.add_overlay(lightning_overlay)
-	lightning_timer = addtimer(CALLBACK(src, PROC_REF(clear_lightning_overlay)), time_to_last, (TIMER_UNIQUE|TIMER_OVERRIDE))
+	lightning_timer = addtimer(CALLBACK(src, PROC_REF(clear_lightning_overlay)), time_to_last, (TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME))
 
 /obj/item/organ/heart/cybernetic/anomalock/proc/clear_lightning_overlay()
-	owner.cut_overlay(lightning_overlay)
+	owner?.cut_overlay(lightning_overlay)
 	lightning_overlay = null
+	deltimer(lightning_timer)
 
 /obj/item/organ/heart/cybernetic/anomalock/attack_self(mob/user, modifiers)
 	. = ..()
@@ -202,6 +206,7 @@
 
 /datum/status_effect/voltaic_overdrive/on_apply()
 	. = ..()
+	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_organ_lost))
 	owner.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
 	owner.reagents.add_reagent(/datum/reagent/medicine/coagulant, 5)
@@ -211,10 +216,19 @@
 
 /datum/status_effect/voltaic_overdrive/on_remove()
 	. = ..()
+	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
 	owner.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	owner.remove_filter("emp_shield")
 	owner.balloon_alert(owner, "your heart weakens")
 	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), REF(src))
+
+/// Called when an organ is lost in the owner. In the event the owner just lost their voltaic (presumably, the one giving this effect), ends the buff and clears the overlay.
+/datum/status_effect/voltaic_overdrive/proc/on_organ_lost(mob/living/carbon/source, obj/item/organ/organ, special)
+	SIGNAL_HANDLER
+	if(istype(organ, /obj/item/organ/heart/cybernetic/anomalock))
+		var/obj/item/organ/heart/cybernetic/anomalock/just_fell_out = organ
+		just_fell_out.clear_lightning_overlay()
+		qdel(src)
 
 /atom/movable/screen/alert/status_effect/anomalock_active
 	name = "voltaic overdrive"
