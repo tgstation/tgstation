@@ -748,8 +748,9 @@
 	succeeded_attempt = TRUE
 	var/obj/item/bodypart/offending_hand = fool.get_active_hand()
 	var/obj/item/bodypart/risked_hand = forward_thinker.get_active_hand()
-	if(iscarbon(fool))
-		offending_hand.dismember(BRUTE, FALSE, WOUND_SLASH)
+	if(iscarbon(fool) && offending_hand.dismember(BRUTE, FALSE, WOUND_SLASH))
+		forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [p_their(fool)] attack, sending [p_their(fool)] arm flying!"),
+										span_notice("You swiftly draw \the [justicetool] and cut off [fool]'s arm!"))
 	else
 		fool.apply_damage(
 			damage = justicetool.force * COUNTERMULTIPLIER,
@@ -762,8 +763,8 @@
 			attack_direction = get_dir(forward_thinker, fool),
 			attacking_item = justicetool,
 		)
-	forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [p_their(fool)] attack, sending [p_their(fool)] arm flying!"),
-									span_notice("You swiftly draw \the [justicetool] and cut off [fool]'s arm!"))
+		forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [p_their(fool)] attack!"),
+										span_notice("You swiftly draw \the [justicetool] and strike them mid-attack!"))
 	if(!IS_ROBOTIC_LIMB(risked_hand))
 		forward_thinker.visible_message(span_danger("[forward_thinker]'s arm is unable to withstand the force of the attack!"),
 										span_danger("You feel a sharp pain as your arm is mutilated by the force of the attack!"))
@@ -792,7 +793,7 @@
 	if(!worthless_hand)
 		worthless_hand = holder.get_inactive_hand()
 
-	if(IS_ROBOTIC_LIMB(worthless_hand))
+	if(IS_ROBOTIC_LIMB(worthless_hand) || !worthless_hand.dismember(BRUTE, FALSE, WOUND_BLUNT))
 		holder.visible_message(span_danger("[holder]'s arm is mutilated as they misfire [p_their(holder)] sheathed blade!"),
 								span_danger("Your arm is mutilated as you fail to safely fire your blade!"))
 		holder.apply_damage(
@@ -804,7 +805,6 @@
 		)
 		return
 
-	worthless_hand.dismember(BRUTE, FALSE, WOUND_BLUNT)
 	holder.visible_message(span_danger("[holder]'s arm is violently torn off as they misfire [p_their(holder)] sheathed blade!"),
 							span_danger("Your arm is torn off as you fail to safely fire your blade!"))
 
