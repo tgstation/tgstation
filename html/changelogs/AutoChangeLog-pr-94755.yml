@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - balance: "wooden barricades mapped on top of objects are now crude barricades, preventing them from materializing when you open a door."

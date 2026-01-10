@@ -1,4 +1,0 @@
-author: "Arceniu"
-delete-after: True
-changes:
-  - bugfix: "ert commander card properly appear in game, no longer overriding basetype ert card"

@@ -1,0 +1,5 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - rscadd: "Adds the MOD Storage Module of Holding, a version of the Bag of Holding for your MODsuits."
+  - refactor: "The behavior of MODsuit storage modules and anomaly-locked modules has been refactored - please report any oddities."
