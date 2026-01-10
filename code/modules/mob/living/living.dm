@@ -2748,17 +2748,18 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		tgui_alert(admin, "Human mood system is disabled on this server.", "Mood System Disabled")
 		return
 
-	var/list/mood_events = list()
+	var/list/current_events = UNLINT(mob_mood.mood_events)
+	var/list/removable_events = list()
 
-	for (UNLINT(var/category in mob_mood.mood_events))
-		var/datum/mood_event/event = UNLINT(mob_mood.mood_events[category])
-		mood_events[event] = category
+	for (var/category in current_events)
+		var/datum/mood_event/event = UNLINT(current_events[category])
+		removable_events[event] = category
 
-	var/datum/mood_event/chosen = tgui_input_list(admin, "What mood event?", "Remove Mood Event", mood_events)
+	var/datum/mood_event/chosen = tgui_input_list(admin, "What mood event?", "Remove Mood Event", removable_events)
 	if (!chosen || QDELETED(src) || !check_rights(NONE))
 		return
 
-	UNLINT(mob_mood.clear_mood_event(mood_events[chosen]))
+	UNLINT(mob_mood.clear_mood_event(removable_events[chosen]))
 
 /// Adds a mood event to the mob
 /mob/living/proc/add_mood_event(category, type, ...)
