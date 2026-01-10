@@ -97,7 +97,7 @@
 	var/area/unit_test_area = get_area(run_loc_floor_bottom_left)
 	var/list/turf/lavalandable_turfs = unit_test_area.get_turfs_from_all_zlevels()
 
-	var/datum/gas_mixture/lavaland_mix = SSair.parse_gas_string(LAVALAND_DEFAULT_ATMOS, /datum/gas_mixture/turf)
+	var/datum/gas_mixture/lavaland_mix = SSair.parse_gas_string(LAVALAND_DEFAULT_ATMOS, /datum/gas_mixture/immutable/planetary)
 	var/datum/gas_mixture/volumetric_mix = allocate(/datum/gas_mixture, 2500)
 
 	volumetric_mix.copy_from(lavaland_mix)
@@ -105,4 +105,3 @@
 	for(var/turf/open/tile in lavalandable_turfs)
 		tile.copy_air(volumetric_mix)
 		tile.air_update_turf(update = FALSE, remove = FALSE)
-
