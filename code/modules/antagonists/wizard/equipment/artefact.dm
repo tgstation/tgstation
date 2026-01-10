@@ -160,12 +160,12 @@
 
 /// Begins the process of deranging the user for having seen past the veil of reality
 /obj/tear_in_reality/proc/begin_derangement(mob/living/carbon/victim)
-	ADD_TRAIT(jedi, TEAR_IN_REALITY_TRAIT, REF(src))
-	to_chat(jedi, span_userdanger("OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!"))
+	ADD_TRAIT(victim, TEAR_IN_REALITY_TRAIT, REF(src))
+	to_chat(victim, span_userdanger("OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!"))
 	for(var/lore in typesof(/datum/brain_trauma/severe))
-		jedi.gain_trauma(lore)
+		victim.gain_trauma(lore)
 
-	addtimer(CALLBACK(src, PROC_REF(deranged), jedi), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(deranged), victim), 10 SECONDS)
 
 /obj/tear_in_reality/proc/deranged(mob/living/carbon/C)
 	if(!C || C.stat == DEAD)
