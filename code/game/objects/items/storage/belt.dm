@@ -746,6 +746,7 @@
 	icon_state = "grass_sheath"
 	inhand_icon_state = "grass_sheath"
 	worn_icon_state = "grass_sheath"
+	action_slots = ITEM_SLOT_BELT | ITEM_SLOT_SUITSTORE
 	storage_type = /datum/storage/green_sabre_belt
 
 /obj/item/storage/belt/sheath/gladius
@@ -754,6 +755,7 @@
 	icon_state = "gladius_sheath"
 	inhand_icon_state = "gladius_sheath"
 	worn_icon_state = "gladius_sheath"
+	action_slots = ITEM_SLOT_BELT | ITEM_SLOT_SUITSTORE
 	storage_type = /datum/storage/gladius_belt
 	stored_blade = /obj/item/claymore/gladius
 

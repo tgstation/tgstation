@@ -10,7 +10,6 @@
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/tank/jetpack/captain,
 		/obj/item/storage/belt/holster,
-		/obj/item/storage/belt/sheath,
 	)
 	armor_type = /datum/armor/none
 	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
