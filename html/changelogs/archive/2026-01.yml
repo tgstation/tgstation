@@ -259,3 +259,13 @@
   - bugfix: Fixed airlock responses while carrying another mob
   - bugfix: Airlock checks for all possible permits before delaying
   - bugfix: Throwing items at unrestricted airlocks opens them
+2026-01-10:
+  Jacquerel:
+  - rscadd: If you kill yourself with a spear you will impale your head on that spear.
+  Melbert:
+  - rscadd: You can now find the SDMS-35 in Medbay, the CMO's office, the Psychologist's
+      office, and possibly the Library. Quite simply, it's a reference book for all
+      the brain trauma's you may experience.
+  lelandkemble:
+  - bugfix: Disposal pipe previews within the RPD ui will now be correct
+  - map: Icebox science now requires science access to enter
