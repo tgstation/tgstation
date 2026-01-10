@@ -309,9 +309,7 @@
 		add_atom_colour(GLOB.pipe_paint_colors[new_color], FIXED_COLOUR_PRIORITY)
 
 /obj/item/stack/ducts/wrench_act(mob/living/user, obj/item/tool)
-	. = check_attach_turf(loc)
-	if(!.)
-		. = ITEM_INTERACT_FAILURE
+	return check_attach_turf(loc)
 
 /obj/item/stack/ducts/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	// Turn into a duct stack and then merge to the in-hand stack.
