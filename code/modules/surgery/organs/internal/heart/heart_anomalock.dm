@@ -211,6 +211,7 @@
 
 /datum/status_effect/voltaic_overdrive/on_apply()
 	. = ..()
+	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_organ_lost))
 	owner.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
 	owner.reagents.add_reagent(/datum/reagent/medicine/coagulant, 5)
@@ -220,10 +221,17 @@
 
 /datum/status_effect/voltaic_overdrive/on_remove()
 	. = ..()
+	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
 	owner.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	owner.remove_filter("emp_shield")
 	owner.balloon_alert(owner, "your heart weakens")
 	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), REF(src))
+
+/// Called when an organ is lost in the owner. In the event the owner just lost their voltaic (presumably, the one giving this effect), ends the buff and clears the overlay.
+/datum/status_effect/voltaic_overdrive/proc/on_organ_lost(mob/living/carbon/source, obj/item/organ/organ, special)
+	SIGNAL_HANDLER
+	if(istype(organ, /obj/item/organ/heart/cybernetic/anomalock))
+		qdel(src)
 
 /atom/movable/screen/alert/status_effect/anomalock_active
 	name = "voltaic overdrive"
