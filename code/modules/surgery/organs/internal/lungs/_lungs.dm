@@ -998,10 +998,13 @@
 #define GAS_TOLERANCE 5
 
 /obj/item/organ/lungs/lavaland/Initialize(mapload)
+	var/datum/gas_mixture/volumed_mix = new(BREATH_VOLUME * 1000) // to be safe
 	var/datum/gas_mixture/immutable/planetary/mix = SSair.parse_gas_string(LAVALAND_DEFAULT_ATMOS, /datum/gas_mixture/immutable/planetary)
 
+	volumed_mix.copy_from(mix)
+
 	// Take a "breath" of the air
-	var/datum/gas_mixture/breath = mix.remove(mix.total_moles() * BREATH_PERCENTAGE)
+	var/datum/gas_mixture/breath = volumed_mix.remove(volumed_mix.total_moles() * BREATH_PERCENTAGE)
 
 	var/list/breath_gases = breath.gases
 
