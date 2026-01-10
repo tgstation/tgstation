@@ -100,9 +100,9 @@
 	var/datum/gas_mixture/lavaland_mix = SSair.parse_gas_string(LAVALAND_DEFAULT_ATMOS, /datum/gas_mixture/turf)
 	var/datum/gas_mixture/volumetric_mix = allocate(/datum/gas_mixture, 2500)
 
-	test_mix.copy_from(lavaland_mix)
+	volumetric_mix.copy_from(lavaland_mix)
 
 	for(var/turf/open/tile in lavalandable_turfs)
-		tile.copy_air(test_mix)
+		tile.copy_air(volumetric_mix)
 		tile.air_update_turf(update = FALSE, remove = FALSE)
 
