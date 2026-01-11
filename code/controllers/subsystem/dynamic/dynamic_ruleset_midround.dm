@@ -890,8 +890,17 @@
  * ### Shuttle rulesets
  */
 /datum/dynamic_ruleset/midround/from_ghosts/on_shuttle
-	///
-	var/list/shuttle_sleepers
+	/// should the candidacy check wait to spawn? used for conditions like pirate payoff
+//	var/delay_candidate_collection = TRUE
+	/// a weak ref for the shuttle's mobile port, to use for customizable procs
+	var/datum/weakref/shuttle_port_ref
+	/// a list of sleepers for ghosts to use if the initial candidacy check passed but open slots remained
+	var/list/obj/effect/mob_spawn/ghost_role/shuttle_sleepers
+
+
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/collect_candidates()
+	. = ..()
+
 
 /datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/prepare_for_role(datum/mind/candidate)
 	//make mind use sleeper
@@ -899,71 +908,66 @@
 	return
 
 /datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/load_shuttle()
-	var/datum/map_template/shuttle/midround_shuttle = choose_shuttle_template()
-	var/datum/turf_reservation/transit_reservation = SSmapping.request_turf_block_reservation(
-		((SHUTTLE_TRANSIT_BORDER * 2) + midround_shuttle.width),
-		((SHUTTLE_TRANSIT_BORDER * 2) + midround_shuttle.height),
-		reservation_type = /datum/turf_reservation/transit,
-		turf_type_override = /datum/turf_reservation/transit::turf_type,
-	)
-	var/turf/reservation_bottom_left = transit_reservation?.bottom_left_turfs[1]
+	var/datum/map_template/shuttle/midround_shuttle = SSmapping.shuttle_templates[choose_shuttle_template()]
+	var/datum/turf_reservation/shuttle_reservation = SSmapping.request_turf_block_reservation(midround_shuttle.width, midround_shuttle.height)
+	var/turf/reservation_bottom_left = shuttle_reservation?.bottom_left_turfs[1]
 	if(!reservation_bottom_left)
 		CRASH("[src] shuttle reservation failed!")
-	var/turf/shuttle_spawn_point = locate((reservation_bottom_left.x + SHUTTLE_TRANSIT_BORDER), (reservation_bottom_left.y + SHUTTLE_TRANSIT_BORDER), reservation_bottom_left.z)
-	//
-	var/identical_events_ran = 0
-	for(var/event in SSdynamic.executed_rulesets)
-		if(!istype(event, type))
-			continue
-		identical_events_ran++
-	//
-	if(!midround_shuttle.load(shuttle_spawn_point))
+	// load the shuttle into the reservation
+	RegisterSignal(SSshuttle, COMSIG_SHUTTLE_REGISTERED, PROC_REF(post_shuttle_load))
+	if(!midround_shuttle.load(reservation_bottom_left))
 		CRASH("[src] shuttle loading failed!")
-	//
-	var/obj/docking_port/mobile/shuttle_port = identical_events_ran == 1 ? SSshuttle.getShuttle("[midround_shuttle.shuttle_id]") : SSshuttle.getShuttle("[midround_shuttle.shuttle_id]_[identical_events_ran]")
-	RegisterSignal(shuttle_port, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, PROC_REF(on_shuttle_move))
-	//
-	for(var/turf/open/shuttle_turf as anything in midround_shuttle.get_affected_turfs(shuttle_spawn_point))
-		var/obj/effect/mob_spawn/ghost_role/spawner = locate() in shuttle_turf
-		if (spawner)
-			spawner.uses = 0 //locked
-			LAZYADD(shuttle_sleepers, spawner)
-	//
-	var/area/shuttle/transit/shuttle_area = get_area(shuttle_port)
-	var/area/shuttle/transit/transit_area = new()
-	var/transit_path = /turf/open/space/transit
-	switch(shuttle_port.preferred_direction)
-		if(NORTH)
-			transit_path = /turf/open/space/transit/north
-		if(SOUTH)
-			transit_path = /turf/open/space/transit/south
-		if(EAST)
-			transit_path = /turf/open/space/transit/east
-		if(WEST)
-			transit_path = /turf/open/space/transit/west
-	shuttle_area.parallax_movedir = shuttle_port.preferred_direction
-	transit_area.parallax_movedir = shuttle_port.preferred_direction
-	for(var/turf/open/space_turf as anything in transit_reservation.reserved_turfs)
-		if(!istype(space_turf, transit_reservation.turf_type))
-			continue
-		space_turf.ChangeTurf(transit_path)
-		space_turf.change_area(space_turf.loc, transit_area)
 
-//
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/proc/on_shuttle_move(atom/source, turf/oldT)
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/post_shuttle_load(datum/subsystem, obj/docking_port/mobile/shuttle_port)
+	. = ..()
+	var/datum/turf_reservation/shuttle_reservation = SSmapping.get_reservation_from_turf(get_turf(shuttle_port))
+	// register a signal to clean the reservation, and assign the shuttle port weak ref
+	RegisterSignal(shuttle_port, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, PROC_REF(clear_reservation))
+	shuttle_port_ref = WEAKREF(shuttle_port)
+	if(!shuttle_port_ref)
+		CRASH("[src] shuttle couldn't find a mobile port!")
+	// assign the sleepers to spawn players after initial candidacy check
+	for(var/turf/shuttle_turf as anything in shuttle_reservation.reserved_turfs)
+		var/obj/effect/mob_spawn/ghost_role/spawner = locate() in shuttle_turf
+		if(!spawner)
+			continue
+		LAZYADD(shuttle_sleepers, spawner)
+	if(!length(shuttle_sleepers))
+		CRASH("[src] found no sleepers!")
+	// lock the shuttle's player interactables until ready to receive them
+	lock_shuttle(shuttle_port.get_control_console())
+	UnregisterSignal(subsystem, COMSIG_SHUTTLE_REGISTERED)
+
+///
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/proc/clear_reservation(atom/source, turf/oldT)
 	SIGNAL_HANDLER
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	var/datum/turf_reservation/transit_reservation = SSmapping.get_reservation_from_turf(oldT)
-	if(!transit_reservation)
+	var/datum/turf_reservation/shuttle_reservation = SSmapping.get_reservation_from_turf(oldT)
+	if(!shuttle_reservation)
 		CRASH("[src] attempted to unload its transit reservation, but no reservation was found!")
 	UnregisterSignal(source, COMSIG_ATOM_AFTER_SHUTTLE_MOVE)
-	for(var/turf/reserved_turf as anything in transit_reservation.reserved_turfs)
-		var/mob/living/marooned = locate() in reserved_turf
-		if(marooned)
-			dump_in_space(marooned)
-		reserved_turf.empty()
-	qdel(transit_reservation)
+	qdel(shuttle_reservation)
+
+///
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/proc/get_mobile_port()
+	return shuttle_port_ref?.resolve()
+
+///
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/proc/get_control_console()
+	var/obj/docking_port/mobile/shuttle_port = get_mobile_port()
+	return shuttle_port?.get_control_console()
+
+///
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/proc/lock_shuttle(obj/machinery/computer/shuttle/shuttle_console)
+	shuttle_console.locked = TRUE
+	for(var/obj/effect/mob_spawn/ghost_role/spawner as anything in shuttle_sleepers)
+		spawner.uses = 0
+///
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/proc/unlock_shuttle(obj/machinery/computer/shuttle/shuttle_console)
+	shuttle_console.locked = FALSE
+	for(var/obj/effect/mob_spawn/ghost_role/spawner as anything in shuttle_sleepers)
+		spawner.uses = 1
 
 /datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates
 	name = "Pirates"
@@ -986,12 +990,15 @@
 	return ..() && length(default_pirate_pool()) > 0
 
 /datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/choose_shuttle_template()
-	return pirate_gang.ship_template_id
+	return "pirate_[pirate_gang.ship_template_id]"
 
 /datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/execute()
+	. = ..()
 	send_pirate_threat()
-
-
+	var/obj/docking_port/mobile/shuttle_port = get_mobile_port()
+	SSshuttle.generate_transit_dock(shuttle_port)
+	shuttle_port.enterTransit()
+	unlock_shuttle(get_control_console())
 
 /// Returns what pool of pirates to draw from
 /// Returned list is mutated by the ruleset
@@ -1019,7 +1026,7 @@
 	if(picked == RANDOM_PIRATE_POOL)
 		return null
 
-	pirate_gang = picked
+	pirate_gang = admin_pool[picked]
 	return null
 
 #undef RANDOM_PIRATE_POOL

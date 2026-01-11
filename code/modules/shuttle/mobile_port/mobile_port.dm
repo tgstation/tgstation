@@ -202,6 +202,7 @@
 			SSshuttle.assoc_mobile[shuttle_id] = 1
 
 	SSshuttle.mobile_docking_ports += src
+	SEND_SIGNAL(SSshuttle, COMSIG_SHUTTLE_REGISTERED, src)
 
 	if(custom)
 		SSshuttle.custom_shuttles += src

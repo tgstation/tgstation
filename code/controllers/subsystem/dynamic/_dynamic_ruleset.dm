@@ -317,12 +317,23 @@
 		SSmapping.lazy_load_template(template)
 
 ///
+/datum/dynamic_ruleset/proc/choose_shuttle_template()
+	return
+
+///
 /datum/dynamic_ruleset/proc/load_shuttle()
 	return
 
 ///
-/datum/dynamic_ruleset/proc/choose_shuttle_template()
+/datum/dynamic_ruleset/proc/post_shuttle_load()
+	SIGNAL_HANDLER
 	return
+
+///
+/datum/dynamic_ruleset/proc/first_destination(obj/docking_port/mobile/shuttle_port)
+	SHOULD_CALL_PARENT(TRUE)
+	var/obj/docking_port/stationary/transit/first_destination = SSshuttle.generate_transit_dock(shuttle_port)
+	return first_destination
 
 /**
  * Any additional checks to see if this player is a valid candidate for this ruleset
