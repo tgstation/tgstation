@@ -258,7 +258,7 @@
 
 			if (ispath(drop_type, /obj/item/stack))
 				if (ispath(drop_type, /obj/item/stack/sheet/animalhide/carbon))
-					results += new drop_type(src, amount, TRUE, null, 1, limb.skin_tone || limb.species_color)
+					results += new drop_type(src, amount, /*merge = */TRUE, /*mat_override = */null, /*mat_amount = */1, limb.skin_tone || limb.species_color)
 				else
 					results += new drop_type(src, amount)
 				continue

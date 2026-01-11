@@ -99,6 +99,13 @@
 	bio = 90
 	fire = 40
 
+/obj/item/clothing/shoes/cowboy/lizard/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/item/stack/sheet/animalhide/carbon/lizard/skin = locate() in components
+	if (isnull(skin) || !length(skin.skin_color)) // what
+		return ..()
+	set_greyscale(skin.skin_color)
+	return ..()
+
 /obj/item/clothing/shoes/cowboy/lizard/masterwork
 	name = "\improper Hugs-The-Feet lizardskin boots"
 	desc = "A pair of masterfully crafted lizard skin boots. Finally a good application for the station's most bothersome inhabitants."

@@ -224,12 +224,6 @@
 	time = 6 SECONDS
 	category = CAT_CLOTHING
 
-/datum/crafting_recipe/lizardboots/after_crafting(atom/result, list/stuff_to_use)
-	var/obj/item/stack/sheet/animalhide/carbon/lizard/skin = locate() in stuff_to_use
-	if (isnull(skin) || !length(skin.skin_color)) // what
-		return
-	result.set_greyscale(skin.skin_color)
-
 /datum/crafting_recipe/prisonsuit
 	name = "Prisoner Uniform (Suit)"
 	result = /obj/item/clothing/under/rank/prisoner
@@ -272,12 +266,6 @@
 	time = 1 SECONDS
 	reqs = list(/obj/item/stack/sheet/animalhide/carbon/lizard = 1)
 	category = CAT_CLOTHING
-
-/datum/crafting_recipe/lizardhat_alternate/after_crafting(atom/result, list/stuff_to_use)
-	var/obj/item/stack/sheet/animalhide/carbon/lizard/skin = locate() in stuff_to_use
-	if (isnull(skin) || !length(skin.skin_color)) // what
-		return
-	result.set_greyscale(skin.skin_color)
 
 /datum/crafting_recipe/kittyears
 	name = "Kitty Ears"

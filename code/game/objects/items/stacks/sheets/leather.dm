@@ -19,13 +19,8 @@
 
 /obj/item/stack/sheet/animalhide/carbon/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt, new_skin_color)
 	. = ..()
-	if (new_skin_color)
-		skin_color = new_skin_color
-	else if (!skin_color)
-		skin_color = get_random_skin_color()
-
-	if (skin_color && uses_skin_color)
-		add_atom_colour(skin_color, FIXED_COLOUR_PRIORITY)
+	if (!skin_color)
+		set_skin_color(new_skin_color || get_random_skin_color())
 
 /obj/item/stack/sheet/animalhide/carbon/can_merge(obj/item/stack/sheet/animalhide/carbon/check, inhand)
 	. = ..()
