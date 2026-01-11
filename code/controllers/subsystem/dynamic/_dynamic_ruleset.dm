@@ -316,6 +316,75 @@
 		SSmapping.lazy_load_template(template)
 
 /**
+ *
+ */
+/datum/dynamic_ruleset/proc/load_shuttle(shuttle_template_id)
+	var/datum/map_template/shuttle/midround_shuttle = SSmapping.shuttle_templates["[shuttle_template_id]"]
+	var/datum/turf_reservation/transit_reservation = SSmapping.request_turf_block_reservation(
+		((SHUTTLE_TRANSIT_BORDER * 2) + midround_shuttle.width),
+		((SHUTTLE_TRANSIT_BORDER * 2) + midround_shuttle.height),
+		reservation_type = /datum/turf_reservation/transit,
+		turf_type_override = /datum/turf_reservation/transit::turf_type,
+	)
+	var/turf/reservation_bottom_left = transit_reservation?.bottom_left_turfs[1]
+	if(!reservation_bottom_left)
+		CRASH("[src] shuttle reservation failed!")
+	var/turf/shuttle_spawn_point = locate((reservation_bottom_left.x + SHUTTLE_TRANSIT_BORDER), (reservation_bottom_left.y + SHUTTLE_TRANSIT_BORDER), reservation_bottom_left.z)
+	//
+	var/identical_events_ran = 0
+	for(var/event in SSdynamic.executed_rulesets)
+		if(!istype(event, type))
+			continue
+		identical_events_ran++
+	//
+	if(!midround_shuttle.load(shuttle_spawn_point))
+		CRASH("[src] shuttle loading failed!")
+	//
+	var/obj/docking_port/mobile/shuttle_port = identical_events_ran == 1 ? SSshuttle.getShuttle("[midround_shuttle.shuttle_id]") : SSshuttle.getShuttle("[midround_shuttle.shuttle_id]_[identical_events_ran]")
+	RegisterSignal(shuttle_port, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, PROC_REF(clear_reservation))
+	//
+	var/list/spawner_list = list()
+	for(var/turf/open/shuttle_turf as anything in midround_shuttle.get_affected_turfs(shuttle_spawn_point))
+		var/obj/effect/mob_spawn/ghost_role/spawner = locate() in shuttle_turf
+		if (spawner)
+			spawner.uses = 0
+			LAZYADD(spawner_list, spawner)
+	//
+	var/area/shuttle/transit/shuttle_area = get_area(shuttle_port)
+	var/area/shuttle/transit/transit_area = new()
+	var/transit_path = /turf/open/space/transit
+	switch(shuttle_port.preferred_direction)
+		if(NORTH)
+			transit_path = /turf/open/space/transit/north
+		if(SOUTH)
+			transit_path = /turf/open/space/transit/south
+		if(EAST)
+			transit_path = /turf/open/space/transit/east
+		if(WEST)
+			transit_path = /turf/open/space/transit/west
+	shuttle_area.parallax_movedir = shuttle_port.preferred_direction
+	transit_area.parallax_movedir = shuttle_port.preferred_direction
+	for(var/turf/open/space_turf as anything in transit_reservation.reserved_turfs)
+		if(!istype(space_turf, transit_reservation.turf_type))
+			continue
+		space_turf.ChangeTurf(transit_path)
+		space_turf.change_area(space_turf.loc, transit_area)
+
+// The proc which runs when the event's shuttle exits its initial transit reservation
+/datum/dynamic_ruleset/proc/clear_reservation(atom/source, turf/oldT)
+	SIGNAL_HANDLER
+	var/datum/turf_reservation/transit_reservation = SSmapping.get_reservation_from_turf(oldT)
+	if(!transit_reservation)
+		CRASH("[src] attempted to unload its transit reservation, but no reservation was found!")
+	UnregisterSignal(source, COMSIG_ATOM_AFTER_SHUTTLE_MOVE)
+	for(var/turf/reserved_turf as anything in transit_reservation.reserved_turfs)
+		var/mob/living/marooned = locate() in reserved_turf
+		if(marooned)
+			dump_in_space(marooned)
+		reserved_turf.empty()
+	qdel(transit_reservation)
+
+/**
  * Any additional checks to see if this player is a valid candidate for this ruleset
  */
 /datum/dynamic_ruleset/proc/is_valid_candidate(mob/candidate, client/candidate_client)

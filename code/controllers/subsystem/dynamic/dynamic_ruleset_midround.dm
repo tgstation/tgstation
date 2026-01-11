@@ -162,84 +162,41 @@
 /datum/dynamic_ruleset/midround/pirates/proc/spawn_pirates(datum/comm_message/threat, datum/pirate_gang/chosen_gang)
 	if(chosen_gang.paid_off)
 		return
-	//
-	var/datum/map_template/shuttle/pirate/pirate_shuttle = SSmapping.shuttle_templates["pirate_[chosen_gang.ship_template_id]"]
-	reservation = SSmapping.request_turf_block_reservation(
-		((SHUTTLE_TRANSIT_BORDER * 2) + pirate_shuttle.width),
-		((SHUTTLE_TRANSIT_BORDER * 2) + pirate_shuttle.height),
-		reservation_type = /datum/turf_reservation/transit,
-		turf_type_override = /datum/turf_reservation/transit::turf_type,
-	)
-	var/turf/bottom_left = reservation?.bottom_left_turfs[1]
-	if(!bottom_left)
-		CRASH("Pirate shuttle reservation failed!")
-	var/turf/spawn_point = locate((bottom_left.x + SHUTTLE_TRANSIT_BORDER), (bottom_left.y + SHUTTLE_TRANSIT_BORDER), bottom_left.z)
-	//
-	var/existing_pirate_shuttles = 1
-	for(var/obj/docking_port/mobile/pirate/pirate_port in SSshuttle.mobile_docking_ports)
-		existing_pirate_shuttles++
-	//
-	if(!pirate_shuttle.load(spawn_point))
-		CRASH("Pirate shuttle loading failed!")
-	//
-	var/obj/docking_port/mobile/pirate/pirate_port = existing_pirate_shuttles == 1 ? SSshuttle.getShuttle("pirate") : SSshuttle.getShuttle("pirate_[existing_pirate_shuttles]")
-	RegisterSignal(pirate_port, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, PROC_REF(clear_reservation))
-	//
-	var/spawners = list()
-	for(var/turf/pirate_turf as anything in pirate_shuttle.get_affected_turfs(spawn_point))
-		var/obj/effect/mob_spawn/ghost_role/human/pirate/pirate_spawner = locate() in pirate_turf
-		if(pirate_spawner)
-			pirate_spawner.uses = 0
-			LAZYADD(spawners, pirate_spawner)
-	//
-	var/area/shuttle/transit/pirate_area = get_area(pirate_port)
-	var/area/shuttle/transit/transit_area = new()
-	var/transit_path = /turf/open/space/transit
-	switch(pirate_port.preferred_direction)
-		if(NORTH)
-			transit_path = /turf/open/space/transit/north
-		if(SOUTH)
-			transit_path = /turf/open/space/transit/south
-		if(EAST)
-			transit_path = /turf/open/space/transit/east
-		if(WEST)
-			transit_path = /turf/open/space/transit/west
-	pirate_area.parallax_movedir = pirate_port.preferred_direction
-	transit_area.parallax_movedir = pirate_port.preferred_direction
-	for(var/turf/open/space_turf as anything in reservation.reserved_turfs)
-		if(!istype(space_turf, reservation.turf_type))
-			continue
-		space_turf.ChangeTurf(transit_path)
-		space_turf.change_area(space_turf.loc, transit_area)
-	//
+
 	var/list/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for a [span_notice("pirate crew of [chosen_gang.name]?")]", check_jobban = ROLE_TRAITOR, alert_pic = /obj/item/claymore/cutlass, role_name_text = "pirate crew")
-	if(length(candidates))
-		shuffle_inplace(candidates)
-		for(var/i in 1 to length(candidates))
-			var/obj/effect/mob_spawn/ghost_role/human/pirate/pirate_spawner = pick_n_take(spawners)
-			var/mob/spawned_mob = pirate_spawner.create_from_ghost(pick_n_take(candidates))
-			notify_ghosts(
-				"The [chosen_gang.ship_name] has an object of interest: [spawned_mob]!",
-				source = spawned_mob,
-				header = "Pirates!",
-			)
-	//
-	for(var/obj/effect/mob_spawn/ghost_role/human/pirate/pirate_spawner as anything in spawners)
-		pirate_spawner.uses = 1
-		notify_ghosts(
-			"The [chosen_gang.ship_name] has an object of interest: [pirate_spawner]!",
-			source = pirate_spawner,
-			header = "Pirate Spawn Here!",
-		)
+	shuffle_inplace(candidates)
+
+	var/template_key = "pirate_[chosen_gang.ship_template_id]"
+	var/datum/map_template/shuttle/pirate/ship = SSmapping.shuttle_templates[template_key]
+	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
+	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
+	var/z = SSmapping.empty_space.z_value
+	var/turf/T = locate(x,y,z)
+	if(!T)
+		CRASH("Pirate event found no turf to load in")
+
+	if(!ship.load(T))
+		CRASH("Loading pirate ship failed!")
+
+	for(var/turf/area_turf as anything in ship.get_affected_turfs(T))
+		for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in area_turf)
+			if(candidates.len > 0)
+				var/mob/our_candidate = candidates[1]
+				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
+				candidates -= our_candidate
+				notify_ghosts(
+					"The [chosen_gang.ship_name] has an object of interest: [spawned_mob]!",
+					source = spawned_mob,
+					header = "Pirates!",
+				)
+			else
+				notify_ghosts(
+					"The [chosen_gang.ship_name] has an object of interest: [spawner]!",
+					source = spawner,
+					header = "Pirate Spawn Here!",
+				)
 
 	priority_announce(chosen_gang.arrival_announcement, sender_override = chosen_gang.ship_name)
-
-/datum/dynamic_ruleset/midround/pirates/proc/clear_reservation(atom/source)
-	SIGNAL_HANDLER
-	UnregisterSignal(source, COMSIG_ATOM_AFTER_SHUTTLE_MOVE)
-	for(var/turf/reserved_turf as anything in reservation.reserved_turfs)
-		reserved_turf.empty()
-	QDEL_NULL(reservation)
 
 #undef NO_ANSWER
 #undef POSITIVE_ANSWER
