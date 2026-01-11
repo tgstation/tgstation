@@ -46,7 +46,6 @@
 	shove_clone.full_setup(
 		caster,
 		target_mob = victim,
-		faction = caster.get_faction(),
 		life = 30 SECONDS,
 		hp = caster.health,
 		damage = 1,

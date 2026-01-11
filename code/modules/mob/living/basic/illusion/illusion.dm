@@ -50,9 +50,11 @@
 	try_replicate()
 
 /// Full setup for illusion mobs to lessen code duplication in the individual files.
-/mob/living/basic/illusion/proc/full_setup(mob/living/original, mob/living/target_mob = null, list/faction = null, life = 5 SECONDS, hp = 100, damage = 0, replicate = 0)
+/mob/living/basic/illusion/proc/full_setup(mob/living/original, mob/living/target_mob = null, list/faction_override = null, life = 5 SECONDS, hp = 100, damage = 0, replicate = 0)
 	mock_as(original, life, hp, damage, replicate)
-	set_faction(faction)
+	apply_faction_and_allies_from(original)
+	if(faction_override)
+		set_faction(faction_override)
 	set_target(target_mob)
 
 /// Gives the illusion a target to focus on in whatever behavior it wants to engage as.
@@ -98,7 +100,7 @@
 	new_clone.full_setup(
 		parent_mob,
 		target_mob = ai_controller.blackboard[target_key],
-		faction = faction,
+		faction_override = faction,
 		life = 8 SECONDS,
 		hp = health / 2,
 		damage = melee_damage_upper,
