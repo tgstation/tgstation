@@ -83,5 +83,5 @@
 	. = ..()
 	if(isnull(.))
 		return
-	apply_faction_and_allies_from(new_friend, src)
+	set_faction_and_allies_from(new_friend, src)
 	visible_message(span_notice("[src] lowers [src.p_their()] snout at [new_friend]'s offering and begins to wag [src.p_their()] tail."))

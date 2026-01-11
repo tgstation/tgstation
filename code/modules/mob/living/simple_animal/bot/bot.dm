@@ -1092,7 +1092,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	name = paicard.pai.name
 	original_faction = get_faction()
 	original_allies = allies
-	apply_faction_and_allies_from(user, src)
+	set_faction_and_allies_from(user, src)
 	log_combat(user, paicard.pai, "uploaded to [initial(src.name)],")
 	return TRUE
 

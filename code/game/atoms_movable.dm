@@ -1851,12 +1851,12 @@
  * Adds an ally or list of allies to the allies list. Automatically converts target to ref if it is an atom.
  * Returns TRUE if something was actually added, false otherwise
  */
-/atom/movable/proc/add_ally(atom/target)
+/atom/movable/proc/add_ally(ally_or_allies)
 	var/old_length = LAZYLEN(allies)
-	if(!isatom(target))
-		LAZYOR(allies, target)
+	if(!isatom(ally_or_allies))
+		LAZYOR(allies, ally_or_allies)
 	else
-		LAZYOR(allies, "[REF(target)]")
+		LAZYOR(allies, "[REF(ally_or_allies)]")
 
 	return LAZYLEN(allies) != old_length
 

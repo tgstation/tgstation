@@ -102,7 +102,7 @@
 #define FACTION_PINK_EXTRACT(owner) "pink_[owner]"
 
 /**
- * apply_faction_and_allies_from(source, destination)
+ * set_faction_and_allies_from(source, destination)
  * Sets the atom's faction and allies to match that of the provided type's.
  *
  * This is equivalent to:
@@ -115,6 +115,22 @@
 	do { \
 		(destination).set_faction((source).get_faction()); \
 		(destination).set_allies(LAZYLISTDUPLICATE((source).allies)); \
+	} while(FALSE)
+
+/**
+ * apply_faction_and_allies_from(source, destination)
+ * Adds the provided type's factions and allies to the atom's current factions and allies.
+ *
+ * This is equivalent to:
+ *   destination.add_faction(source.get_faction())
+ *    destination.add_ally(source.allies)
+ *
+ * This is a macro (not a proc) to avoid proc call overhead in hot paths.
+ */
+#define apply_faction_and_allies_from(source, destination) \
+	do { \
+		(destination).add_faction((source).get_faction()); \
+		(destination).add_ally(LAZYLISTDUPLICATE((source).allies)); \
 	} while(FALSE)
 
 /**

@@ -52,7 +52,7 @@
 /// Full setup for illusion mobs to lessen code duplication in the individual files.
 /mob/living/basic/illusion/proc/full_setup(mob/living/original, mob/living/target_mob = null, list/faction_override = null, life = 5 SECONDS, hp = 100, damage = 0, replicate = 0)
 	mock_as(original, life, hp, damage, replicate)
-	apply_faction_and_allies_from(original)
+	set_faction_and_allies_from(original)
 	if(faction_override)
 		set_faction(faction_override)
 	set_target(target_mob)

@@ -56,6 +56,6 @@
 	var/turf/where = get_turf(friend)
 	var/new_colour = pick(colours)
 	var/mob/living/basic/slime/new_friend = new(where, new_colour, SLIME_LIFE_STAGE_ADULT)
-	apply_faction_and_allies_from(friend, new_friend)
+	set_faction_and_allies_from(friend, new_friend)
 	new_friend.set_enraged_behaviour()
 	friend.nutrition -= 50

@@ -53,8 +53,7 @@
 	visible_message(span_warning("The corpse of [target.name] suddenly rises!"))
 	var/mob/living/basic/blob_minion/zombie/blombie = change_mob_type(zombie_type, loc, new_name = initial(zombie_type.name))
 	blombie.pass_flags |= PASSBLOB //No way to pass the blob_borne info through change_mob_type() to Initilize(), so we just circumvent it here.
-	blombie.add_faction(get_faction()) //inherit the spore's faction in case it was spawned with a different one (eg gold core)
-	blombie.add_ally(allies)
+	blombie.apply_faction_and_allies_from(src) //inherit the spore's faction in case it was spawned with a different one (eg gold core)
 	blombie.set_name()
 	if (istype(blombie)) // In case of badmin
 		blombie.consume_corpse(target)

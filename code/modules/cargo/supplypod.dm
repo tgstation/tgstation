@@ -576,7 +576,7 @@
 	if(glow_effect)
 		SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
 
-/obj/structure/closet/supplypod/proc/end_glow
+/obj/structure/closet/supplypod/proc/end_glow()
 	if(!glow_effect)
 		return
 	glow_effect.layer = LOW_ITEM_LAYER
@@ -784,7 +784,7 @@
 	pod.try_make_rubble(drop_location())
 	pod.layer = initial(pod.layer)
 	SET_PLANE(pod, initial(pod.plane), our_turf)
-	pod.end_glow
+	pod.end_glow()
 	QDEL_NULL(helper)
 	pod.pre_open() //Begin supplypod open procedures. Here effects like explosions, damage, and other dangerous (and potentially admin-caused, if the centcom_podlauncher datum was used) memes will take place
 	draw_smoke()

@@ -79,7 +79,7 @@
 /// Actually create a mob
 /datum/action/cooldown/mob_cooldown/hivelord_spawn/proc/complete_spawn(turf/spawn_turf, target)
 	var/mob/living/brood = new spawn_type(spawn_turf)
-	apply_faction_and_allies_from(owner, brood)
+	set_faction_and_allies_from(owner, brood)
 	brood.ai_controller?.set_blackboard_key(ai_target_key, target)
 	brood.dir = get_dir(owner, spawn_turf)
 
