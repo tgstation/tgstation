@@ -364,15 +364,11 @@
 
 /obj/item/bodypart/arm/left/shadow/nightmare
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
-
 	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/nyxosynthesis)
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_SHADOW
 
 /obj/item/bodypart/arm/right/shadow/nightmare
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
-
 	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/nyxosynthesis)
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_SHADOW
 
 ///SKELETON
 /obj/item/bodypart/head/skeleton
@@ -439,9 +435,17 @@
 	// These are always disabled
 	disabling_threshold_percentage = 0
 
+/obj/item/bodypart/head/skeleton/nonfunctional/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/blood_limb_overlay)
+
 /obj/item/bodypart/chest/skeleton/nonfunctional
 	limb_id = BODYPART_ID_BONE
 	disabling_threshold_percentage = 0
+
+/obj/item/bodypart/chest/skeleton/nonfunctional/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/blood_limb_overlay)
 
 /obj/item/bodypart/chest/skeleton/nonfunctional/on_adding(mob/living/carbon/new_owner)
 	. = ..()
@@ -457,17 +461,33 @@
 	limb_id = BODYPART_ID_BONE
 	disabling_threshold_percentage = 0
 
+/obj/item/bodypart/arm/left/skeleton/nonfunctional/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/blood_limb_overlay)
+
 /obj/item/bodypart/arm/right/skeleton/nonfunctional
 	limb_id = BODYPART_ID_BONE
 	disabling_threshold_percentage = 0
+
+/obj/item/bodypart/arm/right/skeleton/nonfunctional/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/blood_limb_overlay)
 
 /obj/item/bodypart/leg/left/skeleton/nonfunctional
 	limb_id = BODYPART_ID_BONE
 	disabling_threshold_percentage = 0
 
+/obj/item/bodypart/leg/left/skeleton/nonfunctional/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/blood_limb_overlay)
+
 /obj/item/bodypart/leg/right/skeleton/nonfunctional
 	limb_id = BODYPART_ID_BONE
 	disabling_threshold_percentage = 0
+
+/obj/item/bodypart/leg/right/skeleton/nonfunctional/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/blood_limb_overlay)
 
 ///MUSHROOM
 /obj/item/bodypart/head/mushroom

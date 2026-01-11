@@ -693,7 +693,7 @@
 /obj/machinery/door/airlock{
 	name = "Freezer"
 	},
-/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/iron/freezer,
 /area/awaymission/snowdin/post/kitchen)

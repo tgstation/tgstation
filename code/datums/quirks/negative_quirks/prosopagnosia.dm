@@ -4,8 +4,11 @@
 	icon = FA_ICON_USER_SECRET
 	value = -4
 	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
+	medical_symptom_text = "Unable to recognize familiar faces, often relying on alternative cues such as \
+		voice, clothing, identification, or context to identify individuals."
 	hardcore_value = 5
 	mail_goodies = list(/obj/item/skillchip/appraiser) // bad at recognizing faces but good at recognizing IDs
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_TRAUMALIKE
 
 /datum/quirk/prosopagnosia/add(client/client_source)
 	RegisterSignal(quirk_holder, COMSIG_MOB_REQUESTING_SCREENTIP_NAME_FROM_USER, PROC_REF(screentip_name_override))
