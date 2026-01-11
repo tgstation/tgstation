@@ -54,7 +54,7 @@
 	if (!istype(carbon_owner))
 		return
 	carbon_owner.AddComponentFrom(REF(src), /datum/component/can_flash_from_behind)
-	RegisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, PROC_REF(on_mob_successful_flashed_carbon))
+	RegisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB, PROC_REF(on_mob_successful_flashed_mob))
 
 /// Take away the ability to add more brothers
 /datum/antagonist/brother/proc/remove_conversion_skills()
@@ -62,12 +62,12 @@
 		return
 	var/mob/living/carbon/carbon_owner = owner.current
 	carbon_owner.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
-	UnregisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON)
+	UnregisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB)
 
-/datum/antagonist/brother/proc/on_mob_successful_flashed_carbon(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash)
+/datum/antagonist/brother/proc/on_mob_successful_flashed_mob(mob/living/source, mob/living/flashed, obj/item/assembly/flash/flash)
 	SIGNAL_HANDLER
 
-	if (flashed.stat == DEAD)
+	if (flashed.stat == DEAD || issilicon(flashed) || isdrone(flashed))
 		return
 
 	if (flashed.stat != CONSCIOUS)

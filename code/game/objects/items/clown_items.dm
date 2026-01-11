@@ -4,6 +4,7 @@
  * Bike Horns
  * Air Horns
  * Canned Laughter
+ * Balloon Mallet
  */
 
 /*
@@ -25,7 +26,6 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	grind_results = list(/datum/reagent/lye = 10)
 	var/cleanspeed = 3.5 SECONDS //slower than mop
 	force_string = "robust... against germs"
 	var/uses = 100
@@ -34,6 +34,9 @@
 	. = ..()
 	AddComponent(/datum/component/slippery, 80)
 	AddComponent(/datum/component/cleaner, cleanspeed, 0.1, pre_clean_callback=CALLBACK(src, PROC_REF(should_clean)), on_cleaned_callback=CALLBACK(src, PROC_REF(decreaseUses))) //less scaling for soapies
+
+/obj/item/soap/grind_results()
+	return list(/datum/reagent/lye = 10)
 
 /obj/item/soap/examine(mob/user)
 	. = ..()
@@ -56,36 +59,44 @@
 
 /obj/item/soap/homemade
 	desc = "A homemade bar of soap. Smells of... well...."
-	grind_results = list(/datum/reagent/consumable/liquidgibs = 9, /datum/reagent/lye = 9)
 	icon_state = "soapgibs"
 	inhand_icon_state = "soapgibs"
 	worn_icon_state = "soapgibs"
 	cleanspeed = 3 SECONDS // faster than base soap to reward chemists for going to the effort
 
+/obj/item/soap/homemade/grind_results()
+	return list(/datum/reagent/consumable/liquidgibs = 9, /datum/reagent/lye = 9)
+
 /obj/item/soap/nanotrasen
 	desc = "A heavy duty bar of Nanotrasen brand soap. Smells of plasma."
-	grind_results = list(/datum/reagent/toxin/plasma = 10, /datum/reagent/lye = 10)
 	icon_state = "soapnt"
 	inhand_icon_state = "soapnt"
 	worn_icon_state = "soapnt"
 	cleanspeed = 2.8 SECONDS //janitor gets this
 	uses = 300
 
+/obj/item/soap/nanotrasen/grind_results()
+	return list(/datum/reagent/toxin/plasma = 10, /datum/reagent/lye = 10)
+
 /obj/item/soap/deluxe
 	desc = "A deluxe Waffle Corporation brand bar of soap. Smells of high-class luxury."
-	grind_results = list(/datum/reagent/consumable/aloejuice = 10, /datum/reagent/lye = 10)
 	icon_state = "soapdeluxe"
 	inhand_icon_state = "soapdeluxe"
 	worn_icon_state = "soapdeluxe"
 	cleanspeed = 2 SECONDS //captain gets one of these
 
+/obj/item/soap/deluxe/grind_results()
+	return list(/datum/reagent/consumable/aloejuice = 10, /datum/reagent/lye = 10)
+
 /obj/item/soap/syndie
 	desc = "An untrustworthy bar of soap made of strong chemical agents that dissolve blood faster."
-	grind_results = list(/datum/reagent/toxin/acid = 10, /datum/reagent/lye = 10)
 	icon_state = "soapsyndie"
 	inhand_icon_state = "soapsyndie"
 	worn_icon_state = "soapsyndie"
 	cleanspeed = 0.5 SECONDS //faster than mops so it's useful for traitors who want to clean crime scenes
+
+/obj/item/soap/syndie/grind_results()
+	return list(/datum/reagent/toxin/acid = 10, /datum/reagent/lye = 10)
 
 /obj/item/soap/drone
 	name = "\improper integrated soap module"
@@ -97,12 +108,25 @@
 /obj/item/soap/omega
 	name = "\improper Omega soap"
 	desc = "The most advanced soap known to mankind. The beginning of the end for germs."
-	grind_results = list(/datum/reagent/consumable/potato_juice = 9, /datum/reagent/consumable/ethanol/lizardwine = 9, /datum/reagent/monkey_powder = 9, /datum/reagent/drug/krokodil = 9, /datum/reagent/toxin/acid/nitracid = 9, /datum/reagent/baldium = 9, /datum/reagent/consumable/ethanol/hooch = 9, /datum/reagent/bluespace = 9, /datum/reagent/drug/pumpup = 9, /datum/reagent/consumable/space_cola = 9)
 	icon_state = "soapomega"
 	inhand_icon_state = "soapomega"
 	worn_icon_state = "soapomega"
 	cleanspeed = 0.3 SECONDS //Only the truest of mind soul and body get one of these
 	uses = 800 //In the Greek numeric system, Omega has a value of 800
+
+/obj/item/soap/omega/grind_results()
+	return list(
+		/datum/reagent/consumable/potato_juice = 9,
+		/datum/reagent/consumable/ethanol/lizardwine = 9,
+		/datum/reagent/monkey_powder = 9,
+		/datum/reagent/drug/krokodil = 9,
+		/datum/reagent/toxin/acid/nitracid = 9,
+		/datum/reagent/baldium = 9,
+		/datum/reagent/consumable/ethanol/hooch = 9,
+		/datum/reagent/bluespace = 9,
+		/datum/reagent/drug/pumpup = 9,
+		/datum/reagent/consumable/space_cola = 9
+	)
 
 /obj/item/soap/omega/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is using [src] to scrub themselves from the timeline! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -229,6 +253,7 @@
 	inhand_icon_state = "gold_horn"
 	worn_icon_state = "horn_gold"
 	COOLDOWN_DECLARE(golden_horn_cooldown)
+	custom_materials = list(/datum/material/bananium = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/bikehorn/golden/attack()
 	flip_mobs()
@@ -270,3 +295,46 @@
 	icon_state = "laughter"
 	volume = 50
 	list_reagents = list(/datum/reagent/consumable/laughter = 50)
+
+//balloon mallet
+/obj/item/balloon_mallet
+	name = "balloon mallet"
+	desc = "It's a mallet, a weapon known for being heavy, but made from notoriously light balloons. Air inside removes any force from the swings. It'd be quite embarrassing to get hit by this."
+	icon = 'icons/obj/weapons/hammer.dmi'
+	icon_state = "balloon_mallet"
+	inhand_icon_state = "balloon_mallet"
+	icon_angle = -45
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	siemens_coefficient = 0
+	force = 1
+	throw_speed = 1
+	throwforce = 1
+	throw_range = 1
+	w_class = WEIGHT_CLASS_HUGE
+	attack_verb_continuous = list("mallets", "smoother")
+	attack_verb_simple = list("mallet", "smoother")
+	max_integrity = 20
+	armor_type = /datum/armor/item_banhammer
+	resistance_flags = FIRE_PROOF
+
+/obj/item/balloon_mallet/examine(mob/user)
+	. = ..()
+	if(HAS_TRAIT(user,TRAIT_BALLOON_SUTRA))
+		. += "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
+
+/obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
+	playsound(loc, 'sound/mobs/non-humanoids/clown/hehe.ogg', 20)
+	if (!isliving(target))
+		return
+	switch(target.mob_mood.sanity)
+		if (SANITY_INSANE to SANITY_CRAZY)
+			force = 8
+		if (SANITY_UNSTABLE to SANITY_DISTURBED)
+			force = 4
+			target.add_mood_event("humiliated", /datum/mood_event/mallet_humiliation)
+		if (SANITY_NEUTRAL to SANITY_GREAT)
+			target.add_mood_event("humiliated", /datum/mood_event/mallet_humiliation)
+
+	if(user.combat_mode)
+		return ..(target, user)

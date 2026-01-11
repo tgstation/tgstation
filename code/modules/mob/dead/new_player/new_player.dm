@@ -6,9 +6,10 @@
 	density = FALSE
 	stat = DEAD
 	hud_type = /datum/hud/new_player
-	hud_possible = list()
 
-	var/ready = FALSE
+	/// String Values tied to Defines that state whether the new_player is ready to play or not.
+	/// Do try your best to compare this value directly against the defines for certainty but helper procs do exist in bulkier situations.
+	var/ready = PLAYER_NOT_READY
 	/// Referenced when you want to delete the new_player later on in the code.
 	var/spawning = FALSE
 	/// For instant transfer once the round is set up
@@ -63,6 +64,12 @@
 	if (href_list["votepollref"])
 		var/datum/poll_question/poll = locate(href_list["votepollref"]) in GLOB.polls
 		vote_on_poll_handler(poll, href_list)
+
+/// Quickly gets a boolean of whether the new_player is ready to play or not in places where we would like the boolean logic.
+/// The assertion is that readiness must be an opted in TRUE, while all other states (e.g. not ready, broken, etc) are FALSE.
+/// We organize it this way to ensure the system is extensible for other possible ready states.
+/mob/dead/new_player/proc/is_ready_to_play()
+	return ready == PLAYER_READY_TO_PLAY
 
 //When you cop out of the round (NB: this HAS A SLEEP FOR PLAYER INPUT IN IT)
 /mob/dead/new_player/proc/make_me_an_observer()
@@ -180,6 +187,8 @@
 		tgui_alert(usr, "There was an unexpected error putting you into your requested job. If you cannot join with any job, you should contact an admin.")
 		return FALSE
 
+	var/latejoin_period = CEILING(STATION_TIME_PASSED() / (5 MINUTES), 5)
+	SSblackbox.record_feedback("tally", "latejoin_time", 1, latejoin_period)
 	mind.late_joiner = TRUE
 	var/atom/destination = mind.assigned_role.get_latejoin_spawn_point()
 	if(!destination)
@@ -235,8 +244,12 @@
 	if(CONFIG_GET(flag/allow_latejoin_antagonists) && !EMERGENCY_PAST_POINT_OF_NO_RETURN && humanc) //Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		SSdynamic.on_latejoin(humanc)
 
-	if((job.job_flags & JOB_ASSIGN_QUIRKS) && humanc && CONFIG_GET(flag/roundstart_traits))
-		SSquirks.AssignQuirks(humanc, humanc.client)
+	if(humanc)
+		if(job.job_flags & JOB_ASSIGN_QUIRKS)
+			if(CONFIG_GET(flag/roundstart_traits))
+				SSquirks.AssignQuirks(humanc, humanc.client)
+		else // clear any personalities the prefs added since our job clearly does not want them
+			humanc.clear_personalities()
 
 	if(humanc) // Quirks may change manifest datapoints, so inject only after assigning quirks
 		GLOB.manifest.inject(humanc)

@@ -59,10 +59,16 @@
 	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, charge)
 	var/static/list/fishable_turfs = typecacheof(list(/turf/open/lava))
 	ai_controller.set_blackboard_key(BB_FISHABLE_LIST, fishable_turfs)
+	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/mining/lobstrosity/Destroy()
 	QDEL_NULL(charge)
 	return ..()
+
+/mob/living/basic/mining/lobstrosity/update_overlays()
+	. = ..()
+	if (stat != DEAD)
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
 /mob/living/basic/mining/lobstrosity/ranged_secondary_attack(atom/atom_target, modifiers)
 	charge.Trigger(target = atom_target)
@@ -234,8 +240,8 @@
 		grown.tamed()
 	for(var/friend in ai_controller?.blackboard?[BB_FRIENDS_LIST])
 		grown.befriend(friend)
-	grown.setBruteLoss(getBruteLoss())
-	grown.setFireLoss(getFireLoss())
+	grown.set_brute_loss(get_brute_loss())
+	grown.set_fire_loss(get_fire_loss())
 	qdel(src) //We called change_mob_type without 'delete_old_mob = TRUE' since we had to pass down friends and damage
 
 /mob/living/basic/mining/lobstrosity/juvenile/lava

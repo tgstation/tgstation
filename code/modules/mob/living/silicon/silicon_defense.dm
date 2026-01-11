@@ -2,8 +2,8 @@
 /mob/living/silicon/grippedby(mob/living/carbon/user, instant = FALSE)
 	return //can't upgrade a simple pull into a more aggressive grab.
 
-/mob/living/silicon/get_ear_protection()//no ears
-	return 2
+/mob/living/silicon/get_ear_protection(ignore_deafness = FALSE)
+	return ..() + EAR_PROTECTION_HEAVY //no ears
 
 /mob/living/silicon/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	. = ..()
@@ -17,7 +17,7 @@
 		to_chat(user, span_danger("You slash at [src]!"))
 		if(prob(8))
 			flash_act(affect_silicon = 1)
-		adjustBruteLoss(damage)
+		adjust_brute_loss(damage)
 		log_combat(user, src, "attacked")
 	else
 		playsound(loc, 'sound/items/weapons/slashmiss.ogg', 25, TRUE, -1)
@@ -51,7 +51,7 @@
 	. = ..()
 	if(!.)
 		return
-	adjustBruteLoss(rand(10, 15))
+	adjust_brute_loss(rand(10, 15))
 	playsound(loc, SFX_PUNCH, 25, TRUE, -1)
 	visible_message(span_danger("[user] punches [src]!"), \
 					span_userdanger("[user] punches you!"), null, COMBAT_MESSAGE_RANGE, user)
@@ -159,3 +159,6 @@
 	apply_status_effect(/datum/status_effect/borg_slow, damage_done / 60)
 
 #undef CYBORG_SLOWDOWN_THRESHOLD
+
+/mob/living/silicon/hypnosis_vulnerable()
+	return FALSE //It obeys its laws

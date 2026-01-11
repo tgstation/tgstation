@@ -77,7 +77,7 @@
 
 /obj/item/clothing/shoes/jackboots/floortile/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -5) //tacticool
+	AddElement(/datum/element/adjust_fishing_difficulty, -5) //tacticool
 
 /obj/item/clothing/shoes/winterboots
 	name = "winter boots"
@@ -178,7 +178,7 @@
 	icon_state = "lizardskin_shoes"
 	inhand_icon_state = null
 
-/obj/item/clothing/shoes/kim
+/obj/item/clothing/shoes/jackboots/kim
 	name = "aerostatic boots"
 	desc = "A crisp, clean set of boots for working long hours on the beat."
 	icon_state = "aerostatic_boots"
@@ -192,7 +192,7 @@
 
 /obj/item/clothing/shoes/pirate/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+	AddElement(/datum/element/adjust_fishing_difficulty, -4)
 
 /obj/item/clothing/shoes/pirate/armored
 	armor_type = /datum/armor/shoes_pirate

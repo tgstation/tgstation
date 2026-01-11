@@ -8,7 +8,7 @@
 		/obj/item/assembly/igniter = 3,
 		/obj/item/assembly/prox_sensor = 5,
 		/obj/item/assembly/signaler = 4,
-		/obj/item/computer_disk/ordnance = 4,
+		/obj/item/disk/computer/ordnance = 4,
 		/obj/item/stock_parts/capacitor = 3,
 		/obj/item/stock_parts/servo = 3,
 		/obj/item/stock_parts/matter_bin = 3,
@@ -34,7 +34,6 @@
 		/obj/item/universal_scanner = 3,
 		/obj/item/vending_refill/custom = 3,
 	)
-	allow_custom = TRUE
 
 	refill_canister = /obj/item/vending_refill/assist
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"

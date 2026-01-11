@@ -28,3 +28,7 @@
 	if (str_var && str_var[length(str_var)] != "/")
 		str_var += "/"
 	return ..(str_var)
+
+/datum/config_entry/string/storage_cdn_iframe
+	protection = CONFIG_ENTRY_LOCKED
+	default = "https://tgstation.github.io/byond-client-storage/iframe.html"

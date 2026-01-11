@@ -3,6 +3,7 @@
  */
 
 /datum/action/changeling
+	abstract_type = /datum/action/changeling
 	name = "Prototype Sting - Debug button, ahelp this"
 	background_icon_state = "bg_changeling"
 	overlay_icon_state = "bg_changeling_border"

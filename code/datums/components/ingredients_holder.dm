@@ -58,7 +58,7 @@
 	ingredient_names = processed_holder.ingredient_names
 	custom_name = processed_holder.custom_name
 	atom_parent.name = "[custom_adjective()] [custom_name] [atom_parent.name]"
-	for(var/fillcol as anything in processed_holder.filling_colors)
+	for(var/fillcol in processed_holder.filling_colors)
 		apply_fill(fillcol)
 
 /datum/component/ingredients_holder/Destroy(force)

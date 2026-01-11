@@ -24,9 +24,7 @@
 
 /obj/machinery/atmospherics/components/binary/pump/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/atmos_pump,
-	))
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/atmos_pump), only_root_path = TRUE))
 	register_context()
 
 /obj/machinery/atmospherics/components/binary/pump/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -127,6 +125,10 @@
 /obj/machinery/atmospherics/components/binary/pump/on/layer4
 	piping_layer = 4
 	icon_state= "pump_on_map-4"
+
+/obj/machinery/atmospherics/components/binary/pump/on/layer5
+	piping_layer = 5
+	icon_state = "pump_on_map-5"
 
 /obj/item/circuit_component/atmos_pump
 	display_name = "Atmospheric Binary Pump"

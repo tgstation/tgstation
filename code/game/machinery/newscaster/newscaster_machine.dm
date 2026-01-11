@@ -72,12 +72,13 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
-/obj/machinery/newscaster/Initialize(mapload, ndir, building)
+/obj/machinery/newscaster/Initialize(mapload)
 	. = ..()
 	GLOB.allCasters += src
 	GLOB.allbountyboards += src
 	update_appearance()
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/machinery/newscaster/Destroy()
 	GLOB.allCasters -= src
@@ -685,7 +686,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		if(tgui_alert(user,"Your channel name contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
 			return
 		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \
-			They may be using a disallowed term for a cross-station newscaster channel. Increasing delay time to reject.\n\n Channel name: \"[channel_name]\"")
+			They may be using a disallowed term for a cross-station newscaster channel. Increasing delay time to reject.\n\n Channel name: \"[html_encode(channel_name)]\"")
 		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \
 			They may be using a disallowed term for a cross-station newscaster channel. Increasing delay time to reject.\n\n Channel name: \"[channel_name]\"")
 		approval_time = EXTENDED_CROSS_SECTOR_CANCEL_TIME
@@ -701,7 +702,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		GLOB.admins,
 		span_adminnotice( \
 			"<b color='orange'>Cross-sector channel creation (OUTGOING):</b> [ADMIN_LOOKUPFLW(user)] is about to create a cross-sector \
-			newscaster channel \"[channel_name]\" (will autoapprove in [DisplayTimeText(approval_time)]): \
+			newscaster channel \"[html_encode(channel_name)]\" (will autoapprove in [DisplayTimeText(approval_time)]): \
 			<b><a href='byond://?src=[REF(src)];reject_channel_creation=1'>REJECT</a></b>"\
 		)
 	)
@@ -781,7 +782,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(current_channel.receiving_cross_sector)
 		return
 
-	var/temp_message = tgui_input_text(user, "Write your Feed story", "Network Channel Handler", feed_channel_message, max_length = MAX_BROADCAST_LEN, multiline = TRUE)
+	var/temp_message = tgui_input_text(user, "Write your Feed story", "Network Channel Handler", feed_channel_message, max_length = MAX_MESSAGE_LEN, multiline = TRUE)
 	if(length(temp_message) <= 1)
 		return TRUE
 
@@ -877,7 +878,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return TRUE
 	payment_target.transfer_money(current_user, active_request.value, "Bounty Request")
-	say("Paid out [active_request.value] credits.")
+	say("Paid out [active_request.value] [MONEY_NAME].")
 	GLOB.request_list.Remove(active_request)
 	qdel(active_request)
 

@@ -84,7 +84,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	/// World.time the turret last fired
 	var/last_fired = 0
 	/// Ticks until next shot (1.5 ?)
-	var/shot_delay = 15
+	var/shot_delay = 1.5 SECONDS
 	/// Turret flags about who is turret allowed to shoot
 	var/turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS
 	/// Determines if the turret is on
@@ -324,55 +324,61 @@ DEFINE_BITFIELD(turret_flags, list(
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/porta_turret/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(machine_stat & BROKEN)
-		if(I.tool_behaviour == TOOL_CROWBAR)
-			//If the turret is destroyed, you can remove it with a crowbar to
-			//try and salvage its components
-			to_chat(user, span_notice("You begin prying the metal coverings off..."))
-			if(I.use_tool(src, user, 20))
-				if(prob(70))
-					if(stored_gun)
-						stored_gun.forceMove(loc)
-						stored_gun = null
-					to_chat(user, span_notice("You remove the turret and salvage some components."))
-					if(prob(50))
-						new /obj/item/stack/sheet/iron(loc, rand(1,4))
-					if(prob(50))
-						new /obj/item/assembly/prox_sensor(loc)
-				else
-					to_chat(user, span_notice("You remove the turret but did not manage to salvage anything."))
-				qdel(src)
+/obj/machinery/porta_turret/crowbar_act(mob/living/user, obj/item/tool)
+	if(!(machine_stat & BROKEN))
+		return NONE
 
-	else if((I.tool_behaviour == TOOL_WRENCH) && (!on))
-		if(raised)
-			return
-
-		//This code handles moving the turret around. After all, it's a portable turret!
-		if(!anchored && !isinspace())
-			set_anchored(TRUE)
-			RemoveInvisibility(id=type)
-			update_appearance()
-			to_chat(user, span_notice("You secure the exterior bolts on the turret."))
-			if(has_cover)
-				cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
-				cover.parent_turret = src //make the cover's parent src
-		else if(anchored)
-			set_anchored(FALSE)
-			to_chat(user, span_notice("You unsecure the exterior bolts on the turret."))
-			power_change()
-			SetInvisibility(INVISIBILITY_NONE, id=type)
-			qdel(cover) //deletes the cover, and the turret instance itself becomes its own cover.
-
-	else if(I.GetID())
-		//Behavior lock/unlock mangement
-		if(allowed(user))
-			locked = !locked
-			to_chat(user, span_notice("Controls are now [locked ? "locked" : "unlocked"]."))
-		else
-			to_chat(user, span_alert("Access denied."))
+	//If the turret is destroyed, you can remove it with a crowbar to
+	//try and salvage its components
+	to_chat(user, span_notice("You begin prying the metal coverings off..."))
+	if(!tool.use_tool(src, user, 20))
+		return ITEM_INTERACT_BLOCKING
+	if(prob(70))
+		if(stored_gun)
+			stored_gun.forceMove(loc)
+			stored_gun = null
+		to_chat(user, span_notice("You remove the turret and salvage some components."))
+		if(prob(50))
+			new /obj/item/stack/sheet/iron(loc, rand(1,4))
+		if(prob(50))
+			new /obj/item/assembly/prox_sensor(loc)
 	else
-		return ..()
+		to_chat(user, span_notice("You remove the turret but did not manage to salvage anything."))
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/porta_turret/wrench_act(mob/living/user, obj/item/tool)
+	if(on || raised)
+		return NONE
+
+	//This code handles moving the turret around. After all, it's a portable turret!
+	if(!anchored && !isinspace())
+		set_anchored(TRUE)
+		RemoveInvisibility(id=type)
+		update_appearance()
+		to_chat(user, span_notice("You secure the exterior bolts on the turret."))
+		if(has_cover)
+			cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
+			cover.parent_turret = src //make the cover's parent src
+	else if(anchored)
+		set_anchored(FALSE)
+		to_chat(user, span_notice("You unsecure the exterior bolts on the turret."))
+		power_change()
+		SetInvisibility(INVISIBILITY_NONE, id=type)
+		qdel(cover) //deletes the cover, and the turret instance itself becomes its own cover.
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/porta_turret/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!tool.GetID())
+		return NONE
+
+	//Behavior lock/unlock mangement
+	if(!allowed(user))
+		to_chat(user, span_alert("Access denied."))
+		return ITEM_INTERACT_BLOCKING
+	locked = !locked
+	to_chat(user, span_notice("Controls are now [locked ? "locked" : "unlocked"]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/porta_turret/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -824,7 +830,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/syndicate/shuttle
 	scan_range = 9
-	shot_delay = 3
+	shot_delay = 3 DECISECONDS
 	stun_projectile = /obj/projectile/bullet/p50/penetrator/shuttle
 	lethal_projectile = /obj/projectile/bullet/p50/penetrator/shuttle
 	lethal_projectile_sound = 'sound/items/weapons/gun/smg/shot.ogg'
@@ -922,212 +928,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	stun_projectile = /obj/projectile/kinetic/miner
 	stun_projectile_sound = 'sound/items/weapons/kinetic_accel.ogg'
 
-////////////////////////
-//Turret Control Panel//
-////////////////////////
-
-/obj/machinery/turretid
-	name = "turret control panel"
-	desc = "Used to control a room's automated defenses."
-	icon = 'icons/obj/machines/turret_control.dmi'
-	icon_state = "control_standby"
-	base_icon_state = "control"
-	density = FALSE
-	req_access = list(ACCESS_AI_UPLOAD)
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	interaction_flags_click = ALLOW_SILICON_REACH
-	/// Variable dictating if linked turrets are active and will shoot targets
-	var/enabled = TRUE
-	/// Variable dictating if linked turrets will shoot lethal projectiles
-	var/lethal = FALSE
-	/// Variable dictating if the panel is locked, preventing changes to turret settings
-	var/locked = TRUE
-	/// An area in which linked turrets are located, it can be an area name, path or nothing
-	var/control_area = null
-	/// AI is unable to use this machine if set to TRUE
-	var/ailock = FALSE
-	/// Variable dictating if linked turrets will shoot cyborgs
-	var/shoot_cyborgs = FALSE
-	/// List of weakrefs to all turrets
-	var/list/turrets = list()
-
-/obj/machinery/turretid/Initialize(mapload, ndir = 0, built = 0)
-	. = ..()
-	if(built)
-		locked = FALSE
-	power_change() //Checks power and initial settings
-	find_and_hang_on_wall()
-
-/obj/machinery/turretid/Destroy()
-	turrets.Cut()
-	return ..()
-
-/obj/machinery/turretid/Initialize(mapload) //map-placed turrets autolink turrets
-	. = ..()
-	if(!mapload)
-		return
-
-	// The actual area that control_area refers to
-	var/area/control_area_instance
-
-	if(control_area)
-		control_area_instance = get_area_instance_from_text(control_area)
-		if(!control_area_instance)
-			log_mapping("Bad control_area path for [src] at [AREACOORD(src)]: [control_area]")
-	if(!control_area_instance)
-		control_area_instance = get_area(src)
-
-	for(var/obj/machinery/porta_turret/T in control_area_instance)
-		turrets |= WEAKREF(T)
-
-/obj/machinery/turretid/examine(mob/user)
-	. += ..()
-	if(issilicon(user) && !(machine_stat & BROKEN))
-		. += {"[span_notice("Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.")]
-					[span_notice("Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].")]"}
-
-/obj/machinery/turretid/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
-	. = NONE
-	if(machine_stat & BROKEN)
-		return
-
-	if(multi_tool.buffer && istype(multi_tool.buffer, /obj/machinery/porta_turret))
-		turrets |= WEAKREF(multi_tool.buffer)
-		to_chat(user, span_notice("You link \the [multi_tool.buffer] with \the [src]."))
-		return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/turretid/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(machine_stat & BROKEN)
-		return
-
-	if (issilicon(user))
-		return attack_hand(user)
-
-	var/id = attacking_item.GetID()
-
-	if(isnull(id))
-		return
-
-	if (check_access(id))
-		if(obj_flags & EMAGGED)
-			to_chat(user, span_warning("The turret control is unresponsive!"))
-			return
-
-		locked = !locked
-		to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] the panel."))
-	else
-		to_chat(user, span_alert("Access denied."))
-
-/obj/machinery/turretid/emag_act(mob/user, obj/item/card/emag/emag_card)
-	if(obj_flags & EMAGGED)
-		return FALSE
-	balloon_alert(user, "access analysis module shorted")
-	obj_flags |= EMAGGED
-	locked = FALSE
-	return TRUE
-
-/obj/machinery/turretid/attack_ai(mob/user)
-	if(!ailock || isAdminGhostAI(user))
-		return attack_hand(user)
-	else
-		to_chat(user, span_warning("There seems to be a firewall preventing you from accessing this device!"))
-
-/obj/machinery/turretid/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "TurretControl", name)
-		ui.open()
-
-/obj/machinery/turretid/ui_data(mob/user)
-	var/list/data = list()
-	data["locked"] = locked
-	data["siliconUser"] = HAS_SILICON_ACCESS(user)
-	data["enabled"] = enabled
-	data["lethal"] = lethal
-	data["shootCyborgs"] = shoot_cyborgs
-	return data
-
-/obj/machinery/turretid/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return
-
-	var/mob/user = ui.user
-
-	switch(action)
-		if("lock")
-			if(!HAS_SILICON_ACCESS(user))
-				return
-			if((obj_flags & EMAGGED) || (machine_stat & BROKEN))
-				to_chat(user, span_warning("The turret control is unresponsive!"))
-				return
-			locked = !locked
-			return TRUE
-		if("power")
-			toggle_on(user)
-			return TRUE
-		if("mode")
-			toggle_lethal(user)
-			return TRUE
-		if("shoot_silicons")
-			shoot_silicons(user)
-			return TRUE
-
-/obj/machinery/turretid/proc/toggle_lethal(mob/user)
-	lethal = !lethal
-	if (user)
-		var/enabled_or_disabled = lethal ? "disabled" : "enabled"
-		balloon_alert(user, "safeties [enabled_or_disabled]")
-		add_hiddenprint(user)
-		log_combat(user, src, "[enabled_or_disabled] lethals on")
-	updateTurrets()
-
-/obj/machinery/turretid/proc/toggle_on(mob/user)
-	enabled = !enabled
-	if (user)
-		var/enabled_or_disabled = enabled ? "enabled" : "disabled"
-		balloon_alert(user, "[enabled_or_disabled]")
-		add_hiddenprint(user)
-		log_combat(user, src, "[enabled ? "enabled" : "disabled"]")
-	updateTurrets()
-
-/obj/machinery/turretid/proc/shoot_silicons(mob/user)
-	shoot_cyborgs = !shoot_cyborgs
-	if (user)
-		var/status = shoot_cyborgs ? "Shooting Borgs" : "Not Shooting Borgs"
-		balloon_alert(user, LOWER_TEXT(status))
-		add_hiddenprint(user)
-		log_combat(user, src, "[status]")
-	updateTurrets()
-
-/obj/machinery/turretid/proc/updateTurrets()
-	for (var/datum/weakref/turret_ref in turrets)
-		var/obj/machinery/porta_turret/turret = turret_ref.resolve()
-		if(!turret)
-			turrets -= turret_ref
-			continue
-		turret.setState(enabled, lethal, shoot_cyborgs)
-	update_appearance()
-
-/obj/machinery/turretid/update_icon_state()
-	if(machine_stat & NOPOWER)
-		icon_state = "[base_icon_state]_off"
-		return ..()
-	if (enabled)
-		icon_state = "[base_icon_state]_[lethal ? "kill" : "stun"]"
-		return ..()
-	icon_state = "[base_icon_state]_standby"
-	return ..()
-
-/obj/item/wallframe/turret_control
-	name = "turret control frame"
-	desc = "Used for building turret control panels."
-	icon = 'icons/obj/machines/turret_control.dmi'
-	icon_state = "control_frame"
-	result_path = /obj/machinery/turretid
-	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT)
-	pixel_shift = 29
-
 /obj/item/gun/proc/get_turret_properties()
 	. = list()
 	.["lethal_projectile"] = null
@@ -1169,7 +969,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	.["stun_projectile"] = /obj/projectile/beam/lasertag/bluetag
 	.["lethal_projectile"] = /obj/projectile/beam/lasertag/bluetag
 	.["base_icon_state"] = "blue"
-	.["shot_delay"] = 30
+	.["shot_delay"] = 3 SECONDS
 	.["team_color"] = "blue"
 
 /obj/item/gun/energy/laser/redtag/get_turret_properties()
@@ -1177,7 +977,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	.["stun_projectile"] = /obj/projectile/beam/lasertag/redtag
 	.["lethal_projectile"] = /obj/projectile/beam/lasertag/redtag
 	.["base_icon_state"] = "red"
-	.["shot_delay"] = 30
+	.["shot_delay"] = 3 SECONDS
 	.["team_color"] = "red"
 
 /obj/item/gun/energy/e_gun/turret/get_turret_properties()
@@ -1233,7 +1033,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/lasertag/bullet_act(obj/projectile/projectile)
 	. = ..()
-	if(!on)
+	if(!on || . != BULLET_ACT_HIT)
 		return
 	if(team_color == "blue" && istype(projectile, /obj/projectile/beam/lasertag/redtag))
 		set_disabled(10 SECONDS)

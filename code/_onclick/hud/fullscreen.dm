@@ -72,8 +72,6 @@
 		if(screen.needs_offsetting)
 			screen.plane = GET_NEW_PLANE(initial(screen.plane), offset)
 
-INITIALIZE_IMMEDIATE(/atom/movable/screen/fullscreen)
-
 /atom/movable/screen/fullscreen
 	icon = 'icons/hud/screen_full.dmi'
 	icon_state = "default"
@@ -130,6 +128,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/fullscreen)
 
 /atom/movable/screen/fullscreen/blind/cyborg
 	show_when_dead = TRUE
+
+/atom/movable/screen/fullscreen/blind/noflicker
+	icon_state = "blackimageoverlaystatic"
+	layer = BLIND_LAYER
+	plane = FULLSCREEN_PLANE
 
 /atom/movable/screen/fullscreen/curse
 	icon_state = "curse"

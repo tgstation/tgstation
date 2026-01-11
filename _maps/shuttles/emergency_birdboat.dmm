@@ -255,7 +255,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "iP" = (
-/obj/machinery/vending/wallmed/directional/south{
+/obj/machinery/wall_healer/free/directional/south{
 	use_power = 0
 	},
 /turf/open/floor/mineral/titanium,

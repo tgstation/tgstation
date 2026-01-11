@@ -9,6 +9,21 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MISC,
 	)
 
+/datum/design/flare
+	name = "Flare"
+	id = "flare"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/plasma = SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 0.5,
+	)
+	build_path = /obj/item/flashlight/flare
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MISC,
+	)
+
 /datum/design/crowbar
 	name = "Pocket Crowbar"
 	id = "crowbar"
@@ -494,6 +509,18 @@
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ASSEMBLIES,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/suit_sensor
+	name = "Suit Sensor"
+	id = "suit_sensor"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/suit_sensor
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ASSEMBLIES,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/conveyor_belt
 	name = "Conveyor Belt"

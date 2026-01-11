@@ -77,7 +77,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/corner{
 	dir = 8
 	},
-/obj/item/ammo_box/a357,
+/obj/item/ammo_box/speedloader/c357,
 /obj/item/gun/ballistic/revolver/golden,
 /turf/open/floor/iron/smooth_corner{
 	dir = 8

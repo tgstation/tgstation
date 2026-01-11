@@ -61,7 +61,7 @@
 		attacked_atom = singular_turf
 		break
 
-	if(user.CanReach(attacked_atom))
+	if(attacked_atom.IsReachableBy(user))
 		return ITEM_INTERACT_BLOCKING
 
 	var/atom/bullet = fire_projectile(/obj/projectile/grapple_hook, attacked_atom, 'sound/items/weapons/zipline_fire.ogg')
@@ -84,7 +84,7 @@
 /obj/item/grapple_gun/proc/on_grapple_hit(datum/source, atom/movable/firer, atom/target, Angle)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(source, list(COMSIG_PROJECTILE_ON_HIT, COMSIG_PREQDELETED))
+	UnregisterSignal(source, list(COMSIG_PROJECTILE_SELF_ON_HIT, COMSIG_PREQDELETED))
 	QDEL_NULL(zipline)
 	var/mob/living/user = zipliner?.resolve()
 	if(isnull(user) || isnull(target))

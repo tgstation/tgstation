@@ -19,12 +19,11 @@
 	cult_team = null
 	return ..()
 
-/obj/structure/destructible/cult/Initialize(mapload)
+/obj/structure/destructible/cult/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_CONSTRUCTED, PROC_REF(on_constructed))
-
-/obj/structure/destructible/cult/proc/on_constructed(datum/source, mob/builder)
-	SIGNAL_HANDLER
+	if(!ismob(crafter))
+		return
+	var/mob/living/builder = crafter
 	var/datum/antagonist/cult/cultist = builder.mind?.has_antag_datum(/datum/antagonist/cult, TRUE)
 	cult_team = cultist?.get_team()
 

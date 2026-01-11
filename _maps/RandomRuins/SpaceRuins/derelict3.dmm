@@ -11,7 +11,7 @@
 "d" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 
 (1,1,1) = {"
 a

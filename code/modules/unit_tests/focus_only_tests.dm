@@ -12,6 +12,9 @@
 /// Checks that every overlay passed into build_appearance_list exists in the icon
 /datum/unit_test/focus_only/invalid_overlays
 
+/// Checks that every screen alert with an overlay icon state is valid
+/datum/unit_test/focus_only/screen_alert_overlay
+
 /// Checks that every icon sent to the research_designs spritesheet is valid
 /datum/unit_test/focus_only/invalid_research_designs
 
@@ -30,20 +33,24 @@
 /// Checks that nightvision eyes have a full set of color lists
 /datum/unit_test/focus_only/nightvision_color_cutoffs
 
-/// Checks that no light shares a tile/pixel offsets with another
-/datum/unit_test/focus_only/stacked_lights
+/// Ensures that items that got the nullrod_core element with the chaptain_spawnable arg can be selected by the chaplain
+/datum/unit_test/focus_only/nullrod_variants
 
 /// Checks for bad icon / icon state setups in cooking crafting menu
 /datum/unit_test/focus_only/bad_cooking_crafting_icons
-
-/// Ensures openspace never spawns on the bottom of a z stack
-/datum/unit_test/focus_only/openspace_clear
 
 /// Checks to ensure that variables expected to exist in a job datum (for config reasons) actually exist
 /datum/unit_test/focus_only/missing_job_datum_variables
 
 /// Checks that the contents of the fish_counts list are also present in fish_table
 /datum/unit_test/focus_only/fish_sources_tables
+
+/**
+ * This will tell us if we forgot to properly set the stable population for any fish.
+ * Fish with a stable population of one or less need to have either the mateless or crossbreeder trait, or be compatible with
+ * other fish types with a higher stable population.
+ */
+/datum/unit_test/focus_only/fish_population
 
 /// Checks that maploaded mobs with either the `atmos_requirements` or `body_temp_sensitive`
 /datum/unit_test/focus_only/atmos_and_temp_requirements

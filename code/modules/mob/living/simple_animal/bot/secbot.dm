@@ -20,7 +20,7 @@
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
 	bot_type = SEC_BOT
 	bot_mode_flags = ~BOT_MODE_CAN_BE_SAPIENT
-	data_hud_type = DATA_HUD_SECURITY_ADVANCED
+	data_hud_type = TRAIT_SECURITY_HUD
 	hackables = "target identification systems"
 	path_image_color = COLOR_RED
 	possessed_message = "You are a securitron! Guard the station to the best of your ability!"
@@ -33,6 +33,8 @@
 		BEEPSKY_VOICED_I_AM_THE_LAW = 'sound/mobs/non-humanoids/beepsky/iamthelaw.ogg',
 		BEEPSKY_VOICED_SECURE_DAY = 'sound/mobs/non-humanoids/beepsky/secureday.ogg',
 	)
+
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3.2)
 
 	///Whether this secbot is considered 'commissioned' and given the trait on Initialize.
 	var/commissioned = FALSE
@@ -93,7 +95,7 @@
 	desc = "It's Sergeant-At-Armsky! He's a disgruntled assistant to the warden that would probably shoot you if he had hands."
 	health = 45
 	bot_mode_flags = ~(BOT_MODE_CAN_BE_SAPIENT|BOT_MODE_AUTOPATROL)
-	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS
+	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS | SECBOT_CHECK_WEAPONS
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr
 	name = "Officer Pipsqueak"
@@ -349,7 +351,6 @@
 		return FALSE
 	if(!current_target.handcuffed)
 		current_target.set_handcuffed(new cuff_type(current_target))
-		current_target.update_handcuffed()
 		playsound(src, SFX_LAW, 50, FALSE)
 		back_to_idle()
 
@@ -593,7 +594,7 @@
 		nap_violation(target)
 		return FALSE
 	var/datum/bank_account/beepsky_department_account = SSeconomy.get_dep_account(payment_department)
-	say("Thank you for your compliance. Your account been charged [fair_market_price] credits.")
+	say("Thank you for your compliance. Your account been charged [fair_market_price] [MONEY_NAME].")
 	if(beepsky_department_account)
 		beepsky_department_account.adjust_money(fair_market_price)
 		return TRUE

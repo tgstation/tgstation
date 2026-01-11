@@ -1,5 +1,6 @@
 ///prototype for mining mobs
 /mob/living/basic/mining
+	abstract_type = /mob/living/basic/mining
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	combat_mode = TRUE
 	status_flags = NONE //don't inherit standard basicmob flags
@@ -20,11 +21,14 @@
 	var/crusher_loot
 	/// What is the chance the mob drops it if all their health was taken by crusher attacks
 	var/crusher_drop_chance = 25
+	/// Does this mob count for mining mob kills counter?
+	var/kill_count = TRUE
 
 /mob/living/basic/mining/Initialize(mapload)
 	. = ..()
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
-	AddElement(/datum/element/mob_killed_tally, "mobs_killed_mining")
+	if (kill_count)
+		AddElement(/datum/element/mob_killed_tally, "mobs_killed_mining")
 	var/static/list/vulnerable_projectiles
 	if(!vulnerable_projectiles)
 		vulnerable_projectiles = string_list(MINING_MOB_PROJECTILE_VULNERABILITY)

@@ -20,6 +20,7 @@
 /obj/item/table_clock/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, TRUE)
+	AddElement(/datum/element/beauty, 200)
 
 /obj/item/table_clock/Destroy(force)
 	soundloop.stop()

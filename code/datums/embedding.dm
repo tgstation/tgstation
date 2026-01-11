@@ -313,7 +313,7 @@
 
 /// Someone attempted to pull us out! Either the owner by inspecting themselves, or someone else by examining the owner and clicking the link.
 /datum/embedding/proc/rip_out(mob/living/jack_the_ripper)
-	if (!jack_the_ripper.CanReach(owner))
+	if (!owner.IsReachableBy(jack_the_ripper))
 		return
 
 	if (!jack_the_ripper.can_perform_action(owner, FORBID_TELEKINESIS_REACH | NEED_HANDS | ALLOW_RESTING))
@@ -420,7 +420,7 @@
 	if (user.zone_selected != owner_limb.body_zone || (tool.tool_behaviour != TOOL_HEMOSTAT && tool.tool_behaviour != TOOL_WIRECUTTER))
 		return
 
-	if (parent != owner_limb.embedded_objects[1]) // Don't pluck everything at the same time
+	if (parent != LAZYACCESS(owner_limb.embedded_objects, 1)) // Don't pluck everything at the same time
 		return
 
 	// Ensure that we can actually

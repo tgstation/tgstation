@@ -166,12 +166,10 @@
 		return ..()
 	attacking_item.forceMove(src)
 
-/obj/item/clothing/shoes/sneakers/orange/allow_attack_hand_drop(mob/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/C = user
-		if(C.shoes == src && attached_cuffs)
-			to_chat(user, span_warning("You need help taking these off!"))
-			return FALSE
+/obj/item/clothing/shoes/sneakers/orange/can_mob_unequip(mob/user)
+	if(user.get_item_by_slot(slot_flags) == src && attached_cuffs)
+		to_chat(user, span_warning("You need help taking these off!"))
+		return FALSE
 	return ..()
 
 /obj/item/clothing/shoes/sneakers/orange/mouse_drop_dragged(atom/over_object, mob/user)

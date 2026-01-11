@@ -19,8 +19,9 @@
 
 //Inventory depth: limits how many nested storage items you can access directly.
 //1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
-#define INVENTORY_DEPTH 3
-#define STORAGE_VIEW_DEPTH 2
+#define REACH_DEPTH_SELF 1
+/// A storage depth ontop of SELF. REACH_DEPTH_STORAGE(1) would allow an item inside of a backpack you are carrying.
+#define REACH_DEPTH_STORAGE(level) (level + REACH_DEPTH_SELF)
 
 //ITEM INVENTORY SLOT BITMASKS
 /// Suit slot (armors, costumes, space suits, etc.)
@@ -86,7 +87,7 @@ DEFINE_BITFIELD(no_equip_flags, list(
 	ITEM_SLOT_MASK | ITEM_SLOT_HEAD | ITEM_SLOT_FEET | ITEM_SLOT_ID | ITEM_SLOT_BELT | ITEM_SLOT_BACK | ITEM_SLOT_NECK )
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
-//Make sure to update check_obscured_slots() if you add more.
+//Make sure to update obscured_slots if you add more.
 #define HIDEGLOVES (1<<0)
 #define HIDESUITSTORAGE (1<<1)
 #define HIDEJUMPSUIT (1<<2) //these first four are only used in exterior suits
@@ -215,7 +216,7 @@ GLOBAL_LIST_INIT(any_suit_storage, typecacheof(list(
 	/obj/item/radio,
 	/obj/item/storage/bag/books,
 	/obj/item/storage/fancy/cigarettes,
-	/obj/item/tank/jetpack/oxygen/captain,
+	/obj/item/tank/jetpack/captain,
 	/obj/item/stack/spacecash,
 	/obj/item/storage/wallet,
 	/obj/item/folder,
@@ -288,6 +289,8 @@ GLOBAL_LIST_INIT(chaplain_suit_allowed, list(
 	/obj/item/tank/internals/plasmaman,
 	/obj/item/gun/ballistic/bow/divine,
 	/obj/item/gun/ballistic/revolver/chaplain,
+	/obj/item/toy/plush/carpplushie/nullrod,
+	/obj/item/melee/energy/sword/nullrod,
 ))
 
 //Allowed list for all mining suits
@@ -308,6 +311,24 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	/obj/item/pickaxe,
 	/obj/item/resonator,
 	/obj/item/spear,
+	/obj/item/gun/ballistic/bow/ashenbow,
+))
+
+// Allowed list for personal carry firearms and holsters
+
+GLOBAL_LIST_INIT(personal_carry_allowed, list(
+	/obj/item/storage/belt/holster,
+	/obj/item/gun/ballistic/automatic/pistol,
+	/obj/item/gun/ballistic/revolver,
+	/obj/item/gun/energy/disabler/smoothbore,
+))
+
+/// Allowed list for improvised firearms
+
+GLOBAL_LIST_INIT(improvised_firearm_allowed, list(
+	/obj/item/gun/ballistic/rifle/boltaction/pipegun,
+	/obj/item/gun/energy/laser/musket,
+	/obj/item/gun/energy/disabler/smoothbore,
 ))
 
 /// List of all "tools" that can fit into belts or work from toolboxes

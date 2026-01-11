@@ -99,17 +99,15 @@
 	if(HAS_TRAIT(echolocator, TRAIT_ECHOLOCATION_EXTRA_RANGE))
 		real_echo_range += 2
 	var/list/filtered = list()
-	var/list/seen = dview(real_echo_range, get_turf(echolocator.client?.eye || echolocator), invis_flags = echolocator.see_invisible)
 	if(blinding)
-		for(var/atom/seen_atom as anything in seen)
+		for(var/atom/seen_atom as anything in dview(real_echo_range, get_turf(echolocator.client?.eye || echolocator), invis_flags = echolocator.see_invisible))
 			if(!seen_atom.alpha)
 				continue
 			if(allowed_paths[seen_atom.type])
 				filtered += seen_atom
 	else
-		var/list/ranged_atoms = range(real_echo_range, get_turf(echolocator.client?.eye || echolocator))
-		for(var/atom/possible_atom as anything in ranged_atoms)
-			if(!possible_atom.alpha)
+		for(var/atom/possible_atom as anything in range(real_echo_range, get_turf(echolocator.client?.eye || echolocator)))
+			if(!possible_atom.alpha || possible_atom.invisibility > echolocator.see_invisible)
 				continue
 			if(allowed_paths[possible_atom.type])
 				filtered += possible_atom

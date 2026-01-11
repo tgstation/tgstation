@@ -8,32 +8,15 @@ GLOBAL_LIST_EMPTY(stealthminID) //reference list with IDs that store ckeys, for 
 
 /// List of types of abstract mob which shouldn't usually exist in the world on its own if we're spawning random mobs
 GLOBAL_LIST_INIT(abstract_mob_types, list(
-	/mob/living/basic,
-	/mob/living/basic/blob_minion,
-	/mob/living/basic/bot,
 	/mob/living/basic/construct,
 	/mob/living/basic/guardian,
 	/mob/living/basic/heretic_summon,
-	/mob/living/basic/mimic, // Cannot exist if spawned without being passed an item reference
-	/mob/living/basic/mining,
-	/mob/living/basic/pet,
+	/mob/living/basic/mimic/copy, // Cannot exist if spawned without being passed an item reference
 	/mob/living/basic/soulscythe, // This is just a way for players to control the soulscythe item
-	/mob/living/basic/spider,
-	/mob/living/carbon,
-	/mob/living/carbon/alien,
-	/mob/living/carbon/alien/adult,
 	/mob/living/carbon/human/consistent,
 	/mob/living/carbon/human/dummy,
 	/mob/living/carbon/human/dummy/consistent,
-	/mob/living/carbon/human/species,
-	/mob/living/silicon,
-	/mob/living/simple_animal,
-	/mob/living/simple_animal/bot,
-	/mob/living/simple_animal/hostile,
-	/mob/living/simple_animal/hostile/asteroid,
-	/mob/living/simple_animal/hostile/asteroid/elite,
-	/mob/living/simple_animal/hostile/megafauna,
-))
+	))
 
 
 //Since it didn't really belong in any other category, I'm putting this here
@@ -81,37 +64,6 @@ GLOBAL_LIST_EMPTY(revenant_relay_mobs)
 
 ///underages who have been reported to security for trying to buy things they shouldn't, so they can't spam
 GLOBAL_LIST_EMPTY(narcd_underages)
-/// List of language prototypes to reference, assoc [type] = prototype
-GLOBAL_LIST_INIT_TYPED(language_datum_instances, /datum/language, init_language_prototypes())
-/// List if all language typepaths learnable, IE, those with keys
-GLOBAL_LIST_INIT(all_languages, init_all_languages())
-/// /List of language prototypes to reference, assoc "name" = typepath
-GLOBAL_LIST_INIT(language_types_by_name, init_language_types_by_name())
-
-/proc/init_language_prototypes()
-	var/list/lang_list = list()
-	for(var/datum/language/lang_type as anything in typesof(/datum/language))
-		if(!initial(lang_type.key))
-			continue
-
-		lang_list[lang_type] = new lang_type()
-	return lang_list
-
-/proc/init_all_languages()
-	var/list/lang_list = list()
-	for(var/datum/language/lang_type as anything in typesof(/datum/language))
-		if(!initial(lang_type.key))
-			continue
-		lang_list += lang_type
-	return lang_list
-
-/proc/init_language_types_by_name()
-	var/list/lang_list = list()
-	for(var/datum/language/lang_type as anything in typesof(/datum/language))
-		if(!initial(lang_type.key))
-			continue
-		lang_list[initial(lang_type.name)] = lang_type
-	return lang_list
 
 /// A list of all the possible blood types, keyed by id (which is just the name in most cases)
 GLOBAL_LIST_INIT(blood_types, init_blood_types())
@@ -119,9 +71,7 @@ GLOBAL_LIST_INIT(blood_types, init_blood_types())
 /// Initializes the list of blood type singletons
 /proc/init_blood_types()
 	. = list()
-	for(var/datum/blood_type/blood_type_path as anything in subtypesof(/datum/blood_type))
-		if(blood_type_path::root_abstract_type == blood_type_path) // Don't instantiate abstract blood types
-			continue
+	for(var/datum/blood_type/blood_type_path as anything in valid_subtypesof(/datum/blood_type))
 		var/datum/blood_type/new_type = new blood_type_path()
 		.[new_type.id] = new_type
 
@@ -203,7 +153,7 @@ GLOBAL_LIST_INIT(dna_identity_blocks, init_identity_block_types())
 
 /proc/init_identity_block_types()
 	. = list()
-	for(var/datum/dna_block/identity/block_path as anything in subtypesof(/datum/dna_block/identity))
+	for(var/datum/dna_block/identity/block_path as anything in valid_subtypesof(/datum/dna_block/identity))
 		var/datum/dna_block/identity/new_block = new block_path()
 		.[block_path] = new_block
 
@@ -212,6 +162,6 @@ GLOBAL_LIST_INIT(dna_feature_blocks, init_feature_block_types())
 
 /proc/init_feature_block_types()
 	. = list()
-	for(var/datum/dna_block/feature/block_path as anything in subtypesof(/datum/dna_block/feature))
+	for(var/datum/dna_block/feature/block_path as anything in valid_subtypesof(/datum/dna_block/feature))
 		var/datum/dna_block/feature/new_block = new block_path()
 		.[block_path] = new_block

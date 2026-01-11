@@ -21,11 +21,13 @@
 	w_class = WEIGHT_CLASS_BULKY
 	wound_bonus = 20
 	demolition_mod = 1.25
-	grind_results = list(/datum/reagent/lead = 20)
 	pickup_sound = 'sound/items/handling/lead_pipe/lead_pipe_pickup.ogg'
 	drop_sound = 'sound/items/handling/materials/metal_drop.ogg'
 	throw_drop_sound = 'sound/items/handling/lead_pipe/lead_pipe_drop.ogg'
 	hitsound = 'sound/items/lead_pipe_hit.ogg'
+
+/obj/item/lead_pipe/grind_results()
+	return list(/datum/reagent/lead = 20)
 
 //A good battery early in the shift. Source of lead & sulfuric acid reagents.
 //Add lead material to this once implemented.
@@ -39,9 +41,12 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	maxcharge = STANDARD_CELL_CHARGE * 60 // initial charge reduced on init
 	chargerate = STANDARD_CELL_RATE * 0.3 //charging is about 70% less efficient than lithium batteries.
+	emp_damage_modifier = 4 // 15 shots.
 	charge_light_type = null
 	connector_type = "leadacid"
-	grind_results = list(/datum/reagent/lead = 15, /datum/reagent/toxin/acid = 15, /datum/reagent/water = 20)
+
+/obj/item/stock_parts/power_store/cell/lead/grind_results()
+	return list(/datum/reagent/lead = 15, /datum/reagent/toxin/acid = 15, /datum/reagent/water = 20)
 
 //starts partially discharged
 /obj/item/stock_parts/power_store/cell/lead/Initialize(mapload)
@@ -55,8 +60,8 @@
 	)
 
 // Give our owner shock touch when entering the digital realm
-/obj/item/stock_parts/power_store/cell/lead/proc/shockingly_improve_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
-	if(external_load_flags & DOMAIN_FORBIDS_ABILITIES)
+/obj/item/stock_parts/power_store/cell/lead/proc/shockingly_improve_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, domain_flags)
+	if(domain_flags & DOMAIN_FORBIDS_ABILITIES)
 		return BITRUNNER_GEAR_LOAD_BLOCKED
 
 	if(!avatar.can_mutate())

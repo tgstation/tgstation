@@ -157,16 +157,16 @@
 		fishfluence.after_drain(user)
 		var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 		if(heretic_datum)
-			heretic_datum.knowledge_points++
+			heretic_datum.adjust_knowledge_points(1)
 			to_chat(user, "[span_hear("You hear a whisper...")] [span_hypnophrase("THE HIGHER I RISE, THE MORE I FISH.")]")
 			// They can also gain an extra influence point if they infused their rod.
 			if(HAS_TRAIT(challenge.used_rod, TRAIT_ROD_MANSUS_INFUSED))
-				heretic_datum.knowledge_points++
+				heretic_datum.adjust_knowledge_points(1)
 			to_chat(user, span_boldnotice("Your infused rod improves your knowledge gain!"))
 		return
 
 	// Non-heretics instead go crazy
-	human_user?.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
+	human_user?.adjust_organ_loss(ORGAN_SLOT_BRAIN, 10, 190)
 	human_user?.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 	human_user?.do_jitter_animation(50)
 	// Hand fires at them from the location

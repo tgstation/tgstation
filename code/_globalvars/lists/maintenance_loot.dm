@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/stack/sheet/iron/twenty = 1,
 		/obj/item/stack/sheet/mineral/plasma = 1,
 		/obj/item/stock_parts/power_store/cell = 1,
-
+		/obj/effect/spawner/random/engineering/vending_restock = 1,
 		//assemblies
 		/obj/item/assembly/health = 1,
 		/obj/item/assembly/igniter = 1,
@@ -266,13 +266,13 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		) = 8,
 
 	list(//computer disks
-		/obj/item/computer_disk/maintenance/scanner = 1,
-		/obj/item/computer_disk/maintenance/camera = 1,
-		/obj/item/computer_disk/maintenance/modsuit_control = 1,
-		/obj/item/computer_disk/maintenance/spectre_meter = 1,
-		/obj/item/computer_disk/maintenance/arcade = 1,
+		/obj/item/disk/computer/maintenance/scanner = 1,
+		/obj/item/disk/computer/maintenance/camera = 1,
+		/obj/item/disk/computer/maintenance/modsuit_control = 1,
+		/obj/item/disk/computer/maintenance/spectre_meter = 1,
+		/obj/item/disk/computer/maintenance/arcade = 1,
 		/obj/item/disk/design_disk/liberator = 1,
-		/obj/item/computer_disk/maintenance/theme = 3,
+		/obj/item/disk/computer/maintenance/theme = 3,
 	) = 4,
 
 	list(//modsuits
@@ -410,6 +410,9 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	GLOB.rarity_loot = maint_rarity_weight,
 	GLOB.oddity_loot = maint_oddity_weight,
 	))
+
+//Loot pool that is copied from maint loot but doesn't get changed due to holidays
+GLOBAL_LIST_INIT(dumpster_loot, GLOB.maintenance_loot.Copy())
 
 GLOBAL_LIST_INIT(ratking_trash, list(//Garbage: used by the regal rat mob when spawning garbage.
 			/obj/item/cigbutt,

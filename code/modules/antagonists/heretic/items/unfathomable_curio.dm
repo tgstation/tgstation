@@ -65,16 +65,16 @@
 		return
 
 	to_chat(wearer, span_warning("Laughter echoes in your mind...."))
-	wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, 40)
+	wearer.adjust_organ_loss(ORGAN_SLOT_BRAIN, 40)
 	wearer.dropItemToGround(src, TRUE)
-	wearer.gain_trauma(pick(brain_traumas) ,TRAUMA_RESILIENCE_ABSOLUTE)
+	wearer.gain_trauma(pick(brain_traumas), TRAUMA_RESILIENCE_MAGIC)
 
 /obj/item/storage/belt/unfathomable_curio/examine(mob/living/carbon/user)
 	. = ..()
 	if(IS_HERETIC(user))
 		return
 
-	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
+	user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 10, 160)
 	user.adjust_temp_blindness(5 SECONDS)
 	. += span_notice("It. It looked. IT WRAPS ITSELF AROUND ME.")
 

@@ -78,13 +78,14 @@ const RangeDisplay = (props) => {
       />
       <NumberInput
         animated
+        tickWhileDragging
         width="35px"
         step={1}
         stepPixelSize={5}
         value={range}
         minValue={0}
         maxValue={5}
-        onDrag={(value) =>
+        onChange={(value) =>
           act('set_range', {
             new_range: value,
           })

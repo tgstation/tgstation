@@ -17,7 +17,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
+	custom_materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2,
+	)
 	actions_types = list(/datum/action/item_action/toggle_light)
 	action_slots = ALL
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
@@ -25,6 +28,10 @@
 	light_range = 4
 	light_power = 1
 	light_on = FALSE
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
+
 	/// If we've been forcibly disabled for a temporary amount of time.
 	COOLDOWN_DECLARE(disabled_time)
 	/// Can we toggle this light on and off (used for contexual screentips only)
@@ -37,9 +44,13 @@
 	var/start_on = FALSE
 	/// When true, painting the flashlight won't change its light color
 	var/ignore_base_color = FALSE
+	/// This simply means if the flashlight can be cuffed to your hand (why?)
+	var/has_closed_handle = TRUE
 
 /obj/item/flashlight/Initialize(mapload)
 	. = ..()
+	if(has_closed_handle)
+		AddElement(/datum/element/cuffable_item)
 	if(start_on)
 		set_light_on(TRUE)
 	update_brightness()
@@ -223,7 +234,7 @@
 			. += span_notice_ml("[patient] has [pill_count] pill[pill_count > 1 ? "s" : ""] implanted in [patient.p_their()] teeth.\n")
 
 	//assess any suffocation damage
-	var/hypoxia_status = patient.getOxyLoss() > 20
+	var/hypoxia_status = patient.get_oxy_loss() > 20
 
 	if(patient == user)
 		if(hypoxia_status)
@@ -242,9 +253,11 @@
 	else
 		. += span_info_ml("You press a finger to [patient.p_their()] gums:\n")
 
-	if(patient.blood_volume <= BLOOD_VOLUME_SAFE && patient.blood_volume > BLOOD_VOLUME_OKAY)
+	var/cached_blood_volume = patient.get_blood_volume(apply_modifiers = TRUE)
+
+	if(cached_blood_volume <= BLOOD_VOLUME_SAFE && cached_blood_volume > BLOOD_VOLUME_OKAY)
 		. += span_danger_ml("Color returns slowly!\n")//low blood
-	else if(patient.blood_volume <= BLOOD_VOLUME_OKAY)
+	else if(cached_blood_volume <= BLOOD_VOLUME_OKAY)
 		. += span_danger_ml("Color does not return!\n")//critical blood
 	else
 		. += span_notice_ml("Color returns quickly.\n")//they're okay :D
@@ -328,6 +341,7 @@
 	light_range = 2
 	light_power = 0.8
 	light_color = "#CCFFFF"
+	has_closed_handle = FALSE
 	COOLDOWN_DECLARE(holosign_cooldown)
 
 /obj/item/flashlight/pen/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -385,6 +399,7 @@
 	light_power = 0.8
 	light_color = "#99ccff"
 	hitsound = 'sound/items/weapons/genhit1.ogg'
+	has_closed_handle = FALSE
 
 // the desk lamps are a bit special
 /obj/item/flashlight/lamp
@@ -402,6 +417,7 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	custom_materials = null
 	start_on = TRUE
+	has_closed_handle = FALSE
 
 // green-shaded desk lamp
 /obj/item/flashlight/lamp/green
@@ -431,9 +447,9 @@
 	light_color = LIGHT_COLOR_FLARE
 	light_system = OVERLAY_LIGHT
 	light_power = 2
-	grind_results = list(/datum/reagent/sulfur = 15)
 	sound_on = 'sound/items/match_strike.ogg'
 	toggle_context = FALSE
+	has_closed_handle = FALSE
 	/// How many seconds of fuel we have left
 	var/fuel = 0
 	/// Do we randomize the fuel when initialized
@@ -444,7 +460,11 @@
 	var/trash_type = /obj/item/trash/flare
 	/// If the light source can be extinguished
 	var/can_be_extinguished = FALSE
-	custom_materials = list(/datum/material/plastic= SMALL_MATERIAL_AMOUNT * 0.5)
+	custom_materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/plasma = SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 0.5,
+	)
 
 /obj/item/flashlight/flare/Initialize(mapload)
 	. = ..()
@@ -457,6 +477,9 @@
 		force = on_damage
 		damtype = BURN
 		update_brightness()
+
+/obj/item/flashlight/flare/grind_results()
+	return list(/datum/reagent/sulfur = 15)
 
 /obj/item/flashlight/flare/init_slapcrafting()
 	return
@@ -701,6 +724,7 @@
 	slot_flags = null
 	trash_type = /obj/effect/decal/cleanable/ash
 	can_be_extinguished = TRUE
+	custom_materials = list(/datum/material/wood = SMALL_MATERIAL_AMOUNT*0.5)
 
 /obj/item/flashlight/flare/torch/on
 	start_on = TRUE
@@ -712,6 +736,7 @@
 	fuel = INFINITY
 	randomize_fuel = FALSE
 	start_on = TRUE
+	custom_materials = null
 
 /obj/item/flashlight/flare/torch/red
 	color = "#ff0000"
@@ -770,6 +795,7 @@
 	light_range = 6 //luminosity when on
 	light_color = "#ffff66"
 	light_system = OVERLAY_LIGHT
+	has_closed_handle = FALSE
 
 /obj/item/flashlight/emp
 	var/emp_max_charges = 4
@@ -840,10 +866,11 @@
 	base_icon_state = "glowstick"
 	inhand_icon_state = null
 	worn_icon_state = "lightstick"
-	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
 	sound_on = 'sound/effects/wounds/crack2.ogg' // the cracking sound isn't just for wounds silly
 	toggle_context = FALSE
 	ignore_base_color = TRUE
+	has_closed_handle = FALSE
+	custom_materials = null
 	/// How much max fuel we have
 	var/max_fuel = 0
 	/// How much oxygen gets added upon cracking the stick. Doesn't actually produce a reaction with the fluid but it does allow for bootleg chemical "grenades"
@@ -871,6 +898,11 @@
 		bite_consumption = round(reagents.total_volume / (rand(20, 30) * 0.1)),\
 	)
 	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
+
+/obj/item/flashlight/glowstick/grind_results()
+	. = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10)
+	if(!light_on)
+		.[/datum/reagent/oxygen] = 5
 
 /obj/item/flashlight/glowstick/proc/get_fuel()
 	return reagents.get_reagent_amount(fuel_type)
@@ -911,7 +943,6 @@
 
 /obj/item/flashlight/glowstick/proc/turn_on()
 	reagents.add_reagent(/datum/reagent/oxygen, oxygen_added)
-	grind_results -= /datum/reagent/oxygen
 	set_light_on(TRUE) // Just in case
 	var/datum/action/toggle = locate(/datum/action/item_action/toggle_light) in actions
 	// No sense having a toggle light action that we don't use eh?
@@ -1023,6 +1054,7 @@
 	plane = FLOOR_PLANE
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	has_closed_handle = FALSE
 	///Boolean that switches when a full color flip ends, so the light can appear in all colors.
 	var/even_cycle = FALSE
 	///Base light_range that can be set on Initialize to use in smooth light range expansions and contractions.
@@ -1064,6 +1096,7 @@
 /obj/item/flashlight/eyelight
 	name = "eyelight"
 	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
+	spawn_blacklisted = TRUE
 	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = DROPDEL
 	actions_types = list()
@@ -1077,3 +1110,127 @@
 #undef SUCCESS
 #undef NO_FUEL
 #undef ALREADY_LIT
+
+#define SLOWDOWN_ON 1
+
+/obj/item/flashlight/lamp/space_bubble
+	name = "space furnace"
+	desc = "A heavy furnace capable of forming a temporary bubble that holds in breathable air."
+	icon_state = "space_lamp"
+	worn_icon_state = "space_lamp"
+	inhand_icon_state = "space_lamp"
+	w_class = WEIGHT_CLASS_HUGE
+	throw_range = 2
+	slot_flags = ITEM_SLOT_BACK
+	item_flags = SLOWS_WHILE_IN_HAND
+	heat = 2500
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 2.5,
+	)
+	light_color = LIGHT_COLOR_ORANGE
+	start_on = FALSE
+	sound_on = 'sound/effects/fire_puff.ogg'
+	sound_off = 'sound/items/weapons/gun/bow/bow_fire.ogg'
+
+	///The timer we track until the bubble deletes itself.
+	var/bubble_timer
+	///The amount of time that the bubble will survive for once turned on. This can't be changed normally but is a var for admins.
+	var/bubble_duration = (15 MINUTES)
+	///Boolean on whether or not a pyroclastic anomaly core has been inserted, allowing the item to be used.
+	var/installed_pyro_core = FALSE
+	///The proximity monitor & visual bubble that grants space protection to people nearby, while active.
+	var/datum/proximity_monitor/advanced/bubble/space_protection/space_bubble
+
+/obj/item/flashlight/lamp/space_bubble/Initialize(mapload)
+	AddElement(/datum/element/update_icon_updates_onmob)
+	. = ..()
+	AddComponent(/datum/component/two_handed, require_twohands = TRUE)
+	update_appearance(UPDATE_DESC)
+
+/obj/item/flashlight/lamp/space_bubble/Destroy(force)
+	if(space_bubble)
+		QDEL_NULL(space_bubble)
+	return ..()
+
+/obj/item/flashlight/lamp/space_bubble/init_slapcrafting()
+	return
+
+/obj/item/flashlight/lamp/space_bubble/update_icon_state()
+	. = ..()
+	if(light_on)
+		worn_icon_state = "[initial(worn_icon_state)]-on"
+	else
+		worn_icon_state = initial(worn_icon_state)
+
+/obj/item/flashlight/lamp/space_bubble/update_desc(updates)
+	. = ..()
+	if(installed_pyro_core)
+		desc = initial(desc)
+		return
+	desc = initial(desc) + " Requires a pyroclastic anomaly core to function."
+
+/obj/item/flashlight/lamp/space_bubble/get_temperature()
+	return light_on * heat
+
+/obj/item/flashlight/lamp/space_bubble/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(light_on && istype(tool, /obj/item/cigarette))
+		var/obj/item/cigarette/cig = tool
+		if(cig.lit)
+			return NONE
+		cig.light(flavor_text = "[user] lights up \the [cig] using the burning coming out of the [src]. Damn.")
+		return ITEM_INTERACT_SUCCESS
+	if(!istype(tool, /obj/item/assembly/signaler/anomaly/pyro) || installed_pyro_core)
+		return NONE
+	user.balloon_alert(user, "core inserted")
+	qdel(tool)
+	installed_pyro_core = TRUE
+	playsound(src, 'sound/machines/crate/crate_open.ogg', 50, FALSE)
+	update_appearance(UPDATE_DESC)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/flashlight/lamp/space_bubble/toggle_light(mob/user)
+	if(!installed_pyro_core)
+		user.balloon_alert(user, "core missing!")
+		return FALSE
+	var/datum/gas_mixture/environment = loc?.return_air()
+	var/affected_pressure = environment.return_pressure()
+	if(!light_on && (affected_pressure < ONE_ATMOSPHERE))
+		user.balloon_alert(user, "no pressure!")
+		return FALSE
+	. = ..()
+	if(light_on)
+		if(istype(space_bubble))
+			QDEL_NULL(space_bubble)
+		bubble_timer = addtimer(CALLBACK(src, PROC_REF(start_bubble_close), "dies down..."), bubble_duration, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME)
+		space_bubble = new(src, 4, FALSE, src)
+		slowdown = SLOWDOWN_ON
+		drag_slowdown = SLOWDOWN_ON
+		user.update_equipment_speed_mods()
+		return
+	close_bubble(user)
+
+///Uses an arg for special flavortext to be balloon alerted to everyone, then gives an extra 5 seconds before killing the bubble.
+/obj/item/flashlight/lamp/space_bubble/proc/start_bubble_close(special_flavortext)
+	if(special_flavortext)
+		balloon_alert_to_viewers(special_flavortext)
+	var/mob/living/potential_mob = recursive_loc_check(src, /mob/living) || null
+	addtimer(CALLBACK(src, PROC_REF(toggle_light), potential_mob), 5 SECONDS, TIMER_UNIQUE|TIMER_DELETE_ME)
+
+///Closes the bubble and cleans up after itself. Optional 'user' arg for the mob turning us off.
+/obj/item/flashlight/lamp/space_bubble/proc/close_bubble(mob/user)
+	QDEL_NULL(space_bubble)
+	if(bubble_timer)
+		deltimer(bubble_timer)
+	slowdown = initial(slowdown)
+	drag_slowdown = initial(drag_slowdown)
+	if(user)
+		user.update_equipment_speed_mods()
+
+#undef SLOWDOWN_ON
+
+///Pre-core activated one for admin spawning.
+/obj/item/flashlight/lamp/space_bubble/preactivated
+	installed_pyro_core = TRUE

@@ -6,6 +6,7 @@
 	desc = "..."
 	icon = 'icons/obj/medical/chemical_tanks.dmi'
 	icon_state = "water"
+	abstract_type = /obj/structure/reagent_dispensers
 	density = TRUE
 	anchored = FALSE
 	pressure_resistance = 2*ONE_ATMOSPHERE
@@ -174,7 +175,7 @@
 		if(!fuel_amt)
 			visible_message(span_danger("\The [src] ruptures!"))
 		// Leave it up to future terrorists to figure out the best way to mix reagents with fuel for a useful boom here
-		chem_splash(loc, null, 2 + (reagents.total_volume + fuel_amt) / 1000, list(reagents), extra_heat=(fuel_amt / 50),adminlog=(fuel_amt<25))
+		chem_splash(loc, null, 2 + floor((reagents.total_volume + fuel_amt) / 1000), list(reagents), extra_heat=(fuel_amt / 50),adminlog=(fuel_amt<25))
 
 	if(fuel_amt) // with that done, actually explode
 		visible_message(span_danger("\The [src] explodes!"))
@@ -352,7 +353,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	. = ..()
 	if(prob(1))
 		desc = "IT'S PEPPER TIME, BITCH!"
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/structure/reagent_dispensers/water_cooler
 	name = "water cooler"
@@ -362,6 +364,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	tank_volume = 200
 	can_be_tanked = FALSE
 	max_integrity = 150
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 25)
 	///Paper cups left from the cooler.
 	var/paper_cups = 25
 	///Reference to our jug.
@@ -514,10 +517,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 /obj/structure/reagent_dispensers/water_cooler/boom()
 	if(QDELETED(src))
 		return
-	var/liquid_amount = 0
 	if(reagents.total_volume)
 		visible_message(span_danger("\The [src] flips on it's side and spills everywhere!"))
-		chem_splash(get_turf(src), null, 2 + (reagents.total_volume + liquid_amount) / 1000, list(reagents), extra_heat=(liquid_amount / 50), adminlog=(liquid_amount<25))
+		chem_splash(get_turf(src), null, 2 + floor((reagents.total_volume) / 1000), list(reagents))
 	eject_jug(throw_away = TRUE)
 	playsound(src, 'sound/effects/glass/glassbash.ogg', 100)
 	tip_over()
@@ -611,13 +613,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 
 /obj/structure/reagent_dispensers/wall/virusfood/Initialize(mapload)
 	. = ..()
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/structure/reagent_dispensers/cooking_oil
 	name = "vat of cooking oil"
 	desc = "A huge metal vat with a tap on the front. Filled with cooking oil for use in frying food."
 	icon_state = "vat"
-	anchored = TRUE
 	reagent_id = /datum/reagent/consumable/nutriment/fat/oil
 	openable = TRUE
 
@@ -626,7 +628,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	desc = "A dish full of food slop for your bowl."
 	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "serving"
-	anchored = TRUE
 	reagent_id = /datum/reagent/consumable/nutraslop
 
 /obj/structure/reagent_dispensers/plumbed
@@ -652,7 +653,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 
 /obj/structure/reagent_dispensers/plumbed/storage/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 
 
 /obj/structure/reagent_dispensers/plumbed/storage/update_overlays()

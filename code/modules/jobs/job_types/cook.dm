@@ -1,7 +1,6 @@
 /datum/job/cook
 	title = JOB_COOK
 	description = "Serve food, cook meat, keep the crew fed."
-	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2
@@ -16,6 +15,7 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
+	mind_traits = list(TRAIT_DESENSITIZED) // butcher
 	liver_traits = list(TRAIT_CULINARY_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_COOK

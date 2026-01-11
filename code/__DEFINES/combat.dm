@@ -236,16 +236,22 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 // Ammo box multiload defines
 /// Ammo box does not accept multiload in or out, e.g. ammo box CANNOT transfer multiple casings in one action, either IN or OUT.
 #define AMMO_BOX_MULTILOAD_NONE	0
-/// Ammo box accepts multiload going in, e.g. ammo box can transfer multiple casings IN at once.
+/// Ammo box accepts multiload going in, e.g. a magazine being fed from a stripper clip.
 #define AMMO_BOX_MULTILOAD_IN	(1 << 0)
-/// Ammo box accepts multiload going out, e.g. ammo box can transfer multiple casings OUT at once.
+/// Ammo box can multiload going out to other ammo boxes, but not loaded magazines, e.g. an ammo box feeding into an unloaded magazine.
 #define AMMO_BOX_MULTILOAD_OUT	(1 << 1)
+/// Ammo box can multiload going out into loaded magazines, e.g. a speedloader feeding into a revolver's cylinder or a stripper clip feeding into a loaded magazine.
+#define AMMO_BOX_MULTILOAD_OUT_LOADED	(1 << 2)
 /// Ammo box accepts multiload in AND out, e.g. ammo box can transfer multiple casings IN at once *and* OUT at once.
-#define AMMO_BOX_MULTILOAD_BOTH	AMMO_BOX_MULTILOAD_IN | AMMO_BOX_MULTILOAD_OUT
+/// Ammo boxes are assumed to have some variety of magazine loading assistance.
+#define AMMO_BOX_MULTILOAD_BOTH	(AMMO_BOX_MULTILOAD_IN | AMMO_BOX_MULTILOAD_OUT)
+/// Ammo box can accept multiloads, AND can give multiloads to boxes that are loaded or not loaded. Individual stripper clips would count for this.
+#define AMMO_BOX_MULTILOAD_ALL	(AMMO_BOX_MULTILOAD_IN | AMMO_BOX_MULTILOAD_OUT | AMMO_BOX_MULTILOAD_OUT_LOADED)
 
 DEFINE_BITFIELD(ammo_box_multiload, list(
 	"LOAD_IN" = AMMO_BOX_MULTILOAD_IN,
 	"LOAD_OUT" = AMMO_BOX_MULTILOAD_OUT,
+	"LOAD_OUT_LOADED" = AMMO_BOX_MULTILOAD_OUT_LOADED,
 ))
 
 #define SUPPRESSED_NONE 0
@@ -279,11 +285,6 @@ DEFINE_BITFIELD(ammo_box_multiload, list(
 #define BODY_ZONE_L_LEG "l_leg"
 #define BODY_ZONE_R_LEG "r_leg"
 
-GLOBAL_LIST_INIT(all_body_zones, list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-GLOBAL_LIST_INIT(limb_zones, list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-
 #define BODY_ZONE_PRECISE_EYES "eyes"
 #define BODY_ZONE_PRECISE_MOUTH "mouth"
 #define BODY_ZONE_PRECISE_GROIN "groin"
@@ -291,6 +292,12 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 #define BODY_ZONE_PRECISE_R_HAND "r_hand"
 #define BODY_ZONE_PRECISE_L_FOOT "l_foot"
 #define BODY_ZONE_PRECISE_R_FOOT "r_foot"
+
+GLOBAL_LIST_INIT(all_body_zones, list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
+GLOBAL_LIST_INIT(limb_zones, list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
+GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
+GLOBAL_LIST_INIT(all_precise_body_zones, list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT))
 
 //We will round to this value in damage calculations.
 #define DAMAGE_PRECISION 0.1
@@ -348,7 +355,7 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 /// Armor can't block more than this as a percentage
 #define ARMOR_MAX_BLOCK 90
 /// Calculates the new armour value after armour penetration. Can return negative values, and those must be caught.
-#define PENETRATE_ARMOUR(armour, penetration) (penetration == 100 ? 0 : 100 * (armour - penetration) / (100 - penetration))
+#define PENETRATE_ARMOUR(armour, penetration) (penetration >= 100 ? 0 : 100 * (armour - penetration) / (100 - penetration))
 
 // Defines for combo attack component
 /// LMB Attack

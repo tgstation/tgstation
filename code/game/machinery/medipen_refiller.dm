@@ -24,7 +24,7 @@
 /obj/machinery/medipen_refiller/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand)
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 	register_context()
 
 /obj/machinery/medipen_refiller/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -110,10 +110,12 @@
 
 /obj/machinery/medipen_refiller/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
 	user.balloon_alert_to_viewers("furiously plunging...", "plunging medipen refiller...")
-	if(do_after(user, 3 SECONDS, target = src))
-		user.balloon_alert_to_viewers("finished plunging")
-		reagents.expose(get_turf(src), TOUCH)
-		reagents.clear_reagents()
+	if(!do_after(user, 3 SECONDS, target = src))
+		return TRUE
+	user.balloon_alert_to_viewers("finished plunging")
+	reagents.expose(get_turf(src), TOUCH)
+	reagents.clear_reagents()
+	return TRUE
 
 /obj/machinery/medipen_refiller/wrench_act(mob/living/user, obj/item/tool)
 	default_unfasten_wrench(user, tool)

@@ -13,7 +13,7 @@ jobs:
   show_screenshot_test_results:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') && github.event.workflow_run.run_attempt == 1 )
     name: Show Screenshot Test Results
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: "Check for ARTIFACTS_FILE_HOUSE_KEY"
         id: secrets_set
@@ -25,7 +25,7 @@ jobs:
           echo "SECRETS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
       - name: Checkout
         if: steps.secrets_set.outputs.SECRETS_ENABLED
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Prepare module
         if: steps.secrets_set.outputs.SECRETS_ENABLED
         run: |

@@ -181,9 +181,6 @@
 /// allow votes to change map
 /datum/config_entry/flag/allow_vote_map
 
-/// allow players to vote to re-do the map vote
-/datum/config_entry/flag/allow_rock_the_vote
-
 /// the number of times we allow players to rock the vote
 /datum/config_entry/number/max_rocking_votes
 	default = 1
@@ -332,6 +329,9 @@
 
 /datum/config_entry/string/githuburl
 	default = "https://www.github.com/tgstation/tgstation"
+
+/datum/config_entry/string/configurl
+	default = "https://github.com/tgstation-operations/server-config"
 
 /datum/config_entry/string/discordbotcommandprefix
 	default = "?"
@@ -638,6 +638,13 @@
 
 /datum/config_entry/flag/picture_logging_camera
 
+/datum/config_entry/number/roundstart_logout_report_time_average
+	default = 10 MINUTES
+	min_val = 0
+
+/datum/config_entry/number/roundstart_logout_report_time_variance
+	default = 3 MINUTES
+	min_val = 0
 
 /datum/config_entry/flag/reopen_roundstart_suicide_roles
 
@@ -786,3 +793,7 @@
 
 /datum/config_entry/flag/generate_assets_in_init
 	default = FALSE
+
+/datum/config_entry/number/minimum_ascension_time
+	default = 0 // 1 minute
+	min_val = 0

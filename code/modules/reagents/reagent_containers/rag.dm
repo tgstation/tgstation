@@ -145,7 +145,8 @@
 			fire_act(500, 100)
 
 	// FINALLY add the dna to us
-	add_blood_DNA(all_blood_dna)
+	if(length(all_blood_dna))
+		add_blood_DNA(all_blood_dna)
 	update_appearance()
 	if(blood_level >= 10)
 		to_chat(cleaner, span_warning("[src] is too dirty to clean anything else! Wash it first!"))
@@ -176,7 +177,7 @@
 	amount_to_remove = how_dirty * 1.2
 	for(var/datum/reagent/other_reagent as anything in reagents.reagent_list)
 		if((other_reagent.chemical_flags & REAGENT_CLEANS) && other_reagent.volume >= amount_to_remove)
-			reagents.remove_reagent(other_reagent, amount_to_remove)
+			reagents.remove_reagent(other_reagent.type, amount_to_remove)
 			return TRUE
 
 	return FALSE

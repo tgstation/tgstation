@@ -26,7 +26,7 @@
 	midround_type = HEAVY_MIDROUND
 	false_alarm_able = TRUE
 	ruleset_flags = RULESET_INVADER
-	weight = list(
+	weight = alist(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 0,
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
@@ -271,7 +271,7 @@
 	pref_flag = ROLE_WIZARD_MIDROUND
 	jobban_flag = ROLE_WIZARD
 	ruleset_flags = RULESET_INVADER|RULESET_HIGH_IMPACT
-	weight = list(
+	weight = alist(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 0,
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
@@ -294,7 +294,7 @@
 	pref_flag = ROLE_OPERATIVE_MIDROUND
 	jobban_flag = ROLE_OPERATIVE
 	ruleset_flags = RULESET_INVADER|RULESET_HIGH_IMPACT
-	weight = list(
+	weight = alist(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
@@ -378,7 +378,7 @@
 	false_alarm_able = TRUE
 	pref_flag = ROLE_BLOB
 	ruleset_flags = RULESET_INVADER
-	weight = list(
+	weight = alist(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
@@ -407,6 +407,9 @@
 /datum/dynamic_ruleset/midround/from_ghosts/blob/false_alarm()
 	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
 
+	// Set status displays to biohazard alert even for false alarm
+	send_status_display_biohazard_alert()
+
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph
 	name = "Alien Infestation"
 	config_tag = "Xenomorph"
@@ -415,7 +418,7 @@
 	false_alarm_able = TRUE
 	pref_flag = ROLE_ALIEN
 	ruleset_flags = RULESET_INVADER
-	weight = list(
+	weight = alist(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 5,
@@ -502,7 +505,7 @@
 	false_alarm_able = TRUE
 	pref_flag = ROLE_SPACE_DRAGON
 	ruleset_flags = RULESET_INVADER
-	weight = list(
+	weight = alist(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 3,
 		DYNAMIC_TIER_MEDIUMHIGH = 5,
@@ -572,7 +575,7 @@
 	midround_type = HEAVY_MIDROUND
 	pref_flag = ROLE_NINJA
 	ruleset_flags = RULESET_INVADER
-	weight = list(
+	weight = alist(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 0,
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
@@ -655,7 +658,7 @@
 	candidate_role = "Changeling"
 	pref_flag = ROLE_CHANGELING_MIDROUND
 	jobban_flag = ROLE_CHANGELING
-	ruleset_flags = RULESET_INVADER
+	ruleset_flags = RULESET_INVADER|RULESET_VARIATION
 	weight = 5
 	min_pop = 15
 	max_antag_cap = 1
@@ -666,6 +669,21 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_changeling/assign_role(datum/mind/candidate)
 	generate_changeling_meteor(candidate)
+
+/datum/dynamic_ruleset/midround/from_ghosts/space_changeling/mass
+	name = "Mass Space Changelings"
+	config_tag = "Mass Changelings"
+	midround_type = HEAVY_MIDROUND
+	min_pop = 25
+	min_antag_cap = 2
+	max_antag_cap = 3
+	repeatable_weight_decrease = 4
+	weight = alist(
+		DYNAMIC_TIER_LOW = 0,
+		DYNAMIC_TIER_LOWMEDIUM = 3,
+		DYNAMIC_TIER_MEDIUMHIGH = 4,
+		DYNAMIC_TIER_HIGH = 5,
+	)
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone
 	name = "Paradox Clone"
@@ -678,21 +696,28 @@
 	min_pop = 10
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/effect/bluespace_stream
+	/// Chance of getting another clone for the price of free
+	var/bonus_clone_chance = 20
+
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/New(list/dynamic_config)
+	. = ..()
+	max_antag_cap += prob(bonus_clone_chance)
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/can_be_selected()
 	return ..() && !isnull(find_clone()) && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
 
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/create_execute_args()
+	return list(find_clone())
+
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/create_ruleset_body()
 	return // handled by assign_role() entirely
 
-/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/assign_role(datum/mind/candidate)
-	var/mob/living/carbon/human/good_version = find_clone()
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/assign_role(datum/mind/candidate, mob/living/carbon/human/good_version)
 	var/mob/living/carbon/human/bad_version = good_version.make_full_human_copy(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
 	candidate.transfer_to(bad_version, force_key_move = TRUE)
 
 	var/datum/antagonist/paradox_clone/antag = candidate.add_antag_datum(/datum/antagonist/paradox_clone)
-	antag.original_ref = WEAKREF(good_version.mind)
-	antag.setup_clone()
+	antag.setup_clone(good_version.mind)
 
 	playsound(bad_version, 'sound/items/weapons/zapbang.ogg', 30, TRUE)
 	bad_version.put_in_hands(new /obj/item/storage/toolbox/mechanical()) //so they dont get stuck in maints
@@ -830,12 +855,12 @@
 		HUNTER_PACK_MI13,
 	)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(check_spawn_hunters), hunter_backstory, 10 MINUTES), 1 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(check_spawn_hunters), 10 MINUTES), 1 MINUTES)
 
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/assign_role(datum/mind/candidate, datum/team/fugitive/team, turf/team_spawn)
 	candidate.current.forceMove(team_spawn)
 	equip_fugitive(candidate.current, team)
-	if(length(selected_minds) > 1 && candidate == selected_minds[1])
+	if(candidate == selected_minds[1])
 		equip_fugitive_leader(candidate.current)
 	playsound(candidate.current, 'sound/items/weapons/emitter.ogg', 50, TRUE)
 
@@ -1054,6 +1079,7 @@
 	false_alarm_able = TRUE
 	pref_flag = ROLE_SLEEPER_AGENT
 	jobban_flag = ROLE_TRAITOR
+	ruleset_flags = RULESET_VARIATION
 	weight = 10
 	min_pop = 3
 	blacklisted_roles = list(
@@ -1069,6 +1095,22 @@
 		"[command_name()] High-Priority Update",
 	)
 
+/datum/dynamic_ruleset/midround/from_living/traitor/mass
+	name = "Mass Traitors"
+	config_tag = "Mass Traitors"
+	midround_type = HEAVY_MIDROUND
+	min_pop = 15
+	min_antag_cap = 2
+	max_antag_cap = 4
+	repeatable_weight_decrease = 8
+	blacklisted_roles = list()
+	weight = alist(
+		DYNAMIC_TIER_LOW = 0,
+		DYNAMIC_TIER_LOWMEDIUM = 3,
+		DYNAMIC_TIER_MEDIUMHIGH = 8,
+		DYNAMIC_TIER_HIGH = 10,
+	)
+
 /datum/dynamic_ruleset/midround/from_living/malf_ai
 	name = "Malfunctioning AI"
 	config_tag = "Midround Malfunctioning AI"
@@ -1077,7 +1119,7 @@
 	pref_flag = ROLE_MALF_MIDROUND
 	jobban_flag = ROLE_MALF
 	ruleset_flags = RULESET_HIGH_IMPACT
-	weight = list(
+	weight = alist(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
@@ -1105,7 +1147,7 @@
 	midround_type = HEAVY_MIDROUND
 	pref_flag = ROLE_BLOB_INFECTION
 	jobban_flag = ROLE_BLOB
-	weight = list(
+	weight = alist(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
@@ -1129,7 +1171,7 @@
 	midround_type = LIGHT_MIDROUND
 	pref_flag = ROLE_OBSESSED
 	blacklisted_roles = list()
-	weight = list(
+	weight = alist(
 		DYNAMIC_TIER_LOW = 5,
 		DYNAMIC_TIER_LOWMEDIUM = 5,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,

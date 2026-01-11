@@ -292,7 +292,7 @@
 			possible_headwear += item
 	if(!length(possible_headwear))
 		for(var/obj/item/item in orange(1))
-			if(ispath(item.dog_fashion, /datum/dog_fashion/head) && CanReach(item))
+			if(ispath(item.dog_fashion, /datum/dog_fashion/head) && item.IsReachableBy(src))
 				possible_headwear += item
 	if(!length(possible_headwear))
 		return
@@ -517,7 +517,7 @@
 		visible_message(span_warning("[src] arises again, revived by the dark magicks!"), \
 		span_cult_large("RISE"))
 		revive(ADMIN_HEAL_ALL) //also means that a dead Nars-Ian can consume a pet and revive
-	adjustBruteLoss(-maxHealth)
+	adjust_brute_loss(-maxHealth)
 
 //LISA! SQUEEEEEEEEE~
 /mob/living/basic/pet/dog/corgi/lisa

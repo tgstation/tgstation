@@ -1,6 +1,7 @@
 /obj/effect/decal/cleanable
 	gender = PLURAL
 	layer = CLEANABLE_FLOOR_OBJECT_LAYER
+	abstract_type = /obj/effect/decal/cleanable
 	flags_1 = UNPAINTABLE_1
 	var/list/random_icon_states = null
 	/// When two of these are on a same tile or do we need to merge them into just one?

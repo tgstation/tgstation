@@ -41,6 +41,8 @@ DECLARE_LOG_NAMED(harddel_log, "harddels", START_LOG)
 DECLARE_LOG_NAMED(test_log, "tests", START_LOG)
 #endif
 
+DECLARE_LOG_NAMED(reta_log, "reta", START_LOG)
+
 
 /// Picture logging
 GLOBAL_VAR(picture_log_directory)

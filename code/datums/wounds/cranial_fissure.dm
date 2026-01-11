@@ -2,7 +2,7 @@
 	wound_path_to_generate = /datum/wound/cranial_fissure
 	required_limb_biostate = BIO_BONE
 
-	required_wounding_types = list(WOUND_ALL)
+	required_wounding_type = WOUND_ALL
 
 	wound_series = WOUND_SERIES_CRANIAL_FISSURE
 
@@ -39,6 +39,10 @@
 
 	severity = WOUND_SEVERITY_CRITICAL
 	sound_effect = 'sound/effects/dismember.ogg'
+	surgery_states = SURGERY_SKIN_OPEN | SURGERY_BONE_SAWED // Literally a cracked open skull, no vessels as it... doesn't bleed?
+
+	/// If TRUE we have been prepped for surgery (to repair)
+	VAR_FINAL/prepped = FALSE
 
 #define CRANIAL_FISSURE_FILTER_DISPLACEMENT "cranial_fissure_displacement"
 
@@ -50,7 +54,7 @@
 
 	RegisterSignal(victim, COMSIG_MOB_SLIPPED, PROC_REF(on_owner_slipped))
 
-/datum/wound/cranial_fissure/remove_wound(ignore_limb, replaced)
+/datum/wound/cranial_fissure/remove_wound(ignore_limb, replaced, destroying)
 	REMOVE_TRAIT(limb, TRAIT_IMMUNE_TO_CRANIAL_FISSURE, type)
 	if (!isnull(victim))
 		REMOVE_TRAIT(victim, TRAIT_HAS_CRANIAL_FISSURE, type)

@@ -25,11 +25,6 @@
 	SHOULD_CALL_PARENT(FALSE)
 	return "errors"
 
-/obj/item/crusher_trophy/attackby(obj/item/attacking_item, mob/living/user)
-	if(!istype(attacking_item, /obj/item/kinetic_crusher))
-		return ..()
-	add_to(attacking_item, user)
-
 /// Tries to add the trophy to our crusher
 /obj/item/crusher_trophy/proc/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
 	for(var/obj/item/crusher_trophy/trophy as anything in crusher.trophies)

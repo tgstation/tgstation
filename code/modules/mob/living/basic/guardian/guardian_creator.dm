@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	/// Failure message if no ghost picks the holopara.
 	var/failure_message = span_boldholoparasite("..And draw a card! It's... blank? Maybe you should try again later.")
 	/// Failure message if we don't allow lings.
-	var/ling_failure = span_boldholoparasite("The deck refuses to respond to a souless creature such as you.")
+	var/ling_failure = span_boldholoparasite("The deck refuses to respond to a soulless creature such as you.")
 	/// Message sent if we successfully get a guardian.
 	var/success_message = span_holoparasite("<b>%GUARDIAN</b> has been summoned!")
 	/// If true, you are given a random guardian rather than picking from a selection.
@@ -135,6 +135,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	to_chat(user, guardian_theme.get_fluff_string(summoned_guardian.guardian_type))
 	to_chat(user, replacetext(success_message, "%GUARDIAN", mob_name))
 	summoned_guardian.client?.init_verbs()
+	summoned_guardian.updatehealth() // Set the initial health hud
 	return summoned_guardian
 
 /// Checks to ensure we're still capable of using the radial selector

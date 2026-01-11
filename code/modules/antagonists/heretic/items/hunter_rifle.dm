@@ -174,10 +174,10 @@
 	return ..()
 
 // Extra ammunition can be made with a heretic ritual.
-/obj/item/ammo_box/strilka310/lionhunter
+/obj/item/ammo_box/speedloader/strilka310/lionhunter
 	name = "stripper clip (.310 hunter)"
 	desc = "A stripper clip of mysterious, atypical ammo. It doesn't fit into normal ballistic rifles."
-	icon_state = "310_strip"
+	icon_state = "lionhunter_strip"
 	ammo_type = /obj/item/ammo_casing/strilka310/lionhunter
 	max_ammo = 3
 	multiple_sprites = AMMO_BOX_PER_BULLET

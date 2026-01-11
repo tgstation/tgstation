@@ -137,7 +137,7 @@ CREATE TABLE `SS13_connection_log` (
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
   `round_id` int(11) unsigned NOT NULL,
-  `ckey` varchar(45) DEFAULT NULL,
+  `ckey` varchar(32) DEFAULT NULL,
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -304,7 +304,7 @@ CREATE TABLE `SS13_manifest` (
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) NOT NULL,
   `round_id` int(11) NOT NULL,
-  `ckey` text NOT NULL,
+  `ckey` varchar(32) NOT NULL,
   `character_name` text NOT NULL,
   `job` text NOT NULL,
   `special` text DEFAULT NULL,
@@ -646,7 +646,7 @@ CREATE TABLE `SS13_ticket` (
   KEY `idx_ticket_act_time_rid` (`action`, `timestamp`, `round_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-DELIMITER $$
+DELIMITER //
 CREATE PROCEDURE `set_poll_deleted`(
 	IN `poll_id` INT
 )
@@ -657,16 +657,16 @@ UPDATE `SS13_poll_option` SET deleted = 1 WHERE pollid = poll_id;
 UPDATE `SS13_poll_vote` SET deleted = 1 WHERE pollid = poll_id;
 UPDATE `SS13_poll_textreply` SET deleted = 1 WHERE pollid = poll_id;
 END
-$$
+//
 CREATE TRIGGER `SS13_role_timeTlogupdate` AFTER UPDATE ON `SS13_role_time` FOR EACH ROW BEGIN INSERT into SS13_role_time_log (ckey, job, delta) VALUES (NEW.CKEY, NEW.job, NEW.minutes-OLD.minutes);
 END
-$$
+//
 CREATE TRIGGER `SS13_role_timeTloginsert` AFTER INSERT ON `SS13_role_time` FOR EACH ROW BEGIN INSERT into SS13_role_time_log (ckey, job, delta) VALUES (NEW.ckey, NEW.job, NEW.minutes);
 END
-$$
+//
 CREATE TRIGGER `SS13_role_timeTlogdelete` AFTER DELETE ON `SS13_role_time` FOR EACH ROW BEGIN INSERT into SS13_role_time_log (ckey, job, delta) VALUES (OLD.ckey, OLD.job, 0-OLD.minutes);
 END
-$$
+//
 DELIMITER ;
 
 --

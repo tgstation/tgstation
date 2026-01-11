@@ -216,7 +216,8 @@
 		factory.assign_blobbernaut(null)
 		return FALSE
 
-	var/mob/living/basic/blob_minion/blobbernaut/minion/blobber = new(get_turf(factory))
+	var/mob_type = /mob/living/basic/blob_minion/blobbernaut/minion
+	var/mob/living/basic/blob_minion/blobbernaut/minion/blobber = new mob_type(get_turf(factory), blob_borne = TRUE)
 	blobber.AddComponent(/datum/component/blob_minion, new_overmind = src, new_death_cloud_size = blobber.death_cloud_size)
 	factory.assign_blobbernaut(blobber)
 	blobber.assign_key(ghost.key, blobstrain)

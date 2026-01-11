@@ -3,6 +3,7 @@
 	desc = "Yell at coderbus."
 	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "error"
+	abstract_type = /obj/vehicle
 	max_integrity = 300
 	armor_type = /datum/armor/obj_vehicle
 	layer = VEHICLE_LAYER

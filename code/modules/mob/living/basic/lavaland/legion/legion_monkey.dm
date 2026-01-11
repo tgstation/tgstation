@@ -34,6 +34,7 @@
 	desc = "You can see what was once a monkey under the densely packed snow. It doesn't look friendly."
 	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	icon_state = "snow_monkey"
+	has_emissive = FALSE
 
 /mob/living/basic/mining/legion/monkey/snow/Initialize(mapload)
 	. = ..()

@@ -766,15 +766,9 @@
 "eq" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
-"ev" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 5
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/deepstorage/armory)
 "ew" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
@@ -1048,7 +1042,6 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "fC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "deepo2";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -1196,13 +1189,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
-"gv" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "deepn2";
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/deepstorage/power)
 "gw" = (
 /obj/machinery/sleeper{
 	dir = 4
@@ -1286,7 +1272,6 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "gP" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "deepn2";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -1539,6 +1524,14 @@
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
+"nh" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage/hydroponics)
 "oo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1581,13 +1574,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
-"qm" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "deepo2";
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/deepstorage/power)
 "qq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 1
@@ -2405,6 +2391,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "MV" = (
@@ -4397,7 +4384,7 @@ db
 dt
 dt
 pq
-ev
+dt
 xY
 fb
 fo
@@ -4441,8 +4428,8 @@ ag
 aQ
 vG
 bC
-zf
-sL
+nh
+bC
 Lg
 aQ
 wK
@@ -4507,9 +4494,9 @@ fb
 fp
 fC
 fL
-qm
+gP
 fp
-gv
+fC
 gD
 gP
 fp

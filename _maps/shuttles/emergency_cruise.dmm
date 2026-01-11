@@ -384,7 +384,7 @@
 	pixel_x = 4;
 	pixel_y = -1
 	},
-/obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/wall_healer/free/directional/east,
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
@@ -932,7 +932,7 @@
 /obj/structure/chair/sofa/bench/right{
 	dir = 8
 	},
-/obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/wall_healer/free/directional/east,
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -2054,7 +2054,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 4
 	},
-/obj/machinery/vending/wallmed/directional/south,
+/obj/machinery/wall_healer/free/directional/south,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "Cu" = (
@@ -2327,10 +2327,7 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape/brig)
 "Fq" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32;
-	pixel_y = 32
-	},
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
 "FC" = (
@@ -4348,7 +4345,7 @@ bP
 bj
 QI
 hp
-Fq
+La
 nk
 gv
 Ks
@@ -4395,7 +4392,7 @@ jt
 jt
 jt
 uV
-La
+Fq
 nk
 fI
 uu

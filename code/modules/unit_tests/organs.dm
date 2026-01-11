@@ -78,8 +78,8 @@
 /datum/unit_test/organ_damage/proc/test_organ(mob/living/carbon/human/dummy, obj/item/organ/test_organ)
 	var/slot_to_use = test_organ.slot
 
-	// Tests [mob/living/proc/adjustOrganLoss]
-	TEST_ASSERT_EQUAL(dummy.adjustOrganLoss(slot_to_use, test_organ.maxHealth * 10), -test_organ.maxHealth, \
+	// Tests [mob/living/proc/adjust_organ_loss]
+	TEST_ASSERT_EQUAL(dummy.adjust_organ_loss(slot_to_use, test_organ.maxHealth * 10), -test_organ.maxHealth, \
 		"Mob level \"apply organ damage\" returned the wrong value for [slot_to_use] organ with default arguments.")
 	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use), test_organ.maxHealth, \
 		"Mob level \"apply organ damage\" can exceed the [slot_to_use] organ's damage cap with default arguments.")
@@ -89,14 +89,14 @@
 	dummy.fully_heal(HEAL_ORGANS)
 
 	// Tests [mob/living/proc/set_organ_damage]
-	TEST_ASSERT_EQUAL(dummy.setOrganLoss(slot_to_use, test_organ.maxHealth * 10), -test_organ.maxHealth, \
+	TEST_ASSERT_EQUAL(dummy.set_organ_loss(slot_to_use, test_organ.maxHealth * 10), -test_organ.maxHealth, \
 		"Mob level \"set organ damage\" returned the wrong value for [slot_to_use] organ with default arguments.")
 	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use), test_organ.maxHealth, \
 		"Mob level \"set organ damage\" can exceed the [slot_to_use] organ's damage cap with default arguments.")
 	dummy.fully_heal(HEAL_ORGANS)
 
-	// Tests [mob/living/proc/adjustOrganLoss] with a large max supplied
-	TEST_ASSERT_EQUAL(dummy.adjustOrganLoss(slot_to_use, test_organ.maxHealth * 10, INFINITY), -test_organ.maxHealth, \
+	// Tests [mob/living/proc/adjust_organ_loss] with a large max supplied
+	TEST_ASSERT_EQUAL(dummy.adjust_organ_loss(slot_to_use, test_organ.maxHealth * 10, INFINITY), -test_organ.maxHealth, \
 		"Mob level \"apply organ damage\" returned the wrong value for [slot_to_use] organ with a large maximum supplied.")
 	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use), test_organ.maxHealth, \
 		"Mob level \"apply organ damage\" can exceed the [slot_to_use] organ's damage cap with a large maximum supplied.")
@@ -124,3 +124,16 @@
 	var/obj/item/organ/brain = locate() in dummy.organs
 	brain.forceMove(dummy.loc)
 	allocated += brain
+
+/datum/unit_test/felinid_ears
+
+/datum/unit_test/felinid_ears/Run()
+	var/mob/living/carbon/human/normal_dummy = allocate(/mob/living/carbon/human/consistent)
+	normal_dummy.dna.features[FEATURE_EARS] = SPRITE_ACCESSORY_NONE
+	normal_dummy.set_species(/datum/species/human/felinid, pref_load = TRUE)
+	TEST_ASSERT(!istype(normal_dummy.get_organ_slot(ORGAN_SLOT_EARS), /obj/item/organ/ears/cat), "Felinid with NONE ears set had cat ears on species gain.")
+	TEST_ASSERT_NOTNULL(normal_dummy.get_organ_slot(ORGAN_SLOT_EARS), "Felinid with NONE ears set had NO ears on species gain.")
+
+	var/mob/living/carbon/human/anime_dummy = allocate(/mob/living/carbon/human/consistent)
+	anime_dummy.set_species(/datum/species/human/felinid, pref_load = TRUE)
+	TEST_ASSERT(istype(anime_dummy.get_organ_slot(ORGAN_SLOT_EARS), /obj/item/organ/ears/cat), "Felinid with default ears set did not have cat ears on species gain.")

@@ -672,8 +672,7 @@
 	},
 /obj/structure/flora/bush,
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/oxygen_output{
-	dir = 1;
-	chamber_id = "syndielab_biodome"
+	dir = 1
 	},
 /turf/open/floor/grass{
 	initial_gas_mix = "o2=1000;n2=1100;TEMP=280"
@@ -681,7 +680,7 @@
 /area/ruin/syndielab)
 "QO" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/computer_disk/syndicate/camera_app{
+/obj/item/disk/computer/syndicate/camera_app{
 	pixel_y = 4;
 	pixel_x = -5
 	},

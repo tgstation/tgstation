@@ -27,14 +27,14 @@
 	click_wrapper(attacker, to_smack)
 	TEST_ASSERT_NOTEQUAL(to_smack.get_integrity(), to_smack.max_integrity, "The barricade should have taken damage a from a non-combat-mode click.")
 
-/// Tests that common tool interactions are possible still, by attempting to open the panel of an air alarm.
+/// Tests that common tool interactions are possible still, by attempting to open the panel of an techfab.
 /datum/unit_test/machinery_tool_interaction
 
 /datum/unit_test/machinery_tool_interaction/Run()
 	var/mob/living/carbon/human/consistent/attacker = EASY_ALLOCATE()
 	var/obj/item/screwdriver/screwdriver = EASY_ALLOCATE()
-	var/obj/machinery/airalarm/to_smack = EASY_ALLOCATE()
+	var/obj/machinery/rnd/production/to_smack = EASY_ALLOCATE()
 	attacker.put_in_active_hand(screwdriver, forced = TRUE)
 	click_wrapper(attacker, to_smack)
-	TEST_ASSERT_EQUAL(to_smack.get_integrity(), to_smack.max_integrity, "The air alarm took damage when interacted with a screwdriver.")
-	TEST_ASSERT(to_smack.panel_open, "The air alarm should have opened its panel after being interacted with a screwdriver.")
+	TEST_ASSERT_EQUAL(to_smack.get_integrity(), to_smack.max_integrity, "The techfab took damage when interacted with a screwdriver.")
+	TEST_ASSERT(to_smack.panel_open, "The techfab should have opened its panel after being interacted with a screwdriver.")

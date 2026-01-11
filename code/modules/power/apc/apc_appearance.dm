@@ -109,6 +109,8 @@
 
 // Shows a dark-blue interface for a moment. Shouldn't appear on cameras.
 /obj/machinery/power/apc/proc/flicker_hacked_icon()
+	if(opened != APC_COVER_CLOSED)
+		return
 	var/image/hacker_image = image(icon = 'icons/obj/machines/wallmounts.dmi', loc = src, icon_state = "apcemag", layer = FLOAT_LAYER)
 	var/list/mobs_to_show = list()
 	// Collecting mobs the APC can see for this animation, rather than mobs that can see the APC. Important distinction, intended such that mobs on camera / with XRAY cannot see the flicker.

@@ -189,7 +189,7 @@
 				if(feedback)
 					to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE
-			if(!(human_owner.head?.clothing_flags & CASTING_CLOTHES) && !(human_owner.glasses?.clothing_flags & CASTING_CLOTHES))
+			if(!(astype(human_owner.head, /obj/item/clothing)?.clothing_flags & CASTING_CLOTHES) && !(human_owner.glasses?.clothing_flags & CASTING_CLOTHES))
 				if(feedback)
 					to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
 				return FALSE
@@ -405,8 +405,8 @@
 
 		if(INVOCATION_EMOTE)
 			invoker.visible_message(
-				capitalize(REPLACE_PRONOUNS(replacetext(used_invocation_message, "%CASTER", invoker.name), invoker)),
-				capitalize(REPLACE_PRONOUNS(replacetext(invocation_self_message, "%CASTER", invoker.name), invoker)),
+				capitalize(REPLACE_PRONOUNS(replacetext(used_invocation_message, "%CASTER", "[invoker]"), invoker)),
+				capitalize(REPLACE_PRONOUNS(replacetext(invocation_self_message, "%CASTER", "[invoker]"), invoker)),
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
 

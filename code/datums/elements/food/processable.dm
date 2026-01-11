@@ -14,8 +14,10 @@
 	var/table_required
 	///Verb used in processing food (such as slice, flatten), defaults to process
 	var/screentip_verb
+	///Sound to play when the do_after begins
+	var/sound_to_play
 
-/datum/element/processable/Attach(datum/target, tool_behaviour, result_atom_type, amount_created = 3, time_to_process = 2 SECONDS, table_required = FALSE, screentip_verb = "Process")
+/datum/element/processable/Attach(datum/target, tool_behaviour, result_atom_type, amount_created = 3, time_to_process = 2 SECONDS, table_required = FALSE, screentip_verb = "Process", sound_to_play = null)
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
@@ -26,6 +28,7 @@
 	src.result_atom_type = result_atom_type
 	src.table_required = table_required
 	src.screentip_verb = screentip_verb
+	src.sound_to_play = sound_to_play
 
 	var/atom/atom_target = target
 	atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
@@ -42,11 +45,11 @@
 	var/atom/movable/result = new result_atom_type
 	if(!prototype.compare_materials(result))
 		var/warning = "custom_materials of [result.type] when processed compared to just spawned don't match"
-		var/what_it_should_be = prototype.get_materials_english_list()
+		var/what_it_should_be = prototype.transcribe_materials_list()
 		//compose a text string containing the syntax and paths to use for editing the custom_materials var
 		if(result.custom_materials)
 			what_it_should_be += " (you can round values a bit)"
-		stack_trace("[warning]. custom_materials should be [what_it_should_be] (you can round values a bit).")
+		stack_trace("[warning]. should be: custom_materials = [what_it_should_be] (you can round values a bit).")
 	qdel(prototype)
 	qdel(result)
 
@@ -67,7 +70,7 @@
 			to_chat(user, span_notice("You cannot make [initial(result_atom_type.name)] here! You need a table or at least a tray."))
 			return
 
-	mutable_recipes += list(list(TOOL_PROCESSING_RESULT = result_atom_type, TOOL_PROCESSING_AMOUNT = amount_created, TOOL_PROCESSING_TIME = time_to_process))
+	mutable_recipes += list(list(TOOL_PROCESSING_RESULT = result_atom_type, TOOL_PROCESSING_AMOUNT = amount_created, TOOL_PROCESSING_TIME = time_to_process, TOOL_PROCESSING_SOUND = sound_to_play))
 
 ///So people know what the frick they're doing without reading from a wiki page (I mean they will inevitably but i'm trying to help, ok?)
 /datum/element/processable/proc/OnExamine(atom/source, mob/user, list/examine_list)

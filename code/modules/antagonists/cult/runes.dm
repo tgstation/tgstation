@@ -290,11 +290,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(invoker, span_warning("Something is shielding [convertee]'s mind!"))
 		return FALSE
 
-	var/brutedamage = convertee.getBruteLoss()
-	var/burndamage = convertee.getFireLoss()
+	var/brutedamage = convertee.get_brute_loss()
+	var/burndamage = convertee.get_fire_loss()
 	if(brutedamage || burndamage)
-		convertee.adjustBruteLoss(-(brutedamage * 0.75))
-		convertee.adjustFireLoss(-(burndamage * 0.75))
+		convertee.adjust_brute_loss(-(brutedamage * 0.75))
+		convertee.adjust_fire_loss(-(burndamage * 0.75))
 
 	convertee.visible_message(
 		span_warning("[convertee] writhes in pain [(brutedamage || burndamage) \
@@ -930,7 +930,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	color = "#FC9B54"
 	set_light(6, 1, color)
 	for(var/mob/living/target in viewers(T))
-		if(!IS_CULTIST(target) && target.blood_volume)
+		if(!IS_CULTIST(target) && CAN_HAVE_BLOOD(target))
 			if(target.can_block_magic(charge_cost = 0))
 				continue
 			to_chat(target, span_cult_large("Your blood boils in your veins!"))
@@ -955,7 +955,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 /obj/effect/rune/blood_boil/proc/do_area_burn(turf/T, multiplier)
 	set_light(6, 1, color)
 	for(var/mob/living/target in viewers(T))
-		if(!IS_CULTIST(target) && target.blood_volume)
+		if(!IS_CULTIST(target) && target.get_blood_volume())
 			if(target.can_block_magic(charge_cost = 0))
 				continue
 			target.take_overall_damage(tick_damage*multiplier, tick_damage*multiplier)
@@ -1025,7 +1025,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
 		new_human.apply_status_effect(/datum/status_effect/cultghost) //ghosts can't summon more ghosts
 		new_human.set_invis_see(SEE_INVISIBLE_OBSERVER)
-		new_human.add_traits(list(TRAIT_NOBREATH, TRAIT_PERMANENTLY_MORTAL), INNATE_TRAIT) // permanently mortal can be removed once this is a bespoke kind of mob
+		new_human.add_traits(list(TRAIT_NOBREATH, TRAIT_SPAWNED_MOB, TRAIT_PERMANENTLY_MORTAL), INNATE_TRAIT) // permanently mortal can be removed once this is a bespoke kind of mob
 		ghosts++
 		playsound(src, 'sound/effects/magic/exit_blood.ogg', 50, TRUE)
 		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))
@@ -1148,17 +1148,16 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 
 	for(var/mob/living/target in range(src, 3))
 		target.Paralyze(30)
-	empulse(T, 0.42*(intensity), 1)
+	empulse(T, 0.42*(intensity), 1, emp_source = src)
 
 	var/list/images = list()
-	var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	for(var/mob/living/M in GLOB.alive_mob_list)
 		if(!is_valid_z_level(T, get_turf(M)))
 			continue
 		if(ishuman(M))
 			if(!IS_CULTIST(M))
-				sec_hud.hide_from(M)
-				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(hudFix), M), duration)
+				ADD_TRAIT(M, TRAIT_BLOCK_SECHUD, CULT_TRAIT)
+				addtimer(TRAIT_CALLBACK_REMOVE(M, TRAIT_BLOCK_SECHUD, CULT_TRAIT), duration)
 			var/image/A = image('icons/mob/nonhuman-player/cult.dmi',M,"cultist", ABOVE_MOB_LAYER)
 			A.override = 1
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "human_apoc", A, NONE)
@@ -1235,13 +1234,3 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			if(I.icon_state != "bloodsparkles")
 				I.override = TRUE
 		sleep(19 SECONDS)
-
-
-
-/proc/hudFix(mob/living/carbon/human/target)
-	if(!target || !target.client)
-		return
-	var/obj/O = target.get_item_by_slot(ITEM_SLOT_EYES)
-	if(istype(O, /obj/item/clothing/glasses/hud/security))
-		var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
-		sec_hud.show_to(target)

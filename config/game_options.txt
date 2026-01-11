@@ -55,6 +55,11 @@ HUMANS_NEED_SURNAMES
 ## If uncommented, this forces all players to use random names !and appearances!.
 #FORCE_RANDOM_NAMES
 
+## Amount of time after the round starts that the player disconnect report is issued, randomized by ROUNDSTART_LOGOUT_REPORT_TIME_VARIANCE as a lower and upper possible timer
+## Setting ROUNDSTART_LOGOUT_REPORT_TIME_VARIANCE to 0 will result in no variance, and only display the time in ROUNDSTART_LOGOUT_REPORT_TIME_AVERAGE
+ROUNDSTART_LOGOUT_REPORT_TIME_VARIANCE 1800
+ROUNDSTART_LOGOUT_REPORT_TIME_AVERAGE 6000
+
 ## Unhash this to turn on automatic reopening of a player's job if they suicide at roundstart
 #REOPEN_ROUNDSTART_SUICIDE_ROLES
 

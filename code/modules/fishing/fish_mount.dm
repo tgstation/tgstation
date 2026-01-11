@@ -4,7 +4,7 @@
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fish_mount_item"
 	result_path = /obj/structure/fish_mount
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 	pixel_shift = 31
 	///Reference to the persistent_id of the mount this was spawned from.
 	var/persistence_id
@@ -34,13 +34,12 @@
 	/// Trophies from persistence have a good chance to be dusted if removal is attempted, though rarely it pays off.
 	var/persistence_loaded_fish = FALSE
 
-/obj/structure/fish_mount/Initialize(mapload, floor_to_wall_dir)
+/obj/structure/fish_mount/Initialize(mapload)
 	. = ..()
 	//Mounted fish shouldn't flop. It should also show size and weight to everyone.
 	add_traits(list(TRAIT_STOP_FISH_FLOPPING, TRAIT_EXAMINE_FISH), INNATE_TRAIT)
-	if(floor_to_wall_dir)
-		setDir(floor_to_wall_dir)
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_mount_on_atom()
 	if(!persistence_id)
 		return
 	if(SSfishing.initialized)
@@ -70,7 +69,8 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/fish_mount/proc/add_first_fish()
-	var/obj/item/fish/fish_path = pick(subtypesof(/obj/item/fish) - list(typesof(/obj/item/fish/holo) + list(/obj/item/fish/starfish/chrystarfish))) // chrystarfish immediately shatters when placed
+	var/list/valid_picks = subtypesof(/obj/item/fish) - typesof(/obj/item/fish/holo) - /obj/item/fish/starfish/chrystarfish // chrystarfish immediately shatters when placed
+	var/obj/item/fish/fish_path = pick(valid_picks)
 	if(fish_path.fish_id_redirect_path)
 		fish_path = fish_path.fish_id_redirect_path
 	var/fluff_name = pick("John Trasen III", "a nameless intern", "Pun Pun", AQUARIUM_COMPANY, "Unknown", "Central Command")
@@ -103,6 +103,9 @@
 	playsound(loc, 'sound/machines/click.ogg', 30, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
+/obj/structure/fish_mount/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return TRUE
+
 /obj/structure/fish_mount/proc/add_fish(obj/item/fish/fish, from_persistence = FALSE, catcher)
 	if(QDELETED(src)) // don't ever try to add a fish to one of these that's already been deleted - and get rid of the one that was created
 		qdel(fish)
@@ -113,7 +116,6 @@
 		mounted_fish.forceMove(loc)
 	fish.forceMove(src)
 	vis_contents += fish
-	fish.flags_1 |= IS_ONTOP_1
 	fish.vis_flags |= (VIS_INHERIT_PLANE|VIS_INHERIT_LAYER)
 	fish.interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 	fish.obj_flags &= ~UNIQUE_RENAME
@@ -128,7 +130,6 @@
 
 	AddElement(/datum/element/beauty, get_fish_beauty())
 	RegisterSignals(fish, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW), PROC_REF(on_fish_attack_hand))
-	rotate_fish(dir)
 	if(from_persistence)
 		persistence_loaded_fish = TRUE
 		fish.add_traits(list(TRAIT_NO_FISHING_ACHIEVEMENT, TRAIT_FISH_LOW_PRICE), INNATE_TRAIT)
@@ -141,20 +142,6 @@
 	if(main_material)
 		beauty += main_material.beauty_modifier * mounted_fish.weight
 	return round(beauty)
-
-/obj/structure/fish_mount/proc/rotate_fish(direction, old_direction)
-	var/rotation = angle2dir(REVERSE_DIR(direction))
-	if(old_direction)
-		rotation -= angle2dir(REVERSE_DIR(old_direction))
-
-	if(!rotation)
-		return
-	mounted_fish.transform = mounted_fish.transform.Turn(rotation)
-
-/obj/structure/fish_mount/setDir(newdir)
-	var/old_dir = dir
-	. = ..()
-	rotate_fish(dir, old_dir)
 
 /obj/structure/fish_mount/proc/on_fish_attack_hand(datum/source, mob/living/user)
 	SIGNAL_HANDLER
@@ -193,9 +180,7 @@
 		return ..()
 	RemoveElement(/datum/element/beauty, get_fish_beauty())
 	if(!QDELETED(mounted_fish) && (!persistence_loaded_fish || roll_for_safe_removal()))
-		rotate_fish(0, dir)
 		UnregisterSignal(mounted_fish, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW))
-		mounted_fish.flags_1 &= ~IS_ONTOP_1
 		mounted_fish.vis_flags &= ~(VIS_INHERIT_PLANE|VIS_INHERIT_LAYER)
 		mounted_fish.interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
 		mounted_fish.obj_flags |= UNIQUE_RENAME

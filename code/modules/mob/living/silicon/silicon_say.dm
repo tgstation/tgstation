@@ -24,7 +24,7 @@
 	var/namepart = name
 	// If carbon, use voice to account for voice changers
 	if(iscarbon(src))
-		namepart = GetVoice()
+		namepart = get_voice(add_id_name = TRUE)
 
 	// AI in carbon body should still have its real name
 	var/obj/item/organ/brain/cybernetic/ai/brain = get_organ_slot(ORGAN_SLOT_BRAIN)

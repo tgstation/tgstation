@@ -6,6 +6,8 @@
 	max_integrity = 50
 	/// Do all the cards drop to the floor when thrown at a person
 	var/can_play_52_card_pickup = TRUE
+	/// How many cards can we hold at the same time
+	var/card_limit = 21
 
 	/// List of card atoms for a hand or deck
 	var/list/obj/item/toy/singlecard/card_atoms
@@ -28,7 +30,7 @@
 		return .
 
 	var/mob/thrower = throwingdatum?.get_thrower()
-	if(!thrower) // if a mob didn't throw it (need two people to play 52 pickup)
+	if(!istype(thrower)) // if a mob didn't throw it (need two people to play 52 pickup)
 		return
 
 	if(count_cards() == 0)
@@ -64,29 +66,29 @@
  * All cards that are inserted have their angle and pixel offsets reset to zero however their
  * flip state does not change unless it's being inserted into a deck which is always facedown
  * (see the deck/insert proc)
+ * Returns the list of inserted cards
  *
  * Arguments:
  * * card_item - Either a singlecard or cardhand that gets inserted into the src
  */
 /obj/item/toy/cards/proc/insert(obj/item/toy/card_item)
 	fetch_card_atoms()
+	// Can't add any cards, don't do anything
+	if (count_cards() >= card_limit)
+		return null
 
-	var/cards_to_add = list()
-	var/obj/item/toy/cards/cardhand/recycled_cardhand
+	var/list/cards_to_add = list()
 
 	if(istype(card_item, /obj/item/toy/singlecard))
 		cards_to_add += card_item
 
 	if(istype(card_item, /obj/item/toy/cards/cardhand))
-		recycled_cardhand = card_item
+		var/obj/item/toy/cards/cardhand/recycled_cardhand = card_item
+		cards_to_add += recycled_cardhand.fetch_card_atoms()
 
-		var/list/recycled_cards = recycled_cardhand.fetch_card_atoms()
-
-		for(var/obj/item/toy/singlecard/card in recycled_cards)
-			cards_to_add += card
-			recycled_cards -= card
-			card.moveToNullspace()
-		qdel(recycled_cardhand)
+	if(length(cards_to_add) + count_cards() > card_limit)
+		// Remove all cards past however many we can fit
+		cards_to_add.Cut(card_limit - count_cards() + 1, length(cards_to_add) + 1)
 
 	for(var/obj/item/toy/singlecard/card in cards_to_add)
 		card.forceMove(src)
@@ -98,21 +100,29 @@
 		card.transform = M
 		card.update_appearance()
 		card_atoms += card
-		cards_to_add -= card
+
+	if(istype(card_item, /obj/item/toy/cards/cardhand))
+		var/obj/item/toy/cards/cardhand/recycled_cardhand = card_item
+		recycled_cardhand.card_atoms -= cards_to_add
+		if (!length(recycled_cardhand.fetch_card_atoms()))
+			qdel(card_item)
+
 	update_appearance()
+	return cards_to_add
 
 /**
  * Draws a card from the deck or hand of cards.
  *
- * Draws the top card unless a card arg is supplied then it picks that specific card
- * and returns it (the card arg is used by the radial menu for cardhands to select
- * specific cards out of the cardhand)
+ * Draws the top card, removing it from the associated card atoms list,
+ * unless a card arg is supplied; then it picks that specific card, removes it from the
+ * associated card atoms list, and returns it (the card arg is used by the radial menu for cardhands to select
+ * specific cards out of the cardhand).
  * Arguments:
  * * mob/living/user - The user drawing the card.
  * * obj/item/toy/singlecard/card (optional) - The card drawn from the hand
 **/
 /obj/item/toy/cards/proc/draw(mob/living/user, obj/item/toy/singlecard/card)
-	if(!isliving(user) || !user.can_perform_action(src, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH))
+	if(!isliving(user) || !user.can_perform_action(src, NEED_DEXTERITY | FORBID_TELEKINESIS_REACH))
 		return
 
 	if(count_cards() == 0)
@@ -121,12 +131,17 @@
 
 	var/list/cards = fetch_card_atoms()
 
-	card = card || cards[1] //draw the card on top
+	card ||= pick_card(user, cards)
 	cards -= card
 
 	update_appearance()
 	playsound(src, 'sound/items/cards/cardflip.ogg', 50, TRUE)
 	return card
+
+/// Picks what card the user draws from the deck
+/obj/item/toy/cards/proc/pick_card(mob/living/user, list/obj/item/toy/singlecard/cards)
+	// By default just pick the top card
+	return cards[1]
 
 /// Returns the cards in this deck.
 /// Lazily generates the cards if they haven't already been made.

@@ -1,5 +1,6 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
+	abstract_type = /mob/living
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
 	pressure_resistance = 10
 	hud_type = /datum/hud/living
@@ -88,11 +89,13 @@
 	  */
 	var/incorporeal_move = FALSE
 
-	var/list/quirks = list()
-	///a list of surgery datums. generally empty, they're added when the player wants them.
-	var/list/surgeries = list()
-	///Mob specific surgery speed modifier
-	var/mob_surgery_speed_mod = 1
+	/// Lazylist of all quirks the mob has. These are not singletons
+	var/list/quirks
+	/// Lazylist of all typepaths of personalities the mob has.
+	var/list/personalities
+
+	/// Lazylist of surgery speed modifiers - id to number - 2 = 2x faster, 0.5x = 0.5x slower
+	var/list/mob_surgery_speed_mods
 
 	/// Used by [living/Bump()][/mob/living/proc/Bump] and [living/PushAM()][/mob/living/proc/PushAM] to prevent potential infinite loop.
 	var/now_pushing = null
@@ -108,7 +111,7 @@
 	var/mob_size = MOB_SIZE_HUMAN
 	/// List of biotypes the mob belongs to. Used by diseases and reagents mainly.
 	var/mob_biotypes = MOB_ORGANIC
-	/// The type of respiration the mob is capable of doing. Used by adjustOxyLoss.
+	/// The type of respiration the mob is capable of doing. Used by adjust_oxy_loss.
 	var/mob_respiration_type = RESPIRATION_OXYGEN
 	///more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 	var/metabolism_efficiency = 1
@@ -136,6 +139,8 @@
 	/// Cell tracker datum we use to manage the pipes around us, for faster ventcrawling
 	/// Should only exist if you're in a pipe
 	var/datum/cell_tracker/pipetracker
+	/// Cooldown for welded vent movement messages to prevent spam
+	COOLDOWN_DECLARE(welded_vent_message_cd)
 
 	var/smoke_delay = 0 ///used to prevent spam with smoke reagent reaction on mob.
 
@@ -157,8 +162,13 @@
 	///effectiveness prob. is modified negatively by this amount; positive numbers make it more difficult, negative ones make it easier
 	var/butcher_difficulty = 0
 
-	///how much blood the mob has
+	/// How much blood the mob currently has.
+	/// Don't read directly, use get_blood_volume() and get_blood_volume(apply_modifiers = TRUE).
+	/// Don't write directly either, use set_blood_volume() and adjust_blood_volume().
+	/// Also don't initialize this. Initialize default_blood_volume instead.
 	var/blood_volume = 0
+	/// The default blood volume of the mob. Used primarily for healing bloodloss.
+	var/default_blood_volume = 0
 
 	///a list of all status effects the mob has
 	var/list/status_effects
@@ -197,6 +207,8 @@
 	var/icon/head_icon = 'icons/mob/clothing/head/pets_head.dmi'
 	/// icon_state for holding mobs.
 	var/held_state = ""
+	/// Typepath of the holder created when we're picked up
+	var/inhand_holder_type = /obj/item/mob_holder
 
 	///If combat mode is on or not
 	var/combat_mode = FALSE
@@ -241,3 +253,9 @@
 	/// First element is the current martial art - any other elements are "saved" for if they unlearn the first one
 	/// Reference handling is done by the martial arts themselves
 	var/list/datum/martial_art/martial_arts
+
+	/// how many tiles can this mob reach with their hands? 1 tile is adjacent.
+	var/reach_length = 1
+
+	/// Lazy assoc list of currently applied fishing difficulty modifiers keyed to their source
+	var/list/fishing_difficulty_mods_by_source

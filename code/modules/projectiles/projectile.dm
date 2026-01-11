@@ -8,6 +8,7 @@
 	name = "projectile"
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "bullet"
+	abstract_type = /obj/projectile
 	density = FALSE
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -633,6 +634,8 @@
 		if(!HAS_TRAIT(target, TRAIT_BLOCKING_PROJECTILES) && isliving(target))
 			var/mob/living/living_target = target
 			living_target.block_projectile_effects()
+		return FALSE
+	if(HAS_TRAIT(target, TRAIT_UNHITTABLE_BY_LASERS) && (armor_flag & LASER))
 		return FALSE
 	if(!ignore_source_check && firer && !direct_target)
 		if(target == firer || (target == firer.loc && ismecha(firer.loc)) || (target in firer.buckled_mobs))

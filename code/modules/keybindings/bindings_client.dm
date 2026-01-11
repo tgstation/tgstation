@@ -75,7 +75,7 @@
 	for(var/kb_name in prefs.key_bindings_by_key[full_key])
 		keycount++
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[kb_name]
-		if(kb.can_use(src) && kb.down(src, click_data[1]) && keycount >= MAX_COMMANDS_PER_KEY)
+		if(kb.can_use(src) && kb.down(src, click_data[1], click_data[2], click_data[3]) && keycount >= MAX_COMMANDS_PER_KEY)
 			break
 
 	holder?.key_down(_key, src, full_key)

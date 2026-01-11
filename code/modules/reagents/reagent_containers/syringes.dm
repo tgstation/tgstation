@@ -12,7 +12,7 @@
 	possible_transfer_amounts = list(5, 10, 15)
 	volume = 15
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.2)
-	reagent_flags = TRANSPARENT
+	initial_reagent_flags = TRANSPARENT
 	custom_price = PAYCHECK_CREW * 0.5
 	sharpness = SHARP_POINTY
 	embed_type = /datum/embedding/syringe
@@ -33,9 +33,6 @@
 		dart_insert_projectile_icon_state, \
 		CALLBACK(src, PROC_REF(get_dart_var_modifiers))\
 	)
-
-/obj/item/reagent_containers/syringe/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	return
 
 /obj/item/reagent_containers/syringe/proc/try_syringe(atom/target, mob/user)
 	if(!target.reagents)
@@ -140,8 +137,8 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user) // transfer from, transfer to - who cares?
-
-	to_chat(user, span_notice("You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units."))
+	if(trans)
+		to_chat(user, span_notice("You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units."))
 	target.update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -355,6 +352,7 @@
 	dart_insert_casing_icon_state = "overlay_syringe_crude"
 	dart_insert_projectile_icon_state = "overlay_syringe_crude_proj"
 	embed_type = /datum/embedding/syringe/crude
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 5)
 
 /datum/embedding/syringe/crude
 	embed_chance = 75

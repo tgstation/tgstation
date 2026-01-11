@@ -20,7 +20,7 @@
 	if(!theme_app)
 		return FALSE
 	//don't get the same one twice
-	if(theme_app.imported_themes.Find(theme_name))
+	if(LAZYFIND(theme_app.imported_themes, theme_name))
 		return FALSE
 	return TRUE
 
@@ -30,15 +30,24 @@
 	//add the theme to the computer and increase its size to match
 	var/datum/computer_file/program/themeify/theme_app = locate() in computer.stored_files
 	if(theme_app)
-		theme_app.imported_themes += theme_name
+		LAZYADD(theme_app.imported_themes, theme_name)
 		theme_app.size += size
 		qdel(src)
 
 /datum/computer_file/program/maintenance/theme/cat
-	theme_name = CAT_THEME_NAME
+	theme_name = PDA_THEME_CAT_NAME
 
 /datum/computer_file/program/maintenance/theme/lightmode
-	theme_name = LIGHT_THEME_NAME
+	theme_name = PDA_THEME_LIGHT_MODE_NAME
 
 /datum/computer_file/program/maintenance/theme/spooky
-	theme_name = ELDRITCH_THEME_NAME
+	theme_name = PDA_THEME_SPOOKY_NAME
+
+/datum/computer_file/program/maintenance/theme/hacker
+	theme_name = PDA_THEME_HACKERMAN_NAME
+
+/datum/computer_file/program/maintenance/theme/roulette
+	theme_name = PDA_THEME_ROULETTE_NAME
+
+/datum/computer_file/program/maintenance/theme/alien
+	theme_name = PDA_THEME_ABDUCTOR_NAME

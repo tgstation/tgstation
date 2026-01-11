@@ -39,7 +39,6 @@
 	extra_price = PAYCHECK_COMMAND
 	payment_department = ACCOUNT_MED
 	light_mask = "med-light-mask"
-	allow_custom = TRUE
 
 /obj/item/vending_refill/medical
 	machine_name = "NanoMed Plus"
@@ -90,6 +89,8 @@
 		/obj/item/reagent_containers/cup/bottle/salglu_solution = 3,
 		/obj/item/reagent_containers/cup/bottle/toxin = 3,
 		/obj/item/reagent_containers/syringe/antiviral = 6,
+		/obj/item/reagent_containers/medigel/libital = 2,
+		/obj/item/reagent_containers/medigel/aiuri = 2,
 		/obj/item/reagent_containers/medigel/sterilizine = 3,
 	)
 	contraband = list(
@@ -101,6 +102,7 @@
 		/obj/item/reagent_containers/medigel/synthflesh = 2,
 		/obj/item/storage/pill_bottle/psicodine = 2,
 		/obj/item/storage/pill_bottle/sansufentanyl = 1,
+		/obj/item/inhaler/albuterol = 2,
 	)
 	default_price = 50
 	extra_price = 100

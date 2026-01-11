@@ -19,11 +19,11 @@
 	///Flags for reagents, like INJECTABLE, TRANSPARENT bla bla everything thats in DEFINES/reagents.dm
 	var/reagent_flags = TRANSPARENT
 
-/obj/machinery/plumbing/Initialize(mapload, bolt = TRUE)
+/obj/machinery/plumbing/Initialize(mapload)
 	. = ..()
-	set_anchored(bolt)
+	set_anchored(mapload)
 	create_reagents(buffer, reagent_flags)
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 	register_context()
 
 /obj/machinery/plumbing/create_reagents(max_vol, flags)
@@ -98,7 +98,9 @@
 
 /obj/machinery/plumbing/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
 	user.balloon_alert_to_viewers("furiously plunging...")
-	if(do_after(user, 3 SECONDS, target = src))
-		user.balloon_alert_to_viewers("finished plunging")
-		reagents.expose(get_turf(src), TOUCH) //splash on the floor
-		reagents.clear_reagents()
+	if(!do_after(user, 3 SECONDS, target = src))
+		return TRUE
+	user.balloon_alert_to_viewers("finished plunging")
+	reagents.expose(get_turf(src), TOUCH) //splash on the floor
+	reagents.clear_reagents()
+	return TRUE

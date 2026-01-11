@@ -23,9 +23,7 @@
 	if(map_pad_id)
 		mapped_quantum_pads[map_pad_id] = src
 
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/quantumpad,
-	))
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/quantumpad), only_root_path = TRUE))
 
 /obj/machinery/quantumpad/Destroy()
 	mapped_quantum_pads -= map_pad_id
@@ -92,8 +90,10 @@
 	return ..()
 
 /obj/machinery/quantumpad/interact(mob/user, obj/machinery/quantumpad/target_pad = linked_pad)
-	if(!target_pad || QDELETED(target_pad))
-		if(!map_pad_link_id || !initMappedLink())
+	if(QDELETED(target_pad))
+		if(map_pad_link_id && initMappedLink())
+			target_pad = linked_pad
+		else
 			to_chat(user, span_warning("Target pad not found!"))
 			return
 

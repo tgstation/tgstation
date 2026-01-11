@@ -46,13 +46,16 @@
 			to_chat(src, span_warning("You can't vent crawl while buckled!"))
 		return
 	if(iscarbon(src) && required_nudity)
-		if(length(get_equipped_items(INCLUDE_POCKETS)) || get_num_held_items())
+		if(length(get_equipped_items(INCLUDE_POCKETS|INCLUDE_HELD)))
 			if(provide_feedback)
 				to_chat(src, span_warning("You can't crawl around in the ventilation ducts with items!"))
 			return
 	if(ventcrawl_target.welded)
 		if(provide_feedback)
-			to_chat(src, span_warning("You can't crawl around a welded vent!"))
+			// Add cooldown to prevent welded vent message spam during movement
+			if(COOLDOWN_FINISHED(src, welded_vent_message_cd))
+				to_chat(src, span_warning("You can't crawl around a welded vent!"))
+				COOLDOWN_START(src, welded_vent_message_cd, 2 SECONDS)
 		return
 
 	if(!(vent_movement & VENTCRAWL_ENTRANCE_ALLOWED))

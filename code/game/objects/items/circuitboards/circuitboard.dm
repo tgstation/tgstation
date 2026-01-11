@@ -12,9 +12,9 @@
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	abstract_type = /obj/item/circuitboard
 	custom_materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	w_class = WEIGHT_CLASS_SMALL
-	grind_results = list(/datum/reagent/silicon = 20)
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	var/build_path = null
 	/// whether or not the circuit board will build into a vendor whose products cost nothing (used for offstation vending machines mostly)
@@ -28,6 +28,9 @@
 	if(icon_state == "circuit_map") // some circuitboards have cool custom sprites
 		set_greyscale(new_config = /datum/greyscale_config/circuit)
 	return ..()
+
+/obj/item/circuitboard/grind_results()
+	return list(/datum/reagent/silicon = 20)
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/machine)
 	if(LAZYLEN(machine.component_parts))
@@ -67,6 +70,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 */
 
 /obj/item/circuitboard/machine
+	abstract_type = /obj/item/circuitboard/machine
 	name_extension = "(Machine Board)"
 	/// Whether this machine must be anchored to be constructed.
 	var/needs_anchored = TRUE

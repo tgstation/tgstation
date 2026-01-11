@@ -26,7 +26,7 @@
 	src.maptext_height = maptext_height * (font_size / 5)
 
 	update_text()
-	screen_loc = "NORTH:[offset[1]],CENTER:[offset[2]]"
+	screen_loc = "NORTH:[offset[1]],WEST:[offset[2]]"
 
 /atom/movable/screen/escape_menu/text/proc/update_text()
 	SHOULD_CALL_PARENT(TRUE)

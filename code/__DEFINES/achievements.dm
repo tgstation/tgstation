@@ -14,6 +14,7 @@
 
 //Misc Medal hub IDs
 #define MEDAL_METEOR "Your Life Before Your Eyes"
+#define MEDAL_METEOR_PUNCH "Your Life In Your Hands"
 #define MEDAL_PULSE "Jackpot"
 #define MEDAL_TIMEWASTE "Overextended The Joke"
 #define MEDAL_RODSUPLEX "Feat of Strength"
@@ -161,3 +162,6 @@
 
 #define CHEF_TOURISTS_SERVED "Tourists Served As Chef"
 #define BARTENDER_TOURISTS_SERVED "Tourists Served As Bartender"
+
+/// Value in metadata version that signifies the achievement is archived
+#define ACHIEVEMENT_ARCHIVED_VERSION 9999

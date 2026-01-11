@@ -56,7 +56,7 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 // Save resources in silo
 /obj/machinery/ore_silo/on_object_saved()
 	var/data
-	var/datum/component/material_container/material_holder = GetComponent(/datum/component/material_container)
+	var/datum/material_container/material_holder = materials
 	for(var/each in material_holder.materials)
 		var/amount = material_holder.materials[each] / 100
 		var/datum/material/material_datum = each
@@ -177,7 +177,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	if(istext(value))
 		//Prevent symbols from being because otherwise you can name something
 		// [";},/obj/item/gun/energy/laser/instakill{name="da epic gun] and spawn yourself an instakill gun.
-		return "\"[hashtag_newlines_and_tabs("[value]", list("{"="", "}"="", "\""="", ";"="", ","=""))]\""
+		return "\"[hashtag_newlines_and_tabs("[value]", list("{"="", "}"="", "\""="", ","=""))]\""
 	if(isnum(value) || ispath(value))
 		return "[value]"
 	if(islist(value))

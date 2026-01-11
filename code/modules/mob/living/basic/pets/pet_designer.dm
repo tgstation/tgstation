@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT(pet_options, list(
 
 	for(var/color in possible_colors)
 		demo_carrier.set_greyscale(possible_colors[color])
-		list_to_return[color] = icon2base64(getFlatIcon(demo_carrier))
+		list_to_return[color] = icon2base64(getFlatIcon(demo_carrier, no_anim = TRUE))
 	qdel(demo_carrier)
 	return list_to_return
 

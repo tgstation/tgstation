@@ -77,7 +77,7 @@
 	mood_bonus = 5
 	mood_message = "I love being in the library!"
 	mood_trait = TRAIT_INTROVERT
-	area_flags = CULT_PERMITTED | BLOBS_ALLOWED | UNIQUE_AREA
+	area_flags = CULT_PERMITTED | BLOBS_ALLOWED
 	sound_environment = SOUND_AREA_LARGE_SOFTFLOOR
 
 /area/station/service/library/garden
@@ -112,7 +112,7 @@
 /area/station/service/chapel
 	name = "\improper Chapel"
 	icon_state = "chapel"
-	mood_bonus = 5
+	mood_bonus = 4
 	mood_message = "Being in the chapel brings me peace."
 	mood_trait = TRAIT_SPIRITUAL
 	ambience_index = AMBIENCE_HOLY
@@ -180,7 +180,7 @@
 /area/station/service/janitor
 	name = "\improper Custodial Closet"
 	icon_state = "janitor"
-	area_flags = CULT_PERMITTED | BLOBS_ALLOWED | UNIQUE_AREA
+	area_flags = CULT_PERMITTED | BLOBS_ALLOWED
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /area/station/service/barber

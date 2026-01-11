@@ -7,7 +7,7 @@
 	circuit = /obj/item/circuitboard/machine/component_printer
 
 	/// The internal material bus
-	var/datum/component/remote_materials/materials
+	var/datum/remote_materials/materials
 
 	density = TRUE
 
@@ -22,7 +22,7 @@
 
 /obj/machinery/component_printer/Initialize(mapload)
 	. = ..()
-	materials = AddComponent(/datum/component/remote_materials, mapload)
+	materials = new (src, mapload)
 
 /obj/machinery/component_printer/post_machine_initialize()
 	. = ..()
@@ -30,6 +30,10 @@
 		CONNECT_TO_RND_SERVER_ROUNDSTART(techweb, src)
 	if(techweb)
 		on_connected_techweb()
+
+/obj/machinery/component_printer/Destroy(force)
+	QDEL_NULL(materials)
+	return ..()
 
 /obj/machinery/component_printer/proc/connect_techweb(datum/techweb/new_techweb)
 	if(techweb)
@@ -132,7 +136,7 @@
 	if (!materials.mat_container.has_materials(design.materials, efficiency_coeff))
 		return
 
-	materials.use_materials(design.materials, efficiency_coeff, 1, "printed", "[design.name]", user_data)
+	materials.use_materials(design.materials, efficiency_coeff, 1, "processed", "[design.name]", user_data)
 	return new design.build_path(drop_location())
 
 /obj/machinery/component_printer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -160,7 +164,7 @@
 
 			balloon_alert_to_viewers("printed [design.name]")
 
-			materials.use_materials(design.materials, efficiency_coeff, 1, "printed", "[design.name]", user_data)
+			materials.use_materials(design.materials, efficiency_coeff, 1, "processed", "[design.name]", user_data)
 			var/atom/printed_design = new design.build_path(drop_location())
 			printed_design.pixel_x = printed_design.base_pixel_x + rand(-5, 5)
 			printed_design.pixel_y = printed_design.base_pixel_y + rand(-5, 5)
@@ -338,7 +342,7 @@
 	density = TRUE
 
 	///The internal material bus
-	var/datum/component/remote_materials/materials
+	var/datum/remote_materials/materials
 	///List of designs scanned and saved
 	var/list/scanned_designs = list()
 	///Constant material cost per component
@@ -349,7 +353,11 @@
 /obj/machinery/module_duplicator/Initialize(mapload)
 	. = ..()
 
-	materials = AddComponent(/datum/component/remote_materials, mapload)
+	materials = new (src, mapload)
+
+/obj/machinery/module_duplicator/Destroy(force)
+	QDEL_NULL(materials)
+	return ..()
 
 /obj/machinery/module_duplicator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -390,7 +398,7 @@
 	. = ..()
 	if (.)
 		return
-	var/obj/item/card/id/advanced/user_card = astype(usr, /mob/living)?.get_idcard()
+	var/alist/user_data = ID_DATA(usr)
 
 	switch (action)
 		if ("print")
@@ -401,14 +409,14 @@
 
 			var/list/design = scanned_designs[design_id]
 
-			if (!materials.can_use_resource(user_card))
+			if (!materials.can_use_resource(user_data = user_data))
 				return TRUE
 
 			if (!materials.mat_container.has_materials(design["materials"], efficiency_coeff))
 				say("Not enough materials.")
 				return TRUE
 
-			materials.use_materials(design["materials"], efficiency_coeff, 1, design["name"], design["materials"], user_card)
+			materials.use_materials(design["materials"], efficiency_coeff, 1, design["name"], design["materials"], user_data = user_data)
 			print_module(design)
 			balloon_alert_to_viewers("printed [design["name"]]")
 		if ("remove_mat")

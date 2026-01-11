@@ -2,9 +2,8 @@
 	title = JOB_CHIEF_MEDICAL_OFFICER
 	description = "Coordinate doctors and other medbay employees, ensure they \
 		know how to save lives, check for injuries on the crew monitor."
-	department_head = list(JOB_CAPTAIN)
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
-	head_announce = list(RADIO_CHANNEL_MEDICAL)
+	head_announce = RADIO_CHANNEL_MEDICAL
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -27,7 +26,7 @@
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_MED
 
-	mind_traits = list(HEAD_OF_STAFF_MIND_TRAITS)
+	mind_traits = list(HEAD_OF_STAFF_MIND_TRAITS, MEDICAL_MIND_TRAITS)
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM, TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER
@@ -66,15 +65,15 @@
 		)
 	belt = /obj/item/modular_computer/pda/heads/cmo
 	ears = /obj/item/radio/headset/heads/cmo
-	shoes = /obj/item/clothing/shoes/sneakers/blue
+	shoes = /obj/item/clothing/shoes/sneakers/white
 	l_pocket = /obj/item/laser_pointer/blue
 	r_pocket = /obj/item/pinpointer/crew
 	l_hand = /obj/item/storage/medkit/surgery
 
-	backpack = /obj/item/storage/backpack/medic
-	satchel = /obj/item/storage/backpack/satchel/med
-	duffelbag = /obj/item/storage/backpack/duffelbag/med
-	messenger = /obj/item/storage/backpack/messenger/med
+	backpack = /obj/item/storage/backpack/chief_medic
+	satchel = /obj/item/storage/backpack/satchel/chief_medic
+	duffelbag = /obj/item/storage/backpack/duffelbag/chief_medic
+	messenger = /obj/item/storage/backpack/messenger/chief_medic
 
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = list(

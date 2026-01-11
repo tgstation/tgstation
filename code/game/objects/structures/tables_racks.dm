@@ -52,6 +52,12 @@
 	var/matrix/before_flipped_matrix
 	/// Do we place people onto the table rather than slamming them?
 	var/slam_gently = FALSE
+	/// Where icon is our flipped table located in?
+	var/flipped_table_icon = 'icons/obj/flipped_tables.dmi'
+	/// What sound does the table make when unflipped?
+	var/unflip_table_sound = 'sound/items/trayhit/trayhit2.ogg'
+	/// What sound does the table make when we flip the table?
+	var/flipped_table_sound = 'sound/items/trayhit/trayhit1.ogg'
 
 /obj/structure/table/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
@@ -85,11 +91,7 @@
 	make_climbable()
 	AddElement(/datum/element/give_turf_traits, string_list(turf_traits))
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
-	AddComponent(/datum/component/table_smash, gentle_push = slam_gently, after_smash = CALLBACK(src, PROC_REF(after_smash)))
-
-/// Called after someone is harmfully smashed into us
-/obj/structure/table/proc/after_smash(mob/living/smashed)
-	return // This is mostly for our children
+	AddElement(/datum/element/table_smash, gentle_push = slam_gently, after_smash_proccall = PROC_REF(after_smash))
 
 /// Applies additional properties based on the frame used to construct this table.
 /obj/structure/table/proc/apply_frame_properties(obj/structure/table_frame/frame_used)
@@ -103,13 +105,13 @@
 
 ///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
 /obj/structure/table/proc/make_climbable()
-	AddComponent(/datum/component/climb_walkable)
+	AddElement(/datum/element/climb_walkable)
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 //proc that adds elements present in normal tables
 /obj/structure/table/proc/unflip_table()
-	playsound(src, 'sound/items/trayhit/trayhit2.ogg', 100)
+	playsound(src, unflip_table_sound, 100)
 	make_climbable()
 	AddElement(/datum/element/give_turf_traits, turf_traits)
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
@@ -129,8 +131,8 @@
 
 //proc that removes elements present in now-flipped tables
 /obj/structure/table/proc/flip_table(new_dir = SOUTH)
-	playsound(src, 'sound/items/trayhit/trayhit1.ogg', 100)
-	qdel(GetComponent(/datum/component/climb_walkable))
+	playsound(src, flipped_table_sound, 100)
+	RemoveElement(/datum/element/climb_walkable)
 	RemoveElement(/datum/element/climbable)
 	RemoveElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	RemoveElement(/datum/element/give_turf_traits, turf_traits)
@@ -170,7 +172,7 @@
 			transform_matrix.Turn(270)
 		animate(src, transform = transform_matrix, time = 0)
 	else
-		icon = 'icons/obj/flipped_tables.dmi'
+		icon = flipped_table_icon
 		icon_state = base_icon_state
 
 	update_appearance()
@@ -283,14 +285,17 @@
 	if(!can_flip)
 		return
 
+	var/interaction_key = "table_flip_[REF(src)]"
 	if(!is_flipped)
-		user.balloon_alert_to_viewers("flipping table...")
-		if(do_after(user, max_integrity * 0.25))
+		if(!LAZYACCESS(user.do_afters, interaction_key)) // To avoid balloon alert spam
+			user.balloon_alert_to_viewers("flipping table...")
+		if(do_after(user, max_integrity * 0.25, src, interaction_key = interaction_key))
 			flip_table(get_dir(user, src))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	user.balloon_alert_to_viewers("flipping table upright...")
-	if(do_after(user, max_integrity * 0.25, src))
+	if(!LAZYACCESS(user.do_afters, interaction_key)) // To avoid balloon alert spam
+		user.balloon_alert_to_viewers("flipping table upright...")
+	if(do_after(user, max_integrity * 0.25, src, interaction_key = interaction_key))
 		unflip_table()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -418,7 +423,7 @@
 	return FALSE
 
 /obj/structure/table/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_DECONSTRUCT)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_DECONSTRUCT)
 		qdel(src)
 		return TRUE
 	return FALSE
@@ -525,7 +530,7 @@
 	icon = 'icons/obj/smooth_structures/glass_table.dmi'
 	icon_state = "glass_table-0"
 	base_icon_state = "glass_table"
-	custom_materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/glass
 	smoothing_groups = SMOOTH_GROUP_GLASS_TABLES
 	canSmoothWith = SMOOTH_GROUP_GLASS_TABLES
@@ -543,6 +548,7 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_AI_AVOID_TURF)))
 
 /obj/structure/table/glass/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -599,7 +605,7 @@
 	icon = 'icons/obj/smooth_structures/plasmaglass_table.dmi'
 	icon_state = "plasmaglass_table-0"
 	base_icon_state = "plasmaglass_table"
-	custom_materials = list(/datum/material/alloy/plasmaglass =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/plasmaglass
 	glass_shard_type = /obj/item/shard/plasma
 	max_integrity = 100
@@ -621,8 +627,9 @@
 	max_integrity = 70
 	smoothing_groups = SMOOTH_GROUP_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_WOOD_TABLES
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 
-/obj/structure/table/wood/after_smash(mob/living/smashed)
+/obj/structure/table/wood/after_smash(mob/living/smashed_onto)
 	if(QDELETED(src) || prob(66))
 		return
 	visible_message(
@@ -631,9 +638,9 @@
 	)
 
 	playsound(src, 'sound/effects/wounds/crack2.ogg', 50, TRUE)
-	smashed.Knockdown(10 SECONDS)
-	smashed.Paralyze(2 SECONDS)
-	smashed.apply_damage(20, BRUTE)
+	smashed_onto.Knockdown(10 SECONDS)
+	smashed_onto.Paralyze(2 SECONDS)
+	smashed_onto.apply_damage(20, BRUTE)
 	deconstruct(FALSE)
 
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
@@ -844,7 +851,7 @@
 	canSmoothWith = SMOOTH_GROUP_BRONZE_TABLES
 	can_flip = FALSE
 
-/obj/structure/table/bronze/after_smash(mob/living/pushed_mob)
+/obj/structure/table/bronze/after_smash(mob/living/smashed_onto)
 	playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
 /obj/structure/table/reinforced/rglass
@@ -853,7 +860,7 @@
 	icon = 'icons/obj/smooth_structures/rglass_table.dmi'
 	icon_state = "rglass_table-0"
 	base_icon_state = "rglass_table"
-	custom_materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/rglass
 	max_integrity = 150
 
@@ -863,7 +870,7 @@
 	icon = 'icons/obj/smooth_structures/rplasmaglass_table.dmi'
 	icon_state = "rplasmaglass_table-0"
 	base_icon_state = "rplasmaglass_table"
-	custom_materials = list(/datum/material/alloy/plasmaglass =SHEET_MATERIAL_AMOUNT, /datum/material/iron =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/plasmarglass
 
 /obj/structure/table/reinforced/titaniumglass
@@ -872,7 +879,7 @@
 	icon = 'icons/obj/smooth_structures/titaniumglass_table.dmi'
 	icon_state = "titaniumglass_table-0"
 	base_icon_state = "titaniumglass_table"
-	custom_materials = list(/datum/material/alloy/titaniumglass =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/alloy/titaniumglass = SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/titaniumglass
 	max_integrity = 250
 
@@ -882,7 +889,7 @@
 	icon = 'icons/obj/smooth_structures/plastitaniumglass_table.dmi'
 	icon_state = "plastitaniumglass_table-0"
 	base_icon_state = "plastitaniumglass_table"
-	custom_materials = list(/datum/material/alloy/plastitaniumglass =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/alloy/plastitaniumglass = SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/plastitaniumglass
 	max_integrity = 300
 
@@ -923,6 +930,7 @@
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(mark_patient),
+		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(mark_patient),
 		COMSIG_ATOM_EXITED = PROC_REF(unmark_patient),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
@@ -1022,24 +1030,34 @@
 /obj/structure/table/optable/make_climbable()
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
+// surgical tools cannot be placed on the op table while a patient is also on it
+/obj/structure/table/optable/table_place_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isnull(patient) && (tool.item_flags & SURGICAL_TOOL))
+		tool.melee_attack_chain(user, patient, modifiers)
+		return ITEM_INTERACT_SUCCESS
+
+	return ..()
+
 ///Align the mob with the table when buckled.
 /obj/structure/table/optable/post_buckle_mob(mob/living/buckled)
 	buckled.add_offsets(type, z_add = 6)
+	buckled.AddComponentFrom(type, /datum/component/free_operation)
 
 ///Disalign the mob with the table when unbuckled.
 /obj/structure/table/optable/post_unbuckle_mob(mob/living/buckled)
 	buckled.remove_offsets(type)
+	buckled.RemoveComponentSource(type, /datum/component/free_operation)
 
 /// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
-/obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/carbon/potential_patient)
+/obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/potential_patient)
 	SIGNAL_HANDLER
 	if(!istype(potential_patient))
 		return
-	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(recheck_patient))
+	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(recheck_patient), TRUE)
 	recheck_patient(potential_patient) // In case the mob is already lying down before they entered.
 
 /// Unmark the potential patient.
-/obj/structure/table/optable/proc/unmark_patient(datum/source, mob/living/carbon/potential_patient)
+/obj/structure/table/optable/proc/unmark_patient(datum/source, mob/living/potential_patient)
 	SIGNAL_HANDLER
 	if(!istype(potential_patient))
 		return
@@ -1056,34 +1074,61 @@
 	if(patient && patient != potential_patient)
 		return
 
-	if(potential_patient.body_position == LYING_DOWN && potential_patient.loc == loc)
+	if(IS_LYING_OR_CANNOT_LIE(potential_patient) && potential_patient.loc == loc)
 		set_patient(potential_patient)
 		return
 
 	// Find another lying mob as a replacement.
-	for (var/mob/living/carbon/replacement_patient in loc.contents)
-		if(replacement_patient.body_position == LYING_DOWN)
-			set_patient(replacement_patient)
-			return
+	var/found_replacement
+	for (var/mob/living/replacement_patient in loc)
+		if(!IS_LYING_OR_CANNOT_LIE(replacement_patient))
+			continue
+		if(iscarbon(found_replacement))
+			break
+		else if(isliving(found_replacement) && !iscarbon(replacement_patient))
+			continue // Prefer carbons over non-carbons.
+		found_replacement = replacement_patient
 
-	set_patient(null)
+	set_patient(found_replacement)
 
 /obj/structure/table/optable/proc/set_patient(mob/living/carbon/new_patient)
 	if (patient)
-		UnregisterSignal(patient, list(COMSIG_MOB_SURGERY_STARTED, COMSIG_MOB_SURGERY_FINISHED))
+		UnregisterSignal(patient, list(
+			SIGNAL_ADDTRAIT(TRAIT_READY_TO_OPERATE),
+			SIGNAL_REMOVETRAIT(TRAIT_READY_TO_OPERATE),
+			COMSIG_ATOM_BEING_OPERATED_ON,
+			COMSIG_ATOM_SURGERY_FINISHED,
+			COMSIG_LIVING_UPDATING_SURGERY_STATE,
+		))
 		if (patient.external && patient.external == air_tank)
 			patient.close_externals()
 
+	SEND_SIGNAL(src, COMSIG_OPERATING_TABLE_SET_PATIENT, new_patient)
 	patient = new_patient
 	update_appearance()
+	computer?.update_static_data_for_all_viewers()
 	if (!patient)
 		return
-	RegisterSignal(patient, COMSIG_MOB_SURGERY_STARTED, PROC_REF(on_surgery_change))
-	RegisterSignal(patient, COMSIG_MOB_SURGERY_FINISHED, PROC_REF(on_surgery_change))
+	RegisterSignals(patient, list(
+		SIGNAL_ADDTRAIT(TRAIT_READY_TO_OPERATE),
+		SIGNAL_REMOVETRAIT(TRAIT_READY_TO_OPERATE),
+		COMSIG_ATOM_SURGERY_FINISHED,
+		COMSIG_LIVING_UPDATING_SURGERY_STATE,
+	), PROC_REF(on_surgery_change))
+	RegisterSignal(patient, COMSIG_ATOM_BEING_OPERATED_ON, PROC_REF(get_surgeries))
 
 /obj/structure/table/optable/proc/on_surgery_change(datum/source)
 	SIGNAL_HANDLER
 	update_appearance()
+	computer?.update_static_data_batched()
+
+/obj/structure/table/optable/proc/get_surgeries(datum/source, mob/living/surgeon, list/operations)
+	SIGNAL_HANDLER
+
+	if(isnull(computer))
+		return
+
+	operations |= computer.advanced_surgeries
 
 /obj/structure/table/optable/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (istype(tool, /obj/item/clothing/mask/breath))
@@ -1135,7 +1180,7 @@
 	tool.play_tool_sound(src, 50)
 	balloon_alert(user, "mask detached")
 	UnregisterSignal(breath_mask, list(COMSIG_MOVABLE_MOVED, COMSIG_ITEM_DROPPED))
-	if (user.CanReach(breath_mask))
+	if (breath_mask.IsReachableBy(user))
 		user.put_in_hands(breath_mask)
 	breath_mask = null
 	update_appearance()
@@ -1150,7 +1195,7 @@
 	air_tank.forceMove(drop_location())
 	tool.play_tool_sound(src, 50)
 	balloon_alert(user, "tank detached")
-	if (user.CanReach(air_tank))
+	if (air_tank.IsReachableBy(user))
 		user.put_in_hands(air_tank)
 	if (patient?.external && patient.external == air_tank)
 		patient.close_externals()
@@ -1182,7 +1227,7 @@
 		. += span_notice("There's a port for a breathing mask tube on its side.")
 
 /obj/structure/table/optable/proc/detach_mask(mob/living/user)
-	if (!istype(user) || !user.CanReach(src) || !user.can_interact_with(src))
+	if (!istype(user) || !IsReachableBy(user) || !user.can_interact_with(src))
 		return FALSE
 
 	if (!breath_mask)
@@ -1198,7 +1243,7 @@
 	return TRUE
 
 /obj/structure/table/optable/mouse_drop_dragged(atom/over, mob/living/user, src_location, over_location, params)
-	if (over != patient || !istype(user) || !user.CanReach(src) || !user.can_interact_with(src))
+	if (over != patient || !istype(user) || !IsReachableBy(user) || !user.can_interact_with(src))
 		return
 
 	if (!air_tank)
@@ -1264,7 +1309,7 @@
 		. += mutable_appearance(icon, air_tank.tank_holder_icon_state)
 	if (breath_mask?.loc == src)
 		. += mutable_appearance(icon, "mask_[breath_mask.icon_state]")
-	if (!length(patient?.surgeries))
+	if (!patient || !HAS_TRAIT(patient, TRAIT_READY_TO_OPERATE))
 		return
 	. += mutable_appearance(icon, "[icon_state]_[computer ? "" : "un"]linked")
 	if (computer)
@@ -1283,12 +1328,14 @@
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW //You can throw objects over this, despite its density.
 	max_integrity = 20
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/rack/skeletal
 	name = "skeletal minibar"
 	desc = "Rattle me boozes!"
 	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "minibar"
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/rack/Initialize(mapload)
 	. = ..()
@@ -1378,7 +1425,7 @@
 	icon_state = "rack_parts"
 	inhand_icon_state = "rack_parts"
 	obj_flags = CONDUCTS_ELECTRICITY
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	var/building = FALSE
 
 /obj/item/rack_parts/Initialize(mapload)
@@ -1420,4 +1467,3 @@
 		R.add_fingerprint(user)
 		qdel(src)
 	building = FALSE
-

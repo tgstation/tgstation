@@ -350,7 +350,7 @@
 /obj/item/fish/gullion
 	name = "gullion"
 	fish_id = "gullion"
-	desc = "This crystalline fish is actually one of only two known silicon-based lifeforms.\
+	desc = "This crystalline fish is actually one of only two known silicon-based lifeforms. \
 		It avoids death via oxygen-silicate reactions by organically shielding its exterior, allowing the thick scales to calcify into quartz and diamond, at the cost of rendering the fish functionally blind. \
 		How xenomorphs manage is a complete mystery bordering on bullshit."
 	icon = 'icons/obj/aquarium/rift.dmi'
@@ -396,12 +396,13 @@
 	visible_message(span_suicide("[user] swallows [src] whole! It looks like they're trying to commit suicide!"))
 	forceMove(user)
 	var/datum/gas_mixture/environment = user.loc.return_air()
-	var/oxygen_in_air = check_gases(environment.gases, list(/datum/gas/oxygen))
+	var/oxygen_in_air = locate(/datum/gas/oxygen) in environment.gases
 	if(!oxygen_in_air || (status == FISH_DEAD))
 		visible_message(span_suicide("[user] chokes and dies! (Wait, from the fish or from lack of air?)"))
 		return OXYLOSS
 
 	user.petrify(statue_timer = INFINITY)
+	user.death()
 	visible_message(span_suicide("[user]'s skin turns into quartz upon contact with the oxygen in the air!'"))
 	qdel(src)
 	return MANUAL_SUICIDE
@@ -454,7 +455,7 @@
 	max_pressure = INFINITY
 	safe_air_limits = list()
 	fillet_type = /obj/item/food/badrecipe/moldy/bacteria
-	stable_population = 0
+	stable_population = 2
 
 /obj/item/fish/mossglob/Initialize(mapload, apply_qualities)
 	. = ..()
@@ -588,7 +589,7 @@
 
 	voice_of_god(psychic_speech, user, list("big", "alertalien"), base_multiplier = 5, include_speaker = TRUE, forced = TRUE, ignore_spam = TRUE)
 	psy_wail()
-	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, INFINITY, INFINITY, ORGAN_SLOT_BRAIN)
+	user.adjust_organ_loss(ORGAN_SLOT_BRAIN, INFINITY, INFINITY, ORGAN_SLOT_BRAIN)
 	user.death()
 	return MANUAL_SUICIDE
 
@@ -652,7 +653,7 @@
 		if(iscarbon(screeched))
 			var/mob/living/carbon/carbon_screeched = screeched
 			carbon_screeched.vomit(MOB_VOMIT_MESSAGE)
-			carbon_screeched.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50)
+			carbon_screeched.adjust_organ_loss(ORGAN_SLOT_BRAIN, 50)
 
 	var/affected = 0
 	for(var/obj/item/fish/fishie in range(7, src))
@@ -705,7 +706,7 @@
 	now_fixed = span_noticealien("The psychic noise starts to fade.")
 	low_threshold_cleared = span_noticealien("The whispers leave you alone.")
 
-	bang_protect = 5
+	bang_protect = EAR_PROTECTION_VACUUM
 	damage_multiplier = 0.1
 	visual = TRUE
 	/// Overlay for the mob sprite because actual organ overlays are a fucking unusable nightmare
@@ -722,12 +723,7 @@
 	icon_state = "babbearfish"
 
 /datum/bodypart_overlay/simple/babbearfish/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	var/mob/living/carbon/human/human = bodypart_owner.owner
-	if(!istype(human))
-		return TRUE
-	if((human.head?.flags_inv & HIDEEARS) || (human.wear_mask?.flags_inv & HIDEEARS))
-		return FALSE
-	return TRUE
+	return !(bodypart_owner.owner?.obscured_slots & HIDEEARS)
 
 /obj/item/organ/ears/babbelfish/Initialize(mapload)
 	. = ..()
@@ -820,7 +816,7 @@
 
 /obj/item/organ/ears/babbelfish/proc/on_drain_magic(mob/user)
 	to_chat(user, span_noticealien("Your [src] pop as they protect your mind from psychic phenomena!"))
-	adjustEarDamage(ddeaf = 20)
+	adjust_temporary_deafness(40 SECONDS)
 
 /obj/item/organ/ears/babbelfish/proc/on_expire(mob/user)
 	to_chat(user, span_noticealien("Your [src] suddenly burst apart!"))

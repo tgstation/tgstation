@@ -1,6 +1,7 @@
 /obj/item/clothing/head/hats
 	icon = 'icons/obj/clothing/head/hats.dmi'
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
+	abstract_type = /obj/item/clothing/head/hats
 
 /obj/item/clothing/head/hats/centhat
 	name = "\improper CentCom hat"
@@ -59,10 +60,11 @@
 	desc = "These were once used by plague doctors. This hat will only slightly protect you from exposure to the Pestilence."
 	icon_state = "plaguedoctor"
 	armor_type = /datum/armor/bio_hood_plague
-	flags_inv = NONE
+	flags_inv = HIDEHAIR|HIDEEARS
 	clothing_flags = SNUG_FIT
 	flags_cover = NONE
 	dirt_state = null
+	alternate_worn_layer = HAIR_LAYER
 
 /datum/armor/bio_hood_plague
 	bio = 100
@@ -302,7 +304,7 @@
 /obj/item/clothing/head/hats/centcom_cap
 	name = "\improper CentCom commander cap"
 	icon_state = "centcom_cap"
-	desc = "Worn by the finest of CentCom commanders. Inside the lining of the cap, lies two faint initials."
+	desc = "Worn by the finest of CentCom commanders. Two faint initials lie inside the lining of the cap."
 	inhand_icon_state = "that"
 	flags_inv = 0
 	armor_type = /datum/armor/hats_centcom_cap
@@ -326,7 +328,13 @@
 /obj/item/clothing/head/costume/ushanka
 	name = "ushanka"
 	desc = "Perfect for winter in Siberia, da?"
-	icon_state = "ushankadown"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/ushanka"
+	post_init_icon_state = "ushanka_gagdown"
+	greyscale_config = /datum/greyscale_config/ushanka
+	greyscale_config_worn = /datum/greyscale_config/ushanka/worn
+	greyscale_colors = "#C7B08B#5A4E44"
+	flags_1 = IS_PLAYER_COLORABLE_1
 	inhand_icon_state = null
 	flags_inv = HIDEEARS|HIDEHAIR
 	cold_protection = HEAD
@@ -334,9 +342,9 @@
 	dog_fashion = /datum/dog_fashion/head/ushanka
 	var/earflaps = TRUE
 	///Sprite visible when the ushanka flaps are folded up.
-	var/upsprite = "ushankaup"
+	var/upsprite = "ushanka_gagup"
 	///Sprite visible when the ushanka flaps are folded down.
-	var/downsprite = "ushankadown"
+	var/downsprite = "ushanka_gagdown"
 
 /obj/item/clothing/head/costume/ushanka/attack_self(mob/user)
 	if(earflaps)
@@ -352,9 +360,20 @@
 /obj/item/clothing/head/costume/ushanka/polar
 	name = "bear hunter's ushanka"
 	desc = "Handcrafted in Siberia from real polar bears."
-	icon_state = "ushankadown_polar"
-	upsprite = "ushankaup_polar"
-	downsprite = "ushankadown_polar"
+	icon_state = "/obj/item/clothing/head/costume/ushanka/polar"
+	greyscale_colors = "#FCFCFD#CCCED1"
+	flags_1 = null
+
+/obj/item/clothing/head/costume/ushanka/sec
+	name = "security ushanka"
+	icon_state = "/obj/item/clothing/head/costume/ushanka/sec"
+	desc = "A warm and comfortable ushanka, dyed with 'all natural flavors' according to the tag."
+	greyscale_colors = "#C7B08B#A52F29"
+	armor_type = /datum/armor/cosmetic_sec
+	flags_1 = null
+
+/obj/item/clothing/head/costume/nightcap
+	abstract_type = /obj/item/clothing/head/costume/nightcap
 
 /obj/item/clothing/head/costume/nightcap/blue
 	name = "blue nightcap"
@@ -372,3 +391,4 @@
 	icon_state = "paper"
 	worn_icon_state = "paper"
 	dog_fashion = /datum/dog_fashion/head
+	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)

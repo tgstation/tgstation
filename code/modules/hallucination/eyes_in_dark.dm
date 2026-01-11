@@ -69,20 +69,20 @@
 
 /obj/effect/abstract/floating_eyes/update_overlays()
 	. = ..()
-	var/mutable_appearance/r_eye = mutable_appearance(icon = 'icons/mob/human/human_face.dmi', icon_state = "eyes_glow_r")
+	var/mutable_appearance/r_eye = mutable_appearance(icon = 'icons/mob/human/human_eyes.dmi', icon_state = "eyes_glow_r")
 	r_eye.color = COLOR_DARK_RED
 	. += r_eye
-	var/mutable_appearance/l_eye = mutable_appearance(icon = 'icons/mob/human/human_face.dmi', icon_state = "eyes_glow_l")
+	var/mutable_appearance/l_eye = mutable_appearance(icon = 'icons/mob/human/human_eyes.dmi', icon_state = "eyes_glow_l")
 	l_eye.color = COLOR_DARK_RED
 	. += l_eye
 
-	. += emissive_appearance('icons/mob/human/human_face.dmi', "eyes_glow_l", src)
-	. += emissive_appearance('icons/mob/human/human_face.dmi', "eyes_glow_r", src)
+	. += emissive_appearance('icons/mob/human/human_eyes.dmi', "eyes_glow_l", src)
+	. += emissive_appearance('icons/mob/human/human_eyes.dmi', "eyes_glow_r", src)
 
 /obj/effect/abstract/floating_eyes/process(seconds_per_tick)
 	var/turf/below_us = get_turf(src)
 	var/mob/seer = seer_ref?.resolve()
-	if(below_us.get_lumcount() < LIGHTING_TILE_IS_DARK || seer?.lighting_cutoff >= 2.5 || get_dist(seer, src) <= 1)
+	if(below_us.get_lumcount() > LIGHTING_TILE_IS_DARK || seer?.lighting_cutoff >= 2.5 || get_dist(seer, src) <= 1)
 		graceful_delete()
 
 /obj/effect/abstract/floating_eyes/proc/graceful_delete()

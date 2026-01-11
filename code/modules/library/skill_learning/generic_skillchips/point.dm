@@ -26,7 +26,7 @@
 
 /obj/item/skillchip/big_pointer/proc/fancier_pointer(mob/living/user, atom/pointed, obj/effect/temp_visual/point/point)
 	SIGNAL_HANDLER
-	if(HAS_TRAIT(user, TRAIT_UNKNOWN))
+	if(HAS_TRAIT(user, TRAIT_UNKNOWN_APPEARANCE))
 		return
 	point.cut_overlays()
 	var/datum/action/change_pointer_color/action = locate() in actions
@@ -72,7 +72,7 @@
 		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON, force = TRUE)
 
 /datum/action/change_pointer_color/proc/pick_color(mob/user)
-	var/ncolor = input(owner, "Pick new color", "Pointer Color", arrow_color) as color|null
+	var/ncolor = tgui_color_picker(owner, "Pick new color", "Pointer Color", arrow_color)
 	if(user != owner || !IsAvailable(feedback = TRUE))
 		return
 	arrow_color = ncolor

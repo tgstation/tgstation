@@ -18,8 +18,18 @@
 	var/sanity = SANITY_NEUTRAL
 	/// the total combined value of all visible moodlets for the mob
 	var/shown_mood
-	/// Moodlet value modifier
+	/// Multiplier to the sum total of mood the mob is experiencing
 	var/mood_modifier = 1
+	/// Multiplier to positive moodlet values. Stacks with mood_modifier
+	var/positive_mood_modifier = 1
+	/// Multiplier to negative moodlet values. Stacks with mood_modifier
+	var/negative_mood_modifier = 1
+	/// Multiplier to the length of positive moodlets.
+	/// Please don't set this to 0
+	var/positive_moodlet_length_modifier = 1
+	/// Multiplier to the length of negative moodlets.
+	/// Please don't set this to 0
+	var/negative_moodlet_length_modifier = 1
 	/// Used to track what stage of moodies they're on (1-9)
 	var/mood_level = MOOD_LEVEL_NEUTRAL
 	/// To track what stage of sanity they're on (1-6)
@@ -142,50 +152,95 @@
  *
  * Arguments:
  * * category - (text) category of the mood event - see /datum/mood_event for category explanation
- * * type - (path) any /datum/mood_event
+ * * type - (path) any /datum/mood_event (besides /datum/mood_event/conditional)
  */
-/datum/mood/proc/add_mood_event(category, type, ...)
-	// we may be passed an instantiated mood datum with a modified timeout
-	// it is to be used as a vehicle to copy data from and then cleaned up afterwards.
-	// why do it this way? because the params list may contain numbers, and we may not necessarily want those to be interpreted as a timeout modifier.
-	// this is only used by the food quality system currently
-	var/datum/mood_event/mood_to_copy_from
-	if (istype(type, /datum/mood_event))
-		mood_to_copy_from = type
-		type = mood_to_copy_from.type
-	if (!ispath(type, /datum/mood_event))
-		CRASH("A non path ([type]), was used to add a mood event. This shouldn't be happening.")
+/datum/mood/proc/add_mood_event(category, new_type, ...)
+	if (!ispath(new_type, /datum/mood_event))
+		CRASH("A non path ([new_type]), was used to add a mood event. This shouldn't be happening.")
+	if (ispath(new_type, /datum/mood_event/conditional))
+		CRASH("A conditional mood event ([new_type]) was used in add_mood_event. Use add_conditional_mood_event instead.")
 	if (!istext(category))
 		category = REF(category)
 
-	var/datum/mood_event/the_event
-	if (mood_events[category])
-		the_event = mood_events[category]
-		if (the_event.type == type)
-			if (the_event.timeout)
-				if (!isnull(mood_to_copy_from))
-					the_event.timeout = mood_to_copy_from.timeout
-				addtimer(CALLBACK(src, PROC_REF(clear_mood_event), category), the_event.timeout, (TIMER_UNIQUE|TIMER_OVERRIDE))
-			qdel(mood_to_copy_from)
-			return // Don't need to update the event.
-
-		clear_mood_event(category)
 	var/list/params = args.Copy(3)
-
-	params.Insert(1, mob_parent)
-	the_event = new type(arglist(params))
-	if (QDELETED(the_event)) // the mood event has been deleted for whatever reason (requires a job, etc)
+	var/datum/mood_event/new_event = new new_type(category)
+	if(!new_event.can_effect_mob(arglist(list(src, mob_parent) + params)))
+		qdel(new_event)
 		return
 
-	the_event.category = category
-	if (!isnull(mood_to_copy_from))
-		the_event.timeout = mood_to_copy_from.timeout
-	qdel(mood_to_copy_from)
-	mood_events[category] = the_event
-	update_mood()
+	add_mood_event_instance(new_event, params)
 
-	if (the_event.timeout)
-		addtimer(CALLBACK(src, PROC_REF(clear_mood_event), category), the_event.timeout, (TIMER_UNIQUE|TIMER_OVERRIDE))
+/**
+ * Handles adding a mood event instance, including replacing or refreshing existing events
+ */
+/datum/mood/proc/add_mood_event_instance(datum/mood_event/new_event, list/params)
+	PRIVATE_PROC(TRUE)
+	var/category = new_event.category
+	var/datum/mood_event/existing_event = mood_events[category]
+	if(existing_event)
+		var/continue_adding = FALSE
+		if(existing_event.type == new_event.type)
+			continue_adding = existing_event.be_refreshed(arglist(list(src) + params))
+		else
+			continue_adding = existing_event.be_replaced(arglist(list(src, new_event) + params))
+		if(!continue_adding)
+			update_mood()
+			qdel(new_event)
+			return
+		clear_mood_event(category)
+
+	new_event.on_add(src, mob_parent, params)
+	mood_events[category] = new_event
+	update_mood()
+	if(new_event.mood_change == 0 || new_event.hidden)
+		return
+	if(new_event.mood_change > 0)
+		add_personality_mood_to_viewers(mob_parent, "other_good_moodlet", list(
+			/datum/personality/empathetic = /datum/mood_event/empathetic_happy,
+			/datum/personality/misanthropic = /datum/mood_event/misanthropic_sad
+		), range = 4)
+	else
+		add_personality_mood_to_viewers(mob_parent, "other_bad_moodlet", list(
+			/datum/personality/empathetic = /datum/mood_event/empathetic_sad,
+			/datum/personality/misanthropic = /datum/mood_event/misanthropic_happy
+		), range = 4)
+
+/**
+ * Adds a conditional mood event to the mob
+ *
+ * Arguments:
+ * * category - (text) category of the mood event - see /datum/mood_event for category explanation
+ * * base_type - (path) any /datum/mood_event/conditional
+ */
+/datum/mood/proc/add_conditional_mood_event(category, datum/base_type, ...)
+	if (!ispath(base_type, /datum/mood_event/conditional))
+		if (ispath(base_type, /datum/mood_event))
+			CRASH("A non-conditional mood event ([base_type]) was used in add_conditional_mood_event. Use add_mood_event instead.")
+		CRASH("A non path ([base_type]), was used to add a mood event. This shouldn't be happening.")
+	if (!istext(category))
+		category = REF(category)
+
+	var/list/params = args.Copy(3)
+	var/list/datum/mood_event/conditional/all_valid_conditional_events = list()
+	for(var/event_subtype in valid_typesof(base_type))
+		var/datum/mood_event/potential_event = new event_subtype(category)
+		if(!potential_event.can_effect_mob(arglist(list(src, mob_parent) + params)))
+			qdel(potential_event)
+			continue
+
+		all_valid_conditional_events += potential_event
+
+	if(!length(all_valid_conditional_events))
+		return //no valid events to add
+
+	var/datum/mood_event/conditional/highest_priority_event
+	for(var/datum/mood_event/conditional/checked_event as anything in all_valid_conditional_events)
+		if(!highest_priority_event || checked_event.priority > highest_priority_event.priority)
+			highest_priority_event = checked_event
+
+	add_mood_event_instance(highest_priority_event, params)
+	all_valid_conditional_events -= highest_priority_event // you are the chosen one
+	QDEL_LIST(all_valid_conditional_events) // clean up the losers
 
 /**
  * Removes a mood event from the mob
@@ -218,12 +273,14 @@
 
 	for(var/category in mood_events)
 		var/datum/mood_event/the_event = mood_events[category]
-		mood += the_event.mood_change
+		var/event_mood = the_event.mood_change
+		event_mood *= max((event_mood > 0) ? positive_mood_modifier : negative_mood_modifier, 0)
+		mood += event_mood
 		if (!the_event.hidden)
-			shown_mood += the_event.mood_change
+			shown_mood += event_mood
 
-	mood *= mood_modifier
-	shown_mood *= mood_modifier
+	mood *= max(mood_modifier, 0)
+	shown_mood *= max(mood_modifier, 0)
 
 	switch(mood)
 		if (-INFINITY to MOOD_SAD4)
@@ -250,7 +307,7 @@
 
 /// Updates the mob's mood icon
 /datum/mood/proc/update_mood_icon()
-	if (!(mob_parent.client || mob_parent.hud_used))
+	if (!(mob_parent.client || mob_parent.hud_used) || isnull(mood_screen_object))
 		return
 
 	mood_screen_object.cut_overlays()
@@ -314,6 +371,7 @@
 	if(hud?.infodisplay)
 		hud.infodisplay -= mood_screen_object
 	QDEL_NULL(mood_screen_object)
+	UnregisterSignal(hud, COMSIG_QDELETING)
 
 /// Handles clicking on the mood HUD object
 /datum/mood/proc/hud_click(datum/source, location, control, params, mob/user)
@@ -561,6 +619,10 @@
 
 	update_mood_icon()
 
+/// Sets sanity to a specific amount, useful for callbacks
+/datum/mood/proc/reset_sanity(amount)
+	set_sanity(amount, override = TRUE)
+
 /// Adjusts sanity by a value
 /datum/mood/proc/adjust_sanity(amount, minimum = SANITY_INSANE, maximum = SANITY_GREAT, override = FALSE)
 	set_sanity(sanity + amount, minimum, maximum, override)
@@ -588,7 +650,6 @@
 
 /**
  * Returns true if you already have a mood from a provided category.
- * You may think to yourself, why am I trying to get a boolean from a component? Well, this system probably should not be a component.
  *
  * Arguments
  * * category - Mood category to validate against.

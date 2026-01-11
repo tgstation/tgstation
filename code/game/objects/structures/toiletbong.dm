@@ -6,12 +6,13 @@
 	base_icon_state = "toiletbong"
 	density = FALSE
 	anchored = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.05, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.8)
 	var/smokeradius = 1
 	var/mutable_appearance/weed_overlay
 
 /obj/structure/toiletbong/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, post_rotation = CALLBACK(src, PROC_REF(post_rotation)))
+	AddElement(/datum/element/simple_rotation, post_rotation_proccall = PROC_REF(post_rotation))
 	create_storage(storage_type = /datum/storage/toiletbong)
 
 	weed_overlay = mutable_appearance('icons/obj/watercloset.dmi', "[base_icon_state]_overlay")
@@ -78,7 +79,6 @@
 	update_appearance(UPDATE_ICON)
 
 /obj/structure/toiletbong/wrench_act(mob/living/user, obj/item/tool)
-	..()
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
@@ -94,9 +94,9 @@
 	if (!do_after(user, 10 SECONDS, target = src))
 		return FALSE
 	new /obj/item/flamethrower(get_turf(src))
-	new /obj/item/stack/sheet/iron(get_turf(src))
 	var/obj/item/tank/internals/plasma/ptank = new /obj/item/tank/internals/plasma(get_turf(src))
 	ptank.air_contents.gases[/datum/gas/plasma][MOLES] = (0)
+	drop_costum_materials()
 	qdel(src)
 	return TRUE
 

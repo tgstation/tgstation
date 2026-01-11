@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" />
+
+    <script type="text/javascript">
+      const INDEXED_DB_VERSION = 1;
+      const INDEXED_DB_NAME = 'tgui';
+      const INDEXED_DB_STORE_NAME = 'storage';
+
+      const READ_ONLY = 'readonly';
+      const READ_WRITE = 'readwrite';
+
+      const MAX_MESSAGES = 1000;
+
+      const dbPromise = new Promise((resolve, reject) => {
+        const indexedDB = window.indexedDB;
+        const req = indexedDB.open(INDEXED_DB_NAME, INDEXED_DB_VERSION);
+        req.onupgradeneeded = (event) => {
+          try {
+            if (event.oldVersion < 1) {
+              req.result.createObjectStore(INDEXED_DB_STORE_NAME);
+            }
+          } catch (err) {
+            reject(new Error('Failed to upgrade IDB: ' + req.error));
+          }
+        };
+
+        req.onsuccess = () => resolve(req.result);
+
+        req.onerror = () => {
+          reject(new Error('Failed to open IDB: ' + req.error));
+        };
+      });
+
+      window.addEventListener('message', (messageEvent) => {
+        switch (messageEvent.data.type) {
+          case 'ping':
+            messageEvent.source.postMessage(true, '*');
+            break;
+          case 'get':
+            get(messageEvent.data.key).then((value) => {
+              messageEvent.source.postMessage(
+                { key: messageEvent.data.key, value: value },
+                '*',
+              );
+            });
+            break;
+          case 'set':
+            set(messageEvent.data.key, messageEvent.data.value);
+            break;
+          case 'remove':
+            remove(messageEvent.data.key);
+            break;
+          case 'clear':
+            clear();
+            break;
+
+          default:
+            break;
+        }
+      });
+
+      const getStore = async (mode) => {
+        return dbPromise.then((db) =>
+          db
+            .transaction(INDEXED_DB_STORE_NAME, mode)
+            .objectStore(INDEXED_DB_STORE_NAME),
+        );
+      };
+
+      const get = async (key) => {
+        const store = await getStore(READ_ONLY);
+        return new Promise((resolve, reject) => {
+          const req = store.get(key);
+          req.onsuccess = () => resolve(req.result);
+          req.onerror = () => reject(req.error);
+        });
+      };
+
+      const set = async (key, value) => {
+        const store = await getStore(READ_WRITE);
+        store.put(value, key);
+      };
+
+      const remove = async (key) => {
+        const store = await getStore(READ_WRITE);
+        store.delete(key);
+      };
+
+      const clear = async () => {
+        const store = await getStore(READ_WRITE);
+        store.clear();
+      };
+
+      window.onload = () => {
+        window.parent.postMessage("ready", "*");
+      }
+    </script>
+  </head>
+</html>

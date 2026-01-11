@@ -35,6 +35,8 @@
 	)
 	/// How we get blasting
 	var/datum/action/cooldown/mob_cooldown/brimbeam/beam
+	/// Icon state used when the brimbeam ability is being fired
+	var/firing_icon_state = "brimdemon_firing"
 
 /mob/living/basic/mining/brimdemon/Initialize(mapload)
 	. = ..()
@@ -42,6 +44,7 @@
 	beam = new(src)
 	beam.Grant(src)
 	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, beam)
+	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/mining/brimdemon/Destroy(force)
 	QDEL_NULL(beam)
@@ -56,6 +59,11 @@
 		return
 	var/obj/effect/temp_visual/brim_burst/bang = new(loc)
 	forceMove(bang)
+
+/mob/living/basic/mining/brimdemon/update_overlays()
+	. = ..()
+	if (stat != DEAD)
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
 /// Show a funny animation before doing an explosion
 /obj/effect/temp_visual/brim_burst

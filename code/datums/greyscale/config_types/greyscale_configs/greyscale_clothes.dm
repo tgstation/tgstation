@@ -89,6 +89,15 @@
 	name = "Santa Hat (Worn)"
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
 
+/datum/greyscale_config/ushanka
+	name = "Ushanka"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ushanka.json'
+
+/datum/greyscale_config/ushanka/worn
+	name = "Ushanka (Worn)"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+
 //
 // MASKS
 //
@@ -218,6 +227,15 @@
 	name = "Infinity Scarf (Worn)"
 	icon_file = 'icons/mob/clothing/neck.dmi'
 
+/datum/greyscale_config/robe_cape
+	name = "Robe Cape"
+	icon_file = 'icons/obj/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/robe_cape.json'
+
+/datum/greyscale_config/robe_cape/worn
+	name = "Robe Cape"
+	icon_file = 'icons/mob/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/robe_cape_worn.json'
 //
 // GLOVES
 //
@@ -398,6 +416,7 @@
 /datum/greyscale_config/slacks/worn
 	name = "Slacks (Worn)"
 	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
+	json_config = 'code/datums/greyscale/json_configs/slacks_worn.json'
 
 /datum/greyscale_config/shorts
 	name = "Shorts"
@@ -416,6 +435,7 @@
 /datum/greyscale_config/jeans/worn
 	name = "Jeans (Worn)"
 	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jeans_worn.json'
 
 /datum/greyscale_config/jeanshorts
 	name = "Jean Shorts"

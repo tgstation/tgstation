@@ -118,9 +118,6 @@
 	stored = new /obj/item/reagent_containers/cup/beaker/large(src)
 
 /obj/item/borg/apparatus/beaker/Destroy()
-	if(stored)
-		var/obj/item/reagent_containers/reagent_container = stored
-		reagent_container.SplashReagents(get_turf(src))
 	QDEL_NULL(stored)
 	return ..()
 
@@ -212,6 +209,23 @@
 	item_flags = SURGICAL_TOOL
 	storable = list(/obj/item/organ,
 					/obj/item/bodypart)
+	/// Underlay of whatever we have stored
+	var/image/stored_underlay
+
+/obj/item/borg/apparatus/organ_storage/update_overlays()
+	. = ..()
+	if(stored_underlay)
+		underlays -= stored_underlay
+	if(!stored)
+		return
+	stored_underlay = image(stored)
+	stored_underlay.layer = FLOAT_LAYER
+	stored_underlay.plane = FLOAT_PLANE
+	stored_underlay.pixel_w = 0
+	stored_underlay.pixel_x = 0
+	stored_underlay.pixel_y = 0
+	stored_underlay.pixel_z = 0
+	underlays += stored_underlay
 
 /obj/item/borg/apparatus/organ_storage/examine()
 	. = ..()
@@ -223,22 +237,6 @@
 		. += "Nothing."
 	. += span_notice(" <i>Alt-click</i> will drop the currently stored organ. ")
 
-/obj/item/borg/apparatus/organ_storage/update_overlays()
-	. = ..()
-	icon_state = null // hides the original icon (otherwise it's drawn underneath)
-	var/mutable_appearance/bag
-	if(stored)
-		var/mutable_appearance/stored_organ = new /mutable_appearance(stored)
-		stored_organ.layer = FLOAT_LAYER
-		stored_organ.plane = FLOAT_PLANE
-		stored_organ.pixel_w = 0
-		stored_organ.pixel_z = 0
-		. += stored_organ
-		bag = mutable_appearance(icon, icon_state = "evidence") // full bag
-	else
-		bag = mutable_appearance(icon, icon_state = "evidenceobj") // empty bag
-	. += bag
-
 /obj/item/borg/apparatus/organ_storage/click_alt(mob/living/silicon/robot/user)
 	if(!stored)
 		to_chat(user, span_notice("[src] is empty."))
@@ -246,18 +244,18 @@
 
 	var/obj/item/organ = stored
 	user.visible_message(span_notice("[user] dumps [organ] from [src]."), span_notice("You dump [organ] from [src]."))
-	cut_overlays()
-	organ.forceMove(get_turf(src))
+	organ.forceMove(drop_location())
 	return CLICK_ACTION_SUCCESS
 
 ///Apparatus to allow Engineering/Sabo borgs to manipulate any material sheets.
 /obj/item/borg/apparatus/sheet_manipulator
 	name = "material manipulation apparatus"
-	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles and shuttle frame rods."
+	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles and various rods."
 	icon_state = "borg_stack_apparatus"
 	storable = list(/obj/item/stack/sheet,
 					/obj/item/stack/tile,
-					/obj/item/stack/rods/shuttle)
+					/obj/item/stack/rods,
+					/obj/item/stack/conveyor)
 
 /obj/item/borg/apparatus/sheet_manipulator/Initialize(mapload)
 	update_appearance()
@@ -285,21 +283,24 @@
 		. += "The apparatus currently has [stored] secured."
 	. += span_notice(" <i>Alt-click</i> will drop the currently stored sheets. ")
 
-///Apparatus allowing Engineer/Sabo borgs to manipulate Machine and Computer circuit boards
-/obj/item/borg/apparatus/circuit
-	name = "circuit manipulation apparatus"
-	desc = "A special apparatus for carrying and manipulating circuit boards and power cells."
+///Apparatus allowing Engineer/Sabo borgs to manipulate circuit boards and more
+/obj/item/borg/apparatus/engineering
+	name = "engineering apparatus"
+	desc = "A special apparatus for carrying and manipulating circuit boards, lights and power cells."
 	icon_state = "borg_hardware_apparatus"
-	storable = list(/obj/item/circuitboard,
+	storable = list(
+		/obj/item/circuitboard,
 		/obj/item/electronics,
 		/obj/item/stock_parts/power_store,
+		/obj/item/light,
+		/obj/item/conveyor_switch_construct,
 	)
 
-/obj/item/borg/apparatus/circuit/Initialize(mapload)
+/obj/item/borg/apparatus/engineering/Initialize(mapload)
 	update_appearance()
 	return ..()
 
-/obj/item/borg/apparatus/circuit/update_overlays()
+/obj/item/borg/apparatus/engineering/update_overlays()
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon, "borg_hardware_apparatus_arm1")
 	if(stored)
@@ -317,19 +318,19 @@
 		. += stored_copy
 	. += arm
 
-/obj/item/borg/apparatus/circuit/examine()
+/obj/item/borg/apparatus/engineering/examine()
 	. = ..()
 	if(stored)
 		. += "The apparatus currently has [stored] secured."
-	. += span_notice(" <i>Alt-click</i> will drop the currently stored circuit. ")
+	. += span_notice(" <i>Alt-click</i> will drop the currently stored item. ")
 
-/obj/item/borg/apparatus/circuit/pre_attack(atom/atom, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/item/borg/apparatus/engineering/pre_attack(atom/atom, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(atom, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, span_warning("This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up."))
 	return ..()
 
 // stops them from cell interactions with other borgos
-/obj/item/borg/apparatus/circuit/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
+/obj/item/borg/apparatus/engineering/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
 	if(iscyborg(user) && iscyborg(interacting_with))
 		balloon_alert(user, "your manipulator isn't dexterous enough to interact with this properly.")
 		return ITEM_INTERACT_FAILURE
@@ -347,7 +348,6 @@
 		/obj/item/reagent_containers/cup/soup_pot,
 		/obj/item/seeds,
 		/obj/item/graft,
-		/obj/item/fish,
 	)
 
 /obj/item/borg/apparatus/service/Initialize(mapload)

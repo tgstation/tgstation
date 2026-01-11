@@ -9,6 +9,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 #define SENTIENT_BOT_RESET_TIMER 45 SECONDS
 
 /mob/living/basic/bot
+	abstract_type = /mob/living/basic/bot
 	icon = 'icons/mob/silicon/aibots.dmi'
 	layer = MOB_LAYER
 	gender = NEUTER
@@ -84,7 +85,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	var/list/current_pathed_turfs = list()
 
 	///The type of data HUD the bot uses. Diagnostic by default.
-	var/data_hud_type = DATA_HUD_DIAGNOSTIC
+	var/data_hud_type = TRAIT_DIAGNOSTIC_HUD
 	/// If true we will allow ghosts to control this mob
 	var/can_be_possessed = FALSE
 	/// Message to display upon possession
@@ -131,16 +132,15 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 	//Adds bot to the diagnostic HUD system
 	prepare_huds()
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_atom_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_atom_to_hud(src)
 	diag_hud_set_bothealth()
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
 
 	//If a bot has its own HUD (for player bots), provide it.
 	if(!isnull(data_hud_type))
-		var/datum/atom_hud/datahud = GLOB.huds[data_hud_type]
-		datahud.show_to(src)
+		ADD_TRAIT(src, data_hud_type, INNATE_TRAIT)
 
 	if(mapload && is_station_level(z) && (bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT) && (bot_mode_flags & BOT_MODE_ROUNDSTART_POSSESSION))
 		enable_possession(mapload = mapload)
@@ -771,7 +771,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	update_appearance()
 
 /mob/living/basic/bot/rust_heretic_act()
-	adjustBruteLoss(400)
+	adjust_brute_loss(400)
 
 /mob/living/basic/bot/proc/attempt_access(mob/bot, obj/door_attempt)
 	SIGNAL_HANDLER

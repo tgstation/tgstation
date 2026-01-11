@@ -63,7 +63,7 @@
 	drain_power(use_energy_cost)
 	grab_atom(target)
 
-/obj/item/mod/module/anomaly_locked/kinesis/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/anomaly_locked/kinesis/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	clear_grab(playsound = !deleting)
 
 /obj/item/mod/module/anomaly_locked/kinesis/process(seconds_per_tick)

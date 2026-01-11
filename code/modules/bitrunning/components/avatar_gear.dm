@@ -5,6 +5,8 @@
 	var/datum/callback/load_callback
 	/// Weakref to the human we are currently carried by
 	var/datum/weakref/tracked_human_ref
+	/// Weakref to the connect_containers component that tracks the human
+	var/datum/weakref/connect_ref
 
 /datum/component/loads_avatar_gear/Initialize(datum/callback/load_callback)
 	if(!isitem(parent))
@@ -18,14 +20,14 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERING = PROC_REF(on_entered_loc),
 	)
-	AddComponent(/datum/component/connect_containers, parent, loc_connections)
+	connect_ref = WEAKREF(AddComponent(/datum/component/connect_containers, parent, loc_connections))
 
 /datum/component/loads_avatar_gear/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ENTERING,
 	))
 
-	qdel(GetComponent(/datum/component/connect_containers))
+	qdel(connect_ref)
 
 /datum/component/loads_avatar_gear/Destroy(force)
 	load_callback = null
@@ -62,6 +64,6 @@
 	tracked_human_ref = WEAKREF(to_track)
 	RegisterSignal(to_track, COMSIG_BITRUNNER_STOCKING_GEAR, PROC_REF(load_onto_avatar))
 
-/datum/component/loads_avatar_gear/proc/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
+/datum/component/loads_avatar_gear/proc/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, domain_flags)
 	SIGNAL_HANDLER
-	return load_callback?.Invoke(neo, avatar, external_load_flags)
+	return load_callback?.Invoke(neo, avatar, domain_flags)

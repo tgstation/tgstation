@@ -22,8 +22,8 @@
 
 /obj/item/storage/portable_chem_mixer/Initialize(mapload)
 	. = ..()
-
 	register_context()
+	AddElement(/datum/element/drag_pickup)
 
 /obj/item/storage/portable_chem_mixer/Destroy()
 	dispensable_reagents.Cut()
@@ -238,13 +238,6 @@
 			replace_beaker(ui.user)
 			update_appearance()
 			return TRUE
-
-/obj/item/storage/portable_chem_mixer/mouse_drop_dragged(atom/over_object)
-	if(ismob(loc))
-		var/mob/M = loc
-		if(istype(over_object, /atom/movable/screen/inventory/hand))
-			var/atom/movable/screen/inventory/hand/H = over_object
-			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 /obj/item/storage/portable_chem_mixer/click_alt(mob/living/user)
 	if(!atom_storage.locked)

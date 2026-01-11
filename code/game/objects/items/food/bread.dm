@@ -4,6 +4,7 @@
 	name = "bread?"
 	desc = "You shouldn't see this, call the coders."
 	icon = 'icons/obj/food/burgerbread.dmi'
+	abstract_type = /obj/item/food/bread
 	max_volume = 80
 	tastes = list("bread" = 10)
 	foodtypes = GRAIN
@@ -21,7 +22,7 @@
 
 /obj/item/food/bread/make_processable()
 	if (slice_type)
-		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, yield, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, yield, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 		AddElement(/datum/element/processable, TOOL_SAW, slice_type, yield, 4 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 // Abstract parent object for sliced bread items. Should not be made obtainable in game.
@@ -29,6 +30,7 @@
 	name = "breadslice?"
 	desc = "You shouldn't see this, call the coders."
 	icon = 'icons/obj/food/burgerbread.dmi'
+	abstract_type = /obj/item/food/breadslice
 	foodtypes = GRAIN
 	food_flags = FOOD_FINGER_FOOD
 	eat_time = 0.5 SECONDS

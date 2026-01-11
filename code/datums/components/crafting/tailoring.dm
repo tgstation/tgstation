@@ -150,6 +150,7 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/hud/security/sunglasses = 1)
 	category = CAT_EQUIPMENT
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY
 
 /datum/crafting_recipe/hudsunmed
 	name = "Medical HUDsunglasses"
@@ -168,6 +169,7 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/hud/health/sunglasses = 1)
 	category = CAT_EQUIPMENT
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY
 
 /datum/crafting_recipe/hudsundiag
 	name = "Diagnostic HUDsunglasses"
@@ -186,6 +188,7 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/hud/diagnostic/sunglasses = 1)
 	category = CAT_EQUIPMENT
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY
 
 /datum/crafting_recipe/scienceglasses
 	name = "Science Glasses"
@@ -204,6 +207,7 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/sunglasses/chemical = 1)
 	category = CAT_EQUIPMENT
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY
 
 /datum/crafting_recipe/ghostsheet
 	name = "Ghost Sheet"
@@ -417,12 +421,7 @@
 	)
 	reqs = list(/obj/item/stack/sheet/cloth = 4)
 	category = CAT_CLOTHING
-
-/datum/crafting_recipe/chaplain_hood/New()
-	. = ..()
-	//the resulting hoodie can be used to craft other hoodies.
-	//recipe blacklists should be refactored to only affect components and not tools.
-	blacklist -= result
+	blacklist_result = NEVER_BLACKLIST_RESULT //the resulting hoodie can be used to craft other hoodies.
 
 /datum/crafting_recipe/flower_garland
 	name = "Flower Garland"
@@ -539,6 +538,7 @@
 		/obj/item/stack/sheet/mineral/metal_hydrogen = 1,
 		/obj/item/stack/sheet/mineral/zaukerite = 1,
 	)
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY // stupid recipe, don't give every atmos gas mask these mats.
 
 	category = CAT_CLOTHING
 

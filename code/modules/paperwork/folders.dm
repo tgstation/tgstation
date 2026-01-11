@@ -6,6 +6,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	pressure_resistance = 2
 	resistance_flags = FLAMMABLE
+	obj_flags = UNIQUE_RENAME | RENAME_NO_DESC
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 	/// The background color for tgui in hex (with a `#`)
 	var/bg_color = "#7f7f7f"
 	/// A typecache of the objects that can be inserted into a folder
@@ -61,6 +63,9 @@
 	if(IS_WRITING_UTENSIL(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Rename"
 		return CONTEXTUAL_SCREENTIP_SET
+	if((held_item.tool_behaviour == TOOL_KNIFE || held_item.tool_behaviour == TOOL_WIRECUTTER) && !contents.len)
+		context[SCREENTIP_CONTEXT_LMB] = "Cut apart"
+		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 
 /obj/item/folder/proc/remove_item(obj/item/Item, mob/user)
@@ -91,8 +96,8 @@
 /obj/item/folder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(is_type_in_typecache(tool, folder_insertables))
 		return insertables_act(user, tool)
-	if(IS_WRITING_UTENSIL(tool))
-		return writing_utensil_act(user, tool)
+	if(tool.tool_behaviour == TOOL_KNIFE || tool.tool_behaviour == TOOL_WIRECUTTER)
+		return sharp_thing_act(user, tool)
 	return NONE
 
 /obj/item/folder/proc/insertables_act(mob/living/user, obj/item/tool)
@@ -101,19 +106,19 @@
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/folder/proc/writing_utensil_act(mob/user, obj/item/writing_instrument)
-	if(!user.can_write(writing_instrument))
-		return ITEM_INTERACT_BLOCKING
-
-	var/inputvalue = tgui_input_text(user, "What would you like to label the folder?", "Folder Labelling", max_length = MAX_NAME_LEN)
-
-	if(!inputvalue)
-		return ITEM_INTERACT_BLOCKING
-	if(!user.can_perform_action(src))
-		return ITEM_INTERACT_BLOCKING
-
-	name = "folder[(inputvalue ? " - '[inputvalue]'" : null)]"
+/obj/item/folder/nameformat(input, user)
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	return"folder[(input ? " - '[input]'" : null)]"
+
+
+/obj/item/folder/proc/sharp_thing_act(mob/user, obj/item/sharp_tool)
+	if(contents.len)
+		balloon_alert(user, "empty [src] first!")
+		return ITEM_INTERACT_BLOCKING
+
+	balloon_alert(user, "cut apart")
+	qdel(src)
+	user.put_in_hands(new /obj/item/stack/sheet/cardboard)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/folder/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)

@@ -81,13 +81,14 @@ const Controls = (props) => {
         <LabeledList.Item label="Gas Input">
           <NumberInput
             animated
+            tickWhileDragging
             step={0.1}
             value={gas_input}
             width="63px"
             unit="moles/s"
             minValue={0}
             maxValue={250}
-            onDrag={(value) =>
+            onChange={(value) =>
               act('gas_input', {
                 gas_input: value,
               })

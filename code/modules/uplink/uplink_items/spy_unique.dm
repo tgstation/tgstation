@@ -31,10 +31,10 @@
 	item = /obj/item/clothing/gloves/combat
 	cost = 1
 
-/datum/uplink_item/spy_unique/krav_maga
+/datum/uplink_item/spy_unique/kaza_ruk
 	name = "Combat Gloves Plus"
 	desc = "A pair of combat gloves plus. They're insulated AND you can do martial arts with it!"
-	item = /obj/item/clothing/gloves/krav_maga/combatglovesplus
+	item = /obj/item/clothing/gloves/kaza_ruk/combatglovesplus
 
 /datum/uplink_item/spy_unique/tackle_gloves
 	name = "Guerrilla Gloves"
@@ -76,6 +76,11 @@
 	item = /obj/item/gun/ballistic/shotgun/automatic/dual_tube/deadly
 	cost = SPY_UPPER_COST_THRESHOLD
 	uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
+	relevant_child_items = list(
+		/datum/uplink_item/spy_unique/shotgun_ammo,
+		/datum/uplink_item/spy_unique/shotgun_ammo/breacher_slug,
+		/datum/uplink_item/spy_unique/shotgun_ammo/slugs,
+	)
 
 /datum/uplink_item/spy_unique/bulldog_shotgun
 	name = "Bulldog Shotgun"
@@ -83,6 +88,17 @@
 	item = /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 	cost = SPY_UPPER_COST_THRESHOLD
 	uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
+	relevant_child_items = list(
+		/datum/uplink_item/ammo_nuclear/basic/buck,
+		/datum/uplink_item/ammo_nuclear/basic/donk,
+		/datum/uplink_item/ammo_nuclear/basic/flechette,
+		/datum/uplink_item/ammo_nuclear/basic/slug,
+		/datum/uplink_item/ammo_nuclear/incendiary/dragon,
+		/datum/uplink_item/ammo_nuclear/special/meteor,
+		/datum/uplink_item/spy_unique/shotgun_ammo,
+		/datum/uplink_item/spy_unique/shotgun_ammo/breacher_slug,
+		/datum/uplink_item/spy_unique/shotgun_ammo/slugs,
+	)
 
 /datum/uplink_item/spy_unique/ansem_pistol
 	name = "Ansem Pistol"
@@ -90,6 +106,36 @@
 	item = /obj/item/gun/ballistic/automatic/pistol/clandestine
 	cost = SPY_UPPER_COST_THRESHOLD
 	uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
+	relevant_child_items = list(
+		/datum/uplink_item/ammo_nuclear/basic/m10mm,
+		/datum/uplink_item/ammo_nuclear/ap/m10mm,
+		/datum/uplink_item/ammo_nuclear/hp/m10mm,
+		/datum/uplink_item/ammo_nuclear/incendiary/m10mm,
+	)
+
+/datum/uplink_item/spy_unique/makarov_pistol
+	name = "Makarov Pistol"
+	desc = "A Makarov pistol - Reliable and sturdy."
+	item = /obj/item/gun/ballistic/automatic/pistol
+	cost = SPY_LOWER_COST_THRESHOLD
+	uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
+	relevant_child_items = list(
+		/datum/uplink_item/ammo/pistol,
+		/datum/uplink_item/ammo/pistolap,
+		/datum/uplink_item/ammo/pistolhp,
+		/datum/uplink_item/ammo/pistolfire,
+	)
+
+/datum/uplink_item/spy_unique/toy_pistol
+	name = "Donksoft Riot Pistol"
+	desc = "A Donksoft Riot Pistol - A toy pistol that fires foam darts at higher than normal velocity."
+	item = /obj/item/gun/ballistic/automatic/pistol/toy/riot/clandestine
+	cost = SPY_LOWER_COST_THRESHOLD
+	cost = SPY_LOWER_COST_THRESHOLD
+	uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
+	relevant_child_items = list(
+		/datum/uplink_item/ammo/toydarts,
+	)
 
 /datum/uplink_item/spy_unique/rocket_launcher
 	name = "Rocket Launcher"
@@ -97,6 +143,10 @@
 	item = /obj/item/gun/ballistic/rocketlauncher
 	cost = SPY_UPPER_COST_THRESHOLD - 1 // It's a meme item
 	uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
+	relevant_child_items = list(
+		/datum/uplink_item/ammo_nuclear/ap/rocket,
+		/datum/uplink_item/ammo_nuclear/basic/rocket,
+	)
 
 /datum/uplink_item/spy_unique/shotgun_ammo
 	name = "Box of Buckshot"
@@ -155,3 +205,40 @@
 	item = /obj/item/melee/baton/nunchaku
 	cost = SPY_UPPER_COST_THRESHOLD
 	uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
+
+/datum/uplink_item/spy_unique/penbang
+	name = "Penbang"
+	desc = "A flashbang disguised as a normal pen - click and throw! Has no other warning upon being activated. \
+		Fuse duration depends on how far the cap is twisted."
+	item = /obj/item/pen/penbang
+	cost = 1
+
+/datum/uplink_item/spy_unique/cameraflash
+	name = "Camera Flash"
+	desc = "A camera with a high-powered flash. Can be used as a normal flash when in close proximity to a target."
+	item = /obj/item/camera/flash
+	cost = 1
+
+/datum/uplink_item/spy_unique/daggerboot
+	name = "Boot Dagger"
+	desc = "A pair of boots with a dagger embedded into the sole. Kicks with these will stab the target, potentially causing bleeding."
+	item = /obj/item/clothing/shoes/jackboots/dagger
+	cost = 1
+
+/datum/uplink_item/spy_unique/monster_cube_box
+	name = "Random Monster Cubes"
+	desc = "A box containing a bunch of random monster cubes. Add water and see what you get!"
+	item = /obj/item/storage/box/monkeycubes/random
+	cost = SPY_LOWER_COST_THRESHOLD // There's some really bad stuff in here but also some really mild stuff
+
+/datum/uplink_item/spy_unique/sleeping_carp
+	name = "Sleeping Carp Technique"
+	desc = "A scroll teaching you the basics of the Sleeping Carp martial art."
+	item = /datum/uplink_item/stealthy_weapons/martialarts::item
+	cost = /datum/uplink_item/stealthy_weapons/martialarts::cost
+
+/datum/uplink_item/spy_unique/spider_bite
+	name = "Spider Bite Technique"
+	desc = "A scroll teaching you the basics of the Spider Bite martial art."
+	item = /obj/item/book/granter/martial/spider_bite
+	cost = SPY_UPPER_COST_THRESHOLD // While SCarp is firmly in the upper threshold, Spider Bite can be in either middle or upper.

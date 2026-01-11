@@ -62,31 +62,30 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(thing.anchored)
 		return NONE
 
-	. = ITEM_INTERACT_BLOCKING
 	var/obj/structure/extraction_point/beacon = beacon_ref?.resolve()
 	if(isnull(beacon))
 		balloon_alert(user, "not linked!")
 		beacon_ref = null
-		return .
+		return ITEM_INTERACT_BLOCKING
 	var/area/area = get_area(thing)
 	if(!can_use_indoors)
 		if(!area.outdoors)
 			balloon_alert(user, "not outdoors!")
-			return .
+			return ITEM_INTERACT_BLOCKING
 	if(area.area_flags & NOTELEPORT)
 		balloon_alert(user, "unable to activate!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	var/area/target_area = get_area(beacon)
 	if(area != target_area && ((area.area_flags & LOCAL_TELEPORT) || (target_area.area_flags & LOCAL_TELEPORT)))
 		balloon_alert(user, "unable to activate!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(!safe_for_living_creatures && check_for_living_mobs(thing))
 		to_chat(user, span_warning("[src] is not safe for use with living creatures, they wouldn't survive the trip back!"))
 		balloon_alert(user, "not safe!")
-		return .
+		return ITEM_INTERACT_BLOCKING
 	if(thing.move_resist > max_force_fulton)
 		balloon_alert(user, "too heavy!")
-		return .
+		return ITEM_INTERACT_BLOCKING
 	balloon_alert_to_viewers("attaching...")
 	playsound(thing, 'sound/items/zip/zip.ogg', vol = 50, vary = TRUE)
 	if(isliving(thing))
@@ -95,7 +94,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			to_chat(thing, span_userdanger("You are being extracted! Stand still to proceed."))
 
 	if(!do_after(user, 5 SECONDS, target = thing))
-		return .
+		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert_to_viewers("extracting!")
 	if(loc == user && ishuman(user))

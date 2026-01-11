@@ -22,7 +22,7 @@
 		/area/station/service = COLOR_SERVICE_LIME,
 		/area/centcom = COLOR_CENTCOM_BLUE,  // how?
 		/area/station/command = COLOR_COMMAND_BLUE,
-		/area/station/ai_monitored = COLOR_COMMAND_BLUE,
+		/area/station/ai = COLOR_COMMAND_BLUE,
 		/area/station/medical = COLOR_MEDICAL_BLUE,
 		/area/station/science = COLOR_SCIENCE_PINK,
 		/area/station/engineering = COLOR_ENGINEERING_ORANGE,
@@ -45,9 +45,10 @@
 
 /obj/item/quantum_keycard/click_alt(mob/living/user)
 	to_chat(user, span_notice("You start pressing [src]'s unlink button..."))
-	if(do_after(user, 4 SECONDS, target = src))
-		to_chat(user, span_notice("The keycard beeps twice and disconnects the quantum link."))
-		set_pad()
+	if(!do_after(user, 4 SECONDS, target = src))
+		return CLICK_ACTION_BLOCKING
+	to_chat(user, span_notice("The keycard beeps twice and disconnects the quantum link."))
+	set_pad()
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/quantum_keycard/proc/set_pad(obj/machinery/quantumpad/new_pad)

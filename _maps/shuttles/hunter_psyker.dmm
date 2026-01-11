@@ -147,25 +147,25 @@
 "gE" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/structure/table/reinforced/plasmarglass,
-/obj/item/ammo_box/c38/match{
+/obj/item/ammo_box/speedloader/c38/match{
 	pixel_x = -5;
 	pixel_y = 4
 	},
-/obj/item/ammo_box/c38/match{
+/obj/item/ammo_box/speedloader/c38/match{
 	pixel_x = -1;
 	pixel_y = 4
 	},
-/obj/item/ammo_box/c38/match{
+/obj/item/ammo_box/speedloader/c38/match{
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/obj/item/ammo_box/c38/match{
+/obj/item/ammo_box/speedloader/c38/match{
 	pixel_x = -8
 	},
-/obj/item/ammo_box/c38/match{
+/obj/item/ammo_box/speedloader/c38/match{
 	pixel_x = -4
 	},
-/obj/item/ammo_box/c38/match,
+/obj/item/ammo_box/speedloader/c38/match,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/hunter)
 "gW" = (

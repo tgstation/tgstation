@@ -14,6 +14,7 @@
 	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	mutatelist = list(/obj/item/seeds/carrot/parsnip, /obj/item/seeds/carrot/cahnroot)
 	reagents_add = list(/datum/reagent/medicine/oculine = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
+	genes = list(/datum/plant_gene/trait/soil_lover)
 
 /obj/item/food/grown/carrot
 	seed = /obj/item/seeds/carrot
@@ -22,8 +23,10 @@
 	icon_state = "carrot"
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
-	juice_typepath = /datum/reagent/consumable/carrotjuice
 	wine_power = 30
+
+/obj/item/food/grown/carrot/juice_typepath()
+	return /datum/reagent/consumable/carrotjuice
 
 /obj/item/food/grown/carrot/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!I.get_sharpness())
@@ -61,8 +64,10 @@
 	desc = "Closely related to carrots."
 	icon_state = "parsnip"
 	foodtypes = VEGETABLES
-	juice_typepath = /datum/reagent/consumable/parsnipjuice
 	wine_power = 35
+
+/obj/item/food/grown/parsnip/juice_typepath()
+	return /datum/reagent/consumable/parsnipjuice
 
 /obj/item/food/grown/parsnip/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!I.get_sharpness())
@@ -91,7 +96,7 @@
 	species = "cahn'root"
 	plantname = "Cahn'root"
 	product = /obj/item/food/grown/cahnroot
-	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
+	genes = list(/datum/plant_gene/trait/soil_lover, /datum/plant_gene/trait/plant_type/weed_hardy)
 	endurance = 50
 	instability = 10
 	icon_dead = "cahn'root-dead"
@@ -106,9 +111,11 @@
 	desc = "Heavily modified version of terran carrot, originally made to survive the scarciest of environments by an enterprising scientist of Moth Flotilla, Cahn'Mang."
 	icon_state = "cahn'root"
 	foodtypes = VEGETABLES
-	juice_typepath = null
 	tastes = list("sweet dirt" = 1)
 	distill_reagent = /datum/reagent/consumable/rootbeer
+
+/obj/item/food/grown/cahnroot/juice_typepath()
+	return null
 
 /obj/item/food/grown/cahnroot/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!I.get_sharpness())
@@ -142,6 +149,7 @@
 	instability = 10
 	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
+	genes = list(/datum/plant_gene/trait/soil_lover)
 	mutatelist = list(/obj/item/seeds/redbeet)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/sugar = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 
@@ -168,7 +176,7 @@
 	instability = 15
 	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
-	genes = list(/datum/plant_gene/trait/maxchem)
+	genes = list(/datum/plant_gene/trait/soil_lover, /datum/plant_gene/trait/maxchem)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.05)
 	graft_gene = /datum/plant_gene/trait/maxchem
 

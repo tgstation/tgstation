@@ -35,6 +35,16 @@
 	eatverbs = list("bite", "chew", "gnaw", "swallow", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
 	starting_reagent_purity = 1.0
+	var/fillet_name = "%NAME fillet"
+
+/obj/item/food/fishmeat/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_FOOD_DONT_INHERIT_NAME_FROM_PROCESSED, INNATE_TRAIT)
+
+/obj/item/food/fishmeat/OnCreatedFromProcessing(mob/living/user, obj/item/work_tool, list/chosen_option, atom/original_atom)
+	. = ..()
+	name = replacetext(fillet_name, "%NAME", original_atom.name)
+	material_flags &= ~MATERIAL_ADD_PREFIX //don't double down on material prefixes
 
 /obj/item/food/fishmeat/quality
 	name = "quality fish fillet"
@@ -105,7 +115,7 @@
 	AddComponent(/datum/component/grillable, /obj/item/food/grilled_moonfish, rand(40 SECONDS, 50 SECONDS), TRUE, TRUE)
 
 /obj/item/food/fishmeat/gunner_jellyfish
-	name = "filleted gunner jellyfish"
+	name = "gunner jellyfish fillet"
 	desc = "A gunner jellyfish with the stingers removed. Mildly hallucinogenic when raw."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "jellyfish_fillet"
@@ -115,10 +125,7 @@
 
 ///Premade gunner jellyfish fillets from supply orders. Contains the halluginogen that'd be normally from the fish trait.
 /obj/item/food/fishmeat/gunner_jellyfish/supply
-
-/obj/item/food/fishmeat/gunner_jellyfish/supply/Initialize(mapload)
-	food_reagents[/datum/reagent/toxin/mindbreaker/fish] = 2
-	return ..()
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/toxin/mindbreaker/fish = 2)
 
 /obj/item/food/fishmeat/armorfish
 	name = "cleaned armorfish"
@@ -126,6 +133,7 @@
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "armorfish_fillet"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
+	fillet_name = "cleaned %NAME"
 
 ///donkfish fillets. The yuck reagent is now added by the fish trait of the same name.
 /obj/item/food/fishmeat/donkfish
@@ -140,6 +148,7 @@
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "octopus_fillet"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
+	fillet_name = "%NAME tentacle"
 
 /obj/item/food/fishmeat/octopus/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/grilled_octopus, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -350,7 +359,7 @@
 
 // sliceable into 4xtempehslices
 /obj/item/food/tempeh/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/tempehslice, 4, 5 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/tempehslice, 4, 5 SECONDS, table_required = TRUE, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 
 //add an icon for slices
 /obj/item/food/tempehslice
@@ -457,7 +466,7 @@
 	AddComponent(/datum/component/grillable, meatball_type, rand(30 SECONDS, 40 SECONDS), TRUE)
 
 /obj/item/food/raw_meatball/make_processable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, patty_type, 1, table_required = TRUE, screentip_verb = "Flatten")
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, patty_type, 1, table_required = TRUE, screentip_verb = "Flatten", sound_to_play = SFX_ROLLING_PIN_ROLLING)
 
 /obj/item/food/raw_meatball/human
 	name = "strange raw meatball"
@@ -629,8 +638,8 @@
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/sausage/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/salami, 6, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/sausage/american, 1, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/salami, 6, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/sausage/american, 1, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/sausage/american
 	name = "american sausage"
@@ -882,6 +891,7 @@
 	trash_type = /obj/item/stack/rods
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "kebab"
+	abstract_type = /obj/item/food/kebab
 	w_class = WEIGHT_CLASS_NORMAL
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 14)
 	tastes = list("meat" = 3, "metal" = 1)

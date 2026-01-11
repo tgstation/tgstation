@@ -11,6 +11,7 @@
 
 //Parent to shields and blades because muh copypasted code.
 /datum/action/changeling/weapon
+	abstract_type = /datum/action/changeling/weapon
 	name = "Organic Weapon"
 	desc = "Go tell a coder if you see this"
 	helptext = "Yell at Miauw and/or Perakp"
@@ -87,6 +88,7 @@
 
 //Parent to space suits and armor.
 /datum/action/changeling/suit
+	abstract_type = /datum/action/changeling/suit
 	name = "Organic Suit"
 	desc = "Go tell a coder if you see this"
 	helptext = "Yell at Miauw and/or Perakp"
@@ -225,6 +227,8 @@
 	)
 
 /obj/item/melee/arm_blade/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
+	if(QDELETED(target))
+		return
 	if(istype(target, /obj/structure/table))
 		var/obj/smash = target
 		smash.deconstruct(FALSE)
@@ -295,7 +299,7 @@
 	fire_sound = 'sound/effects/splat.ogg'
 	force = 0
 	max_charges = 1
-	fire_delay = 1
+	fire_delay = 1 DECISECONDS
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
@@ -521,6 +525,9 @@
 		loc.visible_message(span_warning("The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!"), span_warning("We inflate our hand into a strong shield."), span_hear("You hear organic matter ripping and tearing!"))
 
 /obj/item/shield/changeling/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
+
 	if(remaining_uses < 1)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
@@ -708,7 +715,7 @@
 	button_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	button_icon_state = "legion_head"
 	cooldown_time = 15 SECONDS
-	spawn_type = /mob/living/basic/legion_brood
+	spawn_type = /mob/living/basic/mining/legion_brood
 	spawn_count = 4
 
 /datum/action/cooldown/hivehead_spawn_minions/legion/do_tell()
@@ -716,6 +723,6 @@
 	playsound(owner, 'sound/effects/blob/attackblob.ogg', 60, TRUE)
 
 /datum/action/cooldown/hivehead_spawn_minions/legion/minion_additional_changes(mob/living/basic/minion)
-	var/mob/living/basic/legion_brood/brood = minion
+	var/mob/living/basic/mining/legion_brood/brood = minion
 	if (istype(brood))
 		brood.assign_creator(owner, FALSE)

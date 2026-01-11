@@ -45,7 +45,7 @@
 	var/link_on_init = TRUE
 
 	/// Reference to a remote material inventory, such as an ore silo.
-	var/datum/component/remote_materials/rmat
+	var/datum/remote_materials/rmat
 
 	/// All designs in the techweb that can be fabricated by this machine, since the last update.
 	var/list/datum/design/cached_designs
@@ -58,11 +58,12 @@
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
 	print_sound = new(src,  FALSE)
-	rmat = AddComponent(/datum/component/remote_materials, mapload && link_on_init)
+	rmat = new (src, mapload && link_on_init)
 	cached_designs = list()
 	return ..()
 
 /obj/machinery/mecha_part_fabricator/Destroy()
+	QDEL_NULL(rmat)
 	QDEL_NULL(print_sound)
 	return ..()
 
@@ -224,7 +225,7 @@
 	if(!D || length(D.reagents_list))
 		return FALSE
 
-	var/datum/component/material_container/materials = rmat.mat_container
+	var/datum/material_container/materials = rmat.mat_container
 	if (!materials)
 		if(verbose)
 			say("No access to material storage, please contact the quartermaster.")
@@ -236,7 +237,7 @@
 			say("Not enough resources. Processing stopped.")
 		return FALSE
 
-	rmat.use_materials(D.materials, component_coeff, 1, "built", "[D.name]", user_data)
+	rmat.use_materials(D.materials, component_coeff, 1, "processed", "[D.name]", user_data)
 	being_built = D
 	build_finish = world.time + get_construction_time_w_coeff(initial(D.construction_time))
 	build_start = world.time
@@ -486,7 +487,7 @@
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])
 			// SAFETY: eject_sheets checks for valid mats
-			rmat.eject_sheets(material, amount)
+			rmat.eject_sheets(material, amount, user_data = ID_DATA(usr))
 			return
 
 	return FALSE

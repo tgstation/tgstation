@@ -1,5 +1,31 @@
 // CHAPLAIN NULLROD AND CUSTOM WEAPONS //
 
+GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
+
+/proc/init_nullrod_variants()
+	var/list/rods = list()
+	for(var/obj/item/nullrod/nullrod_type as anything in typesof(/obj/item/nullrod))
+		if(!nullrod_type::chaplain_spawnable)
+			continue
+		rods[nullrod_type] = nullrod_type::menu_description
+	//special non-nullrod subtyped shit
+	rods[/obj/item/toy/plush/carpplushie/nullrod] = "A plushie dealing a little less damage due to its cute form. \
+		Capable of blessing one person with the Carp-Sie favor, \
+		which grants friendship of all wild space carps. Fits in pockets. Can be worn on the belt."
+	rods[/obj/item/gun/ballistic/bow/divine] = "A divine bow and 10 quivered holy arrows."
+	rods[/obj/item/organ/cyberimp/arm/toolkit/shard/scythe] = "A shard that implants itself into your arm, \
+		allowing you to conjure forth a vorpal scythe. \
+		Allows you to behead targets for empowered strikes. \
+		Harms you if you dismiss the scythe without first causing harm to a creature. \
+		The shard also causes you to become Morbid, shifting your interests towards the macabre."
+	rods[/obj/item/melee/skateboard/holyboard] = "A skateboard that grants you flight and anti-magic abilities while ridden. Fits in your bag."
+
+	for(var/obj/item/melee/energy/sword/nullrod/energy_nullrod_type as anything in typesof(/obj/item/melee/energy/sword/nullrod))
+		rods[energy_nullrod_type] = "An energy sword, but with a lower force, no armour penetration and a low chance of blocking. Can be switched on and off. \
+			Can be stored away easily while off, but impossible while on."
+
+	return rods
+
 /obj/item/nullrod
 	name = "null rod"
 	desc = "A rod of pure obsidian; its very presence disrupts and dampens 'magical forces'. That's what the guidebook says, anyway."
@@ -27,62 +53,19 @@
 
 /obj/item/nullrod/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
-	AddComponent(/datum/component/effect_remover, \
-		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
-		success_forcesay = "BEGONE FOUL MAGIKS!!", \
-		tip_text = "Clear rune", \
-		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
-		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
-	)
-	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
-	ADD_TRAIT(src, TRAIT_NULLROD_ITEM, INNATE_TRAIT)
+	AddElement(/datum/element/nullrod_core, chaplain_spawnable)
 
 	if((GLOB.holy_weapon_type && station_holy_item) || type != /obj/item/nullrod)
 		return
-
-	var/list/rods = list()
-	for(var/obj/item/nullrod/nullrod_type as anything in typesof(/obj/item/nullrod))
-		if(!initial(nullrod_type.chaplain_spawnable))
-			continue
-		rods[nullrod_type] = initial(nullrod_type.menu_description)
-	//special non-nullrod subtyped shit
-	rods[/obj/item/gun/ballistic/bow/divine/with_quiver] = "A divine bow and 10 quivered holy arrows."
-	rods[/obj/item/organ/cyberimp/arm/toolkit/shard/scythe] = "A shard that implants itself into your arm, \
-								allowing you to conjure forth a vorpal scythe. \
-								Allows you to behead targets for empowered strikes. \
-								Harms you if you dismiss the scythe without first causing harm to a creature. \
-								The shard also causes you to become Morbid, shifting your interests towards the macabre."
-	rods[/obj/item/melee/skateboard/holyboard] = "A skateboard that grants you flight and anti-magic abilities while ridden. Fits in your bag."
-	AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, PROC_REF(on_holy_weapon_picked)))
+	AddComponent(/datum/component/subtype_picker, GLOB.nullrod_variants, CALLBACK(src, PROC_REF(on_holy_weapon_picked)))
 
 /// Callback for subtype picker, invoked when the chaplain picks a new nullrod
 /obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/new_holy_weapon, mob/living/picker)
-	// Some nullrod variants aren't nullrod subtypes
-	if(istype(new_holy_weapon))
-		new_holy_weapon.on_selected(src, picker)
-	else // In which case they still need to be marked as one
-		ADD_TRAIT(new_holy_weapon, TRAIT_NULLROD_ITEM, INNATE_TRAIT)
 	if(!station_holy_item)
 		return
 	GLOB.holy_weapon_type = new_holy_weapon.type
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NULLROD_PICKED)
 	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[new_holy_weapon.name]")
-
-/// Called on a new instance of a nullrod when selected
-/// Override this to add behavior when a nullrod is picked
-/obj/item/nullrod/proc/on_selected(obj/item/nullrod/old_weapon, mob/living/picker)
-	return
-
-/// Callback for effect remover, invoked when a cult rune is cleared
-/obj/item/nullrod/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
-	if(!istype(target, /obj/effect/rune))
-		return
-
-	var/obj/effect/rune/target_rune = target
-	if(target_rune.log_when_erased)
-		user.log_message("erased [target_rune.cultist_name] rune using [src]", LOG_GAME)
-	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 /obj/item/nullrod/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
@@ -145,7 +128,7 @@
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -3)
 
 /obj/item/nullrod/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == (PROJECTILE_ATTACK || LEAP_ATTACK || OVERWHELMING_ATTACK))
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
 	return ..()
 
@@ -208,89 +191,26 @@
 	SET_ATTACK_FORCE(attack_modifiers, rand(max(force - 15, 1), force + 15))
 	return ..()
 
-/obj/item/nullrod/claymore/saber
-	name = "light energy sword"
-	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
-	icon = 'icons/obj/weapons/transforming_energy.dmi'
-	icon_state = "e_sword_on_blue"
-	inhand_icon_state = "e_sword_on_blue"
-	worn_icon_state = "swordblue"
-	icon_angle = -45
-	slot_flags = ITEM_SLOT_BELT
-	hitsound = 'sound/items/weapons/blade1.ogg'
-	block_sound = 'sound/items/weapons/block_blade.ogg'
-	menu_description = "A sharp energy sword which provides a low chance of blocking incoming melee attacks. Can be worn on the belt."
-
-/obj/item/nullrod/claymore/saber/red
-	name = "dark energy sword"
-	desc = "Woefully ineffective when used on steep terrain."
-	icon_state = "e_sword_on_red"
-	inhand_icon_state = "e_sword_on_red"
-	worn_icon_state = "swordred"
-
-/obj/item/nullrod/claymore/saber/pirate
-	name = "nautical energy sword"
-	desc = "Convincing HR that your religion involved piracy was no mean feat."
-	icon_state = "e_cutlass_on"
-	inhand_icon_state = "e_cutlass_on"
-	worn_icon_state = "swordred"
-
-/// Vibro Variant
-/// This subtype possesses armor penetration and is sharp.
-
-/obj/item/nullrod/vibro
-	name = "high frequency blade"
-	desc = "Bad references are the DNA of the soul."
-	icon = 'icons/obj/weapons/sword.dmi'
-	icon_state = "hfrequency0"
-	inhand_icon_state = "hfrequency1"
-	worn_icon_state = "hfrequency0"
-	icon_angle = -45
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
-	armour_penetration = 35
-	slot_flags = ITEM_SLOT_BACK
-	sharpness = SHARP_EDGED
-	attack_verb_continuous = list("chops", "slices", "cuts", "zandatsu's")
-	attack_verb_simple = list("chop", "slice", "cut", "zandatsu")
-	hitsound = 'sound/items/weapons/rapierhit.ogg'
-	menu_description = "A sharp blade which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
-	var/list/alt_continuous = list("stabs", "pierces", "impales")
-	var/list/alt_simple = list("stab", "pierce", "impale")
-
-/obj/item/nullrod/vibro/Initialize(mapload)
-	. = ..()
-	alt_continuous = string_list(alt_continuous)
-	alt_simple = string_list(alt_simple)
-	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -3)
-
-/obj/item/nullrod/vibro/Initialize(mapload)
-	. = ..()
-	AddComponent(
-		/datum/component/butchering, \
-		speed = 7 SECONDS, \
-		effectiveness = 110, \
-	)
-
-/obj/item/nullrod/vibro/spellblade
+/obj/item/nullrod/claymore/spellblade
 	name = "dormant spellblade"
 	desc = "The blade grants the wielder nearly limitless power...if they can figure out how to turn it on, that is."
 	icon = 'icons/obj/weapons/guns/magic.dmi'
 	icon_state = "spellblade"
 	inhand_icon_state = "spellblade"
+	slot_flags = ITEM_SLOT_BACK
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	worn_icon_state = "spellblade"
 	hitsound = 'sound/items/weapons/rapierhit.ogg'
-	menu_description = "A sharp blade which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
+	menu_description = "A sharp blade which provides a low chance of blocking incoming melee attacks. Can be worn on the back."
 
-/obj/item/nullrod/vibro/talking
+/obj/item/nullrod/claymore/talking
 	name = "possessed blade"
 	desc = "When the station falls into chaos, it's nice to have a friend by your side."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "talking_sword"
 	inhand_icon_state = "talking_sword"
+	slot_flags = ITEM_SLOT_BACK
 	icon_angle = 45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -298,13 +218,13 @@
 	attack_verb_continuous = list("chops", "slices", "cuts")
 	attack_verb_simple= list("chop", "slice", "cut")
 	hitsound = 'sound/items/weapons/rapierhit.ogg'
-	menu_description = "A sharp blade which partially penetrates armor. Able to awaken a friendly spirit to provide guidance. Very effective at butchering bodies. Can be worn on the back."
+	menu_description = "A sharp blade which provides a low chance of blocking incoming melee attacks. Able to awaken a friendly spirit to provide guidance. Can be worn on the back."
 
-/obj/item/nullrod/vibro/talking/Initialize(mapload)
+/obj/item/nullrod/claymore/talking/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/spirit_holding)
 
-/obj/item/nullrod/vibro/talking/chainsword
+/obj/item/nullrod/claymore/talking/chainsword
 	name = "possessed chainsaw sword"
 	desc = "Suffer not a heretic to live."
 	icon_state = "chainswordon"
@@ -319,8 +239,82 @@
 	toolspeed = 0.5 //same speed as an active chainsaw
 	chaplain_spawnable = FALSE //prevents being pickable as a chaplain weapon (it has 30 force)
 
+/obj/item/nullrod/claymore/talking/chainsword/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item) //Thanks goodness it cannot be selected by chappies
+	AddComponent(
+		/datum/component/butchering, \
+		speed = 7 SECONDS, \
+		effectiveness = 110, \
+	)
+
+/obj/item/nullrod/claymore/heretic
+	name = "occultist's khopesh"
+	desc = "Steels your hand to slay foes beyond comprehension."
+	icon = 'icons/obj/weapons/khopesh.dmi'
+	icon_state = "eldritch_blade"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	inhand_icon_state = "eldritch_blade"
+	worn_icon_state = "eldritch_blade"
+	menu_description = "A sharp curved blade which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
+
 /// Other Variants
 /// Not a special category on their own, but usually possess more unique mechanics
+
+// High Frequency Blade - Two-handed, has armor penetration, and can block exosuit attacks relatively easily. Can't block anything else.
+
+/obj/item/nullrod/vibro
+	name = "high frequency blade"
+	desc = "Bad references are the DNA of the soul."
+	icon = 'icons/obj/weapons/sword.dmi'
+	icon_state = "hfrequency0"
+	inhand_icon_state = "hfrequency0"
+	base_icon_state = "hfrequency"
+	worn_icon_state = "hfrequency0"
+	icon_angle = -45
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	w_class = WEIGHT_CLASS_BULKY
+	force = 10
+	armour_penetration = 35
+	block_chance = 40
+	slot_flags = ITEM_SLOT_BACK
+	sharpness = SHARP_EDGED
+	attack_verb_continuous = list("chops", "slices", "cuts", "zandatsu's")
+	attack_verb_simple = list("chop", "slice", "cut", "zandatsu")
+	hitsound = 'sound/items/weapons/rapierhit.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
+	menu_description = "A sharp blade which partially penetrates armor. Unusualy adept at blocking melee attacks from exosuits. Very effective at butchering bodies. Can be worn on the back."
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
+
+/obj/item/nullrod/vibro/Initialize(mapload)
+	. = ..()
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -3)
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = 10, \
+		force_wielded = 18, \
+	)
+	AddComponent(
+		/datum/component/butchering, \
+		speed = 7 SECONDS, \
+		effectiveness = 110, \
+	)
+
+/obj/item/nullrod/vibro/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)) && attack_type == OVERWHELMING_ATTACK)
+		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
+		return TRUE
+	return FALSE
+
+/obj/item/nullrod/vibro/update_icon_state()
+	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
+	return ..()
 
 // God Hand - Cannot be dropped. Does burn damage.
 
@@ -455,17 +449,20 @@
 		bonus_modifier = 0, \
 		butcher_sound = hitsound, \
 	)
+	RegisterSignal(src, COMSIG_ITEM_SUBTYPE_PICKER_SELECTED, PROC_REF(on_selected))
 
-/obj/item/nullrod/chainsaw/on_selected(obj/item/nullrod/old_weapon, mob/living/picker)
+/obj/item/nullrod/chainsaw/proc/on_selected(datum/source, obj/item/nullrod/old_weapon, mob/living/picker)
+	SIGNAL_HANDLER
 	if(!iscarbon(picker))
 		return
+	to_chat(picker, span_warning("[src] takes the place of your arm!"))
 	var/obj/item/bodypart/active = picker.get_active_hand()
 	var/mob/living/carbon/new_hero = picker
 	new_hero.make_item_prosthetic(src, active.body_zone)
 
 /obj/item/nullrod/chainsaw/equipped(mob/living/carbon/user, slot, initial)
 	. = ..()
-	if(!iscarbon(user))
+	if(!iscarbon(user) || HAS_TRAIT_FROM(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT))
 		return
 	if(!(slot & ITEM_SLOT_HANDS))
 		return
@@ -607,29 +604,22 @@
 
 // Carp-sie Plushie - Gives you the carp faction so that you can be friends with carp.
 
-/obj/item/nullrod/carp
+/obj/item/toy/plush/carpplushie/nullrod
 	name = "carp-sie plushie"
 	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to receive the blessing of Carp-Sie."
-	icon = 'icons/map_icons/items/_item.dmi'
-	icon_state = "/obj/item/nullrod/carp"
-	post_init_icon_state = "map_plushie_carp"
-	greyscale_config = /datum/greyscale_config/plush_carp
-	greyscale_colors = "#cc99ff#000000"
-	inhand_icon_state = "carp_plushie"
 	worn_icon_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 15
-	attack_verb_continuous = list("bites", "eats", "fin slaps")
-	attack_verb_simple = list("bite", "eat", "fin slap")
-	hitsound = 'sound/items/weapons/bite.ogg'
-	menu_description = "A plushie dealing a little less damage due to its cute form. Capable of blessing one person with the Carp-Sie favor, which grants friendship of all wild space carps. Fits in pockets. Can be worn on the belt."
+	offspring_type = /obj/item/toy/plush/carpplushie
+	divine = TRUE
 
-/obj/item/nullrod/carp/Initialize(mapload)
+/obj/item/toy/plush/carpplushie/nullrod/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/nullrod_core)
 	AddComponent(/datum/component/faction_granter, FACTION_CARP, holy_role_required = HOLY_ROLE_PRIEST, grant_message = span_boldnotice("You are blessed by Carp-Sie. Wild space carp will no longer attack you."))
 
-// Monk's Staff - Higher block, lower damage.
+// Monk's Staff - Good block, two-handed. Great for showing off.
 
 /obj/item/nullrod/bostaff
 	name = "monk's staff"
@@ -664,7 +654,7 @@
 	return ..()
 
 /obj/item/nullrod/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == (PROJECTILE_ATTACK || LEAP_ATTACK || OVERWHELMING_ATTACK))
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
 		final_block_chance = 0 //Don't bring a stick to a gunfight, and also you aren't going to really block someone full body tackling you with a stick. Or a road roller, if one happened to hit you.
 	return ..()
 
@@ -869,7 +859,7 @@
 	if(user == living_target)
 		return
 
-	if(living_target.stat == DEAD)
+	if(living_target.stat == DEAD || QDELETED(living_target))
 		return
 
 	sneak_attack(living_target, user)

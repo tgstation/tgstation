@@ -9,7 +9,7 @@
 	var/antag = TRUE
 
 
-/obj/effect/mob_spawn/ghost_role/human/virtual_domain/special(mob/living/spawned_mob, mob/mob_possessor)
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/special(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
 	var/datum/mind/ghost_mind = mob_possessor.mind
 	if(ghost_mind) // Preserves any previous bodies before making the switch
 		spawned_mob.AddComponent(/datum/component/temporary_body, ghost_mind, ghost_mind.current, TRUE)
@@ -18,6 +18,7 @@
 
 	if(antag)
 		spawned_mob.mind.add_antag_datum(/datum/antagonist/domain_ghost_actor)
+		spawned_mob.mind.set_assigned_role(SSjob.get_job_type(/datum/job/bitrunning_glitch))
 
 /// Simulates a ghost role spawn without calling special(), ie a bitrunner spawn instead of a ghost.
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/proc/artificial_spawn(mob/living/runner)
@@ -33,14 +34,16 @@
 	outfit = /datum/outfit/beachbum
 	spawner_job_path = /datum/job/beach_bum
 	antag = FALSE
+	allow_custom_character = GHOSTROLE_TAKE_PREFS_APPEARANCE
 
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/beach/lifeguard
 	name = "virtual lifeguard sleeper"
 	you_are_text = "You are a spunky virtual lifeguard!"
 	flavour_text = "It's up to you to make sure nobody lags or gets eaten by malware and stuff."
 	outfit = /datum/outfit/beachbum/lifeguard
+	allow_custom_character = NONE
 
-/obj/effect/mob_spawn/ghost_role/human/virtual_domain/beach/lifeguard/special(mob/living/carbon/human/lifeguard, mob/mob_possessor)
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/beach/lifeguard/special(mob/living/carbon/human/lifeguard, mob/mob_possessor, apply_prefs)
 	. = ..()
 	lifeguard.gender = FEMALE
 	lifeguard.update_body()
@@ -50,6 +53,7 @@
 	you_are_text = "You are a virtual beach bartender!"
 	flavour_text = "Your job is to keep the virtually rendered drinks coming, and help the dudebros engage drunkness simulations."
 	outfit = /datum/outfit/spacebartender
+	allow_custom_character = ALL
 
 //Skeleton Pirates
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/pirate
@@ -72,7 +76,7 @@
 	head = /obj/item/clothing/head/costume/pirate/bandana/armored
 	shoes = /obj/item/clothing/shoes/pirate/armored
 
-/obj/effect/mob_spawn/ghost_role/human/virtual_domain/pirate/special(mob/living/spawned_mob, mob/mob_possessor)
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/pirate/special(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_mob.fully_replace_character_name(spawned_mob.real_name, "[pick(strings(PIRATE_NAMES_FILE, "generic_beginnings"))][pick(strings(PIRATE_NAMES_FILE, "generic_endings"))]")
 

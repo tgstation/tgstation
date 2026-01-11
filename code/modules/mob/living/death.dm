@@ -17,6 +17,7 @@
 
 	if(stat != DEAD)
 		death(TRUE)
+	send_death_moodlets(gibbed = TRUE)
 
 	ghostize()
 	spill_organs(drop_bitflags)
@@ -102,6 +103,8 @@
 		// keep us upright so the animation fits.
 		ADD_TRAIT(src, TRAIT_FORCED_STANDING, TRAIT_GENERIC)
 
+	send_death_moodlets(dusted = TRUE)
+
 	if(drop_items)
 		unequip_everything()
 
@@ -160,6 +163,46 @@
 	ash.pixel_z = -5
 	ash.pixel_w = rand(-1, 1)
 
+/**
+ * Sends a moodlet to all nearby living mobs that are not blind or unconscious
+ * to indicate that they saw this mob die (and thus feel bad about it)
+ *
+ * Note: If the mob already has a death moodlet, and the same moodlet is applied, the existing moodlet will simply worsen.
+ * Note: If the mob has a death moodlet, and a worse moodlet is applied, the worse moodlet will take priority.
+ *
+ * Arguments:
+ * * dusted - Was the mob dusted?
+ * * gibbed - Was the mob gibbed?
+ */
+/mob/living/proc/send_death_moodlets(dusted = FALSE, gibbed = FALSE)
+	if(flags_1 & HOLOGRAM_1)
+		return
+
+	for(var/mob/living/nearby in viewers(src))
+		if(nearby.stat >= UNCONSCIOUS || nearby.is_blind())
+			continue
+		nearby.add_mood_event("saw_death", /datum/mood_event/conditional/see_death, src, dusted, gibbed)
+
+/mob/living/silicon/send_death_moodlets(dusted = FALSE, gibbed = FALSE)
+	return // You are a machine (Future todo, roboticists feel sad though)
+
+/mob/living/basic/send_death_moodlets(dusted = FALSE, gibbed = FALSE)
+	if(!(basic_mob_flags & SENDS_DEATH_MOODLETS))
+		return
+	. = ..()
+	add_memory_in_range(src, 7, /datum/memory/pet_died, deuteragonist = src)
+
+/mob/living/simple_animal/send_death_moodlets(dusted = FALSE, gibbed = FALSE)
+	return // I don't care about you anymore
+
+/mob/living/carbon/human/send_death_moodlets(dusted = FALSE, gibbed = FALSE)
+	// Deaths of people undergoing surgery don't count
+	// otherwise surgeons would be depressed and that would be too realistic
+	if(HAS_TRAIT(src, TRAIT_READY_TO_OPERATE))
+		return
+	. = ..()
+	add_memory_in_range(src, 7, (gibbed ? /datum/memory/witness_gib : /datum/memory/witnessed_death), protagonist = src)
+
 /*
  * Called when the mob dies. Can also be called manually to kill a mob.
  *
@@ -170,8 +213,10 @@
 	if(stat == DEAD)
 		return FALSE
 
-	if(!gibbed && (death_sound || death_message || (living_flags & ALWAYS_DEATHGASP)))
-		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "deathgasp")
+	if(!gibbed)
+		if(death_sound || death_message || (living_flags & ALWAYS_DEATHGASP))
+			INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "deathgasp")
+		send_death_moodlets()
 
 	set_stat(DEAD)
 	timeofdeath = world.time

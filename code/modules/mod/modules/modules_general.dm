@@ -2,33 +2,26 @@
 
 ///Storage - Adds a storage component to the suit.
 /obj/item/mod/module/storage
-	name = "MOD storage module"
+	name = "MOD compact storage module"
 	desc = "What amounts to a series of integrated storage compartments and specialized pockets installed across \
-		the surface of the suit, useful for storing various bits, and or bobs."
+		the surface of the suit, useful for storing various bits, and or bobs. This version has been trimmed down to save space."
 	icon_state = "storage"
-	complexity = 3
+	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/plate_compression)
 	required_slots = list(ITEM_SLOT_BACK)
-	/// Max weight class of items in the storage.
-	var/max_w_class = WEIGHT_CLASS_NORMAL
-	/// Max combined weight of all items in the storage.
-	var/max_combined_w_class = 15
-	/// Max amount of items in the storage.
-	var/max_items = 7
-	/// Is nesting same-size storage items allowed?
-	var/big_nesting = FALSE
+	/// The storage type to create for the module
+	var/datum/storage/storage_type = /datum/storage/mod_storage
 
 /obj/item/mod/module/storage/Initialize(mapload)
 	. = ..()
-	create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
-	atom_storage.allow_big_nesting = TRUE
-	atom_storage.set_locked(STORAGE_FULLY_LOCKED)
+	if(storage_type)
+		create_storage(storage_type = storage_type)
+		atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 
 /obj/item/mod/module/storage/on_install()
 	. = ..()
-	var/datum/storage/modstorage = mod.create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
+	var/datum/storage/modstorage = mod.create_storage(storage_type = storage_type)
 	modstorage.set_real_location(src)
-	modstorage.allow_big_nesting = big_nesting
 	atom_storage.set_locked(STORAGE_NOT_LOCKED)
 	var/obj/item/clothing/suit = mod.get_part_from_slot(ITEM_SLOT_OCLOTHING)
 	if(istype(suit))
@@ -55,22 +48,22 @@
 	mod.wearer.temporarilyRemoveItemFromInventory(mod.wearer.s_store)
 
 /obj/item/mod/module/storage/large_capacity
-	name = "MOD expanded storage module"
+	name = "MOD storage module"
 	desc = "Reverse engineered by Nakamura Engineering from Donk Company designs, this system of hidden compartments \
 		is entirely within the suit, distributing items and weight evenly to ensure a comfortable experience for the user; \
 		whether smuggling, or simply hauling."
+	complexity = 3
 	icon_state = "storage_large"
-	max_combined_w_class = 21
-	max_items = 14
+	storage_type = /datum/storage/mod_storage/expanded
 
 /obj/item/mod/module/storage/syndicate
 	name = "MOD syndicate storage module"
 	desc = "A storage system using nanotechnology developed by Cybersun Industries, these compartments use \
 		esoteric technology to compress the physical matter of items put inside of them, \
 		essentially shrinking items for much easier and more portable storage."
+	complexity = 3
 	icon_state = "storage_syndi"
-	max_combined_w_class = 30
-	max_items = 21
+	storage_type = /datum/storage/mod_storage/syndicate
 
 /obj/item/mod/module/storage/belt
 	name = "MOD case storage module"
@@ -79,20 +72,16 @@
 		If you find this equipped to a standard modular suit, then someone has almost certainly shortchanged you on a proper storage module."
 	icon_state = "storage_case"
 	complexity = 0
-	max_w_class = WEIGHT_CLASS_SMALL
-	max_combined_w_class = 21
-	max_items = 7
 	required_slots = list(ITEM_SLOT_BELT)
+	storage_type = /datum/storage/mod_storage/belt
 
 /obj/item/mod/module/storage/bluespace
 	name = "MOD bluespace storage module"
 	desc = "A storage system developed by Nanotrasen, these compartments employ \
 		miniaturized bluespace pockets for the ultimate in storage technology; regardless of the weight of objects put inside."
+	complexity = 3
 	icon_state = "storage_large"
-	max_w_class = WEIGHT_CLASS_GIGANTIC
-	max_combined_w_class = 60
-	max_items = 21
-	big_nesting = TRUE
+	storage_type = /datum/storage/mod_storage/bluespace
 
 ///Ion Jetpack - Lets the user fly freely through space using battery charge.
 /obj/item/mod/module/jetpack
@@ -171,12 +160,12 @@
 		return FALSE
 	return TRUE
 
-/obj/item/mod/module/jetpack/on_activation()
+/obj/item/mod/module/jetpack/on_activation(mob/activator)
 	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
 	if (!stabilize)
 		ADD_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, REF(src))
 
-/obj/item/mod/module/jetpack/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/jetpack/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, REF(src))
 
@@ -206,9 +195,9 @@
 	incompatible_modules = list(/obj/item/mod/module/jump_jet)
 	required_slots = list(ITEM_SLOT_BACK)
 
-/obj/item/mod/module/jump_jet/on_use()
+/obj/item/mod/module/jump_jet/on_use(mob/activator)
 	if (DOING_INTERACTION(mod.wearer, mod.wearer))
-		balloon_alert(mod.wearer, "busy!")
+		balloon_alert(activator, "busy!")
 		return
 	balloon_alert(mod.wearer, "launching...")
 	mod.wearer.Shake(duration = 1 SECONDS)
@@ -243,9 +232,9 @@
 	incompatible_modules = list(/obj/item/mod/module/status_readout)
 	tgui_id = "status_readout"
 	required_slots = list(ITEM_SLOT_BACK)
-	/// Does this show damage types, body temp, satiety
+	/// Does this show damage types, body temp, satiety?
 	var/display_detailed_vitals = TRUE
-	/// Does this show DNA data
+	/// Does this show DNA data?
 	var/display_dna = FALSE
 	/// Does this show the round ID and shift time?
 	var/display_time = FALSE
@@ -253,6 +242,8 @@
 	var/death_sound = 'sound/effects/flatline3.ogg'
 	/// Death sound volume. Please be responsible with this.
 	var/death_sound_volume = 50
+	/// Does this boost suit sensor status across Z-levels?
+	var/sensor_boost = TRUE
 
 /obj/item/mod/module/status_readout/add_ui_data()
 	. = ..()
@@ -262,10 +253,10 @@
 	.["health"] = mod.wearer?.health || 0
 	.["health_max"] = mod.wearer?.getMaxHealth() || 0
 	if(display_detailed_vitals)
-		.["loss_brute"] = mod.wearer?.getBruteLoss() || 0
-		.["loss_fire"] = mod.wearer?.getFireLoss() || 0
-		.["loss_tox"] = mod.wearer?.getToxLoss() || 0
-		.["loss_oxy"] = mod.wearer?.getOxyLoss() || 0
+		.["loss_brute"] = mod.wearer?.get_brute_loss() || 0
+		.["loss_fire"] = mod.wearer?.get_fire_loss() || 0
+		.["loss_tox"] = mod.wearer?.get_tox_loss() || 0
+		.["loss_oxy"] = mod.wearer?.get_oxy_loss() || 0
 		.["body_temperature"] = mod.wearer?.bodytemperature || 0
 		.["nutrition"] = mod.wearer?.nutrition || 0
 	if(display_dna)
@@ -291,6 +282,7 @@
 	. = ..()
 	.["display_detailed_vitals"] = add_ui_configuration("Detailed Vitals", "bool", display_detailed_vitals)
 	.["display_dna"] = add_ui_configuration("DNA Information", "bool", display_dna)
+	.["sensor_boost"] = add_ui_configuration("Suit Sensor Booster", "bool", sensor_boost)
 
 /obj/item/mod/module/status_readout/configure_edit(key, value)
 	switch(key)
@@ -298,12 +290,23 @@
 			display_detailed_vitals = text2num(value)
 		if("display_dna")
 			display_dna = text2num(value)
+		if("sensor_boost")
+			sensor_boost = text2num(value)
+			update_sensor_booster()
 
 /obj/item/mod/module/status_readout/on_part_activation()
 	RegisterSignal(mod.wearer, COMSIG_LIVING_DEATH, PROC_REF(death_sound))
+	update_sensor_booster()
 
 /obj/item/mod/module/status_readout/on_part_deactivation(deleting)
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_DEATH)
+	REMOVE_TRAIT(mod.wearer, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
+
+/obj/item/mod/module/status_readout/proc/update_sensor_booster()
+	if(sensor_boost)
+		ADD_TRAIT(mod.wearer, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
+	else
+		REMOVE_TRAIT(mod.wearer, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
 
 /obj/item/mod/module/status_readout/proc/death_sound(mob/living/carbon/human/wearer)
 	SIGNAL_HANDLER
@@ -424,12 +427,12 @@
 	/// Maximum range we can set.
 	var/max_range = 5
 
-/obj/item/mod/module/flashlight/on_activation()
+/obj/item/mod/module/flashlight/on_activation(mob/activator)
 	set_light_flags(light_flags | LIGHT_ATTACHED)
 	set_light_on(active)
 	active_power_cost = base_power * light_range
 
-/obj/item/mod/module/flashlight/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/flashlight/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	set_light_flags(light_flags & ~LIGHT_ATTACHED)
 	set_light_on(active)
 
@@ -459,7 +462,7 @@
 /obj/item/mod/module/flashlight/configure_edit(key, value)
 	switch(key)
 		if("light_color")
-			value = input(usr, "Pick new light color", "Flashlight Color") as color|null
+			value = tgui_color_picker(usr, "Pick new light color", "Flashlight Color")
 			if(!value)
 				return
 			if(is_color_dark(value, 50))
@@ -504,13 +507,13 @@
 	/// Time it takes for us to dispense.
 	var/dispense_time = 0 SECONDS
 
-/obj/item/mod/module/dispenser/on_use()
+/obj/item/mod/module/dispenser/on_use(mob/activator)
 	if(dispense_time && !do_after(mod.wearer, dispense_time, target = mod))
 		balloon_alert(mod.wearer, "interrupted!")
 		return FALSE
 	var/obj/item/dispensed = new dispense_type(mod.wearer.loc)
 	mod.wearer.put_in_hands(dispensed)
-	balloon_alert(mod.wearer, "[dispensed] dispensed")
+	balloon_alert(activator, "[dispensed] dispensed")
 	playsound(src, 'sound/machines/click.ogg', 100, TRUE)
 	drain_power(use_energy_cost)
 	return dispensed
@@ -613,9 +616,9 @@
 	UnregisterSignal(mod, COMSIG_ATOM_EMP_ACT)
 	UnregisterSignal(mod, COMSIG_ATOM_EMAG_ACT)
 
-/obj/item/mod/module/dna_lock/on_use()
+/obj/item/mod/module/dna_lock/on_use(mob/activator)
 	dna = mod.wearer.dna.unique_enzymes
-	balloon_alert(mod.wearer, "dna updated")
+	balloon_alert(activator, "dna updated")
 	drain_power(use_energy_cost)
 
 /obj/item/mod/module/dna_lock/emp_act(severity)
@@ -753,12 +756,11 @@
 ///A module that recharges the suit by an itsy tiny bit whenever the user takes a step. Originally called "magneto module" but the videogame reference sounds cooler.
 /obj/item/mod/module/joint_torsion
 	name = "MOD joint torsion ratchet module"
-	desc = "A compact, weak AC generator that charges the suit's internal cell through the power of deambulation. It doesn't work in zero G."
+	desc = "A compact, weak AC generator that charges the suit's internal cell through the power of deambulation. It doesn't work in zero G. More than one can be installed."
 	icon_state = "joint_torsion"
 	complexity = 1
-	incompatible_modules = list(/obj/item/mod/module/joint_torsion)
 	required_slots = list(ITEM_SLOT_FEET)
-	var/power_per_step = DEFAULT_CHARGE_DRAIN * 0.3
+	var/power_per_step = DEFAULT_CHARGE_DRAIN * 0.45
 
 /obj/item/mod/module/joint_torsion/on_part_activation()
 	if(!(mod.wearer.movement_type & (FLOATING|FLYING)))
@@ -814,12 +816,7 @@
 	)
 	/// Materials that will be extracted.
 	var/list/accepted_mats
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_obj_entered),
-		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(on_atom_initialized_on),
-	)
-	var/datum/component/connect_loc_behalf/connector
-	var/datum/component/material_container/container
+	var/datum/material_container/container
 
 /obj/item/mod/module/recycler/Initialize(mapload)
 	. = ..()
@@ -827,31 +824,35 @@
 	if(!length(accepted_mats))
 		accepted_mats = SSmaterials.materials_by_category[MAT_CATEGORY_SILO]
 
-	container = AddComponent( \
-		/datum/component/material_container, \
+	container = new ( \
+		src, \
 		accepted_mats, \
 		50 * SHEET_MATERIAL_AMOUNT, \
 		MATCONTAINER_EXAMINE | MATCONTAINER_NO_INSERT, \
 		container_signals = list( \
-			COMSIG_MATCONTAINER_SHEETS_RETRIEVED = TYPE_PROC_REF(/obj/item/mod/module/recycler, InsertSheets) \
+			COMSIG_MATCONTAINER_STACK_RETRIEVED = TYPE_PROC_REF(/obj/item/mod/module/recycler, InsertSheets) \
 		) \
 	)
 
 /obj/item/mod/module/recycler/Destroy()
-	container = null
+	QDEL_NULL(container)
 	return ..()
 
-/obj/item/mod/module/recycler/on_activation()
-	connector = AddComponent(/datum/component/connect_loc_behalf, mod.wearer, loc_connections)
+/obj/item/mod/module/recycler/on_activation(mob/activator)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_moved))
 
-/obj/item/mod/module/recycler/on_deactivation(display_message, deleting = FALSE)
-	QDEL_NULL(connector)
-	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_moved))
+/obj/item/mod/module/recycler/on_deactivation(mob/activator, display_message, deleting = FALSE)
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	if(mod.wearer.loc)
+		UnregisterSignal(mod.wearer.loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
 
 /obj/item/mod/module/recycler/proc/on_wearer_moved(datum/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
-
+	if(old_loc)
+		UnregisterSignal(mod.wearer.loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
+	if(mod.wearer.loc)
+		RegisterSignal(mod.wearer.loc, COMSIG_ATOM_ENTERED, PROC_REF(on_obj_entered))
+		RegisterSignal(mod.wearer.loc, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_initialized_on))
 	for(var/obj/item/item in mod.wearer.loc)
 		if(!is_type_in_list(item, allowed_item_types))
 			return
@@ -859,18 +860,14 @@
 
 /obj/item/mod/module/recycler/proc/on_obj_entered(atom/new_loc, atom/movable/arrived, atom/old_loc)
 	SIGNAL_HANDLER
-
-	if(!is_type_in_list(arrived, allowed_item_types))
-		return
-	insert_trash(arrived)
+	if(is_type_in_list(arrived, allowed_item_types))
+		insert_trash(arrived)
 
 /obj/item/mod/module/recycler/proc/on_atom_initialized_on(atom/loc, atom/new_atom)
 	SIGNAL_HANDLER
-
-	if(!is_type_in_list(new_atom, allowed_item_types))
-		return
-	//Give the new atom the time to fully initialize and maybe live if the wearer moves away.
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/mod/module/recycler, insert_trash_if_nearby), new_atom), 0.5 SECONDS)
+	// Give the new atom the time to fully initialize and maybe live if the wearer moves away.
+	if(is_type_in_list(new_atom, allowed_item_types))
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/mod/module/recycler, insert_trash_if_nearby), new_atom), 0.5 SECONDS)
 
 /obj/item/mod/module/recycler/proc/insert_trash_if_nearby(atom/new_atom)
 	if(new_atom && mod?.wearer && new_atom.loc == mod.wearer.loc)
@@ -997,19 +994,19 @@
 	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
 	if(!gloves)
 		return
-	gloves.AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+	gloves.AddElement(/datum/element/adjust_fishing_difficulty, -5)
 	if(equipped)
 		gloves.AddComponent(/datum/component/profound_fisher, equipped, delete_rod_when_deleted = FALSE)
 
 /obj/item/mod/module/fishing_glove/on_part_deactivation(deleting = FALSE)
 	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
 	if(gloves && !deleting)
-		qdel(gloves.GetComponent(/datum/component/adjust_fishing_difficulty))
+		gloves.RemoveElement(/datum/element/adjust_fishing_difficulty)
 		qdel(gloves.GetComponent(/datum/component/profound_fisher))
 
 /obj/item/mod/module/shock_absorber
 	name = "MOD shock absorption module"
-	desc = "A module that makes the user resistant to the knockdown inflicted by Stun Batons."
+	desc = "A module that makes the user resistant to the knockdown and CNS disruption inflicted by Stun Batons."
 	icon_state = "no_baton"
 	complexity = 1
 	use_energy_cost = DEFAULT_CHARGE_DRAIN
@@ -1032,25 +1029,3 @@
 	var/datum/effect_system/lightning_spread/sparks = new /datum/effect_system/lightning_spread
 	sparks.set_up(number = 5, cardinals_only = TRUE, location = mod.wearer.loc)
 	sparks.start()
-
-/obj/item/mod/module/hearing_protection
-	name = "MOD hearing protection module"
-	desc = "A module that protects the users ears from loud sounds"
-	complexity = 0
-	removable = FALSE
-	incompatible_modules = list(/obj/item/mod/module/hearing_protection)
-	required_slots = list(ITEM_SLOT_HEAD)
-
-/obj/item/mod/module/hearing_protection/on_part_activation()
-	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
-	if(istype(head_cover))
-		head_cover.AddComponent(/datum/component/wearertargeting/earprotection)
-		var/datum/component/wearertargeting/earprotection/protection = head_cover.GetComponent(/datum/component/wearertargeting/earprotection)
-		protection.on_equip(src, mod.wearer, ITEM_SLOT_HEAD)
-
-/obj/item/mod/module/hearing_protection/on_part_deactivation(deleting = FALSE)
-	if(deleting)
-		return
-	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
-	if(istype(head_cover))
-		qdel(head_cover.GetComponent(/datum/component/wearertargeting/earprotection))
