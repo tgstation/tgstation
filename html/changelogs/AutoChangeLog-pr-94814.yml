@@ -1,0 +1,4 @@
+author: "SapphoQueer"
+delete-after: True
+changes:
+  - bugfix: "Modular computers now have a 2 second delay before being deconstructed."
