@@ -68,7 +68,7 @@
 
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
 
-	///What types of bounty tasks can this job receive past the default?
+	///What types of bounty tasks can this job receive past the default? TODO, move to id trims.
 	var/bounty_types = CIV_JOB_BASIC
 
 	/// Goodies that can be received via the mail system.
@@ -405,8 +405,7 @@
 		var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[equipped.account_id]"]
 
 		if(account && account.account_id == equipped.account_id)
-			card.registered_account = account
-			LAZYADD(account.bank_cards, card)
+			card.set_account(account)
 
 		equipped.update_ID_card()
 
