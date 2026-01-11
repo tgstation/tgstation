@@ -209,7 +209,7 @@
 			timeout_modifier += 0.1
 			description = "It warms my heart to see xenomorphs get blown to bits!"
 
-	if(isalienroyal(dead_mob))
+	if(isalienroyal(dead_mob) || istype(dead_mob, /mob/living/basic/alien/queen))
 		change_modifier = 0.5
 		timeout_modifier = 0.5
 		description = "The queen has fallen! Humanity prevails! I hope those bastards all rot in hell!"
