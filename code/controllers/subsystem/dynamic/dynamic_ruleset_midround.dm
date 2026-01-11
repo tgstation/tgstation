@@ -58,148 +58,6 @@
 /datum/dynamic_ruleset/midround/spiders/false_alarm()
 	announce_spiders()
 
-/datum/dynamic_ruleset/midround/pirates
-	name = "Pirates"
-	config_tag = "Light Pirates"
-	midround_type = LIGHT_MIDROUND
-	jobban_flag = ROLE_TRAITOR
-	ruleset_flags = RULESET_INVADER|RULESET_ADMIN_CONFIGURABLE
-	weight = 3
-	min_pop = 15
-	min_antag_cap = 0 // ship will spawn if there are no ghosts around
-
-	/// Pool to pick pirates from
-	var/list/datum/pirate_gang/pirate_pool
-
-/datum/dynamic_ruleset/midround/pirates/New(list/dynamic_config)
-	. = ..()
-	pirate_pool = default_pirate_pool()
-
-/datum/dynamic_ruleset/midround/pirates/can_be_selected()
-	return ..() && (GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT) && length(default_pirate_pool()) > 0
-
-// An abornmal ruleset that selects no players, but just spawns a pirate ship
-/datum/dynamic_ruleset/midround/pirates/execute()
-	send_pirate_threat(pirate_pool)
-
-/// Returns what pool of pirates to drawn from
-/// Returned list is mutated by the ruleset
-/datum/dynamic_ruleset/midround/pirates/proc/default_pirate_pool()
-	return GLOB.light_pirate_gangs
-
-/datum/dynamic_ruleset/midround/pirates/heavy
-	name = "Pirates"
-	config_tag = "Heavy Pirates"
-	midround_type = HEAVY_MIDROUND
-	jobban_flag = ROLE_TRAITOR
-	ruleset_flags = RULESET_INVADER
-	weight = 3
-	min_pop = 25
-	min_antag_cap = 0 // ship will spawn if there are no ghosts around
-
-/datum/dynamic_ruleset/midround/pirates/heavy/default_pirate_pool()
-	return GLOB.heavy_pirate_gangs
-
-#define RANDOM_PIRATE_POOL "Random"
-
-/datum/dynamic_ruleset/midround/pirates/configure_ruleset(mob/admin)
-	var/list/admin_pool = list("[RULESET_CONFIG_CANCEL]" = TRUE, "[RANDOM_PIRATE_POOL]" = TRUE)
-	for(var/datum/pirate_gang/gang as anything in default_pirate_pool())
-		admin_pool[gang.name] = gang
-	var/picked = tgui_input_list(admin, "Select a pirate gang", "Pirate Gang Selection", admin_pool)
-	if(!picked || picked == RULESET_CONFIG_CANCEL)
-		return RULESET_CONFIG_CANCEL
-	if(picked == RANDOM_PIRATE_POOL)
-		return null
-
-	pirate_pool = list(admin_pool[picked])
-	return null
-
-#undef RANDOM_PIRATE_POOL
-
-#define NO_ANSWER 0
-#define POSITIVE_ANSWER 1
-#define NEGATIVE_ANSWER 2
-
-/datum/dynamic_ruleset/midround/pirates/proc/send_pirate_threat(list/pirate_selection)
-	var/datum/pirate_gang/chosen_gang = pick_n_take(pirate_selection)
-	///If there was nothing to pull from our requested list, stop here.
-	if(!chosen_gang)
-		message_admins("Error attempting to run the space pirate event, as the given pirate gangs list was empty.")
-		return
-	//set payoff
-	var/payoff = 0
-	var/datum/bank_account/account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	if(account)
-		payoff = max(PAYOFF_MIN, FLOOR(account.account_balance * 0.80, 1000))
-	var/datum/comm_message/threat = chosen_gang.generate_message(payoff)
-	//send message
-	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", SSstation.announcer.get_rand_report_sound())
-	threat.answer_callback = CALLBACK(src, PROC_REF(pirates_answered), threat, chosen_gang, payoff, world.time)
-	addtimer(CALLBACK(src, PROC_REF(spawn_pirates), threat, chosen_gang), RESPONSE_MAX_TIME)
-	GLOB.communications_controller.send_message(threat, unique = TRUE)
-
-/datum/dynamic_ruleset/midround/pirates/proc/pirates_answered(datum/comm_message/threat, datum/pirate_gang/chosen_gang, payoff, initial_send_time)
-	if(world.time > initial_send_time + RESPONSE_MAX_TIME)
-		priority_announce(chosen_gang.response_too_late, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
-		return
-	if(!threat?.answered)
-		return
-	if(threat.answered == NEGATIVE_ANSWER)
-		priority_announce(chosen_gang.response_rejected, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
-		return
-
-	var/datum/bank_account/plundered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	if(plundered_account)
-		if(plundered_account.adjust_money(-payoff))
-			chosen_gang.paid_off = TRUE
-			priority_announce(chosen_gang.response_received, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
-		else
-			priority_announce(chosen_gang.response_not_enough, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
-
-/datum/dynamic_ruleset/midround/pirates/proc/spawn_pirates(datum/comm_message/threat, datum/pirate_gang/chosen_gang)
-	if(chosen_gang.paid_off)
-		return
-
-	var/list/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for a [span_notice("pirate crew of [chosen_gang.name]?")]", check_jobban = ROLE_TRAITOR, alert_pic = /obj/item/claymore/cutlass, role_name_text = "pirate crew")
-	shuffle_inplace(candidates)
-
-	var/template_key = "pirate_[chosen_gang.ship_template_id]"
-	var/datum/map_template/shuttle/pirate/ship = SSmapping.shuttle_templates[template_key]
-	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
-	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
-	var/z = SSmapping.empty_space.z_value
-	var/turf/T = locate(x,y,z)
-	if(!T)
-		CRASH("Pirate event found no turf to load in")
-
-	if(!ship.load(T))
-		CRASH("Loading pirate ship failed!")
-
-	for(var/turf/area_turf as anything in ship.get_affected_turfs(T))
-		for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in area_turf)
-			if(candidates.len > 0)
-				var/mob/our_candidate = candidates[1]
-				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
-				candidates -= our_candidate
-				notify_ghosts(
-					"The [chosen_gang.ship_name] has an object of interest: [spawned_mob]!",
-					source = spawned_mob,
-					header = "Pirates!",
-				)
-			else
-				notify_ghosts(
-					"The [chosen_gang.ship_name] has an object of interest: [spawner]!",
-					source = spawner,
-					header = "Pirate Spawn Here!",
-				)
-
-	priority_announce(chosen_gang.arrival_announcement, sender_override = chosen_gang.ship_name)
-
-#undef NO_ANSWER
-#undef POSITIVE_ANSWER
-#undef NEGATIVE_ANSWER
-
 /**
  * ### Ghost rulesets
  *
@@ -1026,6 +884,220 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/assign_role(datum/mind/candidate)
 	return // handled by new() entirely
+
+
+/**
+ * ### Shuttle rulesets
+ */
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle
+	///
+	var/list/shuttle_sleepers
+
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/prepare_for_role(datum/mind/candidate)
+	//make mind use sleeper
+	//remember to unlock unused sleepers
+	return
+
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/load_shuttle()
+	var/datum/map_template/shuttle/midround_shuttle = choose_shuttle_template()
+	var/datum/turf_reservation/transit_reservation = SSmapping.request_turf_block_reservation(
+		((SHUTTLE_TRANSIT_BORDER * 2) + midround_shuttle.width),
+		((SHUTTLE_TRANSIT_BORDER * 2) + midround_shuttle.height),
+		reservation_type = /datum/turf_reservation/transit,
+		turf_type_override = /datum/turf_reservation/transit::turf_type,
+	)
+	var/turf/reservation_bottom_left = transit_reservation?.bottom_left_turfs[1]
+	if(!reservation_bottom_left)
+		CRASH("[src] shuttle reservation failed!")
+	var/turf/shuttle_spawn_point = locate((reservation_bottom_left.x + SHUTTLE_TRANSIT_BORDER), (reservation_bottom_left.y + SHUTTLE_TRANSIT_BORDER), reservation_bottom_left.z)
+	//
+	var/identical_events_ran = 0
+	for(var/event in SSdynamic.executed_rulesets)
+		if(!istype(event, type))
+			continue
+		identical_events_ran++
+	//
+	if(!midround_shuttle.load(shuttle_spawn_point))
+		CRASH("[src] shuttle loading failed!")
+	//
+	var/obj/docking_port/mobile/shuttle_port = identical_events_ran == 1 ? SSshuttle.getShuttle("[midround_shuttle.shuttle_id]") : SSshuttle.getShuttle("[midround_shuttle.shuttle_id]_[identical_events_ran]")
+	RegisterSignal(shuttle_port, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, PROC_REF(on_shuttle_move))
+	//
+	for(var/turf/open/shuttle_turf as anything in midround_shuttle.get_affected_turfs(shuttle_spawn_point))
+		var/obj/effect/mob_spawn/ghost_role/spawner = locate() in shuttle_turf
+		if (spawner)
+			spawner.uses = 0 //locked
+			LAZYADD(shuttle_sleepers, spawner)
+	//
+	var/area/shuttle/transit/shuttle_area = get_area(shuttle_port)
+	var/area/shuttle/transit/transit_area = new()
+	var/transit_path = /turf/open/space/transit
+	switch(shuttle_port.preferred_direction)
+		if(NORTH)
+			transit_path = /turf/open/space/transit/north
+		if(SOUTH)
+			transit_path = /turf/open/space/transit/south
+		if(EAST)
+			transit_path = /turf/open/space/transit/east
+		if(WEST)
+			transit_path = /turf/open/space/transit/west
+	shuttle_area.parallax_movedir = shuttle_port.preferred_direction
+	transit_area.parallax_movedir = shuttle_port.preferred_direction
+	for(var/turf/open/space_turf as anything in transit_reservation.reserved_turfs)
+		if(!istype(space_turf, transit_reservation.turf_type))
+			continue
+		space_turf.ChangeTurf(transit_path)
+		space_turf.change_area(space_turf.loc, transit_area)
+
+//
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/proc/on_shuttle_move(atom/source, turf/oldT)
+	SIGNAL_HANDLER
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/datum/turf_reservation/transit_reservation = SSmapping.get_reservation_from_turf(oldT)
+	if(!transit_reservation)
+		CRASH("[src] attempted to unload its transit reservation, but no reservation was found!")
+	UnregisterSignal(source, COMSIG_ATOM_AFTER_SHUTTLE_MOVE)
+	for(var/turf/reserved_turf as anything in transit_reservation.reserved_turfs)
+		var/mob/living/marooned = locate() in reserved_turf
+		if(marooned)
+			dump_in_space(marooned)
+		reserved_turf.empty()
+	qdel(transit_reservation)
+
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates
+	name = "Pirates"
+	config_tag = "Light Pirates"
+	signup_atom_appearance = /obj/item/claymore/cutlass
+	candidate_role = "Pirates"
+	midround_type = LIGHT_MIDROUND
+	jobban_flag = ROLE_TRAITOR
+	ruleset_flags = RULESET_INVADER|RULESET_ADMIN_CONFIGURABLE
+	weight = 3
+	min_pop = 15
+	///
+	var/datum/pirate_gang/pirate_gang
+
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/New(list/dynamic_config)
+	. = ..()
+	pirate_gang = pick(default_pirate_pool())
+
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/can_be_selected()
+	return ..() && length(default_pirate_pool()) > 0
+
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/choose_shuttle_template()
+	return pirate_gang.ship_template_id
+
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/execute()
+	send_pirate_threat()
+
+
+
+/// Returns what pool of pirates to draw from
+/// Returned list is mutated by the ruleset
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/proc/default_pirate_pool()
+	return GLOB.light_pirate_gangs
+
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/heavy
+	config_tag = "Heavy Pirates"
+	midround_type = HEAVY_MIDROUND
+	weight = 3
+	min_pop = 25
+
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/heavy/default_pirate_pool()
+	return GLOB.heavy_pirate_gangs
+
+#define RANDOM_PIRATE_POOL "Random"
+
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/configure_ruleset(mob/admin)
+	var/list/admin_pool = list("[RULESET_CONFIG_CANCEL]" = TRUE, "[RANDOM_PIRATE_POOL]" = TRUE)
+	for(var/datum/pirate_gang/gang as anything in default_pirate_pool())
+		admin_pool[gang.name] = gang
+	var/picked = tgui_input_list(admin, "Select a pirate gang", "Pirate Gang Selection", admin_pool)
+	if(!picked || picked == RULESET_CONFIG_CANCEL)
+		return RULESET_CONFIG_CANCEL
+	if(picked == RANDOM_PIRATE_POOL)
+		return null
+
+	pirate_gang = picked
+	return null
+
+#undef RANDOM_PIRATE_POOL
+
+#define NO_ANSWER 0
+#define POSITIVE_ANSWER 1
+#define NEGATIVE_ANSWER 2
+
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/proc/send_pirate_threat()
+	///If there was nothing to pull from our requested list, stop here.
+	if(!pirate_gang)
+		message_admins("Error attempting to run the space pirate event, as the given pirate gangs list was empty.")
+		return
+	//set payoff
+	var/payoff = 0
+	var/datum/bank_account/account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(account)
+		payoff = max(PAYOFF_MIN, FLOOR(account.account_balance * 0.80, 1000))
+	var/datum/comm_message/threat = pirate_gang.generate_message(payoff)
+	//send message
+	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", SSstation.announcer.get_rand_report_sound())
+	threat.answer_callback = CALLBACK(src, PROC_REF(pirates_answered), threat, pirate_gang, payoff, world.time)
+//	addtimer(CALLBACK(src, PROC_REF(spawn_pirates), threat, pirate_gang), RESPONSE_MAX_TIME)
+	GLOB.communications_controller.send_message(threat, unique = TRUE)
+
+/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/proc/pirates_answered(datum/comm_message/threat, datum/pirate_gang/pirate_gang, payoff, initial_send_time)
+	if(world.time > initial_send_time + RESPONSE_MAX_TIME)
+		priority_announce(pirate_gang.response_too_late, sender_override = pirate_gang.ship_name, color_override = pirate_gang.announcement_color)
+		return
+	if(!threat?.answered)
+		return
+	if(threat.answered == NEGATIVE_ANSWER)
+		priority_announce(pirate_gang.response_rejected, sender_override = pirate_gang.ship_name, color_override = pirate_gang.announcement_color)
+		return
+
+	var/datum/bank_account/plundered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(plundered_account)
+		if(plundered_account.adjust_money(-payoff))
+			pirate_gang.paid_off = TRUE
+			priority_announce(pirate_gang.response_received, sender_override = pirate_gang.ship_name, color_override = pirate_gang.announcement_color)
+		else
+			priority_announce(pirate_gang.response_not_enough, sender_override = pirate_gang.ship_name, color_override = pirate_gang.announcement_color)
+
+#undef NO_ANSWER
+#undef POSITIVE_ANSWER
+#undef NEGATIVE_ANSWER
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /datum/dynamic_ruleset/midround/from_living
 	min_antag_cap = 1
