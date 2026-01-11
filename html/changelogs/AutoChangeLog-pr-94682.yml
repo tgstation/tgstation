@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Eigenstasium teleportation now has a precision of 3, up from 0 - meaning the teleport now picks a random tile up to 3 tiles away from the creation spot"
-  - balance: "If Eigenstasium return teleportation fails - due to stabillizing agent - it leaves an echo behind. The echo lasts for 5 minutes, but is reduced the longer the Eigenstasium metabolized in your body."

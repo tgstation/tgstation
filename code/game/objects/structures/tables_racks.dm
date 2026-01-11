@@ -1030,6 +1030,14 @@
 /obj/structure/table/optable/make_climbable()
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
+// surgical tools cannot be placed on the op table while a patient is also on it
+/obj/structure/table/optable/table_place_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isnull(patient) && (tool.item_flags & SURGICAL_TOOL))
+		tool.melee_attack_chain(user, patient, modifiers)
+		return ITEM_INTERACT_SUCCESS
+
+	return ..()
+
 ///Align the mob with the table when buckled.
 /obj/structure/table/optable/post_buckle_mob(mob/living/buckled)
 	buckled.add_offsets(type, z_add = 6)
@@ -1095,6 +1103,7 @@
 		if (patient.external && patient.external == air_tank)
 			patient.close_externals()
 
+	SEND_SIGNAL(src, COMSIG_OPERATING_TABLE_SET_PATIENT, new_patient)
 	patient = new_patient
 	update_appearance()
 	computer?.update_static_data_for_all_viewers()

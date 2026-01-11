@@ -138,9 +138,9 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	/// The maximum size this fish can reach, calculated the first time update_size_and_weight() is called.
 	var/maximum_size
 
-	/// Weight in grams. Null until update_size_and_weight is called. Grind results scale with it. Don't think too hard how a trout could fit in a blender.
+	/// Weight in "kiloclam". Null until update_size_and_weight is called. Grind results scale with it. Don't think too hard how a trout could fit in a blender.
 	var/weight
-	/// Average weight for this fish type in grams
+	/// Average weight for this fish type in "kiloclam"
 	var/average_weight = 1000
 	/// Temporarily stores the new weight of the fish from randomize_size_and_weight() to be used by update_size_weight() later, so that it can be deferred.
 	var/temp_weight
@@ -549,7 +549,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH) || HAS_TRAIT(loc, TRAIT_EXAMINE_FISH))
 		. += span_notice("[p_theyre(TRUE)] [size] cm long.")
-		. += span_notice("[p_they(TRUE)] weighs [weight] g.")
+		. += span_notice("[p_they(TRUE)] weighs [weight] [span_tooltip("the standard unit of measurement for space age fish", "kiloclam")].")
 
 		if(HAS_TRAIT(src, TRAIT_FISH_GENEGUNNED))
 			. += span_warning("[p_theyve(TRUE)] been edited by a fish genegun. [p_they(TRUE)]'ll die if edited again.")

@@ -93,9 +93,8 @@
 
 /// Start firing the weapon on interaction
 /obj/structure/mounted_gun/proc/try_firing(mob/living/user)
-	user.log_message("fired a mounted gun", LOG_ATTACK)
-	log_game("[key_name(user)] fired a mounted gun in [AREACOORD(src)]")
-	addtimer(CALLBACK(src, PROC_REF(fire_sequence), user), fire_delay) //uses fire proc as shown below to shoot the gun
+	user.log_message("fired \a [src]", LOG_ATTACK)
+	addtimer(CALLBACK(src, PROC_REF(fire_sequence), user), fire_delay)
 
 /// Loop firing until we are done
 /obj/structure/mounted_gun/proc/fire_sequence(mob/living/user)

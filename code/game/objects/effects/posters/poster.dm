@@ -124,7 +124,7 @@
 		placed_poster.roll_and_drop(user_drop_location, user)
 		return ITEM_INTERACT_FAILURE
 
-	placed_poster.AddComponent(/datum/component/atom_mounted, wall_structure)
+	placed_poster.find_and_mount_on_atom()
 	placed_poster.on_placed_poster(user)
 	return ITEM_INTERACT_SUCCESS
 

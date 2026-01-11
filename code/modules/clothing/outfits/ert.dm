@@ -38,7 +38,7 @@
 /datum/outfit/centcom/ert/commander
 	name = "ERT Commander"
 
-	id = /obj/item/card/id/advanced/centcom/ert
+	id = /obj/item/card/id/advanced/centcom/ert/commander
 	back = /obj/item/mod/control/pre_equipped/responsory/commander
 	l_hand = /obj/item/gun/energy/e_gun
 	box = /obj/item/storage/box/survival/centcom
@@ -489,7 +489,7 @@
 /datum/outfit/centcom/ert/marine
 	name = "Marine Commander"
 
-	id = /obj/item/card/id/advanced/centcom/ert
+	id = /obj/item/card/id/advanced/centcom/ert/commander
 	suit = /obj/item/clothing/suit/armor/vest/marine
 	suit_store = /obj/item/gun/ballistic/automatic/wt550
 	back = /obj/item/shield/riot
