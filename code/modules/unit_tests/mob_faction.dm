@@ -111,7 +111,7 @@
 		/// Sanity - Let's test that no mobs are mutating or not being assigned a string list somewhere along the line
 		var/expected_faction = string_list(mob_faction)
 		if(mob_faction != expected_faction)
-			TEST_FAIL("Original faction does not match after removing the test faction! Make sure you are using the add_faction and remove_faction procs, \
+			TEST_FAIL("Faction list does not match the cached string_list()! Make sure you are using the add_faction and remove_faction procs, \
 				and not editing the faction list directly anywhere. Also make sure that the faction list is getting string_list()'d in the first place. \
 				e.g. your mob might be short circuiting Initialize() (or returning INITIALIZE_HINT_QDEL). Either add string_list() its faction list, \
 				or add its type to the ignored list if appropriate. \
