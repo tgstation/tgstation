@@ -238,7 +238,7 @@
 	if(isnull(reward))
 		return
 	var/isfish = isfish(reward)
-	if((material_flags & MATERIAL_EFFECTS) && isfish && length(custom_materials))
+	if((material_flags & MATERIAL_EFFECTS) && isfish && length(custom_materials) && HAS_TRAIT(reward, TRAIT_FISH_JUST_SPAWNED))
 		if(prob(get_material_fish_chance(user)))
 			var/obj/item/fish/fish = reward
 			var/datum/material/material = get_master_material()

@@ -801,3 +801,87 @@
   - admin: It should now be far easier (as well as be a better experience) for an
       admin to recall the shuttle regardless of game state (up until the shuttle actually
       docks, that is).
+2025-12-28:
+  Jacquerel:
+  - rscadd: Escaped bitrunning glitches will visually distort when interacted with
+  - bugfix: Escaped bitrunning glitches will not stick around as holographic corpses
+      after they die
+2025-12-29:
+  Aliceee2ch:
+  - map: Moved bar sign on Catwalk's kitchen.
+  jlsnow301:
+  - bugfix: Fixed a bluescreen in the personal crafting menu
+  necromanceranne:
+  - code_imp: Fixes up some of the code and grammar for the giantslayer spears.
+  - bugfix: Giantslayer spears are not improvised and therefore do not break when
+      used to attack things.
+  timothymtorres:
+  - rscadd: Add wooden crafting recipes for gavel hammer and gavel blocks. (aka the
+      judge's hammer in the courtroom)
+  vinylspiders:
+  - refactor: crafting menu should be slightly faster now with searching the area
+      for items that are blacklisted, and uses less memory than it did previously
+2025-12-30:
+  FlufflesTheDog:
+  - admin: Changing suit sensors from the strip menu is now logged
+  - bugfix: Fixed a case where your suit sensor status could be desynced from what
+      your suit sensors appear to be set to
+  JohnFulpWillard:
+  - bugfix: PDA messenger will no longer force itself as your active program when
+      sending/receiving PDA messages.
+  - balance: You can use inducers on SMES' now.
+  Melbert:
+  - bugfix: Moth wing repair surgery correctly checks that bones are intact rather
+      than bones are sawed
+  - balance: When you are shocked, you remain standing for a short period of time
+      before being forced to the ground. You are still stunned for the duration of
+      this effect, that remains unchanged.
+  - rscdel: Wardens no longer spawn with an evidence bag
+  - bugfix: Naive and Desensitized people get less sad at death
+  SmArtKar:
+  - bugfix: Bandanas tied around your neck no longer hide your identity or your snout
+  TealSeer:
+  - bugfix: fixed cargo PDA app missing currency name
+  TheNobodyofimportance:
+  - bugfix: Adds midround clownops to the antag pref
+  arbuzik456:
+  - rscadd: Added casual way of wearing jeans and different pants.
+  archbtw0:
+  - spellcheck: Fix a duplicate 'the'
+  jlsnow301:
+  - bugfix: Fixed importing chat tabs from a file. They should still exist on reload
+  lelandkemble:
+  - balance: took away the CE's sneakers and gave them work boots.
+  necromanceranne:
+  - balance: The iconoclast repeater, the handheld version, no longer fires two pellets
+      but instead fires in a two round burst.
+  - balance: The iconoclast repeater now charges two shots (one trigger pull) every
+      crank, and the crank takes 0.4 seconds (letting you outpace your shot rate).
+      However, you cannot charge the gun while moving.
+  - balance: Reduces the damage of the repeater's shots (both versions). Now it does
+      15 lethal force per shot. Since this is coming out in bursts of two, this means
+      that it deals 30 lethal force in a single pull.
+  - bugfix: Laser musket type weapons are now heavy weapons.
+  - code_imp: Cleans up some of the code and grammar on the repeater.
+  vinylspiders:
+  - bugfix: fixes a pushed crate not removing on_climbable trait properly off the
+      mob standing atop it
+  - bugfix: fixes tablesmashing onto platforms
+2025-12-31:
+  ElGitificador:
+  - spellcheck: fixed typo in syndol description.
+  Melbert:
+  - rscadd: Adds screen hud elements for ghost toggles
+  SmArtKar:
+  - balance: Changed Coveroli in Albuterol's recipe to standard Convermol
+  TheRyeGuyWhoWillNowDie:
+  - balance: the security gas mask is pepper-proof again.
+  Y0SH1M4S73R:
+  - bugfix: If, for some godforsaken reason, you find yourself with a weapon that
+      has more than 100% armor penetration, it will now properly ignore armor in its
+      entirety instead of ENHANCING it, which it used to do.
+  - bugfix: The Spinward Sector Fishery Association would like to apologize for using
+      a bitwise XOR instead of exponentiation in the source code of their automated
+      fish price evaluation system.
+  necromanceranne:
+  - bugfix: Batons respect chest armor specifically once again.

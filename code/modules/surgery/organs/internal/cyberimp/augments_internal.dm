@@ -260,7 +260,7 @@
 		return
 
 	if(organ_flags & ORGAN_FAILING)
-		var/holy_shit_my_brain = remove_brain()
+		var/holy_shit_my_brain = remove_brain(owner.get_organ_by_type(ORGAN_SLOT_BRAIN))
 		if(holy_shit_my_brain)
 			to_chat(owner, span_warning("You take [holy_shit_my_brain] out of [src]. You stare at it for a moment in confusion."))
 		return
@@ -324,7 +324,7 @@
 			skillchip.forceMove(owner.drop_location())
 			playsound(owner, 'sound/machines/terminal/terminal_eject.ogg', 25, TRUE)
 		else
-			remove_brain()
+			remove_brain(chippy_brain, severity == EMP_LIGHT ? 1 : 2)
 	addtimer(CALLBACK(src, PROC_REF(reboot)), 90 / severity)
 
 /obj/item/organ/cyberimp/brain/connector/proc/remove_brain(obj/item/organ/brain/chippy_brain, severity = 1)
@@ -405,7 +405,7 @@
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_LIVING_OPERATING_ON)
 
-/obj/item/organ/cyberimp/brain/surgical_processor/proc/check_surgery(datum/source, mob/living/patient, list/operations)
+/obj/item/organ/cyberimp/brain/surgical_processor/proc/check_surgery(datum/source, atom/movable/operating_on, list/operations)
 	SIGNAL_HANDLER
 
 	if(organ_flags & (ORGAN_FAILING|ORGAN_EMP))

@@ -49,8 +49,7 @@
 				hanging_object.pixel_x = pixel_shift
 			if(WEST)
 				hanging_object.pixel_x = -pixel_shift
-	if(!istype(get_area(user), /area/shuttle)) //due to turf changing issue we don't mount here for now
-		hanging_object.AddComponent(/datum/component/atom_mounted, support_structure)
+	hanging_object.find_and_mount_on_atom()
 	after_attach(hanging_object)
 	qdel(src)
 
