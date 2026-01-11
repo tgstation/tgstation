@@ -212,7 +212,7 @@
 	if(isalienroyal(dead_mob) || istype(dead_mob, /mob/living/basic/alien/queen))
 		change_modifier = 0.5
 		timeout_modifier = 0.5
-		description = "The queen has fallen! Humanity prevails! I hope those bastards all rot in hell!"
+		description = "The queen has fallen! The galaxy lives another day! I hope those bastards all rot in hell!"
 		if(gibbed || dusted)
 			change_modifier += 0.25
 			timeout_modifier += 0.25
