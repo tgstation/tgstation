@@ -61,7 +61,7 @@ Difficulty: Medium
 	AddElement(/datum/element/relay_attackers)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_HEAVY)
 
-	RegisterSignals(src, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET), PROC_REF(attack_override))
+	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(attack_override))
 
 	miner_saw = new(src)
 	RegisterSignal(miner_saw, COMSIG_PREQDELETED, PROC_REF(on_saw_deleted))

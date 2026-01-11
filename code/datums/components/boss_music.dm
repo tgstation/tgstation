@@ -13,7 +13,7 @@
 	var/list/music_callbacks = list()
 
 	/// Signal that we listen to on our parent to know when to start boss music.
-	var/list/signal = null
+	var/signal = null
 
 /datum/component/boss_music/Initialize(boss_track, signal)
 	. = ..()
