@@ -179,7 +179,6 @@
 			var/atom/movable/node = popleft(queue)
 			if(visited[node])
 				continue
-			visited[node] = TRUE
 
 			//visit all neighbours of this pipe as well
 			pipe = node
@@ -195,15 +194,22 @@
 				for(var/atom/movable/subnode in pipe.neighbours)
 					queue += subnode
 
+				visited[node] = TRUE
 				continue
 
 			//assign machines to new network
 			for(var/datum/component/plumbing/plumbing as anything in node.GetComponents(/datum/component/plumbing))
+				//disconnect old net
 				for(var/dirtext in plumbing.ducts)
 					if(plumbing.ducts[dirtext] == net)
 						net.remove_plumber(plumbing)
-						if(newnet)
-							newnet.add_plumber(plumbing, text2num(dirtext))
+				//assign new net
+				if(newnet)
+					for(pipe as anything in newnet.ducts)
+						var/dir = pipe.neighbours[node]
+						if(dir)
+							newnet.add_plumber(plumbing, REVERSE_DIR(dir))
+
 	disconnect()
 
 	return ..()
