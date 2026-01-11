@@ -12,8 +12,8 @@
 	. = ..()
 	if(!LAZYLEN(possible_reagents))
 		LAZYINITLIST(possible_reagents)
-		for(var/R in subtypesof(/datum/reagent/drug) + subtypesof(/datum/reagent/medicine) + typesof(/datum/reagent/toxin))
-			possible_reagents += R
+		for(var/reagent_path in subtypesof(/datum/reagent/drug) + subtypesof(/datum/reagent/medicine) + typesof(/datum/reagent/toxin))
+			possible_reagents += reagent_path
 
 /obj/item/organ/heart/gland/chem/activate()
 	var/chem_to_add = pick(possible_reagents)
