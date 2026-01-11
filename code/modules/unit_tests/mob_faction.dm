@@ -112,6 +112,8 @@
 		var/current_faction = mob_instance.get_faction()
 		if(mob_faction != string_list(mob_instance.get_faction()))
 			TEST_FAIL("Original faction does not match after removing the test faction! Make sure you are using the add_faction and remove_faction procs, \
-				and not editing the faction list directly anywhere. \
+				and not editing the faction list directly anywhere. Also make sure that the faction list is getting string_list()'d in the first place. \
+				e.g. your mob might be short circuiting Initialize() (or returning INITIALIZE_HINT_QDEL). Either add string_list() its faction list, \
+				or add its type to the ignored list if appropriate. \
 				mob: [mob_instance]([mob_instance.type]) current factions: ([jointext(current_faction, ", ")]) expected factions: ([jointext(mob_faction, ", ")])")
 		qdel(mob_instance)
