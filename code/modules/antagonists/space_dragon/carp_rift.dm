@@ -258,7 +258,7 @@
 	if(isnull(dragon))
 		return
 	var/mob/living/newcarp = new dragon.minion_to_spawn(loc)
-	set_faction_and_allies_from(dragon.owner.current, newcarp)
+	SET_FACTION_AND_ALLIES_FROM(newcarp, dragon.owner.current)
 	newcarp.AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
 	newcarp.AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
 	dragon.wavespeak?.link_mob(newcarp)

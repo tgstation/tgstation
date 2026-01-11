@@ -172,7 +172,7 @@
 		visible_message(span_boldwarning("[src]'s head flies off!"))
 		var/mob/living/simple_animal/hostile/asteroid/elite/legionnairehead/newhead = new /mob/living/simple_animal/hostile/asteroid/elite/legionnairehead(loc)
 		newhead.GiveTarget(target)
-		set_faction_and_allies_from(src, newhead)
+		SET_FACTION_AND_ALLIES_FROM(newhead, src)
 		myhead = newhead
 		myhead.body = src
 		if(health < maxHealth * 0.25)

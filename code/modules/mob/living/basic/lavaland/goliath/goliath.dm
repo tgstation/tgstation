@@ -159,7 +159,7 @@
 	. = ..()
 	if(isnull(.))
 		return
-	set_faction_and_allies_from(new_friend, src)
+	SET_FACTION_AND_ALLIES_FROM(src, new_friend)
 
 /mob/living/basic/mining/goliath/RangedAttack(atom/atom_target, modifiers)
 	tentacles?.Trigger(target = atom_target)

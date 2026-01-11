@@ -97,7 +97,7 @@
 	. = ..()
 	if(isnull(.))
 		return
-	apply_faction_and_allies_from(new_friend)
+	APPLY_FACTION_AND_ALLIES_FROM(src, new_friend)
 	remove_faction(FACTION_MINING)
 
 /mob/living/basic/mining/lobstrosity/mind_initialize()

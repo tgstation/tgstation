@@ -79,7 +79,7 @@
 	var/datum/antagonist/heretic_monster/woohoo_free_antag = new(src)
 	monster.mind.add_antag_datum(woohoo_free_antag)
 	if(ascendee)
-		set_faction_and_allies_from(ascendee.current, monster)
+		SET_FACTION_AND_ALLIES_FROM(monster, ascendee.current)
 		woohoo_free_antag.set_owner(ascendee)
 	var/datum/objective/kill_all_your_friends = new()
 	kill_all_your_friends.owner = monster.mind

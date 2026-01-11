@@ -871,7 +871,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 
 	user.mind.transfer_to(switchy_mob)
 	SEND_SIGNAL(switchy_mob, COMSIG_SIMPLEMOB_TRANSFERPOTION, user)
-	set_faction_and_allies_from(user, switchy_mob)
+	SET_FACTION_AND_ALLIES_FROM( switchy_mob, user)
 	switchy_mob.copy_languages(user, LANGUAGE_MIND)
 	user.death()
 	to_chat(switchy_mob, span_notice("In a quick flash, you feel your consciousness flow into [switchy_mob]!"))
