@@ -906,11 +906,9 @@
 /datum/dynamic_ruleset/midround/from_ghosts/shuttle/assign_role(datum/mind/candidate, obj/docking_port/mobile/shuttle_port)
 	//make mind use sleeper
 	//remember to unlock unused sleepers
-	return
-
-///
-/datum/dynamic_ruleset/midround/from_ghosts/shuttle/proc/choose_shuttle_template()
-	return
+	SSshuttle.generate_transit_dock(shuttle_port)
+	shuttle_port.enterTransit()
+	unlock_shuttle(shuttle_port.get_control_console())
 
 ///
 /datum/dynamic_ruleset/midround/from_ghosts/shuttle/proc/load_shuttle()
@@ -951,12 +949,20 @@
 	qdel(shuttle_reservation)
 
 ///
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/proc/choose_shuttle_template()
+	PROTECTED_PROC(TRUE)
+	stack_trace("Ruleset [src] does not implement choose_shuttle_template()")
+	return
+
+///
 /datum/dynamic_ruleset/midround/from_ghosts/shuttle/proc/lock_shuttle(obj/machinery/computer/shuttle/shuttle_console)
+	SHOULD_CALL_PARENT(TRUE)
 	shuttle_console.locked = TRUE
 	for(var/obj/effect/mob_spawn/ghost_role/spawner as anything in shuttle_sleepers)
 		spawner.uses = 0
 ///
 /datum/dynamic_ruleset/midround/from_ghosts/shuttle/proc/unlock_shuttle(obj/machinery/computer/shuttle/shuttle_console)
+	SHOULD_CALL_PARENT(TRUE)
 	shuttle_console.locked = FALSE
 	for(var/obj/effect/mob_spawn/ghost_role/spawner as anything in shuttle_sleepers)
 		spawner.uses = 1
@@ -987,10 +993,6 @@
 /datum/dynamic_ruleset/midround/from_ghosts/shuttle/pirates/execute()
 	. = ..()
 	send_pirate_threat()
-	var/obj/docking_port/mobile/shuttle_port = shuttle_port_ref?.resolve()
-	SSshuttle.generate_transit_dock(shuttle_port)
-	shuttle_port.enterTransit()
-	unlock_shuttle(shuttle_port.get_control_console())
 
 /// Returns what pool of pirates to draw from
 /// Returned list is mutated by the ruleset
