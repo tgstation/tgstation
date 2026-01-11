@@ -101,24 +101,19 @@
 		var/mob/mob_instance = allocate(mob_type)
 		var/list/mob_faction = mob_instance.get_faction()
 		if(isnull(mob_faction))
+			qdel(mob_instance)
 			continue
 		else if (!islist(mob_faction))
 			TEST_FAIL("[mob_type] faction variable is not a list or null! Only lazy lists are supported currently (currently set to [mob_faction]).")
+			qdel(mob_instance)
 			continue
 		else if (!LAZYLEN(mob_faction))
 			TEST_FAIL("[mob_type] faction variable is an empty list! Set to null instead, faction lists are lazy.")
+			qdel(mob_instance)
 			continue
-		factions_by_type[mob_type] = mob_faction
-		mob_instance.add_faction(test_faction)
-		mobs_to_check += mob_instance.type
-		qdel(mob_instance)
 
-	/// Sanity - Let's test that no mobs are mutating any string lists somewhere along the line
-	for (var/mob_type in mobs_to_check)
-		var/mob/mob_instance = allocate(mob_type)
-		var/list/mob_faction = mob_instance.get_faction()
-		var/list/original_faction = factions_by_type[mob_instance.type]
-		if(original_faction != mob_faction)
+		/// Sanity - Let's test that no mobs are mutating or not being assigned a string list somewhere along the line
+		if(mob_faction != string_list(mob_instance.get_faction()))
 			TEST_FAIL("Original faction does not match after removing the test faction! Make sure you are using the add_faction and remove_faction procs, \
 				and not editing the faction list directly anywhere. \
 				mob: [mob_instance]([mob_instance.type]) current factions: ([jointext(mob_faction, ", ")]) expected factions: ([jointext(original_faction, ", ")])")
