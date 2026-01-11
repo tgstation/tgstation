@@ -811,12 +811,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"cU" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 5
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -1922,7 +1916,7 @@ ao
 bx
 aH
 cD
-cU
+aw
 by
 al
 al
@@ -1969,7 +1963,7 @@ ao
 bx
 aS
 cx
-aS
+aw
 by
 al
 al
@@ -2016,7 +2010,7 @@ bn
 bZ
 tv
 cE
-aS
+aw
 bZ
 bY
 bE

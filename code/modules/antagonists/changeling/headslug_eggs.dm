@@ -19,7 +19,7 @@
 	. = ..()
 	removal_time = world.time
 
-/obj/item/organ/body_egg/changeling_egg/egg_process(seconds_per_tick, times_fired)
+/obj/item/organ/body_egg/changeling_egg/egg_process(seconds_per_tick)
 	if(owner && hatch_time <= world.time)
 		pop()
 

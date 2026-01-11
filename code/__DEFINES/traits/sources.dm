@@ -329,3 +329,12 @@
 
 /// Permanent trait from an overdose effect
 #define OVERDOSE_TRAIT "overdose"
+
+/// Trait gained from bioware surgeries
+#define BIOWARE_TRAIT "bioware"
+
+/// Trait gained from skeleton "limbs", such as husking from a butchered chest
+#define SKELETON_TRAIT "skeleton"
+
+/// Trait gained by a guardian who is recalled
+#define GUARDIAN_RECALLED "guardian_recalled"

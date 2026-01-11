@@ -10,7 +10,7 @@
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/epilepsy/on_life(seconds_per_tick, times_fired)
+/datum/mutation/epilepsy/on_life(seconds_per_tick)
 	if(SPT_PROB(0.5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick))
 		trigger_seizure()
 
@@ -89,7 +89,7 @@
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/cough/on_life(seconds_per_tick, times_fired)
+/datum/mutation/cough/on_life(seconds_per_tick)
 	if(SPT_PROB(2.5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && owner.stat == CONSCIOUS)
 		owner.drop_all_held_items()
 		owner.emote("cough")
@@ -106,7 +106,7 @@
 	text_gain_indication = span_danger("You feel screams echo through your mind...")
 	text_lose_indication = span_notice("The screaming in your mind fades.")
 
-/datum/mutation/paranoia/on_life(seconds_per_tick, times_fired)
+/datum/mutation/paranoia/on_life(seconds_per_tick)
 	if(SPT_PROB(2.5, seconds_per_tick) && owner.stat == CONSCIOUS)
 		owner.emote("scream")
 		if(prob(25))
@@ -214,7 +214,7 @@
 	text_gain_indication = span_danger("You twitch.")
 	synchronizer_coeff = 1
 
-/datum/mutation/tourettes/on_life(seconds_per_tick, times_fired)
+/datum/mutation/tourettes/on_life(seconds_per_tick)
 	if(SPT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && owner.stat == CONSCIOUS && !owner.IsStun())
 		switch(rand(1, 3))
 			if(1)
@@ -359,7 +359,7 @@
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/fire/on_life(seconds_per_tick, times_fired)
+/datum/mutation/fire/on_life(seconds_per_tick)
 	if(SPT_PROB((0.05+(100-dna.stability)/19.5) * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick))
 		owner.adjust_fire_stacks(2 * GET_MUTATION_POWER(src))
 		owner.ignite_mob()
@@ -388,7 +388,7 @@
 	power_coeff = 1
 	var/warpchance = 0
 
-/datum/mutation/badblink/on_life(seconds_per_tick, times_fired)
+/datum/mutation/badblink/on_life(seconds_per_tick)
 	if(SPT_PROB(warpchance, seconds_per_tick))
 		var/warpmessage = pick(
 		span_warning("With a sickening 720-degree twist of [owner.p_their()] back, [owner] vanishes into thin air."),
@@ -416,7 +416,7 @@
 	/// The cooldown for the warning message
 	COOLDOWN_DECLARE(msgcooldown)
 
-/datum/mutation/acidflesh/on_life(seconds_per_tick, times_fired)
+/datum/mutation/acidflesh/on_life(seconds_per_tick)
 	if(SPT_PROB(13, seconds_per_tick))
 		if(COOLDOWN_FINISHED(src, msgcooldown))
 			to_chat(owner, span_danger("Your acid flesh bubbles..."))
@@ -698,7 +698,7 @@
 	else
 		ADD_TRAIT(owner, TRAIT_SOFTSPOKEN, REF(src))
 
-/datum/mutation/inexorable/on_life(seconds_per_tick, times_fired)
+/datum/mutation/inexorable/on_life(seconds_per_tick)
 	if(owner.health > owner.crit_threshold || owner.stat != CONSCIOUS || HAS_TRAIT(owner, TRAIT_STASIS))
 		return
 	// Gives you 30 seconds of being in soft crit... give or take

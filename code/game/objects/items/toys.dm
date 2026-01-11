@@ -16,7 +16,7 @@
  * Toy big red button
  * Beach ball
  * Toy xeno
- *      Kitty toys!
+ * Kitty toys!
  * Snowballs
  * Clockwork Watches
  * Toy Daggers
@@ -25,6 +25,8 @@
  * Fake heretic codex
  * Fake Pierced Reality
  * Intento
+ * Extendo hand
+ * Ban hammer
  */
 /obj/item/toy
 	abstract_type = /obj/item/toy
@@ -1846,3 +1848,70 @@ GLOBAL_LIST_EMPTY(intento_players)
 	attack_verb_simple = list("smack", "club", "wack", "vendor")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
+
+/obj/item/extendohand
+	name = "extendo-hand"
+	desc = "Futuristic tech has allowed these classic spring-boxing toys to essentially act as a fully functional hand-operated hand prosthetic."
+	icon = 'icons/obj/toys/toy.dmi'
+	icon_state = "extendohand"
+	inhand_icon_state = "extendohand"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	force = 0
+	throwforce = 5
+	reach = 2
+	var/min_reach = 2
+
+/obj/item/extendohand/acme
+	name = "\improper ACME Extendo-Hand"
+	desc = "A novelty extendo-hand produced by the ACME corporation. Originally designed to knock out roadrunners."
+
+/obj/item/extendohand/attack(atom/M, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
+	var/dist = get_dist(M, user)
+	if(dist < min_reach)
+		to_chat(user, span_warning("[M] is too close to use [src] on."))
+		return
+	M.attack_hand(user, modifiers)
+
+/obj/item/banhammer
+	desc = "A banhammer."
+	name = "banhammer"
+	icon = 'icons/obj/weapons/hammer.dmi'
+	icon_state = "toyhammer"
+	icon_angle = -45
+	slot_flags = ITEM_SLOT_BELT
+	throwforce = 0
+	force = 1
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 3
+	throw_range = 7
+	attack_verb_continuous = list("bans")
+	attack_verb_simple = list("ban")
+	max_integrity = 200
+	armor_type = /datum/armor/item_banhammer
+	resistance_flags = FIRE_PROOF
+
+/datum/armor/item_banhammer
+	fire = 100
+	acid = 70
+
+/obj/item/banhammer/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/kneejerk)
+
+/obj/item/banhammer/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is hitting [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to ban [user.p_them()]self from life."))
+	return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
+/*
+oranges says: This is a meme relating to the english translation of the ss13 russian wiki page on lurkmore.
+mrdoombringer sez: and remember kids, if you try and PR a fix for this item's grammar, you are admitting that you are, indeed, a newfriend.
+for further reading, please see: https://github.com/tgstation/tgstation/pull/30173 and https://translate.google.com/translate?sl=auto&tl=en&js=y&prev=_t&hl=en&ie=UTF-8&u=%2F%2Flurkmore.to%2FSS13&edit-text=&act=url
+*/
+/obj/item/banhammer/attack(mob/M, mob/living/user)
+	if(user.zone_selected == BODY_ZONE_HEAD)
+		M.visible_message(span_danger("[user] are stroking the head of [M] with a bangammer."), span_userdanger("[user] are stroking your head with a bangammer."), span_hear("You hear a bangammer stroking a head.")) // see above comment
+	else
+		M.visible_message(span_danger("[M] has been banned FOR NO REISIN by [user]!"), span_userdanger("You have been banned FOR NO REISIN by [user]!"), span_hear("You hear a banhammer banning someone."))
+	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
+	if(user.combat_mode)
+		return ..(M, user)

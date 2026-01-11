@@ -24,7 +24,6 @@
 	var/theme = THEME_CULT
 	/// Role check, if any needed
 	var/required_role = /datum/antagonist/cult
-	grind_results = list(/datum/reagent/hauntium = 25, /datum/reagent/silicon = 10) //can be ground into hauntium
 
 /obj/item/soulstone/Initialize(mapload)
 	. = ..()
@@ -32,6 +31,9 @@
 		RegisterSignal(src, COMSIG_BIBLE_SMACKED, PROC_REF(on_bible_smacked))
 	if(!base_name)
 		base_name = initial(name)
+
+/obj/item/soulstone/grind_results()
+	return list(/datum/reagent/hauntium = 25, /datum/reagent/silicon = 10) //can be ground into hauntium
 
 /obj/item/soulstone/update_appearance(updates)
 	. = ..()
@@ -612,10 +614,27 @@
 /obj/item/soulstone/anybody
 	required_role = null
 
+/obj/item/ectoplasm
+	name = "ectoplasm"
+	desc = "Spooky."
+	gender = PLURAL
+	icon = 'icons/effects/magic.dmi'
+	icon_state = "ectoplasm"
+
+/obj/item/ectoplasm/grind_results()
+	return list(/datum/reagent/hauntium = 25)
+
+/obj/item/ectoplasm/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane!"))
+	return OXYLOSS
+
 /obj/item/soulstone/mystic
 	icon_state = "mystic_soulstone"
 	theme = THEME_WIZARD
 	required_role = /datum/antagonist/wizard
+
+/obj/item/ectoplasm/mystic
+	icon_state = "mysticplasm"
 
 /obj/item/soulstone/anybody/revolver
 	one_use = TRUE
@@ -624,6 +643,10 @@
 /obj/item/soulstone/anybody/purified
 	icon_state = "purified_soulstone"
 	theme = THEME_HOLY
+
+/obj/item/ectoplasm/angelic
+	icon = 'icons/effects/magic.dmi'
+	icon_state = "angelplasm"
 
 /obj/item/soulstone/anybody/chaplain
 	name = "mysterious old shard"

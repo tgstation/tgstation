@@ -41,7 +41,6 @@
 "cm" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
@@ -223,7 +222,6 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "xy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -377,7 +375,7 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "Kw" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2{
-	dir = 1
+	dir = 4
 	},
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating,

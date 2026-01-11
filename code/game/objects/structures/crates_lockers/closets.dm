@@ -176,8 +176,20 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	update_appearance()
 
 /obj/structure/closet/LateInitialize()
-	if(!opened && is_maploaded)
-		take_contents()
+	if(is_maploaded)
+		// very rare chance that a maintenance closet gets linked to another closet at roundstart
+		// 0.1% chance -> metastation has ~36 maintenance closets -> P(links>=1) = 3.54% per round -> about once every 30 rounds
+		if(prob(0.1) && istype(get_area(src), /area/station/maintenance))
+			var/list/targets = GLOB.roundstart_station_closets.Copy() - src
+			var/list/picked = list(src)
+			for(var/i in 1 to pick(1, 2))
+				picked += pick_n_take(targets)
+			GLOB.closet_teleport_controller.create_new_link(picked, subtle = TRUE)
+			if(!opened)
+				open(force = TRUE, special_effects = FALSE)
+
+		if(!opened)
+			take_contents()
 
 	if(sealed)
 		var/datum/gas_mixture/external_air = loc.return_air()
@@ -689,6 +701,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	else
 		return ..()
 
+/obj/structure/closet/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if (attack_hand(user, modifiers))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
 /// check if we can install airlock electronics in this closet
 /obj/structure/closet/proc/can_install_airlock_electronics(mob/user)
 	if(secure || !can_install_electronics || opened)
@@ -980,14 +997,15 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	. = ..()
 	if(.)
 		return
+
 	if(user.body_position == LYING_DOWN && get_dist(src, user) > 0)
 		return
 
 	if(toggle(user))
-		return
+		return TRUE
 
 	if(!opened)
-		togglelock(user)
+		return togglelock(user)
 
 /obj/structure/closet/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)

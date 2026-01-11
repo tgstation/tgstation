@@ -1,7 +1,7 @@
 // tgstation-server DMAPI
 // The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in IETF RFC 2119.
 
-#define TGS_DMAPI_VERSION "7.3.3"
+#define TGS_DMAPI_VERSION "7.3.5"
 
 // All functions and datums outside this document are subject to change with any version and should not be relied on.
 

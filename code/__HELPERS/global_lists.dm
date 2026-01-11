@@ -2,14 +2,6 @@
 /////Initial Building/////
 //////////////////////////
 
-/// Inits GLOB.surgeries
-/proc/init_surgeries()
-	var/surgeries = list()
-	for(var/path in subtypesof(/datum/surgery))
-		surgeries += new path()
-	sort_list(surgeries, GLOBAL_PROC_REF(cmp_typepaths_asc))
-	return surgeries
-
 /// Legacy procs that really should be replaced with proper _INIT macros
 /proc/make_datum_reference_lists()
 	// I tried to eliminate this proc but I couldn't untangle their init-order interdependencies -Dominion/Cyberboss
@@ -19,11 +11,9 @@
 	init_crafting_recipes_atoms()
 
 /// Inits crafting recipe lists
-/proc/init_crafting_recipes(list/crafting_recipes)
-	for(var/path in subtypesof(/datum/crafting_recipe))
-		if(ispath(path, /datum/crafting_recipe/stack))
-			continue
-		var/datum/crafting_recipe/recipe = new path()
+/proc/init_crafting_recipes()
+	for(var/datum/crafting_recipe_path as anything in valid_subtypesof(/datum/crafting_recipe))
+		var/datum/crafting_recipe/recipe = new crafting_recipe_path()
 		var/is_cooking = (recipe.category in GLOB.crafting_category_food)
 		recipe.reqs = sort_list(recipe.reqs, GLOBAL_PROC_REF(cmp_crafting_req_priority))
 		if(recipe.name != "" && recipe.result)
