@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Changing the job of one person from one job position to another won't set EVERYONE ELSE of the old job's paycheck department to the new one."
