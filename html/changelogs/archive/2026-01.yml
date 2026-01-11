@@ -259,3 +259,39 @@
   - bugfix: Fixed airlock responses while carrying another mob
   - bugfix: Airlock checks for all possible permits before delaying
   - bugfix: Throwing items at unrestricted airlocks opens them
+2026-01-10:
+  Jacquerel:
+  - rscadd: If you kill yourself with a spear you will impale your head on that spear.
+  Melbert:
+  - rscadd: You can now find the SDMS-35 in Medbay, the CMO's office, the Psychologist's
+      office, and possibly the Library. Quite simply, it's a reference book for all
+      the brain trauma's you may experience.
+  lelandkemble:
+  - bugfix: Disposal pipe previews within the RPD ui will now be correct
+  - map: Icebox science now requires science access to enter
+2026-01-11:
+  Cirrial:
+  - map: Fixed the access requirements of the telecomms door in Catwalk.
+  FalloutFalcon, Major00:
+  - rscadd: Adds Teto (Outfit), found in the autodrobe
+  - image: Resprited Miku outfit and fixed minor issues with it
+  Jacquerel:
+  - bugfix: Plasmaman Nuclear Operative helmet does not turn into a big error graphic
+      when its torch is enabled
+  - image: Plasmamen Nuclear Operatives illuminate their skull with red light instead
+      of purple
+  JohnFulpWillard:
+  - bugfix: Changing the job of one person from one job position to another won't
+      set EVERYONE ELSE of the old job's paycheck department to the new one.
+  Nari Harimoto:
+  - bugfix: Camera Consoles no longer hallucinate the Gateway in a different position
+  Y0SH1M4S73R:
+  - rscadd: Adds the MOD Storage Module of Holding, a version of the Bag of Holding
+      for your MODsuits.
+  - refactor: The behavior of MODsuit storage modules and anomaly-locked modules has
+      been refactored - please report any oddities.
+  loganuk:
+  - bugfix: Making surgery beds on top of stasis beds no longer possible
+  trickyfox-inc:
+  - admin: New adminverb "show occupants PP". You can now open the PP of mobs inside
+      vehicles, closets, machinery, body bags, etc. via the RMB context menu.
