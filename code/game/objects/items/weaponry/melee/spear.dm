@@ -91,7 +91,8 @@
 	if (!head)
 		return BRUTELOSS // No head?
 	var/obj/structure/headpike/pike = new pike_type(drop_location())
-	head.dismember(silent = FALSE, wounding_type = WOUND_PIERCE)
+	if (!head.dismember(silent = FALSE, wounding_type = WOUND_PIERCE))
+		return BRUTELOSS // Guess your neck is too strong
 	head.forceMove(pike)
 	pike.victim = head
 	forceMove(pike)
