@@ -69950,23 +69950,6 @@
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
-"sMm" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/ladder,
-/obj/machinery/door/window/brigdoor/right/directional/east{
-	name = "Telecomms Access";
-	req_access = list("tcomms")
-	},
-/obj/machinery/camera/autoname/directional/west,
-/turf/open/floor/iron/dark,
-/area/station/tcommsat/server)
 "sMp" = (
 /obj/item/paint/violet{
 	pixel_x = -7;
@@ -213092,7 +213075,7 @@ mWH
 wzj
 mYX
 uLc
-sMm
+xQM
 sFE
 eUq
 wzj
