@@ -70,15 +70,13 @@
 
 	/// Pool to pick pirates from
 	var/list/datum/pirate_gang/pirate_pool
-	///
-	var/datum/turf_reservation/transit/reservation
 
 /datum/dynamic_ruleset/midround/pirates/New(list/dynamic_config)
 	. = ..()
 	pirate_pool = default_pirate_pool()
 
 /datum/dynamic_ruleset/midround/pirates/can_be_selected()
-	return ..() && (SSmapping.is_planetary() && SSmapping.current_map.wilderness_levels) && (GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT) && length(default_pirate_pool()) > 0
+	return ..() && (GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT) && length(default_pirate_pool()) > 0
 
 // An abornmal ruleset that selects no players, but just spawns a pirate ship
 /datum/dynamic_ruleset/midround/pirates/execute()
@@ -784,7 +782,7 @@
 	VAR_FINAL/hunter_backstory
 
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/can_be_selected()
-	return ..() && !SSmapping.is_planetary() && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
+	return ..() && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
 
 // If less than a certain number of candidates accept the poll, it varies how many antags are spawned
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/collect_candidates()
