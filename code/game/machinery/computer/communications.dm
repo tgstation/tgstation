@@ -855,8 +855,8 @@
 	switch(picked_option)
 		if(HACK_PIRATE) // Triggers pirates, which the crew may be able to pay off to prevent
 			var/list/pirate_rulesets = list(
-				/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates,
-				/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/heavy,
+				/datum/dynamic_ruleset/midround/from_ghosts/shuttle/pirates,
+				/datum/dynamic_ruleset/midround/from_ghosts/shuttle/pirates/heavy,
 			)
 			SSdynamic.force_run_midround(pick(pirate_rulesets))
 

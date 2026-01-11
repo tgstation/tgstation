@@ -889,7 +889,7 @@
 /**
  * ### Shuttle rulesets
  */
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle
 	/// should the candidacy check wait to spawn? used for conditions like pirate payoff
 //	var/delay_candidate_collection = TRUE
 	/// a weak ref for the shuttle's mobile port, to use for customizable procs
@@ -897,49 +897,50 @@
 	/// a list of sleepers for ghosts to use if the initial candidacy check passed but open slots remained
 	var/list/obj/effect/mob_spawn/ghost_role/shuttle_sleepers
 
-
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/collect_candidates()
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/collect_candidates()
 	. = ..()
 
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/create_execute_args()
+	return list(load_shuttle())
 
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/prepare_for_role(datum/mind/candidate)
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/assign_role(datum/mind/candidate, obj/docking_port/mobile/shuttle_port)
 	//make mind use sleeper
 	//remember to unlock unused sleepers
 	return
 
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/load_shuttle()
+///
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/proc/choose_shuttle_template()
+	return
+
+///
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/proc/load_shuttle()
 	var/datum/map_template/shuttle/midround_shuttle = SSmapping.shuttle_templates[choose_shuttle_template()]
 	var/datum/turf_reservation/shuttle_reservation = SSmapping.request_turf_block_reservation(midround_shuttle.width, midround_shuttle.height)
 	var/turf/reservation_bottom_left = shuttle_reservation?.bottom_left_turfs[1]
 	if(!reservation_bottom_left)
 		CRASH("[src] shuttle reservation failed!")
 	// load the shuttle into the reservation
-	RegisterSignal(SSshuttle, COMSIG_SHUTTLE_REGISTERED, PROC_REF(post_shuttle_load))
 	if(!midround_shuttle.load(reservation_bottom_left))
 		CRASH("[src] shuttle loading failed!")
-
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/post_shuttle_load(datum/subsystem, obj/docking_port/mobile/shuttle_port)
-	. = ..()
-	var/datum/turf_reservation/shuttle_reservation = SSmapping.get_reservation_from_turf(get_turf(shuttle_port))
-	// register a signal to clean the reservation, and assign the shuttle port weak ref
-	RegisterSignal(shuttle_port, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, PROC_REF(clear_reservation))
-	shuttle_port_ref = WEAKREF(shuttle_port)
+	for(var/turf/shuttle_turf as anything in shuttle_reservation.reserved_turfs)
+		CHECK_TICK
+		var/obj/effect/mob_spawn/ghost_role/spawner = locate() in shuttle_turf
+		if(!shuttle_port_ref)
+			shuttle_port_ref = WEAKREF(SSshuttle.get_containing_shuttle(shuttle_turf))
+		if(spawner)
+			// assign the sleepers to spawn players after initial candidacy check
+			LAZYADD(shuttle_sleepers, spawner)
 	if(!shuttle_port_ref)
 		CRASH("[src] shuttle couldn't find a mobile port!")
-	// assign the sleepers to spawn players after initial candidacy check
-	for(var/turf/shuttle_turf as anything in shuttle_reservation.reserved_turfs)
-		var/obj/effect/mob_spawn/ghost_role/spawner = locate() in shuttle_turf
-		if(!spawner)
-			continue
-		LAZYADD(shuttle_sleepers, spawner)
-	if(!length(shuttle_sleepers))
-		CRASH("[src] found no sleepers!")
+	// register a signal to clean the reservation
+	var/obj/docking_port/mobile/shuttle_port = shuttle_port_ref.resolve()
+	RegisterSignal(shuttle_port, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, PROC_REF(clear_reservation))
 	// lock the shuttle's player interactables until ready to receive them
 	lock_shuttle(shuttle_port.get_control_console())
-	UnregisterSignal(subsystem, COMSIG_SHUTTLE_REGISTERED)
+	return shuttle_port
 
 ///
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/proc/clear_reservation(atom/source, turf/oldT)
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/proc/clear_reservation(atom/source, turf/oldT)
 	SIGNAL_HANDLER
 	SHOULD_NOT_OVERRIDE(TRUE)
 
@@ -950,26 +951,17 @@
 	qdel(shuttle_reservation)
 
 ///
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/proc/get_mobile_port()
-	return shuttle_port_ref?.resolve()
-
-///
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/proc/get_control_console()
-	var/obj/docking_port/mobile/shuttle_port = get_mobile_port()
-	return shuttle_port?.get_control_console()
-
-///
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/proc/lock_shuttle(obj/machinery/computer/shuttle/shuttle_console)
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/proc/lock_shuttle(obj/machinery/computer/shuttle/shuttle_console)
 	shuttle_console.locked = TRUE
 	for(var/obj/effect/mob_spawn/ghost_role/spawner as anything in shuttle_sleepers)
 		spawner.uses = 0
 ///
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/proc/unlock_shuttle(obj/machinery/computer/shuttle/shuttle_console)
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/proc/unlock_shuttle(obj/machinery/computer/shuttle/shuttle_console)
 	shuttle_console.locked = FALSE
 	for(var/obj/effect/mob_spawn/ghost_role/spawner as anything in shuttle_sleepers)
 		spawner.uses = 1
 
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/pirates
 	name = "Pirates"
 	config_tag = "Light Pirates"
 	signup_atom_appearance = /obj/item/claymore/cutlass
@@ -982,41 +974,41 @@
 	///
 	var/datum/pirate_gang/pirate_gang
 
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/New(list/dynamic_config)
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/pirates/New(list/dynamic_config)
 	. = ..()
 	pirate_gang = pick(default_pirate_pool())
 
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/can_be_selected()
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/pirates/can_be_selected()
 	return ..() && length(default_pirate_pool()) > 0
 
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/choose_shuttle_template()
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/pirates/choose_shuttle_template()
 	return "pirate_[pirate_gang.ship_template_id]"
 
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/execute()
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/pirates/execute()
 	. = ..()
 	send_pirate_threat()
-	var/obj/docking_port/mobile/shuttle_port = get_mobile_port()
+	var/obj/docking_port/mobile/shuttle_port = shuttle_port_ref?.resolve()
 	SSshuttle.generate_transit_dock(shuttle_port)
 	shuttle_port.enterTransit()
-	unlock_shuttle(get_control_console())
+	unlock_shuttle(shuttle_port.get_control_console())
 
 /// Returns what pool of pirates to draw from
 /// Returned list is mutated by the ruleset
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/proc/default_pirate_pool()
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/pirates/proc/default_pirate_pool()
 	return GLOB.light_pirate_gangs
 
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/heavy
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/pirates/heavy
 	config_tag = "Heavy Pirates"
 	midround_type = HEAVY_MIDROUND
 	weight = 3
 	min_pop = 25
 
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/heavy/default_pirate_pool()
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/pirates/heavy/default_pirate_pool()
 	return GLOB.heavy_pirate_gangs
 
 #define RANDOM_PIRATE_POOL "Random"
 
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/configure_ruleset(mob/admin)
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/pirates/configure_ruleset(mob/admin)
 	var/list/admin_pool = list("[RULESET_CONFIG_CANCEL]" = TRUE, "[RANDOM_PIRATE_POOL]" = TRUE)
 	for(var/datum/pirate_gang/gang as anything in default_pirate_pool())
 		admin_pool[gang.name] = gang
@@ -1035,7 +1027,7 @@
 #define POSITIVE_ANSWER 1
 #define NEGATIVE_ANSWER 2
 
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/proc/send_pirate_threat()
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/pirates/proc/send_pirate_threat()
 	///If there was nothing to pull from our requested list, stop here.
 	if(!pirate_gang)
 		message_admins("Error attempting to run the space pirate event, as the given pirate gangs list was empty.")
@@ -1052,7 +1044,7 @@
 //	addtimer(CALLBACK(src, PROC_REF(spawn_pirates), threat, pirate_gang), RESPONSE_MAX_TIME)
 	GLOB.communications_controller.send_message(threat, unique = TRUE)
 
-/datum/dynamic_ruleset/midround/from_ghosts/on_shuttle/pirates/proc/pirates_answered(datum/comm_message/threat, datum/pirate_gang/pirate_gang, payoff, initial_send_time)
+/datum/dynamic_ruleset/midround/from_ghosts/shuttle/pirates/proc/pirates_answered(datum/comm_message/threat, datum/pirate_gang/pirate_gang, payoff, initial_send_time)
 	if(world.time > initial_send_time + RESPONSE_MAX_TIME)
 		priority_announce(pirate_gang.response_too_late, sender_override = pirate_gang.ship_name, color_override = pirate_gang.announcement_color)
 		return
