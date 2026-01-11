@@ -35,36 +35,36 @@
 	// set_faction()
 	dummy.set_faction(test_factions)
 	if (dummy.get_faction() != string_list(test_factions))
-		TEST_FAIL("set_faction() failed to set the factions to the correct list! Instead: ([dummy.get_faction().Join(", ")]). Ensure that you are using string_list().")
+		TEST_FAIL("set_faction() failed to set the factions to the correct list! Instead: ([jointext(dummy.get_faction(), ", ")]). Ensure that you are using string_list().")
 	// remove_faction() - list arg
 	dummy.remove_faction(test_factions)
 	if (!isnull(dummy.get_faction()))
-		TEST_FAIL("remove_faction() did not remove the factions properly, they should be null! Instead: ([dummy.get_faction().Join(", ")]). Ensure that you are using string_list().")
+		TEST_FAIL("remove_faction() did not remove the factions properly, they should be null! Instead: ([jointext(dummy.get_faction(), ", ")]). Ensure that you are using string_list().")
 	// add_faction() - string arg
 	dummy.add_faction(test_faction)
 	if (dummy.get_faction() != string_list(list(test_faction)))
-		TEST_FAIL("add_faction() did not add the test faction! Instead: ([dummy.get_faction().Join(", ")]). Ensure that you are using string_list().")
+		TEST_FAIL("add_faction() did not add the test faction! Instead: ([jointext(dummy.get_faction(), ", ")]). Ensure that you are using string_list().")
 	// remove_faction() - string arg
 	dummy.remove_faction(test_faction)
 	if (!isnull(dummy.get_faction()))
-		TEST_FAIL("remove_faction() did not remove the test faction! Instead: ([dummy.get_faction().Join(", ")]). Ensure that you are using string_list().")
+		TEST_FAIL("remove_faction() did not remove the test faction! Instead: ([jointext(dummy.get_faction(), ", ")]). Ensure that you are using string_list().")
 
 	// set_allies()
 	dummy.set_allies(test_allies)
 	if (!dummy.has_ally(test_allies, match_all = TRUE))
-		TEST_FAIL("set_faction() failed to set the allies to the correct list! Instead: ([dummy.allies.Join(", ")]). Ensure that you are using string_list().")
+		TEST_FAIL("set_faction() failed to set the allies to the correct list! Instead: ([jointext(dummy.allies, ", ")]). Ensure that you are using string_list().")
 	// remove_ally() - list arg
 	dummy.remove_ally(test_allies)
 	if (!isnull(dummy.allies))
-		TEST_FAIL("remove_ally() did not remove the allies properly, they should be null! Instead: ([dummy.allies.Join(", ")]). Ensure that you are using string_list().")
+		TEST_FAIL("remove_ally() did not remove the allies properly, they should be null! Instead: ([jointext(dummy.allies, ", ")]). Ensure that you are using string_list().")
 	// add_ally() - string arg
 	dummy.add_ally(test_ally)
 	if (!dummy.has_ally(test_ally))
-		TEST_FAIL("add_ally() did not add the test ally! Instead: ([dummy.allies.Join(", ")]). Ensure that you are using string_list().")
+		TEST_FAIL("add_ally() did not add the test ally! Instead: ([jointext(dummy.allies, ", ")]). Ensure that you are using string_list().")
 	// remove_ally() - string arg
 	dummy.remove_ally(test_ally)
 	if (!isnull(dummy.allies))
-		TEST_FAIL("remove_ally() did not remove the test ally! Instead: ([dummy.allies.Join(", ")]). Ensure that you are using string_list().")
+		TEST_FAIL("remove_ally() did not remove the test ally! Instead: ([jointext(dummy.allies, ", ")]). Ensure that you are using string_list().")
 
 	dummy.add_ally(dummy) // put the dummy's orgiginal ally (itself) back
 
@@ -73,7 +73,7 @@
 
 	// Their allies should match
 	if (!(dummy.has_ally(REF(dummy)) && dummy.has_ally(REF(dummy_two))))
-		TEST_FAIL("apply_faction_and_allies() failed to add the correct allies. Should have both dummy's refs. Instead: ([dummy.allies.Join(", ")])")
+		TEST_FAIL("apply_faction_and_allies() failed to add the correct allies. Should have both dummy's refs. Instead: ([jointext(dummy.allies, ", ")])")
 	if (!dummy.faction_check_atom(dummy_two))
 		TEST_FAIL("faction_check_atom() returned FALSE when it should have returned TRUE.")
 
@@ -83,7 +83,7 @@
 
 	// Their faction should match
 	if (!(dummy.has_faction("copymeiguess")))
-		TEST_FAIL("apply_faction_and_allies() failed to add the correct faction. Should have the second dummy's faction. Instead: ([dummy.get_faction().Join(", ")])")
+		TEST_FAIL("apply_faction_and_allies() failed to add the correct faction. Should have the second dummy's faction. Instead: ([jointext(dummy.get_faction(), ", ")])")
 
 	// Test the list arg version too
 	else if (!dummy.has_faction(dummy_two.get_faction()))
@@ -93,9 +93,9 @@
 	SET_FACTION_AND_ALLIES_FROM(dummy, dummy_two)
 
 	if (!dummy.has_ally(dummy_two) || dummy.has_ally(dummy))
-		TEST_FAIL("set_faction_and_allies() failed to add the correct allies Should have just the second dummy's ref. Instead: ([dummy.get_faction().Join(", ")])")
+		TEST_FAIL("set_faction_and_allies() failed to add the correct allies Should have just the second dummy's ref. Instead: ([jointext(dummy.get_faction(), ", ")])")
 	if (!(dummy.has_faction("copymeiguess")))
-		TEST_FAIL("set_faction_and_allies() failed to add the correct faction. Should have the second dummy's faction. Instead: ([dummy.get_faction().Join(", ")])")
+		TEST_FAIL("set_faction_and_allies() failed to add the correct faction. Should have the second dummy's faction. Instead: ([jointext(dummy.get_faction(), ", ")])")
 
 	for (var/mob_type in typesof(/mob) - ignored)
 		var/mob/mob_instance = allocate(mob_type)
@@ -121,5 +121,5 @@
 		if(original_faction != mob_faction)
 			TEST_FAIL("Original faction does not match after removing the test faction! Make sure you are using the add_faction and remove_faction procs, \
 				and not editing the faction list directly anywhere. \
-				mob: [mob_instance]([mob_instance.type]) current factions: ([mob_faction.Join(", ")]) expected factions: ([original_faction.Join(", ")])")
+				mob: [mob_instance]([mob_instance.type]) current factions: ([jointext(mob_faction, ", ")]) expected factions: ([jointext(original_faction, ", ")])")
 		qdel(mob_instance)
