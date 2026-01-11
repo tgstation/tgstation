@@ -187,6 +187,9 @@
 	if(is_any_xenomorph(who))
 		return FALSE
 
+	if(HAS_TRAIT(who, TRAIT_XENO_HOST))
+		return TRUE
+
 	return is_any_xenomorph(dead_mob)
 
 // Give buffs based on the type of xenomorph dying
@@ -194,6 +197,10 @@
 	// following values are in absolute value form, we make it have a positive effect later
 	var/change_modifier = 0
 	var/timeout_modifier = 0
+
+	if(HAS_TRAIT(owner, TRAIT_XENO_HOST))
+		handle_embryo_carrier(dead_mob)
+		return
 
 	if(islarva(dead_mob))
 		change_modifier = 0.1
@@ -221,6 +228,31 @@
 
 	mood_change = initial(mood_change) * -change_modifier
 	timeout = initial(timeout) * timeout_modifier
+
+/// Separate proc that handles cases where the viewer is carrying a xenomorph embryo
+/datum/mood_event/conditional/see_death/xeno/proc/handle_embryo_carrier(mob/dead_mob)
+	if(!HAS_TRAIT(owner, TRAIT_XENO_HOST))
+		return
+
+	var/obj/item/organ/body_egg/alien_embryo/embryo = owner.get_organ_by_type(/obj/item/organ/body_egg/alien_embryo)
+	if(isnull(embryo))
+		stack_trace("Xeno Host [owner] missing embryo organ despite having XENO_HOST trait. What the fuck?")
+		return
+
+	if(owner.stat != CONSCIOUS) // if the carrier is sleeping then presumably the embryo's hivemind isn't affected
+		return
+
+	// You feel a lot worse if you're conscious and see a xenomorph die while implanted because the hivemind feels the loss of their sister
+	var/embryo_stage_multiplier = 1 + (embryo.stage / 10)
+	mood_change *= embryo_stage_multiplier
+	timeout *= embryo_stage_multiplier
+	description = "There's something inside of me churning after I saw that xenomorph die."
+	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_XENO_HOST), PROC_REF(on_embryo_removal))
+
+/// Handles cleanup once the embryo carrier dies
+/datum/mood_event/conditional/see_death/xeno/proc/on_embryo_removal(datum/source)
+	SIGNAL_HANDLER
+	qdel(src)
 
 /// Desensitized brings up the rear
 /datum/mood_event/conditional/see_death/desensitized
