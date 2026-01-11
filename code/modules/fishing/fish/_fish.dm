@@ -1420,7 +1420,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 
 	var/list/fishing_data = list(new_fish.size, new_fish.weight, new_fish.custom_materials)
-	log_fish("[new_fish] has been bred at [fishing_spot] from [partner].", fishing_data)
+	log_fish("[new_fish] has been bred at [new_fish.drop_location()] from [partner].", fishing_data)
 
 	breeding_wait = world.time + breeding_timeout
 
