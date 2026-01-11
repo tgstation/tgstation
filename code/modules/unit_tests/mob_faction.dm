@@ -70,17 +70,15 @@
 	// Their allies should match
 	if (!(dummy.has_ally(REF(dummy)) && dummy.has_ally(REF(dummy_two))))
 		TEST_FAIL("apply_faction_and_allies() failed to add the correct allies. Should have both dummy's refs. Instead: ([jointext(dummy.allies, ", ")])")
-	if (!dummy.faction_check_atom(dummy_two))
-		TEST_FAIL("faction_check_atom() returned FALSE when it should have returned TRUE.")
-
 	// Test the list arg version too
 	else if (!dummy.has_ally(list(REF(dummy), REF(dummy_two))))
 		TEST_FAIL("has_ally() failed to return TRUE when passed a list of allies.")
+	if (!dummy.faction_check_atom(dummy_two))
+		TEST_FAIL("faction_check_atom() returned FALSE when it should have returned TRUE.")
 
 	// Their faction should match
 	if (!(dummy.has_faction("copymeiguess")))
 		TEST_FAIL("apply_faction_and_allies() failed to add the correct faction. Should have the second dummy's faction. Instead: ([jointext(dummy.get_faction(), ", ")])")
-
 	// Test the list arg version too
 	else if (!dummy.has_faction(dummy_two.get_faction()))
 		TEST_FAIL("has_faction() failed to return TRUE when passed a list of allies.")
