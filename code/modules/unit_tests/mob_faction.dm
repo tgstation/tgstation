@@ -12,10 +12,6 @@
 	ignored += typesof(/mob/living/silicon/robot/model)
 	ignored += typesof(/mob/eye/camera/remote) // These will always just qdel themselves immediately if there was no creator arg
 
-	/// List of mobs that we will be sanity to checking to see if their lists match after removing the test faction
-	var/list/mobs_to_check = list()
-	/// List of factions by mob type
-	var/list/factions_by_type = list()
 	/// We are going to add a 'test faction' here, something that won't be on any existing mobs
 	var/test_faction = "about_to_be_poofed"
 	/// Same as test_faction but for testing the list version of the proc
