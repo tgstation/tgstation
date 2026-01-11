@@ -12,35 +12,33 @@
 	max_integrity = 300
 	/// Suffix added to base icon state when firing
 	var/fire_suffix = "_fire"
-	///whether the cannon can be unwrenched from the ground. Anchorable_cannon equivalent.
+	/// whether the cannon can be unwrenched from the ground. Anchorable_cannon equivalent.
 	var/anchorable_gun = TRUE
-	/// does this thing need ammo at all or does it just make ammo?
-	var/uses_ammo = TRUE
-	///Max shots per firing of the gun.
+	/// Max shots per firing of the gun.
 	var/max_shots_per_fire = 1
-	///Delay it takes to load the gun. Set to 0 if none.
+	/// Delay it takes to load the gun. Set to 0 if none.
 	var/load_delay = 0 SECONDS
-	///Message displayed when loading gun
+	/// Message displayed when loading gun
 	var/loading_message = "gun loaded"
-	///Shots currently loaded. Should never be more than max_shots_per_fire.
+	/// Shots currently loaded. Should never be more than max_shots_per_fire.
 	var/shots_in_gun = 1
-	///shots added to gun, per piece of ammo loaded.
+	/// Shots added to gun, per piece of ammo loaded.
 	var/shots_per_load = 1
-	///Accepted "ammo" type
-	var/ammo_type = /obj/item/ammo_casing/strilka310
-	///Projectile to fire
+	/// Things you can load into the gun
+	var/list/accepted_ammo_types = list(/obj/item/ammo_casing/strilka310)
+	/// Projectile to fire
 	var/projectile_type = /obj/projectile/bullet/strilka310
-	///Delay in firing the gun after lighting
+	/// Delay in firing the gun after lighting
 	var/fire_delay = 5 DECISECONDS
-	///Delay between shots
+	/// Delay between shots
 	var/shot_delay = 3 DECISECONDS
-	///If the gun shakes the camera when firing
+	/// If the gun shakes the camera when firing
 	var/firing_shakes_camera = TRUE
-	///sound of firing for all but last shot
+	/// Sound of firing for all but last shot
 	var/fire_sound = 'sound/items/weapons/gun/general/mountedgun.ogg'
-	///sound of firing for last shot
+	/// Sound of firing for last shot
 	var/last_fire_sound = 'sound/items/weapons/gun/general/mountedgunend.ogg'
-	///So you can't reload it mid-firing
+	/// So you can't reload it mid-firing
 	var/is_firing = FALSE
 	/// How many degrees to vary fire angle if the gun is not anchored
 	var/unanchored_variance = 20
@@ -51,6 +49,26 @@
 		/obj/item/assembly/igniter = 1,
 	)
 
+/obj/structure/mounted_gun/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/simple_rotation)
+	register_context()
+
+/obj/structure/mounted_gun/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!isliving(user))
+		return
+
+	if(anchorable_gun && held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unanchor" : "Anchor"
+
+	if(is_type_in_list(held_item, accepted_ammo_types))
+		context[SCREENTIP_CONTEXT_LMB] = "Load weapon"
+
+	if (!held_item)
+		context[SCREENTIP_CONTEXT_LMB] = "Fire weapon"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
 /obj/structure/mounted_gun/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!anchorable_gun) /// Can't anchor an unanchorable gun.
@@ -60,7 +78,7 @@
 
 ///Covers Reloading and lighting of the gun
 /obj/structure/mounted_gun/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!uses_ammo || user.combat_mode || !istype(tool, ammo_type)) //see if the gun needs to be loaded in some way.
+	if(user.combat_mode || !is_type_in_list(tool, accepted_ammo_types)) //see if the gun needs to be loaded in some way.
 		return NONE
 
 	if(is_firing)
@@ -93,7 +111,7 @@
 
 /// Start firing the weapon on interaction
 /obj/structure/mounted_gun/proc/try_firing(mob/living/user)
-	user.log_message("fired \a [src]", LOG_ATTACK)
+	user.log_message("fired a [initial(name)]", LOG_ATTACK)
 	addtimer(CALLBACK(src, PROC_REF(fire_sequence), user), fire_delay)
 
 /// Loop firing until we are done
@@ -107,7 +125,7 @@
 
 	while (shots_in_gun > 0)
 		shots_in_gun--
-		fire_loop()
+		fire_loop(user)
 		sleep(shot_delay)
 
 	shots_in_gun = 0
@@ -125,18 +143,18 @@
 	return // Generally we don't have contents to dump but some children do.
 
 /// Perform the contents of the loop
-/obj/structure/mounted_gun/proc/fire_loop()
+/obj/structure/mounted_gun/proc/fire_loop(mob/living/user)
 	for(var/mob/shaken_mob in urange(3, src))
 		if(shaken_mob.stat == CONSCIOUS && firing_shakes_camera) //is the mob awake to feel the shaking?
 			shake_camera(shaken_mob, 3, 1)
 		icon_state = base_icon_state + fire_suffix
 	playsound(src, shots_in_gun > 0 ? fire_sound : last_fire_sound, vol = 50, vary = FALSE, falloff_exponent = 5)
-	fire_gun()
+	fire_gun(user)
 
 /// Actually finally shoot the thing
-/obj/structure/mounted_gun/proc/fire_gun()
+/obj/structure/mounted_gun/proc/fire_gun(mob/living/user)
 	var/obj/projectile/fired_projectile = get_fired_projectile()
-	fired_projectile.firer = src
+	fired_projectile.firer = user
 	fired_projectile.fired_from = src
 	var/fire_angle = dir2angle(dir) + (!anchorable_gun || anchored ? 0 : rand(-unanchored_variance, unanchored_variance))
 	fired_projectile.fire(fire_angle)
@@ -156,7 +174,7 @@
 	max_shots_per_fire = 8
 	shots_in_gun = 8
 	shots_per_load = 2
-	ammo_type = /obj/item/ammo_casing/junk
+	accepted_ammo_types = list(/obj/item/ammo_casing/junk)
 	projectile_type = /obj/projectile/bullet/junk
 	fire_delay = 3 DECISECONDS
 	shot_delay = 2 DECISECONDS
@@ -208,7 +226,7 @@
 	max_shots_per_fire = 50
 	shots_per_load = 50
 	shots_in_gun = 50
-	ammo_type = /obj/item/ammo_casing/canister_shot
+	accepted_ammo_types = list(/obj/item/ammo_casing/canister_shot)
 	projectile_type = /obj/projectile/bullet/shrapnel
 	fire_delay = 3 DECISECONDS
 	shot_delay = 1 DECISECONDS
@@ -237,7 +255,7 @@
 	base_icon_state = "ratvarian_repeater"
 	loading_message = "gun charged"
 	anchored = FALSE
-	uses_ammo = FALSE
+	accepted_ammo_types = list() // We don't want any of that shit
 	load_delay = 3 SECONDS
 	max_shots_per_fire = 12
 	shots_per_load = 12
@@ -262,6 +280,18 @@
 		/obj/item/stack/rods = 3,
 	)
 
+/obj/structure/mounted_gun/ratvarian_repeater/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!isliving(user))
+		return
+
+	if(anchorable_gun && held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unanchor" : "Anchor"
+
+	if (!held_item)
+		context[SCREENTIP_CONTEXT_LMB] = shots_in_gun >= max_shots_per_fire ? "Fire weapon" : "Crank weapon"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
 // Charge the gun instead of firing it if it's not loaded
 /obj/structure/mounted_gun/ratvarian_repeater/try_firing(mob/user)
 	var/fully_loaded = shots_in_gun >= max_shots_per_fire
@@ -276,7 +306,7 @@
 	shots_in_gun = min(shots_in_gun + shots_per_load, max_shots_per_fire)
 	playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 50, FALSE, 5)
 
-/obj/structure/mounted_gun/ratvarian_repeater/fire_loop()
+/obj/structure/mounted_gun/ratvarian_repeater/fire_loop(mob/living/user)
 	. = ..()
 	if(shots_in_gun % 2 != 1) // Extra delay every other shot for burst fire
 		sleep(shot_delay)
@@ -289,14 +319,18 @@
 	base_icon_state = "improvised_ballista"
 	throwforce = 30
 	anchored = FALSE
-	uses_ammo = TRUE
 	load_delay = 6 SECONDS
 	max_shots_per_fire = 1
 	shots_per_load = 1
 	shots_in_gun = 0
 	fire_sound = 'sound/items/xbow_lock.ogg'
 	last_fire_sound = 'sound/items/xbow_lock.ogg'
-	ammo_type = /obj/item/spear
+	accepted_ammo_types = list(
+		/obj/item/brass_spear,
+		/obj/item/melee/baton/security/cattleprod,
+		/obj/item/nullrod/spear,
+		/obj/item/spear,
+	)
 	projectile_type = /obj/projectile/bullet/ballista_spear
 	fire_delay = 1
 	shot_delay = 1
@@ -310,13 +344,11 @@
 		/obj/item/stack/sheet/iron = 2,
 		/obj/item/stack/rods = 3,
 	)
-	/// Suffix added to base icon state when loaded
-	var/loaded_suffix = "_loaded"
 	/// What spear has someone put in us?
 	var/obj/item/loaded_spear
 
 /obj/structure/mounted_gun/ballista/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, ammo_type) || user.combat_mode)
+	if(!is_type_in_list(tool, accepted_ammo_types) || user.combat_mode)
 		return NONE
 
 	if(is_firing)
@@ -334,21 +366,22 @@
 			return ITEM_INTERACT_BLOCKING
 
 	shots_in_gun = 1
-	icon_state = base_icon_state + loaded_suffix
 
 	loaded_spear = tool
 	loaded_spear.forceMove(src)
 	RegisterSignals(loaded_spear, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(on_spear_left))
 
-	balloon_alert(user, loading_message)
+	icon_state = base_icon_state + (istype(loaded_spear, /obj/item/melee/baton/security/cattleprod) ? "_loaded_prod" : "_loaded")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/mounted_gun/ballista/get_fired_projectile()
 	if (istype(loaded_spear, /obj/item/spear/dragonator))
 		return new /obj/projectile/bullet/ballista_spear/dragonator(get_turf(src))
+	if (istype(loaded_spear, /obj/item/melee/baton/security/cattleprod))
+		return new /obj/projectile/bullet/ballista_spear/prod(get_turf(src))
 	return ..()
 
-/obj/structure/mounted_gun/ballista/fire_gun()
+/obj/structure/mounted_gun/ballista/fire_gun(mob/living/user)
 	var/obj/projectile/bullet/ballista_spear/fired_projectile = . = ..()
 	fired_projectile.attach_spear(loaded_spear)
 
