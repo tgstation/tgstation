@@ -958,14 +958,15 @@
 /datum/dynamic_ruleset/midround/from_ghosts/shuttle/proc/lock_shuttle(obj/machinery/computer/shuttle/shuttle_console)
 	SHOULD_CALL_PARENT(TRUE)
 	shuttle_console.locked = TRUE
-	for(var/obj/effect/mob_spawn/ghost_role/spawner as anything in shuttle_sleepers)
-		spawner.uses = 0
+	for(var/i in length(shuttle_sleepers))
+		shuttle_sleepers[i].uses = 0
+
 ///
 /datum/dynamic_ruleset/midround/from_ghosts/shuttle/proc/unlock_shuttle(obj/machinery/computer/shuttle/shuttle_console)
 	SHOULD_CALL_PARENT(TRUE)
 	shuttle_console.locked = FALSE
-	for(var/obj/effect/mob_spawn/ghost_role/spawner as anything in shuttle_sleepers)
-		spawner.uses = 1
+	for(var/i in length(shuttle_sleepers))
+		shuttle_sleepers[i].uses = 1
 
 /datum/dynamic_ruleset/midround/from_ghosts/shuttle/pirates
 	name = "Pirates"
