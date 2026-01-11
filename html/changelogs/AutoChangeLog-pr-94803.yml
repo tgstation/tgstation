@@ -1,0 +1,4 @@
+author: "loganuk"
+delete-after: True
+changes:
+  - bugfix: "Shuttle purchase screen now shows price for emag shuttles as well as normal"

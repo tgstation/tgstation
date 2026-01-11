@@ -36,6 +36,12 @@
 	icon_state = "bsing"
 	equip_delay_other = 5 SECONDS
 
+/obj/item/clothing/shoes/singerr
+	name = "red performer's boots"
+	desc = "These boots were made for dancing."
+	icon_state = "rsing"
+	equip_delay_other = 5 SECONDS
+
 /obj/item/clothing/shoes/bronze
 	name = "bronze boots"
 	desc = "A giant, clunky pair of shoes crudely made out of bronze. Why would anyone wear these?"

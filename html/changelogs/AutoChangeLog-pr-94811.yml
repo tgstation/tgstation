@@ -1,0 +1,4 @@
+author: "SapphoQueer"
+delete-after: True
+changes:
+  - bugfix: "Hypnoflashes now fit on secbelts just like regular flashes."
