@@ -1,0 +1,4 @@
+author: "loganuk"
+delete-after: True
+changes:
+  - bugfix: "Making surgery beds on top of stasis beds no longer possible"
