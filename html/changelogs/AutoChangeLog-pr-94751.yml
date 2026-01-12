@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Made lizard skin and lizardskin items inherit their \"donor's\" skin color"
