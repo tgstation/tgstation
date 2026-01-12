@@ -1,0 +1,4 @@
+author: "KingkumaArt"
+delete-after: True
+changes:
+  - bugfix: "Giantslayer spear now does intended damage to mining mobs."
