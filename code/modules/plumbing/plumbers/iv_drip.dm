@@ -8,14 +8,20 @@
 	use_internal_storage = TRUE
 	processing_flags = START_PROCESSING_MANUALLY
 
-/obj/machinery/iv_drip/plumbing/Initialize(mapload, bolt, layer)
+/obj/machinery/iv_drip/plumbing/Initialize(mapload, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
-	AddComponent(/datum/component/simple_rotation)
+	AddComponent(/datum/component/plumbing/automated_iv, layer)
+	AddElement(/datum/element/simple_rotation)
+
+/obj/machinery/iv_drip/plumbing/quick_toggle(mob/living/user)
+	return FALSE
+
+/obj/machinery/iv_drip/plumbing/click_alt(mob/user)
+	return NONE
 
 /obj/machinery/iv_drip/plumbing/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
-	if(held_item.tool_behaviour != TOOL_WRENCH)
+	if(isnull(held_item) || held_item.tool_behaviour != TOOL_WRENCH)
 		return
 	context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Una" : "A"]nchor"
 	return CONTEXTUAL_SCREENTIP_SET

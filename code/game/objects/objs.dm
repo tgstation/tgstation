@@ -64,10 +64,14 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 	if (id_tag)
 		GLOB.objects_by_id_tag[id_tag] = src
+	if(opacity)
+		SScameras.update_visibility(src)
 
 /obj/Destroy(force)
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+	if(opacity)
+		SScameras.update_visibility(src)
 	SStgui.close_uis(src)
 	GLOB.objects_by_id_tag -= id_tag
 	. = ..()
@@ -302,7 +306,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	set_anchored(!anchored)
 	check_on_table()
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-	SEND_SIGNAL(src, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, anchored)
 	return SUCCESSFUL_UNFASTEN
 
 /// For the do_after, this checks if unfastening conditions are still valid

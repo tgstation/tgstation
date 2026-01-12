@@ -6,16 +6,16 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ad" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ae" = (
 /obj/item/stack/cable_coil/cut,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ag" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/onehalf/dorms_med)
@@ -106,7 +106,7 @@
 "aw" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ax" = (
 /obj/structure/lattice,
 /turf/template_noop,
@@ -227,7 +227,7 @@
 /obj/structure/lattice,
 /obj/item/storage/toolbox/syndicate,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aT" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
@@ -570,7 +570,7 @@
 "bV" = (
 /obj/item/stack/sheet/iron,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bW" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
@@ -651,7 +651,7 @@
 	icon_state = "small"
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ck" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
@@ -705,14 +705,14 @@
 "cr" = (
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "cs" = (
 /obj/item/stack/sheet/plasteel{
 	amount = 10
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ct" = (
 /obj/structure/lattice,
 /obj/item/shard{
@@ -747,7 +747,7 @@
 "cA" = (
 /obj/item/stack/tile/wood,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "cB" = (
 /turf/template_noop,
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -813,7 +813,7 @@
 "cN" = (
 /obj/item/stack/sheet/plasteel,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "cQ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -828,17 +828,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
-"cT" = (
+"cU" = (
+/obj/structure/table/reinforced,
 /obj/machinery/button/door{
 	id = "bridge_onehalf";
 	name = "Bridge Blast Door";
-	pixel_x = 32;
 	pixel_y = 5
 	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/onehalf/bridge)
-"cU" = (
-/obj/structure/table/reinforced,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cY" = (
@@ -879,23 +875,23 @@
 /obj/item/stack/sheet/plasteel,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "di" = (
 /obj/item/shard{
 	icon_state = "medium"
 	},
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "dj" = (
 /obj/item/stack/rods,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "dl" = (
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ms" = (
 /obj/item/stack/tile/iron/base,
 /obj/structure/cable,
@@ -1411,7 +1407,7 @@ Vh
 Vh
 cJ
 cn
-cT
+cn
 cn
 cq
 ad

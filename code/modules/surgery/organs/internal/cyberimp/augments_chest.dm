@@ -14,7 +14,9 @@
 	var/poison_amount = 5
 	slot = ORGAN_SLOT_STOMACH_AID
 
-/obj/item/organ/cyberimp/chest/nutriment/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/cyberimp/chest/nutriment/on_life(seconds_per_tick)
+	. = ..()
+
 	if(synthesizing)
 		return
 
@@ -55,12 +57,14 @@
 	COOLDOWN_DECLARE(reviver_cooldown)
 	COOLDOWN_DECLARE(defib_cooldown)
 
-/obj/item/organ/cyberimp/chest/reviver/on_death(seconds_per_tick, times_fired)
+/obj/item/organ/cyberimp/chest/reviver/on_death(seconds_per_tick)
 	if(isnull(owner)) // owner can be null, on_death() gets called by /obj/item/organ/process() for decay
 		return
 	try_heal() // Allows implant to work even on dead people
 
-/obj/item/organ/cyberimp/chest/reviver/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/cyberimp/chest/reviver/on_life(seconds_per_tick)
+	. = ..()
+
 	try_heal()
 
 /obj/item/organ/cyberimp/chest/reviver/proc/try_heal()
@@ -90,19 +94,19 @@
 	/// boolean that stands for if PHYSICAL damage being patched
 	var/body_damage_patched = FALSE
 	var/need_mob_update = FALSE
-	if(owner.getOxyLoss())
-		need_mob_update += owner.adjustOxyLoss(-5, updating_health = FALSE)
+	if(owner.get_oxy_loss())
+		need_mob_update += owner.adjust_oxy_loss(-5, updating_health = FALSE)
 		revive_cost += 5
-	if(owner.getBruteLoss())
-		need_mob_update += owner.adjustBruteLoss(-2, updating_health = FALSE)
+	if(owner.get_brute_loss())
+		need_mob_update += owner.adjust_brute_loss(-2, updating_health = FALSE)
 		revive_cost += 40
 		body_damage_patched = TRUE
-	if(owner.getFireLoss())
-		need_mob_update += owner.adjustFireLoss(-2, updating_health = FALSE)
+	if(owner.get_fire_loss())
+		need_mob_update += owner.adjust_fire_loss(-2, updating_health = FALSE)
 		revive_cost += 40
 		body_damage_patched = TRUE
-	if(owner.getToxLoss())
-		need_mob_update += owner.adjustToxLoss(-1, updating_health = FALSE)
+	if(owner.get_tox_loss())
+		need_mob_update += owner.adjust_tox_loss(-1, updating_health = FALSE)
 		revive_cost += 40
 	if(need_mob_update)
 		owner.updatehealth()

@@ -1,8 +1,3 @@
-// Defines for the ballmer peak.
-#define BALLMER_PEAK_LOW_END 12.9
-#define BALLMER_PEAK_HIGH_END 13.8
-#define BALLMER_PEAK_WINDOWS_ME 26
-
 /// The threshld which determine if someone is tipsy vs drunk
 #define TIPSY_THRESHOLD 6
 
@@ -158,10 +153,10 @@
 
 /datum/status_effect/inebriated/drunk/on_tick_effects()
 	// Handle the Ballmer Peak.
-	// If our owner is a scientist (has the trait "TRAIT_BALLMER_SCIENTIST"), there's a 5% chance
+	// If our owner is a scientist (has the trait "TRAIT_SCIENTIST_LIVER"), there's a 5% chance
 	// that they'll say one of the special "ballmer message" lines, depending their drunk-ness level.
 	var/obj/item/organ/liver/liver_organ = owner.get_organ_slot(ORGAN_SLOT_LIVER)
-	if(liver_organ && HAS_TRAIT(liver_organ, TRAIT_BALLMER_SCIENTIST) && prob(5))
+	if(liver_organ && HAS_TRAIT(liver_organ, TRAIT_SCIENTIST_LIVER) && prob(5) && HAS_PERSONALITY(owner, /datum/personality/whimsical))
 		if(drunk_value >= BALLMER_PEAK_LOW_END && drunk_value <= BALLMER_PEAK_HIGH_END)
 			owner.say(pick_list_replacements(VISTA_FILE, "ballmer_good_msg"), forced = "ballmer")
 
@@ -201,20 +196,20 @@
 
 	// Over 81, we will gain constant toxloss
 	if(drunk_value >= 81)
-		owner.adjustToxLoss(1)
+		owner.adjust_tox_loss(1)
 		if(owner.stat == CONSCIOUS && prob(5))
 			to_chat(owner, span_warning("Maybe you should lie down for a bit..."))
 
 	// Over 91, we gain even more toxloss, brain damage, and have a chance of dropping into a long sleep
 	if(drunk_value >= 91)
-		owner.adjustToxLoss(1)
-		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.4)
+		owner.adjust_tox_loss(1)
+		owner.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.4)
 		if(owner.stat == CONSCIOUS)
 			attempt_to_blackout()
 
 	// And finally, over 100 - let's be honest, you shouldn't be alive by now.
 	if(drunk_value >= 101)
-		owner.adjustToxLoss(2)
+		owner.adjust_tox_loss(2)
 
 /datum/status_effect/inebriated/drunk/proc/attempt_to_blackout()
 	var/mob/living/carbon/drunkard = owner
@@ -238,9 +233,5 @@
 		motor skills, and mental cognition. Make sure to act like it."
 	use_user_hud_icon = TRUE
 	overlay_state = "drunk"
-
-#undef BALLMER_PEAK_LOW_END
-#undef BALLMER_PEAK_HIGH_END
-#undef BALLMER_PEAK_WINDOWS_ME
 
 #undef TIPSY_THRESHOLD

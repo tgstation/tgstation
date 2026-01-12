@@ -11,6 +11,7 @@
 	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR | UNIQUE_RENAME | RENAME_NO_DESC
 	set_dir_on_move = FALSE
 	can_atmos_pass = ATMOS_PASS_PROC
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
 
 	/// Reference to the airlock electronics inside for determining window access.
 	var/obj/item/electronics/airlock/electronics = null
@@ -46,7 +47,7 @@
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
-	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
+	AddElement(/datum/element/simple_rotation, ROTATION_NEEDS_ROOM)
 
 /obj/structure/windoor_assembly/Destroy()
 	set_density(FALSE)
@@ -324,7 +325,7 @@
 			if(EAST,WEST)
 				windoor.unres_sides &= ~NORTH
 				windoor.unres_sides &= ~SOUTH
-		windoor.unres_sensor = TRUE
+		windoor.unres_latch = TRUE
 	electronics.forceMove(windoor)
 	windoor.electronics = electronics
 	windoor.autoclose = TRUE

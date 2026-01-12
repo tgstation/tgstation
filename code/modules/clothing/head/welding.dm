@@ -21,7 +21,7 @@
 /obj/item/clothing/head/utility/welding/Initialize(mapload)
 	. = ..()
 	if(!up)
-		AddComponent(/datum/component/adjust_fishing_difficulty, 8)
+		AddElement(/datum/element/adjust_fishing_difficulty, 8)
 
 /datum/armor/utility_welding
 	melee = 10
@@ -34,9 +34,9 @@
 /obj/item/clothing/head/utility/welding/adjust_visor(mob/user)
 	. = ..()
 	if(up)
-		qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
+		RemoveElement(/datum/element/adjust_fishing_difficulty)
 	else
-		AddComponent(/datum/component/adjust_fishing_difficulty, 8)
+		AddElement(/datum/element/adjust_fishing_difficulty, 8)
 
 /obj/item/clothing/head/utility/welding/update_icon_state()
 	. = ..()

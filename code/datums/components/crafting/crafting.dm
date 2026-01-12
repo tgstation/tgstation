@@ -68,12 +68,17 @@
 	var/list/requirements_list = list()
 
 	// Process all requirements
-	for(var/requirement_path in recipe.reqs)
+	var/recipe_result
+	if(recipe.blacklist_result)
+		recipe_result = recipe.result
+	for(var/requirement_path, needed_amount in recipe.reqs)
 		// Check we have the appropriate amount available in the contents list
-		var/needed_amount = recipe.reqs[requirement_path]
 		for(var/content_item_path in contents)
 			// Right path and not blacklisted
-			if(!ispath(content_item_path, requirement_path) || recipe.blacklist.Find(content_item_path))
+			if(!ispath(content_item_path, requirement_path) || (content_item_path in recipe.blacklist) || is_type_in_typecache(recipe.global_blacklist, content_item_path))
+				continue
+			// If we are a recipe that is blacklisting its result, make sure we skip that path
+			if(recipe_result && content_item_path == recipe_result)
 				continue
 
 			needed_amount -= contents[content_item_path]
@@ -85,14 +90,14 @@
 
 		// Store the instances of what we will use for recipe.check_requirements() for requirement_path
 		var/list/instances_list = list()
-		for(var/instance_path in item_instances)
+		for(var/instance_path, item_instance in item_instances)
 			if(ispath(instance_path, requirement_path))
-				instances_list += item_instances[instance_path]
+				instances_list += item_instance
 
 		requirements_list[requirement_path] = instances_list
 
-	for(var/requirement_path in recipe.chem_catalysts)
-		if(contents[requirement_path] < recipe.chem_catalysts[requirement_path])
+	for(var/requirement_path, chem_amount in recipe.chem_catalysts)
+		if(contents[requirement_path] < chem_amount)
 			return FALSE
 
 	var/mech_found = FALSE
@@ -244,15 +249,29 @@
 	//used to gather the material composition of the utilized requirements to transfer to the result
 	var/list/total_materials = list()
 	var/list/stuff_to_use = get_used_reqs(recipe, crafter, total_materials)
+
+	for(var/mat, to_remove in recipe.removed_mats)
+		var/datum/material/ref_mat = locate(mat) in total_materials
+		if(!ref_mat)
+			continue
+		if(total_materials[ref_mat] < to_remove)
+			total_materials -= ref_mat
+		else
+			total_materials[ref_mat] -= to_remove
+
 	var/atom/result
 	var/turf/craft_turf = get_turf(crafter.loc)
-	var/set_materials = TRUE
+	var/set_materials = !(recipe.crafting_flags & CRAFT_NO_MATERIALS)
 	if(ispath(recipe.result, /turf))
 		result = craft_turf.place_on_top(recipe.result)
 	else if(ispath(recipe.result, /obj/item/stack))
+		var/res_amount = recipe.result_amount || 1
 		//we don't merge the stack right away but try to put it in the hand of the crafter
-		result = new recipe.result(craft_turf, recipe.result_amount || 1, /*merge =*/FALSE)
-		set_materials = FALSE //stacks are bit too complex for it for now, but you're free to change that.
+		if(set_materials)
+			result = new recipe.result(craft_turf, res_amount, /*merge =*/ FALSE, /*mat_override =*/ total_materials, /*mat_amt =*/ 1 / res_amount)
+			set_materials = FALSE //We've already set the materials on init. Don't do it again
+		else
+			result = new recipe.result(craft_turf, res_amount, FALSE)
 	else
 		result = new recipe.result(craft_turf)
 		if(result.atom_storage && recipe.delete_contents)
@@ -372,21 +391,21 @@
 	if(recipe.structures)
 		requirements += recipe.structures
 
-	var/list/surroundings
+	var/list/surroundings = get_environment(atom, recipe.blacklist)
 	for(var/path_key in requirements)
 		var/amount = recipe.reqs?[path_key] || recipe.machinery?[path_key] || recipe.structures?[path_key]
 		if(!amount)//since machinery & structures can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
 			continue
-		surroundings = get_environment(atom, recipe.blacklist)
-		surroundings -= return_list
 		if(ispath(path_key, /datum/reagent))
 			if(!holder)
 				holder = new(INFINITY, NO_REACT) //an infinite volume holder than can store reagents without reacting
 				return_list += holder
+			var/list/checked = list()
 			while(amount > 0)
-				var/obj/item/reagent_containers/container = locate() in surroundings
+				var/obj/item/reagent_containers/container = locate() in ((surroundings | return_list) - checked)
 				if(isnull(container)) //This would only happen if the previous checks for contents and tools were flawed.
 					stack_trace("couldn't fulfill the required amount for [path_key]. Dangit")
+					break
 				if(QDELING(container)) //it's deleting...
 					surroundings -= container
 					continue
@@ -394,7 +413,7 @@
 				if(reagent_volume)
 					container.reagents.trans_to(holder, min(amount, reagent_volume), target_id = path_key, no_react = TRUE)
 					amount -= reagent_volume
-				surroundings -= container
+				checked += container
 				container.update_appearance(UPDATE_ICON)
 		else if(ispath(path_key, /obj/item/stack))
 			var/obj/item/stack/tally_stack
@@ -402,6 +421,7 @@
 				var/obj/item/stack/origin_stack = locate(path_key) in surroundings
 				if(isnull(origin_stack)) //This would only happen if the previous checks for contents and tools were flawed.
 					stack_trace("couldn't fulfill the required amount for [path_key]. Dangit")
+					break
 				if(QDELING(origin_stack))
 					continue
 				var/amount_to_give = min(origin_stack.amount, amount)
@@ -420,6 +440,7 @@
 				var/atom/movable/item = locate(path_key) in surroundings
 				if(isnull(item)) //This would only happen if the previous checks for contents and tools were flawed.
 					stack_trace("couldn't fulfill the required amount for [path_key]. Dangit")
+					break
 				if(QDELING(item))
 					continue
 				return_list += item
@@ -656,18 +677,18 @@
 			data["structures"] += atoms.Find(req_atom)
 
 	// Ingredients / Materials
+	data["reqs"] = list()
 	if(recipe.reqs.len)
-		data["reqs"] = list()
 		for(var/req_atom in recipe.reqs)
 			var/id = atoms.Find(req_atom)
 			data["reqs"]["[id]"] = recipe.reqs[req_atom]
 
 	// Catalysts
-	if(recipe.chem_catalysts.len)
+	if(LAZYLEN(recipe.chem_catalysts))
 		data["chem_catalysts"] = list()
-		for(var/req_atom in recipe.chem_catalysts)
+		for(var/req_atom, chem_amount in recipe.chem_catalysts)
 			var/id = atoms.Find(req_atom)
-			data["chem_catalysts"]["[id]"] = recipe.chem_catalysts[req_atom]
+			data["chem_catalysts"]["[id]"] = chem_amount
 
 	// Reaction data
 	if(ispath(recipe.reaction))

@@ -66,7 +66,7 @@
 	. = ..()
 	update_appearance(UPDATE_ICON_STATE)
 	update_anomaly_state()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -7) // PSYCHIC FISHING
+	AddElement(/datum/element/adjust_fishing_difficulty, -7) // PSYCHIC FISHING
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
 
 /obj/item/clothing/head/helmet/perceptomatrix/equipped(mob/living/user, slot)
@@ -102,7 +102,7 @@
 
 	// When someone makes TRAIT_DEAF an element, or status effect, or whatever, give this item a way to bypass said deafness.
 	// just blocking future instances of deafness isn't what the item is meant to do but there's no proper way to do it otherwise at the moment.
-	active_components += AddComponent(/datum/component/wearertargeting/earprotection, reduce_amount = 2) // should be same as highest value
+	active_components += AddComponent(/datum/component/wearertargeting/earprotection, EAR_PROTECTION_HEAVY) // should be same as highest value
 	active_components += AddComponent(
 		/datum/component/anti_magic, \
 		antimagic_flags = MAGIC_RESISTANCE_MIND, \

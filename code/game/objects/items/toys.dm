@@ -16,7 +16,7 @@
  * Toy big red button
  * Beach ball
  * Toy xeno
- *      Kitty toys!
+ * Kitty toys!
  * Snowballs
  * Clockwork Watches
  * Toy Daggers
@@ -25,6 +25,8 @@
  * Fake heretic codex
  * Fake Pierced Reality
  * Intento
+ * Extendo hand
+ * Ban hammer
  */
 /obj/item/toy
 	abstract_type = /obj/item/toy
@@ -459,7 +461,7 @@
 		return
 	if(!user.is_holding(src)) // Half digestion? Start choking to death
 		user.visible_message(span_suicide("[user] panics and starts choking [user.p_them()]self to death!"))
-		user.adjustOxyLoss(200)
+		user.adjust_oxy_loss(200)
 		user.death(FALSE) // unfortunately you have to handle the suiciding yourself with a manual suicide
 		user.ghostize(FALSE) // get the fuck out of our body
 		return
@@ -467,13 +469,13 @@
 	if(CH.cavity_item) // if he's (un)bright enough to have a round and full belly...
 		user.visible_message(span_danger("[user] regurgitates [src]!")) // I swear i dont have a fetish
 		user.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 100, distance = 0)
-		user.adjustOxyLoss(120)
+		user.adjust_oxy_loss(120)
 		user.dropItemToGround(src) // incase the crit state doesn't drop the singulo to the floor
 		user.set_suicide(FALSE)
 		return
 	user.transferItemToLoc(src, user, TRUE)
 	CH.cavity_item = src // The mother came inside and found Andy, dead with a HUGE belly full of toys
-	user.adjustOxyLoss(200) // You know how most small toys in the EU have that 3+ onion head icon and a warning that says "Unsuitable for children under 3 years of age due to small parts - choking hazard"? This is why.
+	user.adjust_oxy_loss(200) // You know how most small toys in the EU have that 3+ onion head icon and a warning that says "Unsuitable for children under 3 years of age due to small parts - choking hazard"? This is why.
 	user.death(FALSE)
 	user.ghostize(FALSE)
 
@@ -586,6 +588,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("attacks", "strikes", "hits")
 	attack_verb_simple = list("attack", "strike", "hit")
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.1, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1)
 	/// Whether our sword has been multitooled to rainbow
 	var/hacked = FALSE
 	/// The color of our fake energy sword
@@ -788,7 +791,7 @@
 
 /obj/item/dualsaber/toy/impale(mob/living/user)//Stops Toy Dualsabers from injuring clowns
 	to_chat(user, span_warning("You twirl around a bit before losing your balance and impaling yourself on [src]."))
-	user.adjustStaminaLoss(25)
+	user.adjust_stamina_loss(25)
 
 /obj/item/toy/katana
 	name = "replica katana"
@@ -1081,6 +1084,7 @@
 	icon_state = "snowball"
 	throwforce = 20 //the same damage as a disabler shot
 	damtype = STAMINA //maybe someday we can add stuffing rocks (or perhaps ore?) into snowballs to make them deal brute damage
+	custom_materials = list(/datum/material/snow = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/toy/snowball/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	user.throw_item(interacting_with)
@@ -1844,3 +1848,70 @@ GLOBAL_LIST_EMPTY(intento_players)
 	attack_verb_simple = list("smack", "club", "wack", "vendor")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
+
+/obj/item/extendohand
+	name = "extendo-hand"
+	desc = "Futuristic tech has allowed these classic spring-boxing toys to essentially act as a fully functional hand-operated hand prosthetic."
+	icon = 'icons/obj/toys/toy.dmi'
+	icon_state = "extendohand"
+	inhand_icon_state = "extendohand"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	force = 0
+	throwforce = 5
+	reach = 2
+	var/min_reach = 2
+
+/obj/item/extendohand/acme
+	name = "\improper ACME Extendo-Hand"
+	desc = "A novelty extendo-hand produced by the ACME corporation. Originally designed to knock out roadrunners."
+
+/obj/item/extendohand/attack(atom/M, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
+	var/dist = get_dist(M, user)
+	if(dist < min_reach)
+		to_chat(user, span_warning("[M] is too close to use [src] on."))
+		return
+	M.attack_hand(user, modifiers)
+
+/obj/item/banhammer
+	desc = "A banhammer."
+	name = "banhammer"
+	icon = 'icons/obj/weapons/hammer.dmi'
+	icon_state = "toyhammer"
+	icon_angle = -45
+	slot_flags = ITEM_SLOT_BELT
+	throwforce = 0
+	force = 1
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 3
+	throw_range = 7
+	attack_verb_continuous = list("bans")
+	attack_verb_simple = list("ban")
+	max_integrity = 200
+	armor_type = /datum/armor/item_banhammer
+	resistance_flags = FIRE_PROOF
+
+/datum/armor/item_banhammer
+	fire = 100
+	acid = 70
+
+/obj/item/banhammer/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/kneejerk)
+
+/obj/item/banhammer/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is hitting [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to ban [user.p_them()]self from life."))
+	return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
+/*
+oranges says: This is a meme relating to the english translation of the ss13 russian wiki page on lurkmore.
+mrdoombringer sez: and remember kids, if you try and PR a fix for this item's grammar, you are admitting that you are, indeed, a newfriend.
+for further reading, please see: https://github.com/tgstation/tgstation/pull/30173 and https://translate.google.com/translate?sl=auto&tl=en&js=y&prev=_t&hl=en&ie=UTF-8&u=%2F%2Flurkmore.to%2FSS13&edit-text=&act=url
+*/
+/obj/item/banhammer/attack(mob/M, mob/living/user)
+	if(user.zone_selected == BODY_ZONE_HEAD)
+		M.visible_message(span_danger("[user] are stroking the head of [M] with a bangammer."), span_userdanger("[user] are stroking your head with a bangammer."), span_hear("You hear a bangammer stroking a head.")) // see above comment
+	else
+		M.visible_message(span_danger("[M] has been banned FOR NO REISIN by [user]!"), span_userdanger("You have been banned FOR NO REISIN by [user]!"), span_hear("You hear a banhammer banning someone."))
+	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
+	if(user.combat_mode)
+		return ..(M, user)

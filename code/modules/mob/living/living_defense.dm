@@ -40,13 +40,18 @@
 	return
 
 //this returns the mob's protection against ear damage (0:no protection; 1: some ear protection; 2: has no ears)
-/mob/living/proc/get_ear_protection()
+/mob/living/proc/get_ear_protection(ignore_deafness = FALSE)
+	if(!ignore_deafness && HAS_TRAIT(src, TRAIT_DEAF))
+		return INFINITY //For all my homies that can not hear in the world
+	var/list/sig_protection = list(0)
+	SEND_SIGNAL(src, COMSIG_LIVING_GET_EAR_PROTECTION, sig_protection)
+	var/protection = sig_protection[EAR_PROTECTION_ARG]
 	var/turf/current_turf = get_turf(src)
 	var/datum/gas_mixture/environment = current_turf.return_air()
-	var/pressure = environment ? environment.return_pressure() : 0
+	var/pressure = environment?.return_pressure()
 	if(pressure < SOUND_MINIMUM_PRESSURE) //space is empty
-		return 1
-	return 0
+		protection += EAR_PROTECTION_VACUUM
+	return protection
 
 /**
  * Checks if our mob has their mouth covered.
@@ -94,6 +99,20 @@
 /// Returns the atom covering the mob's ears, or null if their ears are uncovered.
 /mob/living/proc/is_ears_covered()
 	return null
+
+/**
+ * Check if the passed body zone is covered by some clothes
+ *
+ * * location: body zone to check
+ * ([BODY_ZONE_CHEST], [BODY_ZONE_HEAD], etc)
+ * * exluded_equipment_slots: equipment slots to ignore when checking coverage
+ * (for example, if you want to ignore helmets, pass [ITEM_SLOT_HEAD])
+ *
+ * Returns TRUE if the location is accessible (not covered)
+ * Returns FALSE if the location is covered by something
+ */
+/mob/living/proc/is_location_accessible(location, exluded_equipment_slots = NONE)
+	return TRUE
 
 /mob/living/bullet_act(obj/projectile/proj, def_zone, piercing_hit = FALSE, blocked = 0)
 	. = ..()
@@ -161,7 +180,7 @@
 		return
 
 	var/obj/item/bodypart/hit_bodypart = get_bodypart(check_hit_limb_zone_name(def_zone))
-	if (blood_volume && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
+	if (get_blood_volume() && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
 		create_splatter(angle2dir(proj.angle))
 		if(prob(33))
 			add_splatter_floor(get_turf(src))
@@ -454,13 +473,8 @@
 	if(.)
 		return TRUE
 
-	for(var/datum/surgery/operations as anything in surgeries)
-		if(user.combat_mode)
-			break
-		if(IS_IN_INVALID_SURGICAL_POSITION(src, operations))
-			continue
-		if(operations.next_step(user, modifiers))
-			return TRUE
+	if(!combat_mode && HAS_TRAIT(src, TRAIT_READY_TO_OPERATE) && user.perform_surgery(src))
+		return TRUE
 
 	return FALSE
 
@@ -576,12 +590,12 @@
 	if(shock_damage < 1)
 		return FALSE
 	if(!(flags & SHOCK_ILLUSION))
-		adjustFireLoss(shock_damage)
-		if(getFireLoss() > 100)
+		adjust_fire_loss(shock_damage)
+		if(get_fire_loss() > 100)
 			add_shared_particles(/particles/smoke/burning)
 			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, remove_shared_particles), /particles/smoke/burning), 10 SECONDS)
 	else
-		adjustStaminaLoss(shock_damage)
+		adjust_stamina_loss(shock_damage)
 	if(!(flags & SHOCK_SUPPRESS_MESSAGE))
 		visible_message(
 			span_danger("[src] was shocked by \the [source]!"), \
@@ -654,8 +668,38 @@
 	return TRUE
 
 //called when the mob receives a loud bang
-/mob/living/proc/soundbang_act()
-	return FALSE
+/mob/living/proc/soundbang_act(intensity = SOUNDBANG_NORMAL, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15, ignore_deafness = FALSE, send_sound = TRUE)
+	var/protection = get_ear_protection(ignore_deafness)
+	if(protection >= intensity)
+		return FALSE
+
+	///The amplitude of the effect is reduced by sound protection, while weakness only makes it worse.
+	var/effect_amount = protection > 0 ? 1 - (protection/intensity) : 1 - protection
+	if(stun_pwr)
+		Paralyze(stun_pwr * effect_amount * 0.1)
+		Knockdown(stun_pwr * effect_amount)
+
+	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
+
+	. = effect_amount //how soundbanged we are
+	if(!ears || !(deafen_pwr || damage_pwr))
+		return
+
+	var/ear_damage = damage_pwr * effect_amount
+	var/deaf = deafen_pwr * effect_amount
+	sound_damage(ear_damage, deaf)
+
+	if(send_sound)
+		SEND_SOUND(src, sound('sound/items/weapons/flash_ring.ogg',0, 1, 0, 250))
+
+	if(ears.damage >= 15 && prob(ears.damage - 5))
+		to_chat(src, span_userdanger("You can't hear anything!"))
+		// Makes you deaf, enough that you need a proper source of healing, it won't self heal
+		// you need earmuffs, inacusiate, or replacement
+		ears.set_organ_damage(ears.maxHealth)
+	else if(ears.damage >= 5)
+		to_chat(src, span_warning("Your ears start to ring[ears.damage >= 15 ? " badly!":"!"]"))
+
 
 //to damage the clothes worn by a mob
 /mob/living/proc/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
@@ -756,7 +800,7 @@
 			if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == shove_dir && obj_content.density)
 				shove_flags |= SHOVE_DIRECTIONAL_BLOCKED
 				break
-		if(target_turf != target_shove_turf && !(shove_flags && SHOVE_DIRECTIONAL_BLOCKED)) //Make sure that we don't run the exact same check twice on the same tile
+		if(target_turf != target_shove_turf && !(shove_flags & SHOVE_DIRECTIONAL_BLOCKED)) //Make sure that we don't run the exact same check twice on the same tile
 			for(var/obj/obj_content in target_shove_turf)
 				if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == REVERSE_DIR(shove_dir) && obj_content.density)
 					shove_flags |= SHOVE_DIRECTIONAL_BLOCKED
@@ -767,22 +811,22 @@
 		if(!(shove_flags & SHOVE_DIRECTIONAL_BLOCKED) && (SEND_SIGNAL(target_shove_turf, COMSIG_LIVING_DISARM_COLLIDE, src, target, shove_flags, weapon) & COMSIG_LIVING_SHOVE_HANDLED))
 			return
 		if((shove_flags & SHOVE_BLOCKED) && !(shove_flags & (SHOVE_KNOCKDOWN_BLOCKED|SHOVE_CAN_KICK_SIDE)))
-			target.Knockdown(SHOVE_KNOCKDOWN_SOLID, daze_amount = 3 SECONDS)
-			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
-				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-			to_chat(src, span_danger("You shove [target.name], knocking [target.p_them()] down!"))
-			log_combat(src, target, "shoved", "knocking them down[weapon ? " with [weapon]" : ""]")
+			var/knocked_down = target.Knockdown(SHOVE_KNOCKDOWN_SOLID, daze_amount = 3 SECONDS)
+			target.visible_message(span_danger("[name] shoves [target.name][knocked_down ? ", knocking [target.p_them()] down" : ""]!"),
+				span_userdanger("You[knocked_down ? "'re knocked down" : " resist falling down"] from a shove by [name]!"), span_hear("You hear aggressive shuffling [knocked_down ? "followed by a loud thud!" : ""]"), COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, span_danger("You shove [target.name][knocked_down ? ", knocking [target.p_them()] down" : ""]!"))
+			log_combat(src, target, "shoved", "[knocked_down ? "knocking them down[weapon ? " with [weapon]" : ""]" : ""]")
 			return
 
 	if(shove_flags & SHOVE_CAN_KICK_SIDE) //KICK HIM IN THE NUTS
-		target.Paralyze(SHOVE_CHAIN_PARALYZE)
-		target.apply_status_effect(/datum/status_effect/no_side_kick)
-		target.visible_message(span_danger("[name] kicks [target.name] onto [target.p_their()] side!"),
-						span_userdanger("You're kicked onto your side by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-		to_chat(src, span_danger("You kick [target.name] onto [target.p_their()] side!"))
-		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, SetKnockdown), 0), SHOVE_CHAIN_PARALYZE)
-		log_combat(src, target, "kicks", "onto their side (paralyzing)")
-		return
+		if(target.Paralyze(SHOVE_CHAIN_PARALYZE))
+			target.apply_status_effect(/datum/status_effect/no_side_kick)
+			target.visible_message(span_danger("[name] kicks [target.name] onto [target.p_their()] side!"),
+							span_userdanger("You're kicked onto your side by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, span_danger("You kick [target.name] onto [target.p_their()] side!"))
+			addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, SetKnockdown), 0), SHOVE_CHAIN_PARALYZE)
+			log_combat(src, target, "kicks", "onto their side (paralyzing)")
+			return
 
 	target.get_shoving_message(src, weapon, shove_flags)
 

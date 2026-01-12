@@ -8,7 +8,7 @@
 	/// The efficiency coefficient. Material costs and print times are multiplied by this number;
 	var/efficiency_coeff = 1
 	/// The material storage used by this fabricator.
-	var/datum/component/remote_materials/materials
+	var/datum/remote_materials/materials
 	/// Which departments are allowed to process this design
 	var/allowed_department_flags = ALL
 	/// Icon state when production has started
@@ -28,8 +28,8 @@
 
 /obj/machinery/rnd/production/Initialize(mapload)
 	print_sound = new(src,  FALSE)
-	materials = AddComponent(
-		/datum/component/remote_materials, \
+	materials = new (
+		src, \
 		mapload, \
 		mat_container_signals = list( \
 			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/rnd/production, local_material_insert)
@@ -53,9 +53,9 @@
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/machinery/rnd/production/Destroy()
-	QDEL_NULL(print_sound)
-	materials = null
 	cached_designs = null
+	QDEL_NULL(print_sound)
+	QDEL_NULL(materials)
 	return ..()
 
 // Stuff for the stripe on the department machines
@@ -79,8 +79,8 @@
 	if(!in_range(user, src) && !isobserver(user))
 		return
 
-	. += span_notice("Material usage cost at <b>[efficiency_coeff * 100]%</b>")
-	. += span_notice("Build time at <b>[efficiency_coeff * 100]%</b>")
+	. += span_notice("Material usage cost at <b>[efficiency_coeff * 100]%</b>.")
+	. += span_notice("Build time at <b>[efficiency_coeff * 100]%</b>.")
 	if(drop_direction)
 		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
 		. += span_notice("[EXAMINE_HINT("Alt-click")] to reset.")

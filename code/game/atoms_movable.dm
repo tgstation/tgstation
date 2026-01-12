@@ -174,6 +174,8 @@
 		blocker.dir = dir
 		blocker.appearance_flags = appearance_flags | EMISSIVE_APPEARANCE_FLAGS
 		blocker.plane = GET_NEW_PLANE(EMISSIVE_PLANE, PLANE_TO_OFFSET(plane)) // Takes a light path through the normal macro for a microop
+		if (IS_TOPDOWN_PLANE(plane))
+			blocker.layer = TOPDOWN_TO_EMISSIVE_LAYER(layer)
 		// Ok so this is really cursed, but I want to set with this blocker cheaply while
 		// Still allowing it to be removed from the overlays list later
 		// So I'm gonna flatten it, then insert the flattened overlay into overlays AND the managed overlays list, directly
@@ -577,7 +579,7 @@
 		if(pulling_mob.buckled && pulling_mob.buckled.buckle_prevents_pull) //if they're buckled to something that disallows pulling, prevent it
 			stop_pulling()
 			return FALSE
-	if(moving_atom == loc && pulling.density)
+	if(get_turf(moving_atom) == loc && pulling.density)
 		return FALSE
 	var/move_dir = get_dir(pulling.loc, moving_atom)
 	if(!Process_Spacemove(move_dir))
@@ -1352,7 +1354,7 @@
 	//They are moving! Wouldn't it be cool if we calculated their momentum and added it to the throw?
 	if(ismob(thrower))
 		var/mob/thrower_mob = thrower
-		if(thrower_mob.last_move && thrower_mob.client && thrower_mob.client.move_delay >= world.time + world.tick_lag*2)
+		if(thrower_mob.last_move && thrower_mob.client && thrower_mob.client.move_delay >= world.time)
 			var/user_momentum = thrower_mob.cached_multiplicative_slowdown
 			if (!user_momentum) //no movement_delay, this means they move once per byond tick, lets calculate from that instead.
 				user_momentum = world.tick_lag

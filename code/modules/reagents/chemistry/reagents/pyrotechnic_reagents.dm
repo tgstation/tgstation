@@ -11,9 +11,9 @@
 	if(reac_volume >= 1)
 		exposed_turf.AddComponent(/datum/component/thermite, reac_volume)
 
-/datum/reagent/thermite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/thermite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjustFireLoss(1 * REM * seconds_per_tick, updating_health = FALSE))
+	if(affected_mob.adjust_fire_loss(0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/nitroglycerin
@@ -24,9 +24,9 @@
 	taste_description = "oil"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/nitroglycerin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/nitroglycerin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, -1 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
+	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, -0.5 * metabolization_ratio * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/stabilizing_agent
@@ -42,17 +42,17 @@
 
 /datum/reagent/clf3
 	name = "Chlorine Trifluoride"
-	description = "Makes a temporary 3x3 fireball when it comes into existence, so be careful when mixing. ClF3 applied to a surface burns things that wouldn't otherwise burn, sometimes through the very floors of the station and exposing it to the vacuum of space."
+	description = "A very flammable liquid capable of burning even through the hull of the station. Bursts into a fireball upon creation."
 	color = "#FFC8C8"
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 	taste_description = "burning"
 	penetrates_skin = NONE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/clf3/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/clf3/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.adjust_fire_stacks(2 * REM * seconds_per_tick)
-	if(affected_mob.adjustFireLoss(0.3 * max(affected_mob.fire_stacks, 1) * REM * seconds_per_tick, updating_health = FALSE))
+	affected_mob.adjust_fire_stacks(0.1 * metabolization_ratio * seconds_per_tick)
+	if(affected_mob.adjust_fire_loss(0.015 * max(affected_mob.fire_stacks, 1) * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/clf3/expose_turf(turf/exposed_turf, reac_volume)
@@ -168,13 +168,13 @@
 	exposed_mob.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*exposed_mob.fire_stacks * (1 - touch_protection), 0.3)
 	if(burndmg)
-		exposed_mob.adjustFireLoss(burndmg, 0)
+		exposed_mob.adjust_fire_loss(burndmg, 0)
 	exposed_mob.ignite_mob()
 
-/datum/reagent/phlogiston/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
+/datum/reagent/phlogiston/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	metabolizer.adjust_fire_stacks(1 * REM * seconds_per_tick)
-	if(metabolizer.adjustFireLoss(0.3 * max(metabolizer.fire_stacks, 0.15) * REM * seconds_per_tick, updating_health = FALSE))
+	metabolizer.adjust_fire_stacks(0.5 * metabolization_ratio * seconds_per_tick)
+	if(metabolizer.adjust_fire_loss(0.15 * max(metabolizer.fire_stacks, 0.15) * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/napalm
@@ -194,9 +194,9 @@
 
 	mytray.adjust_weedlevel(-rand(5,9)) //At least give them a small reward if they bother.
 
-/datum/reagent/napalm/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/napalm/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.adjust_fire_stacks(1 * REM * seconds_per_tick)
+	affected_mob.adjust_fire_stacks(0.5 * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/napalm/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -228,35 +228,36 @@
 
 /datum/reagent/cryostylane/on_mob_add(mob/living/affected_mob, amount)
 	. = ..()
-	affected_mob.mob_surgery_speed_mod = 1-((CRYO_SPEED_PREFACTOR * (1 - creation_purity))+CRYO_SPEED_CONSTANT) //10% - 30% slower
+	// Between a 1.1x and a 1.5x to surgery time depending on purity
+	affected_mob.add_surgery_speed_mod(type, 1 + ((CRYO_SPEED_PREFACTOR * (1 - creation_purity)) + CRYO_SPEED_CONSTANT), min(amount * 1 MINUTES, 5 MINUTES))
 	affected_mob.color = COLOR_CYAN
 
 /datum/reagent/cryostylane/on_mob_delete(mob/living/affected_mob)
 	. = ..()
-	affected_mob.mob_surgery_speed_mod = 1
+	affected_mob.remove_surgery_speed_mod(type)
 	affected_mob.color = COLOR_WHITE
 
 //Pauses decay! Does do something, I promise.
-/datum/reagent/cryostylane/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
+/datum/reagent/cryostylane/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	metabolization_rate = 0.05 * REM //slower consumption when dead
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM //slower consumption when dead
 
-/datum/reagent/cryostylane/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/cryostylane/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	metabolization_rate = 0.25 * REM//faster consumption when alive
 	if(affected_mob.reagents.has_reagent(/datum/reagent/oxygen))
-		affected_mob.reagents.remove_reagent(/datum/reagent/oxygen, 0.5 * REM * seconds_per_tick)
-		affected_mob.adjust_bodytemperature(-15 * REM * seconds_per_tick)
+		affected_mob.reagents.remove_reagent(/datum/reagent/oxygen, 1 * metabolization_ratio * seconds_per_tick)
+		affected_mob.adjust_bodytemperature(-30 * metabolization_ratio * seconds_per_tick)
 		if(ishuman(affected_mob))
 			var/mob/living/carbon/human/humi = affected_mob
-			humi.adjust_coretemperature(-15 * REM * seconds_per_tick)
+			humi.adjust_coretemperature(-30 * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/cryostylane/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
 	if(reac_volume < 5)
 		return
 	for(var/mob/living/basic/slime/exposed_slime in exposed_turf)
-		exposed_slime.adjustToxLoss(rand(15,30))
+		exposed_slime.adjust_tox_loss(rand(15,30))
 
 #undef CRYO_SPEED_PREFACTOR
 #undef CRYO_SPEED_CONSTANT
@@ -272,14 +273,14 @@
 	burning_volume = 0.05
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/pyrosium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/pyrosium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(holder.has_reagent(/datum/reagent/oxygen))
-		holder.remove_reagent(/datum/reagent/oxygen, 0.5 * REM * seconds_per_tick)
-		affected_mob.adjust_bodytemperature(15 * REM * seconds_per_tick)
+		holder.remove_reagent(/datum/reagent/oxygen, 0.5 * metabolization_ratio * seconds_per_tick)
+		affected_mob.adjust_bodytemperature(15 * metabolization_ratio * seconds_per_tick)
 		if(ishuman(affected_mob))
 			var/mob/living/carbon/human/affected_human = affected_mob
-			affected_human.adjust_coretemperature(15 * REM * seconds_per_tick)
+			affected_human.adjust_coretemperature(15 * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/pyrosium/burn(datum/reagents/holder)
 	if(holder.has_reagent(/datum/reagent/oxygen))
@@ -297,7 +298,7 @@
 	var/shock_timer = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/teslium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/teslium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	shock_timer++
 	if(shock_timer >= rand(5, 30)) //Random shocks are wildly unpredictable
@@ -334,16 +335,16 @@
 	taste_description = "jelly"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	if(!isjellyperson(affected_mob)) //everyone but jellypeople get shocked as normal.
 		return ..()
-	affected_mob.AdjustAllImmobility(-40  *REM * seconds_per_tick)
-	if(affected_mob.adjustStaminaLoss(-10 * REM * seconds_per_tick, updating_stamina = FALSE))
+	affected_mob.AdjustAllImmobility(-20  * metabolization_ratio * seconds_per_tick)
+	if(affected_mob.adjust_stamina_loss(-5 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))
 		. = UPDATE_MOB_HEALTH
 	if(is_species(affected_mob, /datum/species/jelly/luminescent))
 		var/mob/living/carbon/human/affected_human = affected_mob
 		var/datum/species/jelly/luminescent/slime_species = affected_human.dna.species
-		slime_species.extract_cooldown = max(slime_species.extract_cooldown - (2 SECONDS * REM * seconds_per_tick), 0)
+		slime_species.extract_cooldown = max(slime_species.extract_cooldown - (1 SECONDS * metabolization_ratio * seconds_per_tick), 0)
 
 /datum/reagent/firefighting_foam
 	name = "Firefighting Foam"

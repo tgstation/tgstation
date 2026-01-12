@@ -5,14 +5,14 @@ on:
 jobs:
   # labeler must run before gbp because gbp calculates itself based on labels
   labeler:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: github.event.action == 'opened' || github.event.action == 'synchronize'
     permissions:
       pull-requests: write # to apply labels
       issues: write # to apply labels
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Run Auto Labeler
         uses: actions/github-script@v7
         with:
@@ -27,7 +27,7 @@ jobs:
             });
             console.log(`Labels updated: ${new_labels}`);
   gbp:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: github.event.action == 'opened' || github.event.action == 'closed'
     steps:
       - name: "Check for ACTION_ENABLER secret and pass true to output if it exists to be checked by later steps"
@@ -40,7 +40,7 @@ jobs:
           echo "ACTIONS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
       - name: Checkout
         if: steps.value_holder.outputs.ACTIONS_ENABLED
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Setup git
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         run: |
@@ -48,7 +48,7 @@ jobs:
           git config --global user.email "<>"
       - name: Checkout alternate branch
         if: steps.value_holder.outputs.ACTIONS_ENABLED
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: "gbp-balances" # The branch name
           path: gbp-balances

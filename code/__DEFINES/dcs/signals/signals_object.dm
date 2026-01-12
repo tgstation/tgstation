@@ -5,8 +5,6 @@
 // /obj signals
 ///from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"
-///from base of code/game/machinery
-#define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
 #define COMSIG_OBJ_HIDE "obj_hide"
 /// from /obj/item/toy/crayon/spraycan/use_on: (user, spraycan, color_is_dark)
@@ -226,6 +224,8 @@
 #define COMSIG_MULTITOOL_REMOVE_BUFFER "multitool_remove_buffer"
 ///from [/obj/effect/mine/proc/triggermine]:
 #define COMSIG_MINE_TRIGGERED "minegoboom"
+///from [/obj/structure/closet/supplypod/proc/handleReturnAfterDeparting]:
+#define COMSIG_SUPPLYPOD_RETURNING "supplypodgohome"
 ///from [/obj/structure/closet/supplypod/proc/preOpen]:
 #define COMSIG_SUPPLYPOD_LANDED "supplypodgoboom"
 
@@ -257,10 +257,6 @@
 
 ///a deliver_first element closet was successfully delivered
 #define COMSIG_CLOSET_DELIVERED "crate_delivered"
-
-///Eigenstasium
-///From base of [/datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom]: (var/target)
-#define COMSIG_EIGENSTATE_ACTIVATE "eigenstate_activate"
 
 // /obj signals for economy
 ///called when the payment component tries to charge an account.
@@ -377,7 +373,7 @@
 	#define COMPONENT_CANCEL_SAWING_OFF (1<<0)
 #define COMSIG_GUN_SAWN_OFF "gun_sawn_off"
 
-///called in /obj/item/firing_pin/proc/gun_insert(mob/living/user, obj/item/gun/new_gun): (obj/item/firing_pin/pin, mob/living/user)
+///called in /obj/item/firing_pin/proc/gun_insert(mob/living/user, obj/item/gun/new_gun, starting): (obj/item/firing_pin/pin, mob/living/user, starting)
 #define COMSIG_GUN_PIN_INSERTED "gun_pin_inserted"
 
 ///called in /obj/item/firing_pin/proc/gun_remove(mob/living/user): (obj/item/firing_pin/pin, mob/living/user)

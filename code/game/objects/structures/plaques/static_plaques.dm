@@ -9,12 +9,19 @@
 		SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
 		layer = HIGH_TURF_LAYER
 
+/obj/structure/plaque/static_plaque/get_moutable_objects()
+	return list()
+
+/obj/structure/plaque/static_plaque/find_and_mount_on_atom(mark_for_late_init, late_init)
+	if(isProbablyWallMounted(src))
+		return ..()
+
 /obj/structure/plaque/static_plaque/atmos
 	name = "\improper FEA Atmospherics Division plaque"
 	desc = "This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands."
 
 /obj/structure/plaque/static_plaque/thunderdome
-	name = "Thunderdome Plaque"
+	name = "\improper Thunderdome plaque"
 	desc = "This plaque commemorates those who have fallen in glorious combat.  For all the charred, dizzy, and beaten men who have died in its hands."
 
 /obj/structure/plaque/static_plaque/golden
@@ -31,7 +38,7 @@
 
 // Runtimestation: added Nov 11, 2016 (946ec1fec869eb59d6a84e32c90613af734fcd0e)
 /obj/structure/plaque/static_plaque/golden/commission
-	name = "Commission Plaque"
+	name = "commission plaque"
 	desc = "Spinward Sector Station SS-13\n'Runtime' Class Outpost\nCommissioned 03/11/2556\n'Dedicated to the Pioneers'"
 	icon_state = "commission_nt"
 	layer = BELOW_OPEN_DOOR_LAYER

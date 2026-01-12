@@ -11,6 +11,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_GIRDER
 	canSmoothWith = SMOOTH_GROUP_GIRDER + SMOOTH_GROUP_WALLS
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
@@ -134,7 +135,7 @@
 			qdel(src)
 		return
 
-	if(istype(stack, /obj/item/stack/sheet/iron))
+	else if(istype(stack, /obj/item/stack/sheet/iron))
 		var/amount = construction_cost[/obj/item/stack/sheet/iron]
 		if(state == GIRDER_DISPLACED)
 			if(stack.get_amount() < amount)
@@ -180,7 +181,7 @@
 				qdel(src)
 			return
 
-	if(istype(stack, /obj/item/stack/sheet/titaniumglass) && state == GIRDER_TRAM)
+	else if(istype(stack, /obj/item/stack/sheet/titaniumglass) && state == GIRDER_TRAM)
 		var/amount = construction_cost[/obj/item/stack/sheet/titaniumglass]
 		if(stack.get_amount() < amount)
 			balloon_alert(user, "need [amount] sheets!")
@@ -195,7 +196,7 @@
 			qdel(src)
 		return
 
-	if(istype(stack, /obj/item/stack/sheet/plasteel))
+	else if(istype(stack, /obj/item/stack/sheet/plasteel))
 		var/amount = construction_cost[/obj/item/stack/sheet/plasteel]
 		if(state == GIRDER_DISPLACED)
 			if(stack.get_amount() < amount)
@@ -238,7 +239,7 @@
 				qdel(src)
 			return
 
-	if(istype(stack, /obj/item/stack/sheet/mineral/plastitanium))
+	else if(istype(stack, /obj/item/stack/sheet/mineral/plastitanium))
 		if(state == GIRDER_REINF)
 			if(stack.get_amount() < 1)
 				return
@@ -254,7 +255,7 @@
 			return
 		// No return here because generic material construction handles making normal plastitanium walls
 
-	if(!stack.has_unique_girder && stack.material_type)
+	else if(!stack.has_unique_girder && stack.material_type)
 		if(istype(src, /obj/structure/girder/reinforced))
 			balloon_alert(user, "need plasteel or plastitanium!")
 			return
@@ -472,6 +473,7 @@
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
+	custom_materials = list(/datum/material/runedmetal = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/girder/cult/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
@@ -524,7 +526,7 @@
 	return FALSE
 
 /obj/structure/girder/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data["[RCD_DESIGN_MODE]"])
+	switch(rcd_data[RCD_DESIGN_MODE])
 		if(RCD_TURF)
 			if(the_rcd.rcd_design_path != /turf/open/floor/plating/rcd)
 				return FALSE
@@ -547,6 +549,7 @@
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
+	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/girder/bronze/attackby(obj/item/W, mob/living/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)

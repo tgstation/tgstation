@@ -10,6 +10,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
+	assembly_flags = ASSEMBLY_NO_DUPLICATES
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*3, /datum/material/glass = SMALL_MATERIAL_AMOUNT*3)
 	light_system = OVERLAY_LIGHT //Used as a flash here.
 	light_range = FLASH_LIGHT_RANGE
@@ -194,15 +195,15 @@
 				if(user)
 					user.visible_message(span_warning("[user] blinds [flashed] with the flash!"), span_danger("You blind [flashed] with the flash!"))
 				else
-					to_chat(flashed, "you're blinded by [src]!")
+					to_chat(flashed, "You're blinded by [src]!")
 		else
 			//easy way to make sure that you can only long stun someone who is facing in your direction
-			flashed.adjustStaminaLoss(rand(80, 120) * (1 - (deviation * 0.5)))
+			flashed.adjust_stamina_loss(rand(80, 120) * (1 - (deviation * 0.5)))
 			flashed.Knockdown(rand(25, 50) * (1 - (deviation * 0.5)))
 			if(user)
 				visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
 			else
-				to_chat(flashed, "you're blinded by [src]!")
+				to_chat(flashed, "You're blinded by [src]!")
 
 	if(user)
 		SEND_SIGNAL(user, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB, flashed, src, deviation)
@@ -276,6 +277,7 @@
 		return FALSE
 	if(!AOE_flash(user = user))
 		return FALSE
+	return TRUE
 
 /obj/item/assembly/flash/emp_act(severity)
 	. = ..()
@@ -293,12 +295,14 @@
 /obj/item/assembly/flash/cyborg
 
 /obj/item/assembly/flash/cyborg/attack(mob/living/M, mob/user)
-	..()
-	new /obj/effect/temp_visual/borgflash(get_turf(src))
+	. = ..()
+	if (.)
+		new /obj/effect/temp_visual/borgflash(get_turf(src))
 
 /obj/item/assembly/flash/cyborg/attack_self(mob/user)
-	..()
-	new /obj/effect/temp_visual/borgflash(get_turf(src))
+	. = ..()
+	if (.)
+		new /obj/effect/temp_visual/borgflash(get_turf(src))
 
 /obj/item/assembly/flash/cyborg/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	return

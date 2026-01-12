@@ -104,6 +104,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HUSK "husk"
 ///Blacklisted from being revived via defibrillator
 #define TRAIT_DEFIB_BLACKLISTED "defib_blacklisted"
+/// This carbon doesn't need a brain to be revived, though some revival methods like defibbing will still check for a functional brain
+#define TRAIT_BRAINLESS_CARBON "brainless_carbon"
 #define TRAIT_BADDNA "baddna"
 #define TRAIT_CLUMSY "clumsy"
 /// Trait that means you are capable of holding items in some form
@@ -221,7 +223,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_AUGMENTS "no_augments"
 /// This carbon doesn't get hungry
 #define TRAIT_NOHUNGER "no_hunger"
-/// This carbon doesn't bleed
+/// This carbon doesn't have blood
 #define TRAIT_NOBLOOD "noblood"
 /// This just means that the carbon will always have functional liverless metabolism
 #define TRAIT_LIVERLESS_METABOLISM "liverless_metabolism"
@@ -331,6 +333,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WOUND_LICKER "wound_licker"
 /// Mobs with this trait are allowed to use silicon emotes
 #define TRAIT_SILICON_EMOTES_ALLOWED "silicon_emotes_allowed"
+/// Mobs with this trait can tell when other mobs whisper even if their mouth is covered. They still can't tell what was whispered though.
+#define TRAIT_SEE_MASK_WHISPER "see_mask_whisper"
 
 /// This trait designate that the mob was originally a monkey
 #define TRAIT_BORN_MONKEY "born_as_a_monkey"
@@ -360,6 +364,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NODEATH "nodeath"
 #define TRAIT_NOHARDCRIT "nohardcrit"
 #define TRAIT_NOSOFTCRIT "nosoftcrit"
+#define TRAIT_NO_OXYLOSS_PASSOUT "nooxylosspassout"
 /// Makes someone show up as mindshielded on sechuds. Does NOT actually make them unconvertable - See TRAIT_UNCONVERTABLE for that
 #define TRAIT_MINDSHIELD "mindshield"
 /// Makes it impossible for someone to be converted by cult/revs/etc.
@@ -420,7 +425,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SPINNING_WEB_TURF "spinning_web_turf"
 #define TRAIT_ABDUCTOR_TRAINING "abductor-training"
 #define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
-#define TRAIT_SURGEON "surgeon"
 #define TRAIT_STRONG_GRABBER "strong_grabber"
 #define TRAIT_SOOTHED_THROAT "soothed-throat"
 #define TRAIT_SOOTHED_HEADACHE "soothed-headache"
@@ -467,8 +471,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PERCEPTUAL_TRAUMA_BYPASS "trauma_bypass"
 /// mob is immune to hallucinations
 #define TRAIT_HALLUCINATION_IMMUNE "hallucination_immune"
-/// Increases chance of getting special traumas, makes them harder to cure
-#define TRAIT_SPECIAL_TRAUMA_BOOST "special_trauma_boost"
 
 //---- Brain trauma resists
 /// Unable to gain any brain trauma whatsoever
@@ -733,7 +735,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ENGINEER_METABOLISM "engineer_metabolism"
 #define TRAIT_ROYAL_METABOLISM "royal_metabolism"
 #define TRAIT_PRETENDER_ROYAL_METABOLISM "pretender_royal_metabolism"
-#define TRAIT_BALLMER_SCIENTIST "ballmer_scientist"
+#define TRAIT_SCIENTIST_LIVER "ballmer_scientist"
 #define TRAIT_MAINTENANCE_METABOLISM "maintenance_metabolism"
 #define TRAIT_CORONER_METABOLISM "coroner_metabolism"
 #define TRAIT_HUMAN_AI_METABOLISM "human_ai_metabolism"
@@ -974,6 +976,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DUCT_TAPE_UNREPAIRABLE "duct_tape_unrepairable"
 /// An item is ALWAYS considered baseline reachable and will pipe into CanBeReached().
 #define TRAIT_SKIP_BASIC_REACH_CHECK "skip_basic_reach_check"
+/// Increases chance of this brain getting special traumas, makes them harder to cure
+#define TRAIT_SPECIAL_TRAUMA_BOOST "special_trauma_boost"
 
 //---- Heretic Traits
 /// Hides the heretic overlay that outs them as the heretic
@@ -1010,7 +1014,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PHOTOGRAPHER "photographer"
 #define TRAIT_MUSICIAN "musician"
 #define TRAIT_LIGHT_DRINKER "light_drinker"
-#define TRAIT_EMPATH "empath"
 #define TRAIT_EVIL "evil"
 #define TRAIT_FRIENDLY "friendly"
 #define TRAIT_GRABWEAKNESS "grab_weakness"
@@ -1190,6 +1193,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_SURVIVE_COOKING "fish_survive_cooking"
 ///This fish is healed by milk and hurt by bone hurting juice
 #define TRAIT_FISH_MADE_OF_BONE "fish_made_of_bone"
+///The traits of this fish have been edited by a fish gene-gun at least once. It'll die the next time the fish genegun is used on them.
+#define TRAIT_FISH_GENEGUNNED "fish_genegunned"
 /**
  * This fish has been fed teslium without the electrogenesis having trait.
  * Gives the electrogenesis, but at halved output, and it hurts the fish over time.
@@ -1199,6 +1204,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_QUICK_GROWTH "fish_quick_growth"
 /// This fish has been fed mutagen or something. Evolutions will have more than twice the probability
 #define TRAIT_FISH_MUTAGENIC "fish_mutagenic"
+/// This fish has just been spawned as a result of the fishing minigame - Check for this trait when doing anything that shouldn't be done when catching the fish from an aquarium.
+#define TRAIT_FISH_JUST_SPAWNED "fish_just_spawned"
 
 /// Trait given to angelic constructs to let them purge cult runes
 #define TRAIT_ANGELIC "angelic"
@@ -1584,8 +1591,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Attached to objects currently on tables and such, allowing them to walk on other objects without the climbing delay
 #define TRAIT_ON_CLIMBABLE "on_climbable"
 
-/// Trait that allows mobs to perform surgery on themselves
+/// Allows a mob to perform any operation on themselves (with a penalty), where normally only specific operations allow self-surgery.
 #define TRAIT_SELF_SURGERY "self_surgery"
+/// This mob's surgical operations ignore ALL speed modifiers (even positive ones!) besides tool quality.
+/// The mob can also no longer fail their operations, unless the operation says otherwise
+#define TRAIT_IGNORE_SURGERY_MODIFIERS "ignore_surgery_modifiers"
+/// Trait applied to mobs or bodyparts which allows for them to be operated on
+#define TRAIT_READY_TO_OPERATE "ready_to_operate"
 
 /// Trait that makes mobs with it immune to mining gear AOE attacks
 #define TRAIT_MINING_AOE_IMMUNE "mining_aoe_immune"
@@ -1599,7 +1611,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait specifying that an AI has a remote connection to an integrated circuit
 #define TRAIT_CONNECTED_TO_CIRCUIT "connected_to_circuit"
 
+/// Applied to an organ that has been operated on - some organs can't be operated on multiple times
+#define TRAIT_ORGAN_OPERATED_ON "organ_operated_on"
+
 /// Mob is artificially spawned rather than being created through more natural means - applied to monkey cubes and such
 #define TRAIT_SPAWNED_MOB "spawned_mob"
+
+/// Turf is one that ai mobs will generally avoid pathing through
+/// Doesn't need to be applied to any turfs that override can_cross_safely
+#define TRAIT_AI_AVOID_TURF "warning_turf"
+
+/// Object is dangerous to mobs buckled to it
+#define TRAIT_DANGEROUS_BUCKLE "dangerous_buckle"
 
 // END TRAIT DEFINES

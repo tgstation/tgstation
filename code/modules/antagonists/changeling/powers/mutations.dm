@@ -177,7 +177,8 @@
 	name = "Arm Blade"
 	desc = "We reform one of our arms into a deadly blade. Costs 20 chemicals."
 	helptext = "We may retract our armblade in the same manner as we form it. Cannot be used while in lesser form."
-	button_icon_state = "armblade"
+	button_icon_state = "arm_blade"
+	category = "combat"
 	chemical_cost = 20
 	dna_cost = 2
 	req_human = TRUE
@@ -227,6 +228,8 @@
 	)
 
 /obj/item/melee/arm_blade/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
+	if(QDELETED(target))
+		return
 	if(istype(target, /obj/structure/table))
 		var/obj/smash = target
 		smash.deconstruct(FALSE)
@@ -271,6 +274,7 @@
 	In our combat stance, we will put the victim in our hold after catching them, and we will pull them in and impale them if we're also holding a sharp weapon, or have an armblade. This pierces armor. \
 	Cannot be used while in lesser form."
 	button_icon_state = "tentacle"
+	category = "combat"
 	chemical_cost = 10
 	dna_cost = 2
 	req_human = TRUE
@@ -297,7 +301,7 @@
 	fire_sound = 'sound/effects/splat.ogg'
 	force = 0
 	max_charges = 1
-	fire_delay = 1
+	fire_delay = 1 DECISECONDS
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
@@ -487,6 +491,7 @@
 	desc = "We reform one of our arms into a hard shield. Costs 20 chemicals."
 	helptext = "Organic tissue cannot resist damage forever; the shield will break after it is hit too much. The more genomes we absorb, the stronger it is. Cannot be used while in lesser form."
 	button_icon_state = "organic_shield"
+	category = "combat"
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = TRUE
@@ -523,6 +528,9 @@
 		loc.visible_message(span_warning("The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!"), span_warning("We inflate our hand into a strong shield."), span_hear("You hear organic matter ripping and tearing!"))
 
 /obj/item/shield/changeling/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
+
 	if(remaining_uses < 1)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
@@ -541,6 +549,7 @@
 	desc = "We turn our skin into tough chitin to protect us from damage. Costs 20 chemicals."
 	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor provides decent protection against brute force and energy weapons. Cannot be used in lesser form."
 	button_icon_state = "chitinous_armor"
+	category = "combat"
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = TRUE
@@ -607,6 +616,7 @@
 	desc = "We coat our head in a waxy outing coating similar to a bee hive which can be used to manufacture bees to attack our enemies. Costs 15 chemicals."
 	helptext = "While the hive head does not provide much in the ways of armor, it does allow the user to send bees out to attack targets. Reagents can poured inside the hive to cause all bees released to inject said reagents."
 	button_icon_state = "hive_head"
+	category = "combat"
 	chemical_cost = 15
 	dna_cost = 2
 	req_human = FALSE

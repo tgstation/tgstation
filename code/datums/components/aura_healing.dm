@@ -120,26 +120,25 @@
 
 	for (var/mob/living/candidate as anything in to_heal)
 		if (!current_alerts[candidate])
-			var/atom/movable/screen/alert/aura_healing/alert = candidate.throw_alert(alert_category, /atom/movable/screen/alert/aura_healing, new_master = parent)
-			alert.desc = "You are being healed by [parent]."
+			candidate.throw_alert(alert_category, /atom/movable/screen/alert/aura_healing, new_master = parent)
 			current_alerts[candidate] = TRUE
 
 		if (should_show_effect && candidate.health < candidate.maxHealth)
 			new /obj/effect/temp_visual/heal(get_turf(candidate), healing_color)
 
 		if (iscarbon(candidate) || issilicon(candidate) || isbasicmob(candidate))
-			candidate.adjustBruteLoss(-brute_heal * seconds_per_tick, updating_health = FALSE)
-			candidate.adjustFireLoss(-burn_heal * seconds_per_tick, updating_health = FALSE)
+			candidate.adjust_brute_loss(-brute_heal * seconds_per_tick, updating_health = FALSE)
+			candidate.adjust_fire_loss(-burn_heal * seconds_per_tick, updating_health = FALSE)
 
 		if (iscarbon(candidate))
 			// Toxin healing is forced for slime people
-			candidate.adjustToxLoss(-toxin_heal * seconds_per_tick, updating_health = FALSE, forced = TRUE)
+			candidate.adjust_tox_loss(-toxin_heal * seconds_per_tick, updating_health = FALSE, forced = TRUE)
 
-			candidate.adjustOxyLoss(-suffocation_heal * seconds_per_tick, updating_health = FALSE)
-			candidate.adjustStaminaLoss(-stamina_heal * seconds_per_tick, updating_stamina = FALSE)
+			candidate.adjust_oxy_loss(-suffocation_heal * seconds_per_tick, updating_health = FALSE)
+			candidate.adjust_stamina_loss(-stamina_heal * seconds_per_tick, updating_stamina = FALSE)
 
 			for (var/organ in organ_healing)
-				candidate.adjustOrganLoss(organ, -organ_healing[organ] * seconds_per_tick)
+				candidate.adjust_organ_loss(organ, -organ_healing[organ] * seconds_per_tick)
 			var/mob/living/carbon/carbidate = candidate
 			for(var/datum/wound/iter_wound as anything in carbidate.all_wounds)
 				iter_wound.adjust_blood_flow(-wound_clotting * seconds_per_tick)
@@ -151,8 +150,7 @@
 			var/mob/living/basic/basic_candidate = candidate
 			basic_candidate.adjust_health(-simple_heal * seconds_per_tick, updating_health = FALSE)
 
-		if (candidate.blood_volume < BLOOD_VOLUME_NORMAL)
-			candidate.blood_volume += blood_heal * seconds_per_tick
+		candidate.adjust_blood_volume(blood_heal * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
 
 		candidate.updatehealth()
 
@@ -165,5 +163,10 @@
 	icon_state = "template"
 	use_user_hud_icon = TRUE
 	clickable_glow = TRUE
+	click_master = FALSE
+
+/atom/movable/screen/alert/aura_healing/update_desc(updates)
+	. = ..()
+	desc = "You are being healed by [master_ref?.resolve()]."
 
 #undef HEAL_EFFECT_COOLDOWN

@@ -39,7 +39,7 @@
 		return
 	RegisterSignal(current_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(AreaPowerCheck))
 	if(mapload)
-		find_and_hang_on_wall()
+		find_and_mount_on_atom()
 	GLOB.intercoms_list += src
 
 /obj/item/radio/intercom/Destroy()
@@ -69,11 +69,13 @@
 		if(tool.use_tool(src, user, 30, volume=50))
 			user.visible_message(span_notice("[user] tightens [src]'s screws!"), span_notice("You tighten [src]'s screws."))
 			unscrewed = FALSE
+			update_appearance(UPDATE_OVERLAYS)
 	else
 		user.visible_message(span_notice("[user] starts loosening [src]'s screws..."), span_notice("You start unscrewing [src]..."))
 		if(tool.use_tool(src, user, 40, volume=50))
 			user.visible_message(span_notice("[user] loosens [src]'s screws!"), span_notice("You unscrew [src], loosening it from the wall."))
 			unscrewed = TRUE
+			update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
 /obj/item/radio/intercom/wrench_act(mob/living/user, obj/item/tool)
@@ -197,7 +199,7 @@
 	icon_state = "intercom"
 	result_path = /obj/item/radio/intercom/unscrewed
 	pixel_shift = 26
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.75, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.25)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 
@@ -231,8 +233,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 	desc = "A custom-made Syndicate-issue intercom used to transmit on all Nanotrasen frequencies. Particularly expensive."
 	freerange = TRUE
 
+/obj/item/radio/intercom/mi13
+	name = "intercom"
+	desc = "Talk through this to talk to whoever is in this facility with you."
+	freerange = TRUE
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 27)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 27)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, 27)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/syndicate, 27)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/syndicate/freerange, 27)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/mi13, 27)

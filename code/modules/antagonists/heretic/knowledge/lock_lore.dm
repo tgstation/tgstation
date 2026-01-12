@@ -32,7 +32,7 @@
 		"Use your labyrinth book to shake off pursuers. It creates impassible walls to anyone but you.",
 	)
 
-	start = /datum/heretic_knowledge/limited_amount/starting/base_knock
+	start = /datum/heretic_knowledge/limited_amount/starting/base_lock
 	knowledge_tier1 = /datum/heretic_knowledge/key_ring
 	guaranteed_side_tier1 = /datum/heretic_knowledge/painting
 	knowledge_tier2 = /datum/heretic_knowledge/limited_amount/concierge_rite
@@ -44,7 +44,7 @@
 	knowledge_tier4 = /datum/heretic_knowledge/spell/caretaker_refuge
 	ascension = /datum/heretic_knowledge/ultimate/lock_final
 
-/datum/heretic_knowledge/limited_amount/starting/base_knock
+/datum/heretic_knowledge/limited_amount/starting/base_lock
 	name = "A Steward's Secret"
 	desc = "Opens up the Path of Lock to you. \
 		Allows you to transmute a knife and a crowbar into a Key Blade. \
@@ -62,26 +62,28 @@
 	mark_type = /datum/status_effect/eldritch/lock
 	eldritch_passive = /datum/status_effect/heretic_passive/lock
 
-/datum/heretic_knowledge/limited_amount/starting/base_knock/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/limited_amount/starting/base_lock/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_secondary_mansus_grasp))
 	var/datum/action/cooldown/spell/touch/mansus_grasp/grasp_spell = locate() in user.actions
 	grasp_spell?.invocation_type = INVOCATION_NONE
 	grasp_spell?.sound = null
 
-/datum/heretic_knowledge/limited_amount/starting/base_knock/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/limited_amount/starting/base_lock/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY)
 
-/datum/heretic_knowledge/limited_amount/starting/base_knock/on_mansus_grasp(mob/living/source, mob/living/target)
+/datum/heretic_knowledge/limited_amount/starting/base_lock/on_mansus_grasp(mob/living/source, mob/living/target)
 	. = ..()
 
 	var/obj/item/clothing/under/suit = target.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	if(!suit.can_adjust)
+		return
 	if(istype(suit) && suit.adjusted == NORMAL_STYLE)
 		suit.toggle_jumpsuit_adjust()
 		suit.update_appearance()
 
-/datum/heretic_knowledge/limited_amount/starting/base_knock/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
+/datum/heretic_knowledge/limited_amount/starting/base_lock/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
 	SIGNAL_HANDLER
 
 	if(ismecha(target))

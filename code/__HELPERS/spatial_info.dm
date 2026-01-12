@@ -403,6 +403,15 @@
 	. = view(range, source)
 	source.luminosity = lum
 
+/// get_hear that only gets turfs so we can use as_anything
+/proc/get_hear_turfs(range, atom/source)
+	var/lum = source.luminosity
+	source.luminosity = 6
+	. = list()
+	for(var/turf/turf in view(range, source))
+		. += turf
+	source.luminosity = lum
+
 ///Returns the open turf next to the center in a specific direction
 /proc/get_open_turf_in_dir(atom/center, dir)
 	var/turf/open/get_turf = get_step(center, dir)

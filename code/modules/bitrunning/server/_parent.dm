@@ -88,7 +88,7 @@
 
 	. += span_infoplain("Can be resource intensive to run. Ensure adequate power supply.")
 
-	. += span_notice("Its maintainance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
 	if(panel_open)
 		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
 
@@ -145,17 +145,16 @@
 	return ..()
 
 
-/obj/machinery/quantum_server/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
+/obj/machinery/quantum_server/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/bitrunning_debug))
+		return NONE
 
-	if(!istype(weapon, /obj/item/bitrunning_debug))
-		return
-
+	balloon_alert(user, "*hacker voice* i'm in")
 	obj_flags |= EMAGGED
 	glitch_chance = 0.5
 	capacitor_coefficient = 0.1
 	points = 100
-
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/quantum_server/crowbar_act(mob/living/user, obj/item/crowbar)
 	. = NONE

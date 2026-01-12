@@ -26,7 +26,7 @@
 	///Designs imported from technology disks that we can print.
 	var/list/imported_designs = list()
 	///The container to hold materials
-	var/datum/component/material_container/materials
+	var/datum/material_container/materials
 	///direction we output onto (if 0, on top of us)
 	var/drop_direction = 0
 	//looping sound for printing items
@@ -34,8 +34,8 @@
 
 /obj/machinery/autolathe/Initialize(mapload)
 	print_sound = new(src,  FALSE)
-	materials = AddComponent( \
-		/datum/component/material_container, \
+	materials = new ( \
+		src, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
 		0, \
 		MATCONTAINER_EXAMINE|MATCONTAINER_ACCEPT_ALLOYS, \
@@ -52,7 +52,7 @@
 
 /obj/machinery/autolathe/Destroy()
 	QDEL_NULL(print_sound)
-	materials = null
+	QDEL_NULL(materials)
 	return ..()
 
 /obj/machinery/autolathe/examine(mob/user)
@@ -60,14 +60,14 @@
 	if(!in_range(user, src) && !isobserver(user))
 		return
 
-	. += span_notice("Material usage cost at <b>[creation_efficiency * 100]%</b>")
+	. += span_notice("Material usage cost at <b>[creation_efficiency * 100]%</b>.")
 	if(drop_direction)
 		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
 		. += span_notice("[EXAMINE_HINT("Alt-click")] to reset.")
 	else
 		. += span_notice("[EXAMINE_HINT("Drag")] towards a direction (while next to it) to change drop direction.")
 
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 	if(panel_open)
 		. += span_notice("The machine can be [EXAMINE_HINT("pried")] apart.")
 

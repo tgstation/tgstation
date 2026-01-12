@@ -73,7 +73,7 @@
 
 // Other
 #define FEATURE_WINGS "wings"
-#define FEATURE_WINGS_OPEN "[FEATURE_WINGS]open"
+#define FEATURE_WINGS_OPEN "wingsopen"
 #define FEATURE_TAIL_MONKEY "tail_monkey"
 #define FEATURE_TAIL_XENO "tail_xeno"
 #define FEATURE_TAILSPINES "tailspines" // Different from regular spines, these appear on tails
@@ -91,8 +91,12 @@
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
 #define ORGAN_SLOT_APPENDIX "appendix"
 #define ORGAN_SLOT_BRAIN "brain"
-#define ORGAN_SLOT_BRAIN_CEREBELLUM "brain_antidrop"
-#define ORGAN_SLOT_BRAIN_CNS "brain_antistun"
+/// Brain implants that affect the mob's motor control (grabbing, moving, attacking)
+#define ORGAN_SLOT_BRAIN_CEREBELLUM "brain_motorcontrol"
+/// Brain implants that affect the mob's sensory systems (pain, vision, hearing, etc)
+#define ORGAN_SLOT_BRAIN_CNS "brain_cns"
+/// Brain implants that affect the mob's memory and cognition (skills, knowledge, etc)
+#define ORGAN_SLOT_BRAIN_HIPPOCAMPUS "brain_memory"
 #define ORGAN_SLOT_BREATHING_TUBE "breathing_tube"
 #define ORGAN_SLOT_EARS "ears"
 #define ORGAN_SLOT_EYES "eye_sight"

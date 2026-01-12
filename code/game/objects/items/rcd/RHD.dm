@@ -35,7 +35,7 @@
 	/// bitflags for banned upgrades
 	var/banned_upgrades = NONE
 	/// remote connection to the silo
-	var/datum/component/remote_materials/silo_mats
+	var/datum/remote_materials/silo_mats
 	/// switch to use internal or remote storage
 	var/silo_link = FALSE
 	/// has the blueprint design changed
@@ -51,8 +51,12 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	if(construction_upgrades & RCD_UPGRADE_SILO_LINK)
-		silo_mats = AddComponent(/datum/component/remote_materials, mapload, FALSE)
+		silo_mats = new (src, mapload, FALSE)
 	update_appearance()
+
+/obj/item/construction/Destroy()
+	QDEL_NULL(silo_mats)
+	return ..()
 
 ///An do_after() specially designed for rhd devices
 /obj/item/construction/proc/build_delay(mob/user, delay, atom/target)
@@ -122,7 +126,7 @@
 		return FALSE
 	construction_upgrades |= design_disk.upgrade
 	if((design_disk.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
-		silo_mats = AddComponent(/datum/component/remote_materials, FALSE, FALSE)
+		silo_mats = new (src, FALSE, FALSE)
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(design_disk)
 	update_static_data_for_all_viewers()
@@ -166,9 +170,6 @@
 	balloon_alert(user, "storage full!")
 	return FALSE
 
-/obj/item/construction/proc/activate()
-	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-
 /obj/item/construction/attack_self(mob/user)
 	playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
 	if(prob(20))
@@ -181,27 +182,39 @@
 		if(ratio > 0)
 			. += "[icon_state]_charge[ratio]"
 
-/obj/item/construction/proc/useResource(amount, mob/user)
+/**
+ * Uses resource to do some action. Returns amount of resource used or TRUE/FALSE if only an dry run is required
+ *
+ * Arguments
+ * * amount - the amount of resource to use
+ * * mob/user - the player using the resource
+ * * dry_run - if TRUE will only check if the amount of resource is available but will not use any
+*/
+/obj/item/construction/proc/useResource(amount, mob/user, dry_run = FALSE)
 	if(!silo_mats || !silo_link)
 		if(matter < amount)
+			if(has_ammobar)
+				flick("[icon_state]_empty", src)
 			if(user)
 				balloon_alert(user, "not enough matter!")
 			return FALSE
-		matter -= amount
-		update_appearance()
-		return TRUE
+		if(!dry_run)
+			matter -= amount
+			update_appearance()
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 	else
-		if(!silo_mats.mat_container)
+		if(!silo_mats.can_use_resource(user_data = ID_DATA(user)))
 			if(user)
-				balloon_alert(user, "no silo detected!")
+				balloon_alert(user, "permission denied!")
 			return FALSE
-
 		if(!silo_mats.mat_container.has_enough_of_material(/datum/material/iron, amount * SILO_USE_AMOUNT))
 			if(user)
 				balloon_alert(user, "not enough silo material!")
 			return FALSE
-		silo_mats.use_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount, action = "RESTOCKED", name = "x restocked an RCD", user_data = ID_DATA(user))
-		return TRUE
+		if(!dry_run)
+			amount = silo_mats.use_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount, action = "RESTOCKED", name = "x restocked an RCD", user_data = ID_DATA(user))
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	return dry_run ? TRUE : amount
 
 /obj/item/construction/ui_static_data(mob/user)
 	. = list()
@@ -254,23 +267,6 @@
 /obj/item/construction/proc/handle_ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	return null
 
-/obj/item/construction/proc/checkResource(amount, mob/user)
-	if(!silo_mats || !silo_mats.mat_container || !silo_link)
-		if(silo_link)
-			balloon_alert(user, "silo link invalid!")
-			return FALSE
-		else
-			. = matter >= amount
-	else
-		if(!silo_mats.can_use_resource(user_data = ID_DATA(user)))
-			return FALSE
-		. = silo_mats.mat_container.has_enough_of_material(/datum/material/iron, amount * SILO_USE_AMOUNT)
-	if(!. && user)
-		balloon_alert(user, "low ammo!")
-		if(has_ammobar)
-			flick("[icon_state]_empty", src) //somewhat hacky thing to make RCDs with ammo counters actually have a blinking yellow light
-	return .
-
 /obj/item/construction/proc/range_check(atom/target, mob/user)
 	if(target.z != user.z)
 		return
@@ -300,7 +296,7 @@
 /obj/item/rcd_upgrade
 	name = "RCD advanced design disk"
 	desc = "It seems to be empty."
-	icon = 'icons/obj/devices/circuitry_n_data.dmi'
+	icon = 'icons/obj/devices/floppy_disks.dmi'
 	icon_state = "datadisk3"
 	var/upgrade
 
