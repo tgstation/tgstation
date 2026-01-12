@@ -219,8 +219,8 @@
 
 /datum/crafting_recipe/lizardboots
 	name = "Lizard Skin Boots"
-	result = /obj/effect/spawner/random/clothing/lizardboots
-	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1, /obj/item/stack/sheet/leather = 1)
+	result = /obj/item/clothing/shoes/cowboy/lizard
+	reqs = list(/obj/item/stack/sheet/animalhide/carbon/lizard = 1, /obj/item/stack/sheet/leather = 1)
 	time = 6 SECONDS
 	category = CAT_CLOTHING
 
@@ -264,7 +264,7 @@
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/costume/lizard
 	time = 1 SECONDS
-	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
+	reqs = list(/obj/item/stack/sheet/animalhide/carbon/lizard = 1)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/kittyears

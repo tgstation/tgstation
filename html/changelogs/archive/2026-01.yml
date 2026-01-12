@@ -280,11 +280,39 @@
       when its torch is enabled
   - image: Plasmamen Nuclear Operatives illuminate their skull with red light instead
       of purple
+  - bugfix: Chainsaws can't behead people with unremovable heads.
+  - bugfix: You can only put your own head on a spear or into a box if it is possible
+      to remove your head.
+  - bugfix: Heretic rifts can only remove your arms if your arms can be removed.
+  - bugfix: Paperwork can only cut off your head if your head can be cut off.
+  - bugfix: Smite being reflected can only blow off your arm if your arm can be removed.
   JohnFulpWillard:
   - bugfix: Changing the job of one person from one job position to another won't
       set EVERYONE ELSE of the old job's paycheck department to the new one.
+  Maximal08:
+  - qol: made division of Changeling abilities into categories
+  - image: added Defibrillator Grasp icon
+  - image: modified Pheromone Receptors icon
+  Melbert:
+  - rscdel: N-spect scanners can no longer print reports. All it does now is scan
+      for contraband.
+  - rscdel: Clown N-spect scanners have been removed.
+  - rscdel: Security no longer get bounties to loot the brig's equipment. Though the
+      contraband bounty is still available.
+  - rscadd: Security's patrol bounties have been reworked. Now, they just require
+      you to walk around an area for a bit. No scanning necessary.
+  - refactor: Adds setters for bounties and bank accounts. Report any situations where
+      your bank account is not set correctly.
+  - refactor: ID trims now handle bounty generation. Report any situations where you
+      get a weird pool of bounties.
+  - bugfix: Bountious Bounties station trait works again
   Nari Harimoto:
   - bugfix: Camera Consoles no longer hallucinate the Gateway in a different position
+  SapphoQueer:
+  - bugfix: Hypnoflashes now fit on secbelts just like regular flashes.
+  - bugfix: Modular computers now have a 2 second delay before being deconstructed.
+  SmArtKar:
+  - bugfix: Added logging and fingerprints to pipebombs
   Y0SH1M4S73R:
   - rscadd: Adds the MOD Storage Module of Holding, a version of the Bag of Holding
       for your MODsuits.
@@ -292,6 +320,12 @@
       been refactored - please report any oddities.
   loganuk:
   - bugfix: Making surgery beds on top of stasis beds no longer possible
+  - bugfix: Shuttle purchase screen now shows price for emag shuttles as well as normal
+  mcbalaam:
+  - rscadd: "Big Manipulators are now Smart\u2122"
   trickyfox-inc:
   - admin: New adminverb "show occupants PP". You can now open the PP of mobs inside
       vehicles, closets, machinery, body bags, etc. via the RMB context menu.
+2026-01-12:
+  SmArtKar:
+  - rscadd: Made lizard skin and lizardskin items inherit their "donor's" skin color

@@ -13,6 +13,9 @@
 	description = "Nanotrasen is interested in a virus with a [stat_name] stat of exactly [stat_value]. Central Command will pay handsomely for such a virus."
 	reward += rand(0, 4) * CARGO_CRATE_VALUE
 
+/datum/bounty/virus/print_required()
+	return "At least 1u"
+
 /datum/bounty/virus/can_claim()
 	return ..() && shipped
 
@@ -61,4 +64,3 @@
 
 /datum/bounty/virus/transmit/accepts_virus(datum/disease/advance/virus)
 	return virus.totalTransmittable() == stat_value
-
