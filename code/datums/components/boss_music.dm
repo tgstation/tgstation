@@ -1,5 +1,5 @@
 /**
- * Attaches to a hostile simplemob and plays that music while they have a target.
+ * Attaches to a mob and plays that music while they have a target.
  */
 /datum/component/boss_music
 	///The music track we will play to players.
@@ -35,16 +35,26 @@
 
 /datum/component/boss_music/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, signal, PROC_REF(on_target_found))
+	if(isbasicmob(parent))
+		RegisterSignal(parent, signal, PROC_REF(basic_target_found))
+	else
+		RegisterSignal(parent, signal, PROC_REF(on_target_found))
 
 /datum/component/boss_music/UnregisterFromParent()
 	UnregisterSignal(parent, signal)
 	return ..()
 
+/// Handler wrapper for basic mobs getting a target
+/datum/component/boss_music/proc/basic_target_found(mob/source, key)
+	SIGNAL_HANDLER
+	var/mob/new_target = source.ai_controller.blackboard[key]
+	on_target_found(source, new_target)
+
 ///Handles giving the boss music to a new target the fauna has received.
 ///Keeps track of them to not repeatedly overwrite its own track.
-/datum/component/boss_music/proc/on_target_found(atom/source, mob/new_target)
+/datum/component/boss_music/proc/on_target_found(mob/source, mob/new_target)
 	SIGNAL_HANDLER
+
 	if(QDELETED(source) || !istype(new_target))
 		return
 
