@@ -1,5 +1,5 @@
 #define PROB_SPIDER_REPLACEMENT 50
-#define PROB_WEAKPOINT_SPAWNS 15
+#define PROB_WEAKPOINT_SPAWNS 50
 
 SUBSYSTEM_DEF(minor_mapping)
 	name = "Minor Mapping"
