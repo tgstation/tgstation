@@ -220,6 +220,7 @@
 	QDEL_NULL(access_card)
 	GLOB.simple_animals[AIStatus] -= src
 	SSnpcpool.currentrun -= src
+	SSidlenpcpool.currentrun -= src
 
 	return ..()
 
