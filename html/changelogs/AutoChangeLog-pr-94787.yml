@@ -1,4 +1,0 @@
-author: "trickyfox-inc"
-delete-after: True
-changes:
-  - admin: "New adminverb \"show occupants PP\". You can now open the PP of mobs inside vehicles, closets, machinery, body bags, etc. via the RMB context menu."

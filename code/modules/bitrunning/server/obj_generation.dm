@@ -79,7 +79,7 @@
 
 	var/obj/item/card/id/outfit_id = avatar.wear_id
 	if(outfit_id)
-		outfit_id.registered_account = new()
+		outfit_id.set_account(new /datum/bank_account)
 		outfit_id.registered_account.replaceable = FALSE
 
 		SSid_access.apply_trim_to_card(outfit_id, /datum/id_trim/bit_avatar)

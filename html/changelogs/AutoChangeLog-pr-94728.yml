@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - balance: "Miners Beware: Blood Drunk Miners have been refactored into basic mobs. This means their timings and such may be a bit more unpredictable than what you're used to. The difficulty should be about the same, but do approach with caution lest you get devoured..."

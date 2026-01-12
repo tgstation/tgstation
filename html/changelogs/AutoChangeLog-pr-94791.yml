@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Plasmaman Nuclear Operative helmet does not turn into a big error graphic when its torch is enabled"
-  - image: "Plasmamen Nuclear Operatives illuminate their skull with red light instead of purple"
