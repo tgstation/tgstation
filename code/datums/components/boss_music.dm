@@ -13,6 +13,7 @@
 	var/list/music_callbacks = list()
 
 	/// Signal that we listen to on our parent to know when to start boss music.
+	/// On basic mobs, the signal should be a variant of `COMSIG_AI_BLACKBOARD_KEY_SET()`, feeding in whatever key you want.
 	var/signal = null
 
 /datum/component/boss_music/Initialize(boss_track, signal)
@@ -44,7 +45,7 @@
 	UnregisterSignal(parent, signal)
 	return ..()
 
-/// Handler wrapper for basic mobs getting a target
+/// Handler wrapper for basic mobs getting a target. The signal we pass to basic mobs passes along the blackboard key which we can access off parent.
 /datum/component/boss_music/proc/basic_target_found(mob/source, key)
 	SIGNAL_HANDLER
 	var/mob/new_target = source.ai_controller.blackboard[key]
