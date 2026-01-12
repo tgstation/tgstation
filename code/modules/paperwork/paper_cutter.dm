@@ -113,13 +113,7 @@
 
 /obj/item/papercutter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/paper))
-		if(is_type_in_list(tool, list(
-				/obj/item/paper/fake_report,
-				/obj/item/paper/holy_writ,
-				/obj/item/paper/pamphlet,
-				/obj/item/paper/paperslip,
-				/obj/item/paper/report,
-		)))
+		if(is_type_in_list(tool, list(/obj/item/paper/holy_writ, /obj/item/paper/pamphlet, /obj/item/paper/paperslip)))
 			balloon_alert(user, "won't fit!")
 			return ITEM_INTERACT_BLOCKING
 		if(stored_paper)
