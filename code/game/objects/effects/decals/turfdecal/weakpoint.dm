@@ -7,7 +7,7 @@
 	name = "weakpoint crack"
 	desc = "A suspicious crack runs along the ground."
 	icon = 'icons/effects/effects.dmi'
-	icon_state = "blueshatter2" //WIP
+	icon_state = "weakpoint"
 
 	/// The required strength of explosion for a weakpoint to propogate
 	var/required_strength = EXPLODE_LIGHT
@@ -24,6 +24,7 @@
 /obj/effect/weakpoint/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_OBSERVER, use_anchor = TRUE)
+	register_context()
 
 /obj/effect/weakpoint/ex_act(severity, target)
 	. = ..()
@@ -43,7 +44,7 @@
 
 	if(spawns_children)
 		var/static/list/skip_turfs = typecacheof(list(
-			/turf/space,
+			/turf/open/space,
 			/turf/open/misc/asteroid,
 			/turf/open/misc/snow,
 		))
@@ -57,6 +58,26 @@
 			newpoint.crack_split_count = crack_split_count
 	qdel(src)
 
+/obj/effect/weakpoint/welder_act(mob/living/user, obj/item/tool)
+	. = ..()
+	to_chat(user, span_notice("You begin to strengthen [src]..."))
+	if(!tool.use_tool(src, user, 4 SECONDS, amount = 1, volume=50))
+		return TRUE
+	balloon_alert_to_viewers("sealed!")
+	to_chat(user, span_notice("\The [src] is fully sealed, eliminating the risk of growing."))
+	qdel(src)
+
+/obj/effect/weakpoint/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(held_item.tool_behaviour == TOOL_WELDER)
+		context[SCREENTIP_CONTEXT_LMB] = "Repair weakpoint"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
+
+/obj/effect/weakpoint/examine(mob/user)
+	. = ..()
+	. += span_notice("\The [src] could be repaired with a welder.")
+	. += span_warning("A strong enough explosion will cause [src] to expand.")
 
 /**
  * Generates a list of turfs from the start location meandering along a randomized set of turns.
@@ -94,7 +115,7 @@
 /obj/effect/weakpoint/big
 	name = "dangerous weakpoint"
 	desc = "A suspicious crack runs along the ground. This one makes you feel particuarly uneasy."
-	icon_state = "greenshatter" //also WIP
+	icon_state = "weakpoint"
 	crack_length = 15
 	crack_split_count = 6
 	new_weakpoints = 3
