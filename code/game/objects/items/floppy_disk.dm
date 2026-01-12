@@ -221,10 +221,7 @@
 	RegisterSignal(src, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(on_throw_land))
 
 /obj/item/disk_stack/Destroy()
-	var/turf/dump_loc = drop_location()
-	for (var/obj/item/disk/disk as anything in stacked_disks)
-		disk.forceMove(dump_loc)
-	stacked_disks = null
+	QDEL_LIST(stacked_disks)
 	return ..()
 
 /obj/item/disk_stack/examine(mob/user)
