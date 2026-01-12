@@ -178,7 +178,7 @@
 			if(!istype(pack))
 				CRASH("Unknown supply pack id given by express order console ui. ID: [params["id"]]")
 
-			if((pack.order_flags & ORDER_GOODY) && !self_paid)
+			if((pack.order_flags & ORDER_GOODY) && !self_paid && !(obj_flags & EMAGGED))
 				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 				say("ERROR: Small crates may only be purchased by private accounts.")
 				return

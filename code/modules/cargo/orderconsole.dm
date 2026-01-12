@@ -241,13 +241,15 @@
 		rank = "Silicon"
 
 	var/datum/bank_account/account
-	var/list/access
-	var/mob/living/living_user
-	var/obj/item/card/id/id_card
 
 	if(isliving(user))
-		living_user = user
-		id_card = living_user.get_idcard(TRUE)
+		var/mob/living/living_user = user
+		var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
+
+		var/bypass = FALSE
+		if(istype(id_card, /obj/item/card/id/advanced/chameleon)) //We'll bypass access restrictions
+			bypass = TRUE
+
 		account = id_card?.registered_account // We can still assign an account for request department purposes.
 		if(self_paid)
 			if(!istype(id_card))
@@ -259,8 +261,8 @@
 			if(!istype(account))
 				say("Invalid bank account.")
 				return
-			access = id_card.GetAccess()
-			if(pack.access_view && !(pack.access_view in access))
+			var/list/access = id_card.GetAccess()
+			if((pack.access_view && !(pack.access_view in access)) && !bypass)
 				say("[id_card] lacks the requisite access for this purchase.")
 				return
 
@@ -284,15 +286,19 @@
 				if(dept_choice == "Cargo Budget")
 					personal_department = null
 
-		if(!id_card || !living_user || !access)
-			living_user = user
-			id_card = living_user.get_idcard(TRUE)
-			access = id_card.GetAccess()
-		if(pack.access_view && !(pack.access_view in access) && personal_department)
-			// We want to block cargo requests when a player is requesting a restricted pack that they don't have access to.
-			// BUT only when it's requested with non-cargo funds, as cargo had direct oversight over their own purchases with their own budget.
-			say("ERROR: User lacks the requisite access for this purchase request.")
-			return
+
+		if(isliving(user))
+			var/mob/living/living_user = user
+			var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
+			var/list/access = id_card?.GetAccess()
+			if(!id_card || !living_user || !access)
+				living_user = user
+				id_card = living_user.get_idcard(TRUE)
+			if(pack.access_view && !(pack.access_view in access) && personal_department)
+				// We want to block cargo requests when a player is requesting a restricted pack that they don't have access to.
+				// BUT only when it's requested with non-cargo funds, as cargo had direct oversight over their own purchases with their own budget.
+				say("ERROR: User lacks the requisite access for this purchase request.")
+				return
 
 	if((pack.order_flags & ORDER_GOODY) && !self_paid)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
