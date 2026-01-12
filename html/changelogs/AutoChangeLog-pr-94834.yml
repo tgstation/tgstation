@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Objects that can pass over tables don't block table construction"
+  - qol: "If table construction fails, it tells you what is blocking, rather than \"something is\""
