@@ -658,6 +658,15 @@
 	name = "Glow Shoes (Worn)"
 	icon_file = 'icons/mob/clothing/feet.dmi'
 
+/datum/greyscale_config/lizard_shoes
+	name = "Lizardskin Boots"
+	icon_file = 'icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/lizard_shoes.json'
+
+/datum/greyscale_config/lizard_shoes/worn
+	name = "Lizardskin Boots (Worn)"
+	icon_file = 'icons/mob/clothing/feet.dmi'
+
 //
 // ACCESSORIES
 //
@@ -889,6 +898,15 @@
 
 /datum/greyscale_config/jester_hat/worn
 	name = "Jester Hat (Worn)"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+
+/datum/greyscale_config/lizard_hat
+	name = "Lizardskin Cloche Hat"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/lizard_hat.json'
+
+/datum/greyscale_config/lizard_hat/worn
+	name = "Lizardskin Cloche Hat (Worn)"
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
 
 /datum/greyscale_config/fedora
