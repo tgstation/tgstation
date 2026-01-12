@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(idlenpcpool)
 		var/mob/living/simple_animal/ISA = idlerun[idlerun.len]
 		--idlerun.len
 
-		if (QDELETED(ISA))
+		if(QDELETED(ISA))
 			GLOB.simple_animals[AI_IDLE] -= ISA
 			stack_trace("Found a null in simple_animals idle list [ISA.type]!")
 			continue
@@ -32,5 +32,5 @@ SUBSYSTEM_DEF(idlenpcpool)
 				ISA.handle_automated_action()
 			if(ISA.stat != DEAD)
 				ISA.handle_automated_speech()
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
