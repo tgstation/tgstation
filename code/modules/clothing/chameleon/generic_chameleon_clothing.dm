@@ -193,12 +193,13 @@ do { \
 	clothing_traits = list(TRAIT_VOICE_MATCHES_ID)
 
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
-	var/was_on = (TRAIT_VOICE_MATCHES_ID in clothing_traits)
-	if(was_on)
-		attach_clothing_traits(TRAIT_VOICE_MATCHES_ID)
-	else
+	var/on = (TRAIT_VOICE_MATCHES_ID in clothing_traits)
+	if(on)
 		detach_clothing_traits(TRAIT_VOICE_MATCHES_ID)
-	to_chat(user, span_notice("The voice changer is now [was_on ? "off" : "on"]!"))
+	else
+		attach_clothing_traits(TRAIT_VOICE_MATCHES_ID)
+	on = !on
+	to_chat(user, span_notice("The voice changer is now [on ? "on" : "off"]!"))
 
 /obj/item/clothing/mask/chameleon/broken
 

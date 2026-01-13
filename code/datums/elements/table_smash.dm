@@ -4,21 +4,24 @@
 	argument_hash_start_idx = 2
 	/// If true, mobs will be placed gently on the table even if they're in an aggressive grab
 	var/gentle_push
+	/// Passed proc call path for what to do after smashing harmfully into our 'table'-like obj
+	var/after_smash_proccall
 
-/datum/element/table_smash/Attach(datum/target, gentle_push = FALSE)
+/datum/element/table_smash/Attach(datum/target, gentle_push = FALSE, after_smash_proccall)
 	. = ..()
 	if (!isobj(target))
 		return ELEMENT_INCOMPATIBLE
 
 	src.gentle_push = gentle_push
+	src.after_smash_proccall = after_smash_proccall
 
 	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_interaction))
 	RegisterSignal(target, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
 
 	var/static/list/loc_connections = list(
-		COMSIG_LIVING_DISARM_COLLIDE = TYPE_PROC_REF(/obj/structure/table, on_pushed_into),
+		COMSIG_LIVING_DISARM_COLLIDE = TYPE_PROC_REF(/obj/structure, on_disarm_shoved_into),
 	)
-	target.AddComponent(/datum/component/connect_loc_behalf, target, loc_connections)
+	target.AddElement(/datum/element/connect_loc, loc_connections)
 
 /datum/element/table_smash/Detach(datum/source, ...)
 	. = ..()
@@ -159,7 +162,8 @@
 	log_combat(user, pushed_mob, "tabled", null, "onto [table]")
 	pushed_mob.add_mood_event("table", /datum/mood_event/table)
 	SEND_SIGNAL(user, COMSIG_LIVING_TABLE_SLAMMING, pushed_mob, table)
-	table.after_smash(pushed_mob)
+	if(after_smash_proccall)
+		call(table, after_smash_proccall)(pushed_mob)
 
 /// Even more aggressively smash a single part of a mob onto the table
 /datum/element/table_smash/proc/tablelimbsmash(mob/living/user, mob/living/pushed_mob, obj/structure/table/table)
@@ -177,10 +181,11 @@
 	pushed_mob.add_mood_event("table", /datum/mood_event/table_limbsmash, banged_limb)
 	table.take_damage(50)
 	SEND_SIGNAL(user, COMSIG_LIVING_TABLE_LIMB_SLAMMING, pushed_mob, table)
-	table.after_smash(pushed_mob)
+	if(after_smash_proccall)
+		call(table, after_smash_proccall)(pushed_mob)
 
 /// Called when someone is shoved into our tile
-/obj/structure/table/proc/on_pushed_into(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
+/obj/structure/proc/on_disarm_shoved_into(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
 	SIGNAL_HANDLER
 	if((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED))
 		return
@@ -193,6 +198,6 @@
 	after_smash(target)
 	return COMSIG_LIVING_SHOVE_HANDLED
 
-/// What happens after something gets smashed onto this table
-/obj/structure/table/proc/after_smash(mob/living/smashed_onto)
-	return
+/// Called after someone is harmfully smashed onto us
+/obj/structure/proc/after_smash(mob/living/smashed_onto)
+	return // This is mostly for our children

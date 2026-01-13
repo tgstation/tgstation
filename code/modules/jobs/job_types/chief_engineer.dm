@@ -75,7 +75,7 @@
 	ears = /obj/item/radio/headset/heads/ce
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/utility/hardhat/welding/white/up
-	shoes = /obj/item/clothing/shoes/sneakers/brown
+	shoes = /obj/item/clothing/shoes/workboots
 	l_pocket = /obj/item/modular_computer/pda/heads/ce
 
 	backpack = /obj/item/storage/backpack/industrial

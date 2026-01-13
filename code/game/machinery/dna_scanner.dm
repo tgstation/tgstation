@@ -159,56 +159,19 @@
 	SIGNAL_HANDLER
 	set_linked_console(null)
 
-// Disk skins
-/datum/atom_skin/dna_disk
-	abstract_type = /datum/atom_skin/dna_disk
-
-/datum/atom_skin/dna_disk/red
-	preview_name = "Red"
-	new_icon_state = "datadisk0"
-
-/datum/atom_skin/dna_disk/dark_blue
-	preview_name = "Dark Blue"
-	new_icon_state = "datadisk1"
-
-/datum/atom_skin/dna_disk/yellow
-	preview_name = "Yellow"
-	new_icon_state = "datadisk2"
-
-/datum/atom_skin/dna_disk/black
-	preview_name = "Black"
-	new_icon_state = "datadisk3"
-
-/datum/atom_skin/dna_disk/green
-	preview_name = "Green"
-	new_icon_state = "datadisk4"
-
-/datum/atom_skin/dna_disk/purple
-	preview_name = "Purple"
-	new_icon_state = "datadisk5"
-
-/datum/atom_skin/dna_disk/grey
-	preview_name = "Grey"
-	new_icon_state = "datadisk6"
-
-/datum/atom_skin/dna_disk/light_blue
-	preview_name = "Light Blue"
-	new_icon_state = "datadisk7"
-
 //Just for transferring between genetics machines.
 /obj/item/disk/data
-	name = "DNA data disk"
+	name = "\improper DNA data disk"
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	var/list/genetic_makeup_buffer = list()
 	var/list/mutations = list()
-	var/max_mutations = 6
-	var/read_only = FALSE //Well,it's still a floppy disk
+	var/max_mutations = 10
+	read_only = FALSE //Well,it's still a floppy disk
 
 /obj/item/disk/data/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/dna_disk, infinite = TRUE)
 	icon_state = "datadisk[rand(0,7)]"
-	add_overlay("datadisk_gene")
+	set_sticker_icon_state(pick("o_dna1", "o_dna2"))
 	if(length(genetic_makeup_buffer))
 		var/datum/blood_type = genetic_makeup_buffer["blood_type"]
 		if(blood_type)
@@ -225,11 +188,3 @@
 	for(var/datum/mutation/mut as anything in subtypesof(/datum/mutation))
 		var/datum/mutation/ref = GET_INITIALIZED_MUTATION(mut)
 		mutations += ref
-
-/obj/item/disk/data/attack_self(mob/user)
-	read_only = !read_only
-	to_chat(user, span_notice("You flip the write-protect tab to [read_only ? "protected" : "unprotected"]."))
-
-/obj/item/disk/data/examine(mob/user)
-	. = ..()
-	. += "The write-protect tab is set to [read_only ? "protected" : "unprotected"]."

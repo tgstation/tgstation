@@ -1,0 +1,5 @@
+author: "ElGitificador"
+delete-after: True
+changes:
+  - balance: "Advanced DNA injectors have a cooldown cap of 90s, as opposed to not having a cap at all"
+  - balance: "DNA data disks can now store 10 mutations."
