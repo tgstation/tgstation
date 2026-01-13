@@ -706,6 +706,7 @@
 	iris_overlay = null
 	eye_color_left = "#3cb8a5"
 	eye_color_right = "#3cb8a5"
+	color_cutoffs = list(5, 8, 25)
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
 	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
 	organ_traits = list(TRAIT_XRAY_VISION)
