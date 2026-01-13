@@ -200,7 +200,7 @@
 /mob/living/basic/guardian/gib()
 	death(TRUE)
 
-/mob/living/basic/guardian/dust(just_ash, drop_items, force)
+/mob/living/basic/guardian/dust(just_ash, drop_items, give_moodlet, force)
 	death(TRUE)
 
 /// Link up with a summoner mob.

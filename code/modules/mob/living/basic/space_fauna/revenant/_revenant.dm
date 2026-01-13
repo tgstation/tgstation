@@ -278,7 +278,7 @@
 /mob/living/basic/revenant/med_hud_set_status()
 	return //we use no hud
 
-/mob/living/basic/revenant/dust(just_ash, drop_items, force)
+/mob/living/basic/revenant/dust(just_ash, drop_items, give_moodlet, force)
 	death()
 
 /mob/living/basic/revenant/gib()
