@@ -78,7 +78,7 @@
 	spell_requirements = NONE
 
 	/// How much eye damage is given on cast
-	var/eye_damage = 8
+	var/eye_damage = 7.5
 	/// The duration of the thermal vision
 	var/thermal_duration = 30 SECONDS
 
