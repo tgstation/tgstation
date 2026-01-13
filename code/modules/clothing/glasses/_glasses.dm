@@ -591,7 +591,7 @@
 	icon_state = "material"
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
 	color_cutoffs = list(5, 8, 25)
-	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
+	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /obj/item/clothing/glasses/thermal/xray/equipped(mob/living/carbon/human/user, slot)
 	. = ..()

@@ -706,9 +706,8 @@
 	iris_overlay = null
 	eye_color_left = "#3cb8a5"
 	eye_color_right = "#3cb8a5"
-	color_cutoffs = list(5, 8, 25)
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
-	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
+	flash_protect = FLASH_PROTECTION_SENSITIVE
 	organ_traits = list(TRAIT_XRAY_VISION)
 	penlight_message = "are replaced by small radiation emitters and detectors"
 
@@ -1117,13 +1116,14 @@
 	penlight_message = "are bulbous clusters of LEDs and cameras"
 	pupils_name = "aperture clusters"
 
-/obj/item/organ/eyes/robotic/thermals/moth //we inherit flash weakness from thermals
+/obj/item/organ/eyes/robotic/thermals/moth //we inherit flash weakness from thermals/xrays + moth eyes
 	name = "thermal moth eyes"
 	icon_state = "eyes_moth_cyber_thermal"
 	eye_icon_state = "motheyes_white"
 	eye_color_left = "#901f38"
 	eye_color_right = "#901f38"
 	blink_animation = FALSE
+	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
 	pupils_name = "sensor clusters"
 	penlight_message = "are two clustered hemispheres of thermal sensors"
 
