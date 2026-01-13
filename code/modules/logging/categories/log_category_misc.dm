@@ -71,4 +71,4 @@
 
 /datum/log_category/fishing
 	category = LOG_CATEGORY_FISHING
-	config_flag = /datum/config_entry/flag/log_econ
+	config_flag = /datum/config_entry/flag/fishing
