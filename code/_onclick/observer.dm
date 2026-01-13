@@ -60,10 +60,16 @@
 	return FALSE
 
 /mob/living/attack_ghost(mob/dead/observer/user)
-	if(user.client && (user.ghost_hud_flags & GHOST_HEALTH))
-		healthscan(user, src, 1, TRUE)
-	if(user.client && (user.ghost_hud_flags & GHOST_CHEM))
-		chemscan(user, src)
+	if(user.client)
+		var/scan_done = FALSE
+		if (user.ghost_hud_flags & GHOST_HEALTH)
+			healthscan(user, src, 1, TRUE)
+			scan_done = TRUE
+		if (user.ghost_hud_flags & GHOST_CHEM)
+			chemscan(user, src)
+			scan_done = TRUE
+		if(scan_done)
+			return TRUE
 	return ..()
 
 // ---------------------------------------
