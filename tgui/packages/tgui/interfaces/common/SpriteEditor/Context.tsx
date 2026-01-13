@@ -42,6 +42,18 @@ import {
   type StringLayer,
 } from './Types/types';
 
+const SpriteEditorContextObject = createContext<SpriteEditorContextType | null>(
+  null,
+);
+
+const useSpriteEditorContext = (name: string): SpriteEditorContextType => {
+  const context = useContext(SpriteEditorContextObject);
+  if (!context) {
+    throw new Error(`${name} must be a child of SpriteEditor.Root`);
+  }
+  return context;
+};
+
 type ToolbarButtonProps = Omit<
   Parameters<typeof Button>[0],
   'icon' | 'onClick' | 'selected' | 'ellipsis'
@@ -55,84 +67,75 @@ type ToolbarProps = {
 
 type TransactionType = 'undo' | 'redo';
 
-const undoRedoFactory = (type: TransactionType) => {
-  return (props: { stack: string[] }) => {
-    const { stack } = props;
-    const { act } = useBackend();
-    const [historyOpen, setHistoryOpen] = useState(false);
-    const stackEmpty = stack.length < 1;
-    const action = (count: number = 1) =>
-      act(`spriteEditorCommand`, { command: type, count });
-    return (
-      <Popper
-        isOpen={historyOpen}
-        onClickOutside={() => setHistoryOpen(false)}
-        content={
-          <Box backgroundColor="rgba(0, 0, 0, 33%)">
-            <Stack vertical maxHeight="15rem" overflowY="scroll">
-              {stack.map((transaction, i) => (
-                <Stack.Item key={i} m={0}>
-                  <Button
-                    mx="0.5rem"
-                    color="transparent"
-                    width="100%"
-                    ellipsis
-                    onClick={() => {
-                      action(i);
-                      setHistoryOpen(false);
-                    }}
-                  >
-                    {transaction}
-                  </Button>
-                </Stack.Item>
-              ))}
-            </Stack>
-          </Box>
-        }
-      >
-        <Button
-          inline
-          mr={0}
-          icon={type}
-          disabled={stackEmpty}
-          tooltip={`${capitalize(type)}${stackEmpty ? '' : ` ${stack[stack.length - 1]}`}`}
-          onClick={() => action()}
-          style={{
-            borderTopRightRadius: 0,
-            borderBottomRightRadius: 0,
-            borderRight: '1px solid rgba(255, 255, 255, 0.33)',
-          }}
-        />
-        <Button
-          inline
-          ml={0}
-          icon={historyOpen ? 'chevron-up' : 'chevron-down'}
-          disabled={stackEmpty}
-          iconSize={0.5}
-          onClick={() => setHistoryOpen(!historyOpen)}
-          style={{
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0,
-          }}
-        />
-      </Popper>
-    );
-  };
+type HistoryButtonProps = {
+  stack: string[];
+  type: TransactionType;
 };
 
-const SpriteEditorContextObject = createContext<SpriteEditorContextType | null>(
-  null,
-);
-
-const useSpriteEditorContext = (name: string): SpriteEditorContextType => {
-  const context = useContext(SpriteEditorContextObject);
-  if (!context) {
-    throw new Error(`${name} must be a child of SpriteEditor.Root`);
-  }
-  return context;
+const HistoryButton = (props: HistoryButtonProps) => {
+  const { stack, type } = props;
+  const { act } = useBackend();
+  const [historyOpen, setHistoryOpen] = useState(false);
+  const stackEmpty = stack.length < 1;
+  const action = (count = 1) =>
+    act(`spriteEditorCommand`, { command: type, count });
+  return (
+    <Popper
+      isOpen={historyOpen}
+      onClickOutside={() => setHistoryOpen(false)}
+      content={
+        <Box backgroundColor="rgba(0, 0, 0, 33%)">
+          <Stack vertical maxHeight="15rem" overflowY="scroll">
+            {stack.map((transaction, i) => (
+              <Stack.Item key={i} m={0}>
+                <Button
+                  mx="0.5rem"
+                  color="transparent"
+                  width="100%"
+                  ellipsis
+                  onClick={() => {
+                    action(i);
+                    setHistoryOpen(false);
+                  }}
+                >
+                  {transaction}
+                </Button>
+              </Stack.Item>
+            ))}
+          </Stack>
+        </Box>
+      }
+    >
+      <Button
+        inline
+        mr={0}
+        icon={type}
+        disabled={stackEmpty}
+        tooltip={`${capitalize(type)}${stackEmpty ? '' : ` ${stack[stack.length - 1]}`}`}
+        onClick={() => action()}
+        style={{
+          borderTopRightRadius: 0,
+          borderBottomRightRadius: 0,
+          borderRight: '1px solid rgba(255, 255, 255, 0.33)',
+        }}
+      />
+      <Button
+        inline
+        ml={0}
+        icon={historyOpen ? 'chevron-up' : 'chevron-down'}
+        disabled={stackEmpty}
+        iconSize={0.5}
+        onClick={() => setHistoryOpen(!historyOpen)}
+        style={{
+          borderTopLeftRadius: 0,
+          borderBottomLeftRadius: 0,
+        }}
+      />
+    </Popper>
+  );
 };
 
-const colorPicker = (
+const ContextColorPicker = (
   props: Omit<ColorPickerProps, 'initialColor' | 'onSelectColor'>,
 ) => {
   const { currentColor, setCurrentColor } = useSpriteEditorContext(
@@ -167,13 +170,13 @@ type ContextPaletteProps = IncludeOrOmitEntireType<
   >
 >;
 
-function HasServerColorProps(
+const hasServerColorProps = (
   props: ContextPaletteProps,
-): props is ContextPaletteProps & ServerColorProps {
+): props is ContextPaletteProps & ServerColorProps => {
   return Object.hasOwn(props, 'serverPalette');
-}
+};
 
-const palette = (props: ContextPaletteProps) => {
+const ContextPalette = (props: ContextPaletteProps) => {
   const { colors, setColors, currentColor, setCurrentColor } =
     useSpriteEditorContext('SpriteEditor.Palette');
   const {
@@ -181,20 +184,21 @@ const palette = (props: ContextPaletteProps) => {
     maxServerColors,
     onAddServerColor,
     onRemoveServerColor,
-  } = HasServerColorProps(props) ? props : {};
+  } = hasServerColorProps(props) ? props : {};
   const { act } = useBackend();
   const parsedServerColors = serverPalette?.map(parseHexColorString);
-  if (parsedServerColors?.length) {
-    useEffect(() => {
-      if (
-        !parsedServerColors.find((serverColor) =>
-          colorsAreEqual(serverColor, currentColor),
-        )
-      ) {
-        setCurrentColor(parsedServerColors[0]);
-      }
-    }, [JSON.stringify(parsedServerColors)]);
-  }
+  useEffect(() => {
+    if (!parsedServerColors) {
+      return;
+    }
+    if (
+      !parsedServerColors.find((serverColor) =>
+        colorsAreEqual(serverColor, currentColor),
+      )
+    ) {
+      setCurrentColor(parsedServerColors[0]);
+    }
+  }, [JSON.stringify(parsedServerColors)]);
   return (
     <Palette
       colors={parsedServerColors ?? colors}
@@ -220,10 +224,17 @@ const palette = (props: ContextPaletteProps) => {
   );
 };
 
-const undoButton = undoRedoFactory('undo');
-const redoButton = undoRedoFactory('redo');
+const ContextUndo = (props: Pick<HistoryButtonProps, 'stack'>) => {
+  const { stack } = props;
+  return <HistoryButton stack={stack} type="undo" />;
+};
 
-const toolbar = (props: ToolbarProps) => {
+const ContextRedo = (props: Pick<HistoryButtonProps, 'stack'>) => {
+  const { stack } = props;
+  return <HistoryButton stack={stack} type="redo" />;
+};
+
+const ContextToolbar = (props: ToolbarProps) => {
   const { tools, currentTool, setCurrentTool } = useSpriteEditorContext(
     'SpriteEditor.Toolbar',
   );
@@ -262,7 +273,7 @@ type ContextCanvasProps = {
   disabled?: BooleanLike;
 } & Omit<AdvancedCanvasPropsBase, 'data' | 'backdropColor'>;
 
-const canvas = (props: ContextCanvasProps) => {
+const ContextCanvas = (props: ContextCanvasProps) => {
   const { data, disabled, ...rest } = props;
   const { width, height, backdrop } = data;
   const context = useSpriteEditorContext('SpriteEditor.Canvas');
@@ -308,7 +319,7 @@ const canvas = (props: ContextCanvasProps) => {
   );
 };
 
-const layerManager = (props: Omit<LayerManagerProps, 'context'>) => (
+const ContextLayerManager = (props: Omit<LayerManagerProps, 'context'>) => (
   <LayerManager
     {...props}
     context={useSpriteEditorContext('SpriteEditor.LayerManager')}
@@ -388,11 +399,11 @@ export namespace SpriteEditorContext {
       </SpriteEditorContextObject.Provider>
     );
   };
-  export const ColorPicker = colorPicker;
-  export const Palette = palette;
-  export const Undo = undoButton;
-  export const Redo = redoButton;
-  export const Toolbar = toolbar;
-  export const Canvas = canvas;
-  export const LayerManager = layerManager;
+  export const ColorPicker = ContextColorPicker;
+  export const Palette = ContextPalette;
+  export const Undo = ContextUndo;
+  export const Redo = ContextRedo;
+  export const Toolbar = ContextToolbar;
+  export const Canvas = ContextCanvas;
+  export const LayerManager = ContextLayerManager;
 }

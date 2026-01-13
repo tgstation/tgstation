@@ -1,11 +1,10 @@
 import { useLayoutEffect, useRef, useState } from 'react';
+import transparency_checkerboard from 'tgui/assets/transparency_checkerboard.svg';
 import {
   type BooleanStyleMap,
   computeBoxProps,
   type StringStyleMap,
 } from 'tgui-core/ui';
-
-import transparency_checkerboard from '../../../assets/transparency_checkerboard.svg';
 import { colorToCssString } from '../colorSpaces';
 import { useClickAndDragEventHandler, useDimensions } from '../helpers';
 import type {

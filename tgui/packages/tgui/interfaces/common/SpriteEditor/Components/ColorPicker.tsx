@@ -15,7 +15,6 @@ import {
   computeBoxProps,
   type StringStyleMap,
 } from 'tgui-core/ui';
-
 import {
   AsBothSpaces,
   hsva2hslString,

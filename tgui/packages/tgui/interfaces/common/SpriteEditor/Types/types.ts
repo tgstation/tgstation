@@ -1,7 +1,6 @@
 import type { Dispatch, SetStateAction, useSyncExternalStore } from 'react';
 import type { Box } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
-
 import type { Tool } from './Tool';
 
 export type RGB = {

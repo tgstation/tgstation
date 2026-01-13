@@ -1,4 +1,4 @@
-import { useBackend } from '../../../../../backend';
+import { useBackend } from 'tgui/backend';
 import { colorToHexString } from '../../colorSpaces';
 import { constrainToIconGrid, copyLayer } from '../../helpers';
 import { Tool } from '../Tool';
