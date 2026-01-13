@@ -1116,7 +1116,7 @@
 	penlight_message = "are bulbous clusters of LEDs and cameras"
 	pupils_name = "aperture clusters"
 
-/obj/item/organ/eyes/robotic/thermals/moth //we inherit flash weakness from thermals/xrays + moth eyes
+/obj/item/organ/eyes/robotic/thermals/moth
 	name = "thermal moth eyes"
 	icon_state = "eyes_moth_cyber_thermal"
 	eye_icon_state = "motheyes_white"
