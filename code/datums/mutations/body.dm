@@ -699,7 +699,7 @@
 		ADD_TRAIT(owner, TRAIT_SOFTSPOKEN, REF(src))
 
 /datum/mutation/inexorable/on_life(seconds_per_tick)
-	if(owner.health > owner.crit_threshold || owner.stat != CONSCIOUS || HAS_TRAIT(owner, TRAIT_STASIS))
+	if(owner.health > owner.crit_threshold || owner.stat != CONSCIOUS || HAS_TRAIT(owner, TRAIT_STASIS) || HAS_TRAIT(owner, TRAIT_NOCRITDAMAGE))
 		return
 	// Gives you 30 seconds of being in soft crit... give or take
 	if(HAS_TRAIT(owner, TRAIT_TOXIMMUNE) || HAS_TRAIT(owner, TRAIT_TOXINLOVER))
