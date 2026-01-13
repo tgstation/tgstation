@@ -545,12 +545,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	if(!iscarbon(hangover_mob))
 		return
 
-	if(HAS_PERSONALITY(hangover_mob, /datum/personality/teetotal))
-		hangover_mob.add_mood_event("hungover", /datum/mood_event/teetotal_hangover)
+	var/mob/living/carbon/spawned_carbon = hangover_mob
+	if(HAS_PERSONALITY(spawned_carbon, /datum/personality/teetotal))
+		spawned_carbon.add_mood_event("hungover", /datum/mood_event/teetotal_hangover)
 		spawned_carbon.adjust_disgust(30)
 		return
 
-	var/mob/living/carbon/spawned_carbon = hangover_mob
 	spawned_carbon.set_resting(TRUE, silent = TRUE)
 	if(HAS_PERSONALITY(spawned_carbon, /datum/personality/bibulous))
 		spawned_carbon.add_mood_event("hungover", /datum/mood_event/bibulous_hangover)
