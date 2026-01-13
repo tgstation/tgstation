@@ -325,12 +325,6 @@
 				var/actual_state = text2num(state)
 				if (actual_state & surgery_states)
 					surgery_states &= ~actual_state
-			if(!LIMB_HAS_SKIN(limb))
-				surgery_states &= ~SKINLESS_SURGERY_STATES
-			if(!LIMB_HAS_BONES(limb))
-				surgery_states &= ~BONELESS_SURGERY_STATES
-			if(!LIMB_HAS_VESSELS(limb))
-				surgery_states &= ~VESSELLESS_SURGERY_STATES
 
 		if (surgery_states) // second check applies any remaining valid states
 			limb.add_surgical_state(surgery_states)
