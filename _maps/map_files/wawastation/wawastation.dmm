@@ -39840,7 +39840,6 @@
 	name = "MiniSat Access"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/any/command/ai_upload,
@@ -43223,7 +43222,6 @@
 	name = "MiniSat Access"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
-/obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/unres/delayed{
 	dir = 4
 	},
