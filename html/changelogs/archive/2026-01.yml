@@ -329,3 +329,33 @@
 2026-01-12:
   SmArtKar:
   - rscadd: Made lizard skin and lizardskin items inherit their "donor's" skin color
+2026-01-13:
+  KingkumaArt:
+  - bugfix: Giantslayer spear now does intended damage to mining mobs.
+  Melbert:
+  - qol: Objects that can pass over tables don't block table construction
+  - qol: If table construction fails, it tells you what is blocking, rather than "something
+      is"
+  - qol: Biogenerators protect food placed on top of them from germs
+  - bugfix: Fixed spotlight effect on multi-z map
+  MelokG000:
+  - balance: Added yellow pocket oxygen tank to kinetic crusher kit
+  SmArtKar:
+  - bugfix: Fixed odd behaviors of floppy disk stacks
+  Tractor-Maam:
+  - bugfix: fixed circuit action icon five
+  lelandkemble:
+  - bugfix: Flipped RPD-placed trinary atmospheric implements now place properly.
+  loganuk:
+  - bugfix: Restores emergency access feature
+  san7890:
+  - balance: 'Miners Beware: Blood Drunk Miners have been refactored into basic mobs.
+      This means their timings and such may be a bit more unpredictable than what
+      you''re used to. The difficulty should be about the same, but do approach with
+      caution lest you get devoured...'
+  - balance: Helping out (or just watching) the murderization of xenomorphs will give
+      you a positive moodlet, with increased effect depending on the strength of the
+      xenomorph. Bonus points for sending them out in gibby/dusty fashion.
+  - balance: However, if you are a carrier of a xenomorph embryo and witness this
+      death, the unborn entity inside you will provoke a sense of malaise having been
+      so close to the death of the sister.
