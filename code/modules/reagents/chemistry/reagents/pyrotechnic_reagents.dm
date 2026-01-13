@@ -436,7 +436,7 @@
 	affected_human.physiology.siemens_coeff *= 0.5
 
 /datum/reagent/teslium/on_spark_act(power_charge, enclosed)
-	tesla_zap(source = holder.my_atom, zap_range = round(volume / 5, 1), power = volume * 10 + power_charge, cutoff = 1 KILO JOULES, zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_LOW_POWER_GEN)
+	tesla_zap(source = holder.my_atom, zap_range = round(volume / 5, 1), power = volume * 20 + power_charge, cutoff = 1 KILO JOULES, zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_LOW_POWER_GEN)
 	playsound(holder.my_atom, 'sound/machines/defib/defib_zap.ogg', 50, TRUE)
 	return SPARK_ACT_NON_DESTRUCTIVE
 
