@@ -8,8 +8,14 @@
 	)
 	time = 3 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
-	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_PRIORITY_NEXT_STEP
+	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
+
+/datum/surgery_operation/limb/repair_puncture/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, tool)
+	. = ..()
+	for(var/datum/wound/pierce/bleed/pierce_wound in limb.wounds)
+		if(HAS_TRAIT(pierce_wound, TRAIT_WOUND_SCANNED))
+			. *= 0.5
 
 /datum/surgery_operation/limb/repair_puncture/get_default_radial_image()
 	return image(/obj/item/hemostat)
@@ -27,9 +33,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to realign the torn blood vessels in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to realign the torn blood vessels in [limb.owner]'s [limb.plaintext_zone] with [tool]."),
-		span_notice("[surgeon] begins to realign the torn blood vessels in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to realign the torn blood vessels in [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to realign the torn blood vessels in [FORMAT_LIMB_OWNER(limb)] with [tool]."),
+		span_notice("[surgeon] begins to realign the torn blood vessels in [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "You feel a horrible stabbing pain in your [limb.plaintext_zone]!")
 
@@ -42,9 +48,9 @@
 		display_results(
 			surgeon,
 			limb.owner,
-			span_notice("You successfully realign the last of the torn blood vessels in [limb.owner]'s [limb.plaintext_zone]."),
-			span_notice("[surgeon] successfully realigns the last of the torn blood vessels in [limb.owner]'s [limb.plaintext_zone] with [tool]!"),
-			span_notice("[surgeon] successfully realigns the last of the torn blood vessels in  [limb.owner]'s [limb.plaintext_zone]!"),
+			span_notice("You successfully realign the last of the torn blood vessels in [FORMAT_LIMB_OWNER(limb)]."),
+			span_notice("[surgeon] successfully realigns the last of the torn blood vessels in [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
+			span_notice("[surgeon] successfully realigns the last of the torn blood vessels in  [FORMAT_LIMB_OWNER(limb)]!"),
 		)
 		return
 
@@ -52,18 +58,18 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully realign some of the blood vessels in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] successfully realigns some of the blood vessels in [limb.owner]'s [limb.plaintext_zone] with [tool]!"),
-		span_notice("[surgeon] successfully realigns some of the blood vessels in  [limb.owner]'s [limb.plaintext_zone]!"),
+		span_notice("You successfully realign some of the blood vessels in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully realigns some of the blood vessels in [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
+		span_notice("[surgeon] successfully realigns some of the blood vessels in  [FORMAT_LIMB_OWNER(limb)]!"),
 	)
 
 /datum/surgery_operation/limb/repair_puncture/on_failure(obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You jerk apart some of the blood vessels in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] jerks apart some of the blood vessels in [limb.owner]'s [limb.plaintext_zone] with [tool]!"),
-		span_notice("[surgeon] jerks apart some of the blood vessels in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You jerk apart some of the blood vessels in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] jerks apart some of the blood vessels in [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
+		span_notice("[surgeon] jerks apart some of the blood vessels in [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	limb.receive_damage(rand(4, 8), wound_bonus = 10, sharpness = SHARP_EDGED, damage_source = tool)
 
@@ -79,8 +85,14 @@
 	)
 	time = 3.2 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
-	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_PRIORITY_NEXT_STEP
+	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
+
+/datum/surgery_operation/limb/seal_veins/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, tool)
+	. = ..()
+	for(var/datum/wound/pierce/bleed/pierce_wound in limb.wounds)
+		if(HAS_TRAIT(pierce_wound, TRAIT_WOUND_SCANNED))
+			. *= 0.5
 
 /datum/surgery_operation/limb/seal_veins/get_default_radial_image()
 	return image(/obj/item/cautery)
@@ -108,9 +120,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to seal the realigned blood vessels in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to seal the realigned blood vessels in [limb.owner]'s [limb.plaintext_zone] with [tool]."),
-		span_notice("[surgeon] begins to seal the realigned blood vessels in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to seal the realigned blood vessels in [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to seal the realigned blood vessels in [FORMAT_LIMB_OWNER(limb)] with [tool]."),
+		span_notice("[surgeon] begins to seal the realigned blood vessels in [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "You feel a burning sensation in your [limb.plaintext_zone]!")
 
@@ -122,9 +134,9 @@
 		display_results(
 			surgeon,
 			limb.owner,
-			span_notice("You successfully seal the last of the ruptured blood vessels in [limb.owner]'s [limb.plaintext_zone]."),
-			span_notice("[surgeon] successfully seals the last of the ruptured blood vessels in [limb.owner]'s [limb.plaintext_zone] with [tool]!"),
-			span_notice("[surgeon] successfully seals the last of the ruptured blood vessels in  [limb.owner]'s [limb.plaintext_zone]!"),
+			span_notice("You successfully seal the last of the ruptured blood vessels in [FORMAT_LIMB_OWNER(limb)]."),
+			span_notice("[surgeon] successfully seals the last of the ruptured blood vessels in [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
+			span_notice("[surgeon] successfully seals the last of the ruptured blood vessels in  [FORMAT_LIMB_OWNER(limb)]!"),
 		)
 		return
 
@@ -132,7 +144,7 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully seal some of the blood vessels in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] successfully seals some of the blood vessels in [limb.owner]'s [limb.plaintext_zone] with [tool]!"),
-		span_notice("[surgeon] successfully seals some of the blood vessels in  [limb.owner]'s [limb.plaintext_zone]!"),
+		span_notice("You successfully seal some of the blood vessels in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully seals some of the blood vessels in [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
+		span_notice("[surgeon] successfully seals some of the blood vessels in  [FORMAT_LIMB_OWNER(limb)]!"),
 	)
