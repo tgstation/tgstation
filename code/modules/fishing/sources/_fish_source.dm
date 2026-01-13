@@ -299,9 +299,13 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		fisherman.balloon_alert(fisherman, "caught something!")
 		return
 	fisherman.balloon_alert(fisherman, "caught [reward]!")
+
+	var/list/fishing_data
 	if (isfish(reward))
 		ADD_TRAIT(reward, TRAIT_NO_FISHING_ACHIEVEMENT, TRAIT_GENERIC)
-
+		var/obj/item/fish/caught_fish = reward
+		fishing_data = list(caught_fish.size, caught_fish.weight, caught_fish.custom_materials)
+	log_fish("[fisherman] has caught a [reward] at [fishing_spot] using [rod].", fishing_data)
 	return reward
 
 ///Simplified version of dispense_reward that doesn't need a fisherman.
