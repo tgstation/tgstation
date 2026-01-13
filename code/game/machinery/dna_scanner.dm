@@ -166,7 +166,7 @@
 	var/list/genetic_makeup_buffer = list()
 	var/list/mutations = list()
 	var/max_mutations = 10
-	var/read_only = FALSE //Well,it's still a floppy disk
+	read_only = FALSE //Well,it's still a floppy disk
 
 /obj/item/disk/data/Initialize(mapload)
 	. = ..()
