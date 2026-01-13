@@ -23,5 +23,7 @@
 	TEST_ASSERT_NOTNULL(ourborg.module_active, "RCD module failed to activate")
 	click_wrapper(ourborg, targetturf)
 	TEST_ASSERT(iswallturf(targetturf), "Borg RCD was unable to create wall")
+	targetturf.ChangeTurf(/turf/open/floor/plating)
+	ourborg.deactivate_module(rcd)
 
 
