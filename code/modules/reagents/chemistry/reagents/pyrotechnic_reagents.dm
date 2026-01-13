@@ -135,6 +135,10 @@
 	holder.clear_reagents()
 
 /datum/reagent/gunpowder/on_spark_act(power_charge, enclosed)
+	if (power_charge >= STANDARD_CELL_CHARGE || holder.chem_temp >= 474)
+		reagent_explode(holder, volume, strengthdiv = 5, 10, clear_holder_reagents = FALSE)
+		return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
+
 	holder.my_atom.visible_message(span_boldnotice("Sparks start flying around the gunpowder!"))
 	if (!enclosed)
 		do_sparks(2, TRUE, get_turf(holder.my_atom))
