@@ -169,6 +169,8 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
  * 5 explosion power is a (0, 1, 3) explosion.
  * 1 explosion power is a (0, 0, 1) explosion.
  *
+ * The easy formula for defaults is sqrt(power * 2) * (0.25 | 0.5 | 1)
+ *
  * Arguments:
  * * epicenter: Turf the explosion is centered at.
  * * power - Dyn explosion power. See reference above.
@@ -176,7 +178,6 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
  * * flash_range: The range at which the explosion flashes people. Equal to the equivalent of the light impact range multiplied by this value.
  * * adminlog: Whether to log the explosion/report it to the administration.
  * * ignorecap: Whether to ignore the relevant bombcap. Defaults to FALSE.
- * * flame_range: The range at which the explosion should produce hotspots.
  * * silent: Whether to generate/execute sound effects.
  * * smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
  * * explosion_cause: [Optional] The atom that caused the explosion, when different to the origin. Used for logging.
@@ -186,7 +187,7 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 		return
 	var/range = 0
 	range = round((2 * power)**GLOB.DYN_EX_SCALE)
-	explosion(epicenter, devastation_range = round(range * 0.25), heavy_impact_range = round(range * 0.5), light_impact_range = round(range), flame_range = flame_range*range, flash_range = flash_range*range, adminlog = adminlog, ignorecap = ignorecap, silent = silent, smoke = smoke, explosion_cause = explosion_cause)
+	explosion(epicenter, devastation_range = round(range * 0.25), heavy_impact_range = round(range * 0.5), light_impact_range = round(range), flame_range = isnull(flame_range) ? null : flame_range * range, flash_range = isnull(flash_range) ? null : flash_range * range, adminlog = adminlog, ignorecap = ignorecap, silent = silent, smoke = smoke, explosion_cause = explosion_cause)
 
 
 
