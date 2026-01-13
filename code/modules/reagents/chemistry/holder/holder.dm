@@ -799,6 +799,7 @@
 	if (!islist(banned_reagents))
 		banned_reagents = list(banned_reagents)
 	var/result = NONE
+	var/update = FALSE
 	for (var/datum/reagent/reagent as anything in reagent_list)
 		if (is_type_in_list(reagent, banned_reagents))
 			continue
@@ -810,7 +811,10 @@
 			clear_reagents()
 			return result
 		if (!(reagent_result & SPARK_ACT_KEEP_REAGENT))
-			del_reagent(reagent)
+			reagent.volume = 0
+			update = TRUE
+	if (update)
+		update_total()
 	return result
 
 //===============================Logging==========================================
