@@ -36,7 +36,6 @@ Difficulty: Medium
 	achievements = list(
 		/datum/award/achievement/boss/boss_killer,
 		/datum/award/achievement/boss/blood_miner_kill,
-		/datum/award/achievement/boss/blood_miner_crusher,
 		/datum/award/score/blood_miner_score,
 	)
 	crusher_achievement_type = /datum/award/achievement/boss/blood_miner_crusher
