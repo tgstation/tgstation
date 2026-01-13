@@ -135,6 +135,14 @@
 	holder.clear_reagents()
 
 /datum/reagent/gunpowder/on_spark_act(power_charge, enclosed)
+	// Gunpowder doesn't blow in presence of stabilizing agent but instead consumes it every time it'd get triggered
+	var/agent_volume = holder.get_reagent_amount(/datum/reagent/stabilizing_agent)
+	if (agent_volume)
+		var/sapped_amt = 0.1 + round(power_charge / (0.1 * STANDARD_CELL_CHARGE), 0.01)
+		holder.remove_reagent(/datum/reagent/stabilizing_agent, sapped_amt)
+		if (agent_volume > sapped_amt)
+			return
+
 	if (power_charge >= STANDARD_CELL_CHARGE || holder.chem_temp >= 474)
 		reagent_explode(holder, volume, modifier = 5, strengthdiv = 10, clear_holder_reagents = FALSE)
 		return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
