@@ -152,9 +152,9 @@
 	if (power_charge)
 		// Okay but what if we made a REALLY big boom?
 		var/power_coeff = log(2, power_charge / STANDARD_CELL_CHARGE)
-		reagent_explode(holder, volume, modiifer = min(2 * power_coeff, 8), strengthdiv = 7 / min(power_coeff, 4), clear_holder_reagents = FALSE)
+		reagent_explode(holder, volume, modifier = min(2 * power_coeff, 8), strengthdiv = 7 / min(power_coeff, 4), clear_holder_reagents = FALSE)
 	else if (holder.chem_temp >= 474)
-		reagent_explode(holder, volume, modiifer = 2, strengthdiv = 7, clear_holder_reagents = FALSE)
+		reagent_explode(holder, volume, modifier = 2, strengthdiv = 7, clear_holder_reagents = FALSE)
 	else
 		reagent_explode(holder, volume, strengthdiv = 8, clear_holder_reagents = FALSE)
 	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
