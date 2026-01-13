@@ -591,6 +591,7 @@
 	icon_state = "material"
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
 	flash_protect = FLASH_PROTECTION_SENSITIVE
+	glass_colour_type = /datum/client_colour/glass_colour/lightblue
 
 /obj/item/clothing/glasses/thermal/xray/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
