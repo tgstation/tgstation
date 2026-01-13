@@ -872,6 +872,8 @@
 /obj/item/modular_computer/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	tool.play_tool_sound(src, user, 20, volume=20)
+	if(!do_after(user, 2 SECONDS, target = physical))
+		return ITEM_INTERACT_BLOCKING
 	deconstruct(TRUE)
 	user.balloon_alert(user, "disassembled")
 	return ITEM_INTERACT_SUCCESS

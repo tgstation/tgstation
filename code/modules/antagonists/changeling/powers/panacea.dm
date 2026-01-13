@@ -2,7 +2,8 @@
 	name = "Anatomic Panacea"
 	desc = "Expels impurities from our form: curing diseases, removing parasites, sobering us, purging toxins and radiation, curing traumas and brain damage, and resetting our genetic code completely. Costs 20 chemicals."
 	helptext = "Can be used while unconscious."
-	button_icon_state = "panacea"
+	button_icon_state = "anatomic_panacea"
+	category = "utility"
 	chemical_cost = 20
 	dna_cost = 1
 	req_stat = HARD_CRIT

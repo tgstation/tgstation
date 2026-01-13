@@ -221,7 +221,11 @@
 			results += butcher_result
 
 		if (is_stack && amount)
-			var/obj/item/stack/butcher_result = new drop_type(drop_loc, amount)
+			var/obj/item/stack/butcher_result = null
+			if (ispath(drop_type, /obj/item/stack/sheet/animalhide/carbon))
+				butcher_result = new drop_type(drop_loc, amount, /*merge = */TRUE, /*mat_override = */null, /*mat_amount = */1, target.skin_tone || target.species_color)
+			else
+				butcher_result = new drop_type(drop_loc, amount)
 			if (target.blood_dna_info)
 				butcher_result.add_blood_DNA(target.blood_dna_info.Copy())
 			results += butcher_result

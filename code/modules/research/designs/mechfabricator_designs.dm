@@ -2114,6 +2114,17 @@
 	)
 	build_path = /obj/item/mod/module/storage/large_capacity
 
+/datum/design/module/mod_storage_holding
+	name = "Storage Module of Holding"
+	id = "mod_storage_holding"
+	materials = list(
+		/datum/material/gold =SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/uranium = SMALL_MATERIAL_AMOUNT*2.5,
+		/datum/material/bluespace =SHEET_MATERIAL_AMOUNT
+	)
+	build_path = /obj/item/mod/module/storage/holding
+
 /datum/design/module/mod_visor_medhud
 	name = "Medical Visor Module"
 	id = "mod_visor_medhud"

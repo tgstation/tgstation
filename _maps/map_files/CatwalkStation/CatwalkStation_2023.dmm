@@ -14876,7 +14876,7 @@
 /obj/structure/ladder,
 /obj/machinery/door/window/brigdoor/right/directional/east{
 	name = "Telecomms Access";
-	req_access = list("tcoms")
+	req_access = list("tcomms")
 	},
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/dark,

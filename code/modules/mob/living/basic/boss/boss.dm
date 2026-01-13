@@ -20,25 +20,28 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	/// Name for the GPS signal of the megafauna
 	var/gps_name = null
-	/// What crusher trophy this mob drops, if any
-	var/crusher_loot
+	/// What crusher trophy/trophies this mob drops, if any
+	/// Should be wrapped in a list for sanity when we pass it to the element.
+	var/list/crusher_loot = null
+
+	/// What achievements do we give our defeater?
+	var/list/achievements = null
+	/// What type of achievement we give for crusher kills, if any.
+	var/crusher_achievement_type = null
+	/// What memory to give to victor who have killed us, if any.
+	var/victor_memory_type = null
 
 /mob/living/basic/boss/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/wall_tearer, tear_time = 1 SECONDS)
 	if(gps_name)
 		AddComponent(/datum/component/gps, gps_name)
-	if(crusher_loot)
-		AddElement(\
-			/datum/element/crusher_loot,\
-			trophy_type = crusher_loot,\
-			guaranteed_drop = 0.6,\
-			drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
-		)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE, TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE, TRAIT_NO_FLOATING_ANIM), MEGAFAUNA_TRAIT)
+	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE, TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_NO_FLOATING_ANIM), MEGAFAUNA_TRAIT)
 	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/simple_flying)
+	handle_crusher_loot()
+	handle_achievements()
 
 /mob/living/basic/boss/gib()
 	if(health > 0)
@@ -55,12 +58,29 @@
 		return
 	return ..()
 
+/mob/living/basic/boss/ex_act(severity, target)
+	switch (severity)
+		if (EXPLODE_DEVASTATE)
+			adjust_brute_loss(250)
+
+		if (EXPLODE_HEAVY)
+			adjust_brute_loss(100)
+
+		if (EXPLODE_LIGHT)
+			adjust_brute_loss(50)
+
+	return TRUE
+
 /mob/living/basic/boss/early_melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
 	. = ..()
 	if(!. || !istype(target))
 		return
-	if(target.stat == DEAD || (target.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(target, TRAIT_NODEATH)))
+	if(should_devour(target))
 		devour(target)
+
+/// Determines if this mob is worth devouring
+/mob/living/basic/boss/proc/should_devour(mob/living/victim)
+	return victim.stat == DEAD || (victim.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(victim, TRAIT_NODEATH))
 
 /// Devours a target and restores health to the megafauna
 /mob/living/basic/boss/proc/devour(mob/living/victim)
@@ -79,20 +99,28 @@
 	victim.apply_status_effect(/datum/status_effect/gutted)
 	return TRUE
 
+/// Small little taunt when we epically troll someone
 /mob/living/basic/boss/proc/celebrate_kill(mob/living/poor_sap)
 	visible_message(
 		span_danger("[src] disembowels [poor_sap]!"),
-		span_userdanger("You feast on [poor_sap]'s organs, restoring your health!"))
+		span_userdanger("You feast on [poor_sap]'s organs, restoring your health!"),
+	)
 
-/mob/living/basic/boss/ex_act(severity, target)
-	switch (severity)
-		if (EXPLODE_DEVASTATE)
-			adjust_brute_loss(250)
+/// Handles adding all relevant achievements when applicable (probably when we are defeated)
+/// Achievements being null/no length is handled in the element itself.
+/mob/living/basic/boss/proc/handle_achievements()
+	if(length(achievements) <= 0)
+		return
+	AddElement(/datum/element/kill_achievement, string_list(achievements), crusher_achievement_type, victor_memory_type)
 
-		if (EXPLODE_HEAVY)
-			adjust_brute_loss(100)
+/// Handles adding crusher loot when applicable (probably when we are defeated)
+/mob/living/basic/boss/proc/handle_crusher_loot()
+	if(isnull(crusher_loot))
+		return
+	AddElement(\
+		/datum/element/crusher_loot,\
+		trophy_type = string_list(crusher_loot),\
+		guaranteed_drop = 0.6,\
+		drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
+	)
 
-		if (EXPLODE_LIGHT)
-			adjust_brute_loss(50)
-
-	return TRUE

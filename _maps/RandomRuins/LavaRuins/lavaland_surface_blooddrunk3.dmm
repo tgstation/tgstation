@@ -104,7 +104,7 @@
 /obj/structure/stone_tile/block{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter,
+/mob/living/basic/boss/blood_drunk_miner/hunter,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "o" = (

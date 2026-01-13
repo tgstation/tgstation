@@ -254,21 +254,6 @@
 	result = /obj/item/clothing/gloves/tackler/offbrand
 	category = CAT_EQUIPMENT
 
-/**
- * Recipe used for upgrading fake N-spect scanners to bananium HONK-spect scanners
- */
-/datum/crafting_recipe/clown_scanner_upgrade
-	name = "Bananium HONK-spect scanner"
-	result = /obj/item/inspector/clown/bananium
-	reqs = list(
-		/obj/item/inspector/clown = 1,
-		/obj/item/stack/sticky_tape = 3,
-		/obj/item/stack/sheet/mineral/bananium = 5,
-	) //the chainsaw of prank tools
-	tool_paths = list(/obj/item/bikehorn)
-	time = 40 SECONDS
-	category = CAT_EQUIPMENT
-
 /datum/crafting_recipe/rebar_quiver
 	name = "Rebar Storage Quiver"
 	result = /obj/item/storage/bag/rebar_quiver

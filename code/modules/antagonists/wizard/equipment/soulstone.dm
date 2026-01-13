@@ -614,10 +614,27 @@
 /obj/item/soulstone/anybody
 	required_role = null
 
+/obj/item/ectoplasm
+	name = "ectoplasm"
+	desc = "Spooky."
+	gender = PLURAL
+	icon = 'icons/effects/magic.dmi'
+	icon_state = "ectoplasm"
+
+/obj/item/ectoplasm/grind_results()
+	return list(/datum/reagent/hauntium = 25)
+
+/obj/item/ectoplasm/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane!"))
+	return OXYLOSS
+
 /obj/item/soulstone/mystic
 	icon_state = "mystic_soulstone"
 	theme = THEME_WIZARD
 	required_role = /datum/antagonist/wizard
+
+/obj/item/ectoplasm/mystic
+	icon_state = "mysticplasm"
 
 /obj/item/soulstone/anybody/revolver
 	one_use = TRUE
@@ -626,6 +643,10 @@
 /obj/item/soulstone/anybody/purified
 	icon_state = "purified_soulstone"
 	theme = THEME_HOLY
+
+/obj/item/ectoplasm/angelic
+	icon = 'icons/effects/magic.dmi'
+	icon_state = "angelplasm"
 
 /obj/item/soulstone/anybody/chaplain
 	name = "mysterious old shard"

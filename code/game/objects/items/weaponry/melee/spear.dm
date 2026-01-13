@@ -91,7 +91,8 @@
 	if (!head)
 		return BRUTELOSS // No head?
 	var/obj/structure/headpike/pike = new pike_type(drop_location())
-	head.dismember(silent = FALSE, wounding_type = WOUND_PIERCE)
+	if (!head.dismember(silent = FALSE, wounding_type = WOUND_PIERCE))
+		return BRUTELOSS // Guess your neck is too strong
 	head.forceMove(pike)
 	pike.victim = head
 	forceMove(pike)
@@ -340,7 +341,7 @@
 
 /obj/item/spear/dragonator/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bane, mob_biotypes = MOB_MINING, damage_multiplier = 3.5) //For killing really big monsters,
+	AddElement(/datum/element/bane, mob_biotypes = MOB_MINING, damage_multiplier = 0, added_damage = 80, requires_combat_mode = FALSE) //For killing really big monsters.
 
 /*
  * Untreated Giantslayer , needs to be thrown into lava

@@ -279,30 +279,29 @@
  * Returns the required item count, or required chemical units required to submit a bounty.
  */
 /datum/bank_account/proc/bounty_num()
-	if(!civilian_bounty)
-		return FALSE
-	if(istype(civilian_bounty, /datum/bounty/item))
-		var/datum/bounty/item/item = civilian_bounty
-		return "[item.shipped_count]/[item.required_count]"
-	if(istype(civilian_bounty, /datum/bounty/reagent))
-		var/datum/bounty/reagent/chemical = civilian_bounty
-		return "[chemical.shipped_volume]/[chemical.required_volume] u"
-	if(istype(civilian_bounty, /datum/bounty/virus))
-		return "At least 1u"
+	return civilian_bounty?.print_required() || "N/A"
 
 /**
  * Produces the value of the account's civilian bounty reward, if able.
  */
 /datum/bank_account/proc/bounty_value()
-	if(!civilian_bounty)
-		return FALSE
-	return civilian_bounty.reward
+	return civilian_bounty?.get_bounty_reward() || 0
+
+/datum/bank_account/proc/set_bounty(datum/bounty/new_bounty, obj/item/id_card)
+	if(civilian_bounty)
+		reset_bounty(id_card)
+
+	civilian_bounty = new_bounty
+	civilian_bounty.on_selected(id_card)
 
 /**
  * Performs house-cleaning on variables when a civilian bounty is replaced, or, when a bounty is claimed.
  */
-/datum/bank_account/proc/reset_bounty()
-	civilian_bounty = null
+/datum/bank_account/proc/reset_bounty(obj/item/id_card)
+	if(civilian_bounty)
+		civilian_bounty.on_reset(id_card)
+		civilian_bounty = null
+
 	COOLDOWN_RESET(src, bounty_timer)
 
 /datum/bank_account/department

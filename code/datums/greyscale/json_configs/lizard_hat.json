@@ -1,0 +1,10 @@
+{
+	"lizard_hat": [
+		{
+			"type": "icon_state",
+			"icon_state": "lizard_hat",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	]
+}

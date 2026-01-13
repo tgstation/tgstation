@@ -29,12 +29,12 @@ ADMIN_VERB(power_debug, R_DEBUG, "Check Power", "Verifies the integrity of the p
 		if (!PN.nodes || !PN.nodes.len)
 			if(PN.cables && (PN.cables.len > 1))
 				var/obj/structure/cable/C = PN.cables[1]
-				results += "Powernet with no nodes! (number [PN.number]) - example cable at [ADMIN_VERBOSEJMP(C)]"
+				results += "Powernet with no nodes! Example cable at [ADMIN_VERBOSEJMP(C)]"
 
 		if (!PN.cables || (PN.cables.len < 10))
 			if(PN.cables && (PN.cables.len > 1))
 				var/obj/structure/cable/C = PN.cables[1]
-				results += "Powernet with fewer than 10 cables! (number [PN.number]) - example cable at [ADMIN_VERBOSEJMP(C)]"
+				results += "Powernet with fewer than 10 cables! Example cable at [ADMIN_VERBOSEJMP(C)]"
 
 	for(var/turf/T in world.contents)
 		var/cable_layers //cache all cable layers (which are bitflags) present

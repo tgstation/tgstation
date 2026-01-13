@@ -33,163 +33,6 @@
 	)
 	//very imprecise
 
-/obj/item/melee/sabre
-	name = "officer's sabre"
-	desc = "An elegant weapon, its monomolecular edge is capable of cutting through flesh and bone with ease."
-	icon = 'icons/obj/weapons/sword.dmi'
-	icon_state = "sabre"
-	inhand_icon_state = "sabre"
-	icon_angle = -45
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	obj_flags = CONDUCTS_ELECTRICITY | UNIQUE_RENAME
-	force = 20
-	throwforce = 10
-	demolition_mod = 0.75 //but not metal
-	w_class = WEIGHT_CLASS_BULKY
-	block_chance = 50
-	armour_penetration = 75
-	sharpness = SHARP_EDGED
-	attack_verb_continuous = list("slashes", "cuts")
-	attack_verb_simple = list("slash", "cut")
-	block_sound = 'sound/items/weapons/parry.ogg'
-	hitsound = 'sound/items/weapons/rapierhit.ogg'
-	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
-	wound_bonus = 10
-	exposed_wound_bonus = 25
-
-/obj/item/melee/sabre/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/cuffable_item) //closed sword guard
-	AddComponent(/datum/component/jousting)
-	//fast and effective, but as a sword, it might damage the results.
-	AddComponent(/datum/component/butchering, \
-		speed = 3 SECONDS, \
-		effectiveness = 95, \
-		bonus_modifier = 5, \
-	)
-	// The weight of authority comes down on the tider's crimes.
-	AddElement(/datum/element/bane, target_type = /mob/living/carbon/human, damage_multiplier = 0.35)
-	RegisterSignal(src, COMSIG_OBJECT_PRE_BANING, PROC_REF(attempt_bane))
-	RegisterSignal(src, COMSIG_OBJECT_ON_BANING, PROC_REF(bane_effects))
-
-/**
- * If the target reeks of maintenance, the blade can tear through their body with a total of 20 damage.
- */
-/obj/item/melee/sabre/proc/attempt_bane(element_owner, mob/living/carbon/criminal)
-	SIGNAL_HANDLER
-	var/obj/item/organ/liver/liver = criminal.get_organ_slot(ORGAN_SLOT_LIVER)
-	if(isnull(liver) || !HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
-		return COMPONENT_CANCEL_BANING
-
-/**
- * Assistants should fear this weapon.
- */
-/obj/item/melee/sabre/proc/bane_effects(element_owner, mob/living/carbon/human/baned_target)
-	SIGNAL_HANDLER
-	baned_target.visible_message(
-		span_warning("[src] tears through [baned_target] with unnatural ease!"),
-		span_userdanger("As [src] tears into your body, you feel the weight of authority collapse into your wounds!"),
-	)
-	INVOKE_ASYNC(baned_target, TYPE_PROC_REF(/mob/living/carbon/human, emote), "scream")
-
-/obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
-	return ..()
-
-/obj/item/melee/sabre/on_exit_storage(datum/storage/container)
-	playsound(container.parent, 'sound/items/unsheath.ogg', 25, TRUE)
-
-/obj/item/melee/sabre/on_enter_storage(datum/storage/container)
-	playsound(container.parent, 'sound/items/sheath.ogg', 25, TRUE)
-
-/obj/item/melee/sabre/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!"))
-	var/i = 0
-	ADD_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
-	if(iscarbon(user))
-		var/mob/living/carbon/Cuser = user
-		var/obj/item/bodypart/holding_bodypart = Cuser.get_holding_bodypart_of_item(src)
-		var/list/limbs_to_dismember
-		var/list/arms = list()
-		var/list/legs = list()
-		var/obj/item/bodypart/bodypart
-
-		for(bodypart in Cuser.bodyparts)
-			if(bodypart == holding_bodypart)
-				continue
-			if(bodypart.body_part & ARMS)
-				arms += bodypart
-			else if (bodypart.body_part & LEGS)
-				legs += bodypart
-
-		limbs_to_dismember = arms + legs
-		if(holding_bodypart)
-			limbs_to_dismember += holding_bodypart
-
-		var/speedbase = abs((4 SECONDS) / limbs_to_dismember.len)
-		for(bodypart in limbs_to_dismember)
-			i++
-			addtimer(CALLBACK(src, PROC_REF(suicide_dismember), user, bodypart), speedbase * i)
-	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), (5 SECONDS) * i)
-	return MANUAL_SUICIDE
-
-/obj/item/melee/sabre/proc/suicide_dismember(mob/living/user, obj/item/bodypart/affecting)
-	if(!QDELETED(affecting) && !(affecting.bodypart_flags & BODYPART_UNREMOVABLE) && affecting.owner == user && !QDELETED(user))
-		playsound(user, hitsound, 25, TRUE)
-		affecting.dismember(BRUTE)
-		user.adjust_brute_loss(force * 1.25)
-
-/obj/item/melee/sabre/proc/manual_suicide(mob/living/user, originally_nodropped)
-	if(!QDELETED(user))
-		user.adjust_brute_loss(200)
-		user.death(FALSE)
-	REMOVE_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
-
-
-/obj/item/melee/parsnip_sabre
-	name = "parsnip sabre"
-	desc = "A weird, yet elegant weapon. Surprisingly sharp for something made from a parsnip."
-	icon = 'icons/obj/weapons/sword.dmi'
-	icon_state = "parsnip_sabre"
-	inhand_icon_state = "parsnip_sabre"
-	icon_angle = -45
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	force = 15
-	throwforce = 10
-	demolition_mod = 0.3
-	w_class = WEIGHT_CLASS_BULKY
-	block_chance = 40
-	armour_penetration = 40
-	sharpness = SHARP_EDGED
-	attack_verb_continuous = list("slashes", "cuts")
-	attack_verb_simple = list("slash", "cut")
-	block_sound = 'sound/items/weapons/parry.ogg'
-	hitsound = 'sound/items/weapons/rapierhit.ogg'
-	custom_materials = null
-	wound_bonus = 5
-	exposed_wound_bonus = 15
-
-/obj/item/melee/parsnip_sabre/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/cuffable_item) //closed sword guard
-	AddComponent(/datum/component/jousting)
-
-/obj/item/melee/parsnip_sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
-	return ..()
-
-/obj/item/melee/parsnip_sabre/on_exit_storage(datum/storage/container)
-	. = ..()
-	playsound(container.parent, 'sound/items/unsheath.ogg', 25, TRUE)
-
-/obj/item/melee/parsnip_sabre/on_enter_storage(datum/storage/container)
-	. = ..()
-	playsound(container.parent, 'sound/items/sheath.ogg', 25, TRUE)
-
 /obj/item/melee/beesword
 	name = "The Stinger"
 	desc = "Taken from a giant bee and folded over one thousand times in pure honey. Can sting through anything."
@@ -227,122 +70,6 @@
 	user.visible_message(span_suicide("[user] is stabbing [user.p_them()]self in the throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(get_turf(src), hitsound, 75, TRUE, -1)
 	return TOXLOSS
-
-/obj/item/melee/supermatter_sword
-	name = "supermatter sword"
-	desc = "In a station full of bad ideas, this might just be the worst."
-	icon = 'icons/obj/weapons/sword.dmi'
-	icon_state = "supermatter_sword_balanced"
-	inhand_icon_state = "supermatter_sword"
-	icon_angle = -90
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	slot_flags = null
-	w_class = WEIGHT_CLASS_BULKY
-	force = 0.001
-	armour_penetration = 1000
-	force_string = "INFINITE"
-	item_flags = NEEDS_PERMIT|NO_BLOOD_ON_ITEM
-	custom_materials = list(/datum/material/adamantine = SHEET_MATERIAL_AMOUNT * 20, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
-	var/obj/machinery/power/supermatter_crystal/shard
-	var/balanced = 1
-
-/obj/item/melee/supermatter_sword/Initialize(mapload)
-	. = ..()
-	shard = new /obj/machinery/power/supermatter_crystal(src)
-	qdel(shard.countdown)
-	shard.countdown = null
-	START_PROCESSING(SSobj, src)
-	visible_message(span_warning("[src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all."))
-	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(eat_bullets))
-
-/obj/item/melee/supermatter_sword/process()
-	if(balanced || throwing || ismob(src.loc) || isnull(src.loc))
-		return
-	if(!isturf(src.loc))
-		var/atom/target = src.loc
-		forceMove(target.loc)
-		consume_everything(target)
-	else
-		var/turf/turf = get_turf(src)
-		if(!isspaceturf(turf))
-			consume_turf(turf)
-
-/obj/item/melee/supermatter_sword/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(.)
-		return .
-
-	if(target == user)
-		user.dropItemToGround(src, TRUE)
-	else
-		user.do_attack_animation(target)
-	consume_everything(target)
-	return TRUE
-
-/obj/item/melee/supermatter_sword/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
-	if(ismob(hit_atom))
-		var/mob/mob = hit_atom
-		if(src.loc == mob)
-			mob.dropItemToGround(src, TRUE)
-	consume_everything(hit_atom)
-
-/obj/item/melee/supermatter_sword/pickup(user)
-	..()
-	balanced = 0
-	icon_state = "supermatter_sword"
-	icon_angle = -45
-
-/obj/item/melee/supermatter_sword/ex_act(severity, target)
-	visible_message(
-		span_danger("The blast wave smacks into [src] and rapidly flashes to ash."),
-		span_hear("You hear a loud crack as you are washed with a wave of heat.")
-	)
-	consume_everything()
-	return TRUE
-
-/obj/item/melee/supermatter_sword/acid_act()
-	visible_message(span_danger("The acid smacks into [src] and rapidly flashes to ash."),\
-	span_hear("You hear a loud crack as you are washed with a wave of heat."))
-	consume_everything()
-	return TRUE
-
-/obj/item/melee/supermatter_sword/proc/eat_bullets(datum/source, obj/projectile/hitting_projectile)
-	SIGNAL_HANDLER
-
-	visible_message(
-		span_danger("[hitting_projectile] smacks into [source] and rapidly flashes to ash."),
-		null,
-		span_hear("You hear a loud crack as you are washed with a wave of heat."),
-	)
-	consume_everything(hitting_projectile)
-	return COMPONENT_BULLET_BLOCKED
-
-/obj/item/melee/supermatter_sword/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!"))
-	user.dropItemToGround(src, TRUE)
-	shard.Bumped(user)
-
-/obj/item/melee/supermatter_sword/proc/consume_everything(target)
-	if(isnull(target))
-		shard.Bump(target)
-	else if(!isturf(target))
-		shard.Bumped(target)
-	else
-		consume_turf(target)
-
-/obj/item/melee/supermatter_sword/proc/consume_turf(turf/turf)
-	var/oldtype = turf.type
-	var/turf/newT = turf.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-	if(newT.type == oldtype)
-		return
-	playsound(turf, 'sound/effects/supermatter.ogg', 50, TRUE)
-	turf.visible_message(
-		span_danger("[turf] smacks into [src] and rapidly flashes to ash."),
-		span_hear("You hear a loud crack as you are washed with a wave of heat."),
-	)
-	shard.Bump(turf)
 
 /obj/item/melee/curator_whip
 	name = "curator's whip"
@@ -548,3 +275,281 @@
 		final_block_chance = 0 //Don't bring a...mace to a gunfight, and also you aren't going to really block someone full body tackling you with a mace. Or a road roller, if one happened to hit you.
 	return ..()
 
+/obj/item/sord
+	name = "\improper SORD"
+	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
+	icon = 'icons/obj/weapons/sword.dmi'
+	icon_state = "sord"
+	inhand_icon_state = "sord"
+	icon_angle = -35
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT
+	force = 2
+	throwforce = 1
+	w_class = WEIGHT_CLASS_NORMAL
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+
+/obj/item/sord/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is trying to impale [user.p_them()]self with [src]! It might be a suicide attempt if it weren't so shitty."), \
+	span_suicide("You try to impale yourself with [src], but it's USELESS..."))
+	return SHAME
+
+/obj/item/carpenter_hammer
+	name = "carpenter hammer"
+	icon = 'icons/obj/weapons/hammer.dmi'
+	icon_state = "carpenter_hammer"
+	inhand_icon_state = "carpenter_hammer"
+	worn_icon_state = "clawhammer" //plaecholder
+	icon_angle = -45
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	desc = "Uncanny looking hammer."
+	force = 17
+	throwforce = 14
+	throw_range = 4
+	w_class = WEIGHT_CLASS_NORMAL
+	wound_bonus = 20
+	demolition_mod = 1.15
+	slot_flags = ITEM_SLOT_BELT
+
+/obj/item/carpenter_hammer/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/kneejerk)
+	AddComponent(/datum/component/item_killsound, \
+	allowed_mobs = list(/mob/living/carbon/human), \
+	killsound = 'sound/items/weapons/hammer_death_scream.ogg', \
+	replace_default_death_sound = TRUE, \
+	)
+
+/obj/item/carpenter_hammer/examine(mob/user)
+	. = ..()
+	. += ""
+	. += "Real World Tip:"
+	. += pick(
+		"Every building, from hospitals to homes, has a room that serves as the heart of the building \
+		and carries blood and nutrients to its extremities. Try to find the heart of your home!",
+		"All the food you've tried is rotten. You've never eaten fresh food.",
+		"Viruses do not exist. Illness is simply your body punishing you for what you have done wrong.",
+		"Space stations must have at least 50 mammalian teeth embedded in the north walls for structural safety reasons.",
+		"Queen dragonfly sleeps and smiles.",
+	)
+
+/obj/item/phone
+	name = "red phone"
+	desc = "Should anything ever go wrong..."
+	icon = 'icons/obj/devices/voice.dmi'
+	icon_state = "red_phone"
+	force = 3
+	throwforce = 2
+	throw_speed = 3
+	throw_range = 4
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb_continuous = list("calls", "rings")
+	attack_verb_simple = list("call", "ring")
+	hitsound = 'sound/items/weapons/ring.ogg'
+
+/obj/item/phone/suicide_act(mob/living/user)
+	if(locate(/obj/structure/chair/stool) in user.loc)
+		user.visible_message(span_suicide("[user] begins to tie a noose with [src]'s cord! It looks like [user.p_theyre()] trying to commit suicide!"))
+	else
+		user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]'s cord! It looks like [user.p_theyre()] trying to commit suicide!"))
+	return OXYLOSS
+
+/obj/item/bambostaff
+	name = "bamboo staff"
+	desc = "A long bamboo-made staff with steel-capped ends. It is rumoured that initiates of Spider Clan train with such before getting to learn how to use a katana."
+	force = 10
+	block_chance = 45
+	block_sound = 'sound/items/weapons/genhit.ogg'
+	slot_flags = ITEM_SLOT_BACK
+	w_class = WEIGHT_CLASS_BULKY
+	hitsound = SFX_SWING_HIT
+	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
+	attack_verb_simple = list("smash", "slam", "whack", "thwack")
+	icon = 'icons/obj/weapons/staff.dmi'
+	icon_state = "bambostaff0"
+	base_icon_state = "bambostaff"
+	inhand_icon_state = "bambostaff0"
+	worn_icon_state = "bambostaff0"
+	icon_angle = -135
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 4)
+
+/obj/item/bambostaff/Initialize(mapload)
+	. = ..()
+	// there are too many puns to choose from. ('Bo' is the 'real' name for this kind of weapon.)
+	name = pick("bamboo staff", "bambo staff", "bam-Bo staff", "bam boo staff", "bam-boo staff", "bam Bo", "bambo", "bam-Bo", "bamboo-Bo")
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = 10, \
+		force_wielded = 14, \
+	)
+
+/obj/item/bambostaff/update_icon_state()
+	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
+	return ..()
+
+/obj/item/bambostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
+		final_block_chance = 0 //Don't bring a staff to a gunfight, and also you aren't going to really block someone full body tackling you with a staff. Or a road roller, if one happened to hit you.
+	return ..()
+
+/obj/item/staff
+	name = "wizard staff"
+	desc = "Apparently a staff used by the wizard."
+	icon = 'icons/obj/weapons/guns/magic.dmi'
+	icon_state = "staff"
+	inhand_icon_state = "staff"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+	force = 3
+	throwforce = 5
+	throw_speed = 2
+	throw_range = 5
+	w_class = WEIGHT_CLASS_SMALL
+	armour_penetration = 100
+	attack_verb_continuous = list("bludgeons", "whacks", "disciplines")
+	attack_verb_simple = list("bludgeon", "whack", "discipline")
+	resistance_flags = FLAMMABLE
+
+/obj/item/staff/broom
+	name = "broom"
+	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
+	icon_state = "broom"
+	inhand_icon_state = "broom"
+	resistance_flags = FLAMMABLE
+
+/obj/item/staff/tape
+	name = "tape staff"
+	desc = "A roll of tape snugly attached to a stick."
+	icon_state = "tapestaff"
+	inhand_icon_state = "tapestaff"
+	resistance_flags = FLAMMABLE
+
+/obj/item/staff/stick
+	name = "stick"
+	desc = "A great tool to drag someone else's drinks across the bar."
+	icon = 'icons/obj/weapons/staff.dmi'
+	icon_state = "cane"
+	inhand_icon_state = "stick"
+	icon_angle = 135
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	force = 3
+	throwforce = 5
+	throw_speed = 2
+	throw_range = 5
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/tailclub
+	name = "tail club"
+	desc = "For the beating to death of lizards with their own tails."
+	icon = 'icons/obj/weapons/club.dmi'
+	icon_state = "tailclub"
+	icon_angle = -25
+	force = 14
+	throwforce = 1 // why are you throwing a club do you even weapon
+	throw_speed = 1
+	throw_range = 1
+	attack_verb_continuous = list("clubs", "bludgeons")
+	attack_verb_simple = list("club", "bludgeon")
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
+
+/obj/item/melee/flyswatter
+	name = "flyswatter"
+	desc = "Useful for killing pests of all sizes."
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
+	icon_state = "flyswatter"
+	inhand_icon_state = "flyswatter"
+	icon_angle = -45
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	force = 1
+	throwforce = 1
+	attack_verb_continuous = list("swats", "smacks")
+	attack_verb_simple = list("swat", "smack")
+	hitsound = 'sound/effects/snap.ogg'
+	w_class = WEIGHT_CLASS_SMALL
+	/// Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
+	var/static/list/splattable
+
+/obj/item/melee/flyswatter/Initialize(mapload)
+	. = ..()
+	if (isnull(splattable))
+		splattable = typecacheof(list(
+			/mob/living/basic/ant,
+			/mob/living/basic/butterfly,
+			/mob/living/basic/cockroach,
+			/mob/living/basic/cockroach/bloodroach,
+			/mob/living/basic/spider/growing/spiderling,
+			/mob/living/basic/bee,
+			/obj/effect/decal/cleanable/ants,
+			/obj/item/queen_bee,
+		))
+	AddElement(/datum/element/bane, mob_biotypes = MOB_BUG,  target_type = /mob/living/basic, damage_multiplier = 0, added_damage = 24, requires_combat_mode = FALSE)
+
+/obj/item/melee/flyswatter/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
+	if(is_type_in_typecache(target, splattable))
+		to_chat(user, span_warning("You easily splat [target]."))
+		if(QDELETED(target))
+			return
+		if(isliving(target))
+			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
+			var/mob/living/bug = target
+			bug.investigate_log("has been splatted by a flyswatter.", INVESTIGATE_DEATHS)
+			bug.gib(DROP_ALL_REMAINS)
+		else
+			qdel(target)
+
+/obj/item/proc/can_trigger_gun(mob/living/user, akimbo_usage)
+	if(!user.can_use_guns(src))
+		return FALSE
+	return TRUE
+
+/obj/item/gohei
+	name = "gohei"
+	desc = "A wooden stick with white streamers at the end. Originally used by shrine maidens to purify things. Now used by the station's valued weeaboos."
+	resistance_flags = FLAMMABLE
+	force = 5
+	throwforce = 5
+	hitsound = SFX_SWING_HIT
+	attack_verb_continuous = list("whacks", "thwacks", "wallops", "socks")
+	attack_verb_simple = list("whack", "thwack", "wallop", "sock")
+	icon = 'icons/obj/weapons/club.dmi'
+	icon_state = "gohei"
+	inhand_icon_state = "gohei"
+	icon_angle = -65
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+
+/obj/item/melee/moonlight_greatsword
+	name = "moonlight greatsword"
+	desc = "Don't tell anyone you put any points into dex, though."
+	icon = 'icons/obj/weapons/sword.dmi'
+	icon_state = "swordon"
+	inhand_icon_state = "swordon"
+	worn_icon_state = "swordon"
+	icon_angle = -45
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
+	block_chance = 20
+	block_sound = 'sound/items/weapons/parry.ogg'
+	sharpness = SHARP_EDGED
+	force = 14
+	throwforce = 12
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
+
+/obj/item/melee/moonlight_greatsword/Initialize(mapload)
+	. = ..()
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)

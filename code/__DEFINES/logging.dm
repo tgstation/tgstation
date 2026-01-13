@@ -95,6 +95,7 @@
 #define LOG_CATEGORY_CONFIG "config"
 #define LOG_CATEGORY_DYNAMIC "dynamic"
 #define LOG_CATEGORY_ECONOMY "economy"
+#define LOG_CATEGORY_FISHING "fishing"
 #define LOG_CATEGORY_FILTER "filter"
 #define LOG_CATEGORY_MANIFEST "manifest"
 #define LOG_CATEGORY_MECHA "mecha"

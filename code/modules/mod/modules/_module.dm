@@ -35,6 +35,10 @@
 	var/overlay_state_use
 	/// Icon file for the overlay.
 	var/overlay_icon_file = 'icons/mob/clothing/modsuit/mod_modules.dmi'
+	/// Overlay given to the item icon of the control unit
+	var/overlay_state_item
+	/// Icon file for the item overlay
+	var/item_overlay_icon_file = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	/// Does the overlay use the control unit's colors?
 	var/use_mod_colors = FALSE
 	/// What modules are we incompatible with?
@@ -459,13 +463,10 @@
 	deactivate()
 	return COMSIG_KB_ACTIVATED
 
-///Anomaly Locked - Causes the module to not function without an anomaly.
+///Anomaly Locked - Mostly just a wrapper for modules that don't need to descend from any other module but need the anomaly_locked_module component
 /obj/item/mod/module/anomaly_locked
 	name = "MOD anomaly locked module"
 	desc = "A form of a module, locked behind an anomalous core to function."
-	incompatible_modules = list()
-	/// The core item the module runs off.
-	var/obj/item/assembly/signaler/anomaly/core
 	/// Accepted types of anomaly cores.
 	var/list/accepted_anomalies = list(/obj/item/assembly/signaler/anomaly)
 	/// If this one starts with a core in.
@@ -475,80 +476,4 @@
 
 /obj/item/mod/module/anomaly_locked/Initialize(mapload)
 	. = ..()
-	if(!prebuilt || !length(accepted_anomalies))
-		return
-	var/core_path = pick(accepted_anomalies)
-	core = new core_path(src)
-	update_icon_state()
-
-/obj/item/mod/module/anomaly_locked/Destroy()
-	QDEL_NULL(core)
-	return ..()
-
-/obj/item/mod/module/anomaly_locked/examine(mob/user)
-	. = ..()
-	if(!length(accepted_anomalies))
-		return
-	if(core)
-		. += span_notice("There is a [core.name] installed in it. [core_removable ? "You could remove it with a <b>screwdriver</b>..." : "Unfortunately, due to a design quirk, it's unremovable."]")
-	else
-		var/list/core_list = list()
-		for(var/path in accepted_anomalies)
-			var/atom/core_path = path
-			core_list += initial(core_path.name)
-		. += span_notice("You need to insert \a [english_list(core_list, and_text = " or ")] for this module to function.")
-		if(!core_removable)
-			. += span_notice("Due to some design quirk, once a core is inserted, it won't be removable.")
-
-/obj/item/mod/module/anomaly_locked/on_select()
-	if(!core)
-		balloon_alert(mod.wearer, "no core!")
-		return
-	return ..()
-
-/obj/item/mod/module/anomaly_locked/on_process(seconds_per_tick)
-	. = ..()
-	if(!core)
-		return FALSE
-
-/obj/item/mod/module/anomaly_locked/on_active_process(seconds_per_tick)
-	if(!core)
-		return FALSE
-	return TRUE
-
-/obj/item/mod/module/anomaly_locked/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(item.type in accepted_anomalies)
-		if(core)
-			balloon_alert(user, "core already in!")
-			return
-		if(!user.transferItemToLoc(item, src))
-			return
-		core = item
-		balloon_alert(user, "core installed")
-		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-		update_icon_state()
-	else
-		return ..()
-
-/obj/item/mod/module/anomaly_locked/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(!core)
-		balloon_alert(user, "no core!")
-		return
-	if(!core_removable)
-		balloon_alert(user, "already has core!")
-		return
-	balloon_alert(user, "removing core...")
-	if(!do_after(user, 3 SECONDS, target = src))
-		balloon_alert(user, "interrupted!")
-		return
-	balloon_alert(user, "core removed")
-	core.forceMove(drop_location())
-	if(Adjacent(user) && !issilicon(user))
-		user.put_in_hands(core)
-	core = null
-	update_icon_state()
-
-/obj/item/mod/module/anomaly_locked/update_icon_state()
-	icon_state = initial(icon_state) + (core ? "-core" : "")
-	return ..()
+	AddComponent(/datum/component/anomaly_locked_module, accepted_anomalies, prebuilt, core_removable)

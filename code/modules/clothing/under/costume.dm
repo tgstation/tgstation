@@ -197,6 +197,7 @@
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/singer
+	abstract_type = /obj/item/clothing/under/costume/singer
 	desc = "Just looking at this makes you want to sing."
 	body_parts_covered = CHEST|GROIN|ARMS
 	alternate_worn_layer = ABOVE_SHOES_LAYER
@@ -211,6 +212,12 @@
 /obj/item/clothing/under/costume/singer/blue
 	name = "blue performer's outfit"
 	icon_state = "bsing"
+	inhand_icon_state = null
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+
+/obj/item/clothing/under/costume/singer/red
+	name = "red performer's outfit"
+	icon_state = "rsing"
 	inhand_icon_state = null
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 

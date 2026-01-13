@@ -46,6 +46,8 @@
 #define DIAG_CAMERA_HUD "21"
 /// Steady Hacked APC effect, visible only to Malf AIs
 #define MALF_APC_HUD "22"
+/// Big Manipulator interaction point HUDs
+#define BIG_MANIP_HUD "23"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
