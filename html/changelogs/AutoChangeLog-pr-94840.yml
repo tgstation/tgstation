@@ -1,0 +1,4 @@
+author: "Cirrial"
+delete-after: True
+changes:
+  - image: "The Human Observation Console for Abductors now has a separate icon for Send To and Send Self."
