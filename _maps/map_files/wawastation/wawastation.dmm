@@ -109,6 +109,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
 /obj/structure/cable/layer3,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mapping_helpers/airlock/access/any/command/ai_upload,
 /turf/open/floor/plating,
 /area/station/ai/satellite/maintenance/storage)
 "abC" = (
@@ -36607,7 +36608,6 @@
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Antechamber"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
 /obj/structure/cable/layer3,
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "aisat";
@@ -36616,6 +36616,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
 /obj/effect/mapping_helpers/airlock/access/any/command/ai_upload,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai/satellite/interior)
 "mDT" = (
@@ -39843,6 +39844,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/any/command/ai_upload,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/ai/satellite/teleporter)
 "nKx" = (
@@ -43228,6 +43230,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/any/command/ai_upload,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/ai/satellite/foyer)
 "oWE" = (
@@ -63207,6 +63210,7 @@
 	name = "Relay Access"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
+/obj/effect/mapping_helpers/airlock/access/any/command/ai_upload,
 /turf/open/floor/iron/dark,
 /area/station/ai/satellite/teleporter)
 "vKx" = (
@@ -69754,6 +69758,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/any/command/ai_upload,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
 /turf/open/floor/iron/dark/small,
 /area/station/engineering/transit_tube)
 "xYu" = (
