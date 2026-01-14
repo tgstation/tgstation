@@ -100,41 +100,6 @@
 /obj/item/gun/magic/midas_hand/proc/check_gold_range(mob/living/user, mob/living/victim)
 	return IN_GIVEN_RANGE(user, victim, gold_suck_range*2)
 
-/obj/item/ammo_casing/magic/midas_round
-	projectile_type = /obj/projectile/magic/midas_round
-
-
-/obj/projectile/magic/midas_round
-	name = "gold pellet"
-	desc = "A typical flintlock ball, save for the fact it's made of cursed Egyptian gold."
-	damage_type = BRUTE
-	damage = 10
-	stamina = 20
-	armour_penetration = 50
-	hitsound = 'sound/effects/coin2.ogg'
-	icon_state = "pellet"
-	color = COLOR_GOLD
-	/// The gold charge in this pellet
-	var/gold_charge = 0
-
-
-/obj/projectile/magic/midas_round/fire(setAngle)
-	/// Transfer the gold energy to our bullet
-	var/obj/item/gun/magic/midas_hand/my_gun = fired_from
-	gold_charge = my_gun.gold_timer
-	my_gun.gold_timer = 0
-	..()
-
-// Gives human targets Midas Blight.
-/obj/projectile/magic/midas_round/on_hit(atom/target, blocked = 0, pierce_hit)
-	. = ..()
-	if(ishuman(target))
-		var/mob/living/carbon/human/my_guy = target
-		if(isskeleton(my_guy)) // No cheap farming
-			return
-		my_guy.apply_status_effect(/datum/status_effect/midas_blight, min(30 SECONDS, round(gold_charge, 0.2))) // 100u gives 10 seconds
-		return
-
 /obj/item/gun/magic/midas_hand/suicide_act(mob/living/user)
 	if(!ishuman(user))
 		return
@@ -151,3 +116,36 @@
 	charges = 0
 	gold_timer = 0
 	return OXYLOSS
+
+/obj/item/ammo_casing/magic/midas_round
+	projectile_type = /obj/projectile/magic/midas_round
+
+/// Turns people into gold
+/obj/projectile/magic/midas_round
+	name = "gold pellet"
+	desc = "A typical flintlock ball, save for the fact it's made of cursed Egyptian gold."
+	damage_type = BRUTE
+	damage = 10
+	stamina = 20
+	armour_penetration = 50
+	hitsound = 'sound/effects/coin2.ogg'
+	icon_state = "pellet"
+	color = COLOR_GOLD
+	/// The gold charge in this pellet
+	var/gold_charge = 0
+
+/obj/projectile/magic/midas_round/fire(setAngle)
+	/// Transfer the gold energy to our bullet
+	var/obj/item/gun/magic/midas_hand/my_gun = fired_from
+	gold_charge = my_gun.gold_timer
+	my_gun.gold_timer = 0
+	return ..()
+
+// Gives human targets Midas Blight.
+/obj/projectile/magic/midas_round/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	if(!ishuman(target))
+		return
+	var/mob/living/carbon/human/my_guy = target
+	if(!isskeleton(my_guy)) // No cheap farming
+		my_guy.apply_status_effect(/datum/status_effect/midas_blight, min(30 SECONDS, round(gold_charge, 0.2))) // 100u gives 10 seconds
