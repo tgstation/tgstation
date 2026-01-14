@@ -48,12 +48,11 @@
 
 	//Aquire access from the inserted ID card.
 	if(!length(access))
-		var/obj/item/card/id/D = computer?.stored_id?.GetID()
-		if(!D)
+		var/list/computer_access = computer?.GetAccess()
+		if(!length(computer_access))
 			return FALSE
-		access = D.GetAccess()
 
-	if(paccess_to_check in access)
+	if(paccess_to_check in computer_access)
 		return TRUE
 
 	return FALSE
