@@ -168,13 +168,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	base_icon_state = "spare_safe"
 	armor_type = /datum/armor/safe_caps_spare
 	damage_deflection = 30 // prevents stealing the captain's spare using null rods/lavaland monsters/AP projectiles
-	density = FALSE
+	density = TRUE
 	anchored_tabletop_offset = 6
 	custom_materials = list(
 		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/gold = SHEET_MATERIAL_AMOUNT*3,
 	)
 	material_flags = MATERIAL_EFFECTS
+
+/obj/structure/secure_safe/caps_spare/CanPass(atom/movable/mover, border_dir)
+    if(isliving(mover)) // Allows players/mobs to walk over it
+        return TRUE
+    return ..() // Follows default density rules for everything else (bullets, objects)
 
 /datum/armor/safe_caps_spare
 	melee = 100
