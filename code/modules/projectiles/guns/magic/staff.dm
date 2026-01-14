@@ -84,6 +84,23 @@
 	inhand_icon_state = "staffofanimation"
 	school = SCHOOL_EVOCATION
 
+/obj/item/gun/magic/staff/animate/do_suicide(mob/living/user)
+	user.Stun(20 SECONDS, ignore_canstun = TRUE)
+	var/list/my_shit = user.unequip_everything()
+	my_shit -= src
+	user.put_in_active_hand(src) // Keep this one for now
+	charges++ // We already subtracted one
+	while (length(my_shit) && charges > 0)
+		if(QDELETED(user) || user.stat == DEAD)
+			break
+		process_chamber()
+		playsound(loc, fire_sound, 50, TRUE, -1)
+		var/obj/item/my_thing = pop(my_shit)
+		user.dropItemToGround(my_thing)
+		my_thing.animate_atom_living()
+		sleep(0.25 SECONDS)
+	return SHAME // Hopefully they kill you
+
 /// Heals people and even raises the dead
 /obj/item/gun/magic/staff/healing
 	name = "staff of healing"
@@ -196,6 +213,18 @@
 	process_fire(user, user, FALSE)
 	return FALSE
 
+/obj/item/gun/magic/staff/chaos/do_suicide(mob/living/user)
+	charges++ // We already subtracted one
+	for (var/i in 1 to 5)
+		if (!charges || user.stat == DEAD || QDELETED(user))
+			break
+		playsound(loc, fire_sound, 50, TRUE, -1)
+		process_fire(user, user, FALSE)
+		process_chamber()
+		sleep(0.25 SECONDS)
+
+	return FIRELOSS
+
 /**
  * Staff of chaos given to the wizard upon completing a cheesy grand ritual. Is completely evil and if something
  * breaks, it's completely intended. Fuck off.
@@ -248,6 +277,16 @@
 	no_den_usage = TRUE
 	school = SCHOOL_TRANSMUTATION
 
+/obj/item/gun/magic/staff/door/do_suicide(mob/living/user)
+	. = ..()
+	var/obj/structure/mineral_door/wood/door = new(user.drop_location())
+	door.name = user.real_name
+	addtimer(CALLBACK(door, TYPE_PROC_REF(/obj/structure/mineral_door, Open)), 1.5 SECONDS)
+	user.drop_everything()
+	user.ghostize()
+	qdel(user)
+	return MANUAL_SUICIDE
+
 /// Makes people slip really hard
 /obj/item/gun/magic/staff/honk
 	name = "staff of the honkmother"
@@ -259,6 +298,16 @@
 	max_charges = 4
 	recharge_rate = 8
 	school = SCHOOL_EVOCATION
+
+/obj/item/gun/magic/staff/honk/do_suicide(mob/living/user)
+	. = ..()
+	new /obj/effect/decal/cleanable/food/pie_smudge(user.drop_location())
+	user.AddComponent(\
+		/datum/component/face_decal/splat,\
+		icon_state = "creampie",\
+		layers = EXTERNAL_FRONT,\
+	)
+	return SHAME
 
 /// Dismembers people, and is a passable melee weapon
 /obj/item/gun/magic/staff/spellblade
@@ -294,6 +343,17 @@
 		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
 	return ..()
 
+/obj/item/gun/magic/staff/spellblade/do_suicide(mob/living/user)
+	. = ..()
+	if (!iscarbon(user))
+		return BRUTELOSS
+	var/mob/living/carbon/suicider = user
+	for (var/obj/item/bodypart/limb in suicider.bodyparts)
+		limb.dismember(BRUTE, silent = FALSE, wounding_type = WOUND_SLASH)
+		sleep(0.25 SECONDS)
+
+	return BRUTELOSS
+
 /// Welds people into flying lockers
 /obj/item/gun/magic/staff/locker
 	name = "staff of the locker"
@@ -307,6 +367,14 @@
 	recharge_rate = 4
 	school = SCHOOL_TRANSMUTATION //in a way
 
+/obj/item/gun/magic/staff/locker/do_suicide(mob/living/user)
+	. = ..()
+	var/obj/structure/closet/decay/locker = new(user.drop_location())
+	locker.insert(user)
+	locker.welded = TRUE
+	locker.update_appearance(UPDATE_ICON_STATE)
+	return BRUTELOSS
+
 /// Makes targets "fly" by throwing them away
 /obj/item/gun/magic/staff/flying
 	name = "staff of flying"
@@ -317,6 +385,12 @@
 	inhand_icon_state = "staffofchange"
 	worn_icon_state = "flightstaff"
 	school = SCHOOL_EVOCATION
+
+/obj/item/gun/magic/staff/flying/do_suicide(mob/living/user)
+	. = ..()
+	var/atom/throw_target = get_edge_target_turf(user, pick(GLOB.alldirs))
+	user.throw_at(throw_target, 200, 4)
+	return BRUTELOSS
 
 /// Scrambles languages
 /obj/item/gun/magic/staff/babel
@@ -329,6 +403,12 @@
 	worn_icon_state = "babelstaff"
 	school = SCHOOL_FORBIDDEN //evil
 
+/obj/item/gun/magic/staff/babel/do_suicide(mob/living/user)
+	. = ..()
+	process_fire(user, user, FALSE)
+	user.say("I wish I was dead.", forced = "failed babel staff suicide")
+	return SHAME
+
 /// Deals damage to the target and recharges their spells if they have any
 /obj/item/gun/magic/staff/necropotence
 	name = "staff of necropotence"
@@ -340,6 +420,14 @@
 	worn_icon_state = "necrostaff"
 	school = SCHOOL_NECROMANCY //REALLY evil
 
+/obj/item/gun/magic/staff/necropotence/do_suicide(mob/living/user)
+	. = ..()
+	user.unequip_everything()
+	var/obj/item/soulstone/anybody/stone = new(user.drop_location())
+	stone.capture_soul(user, user = null, forced = TRUE)
+	user.death()
+	return MANUAL_SUICIDE
+
 /// Asks a ghost to start playing as the poor victim
 /obj/item/gun/magic/staff/wipe
 	name = "staff of possession"
@@ -350,6 +438,11 @@
 	inhand_icon_state = "pharoah_sceptre"
 	worn_icon_state = "wipestaff"
 	school = SCHOOL_FORBIDDEN //arguably the worst staff in the entire game effect wise
+
+/obj/item/gun/magic/staff/wipe/do_suicide(mob/living/user)
+	. = ..()
+	process_fire(user, user, FALSE)
+	return MANUAL_SUICIDE_NONLETHAL // Someone else is you now
 
 /// Makes the target really small
 /obj/item/gun/magic/staff/shrink
@@ -365,3 +458,15 @@
 	school = SCHOOL_TRANSMUTATION
 	slot_flags = NONE //too small to wear on your back
 	w_class = WEIGHT_CLASS_NORMAL //but small enough for a bag
+
+/obj/item/gun/magic/staff/shrink/do_suicide(mob/living/user)
+	. = ..()
+	playsound(user, fire_sound, 50, TRUE)
+	user.unequip_everything()
+	user.visible_message(span_suicide("[user] shrinks into nothing!"), span_suicide("You shrink into nothing!"))
+	user.Stun(20 SECONDS, ignore_canstun = TRUE)
+	user.set_suicide(TRUE)
+	user.ghostize()
+	animate(user, transform = matrix() * 0, time = 1 SECONDS)
+	QDEL_IN(user, 1 SECONDS)
+	return MANUAL_SUICIDE
