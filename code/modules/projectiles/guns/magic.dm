@@ -138,7 +138,7 @@
 /obj/item/gun/magic/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is twisting [src] above [user.p_their()] head, releasing a magical blast! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if (can_user_shoot(user))
-		process_chamber()
+		charges--
 		return do_suicide(user)
 	user.visible_message(span_suicide("...but nothing happens."))
 	return SHAME

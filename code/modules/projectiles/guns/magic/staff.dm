@@ -93,7 +93,7 @@
 	while (length(my_shit) && charges > 0)
 		if(QDELETED(user) || user.stat == DEAD)
 			break
-		process_chamber()
+		charges--
 		playsound(loc, fire_sound, 50, TRUE, -1)
 		var/obj/item/my_thing = pop(my_shit)
 		user.dropItemToGround(my_thing)
@@ -220,7 +220,7 @@
 			break
 		playsound(loc, fire_sound, 50, TRUE, -1)
 		process_fire(user, user, FALSE)
-		process_chamber()
+		charges--
 		sleep(0.25 SECONDS)
 
 	return FIRELOSS
