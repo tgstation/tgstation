@@ -69,6 +69,10 @@
 
 	return CONTEXTUAL_SCREENTIP_SET
 
+/obj/structure/mounted_gun/update_icon_state()
+	. = ..()
+	icon_state = base_icon_state + (is_firing ? fire_suffix : "")
+
 /obj/structure/mounted_gun/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!anchorable_gun) /// Can't anchor an unanchorable gun.
@@ -121,16 +125,25 @@
 		return
 
 	is_firing = TRUE
-	icon_state = base_icon_state + fire_suffix
+	update_appearance(UPDATE_ICON_STATE)
 
+	var/delay = 0
 	while (shots_in_gun > 0)
 		shots_in_gun--
-		fire_loop(user)
-		sleep(shot_delay)
+		addtimer(CALLBACK(src, PROC_REF(fire_loop), user), delay, TIMER_DELETE_ME)
+		if (shots_in_gun == 0)
+			addtimer(CALLBACK(src, PROC_REF(finish_firing)), delay, TIMER_DELETE_ME)
+		else
+			delay += time_until_next_shot()
 
-	shots_in_gun = 0
+/// Called when we run out of bullets
+/obj/structure/mounted_gun/proc/finish_firing()
 	is_firing = FALSE
-	icon_state = base_icon_state
+	update_appearance(UPDATE_ICON_STATE)
+
+/// Return
+/obj/structure/mounted_gun/proc/time_until_next_shot()
+	return shot_delay
 
 /obj/structure/mounted_gun/atom_deconstruct(disassembled = TRUE)
 	. = ..()
@@ -142,12 +155,11 @@
 /obj/structure/mounted_gun/dump_contents()
 	return // Generally we don't have contents to dump but some children do.
 
-/// Perform the contents of the loop
+/// Perform the contents of the loop, return the amount of time until the next shot
 /obj/structure/mounted_gun/proc/fire_loop(mob/living/user)
 	for(var/mob/shaken_mob in urange(3, src))
 		if(shaken_mob.stat == CONSCIOUS && firing_shakes_camera) //is the mob awake to feel the shaking?
 			shake_camera(shaken_mob, 3, 1)
-		icon_state = base_icon_state + fire_suffix
 	playsound(src, shots_in_gun > 0 ? fire_sound : last_fire_sound, vol = 50, vary = FALSE, falloff_exponent = 5)
 	fire_gun(user)
 
@@ -306,10 +318,8 @@
 	shots_in_gun = min(shots_in_gun + shots_per_load, max_shots_per_fire)
 	playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 50, FALSE, 5)
 
-/obj/structure/mounted_gun/ratvarian_repeater/fire_loop(mob/living/user)
-	. = ..()
-	if(shots_in_gun % 2 != 1) // Extra delay every other shot for burst fire
-		sleep(shot_delay)
+/obj/structure/mounted_gun/ratvarian_repeater/time_until_next_shot()
+	return shots_in_gun % 2 != 1 ? shot_delay * 2 : shot_delay
 
 /// A makeshift structure for firing spears with increased force
 /obj/structure/mounted_gun/ballista
@@ -347,6 +357,13 @@
 	/// What spear has someone put in us?
 	var/obj/item/loaded_spear
 
+/obj/structure/mounted_gun/ballista/update_icon_state()
+	. = ..()
+	if (loaded_spear)
+		icon_state = base_icon_state + (istype(loaded_spear, /obj/item/melee/baton/security/cattleprod) ? "_loaded_prod" : "_loaded")
+	else
+		icon_state = base_icon_state
+
 /obj/structure/mounted_gun/ballista/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!is_type_in_list(tool, accepted_ammo_types) || user.combat_mode)
 		return NONE
@@ -369,9 +386,8 @@
 
 	loaded_spear = tool
 	loaded_spear.forceMove(src)
+	update_appearance(UPDATE_ICON_STATE)
 	RegisterSignals(loaded_spear, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(on_spear_left))
-
-	icon_state = base_icon_state + (istype(loaded_spear, /obj/item/melee/baton/security/cattleprod) ? "_loaded_prod" : "_loaded")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/mounted_gun/ballista/get_fired_projectile()
@@ -389,9 +405,9 @@
 /obj/structure/mounted_gun/ballista/proc/on_spear_left()
 	SIGNAL_HANDLER
 	UnregisterSignal(loaded_spear, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
-	icon_state = base_icon_state
-	loaded_spear = null
 	shots_in_gun = 0
+	loaded_spear = null
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/mounted_gun/ballista/dump_contents()
 	. = ..()
