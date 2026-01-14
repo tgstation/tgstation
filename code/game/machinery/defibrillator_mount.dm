@@ -109,7 +109,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 		defib.paddles.snap_back()
 		return
 
-	if(!allowed(user) && SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_RED) //anyone can toggle the clamps in red alert!
+	if(!item.GetID() || (!allowed(user) && SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_RED)) //anyone can toggle the clamps in red alert!
 		to_chat(user, span_warning("Insufficient access."))
 		return
 	if(!defib)
