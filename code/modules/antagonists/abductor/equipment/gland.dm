@@ -100,6 +100,8 @@
 	update_gland_hud()
 
 /obj/item/organ/heart/gland/on_life(seconds_per_tick)
+	. = ..()
+
 	if(!active)
 		return
 	if(!ownerCheck())

@@ -3,7 +3,6 @@
 // each contiguous network of cables & nodes
 /////////////////////////////////////
 /datum/powernet
-	var/number // unique id
 	var/list/cables = list() // all cables & junctions
 	var/list/nodes = list() // all connected machines
 

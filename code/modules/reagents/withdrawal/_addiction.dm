@@ -2,6 +2,10 @@
 /datum/addiction
 	///Name of this addiction
 	var/name = "cringe code"
+	///Description of this addiction
+	var/description = "A harmful dependence on cringe code."
+	///Medical symptoms of this addiction
+	var/symptoms = "Wants more cringe code."
 	///Higher threshold, when you start being addicted
 	var/addiction_gain_threshold = 600
 	///Lower threshold, when you stop being addicted
