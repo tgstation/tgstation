@@ -1,4 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes:
-  - bugfix: "A fishing rod's materials can only be applied to fish when they are initially spawned from a fishing spot. This means you cannot repeatedly apply a fishing rod's materials to the same single fish to increase its mass without limits."

@@ -1378,6 +1378,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 ///The timeout multiplier for offspring fish, the ones generated when two compatible fish are coupled
 #define OFFSPRING_FISH_BREEDING_TIMEOUT_MULT 2
 
+/// A product of fish breeding is spawned, and it's inherited traits are handled here.
 /obj/item/fish/proc/create_offspring(chosen_type, obj/item/fish/partner, datum/fish_evolution/evolution)
 	var/obj/item/fish/new_fish = new chosen_type (loc, FALSE)
 	//Try to pass down compatible traits based on inheritability
@@ -1416,6 +1417,10 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		new_fish.set_custom_materials(new_mats) // apply_material_effects() will call update_size_and_weight()
 	else
 		new_fish.update_size_and_weight(new_fish.temp_size, new_fish.temp_weight)
+
+
+	var/list/fishing_data = list(new_fish.size, new_fish.weight, new_fish.custom_materials)
+	log_fish("[new_fish] has been bred at [new_fish.drop_location()] from [partner].", fishing_data)
 
 	breeding_wait = world.time + breeding_timeout
 

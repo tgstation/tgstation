@@ -508,7 +508,7 @@ SUBSYSTEM_DEF(id_access)
 	id_card.add_wildcards(trim.wildcard_access, mode = TRY_ADD_ALL)
 	if(istype(trim, /datum/id_trim/job))
 		var/datum/id_trim/job/job_trim = trim // Here is where we update a player's paycheck department for the purposes of discounts/paychecks.
-		id_card.registered_account.account_job.paycheck_department = job_trim.job.paycheck_department
+		id_card.registered_account.account_job = job_trim.job
 
 	// Apply any currently active RETA grants to this card with updated trim access
 	apply_active_reta_grants_to_card(id_card)

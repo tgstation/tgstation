@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - qol: "Ghost health and chem scanning displays after examine information rather than before"

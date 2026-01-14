@@ -7,7 +7,7 @@
 /obj/item/evidencebag,
 /obj/item/organ/heart/cybernetic/tier2,
 /obj/structure/broken_flooring/pile,
-/obj/item/stack/sheet/animalhide/human/five,
+/obj/item/stack/sheet/animalhide/carbon/human/five,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "bv" = (

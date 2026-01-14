@@ -26,7 +26,7 @@
 	mutantears = /obj/item/organ/ears/dullahan
 	mutantstomach = null
 	mutantlungs = null
-	skinned_type = /obj/item/stack/sheet/animalhide/human
+	skinned_type = /obj/item/stack/sheet/animalhide/carbon/human
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	/// The dullahan relay that's associated with the owner, used to handle many things such as talking and hearing.

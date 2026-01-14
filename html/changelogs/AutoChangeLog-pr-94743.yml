@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "intercoms will now visibly have their mic on when constructed manually"
