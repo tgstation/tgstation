@@ -12,7 +12,7 @@
 	fire_sound = 'sound/items/weapons/gun/rifle/shot.ogg'
 	pinless = TRUE
 	max_charges = 1
-	can_charge = FALSE
+	self_charging = FALSE
 	item_flags = NEEDS_PERMIT
 	w_class = WEIGHT_CLASS_BULKY // Should fit on a belt.
 	force = 3

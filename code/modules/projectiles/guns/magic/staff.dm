@@ -31,6 +31,7 @@
 /obj/item/gun/magic/staff/proc/on_intruder_use(mob/living/user, atom/target)
 	return TRUE
 
+/// Turns mobs into other mobs
 /obj/item/gun/magic/staff/change
 	name = "staff of change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
@@ -53,15 +54,27 @@
 		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>You don't feel strong enough to properly wield this staff!</span>"))
 		balloon_alert(user, "you feel weak holding this staff")
 
-/obj/item/gun/magic/staff/change/on_intruder_use(mob/living/user, atom/target)
+/// Transforms the user
+/obj/item/gun/magic/staff/change/proc/transform_self(mob/living/user)
 	user.dropItemToGround(src, TRUE)
 	var/wabbajack_into = preset_wabbajack_type || pick(WABBAJACK_MONKEY, WABBAJACK_HUMAN, WABBAJACK_ANIMAL)
 	var/mob/living/new_body = user.wabbajack(wabbajack_into, preset_wabbajack_changeflag)
 	if(!new_body)
 		return
-
 	balloon_alert(new_body, "wabbajack, wabbajack!")
+	return new_body
 
+/obj/item/gun/magic/staff/change/on_intruder_use(mob/living/user, atom/target)
+	transform_self(user)
+
+/obj/item/gun/magic/staff/change/do_suicide(mob/living/user)
+	playsound(loc, fire_sound, 50, TRUE, -1)
+	var/mob/living/transformed = transform_self(user)
+	transformed.death()
+	transformed.set_suicide(TRUE)
+	return MANUAL_SUICIDE
+
+/// Brings objects to life
 /obj/item/gun/magic/staff/animate
 	name = "staff of animation"
 	desc = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
@@ -71,6 +84,7 @@
 	inhand_icon_state = "staffofanimation"
 	school = SCHOOL_EVOCATION
 
+/// Heals people and even raises the dead
 /obj/item/gun/magic/staff/healing
 	name = "staff of healing"
 	desc = "An artefact that spits bolts of restoring magic which can remove ailments of all kinds and even raise the dead."
@@ -115,9 +129,18 @@
 	healing_beam.LoseTarget()
 	return ..()
 
-/obj/item/gun/magic/staff/healing/handle_suicide() //Stops people trying to commit suicide to heal themselves
-	return
+/obj/item/gun/magic/staff/healing/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params, bypass_timer)
+	return //Stops people clicking on themselves for self-healing
 
+/obj/item/gun/magic/staff/healing/do_suicide(mob/living/user)
+	playsound(loc, fire_sound, 50, TRUE, -1)
+	if(user.mob_biotypes & MOB_UNDEAD)
+		user.dust(drop_items = TRUE)
+		return MANUAL_SUICIDE
+	user.visible_message(span_suicide("...but nothing happens."))
+	return SHAME
+
+/// Does random shit when fired
 /obj/item/gun/magic/staff/chaos
 	name = "staff of chaos"
 	desc = "An artefact that spits bolts of chaotic magic that can potentially do anything."
@@ -127,7 +150,7 @@
 	inhand_icon_state = "staffofchaos"
 	max_charges = 10
 	recharge_rate = 2
-	no_den_usage = 1
+	no_den_usage = TRUE
 	school = SCHOOL_FORBIDDEN //this staff is evil. okay? it just is. look at this projectile type list. this is wrong.
 
 	/// List of all projectiles we can fire from our staff.
@@ -212,6 +235,7 @@
 		/obj/projectile/plasma,
 	) //if you ever try to expand this list, avoid adding bullets/energy projectiles, this ain't supposed to be a gun... unless it's funny
 
+/// Creates and opens doors
 /obj/item/gun/magic/staff/door
 	name = "staff of door creation"
 	desc = "An artefact that spits bolts of transformative magic that can create doors in walls."
@@ -221,9 +245,10 @@
 	inhand_icon_state = "staffofdoor"
 	max_charges = 10
 	recharge_rate = 2
-	no_den_usage = 1
+	no_den_usage = TRUE
 	school = SCHOOL_TRANSMUTATION
 
+/// Makes people slip really hard
 /obj/item/gun/magic/staff/honk
 	name = "staff of the honkmother"
 	desc = "Honk."
@@ -235,6 +260,7 @@
 	recharge_rate = 8
 	school = SCHOOL_EVOCATION
 
+/// Dismembers people, and is a passable melee weapon
 /obj/item/gun/magic/staff/spellblade
 	name = "spellblade"
 	desc = "A deadly combination of laziness and bloodlust, this blade allows the user to dismember their enemies without all the hard work of actually swinging the sword."
@@ -268,6 +294,7 @@
 		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
 	return ..()
 
+/// Welds people into flying lockers
 /obj/item/gun/magic/staff/locker
 	name = "staff of the locker"
 	desc = "An artefact that expels encapsulating bolts, for incapacitating thy enemy."
@@ -280,8 +307,7 @@
 	recharge_rate = 4
 	school = SCHOOL_TRANSMUTATION //in a way
 
-//yes, they don't have sounds. they're admin staves, and their projectiles will play the chaos bolt sound anyway so why bother?
-
+/// Makes targets "fly" by throwing them away
 /obj/item/gun/magic/staff/flying
 	name = "staff of flying"
 	desc = "An artefact that spits bolts of graceful magic that can make something fly."
@@ -292,6 +318,7 @@
 	worn_icon_state = "flightstaff"
 	school = SCHOOL_EVOCATION
 
+/// Scrambles languages
 /obj/item/gun/magic/staff/babel
 	name = "staff of babel"
 	desc = "An artefact that spits bolts of confusion magic that can make something depressed and incoherent."
@@ -302,6 +329,7 @@
 	worn_icon_state = "babelstaff"
 	school = SCHOOL_FORBIDDEN //evil
 
+/// Deals damage to the target and recharges their spells if they have any
 /obj/item/gun/magic/staff/necropotence
 	name = "staff of necropotence"
 	desc = "An artefact that spits bolts of death magic that can repurpose the soul."
@@ -312,6 +340,7 @@
 	worn_icon_state = "necrostaff"
 	school = SCHOOL_NECROMANCY //REALLY evil
 
+/// Asks a ghost to start playing as the poor victim
 /obj/item/gun/magic/staff/wipe
 	name = "staff of possession"
 	desc = "An artefact that spits bolts of mind-unlocking magic that can let ghosts invade the victim's mind."
@@ -322,6 +351,7 @@
 	worn_icon_state = "wipestaff"
 	school = SCHOOL_FORBIDDEN //arguably the worst staff in the entire game effect wise
 
+/// Makes the target really small
 /obj/item/gun/magic/staff/shrink
 	name = "staff of shrinking"
 	desc = "An artefact that spits bolts of tiny magic that makes things small. It's easily mistaken for a wand."
