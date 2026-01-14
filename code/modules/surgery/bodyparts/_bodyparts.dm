@@ -316,6 +316,8 @@
 		return FALSE
 	return  ..()
 
+/// Returns an assoc list of items dropped when the limb is butchered
+/// force - Force an update of drops ignoring the cache
 /obj/item/bodypart/proc/get_butcher_drops(force = FALSE)
 	if(!isnull(butcher_drops) && !force)
 		return butcher_drops
