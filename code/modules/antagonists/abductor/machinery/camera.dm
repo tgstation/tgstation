@@ -49,7 +49,7 @@
 	var/use_delay
 	name = "Send To"
 	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
-	button_icon_state = "beam_down"
+	button_icon_state = "beam_down_pad"
 
 /datum/action/innate/teleport_in/Activate()
 	if(!target || !iscarbon(owner))

@@ -34,10 +34,10 @@ Difficulty: Medium
 	ai_controller = /datum/ai_controller/blood_drunk_miner
 
 	achievements = list(
-		/datum/award/achievement/boss/boss_killer,
 		/datum/award/achievement/boss/blood_miner_kill,
-		/datum/award/achievement/boss/blood_miner_crusher,
+		/datum/award/achievement/boss/boss_killer,
 		/datum/award/score/blood_miner_score,
+		/datum/award/score/boss_score,
 	)
 	crusher_achievement_type = /datum/award/achievement/boss/blood_miner_crusher
 	victor_memory_type = /datum/memory/megafauna_slayer
