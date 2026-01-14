@@ -61,12 +61,13 @@
 
 /mob/living/attack_ghost(mob/dead/observer/user)
 	. = ..()
-	if(user.client)
-		if (user.ghost_hud_flags & GHOST_HEALTH)
-			healthscan(user, src, 1, TRUE)
-		if (user.ghost_hud_flags & GHOST_CHEM)
-			chemscan(user, src)
-	return
+	if(isnull(user.client))
+		return
+
+	if (user.ghost_hud_flags & GHOST_HEALTH)
+		healthscan(user, src, 1, TRUE)
+	if (user.ghost_hud_flags & GHOST_CHEM)
+		chemscan(user, src)
 
 // ---------------------------------------
 // And here are some good things for free:
