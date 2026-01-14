@@ -433,52 +433,45 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	. = ..()
 	make_syndie()
 
-/obj/item/radio/headset/screwdriver_act(mob/living/user, obj/item/tool)
-	if(keyslot || keyslot2)
-		for(var/ch_name in channels)
-			SSradio.remove_object(src, GLOB.default_radio_channels[ch_name])
-			secure_radio_connections[ch_name] = null
+/obj/item/radio/headset/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == keyslot2)
+		keyslot2 = null
+		if(!QDELING(src))
+			recalculateChannels()
 
-		if(keyslot)
-			user.put_in_hands(keyslot)
-			keyslot = null
-		if(keyslot2)
-			user.put_in_hands(keyslot2)
-			keyslot2 = null
-
-		recalculateChannels()
-		to_chat(user, span_notice("You pop out the encryption keys in the headset."))
-
-	else
-		to_chat(user, span_warning("This headset doesn't have any unique encryption keys! How useless..."))
-	tool.play_tool_sound(src, 10)
-	return TRUE
-
-/obj/item/radio/headset/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(W, /obj/item/encryptionkey))
-		return ..()
-
-	if(keyslot && keyslot2)
-		to_chat(user, span_warning("The headset can't hold another key!"))
+/obj/item/radio/headset/remove_keys(mob/living/user)
+	. = ..()
+	if(!keyslot2)
 		return
 
-	if(!keyslot)
-		if(!user.transferItemToLoc(W, src))
-			return
-		keyslot = W
-	else
-		if(!user.transferItemToLoc(W, src))
-			return
-		keyslot2 = W
+	. += keyslot2
+	user.put_in_hands(keyslot2) // null via Exited
 
+/obj/item/radio/headset/install_key(mob/living/user, obj/item/encryptionkey/key)
+	if(!keyslot)
+		return ..()
+
+	if(keyslot2)
+		loc.balloon_alert(user, "cannot hold a third key!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(key, src))
+		loc.balloon_alert(user, "cannot install!")
+		return ITEM_INTERACT_BLOCKING
+
+	keyslot2 = key
 	recalculateChannels()
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	loc.balloon_alert(user, "encryption key installed")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/radio/headset/recalculateChannels()
 	. = ..()
 	if(keyslot2)
-		for(var/ch_name in keyslot2.channels)
-			if(!(ch_name in src.channels))
-				LAZYSET(channels, ch_name, keyslot2.channels[ch_name])
+		for(var/channel_name in keyslot2.channels)
+			if(!(channel_name in channels))
+				channels[channel_name] = keyslot2.channels[channel_name]
 
 		special_channels |= keyslot2.special_channels
 
