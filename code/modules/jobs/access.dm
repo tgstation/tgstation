@@ -7,6 +7,8 @@
 	//check if it doesn't require any access at all, or the user is an Adminghost
 	if(check_access(null) || isAdminGhostAI(accessor))
 		return TRUE
+	if(isnull(accessor)) //likely a TK user, and we checked for free access above.
+		return FALSE
 
 	var/list/player_access = list()
 	//If the mob has the simple_access component with the requried access, we let them in.
