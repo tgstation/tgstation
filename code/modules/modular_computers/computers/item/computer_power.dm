@@ -9,7 +9,7 @@
 
 	if(!internal_cell)
 		return FALSE
-	if(internal_cell.use(amount) || !amount) //no power to check, we made sure it can use power though.
+	if(!amount || internal_cell.use(amount))
 		return TRUE
 	if(!check_programs)
 		return FALSE
