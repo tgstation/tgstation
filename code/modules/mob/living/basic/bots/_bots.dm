@@ -773,10 +773,10 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/rust_heretic_act()
 	adjust_brute_loss(400)
 
-/mob/living/basic/bot/proc/attempt_access(mob/bot, obj/door_attempt)
+/mob/living/basic/bot/proc/attempt_access(mob/bot, obj/door_attempt, list/player_access)
 	SIGNAL_HANDLER
-
-	return (door_attempt.check_access(access_card) ? ACCESS_ALLOWED : ACCESS_DISALLOWED)
+	player_access += access_card.GetAccess()
+	return NONE
 
 /mob/living/basic/bot/proc/generate_speak_list()
 	return null

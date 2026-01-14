@@ -19,15 +19,10 @@
 		RegisterSignal(donor_atom, COMSIG_IMPLANT_REMOVED, PROC_REF(on_donor_removed))
 	RegisterSignal(donor_atom, COMSIG_QDELETING, PROC_REF(on_donor_removed))
 
-/datum/component/simple_access/proc/on_tried_access(datum/source, atom/locked_thing)
+/datum/component/simple_access/proc/on_tried_access(datum/source, atom/locked_thing, list/player_access)
 	SIGNAL_HANDLER
-	if(!isobj(locked_thing))
-		return LOCKED_ATOM_INCOMPATIBLE
-	var/obj/locked_object = locked_thing
-	if(locked_object.check_access_list(access))
-		return ACCESS_ALLOWED
-	else
-		return ACCESS_DISALLOWED
+	player_access += access
+	return NONE
 
 /datum/component/simple_access/proc/retrieve_access(datum/source, list/access_list)
 	SIGNAL_HANDLER

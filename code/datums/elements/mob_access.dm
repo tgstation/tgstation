@@ -15,10 +15,10 @@
 	my_access = accesses
 	RegisterSignal(target, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
 
-/datum/element/mob_access/proc/attempt_access(datum/source, obj/door_attempt)
+/datum/element/mob_access/proc/attempt_access(datum/source, obj/door_attempt, list/player_access)
 	SIGNAL_HANDLER
-
-	return (door_attempt.check_access_list(my_access)) ? ACCESS_ALLOWED : ACCESS_DISALLOWED
+	player_access += my_access
+	return NONE
 
 /datum/element/mob_access/Detach(datum/source, ...)
 	UnregisterSignal(source, COMSIG_MOB_TRIED_ACCESS)

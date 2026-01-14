@@ -268,9 +268,9 @@
 		equipped_back_fashion_item.apply(src)
 
 ///Handler for COMSIG_MOB_TRIED_ACCESS
-/mob/living/basic/pet/dog/corgi/proc/on_tried_access(mob/accessor, obj/locked_thing)
+/mob/living/basic/pet/dog/corgi/proc/on_tried_access(mob/accessor, obj/locked_thing, list/player_access)
 	SIGNAL_HANDLER
-	return locked_thing?.check_access(access_card) ? ACCESS_ALLOWED : ACCESS_DISALLOWED
+	player_access += access_card.GetAccess()
 
 ///Handles updating any existing overlays for the corgi (such as fashion items) when it changes how it appears, as in, dead or alive.
 /mob/living/basic/pet/dog/corgi/proc/on_appearance_change()
