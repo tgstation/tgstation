@@ -17,10 +17,16 @@
 	/// Overlay added when you are in danger
 	var/state_danger
 
+	/// If null, does nothing
+	/// If set to a ztrait, like ZTRAIT_MINING, we check zlevels with that trait for weather towers
+	/// Having no active radar towers on those levels will reduce the accuracy of the warnings
+	var/radar_z_trait
+
 /datum/component/weather_announcer/Initialize(
 	state_normal,
 	state_warning,
 	state_danger,
+	radar_z_trait,
 )
 	. = ..()
 	if (!ismovable(parent))
