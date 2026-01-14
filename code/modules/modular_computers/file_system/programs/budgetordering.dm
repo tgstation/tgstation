@@ -48,11 +48,11 @@
 
 	//Aquire access from the inserted ID card.
 	if(!length(access))
-		var/list/computer_access = computer?.GetAccess()
-		if(!length(computer_access))
+		access = computer?.GetAccess()
+		if(!length(access))
 			return FALSE
 
-	if(paccess_to_check in computer_access)
+	if(paccess_to_check in access)
 		return TRUE
 
 	return FALSE
