@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "Killing Blood Drunk Miner normally should no longer give you a crusher achievement."
