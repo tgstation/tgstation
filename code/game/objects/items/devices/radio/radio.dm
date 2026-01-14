@@ -631,6 +631,9 @@
 	if(keyslot)
 		loc.balloon_alert(user, "cannot hold a second key!")
 		return ITEM_INTERACT_BLOCKING
+	if(freqlock)
+		loc.balloon_alert(user, "keyslot is locked!")
+		return ITEM_INTERACT_BLOCKING
 
 	if(!user.transferItemToLoc(key, src))
 		loc.balloon_alert(user, "cannot install!")
@@ -770,6 +773,8 @@
 	canhear_range = 3
 
 // In case you want to map it in/spawn it for some reason
+/obj/item/radio/toy
+
 /obj/item/radio/toy/Initialize(mapload)
 	. = ..()
 	make_silly()
