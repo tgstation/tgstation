@@ -24,8 +24,8 @@
 		QDEL_NULL(dropped_atom) // If it left our atom's contents then this is a null reference, if it didn't then it's fucked I guess
 
 /datum/component/projectile_instance_drop/Destroy(force)
-	. = ..()
 	dropped_atom = null
+	return ..()
 
 /// When we hit something check if we should hit the floor
 /datum/component/projectile_instance_drop/proc/on_projectile_hit(obj/projectile/source, atom/movable/firer, atom/target, angle, hit_limb_zone, blocked, pierce_hit)
