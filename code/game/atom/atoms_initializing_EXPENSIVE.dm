@@ -154,6 +154,8 @@
 	if(ispath(ai_controller))
 		ai_controller = new ai_controller(src)
 
+	setup_reskins()
+
 	return INITIALIZE_HINT_NORMAL
 
 /**

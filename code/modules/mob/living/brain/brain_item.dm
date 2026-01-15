@@ -338,6 +338,8 @@
 	return ..()
 
 /obj/item/organ/brain/on_life(seconds_per_tick)
+	. = ..()
+
 	if(HAS_TRAIT(src, TRAIT_BRAIN_DAMAGE_NODEATH))
 		return
 	if(damage >= BRAIN_DAMAGE_DEATH) //rip

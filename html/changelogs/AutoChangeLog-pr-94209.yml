@@ -1,8 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - rscadd: "Nanotrasen has begun rolling out (unconfigured) expeditionary deathrattle implant kits for their mining teams for 900 points (585 points, if manually delivered). These only alert for deaths on raw mining wasteland, and will not work in space, ruins, or on-station."
-  - balance: "Kheiral cuffs can now be attached to uniforms as accessories. They retain their suit sensor extension/GPS functionality (still only when off station Z-levels, though)."
-  - bugfix: "Beacon implants now turn off (hide themselves on prisoner management consoles) after ten minutes, matching the tracking implant's functionality."
-  - qol: "Made the implant pad UI a little nicer to look at, with dropdowns and demarcated sections."
-  - code_imp: "Implants now have separated \"immediately useful\" information and \"extended lore tidbits\" information as variables instead of one unchangeable get_info() block."

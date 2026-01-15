@@ -15,7 +15,6 @@
 	taste_description = "wiggly cosmic dust."
 	color = "#5020F4"
 	overdose_threshold = 15
-	metabolization_rate = 1 * REAGENTS_METABOLISM
 	ph = 3.7
 	purity = 0.5
 	creation_purity = 0.5
@@ -78,7 +77,7 @@
 
 	return ..()
 
-/datum/reagent/eigenstate/on_mob_life(mob/living/carbon/living_mob)
+/datum/reagent/eigenstate/on_mob_life(mob/living/carbon/living_mob, metabolization_ratio)
 	. = ..()
 	if(prob(20))
 		do_sparks(5,FALSE,living_mob)
@@ -95,7 +94,7 @@
 
 	qdel(eigenstate)
 
-/datum/reagent/eigenstate/overdose_start(mob/living/living_mob) //Overdose, makes you teleport randomly
+/datum/reagent/eigenstate/overdose_start(mob/living/living_mob, metabolization_ratio) //Overdose, makes you teleport randomly
 	. = ..()
 	to_chat(living_mob, span_userdanger("You feel like your perspective is being ripped apart as you begin flitting in and out of reality!"))
 	living_mob.set_jitter_if_lower(40 SECONDS)
@@ -105,7 +104,7 @@
 		carbon_mob.apply_status_effect(/datum/status_effect/eigenstasium)
 	return ..()
 
-/datum/reagent/eigenstate/overdose_process(mob/living/living_mob) //Overdose, makes you teleport randomly
+/datum/reagent/eigenstate/overdose_process(mob/living/living_mob, metabolization_ratio) //Overdose, makes you teleport randomly
 	. = ..()
 	do_teleport(living_mob, get_turf(living_mob), 10, asoundin = 'sound/effects/phasein.ogg')
 
