@@ -184,7 +184,7 @@
 	. = ..()
 	if (slot & ITEM_SLOT_ID)
 		RegisterSignal(user, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
-	if (slot & ITEM_SLOT_ID|ITEM_SLOT_HANDS)
+	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
 		RegisterSignal(user, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_access_tried))
 	if (slot & ITEM_SLOT_POCKETS)
 		//putting it in your pocket doesn't let you use it as access.
