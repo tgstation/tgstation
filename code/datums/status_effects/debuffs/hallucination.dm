@@ -86,7 +86,7 @@
 	return STOP_BUMP
 
 /datum/status_effect/hallucination/tick(seconds_between_ticks)
-	if(owner.stat >= UNCONSCIOUS)
+	if(owner.stat == DEAD)
 		return
 	if(!COOLDOWN_FINISHED(src, hallucination_cooldown))
 		return
