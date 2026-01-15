@@ -223,6 +223,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	if (our_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return NONE
 
+	if (shock(user, 50))
+		return ITEM_INTERACT_BLOCKING
+
 	var/list/choices = list()
 	for (var/check_dir in GLOB.cardinals)
 		if (!(check_dir & (linked_dirs | banned_links)))
@@ -239,6 +242,10 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 
 	var/obj/item/cutters = user.get_active_held_item()
 	if (!cutters.tool_behaviour == TOOL_WIRECUTTER)
+		return ITEM_INTERACT_BLOCKING
+
+	// Insuls taken off?
+	if (shock(user, 50))
 		return ITEM_INTERACT_BLOCKING
 
 	var/picked_dir = text2dir(choice)
