@@ -44,7 +44,7 @@
 	hud_icons = list(FAN_HUD)
 
 /datum/atom_hud/data/diagnostic
-	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD, DIAG_AIRLOCK_HUD, DIAG_LAUNCHPAD_HUD)
+	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD, DIAG_AIRLOCK_HUD, DIAG_LAUNCHPAD_HUD, BIG_MANIP_HUD)
 
 /datum/atom_hud/data/bot_path
 	hud_icons = list(DIAG_PATH_HUD)
@@ -67,6 +67,9 @@
 
 /datum/atom_hud/data/malf_apc
 	hud_icons = list(MALF_APC_HUD)
+
+/datum/atom_hud/data/human/blood
+	hud_icons = list(BLOOD_HUD)
 
 /* MED/SEC/DIAG HUD HOOKS */
 
@@ -149,6 +152,21 @@ Medical HUD! Basic mode needs suit sensors on.
 			return "health-85"
 		else
 			return "health-100"
+
+/// A helper for getting the appropriate icon state for the blood hud.
+/proc/round_blood_for_hud(mob/living/bloodbag)
+	var/blood_level = (bloodbag.get_blood_volume(apply_modifiers = TRUE) / BLOOD_VOLUME_NORMAL) * 100
+	switch(blood_level)
+		if(87.5 to INFINITY)
+			return "hudblood100"
+		if(62.5 to 87.5)
+			return "hudblood75"
+		if(37.5 to 62.5)
+			return "hudblood50"
+		if(12.5 to 37.5)
+			return "hudblood25"
+		if(-INFINITY to 12.5)
+			return "hudblood0"
 
 //HOOKS
 
@@ -495,6 +513,14 @@ Diagnostic HUDs!
 	holder.loc = get_turf(src)
 	SET_PLANE(holder,ABOVE_LIGHTING_PLANE,src)
 	set_hud_image_active(MALF_APC_HUD)
+
+/*~~~~~~~~~~~~
+	BLOOD FOR THE BLOOD GOD!!!
+~~~~~~~~~~~~~*/
+
+/mob/living/proc/blood_hud_set_status()
+	if (CAN_HAVE_BLOOD(src))
+		set_hud_image_state(BLOOD_HUD, round_blood_for_hud(src))
 
 #define CACHED_WIDTH_INDEX "width"
 #define CACHED_HEIGHT_INDEX "height"

@@ -68,7 +68,7 @@
 
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
 
-	///What types of bounty tasks can this job receive past the default?
+	///What types of bounty tasks can this job receive past the default? TODO, move to id trims.
 	var/bounty_types = CIV_JOB_BASIC
 
 	/// Goodies that can be received via the mail system.
@@ -405,8 +405,7 @@
 		var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[equipped.account_id]"]
 
 		if(account && account.account_id == equipped.account_id)
-			card.registered_account = account
-			LAZYADD(account.bank_cards, card)
+			card.set_account(account)
 
 		equipped.update_ID_card()
 
@@ -421,8 +420,8 @@
 		stack_trace("pda_slot was set but we couldn't find a PDA!")
 		return
 
-	pda.imprint_id(equipped.real_name, equipped_job.title)
-	pda.update_ringtone(equipped_job.job_tone)
+	pda.imprint_id(equipped.real_name, equipped_job?.title || equipped.job)
+	pda.update_ringtone(equipped_job?.job_tone)
 	pda.UpdateDisplay()
 
 	var/client/equipped_client = GLOB.directory[ckey(equipped.mind?.key)]
