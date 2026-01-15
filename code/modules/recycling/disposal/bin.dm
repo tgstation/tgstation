@@ -562,19 +562,74 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 			eject()
 			. = TRUE
 
-
-/obj/machinery/disposal/bin/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	if(isitem(AM) && AM.CanEnterDisposals())
-		var/mob/thrower = throwingdatum?.get_thrower()
-		if((istype(thrower) && HAS_TRAIT(thrower, TRAIT_THROWINGARM)) || prob(75))
-			AM.forceMove(src)
-			visible_message(span_notice("[AM] lands in [src]."))
+// BEGIN TROUTSTATION EDITS
+/obj/machinery/disposal/bin/hitby(atom/movable/hitting_atom, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	var/atom/thrower = throwingdatum?.get_thrower()
+	if(isitem(hitting_atom) && hitting_atom.CanEnterDisposals())
+		if((thrower && HAS_TRAIT(thrower, TRAIT_THROWINGARM)) || prob(75))
+			hitting_atom.forceMove(src)
+			visible_message(span_notice("[hitting_atom] lands in [src]."))
 			update_appearance()
 		else
-			visible_message(span_notice("[AM] bounces off of [src]'s rim!"))
+			visible_message(span_notice("[hitting_atom] bounces off of [src]'s rim!"))
 			return ..()
+
+	else if(ismob(hitting_atom) && hitting_atom.CanEnterDisposals())
+		// Lower probability so combat throws aren't a reliable way to dispose of combatants.
+		// Unless you're cursed, then you signed up for this fate.
+		if((thrower && HAS_TRAIT(thrower, TRAIT_THROWINGARM)) || prob(33) || HAS_TRAIT(hitting_atom, TRAIT_CURSED))
+			hitting_atom.forceMove(src)
+
+			if(isliving(hitting_atom))
+				var/mob/living/living = hitting_atom
+				living.Stun(10 SECONDS)
+
+			visible_message(span_notice("[hitting_atom] is launched directly into [src]!"))
+			// Automatically flush, because this is meant to work when a trap throws you in.
+			flush = TRUE
+			visible_message(span_danger("[src]'s lever is forced down as [hitting_atom] lands inside!"))
+			update_appearance()
+		else
+			visible_message(span_notice("[hitting_atom] crashes against [src]!"))
+			return ..()
+
 	else
 		return ..()
+
+// Allow objects (or people) to fall into disposals from above!
+/obj/machinery/disposal/bin/intercept_zImpact(list/falling_movables, levels = 1)
+	. = ..()
+	for(var/atom/movable/movable in falling_movables)
+		if(movable.CanEnterDisposals())
+			if(isliving(movable))
+				visible_message(span_notice("[movable] dives into [src] from above!"))
+
+			// Same as falling normally.
+			movable.SpinAnimation(0.5 SECONDS, loops = 2)
+
+			// Let the animation play before moving it into the bin.
+			// The timer/callback shouldn't break anything, since movable has entered the tile already
+			// and should be stunned if it's a mob.
+			// In the worst case it might get moved off of the tile and then magically sucked into the bin.
+			addtimer(CALLBACK(src, PROC_REF(complete_fall), movable), 0.5 SECONDS * 2)
+			falling_movables -= movable
+
+			if(isliving(movable))
+				var/mob/living/living = movable
+				living.Stun(10 SECONDS)
+
+	. |= FALL_INTERCEPTED
+
+/// Callback from `intercept_zImpact` to complete the fall into the bin after the spin animation completes.
+/obj/machinery/disposal/bin/proc/complete_fall(atom/movable/movable)
+	// Put it in the bin.
+	movable.forceMove(src)
+	update_appearance()
+
+	// Immediately flush living mobs as a reward(?) for diving in across z-levels
+	if(isliving(movable))
+		do_flush()
+// END TROUTSTATION EDITS
 
 /obj/machinery/disposal/bin/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()

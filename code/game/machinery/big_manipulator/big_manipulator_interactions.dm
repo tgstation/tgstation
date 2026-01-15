@@ -403,7 +403,7 @@
 		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return
 
-	held_atom.throw_at(get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_turf(held_atom))), item_throw_range, 2)
+	held_atom.throw_at(get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_turf(held_atom))), item_throw_range, 2, src)  // TROUTSTATION EDIT
 	finish_manipulation(TRANSFER_TYPE_DROPOFF)
 
 /// Uses the empty hand to interact with objects
