@@ -373,3 +373,19 @@
   san7890:
   - bugfix: Killing Blood Drunk Miner normally should no longer give you a crusher
       achievement.
+2026-01-15:
+  ElGitificador:
+  - bugfix: fixed bear suit not hiding hands
+  Hardly:
+  - bugfix: Fixed hair dyes returning a TGUI error when trying to dye a hair.
+  JohnFulpWillard:
+  - bugfix: PDA's ring again.
+  Melbert:
+  - bugfix: Surgical state applied by wounds no longer persist after fix
+  SmArtKar:
+  - bugfix: Fixes digitigrade (and some other unique) limbs not being butcherable
+  - image: Digitigrade limbs now have unique bone sprites when butchered
+  lelandkemble:
+  - qol: Ghost health and chem scanning displays after examine information rather
+      than before
+  - map: AI satellite accesses have been made more consistent across maps.
