@@ -1,7 +1,7 @@
 import type { Dispatch, SetStateAction } from 'react';
+import { useBackend } from 'tgui/backend';
 import { Box, Button, Icon, Input, Section, Stack } from 'tgui-core/components';
 import type { BooleanStyleMap, StringStyleMap } from 'tgui-core/ui';
-import { useBackend } from '../../../../backend';
 import { Dir, type InlineStyle, type SpriteData } from '../Types/types';
 import { AdvancedCanvas } from './AdvancedCanvas';
 

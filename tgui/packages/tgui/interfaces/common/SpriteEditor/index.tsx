@@ -14,7 +14,7 @@ import {
   onSelectServerColorAtom,
   previewDataAtom,
   previewLayerAtom,
-  toolsAtom,
+  tools,
 } from './atoms';
 import {
   AdvancedCanvas,
@@ -249,7 +249,6 @@ export namespace SpriteEditor {
   };
 
   export const Toolbar = (props: ToolbarProps) => {
-    const tools = useAtomValue(toolsAtom);
     const [currentTool, setCurrentTool] = useAtom(currentToolAtom);
     const {
       toolButtonProps,

@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import { useBackend } from 'tgui/backend';
+import { sendAct as act } from 'tgui/events/act';
 import { colorToHexString } from './colorSpaces';
 import type { Tool } from './Types/Tool';
 import { Bucket } from './Types/Tools/Bucket';
@@ -18,7 +18,6 @@ export const onSelectServerColorAtom = atom<string | undefined>(undefined);
 export const currentColorAtom = atom<EditorColor, [EditorColor], void>(
   (get) => get(currentColorInternalAtom),
   (get, set, color) => {
-    const { act } = useBackend();
     const onSetServerColor = get(onSelectServerColorAtom);
     if (onSetServerColor) {
       act(onSetServerColor, { color: colorToHexString(color) });
@@ -27,15 +26,13 @@ export const currentColorAtom = atom<EditorColor, [EditorColor], void>(
   },
 );
 
-const tools: Tool[] = [
+export const tools: Tool[] = [
   new Pencil(),
   new Eraser(),
   new Eyedropper(),
   new Bucket(),
 ];
 
-const toolsInternalAtom = atom<Tool[]>(tools);
-export const toolsAtom = atom((get) => get(toolsInternalAtom));
 export const currentToolAtom = atom(tools[0]);
 export const dirAtom = atom(Dir.SOUTH);
 export const layerAtom = atom(0);
