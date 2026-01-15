@@ -97,7 +97,7 @@
 	// Looks much nicer and doesn't cause multiple runtimes.
 	QDEL_IN(src, DUST_ANIMATION_TIME)
 
-/mob/living/dust(just_ash, drop_items, give_moodlet, force)
+/mob/living/dust(just_ash, drop_items, give_moodlet = TRUE, force)
 	..()
 	if(body_position == STANDING_UP)
 		// keep us upright so the animation fits.
