@@ -219,7 +219,7 @@
 
 	if (slot & ITEM_SLOT_ID)
 		RegisterSignal(equipper, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
-	if (slot & ITEM_SLOT_ID|ITEM_SLOT_HANDS)
+	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
 		RegisterSignal(equipper, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_access_tried))
 
 /obj/item/card/id/proc/on_loc_dropped(datum/source, mob/dropper)
