@@ -1,7 +1,6 @@
 import type { Dispatch, SetStateAction, useSyncExternalStore } from 'react';
 import type { Box } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
-import type { Tool } from './Tool';
 
 export type RGB = {
   r: number;
@@ -122,20 +121,11 @@ export type SpriteEditorData = IncludeOrOmitEntireType<
   }
 >;
 
-export type SpriteEditorContextType = {
-  colors: EditorColor[];
-  setColors: Dispatch<SetStateAction<EditorColor[]>>;
+export type SpriteEditorToolContext = {
   currentColor: EditorColor;
   setCurrentColor: Dispatch<SetStateAction<EditorColor>>;
-  tools: Tool[];
-  currentTool: Tool;
-  setCurrentTool: Dispatch<SetStateAction<Tool>>;
   selectedDir: Dir;
-  setSelectedDir: Dispatch<SetStateAction<Dir>>;
   selectedLayer: number;
-  setSelectedLayer: Dispatch<SetStateAction<number>>;
-  previewLayer?: number;
   setPreviewLayer: Dispatch<SetStateAction<number | undefined>>;
-  previewData?: StringLayer;
   setPreviewData: Dispatch<SetStateAction<StringLayer | undefined>>;
 };

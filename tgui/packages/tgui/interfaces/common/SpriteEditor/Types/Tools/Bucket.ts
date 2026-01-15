@@ -2,14 +2,14 @@ import { useBackend } from 'tgui/backend';
 import { colorToHexString } from '../../colorSpaces';
 import { constrainToIconGrid } from '../../helpers';
 import { Tool } from '../Tool';
-import type { SpriteData, SpriteEditorContextType } from '../types';
+import type { SpriteData, SpriteEditorToolContext } from '../types';
 
 export class Bucket extends Tool {
   icon = 'fill-drip';
   name = 'Fill';
 
   onMouseDown(
-    context: SpriteEditorContextType,
+    context: SpriteEditorToolContext,
     data: SpriteData,
     x: number,
     y: number,

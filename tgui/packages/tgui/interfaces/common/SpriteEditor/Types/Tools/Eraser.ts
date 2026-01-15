@@ -6,7 +6,7 @@ import type { LayerTransaction } from '../Transaction';
 import type {
   Dir,
   SpriteData,
-  SpriteEditorContextType,
+  SpriteEditorToolContext,
   StringLayer,
 } from '../types';
 
@@ -57,7 +57,7 @@ export class Eraser extends Tool {
   currentTransaction: EraserTransaction | null;
 
   onMouseDown(
-    context: SpriteEditorContextType,
+    context: SpriteEditorToolContext,
     data: SpriteData,
     x: number,
     y: number,
@@ -84,7 +84,7 @@ export class Eraser extends Tool {
   }
 
   onMouseMove(
-    context: SpriteEditorContextType,
+    context: SpriteEditorToolContext,
     data: SpriteData,
     x: number,
     y: number,
@@ -107,7 +107,7 @@ export class Eraser extends Tool {
   }
 
   onMouseUp(
-    context: SpriteEditorContextType,
+    context: SpriteEditorToolContext,
     data: SpriteData,
     x: number,
     y: number,

@@ -6,7 +6,7 @@ import type { LayerTransaction } from '../Transaction';
 import type {
   Dir,
   SpriteData,
-  SpriteEditorContextType,
+  SpriteEditorToolContext,
   StringLayer,
 } from '../types';
 
@@ -58,7 +58,7 @@ export class Pencil extends Tool {
   currentTransaction: PencilTransaction | null;
 
   onMouseDown(
-    context: SpriteEditorContextType,
+    context: SpriteEditorToolContext,
     data: SpriteData,
     x: number,
     y: number,
@@ -90,7 +90,7 @@ export class Pencil extends Tool {
   }
 
   onMouseMove(
-    context: SpriteEditorContextType,
+    context: SpriteEditorToolContext,
     data: SpriteData,
     x: number,
     y: number,
@@ -109,7 +109,7 @@ export class Pencil extends Tool {
   }
 
   onMouseUp(
-    context: SpriteEditorContextType,
+    context: SpriteEditorToolContext,
     data: SpriteData,
     x: number,
     y: number,

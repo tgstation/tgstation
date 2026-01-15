@@ -1,21 +1,16 @@
+import type { Dispatch, SetStateAction } from 'react';
 import { Box, Button, Icon, Input, Section, Stack } from 'tgui-core/components';
 import type { BooleanStyleMap, StringStyleMap } from 'tgui-core/ui';
-
 import { useBackend } from '../../../../backend';
-import {
-  Dir,
-  type InlineStyle,
-  type SpriteData,
-  type SpriteEditorContextType,
-} from '../Types/types';
+import { Dir, type InlineStyle, type SpriteData } from '../Types/types';
 import { AdvancedCanvas } from './AdvancedCanvas';
 
 export type LayerManagerProps = {
   data: SpriteData;
-  context: Pick<
-    SpriteEditorContextType,
-    'selectedDir' | 'setSelectedDir' | 'selectedLayer' | 'setSelectedLayer'
-  >;
+  selectedDir: Dir;
+  setSelectedDir: Dispatch<SetStateAction<Dir>>;
+  selectedLayer: number;
+  setSelectedLayer: Dispatch<SetStateAction<number>>;
 } & Partial<BooleanStyleMap & StringStyleMap & InlineStyle>;
 
 const dirs = [Dir.SOUTH, Dir.NORTH, Dir.EAST, Dir.WEST];
@@ -24,9 +19,14 @@ const dirIcons = ['arrow-down', 'arrow-up', 'arrow-right', 'arrow-left'];
 
 export const LayerManager = (props: LayerManagerProps) => {
   const { act } = useBackend();
-  const { data, context, ...rest } = props;
-  const { selectedDir, setSelectedDir, selectedLayer, setSelectedLayer } =
-    context;
+  const {
+    data,
+    selectedDir,
+    setSelectedDir,
+    selectedLayer,
+    setSelectedLayer,
+    ...rest
+  } = props;
   const { width, height, dirs: iconDirs, layers } = data;
   const layerCount = layers.length;
   const cells = [

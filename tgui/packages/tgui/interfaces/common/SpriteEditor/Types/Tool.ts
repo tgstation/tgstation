@@ -1,23 +1,23 @@
-import type { SpriteData, SpriteEditorContextType } from './types';
+import type { SpriteData, SpriteEditorToolContext } from './types';
 
 export abstract class Tool {
   abstract icon: string;
   abstract name: string;
   abstract onMouseDown(
-    context: SpriteEditorContextType,
+    context: SpriteEditorToolContext,
     data: SpriteData,
     x: number,
     y: number,
     isRightClick?: boolean,
   ): boolean | undefined;
   onMouseMove?(
-    context: SpriteEditorContextType,
+    context: SpriteEditorToolContext,
     data: SpriteData,
     x: number,
     y: number,
   ): void;
   onMouseUp?(
-    context: SpriteEditorContextType,
+    context: SpriteEditorToolContext,
     data: SpriteData,
     x?: number,
     y?: number,

@@ -6,11 +6,11 @@ import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { SpriteEditor } from './common/SpriteEditor';
 import {
   AdvancedCanvas,
   type AdvancedCanvasPropsBase,
 } from './common/SpriteEditor/Components/AdvancedCanvas';
-import { SpriteEditorContext } from './common/SpriteEditor/Context';
 import { hasServerColorData } from './common/SpriteEditor/helpers';
 import { Dir, type SpriteEditorData } from './common/SpriteEditor/Types/types';
 
@@ -115,16 +115,17 @@ const EditableCanvas = (props: EditableCanvasProps) => {
     serverSelectedColor,
     serverPalette,
     maxServerColors,
-    onAddServerColor,
     onSelectServerColor,
+    onAddServerColor,
     onRemoveServerColor,
   } = usingImplement ? editorData : {};
   const [showGrid, setShowGrid] = useState<boolean>(false);
   const sidebarItems: ReactNode[] = [];
+  SpriteEditor.syncBackend(onSelectServerColor, serverSelectedColor);
   if (allowColorPicker) {
     sidebarItems.push(
       <Stack.Item width="100%">
-        <SpriteEditorContext.ColorPicker
+        <SpriteEditor.ColorPicker
           width="100%"
           colorMode={colorMode}
           hslWidth="40%"
@@ -136,7 +137,7 @@ const EditableCanvas = (props: EditableCanvasProps) => {
   if (usingImplement && maxServerColors! > 1) {
     sidebarItems.push(
       <Stack.Item grow width="100%">
-        <SpriteEditorContext.Palette
+        <SpriteEditor.Palette
           serverPalette={serverPalette!}
           maxServerColors={maxServerColors!}
           onAddServerColor={onAddServerColor!}
@@ -154,76 +155,66 @@ const EditableCanvas = (props: EditableCanvasProps) => {
       height={shouldRenderSidebar ? Math.max(height + 110, 350) : height + 110}
     >
       <Window.Content>
-        <SpriteEditorContext.Root
-          serverSelectedColor={serverSelectedColor}
-          onSelectServerColor={onSelectServerColor}
-        >
-          <Stack fill>
-            {shouldRenderSidebar ? (
-              <Stack.Item>
-                <Stack fill vertical width="350px">
-                  {sidebarItems}
-                </Stack>
-              </Stack.Item>
-            ) : undefined}
-            <Stack.Item grow minWidth="0">
-              <Stack fill vertical>
-                <Stack.Item>
-                  <Stack fill justify="space-around">
-                    {editable ? (
-                      <>
-                        <Stack.Item>
-                          <SpriteEditorContext.Toolbar
-                            toolFlags={toolFlags}
-                            perButtonProps={(tool) => {
-                              return { tooltip: tool.name };
-                            }}
-                          />
-                        </Stack.Item>
-                        <Stack.Item grow />
-                      </>
-                    ) : undefined}
-                    <Stack.Item>
-                      <Button.Checkbox
-                        checked={showGrid}
-                        onClick={() => setShowGrid(!showGrid)}
-                      >
-                        Show Grid
-                      </Button.Checkbox>
-                    </Stack.Item>
-                    <Stack.Item>
-                      <ZoomButtons {...{ zoom, setZoom, pixelsPerUnit }} />
-                    </Stack.Item>
-                  </Stack>
-                </Stack.Item>
-                <Stack.Item
-                  grow
-                  width="100%"
-                  textAlign="center"
-                  overflow="auto"
-                >
-                  <ZoomListener {...{ zoom, setZoom, pixelsPerUnit }}>
-                    <SpriteEditorContext.Canvas
-                      width={`${width}px`}
-                      height={`${height}px`}
-                      showGrid={showGrid}
-                      data={sprite}
-                      disabled={!editable}
-                      position="relative"
-                      top="50%"
-                      style={{ transform: 'translate(0, -50%)' }}
-                    />
-                  </ZoomListener>
-                </Stack.Item>
-                <Stack.Item basis={0} width="100%" textAlign="center">
-                  <Button.Confirm onClick={() => act('finalize')}>
-                    Finalize
-                  </Button.Confirm>
-                </Stack.Item>
+        <Stack fill>
+          {shouldRenderSidebar ? (
+            <Stack.Item>
+              <Stack fill vertical width="350px">
+                {sidebarItems}
               </Stack>
             </Stack.Item>
-          </Stack>
-        </SpriteEditorContext.Root>
+          ) : undefined}
+          <Stack.Item grow minWidth="0">
+            <Stack fill vertical>
+              <Stack.Item>
+                <Stack fill justify="space-around">
+                  {editable ? (
+                    <>
+                      <Stack.Item>
+                        <SpriteEditor.Toolbar
+                          toolFlags={toolFlags}
+                          perButtonProps={(tool) => {
+                            return { tooltip: tool.name };
+                          }}
+                        />
+                      </Stack.Item>
+                      <Stack.Item grow />
+                    </>
+                  ) : undefined}
+                  <Stack.Item>
+                    <Button.Checkbox
+                      checked={showGrid}
+                      onClick={() => setShowGrid(!showGrid)}
+                    >
+                      Show Grid
+                    </Button.Checkbox>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <ZoomButtons {...{ zoom, setZoom, pixelsPerUnit }} />
+                  </Stack.Item>
+                </Stack>
+              </Stack.Item>
+              <Stack.Item grow width="100%" textAlign="center" overflow="auto">
+                <ZoomListener {...{ zoom, setZoom, pixelsPerUnit }}>
+                  <SpriteEditor.Canvas
+                    width={`${width}px`}
+                    height={`${height}px`}
+                    showGrid={showGrid}
+                    data={sprite}
+                    disabled={!editable}
+                    position="relative"
+                    top="50%"
+                    style={{ transform: 'translate(0, -50%)' }}
+                  />
+                </ZoomListener>
+              </Stack.Item>
+              <Stack.Item basis={0} width="100%" textAlign="center">
+                <Button.Confirm onClick={() => act('finalize')}>
+                  Finalize
+                </Button.Confirm>
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );

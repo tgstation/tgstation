@@ -1,14 +1,14 @@
 import { parseHexColorString } from '../../colorSpaces';
 import { constrainToIconGrid, getDataPixel } from '../../helpers';
 import { Tool } from '../Tool';
-import type { SpriteData, SpriteEditorContextType } from '../types';
+import type { SpriteData, SpriteEditorToolContext } from '../types';
 
 export class Eyedropper extends Tool {
   icon = 'eye-dropper';
   name = 'Eyedropper';
 
   onMouseDown(
-    context: SpriteEditorContextType,
+    context: SpriteEditorToolContext,
     data: SpriteData,
     x: number,
     y: number,
