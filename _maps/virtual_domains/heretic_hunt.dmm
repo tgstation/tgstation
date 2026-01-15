@@ -1046,7 +1046,7 @@
 /area/virtual_domain)
 "LB" = (
 /obj/machinery/door/airlock/maintenance_hatch,
-/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/virtual_domain)

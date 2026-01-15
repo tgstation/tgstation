@@ -18,9 +18,9 @@
 	///volume of our internal buffer
 	var/volume = 200
 
-/obj/machinery/plumbing/liquid_pump/Initialize(mapload, bolt, layer)
+/obj/machinery/plumbing/liquid_pump/Initialize(mapload, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
+	AddComponent(/datum/component/plumbing/simple_supply, layer)
 
 ///please note that the component has a hook in the parent call, wich handles activating and deactivating
 /obj/machinery/plumbing/liquid_pump/default_unfasten_wrench(mob/user, obj/item/I, time = 20)

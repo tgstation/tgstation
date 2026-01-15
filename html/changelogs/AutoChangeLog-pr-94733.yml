@@ -1,0 +1,6 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "Eldritch rusted tiles don't apply their effects to anyone who is jaunted or in vents, and don't apply negative effects to people who are flying."
+  - balance: "Heretic items which apply rust (grenades and eldritch reagent) check the rust resistance level of the turf rather than always rusting it."
+  - bugfix: "Rust Heretics ascending don't rust unrustable turfs, like space tiles."

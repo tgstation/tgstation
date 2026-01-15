@@ -536,6 +536,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/radio/headset/headset_srv = 2,
 		/obj/item/storage/box/evidence = 2,
 		/obj/item/reagent_containers/cup/fish_feed = 1,
+		/obj/item/storage/box/stamps = 1,
 	)
 	premium = list(
 		/obj/item/mod/control/pre_equipped/portable_suit = 1,

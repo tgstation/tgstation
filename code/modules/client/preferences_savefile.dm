@@ -428,6 +428,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return TRUE
 
 /datum/preferences/proc/switch_to_slot(new_slot)
+	if(new_slot == default_slot) // sanity check, nothing to do here.
+		return
 	// SAFETY: `load_character` performs sanitization on the slot number
 	if (!load_character(new_slot))
 		tainted_character_profiles = TRUE

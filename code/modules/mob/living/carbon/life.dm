@@ -486,8 +486,18 @@
 	if(blood_type.reagent_type != chem.type)
 		return
 
+	var/cached_blood_volume = get_blood_volume()
+
 	var/blood_added = adjust_blood_volume(round(reac_volume, CHEMICAL_VOLUME_ROUNDING))
 	reagents.remove_reagent(chem.type, blood_added)
+
+	if(chem.data?[BLOOD_DATA_SYNTH_CONTENT] && !IS_BLOOD_ALWAYS_SYNTHETIC(src))
+		var/added_synth_volume = blood_added * chem.data[BLOOD_DATA_SYNTH_CONTENT]
+		var/existing_synth_volume = cached_blood_volume * get_blood_synth_content()
+
+		if (added_synth_volume != 0 || existing_synth_volume != 0)
+			// A simple weighted average that simplifies down to "total synth volume / total blood volume" i.e. "how much of our blood is synthetic"
+			AddComponent(/datum/component/synth_blood, (added_synth_volume + existing_synth_volume) / (blood_added + cached_blood_volume))
 
 	if(chem.data?["blood_type"])
 		var/datum/blood_type/donor_type = chem.data["blood_type"]
@@ -530,24 +540,26 @@
 			disease.stage_act(seconds_per_tick)
 
 /mob/living/carbon/handle_mutations(time_since_irradiated, seconds_per_tick)
-	if(!dna?.temporary_mutations.len)
+	if(!LAZYLEN(dna?.temporary_mutations))
 		return
 
-	for(var/mut in dna.temporary_mutations)
-		if(dna.temporary_mutations[mut] < world.time)
+	for(var/mut, mut_data in dna.temporary_mutations)
+		if(mut_data < world.time)
+			if(!LAZYLEN(dna.previous))
+				continue
 			if(mut == UI_CHANGED)
 				if(dna.previous["UI"])
 					dna.unique_identity = merge_text(dna.unique_identity,dna.previous["UI"])
 					updateappearance(mutations_overlay_update=1)
 					dna.previous.Remove("UI")
-				dna.temporary_mutations.Remove(mut)
+				LAZYREMOVE(dna.temporary_mutations, mut)
 				continue
 			if(mut == UF_CHANGED)
 				if(dna.previous["UF"])
 					dna.unique_features = merge_text(dna.unique_features,dna.previous["UF"])
 					updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 					dna.previous.Remove("UF")
-				dna.temporary_mutations.Remove(mut)
+				LAZYREMOVE(dna.temporary_mutations, mut)
 				continue
 			if(mut == UE_CHANGED)
 				if(dna.previous["name"])
@@ -560,7 +572,7 @@
 				if(dna.previous["blood_type"])
 					set_blood_type(dna.previous["blood_type"])
 					dna.previous.Remove("blood_type")
-				dna.temporary_mutations.Remove(mut)
+				LAZYREMOVE(dna.temporary_mutations, mut)
 				continue
 
 /**

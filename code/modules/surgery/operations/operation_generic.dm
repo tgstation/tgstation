@@ -19,7 +19,7 @@
 	time = 1.6 SECONDS
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
-	operation_flags = OPERATION_AFFECTS_MOOD
+	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NO_PATIENT_REQUIRED
 	any_surgery_states_blocked = ALL_SURGERY_SKIN_STATES
 	/// We can't cut mobs with this biostate
 	var/biostate_blacklist = BIO_CHITIN
@@ -46,9 +46,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to make an incision in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to make an incision in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to make an incision in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to make an incision in [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to make an incision in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] begins to make an incision in [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "You feel a stabbing in your [limb.plaintext_zone].")
 
@@ -58,13 +58,19 @@
 	if(!limb.can_bleed())
 		return
 
-	var/blood_name = limb.owner.get_bloodtype()?.get_blood_name() || "Blood"
+	var/blood_name = limb.owner?.get_bloodtype()?.get_blood_name()
+	if(!blood_name && length(limb.blood_dna_info))
+		var/datum/blood_type/blood_type = limb.blood_dna_info[limb.blood_dna_info[1]]
+		blood_name = blood_type?.get_blood_name()
+	if(!blood_name)
+		blood_name = "Blood"
+
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("[blood_name] pools around the incision in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[blood_name] pools around the incision in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[blood_name] pools around the incision in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("[blood_name] pools around the incision in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[blood_name] pools around the incision in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[blood_name] pools around the incision in [FORMAT_LIMB_OWNER(limb)]."),
 	)
 
 /// Subtype for thick skinned creatures (Xenomorphs)
@@ -95,6 +101,7 @@
 	name = "retract skin"
 	desc = "Retract the patient's skin to access their internal organs. \
 		Causes \"skin open\" surgical state."
+	operation_flags = OPERATION_NO_PATIENT_REQUIRED
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	replaced_by = /datum/surgery_operation/limb/retract_skin/abductor
 	implements = list(
@@ -102,6 +109,7 @@
 		TOOL_SCREWDRIVER = 2.25,
 		TOOL_WIRECUTTER = 2.85,
 		/obj/item/stack/rods = 2.85,
+		/obj/item/kitchen/fork = 2.85,
 	)
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/retractor1.ogg'
@@ -115,15 +123,17 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to retract the skin in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to retract the skin in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to retract the skin in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to retract the skin in [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to retract the skin in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] begins to retract the skin in [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "You feel a severe stinging pain spreading across your [limb.plaintext_zone] as the skin is pulled back.")
 
 /datum/surgery_operation/limb/retract_skin/on_success(obj/item/bodypart/limb)
 	. = ..()
-	limb.add_surgical_state(SURGERY_SKIN_OPEN)
+	// the limb SHOULD either have unclamped or clamped vessels if we're retracting skin
+	// if it doesn't, some shenanigans happened (likely due to wounds), so we add unclamped if needed - just to be thorough
+	limb.add_surgical_state(SURGERY_SKIN_OPEN | (LIMB_HAS_SURGERY_STATE(limb, SURGERY_VESSELS_CLAMPED) ? NONE : SURGERY_VESSELS_UNCLAMPED))
 	limb.remove_surgical_state(SURGERY_SKIN_CUT)
 
 /datum/surgery_operation/limb/retract_skin/abductor
@@ -136,6 +146,7 @@
 	desc = "Mend the incision in the patient's skin, closing it up. \
 		Clears most surgical states."
 	required_bodytype = ~BODYTYPE_ROBOTIC
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	replaced_by = /datum/surgery_operation/limb/close_skin/abductor
 	implements = list(
 		TOOL_CAUTERY = 1,
@@ -181,9 +192,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to mend the incision in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to mend the incision in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to mend the incision in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to mend the incision in [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to mend the incision in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] begins to mend the incision in [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "Your [limb.plaintext_zone] is being [istype(tool, /obj/item/stack/medical/suture) ? "pinched" : "burned"]!")
 
@@ -203,7 +214,7 @@
 	desc = "Clamp bleeding blood vessels in the patient's body to prevent blood loss. \
 		Causes \"vessels clamped\" surgical state."
 	required_bodytype = ~BODYTYPE_ROBOTIC
-	operation_flags = OPERATION_PRIORITY_NEXT_STEP
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	replaced_by = /datum/surgery_operation/limb/clamp_bleeders/abductor
 	implements = list(
 		TOOL_HEMOSTAT = 1,
@@ -222,9 +233,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to clamp bleeders in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to clamp bleeders in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to clamp bleeders in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to clamp bleeders in [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to clamp bleeders in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] begins to clamp bleeders in [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "You feel a pinch as the bleeding in your [limb.plaintext_zone] is slowed.")
 
@@ -246,6 +257,7 @@
 	desc = "Unclamp blood vessels in the patient's body to allow blood flow again. \
 		Clears \"vessels clamped\" surgical state."
 	required_bodytype = ~BODYTYPE_ROBOTIC
+	operation_flags = OPERATION_NO_PATIENT_REQUIRED
 	replaced_by = /datum/surgery_operation/limb/unclamp_bleeders/abductor
 	implements = list(
 		TOOL_HEMOSTAT = 1,
@@ -270,9 +282,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to unclamp bleeders in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to unclamp bleeders in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to unclamp bleeders in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to unclamp bleeders in [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to unclamp bleeders in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] begins to unclamp bleeders in [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "You feel a pressure release as blood starts flowing in your [limb.plaintext_zone] again.")
 
@@ -310,7 +322,7 @@
 		/obj/item = 'sound/items/handling/surgery/scalpel1.ogg',
 	)
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
-	operation_flags = OPERATION_AFFECTS_MOOD
+	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NO_PATIENT_REQUIRED
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED
 
@@ -328,9 +340,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to saw through the bone in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to saw through the bone in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to saw through the bone in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to saw through the bone in [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to saw through the bone in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] begins to saw through the bone in [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "You feel a horrid ache spread through the inside of your [limb.plaintext_zone]!")
 
@@ -341,9 +353,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You saw [limb.owner]'s [limb.plaintext_zone] open."),
-		span_notice("[surgeon] saws [limb.owner]'s [limb.plaintext_zone] open!"),
-		span_notice("[surgeon] saws [limb.owner]'s [limb.plaintext_zone] open!"),
+		span_notice("You saw [FORMAT_LIMB_OWNER(limb)] open."),
+		span_notice("[surgeon] saws [FORMAT_LIMB_OWNER(limb)] open!"),
+		span_notice("[surgeon] saws [FORMAT_LIMB_OWNER(limb)] open!"),
 	)
 	display_pain(limb.owner, "It feels like something just broke in your [limb.plaintext_zone]!")
 
@@ -353,6 +365,7 @@
 	desc = "Repair a patient's cut or broken bones. \
 		Clears \"bone sawed\" and \"bone drilled\" surgical states."
 	required_bodytype = ~BODYTYPE_ROBOTIC
+	operation_flags = OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		/obj/item/stack/medical/bone_gel = 1,
 		/obj/item/stack/sticky_tape/surgical = 1,
@@ -382,9 +395,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to fix the bones in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to fix the bones in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to fix the bones in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to fix the bones in [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to fix the bones in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] begins to fix the bones in [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "You feel a grinding sensation in your [limb.plaintext_zone] as the bones are set back in place.")
 
@@ -398,6 +411,7 @@
 	desc = "Drill through a patient's bones. \
 		Causes \"bone drilled\" surgical state."
 	required_bodytype = ~BODYTYPE_ROBOTIC
+	operation_flags = OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		TOOL_DRILL = 1,
 		/obj/item/screwdriver/power = 1.25,
@@ -426,9 +440,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to drill into the bone in [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to drill into the bone in [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to drill into the bone in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to drill into the bone in [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to drill into the bone in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] begins to drill into the bone in [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "You feel a horrible piercing pain in your [limb.plaintext_zone]!")
 
@@ -438,9 +452,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You drill into [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] drills into [limb.owner]'s [limb.plaintext_zone]!"),
-		span_notice("[surgeon] drills into [limb.owner]'s [limb.plaintext_zone]!"),
+		span_notice("You drill into [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] drills into [FORMAT_LIMB_OWNER(limb)]!"),
+		span_notice("[surgeon] drills into [FORMAT_LIMB_OWNER(limb)]!"),
 	)
 
 /datum/surgery_operation/limb/incise_organs
@@ -448,6 +462,7 @@
 	desc = "Make an incision in patient's internal organ tissue to allow for manipulation or repair. \
 		Causes \"organs cut\" surgical state."
 	required_bodytype = ~BODYTYPE_ROBOTIC
+	operation_flags = OPERATION_NO_PATIENT_REQUIRED
 	replaced_by = /datum/surgery_operation/limb/incise_organs/abductor
 	implements = list(
 		TOOL_SCALPEL = 1,
@@ -477,9 +492,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to make an incision in the organs within [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to make an incision in the organs within [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to make an incision in the organs within [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to make an incision in the organs within [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to make an incision in the organs within [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] begins to make an incision in the organs within [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "You feel a stabbing in your [limb.plaintext_zone].")
 
@@ -490,9 +505,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You make an incision in the organs within [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] makes an incision in the organs within [limb.owner]'s [limb.plaintext_zone]!"),
-		span_notice("[surgeon] makes an incision in the organs within [limb.owner]'s [limb.plaintext_zone]!"),
+		span_notice("You make an incision in the organs within [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] makes an incision in the organs within [FORMAT_LIMB_OWNER(limb)]!"),
+		span_notice("[surgeon] makes an incision in the organs within [FORMAT_LIMB_OWNER(limb)]!"),
 	)
 	display_pain(limb.owner, "You feel a sharp pain from inside your [limb.plaintext_zone]!")
 
