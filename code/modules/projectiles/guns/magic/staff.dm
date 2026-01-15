@@ -279,9 +279,11 @@
 
 /obj/item/gun/magic/staff/door/do_suicide(mob/living/user)
 	. = ..()
-	var/obj/structure/mineral_door/wood/door = new(user.drop_location())
+	var/obj/machinery/door/airlock/material/door = new(user.drop_location())
+	door.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
+	door.update_appearance(updates = UPDATE_ICON)
 	door.name = user.real_name
-	addtimer(CALLBACK(door, TYPE_PROC_REF(/obj/structure/mineral_door, Open)), 1.5 SECONDS)
+	addtimer(CALLBACK(door, TYPE_PROC_REF(/obj/machinery/door, open)), 1.5 SECONDS)
 	user.drop_everything()
 	user.ghostize()
 	qdel(user)
