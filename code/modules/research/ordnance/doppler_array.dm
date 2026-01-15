@@ -15,7 +15,7 @@
 	/// List of all explosion records in the form of /datum/data/tachyon_record
 	var/list/records = list()
 	/// Reference to a disk we are going to print to.
-	var/obj/item/computer_disk/inserted_disk
+	var/obj/item/disk/computer/inserted_disk
 
 	// Lighting system to better communicate the directions.
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
@@ -49,8 +49,8 @@
 	. += span_notice("It is currently facing [dir2text(dir)]")
 
 /obj/machinery/doppler_array/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/computer_disk))
-		var/obj/item/computer_disk/disk = item
+	if(istype(item, /obj/item/disk/computer))
+		var/obj/item/disk/computer/disk = item
 		eject_disk(user)
 		if(user.transferItemToLoc(disk, src))
 			inserted_disk = disk

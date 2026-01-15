@@ -28,7 +28,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/structure/table,
-/obj/item/food/pizza{
+/obj/item/food/pizza/margherita{
 	pixel_y = 6
 	},
 /turf/open/floor/iron/kitchen,
@@ -226,7 +226,7 @@
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/structure/table,
-/obj/item/food/pizza,
+/obj/item/food/pizza/margherita,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "mX" = (

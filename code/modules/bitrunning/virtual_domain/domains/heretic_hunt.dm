@@ -75,7 +75,7 @@
 /datum/outfit/virtual_domain_heretic/pre_equip(mob/living/carbon/human/user, visuals_only)
 	ADD_TRAIT(user, TRAIT_ACT_AS_HERETIC, INNATE_TRAIT)
 	ADD_TRAIT(user, TRAIT_NO_TELEPORT, INNATE_TRAIT)
-	user.AddElement(/datum/element/leeching_walk)
+	user.AddElement(/datum/element/rust_healing)
 	user.faction |= FACTION_HERETIC
 
 // All it does is stand there, only attacks if attacked (Manuel player)

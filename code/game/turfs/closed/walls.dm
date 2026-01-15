@@ -298,10 +298,10 @@
 
 	add_overlay(dent_decals)
 
-/turf/closed/wall/rust_turf()
+/turf/closed/wall/rust_turf(magic = FALSE)
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ScrapeAway()
-		return
+		return TRUE
 
 	return ..()
 

@@ -21,8 +21,18 @@
 	speed = 3.5 //dont make this any faster PLEASE
 	gps_name = "L-4 Biohazard Beacon"
 	ai_controller = /datum/ai_controller/basic_controller/thing_boss
-	crusher_loot = /obj/item/crusher_trophy/flesh_glob
+	crusher_loot = list(/obj/item/crusher_trophy/flesh_glob)
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
+
+	achievements = list(
+		/datum/award/achievement/boss/boss_killer,
+		/datum/award/achievement/boss/thething_kill,
+		/datum/award/score/boss_score,
+		/datum/award/score/thething_score,
+	)
+	crusher_achievement_type = /datum/award/achievement/boss/thething_crusher
+	victor_memory_type = /datum/memory/megafauna_slayer
+
 	/// Current phase of the boss fight
 	var/phase = 1
 	/// Time the Thing will be invulnerable between phases
@@ -41,13 +51,7 @@
 
 /mob/living/basic/boss/thing/Initialize(mapload)
 	. = ..()
-	var/static/list/achievements = list(
-		/datum/award/achievement/boss/boss_killer,
-		/datum/award/achievement/boss/thething_kill,
-		/datum/award/score/boss_score,
-		/datum/award/score/thething_score,
-		)
-	AddElement(/datum/element/kill_achievement, achievements, /datum/award/achievement/boss/thething_crusher, /datum/memory/megafauna_slayer)
+
 	AddElement(/datum/element/death_drops, /obj/item/keycard/thing_boss, FALSE)
 
 	var/static/list/innate_actions = list(

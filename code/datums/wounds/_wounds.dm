@@ -79,6 +79,7 @@
 	/// How much we're contributing to this limb's bleed_rate
 	var/blood_flow
 	/// Surgical states we're applying to our limb
+	/// Note: This var is mutated after it is applied, to only states that were successfully applied
 	var/surgery_states = NONE
 
 	/// How much having this wound will add to all future check_wounding() rolls on this limb, to allow progression to worse injuries with repeated damage
@@ -304,15 +305,6 @@
 			limb.update_wounds(replaced)
 		if (disabling)
 			limb.remove_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
-
-		if(surgery_states)
-			for (var/state in exclusive_surgery_states)
-				if (!(limb.surgery_state & exclusive_surgery_states[state]))
-					continue
-				var/actual_state = text2num(state)
-				if (actual_state & surgery_states)
-					surgery_states &= ~actual_state
-
 		if (surgery_states)
 			limb.remove_surgical_state(surgery_states)
 
@@ -323,11 +315,10 @@
 	if (limb)
 		RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(source_died))
 		RegisterSignals(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_UNGAUZED), PROC_REF(gauze_state_changed))
-		RegisterSignal(limb, COMSIG_BODYPART_UPDATING_SURGERY_STATE, PROC_REF(on_surgery_state_change))
 		if (disabling)
 			limb.add_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 
-		if(surgery_states)
+		if(surgery_states) // first check filters invalid states
 			for (var/state in exclusive_surgery_states)
 				if (!(limb.surgery_state & exclusive_surgery_states[state]))
 					continue
@@ -335,8 +326,10 @@
 				if (actual_state & surgery_states)
 					surgery_states &= ~actual_state
 
-		if (surgery_states)
+		if (surgery_states) // second check applies any remaining valid states
 			limb.add_surgical_state(surgery_states)
+			// NB: don't check state changes until AFTER we finish apply our own, or we'll just undo ourselves
+			RegisterSignal(limb, COMSIG_BODYPART_UPDATING_SURGERY_STATE, PROC_REF(on_surgery_state_change))
 
 		if (victim)
 			start_limping_if_we_should() // the status effect already handles removing itself
@@ -345,8 +338,9 @@
 		update_inefficiencies(replaced)
 
 /// Used to remove states applied or removed by operations from ourselves as to not remove them if we heal mid-surgery
-/datum/wound/proc/on_surgery_state_change(old_state, surgery_state, changed_states)
+/datum/wound/proc/on_surgery_state_change(datum/source, old_state, current_state, changed_states)
 	SIGNAL_HANDLER
+	// Any state that changes, adding or removing, should henceforth be untouched by us. Let the surgeon handle it.
 	surgery_states &= ~changed_states
 
 /datum/wound/proc/add_or_remove_actionspeed_mod()

@@ -1,0 +1,10 @@
+author: "loganuk"
+delete-after: True
+changes:
+  - map: "CATWALK - Chapel has had an upgrade, rejoice in a larger area"
+  - map: "CATWALK - Atmos & Engi had a quick tidy up"
+  - map: "CATWALK - Solar Arrays tweaked to be better"
+  - map: "CATWALK - South East Maintenance has changed"
+  - map: "CATWALK - Security expanded"
+  - map: "CATWALK - AI Sat fortified similar to Meta and other maps"
+  - map: "CATWALK - See full change log in PR"

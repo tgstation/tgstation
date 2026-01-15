@@ -177,6 +177,8 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define isstargazer(A) (istype(A, /mob/living/basic/heretic_summon/star_gazer))
 
+#define isbloodworm(A) (istype(A, /mob/living/basic/blood_worm))
+
 /// returns whether or not the atom is either a basic mob OR simple animal
 #define isanimal_or_basicmob(A) (istype(A, /mob/living/simple_animal) || istype(A, /mob/living/basic))
 
@@ -323,7 +325,7 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 GLOBAL_LIST_INIT(book_types, typecacheof(list(
 	/obj/item/book,
 	/obj/item/spellbook,
-	/obj/item/infuser_book,
+	/obj/item/tgui_book,
 	/obj/item/storage/photo_album,
 	/obj/item/storage/card_binder,
 	/obj/item/codex_cicatrix,
@@ -351,3 +353,4 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 
 #define is_area_nearby_station(checked_area) (istype(checked_area, /area/space) || istype(checked_area, /area/space/nearstation) || istype(checked_area, /area/station/asteroid))
 #define is_area_virtual(checked_area) (GLOB.virtual_areas && GLOB.virtual_areas[(checked_area).type])
+#define is_area_shuttle(checked_area) (istype(checked_area, /area/shuttle))

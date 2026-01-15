@@ -147,13 +147,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 //button for antags to review their descriptions/info
 /datum/action/antag_info
-	name = "Open Special Role Information:"
+	name = "Open Special Role Information"
 	button_icon_state = "round_end"
 	show_to_observers = FALSE
 
 /datum/action/antag_info/New(Target)
 	. = ..()
-	name = "Open [target] Information:"
+	name = "Open [target] Information"
 
 /datum/action/antag_info/Trigger(mob/clicker, trigger_flags)
 	. = ..()
@@ -194,6 +194,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 		if(old_body)
 			info_button.Remove(old_body)
 		info_button.Grant(new_body)
+	if (antag_moodlet)
+		if (old_body)
+			clear_antag_moodies(old_body)
+		give_antag_moodies(new_body)
 	apply_innate_effects(new_body)
 	if(new_body.stat != DEAD)
 		new_body.add_to_current_living_antags()
@@ -364,18 +368,20 @@ GLOBAL_LIST_EMPTY(antagonists)
 /**
  * Proc that assigns this antagonist's ascribed moodlet to the player.
  */
-/datum/antagonist/proc/give_antag_moodies()
+/datum/antagonist/proc/give_antag_moodies(mob/living/mob_override)
 	if(!antag_moodlet)
 		return
-	owner.current.add_mood_event("antag_moodlet_[type]", antag_moodlet)
+	var/mob/living/target = mob_override || owner.current
+	target.add_mood_event("antag_moodlet_[type]", antag_moodlet)
 
 /**
  * Proc that removes this antagonist's ascribed moodlet from the player.
  */
-/datum/antagonist/proc/clear_antag_moodies()
+/datum/antagonist/proc/clear_antag_moodies(mob/living/mob_override)
 	if(!antag_moodlet)
 		return
-	owner.current.clear_mood_event("antag_moodlet_[type]")
+	var/mob/living/target = mob_override || owner.current
+	target.clear_mood_event("antag_moodlet_[type]")
 
 /**
  * Proc that will return the team this antagonist belongs to, when called. Helpful with antagonists that may belong to multiple potential teams in a single round.
