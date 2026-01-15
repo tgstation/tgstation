@@ -1,4 +1,0 @@
-author: "ElGitificador"
-delete-after: True
-changes:
-  - bugfix: "fixed bear suit not hiding hands"

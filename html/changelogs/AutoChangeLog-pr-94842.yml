@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixes digitigrade (and some other unique) limbs not being butcherable"
-  - image: "Digitigrade limbs now have unique bone sprites when butchered"

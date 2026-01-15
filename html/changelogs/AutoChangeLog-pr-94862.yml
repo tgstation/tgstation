@@ -1,4 +1,0 @@
-author: "Hardly"
-delete-after: True
-changes:
-  - bugfix: "Fixed hair dyes returning a TGUI error when trying to dye a hair."

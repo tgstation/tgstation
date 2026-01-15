@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - map: "AI satellite accesses have been made more consistent across maps."
