@@ -31,7 +31,6 @@
 			gun.projectiles_cache = gun.projectiles_cache_max
 
 ///Called when the mecha with an MMI in it tries opening a door.
-/obj/vehicle/sealed/mecha/proc/on_tried_access(datum/source, obj/door_attempt, list/player_access)
+/obj/vehicle/sealed/mecha/proc/retrieve_access(datum/source, list/player_access)
 	SIGNAL_HANDLER
 	player_access += accesses
-	return NONE

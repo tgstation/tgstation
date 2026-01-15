@@ -9,8 +9,7 @@
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 	access = new_access
-	RegisterSignal(parent, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
-	RegisterSignal(parent, COMSIG_MOB_RETRIEVE_SIMPLE_ACCESS, PROC_REF(retrieve_access))
+	RegisterSignal(parent, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 	if(!donor_atom)
 		return
 	if(isorgan(donor_atom))
@@ -18,11 +17,6 @@
 	else if(istype(donor_atom, /obj/item/implant))
 		RegisterSignal(donor_atom, COMSIG_IMPLANT_REMOVED, PROC_REF(on_donor_removed))
 	RegisterSignal(donor_atom, COMSIG_QDELETING, PROC_REF(on_donor_removed))
-
-/datum/component/simple_access/proc/on_tried_access(datum/source, atom/locked_thing, list/player_access)
-	SIGNAL_HANDLER
-	player_access += access
-	return NONE
 
 /datum/component/simple_access/proc/retrieve_access(datum/source, list/access_list)
 	SIGNAL_HANDLER

@@ -157,14 +157,12 @@
 	if(istype(shell, /obj/machinery/door/airlock))
 		attached_airlock = shell
 		RegisterSignals(shell, list(
-			COMSIG_MOB_TRIED_ACCESS,
 			COMSIG_AIRLOCK_SHELL_ALLOWED,
 		), PROC_REF(handle_allowed))
 
 /obj/item/circuit_component/airlock_access_event/unregister_shell(atom/movable/shell)
 	attached_airlock = null
 	UnregisterSignal(shell, list(
-		COMSIG_MOB_TRIED_ACCESS,
 		COMSIG_AIRLOCK_SHELL_ALLOWED
 	))
 	return ..()

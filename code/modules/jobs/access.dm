@@ -10,15 +10,14 @@
 	if(isnull(accessor)) //likely a TK user, and we checked for free access above.
 		return FALSE
 
-	var/list/player_access = list()
 	//If the mob has the simple_access component with the requried access, we let them in.
-	var/attempted_access = SEND_SIGNAL(accessor, COMSIG_MOB_TRIED_ACCESS, src, player_access)
-
-	//direct yes/no results
+	var/attempted_access = SEND_SIGNAL(accessor, COMSIG_MOB_TRIED_ACCESS, src)
 	if(attempted_access & ACCESS_ALLOWED)
 		return TRUE
 	if(attempted_access & ACCESS_DISALLOWED)
 		return FALSE
+
+	var/list/player_access = accessor.get_access()
 
 	//now let's check access we got from the signal.
 	if(check_access_list(player_access))
@@ -26,7 +25,7 @@
 
 	if(HAS_SILICON_ACCESS(accessor))
 		if(!(ROLE_SYNDICATE in accessor.faction))
-			if((ACCESS_SYNDICATE in req_access) || (ACCESS_SYNDICATE_LEADER in req_access) || (ACCESS_SYNDICATE in req_one_access) || (ACCESS_SYNDICATE_LEADER in req_one_access))
+			if((ACCESS_SYNDICATE in req_access + req_one_access) || (ACCESS_SYNDICATE_LEADER in req_access + req_one_access))
 				return FALSE
 			if(onSyndieBase() && loc != accessor)
 				return FALSE

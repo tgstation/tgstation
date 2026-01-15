@@ -174,7 +174,7 @@
 	if (isitem(old_loc))
 		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 		if (ismob(old_loc.loc))
-			UnregisterSignal(old_loc.loc, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_TRIED_ACCESS))
+			UnregisterSignal(old_loc.loc, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_RETRIEVE_ACCESS))
 	. = ..()
 	if (isitem(loc))
 		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(on_loc_equipped))
@@ -185,13 +185,13 @@
 	if (slot & ITEM_SLOT_ID)
 		RegisterSignal(user, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
 	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
-		RegisterSignal(user, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_access_tried))
+		RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 	if (slot & ITEM_SLOT_POCKETS)
 		//putting it in your pocket doesn't let you use it as access.
-		UnregisterSignal(user, COMSIG_MOB_TRIED_ACCESS)
+		UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
 
 /obj/item/card/id/dropped(mob/user)
-	UnregisterSignal(user, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_TRIED_ACCESS))
+	UnregisterSignal(user, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_RETRIEVE_ACCESS))
 	return ..()
 
 /obj/item/card/id/equipped(mob/user, slot, initial = FALSE)
@@ -220,17 +220,16 @@
 	if (slot & ITEM_SLOT_ID)
 		RegisterSignal(equipper, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
 	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
-		RegisterSignal(equipper, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_access_tried))
+		RegisterSignal(equipper, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 
 /obj/item/card/id/proc/on_loc_dropped(datum/source, mob/dropper)
 	SIGNAL_HANDLER
-	UnregisterSignal(dropper, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_TRIED_ACCESS))
+	UnregisterSignal(dropper, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_RETRIEVE_ACCESS))
 
 ///Called when we're being used as access.
-/obj/item/card/id/proc/on_access_tried(datum/source, obj/door_attempt, list/player_access)
+/obj/item/card/id/proc/retrieve_access(datum/source, list/player_access)
 	SIGNAL_HANDLER
 	player_access += GetAccess()
-	return NONE
 
 /obj/item/card/id/proc/on_pointed(mob/living/user, atom/pointed, obj/effect/temp_visual/point/point)
 	SIGNAL_HANDLER
