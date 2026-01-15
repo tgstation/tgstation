@@ -106,10 +106,12 @@
 	QDEL_NULL(worn_face_offset)
 	return ..()
 
-/obj/item/bodypart/head/get_butcher_drops()
-	if(butcher_drops)
+/obj/item/bodypart/head/get_butcher_drops(force = FALSE)
+	if(!isnull(butcher_drops) && !force)
 		return butcher_drops
-	var/datum/species/species = GLOB.species_list[limb_id]
+	if (butcher_drop_cache[type] && !force)
+		return butcher_drop_cache[type]
+	var/datum/species/species = GLOB.species_list[species_id || limb_id]
 	if (!species || !species.skinned_type)
 		return null
 	return list(species.skinned_type = 1)

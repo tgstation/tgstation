@@ -294,6 +294,19 @@
 
 	return TRUE
 
+/datum/tgs_api/v5/TriggerDeployment(event_name, list/parameters, wait_for_completion)
+	RequireInitialBridgeResponse()
+	WaitForReattach(TRUE)
+
+	if(interop_version.minor < 11)
+		TGS_WARNING_LOG("Interop version too low for triggering deployments!")
+		return FALSE
+
+	var response = Bridge(DMAPI5_BRIDGE_COMMAND_DEPLOY)
+	if(!response)
+		return FALSE
+	return TRUE
+
 /datum/tgs_api/v5/proc/DecodeChannels(chat_update_json)
 	TGS_DEBUG_LOG("DecodeChannels()")
 	var/list/chat_channels_json = chat_update_json[DMAPI5_CHAT_UPDATE_CHANNELS]

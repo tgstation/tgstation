@@ -420,8 +420,8 @@
 		stack_trace("pda_slot was set but we couldn't find a PDA!")
 		return
 
-	pda.imprint_id(equipped.real_name, equipped_job.title)
-	pda.update_ringtone(equipped_job.job_tone)
+	pda.imprint_id(equipped.real_name, equipped_job?.title || equipped.job)
+	pda.update_ringtone(equipped_job?.job_tone)
 	pda.UpdateDisplay()
 
 	var/client/equipped_client = GLOB.directory[ckey(equipped.mind?.key)]

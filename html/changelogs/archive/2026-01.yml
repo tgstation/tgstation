@@ -329,3 +329,63 @@
 2026-01-12:
   SmArtKar:
   - rscadd: Made lizard skin and lizardskin items inherit their "donor's" skin color
+2026-01-13:
+  KingkumaArt:
+  - bugfix: Giantslayer spear now does intended damage to mining mobs.
+  Melbert:
+  - qol: Objects that can pass over tables don't block table construction
+  - qol: If table construction fails, it tells you what is blocking, rather than "something
+      is"
+  - qol: Biogenerators protect food placed on top of them from germs
+  - bugfix: Fixed spotlight effect on multi-z map
+  MelokG000:
+  - balance: Added yellow pocket oxygen tank to kinetic crusher kit
+  SmArtKar:
+  - bugfix: Fixed odd behaviors of floppy disk stacks
+  Tractor-Maam:
+  - bugfix: fixed circuit action icon five
+  lelandkemble:
+  - bugfix: Flipped RPD-placed trinary atmospheric implements now place properly.
+  loganuk:
+  - bugfix: Restores emergency access feature
+  san7890:
+  - balance: 'Miners Beware: Blood Drunk Miners have been refactored into basic mobs.
+      This means their timings and such may be a bit more unpredictable than what
+      you''re used to. The difficulty should be about the same, but do approach with
+      caution lest you get devoured...'
+  - balance: Helping out (or just watching) the murderization of xenomorphs will give
+      you a positive moodlet, with increased effect depending on the strength of the
+      xenomorph. Bonus points for sending them out in gibby/dusty fashion.
+  - balance: However, if you are a carrier of a xenomorph embryo and witness this
+      death, the unborn entity inside you will provoke a sense of malaise having been
+      so close to the death of the sister.
+2026-01-14:
+  ArcaneMusic:
+  - admin: Fishing now has it's own log file, when a fish is caught or bred into the
+      game.
+  Cirrial:
+  - image: The Human Observation Console for Abductors now has a separate icon for
+      Send To and Send Self.
+  ElGitificador:
+  - balance: Advanced DNA injectors have a cooldown cap of 90s, as opposed to not
+      having a cap at all
+  - balance: DNA data disks can now store 10 mutations.
+  san7890:
+  - bugfix: Killing Blood Drunk Miner normally should no longer give you a crusher
+      achievement.
+2026-01-15:
+  ElGitificador:
+  - bugfix: fixed bear suit not hiding hands
+  Hardly:
+  - bugfix: Fixed hair dyes returning a TGUI error when trying to dye a hair.
+  JohnFulpWillard:
+  - bugfix: PDA's ring again.
+  Melbert:
+  - bugfix: Surgical state applied by wounds no longer persist after fix
+  SmArtKar:
+  - bugfix: Fixes digitigrade (and some other unique) limbs not being butcherable
+  - image: Digitigrade limbs now have unique bone sprites when butchered
+  lelandkemble:
+  - qol: Ghost health and chem scanning displays after examine information rather
+      than before
+  - map: AI satellite accesses have been made more consistent across maps.
