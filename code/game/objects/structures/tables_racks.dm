@@ -91,11 +91,7 @@
 	make_climbable()
 	AddElement(/datum/element/give_turf_traits, string_list(turf_traits))
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
-	AddElement(/datum/element/table_smash, gentle_push = slam_gently)
-
-/// Called after someone is harmfully smashed into us
-/obj/structure/table/after_smash(mob/living/smashed_onto)
-	return // This is mostly for our children
+	AddElement(/datum/element/table_smash, gentle_push = slam_gently, after_smash_proccall = PROC_REF(after_smash))
 
 /// Applies additional properties based on the frame used to construct this table.
 /obj/structure/table/proc/apply_frame_properties(obj/structure/table_frame/frame_used)
@@ -109,7 +105,7 @@
 
 ///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
 /obj/structure/table/proc/make_climbable()
-	AddComponent(/datum/component/climb_walkable)
+	AddElement(/datum/element/climb_walkable)
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
@@ -136,7 +132,7 @@
 //proc that removes elements present in now-flipped tables
 /obj/structure/table/proc/flip_table(new_dir = SOUTH)
 	playsound(src, flipped_table_sound, 100)
-	qdel(GetComponent(/datum/component/climb_walkable))
+	RemoveElement(/datum/element/climb_walkable)
 	RemoveElement(/datum/element/climbable)
 	RemoveElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	RemoveElement(/datum/element/give_turf_traits, turf_traits)
@@ -1034,13 +1030,23 @@
 /obj/structure/table/optable/make_climbable()
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
+// surgical tools cannot be placed on the op table while a patient is also on it
+/obj/structure/table/optable/table_place_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isnull(patient) && (tool.item_flags & SURGICAL_TOOL))
+		tool.melee_attack_chain(user, patient, modifiers)
+		return ITEM_INTERACT_SUCCESS
+
+	return ..()
+
 ///Align the mob with the table when buckled.
 /obj/structure/table/optable/post_buckle_mob(mob/living/buckled)
 	buckled.add_offsets(type, z_add = 6)
+	buckled.AddComponentFrom(type, /datum/component/free_operation)
 
 ///Disalign the mob with the table when unbuckled.
 /obj/structure/table/optable/post_unbuckle_mob(mob/living/buckled)
 	buckled.remove_offsets(type)
+	buckled.RemoveComponentSource(type, /datum/component/free_operation)
 
 /// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
 /obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/potential_patient)
@@ -1090,13 +1096,14 @@
 		UnregisterSignal(patient, list(
 			SIGNAL_ADDTRAIT(TRAIT_READY_TO_OPERATE),
 			SIGNAL_REMOVETRAIT(TRAIT_READY_TO_OPERATE),
-			COMSIG_LIVING_BEING_OPERATED_ON,
-			COMSIG_LIVING_SURGERY_FINISHED,
+			COMSIG_ATOM_BEING_OPERATED_ON,
+			COMSIG_ATOM_SURGERY_FINISHED,
 			COMSIG_LIVING_UPDATING_SURGERY_STATE,
 		))
 		if (patient.external && patient.external == air_tank)
 			patient.close_externals()
 
+	SEND_SIGNAL(src, COMSIG_OPERATING_TABLE_SET_PATIENT, new_patient)
 	patient = new_patient
 	update_appearance()
 	computer?.update_static_data_for_all_viewers()
@@ -1105,10 +1112,10 @@
 	RegisterSignals(patient, list(
 		SIGNAL_ADDTRAIT(TRAIT_READY_TO_OPERATE),
 		SIGNAL_REMOVETRAIT(TRAIT_READY_TO_OPERATE),
-		COMSIG_LIVING_SURGERY_FINISHED,
+		COMSIG_ATOM_SURGERY_FINISHED,
 		COMSIG_LIVING_UPDATING_SURGERY_STATE,
 	), PROC_REF(on_surgery_change))
-	RegisterSignal(patient, COMSIG_LIVING_BEING_OPERATED_ON, PROC_REF(get_surgeries))
+	RegisterSignal(patient, COMSIG_ATOM_BEING_OPERATED_ON, PROC_REF(get_surgeries))
 
 /obj/structure/table/optable/proc/on_surgery_change(datum/source)
 	SIGNAL_HANDLER

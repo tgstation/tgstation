@@ -240,8 +240,8 @@
 	icon_state = "riot"
 	base_icon_state = "riot"
 	inhand_icon_state = "riot_helmet"
-	toggle_message = "You pull the visor down"
-	alt_toggle_message = "You push the visor up"
+	toggle_message = "You pull the visor down."
+	alt_toggle_message = "You push the visor up."
 	armor_type = /datum/armor/toggleable_riot
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE|HIDESNOUT
 	strip_delay = 8 SECONDS
@@ -263,7 +263,7 @@
 
 /obj/item/clothing/head/helmet/toggleable/riot/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 2)
+	AddElement(/datum/element/adjust_fishing_difficulty, 2)
 
 /datum/armor/toggleable_riot
 	melee = 50
@@ -295,8 +295,8 @@
 	icon_state = "justice"
 	base_icon_state = "justice"
 	inhand_icon_state = "justice_helmet"
-	toggle_message = "You turn off the lights"
-	alt_toggle_message = "You turn on the lights"
+	toggle_message = "You turn off the lights."
+	alt_toggle_message = "You turn on the lights."
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	///Cooldown for toggling the visor.
 	COOLDOWN_DECLARE(visor_toggle_cooldown)
@@ -358,7 +358,7 @@
 
 /obj/item/clothing/head/helmet/swat/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 3)
+	AddElement(/datum/element/adjust_fishing_difficulty, 3)
 
 /datum/armor/helmet_swat
 	melee = 40
@@ -509,7 +509,7 @@
 
 /obj/item/clothing/head/helmet/knight/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 3)
+	AddElement(/datum/element/adjust_fishing_difficulty, 3)
 
 /datum/armor/helmet_knight
 	melee = 50

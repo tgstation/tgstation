@@ -8,7 +8,7 @@
 	///type paths of items consumed associated with how many are needed
 	var/list/reqs = list()
 	///type paths of items explicitly not allowed as an ingredient
-	var/list/blacklist = list()
+	var/list/blacklist
 	///type path of item resulting from this craft
 	var/result
 	/// String defines of items needed but not consumed. Lazy list.
@@ -23,13 +23,13 @@
 	///time in seconds. Remember to use the SECONDS define!
 	var/time = 3 SECONDS
 	///type paths of items that will be forceMoved() into the result instead of being deleted
-	var/list/parts = list()
+	var/list/parts
 	///items, structures and machineries of types that are in this list won't transfer their materials to the result
 	var/list/requirements_mats_blacklist
 	///if set, the materials in this list and their values will be subtracted from the result.
 	var/list/removed_mats
 	///like tool_behaviors but for reagents
-	var/list/chem_catalysts = list()
+	var/list/chem_catalysts
 	///where it shows up in the crafting UI
 	var/category
 	///Required machines for the craft, set the assigned value of the typepath to CRAFTING_MACHINERY_CONSUME or CRAFTING_MACHINERY_USE. Lazy associative list: type_path key -> flag value.
@@ -50,19 +50,15 @@
 	var/delete_contents = TRUE
 	/// Allows you to craft so that you don't have to click the craft button many times.
 	var/mass_craftable = FALSE
-
 	///crafting_flags var to hold bool values
 	var/crafting_flags = CRAFT_CHECK_DENSITY
-
-/datum/crafting_recipe/New()
-	if(!name && result)
-		var/atom/atom_result = result
-		name = initial(atom_result.name)
-
-	if(!(result in reqs))
-		blacklist += result
-	// These should be excluded from all crafting recipies
-	blacklist += list(
+	/**
+	* Should the recipe blacklist its result? Default behavior is to blacklist any result that isn't in reqs.
+	* Can be set to ALWAYS_BLACKLIST_RESULT or NEVER_BLACKLIST_RESULT to override the default behavior.
+	*/
+	var/blacklist_result = BLACKLIST_RESULT_IF_NOT_IN_REQS
+	/// Global crafting blacklist. These should be excluded from all crafting recipes no matter what.
+	var/static/list/global_blacklist = typecacheof(list(
 		/obj/item/cautery/augment,
 		/obj/item/cautery/cruel/augment,
 		/obj/item/circular_saw/augment,
@@ -81,15 +77,25 @@
 		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/wirecutters/cyborg,
 		/obj/item/wrench/cyborg,
-	)
+	))
+
+/datum/crafting_recipe/New()
+	if(!name && result)
+		var/atom/atom_result = result
+		name = initial(atom_result.name)
+	if(result && blacklist_result == BLACKLIST_RESULT_IF_NOT_IN_REQS && !(result in reqs))
+		blacklist_result = ALWAYS_BLACKLIST_RESULT
 	if(tool_behaviors)
 		tool_behaviors = string_list(tool_behaviors)
 	if(tool_paths)
 		tool_paths = string_list(tool_paths)
-	for(var/key in parts)
-		if(!parts[key])
+	for(var/key, part in parts)
+		if(!part)
 			//ensure every single, same-type part used for the recipe will be transferred if the value is otherwise not specified
-			parts[key] = INFINITY
+			part = INFINITY
+
+/datum/crafting_recipe/stack
+	abstract_type = /datum/crafting_recipe/stack
 
 /datum/crafting_recipe/stack/New(obj/item/stack/material, datum/stack_recipe/stack_recipe)
 	if(!material || !stack_recipe || !stack_recipe.result_type)

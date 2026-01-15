@@ -386,7 +386,6 @@
 
 	return TRUE
 
-
 /**
  * Security circuit component
  */
