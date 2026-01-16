@@ -1,4 +1,0 @@
-author: "RikuTheKiller"
-delete-after: True
-changes:
-  - bugfix: "Camera chunks, the biggest source of lag in the entire game, now run twice as fast."

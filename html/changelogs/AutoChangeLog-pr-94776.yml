@@ -1,5 +1,0 @@
-author: "TheNobodyofimportance"
-delete-after: True
-changes:
-  - bugfix: "The Syndicate infiltrator no longer spawns in the nuclear base, and instead spawns alongside nukies, eliminating lazyload clipping."
-  - bugfix: "Clownops now spawn with a bananium bomb in their infiltrator."

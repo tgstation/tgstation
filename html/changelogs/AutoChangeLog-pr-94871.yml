@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - refactor: "ID checking for access has been reworked, please make a bug report if anything that's supposed to grant access is not working."
