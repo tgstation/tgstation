@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "Once installed, special PDA themes from maintenance disks will be present on your roundstart PDA on future rounds (Sadly I couldn't figure out a way to add those to the preferences UI yet). You can check which PDA themes you've unlocked in the Progress tab of the achievements UI."
