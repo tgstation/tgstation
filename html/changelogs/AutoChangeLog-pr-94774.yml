@@ -1,0 +1,4 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - bugfix: "Removes the intercomm in meta xenobio interior so it doesn't clip with the shower anymore."
