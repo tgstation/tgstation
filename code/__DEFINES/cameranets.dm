@@ -1,7 +1,30 @@
 /// We only want chunk sizes that are to the power of 2. E.g: 2, 4, 8, 16, etc..
 #define CHUNK_SIZE 16
-/// Takes a position, transforms it into a chunk bounded position. Indexes at 1 so it'll land on actual turfs always
-#define GET_CHUNK_COORD(v) (max((FLOOR(v, CHUNK_SIZE)), 1))
+/// The maximum number of chunks in each dimension. The maximum length of chunks on a z-level is CHUNK_SIZE * MAX_CHUNKS.
+#define MAX_CHUNKS 256
+
+/// Takes camera chunk coordinates and transforms them into a chunk coordinate index. Supports up to 256 16x16 chunks in each dimension. (for indexing SScameras.chunks)
+#define GET_CHUNK_COORDS(x, y, z) (x | (y << 8) | (z << 16))
+/// Takes a camera chunk y coordinate and transforms it into a partial chunk coordinate index. Supports up to 256 16x16 chunks in each dimension. (for indexing SScameras.chunks)
+#define GET_CHUNK_Y_COORD(y) (y << 8)
+/// Takes a camera chunk z coordinate and transforms it into a partial chunk coordinate index. Supports up to 256 16x16 chunks in each dimension. (for indexing SScameras.chunks)
+#define GET_CHUNK_Z_COORD(z) (z << 16)
+
+/// Takes world coordinates and transforms them into a chunk coordinate index. (for indexing SScameras.chunks)
+#define GET_TURF_CHUNK_COORDS(turf) GET_CHUNK_COORDS(floor(WORLD_TO_CHUNK(turf.x)), floor(WORLD_TO_CHUNK(turf.y)), turf.z)
+/// Takes world coordinates and transforms them into a chunk turf coordinate index. (for indexing chunk.turfs, chunk.visibility, etc.)
+#define GET_CHUNK_TURF_COORDS(turf, chunk) (1 + (turf.x - chunk.world_x) + (turf.y - chunk.world_y) * CHUNK_SIZE)
+
+/// Converts a coordinate (x or y) from world space into chunk space.
+/// Returns a fraction, use floor(), round() or ceil() as needed.
+/// Only meant for positions. For lengths, use (v / CHUNK_SIZE).
+#define WORLD_TO_CHUNK(v) ((v - 1) / CHUNK_SIZE)
+/// Converts a coordinate (x or y) from chunk space to world space.
+/// Only meant for positions. For lengths, use (v * CHUNK_SIZE).
+#define CHUNK_TO_WORLD(v) (1 + v * CHUNK_SIZE)
+
+/// Queues a camera for the next visibility update. (add it manually inside the subsystem)
+#define QUEUE_CAMERA_UPDATE(camera) if (!QDELETED(camera)) { SScameras.camera_queue += camera }
 
 //List of different camera nets, cameras are given this in the map and camera consoles can only view them if
 //they share this network with them.

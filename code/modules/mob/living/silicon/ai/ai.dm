@@ -327,7 +327,7 @@
 		return ISINRANGE(target_turf.x, ai_turf.x - interaction_range, ai_turf.x + interaction_range) \
 			&& ISINRANGE(target_turf.y, ai_turf.y - interaction_range, ai_turf.y + interaction_range)
 	else
-		return SScameras.is_visible_by_cameras(target_turf)
+		return SScameras.is_on_cameras(target_turf)
 
 /mob/living/silicon/ai/cancel_camera()
 	view_core()
@@ -484,7 +484,7 @@
 		if(controlled_equipment)
 			to_chat(src, span_warning("You are already loaded into an onboard computer!"))
 			return
-		if(!SScameras.is_visible_by_cameras(M))
+		if(!SScameras.is_on_cameras(M))
 			to_chat(src, span_warning("Exosuit is no longer near active cameras."))
 			return
 		if(!isturf(loc))
@@ -529,7 +529,7 @@
 		//The target must be in view of a camera or near the core.
 	if(turf_check in range(get_turf(src)))
 		call_bot(turf_check)
-	else if(SScameras.is_visible_by_cameras(turf_check))
+	else if(SScameras.is_on_cameras(turf_check))
 		call_bot(turf_check)
 	else
 		to_chat(src, span_danger("Selected location is not visible."))
@@ -737,14 +737,14 @@
 //AI_CAMERA_LUMINOSITY
 
 /mob/living/silicon/ai/proc/light_cameras()
+	/*
 	var/list/obj/machinery/camera/add = list()
 	var/list/obj/machinery/camera/remove = list()
 	var/list/obj/machinery/camera/visible = list()
-	for (var/datum/camerachunk/chunk as anything in eyeobj.visibleCameraChunks)
-		for (var/z_key in chunk.cameras)
-			for(var/obj/machinery/camera/camera as anything in chunk.cameras[z_key])
-				if(isnull(camera) || !camera.can_use() || get_dist(camera, eyeobj) > 7 || !camera.internal_light)
-					continue
+
+	for (var/datum/camera_chunk/chunk as anything in client?.view_chunks)
+		for(var/obj/machinery/camera/camera as anything in chunk.cameras)
+			if(get_dist(camera, eyeobj) <= 7 && camera.internal_light)
 				visible |= camera
 
 	add = visible - lit_cameras
@@ -756,6 +756,7 @@
 	for (var/obj/machinery/camera/C in add)
 		C.Togglelight(1)
 		lit_cameras |= C
+	*/
 
 /mob/living/silicon/ai/proc/control_integrated_radio()
 	set name = "Transceiver Settings"
@@ -815,7 +816,7 @@
 	if(isturf(loc)) //AI in core, check if on cameras
 		//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
 		//apc_override is needed here because AIs use their own APC when depowered
-		return (SScameras.is_visible_by_cameras(get_turf_pixel(A)) || (A == apc_override))
+		return (SScameras.is_on_cameras(get_turf_pixel(A)) || (A == apc_override))
 	//AI is carded/shunted
 	//view(src) returns nothing for carded/shunted AIs and they have X-ray vision so just use get_dist
 	var/list/viewscale = getviewsize(client.view)
@@ -900,6 +901,8 @@
 		current = new_eye
 	if(!client)
 		return
+	if(eyeobj)
+		eyeobj.clear_visibility() // HAHAHA FUCK MY CHUD LIFE
 
 	if(ismovable(new_eye))
 		if(new_eye != GLOB.ai_camera_room_landmark)
@@ -912,6 +915,7 @@
 			if(eyeobj)
 				client.set_eye(eyeobj)
 				client.perspective = EYE_PERSPECTIVE
+				eyeobj.update_visibility()
 			else
 				client.set_eye(client.mob)
 				client.perspective = MOB_PERSPECTIVE
@@ -1060,7 +1064,7 @@
 	. = ..()
 
 /mob/living/silicon/ai/proc/camera_visibility(mob/eye/camera/ai/moved_eye)
-	SScameras.update_eye_chunk(moved_eye)
+	//SScameras.update_eye_chunk(moved_eye)
 
 /mob/living/silicon/ai/forceMove(atom/destination)
 	. = ..()

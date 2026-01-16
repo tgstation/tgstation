@@ -104,12 +104,6 @@
 	if(ai.master_multicam)
 		ai.master_multicam.refresh_view()
 
-/mob/eye/camera/ai/update_visibility()
-	if(ai)
-		ai.camera_visibility(src)
-	else
-		..()
-
 /mob/eye/camera/ai/GetViewerClient()
 	if(ai)
 		return ai.client
@@ -221,7 +215,7 @@
 
 /mob/eye/camera/ai/Hear(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	. = ..()
-	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && SScameras.is_visible_by_cameras(speaker))
+	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && SScameras.is_on_cameras(speaker))
 		ai.relay_speech(speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
 /obj/effect/overlay/ai_detect_hud

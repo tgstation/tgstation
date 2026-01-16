@@ -124,7 +124,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	myarea = get_room_area()
 
 	if(camera_enabled)
-		SScameras.add_camera_to_chunk(src)
 		LAZYADD(myarea.cameras, src)
 #ifdef MAP_TEST
 		update_appearance()
@@ -138,22 +137,38 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(mapload)
 		find_and_mount_on_atom(mark_for_late_init = TRUE)
 
+	if (can_use())
+		QUEUE_CAMERA_UPDATE(src)
+
 /obj/machinery/camera/get_turfs_to_mount_on()
 	return list(get_step(src, dir))
 
 /obj/machinery/camera/Destroy(force)
 	if(can_use())
-		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
-	SScameras.remove_camera_from_chunk(src)
+		toggle_cam(null, 0) //kick anyone viewing out
+
 	SScameras.cameras -= src
+	SScameras.camera_queue -= src
+
+	if (view_bounds)
+		SScameras.adjust_viewing_camera_counts(src, -1)
+		view_chunks.Cut()
+
+		for (var/datum/camera_chunk/chunk as anything in view_chunks)
+			chunk.cameras -= src
+		view_turfs.Cut()
+
 	cancelCameraAlarm()
+
 	if(isarea(myarea))
 		LAZYREMOVE(myarea.cameras, src)
+
 	QDEL_NULL(alarm_manager)
 	QDEL_NULL(last_shown_paper)
 	QDEL_NULL(xray_module)
 	QDEL_NULL(emp_module)
 	QDEL_NULL(proximity_monitor)
+
 	return ..()
 
 /obj/machinery/camera/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
@@ -230,7 +245,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(!prob(150 / severity))
 		return
 	network = list()
-	SScameras.remove_camera_from_chunk(src)
 	set_machine_stat(machine_stat | EMPED)
 	set_light(0)
 	emped++ //Increase the number of consecutive EMP's
@@ -257,11 +271,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	network = previous_network
 	set_machine_stat(machine_stat & ~EMPED)
 	update_appearance()
-	if(can_use())
-		SScameras.add_camera_to_chunk(src)
 	emped = 0 //Resets the consecutive EMP count
 	addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 10 SECONDS)
 	calculate_active_power()
+
+/obj/machinery/camera/on_set_machine_stat(old_value)
+	. = ..()
+	if ((old_value ^ machine_stat) & EMPED)
+		QUEUE_CAMERA_UPDATE(src)
 
 /obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
@@ -271,8 +288,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	user.switchCamera(src)
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
-	src.view_range = num
-	SScameras.update_visibility(src)
+	if (view_range != num)
+		QUEUE_CAMERA_UPDATE(src)
+	view_range = num
 
 /obj/machinery/camera/proc/shock(mob/living/user)
 	if(!istype(user))
@@ -348,8 +366,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = TRUE)
 	camera_enabled = !camera_enabled
+	QUEUE_CAMERA_UPDATE(src)
 	if(can_use())
-		SScameras.add_camera_to_chunk(src)
 		if (isturf(loc))
 			myarea = get_area(src)
 			LAZYADD(myarea.cameras, src)
@@ -357,7 +375,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			myarea = null
 	else
 		set_light(0)
-		SScameras.remove_camera_from_chunk(src)
 		if (isarea(myarea))
 			LAZYREMOVE(myarea.cameras, src)
 	// We are not guarenteed that the camera will be on a turf. account for that
@@ -401,19 +418,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		return FALSE
 	return TRUE
 
-/// Returns a list of turfs in this camera's view.
-/// This includes turfs that are "obscured by darkness" from the camera's POV.
+/// Returns an alist of turfs in this camera's view. This includes turfs that are "obscured by darkness" from the camera's POV.
+/// Format is "alist[turf] = null", if you need to check individual objects use "length(can_see & list(turf))". Only "&" and "in" work for checking contents, but "in" is much slower.
+/// Always have the return value of can_see as the left-hand operand, otherwise it uses list checks instead of alist checks and your CPU time gets thrown in a blender.
 /obj/machinery/camera/proc/can_see()
-	var/list/see = null
+	var/alist/see = alist()
 	var/turf/pos = get_turf(src)
 	var/turf/directly_above = GET_TURF_ABOVE(pos)
 	var/check_lower = pos != get_lowest_turf(pos)
 	var/check_higher = directly_above && istransparentturf(directly_above) && (pos != get_highest_turf(pos))
 
 	if(isXRay())
-		see = RANGE_TURFS(view_range, pos)
+		see += RANGE_TURFS(view_range, pos)
 	else
-		see = get_hear_turfs(view_range, pos)
+		var/lum = pos.luminosity
+		pos.luminosity = 6
+		for(var/turf/turf in view(view_range, pos))
+			see += turf
+		pos.luminosity = lum
 
 	if(check_lower || check_higher)
 		// Haha datum var access KILL ME
@@ -428,6 +450,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 				while(above && istransparentturf(above))
 					see += RANGE_TURFS(1, above)
 					above = GET_TURF_ABOVE(above)
+
 	return see
 
 /obj/machinery/camera/proc/Togglelight(on=0)

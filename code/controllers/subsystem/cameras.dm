@@ -1,222 +1,304 @@
-/// Manages the security cameras and camera chunks
+/// Manages camera visibility
 SUBSYSTEM_DEF(cameras)
 	name = "Cameras"
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_NO_INIT
 	priority = FIRE_PRIORITY_CAMERAS
-	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	wait = 2 MINUTES
+	wait = 1 SECONDS
 	dependencies = list(
-		// Required to get plane offset for static images
-		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/mapping, // plane offsets
+		/datum/controller/subsystem/atoms, // opacity
 	)
 
-	/// The cameras on the map, no matter if they work or not.
-	/// Updated in obj/machinery/camera.dm in Initialize() and Destroy().
-	var/list/obj/machinery/camera/cameras = list()
-	/// The chunks of the map, mapping the areas that the cameras can see.
-	var/list/chunks = list()
-	/// Chunks that must be updated
-	var/list/chunks_to_update  = list()
-	/// List of images cloned by all chunk static images put onto turfs cameras cant see
-	/// Indexed by the plane offset to use
-	var/list/image/obscured_images = list()
-	/// Primarily for debugging, outright prevents all camera chunk updates
-	var/disable_camera_updates = FALSE
-	/// Tracks current subsystem run
-	var/list/current_run = list()
+	/// All cameras on the map.
+	var/list/cameras = list()
+	/// All camera chunks on the map. (alist[chunk_coords] = chunk)
+	var/alist/chunks = alist()
 
-/datum/controller/subsystem/cameras/Initialize()
-	update_offsets(SSmapping.max_plane_offset)
-	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_offset_growth))
-	return SS_INIT_SUCCESS
+	/// All cameras that must be updated. (alist[camera] = null)
+	var/alist/camera_queue = alist()
+	/// All chunks that must be updated. (alist[chunk] = null)
+	var/alist/chunk_queue = alist()
+
+//GLOBAL_LIST_EMPTY(camera_cost)
+//GLOBAL_LIST_EMPTY(camera_count)
 
 /datum/controller/subsystem/cameras/fire(resumed = FALSE)
-	if(!resumed)
-		src.current_run = chunks_to_update.Copy()
-		chunks_to_update = list()
+	//INIT_COST(GLOB.camera_cost, GLOB.camera_count)
+	//EXPORT_STATS_TO_CSV_LATER("camera-cost.txt", GLOB.camera_cost, GLOB.camera_count)
 
-	var/list/current_run = src.current_run
-	while(current_run.len)
-		var/datum/camerachunk/chunk = current_run[current_run.len]
-		chunk.force_update(only_if_necessary = TRUE) // Forces an update if necessary
-		current_run.len--
-		if(MC_TICK_CHECK)
-			break
+	for (var/datum/component/camera/camera as anything in camera_queue)
+		if (MC_TICK_CHECK)
+			return
 
-/datum/controller/subsystem/cameras/stat_entry(msg)
-	msg = "Cams: [length(cameras)] | Chunks: [length(chunks)] | Updating: [length(chunks_to_update)]"
-	return ..()
+		camera_queue -= camera
 
-/// Updates the images for new plane offsets
-/datum/controller/subsystem/cameras/proc/update_offsets(new_offset)
-	for(var/i in length(obscured_images) to new_offset)
-		var/image/obscured = new('icons/effects/cameravis.dmi')
-		SET_PLANE_W_SCALAR(obscured, CAMERA_STATIC_PLANE, i)
-		obscured.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | KEEP_APART
-		obscured.override = TRUE
-		obscured_images += obscured
+		// Cache for speed and readability
+		var/datum/camera_view_data/old_view = camera.view
 
-/datum/controller/subsystem/cameras/proc/on_offset_growth(datum/source, old_offset, new_offset)
+		// We're gonna use this after old_view is deleted
+		var/list/old_view_chunks = old_view.chunks
+
+		// Remove the camera from turfs that it's viewing
+		if (old_view)
+			adjust_viewing_camera_counts(old_view, -1)
+			QDEL_NULL(camera.view)
+
+		// If the camera can't be used, clear up view data and continue
+		if (QDELING(camera) || !camera.enabled || !get_turf(camera.parent))
+			remove_camera_from_chunks(camera, old_view_chunks)
+			continue
+
+		view = new(camera)
+
+		var/list/new_view_chunks = list()
+
+		populate_view_chunks(new_view_chunks, view_bounds)
+
+		add_camera_to_chunks(camera, new_view_chunks - old_view_chunks)
+
+		remove_camera_from_chunks(camera, old_view_chunks - new_view_chunks)
+
+		camera.view_chunks = new_view_chunks
+
+		// Add the camera to turfs that it's viewing
+		adjust_viewing_camera_counts(camera, 1)
+
+	//SET_COST("Run cameras")
+
+/datum/controller/subsystem/cameras/proc/populate_view_turfs(datum/camera_view_data/view)
+	var/view_range = view.range
+	var/view_size = view.size
+
+	var/view_min_x = view.min_x
+	var/view_min_y = view.min_y
+
+	// Set the source turf luminosity to max to make view() ignore darkness
+	var/luminosity = source.luminosity
+	source.luminosity = 6
+
+	// Create a dense visibility mask indexed by view bound coordinates
+	// view(), turf.x, turf.y and view_turfs[] are the most expensive operations here
+	for (var/turf/turf in view(view_range, source))
+		view_turfs[1 + (turf.x - view_min_x) + (turf.y - view_min_y) * view_size] = TRUE
+
+	// Restore the previous luminosity
+	source.luminosity = luminosity
+
+/datum/controller/subsystem/cameras/proc/populate_view_chunks(datum/camera_view_data/view)
+	var/view_min_x = view.min_x
+	var/view_min_y = view.min_y
+
+	var/start_chunk_x = max(0, floor(WORLD_TO_CHUNK(view_min_x)))
+	var/start_chunk_y = max(0, floor(WORLD_TO_CHUNK(view_min_y)))
+
+	var/view_size = view.size
+
+	var/end_chunk_x = start_chunk_x + ceil(view_size / CHUNK_SIZE) - 1 // -1 because the bounds are inclusive
+	var/end_chunk_y = start_chunk_y + ceil(view_size / CHUNK_SIZE) - 1 // ditto
+
+	var/view_z = view.z
+
+	var/chunk_z_coord = GET_CHUNK_Z_COORD(view_z)
+
+	// Add chunks within view bounds
+	for (var/chunk_y = start_chunk_y to end_chunk_y)
+		var/chunk_yz_coord = GET_CHUNK_Y_COORD(chunk_y) | chunk_z_coord
+		for (var/chunk_x = start_chunk_x to end_chunk_x)
+			var/datum/camera_chunk/chunk = chunks[chunk_x | chunk_yz_coord] || new /datum/camera_chunk(chunk_x, chunk_y, view_z)
+			if (chunk)
+				view_chunks += chunk
+
+/datum/controller/subsystem/cameras/proc/add_camera_to_chunks(obj/machinery/camera/camera, list/chunks)
+	for (var/datum/camera_chunk/chunk as anything in chunks)
+		if (!length(chunk.cameras))
+			chunk.init_cameras()
+
+		chunk.cameras += camera
+
+/datum/controller/subsystem/cameras/proc/remove_camera_from_chunks(obj/machinery/camera/camera, list/chunks)
+	for (var/datum/camera_chunk/chunk as anything in chunks)
+		chunk.cameras -= camera
+
+		if (!length(chunk.cameras))
+			chunk.deinit_cameras()
+
+/datum/controller/subsystem/cameras/proc/adjust_viewing_camera_counts(datum/camera_view/view, amount)
+	var/list/view_turfs = camera.view_turfs
+
+	var/view_size = view.size
+	var/view_range = view.range
+
+	var/view_min_x = view.min_x
+	var/view_min_y = view.min.y
+
+	var/view_max_x = view_min_x + view.range
+	var/view_max_y = view_max_y + view.range
+
+	for (var/datum/camera_chunk/chunk in camera.view_chunks)
+		var/list/visibility = chunk.visibility
+
+		var/chunk_min_x = chunk.world_x
+		var/chunk_min_y = chunk.world_y
+
+		// Get the intersection of the chunk and view bounds
+		var/int_min_x = max(chunk_min_x, view_min_x)
+		var/int_min_y = max(chunk_min_y, view_min_y)
+
+		var/start_x = intersection.min.x
+		var/start_y = intersection.min.y
+
+		var/end_x = intersection.max.x - 1 // inclusive
+		var/end_y = intersection.max.y - 1 // ditto
+
+		// Iterate over the intersection and remove the camera from visibility array camera counts
+		for (var/world_y in start_y to end_y)
+			var/view_row = (world_y - view_min_y) * view_size_y
+			var/chunk_row = (world_y - chunk_min_y) * CHUNK_SIZE
+
+			for (var/world_x in start_x to end_x)
+				if (view_turfs[1 + (world_x - view_min_x) + view_row])
+					visibility[1 + (world_x - chunk_min_x) + chunk_row] += amount
+
+/// Checks if the atom is visible by any cameras on the map. Strictly returns TRUE or FALSE.
+/datum/controller/subsystem/cameras/proc/is_on_cameras(atom/atom_to_check)
+	var/turf/turf_to_check = get_turf(atom_to_check)
+	if (!turf_to_check)
+		return FALSE
+
+	var/datum/camera_chunk/chunk = chunks[GET_TURF_CHUNK_COORDS(turf_to_check)]
+	return !isnull(chunk) && chunk.visibility[GET_CHUNK_TURF_COORDS(turf_to_check, chunk)] > 0
+
+/// Returns the first camera found on which atom the is visible, if any.
+/datum/controller/subsystem/cameras/proc/get_first_viewing_camera(atom/atom_to_check)
+	var/turf/turf_to_check = get_turf(atom_to_check)
+	if (!turf_to_check)
+		return
+
+	var/datum/camera_chunk/chunk = chunks[GET_TURF_CHUNK_COORDS(turf_to_check)]
+	if (!chunk?.visibility[GET_CHUNK_TURF_COORDS(turf_to_check, chunk)])
+		return
+
+	var/x = turf_to_check.x
+	var/y = turf_to_check.y
+
+	for (var/obj/machinery/camera/camera as anything in chunk.cameras)
+		var/datum/bounds/view_bounds = camera.view_bounds
+		if (camera.view_turfs[1 + (x - view_bounds.min.x) + (y - view_bounds.min.y) * view_bounds.get_size().y])
+			return camera
+
+/// Returns a list of all of the cameras on which the atom is visible.
+/datum/controller/subsystem/cameras/proc/get_all_viewing_cameras(atom/atom_to_check)
+	. = list()
+	var/turf/turf_to_check = get_turf(atom_to_check)
+	if (!turf_to_check)
+		return
+
+	var/datum/camera_chunk/chunk = chunks[GET_TURF_CHUNK_COORDS(turf_to_check)]
+	if (!chunk?.visibility[GET_CHUNK_TURF_COORDS(turf_to_check, chunk)])
+		return
+
+	var/x = turf_to_check.x
+	var/y = turf_to_check.y
+
+	for (var/obj/machinery/camera/camera as anything in chunk.cameras)
+		var/datum/bounds/view_bounds = camera.view_bounds
+		if (camera.view_turfs[1 + (x - view_bounds.min.x) + (y - view_bounds.min.y) * view_bounds.get_size().y])
+			. += camera
+
+/// Updates all of the cameras that might see this atom.
+/datum/controller/subsystem/cameras/proc/update_visibility(atom/source)
+	var/turf/turf = get_turf(source)
+	if (!turf)
+		return
+
+	var/datum/camera_chunk/chunk = chunks[GET_TURF_CHUNK_COORDS(turf)]
+	if (!chunk)
+		return
+
+	var/vector/point = vector(turf.x, turf.y, turf.z)
+
+	for (var/obj/machinery/camera/camera in chunk.cameras)
+		if (camera.view_bounds.contains(point))
+			camera_queue += camera
+
+/// Adds the mob to camera static viewers, causing it to see camera static over areas where cameras on the map can't see.
+/// The source variable is such that multiple sources can add the ability to view static without conflicting.
+/datum/controller/subsystem/cameras/proc/add_viewer_mob(mob/viewer_mob, source)
+	if (!source)
+		CRASH("Attempted to add the ability to view camera static to a mob without a source for it.")
+	if (QDELETED(viewer_mob))
+		return
+
+	var/was_a_viewer = HAS_TRAIT(viewer_mob, TRAIT_SEES_CAMERA_STATIC)
+
+	ADD_TRAIT(viewer_mob, TRAIT_SEES_CAMERA_STATIC, source)
+
+	if (was_a_viewer)
+		return
+
+	if (viewer_mob.client)
+		add_viewer_client(viewer_mob.client, REF(viewer_mob))
+
+	RegisterSignals(viewer_mob, list(COMSIG_QDELETING, SIGNAL_REMOVETRAIT(TRAIT_SEES_CAMERA_STATIC)), PROC_REF(remove_viewer_mob_internal))
+	RegisterSignal(viewer_mob, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(on_viewer_mob_login))
+	RegisterSignal(viewer_mob, COMSIG_MOB_LOGOUT, PROC_REF(on_viewer_mob_logout))
+
+/// Removes the mob from camera static viewers, causing camera static that it sees to disappear. (if there are no more sources, that is)
+/datum/controller/subsystem/cameras/proc/remove_viewer_mob(mob/viewer_mob, source)
+	if (!source)
+		CRASH("Attempted to remove the ability to view camera static from a mob without a source for it.")
+
+	REMOVE_TRAIT(viewer_mob, TRAIT_SEES_CAMERA_STATIC, source)
+
+/// Internal part of [proc/remove_viewer_source()]
+/datum/controller/subsystem/cameras/proc/remove_viewer_mob_internal(mob/viewer_mob)
 	SIGNAL_HANDLER
-	update_offsets(new_offset)
-
-/// Checks if a chunk has been generated in x, y, z.
-/datum/controller/subsystem/cameras/proc/get_camera_chunk(x, y, z)
-	x = GET_CHUNK_COORD(x)
-	y = GET_CHUNK_COORD(y)
-	if(GET_LOWEST_STACK_OFFSET(z) != 0)
-		var/turf/lowest = get_lowest_turf(locate(x, y, z))
-		return chunks["[x],[y],[lowest.z]"]
-
-	return chunks["[x],[y],[z]"]
-
-// Returns the chunk in the x, y, z.
-// If there is no chunk, it creates a new chunk and returns that.
-/datum/controller/subsystem/cameras/proc/generate_chunk(x, y, z)
-	x = GET_CHUNK_COORD(x)
-	y = GET_CHUNK_COORD(y)
-	var/turf/lowest = get_lowest_turf(locate(x, y, z))
-	var/key = "[x],[y],[lowest.z]"
-	. = chunks[key]
-	if(!.)
-		. = new /datum/camerachunk(x, y, lowest.z)
-		chunks[key] = .
-
-/// Updates what the camera eye can see.
-/// It is recommended you use this when a camera eye moves or its location is set.
-/datum/controller/subsystem/cameras/proc/update_eye_chunk(mob/eye/camera/eye)
-	var/list/visibleChunks = list()
-	//Get the eye's turf in case its located in an object like a mecha
-	var/turf/eye_turf = get_turf(eye)
-	if(eye.loc)
-		var/static_range = eye.static_visibility_range
-		var/x1 = max(1, eye_turf.x - static_range)
-		var/y1 = max(1, eye_turf.y - static_range)
-		var/x2 = min(world.maxx, eye_turf.x + static_range)
-		var/y2 = min(world.maxy, eye_turf.y + static_range)
-
-		for(var/x = x1; x <= x2; x += CHUNK_SIZE)
-			for(var/y = y1; y <= y2; y += CHUNK_SIZE)
-				visibleChunks |= generate_chunk(x, y, eye_turf.z)
-
-	var/list/remove = eye.visibleCameraChunks - visibleChunks
-	var/list/add = visibleChunks - eye.visibleCameraChunks
-
-	for(var/datum/camerachunk/chunk as anything in remove)
-		chunk.remove(eye)
-
-	for(var/datum/camerachunk/chunk as anything in add)
-		chunk.add(eye)
-
-/// Used in [/proc/major_chunk_change] - indicates the camera should be removed from the chunk list.
-#define REMOVE_CAMERA 0
-/// Used in [/proc/major_chunk_change] - indicates the camera should be added to the chunk list.
-#define ADD_CAMERA 1
-/// Used in [/proc/major_chunk_change] - indicates the chunk should be updated without adding/removing a camera.
-#define IGNORE_CAMERA 2
-
-/// Updates the chunks that the turf is located in. Use this when obstacles are destroyed or when doors open.
-/datum/controller/subsystem/cameras/proc/update_visibility(atom/relevant_atom)
-	if(!SSticker)
-		return
-	major_chunk_change(relevant_atom, IGNORE_CAMERA)
-
-/// Removes a camera from a chunk.
-/datum/controller/subsystem/cameras/proc/remove_camera_from_chunk(obj/machinery/camera/old_cam)
-	major_chunk_change(old_cam, REMOVE_CAMERA)
-
-/// Add a camera to a chunk.
-/datum/controller/subsystem/cameras/proc/add_camera_to_chunk(obj/machinery/camera/new_cam)
-	if(new_cam.can_use())
-		major_chunk_change(new_cam, ADD_CAMERA)
-
-/**
- * Used for Cyborg/mecha cameras. Since portable cameras can be in ANY chunk.
- * update_delay_buffer is passed all the way to queue_update() from their camera updates on movement
- * to change the time between static updates.
-*/
-/datum/controller/subsystem/cameras/proc/update_portable_camera(obj/machinery/camera/updating_camera, update_delay_buffer)
-	if(updating_camera.can_use())
-		major_chunk_change(updating_camera, ADD_CAMERA, update_delay_buffer)
-
-/**
- * Never access this proc directly!!!!
- * This will update the chunk and all the surrounding chunks.
- * It will also add the atom to the cameras list if you set the choice to 1.
- * Setting the choice to 0 will remove the camera from the chunks.
- * If you want to update the chunks around an object, without adding/removing a camera, use choice 2.
- * update_delay_buffer is passed all the way to queue_update() from portable camera updates on movement
- * to change the time between static updates.
- */
-/datum/controller/subsystem/cameras/proc/major_chunk_change(atom/center_or_camera, choice = IGNORE_CAMERA, update_delay_buffer = 0)
-	PROTECTED_PROC(TRUE)
-
-	if(QDELETED(center_or_camera) && choice == ADD_CAMERA)
-		CRASH("Tried to add a qdeleting camera to the net")
-
-	var/turf/chunk_turf = get_turf(center_or_camera)
-	if(isnull(chunk_turf))
-		return
-
-	var/x1 = max(1, chunk_turf.x - (CHUNK_SIZE / 2))
-	var/y1 = max(1, chunk_turf.y - (CHUNK_SIZE / 2))
-	var/x2 = min(world.maxx, chunk_turf.x + (CHUNK_SIZE / 2))
-	var/y2 = min(world.maxy, chunk_turf.y + (CHUNK_SIZE / 2))
-	for(var/x = x1; x <= x2; x += CHUNK_SIZE)
-		for(var/y = y1; y <= y2; y += CHUNK_SIZE)
-			var/datum/camerachunk/chunk = get_camera_chunk(x, y, chunk_turf.z)
-			if(isnull(chunk))
-				continue
-			if(choice == REMOVE_CAMERA)
-				// Remove the camera.
-				chunk.cameras[chunk_turf.z] -= center_or_camera
-			if(choice == ADD_CAMERA)
-				// You can't have the same camera in the list twice.
-				chunk.cameras[chunk_turf.z] |= center_or_camera
-			chunk.queue_update(center_or_camera, update_delay_buffer)
-
-/// A faster, turf only version of [/datum/controller/subsystem/cameras/proc/major_chunk_change]
-/// For use in sensitive code, be careful with it
-/datum/controller/subsystem/cameras/proc/bare_major_chunk_change(turf/changed)
-	var/x1 = max(1, changed.x - (CHUNK_SIZE / 2))
-	var/y1 = max(1, changed.y - (CHUNK_SIZE / 2))
-	var/x2 = min(world.maxx, changed.x + (CHUNK_SIZE / 2))
-	var/y2 = min(world.maxy, changed.y + (CHUNK_SIZE / 2))
-	for(var/x = x1; x <= x2; x += CHUNK_SIZE)
-		for(var/y = y1; y <= y2; y += CHUNK_SIZE)
-			var/datum/camerachunk/chunk = get_camera_chunk(x, y, changed.z)
-			chunk?.queue_update(changed, 0)
-
-/// Will check if an atom is on a viewable turf.
-/// Returns TRUE if the atom is visible by any camera, FALSE otherwise.
-/datum/controller/subsystem/cameras/proc/is_visible_by_cameras(atom/target)
-	return turf_visible_by_cameras(get_turf(target))
-
-/// Checks if the passed turf is visible by any camera.
-/// Returns TRUE if the turf is visible by any camera, FALSE otherwise.
-/datum/controller/subsystem/cameras/proc/turf_visible_by_cameras(turf/position)
 	PRIVATE_PROC(TRUE)
-	if(isnull(position))
-		return FALSE
-	var/datum/camerachunk/chunk = generate_chunk(position.x, position.y, position.z)
-	if(isnull(chunk))
-		return FALSE
-	chunk.force_update(only_if_necessary = TRUE) // Update NOW if necessary
-	if(chunk.visibleTurfs[position])
-		return TRUE
-	return FALSE
 
-/// Gets the camera chunk the passed turf is in.
-/// Returns the chunk if it exists and is visible, null otherwise.
-/datum/controller/subsystem/cameras/proc/get_turf_camera_chunk(turf/position)
-	RETURN_TYPE(/datum/camerachunk)
-	var/datum/camerachunk/chunk = generate_chunk(position.x, position.y, position.z)
-	if(!chunk)
-		return null
-	chunk.force_update(only_if_necessary = TRUE) // Update NOW if necessary
-	if(chunk.visibleTurfs[position])
-		return chunk
-	return null
+	if (viewer_mob.client)
+		remove_viewer_client(viewer_mob.client, REF(viewer_mob))
+
+	UnregisterSignal(viewer_mob, list(COMSIG_QDELETING, SIGNAL_REMOVETRAIT(TRAIT_SEES_CAMERA_STATIC), COMSIG_MOB_CLIENT_LOGIN, COMSIG_MOB_LOGOUT))
+
+/datum/controller/subsystem/cameras/proc/on_viewer_mob_login(mob/viewer_mob, client/viewer_client)
+	SIGNAL_HANDLER
+	add_viewer_client(viewer_client, REF(viewer_mob))
+
+/datum/controller/subsystem/cameras/proc/on_viewer_mob_logout(mob/viewer_mob)
+	SIGNAL_HANDLER
+	remove_viewer_client(viewer_mob.canon_client, REF(viewer_mob))
+
+/datum/controller/subsystem/cameras/proc/add_viewer_client(client/viewer_client, source)
+	if (!source)
+		CRASH("Attempted to add the ability to view camera static to a client without a source for it.")
+
+	var/was_a_viewer = HAS_TRAIT(viewer_client, TRAIT_SEES_CAMERA_STATIC)
+
+	ADD_TRAIT(viewer_client, TRAIT_SEES_CAMERA_STATIC, source)
+
+	if (was_a_viewer)
+		return
+
+	viewer_client.AddComponent(/datum/component/camera_viewer)
+
+	RegisterSignal(viewer_client, SIGNAL_REMOVETRAIT(TRAIT_SEES_CAMERA_STATIC), PROC_REF(remove_viewer_client_internal))
+
+/datum/controller/subsystem/cameras/proc/remove_viewer_client(client/viewer_client, source)
+	if (!source)
+		CRASH("Attempted to remove the ability to view camera static from a client without a source for it.")
+
+	REMOVE_TRAIT(viewer_client, TRAIT_SEES_CAMERA_STATIC, source)
+
+/datum/controller/subsystem/cameras/proc/remove_viewer_client_internal(client/viewer_client)
+	SIGNAL_HANDLER
+	PRIVATE_PROC(TRUE)
+
+	var/datum/component/camera_viewer = viewer_client.GetComponent(/datum/component/camera_viewer)
+
+	if (!QDELETED(camera_viewer))
+		qdel(camera_viewer)
+
+	UnregisterSignal(viewer_client, SIGNAL_REMOVETRAIT(TRAIT_SEES_CAMERA_STATIC))
 
 /// Returns list of available cameras, ready to use for UIs displaying list of them
 /// The format is: list("name" = "camera.c_tag", ref = REF(camera))
@@ -271,26 +353,3 @@ SUBSYSTEM_DEF(cameras)
 		return FALSE
 
 	return length(camera_to_check.network & networks_available) > 0
-
-#undef ADD_CAMERA
-#undef REMOVE_CAMERA
-#undef IGNORE_CAMERA
-
-/obj/effect/overlay/camera_static
-	name = "static"
-	icon = null
-	icon_state = null
-	anchored = TRUE  // should only appear in vis_contents, but to be safe
-	appearance_flags = RESET_TRANSFORM | TILE_BOUND | LONG_GLIDE
-	// this combination makes the static block clicks to everything below it,
-	// without appearing in the right-click menu for non-AI clients
-	mouse_opacity = MOUSE_OPACITY_ICON
-	invisibility = INVISIBILITY_ABSTRACT
-
-	plane = CAMERA_STATIC_PLANE
-
-ADMIN_VERB(pause_camera_updates, R_ADMIN, "Toggle Camera Updates", "Stop security cameras from updating, meaning what they see now is what they will see forever.", ADMIN_CATEGORY_DEBUG)
-	SScameras.disable_camera_updates = !SScameras.disable_camera_updates
-	log_admin("[key_name_admin(user)] [SScameras.disable_camera_updates ? "disabled" : "enabled"] camera updates.")
-	message_admins("Admin [key_name_admin(user)] has [SScameras.disable_camera_updates ? "disabled" : "enabled"] camera updates.")
-	BLACKBOX_LOG_ADMIN_VERB("Toggle Camera Updates")
