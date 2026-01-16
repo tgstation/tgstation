@@ -48,7 +48,7 @@
 		return
 	return ..()
 
-/mob/living/basic/boss/dust(just_ash, drop_items, force)
+/mob/living/basic/boss/dust(just_ash, drop_items, give_moodlet, force)
 	if(!force && health > 0)
 		return
 	return ..()
