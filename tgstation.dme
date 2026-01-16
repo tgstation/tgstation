@@ -1610,7 +1610,6 @@
 #include "code\datums\elements\loomable.dm"
 #include "code\datums\elements\lube_walking.dm"
 #include "code\datums\elements\mirage_border.dm"
-#include "code\datums\elements\mob_access.dm"
 #include "code\datums\elements\mob_grabber.dm"
 #include "code\datums\elements\mob_killed_tally.dm"
 #include "code\datums\elements\move_force_on_death.dm"
