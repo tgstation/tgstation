@@ -122,8 +122,8 @@
 	name = "welding hard hat"
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight AND welding shield! The bulb seems a little smaller though."
 	light_range = 3 //Needs a little bit of tradeoff
-	toggle_message = "You pull the visor down"
-	alt_toggle_message = "You push the visor up"
+	toggle_message = "You pull the visor down."
+	alt_toggle_message = "You push the visor up."
 	dog_fashion = null
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_welding_screen)
 	flash_protect = FLASH_PROTECTION_WELDER
@@ -246,14 +246,14 @@
 	light_color = "#fff2bf"
 	worn_y_offset = 1
 	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
-	clothing_traits = list()
+	clothing_traits = null
 	pickup_sound = null
 	drop_sound = null
 	equip_sound = null
 
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 3)
+	AddElement(/datum/element/adjust_fishing_difficulty, 3)
 
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/set_light_on(new_value)
 	. = ..()
@@ -312,6 +312,6 @@
 	hair_mask = ""
 	armor_type = /datum/armor/none
 	light_range = 1 //luminosity when on
-	clothing_traits = list()
+	clothing_traits = null
 
 	dog_fashion = /datum/dog_fashion/head/reindeer

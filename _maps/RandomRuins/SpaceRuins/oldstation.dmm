@@ -3051,7 +3051,7 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table,
 /obj/machinery/door/window/brigdoor/right/directional/east,
-/obj/item/computer_disk,
+/obj/item/disk/computer,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "nI" = (

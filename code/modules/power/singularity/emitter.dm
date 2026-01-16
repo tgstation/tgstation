@@ -77,7 +77,7 @@
 	sparks = new
 	sparks.attach(src)
 	sparks.set_up(5, TRUE, src)
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/power/emitter/welded/Initialize(mapload)
@@ -628,7 +628,7 @@
 /obj/item/emitter_disk
 	name = "\improper Diode Disk: Debugger"
 	desc = "This disk can be used on an emitter with an open panel to reset its projectile. Unless this was handed to you by an admin, you should report this on github."
-	icon = 'icons/obj/devices/circuitry_n_data.dmi'
+	icon = 'icons/obj/devices/floppy_disks.dmi'
 	icon_state = "datadisk6"
 	var/laser_color = COLOR_VIBRANT_LIME
 	var/stored_proj = /obj/projectile/beam/emitter/hitscan

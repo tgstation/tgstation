@@ -100,6 +100,20 @@
 /mob/living/proc/is_ears_covered()
 	return null
 
+/**
+ * Check if the passed body zone is covered by some clothes
+ *
+ * * location: body zone to check
+ * ([BODY_ZONE_CHEST], [BODY_ZONE_HEAD], etc)
+ * * exluded_equipment_slots: equipment slots to ignore when checking coverage
+ * (for example, if you want to ignore helmets, pass [ITEM_SLOT_HEAD])
+ *
+ * Returns TRUE if the location is accessible (not covered)
+ * Returns FALSE if the location is covered by something
+ */
+/mob/living/proc/is_location_accessible(location, exluded_equipment_slots = NONE)
+	return TRUE
+
 /mob/living/bullet_act(obj/projectile/proj, def_zone, piercing_hit = FALSE, blocked = 0)
 	. = ..()
 	if (. != BULLET_ACT_HIT)
@@ -459,13 +473,8 @@
 	if(.)
 		return TRUE
 
-	for(var/datum/surgery/operations as anything in surgeries)
-		if(user.combat_mode)
-			break
-		if(IS_IN_INVALID_SURGICAL_POSITION(src, operations))
-			continue
-		if(operations.next_step(user, modifiers))
-			return TRUE
+	if(!combat_mode && HAS_TRAIT(src, TRAIT_READY_TO_OPERATE) && user.perform_surgery(src))
+		return TRUE
 
 	return FALSE
 
@@ -791,7 +800,7 @@
 			if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == shove_dir && obj_content.density)
 				shove_flags |= SHOVE_DIRECTIONAL_BLOCKED
 				break
-		if(target_turf != target_shove_turf && !(shove_flags && SHOVE_DIRECTIONAL_BLOCKED)) //Make sure that we don't run the exact same check twice on the same tile
+		if(target_turf != target_shove_turf && !(shove_flags & SHOVE_DIRECTIONAL_BLOCKED)) //Make sure that we don't run the exact same check twice on the same tile
 			for(var/obj/obj_content in target_shove_turf)
 				if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == REVERSE_DIR(shove_dir) && obj_content.density)
 					shove_flags |= SHOVE_DIRECTIONAL_BLOCKED

@@ -8,6 +8,7 @@
 //then you MUST update the database!
 
 // Roundstart roles
+#define ROLE_BLOOD_WORM "Blood Worm"
 #define ROLE_BROTHER "Blood Brother"
 #define ROLE_CHANGELING "Changeling"
 #define ROLE_CULTIST "Cultist"
@@ -23,6 +24,7 @@
 #define ROLE_ALIEN "Xenomorph"
 #define ROLE_BLOB "Blob"
 #define ROLE_BLOB_INFECTION "Blob Infection"
+#define ROLE_BLOOD_WORM_INFESTATION "Blood Worm Infestation"
 #define ROLE_CHANGELING_MIDROUND "Changeling (Midround)"
 #define ROLE_FUGITIVE "Fugitive"
 #define ROLE_LONE_OPERATIVE "Lone Operative"

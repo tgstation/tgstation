@@ -311,7 +311,7 @@
 		set_arm_fluff(arm)
 	return TRUE
 
-/datum/status_effect/golem/diamond/tick(delta_time, times_fired)
+/datum/status_effect/golem/diamond/tick(delta_time)
 	owner.alpha = max(owner.alpha - alpha_per_tick, 0)
 
 /// Reset alpha to starting value
@@ -373,7 +373,7 @@
 	alert_desc = "You are more resistant to physical blows, and pack more of a punch yourself."
 	filter_color = LIGHT_COLOR_HALOGEN
 	/// Amount to reduce brute damage by
-	var/brute_modifier = 0.7
+	var/brute_modifier = 0.8 // golems already have an innate 0.5 brute resistance - this is multiplicate on top of that
 	/// How much extra damage do we do with our fists?
 	var/damage_increase = 3
 	/// Deal this much extra damage to mining mobs, most of which take 0 unarmed damage usually

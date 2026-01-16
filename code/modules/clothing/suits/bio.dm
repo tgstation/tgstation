@@ -18,7 +18,7 @@
 	. = ..()
 	if (dirt_state)
 		AddComponent(/datum/component/clothing_dirt, dirt_state)
-	AddComponent(/datum/component/adjust_fishing_difficulty, 6)
+	AddElement(/datum/element/adjust_fishing_difficulty, 6)
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
 
 /datum/armor/head_bio_hood
@@ -46,7 +46,7 @@
 
 /obj/item/clothing/suit/bio_suit/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 6)
+	AddElement(/datum/element/adjust_fishing_difficulty, 6)
 
 //Standard biosuit, orange stripe
 /datum/armor/suit_bio_suit

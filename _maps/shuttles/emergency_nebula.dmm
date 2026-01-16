@@ -506,7 +506,7 @@
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/status_display/evac/directional/north,
 /obj/machinery/camera/autoname{
-	dir = 9
+	dir = 1
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
@@ -1249,7 +1249,7 @@
 /obj/machinery/stasis,
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/camera/autoname{
-	dir = 9
+	dir = 1
 	},
 /turf/open/floor/iron/white/herringbone,
 /area/shuttle/escape)
@@ -1475,7 +1475,7 @@
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/status_display/evac/directional/west,
 /obj/machinery/camera/autoname{
-	dir = 9
+	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
@@ -2396,7 +2396,7 @@
 /obj/machinery/chem_dispenser/drinks/beer,
 /obj/machinery/status_display/evac/directional/north,
 /obj/machinery/camera/autoname{
-	dir = 9
+	dir = 1
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)

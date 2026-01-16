@@ -38,7 +38,7 @@
 	if(visor_dirt)
 		AddComponent(/datum/component/clothing_dirt, visor_dirt)
 	if(fishing_modifier)
-		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 	add_stabilizer()
 
 /obj/item/clothing/head/helmet/space/proc/add_stabilizer(loose_hat = TRUE)
@@ -102,7 +102,7 @@
 		cell = new cell(src)
 
 	if(fishing_modifier)
-		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 
 /obj/item/clothing/suit/space/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
 	. = ..()

@@ -36,7 +36,7 @@
 	speed = 3
 	move_to_delay = 10
 	mouse_opacity = MOUSE_OPACITY_ICON
-	mob_biotypes = MOB_ROBOTIC|MOB_MINING
+	mob_biotypes = MOB_ROBOTIC|MOB_MINING|MOB_MINERAL
 	death_sound = 'sound/effects/magic/repulse.ogg'
 	death_message = "'s lights flicker, before its top part falls down."
 	loot_drop = /obj/item/clothing/accessory/pandora_hope
@@ -96,7 +96,7 @@
 		if(AOE_SQUARES)
 			aoe_squares(target)
 
-/mob/living/simple_animal/hostile/asteroid/elite/pandora/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/asteroid/elite/pandora/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(health >= maxHealth * 0.5)
 		cooldown_time = 2 SECONDS

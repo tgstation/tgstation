@@ -23,10 +23,10 @@
 /datum/reagent/toxin/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_toxic(round(volume * 2))
 
-/datum/reagent/toxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(toxpwr && affected_mob.health > health_required)
-		if(affected_mob.adjust_tox_loss(toxpwr * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+		if(affected_mob.adjust_tox_loss(METABOLIZE_FREE_CONSTANT(0.5) * toxpwr * normalise_creation_purity() * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/amatoxin
@@ -65,7 +65,7 @@
 		exposed_mob.updateappearance()
 		exposed_mob.domutcheck()
 
-/datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(affected_mob.adjust_tox_loss(0.5 * seconds_per_tick * REM, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
@@ -105,11 +105,11 @@
 	UnregisterSignal(holder, COMSIG_REAGENTS_TEMP_CHANGE)
 	return ..()
 
-/datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
-		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2 * REM * seconds_per_tick)
-	affected_mob.adjustPlasma(20 * REM * seconds_per_tick)
+		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 1 * metabolization_ratio * seconds_per_tick)
+	affected_mob.adjustPlasma(10 * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/toxin/plasma/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
@@ -160,15 +160,15 @@
 	material = /datum/material/hot_ice
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/hot_ice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/hot_ice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
-		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2 * REM * seconds_per_tick)
-	affected_mob.adjustPlasma(20 * REM * seconds_per_tick)
-	affected_mob.adjust_bodytemperature(-7 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, affected_mob.get_body_temp_normal())
+		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 1 * metabolization_ratio * seconds_per_tick)
+	affected_mob.adjustPlasma(10 * metabolization_ratio * seconds_per_tick)
+	affected_mob.adjust_bodytemperature(-3.5 * TEMPERATURE_DAMAGE_COEFFICIENT * metabolization_ratio * seconds_per_tick, affected_mob.get_body_temp_normal())
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/humi = affected_mob
-		humi.adjust_coretemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
+		humi.adjust_coretemperature(-3.5 * metabolization_ratio * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 
 /datum/reagent/toxin/hot_ice/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
@@ -190,11 +190,11 @@
 	ph = 1.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/lexorin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/lexorin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(!HAS_TRAIT(affected_mob, TRAIT_NOBREATH))
-		affected_mob.adjust_oxy_loss(5 * REM * normalise_creation_purity() * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		affected_mob.losebreath += 2 * REM * normalise_creation_purity() * seconds_per_tick
+		affected_mob.adjust_oxy_loss(2.5 * normalise_creation_purity() * metabolization_ratio * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		affected_mob.losebreath += 1 * normalise_creation_purity() * metabolization_ratio * seconds_per_tick
 		. = UPDATE_MOB_HEALTH
 		if(SPT_PROB(10, seconds_per_tick))
 			affected_mob.emote("gasp")
@@ -221,11 +221,11 @@
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(SPT_PROB(5, seconds_per_tick))
 		to_chat(affected_mob, span_danger("Your insides are burning!"))
-		if(affected_mob.adjust_tox_loss(rand(20, 60), updating_health = FALSE, required_biotype = affected_biotype))
+		if(affected_mob.adjust_tox_loss(rand(20, 60) * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 	else if(SPT_PROB(23, seconds_per_tick))
 		if(affected_mob.heal_bodypart_damage(5))
@@ -292,18 +292,18 @@
 	. = ..()
 	affected_mob.remove_status_effect(/datum/status_effect/reagent_effect/fakedeath)
 
-/datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(HAS_TRAIT(affected_mob, TRAIT_FAKEDEATH) && HAS_TRAIT(affected_mob, TRAIT_DEATHCOMA))
 		return
 	var/need_mob_update
 	switch(current_cycle)
 		if(2 to 6)
-			affected_mob.adjust_confusion(1 SECONDS * REM * seconds_per_tick)
-			affected_mob.adjust_drowsiness(2 SECONDS * REM * seconds_per_tick)
-			affected_mob.adjust_slurring(6 SECONDS * REM * seconds_per_tick)
+			affected_mob.adjust_confusion(0.5 SECONDS * metabolization_ratio * seconds_per_tick)
+			affected_mob.adjust_drowsiness(1 SECONDS * metabolization_ratio * seconds_per_tick)
+			affected_mob.adjust_slurring(3 SECONDS * metabolization_ratio * seconds_per_tick)
 		if(6 to 9)
-			need_mob_update = affected_mob.adjust_stamina_loss(40 * REM * seconds_per_tick, updating_stamina = FALSE)
+			need_mob_update = affected_mob.adjust_stamina_loss(20 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)
 		if(10 to INFINITY)
 			if(affected_mob.stat != DEAD)
 				affected_mob.fakedeath(type)
@@ -322,9 +322,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_FAKEDEATH)
 
-/datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_oxy_loss(1 * REM * seconds_per_tick, FALSE, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
+	if(affected_mob.adjust_oxy_loss(0.5 * metabolization_ratio * seconds_per_tick, FALSE, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/mindbreaker
@@ -341,7 +341,7 @@
 	addiction_types = list(/datum/addiction/hallucinogens = 18)  //7.2 per 2 seconds
 	metabolized_traits = list(TRAIT_RDS_SUPPRESSED)
 
-/datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	// mindbreaker toxin assuages hallucinations in those plagued with it, mentally
 	if(affected_mob.has_trauma_type(/datum/brain_trauma/mild/hallucinations))
@@ -349,7 +349,7 @@
 
 	// otherwise it creates hallucinations. truly a miracle medicine.
 	else
-		affected_mob.adjust_hallucinations(10 SECONDS * REM * seconds_per_tick)
+		affected_mob.adjust_hallucinations(5 SECONDS * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/toxin/mindbreaker/fish
 	name = "Jellyfish Hallucinogen"
@@ -433,9 +433,9 @@
 	. = ..()
 	AddElement(/datum/element/bugkiller_reagent)
 
-/datum/reagent/toxin/pestkiller/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/pestkiller/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_tox_loss(2 * toxpwr * REM * seconds_per_tick, updating_health = FALSE, required_biotype = MOB_BUG))
+	if(affected_mob.adjust_tox_loss(1 * toxpwr * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = MOB_BUG))
 		return UPDATE_MOB_HEALTH
 
 //Pest Spray
@@ -478,11 +478,11 @@
 		spore_lung_victim.Stun(1 SECONDS)
 		spore_lung_victim.emote("cough")
 
-/datum/reagent/toxin/spore/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/spore/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	affected_mob.damageoverlaytemp = 60
 	affected_mob.update_damage_hud()
-	affected_mob.set_eye_blur_if_lower(6 SECONDS * REM * seconds_per_tick)
+	affected_mob.set_eye_blur_if_lower(3 SECONDS * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/toxin/spore_burning
 	name = "Burning Spore Toxin"
@@ -493,9 +493,9 @@
 	ph = 13
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/toxin/spore_burning/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/spore_burning/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.adjust_fire_stacks(2 * REM * seconds_per_tick)
+	affected_mob.adjust_fire_stacks(1 * metabolization_ratio * seconds_per_tick)
 	affected_mob.ignite_mob()
 
 /datum/reagent/toxin/chloralhydrate
@@ -511,17 +511,17 @@
 	inverse_chem = /datum/reagent/impurity/chloralax
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	switch(current_cycle)
 		if(2 to 11)
-			affected_mob.adjust_confusion(2 SECONDS * REM * normalise_creation_purity() * seconds_per_tick)
-			affected_mob.adjust_drowsiness(4 SECONDS * REM * normalise_creation_purity() * seconds_per_tick)
+			affected_mob.adjust_confusion(0.67 SECONDS * normalise_creation_purity() * metabolization_ratio * seconds_per_tick)
+			affected_mob.adjust_drowsiness(1.34 SECONDS * normalise_creation_purity() * metabolization_ratio * seconds_per_tick)
 		if(11 to 51)
-			affected_mob.Sleeping(40 * REM * normalise_creation_purity() * seconds_per_tick)
+			affected_mob.Sleeping(13.34 * normalise_creation_purity() * metabolization_ratio * seconds_per_tick)
 		if(52 to INFINITY)
-			affected_mob.Sleeping(40 * REM * normalise_creation_purity() * seconds_per_tick)
-			if(affected_mob.adjust_tox_loss(1 * (current_cycle - 51) * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+			affected_mob.Sleeping(13.34 * normalise_creation_purity() * metabolization_ratio * seconds_per_tick)
+			if(affected_mob.adjust_tox_loss(0.34 * (current_cycle - 51) * normalise_creation_purity() * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 				return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/fakebeer //disguised as normal beer for use by emagged brobots
@@ -545,14 +545,14 @@
 	icon = initial(copy_from.icon)
 	icon_state = initial(copy_from.icon_state)
 
-/datum/reagent/toxin/fakebeer/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/fakebeer/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	switch(current_cycle)
 		if(2 to 51)
-			affected_mob.Sleeping(40 * REM * seconds_per_tick)
+			affected_mob.Sleeping(13.34 * metabolization_ratio * seconds_per_tick)
 		if(52 to INFINITY)
-			affected_mob.Sleeping(40 * REM * seconds_per_tick)
-			if(affected_mob.adjust_tox_loss(1 * (current_cycle - 50) * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+			affected_mob.Sleeping(13.34 * metabolization_ratio * seconds_per_tick)
+			if(affected_mob.adjust_tox_loss(0.34 * (current_cycle - 50) * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 				return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/coffeepowder
@@ -595,10 +595,10 @@
 	ph = 12.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	// Gain approximately 12 seconds * creation purity seconds of silence every metabolism tick.
-	affected_mob.set_silence_if_lower(6 SECONDS * REM * normalise_creation_purity() * seconds_per_tick)
+	affected_mob.set_silence_if_lower(3 SECONDS * metabolization_ratio * normalise_creation_purity() * seconds_per_tick)
 
 /datum/reagent/toxin/staminatoxin
 	name = "Tirizene"
@@ -609,9 +609,9 @@
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_stamina_loss(data * REM * seconds_per_tick, updating_stamina = FALSE))
+	if(affected_mob.adjust_stamina_loss(0.5 * data * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))
 		. = UPDATE_MOB_HEALTH
 	data = max(data - 1, 3)
 
@@ -625,14 +625,14 @@
 	/// How radioactive is this reagent
 	var/rad_power = 3
 
-/datum/reagent/toxin/polonium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/polonium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(!HAS_TRAIT(affected_mob, TRAIT_IRRADIATED) && SSradiation.can_irradiate_basic(affected_mob))
 		var/chance = min(volume / (20 - rad_power * 5), rad_power)
 		if(SPT_PROB(chance, seconds_per_tick)) // ignore rad protection calculations bc it's inside of us
 			affected_mob.AddComponent(/datum/component/irradiated)
 	else
-		if(affected_mob.adjust_tox_loss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+		if(affected_mob.adjust_tox_loss(4 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/polonium/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
@@ -677,7 +677,7 @@
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/toxin/histamine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/histamine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(SPT_PROB(30, seconds_per_tick))
 		switch(pick(1, 2, 3, 4))
@@ -691,15 +691,16 @@
 			if(4)
 				if(prob(75))
 					to_chat(affected_mob, span_danger("You scratch at an itch."))
-					if(affected_mob.adjust_brute_loss(2* REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype))
+					if(affected_mob.adjust_brute_loss(4 * metabolization_ratio, updating_health = FALSE, required_bodytype = affected_bodytype))
 						return UPDATE_MOB_HEALTH
 
-/datum/reagent/toxin/histamine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/histamine/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
+	var/heal = 4 * metabolization_ratio * seconds_per_tick
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_oxy_loss(2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	need_mob_update += affected_mob.adjust_brute_loss(2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjust_tox_loss(2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update = affected_mob.adjust_oxy_loss(heal, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update += affected_mob.adjust_brute_loss(heal, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjust_tox_loss(heal, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -717,18 +718,18 @@
 	inverse_chem = /datum/reagent/impurity/methanol
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM)) //mmmm, the forbidden pickle juice
-		if(affected_mob.adjust_tox_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)) //it counteracts its own toxin damage.
+		if(affected_mob.adjust_tox_loss(-1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)) //it counteracts its own toxin damage.
 			return UPDATE_MOB_HEALTH
 		return
 	else if(SPT_PROB(2.5, seconds_per_tick) && !HAS_TRAIT(affected_mob, TRAIT_BLOCK_FORMALDEHYDE_METABOLISM))
 		holder.add_reagent(/datum/reagent/toxin/histamine, pick(5,15))
-		holder.remove_reagent(/datum/reagent/toxin/formaldehyde, 1.2)
+		holder.remove_reagent(/datum/reagent/toxin/formaldehyde, 2.4 * metabolization_ratio * seconds_per_tick)
 	return ..()
 
-/datum/reagent/toxin/formaldehyde/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/formaldehyde/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
 	if(HAS_TRAIT(affected_mob, TRAIT_BLOCK_FORMALDEHYDE_METABOLISM))
 		return
 
@@ -744,13 +745,13 @@
 	///Mob Size of the current mob sprite.
 	var/current_size = RESIZE_DEFAULT_SIZE
 
-/datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	var/newsize = 1.1 * RESIZE_DEFAULT_SIZE
 	affected_mob.update_transform(newsize/current_size)
 	current_size = newsize
 	toxpwr = 0.1 * volume
 
-	if(affected_mob.adjust_brute_loss((0.3 * volume) * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype))
+	if(affected_mob.adjust_brute_loss(2 * (0.3 * volume) * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype))
 		. = UPDATE_MOB_HEALTH
 
 	// chance to either decay into histamine or go the normal route of toxin metabolization
@@ -777,16 +778,16 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/opioids = 25)
 
-/datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 3 * REM * normalise_creation_purity() * seconds_per_tick, 150)
+	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 3 * metabolization_ratio * normalise_creation_purity() * seconds_per_tick, 150)
 	if(affected_mob.toxloss <= 60)
-		need_mob_update += affected_mob.adjust_tox_loss(1 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += affected_mob.adjust_tox_loss(1 * metabolization_ratio * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(current_cycle > 4)
 		affected_mob.add_mood_event("smacked out", /datum/mood_event/narcotic_heavy, name)
 	if(current_cycle > 18)
-		affected_mob.Sleeping(40 * REM * normalise_creation_purity() * seconds_per_tick)
+		affected_mob.Sleeping(40 * metabolization_ratio * normalise_creation_purity() * seconds_per_tick)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -801,7 +802,7 @@
 	ph = 9.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/cyanide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/cyanide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update = FALSE
 	if(SPT_PROB(2.5, seconds_per_tick))
@@ -810,7 +811,7 @@
 	if(SPT_PROB(4, seconds_per_tick))
 		to_chat(affected_mob, span_danger("You feel horrendously weak!"))
 		affected_mob.Stun(40)
-		need_mob_update += affected_mob.adjust_tox_loss(2*REM * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += affected_mob.adjust_tox_loss(8 * normalise_creation_purity() * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -836,7 +837,7 @@
 	penetrates_skin = TOUCH|VAPOR
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	var/scratched = FALSE
 	var/scratch_damage = 0.2 * REM
 
@@ -868,7 +869,7 @@
 	toxpwr = 2.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/toxin/initropidril/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/initropidril/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(!SPT_PROB(13, seconds_per_tick))
 		return
@@ -879,7 +880,7 @@
 			affected_mob.Paralyze(60)
 		if(2)
 			affected_mob.losebreath += 10
-			affected_mob.adjust_oxy_loss(rand(5,25), updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+			affected_mob.adjust_oxy_loss(2 * rand(5,25) * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 			need_mob_update = TRUE
 		if(3)
 			if(!affected_mob.undergoing_cardiac_arrest() && affected_mob.can_heartattack())
@@ -902,10 +903,10 @@
 	taste_mult = 0 // undetectable, I guess?
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/toxin/pancuronium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/pancuronium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(current_cycle > 10)
-		affected_mob.Stun(40 * REM * seconds_per_tick)
+		affected_mob.Stun(80 * metabolization_ratio * seconds_per_tick)
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.losebreath += 4
 		return UPDATE_MOB_HEALTH
@@ -920,11 +921,11 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	added_traits = list(TRAIT_ANTICONVULSANT)
 
-/datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(current_cycle > 10)
-		affected_mob.Sleeping(40 * REM * seconds_per_tick)
-	if(affected_mob.adjust_stamina_loss(10 * REM * seconds_per_tick, updating_stamina = FALSE))
+		affected_mob.Sleeping(26.67 * metabolization_ratio * seconds_per_tick)
+	if(affected_mob.adjust_stamina_loss(0.67 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/sulfonal
@@ -939,10 +940,10 @@
 	ph = 6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/sulfonal/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/sulfonal/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(current_cycle > 22)
-		affected_mob.Sleeping(40 * REM * normalise_creation_purity() * seconds_per_tick)
+		affected_mob.Sleeping(160 * normalise_creation_purity() * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/toxin/amanitin
 	name = "Amanitin"
@@ -954,9 +955,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	var/delayed_toxin_damage = 0
 
-/datum/reagent/toxin/amanitin/on_mob_life(mob/living/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/amanitin/on_mob_life(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	delayed_toxin_damage += (seconds_per_tick * 3)
+	delayed_toxin_damage += 6 * metabolization_ratio * seconds_per_tick
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/affected_mob)
 	. = ..()
@@ -977,12 +978,12 @@
 	inverse_chem = /datum/reagent/impurity/ipecacide
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/lipolicide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/lipolicide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(affected_mob.nutrition <= NUTRITION_LEVEL_STARVING)
-		if(affected_mob.adjust_tox_loss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+		if(affected_mob.adjust_tox_loss(1 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			. = UPDATE_MOB_HEALTH
-	affected_mob.adjust_nutrition(-3 * REM * normalise_creation_purity() * seconds_per_tick) // making the chef more valuable, one meme trap at a time
+	affected_mob.adjust_nutrition(-3 * normalise_creation_purity() * metabolization_ratio * seconds_per_tick) // making the chef more valuable, one meme trap at a time
 	affected_mob.overeatduration = 0
 
 /datum/reagent/toxin/coniine
@@ -993,23 +994,22 @@
 	toxpwr = 1.75
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/coniine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/coniine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(affected_mob.losebreath < 5)
-		affected_mob.losebreath = min(affected_mob.losebreath + 5 * REM * seconds_per_tick, 5)
+		affected_mob.losebreath = min(affected_mob.losebreath + 41.67 * metabolization_ratio * seconds_per_tick, 5)
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/spewium
 	name = "Spewium"
 	description = "A powerful emetic, causes uncontrollable vomiting.  May result in vomiting organs at high doses."
 	color = "#2f6617" //A sickly green color
-	metabolization_rate = REAGENTS_METABOLISM
 	overdose_threshold = 29
 	toxpwr = 0
 	taste_description = "vomit"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/toxin/spewium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/spewium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(current_cycle > 11 && SPT_PROB(min(31, current_cycle), seconds_per_tick))
 		affected_mob.vomit(10, prob(10), prob(50), rand(0,4), TRUE)
@@ -1021,9 +1021,9 @@
 		affected_mob.vomit(vomit_flags = constructed_flags, distance = rand(0,4))
 		for(var/datum/reagent/toxin/reagent in affected_mob.reagents.reagent_list)
 			if(reagent != src)
-				affected_mob.reagents.remove_reagent(reagent.type, 1 * reagent.purge_multiplier * REM * seconds_per_tick)
+				affected_mob.reagents.remove_reagent(reagent.type, 0.5 * reagent.purge_multiplier * metabolization_ratio * seconds_per_tick)
 
-/datum/reagent/toxin/spewium/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/spewium/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(current_cycle > 33 && SPT_PROB(7.5, seconds_per_tick))
 		affected_mob.spew_organ()
@@ -1038,11 +1038,11 @@
 	toxpwr = 1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(current_cycle > 11)
-		affected_mob.Paralyze(60 * REM * seconds_per_tick)
-	if(affected_mob.adjust_oxy_loss(0.5*REM*seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
+		affected_mob.Paralyze(240 * metabolization_ratio * seconds_per_tick)
+	if(affected_mob.adjust_oxy_loss(2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/heparin //Based on a real-life anticoagulant. I'm not a doctor, so this won't be realistic.
@@ -1059,9 +1059,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_BLOOD_FOUNTAIN)
 
-/datum/reagent/toxin/heparin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/heparin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	if(holder.has_reagent(/datum/reagent/medicine/coagulant)) //Directly purges coagulants from the system. Get rid of the heparin BEFORE attempting to use coagulants.
-		holder.remove_reagent(/datum/reagent/medicine/coagulant, 2 * REM * seconds_per_tick)
+		holder.remove_reagent(/datum/reagent/medicine/coagulant, 5 * metabolization_ratio * seconds_per_tick)
 	return ..()
 
 /datum/reagent/toxin/rotatium //Rotatium. Fucks up your rotation and is hilarious
@@ -1077,7 +1077,7 @@
 	taste_description = "spinning"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/rotatium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/rotatium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(!affected_mob.hud_used || (current_cycle < 20 || (current_cycle % 20) == 0))
 		return
@@ -1106,13 +1106,14 @@
 	ph = 8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/anacea/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/anacea/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	var/remove_amt = 5
 	if(holder.has_reagent(/datum/reagent/medicine/calomel) || holder.has_reagent(/datum/reagent/medicine/pen_acid))
 		remove_amt = 0.5
 	. = ..()
 	for(var/datum/reagent/medicine/reagent in affected_mob.reagents.reagent_list)
-		affected_mob.reagents.remove_reagent(reagent.type, remove_amt * reagent.purge_multiplier * REM * normalise_creation_purity() * seconds_per_tick)
+		reagent.volume -= 6.25 * remove_amt * reagent.purge_multiplier * normalise_creation_purity() * metabolization_ratio * seconds_per_tick
+	affected_mob.reagents.update_total()
 
 //ACID
 
@@ -1181,9 +1182,9 @@
 	mytray.adjust_toxic(round(volume * 3))
 	mytray.adjust_weedlevel(-rand(1,4))
 
-/datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_fire_loss(((current_cycle-1)/15) * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype))
+	if(affected_mob.adjust_fire_loss(0.5 * ((current_cycle-1)/15) * metabolization_ratio * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/acid/nitracid
@@ -1197,28 +1198,25 @@
 	ph = 1.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_fire_loss((volume/10) * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)) //here you go nervar
+	if(affected_mob.adjust_fire_loss(0.5 * (volume/10) * metabolization_ratio * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)) //here you go nervar
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/delayed
 	name = "Toxin Microcapsules"
 	description = "Causes heavy toxin damage after a brief time of inactivity."
 	metabolization_rate = 0 //stays in the system until active.
-	var/actual_metaboliztion_rate = REAGENTS_METABOLISM
 	toxpwr = 0
-	var/actual_toxpwr = 5
-	var/delay = 31
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/toxin/delayed/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/delayed/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(current_cycle <= delay)
+	if(current_cycle <= 31)
 		return
 	if(holder)
-		holder.remove_reagent(type, actual_metaboliztion_rate * affected_mob.metabolism_efficiency * seconds_per_tick)
-	if(affected_mob.adjust_tox_loss(actual_toxpwr * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+		holder.remove_reagent(type, REAGENTS_METABOLISM * affected_mob.metabolism_efficiency * seconds_per_tick)
+	if(affected_mob.adjust_tox_loss(0.5 * 5 * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		. = UPDATE_MOB_HEALTH
 	if(SPT_PROB(5, seconds_per_tick))
 		affected_mob.Paralyze(20)
@@ -1253,9 +1251,9 @@
 	. = ..()
 	affected_mob.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
 
-/datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_stamina_loss(7.5 * REM * seconds_per_tick, updating_stamina = FALSE))
+	if(affected_mob.adjust_stamina_loss(3.25 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))
 		. = UPDATE_MOB_HEALTH
 	if(!SPT_PROB(10, seconds_per_tick))
 		return
@@ -1267,7 +1265,7 @@
 		if(3)
 			to_chat(affected_mob, span_warning("Your bones hurt!"))
 
-/datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(SPT_PROB(2, seconds_per_tick) && iscarbon(affected_mob)) //big oof
 		var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
@@ -1297,9 +1295,9 @@
 	taste_description = "tannin"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/bungotoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/bungotoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, 3 * REM * seconds_per_tick))
+	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, 3 * metabolization_ratio * seconds_per_tick))
 		. = UPDATE_MOB_HEALTH
 
 	// If our mob's currently dizzy from anything else, we will also gain confusion
@@ -1321,11 +1319,11 @@
 	taste_description = "sugary sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/leadacetate/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/leadacetate/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_EARS, 1 * REM * seconds_per_tick)
-	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 1 * REM * seconds_per_tick)
+	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_EARS, 0.5 * metabolization_ratio * seconds_per_tick)
+	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.5 * metabolization_ratio * seconds_per_tick)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 	if(SPT_PROB(0.5, seconds_per_tick))
@@ -1345,9 +1343,9 @@
 	health_required = 10
 	liver_damage_multiplier = 0
 
-/datum/reagent/toxin/viperspider/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/viperspider/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.adjust_hallucinations(10 SECONDS * REM * seconds_per_tick)
+	affected_mob.adjust_hallucinations(5 SECONDS * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/toxin/tetrodotoxin
 	name = "Tetrodotoxin"
@@ -1368,7 +1366,7 @@
 		TRAIT_PARALYSIS_R_LEG = BODY_ZONE_R_LEG,
 	)
 
-/datum/reagent/toxin/tetrodotoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/tetrodotoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/need_mob_update
 	if(HAS_TRAIT(affected_mob, TRAIT_TETRODOTOXIN_HEALING))
@@ -1376,10 +1374,10 @@
 		liver_tolerance_multiplier = 0
 		silent_toxin = TRUE
 		remove_paralysis()
-		need_mob_update += affected_mob.adjust_oxy_loss(-0.7 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		need_mob_update = affected_mob.adjust_tox_loss(-0.75 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-		need_mob_update += affected_mob.adjust_brute_loss(-1.2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += affected_mob.adjust_fire_loss(-1.35 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.adjust_oxy_loss(-3.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		need_mob_update = affected_mob.adjust_tox_loss(-3.25 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += affected_mob.adjust_brute_loss(-6 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.adjust_fire_loss(-6.75 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		return need_mob_update ? UPDATE_MOB_HEALTH : .
 
 	liver_tolerance_multiplier = initial(liver_tolerance_multiplier)
@@ -1389,25 +1387,25 @@
 	switch(current_cycle)
 		if(7 to 13)
 			if(SPT_PROB(20, seconds_per_tick))
-				affected_mob.set_jitter_if_lower(rand(2 SECONDS, 3 SECONDS) * REM * seconds_per_tick)
+				affected_mob.set_jitter_if_lower(5 * rand(2 SECONDS, 3 SECONDS) * metabolization_ratio)
 			if(SPT_PROB(5, seconds_per_tick))
 				var/obj/item/organ/tongue/tongue = affected_mob.get_organ_slot(ORGAN_SLOT_TONGUE)
 				if(tongue)
 					to_chat(affected_mob, span_warning("Your [tongue.name] feels numb..."))
-				affected_mob.set_slurring_if_lower(5 SECONDS * REM * seconds_per_tick)
-			affected_mob.adjust_disgust(3.5 * REM * seconds_per_tick)
+				affected_mob.set_slurring_if_lower(25 SECONDS * metabolization_ratio)
+			affected_mob.adjust_disgust(17.5 * metabolization_ratio * seconds_per_tick)
 		if(13 to 21)
 			silent_toxin = FALSE
 			toxpwr = 0.5
-			need_mob_update = affected_mob.adjust_stamina_loss(2.5 * REM * seconds_per_tick, updating_stamina = FALSE)
+			need_mob_update = affected_mob.adjust_stamina_loss(12.5 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)
 			if(SPT_PROB(20, seconds_per_tick))
-				affected_mob.losebreath += 1 * REM * seconds_per_tick
+				affected_mob.losebreath += 5 * metabolization_ratio
 				need_mob_update = TRUE
 			if(SPT_PROB(40, seconds_per_tick))
-				affected_mob.set_jitter_if_lower(rand(2 SECONDS, 3 SECONDS) * REM * seconds_per_tick)
-			affected_mob.adjust_disgust(3 * REM * seconds_per_tick)
-			affected_mob.set_slurring_if_lower(1 SECONDS * REM * seconds_per_tick)
-			affected_mob.adjust_stamina_loss(2 * REM * seconds_per_tick, updating_stamina = FALSE)
+				affected_mob.set_jitter_if_lower(5 * rand(2 SECONDS, 3 SECONDS) * metabolization_ratio)
+			affected_mob.adjust_disgust(15 * metabolization_ratio * seconds_per_tick)
+			affected_mob.set_slurring_if_lower(5 SECONDS * metabolization_ratio * seconds_per_tick)
+			affected_mob.adjust_stamina_loss(10 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)
 			if(SPT_PROB(4, seconds_per_tick))
 				paralyze_limb(affected_mob)
 				need_mob_update = TRUE
@@ -1418,13 +1416,13 @@
 			need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.5)
 			need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LUNGS, 0.7)
 			if(SPT_PROB(40, seconds_per_tick))
-				affected_mob.losebreath += 2 * REM * seconds_per_tick
+				affected_mob.losebreath += 10 * metabolization_ratio
 				need_mob_update = TRUE
-			affected_mob.adjust_disgust(3 * REM * seconds_per_tick)
-			affected_mob.set_slurring_if_lower(3 SECONDS * REM * seconds_per_tick)
+			affected_mob.adjust_disgust(15 * metabolization_ratio * seconds_per_tick)
+			affected_mob.set_slurring_if_lower(15 SECONDS * metabolization_ratio * seconds_per_tick)
 			if(SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel horribly weak."))
-			need_mob_update += affected_mob.adjust_stamina_loss(5 * REM * seconds_per_tick, updating_stamina = FALSE)
+			need_mob_update += affected_mob.adjust_stamina_loss(25 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)
 			if(SPT_PROB(8, seconds_per_tick))
 				paralyze_limb(affected_mob)
 				need_mob_update = TRUE
@@ -1434,9 +1432,9 @@
 			toxpwr = 1.5
 			need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 1, BRAIN_DAMAGE_DEATH)
 			need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LUNGS, 1.4)
-			affected_mob.set_silence_if_lower(3 SECONDS * REM * seconds_per_tick)
-			need_mob_update += affected_mob.adjust_stamina_loss(5 * REM * seconds_per_tick, updating_stamina = FALSE)
-			affected_mob.adjust_disgust(2 * REM * seconds_per_tick)
+			affected_mob.set_silence_if_lower(15 SECONDS * metabolization_ratio * seconds_per_tick)
+			need_mob_update += affected_mob.adjust_stamina_loss(25 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)
+			affected_mob.adjust_disgust(10 * metabolization_ratio * seconds_per_tick)
 			if(SPT_PROB(15, seconds_per_tick))
 				paralyze_limb(affected_mob)
 				need_mob_update = TRUE
