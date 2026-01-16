@@ -209,7 +209,7 @@
 
 		recovery_prob = clamp(recovery_prob / bad_immune, 0, 100)
 
-		if(recovery_prob)
+		if(recovery_prob && (bad_immune == 1))
 			if(SPT_PROB(recovery_prob, seconds_per_tick))
 				if(stage == 1 && prob(cure_chance * DISEASE_FINAL_CURE_CHANCE_MULTIPLIER)) //if we reduce FROM stage == 1, cure the virus - after defeating its cure_chance in a final battle
 					if(!HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) && (affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING))

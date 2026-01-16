@@ -69,7 +69,7 @@
 	)
 	spying = TRUE
 
-/datum/computer_file/program/secureye/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
+/datum/computer_file/program/secureye/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	// Map name has to start and end with an A-Z character,
 	// and definitely NOT with a square bracket or even a number.
@@ -174,7 +174,7 @@
 		CRASH("[src] was able to track [target] through /datum/trackable, but was not on a visible turf to cameras.")
 	for(var/obj/machinery/camera/cameras as anything in target_camerachunk.cameras[target.z])
 		// We need to find a particular camera that can see this turf
-		if(!(target_turf in cameras.can_see()))
+		if(length(cameras.can_see() & list(target_turf)))
 			continue
 		var/new_camera = WEAKREF(cameras)
 		if(camera_ref == new_camera)

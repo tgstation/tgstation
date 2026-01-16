@@ -19,7 +19,7 @@
 	src.stored_picture = stored_picture
 	src.picture_name = picture_name
 
-/datum/computer_file/picture/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
+/datum/computer_file/picture/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	assign_path()
 

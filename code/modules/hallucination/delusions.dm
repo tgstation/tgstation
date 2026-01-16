@@ -62,7 +62,7 @@
 	return ..()
 
 /datum/hallucination/delusion/start()
-	if(!hallucinator.client)
+	if(!hallucinator.client || hallucinator.stat >= UNCONSCIOUS)
 		return FALSE
 
 	feedback_details += "Delusion: [delusion_name]"

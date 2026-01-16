@@ -42,7 +42,7 @@
 	var/mob/living/carbon/human/stored_owner = active_owner //to avoid infinite looping when dust unequips the pendant
 	active_owner = null
 	to_chat(stored_owner, span_userdanger("You feel your life rapidly slipping away from you!"))
-	stored_owner.dust(TRUE, TRUE)
+	stored_owner.dust(just_ash = TRUE, drop_items = TRUE)
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/check_health(mob/living/source)
 	SIGNAL_HANDLER

@@ -401,19 +401,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		return FALSE
 	return TRUE
 
-/// Returns a list of turfs in this camera's view.
-/// This includes turfs that are "obscured by darkness" from the camera's POV.
+/// Returns an alist of turfs in this camera's view. This includes turfs that are "obscured by darkness" from the camera's POV.
+/// Format is "alist[turf] = null", if you need to check individual objects use "length(can_see & list(turf))". Only "&" and "in" work for checking contents, but "in" is much slower.
+/// Always have the return value of can_see as the left-hand operand, otherwise it uses list checks instead of alist checks and your CPU time gets thrown in a blender.
 /obj/machinery/camera/proc/can_see()
-	var/list/see = null
+	var/alist/see = alist()
 	var/turf/pos = get_turf(src)
 	var/turf/directly_above = GET_TURF_ABOVE(pos)
 	var/check_lower = pos != get_lowest_turf(pos)
 	var/check_higher = directly_above && istransparentturf(directly_above) && (pos != get_highest_turf(pos))
 
 	if(isXRay())
-		see = RANGE_TURFS(view_range, pos)
+		see += RANGE_TURFS(view_range, pos)
 	else
-		see = get_hear_turfs(view_range, pos)
+		var/lum = pos.luminosity
+		pos.luminosity = 6
+		for(var/turf/turf in view(view_range, pos))
+			see += turf
+		pos.luminosity = lum
 
 	if(check_lower || check_higher)
 		// Haha datum var access KILL ME
@@ -428,6 +433,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 				while(above && istransparentturf(above))
 					see += RANGE_TURFS(1, above)
 					above = GET_TURF_ABOVE(above)
+
 	return see
 
 /obj/machinery/camera/proc/Togglelight(on=0)

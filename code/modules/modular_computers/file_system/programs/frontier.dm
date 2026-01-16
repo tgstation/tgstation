@@ -18,7 +18,7 @@
 	/// The file under consideration.
 	var/datum/computer_file/data/ordnance/selected_file
 
-/datum/computer_file/program/scipaper_program/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
+/datum/computer_file/program/scipaper_program/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	paper_to_be = new
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
