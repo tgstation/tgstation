@@ -1,3 +1,11 @@
 2026-01-05:
   GuffyWuffy:
   - sound: added ai vox words
+2026-01-16:
+  Asp:
+  - rscadd: Atoms can now fall into disposal bins from a higher Z-level. Mobs are
+      immediately flushed.
+  - rscadd: A laser can be attached to the big manipulator, making it 100% accurate
+      at throwing atoms into disposal bins.
+  - bugfix: Big manipulators no longer crash while emagged and adding new interaction
+      points.
