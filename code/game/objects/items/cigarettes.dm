@@ -668,8 +668,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	chem_volume = 60
 	lung_harm = 2.5
 	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/consumable/menthol = 6, /datum/reagent/medicine/oculine = 1)
+
+/obj/item/cigarette/greytide/Initialize(mapload)
+	. = ..()
 	/// Weighted list of random reagents to add
-	var/static/list/possible_reagents = list(
+	var/list/possible_reagents = list(
 		/datum/reagent/toxin/fentanyl = 2,
 		/datum/reagent/glitter/random = 2,
 		/datum/reagent/drug/aranesp = 2,
@@ -685,9 +688,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		/datum/reagent/consumable/mintextract = 2,
 		/datum/reagent/pax = 1,
 	)
-
-/obj/item/cigarette/greytide/Initialize(mapload)
-	. = ..()
 	if(prob(40))
 		reagents.add_reagent(pick_weight(possible_reagents), rand(10, 15))
 

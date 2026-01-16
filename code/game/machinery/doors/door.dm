@@ -281,6 +281,8 @@
 			return
 		if(requiresID() && check_access(I))
 			open()
+		else if(unrestricted_side(I) && !delayed_unres_open)
+			open()
 		else
 			run_animation(DOOR_DENY_ANIMATION)
 		return
@@ -300,19 +302,7 @@
 		return !opacity
 
 /obj/machinery/door/proc/bumpopen(mob/user)
-	if(operating || !can_open_with_hands)
-		return
-
-	add_fingerprint(user)
-	if(!density || (obj_flags & EMAGGED))
-		return
-
-	if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)
-		open()
-	else if(requiresID() && allowed(user))
-		open()
-	else
-		run_animation(DOOR_DENY_ANIMATION)
+	try_to_activate_door(user, access_bypass = FALSE, bumped = TRUE)
 
 /obj/machinery/door/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -335,37 +325,43 @@
 		return
 	return ..()
 
-/obj/machinery/door/proc/try_to_activate_door(mob/living/user, access_bypass = FALSE)
+/obj/machinery/door/proc/try_to_activate_door(mob/user, access_bypass = FALSE, bumped = FALSE)
 	add_fingerprint(user)
-	if(operating || (obj_flags & EMAGGED) || !can_open_with_hands)
+	if(operating || (obj_flags & EMAGGED))
 		return
-	if(access_bypass || (requiresID() && allowed(user)))
+
+	if(!bumped && !can_open_with_hands)
+		return
+
+	if(elevator_mode && elevator_status != LIFT_PLATFORM_UNLOCKED)
+		return
+
+	var/access_check = access_bypass
+	if(emergency)
+		access_check = TRUE
+	else if(unrestricted_side(user) && !delayed_unres_open)
+		access_check = TRUE
+	else if(!requiresID())
+		access_check = TRUE
+	else if(allowed(user)) // You
+		access_check = TRUE
+	else for(var/mob/living/human_backpack in user.buckled_mobs)
+		if(allowed(human_backpack)) // Your partner in crime
+			access_check = TRUE
+			break
+
+	if(!access_check && unrestricted_side(user) && attempt_delayed_unres_open(user))
+		access_check = TRUE
+
+	if(access_check)
 		if(density)
 			open()
 		else
 			close()
 		return TRUE
-	if(density)
+
+	else if(!operating && density)
 		run_animation(DOOR_DENY_ANIMATION)
-
-/obj/machinery/door/allowed(mob/accessor)
-	if(emergency)
-		return TRUE
-
-	. = ..() // let's see if this user has any funny way to access this before we try unrestricted stuff as that will have potential delays
-
-	if(. == TRUE)
-		return TRUE
-
-	if(unrestricted_side(accessor))
-		if(!delayed_unres_open)
-			return TRUE
-
-		return attempt_delayed_unres_open(accessor)
-
-	return FALSE
-
-
 
 /// Allows for specific side of airlocks to be unrestricted (IE, can exit maint freely, but need access to enter)
 /obj/machinery/door/proc/unrestricted_side(mob/opener)
@@ -377,6 +373,7 @@
 	if(opener.do_after_count() > 0) // not allowed to do this if you're doing something else. just wait lad.
 		return FALSE
 
+	stoplag(1) // allow the door to process any allow/deny responses first
 	var/do_after_time = rand(delayed_unres_time_lower, delayed_unres_time_upper)
 	ADD_TRAIT(opener, TRAIT_UNRESTRICTED_AIRLOCK_OPENING, REF(src))
 	RegisterSignal(opener, COMSIG_ATOM_PRE_PRESSURE_PUSH, PROC_REF(stop_pressure_during_unres_open))
