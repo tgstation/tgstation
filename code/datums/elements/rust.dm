@@ -115,6 +115,9 @@
 /datum/element/rust/heretic/proc/on_entered(turf/source, atom/movable/entered, ...)
 	SIGNAL_HANDLER
 
+	if (HAS_TRAIT(entered, TRAIT_RUSTIMMUNE) || HAS_TRAIT(entered, TRAIT_MAGICALLY_PHASED) || entered.movement_type & (MOVETYPES_NOT_TOUCHING_GROUND | VENTCRAWLING))
+		return
+
 	if(ismecha(entered))
 		var/obj/vehicle/sealed/mecha/victim = entered
 		victim.take_damage(20, armour_penetration = 100)

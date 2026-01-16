@@ -1137,6 +1137,13 @@
 		'sound/items/hard_hat/hard_hat_equip3.ogg',
 	)
 
+/datum/sound_effect/alien_spit_acid
+	key = SFX_ALIEN_SPIT_ACID
+	file_paths = list(
+		'sound/effects/alien/alien_spitacid.ogg',
+		'sound/effects/alien/alien_spitacid2.ogg'
+	)
+
 /// troutstation list
 /datum/sound_effect/gay
 	key = SFX_GAY

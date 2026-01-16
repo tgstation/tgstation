@@ -65,8 +65,8 @@
 	if(!istype(to_modify)) // null or invalid
 		return
 
-	to_modify.eye_damage = 10 * GET_MUTATION_SYNCHRONIZER(src)
-	to_modify.thermal_duration = 10 SECONDS * GET_MUTATION_POWER(src)
+	to_modify.eye_damage = /datum/action/cooldown/spell/thermal_vision::eye_damage * GET_MUTATION_SYNCHRONIZER(src) * GET_MUTATION_POWER(src)
+	to_modify.thermal_duration = /datum/action/cooldown/spell/thermal_vision::thermal_duration * GET_MUTATION_POWER(src)
 
 /datum/action/cooldown/spell/thermal_vision
 	name = "Activate Thermal Vision"
@@ -74,13 +74,13 @@
 	button_icon = 'icons/mob/actions/actions_changeling.dmi'
 	button_icon_state = "augmented_eyesight"
 
-	cooldown_time = 25 SECONDS
+	cooldown_time = 60 SECONDS
 	spell_requirements = NONE
 
 	/// How much eye damage is given on cast
-	var/eye_damage = 10
+	var/eye_damage = 7.5
 	/// The duration of the thermal vision
-	var/thermal_duration = 10 SECONDS
+	var/thermal_duration = 30 SECONDS
 
 /datum/action/cooldown/spell/thermal_vision/Remove(mob/living/remove_from)
 	REMOVE_TRAIT(remove_from, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
@@ -202,4 +202,3 @@
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, GENETIC_MUTATION)
-

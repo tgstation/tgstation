@@ -131,7 +131,9 @@
 
 /datum/surgery_operation/limb/retract_skin/on_success(obj/item/bodypart/limb)
 	. = ..()
-	limb.add_surgical_state(SURGERY_SKIN_OPEN)
+	// the limb SHOULD either have unclamped or clamped vessels if we're retracting skin
+	// if it doesn't, some shenanigans happened (likely due to wounds), so we add unclamped if needed - just to be thorough
+	limb.add_surgical_state(SURGERY_SKIN_OPEN | (LIMB_HAS_SURGERY_STATE(limb, SURGERY_VESSELS_CLAMPED) ? NONE : SURGERY_VESSELS_UNCLAMPED))
 	limb.remove_surgical_state(SURGERY_SKIN_CUT)
 
 /datum/surgery_operation/limb/retract_skin/abductor

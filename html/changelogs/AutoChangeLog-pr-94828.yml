@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - admin: "Fishing now has it's own log file, when a fish is caught or bred into the game."

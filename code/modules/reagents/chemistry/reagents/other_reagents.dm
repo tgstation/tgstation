@@ -2936,8 +2936,8 @@
 
 /datum/reagent/eldritch/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
-	if ((reac_volume >= 1.5 || isplatingturf(exposed_turf)) && !HAS_TRAIT(exposed_turf, TRAIT_RUSTY))
-		exposed_turf.rust_turf()
+	if ((reac_volume >= 1.5 || isplatingturf(exposed_turf)))
+		exposed_turf.rust_heretic_act(RUST_RESISTANCE_TITANIUM)
 
 /datum/reagent/universal_indicator
 	name = "Universal Indicator"

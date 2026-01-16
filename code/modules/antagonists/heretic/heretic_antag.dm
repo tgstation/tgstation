@@ -354,7 +354,7 @@
 	for(var/starting_knowledge in GLOB.heretic_start_knowledge)
 		gain_knowledge(starting_knowledge, HERETIC_KNOWLEDGE_START, update = FALSE)
 
-	owner.current.AddElement(/datum/element/leeching_walk/minor)
+	owner.current.AddElement(/datum/element/rust_healing, FALSE, 1.5, 5)
 
 	ADD_TRAIT(owner, TRAIT_SEE_BLESSED_TILES, REF(src))
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer) // Gain +1 knowledge every 20 minutes.
@@ -368,7 +368,7 @@
 			QDEL_NULL(researched_knowledge[knowledge_path][HKT_INSTANCE])
 
 	REMOVE_TRAIT(owner, TRAIT_SEE_BLESSED_TILES, REF(src))
-	owner.current.RemoveElement(/datum/element/leeching_walk/minor)
+	owner.current.RemoveElement(/datum/element/rust_healing, FALSE, 1.5, 5)
 	QDEL_NULL(heretic_path)
 	owner.current.cut_overlay(eldritch_overlay)
 	return ..()

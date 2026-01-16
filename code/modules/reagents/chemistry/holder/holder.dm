@@ -142,10 +142,10 @@
 			iter_reagent.purity = ((iter_reagent.creation_purity * iter_reagent.volume) + (added_purity * amount)) /(iter_reagent.volume + amount) //This should add the purity to the product
 			iter_reagent.creation_purity = iter_reagent.purity
 			iter_reagent.ph = ((iter_reagent.ph * (iter_reagent.volume)) + (added_ph * amount)) / (iter_reagent.volume + amount)
+			iter_reagent.on_merge(data, amount) // Update this before updating volume. FIXME: Move all of the surrounding crap into this proc so implementations decide whether they go first or base code goes first.
 			iter_reagent.volume += amount
 			update_total()
 
-			iter_reagent.on_merge(data, amount)
 			if(reagtemp != cached_temp)
 				var/new_heat_capacity = heat_capacity()
 				if(new_heat_capacity)

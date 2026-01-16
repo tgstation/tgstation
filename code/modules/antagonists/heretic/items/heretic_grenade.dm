@@ -111,7 +111,7 @@
 
 /datum/reagent/heretic_rust/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
-	exposed_turf.rust_turf()
+	exposed_turf.rust_heretic_act(RUST_RESISTANCE_TITANIUM)
 
 /datum/reagent/heretic_rust/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()

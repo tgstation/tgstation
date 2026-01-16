@@ -38,11 +38,11 @@
 	/// Which functional (i.e. flightpotion) wing types (if any) does this bodypart support? If count is >1 a radial menu is used to choose between all icons in list
 	var/list/wing_types = list(/obj/item/organ/wings/functional/angel)
 
-/obj/item/bodypart/chest/get_butcher_drops()
+/obj/item/bodypart/chest/get_butcher_drops(force = FALSE)
 	. = ..()
-	if(butcher_drops)
+	if(!isnull(butcher_drops) && !force)
 		return
-	var/datum/species/species = GLOB.species_list[limb_id]
+	var/datum/species/species = GLOB.species_list[species_id || limb_id]
 	if (!species || !species.skinned_type)
 		return
 	if (!islist(.))

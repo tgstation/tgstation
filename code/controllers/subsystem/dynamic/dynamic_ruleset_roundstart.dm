@@ -98,6 +98,40 @@
 /datum/dynamic_ruleset/roundstart/changeling/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/changeling)
 
+// Quick thing about this event, it turns out roundstart blood worms, despite being granted a host, are worse at antaggery in practice.
+// They have their static, so unlike blood worms who spawn in the middle of the round, they just kinda tend to do nothing. So having at least 2 is ideal.
+// This way, if one ends up being a fluke, the other can hopefully pick up the slack. It's a semi-rare event, so having a massive chance to just fizzle out isn't ideal.
+/datum/dynamic_ruleset/roundstart/blood_worm
+	name = "Blood Worms"
+	config_tag = "Roundstart Blood Worm"
+	preview_antag_datum = /datum/antagonist/blood_worm
+	pref_flag = ROLE_BLOOD_WORM
+	weight = 1
+	min_pop = 10 // Resource limited, spawning on lowpop is fine.
+	max_antag_cap = list("denominator" = 29) // +1 blood worm per 30 pop.
+	repeatable = FALSE // Yeah no.
+
+/datum/dynamic_ruleset/roundstart/blood_worm/is_valid_candidate(mob/living/candidate, client/candidate_client)
+	if (!..())
+		return FALSE
+
+	var/species_type = candidate_client.prefs.read_preference(/datum/preference/choiced/species)
+	var/datum/species/species = GLOB.species_prototypes[species_type]
+
+	return !(TRAIT_NOBLOOD in species.inherent_traits)
+
+/datum/dynamic_ruleset/roundstart/blood_worm/assign_role(datum/mind/candidate)
+	if (!CAN_HAVE_BLOOD(candidate.current))
+		CRASH("A roundstart blood worm tried to spawn into a candidate mob with no blood. This shouldn't happen, because we already checked for TRAIT_NOBLOOD in species traits.")
+
+	var/mob/living/carbon/human/host = candidate.current
+	var/mob/living/basic/blood_worm/hatchling/worm = new(get_turf(host))
+
+	candidate.transfer_to(worm)
+	candidate.add_antag_datum(/datum/antagonist/blood_worm/infestation)
+
+	worm.enter_host(host, silent = TRUE, gain_progress = FALSE)
+
 /datum/dynamic_ruleset/roundstart/heretic
 	name = "Heretics"
 	config_tag = "Roundstart Heretics"

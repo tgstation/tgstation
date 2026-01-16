@@ -177,6 +177,8 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define isstargazer(A) (istype(A, /mob/living/basic/heretic_summon/star_gazer))
 
+#define isbloodworm(A) (istype(A, /mob/living/basic/blood_worm))
+
 /// returns whether or not the atom is either a basic mob OR simple animal
 #define isanimal_or_basicmob(A) (istype(A, /mob/living/simple_animal) || istype(A, /mob/living/basic))
 

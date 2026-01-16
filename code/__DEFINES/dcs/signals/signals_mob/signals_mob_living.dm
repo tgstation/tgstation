@@ -370,6 +370,9 @@
 /// From /mob/living/proc/mob_pickup() : (mob/living/user, obj/item/mob_holder/holder)
 #define COMSIG_LIVING_SCOOPED_UP "living_scooped_up"
 
+/// From /mob/living/proc/update_blood_status(), sent when the return value of /mob/living/proc/can_have_blood() changes, but before the new blood status is applied : (had_blood, has_blood, old_blood_volume)
+#define COMSIG_LIVING_PRE_UPDATE_BLOOD_STATUS "living_pre_update_blood_status"
+
 /// From /mob/living/proc/update_blood_status(), sent when the return value of /mob/living/proc/can_have_blood() changes : (had_blood, has_blood, old_blood_volume, new_blood_volume)
 #define COMSIG_LIVING_UPDATE_BLOOD_STATUS "living_update_blood_status"
 
