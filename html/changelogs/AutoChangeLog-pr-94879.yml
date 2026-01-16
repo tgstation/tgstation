@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Hallucinations that don't make sense to trigger while unconscious or deaf will no longer trigger while unconscious or deaf"
