@@ -2631,7 +2631,6 @@
 	dwidth = 12;
 	height = 17;
 	name = "syndicate recon outpost";
-	roundstart_template = /datum/map_template/shuttle/infiltrator/basic;
 	shuttle_id = "syndicate_away";
 	width = 23
 	},
