@@ -389,3 +389,52 @@
   - qol: Ghost health and chem scanning displays after examine information rather
       than before
   - map: AI satellite accesses have been made more consistent across maps.
+2026-01-16:
+  ArcaneMusic:
+  - bugfix: The Express Cargo Console can no longer buy goodie items.
+  - rscadd: The Express Cargo console can bypass the goodie purchasing protection
+      if Emagged.
+  - bugfix: Departmental Order requests may no longer bypass access restrictions,
+      and require access to place the order.
+  - rscadd: Departmental Order may explicitly bypass access restrictions if placed
+      using an agent ID.
+  Jacquerel:
+  - rscadd: You can now also load stunprods into ballistas, make sure you turn them
+      on first though
+  - balance: The mounted ballista's damage, wound chance, and armour penetration is
+      now dependent on what kind of spear is loaded into it, and is generally a bit
+      lower
+  - balance: Mounted guns are less accurate when not wrenched down
+  - bugfix: Cancelling reloading a ballista now cancels the reload rather than completing
+      it.
+  - bugfix: You can pick up the exact same spear you fired out of a ballista, rather
+      than a totally new generic spear
+  - bugfix: It is possible to damage and destroy mounted guns with weapons
+  - code_imp: Reworked mounted guns to duplicate less code, please report any deviant
+      behaviour
+  - balance: Eldritch rusted tiles don't apply their effects to anyone who is jaunted
+      or in vents, and don't apply negative effects to people who are flying.
+  - balance: Heretic items which apply rust (grenades and eldritch reagent) check
+      the rust resistance level of the turf rather than always rusting it.
+  - bugfix: Rust Heretics ascending don't rust unrustable turfs, like space tiles.
+  RikuTheKiller:
+  - rscadd: Added a new heavy roundstart/midround antagonist, the Blood Worm. Credit
+      to INFRARED_BARON for the sprites!
+  - bugfix: Removing traits based on a source no longer causes issues with trait signals.
+  - bugfix: High-priority effects no longer double-trigger due to subsystem issues.
+  - bugfix: Weighted averaging in reagent merging code has been band-aid fixed. It's
+      not the best, but it works.
+  SapphoQueer:
+  - bugfix: The buttons for lavaland organs no longer show up after their removal
+      from your body.
+  carpotoxin:
+  - code_imp: Adding or removing rulesets from the queue list is done by procs instead
+      of directly editing the list.
+  loganuk:
+  - map: CATWALK - Chapel has had an upgrade, rejoice in a larger area
+  - map: CATWALK - Atmos & Engi had a quick tidy up
+  - map: CATWALK - Solar Arrays tweaked to be better
+  - map: CATWALK - South East Maintenance has changed
+  - map: CATWALK - Security expanded
+  - map: CATWALK - AI Sat fortified similar to Meta and other maps
+  - map: CATWALK - See full change log in PR

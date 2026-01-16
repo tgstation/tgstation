@@ -1,7 +1,0 @@
-author: "RikuTheKiller"
-delete-after: True
-changes:
-  - rscadd: "Added a new heavy roundstart/midround antagonist, the Blood Worm. Credit to INFRARED_BARON for the sprites!"
-  - bugfix: "Removing traits based on a source no longer causes issues with trait signals."
-  - bugfix: "High-priority effects no longer double-trigger due to subsystem issues."
-  - bugfix: "Weighted averaging in reagent merging code has been band-aid fixed. It's not the best, but it works."

@@ -1,7 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - bugfix: "The Express Cargo Console can no longer buy goodie items."
-  - rscadd: "The Express Cargo console can bypass the goodie purchasing protection if Emagged."
-  - bugfix: "Departmental Order requests may no longer bypass access restrictions, and require access to place the order."
-  - rscadd: "Departmental Order may explicitly bypass access restrictions if placed using an agent ID."
