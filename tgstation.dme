@@ -891,6 +891,7 @@
 #include "code\datums\achievements\mafia_achievements.dm"
 #include "code\datums\achievements\misc_achievements.dm"
 #include "code\datums\achievements\misc_scores.dm"
+#include "code\datums\achievements\progress_scores.dm"
 #include "code\datums\achievements\skill_achievements.dm"
 #include "code\datums\actions\action.dm"
 #include "code\datums\actions\cooldown_action.dm"
