@@ -56,6 +56,7 @@ GLOBAL_LIST_EMPTY(weather_towers)
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
 	processing_flags = START_PROCESSING_MANUALLY
+	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 12)
 
 	/// Whether the tower is active and functioning
 	var/active = FALSE
@@ -84,11 +85,8 @@ GLOBAL_LIST_EMPTY(weather_towers)
 /obj/machinery/power/weather_tower/connect_to_network()
 	return anchored && ..()
 
-/obj/machinery/power/weather_tower/dump_contents()
-	. = ..()
-	core?.forceMove(drop_location())
-	if(!QDELING(src))
-		update_appearance()
+/obj/machinery/power/weather_tower/on_deconstruction(disassembled)
+	new /obj/item/stack/sheet/plasteel(loc, disassembled ? 12 : 4)
 
 /obj/machinery/power/weather_tower/Exited(atom/movable/gone, direction)
 	. = ..()
