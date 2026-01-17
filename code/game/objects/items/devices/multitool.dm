@@ -29,8 +29,7 @@
 	pickup_sound = 'sound/items/handling/tools/multitool_pickup.ogg'
 	custom_materials = list(
 		/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5,
-		/datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2,
-		/datum/material/gold = SMALL_MATERIAL_AMOUNT * 0.1
+		/datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2
 	)
 	custom_premium_price = PAYCHECK_CREW * 3
 	toolspeed = 1

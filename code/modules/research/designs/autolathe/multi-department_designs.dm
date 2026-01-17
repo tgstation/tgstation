@@ -40,9 +40,9 @@
 	name = "Multitool"
 	id = "multitool"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 0.5,
-		/datum/material/glass =SMALL_MATERIAL_AMOUNT * 0.2,
-		/datum/material/gold = SMALL_MATERIAL_AMOUNT * 0.1
+	materials = list(
+		/datum/material/iron =SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/glass =SMALL_MATERIAL_AMOUNT * 0.2
 		)
 	build_path = /obj/item/multitool
 	category = list(
