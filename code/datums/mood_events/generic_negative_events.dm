@@ -648,3 +648,8 @@
 	description = "Ugh, what a night."
 	mood_change = 0
 	timeout = 10 MINUTES
+
+/datum/mood_event/jabbed_with_tester
+	description = "Man, getting jabbed with that thing really sucked."
+	mood_change = -4
+	timeout = 5 MINUTES

@@ -6914,7 +6914,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/north,
 /obj/machinery/shower/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
@@ -11134,7 +11133,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable/layer3,
-/obj/effect/mapping_helpers/airlock/access/any/command/general,
+/obj/effect/mapping_helpers/airlock/access/any/command/ai_upload,
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
 /turf/open/floor/iron/dark,
@@ -15027,7 +15026,7 @@
 	id = "transitlockdown"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
-/obj/effect/mapping_helpers/airlock/access/any/command/general,
+/obj/effect/mapping_helpers/airlock/access/any/command/ai_upload,
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
 /turf/open/floor/iron/dark,
 /area/station/engineering/transit_tube)
@@ -25746,7 +25745,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable/layer3,
-/obj/effect/mapping_helpers/airlock/access/any/command/general,
+/obj/effect/mapping_helpers/airlock/access/any/command/ai_upload,
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
 /turf/open/floor/iron/dark,
@@ -41667,6 +41666,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
 "ooG" = (
@@ -42981,7 +42981,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/any/command/general,
+/obj/effect/mapping_helpers/airlock/access/any/command/ai_upload,
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
