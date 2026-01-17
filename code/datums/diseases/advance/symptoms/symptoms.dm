@@ -76,8 +76,7 @@
 		if(advanced_disease.affected_mob.has_reagent(symptom_cure))
 			remedied = TRUE
 			return FALSE
-		else
-			remedied = FALSE
+		remedied = FALSE
 	if(world.time < next_activation)
 		return FALSE
 	else

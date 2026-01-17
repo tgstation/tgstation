@@ -185,9 +185,7 @@
 				if(SANITY_LEVEL_INSANE)
 					recovery_prob += -0.4
 
-		var/datum/status_effect/sleeping = /datum/status_effect/incapacitating/sleeping
-		var/sleeping_id = sleeping.id
-		if((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) || !(affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING)) && HAS_TRAIT_FROM_ONLY(affected_mob, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(sleeping_id))) //resting starved won't help, but resting helps
+		if((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) || !(affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING)) && HAS_TRAIT_FROM_ONLY(affected_mob, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(/datum/status_effect/incapacitating/sleeping::id))) //resting starved won't help, but resting helps
 			var/turf/rest_turf = get_turf(affected_mob)
 			var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
 
@@ -219,7 +217,6 @@
 		if(recovery_prob && (bad_immune == 1))
 			var/failure_chance = (1 - get_recovery_failure_chance() / 100)
 			if(SPT_PROB(recovery_prob * failure_chance, seconds_per_tick))
->>>>>>> 7d6f8f8a0ec02b7e964bd6b5b518a81321ea2549
 				if(stage == 1 && prob(cure_chance * DISEASE_FINAL_CURE_CHANCE_MULTIPLIER)) //if we reduce FROM stage == 1, cure the virus - after defeating its cure_chance in a final battle
 					if(!HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) && (affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING))
 						if(stage_peaked == FALSE) //if you didn't ride out the virus from its peak, if you're malnourished when it cures, you don't get resistance
