@@ -23,7 +23,7 @@
 	var/datum/girder_wall_recipe/main_recipe = get_main_recipe(structure, stack)
 
 	if (main_recipe)
-		attempt_recipe_async(structure, user, stack, main_recipe, is_material_recipe = FALSE)
+		INVOKE_ASYNC(src, PROC_REF(attempt_recipe), structure, user, stack, main_recipe, is_material_recipe = FALSE)
 		return ITEM_INTERACT_BLOCKING
 
 	if (stack.has_unique_girder)
@@ -37,7 +37,7 @@
 	var/datum/girder_wall_recipe/material_recipe = get_material_recipe(structure, stack)
 
 	if (material_recipe)
-		attempt_recipe_async(structure, user, stack, material_recipe, is_material_recipe = TRUE)
+		INVOKE_ASYNC(src, PROC_REF(attempt_recipe), structure, user, stack, material_recipe, is_material_recipe = TRUE)
 		return ITEM_INTERACT_BLOCKING
 
 /// Returns the main wall recipe of the stack for the structure, if any.
