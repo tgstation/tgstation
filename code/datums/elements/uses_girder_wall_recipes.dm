@@ -83,7 +83,7 @@
 	if (!stack.use_tool(structure, user, recipe.make_delay, recipe.stack_amount, extra_checks = CALLBACK(src, PROC_REF(check_recipe), structure, user, recipe)))
 		return
 
-	var/atom/wall = null
+	var/atom/wall
 	if (ispath(recipe.wall_type, /turf))
 		var/turf/structure_turf = get_turf(structure)
 		wall = structure_turf.place_on_top(recipe.wall_type)
