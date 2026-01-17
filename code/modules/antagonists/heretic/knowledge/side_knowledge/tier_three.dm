@@ -73,7 +73,7 @@
 	)
 	limit = 1
 	cost = 2
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/ui/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "ghoul_shattered"
 	drafting_tier = 3
 
