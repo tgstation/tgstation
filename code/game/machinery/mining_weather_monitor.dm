@@ -262,14 +262,23 @@ GLOBAL_LIST_EMPTY(weather_towers)
 	var/list/affected_zs = list(src.z)
 	var/list/affected_areas
 	if(is_station)
+		var/list/storm_free_areas = typecacheof(list(
+			/area/station/ai,
+			/area/station/commons/storage/emergency,
+			/area/station/maintenance,
+			/area/station/security/prison/safe,
+			/area/station/security/prison/toilet,
+		))
+
+		used_flags |= WEATHER_INDOORS
 		affected_zs |= SSmapping.levels_by_trait(ZTRAIT_STATION)
 		affected_areas = list()
 		for(var/area/station/station_area in GLOB.areas)
-			if(istype(station_area, /area/station/maintenance))
+			if(is_type_in_typecache(station_area, storm_free_areas))
 				continue
 			affected_areas += station_area
+		// keep the summoner safe as well
 		affected_areas -= get_area(src)
-		used_flags |= WEATHER_INDOORS
 
 	var/datum/weather/weather = SSweather.run_weather(
 		weather_datum_type = weather_type,
