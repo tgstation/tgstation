@@ -144,7 +144,7 @@
 	duration = 5 MINUTES
 	curse_color = "#f19a9a"
 
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/ui/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "curse_paralysis"
 
 
@@ -179,7 +179,7 @@
 	duration = 3 MINUTES
 	curse_color = "#c1ffc9"
 
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/ui/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "curse_corrosion"
 
 /datum/heretic_knowledge/curse/corrosion/curse(mob/living/carbon/human/chosen_mob)
