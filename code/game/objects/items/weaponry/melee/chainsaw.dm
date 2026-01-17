@@ -92,10 +92,18 @@
 		return BRUTELOSS
 
 	user.visible_message(span_suicide("[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(src, 'sound/items/weapons/chainsawhit.ogg', 100, TRUE)
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
-	if(myhead)
-		myhead.dismember()
+	if(!myhead)
+		visible_message(span_suicide("[user] realises that [user.p_they()] cannot cut off [user.p_their()] head because [user.p_they()] don't have one!"))
+		return SHAME
+
+	playsound(src, 'sound/items/weapons/chainsawhit.ogg', 100, TRUE)
+	if(myhead.dismember())
+		return BRUTELOSS
+
+	var/datum/wound/slash/crit_wound = new ()
+	crit_wound.apply_wound(myhead)
+	visible_message(span_suicide("[user] tries in vain to cut off [user.p_their()] head but perishes in the attempt!"))
 	return BRUTELOSS
 
 /obj/item/chainsaw/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
@@ -106,7 +114,7 @@
 		return ..()
 
 	var/obj/item/bodypart/head = target_mob.get_bodypart(BODY_ZONE_HEAD)
-	if (isnull(head))
+	if (!head?.can_dismember())
 		return ..()
 
 	playsound(user, 'sound/items/weapons/slice.ogg', vol = 80, vary = TRUE)
@@ -115,8 +123,8 @@
 	if (!do_after(user, behead_time, target_mob, extra_checks = CALLBACK(src, PROC_REF(has_same_head), target_mob, head)))
 		return TRUE
 
-	head.dismember(silent = FALSE)
-	user.put_in_hands(head)
+	if (head.dismember(silent = FALSE))
+		user.put_in_hands(head)
 
 	return TRUE
 

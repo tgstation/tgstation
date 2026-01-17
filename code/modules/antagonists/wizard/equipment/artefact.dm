@@ -284,7 +284,7 @@
 			continue
 		var/mob/living/carbon/human/H = X
 		if(H.stat == DEAD)
-			H.dust(TRUE)
+			H.dust(just_ash = TRUE)
 			spooky_scaries.Remove(X)
 			continue
 	list_clear_nulls(spooky_scaries)

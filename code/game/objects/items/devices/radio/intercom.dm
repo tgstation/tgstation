@@ -63,7 +63,19 @@
 	else
 		. += span_notice("It has a frequency lock set to [frequency/10].")
 
-/obj/item/radio/intercom/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/item/radio/intercom/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_RMB] = unscrewed ? "Secure to wall" : "Unscrew from wall"
+		context[SCREENTIP_CONTEXT_LMB] = isnull(keyslot) ? context[SCREENTIP_CONTEXT_RMB] : "Remove encryption key" // sometimes same behavior
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item?.tool_behaviour == TOOL_WRENCH && unscrewed)
+		context[SCREENTIP_CONTEXT_RMB] = "Detach from wall"
+		context[SCREENTIP_CONTEXT_LMB] = context[SCREENTIP_CONTEXT_LMB] // same behavior
+		. = CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/radio/intercom/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	if(unscrewed)
 		user.visible_message(span_notice("[user] starts tightening [src]'s screws..."), span_notice("You start screwing in [src]..."))
 		if(tool.use_tool(src, user, 30, volume=50))
@@ -76,19 +88,27 @@
 			user.visible_message(span_notice("[user] loosens [src]'s screws!"), span_notice("You unscrew [src], loosening it from the wall."))
 			unscrewed = TRUE
 			update_appearance(UPDATE_OVERLAYS)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/radio/intercom/screwdriver_act(mob/living/user, obj/item/tool)
+	if(isnull(keyslot))
+		return screwdriver_act_secondary(user, tool)
+	return ..()
 
 /obj/item/radio/intercom/wrench_act(mob/living/user, obj/item/tool)
-	. = TRUE
 	if(!unscrewed)
 		to_chat(user, span_warning("You need to unscrew [src] from the wall first!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	user.visible_message(span_notice("[user] starts unsecuring [src]..."), span_notice("You start unsecuring [src]..."))
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 80))
 		user.visible_message(span_notice("[user] unsecures [src]!"), span_notice("You detach [src] from the wall."))
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 		deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/radio/intercom/wrench_act_secondary(mob/living/user, obj/item/tool)
+	return wrench_act(user, tool)
 
 /**
  * Override attack_tk_grab instead of attack_tk because we actually want attack_tk's
