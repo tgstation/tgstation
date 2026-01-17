@@ -99,13 +99,11 @@
 
 /obj/item/radio/Initialize(mapload)
 	set_wires(new /datum/wires/radio(src))
-	secure_radio_connections = list()
 	. = ..()
 
 	if(ispath(keyslot))
 		keyslot = new keyslot()
-	for(var/ch_name in channels)
-		secure_radio_connections[ch_name] = add_radio(src, GLOB.default_radio_channels[ch_name])
+		recalculateChannels()
 
 	perform_update_icon = FALSE
 	set_listening(listening)
@@ -118,7 +116,7 @@
 		update_appearance(UPDATE_ICON)
 
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
-
+	register_context()
 	// No subtypes
 	if(type != /obj/item/radio)
 		return
@@ -131,6 +129,16 @@
 	if(istype(keyslot))
 		QDEL_NULL(keyslot)
 	return ..()
+
+/obj/item/radio/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "Remove encryption key"
+		context[SCREENTIP_CONTEXT_RMB] = unscrewed ? "Screw in" : "Unscrew"
+		. = CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/encryptionkey))
+		context[SCREENTIP_CONTEXT_LMB] = "Install encryption key"
+		. = CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/radio/on_saboteur(datum/source, disrupt_duration)
 	. = ..()
@@ -155,7 +163,7 @@
 			if(!(channel_name in channels))
 				channels[channel_name] = keyslot.channels[channel_name]
 
-		special_channels = keyslot.special_channels
+		special_channels |= keyslot.special_channels
 
 	for(var/channel_name in channels)
 		secure_radio_connections[channel_name] = add_radio(src, GLOB.default_radio_channels[channel_name])
@@ -163,11 +171,16 @@
 	if(!listening)
 		remove_radio_all(src)
 
-// Used for cyborg override
 /obj/item/radio/proc/resetChannels()
+	for(var/ch_name in channels)
+		SSradio.remove_object(src, GLOB.default_radio_channels[ch_name])
+
 	channels = list()
 	secure_radio_connections = list()
 	special_channels = NONE
+
+	if(!freerange && (frequency > MAX_FREQ || frequency < MIN_FREQ))
+		frequency = FREQ_COMMON
 
 ///goes through all radio channels we should be listening for and readds them to the global list
 /obj/item/radio/proc/readd_listening_radio_channels()
@@ -494,16 +507,26 @@
 		if("frequency")
 			if(freqlock != RADIO_FREQENCY_UNLOCKED)
 				return
-			var/tune = params["tune"]
+			var/tune = 0
 			var/adjust = text2num(params["adjust"])
 			if(adjust)
 				tune = frequency + adjust * 10
-				. = TRUE
-			else if(text2num(tune) != null)
-				tune = tune * 10
-				. = TRUE
-			if(.)
+			else if(tune)
+				tune *= 10
+			if(tune)
 				set_frequency(sanitize_frequency(tune, freerange, (special_channels & RADIO_SPECIAL_SYNDIE)))
+			. = TRUE
+
+		if("tune_to_channel")
+			if(freqlock != RADIO_FREQENCY_UNLOCKED)
+				return
+			var/channel = params["channel"]
+			if(!(channel in channels))
+				return
+			// bypasses frequency range, force tunes to a specific encrypted channel
+			set_frequency(GLOB.default_radio_channels[channel])
+			. = TRUE
+
 		if("listen")
 			set_listening(!listening)
 			. = TRUE
@@ -561,15 +584,66 @@
 /obj/item/radio/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode && tool.tool_behaviour == TOOL_SCREWDRIVER)
 		return screwdriver_act(user, tool)
-	return ..()
+	if(istype(tool, /obj/item/encryptionkey))
+		return install_key(user, tool)
+	return NONE
 
-/obj/item/radio/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/item/radio/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	add_fingerprint(user)
 	unscrewed = !unscrewed
+	tool.play_tool_sound(src, 10)
 	if(unscrewed)
-		to_chat(user, span_notice("The radio can now be attached and modified!"))
+		to_chat(user, span_notice("[src] can now be attached and modified!"))
 	else
-		to_chat(user, span_notice("The radio can no longer be modified or attached!"))
+		to_chat(user, span_notice("[src] can no longer be modified or attached!"))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/radio/screwdriver_act(mob/living/user, obj/item/tool)
+	var/list/removed_keys = remove_keys(user)
+	if(length(removed_keys) > 1)
+		to_chat(user, span_notice("You remove the encryption keys from [src]."))
+	else if(length(removed_keys) == 1)
+		to_chat(user, span_notice("You remove [removed_keys[1]] from [src]."))
+	else
+		to_chat(user, span_warning("[src] doesn't have any unique encryption keys! How useless..."))
+	tool.play_tool_sound(src, 10)
+	return TRUE
+
+/obj/item/radio/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == keyslot)
+		keyslot = null
+		if(!QDELING(src))
+			recalculateChannels()
+
+/// Attempts to put all keys in the radio into the user's hands
+/// Returns a list of the removed keys
+/obj/item/radio/proc/remove_keys(mob/living/user)
+	. = list()
+	if(!keyslot)
+		return
+
+	. += keyslot
+	user.put_in_hands(keyslot) // null via Exited
+
+/// Attempts to install the given encryption key into the radio
+/obj/item/radio/proc/install_key(mob/living/user, obj/item/encryptionkey/key)
+	if(keyslot)
+		loc.balloon_alert(user, "cannot hold a second key!")
+		return ITEM_INTERACT_BLOCKING
+	if(freqlock)
+		loc.balloon_alert(user, "keyslot is locked!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(key, src))
+		loc.balloon_alert(user, "cannot install!")
+		return ITEM_INTERACT_BLOCKING
+
+	keyslot = key
+	recalculateChannels()
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	loc.balloon_alert(user, "encryption key installed")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/radio/emp_act(severity)
 	. = ..()
@@ -631,41 +705,6 @@
 /obj/item/radio/borg/syndicate/Initialize(mapload)
 	. = ..()
 	set_frequency(FREQ_SYNDICATE)
-
-/obj/item/radio/borg/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!keyslot)
-		loc.balloon_alert(user, "no encryption keys!")
-		return
-
-	for(var/ch_name in channels)
-		SSradio.remove_object(src, GLOB.default_radio_channels[ch_name])
-		secure_radio_connections[ch_name] = null
-
-	if (!user.put_in_hands(keyslot))
-		keyslot.forceMove(drop_location())
-
-	keyslot = null
-	recalculateChannels()
-	loc.balloon_alert(user, "encryption key removed")
-	return ..()
-
-/obj/item/radio/borg/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if (!istype(tool, /obj/item/encryptionkey))
-		return NONE
-
-	if(keyslot)
-		loc.balloon_alert(user, "cannot hold another key!")
-		return ITEM_INTERACT_BLOCKING
-
-	if(!user.transferItemToLoc(tool, src))
-		loc.balloon_alert(user, "cannot install!")
-		return ITEM_INTERACT_BLOCKING
-
-	keyslot = tool
-	recalculateChannels()
-	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-	loc.balloon_alert(user, "encryption key installed")
-	return ITEM_INTERACT_SUCCESS
 
 /obj/item/radio/off // Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
 	dog_fashion = /datum/dog_fashion/back
@@ -734,6 +773,8 @@
 	canhear_range = 3
 
 // In case you want to map it in/spawn it for some reason
+/obj/item/radio/toy
+
 /obj/item/radio/toy/Initialize(mapload)
 	. = ..()
 	make_silly()
