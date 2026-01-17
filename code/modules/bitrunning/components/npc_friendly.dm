@@ -29,8 +29,7 @@
 	player.add_faction(npc_factions)
 
 /datum/component/npc_friendly/Destroy(force)
-	. = ..()
-
 	var/mob/living/player = parent
-
-	player.set_faction(previous_factions)
+	if(!QDELETED(parent))
+		player.set_faction(previous_factions)
+	return ..()
