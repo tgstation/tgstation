@@ -66,6 +66,10 @@
 /// log login/logout
 /datum/config_entry/flag/log_access
 
+/// log blood worm actions like entering/leaving hosts
+/datum/config_entry/flag/log_blood_worm
+	default = TRUE
+
 /// Config entry which special logging of failed logins under suspicious circumstances.
 /datum/config_entry/flag/log_suspicious_login
 
@@ -180,9 +184,6 @@
 
 /// allow votes to change map
 /datum/config_entry/flag/allow_vote_map
-
-/// allow players to vote to re-do the map vote
-/datum/config_entry/flag/allow_rock_the_vote
 
 /// the number of times we allow players to rock the vote
 /datum/config_entry/number/max_rocking_votes
@@ -332,6 +333,9 @@
 
 /datum/config_entry/string/githuburl
 	default = "https://www.github.com/tgstation/tgstation"
+
+/datum/config_entry/string/configurl
+	default = "https://github.com/tgstation-operations/server-config"
 
 /datum/config_entry/string/discordbotcommandprefix
 	default = "?"
@@ -797,3 +801,5 @@
 /datum/config_entry/number/minimum_ascension_time
 	default = 0 // 1 minute
 	min_val = 0
+
+/datum/config_entry/flag/fishing

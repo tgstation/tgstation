@@ -366,6 +366,8 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 		to_dump.pixel_x = to_dump.base_pixel_x + rand(-5, 5)
 		to_dump.pixel_y = to_dump.base_pixel_y + rand(-5, 5)
 
+	update_appearance()
+
 /obj/machinery/disposal/force_pushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	. = ..()
 	visible_message(span_warning("[src] is ripped free from the floor!"))
@@ -627,7 +629,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	var/turf/final_turf = length(open_turfs) ? pick(open_turfs) : drop_location()
 	var/mob/living/startled_animal = new contained_animal(drop_location())
 	startled_animal.Move(final_turf)
-	visible_message(span_notice("A startled [startled_animal] jumps out of [src]"))
+	visible_message(span_notice("A startled [startled_animal] jumps out of [src]."))
 	contained_animal = null
 
 /// Initiates flushing

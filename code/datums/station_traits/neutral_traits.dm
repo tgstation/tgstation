@@ -377,7 +377,8 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	show_in_report = TRUE
 	weight = 1
-	report_message = "We've reports of high amount of trace eigenstasium on your station. Ensure that your closets are working correctly."
+	report_message = "We've reports of loose bluespace streams affecting your station's lockers and closets. \
+		You might lose some of your belongings... or gain some new ones!"
 
 /datum/station_trait/linked_closets/on_round_start()
 	. = ..()
@@ -392,7 +393,7 @@
 		var/list/targets = list()
 		for(var/how_many in 1 to rand(2,3))
 			targets += pick_n_take(roundstart_closets)
-		GLOB.eigenstate_manager.create_new_link(targets)
+		GLOB.closet_teleport_controller.create_new_link(targets)
 
 
 #define PRO_SKUB "pro-skub"

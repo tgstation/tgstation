@@ -534,7 +534,7 @@
 	boltslocked = !boltslocked
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/door/firedoor/try_to_activate_door(mob/user, access_bypass = FALSE)
+/obj/machinery/door/firedoor/try_to_activate_door(mob/user, access_bypass = FALSE, bumped = FALSE)
 	return
 
 /obj/machinery/door/firedoor/try_to_weld_secondary(obj/item/weldingtool/W, mob/user)
@@ -743,12 +743,16 @@
 
 /obj/machinery/door/firedoor/border_only/Initialize(mapload)
 	. = ..()
+	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	adjust_lights_starting_offset()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
-
 	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/machinery/door/firedoor/border_only/close()
+	. = ..()
+	flags_1 &= ~PREVENT_CLICK_UNDER_1
 
 /obj/machinery/door/firedoor/border_only/adjust_lights_starting_offset()
 	light_xoffset = 0
@@ -976,7 +980,7 @@
 
 /obj/structure/firelock_frame/border_only/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
+	AddElement(/datum/element/simple_rotation, ROTATION_NEEDS_ROOM)
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),

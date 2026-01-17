@@ -278,7 +278,7 @@
 /obj/item/mod/module/stamp
 	name = "MOD stamper module"
 	desc = "A module installed into the wrist of the suit, this functions as a high-power stamp, \
-		able to switch between accept and deny modes."
+		able to switch between accept, deny, and void modes."
 	icon_state = "stamp"
 	module_type = MODULE_ACTIVE
 	complexity = 1
@@ -290,15 +290,28 @@
 
 /obj/item/stamp/mod
 	name = "MOD electronic stamp"
-	desc = "A high-power stamp, able to switch between accept and deny mode when used."
+	desc = "A high-power stamp, able to switch between accept, deny, and void modes when used."
+	icon_state = "stamp-ok"
 
 /obj/item/stamp/mod/attack_self(mob/user, modifiers)
-	. = ..()
-	if(icon_state == "stamp-ok")
-		icon_state = "stamp-deny"
-	else
-		icon_state = "stamp-ok"
-	balloon_alert(user, "switched mode")
+
+	var/choices = list()
+	var/icon_states = list()
+	icon_states["Granted"] = "stamp-ok"
+	icon_states["Denied"] = "stamp-deny"
+	icon_states["Void"] = "stamp-void"
+	for(var/possible_icon_state in icon_states)
+		if(!(src.icon_state == icon_states[possible_icon_state]))
+			choices[possible_icon_state] = image(src.icon, icon_states[possible_icon_state])
+	var/chosen_icon_state = show_radial_menu(user, user, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), src, user), require_near = TRUE)
+	if(chosen_icon_state)
+		playsound(src, 'sound/machines/click.ogg', 30, TRUE, -3)
+		src.icon_state = icon_states[chosen_icon_state]
+
+/obj/item/stamp/mod/proc/check_menu(datum/target, mob/user)
+	if(user.incapacitated || !user.is_holding(target))
+		return FALSE
+	return TRUE
 
 ///Atrocinator - Flips your gravity.
 /obj/item/mod/module/atrocinator

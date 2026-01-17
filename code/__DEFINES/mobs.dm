@@ -3,8 +3,8 @@
 //Misc mob defines
 
 //Ready states at roundstart for mob/dead/new_player
-#define PLAYER_NOT_READY 0
-#define PLAYER_READY_TO_PLAY 1
+#define PLAYER_NOT_READY "Not Ready"
+#define PLAYER_READY_TO_PLAY "Ready"
 
 //movement intent defines for the move_intent var
 #define MOVE_INTENT_WALK "walk"
@@ -124,6 +124,8 @@
 #define MOB_MINING (1 << 13)
 ///The mob is a crustacean. Like crabs. Or lobsters.
 #define MOB_CRUSTACEAN (1 << 14)
+///The mob is all boney
+#define MOB_SKELETAL (1 << 15)
 
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)
@@ -160,6 +162,8 @@
 #define BODYSHAPE_DIGITIGRADE (1<<2)
 ///The limb is snouted.
 #define BODYSHAPE_SNOUTED (1<<3)
+/// Golem's wacky rocky limbs
+#define BODYSHAPE_GOLEM (1<<4)
 
 #define BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE (BODYTYPE_ROBOTIC | BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_GOLEM | BODYTYPE_PEG)
 #define BODYTYPE_CAN_BE_BIOSCRAMBLED(bodytype) (!(bodytype & BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE))
@@ -205,6 +209,7 @@
 #define BODYPART_ID_PSYKER "psyker"
 #define BODYPART_ID_MEAT "meat"
 #define BODYPART_ID_PEG "peg"
+#define BODYPART_ID_BONE "bone"
 
 
 //See: datum/species/var/digitigrade_customization
@@ -475,7 +480,7 @@
 /// How much nutrition eating clothes as moth gives and drains
 #define CLOTHING_NUTRITION_GAIN 15
 #define REAGENTS_METABOLISM 0.2 //How many units of reagent are consumed per second, by default.
-#define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4) // By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
+#define REAGENTS_EFFECT_MULTIPLIER (1 / (REAGENTS_METABOLISM * SSMOBS_DT)) // When multiplied with the volume of reagent metabolized you get an value from 0->1 to scale all reagent affects
 #define REM REAGENTS_EFFECT_MULTIPLIER //! Shorthand for the above define for ease of use in equations and the like
 
 // Eye protection
@@ -576,9 +581,10 @@
 #define DEFIB_FAIL_NO_INTELLIGENCE (1<<8)
 #define DEFIB_FAIL_BLACKLISTED (1<<9)
 #define DEFIB_NOGRAB_AGHOST (1<<10)
+#define DEFIB_FAIL_GOLEM (1<<11)
 
 // Bit mask of possible return values by can_defib that would result in a revivable patient
-#define DEFIB_REVIVABLE_STATES (DEFIB_FAIL_NO_HEART | DEFIB_FAIL_FAILING_HEART | DEFIB_FAIL_HUSK | DEFIB_FAIL_TISSUE_DAMAGE | DEFIB_FAIL_FAILING_BRAIN | DEFIB_POSSIBLE)
+#define DEFIB_REVIVABLE_STATES (DEFIB_FAIL_NO_HEART | DEFIB_FAIL_FAILING_HEART | DEFIB_FAIL_HUSK | DEFIB_FAIL_TISSUE_DAMAGE | DEFIB_FAIL_FAILING_BRAIN | DEFIB_FAIL_GOLEM | DEFIB_POSSIBLE)
 
 #define SLEEP_CHECK_DEATH(X, A) \
 	sleep(X); \

@@ -1,7 +1,8 @@
 import { sortBy } from 'es-toolkit';
 import { filter, map } from 'es-toolkit/compat';
 import { type ReactNode, useState } from 'react';
-import { type sendAct, useBackend } from 'tgui/backend';
+import { useBackend } from 'tgui/backend';
+import { sendAct } from 'tgui/events/act';
 import {
   Box,
   Button,
@@ -13,7 +14,6 @@ import {
 } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
-
 import { CharacterPreview } from '../../common/CharacterPreview';
 import { RandomizationButton } from '../components/RandomizationButton';
 import { features } from '../preferences/features';
@@ -21,7 +21,7 @@ import {
   type FeatureChoicedServerData,
   FeatureValueInput,
 } from '../preferences/features/base';
-import { Gender, GENDERS } from '../preferences/gender';
+import { GENDERS, Gender } from '../preferences/gender';
 import {
   createSetPreference,
   type PreferencesMenuData,
@@ -337,8 +337,8 @@ function MainFeature(props: MainFeatureProps) {
 }
 
 const createSetRandomization =
-  (act: typeof sendAct, preference: string) => (newSetting: RandomSetting) => {
-    act('set_random_preference', {
+  (preference: string) => (newSetting: RandomSetting) => {
+    sendAct('set_random_preference', {
       preference,
       value: newSetting,
     });
@@ -396,7 +396,7 @@ export function PreferenceList(props: PreferenceListProps) {
                   {randomSetting && (
                     <Stack.Item>
                       <RandomizationButton
-                        setValue={createSetRandomization(act, featureId)}
+                        setValue={createSetRandomization(featureId)}
                         value={randomSetting}
                       />
                     </Stack.Item>
@@ -426,13 +426,9 @@ export function getRandomization(
   serverData: ServerData | undefined,
   randomBodyEnabled: boolean,
 ): Record<string, RandomSetting> {
-  if (!serverData) {
-    return {};
-  }
-
   const { data } = useBackend<PreferencesMenuData>();
 
-  if (!randomBodyEnabled) {
+  if (!randomBodyEnabled || !serverData) {
     return {};
   }
 
@@ -455,6 +451,7 @@ type MainPageProps = {
 
 export function MainPage(props: MainPageProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
+
   const [deleteCharacterPopupOpen, setDeleteCharacterPopupOpen] =
     useState(false);
   const [multiNameInputOpen, setMultiNameInputOpen] = useState(false);
@@ -584,10 +581,7 @@ export function MainPage(props: MainPageProps) {
                       currentValue={clothing}
                       handleSelect={createSetPreference(act, clothingKey)}
                       randomization={randomizationOfMainFeatures[clothingKey]}
-                      setRandomization={createSetRandomization(
-                        act,
-                        clothingKey,
-                      )}
+                      setRandomization={createSetRandomization(clothingKey)}
                     />
                   )}
                 </Stack.Item>

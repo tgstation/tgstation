@@ -10,7 +10,7 @@ on:
 jobs:
   compile_all_stations:
     name: Compile All Station Maps
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
 
     steps:
@@ -31,7 +31,7 @@ jobs:
 
   compile_all_templates:
     name: Compile All Templates
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
 
     steps:

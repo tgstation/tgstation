@@ -329,3 +329,18 @@
 
 /// Permanent trait from an overdose effect
 #define OVERDOSE_TRAIT "overdose"
+
+/// Trait from a blood worm being in a host
+#define BLOOD_WORM_HOST_TRAIT "blood_worm_host_trait"
+
+/// Trait from being under a door via [/datum/component/slide_under_doors]
+#define UNDER_DOOR_TRAIT "under_door_trait"
+
+/// Trait gained from bioware surgeries
+#define BIOWARE_TRAIT "bioware"
+
+/// Trait gained from skeleton "limbs", such as husking from a butchered chest
+#define SKELETON_TRAIT "skeleton"
+
+/// Trait gained by a guardian who is recalled
+#define GUARDIAN_RECALLED "guardian_recalled"

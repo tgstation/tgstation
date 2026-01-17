@@ -48,10 +48,9 @@
 
 	//Aquire access from the inserted ID card.
 	if(!length(access))
-		var/obj/item/card/id/D = computer?.stored_id?.GetID()
-		if(!D)
+		access = computer?.GetAccess()
+		if(!length(access))
 			return FALSE
-		access = D.GetAccess()
 
 	if(paccess_to_check in access)
 		return TRUE
@@ -67,7 +66,7 @@
 	var/obj/item/card/id/id_card = computer.stored_id?.GetID()
 	if(id_card?.registered_account)
 		buyer = SSeconomy.get_dep_account(id_card?.registered_account.account_job.paycheck_department)
-		if((ACCESS_COMMAND in id_card.access))
+		if((ACCESS_BUDGET in id_card.access))
 			requestonly = FALSE
 			can_approve_requests = TRUE
 			// If buyer is a departmental budget, replaces "Cargo" with that budget - we're not using the cargo budget here
@@ -89,14 +88,16 @@
 	data["supplies"] = list()
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-		if(!is_visible_pack(user, P.access_view , null, P.contraband) || P.hidden)
+		if(P.order_flags & ORDER_INVISIBLE)
+			continue
+		if(!is_visible_pack(user, P.access_view , null, (P.order_flags & ORDER_CONTRABAND)) || (P.order_flags & ORDER_EMAG_ONLY))
 			continue
 		if(!data["supplies"][P.group])
 			data["supplies"][P.group] = list(
 				"name" = P.group,
 				"packs" = list()
 			)
-		if((P.hidden && (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.drop_pod_only))
+		if(((P.order_flags & ORDER_EMAG_ONLY) && ((P.order_flags & ORDER_CONTRABAND) && !contraband) || ((P.order_flags & ORDER_SPECIAL) && !(P.order_flags & ORDER_SPECIAL_ENABLED)) || (P.order_flags & ORDER_POD_ONLY)))
 			continue
 
 		var/obj/item/first_item = length(P.contains) > 0 ? P.contains[1] : null
@@ -107,7 +108,7 @@
 			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
 			"first_item_icon" = first_item?.icon,
 			"first_item_icon_state" = first_item?.icon_state,
-			"goody" = P.goody,
+			"goody" = P.order_flags & ORDER_GOODY,
 			"access" = P.access,
 			"contains" = P.get_contents_ui_data(),
 		))
@@ -171,6 +172,8 @@
 /datum/computer_file/program/budgetorders/ui_static_data(mob/user)
 	var/list/data = list()
 	data["max_order"] = CARGO_MAX_ORDER
+	data["displayed_currency_full_name"] = " [MONEY_NAME]"
+	data["displayed_currency_name"] = " [MONEY_SYMBOL]"
 	return data
 
 /datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
@@ -216,7 +219,7 @@
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				return
-			if(pack.hidden || pack.contraband || pack.drop_pod_only || (pack.special && !pack.special_enabled))
+			if((pack.order_flags & (ORDER_EMAG_ONLY | ORDER_POD_ONLY | ORDER_CONTRABAND)) || ((pack.order_flags & ORDER_SPECIAL) && !(pack.order_flags & ORDER_SPECIAL_ENABLED)))
 				return
 
 			var/name = "*None Provided*"
@@ -267,7 +270,7 @@
 					if(dept_choice == "Cargo Budget")
 						personal_department = null
 
-			if(pack.goody && !self_paid)
+			if((pack.order_flags & ORDER_GOODY) && !self_paid)
 				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 				computer.say("ERROR: Small crates may only be purchased by private accounts.")
 				return

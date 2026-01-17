@@ -9,7 +9,7 @@ ADMIN_VERB(atmos_debug, R_DEBUG, "Check Plumbing", "Verifies the integrity of th
 
 	//Pipes
 	for(var/obj/machinery/atmospherics/pipe/pipe as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/pipe))
-		if(istype(pipe, /obj/machinery/atmospherics/pipe/smart) || istype(pipe, /obj/machinery/atmospherics/pipe/layer_manifold))
+		if(istype(pipe, /obj/machinery/atmospherics/pipe/smart) || istype(pipe, /obj/machinery/atmospherics/pipe/layer_manifold) || istype(pipe, /obj/machinery/atmospherics/pipe/multiz))
 			continue
 		if(pipe.z && (!pipe.nodes || !pipe.nodes.len || (null in pipe.nodes)))
 			to_chat(user, "Unconnected [pipe.name] located at [ADMIN_VERBOSEJMP(pipe)]", confidential = TRUE)
@@ -29,12 +29,12 @@ ADMIN_VERB(power_debug, R_DEBUG, "Check Power", "Verifies the integrity of the p
 		if (!PN.nodes || !PN.nodes.len)
 			if(PN.cables && (PN.cables.len > 1))
 				var/obj/structure/cable/C = PN.cables[1]
-				results += "Powernet with no nodes! (number [PN.number]) - example cable at [ADMIN_VERBOSEJMP(C)]"
+				results += "Powernet with no nodes! Example cable at [ADMIN_VERBOSEJMP(C)]"
 
 		if (!PN.cables || (PN.cables.len < 10))
 			if(PN.cables && (PN.cables.len > 1))
 				var/obj/structure/cable/C = PN.cables[1]
-				results += "Powernet with fewer than 10 cables! (number [PN.number]) - example cable at [ADMIN_VERBOSEJMP(C)]"
+				results += "Powernet with fewer than 10 cables! Example cable at [ADMIN_VERBOSEJMP(C)]"
 
 	for(var/turf/T in world.contents)
 		var/cable_layers //cache all cable layers (which are bitflags) present

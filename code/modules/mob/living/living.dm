@@ -45,7 +45,6 @@
 		imaginary_group -= src
 		QDEL_LIST(imaginary_group)
 	QDEL_LAZYLIST(diseases)
-	QDEL_LIST(surgeries)
 	QDEL_LAZYLIST(quirks)
 	return ..()
 
@@ -641,11 +640,9 @@
 /**
  * Returns the access list for this mob
  */
-/mob/living/proc/get_access() as /list
+/mob/living/get_access()
 	var/list/access_list = list()
-	SEND_SIGNAL(src, COMSIG_MOB_RETRIEVE_SIMPLE_ACCESS, access_list)
-	var/obj/item/card/id/id = get_idcard()
-	access_list += id?.GetAccess()
+	SEND_SIGNAL(src, COMSIG_MOB_RETRIEVE_ACCESS, access_list)
 	return access_list
 
 /mob/living/proc/get_id_in_hand()
@@ -1431,6 +1428,34 @@
 /mob/living/proc/update_stamina()
 	SEND_SIGNAL(src, COMSIG_LIVING_STAMINA_UPDATE)
 	update_stamina_hud()
+
+/mob/living/update_stamina_hud(shown_stamina_loss)
+	if(!client || !hud_used?.stamina)
+		return
+
+	var/stam_crit_threshold = maxHealth - crit_threshold
+
+	if(stat == DEAD)
+		hud_used.stamina.icon_state = "stamina_dead"
+	else
+
+		if(shown_stamina_loss == null)
+			shown_stamina_loss = get_stamina_loss()
+
+		if(shown_stamina_loss >= stam_crit_threshold)
+			hud_used.stamina.icon_state = "stamina_crit"
+		else if(shown_stamina_loss > maxHealth*0.8)
+			hud_used.stamina.icon_state = "stamina_5"
+		else if(shown_stamina_loss > maxHealth*0.6)
+			hud_used.stamina.icon_state = "stamina_4"
+		else if(shown_stamina_loss > maxHealth*0.4)
+			hud_used.stamina.icon_state = "stamina_3"
+		else if(shown_stamina_loss > maxHealth*0.2)
+			hud_used.stamina.icon_state = "stamina_2"
+		else if(shown_stamina_loss > 0)
+			hud_used.stamina.icon_state = "stamina_1"
+		else
+			hud_used.stamina.icon_state = "stamina_full"
 
 /mob/living/carbon/alien/update_stamina()
 	return
@@ -2548,6 +2573,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/set_usable_hands(new_value)
 	if(usable_hands == new_value)
 		return
+	if(new_value < 0) // Sanity check
+		stack_trace("[src] had set_usable_hands() called on them with a negative value!")
+		new_value = 0
 	. = usable_hands
 	usable_hands = new_value
 
@@ -2726,7 +2754,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/add_mood_event(category, type, ...)
 	if(QDELETED(mob_mood))
 		return
-	mob_mood.add_mood_event(arglist(args))
+
+	if(ispath(type, /datum/mood_event/conditional))
+		mob_mood.add_conditional_mood_event(arglist(args))
+	else
+		mob_mood.add_mood_event(arglist(args))
 
 /// Clears a mood event from the mob
 /mob/living/proc/clear_mood_event(category)
@@ -2875,7 +2907,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(picked_theme == "Random")
 		picked_theme = null //holopara code handles not having a theme by giving a random one
 	var/picked_name = tgui_input_text(admin, "Name the guardian, leave empty to let player name it.", "Guardian Controller", max_length = MAX_NAME_LEN)
-	var/picked_color = input(admin, "Set the guardian's color, cancel to let player set it.", "Guardian Controller", "#ffffff") as color|null
+	var/picked_color = tgui_color_picker(admin, "Set the guardian's color, cancel to let player set it.", "Guardian Controller", COLOR_WHITE)
 	if(tgui_alert(admin, "Confirm creation.", "Guardian Controller", list("Yes", "No")) != "Yes")
 		return
 	var/mob/living/basic/guardian/summoned_guardian = new picked_type(src, picked_theme)

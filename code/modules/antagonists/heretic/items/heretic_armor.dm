@@ -551,7 +551,7 @@
 		//"You are needed in [area name]. You need to be there. %ATTACKER might want you to stay, but you are needed in [area name].",
 		//"You see %ATTACKER strike a [name of animal]. The face of the beast is a mirror of your own. How strange.",
 		"%ATTACKER bumps you and you spill your tea. It's fine. You've plenty of cups.",
-		"You hear a roaring crash. The waves hit the boat. The is sea vast and dark. You see %ATTACKER striking the water, cursing its master.",
+		"You hear a roaring crash. The waves hit the boat. The sea is vast and dark. You see %ATTACKER striking the water, cursing its master.",
 		"Sequins scatter into the air around %ATTACKER. The sequins...",
 		"You notice that a button has popped off your collar. How did that happen? Maybe %ATTACKER is to blame.",
 		"%ATTACKER isn't very funny, and you're struggling to see the punchline.",
@@ -918,8 +918,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/proc/on_move(mob/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
 
-	var/turf/mover_turf = get_turf(source)
-	if(HAS_TRAIT(mover_turf, TRAIT_RUSTY))
+	if(source.is_touching_rust())
 		set_armor(/datum/armor/eldritch_armor/rust/on_rust)
 
 		ADD_TRAIT(source, TRAIT_PIERCEIMMUNE, REF(src))

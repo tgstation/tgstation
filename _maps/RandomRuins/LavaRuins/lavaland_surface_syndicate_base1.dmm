@@ -818,10 +818,6 @@
 /obj/structure/sink/kitchen/directional/west,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
-"gO" = (
-/obj/structure/sign/departments/cargo,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/syndicate_lava_base/cargo)
 "gP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown{
@@ -1707,6 +1703,9 @@
 /area/ruin/syndicate_lava_base/engineering)
 "nA" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
 /turf/open/floor/iron/white/corner,
 /area/ruin/syndicate_lava_base/medbay)
 "nB" = (
@@ -1763,9 +1762,9 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/bar)
 "nM" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/medbay)
@@ -1929,9 +1928,9 @@
 /area/ruin/syndicate_lava_base/engineering)
 "pp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/medbay)
 "pu" = (
@@ -2586,13 +2585,6 @@
 /obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/main)
-"zq" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/turf/open/floor/iron,
-/area/ruin/syndicate_lava_base/medbay)
 "zt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -3318,6 +3310,7 @@
 	},
 /obj/machinery/duct,
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/departments/cargo/directional/east,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
 "Iv" = (
@@ -6092,7 +6085,7 @@ qA
 lJ
 pW
 lI
-zq
+lJ
 nM
 ob
 al
@@ -6273,7 +6266,7 @@ SQ
 Iw
 dy
 dy
-gO
+dy
 Tb
 hC
 dy

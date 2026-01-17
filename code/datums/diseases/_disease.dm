@@ -98,7 +98,7 @@
 	UnregisterSignal(affected_mob, COMSIG_CARBON_PRE_BREATHE)
 
 ///Proc to process the disease and decide on whether to advance, cure or make the symptoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
-/datum/disease/proc/stage_act(seconds_per_tick, times_fired)
+/datum/disease/proc/stage_act(seconds_per_tick)
 	var/slowdown = HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
 	var/recovery_prob = 0
 	var/cure_mod
@@ -209,7 +209,7 @@
 
 		recovery_prob = clamp(recovery_prob / bad_immune, 0, 100)
 
-		if(recovery_prob)
+		if(recovery_prob && (bad_immune == 1))
 			if(SPT_PROB(recovery_prob, seconds_per_tick))
 				if(stage == 1 && prob(cure_chance * DISEASE_FINAL_CURE_CHANCE_MULTIPLIER)) //if we reduce FROM stage == 1, cure the virus - after defeating its cure_chance in a final battle
 					if(!HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) && (affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING))
