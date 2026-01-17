@@ -57,7 +57,8 @@
 	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return
 
-	var/new_grad_color = tgui_color_picker(user, "Choose a secondary hair color:", "Character Preference", human_target.get_hair_gradient_color())
+	var/hair_key = what_to_dye == "Hair" ? GRADIENT_HAIR_KEY : GRADIENT_FACIAL_HAIR_KEY
+	var/new_grad_color = tgui_color_picker(user, "Choose a secondary hair color:", "Character Preference", human_target.get_hair_gradient_color(hair_key))
 	if(!new_grad_color || !user.can_perform_action(src, NEED_DEXTERITY) || !target.IsReachableBy(user))
 		return
 

@@ -49,6 +49,8 @@
 	var/is_invisible = FALSE
 	///The ID of a species used to generate the icon. Needs to match the icon_state portion in the limbs file!
 	var/limb_id = SPECIES_HUMAN
+	///ID of a species to use as an override for species-based biological logic, such as what species to pull the meat from, if our limb_id doesn't match
+	var/species_id = null
 	//Defines what sprite the limb should use if it is also sexually dimorphic.
 	var/limb_gender = "m"
 	///Is there a sprite difference between male and female?
@@ -314,12 +316,14 @@
 		return FALSE
 	return  ..()
 
-/obj/item/bodypart/proc/get_butcher_drops()
-	if(!isnull(butcher_drops))
+/// Returns an assoc list of items dropped when the limb is butchered
+/// force - Force an update of drops ignoring the cache
+/obj/item/bodypart/proc/get_butcher_drops(force = FALSE)
+	if(!isnull(butcher_drops) && !force)
 		return butcher_drops
-	if (butcher_drop_cache[type])
+	if (butcher_drop_cache[type] && !force)
 		return butcher_drop_cache[type]
-	var/datum/species/species = GLOB.species_list[limb_id]
+	var/datum/species/species = GLOB.species_list[species_id || limb_id]
 	if (!species || !species.meat || !base_meat_amount)
 		return null
 	return list(species.meat = base_meat_amount)

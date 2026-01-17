@@ -337,9 +337,11 @@
 		return
 
 	var/access_check = access_bypass
-	if(unrestricted_side(user) && !delayed_unres_open)
+	if(emergency)
 		access_check = TRUE
-	if(!requiresID())
+	else if(unrestricted_side(user) && !delayed_unres_open)
+		access_check = TRUE
+	else if(!requiresID())
 		access_check = TRUE
 	else if(allowed(user)) // You
 		access_check = TRUE
