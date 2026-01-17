@@ -1937,22 +1937,6 @@
 		else
 			input_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
 
-	var/change_trim = tgui_alert(user, "Adjust the appearance of your card's trim?", "Modify Trim", list("Yes", "No"))
-	if(!after_input_check(user))
-		return TRUE
-	var/selected_trim_path
-	var/static/list/trim_list
-	if(change_trim == "Yes")
-		trim_list = list()
-		for(var/trim_path in typesof(/datum/id_trim))
-			var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[trim_path]
-			if(trim && trim.trim_state && trim.assignment)
-				var/fake_trim_name = "[trim.assignment] ([trim.trim_state])"
-				trim_list[fake_trim_name] = trim_path
-		selected_trim_path = tgui_input_list(user, "Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", sort_list(trim_list, GLOBAL_PROC_REF(cmp_typepaths_asc)))
-		if(!after_input_check(user))
-			return TRUE
-
 	var/target_occupation = tgui_input_text(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant", max_length = MAX_NAME_LEN)
 	if(!after_input_check(user))
 		return TRUE
@@ -1969,8 +1953,6 @@
 		return
 
 	registered_name = input_name
-	if(selected_trim_path)
-		SSid_access.apply_trim_override(src, trim_list[selected_trim_path])
 	if(target_occupation)
 		assignment = sanitize(target_occupation)
 	if(new_age)
@@ -1984,16 +1966,10 @@
 	to_chat(user, span_notice("You successfully forge the ID card."))
 	user.log_message("forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\" and trim \"[trim?.assignment]\".", LOG_GAME)
 
-	if(!ishuman(user))
+	if(!ishuman(user) || registered_account)
 		return
 
 	var/mob/living/carbon/human/owner = user
-	if (!selected_trim_path) // Ensure that even without a trim update, we update user's sechud
-		owner.update_ID_card()
-
-	if (registered_account)
-		return
-
 	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[owner.account_id]"]
 	if(account)
 		set_account(account)
