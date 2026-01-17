@@ -72,8 +72,8 @@
 	var/special_channels = NONE
 	/// associative list of the encrypted radio channels this radio is currently set to listen/broadcast to, of the form: list(channel name = TRUE or FALSE)
 	var/list/channels
-	/// associative list of the encrypted radio channels this radio can listen/broadcast to, of the form: list(channel name = channel frequency)
-	var/list/secure_radio_connections
+	/// lazy associative list of the encrypted radio channels this radio can listen/broadcast to, of the form: list(channel name = channel frequency)
+	var/list/secure_radio_connections = null
 
 	/// overlay when speaker is on
 	var/overlay_speaker_idle = "s_idle"
@@ -166,7 +166,7 @@
 		special_channels |= keyslot.special_channels
 
 	for(var/channel_name in channels)
-		secure_radio_connections[channel_name] = add_radio(src, GLOB.default_radio_channels[channel_name])
+		LAZYSET(secure_radio_connections, channel_name, add_radio(src, GLOB.default_radio_channels[channel_name]))
 
 	if(!listening)
 		remove_radio_all(src)
@@ -176,7 +176,7 @@
 		SSradio.remove_object(src, GLOB.default_radio_channels[ch_name])
 
 	channels = list()
-	secure_radio_connections = list()
+	LAZYNULL(secure_radio_connections)
 	special_channels = NONE
 
 	if(!freerange && (frequency > MAX_FREQ || frequency < MIN_FREQ))
@@ -341,7 +341,7 @@
 	if(channel && channels && channels.len > 0)
 		if(channel == MODE_DEPARTMENT)
 			channel = channels[1]
-		freq = secure_radio_connections[channel]
+		freq = LAZYACCESS(secure_radio_connections, channel)
 		if (!channels[channel]) // if the channel is turned off, don't broadcast
 			return
 	else
