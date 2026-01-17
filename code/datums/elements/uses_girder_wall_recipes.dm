@@ -1,3 +1,5 @@
+/// An element for girders, wall barricades, etc. that makes them use wall construction recipes.
+/// Only really meant for recipes where you click on the girder with a stack of materials to make a wall.
 /datum/element/uses_girder_wall_recipes
 
 /datum/element/uses_girder_wall_recipes/Attach(datum/target)
