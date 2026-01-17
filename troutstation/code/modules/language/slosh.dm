@@ -12,4 +12,4 @@
 	default_priority = 70
 
 	icon_state = "wawa"
-	icon = 'troutstation/icons/misc/language.dmi'
+	icon = 'troutstation/icons/ui/chat/language.dmi'

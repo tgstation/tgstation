@@ -13,7 +13,7 @@
 		"zn", "ku", "gru", "kru", "glu", "klu", "hrk", "gul", "gol", "ku", "ko",
 		"grn", "gra", "ulg", "hlk", "kl", "vrm", "vrr", "grr", "gor", "vur", "rul"
 	)
-	icon = 'troutstation/icons/misc/language.dmi'
+	icon = 'troutstation/icons/ui/chat/language.dmi'
 	icon_state = "anteater"
 	default_priority = 90
 
