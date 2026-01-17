@@ -176,9 +176,15 @@
 		if (ismob(old_loc.loc))
 			UnregisterSignal(old_loc.loc, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_RETRIEVE_ACCESS))
 	. = ..()
-	if (isitem(loc))
-		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(on_loc_equipped))
-		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(on_loc_dropped))
+	if (!isitem(loc))
+		return
+	RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(on_loc_equipped))
+	RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(on_loc_dropped))
+	if (ismob(loc.loc))
+		var/mob/wearer = loc.loc
+		// Equip chain shenanigans
+		UnregisterSignal(wearer, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_RETRIEVE_ACCESS))
+		on_loc_equipped(loc, wearer, wearer.get_slot_by_item(loc))
 
 /obj/item/card/id/equipped(mob/user, slot)
 	. = ..()
