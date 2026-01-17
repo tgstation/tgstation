@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "All radios (intercoms and station-bounced) can have encryption keys installed in them, rather than solely headsets and cyborgs."
+  - rscadd: "Existing screwdriver interactions for station-bounced radios and intercoms have been moved to right click. However, intercoms will still default to the old behavior if they have no key installed."
+  - qol: "Screentips for radios."
