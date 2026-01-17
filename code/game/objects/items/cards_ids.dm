@@ -1173,6 +1173,10 @@
 	/// If this is set, will manually override the trim shown for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
 	var/sechud_icon_state_override = null
 
+	/// A name (eg "Captain") that is "inherent" to this ID card
+	/// If the assigned name matches the inherent name it does not apply the label
+	var/inherent_assigned_name
+
 /obj/item/card/id/advanced/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
@@ -1274,6 +1278,13 @@
 
 	is_intern = FALSE
 	update_label()
+
+/obj/item/card/id/advanced/update_label()
+	if(inherent_assigned_name && registered_name == inherent_assigned_name)
+		name = "[initial(name)][(!assignment || assignment == inherent_assigned_name) ? "" : " ([assignment])"]"
+		return
+
+	return ..()
 
 /obj/item/card/id/advanced/update_overlays()
 	. = ..()
@@ -1377,13 +1388,7 @@
 	registered_name = "Captain"
 	trim = /datum/id_trim/job/captain
 	registered_age = null
-
-/obj/item/card/id/advanced/gold/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
-	if(registered_name == "Captain")
-		name = "[initial(name)][(!assignment || assignment == "Captain") ? "" : " ([assignment])"]"
-		update_appearance(UPDATE_ICON)
-	else
-		..()
+	inherent_assigned_name = "Captain"
 
 /obj/item/card/id/advanced/centcom
 	name = "\improper CentCom ID"
@@ -1478,14 +1483,7 @@
 	desc = "The spare ID of the Dark Lord himself."
 	registered_name = "Captain"
 	registered_age = null
-
-/obj/item/card/id/advanced/black/syndicate_command/captain_id/syndie_spare/update_label()
-	if(registered_name == "Captain")
-		name = "[initial(name)][(!assignment || assignment == "Captain") ? "" : " ([assignment])"]"
-		update_appearance(UPDATE_ICON)
-		return
-
-	return ..()
+	inherent_assigned_name = "Captain"
 
 /obj/item/card/id/advanced/debug
 	name = "\improper Debug ID"
