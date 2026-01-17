@@ -140,8 +140,8 @@ SUBSYSTEM_DEF(dynamic)
 	// put rulesets in the queue (if admins didn't)
 	// this will even handle the case in which the tier wants 0 roundstart rulesets
 	if(!length(queued_rulesets))
-		for(var/ruleset_typepath in pick_roundstart_rulesets(antag_candidates))
-			queue_ruleset(ruleset_typepath)
+		for(var/datum/dynamic_ruleset/roundstart/ruleset as anything in pick_roundstart_rulesets(antag_candidates))
+			queue_ruleset(ruleset.type)
 	// we got what we needed, reset so we can do real job selection later
 	// reset only happens AFTER roundstart selection so we can verify stuff like "can we get 3 heads of staff for revs?"
 	SSjob.reset_occupations()
