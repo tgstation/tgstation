@@ -72,13 +72,13 @@
 	name = "Syndicate Surplus Crate"
 	desc = "A dusty crate from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
 			If the rumors are true, it will fill it's contents based on your current reputation. \
-			Contents are sorted to always be worth [TC_VALUE_SURPLUS_INDIVIDUAL] TC. The Syndicate will only provide one surplus item per agent."
+			Contents are sorted to always be worth " + TC_VALUE_SURPLUS_INDIVIDUAL + " TC. The Syndicate will only provide one surplus item per agent."
 	item = /obj/structure/closet/crate // will be replaced in purchase()
 	cost = 20
 	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	/// Value of items inside the crate in TC
-	var/crate_tc_value = [TC_VALUE_SURPLUS_INDIVIDUAL]
+	var/crate_tc_value = TC_VALUE_SURPLUS_INDIVIDUAL
 	/// crate that will be used for the surplus crate
 	var/crate_type = /obj/structure/closet/crate
 
@@ -136,12 +136,12 @@
 	name = "United Surplus Crate"
 	desc = "A shiny and large crate to be delivered directly to you via Supply Pod. It has an advanced locking mechanism with an anti-tampering protocol. \
 			It is recommended that you only attempt to open it by having another agent purchase a Surplus Crate Key. Unite and fight. \
-			Rumored to contain a valuable assortment of items based on your current reputation. Contents are sorted to always be worth [TC_VALUE_SURPLUS_UNITED] TC. \
+			Rumored to contain a valuable assortment of items based on your current reputation. Contents are sorted to always be worth " + TC_VALUE_SURPLUS_UNITED + " TC. \
 			The Syndicate will only provide one surplus item per agent."
 	cost = 20
 	item = /obj/structure/closet/crate/secure/syndicrate
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
-	crate_tc_value = [TC_VALUE_SURPLUS_UNITED]
+	crate_tc_value = TC_VALUE_SURPLUS_UNITED
 	crate_type = /obj/structure/closet/crate/secure/syndicrate
 
 /// edited version of fill crate for super surplus to ensure it can only be unlocked with the syndicrate key
