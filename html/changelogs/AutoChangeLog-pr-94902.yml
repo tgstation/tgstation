@@ -1,4 +1,0 @@
-author: "tontyGH"
-delete-after: True
-changes:
-  - bugfix: "As the AI, possessing an empty shell will no longer break your de-synchronization protocols, which would trap your Nanotrasen-brand Silica-Soul(TM) inside of it."
