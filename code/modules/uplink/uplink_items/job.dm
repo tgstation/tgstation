@@ -134,6 +134,13 @@
 	cost = 14
 	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
 
+/datum/uplink_item/role_restricted/dnainjector/bad_dna
+	name = "Unstable DNA Injector"
+	desc = "A DNA injector which contains an engineered strand of DNA capable of causing the uncontrolable evolution of a subject's DNA."
+	item = /obj/item/dnainjector/bad_dna
+	cost = 2
+	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
+
 /datum/uplink_item/role_restricted/meathook
 	name = "Butcher's Meat Hook"
 	desc = "A brutal cleaver on a long chain, it allows you to pull people to your location."
