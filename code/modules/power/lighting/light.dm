@@ -271,7 +271,7 @@
 					l_power = power_set,
 					l_color = color_set
 					)
-	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE) && !turned_off())
+	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE * SSMACHINES_DT) && !turned_off())
 		use_power = IDLE_POWER_USE
 		low_power_mode = TRUE
 		START_PROCESSING(SSmachines, src)
@@ -326,6 +326,7 @@
 		reagents.handle_reactions()
 	if(low_power_mode && !use_emergency_power(LIGHT_EMERGENCY_POWER_USE * seconds_per_tick))
 		update(FALSE) //Disables emergency mode and sets the color to normal
+		return PROCESS_KILL
 
 /obj/machinery/light/proc/burn_out()
 	if(status == LIGHT_OK)
