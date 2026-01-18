@@ -10,14 +10,17 @@
 	program_icon = "paint-roller"
 
 	///List of all themes imported from maintenance apps.
-	var/list/imported_themes = list()
+	var/list/imported_themes
 
 /datum/computer_file/program/themeify/ui_data(mob/user)
 	var/list/data = list()
 
 	if(computer.obj_flags & EMAGGED)
 		data["themes"] += list(list("theme_name" = PDA_THEME_SYNDICATE_NAME, "theme_ref" = GLOB.pda_name_to_theme[PDA_THEME_SYNDICATE_NAME]))
-	for(var/theme_key in GLOB.default_pda_themes + imported_themes)
+	var/list/available_themes = GLOB.default_pda_themes.Copy()
+	if(imported_themes)
+		available_themes += imported_themes
+	for(var/theme_key in available_themes)
 		data["themes"] += list(list("theme_name" = theme_key, "theme_ref" = GLOB.pda_name_to_theme[theme_key]))
 
 	return data
@@ -29,7 +32,7 @@
 			var/selected_theme = params["selected_theme"]
 			if( \
 				!GLOB.default_pda_themes.Find(selected_theme) && \
-				!imported_themes.Find(selected_theme) && \
+				!LAZYFIND(imported_themes, selected_theme) && \
 				!(computer.obj_flags & EMAGGED) \
 			)
 				return FALSE

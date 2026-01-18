@@ -217,18 +217,17 @@
 		return ..()
 
 	if(!(linked_venue.req_access in used_id.GetAccess()))
-		to_chat(user, span_warning("This card lacks the access to change this venues status."))
+		to_chat(user, span_warning("This card lacks the access to change this venue's status."))
 		return
 
 	linked_venue.toggle_open()
 	update_icon()
 
 /obj/machinery/restaurant_portal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	var/obj/item/card/id/used_id = tool.GetID()
-	if(!istype(used_id))
+	if(!tool.GetID())
 		return NONE
 
-	if(!check_access(used_id))
+	if(!allowed(user))
 		balloon_alert(user, "insufficient access!")
 		return ITEM_INTERACT_BLOCKING
 

@@ -25,6 +25,8 @@
 	unarmed_damage_high = 3
 	unarmed_effectiveness = 0
 	bodypart_trait_source = HEAD_TRAIT
+	butcher_replacement = /obj/item/bodypart/head/skeleton/nonfunctional
+	base_meat_amount = 0
 
 	/// Do we show the information about missing organs upon being examined? Defaults to TRUE, useful for Dullahan heads.
 	var/show_organs_on_examine = TRUE
@@ -103,6 +105,16 @@
 	QDEL_NULL(worn_head_offset)
 	QDEL_NULL(worn_face_offset)
 	return ..()
+
+/obj/item/bodypart/head/get_butcher_drops(force = FALSE)
+	if(!isnull(butcher_drops) && !force)
+		return butcher_drops
+	if (butcher_drop_cache[type] && !force)
+		return butcher_drop_cache[type]
+	var/datum/species/species = GLOB.species_list[species_id || limb_id]
+	if (!species || !species.skinned_type)
+		return null
+	return list(species.skinned_type = 1)
 
 /obj/item/bodypart/head/grind_results()
 	return null

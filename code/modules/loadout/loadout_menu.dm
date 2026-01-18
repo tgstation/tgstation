@@ -14,9 +14,6 @@
 	QDEL_NULL(menu)
 	return ..()
 
-/datum/preference_middleware/loadout/on_new_character(mob/user)
-	preferences.character_preview_view?.update_body()
-
 /datum/preference_middleware/loadout/proc/action_select_item(list/params, mob/user)
 	PRIVATE_PROC(TRUE)
 	var/path_to_use = text2path(params["path"])

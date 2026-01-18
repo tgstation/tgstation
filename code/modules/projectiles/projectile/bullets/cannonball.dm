@@ -87,3 +87,75 @@
 	object_damage_decreases = TRUE
 	object_damage_decrease_on_hit = 40
 	range = 7 //let's keep it a bit sane, okay?
+
+
+/// Mounted ballista projectile, not exactly a cannonball but it's close enough
+/obj/projectile/bullet/ballista_spear
+	name = "ballista spear"
+	icon_state = "ballista_spear"
+	damage = 60
+	speed = 3
+	catastropic_dismemberment = TRUE
+	projectile_piercing = PASSMOB
+	dismemberment = 3
+	embed_type = null
+	shrapnel_type = null
+	wound_bonus = 40
+	exposed_wound_bonus = 30
+	damage_type = BRUTE
+
+/// Set statistics based on provided spear
+/obj/projectile/bullet/ballista_spear/proc/attach_spear(obj/item/spear)
+	damage = spear.throwforce * 2.5
+	armour_penetration = spear.armour_penetration * 2
+	wound_bonus += spear.wound_bonus // Most spears have a negative wound bonus so this actually goes down
+	AddComponent(/datum/component/projectile_instance_drop, spear)
+
+/// An even bigger ballista projectile designed for taking down monsters
+/obj/projectile/bullet/ballista_spear/dragonator
+	name = "dragon-slaying ballista spear"
+	icon_state = "ballista_spear_dragon"
+	damage = 120
+	speed = 4
+	armour_penetration = 25
+	wound_bonus = 15
+	exposed_wound_bonus = 30
+
+/obj/projectile/bullet/ballista_spear/dragonator/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/bane, mob_biotypes = MOB_MINING, damage_multiplier = 2)
+
+/obj/projectile/bullet/ballista_spear/dragonator/attach_spear(obj/item/spear)
+	AddComponent(/datum/component/projectile_instance_drop, spear)
+
+/// A "spear" that's not sharp but has a different surprise on the end
+/obj/projectile/bullet/ballista_spear/prod
+	name = "ballistic prod"
+	icon_state = "ballista_prod"
+	damage = 40
+	projectile_piercing = NONE
+	dismemberment = 0
+	sharpness = NONE
+	wound_bonus = 10
+	exposed_wound_bonus = 20
+	/// Reference to our stored cattleprod
+	var/obj/item/melee/baton/security/cattleprod/held_prod
+
+/obj/projectile/bullet/ballista_spear/prod/attach_spear(obj/item/spear)
+	AddComponent(/datum/component/projectile_instance_drop, spear)
+	if (!istype(spear, /obj/item/melee/baton/security/cattleprod))
+		return // IDK how you did this but you're going to have a boring projectile
+	name = "ballistic [initial(spear.name)]"
+	held_prod = spear
+	RegisterSignals(held_prod, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(on_prod_left))
+
+/obj/projectile/bullet/ballista_spear/prod/on_hit(mob/target, blocked = 0, pierce_hit)
+	. = ..()
+	if (held_prod?.active && blocked != 100)
+		var/mob/prodder = ismob(firer) ? firer : null
+		held_prod?.finalize_baton_attack(target, prodder)
+
+/// If our teleprod teleports out of the bullet then it's not going to prod anyone is it?
+/obj/projectile/bullet/ballista_spear/prod/proc/on_prod_left()
+	SIGNAL_HANDLER
+	QDEL_IN(src, 1) // Not instantly because if it dropped on the floor because we hit someone we want to finish doing that first

@@ -640,11 +640,9 @@
 /**
  * Returns the access list for this mob
  */
-/mob/living/proc/get_access() as /list
+/mob/living/get_access()
 	var/list/access_list = list()
-	SEND_SIGNAL(src, COMSIG_MOB_RETRIEVE_SIMPLE_ACCESS, access_list)
-	var/obj/item/card/id/id = get_idcard()
-	access_list += id?.GetAccess()
+	SEND_SIGNAL(src, COMSIG_MOB_RETRIEVE_ACCESS, access_list)
 	return access_list
 
 /mob/living/proc/get_id_in_hand()
@@ -2575,6 +2573,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/set_usable_hands(new_value)
 	if(usable_hands == new_value)
 		return
+	if(new_value < 0) // Sanity check
+		stack_trace("[src] had set_usable_hands() called on them with a negative value!")
+		new_value = 0
 	. = usable_hands
 	usable_hands = new_value
 

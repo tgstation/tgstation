@@ -45,7 +45,7 @@
 
 	register_context()
 	update_appearance(UPDATE_OVERLAYS)
-	AddComponent(/datum/component/climb_walkable)
+	AddElement(/datum/element/climb_walkable)
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 	AddElement(/datum/element/give_turf_traits, string_list(turf_traits))

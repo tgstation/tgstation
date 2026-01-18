@@ -13,8 +13,8 @@
 	var/dirty = FALSE
 	/// Time from starting until meat appears
 	var/gibtime = 40
-	/// How much meat we meet when we meat the meat
-	var/meat_produced = 2
+	/// Average efficiency multiplier for how much meat we meet when we meat the meat per meat of each of meat's meat limbs
+	var/efficiency = 0.25
 	/// If the gibber should give the 'Subject may not have abiotic items on' message
 	var/ignore_clothing = FALSE
 	/// The DNA info of the last gibbed mob
@@ -35,9 +35,9 @@
 /obj/machinery/gibber/RefreshParts()
 	. = ..()
 	gibtime = 40
-	meat_produced = initial(meat_produced)
+	efficiency = initial(efficiency)
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
-		meat_produced += matter_bin.tier
+		efficiency += matter_bin.tier * 0.25
 	for(var/datum/stock_part/servo/servo in component_parts)
 		gibtime -= 5 * servo.tier
 		if(servo.tier >= 2)
@@ -46,7 +46,7 @@
 /obj/machinery/gibber/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Outputting <b>[meat_produced]</b> meat slab(s) after <b>[gibtime*0.1]</b> seconds of processing.")
+		. += span_notice("The status display reads: Outputting <b>[efficiency]%</b> of meat after <b>[gibtime*0.1]</b> seconds of processing.")
 		for(var/datum/stock_part/servo/servo in component_parts)
 			if(servo.tier >= 2)
 				. += span_notice("[src] has been upgraded to process inorganic materials.")
@@ -127,7 +127,7 @@
 				set_occupant(C)
 				update_appearance()
 	else
-		startgibbing(user)
+		start_gibbing(user)
 
 /obj/machinery/gibber/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -162,12 +162,14 @@
 	dump_inventory_contents()
 	update_appearance()
 
-/obj/machinery/gibber/proc/startgibbing(mob/user)
+/obj/machinery/gibber/proc/start_gibbing(mob/user)
 	if(operating)
 		return
+
 	if(!occupant)
 		audible_message(span_hear("You hear a loud metallic grinding sound."))
 		return
+
 	if(occupant.flags_1 & HOLOGRAM_1)
 		audible_message(span_hear("You hear a very short metallic grinding sound."))
 		playsound(loc, 'sound/machines/hiss.ogg', 20, TRUE)
@@ -180,123 +182,160 @@
 	playsound(loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	operating = TRUE
 	update_appearance()
-
 	Shake(pixelshiftx = 1, pixelshifty = 0, duration = gibtime)
-	var/mob/living/mob_occupant = occupant
-	var/sourcename = mob_occupant.real_name
-	var/sourcejob
-	if(ishuman(occupant))
-		var/mob/living/carbon/human/gibee = occupant
-		sourcejob = gibee.job
-	var/sourcenutriment = mob_occupant.nutrition / 15
-	var/gibtypes = null
-	var/typeofmeat = /obj/item/food/meat/slab/human
-	var/typeofskin
 
+	var/mob/living/victim = occupant
 	var/list/results = list()
-	var/obj/item/stack/sheet/animalhide/skin
-	var/list/datum/disease/diseases = mob_occupant.get_static_viruses()
+	var/list/datum/disease/diseases = list()
+	for(var/datum/disease/disease as anything in victim.get_static_viruses())
+		// admin or special viruses that should not be reproduced
+		if(!(disease.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS)))
+			diseases += disease
 
-	// We cannot initial() lists on types, so we need to create in nullspace, take the list and then delete our mob's gibspawner
-	var/spawner_type = mob_occupant.get_gibs_type()
-	if (spawner_type)
-		// No need to handle cleanup as it returns INITIALIZE_HINT_QDEL by default
-		var/obj/effect/gibspawner/spawner = new spawner_type()
-		gibtypes = spawner.gibtypes
+	blood_dna_info = victim.get_blood_dna_list()
 
-	if(ishuman(occupant))
-		var/mob/living/carbon/human/gibee = occupant
-		if(prob(40) && (sourcejob in list(JOB_SECURITY_OFFICER,JOB_WARDEN,JOB_HEAD_OF_SECURITY)))
-			typeofmeat = /obj/item/food/meat/slab/pig
-		else if(gibee.dna && gibee.dna.species)
-			typeofmeat = gibee.dna.species.meat
-			typeofskin = gibee.dna.species.skinned_type
-		blood_dna_info = gibee.get_blood_dna_list()
+	if (!ishuman(victim))
+		var/meat_type = /obj/item/food/meat/slab
+		var/skin_type = null
+		var/meat_produced = 2
+		var/skin_produced = 1
+		if (victim.butcher_results || victim.guaranteed_butcher_results)
+			for (var/possible_drop in victim.butcher_results | victim.guaranteed_butcher_results)
+				if (ispath(possible_drop, /obj/item/food/meat/slab))
+					meat_type = possible_drop
+					meat_produced = victim.butcher_results[possible_drop] + victim.guaranteed_butcher_results[possible_drop]
+				else if (ispath(possible_drop, /obj/item/stack/sheet/animalhide))
+					skin_type = possible_drop
+					skin_produced = victim.butcher_results[possible_drop] + victim.guaranteed_butcher_results[possible_drop]
 
-	else if(iscarbon(occupant))
-		var/mob/living/carbon/carbon_occupant = occupant
-		typeofmeat = carbon_occupant.type_of_meat
-		if(isalien(carbon_occupant))
-			typeofskin = /obj/item/stack/sheet/animalhide/xeno
-		blood_dna_info = carbon_occupant.get_blood_dna_list()
+		else if (iscarbon(victim))
+			var/mob/living/carbon/as_carbon = victim
+			meat_type = as_carbon.type_of_meat
+			if (isalien(victim))
+				skin_type = /obj/item/stack/sheet/animalhide/xeno
 
-	if (typeofmeat)
-		for (var/i in 1 to meat_produced)
-			var/obj/item/food/meat/slab/newmeat = new typeofmeat(null, blood_dna_info)
-			newmeat.name = "[sourcename] [newmeat.name]"
-			newmeat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, occupant) = 4 * SHEET_MATERIAL_AMOUNT))
-			if(!istype(newmeat))
+		for (var/i in 1 to rand(floor(meat_produced * efficiency / initial(efficiency)), ceil(meat_produced * efficiency / initial(efficiency))))
+			results += spawn_meat(victim, meat_type, diseases)
+
+		if (skin_type && skin_produced)
+			for (var/i in 1 to rand(floor(skin_produced * efficiency / initial(efficiency)), ceil(skin_produced * efficiency / initial(efficiency))))
+				results += new skin_type(src)
+
+		SEND_SIGNAL(victim, COMSIG_LIVING_GIBBER_ACT, user, src, results)
+		process_results(victim, results)
+		addtimer(CALLBACK(src, PROC_REF(finish_gibbing), results, victim.get_gibs_type(), diseases), gibtime)
+		log_combat(user, victim, "gibbed")
+		victim.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
+		victim.death(TRUE)
+		victim.ghostize()
+		set_occupant(null)
+		qdel(victim)
+		return
+
+	var/mob/living/carbon/human/agent_whiskey = victim
+	var/drop_chance = 0
+	for (var/obj/item/bodypart/limb as anything in agent_whiskey.bodyparts)
+		if (!limb.butcher_drops)
+			continue
+
+		for (var/obj/item/drop_type as anything in limb.butcher_drops)
+			var/amount = limb.butcher_drops[drop_type] || 1
+			drop_chance += amount * efficiency
+			if (drop_chance > 1)
+				amount = floor(drop_chance)
+				if (prob(drop_chance * 100))
+					amount += 1
+			else
+				amount = 1
+				if (!prob(drop_chance * 100))
+					continue
+			drop_chance = 0
+
+			if (ispath(drop_type, /obj/item/food/meat))
+				for (var/i in 1 to amount)
+					results += spawn_meat(victim, drop_type, diseases)
 				continue
-			newmeat.subjectname = sourcename
-			if(sourcejob)
-				newmeat.subjectjob = sourcejob
 
-			results += newmeat
+			if (ispath(drop_type, /obj/item/stack))
+				if (ispath(drop_type, /obj/item/stack/sheet/animalhide/carbon))
+					results += new drop_type(src, amount, /*merge = */TRUE, /*mat_override = */null, /*mat_amount = */1, limb.skin_tone || limb.species_color)
+				else
+					results += new drop_type(src, amount)
+				continue
 
-	SEND_SIGNAL(occupant, COMSIG_LIVING_GIBBER_ACT, user, src, results)
+			for (var/i in 1 to amount)
+				results += new drop_type(src)
 
+	SEND_SIGNAL(victim, COMSIG_LIVING_GIBBER_ACT, user, src, results)
+	process_results(victim, results)
+	addtimer(CALLBACK(src, PROC_REF(finish_gibbing), results, victim.get_gibs_type(), diseases), gibtime)
+	log_combat(user, victim, "gibbed")
+	victim.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
+	victim.death(TRUE)
+	victim.ghostize()
+	set_occupant(null)
+	qdel(victim)
+
+/obj/machinery/gibber/proc/spawn_meat(mob/living/victim, meat_type = /obj/item/food/meat/slab, list/datum/disease/diseases)
+	var/obj/item/food/meat/meat = new meat_type(src, blood_dna_info)
+	meat.name = "[victim.real_name]'s [meat.name]"
+	meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, victim) = 4 * SHEET_MATERIAL_AMOUNT))
+	if (!istype(meat))
+		return
+	meat.subjectname = victim.real_name
+	meat.subjectjob = victim.job
+	if (length(diseases))
+		meat.AddComponent(/datum/component/infective, diseases)
+	return meat
+
+/obj/machinery/gibber/proc/process_results(mob/living/victim, list/obj/item/results)
 	var/reagents_in_produced = 0
 	for(var/obj/item/result as anything in results)
 		if(result.reagents)
-			reagents_in_produced++
+			reagents_in_produced += 1
 
 	for(var/obj/item/result as anything in results)
-		occupant.reagents.trans_to(result, occupant.reagents.total_volume / reagents_in_produced, remove_blacklisted = TRUE)
-		result.reagents?.add_reagent(/datum/reagent/consumable/nutriment/fat, sourcenutriment / reagents_in_produced) // Thehehe. Fat guys go first
+		if (victim.reagents)
+			victim.reagents.trans_to(result, victim.reagents.total_volume / reagents_in_produced, remove_blacklisted = TRUE)
+		result.reagents?.add_reagent(/datum/reagent/consumable/nutriment/fat, victim.nutrition / 15 / reagents_in_produced)
 
-
-	if(typeofskin)
-		skin = new typeofskin
-
-	log_combat(user, occupant, "gibbed")
-	mob_occupant.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-	mob_occupant.death(TRUE)
-	mob_occupant.ghostize()
-	set_occupant(null)
-	qdel(mob_occupant)
-	addtimer(CALLBACK(src, PROC_REF(make_meat), skin, results, meat_produced, gibtypes, diseases, blood_dna_info), gibtime)
-
-/obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/results, meat_produced, list/gibtypes, list/datum/disease/diseases, blood_dna_info)
+/obj/machinery/gibber/proc/finish_gibbing(list/obj/item/results, gibs_type, list/datum/disease/diseases)
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
 	operating = FALSE
 	if (!dirty && prob(50))
 		dirty = TRUE
+
 	if(blood_dna_info)
 		add_blood_DNA(blood_dna_info)
+
 	var/turf/our_turf = get_turf(src)
 	var/list/turf/nearby_turfs = RANGE_TURFS(3, our_turf) - our_turf
-	if(skin)
-		skin.forceMove(loc)
-		skin.throw_at(pick(nearby_turfs), meat_produced, 3)
+	for (var/obj/item/result as anything in results)
+		result.forceMove(our_turf)
+		result.throw_at(pick(nearby_turfs), rand(1, length(results)), 1)
 
-	var/iteration = 1
-	for (var/obj/item/meatslab in results)
-		if(LAZYLEN(diseases))
-			var/list/datum/disease/diseases_to_add = list()
-			for(var/datum/disease/disease as anything in diseases)
-				// admin or special viruses that should not be reproduced
-				if(disease.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
-					continue
+	if (!gibs_type)
+		pixel_x = base_pixel_x
+		update_appearance()
+		return
 
-				diseases_to_add += disease
-			if(LAZYLEN(diseases_to_add))
-				meatslab.AddComponent(/datum/component/infective, diseases_to_add)
-		meatslab.forceMove(loc)
-		meatslab.throw_at(pick(nearby_turfs), iteration, 3)
+	var/obj/effect/gibspawner/spawner = new gibs_type()
+	var/list/gibs = spawner.gibtypes
+	if (!length(gibs))
+		pixel_x = base_pixel_x
+		update_appearance()
+		return
 
-		iteration++
+	for (var/i in 1 to length(results))
+		var/gib_dir = pick(GLOB.alldirs)
+		var/turf/gib_turf = get_step(src, gib_dir)
+		if (gib_turf.is_blocked_turf(TRUE))
+			continue
+		var/gib_type = pick(gibs)
+		var/obj/effect/decal/cleanable/blood/gibs/gib = new gib_type(gib_turf, diseases, blood_dna_info)
+		gib.streak(gib_dir)
 
-	if (length(gibtypes))
-		for (var/i in 1 to meat_produced**2) //2 slabs: 4 giblets, 3 slabs: 9, etc.
-			var/gibdir = pick(GLOB.alldirs)
-			var/turf/gibturf = get_step(src, gibdir)
-			if (!gibturf.is_blocked_turf(exclude_mobs = TRUE))
-				var/list/gibtype = pick(gibtypes)
-				var/obj/effect/decal/cleanable/blood/gibs/gib = new gibtype(gibturf, diseases, blood_dna_info)
-				gib.streak(gibdir)
-
-	pixel_x = base_pixel_x //return to its spot after shaking
-	operating = FALSE
+	pixel_x = base_pixel_x
 	update_appearance()
 
 //auto-gibs anything that bumps into it

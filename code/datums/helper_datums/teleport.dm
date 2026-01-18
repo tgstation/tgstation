@@ -31,8 +31,13 @@
 			if(istype(teleatom, /obj/item/storage/backpack/holding))
 				precision = rand(1,100)
 
-			var/static/list/bag_cache = typecacheof(/obj/item/storage/backpack/holding)
+			var/static/list/bag_cache = typecacheof(/obj/item/storage/backpack/holding, /obj/item/mod/control, /obj/item/mod/module/storage)
 			var/list/bagholding = typecache_filter_list(teleatom.get_all_contents(), bag_cache)
+			for(var/obj/item/mod/modsuit_or_module in bagholding)
+				var/datum/storage/storage = modsuit_or_module.atom_storage
+				if(istype(storage, /datum/storage/bag_of_holding) && storage.real_location == storage.parent)
+					continue
+				bagholding -= modsuit_or_module
 			if(bagholding.len)
 				precision = max(rand(1,100)*bagholding.len,100)
 				if(isliving(teleatom))

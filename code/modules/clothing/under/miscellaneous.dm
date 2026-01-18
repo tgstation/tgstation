@@ -64,7 +64,7 @@
 
 /obj/item/clothing/under/misc/adminsuit/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -25)
+	AddElement(/datum/element/adjust_fishing_difficulty, -25)
 
 /datum/armor/clothing_under/adminsuit
 	melee = 100

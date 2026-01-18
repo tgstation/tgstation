@@ -33,14 +33,14 @@
 
 	pipename = initial(pipe_type.name)
 
-	AddElement(/datum/element/simple_rotation)
+	AddElement(/datum/element/simple_rotation, post_rotation_proccall = PROC_REF(post_rotation))
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
 	// this only gets used by pipes created by RPDs or pipe dispensers
 	if(flip)
-		// Simulate two right clicks to flip this thing upside down
-		usr.base_click_alt_secondary(src)
-		usr.base_click_alt_secondary(src)
+		// Rotate, bypassing simple_rotation for 180 degrees at once
+		setDir(turn(dir, ROTATION_FLIP))
+		post_rotation(usr, ROTATION_FLIP)
 
 	update_appearance(UPDATE_ICON)
 
@@ -88,7 +88,7 @@
 			dpdir |= REVERSE_DIR(dir)
 	return dpdir
 
-/obj/structure/disposalconstruct/post_rotation(mob/user, degrees)
+/obj/structure/disposalconstruct/proc/post_rotation(mob/user, degrees)
 	if(degrees == ROTATION_FLIP)
 		var/obj/structure/disposalpipe/temp = pipe_type
 		if(initial(temp.flip_type))

@@ -36,14 +36,8 @@
 /// Ensures that items that got the nullrod_core element with the chaptain_spawnable arg can be selected by the chaplain
 /datum/unit_test/focus_only/nullrod_variants
 
-/// Checks that no light shares a tile/pixel offsets with another
-/datum/unit_test/focus_only/stacked_lights
-
 /// Checks for bad icon / icon state setups in cooking crafting menu
 /datum/unit_test/focus_only/bad_cooking_crafting_icons
-
-/// Ensures openspace never spawns on the bottom of a z stack
-/datum/unit_test/focus_only/openspace_clear
 
 /// Checks to ensure that variables expected to exist in a job datum (for config reasons) actually exist
 /datum/unit_test/focus_only/missing_job_datum_variables
@@ -75,6 +69,3 @@
 
 ///Checks that items have roughly the same materials whenever spawned via processing/microwaving/baking etc. or any other mean.
 /datum/unit_test/focus_only/check_materials_when_processed
-
-///Checks if an map loaded object found an valid support atom to hang on
-/datum/unit_test/focus_only/atom_mounted
