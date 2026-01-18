@@ -389,3 +389,111 @@
   - qol: Ghost health and chem scanning displays after examine information rather
       than before
   - map: AI satellite accesses have been made more consistent across maps.
+2026-01-16:
+  ArcaneMusic:
+  - bugfix: The Express Cargo Console can no longer buy goodie items.
+  - rscadd: The Express Cargo console can bypass the goodie purchasing protection
+      if Emagged.
+  - bugfix: Departmental Order requests may no longer bypass access restrictions,
+      and require access to place the order.
+  - rscadd: Departmental Order may explicitly bypass access restrictions if placed
+      using an agent ID.
+  ElGitificador:
+  - spellcheck: fixed heckacious larincks not being properly capitalized
+  Ezel:
+  - bugfix: Removes the intercomm in meta xenobio interior so it doesn't clip with
+      the shower anymore.
+  Ghommie:
+  - rscadd: Once installed, special PDA themes from maintenance disks will be present
+      on your roundstart PDA on future rounds (Sadly I couldn't figure out a way to
+      add those to the preferences UI yet). You can check which PDA themes you've
+      unlocked in the Progress tab of the achievements UI.
+  Jacquerel:
+  - rscadd: You can now also load stunprods into ballistas, make sure you turn them
+      on first though
+  - balance: The mounted ballista's damage, wound chance, and armour penetration is
+      now dependent on what kind of spear is loaded into it, and is generally a bit
+      lower
+  - balance: Mounted guns are less accurate when not wrenched down
+  - bugfix: Cancelling reloading a ballista now cancels the reload rather than completing
+      it.
+  - bugfix: You can pick up the exact same spear you fired out of a ballista, rather
+      than a totally new generic spear
+  - bugfix: It is possible to damage and destroy mounted guns with weapons
+  - code_imp: Reworked mounted guns to duplicate less code, please report any deviant
+      behaviour
+  - balance: Eldritch rusted tiles don't apply their effects to anyone who is jaunted
+      or in vents, and don't apply negative effects to people who are flying.
+  - balance: Heretic items which apply rust (grenades and eldritch reagent) check
+      the rust resistance level of the turf rather than always rusting it.
+  - bugfix: Rust Heretics ascending don't rust unrustable turfs, like space tiles.
+  JohnFulpWillard:
+  - refactor: ID checking for access has been reworked, please make a bug report if
+      anything that's supposed to grant access is not working.
+  LT3:
+  - code_imp: Code unit testing now checks emergency access and red alert access
+  Melbert:
+  - spellcheck: Corrects the blind message for manual cauterization
+  - rscadd: Hallucinations that don't make sense to trigger while unconscious or deaf
+      will no longer trigger while unconscious or deaf
+  - balance: 'Thermal vision mutation: Active duration 10s -> 30s  (with power, 30s->45s)'
+  - balance: 'Thermal vision mutation: Cooldown 25s -> 60s (with energy, 60s -> 30s)'
+  - balance: 'Thermal vision mutation: Eye damage 10 -> 7.5 (with sync, 7.5 -> 3.75)'
+  - balance: 'Thermal vision mutation: Eye damage is now affected by power chromosome
+      (with power, 7.5 -> 11.25)'
+  RikuTheKiller:
+  - rscadd: Added a new heavy roundstart/midround antagonist, the Blood Worm. Credit
+      to INFRARED_BARON for the sprites!
+  - bugfix: Removing traits based on a source no longer causes issues with trait signals.
+  - bugfix: High-priority effects no longer double-trigger due to subsystem issues.
+  - bugfix: Weighted averaging in reagent merging code has been band-aid fixed. It's
+      not the best, but it works.
+  - bugfix: Camera chunks, the biggest source of lag in the entire game, now run twice
+      as fast.
+  SapphoQueer:
+  - bugfix: The buttons for lavaland organs no longer show up after their removal
+      from your body.
+  SyncIt21:
+  - bugfix: photocopier does not charge for failed tasks
+  TheNobodyofimportance:
+  - bugfix: The Syndicate infiltrator no longer spawns in the nuclear base, and instead
+      spawns alongside nukies, eliminating lazyload clipping.
+  - bugfix: Clownops now spawn with a bananium bomb in their infiltrator.
+  Vect0r2:
+  - balance: people with immunodeficiency no longer can cure themselves automatically
+  carpotoxin:
+  - code_imp: Adding or removing rulesets from the queue list is done by procs instead
+      of directly editing the list.
+  loganuk:
+  - map: CATWALK - Chapel has had an upgrade, rejoice in a larger area
+  - map: CATWALK - Atmos & Engi had a quick tidy up
+  - map: CATWALK - Solar Arrays tweaked to be better
+  - map: CATWALK - South East Maintenance has changed
+  - map: CATWALK - Security expanded
+  - map: CATWALK - AI Sat fortified similar to Meta and other maps
+  - map: CATWALK - See full change log in PR
+2026-01-18:
+  Arturlang:
+  - bugfix: fixes star touch's cosmic bean making the victim forever unable to teleport
+      and leave trails
+  Melbert:
+  - rscadd: Adds stasis bodybags, unlocked with cryo tech. They put its occupants
+      (organ or mobs) in stasis, but wear down over time.
+  - rscadd: Adds triage cards to the medical vendor, a flavor item docs can use during
+      mass casualty events.
+  - qol: You can pin papers to closed bodybags. Keep organized with your autopsies.
+  - qol: You can interact with papers in folders and on clipboards
+  - qol: All forms of stasis stop brain tumors
+  - rscadd: Hangover effects depend on personality traits
+  - rscadd: All radios (intercoms and station-bounced) can have encryption keys installed
+      in them, rather than solely headsets and cyborgs.
+  - rscadd: Existing screwdriver interactions for station-bounced radios and intercoms
+      have been moved to right click. However, intercoms will still default to the
+      old behavior if they have no key installed.
+  - qol: Screentips for radios.
+  SmArtKar:
+  - bugfix: Fixed ID cards sometimes not functioning within wallets/PDAs
+  tontyGH:
+  - bugfix: As the AI, possessing an empty shell will no longer break your de-synchronization
+      protocols, which would trap your Nanotrasen-brand Silica-Soul(TM) inside of
+      it.
