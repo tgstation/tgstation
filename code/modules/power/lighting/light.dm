@@ -237,7 +237,7 @@
 		var/color_set = bulb_colour
 		if(color)
 			color_set = color
-		if(reagents)
+		if(reagents || !is_full_charge())
 			START_PROCESSING(SSmachines, src)
 		var/area/local_area = get_room_area()
 		if (flickering)
