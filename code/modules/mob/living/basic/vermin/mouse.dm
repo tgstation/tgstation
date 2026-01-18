@@ -43,6 +43,9 @@
 		/datum/pet_command/follow/start_active,
 		/datum/pet_command/perform_trick_sequence,
 	)
+	// Troutstation edit
+	/// Squeak sounds this mouse makes. Uses weighted lists (higher number is likelier to be picked)
+	var/list/squeaks = list('sound/mobs/non-humanoids/mouse/mousesqueek.ogg' = 1)
 
 /datum/emote/mouse
 	mob_type_allowed_typecache = /mob/living/basic/mouse
@@ -70,7 +73,8 @@
 	held_state = "mouse_[body_color]" // not handled by variety element
 	AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
-	AddComponent(/datum/component/squeak, list('sound/mobs/non-humanoids/mouse/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
+	// Troutstation edit
+	AddComponent(/datum/component/squeak, squeak, 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
