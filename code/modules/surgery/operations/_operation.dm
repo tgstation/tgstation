@@ -782,7 +782,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	return basemod
 
 /// Gets the surgery speed modifier for a given mob, based off what sort of table/bed/whatever is on their turf.
-/datum/surgery_operation/proc/get_location_modifier(turf/operation_turf, patient, surgeon, tool)
+/datum/surgery_operation/proc/get_location_modifier(turf/operation_turf, mob/living/patient, mob/living/surgeon, tool)
 	PROTECTED_PROC(TRUE)
 	// Technically this IS a typecache, just not the usual kind :3
 	// The order of the modifiers matter, latter entries override earlier ones
