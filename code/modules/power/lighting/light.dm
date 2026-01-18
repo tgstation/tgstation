@@ -290,9 +290,9 @@
 		var/static_power_used_new = 0
 		var/area/local_area = get_room_area()
 		if (nightshift_enabled && !local_area?.fire)
-			static_power_used_new = nightshift_brightness * nightshift_light_power * power_consumption_rate
+			static_power_used_new = ceil(nightshift_brightness * nightshift_light_power * power_consumption_rate)
 		else
-			static_power_used_new = brightness * bulb_power * power_consumption_rate
+			static_power_used_new = ceil(brightness * bulb_power * power_consumption_rate)
 		if(static_power_used != static_power_used_new) //Consumption changed - update
 			removeStaticPower(static_power_used, AREA_USAGE_STATIC_LIGHT)
 			static_power_used = static_power_used_new
