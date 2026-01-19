@@ -8,6 +8,7 @@ SUBSYSTEM_DEF(ai_controllers)
 	)
 	wait = 0.5 SECONDS //Plan every half second if required, not great not terrible.
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	var/list/currentrun = list()
 	///type of status we are interested in running
 	var/planning_status = AI_STATUS_ON
 	/// The average tick cost of all active AI, calculated on fire.
@@ -26,9 +27,16 @@ SUBSYSTEM_DEF(ai_controllers)
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
 	if(!resumed)
+		var/list/planning_list = GLOB.ai_controllers_by_status[planning_status]
+		currentrun = planning_list.Copy()
 		summing_cost = 0
+
+	//cache for sanic speed (lists are references anyways)
+	var/list/current_run = src.currentrun
 	var/timer = TICK_USAGE_REAL
-	for(var/datum/ai_controller/ai_controller as anything in GLOB.ai_controllers_by_status[planning_status])
+	while(length(current_run))
+		var/datum/ai_controller/ai_controller = current_run[length(current_run)]
+		current_run.len--
 		if(!ai_controller.able_to_plan)
 			continue
 		ai_controller.SelectBehaviors(wait * 0.1)

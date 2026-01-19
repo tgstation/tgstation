@@ -63,7 +63,7 @@
 	ADD_TRAIT(human_target, TRAIT_FAKEDEATH, TRAIT_STATUS_EFFECT(id))
 	ADD_TRAIT(human_target, TRAIT_HERETIC_SUMMON, TRAIT_STATUS_EFFECT(id))
 	human_target.become_husk(TRAIT_STATUS_EFFECT(id))
-	human_target.faction |= FACTION_HERETIC
+	human_target.add_faction(FACTION_HERETIC)
 	human_target.apply_status_effect(/datum/status_effect/desensitized, TRAIT_STATUS_EFFECT(id), DESENSITIZED_THRESHOLD * 0.2)
 
 	if(human_target.mind)
@@ -94,7 +94,7 @@
 	REMOVE_TRAIT(human_target, TRAIT_FAKEDEATH, TRAIT_STATUS_EFFECT(id))
 	REMOVE_TRAIT(human_target, TRAIT_HERETIC_SUMMON, TRAIT_STATUS_EFFECT(id))
 	human_target.cure_husk(TRAIT_STATUS_EFFECT(id))
-	human_target.faction -= FACTION_HERETIC
+	human_target.remove_faction(FACTION_HERETIC)
 	human_target.remove_status_effect(/datum/status_effect/desensitized, TRAIT_STATUS_EFFECT(id))
 	human_target.mind?.remove_antag_datum(/datum/antagonist/heretic_monster)
 

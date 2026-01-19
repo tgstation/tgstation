@@ -77,7 +77,7 @@
 	var/mob/living/antag = mob_override || owner.current
 	RegisterSignal(antag, COMSIG_LIVING_LIFE, PROC_REF(rift_checks))
 	RegisterSignal(antag, COMSIG_LIVING_DEATH, PROC_REF(destroy_rifts))
-	antag.faction |= FACTION_CARP
+	antag.add_faction(FACTION_CARP)
 	// Give the ability over if we have one
 	rift_ability?.Grant(antag)
 	wavespeak = antag.AddComponent( \
@@ -94,7 +94,7 @@
 	var/mob/living/antag = mob_override || owner.current
 	UnregisterSignal(antag, COMSIG_LIVING_LIFE)
 	UnregisterSignal(antag, COMSIG_LIVING_DEATH)
-	antag.faction -= FACTION_CARP
+	antag.remove_faction(FACTION_CARP)
 	rift_ability?.Remove(antag)
 	QDEL_NULL(wavespeak)
 

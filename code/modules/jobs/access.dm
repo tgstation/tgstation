@@ -24,7 +24,7 @@
 		return TRUE
 
 	if(HAS_SILICON_ACCESS(accessor))
-		if(!(ROLE_SYNDICATE in accessor.faction))
+		if(!(accessor.has_faction(ROLE_SYNDICATE)))
 			if((ACCESS_SYNDICATE in req_access) || (ACCESS_SYNDICATE_LEADER in req_access) || (ACCESS_SYNDICATE in req_one_access) || (ACCESS_SYNDICATE_LEADER in req_one_access))
 				return FALSE
 			if(onSyndieBase() && loc != accessor)

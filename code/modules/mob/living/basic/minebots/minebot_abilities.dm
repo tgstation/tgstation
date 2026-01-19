@@ -116,7 +116,7 @@
 	if(isgroundlessturf(my_turf))
 		return FALSE
 	var/obj/effect/mine/minebot/my_mine = new(my_turf)
-	my_mine.ignore_list = owner.faction.Copy()
+	my_mine.ignore_list = owner.get_faction()
 	playsound(my_turf, 'sound/items/weapons/armbomb.ogg', 20)
 	StartCooldown()
 	return TRUE
@@ -183,6 +183,6 @@
 	if(!isliving(on_who))
 		return ..()
 	var/mob/living/stepped_mob = on_who
-	if(FACTION_NEUTRAL in stepped_mob.faction)
+	if(stepped_mob.has_faction(FACTION_NEUTRAL))
 		return FALSE
 	return ..()
