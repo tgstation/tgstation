@@ -262,6 +262,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EASYBLEED "easybleed"
 /// Mob recovers from addictions at an accelerated rate
 #define TRAIT_ADDICTIONRESILIENT "addiction_resilient"
+/// Mob is immune to the effects of addictions
+#define TRAIT_NO_WITHDRAWALS "no_withdrawals"
 #define TRAIT_TOXINLOVER "toxinlover"
 /// Doesn't get overlays from being in critical.
 #define TRAIT_NOCRITOVERLAY "no_crit_overlay"
@@ -444,6 +446,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MEDICAL_HUD_SENSOR_ONLY "med_hud_lesser"
 #define TRAIT_SECURITY_HUD "sec_hud"
 #define TRAIT_SECURITY_HUD_ID_ONLY "sec_hud_lesser"
+#define TRAIT_BLOOD_HUD "blood_hud"
 #define TRAIT_ABDUCTOR_HUD "abductor_hud"
 /// Stop the user from seeing the sechud. Only works for trait handled sechuds.
 #define TRAIT_BLOCK_SECHUD "block_sechud"
@@ -1294,6 +1297,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This should not be used on clothing_traits, but should be applied to the clothing itself.
 #define TRAIT_RADIATION_PROTECTED_CLOTHING "radiation_protected_clothing"
 
+/// Immune to the effects of rust
+#define TRAIT_RUSTIMMUNE "rust_immune"
+
 /// Whether or not this item will allow the radiation SS to go through standard
 /// radiation processing as if this wasn't already irradiated.
 /// Basically, without this, COMSIG_IN_RANGE_OF_IRRADIATION won't fire once the object is irradiated.
@@ -1615,6 +1621,18 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Mob is artificially spawned rather than being created through more natural means - applied to monkey cubes and such
 #define TRAIT_SPAWNED_MOB "spawned_mob"
+
+/// Mob is the host of a living blood worm.
+#define TRAIT_BLOOD_WORM_HOST "blood_worm_host"
+
+/// Mob just doesn't fucking care. No mood and no sanity.
+#define TRAIT_APATHETIC "apathetic"
+
+/// Mob can't be inflicted with the split personality trauma.
+#define TRAIT_NO_SPLIT_PERSONALITY "no_split_personality"
+
+/// Mob is shapeshifted, e.g. via a polymorph belt.
+#define TRAIT_SHAPESHIFTED "shapeshifted"
 
 /// Turf is one that ai mobs will generally avoid pathing through
 /// Doesn't need to be applied to any turfs that override can_cross_safely

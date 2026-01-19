@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - bugfix: "fixes star touch's cosmic bean making the victim forever unable to teleport and leave trails"

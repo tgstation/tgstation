@@ -142,7 +142,7 @@
 	. = ..()
 
 	var/datum/bank_account/blank_bank_account = new("Unassigned", SSjob.get_job_type(/datum/job/unassigned), player_account = FALSE)
-	registered_account = blank_bank_account
+	set_account(blank_bank_account)
 	registered_account.replaceable = TRUE
 
 	// Applying the trim updates the label and icon, so don't do this twice.
@@ -164,10 +164,8 @@
 		ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, ROUNDSTART_TRAIT)
 
 /obj/item/card/id/Destroy()
-	if (registered_account)
-		LAZYREMOVE(registered_account.bank_cards, src)
-	if (my_store)
-		QDEL_NULL(my_store)
+	clear_account()
+	QDEL_NULL(my_store)
 	if (isitem(loc))
 		UnregisterSignal(loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	return ..()
@@ -176,19 +174,30 @@
 	if (isitem(old_loc))
 		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 		if (ismob(old_loc.loc))
-			UnregisterSignal(old_loc.loc, COMSIG_MOVABLE_POINTED)
+			UnregisterSignal(old_loc.loc, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_RETRIEVE_ACCESS))
 	. = ..()
-	if (isitem(loc))
-		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(on_loc_equipped))
-		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(on_loc_dropped))
+	if (!isitem(loc))
+		return
+	RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(on_loc_equipped))
+	RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(on_loc_dropped))
+	if (ismob(loc.loc))
+		var/mob/wearer = loc.loc
+		// Equip chain shenanigans
+		UnregisterSignal(wearer, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_RETRIEVE_ACCESS))
+		on_loc_equipped(loc, wearer, wearer.get_slot_by_item(loc))
 
 /obj/item/card/id/equipped(mob/user, slot)
 	. = ..()
 	if (slot & ITEM_SLOT_ID)
 		RegisterSignal(user, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
+	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
+		RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
+	if (slot & ITEM_SLOT_POCKETS)
+		//putting it in your pocket doesn't let you use it as access.
+		UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
 
 /obj/item/card/id/dropped(mob/user)
-	UnregisterSignal(user, COMSIG_MOVABLE_POINTED)
+	UnregisterSignal(user, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_RETRIEVE_ACCESS))
 	return ..()
 
 /obj/item/card/id/equipped(mob/user, slot, initial = FALSE)
@@ -214,12 +223,19 @@
 /obj/item/card/id/proc/on_loc_equipped(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
-	if (slot == ITEM_SLOT_ID)
+	if (slot & ITEM_SLOT_ID)
 		RegisterSignal(equipper, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
+	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
+		RegisterSignal(equipper, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 
 /obj/item/card/id/proc/on_loc_dropped(datum/source, mob/dropper)
 	SIGNAL_HANDLER
-	UnregisterSignal(dropper, COMSIG_MOVABLE_POINTED)
+	UnregisterSignal(dropper, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_RETRIEVE_ACCESS))
+
+///Called when we're being used as access.
+/obj/item/card/id/proc/retrieve_access(datum/source, list/player_access)
+	SIGNAL_HANDLER
+	player_access += GetAccess()
 
 /obj/item/card/id/proc/on_pointed(mob/living/user, atom/pointed, obj/effect/temp_visual/point/point)
 	SIGNAL_HANDLER
@@ -475,8 +491,31 @@
 	// Hard reset access
 	access.Cut()
 
+/// Sets the bank account for the ID card.
+/obj/item/card/id/proc/set_account(datum/bank_account/account, transfer_funds = FALSE)
+	if(registered_account == account)
+		return
+	if(!isnull(registered_account))
+		if(transfer_funds)
+			account?.transfer_money(registered_account, registered_account.account_balance, "Account transfer")
+		clear_account()
+	if(isnull(account))
+		return
+
+	if(src in account.bank_cards)
+		stack_trace("Despite [src] not being registered to [account], the account already has it within the bank_cards list.")
+
+	registered_account = account
+	LAZYOR(registered_account.bank_cards, src)
+	registered_account.civilian_bounty?.on_selected(src)
+
 /// Clears the economy account from the ID card.
 /obj/item/card/id/proc/clear_account()
+	if(isnull(registered_account))
+		return
+
+	registered_account.civilian_bounty?.on_reset(src)
+	LAZYREMOVE(registered_account.bank_cards, src)
 	registered_account = null
 
 
@@ -750,7 +789,6 @@
 /// Attempts to set a new bank account on the ID card.
 /obj/item/card/id/proc/set_new_account(mob/living/user)
 	. = FALSE
-	var/datum/bank_account/old_account = registered_account
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the ID to continue!"))
 		return FALSE
@@ -767,11 +805,7 @@
 	if(isnull(account))
 		to_chat(user, span_warning("The account ID number provided is invalid."))
 		return FALSE
-	if(old_account)
-		LAZYREMOVE(old_account.bank_cards, src)
-		account.account_balance += old_account.account_balance
-	LAZYADD(account.bank_cards, src)
-	registered_account = account
+	set_account(account, transfer_funds = TRUE)
 	to_chat(user, span_notice("The provided account has been linked to this ID card. It contains [account.account_balance] [MONEY_NAME]."))
 	return TRUE
 
@@ -1097,8 +1131,7 @@
 	. = ..()
 	var/datum/bank_account/department_account = SSeconomy.get_dep_account(department_ID)
 	if(department_account)
-		registered_account = department_account
-		LAZYOR(department_account.bank_cards, src)
+		set_account(department_account)
 		name = "departmental card ([department_name])"
 		desc = "Provides access to the [department_name]."
 	SSeconomy.dep_cards += src
@@ -1470,7 +1503,7 @@
 
 /obj/item/card/id/advanced/debug/Initialize(mapload)
 	. = ..()
-	registered_account = new(player_account = FALSE)
+	set_account(new /datum/bank_account(player_account = FALSE))
 	registered_account.account_id = ADMIN_ACCOUNT_ID // this is so bank_card_talk() can work.
 	registered_account.account_job = SSjob.get_job_type(/datum/job/admin)
 	registered_account.account_balance += 999999 // MONEY! We add more money to the account every time we spawn because it's a debug item and infinite money whoopie
@@ -1971,8 +2004,7 @@
 
 	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[owner.account_id]"]
 	if(account)
-		LAZYADD(account.bank_cards, src)
-		registered_account = account
+		set_account(account)
 		to_chat(user, span_notice("Your account number has been automatically assigned."))
 
 /obj/item/card/id/advanced/chameleon/add_item_context(obj/item/source, list/context, atom/target, mob/living/user,)

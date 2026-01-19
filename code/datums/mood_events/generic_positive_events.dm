@@ -268,6 +268,11 @@
 	mood_change = 6
 	timeout = 5 MINUTES
 
+/datum/mood_event/blood_worm
+	description = "KILL, CONSUME, MULTIPLY, CONQUER."
+	mood_change = 999 // Makes it bold green and gives the special obj a higher priority. Blood worm hosts are apathetic, so this is otherwise meaningless.
+	hidden = TRUE
+
 /datum/mood_event/family_heirloom
 	description = "My family heirloom is safe with me."
 	mood_change = 1
@@ -701,3 +706,8 @@
 	mood_change = 3
 	timeout = 2 MINUTES
 	event_flags = MOOD_EVENT_WHIMSY
+
+/datum/mood_event/bibulous_hangover
+	description = "What a night! I can't wait to do it all again!"
+	mood_change = 2
+	timeout = 10 MINUTES

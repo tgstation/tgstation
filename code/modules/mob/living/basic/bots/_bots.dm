@@ -112,7 +112,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	AddElement(/datum/element/ai_retaliate)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(handle_loop_movement))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(after_attacked))
-	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
+	RegisterSignal(src, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 	add_traits(list(TRAIT_NO_GLIDE, TRAIT_SILICON_EMOTES_ALLOWED), INNATE_TRAIT)
 	LoadComponent(/datum/component/bloodysoles/bot)
 	GLOB.bots_list += src
@@ -773,10 +773,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/rust_heretic_act()
 	adjust_brute_loss(400)
 
-/mob/living/basic/bot/proc/attempt_access(mob/bot, obj/door_attempt)
+/mob/living/basic/bot/proc/retrieve_access(mob/bot, list/player_access)
 	SIGNAL_HANDLER
-
-	return (door_attempt.check_access(access_card) ? ACCESS_ALLOWED : ACCESS_DISALLOWED)
+	player_access += access_card.GetAccess()
 
 /mob/living/basic/bot/proc/generate_speak_list()
 	return null

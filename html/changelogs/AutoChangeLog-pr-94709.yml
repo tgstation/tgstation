@@ -1,0 +1,8 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Adds stasis bodybags, unlocked with cryo tech. They put its occupants (organ or mobs) in stasis, but wear down over time."
+  - rscadd: "Adds triage cards to the medical vendor, a flavor item docs can use during mass casualty events."
+  - qol: "You can pin papers to closed bodybags. Keep organized with your autopsies."
+  - qol: "You can interact with papers in folders and on clipboards"
+  - qol: "All forms of stasis stop brain tumors"
