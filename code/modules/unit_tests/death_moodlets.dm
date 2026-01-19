@@ -103,3 +103,23 @@
 
 /datum/unit_test/death_moodlets/pet/animal_disliker_to_pet/prepare_dummy(mob/living/carbon/human/consistent/dummy)
 	dummy.add_personality(/datum/personality/animal_disliker)
+
+// This one just tests that the death desensitized status effect works as expected
+/datum/unit_test/desensitized_status_effect
+
+/datum/unit_test/desensitized_status_effect/Run()
+	var/mob/living/carbon/human/consistent/normal_dummy = EASY_ALLOCATE()
+	var/mob/living/carbon/human/consistent/desensitized_dummy = EASY_ALLOCATE()
+	desensitized_dummy.mind_initialize()
+
+	desensitized_dummy.apply_status_effect(/datum/status_effect/desensitized, TRAIT_SOURCE_UNIT_TESTS, DESENSITIZED_THRESHOLD)
+	TEST_ASSERT_EQUAL(desensitized_dummy.mind.desensitized_level, DESENSITIZED_THRESHOLD, "Desensitized level not set correctly on application of desensitized status effect.")
+
+	desensitized_dummy.mind.transfer_to(normal_dummy)
+	TEST_ASSERT_EQUAL(normal_dummy.mind.desensitized_level, 1.0, "Desensitized level not reset to normal on transfer of mind from desensitized mob.")
+
+	normal_dummy.mind.transfer_to(desensitized_dummy)
+	TEST_ASSERT_EQUAL(desensitized_dummy.mind.desensitized_level, DESENSITIZED_THRESHOLD, "Desensitized level not restored on transfer of mind back to desensitized mob.")
+
+	desensitized_dummy.remove_status_effect(/datum/status_effect/desensitized, TRAIT_SOURCE_UNIT_TESTS)
+	TEST_ASSERT_EQUAL(desensitized_dummy.mind.desensitized_level, 1.0, "Desensitized level not reset to normal on removal of desensitized status effect.")
