@@ -21,7 +21,7 @@
 
 /obj/machinery/plumbing/output/Initialize(mapload, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, layer, distinct_reagent_cap = 5)
+	AddComponent(/datum/component/plumbing/simple_demand, layer)
 
 ///For pouring reagents from ducts directly into cups
 /obj/machinery/plumbing/output/tap

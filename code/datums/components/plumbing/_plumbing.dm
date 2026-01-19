@@ -16,9 +16,6 @@
 	var/demand_color = COLOR_RED
 	///What color is our supply connect?
 	var/supply_color = COLOR_BLUE
-	/// How many distinct reagents can we accept at once
-	/// Ex - if this was set to "3", our component would only request the first 3 reagents found, even if more are available
-	var/distinct_reagent_cap = INFINITY
 
 ///turn_connects is for wheter or not we spin with the object to change our pipes
 /datum/component/plumbing/Initialize(ducting_layer)
@@ -58,7 +55,6 @@
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(create_overlays)) //called by lateinit on startup
 	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_parent_dir_change)) //called when placed on a shuttle and it moves, and other edge cases
 	RegisterSignal(parent, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, PROC_REF(change_ducting_layer))
-	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/plumbing/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -69,7 +65,6 @@
 		COMSIG_ATOM_UPDATE_OVERLAYS,
 		COMSIG_ATOM_DIR_CHANGE,
 		COMSIG_MOVABLE_CHANGE_DUCT_LAYER,
-		COMSIG_ATOM_EXAMINE,
 	))
 
 /datum/component/plumbing/Destroy()
@@ -267,42 +262,11 @@
 			if(dir & demand_connects)
 				send_request(dir)
 
-/datum/component/plumbing/proc/on_examine(atom/movable/source, mob/user, list/examine_list)
-	SIGNAL_HANDLER
-
-	if(distinct_reagent_cap != INFINITY)
-		examine_list += span_notice("This plumbing component will only accept up to [distinct_reagent_cap] distinct reagents at once.")
-
 ///called from in process(). only calls process_request(), but can be overwritten for children with special behaviour
 /datum/component/plumbing/proc/send_request(dir)
 	var/amount_to_give = MACHINE_REAGENT_TRANSFER
-	// infinite cap means we need to special handling, process_request will just grab as much as it wants.
-	if(distinct_reagent_cap == INFINITY)
-		process_request(amount_to_give, null, dir) // null for no specific reagent, we're not picky.
-		return
 
-	// we have a cap, so we need to figure out what reagents we want
-	var/list/all_allowed_reagents = get_all_network_reagents(ducts["[dir]"])
-	if(length(all_allowed_reagents) > distinct_reagent_cap)
-		all_allowed_reagents.Cut(distinct_reagent_cap + 1)
-	else if(!length(all_allowed_reagents))
-		return
-
-	// request an even amount of each allowed reagent
-	var/amount_per_reagent = round(amount_to_give / length(all_allowed_reagents), CHEMICAL_VOLUME_ROUNDING)
-	for(var/allowed_reagent in all_allowed_reagents)
-		process_request(amount_per_reagent, allowed_reagent, dir)
-
-/// Returns a list of all distinct reagent types available in the passed duct network.
-/// The passed net can be null, it is handled.
-/datum/component/plumbing/proc/get_all_network_reagents(datum/ductnet/net)
-	var/list/distinct_reagents = list()
-	for(var/datum/reagent/existing_regent as anything in reagents.reagent_list)
-		distinct_reagents |= existing_regent.type
-	for(var/datum/component/plumbing/supplier as anything in net?.suppliers)
-		for(var/datum/reagent/chemical as anything in supplier.reagents.reagent_list)
-			distinct_reagents |= chemical.type
-	return distinct_reagents
+	process_request(amount_to_give, dir = dir)
 
 ///check who can give us what we want, and how many each of them will give us
 /datum/component/plumbing/proc/process_request(amount = MACHINE_REAGENT_TRANSFER, reagent, dir, round_robin = TRUE)
