@@ -27,7 +27,7 @@
 /datum/mood_event/conditional/see_death/add_effects(mob/dead_mob, dusted, gibbed)
 	update_effect(dead_mob)
 
-	if(HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB) || (dead_mob.flags_1 & HOLOGRAM_1))
+	if(HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB))
 		mood_change *= 0.25
 		timeout *= 0.2
 
