@@ -18,7 +18,7 @@ In any query remember to add a prefix to the table names if you use one.
 
 ---
 
-Version 5.34, godsnoknowswhen 2025, by Ghommie
+Version 5.34, 16 January 2026, by Ghommie
 Added `pda_themes_progress` as the second 'progress' subtype of 'datum/award/scores'
 
 ```sql
