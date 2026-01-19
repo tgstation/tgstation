@@ -710,12 +710,12 @@
 		return FAILED_BLOCK
 	do_strike(fool, forward_thinker, justicetool)
 	playsound(forward_thinker, 'sound/items/unsheath.ogg', 50, TRUE)
-	forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [p_their(fool)] attack!"), span_notice("You swiftly draw \the [justicetool] and counter-attack [fool]!"))
 	COOLDOWN_RESET(used_sheath, full_ability_cooldown)
 	return SUCCESSFUL_BLOCK
 
 /datum/action/innate/blade_counter/proc/do_strike(mob/living/fool, mob/living/forward_thinker, obj/item/justicetool)
 	var/obj/item/bodypart/offending_hand = fool.get_active_hand()
+	forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [p_their(fool)] attack!"), span_notice("You swiftly draw \the [justicetool] and counter-attack [fool]!"))
 	fool.apply_damage(
 		damage = justicetool.force * COUNTERMULTIPLIER,
 		damagetype = justicetool.damtype,
@@ -780,7 +780,6 @@
 /datum/action/innate/blade_counter/gunpowered/relax(mob/living/holder, obj/item/storage/belt/sheath/active_sheath)
 	..()
 	if(succeeded_attempt)
-		succeeded_attempt = FALSE
 		return
 
 	if(length(active_sheath.contents))
