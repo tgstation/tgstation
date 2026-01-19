@@ -88,8 +88,7 @@
 
 				//connect ductnets
 				if(!other.net) //will be null only for map loaded ducts
-					net.ducts += other
-					other.net = net
+					net.add_duct(other, FALSE)
 				else if(net != other.net) //merge the nets
 					var/datum/ductnet/othernet = other.net
 					//Take all its suppliers & demanders
@@ -103,9 +102,11 @@
 					othernet.demanders.Cut()
 
 					//Take all its ducts
-					net.ducts |= othernet.ducts
 					for(var/obj/machinery/duct/duct as anything in othernet.ducts)
-						duct.net = net
+						net.add_duct(duct, FALSE)
+
+					//Transfer all its reagents
+					othernet.pipeline.trans_to(net.pipeline, othernet.pipeline.maximum_volume, no_react = TRUE)
 
 					//destory it
 					qdel(othernet)
@@ -142,6 +143,17 @@
 
 ///we disconnect ourself from our neighbours. we also destroy our ductnet and tell our neighbours to make a new one
 /obj/machinery/duct/on_deconstruction()
+	//Expose reagents to everything on the ducts turf
+	var/modifier = 1 / net.ducts.len
+	var/turf/drop = get_turf(src)
+	for(var/atom/thing in drop)
+		//Things below the turf are protected
+		if(HAS_TRAIT(thing, TRAIT_UNDERFLOOR))
+			continue
+		net.pipeline.expose(thing, TOUCH, modifier)
+	net.pipeline.expose(drop, TOUCH, modifier)
+
+	//Drop duct stack
 	var/obj/item/stack/ducts/duct_stack = new (drop_location())
 	duct_stack.duct_color = duct_color
 	duct_stack.duct_layer = duct_layer
@@ -159,6 +171,11 @@
 	//object was early deleted
 	if(!net)
 		return ..()
+
+	//remove reagents. Spilling is done on turf because no side effects in destroy
+	var/reagents_per_pipe = net.pipeline.total_volume / net.ducts.len
+	net.pipeline.remove_all(reagents_per_pipe)
+	reagents_per_pipe = net.pipeline.total_volume / net.ducts.len
 
 	var/list/atom/movable/visited = list(src = TRUE)
 	while(neighbours.len)
@@ -185,11 +202,9 @@
 			pipe = node
 			if(istype(pipe))
 				//assign to new pipenet
-				pipe.disconnect()
 				if(!newnet)
 					newnet = new
-				newnet.ducts += pipe
-				pipe.net = newnet
+				newnet.add_duct(pipe)
 
 				//go through its neighbours as well
 				for(var/atom/movable/subnode in pipe.neighbours)
@@ -204,6 +219,10 @@
 						net.remove_plumber(plumbing)
 						if(newnet)
 							newnet.add_plumber(plumbing, text2num(dirtext))
+
+		//Evenly distribute all reagents into this new pipeline
+		if(newnet.ducts.len)
+			net.pipeline.trans_to(newnet.pipeline, reagents_per_pipe * newnet.ducts.len, no_react = TRUE, copy_only = TRUE)
 	disconnect()
 
 	return ..()

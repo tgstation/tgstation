@@ -6,11 +6,14 @@
 	var/list/datum/component/plumbing/suppliers
 	///Stuff that demands chems keep track of components that need their ducts updated as this net evolves
 	var/list/datum/component/plumbing/demanders
+	///Reagents stored in this pipeline
+	var/datum/reagents/plumbing/pipeline
 
 /datum/ductnet/New(obj/machinery/duct/parent)
 	ducts = parent ? list(parent) : list()
 	suppliers = list()
 	demanders = list()
+	pipeline = new(parent ? DUCT_VOLUME : 0, NO_REACT)
 	return ..()
 
 /datum/ductnet/Destroy(force)
@@ -19,7 +22,17 @@
 		remove_plumber(plumbing)
 	suppliers.Cut()
 	demanders.Cut()
+	QDEL_NULL(pipeline)
 	return ..()
+
+/datum/ductnet/proc/add_duct(obj/machinery/duct/pipe, disconnect = TRUE)
+	if(pipe in ducts)
+		return
+	if(pipe.net && disconnect)
+		pipe.disconnect()
+	ducts += pipe
+	pipe.net = src
+	pipeline.maximum_volume += DUCT_VOLUME
 
 ///add a plumbing object to either demanders or suppliers
 /datum/ductnet/proc/add_plumber(datum/component/plumbing/plumbing, dir)

@@ -135,6 +135,7 @@
 				if(plumber.active() && (plumber.ducting_layer & ducting_layer))
 					if((plumber.demand_connects & opposite_dir) && (supply_connects & direction) || (plumber.supply_connects & opposite_dir) && (demand_connects & direction)) //make sure we arent connecting two supplies or demands
 						var/datum/ductnet/net = new
+						net.pipeline.maximum_volume = DUCT_VOLUME
 						net.add_plumber(src, direction)
 						net.add_plumber(plumber, opposite_dir)
 
