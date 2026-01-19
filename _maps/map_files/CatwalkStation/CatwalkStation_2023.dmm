@@ -32089,6 +32089,11 @@
 "ixW" = (
 /obj/machinery/pdapainter/engineering,
 /obj/item/radio/intercom/directional/east,
+/obj/effect/mapping_helpers/requests_console/information,
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/machinery/requests_console/directional/south{
+	name = "Chief Engineer's Requests Console"
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/command/heads_quarters/ce)
 "iyh" = (
