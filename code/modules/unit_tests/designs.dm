@@ -18,7 +18,7 @@
 		if (length(current_design.reagents_list) && !(current_design.build_type & LIMBGROWER))
 			TEST_FAIL("Design [current_design.type] requires reagents but isn't a limb grower design. Reagent costs are only supported by limb grower designs")
 
-	for(var/datum/design/surgery/path as anything in subtypesof(/datum/design/surgery))
+	for(var/datum/design/surgery/path as anything in valid_subtypesof(/datum/design/surgery))
 		if (path::id == DESIGN_ID_IGNORE)
 			TEST_FAIL("Surgery Design [path] has no ID set")
 		if (isnull(path::surgery))
