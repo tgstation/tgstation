@@ -112,3 +112,8 @@
 #define BLOCK_NEW_MOOD FALSE
 /// Return from /be_replaced or /be_refreshed to actually go through and allow the new mood event to be added
 #define ALLOW_NEW_MOOD TRUE
+
+/// Threshold for desensitization effects to start applying
+#define DESENSITIZED_THRESHOLD 0.5
+#define DESENSITIZED_MINIMUM 0.1
+#define DESENSITIZED_REDUCTION_PER_DEATH 0.03

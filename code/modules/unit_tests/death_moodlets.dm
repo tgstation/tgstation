@@ -6,6 +6,7 @@
 
 /datum/unit_test/death_moodlets/Run()
 	var/mob/living/carbon/human/consistent/dummy = allocate(__IMPLIED_TYPE__)
+	dummy.mind_initialize()
 	prepare_dummy(dummy)
 
 	var/mob/living/dying = get_dying_mob()
@@ -47,7 +48,7 @@
 	desired_moodlet = /datum/mood_event/conditional/see_death/desensitized
 
 /datum/unit_test/death_moodlets/human/desensitized/prepare_dummy(mob/living/carbon/human/consistent/dummy)
-	ADD_TRAIT(dummy, TRAIT_DESENSITIZED, TRAIT_SOURCE_UNIT_TESTS)
+	dummy.mind.desensitized_level = DESENSITIZED_THRESHOLD
 
 /// Test callous moodlet
 /datum/unit_test/death_moodlets/human/callous
@@ -61,8 +62,8 @@
 	desired_moodlet = /datum/mood_event/conditional/see_death/dontcare
 
 /datum/unit_test/death_moodlets/human/desensitized_and_callous/prepare_dummy(mob/living/carbon/human/consistent/dummy)
-	ADD_TRAIT(dummy, TRAIT_DESENSITIZED, TRAIT_SOURCE_UNIT_TESTS)
 	dummy.add_personality(/datum/personality/callous)
+	dummy.mind.desensitized_level = DESENSITIZED_THRESHOLD
 
 /// Test cultist positive moodlet
 /datum/unit_test/death_moodlets/human/cultist
@@ -87,7 +88,7 @@
 	desired_moodlet = /datum/mood_event/conditional/see_death/pet
 
 /datum/unit_test/death_moodlets/pet/desensitized_to_pet/prepare_dummy(mob/living/carbon/human/consistent/dummy)
-	ADD_TRAIT(dummy, TRAIT_DESENSITIZED, TRAIT_SOURCE_UNIT_TESTS)
+	dummy.mind.desensitized_level = DESENSITIZED_THRESHOLD
 
 /// Tests callous moodlet when a pet dies
 /datum/unit_test/death_moodlets/pet/callous_to_pet
