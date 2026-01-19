@@ -734,7 +734,7 @@
 
 /datum/action/innate/blade_counter/gunpowered
 	name = "Powered Counterattack"
-	desc = "Anticipate an enemy's attack and attempt to strike back, at great risk to yourself."
+	desc = "Anticipate an enemy's attack and attempt to strike back, at great risk to yourself. The firing angle requires it be held on your hip."
 
 	/// Whether the currently relevant counterattack succeeded.
 	var/succeeded_attempt = FALSE
@@ -745,6 +745,8 @@
 
 
 /datum/action/innate/blade_counter/gunpowered/do_strike(mob/living/fool, mob/living/forward_thinker, obj/item/justicetool)
+	if(forward_thinker.get_slot_by_item(target) == ITEM_SLOT_SUITSTORE)
+		return ..()
 	succeeded_attempt = TRUE
 	var/obj/item/bodypart/offending_hand = fool.get_active_hand()
 	var/obj/item/bodypart/risked_hand = forward_thinker.get_active_hand()
@@ -779,7 +781,7 @@
 
 /datum/action/innate/blade_counter/gunpowered/relax(mob/living/holder, obj/item/storage/belt/sheath/active_sheath)
 	..()
-	if(succeeded_attempt)
+	if(succeeded_attempt || holder.get_slot_by_item(target) == ITEM_SLOT_SUITSTORE)
 		return
 
 	if(length(active_sheath.contents))
