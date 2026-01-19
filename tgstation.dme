@@ -5834,6 +5834,7 @@
 #include "code\modules\plumbing\plumbers\iv_drip.dm"
 #include "code\modules\plumbing\plumbers\pill_press.dm"
 #include "code\modules\plumbing\plumbers\plumbing_buffer.dm"
+#include "code\modules\plumbing\plumbers\plumbing_meter.dm"
 #include "code\modules\plumbing\plumbers\pumps.dm"
 #include "code\modules\plumbing\plumbers\reaction_chamber.dm"
 #include "code\modules\plumbing\plumbers\simple_machines.dm"

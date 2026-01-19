@@ -35,6 +35,9 @@
 			"synthesizer_booze",
 			"tap_output",
 		),
+		'icons/obj/pipes_n_cables/meter.dmi' = list(
+			"meter"
+		)
 	)
 
 	for(var/icon_file in essentials)

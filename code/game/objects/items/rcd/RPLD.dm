@@ -44,12 +44,12 @@
 			/obj/machinery/plumbing/fermenter = 30,
 			/obj/machinery/plumbing/liquid_pump = 35, //extracting chemicals from ground is one way of creation
 			/obj/machinery/plumbing/disposer = 10,
-			/obj/machinery/plumbing/buffer = 10, //creates chemicals as it waits for other buffers containing other chemicals and when mixed creates new chemicals
 		),
 
 		//category 2 distributors i.e devices which inject , move around , remove chemicals from the network
 		"Distributors" = list(
 			/obj/machinery/duct = 1,
+			/obj/machinery/reagent_meter = 1,
 			/obj/machinery/plumbing/layer_manifold = 5,
 			/obj/machinery/plumbing/input = 5,
 			/obj/machinery/plumbing/filter = 5,
@@ -61,10 +61,11 @@
 		//category 3 Storage i.e devices which stores & makes the processed chemicals ready for consumption
 		"Storage" = list(
 			/obj/machinery/plumbing/tank = 20,
+			/obj/machinery/plumbing/buffer = 10,
 			/obj/machinery/plumbing/acclimator = 10,
 			/obj/machinery/plumbing/bottler = 50,
 			/obj/machinery/plumbing/pill_press = 20,
-			/obj/machinery/iv_drip/plumbing = 20
+			/obj/machinery/iv_drip/plumbing = 20,
 		),
 	)
 
@@ -184,9 +185,6 @@
 
 ///pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type
 /obj/item/construction/plumbing/proc/create_machine(atom/destination, mob/user)
-	if(!isopenturf(destination))
-		return FALSE
-
 	var/cost = 0
 	for(var/category in plumbing_design_types)
 		cost = plumbing_design_types[category][blueprint]
@@ -216,12 +214,20 @@
 	useResource(cost, user)
 	return TRUE
 
-/obj/item/construction/plumbing/proc/canPlace(turf/destination)
-	if(!isopenturf(destination))
-		return FALSE
-	if(initial(blueprint.density) && destination.is_blocked_turf(exclude_mobs = FALSE, source_atom = null, ignore_atoms = null))
-		return FALSE
-	return isnull(ducting_layer_check(destination, ispath(blueprint, /obj/machinery/duct) ? GLOB.plumbing_layers[current_layer] : NONE))
+/obj/item/construction/plumbing/proc/canPlace(atom/destination)
+	if(ispath(blueprint, /obj/machinery/reagent_meter))
+		if(!istype(destination, /obj/machinery/duct))
+			return FALSE
+		var/obj/machinery/duct/target = destination
+		if(target.duct_layer != current_layer)
+			return FALSE
+	else
+		var/turf/open/target = destination
+		if(!isopenturf(target))
+			return FALSE
+		if(initial(blueprint.density) && target.is_blocked_turf(exclude_mobs = FALSE, source_atom = null, ignore_atoms = null))
+			return FALSE
+		return isnull(ducting_layer_check(target, ispath(blueprint, /obj/machinery/duct) ? GLOB.plumbing_layers[current_layer] : NONE))
 
 /obj/item/construction/plumbing/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
@@ -229,6 +235,9 @@
 		return .
 	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
 		return NONE
+
+	if(ispath(blueprint, /obj/machinery/reagent_meter))
+		return create_machine(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 	for(var/category_name in plumbing_design_types)
 		var/list/designs = plumbing_design_types[category_name]
@@ -251,11 +260,7 @@
 				playsound(src, 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
 			return ITEM_INTERACT_SUCCESS
 
-	if(!isopenturf(interacting_with))
-		return NONE
-	if(create_machine(interacting_with, user))
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	return create_machine(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 /obj/item/construction/plumbing/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
 	if(!istype(target, /obj/machinery/duct))
