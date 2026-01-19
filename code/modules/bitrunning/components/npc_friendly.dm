@@ -1,7 +1,7 @@
 /// Makes a mob friendly with most NPC factions
 /datum/component/npc_friendly
 	/// The list of factions to add to the player
-	var/list/npc_factions = list(
+	var/static/list/npc_factions = list(
 		FACTION_BOSS,
 		FACTION_CARP,
 		FACTION_HIVEBOT,
@@ -15,7 +15,7 @@
 		ROLE_SYNDICATE,
 	)
 	/// List of factions previously held by the player
-	var/list/previous_factions = list()
+	var/list/previous_factions
 
 /datum/component/npc_friendly/Initialize()
 	. = ..()
@@ -25,13 +25,11 @@
 
 	var/mob/living/player = parent
 
-	previous_factions.Add(player.faction)
-	player.faction |= npc_factions
+	previous_factions = player.get_faction()
+	player.add_faction(npc_factions)
 
 /datum/component/npc_friendly/Destroy(force)
-	. = ..()
-
 	var/mob/living/player = parent
-
-	player.faction.Cut()
-	player.faction.Add(previous_factions)
+	if(!QDELETED(parent))
+		player.set_faction(previous_factions)
+	return ..()

@@ -52,7 +52,7 @@
 	add_team_hud(target)
 
 	if (!istype(target, /mob/living/basic/blood_worm))
-		target.faction |= FACTION_BLOOD_WORM
+		target.add_faction(FACTION_BLOOD_WORM)
 
 	// Apathy and fearlessness are traits inherent to the very mind of a blood worm.
 	// Being immune to hunger, withdrawals, etc. are physical traits of blood worm hosts.
@@ -62,7 +62,7 @@
 	var/mob/living/target = mob_override || owner.current
 
 	if (!istype(target, /mob/living/basic/blood_worm))
-		target.faction -= FACTION_BLOOD_WORM
+		target.remove_faction(FACTION_BLOOD_WORM)
 
 	REMOVE_TRAITS_IN(target, REF(src))
 

@@ -113,6 +113,10 @@
 	var/list/automated_announcements
 	/// Action we use to say voice lines out loud, also we just pass anything we try to say through here just in case it plays a voice line
 	var/datum/action/cooldown/bot_announcement/pa_system
+	// The faction of the bot before it inherited the pai's faction
+	var/list/original_faction
+	// The allies of the bot before it inherited the pai's faction
+	var/list/original_allies
 
 	///Innate access uses an internal ID card.
 	var/obj/item/card/id/access_card = null
@@ -1091,7 +1095,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 	paicard.pai.mind.transfer_to(src)
 	to_chat(src, span_notice("You sense your form change as you are uploaded into [src]."))
 	name = paicard.pai.name
-	faction = user.faction.Copy()
+	original_faction = get_faction()
+	original_allies = allies
+	SET_FACTION_AND_ALLIES_FROM(src, user)
 	log_combat(user, paicard.pai, "uploaded to [initial(src.name)],")
 	return TRUE
 
@@ -1121,7 +1127,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 		to_chat(paicard.pai, span_notice("You feel your control fade as [paicard] ejects from [initial(src.name)]."))
 	paicard = null
 	name = initial(src.name)
-	faction = initial(faction)
+	set_faction(original_faction)
+	set_allies(original_allies)
 	remove_all_languages(source = LANGUAGE_PAI)
 	get_selected_language()
 
@@ -1152,7 +1159,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	update_appearance()
 
 /mob/living/simple_animal/bot/sentience_act()
-	faction -= FACTION_SILICON
+	remove_faction(FACTION_SILICON)
 
 /mob/living/simple_animal/bot/proc/set_path(list/newpath)
 	path = newpath ? newpath : list()

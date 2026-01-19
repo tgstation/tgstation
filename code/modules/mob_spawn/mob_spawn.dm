@@ -76,7 +76,7 @@
 /obj/effect/mob_spawn/proc/special(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
 	SHOULD_CALL_PARENT(TRUE)
 	if(faction)
-		spawned_mob.faction = faction
+		spawned_mob.set_faction(faction)
 	if(ishuman(spawned_mob))
 		var/mob/living/carbon/human/spawned_human = spawned_mob
 		if(mob_species)

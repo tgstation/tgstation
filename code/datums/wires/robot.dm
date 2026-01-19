@@ -35,7 +35,7 @@
 		if(WIRE_AI) // Pulse to pick a new AI.
 			if(!R.emagged)
 				var/new_ai
-				var/is_a_syndi_borg = (ROLE_SYNDICATE in R.faction)
+				var/is_a_syndi_borg = R.has_faction(ROLE_SYNDICATE)
 				if(user)
 					new_ai = select_active_ai(user, R.z, !is_a_syndi_borg, is_a_syndi_borg)
 				else
