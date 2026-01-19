@@ -6886,6 +6886,7 @@
 #include "troutstation\code\modules\language\slosh.dm"
 #include "troutstation\code\modules\loadout\categories\heads.dm"
 #include "troutstation\code\modules\loadout\categories\pocket.dm"
+#include "troutstation\code\modules\mob\living\basic\pets\dog\dog_subtypes.dm"
 #include "troutstation\code\modules\mob\living\basic\space_fauna\skitterer.dm"
 #include "troutstation\code\modules\mob\living\basic\space_fauna\slugcat\slugcat.dm"
 #include "troutstation\code\modules\mob\living\basic\vermin\lizard.dm"
