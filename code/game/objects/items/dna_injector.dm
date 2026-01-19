@@ -580,3 +580,7 @@
 /obj/item/dnainjector/anticlever
 	name = "\improper DNA injector (Anti-Clever)"
 	remove_mutations = list(/datum/mutation/clever)
+
+/obj/item/dnainjector/bad_dna
+	name = "\improper DNA injector (Unstable DNA)"
+	add_mutations = list(/datum/mutation/bad_dna)
