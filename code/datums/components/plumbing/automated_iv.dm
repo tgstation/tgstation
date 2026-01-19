@@ -16,18 +16,15 @@
 	QDEL_NULL(holder)
 	return ..()
 
-/datum/component/plumbing/automated_iv/can_give(amount, reagent)
-	var/obj/machinery/iv_drip/plumbing/drip = parent
-	return ..() && drip.mode == IV_TAKING
-
 /datum/component/plumbing/automated_iv/send_request(dir)
 	var/obj/machinery/iv_drip/plumbing/drip = parent
 	if(drip.mode == IV_INJECTING)
 		return ..()
 
-/datum/component/plumbing/automated_iv/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net, round_robin = TRUE)
-	reagents.trans_to(holder, reagents.total_volume)
-	reagents = holder
-	. = ..()
+/datum/component/plumbing/automated_iv/supply_demand(dir)
 	var/obj/machinery/iv_drip/plumbing/drip = parent
-	reagents = drip.reagents
+	if(drip.mode == IV_TAKING)
+		reagents.trans_to(holder, reagents.total_volume)
+		reagents = holder
+		. = ..()
+		reagents = drip.reagents

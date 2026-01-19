@@ -6,8 +6,6 @@
 	buffer = 100
 	density = FALSE
 
-	///constantly switches between TRUE and FALSE. TRUE means the batch tick goes straight, FALSE means the next batch goes in the side duct.
-	var/turn_straight = TRUE
 	///how much we must transfer straight. note input can be as high as 10 reagents per process, usually
 	var/transfer_straight = 5
 	///how much we must transfer to the side

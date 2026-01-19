@@ -8,53 +8,28 @@
 		return COMPONENT_INCOMPATIBLE
 	return ..()
 
-/datum/component/plumbing/filter/can_give(amount, reagent, datum/ductnet/net)
-	. = ..()
-	if(.)
-		var/direction
-		for(var/A in ducts)
-			if(ducts[A] == net)
-				direction = get_original_direction(text2num(A)) //we need it relative to the direction, so filters don't change when we turn the filter
-				break
-		if(!direction)
-			return FALSE
-		if(reagent)
-			if(!can_give_in_direction(direction, reagent))
-				return FALSE
+/datum/component/plumbing/filter/supply_demand(dir)
+	var/list/whitelist = null
 
-/datum/component/plumbing/filter/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net, round_robin = TRUE)
-	if(!reagents || !target || !target.reagents)
-		return FALSE
-	var/direction
-	for(var/A in ducts)
-		if(ducts[A] == net)
-			direction = get_original_direction(text2num(A))
-			break
-	if(reagent)
-		reagents.trans_to(target.parent, amount, target_id = reagent, methods = round_robin ? LINEAR : NONE)
-	else
-		for(var/A in reagents.reagent_list)
-			var/datum/reagent/R = A
-			if(!can_give_in_direction(direction, R.type))
-				continue
-			var/new_amount
-			if(R.volume < amount)
-				new_amount = amount - R.volume
-			reagents.trans_to(target.parent, amount, target_id = R.type, methods = round_robin ? LINEAR : NONE)
-			amount = new_amount
-			if(amount <= 0)
-				break
-
-///We check if the direction and reagent are valid to give. Needed for filters since different outputs have different behaviours
-/datum/component/plumbing/filter/proc/can_give_in_direction(dir, reagent)
 	var/obj/machinery/plumbing/filter/F = parent
-	switch(dir)
+	switch(get_original_direction(dir))
 		if(SOUTH) //straight
-			if(!F.left.Find(reagent) && !F.right.Find(reagent))
-				return TRUE
-		if(WEST) //right
-			if(F.right.Find(reagent))
-				return TRUE
+			if(length(F.left) || length(F.right))
+				whitelist = list()
+				for(var/datum/reagent/target as anything in reagents.reagent_list)
+					if((target.type in F.left) || (target.type in F.right))
+						continue
+					whitelist += target.type
+				if(whitelist.len == reagents.reagent_list.len)
+					whitelist = null
 		if(EAST) //left
-			if(F.left.Find(reagent))
-				return TRUE
+			whitelist = F.left
+		if(WEST) //right
+			whitelist = F.right
+
+	. = 0
+	if(whitelist)
+		for(var/datum/reagent/send as anything in whitelist)
+			. += process_demand(reagent = send, dir = dir)
+	else
+		. = process_demand(dir = dir)

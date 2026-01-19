@@ -109,8 +109,7 @@
 		demand_connects = new_demand_connects
 		supply_connects = new_supply_connects
 
-	if(demand_connects)
-		START_PROCESSING(SSplumbing, src)
+	START_PROCESSING(SSplumbing, src)
 
 	for(var/direction in GLOB.cardinals)
 		if(!(direction & (demand_connects | supply_connects)))
@@ -250,66 +249,63 @@
 		enable()
 
 /datum/component/plumbing/process()
-	if(!demand_connects)
-		return PROCESS_KILL
+	var/obj/machinery/target = parent
+	if(istype(target) && !target.is_operational)
+		return
+	var/work_done = FALSE
 
 	var/datum/reagents/receiver = recipient_reagents_holder()
-	if(QDELETED(receiver))
-		return PROCESS_KILL
+	for(var/dir in GLOB.cardinals)
+		if(!receiver.holder_full() && (dir & demand_connects) && send_request(dir))
+			work_done = TRUE
 
-	if(!receiver.holder_full())
-		for(var/dir in GLOB.cardinals)
-			if(dir & demand_connects)
-				send_request(dir)
+		if(reagents.total_volume && (dir & supply_connects) && supply_demand(dir))
+			work_done = TRUE
 
-///called from in process(). only calls process_request(), but can be overwritten for children with special behaviour
-/datum/component/plumbing/proc/send_request(dir)
-	var/amount_to_give = MACHINE_REAGENT_TRANSFER
+	if(istype(target) && work_done)
+		target.use_energy(target.active_power_usage * 0.25)
 
-	process_request(amount_to_give, dir = dir)
+///Returns a ductnet based on the requested direction
+/datum/component/plumbing/proc/net(dir)
+	PRIVATE_PROC(TRUE)
+	RETURN_TYPE(/datum/ductnet)
 
-///check who can give us what we want, and how many each of them will give us
-/datum/component/plumbing/proc/process_request(amount = MACHINE_REAGENT_TRANSFER, reagent, dir, round_robin = TRUE)
-	//find the duct to take from
 	var/dirtext = num2text(dir)
 	var/datum/ductnet/net = ducts[dirtext]
 	if(QDELETED(net))
 		if(net)
 			ducts -= dirtext
-		return FALSE
+		net = null
 
-	//find all valid suppliers in the duct
-	var/list/valid_suppliers = list()
-	for(var/datum/component/plumbing/supplier as anything in net?.suppliers)
-		if(supplier.can_give(amount, reagent, net))
-			valid_suppliers += supplier
-	var/suppliersLeft = length(valid_suppliers)
-	if(!suppliersLeft)
-		return FALSE
+	return net
 
-	//take an equal amount from each supplier
-	var/currentRequest
-	var/target_volume = reagents.total_volume + amount
-	for(var/datum/component/plumbing/give as anything in valid_suppliers)
-		currentRequest = (target_volume - reagents.total_volume) / suppliersLeft
-		give.transfer_to(src, currentRequest, reagent, net, round_robin)
-		suppliersLeft--
-	return TRUE
+///Request reagents from an specific direction. Override in child types
+/datum/component/plumbing/proc/send_request(dir)
+	return process_request(MACHINE_REAGENT_TRANSFER, dir = dir)
 
-///returns TRUE when they can give the specified amount and reagent. called by process request
-/datum/component/plumbing/proc/can_give(amount, reagent, datum/ductnet/net)
-	SHOULD_BE_PURE(TRUE)
+///Does the actual work of transferring reagents from the pipeline to this machines recipient holder
+/datum/component/plumbing/proc/process_request(amount = MACHINE_REAGENT_TRANSFER, reagent, dir, round_robin = TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(amount <= 0)
-		return FALSE
+	var/datum/ductnet/net = net(dir)
+	if(net)
+		return net.pipeline.trans_to(recipient_reagents_holder(), amount, target_id = reagent, methods = round_robin ? LINEAR : NONE)
 
-	if(reagent) //only asked for one type of reagent
-		return reagents.has_reagent(reagent)
-	else if(reagents.total_volume) //take whatever
-		return TRUE
+///Send reagents in an specific direction. Override in child types
+/datum/component/plumbing/proc/supply_demand(dir)
+	return process_request(MACHINE_REAGENT_TRANSFER, dir = dir)
 
-	return FALSE
+///Does the actual work of transferring reagents to the pipeline from this machines reagent holder
+/datum/component/plumbing/proc/process_demand(amount = MACHINE_REAGENT_TRANSFER, reagent, dir, round_robin = TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
-///this is where the reagent is actually transferred and is thus the finish point of our process()
-/datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net, round_robin = TRUE)
-	reagents.trans_to(target.recipient_reagents_holder(), amount, target_id = reagent, methods = round_robin ? LINEAR : NONE)
+	var/datum/ductnet/net = net(dir)
+	if(net)
+		net.pipeline.my_atom = parent
+
+		for(var/obj/machinery/duct/pipe as anything in net.ducts)
+			if(pipe.neighbours[parent] == dir)
+				net.pipeline.my_atom = pipe
+				break
+
+		return reagents.trans_to(net.pipeline, amount, target_id = reagent, methods = round_robin ? LINEAR : NONE)

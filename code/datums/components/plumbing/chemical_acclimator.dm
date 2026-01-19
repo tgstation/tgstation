@@ -8,13 +8,12 @@
 		return COMPONENT_INCOMPATIBLE
 	return ..()
 
-/datum/component/plumbing/acclimator/can_give(amount, reagent)
-	var/obj/machinery/plumbing/acclimator/myacclimator = parent
-
-	return myacclimator.emptying && ..()
-
-///We're overriding process and not send_request, because all process does is do the requests, so we might aswell cut out the middle man and save some code from running
-/datum/component/plumbing/acclimator/process()
+/datum/component/plumbing/acclimator/send_request(dir)
 	var/obj/machinery/plumbing/acclimator/myacclimator = parent
 	if(!myacclimator.emptying)
-		..()
+		return ..()
+
+/datum/component/plumbing/acclimator/supply_demand(dir)
+	var/obj/machinery/plumbing/acclimator/myacclimator = parent
+	if(myacclimator.emptying)
+		return ..()
