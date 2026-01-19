@@ -279,7 +279,7 @@
 		if(operating_status == TRANSPORT_REMOTE_FAULT)
 			operating_status = TRANSPORT_SYSTEM_NORMAL
 	else if(operating_status == TRANSPORT_SYSTEM_NORMAL)
-			operating_status = TRANSPORT_REMOTE_FAULT
+		operating_status = TRANSPORT_REMOTE_FAULT
 
 /**
  * Update processing state.
