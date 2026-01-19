@@ -6889,6 +6889,7 @@
 #include "troutstation\code\modules\mob\living\basic\space_fauna\skitterer.dm"
 #include "troutstation\code\modules\mob\living\basic\space_fauna\slugcat\slugcat.dm"
 #include "troutstation\code\modules\mob\living\basic\vermin\lizard.dm"
+#include "troutstation\code\modules\mob\living\basic\vermin\mouse.dm"
 #include "troutstation\code\modules\mob\living\carbon\human\species_types\anteater.dm"
 #include "troutstation\code\modules\movespeed\modifiers\reagent.dm"
 #include "troutstation\code\modules\reagents\reagent_dispenser.dm"

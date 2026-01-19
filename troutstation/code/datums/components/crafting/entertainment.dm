@@ -48,3 +48,11 @@
 		)
 	category = CAT_ENTERTAINMENT
 
+/datum/crafting_recipe/maddie
+	name = "maddie"
+	result = /mob/living/basic/mouse/rat/maddie
+	reqs = list(
+		/obj/item/toy/plush/maddie = 3,
+		/obj/item/food/deadmouse = 1
+	)
+	category = CAT_ENTERTAINMENT
