@@ -132,7 +132,11 @@ GLOBAL_LIST_EMPTY(weather_towers)
 		ui.open()
 
 /obj/machinery/power/weather_tower/ui_status(mob/user, datum/ui_state/state)
-	return isnull(core) ? UI_CLOSE : ..()
+	if(isnull(core))
+		return UI_CLOSE
+	if(!active)
+		return UI_DISABLED
+	return ..()
 
 /obj/machinery/power/weather_tower/ui_data(mob/user)
 	var/list/data = list()
@@ -244,7 +248,7 @@ GLOBAL_LIST_EMPTY(weather_towers)
 
 /// Summon a weather event of the given type on this tower's z-level
 /obj/machinery/power/weather_tower/proc/summon_weather(datum/weather/weather_type, mob/user)
-	if(isnull(core))
+	if(isnull(core) || !active)
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, summon_weather_cd))
 		return FALSE
@@ -312,7 +316,7 @@ GLOBAL_LIST_EMPTY(weather_towers)
 /// Subtract a charge and handle core depletion
 /obj/machinery/power/weather_tower/proc/use_core_charge(amount)
 	if(isnull(core))
-		return
+		CRASH("Tried to use weather core charge when no core is installed!")
 
 	core.charges -= amount
 	if(core.charges <= 0)
@@ -322,7 +326,7 @@ GLOBAL_LIST_EMPTY(weather_towers)
 
 /// Clears whatever weather datum is referenced with weather_ref
 /obj/machinery/power/weather_tower/proc/clear_weather(weather_ref, mob/user)
-	if(isnull(core))
+	if(isnull(core) || !active)
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, clear_weather_cd))
 		return FALSE

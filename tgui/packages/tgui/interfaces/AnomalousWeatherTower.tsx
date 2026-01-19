@@ -1,7 +1,5 @@
-import { useState } from 'react';
-import { useBackend } from 'tgui/backend';
+import { useBackend, useSharedState } from 'tgui/backend';
 import {
-  Box,
   Button,
   Dropdown,
   NoticeBox,
@@ -19,7 +17,7 @@ type Weather = {
 
 type Data = {
   core_charges: number;
-  max_core_charges: number;
+  max_core_charge: number;
   weather_charge_cost: number;
   can_summon_weather: BooleanLike;
   can_clear_weather: BooleanLike;
@@ -35,7 +33,7 @@ export const AnomalousWeatherTower = () => {
   const { act, data } = useBackend<Data>();
   const {
     core_charges,
-    max_core_charges = 8,
+    max_core_charge,
     weather_charge_cost,
     can_summon_weather,
     can_clear_weather,
@@ -43,35 +41,45 @@ export const AnomalousWeatherTower = () => {
     active_weather_on_z,
   } = data;
 
-  const [selectedWeather, setSelectedWeather] = useState(
+  const [selectedWeather, setSelectedWeather] = useSharedState(
+    'selectedWeather',
     summonable_weather_types[0],
   );
 
-  const height = 400 + active_weather_on_z.length * 30;
+  const winHeight = 420 + active_weather_on_z.length * 30;
+
+  let chargeColor = 'green';
+  if (core_charges / max_core_charge <= 0.25) {
+    chargeColor = 'red';
+  } else if (core_charges / max_core_charge <= 0.5) {
+    chargeColor = 'yellow';
+  }
 
   return (
-    <Window width={250} height={height}>
+    <Window width={250} height={winHeight} theme="ntos_darkmode">
       <Window.Content>
         <Stack vertical>
           <Stack.Item>
-            <Section align="center">
-              <Box fontSize="20px">Core charge: </Box>
-              <Box
-                fontSize="24px"
-                color={
-                  core_charges > 4
-                    ? 'green'
-                    : core_charges > 2
-                      ? 'yellow'
-                      : 'red'
-                }
-              >
-                {formatCharges(core_charges, max_core_charges)}{' '}
-              </Box>
+            <Section fontFamily="Consolas, monospace">
+              <Stack vertical align="center">
+                <Stack.Item fontSize="18px">Core charge</Stack.Item>
+                <Stack.Item
+                  fontSize="24px"
+                  color={chargeColor}
+                  backgroundColor="black"
+                  pt={1}
+                  pb={1}
+                  width="50%"
+                  textAlign="center"
+                  className="AnomalyTower__Charge"
+                >
+                  {formatCharges(core_charges, max_core_charge)}
+                </Stack.Item>
+              </Stack>
             </Section>
           </Stack.Item>
           <Stack.Item>
-            <Section title="Active Weather">
+            <Section title="Active Weather" fontFamily="Consolas, monospace">
               {active_weather_on_z.length > 0 ? (
                 active_weather_on_z.map((weather) => (
                   <Stack.Item key={weather.id}>
@@ -103,10 +111,15 @@ export const AnomalousWeatherTower = () => {
             </Section>
           </Stack.Item>
           <Stack.Item grow>
-            <Section title="Summon Weather" fill>
+            <Section
+              title="Summon Weather"
+              fill
+              fontFamily="Consolas, monospace"
+            >
               <Stack vertical fill>
                 <Stack.Item>
                   <Dropdown
+                    buttons
                     options={summonable_weather_types.map(
                       (weather) => weather.name,
                     )}
