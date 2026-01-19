@@ -140,7 +140,6 @@
 /datum/transport_controller/linear/tram/Destroy()
 	paired_cabinet = null
 	set_status_code(SYSTEM_FAULT, TRUE)
-	SEND_SIGNAL(SStransport, COMSIG_TRANSPORT_ACTIVE, src, FALSE, controller_status, travel_direction, destination_platform)
 	tram_registration.active = FALSE
 	SSblackbox.record_feedback("amount", "tram_destroyed", 1)
 	SSpersistence.save_tram_history(specific_transport_id)
@@ -216,7 +215,7 @@
 			explosion(transport_module, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 			qdel(transport_module)
 
-		send_transport_active_signal()
+		send_transport_status_update()
 
 /**
  * Calculate the journey details to the requested platform
@@ -258,8 +257,6 @@
 		set_status_code(EMERGENCY_STOP, FALSE)
 		playsound(paired_cabinet, 'sound/machines/synth/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
-
-	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, idle_platform, destination_platform)
 
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
 		if(transport_module.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs
@@ -502,7 +499,7 @@
 		return
 
 	controller_active = new_status
-	send_transport_active_signal()
+	send_transport_status_update()
 	log_transport("TC: [specific_transport_id] controller state [controller_active ? "READY > PROCESSING" : "PROCESSING > READY"].")
 
 /**
@@ -528,10 +525,10 @@
 			stack_trace("Transport controller received invalid status code request [code]/[value]")
 			return
 
-	send_transport_active_signal()
+	send_transport_status_update()
 
-/datum/transport_controller/linear/tram/proc/send_transport_active_signal()
-	SEND_SIGNAL(SStransport, COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+/datum/transport_controller/linear/tram/proc/send_transport_status_update()
+	SEND_SIGNAL(SStransport, COMSIG_TRANSPORT_UPDATED, src, controller_active, controller_status, travel_direction, destination_platform)
 
 /**
  * Part of the pre-departure list, checks the status of the doors on the tram
@@ -634,17 +631,17 @@
 /datum/transport_controller/linear/tram/proc/power_lost()
 	set_operational(FALSE)
 	log_transport("TC: [specific_transport_id] power lost.")
-	send_transport_active_signal()
 
 /datum/transport_controller/linear/tram/proc/power_restored()
 	set_operational(TRUE)
 	log_transport("TC: [specific_transport_id] power restored.")
 	cycle_doors(CYCLE_OPEN)
-	send_transport_active_signal()
 
 /datum/transport_controller/linear/tram/proc/set_operational(new_value)
 	if(controller_operational != new_value)
 		controller_operational = new_value
+
+	send_transport_status_update()
 
 /**
  * Returns the closest tram nav beacon to an atom
@@ -1017,7 +1014,7 @@
 		return
 
 	controller_datum.notify_controller(src)
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(sync_controller))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(sync_controller))
 
 /obj/machinery/transport/tram_controller/hilbert/find_controller()
 	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
@@ -1029,7 +1026,7 @@
 		return
 
 	controller_datum.notify_controller(src)
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(sync_controller))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(sync_controller))
 
 /**
  * Since the machinery obj is a dumb terminal for the controller datum, sync the display with the status bitfield of the tram
@@ -1188,7 +1185,7 @@
 	if(!controller_datum)
 		return
 	controller_datum.set_home_controller(src)
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(sync_controller))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(sync_controller))
 
 /obj/item/wallframe/tram
 	name = "tram controller cabinet"

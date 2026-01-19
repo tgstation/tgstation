@@ -103,8 +103,7 @@
 
 /obj/machinery/transport/crossing_signal/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(wake_up))
-	RegisterSignal(SStransport, COMSIG_COMMS_STATUS, PROC_REF(comms_change))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(wake_up))
 	SStransport.crossing_signals += src
 	register_context()
 
@@ -490,7 +489,7 @@
 /obj/machinery/transport/guideway_sensor/post_machine_initialize()
 	. = ..()
 	pair_sensor()
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(wake_up))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(wake_up))
 
 /obj/machinery/transport/guideway_sensor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
