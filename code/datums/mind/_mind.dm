@@ -552,7 +552,7 @@
 
 /// Called when we witness the death of a humanoid mob.
 /datum/mind/proc/witnessed_death(mob/living/dead_mob)
-	if(HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB) || !ishuman(dead_mob))
+	if(HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB) || !ishuman(dead_mob) || (dead_mob.flags_1 & ADMIN_SPAWNED_1))
 		return
 
 	// every humanoid death gives us % resistance to the next one
