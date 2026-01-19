@@ -1,7 +1,7 @@
 //The "pod_landingzone" temp visual is created by anything that "launches" a supplypod. This is what animates the pod and makes the pod forcemove to the station.
 //------------------------------------SUPPLY POD-------------------------------------//
 /obj/structure/closet/supplypod
-	name = "supply pod" //Names and descriptions are normally created with the setStyle() proc during initialization, but we have these default values here as a failsafe
+	name = "supply pod" //Names and descriptions are normally created with the set_style() proc during initialization, but we have these default values here as a failsafe
 	desc = "A Nanotrasen supply drop pod."
 	icon = 'icons/obj/supplypods.dmi'
 	icon_state = "pod" //This is a common base sprite shared by a number of pods
@@ -88,9 +88,9 @@
 	desc = "A blood-red styled drop pod."
 	specialised = TRUE
 
-/obj/structure/closet/supplypod/podspawn/deathmatch/preOpen()
+/obj/structure/closet/supplypod/podspawn/deathmatch/pre_open()
 	for(var/mob/living/critter in contents)
-		critter.faction = list(FACTION_HOSTILE) //No infighting, but also KILL!!
+		critter.set_faction(list(FACTION_HOSTILE)) //No infighting, but also KILL!!
 	return ..()
 
 /obj/structure/closet/supplypod/extractionpod
@@ -165,9 +165,9 @@
 		forceMove(shippingLane)
 	if (customStyle)
 		style = customStyle
-	setStyle(style) //Upon initialization, give the supplypod an iconstate, name, and description based on the "style" variable. This system is important for the centcom_podlauncher to function correctly
+	set_style(style) //Upon initialization, give the supplypod an iconstate, name, and description based on the "style" variable. This system is important for the centcom_podlauncher to function correctly
 
-/obj/structure/closet/supplypod/proc/setStyle(datum/pod_style/chosen_style) //Used to give the sprite an icon state, name, and description.
+/obj/structure/closet/supplypod/proc/set_style(datum/pod_style/chosen_style) //Used to give the sprite an icon state, name, and description.
 	style = chosen_style
 	icon_state = chosen_style::icon_state
 	decal = chosen_style::decal_icon
@@ -206,7 +206,7 @@
 		return
 
 	if(rubble)
-		. += rubble.getForeground(src)
+		. += rubble.get_foreground(src)
 
 	if(ispath(style, /datum/pod_style/seethrough))
 		for(var/atom/A in contents)
@@ -317,7 +317,7 @@
 	var/turf/return_turf = locate(reverse_dropoff_coords[1], reverse_dropoff_coords[2], reverse_dropoff_coords[3])
 	new /obj/effect/pod_landingzone(return_turf, src)
 
-/obj/structure/closet/supplypod/proc/preOpen() //Called before the open_pod() proc. Handles anything that occurs right as the pod lands.
+/obj/structure/closet/supplypod/proc/pre_open() //Called before the open_pod() proc. Handles anything that occurs right as the pod lands.
 	var/turf/turf_underneath = get_turf(src)
 	var/list/boom = explosionSize
 	resistance_flags = initial(resistance_flags)
@@ -386,7 +386,7 @@
 		return
 	if (opened) //This is to ensure we don't open something that has already been opened
 		return
-	holder.setOpened()
+	holder.set_opened()
 	var/turf/turf_underneath = get_turf(holder) //Get the turf of whoever's contents we're talking about
 	if (istype(holder, /mob)) //Allows mobs to assume the role of the holder, meaning we look at the mob's contents rather than the supplypod's contents. Typically by this point the supplypod's contents have already been moved over to the mob's contents
 		var/mob/holder_as_mob = holder
@@ -404,20 +404,20 @@
 	if (broken) //If the pod is opening because it's been destroyed, we end here
 		return
 	if (ispath(style, /datum/pod_style/seethrough))
-		startExitSequence(src)
+		start_exit_sequence(src)
 	else
 		if (reversing)
 			addtimer(CALLBACK(src, PROC_REF(SetReverseIcon)), delays[POD_LEAVING]/2) //Finish up the pod's duties after a certain amount of time
 		if(!stay_after_drop) // Departing should be handled manually
-			addtimer(CALLBACK(src, PROC_REF(startExitSequence), holder), delays[POD_LEAVING]*(4/5)) //Finish up the pod's duties after a certain amount of time
+			addtimer(CALLBACK(src, PROC_REF(start_exit_sequence), holder), delays[POD_LEAVING]*(4/5)) //Finish up the pod's duties after a certain amount of time
 
-/obj/structure/closet/supplypod/proc/startExitSequence(atom/movable/holder)
+/obj/structure/closet/supplypod/proc/start_exit_sequence(atom/movable/holder)
 	if (leavingSound)
 		playsound(get_turf(holder), leavingSound, soundVolume, FALSE, FALSE)
 	if (reversing) //If we're reversing, we call the close proc. This sends the pod back up to centcom
 		close(holder)
 	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a separate holder exists)
-		deleteRubble()
+		delete_rubble()
 		if (!effectQuiet && create_sparks && !ispath(style, /datum/pod_style/invisible) && !ispath(style, /datum/pod_style/seethrough))
 			do_sparks(5, TRUE, holder) //Create some sparks right before closing
 		qdel(src) //Delete ourselves and the holder
@@ -430,8 +430,8 @@
 	take_contents(holder)
 	if (close_sound)
 		playsound(holder, close_sound, soundVolume*0.75, TRUE, -3)
-	holder.setClosed()
-	addtimer(CALLBACK(src, PROC_REF(preReturn), holder), delays[POD_LEAVING] * 0.2) //Start to leave a bit after closing for cinematic effect
+	holder.set_closed()
+	addtimer(CALLBACK(src, PROC_REF(pre_return), holder), delays[POD_LEAVING] * 0.2) //Start to leave a bit after closing for cinematic effect
 
 /obj/structure/closet/supplypod/take_contents(atom/movable/holder)
 	var/turf/turf_underneath = holder.drop_location()
@@ -506,38 +506,38 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/closet/supplypod/proc/preReturn(atom/movable/holder)
-	deleteRubble()
+/obj/structure/closet/supplypod/proc/pre_return(atom/movable/holder)
+	delete_rubble()
 	animate(holder, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(holder, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) //Animate our rising pod
 	addtimer(CALLBACK(src, PROC_REF(handleReturnAfterDeparting), holder), 15) //Finish up the pod's duties after a certain amount of time
 
-/obj/structure/closet/supplypod/extractionpod/preReturn(atom/movable/holder)
+/obj/structure/closet/supplypod/extractionpod/pre_return(atom/movable/holder)
 	// Double ensure we're loaded, this SHOULD be here by now but you never know
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY)
 	var/turf/picked_turf = pick(GLOB.holdingfacility)
 	reverse_dropoff_coords = list(picked_turf.x, picked_turf.y, picked_turf.z)
 	return ..()
 
-/obj/structure/closet/supplypod/setOpened() //Proc exists here, as well as in any atom that can assume the role of a "holder" of a supplypod. Check the open_pod() proc for more details
+/obj/structure/closet/supplypod/set_opened() //Proc exists here, as well as in any atom that can assume the role of a "holder" of a supplypod. Check the open_pod() proc for more details
 	opened = TRUE
 	set_density(FALSE)
 	update_appearance()
 	after_open(null, FALSE)
 
-/obj/structure/closet/supplypod/extractionpod/setOpened()
+/obj/structure/closet/supplypod/extractionpod/set_opened()
 	opened = TRUE
 	set_density(TRUE)
 	update_appearance()
 	after_open(null, FALSE)
 
-/obj/structure/closet/supplypod/setClosed() //Ditto
+/obj/structure/closet/supplypod/set_closed() //Ditto
 	opened = FALSE
 	set_density(TRUE)
 	update_appearance()
 	after_close(null, FALSE)
 
-/obj/structure/closet/supplypod/proc/tryMakeRubble(turf/T) //Ditto
+/obj/structure/closet/supplypod/proc/try_make_rubble(turf/T) //Ditto
 	if (rubble_type == RUBBLE_NONE)
 		return
 	if (rubble)
@@ -547,19 +547,19 @@
 	if (isspaceturf(T) || isclosedturf(T))
 		return
 	rubble = new /obj/effect/supplypod_rubble(T)
-	rubble.setStyle(rubble_type, src)
+	rubble.set_style(rubble_type, src)
 	update_appearance()
 
 /obj/structure/closet/supplypod/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	deleteRubble()
+	delete_rubble()
 	return ..()
 
-/obj/structure/closet/supplypod/proc/deleteRubble()
-	rubble?.fadeAway()
+/obj/structure/closet/supplypod/proc/delete_rubble()
+	rubble?.fade_away()
 	rubble = null
 	update_appearance()
 
-/obj/structure/closet/supplypod/proc/addGlow()
+/obj/structure/closet/supplypod/proc/add_glow()
 	if (style::shape != POD_SHAPE_NORMAL)
 		return
 	glow_effect = new(src)
@@ -576,11 +576,11 @@
 	if(glow_effect)
 		SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
 
-/obj/structure/closet/supplypod/proc/endGlow()
+/obj/structure/closet/supplypod/proc/end_glow()
 	if(!glow_effect)
 		return
 	glow_effect.layer = LOW_ITEM_LAYER
-	glow_effect.fadeAway(delays[POD_OPENING])
+	glow_effect.fade_away(delays[POD_OPENING])
 	//Trust the signals
 
 /obj/structure/closet/supplypod/proc/remove_glow()
@@ -589,8 +589,8 @@
 	vis_contents -= glow_effect
 	glow_effect = null
 
-/obj/structure/closet/supplypod/Destroy()
-	deleteRubble()
+/obj/structure/closet/supplypod/Destroy(force)
+	delete_rubble()
 	//Trust the signals even harder
 	qdel(glow_effect)
 	open_pod(src, broken = TRUE) //Lets dump our contents by opening up
@@ -616,12 +616,12 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 255
 
-/obj/effect/engineglow/proc/fadeAway(leaveTime)
+/obj/effect/engineglow/proc/fade_away(leaveTime)
 	var/duration = min(leaveTime, 25)
 	animate(src, alpha=0, time = duration)
 	QDEL_IN(src, duration + 5)
 
-/obj/effect/supplypod_smoke/proc/drawSelf(amount)
+/obj/effect/supplypod_smoke/proc/draw_self(amount)
 	alpha = max(0, 255-(amount*20))
 
 /obj/effect/supplypod_rubble
@@ -635,17 +635,17 @@
 	var/foreground = "rubble_fg"
 	var/verticle_offset = 0
 
-/obj/effect/supplypod_rubble/proc/getForeground(obj/structure/closet/supplypod/pod)
+/obj/effect/supplypod_rubble/proc/get_foreground(obj/structure/closet/supplypod/pod)
 	var/mutable_appearance/rubble_overlay = mutable_appearance('icons/obj/supplypods.dmi', foreground)
 	rubble_overlay.appearance_flags = KEEP_APART|RESET_TRANSFORM
 	rubble_overlay.transform = matrix().Translate(SUPPLYPOD_X_OFFSET - pod.pixel_x, verticle_offset)
 	return rubble_overlay
 
-/obj/effect/supplypod_rubble/proc/fadeAway()
+/obj/effect/supplypod_rubble/proc/fade_away()
 	animate(src, alpha=0, time = 30)
 	QDEL_IN(src, 35)
 
-/obj/effect/supplypod_rubble/proc/setStyle(type, obj/structure/closet/supplypod/pod)
+/obj/effect/supplypod_rubble/proc/set_style(type, obj/structure/closet/supplypod/pod)
 	if (type == RUBBLE_WIDE)
 		icon_state += "_wide"
 		foreground += "_wide"
@@ -729,14 +729,14 @@
 	var/soundStartTime = pod.delays[POD_TRANSIT] - pod.fallingSoundLength + pod.delays[POD_FALLING]
 	if (soundStartTime < 0)
 		soundStartTime = 1
-	addtimer(CALLBACK(src, PROC_REF(playFallingSound)), soundStartTime)
-	addtimer(CALLBACK(src, PROC_REF(beginLaunch), pod.effectCircle), pod.delays[POD_TRANSIT])
+	addtimer(CALLBACK(src, PROC_REF(play_falling_sound)), soundStartTime)
+	addtimer(CALLBACK(src, PROC_REF(begin_launch), pod.effectCircle), pod.delays[POD_TRANSIT])
 
-/obj/effect/pod_landingzone/proc/playFallingSound()
+/obj/effect/pod_landingzone/proc/play_falling_sound()
 	playsound(src, pod.fallingSound, pod.soundVolume, TRUE, 6)
 
-/obj/effect/pod_landingzone/proc/beginLaunch(effectCircle) //Begin the animation for the pod falling. The effectCircle param determines whether the pod gets to come in from any descent angle
-	pod.addGlow()
+/obj/effect/pod_landingzone/proc/begin_launch(effectCircle) //Begin the animation for the pod falling. The effectCircle param determines whether the pod gets to come in from any descent angle
+	pod.add_glow()
 	pod.update_appearance()
 	pod.forceMove(drop_location())
 	for (var/mob/living/M in pod) //Remember earlier (initialization) when we moved mobs into the pod_landingzone so they wouldnt get lost in nullspace? Time to get them out
@@ -745,15 +745,15 @@
 	pod.pixel_x = cos(angle)*32*length(smoke_effects) //Use some ADVANCED MATHEMATICS to set the animated pod's position to somewhere on the edge of a circle with the center being the pod_landingzone
 	pod.pixel_z = sin(angle)*32*length(smoke_effects)
 	var/rotation = get_pixel_angle(pod.pixel_z, pod.pixel_x) //CUSTOM HOMEBREWED proc that is just arctan with extra steps
-	setupSmoke(rotation)
+	setup_smoke(rotation)
 	pod.transform = matrix().Turn(rotation)
 	pod.layer = FLY_LAYER
 	SET_PLANE_EXPLICIT(pod, ABOVE_GAME_PLANE, src)
 	if (!ispath(pod.style, /datum/pod_style/invisible))
 		animate(pod, pixel_z = -1 * abs(sin(rotation))*4, pixel_x = SUPPLYPOD_X_OFFSET + (sin(rotation) * 20), time = pod.delays[POD_FALLING], easing = LINEAR_EASING) //Make the pod fall! At an angle!
-	addtimer(CALLBACK(src, PROC_REF(endLaunch)), pod.delays[POD_FALLING], TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
+	addtimer(CALLBACK(src, PROC_REF(end_launch)), pod.delays[POD_FALLING], TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
-/obj/effect/pod_landingzone/proc/setupSmoke(rotation)
+/obj/effect/pod_landingzone/proc/setup_smoke(rotation)
 	if (ispath(pod.style, /datum/pod_style/invisible) || ispath(pod.style, /datum/pod_style/seethrough))
 		return
 	var/turf/our_turf = get_turf(drop_location())
@@ -769,25 +769,25 @@
 		smoke_part.pixel_y = abs(cos(rotation))*32 * i
 		smoke_part.add_filter("smoke_blur", 1, gauss_blur_filter(size = 4))
 		var/time = (pod.delays[POD_FALLING] / length(smoke_effects))*(length(smoke_effects)-i)
-		addtimer(CALLBACK(smoke_part, TYPE_PROC_REF(/obj/effect/supplypod_smoke/, drawSelf), i), time, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
+		addtimer(CALLBACK(smoke_part, TYPE_PROC_REF(/obj/effect/supplypod_smoke/, draw_self), i), time, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 		QDEL_IN(smoke_part, pod.delays[POD_FALLING] + 35)
 
-/obj/effect/pod_landingzone/proc/drawSmoke()
+/obj/effect/pod_landingzone/proc/draw_smoke()
 	if (ispath(pod.style, /datum/pod_style/invisible) || ispath(pod.style, /datum/pod_style/seethrough))
 		return
 	for (var/obj/effect/supplypod_smoke/smoke_part in smoke_effects)
 		animate(smoke_part, alpha = 0, time = 20, flags = ANIMATION_PARALLEL)
 		animate(smoke_part.get_filter("smoke_blur"), size = 6, time = 15, easing = CUBIC_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
 
-/obj/effect/pod_landingzone/proc/endLaunch()
+/obj/effect/pod_landingzone/proc/end_launch()
 	var/turf/our_turf = get_turf(drop_location())
-	pod.tryMakeRubble(drop_location())
+	pod.try_make_rubble(drop_location())
 	pod.layer = initial(pod.layer)
 	SET_PLANE(pod, initial(pod.plane), our_turf)
-	pod.endGlow()
+	pod.end_glow()
 	QDEL_NULL(helper)
-	pod.preOpen() //Begin supplypod open procedures. Here effects like explosions, damage, and other dangerous (and potentially admin-caused, if the centcom_podlauncher datum was used) memes will take place
-	drawSmoke()
+	pod.pre_open() //Begin supplypod open procedures. Here effects like explosions, damage, and other dangerous (and potentially admin-caused, if the centcom_podlauncher datum was used) memes will take place
+	draw_smoke()
 	qdel(src) //The pod_landingzone's purpose is complete. It can rest easy now
 
 //------------------------------------UPGRADES-------------------------------------//

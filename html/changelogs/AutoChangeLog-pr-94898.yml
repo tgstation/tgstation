@@ -1,0 +1,4 @@
+author: "combustor"
+delete-after: True
+changes:
+  - bugfix: "Adds a request console to the CE's office in catwalk"

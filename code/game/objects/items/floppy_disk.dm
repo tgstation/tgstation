@@ -218,11 +218,10 @@
 
 /obj/item/disk_stack/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(spread))
-	RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
+	RegisterSignal(src, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(on_throw_land))
 
 /obj/item/disk_stack/Destroy()
-	stacked_disks.Cut()
+	QDEL_LIST(stacked_disks)
 	return ..()
 
 /obj/item/disk_stack/examine(mob/user)
@@ -267,22 +266,22 @@
 	user.put_in_hands(top)
 	balloon_alert(user, "removed top disk")
 
-	if(length(stacked_disks) == 1)
-		var/obj/item/disk/last_disk = stacked_disks[1]
-		var/was_in_hand = user.is_holding(src)
-		if(was_in_hand)
-			last_disk.forceMove(user)
-			user.put_in_hands(last_disk)
-		else
-			var/turf/T = get_turf(src)
-			last_disk.forceMove(T)
-			last_disk.pixel_x = pixel_x
-			last_disk.pixel_y = pixel_y
-
-		QDEL_IN(src, 0)
+	if(length(stacked_disks) > 1)
+		update_appearance(UPDATE_OVERLAYS)
 		return TRUE
 
-	update_appearance(UPDATE_OVERLAYS)
+	var/obj/item/disk/last_disk = stacked_disks[1]
+	var/was_in_hand = user.is_holding(src)
+	if(was_in_hand)
+		last_disk.forceMove(user)
+		user.put_in_hands(last_disk)
+	else
+		var/turf/T = get_turf(src)
+		last_disk.forceMove(T)
+		last_disk.pixel_x = pixel_x
+		last_disk.pixel_y = pixel_y
+
+	qdel(src)
 	return TRUE
 
 /obj/item/disk_stack/proc/merge_stacks(mob/user, obj/item/disk_stack/diskstack)
@@ -309,13 +308,14 @@
 	to_chat(user, span_notice("You merge two stacks of disks together."))
 
 	if(!length(diskstack.stacked_disks))
-		QDEL_IN(diskstack, 0)
-
+		qdel(diskstack)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/disk_stack/proc/spread()
+/obj/item/disk_stack/proc/on_throw_land()
 	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(spread))
 
+/obj/item/disk_stack/proc/spread()
 	if(!length(stacked_disks))
 		return
 
@@ -325,27 +325,22 @@
 		each_disk.throw_at(get_step(src, pick(NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST)), 1, 0.8)
 
 	visible_message(span_warning("The stack falls apart!"))
-	update_appearance(UPDATE_OVERLAYS)
-	throw_at(get_step(src, pick(NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST)), 1, 0.8)
+	qdel(src)
 
 /obj/item/disk_stack/attack_hand_secondary(mob/user, list/modifiers)
 	if(pop_top_disk(user))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	. = ..()
+	return ..()
 
 /// Handle disks leaving the stack through other means
-/obj/item/disk_stack/proc/on_exited(datum/source, atom/movable/gone, direction)
-	SIGNAL_HANDLER
-
+/obj/item/disk_stack/Exited(atom/movable/gone, direction)
+	. = ..()
 	if(!istype(gone, /obj/item/disk))
 		return
-
 	stacked_disks -= gone
 	update_appearance(UPDATE_OVERLAYS)
-
 	if(!length(stacked_disks))
-		QDEL_IN(src, 0)
+		qdel(src)
 
 /obj/item/disk/can_be_package_wrapped()
 	return TRUE

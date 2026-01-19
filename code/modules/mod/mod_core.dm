@@ -487,7 +487,7 @@
 			spawn_types = list(spawned_mob_type), \
 			spawn_time = 5 SECONDS, \
 			max_spawned = 3, \
-			faction = mod.wearer.faction, \
+			faction = mod.wearer.get_faction(), \
 		)
 		RegisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED, PROC_REF(new_mob))
 		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(spread_flowers))

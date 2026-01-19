@@ -384,12 +384,12 @@
 		return UI_CLOSE
 	if(!user.can_read(src))
 		return UI_CLOSE
-	if(in_contents_of(/obj/machinery/door/airlock) || in_contents_of(/obj/item/clipboard) || in_contents_of(/obj/item/folder))
+	if(ismovable(loc) && loc.IsContainedAtomAccessible(src, user))
 		return UI_INTERACTIVE
 	return ..()
 
 /obj/item/paper/can_interact(mob/user)
-	if(in_contents_of(/obj/machinery/door/airlock))
+	if(ismovable(loc) && loc.IsContainedAtomAccessible(src, user))
 		return TRUE
 	return ..()
 

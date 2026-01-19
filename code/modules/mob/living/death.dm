@@ -91,19 +91,20 @@
  * * drop_items - Should the mob drop their items before dusting?
  * * force - Should this mob be FORCABLY dusted?
 */
-/atom/movable/proc/dust(just_ash, drop_items, force)
+/atom/movable/proc/dust(just_ash, drop_items, give_moodlet, force)
 	dust_animation()
 	// since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play.
 	// Looks much nicer and doesn't cause multiple runtimes.
 	QDEL_IN(src, DUST_ANIMATION_TIME)
 
-/mob/living/dust(just_ash, drop_items, force)
+/mob/living/dust(just_ash, drop_items, give_moodlet = TRUE, force)
 	..()
 	if(body_position == STANDING_UP)
 		// keep us upright so the animation fits.
 		ADD_TRAIT(src, TRAIT_FORCED_STANDING, TRAIT_GENERIC)
 
-	send_death_moodlets(dusted = TRUE)
+	if(give_moodlet)
+		send_death_moodlets(dusted = TRUE)
 
 	if(drop_items)
 		unequip_everything()

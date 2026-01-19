@@ -1103,7 +1103,7 @@
 	var/list/livingplants = list(/mob/living/basic/tree, /mob/living/basic/killer_tomato)
 	var/chosen = pick(livingplants)
 	var/mob/living/C = new chosen(get_turf(src))
-	C.faction = list(FACTION_PLANTS)
+	C.set_faction(list(FACTION_PLANTS))
 
 /// Plants the seed / graft into the tray and resets growth related stats such as maturity on the tray.
 /obj/machinery/hydroponics/proc/propagate_plant(obj/item/seeds/young_plant, mob/living/user)

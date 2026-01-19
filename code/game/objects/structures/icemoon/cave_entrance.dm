@@ -146,6 +146,6 @@ GLOBAL_LIST_INIT(ore_probability, list(
 		if(1 to 80)
 			new /obj/structure/closet/crate/necropolis/tendril/demonic(loc)
 		if(81 to 90)
-			new /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom(loc)
+			new /mob/living/basic/boss/blood_drunk_miner/doom(loc)
 		if(91 to INFINITY)
 			new /obj/structure/elite_tumor(loc)

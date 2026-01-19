@@ -256,6 +256,13 @@
 					results += spawn_meat(victim, drop_type, diseases)
 				continue
 
+			if (ispath(drop_type, /obj/item/stack))
+				if (ispath(drop_type, /obj/item/stack/sheet/animalhide/carbon))
+					results += new drop_type(src, amount, /*merge = */TRUE, /*mat_override = */null, /*mat_amount = */1, limb.skin_tone || limb.species_color)
+				else
+					results += new drop_type(src, amount)
+				continue
+
 			for (var/i in 1 to amount)
 				results += new drop_type(src)
 
