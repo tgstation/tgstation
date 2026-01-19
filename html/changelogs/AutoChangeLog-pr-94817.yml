@@ -1,5 +1,0 @@
-author: "Hatterhat, vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "Voltaic combat cyberheart's lightning overlay should be more reliably cleared in the event that it should be lost."
-  - bugfix: "If your voltaic combat cyberheart is lost/removed while you're in voltaic overdrive, you lose the overdrive."

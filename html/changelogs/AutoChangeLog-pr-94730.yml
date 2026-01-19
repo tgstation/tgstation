@@ -1,4 +1,0 @@
-author: "ElGitificador"
-delete-after: True
-changes:
-  - bugfix: "fixed syndi surplus crate desc not naming their new tc value properly"

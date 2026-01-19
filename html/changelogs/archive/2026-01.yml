@@ -497,3 +497,14 @@
   - bugfix: As the AI, possessing an empty shell will no longer break your de-synchronization
       protocols, which would trap your Nanotrasen-brand Silica-Soul(TM) inside of
       it.
+2026-01-19:
+  ElGitificador:
+  - bugfix: fixed syndi surplus crate desc not naming their new tc value properly
+  Hatterhat, vinylspiders:
+  - bugfix: Voltaic combat cyberheart's lightning overlay should be more reliably
+      cleared in the event that it should be lost.
+  - bugfix: If your voltaic combat cyberheart is lost/removed while you're in voltaic
+      overdrive, you lose the overdrive.
+  Nari Harimoto:
+  - map: Nanotrasen found the budget to add a small circuit workshop to the engineering
+      department on every station except for tramstation.
