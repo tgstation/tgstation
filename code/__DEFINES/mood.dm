@@ -115,5 +115,10 @@
 
 /// Threshold for desensitization effects to start applying
 #define DESENSITIZED_THRESHOLD 0.5
+/// Minimum level for desensitization multiplier
 #define DESENSITIZED_MINIMUM 0.1
+/// Reduction in desensitization level per death witnessed
 #define DESENSITIZED_REDUCTION_PER_DEATH 0.025
+
+/// Check if a mob is desensitized (passes the threshold)
+#define IS_DESENSITIZED(mob) ((mob.mind?.desensitized_level || 1) <= DESENSITIZED_THRESHOLD)
