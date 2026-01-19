@@ -116,4 +116,4 @@
 /// Threshold for desensitization effects to start applying
 #define DESENSITIZED_THRESHOLD 0.5
 #define DESENSITIZED_MINIMUM 0.1
-#define DESENSITIZED_REDUCTION_PER_DEATH 0.03
+#define DESENSITIZED_REDUCTION_PER_DEATH 0.025
