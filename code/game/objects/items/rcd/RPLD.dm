@@ -210,7 +210,7 @@
 	if(ispath(blueprint, /obj/machinery/duct))
 		new blueprint(destination, GLOB.pipe_paint_colors[current_color], GLOB.plumbing_layers[current_layer])
 	else
-		new blueprint(destination, GLOB.plumbing_layers[current_layer])
+		new blueprint(ispath(blueprint, /obj/machinery/reagent_meter) ? get_turf(destination) : destination, GLOB.plumbing_layers[current_layer])
 	useResource(cost, user)
 	return TRUE
 
@@ -219,8 +219,9 @@
 		if(!istype(destination, /obj/machinery/duct))
 			return FALSE
 		var/obj/machinery/duct/target = destination
-		if(target.duct_layer != current_layer)
+		if(target.duct_layer != GLOB.plumbing_layers[current_layer])
 			return FALSE
+		return TRUE
 	else
 		var/turf/open/target = destination
 		if(!isopenturf(target))
@@ -238,6 +239,11 @@
 
 	if(ispath(blueprint, /obj/machinery/reagent_meter))
 		return create_machine(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+
+	if(istype(interacting_with, /obj/item/reagent_meter))
+		matter += 1
+		qdel(interacting_with)
+		return ITEM_INTERACT_SUCCESS
 
 	for(var/category_name in plumbing_design_types)
 		var/list/designs = plumbing_design_types[category_name]

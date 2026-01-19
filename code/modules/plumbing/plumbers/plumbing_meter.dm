@@ -46,7 +46,7 @@
 
 /obj/machinery/reagent_meter/on_deconstruction(disassembled)
 	. = ..()
-	new /obj/item/reagent_meter(src, duct_layer)
+	new /obj/item/reagent_meter(drop_location(), duct_layer)
 
 /obj/machinery/reagent_meter/examine(mob/user)
 	. = ..()
@@ -125,7 +125,7 @@
 	. = ITEM_INTERACT_FAILURE
 	for(var/obj/machinery/duct/target in get_turf(src))
 		if(target.duct_layer == duct_layer)
-			new /obj/machinery/meter(loc, duct_layer)
+			new /obj/machinery/reagent_meter(loc, duct_layer)
 			W.play_tool_sound(src)
 			to_chat(user, span_notice("You fasten the meter to the pipe."))
 			qdel(src)

@@ -263,7 +263,7 @@
 			work_done = TRUE
 
 	if(istype(target) && work_done)
-		target.use_energy(target.active_power_usage * 0.25)
+		target.use_energy(target.active_power_usage * 0.15)
 
 ///Returns a ductnet based on the requested direction
 /datum/component/plumbing/proc/net(dir)
@@ -293,7 +293,7 @@
 
 ///Send reagents in an specific direction. Override in child types
 /datum/component/plumbing/proc/supply_demand(dir)
-	return process_request(MACHINE_REAGENT_TRANSFER, dir = dir)
+	return process_demand(MACHINE_REAGENT_TRANSFER, dir = dir)
 
 ///Does the actual work of transferring reagents to the pipeline from this machines reagent holder
 /datum/component/plumbing/proc/process_demand(amount = MACHINE_REAGENT_TRANSFER, reagent, dir, round_robin = TRUE)

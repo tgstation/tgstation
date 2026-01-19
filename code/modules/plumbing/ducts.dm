@@ -221,7 +221,7 @@
 							newnet.add_plumber(plumbing, text2num(dirtext))
 
 		//Evenly distribute all reagents into this new pipeline
-		if(newnet.ducts.len)
+		if(newnet?.ducts.len)
 			net.pipeline.trans_to(newnet.pipeline, reagents_per_pipe * newnet.ducts.len, no_react = TRUE, copy_only = TRUE)
 	disconnect()
 
