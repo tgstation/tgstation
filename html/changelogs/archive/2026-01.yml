@@ -508,3 +508,21 @@
   Nari Harimoto:
   - map: Nanotrasen found the budget to add a small circuit workshop to the engineering
       department on every station except for tramstation.
+2026-01-20:
+  Ezel:
+  - balance: sabre, parsnip, gladius sheathe can now be worn on suit storages
+  - bugfix: mirrors gladius belt worn sprite so it doesn't overlap with belted revolvers
+  - image: adds mirrored belt sprites
+  LT3:
+  - bugfix: Fixed lights being able to run on emergency power forever
+  SmArtKar:
+  - qol: You can now clamp cables by RMBing them with wirecutters in order to prevent
+      them from connecting to other cables in a certain direction.
+  - refactor: Refactored cable interaction and some of connection code
+  carpotoxin:
+  - bugfix: fixed the queue'ing of roundstart antags
+  combustor:
+  - bugfix: Adds a request console to the CE's office in catwalk
+  vinylspiders:
+  - refactor: faction list structures have been refactored, please report any unusual
+      faction related behavior
