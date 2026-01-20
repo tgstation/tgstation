@@ -24,7 +24,7 @@
 /datum/component/plumbing/automated_iv/supply_demand(dir)
 	var/obj/machinery/iv_drip/plumbing/drip = parent
 	if(drip.mode == IV_TAKING)
-		reagents.trans_to(holder, reagents.total_volume)
+		reagents.trans_to(holder, reagents.total_volume, no_react = TRUE)
 		reagents = holder
 		. = ..()
 		reagents = drip.reagents

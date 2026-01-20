@@ -39,6 +39,12 @@
 	//everything for every chemical removed, wich isn't a good option either.
 	chamber.on_reagent_change(reagents) //We need to check it now, because some reactions leave nothing left.
 
+/datum/component/plumbing/reaction_chamber/supply_demand(dir)
+	var/obj/machinery/plumbing/reaction_chamber/chamber = parent
+
+	if(chamber.emptying && !reagents.is_reacting)
+		return ..()
+
 /datum/component/plumbing/buffered
 	///The reagent to request into this buffer
 	VAR_PROTECTED/datum/reagent/request

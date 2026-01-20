@@ -68,23 +68,24 @@
 	var/pipe_layer = PLUMBING_PIPE_VISIBILE_LAYER + duct_layer * 0.0003
 	. += image('icons/obj/pipes_n_cables/meter.dmi', "buttons4", layer = pipe_layer)
 
-	var/level = ROUND_UP(6 * (pipe.net.pipeline.total_volume / pipe.net.pipeline.maximum_volume))
-	if(level)
-		var/image/overlay = image('icons/obj/pipes_n_cables/meter.dmi', "pressure3_[level]", layer = pipe_layer)
-		switch(pipe.net.pipeline.chem_temp)
-			if(0 to 100)
-				overlay.color = COLOR_VIOLET
-			if(100 to 200)
-				overlay.color = COLOR_BLUE
-			if(200 to 400)
-				overlay.color = COLOR_VIBRANT_LIME
-			if(400 to 600)
-				overlay.color = COLOR_YELLOW
-			if(600 to 800)
-				overlay.color = COLOR_ORANGE
-			if(800 to INFINITY)
-				overlay.color = COLOR_RED
-		. += overlay
+	if(is_operational)
+		var/level = ROUND_UP(6 * (pipe.net.pipeline.total_volume / pipe.net.pipeline.maximum_volume))
+		if(level)
+			var/image/overlay = image('icons/obj/pipes_n_cables/meter.dmi', "pressure3_[level]", layer = pipe_layer)
+			switch(pipe.net.pipeline.chem_temp)
+				if(0 to 100)
+					overlay.color = COLOR_VIOLET
+				if(100 to 200)
+					overlay.color = COLOR_BLUE
+				if(200 to 400)
+					overlay.color = COLOR_VIBRANT_LIME
+				if(400 to 600)
+					overlay.color = COLOR_YELLOW
+				if(600 to 800)
+					overlay.color = COLOR_ORANGE
+				if(800 to INFINITY)
+					overlay.color = COLOR_RED
+			. += overlay
 
 /obj/machinery/reagent_meter/proc/update()
 	SIGNAL_HANDLER
@@ -95,6 +96,12 @@
 	SIGNAL_HANDLER
 
 	RegisterSignal(pipe.net.pipeline, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(update))
+
+/obj/machinery/reagent_meter/wrench_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_FAILURE
+	if(tool.use_tool(src, user, 2 SECONDS, volume = 50))
+		deconstruct(TRUE)
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_meter
 	name = "reagent meter"
