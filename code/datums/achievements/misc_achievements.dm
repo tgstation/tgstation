@@ -252,7 +252,7 @@
 	icon_state = "dragon_plus_fish"
 
 /datum/award/achievement/misc/desensitized
-	name = "In Flanders Field"
+	name = "In Flanders Fields"
 	desc = "You have witnessed more death and despair in one shift than most TerraGov marines have seen across an entire tour of duty. \
 		Perhaps one day you'll find peace. But not today."
 	database_id = MEDAL_DESENSITIZED
