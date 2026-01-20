@@ -69,7 +69,7 @@
 
 /obj/machinery/reagent_meter/update_overlays()
 	. = ..()
-	if(!is_operational)
+	if(!is_operational || QDELETED(pipe))
 		return
 
 	var/pipe_layer = PLUMBING_PIPE_VISIBILE_LAYER + duct_layer * 0.0003
