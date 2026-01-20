@@ -185,7 +185,7 @@
 		/datum/mutation/nervousness
 	)
 
-/obj/item/disk/data/maint_loot/New()
+/obj/item/disk/data/maint/New()
 	..()
 
 	//Amount of mutations added to the disk
