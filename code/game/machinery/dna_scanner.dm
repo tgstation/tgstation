@@ -188,19 +188,21 @@
 /obj/item/disk/data/maint/Initialize(mapload)
 	..()
 
-	//Amount of mutations added to the disk
-	var/amount = rand(0, min(max_mutations, length(possible_mutations)))
+		//Amount of mutations added to the disk
+		var/amount = rand(0, min(max_mutations, length(possible_mutations)))
+	
+		//Temporal copy to avoid duplicates
+		var/list/temp = list()
+		temp += possible_mutations
+	
+		for(var/i = 1 to amount)
+			if(!length(temp))
+				break
+			var/mutation = pick(temp)
+			mutations += mutation
+			temp -= mutation
+	return
 
-	//Temporal copy to avoid duplicates
-	var/list/temp = list()
-	temp += possible_mutations
-
-	for(var/i = 1 to amount)
-		if(!length(temp))
-			break
-		var/mutation = pick(temp)
-		mutations += mutation
-		temp -= mutation
 
 /obj/item/disk/data/Initialize(mapload)
 	. = ..()
