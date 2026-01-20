@@ -9,7 +9,6 @@
 	l_pocket = /obj/item/grenade/c4/ninja
 	r_pocket = /obj/item/tank/internals/emergency_oxygen
 	internals_slot = ITEM_SLOT_RPOCKET
-	belt = /obj/item/energy_katana
 	back = /obj/item/mod/control/pre_equipped/ninja
 	implants = list(/obj/item/implant/explosive)
 
