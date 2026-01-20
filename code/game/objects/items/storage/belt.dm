@@ -759,6 +759,26 @@
 	storage_type = /datum/storage/gladius_belt
 	stored_blade = /obj/item/claymore/gladius
 
+/obj/item/storage/belt/sheath/katana
+	name = "katana sheath"
+	desc = "A sheath that houses the nimble katana."
+	icon_state = "katana_sheath"
+	inhand_icon_state = "katana_sheath"
+	worn_icon_state = "katana_sheath"
+	action_slots = ITEM_SLOT_BELT | ITEM_SLOT_SUITSTORE
+	storage_type = /datum/storage/katana_sheath
+	stored_blade = /obj/item/katana
+
+/obj/item/storage/belt/sheath/ninja
+	name = "energy katana sheath"
+	desc = "A high tech katana sheath that allows for quick blade movements"
+	icon_state = "ninja_sheath"
+	inhand_icon_state = "ninja_sheath"
+	worn_icon_state = "ninja_sheath"
+	action_slots = ITEM_SLOT_BELT | ITEM_SLOT_SUITSTORE
+	storage_type = /datum/storage/ninja_sheath
+	stored_blade = /obj/item/energy_katana
+
 /obj/item/storage/belt/plant
 	name = "botanical belt"
 	desc = "A sturdy leather belt used to hold most hydroponics supplies."
