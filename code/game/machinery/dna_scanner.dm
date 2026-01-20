@@ -172,8 +172,6 @@
 	name = "\improper Maintenance DNA data disk"
 	desc = "An old data disk used, which could have been used to store DNA information."
 	icon_state = "datadisk0"
-	var/max_mutations = 10
-	var/read_only = FALSE
 	//Maint disk pool of mutations
 	var/list/possible_mutations = list(
 		/datum/mutation/biotechcompat,
