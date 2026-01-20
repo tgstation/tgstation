@@ -133,7 +133,10 @@
 	check_starting_landmark()
 
 /**
- * If someone VVs the base speed limiter of the tram, copy it to the current active speed limiter.
+ * We expect people to VV tram_max_speed, and set the appropriate internal_movement_delay/base_internal_movement_delay.
+ * But if they set one of the internals, we should also update tram_max_speed to reflect it.
+ *
+ * You cannot make the tram move faster than 1 movement per world.tick_lag, so our lower limit is 0.5 (tram_max_speed 100)
  */
 /datum/transport_controller/linear/tram/vv_edit_var(var_name, var_value)
 	. = ..()

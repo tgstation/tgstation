@@ -1,3 +1,4 @@
+/// Amount of travel distance to force open tram doors while moving
 #define TRAM_DOOR_RELEASE_THRESHOLD 17
 
 /obj/machinery/door/airlock/tram
