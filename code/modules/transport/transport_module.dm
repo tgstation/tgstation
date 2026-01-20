@@ -42,7 +42,7 @@
 	var/list/atom/movable/changed_gliders = list()
 
 	///decisecond delay between horizontal movements. cannot make the tram move faster than 1 movement per world.tick_lag. only used to give to the transport_controller
-	var/speed_limiter = 0.5
+	var/internal_movement_delay = 0.5
 
 	///master datum that controls our movement. in general /transport/linear subtypes control moving themselves, and
 	/// /datum/transport_controller instances control moving the entire tram and any behavior associated with that.
@@ -415,7 +415,7 @@
 			for(var/mob/living/victim_living in dest_turf.contents)
 				var/damage_multiplier = victim_living.maxHealth * 0.01
 				var/extra_ouch = FALSE // if emagged you're gonna have a really bad time
-				if(speed_limiter == 0.5) // slow trams don't cause extra damage
+				if(internal_movement_delay <= 1) // slow trams don't cause extra damage
 					for(var/obj/structure/tram/spoiler/my_spoiler in transport_contents)
 						if(istype(victim_living.buckled, /obj/structure/fluff/tram_rail))
 							extra_ouch = TRUE
@@ -971,4 +971,3 @@
 
 /obj/structure/transport/linear/tram/slow
 	transport_controller_type = /datum/transport_controller/linear/tram/slow
-	speed_limiter = /datum/transport_controller/linear/tram/slow::speed_limiter

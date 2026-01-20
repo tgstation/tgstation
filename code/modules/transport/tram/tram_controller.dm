@@ -35,10 +35,13 @@
 	var/current_load = 0
 
 	///decisecond delay between horizontal movement. cannot make the tram move faster than 1 movement per world.tick_lag.
-	var/speed_limiter = 0.5
+	var/internal_movement_delay
 
-	///version of speed_limiter that gets set in init and is considered our base speed if our lift gets slowed down
-	var/base_speed_limiter = 0.5
+	///version of internal_movement_delay that gets set in init and is considered our base delay if our tram gets slowed down
+	var/base_internal_movement_delay
+
+	///speed of the death machine on rails (in percent)
+	var/tram_max_speed = 100
 
 	///the world.time we should next move at. in case our speed is set to less than 1 movement per tick
 	var/scheduled_move = INFINITY
@@ -118,8 +121,8 @@
  */
 /datum/transport_controller/linear/tram/New(obj/structure/transport/linear/tram/transport_module)
 	. = ..()
-	speed_limiter = transport_module.speed_limiter
-	base_speed_limiter = transport_module.speed_limiter
+	set_tram_speed(tram_max_speed)
+	base_internal_movement_delay = internal_movement_delay
 	tram_history = SSpersistence.load_tram_history(specific_transport_id)
 	var/datum/tram_mfg_info/previous_tram = peek(tram_history)
 	if(!isnull(previous_tram) && previous_tram.active)
@@ -134,8 +137,15 @@
  */
 /datum/transport_controller/linear/tram/vv_edit_var(var_name, var_value)
 	. = ..()
-	if(var_name == "base_speed_limiter")
-		speed_limiter = max(speed_limiter, base_speed_limiter)
+	if(var_name == "tram_max_speed")
+		set_tram_speed(tram_max_speed)
+	if(var_name == "internal_movement_delay")
+		internal_movement_delay = round(max(internal_movement_delay, 0.5), 0.1)
+		tram_max_speed = round(50 / internal_movement_delay, 1)
+	if(var_name == "base_internal_movement_delay")
+		base_internal_movement_delay = round(max(base_internal_movement_delay, 0.5), 0.1)
+		internal_movement_delay = max(internal_movement_delay, base_internal_movement_delay)
+		tram_max_speed = round(50 / internal_movement_delay, 1)
 
 /datum/transport_controller/linear/tram/Destroy()
 	paired_cabinet = null
@@ -267,10 +277,11 @@
 				malf_active = TRANSPORT_LOCAL_FAULT
 				addtimer(CALLBACK(src, PROC_REF(announce_malf_event)), 1 SECONDS)
 		transport_module.verify_transport_contents()
-		transport_module.glide_size_override = DELAY_TO_GLIDE_SIZE(speed_limiter)
+		transport_module.internal_movement_delay = internal_movement_delay
+		transport_module.glide_size_override = DELAY_TO_GLIDE_SIZE(internal_movement_delay)
 		transport_module.set_travelling(TRUE)
 
-	scheduled_move = world.time + speed_limiter
+	scheduled_move = world.time + internal_movement_delay
 
 	START_PROCESSING(SStransport, src)
 
@@ -318,7 +329,7 @@
 				recovery_clear_count = 0
 
 			if(recovery_clear_count >= SStransport.max_cheap_moves)
-				speed_limiter = base_speed_limiter
+				set_tram_speed(tram_max_speed)
 				recovery_mode = FALSE
 				recovery_clear_count = 0
 				log_transport("TC: [specific_transport_id] removing speed limiter, performance issue resolved. Last tick was [duration]ms.")
@@ -328,13 +339,17 @@
 			if(recovery_activate_count >= SStransport.max_exceeding_moves)
 				message_admins("The tram at [ADMIN_JMP(transport_modules[1])] is taking [duration] ms which is more than [SStransport.max_time] ms per movement for [recovery_activate_count] ticks. Reducing its movement speed until it recovers. If this continues to be a problem you can reset the tram contents to its original state, and clear added objects on the Debug tab.")
 				log_transport("TC: [specific_transport_id] activating speed limiter due to poor performance.  Last tick was [duration]ms.")
-				speed_limiter = base_speed_limiter * 2 //halves its speed
+				base_internal_movement_delay = internal_movement_delay // update base in case it's been edited
+				internal_movement_delay = base_internal_movement_delay * 2 //halves its speed
 				recovery_mode = TRUE
 				recovery_activate_count = 0
 		else
 			recovery_activate_count = max(recovery_activate_count - 1, 0)
 
-		scheduled_move = world.time + speed_limiter
+		scheduled_move = world.time + internal_movement_delay
+
+/datum/transport_controller/linear/tram/proc/set_tram_speed(new_speed)
+	internal_movement_delay = round(clamp(50 / new_speed, 0.5, 5), 0.1)
 
 /**
  * Tram stops normally, performs post-trip actions and updates the tram registration.
@@ -348,13 +363,12 @@
 		playsound(paired_cabinet, 'sound/machines/synth/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
 		log_transport("TC: [specific_transport_id] position data successfully reset.")
-		speed_limiter = initial(speed_limiter)
 	idle_platform = destination_platform
 	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
 	current_speed = 0
 	current_load = 0
-	speed_limiter = initial(speed_limiter)
+	set_tram_speed(tram_max_speed)
 
 /**
  * Tram comes to an in-station degraded stop, throwing the players. Caused by power loss or tram malfunction event.
@@ -368,7 +382,6 @@
 		playsound(paired_cabinet, 'sound/machines/synth/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
 		log_transport("TC: [specific_transport_id] position data successfully reset. ")
-		speed_limiter = initial(speed_limiter)
 	if(malf_active == TRANSPORT_LOCAL_FAULT)
 		set_status_code(SYSTEM_FAULT, TRUE)
 		addtimer(CALLBACK(src, PROC_REF(cycle_doors), CYCLE_OPEN), 2 SECONDS)
@@ -381,7 +394,7 @@
 	travel_trip_length = 0
 	current_speed = 0
 	current_load = 0
-	speed_limiter = initial(speed_limiter)
+	set_tram_speed(tram_max_speed)
 	var/throw_direction = travel_direction
 	for(var/obj/structure/transport/linear/tram/module in transport_modules)
 		module.estop_throw(throw_direction)
@@ -446,7 +459,7 @@
 	travel_remaining = get_dist(nav_beacon, reset_beacon)
 	travel_trip_length = travel_remaining
 	destination_platform = reset_beacon
-	speed_limiter = 1.5
+	internal_movement_delay = 1.5
 	playsound(paired_cabinet, 'sound/machines/ping.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	paired_cabinet.say("Peforming controller reset... Navigating to reset point.")
 	log_transport("TC: [specific_transport_id] trip calculation: src: [nav_beacon.x], [nav_beacon.y], [nav_beacon.z] dst: [destination_platform] [destination_platform.x], [destination_platform.y], [destination_platform.z] = Dir [travel_direction] Dist [travel_remaining].")
@@ -741,9 +754,8 @@
 	return push_destination
 
 
-/datum/transport_controller/linear/tram/slow //for some reason speed is set to initial() in the code but if i touched it it would probably break so
-	speed_limiter = 3
-	base_speed_limiter = 3
+/datum/transport_controller/linear/tram/slow
+	tram_max_speed = 16.5
 
 /**
  * The physical cabinet on the tram. Acts as the interface between players and the controller datum.
