@@ -256,10 +256,7 @@
 	user.visible_message(span_suicide("A live frog bursts out of [user]!"))
 	new /obj/effect/spawner/random/frog(user.drop_location())
 
-	var/obj/item/bodypart/chest
-	if (iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		chest = carbon_user.get_bodypart(BODY_ZONE_CHEST)
+	var/obj/item/bodypart/chest = user.get_bodypart(BODY_ZONE_CHEST)
 
 	if (chest)
 		chest.dismember()
