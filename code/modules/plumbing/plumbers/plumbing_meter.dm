@@ -54,7 +54,7 @@
 	if(pipe.net.pipeline.total_volume)
 		. += span_notice("It contains.")
 		for(var/datum/reagent/reg as anything in pipe.net.pipeline.reagent_list)
-			. += span_notice("[reg.volume]u of [reg.name].")
+			. += span_notice("[round(reg.volume, CHEMICAL_VOLUME_ROUNDING)]u of [reg.name].")
 	. += span_notice("It can be [EXAMINE_HINT("wrenched")] apart.")
 
 /obj/machinery/reagent_meter/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -63,29 +63,35 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 		return CONTEXTUAL_SCREENTIP_SET
 
+/obj/machinery/reagent_meter/on_set_is_operational(old_value)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
 /obj/machinery/reagent_meter/update_overlays()
 	. = ..()
+	if(!is_operational)
+		return
+
 	var/pipe_layer = PLUMBING_PIPE_VISIBILE_LAYER + duct_layer * 0.0003
 	. += image('icons/obj/pipes_n_cables/meter.dmi', "buttons4", layer = pipe_layer)
 
-	if(is_operational)
-		var/level = ROUND_UP(6 * (pipe.net.pipeline.total_volume / pipe.net.pipeline.maximum_volume))
-		if(level)
-			var/image/overlay = image('icons/obj/pipes_n_cables/meter.dmi', "pressure3_[level]", layer = pipe_layer)
-			switch(pipe.net.pipeline.chem_temp)
-				if(0 to 100)
-					overlay.color = COLOR_VIOLET
-				if(100 to 200)
-					overlay.color = COLOR_BLUE
-				if(200 to 400)
-					overlay.color = COLOR_VIBRANT_LIME
-				if(400 to 600)
-					overlay.color = COLOR_YELLOW
-				if(600 to 800)
-					overlay.color = COLOR_ORANGE
-				if(800 to INFINITY)
-					overlay.color = COLOR_RED
-			. += overlay
+	var/level = ROUND_UP(6 * (pipe.net.pipeline.total_volume / pipe.net.pipeline.maximum_volume))
+	if(level)
+		var/image/overlay = image('icons/obj/pipes_n_cables/meter.dmi', "pressure3_[level]", layer = pipe_layer)
+		switch(pipe.net.pipeline.chem_temp)
+			if(0 to 100)
+				overlay.color = COLOR_VIOLET
+			if(100 to 200)
+				overlay.color = COLOR_BLUE
+			if(200 to 400)
+				overlay.color = COLOR_VIBRANT_LIME
+			if(400 to 600)
+				overlay.color = COLOR_YELLOW
+			if(600 to 800)
+				overlay.color = COLOR_ORANGE
+			if(800 to INFINITY)
+				overlay.color = COLOR_RED
+		. += overlay
 
 /obj/machinery/reagent_meter/proc/update()
 	SIGNAL_HANDLER
@@ -96,6 +102,8 @@
 	SIGNAL_HANDLER
 
 	RegisterSignal(pipe.net.pipeline, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(update))
+
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/reagent_meter/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_FAILURE

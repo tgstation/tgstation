@@ -172,10 +172,7 @@
 	if(!net)
 		return ..()
 
-	//remove reagents. Spilling is done on turf because no side effects in destroy
 	var/reagents_per_pipe = net.pipeline.total_volume / net.ducts.len
-	net.pipeline.remove_all(reagents_per_pipe)
-	reagents_per_pipe = net.pipeline.total_volume / net.ducts.len
 
 	var/list/atom/movable/visited = list(src = TRUE)
 	while(neighbours.len)
@@ -222,7 +219,7 @@
 
 		//Evenly distribute all reagents into this new pipeline
 		if(newnet?.ducts.len)
-			net.pipeline.trans_to(newnet.pipeline, reagents_per_pipe * newnet.ducts.len, no_react = TRUE, copy_only = TRUE)
+			net.pipeline.trans_to(newnet.pipeline, reagents_per_pipe * newnet.ducts.len, no_react = TRUE, copy_only = TRUE, methods = NONE)
 	disconnect()
 
 	return ..()

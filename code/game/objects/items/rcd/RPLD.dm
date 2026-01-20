@@ -237,13 +237,13 @@
 	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
 		return NONE
 
-	if(ispath(blueprint, /obj/machinery/reagent_meter))
-		return create_machine(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
-
 	if(istype(interacting_with, /obj/item/reagent_meter))
 		matter += 1
 		qdel(interacting_with)
 		return ITEM_INTERACT_SUCCESS
+
+	if(ispath(blueprint, /obj/machinery/reagent_meter))
+		return create_machine(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 	for(var/category_name in plumbing_design_types)
 		var/list/designs = plumbing_design_types[category_name]
