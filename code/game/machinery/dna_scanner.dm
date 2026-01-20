@@ -185,9 +185,6 @@
 		/datum/mutation/nervousness
 	)
 
-	//Final list
-	var/list/mutations = list()
-
 /obj/item/disk/data/maint_loot/New()
 	..()
 
