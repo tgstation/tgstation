@@ -189,10 +189,10 @@
 	..()
 
 	//Amount of mutations added to the disk
-	var/amount = rand(0, min(max_mutations, possible_mutations.len))
+	var/amount = rand(0, min(max_mutations, length(possible_mutations)))
 
 	//Temporal copy to avoid duplicates
-	var/list/temp = possible_mutations.Copy()
+	var/list/temp = list()
 
 	for(var/i = 1 to amount)
 		var/mutation = pick(temp)
