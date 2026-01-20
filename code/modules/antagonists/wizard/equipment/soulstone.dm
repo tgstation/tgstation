@@ -445,7 +445,7 @@
 		soulstone_spirit.copy_languages(user, LANGUAGE_MASTER)
 	soulstone_spirit.get_language_holder().omnitongue = TRUE //Grants omnitongue
 	if(user)
-		soulstone_spirit.faction |= "[REF(user)]" //Add the master as a faction, allowing inter-mob cooperation
+		soulstone_spirit.add_ally(user) //Add the master as a faction, allowing inter-mob cooperation
 		if(IS_CULTIST(user))
 			soulstone_spirit.mind.add_antag_datum(/datum/antagonist/cult/shade)
 			SSblackbox.record_feedback("tally", "cult_shade_created", 1)
@@ -557,7 +557,7 @@
 	flick("make_[makeicon][theme]", newstruct)
 	playsound(newstruct, 'sound/effects/constructform.ogg', 50)
 	if(stoner)
-		newstruct.faction |= "[REF(stoner)]"
+		newstruct.add_ally(stoner)
 		newstruct.construct_master = stoner
 		var/datum/action/innate/seek_master/seek_master = new
 		seek_master.Grant(newstruct)
@@ -614,10 +614,27 @@
 /obj/item/soulstone/anybody
 	required_role = null
 
+/obj/item/ectoplasm
+	name = "ectoplasm"
+	desc = "Spooky."
+	gender = PLURAL
+	icon = 'icons/effects/magic.dmi'
+	icon_state = "ectoplasm"
+
+/obj/item/ectoplasm/grind_results()
+	return list(/datum/reagent/hauntium = 25)
+
+/obj/item/ectoplasm/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane!"))
+	return OXYLOSS
+
 /obj/item/soulstone/mystic
 	icon_state = "mystic_soulstone"
 	theme = THEME_WIZARD
 	required_role = /datum/antagonist/wizard
+
+/obj/item/ectoplasm/mystic
+	icon_state = "mysticplasm"
 
 /obj/item/soulstone/anybody/revolver
 	one_use = TRUE
@@ -626,6 +643,10 @@
 /obj/item/soulstone/anybody/purified
 	icon_state = "purified_soulstone"
 	theme = THEME_HOLY
+
+/obj/item/ectoplasm/angelic
+	icon = 'icons/effects/magic.dmi'
+	icon_state = "angelplasm"
 
 /obj/item/soulstone/anybody/chaplain
 	name = "mysterious old shard"

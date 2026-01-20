@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.3.10/schema.json",
 	"assist": {
 		"actions": {
 			"source": {
@@ -40,15 +40,18 @@
 		"rules": {
 			"recommended": true,
 			"a11y": "off",
+			"complexity": {
+				"useArrowFunction": "error"
+			},
 			"correctness": {
-				"noUnusedImports": "warn",
+				"noUnusedImports": "error",
 				"noUnusedVariables": "off",
 				"useExhaustiveDependencies": "off",
 				"noUnusedFunctionParameters": "off",
 				"useHookAtTopLevel": "off"
 			},
 			"security": {
-				"noDangerouslySetInnerHtml": "warn"
+				"noDangerouslySetInnerHtml": "off"
 			},
 			"style": {
 				"noNonNullAssertion": "off",
@@ -57,7 +60,8 @@
 			"suspicious": {
 				"noArrayIndexKey": "off",
 				"noExplicitAny": "off",
-				"noImplicitAnyLet": "off"
+				"noImplicitAnyLet": "off",
+				"noVar": "error"
 			}
 		}
 	},

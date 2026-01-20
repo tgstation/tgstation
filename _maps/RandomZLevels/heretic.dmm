@@ -4859,7 +4859,6 @@
 /area/awaymission/caves/heretic_laboratory)
 "yZ" = (
 /obj/machinery/door/airlock/hatch,
-/obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
@@ -5052,7 +5051,6 @@
 /area/awaymission/caves/heretic_laboratory)
 "Av" = (
 /obj/machinery/door/airlock/hatch,
-/obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden/crude,
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4

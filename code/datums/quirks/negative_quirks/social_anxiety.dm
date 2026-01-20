@@ -6,9 +6,12 @@
 	gain_text = span_danger("You start worrying about what you're saying.")
 	lose_text = span_notice("You feel easier about talking again.") //if only it were that easy!
 	medical_record_text = "Patient is usually anxious in social encounters and prefers to avoid them."
+	medical_symptom_text = "Experiences intense anxiety and discomfort in social situations, \
+		leading to avoidance of social interactions and difficulty in communication."
 	hardcore_value = 4
 	mob_trait = TRAIT_ANXIOUS
 	mail_goodies = list(/obj/item/storage/pill_bottle/psicodine)
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_TRAUMALIKE
 	var/dumb_thing = TRUE
 
 /datum/quirk/social_anxiety/add(client/client_source)

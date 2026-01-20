@@ -6,11 +6,16 @@
 	implant_flags = IMPLANT_TYPE_SECURITY
 	hud_icon_state = "hud_imp_noteleport"
 
-/obj/item/implant/teleport_blocker/get_data()
-	return "<b>Implant Specifications:</b><BR> \
-		<b>Name:</b> Robust Corp EXP-001 'Bluespace Grounder'<BR> \
-		<b>Implant Details:</b> Upon implantation, grounds the user's bluespace signature to their currently occupied plane of existence. \
-		Most, if not all forms of teleportation on the implantee will be rendered ineffective. Useful for keeping especially slippery prisoners in place.<BR>"
+	implant_info = "Automatically activates upon implantation. \
+		Grounds users' bluespace signatures, preventing jaunting and/or teleportation."
+
+	implant_lore = "The Robust Corp BG-001-EXP is a subcutaneous, experimental bluespace counter-resonance \
+		frequency generator, designed to firmly ground an implantee's bluespace signature in baseline reality. \
+		In layman's terms, it counteracts attempts to slip into bluespace or similar gaps in reality, \
+		generating a dissonant frequency that interferes with the attempt, resulting in temporary paralysis. \
+		Test subjects report that the interference feels like slamming into a wall, with none of the \
+		physical trauma of actually slamming into a wall. Preliminary reports indicate that this \
+		would likely be useful for keeping especially slippery prisoners in place."
 
 /obj/item/implant/teleport_blocker/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()

@@ -52,8 +52,6 @@
 
 /// Rolling a reward path for a fishing challenge
 #define COMSIG_FISHING_CHALLENGE_ROLL_REWARD "fishing_roll_reward"
-/// Adjusting the difficulty of a rishing challenge, often based on the reward path
-#define COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY "fishing_get_difficulty"
 /// From /datum/fishing_challenge/start_minigame_phase, called after the fish movement datum is spawned: (datum/fish_movement/mover)
 #define COMSIG_FISHING_CHALLENGE_MOVER_INITIALIZED "fishing_mover_initialized"
 /// Fishing challenge completed
