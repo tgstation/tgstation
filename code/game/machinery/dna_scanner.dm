@@ -193,8 +193,11 @@
 
 	//Temporal copy to avoid duplicates
 	var/list/temp = list()
+	temp += possible_mutations
 
 	for(var/i = 1 to amount)
+		if(!length(temp))
+			break
 		var/mutation = pick(temp)
 		mutations += mutation
 		temp -= mutation
