@@ -3,6 +3,7 @@
 	desc = "Subject is more compatibile with biotechnology such as skillchips."
 	quality = POSITIVE
 	instability = POSITIVE_INSTABILITY_MINI
+	locked = TRUE
 
 /datum/mutation/biotechcompat/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()

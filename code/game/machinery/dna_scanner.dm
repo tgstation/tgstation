@@ -204,6 +204,42 @@
 	var/max_mutations = 6
 	var/read_only = FALSE //Well,it's still a floppy disk
 
+/obj/item/disk/data/maint //Maint DNA data disk. Contains otherwise locked, gimmick mutations.
+	name = "\improper Maintenance DNA data disk"
+	desc = "An old data disk used, which could have been used to store DNA information."
+	icon_state = "datadisk[rand(0,7)]"
+	var/max_mutations = 10
+	var/read_only = FALSE
+	//Maint disk pool of mutations
+	var/list/possible_mutations = list(
+		/datum/mutation/biotechcompat,
+		/datum/mutation/nearsight,
+		/datum/mutation/tourettes,
+		/datum/mutation/swedish,
+		/datum/mutation/chav,
+		/datum/mutation/elvis,
+		/datum/mutation/illiterate,
+		/datum/mutation/geladikinesis,
+		/datum/mutation/nervousness
+	)
+
+	//Final list
+	var/list/mutations = list()
+
+/obj/item/disk/data/maint_loot/New()
+	..()
+
+	//Amount of mutations added to the disk
+	var/amount = rand(0, min(max_mutations, possible_mutations.len))
+
+	//Temporal copy to avoid duplicates
+	var/list/temp = possible_mutations.Copy()
+
+	for(var/i = 1 to amount)
+		var/mutation = pick(temp)
+		mutations += mutation
+		temp -= mutation
+
 /obj/item/disk/data/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/dna_disk, infinite = TRUE)
