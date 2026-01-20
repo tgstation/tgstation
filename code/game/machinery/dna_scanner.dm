@@ -185,7 +185,7 @@
 		/datum/mutation/nervousness
 	)
 
-/obj/item/disk/data/maint/New()
+/obj/item/disk/data/maint/Initialize(mapload)
 	..()
 
 	//Amount of mutations added to the disk
