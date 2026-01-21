@@ -469,7 +469,7 @@
 		if (!IS_ROBOTIC_ORGAN(organ))
 			return FALSE
 	for (var/obj/item/bodypart/bodypart as anything in check.bodyparts)
-		if (bodypart.bodytype != BODYTYPE_ROBOTIC)
+		if (!(bodypart.bodytype & BODYTYPE_ROBOTIC))
 			return FALSE
 	return TRUE
 
