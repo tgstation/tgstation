@@ -18,6 +18,7 @@
 	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 50
 	block_sound = 'sound/items/weapons/parry.ogg'
+	pickup_sound = 'sound/items/unsheath.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor_type = /datum/armor/item_katana

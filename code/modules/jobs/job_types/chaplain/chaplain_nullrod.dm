@@ -175,6 +175,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	icon_state = "katana"
 	inhand_icon_state = "katana"
 	worn_icon_state = "katana"
+	pickup_sound = 'sound/items/unsheath.ogg'
 	menu_description = "A sharp katana which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
 
 /obj/item/nullrod/claymore/multiverse
