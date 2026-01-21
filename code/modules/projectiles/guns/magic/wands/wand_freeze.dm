@@ -29,6 +29,7 @@
 		brain.Remove(user)
 		brain.forceMove(snover)
 	user.unequip_everything()
+	user.ghostize()
 	qdel(user)
 	return MANUAL_SUICIDE
 

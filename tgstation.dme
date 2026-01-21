@@ -5962,6 +5962,7 @@
 #include "code\modules\projectiles\guns\magic\wands\wand_babel.dm"
 #include "code\modules\projectiles\guns\magic\wands\wand_booze.dm"
 #include "code\modules\projectiles\guns\magic\wands\wand_freeze.dm"
+#include "code\modules\projectiles\guns\magic\wands\wand_hallucination.dm"
 #include "code\modules\projectiles\guns\special\blastcannon.dm"
 #include "code\modules\projectiles\guns\special\chem_gun.dm"
 #include "code\modules\projectiles\guns\special\grenade_launcher.dm"
