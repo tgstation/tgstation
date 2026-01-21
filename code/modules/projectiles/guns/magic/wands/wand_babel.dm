@@ -11,7 +11,7 @@
 	fire_sound = 'sound/effects/magic/staff_change.ogg'
 	max_charges = 10
 
-/obj/item/gun/magic/wand/babel/zap_self(mob/living/user)
+/obj/item/gun/magic/wand/babel/zap_self(mob/living/user, suicide = FALSE)
 	. = ..()
 	charges--
 	if (HAS_TRAIT(user, TRAIT_TOWER_OF_BABEL))

@@ -10,7 +10,7 @@
 	fire_sound = 'sound/effects/magic/staff_animation.ogg'
 	max_charges = 10
 
-/obj/item/gun/magic/wand/animate/zap_self(mob/living/user)
+/obj/item/gun/magic/wand/animate/zap_self(mob/living/user, suicide = FALSE)
 	. = ..()
 	to_chat(user, span_warning("You animate one of your own possessions!"))
 	charges--
@@ -36,11 +36,11 @@
 
 	var/turf/destination = user.drop_location()
 
-	if (isorgan(teleport_part))
-		var/obj/item/organ/brain = teleport_part
+	if (isorgan(animate_part))
+		var/obj/item/organ/brain = animate_part
 		brain.Remove(user, special = FALSE)
 	else
-		var/obj/item/bodypart/head = teleport_part
+		var/obj/item/bodypart/head = animate_part
 		head.dismember(BRUTE)
 
 	animate_part.forceMove(destination)
