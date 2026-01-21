@@ -327,6 +327,7 @@
 	. = ..()
 	set_holdable(/obj/item/energy_katana)
 
+///Chaplain katana sheath
 /datum/storage/hanzo_sheath
 	max_slots = 1
 	do_rustle = FALSE
@@ -336,6 +337,17 @@
 /datum/storage/hanzo_sheath/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(/obj/item/nullrod/claymore/katana)
+
+///Toy Katana Sheath(Metabreaker)
+/datum/storage/toy_sheath
+	max_slots = 1
+	do_rustle = FALSE
+	max_specific_storage = WEIGHT_CLASS_BULKY
+	click_alt_open = FALSE
+
+/datum/storage/toy_sheath/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
+	. = ..()
+	set_holdable(/obj/item/toy/katana)
 
 ///Plant belt
 /datum/storage/plant_belt

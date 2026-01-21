@@ -785,6 +785,11 @@
 	storage_type = /datum/storage/hanzo_sheath
 	stored_blade = /obj/item/nullrod/claymore/katana
 
+/obj/item/storage/belt/sheath/katana/toy
+	action_slots = NONE
+	storage_type = /datum/storage/toy_sheath
+	stored_blade = /obj/item/toy/katana
+
 /obj/item/storage/belt/plant
 	name = "botanical belt"
 	desc = "A sturdy leather belt used to hold most hydroponics supplies."
