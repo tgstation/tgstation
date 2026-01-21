@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - refactor: "Refactored turrets so they only process if something potentially \"interesting\" is within its range."
