@@ -34,7 +34,7 @@
 	fire_sound = 'sound/effects/magic/staff_chaos.ogg'
 	max_charges = 20
 
-/obj/item/gun/magic/wand/hallucination/zap_self(mob/living/user)
+/obj/item/gun/magic/wand/hallucination/zap_self(mob/living/user, suicide = FALSE)
 	. = ..()
 	var/datum/hallucination/picked_hallucination = pick(WIZARD_WAND_HALLUCINATIONS)
 	user.cause_hallucination(picked_hallucination, "wand")
