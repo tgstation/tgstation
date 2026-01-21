@@ -1208,7 +1208,7 @@
 /datum/reagent/uranium/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.mutation_roll(user)
 	mytray.adjust_plant_health(-round(volume))
-	mytray.adjust_toxic(round(volume * 2 / tox_damage)) // more damage = more
+	mytray.adjust_toxic(round(volume * 0.5 / tox_damage)) // more damage = more
 
 /datum/reagent/uranium/radium
 	name = "Radium"
