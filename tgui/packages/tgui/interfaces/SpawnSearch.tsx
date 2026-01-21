@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Autofocus,
   Button,
@@ -8,17 +8,7 @@ import {
   VirtualList,
 } from 'tgui-core/components';
 import { fetchRetry } from 'tgui-core/http';
-import {
-  KEY_A,
-  KEY_DOWN,
-  KEY_ENTER,
-  KEY_ESCAPE,
-  KEY_F,
-  KEY_N,
-  KEY_R,
-  KEY_UP,
-  KEY_Z,
-} from 'tgui-core/keycodes';
+import { KEY } from 'tgui-core/keys';
 import { resolveAsset } from '../assets';
 import { useBackend } from './../backend';
 import { Window } from './../layouts';
@@ -35,13 +25,13 @@ type SpawnSearchData = {
 type SpawnAtomData = {
   // Type -> Name
   types: Record<string, string>;
-  abstractTypes: Record<string, boolean>
+  abstractTypes: Record<string, boolean>;
   fancyTypes: Record<string, string>;
 };
 
 type AtomPathData = {
   types: Array<AtomTypeData>;
-  abstractTypes: Record<string, boolean>
+  abstractTypes: Record<string, boolean>;
   fancyTypes: Record<string, string>;
 };
 
@@ -50,24 +40,33 @@ type AtomTypeData = {
   name: string;
 };
 
-export const SpawnSearch = () => {
+export function SpawnSearch() {
   const { act, data } = useBackend<SpawnSearchData>();
-  const { initValue, searchNames, regexSearch, fancyTypes, includeAbstracts } =
-    data;
+  const {
+    initValue = '',
+    searchNames,
+    regexSearch,
+    fancyTypes,
+    includeAbstracts,
+  } = data;
   const [atomData, setAtomData] = useState<AtomPathData>({
     types: [],
     abstractTypes: {},
     fancyTypes: {},
   });
-  const [selected, setSelected] = useState<number>(0);
-  const [query, setQuery] = useState<string>(
-    (regexSearch ? 're:' : '') + (initValue || ''),
-  );
-  const [spawnAmount, setSpawnAmount] = useState<number>(1);
-  const [invalidInput, setInvalidInput] = useState<boolean>(false);
-  const [searchBarVisible, setSearchBarVisible] = useState<boolean>(true);
+  const [selected, setSelected] = useState(0);
+  const [query, setQuery] = useState(initValue);
+  const [spawnAmount, setSpawnAmount] = useState(1);
+  const [invalidInput, setInvalidInput] = useState(false);
+  const [searchBarVisible, setSearchBarVisible] = useState(true);
 
-  const filterItems = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const isRegexMode = query.indexOf('re:') === 0;
+
+  const [filteredItems, setFilteredItems] = useState<Array<AtomTypeData>>([]);
+
+  function filterItems(): Array<AtomTypeData> {
     let filterQuery = query;
     setInvalidInput(false);
     const isRegex = filterQuery.indexOf('re:') === 0;
@@ -131,9 +130,11 @@ export const SpawnSearch = () => {
           (searchNames && searchLambda(type.name))) &&
         (includeAbstracts || !atomData.abstractTypes[type.typepath]),
     );
-  };
+  }
 
-  const [filteredItems, setFilteredItems] = useState<Array<AtomTypeData>>([]);
+  useEffect(() => {
+    setFilteredItems(filterItems());
+  }, [query, atomData, includeAbstracts]);
 
   useEffect(() => {
     fetchRetry(resolveAsset('spawn_menu_atom_data.json'))
@@ -156,16 +157,28 @@ export const SpawnSearch = () => {
       });
   }, []);
 
-  useEffect(
-    () => setFilteredItems(filterItems()),
-    [query, atomData, includeAbstracts],
-  );
+  function flipRegexMode(): void {
+    const input = inputRef.current;
+    if (!input) return;
+
+    input.blur(); // Input won't update while focused ~:^)
+
+    if (isRegexMode) {
+      setQuery(query.slice(3));
+    } else {
+      setQuery(`re:${query}`);
+    }
+
+    setTimeout(() => {
+      input.focus();
+    }, 1);
+  }
 
   // User presses up or down on keyboard
   // Simulates clicking an item
-  const onArrowKey = (key: number) => {
+  function onArrowKey(key: 'ArrowDown' | 'ArrowUp'): void {
     const len = Object.keys(filteredItems).length - 1;
-    if (key === KEY_DOWN) {
+    if (key === KEY.Down) {
       if (selected === null || selected === len) {
         setSelected(0);
         document!.getElementById('0')?.scrollIntoView();
@@ -173,7 +186,7 @@ export const SpawnSearch = () => {
         setSelected(selected + 1);
         document!.getElementById((selected + 1).toString())?.scrollIntoView();
       }
-    } else if (key === KEY_UP) {
+    } else if (key === KEY.Up) {
       if (selected === null || selected === 0) {
         setSelected(len);
         document!.getElementById(len.toString())?.scrollIntoView();
@@ -182,19 +195,20 @@ export const SpawnSearch = () => {
         document!.getElementById((selected - 1).toString())?.scrollIntoView();
       }
     }
-  };
+  }
 
-  const onSelected = (selection: AtomTypeData) =>
+  function onSelected(selection: AtomTypeData): void {
     act('spawn', { type: selection.typepath, amount: spawnAmount });
+  }
 
-  const onSearch = (newQuery: string) => {
+  function onSearch(newQuery: string): void {
     if (newQuery === query) {
       return;
     }
     setQuery(newQuery);
     setSelected(0);
     document!.getElementById('0')?.scrollIntoView();
-  };
+  }
 
   // Grabs the cursor when no search bar is visible.
   if (!searchBarVisible) {
@@ -210,15 +224,9 @@ export const SpawnSearch = () => {
         <>
           <Button
             icon="percent"
-            selected={query.indexOf('re:') === 0}
-            tooltip={
-              query.indexOf('re:') === 0 ? 'RegEx Mode' : 'Standard Mode'
-            }
-            onClick={() => {
-              query.indexOf('re:') === 0
-                ? setQuery(query.slice(3))
-                : setQuery(`re:${query}`);
-            }}
+            selected={isRegexMode}
+            tooltip={isRegexMode ? 'RegEx Mode' : 'Standard Mode'}
+            onClick={flipRegexMode}
           />
           <Button
             icon="font"
@@ -249,31 +257,30 @@ export const SpawnSearch = () => {
         <Section
           fill
           onKeyDown={(event) => {
-            const keyCode = window.event ? event.which : event.keyCode;
-            if (keyCode === KEY_DOWN || keyCode === KEY_UP) {
+            const key = event.key;
+            if (key === KEY.Down || key === KEY.Up) {
               event.preventDefault();
-              onArrowKey(keyCode);
+              onArrowKey(key);
             }
 
-            if (keyCode === KEY_ENTER) {
+            if (key === KEY.Enter) {
               event.preventDefault();
               onSelected(filteredItems[selected]);
             }
 
-            if (keyCode === KEY_ESCAPE) {
+            if (key === KEY.Escape) {
               event.preventDefault();
               act('cancel');
             }
 
-            if (keyCode === KEY_R && event.altKey) {
-              if (query.indexOf('re:') === 0) setQuery(query.slice(3));
-              else setQuery(`re:${query}`);
+            if (key === 'KeyR' && event.altKey) {
+              flipRegexMode();
             }
 
-            if (keyCode === KEY_N && event.altKey)
+            if (key === 'KeyN' && event.altKey)
               act('setNameSearch', { searchNames: !searchNames });
 
-            if (keyCode === KEY_F && event.altKey)
+            if (key === 'KeyF' && event.altKey)
               act('setFancyTypes', { fancyTypes: !fancyTypes });
           }}
         >
@@ -294,10 +301,7 @@ export const SpawnSearch = () => {
                       }}
                       onDoubleClick={() => onSelected(item)}
                       onKeyDown={(event) => {
-                        const keyCode = window.event
-                          ? event.which
-                          : event.keyCode;
-                        if (keyCode >= KEY_A && keyCode <= KEY_Z) {
+                        if (/^[a-z]$/i.test(event.key)) {
                           event.preventDefault();
                           setSearchBarVisible(false);
                           setTimeout(() => {
@@ -362,6 +366,7 @@ export const SpawnSearch = () => {
             </Stack.Item>
             {!!searchBarVisible && (
               <Input
+                ref={inputRef}
                 autoFocus
                 autoSelect
                 fluid
@@ -377,4 +382,4 @@ export const SpawnSearch = () => {
       </Window.Content>
     </Window>
   );
-};
+}
