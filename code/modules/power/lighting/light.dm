@@ -407,7 +407,7 @@
 		tool.play_tool_sound(src, 75)
 		user.visible_message(span_notice("[user.name] opens [src]'s casing."), \
 			span_notice("You open [src]'s casing."), span_hear("You hear a noise."))
-		deconstruct()
+		deconstruct(disassembled = TRUE)
 		return
 
 	if(tool.item_flags & ABSTRACT)
@@ -420,16 +420,19 @@
 			electrocute_mob(user, get_area(src), src, (rand(7,10) * 0.1), TRUE)
 
 /obj/machinery/light/on_deconstruction(disassembled)
-	var/atom/drop_point = drop_location()
 
-	var/obj/item/wallframe/light_fixture/frame = null
+	var/obj/structure/light_construct/frame = null
 	switch(fitting)
 		if("tube")
-			frame = new /obj/item/wallframe/light_fixture(drop_point)
+			frame = new /obj/structure/light_construct(loc)
 		if("bulb")
-			frame = new /obj/item/wallframe/light_fixture/small(drop_point)
+			frame = new /obj/structure/light_construct/small(loc)
 		if("floor bulb")
-			frame = new /obj/item/wallframe/light_fixture/small(drop_point)
+			frame = new /obj/structure/light_construct/floor(loc)
+	frame.stage = LIGHT_CONSTRUCT_WIRED
+	frame.icon_state = "[frame.fixture_type]-construct-stage2"
+	frame.setDir(dir)
+	frame.find_and_mount_on_atom()
 	if(!disassembled)
 		frame.take_damage(frame.max_integrity * 0.5, sound_effect = FALSE)
 		if(status != LIGHT_BROKEN)
@@ -441,7 +444,8 @@
 
 	var/obj/item/stock_parts/power_store/real_cell = get_cell()
 	if(!QDELETED(real_cell))
-		real_cell.forceMove(drop_point)
+		real_cell.forceMove(frame)
+		frame.cell = real_cell
 
 /obj/machinery/light/attacked_by(obj/item/attacking_object, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
