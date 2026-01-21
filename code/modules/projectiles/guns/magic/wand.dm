@@ -215,7 +215,17 @@
 		teleport_part = suicider.get_bodypart(BODY_ZONE_HEAD)
 	if (!teleport_part)
 		return SHAME
-	var/turf/destination = user.drop_location()
+
+	var/turf/destination = user.drop_location() // Grab this first in case moving the brain out dusts you or something
+
+	if (isorgan(teleport_part))
+		var/obj/item/organ/brain = teleport_part
+		brain.Remove(user, special = FALSE)
+	else
+		var/obj/item/bodypart/head = teleport_part
+		head.dismember(BRUTE)
+
+	teleport_part.forceMove(destination)
 	do_teleport(teleport_part, destination, 10, channel = TELEPORT_CHANNEL_MAGIC)
 	if (user.stat != DEAD)
 		return SHAME

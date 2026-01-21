@@ -105,7 +105,7 @@
 	petrified_mob.mind?.transfer_to(new_statue)
 	to_chat(new_statue, span_userdanger("You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! [owner ? "Do not harm [owner], your creator" : ""]."))
 	forceMove(new_statue)
-
+	return new_statue
 
 /mob/proc/petrify(statue_timer)
 	return
