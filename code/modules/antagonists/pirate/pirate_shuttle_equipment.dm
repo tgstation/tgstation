@@ -423,7 +423,7 @@
 /datum/export/pirate/ransom/get_base_cost(mob/living/carbon/human/ransomee)
 	if(ransomee.stat != CONSCIOUS || !ransomee.mind || HAS_TRAIT(ransomee.mind, TRAIT_HAS_BEEN_KIDNAPPED)) //mint condition only
 		return 0
-	else if(FACTION_PIRATE in ransomee.faction) //can't ransom your fellow pirates to CentCom!
+	else if(ransomee.has_faction(FACTION_PIRATE)) //can't ransom your fellow pirates to CentCom!
 		return 0
 	else if(HAS_TRAIT(ransomee, TRAIT_HIGH_VALUE_RANSOM))
 		return 3000

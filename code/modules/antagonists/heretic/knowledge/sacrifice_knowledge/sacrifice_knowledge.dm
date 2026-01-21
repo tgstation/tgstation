@@ -257,7 +257,7 @@
 		loot.throw_at(get_step_rand(sacrifice), 2, 4, user, TRUE)
 
 	// The loser is DUSTED.
-	sacrifice.dust(TRUE, TRUE)
+	sacrifice.dust(just_ash = TRUE, drop_items = TRUE)
 
 	// Increase reward counter
 	var/datum/antagonist/heretic/antag = GET_HERETIC(user)

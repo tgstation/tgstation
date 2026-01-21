@@ -494,7 +494,7 @@ DEFINE_BITFIELD(turret_flags, list(
 					continue
 				if(in_faction(sillyconerobot)) // borgs in faction are friendly
 					continue
-				if((ROLE_SYNDICATE in faction) && sillyconerobot.emagged) // special case: emagged station borgs are friendly to syndicate turrets
+				if(has_faction(ROLE_SYNDICATE) && sillyconerobot.emagged) // special case: emagged station borgs are friendly to syndicate turrets
 					continue
 
 				targets += sillyconerobot
@@ -622,7 +622,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	return threatcount
 
 /obj/machinery/porta_turret/proc/in_faction(mob/target)
-	return length(faction & target.faction)
+	return faction_check_atom(target)
 
 /obj/machinery/porta_turret/proc/target(atom/movable/target)
 	if(target)

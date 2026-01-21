@@ -137,3 +137,17 @@
 	icon_state = "syndieenvirobag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/prisoner/pressurized/syndicate
 	resistance_flags = ACID_PROOF | FIRE_PROOF | FREEZE_PROOF | LAVA_PROOF
+
+/obj/item/bodybag/stasis
+	name = /obj/structure/closet/body_bag/environmental/stasis::name
+	desc = /obj/structure/closet/body_bag/environmental/stasis::desc
+	max_integrity = /obj/structure/closet/body_bag/environmental/stasis::max_integrity
+	icon = 'icons/obj/medical/bodybag.dmi'
+	icon_state = "stasis_bag_folded"
+	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/stasis
+
+/obj/item/bodybag/stasis/deploy_bodybag(mob/user, atom/location)
+	var/obj/structure/closet/body_bag/environmental/stasis/bag = ..()
+	bag.last_filter_update = -1
+	bag.update_integrity(get_integrity())
+	return bag

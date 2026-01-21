@@ -398,6 +398,16 @@
       and require access to place the order.
   - rscadd: Departmental Order may explicitly bypass access restrictions if placed
       using an agent ID.
+  ElGitificador:
+  - spellcheck: fixed heckacious larincks not being properly capitalized
+  Ezel:
+  - bugfix: Removes the intercomm in meta xenobio interior so it doesn't clip with
+      the shower anymore.
+  Ghommie:
+  - rscadd: Once installed, special PDA themes from maintenance disks will be present
+      on your roundstart PDA on future rounds (Sadly I couldn't figure out a way to
+      add those to the preferences UI yet). You can check which PDA themes you've
+      unlocked in the Progress tab of the achievements UI.
   Jacquerel:
   - rscadd: You can now also load stunprods into ballistas, make sure you turn them
       on first though
@@ -417,6 +427,20 @@
   - balance: Heretic items which apply rust (grenades and eldritch reagent) check
       the rust resistance level of the turf rather than always rusting it.
   - bugfix: Rust Heretics ascending don't rust unrustable turfs, like space tiles.
+  JohnFulpWillard:
+  - refactor: ID checking for access has been reworked, please make a bug report if
+      anything that's supposed to grant access is not working.
+  LT3:
+  - code_imp: Code unit testing now checks emergency access and red alert access
+  Melbert:
+  - spellcheck: Corrects the blind message for manual cauterization
+  - rscadd: Hallucinations that don't make sense to trigger while unconscious or deaf
+      will no longer trigger while unconscious or deaf
+  - balance: 'Thermal vision mutation: Active duration 10s -> 30s  (with power, 30s->45s)'
+  - balance: 'Thermal vision mutation: Cooldown 25s -> 60s (with energy, 60s -> 30s)'
+  - balance: 'Thermal vision mutation: Eye damage 10 -> 7.5 (with sync, 7.5 -> 3.75)'
+  - balance: 'Thermal vision mutation: Eye damage is now affected by power chromosome
+      (with power, 7.5 -> 11.25)'
   RikuTheKiller:
   - rscadd: Added a new heavy roundstart/midround antagonist, the Blood Worm. Credit
       to INFRARED_BARON for the sprites!
@@ -424,9 +448,19 @@
   - bugfix: High-priority effects no longer double-trigger due to subsystem issues.
   - bugfix: Weighted averaging in reagent merging code has been band-aid fixed. It's
       not the best, but it works.
+  - bugfix: Camera chunks, the biggest source of lag in the entire game, now run twice
+      as fast.
   SapphoQueer:
   - bugfix: The buttons for lavaland organs no longer show up after their removal
       from your body.
+  SyncIt21:
+  - bugfix: photocopier does not charge for failed tasks
+  TheNobodyofimportance:
+  - bugfix: The Syndicate infiltrator no longer spawns in the nuclear base, and instead
+      spawns alongside nukies, eliminating lazyload clipping.
+  - bugfix: Clownops now spawn with a bananium bomb in their infiltrator.
+  Vect0r2:
+  - balance: people with immunodeficiency no longer can cure themselves automatically
   carpotoxin:
   - code_imp: Adding or removing rulesets from the queue list is done by procs instead
       of directly editing the list.
@@ -438,3 +472,57 @@
   - map: CATWALK - Security expanded
   - map: CATWALK - AI Sat fortified similar to Meta and other maps
   - map: CATWALK - See full change log in PR
+2026-01-18:
+  Arturlang:
+  - bugfix: fixes star touch's cosmic bean making the victim forever unable to teleport
+      and leave trails
+  Melbert:
+  - rscadd: Adds stasis bodybags, unlocked with cryo tech. They put its occupants
+      (organ or mobs) in stasis, but wear down over time.
+  - rscadd: Adds triage cards to the medical vendor, a flavor item docs can use during
+      mass casualty events.
+  - qol: You can pin papers to closed bodybags. Keep organized with your autopsies.
+  - qol: You can interact with papers in folders and on clipboards
+  - qol: All forms of stasis stop brain tumors
+  - rscadd: Hangover effects depend on personality traits
+  - rscadd: All radios (intercoms and station-bounced) can have encryption keys installed
+      in them, rather than solely headsets and cyborgs.
+  - rscadd: Existing screwdriver interactions for station-bounced radios and intercoms
+      have been moved to right click. However, intercoms will still default to the
+      old behavior if they have no key installed.
+  - qol: Screentips for radios.
+  SmArtKar:
+  - bugfix: Fixed ID cards sometimes not functioning within wallets/PDAs
+  tontyGH:
+  - bugfix: As the AI, possessing an empty shell will no longer break your de-synchronization
+      protocols, which would trap your Nanotrasen-brand Silica-Soul(TM) inside of
+      it.
+2026-01-19:
+  ElGitificador:
+  - bugfix: fixed syndi surplus crate desc not naming their new tc value properly
+  Hatterhat, vinylspiders:
+  - bugfix: Voltaic combat cyberheart's lightning overlay should be more reliably
+      cleared in the event that it should be lost.
+  - bugfix: If your voltaic combat cyberheart is lost/removed while you're in voltaic
+      overdrive, you lose the overdrive.
+  Nari Harimoto:
+  - map: Nanotrasen found the budget to add a small circuit workshop to the engineering
+      department on every station except for tramstation.
+2026-01-20:
+  Ezel:
+  - balance: sabre, parsnip, gladius sheathe can now be worn on suit storages
+  - bugfix: mirrors gladius belt worn sprite so it doesn't overlap with belted revolvers
+  - image: adds mirrored belt sprites
+  LT3:
+  - bugfix: Fixed lights being able to run on emergency power forever
+  SmArtKar:
+  - qol: You can now clamp cables by RMBing them with wirecutters in order to prevent
+      them from connecting to other cables in a certain direction.
+  - refactor: Refactored cable interaction and some of connection code
+  carpotoxin:
+  - bugfix: fixed the queue'ing of roundstart antags
+  combustor:
+  - bugfix: Adds a request console to the CE's office in catwalk
+  vinylspiders:
+  - refactor: faction list structures have been refactored, please report any unusual
+      faction related behavior
