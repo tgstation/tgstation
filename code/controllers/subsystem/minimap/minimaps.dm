@@ -237,16 +237,17 @@
 	if(!isatom(target) || !hud_flags || !blip)
 		CRASH("Invalid marker added to subsystem")
 
+	var/turf/target_turf = get_turf(target)
+
 	// XANTODO Probably need initialized check somehow if(!initialized || !(minimaps_by_z["[target.z]"])) //the minimap doesn't exist yet, z level was probably loaded after init
-	if(!(minimaps_by_z["[target.z]"])) //the minimap doesn't exist yet, z level was probably loaded after init
-		for(var/datum/callback/callback as anything in earlyadds["[target.z]"])
+	if(!(minimaps_by_z["[target_turf.z]"])) //the minimap doesn't exist yet, z level was probably loaded after init
+		for(var/datum/callback/callback as anything in earlyadds["[target_turf.z]"])
 			if(callback.arguments[1] == target)
 				return
-		LAZYADDASSOC(earlyadds, "[target.z]", CALLBACK(src, PROC_REF(add_marker), target, hud_flags, blip))
+		LAZYADDASSOC(earlyadds, "[target_turf.z]", CALLBACK(src, PROC_REF(add_marker), target, hud_flags, blip))
 		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(remove_earlyadd), override = TRUE) //Override required for late z-level loading to prevent hard dels where an atom is initiated during z load, but is qdel'd before it finishes
 		return
 
-	var/turf/target_turf = get_turf(target)
 
 	blip.pixel_x = MINIMAP_PIXEL_FROM_WORLD(target_turf.x) + minimaps_by_z["[target_turf.z]"].x_offset
 	blip.pixel_y = MINIMAP_PIXEL_FROM_WORLD(target_turf.y) + minimaps_by_z["[target_turf.z]"].y_offset
@@ -324,36 +325,59 @@
 		images_by_source[source].pixel_y = MINIMAP_PIXEL_FROM_WORLD(source.y) + minimaps_by_z["[source.z]"].y_offset
 		return
 
-	var/atom/movable/movable_loc = source.loc
+	var/atom/movable/movable_loc = get_atom_on_turf(source)
+	var/turf/target_turf = get_turf(source)
 	override_minimap_tracking(source, movable_loc, src)
-	images_by_source[movable_loc].pixel_x = MINIMAP_PIXEL_FROM_WORLD(movable_loc.x) + minimaps_by_z["[movable_loc.z]"].x_offset
-	images_by_source[movable_loc].pixel_y = MINIMAP_PIXEL_FROM_WORLD(movable_loc.y) + minimaps_by_z["[movable_loc.z]"].y_offset
+	images_by_source[movable_loc].pixel_x = MINIMAP_PIXEL_FROM_WORLD(target_turf.x) + minimaps_by_z["[target_turf.z]"].x_offset
+	images_by_source[movable_loc].pixel_y = MINIMAP_PIXEL_FROM_WORLD(target_turf.y) + minimaps_by_z["[target_turf.z]"].y_offset
 
 ///Used to handle minimap tracking inside other movables
 /datum/tactical_map/proc/override_minimap_tracking(atom/movable/tracked_atom, atom/movable/new_tracked, datum/tactical_map/map)
 	var/image/existing_blip = map.images_by_source[new_tracked]
+	// If the container isn't drawn on the map, we can just make the container act as the thing we track on the map
 	if(!existing_blip)
 		add_marker(new_tracked, get_hud_flags(tracked_atom), map.images_by_source[tracked_atom])
 		RegisterSignal(tracked_atom, COMSIG_ATOM_EXITING, PROC_REF(cancel_override_minimap_tracking))
 		return
-	to_chat(world, "preexisting blip")
-
-	//var/image/blip = map.images_by_source[tracked_atom]
-	//blip.RegisterSignal(new_tracked, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/datum/tactical_map, minimap_on_move))
+	// Special handling, if the nuke disk is held by a nukie it will replace their icon and flash
+	if(istype(tracked_atom, /obj/item/disk/nuclear))
+		remove_marker(new_tracked)
+		remove_marker(tracked_atom)
+		add_marker(new_tracked, MINIMAP_FLAG_ALL, image('icons/ui_icons/minimap/map_blips_large.dmi', null, "green_disk_on", MINIMAP_BLIPS_LAYER))
+		RegisterSignal(tracked_atom, COMSIG_ATOM_EXITING, PROC_REF(cancel_nukedisk_minimap_tracking), override = TRUE)
+		return
 
 ///Gets the hud flag of something
 /datum/tactical_map/proc/get_hud_flags(atom/checked_atom)
-	switch(checked_atom.type)
-		if(/obj/item/disk/nuclear)
-			. = MINIMAP_FLAG_ALL
+	if(istype(checked_atom, /obj/item/disk/nuclear))
+		return MINIMAP_FLAG_ALL
+
+	if(!ismob(checked_atom))
+		return
+	var/mob/checked_mob = checked_atom
+
+	if(IS_NUKE_OP(checked_mob))
+		return MINIMAP_FLAG_NUCLEAR
 
 ///Stops minimap override tracking
 /datum/tactical_map/proc/cancel_override_minimap_tracking(atom/movable/thing, atom/movable/container)
 	SIGNAL_HANDLER
-	//var/image/blip = images_by_source[source]
-	//blip?.UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(container, COMSIG_MOVABLE_MOV5ED)
-	UnregisterSignal(container, COMSIG_ATOM_EXITED)
+	UnregisterSignal(thing, COMSIG_ATOM_EXITING)
+	remove_marker(container)
+
+/// Restores the icons that were replaced by the nuke disk and
+/datum/tactical_map/proc/cancel_nukedisk_minimap_tracking(atom/movable/nukedisk, atom/movable/container)
+	SIGNAL_HANDLER
+	remove_marker(nukedisk)
+	remove_marker(container)
+	UnregisterSignal(nukedisk, COMSIG_ATOM_EXITING)
+	add_marker(nukedisk, MINIMAP_FLAG_ALL, image('icons/ui_icons/minimap/map_blips_large.dmi', null, "green_disk_off", MINIMAP_BLIPS_LAYER)) // Re-draw diskie
+
+	// Restore your map icon if you had one before picking up the disk
+	var/obj/item/implant/tacmap/mob_map = locate() in container.contents
+	if(!mob_map)
+		return
+	mob_map.update_minimap_icon(container)
 
 /**
  * Removes an atom and it's blip from the subsystem
