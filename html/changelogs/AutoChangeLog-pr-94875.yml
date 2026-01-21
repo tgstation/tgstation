@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Fixes light deconstruction succeeding when they're fully constructed, and failing when they're not."
