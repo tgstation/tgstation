@@ -774,6 +774,15 @@
 	storage_type = /datum/storage/ninja_sheath
 	stored_blade = /obj/item/energy_katana
 
+/obj/item/storage/belt/sheath/hanzo_katana
+	name = "hanzo katana sheath"
+	desc = "A normal black sheath meant to house the legendary hanzo steel"
+	icon_state = "hanzo_sheath"
+	inhand_icon_state = "hanzo_sheath"
+	worn_icon_state = "hanzo_sheath"
+	storage_type = /datum/storage/hanzo_sheath
+	stored_blade = /obj/item/nullrod/claymore/katana
+
 /obj/item/storage/belt/plant
 	name = "botanical belt"
 	desc = "A sturdy leather belt used to hold most hydroponics supplies."
