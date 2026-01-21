@@ -589,7 +589,7 @@
 	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
 	var/stored_blade
 	actions_types = list(/datum/action/innate/blade_counter)
-	action_slots = ITEM_SLOT_BELT
+	action_slots = ITEM_SLOT_BELT | ITEM_SLOT_SUITSTORE
 	COOLDOWN_DECLARE(resheath_cooldown)
 	COOLDOWN_DECLARE(full_ability_cooldown)
 
@@ -736,7 +736,6 @@
 	icon_state = "sheath"
 	inhand_icon_state = "sheath"
 	worn_icon_state = "sheath"
-	action_slots = ITEM_SLOT_BELT | ITEM_SLOT_SUITSTORE
 	storage_type = /datum/storage/sabre_belt
 	stored_blade = /obj/item/melee/sabre
 
@@ -746,7 +745,6 @@
 	icon_state = "grass_sheath"
 	inhand_icon_state = "grass_sheath"
 	worn_icon_state = "grass_sheath"
-	action_slots = ITEM_SLOT_BELT | ITEM_SLOT_SUITSTORE
 	storage_type = /datum/storage/green_sabre_belt
 
 /obj/item/storage/belt/sheath/gladius
@@ -755,7 +753,6 @@
 	icon_state = "gladius_sheath"
 	inhand_icon_state = "gladius_sheath"
 	worn_icon_state = "gladius_sheath"
-	action_slots = ITEM_SLOT_BELT | ITEM_SLOT_SUITSTORE
 	storage_type = /datum/storage/gladius_belt
 	stored_blade = /obj/item/claymore/gladius
 
@@ -765,7 +762,6 @@
 	icon_state = "katana_sheath"
 	inhand_icon_state = "katana_sheath"
 	worn_icon_state = "katana_sheath"
-	action_slots = ITEM_SLOT_BELT | ITEM_SLOT_SUITSTORE
 	storage_type = /datum/storage/katana_sheath
 	stored_blade = /obj/item/katana
 
@@ -775,9 +771,17 @@
 	icon_state = "ninja_sheath"
 	inhand_icon_state = "ninja_sheath"
 	worn_icon_state = "ninja_sheath"
-	action_slots = ITEM_SLOT_BELT | ITEM_SLOT_SUITSTORE
 	storage_type = /datum/storage/ninja_sheath
 	stored_blade = /obj/item/energy_katana
+
+/obj/item/storage/belt/sheath/hanzo_katana
+	name = "hanzo katana sheath"
+	desc = "A normal black sheath meant to house the legendary hanzo steel"
+	icon_state = "hanzo_sheath"
+	inhand_icon_state = "hanzo_sheath"
+	worn_icon_state = "hanzo_sheath"
+	storage_type = /datum/storage/hanzo_sheath
+	stored_blade = /obj/item/nullrod/claymore/katana
 
 /obj/item/storage/belt/plant
 	name = "botanical belt"
