@@ -4,12 +4,10 @@
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "katana"
 	inhand_icon_state = "katana"
-	worn_icon_state = "katana"
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
-	slot_flags = ITEM_SLOT_BACK
 	force = 40
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY

@@ -175,8 +175,8 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	desc = "Capable of cutting clean through a holy claymore."
 	icon_state = "katana"
 	inhand_icon_state = "katana"
-	worn_icon_state = "katana"
 	pickup_sound = 'sound/items/unsheath.ogg'
+	slot_flags = NONE
 	chaplain_spawnable = FALSE
 
 /obj/item/nullrod/claymore/multiverse
