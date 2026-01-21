@@ -807,13 +807,13 @@
 		if (!reagent_result)
 			continue
 		result |= (reagent_result & SPARK_ACT_RETURNS)
-		if (reagent_result & SPARK_ACT_CLEAR_ALL)
-			clear_reagents()
-			return result
 		if (!(reagent_result & SPARK_ACT_KEEP_REAGENT))
 			reagent.volume = 0
 			update = TRUE
-	if (update)
+
+	if (result & SPARK_ACT_CLEAR_ALL)
+		clear_reagents()
+	else if (update)
 		update_total()
 	return result
 

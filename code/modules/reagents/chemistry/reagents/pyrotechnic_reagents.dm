@@ -201,10 +201,10 @@
 			continue
 		var/distance = get_dist(location, victim)
 		if(distance <= 4 || issilicon(victim))
-			victim.Paralyze(max(20 / max(1, distance), 5))
-			victim.Knockdown(max(200 / max(1, distance), 60))
+			victim.Paralyze(max(2 SECONDS / max(1, distance), 0.5 SECONDS))
+			victim.Knockdown(max(20 SECONDS / max(1, distance), 6 SECONDS))
 		else
-			victim.adjust_dizzy_up_to(max(200 / max(1, distance), 5), 20 SECONDS)
+			victim.adjust_dizzy_up_to(max(20 SECONDS / max(1, distance), 0.5 SECONDS), 20 SECONDS)
 		victim.dropItemToGround(victim.get_active_held_item())
 		victim.dropItemToGround(victim.get_inactive_held_item())
 	return SPARK_ACT_NON_DESTRUCTIVE
@@ -223,16 +223,14 @@
 		return
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/fluid_spread/smoke/chem/smoke_system = new()
-	smoke_system.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 	if (iscarbon(holder.my_atom))
 		var/mob/living/carbon/victim = holder.my_atom
 		if (victim.stat != DEAD)
 			victim.visible_message(span_warning("[victim] starts violently coughing up smoke!"))
 		victim.adjust_organ_loss(ORGAN_SLOT_LUNGS, volume / 15)
-	if(smoke_system)
-		smoke_system.set_up(amount = volume / 1.5, holder = holder.my_atom, location = location, carry = holder, silent = FALSE)
-		smoke_system.start(log = TRUE)
+	smoke_system.set_up(amount = volume / 1.5, holder = holder.my_atom, location = location, carry = holder, silent = FALSE)
+	smoke_system.start(log = TRUE)
 	return SPARK_ACT_NON_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 /datum/reagent/sonic_powder
