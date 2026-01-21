@@ -102,6 +102,8 @@
 				continue
 			if(istype(location, /turf/open/floor/iron/solarpanel))
 				continue
+			if(istype(location, /turf/open/misc/asteroid/snow/icemoon))
+				continue
 			var/area/arealoc = get(location, /area)
 			map_position_to_name["[level]:[xval]:[yval]"] = arealoc?.name
 			if(location.density)
@@ -259,7 +261,7 @@
 				updator.raw_blips += blip
 	if(ismovable(target))
 		RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_change))
-		RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(minimap_on_move))
+		RegisterSignal(target, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/datum/tactical_map, minimap_on_move))
 	removal_cbs[target] = CALLBACK(src, PROC_REF(removeimage), blip, target, hud_flags)
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(remove_marker), override = TRUE) //override for atoms that were on a late loaded z-level, overrides the remove_earlyadd above
 
@@ -292,25 +294,25 @@
  *
  * TODO gross amount of assoc usage and unneeded ALL FLAGS iteration
  */
-/datum/tactical_map/proc/on_z_change(atom/movable/source, oldz, newz)
+/datum/tactical_map/proc/on_z_change(atom/movable/source, turf/old_turf, turf/new_turf, same_z_layer)
 	SIGNAL_HANDLER
 	var/image/blip
 	for(var/flag in GLOB.all_minimap_flags)
-		if(!minimaps_by_z["[oldz]"]?.images_assoc["[flag]"][source])
+		if(!minimaps_by_z["[old_turf.z]"]?.images_assoc["[flag]"][source])
 			continue
 		if(!blip)
-			blip = minimaps_by_z["[oldz]"].images_assoc["[flag]"][source]
+			blip = minimaps_by_z["[old_turf.z]"].images_assoc["[flag]"][source]
 		// todo maybe make update_targets also sort by zlevel?
 		for(var/datum/minimap_updator/updator as anything in update_targets["[flag]"])
-			if(updator.ztarget == oldz)
+			if(updator.ztarget == old_turf.z)
 				updator.raw_blips -= blip
-			else if(updator.ztarget == newz)
+			else if(updator.ztarget == new_turf.z)
 				updator.raw_blips += blip
-		minimaps_by_z["[newz]"].images_assoc["[flag]"][source] = blip
-		minimaps_by_z["[oldz]"].images_assoc["[flag]"] -= source
+		minimaps_by_z["[new_turf.z]"].images_assoc["[flag]"][source] = blip
+		minimaps_by_z["[old_turf.z]"].images_assoc["[flag]"] -= source
 
-		minimaps_by_z["[newz]"].images_raw["[flag]"] += blip
-		minimaps_by_z["[oldz]"].images_raw["[flag]"] -= blip
+		minimaps_by_z["[new_turf.z]"].images_raw["[flag]"] += blip
+		minimaps_by_z["[old_turf.z]"].images_raw["[flag]"] -= blip
 
 /**
  * Simple proc, updates overlay position on the map when a atom moves
@@ -323,24 +325,35 @@
 		return
 
 	var/atom/movable/movable_loc = source.loc
-	source.override_minimap_tracking(source.loc, src)
+	override_minimap_tracking(source, movable_loc, src)
 	images_by_source[movable_loc].pixel_x = MINIMAP_PIXEL_FROM_WORLD(movable_loc.x) + minimaps_by_z["[movable_loc.z]"].x_offset
 	images_by_source[movable_loc].pixel_y = MINIMAP_PIXEL_FROM_WORLD(movable_loc.y) + minimaps_by_z["[movable_loc.z]"].y_offset
 
 ///Used to handle minimap tracking inside other movables
-/atom/movable/proc/override_minimap_tracking(atom/movable/loc, datum/tactical_map/map)
-	var/image/blip = map.images_by_source[src]
-	blip.RegisterSignal(loc, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/datum/tactical_map, minimap_on_move))
-	RegisterSignal(loc, COMSIG_ATOM_EXITED, TYPE_PROC_REF(/datum/tactical_map, cancel_override_minimap_tracking))
+/datum/tactical_map/proc/override_minimap_tracking(atom/movable/tracked_atom, atom/movable/new_tracked, datum/tactical_map/map)
+	var/image/existing_blip = map.images_by_source[new_tracked]
+	if(!existing_blip)
+		add_marker(new_tracked, get_hud_flags(tracked_atom), map.images_by_source[tracked_atom])
+		RegisterSignal(tracked_atom, COMSIG_ATOM_EXITING, PROC_REF(cancel_override_minimap_tracking))
+		return
+	to_chat(world, "preexisting blip")
+
+	//var/image/blip = map.images_by_source[tracked_atom]
+	//blip.RegisterSignal(new_tracked, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/datum/tactical_map, minimap_on_move))
+
+///Gets the hud flag of something
+/datum/tactical_map/proc/get_hud_flags(atom/checked_atom)
+	switch(checked_atom.type)
+		if(/obj/item/disk/nuclear)
+			. = MINIMAP_FLAG_ALL
 
 ///Stops minimap override tracking
-/datum/tactical_map/proc/cancel_override_minimap_tracking(atom/movable/source, atom/movable/mover)
+/datum/tactical_map/proc/cancel_override_minimap_tracking(atom/movable/thing, atom/movable/container)
 	SIGNAL_HANDLER
-	if(mover != source)
-		return
-	var/image/blip = images_by_source[source]
-	blip?.UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(source, COMSIG_ATOM_EXITED)
+	//var/image/blip = images_by_source[source]
+	//blip?.UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(container, COMSIG_MOVABLE_MOV5ED)
+	UnregisterSignal(container, COMSIG_ATOM_EXITED)
 
 /**
  * Removes an atom and it's blip from the subsystem
@@ -754,7 +767,7 @@
 /**
  * Updates the map when the owner changes zlevel
  */
-/datum/action/minimap/proc/on_owner_z_change(atom/movable/source, old_turf, turf/new_turf)
+/datum/action/minimap/proc/on_owner_z_change(atom/movable/source, turf/old_turf, turf/new_turf, same_z_layer)
 	SIGNAL_HANDLER
 	change_z_shown(new_turf.z)
 

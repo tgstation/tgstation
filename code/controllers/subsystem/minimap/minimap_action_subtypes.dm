@@ -57,3 +57,8 @@
 /datum/action/minimap/nuclear
 	minimap_flags = MINIMAP_FLAG_NUCLEAR
 	marker_flags = MINIMAP_FLAG_NUCLEAR
+
+/datum/action/minimap/nuclear/New(Target, new_minimap_flags, new_marker_flags, tactical_map)
+	. = ..()
+	for(var/obj/item/disk/nuclear/nuke_disk as anything in SSpoints_of_interest.real_nuclear_disks)
+		my_map.add_marker(nuke_disk, MINIMAP_FLAG_ALL, image('icons/ui_icons/minimap/map_blips_large.dmi', null, "green_disk_off", MINIMAP_BLIPS_LAYER))

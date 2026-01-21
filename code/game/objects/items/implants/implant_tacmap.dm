@@ -48,6 +48,9 @@
 /// Gets the icon to show us on the map
 /obj/item/implant/tacmap/proc/get_minimap_marker(mob/wearer)
 	var/marker_flags = initial(minimap_type.marker_flags)
+	if(istype(wearer, /mob/living/basic/carp/pet/cayenne))
+		my_map.add_marker(wearer, marker_flags, image('icons/ui_icons/minimap/map_blips.dmi', null, "cayenne", MINIMAP_BLIPS_LAYER))
+		return
 	if(IS_NUKE_OP(wearer))
 		my_map.add_marker(wearer, marker_flags, image('icons/ui_icons/minimap/map_blips.dmi', null, "syndicate", MINIMAP_BLIPS_LAYER))
 		return
@@ -88,6 +91,9 @@
 	minimap_type = /datum/action/minimap/nuclear
 
 /obj/item/implant/tacmap/nuclear/implant(mob/living/target, mob/user, silent, force)
+	if(istype(target, /mob/living/basic/carp/pet/cayenne))
+		return ..()
+
 	var/datum/antagonist/nukeop/nukie = IS_NUKE_OP(target)
 	if(isnull(nukie))
 		return ..()
