@@ -276,7 +276,7 @@
 	if(!id.registered_account)
 		to_chat(user, span_warning("ERROR: Identification card lacks registered bank account!"))
 		return ITEM_INTERACT_BLOCKING
-	if(id.registered_account != pin_owner)
+	if(pin_owner && id.registered_account != pin_owner)
 		to_chat(user, span_warning("ERROR: This firing pin has already been authorized!"))
 		return ITEM_INTERACT_BLOCKING
 	if(id.registered_account == pin_owner)
