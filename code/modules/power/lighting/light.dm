@@ -429,7 +429,7 @@
 		if("floor bulb")
 			frame = new /obj/structure/light_construct/floor(loc)
 	frame.stage = LIGHT_CONSTRUCT_WIRED
-	frame.icon_state = "[fitting == "floor bulb" ? "floor" : fitting]-construct-stage2"
+	frame.icon_state = "[frame.fixture_type]-construct-stage2"
 	frame.setDir(dir)
 	frame.find_and_mount_on_atom()
 	if(!disassembled)
