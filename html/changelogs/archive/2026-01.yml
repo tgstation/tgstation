@@ -526,3 +526,20 @@
   vinylspiders:
   - refactor: faction list structures have been refactored, please report any unusual
       faction related behavior
+2026-01-21:
+  Fghj240:
+  - balance: advanced disease cures are now based on their symptoms
+  - balance: spaceacillin is a little worse at curing viruses
+  - balance: health analyzers can only detect a limited amount of unique advanced
+      disease cures
+  - balance: advanced disease resistance affects natural recovery
+  - balance: advanced disease cure resistance cap raised
+  - balance: advanced disease stage speed starts higher and scales slower
+  - balance: low level virus symptoms have had their stats increased
+  - balance: vomiting symptom thresholds slightly increased
+  - balance: you don't count as sleeping for the purpose of natural recovery if made
+      unconscious by means other than sleeping
+  Hardly:
+  - spellcheck: Fixed a typo with Deltastation's Server Room Entrance's camera.
+  Melbert:
+  - bugfix: Syncing instruments no longer fails if starting instrument is held
