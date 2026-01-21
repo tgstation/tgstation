@@ -176,7 +176,18 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	inhand_icon_state = "katana"
 	worn_icon_state = "katana"
 	pickup_sound = 'sound/items/unsheath.ogg'
-	menu_description = "A sharp katana which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
+	chaplain_spawnable = FALSE
+
+/obj/item/storage/belt/sheath/hanzo_katana
+	name = "hanzo katana sheath"
+	desc = "A normal black sheath meant to house the legendary hanzo steel"
+	icon_state = "hanzo_sheath"
+	inhand_icon_state = "hanzo_sheath"
+	worn_icon_state = "hanzo_sheath"
+	menu_description = "A sharp katana which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt, wearing the sheath on belt allows for a swift counterattack."
+	storage_type = /datum/storage/hanzo_sheath
+	stored_blade = /obj/item/nullrod/claymore/katana
+	chaplain_spawnable = TRUE
 
 /obj/item/nullrod/claymore/multiverse
 	name = "extradimensional blade"
