@@ -231,6 +231,7 @@
 		if(LIGHT_BROKEN,LIGHT_BURNED,LIGHT_EMPTY)
 			on = FALSE
 	low_power_mode = FALSE
+
 	if(on)
 		var/brightness_set = brightness
 		var/power_set = bulb_power
@@ -239,6 +240,10 @@
 			color_set = color
 		if(reagents || !is_full_charge())
 			START_PROCESSING(SSmachines, src)
+			if (reagents.spark_act(active_power_usage, TRUE) & SPARK_ACT_DESTRUCTIVE)
+				message_admins("A rigged lightbulb at [AREACOORD(src)] has exploded.")
+				qdel(src)
+				return
 		var/area/local_area = get_room_area()
 		if (flickering)
 			brightness_set = brightness * bulb_low_power_brightness_mul
@@ -274,6 +279,10 @@
 	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE * SSMACHINES_DT) && !turned_off())
 		use_power = IDLE_POWER_USE
 		low_power_mode = TRUE
+		if (reagents?.spark_act(idle_power_usage, TRUE) & SPARK_ACT_DESTRUCTIVE)
+			message_admins("A rigged lightbulb at [AREACOORD(src)] has exploded.")
+			qdel(src)
+			return
 		START_PROCESSING(SSmachines, src)
 	else
 		use_power = IDLE_POWER_USE
