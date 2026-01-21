@@ -762,6 +762,7 @@
 	icon_state = "katana_sheath"
 	inhand_icon_state = "katana_sheath"
 	worn_icon_state = "katana_sheath"
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	storage_type = /datum/storage/katana_sheath
 	stored_blade = /obj/item/katana
 
@@ -780,6 +781,7 @@
 	icon_state = "hanzo_sheath"
 	inhand_icon_state = "hanzo_sheath"
 	worn_icon_state = "hanzo_sheath"
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	storage_type = /datum/storage/hanzo_sheath
 	stored_blade = /obj/item/nullrod/claymore/katana
 
