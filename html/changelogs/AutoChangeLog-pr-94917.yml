@@ -1,0 +1,4 @@
+author: "ElGitificador"
+delete-after: True
+changes:
+  - bugfix: "fixed experimentor irradiate goo failure locking experimentor"
