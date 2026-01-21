@@ -184,7 +184,7 @@
 	. = ..()
 	if(!isnull(owner))
 		real_name = owner.real_name
-		if(HAS_TRAIT(owner, TRAIT_HUSK))
+		if(is_husked)
 			ADD_TRAIT(src, TRAIT_DISFIGURED, HUSK_TRAIT)
 		else
 			REMOVE_TRAIT(src, TRAIT_DISFIGURED, HUSK_TRAIT)
