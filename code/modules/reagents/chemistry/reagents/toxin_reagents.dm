@@ -67,7 +67,7 @@
 
 /datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_tox_loss(0.5 * seconds_per_tick * REM, required_biotype = affected_biotype))
+	if(affected_mob.adjust_tox_loss(0.25 * seconds_per_tick * metabolization_ratio, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -280,7 +280,7 @@
 /datum/reagent/toxin/zombiepowder/proc/zombify(mob/living/holder_mob)
 	PRIVATE_PROC(TRUE)
 
-	holder_mob.adjust_oxy_loss(0.5*REM, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	holder_mob.adjust_oxy_loss(0.25, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if((data?["method"] & (INGEST|INHALE)) && holder_mob.stat != DEAD)
 		holder_mob.apply_status_effect(/datum/status_effect/reagent_effect/fakedeath, type)
 
@@ -839,8 +839,7 @@
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	var/scratched = FALSE
-	var/scratch_damage = 0.2 * REM
-
+	var/scratch_damage = 0.25 * metabolization_ratio
 	var/obj/item/bodypart/head = affected_mob.get_bodypart(BODY_ZONE_HEAD)
 	if(!isnull(head) && SPT_PROB(8, seconds_per_tick))
 		scratched = affected_mob.itch(damage = scratch_damage, target_part = head)
