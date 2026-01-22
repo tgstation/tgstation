@@ -219,7 +219,7 @@
 /mob/eye/imaginary_friend/hivemind/verb/exit_hivemind()
 	set category = "IC"
 	set name = "Exit Hivemind"
-	set desc = "Relinquish your life and enter the land of the dead."
+	set desc = "Leave the hivemind behind and enter the land of the dead.
 
 	var/response = tgui_alert(src, "Are you sure you want to exit the hivemind? \
 		You can't re-enter it, though you can still be revived.", "Confirm Exit", list("Exit", "Stay"))
