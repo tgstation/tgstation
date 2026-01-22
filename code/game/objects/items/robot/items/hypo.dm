@@ -107,6 +107,7 @@
 	icon_state = "borghypo"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(2,5)
+	abstract_type = /obj/item/reagent_containers/borghypo
 
 	/** The maximum volume for each reagent stored in this hypospray
 	 * In most places we add + 1 because we're secretly keeping [max_volume_per_reagent + 1]
