@@ -84,7 +84,7 @@ const GeneCycler = (props) => {
 };
 
 const GenomeSequencer = (props) => {
-  const { mutation, clickable = true, tip = true } = props;
+  const { mutation, clickable = true } = props;
   if (!mutation) {
     return <Box color="average">No genome selected for sequencing.</Box>;
   }
@@ -159,7 +159,7 @@ const GenomeSequencer = (props) => {
   return (
     <>
       <Box m={-0.5}>{pairs}</Box>
-      {tip && (
+      {clickable && (
         <Box color="label" mt={1}>
           <b>Tip:</b> Ctrl+Click on the gene to set it to X. Right Click to
           cycle in reverse.
@@ -187,7 +187,6 @@ export const GenomePreview = (props) => {
             // no other data is needed when clickable is false
           }}
           clickable={false}
-          tip={false}
         />
       </Box>
     </NoticeBox>
