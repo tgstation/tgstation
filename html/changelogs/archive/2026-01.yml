@@ -508,3 +508,71 @@
   Nari Harimoto:
   - map: Nanotrasen found the budget to add a small circuit workshop to the engineering
       department on every station except for tramstation.
+2026-01-20:
+  Ezel:
+  - balance: sabre, parsnip, gladius sheathe can now be worn on suit storages
+  - bugfix: mirrors gladius belt worn sprite so it doesn't overlap with belted revolvers
+  - image: adds mirrored belt sprites
+  LT3:
+  - bugfix: Fixed lights being able to run on emergency power forever
+  SmArtKar:
+  - qol: You can now clamp cables by RMBing them with wirecutters in order to prevent
+      them from connecting to other cables in a certain direction.
+  - refactor: Refactored cable interaction and some of connection code
+  carpotoxin:
+  - bugfix: fixed the queue'ing of roundstart antags
+  combustor:
+  - bugfix: Adds a request console to the CE's office in catwalk
+  vinylspiders:
+  - refactor: faction list structures have been refactored, please report any unusual
+      faction related behavior
+2026-01-21:
+  Fghj240:
+  - balance: advanced disease cures are now based on their symptoms
+  - balance: spaceacillin is a little worse at curing viruses
+  - balance: health analyzers can only detect a limited amount of unique advanced
+      disease cures
+  - balance: advanced disease resistance affects natural recovery
+  - balance: advanced disease cure resistance cap raised
+  - balance: advanced disease stage speed starts higher and scales slower
+  - balance: low level virus symptoms have had their stats increased
+  - balance: vomiting symptom thresholds slightly increased
+  - balance: you don't count as sleeping for the purpose of natural recovery if made
+      unconscious by means other than sleeping
+  Hardly:
+  - spellcheck: Fixed a typo with Deltastation's Server Room Entrance's camera.
+  Melbert:
+  - bugfix: Syncing instruments no longer fails if starting instrument is held
+2026-01-22:
+  Absolucy:
+  - refactor: Refactored turrets so they only process if something potentially "interesting"
+      is within its range.
+  ElGitificador:
+  - bugfix: fixed experimentor irradiate goo failure locking experimentor
+  Jacquerel:
+  - bugfix: You can't shoot yourself using a wand or staff that you can't use, or
+      that has no charge
+  - rscadd: Most wands and staves now do something funnier if you use them to kill
+      yourself
+  SmArtKar:
+  - bugfix: Fixed people hanged on meat spikes sometimes rotating sideways
+  - rscadd: Multiple new reagents such as napalm, sorium, TATP, smoke/sonic/flash
+      powders and other explosives can now be used to rig cells or tools.
+  - rscadd: Plasma and gunpowder rigged items can now have controlled current requirement/delay
+      by adding some stabilizing agent alongside the main reagent.
+  - balance: Creating chemical smoke inside of a mob now makes them violently cough
+      it up, damaging their lungs a bit.
+  - bugfix: Chemically-rigged lightbulbs now once again explode.
+  - refactor: Refactored how power cells, welding tools, lightbulbs, cigarettes (and
+      now, lighters) handle being rigged with chemicals.
+  - code_imp: Dreamchecker no longer throws an error if you run the game with the
+      MAP_TEST flag
+  VigilDLX:
+  - bugfix: Fixed Medipen Refiller taking more than it refilled
+  lelandkemble:
+  - bugfix: Fixes light deconstruction succeeding when they're fully constructed,
+      and failing when they're not.
+  - map: Catwalk AI sat's door accesses have been brought in line with other maps
+  necromanceranne:
+  - qol: The white ship has a unique GPS signal. Just look for the 'Distress Signal'
+      co-ordinate.

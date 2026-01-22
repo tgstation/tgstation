@@ -236,6 +236,17 @@
 /datum/reagent/proc/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
 	SHOULD_CALL_PARENT(TRUE)
 
+/*
+ * Called when a reagent is exposed to electric current, rapidly heated or smashed, something that would cause explosives to get easily set off
+ * Returning a SPARK_ACT_ flag will signal that an action has occurred as a result, for parent behavior and logging purposes
+ * Probably shouldn't be called from within a mob's bloodstream, unless you're ready for some very explosive results
+ * Arguments:
+ * * power_charge - If we were triggered from electric current, how much power was dumped into us?
+ * * enclosed - Is the reaction happening in an enclosed container or not? Doesn't use reagent holder's flags as it might be called on reagents "exiting" the container
+ */
+/datum/reagent/proc/on_spark_act(power_charge = 0, enclosed = TRUE)
+	return NONE
+
 /**
  * Called after add_reagents creates a new reagent.
  *

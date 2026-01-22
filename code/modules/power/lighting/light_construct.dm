@@ -115,6 +115,7 @@
 					user.visible_message(span_notice("[user.name] deconstructs [src]."), \
 						span_notice("You deconstruct [src]."), span_hear("You hear a ratchet."))
 					playsound(src, 'sound/items/deconstruct.ogg', 75, TRUE)
+					deconstruct()
 				return
 
 			if(istype(tool, /obj/item/stack/cable_coil))

@@ -62575,7 +62575,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/camera/directional/north{
-	c_tag = "Science - Sever Room Entrance";
+	c_tag = "Science - Server Room Entrance";
 	name = "science camera";
 	network = list("ss13","rd")
 	},

@@ -71,8 +71,8 @@
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	mytray.mutation_roll(user)
-	mytray.adjust_toxic(3) //It is still toxic, mind you, but not to the same degree.
+	mytray.radioactive_exposure(modifier = volume * 0.1)
+	mytray.myseed?.adjust_instability(round(volume * 0.2))
 
 /datum/reagent/toxin/mutagen/used_on_fish(obj/item/fish/fish)
 	ADD_TRAIT(fish, TRAIT_FISH_MUTAGENIC, type)
@@ -81,6 +81,7 @@
 
 #define LIQUID_PLASMA_BP (50+T0C)
 #define LIQUID_PLASMA_IG (325+T0C)
+#define LIQUID_PLASMA_CHARGE_COEFF 2.7
 
 /datum/reagent/toxin/plasma
 	name = "Plasma"
@@ -141,14 +142,29 @@
 		exposed_turf.atmos_spawn_air("[GAS_PLASMA]=[reac_volume];[TURF_TEMPERATURE(temp)]")
 	return ..()
 
-#undef LIQUID_PLASMA_BP
-#undef LIQUID_PLASMA_IG
 
-/datum/reagent/toxin/plasma/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
+// Splashing people with plasma is stronger than fuel!
+/datum/reagent/toxin/plasma/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	if(methods & (TOUCH|VAPOR))
 		exposed_mob.adjust_fire_stacks(reac_volume / 5)
 		return
+
+/datum/reagent/toxin/plasma/on_spark_act(power_charge, enclosed)
+	// If we have any stabilizing agent in the mix, we need 0.2% of a standard cell value per mol of agent to be spent at once to blow
+	// This should allow for some more creative traps to be made with plasma
+	var/agent_volume = holder.get_reagent_amount(/datum/reagent/stabilizing_agent)
+	if (agent_volume && power_charge < agent_volume * 0.002 * STANDARD_CELL_CHARGE)
+		return NONE
+
+	// Plasma explosions become stronger with higher current, and don't care about if they're enclosed or not
+	var/power_modifier = max(0, round(power_charge / STANDARD_CELL_CHARGE * LIQUID_PLASMA_CHARGE_COEFF, 1) - 1)
+	reagent_explode(holder, volume, modifier = power_modifier, strengthdiv = 5, clear_holder_reagents = FALSE)
+	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
+
+#undef LIQUID_PLASMA_BP
+#undef LIQUID_PLASMA_IG
+#undef LIQUID_PLASMA_CHARGE_COEFF
 
 /datum/reagent/toxin/hot_ice
 	name = "Hot Ice Slush"

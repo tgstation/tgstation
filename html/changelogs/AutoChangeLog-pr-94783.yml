@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Rebalanced Unstable Mutagen's / Uranium's botany use. It now always increases instability (on par with L4Z), and occasionally increases instability even more at the costs of some toxins. It also scales with volume"
+  - rscadd: "Adds \"Toxin Resistance\" gene to botany which makes the plant immune to toxin damage. Given (and graftable from) Death Berries."
+  - rscadd: "Adds \"Toxin Adaptation\" gene to botany which makes the plant heal from toxin damage. Only in strange seeds (for now)."
+  - code_imp: "Cleaned up a smidge of botany code"
