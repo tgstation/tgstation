@@ -171,7 +171,7 @@
 
 /mob/eye/imaginary_friend/hivemind
 	name = "hivemind member"
-	desc = "A member of the changeling hivemind."
+	desc = "A drifting thought in the ocean that is the changeling hivemind."
 	distance_allowance = 5
 	require_los = TRUE
 	hidden = TRUE
