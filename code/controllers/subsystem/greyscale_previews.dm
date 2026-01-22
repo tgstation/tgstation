@@ -183,7 +183,7 @@ SUBSYSTEM_DEF(greyscale_previews)
 	#ifdef USE_RUSTG_ICONFORGE_GAGS
 	// generate all previews in parallel
 	var/holder = "tmp/greyscale_previews.dmi"
-	var/list/headless_result = rustg_iconforge_generate_headless(holder, json_encode(icons), TRUE)
+	var/list/headless_result = rustg_iconforge_generate_headless(holder, json_encode(icons), FALSE)
 	if(!istype(headless_result))
 		stack_trace("Could not generate greyscale previews using rustg_iconforge_generate_headless! The output format was invalid (JSON did not decode to a list). Got: [headless_result]")
 	if(!length(headless_result))
