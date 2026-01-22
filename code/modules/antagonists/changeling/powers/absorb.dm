@@ -192,11 +192,11 @@
 
 	var/greet_message = ""
 	greet_message += separator_hr(span_danger(span_slightly_larger("You are absorbed by the changeling!")))
-	greet_message += "You are now a part of the changeling hivemind, and can communicate with them freely. \
-		Your knowledge may be useful to them."
+	greet_message += "You are now a part of the changeling hivemind, and can communicate with them freely by speaking. \
+		Your knowledge may be useful to them..."
 	greet_message += "<br>You may also choose to <a href='byond://?src=[REF(src)];exit_hivemind=1'>exit the hivemind</a> \
-		if you prefer to observe the rest of the round instead."
-	greet_message += "<br>Either way, if your body is revived, you will be returned to it as normal."
+		if you prefer to observe instead."
+	greet_message += "<br>Either way, if your body or brain is revived, you will be returned to it as normal."
 
 	to_chat(src, boxed_message(span_changeling(greet_message)))
 
