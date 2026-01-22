@@ -130,6 +130,11 @@ SUBSYSTEM_DEF(greyscale_previews)
 
 /datum/controller/subsystem/greyscale_previews/proc/ExportMapPreviewsForType(filename, list/entries)
 	var/list/icons = list()
+	#ifdef USE_RUSTG_ICONFORGE_GAGS
+	// make sure the error icon exists as a default
+	var/datum/universal_icon/empty_icon = uni_icon('icons/testing/greyscale_error.dmi', "")
+	icons[""] = empty_icon.to_list()
+	#endif
 
 	for (var/entry in entries)
 		var/atom/typepath
@@ -176,9 +181,6 @@ SUBSYSTEM_DEF(greyscale_previews)
 	#endif
 
 	#ifdef USE_RUSTG_ICONFORGE_GAGS
-	// make sure the error icon exists as a default
-	var/datum/universal_icon/empty_icon = uni_icon('icons/testing/greyscale_error.dmi', "")
-	icons[""] = empty_icon.to_list()
 	// generate all previews in parallel
 	var/holder = "tmp/greyscale_previews.dmi"
 	var/list/headless_result = rustg_iconforge_generate_headless(holder, json_encode(icons), TRUE)
