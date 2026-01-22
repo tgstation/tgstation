@@ -1,8 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "Multiple new reagents such as napalm, sorium, TATP, smoke/sonic/flash powders and other explosives can now be used to rig cells or tools."
-  - rscadd: "Plasma and gunpowder rigged items can now have controlled current requirement/delay by adding some stabilizing agent alongside the main reagent."
-  - balance: "Creating chemical smoke inside of a mob now makes them violently cough it up, damaging their lungs a bit."
-  - bugfix: "Chemically-rigged lightbulbs now once again explode."
-  - refactor: "Refactored how power cells, welding tools, lightbulbs, cigarettes (and now, lighters) handle being rigged with chemicals."
