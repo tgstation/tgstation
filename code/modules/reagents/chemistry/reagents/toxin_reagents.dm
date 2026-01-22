@@ -82,6 +82,7 @@
 #define LIQUID_PLASMA_BP (50+T0C)
 #define LIQUID_PLASMA_IG (325+T0C)
 #define LIQUID_PLASMA_CHARGE_COEFF 2.7
+#define LIQUID_PLASMA_VOLUME_POWER_CAP 10
 
 /datum/reagent/toxin/plasma
 	name = "Plasma"
@@ -162,12 +163,17 @@
 	var/strengthdiv = 5
 	if (spark_flags & SPARK_ACT_WEAKEN_COMMON)
 		strengthdiv *= 3 // Stronger than waterpot, weaker than methbombs
+		var/current_limit = round(volume / LIQUID_PLASMA_VOLUME_POWER_CAP, 1)
+		// High current can only get you so far before you get a sharp dropoff
+		if (power_modifier > current_limit)
+			power_modifier = current_limit + log(power_modifier - current_limit + 1)
 	reagent_explode(holder, volume, modifier = power_modifier, strengthdiv = strengthdiv, clear_holder_reagents = FALSE)
 	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 #undef LIQUID_PLASMA_BP
 #undef LIQUID_PLASMA_IG
 #undef LIQUID_PLASMA_CHARGE_COEFF
+#undef LIQUID_PLASMA_VOLUME_POWER_CAP
 
 /datum/reagent/toxin/hot_ice
 	name = "Hot Ice Slush"

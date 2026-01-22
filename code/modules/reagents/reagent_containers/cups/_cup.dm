@@ -31,6 +31,10 @@
 	var/has_lid = FALSE
 	/// Assembly attached to our lid
 	var/obj/item/assembly_holder/lid_assembly = null
+	/// Power cell duct-taped to the side of the beaker
+	var/obj/item/stock_parts/power_store/cell/attached_cell = null
+	/// Have we added wiring to the cell?
+	var/cell_wired = FALSE
 	/// Visual y-offset for the assembly on our lid
 	var/assembly_pixel_y = 0
 
@@ -41,6 +45,7 @@
 
 /obj/item/reagent_containers/cup/Destroy(force)
 	QDEL_NULL(lid_assembly)
+	QDEL_NULL(attached_cell)
 	return ..()
 
 /obj/item/reagent_containers/cup/examine(mob/user)
@@ -164,8 +169,48 @@
 			return ITEM_INTERACT_BLOCKING
 
 		if (attach_assembly(tool, user))
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
+
+	if (lid_assembly && istype(tool, /obj/item/stock_parts/power_store/cell))
+		if (attached_cell)
+			to_chat(user, span_warning("[src] already has \a [attached_cell] attached to it!"))
+			return ITEM_INTERACT_BLOCKING
+
+		if (isnull(locate(/obj/item/assembly/igniter) in lid_assembly))
+			to_chat(user, span_warning("[lid_assembly] doesn't have an igniter to connect [src] to!"))
+			return ITEM_INTERACT_BLOCKING
+
+		if (!user.transferItemToLoc(tool, src))
+			to_chat(user, span_warning("[tool] is stuck to your hand!"))
+			return ITEM_INTERACT_BLOCKING
+
+		to_chat(user, span_notice("You attach [tool] underneath [src]'s lid."))
+		add_fingerprint(user)
+		log_bomber(user, "attached [tool.name] to ", src)
+		attached_cell = tool
+		attached_cell.pixel_y = 0
+		attached_cell.pixel_z = -4
+		update_appearance()
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+		return ITEM_INTERACT_SUCCESS
+
+	if (attached_cell && istype(tool, /obj/item/stack/cable_coil))
+		if (cell_wired)
+			to_chat(user, span_warning("[attached_cell] is already wired to [lid_assembly]!"))
+			return ITEM_INTERACT_BLOCKING
+
+		var/obj/item/stack/cable_coil/cable = tool
+		if (!cable.use(5))
+			to_chat(user, span_warning("You need at least 5 cable pieces to wire [attached_cell]!"))
+			return ITEM_INTERACT_BLOCKING
+
+		to_chat(user, span_notice("You wire [attached_cell] to [lid_assembly]."))
+		add_fingerprint(user)
+		cell_wired = TRUE
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
 	if(!is_open_container())
 		return NONE
@@ -203,9 +248,12 @@
 	. = ..()
 	if (has_lid)
 		. += mutable_appearance(icon, "[icon_state]_lid")
-
 	if (lid_assembly)
 		. += lid_assembly
+	if (attached_cell)
+		. += attached_cell
+		if (cell_wired)
+			. += mutable_appearance('icons/obj/machines/cell_charger.dmi', "ccharger-[attached_cell.connector_type]-on")
 
 // For player convinience, assume that the lids are rubber and can be pierced with a syringe
 /obj/item/reagent_containers/cup/is_refillable()
@@ -227,23 +275,46 @@
 	if (!can_lid)
 		return NONE
 
-	if (lid_assembly)
-		var/obj/item/assembly_holder/our_assembly = lid_assembly
+	if (cell_wired)
+		balloon_alert(user, "cut the wiring first!")
+		return CLICK_ACTION_BLOCKING
+
+	if (attached_cell)
+		var/obj/item/our_cell = attached_cell
 		// Exited() automatically clears it
+		our_cell.forceMove(drop_location())
+		user.put_in_hands(our_cell)
+		balloon_alert(user, "cell detached")
+		update_appearance()
+		return CLICK_ACTION_SUCCESS
+
+	if (lid_assembly)
+		var/obj/item/our_assembly = lid_assembly
 		our_assembly.forceMove(drop_location())
 		user.put_in_hands(our_assembly)
-		to_chat(user, "You detach [our_assembly] from [src].")
+		balloon_alert(user, "assembly detached")
 		update_appearance()
 		return CLICK_ACTION_SUCCESS
 
 	has_lid = !has_lid
 	update_appearance()
-	balloon_alert(user, "lid [has_lid ? "sealed" : "unsealed"]!")
+	balloon_alert(user, "lid [has_lid ? "sealed" : "unsealed"]")
 	if (has_lid)
 		add_container_flags(SEALED_CONTAINER)
 	else
 		reset_container_flags()
 	return CLICK_ACTION_SUCCESS
+
+/obj/item/reagent_containers/cup/wirecutter_act(mob/living/user, obj/item/tool)
+	if (user.combat_mode || !cell_wired)
+		return NONE
+
+	new /obj/item/stack/cable_coil(drop_location(), 5)
+	cell_wired = FALSE
+	update_appearance()
+	balloon_alert(user, "wiring cut")
+	tool.play_tool_sound(src, 50)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/cup/proc/attach_assembly(obj/item/assembly_holder/assembly, mob/living/user)
 	if (!user.transferItemToLoc(assembly, src))
@@ -254,6 +325,7 @@
 	add_fingerprint(user)
 	lid_assembly = assembly
 	lid_assembly.master = src
+	lid_assembly.pixel_y = 0
 	lid_assembly.pixel_z = assembly_pixel_y
 	lid_assembly.on_attach()
 	RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, PROC_REF(on_igniter_activate))
@@ -263,14 +335,28 @@
 
 /obj/item/reagent_containers/cup/Exited(atom/movable/gone, direction)
 	. = ..()
-	if (gone != lid_assembly)
-		return
-	lid_assembly = null
-	UnregisterSignal(src, COMSIG_IGNITER_ACTIVATE)
-	update_appearance()
+	if (gone == lid_assembly)
+		lid_assembly = null
+		UnregisterSignal(src, COMSIG_IGNITER_ACTIVATE)
+		update_appearance()
+	else if (gone == attached_cell)
+		attached_cell = null
+		cell_wired = FALSE
+		update_appearance()
 
 /obj/item/reagent_containers/cup/proc/on_igniter_activate(datum/source, obj/item/assembly/igniter/igniter)
 	SIGNAL_HANDLER
+	// We've got an attached cell wired up, so we'll try to spend all of its current first
+	if (attached_cell && cell_wired)
+		var/power_spent = attached_cell.use(attached_cell.charge())
+		// Power cell was rigged
+		if (QDELETED(src))
+			return
+
+		// We'll be nerfing plasma and welding fuel as they're very easy to get and make for boring bombs
+		if (power_spent > 0 && (reagents.spark_act(power_spent, SPARK_ACT_ENCLOSED | SPARK_ACT_WEAKEN_COMMON) & SPARK_ACT_DESTRUCTIVE))
+			return
+
 	// Igniters heat, condensers chill
 	var/igniter_temp = igniter.get_temperature()
 	if (igniter_temp > 0)

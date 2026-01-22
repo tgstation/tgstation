@@ -222,7 +222,7 @@
 /datum/reagent/smoke_powder/on_spark_act(power_charge, spark_flags)
 	// Can't really make a cloud of smoke if we're inside of an enclosed container
 	// ...unless we're a mob, in which case this is pretty cursed
-	if (enclosed && !ismob(holder.my_atom))
+	if ((spark_flags & SPARK_ACT_ENCLOSED) && !ismob(holder.my_atom))
 		return
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/fluid_spread/smoke/chem/smoke_system = new()
