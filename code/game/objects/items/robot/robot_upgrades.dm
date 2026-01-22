@@ -379,14 +379,8 @@
 		deactivate_sr()
 
 /obj/item/borg/upgrade/hypospray
-	name = "medical cyborg hypospray advanced synthesiser"
-	desc = "An upgrade to the Medical model cyborg's hypospray, allowing it \
-		to produce more advanced and complex medical reagents."
-	icon_state = "module_medical"
+	abstract_type = /obj/item/borg/upgrade/hypospray
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/medical)
-	model_flags = BORG_MODEL_MEDICAL
-	var/list/additional_reagents = list()
 
 /obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
@@ -399,13 +393,28 @@
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/reagent_containers/borghypo/medical/hypo in borg.model.modules)
-		hypo.remove_hypo_upgrade()
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
+		if(hypo.upgraded)
+			hypo.remove_hypo_upgrade()
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.emag_modules)
+		if(hypo.upgraded)
+			hypo.remove_hypo_upgrade()
 
-/obj/item/borg/upgrade/hypospray/expanded
+/obj/item/borg/upgrade/hypospray/medical
 	name = "medical cyborg expanded hypospray"
 	desc = "An upgrade to the Medical model's hypospray, allowing it \
 		to treat a wider range of conditions and problems."
+	icon_state = "module_medical"
+	model_type = list(/obj/item/robot_model/medical)
+	model_flags = BORG_MODEL_MEDICAL
+
+/obj/item/borg/upgrade/hypospray/service
+	name = "service cyborg expanded shaker"
+	desc = "An upgrade to the Service model's shaker, allowing it \
+		to prepare a wider variety of food and drink recipes."
+	icon_state = "module_service"
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
 
 /obj/item/borg/upgrade/piercing_hypospray
 	name = "cyborg piercing hypospray"

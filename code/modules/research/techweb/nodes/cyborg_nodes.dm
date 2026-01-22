@@ -55,6 +55,7 @@
 	design_ids = list(
 		"borg_upgrade_rolling_table",
 		"borg_upgrade_condiment_synthesizer",
+		"borg_upgrade_expandedsynthesiser_service",
 		"borg_upgrade_silicon_knife",
 		"borg_upgrade_service_apparatus",
 		"borg_upgrade_drink_apparatus",
@@ -86,7 +87,7 @@
 		"borg_upgrade_pinpointer",
 		"borg_upgrade_beakerapp",
 		"borg_upgrade_defibrillator",
-		"borg_upgrade_expandedsynthesiser",
+		"borg_upgrade_expandedsynthesiser_medical",
 		"borg_upgrade_piercinghypospray",
 		"borg_upgrade_surgicalprocessor",
 		"borg_upgrade_surgicalomnitool",

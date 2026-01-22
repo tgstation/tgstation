@@ -175,6 +175,24 @@
 					cyborg.cell.use(charge_cost)
 					stored_reagents.add_reagent(reagent_to_regen, 5, reagtemp = dispensed_temperature, no_react = TRUE)
 
+/// Upgrade our hypospray to hold even more new reagents!
+/obj/item/reagent_containers/borghypo/proc/upgrade_hypo()
+	upgraded = TRUE
+	// Expand the holder's capacity to allow for our new suite of reagents
+	stored_reagents.maximum_volume += (length(expanded_reagent_types) * (max_volume_per_reagent + 1))
+	for(var/reagent in expanded_reagent_types)
+		var/datum/reagent/reagent_to_add = reagent
+		add_new_reagent(reagent_to_add)
+
+/// Remove the reagents we got from the expansion, back to our base reagents
+/obj/item/reagent_containers/borghypo/proc/remove_hypo_upgrade()
+	upgraded = FALSE
+	for(var/reagent in expanded_reagent_types)
+		var/datum/reagent/reagent_to_remove = reagent
+		stored_reagents.del_reagent(reagent_to_remove)
+	// Reduce the holder's capacity because we no longer need the room for those reagents
+	stored_reagents.maximum_volume -= (length(expanded_reagent_types) * (max_volume_per_reagent + 1))
+
 /obj/item/reagent_containers/borghypo/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!iscarbon(interacting_with))
 		return NONE
@@ -259,24 +277,6 @@
 /obj/item/reagent_containers/borghypo/medical
 	default_reagent_types = BASE_MEDICAL_REAGENTS
 	expanded_reagent_types = EXPANDED_MEDICAL_REAGENTS
-
-/// Upgrade our hypospray to hold even more new reagents!
-/obj/item/reagent_containers/borghypo/medical/proc/upgrade_hypo()
-	upgraded = TRUE
-	// Expand the holder's capacity to allow for our new suite of reagents
-	stored_reagents.maximum_volume += (length(expanded_reagent_types) * (max_volume_per_reagent + 1))
-	for(var/reagent in expanded_reagent_types)
-		var/datum/reagent/reagent_to_add = reagent
-		add_new_reagent(reagent_to_add)
-
-/// Remove the reagents we got from the expansion, back to our base reagents
-/obj/item/reagent_containers/borghypo/medical/proc/remove_hypo_upgrade()
-	upgraded = FALSE
-	for(var/reagent in expanded_reagent_types)
-		var/datum/reagent/reagent_to_remove = reagent
-		stored_reagents.del_reagent(reagent_to_remove)
-	// Reduce the holder's capacity because we no longer need the room for those reagents
-	stored_reagents.maximum_volume -= (length(expanded_reagent_types) * (max_volume_per_reagent + 1))
 
 /obj/item/reagent_containers/borghypo/medical/hacked
 	icon_state = "borghypo_s"

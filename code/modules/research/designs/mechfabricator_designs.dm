@@ -1349,11 +1349,11 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
 
-/datum/design/borg_upgrade_expandedsynthesiser
+/datum/design/borg_upgrade_expandedsynthesiser_medical
 	name = "Expanded Hypospray Synthesiser"
-	id = "borg_upgrade_expandedsynthesiser"
+	id = "borg_upgrade_expandedsynthesiser_medical"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/hypospray/expanded
+	build_path = /obj/item/borg/upgrade/hypospray/medical
 	materials = list(
 		/datum/material/iron =SHEET_MATERIAL_AMOUNT*7.5,
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT*7.5,
@@ -1607,6 +1607,22 @@
 		/datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT,
 	)
 	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+
+/datum/design/borg_upgrade_expandedsynthesiser_service
+	name = "Expanded Shaker Synthesiser"
+	id = "borg_upgrade_expandedsynthesiser_service"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/hypospray/service
+	materials = list(
+		/datum/material/iron =SHEET_MATERIAL_AMOUNT*7.5,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT*7.5,
+		/datum/material/plasma =SHEET_MATERIAL_AMOUNT*4,
+		/datum/material/uranium =SHEET_MATERIAL_AMOUNT*4,
+	)
+	construction_time = 8 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
 	)
