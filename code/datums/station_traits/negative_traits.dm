@@ -755,11 +755,11 @@
 	trait_to_give = STATION_TRAIT_SPIKED_DRINKS
 
 /datum/station_trait/structural_weakness
-	name = "Structural weaknesses"
+	name = "Structural Weaknesses"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 5
 	show_in_report = TRUE
-	report_message = "A post-mortem breakdown of materials used has informed us that the station may have been built with a number of structural weaknesses. Be on the look out for them, and try not to let anything explode."
+	report_message = "Our station subdivision informed us that this station may have been built with a number of structural weaknesses due to defective construction materials. Be on the lookout for them and try not to let anything explode."
 	trait_to_give = STATION_TRAIT_SPAWN_WEAKPOINTS
 
 #undef GLOW_NEBULA
