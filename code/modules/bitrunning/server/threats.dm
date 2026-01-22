@@ -114,7 +114,7 @@
 	new_mob.PossessByPlayer(ghost.key)
 
 	if(ghost_mind)
-		new_mob.AddComponent(/datum/component/temporary_body, ghost_mind, TRUE)
+		new_mob.AddComponent(/datum/component/temporary_body, ghost_mind, return_on_death = TRUE)
 
 	var/datum/mind/antag_mind = new_mob.mind
 	antag_mind.add_antag_datum(chosen_role)
