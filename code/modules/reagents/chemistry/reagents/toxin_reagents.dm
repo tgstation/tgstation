@@ -158,7 +158,7 @@
 		return NONE
 
 	// Plasma explosions become stronger with higher current, and don't care about if they're enclosed or not
-	var/power_modifier = max(0, round(power_charge / STANDARD_CELL_CHARGE * LIQUID_PLASMA_CHARGE_COEFF, 1) - 1)
+	var/power_modifier = max(0, round(sqrt(power_charge / STANDARD_CELL_CHARGE) * LIQUID_PLASMA_CHARGE_COEFF, 1) - 1)
 	var/strengthdiv = 5
 	if (spark_flags & SPARK_ACT_WEAKEN_COMMON)
 		strengthdiv *= 3 // Stronger than waterpot, weaker than methbombs
