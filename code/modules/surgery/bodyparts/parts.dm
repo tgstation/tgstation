@@ -233,6 +233,13 @@
 		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
 		hand_screen_object?.update_appearance()
 
+/obj/item/bodypart/arm/animate_atom_living(mob/living/owner)
+	var/mob/living/basic/slapper = ..()
+	slapper.attack_vis_effect = ATTACK_EFFECT_PUNCH
+	slapper.attack_verb_continuous = "punches"
+	slapper.attack_verb_simple = "punch"
+	return slapper
+
 /obj/item/bodypart/arm/left
 	name = "left arm"
 	desc = "Did you know that the word 'sinister' stems originally from the \
@@ -457,6 +464,13 @@
 				to_chat(owner, span_userdanger("You lose control of your [plaintext_zone]!"))
 	else if(!bodypart_disabled)
 		owner.set_usable_legs(owner.usable_legs + 1)
+
+/obj/item/bodypart/leg/animate_atom_living(mob/living/owner)
+	var/mob/living/basic/kicker = ..()
+	kicker.attack_vis_effect = ATTACK_EFFECT_KICK
+	kicker.attack_verb_continuous = "kicks"
+	kicker.attack_verb_simple = "kick"
+	return kicker
 
 /obj/item/bodypart/leg/left
 	name = "left leg"
