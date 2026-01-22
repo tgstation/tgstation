@@ -7,11 +7,13 @@
 	// Generates the spritesheet in /tmp, while also ensuring that ALL icons output to the same size (will error otherwise)
 	// Left here in case caching changes somehow and we want a fresh generator
 	var/test_icon_filepath = "tmp/antag_icon_screenshot_test.dmi"
-	var/list/headless_result = rustg_iconforge_generate_headless(test_icon_filepath, json_encode(antagonists.entries_json), TRUE)
+	var/list/headless_result = rustg_iconforge_generate_headless(test_icon_filepath, antagonists.entries_json, TRUE)
 	if(!istype(headless_result))
 		TEST_FAIL("Could not generate antagonist icons using rustg_iconforge_generate_headless! The output format was invalid (JSON did not decode to a list). Got: [headless_result]")
 	if(!length(headless_result))
 		TEST_FAIL("Could not generate antagonist icons using rustg_iconforge_generate_headless! The output list was empty. Got: [json_encode(headless_result)]")
+	if(!isnull(headless_result["error"]))
+		TEST_FAIL("Could not generate antagonist icons using rustg_iconforge_generate_headless! There was an error: [headless_result["error"]]")
 	if(headless_result["file_path"] != test_icon_filepath)
 		TEST_FAIL("Could not generate antagonist icons using rustg_iconforge_generate_headless! The output file_path differed from the input. Got: [json_encode(headless_result)]")
 	if(headless_result["width"] != ANTAGONIST_PREVIEW_ICON_SIZE || headless_result["height"] != ANTAGONIST_PREVIEW_ICON_SIZE)

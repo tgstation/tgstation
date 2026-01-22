@@ -203,3 +203,8 @@
 #ifdef MAP_TEST
 #warn Compiling in MAP_TEST mode. Certain game mechanics will be disabled.
 #endif
+
+/// Disable to use builtin DM-based generation.
+/// IconForge is 250x times faster but requires storing the icons in tmp/ and may result in higher asset transport.
+/// Note that the builtin GAGS editor still uses the 'legacy' generation to allow for debugging.
+#define USE_RUSTG_ICONFORGE_GAGS
