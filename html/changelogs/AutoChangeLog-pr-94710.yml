@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Pressure damage scales over time. It starts at 2 per second (pre-buff value) but increases by 0.5 damage every 1.2 minutes you are exposed, up to 5 per second (requiring 7.2 full minutes of exposure)."
