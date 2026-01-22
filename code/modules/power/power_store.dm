@@ -281,7 +281,7 @@
 	if(discharged_energy < STANDARD_BATTERY_CHARGE)
 		return
 	user.dropItemToGround(src)
-	user.dust(just_ash = TRUE)
+	user.dust(just_ash = TRUE, drop_items = TRUE)
 	playsound(src, 'sound/effects/magic/lightningshock.ogg', 50, TRUE, 10)
 	tesla_zap(source = src, zap_range = 10, power = discharged_energy)
 
