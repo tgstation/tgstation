@@ -21,8 +21,8 @@ import {
 } from 'tgui-core/keycodes';
 import type { BooleanLike } from 'tgui-core/react';
 import { resolveAsset } from '../assets';
-import { useBackend } from './../backend';
-import { Window } from './../layouts';
+import { useBackend } from '../backend';
+import { Window } from '../layouts';
 import { logger } from '../logging';
 
 type SpawnSearchData = {
