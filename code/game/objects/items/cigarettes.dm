@@ -426,7 +426,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	damtype = BURN
 	force = 4
 
-	if(reagents?.spark_act(0, FALSE, banned_reagents = /datum/reagent/flash_powder) & SPARK_ACT_DESTRUCTIVE)
+	if(reagents?.spark_act(0, NONE, banned_reagents = /datum/reagent/flash_powder) & SPARK_ACT_DESTRUCTIVE)
 		usr?.log_message("lit a rigged cigarette", LOG_VICTIM)
 		qdel(src)
 		return
