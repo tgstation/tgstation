@@ -2,7 +2,9 @@ import { mock } from 'bun:test';
 
 function Window({ children, ...props }: any) {
   return (
-    <div style={{ height: props.height, width: props.width }}>{children}</div>
+    <div style={{ height: `${props.height}px`, width: `${props.width}px` }}>
+      {children}
+    </div>
   );
 }
 

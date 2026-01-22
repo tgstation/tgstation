@@ -31,8 +31,3 @@ const ByondMock = {
 mock.module('globalThis', () => ({
   Byond: ByondMock,
 }));
-
-// Also assign to global window object
-if (typeof window !== 'undefined') {
-  (window as any).Byond = ByondMock;
-}
