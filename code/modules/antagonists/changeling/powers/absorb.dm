@@ -281,6 +281,7 @@
 
 	if(!length(freeloaders))
 		stack_trace("Tried to eject from hivemind with no hivemind members!")
+		qdel(src)
 		return FALSE
 
 	var/chosen = tgui_input_list(owner, "Choose a member to eject from the hivemind.", "Eject Hivemind Member", freeloaders)
