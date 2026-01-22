@@ -309,6 +309,7 @@
 /datum/component/butchering/proc/create_replacement_limb(obj/item/bodypart/target, drop_loc)
 	var/drop_type = target.butcher_replacement
 	var/obj/item/bodypart/replacement = new drop_type(drop_loc)
+	replacement.bodyshape = target.bodyshape
 	replacement.set_initial_damage(target.brute_dam, target.burn_dam)
 	if (IS_ORGANIC_LIMB(replacement) && target.owner)
 		replacement.blood_dna_info = target.owner.get_blood_dna_list()

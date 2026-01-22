@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Thermal vision mutation: Active duration 10s -> 30s  (with power, 30s->45s)"
+  - balance: "Thermal vision mutation: Cooldown 25s -> 60s (with energy, 60s -> 30s)"
+  - balance: "Thermal vision mutation: Eye damage 10 -> 7.5 (with sync, 7.5 -> 3.75)"
+  - balance: "Thermal vision mutation: Eye damage is now affected by power chromosome (with power, 7.5 -> 11.25)"

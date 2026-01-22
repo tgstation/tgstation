@@ -73,6 +73,10 @@
 	var/obj/item/bodypart/head/psyker/psyker_head = new()
 	if(!psyker_head.replace_limb(src))
 		return FALSE
+	psyker_head.species_id = dna?.species?.id
+	var/list/our_drops = psyker_head.get_butcher_drops(force = TRUE)
+	if (length(our_drops))
+		psyker_head.butcher_drops = string_list(our_drops)
 	qdel(old_head)
 	var/obj/item/organ/brain/psyker/psyker_brain = new() /// turns out if you make a flashing monochromatic outline against black background that refreshes on inconsistant intervals, it hurts peoples eyes. Who'da thunk.
 	if(is_blinding)

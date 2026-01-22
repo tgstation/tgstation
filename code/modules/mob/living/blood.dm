@@ -30,6 +30,10 @@
 
 	var/amount = blood_volume
 
+	// For simple multipliers, like a blood worm in a mob.
+	for (var/source in blood_volume_modifiers)
+		amount *= blood_volume_modifiers[source]
+
 	// Handled here instead of in the saline reagent datum, because this way the modification order is consistent.
 	// E.g. if you have an effect that modifies blood volume over the dilution cap, then saline should do nothing.
 	var/datum/reagent/medicine/salglu_solution/saline = reagents?.has_reagent(/datum/reagent/medicine/salglu_solution)
@@ -48,15 +52,15 @@
 	if (!CAN_HAVE_BLOOD(src) && amount != 0)
 		return cached_blood_volume
 
-	if (amount == cached_blood_volume)
-		return cached_blood_volume
+	// Don't return early even if "amount == cached_blood_volume", because we don't know if minimum or maximum would change it anyway.
+	// Putting this here because I made that mistake and it led to a bug.
 
 	blood_volume = clamp(amount, minimum, maximum)
 
 	var/updated_blood_volume = get_blood_volume()
 
 	if (cached_blood_volume != updated_blood_volume)
-		living_flags |= QUEUE_BLOOD_UPDATE
+		QUEUE_BLOOD_UPDATE(src)
 
 	return updated_blood_volume
 
@@ -85,28 +89,52 @@
 	var/updated_blood_volume = set_blood_volume(cached_blood_volume + amount, minimum = minimum, maximum = maximum, cached_blood_volume = cached_blood_volume)
 	return updated_blood_volume - cached_blood_volume
 
-/// Updates effects that rely on blood volume, like blood HUDs.
+/// Updates effects that rely on blood volume or status, like blood HUDs.
 /mob/living/proc/update_blood_effects()
-	living_flags &= ~QUEUE_BLOOD_UPDATE
+	living_flags &= ~BLOOD_UPDATE_QUEUED
+	blood_hud_set_status()
 
 /// Updates effects that rely on whether the mob can have blood.
 /mob/living/proc/update_blood_status()
 	var/had_blood = CAN_HAVE_BLOOD(src)
+	var/has_blood = can_have_blood()
 
-	living_flags = can_have_blood() ? (living_flags | LIVING_CAN_HAVE_BLOOD) : (living_flags & ~LIVING_CAN_HAVE_BLOOD)
-
-	var/has_blood = CAN_HAVE_BLOOD(src)
-
+	// Must not return early on first init for mobs that can have blood. (otherwise they will miss being added to the blood hud)
 	if (had_blood == has_blood)
 		return
 
 	var/old_blood_volume = get_blood_volume()
 
+	// Must be sent before living flags are updated.
+	SEND_SIGNAL(src, COMSIG_LIVING_PRE_UPDATE_BLOOD_STATUS, had_blood, has_blood, old_blood_volume)
+
+	living_flags = has_blood ? (living_flags | LIVING_CAN_HAVE_BLOOD) : (living_flags & ~LIVING_CAN_HAVE_BLOOD)
+
 	set_blood_volume(has_blood ? default_blood_volume : 0)
 
 	var/new_blood_volume = get_blood_volume()
 
+	// Must be sent after living flags are updated.
 	SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_BLOOD_STATUS, had_blood, has_blood, old_blood_volume, new_blood_volume)
+
+	var/datum/atom_hud/data/human/blood/blood_hud = GLOB.huds[DATA_HUD_BLOOD]
+
+	if (has_blood)
+		blood_hud.add_atom_to_hud(src)
+	else
+		blood_hud.remove_atom_from_hud(src)
+
+	update_blood_effects()
+
+/// Sets the blood volume multiplier for the given source to the given multiplier value.
+/mob/living/proc/set_blood_volume_modifier(source, multiplier)
+	LAZYSET(blood_volume_modifiers, source, multiplier)
+	QUEUE_BLOOD_UPDATE(src)
+
+/// Removes the blood volume multiplier for the given source.
+/mob/living/proc/remove_blood_volume_modifier(source)
+	LAZYREMOVE(blood_volume_modifiers, source)
+	QUEUE_BLOOD_UPDATE(src)
 
 /// A one-time coagulating effect of the mob's bloodiest cut/stab
 /// Returns TRUE if a wound was affected, FALSE if no wound was found
@@ -382,8 +410,20 @@
 		adjust_blood_volume(-amount)
 		return amount
 
+	var/cached_target_blood_volume = target.get_blood_volume()
+
 	// And, obviously, cap it to how much blood the target can take if they're living.
 	amount = target.adjust_blood_volume(amount, maximum = BLOOD_VOLUME_MAX_LETHAL)
+
+	// Synthetic blood handling, used for capping blood worm growth from monkeys, blood bags and basic mobs. This forces blood worms to kill people to reach adulthood.
+	if (!IS_BLOOD_ALWAYS_SYNTHETIC(target))
+		var/added_synth_volume = amount * get_blood_synth_content()
+		var/existing_synth_volume = cached_target_blood_volume * target.get_blood_synth_content()
+
+		if (added_synth_volume != 0 || existing_synth_volume != 0)
+			// A simple weighted average that simplifies down to "total synth volume / total blood volume" i.e. "how much of their blood is synthetic"
+			target.AddComponent(/datum/component/synth_blood, (added_synth_volume + existing_synth_volume) / (amount + cached_target_blood_volume))
+
 	adjust_blood_volume(-amount)
 	return amount
 
@@ -417,6 +457,10 @@
 
 		if(LAZYLEN(disease_resistances))
 			blood_data["resistances"] = disease_resistances.Copy()
+
+	var/synth_content = get_blood_synth_content()
+	if (synth_content > 0)
+		blood_data[BLOOD_DATA_SYNTH_CONTENT] = synth_content
 
 	// DNA, mind, facitons, etc don't get stored in stuff like oil
 	if (!(blood_type.blood_flags & BLOOD_ADD_DNA))
@@ -774,6 +818,15 @@
 		blood_alcohol_content = round(inebriation.drunk_value * DRUNK_POWER_TO_BLOOD_ALCOHOL, 0.01)
 
 	return blood_alcohol_content
+
+/// Returns on a 0-1 scale how synthetic this mobs blood is. Used for blood worms to cap growth from easily accessible sources of blood.
+/mob/living/proc/get_blood_synth_content()
+	if (IS_BLOOD_ALWAYS_SYNTHETIC(src))
+		return 1 // Basic mobs, simple mobs, born monkeys and spawned mobs have fully synthetic blood.
+
+	// Handles accounting for synthetic blood injected into mobs that don't normally have it.
+	var/datum/component/synth_blood/synth_comp = GetComponent(/datum/component/synth_blood)
+	return synth_comp?.synth_content
 
 #undef BLOOD_DRIP_RATE_MOD
 #undef DRUNK_POWER_TO_BLOOD_ALCOHOL

@@ -244,3 +244,103 @@
 	var/obj/item/clothing/under/jumpsuit = test_mob.get_item_by_slot(ITEM_SLOT_ICLOTHING)
 	jumpsuit.adjust_to_alt()
 	TEST_ASSERT(test_mob.is_location_accessible(BODY_ZONE_CHEST), "Chest should be accessible after rolling jumpsuit down")
+
+/// Tests surgeries which just modify basic surgical states
+/datum/unit_test/state_surgeries
+
+/datum/unit_test/state_surgeries/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/surgeon = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/scalpel/scalpel = allocate(/obj/item/scalpel)
+	var/obj/item/retractor/retractor = allocate(/obj/item/retractor)
+	var/obj/item/circular_saw/saw = allocate(/obj/item/circular_saw)
+	var/obj/item/hemostat/hemostat = allocate(/obj/item/hemostat)
+	var/obj/item/cautery/cautery = allocate(/obj/item/cautery)
+	var/obj/item/bodypart/chest/chest = patient.get_bodypart(BODY_ZONE_CHEST)
+
+	var/datum/surgery_operation/limb/incise_skin/isurgery = GLOB.operations.operations_by_typepath[__IMPLIED_TYPE__]
+	UNLINT(isurgery.success(chest, surgeon, scalpel, list()))
+
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_SKIN_CUT), "Making an incision did not apply the skin cut surgical state")
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_VESSELS_UNCLAMPED), "Making an incision did not apply the vessels unclamped surgical state")
+
+	var/datum/surgery_operation/limb/retract_skin/rsurgery = GLOB.operations.operations_by_typepath[__IMPLIED_TYPE__]
+	UNLINT(rsurgery.success(chest, surgeon, retractor, list()))
+
+	TEST_ASSERT(!LIMB_HAS_SURGERY_STATE(chest, SURGERY_SKIN_CUT), "Retracting skin did not remove the skin cut surgical state")
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_SKIN_OPEN), "Retracting skin did not apply the skin open surgical state")
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_VESSELS_UNCLAMPED), "Retracting skin removed the vessels unclamped surgical state unexpectedly")
+
+	var/datum/surgery_operation/limb/clamp_bleeders/csurgery = GLOB.operations.operations_by_typepath[__IMPLIED_TYPE__]
+	UNLINT(csurgery.success(chest, surgeon, hemostat, list()))
+
+	TEST_ASSERT(!LIMB_HAS_SURGERY_STATE(chest, SURGERY_VESSELS_UNCLAMPED), "Clamping bleeders did not remove the vessels unclamped surgical state")
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_VESSELS_CLAMPED), "Clamping bleeders did not apply the vessels clamped surgical state")
+
+	var/datum/surgery_operation/limb/saw_bones/ssurgery = GLOB.operations.operations_by_typepath[__IMPLIED_TYPE__]
+	UNLINT(ssurgery.success(chest, surgeon, saw, list()))
+
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_BONE_SAWED), "Sawing bones did not apply the bone sawed surgical state")
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_VESSELS_CLAMPED), "Sawing bones removed the vessels clamped surgical state unexpectedly")
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_SKIN_OPEN), "Sawing bones removed the skin open surgical state unexpectedly")
+
+	var/datum/surgery_operation/limb/incise_organs/osurgery = GLOB.operations.operations_by_typepath[__IMPLIED_TYPE__]
+	UNLINT(osurgery.success(chest, surgeon, scalpel, list()))
+
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_ORGANS_CUT), "Incising organs did not apply the organs incision surgical state")
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_BONE_SAWED), "Incising organs removed the bone sawed surgical state unexpectedly")
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_VESSELS_CLAMPED), "Incising organs removed the vessels clamped surgical state unexpectedly")
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_SKIN_OPEN), "Incising organs removed the skin open surgical state unexpectedly")
+
+	var/datum/surgery_operation/limb/close_skin/msurgery = GLOB.operations.operations_by_typepath[__IMPLIED_TYPE__]
+	UNLINT(msurgery.success(chest, surgeon, cautery, list()))
+
+	TEST_ASSERT(!LIMB_HAS_ANY_SURGERY_STATE(chest, ALL), "Closing surgery did not remove all surgical states applied during surgery")
+
+/// Checks wounds apply surgical state and remove surgical state when healed
+/datum/unit_test/wound_state
+
+/datum/unit_test/wound_state/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/bodypart/chest/chest = patient.get_bodypart(BODY_ZONE_CHEST)
+
+	var/datum/wound/slash/flesh/severe/wound = new()
+	wound.surgery_states = SURGERY_SKIN_CUT | SURGERY_VESSELS_UNCLAMPED
+	wound.apply_wound(chest)
+
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_SKIN_CUT|SURGERY_VESSELS_UNCLAMPED), "Wound did not apply correct surgery states to limb")
+
+	qdel(wound)
+
+	TEST_ASSERT(!LIMB_HAS_ANY_SURGERY_STATE(chest, SURGERY_SKIN_CUT|SURGERY_VESSELS_UNCLAMPED), "Wound did not remove surgery states from limb upon healing")
+
+/// Checks surgical states applied by surgery while wounded don't get removed when the wound heals
+/datum/unit_test/wound_state_with_surgery
+
+/datum/unit_test/wound_state_with_surgery/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/bodypart/chest/chest = patient.get_bodypart(BODY_ZONE_CHEST)
+
+	var/datum/wound/slash/flesh/severe/wound = new()
+	wound.surgery_states = SURGERY_SKIN_CUT | SURGERY_VESSELS_UNCLAMPED | SURGERY_BONE_DRILLED
+	wound.apply_wound(chest)
+
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_SKIN_CUT|SURGERY_VESSELS_UNCLAMPED|SURGERY_BONE_DRILLED), "Wound did not apply correct surgery states to limb")
+
+	var/datum/surgery_operation/limb/retract_skin/surgery = GLOB.operations.operations_by_typepath[__IMPLIED_TYPE__]
+	var/mob/living/carbon/human/surgeon = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/retractor/retractor = allocate(/obj/item/retractor)
+
+	UNLINT(surgery.success(chest, surgeon, retractor, list()))
+
+	TEST_ASSERT(!LIMB_HAS_SURGERY_STATE(chest, SURGERY_SKIN_CUT), "Surgical state for skin cut was not removed after surgery opened the cut")
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_SKIN_OPEN), "Surgical state for skin open was not applied after surgery opened the cut")
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_VESSELS_UNCLAMPED), "Surgical state for unclamped vessels was incorrectly removed by surgery that only opened the skin")
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_BONE_DRILLED), "Surgical state for bone drilled was incorrectly removed by surgery that only opened the skin")
+
+	qdel(wound)
+
+	TEST_ASSERT(!LIMB_HAS_ANY_SURGERY_STATE(chest, SURGERY_SKIN_CUT), "Surgical state for skin cut was somehow re-applied upon wound healing")
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_SKIN_OPEN), "Surgical state for skin open was incorrectly removed upon wound healing")
+	TEST_ASSERT(LIMB_HAS_SURGERY_STATE(chest, SURGERY_VESSELS_UNCLAMPED), "Surgical state for unclamped vessels was incorrectly removed upon wound healing")
+	TEST_ASSERT(!LIMB_HAS_SURGERY_STATE(chest, SURGERY_BONE_DRILLED), "Surgical state for bone drilled was not correctly removed upon wound healing")

@@ -630,18 +630,19 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return
 
 /// Check if the heretic is strong enough to rust this turf, and if so, rusts the turf with an added visual effect.
-/turf/rust_heretic_act(rust_strength = 1)
-	if((turf_flags & NO_RUST) || (rust_strength < rust_resistance))
-		return
-	rust_turf()
-
-/// Override this to change behaviour when being rusted by a heretic
-/turf/proc/rust_turf()
-	if(HAS_TRAIT(src, TRAIT_RUSTY))
+/turf/rust_heretic_act(rust_strength = RUST_RESISTANCE_BASIC)
+	if((rust_strength < rust_resistance))
 		return
 
-	AddElement(/datum/element/rust/heretic)
-	new /obj/effect/glowing_rune(src)
+	if (rust_turf(magic = TRUE))
+		new /obj/effect/glowing_rune(src)
+
+/// Override this to change behaviour when being rusted
+/turf/proc/rust_turf(magic = FALSE)
+	if ((turf_flags & NO_RUST) || HAS_TRAIT(src, TRAIT_RUSTIMMUNE) || HAS_TRAIT(src, TRAIT_RUSTY))
+		return FALSE
+	AddElement(magic ? /datum/element/rust/heretic : /datum/element/rust)
+	return TRUE
 
 /turf/handle_fall(mob/faller)
 	if(has_gravity(src))

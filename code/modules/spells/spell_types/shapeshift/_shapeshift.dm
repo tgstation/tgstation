@@ -160,7 +160,9 @@
 	// Make sure it's castable even in their new form.
 	pre_shift_requirements = spell_requirements
 	spell_requirements &= ~(SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_WIZARD_GARB)
-	ADD_TRAIT(new_shape, TRAIT_DONT_WRITE_MEMORY, SHAPESHIFT_TRAIT) // If you shapeshift into a pet subtype we don't want to update Poly's deathcount or something when you die
+
+	// If you shapeshift into a pet subtype we don't want to update Poly's deathcount or something when you die
+	new_shape.add_traits(list(TRAIT_DONT_WRITE_MEMORY, TRAIT_SHAPESHIFTED), SHAPESHIFT_TRAIT)
 
 	// Make sure that if you shapechanged into a bot, the AI can't just turn you off.
 	var/mob/living/simple_animal/bot/polymorph_bot = new_shape

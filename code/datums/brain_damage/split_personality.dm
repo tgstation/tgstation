@@ -21,7 +21,7 @@
 
 /datum/brain_trauma/severe/split_personality/on_gain()
 	var/mob/living/brain_owner = owner
-	if(brain_owner.stat == DEAD || !GET_CLIENT(brain_owner) || istype(get_area(brain_owner), /area/deathmatch)) //No use assigning people to a corpse or braindead
+	if(brain_owner.stat == DEAD || !GET_CLIENT(brain_owner) || istype(get_area(brain_owner), /area/deathmatch) || HAS_TRAIT(brain_owner, TRAIT_NO_SPLIT_PERSONALITY)) //No use assigning people to a corpse or braindead
 		return FALSE
 	. = ..()
 	make_backseats()

@@ -653,7 +653,7 @@
 
 	if(!isnull(ascension_achievement))
 		user.client?.give_award(ascension_achievement, user)
-	heretic_datum.rust_strength = 4 // Ascended heretics can rust whatever they want (below RUST_RESISTANCE_ABSOLUTE)
+	heretic_datum.rust_strength = RUST_RESISTANCE_ORGANIC // Ascended heretics can rust whatever they want (below RUST_RESISTANCE_ABSOLUTE)
 	ADD_TRAIT(user, TRAIT_DESENSITIZED, type)
 	return TRUE
 

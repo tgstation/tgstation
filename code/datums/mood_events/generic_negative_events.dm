@@ -638,3 +638,8 @@
 		mood_change = 0
 		description = "I just got coated in blood. Fascinating!"
 		return
+
+/datum/mood_event/jabbed_with_tester
+	description = "Man, getting jabbed with that thing really sucked."
+	mood_change = -4
+	timeout = 5 MINUTES
