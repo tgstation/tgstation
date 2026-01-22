@@ -9,6 +9,7 @@ import { createLogger } from 'tgui/logging';
 import { Tooltip } from 'tgui-core/components';
 import { EventEmitter } from 'tgui-core/events';
 import { classes } from 'tgui-core/react';
+import { GenomePreview } from '../../tgui/interfaces/DnaConsole/DnaConsoleSequencer';
 import { store } from '../events/store';
 import { scrollTrackingAtom } from './atom';
 import {
@@ -36,6 +37,7 @@ const SCROLL_TRACKING_TOLERANCE = 24;
 // List of injectable component names to the actual type
 export const TGUI_CHAT_COMPONENTS = {
   Tooltip,
+  GenomePreview,
 };
 
 // List of injectable attibute names mapped to their proper prop
@@ -43,6 +45,8 @@ export const TGUI_CHAT_COMPONENTS = {
 export const TGUI_CHAT_ATTRIBUTES_TO_PROPS = {
   position: 'position',
   content: 'content',
+  mutation_sequence: 'mutation_sequence',
+  mutation_name: 'mutation_name',
 };
 
 function createHighlightNode(text, color) {

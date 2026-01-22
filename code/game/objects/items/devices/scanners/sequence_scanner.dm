@@ -103,13 +103,15 @@
 		LAZYSET(buffer, mutation.type, GET_SEQUENCE(mutation.type))
 		active_mutations.Add(mutation.type)
 
-	to_chat(user, span_notice("Subject [target.name]'s DNA sequence has been saved to buffer."))
+	var/output = list("Subject [target.name]'s DNA sequence has been saved to buffer.")
 	for(var/mutation in buffer)
 		//highlight activated mutations
 		if(LAZYFIND(active_mutations, mutation))
-			to_chat(user, span_boldnotice("[get_display_name(mutation)]"))
+			output += "&bull; [span_bold(get_display_name(mutation))]"
 		else
-			to_chat(user, span_notice("[get_display_name(mutation)]"))
+			output += "&bull; [get_display_name(mutation)]"
+
+	to_chat(user, boxed_message(span_notice(jointext(output, "<br>"))))
 
 ///proc for scanning someone's genetic makeup
 /obj/item/sequence_scanner/proc/makeup_scan(mob/living/carbon/target, mob/living/user)
@@ -144,13 +146,18 @@
 			break
 
 	if(sequence)
-		var/display
+		var/fallback
 		for(var/i in 0 to length_char(sequence) / DNA_MUTATION_BLOCKS-1)
 			if(i)
-				display += "-"
-			display += copytext_char(sequence, 1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
+				fallback += "-"
+			fallback += copytext_char(sequence, 1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
 
-		to_chat(user, "[span_boldnotice("[display]")]<br>")
+		tgui_component_to_chat(
+			user = user,
+			component_name = "GenomePreview",
+			component_data = list("mutation_sequence" = sequence, "mutation_name" = answer),
+			fallback = span_boldnotice(fallback),
+		)
 
 	ready = FALSE
 	icon_state = "[icon_state]_recharging"
