@@ -186,7 +186,7 @@
 
 /mob/eye/imaginary_friend/hivemind/Login()
 	. = ..()
-	client?.eye = owner || src
+	client.eye = owner || src
 
 /mob/eye/imaginary_friend/hivemind/greet()
 
