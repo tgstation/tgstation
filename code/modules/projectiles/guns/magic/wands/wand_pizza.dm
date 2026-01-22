@@ -11,7 +11,7 @@
 	fire_sound = 'sound/effects/magic/staff_change.ogg'
 	max_charges = 20
 
-/obj/item/gun/magic/wand/pizza/zap_self(mob/living/user)
+/obj/item/gun/magic/wand/pizza/zap_self(mob/living/user, suicide = FALSE)
 	to_chat(user, span_notice("You can't bring yourself to commit to a permanent transformation into pizza right now."))
 	return
 
