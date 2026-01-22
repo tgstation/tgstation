@@ -1,0 +1,5 @@
+author: "se"
+delete-after: True
+changes:
+  - balance: "Killing yourself with a tadpole now only bursts your chest open and not your entire body, and frankly even that is pretty impressive work for a single frog to manage."
+  - bugfix: "Killing yourself in various other ways that gib or dust you will no longer delete the items you were wearing, consistent with most of the other ways of killing yourself that gib or dust you."
