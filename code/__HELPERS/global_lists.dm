@@ -29,7 +29,7 @@
 		/obj/item/stack/sheet/plasmarglass = GLOB.prglass_recipes,
 		/obj/item/stack/sheet/animalhide/gondola = GLOB.gondola_recipes,
 		/obj/item/stack/sheet/animalhide/corgi = GLOB.corgi_recipes,
-		/obj/item/stack/sheet/animalhide/monkey = GLOB.monkey_recipes,
+		/obj/item/stack/sheet/animalhide/carbon/monkey = GLOB.monkey_recipes,
 		/obj/item/stack/sheet/animalhide/xeno = GLOB.xeno_recipes,
 		/obj/item/stack/sheet/leather = GLOB.leather_recipes,
 		/obj/item/stack/sheet/sinew = GLOB.sinew_recipes,

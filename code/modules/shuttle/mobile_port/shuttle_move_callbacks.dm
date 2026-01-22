@@ -118,13 +118,15 @@ All ShuttleMove procs go here
 // Called on atoms after everything has been moved
 /atom/movable/proc/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, oldT)
+
 	if(light)
 		update_light()
 	if(rotation)
 		shuttleRotate(rotation)
 
 	update_parallax_contents()
+
+	SEND_SIGNAL(src, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, oldT)
 
 	return TRUE
 
@@ -369,7 +371,7 @@ All ShuttleMove procs go here
 
 /obj/structure/cable/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
-	Connect_cable(TRUE)
+	connect_cable(TRUE)
 	propagate_if_no_network()
 
 /obj/machinery/power/shuttle_engine/hypotheticalShuttleMove(move_mode)

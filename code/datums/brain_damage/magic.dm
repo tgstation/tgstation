@@ -10,6 +10,9 @@
 	name = "Lumiphobia"
 	desc = "Patient has an inexplicable adverse reaction to light."
 	scan_desc = "light hypersensitivity"
+	symptoms = "Exhibits extreme discomfort and adverse reactions when exposed to bright light sources, \
+		and will go to great lengths to avoid illuminated areas. \
+		This sensitivity can lead to skin irritation, similar to that of a severe sunburn."
 	gain_text = span_warning("You feel a craving for darkness.")
 	lose_text = span_notice("Light no longer bothers you.")
 	/// Cooldown to prevent warning spam
@@ -34,6 +37,8 @@
 	name = "Poltergeist"
 	desc = "Patient appears to be targeted by a violent invisible entity."
 	scan_desc = "paranormal activity"
+	symptoms = "Experiences frequent and unprovoked physical disturbances in their immediate vicinity, \
+		such as objects being thrown or moved without any apparent cause."
 	gain_text = span_warning("You feel a hateful presence close to you.")
 	lose_text = span_notice("You feel the hateful presence fade away.")
 
@@ -57,6 +62,8 @@
 	name = "Athaumasia"
 	desc = "Patient is completely inert to magical forces."
 	scan_desc = "thaumic blank"
+	symptoms = "Exhibits a complete immunity to effects unexplainable by conventional science, \
+		such as the abilities demonstrated by members of the Wizard Federation."
 	gain_text = span_notice("You realize that magic cannot be real.")
 	lose_text = span_notice("You realize that magic might be real.")
 
@@ -72,6 +79,9 @@
 	name = "Stalking Phantom"
 	desc = "Patient is stalked by a phantom only they can see."
 	scan_desc = "extra-sensory paranoia"
+	symptoms = "Feels an unshakable sensation of being watched or pursued by an unseen entity, \
+		leading to heightened anxiety, paranoia, and occasional hallucinations of a ghostly figure in their vicinity. \
+		Extreme cases may even result in physical harm inflicted upon the patient by a seemingly invisible force."
 	gain_text = span_warning("You feel like something wants to kill you...")
 	lose_text = span_notice("You no longer feel eyes on your back.")
 	/// Type of stalker that is chasing us
@@ -134,6 +144,7 @@
 /datum/brain_trauma/magic/stalker/cosmic
 	stalker_type = /obj/effect/client_image_holder/stalker_phantom/cosmic
 	random_gain = FALSE
+	known_trauma = FALSE
 
 /obj/effect/client_image_holder/stalker_phantom/cosmic
 	image_icon = 'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi'

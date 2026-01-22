@@ -10,17 +10,17 @@
 
 /datum/action/cooldown/mob_cooldown/transform_weapon/Activate(atom/target_atom)
 	disable_cooldown_actions()
-	do_transform(target_atom)
+	do_transform()
 	StartCooldown(rand(cooldown_time, max_cooldown_time), 0)
 	enable_cooldown_actions()
 	return TRUE
 
-/datum/action/cooldown/mob_cooldown/transform_weapon/proc/do_transform(atom/target)
-	if(!istype(owner, /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner))
+/datum/action/cooldown/mob_cooldown/transform_weapon/proc/do_transform()
+	if(!istype(owner, /mob/living/basic/boss/blood_drunk_miner))
 		return
-	var/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/blood_drunk_miner = owner
+	var/mob/living/basic/boss/blood_drunk_miner/blood_drunk_miner = owner
 	blood_drunk_miner.miner_saw.attack_self(owner)
 	var/saw_open = HAS_TRAIT(blood_drunk_miner.miner_saw, TRAIT_TRANSFORM_ACTIVE)
-	blood_drunk_miner.rapid_melee = saw_open ? 3 : 5
+	blood_drunk_miner.rapid_melee_hits = saw_open ? 3 : 5
 	blood_drunk_miner.icon_state = "miner[saw_open ? "_transformed":""]"
 	blood_drunk_miner.icon_living = "miner[saw_open ? "_transformed":""]"

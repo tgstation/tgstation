@@ -31,6 +31,7 @@
 /obj/item/gun/magic/staff/proc/on_intruder_use(mob/living/user, atom/target)
 	return TRUE
 
+/// Turns mobs into other mobs
 /obj/item/gun/magic/staff/change
 	name = "staff of change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
@@ -53,15 +54,27 @@
 		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>You don't feel strong enough to properly wield this staff!</span>"))
 		balloon_alert(user, "you feel weak holding this staff")
 
-/obj/item/gun/magic/staff/change/on_intruder_use(mob/living/user, atom/target)
+/// Transforms the user
+/obj/item/gun/magic/staff/change/proc/transform_self(mob/living/user)
 	user.dropItemToGround(src, TRUE)
 	var/wabbajack_into = preset_wabbajack_type || pick(WABBAJACK_MONKEY, WABBAJACK_HUMAN, WABBAJACK_ANIMAL)
 	var/mob/living/new_body = user.wabbajack(wabbajack_into, preset_wabbajack_changeflag)
 	if(!new_body)
 		return
-
 	balloon_alert(new_body, "wabbajack, wabbajack!")
+	return new_body
 
+/obj/item/gun/magic/staff/change/on_intruder_use(mob/living/user, atom/target)
+	transform_self(user)
+
+/obj/item/gun/magic/staff/change/do_suicide(mob/living/user)
+	playsound(loc, fire_sound, 50, TRUE, -1)
+	var/mob/living/transformed = transform_self(user)
+	transformed.death()
+	transformed.set_suicide(TRUE)
+	return MANUAL_SUICIDE
+
+/// Brings objects to life
 /obj/item/gun/magic/staff/animate
 	name = "staff of animation"
 	desc = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
@@ -71,6 +84,36 @@
 	inhand_icon_state = "staffofanimation"
 	school = SCHOOL_EVOCATION
 
+/obj/item/gun/magic/staff/animate/do_suicide(mob/living/user)
+	user.Stun(20 SECONDS, ignore_canstun = TRUE)
+	var/list/my_shit = user.unequip_everything()
+	my_shit -= src
+	user.put_in_active_hand(src) // Keep this one for now
+	charges++ // We already subtracted one
+	user.Paralyze(2 SECONDS, ignore_canstun = TRUE) // We have at most 6 charges so this is slightly longer than necessary
+	while (length(my_shit) && charges > 0)
+		if(QDELETED(user) || user.stat == DEAD)
+			break
+		charges--
+		playsound(loc, fire_sound, 50, TRUE, -1)
+		var/obj/item/my_thing = pop(my_shit)
+		user.dropItemToGround(my_thing)
+		var/mob/living/angry_thing = my_thing.animate_atom_living()
+		angry_thing.ai_controller?.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, user)
+		angry_thing.ai_controller?.set_blackboard_key(BB_TARGET_MINIMUM_STAT, HARD_CRIT)
+		angry_thing.ai_controller?.ai_interact(user, combat_mode = TRUE)
+		user.apply_damage(35, BRUTE, forced = TRUE) // Mimics are not actually very strong so we pretend that it just bit us so we die faster, at least 3 charges & worn items should do it
+		sleep(0.25 SECONDS)
+
+	if (QDELETED(user))
+		return MANUAL_SUICIDE
+	if (user.stat == CONSCIOUS)
+		return SHAME
+	if (user.stat != DEAD)
+		user.death() // If you got put into crit by the mobs we'll finish you off
+	return MANUAL_SUICIDE
+
+/// Heals people and even raises the dead
 /obj/item/gun/magic/staff/healing
 	name = "staff of healing"
 	desc = "An artefact that spits bolts of restoring magic which can remove ailments of all kinds and even raise the dead."
@@ -115,9 +158,18 @@
 	healing_beam.LoseTarget()
 	return ..()
 
-/obj/item/gun/magic/staff/healing/handle_suicide() //Stops people trying to commit suicide to heal themselves
-	return
+/obj/item/gun/magic/staff/healing/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params, bypass_timer)
+	return //Stops people clicking on themselves for self-healing
 
+/obj/item/gun/magic/staff/healing/do_suicide(mob/living/user)
+	playsound(loc, fire_sound, 50, TRUE, -1)
+	if(user.mob_biotypes & MOB_UNDEAD)
+		user.dust(drop_items = TRUE)
+		return MANUAL_SUICIDE
+	user.visible_message(span_suicide("...but nothing happens."))
+	return SHAME
+
+/// Does random shit when fired
 /obj/item/gun/magic/staff/chaos
 	name = "staff of chaos"
 	desc = "An artefact that spits bolts of chaotic magic that can potentially do anything."
@@ -127,7 +179,7 @@
 	inhand_icon_state = "staffofchaos"
 	max_charges = 10
 	recharge_rate = 2
-	no_den_usage = 1
+	no_den_usage = TRUE
 	school = SCHOOL_FORBIDDEN //this staff is evil. okay? it just is. look at this projectile type list. this is wrong.
 
 	/// List of all projectiles we can fire from our staff.
@@ -173,6 +225,18 @@
 	process_fire(user, user, FALSE)
 	return FALSE
 
+/obj/item/gun/magic/staff/chaos/do_suicide(mob/living/user)
+	charges++ // We already subtracted one
+	for (var/i in 1 to 5)
+		if (!charges || user.stat == DEAD || QDELETED(user))
+			break
+		playsound(loc, fire_sound, 50, TRUE, -1)
+		process_fire(user, user, FALSE)
+		charges--
+		sleep(0.25 SECONDS)
+
+	return FIRELOSS
+
 /**
  * Staff of chaos given to the wizard upon completing a cheesy grand ritual. Is completely evil and if something
  * breaks, it's completely intended. Fuck off.
@@ -212,6 +276,7 @@
 		/obj/projectile/plasma,
 	) //if you ever try to expand this list, avoid adding bullets/energy projectiles, this ain't supposed to be a gun... unless it's funny
 
+/// Creates and opens doors
 /obj/item/gun/magic/staff/door
 	name = "staff of door creation"
 	desc = "An artefact that spits bolts of transformative magic that can create doors in walls."
@@ -221,9 +286,22 @@
 	inhand_icon_state = "staffofdoor"
 	max_charges = 10
 	recharge_rate = 2
-	no_den_usage = 1
+	no_den_usage = TRUE
 	school = SCHOOL_TRANSMUTATION
 
+/obj/item/gun/magic/staff/door/do_suicide(mob/living/user)
+	. = ..()
+	var/obj/machinery/door/airlock/material/door = new(user.drop_location())
+	door.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
+	door.update_appearance(updates = UPDATE_ICON)
+	door.name = user.real_name
+	addtimer(CALLBACK(door, TYPE_PROC_REF(/obj/machinery/door, open)), 1.5 SECONDS)
+	user.drop_everything()
+	user.ghostize()
+	qdel(user)
+	return MANUAL_SUICIDE
+
+/// Makes people slip really hard
 /obj/item/gun/magic/staff/honk
 	name = "staff of the honkmother"
 	desc = "Honk."
@@ -235,6 +313,17 @@
 	recharge_rate = 8
 	school = SCHOOL_EVOCATION
 
+/obj/item/gun/magic/staff/honk/do_suicide(mob/living/user)
+	. = ..()
+	new /obj/effect/decal/cleanable/food/pie_smudge(user.drop_location())
+	user.AddComponent(\
+		/datum/component/face_decal/splat,\
+		icon_state = "creampie",\
+		layers = EXTERNAL_FRONT,\
+	)
+	return SHAME
+
+/// Dismembers people, and is a passable melee weapon
 /obj/item/gun/magic/staff/spellblade
 	name = "spellblade"
 	desc = "A deadly combination of laziness and bloodlust, this blade allows the user to dismember their enemies without all the hard work of actually swinging the sword."
@@ -268,6 +357,18 @@
 		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
 	return ..()
 
+/obj/item/gun/magic/staff/spellblade/do_suicide(mob/living/user)
+	. = ..()
+	if (!iscarbon(user))
+		return BRUTELOSS
+	var/mob/living/carbon/suicider = user
+	for (var/obj/item/bodypart/limb in suicider.bodyparts)
+		limb.dismember(BRUTE, silent = FALSE, wounding_type = WOUND_SLASH)
+		sleep(0.25 SECONDS)
+
+	return BRUTELOSS
+
+/// Welds people into flying lockers
 /obj/item/gun/magic/staff/locker
 	name = "staff of the locker"
 	desc = "An artefact that expels encapsulating bolts, for incapacitating thy enemy."
@@ -280,8 +381,15 @@
 	recharge_rate = 4
 	school = SCHOOL_TRANSMUTATION //in a way
 
-//yes, they don't have sounds. they're admin staves, and their projectiles will play the chaos bolt sound anyway so why bother?
+/obj/item/gun/magic/staff/locker/do_suicide(mob/living/user)
+	. = ..()
+	var/obj/structure/closet/decay/locker = new(user.drop_location())
+	locker.insert(user)
+	locker.welded = TRUE
+	locker.update_appearance(UPDATE_ICON_STATE)
+	return BRUTELOSS
 
+/// Makes targets "fly" by throwing them away
 /obj/item/gun/magic/staff/flying
 	name = "staff of flying"
 	desc = "An artefact that spits bolts of graceful magic that can make something fly."
@@ -292,6 +400,13 @@
 	worn_icon_state = "flightstaff"
 	school = SCHOOL_EVOCATION
 
+/obj/item/gun/magic/staff/flying/do_suicide(mob/living/user)
+	. = ..()
+	var/atom/throw_target = get_edge_target_turf(user, pick(GLOB.alldirs))
+	user.throw_at(throw_target, 200, 4)
+	return BRUTELOSS
+
+/// Scrambles languages
 /obj/item/gun/magic/staff/babel
 	name = "staff of babel"
 	desc = "An artefact that spits bolts of confusion magic that can make something depressed and incoherent."
@@ -302,6 +417,13 @@
 	worn_icon_state = "babelstaff"
 	school = SCHOOL_FORBIDDEN //evil
 
+/obj/item/gun/magic/staff/babel/do_suicide(mob/living/user)
+	. = ..()
+	process_fire(user, user, FALSE)
+	user.say("I wish I was dead.", forced = "failed babel staff suicide")
+	return SHAME
+
+/// Deals damage to the target and recharges their spells if they have any
 /obj/item/gun/magic/staff/necropotence
 	name = "staff of necropotence"
 	desc = "An artefact that spits bolts of death magic that can repurpose the soul."
@@ -312,6 +434,15 @@
 	worn_icon_state = "necrostaff"
 	school = SCHOOL_NECROMANCY //REALLY evil
 
+/obj/item/gun/magic/staff/necropotence/do_suicide(mob/living/user)
+	. = ..()
+	user.unequip_everything()
+	var/obj/item/soulstone/anybody/stone = new(user.drop_location())
+	stone.capture_soul(user, user = null, forced = TRUE)
+	user.death()
+	return MANUAL_SUICIDE
+
+/// Asks a ghost to start playing as the poor victim
 /obj/item/gun/magic/staff/wipe
 	name = "staff of possession"
 	desc = "An artefact that spits bolts of mind-unlocking magic that can let ghosts invade the victim's mind."
@@ -322,6 +453,12 @@
 	worn_icon_state = "wipestaff"
 	school = SCHOOL_FORBIDDEN //arguably the worst staff in the entire game effect wise
 
+/obj/item/gun/magic/staff/wipe/do_suicide(mob/living/user)
+	. = ..()
+	process_fire(user, user, FALSE)
+	return MANUAL_SUICIDE_NONLETHAL // Someone else is you now
+
+/// Makes the target really small
 /obj/item/gun/magic/staff/shrink
 	name = "staff of shrinking"
 	desc = "An artefact that spits bolts of tiny magic that makes things small. It's easily mistaken for a wand."
@@ -335,3 +472,15 @@
 	school = SCHOOL_TRANSMUTATION
 	slot_flags = NONE //too small to wear on your back
 	w_class = WEIGHT_CLASS_NORMAL //but small enough for a bag
+
+/obj/item/gun/magic/staff/shrink/do_suicide(mob/living/user)
+	. = ..()
+	playsound(user, fire_sound, 50, TRUE)
+	user.unequip_everything()
+	user.visible_message(span_suicide("[user] shrinks into nothing!"), span_suicide("You shrink into nothing!"))
+	user.Stun(20 SECONDS, ignore_canstun = TRUE)
+	user.set_suicide(TRUE)
+	user.ghostize()
+	animate(user, transform = matrix() * 0, time = 1 SECONDS)
+	QDEL_IN(user, 1 SECONDS)
+	return MANUAL_SUICIDE

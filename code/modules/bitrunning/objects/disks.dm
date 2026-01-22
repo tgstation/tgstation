@@ -10,7 +10,6 @@
 	base_icon_state = "datadisk"
 	icon_state = "datadisk0"
 	sticker_icon_state = "o_code"
-	reskin_allowed = FALSE
 	/// Name of the choice made
 	var/choice_made
 
@@ -23,6 +22,9 @@
 	AddComponent(/datum/component/loads_avatar_gear, \
 		load_callback = CALLBACK(src, PROC_REF(load_onto_avatar)), \
 	)
+
+/obj/item/disk/bitrunning/setup_reskins()
+	return
 
 /obj/item/disk/bitrunning/examine(mob/user)
 	. = ..()

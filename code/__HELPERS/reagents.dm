@@ -1,3 +1,7 @@
+///Helper to ensure a constant is applied regardless of reagent metabolization rate to get 100% effect
+///Use for parent reagent types when subtypes alter metabolization rates
+#define METABOLIZE_FREE_CONSTANT(value)((value * REAGENTS_METABOLISM) / metabolization_rate)
+
 /proc/chem_recipes_do_conflict(datum/chemical_reaction/r1, datum/chemical_reaction/r2)
 	//We have to check to see if either is competitive so can ignore it (competitive reagents are supposed to conflict)
 	if((r1.reaction_flags & REACTION_COMPETITIVE) || (r2.reaction_flags & REACTION_COMPETITIVE))
