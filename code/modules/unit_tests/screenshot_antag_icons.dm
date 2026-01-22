@@ -7,7 +7,7 @@
 	// Generates the spritesheet in /tmp, while also ensuring that ALL icons output to the same size (will error otherwise)
 	// Left here in case caching changes somehow and we want a fresh generator
 	var/test_icon_filepath = "tmp/antag_icon_screenshot_test.dmi"
-	var/headless_result_str = rustg_iconforge_generate_headless(test_icon_filepath, antagonists.entries_json, TRUE)
+	var/headless_result_str = rustg_iconforge_generate_headless(test_icon_filepath, json_encode(antagonists.entries_json), TRUE)
 	if(!findtext(headless_result_str, "{", 1, 2))
 		TEST_FAIL("Could not generate antagonist icons using rustg_iconforge_generate_headless! The output format was invalid. Got: [headless_result_str]")
 	var/list/headless_result = json_decode(headless_result_str)
