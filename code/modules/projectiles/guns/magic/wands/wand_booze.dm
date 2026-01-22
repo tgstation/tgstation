@@ -19,9 +19,9 @@
 	if (!suicide)
 		user.log_message("zapped [user.p_them()]self with a <b>[src]</b>", LOG_ATTACK)
 		user.visible_message(span_notice("[user] puts the [src] up to [user.p_their()] mouth and starts chugging!"))
-	var/datum/reagent/consumable/ethanol/bacchus_blessing/booze = new()
-	booze.expose_mob(user, INGEST)
-	user.reagents.add_reagent(booze.type, 10)
+	var/obj/projectile/magic/booze/splash = new(user.drop_location())
+	splash.firer = user
+	user.projectile_hit(splash, BODY_ZONE_HEAD)
 	charges--
 
 /obj/item/gun/magic/wand/booze/do_suicide(mob/living/user)

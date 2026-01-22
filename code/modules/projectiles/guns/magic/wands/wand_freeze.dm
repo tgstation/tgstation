@@ -14,10 +14,9 @@
 /obj/item/gun/magic/wand/freeze/zap_self(mob/living/user, suicide = FALSE)
 	. = ..()
 	to_chat(user, span_warning("You freeze yourself in a block of ice!"))
-	user.apply_status_effect(/datum/status_effect/ice_block_talisman, 10 SECONDS)
-	var/turf/hit_turf = get_turf(user)
-	if (isfloorturf(hit_turf) && !isspaceturf(hit_turf) && !isindestructiblefloor(hit_turf))
-		hit_turf.ChangeTurf(/turf/open/floor/fakeice/slippery, flags = CHANGETURF_INHERIT_AIR)
+	var/obj/projectile/magic/freeze/ice = new(user.drop_location())
+	ice.firer = user
+	user.projectile_hit(ice, BODY_ZONE_CHEST)
 	charges--
 
 /obj/item/gun/magic/wand/freeze/do_suicide(mob/living/user)

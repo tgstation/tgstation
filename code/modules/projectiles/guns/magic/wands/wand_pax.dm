@@ -19,11 +19,8 @@
 	user.adjust_brute_loss(-30)
 
 /obj/item/gun/magic/wand/pax/zap_self(mob/living/user, suicide = FALSE)
-	playsound(user, fire_sound, 50, TRUE)
-	user.log_message("zapped [user.p_them()]self with a <b>[src]</b>", LOG_ATTACK)
 	if (!suicide)
 		user.visible_message(span_notice("[user] tenderly kisses [user.p_their()] own wand."))
-	charges--
 
 /obj/item/gun/magic/wand/pax/do_suicide(mob/living/user)
 	. = ..()

@@ -18,7 +18,7 @@
 	var/obj/projectile/magic/rebellion/blast = new()
 	if (suicide)
 		blast.valid_zones = list(BODY_ZONE_HEAD)
-	blast.on_hit(user)
+	user.projectile_hit(blast, suicide ? BODY_ZONE_HEAD : BODY_ZONE_CHEST)
 	qdel(blast)
 
 /obj/item/gun/magic/wand/rebel/do_suicide(mob/living/user)
