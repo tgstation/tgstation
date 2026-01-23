@@ -8,6 +8,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 GLOBAL_LIST_INIT(unrecommended_builds, list(
 	"1670" = "Bug breaking in-world text rendering.",
 	"1671" = "Bug breaking in-world text rendering.",
+	"1675" = "Frequent crashing.",
+	"1676" = "Frequent crashing.",
 ))
 #define LIMITER_SIZE 5
 #define CURRENT_SECOND 1

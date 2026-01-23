@@ -543,3 +543,58 @@
   - spellcheck: Fixed a typo with Deltastation's Server Room Entrance's camera.
   Melbert:
   - bugfix: Syncing instruments no longer fails if starting instrument is held
+2026-01-22:
+  Absolucy:
+  - refactor: Refactored turrets so they only process if something potentially "interesting"
+      is within its range.
+  ElGitificador:
+  - bugfix: fixed experimentor irradiate goo failure locking experimentor
+  Jacquerel:
+  - bugfix: You can't shoot yourself using a wand or staff that you can't use, or
+      that has no charge
+  - rscadd: Most wands and staves now do something funnier if you use them to kill
+      yourself
+  Melbert:
+  - balance: Pressure damage scales over time. It starts at 2 per second (pre-buff
+      value) but increases by 0.5 damage every 1.2 minutes you are exposed, up to
+      5 per second (requiring 7.2 full minutes of exposure).
+  - balance: Rebalanced Unstable Mutagen's / Uranium's botany use. It now always increases
+      instability (on par with L4Z), and occasionally increases instability even more
+      at the costs of some toxins. It also scales with volume
+  - rscadd: Adds "Toxin Resistance" gene to botany which makes the plant immune to
+      toxin damage. Given (and graftable from) Death Berries.
+  - rscadd: Adds "Toxin Adaptation" gene to botany which makes the plant heal from
+      toxin damage. Only in strange seeds (for now).
+  - code_imp: Cleaned up a smidge of botany code
+  SmArtKar:
+  - bugfix: Fixed people hanged on meat spikes sometimes rotating sideways
+  - rscadd: Multiple new reagents such as napalm, sorium, TATP, smoke/sonic/flash
+      powders and other explosives can now be used to rig cells or tools.
+  - rscadd: Plasma and gunpowder rigged items can now have controlled current requirement/delay
+      by adding some stabilizing agent alongside the main reagent.
+  - balance: Creating chemical smoke inside of a mob now makes them violently cough
+      it up, damaging their lungs a bit.
+  - bugfix: Chemically-rigged lightbulbs now once again explode.
+  - refactor: Refactored how power cells, welding tools, lightbulbs, cigarettes (and
+      now, lighters) handle being rigged with chemicals.
+  - code_imp: Dreamchecker no longer throws an error if you run the game with the
+      MAP_TEST flag
+  VigilDLX:
+  - bugfix: Fixed Medipen Refiller taking more than it refilled
+  lelandkemble:
+  - bugfix: Fixes light deconstruction succeeding when they're fully constructed,
+      and failing when they're not.
+  - map: Catwalk AI sat's door accesses have been brought in line with other maps
+  - bugfix: Paywall firing pins are registerable again, & they'll keep being registerable
+      after being unregistered.
+  necromanceranne:
+  - qol: The white ship has a unique GPS signal. Just look for the 'Distress Signal'
+      co-ordinate.
+  - balance: The infiltrator and blood-red modsuit have had their armor values swapped.
+  se:
+  - balance: Killing yourself with a tadpole now only bursts your chest open and not
+      your entire body, and frankly even that is pretty impressive work for a single
+      frog to manage.
+  - bugfix: Killing yourself in various other ways that gib or dust you will no longer
+      delete the items you were wearing, consistent with most of the other ways of
+      killing yourself that gib or dust you.

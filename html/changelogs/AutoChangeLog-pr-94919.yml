@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - code_imp: "Dreamchecker no longer throws an error if you run the game with the MAP_TEST flag"
