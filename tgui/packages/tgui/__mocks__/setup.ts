@@ -1,18 +1,21 @@
 import { mock } from 'bun:test';
+
 import './byond';
 import './layouts';
-import './tgui-core';
 
-mock.module('../backend', () => ({
-  useBackend: mock(() => ({
-    act: mock(() => {}),
-    data: {},
-  })),
-}));
+const logger = {
+  debug: () => {},
+  error: () => {},
+  info: () => {},
+  log: () => {},
+  warn: () => {},
+};
 
 mock.module('../logging', () => ({
-  log: mock(() => {}),
-  error: mock(() => {}),
-  warn: mock(() => {}),
-  info: mock(() => {}),
+  createLogger: () => logger,
+  logger,
+}));
+
+mock.module('../events/act', () => ({
+  sendAct: async () => ({}),
 }));

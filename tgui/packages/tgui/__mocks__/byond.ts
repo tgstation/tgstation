@@ -1,5 +1,3 @@
-import { mock } from 'bun:test';
-
 const ByondMock = {
   windowId: 'test-window',
   IS_BYOND: true,
@@ -7,27 +5,25 @@ const ByondMock = {
   strictMode: true,
   storageCdn: '',
 
-  call: mock(() => {}),
-  callAsync: mock(async () => ({})),
-  topic: mock(() => {}),
-  command: mock(() => {}),
+  call: () => ({}),
+  callAsync: async () => ({}),
+  topic: () => {},
+  command: () => {},
 
-  winget: mock(async () => ({})),
-  winset: mock(() => {}),
+  winget: async () => ({}),
+  winset: () => {},
 
   parseJson: (text: string) => JSON.parse(text),
 
-  sendMessage: mock(() => {}),
-  subscribe: mock(() => {}),
-  subscribeTo: mock(() => {}),
+  sendMessage: () => {},
+  subscribe: () => {},
+  subscribeTo: () => {},
 
-  loadCss: mock(() => {}),
-  loadJs: mock(() => {}),
+  loadCss: () => {},
+  loadJs: () => {},
 
   iconRefMap: {},
-  saveBlob: mock(() => {}),
+  saveBlob: () => {},
 };
 
-mock.module('globalThis', () => ({
-  Byond: ByondMock,
-}));
+(globalThis as any).Byond = ByondMock;

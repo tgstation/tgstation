@@ -1,15 +1,23 @@
 import { mock } from 'bun:test';
 
-function Window({ children, ...props }: any) {
+type MockWindowProps = Partial<{
+  title: string;
+  children: React.ReactNode;
+}>;
+
+function Window(props: MockWindowProps) {
+  const { title = 'Test UI', children } = props;
+
   return (
-    <div style={{ height: `${props.height}px`, width: `${props.width}px` }}>
+    <div className="Window">
+      <div>{title}</div>
       {children}
     </div>
   );
 }
 
-function Content({ children, ...props }: any) {
-  return <div style={{ flex: 1, overflow: 'auto' }}>{children}</div>;
+function Content({ children }: { children?: React.ReactNode }) {
+  return <div className="Window__content">{children}</div>;
 }
 
 Window.Content = Content;
