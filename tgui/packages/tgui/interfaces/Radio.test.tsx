@@ -4,6 +4,8 @@ import { gameDataAtom, store } from '../events/store';
 
 import { Radio } from './Radio';
 
+// Just an example unit test!
+
 store.set(gameDataAtom, {
   freqlock: 0,
   frequency: 1553,
@@ -23,6 +25,7 @@ describe('Radio tests', () => {
   it('loads without failing', () => {
     act(() => render(<Radio />));
 
+    // Radio doesn't have a default title
     expect(screen.getByText('Test UI')).toBeDefined();
   });
 
