@@ -20,4 +20,4 @@
 		for (var/obj/gaything in T)
 			gaything.add_atom_colour("#ff99fc", WASHABLE_COLOUR_PRIORITY)
 
-	default_explode(holder, created_volume, modifier, strengthdiv, FALSE)
+	reagent_explode(holder, created_volume, modifier, strengthdiv, FALSE)
