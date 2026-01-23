@@ -152,6 +152,13 @@
 		return
 
 /datum/reagent/toxin/plasma/on_spark_act(power_charge, spark_flags)
+	// Tape up your plasma IEDs
+	if ((spark_flags & SPARK_ACT_WEAKEN_COMMON) && !(spark_flags & SPARK_ACT_ENCLOSED))
+		if(temp < LIQUID_PLASMA_BP)
+			return NONE
+		exposed_turf.atmos_spawn_air("[GAS_PLASMA]=[volume];[TURF_TEMPERATURE(holder.chem_temp)]")
+		return SPARK_ACT_NON_DESTRUCTIVE
+
 	// If we have any stabilizing agent in the mix, we need 0.2% of a standard cell value per mol of agent to be spent at once to blow
 	// This should allow for some more creative traps to be made with plasma
 	var/agent_volume = holder.get_reagent_amount(/datum/reagent/stabilizing_agent)

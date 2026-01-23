@@ -188,7 +188,7 @@
 
 		to_chat(user, span_notice("You attach [tool] underneath [src]'s lid."))
 		add_fingerprint(user)
-		log_bomber(user, "attached [tool.name] to ", src)
+		log_bomber(user, "attached [tool.name] to", src)
 		attached_cell = tool
 		attached_cell.pixel_y = 0
 		attached_cell.pixel_z = -4
@@ -329,7 +329,7 @@
 	lid_assembly.pixel_z = assembly_pixel_y
 	lid_assembly.on_attach()
 	RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, PROC_REF(on_igniter_activate))
-	log_bomber(user, "attached [lid_assembly.name] to ", src)
+	log_bomber(user, "attached [lid_assembly.name] to", src)
 	update_appearance()
 	return TRUE
 
@@ -355,6 +355,7 @@
 
 		// We'll be nerfing plasma and welding fuel as they're very easy to get and make for boring bombs
 		if (power_spent > 0 && (reagents.spark_act(power_spent, SPARK_ACT_ENCLOSED | SPARK_ACT_WEAKEN_COMMON) & SPARK_ACT_DESTRUCTIVE))
+			qdel(src)
 			return
 
 	// Igniters heat, condensers chill
