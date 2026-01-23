@@ -108,6 +108,7 @@
 	if(tape_color)
 		to_chat(user, "You rip off the tape covering [src]'s hole.")
 		playsound(user, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE)
+		tape_color = null
 		add_container_flags(OPENCONTAINER)
 		update_appearance()
 		return
