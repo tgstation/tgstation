@@ -5,7 +5,7 @@ Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be
 The latest database version is 5.33; The query to update the schema revision table is:
 
 ```sql
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 33);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 34);
 ```
 
 or
