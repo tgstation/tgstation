@@ -174,9 +174,6 @@
   - balance: The MODsuit equipment techweb node has been split in two, with an offshoot
       for civilian MODules.
 2025-12-05:
-  Guffy:
-  - troutstation: true
-  - bugfix: realigned door on the gay escape shuttle
   Aliceee2ch:
   - image: Most of mapping spawner icons were updated to match latest version of sprites.
   ArchBTW:
@@ -299,9 +296,6 @@
   - rscadd: Added a new set of chaplain armour based on the generic heretic robes
       unavailable since the path rework.
 2025-12-09:
-  Guffy:
-  - troutstation: true
-  - rscadd: Picnic blanket tile
   Aliceee2ch:
   - image: Added 2 new contraband and 1 new official posters.
   Fghj240:
@@ -339,9 +333,6 @@
   - admin: Multikeying Notice Messages have taken on a new form factor but should
       still furnish the same information.
 2025-12-10:
-  Guffy:
-  - troutstation: true
-  - rscadd: Skitterers now steal items laying around
   ArcaneMusic:
   - bugfix: Plasma sheets are once again immune to market elasticity, selling for
       a static 80 credits each yet again.
@@ -416,10 +407,6 @@
   - bugfix: Fix disabled cameras consuming power
   xPokee:
   - spellcheck: The Scrubs, MD abduction spy bounty now has the proper name.
-2025-12-12:
-  Cirrial:
-  - troutstation: true
-  - rscadd: Added Troutstation changelogs (highlighted in the main changelog).
 2025-12-13:
   ArchBTW:
   - bugfix: Fix clicking on things underneath directional firelocks
@@ -771,9 +758,6 @@
   vinylspiders:
   - server: updates bun version to 1.3.5, and adds automated validation for tgs
 2025-12-25:
-  GuffyWuffy:
-  - troutstation: true
-  - rscadd: Added greyscale lizard for adding colours
   Frenjo:
   - bugfix: Fixed the inability to shove an intellicarded AI into a Mauler-type exosuit.
   LT3:

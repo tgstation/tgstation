@@ -25,7 +25,8 @@
 	var/list/data = list( "dates" = list() )
 	var/regex/ymlRegex = regex(@"\.yml", "g")
 
-	for(var/archive_file in sort_list(flist("html/changelogs/archive/")))
+	// Troutstation edit to use combined folder instead
+	for(var/archive_file in sort_list(flist("html/changelogs/combined/archive/")))
 		var/archive_date = ymlRegex.Replace(archive_file, "")
 		data["dates"] = list(archive_date) + data["dates"]
 

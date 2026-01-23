@@ -9,6 +9,7 @@
 
 import fs from 'node:fs';
 import Bun from 'bun';
+import YAML from 'yaml';
 import Juke from './juke/index.js';
 import { bun, bunRoot } from './lib/bun';
 import { DreamDaemon, DreamMaker, NamedVersionFile } from './lib/byond';
@@ -207,6 +208,7 @@ export const DmTarget = new Juke.Target({
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_TEMPLATES') && DmMapsIncludeTarget,
     !get(SkipIconCutter) && IconCutterTarget,
+    // Troutstation edit
     !get(SkipIconCutter) && TroutstationIconCutterTarget,
   ],
   inputs: [
@@ -248,6 +250,7 @@ export const DmTestTarget = new Juke.Target({
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
     IconCutterTarget,
+    // Troutstation edit
     TroutstationIconCutterTarget,
   ],
   executes: async ({ get }) => {
@@ -281,6 +284,84 @@ export const DmTestTarget = new Juke.Target({
     }
   },
 });
+
+// Troutstation edit start
+export const CombineChangelogsTarget = new Juke.Target({
+  outputs: () => {
+    const mainChangelogs = [...Juke.glob('html/changelogs/archive/*.yml')];
+    return mainChangelogs.map((file) =>
+      file.replace('archive/', 'combined/archive/'),
+    );
+  },
+  executes: async () => {
+    const combinedChangelogPath = 'html/changelogs/combined/archive';
+    if (!fs.existsSync(combinedChangelogPath)) {
+      fs.mkdirSync(combinedChangelogPath, { recursive: true });
+    }
+    const troutstationChangelogPath = 'html/changelogs/troutstation/archive';
+    const mainChangelogs = [...Juke.glob('html/changelogs/archive/*.yml')];
+    mainChangelogs.forEach((mainChangelogFile) => {
+      const filename = mainChangelogFile.replace(/^.*[\\/]/, '');
+      const combinedChangelogFile = `${combinedChangelogPath}/${filename}`;
+      const troutstationChangelogFile = `${troutstationChangelogPath}/${filename}`;
+      if (fs.existsSync(troutstationChangelogFile)) {
+        Juke.logger.info(`merging changelogs for ${filename}...`);
+        const mainChangelog = YAML.parse(
+          fs.readFileSync(mainChangelogFile, 'utf8'),
+        );
+        const troutstationChangelog = YAML.parse(
+          fs.readFileSync(troutstationChangelogFile, 'utf8'),
+        );
+        // add troutstation: true to every entry in troutstation changelog
+        for (const date of Object.keys(troutstationChangelog)) {
+          const users = troutstationChangelog[date];
+          const usernames = Object.keys(users);
+          const editedUsers = [];
+          for (const username of usernames) {
+            const changes = users[username];
+            changes.unshift({ troutstation: true });
+            editedUsers[username] = changes;
+          }
+          troutstationChangelog[date] = editedUsers;
+        }
+        // merge them together
+        const combinedChangelog = {};
+        const dates = [
+          ...new Set(
+            Object.keys(mainChangelog).concat(
+              Object.keys(troutstationChangelog),
+            ),
+          ),
+        ].sort();
+        for (const date of dates) {
+          const mainEntries = mainChangelog[date] ?? {};
+          const troutstationEntries = troutstationChangelog[date] ?? {};
+          const combinedUsernames = Object.keys(troutstationEntries).concat(
+            Object.keys(mainEntries),
+          );
+          const combinedEntries = {};
+          for (const username of combinedUsernames) {
+            Juke.logger.info(`username: ${username}`);
+            const troutstationEntriesForUser =
+              troutstationEntries[username] ?? [];
+            const mainEntriesForUser = mainEntries[username] ?? [];
+            const concatEntries =
+              troutstationEntriesForUser.concat(mainEntriesForUser);
+            combinedEntries[username] = concatEntries;
+          }
+          combinedChangelog[date] = combinedEntries;
+        }
+        fs.writeFileSync(
+          combinedChangelogFile,
+          YAML.stringify(combinedChangelog),
+        );
+      } else {
+        fs.copyFileSync(mainChangelogFile, combinedChangelogFile);
+      }
+    });
+  },
+});
+// Troutstation edit end
 
 export const AutowikiTarget = new Juke.Target({
   parameters: [
@@ -427,7 +508,7 @@ export const LintTarget = new Juke.Target({
 });
 
 export const BuildTarget = new Juke.Target({
-  dependsOn: [TguiTarget, DmTarget],
+  dependsOn: [CombineChangelogsTarget, TguiTarget, DmTarget],
 });
 
 export const ServerTarget = new Juke.Target({
@@ -478,7 +559,7 @@ export const CleanAllTarget = new Juke.Target({
 });
 
 export const TgsTarget = new Juke.Target({
-  dependsOn: [TguiTarget],
+  dependsOn: [CombineChangelogsTarget, TguiTarget],
   executes: async () => {
     Juke.logger.info('Prepending TGS define');
     prependDefines('TGS');

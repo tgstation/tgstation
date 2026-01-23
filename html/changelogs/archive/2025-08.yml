@@ -61,9 +61,6 @@
   subject217:
   - spellcheck: fixed a typo in the operative bomb implant manual
 2025-08-03:
-  Guffy:
-  - troutstation: true
-  - code_imp: altered reagent type of gay water
   SmArtKar:
   - qol: Monster cores now display above corpses when dropped
   Thunder12345:
@@ -128,10 +125,6 @@
   - code_imp: cleaned up closet see through code. It's documented & slightly faster
       performance wise
 2025-08-07:
-  Guffy:
-  - troutstation: true
-  - rscadd: Added water cooler phobia
-  - rscadd: Added random speech for gay water coolers
   Arturlang:
   - code_imp: action's now pass down the clicker via the first arg of Trigger()
   - code_imp: antagonist ui_act now ensures that the owners of the antag datum thesmelves
@@ -158,9 +151,6 @@
   - bugfix: Fixed unrestricted access overlays not showing up on windoors.
   - bugfix: Fixed blood/glass floor glow going over objects
 2025-08-08:
-  Guffy:
-  - troutstation: true
-  - rscadd: gay water overdose
   Arturlang:
   - bugfix: ghosts can't buy heretic powers
   Melbert:
@@ -381,12 +371,6 @@
   plsleavemealon:
   - rscadd: Adds a new bounty app to the PDA allowing you to remotely check your bounties
 2025-08-15:
-  ArchytasBird:
-  - troutstation: true
-  - rscadd: Science order for relics
-  - bugfix: tabling should work
-  - bugfix: organ harvesting effect on relics updated to current safe tm method
-  - refactor: normal relic orders come in a dumpster
   EnterTheJake:
   - balance: Uplink price on the suppressor has been lowered from 3 to 1 TC.
   Ezel:
@@ -490,9 +474,6 @@
   - map: Adds an External Security Camera to the Starboard Vault Wall overlooking
       the AI Upload on Nebulastation
 2025-08-20:
-  Guffy:
-  - troutstation: true
-  - bugfix: fixed ralsei plush not being in the game
   Cameron-The-Raven:
   - bugfix: Brains will no longer runtime when owner-less
   panvxv:

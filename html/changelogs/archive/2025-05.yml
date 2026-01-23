@@ -1,8 +1,4 @@
 2025-05-01:
-  Guffy:
-  - troutstation: true
-  - rscadd: some word replacements for io
-  - rscdel: some word replacements for io
   Ezel/Improvedname, JohnFulpWillard:
   - balance: Cult daggers boomerang back to non-cultists who throw it.
   - balance: Flagellant's robes crushes non-cultists with gravity instead of forcing
@@ -46,16 +42,6 @@
   - bugfix: throwing items on the same tile as you will make a sound again
   - bugfix: fixes bane element not working if it was used by a weapon without a wielder
 2025-05-02:
-  ArchytasBird:
-  - troutstation: true
-  - rscadd: relics now have a procedurally generated web of effects that can happen when introduced to various stimuli
-  - rscadd: relic cargo order to order more relics once the station is picked clean
-  - rscadd: relic pinpointer to monitor relic states & assist in finding fruitful stimuli
-  - rscadd: relic pinpointer to science wardrobe, crafting and autolathe recepies
-  - image: plushie_archy
-  - code_imp: small chance for any relic to have the plushie_archy sprite applied
-  - refactor: minor extension to how relics handle variants
-  - admin: added some admin alerts for potentially disastrous relic effects
   ArrisFairburne:
   - code_imp: removed non-functional ID saving functions
   Goat:
@@ -200,15 +186,6 @@
   TealSeer:
   - bugfix: roundstart photocopiers should no longer be empty on some maps
 2025-05-08:
-  ArchytasBird:
-  - troutstation: true
-  - rscadd: Relic Analyzer to handle activating and displaying relic information, as well as contributing research points for every scanned relic node.
-  - rscadd: Relic Pinpointers have a "sweep" scan mode that will display the nearest relic (activated or not).
-  - rscadd: Relics are listening...
-  - rscadd: Relics are hungry...
-  - rscadd: Relics have knowledge to share...
-  - qol: Relic nodes are now weighted (all equal odds atm)
-  - rscdel: Relic Pinpointers no longer display relic information
   Bisar:
   - image: Animations have been added to inserting/removing items from machines, and
       to inserting things into containers that are not on your person.
@@ -301,12 +278,6 @@
   vinylspiders:
   - bugfix: stops snails from clogging up CI
 2025-05-12:
-  Guffy:
-  - troutstation: true
-  - rscadd: Added Skiff hologram for AI
-  - rscadd: Io foods
-  - qol: Sprinkles orderable from Produce Orders Console
-  - refactor: misnamed folder
   Jacquerel:
   - balance: Regal Rats can now grab mice out of disposal bins, and no longer spawn
       them with the Riot ability.
@@ -407,9 +378,6 @@
   TealSeer:
   - bugfix: fixed cross-server newscaster functionality
 2025-05-17:
-  Guffy:
-  - troutstation: true
-  - sound: Modified frog sound.
   Absolucy:
   - bugfix: False walls properly smooth with objects now, such as other false walls.
   Holoo-1:
@@ -814,9 +782,6 @@
   - spellcheck: Stations in the Spinward Sector have reported malfunctioning AIs swearing
       fealty to the dead god Ratvar.
 2025-05-30:
-  Cirrial:
-  - troutstation: true
-  - rscadd: Anteaters can now see if the foods are snout-sized or not. So can chefs.
   00-Steven:
   - refactor: Refactored the folder/biscuit interaction chain. Please report any issues.
   - bugfix: Picking up paper into a folder/biscuit by clicking on the paper with it

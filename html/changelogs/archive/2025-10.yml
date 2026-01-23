@@ -1,7 +1,4 @@
 2025-10-01:
-  Guffy:
-  - troutstation: true
-  - image: added new ui
   Iajret:
   - bugfix: Fixed an edge case of mineral turfs being generated with 0 amount of ore
       in it.
@@ -537,20 +534,6 @@
   grungussuss:
   - qol: item offers now persist when pulling
 2025-10-17:
-  ArchytasBird:
-  - troutstation: true
-  - rscadd: 'relics have a few new interactions: mouseover'
-  - rscadd: 'relics have a few new nodes: embed, contraband, cloaking'
-  - balance: relics can be changed to be useable as a tool type via implements node
-  - balance: the language node now sets someone's understanding instead of strictly adding
-  - balance: emp effects activate relics
-  - bugfix: relics can hear stuff again
-  - bugfix: tabling now teleports the relic to the table
-  - spellcheck: fixed a few typos
-  Guffy:
-  - troutstation: true
-  - rscadd: Gaywater explosion now affects items
-  - bugfix: Tiles affected by gaywater explosion now cleanable
   Aliceee2ch:
   - qol: Jaws of Recovery can be worn on medical MODSuit suit storage now.
   - rscadd: Added modified Jaws of Recovery and recipe for them. Made from regular
@@ -573,9 +556,6 @@
   - bugfix: Females wearing either a yukata or kimono no longer have holes in their
       clothes.
 2025-10-19:
-  Guffy:
-  - troutstation: true
-  - rscadd: Hugs-The-Moths plushie
   ArchBTW:
   - bugfix: removes fov cone (oversight) with medieval pirate helmet
   Arturlang:
@@ -661,9 +641,6 @@
   tttruancy:
   - balance: Plastic flaps now resist heat better
 2025-10-21:
-  Guffy:
-  - troutstation: true
-  - rscadd: Added crushable Cydonia plush, and vending machine plushes
   Aliceee2ch:
   - spellcheck: Minor grammar fix for extinguishers
   Melbert:
@@ -875,9 +852,6 @@
   - sound: added sounds for utility headwear
   - sound: surgery caps use cloth sounds now
 2025-10-29:
-  Guffy:
-  - troutstation: true
-  - rscadd: youtube poop announcer station trait
   Aliceee2ch:
   - spellcheck: Birdshot plaque was decomissioned and replaced on Catwalk.
   Fghj240:

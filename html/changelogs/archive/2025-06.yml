@@ -287,18 +287,6 @@
   - bugfix: map exported APC's now locate the terminals under them & attach to it
       thus enabling charging & stuff
 2025-06-13:
-  ArchytasBird:
-  - troutstation: true
-  - rscadd: relics can table things
-  - balance: relic blood-lust no longer juice-boxes
-  - bugfix: relic pinpointer general scanning now works
-  - qol: adjusted colors to be more readable
-  - qol: adjusted various span formats to better display hazards
-  - qol: paint condition given a clearer description
-  - bugfix: swapped oview with view - this means standing on a relic is no longer safe
-  - balance: relics now have a (for now) short ban-list of some more disruptive round-ending spawns
-  - balance: relics have a higher minimum reaction time so players have time to respond to threats more
-  - rscadd: \"very_dangerous\" bool to relics to remove current and future guardrails for admeme abuse
   00-Steven:
   - bugfix: The static from holocalls no longer stays even after exiting the holocall.
   Absolucy:

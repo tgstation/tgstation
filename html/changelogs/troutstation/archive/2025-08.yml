@@ -1,0 +1,19 @@
+2025-08-03:
+  Guffy:
+  - code_imp: altered reagent type of gay water
+2025-08-07:
+  Guffy:
+  - rscadd: Added water cooler phobia
+  - rscadd: Added random speech for gay water coolers
+2025-08-08:
+  Guffy:
+  - rscadd: gay water overdose
+2025-08-15:
+  ArchytasBird:
+  - rscadd: Science order for relics
+  - bugfix: tabling should work
+  - bugfix: organ harvesting effect on relics updated to current safe tm method
+  - refactor: normal relic orders come in a dumpster
+2025-08-20:
+  Guffy:
+  - bugfix: fixed ralsei plush not being in the game

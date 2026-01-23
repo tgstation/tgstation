@@ -273,3 +273,4 @@ rust_g64.dll
 # troutstation specific
 /troutstation/unversioned
 /config/cirrdbconfig.txt
+/html/changelogs/combined/archive

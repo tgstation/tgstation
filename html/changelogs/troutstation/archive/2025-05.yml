@@ -1,0 +1,35 @@
+2025-05-01:
+  Guffy:
+  - rscadd: some word replacements for io
+  - rscdel: some word replacements for io
+2025-05-02:
+  ArchytasBird:
+  - rscadd: relics now have a procedurally generated web of effects that can happen when introduced to various stimuli
+  - rscadd: relic cargo order to order more relics once the station is picked clean
+  - rscadd: relic pinpointer to monitor relic states & assist in finding fruitful stimuli
+  - rscadd: relic pinpointer to science wardrobe, crafting and autolathe recepies
+  - image: plushie_archy
+  - code_imp: small chance for any relic to have the plushie_archy sprite applied
+  - refactor: minor extension to how relics handle variants
+  - admin: added some admin alerts for potentially disastrous relic effects
+2025-05-08:
+  ArchytasBird:
+  - rscadd: Relic Analyzer to handle activating and displaying relic information, as well as contributing research points for every scanned relic node.
+  - rscadd: Relic Pinpointers have a "sweep" scan mode that will display the nearest relic (activated or not).
+  - rscadd: Relics are listening...
+  - rscadd: Relics are hungry...
+  - rscadd: Relics have knowledge to share...
+  - qol: Relic nodes are now weighted (all equal odds atm)
+  - rscdel: Relic Pinpointers no longer display relic information
+2025-05-12:
+  Guffy:
+  - rscadd: Added Skiff hologram for AI
+  - rscadd: Io foods
+  - qol: Sprinkles orderable from Produce Orders Console
+  - refactor: misnamed folder
+2025-05-17:
+  Guffy:
+  - sound: Modified frog sound.
+2025-05-30:
+  Cirrial:
+  - rscadd: Anteaters can now see if the foods are snout-sized or not. So can chefs.

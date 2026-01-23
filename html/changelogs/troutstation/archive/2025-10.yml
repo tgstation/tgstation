@@ -1,0 +1,25 @@
+2025-10-01:
+  Guffy:
+  - image: added new ui
+2025-10-17:
+  ArchytasBird:
+  - rscadd: 'relics have a few new interactions: mouseover'
+  - rscadd: 'relics have a few new nodes: embed, contraband, cloaking'
+  - balance: relics can be changed to be useable as a tool type via implements node
+  - balance: the language node now sets someone's understanding instead of strictly adding
+  - balance: emp effects activate relics
+  - bugfix: relics can hear stuff again
+  - bugfix: tabling now teleports the relic to the table
+  - spellcheck: fixed a few typos
+  Guffy:
+  - rscadd: Gaywater explosion now affects items
+  - bugfix: Tiles affected by gaywater explosion now cleanable
+2025-10-19:
+  Guffy:
+  - rscadd: Hugs-The-Moths plushie
+2025-10-21:
+  Guffy:
+  - rscadd: Added crushable Cydonia plush, and vending machine plushes
+2025-10-29:
+  Guffy:
+  - rscadd: youtube poop announcer station trait
