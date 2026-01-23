@@ -644,7 +644,7 @@
 				return FALSE
 	if(LAZYLEN(faction) && ismob(target) && !direct_target)
 		var/mob/target_mob = target
-		if(FAST_FACTION_CHECK(faction, target_mob.get_faction(), allies, target_mob.allies))
+		if(FAST_FACTION_CHECK(faction, target_mob.get_faction(), allies, target_mob.allies, FALSE))
 			return FALSE
 	if(target.density || cross_failed) //This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
 		return TRUE
