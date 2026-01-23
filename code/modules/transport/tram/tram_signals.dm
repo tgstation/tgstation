@@ -354,7 +354,7 @@
 		return PROCESS_KILL
 
 	// Finally the interesting part where it's ACTUALLY approaching
-	if(approach_distance <= red_distance_threshold)
+	if(approach_distance <= red_distance_threshold && operating_status == TRANSPORT_SYSTEM_NORMAL)
 		set_signal_state(XING_STATE_RED)
 		return
 	if(approach_distance <= amber_distance_threshold && operating_status == TRANSPORT_SYSTEM_NORMAL)
