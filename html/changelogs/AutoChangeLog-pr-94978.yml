@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - spellcheck: "The slime management console no longer reads a variable name out incorrectly."
