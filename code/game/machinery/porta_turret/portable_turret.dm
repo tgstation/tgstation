@@ -678,7 +678,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	A.firer = src
 	A.fired_from = src
 	if(ignore_faction)
-		A.ignored_factions = faction
+		APPLY_FACTION_AND_ALLIES_FROM(A, src)
 	A.fire()
 	return A
 
