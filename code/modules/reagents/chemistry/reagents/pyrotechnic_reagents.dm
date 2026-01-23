@@ -30,7 +30,7 @@
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/nitroglycerin/on_spark_act(power_charge, spark_flags)
-	reagent_explode(holder, volume, strengthdiv = 2, clear_holder_reagents = FALSE)
+	reagent_explode(holder, volume, strengthdiv = 2, clear_holder_reagents = FALSE, flame_factor = 1)
 	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 /datum/reagent/stabilizing_agent
@@ -144,7 +144,7 @@
 			return
 
 	if (power_charge >= STANDARD_CELL_CHARGE || holder.chem_temp >= 474)
-		reagent_explode(holder, volume, modifier = 5, strengthdiv = 10, clear_holder_reagents = FALSE)
+		reagent_explode(holder, volume, modifier = 5, strengthdiv = 10, clear_holder_reagents = FALSE, flame_factor = 1)
 		return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 	holder.my_atom.visible_message(span_boldnotice("Sparks start flying around the gunpowder!"))
@@ -164,11 +164,11 @@
 	if (power_charge)
 		// Okay but what if we made a REALLY big boom?
 		var/power_coeff = log(2, power_charge / STANDARD_CELL_CHARGE)
-		reagent_explode(holder, volume, modifier = min(2 * power_coeff, 8), strengthdiv = 7 / min(power_coeff, 4), clear_holder_reagents = FALSE)
+		reagent_explode(holder, volume, modifier = min(2 * power_coeff, 8), strengthdiv = 7 / min(power_coeff, 4), clear_holder_reagents = FALSE, flame_factor = 1)
 	else if (holder.chem_temp >= 474)
-		reagent_explode(holder, volume, modifier = 2, strengthdiv = 7, clear_holder_reagents = FALSE)
+		reagent_explode(holder, volume, modifier = 2, strengthdiv = 7, clear_holder_reagents = FALSE, flame_factor = 1)
 	else
-		reagent_explode(holder, volume, strengthdiv = 8, clear_holder_reagents = FALSE)
+		reagent_explode(holder, volume, strengthdiv = 8, clear_holder_reagents = FALSE, flame_factor = 1)
 	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 /datum/reagent/tatp
@@ -179,7 +179,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/tatp/on_spark_act(power_charge, spark_flags)
-	reagent_explode(holder, volume, strengthdiv = 1.5 + rand() * 1.5, clear_holder_reagents = FALSE)
+	reagent_explode(holder, volume, strengthdiv = 1.5 + rand() * 1.5, clear_holder_reagents = FALSE, flame_factor = 1)
 	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 /datum/reagent/flash_powder

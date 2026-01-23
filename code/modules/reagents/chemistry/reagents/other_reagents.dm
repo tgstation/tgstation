@@ -1319,7 +1319,7 @@
 	if (spark_flags & SPARK_ACT_WEAKEN_COMMON)
 		strengthdiv *= 3 // Noticeably weaker than waterpot, at least put some effort in, cmon
 
-	reagent_explode(holder, volume, strengthdiv = strengthdiv, clear_holder_reagents = FALSE)
+	reagent_explode(holder, volume, strengthdiv = strengthdiv, clear_holder_reagents = FALSE, flame_factor = 1)
 	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 /datum/reagent/space_cleaner

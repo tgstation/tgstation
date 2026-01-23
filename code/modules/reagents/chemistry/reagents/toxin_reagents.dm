@@ -154,9 +154,11 @@
 /datum/reagent/toxin/plasma/on_spark_act(power_charge, spark_flags)
 	// Tape up your plasma IEDs
 	if ((spark_flags & SPARK_ACT_WEAKEN_COMMON) && !(spark_flags & SPARK_ACT_ENCLOSED))
-		if(temp < LIQUID_PLASMA_BP)
+		if(holder.chem_temp < LIQUID_PLASMA_BP)
 			return NONE
-		exposed_turf.atmos_spawn_air("[GAS_PLASMA]=[volume];[TURF_TEMPERATURE(holder.chem_temp)]")
+		var/turf/holder_turf = get_turf(holder)
+		if (holder_turf)
+			holder_turf.atmos_spawn_air("[GAS_PLASMA]=[volume];[TURF_TEMPERATURE(holder.chem_temp)]")
 		return SPARK_ACT_NON_DESTRUCTIVE
 
 	// If we have any stabilizing agent in the mix, we need 0.2% of a standard cell value per mol of agent to be spent at once to blow
@@ -174,7 +176,7 @@
 		// High current can only get you so far before you get a sharp dropoff
 		if (power_modifier > current_limit)
 			power_modifier = current_limit + log(power_modifier - current_limit + 1)
-	reagent_explode(holder, volume, modifier = power_modifier, strengthdiv = strengthdiv, clear_holder_reagents = FALSE)
+	reagent_explode(holder, volume, modifier = power_modifier, strengthdiv = strengthdiv, clear_holder_reagents = FALSE, flame_factor = 1)
 	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 #undef LIQUID_PLASMA_BP
