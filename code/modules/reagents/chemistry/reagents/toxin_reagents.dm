@@ -175,7 +175,7 @@
 		var/current_limit = round(volume / LIQUID_PLASMA_VOLUME_POWER_CAP, 1)
 		// High current can only get you so far before you get a sharp dropoff
 		if (power_modifier > current_limit)
-			power_modifier = current_limit + log(power_modifier - current_limit + 1)
+			power_modifier = round(current_limit + log(power_modifier - current_limit + 1), 1)
 	reagent_explode(holder, volume, modifier = power_modifier, strengthdiv = strengthdiv, clear_holder_reagents = FALSE, flame_factor = 1)
 	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
