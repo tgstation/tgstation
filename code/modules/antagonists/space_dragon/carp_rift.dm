@@ -159,7 +159,7 @@
 	if(charge_state == CHARGE_COMPLETED)
 		if(SPT_PROB(1.25, seconds_per_tick) && dragon)
 			var/mob/living/newcarp = new dragon.ai_to_spawn(loc)
-			newcarp.faction = dragon.owner.current.faction.Copy()
+			newcarp.set_faction(dragon.owner.current.get_faction())
 		if(SPT_PROB(1.5, seconds_per_tick))
 			var/rand_dir = pick(GLOB.cardinals)
 			GLOB.move_manager.move_to(src, get_step(src, rand_dir), 1)
@@ -258,7 +258,7 @@
 	if(isnull(dragon))
 		return
 	var/mob/living/newcarp = new dragon.minion_to_spawn(loc)
-	newcarp.faction = dragon.owner.current.faction
+	SET_FACTION_AND_ALLIES_FROM(newcarp, dragon.owner.current)
 	newcarp.AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
 	newcarp.AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
 	dragon.wavespeak?.link_mob(newcarp)

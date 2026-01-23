@@ -1,5 +1,5 @@
 /*Voice Change
- * Slight stealth reduction
+ * Slight stealth increase
  * Reduces resistance
  * Reduces stage speed
  * Increases transmissibility
@@ -11,8 +11,8 @@
 	name = "Voice Change"
 	desc = "The virus alters the pitch and tone of the host's vocal cords, changing how their voice sounds."
 	illness = "Mime Crisis"
-	stealth = -1
-	resistance = -2
+	stealth = 2
+	resistance = -1
 	stage_speed = -2
 	transmittable = 2
 	level = 6
@@ -21,6 +21,7 @@
 	symptom_delay_min = 60
 	symptom_delay_max = 120
 	required_organ = ORGAN_SLOT_TONGUE
+	symptom_cure = /datum/reagent/inverse/healing/convermol
 	threshold_descs = list(
 		"Transmission 14" = "The host's language center of the brain is damaged, leading to complete inability to speak or understand any language.",
 		"Stage Speed 7" = "Changes voice more often.",

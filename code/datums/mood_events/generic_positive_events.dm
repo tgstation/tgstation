@@ -706,3 +706,8 @@
 	mood_change = 3
 	timeout = 2 MINUTES
 	event_flags = MOOD_EVENT_WHIMSY
+
+/datum/mood_event/bibulous_hangover
+	description = "What a night! I can't wait to do it all again!"
+	mood_change = 2
+	timeout = 10 MINUTES

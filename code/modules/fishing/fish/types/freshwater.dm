@@ -253,8 +253,17 @@
 /obj/item/fish/tadpole/proc/gestation(mob/living/user)
 	if(QDELETED(user) || QDELETED(src))
 		return
+	user.visible_message(span_suicide("A live frog bursts out of [user]!"))
 	new /obj/effect/spawner/random/frog(user.drop_location())
-	user.gib()
+
+	var/obj/item/bodypart/chest = user.get_bodypart(BODY_ZONE_CHEST)
+
+	if (chest)
+		chest.dismember()
+		user.death()
+	else
+		user.gib(DROP_ALL_REMAINS)
+
 	qdel(src)
 
 /obj/item/fish/perch

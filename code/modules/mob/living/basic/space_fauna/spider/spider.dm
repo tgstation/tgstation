@@ -152,7 +152,7 @@
 
 	var/mob/living/basic/spider/giant/grown = change_mob_type(grow_as, get_turf(src), initial(grow_as.name))
 	ADD_TRAIT(grown, TRAIT_WAS_EVOLVED, REF(src))
-	grown.faction = faction.Copy()
+	SET_FACTION_AND_ALLIES_FROM(grown, src)
 	grown.directive = directive
 	grown.set_name()
 	grown.set_brute_loss(get_brute_loss())

@@ -106,6 +106,8 @@
 #define VV_HK_OBSERVE_FOLLOW "observe_follow"
 #define VV_HK_GET_MOVABLE "get_movable"
 #define VV_HK_DEADCHAT_PLAYS "deadchat_plays"
+#define VV_HK_ADD_REMOVE_FACTION "add_remove_faction"
+#define VV_HK_GET_FACTIONS "add_remove_factions"
 
 // /obj
 #define VV_HK_OSAY "osay"

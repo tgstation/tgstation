@@ -27,7 +27,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	greyscale_colors = GONDOLA_COLORS
 	organ_traits = list(TRAIT_PACIFISM)
 	///keeps track of whether the receiver actually gained factions
-	var/list/factions_to_remove = list()
+	var/list/factions_to_remove
 
 /obj/item/organ/heart/gondola/Initialize(mapload)
 	. = ..()
@@ -37,18 +37,16 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 
 /obj/item/organ/heart/gondola/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
-	if(!(FACTION_HOSTILE in receiver.faction))
-		factions_to_remove += FACTION_HOSTILE
-	if(!(FACTION_MINING in receiver.faction))
-		factions_to_remove += FACTION_MINING
-	receiver.faction |= list(FACTION_HOSTILE, FACTION_MINING)
+	if(!receiver.has_faction(FACTION_HOSTILE))
+		LAZYADD(factions_to_remove, FACTION_HOSTILE)
+	if(!receiver.has_faction(FACTION_MINING))
+		LAZYADD(factions_to_remove, FACTION_MINING)
+	receiver.add_faction(list(FACTION_HOSTILE, FACTION_MINING))
 
 /obj/item/organ/heart/gondola/on_mob_remove(mob/living/carbon/heartless, special, movement_flags)
 	. = ..()
-	for(var/faction in factions_to_remove)
-		heartless.faction -= faction
-	//reset this for a different target
-	factions_to_remove = list()
+	if(LAZYLEN(factions_to_remove))
+		heartless.remove_faction(factions_to_remove)
 
 /// Zen (tounge): You can no longer speak, but get a powerful positive moodlet
 /obj/item/organ/tongue/gondola

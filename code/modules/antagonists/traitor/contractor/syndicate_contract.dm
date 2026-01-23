@@ -117,7 +117,7 @@
 
 	var/obj/structure/closet/supplypod/extractionpod/pod = source
 	// Handle the pod returning
-	pod.startExitSequence(pod)
+	pod.start_exit_sequence(pod)
 
 	if(ishuman(person_sent))
 		var/mob/living/carbon/human/target = person_sent

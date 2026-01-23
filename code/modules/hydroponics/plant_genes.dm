@@ -624,10 +624,6 @@
 	pocell.charge = pocell.maxcharge
 	pocell.name = "[our_plant.name] battery"
 	pocell.desc = "A rechargeable plant-based power cell. This one has a rating of [display_energy(pocell.maxcharge)], and you should not swallow it."
-
-	if(our_plant.reagents.has_reagent(/datum/reagent/toxin/plasma, 2))
-		pocell.rigged = TRUE
-
 	qdel(our_plant)
 
 /*
@@ -962,6 +958,13 @@
 	if(istype(grown_plant))
 		grown_plant.preserved_food = TRUE
 
+/// Ignores tox damage
+/datum/plant_gene/trait/tox_resistance
+	name = "Toxin Resistance"
+	description = "It is immune to the negative effects of a toxic environment."
+	icon = FA_ICON_SKULL_CROSSBONES
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+
 /datum/plant_gene/trait/carnivory
 	name = "Obligate Carnivory"
 	description = "Pests have positive effect on the plant health."
@@ -985,6 +988,12 @@
 	description = "It is a mushroom that needs no water, less light and can't be overtaken by weeds."
 	icon = FA_ICON_DROPLET_SLASH
 
+/// A plant that thrives in toxic environments.
+/datum/plant_gene/trait/plant_type/toxin_adaptation
+	name = "Toxin Adaptation"
+	description = "It is a toxic plant that thrives in poisonous environments."
+	icon = FA_ICON_SKULL_CROSSBONES
+
 /// Currently unused and does nothing. Appears in strange seeds.
 /datum/plant_gene/trait/plant_type/alien_properties
 	name ="?????"
@@ -1006,4 +1015,3 @@
 	description = "A plant that needs the firm embrace of soil to develop properly, produces small irregular produce when grown hydroponically."
 	icon =  FA_ICON_MOUND
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
-

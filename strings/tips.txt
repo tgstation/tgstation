@@ -227,7 +227,7 @@ As the Head of Security, you can call for executions or forced cyborgization, bu
 As the Malfunctioning AI, look into flooding the station with plasma fires to kill off large portions of the crew, letting you pick off the remaining few with space suits who escaped.
 As the Malfunctioning AI, you can shunt to an APC if the situation gets bad. This disables your doomsday device if it is active.
 As the Malfunctioning AI, you should either order your cyborgs to dismantle the robotics console or blow it up yourself in order to protect them.
-As the Mime, you can use :r and :l to speak through your ventriloquist dummy.
+As the Mime, you can use :R / .R or :L / .L to speak through a ventriloquist dummy, depending on which hand you are holding it in.
 As the Mime, your invisible wall power blocks people as well as projectiles. You can use it in a pinch to delay your pursuer.
 As the Mime, your oath of silence is your source of power. Breaking it robs you of your powers and of your honor.
 As the Quartermaster, be sure to check the manifests on crates you receive to make sure all the info is correct. If there's a mistake, stamp the manifest DENIED and send it back in a crate with the items untouched for a refund!
@@ -320,8 +320,11 @@ You can right click someone with wire cutters, jaws of life, and box cutters to 
 You can screwdriver any non-chemical grenade to shorten fuses from 5 seconds, to 3 seconds, to instant boom! Nobody ever expects this.
 You can spray a fire extinguisher, throw items or fire a gun while floating through space to change your direction. Simply fire opposite to where you want to go.
 You can swap floor tiles by holding a crowbar in one hand and a stack of tiles in the other.
+You can use :I / .I to speak through any intercom within arm's reach. This allows you to talk into it without manually turning on its microphone, and even works if you are in critical condition (but not unconscious)!
+You can use :L / .L or :R / .R to speak through an item being held in your left or right hand respectively. This allows you to talk into a station-bounced radio without manually turning on its microphone, or even to pretend to be a toy!
 You can use a machine in the vault to deposit cash or rob Cargo's department funds.
 You can use a multitool in your hand to track the area's local APC.
+You can use a screwdriver to remove an encryption key from a radio headset. The key can then be installed into your own headset, an intercom, or even a station-bounced radio, allowing you to eavesdrop on secure communications.
 You can use an upgraded microwave to charge your PDA!
 You don't need to destroy a Spacecoin machine to make your funds stop draining. Swiping your ID on it will stop the withdrawal.
 You'll quickly lose your interest in the game if you play to win and kill. If you find yourself doing this, take a step back and talk to people - it's a much better experience!

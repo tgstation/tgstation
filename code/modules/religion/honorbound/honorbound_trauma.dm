@@ -104,10 +104,10 @@
 /// Checks a mob for any obvious signs of evil, and applies a guilty reason for each.
 /datum/brain_trauma/special/honorbound/proc/check_visible_guilt(mob/living/attacked_mob)
 	//will most likely just hit nuke ops but good catch-all. WON'T hit traitors
-	if(ROLE_SYNDICATE in attacked_mob.faction)
+	if(attacked_mob.has_faction(ROLE_SYNDICATE))
 		guilty(attacked_mob, "for their misaligned association with the Syndicate!")
 	//not an antag datum check so it applies to wizard minions as well
-	if(ROLE_WIZARD in attacked_mob.faction)
+	if(attacked_mob.has_faction(ROLE_WIZARD))
 		guilty(attacked_mob, "for blasphemous magicks!")
 	if(HAS_TRAIT(attacked_mob, TRAIT_CULT_HALO))
 		guilty(attacked_mob, "for blasphemous worship!")

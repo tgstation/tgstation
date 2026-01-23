@@ -429,7 +429,7 @@ effective or pretty fucking useless.
 
 /obj/machinery/porta_turret/syndicate/toolbox/examine(mob/user)
 	. = ..()
-	if(faction_check(faction, user.faction))
+	if(faction_check_atom(user))
 		. += span_notice("You can repair it by <b>left-clicking</b> with a combat wrench.")
 		. += span_notice("You can fold it by <b>right-clicking</b> with a combat wrench.")
 
@@ -494,7 +494,7 @@ effective or pretty fucking useless.
 		qdel(src)
 
 /obj/machinery/porta_turret/syndicate/toolbox/ui_status(mob/user, datum/ui_state/state)
-	if(faction_check(user.faction, faction))
+	if(faction_check_atom(user))
 		return ..()
 
 	return UI_CLOSE

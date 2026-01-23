@@ -15,5 +15,5 @@
 
 /datum/action/cooldown/spell/basic_projectile/juggernaut/fire_projectile(atom/target, mob/caster)
 	var/obj/projectile/magic/aoe/juggernaut/to_fire = ..()
-	to_fire.ignored_factions = caster.faction
+	to_fire.ignored_factions = caster.get_faction()
 	return to_fire

@@ -276,13 +276,13 @@
 	if(!id.registered_account)
 		to_chat(user, span_warning("ERROR: Identification card lacks registered bank account!"))
 		return ITEM_INTERACT_BLOCKING
-	if(id.registered_account != pin_owner)
+	if(pin_owner && id.registered_account != pin_owner)
 		to_chat(user, span_warning("ERROR: This firing pin has already been authorized!"))
 		return ITEM_INTERACT_BLOCKING
 	if(id.registered_account == pin_owner)
 		to_chat(user, span_notice("You unlink the card from the firing pin."))
 		gun_owners -= user.get_bank_account()
-		pin_owner = NUTRITION_LEVEL_START_MIN
+		pin_owner = null
 		return ITEM_INTERACT_SUCCESS
 	var/transaction_amount = tgui_input_number(user, "Insert valid deposit amount for gun purchase", "Money Deposit")
 	if(!transaction_amount || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))

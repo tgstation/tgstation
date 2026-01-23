@@ -491,7 +491,7 @@
 
 //BORG, Ninja objective converts a borg to a syndicate version
 /mob/living/silicon/robot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!ninja || !hacking_module || (ROLE_NINJA in faction))
+	if(!ninja || !hacking_module || (has_faction(ROLE_NINJA)))
 		return NONE
 
 	to_chat(src, span_danger("Warni-***BZZZZZZZZZRT*** UPLOADING SPYDERPATCHER VERSION 9.5.2..."))

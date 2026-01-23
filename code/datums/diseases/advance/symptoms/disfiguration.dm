@@ -18,6 +18,7 @@
 	severity = 1
 	symptom_delay_min = 25
 	symptom_delay_max = 75
+	symptom_cure = /datum/reagent/consumable/milk
 
 /datum/symptom/disfiguration/Activate(datum/disease/advance/A)
 	. = ..()

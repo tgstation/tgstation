@@ -4,6 +4,10 @@
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
+/area/station/engineering/circuit_workshop
+	name = "\improper Circuit Workshop"
+	icon_state = "cir_wor"
+
 /area/station/engineering/engine_smes
 	name = "\improper Engineering SMES"
 	icon_state = "engine_smes"

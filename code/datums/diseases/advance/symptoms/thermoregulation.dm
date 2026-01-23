@@ -12,7 +12,7 @@
 	stealth = 0
 	resistance = 1
 	stage_speed = -2
-	transmittable = -1
+	transmittable = 0
 	level = 5
 	severity = 0
 	threshold_descs = list(

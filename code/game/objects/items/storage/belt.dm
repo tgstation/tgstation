@@ -589,13 +589,13 @@
 	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
 	var/stored_blade
 	actions_types = list(/datum/action/innate/blade_counter)
-	action_slots = ITEM_SLOT_BELT
+	action_slots = ITEM_SLOT_BELT | ITEM_SLOT_SUITSTORE
 	COOLDOWN_DECLARE(resheath_cooldown)
 	COOLDOWN_DECLARE(full_ability_cooldown)
 
 /obj/item/storage/belt/sheath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/update_icon_updates_onmob, action_slots)
 	RegisterSignal(src, COMSIG_ATOM_STORED_ITEM, PROC_REF(post_resheath))
 
 /obj/item/storage/belt/sheath/Destroy(force)

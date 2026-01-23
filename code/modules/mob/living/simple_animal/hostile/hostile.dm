@@ -649,7 +649,7 @@
 		return
 	friends += new_friend
 	RegisterSignal(new_friend, COMSIG_QDELETING, PROC_REF(handle_friend_del))
-	faction = new_friend.faction.Copy()
+	SET_FACTION_AND_ALLIES_FROM(src, new_friend)
 
 /mob/living/simple_animal/hostile/lazarus_revive(mob/living/reviver, malfunctioning)
 	. = ..()

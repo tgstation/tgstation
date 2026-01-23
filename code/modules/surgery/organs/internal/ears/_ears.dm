@@ -305,6 +305,13 @@
 	bang_protect = EAR_PROTECTION_NORMAL
 	damage_multiplier = 0.5
 
+/obj/item/organ/ears/cybernetic/volume
+	name = "volume-adjusting cybernetic ears"
+	icon_state = "ears-c-u"
+	desc = "Advanced cybernetic ears capable of dampening loud noises to protect their user."
+	bang_protect = 1
+	damage_multiplier = 0.5
+
 // "X-ray ears" that let you hear through walls
 /obj/item/organ/ears/cybernetic/xray
 	name = "wall-penetrating cybernetic ears"

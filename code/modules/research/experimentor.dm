@@ -286,6 +286,7 @@
 					if(prob(EFFECT_PROB_VERYHIGH) && !(locate(/obj/effect/decal/cleanable/greenglow) in T))
 						var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
 						reagentdecal.reagents.add_reagent(/datum/reagent/uranium/radium, 7)
+			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_MEDIUM * (100 - malfunction_probability_coeff) * 0.01))
 			var/savedName = "[exp_on]"
 			ejectItem(TRUE)
