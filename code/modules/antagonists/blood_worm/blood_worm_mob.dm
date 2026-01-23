@@ -149,7 +149,7 @@
 	update_name()
 
 /mob/living/basic/blood_worm/Destroy()
-	unregister_host()
+	unregister_host(deleting = TRUE)
 
 	spit_action = null
 	leech_action = null

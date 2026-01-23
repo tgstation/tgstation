@@ -101,11 +101,12 @@
 	// Uses the icon file of the current mob. This means the animation is 32x48 for the adults.
 	flick("leave-[effect_name]", src)
 
-/mob/living/basic/blood_worm/proc/unregister_host()
+/mob/living/basic/blood_worm/proc/unregister_host(deleting)
 	if (!host)
 		return
 
-	possess_worm()
+	if(!deleting)
+		possess_worm()
 
 	UnregisterSignal(host, list(
 		COMSIG_QDELETING,
@@ -127,10 +128,12 @@
 	host.RemoveElement(/datum/element/hand_organ_insertion)
 
 	remove_actions(src, host_actions)
-	grant_actions(src, innate_actions)
+	if(!deleting)
+		grant_actions(src, innate_actions)
 
 	host.remove_blood_volume_modifier(REF(src))
-	sync_health(already_ejecting = TRUE)
+	if(!deleting)
+		sync_health(already_ejecting = TRUE)
 
 	remove_host_hud()
 
@@ -139,7 +142,7 @@
 	if (host.stat != DEAD)
 		host.death() // I don't care if you have TRAIT_NODEATH, can't die from bloodloss normally, or whatever else. I just need you to die.
 
-	log_blood_worm("[key_name(src)] unregistered their host [key_name(host)]")
+	log_blood_worm("[key_name(src)][deleting ? "was deleted and " : " "]unregistered their host [key_name(host)]")
 
 	host = null
 
