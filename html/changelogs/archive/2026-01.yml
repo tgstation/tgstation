@@ -611,3 +611,7 @@
   - bugfix: Fixed the regex mode toggle in the spawn (verb) panel.
   lelandkemble:
   - map: The last full wooden barricades on top of dense objects have been excised
+2026-01-24:
+  JoshAdamPowell:
+  - admin: Someone gave Centcom permission to access the anomalous materials research
+      department. The result surely can't be good...
