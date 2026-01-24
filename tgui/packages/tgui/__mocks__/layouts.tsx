@@ -5,6 +5,7 @@ import type { PropsWithChildren } from 'react';
 type WindowProps = Partial<{
   title: string;
 }>;
+
 function Window(props: PropsWithChildren<WindowProps>) {
   const { title = 'Test UI', children } = props;
 
