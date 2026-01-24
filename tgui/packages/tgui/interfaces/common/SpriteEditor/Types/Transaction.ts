@@ -1,8 +1,8 @@
 import type { Dir, StringLayer } from './types';
 
-export interface LayerTransaction {
+export type LayerTransaction = {
   dir: Dir;
   layer: number;
   getPreviewLayer(baseLayer: StringLayer): StringLayer;
   commit(): void;
-}
+};

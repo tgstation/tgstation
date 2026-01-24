@@ -1,9 +1,9 @@
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useEffect, useState } from 'react';
+import { useBackend } from 'tgui/backend';
 import { Box, Button, Floating, Stack } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 import { capitalize } from 'tgui-core/string';
-import { useBackend } from '../../../backend';
 import {
   colorsAtom,
   currentColorAtom,

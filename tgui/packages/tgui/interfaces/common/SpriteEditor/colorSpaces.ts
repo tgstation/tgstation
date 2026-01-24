@@ -95,7 +95,7 @@ export const parseHexColorString = (color: string): EditorColor => ({
 
 type BothSpaces = RGBA & HSVA;
 
-export const AsBothSpaces = (color: EditorColor): BothSpaces =>
+export const asBothSpaces = (color: EditorColor): BothSpaces =>
   isRgb(color)
     ? { ...color, ...rgb2hsv(color) }
     : { ...color, ...hsv2rgb(color) };

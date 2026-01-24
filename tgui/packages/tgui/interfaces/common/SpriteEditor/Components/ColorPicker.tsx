@@ -16,7 +16,7 @@ import {
   type StringStyleMap,
 } from 'tgui-core/ui';
 import {
-  AsBothSpaces,
+  asBothSpaces,
   hsva2hslString,
   parseHexColorString,
   rgb2hexstring,
@@ -358,7 +358,7 @@ export const ColorPicker = (props: ColorPickerProps) => {
     s = 0,
     v,
     a = 1,
-  } = AsBothSpaces(color ?? initialColor);
+  } = asBothSpaces(color ?? initialColor);
   const alpha = colorMode === SpriteEditorColorMode.Rgba;
   switch (colorMode) {
     case SpriteEditorColorMode.Rgba:

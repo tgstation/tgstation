@@ -1,4 +1,4 @@
-import { useBackend } from 'tgui/backend';
+import { sendAct as act } from 'tgui/events/act';
 import { colorToHexString } from '../../colorSpaces';
 import { constrainToIconGrid } from '../../helpers';
 import { Tool } from '../Tool';
@@ -20,7 +20,6 @@ export class Bucket extends Tool {
     const { width, height } = data;
     const [px, py, inBounds] = constrainToIconGrid(x, y, width, height);
     if (!inBounds) return undefined;
-    const { act } = useBackend();
     act('spriteEditorCommand', {
       command: 'transaction',
       transaction: {

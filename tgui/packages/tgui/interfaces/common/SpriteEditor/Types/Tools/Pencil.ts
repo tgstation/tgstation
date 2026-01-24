@@ -1,4 +1,4 @@
-import { useBackend } from 'tgui/backend';
+import { sendAct as act } from 'tgui/events/act';
 import { colorToHexString } from '../../colorSpaces';
 import { constrainToIconGrid, copyLayer } from '../../helpers';
 import { Tool } from '../Tool';
@@ -37,7 +37,6 @@ class PencilTransaction implements LayerTransaction {
   }
 
   commit() {
-    const { act } = useBackend();
     act('spriteEditorCommand', {
       command: 'transaction',
       transaction: {
