@@ -20,6 +20,14 @@
 	unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 
+/obj/item/bodypart/arm/left/anteater/on_adding(mob/living/carbon/new_owner)
+	. = ..()
+	new_owner.AddComponentFrom(REF(src), /datum/component/shovel_hands)
+
+/obj/item/bodypart/arm/left/anteater/on_removal(mob/living/carbon/old_owner)
+	. = ..()
+	old_owner.RemoveComponentSource(REF(src), /datum/component/shovel_hands)
+
 /obj/item/bodypart/arm/right/anteater
 	icon_greyscale = 'troutstation/icons/mob/human/species/anteater/bodyparts.dmi'
 	limb_id = SPECIES_ANTEATER
@@ -28,6 +36,14 @@
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
+
+/obj/item/bodypart/arm/right/anteater/on_adding(mob/living/carbon/new_owner)
+	. = ..()
+	new_owner.AddComponentFrom(REF(src), /datum/component/shovel_hands)
+
+/obj/item/bodypart/arm/right/anteater/on_removal(mob/living/carbon/old_owner)
+	. = ..()
+	old_owner.RemoveComponentSource(REF(src), /datum/component/shovel_hands)
 
 /obj/item/bodypart/leg/left/anteater
 	icon_greyscale = 'troutstation/icons/mob/human/species/anteater/bodyparts.dmi'
