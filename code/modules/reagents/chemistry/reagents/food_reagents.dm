@@ -354,6 +354,7 @@
 /datum/reagent/consumable/mustard
 	name = "Mustard"
 	description = "Spicy, tangy sauce, made from the mustard plant."
+	nutriment_factor = 5
 	color = "#ffd129"
 	taste_description = "mustard"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
