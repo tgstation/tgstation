@@ -23,7 +23,7 @@
 
 /datum/component/cult_kill_tracker/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_ZONE, COMSIG_ITEM_AFTERATTACK, COMSIG_ATOM_EXAMINE, COMSIG_ITEM_CULT_SACRIFICE, COMSIG_PROJECTILE_ON_HIT))
+	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_ZONE, COMSIG_ITEM_AFTERATTACK, COMSIG_ATOM_EXAMINE, COMSIG_ITEM_CULT_SACRIFICE, COMSIG_PROJECTILE_ON_HIT, COMSIG_PROJECTILE_POST_HIT_LIVING))
 
 /datum/component/cult_kill_tracker/proc/on_attack_zone(obj/item/source, mob/living/target, mob/living/user)
 	SIGNAL_HANDLER
