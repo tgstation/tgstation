@@ -40,7 +40,7 @@
 	visible_message(span_suicide("[user] swallows [src] whole! It looks like [user.p_theyre()] trying to derez [user.p_them()]selves!"))
 	var/area/station/holodeck/holo_area = get_area(src)
 	if(!istype(holo_area))
-		user.dust(just_ash = TRUE, drop_items = FALSE)
+		user.dust(just_ash = TRUE, drop_items = TRUE)
 		return MANUAL_SUICIDE
 	holo_area.linked.add_to_spawned(user) // oh no
 	return MANUAL_SUICIDE_NONLETHAL

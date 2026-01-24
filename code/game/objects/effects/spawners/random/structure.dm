@@ -210,6 +210,11 @@
 		/obj/structure/barricade/wooden/crude,
 	)
 
+/obj/effect/spawner/random/structure/barricade/crude
+	name = "crude barricade spawner"
+	icon_state = "barricade_crude"
+	loot = list(/obj/structure/barricade/wooden/crude)
+
 /obj/effect/spawner/random/structure/billboard
 	name = "billboard spawner"
 	icon = 'icons/obj/fluff/billboard.dmi'
