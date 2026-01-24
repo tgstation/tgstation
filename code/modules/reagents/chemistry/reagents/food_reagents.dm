@@ -357,6 +357,7 @@
 	nutriment_factor = 5
 	color = "#ffd129"
 	taste_description = "mustard"
+ nutriment_factor = 5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/mustard
 
