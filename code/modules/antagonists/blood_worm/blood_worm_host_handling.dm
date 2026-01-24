@@ -136,7 +136,7 @@
 
 	remove_host_hud()
 
-	if(deleting && !QDELETED(host)) // If the host was destroyed too, we don't really want to be doing this stuff here
+	if(!QDELETED(host)) // If the host was destroyed too, we don't really want to be doing this stuff here
 		host.set_blood_volume(0)
 
 		if (host.stat != DEAD)
