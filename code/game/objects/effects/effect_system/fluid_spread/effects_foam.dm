@@ -182,26 +182,22 @@
 /datum/effect_system/fluid_spread/foam
 	effect_type = /obj/effect/particle_effect/fluid/foam
 	/// A container for all of the chemicals we distribute through the foam.
-	var/datum/reagents/chemholder
+	var/datum/reagents/chemholder = null
 	/// The amount that
 	var/reagent_scale = FOAM_REAGENT_SCALE
 	/// What type of thing the foam should leave behind when it dissipates.
 	var/atom/movable/result_type = null
 
-
-/datum/effect_system/fluid_spread/foam/New()
-	..()
+/datum/effect_system/fluid_spread/foam/New(turf/location, range = 1, amount = null, atom/holder, datum/reagents/carry = null, result_type = null, stop_reactions = FALSE)
+	. = ..()
 	chemholder = new(1000, NO_REACT)
+	carry?.trans_to(chemholder, carry.total_volume, no_react = stop_reactions, copy_only = TRUE)
+	if(!isnull(result_type))
+		src.result_type = result_type
 
 /datum/effect_system/fluid_spread/foam/Destroy()
 	QDEL_NULL(chemholder)
 	return ..()
-
-/datum/effect_system/fluid_spread/foam/set_up(range = 1, amount = DIAMOND_AREA(range), atom/holder, atom/location = null, datum/reagents/carry = null, result_type = null, stop_reactions = FALSE)
-	. = ..()
-	carry?.trans_to(chemholder, carry.total_volume, no_react = stop_reactions, copy_only = TRUE)
-	if(!isnull(result_type))
-		src.result_type = result_type
 
 /datum/effect_system/fluid_spread/foam/start(log = FALSE)
 	var/obj/effect/particle_effect/fluid/foam/foam = new effect_type(location, new /datum/fluid_group(amount))
@@ -234,7 +230,6 @@
 /datum/effect_system/fluid_spread/foam/long
 	effect_type = /obj/effect/particle_effect/fluid/foam/long_life
 	reagent_scale = FOAM_REAGENT_SCALE * (30 / 8)
-
 
 // Firefighting foam
 /// A variant of foam which absorbs plasma in the air if there is a fire.
@@ -498,9 +493,7 @@
 
 /obj/effect/spawner/foam_starter/Initialize(mapload)
 	. = ..()
-
-	var/datum/effect_system/fluid_spread/foam/foam = new foam_type()
-	foam.set_up(foam_size, holder = src, location = loc)
+	var/datum/effect_system/fluid_spread/foam/foam = new foam_type(loc, foam_size, holder = src)
 	foam.start()
 
 /obj/effect/spawner/foam_starter/small

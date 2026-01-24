@@ -5,8 +5,8 @@
 // will always spawn at the items location.
 /////////////////////////////////////////////
 
-/proc/do_sparks(number, cardinal_only, atom/source)
-	var/datum/effect_system/basic/spark_spread/sparks = new(source, number, cardinal_only)
+/proc/do_sparks(number, cardinal_only, atom/source, spark_type = /datum/effect_system/basic/spark_spread)
+	var/datum/effect_system/basic/spark_spread/sparks = new spark_type(source, number, cardinal_only)
 	sparks.autocleanup = TRUE
 	sparks.start()
 
@@ -98,7 +98,6 @@
 /obj/effect/particle_effect/sparks/electricity
 	name = "lightning"
 	icon_state = "electricity"
-
 
 /datum/effect_system/basic/lightning_spread
 	effect_type = /obj/effect/particle_effect/sparks/electricity
