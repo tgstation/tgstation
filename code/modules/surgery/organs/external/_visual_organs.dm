@@ -163,6 +163,24 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 
 	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
 
+	/// Offset to apply to equipment worn on the mouth we give to the head.
+	var/datum/worn_feature_offset/worn_mask_offset
+
+/obj/item/organ/snout/on_bodypart_insert(obj/item/bodypart/head/limb)
+	. = ..()
+	if(isnull(limb.worn_mask_offset))
+		worn_mask_offset = limb.worn_mask_offset = new(
+			attached_part = limb,
+			feature_key = OFFSET_FACEMASK,
+			offset_x = list("east" = 1, "west" = -1),
+		)
+
+/obj/item/organ/snout/on_bodypart_remove(obj/item/bodypart/head/limb, movement_flags)
+	if(worn_mask_offset)
+		QDEL_NULL(worn_mask_offset)
+		limb.worn_mask_offset = null
+	return ..()
+
 /datum/bodypart_overlay/mutant/snout
 	layers = EXTERNAL_ADJACENT
 	feature_key = FEATURE_SNOUT

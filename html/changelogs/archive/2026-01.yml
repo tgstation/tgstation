@@ -598,3 +598,20 @@
   - bugfix: Killing yourself in various other ways that gib or dust you will no longer
       delete the items you were wearing, consistent with most of the other ways of
       killing yourself that gib or dust you.
+2026-01-23:
+  ArcaneMusic:
+  - spellcheck: The slime management console no longer reads a variable name out incorrectly.
+  JohnFulpWillard:
+  - rscadd: Masks now fit snouted species a little bit better, maybe.
+  LT3:
+  - bugfix: Emergency lighting consumes its cell at the expected rate
+  SmArtKar:
+  - bugfix: Fixed fancytypes in admin menus being mangled
+  jlsnow301:
+  - bugfix: Fixed the regex mode toggle in the spawn (verb) panel.
+  lelandkemble:
+  - map: The last full wooden barricades on top of dense objects have been excised
+2026-01-24:
+  JoshAdamPowell:
+  - admin: Someone gave Centcom permission to access the anomalous materials research
+      department. The result surely can't be good...

@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Autofocus,
+  Box,
   Button,
+  Icon,
   Input,
   Section,
   Stack,
@@ -9,7 +11,6 @@ import {
 } from 'tgui-core/components';
 import { fetchRetry } from 'tgui-core/http';
 import {
-  KEY_A,
   KEY_DOWN,
   KEY_ENTER,
   KEY_ESCAPE,
@@ -17,31 +18,31 @@ import {
   KEY_N,
   KEY_R,
   KEY_UP,
-  KEY_Z,
 } from 'tgui-core/keycodes';
+import type { BooleanLike } from 'tgui-core/react';
 import { resolveAsset } from '../assets';
-import { useBackend } from './../backend';
-import { Window } from './../layouts';
+import { useBackend } from '../backend';
+import { Window } from '../layouts';
 import { logger } from '../logging';
 
 type SpawnSearchData = {
-  initValue: string | undefined;
-  searchNames: boolean;
-  regexSearch: boolean;
-  fancyTypes: boolean;
-  includeAbstracts: boolean;
+  initValue: string | null;
+  searchNames: BooleanLike;
+  regexSearch: BooleanLike;
+  fancyTypes: BooleanLike;
+  includeAbstracts: BooleanLike;
 };
 
 type SpawnAtomData = {
   // Type -> Name
   types: Record<string, string>;
-  abstractTypes: Record<string, boolean>
+  abstractTypes: Record<string, boolean>;
   fancyTypes: Record<string, string>;
 };
 
 type AtomPathData = {
-  types: Array<AtomTypeData>;
-  abstractTypes: Record<string, boolean>
+  types: AtomTypeData[];
+  abstractTypes: Record<string, boolean>;
   fancyTypes: Record<string, string>;
 };
 
@@ -50,53 +51,69 @@ type AtomTypeData = {
   name: string;
 };
 
-export const SpawnSearch = () => {
-  const { act, data } = useBackend<SpawnSearchData>();
-  const { initValue, searchNames, regexSearch, fancyTypes, includeAbstracts } =
-    data;
-  const [atomData, setAtomData] = useState<AtomPathData>({
-    types: [],
-    abstractTypes: {},
-    fancyTypes: {},
-  });
-  const [selected, setSelected] = useState<number>(0);
-  const [query, setQuery] = useState<string>(
-    (regexSearch ? 're:' : '') + (initValue || ''),
-  );
-  const [spawnAmount, setSpawnAmount] = useState<number>(1);
-  const [invalidInput, setInvalidInput] = useState<boolean>(false);
-  const [searchBarVisible, setSearchBarVisible] = useState<boolean>(true);
+const initialAtomPathData: AtomPathData = {
+  types: [],
+  abstractTypes: {},
+  fancyTypes: {},
+};
 
-  const filterItems = () => {
-    let filterQuery = query;
-    setInvalidInput(false);
-    const isRegex = filterQuery.indexOf('re:') === 0;
-    // Remove regex command
-    if (isRegex) filterQuery = filterQuery.slice(3).trimStart();
-    // We wiped the whole query in one keypress (Ctrl+A -> Delete)
-    // Default to regex if we have it enabled
-    else if (regexSearch && filterQuery.length === 0) filterQuery = 're:';
-    const possibleAmountData = filterQuery.split(':');
+export function SpawnSearch() {
+  const { act, data } = useBackend<SpawnSearchData>();
+  const {
+    fancyTypes,
+    includeAbstracts,
+    initValue = '',
+    regexSearch,
+    searchNames,
+  } = data;
+
+  const [atomData, setAtomData] = useState(initialAtomPathData);
+  const [selected, setSelected] = useState(0);
+  const [query, setQuery] = useState(initValue || '');
+  const [searchBarVisible, setSearchBarVisible] = useState(true);
+
+  const { invalidInput, spawnAmount } = useMemo(() => {
+    let invalidInput = false;
+    let spawnAmount = 1;
+
+    const possibleAmountData = query.split(':');
     const amountElement = possibleAmountData[possibleAmountData.length - 1];
-    // This language is cursed, check if last : contains a number afterwards
+
     if (possibleAmountData.length > 1 && !Number.isNaN(+amountElement)) {
       if (+amountElement <= 0) {
-        setInvalidInput(true);
+        invalidInput = true;
+      } else {
+        spawnAmount = +amountElement;
+      }
+    }
+
+    if (regexSearch) {
+      try {
+        new RegExp(query);
+      } catch (error) {
+        invalidInput = true;
+      }
+    }
+
+    return { invalidInput, spawnAmount };
+  }, [query, regexSearch]);
+
+  const filteredItems = useMemo(() => {
+    let filterQuery = query;
+
+    // Extract amount suffix (e.g., ":5" from "query:5")
+    const amountMatch = query.match(/^(.+):(\d+)$/);
+    if (amountMatch) {
+      const amount = +amountMatch[2];
+      if (amount <= 0) {
         return [];
       }
-
-      filterQuery = filterQuery
-        .slice(0, filterQuery.length - amountElement.length - 1)
-        .trimEnd();
-      setSpawnAmount(+amountElement);
-    } else if (spawnAmount !== 1) setSpawnAmount(1);
-
-    if (isRegex !== regexSearch)
-      act('setRegexSearch', { regexSearch: regexSearch });
+      filterQuery = amountMatch[1].trimEnd();
+    }
 
     if (filterQuery.length === 0) return [];
 
-    if (isRegex) {
+    if (regexSearch) {
       try {
         const queryRegex = new RegExp(filterQuery);
         return atomData.types.filter(
@@ -105,8 +122,6 @@ export const SpawnSearch = () => {
             (searchNames && queryRegex.test(type.name)),
         );
       } catch (error) {
-        // We'll get plenty of invalid regexes as we type it out, just highlight the input red and abort search
-        setInvalidInput(true);
         return [];
       }
     }
@@ -115,25 +130,26 @@ export const SpawnSearch = () => {
     if (finalizer === '*' || finalizer === '!')
       filterQuery = filterQuery.slice(0, filterQuery.length - 1);
     filterQuery = filterQuery.toLowerCase();
+
     let searchLambda = (x: string) => x.toLowerCase().includes(filterQuery);
-    if (finalizer === '!')
+    if (finalizer === '!') {
       searchLambda = (x: string) =>
         x.toLowerCase().includes(filterQuery) &&
         x.toLowerCase().lastIndexOf(filterQuery) ===
           x.length - filterQuery.length;
-    else if (finalizer === '*')
+    } else if (finalizer === '*') {
       searchLambda = (x: string) =>
         x.toLowerCase().includes(filterQuery) &&
         !x.slice(x.toLowerCase().lastIndexOf(filterQuery)).includes('/');
+    }
+
     return atomData.types.filter(
       (type: AtomTypeData) =>
         (searchLambda(type.typepath) ||
           (searchNames && searchLambda(type.name))) &&
         (includeAbstracts || !atomData.abstractTypes[type.typepath]),
     );
-  };
-
-  const [filteredItems, setFilteredItems] = useState<Array<AtomTypeData>>([]);
+  }, [query, atomData, regexSearch, includeAbstracts, searchNames]);
 
   useEffect(() => {
     fetchRetry(resolveAsset('spawn_menu_atom_data.json'))
@@ -156,14 +172,9 @@ export const SpawnSearch = () => {
       });
   }, []);
 
-  useEffect(
-    () => setFilteredItems(filterItems()),
-    [query, atomData, includeAbstracts],
-  );
-
   // User presses up or down on keyboard
   // Simulates clicking an item
-  const onArrowKey = (key: number) => {
+  function handleArrowKey(key: number): void {
     const len = Object.keys(filteredItems).length - 1;
     if (key === KEY_DOWN) {
       if (selected === null || selected === len) {
@@ -182,24 +193,56 @@ export const SpawnSearch = () => {
         document!.getElementById((selected - 1).toString())?.scrollIntoView();
       }
     }
-  };
+  }
 
-  const onSelected = (selection: AtomTypeData) =>
-    act('spawn', { type: selection.typepath, amount: spawnAmount });
-
-  const onSearch = (newQuery: string) => {
-    if (newQuery === query) {
-      return;
+  function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>): void {
+    const keyCode = window.event ? event.which : event.keyCode;
+    if (keyCode === KEY_DOWN || keyCode === KEY_UP) {
+      event.preventDefault();
+      handleArrowKey(keyCode);
     }
+
+    if (keyCode === KEY_ENTER) {
+      event.preventDefault();
+      handleSelect(filteredItems[selected]);
+    }
+
+    if (keyCode === KEY_ESCAPE) {
+      event.preventDefault();
+      act('cancel');
+    }
+
+    if (keyCode === KEY_R && event.altKey) {
+      act('setRegexSearch', { regexSearch: !regexSearch });
+    }
+
+    if (keyCode === KEY_N && event.altKey) {
+      act('setNameSearch', { searchNames: !searchNames });
+    }
+
+    if (keyCode === KEY_F && event.altKey) {
+      act('setFancyTypes', { fancyTypes: !fancyTypes });
+    }
+  }
+
+  function handleSelect(selection: AtomTypeData): void {
+    act('spawn', { type: selection.typepath, amount: spawnAmount });
+  }
+
+  function handleSearch(newQuery: string): void {
+    if (newQuery === query) return;
+
     setQuery(newQuery);
     setSelected(0);
     document!.getElementById('0')?.scrollIntoView();
-  };
+  }
 
   // Grabs the cursor when no search bar is visible.
   if (!searchBarVisible) {
     setTimeout(() => document!.getElementById(selected.toString())?.focus(), 1);
   }
+
+  const modeText = regexSearch ? 'RegEx Mode' : 'Standard Mode';
 
   return (
     <Window
@@ -208,18 +251,6 @@ export const SpawnSearch = () => {
       height={500}
       buttons={
         <>
-          <Button
-            icon="percent"
-            selected={query.indexOf('re:') === 0}
-            tooltip={
-              query.indexOf('re:') === 0 ? 'RegEx Mode' : 'Standard Mode'
-            }
-            onClick={() => {
-              query.indexOf('re:') === 0
-                ? setQuery(query.slice(3))
-                : setQuery(`re:${query}`);
-            }}
-          />
           <Button
             icon="font"
             selected={includeAbstracts}
@@ -245,136 +276,140 @@ export const SpawnSearch = () => {
         </>
       }
     >
-      <Window.Content>
-        <Section
-          fill
-          onKeyDown={(event) => {
-            const keyCode = window.event ? event.which : event.keyCode;
-            if (keyCode === KEY_DOWN || keyCode === KEY_UP) {
-              event.preventDefault();
-              onArrowKey(keyCode);
-            }
-
-            if (keyCode === KEY_ENTER) {
-              event.preventDefault();
-              onSelected(filteredItems[selected]);
-            }
-
-            if (keyCode === KEY_ESCAPE) {
-              event.preventDefault();
-              act('cancel');
-            }
-
-            if (keyCode === KEY_R && event.altKey) {
-              if (query.indexOf('re:') === 0) setQuery(query.slice(3));
-              else setQuery(`re:${query}`);
-            }
-
-            if (keyCode === KEY_N && event.altKey)
-              act('setNameSearch', { searchNames: !searchNames });
-
-            if (keyCode === KEY_F && event.altKey)
-              act('setFancyTypes', { fancyTypes: !fancyTypes });
-          }}
-        >
-          <Stack fill vertical>
-            <Stack.Item grow>
-              <Section fill scrollable>
-                <Autofocus />
-                <VirtualList>
-                  {filteredItems.map((item, index) => (
-                    <Button
-                      className="candystripe"
-                      color="transparent"
-                      fluid
-                      id={`${index}`}
-                      key={index}
-                      onClick={() => {
-                        if (index !== selected) setSelected(index);
-                      }}
-                      onDoubleClick={() => onSelected(item)}
-                      onKeyDown={(event) => {
-                        const keyCode = window.event
-                          ? event.which
-                          : event.keyCode;
-                        if (keyCode >= KEY_A && keyCode <= KEY_Z) {
-                          event.preventDefault();
-                          setSearchBarVisible(false);
-                          setTimeout(() => {
-                            setSearchBarVisible(true);
-                          }, 1);
-                        }
-                      }}
-                      selected={index === selected}
-                      style={{
-                        animation: 'none',
-                        transition: 'none',
-                      }}
-                    >
-                      <span
-                        style={
-                          atomData.abstractTypes[item.typepath]
-                            ? { opacity: 0.75, color: '#FFA246' }
-                            : {}
-                        }
-                      >
-                        {fancyTypes &&
-                        Object.keys(atomData.fancyTypes).findLast(
-                          (x: string) => item.typepath.indexOf(x) === 0,
-                        )
-                          ? item.typepath.replace(
-                              Object.keys(atomData.fancyTypes).findLast(
-                                (x: string) => item.typepath.indexOf(x) === 0,
-                              ) as string,
-                              atomData.fancyTypes[
-                                Object.keys(atomData.fancyTypes).findLast(
-                                  (x: string) => item.typepath.indexOf(x) === 0,
-                                ) as string
-                              ],
-                            )
-                          : item.typepath}
-                      </span>
-                      <span
-                        className="label label-info"
-                        style={{
-                          marginLeft: '0.5em',
-                          color: 'rgba(200, 200, 200, 0.5)',
-                          fontSize: '10px',
-                        }}
-                      >
-                        {item.name}
-                      </span>
-                      {!!atomData.abstractTypes[item.typepath] && (
-                        <span
-                          style={{
-                            float: 'right',
-                            marginRight: '0.5em',
-                            color: 'rgba(255, 162, 70, 0.5)',
-                          }}
-                        >
-                          Abstract
-                        </span>
-                      )}
-                    </Button>
-                  ))}
-                </VirtualList>
-              </Section>
-            </Stack.Item>
+      <Window.Content onKeyDown={handleKeyDown}>
+        <Stack fill vertical>
+          <Stack.Item grow>
+            <Section fill scrollable>
+              <Autofocus />
+              <VirtualList>
+                {filteredItems.map((item, index) => (
+                  <Button
+                    className="candystripe"
+                    color="transparent"
+                    fluid
+                    key={index}
+                    onClick={() => {
+                      if (index !== selected) setSelected(index);
+                    }}
+                    onDoubleClick={() => handleSelect(item)}
+                    onKeyDown={(event) => {
+                      if (/^[a-z]$/i.test(event.key)) {
+                        event.preventDefault();
+                        setSearchBarVisible(false);
+                        setTimeout(() => {
+                          setSearchBarVisible(true);
+                        }, 1);
+                      }
+                    }}
+                    selected={index === selected}
+                    style={{
+                      animation: 'none',
+                      transition: 'none',
+                    }}
+                  >
+                    <ListItem atomData={atomData} item={item} />
+                  </Button>
+                ))}
+              </VirtualList>
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
             {!!searchBarVisible && (
-              <Input
-                autoFocus
-                autoSelect
-                fluid
-                onEnter={() => onSelected(filteredItems[selected])}
-                onChange={onSearch}
-                placeholder="Search..."
-                value={query}
-                style={invalidInput ? { borderColor: 'red' } : {}}
-              />
+              <Stack fill align="center" g={0.5}>
+                <Stack.Item width={2}>
+                  <Button
+                    color="transparent"
+                    tooltip={modeText}
+                    onClick={() => {
+                      act('setRegexSearch', { regexSearch: !regexSearch });
+                    }}
+                  >
+                    {regexSearch ? (
+                      <Box as="span" color="good">
+                        re:
+                      </Box>
+                    ) : (
+                      <Icon name="search" />
+                    )}
+                  </Button>
+                </Stack.Item>
+                <Stack.Item grow>
+                  <Input
+                    autoFocus
+                    autoSelect
+                    expensive
+                    fluid
+                    onEnter={() => handleSelect(filteredItems[selected])}
+                    onChange={handleSearch}
+                    placeholder="Search..."
+                    value={query}
+                    style={{
+                      borderColor: invalidInput ? 'red' : undefined,
+                    }}
+                  />
+                </Stack.Item>
+              </Stack>
             )}
-          </Stack>
-        </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
+}
+
+type AtomSpanProps = {
+  atomData: AtomPathData;
+  item: AtomTypeData;
 };
+
+function ListItem(props: AtomSpanProps) {
+  const { atomData, item } = props;
+
+  const { data } = useBackend<SpawnSearchData>();
+  const { fancyTypes } = data;
+
+  const matchingKey = fancyTypes
+    ? Object.keys(atomData.fancyTypes).findLast(
+        (x: string) => item.typepath.indexOf(x) === 0,
+      )
+    : undefined;
+
+  const displayPath = matchingKey
+    ? item.typepath.replace(matchingKey, atomData.fancyTypes[matchingKey])
+    : item.typepath;
+
+  return (
+    <>
+      <span
+        style={
+          atomData.abstractTypes[item.typepath]
+            ? { opacity: 0.75, color: '#FFA246' }
+            : {}
+        }
+      >
+        {displayPath}
+      </span>
+      <span
+        className="label label-info"
+        style={{
+          marginLeft: '0.5em',
+          color: 'rgba(200, 200, 200, 0.5)',
+          fontSize: '10px',
+        }}
+      >
+        {item.name}
+      </span>
+      {!!atomData.abstractTypes[item.typepath] && (
+        <span
+          style={{
+            float: 'right',
+            marginRight: '0.5em',
+            color: 'rgba(255, 162, 70, 0.5)',
+          }}
+        >
+          Abstract
+        </span>
+      )}
+    </>
+  );
+}

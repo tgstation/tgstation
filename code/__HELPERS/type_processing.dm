@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(fancy_type_replacements, list(
 		var/list/local_replacements = zebra_typecacheof(fancy_type_cache, ignore_root_path = TRUE)
 		var/list/local_texts = list()
 		for(var/key in fancy_type_cache)
-			local_texts[local_replacements[key]] = "[key]"
+			local_texts[fancy_type_cache[key]] = "[key]"
 		types_to_replacement = local_replacements
 		replacement_to_text = local_texts
 
