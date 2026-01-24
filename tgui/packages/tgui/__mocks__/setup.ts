@@ -17,5 +17,5 @@ mock.module('../logging', () => ({
 }));
 
 mock.module('../events/act', () => ({
-  sendAct: async () => ({}),
+  sendAct: () => ({}),
 }));

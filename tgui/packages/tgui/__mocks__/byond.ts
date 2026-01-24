@@ -26,4 +26,5 @@ const ByondMock = {
   saveBlob: () => {},
 };
 
-(globalThis as any).Byond = ByondMock;
+// @ts-expect-error
+globalThis.Byond = ByondMock;
