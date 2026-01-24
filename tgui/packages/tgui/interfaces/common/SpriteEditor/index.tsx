@@ -263,18 +263,19 @@ export namespace SpriteEditor {
     }, [toolFlags]);
     return (
       <Stack {...rest}>
-        {tools.map((tool, i) =>
-          toolFlags & (1 << i) ? (
-            <Stack.Item key={i}>
-              <Button
-                icon={tool.icon}
-                selected={currentTool === tool}
-                onClick={() => setCurrentTool(tool)}
-                {...toolButtonProps}
-                {...perButtonProps?.(tool, i)}
-              />
-            </Stack.Item>
-          ) : undefined,
+        {tools.map(
+          (tool, i) =>
+            !!(toolFlags & (1 << i)) && (
+              <Stack.Item key={i}>
+                <Button
+                  icon={tool.icon}
+                  selected={currentTool === tool}
+                  onClick={() => setCurrentTool(tool)}
+                  {...toolButtonProps}
+                  {...perButtonProps?.(tool, i)}
+                />
+              </Stack.Item>
+            ),
         )}
       </Stack>
     );

@@ -119,7 +119,7 @@ const EditableCanvas = (props: EditableCanvasProps) => {
     onAddServerColor,
     onRemoveServerColor,
   } = usingImplement ? editorData : {};
-  const [showGrid, setShowGrid] = useState<boolean>(false);
+  const [showGrid, setShowGrid] = useState(false);
   const sidebarItems: ReactNode[] = [];
   SpriteEditor.syncBackend(onSelectServerColor, serverSelectedColor);
   if (allowColorPicker) {
@@ -156,18 +156,18 @@ const EditableCanvas = (props: EditableCanvasProps) => {
     >
       <Window.Content>
         <Stack fill>
-          {shouldRenderSidebar ? (
+          {shouldRenderSidebar && (
             <Stack.Item>
               <Stack fill vertical width="350px">
                 {sidebarItems}
               </Stack>
             </Stack.Item>
-          ) : undefined}
+          )}
           <Stack.Item grow minWidth="0">
             <Stack fill vertical>
               <Stack.Item>
                 <Stack fill justify="space-around">
-                  {editable ? (
+                  {!!editable && (
                     <>
                       <Stack.Item>
                         <SpriteEditor.Toolbar
@@ -179,7 +179,7 @@ const EditableCanvas = (props: EditableCanvasProps) => {
                       </Stack.Item>
                       <Stack.Item grow />
                     </>
-                  ) : undefined}
+                  )}
                   <Stack.Item>
                     <Button.Checkbox
                       checked={showGrid}
@@ -270,11 +270,11 @@ const FinalizedCanvas = (props: FinalizedCanvasProps) => {
               </Box>
               <Box bold>
                 {author}
-                {date ? `- ${new Date(date).getFullYear() + 540}` : undefined}
+                {date && `- ${new Date(date).getFullYear() + 540}`}
               </Box>
               <Box italic>{medium}</Box>
               <Box italic>
-                {patron ? `Sponsored by ${patron}` : undefined}
+                {patron && `Sponsored by ${patron}`}
                 <Button
                   icon="hand-holding-usd"
                   color="transparent"
@@ -303,7 +303,7 @@ export const Canvas = () => {
   } = data;
   const { sprite } = editorData;
   const { width, height } = sprite;
-  const [zoom, setZoom] = useState<number>(finalized ? 1 : 3);
+  const [zoom, setZoom] = useState(finalized ? 1 : 3);
   const paintingRenderWidth = pixelsPerUnit * zoom * width;
   const paintingRenderHeight = pixelsPerUnit * zoom * height;
   if (finalized) {
