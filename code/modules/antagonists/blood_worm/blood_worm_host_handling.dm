@@ -105,8 +105,7 @@
 	if (!host)
 		return
 
-	if(!deleting)
-		possess_worm()
+	possess_worm(deleting)
 
 	UnregisterSignal(host, list(
 		COMSIG_QDELETING,
@@ -137,10 +136,11 @@
 
 	remove_host_hud()
 
-	host.set_blood_volume(0)
+	if(deleting && !QDELETED(host)) // If the host was destroyed too, we don't really want to be doing this stuff here
+		host.set_blood_volume(0)
 
-	if (host.stat != DEAD)
-		host.death() // I don't care if you have TRAIT_NODEATH, can't die from bloodloss normally, or whatever else. I just need you to die.
+		if (host.stat != DEAD)
+			host.death() // I don't care if you have TRAIT_NODEATH, can't die from bloodloss normally, or whatever else. I just need you to die.
 
 	log_blood_worm("[key_name(src)][deleting ? "was deleted and " : " "]unregistered their host [key_name(host)]")
 
@@ -168,8 +168,8 @@
 
 	log_blood_worm("[key_name(src)] possessed their host [key_name(host)]")
 
-/mob/living/basic/blood_worm/proc/possess_worm()
-	if (!host || !is_possessing_host)
+/mob/living/basic/blood_worm/proc/possess_worm(deleting)
+	if (QDELETED(host) || !is_possessing_host)
 		return
 
 	is_possessing_host = FALSE
@@ -181,9 +181,12 @@
 		QDEL_NULL(backseat)
 
 	remove_actions(host, host_actions)
-	grant_actions(src, host_actions)
-
 	host.remove_language(/datum/language/wormspeak, UNDERSTOOD_LANGUAGE, LANGUAGE_BLOOD_WORM)
+
+	if(deleting) // If we're deleting, we're done here.
+		return
+
+	grant_actions(src, host_actions)
 
 	log_blood_worm("[key_name(src)] unpossessed their host [key_name(host)]")
 
