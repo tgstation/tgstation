@@ -1,7 +1,6 @@
 /datum/unit_test/id_access
 
 /datum/unit_test/id_access/Run()
-	. = ..()
 	var/mob/living/carbon/human/consistent/subject = EASY_ALLOCATE()
 	subject.equip_to_appropriate_slot(new /obj/item/clothing/under/color/grey)
 	var/obj/item/card/id/advanced/card = EASY_ALLOCATE()
@@ -39,7 +38,7 @@
 	subject.dropItemToGround(pda)
 	TEST_ASSERT(check_access(subject, null), "Subject still had access after unequipping PDA with ID card inside.")
 	subject.equip_to_appropriate_slot(pda)
-	click_wrapper(subject, wallet, list(ALT_CLICK = TRUE, BUTTON = ALT_CLICK)) // withdraw id card from pda
+	pda.remove_id(subject)
 	TEST_ASSERT(card.loc == subject && card == subject.get_active_held_item(), "Subject failed to withdraw ID card from PDA.")
 	click_wrapper(subject, pda) // reinsert id card into pda
 	TEST_ASSERT(card.loc == pda, "Subject failed to reinsert ID card into PDA.")
