@@ -305,7 +305,6 @@ export const CombineChangelogsTarget = new Juke.Target({
       const combinedChangelogFile = `${combinedChangelogPath}/${filename}`;
       const troutstationChangelogFile = `${troutstationChangelogPath}/${filename}`;
       if (fs.existsSync(troutstationChangelogFile)) {
-        Juke.logger.info(`merging changelogs for ${filename}...`);
         const mainChangelog = YAML.parse(
           fs.readFileSync(mainChangelogFile, 'utf8'),
         );
@@ -341,7 +340,6 @@ export const CombineChangelogsTarget = new Juke.Target({
           );
           const combinedEntries = {};
           for (const username of combinedUsernames) {
-            Juke.logger.info(`username: ${username}`);
             const troutstationEntriesForUser =
               troutstationEntries[username] ?? [];
             const mainEntriesForUser = mainEntries[username] ?? [];
