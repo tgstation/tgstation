@@ -173,9 +173,9 @@
 					return ITEM_INTERACT_BLOCKING
 				var/obj/machinery/light/L = new /obj/machinery/light(get_turf(winner))
 				L.setDir(get_dir(winner, interacting_with))
-				L.find_and_mount_on_atom()
 				L.color = color_choice
 				L.set_light_color(color_choice)
+				L.find_and_mount_on_atom()
 				useResource(cost, user)
 				return ITEM_INTERACT_SUCCESS
 
