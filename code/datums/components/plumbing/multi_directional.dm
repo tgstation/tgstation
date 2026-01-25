@@ -10,6 +10,8 @@
 	var/atom/movable/parent_movable = parent
 	return turn(dir, dir2angle(parent_movable.dir) - 180)
 
+/datum/component/plumbing/multi_directional/send_request(dir)
+	return process_request(amount = MACHINE_REAGENT_TRANSFER * 2, dir = dir) //these need to move reagents fast
 
 ///Splitter that transfers diffrent amounts along diffrent directions
 /datum/component/plumbing/multi_directional/splitter
@@ -62,8 +64,9 @@
 			whitelist = F.right
 
 	. = 0
+	var/transfer = MACHINE_REAGENT_TRANSFER * 2
 	if(whitelist)
 		for(var/datum/reagent/send as anything in whitelist)
-			. += process_demand(reagent = send, dir = dir)
+			. += process_demand(amount = transfer, reagent = send, dir = dir)
 	else
-		. = process_demand(dir = dir)
+		. = process_demand(amount = transfer, dir = dir)

@@ -143,6 +143,12 @@
 
 ///we disconnect ourself from our neighbours. we also destroy our ductnet and tell our neighbours to make a new one
 /obj/machinery/duct/on_deconstruction()
+	//Drop duct stack
+	var/obj/item/stack/ducts/duct_stack = new (drop_location())
+	duct_stack.duct_color = duct_color
+	duct_stack.duct_layer = duct_layer
+	duct_stack.add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
+
 	//Expose reagents to everything on the ducts turf
 	var/modifier = 1 / net.ducts.len
 	var/turf/drop = get_turf(src)
@@ -152,12 +158,6 @@
 			continue
 		net.pipeline.expose(thing, TOUCH, modifier)
 	net.pipeline.expose(drop, TOUCH, modifier)
-
-	//Drop duct stack
-	var/obj/item/stack/ducts/duct_stack = new (drop_location())
-	duct_stack.duct_color = duct_color
-	duct_stack.duct_layer = duct_layer
-	duct_stack.add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
 
 ///Removes duct from ductnet
 /obj/machinery/duct/proc/disconnect()

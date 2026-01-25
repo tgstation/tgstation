@@ -25,6 +25,12 @@
 	demand_connects = WEST
 	supply_connects = EAST
 
+/datum/component/plumbing/tank/send_request(dir)
+	return process_request(amount = MACHINE_REAGENT_TRANSFER * 2, dir = dir)
+
+/datum/component/plumbing/tank/supply_demand(dir)
+	return process_demand(amount = MACHINE_REAGENT_TRANSFER * 2, dir = dir)
+
 ///Lazily demand from any direction.
 /datum/component/plumbing/aquarium
 	demand_connects = SOUTH|NORTH|EAST|WEST
