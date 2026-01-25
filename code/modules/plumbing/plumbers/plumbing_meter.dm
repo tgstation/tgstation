@@ -40,7 +40,6 @@
 
 	pixel_x = offset
 	pixel_y = offset
-	layer = PLUMBING_PIPE_VISIBILE_LAYER + duct_layer * 0.0003
 
 	register_context()
 
@@ -72,12 +71,11 @@
 	if(!is_operational || QDELETED(pipe))
 		return
 
-	var/pipe_layer = PLUMBING_PIPE_VISIBILE_LAYER + duct_layer * 0.0003
-	. += image('icons/obj/pipes_n_cables/meter.dmi', "buttons4", layer = pipe_layer)
+	. += image('icons/obj/pipes_n_cables/meter.dmi', "buttons4")
 
 	var/level = ROUND_UP(6 * (pipe.net.pipeline.total_volume / pipe.net.pipeline.maximum_volume))
 	if(level)
-		var/image/overlay = image('icons/obj/pipes_n_cables/meter.dmi', "pressure3_[level]", layer = pipe_layer)
+		var/image/overlay = image('icons/obj/pipes_n_cables/meter.dmi', "pressure3_[level]")
 		switch(pipe.net.pipeline.chem_temp)
 			if(0 to 100)
 				overlay.color = COLOR_VIOLET
