@@ -181,7 +181,8 @@
 		QDEL_NULL(backseat)
 
 	remove_actions(host, host_actions)
-	host.remove_language(/datum/language/wormspeak, UNDERSTOOD_LANGUAGE, LANGUAGE_BLOOD_WORM)
+	if(!QDELETED(host))
+		host.remove_language(/datum/language/wormspeak, UNDERSTOOD_LANGUAGE, LANGUAGE_BLOOD_WORM)
 
 	if(deleting) // If we're deleting, we're done here.
 		return
