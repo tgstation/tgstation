@@ -180,10 +180,10 @@
 		do_sparks(4, TRUE, dest)
 
 	if(entersmoke)
-		do_smoke(4, holder = src, location = src)
+		do_smoke(4, src, src)
 
 	if(exitsmoke)
-		do_smoke(4, holder = dest, location = dest)
+		do_smoke(4, dest, dest)
 
 	uses--
 	if(uses == 0)

@@ -163,12 +163,14 @@
 		return PROCESS_KILL
 
 	var/turf/location = get_turf(src)
-	if(!(locate(/obj/effect/particle_effect/fluid/smoke) in location))
-		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/smoke = new()
-		smoke.set_up(setting * 3, holder = src, location = location, carry = reagents, efficiency = efficiency)
-		smoke.start()
-		use_energy(active_power_usage * (setting / max_range))
-		update_appearance(UPDATE_ICON_STATE)
+	if(locate(/obj/effect/particle_effect/fluid/smoke) in location)
+		return
+
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/smoke = new()
+	smoke.set_up(setting * 3, holder = src, location = location, carry = reagents, efficiency = efficiency)
+	smoke.start()
+	use_energy(active_power_usage * (setting / max_range))
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/smoke_machine/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

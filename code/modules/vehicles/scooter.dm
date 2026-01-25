@@ -56,16 +56,14 @@
 
 /obj/vehicle/ridden/scooter/skateboard/Initialize(mapload)
 	. = ..()
-	sparks = new
-	sparks.set_up(1, 0, src)
+	sparks = new(src, 1, FALSE)
 	sparks.attach(src)
 
 /obj/vehicle/ridden/scooter/skateboard/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard)
 
 /obj/vehicle/ridden/scooter/skateboard/Destroy()
-	if(sparks)
-		QDEL_NULL(sparks)
+	QDEL_NULL(sparks)
 	return ..()
 
 /obj/vehicle/ridden/scooter/skateboard/relaymove(mob/living/user, direction)

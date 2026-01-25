@@ -231,13 +231,8 @@
 			addtimer(CALLBACK(src, PROC_REF(reset_icon)), 10 SECONDS)
 		if(4)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car spews out a cloud of laughing gas."))
-			var/datum/reagents/funnychems = new/datum/reagents(300)
-			funnychems.my_atom = src
-			funnychems.add_reagent(/datum/reagent/consumable/superlaughter, 50)
-			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
-			smoke.set_up(4, holder = src, location = src, carry = funnychems)
-			smoke.attach(src)
-			smoke.start(log = TRUE)
+			do_chem_smoke(4, src, src, /datum/reagent/consumable/superlaughter, 50, log = TRUE)
+
 		if(5)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car starts dropping an oil trail."))
 			RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(cover_in_oil))

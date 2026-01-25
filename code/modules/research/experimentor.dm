@@ -233,9 +233,7 @@
 	use_energy(750 JOULES)
 
 /obj/machinery/rnd/experimentor/proc/throwSmoke(turf/where)
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, holder = src, location = where)
-	smoke.start()
+	do_smoke(0, src, where)
 
 /obj/machinery/rnd/experimentor/proc/experiment(exp,obj/item/exp_on)
 	recentlyExperimented = 1
@@ -307,27 +305,15 @@
 		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src] destroys [exp_on], leaking dangerous gas!"))
 			chosenchem = pick(/datum/reagent/carbon,/datum/reagent/uranium/radium,/datum/reagent/toxin,/datum/reagent/consumable/condensedcapsaicin,/datum/reagent/drug/mushroomhallucinogen,/datum/reagent/drug/space_drugs,/datum/reagent/consumable/ethanol,/datum/reagent/consumable/ethanol/beepsky_smash)
-			var/datum/reagents/tmp_holder = new/datum/reagents(50)
-			tmp_holder.my_atom = src
-			tmp_holder.add_reagent(chosenchem , 50)
+			do_chem_smoke(0, src, loc, chosenchem, 50)
 			investigate_log("Experimentor has released [chosenchem] smoke.", INVESTIGATE_EXPERIMENTOR)
-			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
-			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)
 			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
-			smoke.start()
-			qdel(tmp_holder)
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src]'s chemical chamber has sprung a leak!"))
 			chosenchem = pick(/datum/reagent/mutationtoxin/classic,/datum/reagent/cyborg_mutation_nanomachines,/datum/reagent/toxin/acid)
-			var/datum/reagents/tmp_holder = new/datum/reagents(50)
-			tmp_holder.my_atom = src
-			tmp_holder.add_reagent(chosenchem , 50)
-			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
-			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)
+			do_chem_smoke(0, src, loc, chosenchem, 50)
 			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
-			smoke.start()
-			qdel(tmp_holder)
 			ejectItem(TRUE)
 			warn_admins(usr, "[chosenchem] smoke")
 			investigate_log("Experimentor has released <font color='red'>[chosenchem]</font> smoke!", INVESTIGATE_EXPERIMENTOR)
@@ -398,15 +384,9 @@
 			investigate_log("Experimentor has made a cup of [chosenchem] coffee.", INVESTIGATE_EXPERIMENTOR)
 		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src] malfunctions, shattering [exp_on] and releasing a dangerous cloud of coolant!"))
-			var/datum/reagents/tmp_holder = new/datum/reagents(50)
-			tmp_holder.my_atom = src
-			tmp_holder.add_reagent(/datum/reagent/consumable/frostoil, 50)
+			do_chem_smoke(0, src, loc, /datum/reagent/consumable/frostoil, 50)
 			investigate_log("Experimentor has released frostoil gas.", INVESTIGATE_EXPERIMENTOR)
-			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
-			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)
 			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
-			smoke.start()
-			qdel(tmp_holder)
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_LOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_warning("[src] malfunctions, shattering [exp_on] and leaking cold air!"))
@@ -419,9 +399,7 @@
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_MEDIUM * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_warning("[src] malfunctions, releasing a flurry of chilly air as [exp_on] pops out!"))
-			var/datum/effect_system/fluid_spread/smoke/smoke = new
-			smoke.set_up(0, holder = src, location = loc)
-			smoke.start()
+			do_smoke(0, src, loc)
 			ejectItem()
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_OBLITERATE)
@@ -634,9 +612,7 @@
 	call(src, hidden_power)(user)
 
 /obj/item/relic/proc/throw_smoke(turf/where)
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, holder = src, location = get_turf(where))
-	smoke.start()
+	do_smoke(0, src, get_turf(where))
 
 // Artefact Powers \\
 

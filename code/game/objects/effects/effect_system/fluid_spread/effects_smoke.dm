@@ -167,7 +167,7 @@
  * - location: Where to produce the smoke cloud.
  * - smoke_type: The smoke typepath to spawn.
  */
-/proc/do_smoke(range = 0, amount = null, atom/holder = null, location = null, smoke_type = /obj/effect/particle_effect/fluid/smoke, log = FALSE)
+/proc/do_smoke(range = 0, atom/holder = null, location = null, amount = null, smoke_type = /obj/effect/particle_effect/fluid/smoke, log = FALSE)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new(location, range, amount, holder)
 	smoke.effect_type = smoke_type
 	smoke.start(log = log)
@@ -396,11 +396,13 @@
 	return TRUE
 
 /// Helper to quickly create a cloud of reagent smoke
-/proc/do_chem_smoke(range = 0, amount = null, atom/holder = null, location = null, reagent_type = /datum/reagent/water, reagent_volume = 10, log = FALSE, datum/effect_system/fluid_spread/smoke/chem/smoke_type = /datum/effect_system/fluid_spread/smoke/chem)
-	var/datum/reagents/smoke_reagents = new /datum/reagents(reagent_volume)
-	smoke_reagents.add_reagent(reagent_type, reagent_volume)
+/proc/do_chem_smoke(range = 0, atom/holder = null, location = null, reagent_type = /datum/reagent/water, reagent_volume = 10, datum/reagents/carry = null, log = FALSE, amount = null, datum/effect_system/fluid_spread/smoke/chem/smoke_type = /datum/effect_system/fluid_spread/smoke/chem, silent = TRUE)
+	var/datum/reagents/smoke_reagents = null
+	if (!carry)
+		smoke_reagents = new /datum/reagents(reagent_volume)
+		smoke_reagents.add_reagent(reagent_type, reagent_volume)
 
-	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new smoke_type(location, range, amount, holder || location, smoke_reagents, silent = TRUE)
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new smoke_type(location, range, amount, holder || location, carry || smoke_reagents, silent = silent)
 	smoke.start(log = log)
 
 /// A factory which produces clouds of chemical bearing smoke.
