@@ -1,5 +1,0 @@
-author: "EEASAS"
-delete-after: True
-changes:
-  - rscadd: "Mustard. find it in the produce ordering computer or receive it in the mail"
-  - bugfix: "Adds ketchup to the produce ordering computer"
