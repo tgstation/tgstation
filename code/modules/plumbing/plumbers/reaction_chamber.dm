@@ -31,8 +31,7 @@
 /// Handles stopping the emptying process when the chamber empties.
 /obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/plumbing/reaction_chamber/holder)
 	SIGNAL_HANDLER
-
-	if(!holder.get_catalyst_excluded_volume()) //we were emptying, but now we aren't
+	if(!holder.is_reacting && !holder.get_catalyst_excluded_volume()) //we were emptying, but now we aren't
 		emptying = FALSE
 		holder.flags |= NO_REACT
 
