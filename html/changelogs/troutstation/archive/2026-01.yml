@@ -16,3 +16,8 @@
 2026-01-24:
   Cirrial:
   - bugfix: Made the changelogs work automatically, hopefully, I hope, hope, hope.
+2026-01-25:
+  Cirrial:
+  - rscadd: Anteaters now wear masks a bit more offset due to their enormous snouts.
+  - rscadd: Anteaters have an innate ability to dig with their claws, if the earth
+      is soft enough.
