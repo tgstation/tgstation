@@ -1,5 +1,5 @@
 //Maximum disposal rate
-#define MAX_DISPOSAL_RATE 15
+#define MAX_DISPOSAL_RATE 25
 
 /obj/machinery/plumbing/disposer
 	name = "chemical disposer"
@@ -7,13 +7,16 @@
 	icon_state = "disposal"
 	base_icon_state = "disposal"
 	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 4
 
 	///Reagents to remove per second
 	var/disposal_rate = 5
+	///Is this machine switched on
+	var/on = FALSE
 
 /obj/machinery/plumbing/disposer/Initialize(mapload, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, layer)
+	AddComponent(/datum/component/plumbing/simple_demand/disposer, layer)
 	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(update))
 
 /obj/machinery/plumbing/disposer/examine(mob/user)
@@ -34,7 +37,7 @@
 	update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/plumbing/disposer/update_icon_state()
-	icon_state = "[base_icon_state][is_operational && anchored && reagents.total_volume ? "_working" : ""]"
+	icon_state = "[base_icon_state][is_operational && anchored && on && reagents.total_volume ? "_working" : ""]"
 	return ..()
 
 /obj/machinery/plumbing/disposer/on_set_is_operational(old_value)
@@ -46,15 +49,45 @@
 	if(. == ITEM_INTERACT_SUCCESS)
 		update_appearance(UPDATE_ICON_STATE)
 
-/obj/machinery/plumbing/disposer/attack_hand(mob/living/user, list/modifiers)
+/obj/machinery/plumbing/disposer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ChemDisposer", name)
+		ui.open()
+
+/obj/machinery/plumbing/disposer/ui_static_data(mob/user)
+	return list(
+		min_volume = initial(disposal_rate),
+		max_volume = MAX_DISPOSAL_RATE
+	)
+
+/obj/machinery/plumbing/disposer/ui_data(mob/user)
+	return list(
+		enabled = on,
+		disposal_rate = disposal_rate
+	)
+
+/obj/machinery/plumbing/disposer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	var/new_volume = tgui_input_number(user, "Enter new disposal rate", "Disposal rate", disposal_rate, MAX_DISPOSAL_RATE, initial(disposal_rate))
-	if(!new_volume || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+	if(.)
 		return
-	disposal_rate = new_volume
+
+	switch(action)
+		if("toggle_power")
+			on = !on
+			update_appearance(UPDATE_ICON_STATE)
+			return TRUE
+
+		if("change_volume")
+			var/num = text2num(params["volume"])
+			if(!isnum(num))
+				return FALSE
+
+			disposal_rate = clamp(num, initial(disposal_rate), MAX_DISPOSAL_RATE)
+			return TRUE
 
 /obj/machinery/plumbing/disposer/process(seconds_per_tick)
-	if(!is_operational || !reagents.total_volume)
+	if(!is_operational || !reagents.total_volume || !on)
 		return
 	reagents.remove_all(disposal_rate * seconds_per_tick)
 	use_energy((disposal_rate / MAX_DISPOSAL_RATE) * active_power_usage * seconds_per_tick)
