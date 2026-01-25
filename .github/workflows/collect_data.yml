@@ -28,7 +28,7 @@ jobs:
       alternate_tests: ${{ steps.alternate_test_finder.outputs.alternate_tests }}
       max_required_byond_client: ${{ steps.max_required_byond_client.outputs.max_required_byond_client }}
       required_build_versions: ${{ steps.setup_required_build_versions.outputs.required_build_versions }}
-      game_changes: ${{ steps.find_game_changes.outputs.game }}
+      game_changes: ${{ steps.find_game_changes.outputs.all_changed_files != '' }}
 
     steps:
       - uses: actions/checkout@v6
@@ -73,28 +73,9 @@ jobs:
 
       - name: Find game changes
         id: find_game_changes
-        uses: dorny/paths-filter@v3
+        uses: tj-actions/changed-files@v47
         with:
-          filters: |
-            game:
-              - '_maps/**'
-              - '.github/**'
-              - 'bin/**'
-              - 'code/**'
-              - 'config/**'
-              - 'cutter_templates/**'
-              - 'data/**'
-              - 'icons/**'
-              - 'interfaces/**'
-              - 'lua/**'
-              - 'sound/**'
-              - 'SQL/**'
-              - 'strings/**'
-              - 'tools/**'
-              - 'BUILD.cmd'
-              - '.tgs.yml'
-              - 'dependencies.sh'
-              - 'Dockerfile'
-              - 'dreamluau.dll'
-              - 'RUN_SERVER.cmd'
-              - 'tgstation.dme'
+          fetch_depth: 0
+          files_ignore: |
+            html/**,
+            tgui/**,
