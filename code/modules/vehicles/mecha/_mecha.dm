@@ -59,7 +59,7 @@
 	var/mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | BEACON_TRACKABLE | AI_COMPATIBLE | BEACON_CONTROLLABLE
 
 	///Spark effects are handled by this datum
-	var/datum/effect_system/spark_spread/spark_system
+	var/datum/effect_system/basic/spark_spread/spark_system
 	///How powerful our lights are
 	var/lights_power = 6
 	///Just stop the mech from doing anything

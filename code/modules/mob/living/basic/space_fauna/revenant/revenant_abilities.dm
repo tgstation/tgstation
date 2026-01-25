@@ -119,7 +119,7 @@
 			continue
 
 		light.visible_message(span_boldwarning("[light] suddenly flares brightly and begins to spark!"))
-		var/datum/effect_system/spark_spread/light_sparks = new /datum/effect_system/spark_spread()
+		var/datum/effect_system/basic/spark_spread/light_sparks = new /datum/effect_system/basic/spark_spread()
 		light_sparks.set_up(4, 0, light)
 		light_sparks.start()
 		new /obj/effect/temp_visual/revenant(get_turf(light))

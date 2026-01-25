@@ -49,7 +49,7 @@
 		balloon_alert(mod.wearer, "not in storage!")
 		return
 	var/obj/item/microwave_target = target
-	var/datum/effect_system/spark_spread/spark_effect = new()
+	var/datum/effect_system/basic/spark_spread/spark_effect = new()
 	spark_effect.set_up(2, 1, mod.wearer)
 	spark_effect.start()
 	mod.wearer.Beam(target,icon_state="lightning[rand(1,12)]", time = 5)
@@ -57,7 +57,7 @@
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, FALSE)
 	else
 		balloon_alert(mod.wearer, "can't be microwaved!")
-	var/datum/effect_system/spark_spread/spark_effect_two = new()
+	var/datum/effect_system/basic/spark_spread/spark_effect_two = new()
 	spark_effect_two.set_up(2, 1, microwave_target)
 	spark_effect_two.start()
 	drain_power(use_energy_cost)

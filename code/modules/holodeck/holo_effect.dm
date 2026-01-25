@@ -36,9 +36,7 @@
 /obj/effect/holodeck_effect/sparks/activate(obj/machinery/computer/holodeck/HC)
 	var/turf/T = get_turf(src)
 	if(T)
-		var/datum/effect_system/spark_spread/s = new
-		s.set_up(3, 1, T)
-		s.start()
+		do_sparks(3, TRUE, T)
 		T.temperature = 5000 //Why? not quite sure to be honest with you
 		T.hotspot_expose(50000,50000,1)
 

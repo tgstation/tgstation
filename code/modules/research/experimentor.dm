@@ -571,7 +571,7 @@
 	COOLDOWN_DECLARE(cooldown)
 	//What visual theme this artefact has. Current possible choices: "prototype", "necrotech"
 	var/artifact_theme = "prototype"
-	var/datum/effect_system/spark_spread/sparks
+	var/datum/effect_system/basic/spark_spread/sparks
 
 /obj/item/relic/Initialize(mapload)
 	. = ..()

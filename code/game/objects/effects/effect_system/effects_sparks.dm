@@ -5,8 +5,10 @@
 // will always spawn at the items location.
 /////////////////////////////////////////////
 
-/proc/do_sparks(number, cardinal_only, atom/source, spark_type = /datum/effect_system/basic/spark_spread)
-	var/datum/effect_system/basic/spark_spread/sparks = new spark_type(source, number, cardinal_only)
+/proc/do_sparks(number, cardinal_only, atom/source, atom/holder = null, spark_type = /datum/effect_system/basic/spark_spread)
+	var/datum/effect_system/basic/spark_spread/sparks = new spark_type(get_turf(source), number, cardinal_only)
+	if (holder)
+		sparks.attach(holder)
 	sparks.autocleanup = TRUE
 	sparks.start()
 

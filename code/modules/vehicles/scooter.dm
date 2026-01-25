@@ -42,7 +42,7 @@
 	density = FALSE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10)
 	///Sparks datum for when we grind on tables
-	var/datum/effect_system/spark_spread/sparks
+	var/datum/effect_system/basic/spark_spread/sparks
 	///Whether the board is currently grinding
 	var/grinding = FALSE
 	///Stores the time of the last crash plus a short cooldown, affects availability and outcome of certain actions

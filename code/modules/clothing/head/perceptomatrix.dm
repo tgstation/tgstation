@@ -165,12 +165,12 @@
 	/// The amount of hallucination to apply
 	var/hallucination_duration = 25 SECONDS
 	/// Spark system
-	var/datum/effect_system/spark_spread/quantum/spark_sys
+	var/datum/effect_system/basic/spark_spread/quantum/spark_sys
 
 /datum/action/cooldown/spell/pointed/percept_hallucination/New(Target)
 	. = ..()
 
-	spark_sys = new /datum/effect_system/spark_spread/quantum
+	spark_sys = new /datum/effect_system/basic/spark_spread/quantum
 
 /datum/action/cooldown/spell/pointed/percept_hallucination/Destroy()
 	QDEL_NULL(spark_sys)

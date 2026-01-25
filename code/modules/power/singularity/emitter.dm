@@ -46,7 +46,7 @@
 	///What's the projectile sound?
 	var/projectile_sound = 'sound/items/weapons/emitter.ogg'
 	///Sparks emitted with every shot
-	var/datum/effect_system/spark_spread/sparks
+	var/datum/effect_system/basic/spark_spread/sparks
 	///Stores the type of gun we are using inside the emitter
 	var/obj/item/gun/energy/gun
 	///List of all the properties of the inserted gun
