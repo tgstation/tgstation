@@ -26,8 +26,7 @@
 		SSsecurity_level.set_level(SEC_LEVEL_RED)
 	warp = new(src)
 	vis_contents += warp
-	spark_system = new /datum/effect_system/basic/spark_spread/quantum()
-	spark_system.set_up(4, TRUE, src)
+	spark_system = new /datum/effect_system/basic/spark_spread/quantum(src, 4, TRUE)
 	spark_system.attach(src)
 	START_PROCESSING(SSobj, src)
 

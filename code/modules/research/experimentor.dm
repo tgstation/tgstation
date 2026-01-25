@@ -571,18 +571,10 @@
 	COOLDOWN_DECLARE(cooldown)
 	//What visual theme this artefact has. Current possible choices: "prototype", "necrotech"
 	var/artifact_theme = "prototype"
-	var/datum/effect_system/basic/spark_spread/sparks
 
 /obj/item/relic/Initialize(mapload)
 	. = ..()
-	sparks = new()
-	sparks.set_up(5, 1, src)
-	sparks.attach(src)
 	random_themed_appearance()
-
-/obj/item/relic/Destroy(force)
-	QDEL_NULL(sparks)
-	. = ..()
 
 /obj/item/relic/proc/random_themed_appearance()
 	var/themed_name_prefix
@@ -740,7 +732,7 @@
 /obj/item/relic/proc/drink_dispenser(mob/user)
 	var/obj/item/reagent_containers/cup/glass/drinkingglass/freebie = new(get_step_rand(user))
 	playsound(freebie, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	sparks.start()
+	do_sparks(5, TRUE, src, src)
 	addtimer(CALLBACK(src, PROC_REF(dispense_drink), freebie), 0.5 SECONDS)
 
 /obj/item/relic/proc/dispense_drink(obj/item/reagent_containers/cup/glass/glasser)

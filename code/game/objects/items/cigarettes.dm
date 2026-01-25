@@ -1203,9 +1203,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, FALSE)
 			M.apply_damage(20, BURN, BODY_ZONE_HEAD)
 			M.Paralyze(300)
-			var/datum/effect_system/basic/spark_spread/sp = new /datum/effect_system/basic/spark_spread
-			sp.set_up(5, 1, src)
-			sp.start()
+			do_sparks(5, TRUE, src)
 			to_chat(M, span_userdanger("[src] suddenly explodes in your mouth!"))
 			qdel(src)
 			return
