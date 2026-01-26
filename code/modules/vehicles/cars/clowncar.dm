@@ -97,11 +97,7 @@
 	. = ..()
 	if(prob(33))
 		visible_message(span_danger("[src] spews out a ton of space lube!"))
-		var/datum/effect_system/fluid_spread/foam/foam = new
-		var/datum/reagents/foamreagent = new /datum/reagents(25)
-		foamreagent.add_reagent(/datum/reagent/lube, 25)
-		foam.set_up(4, holder = src, location = loc, carry = foamreagent)
-		foam.start()
+		do_foam(4, src, loc, /datum/reagent/lube, 25)
 
 /obj/vehicle/sealed/car/clowncar/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/food/grown/banana))
@@ -218,12 +214,7 @@
 			new /obj/item/grown/bananapeel/specialpeel(loc)
 		if(2)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and unknown chemicals flood out of it."))
-			var/datum/reagents/randomchems = new/datum/reagents(300)
-			randomchems.my_atom = src
-			randomchems.add_reagent(get_random_reagent_id(), 100)
-			var/datum/effect_system/fluid_spread/foam/foam = new
-			foam.set_up(200, holder = src, location = loc, carry = randomchems)
-			foam.start(log = TRUE)
+			do_foam(200, src, loc, get_random_reagent_id(), 100, log = TRUE)
 		if(3)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car turns on its singularity disguise system."))
 			icon = 'icons/obj/machines/engine/singularity.dmi'

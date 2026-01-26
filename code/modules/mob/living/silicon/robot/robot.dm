@@ -249,8 +249,7 @@
 		return
 
 	if(!ion_trail)
-		ion_trail = new
-		ion_trail.set_up(src)
+		ion_trail = new(src)
 
 	ionpulse_on = !ionpulse_on
 	to_chat(src, span_notice("You [ionpulse_on ? null :"de"]activate your ion thrusters."))

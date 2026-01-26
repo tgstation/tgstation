@@ -502,8 +502,7 @@
 	owner.visible_message(span_danger("The reactive armor alters the weather around [owner], shielding [owner.p_them()] from [attack_text]!"))
 	playsound(src, 'sound/effects/magic/lightningshock.ogg', 33, TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
-	var/datum/effect_system/steam_spread/steam = new()
-	steam.set_up(10, FALSE, owner.loc)
+	var/datum/effect_system/basic/steam_spread/steam = new(owner.loc, 10, FALSE)
 	steam.start()
 
 	var/list/affected_turfs = list()
@@ -525,8 +524,7 @@
 	owner.visible_message(span_danger("The reactive armor malfunctions, calling down a storm upon [owner.p_them()]!"))
 	playsound(src, 'sound/effects/magic/lightningshock.ogg', 33, TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
-	var/datum/effect_system/steam_spread/steam = new()
-	steam.set_up(2, FALSE, owner.loc)
+	var/datum/effect_system/basic/steam_spread/steam = new(owner.loc, 2, FALSE)
 	steam.start()
 
 	owner.adjust_wet_stacks(10)

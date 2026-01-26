@@ -28,7 +28,7 @@
 
 /datum/effect_system/New(turf/location)
 	. = ..()
-	src.location = location
+	src.location = get_turf(location)
 
 /datum/effect_system/Destroy()
 	holder = null

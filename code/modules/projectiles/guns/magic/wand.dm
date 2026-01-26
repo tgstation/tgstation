@@ -243,10 +243,10 @@
 	var/turf/origin = get_turf(user)
 	var/turf/destination = find_safe_turf(extended_safety_checks = TRUE)
 
-	if(!do_teleport(target, destination_turf, channel = TELEPORT_CHANNEL_MAGIC))
+	if(!do_teleport(user, destination, channel = TELEPORT_CHANNEL_MAGIC))
 		return ..()
 
-	for(var/turf/smoke_turf as anything in list(origin_turf, destination_turf))
+	for(var/turf/smoke_turf as anything in list(origin, destination))
 		do_smoke(0, src, smoke_turf)
 	return ..()
 

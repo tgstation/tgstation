@@ -129,9 +129,8 @@
 	if(source.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)
 		return
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect_system/reagents_explosion/e = new()
-	e.set_up(1 + round(volume / 6, 1), location, message = FALSE)
-	e.start(holder.my_atom)
+	var/datum/effect_system/reagents_explosion/expl = new(location, 1 + round(volume / 6, 1), message = FALSE)
+	expl.start(holder.my_atom)
 	holder.clear_reagents()
 
 /datum/reagent/gunpowder/on_spark_act(power_charge, enclosed)

@@ -396,13 +396,33 @@
 	return TRUE
 
 /// Helper to quickly create a cloud of reagent smoke
-/proc/do_chem_smoke(range = 0, atom/holder = null, location = null, reagent_type = /datum/reagent/water, reagent_volume = 10, datum/reagents/carry = null, log = FALSE, amount = null, datum/effect_system/fluid_spread/smoke/chem/smoke_type = /datum/effect_system/fluid_spread/smoke/chem, silent = TRUE)
-	var/datum/reagents/smoke_reagents = null
-	if (!carry)
-		smoke_reagents = new /datum/reagents(reagent_volume)
-		smoke_reagents.add_reagent(reagent_type, reagent_volume)
+/// reagent_type can accept a list of reagents, optionally as a key-value pair with values overriding reagent_volume if not null
+/proc/do_chem_smoke(range = 0, atom/holder = null, location = null, reagent_type = /datum/reagent/water, reagent_volume = 10, datum/reagents/carry = null, carry_limit = null, log = FALSE, amount = null, datum/effect_system/fluid_spread/smoke/chem/smoke_type = /datum/effect_system/fluid_spread/smoke/chem, silent = TRUE)
+	if (carry)
+		var/datum/effect_system/fluid_spread/smoke/chem/smoke = new smoke_type(location, range, amount, holder || location, carry, carry_limit, silent)
+		smoke.start(log = log)
+		return
 
-	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new smoke_type(location, range, amount, holder || location, carry || smoke_reagents, silent = silent)
+	if (ispath(reagent_type, /datum/reagent))
+		var/datum/reagents/smoke_reagents = new /datum/reagents(reagent_volume)
+		smoke_reagents.add_reagent(reagent_type, reagent_volume)
+		var/datum/effect_system/fluid_spread/smoke/chem/smoke = new smoke_type(location, range, amount, holder || location, smoke_reagents, carry_limit, silent)
+		smoke.start(log = log)
+		return
+
+	if (!islist(reagent_type))
+		CRASH("do_chem_smoke passed a non-reagent path, non-list reagent_type [reagent_type]!")
+
+	var/list/reagent_list = reagent_type
+	var/chem_volume = 0
+	for (var/chem_type in reagent_list)
+		chem_volume += reagent_list[chem_type] || reagent_volume
+
+	var/datum/reagents/smoke_reagents = new /datum/reagents(chem_volume)
+	for (var/chem_type in reagent_list)
+		smoke_reagents.add_reagent(chem_type, reagent_list[chem_type] || reagent_volume)
+
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new smoke_type(location, range, amount, holder || location, smoke_reagents, carry_limit, silent)
 	smoke.start(log = log)
 
 /// A factory which produces clouds of chemical bearing smoke.
@@ -411,10 +431,10 @@
 	var/datum/reagents/chemholder
 	effect_type = /obj/effect/particle_effect/fluid/smoke/chem
 
-/datum/effect_system/fluid_spread/smoke/chem/New(turf/location, range = 1, amount = null, atom/holder = null, datum/reagents/carry = null, silent = FALSE)
+/datum/effect_system/fluid_spread/smoke/chem/New(turf/location, range = 1, amount = null, atom/holder = null, datum/reagents/carry = null, carry_limit = null, silent = FALSE)
 	. = ..()
 	chemholder = new(1000, NO_REACT)
-	carry?.trans_to(chemholder, carry.total_volume, copy_only = TRUE)
+	carry?.trans_to(chemholder, isnull(carry_limit) ? carry.total_volume : carry_limit, copy_only = TRUE)
 
 	if(silent)
 		return
