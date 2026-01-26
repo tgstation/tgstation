@@ -15,5 +15,5 @@
 
 /datum/component/plumbing/acclimator/supply_demand(dir)
 	var/obj/machinery/plumbing/acclimator/myacclimator = parent
-	if(myacclimator.emptying)
+	if(!reagents.is_reacting && myacclimator.emptying)
 		return ..()

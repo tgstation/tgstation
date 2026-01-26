@@ -19,8 +19,6 @@
 	for(var/obj/machinery/duct/target in get_turf(src))
 		if(target.duct_layer == duct_layer)
 			pipe = target
-			RegisterSignal(pipe.net.pipeline, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(update))
-			RegisterSignal(pipe.net.pipeline, COMSIG_QDELETING, PROC_REF(reassign))
 			RegisterSignal(pipe, COMSIG_QDELETING, PROC_REF(deconstruct))
 			break
 
@@ -91,16 +89,9 @@
 				overlay.color = COLOR_RED
 		. += overlay
 
-/obj/machinery/reagent_meter/proc/update()
-	SIGNAL_HANDLER
-
-	update_appearance(UPDATE_OVERLAYS)
-
-/obj/machinery/reagent_meter/proc/reassign()
-	SIGNAL_HANDLER
-
-	RegisterSignal(pipe.net.pipeline, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(update))
-
+/obj/machinery/reagent_meter/process(seconds_per_tick)
+	if(!is_operational || QDELETED(pipe))
+		return
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/reagent_meter/wrench_act(mob/living/user, obj/item/tool)

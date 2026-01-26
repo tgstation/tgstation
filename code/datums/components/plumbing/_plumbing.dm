@@ -292,4 +292,4 @@
 				net.pipeline.my_atom = pipe
 				break
 
-		return reagents.trans_to(net.pipeline, amount, target_id = reagent, methods = round_robin ? LINEAR : NONE)
+		return reagents.trans_to(net.pipeline, amount, target_id = reagent, methods = round_robin ? LINEAR : NONE, no_react = TRUE)
