@@ -8,6 +8,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	/obj/item/stack/ore/bananium = 5,
 	/obj/item/stack/ore/titanium = 75,
 	))
+
 GLOBAL_VAR_INIT(tumors_spawned, 0)
 
 /obj/structure/spawner/ice_moon
