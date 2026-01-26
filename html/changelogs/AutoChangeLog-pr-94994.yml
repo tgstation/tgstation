@@ -1,4 +1,0 @@
-author: "JoshAdamPowell"
-delete-after: True
-changes:
-  - bugfix: "Removed a ferry console which should not be at the heretic beach\n:cl:"

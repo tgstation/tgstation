@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Chameleon ID's selection pool has been trimmed down, removing all the weird random IDs and trims like \"Head Occultist\", to make it easier to find the real job trims. You can (of course) manually forge the ID to set whatever job text you want."
-  - qol: "Chameleon items format their name slightly differently, making it easier to search"

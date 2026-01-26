@@ -1,4 +1,0 @@
-author: "RikuTheKiller"
-delete-after: True
-changes:
-  - refactor: "Refactored girders and wall construction. Report any bugs."
