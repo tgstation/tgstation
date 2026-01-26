@@ -108,12 +108,7 @@ SUBSYSTEM_DEF(minor_mapping)
 /datum/controller/subsystem/minor_mapping/proc/place_weakpoints(weakpoint_amount)
 	var/list/turfs = find_satchel_suitable_turfs()
 	///List of areas where weakpoints should not be placed.
-	var/list/blacklisted_area_types = list(
-		/area/station/holodeck,
-		/area/space/nearstation,
-		/area/station/solars,
-		/area/station/maintenance, // We want weakpoints to spawn in visible areas where players are more likely to actually interact in.
-	)
+	var/list/blacklisted_area_types = get_blacklist_areas() + /area/station/maintenance
 	while(turfs.len && weakpoint_amount > 0)
 		var/turf/turf = pick_n_take(turfs)
 		if(is_type_in_list(get_area(turf), blacklisted_area_types))
@@ -122,6 +117,17 @@ SUBSYSTEM_DEF(minor_mapping)
 
 		SEND_SIGNAL(new_point, COMSIG_OBJ_HIDE, turf.underfloor_accessibility)
 		weakpoint_amount--
+
+/**
+ * Areas for minor_mapping procs to avoid. Mutate or adjust based on use case.
+ */
+/datum/controller/subsystem/minor_mapping/proc/get_blacklist_areas()
+	var/list/blacklist_areas = list(
+		/area/station/holodeck,
+		/area/space/nearstation,
+		/area/station/solars,
+	)
+	return blacklist_areas
 
 
 #undef PROB_SPIDER_REPLACEMENT

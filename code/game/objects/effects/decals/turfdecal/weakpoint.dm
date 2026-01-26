@@ -29,7 +29,7 @@
 /obj/effect/weakpoint/ex_act(severity, target)
 	. = ..()
 	if(severity < required_strength)
-		to_chat(world, "too weak!")
+		balloon_alert_to_viewers("crack!")
 		playsound(source = src, soundin = sound(get_sfx(SFX_HULL_CREAKING)), vol = 50, vary = TRUE, pressure_affected = FALSE, ignore_walls = TRUE)
 		return //return ominous sounds when we're under the threshold.
 
@@ -59,13 +59,12 @@
 	qdel(src)
 
 /obj/effect/weakpoint/welder_act(mob/living/user, obj/item/tool)
-	. = ..()
 	to_chat(user, span_notice("You begin to strengthen [src]..."))
 	if(!tool.use_tool(src, user, 4 SECONDS, amount = 1, volume=50))
-		return TRUE
-	balloon_alert_to_viewers("sealed!")
-	to_chat(user, span_notice("\The [src] is fully sealed, eliminating the risk of growing."))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("\The [src] is fully sealed, eliminating the risk of the weakpoint growing."))
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/effect/weakpoint/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
