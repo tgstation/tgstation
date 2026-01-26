@@ -37,6 +37,7 @@
 		/obj/item/reagent_containers/condiment/flour = 7,
 		/obj/item/reagent_containers/condiment/rice = 7,
 		/obj/item/reagent_containers/condiment/ketchup = 7,
+		/obj/item/reagent_containers/condiment/mustard = 7,
 		/obj/item/reagent_containers/condiment/enzyme = 7,
 		/obj/item/reagent_containers/condiment/soymilk = 7,
 		/obj/item/kitchen/spoon/soup_ladle = 6,

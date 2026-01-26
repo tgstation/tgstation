@@ -329,6 +329,13 @@
 	list_reagents = list(/datum/reagent/consumable/ketchup = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/condiment/mustard
+	name = "mustard"
+	desc = "A spicy and tangy sauce made out of the mustard plant. Great on hotdogs!"
+	icon_state = "mustard"
+	list_reagents = list(/datum/reagent/consumable/mustard = 50)
+	fill_icon_thresholds = null
+
 /obj/item/reagent_containers/condiment/worcestershire
 	name = "worcestershire sauce"
 	desc = "A fermented sauce of legend from old England. Makes almost anything better."

@@ -121,6 +121,10 @@ export default defineConfig({
       failOnError: true,
       exclude: /node_modules/,
     }),
+    new rspack.IgnorePlugin({
+      resourceRegExp: /\.test\.tsx?$/,
+      contextRegExp: /__mocks__/,
+    }),
   ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],

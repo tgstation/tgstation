@@ -8,6 +8,7 @@
 	icon = 'icons/obj/pipes_n_cables/hydrochem/plumbers.dmi'
 	icon_state = "pump"
 	density = TRUE
+	subsystem_type = /datum/controller/subsystem/processing/plumbing
 	processing_flags = START_PROCESSING_MANUALLY
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.75
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -22,6 +23,8 @@
 /obj/machinery/plumbing/Initialize(mapload)
 	. = ..()
 	set_anchored(mapload)
+	if(mapload)
+		begin_processing()
 	create_reagents(buffer, reagent_flags)
 	AddElement(/datum/element/simple_rotation)
 	register_context()

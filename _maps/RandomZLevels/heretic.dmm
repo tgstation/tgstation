@@ -5809,9 +5809,6 @@
 /turf/open/misc/grass/jungle/station,
 /area/awaymission/beach/heretic)
 "EH" = (
-/obj/machinery/computer/shuttle/ferry/request{
-	dir = 4
-	},
 /turf/open/floor/pod/light,
 /area/awaymission/beach/heretic)
 "EI" = (

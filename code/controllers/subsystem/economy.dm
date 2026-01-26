@@ -14,11 +14,6 @@ SUBSYSTEM_DEF(economy)
 										ACCOUNT_CAR = ACCOUNT_CAR_NAME,
 										ACCOUNT_SEC = ACCOUNT_SEC_NAME)
 	var/list/departmental_accounts = list()
-	/**
-	 * Enables extra money charges for things that normally would be free, such as sleepers/cryo/beepsky.
-	 * Take care when enabling, as players will NOT respond well if the economy is set up for low cash flows.
-	 */
-	var/full_ancap = FALSE
 
 	/// Departmental cash provided to science when a node is researched in specific configs.
 	var/techweb_bounty = 250
@@ -126,7 +121,7 @@ SUBSYSTEM_DEF(economy)
 /**
  * Handy proc for obtaining a department's bank account, given the department ID, AKA the define assigned for what department they're under.
  */
-/datum/controller/subsystem/economy/proc/get_dep_account(dep_id)
+/datum/controller/subsystem/economy/proc/get_dep_account(dep_id) as /datum/bank_account/department
 	for(var/datum/bank_account/department/D in departmental_accounts)
 		if(D.department_id == dep_id)
 			return D

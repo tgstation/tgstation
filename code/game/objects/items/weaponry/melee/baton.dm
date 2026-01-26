@@ -758,6 +758,7 @@
 	abstract_type = /datum/atom_skin/stunsword
 	change_inhand_icon_state = TRUE
 	change_base_icon_state = TRUE
+	change_worn_icon_state = FALSE
 
 /datum/atom_skin/stunsword/default
 	preview_name = "Default"

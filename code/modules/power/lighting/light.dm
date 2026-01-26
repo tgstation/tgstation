@@ -240,7 +240,7 @@
 			color_set = color
 		if(reagents || !is_full_charge())
 			START_PROCESSING(SSmachines, src)
-			if (reagents.spark_act(active_power_usage, TRUE) & SPARK_ACT_DESTRUCTIVE)
+			if (reagents?.spark_act(active_power_usage, TRUE) & SPARK_ACT_DESTRUCTIVE)
 				message_admins("A rigged lightbulb at [AREACOORD(src)] has exploded.")
 				qdel(src)
 				return

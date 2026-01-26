@@ -8,7 +8,7 @@
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED
 	/// Typecache of all item types we explicitly cannot pick
 	/// Note that abstract items are already excluded
-	VAR_FINAL/list/chameleon_blacklist = list()
+	VAR_FINAL/list/chameleon_blacklist
 	/// Typecache of typepaths we can turn into
 	VAR_FINAL/list/chameleon_typecache
 	/// Assoc list of item name + icon state to item typepath
@@ -31,10 +31,18 @@
 		qdel(src)
 		return
 
+	name = "Change [chameleon_name] Appearance"
+	build_all_button_icons()
+
+	LAZYINITLIST(chameleon_blacklist)
+	LAZYINITLIST(chameleon_typecache)
+	LAZYINITLIST(chameleon_list)
+
 	initialize_blacklist()
 	initialize_disguises()
+
 	if(active_type)
-		if(chameleon_blacklist[active_type])
+		if(is_type_in_typecache(active_type, chameleon_blacklist))
 			stack_trace("[type] has an active type defined in init which is blacklisted ([active_type])")
 			active_type = null
 		else
@@ -73,31 +81,40 @@
 	var/datum/action/chameleon_outfit/outfit_action = locate() in remove_from.actions
 	QDEL_NULL(outfit_action)
 
+/// Basic initialization of the chameleon items we cannot pick from
 /datum/action/item_action/chameleon/change/proc/initialize_blacklist()
 	chameleon_blacklist |= typecacheof(target.type)
 
+/// Basic initialization of the chameleon items we can pick from
 /datum/action/item_action/chameleon/change/proc/initialize_disguises()
-	name = "Change [chameleon_name] Appearance"
-	build_all_button_icons()
-
-	LAZYINITLIST(chameleon_typecache)
-	LAZYINITLIST(chameleon_list)
-
 	if(!ispath(chameleon_type, /obj/item))
 		stack_trace("Non-item chameleon type defined on [type] ([chameleon_type])")
 		return
 
 	add_chameleon_items(chameleon_type)
 
-/datum/action/item_action/chameleon/change/proc/add_chameleon_items(type_to_add)
+/// Used for formatting a typepath into something human readable for selection
+/datum/action/item_action/chameleon/change/proc/format_readable_name(datum/format_type)
+	if(ispath(format_type, /obj/item))
+		var/obj/item/format_item = format_type
+		return "[format_item::name] ([replacetext(format_item::post_init_icon_state || format_item::icon_state, "_", " ")])"
 
-	chameleon_typecache |= typecacheof(type_to_add)
-	for(var/obj/item/item_type as anything in chameleon_typecache)
-		if(chameleon_blacklist[item_type] || (item_type::item_flags & ABSTRACT) || item_type == item_type::abstract_type || !item_type::icon_state)
+	return "[format_type]"
+
+/**
+ * Adds items of the given type or types to the chameleon selection list
+ *
+ * * type_or_types_to_add: A single typepath or a list of typepaths to add to the chameleon selection
+ * * only_root: If TRUE, only add the literal type or types passed, not their children
+ * * ignore_root: If TRUE, only add children of the type or types passed, not the literal types
+ */
+/datum/action/item_action/chameleon/change/proc/add_chameleon_items(type_or_types_to_add, only_root = FALSE, ignore_root = FALSE)
+	var/list/new_items = typecacheof(type_or_types_to_add, only_root_path = only_root, ignore_root_path = ignore_root)
+	for(var/obj/item/item_type as anything in new_items - chameleon_typecache)
+		if(is_type_in_typecache(item_type, chameleon_blacklist) || (item_type::item_flags & ABSTRACT) || item_type == item_type::abstract_type || !item_type::icon_state)
 			continue
-		var/chameleon_item_name = "[item_type::name] ([item_type::post_init_icon_state || item_type::icon_state])"
-		chameleon_list[chameleon_item_name] = item_type
-
+		chameleon_list[format_readable_name(item_type)] = item_type
+	chameleon_typecache |= new_items
 
 /datum/action/item_action/chameleon/change/proc/select_look(mob/user)
 	var/picked_name = tgui_input_list(user, "Select [chameleon_name] to change into", "Chameleon Settings", sort_list(chameleon_list, GLOBAL_PROC_REF(cmp_typepaths_asc)))

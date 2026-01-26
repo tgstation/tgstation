@@ -601,6 +601,8 @@
 	needs_update += carbon_host.adjust_tox_loss(-2 * heal_amt, updating_health = FALSE)
 	var/brute_burn_heal = carbon_host.heal_overall_damage(heal_amt, heal_amt, required_bodytype = healable_bodytypes, updating_health = FALSE)
 	needs_update += brute_burn_heal
+	if(needs_update)
+		carbon_host.updatehealth()
 	if(brute_burn_heal && prob(4))
 		to_chat(carbon_host, span_notice("Your skin glows faintly, and you feel your wounds mending themselves."))
 	return TRUE
