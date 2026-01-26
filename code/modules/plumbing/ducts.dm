@@ -339,6 +339,12 @@
 		if(amount == max_amount)
 			balloon_alert(user, "stack full!")
 			return ITEM_INTERACT_FAILURE
+
+		var/obj/machinery/duct/pipe = interacting_with
+		if(pipe.net.pipeline.total_volume)
+			balloon_alert(user, "pipe not empty!")
+			return ITEM_INTERACT_FAILURE
+
 		qdel(interacting_with)
 		add(1)
 		return ITEM_INTERACT_SUCCESS
