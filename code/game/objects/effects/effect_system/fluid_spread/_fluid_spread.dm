@@ -125,6 +125,7 @@
 	attach(holder)
 	if (isnull(amount))
 		amount = DIAMOND_AREA(range)
+	src.amount = amount
 
 /datum/effect_system/fluid_spread/start(log = FALSE)
 	var/location = src.location || get_turf(holder)

@@ -165,11 +165,13 @@
  * - range: The amount of smoke to produce as number of steps from origin covered.
  * - amount: The amount of smoke to produce as the total desired coverage area. Autofilled from the range arg if not set.
  * - location: Where to produce the smoke cloud.
- * - smoke_type: The smoke typepath to spawn.
+ * - smoke_type - Typepath for the effect system to use
+ * - effect_type: The smoke typepath to spawn.
+ * - log: Should the system log the smoke spawned?
  */
-/proc/do_smoke(range = 0, atom/holder = null, location = null, amount = null, smoke_type = /obj/effect/particle_effect/fluid/smoke, log = FALSE)
-	var/datum/effect_system/fluid_spread/smoke/smoke = new(location, range, amount, holder)
-	smoke.effect_type = smoke_type
+/proc/do_smoke(range = 0, atom/holder = null, location = null, amount = null, smoke_type = /datum/effect_system/fluid_spread/smoke, effect_type = /obj/effect/particle_effect/fluid/smoke, log = FALSE)
+	var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type(location, range, amount, holder)
+	smoke.effect_type = effect_type
 	smoke.start(log = log)
 
 /////////////////////////////////////////////
