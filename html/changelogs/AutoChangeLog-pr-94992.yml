@@ -1,0 +1,4 @@
+author: "Cirrial"
+delete-after: True
+changes:
+  - bugfix: "Fixed right-click menu pick up of items not working in rare cases."
