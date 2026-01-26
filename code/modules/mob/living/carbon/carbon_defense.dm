@@ -72,7 +72,7 @@
 
 /mob/living/carbon/apply_projectile_effects(obj/projectile/proj, def_zone, armor_check)
 	. = ..()
-	if(proj.damage_type == BRUTE && proj.damage > 10 && proj.speed > 1 && prob(0.1))
+	if(def_zone == BODY_ZONE_HEAD && proj.damage_type == BRUTE && proj.damage > 10 && proj.speed > 1 && prob(0.1))
 		cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
 
 /mob/living/carbon/check_projectile_dismemberment(obj/projectile/proj, def_zone)
