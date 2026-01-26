@@ -125,8 +125,7 @@
 	if(sound)
 		playsound(location, sound, 60, TRUE)
 	if(effect)
-		effect.attach(location)
-		effect.start()
+		effect.attach(location).start()
 
 /**
  * Attempts to find a "safe" floor turf within some given z-levels
