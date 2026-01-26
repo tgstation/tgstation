@@ -30,7 +30,7 @@
 	. = ..()
 	if(severity < required_strength)
 		balloon_alert_to_viewers("crack!")
-		playsound(source = src, soundin = sound(get_sfx(SFX_HULL_CREAKING)), vol = 50, vary = TRUE, pressure_affected = FALSE, ignore_walls = TRUE)
+		playsound(source = src, soundin = SFX_HULL_CREAKING, vol = 50, vary = TRUE, pressure_affected = FALSE, ignore_walls = TRUE)
 		return //return ominous sounds when we're under the threshold.
 
 	var/list/chain_turfs = get_crack_chain(get_turf(src), 8, TRUE) // Get a nice chain of turfs
@@ -38,7 +38,7 @@
 	var/crack_delay = 0
 	for(var/turf/crack_turf in chain_turfs)
 		addtimer(CALLBACK(crack_turf, TYPE_PROC_REF(/atom, ex_act), severity, crack_turf), CRACK_PROPAGATION_DELAY * crack_delay)
-		playsound(source = crack_turf, soundin = sound(get_sfx(SFX_HULL_CREAKING)), vol = 35, vary = TRUE, pressure_affected = FALSE, ignore_walls = TRUE)
+		playsound(source = crack_turf, soundin = SFX_HULL_CREAKING, vol = 35, vary = TRUE, pressure_affected = FALSE, ignore_walls = TRUE)
 		if(prob(33))
 			crack_delay++
 
@@ -68,7 +68,7 @@
 
 /obj/effect/weakpoint/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(held_item.tool_behaviour == TOOL_WELDER)
+	if(held_item?.tool_behaviour == TOOL_WELDER)
 		context[SCREENTIP_CONTEXT_LMB] = "Repair weakpoint"
 		return CONTEXTUAL_SCREENTIP_SET
 	return .

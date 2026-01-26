@@ -106,6 +106,8 @@ SUBSYSTEM_DEF(minor_mapping)
 
 /// This behaves nearly the same as spawning underfloot satchels, but instead spawns weakpoints.
 /datum/controller/subsystem/minor_mapping/proc/place_weakpoints(weakpoint_amount)
+	if(weakpoint_amount == 0)
+		return
 	var/list/turfs = find_satchel_suitable_turfs()
 	///List of areas where weakpoints should not be placed.
 	var/list/blacklisted_area_types = get_blacklist_areas() + /area/station/maintenance
