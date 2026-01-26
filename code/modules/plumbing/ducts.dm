@@ -216,13 +216,15 @@
 					if(plumbing.ducts[dirtext] == net)
 						net.remove_plumber(plumbing)
 				//assign new net
-				if(newnet?.ducts.len)
+				if(newnet)
 					for(pipe as anything in newnet.ducts)
 						var/dir = pipe.neighbours[node]
 						if(dir)
 							newnet.add_plumber(plumbing, REVERSE_DIR(dir))
-					//Evenly distribute all reagents into this new pipeline
-					net.pipeline.trans_to(newnet.pipeline, reagents_per_pipe * newnet.ducts.len, no_react = TRUE, copy_only = TRUE, methods = NONE)
+
+		//Evenly distribute all reagents into this new pipeline
+		if(newnet?.ducts.len)
+			net.pipeline.trans_to(newnet.pipeline, reagents_per_pipe * newnet.ducts.len, no_react = TRUE, copy_only = TRUE, methods = NONE)
 
 	disconnect()
 
