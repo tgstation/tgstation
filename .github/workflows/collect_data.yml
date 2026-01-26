@@ -77,6 +77,6 @@ jobs:
         with:
           fetch_depth: 0
           files_ignore: |
-            **/*.md,
-            html/**,
-            tgui/**,
+            **/*.md
+            html/**
+            tgui/**
