@@ -351,6 +351,15 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/ketchup
 
+/datum/reagent/consumable/mustard
+	name = "Mustard"
+	description = "Spicy, tangy sauce, made from the mustard plant."
+	nutriment_factor = 5
+	color = "#ffd129"
+	taste_description = "mustard"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/mustard
+
 /datum/reagent/consumable/capsaicin
 	name = "Capsaicin Oil"
 	description = "This is what makes chilis hot."
