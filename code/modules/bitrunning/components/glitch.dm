@@ -17,8 +17,7 @@
 		server.remove_threat(owner) // so the server doesn't dust us
 		health_boost = ROUND_UP(server.threat * 0.2)
 
-	owner.faction.Cut()
-	owner.faction += list(ROLE_GLITCH)
+	owner.set_faction(list(ROLE_GLITCH))
 
 	owner.maxHealth = clamp(owner.maxHealth + health_boost, 200, 500)
 	owner.fully_heal()

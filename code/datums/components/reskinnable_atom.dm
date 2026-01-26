@@ -13,6 +13,8 @@
 	var/change_base_icon_state = FALSE
 	/// If true, changing the reskin also changes the inhand_icon_state of the atom
 	var/change_inhand_icon_state = FALSE
+	/// If true, changing the reskin also changes the worn_icon_state of the atom
+	var/change_worn_icon_state = TRUE
 	/// If true, unset vars are reset to their original values when applying this skin
 	var/reset_missing = TRUE
 
@@ -86,7 +88,8 @@
 		if(!item_apply_to.greyscale_config_inhand_left)
 			APPLY_VAR_OR_RESET_INITIAL(item_apply_to, lefthand_file, new_lefthand_file, reset_missing)
 			APPLY_VAR_OR_RESET_INITIAL(item_apply_to, righthand_file, new_righthand_file, reset_missing)
-		APPLY_VAR_OR_RESET_INITIAL(item_apply_to, worn_icon_state, new_icon_state, reset_missing)
+		if(change_worn_icon_state)
+			APPLY_VAR_OR_RESET_INITIAL(item_apply_to, worn_icon_state, new_icon_state, reset_missing)
 		if(change_inhand_icon_state || new_inhand_icon_state)
 			APPLY_VAR_OR_RESET_INITIAL(item_apply_to, inhand_icon_state, new_inhand_icon_state || new_icon_state, reset_missing)
 

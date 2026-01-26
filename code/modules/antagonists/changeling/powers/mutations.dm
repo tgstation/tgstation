@@ -692,7 +692,8 @@
 		spawns = 1
 	for(var/i in 1 to spawns)
 		var/mob/living/basic/summoned_minion = new spawn_type(owner.drop_location())
-		summoned_minion.faction = list("[REF(owner)]")
+		summoned_minion.set_allies(list("[REF(owner)]"))
+		summoned_minion.set_faction(null)
 		minion_additional_changes(summoned_minion)
 
 ///Our tell that we're using this ability. Usually a sound and a visible message.area

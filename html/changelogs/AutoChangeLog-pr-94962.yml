@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Dna console has a minor visual indicator for invalid pairs (such as A-A or C-T)"

@@ -767,7 +767,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return FALSE
 
 	target.PossessByPlayer(key)
-	target.faction = list(FACTION_NEUTRAL)
+	target.set_faction(list(FACTION_NEUTRAL))
 	return TRUE
 
 /mob/dead/observer/_pointed(atom/pointed_at)

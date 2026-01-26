@@ -85,7 +85,7 @@
 	var/spawn_type = get_legion_type(target)
 	var/mob/living/basic/mining/legion/new_legion = new spawn_type(loc)
 	new_legion.consume(target)
-	new_legion.faction = faction.Copy()
+	new_legion.set_faction(get_faction())
 	qdel(src)
 
 /// Returns the kind of legion we make out of the target
@@ -99,9 +99,9 @@
 /// Sets someone as our creator, mostly so you can't use skulls to heal yourself
 /mob/living/basic/mining/legion_brood/proc/assign_creator(mob/living/creator, copy_full_faction = TRUE)
 	if (copy_full_faction)
-		faction = creator.faction.Copy()
+		set_faction(creator.get_faction())
 	else
-		faction |= REF(creator)
+		add_ally(creator)
 	created_by = WEAKREF(creator)
 	ai_controller?.set_blackboard_key(BB_LEGION_BROOD_CREATOR, creator)
 	RegisterSignal(creator, COMSIG_QDELETING, PROC_REF(creator_destroyed))

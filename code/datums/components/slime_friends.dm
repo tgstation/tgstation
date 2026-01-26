@@ -32,13 +32,13 @@
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/mob/living/living_parent = parent
-	living_parent.faction |= FACTION_SLIME
+	living_parent.add_faction(FACTION_SLIME)
 	RegisterSignal(living_parent, COMSIG_ENTER_AREA, PROC_REF(start_slime_prodaction))
 
 /datum/component/slime_friends/Destroy(force)
 	. = ..()
 	var/mob/living/living_parent = parent
-	living_parent.faction -= FACTION_SLIME
+	living_parent.remove_faction(FACTION_SLIME)
 	timer = null
 
 /// Start slime prodaction when we leave wizden.
@@ -56,6 +56,6 @@
 	var/turf/where = get_turf(friend)
 	var/new_colour = pick(colours)
 	var/mob/living/basic/slime/new_friend = new(where, new_colour, SLIME_LIFE_STAGE_ADULT)
-	new_friend.faction = friend.faction.Copy()
+	SET_FACTION_AND_ALLIES_FROM(new_friend, friend)
 	new_friend.set_enraged_behaviour()
 	friend.nutrition -= 50
