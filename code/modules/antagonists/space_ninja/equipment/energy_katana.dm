@@ -42,7 +42,8 @@
 /obj/item/energy_katana/Initialize(mapload)
 	. = ..()
 	jaunt = new(src)
-	do_sparks(5, FALSE, src, src)
+	spark_system = new(src, 5, FALSE)
+	spark_system.attach(src)
 
 /obj/item/energy_katana/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(isliving(interacting_with))

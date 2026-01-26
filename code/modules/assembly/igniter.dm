@@ -21,7 +21,8 @@
 
 /obj/item/assembly/igniter/Initialize(mapload)
 	. = ..()
-	do_sparks(2, FALSE, src, src)
+	sparks = new(src, 2, FALSE)
+	sparks.attach(src)
 
 /obj/item/assembly/igniter/Destroy()
 	QDEL_NULL(sparks)

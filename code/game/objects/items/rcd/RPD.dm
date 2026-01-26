@@ -80,7 +80,8 @@
 
 /obj/item/pipe_dispenser/Initialize(mapload)
 	. = ..()
-	do_sparks(5, FALSE, src, src)
+	spark_system = new(src, 5, FALSE)
+	spark_system.attach(src)
 	if(!first_atmos)
 		first_atmos = GLOB.atmos_pipe_recipes[GLOB.atmos_pipe_recipes[1]][1]
 	if(!first_disposal)

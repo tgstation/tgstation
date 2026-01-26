@@ -125,7 +125,8 @@ DEFINE_BITFIELD(turret_flags, list(
 		base = src
 	update_appearance()
 	// Sets up a spark system
-	do_sparks(5, FALSE, src, src)
+	spark_system = new(src, 5, FALSE)
+	spark_system.attach(src)
 	tracker = new(src, scan_range)
 	tracker.recalculate_field(full_recalc = TRUE) // manually call this so that our tracker var is set before we set anything up
 	setup()

@@ -368,7 +368,8 @@
 	alt_continuous = string_list(alt_continuous)
 	alt_simple = string_list(alt_simple)
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -10)
-	do_sparks(5, FALSE, src, src)
+	spark_system = new(5, FALSE, src)
+	spark_system.attach(src)
 	START_PROCESSING(SSobj, src)
 	ADD_TRAIT(src, TRAIT_TRANSFORM_ACTIVE, INNATE_TRAIT) // Functions as an extended esword
 

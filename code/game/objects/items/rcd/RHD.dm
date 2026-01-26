@@ -47,7 +47,8 @@
 
 /obj/item/construction/Initialize(mapload)
 	. = ..()
-	do_sparks(5, FALSE, src, src)
+	spark_system = new(5, FALSE, src)
+	spark_system.attach(src)
 	if(construction_upgrades & RCD_UPGRADE_SILO_LINK)
 		silo_mats = new (src, mapload, FALSE)
 	update_appearance()
