@@ -195,6 +195,7 @@
 #include "hydroponics_harvest.dm"
 #include "hydroponics_self_mutations.dm"
 #include "hydroponics_validate_genes.dm"
+#include "id_access.dm"
 #include "inhands.dm"
 #include "interaction_door.dm"
 #include "interaction_silicon.dm"
