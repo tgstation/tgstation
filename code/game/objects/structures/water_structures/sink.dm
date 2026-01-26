@@ -20,38 +20,71 @@
 	var/has_water_reclaimer = TRUE
 	///Units of water to reclaim per second
 	var/reclaim_rate = 0.5
-	///Amount of shift the pixel for placement
-	var/pixel_shift = 14
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 
-/obj/structure/sink/Initialize(mapload, ndir = 0, has_water_reclaimer = null)
+/obj/structure/sink/Initialize(mapload)
 	. = ..()
 
-	if(ndir)
-		dir = ndir
-
-	if(has_water_reclaimer != null)
-		src.has_water_reclaimer = has_water_reclaimer
-
-	switch(dir)
-		if(NORTH)
-			pixel_x = 0
-			pixel_y = -pixel_shift
-		if(SOUTH)
-			pixel_x = 0
-			pixel_y = pixel_shift
-		if(EAST)
-			pixel_x = -pixel_shift
-			pixel_y = 0
-		if(WEST)
-			pixel_x = pixel_shift
-			pixel_y = 0
-
 	create_reagents(capacity, NO_REACT)
-	if(src.has_water_reclaimer)
+	if(has_water_reclaimer)
 		reagents.add_reagent(dispensedreagent, capacity)
 	AddComponent(/datum/component/plumbing/simple_demand/extended)
+
+	register_context()
+
+	if(mapload && !find_and_mount_on_atom(mark_for_late_init = TRUE))
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/sink/LateInitialize()
+	find_and_mount_on_atom(late_init = TRUE)
+
+/obj/structure/sink/atom_deconstruct(dissambled = TRUE)
+	if(buildstacktype)
+		new buildstacktype(loc,buildstackamount)
+	else
+		for(var/i in custom_materials)
+			var/datum/material/M = i
+			new M.sheet_type(loc, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
+	if(has_water_reclaimer)
+		new /obj/item/stock_parts/water_recycler(drop_location())
+
+/obj/structure/sink/get_turfs_to_mount_on()
+	return list(get_step(src, REVERSE_DIR(dir)))
+
+/obj/structure/sink/get_moutable_objects()
+	var/static/list/sink_structures = null
+	if(isnull(sink_structures))
+		sink_structures = list()
+		sink_structures += ..()
+		sink_structures += /obj/machinery/smartfridge //medbay sometimes have sinks attached to fridges
+	return sink_structures
+
+/obj/structure/sink/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = NONE
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Wash hands"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(is_reagent_container(held_item) && held_item.is_refillable() && !held_item.reagents.holder_full())
+		context[SCREENTIP_CONTEXT_LMB] = "Fill container"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/mop) || astype(held_item, /obj/item/rag)?.blood_level == 0)
+		context[SCREENTIP_CONTEXT_LMB] = "Wet mop"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/stock_parts/water_recycler) && !has_water_reclaimer)
+		context[SCREENTIP_CONTEXT_LMB] = "Install recycler"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/storage/fancy/pickles_jar))
+		context[SCREENTIP_CONTEXT_LMB] = "Clean pickle jar"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(!user.combat_mode || (held_item.item_flags & NOBLUDGEON))
+		context[SCREENTIP_CONTEXT_LMB] = "Clean item"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/sink/examine(mob/user)
 	. = ..()
@@ -70,7 +103,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	if(!Adjacent(user))
 		return
 	if(reagents.total_volume < 5)
-		to_chat(user, span_warning("The sink has no more contents left!"))
+		to_chat(user, span_warning("The sink is dry!"))
 		return
 	if(busy)
 		to_chat(user, span_warning("Someone's already washing here!"))
@@ -91,9 +124,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		return
 
 	busy = FALSE
-	reagents.remove_all(5)
 	reagents.expose(user, TOUCH, 5 / max(reagents.total_volume, 5))
-	begin_reclamation()
+	reagents.remove_all(5)
+	START_PROCESSING(SSobj, src)
 	if(washing_face)
 		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_FACE_ACT, CLEAN_WASH)
 	else if(ishuman(user))
@@ -107,132 +140,116 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	user.visible_message(span_notice("[user] washes [user.p_their()] [washing_face ? "face" : "hands"] using [src]."), \
 						span_notice("You wash your [washing_face ? "face" : "hands"] using [src]."))
 
-/obj/structure/sink/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/structure/sink/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
 	if(busy)
 		to_chat(user, span_warning("Someone's already washing here!"))
-		return
+		return ITEM_INTERACT_FAILURE
 
-	if(is_reagent_container(attacking_item))
-		var/obj/item/reagent_containers/RG = attacking_item
-		if(reagents.total_volume <= 0)
+	if(is_reagent_container(tool))
+		var/obj/item/reagent_containers/RG = tool
+		if(!reagents.total_volume)
 			to_chat(user, span_notice("\The [src] is dry."))
-			return FALSE
+			return ITEM_INTERACT_FAILURE
 		if(RG.is_refillable())
 			if(!RG.reagents.holder_full())
 				reagents.trans_to(RG, RG.amount_per_transfer_from_this, transferred_by = user)
-				begin_reclamation()
+				START_PROCESSING(SSobj, src)
 				to_chat(user, span_notice("You fill [RG] from [src]."))
-				return TRUE
+				return ITEM_INTERACT_SUCCESS
 			to_chat(user, span_notice("\The [RG] is full."))
-			return FALSE
+		return ITEM_INTERACT_FAILURE
 
-	if(istype(attacking_item, /obj/item/melee/baton/security))
-		var/obj/item/melee/baton/security/baton = attacking_item
-		if(baton.cell?.charge && baton.active)
+	if(istype(tool, /obj/item/mop) || astype(tool, /obj/item/rag)?.blood_level == 0)
+		if(!reagents.total_volume)
+			to_chat(user, span_notice("\The [src] is dry."))
+			return ITEM_INTERACT_FAILURE
+		reagents.trans_to(tool, 5, transferred_by = user)
+		START_PROCESSING(SSobj, src)
+		to_chat(user, span_notice("You wet [tool] in [src]."))
+		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stock_parts/water_recycler))
+		if(has_water_reclaimer)
+			to_chat(user, span_warning("There is already has a water recycler installed."))
+			return ITEM_INTERACT_FAILURE
+
+		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+		qdel(tool)
+		has_water_reclaimer = TRUE
+		START_PROCESSING(SSobj, src)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/storage/fancy/pickles_jar))
+		if(tool.contents.len)
+			to_chat(user, span_notice("Looks like there's something left in the jar"))
+			return ITEM_INTERACT_FAILURE
+		qdel(tool)
+		to_chat(user, span_notice("You washed the jar, ridding it of the brine."))
+		user.put_in_active_hand(new /obj/item/reagent_containers/cup/beaker/large(loc))
+		return ITEM_INTERACT_SUCCESS
+
+	if(!user.combat_mode || (tool.item_flags & NOBLUDGEON))
+		if(reagents.total_volume < 5)
+			to_chat(user, span_warning("The sink is dry!"))
+			return ITEM_INTERACT_FAILURE
+
+		to_chat(user, span_notice("You start washing [tool]..."))
+		playsound(src, 'sound/machines/sink-faucet.ogg', 50)
+
+		var/obj/item/melee/baton/security/baton = tool
+		if(istype(baton) && baton.active && baton.cell?.use(baton.cell_hit_cost, force = TRUE))
 			flick("baton_active", src)
 			user.Paralyze(baton.knockdown_time)
 			user.set_stutter(baton.knockdown_time)
-			baton.cell.use(baton.cell_hit_cost)
 			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"), \
 								span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
 			playsound(src, baton.on_stun_sound, 50, TRUE)
-			return
+			return ITEM_INTERACT_FAILURE
 
-	if(istype(attacking_item, /obj/item/mop) || astype(attacking_item, /obj/item/rag)?.blood_level == 0)
-		if(reagents.total_volume <= 0)
-			to_chat(user, span_notice("\The [src] is dry."))
-			return FALSE
-		reagents.trans_to(attacking_item, 5, transferred_by = user)
-		begin_reclamation()
-		to_chat(user, span_notice("You wet [attacking_item] in [src]."))
-		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
-		return
-
-	if(attacking_item.tool_behaviour == TOOL_WRENCH)
-		attacking_item.play_tool_sound(src)
-		deconstruct()
-		return
-
-	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
-		if(!has_water_reclaimer)
-			to_chat(user, span_warning("There isn't a water recycler to remove."))
-			return
-
-		attacking_item.play_tool_sound(src)
-		has_water_reclaimer = FALSE
-		new/obj/item/stock_parts/water_recycler(get_turf(loc))
-		to_chat(user, span_notice("You remove the water reclaimer from [src]."))
-		return
-
-	if(istype(attacking_item, /obj/item/stock_parts/water_recycler))
-		if(has_water_reclaimer)
-			to_chat(user, span_warning("There is already has a water recycler installed."))
-			return
-
-		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
-		qdel(attacking_item)
-		has_water_reclaimer = TRUE
-		begin_reclamation()
-		return
-
-	if(istype(attacking_item, /obj/item/storage/fancy/pickles_jar))
-		if(attacking_item.contents.len)
-			to_chat(user, span_notice("Looks like there's something left in the jar"))
-			return
-		qdel(attacking_item)
-		to_chat(user, span_notice("You washed the jar, ridding it of the brine."))
-		user.put_in_active_hand(new /obj/item/reagent_containers/cup/beaker/large(loc))
-		return
-
-	if(!istype(attacking_item))
-		return
-	if(attacking_item.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
-		return
-
-	if(!user.combat_mode || (attacking_item.item_flags & NOBLUDGEON))
-		to_chat(user, span_notice("You start washing [attacking_item]..."))
-		playsound(src, 'sound/machines/sink-faucet.ogg', 50)
 		busy = TRUE
 		if(!do_after(user, 4 SECONDS, target = src))
 			busy = FALSE
-			return 1
+			return ITEM_INTERACT_FAILURE
 		busy = FALSE
-		attacking_item.wash(CLEAN_WASH)
-		reagents.expose(attacking_item, TOUCH, 5 / max(reagents.total_volume, 5))
-		user.visible_message(span_notice("[user] washes [attacking_item] using [src]."), \
-							span_notice("You wash [attacking_item] using [src]."))
-		return 1
-	else
-		return ..()
+		tool.wash(CLEAN_WASH)
+		reagents.expose(tool, TOUCH, 5 / max(reagents.total_volume, 5))
+		reagents.remove_all(5)
+		START_PROCESSING(SSobj, src)
+		user.visible_message(span_notice("[user] washes [tool] using [src]."), \
+							span_notice("You wash [tool] using [src]."))
+		return ITEM_INTERACT_SUCCESS
 
-/obj/structure/sink/atom_deconstruct(dissambled = TRUE)
-	drop_materials()
-	if(has_water_reclaimer)
-		new /obj/item/stock_parts/water_recycler(drop_location())
+/obj/structure/sink/wrench_act(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src)
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/sink/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+
+	if(!has_water_reclaimer)
+		to_chat(user, span_warning("There isn't a water recycler to remove."))
+		return ITEM_INTERACT_FAILURE
+
+	tool.play_tool_sound(src)
+	has_water_reclaimer = FALSE
+	new/obj/item/stock_parts/water_recycler(get_turf(loc))
+	to_chat(user, span_notice("You remove the water reclaimer from [src]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/sink/process(seconds_per_tick)
 	// Water reclamation complete?
-	if(!has_water_reclaimer || reagents.total_volume >= reagents.maximum_volume)
+	if(!has_water_reclaimer || reagents.holder_full())
 		return PROCESS_KILL
 
 	reagents.add_reagent(dispensedreagent, reclaim_rate * seconds_per_tick)
-
-/obj/structure/sink/proc/drop_materials()
-	if(buildstacktype)
-		new buildstacktype(loc,buildstackamount)
-	else
-		for(var/i in custom_materials)
-			var/datum/material/M = i
-			new M.sheet_type(loc, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
-
-/obj/structure/sink/proc/begin_reclamation()
-	START_PROCESSING(SSobj, src)
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"
 	icon_state = "sink_alt"
 	pixel_z = 4
-	pixel_shift = 16
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 
@@ -247,48 +264,46 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	icon_state = "sink_greyscale"
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstacktype = null
+	has_water_reclaimer = FALSE
 
-/obj/structure/sinkframe
+/obj/structure/sink/greyscale/setDir(newdir)
+	return ..(REVERSE_DIR(newdir))
+
+/obj/structure/sink/greyscale/filled
+	has_water_reclaimer = TRUE
+
+/obj/item/wallframe/sinkframe
 	name = "sink frame"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "sink_frame"
 	desc = "A sink frame, that needs a water recycler to finish construction."
-	anchored = FALSE
+	result_path = /obj/structure/sink/greyscale
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	pixel_shift = 16
+	throw_range = 1
 
-/obj/structure/sinkframe/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/simple_rotation)
+/obj/item/wallframe/sinkframe/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(istype(held_item, /obj/item/stock_parts/water_recycler) && result_path == /obj/structure/sink/greyscale)
+		context[SCREENTIP_CONTEXT_LMB] = "Install recycler"
+		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/structure/sinkframe/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(tool, /obj/item/stock_parts/water_recycler))
-		qdel(tool)
-		var/obj/structure/sink/greyscale/new_sink = new(loc, REVERSE_DIR(dir), TRUE)
-		new_sink.set_custom_materials(custom_materials)
-		qdel(src)
-		playsound(new_sink, 'sound/machines/click.ogg', 20, TRUE)
-		return
 	return ..()
 
-/obj/structure/sinkframe/wrench_act(mob/living/user, obj/item/tool)
+/obj/item/wallframe/sinkframe/examine(mob/user)
 	. = ..()
+	if(result_path == /obj/structure/sink/greyscale/filled)
+		. += span_notice("It has a [EXAMINE_HINT("water recycler")] installed.")
+	else
+		. += span_notice("It can be fitted with a [EXAMINE_HINT("water recycler")].")
 
-	tool.play_tool_sound(src)
-	var/obj/structure/sink/greyscale/new_sink = new(loc, REVERSE_DIR(dir), FALSE)
-	new_sink.set_custom_materials(custom_materials)
-	qdel(src)
+/obj/item/wallframe/sinkframe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
+	if(istype(tool, /obj/item/stock_parts/water_recycler))
+		qdel(tool)
+		result_path = /obj/structure/sink/greyscale/filled
+		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+		return ITEM_INTERACT_SUCCESS
 
-	return TRUE
-
-/obj/structure/sinkframe/wrench_act_secondary(mob/living/user, obj/item/tool)
-	. = ..()
-	tool.play_tool_sound(src)
-	deconstruct()
-	return TRUE
-
-/obj/structure/sinkframe/atom_deconstruct(dissambled = TRUE)
-	drop_materials()
-
-/obj/structure/sinkframe/proc/drop_materials()
-	for(var/datum/material/material as anything in custom_materials)
-		new material.sheet_type(loc, FLOOR(custom_materials[material] / SHEET_MATERIAL_AMOUNT, 1))
+/obj/item/wallframe/sinkframe/after_attach(obj/structure/sink/greyscale/attached_to)
+	attached_to.set_custom_materials(custom_materials)
+	attached_to.update_appearance(UPDATE_OVERLAYS)
