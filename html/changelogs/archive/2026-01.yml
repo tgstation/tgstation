@@ -624,3 +624,7 @@
   - bugfix: Fixed lights breaking forever if they lose power
   vinylspiders:
   - bugfix: fixes the sql schema revision being wrong in the code
+2026-01-26:
+  Swan:
+  - bugfix: fixes the HFR health dropping exponentially once it starts taking damage
+      from having too many moles
