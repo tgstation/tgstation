@@ -70,6 +70,11 @@
 
 	return null
 
+/mob/living/carbon/apply_projectile_effects(obj/projectile/proj, def_zone, armor_check)
+	. = ..()
+	if(proj.damage_type == BRUTE && proj.damage > 10 && proj.speed > 1 && prob(0.1))
+		cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
+
 /mob/living/carbon/check_projectile_dismemberment(obj/projectile/proj, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
 	if(affecting && affecting.can_dismember() && !(affecting.bodypart_flags & BODYPART_UNREMOVABLE) && affecting.get_damage() >= (affecting.max_damage - proj.dismemberment))
