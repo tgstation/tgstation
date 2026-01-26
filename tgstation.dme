@@ -5997,6 +5997,7 @@
 #include "code\modules\projectiles\guns\magic\wands\wand_rebel.dm"
 #include "code\modules\projectiles\guns\magic\wands\wand_repulse.dm"
 #include "code\modules\projectiles\guns\magic\wands\wand_swap.dm"
+#include "code\modules\projectiles\guns\magic\wands\wand_tentacle.dm"
 #include "code\modules\projectiles\guns\magic\wands\wand_zap.dm"
 #include "code\modules\projectiles\guns\special\blastcannon.dm"
 #include "code\modules\projectiles\guns\special\chem_gun.dm"

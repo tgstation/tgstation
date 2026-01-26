@@ -11,7 +11,7 @@
 	fire_sound = 'sound/items/weapons/taser.ogg'
 	max_charges = 8
 
-/obj/item/gun/magic/wand/zap/zap_self(mob/living/user)
+/obj/item/gun/magic/wand/zap/zap_self(mob/living/user, suicide = FALSE)
 	. = ..()
 	do_sparks(1, TRUE, src)
 	var/obj/projectile/magic/zap/spark = new(user.drop_location())

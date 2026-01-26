@@ -11,7 +11,7 @@
 	fire_sound = 'sound/items/bikehorn.ogg'
 	max_charges = 10
 
-/obj/item/gun/magic/wand/prank/zap_self(mob/living/user)
+/obj/item/gun/magic/wand/prank/zap_self(mob/living/user, suicide = FALSE)
 	. = ..()
 	var/obj/item/food/pie/cream/magical/pie = new(src)
 	pie.stun_and_blur(user)
