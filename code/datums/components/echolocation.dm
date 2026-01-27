@@ -14,9 +14,9 @@
 	VAR_PRIVATE/static/list/saved_appearances = list()
 
 	/// Typepache of atom types that will be highlighted with an image on ABOVE_GAME_PLANE.
-	/// Put atoms in here that would normally otherwise blend into the background.
 	var/list/highlighted_paths
-	/// Typepache of atom types that wil have an image generated on the same plane but set to a lower alpha.
+	/// Typepache of atom types that will have an image generated on WALL_PLANE,
+	/// so they stick out from the floor but they don't obstruct game objects.
 	VAR_PRIVATE/list/background_paths
 	/// Typecache of turfs that are dangerous, to give them a special icon.
 	VAR_PRIVATE/list/danger_turfs
