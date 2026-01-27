@@ -951,7 +951,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	inverse_chem_val = 0.35
 	inverse_chem = /datum/reagent/inverse/atropine
-	added_traits = list(TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION)
+	added_traits = list(TRAIT_NOCRITDAMAGE, TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION)
 
 /datum/reagent/medicine/atropine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
