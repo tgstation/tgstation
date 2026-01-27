@@ -673,3 +673,6 @@
   tontyGH:
   - bugfix: Viruses that heal their hosts through radiation no longer cause phantom
       pain.
+2026-01-27:
+  KREKS:
+  - image: resprites banners
