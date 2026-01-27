@@ -82,7 +82,7 @@
 			if(!isnum(num))
 				return FALSE
 
-			disposal_rate = clamp(num, 1, MAX_DISPOSAL_RATE)
+			disposal_rate = round(clamp(num, 1, MAX_DISPOSAL_RATE), CHEMICAL_VOLUME_ROUNDING)
 			return TRUE
 
 /obj/machinery/plumbing/disposer/process(seconds_per_tick)
