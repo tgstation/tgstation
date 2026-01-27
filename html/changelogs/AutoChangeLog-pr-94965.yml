@@ -1,0 +1,8 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Added back IEDs made by attaching some wire and tape to a soda can filled with fuel, plasma, or any other explosive of your choice. They need to be lit on fire with a lighter or a welding tool."
+  - rscadd: "You can now attach a lid to beakers with alt-click, preventing them from being spilled when thrown."
+  - rscadd: "Added beakerbombs, made by attaching an assembly (with optional power cell and wiring) to a lidded beaker."
+  - balance: "Rigged explosions now create flames."
+  - balance: "Plasma explosions now limit their explosion potency past a certain point based on their volume"
