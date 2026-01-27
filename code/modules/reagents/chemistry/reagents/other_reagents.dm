@@ -1308,14 +1308,18 @@
 	if(pool)
 		pool.burn_amount = max(min(round(reac_volume / 5), 10), 1)
 
-/datum/reagent/fuel/on_spark_act(power_charge, enclosed)
+/datum/reagent/fuel/on_spark_act(power_charge, spark_flags)
 	// Doesn't go boom in open air unless we pass a REALLY high current or if we're hot enough
-	if (!enclosed && power_charge < STANDARD_BATTERY_VALUE && holder.chem_temp < 474)
+	if (!(spark_flags & SPARK_ACT_ENCLOSED) && power_charge < STANDARD_BATTERY_VALUE && holder.chem_temp < 474)
 		var/turf/our_turf = get_turf(holder.my_atom)
 		our_turf?.hotspot_expose(holder.chem_temp * 10, volume)
 		return NONE
 
-	reagent_explode(holder, volume, strengthdiv = 10, clear_holder_reagents = FALSE)
+	var/strengthdiv = 10
+	if (spark_flags & SPARK_ACT_WEAKEN_COMMON)
+		strengthdiv *= 3 // Noticeably weaker than waterpot, at least put some effort in, cmon
+
+	reagent_explode(holder, volume, strengthdiv = strengthdiv, clear_holder_reagents = FALSE, flame_factor = 1)
 	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 /datum/reagent/space_cleaner

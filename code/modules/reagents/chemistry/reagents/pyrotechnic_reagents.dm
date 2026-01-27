@@ -29,8 +29,8 @@
 	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, -0.5 * metabolization_ratio * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
 
-/datum/reagent/nitroglycerin/on_spark_act(power_charge, enclosed)
-	reagent_explode(holder, volume, strengthdiv = 2, clear_holder_reagents = FALSE)
+/datum/reagent/nitroglycerin/on_spark_act(power_charge, spark_flags)
+	reagent_explode(holder, volume, strengthdiv = 2, clear_holder_reagents = FALSE, flame_factor = 1)
 	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 /datum/reagent/stabilizing_agent
@@ -89,7 +89,7 @@
 	taste_description = "air and bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/sorium/on_spark_act(power_charge, enclosed)
+/datum/reagent/sorium/on_spark_act(power_charge, spark_flags)
 	var/range = clamp(sqrt(volume), 1, 6)
 	goonchem_vortex(get_turf(holder.my_atom), 1, range)
 	return SPARK_ACT_NON_DESTRUCTIVE
@@ -101,7 +101,7 @@
 	taste_description = "compressed bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/liquid_dark_matter/on_spark_act(power_charge, enclosed)
+/datum/reagent/liquid_dark_matter/on_spark_act(power_charge, spark_flags)
 	var/range = clamp(sqrt(volume / 2), 1, 6)
 	goonchem_vortex(get_turf(holder.my_atom), 0, range)
 	return SPARK_ACT_NON_DESTRUCTIVE
@@ -134,7 +134,7 @@
 	e.start(holder.my_atom)
 	holder.clear_reagents()
 
-/datum/reagent/gunpowder/on_spark_act(power_charge, enclosed)
+/datum/reagent/gunpowder/on_spark_act(power_charge, spark_flags)
 	// Gunpowder doesn't blow in presence of stabilizing agent but instead consumes it every time it'd get triggered
 	var/agent_volume = holder.get_reagent_amount(/datum/reagent/stabilizing_agent)
 	if (agent_volume)
@@ -144,11 +144,11 @@
 			return
 
 	if (power_charge >= STANDARD_CELL_CHARGE || holder.chem_temp >= 474)
-		reagent_explode(holder, volume, modifier = 5, strengthdiv = 10, clear_holder_reagents = FALSE)
+		reagent_explode(holder, volume, modifier = 5, strengthdiv = 10, clear_holder_reagents = FALSE, flame_factor = 1)
 		return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 	holder.my_atom.visible_message(span_boldnotice("Sparks start flying around the gunpowder!"))
-	if (!enclosed)
+	if (!(spark_flags & SPARK_ACT_ENCLOSED))
 		do_sparks(2, TRUE, get_turf(holder.my_atom))
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(reagent_explode), holder, volume, 5, 10), rand(5 SECONDS, 10 SECONDS))
 	return SPARK_ACT_NON_DESTRUCTIVE // just wait a bit...
@@ -160,15 +160,15 @@
 	taste_description = "salt"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/rdx/on_spark_act(power_charge, enclosed)
+/datum/reagent/rdx/on_spark_act(power_charge, spark_flags)
 	if (power_charge)
 		// Okay but what if we made a REALLY big boom?
 		var/power_coeff = log(2, power_charge / STANDARD_CELL_CHARGE)
-		reagent_explode(holder, volume, modifier = min(2 * power_coeff, 8), strengthdiv = 7 / min(power_coeff, 4), clear_holder_reagents = FALSE)
+		reagent_explode(holder, volume, modifier = min(2 * power_coeff, 8), strengthdiv = 7 / min(power_coeff, 4), clear_holder_reagents = FALSE, flame_factor = 1)
 	else if (holder.chem_temp >= 474)
-		reagent_explode(holder, volume, modifier = 2, strengthdiv = 7, clear_holder_reagents = FALSE)
+		reagent_explode(holder, volume, modifier = 2, strengthdiv = 7, clear_holder_reagents = FALSE, flame_factor = 1)
 	else
-		reagent_explode(holder, volume, strengthdiv = 8, clear_holder_reagents = FALSE)
+		reagent_explode(holder, volume, strengthdiv = 8, clear_holder_reagents = FALSE, flame_factor = 1)
 	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 /datum/reagent/tatp
@@ -178,8 +178,8 @@
 	taste_description = "death"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/tatp/on_spark_act(power_charge, enclosed)
-	reagent_explode(holder, volume, strengthdiv = 1.5 + rand() * 1.5, clear_holder_reagents = FALSE)
+/datum/reagent/tatp/on_spark_act(power_charge, spark_flags)
+	reagent_explode(holder, volume, strengthdiv = 1.5 + rand() * 1.5, clear_holder_reagents = FALSE, flame_factor = 1)
 	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 /datum/reagent/flash_powder
@@ -189,11 +189,14 @@
 	taste_description = "salt"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/flash_powder/on_spark_act(power_charge, enclosed)
+/datum/reagent/flash_powder/on_spark_act(power_charge, spark_flags)
 	// Even weaker version of the normal flash effect
 	var/turf/location = get_turf(holder.my_atom)
-	if (!enclosed)
+	if (!(spark_flags & SPARK_ACT_ENCLOSED))
 		do_sparks(2, TRUE, location)
+	else if (!(holder.flags & TRANSPARENT) || (!isturf(holder.my_atom.loc) && !ismob(holder.my_atom.loc))) // nope
+		return SPARK_ACT_NON_DESTRUCTIVE
+
 	var/range = round(volume / 15, 1)
 	holder.my_atom.flash_lighting_fx(range = (range + 2))
 	for(var/mob/living/victim in get_hearers_in_view(range, location))
@@ -216,10 +219,10 @@
 	taste_description = "smoke"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/smoke_powder/on_spark_act(power_charge, enclosed)
+/datum/reagent/smoke_powder/on_spark_act(power_charge, spark_flags)
 	// Can't really make a cloud of smoke if we're inside of an enclosed container
 	// ...unless we're a mob, in which case this is pretty cursed
-	if (enclosed && !ismob(holder.my_atom))
+	if ((spark_flags & SPARK_ACT_ENCLOSED) && !ismob(holder.my_atom))
 		return
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/fluid_spread/smoke/chem/smoke_system = new()
@@ -240,7 +243,7 @@
 	taste_description = "loud noises"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/sonic_powder/on_spark_act(power_charge, enclosed)
+/datum/reagent/sonic_powder/on_spark_act(power_charge, spark_flags)
 	// Even weaker version of the normal flash effect
 	var/turf/location = get_turf(holder.my_atom)
 	var/range = round(volume / 15, 1)
@@ -270,8 +273,8 @@
 	if(metabolizer.adjust_fire_loss(0.15 * max(metabolizer.fire_stacks, 0.15) * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
-/datum/reagent/phlogiston/on_spark_act(power_charge, enclosed)
-	if (enclosed && !ismob(holder.my_atom))
+/datum/reagent/phlogiston/on_spark_act(power_charge, spark_flags)
+	if ((spark_flags & SPARK_ACT_ENCLOSED) && !ismob(holder.my_atom))
 		if (!holder.my_atom.uses_integrity)
 			return
 		// Spicy!
@@ -308,8 +311,8 @@
 	if(istype(exposed_mob) && (methods & (TOUCH|VAPOR|PATCH)))
 		exposed_mob.adjust_fire_stacks(min(reac_volume / 4, 20))
 
-/datum/reagent/napalm/on_spark_act(power_charge, enclosed)
-	if (enclosed && !ismob(holder.my_atom))
+/datum/reagent/napalm/on_spark_act(power_charge, spark_flags)
+	if ((spark_flags & SPARK_ACT_ENCLOSED) && !ismob(holder.my_atom))
 		if (!holder.my_atom.uses_integrity)
 			return
 		// Spicy!
@@ -445,7 +448,7 @@
 	var/mob/living/carbon/human/affected_human = affected_mob
 	affected_human.physiology.siemens_coeff *= 0.5
 
-/datum/reagent/teslium/on_spark_act(power_charge, enclosed)
+/datum/reagent/teslium/on_spark_act(power_charge, spark_flags)
 	tesla_zap(source = holder.my_atom, zap_range = round(volume / 5, 1), power = volume * 20 + power_charge, cutoff = 1 KILO JOULES, zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_LOW_POWER_GEN)
 	playsound(holder.my_atom, 'sound/machines/defib/defib_zap.ogg', 50, TRUE)
 	return SPARK_ACT_NON_DESTRUCTIVE
