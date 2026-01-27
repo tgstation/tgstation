@@ -10,14 +10,13 @@ import { Window } from '../layouts';
 
 type Data = {
   enabled: BooleanLike;
-  min_volume: number;
   max_volume: number;
   disposal_rate: number;
 };
 
 export function ChemDisposer() {
   const { act, data } = useBackend<Data>();
-  const { enabled, min_volume, max_volume, disposal_rate } = data;
+  const { enabled, max_volume, disposal_rate } = data;
 
   return (
     <Window width={320} height={105}>
@@ -40,9 +39,9 @@ export function ChemDisposer() {
                 value={disposal_rate}
                 unit="u"
                 width="50px"
-                minValue={min_volume}
+                minValue={1}
                 maxValue={max_volume}
-                step={2}
+                step={1}
                 stepPixelSize={2}
                 onChange={(value) =>
                   act('change_volume', {
