@@ -273,7 +273,7 @@
 
 	var/datum/ductnet/net = net(dir)
 	if(net)
-		return net.pipeline.trans_to(recipient_reagents_holder(), amount, target_id = reagent, methods = round_robin ? LINEAR : NONE)
+		return net.pipeline.trans_to(recipient_reagents_holder(), amount, target_id = reagent, methods = round_robin ? LINEAR : NONE, no_react = TRUE)
 
 ///Send reagents in an specific direction. Override in child types
 /datum/component/plumbing/proc/supply_demand(dir)
