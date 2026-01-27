@@ -143,6 +143,8 @@
 			// These objects will scarcely interact with real walls so it's... fine
 			final_image.layer = ABOVE_NORMAL_TURF_LAYER
 			SET_PLANE(final_image, WALL_PLANE, filtered_atom)
+		else if(is_type_in_typecache(filtered_atom, danger_turfs))
+			SET_PLANE(final_image, FLOOR_PLANE, filtered_atom)
 		else
 			SET_PLANE(final_image, ABOVE_GAME_PLANE, filtered_atom)
 		// Setting loc so we should disregard pixel offsets
