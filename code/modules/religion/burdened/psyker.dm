@@ -10,14 +10,15 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	shade_color = "blue"
 	variant_traits_added = list(TRAIT_ANTIMAGIC_NO_SELFBLOCK)
-
-	var/datum/component/echolocation/echolocation_component
-	var/datum/component/anti_magic/antimagic_component
+	/// Echolocation component we assigned
+	VAR_FINAL/datum/weakref/echolocation_component
+	/// Antimagic component we assigned
+	VAR_FINAL/datum/weakref/antimagic_component
 
 /obj/item/organ/brain/psyker/on_mob_insert(mob/living/carbon/inserted_into)
 	. = ..()
-	echolocation_component = inserted_into.AddComponent(/datum/component/echolocation, echo_icon = "psyker")
-	antimagic_component = inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
+	echolocation_component = WEAKREF(inserted_into.AddComponent(/datum/component/echolocation, echo_icon = "psyker"))
+	antimagic_component = WEAKREF(inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND))
 
 /obj/item/organ/brain/psyker/on_mob_remove(mob/living/carbon/removed_from)
 	. = ..()
@@ -63,7 +64,7 @@
 	emote("scream")
 
 /// Proc with no side effects that turns someone into a psyker. returns FALSE if it could not psykerize.
-/mob/living/carbon/human/proc/psykerize(E)
+/mob/living/carbon/human/proc/psykerize()
 	var/obj/item/bodypart/head/old_head = get_bodypart(BODY_ZONE_HEAD)
 	var/obj/item/organ/brain/old_brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	var/obj/item/organ/old_eyes = get_organ_slot(ORGAN_SLOT_EYES)
