@@ -1,43 +1,55 @@
+#define CANCEL_FAKE_ALERT -1
+
 /datum/hallucination/station_message
 	abstract_hallucination_parent = /datum/hallucination/station_message
 	random_hallucination_weight = 1
 	hallucination_tier = HALLUCINATION_TIER_RARE
+	/// if TRUE, skip on deaf hallucinators
+	var/require_hearing = TRUE
 
 /datum/hallucination/station_message/start()
+	if(require_hearing && !hallucinator.can_hear())
+		return FALSE
+	if(do_fake_alert() == CANCEL_FAKE_ALERT)
+		return FALSE
+
 	qdel(src) // To be implemented by subtypes, call parent for easy cleanup
 	return TRUE
 
-/datum/hallucination/station_message/blob_alert
+/datum/hallucination/station_message/proc/do_fake_alert()
+	return CANCEL_FAKE_ALERT
 
-/datum/hallucination/station_message/blob_alert/start()
+/datum/hallucination/station_message/blob_alert
+	require_hearing = TRUE
+
+/datum/hallucination/station_message/blob_alert/do_fake_alert()
 	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", \
 		"Biohazard Alert", ANNOUNCER_OUTBREAK5, players = list(hallucinator))
-	return ..()
 
 /datum/hallucination/station_message/shuttle_dock
 
-/datum/hallucination/station_message/shuttle_dock/start()
+/datum/hallucination/station_message/shuttle_dock/do_fake_alert()
 	priority_announce(
-					text = "[SSshuttle.emergency] has docked with the station. You have [DisplayTimeText(SSshuttle.emergency_dock_time)] to board the emergency shuttle.",
-					title = "Emergency Shuttle Arrival",
-					sound = ANNOUNCER_SHUTTLEDOCK,
-					sender_override = "Emergency Shuttle Uplink Alert",
-					players = list(hallucinator),
-					color_override = "orange",
-				)
-	return ..()
+		text = "[SSshuttle.emergency] has docked with the station. You have [DisplayTimeText(SSshuttle.emergency_dock_time)] to board the emergency shuttle.",
+		title = "Emergency Shuttle Arrival",
+		sound = ANNOUNCER_SHUTTLEDOCK,
+		sender_override = "Emergency Shuttle Uplink Alert",
+		players = list(hallucinator),
+		color_override = "orange",
+	)
 
 /datum/hallucination/station_message/malf_ai
+	require_hearing = TRUE
 
-/datum/hallucination/station_message/malf_ai/start()
+/datum/hallucination/station_message/malf_ai/do_fake_alert()
 	if(!(locate(/mob/living/silicon/ai) in GLOB.silicon_mobs))
-		return FALSE
+		return CANCEL_FAKE_ALERT
 
 	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", \
 		"Anomaly Alert", ANNOUNCER_AIMALF, players = list(hallucinator))
-	return ..()
 
 /datum/hallucination/station_message/heretic
+	require_hearing = TRUE
 	/// This is gross and will probably easily be outdated in some time but c'est la vie.
 	/// Maybe if someone datumizes heretic paths or something this can be improved
 	var/static/list/ascension_bodies = list(
@@ -63,11 +75,11 @@
 		)
 	)
 
-/datum/hallucination/station_message/heretic/start()
+/datum/hallucination/station_message/heretic/do_fake_alert()
 	// Unfortunately, this will not be synced if mass hallucinated
 	var/mob/living/carbon/human/totally_real_heretic = random_non_sec_crewmember()
 	if(!totally_real_heretic)
-		return FALSE
+		return CANCEL_FAKE_ALERT
 
 	var/list/fake_ascension = pick(ascension_bodies)
 	var/announcement_text = replacetext(fake_ascension["text"], "%FAKENAME%", totally_real_heretic.real_name)
@@ -78,15 +90,15 @@
 		players = list(hallucinator),
 		color_override = "pink",
 	)
-	return ..()
 
 /datum/hallucination/station_message/cult_summon
+	require_hearing = TRUE
 
-/datum/hallucination/station_message/cult_summon/start()
+/datum/hallucination/station_message/cult_summon/do_fake_alert()
 	// Same, will not be synced if mass hallucinated
 	var/mob/living/carbon/human/totally_real_cult_leader = random_non_sec_crewmember()
 	if(!totally_real_cult_leader)
-		return FALSE
+		return CANCEL_FAKE_ALERT
 
 	// Get a fake area that the summoning is happening in
 	var/area/hallucinator_area = get_area(hallucinator)
@@ -100,21 +112,19 @@
 		has_important_message = TRUE,
 		players = list(hallucinator),
 	)
-	return ..()
 
 /datum/hallucination/station_message/meteors
 	random_hallucination_weight = 2
+	require_hearing = TRUE
 
-/datum/hallucination/station_message/meteors/start()
+/datum/hallucination/station_message/meteors/do_fake_alert()
 	priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", ANNOUNCER_METEORS, players = list(hallucinator))
-	return ..()
 
 /datum/hallucination/station_message/supermatter_delam
 
-/datum/hallucination/station_message/supermatter_delam/start()
+/datum/hallucination/station_message/supermatter_delam/do_fake_alert()
 	SEND_SOUND(hallucinator, 'sound/effects/magic/charge.ogg')
 	to_chat(hallucinator, span_bolddanger("You feel reality distort for a moment..."))
-	return ..()
 
 /datum/hallucination/station_message/clock_cult_ark
 	// Clock cult's long gone, but this stays for posterity.
@@ -132,3 +142,5 @@
 
 	hallucinator.playsound_local(get_turf(hallucinator), 'sound/effects/explosion/explosion_distant.ogg', 50, FALSE, pressure_affected = FALSE)
 	qdel(src)
+
+#undef CANCEL_FAKE_ALERT

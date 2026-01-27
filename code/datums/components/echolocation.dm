@@ -56,15 +56,17 @@
 	src.fade_in_time = fade_in_time
 	src.fade_out_time = fade_out_time
 
-	ADD_TRAIT(echolocator, TRAIT_ECHOLOCATOR, "[ECHOLOCATION_TRAIT]_[REF(src)]")
-	echolocator.become_blind("[ECHOLOCATION_TRAIT]_[REF(src)]")
-	echolocator.overlay_fullscreen("[ECHOLOCATION_TRAIT]_[REF(src)]", /atom/movable/screen/fullscreen/echo, echo_icon)
+	ADD_TRAIT(echolocator, TRAIT_ECHOLOCATOR, ECHOLOCATION_TRAIT)
+	ADD_TRAIT(echolocator, TRAIT_SIGHT_BYPASS, ECHOLOCATION_TRAIT)
+	echolocator.become_blind(ECHOLOCATION_TRAIT)
+	echolocator.overlay_fullscreen(ECHOLOCATION_TRAIT, /atom/movable/screen/fullscreen/echo, echo_icon)
+	echolocator.apply_status_effect(/datum/status_effect/grouped/see_no_names, ECHOLOCATION_TRAIT)
 	START_PROCESSING(SSfastprocess, src)
 
 	for(var/tplane in planes)
 		for (var/atom/movable/screen/plane_master/game_plane as anything in echolocator.hud_used?.get_true_plane_masters(tplane))
-			game_plane.add_filter("[ECHOLOCATION_TRAIT]_[REF(src)]_color", 1, color_matrix_filter(black_white_matrix))
-			game_plane.add_filter("[ECHOLOCATION_TRAIT]_[REF(src)]_outline", 1, outline_filter(size = 1, color = COLOR_WHITE))
+			game_plane.add_filter("[ECHOLOCATION_TRAIT]_color", 1, color_matrix_filter(black_white_matrix))
+			game_plane.add_filter("[ECHOLOCATION_TRAIT]_outline", 1, outline_filter(size = 1, color = COLOR_WHITE))
 
 	echolocator.update_sight()
 
@@ -72,16 +74,17 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	var/mob/living/echolocator = parent
 
-	REMOVE_TRAIT(echolocator, TRAIT_ECHOLOCATOR, "[ECHOLOCATION_TRAIT]_[REF(src)]")
-	echolocator.cure_blind("[ECHOLOCATION_TRAIT]_[REF(src)]")
-	echolocator.clear_fullscreen("[ECHOLOCATION_TRAIT]_[REF(src)]")
-
+	REMOVE_TRAIT(echolocator, TRAIT_ECHOLOCATOR, ECHOLOCATION_TRAIT)
+	REMOVE_TRAIT(echolocator, TRAIT_SIGHT_BYPASS, ECHOLOCATION_TRAIT)
+	echolocator.cure_blind(ECHOLOCATION_TRAIT)
+	echolocator.clear_fullscreen(ECHOLOCATION_TRAIT)
+	echolocator.remove_status_effect(/datum/status_effect/grouped/see_no_names, ECHOLOCATION_TRAIT)
 	QDEL_NULL(focus)
 
 	for(var/tplane in planes)
 		for (var/atom/movable/screen/plane_master/game_plane as anything in echolocator.hud_used?.get_true_plane_masters(tplane))
-			game_plane.remove_filter("[ECHOLOCATION_TRAIT]_[REF(src)]_color")
-			game_plane.remove_filter("[ECHOLOCATION_TRAIT]_[REF(src)]_outline")
+			game_plane.remove_filter("[ECHOLOCATION_TRAIT]_color")
+			game_plane.remove_filter("[ECHOLOCATION_TRAIT]_outline")
 
 	echolocator.update_sight()
 

@@ -197,7 +197,7 @@
 	if(!istype(charger))
 		return
 
-	var/datum/component/material_container/mat_container = charger.materials.mat_container
+	var/datum/material_container/mat_container = charger.materials.mat_container
 	if(!mat_container || charger.materials.on_hold())
 		charger.sendmats = FALSE
 		return
@@ -917,12 +917,12 @@
 /obj/item/robot_model/syndicate/rebuild_modules()
 	..()
 	var/mob/living/silicon/robot/cyborg = loc
-	cyborg.faction -= FACTION_SILICON //ai turrets
+	cyborg.remove_faction(FACTION_SILICON) //ai turrets
 
 /obj/item/robot_model/syndicate/remove_module(obj/item/removed_module)
 	..()
 	var/mob/living/silicon/robot/cyborg = loc
-	cyborg.faction |= FACTION_SILICON //ai is your bff now!
+	cyborg.add_faction(FACTION_SILICON) //ai is your bff now!
 
 /obj/item/robot_model/syndicate_medical
 	name = "Syndicate Medical"

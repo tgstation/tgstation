@@ -181,7 +181,7 @@
  * Goes through hud_possible list and adds the images to the hud_list variable (if not already cached)
  */
 /atom/proc/prepare_huds()
-	if(hud_list) // I choose to be lienient about people calling this proc more then once
+	if(hud_list) // I choose to be lenient about people calling this proc more then once
 		return
 	hud_list = list()
 	for(var/hud in hud_possible)
@@ -439,7 +439,7 @@
 
 
 ///Get the item on the mob in the storage slot identified by the id passed in
-/mob/proc/get_item_by_slot(slot_id)
+/mob/proc/get_item_by_slot(slot_id) as /obj/item
 	return null
 
 /// Gets what slot the item on the mob is held in.
@@ -583,13 +583,19 @@
 	if(!result_combined)
 		var/list/result = examinify.examine(src)
 		var/atom_title = examinify.examine_title(src, thats = TRUE)
+		examining(examinify, result)
 		SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result)
 		if(removes_double_click)
 			result += span_notice("<i>You can <a href=byond://?src=[REF(src)];run_examinate=[REF(examinify)]>examine</a> [examinify] closer...</i>")
-		result_combined = (atom_title ? fieldset_block("[atom_title]", jointext(result, "<br>"), "boxed_message") : boxed_message(jointext(result, "<br>")))
+		result_combined = (atom_title ? fieldset_block("[atom_title].", jointext(result, "<br>"), "boxed_message") : boxed_message(jointext(result, "<br>")))
 
 	to_chat(src, span_infoplain(result_combined))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
+
+/// Handles adding examine messages for the target that are specific to this mob, e.g. a blood worm examining how much blood a living target has.
+/mob/proc/examining(atom/target, list/result)
+	SHOULD_NOT_SLEEP(TRUE)
+	return
 
 /mob/Topic(href, list/href_list)
 	. = ..()
@@ -871,6 +877,15 @@
 	set category = "OOC"
 	reset_perspective(null)
 
+/**
+ * Helpful for when a players uplink window gets glitched to above their screen.
+ * preventing them from moving the UPLINK window.
+ */
+/mob/verb/reset_ui_positions_for_mob()
+	set name = "Reset UI Positions"
+	set category = "OOC"
+	SStgui.reset_ui_position(src)
+
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
 /mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
 	set name = ".click"
@@ -1146,24 +1161,6 @@
 ///Can this mob use storage
 /mob/proc/canUseStorage()
 	return FALSE
-
-/*
- * Compare two lists of factions, returning true if any match
- *
- * If exact match is passed through we only return true if both faction lists match equally
- */
-/proc/faction_check(list/faction_A, list/faction_B, exact_match)
-	var/list/match_list
-	if(exact_match)
-		match_list = faction_A&faction_B //only items in both lists
-		var/length = LAZYLEN(match_list)
-		if(length)
-			return (length == LAZYLEN(faction_A)) //if they're not the same len(gth) or we don't have a len, then this isn't an exact match.
-	else
-		match_list = faction_A&faction_B
-		return LAZYLEN(match_list)
-	return FALSE
-
 
 /**
  * Fully update the name of a mob
@@ -1510,8 +1507,7 @@
 	. = ..()
 	// Queue update if change is small enough (6 is 1% of nutrition softcap)
 	if(abs(change) >= 6)
-		mob_mood?.update_nutrition_moodlets()
-		hud_used?.hunger?.update_hunger_bar()
+		update_nutrition()
 	else
 		living_flags |= QUEUE_NUTRITION_UPDATE
 
@@ -1527,10 +1523,15 @@
 	. = ..()
 	// Queue update if change is small enough (6 is 1% of nutrition softcap)
 	if(abs(old_nutrition - nutrition) >= 6)
-		mob_mood?.update_nutrition_moodlets()
-		hud_used?.hunger?.update_hunger_bar()
+		update_nutrition()
 	else
 		living_flags |= QUEUE_NUTRITION_UPDATE
+
+/// Updates nutrition related effects
+/mob/living/proc/update_nutrition()
+	mob_mood?.update_nutrition_moodlets()
+	hud_used?.hunger?.update_hunger_bar()
+	SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_NUTRITION)
 
 /// Apply a proper movespeed modifier based on items we have equipped
 /mob/proc/update_equipment_speed_mods()
@@ -1722,3 +1723,9 @@
 			continue
 		var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[trait]]
 		datahud.show_to(src)
+
+/**
+ * Returns the access list for this mob, most mobs don't have any access.
+ */
+/mob/proc/get_access() as /list
+	return list()

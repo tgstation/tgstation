@@ -5,8 +5,6 @@
 // /obj signals
 ///from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"
-///from base of code/game/machinery
-#define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
 #define COMSIG_OBJ_HIDE "obj_hide"
 /// from /obj/item/toy/crayon/spraycan/use_on: (user, spraycan, color_is_dark)
@@ -100,11 +98,6 @@
 #define COMSIG_FIREALARM_ON_RESET "firealarm_reset"
 
 // /obj access signals
-
-#define COMSIG_OBJ_ALLOWED "door_try_to_activate"
-	#define COMPONENT_OBJ_ALLOW (1<<0)
-	#define COMPONENT_OBJ_DISALLOW (1<<1)
-
 #define COMSIG_AIRLOCK_SHELL_ALLOWED "airlock_shell_try_allowed"
 
 // /obj/machinery/door/airlock signals
@@ -259,10 +252,6 @@
 
 ///a deliver_first element closet was successfully delivered
 #define COMSIG_CLOSET_DELIVERED "crate_delivered"
-
-///Eigenstasium
-///From base of [/datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom]: (var/target)
-#define COMSIG_EIGENSTATE_ACTIVATE "eigenstate_activate"
 
 // /obj signals for economy
 ///called when the payment component tries to charge an account.

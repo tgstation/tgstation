@@ -1395,3 +1395,13 @@
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/washing_machine
+	name = "Washing Machine"
+	desc = "The circuit board to build a washing machine."
+	id = "washing_machine"
+	build_path = /obj/item/circuitboard/machine/washing_machine
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_SERVICE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE

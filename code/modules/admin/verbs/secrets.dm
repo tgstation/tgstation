@@ -637,7 +637,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			if(teamsize <= 0)
 				return FALSE
 
-			candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for a [span_notice("Nanotrasen emergency response drone")]?", check_jobban = ROLE_DRONE, alert_pic = /mob/living/basic/drone/classic, role_name_text = "nanotrasen emergency response drone")
+			candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for a [span_notice("Nanotrasen emergency response drone")]?", check_jobban = ROLE_DRONE, alert_pic = /mob/living/basic/drone/classic, role_name_text = "Nanotrasen emergency response drone")
 
 			if(length(candidates) == 0)
 				return FALSE
@@ -686,6 +686,20 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			sound_to_playing_players('sound/effects/pray_chaplain.ogg')
 			message_admins("[key_name_admin(holder)] healed everyone.")
 			log_admin("[key_name(holder)] healed everyone.")
+
+		if("cascade")
+			if(!is_funmin)
+				return
+			message_admins("[key_name_admin(holder)] started a resonance cascade! You're supposed to be a scientist! Use your common sense!")
+			for(var/obj/machinery/power/supermatter_crystal/S in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/supermatter_crystal))
+				if(!S.is_main_engine)
+					continue
+				S.explosion_point = 0
+				S.set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade)
+				S.external_damage_immediate += 200
+				S.count_down()
+				return
+			return
 
 	if(holder)
 		log_admin("[key_name(holder)] used secret: [action].")

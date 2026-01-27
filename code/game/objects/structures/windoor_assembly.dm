@@ -47,7 +47,7 @@
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
-	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
+	AddElement(/datum/element/simple_rotation, ROTATION_NEEDS_ROOM)
 
 /obj/structure/windoor_assembly/Destroy()
 	set_density(FALSE)
@@ -325,7 +325,7 @@
 			if(EAST,WEST)
 				windoor.unres_sides &= ~NORTH
 				windoor.unres_sides &= ~SOUTH
-		windoor.unres_sensor = TRUE
+		windoor.unres_latch = TRUE
 	electronics.forceMove(windoor)
 	windoor.electronics = electronics
 	windoor.autoclose = TRUE

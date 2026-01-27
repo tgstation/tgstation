@@ -38,14 +38,15 @@
 	RegisterSignal(new_holder, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(new_holder, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(hit_by_projectile))
 	RegisterSignal(new_holder, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(check_dodge))
-	new_holder.faction |= FACTION_CARP //:D
+	new_holder.add_faction(FACTION_CARP) //:D
 	new_holder.grant_language(/datum/language/carptongue, ALL, type)
 
 /datum/martial_art/the_sleeping_carp/deactivate_style(mob/living/remove_from)
 	remove_from.remove_traits(scarp_traits, SLEEPING_CARP_TRAIT)
 	UnregisterSignal(remove_from, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_PRE_BULLET_ACT, COMSIG_LIVING_CHECK_BLOCK))
-	remove_from.faction -= FACTION_CARP //:(
-	remove_from.remove_language(/datum/language/carptongue, ALL, type)
+	remove_from.remove_faction(FACTION_CARP) //:(
+	if (!QDELING(remove_from))
+		remove_from.remove_language(/datum/language/carptongue, ALL, type)
 	return ..()
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/attacker, mob/living/defender)
@@ -383,7 +384,7 @@
 	[span_notice("Crashing Wave Kick")]: Punch Shove. Launch your opponent away from you with incredible force!\n\
 	[span_notice("Keelhaul")]: Shove Shove. Nonlethally kick an opponent to the floor, knocking them down, discombobulating them and dealing substantial stamina damage. If they're already prone, disarm them as well.\n\
 	[span_notice("Kraken Wrack")]: Grab Punch. Deliver a knee jab into the opponent, dealing high stamina damage, as well as briefly stunning them, winding them and making it difficult for them to speak.\n\
-	[span_notice("Grabs and Shoves")]: While in combat mode, your typical grab and shove do decent stamina damag, and your grabs harder to break. If you grab someone who has substantial amounts of stamina damage, you knock them out!\n\
+	[span_notice("Grabs and Shoves")]: While in combat mode, your typical grab and shove do decent stamina damage, and your grabs harder to break. If you grab someone who has substantial amounts of stamina damage, you knock them out!\n\
 	<span class='notice'>While in combat mode (and not stunned, not a hulk, and not in a mech), you can reflect all projectiles that come your way, sending them back at the people who fired them! \n\
 	However, your ability to avoid projectiles is negatively affected when your are burdened by armor, or whenever you are carrying normal-sized or heavier objects in your hands. \n\
 	But if you commmit fully to the martial arts lifestyle by wearing martial arts or carp-related regalia, you will feel empowered enough to potentially avoid attacks even from melee weapons or other unarmed combatants. \n\

@@ -27,7 +27,7 @@
 	name = "Rest Room"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
 /turf/template_noop,
 /area/space/nearstation)
 "q" = (
@@ -70,11 +70,7 @@
 	},
 /obj/modular_map_connector,
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/structure/barricade/wooden,
-/turf/template_noop,
-/area/space/nearstation)
-"U" = (
-/obj/structure/lattice,
+/obj/structure/barricade/wooden/crude,
 /turf/template_noop,
 /area/space/nearstation)
 "W" = (
@@ -126,9 +122,9 @@ a
 "}
 (3,1,1) = {"
 a
-U
-U
-U
+C
+C
+C
 J
 x
 g
@@ -139,12 +135,12 @@ W
 (4,1,1) = {"
 a
 a
-U
+C
 a
-U
+C
 a
-U
-U
+C
+C
 q
 a
 "}
@@ -153,10 +149,10 @@ a
 a
 a
 a
-U
+C
 a
 a
-U
+C
 J
 a
 "}
@@ -165,7 +161,7 @@ a
 a
 a
 a
-U
+C
 a
 a
 M

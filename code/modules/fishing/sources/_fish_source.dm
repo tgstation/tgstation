@@ -159,15 +159,22 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 /datum/fish_source/proc/on_start_fishing(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	return
 
-///Comsig proc from the fishing minigame for 'calculate_difficulty'
-/datum/fish_source/proc/calculate_difficulty_minigame(datum/fishing_challenge/challenge, reward_path, obj/item/fishing_rod/rod, mob/fisherman, list/difficulty_holder)
-	SIGNAL_HANDLER
+/**
+ * Calculates the difficulty of the minigame:
+ *
+ * This includes the source's fishing difficulty, that of the fish, the rod,
+ * favorite and disliked baits, fish traits and the fisherman skill.
+ *
+ * This is the version to call while we are in the fishing minigame phase.
+ */
+/datum/fish_source/proc/calculate_difficulty_minigame(datum/fishing_challenge/challenge, reward_path, obj/item/fishing_rod/rod, mob/fisherman)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	difficulty_holder[1] += calculate_difficulty(reward_path, rod, fisherman)
+	. = 0 // begin with a fresh calculation each time
+	. += calculate_difficulty(reward_path, rod, fisherman)
 
 	// Difficulty modifier added by the fisher's skill level
 	if(!(challenge.special_effects & FISHING_MINIGAME_RULE_NO_EXP))
-		difficulty_holder[1] += fisherman.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)
+		. += fisherman.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)
 
 	if(challenge.special_effects & FISHING_MINIGAME_RULE_KILL)
 		challenge.RegisterSignal(src, COMSIG_FISH_SOURCE_REWARD_DISPENSED, TYPE_PROC_REF(/datum/fishing_challenge, hurt_fish))
@@ -278,6 +285,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = reward.name)
 	SEND_SIGNAL(challenge.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, reward, user)
 	challenge.used_rod.on_reward_caught(reward, user)
+	REMOVE_TRAIT(reward, TRAIT_FISH_JUST_SPAWNED, TRAIT_GENERIC)
 
 /// Gives out the reward if possible
 /datum/fish_source/proc/dispense_reward(reward_path, mob/fisherman, atom/fishing_spot, obj/item/fishing_rod/rod)
@@ -291,9 +299,13 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		fisherman.balloon_alert(fisherman, "caught something!")
 		return
 	fisherman.balloon_alert(fisherman, "caught [reward]!")
+
+	var/list/fishing_data
 	if (isfish(reward))
 		ADD_TRAIT(reward, TRAIT_NO_FISHING_ACHIEVEMENT, TRAIT_GENERIC)
-
+		var/obj/item/fish/caught_fish = reward
+		fishing_data = list(caught_fish.size, caught_fish.weight, caught_fish.custom_materials)
+	log_fish("[fisherman] has caught a [reward] at [fishing_spot] using [rod].", fishing_data)
 	return reward
 
 ///Simplified version of dispense_reward that doesn't need a fisherman.
@@ -342,6 +354,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/atom/movable/reward = new reward_path(spawn_location)
 	if(isfish(reward))
 		var/obj/item/fish/caught_fish = reward
+		ADD_TRAIT(caught_fish, TRAIT_FISH_JUST_SPAWNED, TRAIT_GENERIC)
 		caught_fish.randomize_size_and_weight()
 	return reward
 

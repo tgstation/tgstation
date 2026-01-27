@@ -87,7 +87,7 @@
 	SIGNAL_HANDLER
 	set_highest_scar(null)
 
-/datum/wound/slash/flesh/remove_wound(ignore_limb, replaced)
+/datum/wound/slash/flesh/remove_wound(ignore_limb, replaced, destroying)
 	if(!replaced && highest_scar)
 		already_scarred = TRUE
 		highest_scar.lazy_attach(limb)
@@ -143,7 +143,7 @@
 	if(clot_rate < 0)
 		return BLOOD_FLOW_INCREASING
 
-/datum/wound/slash/flesh/handle_process(seconds_per_tick, times_fired)
+/datum/wound/slash/flesh/handle_process(seconds_per_tick)
 	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
@@ -303,9 +303,9 @@
 	occur_text = "is cut open, slowly leaking blood"
 	sound_effect = 'sound/effects/wounds/blood1.ogg'
 	severity = WOUND_SEVERITY_MODERATE
-	initial_flow = 2
+	initial_flow = 1.75
 	minimum_flow = 0.5
-	clot_rate = 0.05
+	clot_rate = 0.04
 	series_threshold_penalty = 10
 	status_effect_type = /datum/status_effect/wound/slash/flesh/moderate
 	scar_keyword = "slashmoderate"
@@ -335,13 +335,14 @@
 	occur_text = "is ripped open, veins spurting blood"
 	sound_effect = 'sound/effects/wounds/blood2.ogg'
 	severity = WOUND_SEVERITY_SEVERE
-	initial_flow = 3.25
-	minimum_flow = 2.75
-	clot_rate = 0.03
+	initial_flow = 2.75
+	minimum_flow = 2
+	clot_rate = 0.02
 	series_threshold_penalty = 25
 	demotes_to = /datum/wound/slash/flesh/moderate
 	status_effect_type = /datum/status_effect/wound/slash/flesh/severe
 	scar_keyword = "slashsevere"
+	surgery_states = SURGERY_SKIN_CUT | SURGERY_VESSELS_UNCLAMPED
 
 	simple_treat_text = "<b>Bandaging</b> the wound is essential, and will reduce blood loss. Afterwards, the wound can be <b>sutured</b> shut, preferably while the patient is resting and/or grasping their wound."
 	homemade_treat_text = "Bed sheets can be ripped up to make <b>makeshift gauze</b>. <b>Flour, table salt, or salt mixed with water</b> can be applied directly to stem the flow, though unmixed salt will irritate the skin and worsen natural healing. Resting and grabbing your wound will also reduce bleeding."
@@ -368,13 +369,14 @@
 	occur_text = "is torn open, spraying blood wildly"
 	sound_effect = 'sound/effects/wounds/blood3.ogg'
 	severity = WOUND_SEVERITY_CRITICAL
-	initial_flow = 4
-	minimum_flow = 3.85
-	clot_rate = -0.015 // critical cuts actively get worse instead of better
+	initial_flow = 3.75
+	minimum_flow = 3.5
+	clot_rate = -0.012 // critical cuts actively get worse instead of better
 	threshold_penalty = 15
 	demotes_to = /datum/wound/slash/flesh/severe
 	status_effect_type = /datum/status_effect/wound/slash/flesh/critical
 	scar_keyword = "slashcritical"
+	surgery_states = SURGERY_SKIN_OPEN | SURGERY_VESSELS_UNCLAMPED
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR | CAN_BE_GRASPED)
 	simple_treat_text = "<b>Bandaging</b> the wound is of utmost importance, as is seeking direct medical attention - <b>Death</b> will ensue if treatment is delayed whatsoever, with lack of <b>oxygen</b> killing the patient, thus <b>Food, Iron, and saline solution</b> is always recommended after treatment. This wound will not naturally seal itself."
 	homemade_treat_text = "Bed sheets can be ripped up to make <b>makeshift gauze</b>. <b>Flour, salt, and saltwater</b> topically applied will help. Dropping to the ground and grabbing your wound will reduce blood flow."

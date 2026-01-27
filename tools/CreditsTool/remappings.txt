@@ -8,13 +8,10 @@
 tgstation-server Thanks for playing!
 
 optimumtact oranges
-qustinnus Floyd / Qustinnus
 catalystfd __REMOVE__
 TheVekter Vekter
 ChangelingRain Joan
-NewSta1 NewSta
 theOperand Miauw
-PraiseRatvar Frozenguy5
 FuryMcFlurry Fury McFlurry
 vuonojenmustaturska Naksu
 praisenarsie Frozenguy5
@@ -28,3 +25,8 @@ Rectification itseasytosee
 ATHATH ATH1909
 trollbreeder troll breeder
 BuffEngineering Buff Engineering
+actions-user __REMOVE__
+dependabot[bot] __REMOVE__
+github-actions[bot] __REMOVE__
+tgstation-ci[bot] __REMOVE__
+comfyorange __REMOVE__

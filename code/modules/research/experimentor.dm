@@ -286,6 +286,7 @@
 					if(prob(EFFECT_PROB_VERYHIGH) && !(locate(/obj/effect/decal/cleanable/greenglow) in T))
 						var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
 						reagentdecal.reagents.add_reagent(/datum/reagent/uranium/radium, 7)
+			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_MEDIUM * (100 - malfunction_probability_coeff) * 0.01))
 			var/savedName = "[exp_on]"
 			ejectItem(TRUE)
@@ -686,7 +687,8 @@
 	)
 	for(var/counter in 1 to rand(1, 25))
 		var/animal_spawn = pick(valid_animals)
-		new animal_spawn(get_turf(src))
+		var/mob/living/animal = new animal_spawn(get_turf(src))
+		ADD_TRAIT(animal, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
 	warn_admins(user, "Mass Mob Spawn")
 	if(prob(60))
 		to_chat(user, span_warning("[src] falls apart!"))

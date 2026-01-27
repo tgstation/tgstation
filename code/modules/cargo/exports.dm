@@ -237,14 +237,14 @@ Then the player gets the profit from selling his own wasted time.
 	var/total_value = ex.total_value[src]
 	var/total_amount = ex.total_amount[src]
 
-	var/msg = "[total_value] credits: Received [total_amount] "
+	var/msg = "[total_value] [MONEY_NAME]: Received [total_amount] "
 	if(total_value > 0)
 		msg = "+" + msg
 
 	if(unit_name)
 		msg += unit_name
 		if(total_amount > 1)
-			msg += "s"
+			msg += plural_s(unit_name)
 		if(message)
 			msg += " "
 

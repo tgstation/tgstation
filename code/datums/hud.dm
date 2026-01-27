@@ -18,6 +18,7 @@ GLOBAL_ALIST_INIT(huds, alist(
 	DATA_HUD_AI_DETECT = new /datum/atom_hud/ai_detector(),
 	DATA_HUD_FAN = new /datum/atom_hud/data/human/fan_hud(),
 	DATA_HUD_MALF_APC = new /datum/atom_hud/data/malf_apc(),
+	DATA_HUD_BLOOD = new /datum/atom_hud/data/human/blood(),
 ))
 
 /// Assoc list of traits to the huds they give.
@@ -31,6 +32,7 @@ GLOBAL_LIST_INIT(trait_to_hud, list(
 	TRAIT_MIME_FAN = DATA_HUD_FAN,
 	TRAIT_SECURITY_HUD = DATA_HUD_SECURITY_ADVANCED,
 	TRAIT_SECURITY_HUD_ID_ONLY = DATA_HUD_SECURITY_BASIC,
+	TRAIT_BLOOD_HUD = DATA_HUD_BLOOD,
 ))
 
 /// Assoc list of traits that block other traits' huds to list of hud (traits) that they block
@@ -57,7 +59,7 @@ GLOBAL_LIST_INIT(trait_blockers_to_hud, list(
 	var/list/mob/hud_users_all_z_levels = list()
 
 	///these will be the indexes for the atom's hud_list
-	var/list/hud_icons = list()
+	var/list/hud_icons
 
 	///mobs associated with the next time this hud can be added to them
 	var/list/next_time_allowed = list()
@@ -75,6 +77,8 @@ GLOBAL_LIST_INIT(trait_blockers_to_hud, list(
 	for(var/z_level in 1 to world.maxz)
 		hud_atoms += list(list())
 		hud_users += list(list())
+	if(LAZYLEN(hud_icons))
+		hud_icons = string_list(hud_icons)
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_Z, PROC_REF(add_z_level_huds))
 

@@ -5,6 +5,9 @@
 	name = "Split Personality"
 	desc = "Patient's brain is split into two personalities, which randomly switch control of the body."
 	scan_desc = "complete lobe separation"
+	symptoms = "Exhibits two distinct personalities that alternate control over the same body, \
+		each with its own memories, behaviors, and preferences. While both personalities are aware of each other, \
+		they may have conflicting desires and actions, leading to confusion and disorientation for the host."
 	gain_text = span_warning("You feel like your mind was split in two.")
 	lose_text = span_notice("You feel alone again.")
 	var/current_controller = OWNER
@@ -18,7 +21,7 @@
 
 /datum/brain_trauma/severe/split_personality/on_gain()
 	var/mob/living/brain_owner = owner
-	if(brain_owner.stat == DEAD || !GET_CLIENT(brain_owner) || istype(get_area(brain_owner), /area/deathmatch)) //No use assigning people to a corpse or braindead
+	if(brain_owner.stat == DEAD || !GET_CLIENT(brain_owner) || istype(get_area(brain_owner), /area/deathmatch) || HAS_TRAIT(brain_owner, TRAIT_NO_SPLIT_PERSONALITY)) //No use assigning people to a corpse or braindead
 		return FALSE
 	. = ..()
 	make_backseats()
@@ -62,7 +65,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
 
 
-/datum/brain_trauma/severe/split_personality/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/severe/split_personality/on_life(seconds_per_tick)
 	if(owner.stat == DEAD)
 		if(current_controller != OWNER)
 			switch_personalities(TRUE)
@@ -155,7 +158,7 @@
 		trauma = _trauma
 	return ..()
 
-/mob/living/split_personality/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/split_personality/Life(seconds_per_tick = SSMOBS_DT)
 	if(QDELETED(body))
 		qdel(src) //in case trauma deletion doesn't already do it
 
@@ -194,6 +197,7 @@
 	gain_text = ""
 	lose_text = span_notice("You are free of your brainwashing.")
 	can_gain = FALSE
+	known_trauma = FALSE
 	var/codeword
 	var/objective
 
@@ -227,7 +231,7 @@
 	else
 		qdel(src)
 
-/datum/brain_trauma/severe/split_personality/brainwashing/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/severe/split_personality/brainwashing/on_life(seconds_per_tick)
 	return //no random switching
 
 /datum/brain_trauma/severe/split_personality/brainwashing/handle_hearing(datum/source, list/hearing_args)
@@ -262,6 +266,9 @@
 	name = "Alcohol-Induced CNS Impairment"
 	desc = "Patient's CNS has been temporarily impaired by imbibed alcohol, blocking memory formation, and causing reduced cognition and stupefaction."
 	scan_desc = "alcohol-induced CNS impairment"
+	symptoms = "Excessive alcohol consumption leading to a temporary blackout, followed by confusion, disorientation, and an almost \
+		completely altered state of consciousness upon waking for several minutes - during which the individual may exhibit \
+		impaired fine motor skills, an incredible resistance to pain, and a complete lack of memory."
 	gain_text = span_warning("Crap, that was one drink too many. You black out...")
 	lose_text = "You wake up very, very confused and hungover. All you can remember is drinking a lot of alcohol... what happened?"
 	poll_role = "blacked out drunkard"
@@ -298,7 +305,7 @@
 	if(prob(20))//we don't want every single splash to wake them up now do we
 		qdel(src)
 
-/datum/brain_trauma/severe/split_personality/blackout/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/severe/split_personality/blackout/on_life(seconds_per_tick)
 	if(current_controller == OWNER && stranger_backseat)//we should only start transitioning after the other personality has entered
 		owner.overlay_fullscreen("fade_to_black", /atom/movable/screen/fullscreen/blind)
 		owner.clear_fullscreen("fade_to_black", animated = 4 SECONDS)

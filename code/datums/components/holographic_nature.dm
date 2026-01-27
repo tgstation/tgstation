@@ -19,12 +19,15 @@
 /datum/component/holographic_nature/RegisterWithParent()
 	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 	if(isliving(parent))
+		RegisterSignal(parent, COMSIG_LIVING_MOB_BUMP, PROC_REF(on_bumped))
+		RegisterSignal(parent, COMSIG_LIVING_MOB_BUMPED, PROC_REF(on_bumped))
 		RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_mob_damaged))
 		return
 
 	var/atom/atom_parent = parent
 	if(isobj(atom_parent) && atom_parent.uses_integrity)
 		RegisterSignal(parent, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(on_object_damaged))
+
 
 /datum/component/holographic_nature/proc/on_mob_damaged(mob/living/source, damage_amount, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item)
 	SIGNAL_HANDLER
@@ -43,6 +46,10 @@
 		return
 	if(isprojectile(thing) || thing.density)
 		apply_effects()
+
+/datum/component/holographic_nature/proc/on_bumped(atom/movable/source, mob/living/crossing_mob)
+	SIGNAL_HANDLER
+	apply_effects()
 
 /datum/component/holographic_nature/proc/apply_effects()
 	if(!COOLDOWN_FINISHED(src, glitch_cooldown))

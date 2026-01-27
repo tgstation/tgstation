@@ -121,8 +121,12 @@
 	if(in_transit)
 		balloon_alert(recaller, "suit in transit!")
 		return FALSE
-	if(ismob(get_atom_on_turf(mod)))
-		balloon_alert(recaller, "already worn!")
+	var/atom_on_turf = get_atom_on_turf(mod)
+	if(ismob(atom_on_turf))
+		if(atom_on_turf == recaller)
+			balloon_alert(recaller, "already worn!")
+		else
+			recaller.balloon_alert(recaller, "suit is worn by somebody else!")
 		return FALSE
 
 	in_transit = TRUE
@@ -140,6 +144,7 @@
 	var/container = get_atom_on_turf(mod)
 	if(ismob(container))
 		balloon_alert(recaller, "launch interrupted!")
+		in_transit = FALSE
 		return
 
 	if(iscloset(container))
@@ -193,6 +198,11 @@
 	allow_multiple = TRUE // Surgrey is annoying if you loose your MOD
 	/// The pathfinder module we are linked to.
 	var/obj/item/mod/module/pathfinder/module
+	implant_info = "Activated manually. Allows for the recall of a Modular Outerwear Device by the implant owner at any time."
+	implant_lore = "Designed by Nakamura Industries, the MOD Pathfinder implant is the receiving end of the MOD pathfinder module, \
+		designed to be fabricated with its associated host module. It's designed to be implanted near the base of the spine: \
+		installing it anywhere else may result in the associated suit deploying incorrectly or failing to engage its airbrakes, \
+		which Nakamura Industries promises are actually present."
 
 /obj/item/implant/mod/Initialize(mapload)
 	. = ..()
@@ -203,11 +213,6 @@
 /obj/item/implant/mod/Destroy()
 	module = null
 	return ..()
-
-/obj/item/implant/mod/get_data()
-	return "<b>Implant Specifications:</b><BR> \
-		<b>Name:</b> Nakamura Engineering Pathfinder Implant<BR> \
-		<b>Implant Details:</b> Allows for the recall of a Modular Outerwear Device by the implant owner at any time.<BR>"
 
 /datum/action/item_action/mod_recall
 	name = "Recall MOD"

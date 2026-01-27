@@ -12,20 +12,23 @@
 	amount = 5
 	max_amount = 5
 	resistance_flags = FLAMMABLE
-	grind_results = list(/datum/reagent/cellulose = 5)
 	splint_factor = 0.65
 	merge_type = /obj/item/stack/sticky_tape
+	greyscale_config = /datum/greyscale_config/tape
+	greyscale_colors = "#B2B2B2#BD6A62"
+
 	var/conferred_embed = /datum/embedding/sticky_tape
 	///The tape type you get when ripping off a piece of tape.
 	var/obj/tape_gag = /obj/item/clothing/mask/muzzle/tape
-	greyscale_config = /datum/greyscale_config/tape
-	greyscale_colors = "#B2B2B2#BD6A62"
 
 /datum/embedding/sticky_tape
 	pain_mult = 0
 	jostle_pain_mult = 0
 	ignore_throwspeed_threshold = TRUE
 	immune_traits = null
+
+/obj/item/stack/sticky_tape/grind_results()
+	return list(/datum/reagent/cellulose = 5)
 
 /obj/item/stack/sticky_tape/attack_hand(mob/user, list/modifiers)
 	if(user.get_inactive_held_item() == src)

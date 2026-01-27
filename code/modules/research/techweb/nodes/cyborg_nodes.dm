@@ -194,8 +194,9 @@
 	prereq_ids = list(TECHWEB_NODE_COMBAT_IMPLANTS, TECHWEB_NODE_EXP_TOOLS)
 	design_ids = list(
 		"ci-nutrimentplus",
-		"ci-toolset",
 		"ci-surgery",
+		"ci-surgery-brain",
+		"ci-toolset",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)

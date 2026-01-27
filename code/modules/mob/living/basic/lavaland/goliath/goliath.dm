@@ -159,7 +159,7 @@
 	. = ..()
 	if(isnull(.))
 		return
-	faction = new_friend.faction.Copy()
+	SET_FACTION_AND_ALLIES_FROM(src, new_friend)
 
 /mob/living/basic/mining/goliath/RangedAttack(atom/atom_target, modifiers)
 	tentacles?.Trigger(target = atom_target)
@@ -209,7 +209,7 @@
 	/// List of places we might spawn a tentacle, if we're alive
 	var/list/tentacle_target_turfs
 
-/mob/living/basic/mining/goliath/ancient/immortal/Life(seconds_per_tick, times_fired)
+/mob/living/basic/mining/goliath/ancient/immortal/Life(seconds_per_tick)
 	. = ..()
 	if (!. || !isturf(loc))
 		return

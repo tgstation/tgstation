@@ -26,7 +26,7 @@
 	/// Multiplier for both long term and short term ear damage
 	var/damage_multiplier = 1
 
-/obj/item/organ/ears/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/ears/on_life(seconds_per_tick)
 	// only inform when things got worse, needs to happen before we heal
 	if((damage > low_threshold && prev_damage < low_threshold) || (damage > high_threshold && prev_damage < high_threshold))
 		to_chat(owner, span_warning("The ringing in your ears grows louder, blocking out any external noises for a moment."))
@@ -303,6 +303,13 @@
 	icon_state = "ears-c-u"
 	desc = "Advanced cybernetic ears capable of dampening loud noises to protect their user."
 	bang_protect = EAR_PROTECTION_NORMAL
+	damage_multiplier = 0.5
+
+/obj/item/organ/ears/cybernetic/volume
+	name = "volume-adjusting cybernetic ears"
+	icon_state = "ears-c-u"
+	desc = "Advanced cybernetic ears capable of dampening loud noises to protect their user."
+	bang_protect = 1
 	damage_multiplier = 0.5
 
 // "X-ray ears" that let you hear through walls

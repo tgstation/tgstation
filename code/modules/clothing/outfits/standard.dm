@@ -117,10 +117,10 @@
 	name = "Heretic Hallucination"
 
 	uniform = /obj/item/clothing/under/color/grey
-	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
+	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust
 	neck = /obj/item/clothing/neck/heretic_focus
 	r_hand = /obj/item/melee/touch_attack/mansus_fist
-	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
+	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/rust
 	shoes = /obj/item/clothing/shoes/sneakers/black
 
 /datum/outfit/rev_cutout

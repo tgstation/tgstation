@@ -2,6 +2,9 @@
 	name = "Psychotic Schizophrenia"
 	desc = "Patient has a subtype of delusional disorder, becoming irrationally attached to someone."
 	scan_desc = "psychotic schizophrenic delusions"
+	symptoms = "Exhibits obsessive behaviors towards a specific individual, \
+		including frequent staring, intrusive thoughts, and an overwhelming desire to be near them. \
+		This obsession can lead to social withdrawal, anxiety, and impaired daily functioning."
 	gain_text = "If you see this message, make a github issue report. The trauma initialized wrong."
 	lose_text = span_warning("The voices in your head fall silent.")
 	can_gain = TRUE
@@ -36,7 +39,7 @@
 	RegisterSignal(owner, COMSIG_CARBON_HELPED, PROC_REF(on_hug))
 	ADD_TRAIT(owner, TRAIT_DESENSITIZED, REF(src))
 
-/datum/brain_trauma/special/obsessed/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/special/obsessed/on_life(seconds_per_tick)
 	if(!obsession || obsession.stat == DEAD)
 		viewing = FALSE//important, makes sure you no longer stutter when happy if you murdered them while viewing
 		return

@@ -221,6 +221,7 @@
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
 	RegisterSignals(src, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE), PROC_REF(on_shell_damaged))
 	RegisterSignal(src, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, PROC_REF(on_shell_weakened))
+	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
 
 /mob/living/silicon/pai/proc/toggle_leash()
 	if(isnull(card))
@@ -488,3 +489,8 @@
 
 /mob/living/silicon/pai/get_access()
 	return list()
+
+///Called when a pAI tries opening something that requires access.
+/mob/living/silicon/pai/proc/on_tried_access(datum/source, obj/door_attempt, list/player_access)
+	SIGNAL_HANDLER
+	return ACCESS_DISALLOWED

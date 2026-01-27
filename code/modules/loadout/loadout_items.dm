@@ -42,6 +42,8 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	var/group = null
 	/// Loadout flags, see LOADOUT_FLAG_* defines
 	var/loadout_flags = NONE
+	/// If set, this item can only be selected during the holiday specified.
+	var/required_holiday
 	/// The actual item path of the loadout item.
 	var/obj/item/item_path
 	/// Icon file (DMI) for the UI to use for preview icons.
@@ -52,7 +54,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	var/ui_icon_state
 	/// Base typepath to what reskin datum this item can use to reskin into
 	/// Doesn't verify that the item_path actually has these reskins
-	var/reskin_datum
+	var/datum/atom_skin/reskin_datum
 	/// A list of greyscale colors that are used for items that have greyscale support, but don't allow full customization.
 	/// This is an assoc list of /datum/job_department -> colors, or /datum/job -> colors, allowing for preset colors based on player chosen job.
 	/// Jobs are prioritized over departments.
@@ -274,10 +276,13 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 
 	if(reskin_datum && item_details?[INFO_RESKIN])
 		var/skin_chosen = item_details[INFO_RESKIN]
+		var/list/atom_skins = get_atom_skins()
 		for(var/datum/atom_skin/skin_path as anything in valid_subtypesof(reskin_datum))
 			if(skin_path::preview_name != skin_chosen)
 				continue
-			var/datum/atom_skin/skin_instance = GLOB.atom_skins[skin_path]
+			if(skin_path::preview_name != skin_chosen)
+				continue
+			var/datum/atom_skin/skin_instance = atom_skins[skin_path]
 			skin_instance.apply(equipped_item)
 			if(istype(equipped_item, /obj/item/clothing/accessory))
 				// Snowflake handing for accessories, because we need to update the thing it's attached to instead
@@ -317,6 +322,18 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	return formatted_item
 
 /**
+ * Checks if this item is disabled and cannot be selected or granted
+ */
+/datum/loadout_item/proc/is_disabled()
+	return required_holiday && !check_holidays(required_holiday)
+
+/**
+ * Checks if this item is disabled or unequippable for the given item details.
+ */
+/datum/loadout_item/proc/is_equippable(mob/living/carbon/human/equipper, list/item_details)
+	return !is_disabled()
+
+/**
  * Returns a list of information to display about this item in the loadout UI.
  * Icon -> tooltip displayed when its hovered over
  */
@@ -330,6 +347,9 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 
 	if(reskin_datum)
 		displayed_text[FA_ICON_SWATCHBOOK] = "Reskinnable"
+
+	if(required_holiday)
+		displayed_text[FA_ICON_CALENDAR_CHECK] = "Only available: [required_holiday]"
 
 	return displayed_text
 
@@ -377,13 +397,20 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 		return null
 
 	var/list/reskins = list()
+	var/list/atom_skins = get_atom_skins()
+	var/list/reskin_choices
+	if(reskin_datum::allow_all_subtypes_in_loadout)
+		reskin_choices = valid_subtypesof(reskin_datum)
+	else
+		reskin_choices = valid_direct_subtypesof(reskin_datum)
 
-	for(var/datum/atom_skin/skin as anything in valid_subtypesof(reskin_datum))
+	for(var/datum/atom_skin/skin_path as anything in reskin_choices)
+		var/datum/atom_skin/atom_skin = atom_skins[skin_path]
 		UNTYPED_LIST_ADD(reskins, list(
-			"name" = skin::new_name || skin::preview_name,
-			"tooltip" = skin::preview_name,
-			"skin_icon" = skin::new_icon,
-			"skin_icon_state" = skin::new_icon_state,
+			"name" = skin_path::new_name || skin_path::preview_name,
+			"tooltip" = skin_path::preview_name,
+			"skin_icon" = skin_path::new_icon,
+			"skin_icon_state" = atom_skin?.get_preview_icon_state() || skin_path::new_icon
 		))
 
 	return reskins
