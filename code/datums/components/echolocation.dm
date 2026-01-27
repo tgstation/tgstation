@@ -169,15 +169,15 @@
 
 	addtimer(CALLBACK(src, PROC_REF(fade_images), current_time), image_expiry_time)
 
-/datum/component/echolocation/proc/generate_appearance(atom/input)
+/datum/component/echolocation/proc/generate_appearance(atom/gen_for)
 	var/mutable_appearance/copied_appearance = new()
-	copied_appearance.appearance = input
-	if(danger_turfs[input.type])
+	copied_appearance.appearance = gen_for
+	if(is_type_in_typecache(gen_for, danger_turfs))
 		copied_appearance.icon = 'icons/turf/floors.dmi'
 		copied_appearance.icon_state = "danger"
 
-	if(input.icon && input.icon_state)
-		saved_appearances["[input.icon]-[input.icon_state]"] = copied_appearance
+	if(gen_for.icon && gen_for.icon_state)
+		saved_appearances["[gen_for.icon]-[gen_for.icon_state]"] = copied_appearance
 	copied_appearance.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	return copied_appearance
 

@@ -12,8 +12,6 @@
 	var/static/list/update_signals = list(
 		SIGNAL_REMOVETRAIT(TRAIT_SIGHT_BYPASS),
 		SIGNAL_ADDTRAIT(TRAIT_SIGHT_BYPASS),
-		SIGNAL_ADDTRAIT(TRAIT_ECHOLOCATOR),
-		SIGNAL_REMOVETRAIT(TRAIT_ECHOLOCATOR),
 	)
 	/// List of sources which prevent SIGHT_BYPASS from working
 	var/static/list/blocking_sources = list(
