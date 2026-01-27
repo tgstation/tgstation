@@ -1205,9 +1205,9 @@
 
 //Mutagenic chem side-effects.
 /datum/reagent/uranium/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	mytray.mutation_roll(user)
-	mytray.adjust_plant_health(-round(volume))
-	mytray.adjust_toxic(round(volume / tox_damage)) // more damage = more
+	mytray.radioactive_exposure(modifier = volume * 0.1)
+	mytray.myseed?.adjust_instability(round(volume * 0.1))
+	mytray.adjust_toxic(round(0.5 * volume * tox_damage))
 
 /datum/reagent/uranium/radium
 	name = "Radium"
@@ -1298,7 +1298,6 @@
 
 /datum/reagent/fuel/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
-
 	if(!istype(exposed_turf) || isspaceturf(exposed_turf))
 		return
 
@@ -1308,6 +1307,20 @@
 	var/obj/effect/decal/cleanable/fuel_pool/pool = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/fuel_pool)
 	if(pool)
 		pool.burn_amount = max(min(round(reac_volume / 5), 10), 1)
+
+/datum/reagent/fuel/on_spark_act(power_charge, spark_flags)
+	// Doesn't go boom in open air unless we pass a REALLY high current or if we're hot enough
+	if (!(spark_flags & SPARK_ACT_ENCLOSED) && power_charge < STANDARD_BATTERY_VALUE && holder.chem_temp < 474)
+		var/turf/our_turf = get_turf(holder.my_atom)
+		our_turf?.hotspot_expose(holder.chem_temp * 10, volume)
+		return NONE
+
+	var/strengthdiv = 10
+	if (spark_flags & SPARK_ACT_WEAKEN_COMMON)
+		strengthdiv *= 3 // Noticeably weaker than waterpot, at least put some effort in, cmon
+
+	reagent_explode(holder, volume, strengthdiv = strengthdiv, clear_holder_reagents = FALSE, flame_factor = 1)
+	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 /datum/reagent/space_cleaner
 	name = "Space Cleaner"

@@ -304,7 +304,7 @@
 			if(!head?.dismember())
 				carbon_view.gib(DROP_ALL_REMAINS)
 			var/datum/effect_system/reagents_explosion/explosion = new()
-			explosion.set_up(1, get_turf(carbon_view), TRUE, 0)
+			explosion.set_up(1, get_turf(carbon_view), 1)
 			explosion.start(src)
 		else
 			attempt_conversion(carbon_view, source)

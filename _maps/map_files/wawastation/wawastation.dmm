@@ -62053,7 +62053,7 @@
 /obj/item/stock_parts/power_store/cell/bluespace{
 	pixel_x = -5;
 	pixel_y = -8;
-	rigged = 1
+	corrupted = 1
 	},
 /turf/open/misc/asteroid,
 /area/station/asteroid)
