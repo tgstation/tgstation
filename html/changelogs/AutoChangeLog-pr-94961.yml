@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Ashwalkers are now desensetized to non-ashie deaths, and enjoy witnessing gibbings"
+  - bugfix: "Some specific death moodlets now properly register when their target has been dusted or gibbed in their description"
