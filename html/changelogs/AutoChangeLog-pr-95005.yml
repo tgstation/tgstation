@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - bugfix: "The Sanguine Excavation bitrunning domain will drop the cache on killing the boss again."
