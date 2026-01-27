@@ -17,17 +17,20 @@
 	var/list/highlighted_paths
 	/// Typepache of atom types that will have an image generated on WALL_PLANE,
 	/// so they stick out from the floor but they don't obstruct game objects.
-	VAR_PRIVATE/list/background_paths
-	/// Typecache of turfs that are dangerous, to give them a special icon.
-	VAR_PRIVATE/list/danger_turfs
+	var/list/background_paths
+	/// Typecache of overlay icon states to the typecache of types that get that overlay.
+	var/list/overlay_states
+
+	/// Combined typecache of all (UNCHANGING) types we want to echolocate, for faster checking.
+	VAR_PRIVATE/list/combined_filter
 
 	/// The focus action for adjusting echolocation settings.
 	var/datum/action/echolocation_focus/focus
 
 	/// A matrix that turns everything except #ffffff into pure blackness, used for our images (the outlines are #ffffff).
-	VAR_PRIVATE/static/list/black_white_matrix
+	VAR_PRIVATE/list/black_white_matrix
 	/// List of planes we apply our filters to.
-	VAR_PRIVATE/static/list/planes
+	VAR_PRIVATE/list/planes
 
 /datum/component/echolocation/Initialize(
 	echo_range = src.echo_range,
@@ -41,12 +44,35 @@
 	if(!istype(echolocator))
 		return COMPONENT_INCOMPATIBLE
 
-	danger_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/chasm, /turf/open/lava, /turf/open/floor/fakespace, /turf/open/floor/fakepit, /turf/closed/wall/space))
+	overlay_states = list(
+		"danger" = typecacheof(
+			list(
+				/turf/closed/wall/space,
+				/turf/open/chasm,
+				/turf/open/floor/fakepit,
+				/turf/open/floor/fakespace,
+				/turf/open/lava,
+				/turf/open/openspace,
+				/turf/open/space,
+			),
+		),
+		"door" = typecacheof(
+			list(
+				/obj/machinery/door,
+				/obj/structure/mineral_door,
+			),
+		)
+	)
 	highlighted_paths = list()
 	background_paths = typecacheof(list(/obj/structure/bed, /obj/structure/table))
 
-	black_white_matrix ||= list(85, 85, 85, 0, 85, 85, 85, 0, 85, 85, 85, 0, 0, 0, 0, 1, -254, -254, -254, 0)
-	planes ||= list(ABOVE_GAME_PLANE, FLOOR_PLANE, GAME_PLANE, WALL_PLANE)
+	combined_filter = list()
+	for(var/state, typecache in overlay_states)
+		combined_filter |= typecache
+	combined_filter |= background_paths
+
+	black_white_matrix = list(85, 85, 85, 0, 85, 85, 85, 0, 85, 85, 85, 0, 0, 0, 0, 1, -254, -254, -254, 0)
+	planes = list(ABOVE_GAME_PLANE, FLOOR_PLANE, GAME_PLANE, WALL_PLANE)
 
 	focus = new(src)
 	focus.Grant(parent)
@@ -96,7 +122,7 @@
 
 /datum/component/echolocation/process()
 	var/mob/living/echolocator = parent
-	if(echolocator.stat == DEAD)
+	if(echolocator.stat == DEAD) // or deaf? maybe...
 		return
 	echolocate()
 
@@ -107,9 +133,7 @@
 	for(var/atom/seen_atom as anything in dview(echo_range, get_turf(echolocator.client?.eye || echolocator), invis_flags = echolocator.see_invisible))
 		if(!seen_atom.alpha)
 			continue
-		if(!is_type_in_typecache(seen_atom, danger_turfs) \
-			&& !is_type_in_typecache(seen_atom, highlighted_paths) \
-			&& !is_type_in_typecache(seen_atom, background_paths))
+		if(!is_type_in_typecache(seen_atom, combined_filter) && !is_type_in_typecache(seen_atom, highlighted_paths))
 			continue
 		filtered += seen_atom
 
@@ -138,29 +162,58 @@
 			animate(old_image, time = 0, alpha = 255)
 			continue
 
-		// generates a new image for this atom
-		var/image/found_appearance = saved_appearances["[filtered_atom.icon]-[filtered_atom.icon_state]"] || generate_appearance(filtered_atom)
-		var/image/final_image = image(found_appearance)
-		var/is_background = is_type_in_typecache(filtered_atom, background_paths)
-		if(is_background || PLANE_TO_TRUE(found_appearance.plane) == FLOOR_PLANE)
+
+		var/image/final_image
+
+		// check for special overlays first
+		for(var/overlay_state, overlay_typecache in overlay_states)
+			if(!is_type_in_typecache(filtered_atom, overlay_typecache))
+				continue
+
+			var/image/special_overlay = saved_appearances[overlay_state]
+			if(!special_overlay)
+				special_overlay = image('icons/effects/echolocate.dmi', null, overlay_state)
+				special_overlay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+				saved_appearances[overlay_state] = special_overlay
+
+			final_image = image(special_overlay)
+			break
+
+		// or generate a new image for this atom
+		if(isnull(final_image))
+			var/image/found_appearance = saved_appearances["[filtered_atom.icon]-[filtered_atom.icon_state]"]
+			if(isnull(found_appearance))
+				found_appearance = new(filtered_atom)
+				if(filtered_atom.icon && filtered_atom.icon_state)
+					saved_appearances["[filtered_atom.icon]-[filtered_atom.icon_state]"] = found_appearance
+				found_appearance.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+			final_image = image(found_appearance)
+			final_image.dir = filtered_atom.dir
+
+		if(isturf(filtered_atom))
+			// We don't want to mess with you, you can stay on floor or wall plane or whatever
+			SET_PLANE(final_image, filtered_atom.plane, filtered_atom)
+		else if(is_type_in_typecache(filtered_atom, background_paths) || PLANE_TO_TRUE(final_image.plane) == FLOOR_PLANE)
 			// I am being evil here and using wall plane due to being in-between of game plane and floor plane
 			// Why? Because we need background/floor objects to have their own layering, otherwise the effect is blended in wrong
 			// These objects will scarcely interact with real walls so it's... fine
 			final_image.layer = ABOVE_NORMAL_TURF_LAYER
 			SET_PLANE(final_image, WALL_PLANE, filtered_atom)
-		else if(is_type_in_typecache(filtered_atom, danger_turfs))
-			SET_PLANE(final_image, FLOOR_PLANE, filtered_atom)
 		else
+			// Must be on above game plane to separate the effects from game objects
 			SET_PLANE(final_image, ABOVE_GAME_PLANE, filtered_atom)
+
 		// Setting loc so we should disregard pixel offsets
 		final_image.pixel_w = 0
 		final_image.pixel_x = 0
 		final_image.pixel_y = 0
 		final_image.pixel_z = 0
 		final_image.loc = filtered_atom
-		final_image.dir = filtered_atom.dir
-		final_image.alpha = 0
-		animate(final_image, alpha = 255, time = fade_in_time)
+		// fade in
+		if(fade_in_time > 0)
+			final_image.alpha = 0
+			animate(final_image, alpha = 255, time = fade_in_time)
 
 		active_images[current_time] ||= list()
 		active_images[current_time][atom_ref] = final_image
@@ -169,19 +222,11 @@
 
 	addtimer(CALLBACK(src, PROC_REF(fade_images), current_time), image_expiry_time)
 
-/datum/component/echolocation/proc/generate_appearance(atom/gen_for)
-	var/mutable_appearance/copied_appearance = new()
-	copied_appearance.appearance = gen_for
-	if(is_type_in_typecache(gen_for, danger_turfs))
-		copied_appearance.icon = 'icons/turf/floors.dmi'
-		copied_appearance.icon_state = "danger"
-
-	if(gen_for.icon && gen_for.icon_state)
-		saved_appearances["[gen_for.icon]-[gen_for.icon_state]"] = copied_appearance
-	copied_appearance.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	return copied_appearance
-
 /datum/component/echolocation/proc/fade_images(from_time)
+	if(fade_out_time <= 0)
+		cleanup_images(from_time)
+		return
+
 	for(var/atom_ref, echo_image in active_images[from_time])
 		animate(echo_image, alpha = 0, time = fade_out_time)
 
