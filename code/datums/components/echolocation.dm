@@ -132,6 +132,8 @@
 			var/image/old_image = active_images[old_time][atom_ref]
 			active_images[old_time] -= atom_ref
 			active_images[current_time][atom_ref] = old_image
+			if(!length(active_images[old_time]))
+				active_images -= old_time
 			// if they are mid fade, cancel it
 			animate(old_image, time = 0, alpha = 255)
 			continue
