@@ -179,7 +179,6 @@
 			var/atom/movable/node = popleft(queue)
 			if(visited[node])
 				continue
-			visited[node] = TRUE
 
 			//visit all neighbours of this pipe as well
 			pipe = node
@@ -195,15 +194,22 @@
 				for(var/atom/movable/subnode in pipe.neighbours)
 					queue += subnode
 
+				visited[node] = TRUE
 				continue
 
 			//assign machines to new network
 			for(var/datum/component/plumbing/plumbing as anything in node.GetComponents(/datum/component/plumbing))
+				//disconnect old net
 				for(var/dirtext in plumbing.ducts)
 					if(plumbing.ducts[dirtext] == net)
 						net.remove_plumber(plumbing)
-						if(newnet)
-							newnet.add_plumber(plumbing, text2num(dirtext))
+				//assign new net
+				if(newnet)
+					for(pipe as anything in newnet.ducts)
+						var/dir = pipe.neighbours[node]
+						if(dir)
+							newnet.add_plumber(plumbing, REVERSE_DIR(dir))
+
 	disconnect()
 
 	return ..()
@@ -309,9 +315,7 @@
 		add_atom_colour(GLOB.pipe_paint_colors[new_color], FIXED_COLOUR_PRIORITY)
 
 /obj/item/stack/ducts/wrench_act(mob/living/user, obj/item/tool)
-	. = check_attach_turf(loc)
-	if(!.)
-		. = ITEM_INTERACT_FAILURE
+	return check_attach_turf(loc)
 
 /obj/item/stack/ducts/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	// Turn into a duct stack and then merge to the in-hand stack.
@@ -328,13 +332,15 @@
 /obj/item/stack/ducts/proc/check_attach_turf(turf/open_turf, mob/user)
 	. = NONE
 	if(isopenturf(open_turf))
-		var/datum/overlap = ducting_layer_check(open_turf, duct_layer)
+		var/layer_of_duct = GLOB.plumbing_layers[duct_layer]
+
+		var/datum/overlap = ducting_layer_check(open_turf, layer_of_duct)
 		if(!isnull(overlap))
 			if(user)
 				open_turf.balloon_alert(user, "overlapping [istype(overlap, /obj/machinery/duct) ? "duct" : "machine"] detected!")
 			return ITEM_INTERACT_FAILURE
 
-		new /obj/machinery/duct(open_turf, duct_color, duct_layer)
+		new /obj/machinery/duct(open_turf, duct_color, layer_of_duct)
 		playsound(open_turf, 'sound/machines/click.ogg', 50, TRUE)
 		use(1)
 		return ITEM_INTERACT_SUCCESS

@@ -615,3 +615,64 @@
   JoshAdamPowell:
   - admin: Someone gave Centcom permission to access the anomalous materials research
       department. The result surely can't be good...
+2026-01-25:
+  EEASAS:
+  - rscadd: Mustard. find it in the produce ordering computer or receive it in the
+      mail
+  - bugfix: Adds ketchup to the produce ordering computer
+  LT3:
+  - bugfix: Fixed lights breaking forever if they lose power
+  vinylspiders:
+  - bugfix: fixes the sql schema revision being wrong in the code
+2026-01-26:
+  Cirrial:
+  - bugfix: Fixed right-click menu pick up of items not working in rare cases.
+  Cyberboss:
+  - bugfix: Fixed placing people onto tables.
+  JoshAdamPowell:
+  - bugfix: 'Removed a ferry console which should not be at the heretic beach
+
+      :cl:'
+  Melbert:
+  - rscdel: Admins can no longer use the NAP button
+  - bugfix: Fix wallet (again)
+  - bugfix: Fix alt stunsword skin
+  - qol: Dna console has a minor visual indicator for invalid pairs (such as A-A or
+      C-T)
+  - qol: Chameleon ID's selection pool has been trimmed down, removing all the weird
+      random IDs and trims like "Head Occultist", to make it easier to find the real
+      job trims. You can (of course) manually forge the ID to set whatever job text
+      you want.
+  - qol: Chameleon items format their name slightly differently, making it easier
+      to search
+  RikuTheKiller:
+  - refactor: Refactored girders and wall construction. Report any bugs.
+  SmArtKar:
+  - bugfix: Fixed cables not disconnecting their neighbors when destroyed
+  Swan:
+  - bugfix: fixes the HFR health dropping exponentially once it starts taking damage
+      from having too many moles
+  SyncIt21:
+  - qol: added examines & screen tips for wall frame items
+  - qol: added examines & screen tips for washing items in sinks
+  - bugfix: plumbing components inside shuttles reconnect to their machine counterparts
+      correctly
+  - bugfix: plumbing iv drip has its red & blue connectors visible again
+  - bugfix: sinks consume reagents when washing and won't wash when it becomes dry
+  - bugfix: map loaded plumbing machines begin processing
+  - bugfix: 'placing stack of ducts by hand of ducts works again
+
+      fix; plumbing machinery properly reconnects when un wrenching ducts in circular
+      connections'
+  - refactor: sinks are now proper wall mounted components meaning destroying their
+      attached walls will cause it to get destroyed & sink frames are wall frame items
+      that can be carried in hand
+  Y0SH1M4S73R:
+  - bugfix: Service cyborgs did not receive any benefit from installing the piercing
+      hypospray upgrade, so it can no longer be installed in them.
+  tontyGH:
+  - bugfix: Viruses that heal their hosts through radiation no longer cause phantom
+      pain.
+2026-01-27:
+  KREKS:
+  - image: resprites banners

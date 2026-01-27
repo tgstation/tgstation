@@ -419,15 +419,18 @@
 		return .
 	var/found_hypo = FALSE
 	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
-		hypo.bypass_protection = TRUE
-		found_hypo = TRUE
-	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.emag_modules)
+		if(!hypo.allow_piercing)
+			continue
 		hypo.bypass_protection = TRUE
 		found_hypo = TRUE
 
 	if(!found_hypo)
 		to_chat(user, span_warning("There are no installed hypospray modules to upgrade with piercing!")) //check to see if any hyposprays were upgraded
 		return FALSE
+
+	// If we are actually going to install the upgrade due to the presence of compatible modules, make sure their emagged counterparts get upgraded too.
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.emag_modules)
+		hypo.bypass_protection = TRUE
 
 /obj/item/borg/upgrade/piercing_hypospray/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
