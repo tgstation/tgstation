@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Inexorable's crit damage is halted in hard crit while you have Epinephrine or similar, so you can actually get healed out of hard crit"
+  - balance: "Atropine stops crit damage like Epinephrine"
