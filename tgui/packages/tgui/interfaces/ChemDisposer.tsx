@@ -39,7 +39,7 @@ export function ChemDisposer() {
                 value={disposal_rate}
                 unit="u"
                 width="50px"
-                minValue={1}
+                minValue={0.1}
                 maxValue={max_volume}
                 step={1}
                 stepPixelSize={2}
