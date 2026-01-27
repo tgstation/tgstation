@@ -676,3 +676,26 @@
 2026-01-27:
   KREKS:
   - image: resprites banners
+  Melbert:
+  - qol: Banners drop centered
+  - balance: Inexorable's crit damage is halted in hard crit while you have Epinephrine
+      or similar, so you can actually get healed out of hard crit
+  - balance: Atropine stops crit damage like Epinephrine
+  SmArtKar:
+  - qol: Ashwalkers are now desensetized to non-ashie deaths, and enjoy witnessing
+      gibbings
+  - bugfix: Some specific death moodlets now properly register when their target has
+      been dusted or gibbed in their description
+  - rscadd: Added back IEDs made by attaching some wire and tape to a soda can filled
+      with fuel, plasma, or any other explosive of your choice. They need to be lit
+      on fire with a lighter or a welding tool.
+  - rscadd: You can now attach a lid to beakers with alt-click, preventing them from
+      being spilled when thrown.
+  - rscadd: Added beakerbombs, made by attaching an assembly (with optional power
+      cell and wiring) to a lidded beaker.
+  - balance: Rigged explosions now create flames.
+  - balance: Plasma explosions now limit their explosion potency past a certain point
+      based on their volume
+  Thunder12345:
+  - bugfix: The Sanguine Excavation bitrunning domain will drop the cache on killing
+      the boss again.
