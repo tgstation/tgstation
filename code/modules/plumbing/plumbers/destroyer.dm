@@ -57,7 +57,6 @@
 
 /obj/machinery/plumbing/disposer/ui_static_data(mob/user)
 	return list(
-		min_volume = initial(disposal_rate),
 		max_volume = MAX_DISPOSAL_RATE
 	)
 
@@ -83,7 +82,7 @@
 			if(!isnum(num))
 				return FALSE
 
-			disposal_rate = clamp(num, initial(disposal_rate), MAX_DISPOSAL_RATE)
+			disposal_rate = clamp(num, 1, MAX_DISPOSAL_RATE)
 			return TRUE
 
 /obj/machinery/plumbing/disposer/process(seconds_per_tick)
