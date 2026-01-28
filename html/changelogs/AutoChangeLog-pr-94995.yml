@@ -1,5 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes:
-  - bugfix: "The lootpanel will now properly close with distance from the target like most other tguis."
-  - qol: "The lootpanel will now automatically refresh when new items enter it. Removed the manual refresh button."

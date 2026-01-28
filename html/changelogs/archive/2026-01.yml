@@ -699,3 +699,20 @@
   Thunder12345:
   - bugfix: The Sanguine Excavation bitrunning domain will drop the cache on killing
       the boss again.
+2026-01-28:
+  Cyberboss:
+  - bugfix: The lootpanel will now properly close with distance from the target like
+      most other tguis.
+  - qol: The lootpanel will now automatically refresh when new items enter it. Removed
+      the manual refresh button.
+  Melbert:
+  - rscadd: A bullet to the brain has a rare chance of providing a free lobotomy
+  - qol: Operating computers, Vitals readers, and the health analyzer MODsuit module
+      (when active) can be used in the place of a health analyzer to display precise
+      health stats during a Tend Wounds surgery
+  SmArtKar:
+  - bugfix: Fixed some reagents still using old (and now, incorrect) math for their
+      metabolization values
+  lelandkemble:
+  - bugfix: Improvised mounted weaponry now drops a reasonable amount of cable
+  - spellcheck: spine implant emp damaging text spells "shearing" correctly
