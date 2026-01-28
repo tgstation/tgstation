@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Operating computers, Vitals readers, and the health analyzer MODsuit module (when active) can be used in the place of a health analyzer to display precise health stats during a Tend Wounds surgery"
