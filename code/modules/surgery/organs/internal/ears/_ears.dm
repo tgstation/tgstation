@@ -48,11 +48,14 @@
 	. = ..()
 	if(temporary_deafness)
 		on_deafened()
+	REMOVE_TRAIT(organ_owner, TRAIT_DEAF, NO_EARS)
 
 /obj/item/organ/ears/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	if(temporary_deafness)
 		on_undeafened(organ_owner)
+	if(!special)
+		ADD_TRAIT(organ_owner, TRAIT_DEAF, NO_EARS)
 
 /obj/item/organ/ears/get_status_appendix(advanced, add_tooltips)
 	if(owner.stat == DEAD || !HAS_TRAIT(owner, TRAIT_DEAF))

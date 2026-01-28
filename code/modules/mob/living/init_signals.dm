@@ -79,6 +79,9 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_MIND_TEMPORARILY_GONE), PROC_REF(on_mind_temporarily_gone_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_MIND_TEMPORARILY_GONE), PROC_REF(on_mind_temporarily_gone_trait_loss))
 
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_DEAF), PROC_REF(on_deafened))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_DEAF), PROC_REF(on_undeafened))
+
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
 	SIGNAL_HANDLER
@@ -339,3 +342,14 @@
 /mob/living/proc/on_mind_temporarily_gone_trait_loss(datum/source)
 	SIGNAL_HANDLER
 	med_hud_set_status()
+
+/// Called when [TRAIT_DEAF] is added to the mob.
+/mob/living/proc/on_deafened(datum/source)
+	SIGNAL_HANDLER
+	refresh_looping_ambience()
+	stop_sound_channel(CHANNEL_AMBIENCE)
+
+/// Called when [TRAIT_DEAF] is removed from the mob.
+/mob/living/proc/on_undeafened(datum/source)
+	SIGNAL_HANDLER
+	refresh_looping_ambience()
