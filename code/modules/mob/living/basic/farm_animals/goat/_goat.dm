@@ -54,7 +54,6 @@
 
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_pre_attack))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
-	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move))
 
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(edibles))
 
@@ -96,19 +95,6 @@
 		span_danger("[src] gets an evil-looking gleam in [p_their()] eye."),
 	)
 	COOLDOWN_START(src, gleam_cooldown, gleam_delay)
-
-/// Handles automagically eating a plant when we move into a turf that has one.
-/mob/living/basic/goat/proc/on_move(datum/source, atom/entering_loc)
-	SIGNAL_HANDLER
-	if(!isturf(entering_loc) || stat == DEAD)
-		return
-
-	var/list/edible_plants = list()
-	for(var/obj/target in entering_loc)
-		if(is_type_in_list(target, edibles))
-			edible_plants += target
-
-	INVOKE_ASYNC(src, PROC_REF(eat_plant), edible_plants)
 
 /// When invoked, adds an udder when applicable. Male goats do not have udders.
 /mob/living/basic/goat/proc/add_udder()
