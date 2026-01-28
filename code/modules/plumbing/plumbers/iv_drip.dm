@@ -13,7 +13,8 @@
 	. = ..()
 	if(mapload)
 		begin_processing()
-	AddComponent(/datum/component/plumbing/automated_iv, layer)
+
+	AddComponent(/datum/component/plumbing/simple_demand/distinct_reagent_cap/automated_iv, layer)
 	AddElement(/datum/element/simple_rotation)
 
 /obj/machinery/iv_drip/plumbing/quick_toggle(mob/living/user)

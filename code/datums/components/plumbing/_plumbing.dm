@@ -251,7 +251,7 @@
 
 ///Returns a ductnet based on the requested direction
 /datum/component/plumbing/proc/net(dir)
-	PRIVATE_PROC(TRUE)
+	PROTECTED_PROC(TRUE)
 	RETURN_TYPE(/datum/ductnet)
 
 	var/dirtext = num2text(dir)
