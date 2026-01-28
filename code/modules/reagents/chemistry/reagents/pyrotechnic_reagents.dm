@@ -364,7 +364,7 @@
 
 /datum/reagent/cryostylane/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	metabolization_rate = 0.25 * REM//faster consumption when alive
+	metabolization_rate = 0.625 * REAGENTS_METABOLISM //faster consumption when alive
 	if(affected_mob.reagents.has_reagent(/datum/reagent/oxygen))
 		affected_mob.reagents.remove_reagent(/datum/reagent/oxygen, 1 * metabolization_ratio * seconds_per_tick)
 		affected_mob.adjust_bodytemperature(-30 * metabolization_ratio * seconds_per_tick)
