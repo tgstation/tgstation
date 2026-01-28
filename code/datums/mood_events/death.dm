@@ -32,9 +32,12 @@
 		mood_change *= 0.25
 		timeout *= 0.2
 
-	if(HAS_PERSONALITY(owner, /datum/personality/compassionate) && mood_change < 0)
-		mood_change *= 1.5
-		timeout *= 1.5
+	if(mood_change < 0)
+		mood_change = ceil(mood_change * max(DESENSITIZED_MINIMUM, owner.mind?.desensitized_level || 1.0))
+
+		if(HAS_PERSONALITY(owner, /datum/personality/compassionate))
+			mood_change *= 1.5
+			timeout *= 1.5
 
 	if(gibbed || dusted)
 		mood_change *= 1.2
@@ -72,7 +75,7 @@
 /// Checks if our mood can get worse by seeing another death (or better if we're weird like that)
 /datum/mood_event/conditional/see_death/proc/can_stack_effect(mob/dead_mob)
 	// if we're desensitized, don't stack unless it's a buff
-	if(HAS_MIND_TRAIT(owner, TRAIT_DESENSITIZED) && mood_change > 0)
+	if(IS_DESENSITIZED(owner) && mood_change < 0)
 		return FALSE
 	// if we're seeing a spawned mob die, don't stack
 	if(HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB))
@@ -275,11 +278,10 @@
 /// Desensitized brings up the rear
 /datum/mood_event/conditional/see_death/desensitized
 	priority = DESENSITIZED_PRIORITY
-	mood_change = parent_type::mood_change * 0.5
 	timeout = parent_type::timeout * 0.5
 
 /datum/mood_event/conditional/see_death/desensitized/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
-	return HAS_MIND_TRAIT(who, TRAIT_DESENSITIZED)
+	return IS_DESENSITIZED(who)
 
 /datum/mood_event/conditional/see_death/desensitized/update_effect(mob/dead_mob, dusted, gibbed)
 	if(gibbed)
