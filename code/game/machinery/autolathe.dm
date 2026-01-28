@@ -151,15 +151,14 @@
 		var/coeff = (ispath(design.build_path, /obj/item/stack) ? 1 : creation_efficiency)
 		var/list/cost = list()
 		var/customMaterials = FALSE
-		for(var/i in design.materials)
-			var/datum/material/mat = i
-
-			var/design_cost = OPTIMAL_COST(design.materials[i] * coeff)
+		for(var/datum/material/mat as anything in design.materials)
+			var/mat_cost = design.materials[mat]
+			var/design_cost = OPTIMAL_COST(mat_cost * coeff)
 			if(istype(mat))
 				cost[mat.name] = design_cost
 				customMaterials = FALSE
 			else
-				cost[i] = design_cost
+				cost[GLOB.material_flags_to_string[mat]] = design_cost
 				customMaterials = TRUE
 
 		//create & send ui data
@@ -253,8 +252,7 @@
 	//check for materials required. For custom material items decode their required materials
 	var/list/materials_needed = list()
 	var/mat_choice = FALSE
-	for(var/material in design.materials)
-		var/amount_needed = design.materials[material]
+	for(var/material, amount_needed in design.materials)
 		if(!istext(material)) // Material flag(s)
 			if(isnull(material))
 				CRASH("Autolathe ui_act got passed an invalid material id: [material]")
@@ -293,8 +291,8 @@
 
 	//compute power & time to print 1 item
 	var/charge_per_item = 0
-	for(var/material in design.materials)
-		charge_per_item += design.materials[material]
+	for(var/material, amount in design.materials)
+		charge_per_item += amount
 
 	charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * material_cost_coefficient * active_power_usage)
 	var/build_time_per_item = (design.construction_time * design.lathe_time_factor) ** 0.8
@@ -374,24 +372,20 @@
 		var/max_stack_amount = initial(stack_item.max_amount)
 		var/number_to_make = (initial(stack_item.amount) * items_remaining)
 		while(number_to_make > max_stack_amount)
-			created = new stack_item(null, max_stack_amount) //it's imporant to spawn things in nullspace, since obj's like stacks qdel when they enter a tile/merge with other stacks of the same type, resulting in runtimes.
+			created = design.create_result(target, materials_needed, amount = max_stack_amount)
 			if(isitem(created))
 				created.pixel_x = created.base_pixel_x + rand(-6, 6)
 				created.pixel_y = created.base_pixel_y + rand(-6, 6)
-			created.forceMove(target)
 			number_to_make -= max_stack_amount
-
-		created = new stack_item(null, number_to_make)
-
+		created = design.create_result(target, materials_needed, amount = number_to_make)
 	else
-		created = new design.build_path(null)
+		created = design.create_result(target, materials_needed)
 		split_materials_uniformly(materials_needed, material_cost_coefficient, created)
 
 	if(isitem(created))
 		created.pixel_x = created.base_pixel_x + rand(-6, 6)
 		created.pixel_y = created.base_pixel_y + rand(-6, 6)
 	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[created.type]"))
-	created.forceMove(target)
 
 	if(is_stack)
 		items_remaining = 0

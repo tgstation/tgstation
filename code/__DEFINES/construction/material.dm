@@ -49,6 +49,18 @@
 /// All material type class flags
 #define MATERIAL_TYPE_CLASSES (MATERIAL_CLASS_METAL | MATERIAL_CLASS_FABRIC | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_ORGANIC | MATERIAL_CLASS_POLYMER)
 
+/// Assoc list of material flags used in designs to their display names
+GLOBAL_LIST_INIT(material_flags_to_string, alist(
+	MATERIAL_CLASS_RIGID = "rigid material",
+	MATERIAL_CLASS_AMORPHOUS = "amorphous material",
+	MATERIAL_CLASS_METAL = "metallic material",
+	MATERIAL_CLASS_FABRIC = "fabric material",
+	MATERIAL_CLASS_CRYSTAL = "crystalline material",
+	MATERIAL_CLASS_ORGANIC = "organic material",
+	MATERIAL_CLASS_POLYMER = "polymer material",
+	ITEM_MATERIAL_CLASSES = "solid material",
+))
+
 // Material Container Flags.
 ///If the container shows the amount of contained materials on examine.
 #define MATCONTAINER_EXAMINE (1 << 0)

@@ -29,8 +29,8 @@ other types of metals and chemistry for reagents).
 	var/id = DESIGN_ID_IGNORE
 	/// Bitflags indicating what machines this design is compatable with. ([IMPRINTER]|[AWAY_IMPRINTER]|[PROTOLATHE]|[AWAY_LATHE]|[AUTOLATHE]|[MECHFAB]|[BIOGENERATOR]|[LIMBGROWER]|[SMELTER])
 	var/build_type = null
-	/// List of materials required to create one unit of the product. Format is (typepath or caregory) -> amount
-	var/list/materials = list()
+	/// List of materials required to create one unit of the product. Format is (typepath or flags) -> amount
+	var/alist/materials = alist()
 	/// The amount of time required to create one unit of the product.
 	var/construction_time = 3.2 SECONDS
 	/// The typepath of the object produced by this design
@@ -68,13 +68,12 @@ other types of metals and chemistry for reagents).
 
 /datum/design/proc/InitializeMaterials()
 	var/list/temp_list = list()
-	for(var/i in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
-		var/amount = materials[i]
-		if(!istext(i)) //Not a category, so get the ref the normal way
-			var/datum/material/M = SSmaterials.get_material(i)
-			temp_list[M] = amount
+	for(var/mat_type, amount in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
+		if(!istext(mat_type)) //Not a category, so get the ref the normal way
+			var/datum/material/mat = SSmaterials.get_material(mat_type)
+			temp_list[mat] = amount
 		else
-			temp_list[i] = amount
+			temp_list[mat_type] = amount
 	materials = temp_list
 
 /datum/design/proc/icon_html(client/user)
@@ -88,6 +87,17 @@ other types of metals and chemistry for reagents).
 
 	return isnull(desc) ? initial(object_build_item_path.desc) : desc
 
+/// Produce the resulting item, optionally with a specfic amount if we're a stack design
+/datum/design/proc/create_result(atom/drop_loc, list/custom_materials, amount = null)
+	if (!ispath(build_type, /obj/item/stack) && !isnull(amount))
+		CRASH("[src] create_result was passed an amount, despite not being a stack design!")
+
+	if (!ispath(build_type, /obj/item/stack))
+		return new build_type(drop_loc)
+
+	if (isnull(amount))
+		amount = 1
+	return new build_type(drop_loc, amount)
 
 ////////////////////////////////////////
 //Disks for transporting design datums//

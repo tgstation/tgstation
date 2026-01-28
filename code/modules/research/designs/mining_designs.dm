@@ -7,7 +7,7 @@
 	desc = "Allows for the construction of circuit boards used to build an Express Supply Console."//who?
 	id = "cargoexpress"//the coder reading this
 	build_type = IMPRINTER
-	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
+	materials = alist(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/circuitboard/computer/cargo/express
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO
@@ -19,7 +19,7 @@
 	desc = "Allows the Cargo Express Console to call down the Bluespace Drop Pod, greatly increasing user safety."//who?
 	id = "bluespace_pod"//the coder reading this
 	build_type = PROTOLATHE
-	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
+	materials = alist(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/disk/cargo/bluespace_pod
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO
@@ -30,7 +30,7 @@
 	name = "Pickaxe"
 	id = "pickaxe"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
+	materials = alist(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/pickaxe
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MINING
@@ -42,7 +42,7 @@
 	desc = "Yours is the drill that will pierce through the rock walls."
 	id = "drill"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT) //expensive, but no need for miners.
+	materials = alist(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT) //expensive, but no need for miners.
 	build_path = /obj/item/pickaxe/drill
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MINING
@@ -54,7 +54,7 @@
 	desc = "Yours is the drill that will pierce the heavens!"
 	id = "drill_diamond"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(
+	materials = alist(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT*3,
 		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/diamond =SHEET_MATERIAL_AMOUNT,
@@ -70,7 +70,7 @@
 	desc = "You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	id = "plasmacutter"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(
+	materials = alist(
 		/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/glass =SMALL_MATERIAL_AMOUNT*5,
 		/datum/material/plasma = SMALL_MATERIAL_AMOUNT*4,
@@ -86,7 +86,7 @@
 	desc = "It's an advanced plasma cutter, oh my god."
 	id = "plasmacutter_adv"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(
+	materials = alist(
 		/datum/material/iron =SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/plasma =SHEET_MATERIAL_AMOUNT,
@@ -103,7 +103,7 @@
 	desc = "Essentially a handheld planet-cracker. Rock walls cower in fear when they hear one of these."
 	id = "jackhammer"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(
+	materials = alist(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT*3,
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT,
 		/datum/material/silver =SHEET_MATERIAL_AMOUNT,
@@ -120,7 +120,7 @@
 	desc = "An upgraded version of the resonator that allows more fields to be active at once."
 	id = "superresonator"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(
+	materials = alist(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT*2,
 		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT,
@@ -137,7 +137,7 @@
 	desc = "A device which allows kinetic accelerators to be wielded by any organism."
 	id = "triggermod"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(
+	materials = alist(
 		/datum/material/iron =SHEET_MATERIAL_AMOUNT,
 		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5,
@@ -154,7 +154,7 @@
 	desc = "A device which allows kinetic accelerators to deal more damage."
 	id = "damagemod"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(
+	materials = alist(
 		/datum/material/iron =SHEET_MATERIAL_AMOUNT,
 		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5,
@@ -179,7 +179,7 @@
 	desc = "A device which decreases the cooldown of a Kinetic Accelerator."
 	id = "cooldownmod"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/uranium =HALF_SHEET_MATERIAL_AMOUNT)
+	materials = alist(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/uranium =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/borg/upgrade/modkit/cooldown
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS
@@ -199,7 +199,7 @@
 	desc = "A device which allows kinetic accelerators to fire at a further range."
 	id = "rangemod"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/uranium =HALF_SHEET_MATERIAL_AMOUNT)
+	materials = alist(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/uranium =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/borg/upgrade/modkit/range
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS
@@ -219,7 +219,7 @@
 	desc = "A modification kit for Kinetic Accelerators which causes it to fire AoE blasts that destroy rock."
 	id = "hypermod"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(
+	materials = alist(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT*4,
 		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/silver =SHEET_MATERIAL_AMOUNT,
@@ -244,7 +244,7 @@
 	name = "Mining Scanner"
 	id = "mining_scanner"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(
+	materials = alist(
 		/datum/material/glass =SMALL_MATERIAL_AMOUNT*5,
 		/datum/material/iron =SMALL_MATERIAL_AMOUNT*5,
 		/datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT,
@@ -266,26 +266,26 @@
 	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
 	desc = "A device which causes kinetic accelerators to fire AoE blasts that destroy rock and damage creatures."
 	id = "hyperaoemod"
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/silver =SHEET_MATERIAL_AMOUNT*1.5, /datum/material/gold =SHEET_MATERIAL_AMOUNT*1.5, /datum/material/diamond = SHEET_MATERIAL_AMOUNT*2)
+	materials = alist(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/silver =SHEET_MATERIAL_AMOUNT*1.5, /datum/material/gold =SHEET_MATERIAL_AMOUNT*1.5, /datum/material/diamond = SHEET_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/borg/upgrade/modkit/aoe/mobs/andturfs
 
 /datum/design/unique_modkit/rapid_repeater
 	name = "Kinetic Accelerator Rapid Repeater Mod"
 	desc = "A device which greatly reduces a kinetic accelerator's cooldown on striking a living target or rock, but greatly increases its base cooldown."
 	id = "repeatermod"
-	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = SHEET_MATERIAL_AMOUNT*4, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
+	materials = alist(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = SHEET_MATERIAL_AMOUNT*4, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/borg/upgrade/modkit/cooldown/repeater
 
 /datum/design/unique_modkit/resonator_blast
 	name = "Kinetic Accelerator Resonator Blast Mod"
 	desc = "A device which causes kinetic accelerators to fire shots that leave and detonate resonator blasts."
 	id = "resonatormod"
-	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/uranium =SHEET_MATERIAL_AMOUNT * 2.5)
+	materials = alist(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/uranium =SHEET_MATERIAL_AMOUNT * 2.5)
 	build_path = /obj/item/borg/upgrade/modkit/resonator_blasts
 
 /datum/design/unique_modkit/bounty
 	name = "Kinetic Accelerator Death Syphon Mod"
 	desc = "A device which causes kinetic accelerators to permanently gain damage against creature types killed with it."
 	id = "bountymod"
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT*2, /datum/material/gold = SHEET_MATERIAL_AMOUNT*2, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT*2)
+	materials = alist(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT*2, /datum/material/gold = SHEET_MATERIAL_AMOUNT*2, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/borg/upgrade/modkit/bounty

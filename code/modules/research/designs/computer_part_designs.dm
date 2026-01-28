@@ -6,7 +6,7 @@
 	name = "Data Disk"
 	id = "portadrive_basic"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
+	materials = alist(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/disk/computer
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -18,7 +18,7 @@
 	name = "Advanced Data Disk"
 	id = "portadrive_advanced"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
+	materials = alist(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/disk/computer/advanced
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -30,7 +30,7 @@
 	name = "Super Data Disk"
 	id = "portadrive_super"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 4)
+	materials = alist(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 4)
 	build_path = /obj/item/disk/computer/super
 	category = list(
 		RND_CATEGORY_INITIAL,

@@ -61,11 +61,10 @@
 	if(isnull(design))
 		return
 	. += span_notice("It needs:")
-	for(var/valid_type in design.materials)
+	for(var/valid_type, amount in design.materials)
 		var/atom/ingredient = valid_type
-		var/amount = design.materials[ingredient] / SHEET_MATERIAL_AMOUNT
 
-		. += "[amount] sheets of [initial(ingredient.name)]"
+		. += "[amount / SHEET_MATERIAL_AMOUNT] sheets of [initial(ingredient.name)]"
 
 /obj/machinery/power/manufacturing/lathe/update_overlays()
 	. = ..()
@@ -113,8 +112,7 @@
 		return
 	//check for materials required. For custom material items decode their required materials
 	var/list/materials_needed = list()
-	for(var/material in design.materials)
-		var/amount_needed = design.materials[material]
+	for(var/material, amount_needed in design.materials)
 		if(istext(material)) // Material flag(s)
 			for(var/datum/material/valid_candidate as anything in SSmaterials.get_materials_by_flag(material))
 				if(materials.get_material_amount(valid_candidate) >= amount_needed)
@@ -149,13 +147,13 @@
 		var/max_stack_amount = initial(stack_item.max_amount)
 		var/amount = initial(stack_item.amount)
 		while(amount > max_stack_amount)
-			var/obj/item/stack/new_stack = new stack_item(null, max_stack_amount)
+			var/obj/item/stack/new_stack = new stack_item(drop_location(), max_stack_amount)
 			if(!send_resource(new_stack, dir))
 				withheld = new_stack
 			amount -= max_stack_amount
-		created = new stack_item(null, amount)
+		created = new stack_item(drop_location(), amount)
 	else
-		created = new design.build_path(null)
+		created = design.create_result(drop_location(), materials_needed)
 		split_materials_uniformly(materials_needed, target_object = created)
 	if(isitem(created))
 		created.pixel_x = created.base_pixel_x + rand(-6, 6)

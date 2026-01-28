@@ -392,13 +392,12 @@
 		if(!use_biomass(design.materials, amount))
 			return FALSE
 
+		var/drop_location = drop_location()
 		if(istype(design.build_path, /obj/item/stack/sheet))
-			new design.build_path(drop_location(), amount)
-
+			design.create_result(drop_location, amount = amount)
 		else
-			var/drop_location = drop_location()
 			for(var/i in 1 to amount)
-				new design.build_path(drop_location)
+				design.create_result(drop_location)
 
 	return TRUE
 
