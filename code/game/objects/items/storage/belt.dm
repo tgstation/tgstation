@@ -860,7 +860,7 @@
 
 /obj/item/storage/belt/sheath/ninja
 	name = "energy katana sheath"
-	desc = "A high tech katana sheath that allows for quick blade movements"
+	desc = "A high tech katana sheath that allows for quick blade movements."
 	icon_state = "ninja_sheath"
 	inhand_icon_state = "ninja_sheath"
 	worn_icon_state = "ninja_sheath"
@@ -869,7 +869,7 @@
 
 /obj/item/storage/belt/sheath/hanzo_katana
 	name = "hanzo katana sheath"
-	desc = "A normal black sheath meant to house the legendary hanzo steel"
+	desc = "A normal black sheath meant to house the legendary hanzo steel."
 	icon_state = "hanzo_sheath"
 	inhand_icon_state = "hanzo_sheath"
 	worn_icon_state = "hanzo_sheath"
