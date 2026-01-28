@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - rscadd: "Added the ability to modify sabre sheaths into gun-powered sheaths, making their counterattacks much more potent at the risk of great personal harm on failure, especially if you have a weak, fleshy arm."
