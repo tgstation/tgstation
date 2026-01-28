@@ -32,6 +32,9 @@
 	/// List of planes we apply our filters to.
 	VAR_PRIVATE/list/planes
 
+	/// Check every few seconds if we lost our hearing, disable sight_bypass if so (turning us really blind).
+	COOLDOWN_DECLARE(deafness_check)
+
 /datum/component/echolocation/Initialize(
 	echo_range = src.echo_range,
 	image_expiry_time = src.image_expiry_time,
@@ -83,7 +86,8 @@
 	src.fade_out_time = fade_out_time
 
 	ADD_TRAIT(echolocator, TRAIT_ECHOLOCATOR, ECHOLOCATION_TRAIT)
-	ADD_TRAIT(echolocator, TRAIT_SIGHT_BYPASS, ECHOLOCATION_TRAIT)
+	if(echolocator.can_hear())
+		ADD_TRAIT(echolocator, TRAIT_SIGHT_BYPASS, ECHOLOCATION_TRAIT)
 	echolocator.become_blind(ECHOLOCATION_TRAIT)
 	echolocator.overlay_fullscreen(ECHOLOCATION_TRAIT, /atom/movable/screen/fullscreen/echo, echo_icon)
 	echolocator.apply_status_effect(/datum/status_effect/grouped/see_no_names, ECHOLOCATION_TRAIT)
@@ -122,8 +126,13 @@
 
 /datum/component/echolocation/process()
 	var/mob/living/echolocator = parent
-	if(echolocator.stat == DEAD) // or deaf? maybe...
+	if(echolocator.stat == DEAD)
 		return
+	if(echolocator.can_hear()) // i'd like to make this a signal_trait check but deafness isn't only tied to the trait
+		ADD_TRAIT(echolocator, TRAIT_SIGHT_BYPASS, ECHOLOCATION_TRAIT)
+	else
+		REMOVE_TRAIT(echolocator, TRAIT_SIGHT_BYPASS, ECHOLOCATION_TRAIT)
+	COOLDOWN_START(src, deafness_check, 0. SECONDS)
 	echolocate()
 
 /datum/component/echolocation/proc/echolocate()
