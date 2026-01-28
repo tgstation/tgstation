@@ -519,15 +519,11 @@
 /datum/transport_controller/linear/tram/proc/set_status_code(code, value)
 	if(code != DOORS_READY)
 		log_transport("TC: [specific_transport_id] status change [value ? "+" : "-"][english_list(bitfield_to_list(code, TRANSPORT_FLAGS))].")
-	switch(value)
-		if(TRUE)
-			controller_status |= code
-		if(FALSE)
-			controller_status &= ~code
-		else
-			stack_trace("Transport controller received invalid status code request [code]/[value]")
-			return
 
+	if(value)
+		controller_status |= code
+	else
+		controller_status &= ~code
 	send_transport_active_signal()
 
 /datum/transport_controller/linear/tram/proc/send_transport_active_signal()

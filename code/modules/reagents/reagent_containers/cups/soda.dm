@@ -22,6 +22,12 @@
 	throwforce = 12 // set to 0 upon being opened. Have you ever been domed by a soda can? Those things fucking hurt
 	/// If the can hasn't been opened yet, this is the measure of how fizzed up it is from being shaken or thrown around. When opened, this is rolled as a percentage chance to burst
 	var/fizziness = 0
+	/// Have we been sealed with tape? And if so, what color is it?
+	var/tape_color = null
+	/// Color of our fuse, if any
+	var/fuse_color = null
+	/// Timer for our explosion
+	var/fuse_timer = null
 
 /obj/item/reagent_containers/cup/soda_cans/Initialize(mapload, vol)
 	. = ..()
@@ -39,7 +45,7 @@
 		H.visible_message(span_warning("[H] is trying to take a big sip from [src]... The can is empty!"))
 		return SHAME
 	if(!is_drainable())
-		open_soda()
+		open_soda(H)
 		sleep(1 SECONDS)
 	H.visible_message(span_suicide("[H] takes a big sip from [src]! It looks like [H.p_theyre()] trying to commit suicide!"))
 	playsound(H,'sound/items/drink.ogg', 80, TRUE)
@@ -67,24 +73,24 @@
 	return TOXLOSS
 
 /obj/item/reagent_containers/cup/soda_cans/interact_with_atom(atom/target, mob/living/user, list/modifiers)
-	if(iscarbon(target) && !reagents.total_volume && user.combat_mode && user.zone_selected == BODY_ZONE_HEAD)
-		if(target == user)
-			user.visible_message(
-				span_warning("[user] crushes the can of [src] on [user.p_their()] forehead!"),
-				span_notice("You crush the can of [src] on your forehead."),
-			)
-		else
-			user.visible_message(
-				span_warning("[user] crushes the can of [src] on [target]'s forehead!"),
-				span_notice("You crush the can of [src] on [target]'s forehead."),
-			)
-		playsound(src, 'sound/items/weapons/pierce.ogg', rand(10, 50), TRUE)
-		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(target.drop_location())
-		crushed_can.icon_state = icon_state
-		qdel(src)
-		return ITEM_INTERACT_SUCCESS
+	if(!iscarbon(target) || reagents.total_volume || !user.combat_mode || user.zone_selected != BODY_ZONE_HEAD)
+		return ..()
 
-	return ..()
+	if(target == user)
+		user.visible_message(
+			span_warning("[user] crushes the can of [src] on [user.p_their()] forehead!"),
+			span_notice("You crush the can of [src] on your forehead."),
+		)
+	else
+		user.visible_message(
+			span_warning("[user] crushes the can of [src] on [target]'s forehead!"),
+			span_notice("You crush the can of [src] on [target]'s forehead."),
+		)
+	playsound(src, 'sound/items/weapons/pierce.ogg', rand(10, 50), TRUE)
+	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(target.drop_location())
+	crushed_can.icon_state = icon_state
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/cup/soda_cans/bullet_act(obj/projectile/proj)
 	. = ..()
@@ -99,6 +105,14 @@
 	qdel(src)
 
 /obj/item/reagent_containers/cup/soda_cans/proc/open_soda(mob/user)
+	if(tape_color)
+		to_chat(user, "You rip off the tape covering [src]'s hole.")
+		playsound(user, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE)
+		tape_color = null
+		add_container_flags(OPENCONTAINER)
+		update_appearance()
+		return
+
 	if(prob(fizziness))
 		user.visible_message(span_danger("[user] opens [src], and is suddenly sprayed by the fizzing contents!"), span_danger("You pull back the tab of [src], and are suddenly sprayed with a torrent of liquid! Ahhh!!"))
 		burst_soda(user)
@@ -135,9 +149,120 @@
 	reagents.clear_reagents()
 	throwforce = 0
 
+/obj/item/reagent_containers/cup/soda_cans/wirecutter_act(mob/living/user, obj/item/tool)
+	if (!fuse_color)
+		return NONE
+	to_chat(user, span_notice("You snip [src]'s fuse off."))
+	tool.play_tool_sound(src, 50)
+	add_fingerprint(user)
+	fuse_color = null
+	if (!isnull(fuse_timer))
+		deltimer(fuse_timer)
+		fuse_timer = null
+		log_bomber(user, "has disarmed", src)
+	if (heatable)
+		AddElement(/datum/element/reagents_item_heatable)
+	update_appearance()
+
+/obj/item/reagent_containers/cup/soda_cans/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (istype(tool, /obj/item/stack/cable_coil))
+		if (fuse_color)
+			to_chat(user, span_warning("[src] already has a fuse attached to it!"))
+			return ITEM_INTERACT_BLOCKING
+
+		if (tape_color)
+			to_chat(user, span_warning("[src]'s hole is covered up with tape!"))
+			return ITEM_INTERACT_BLOCKING
+
+		if (!is_drainable())
+			to_chat(user, span_warning("[src] hasn't been opened yet!"))
+			return ITEM_INTERACT_BLOCKING
+
+		var/obj/item/stack/cable_coil/coil = tool
+		var/coil_color = GLOB.cable_colors[coil.cable_color]
+		add_fingerprint(user)
+		if (!coil.use(1))
+			return ITEM_INTERACT_BLOCKING
+
+		fuse_color = coil_color
+		// Heating replaced with lighting the fuse
+		RemoveElement(/datum/element/reagents_item_heatable)
+		to_chat(user, span_notice("You attach a fuse to [src]."))
+		log_bomber(user, "attached a fuse to", src)
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	if (istype(tool, /obj/item/stack/sticky_tape))
+		if (tape_color)
+			to_chat(user, span_warning("[src]'s hole is already covered up with tape!"))
+			return ITEM_INTERACT_BLOCKING
+
+		if (!is_drainable())
+			to_chat(user, span_warning("[src] hasn't been opened yet!"))
+			return ITEM_INTERACT_BLOCKING
+
+		var/obj/item/stack/sticky_tape/tape = tool
+		var/list/tape_colors = SSgreyscale.ParseColorString(tape.greyscale_colors)
+		add_fingerprint(user)
+		if (!tape.use(1))
+			return ITEM_INTERACT_BLOCKING
+
+		tape_color = tape_colors[1]
+		to_chat(user, span_notice("You wrap [src] up in [tape]."))
+		reset_container_flags()
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	if (!fuse_color || tool.get_temperature() < FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		return ..()
+
+	if (fuse_timer)
+		to_chat(user, span_warning("[src] is already lit!"))
+		return ITEM_INTERACT_BLOCKING
+
+	add_fingerprint(user)
+	log_bomber(user, "has primed a rigged", src)
+	to_chat(user, span_warning("You light [src]'s fuse!"))
+	fuse_timer = addtimer(CALLBACK(src, PROC_REF(try_detonate)), rand(2 SECONDS, 4 SECONDS))
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/reagent_containers/cup/soda_cans/proc/try_detonate()
+	var/spark_flags = SPARK_ACT_WEAKEN_COMMON
+	if (tape_color)
+		spark_flags |= SPARK_ACT_ENCLOSED
+
+	playsound(src, 'sound/effects/sparks/sparks1.ogg', 50, TRUE)
+	if (reagents.spark_act(0, spark_flags) & SPARK_ACT_DESTRUCTIVE)
+		qdel(src)
+		return
+
+	// Was a dud
+	fuse_color = null
+	tape_color = null
+	add_container_flags(OPENCONTAINER)
+	if (heatable)
+		AddElement(/datum/element/reagents_item_heatable)
+	update_appearance()
+
+/obj/item/reagent_containers/cup/soda_cans/update_overlays()
+	. = ..()
+	if (fuse_color)
+		var/mutable_appearance/fuse_overlay = mutable_appearance('icons/obj/weapons/grenade.dmi', "improvised_grenade_fuse")
+		fuse_overlay.color = fuse_color
+		. += fuse_overlay
+
+	if (tape_color)
+		var/mutable_appearance/tape_overlay = mutable_appearance('icons/obj/weapons/grenade.dmi', "improvised_grenade_tape")
+		tape_overlay.color = tape_color
+		. += tape_overlay
+
+	if (fuse_timer)
+		. += mutable_appearance('icons/obj/weapons/grenade.dmi', "improvised_grenade_active")
+
 /obj/item/reagent_containers/cup/soda_cans/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(. || is_open_container() || !reagents.total_volume) // if it was caught, already opened, or has nothing in it
+	if(. || is_open_container() || !reagents.total_volume || tape_color) // if it was caught, already opened, or has nothing in it
 		return
 
 	fizziness += SODA_FIZZINESS_THROWN
@@ -152,9 +277,14 @@
 	QDEL_IN(src, 1 SECONDS) // give it a second so it can still be logged for the throw impact
 
 /obj/item/reagent_containers/cup/soda_cans/attack_self(mob/user)
+	if(fuse_timer)
+		balloon_alert(user, "the fuse is on fire!")
+		return
+
 	if(!is_drainable())
 		open_soda(user)
 		return
+
 	return ..()
 
 /obj/item/reagent_containers/cup/soda_cans/attack_self_secondary(mob/user)

@@ -1641,4 +1641,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Object is dangerous to mobs buckled to it
 #define TRAIT_DANGEROUS_BUCKLE "dangerous_buckle"
 
+/// Makes the owner desensetized to death, but happy whenever someone gets blown to pieces (as a sacrifice to the necropolis) unless its another worshipper
+#define TRAIT_NECROPOLIS_WORSHIP "necropolis_worship"
+
 // END TRAIT DEFINES
