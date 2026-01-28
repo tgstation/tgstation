@@ -1220,7 +1220,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/colorful_reagent/overdose_start(mob/living/affected_mob)
 	. = ..()
-	metabolization_rate = 0.04 * REM
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 
 /datum/reagent/inverse/colorful_reagent/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
