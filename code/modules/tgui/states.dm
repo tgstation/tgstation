@@ -108,6 +108,8 @@
 			return UI_INTERACTIVE
 	// If the object is obscured, close it.
 	if(viewcheck && !(src_object in view(src)))
+		if(ismovable(src_object.loc) && HAS_TRAIT(src_object.loc, TRAIT_UI_CONTENTS_UNOBSCURED))
+			return shared_living_ui_distance(src_object.loc, viewcheck, allow_tk)
 		return UI_CLOSE
 	var/dist = get_dist(src_object, src)
 	// Open and interact if 1-0 tiles away.

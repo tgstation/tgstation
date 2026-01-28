@@ -1641,4 +1641,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Object is dangerous to mobs buckled to it
 #define TRAIT_DANGEROUS_BUCKLE "dangerous_buckle"
 
+/// Movable treats its contents as unobscured for /mob/living/shared_living_interactivity_checks
+#define TRAIT_UI_CONTENTS_UNOBSCURED "ui_contents_unobscured"
+
 // END TRAIT DEFINES
