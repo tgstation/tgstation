@@ -434,3 +434,18 @@
 	desc = "If you in your carelessness lost the key to your golfcart you can purchase one. Unfortunately not covered by warranty."
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/key/golfcart)
+
+/datum/supply_pack/goody/tier_two_parts
+	name = "Advanced Machine Parts (Tier 2)"
+	desc = "Top of the line consumer stock parts, offered by Nanotrasen's in-house internal requision network."
+	cost = PAYCHECK_CREW * 8
+	contains = list(/obj/item/storage/box/stockparts/advanced)
+
+/datum/supply_pack/goody/offbrand_powerdrill
+	name = "Offbranf Powertoolz" // Intentional Typo
+	desc = "These power tools looks similar to the ones Nanotrasen's researching, and appears to function to the same specifications. However, it seems they neglected to test them as well as we would. Buyer beware."
+	cost = PAYCHECK_CREW * 14
+	contains = list(
+		/obj/item/screwdriver/power/offbrand,
+		/obj/item/crowbar/power/offbrand,
+		)

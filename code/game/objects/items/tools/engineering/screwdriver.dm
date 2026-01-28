@@ -153,6 +153,31 @@
 	playsound(loc, 'sound/items/tools/drill_use.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
+#define DRILL_INTEGRITY 30
+
+/obj/item/screwdriver/power/offbrand
+	name = "hand-e drill"
+	desc = "By all accounts, it looks and feels like an offbrand power drill. ...With the added feature of being a fire hazard."
+	icon_state = "drill_offbrand"
+	max_integrity = DRILL_INTEGRITY
+
+/obj/item/screwdriver/power/offbrand/tool_use_check(mob/living/user, amount, heat_required)
+	. = ..()
+	if(prob(20))
+		do_sparks(1, FALSE, src)
+	if(prob(5))
+		to_chat(user, "[span_warning("[src] overheats and burns you!")]")
+		user.adjust_fire_loss(amount = 1, forced = TRUE)
+		take_damage(1)
+
+/obj/item/screwdriver/power/offbrand/atom_break(damage_flag)
+	. = ..()
+	new /obj/effect/decal/cleanable/molten_object(drop_location())
+	visible_message(span_danger("[src] melts into molten plastic!"))
+	qdel(src)
+
+#undef DRILL_INTEGRITY
+
 /obj/item/screwdriver/cyborg
 	name = "automated screwdriver"
 	desc = "A powerful automated screwdriver, designed to be both precise and quick."
