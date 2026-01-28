@@ -1,0 +1,11 @@
+author: "Ezel, Toriate"
+delete-after: True
+changes:
+  - rscadd: "you can now craft katana sheaths with 3 leather"
+  - balance: "Energy katana and hanzo katana and the normal katana now comes in a sheath this allows them to counterattack aswell"
+  - balance: "Normal katanas aren't a huge item anymore but instead bulky this will allow them to be stored in the suspicous dufflebag/bag of holding"
+  - balance: "Toy katana is now bulky too but comes in a sheath that can't counterattack but looks like the normal katana's one as metabreaker"
+  - balance: "Normal and hanzo katana can't be wielded on your back or belt anymore without a sheath"
+  - balance: "nukie base gets a katana with a sheath which can be stored now but still force 20"
+  - map: "Most maps now include the katana sheaths if premapped in."
+  - image: "energy katana sheath and katana sheaths by  Toriate"
