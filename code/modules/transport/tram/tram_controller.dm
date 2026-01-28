@@ -537,7 +537,7 @@
 		controller_status |= code
 	else
 		controller_status &= ~code
-	send_transport_active_signal()
+	send_transport_status_update()
 
 /datum/transport_controller/linear/tram/proc/send_transport_status_update()
 	SEND_SIGNAL(SStransport, COMSIG_TRANSPORT_UPDATED, src, controller_active, controller_status, travel_direction, destination_platform)
