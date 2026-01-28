@@ -16,6 +16,43 @@
 		edge_overlay.pixel_z = -parent_movable.pixel_y - parent_movable.pixel_z
 		overlays += edge_overlay
 
+///Applies a limit on the number of reagents that can be taken in
+/datum/component/plumbing/simple_demand/distinct_reagent_cap
+	///The number of distinct of reagents we can take in
+	VAR_PRIVATE/distinct_reagent_cap
+
+/datum/component/plumbing/simple_demand/distinct_reagent_cap/Initialize(ducting_layer, distinct_reagent_cap)
+	. = ..()
+	src.distinct_reagent_cap = distinct_reagent_cap
+
+/datum/component/plumbing/simple_demand/distinct_reagent_cap/send_request(dir)
+	//find our ductnet to draw reagents from
+	var/datum/ductnet/net = net(dir)
+	if(!net)
+		return
+	net.pipeline.my_atom = parent
+	for(var/obj/machinery/duct/pipe as anything in net.ducts)
+		if(pipe.neighbours[parent] == dir)
+			net.pipeline.my_atom = pipe
+			break
+
+	//compute how many reagents to draw
+	var/datum/reagents/ductnet = net.pipeline
+	var/list/datum/reagent/reagent_list = list()
+	for(var/datum/reagent/target as anything in reagents.reagent_list)
+		reagent_list += target.type
+	for(var/datum/reagent/target as anything in ductnet.reagent_list)
+		reagent_list |= target.type
+	if(reagent_list.len > distinct_reagent_cap)
+		reagent_list.Cut(distinct_reagent_cap + 1)
+	if(!reagent_list.len)
+		return
+
+	//draw in the actual reagents
+	var/amount_per_reagent = round(MACHINE_REAGENT_TRANSFER / reagent_list.len, CHEMICAL_VOLUME_ROUNDING)
+	for(var/datum/reagent/request as anything in reagent_list)
+		. += ductnet.trans_to(reagents, amount_per_reagent, target_id = request, no_react = TRUE)
+
 ///has one pipe output that only supplies. example is liquid pump and manual input pipe
 /datum/component/plumbing/simple_supply
 	supply_connects = SOUTH
