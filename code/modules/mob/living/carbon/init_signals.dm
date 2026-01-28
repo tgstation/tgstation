@@ -142,6 +142,6 @@
 
 	cure_trauma_type(/datum/brain_trauma/severe/split_personality, TRAUMA_LIMIT_ABSOLUTE)
 
-/mob/living/carbon/on_deafened(datum/source)
+/mob/living/carbon/on_hearing_loss(datum/source)
 	. = ..()
 	breathing_loop.stop()
