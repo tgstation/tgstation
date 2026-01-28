@@ -10,7 +10,8 @@
 /// Sets the custom materials for an atom. This is what you want to call, since most of the ones below are mainly internal.
 /atom/proc/set_custom_materials(list/materials, multiplier = 1)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	if((custom_materials == materials) && multiplier == 1) //Easy way to know no changes are being made.
+	// Easy way to know no changes are being made.
+	if((custom_materials == materials) && multiplier == 1)
 		return
 
 	var/replace_mats = length(materials)
@@ -55,7 +56,7 @@
 		var/list/material_effects = get_material_effects_list(materials)
 		finalize_material_effects(material_effects)
 
-	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials)
+	custom_materials = SSmaterials.get_material_set_cache(materials)
 
 /// Proc responsible for removing material effects when setting materials.
 /atom/proc/remove_material_effects(replace_mats = TRUE)
@@ -74,7 +75,7 @@
 	var/list/material_effects = list()
 	var/index = 1
 	for(var/current_material in materials)
-		var/datum/material/material = GET_MATERIAL_REF(current_material)
+		var/datum/material/material = SSmaterials.get_material(current_material)
 		material_effects[material] = list(
 			MATERIAL_LIST_OPTIMAL_AMOUNT = OPTIMAL_COST(materials[current_material] * material_modifier),
 			MATERIAL_LIST_MULTIPLIER = get_material_multiplier(material, materials, index),
@@ -92,7 +93,7 @@
  * be 1 if below 1. Just don't return negative values.
  */
 /atom/proc/get_material_multiplier(datum/material/custom_material, list/materials, index)
-	return 1/length(materials)
+	return 1 / length(materials)
 
 ///Called by apply_material_effects(). It ACTUALLY handles applying effects common to all atoms (depending on material flags)
 /atom/proc/finalize_material_effects(list/materials)
@@ -116,8 +117,6 @@
 			gather_material_color(custom_material, colors, mat_amount, multicolor = mat_length > 1)
 			var/added_alpha = custom_material.alpha * (custom_material.alpha / 255)
 			total_alpha += GET_MATERIAL_MODIFIER(added_alpha, multiplier)
-		if(custom_material.beauty_modifier)
-			AddElement(/datum/element/beauty, custom_material.beauty_modifier * mat_amount)
 
 	apply_main_material_effects(main_material, main_mat_amount, main_mat_mult)
 
@@ -213,15 +212,19 @@
 	if(!config_type)
 		return
 	for(var/datum/greyscale_config/path as anything in subtypesof(config_type))
-		if(mat_type != initial(path.material_skin))
-			continue
-		return path
+		if(mat_type == initial(path.material_skin))
+			return path
 
 ///Apply material effects of a single material.
 /atom/proc/apply_single_mat_effect(datum/material/material, amount, multiplier)
 	SHOULD_CALL_PARENT(TRUE)
+
+	if(material.beauty_modifier)
+		AddElement(/datum/element/beauty, material.beauty_modifier * amount)
+
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || !uses_integrity)
 		return
+
 	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
 	modify_max_integrity(ceil(max_integrity * integrity_mod))
 	var/list/armor_mods = material.get_armor_modifiers(multiplier)
@@ -230,7 +233,8 @@
 ///A proc for material effects that only the main material (which the atom's primarly composed of) should apply.
 /atom/proc/apply_main_material_effects(datum/material/main_material, amount, multipier)
 	SHOULD_CALL_PARENT(TRUE)
-	if(main_material.texture_layer_icon_state && material_flags & MATERIAL_COLOR)
+
+	if(main_material.texture_layer_icon_state && (material_flags & MATERIAL_COLOR))
 		ADD_KEEP_TOGETHER(src, MATERIAL_SOURCE(main_material))
 		add_filter("material_texture_[main_material.name]", 1, layering_filter(icon = main_material.cached_texture_filter_icon, blend_mode = BLEND_INSET_OVERLAY))
 
@@ -323,7 +327,7 @@
 
 	var/list/cached_materials = custom_materials
 	for(var/mat in cached_materials)
-		var/datum/material/material = GET_MATERIAL_REF(mat)
+		var/datum/material/material = SSmaterials.get_material(mat)
 		var/list/material_comp = material.return_composition(cached_materials[mat], flags)
 		for(var/comp_mat in material_comp)
 			.[comp_mat] += material_comp[comp_mat]
@@ -344,7 +348,7 @@
 	for(var/current_material in cached_materials)
 		if(cached_materials[current_material] < mat_amount)
 			continue
-		var/datum/material/material = GET_MATERIAL_REF(current_material)
+		var/datum/material/material = SSmaterials.get_material(current_material)
 		if(!istype(material, required_material))
 			continue
 		LAZYSET(materials_of_type, material, cached_materials[current_material])
@@ -352,42 +356,10 @@
 	return materials_of_type
 
 /**
- * Fetches a list of all of the materials this object has with the desired material category.
- *
- * Arguments:
- * - category: The category to check for
- * - any_flags: Any bitflags that must be present for the category
- * - all_flags: All bitflags that must be present for the category
- * - no_flags: Any bitflags that must not be present for the category
- * - mat_amount: The minimum amount of materials that must be present
- */
-/atom/proc/has_material_category(category, any_flags=0, all_flags=0, no_flags=0, mat_amount=0)
-	var/list/cached_materials = custom_materials
-	if(!length(cached_materials))
-		return null
-
-	var/materials_of_category
-	for(var/current_material in cached_materials)
-		if(cached_materials[current_material] < mat_amount)
-			continue
-		var/datum/material/material = GET_MATERIAL_REF(current_material)
-		var/category_flags = material?.categories[category]
-		if(isnull(category_flags))
-			continue
-		if(any_flags && !(category_flags & any_flags))
-			continue
-		if(all_flags && (all_flags != (category_flags & all_flags)))
-			continue
-		if(no_flags && (category_flags & no_flags))
-			continue
-		LAZYSET(materials_of_category, material, cached_materials[current_material])
-	return materials_of_category
-
-/**
  * Gets the most common material in the object.
  */
 /atom/proc/get_master_material()
-	return length(custom_materials) ? GET_MATERIAL_REF(custom_materials[1]) : null //materials are sorted by amount, the first is always the main one
+	return length(custom_materials) ? SSmaterials.get_material(custom_materials[1]) : null //materials are sorted by amount, the first is always the main one
 
 /**
  * Gets the total amount of materials in this atom.

@@ -50,7 +50,7 @@
 /obj/structure/statue/atom_deconstruct(disassembled = TRUE)
 	var/amount_mod = disassembled ? 0 : -2
 	for(var/mat in custom_materials)
-		var/datum/material/custom_material = GET_MATERIAL_REF(mat)
+		var/datum/material/custom_material = SSmaterials.get_material(mat)
 		var/amount = max(0,round(custom_materials[mat]/SHEET_MATERIAL_AMOUNT) + amount_mod)
 		if(amount > 0)
 			new custom_material.sheet_type(drop_location(), amount)

@@ -22,7 +22,7 @@
 	print_sound = new(src,  FALSE)
 	materials = new ( \
 		src, \
-		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
+		SSmaterials.flat_materials, \
 		0, \
 		MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, \
 	)
@@ -115,12 +115,11 @@
 	var/list/materials_needed = list()
 	for(var/material in design.materials)
 		var/amount_needed = design.materials[material]
-		if(istext(material)) // category
-			for(var/datum/material/valid_candidate as anything in SSmaterials.materials_by_category[material])
-				if(materials.get_material_amount(valid_candidate) < amount_needed)
-					continue
-				material = valid_candidate
-				break
+		if(istext(material)) // Material flag(s)
+			for(var/datum/material/valid_candidate as anything in SSmaterials.get_materials_by_flag(material))
+				if(materials.get_material_amount(valid_candidate) >= amount_needed)
+					material = valid_candidate
+					break
 		if(isnull(material))
 			return
 		materials_needed[material] = amount_needed

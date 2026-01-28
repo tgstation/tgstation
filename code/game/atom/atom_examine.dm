@@ -114,7 +114,7 @@
 		return
 	var/mats_list = list()
 	for(var/custom_material in custom_materials)
-		var/datum/material/current_material = GET_MATERIAL_REF(custom_material)
+		var/datum/material/current_material = SSmaterials.get_material(custom_material)
 		mats_list += span_tooltip("It is made out of [current_material.name].", current_material.name)
 	. += "made of [english_list(mats_list)]"
 

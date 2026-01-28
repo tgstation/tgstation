@@ -34,7 +34,7 @@
 /obj/machinery/power/apc/proc/fork_outlet_act(mob/living/user, obj/item/tool)
 	var/metal = 0
 	var/shock_source = null
-	metal += LAZYACCESS(tool.custom_materials, GET_MATERIAL_REF(/datum/material/iron))//This prevents wooden rolling pins from shocking the user
+	metal += LAZYACCESS(tool.custom_materials, SSmaterials.get_material(/datum/material/iron))//This prevents wooden rolling pins from shocking the user
 
 	if(cell || terminal) //The mob gets shocked by whichever powersource has the most electricity
 		if(cell && terminal)

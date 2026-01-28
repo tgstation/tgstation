@@ -461,7 +461,7 @@
 
 		data["name"] = module.display_name
 		data["desc"] = "A module that has been loaded in by [user]."
-		data["materials"] = list(GET_MATERIAL_REF(/datum/material/glass) = module.circuit_size * cost_per_component)
+		data["materials"] = list(SSmaterials.get_material(/datum/material/glass) = module.circuit_size * cost_per_component)
 	else if(istype(weapon, /obj/item/integrated_circuit))
 		var/obj/item/integrated_circuit/integrated_circuit = weapon
 		if(HAS_TRAIT(integrated_circuit, TRAIT_CIRCUIT_UNDUPABLE))
@@ -473,7 +473,7 @@
 		data["desc"] = "An integrated circuit that has been loaded in by [user]."
 
 		var/datum/design/integrated_circuit/circuit_design = SSresearch.techweb_design_by_id("integrated_circuit")
-		var/materials = list(GET_MATERIAL_REF(/datum/material/glass) = integrated_circuit.current_size * cost_per_component)
+		var/materials = list(SSmaterials.get_material(/datum/material/glass) = integrated_circuit.current_size * cost_per_component)
 		for(var/material_type in circuit_design.materials)
 			materials[material_type] += circuit_design.materials[material_type]
 

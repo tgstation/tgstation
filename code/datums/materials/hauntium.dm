@@ -5,12 +5,7 @@
 	greyscale_color = "#FFFFFF"
 	alpha = 100
 	starlight_color = COLOR_ALMOST_BLACK
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_FABRIC // Metal for crafting, and fabric because bedsheets and ghosts... you get it.
 	sheet_type = /obj/item/stack/sheet/hauntium
 	value_per_unit = 0.05
 	beauty_modifier = 0.25

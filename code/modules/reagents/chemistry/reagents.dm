@@ -95,7 +95,7 @@
 	. = ..()
 
 	if(material)
-		material = GET_MATERIAL_REF(material)
+		material = SSmaterials.get_material(material)
 	if(glass_price)
 		AddElement(/datum/element/venue_price, glass_price)
 	if(!mass)

@@ -43,7 +43,7 @@
 
 	var/obj/item/I = O
 	var/list/mat_comp = I.get_material_composition()
-	var/datum/material/mat_ref = ispath(material_id) ? locate(material_id) in mat_comp : GET_MATERIAL_REF(material_id)
+	var/datum/material/mat_ref = ispath(material_id) ? locate(material_id) in mat_comp : SSmaterials.get_material(material_id)
 	var/amount = mat_comp[mat_ref]
 	if(!amount)
 		return 0

@@ -730,7 +730,7 @@
 	desc = "A royal knight's favorite garments. Can be trimmed by any friendly person."
 	id = "knight_armour"
 	build_type = AUTOLATHE
-	materials = list(MAT_CATEGORY_ITEM_MATERIAL = SHEET_MATERIAL_AMOUNT*5)
+	materials = list("[ITEM_MATERIAL_CLASSES]" = SHEET_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/clothing/suit/armor/riot/knight/greyscale
 	category = list(RND_CATEGORY_IMPORTED)
 
@@ -739,7 +739,7 @@
 	desc = "A royal knight's favorite hat. If you hold it upside down it's actually a bucket."
 	id = "knight_helmet"
 	build_type = AUTOLATHE
-	materials = list(MAT_CATEGORY_ITEM_MATERIAL = SHEET_MATERIAL_AMOUNT*2.5)
+	materials = list("[ITEM_MATERIAL_CLASSES]" = SHEET_MATERIAL_AMOUNT*2.5)
 	build_path = /obj/item/clothing/head/helmet/knight/greyscale
 	category = list(RND_CATEGORY_IMPORTED)
 

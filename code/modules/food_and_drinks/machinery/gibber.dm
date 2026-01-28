@@ -279,7 +279,7 @@
 /obj/machinery/gibber/proc/spawn_meat(mob/living/victim, meat_type = /obj/item/food/meat/slab, list/datum/disease/diseases)
 	var/obj/item/food/meat/meat = new meat_type(src, blood_dna_info)
 	meat.name = "[victim.real_name]'s [meat.name]"
-	meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, victim) = 4 * SHEET_MATERIAL_AMOUNT))
+	meat.set_custom_materials(list(SSmaterials.get_material(/datum/material/meat/mob_meat, victim) = 4 * SHEET_MATERIAL_AMOUNT))
 	if (!istype(meat))
 		return
 	meat.subjectname = victim.real_name

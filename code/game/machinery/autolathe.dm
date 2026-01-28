@@ -36,7 +36,7 @@
 	print_sound = new(src,  FALSE)
 	materials = new ( \
 		src, \
-		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
+		SSmaterials.flat_materials, \
 		0, \
 		MATCONTAINER_EXAMINE|MATCONTAINER_ACCEPT_ALLOYS, \
 		container_signals = list(COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/autolathe, AfterMaterialInsert)) \
@@ -215,11 +215,13 @@
 	if(action != "make")
 		stack_trace("unknown autolathe ui_act: [action]")
 		return
+
 	if(disabled)
 		say("Unable to print, voltage mismatch in internal wiring.")
 		return
+
 	if(busy)
-		say("currently printing.")
+		say("Currently printing.")
 		return
 
 	//validate design
@@ -250,30 +252,37 @@
 
 	//check for materials required. For custom material items decode their required materials
 	var/list/materials_needed = list()
+	var/mat_choice = FALSE
 	for(var/material in design.materials)
 		var/amount_needed = design.materials[material]
-		if(istext(material)) // category
-			var/list/choices = list()
-			for(var/datum/material/valid_candidate as anything in SSmaterials.materials_by_category[material])
-				if(materials.get_material_amount(valid_candidate) < (amount_needed + materials_needed[material]))
-					continue
+		if(!istext(material)) // Material flag(s)
+			if(isnull(material))
+				CRASH("Autolathe ui_act got passed an invalid material id: [material]")
+			materials_needed[material] += amount_needed
+			continue
+
+		var/list/choices = list()
+		for(var/datum/material/valid_candidate as anything in SSmaterials.get_materials_by_flag(material))
+			if(materials.get_material_amount(valid_candidate) >= (amount_needed + materials_needed[material]))
 				choices[valid_candidate.name] = valid_candidate
-			if(!length(choices))
-				say("No valid materials with applicable amounts detected for design.")
-				return
-			var/chosen = tgui_input_list(
-				ui.user,
-				"Select the material to use",
-				"Material Selection",
-				sort_list(choices),
-			)
-			if(isnull(chosen))
-				return // user cancelled
-			material = choices[chosen]
+
+		if(!length(choices))
+			say("No valid materials with applicable amounts detected for design.")
+			return
+
+		var/chosen = tgui_input_list(
+			ui.user,
+			"Select the material to use",
+			"Material Selection",
+			sort_list(choices),
+		)
+		if(isnull(chosen))
+			return // user cancelled
+
+		material = choices[chosen]
 
 		if(isnull(material))
-			stack_trace("got passed an invalid material id: [material]")
-			return
+			CRASH("A player chose an invalid custom material in autolathe ui_act: [material]")
 		materials_needed[material] += amount_needed
 
 	//checks for available materials
@@ -286,6 +295,7 @@
 	var/charge_per_item = 0
 	for(var/material in design.materials)
 		charge_per_item += design.materials[material]
+
 	charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * material_cost_coefficient * active_power_usage)
 	var/build_time_per_item = (design.construction_time * design.lathe_time_factor) ** 0.8
 
@@ -304,7 +314,7 @@
 		target_location = get_turf(src)
 
 	//give achievement for using unique material
-	if(design.materials[MAT_CATEGORY_ITEM_MATERIAL])
+	if(mat_choice)
 		for(var/datum/material/material in materials_needed)
 			if(!istype(material, /datum/material/glass) && !istype(material, /datum/material/iron))
 				ui.user.client.give_award(/datum/award/achievement/misc/getting_an_upgrade, ui.user)

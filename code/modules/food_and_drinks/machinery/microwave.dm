@@ -752,7 +752,7 @@
 			else
 				dirty++
 
-		metal_amount += (cooked_item.custom_materials?[GET_MATERIAL_REF(/datum/material/iron)] || 0)
+		metal_amount += (cooked_item.custom_materials?[SSmaterials.get_material(/datum/material/iron)] || 0)
 
 	if(cursed_chef && (metal_amount || prob(5)))  // If we're unlucky and have metal, we're guaranteed to explode
 		spark()

@@ -14,59 +14,69 @@
 /// Maximum amount of cable in a coil
 #define MAXCOIL 30
 
-//Category of materials
-/// Can this material be stored in the ore silo
-#define MAT_CATEGORY_SILO "silo capable"
-/// Hard materials, such as iron or silver
-#define MAT_CATEGORY_RIGID "rigid material"
-/// Materials that can be used to craft items
-#define MAT_CATEGORY_ITEM_MATERIAL "item material"
-/**
- * Materials that can also be used to craft items for designs that require two custom mats.
- * This is mainly a work around to the fact we can't (easily) have the same category show
- * multiple times in a list with different values, because list access operator [] will fetch the
- * top-most value.
- */
-#define MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY "item material complementary"
-
-/// Use this flag on TRUE if you want the basic recipes
-#define MAT_CATEGORY_BASE_RECIPES "basic recipes"
-
-///Flags for map loaded materials
+// Flags for material loading
 /// Used to make a material initialize at roundstart.
-#define MATERIAL_INIT_MAPLOAD (1<<0)
+#define MATERIAL_INIT_MAPLOAD (1 << 0)
 /// Used to make a material type able to be instantiated on demand after roundstart.
-#define MATERIAL_INIT_BESPOKE (1<<1)
+#define MATERIAL_INIT_BESPOKE (1 << 1)
 
-//Material Container Flags.
+// Flags for material behaviors
+// Negative values can be used to instead act as a blacklist
+/// This material can be stored in an ore silo
+#define MATERIAL_SILO_STORED (1 << 0)
+/// This material can be used in basic recipes, such as chairs/toilets/tiles
+#define MATERIAL_BASIC_RECIPES (1 << 1)
+/// This material counts as a rigid enough solid to be used to craft tough objects like carving blocks or air tanks
+#define MATERIAL_CLASS_RIGID (1 << 2)
+/// The opposite of rigid, this means that the material cannot hold a solid form (like sand) and cannot be used in item crafting
+#define MATERIAL_CLASS_AMORPHOUS (1 << 3)
+/// This material is a metal and can be used in construction as one
+#define MATERIAL_CLASS_METAL (1 << 4)
+/// This material is a fabric and can be used to make clothing
+#define MATERIAL_CLASS_FABRIC (1 << 5)
+/// This material is a crystal and can be used to make windows or shards
+#define MATERIAL_CLASS_CRYSTAL (1 << 6)
+/// This is an organic material, meaning its probably alive in some way. Or was alive at one point, rather.
+#define MATERIAL_CLASS_ORGANIC (1 << 7)
+/// This is a polymer of some sorts
+#define MATERIAL_CLASS_POLYMER (1 << 8)
+
+/// Wildcard flag for recipes and alike to allow any material to be used
+#define MATERIAL_CLASS_ANY 0
+
+/// All material class flags usable for generic crafting
+#define ITEM_MATERIAL_CLASSES (MATERIAL_CLASS_METAL | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_POLYMER | MATERIAL_CLASS_RIGID)
+/// All material type class flags
+#define MATERIAL_TYPE_CLASSES (MATERIAL_CLASS_METAL | MATERIAL_CLASS_FABRIC | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_ORGANIC | MATERIAL_CLASS_POLYMER)
+
+// Material Container Flags.
 ///If the container shows the amount of contained materials on examine.
-#define MATCONTAINER_EXAMINE (1<<0)
+#define MATCONTAINER_EXAMINE (1 << 0)
 ///If the container cannot have materials inserted through attackby().
-#define MATCONTAINER_NO_INSERT (1<<1)
+#define MATCONTAINER_NO_INSERT (1 << 1)
 ///If the user can insert mats into the container despite the intent.
-#define MATCONTAINER_ANY_INTENT (1<<2)
+#define MATCONTAINER_ANY_INTENT (1 << 2)
 ///If the user won't receive a warning when attacking the container with an unallowed item.
-#define MATCONTAINER_SILENT (1<<3)
+#define MATCONTAINER_SILENT (1 << 3)
 ///Alloys won't be disassembled in its components when inserted.
-#define MATCONTAINER_ACCEPT_ALLOYS (1<<4)
+#define MATCONTAINER_ACCEPT_ALLOYS (1 << 4)
 
+// Atom material behavior flags
 /// Whether a material's mechanical effects should apply to the atom. This is necessary for other flags to work.
-#define MATERIAL_EFFECTS (1<<0)
+#define MATERIAL_EFFECTS (1 << 0)
 /// Applies the material color to the atom's color. Deprecated, use MATERIAL_GREYSCALE instead
-#define MATERIAL_COLOR (1<<1)
+#define MATERIAL_COLOR (1 << 1)
 /// Whether a prefix describing the material should be added to the name
-#define MATERIAL_ADD_PREFIX (1<<2)
+#define MATERIAL_ADD_PREFIX (1 << 2)
 /// Whether a material should affect the stats of the atom
-#define MATERIAL_AFFECT_STATISTICS (1<<3)
+#define MATERIAL_AFFECT_STATISTICS (1 << 3)
 /// Applies the material greyscale color to the atom's greyscale color.
-#define MATERIAL_GREYSCALE (1<<4)
+#define MATERIAL_GREYSCALE (1 << 4)
 /// Materials like plasteel and alien alloy won't apply slowdowns.
-#define MATERIAL_NO_SLOWDOWN (1<<5)
-/**
- * This item is not affected by the standard food-related effects of materials like meat and pizza.
- * Necessary for the edible component counterparts, on_edible_applied() and on_edible_removed()
- */
-#define MATERIAL_NO_EDIBILITY (1<<6)
+#define MATERIAL_NO_SLOWDOWN (1 << 5)
+/// This item is not affected by the standard food-related effects of materials like meat and pizza.
+/// Necessary for the edible component counterparts, on_edible_applied() and on_edible_removed()
+#define MATERIAL_NO_EDIBILITY (1 << 6)
 
 //Special return values of [/datum/material_container/insert_item]
 /// No material was found inside them item
@@ -76,14 +86,13 @@
 /// The item material type was not accepted or other reasons
 #define MATERIAL_INSERT_ITEM_FAILURE 0
 
-
 // Slowdown values.
 /// The slowdown value of one [SHEET_MATERIAL_AMOUNT] of plasteel.
 #define MATERIAL_SLOWDOWN_PLASTEEL (0.05)
 /// The slowdown value of one [SHEET_MATERIAL_AMOUNT] of alien alloy.
 #define MATERIAL_SLOWDOWN_ALIEN_ALLOY (0.1)
 
-//Stock market stock values.
+// Stock market stock values.
 /// How much quantity of a material stock exists for common materials like iron & glass.
 #define MATERIAL_QUANTITY_COMMON 5000
 /// How much quantity of a material stock exists for uncommon materials like silver & titanium.
@@ -105,9 +114,9 @@
 /// Is this material only going to spawn once in ore vents? (6% of vents on lavaland)
 #define MATERIAL_RARITY_UNDISCOVERED 1
 
-///The key to access the 'optimal' amount of a material key from its assoc value list.
+/// The key to access the 'optimal' amount of a material key from its assoc value list.
 #define MATERIAL_LIST_OPTIMAL_AMOUNT "optimal_amount"
-///The key to access the multiplier used to selectively control effects and modifiers of a material.
+/// The key to access the multiplier used to selectively control effects and modifiers of a material.
 #define MATERIAL_LIST_MULTIPLIER "multiplier"
-///A macro that ensures some multiplicative modifiers higher than 1 don't become lower than 1 and vice-versa because of the multiplier.
+/// A macro that ensures some multiplicative modifiers higher than 1 don't become lower than 1 and vice-versa because of the multiplier.
 #define GET_MATERIAL_MODIFIER(modifier, multiplier) (modifier >= 1 ? 1 + ((modifier) - 1) * (multiplier) : (modifier)**(multiplier))

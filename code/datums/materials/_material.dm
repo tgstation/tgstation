@@ -6,18 +6,16 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 
 /datum/material
+	abstract_type = /datum/material
 	/// What the material is referred to as IC.
 	var/name = "material"
 	/// A short description of the material. Not used anywhere, yet...
 	var/desc = "its..stuff."
 	/// What the material is indexed by in the SSmaterials.materials list. Defaults to the type of the material.
-	var/id
-
-	/**
-	 * Base color of the material, for items that don't have greyscale configs nor are made of multiple materials. Item isn't changed in color if this is null.
-	 * This can be a RGB or color matrix, but it cannot be RGBA as alpha is automatically filled in.
-	 */
-	var/color
+	var/id = null
+	/// Base color of the material, for items that don't have greyscale configs nor are made of multiple materials. Item isn't changed in color if this is null.
+	/// This can be a RGB or color matrix, but it cannot be RGBA as alpha is automatically filled in.
+	var/color = null
 	/**
 	 * If the color is a color matrix and either the item uses greyscale configs or is made of multiple colored materials. This will be used instead because
 	 * neither greyscale configs nor BlendRGB() support color matrices.
@@ -25,52 +23,52 @@ Simple datum which is instanced once per type and is used for every object of sa
 	 *
 	 * Basically, set this if the color is a color matrix (list)
 	 */
-	var/greyscale_color
+	var/greyscale_color = null
 	/// Base alpha of the material
 	var/alpha = 255
-	///Starlight color of the material
-	///This is the color of light it'll emit if its turf is transparent and over space. Defaults to COLOR_STARLIGHT if not set
-	var/starlight_color
-	///Bitflags that influence how SSmaterials handles this material.
+	/// Starlight color of the material
+	/// This is the color of light it'll emit if its turf is transparent and over space. Defaults to GLOB.starlight_color if not set
+	var/starlight_color = null
+	/// Bitflags that influence how SSmaterials handles this material.
 	var/init_flags = MATERIAL_INIT_MAPLOAD
-	///Materials "Traits". its a map of key = category | Value = Bool. Used to define what it can be used for
-	var/list/categories = list()
-	///The type of sheet this material creates. This should be replaced as soon as possible by greyscale sheets
-	var/sheet_type
+	/// Material behaviors, the bread and butter. Can either be directly defined, or dynamically calculated for alloys
+	var/mat_flags = NONE
+	/// The type of sheet this material creates.
+	var/sheet_type = null
 	/// What type of ore is this material associated with? Used for mining, and not every material has one.
-	var/obj/item/ore_type
-	///This is a modifier for force, and resembles the strength of the material
+	var/obj/item/ore_type = null
+	/// This is a modifier for force, and resembles the strength of the material
 	var/strength_modifier = 1
-	///This is a modifier for integrity, and resembles the strength of the material
+	/// This is a modifier for integrity, and resembles the strength of the material
 	var/integrity_modifier = 1
 
-	///This is the amount of value per 1 unit of the material
+	/// This is the amount of value per 1 unit of the material
 	var/value_per_unit = 0
-	///This is the minimum value of the material, used in the stock market for any mat that isn't set to null
+	/// This is the minimum value of the material, used in the stock market for any mat that isn't set to null
 	var/minimum_value_override = null
-	///Is this material traded on the stock market?
+	/// Is this material traded on the stock market?
 	var/tradable = FALSE
-	///If this material is tradable, what is the base quantity of the material on the stock market?
+	/// If this material is tradable, what is the base quantity of the material on the stock market?
 	var/tradable_base_quantity = 0
 
-	///Armor modifiers, multiplies an items normal armor vars by these amounts.
+	/// Armor modifiers, multiplies an items normal armor vars by these amounts.
 	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1, ACID = 1)
-	///How beautiful is this material per unit.
+	/// How beautiful is this material per unit.
 	var/beauty_modifier = 0
-	///Can be used to override the sound items make, lets add some SLOSHing.
-	var/item_sound_override
-	///Can be used to override the stepsound a turf makes. MORE SLOOOSH
-	var/turf_sound_override
-	///what texture icon state to overlay
-	var/texture_layer_icon_state
-	///a cached icon for the texture filter
-	var/cached_texture_filter_icon
-	///What type of shard the material will shatter to
-	var/obj/item/shard_type
-	///How resistant the material is to rusting when applied to a turf
+	/// Can be used to override the sound items make, lets add some SLOSHing.
+	var/item_sound_override = null
+	/// Can be used to override the stepsound a turf makes. MORE SLOOOSH
+	var/turf_sound_override = null
+	/// What texture icon state to overlay
+	var/texture_layer_icon_state = null
+	/// A cached icon for the texture filter
+	var/icon/cached_texture_filter_icon = null
+	/// What type of shard the material will shatter to
+	var/obj/item/shard_type = null
+	/// How resistant the material is to rusting when applied to a turf
 	var/mat_rust_resistance = RUST_RESISTANCE_ORGANIC
-	///What type of debris the tile will leave behind when shattered.
-	var/obj/effect/decal/debris_type
+	/// What type of debris the tile will leave behind when shattered.
+	var/obj/effect/decal/debris_type = null
 	/// How likely this mineral is to be found in a boulder during mining.
 	var/mineral_rarity = MATERIAL_RARITY_COMMON
 	/// How many points per units of ore does this grant?

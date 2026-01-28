@@ -99,18 +99,16 @@
 	if(LAZYLEN(mat_override))
 		mats_per_unit = mat_override
 	if(LAZYLEN(mats_per_unit))
-		mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(mats_per_unit, mat_amt)
+		mats_per_unit = SSmaterials.get_material_set_cache(mats_per_unit, mat_amt)
 		initialize_materials(mats_per_unit, amount)
 
 	recipes = get_main_recipes().Copy()
 	if(material_type)
-		var/datum/material/what_are_we_made_of = GET_MATERIAL_REF(material_type) //First/main material
-		for(var/category in what_are_we_made_of.categories)
-			switch(category)
-				if(MAT_CATEGORY_BASE_RECIPES)
-					recipes |= SSmaterials.base_stack_recipes.Copy()
-				if(MAT_CATEGORY_RIGID)
-					recipes |= SSmaterials.rigid_stack_recipes.Copy()
+		var/datum/material/our_mat = SSmaterials.get_material(material_type) //First/main material
+		if (our_mat.mat_flags & MATERIAL_BASIC_RECIPES)
+			recipes |= SSmaterials.base_stack_recipes.Copy()
+		if (our_mat.mat_flags & MATERIAL_CLASS_RIGID)
+			recipes |= SSmaterials.rigid_stack_recipes.Copy()
 
 	update_weight()
 	update_appearance()
@@ -491,7 +489,7 @@
 
 		if(isstack(created))
 			var/obj/item/stack/crafted_stack = created
-			crafted_stack.mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(result_mats)
+			crafted_stack.mats_per_unit = SSmaterials.get_material_set_cache(result_mats)
 			update_custom_materials()
 		else
 			created.set_custom_materials(result_mats, recipe.req_amount * multiplier)

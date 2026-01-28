@@ -702,7 +702,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		var/multiplier = 1 / mats_len
 		var/unmodified_weight = weight
 		for(var/mat_type in custom_materials)
-			var/datum/material/material = GET_MATERIAL_REF(mat_type)
+			var/datum/material/material = SSmaterials.get_material(mat_type)
 			unmodified_weight /= GET_MATERIAL_MODIFIER(material.fish_weight_modifier, multiplier)
 		multiplier = unmodified_weight / weight
 		for(var/mat_type in new_mats_list)
@@ -759,7 +759,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		var/multiplier = 1 / length(custom_materials)
 		if(material_flags & MATERIAL_AFFECT_STATISTICS)
 			for(var/current_material in custom_materials)
-				var/datum/material/material = GET_MATERIAL_REF(current_material)
+				var/datum/material/material = SSmaterials.get_material(current_material)
 				force *= GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
 		var/datum/material/master = get_master_material()
 		if(master?.item_sound_override)

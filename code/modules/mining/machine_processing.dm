@@ -152,7 +152,7 @@
 
 	materials = new ( \
 		src, \
-		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
+		SSmaterials.get_materials_by_flag(MATERIAL_SILO_STORED), \
 		INFINITY, \
 		MATCONTAINER_EXAMINE, \
 		allowed_items = accepted_type \
@@ -160,7 +160,7 @@
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter])
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter] = new /datum/techweb/autounlocking/smelter
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter]
-	selected_material = GET_MATERIAL_REF(/datum/material/iron)
+	selected_material = SSmaterials.get_material(/datum/material/iron)
 
 /obj/machinery/mineral/processing_unit/Destroy()
 	QDEL_NULL(proximity_monitor)

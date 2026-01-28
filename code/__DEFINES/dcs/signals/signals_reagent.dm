@@ -21,7 +21,7 @@
 ///from base of [/datum/reagent/proc/on_transfer_creation(reagent, target_holder, new_reagent)]: (datum/reagents/target_holder, datum/reagent/new_reagent)
 #define COMSIG_REAGENT_ON_TRANSFER "reagent_on_transfer"
 
-///from base of [/datum/materials_controller/proc/InitializeMaterial]: (/datum/material)
+///from base of [/datum/materials_controller/proc/initialize_material]: (/datum/material)
 #define COMSIG_MATERIALS_INIT_MAT "SSmaterials_init_mat"
 
 ///from base of [/datum/component/multiple_lives/proc/respawn]: (mob/respawned_mob, gibbed, lives_left)

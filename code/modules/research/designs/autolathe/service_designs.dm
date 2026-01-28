@@ -530,7 +530,7 @@
 	name = "Material Fishing Rod"
 	id = "fishing_rod_material"
 	build_type = AUTOLATHE
-	materials = list(MAT_CATEGORY_ITEM_MATERIAL = SMALL_MATERIAL_AMOUNT * 4)
+	materials = list("[ITEM_MATERIAL_CLASSES]" = SMALL_MATERIAL_AMOUNT * 4)
 	build_path = /obj/item/fishing_rod/material
 	category = list(
 		RND_CATEGORY_INITIAL,
