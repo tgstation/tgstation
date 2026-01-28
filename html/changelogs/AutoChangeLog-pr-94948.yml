@@ -1,0 +1,7 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Plastic surgery can now be done on detached heads."
+  - refactor: "Refactored how disfiguration is handled to be stored on head's side"
+  - bugfix: "Robotic (and other non-huskable) heads no longer become disfigured from husking"
+  - bugfix: "Attaching a head from a husk to a different body no longer permanently turns them into an Unknown."
