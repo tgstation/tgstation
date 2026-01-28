@@ -47,7 +47,7 @@
 
 /obj/machinery/reagent_meter/examine(mob/user)
 	. = ..()
-	. += span_notice("The pipeline has [pipe.net.pipeline.total_volume]u/[pipe.net.pipeline.maximum_volume]u of reagents.")
+	. += span_notice("The pipeline has [pipe.net.pipeline.total_volume]u/[pipe.net.pipeline.maximum_volume]u of reagents at [pipe.net.pipeline.chem_temp]K.")
 	if(pipe.net.pipeline.total_volume)
 		. += span_notice("It contains.")
 		for(var/datum/reagent/reg as anything in pipe.net.pipeline.reagent_list)

@@ -141,6 +141,21 @@
 
 	update_appearance(UPDATE_ICON_STATE)
 
+//Expose reagents to everything on the ducts turf
+/obj/machinery/duct/proc/spill_reagents()
+	PRIVATE_PROC(TRUE)
+
+	var/modifier = 1 / net.ducts.len
+	var/turf/drop = get_turf(src)
+	for(var/atom/thing in drop)
+		//Things below the turf are protected
+		if(HAS_TRAIT(thing, TRAIT_UNDERFLOOR))
+			continue
+		net.pipeline.expose(thing, TOUCH, modifier)
+	net.pipeline.expose(drop, TOUCH, modifier)
+
+	return modifier
+
 ///we disconnect ourself from our neighbours. we also destroy our ductnet and tell our neighbours to make a new one
 /obj/machinery/duct/on_deconstruction()
 	//Drop duct stack
@@ -150,14 +165,7 @@
 	duct_stack.add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
 
 	//Expose reagents to everything on the ducts turf
-	var/modifier = 1 / net.ducts.len
-	var/turf/drop = get_turf(src)
-	for(var/atom/thing in drop)
-		//Things below the turf are protected
-		if(HAS_TRAIT(thing, TRAIT_UNDERFLOOR))
-			continue
-		net.pipeline.expose(thing, TOUCH, modifier)
-	net.pipeline.expose(drop, TOUCH, modifier)
+	spill_reagents()
 
 ///Removes duct from ductnet
 /obj/machinery/duct/proc/disconnect()
@@ -235,11 +243,16 @@
 	if(held_item?.tool_behaviour == TOOL_WRENCH)
 		context[SCREENTIP_CONTEXT_LMB] = "Destroy duct"
 		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/plunger))
+		context[SCREENTIP_CONTEXT_LMB] = "Flush"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/duct/examine(mob/user)
 	. = ..()
 	. += span_notice("Its current color and layer are [GLOB.pipe_color_name[duct_color]] and [GLOB.plumbing_layer_names["[duct_layer]"]]. Use in-hand to change.")
 	. += span_notice("It can be [EXAMINE_HINT("wrenched")] apart.")
+	if(net.pipeline.total_volume)
+		. += span_notice("You can [EXAMINE_HINT("plunge")] out the reagents.")
 
 /obj/machinery/duct/update_icon_state()
 	var/temp_icon = initial(icon_state)
@@ -262,13 +275,30 @@
 	icon_state = temp_icon
 	return ..()
 
+/obj/machinery/duct/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
+	. = ..()
+	while(net.pipeline.total_volume)
+		user.visible_message( \
+		span_notice("[user] plungers the duct."), \
+		span_notice("You plunge the duct."), \
+		span_hear("You hear chemicals gushing.") \
+		)
+
+		if(!do_after(user, 3 SECONDS, src))
+			return ITEM_INTERACT_FAILURE
+
+		net.pipeline.remove_all(spill_reagents(), TRUE)
+
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/duct/wrench_act(mob/living/user, obj/item/wrench) //I can also be the RPD
 	wrench.play_tool_sound(src)
 
 	user.visible_message( \
 	"[user] ununfastens \the [src].", \
 	span_notice("You unfasten \the [src]."), \
-	span_hear("You hear ratcheting."))
+	span_hear("You hear ratcheting.") \
+	)
 
 	deconstruct()
 	return ITEM_INTERACT_SUCCESS
