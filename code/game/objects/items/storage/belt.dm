@@ -837,6 +837,49 @@
 	storage_type = /datum/storage/gladius_belt
 	stored_blade = /obj/item/claymore/gladius
 
+/obj/item/storage/belt/sheath/katana
+	name = "katana sheath"
+	desc = "A sheath that houses the nimble katana."
+	icon_state = "katana_sheath"
+	inhand_icon_state = "katana_sheath"
+	worn_icon_state = "katana_sheath"
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
+	storage_type = /datum/storage/katana_sheath
+	stored_blade = /obj/item/katana
+
+/obj/item/storage/belt/sheath/katana/empty
+	stored_blade = NONE
+
+/obj/item/storage/belt/sheath/katana/toy
+	action_slots = NONE
+	storage_type = /datum/storage/toy_sheath
+	stored_blade = /obj/item/toy/katana
+
+/obj/item/storage/belt/sheath/katana/toy/empty
+	stored_blade = NONE
+
+/obj/item/storage/belt/sheath/ninja
+	name = "energy katana sheath"
+	desc = "A high tech katana sheath that allows for quick blade movements"
+	icon_state = "ninja_sheath"
+	inhand_icon_state = "ninja_sheath"
+	worn_icon_state = "ninja_sheath"
+	storage_type = /datum/storage/ninja_sheath
+	stored_blade = /obj/item/energy_katana
+
+/obj/item/storage/belt/sheath/hanzo_katana
+	name = "hanzo katana sheath"
+	desc = "A normal black sheath meant to house the legendary hanzo steel"
+	icon_state = "hanzo_sheath"
+	inhand_icon_state = "hanzo_sheath"
+	worn_icon_state = "hanzo_sheath"
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
+	storage_type = /datum/storage/hanzo_sheath
+	stored_blade = /obj/item/nullrod/claymore/katana
+
+/obj/item/storage/belt/sheath/hanzo_katana/empty
+	stored_blade = NONE
+
 /obj/item/storage/belt/plant
 	name = "botanical belt"
 	desc = "A sturdy leather belt used to hold most hydroponics supplies."
