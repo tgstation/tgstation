@@ -17,30 +17,39 @@
 	var/clear_mob_reagents = FALSE
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume, clear_mob_reagents)
+	if (!ismob(holder.my_atom))
+		reagent_explode(holder, created_volume, modifier, strengthdiv, clear_mob_reagents)
+		return
+
 	// If an explosive reaction clears mob reagents, it should always be a minimum power
-	if(ismob(holder.my_atom) && clear_mob_reagents)
+	if(clear_mob_reagents)
 		if(round((created_volume / strengthdiv) + modifier, 1) < 1)
 			modifier += 1 - ((created_volume / strengthdiv) + modifier)
+		reagent_explode(holder, created_volume, modifier, strengthdiv, clear_mob_reagents)
+		return
+
 	// If this particular explosion doesn't automatically clear mob reagents as an inherent quality,
 	// then we can still clear mob reagents with some mad science malpractice that shouldn't work but
 	// does because omnizine is magic and also it's the future or whatever
-	if(ismob(holder.my_atom) && !clear_mob_reagents)
-		// The explosion needs to be a minimum power to clear reagents: see above
-		var/purge_power = round((created_volume / strengthdiv) + modifier, 1)
-		if(purge_power >= 1)
-			var/has_purging_chemical = FALSE
-			// They need one of the purge reagents in them
-			for(var/purging_chem in PURGING_REAGENTS)
-				if(holder.has_reagent(purging_chem))
-					// We have a purging chemical
-					has_purging_chemical = TRUE
-					break
-			// Then we need omnizine! MAGIC!
-			var/has_omnizine = holder.has_reagent(/datum/reagent/medicine/omnizine)
-			if(has_purging_chemical && has_omnizine)
-				// With all this medical "science" combined, we can clear mob reagents
-				clear_mob_reagents = TRUE
-	default_explode(holder, created_volume, modifier, strengthdiv, clear_mob_reagents)
+	// The explosion needs to be a minimum power to clear reagents: see above
+	var/purge_power = round((created_volume / strengthdiv) + modifier, 1)
+	if(purge_power < 1)
+		reagent_explode(holder, created_volume, modifier, strengthdiv, clear_mob_reagents)
+		return
+
+	var/has_purging_chemical = FALSE
+	// They need one of the purge reagents in them
+	for(var/purging_chem in PURGING_REAGENTS)
+		if(holder.has_reagent(purging_chem))
+			// We have a purging chemical
+			has_purging_chemical = TRUE
+			break
+	// Then we need omnizine! MAGIC!
+	var/has_omnizine = holder.has_reagent(/datum/reagent/medicine/omnizine)
+	if(has_purging_chemical && has_omnizine)
+		// With all this medical "science" combined, we can clear mob reagents
+		clear_mob_reagents = TRUE
+	reagent_explode(holder, created_volume, modifier, strengthdiv, clear_mob_reagents)
 
 #undef PURGING_REAGENTS
 /datum/chemical_reaction/reagent_explosion/nitroglycerin
@@ -62,7 +71,7 @@
 
 /datum/chemical_reaction/reagent_explosion/rdx
 	results = list(/datum/reagent/rdx= 2)
-	required_reagents = list(/datum/reagent/phenol = 2, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/acetone_oxide = 1 )
+	required_reagents = list(/datum/reagent/phenol = 2, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/acetone_oxide = 1)
 	required_catalysts = list(/datum/reagent/gold) //royal explosive
 	required_temp = 404
 	strengthdiv = 8
@@ -199,7 +208,8 @@
 	mix_message = span_boldnotice("Sparks start flying around the gunpowder!")
 
 /datum/chemical_reaction/reagent_explosion/gunpowder_explosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	addtimer(CALLBACK(src, PROC_REF(default_explode), holder, created_volume, modifier, strengthdiv), rand(5 SECONDS, 10 SECONDS))
+	do_sparks(2, TRUE, get_turf(holder.my_atom))
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(reagent_explode), holder, created_volume, modifier, strengthdiv), rand(5 SECONDS, 10 SECONDS))
 
 /datum/chemical_reaction/thermite
 	results = list(/datum/reagent/thermite = 3)
@@ -391,6 +401,12 @@
 		S.start(log = TRUE)
 	if(holder?.my_atom)
 		holder.clear_reagents()
+	if (!iscarbon(holder?.my_atom))
+		return
+	var/mob/living/carbon/victim = holder.my_atom
+	if (victim.stat != DEAD)
+		victim.visible_message(span_warning("[victim] starts violently coughing up smoke!"))
+	victim.adjust_organ_loss(ORGAN_SLOT_LUNGS, created_volume / 5)
 
 /datum/chemical_reaction/smoke_powder_smoke
 	required_reagents = list(/datum/reagent/smoke_powder = 1)
@@ -409,6 +425,14 @@
 		S.start(log = TRUE)
 	if(holder?.my_atom)
 		holder.clear_reagents()
+	if(holder?.my_atom)
+		holder.clear_reagents()
+	if (!iscarbon(holder?.my_atom))
+		return
+	var/mob/living/carbon/victim = holder.my_atom
+	if (victim.stat != DEAD)
+		victim.visible_message(span_warning("[victim] starts violently coughing up smoke!"))
+	victim.adjust_organ_loss(ORGAN_SLOT_LUNGS, created_volume / 10)
 
 /datum/chemical_reaction/sonic_powder
 	results = list(/datum/reagent/sonic_powder = 3)
@@ -603,7 +627,7 @@
 		added_delay += 1.5 SECONDS
 	if(created_volume >= 10) //10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
 		addtimer(CALLBACK(src, PROC_REF(zappy_zappy), holder, T3), added_delay)
-	addtimer(CALLBACK(src, PROC_REF(default_explode), holder, created_volume, modifier, strengthdiv), added_delay)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(reagent_explode), holder, created_volume, modifier, strengthdiv), added_delay)
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/proc/zappy_zappy(datum/reagents/holder, power)
 	var/atom/holder_atom = holder.my_atom

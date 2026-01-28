@@ -1,6 +1,0 @@
-author: "Ezel"
-delete-after: True
-changes:
-  - balance: "sabre, parsnip, gladius sheathe can now be worn on suit storages"
-  - bugfix: "mirrors gladius belt worn sprite so it doesn't overlap with belted revolvers"
-  - image: "adds mirrored belt sprites"

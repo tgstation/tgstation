@@ -36,6 +36,7 @@
 
 	reagents = parent_movable.reagents
 
+	on_parent_dir_change(parent_movable, NONE, parent_movable.dir)
 	if(parent_movable.anchored)
 		if(PERFORM_ALL_TESTS(maptest_log_mapping))
 			var/datum/overlap = ducting_layer_check(parent_movable, ducting_layer)
@@ -51,23 +52,21 @@
 		enable()
 
 /datum/component/plumbing/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(disable))
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH), PROC_REF(check_wrench))
 	RegisterSignal(parent, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(toggle_active))
 	RegisterSignal(parent, COMSIG_OBJ_HIDE, PROC_REF(hide))
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(create_overlays)) //called by lateinit on startup
-	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_parent_dir_change)) //called when placed on a shuttle and it moves, and other edge cases
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(create_overlays))
+	RegisterSignal(parent, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(on_parent_dir_change))
 	RegisterSignal(parent, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, PROC_REF(change_ducting_layer))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/plumbing/UnregisterFromParent()
 	UnregisterSignal(parent, list(
-		COMSIG_MOVABLE_MOVED,
 		COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH),
 		COMSIG_MOVABLE_SET_ANCHORED,
 		COMSIG_OBJ_HIDE,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
-		COMSIG_ATOM_DIR_CHANGE,
+		COMSIG_ATOM_POST_DIR_CHANGE,
 		COMSIG_MOVABLE_CHANGE_DUCT_LAYER,
 		COMSIG_ATOM_EXAMINE,
 	))
@@ -96,24 +95,6 @@
 
 ///settle wherever we are, and start behaving like a piece of plumbing
 /datum/component/plumbing/proc/enable()
-	var/atom/movable/parent_movable = parent
-
-	//We update our connects only when we settle down by taking our current and original direction to find our new connects
-
-	demand_connects = initial(demand_connects)
-	supply_connects = initial(supply_connects)
-	if(parent_movable.dir != SOUTH)
-		var/angle = 180 - dir2angle(parent_movable.dir)
-		var/new_demand_connects = NONE
-		var/new_supply_connects = NONE
-		for(var/direction in GLOB.cardinals)
-			if(direction & demand_connects)
-				new_demand_connects |= turn(direction, angle)
-			if(direction & supply_connects)
-				new_supply_connects |= turn(direction, angle)
-		demand_connects = new_demand_connects
-		supply_connects = new_supply_connects
-
 	if(demand_connects)
 		START_PROCESSING(SSplumbing, src)
 
@@ -232,24 +213,34 @@
 /datum/component/plumbing/proc/on_parent_dir_change(atom/movable/parent_obj, old_dir, new_dir)
 	SIGNAL_HANDLER
 
-	if(old_dir == new_dir)
-		return
+	demand_connects = initial(demand_connects)
+	supply_connects = initial(supply_connects)
+	if(new_dir != SOUTH)
+		var/angle = 180 - dir2angle(new_dir)
+		var/new_demand_connects = NONE
+		var/new_supply_connects = NONE
+		for(var/direction in GLOB.cardinals)
+			if(direction & demand_connects)
+				new_demand_connects |= turn(direction, angle)
+			if(direction & supply_connects)
+				new_supply_connects |= turn(direction, angle)
+		demand_connects = new_demand_connects
+		supply_connects = new_supply_connects
 
-	// Defer to later frame because pixel_* is actually updated after all callbacks
-	addtimer(CALLBACK(parent_obj, TYPE_PROC_REF(/atom/, update_appearance)), 0.1 SECONDS)
+	if(length(ducts))
+		disable()
+		enable()
 
 /datum/component/plumbing/proc/change_ducting_layer(obj/source, obj/changer, new_layer = DUCT_LAYER_DEFAULT)
 	SIGNAL_HANDLER
 
 	ducting_layer = new_layer
-	var/atom/movable/parent_movable = parent
-	parent_movable.update_appearance()
+	source.update_appearance(UPDATE_OVERLAYS)
 
 	if(changer)
 		playsound(changer, 'sound/items/tools/ratchet.ogg', 10, TRUE) //sound
 
-	//quickly disconnect and reconnect the network.
-	if(active())
+	if(length(ducts))
 		disable()
 		enable()
 

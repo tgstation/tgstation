@@ -234,8 +234,6 @@
 	var/log_override = FALSE
 	/// If true, the projectile won't cause any logging whatsoever. Used for hallucinations and shit.
 	var/do_not_log = FALSE
-	/// We ignore mobs with these factions.
-	var/list/ignored_factions
 	/// Turf that we have registered connect_loc signal - this is done for performance, as we're moving ~a dozen turfs per tick
 	/// and registering and unregistering signal for every single one of them is stupid. Unregistering the signal from the correct turf in case we get moved by smth else is important
 	var/turf/last_tick_turf
@@ -644,9 +642,9 @@
 			var/mob/firer_mob = firer
 			if (firer_mob.buckled == target)
 				return FALSE
-	if(ignored_factions?.len && ismob(target) && !direct_target)
+	if(LAZYLEN(faction) && ismob(target) && !direct_target)
 		var/mob/target_mob = target
-		if(target_mob.has_faction(ignored_factions))
+		if(FAST_FACTION_CHECK(faction, target_mob.get_faction(), allies, target_mob.allies, FALSE))
 			return FALSE
 	if(target.density || cross_failed) //This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
 		return TRUE

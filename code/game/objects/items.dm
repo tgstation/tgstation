@@ -837,7 +837,7 @@
 			return
 
 	if(usr.get_active_held_item() == null) // Let me know if this has any problems -Yota
-		usr.UnarmedAttack(src)
+		usr.UnarmedAttack(src, TRUE)
 
 /**
  *This proc is executed when someone clicks the on-screen UI button.
@@ -1896,7 +1896,7 @@
 	return null
 
 /obj/item/animate_atom_living(mob/living/owner)
-	new /mob/living/basic/mimic/copy(drop_location(), src, owner)
+	return new /mob/living/basic/mimic/copy(drop_location(), src, owner)
 
 /**
  * Used to update the weight class of the item in a way that other atoms can react to the change.
