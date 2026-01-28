@@ -54,6 +54,8 @@
 	. = ..()
 	if(temporary_deafness)
 		on_undeafened(organ_owner)
+	// Do not apply with special flag, even if it would ultimately be redundant by new ears being hot-swapped in.
+	// This is so we don't trip signal_addtrait when hot-swapping ears, which could cause inappropriate behavior like nuking sound effects.
 	if(!special)
 		ADD_TRAIT(organ_owner, TRAIT_DEAF, NO_EARS)
 
