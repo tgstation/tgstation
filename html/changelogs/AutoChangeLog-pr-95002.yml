@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Improvised mounted weaponry now drops a reasonable amount of cable"
