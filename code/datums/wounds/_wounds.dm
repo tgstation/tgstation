@@ -453,18 +453,16 @@
 
 /// Updates our limping and interaction penalties in accordance with our gauze.
 /datum/wound/proc/update_inefficiencies(replaced_or_replacing = FALSE)
+	SHOULD_NOT_SLEEP(TRUE)
+
 	if (wound_flags & ACCEPTS_GAUZE)
-		var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+		var/splint_factor = limb.get_splint_factor()
 		if(limb.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-			if(current_gauze?.splint_factor)
-				limp_slowdown = initial(limp_slowdown) * current_gauze.splint_factor
-				limp_chance = initial(limp_chance) * current_gauze.splint_factor
-			else
-				limp_slowdown = initial(limp_slowdown)
-				limp_chance = initial(limp_chance)
+			limp_slowdown = initial(limp_slowdown) * splint_factor
+			limp_chance = initial(limp_chance) * splint_factor
 		else if(limb.body_zone in GLOB.arm_zones)
-			if(current_gauze?.splint_factor)
-				set_interaction_efficiency_penalty(1 + ((get_effective_actionspeed_modifier()) * current_gauze.splint_factor))
+			if(splint_factor < 1)
+				set_interaction_efficiency_penalty(1 + (get_effective_actionspeed_modifier() * current_gauze.splint_factor))
 			else
 				set_interaction_efficiency_penalty(initial(interaction_efficiency_penalty))
 

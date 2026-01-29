@@ -1619,6 +1619,18 @@
 		SEND_SIGNAL(gone, COMSIG_ITEM_UNAPPLIED_FROM_LIMB, src)
 
 /**
+ * Get how splinted this bodypart is based on applied items
+ *
+ * Multiplier applied to maluses, so lower = better
+ */
+/obj/item/bodypart/proc/get_splint_factor()
+	var/factor = 1
+	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+	if(current_gauze)
+		factor *= current_gauze.splint_factor
+	return factor
+
+/**
  * Attempts to use up some of gauze applied
  * If we use up all of the gauze, it is deleted
  *

@@ -5,7 +5,6 @@
 	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/stack/medical/wrap/sticky_tape"
 	post_init_icon_state = "tape"
-	var/prefix = "sticky"
 	w_class = WEIGHT_CLASS_TINY
 	full_w_class = WEIGHT_CLASS_TINY
 	item_flags = NOBLUDGEON
@@ -21,6 +20,10 @@
 	apply_verb = "taping"
 	heal_begin_sound = 'sound/items/duct_tape/duct_tape_rip.ogg'
 	heal_end_sound = 'sound/items/duct_tape/duct_tape_rip.ogg'
+
+	/// Prefix applied to the target when wrapped with this tape.
+	var/prefix = "sticky"
+	/// Embed applied to the target when wrapped with this tape.
 	var/conferred_embed = /datum/embedding/sticky_tape
 	///The tape type you get when ripping off a piece of tape.
 	var/obj/tape_gag = /obj/item/clothing/mask/muzzle/tape
