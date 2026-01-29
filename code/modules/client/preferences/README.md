@@ -397,24 +397,24 @@ Space Ninja, for example, looks like:
 	preview_outift = /datum/outfit/ninja
 ```
 
-However, if you want to get creative, you can override `/get_preview_icon()`. This proc should return an icon of size `ANTAGONIST_PREVIEW_ICON_SIZE`x`ANTAGONIST_PREVIEW_ICON_SIZE`.
+However, if you want to get creative, you can override `/get_preview_icon()`. This proc should return a /datum/universal_icon of size `ANTAGONIST_PREVIEW_ICON_SIZE`x`ANTAGONIST_PREVIEW_ICON_SIZE`.
 
-There are some helper procs you can use as well. `render_preview_outfit(outfit_type)` will take an outfit and give you an icon of someone wearing those clothes. `finish_preview_outfit` will, given an icon, resize it appropriately and zoom in on the head. Note that this will look bad on anything that isn't a human, so if you have a non-human antagonist (such as sentient disease), just run `icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)`.
+There are some helper procs you can use as well. `render_preview_outfit(outfit_type)` will take an outfit and give you a /datum/universal_icon of someone wearing those clothes (using get_flat_uni_icon). `finish_preview_outfit` will, given an icon, resize it appropriately and zoom in on the head. Note that this will look bad on anything that isn't a human, so if you have a non-human antagonist (such as sentient disease), just run `icon.scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)`.
 
 For inspiration, here is changeling's:
 
 ```dm
 /datum/antagonist/changeling/get_preview_icon()
-	var/icon/final_icon = render_preview_outfit(/datum/outfit/changeling)
-	var/icon/split_icon = render_preview_outfit(/datum/outfit/job/engineer)
+	var/datum/universal_icon/final_icon = render_preview_outfit(/datum/outfit/changeling)
+	var/datum/universal_icon/split_icon = render_preview_outfit(/datum/outfit/job/engineer)
 
-	final_icon.Shift(WEST, ICON_SIZE_X / 2)
-	final_icon.Shift(EAST, ICON_SIZE_X / 2)
+	final_icon.shift(WEST, ICON_SIZE_X / 2)
+	final_icon.shift(EAST, ICON_SIZE_X / 2)
 
-	split_icon.Shift(EAST, ICON_SIZE_X / 2)
-	split_icon.Shift(WEST, ICON_SIZE_X / 2)
+	split_icon.shift(EAST, ICON_SIZE_X / 2)
+	split_icon.shift(WEST, ICON_SIZE_X / 2)
 
-	final_icon.Blend(split_icon, ICON_OVERLAY)
+	final_icon.blend_icon(split_icon, ICON_OVERLAY)
 
 	return finish_preview_icon(final_icon)
 ```

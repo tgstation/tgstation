@@ -1,8 +1,3 @@
-/// If we are in unit tests OR if we are not using iconforge, then we should make sure the icons we are using are valid.
-#if !defined(USE_RUSTG_ICONFORGE_GAGS) || defined(UNIT_TESTS)
-	#define CHECK_SPRITESHEET_ICON_VALIDITY
-#endif
-
 SUBSYSTEM_DEF(greyscale_previews)
 	name = "Greyscale Previews"
 	flags = SS_NO_FIRE
@@ -135,6 +130,11 @@ SUBSYSTEM_DEF(greyscale_previews)
 
 /datum/controller/subsystem/greyscale_previews/proc/ExportMapPreviewsForType(filename, list/entries)
 	var/list/icons = list()
+	#ifdef USE_RUSTG_ICONFORGE_GAGS
+	// make sure the error icon exists as a default
+	var/datum/universal_icon/empty_icon = uni_icon('icons/testing/greyscale_error.dmi', "")
+	icons[""] = empty_icon.to_list()
+	#endif
 
 	for (var/entry in entries)
 		var/atom/typepath
@@ -162,25 +162,46 @@ SUBSYSTEM_DEF(greyscale_previews)
 		// This is what the actual icon state will be in the map_icon .dmi
 		var/key = reskin_icon_state ? "[typepath]--[icon_state]" : "[typepath]"
 
-	#ifdef CHECK_SPRITESHEET_ICON_VALIDITY
+	#ifdef USE_RUSTG_ICONFORGE_GAGS
+		// No large icons, use icon_preview and icon_preview_state instead.
+		var/datum/universal_icon/map_icon = SSgreyscale.GetColoredIconByTypeUniversalIcon(greyscale_config, greyscale_colors, icon_state)
+		icons[key] = map_icon.to_list()
+	#else
 		var/icon/map_icon = icon(SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)) // No large icons, use icon_preview and icon_preview_state instead.
+	#ifdef UNIT_TESTS // this is much slower using legacy generation, so limit it to unit tests.
 		if (map_icon.Width() > 32 || map_icon.Height() > 32)
 			stack_trace("GAGS configuration is trying to generate a map preview graphic for '[typepath]' (icon state: [icon_state]), which has a large icon. This is not suppoorted; implement icon_preview instead.")
 			continue
 		if (!(icon_state in map_icon.IconStates()))
 			stack_trace("GAGS configuration missing icon state ([icon_state]) needed to generate map preview graphic for '[typepath]'. Make sure the right greyscale_config is set up.")
 			continue
+	#endif
 		map_icon = icon(map_icon, icon_state)
 		icons[key] = map_icon
-	#else // will be updated to use iconforge's new .dmi spritesheet generation instead
-		var/icon/map_icon = icon(SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors))
-		map_icon = icon(map_icon, icon_state)
-		icons[map_icon_key] = map_icon
 	#endif
 
+	#ifdef USE_RUSTG_ICONFORGE_GAGS
+	// generate all previews in parallel
+	var/holder = "tmp/greyscale_previews.dmi"
+	var/list/headless_result = rustg_iconforge_generate_headless(holder, json_encode(icons), FALSE)
+	if(!istype(headless_result))
+		stack_trace("Could not generate greyscale previews using rustg_iconforge_generate_headless! The output format was invalid (JSON did not decode to a list). Got: [headless_result]")
+	if(!length(headless_result))
+		stack_trace("Could not generate greyscale previews using rustg_iconforge_generate_headless! The output list was empty. Got: [json_encode(headless_result)]")
+	if(!isnull(headless_result["error"]))
+		stack_trace("Could not generate greyscale previews using rustg_iconforge_generate_headless! There was an error: [headless_result["error"]]")
+	if(headless_result["file_path"] != holder)
+		stack_trace("Could not generate greyscale previews using rustg_iconforge_generate_headless! The output file_path differed from the input. Got: [json_encode(headless_result)]")
+	// testing size is cheap with rustg, so no need to limit to unit tests.
+	if(headless_result["width"] != 32 || headless_result["height"] != 32)
+		stack_trace("Could not generate greyscale previews using rustg_iconforge_generate_headless! The output size was not 32x32. Got: [json_encode(headless_result)]")
+	if(!fexists(holder))
+		stack_trace("Could not generate greyscale previews using rustg_iconforge_generate_headless! The output file does not exist on the filesystem! Got: [json_encode(headless_result)]")
+	#else
 	var/icon/holder = icon('icons/testing/greyscale_error.dmi')
 	for(var/state in icons)
 		holder.Insert(icons[state], state)
+	#endif
 
 	var/filepath = "icons/map_icons/[filename].dmi"
 #ifdef UNIT_TESTS
@@ -191,8 +212,4 @@ SUBSYSTEM_DEF(greyscale_previews)
 	var/new_md5 = rustg_hash_file(RUSTG_HASH_MD5, filepath)
 	if(old_md5 != new_md5)
 		stack_trace("Generated map icons were different than what is currently saved. If you see this in a CI run it means you need to run the game once through initialization and commit the resulting files in 'icons/map_icons/'")
-#endif
-
-#ifdef CHECK_SPRITESHEET_ICON_VALIDITY
-	#undef CHECK_SPRITESHEET_ICON_VALIDITY
 #endif

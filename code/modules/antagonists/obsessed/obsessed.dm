@@ -58,19 +58,15 @@
 	. = ..()
 
 /datum/antagonist/obsessed/get_preview_icon()
-	var/mob/living/carbon/human/dummy/consistent/victim_dummy = new
-	victim_dummy.set_haircolor("#bb9966", update = FALSE)
-	victim_dummy.set_hairstyle("Messy", update = TRUE)
+	var/datum/universal_icon/obsessed_icon = render_preview_outfit(preview_outfit)
+	var/datum/universal_icon/blood_icon = uni_icon('icons/effects/blood.dmi', "uniformblood")
+	blood_icon.blend_color(BLOOD_COLOR_RED, ICON_MULTIPLY)
+	obsessed_icon.blend_icon(blood_icon, ICON_OVERLAY)
 
-	var/icon/obsessed_icon = render_preview_outfit(preview_outfit)
-	var/icon/blood_icon = icon('icons/effects/blood.dmi', "uniformblood")
-	blood_icon.Blend(BLOOD_COLOR_RED, ICON_MULTIPLY)
-	obsessed_icon.Blend(blood_icon, ICON_OVERLAY)
+	var/datum/universal_icon/final_icon = finish_preview_icon(obsessed_icon)
 
-	var/icon/final_icon = finish_preview_icon(obsessed_icon)
-
-	final_icon.Blend(
-		icon('icons/ui/antags/obsessed.dmi', "obsession"),
+	final_icon.blend_icon(
+		uni_icon('icons/ui/antags/obsessed.dmi', "obsession"),
 		ICON_OVERLAY,
 		ANTAGONIST_PREVIEW_ICON_SIZE - 30,
 		20,

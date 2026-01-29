@@ -16,22 +16,22 @@
 
 /datum/antagonist/fugitive/get_preview_icon()
 	//start with prisoner at the front
-	var/icon/final_icon = render_preview_outfit(preview_outfit)
+	var/datum/universal_icon/final_icon = render_preview_outfit(preview_outfit)
 
 	//then to the left add cultists of yalp elor
-	final_icon.Blend(make_background_fugitive_icon(/datum/outfit/yalp_cultist), ICON_UNDERLAY, -8, 0)
+	final_icon.blend_icon(make_background_fugitive_icon(/datum/outfit/yalp_cultist), ICON_UNDERLAY, -8, 0)
 	//to the right add waldo (we just had to, okay?)
-	final_icon.Blend(make_background_fugitive_icon(/datum/outfit/waldo), ICON_UNDERLAY, 8, 0)
+	final_icon.blend_icon(make_background_fugitive_icon(/datum/outfit/waldo), ICON_UNDERLAY, 8, 0)
 
-	final_icon.Scale(64, 64)
+	final_icon.scale(64, 64)
 
 	return finish_preview_icon(final_icon)
 
 /datum/antagonist/fugitive/proc/make_background_fugitive_icon(datum/outfit/fugitive_fit)
 	var/mob/living/carbon/human/dummy/consistent/fugitive = new
 
-	var/icon/fugitive_icon = render_preview_outfit(fugitive_fit, fugitive)
-	fugitive_icon.ChangeOpacity(0.5)
+	var/datum/universal_icon/fugitive_icon = render_preview_outfit(fugitive_fit, fugitive)
+	fugitive_icon.change_opacity(0.5)
 	qdel(fugitive)
 
 	return fugitive_icon
