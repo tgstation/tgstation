@@ -697,9 +697,7 @@
 
 /obj/item/food/burger/crazy/process(seconds_per_tick) // DIT EES HORRIBLE
 	if(SPT_PROB(2.5, seconds_per_tick))
-		var/datum/effect_system/fluid_spread/smoke/bad/green/smoke = new
-		smoke.set_up(0, holder = src, location = src)
-		smoke.start()
+		do_smoke(0, src, loc, smoke_type = /datum/effect_system/fluid_spread/smoke/bad/green)
 
 // empty burger you can customize
 /obj/item/food/burger/empty

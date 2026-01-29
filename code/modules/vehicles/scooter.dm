@@ -42,7 +42,7 @@
 	density = FALSE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10)
 	///Sparks datum for when we grind on tables
-	var/datum/effect_system/spark_spread/sparks
+	var/datum/effect_system/basic/spark_spread/sparks
 	///Whether the board is currently grinding
 	var/grinding = FALSE
 	///Stores the time of the last crash plus a short cooldown, affects availability and outcome of certain actions
@@ -56,16 +56,14 @@
 
 /obj/vehicle/ridden/scooter/skateboard/Initialize(mapload)
 	. = ..()
-	sparks = new
-	sparks.set_up(1, 0, src)
+	sparks = new(src, 1, FALSE)
 	sparks.attach(src)
 
 /obj/vehicle/ridden/scooter/skateboard/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard)
 
 /obj/vehicle/ridden/scooter/skateboard/Destroy()
-	if(sparks)
-		QDEL_NULL(sparks)
+	QDEL_NULL(sparks)
 	return ..()
 
 /obj/vehicle/ridden/scooter/skateboard/relaymove(mob/living/user, direction)

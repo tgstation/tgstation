@@ -79,11 +79,8 @@
  */
 /proc/spread_reagents(datum/reagents/source, atom/epicenter, spread_range)
 	spread_range = min(spread_range, 20) // Fuck off with trying to do more then this
-	var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
-	steam.set_up(10, 0, epicenter)
-	steam.attach(epicenter)
-	steam.start()
-
+	var/datum/effect_system/basic/steam_spread/steam = new /datum/effect_system/basic/steam_spread(epicenter, 10, FALSE)
+	steam.attach(epicenter).start()
 	// This is a basic floodfill algorithm of atmos connected tiles
 	// Turfs will be stored in the form turf -> TRUE
 	var/chem_temp = source.chem_temp

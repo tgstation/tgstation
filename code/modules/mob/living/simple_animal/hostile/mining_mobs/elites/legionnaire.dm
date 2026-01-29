@@ -231,9 +231,7 @@
 		visible_message(span_boldwarning("[src] spews smoke from the tip of their spine!"))
 	else
 		visible_message(span_boldwarning("[src] spews smoke from its maw!"))
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(2, holder = src, location = smoke_location)
-	smoke.start()
+	do_smoke(2, src, smoke_location)
 
 //The legionnaire's head.  Basically the same as any legion head, but we have to tell our creator when we die so they can generate another head.
 /mob/living/simple_animal/hostile/asteroid/elite/legionnairehead

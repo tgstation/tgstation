@@ -129,9 +129,8 @@
 	if(source.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)
 		return
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect_system/reagents_explosion/e = new()
-	e.set_up(1 + round(volume / 6, 1), location, message = FALSE)
-	e.start(holder.my_atom)
+	var/datum/effect_system/reagents_explosion/expl = new(location, 1 + round(volume / 6, 1), message = FALSE)
+	expl.start(holder.my_atom)
 	holder.clear_reagents()
 
 /datum/reagent/gunpowder/on_spark_act(power_charge, spark_flags)
@@ -225,15 +224,13 @@
 	if ((spark_flags & SPARK_ACT_ENCLOSED) && !ismob(holder.my_atom))
 		return
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect_system/fluid_spread/smoke/chem/smoke_system = new()
 	playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 	if (iscarbon(holder.my_atom))
 		var/mob/living/carbon/victim = holder.my_atom
 		if (victim.stat != DEAD)
 			victim.visible_message(span_warning("[victim] starts violently coughing up smoke!"))
 		victim.adjust_organ_loss(ORGAN_SLOT_LUNGS, volume / 15)
-	smoke_system.set_up(amount = volume / 1.5, holder = holder.my_atom, location = location, carry = holder, silent = FALSE)
-	smoke_system.start(log = TRUE)
+	do_chem_smoke(amount = volume / 1.5, holder = holder.my_atom, location = location, carry = holder, silent = FALSE, log = TRUE)
 	return SPARK_ACT_NON_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 /datum/reagent/sonic_powder

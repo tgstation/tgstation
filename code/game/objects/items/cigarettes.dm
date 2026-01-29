@@ -1122,9 +1122,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	balloon_alert(user, "voltage maximized")
 	icon_state = "vapeopen_high"
 	set_greyscale(new_config = /datum/greyscale_config/vape/open_high)
-	var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread //for effect
-	sp.set_up(5, 1, src)
-	sp.start()
+	do_sparks(5, TRUE, src)
 	return TRUE
 
 /obj/item/vape/attack_self(mob/user)
@@ -1170,11 +1168,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		vaper.adjust_fire_stacks(2)
 		vaper.ignite_mob()
 
-	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
-		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0)
-		e.start(src)
+	// Preserve old welding fuel behavior
+	if(reagents.spark_act(0, TRUE, banned_reagents = /datum/reagent/fuel) & SPARK_ACT_DESTRUCTIVE)
 		qdel(src)
+		return
 
 	if(!reagents.trans_to(vaper, REAGENTS_METABOLISM, methods = INHALE, ignore_stomach = TRUE))
 		reagents.remove_all(REAGENTS_METABOLISM)
@@ -1198,23 +1195,21 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	//Time to start puffing those fat vapes, yo.
 	COOLDOWN_START(src, drag_cooldown, dragtime)
 	if(obj_flags & EMAGGED)
-		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/puff = new
-		puff.set_up(4, holder = src, location = loc, carry = reagents, efficiency = 24)
-		puff.start()
+		var/smoke_amount = DIAMOND_AREA(4)
+		do_chem_smoke(amount = smoke_amount, holder = src, location = loc, carry = reagents, carry_limit = 20, smoke_type = /datum/effect_system/fluid_spread/smoke/chem/smoke_machine)
+		reagents.remove_all(smoke_amount / 24)
 		if(prob(5)) //small chance for the vape to break and deal damage if it's emagged
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, FALSE)
 			M.apply_damage(20, BURN, BODY_ZONE_HEAD)
 			M.Paralyze(300)
-			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread
-			sp.set_up(5, 1, src)
-			sp.start()
+			do_sparks(5, TRUE, src)
 			to_chat(M, span_userdanger("[src] suddenly explodes in your mouth!"))
 			qdel(src)
 			return
 	else if(super)
-		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/puff = new
-		puff.set_up(1, holder = src, location = loc, carry = reagents, efficiency = 24)
-		puff.start()
+		var/smoke_amount = DIAMOND_AREA(1)
+		do_chem_smoke(amount = smoke_amount, holder = src, location = loc, carry = reagents, carry_limit = 20, smoke_type = /datum/effect_system/fluid_spread/smoke/chem/smoke_machine)
+		reagents.remove_all(smoke_amount / 24)
 
 	handle_reagents()
 

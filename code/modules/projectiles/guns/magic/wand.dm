@@ -195,17 +195,13 @@
 
 /obj/item/gun/magic/wand/teleport/zap_self(mob/living/user, suicide = FALSE)
 	if(do_teleport(user, user, 10, channel = TELEPORT_CHANNEL_MAGIC))
-		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(3, holder = src, location = user.loc)
-		smoke.start()
+		do_smoke(3, src, user.loc)
 		charges--
 	return ..()
 
 /obj/item/gun/magic/wand/teleport/do_suicide(mob/living/user)
 	playsound(loc, fire_sound, 50, TRUE, -1)
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(3, holder = src, location = user.loc)
-	smoke.start()
+	do_smoke(3, src, user.loc)
 	if (!iscarbon(user))
 		return SHAME
 
@@ -247,11 +243,11 @@
 	var/turf/origin = get_turf(user)
 	var/turf/destination = find_safe_turf(extended_safety_checks = TRUE)
 
-	if(do_teleport(user, destination, channel=TELEPORT_CHANNEL_MAGIC))
-		for(var/t in list(origin, destination))
-			var/datum/effect_system/fluid_spread/smoke/smoke = new
-			smoke.set_up(0, holder = src, location = t)
-			smoke.start()
+	if(!do_teleport(user, destination, channel = TELEPORT_CHANNEL_MAGIC))
+		return ..()
+
+	for(var/turf/smoke_turf as anything in list(origin, destination))
+		do_smoke(0, src, smoke_turf)
 	return ..()
 
 /obj/item/gun/magic/wand/safety/do_suicide(mob/living/user)

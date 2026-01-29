@@ -57,8 +57,7 @@
 
 	INVOKE_ASYNC(src, PROC_REF(set_core_display_icon), null, client)
 
-	spark_system = new /datum/effect_system/spark_spread()
-	spark_system.set_up(5, 0, src)
+	spark_system = new /datum/effect_system/basic/spark_spread(src, 5, FALSE)
 	spark_system.attach(src)
 
 	add_verb(src, /mob/living/silicon/ai/proc/show_laws_verb)

@@ -8,7 +8,7 @@
 	desc = "A small electronic device able to ignite combustible substances."
 	icon_state = "igniter"
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
-	var/datum/effect_system/spark_spread/sparks
+	var/datum/effect_system/basic/spark_spread/sparks
 	heat = 1000
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
@@ -21,15 +21,12 @@
 
 /obj/item/assembly/igniter/Initialize(mapload)
 	. = ..()
-	sparks = new
-	sparks.set_up(2, 0, src)
+	sparks = new(src, 2, FALSE)
 	sparks.attach(src)
 
 /obj/item/assembly/igniter/Destroy()
-	if(sparks)
-		qdel(sparks)
-	sparks = null
-	. = ..()
+	QDEL_NULL(sparks)
+	return ..()
 
 /obj/item/assembly/igniter/activate()
 	if(!..())

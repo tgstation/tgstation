@@ -56,9 +56,10 @@
 			user.balloon_alert(user, "[item.name] is blocking the pipes!")
 			continue
 		playsound(src, 'sound/items/modsuit/flamethrower.ogg', 50)
-		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/puff = new
-		puff.set_up(smokeradius, holder = src, location = user, carry = item.reagents, efficiency = 20)
-		puff.start()
+
+		var/smoke_amount = DIAMOND_AREA(smokeradius)
+		do_chem_smoke(amount = smoke_amount, holder = src, location = loc, carry = reagents, carry_limit = 20, smoke_type = /datum/effect_system/fluid_spread/smoke/chem/smoke_machine)
+		reagents.remove_all(smoke_amount / 20)
 		if (prob(5) && !(obj_flags & EMAGGED))
 			if(user.get_liked_foodtypes() & GORE)
 				user.balloon_alert(user, "a hidden treat!")

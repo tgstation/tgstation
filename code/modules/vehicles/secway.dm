@@ -30,9 +30,7 @@
 		return PROCESS_KILL
 	if(SPT_PROB(10, seconds_per_tick))
 		return
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, holder = src, location = src)
-	smoke.start()
+	do_smoke(0, src, src)
 
 /obj/vehicle/ridden/secway/welder_act(mob/living/user, obj/item/W)
 	if(user.combat_mode)

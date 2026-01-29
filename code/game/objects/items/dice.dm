@@ -389,7 +389,7 @@
 			//Cookie
 			selected_turf.visible_message(span_userdanger("A cookie appears out of thin air!"))
 			var/obj/item/food/cookie/ooh_a_cookie = new(drop_location())
-			do_smoke(0, holder = src, location = drop_location())
+			do_smoke(0, src, drop_location())
 			ooh_a_cookie.name = "Cookie of Fate"
 		if(12)
 			//Healing
@@ -410,12 +410,12 @@
 		if(14)
 			//Free Gun
 			selected_turf.visible_message(span_userdanger("An impressive gun appears!"))
-			do_smoke(0, holder = src, location = drop_location())
+			do_smoke(0, src, drop_location())
 			new /obj/item/gun/ballistic/revolver/mateba(drop_location())
 		if(15)
 			//Random One-use spellbook
 			selected_turf.visible_message(span_userdanger("A magical looking book drops to the floor!"))
-			do_smoke(0, holder = src, location = drop_location())
+			do_smoke(0, src, drop_location())
 			new /obj/item/book/granter/action/spell/random(drop_location())
 		if(16)
 			//Servant & Servant Summon
@@ -426,12 +426,12 @@
 			//Tator Kit
 			selected_turf.visible_message(span_userdanger("A suspicious box appears!"))
 			new /obj/item/storage/box/syndicate/bundle_a(drop_location())
-			do_smoke(0, holder = src, location = drop_location())
+			do_smoke(0, src, drop_location())
 		if(18)
 			//Captain ID
 			selected_turf.visible_message(span_userdanger("A golden identification card appears!"))
 			new /obj/item/card/id/advanced/gold/captains_spare(drop_location())
-			do_smoke(0, holder = src, location = drop_location())
+			do_smoke(0, src, drop_location())
 		if(19)
 			//Instrinct Resistance
 			selected_turf.visible_message(span_userdanger("[user] looks very robust!"))
