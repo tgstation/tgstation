@@ -91,7 +91,6 @@
 		user.to_chat(src, span_userdanger("EI NATH!"))
 		playsound(user, 'sound/effects/magic/disintegrate.ogg', 50, TRUE)
 		user.gib(DROP_ORGANS|DROP_BODYPARTS)
-		qdel(src)
 		return MOD_CANCEL_ACTIVATE
 
 /obj/item/mod/module/wizard_lock/proc/on_mod_removal(datum/source, mob/living/user)
@@ -102,7 +101,6 @@
 		user.to_chat(src, span_userdanger("EI NATH!"))
 		playsound(user, 'sound/effects/magic/disintegrate.ogg', 50, TRUE)
 		user.gib(DROP_ORGANS|DROP_BODYPARTS)
-		qdel(src)
 		return MOD_CANCEL_REMOVAL
 
 ///Rewinder - Activating saves a point in time, after 10 seconds you will jump back to that state.
