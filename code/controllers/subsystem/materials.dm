@@ -40,35 +40,23 @@ SUBSYSTEM_DEF(materials)
 	material_combos = list()
 	for(var/datum/material/mat_type as anything in valid_subtypesof(/datum/material))
 		if(initial(mat_type.init_flags) & MATERIAL_INIT_MAPLOAD)
-			initialize_material(list(mat_type))
+			initialize_material(mat_type)
 
 	dimensional_themes = init_subtypes_w_path_keys(/datum/dimension_theme)
 
 /** Creates and caches a material datum.
- *
- * Arguments:
- * - [arguments][/list]: The arguments to use to create the material datum
- *   - The first element is the type of material to initialize.
- * 	 - Could also be just the typepath itself, in which case no additional args are passed
+ *	The first argument is the type of material to initialize, the rest are passed to the material's init
  */
-/datum/controller/subsystem/materials/proc/initialize_material(list/arguments)
-	var/datum/material/mat_type = arguments
-	if (islist(arguments))
-		mat_type = arguments[1]
-		if(initial(mat_type.init_flags) & MATERIAL_INIT_BESPOKE)
-			arguments[1] = get_id_from_args(arguments)
-	else if(initial(mat_type.init_flags) & MATERIAL_INIT_BESPOKE)
-		CRASH("Attempted to initialize a bespoke material [arguments], but only the type was passed!")
+/datum/controller/subsystem/materials/proc/initialize_material(datum/material/mat_type, ...)
+	var/mat_id = mat_type
+	if(initial(mat_type.init_flags) & MATERIAL_INIT_BESPOKE)
+		mat_id = get_id_from_args(arglist(list(mat_type) + args.Copy(2)))
 
 	var/datum/material/mat_ref = new mat_type
-	if(islist(arguments))
-		// Needs to be structured like this because we cannot pass argslist into a variable or a ternary
-		if(!mat_ref.Initialize(arglist(arguments)))
-			return null
-	else if(!mat_ref.Initialize(arguments))
+	if(!mat_ref.Initialize(arglist(list(mat_id) + args.Copy(2))))
 		return null
 
-	var/mat_id = mat_ref.id
+	mat_id = mat_ref.id
 	materials[mat_id] = mat_ref
 	flat_materials += mat_ref
 	materials_by_type[mat_type] += list(mat_ref)
@@ -78,55 +66,43 @@ SUBSYSTEM_DEF(materials)
 /**
  * Fetches a cached material singleton when passed sufficient arguments.
  * Arguments:
- * - [arguments][/list]: The list of arguments used to fetch the material ref. Could also be a single typepath to be wrapped if it is not bespoke
- *   - The first element is a material datum, text string, or material type.
- *     - [Material datums][/datum/material] are assumed to be references to the cached datum and are returned
- *     - Text is assumed to be the text ID of a material and the corresponding material is fetched from the cache
- *     - A material type is checked for bespokeness:
- *       - If the material type is not bespoke the type is assumed to be the id for a material and the corresponding material is loaded from the cache.
- *       - If the material type is bespoke a text ID is generated from the arguments list and used to load a material datum from the cache.
- *   - The following elements are used to generate bespoke IDs
+ * - The first argument is a material datum, text string, or material type.
+ * - [Material datums][/datum/material] are assumed to be references to the cached datum and are returned
+ * - Text is assumed to be the text ID of a material and the corresponding material is fetched from the cache
+ * - A material type is checked for bespokeness:
+ *   - If the material type is not bespoke the type is assumed to be the id for a material and the corresponding material is loaded from the cache.
+ *   - If the material type is bespoke a text ID is generated from the arguments list and used to load a material datum from the cache.
+ * - The following elements are used to generate bespoke IDs
  */
-/datum/controller/subsystem/materials/proc/get_material(list/arguments)
+/datum/controller/subsystem/materials/proc/get_material(datum/material/material_type, ...)
 	RETURN_TYPE(/datum/material)
 
 	if(!materials)
 		initialize_materials()
 
-	var/datum/material/key = arguments
-	if (islist(arguments))
-		arguments = arguments[1]
+	if(istype(material_type))
+		return material_type // We are assuming here that the only thing allowed to create material datums is [/datum/controller/subsystem/materials/proc/initialize_material]
 
-	if(istype(key))
-		return key // We are assuming here that the only thing allowed to create material datums is [/datum/controller/subsystem/materials/proc/initialize_material]
-
-	if(istext(key)) // Handle text id
-		. = materials[key]
+	if(istext(material_type)) // Handle text id
+		. = materials[material_type]
 		if(!.)
-			WARNING("Attempted to fetch material ref with invalid text id '[key]'")
+			WARNING("Attempted to fetch material ref with invalid text id '[material_type]'")
 		return
 
-	if(!ispath(key, /datum/material))
-		CRASH("Attempted to fetch material ref with invalid key [key]")
+	if(!ispath(material_type, /datum/material))
+		CRASH("Attempted to fetch material ref with invalid key [material_type]")
 
-	if(!(initial(key.init_flags) & MATERIAL_INIT_BESPOKE))
-		. = materials[key]
+	if(!(initial(material_type.init_flags) & MATERIAL_INIT_BESPOKE))
+		. = materials[material_type]
 		if(!.)
-			WARNING("Attempted to fetch reference to an abstract material with key [key]")
+			WARNING("Attempted to fetch reference to an abstract material with key [material_type]")
 		return
 
-	if (!islist(arguments))
-		CRASH("Attempted to fetch a bespoke material [arguments], but only the type was passed!")
-
-	key = get_id_from_args(arguments)
-	return materials[key] || initialize_material(arguments)
+	var/material_id = get_id_from_args(arglist(list(material_type) + args.Copy(2)))
+	return materials[material_id] || initialize_material(arglist(list(material_type) + args.Copy(2)))
 
 /// Fetches all materials that match a flag, or that don't have a flag if the passed flag is negative
 /datum/controller/subsystem/materials/proc/get_materials_by_flag(mat_flag)
-	// If it was passed to us from an assoc list from a design or something alike
-	if (istext(mat_flag))
-		mat_flag = text2num(mat_flag)
-
 	if (isnull(mat_flag) || mat_flag == MATERIAL_CLASS_ANY) // Wildcard for "any" material
 		return flat_materials
 
@@ -158,15 +134,14 @@ SUBSYSTEM_DEF(materials)
  * Named arguments can appear in any order and we need them to appear after ordered arguments
  * We assume that no one will pass in a named argument with a value of null
  **/
-/datum/controller/subsystem/materials/proc/get_id_from_args(list/arguments)
-	var/datum/material/mattype = arguments[1]
-	var/list/fullid = list("[initial(mattype.id) || mattype]")
+/datum/controller/subsystem/materials/proc/get_id_from_args(datum/material/mat_type, ...)
+	var/list/fullid = list("[initial(mat_type.id) || mat_type]")
 	var/list/named_arguments = list()
-	for(var/i in 2 to length(arguments))
-		var/key = arguments[i]
+	for(var/i in 2 to length(args))
+		var/key = args[i]
 		var/value
 		if(istext(key))
-			value = arguments[key]
+			value = args[key]
 		if(!(istext(key) || isnum(key)))
 			key = REF(key)
 		key = "[key]" // Key is stringified so numbers don't break things

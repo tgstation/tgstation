@@ -253,7 +253,7 @@
 	var/list/materials_needed = list()
 	var/mat_choice = FALSE
 	for(var/material, amount_needed in design.materials)
-		if(!istext(material)) // Material flag(s)
+		if(!isnum(material)) // Material flag(s)
 			if(isnull(material))
 				CRASH("Autolathe ui_act got passed an invalid material id: [material]")
 			materials_needed[material] += amount_needed

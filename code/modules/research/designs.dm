@@ -67,9 +67,9 @@ other types of metals and chemistry for reagents).
 	return ..()
 
 /datum/design/proc/InitializeMaterials()
-	var/list/temp_list = list()
+	var/alist/temp_list = alist()
 	for(var/mat_type, amount in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
-		if(!istext(mat_type)) //Not a category, so get the ref the normal way
+		if(!isnum(mat_type)) // Not a flag, so get the ref the normal way
 			var/datum/material/mat = SSmaterials.get_material(mat_type)
 			temp_list[mat] = amount
 		else
