@@ -5,12 +5,9 @@
 	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/stack/medical/wrap/sticky_tape"
 	post_init_icon_state = "tape"
-	w_class = WEIGHT_CLASS_TINY
-	full_w_class = WEIGHT_CLASS_TINY
 	item_flags = NOBLUDGEON
 	amount = 5
 	max_amount = 5
-	resistance_flags = FLAMMABLE
 	self_delay = 8 SECONDS
 	other_delay = 5 SECONDS
 	splint_factor = 0.65

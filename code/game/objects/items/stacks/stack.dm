@@ -216,12 +216,12 @@
 	if(novariants)
 		return ..()
 	if(amount <= (max_amount * (1/3)))
-		icon_state = initial(icon_state)
+		icon_state = post_init_icon_state || initial(icon_state)
 		return ..()
 	if (amount <= (max_amount * (2/3)))
-		icon_state = "[initial(icon_state)]_2"
+		icon_state = "[post_init_icon_state || initial(icon_state)]_2"
 		return ..()
-	icon_state = "[initial(icon_state)]_3"
+	icon_state = "[post_init_icon_state || initial(icon_state)]_3"
 	return ..()
 
 /obj/item/stack/examine(mob/user)

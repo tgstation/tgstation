@@ -1,15 +1,14 @@
 /obj/item/tourniquet
 	name = "tourniquet"
 	desc = "A medical device used to stop severe bleeding from a limb."
-	// icon = 'icons/obj/medical/tourniquet.dmi'
-	// icon_state = "tourniquet"
-	icon = 'icons/obj/medical/stack_medical.dmi'
-	icon_state = "gauze"
+	icon = 'icons/obj/medical/firstaid.dmi'
+	icon_state = "tourniquet"
 
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 	item_flags = NOBLUDGEON
+	custom_premium_price = PAYCHECK_CREW * 2
 
 /obj/item/tourniquet/Initialize(mapload)
 	. = ..()

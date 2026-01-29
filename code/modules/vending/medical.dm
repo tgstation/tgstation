@@ -33,6 +33,7 @@
 		/obj/item/sensor_device = 2,
 		/obj/item/storage/medkit/advanced = 2,
 		/obj/item/shears = 1,
+		/obj/item/tourniquet = 6,
 		/obj/item/storage/organbox = 1,
 	)
 	refill_canister = /obj/item/vending_refill/medical
