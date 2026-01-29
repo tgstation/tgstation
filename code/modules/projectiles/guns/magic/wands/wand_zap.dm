@@ -17,6 +17,7 @@
 	var/obj/projectile/magic/zap/spark = new(user.drop_location())
 	spark.firer = user
 	user.projectile_hit(spark, BODY_ZONE_CHEST)
+	qdel(spark)
 	charges--
 
 /obj/item/gun/magic/wand/zap/do_suicide(mob/living/user)

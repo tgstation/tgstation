@@ -195,7 +195,7 @@
 
 /datum/component/hat_stabilizer/proc/on_hat_movement(obj/hat, mob/user)
 	SIGNAL_HANDLER
-	remove_hat(user)
+	remove_hat(ismob(user) ? user : null)
 
 /datum/component/hat_stabilizer/proc/on_secondary_attack_hand(datum/source, mob/user)
 	SIGNAL_HANDLER

@@ -22,6 +22,7 @@
 	var/obj/projectile/magic/booze/splash = new(user.drop_location())
 	splash.firer = user
 	user.projectile_hit(splash, BODY_ZONE_HEAD)
+	qdel(splash)
 	charges--
 
 /obj/item/gun/magic/wand/booze/do_suicide(mob/living/user)
