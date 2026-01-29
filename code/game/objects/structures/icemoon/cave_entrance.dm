@@ -9,6 +9,8 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	/obj/item/stack/ore/titanium = 75,
 	))
 
+GLOBAL_VAR_INIT(tumors_spawned, 0)
+
 /obj/structure/spawner/ice_moon
 	name = "cave entrance"
 	desc = "A hole in the ground, filled with monsters ready to defend it."
@@ -143,9 +145,18 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	visible_message(span_warning("Something slips out of [src]!"))
 	var/loot = rand(1, 100)
 	switch(loot)
-		if(1 to 80)
+		if(1 to 75)
 			new /obj/structure/closet/crate/necropolis/tendril/demonic(loc)
+		if(76 to 80)
+			new /mob/living/basic/mining/brimdemon(loc) // demons from a demonic portal
 		if(81 to 90)
-			new /mob/living/basic/boss/blood_drunk_miner/doom(loc)
+			if(world.time-SSticker.round_start_time > 15 MINUTES) // imagine destroying your first portal and being ambushed by a fucking doomslayer
+				new /mob/living/basic/boss/blood_drunk_miner/doom(loc) // demon hunter from a demonic portal
+				return
+			new /obj/structure/closet/crate/necropolis/tendril/demonic(loc)
 		if(91 to INFINITY)
-			new /obj/structure/elite_tumor(loc)
+			if(GLOB.tumors_spawned < 3)
+				new /obj/structure/elite_tumor(loc) // so you wont get like 10 tumors and no other loot
+				GLOB.tumors_spawned ++
+				return
+			new /obj/structure/closet/crate/necropolis/tendril/demonic(loc)
