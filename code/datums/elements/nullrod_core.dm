@@ -18,6 +18,7 @@
 		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed), target), \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)
+	target.AddComponent(/datum/component/cult_kill_tracker)
 	target.AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
 	ADD_TRAIT(target, TRAIT_NULLROD_ITEM, ELEMENT_TRAIT(type))
 
