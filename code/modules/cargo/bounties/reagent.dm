@@ -211,7 +211,7 @@
 	var/wanted_vol = 30
 
 /datum/bounty/pill/can_claim()
-	return ..() && shipped_ammount >= required_ammount
+	return shipped_ammount >= required_ammount
 
 /datum/bounty/pill/applies_to(obj/shipped)
 	if(!istype(shipped, /obj/item/reagent_containers/applicator/pill))
