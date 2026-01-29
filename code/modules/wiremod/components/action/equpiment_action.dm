@@ -90,3 +90,28 @@
 		var/datum/action/granted_action = granted_to[ref]
 		granted_action.name = button_name.value || "Action"
 		granted_action.button_icon_state = "bci_[replacetextEx(LOWER_TEXT(icon_options.value), " ", "_")]"
+
+/datum/action/innate/circuit_equipment_action
+	name = "Action"
+	button_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "bci_power"
+	check_flags = AB_CHECK_CONSCIOUS
+
+	var/datum/granted_to
+	var/obj/item/circuit_component/equipment_action/action_comp
+
+/datum/action/innate/circuit_equipment_action/New(datum/granted_to, obj/item/circuit_component/equipment_action/action_comp)
+	. = ..()
+	src.granted_to = granted_to
+	action_comp.granted_to[REF(granted_to)] = src
+	src.action_comp = action_comp
+
+/datum/action/innate/circuit_equipment_action/Destroy()
+	action_comp.granted_to -= REF(granted_to)
+	action_comp = null
+
+	return ..()
+
+/datum/action/innate/circuit_equipment_action/Activate()
+	action_comp.user.set_output(owner)
+	action_comp.signal.set_output(COMPONENT_SIGNAL)
