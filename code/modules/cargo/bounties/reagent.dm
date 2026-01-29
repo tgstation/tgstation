@@ -4,7 +4,7 @@
 	var/datum/reagent/wanted_reagent
 
 /datum/bounty/reagent/can_claim()
-	return ..() && shipped_volume >= required_volume
+	return shipped_volume >= required_volume
 
 /datum/bounty/reagent/print_required()
 		return "[shipped_volume]/[required_volume] u"
