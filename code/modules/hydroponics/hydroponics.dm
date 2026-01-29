@@ -389,7 +389,7 @@
 					myseed.set_instability(myseed.instability/2)
 			if(myseed.instability >= 20 && prob(myseed.instability) && !myseed.get_gene(/datum/plant_gene/trait/stable_stats)) //No hardmutation if Symbiotic Resilience trait is present.
 				if(myseed.instability >= 40)
-					hardmutate(stabmut = 0)
+					hardmutate(stabmut = myseed.instability >= 80 ? 5 : 0)
 				else
 					mutate(stabmut = 0)
 
