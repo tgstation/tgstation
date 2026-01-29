@@ -13,6 +13,15 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/desc = "its..stuff."
 	/// What the material is indexed by in the SSmaterials.materials list. Defaults to the type of the material.
 	var/id = null
+
+	/// Bitflags that influence how SSmaterials handles this material.
+	var/init_flags = MATERIAL_INIT_MAPLOAD
+	/// Material behaviors, the bread and butter. Can either be directly defined, or dynamically calculated for alloys
+	var/mat_flags = NONE
+	/// List of material property IDs to their values, 0 - 9
+	var/mat_properties = null
+
+	// Color values
 	/// Base color of the material, for items that don't have greyscale configs nor are made of multiple materials. Item isn't changed in color if this is null.
 	/// This can be a RGB or color matrix, but it cannot be RGBA as alpha is automatically filled in.
 	var/color = null
@@ -29,19 +38,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	/// Starlight color of the material
 	/// This is the color of light it'll emit if its turf is transparent and over space. Defaults to GLOB.starlight_color if not set
 	var/starlight_color = null
-	/// Bitflags that influence how SSmaterials handles this material.
-	var/init_flags = MATERIAL_INIT_MAPLOAD
-	/// Material behaviors, the bread and butter. Can either be directly defined, or dynamically calculated for alloys
-	var/mat_flags = NONE
-	/// The type of sheet this material creates.
-	var/sheet_type = null
-	/// What type of ore is this material associated with? Used for mining, and not every material has one.
-	var/obj/item/ore_type = null
-	/// This is a modifier for force, and resembles the strength of the material
-	var/strength_modifier = 1
-	/// This is a modifier for integrity, and resembles the strength of the material
-	var/integrity_modifier = 1
 
+	// Trading values
 	/// This is the amount of value per 1 unit of the material
 	var/value_per_unit = 0
 	/// This is the minimum value of the material, used in the stock market for any mat that isn't set to null
@@ -51,10 +49,25 @@ Simple datum which is instanced once per type and is used for every object of sa
 	/// If this material is tradable, what is the base quantity of the material on the stock market?
 	var/tradable_base_quantity = 0
 
-	/// Armor modifiers, multiplies an items normal armor vars by these amounts.
-	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1, ACID = 1)
-	/// How beautiful is this material per unit.
-	var/beauty_modifier = 0
+	// Associated item types
+	/// The type of sheet this material creates.
+	var/sheet_type = null
+	/// What type of ore is this material associated with? Used for mining, and not every material has one.
+	var/obj/item/ore_type = null
+	/// What type of shard the material will shatter to
+	var/obj/item/shard_type = null
+	/// What type of debris the tile will leave behind when shattered.
+	var/obj/effect/decal/debris_type = null
+
+	// Misc stats
+	/// How resistant the material is to rusting when applied to a turf
+	var/mat_rust_resistance = RUST_RESISTANCE_ORGANIC
+	/// How likely this mineral is to be found in a boulder during mining.
+	var/mineral_rarity = MATERIAL_RARITY_COMMON
+	/// How many points per units of ore does this grant?
+	var/points_per_unit = 1
+
+	// Sound/icon stats, not inherited
 	/// Can be used to override the sound items make, lets add some SLOSHing.
 	var/item_sound_override = null
 	/// Can be used to override the stepsound a turf makes. MORE SLOOOSH
@@ -63,38 +76,6 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/texture_layer_icon_state = null
 	/// A cached icon for the texture filter
 	var/icon/cached_texture_filter_icon = null
-	/// What type of shard the material will shatter to
-	var/obj/item/shard_type = null
-	/// How resistant the material is to rusting when applied to a turf
-	var/mat_rust_resistance = RUST_RESISTANCE_ORGANIC
-	/// What type of debris the tile will leave behind when shattered.
-	var/obj/effect/decal/debris_type = null
-	/// How likely this mineral is to be found in a boulder during mining.
-	var/mineral_rarity = MATERIAL_RARITY_COMMON
-	/// How many points per units of ore does this grant?
-	var/points_per_unit = 1
-	/// The slowdown that is added to items.
-	var/added_slowdown = 0
-
-	/// Fish made of or infused with this material have their weight multiplied by this value.
-	var/fish_weight_modifier = 1
-
-	/// Additive bonus/malus to the fishing difficulty modifier of any rod made of this item. Negative is good, positive bad
-	var/fishing_difficulty_modifier = 0
-	/// Additive bonus/malus to the cast range of the fishing rod
-	var/fishing_cast_range = 0
-	/// The multiplier of how much experience is gained when using a fishing rod made of this material
-	var/fishing_experience_multiplier = 1
-	/// The multiplier to the completion gain of the fishing rod made of this material
-	var/fishing_completion_speed = 1
-	/// The multiplier of the bait/bobber speed of the fishing challenge for fishing rods made of this material
-	var/fishing_bait_speed_mult = 1
-	/// The multiplier of the deceleration/friction for fishing rods made of this material
-	var/fishing_deceleration_mult = 1
-	/// The multiplier of the bounciness of the bait/bobber upon hitting the edges of the minigame area
-	var/fishing_bounciness_mult = 1
-	/// The multiplier of negative velocity that pulls the bait/bobber of a fishing rod down when not holding the click
-	var/fishing_gravity_mult = 1
 
 /** Handles initializing the material.
  *
@@ -118,9 +99,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 ///This proc is called when the material becomes the one the object is composed of the most
 /datum/material/proc/on_main_applied(atom/source, mat_amount, multiplier)
-	SHOULD_CALL_PARENT(TRUE)
-	if(beauty_modifier >= 0.15 && HAS_TRAIT(source, TRAIT_FISHING_BAIT))
-		source.AddElement(/datum/element/shiny_bait)
+	return
 
 /datum/material/proc/setup_glow(turf/on)
 	if(GET_TURF_PLANE_OFFSET(on) != GET_LOWEST_STACK_OFFSET(on.z)) // We ain't the bottom brother
@@ -140,15 +119,13 @@ Simple datum which is instanced once per type and is used for every object of sa
 /datum/material/proc/lit_turf_deleted(turf/source)
 	source.set_light(0, 0, null)
 
-///This proc is called when the material is removed from an object.
+/// This proc is called when the material is removed from an object.
 /datum/material/proc/on_removed(atom/source, amount, material_flags)
 	return
 
-///This proc is called when the material is no longer the one the object is composed by the most
+/// This proc is called when the material is no longer the one the object is composed by the most
 /datum/material/proc/on_main_removed(atom/source, mat_amount, multiplier)
-	SHOULD_CALL_PARENT(TRUE)
-	if(beauty_modifier >= 0.15 && HAS_TRAIT(source, TRAIT_FISHING_BAIT))
-		source.RemoveElement(/datum/element/shiny_bait)
+	return
 
 ////Called in `/datum/component/edible/proc/on_material_effects`
 /datum/material/proc/on_edible_applied(atom/source, datum/component/edible/edible)
@@ -185,3 +162,12 @@ Simple datum which is instanced once per type and is used for every object of sa
 	for(var/armor in armor_modifiers)
 		return_list[armor] = return_list[armor] * multiplier
 	return return_list
+
+/datum/material/proc/get_property(prop_id)
+	if (mat_properties[prop_id])
+		return mat_properties[prop_id]
+
+	var/datum/material_property/derived/derived_prop = SSmaterials.properties[prop_id]
+	if (!istype(derived_prop))
+		return 0 // Property was not specified on the material and wasn't a derived one
+	return derived_prop.get_value(src)

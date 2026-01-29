@@ -24,13 +24,15 @@ SUBSYSTEM_DEF(materials)
 		new /datum/stack_recipe("Material airlock assembly", /obj/structure/door_assembly/door_assembly_material, 4, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_SKIP_MATERIALS_PARITY, category = CAT_DOORS),
 		new /datum/stack_recipe("Material platform", /obj/structure/platform/material, 2, time = 3 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_SKIP_MATERIALS_PARITY, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
 	)
-	///List of stackcrafting recipes for materials using rigid recipes
+	/// List of stackcrafting recipes for materials using rigid recipes
 	var/list/rigid_stack_recipes = list(
 		new /datum/stack_recipe("Carving block", /obj/structure/carving_block, 5, time = 3 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_SKIP_MATERIALS_PARITY, category = CAT_STRUCTURE),
 	)
 
-	///A list of dimensional themes used by the dimensional anomaly and other things, most of which require materials to function.
+	/// A list of dimensional themes used by the dimensional anomaly and other things, most of which require materials to function.
 	var/list/datum/dimension_theme/dimensional_themes
+	/// An ID -> instance list of material properties
+	var/list/datum/material_property/properties
 
 ///Ran on initialize, populated the materials and material dictionaries with their appropriate vars (See these variables for more info)
 /datum/controller/subsystem/materials/proc/initialize_materials()
@@ -38,6 +40,11 @@ SUBSYSTEM_DEF(materials)
 	flat_materials = list()
 	materials_by_type = list()
 	material_combos = list()
+
+	properties = list()
+	for(var/datum/material_property/property_type as anything in valid_subtypesof(/datum/material_property))
+		properties[property_type::id] = new property_type()
+
 	for(var/datum/material/mat_type as anything in valid_subtypesof(/datum/material))
 		if(initial(mat_type.init_flags) & MATERIAL_INIT_MAPLOAD)
 			initialize_material(mat_type)

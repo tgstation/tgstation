@@ -61,6 +61,21 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 	ITEM_MATERIAL_CLASSES = "solid material",
 ))
 
+// Core material property IDs
+#define MATERIAL_DENSITY "density"
+#define MATERIAL_HARDNESS "hardness"
+#define MATERIAL_FLEXIBILITY "flexibility"
+#define MATERIAL_REFLECTIVITY "reflectivity"
+#define MATERIAL_ELECTRICAL "electrical"
+#define MATERIAL_THERMAL "thermal"
+#define MATERIAL_CHEMICAL "chemical"
+
+// Derived material property IDs
+#define MATERIAL_BEAUTY "beauty"
+
+/// Maximum value for a core material property
+#define MATERIAL_PROPERTY_MAX 9
+
 // Material Container Flags.
 ///If the container shows the amount of contained materials on examine.
 #define MATCONTAINER_EXAMINE (1 << 0)

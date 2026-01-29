@@ -140,7 +140,7 @@
 	var/beauty = 100 + mounted_fish.beauty * 1.2
 	var/datum/material/main_material = mounted_fish.get_master_material()
 	if(main_material)
-		beauty += main_material.beauty_modifier * mounted_fish.weight
+		beauty += main_material.get_property(MATERIAL_BEAUTY) * mounted_fish.weight
 	return round(beauty)
 
 /obj/structure/fish_mount/proc/on_fish_attack_hand(datum/source, mob/living/user)

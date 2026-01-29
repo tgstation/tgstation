@@ -1802,6 +1802,8 @@
 #include "code\datums\materials\hauntium.dm"
 #include "code\datums\materials\meat.dm"
 #include "code\datums\materials\pizza.dm"
+#include "code\datums\materials\properties\_properties.dm"
+#include "code\datums\materials\properties\derived.dm"
 #include "code\datums\memory\_memory.dm"
 #include "code\datums\memory\general_memories.dm"
 #include "code\datums\memory\key_memories.dm"

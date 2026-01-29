@@ -99,7 +99,15 @@
 	alpha = 150
 	starlight_color = COLOR_STRONG_MAGENTA
 	init_flags = MATERIAL_INIT_MAPLOAD
-	integrity_modifier = 0.5
+	mat_properties = list(
+		MATERIAL_DENSITY = 2,
+		MATERIAL_HARDNESS = NONE,
+		MATERIAL_FLEXIBILITY = NONE,
+		MATERIAL_REFLECTIVITY = NONE,
+		MATERIAL_ELECTRICAL = NONE,
+		MATERIAL_THERMAL = NONE,
+		MATERIAL_CHEMICAL = NONE,
+	)
 	armor_modifiers = list(MELEE = 0.8, BULLET = 0.8, LASER = 1.2, ENERGY = 1.2, BOMB = 0.3, BIO = 1.2, FIRE = 2, ACID = 2)
 	sheet_type = /obj/item/stack/sheet/plasmaglass
 	shard_type = /obj/item/shard/plasma

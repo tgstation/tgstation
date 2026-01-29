@@ -219,13 +219,20 @@
 /atom/proc/apply_single_mat_effect(datum/material/material, amount, multiplier)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(material.beauty_modifier)
-		AddElement(/datum/element/beauty, material.beauty_modifier * amount)
+	var/beauty_modifier = material.get_property(MATERIAL_BEAUTY)
+	if(beauty_modifier)
+		AddElement(/datum/element/beauty, beauty_modifier * amount)
+
+		if(beauty_modifier >= 0.15 && HAS_TRAIT(src, TRAIT_FISHING_BAIT))
+			AddElement(/datum/element/shiny_bait)
 
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || !uses_integrity)
 		return
 
-	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
+	#warn rework this ffs
+	// Density is health, hardness is melee/projectile armor, 0.1 ~ 1.9 variance
+	var/base_modifier = material.get_property(MATERIAL_DENSITY) / MATERIAL_PROPERTY_MAX * 1.8 + 0.1
+	var/integrity_mod = GET_MATERIAL_MODIFIER(base_modifier, multiplier)
 	modify_max_integrity(ceil(max_integrity * integrity_mod))
 	var/list/armor_mods = material.get_armor_modifiers(multiplier)
 	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
@@ -259,8 +266,6 @@
 		custom_material.on_removed(src, mat_amount, multiplier)
 		if(material_flags & MATERIAL_COLOR)
 			gather_material_color(custom_material, colors, mat_amount, multicolor = mat_length > 1)
-		if(custom_material.beauty_modifier)
-			RemoveElement(/datum/element/beauty, custom_material.beauty_modifier * mat_amount)
 
 	remove_main_material_effects(main_material, main_mat_amount, main_mat_mult)
 
@@ -280,9 +285,18 @@
 ///Remove material effects of a single material.
 /atom/proc/remove_single_mat_effect(datum/material/material, amount, multiplier)
 	SHOULD_CALL_PARENT(TRUE)
+
+	var/beauty_modifier = material.get_property(MATERIAL_BEAUTY)
+	if(beauty_modifier)
+		RemoveElement(/datum/element/beauty, beauty_modifier * amount)
+		if(beauty_modifier >= 0.15 && HAS_TRAIT(src, TRAIT_FISHING_BAIT))
+			RemoveElement(/datum/element/shiny_bait)
+
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || !uses_integrity)
 		return
-	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
+
+	var/base_modifier = material.get_property(MATERIAL_DENSITY) / MATERIAL_PROPERTY_MAX * 1.8 + 0.1
+	var/integrity_mod = GET_MATERIAL_MODIFIER(base_modifier, multiplier)
 	modify_max_integrity(floor(max_integrity / integrity_mod))
 	var/list/armor_mods = material.get_armor_modifiers(1 / multiplier)
 	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
