@@ -10,10 +10,10 @@
 /obj/machinery/plumbing/acclimator
 	name = "chemical acclimator"
 	desc = "An efficient cooler and heater for the perfect showering temperature or illicit chemical factory."
-
 	icon_state = "acclimator"
 	base_icon_state = "acclimator"
 	buffer = 200
+	reagent_flags = TRANSPARENT
 
 	///towards wich temperature do we build?
 	var/target_temperature = 300

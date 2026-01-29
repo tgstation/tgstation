@@ -22,13 +22,13 @@
 	multiplier = 1, //unused for plumbing
 	datum/reagent/target_id,
 	preserve_data = TRUE, //unused for plumbing
-	no_react = FALSE, //unused for plumbing we always want reactions
+	no_react = FALSE,
 	mob/transferred_by, //unused for plumbing logging is not important inside plumbing machines
 	remove_blacklisted = FALSE, //unused for plumbing, we don't care what reagents are inside us
 	methods = LINEAR, //default round robin technique for transferring reagents
 	show_message = TRUE, //unused for plumbing, used for logging only
 	ignore_stomach = FALSE, //unused for plumbing, reagents flow only between machines & is not injected to mobs at any point in time
-	copy_only = FALSE //unused
+	copy_only = FALSE
 )
 	if(QDELETED(target) || !total_volume)
 		return FALSE
@@ -53,7 +53,8 @@
 		return FALSE
 
 	//Set up new reagents to inherit the old ongoing reactions
-	transfer_reactions(target_holder)
+	if(!no_react)
+		transfer_reactions(target_holder)
 
 	var/list/cached_reagents = reagent_list
 	var/transfer_amount
@@ -94,15 +95,19 @@
 		total_transfered_amount += transfered_amount
 		if(round_robin)
 			to_transfer -= transfered_amount
-		reagent.volume -= transfered_amount
+		if(!copy_only)
+			reagent.volume -= transfered_amount
 
 		if(!isnull(target_id))
 			break
-	update_total()
+	if(!copy_only)
+		update_total()
 
 	//handle reactions
-	target_holder.handle_reactions()
-	handle_reactions()
+	if(!no_react)
+		target_holder.handle_reactions()
+		if(!copy_only)
+			handle_reactions()
 
 	return total_transfered_amount
 

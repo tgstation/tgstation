@@ -88,8 +88,7 @@
 
 				//connect ductnets
 				if(!other.net) //will be null only for map loaded ducts
-					net.ducts += other
-					other.net = net
+					net.add_duct(other, FALSE)
 				else if(net != other.net) //merge the nets
 					var/datum/ductnet/othernet = other.net
 					//Take all its suppliers & demanders
@@ -103,9 +102,11 @@
 					othernet.demanders.Cut()
 
 					//Take all its ducts
-					net.ducts |= othernet.ducts
 					for(var/obj/machinery/duct/duct as anything in othernet.ducts)
-						duct.net = net
+						net.add_duct(duct, FALSE)
+
+					//Transfer all its reagents
+					othernet.pipeline.trans_to(net.pipeline, othernet.pipeline.maximum_volume, no_react = TRUE)
 
 					//destory it
 					qdel(othernet)
@@ -140,12 +141,31 @@
 
 	update_appearance(UPDATE_ICON_STATE)
 
+//Expose reagents to everything on the ducts turf
+/obj/machinery/duct/proc/spill_reagents()
+	PRIVATE_PROC(TRUE)
+
+	var/modifier = 1 / net.ducts.len
+	var/turf/drop = get_turf(src)
+	for(var/atom/thing in drop)
+		//Things below the turf are protected
+		if(HAS_TRAIT(thing, TRAIT_UNDERFLOOR))
+			continue
+		net.pipeline.expose(thing, TOUCH, modifier)
+	net.pipeline.expose(drop, TOUCH, modifier)
+
+	return modifier
+
 ///we disconnect ourself from our neighbours. we also destroy our ductnet and tell our neighbours to make a new one
 /obj/machinery/duct/on_deconstruction()
+	//Drop duct stack
 	var/obj/item/stack/ducts/duct_stack = new (drop_location())
 	duct_stack.duct_color = duct_color
 	duct_stack.duct_layer = duct_layer
 	duct_stack.add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
+
+	//Expose reagents to everything on the ducts turf
+	spill_reagents()
 
 ///Removes duct from ductnet
 /obj/machinery/duct/proc/disconnect()
@@ -159,6 +179,8 @@
 	//object was early deleted
 	if(!net)
 		return ..()
+
+	var/reagents_per_pipe = net.pipeline.total_volume / net.ducts.len
 
 	var/list/atom/movable/visited = list(src = TRUE)
 	while(neighbours.len)
@@ -184,11 +206,9 @@
 			pipe = node
 			if(istype(pipe))
 				//assign to new pipenet
-				pipe.disconnect()
 				if(!newnet)
 					newnet = new
-				newnet.ducts += pipe
-				pipe.net = newnet
+				newnet.add_duct(pipe)
 
 				//go through its neighbours as well
 				for(var/atom/movable/subnode in pipe.neighbours)
@@ -210,6 +230,10 @@
 						if(dir)
 							newnet.add_plumber(plumbing, REVERSE_DIR(dir))
 
+		//Evenly distribute all reagents into this new pipeline
+		if(newnet?.ducts.len)
+			net.pipeline.trans_to(newnet.pipeline, reagents_per_pipe * newnet.ducts.len, no_react = TRUE, copy_only = TRUE, methods = NONE)
+
 	disconnect()
 
 	return ..()
@@ -219,11 +243,16 @@
 	if(held_item?.tool_behaviour == TOOL_WRENCH)
 		context[SCREENTIP_CONTEXT_LMB] = "Destroy duct"
 		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/plunger))
+		context[SCREENTIP_CONTEXT_LMB] = "Flush"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/duct/examine(mob/user)
 	. = ..()
 	. += span_notice("Its current color and layer are [GLOB.pipe_color_name[duct_color]] and [GLOB.plumbing_layer_names["[duct_layer]"]]. Use in-hand to change.")
 	. += span_notice("It can be [EXAMINE_HINT("wrenched")] apart.")
+	if(net.pipeline.total_volume)
+		. += span_notice("You can [EXAMINE_HINT("plunge")] out the reagents.")
 
 /obj/machinery/duct/update_icon_state()
 	var/temp_icon = initial(icon_state)
@@ -246,13 +275,30 @@
 	icon_state = temp_icon
 	return ..()
 
+/obj/machinery/duct/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
+	. = ..()
+	while(net.pipeline.total_volume)
+		user.visible_message( \
+		span_notice("[user] plungers the duct."), \
+		span_notice("You plunge the duct."), \
+		span_hear("You hear chemicals gushing.") \
+		)
+
+		if(!do_after(user, 3 SECONDS, src))
+			return ITEM_INTERACT_FAILURE
+
+		net.pipeline.remove_all(spill_reagents(), TRUE)
+
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/duct/wrench_act(mob/living/user, obj/item/wrench) //I can also be the RPD
 	wrench.play_tool_sound(src)
 
 	user.visible_message( \
 	"[user] ununfastens \the [src].", \
 	span_notice("You unfasten \the [src]."), \
-	span_hear("You hear ratcheting."))
+	span_hear("You hear ratcheting.") \
+	)
 
 	deconstruct()
 	return ITEM_INTERACT_SUCCESS
@@ -323,6 +369,12 @@
 		if(amount == max_amount)
 			balloon_alert(user, "stack full!")
 			return ITEM_INTERACT_FAILURE
+
+		var/obj/machinery/duct/pipe = interacting_with
+		if(pipe.net.pipeline.total_volume)
+			balloon_alert(user, "pipe not empty!")
+			return ITEM_INTERACT_FAILURE
+
 		qdel(interacting_with)
 		add(1)
 		return ITEM_INTERACT_SUCCESS

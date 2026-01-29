@@ -294,7 +294,6 @@
 
 		total_removed_amount += remove_amount
 	update_total()
-	handle_reactions()
 
 	return round(total_removed_amount, CHEMICAL_QUANTISATION_LEVEL)
 

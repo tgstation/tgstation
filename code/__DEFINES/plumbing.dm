@@ -12,3 +12,5 @@
 #define IV_TAKING 0
 ///IV drip operation mode when it injects reagents into the object
 #define IV_INJECTING 1
+///Maximum volume of an reagent duct
+#define DUCT_VOLUME 50

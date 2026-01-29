@@ -9,8 +9,9 @@
 		return COMPONENT_INCOMPATIBLE
 	return ..()
 
-/datum/component/plumbing/buffer/can_give(amount, reagent, datum/ductnet/net)
+/datum/component/plumbing/buffer/supply_demand(dir)
 	var/obj/machinery/plumbing/buffer/buffer = parent
-	return (buffer.mode == READY) ? ..() : FALSE
+	if(buffer.mode == READY)
+		return ..()
 
 #undef READY
