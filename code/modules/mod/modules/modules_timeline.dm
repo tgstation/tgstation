@@ -14,7 +14,7 @@
 	module_type = MODULE_USABLE
 	removable = FALSE
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 3
-	incompatible_modules = list(/obj/item/mod/module/eradication_lock, /obj/item/mod/module/dna_lock)
+	incompatible_modules = list(/obj/item/mod/module/eradication_lock, /obj/item/mod/module/dna_lock, /obj/item/mod/module/wizard_lock)
 	cooldown_time = 0.5 SECONDS
 	/// The ckey we lock with, to allow all alternate versions of the user.
 	var/true_owner_ckey
@@ -51,6 +51,62 @@
 	if(true_owner_ckey && user.ckey != true_owner_ckey)
 		to_chat(mod.wearer, span_userdanger("\"Timeline inhabitant tampering detected! Eradicating...\""))
 		new /obj/structure/chrono_field(user.loc, user)
+		return MOD_CANCEL_REMOVAL
+
+/obj/item/mod/module/wizard_lock
+	name = "MOD magical lock module"
+	desc = "A module which remembers the original owner of the suit. \
+			When a non-owner enters, the magical lock will channel a dangerous spell through itself, \
+			exploding the modsuit... with the intruder inside. Not the way you want to go, so it turns \
+			out to be a good deterrent."
+	icon_state = "eradicationlock"
+	module_type = MODULE_USABLE
+	removable = FALSE
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 3
+	incompatible_modules = list(/obj/item/mod/module/eradication_lock, /obj/item/mod/module/dna_lock, /obj/item/mod/module/wizard_lock)
+	cooldown_time = 0.5 SECONDS
+	var/true_owner_ckey
+
+/obj/item/mod/module/wizard_lock/on_install()
+	. = ..()
+	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_mod_activation))
+	RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL, PROC_REF(on_mod_removal))
+
+/obj/item/mod/module/wizard_lock/on_uninstall(deleting = FALSE)
+	. = ..()
+	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
+	UnregisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL)
+
+/obj/item/mod/module/wizard_lock/on_use(mob/activator)
+	true_owner_ckey = mod.wearer.ckey
+	balloon_alert(activator, "user remembered")
+	playsound(src, 'sound/items/pshoom/pshoom.ogg', 25, TRUE)
+	drain_power(use_energy_cost)
+
+/obj/item/mod/module/wizard_lock/proc/on_mod_activation(datum/source, mob/living/user)
+	SIGNAL_HANDLER
+
+	if(true_owner_ckey && user.ckey != true_owner_ckey)
+		to_chat(mod.wearer, span_userdanger("\"Unregistered wizard access attempt registered! Channeling...\""))
+		sleep(2 SECONDS)
+		say("EI NATH!")
+		sleep(0.1 SECONDS)
+		playsound(user, 'sound/effects/magic/disintegrate.ogg', 50, TRUE)
+		user.gib(DROP_ORGANS|DROP_BODYPARTS)
+		qdel(src)
+		return MOD_CANCEL_ACTIVATE
+
+/obj/item/mod/module/wizard_lock/proc/on_mod_removal(datum/source, mob/living/user)
+	SIGNAL_HANDLER
+
+	if(true_owner_ckey && user.ckey != true_owner_ckey)
+		to_chat(mod.wearer, span_userdanger("\"Unregistered wizard tampering with module! Channeling...\""))
+		sleep(2 SECONDS)
+		say("EI NATH!")
+		sleep(0.1 SECONDS)
+		playsound(user, 'sound/effects/magic/disintegrate.ogg', 50, TRUE)
+		user.gib(DROP_ORGANS|DROP_BODYPARTS)
+		qdel(src)
 		return MOD_CANCEL_REMOVAL
 
 ///Rewinder - Activating saves a point in time, after 10 seconds you will jump back to that state.
