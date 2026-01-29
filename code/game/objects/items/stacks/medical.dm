@@ -389,7 +389,6 @@
 	merge_type = /obj/item/stack/medical/gauze
 	apply_verb = "wrapping"
 	works_on_dead = TRUE
-	var/obj/item/bodypart/gauzed_bodypart
 	heal_end_sound = SFX_BANDAGE_END
 	heal_begin_sound = SFX_BANDAGE_BEGIN
 	drop_sound = SFX_CLOTH_DROP
@@ -397,18 +396,16 @@
 
 /obj/item/stack/medical/gauze/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
-	register_context()
+	AddComponent(
+		/datum/component/limb_applicable,
+		apply_category = LIMB_ITEM_GAUZE,
+		override_existing = TRUE, // snowflake checked
+		can_apply = CALLBACK(src, PROC_REF(can_gauze_limb)),
+		on_apply = CALLBACK(src, PROC_REF(on_gauze_limb)),
+	)
 
 /obj/item/stack/medical/gauze/grind_results()
 	return list(/datum/reagent/cellulose = 2)
-
-/obj/item/stack/medical/gauze/Destroy(force)
-	. = ..()
-
-	if (gauzed_bodypart)
-		gauzed_bodypart.current_gauze = null
-		SEND_SIGNAL(gauzed_bodypart, COMSIG_BODYPART_UNGAUZED, src)
-	gauzed_bodypart = null
 
 /obj/item/stack/medical/gauze/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	if(iscarbon(target))
@@ -424,85 +421,76 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Shred Into Cloth"
 		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/stack/medical/gauze/try_heal_checks(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
-	var/obj/item/bodypart/limb = patient.get_bodypart(healed_zone)
-	if(isnull(limb))
-		if(!silent)
-			patient.balloon_alert(user, "no [parse_zone(healed_zone)]!")
-		return FALSE
-	if(!LAZYLEN(limb.wounds))
-		if(!silent)
-			patient.balloon_alert(user, "no wounds!") // good problem to have imo
-		return FALSE
-	if(limb.current_gauze && (limb.current_gauze.absorption_capacity * 1.2 > absorption_capacity)) // ignore if our new wrap is < 20% better than the current one, so someone doesn't bandage it 5 times in a row
-		if(!silent)
-			patient.balloon_alert(user, pick("already bandaged!", "bandage is clean!")) // good enough
-		return FALSE
-	for(var/datum/wound/woundies as anything in limb.wounds)
-		if(woundies.wound_flags & ACCEPTS_GAUZE)
-			return TRUE
-	if(!silent)
-		patient.balloon_alert(user, "can't gauze!")
-	return FALSE
+#define LACKS_WOUND 0
+#define HAS_WOUND 1
+#define HAS_SCANNED_WOUND 2
 
-// gauze is only relevant for wounds, which are handled in the wounds themselves
-/obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/living/user, healed_zone, silent, auto_change_zone, continuous)
-	var/obj/item/bodypart/limb = patient.get_bodypart(healed_zone)
-	var/treatment_delay = (user == patient ? self_delay : other_delay)
-	var/any_scanned = FALSE
+/obj/item/stack/medical/gauze/proc/can_gauze_limb(mob/user, mob/living/patient, obj/item/bodypart/limb)
+	var/wound_tracker = LACKS_WOUND
 	for(var/datum/wound/woundies as anything in limb.wounds)
+		if(!(woundies.wound_flags & ACCEPTS_GAUZE))
+			continue
 		if(HAS_TRAIT(woundies, TRAIT_WOUND_SCANNED))
-			any_scanned = TRUE
+			wound_tracker = HAS_SCANNED_WOUND
 			break
+		wound_tracker = HAS_WOUND
 
-	if(any_scanned)
+	if(wound_tracker == LACKS_WOUND)
+		patient.balloon_alert(user, LAZYLEN(limb.wounds) ? "can't gauze!" : "no wounds!")
+		return FALSE
+
+	var/obj/item/stack/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+	if(current_gauze && (current_gauze.absorption_capacity * 1.2 > absorption_capacity)) // ignore if our new wrap is < 20% better than the current one, so someone doesn't bandage it 5 times in a row
+		patient.balloon_alert(user, pick("already bandaged!", "bandage is clean!")) // good enough
+		return FALSE
+
+	var/treatment_delay = (user == patient ? self_delay : other_delay)
+	if(wound_tracker == HAS_SCANNED_WOUND)
 		treatment_delay *= 0.5
 		if(user == patient)
-			if(!silent)
-				user.visible_message(
-					span_warning("[user] begins expertly wrapping the wounds on [p_their()]'s [limb.plaintext_zone] with [src]..."),
-					span_warning("You begin quickly wrapping the wounds on your [limb.plaintext_zone] with [src], keeping the holo-image indications in mind..."),
-					visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
-				)
-		else
-			if(!silent)
-				user.visible_message(
-					span_warning("[user] begins expertly wrapping the wounds on [patient]'s [limb.plaintext_zone] with [src]..."),
-					span_warning("You begin quickly wrapping the wounds on [patient]'s [limb.plaintext_zone] with [src], keeping the holo-image indications in mind..."),
-					visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
-				)
-	else
-		if(!silent)
 			user.visible_message(
-				span_warning("[user] begins wrapping the wounds on [patient]'s [limb.plaintext_zone] with [src]..."),
-				span_warning("You begin wrapping the wounds on [user == patient ? "your" : "[patient]'s"] [limb.plaintext_zone] with [src]..."),
+				span_warning("[user] begins expertly wrapping the wounds on [p_their()]'s [limb.plaintext_zone] with [src]..."),
+				span_warning("You begin quickly wrapping the wounds on your [limb.plaintext_zone] with [src], keeping the holo-image indications in mind..."),
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
-	playsound(src, heal_begin_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
-
-	if(!do_after(user, treatment_delay, target = patient))
-		return
-
-	if(!silent)
-		patient.balloon_alert(user, "wrapped [parse_zone(healed_zone)]")
+		else
+			user.visible_message(
+				span_warning("[user] begins expertly wrapping the wounds on [patient]'s [limb.plaintext_zone] with [src]..."),
+				span_warning("You begin quickly wrapping the wounds on [patient]'s [limb.plaintext_zone] with [src], keeping the holo-image indications in mind..."),
+				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+			)
+	else
 		user.visible_message(
-			span_green("[user] applies [src] to [patient]'s [limb.plaintext_zone]."),
-			span_green("You bandage the wounds on [user == patient ? "your" : "[patient]'s"] [limb.plaintext_zone]."),
+			span_warning("[user] begins wrapping the wounds on [patient]'s [limb.plaintext_zone] with [src]..."),
+			span_warning("You begin wrapping the wounds on [user == patient ? "your" : "[patient]'s"] [limb.plaintext_zone] with [src]..."),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
-		if(heal_end_sound)
-			playsound(patient, heal_end_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+	if(heal_begin_sound)
+		playsound(src, heal_begin_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 
+	if(!do_after(user, treatment_delay, patient))
+		return FALSE
+
+	if(heal_end_sound)
+		playsound(patient, heal_end_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+	return TRUE
+
+/obj/item/stack/medical/gauze/proc/on_gauze_limb(mob/user, mob/living/patient, obj/item/bodypart/limb)
+	patient.balloon_alert(user, "wrapped [limb.plaintext_zone]")
+	user.visible_message(
+		span_green("[user] applies [src] to [patient]'s [limb.plaintext_zone]."),
+		span_green("You bandage the wounds on [user == patient ? "your" : "[patient]'s"] [limb.plaintext_zone]."),
+		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+	)
 	if(limb.cached_bleed_rate)
 		add_mob_blood(patient)
 
-	// Dressing burns provides a "one-time" bonus to sanitization and healing
-	// However, any notable infection will reduce the effectiveness of this bonus
-	for(var/datum/wound/burn/flesh/wound in limb.wounds)
-		wound.sanitization += sanitization * (wound.infection > 0.1 ? 0.2 : 1)
-		wound.flesh_healing += flesh_regeneration * (wound.infection > 0.1 ? 0 : 1)
+#undef LACKS_WOUND
+#undef HAS_WOUND
+#undef HAS_SCANNED_WOUND
 
-	limb.apply_gauze(src)
+/obj/item/stack/medical/gauze/try_heal_checks(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
+	return FALSE // uses component
 
 /obj/item/stack/medical/gauze/twelve
 	amount = 12

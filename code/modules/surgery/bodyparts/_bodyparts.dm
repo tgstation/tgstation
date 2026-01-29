@@ -158,10 +158,10 @@
 	var/cached_bleed_rate = 0
 	/// How much generic bleedstacks we have on this bodypart
 	var/generic_bleedstacks
-	/// If we have a gauze wrapping currently applied (not including splints)
-	var/obj/item/stack/medical/gauze/current_gauze
 	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/hand_item/self_grasp])
 	var/obj/item/hand_item/self_grasp/grasped_by
+	/// Lazylist of category to item applied to this limb
+	var/list/applied_items
 
 	///A list of all bodypart overlays to draw
 	var/list/bodypart_overlays = list()
@@ -298,7 +298,6 @@
 
 	owner = null
 
-	QDEL_NULL(current_gauze)
 	QDEL_LAZYLIST(scars)
 
 	for(var/atom/movable/movable in contents)
@@ -442,6 +441,7 @@
 		else
 			check_list += span_boldwarning(embed_text)
 
+	var/obj/item/stack/current_gauze = LAZYACCESS(applied_items, LIMB_ITEM_GAUZE)
 	if(current_gauze)
 		check_list += span_notice("\tThere is some [current_gauze.name] wrapped around it.")
 	else if(can_bleed())
@@ -621,8 +621,6 @@
 	var/atom/drop_loc = drop_location()
 	if(IS_ORGANIC_LIMB(src))
 		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
-
-	QDEL_NULL(current_gauze)
 
 	for(var/obj/item/organ/bodypart_organ in contents)
 		if(bodypart_organ.organ_flags & ORGAN_UNREMOVABLE)
@@ -1516,7 +1514,7 @@
 		else if(body_zone != BODY_ZONE_CHEST)
 			surgery_bloodloss *= 0.25
 		// bonus for being gauzed up
-		if(current_gauze)
+		if(LAZYACCESS(applied_items, LIMB_ITEM_GAUZE))
 			surgery_bloodloss *= 0.4
 
 		cached_bleed_rate += surgery_bloodloss
@@ -1587,41 +1585,24 @@
 	return ((biological_state & BIO_BLOODED) && (!owner || owner.can_bleed()))
 
 /**
- * apply_gauze() is used to- well, apply gauze to a bodypart
- *
- * As of the Wounds 2 PR, all bleeding is now bodypart based rather than the old bleedstacks system, and 90% of standard bleeding comes from flesh wounds (the exception is embedded weapons).
- * The same way bleeding is totaled up by bodyparts, gauze now applies to all wounds on the same part. Thus, having a slash wound, a pierce wound, and a broken bone wound would have the gauze
- * applying blood staunching to the first two wounds, while also acting as a sling for the third one. Once enough blood has been absorbed or all wounds with the ACCEPTS_GAUZE flag have been cleared,
- * the gauze falls off.
- *
- * Arguments:
- * * gauze- Just the gauze stack we're taking a sheet from to apply here
- */
-/obj/item/bodypart/proc/apply_gauze(obj/item/stack/medical/gauze/new_gauze)
-	if(!istype(new_gauze) || !new_gauze.absorption_capacity || !new_gauze.use(1))
-		return
-	var/newly_gauzed = !current_gauze
-	QDEL_NULL(current_gauze)
-	current_gauze = new new_gauze.type(src, 1)
-	current_gauze.gauzed_bodypart = src
-	if(newly_gauzed)
-		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZED, current_gauze, new_gauze)
-
-/**
- * seep_gauze() is for when a gauze wrapping absorbs blood or pus from wounds, lowering its absorption capacity.
- *
- * The passed amount of seepage is deducted from the bandage's absorption capacity, and if we reach a negative absorption capacity, the bandages falls off and we're left with nothing.
+ * Attempts to use up some of gauze applied
+ * If we use up all of the gauze, it is deleted
  *
  * Arguments:
  * * seep_amt - How much absorption capacity we're removing from our current bandages (think, how much blood or pus are we soaking up this tick?)
+ *
+ * Return TRUE if we successfully used up some gauze
+ * Return FALSE if we had no gauze to use up
  */
 /obj/item/bodypart/proc/seep_gauze(seep_amt = 0)
+	var/obj/item/stack/current_gauze = LAZYACCESS(applied_items, LIMB_ITEM_GAUZE)
 	if(!current_gauze)
-		return
+		return FALSE
 	current_gauze.absorption_capacity -= seep_amt
 	if(current_gauze.absorption_capacity <= 0)
 		owner.visible_message(span_danger("\The [current_gauze.name] on [owner]'s [name] falls away in rags."), span_warning("\The [current_gauze.name] on your [name] falls away in rags."), vision_distance=COMBAT_MESSAGE_RANGE)
-		QDEL_NULL(current_gauze)
+		qdel(current_gauze)
+	return TRUE
 
 ///A multi-purpose setter for all things immediately important to the icon and iconstate of the limb.
 /obj/item/bodypart/proc/change_appearance(icon, id, greyscale, dimorphic)

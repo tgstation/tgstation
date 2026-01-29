@@ -27,6 +27,16 @@
 	ignore_throwspeed_threshold = TRUE
 	immune_traits = null
 
+/obj/item/stack/sticky_tape/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+	. = ..()
+	AddComponent(
+		/datum/component/limb_applicable,
+		apply_category = LIMB_ITEM_GAUZE,
+		override_existing = TRUE, // snowflake checked
+		can_apply = CALLBACK(src, PROC_REF(can_gauze_limb)),
+		on_apply = CALLBACK(src, PROC_REF(on_gauze_limb)),
+	)
+
 /obj/item/stack/sticky_tape/grind_results()
 	return list(/datum/reagent/cellulose = 5)
 

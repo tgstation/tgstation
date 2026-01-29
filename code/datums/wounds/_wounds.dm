@@ -462,21 +462,22 @@
 /// Updates our limping and interaction penalties in accordance with our gauze.
 /datum/wound/proc/update_inefficiencies(replaced_or_replacing = FALSE)
 	if (wound_flags & ACCEPTS_GAUZE)
+		var/obj/item/stack/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
 		if(limb.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-			if(limb.current_gauze?.splint_factor)
-				limp_slowdown = initial(limp_slowdown) * limb.current_gauze.splint_factor
-				limp_chance = initial(limp_chance) * limb.current_gauze.splint_factor
+			if(current_gauze?.splint_factor)
+				limp_slowdown = initial(limp_slowdown) * current_gauze.splint_factor
+				limp_chance = initial(limp_chance) * current_gauze.splint_factor
 			else
 				limp_slowdown = initial(limp_slowdown)
 				limp_chance = initial(limp_chance)
 		else if(limb.body_zone in GLOB.arm_zones)
-			if(limb.current_gauze?.splint_factor)
-				set_interaction_efficiency_penalty(1 + ((get_effective_actionspeed_modifier()) * limb.current_gauze.splint_factor))
+			if(current_gauze?.splint_factor)
+				set_interaction_efficiency_penalty(1 + ((get_effective_actionspeed_modifier()) * current_gauze.splint_factor))
 			else
 				set_interaction_efficiency_penalty(initial(interaction_efficiency_penalty))
 
 		if(initial(disabling))
-			set_disabling(isnull(limb.current_gauze))
+			set_disabling(isnull(current_gauze))
 
 		limb.update_wounds(replaced_or_replacing)
 
@@ -655,9 +656,10 @@
 /datum/wound/proc/get_wound_description(mob/user)
 	var/desc
 
-	if ((wound_flags & ACCEPTS_GAUZE) && limb.current_gauze)
+	var/obj/item/stack/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+	if ((wound_flags & ACCEPTS_GAUZE) && current_gauze)
 		var/sling_condition = get_gauze_condition()
-		desc = "[victim.p_Their()] [limb.plaintext_zone] is [sling_condition] fastened in a sling of [limb.current_gauze.name]"
+		desc = "[victim.p_Their()] [limb.plaintext_zone] is [sling_condition] fastened in a sling of [current_gauze.name]"
 	else
 		desc = "[victim.p_Their()] [limb.plaintext_zone] [examine_desc]"
 
@@ -695,10 +697,11 @@
 
 /datum/wound/proc/get_gauze_condition()
 	SHOULD_BE_PURE(TRUE)
-	if (!limb.current_gauze)
+	var/obj/item/stack/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+	if (!current_gauze)
 		return null
 
-	switch(limb.current_gauze.absorption_capacity)
+	switch(current_gauze.absorption_capacity)
 		if(0 to 1.25)
 			return "just barely"
 		if(1.25 to 2.75)

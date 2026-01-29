@@ -54,8 +54,9 @@
 /datum/wound/pierce/bleed/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(victim.stat == DEAD || (wounding_dmg < 5) || !limb.can_bleed() || !victim.get_blood_volume() || !prob(internal_bleeding_chance + wounding_dmg))
 		return
-	if(limb.current_gauze?.splint_factor)
-		wounding_dmg *= (1 - limb.current_gauze.splint_factor)
+	var/obj/item/stack/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+	if(current_gauze?.splint_factor)
+		wounding_dmg *= (1 - current_gauze.splint_factor)
 	var/blood_bled = rand(1, wounding_dmg * internal_bleeding_coefficient) // 12 brute toolbox can cause up to 15/18/21 bloodloss on mod/sev/crit
 	switch(blood_bled)
 		if(1 to 6)
@@ -91,7 +92,7 @@
 		return BLOOD_FLOW_STEADY
 	if(HAS_TRAIT(victim, TRAIT_BLOOD_FOUNTAIN))
 		return BLOOD_FLOW_INCREASING
-	if(limb.current_gauze || clot_rate > 0)
+	if(LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE) || clot_rate > 0)
 		return BLOOD_FLOW_DECREASING
 	if(clot_rate < 0)
 		return BLOOD_FLOW_INCREASING
