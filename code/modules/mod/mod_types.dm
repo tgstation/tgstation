@@ -410,7 +410,7 @@
 		/obj/item/mod/module/noslip,
 		/obj/item/mod/module/welding,
 		/obj/item/mod/module/rad_protection,
-		/obj/item/mod/module/eradication_lock,
+		/obj/item/mod/module/wizard_lock,
 	)
 
 /obj/item/mod/control/pre_equipped/ninja
