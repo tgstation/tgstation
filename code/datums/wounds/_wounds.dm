@@ -462,12 +462,12 @@
 			limp_chance = initial(limp_chance) * splint_factor
 		else if(limb.body_zone in GLOB.arm_zones)
 			if(splint_factor < 1)
-				set_interaction_efficiency_penalty(1 + (get_effective_actionspeed_modifier() * current_gauze.splint_factor))
+				set_interaction_efficiency_penalty(1 + (get_effective_actionspeed_modifier() * splint_factor))
 			else
 				set_interaction_efficiency_penalty(initial(interaction_efficiency_penalty))
 
 		if(initial(disabling))
-			set_disabling(isnull(current_gauze))
+			set_disabling(splint_factor < 1)
 
 		limb.update_wounds(replaced_or_replacing)
 

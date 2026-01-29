@@ -184,5 +184,7 @@ DEFINE_BITFIELD(surgery_state, list(
 #define CLAMPED_VESSELS_BLEEDING 0.2
 
 // Limb item categories
-/// Gauze slot, asserted to be stack items
+/// Gauze slot, asserted to be wrap items
 #define LIMB_ITEM_GAUZE "gauze"
+/// Tourniquet slot
+#define LIMB_ITEM_TOURNIQUET "tourniquet"

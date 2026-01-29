@@ -387,6 +387,8 @@
 /obj/item/stack/medical/wrap
 	name = "wrap"
 	desc = "Something you can wrap around someone, like a hug."
+	gender = PLURAL
+	icon_state = "gauze"
 	apply_verb = "wrapping"
 	works_on_dead = TRUE
 
@@ -399,7 +401,7 @@
 		can_apply = CALLBACK(src, PROC_REF(can_gauze_limb)), \
 		on_apply = CALLBACK(src, PROC_REF(on_gauze_limb)), \
 	)
-	RegisterSignal(src, list(COMSIG_ITEM_APPLIED_TO_LIMB, COMSIG_ITEM_UNAPPLIED_FROM_LIMB), PROC_REF(update_wounds))
+	RegisterSignals(src, list(COMSIG_ITEM_APPLIED_TO_LIMB, COMSIG_ITEM_UNAPPLIED_FROM_LIMB), PROC_REF(update_wounds))
 
 /obj/item/stack/medical/wrap/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return NONE // uses component
@@ -488,9 +490,7 @@
 /obj/item/stack/medical/wrap/gauze
 	name = "medical gauze"
 	desc = "A roll of elastic cloth, perfect for stabilizing all kinds of wounds, from cuts and burns, to broken bones."
-	gender = PLURAL
 	singular_name = "medical gauze"
-	icon_state = "gauze"
 	self_delay = 5 SECONDS
 	other_delay = 2 SECONDS
 	max_amount = 12
