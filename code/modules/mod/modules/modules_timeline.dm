@@ -88,9 +88,7 @@
 
 	if(true_owner_ckey && user.ckey != true_owner_ckey)
 		to_chat(mod.wearer, span_userdanger("\"Unregistered wizard access attempt registered! Channeling...\""))
-		sleep(2 SECONDS)
-		say("EI NATH!")
-		sleep(0.5 SECONDS)
+		user.to_chat(src, span_userdanger("EI NATH!"))
 		playsound(user, 'sound/effects/magic/disintegrate.ogg', 50, TRUE)
 		user.gib(DROP_ORGANS|DROP_BODYPARTS)
 		qdel(src)
@@ -101,9 +99,7 @@
 
 	if(true_owner_ckey && user.ckey != true_owner_ckey)
 		to_chat(mod.wearer, span_userdanger("\"Unregistered wizard tampering with module! Channeling...\""))
-		sleep(2 SECONDS)
-		say("EI NATH!")
-		sleep(0.5 SECONDS)
+		user.to_chat(src, span_userdanger("EI NATH!"))
 		playsound(user, 'sound/effects/magic/disintegrate.ogg', 50, TRUE)
 		user.gib(DROP_ORGANS|DROP_BODYPARTS)
 		qdel(src)
