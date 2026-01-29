@@ -475,6 +475,7 @@
 		wound.sanitization += sanitization * (wound.infection > 0.1 ? 0.2 : 1)
 		wound.flesh_healing += flesh_regeneration * (wound.infection > 0.1 ? 0 : 1)
 
+/// Used via signal to update wounds
 /obj/item/stack/medical/wrap/proc/update_wounds(datum/source, obj/item/bodypart/limb)
 	SIGNAL_HANDLER
 	for(var/datum/wound/gauzed as anything in limb.wounds)
