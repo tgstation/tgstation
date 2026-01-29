@@ -306,13 +306,13 @@
 	if(!user.is_holding(src))
 		return
 	if(new_layer)
-		duct_layer = new_layer
+		duct_layer = GLOB.plumbing_layers[new_layer]
 	var/new_color = tgui_input_list(user, "Select a color", "Color", GLOB.pipe_paint_colors, GLOB.pipe_color_name[duct_color])
 	if(!user.is_holding(src))
 		return
 	if(new_color)
-		duct_color = new_color
-		add_atom_colour(GLOB.pipe_paint_colors[new_color], FIXED_COLOUR_PRIORITY)
+		duct_color = GLOB.pipe_paint_colors[new_color]
+		add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
 
 /obj/item/stack/ducts/wrench_act(mob/living/user, obj/item/tool)
 	return check_attach_turf(loc)
@@ -332,15 +332,13 @@
 /obj/item/stack/ducts/proc/check_attach_turf(turf/open_turf, mob/user)
 	. = NONE
 	if(isopenturf(open_turf))
-		var/layer_of_duct = GLOB.plumbing_layers[duct_layer]
-
-		var/datum/overlap = ducting_layer_check(open_turf, layer_of_duct)
+		var/datum/overlap = ducting_layer_check(open_turf, duct_layer)
 		if(!isnull(overlap))
 			if(user)
 				open_turf.balloon_alert(user, "overlapping [istype(overlap, /obj/machinery/duct) ? "duct" : "machine"] detected!")
 			return ITEM_INTERACT_FAILURE
 
-		new /obj/machinery/duct(open_turf, duct_color, layer_of_duct)
+		new /obj/machinery/duct(open_turf, duct_color, duct_layer)
 		playsound(open_turf, 'sound/machines/click.ogg', 50, TRUE)
 		use(1)
 		return ITEM_INTERACT_SUCCESS

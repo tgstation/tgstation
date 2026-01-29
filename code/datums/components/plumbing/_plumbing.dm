@@ -20,7 +20,6 @@
 	/// Ex - if this was set to "3", our component would only request the first 3 reagents found, even if more are available
 	var/distinct_reagent_cap = INFINITY
 
-///turn_connects is for wheter or not we spin with the object to change our pipes
 /datum/component/plumbing/Initialize(ducting_layer)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
