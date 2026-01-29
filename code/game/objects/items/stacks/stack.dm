@@ -58,21 +58,6 @@
 	// They're here instead of /stack/medical
 	// because sticky tape can be used as a makeshift bandage or splint
 
-	/// Verb used when applying this object to someone
-	var/apply_verb = "applying"
-	/// If set and this used as a splint for a broken bone wound,
-	/// This is used as a multiplier for applicable slowdowns (lower = better) (also for speeding up burn recoveries)
-	var/splint_factor
-	/// Like splint_factor but for burns instead of bone wounds. This is a multiplier used to speed up burn recoveries
-	var/burn_cleanliness_bonus
-	/// How much blood flow this stack can absorb if used as a bandage on a cut wound.
-	/// note that absorption is how much we lower the flow rate, not the raw amount of blood we suck up
-	var/absorption_capacity
-	/// How quickly we lower the blood flow on a cut wound we're bandaging.
-	/// Expected lifetime of this bandage in seconds is thus absorption_capacity/absorption_rate,
-	/// or until the cut heals, whichever comes first
-	var/absorption_rate
-
 	/// Can this stack be used for contruction of girders?
 	var/usable_for_construction = FALSE
 	/// Does this stack require a unique girder in order to make a wall?

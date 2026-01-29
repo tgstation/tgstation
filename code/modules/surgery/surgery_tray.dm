@@ -178,7 +178,7 @@
 		/obj/item/retractor,
 		/obj/item/scalpel,
 		/obj/item/stack/medical/bone_gel,
-		/obj/item/stack/sticky_tape/surgical,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical,
 		/obj/item/surgical_drapes,
 		/obj/item/surgicaldrill,
 	)
@@ -201,7 +201,7 @@
 		/obj/item/retractor/cruel,
 		/obj/item/scalpel/cruel,
 		/obj/item/stack/medical/bone_gel,
-		/obj/item/stack/sticky_tape/surgical,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical,
 		/obj/item/surgical_drapes,
 		/obj/item/surgicaldrill/cruel,
 	)
@@ -221,7 +221,7 @@
 		/obj/item/blood_filter,
 		/obj/item/shears,
 		/obj/item/stack/medical/bone_gel,
-		/obj/item/stack/sticky_tape/surgical,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical,
 		/obj/item/clothing/mask/surgical,
 	)
 

@@ -875,7 +875,7 @@
 /area/shuttle/escape)
 "lz" = (
 /obj/structure/table/reinforced/rglass,
-/obj/item/stack/medical/gauze/twelve{
+/obj/item/stack/medical/wrap/gauze/twelve{
 	pixel_x = -2;
 	pixel_y = 6
 	},

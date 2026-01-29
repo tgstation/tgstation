@@ -299,7 +299,7 @@
 	. = limb
 
 	if(limb) // if we're nulling limb, we're basically detaching from it, so we should remove ourselves in that case
-		UnregisterSignal(limb, list(COMSIG_QDELETING, COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_UNGAUZED, COMSIG_BODYPART_UPDATING_SURGERY_STATE))
+		UnregisterSignal(limb, COMSIG_BODYPART_UPDATING_SURGERY_STATE)
 		LAZYREMOVE(limb.wounds, src)
 		if (!destroying)
 			limb.update_wounds(replaced)
@@ -314,7 +314,6 @@
 
 	if (limb)
 		RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(source_died))
-		RegisterSignals(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_UNGAUZED), PROC_REF(gauze_state_changed))
 		if (disabling)
 			limb.add_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 
@@ -452,17 +451,10 @@
 
 	return 0
 
-/// Signal proc for if gauze has been applied or removed from our limb.
-/datum/wound/proc/gauze_state_changed()
-	SIGNAL_HANDLER
-
-	if (wound_flags & ACCEPTS_GAUZE)
-		update_inefficiencies()
-
 /// Updates our limping and interaction penalties in accordance with our gauze.
 /datum/wound/proc/update_inefficiencies(replaced_or_replacing = FALSE)
 	if (wound_flags & ACCEPTS_GAUZE)
-		var/obj/item/stack/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+		var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
 		if(limb.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 			if(current_gauze?.splint_factor)
 				limp_slowdown = initial(limp_slowdown) * current_gauze.splint_factor
@@ -656,7 +648,7 @@
 /datum/wound/proc/get_wound_description(mob/user)
 	var/desc
 
-	var/obj/item/stack/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
 	if ((wound_flags & ACCEPTS_GAUZE) && current_gauze)
 		var/sling_condition = get_gauze_condition()
 		desc = "[victim.p_Their()] [limb.plaintext_zone] is [sling_condition] fastened in a sling of [current_gauze.name]"
@@ -697,7 +689,7 @@
 
 /datum/wound/proc/get_gauze_condition()
 	SHOULD_BE_PURE(TRUE)
-	var/obj/item/stack/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
 	if (!current_gauze)
 		return null
 

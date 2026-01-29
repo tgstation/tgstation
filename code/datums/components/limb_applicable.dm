@@ -16,7 +16,6 @@
 /datum/component/limb_applicable/Initialize(
 	list/valid_zones = GLOB.all_body_zones.Copy(),
 	apply_category,
-	datum/limb_applicable_item/category_datum,
 	override_existing = TRUE,
 	datum/callback/can_apply,
 	datum/callback/on_apply,
@@ -25,7 +24,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	src.valid_zones = valid_zones
-	src.apply_category = category_datum?.id || apply_category || REF(parent)
+	src.apply_category = apply_category || REF(parent)
 	src.override_existing = override_existing
 	src.can_apply = can_apply
 	src.on_apply = on_apply
@@ -82,27 +81,9 @@
 		var/obj/item/stack/stack_parent = parent
 		applying = stack_parent.split_stack(1)
 
+	else if(!user.temporarilyRemoveItemFromInventory(applying))
+		target.balloon_alert(user, "can't part with [applying.name]!")
+		return
+
 	applying_to.apply_item(applying, apply_category, override_existing)
 	on_apply?.Invoke(user, target, applying_to)
-
-/obj/item/bodypart/proc/apply_item(obj/item/applying_item, category, override = FALSE)
-	if(isnull(category))
-		category = REF(applying_item)
-
-	if(!override && LAZYACCESS(applied_items, category))
-		return FALSE
-
-	applying_item.forceMove(applying_item)
-	LAZYSET(applied_items, category, applying_item)
-	// SEND_SIGNAL(applying, COMSIG_ITEM_APPLIED_TO_LIMB, user, src)
-	return TRUE
-
-/obj/item/bodypart/Exited(atom/movable/gone, direction)
-	. = ..()
-	for(var/category, item in applied_items)
-		if(item == gone)
-			LAZYREMOVE(applied_items, category)
-
-/obj/item/bodypart/Destroy()
-	QDEL_LIST_ASSOC_VAL(applied_items)
-	return ..()

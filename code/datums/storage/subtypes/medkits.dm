@@ -30,7 +30,7 @@
 
 		//stacks
 		/obj/item/stack/medical,
-		/obj/item/stack/sticky_tape,
+		/obj/item/stack/medical/wrap/sticky_tape,
 
 		//containers
 		/obj/item/reagent_containers/applicator,
