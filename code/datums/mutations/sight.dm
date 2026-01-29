@@ -5,6 +5,7 @@
 	instability = NEGATIVE_STABILITY_MODERATE
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_danger("You can't see very well.")
+	locked = TRUE
 
 /datum/mutation/nearsight/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
@@ -191,6 +192,7 @@
 	quality = NEGATIVE
 	text_gain_indication = span_danger("You feel unable to read or write.")
 	text_lose_indication = span_danger("You feel able to read and write again.")
+	locked = TRUE
 
 /datum/mutation/illiterate/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()

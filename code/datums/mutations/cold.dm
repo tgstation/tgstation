@@ -7,6 +7,7 @@
 	difficulty = 10
 	synchronizer_coeff = 1
 	power_path = /datum/action/cooldown/spell/conjure_item/snow
+	locked = TRUE
 
 /datum/action/cooldown/spell/conjure_item/snow
 	name = "Create Snow"

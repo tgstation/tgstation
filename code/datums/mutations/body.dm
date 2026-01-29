@@ -213,6 +213,7 @@
 	instability = 0
 	text_gain_indication = span_danger("You twitch.")
 	synchronizer_coeff = 1
+	locked = TRUE
 
 /datum/mutation/tourettes/on_life(seconds_per_tick)
 	if(SPT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && owner.stat == CONSCIOUS && !owner.IsStun())
@@ -283,6 +284,7 @@
 	var/glow_range = 2.5
 	var/glow_color
 	var/obj/effect/dummy/lighting_obj/moblight/glow
+	locked = TRUE
 
 /datum/mutation/glow/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()

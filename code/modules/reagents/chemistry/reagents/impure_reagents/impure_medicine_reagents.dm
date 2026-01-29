@@ -592,7 +592,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		/datum/mutation/stoner,
 		/datum/mutation/medieval,
 		/datum/mutation/wacky,
-		/datum/mutation/piglatin,
 		/datum/mutation/nervousness,
 		/datum/mutation/mute,
 		)

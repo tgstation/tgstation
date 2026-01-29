@@ -8,6 +8,7 @@
 	mutanttongue = /obj/item/organ/tongue/ethereal
 	mutantheart = /obj/item/organ/heart/ethereal
 	exotic_bloodtype = BLOOD_TYPE_ETHEREAL
+	inert_mutation = /datum/mutation/glow
 	siemens_coeff = 0.5 //They thrive on energy
 	payday_modifier = 1.0
 	inherent_traits = list(

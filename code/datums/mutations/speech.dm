@@ -9,6 +9,7 @@
 	instability = NEGATIVE_STABILITY_MINI
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_danger("You feel nervous.")
+	locked = TRUE
 
 /datum/mutation/nervousness/on_life(seconds_per_tick)
 	if(SPT_PROB(5, seconds_per_tick))
@@ -179,6 +180,7 @@
 	text_gain_indication = span_notice("You feel Swedish, however that works.")
 	text_lose_indication = span_notice("The feeling of Swedishness passes.")
 	var/static/list/language_mutilation = list("w" = "v", "j" = "y", "bo" = "bjo", "a" = list("å","ä","æ","a"), "o" = list("ö","ø","o"))
+	locked = TRUE
 
 /datum/mutation/swedish/New(datum/mutation/copymut)
 	. = ..()
@@ -191,6 +193,7 @@
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_notice("Ye feel like a reet prat like, innit?")
 	text_lose_indication = span_notice("You no longer feel like being rude and sassy.")
+	locked = TRUE
 
 /datum/mutation/chav/New(datum/mutation/copymut)
 	. = ..()
@@ -203,6 +206,7 @@
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_notice("You feel pretty good, honeydoll.")
 	text_lose_indication = span_notice("You feel a little less conversation would be great.")
+	locked = TRUE
 
 /datum/mutation/elvis/New(datum/mutation/copymut)
 	. = ..()
@@ -279,29 +283,3 @@
 		message = "[chosen_starting] [message]"
 
 		speech_args[SPEECH_MESSAGE] = message
-
-/datum/mutation/piglatin
-	name = "Pig Latin"
-	desc = "Historians say back in the 2020's humanity spoke entirely in this mystical language."
-	instability = NEGATIVE_STABILITY_MINI
-	quality = MINOR_NEGATIVE
-	text_gain_indication = span_notice("Omethingsay eelsfay offyay.")
-	text_lose_indication = span_notice("The off sensation passes.")
-
-/datum/mutation/piglatin/on_acquiring(mob/living/carbon/human/owner)
-	. = ..()
-	if(!.)
-		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-
-/datum/mutation/piglatin/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
-
-/datum/mutation/piglatin/proc/handle_speech(datum/source, list/speech_args)
-	SIGNAL_HANDLER
-
-	var/spoken_message = speech_args[SPEECH_MESSAGE]
-	spoken_message = piglatin_sentence(spoken_message)
-	speech_args[SPEECH_MESSAGE] = spoken_message
