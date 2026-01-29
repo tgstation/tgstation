@@ -408,7 +408,7 @@
 		return
 
 	if(trans_volume >= 0.4) //prevents cheesing with ultralow doses.
-		exposed_mob.adjust_tox_loss((-3 * min(2, trans_volume) * REM) * normalise_creation_purity(), required_biotype = affected_biotype) //This is to promote iv pole use for that chemotherapy feel.
+		exposed_mob.adjust_tox_loss((-1.5 * min(2, trans_volume)) * normalise_creation_purity(), required_biotype = affected_biotype) //This is to promote iv pole use for that chemotherapy feel.
 	var/obj/item/organ/liver/L = exposed_mob.organs_slot[ORGAN_SLOT_LIVER]
 	if(!L || L.organ_flags & ORGAN_FAILING)
 		return

@@ -1,4 +1,0 @@
-author: "Swan"
-delete-after: True
-changes:
-  - bugfix: "fixes the HFR health dropping exponentially once it starts taking damage from having too many moles"

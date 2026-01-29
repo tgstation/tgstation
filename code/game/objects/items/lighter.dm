@@ -245,7 +245,7 @@
 	if(!lit)
 		return FALSE
 
-	if (reagents.spark_act(0, TRUE, banned_reagents = /datum/reagent/fuel) & SPARK_ACT_DESTRUCTIVE)
+	if (reagents.spark_act(0, SPARK_ACT_ENCLOSED, banned_reagents = /datum/reagent/fuel) & SPARK_ACT_DESTRUCTIVE)
 		qdel(src)
 		return FALSE
 
