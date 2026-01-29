@@ -51,7 +51,7 @@
 /datum/ai_behavior/find_and_set/friendly_cultist/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/mob/living/living_pawn = controller.pawn
 	for(var/mob/living/carbon/possible_cultist in oview(search_range, controller.pawn))
-		if(IS_CULTIST(possible_cultist) && !(living_pawn.faction.Find(REF(possible_cultist))))
+		if(IS_CULTIST(possible_cultist) && !(living_pawn.has_ally(possible_cultist)))
 			return possible_cultist
 
 	return null

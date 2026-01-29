@@ -212,7 +212,7 @@
 			new /obj/item/toy/cards/deck/syndicate(src) // 1 tc, for poker
 
 		if(KIT_NINJA)
-			new /obj/item/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
+			new /obj/item/storage/belt/sheath/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
 			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
 			for(var/i in 1 to 6)
 				new /obj/item/throwing_star(src) // 1 tc
@@ -800,7 +800,7 @@
 	nuke_datum.send_to_spawnpoint = FALSE
 	nuke_datum.nukeop_outfit = null
 	human_target.mind?.add_antag_datum(nuke_datum)
-	human_target.faction |= ROLE_SYNDICATE
+	human_target.add_faction(ROLE_SYNDICATE)
 	to_chat(human_target, span_warning("You are now a nuclear operative. Your main objective, if you were an antagonist and willing, is presumably to assist the nuclear operative team and secure the disk."))
 	to_chat(human_target, span_userdanger("This implant does NOT, in any way, brainwash you. If you were a normal crew member beforehand, forcibly implanted or otherwise, you are still one and cannot assist the nuclear operatives."))
 	return TRUE
@@ -811,7 +811,7 @@
 		return FALSE
 	var/mob/living/living_target = target
 	living_target.mind.remove_antag_datum(/datum/antagonist/nukeop)
-	living_target.faction -= ROLE_SYNDICATE
+	living_target.remove_faction(ROLE_SYNDICATE)
 	to_chat(target, span_notice("You feel a little less nuclear."))
 	to_chat(target, span_userdanger("You're no longer identified as a nuclear operative! You are free to follow any valid goals you wish, even continuing to secure the disk. Just make sure neither any turrets nor operatives kill you on sight."))
 	return TRUE

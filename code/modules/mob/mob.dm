@@ -583,6 +583,7 @@
 	if(!result_combined)
 		var/list/result = examinify.examine(src)
 		var/atom_title = examinify.examine_title(src, thats = TRUE)
+		examining(examinify, result)
 		SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result)
 		if(removes_double_click)
 			result += span_notice("<i>You can <a href=byond://?src=[REF(src)];run_examinate=[REF(examinify)]>examine</a> [examinify] closer...</i>")
@@ -590,6 +591,11 @@
 
 	to_chat(src, span_infoplain(result_combined))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
+
+/// Handles adding examine messages for the target that are specific to this mob, e.g. a blood worm examining how much blood a living target has.
+/mob/proc/examining(atom/target, list/result)
+	SHOULD_NOT_SLEEP(TRUE)
+	return
 
 /mob/Topic(href, list/href_list)
 	. = ..()
@@ -1156,24 +1162,6 @@
 /mob/proc/canUseStorage()
 	return FALSE
 
-/*
- * Compare two lists of factions, returning true if any match
- *
- * If exact match is passed through we only return true if both faction lists match equally
- */
-/proc/faction_check(list/faction_A, list/faction_B, exact_match)
-	var/list/match_list
-	if(exact_match)
-		match_list = faction_A&faction_B //only items in both lists
-		var/length = LAZYLEN(match_list)
-		if(length)
-			return (length == LAZYLEN(faction_A)) //if they're not the same len(gth) or we don't have a len, then this isn't an exact match.
-	else
-		match_list = faction_A&faction_B
-		return LAZYLEN(match_list)
-	return FALSE
-
-
 /**
  * Fully update the name of a mob
  *
@@ -1735,3 +1723,9 @@
 			continue
 		var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[trait]]
 		datahud.show_to(src)
+
+/**
+ * Returns the access list for this mob, most mobs don't have any access.
+ */
+/mob/proc/get_access() as /list
+	return list()

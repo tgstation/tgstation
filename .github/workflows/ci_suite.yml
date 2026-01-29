@@ -33,6 +33,7 @@ jobs:
     uses: ./.github/workflows/collect_data.yml
 
   compile_all_maps:
+    if: needs.collect_data.outputs.game_changes == 'true'
     name: Compile Maps
     needs: collect_data
     uses: ./.github/workflows/compile_all_maps.yml
@@ -40,6 +41,7 @@ jobs:
       max_required_byond_client: ${{ needs.collect_data.outputs.max_required_byond_client }}
 
   setup_build_artifacts:
+    if: needs.collect_data.outputs.game_changes == 'true'
     name: Setup build artifacts
     needs: collect_data
     uses: ./.github/workflows/setup_build_artifacts.yml
@@ -47,6 +49,7 @@ jobs:
       build_versions: ${{ needs.collect_data.outputs.required_build_versions }}
 
   run_all_tests:
+    if: needs.collect_data.outputs.game_changes == 'true'
     name: Integration Tests
     needs: [collect_data, setup_build_artifacts]
     uses: ./.github/workflows/perform_regular_version_tests.yml
@@ -55,7 +58,7 @@ jobs:
       max_required_byond_client: ${{ needs.collect_data.outputs.max_required_byond_client }}
 
   run_alternate_tests:
-    if: needs.collect_data.outputs.alternate_tests != '[]'
+    if: (needs.collect_data.outputs.game_changes == 'true') && (needs.collect_data.outputs.alternate_tests != '[]')
     name: Alternate Tests
     needs: [collect_data, setup_build_artifacts]
     uses: ./.github/workflows/perform_alternate_version_tests.yml
@@ -86,4 +89,4 @@ jobs:
         uses: re-actors/alls-green@release/v1
         with:
           jobs: ${{ toJSON(needs) }}
-          allowed-skips: compare_screenshots
+          allowed-skips: compare_screenshots,compile_all_maps,run_all_tests,run_alternate_tests

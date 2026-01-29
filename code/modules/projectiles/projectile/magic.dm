@@ -27,6 +27,7 @@
 			visible_message(span_warning("[src] fizzles on contact with [plant_tray]!"))
 			return PROJECTILE_DELETE_WITHOUT_HITTING
 
+/// Straight up kills you, unless you're undead
 /obj/projectile/magic/death
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
@@ -53,6 +54,7 @@
 		plant_tray.set_weedlevel(0) // even the weeds perish
 		plant_tray.plantdies()
 
+/// Brings you back from the dead or makes you back into the dead if you're undead
 /obj/projectile/magic/resurrection
 	name = "bolt of resurrection"
 	icon_state = "ion"
@@ -79,6 +81,7 @@
 			return
 		plant_tray.set_plant_health(plant_tray.myseed.endurance, forced = TRUE)
 
+/// Teleports you somewhere randomly within range
 /obj/projectile/magic/teleport
 	name = "bolt of teleportation"
 	icon_state = "bluespace"
@@ -100,6 +103,7 @@
 				smoke.set_up(smoke_range, holder = src, location = stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
 				smoke.start()
 
+/// Teleports you somewhere on the station where the local conditions won't kill you
 /obj/projectile/magic/safety
 	name = "bolt of safety"
 	icon_state = "bluespace"
@@ -118,6 +122,7 @@
 			smoke.set_up(0, holder = src, location = t)
 			smoke.start()
 
+/// Turns walls into doors, or opens doors
 /obj/projectile/magic/door
 	name = "bolt of door creation"
 	icon_state = "energy"
@@ -144,6 +149,7 @@
 		A.unlock()
 	D.open()
 
+/// Turns mobs into other mobs, or plants into other plants
 /obj/projectile/magic/change
 	name = "bolt of change"
 	icon_state = "ice_1"
@@ -166,6 +172,7 @@
 			return
 		plant_tray.polymorph()
 
+/// Makes objects come to life
 /obj/projectile/magic/animate
 	name = "bolt of animation"
 	icon_state = "red_1"
@@ -176,10 +183,11 @@
 	if(!is_type_in_typecache(target, GLOB.animatable_blacklist))
 		target.animate_atom_living(firer)
 
-///proc to animate the target into a living creature
+///proc to animate the target into a living creature, should return the mob if possible
 /atom/proc/animate_atom_living(mob/living/owner)
 	return
 
+/// Slices you
 /obj/projectile/magic/spellblade
 	name = "blade energy"
 	icon_state = "lavastaff"
@@ -187,6 +195,7 @@
 	damage_type = BURN
 	dismemberment = 50
 
+/// Generic magic bullet
 /obj/projectile/magic/arcane_barrage
 	name = "arcane bolt"
 	icon_state = "arcane_barrage"
@@ -194,6 +203,7 @@
 	damage_type = BURN
 	hitsound = 'sound/items/weapons/barragespellhit.ogg'
 
+/// Welds targets inside lockers, and throws the locker
 /obj/projectile/magic/locker
 	name = "locker bolt"
 	icon_state = "locker"
@@ -244,8 +254,9 @@
 		AM.forceMove(get_turf(src))
 	. = ..()
 
+/// Magic locker which breaks itself open after a while
 /obj/structure/closet/decay
-	breakout_time = 600
+	breakout_time = 1 MINUTES
 	icon_welded = null
 	icon_state = "cursed"
 	paint_jobs = null
@@ -281,6 +292,7 @@
 	dump_contents()
 	qdel(src)
 
+/// Throws the target far away
 /obj/projectile/magic/flying
 	name = "bolt of flying"
 	icon_state = "flight"
@@ -291,6 +303,7 @@
 		var/atom/throw_target = get_edge_target_turf(target, angle2dir(angle))
 		target.throw_at(throw_target, 200, 4)
 
+/// Marks you for death, rewards the caster if they kill you
 /obj/projectile/magic/bounty
 	name = "bolt of bounty"
 	icon_state = "bounty"
@@ -300,6 +313,7 @@
 	if(isliving(target))
 		target.apply_status_effect(/datum/status_effect/bounty, firer)
 
+/// Makes whatever it hits immune to magic, except for the magic that makes them immune to magic
 /obj/projectile/magic/antimagic
 	name = "bolt of antimagic"
 	icon_state = "antimagic"
@@ -309,6 +323,7 @@
 	if(istype(target))
 		target.apply_status_effect(/datum/status_effect/song/antimagic)
 
+/// Throws the target at the caster
 /obj/projectile/magic/fetch
 	name = "bolt of fetching"
 	icon_state = "fetch"
@@ -319,6 +334,7 @@
 		var/atom/throw_target = get_edge_target_turf(target, get_dir(target, firer))
 		target.throw_at(throw_target, 200, 4)
 
+/// Scrambles the languages of the target
 /obj/projectile/magic/babel
 	name = "bolt of babel"
 	icon_state = "babel"
@@ -329,6 +345,7 @@
 		if(curse_of_babel(target))
 			target.add_mood_event("curse_of_babel", /datum/mood_event/tower_of_babel)
 
+/// Hurts the target and uses their life energy to recharge the spells they probably don't have
 /obj/projectile/magic/necropotence
 	name = "bolt of necropotence"
 	icon_state = "necropotence"
@@ -346,6 +363,7 @@
 
 	qdel(tap)
 
+/// Puts someone else in control of the target
 /obj/projectile/magic/wipe
 	name = "bolt of possession"
 	icon_state = "wipe"
@@ -435,6 +453,7 @@
 	QDEL_IN(trail_effect, trail_lifespan)
 	COOLDOWN_START(src, trail_cooldown, trail_lifespan)
 
+/// Arcs a chain of lightning from hit targets
 /obj/projectile/magic/aoe/lightning
 	name = "lightning bolt"
 	icon_state = "tesla_projectile" //Better sprites are REALLY needed and appreciated!~
@@ -469,11 +488,12 @@
 	zap_range = 4
 	zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
 
+/// Classic exploding fireball
 /obj/projectile/magic/fireball
 	name = "bolt of fireball"
 	icon_state = "fireball"
 	damage = 10
-	damage_type = BRUTE
+	damage_type = BURN
 
 	/// Heavy explosion range of the fireball
 	var/exp_heavy = 0
@@ -505,6 +525,7 @@
 		explosion_cause = src,
 	)
 
+/// Slow moving, homing, stunning projectile
 /obj/projectile/magic/aoe/magic_missile
 	name = "magic missile"
 	icon_state = "magicm"
@@ -523,6 +544,7 @@
 	color = "red" //Looks more culty this way
 	range = 10
 
+/// Delivers a powerful slap and converts turfs to cult turfs
 /obj/projectile/magic/aoe/juggernaut
 	name = "Gauntlet Echo"
 	icon_state = "cultfist"
@@ -551,7 +573,7 @@
 		new /obj/effect/temp_visual/cult/turf/floor(get_turf(adjacent_object))
 
 //still magic related, but a different path
-
+/// Makes you cold
 /obj/projectile/temp/chill
 	name = "bolt of chills"
 	icon_state = "ice_2"
@@ -559,9 +581,11 @@
 	armour_penetration = 100
 	temperature = -200 // Cools you down greatly per hit
 
+/// Doesn't do anything
 /obj/projectile/magic/nothing
 	name = "bolt of nothing"
 
+/// Homing projectile
 /obj/projectile/magic/spellcard
 	name = "enchanted card"
 	desc = "A piece of paper enchanted to give it extreme durability and stiffness, along with a very hot burn to anyone unfortunate enough to get hit by a charged one."
@@ -570,7 +594,7 @@
 	damage = 2
 	antimagic_charge_cost = 0 // since the cards gets spammed like a shotgun
 
-//a shrink ray that shrinks stuff, which grows back after a short while.
+/// a shrink ray that shrinks stuff, which grows back after a short while.
 /obj/projectile/magic/shrink
 	name = "shrink ray"
 	icon_state = "blue_laser"

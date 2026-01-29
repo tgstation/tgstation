@@ -142,7 +142,7 @@
 	. = ..()
 
 	var/datum/bank_account/blank_bank_account = new("Unassigned", SSjob.get_job_type(/datum/job/unassigned), player_account = FALSE)
-	registered_account = blank_bank_account
+	set_account(blank_bank_account)
 	registered_account.replaceable = TRUE
 
 	// Applying the trim updates the label and icon, so don't do this twice.
@@ -164,40 +164,40 @@
 		ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, ROUNDSTART_TRAIT)
 
 /obj/item/card/id/Destroy()
-	if (registered_account)
-		LAZYREMOVE(registered_account.bank_cards, src)
-	if (my_store)
-		QDEL_NULL(my_store)
+	clear_account()
+	QDEL_NULL(my_store)
 	if (isitem(loc))
 		UnregisterSignal(loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	return ..()
 
 /obj/item/card/id/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
-	if (isitem(old_loc))
-		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-		if (ismob(old_loc.loc))
-			UnregisterSignal(old_loc.loc, COMSIG_MOVABLE_POINTED)
+	if(isitem(old_loc))
+		unequip_from_item_loc(old_loc)
 	. = ..()
-	if (isitem(loc))
-		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(on_loc_equipped))
-		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(on_loc_dropped))
+	if(isitem(loc))
+		equip_to_item_loc(loc)
 
 /obj/item/card/id/equipped(mob/user, slot)
 	. = ..()
 	if (slot & ITEM_SLOT_ID)
 		RegisterSignal(user, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
+		if(ishuman(user))
+			var/mob/living/carbon/human/as_human = user
+			as_human.update_visible_name()
+	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
+		RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
+	if (slot & ITEM_SLOT_POCKETS)
+		//putting it in your pocket doesn't let you use it as access.
+		UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
 
 /obj/item/card/id/dropped(mob/user)
-	UnregisterSignal(user, COMSIG_MOVABLE_POINTED)
-	return ..()
-
-/obj/item/card/id/equipped(mob/user, slot, initial = FALSE)
-	. = ..()
-	if(!(slot & ITEM_SLOT_ID))
-		return
+	UnregisterSignal(user, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_RETRIEVE_ACCESS))
+	if(isitem(loc))
+		equip_to_item_loc(loc) // "dropped" into an item, like a worn wallet
 	if(ishuman(user))
 		var/mob/living/carbon/human/as_human = user
 		as_human.update_visible_name()
+	return ..()
 
 /obj/item/card/id/dropped(mob/user, silent = FALSE)
 	. = ..()
@@ -211,15 +211,38 @@
 		return honorific_title
 	return registered_name
 
+/// ID card is being equipped to an item (like a pda or wallet)
+/obj/item/card/id/proc/equip_to_item_loc(atom/new_loc)
+	RegisterSignal(new_loc, COMSIG_ITEM_EQUIPPED, PROC_REF(on_loc_equipped), override = TRUE)
+	RegisterSignal(new_loc, COMSIG_ITEM_DROPPED, PROC_REF(on_loc_dropped), override = TRUE)
+	if (ismob(new_loc.loc))
+		var/mob/wearer = new_loc.loc
+		// Equip chain shenanigans
+		UnregisterSignal(wearer, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_RETRIEVE_ACCESS))
+		on_loc_equipped(new_loc, wearer, wearer.get_slot_by_item(new_loc))
+
+/// ID card is being unequipped from an item (like a pda or wallet)
+/obj/item/card/id/proc/unequip_from_item_loc(atom/old_loc)
+	UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	if (ismob(old_loc.loc))
+		UnregisterSignal(old_loc.loc, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_RETRIEVE_ACCESS))
+
 /obj/item/card/id/proc/on_loc_equipped(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
-	if (slot == ITEM_SLOT_ID)
+	if (slot & ITEM_SLOT_ID)
 		RegisterSignal(equipper, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
+	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
+		RegisterSignal(equipper, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 
 /obj/item/card/id/proc/on_loc_dropped(datum/source, mob/dropper)
 	SIGNAL_HANDLER
-	UnregisterSignal(dropper, COMSIG_MOVABLE_POINTED)
+	UnregisterSignal(dropper, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_RETRIEVE_ACCESS))
+
+///Called when we're being used as access.
+/obj/item/card/id/proc/retrieve_access(datum/source, list/player_access)
+	SIGNAL_HANDLER
+	player_access += GetAccess()
 
 /obj/item/card/id/proc/on_pointed(mob/living/user, atom/pointed, obj/effect/temp_visual/point/point)
 	SIGNAL_HANDLER
@@ -475,8 +498,31 @@
 	// Hard reset access
 	access.Cut()
 
+/// Sets the bank account for the ID card.
+/obj/item/card/id/proc/set_account(datum/bank_account/account, transfer_funds = FALSE)
+	if(registered_account == account)
+		return
+	if(!isnull(registered_account))
+		if(transfer_funds)
+			account?.transfer_money(registered_account, registered_account.account_balance, "Account transfer")
+		clear_account()
+	if(isnull(account))
+		return
+
+	if(src in account.bank_cards)
+		stack_trace("Despite [src] not being registered to [account], the account already has it within the bank_cards list.")
+
+	registered_account = account
+	LAZYOR(registered_account.bank_cards, src)
+	registered_account.civilian_bounty?.on_selected(src)
+
 /// Clears the economy account from the ID card.
 /obj/item/card/id/proc/clear_account()
+	if(isnull(registered_account))
+		return
+
+	registered_account.civilian_bounty?.on_reset(src)
+	LAZYREMOVE(registered_account.bank_cards, src)
 	registered_account = null
 
 
@@ -750,7 +796,6 @@
 /// Attempts to set a new bank account on the ID card.
 /obj/item/card/id/proc/set_new_account(mob/living/user)
 	. = FALSE
-	var/datum/bank_account/old_account = registered_account
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the ID to continue!"))
 		return FALSE
@@ -767,11 +812,7 @@
 	if(isnull(account))
 		to_chat(user, span_warning("The account ID number provided is invalid."))
 		return FALSE
-	if(old_account)
-		LAZYREMOVE(old_account.bank_cards, src)
-		account.account_balance += old_account.account_balance
-	LAZYADD(account.bank_cards, src)
-	registered_account = account
+	set_account(account, transfer_funds = TRUE)
 	to_chat(user, span_notice("The provided account has been linked to this ID card. It contains [account.account_balance] [MONEY_NAME]."))
 	return TRUE
 
@@ -1097,8 +1138,7 @@
 	. = ..()
 	var/datum/bank_account/department_account = SSeconomy.get_dep_account(department_ID)
 	if(department_account)
-		registered_account = department_account
-		LAZYOR(department_account.bank_cards, src)
+		set_account(department_account)
 		name = "departmental card ([department_name])"
 		desc = "Provides access to the [department_name]."
 	SSeconomy.dep_cards += src
@@ -1145,6 +1185,10 @@
 	var/trim_assignment_override
 	/// If this is set, will manually override the trim shown for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
 	var/sechud_icon_state_override = null
+
+	/// A name (eg "Captain") that is "inherent" to this ID card
+	/// If the assigned name matches the inherent name it does not apply the label
+	var/inherent_assigned_name
 
 /obj/item/card/id/advanced/Initialize(mapload)
 	. = ..()
@@ -1248,6 +1292,13 @@
 	is_intern = FALSE
 	update_label()
 
+/obj/item/card/id/advanced/update_label()
+	if(inherent_assigned_name && registered_name == inherent_assigned_name)
+		name = "[initial(name)][(!assignment || assignment == inherent_assigned_name) ? "" : " ([assignment])"]"
+		return
+
+	return ..()
+
 /obj/item/card/id/advanced/update_overlays()
 	. = ..()
 
@@ -1350,13 +1401,7 @@
 	registered_name = "Captain"
 	trim = /datum/id_trim/job/captain
 	registered_age = null
-
-/obj/item/card/id/advanced/gold/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
-	if(registered_name == "Captain")
-		name = "[initial(name)][(!assignment || assignment == "Captain") ? "" : " ([assignment])"]"
-		update_appearance(UPDATE_ICON)
-	else
-		..()
+	inherent_assigned_name = "Captain"
 
 /obj/item/card/id/advanced/centcom
 	name = "\improper CentCom ID"
@@ -1451,14 +1496,7 @@
 	desc = "The spare ID of the Dark Lord himself."
 	registered_name = "Captain"
 	registered_age = null
-
-/obj/item/card/id/advanced/black/syndicate_command/captain_id/syndie_spare/update_label()
-	if(registered_name == "Captain")
-		name = "[initial(name)][(!assignment || assignment == "Captain") ? "" : " ([assignment])"]"
-		update_appearance(UPDATE_ICON)
-		return
-
-	return ..()
+	inherent_assigned_name = "Captain"
 
 /obj/item/card/id/advanced/debug
 	name = "\improper Debug ID"
@@ -1470,7 +1508,7 @@
 
 /obj/item/card/id/advanced/debug/Initialize(mapload)
 	. = ..()
-	registered_account = new(player_account = FALSE)
+	set_account(new /datum/bank_account(player_account = FALSE))
 	registered_account.account_id = ADMIN_ACCOUNT_ID // this is so bank_card_talk() can work.
 	registered_account.account_job = SSjob.get_job_type(/datum/job/admin)
 	registered_account.account_balance += 999999 // MONEY! We add more money to the account every time we spawn because it's a debug item and infinite money whoopie
@@ -1912,22 +1950,6 @@
 		else
 			input_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
 
-	var/change_trim = tgui_alert(user, "Adjust the appearance of your card's trim?", "Modify Trim", list("Yes", "No"))
-	if(!after_input_check(user))
-		return TRUE
-	var/selected_trim_path
-	var/static/list/trim_list
-	if(change_trim == "Yes")
-		trim_list = list()
-		for(var/trim_path in typesof(/datum/id_trim))
-			var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[trim_path]
-			if(trim && trim.trim_state && trim.assignment)
-				var/fake_trim_name = "[trim.assignment] ([trim.trim_state])"
-				trim_list[fake_trim_name] = trim_path
-		selected_trim_path = tgui_input_list(user, "Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", sort_list(trim_list, GLOBAL_PROC_REF(cmp_typepaths_asc)))
-		if(!after_input_check(user))
-			return TRUE
-
 	var/target_occupation = tgui_input_text(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant", max_length = MAX_NAME_LEN)
 	if(!after_input_check(user))
 		return TRUE
@@ -1944,8 +1966,6 @@
 		return
 
 	registered_name = input_name
-	if(selected_trim_path)
-		SSid_access.apply_trim_override(src, trim_list[selected_trim_path])
 	if(target_occupation)
 		assignment = sanitize(target_occupation)
 	if(new_age)
@@ -1959,20 +1979,13 @@
 	to_chat(user, span_notice("You successfully forge the ID card."))
 	user.log_message("forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\" and trim \"[trim?.assignment]\".", LOG_GAME)
 
-	if(!ishuman(user))
+	if(!ishuman(user) || registered_account)
 		return
 
 	var/mob/living/carbon/human/owner = user
-	if (!selected_trim_path) // Ensure that even without a trim update, we update user's sechud
-		owner.update_ID_card()
-
-	if (registered_account)
-		return
-
 	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[owner.account_id]"]
 	if(account)
-		LAZYADD(account.bank_cards, src)
-		registered_account = account
+		set_account(account)
 		to_chat(user, span_notice("Your account number has been automatically assigned."))
 
 /obj/item/card/id/advanced/chameleon/add_item_context(obj/item/source, list/context, atom/target, mob/living/user,)

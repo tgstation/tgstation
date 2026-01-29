@@ -19,7 +19,7 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SEC
 
-	mind_traits = list(SECURITY_MIND_TRAITS)
+	desensitized_base = DESENSITIZED_THRESHOLD
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_SECURITY_OFFICER
@@ -272,8 +272,6 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 /obj/item/radio/headset/headset_sec/alt/department/Initialize(mapload)
 	. = ..()
 	set_wires(new/datum/wires/radio(src))
-	secure_radio_connections = list()
-	recalculateChannels()
 
 /obj/item/radio/headset/headset_sec/alt/department/engi
 	keyslot = /obj/item/encryptionkey/headset_sec

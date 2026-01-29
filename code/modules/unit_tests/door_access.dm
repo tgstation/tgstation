@@ -44,6 +44,23 @@
 	door.req_one_access = list(ACCESS_ENGINEERING, ACCESS_CARGO)
 	subject.Bump(door)
 	TEST_ASSERT_EQUAL(door.density, TRUE, "Subject with invalid access succeeded in opening airlock access-locked behind req_one_access!")
+	door.close()
+	subject.last_bumped = 0
+
+	// Now, let's test emergency access. Same access and keycard as the last step.
+	door.emergency = TRUE
+	subject.Bump(door)
+	TEST_ASSERT_EQUAL(door.density, FALSE, "Subject failed to open airlock set to emergency access!")
+	door.close()
+	subject.last_bumped = 0
+
+	// Red alert access. Same access and keycard as the last step.
+	door.emergency = FALSE
+	door.red_alert_access = TRUE
+	SSsecurity_level.set_level(SEC_LEVEL_RED)
+	subject.Bump(door)
+	TEST_ASSERT_EQUAL(door.density, FALSE, "Subject failed to bypass airlock ID requirements during red alert!")
+	SSsecurity_level.set_level(SEC_LEVEL_BLUE)
 
 /// Tests that the AI can open doors
 /datum/unit_test/door_access_ai

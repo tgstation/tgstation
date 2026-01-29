@@ -58,10 +58,6 @@
 //Redirection component init flags
 #define REDIRECT_TRANSFER_WITH_TURF 1
 
-//Arch
-#define ARCH_PROB "probability" //Probability for each item
-#define ARCH_MAXDROP "max_drop_amount" //each item's max drop amount
-
 //Ouch my toes!
 #define CALTROP_BYPASS_SHOES (1 << 0)
 #define CALTROP_IGNORE_WALKERS (1 << 1)

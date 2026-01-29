@@ -32,8 +32,7 @@
 	var/mob/living/bananas = new spawned_mob(drop_location(), TRUE, spammer) // funny that we pass monkey init args to non-monkey mobs, that's totally a future issue
 	if (!QDELETED(bananas))
 		ADD_TRAIT(bananas, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
-		if(faction)
-			bananas.faction = faction
+		SET_FACTION_AND_ALLIES_FROM(bananas, src)
 
 		visible_message(span_notice("[src] expands!"))
 		bananas.log_message("spawned via [src], Last attached mob: [key_name(spammer)].", LOG_ATTACK)
