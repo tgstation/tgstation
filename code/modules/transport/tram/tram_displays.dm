@@ -45,7 +45,7 @@
 
 /obj/machinery/transport/destination_sign/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(update_sign))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(update_sign))
 	SStransport.displays += src
 	available_faces = list(
 		TRAMSTATION_LINE_1,

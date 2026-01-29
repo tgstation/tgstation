@@ -103,8 +103,7 @@
 
 /obj/machinery/transport/crossing_signal/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(wake_up))
-	RegisterSignal(SStransport, COMSIG_COMMS_STATUS, PROC_REF(comms_change))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(wake_up))
 	SStransport.crossing_signals += src
 	register_context()
 
@@ -353,7 +352,7 @@
 		return PROCESS_KILL
 
 	// Finally the interesting part where it's ACTUALLY approaching
-	if(approach_distance <= red_distance_threshold)
+	if(approach_distance <= red_distance_threshold && operating_status == TRANSPORT_SYSTEM_NORMAL)
 		set_signal_state(XING_STATE_RED)
 		return
 	if(approach_distance <= amber_distance_threshold && operating_status == TRANSPORT_SYSTEM_NORMAL)
@@ -488,7 +487,7 @@
 /obj/machinery/transport/guideway_sensor/post_machine_initialize()
 	. = ..()
 	pair_sensor()
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(wake_up))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(wake_up))
 
 /obj/machinery/transport/guideway_sensor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
