@@ -57,6 +57,7 @@
 	ADD_TRAIT(src, TRAIT_STRONG_GRABBER, INNATE_TRAIT)
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
+	AddElement(/datum/element/door_pryer, pry_time = 5 SECONDS)
 
 /**
  * ### Guard Spider
@@ -108,6 +109,8 @@
 
 /mob/living/basic/spider/giant/hunter/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/fast_web)
 
 ///Used in the caves away mission.
@@ -180,8 +183,8 @@
 	ADD_TRAIT(src, TRAIT_MEDICAL_HUD, INNATE_TRAIT)
 
 	AddComponent(/datum/component/healing_touch,\
-		heal_brute = 10,\
-		heal_burn = 10,\
+		heal_brute = 25,\
+		heal_burn = 25,\
 		heal_time = 2.5 SECONDS,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/giant)),\
@@ -293,6 +296,21 @@
 		complete_text = "%SOURCE%'s wounds mend together.",\
 	)
 
+/mob/living/basic/spider/giant/tank/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
+	if(!istype(hitting_projectile, /obj/projectile/energy) && !istype(hitting_projectile, /obj/projectile/beam))
+		return ..()
+	if(!prob(40 - round(hitting_projectile.damage / 3))) // reflect chance
+		return ..()
+
+	apply_damage(hitting_projectile.damage * 0.2, hitting_projectile.damage_type)
+	visible_message(
+		span_danger("\The [hitting_projectile] is reflected by [src]'s armored exoskeleton!"),
+		span_userdanger("\The [hitting_projectile] is reflected by your armored exoskeleton!"),
+	)
+
+	hitting_projectile.reflect(src)
+	return BULLET_ACT_FORCE_PIERCE
+
 /// Prevent you from healing when on fire
 /mob/living/basic/spider/giant/tank/proc/can_mend(mob/living/source, mob/living/target)
 	if (on_fire)
@@ -340,6 +358,7 @@
 
 	AddElement(/datum/element/wall_tearer)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/below_average_web)
+	AddElement(/datum/element/door_pryer, pry_time = 3 SECONDS)
 
 /**
  * ### Tarantula
@@ -381,6 +400,7 @@
 	charge.Grant(src)
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
+	AddElement(/datum/element/door_pryer, pry_time = 7 SECONDS)
 
 /mob/living/basic/spider/giant/tarantula/Destroy()
 	QDEL_NULL(charge)
@@ -419,6 +439,7 @@
 
 /mob/living/basic/spider/giant/viper/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddElement(/datum/element/bonus_damage)
 
 /**
@@ -462,9 +483,19 @@
 
 /mob/living/basic/spider/giant/midwife/Initialize(mapload)
 	. = ..()
-
+	ADD_TRAIT(src, TRAIT_MEDICAL_HUD, INNATE_TRAIT)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
+	AddElement(/datum/element/door_pryer, pry_time = 7 SECONDS)
 
+	AddComponent(/datum/component/healing_touch,\
+		heal_brute = 10,\
+		heal_burn = 10,\
+		heal_time = 3 SECONDS,\
+		interaction_key = DOAFTER_SOURCE_SPIDER,\
+		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/giant)),\
+		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
+		complete_text = "%SOURCE% wraps the wounds of %TARGET%.",\
+	)
 /**
  * ### Giant Ice Spider
  *
