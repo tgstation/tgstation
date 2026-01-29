@@ -216,6 +216,7 @@
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
 	SSnpcpool.currentrun -= src
+	SSidlenpcpool.idlerun -= src
 
 	return ..()
 
