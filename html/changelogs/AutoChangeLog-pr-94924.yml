@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Desensitization to death is no longer binary - some antagonists are now more used to it than others."
-  - rscadd: "Witnessing the death of a fellow humanoid (or dying yourself) will slightly desensitize you to future deaths."
-  - rscadd: "Adds an achievement for managing to max out desensitization across a round."
-  - rscadd: "Desensitized crewmembers care less when splattered with blood."
-  - rscadd: "Holodeck mobs have a reduced death mood impact."
