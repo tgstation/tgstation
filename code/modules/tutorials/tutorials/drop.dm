@@ -57,10 +57,10 @@
 		if (STAGE_PICK_SOMETHING_UP)
 			show_instruction("Pick something up!")
 
-/datum/tutorial/drop/proc/on_swap_hands(mob/living/source, obj/item/current_held_item, obj/item/previous_held_item)
+/datum/tutorial/drop/proc/on_swap_hands(mob/living/source, obj/item/swapped_to, obj/item/swapped_from)
 	SIGNAL_HANDLER
 
-	if (isnull(current_held_item))
+	if (isnull(swapped_to))
 		if (stage != STAGE_PICK_SOMETHING_UP)
 			stage = STAGE_PICK_SOMETHING_UP
 			show_instructions()

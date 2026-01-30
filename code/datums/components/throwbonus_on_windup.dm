@@ -91,7 +91,7 @@
 	else
 		end_windup()
 
-/datum/component/throwbonus_on_windup/proc/on_hands_swap(mob/living/source, obj/item/current_held_item, obj/item/previous_held_item)
+/datum/component/throwbonus_on_windup/proc/on_hands_swap(mob/living/source, obj/item/swapped_to, obj/item/swapped_from)
 	SIGNAL_HANDLER
 
 	if(source.get_active_held_item() != parent)
