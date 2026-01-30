@@ -3,11 +3,16 @@
 	desc = "~Jamme, jamme, n'coppa, jamme ja! Jamme, jamme, n'coppa jamme ja, funi-culi funi-cala funi-culi funi-cala!! Jamme jamme ja funiculi funicula!~"
 	color = "#FF9F23"
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_ORGANIC
+	mat_properties = list(
+		MATERIAL_DENSITY = 4,
+		MATERIAL_HARDNESS = 1,
+		MATERIAL_FLEXIBILITY = 6,
+		MATERIAL_REFLECTIVITY = 2,
+		MATERIAL_ELECTRICAL = 6,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 2,
+	)
 	sheet_type = /obj/item/stack/sheet/pizza
-	value_per_unit = 0.05
-	beauty_modifier = 0.1
-	strength_modifier = 0.7
-	armor_modifiers = list(MELEE = 0.3, BULLET = 0.3, LASER = 1.2, ENERGY = 1.2, BOMB = 0.3, FIRE = 1, ACID = 1)
 	item_sound_override = 'sound/effects/meatslap.ogg'
 	turf_sound_override = FOOTSTEP_MEAT
 	texture_layer_icon_state = "pizza"

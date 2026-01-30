@@ -136,7 +136,7 @@
 	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_RIGID
 	mat_properties = list(
 		MATERIAL_DENSITY = 4, // Wow these are light
-		MATERIAL_HARDNESS = 10,
+		MATERIAL_HARDNESS = 9,
 		MATERIAL_FLEXIBILITY = 0,
 		MATERIAL_REFLECTIVITY = 10,
 		MATERIAL_ELECTRICAL = 0, // Did you know they're also an *extremely* potent insulator, only beaten by some synthetic compounds?
@@ -179,7 +179,6 @@
 	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
-	armor_modifiers = list(MELEE = 1.5, BULLET = 1.4, LASER = 0.5, ENERGY = 0.5, FIRE = 1, ACID = 1)
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	points_per_unit = 30 / SHEET_MATERIAL_AMOUNT
 
@@ -224,8 +223,6 @@
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	ore_type = /obj/item/stack/ore/plasma
 	value_per_unit = 200 / SHEET_MATERIAL_AMOUNT
-	beauty_modifier = 0.15
-	armor_modifiers = list(MELEE = 1.4, BULLET = 0.7, ENERGY = 1.2, BIO = 1.2, ACID = 0.5)
 	mineral_rarity = MATERIAL_RARITY_PRECIOUS
 	points_per_unit = 15 / SHEET_MATERIAL_AMOUNT
 
@@ -323,7 +320,6 @@
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	ore_type = /obj/item/stack/ore/bananium
 	value_per_unit = 1000 / SHEET_MATERIAL_AMOUNT
-	beauty_modifier = 0.5
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 60 / SHEET_MATERIAL_AMOUNT
 
@@ -379,7 +375,7 @@
 		MATERIAL_FLEXIBILITY = 2,
 		MATERIAL_REFLECTIVITY = 8,
 		MATERIAL_ELECTRICAL = 6,
-		MATERIAL_THERMAL = 7,
+		MATERIAL_THERMAL = 4,
 		MATERIAL_CHEMICAL = 6,
 	)
 	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
@@ -401,20 +397,18 @@
 	name = "runite"
 	desc = "Runite"
 	color = "#526F77"
-	strength_modifier = 1.3
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
-	sheet_type = /obj/item/stack/sheet/mineral/runite
-	value_per_unit = 600 / SHEET_MATERIAL_AMOUNT
 	mat_properties = list(
 		MATERIAL_DENSITY = 9,
-		MATERIAL_HARDNESS = 10,
+		MATERIAL_HARDNESS = 9,
 		MATERIAL_FLEXIBILITY = 1,
 		MATERIAL_REFLECTIVITY = 0,
 		MATERIAL_ELECTRICAL = 1,
 		MATERIAL_THERMAL = 0,
 		MATERIAL_CHEMICAL = 9,
 	)
-	armor_modifiers = list(MELEE = 1.35, BULLET = 2, LASER = 0.5, ENERGY = 1.25, BOMB = 1.25, BIO = 1, FIRE = 1.4, ACID = 1) //rune is weak against magic lasers but strong against bullets. This is the combat triangle.
+	sheet_type = /obj/item/stack/sheet/mineral/runite
+	value_per_unit = 600 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 
@@ -438,9 +432,6 @@
 	name = "plastic"
 	desc = "Plastic"
 	color = "#BFB9AC"
-	strength_modifier = 0.85
-	sheet_type = /obj/item/stack/sheet/plastic
-	ore_type = /obj/item/stack/ore/slag // No plastic or coal ore, so we use slag.
 	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_POLYMER | MATERIAL_CLASS_RIGID
 	mat_properties = list(
 		MATERIAL_DENSITY = 3,
@@ -452,6 +443,8 @@
 		MATERIAL_CHEMICAL = 4,
 		MATERIAL_FLAMMABILITY = 4,
 	)
+	sheet_type = /obj/item/stack/sheet/plastic
+	ore_type = /obj/item/stack/ore/slag // No plastic or coal ore, so we use slag.
 	value_per_unit = 25 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED // Nobody's found oil on lavaland yet.
 	points_per_unit = 4 / SHEET_MATERIAL_AMOUNT
@@ -466,7 +459,6 @@
 	name = "biomass"
 	desc = "Organic matter."
 	color = "#735b4d"
-	strength_modifier = 0.8
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/wood
@@ -516,7 +508,7 @@
 	color = "#2B7A74"
 	mat_properties = list(
 		MATERIAL_DENSITY = 7,
-		MATERIAL_HARDNESS = 10,
+		MATERIAL_HARDNESS = 9,
 		MATERIAL_FLEXIBILITY = 3,
 		MATERIAL_REFLECTIVITY = 6,
 		MATERIAL_ELECTRICAL = 6,
@@ -646,12 +638,17 @@
 	desc = "You know, it's amazing just how structurally sound sand can be."
 	color = "#EDC9AF"
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_AMORPHOUS
+	mat_properties = list(
+		MATERIAL_DENSITY = 2,
+		MATERIAL_HARDNESS = 0,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 7,
+		MATERIAL_ELECTRICAL = 3,
+		MATERIAL_THERMAL = 8,
+		MATERIAL_CHEMICAL = 4,
+	)
 	ore_type = /obj/item/stack/ore/glass
 	value_per_unit = 2 / SHEET_MATERIAL_AMOUNT
-	strength_modifier = 0.5
-	integrity_modifier = 0.1
-	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 1.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = 0.25
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
 	mat_rust_resistance = RUST_RESISTANCE_BASIC
@@ -666,10 +663,17 @@
 	desc = "Bialtaakid 'ant taerif ma hdha."
 	color = "#ECD5A8"
 	mat_flags = MATERIAL_BASIC_RECIPES
+	mat_properties = list(
+		MATERIAL_DENSITY = 4,
+		MATERIAL_HARDNESS = 1,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 2,
+		MATERIAL_ELECTRICAL = 1,
+		MATERIAL_THERMAL = 6,
+		MATERIAL_CHEMICAL = 6,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/sandstone
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
-	armor_modifiers = list(MELEE = 0.5, BULLET = 0.5, LASER = 1.25, ENERGY = 0.5, BOMB = 0.5, BIO = 0.25, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = 0.3
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "brick"
 	mat_rust_resistance = RUST_RESISTANCE_BASIC
@@ -679,12 +683,16 @@
 	desc = "There's no business like snow business."
 	color = COLOR_WHITE
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_AMORPHOUS
+	mat_properties = list(
+		MATERIAL_DENSITY = 2,
+		MATERIAL_HARDNESS = 2,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 6,
+		MATERIAL_ELECTRICAL = 6,
+		MATERIAL_THERMAL = 6,
+		MATERIAL_CHEMICAL = 1,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/snow
-	strength_modifier = 0.4
-	integrity_modifier = 0.4
-	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
-	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 0.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, FIRE = 0.25, ACID = 1.5)
-	beauty_modifier = 0.3
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
 	mat_rust_resistance = RUST_RESISTANCE_ORGANIC
@@ -698,10 +706,17 @@
 	desc = "Mir'ntrath barhah Nar'sie."
 	color = "#504742"
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 7,
+		MATERIAL_HARDNESS = 7,
+		MATERIAL_FLEXIBILITY = 3,
+		MATERIAL_REFLECTIVITY = 2,
+		MATERIAL_ELECTRICAL = 5,
+		MATERIAL_THERMAL = 1,
+		MATERIAL_CHEMICAL = 8,
+	)
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	value_per_unit = 1500 / SHEET_MATERIAL_AMOUNT
-	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 1, ENERGY = 1, BOMB = 1.2, BIO = 1.2, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = -0.15
 	texture_layer_icon_state = "runed"
 
 /datum/material/runedmetal/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
@@ -715,10 +730,17 @@
 	desc = "Clock Cult? Never heard of it."
 	color = "#876223"
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 8, // Bronze is *very* dense, almost as dense as lead
+		MATERIAL_HARDNESS = 5,
+		MATERIAL_FLEXIBILITY = 3,
+		MATERIAL_REFLECTIVITY = 7,
+		MATERIAL_ELECTRICAL = 8,
+		MATERIAL_THERMAL = 8,
+		MATERIAL_CHEMICAL = 5,
+	)
 	sheet_type = /obj/item/stack/sheet/bronze
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
-	armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = 0.2
 
 /datum/material/paper
 	name = "paper"
@@ -727,9 +749,17 @@
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_ORGANIC
 	sheet_type = /obj/item/stack/sheet/paperframes
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
-	strength_modifier = 0.3
-	armor_modifiers = list(MELEE = 0.1, BULLET = 0.1, LASER = 0.1, ENERGY = 0.1, BOMB = 0.1, BIO = 0.1, ACID = 1.5)
-	beauty_modifier = 0.3
+	mat_properties = list(
+		MATERIAL_DENSITY = 0,
+		MATERIAL_HARDNESS = 0,
+		MATERIAL_FLEXIBILITY = 8,
+		MATERIAL_REFLECTIVITY = 1,
+		MATERIAL_ELECTRICAL = 1,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 0,
+		MATERIAL_FLAMMABILITY = 8,
+		MATERIAL_BEAUTY = 0.3, // Origami is beautiful
+	)
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "paper"
 
@@ -766,11 +796,18 @@
 	desc = "They say cardboard is used by hobos to make incredible things."
 	color = "#5F625C"
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_ORGANIC
+	mat_properties = list(
+		MATERIAL_DENSITY = 1,
+		MATERIAL_HARDNESS = 0,
+		MATERIAL_FLEXIBILITY = 6,
+		MATERIAL_REFLECTIVITY = 1,
+		MATERIAL_ELECTRICAL = 1,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 2,
+		MATERIAL_FLAMMABILITY = 6,
+	)
 	sheet_type = /obj/item/stack/sheet/cardboard
 	value_per_unit = 6 / SHEET_MATERIAL_AMOUNT
-	strength_modifier = 0.3
-	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 0.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, ACID = 1.5)
-	beauty_modifier = -0.1
 
 /datum/material/cardboard/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -790,10 +827,17 @@
 	desc = "Man, building with this will make you the coolest caveman on the block."
 	color = "#e3dac9"
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_ORGANIC | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 3,
+		MATERIAL_HARDNESS = 5,
+		MATERIAL_FLEXIBILITY = 2,
+		MATERIAL_REFLECTIVITY = 4,
+		MATERIAL_ELECTRICAL = 3,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 2,
+	)
 	sheet_type = /obj/item/stack/sheet/bone
 	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
-	armor_modifiers = list(MELEE = 1.2, BULLET = 0.75, LASER = 0.75, ENERGY = 1.2, BOMB = 1, BIO = 1, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = -0.2
 
 /datum/material/bone/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -833,11 +877,19 @@
 	desc = "If it's good enough for pandas, it's good enough for you."
 	color = "#87a852"
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_ORGANIC | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 3, // Denser and bendier than wood, but pretty much the same otherwise
+		MATERIAL_HARDNESS = 4,
+		MATERIAL_FLEXIBILITY = 5,
+		MATERIAL_REFLECTIVITY = 1,
+		MATERIAL_ELECTRICAL = 6,
+		MATERIAL_THERMAL = 3,
+		MATERIAL_CHEMICAL = 1,
+		MATERIAL_FLAMMABILITY = 6,
+		MATERIAL_BEAUTY = 0.2, // Prettier patterns
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/bamboo
-	strength_modifier = 0.5
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
-	armor_modifiers = list(MELEE = 0.5, BULLET = 0.5, LASER = 0.5, ENERGY = 0.5, BOMB = 0.5, BIO = 0.51, FIRE = 0.5, ACID = 1.5)
-	beauty_modifier = 0.2
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "bamboo"
 
@@ -846,9 +898,17 @@
 	desc = "A light absorbing crystal"
 	color = COLOR_ALMOST_BLACK
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL
+	mat_properties = list(
+		MATERIAL_DENSITY = 1,
+		MATERIAL_HARDNESS = 9,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 0,
+		MATERIAL_ELECTRICAL = 1,
+		MATERIAL_THERMAL = 9,
+		MATERIAL_CHEMICAL = 0,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/zaukerite
 	value_per_unit = 900 / SHEET_MATERIAL_AMOUNT
-	armor_modifiers = list(MELEE = 0.9, BULLET = 0.9, LASER = 1.75, ENERGY = 1.75, BOMB = 0.5, BIO = 1, FIRE = 0.1, ACID = 1)
 
 /datum/material/zaukerite/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()

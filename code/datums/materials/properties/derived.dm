@@ -27,7 +27,7 @@
 	// But unless it has enough bend to it, it'll also fracture - which is why flexibility needs to be in a sweetspot, based on density
 	var/hardness_coeff = (2 + max(0, hardness - 4) * 2 - max(0, 2 - hardness)) / MATERIAL_PROPERTY_MAX
 	var/bend_coeff =  1 - abs(flexibility - sqrt(density)) * 0.1
-	// Check the math for yourself in https://www.desmos.com/calculator/nknotklq2l
+	// Check the math for yourself in https://www.desmos.com/calculator/ez2n34w772
 	return round(INTEGRITY_MIN + hardness_coeff * bend_coeff * INTEGRITY_COEFF, 0.01)
 
 #undef INTEGRITY_MIN

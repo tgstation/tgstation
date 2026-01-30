@@ -195,7 +195,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	return armor_modifiers
 
 /datum/material/proc/get_property(prop_id)
-	if (mat_properties[prop_id])
+	if (mat_properties?[prop_id])
 		return mat_properties[prop_id]
 
 	var/datum/material_property/derived/derived_prop = SSmaterials.properties[prop_id]

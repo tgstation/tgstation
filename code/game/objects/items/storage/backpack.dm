@@ -249,16 +249,13 @@
 
 // MEAT MEAT MEAT MEAT MEAT
 
-///This nullifies the force malus from the meat material while not touching other stats.
-#define INVERSE_MEAT_STRENTGH (1 / /datum/material/meat::strength_modifier)
-
 /obj/item/storage/backpack/meat
 	name = "\improper MEAT"
 	desc = "MEAT MEAT MEAT MEAT MEAT MEAT"
 	icon_state = "meatmeatmeat"
 	inhand_icon_state = "meatmeatmeat"
-	force = 15 * INVERSE_MEAT_STRENTGH
-	throwforce = 15 * INVERSE_MEAT_STRENTGH
+	force = 15
+	throwforce = 15
 	material_flags = MATERIAL_EFFECTS | MATERIAL_AFFECT_STATISTICS
 	attack_verb_continuous = list("MEATS", "MEAT MEATS")
 	attack_verb_simple = list("MEAT", "MEAT MEAT")
@@ -284,7 +281,10 @@
 
 	AddComponent(/datum/component/squeak, meat_sounds)
 
-#undef INVERSE_MEAT_STRENTGH
+/obj/item/storage/backpack/meat/change_material_strength(datum/material/material, mat_amount, multiplier, remove)
+	// Our base 15 force includes the implied meat force
+	if (!istype(material, /datum/material/meat))
+		return ..()
 
 /*
  * Satchel Types

@@ -2010,6 +2010,7 @@
 		return
 
 	var/conductivity = material.get_property(MATERIAL_ELECTRICAL)
+	// 0 ~ 1 count as perfect insulators
 	var/siemens_modifier = round(max((conductivity - 1) ** 1.18 * 0.15, 0), 0.01)
 	siemens_coefficient /= GET_MATERIAL_MODIFIER(siemens_modifier, multiplier)
 

@@ -13,7 +13,7 @@
 
 /datum/material_property/density/get_descriptor(value)
 	// Just for reference, IRL density of ABS plastic and water is ~1g/cm3, glass is 2.5, iron is 7.5 and lead is 11
-	// So 0 ~ 1 would be paper/cardboard, then wood at 2, plastic at 3, glass at 4, iron at 6 and lead at 8
+	// So 0 ~ 1 would be paper/cardboard, then wood at 2, plastic at 3, glass at 4, iron at 6 and lead at 8 ~ 9
 	switch(value)
 		if (0 to 1)
 			return "extremely light"

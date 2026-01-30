@@ -6,12 +6,18 @@
 	alpha = 100
 	starlight_color = COLOR_ALMOST_BLACK
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_FABRIC // Metal for crafting, and fabric because bedsheets and ghosts... you get it.
+	mat_properties = list(
+		MATERIAL_DENSITY = 2,
+		MATERIAL_HARDNESS = 6,
+		MATERIAL_FLEXIBILITY = 6,
+		MATERIAL_REFLECTIVITY = 4,
+		MATERIAL_ELECTRICAL = 4,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 2,
+		MATERIAL_FLAMMABILITY = 6,
+	)
 	sheet_type = /obj/item/stack/sheet/hauntium
 	value_per_unit = 0.05
-	beauty_modifier = 0.25
-	//pretty good but only the undead can actually make use of these modifiers
-	strength_modifier = 1.2
-	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.15, ENERGY = 1.15, BOMB = 1, BIO = 1, FIRE = 1, ACID = 0.7)
 
 /datum/material/hauntium/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
