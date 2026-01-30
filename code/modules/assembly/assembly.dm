@@ -25,8 +25,9 @@
 	var/obj/item/assembly_holder/holder = null
 	var/assembly_behavior = ASSEMBLY_FUNCTIONAL_OUTPUT // how does the assembly behave with respect to what it's connected to
 	var/datum/wires/connected = null
-	var/next_activate = 0 //When we're next allowed to activate - for spam control
-	var/activation_cooldown = 30
+	COOLDOWN_DECLARE(next_activate)
+	/// Length of the cooldown between activations
+	var/activation_cooldown = 3 SECONDS
 
 /obj/item/assembly/Destroy()
 	holder = null
