@@ -209,8 +209,7 @@
 		stop_autofiring()
 	return COMPONENT_CLIENT_MOUSEUP_INTERCEPT
 
-
-/datum/component/automatic_fire/proc/stop_autofiring(datum/source, atom/object, turf/location, control, params)
+/datum/component/automatic_fire/proc/stop_autofiring(mob/living/source, obj/item/current_held_item, obj/item/previous_held_item)
 	SIGNAL_HANDLER
 	if(autofire_stat != AUTOFIRE_STAT_FIRING)
 		return

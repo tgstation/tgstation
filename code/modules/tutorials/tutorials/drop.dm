@@ -57,7 +57,7 @@
 		if (STAGE_PICK_SOMETHING_UP)
 			show_instruction("Pick something up!")
 
-/datum/tutorial/drop/proc/on_swap_hands()
+/datum/tutorial/drop/proc/on_swap_hands(mob/living/source, obj/item/current_held_item, obj/item/previous_held_item)
 	SIGNAL_HANDLER
 
 	if (isnull(user.get_active_held_item()))
