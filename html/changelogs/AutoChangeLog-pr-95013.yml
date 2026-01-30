@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Lipoplasty can no longer be used to infinitely farm meat or increase patient's nutrition level"
-  - bugfix: "If your chest has somehow been swapped, you will drop the correct type of meat when undergoing lipoplasty"
-  - code_imp: "Removed magic numbers in human meat related code"
