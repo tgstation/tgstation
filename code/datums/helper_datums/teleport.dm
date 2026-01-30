@@ -301,5 +301,9 @@
 			var/obj/vehicle/vehicle = movable
 			if(vehicle.is_occupant(teleportable))
 				break
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_STOMACH) && istype(movable, /obj/item/organ/stomach))
+			var/obj/item/organ/stomach/stomach = movable
+			if(teleportable in stomach.stomach_contents)
+				break
 		teleportable = movable
 	return teleportable

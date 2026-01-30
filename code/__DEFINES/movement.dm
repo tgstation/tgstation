@@ -139,6 +139,8 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define TELEPORT_CONTAINER_INCLUDE_VEHICLE (1<<3)
 /// Count mech equipment (particularly cargo holds and sleepers) as a valid container
 #define TELEPORT_CONTAINER_INCLUDE_MECH_EQUIPMENT (1<<4)
+/// Count stomachs as a valid container (ew)
+#define TELEPORT_CONTAINER_INCLUDE_STOMACH (1<<5)
 
 ///Return values for moveloop Move()
 #define MOVELOOP_FAILURE 0
