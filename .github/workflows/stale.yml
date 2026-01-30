@@ -18,7 +18,7 @@ jobs:
       - uses: actions/stale@v10
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          stale-pr-message: "This PR has been inactive for long enough to be automatically marked as stale. This means it is at risk of being auto closed in ~7 days. Please address any outstanding review items and ensure your PR is finished - if both are true, and you have auto-staled anyway, you need to actively ask maintainers (by pinging them in the /tg/station Discord) to (re)review or merge your pr. If no maintainer responds to your request, you may wish to close this PR yourself while you seek maintainer comment, as you will later be able to reopen the PR yourself."
+          stale-pr-message: "This PR has been inactive for long enough to be automatically marked as stale. This means it is at risk of being auto closed in ~7 days. Please address any outstanding review items and ensure your PR is finished - if both are true, and you have auto-staled anyway, you need to actively ask maintainers (by pinging them in the /tg/station Discord) to (re)review or merge your PR. If no maintainer responds to your request, you may wish to close this PR yourself while you seek maintainer comment, as you will later be able to reopen the PR yourself."
           stale-issue-message: "This issue has been marked for cleanup and will be automatically closed in ~14 days. If there is evidence that the issue still occurs, leave a comment with it attached and contact an issue manager or maintainer to have the label removed."
           days-before-stale: 7
           days-before-close: 7
