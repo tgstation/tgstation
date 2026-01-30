@@ -369,7 +369,8 @@
 	return TRUE
 
 /obj/item/bombcore/burn()
-	detonate()
+	if(!istype(src, /obj/item/bombcore/syndicate))
+		detonate()
 	..()
 
 /obj/item/bombcore/proc/detonate()
@@ -393,9 +394,6 @@
 
 /obj/item/bombcore/syndicate/ex_act(severity, target)
 	return FALSE
-
-/obj/item/bombcore/syndicate/burn()
-	return ..()
 
 /obj/item/bombcore/syndicate/large
 	name = "Donk Co. Super-Stable Bomb Payload XL"
