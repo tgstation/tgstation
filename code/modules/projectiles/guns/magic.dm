@@ -54,8 +54,7 @@
 	var/pitch_to_use = 1
 
 	if (pitch_with_charges && max_charges > 1)
-		var/min_pitch = self_charging ? 0.7 : 0.5 // If we are going to recharge don't make the sound quite as dire, because you might be firing it at 1 charge quite a lot
-		pitch_to_use = LERP(1, min_pitch, (1 - (charges/max_charges)) ** 2)
+		pitch_to_use = LERP(1, 0.4, (1 - (charges/max_charges)) ** 2)
 
 	var/sound/playing_sound = sound(suppressed ? suppressed_sound : fire_sound)
 	playing_sound.pitch = pitch_to_use
