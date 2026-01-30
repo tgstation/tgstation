@@ -363,13 +363,15 @@
 	var/range_medium = 9
 	var/range_light = 17
 	var/range_flame = 17
+	/// Whether this core explodes when burnt
+	var/explodes_when_burnt = TRUE
 
 /obj/item/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
 	detonate()
 	return TRUE
 
 /obj/item/bombcore/burn()
-	if(!istype(src, /obj/item/bombcore/syndicate))
+	if(explodes_when_burnt)
 		detonate()
 	..()
 
@@ -391,6 +393,7 @@
 /obj/item/bombcore/syndicate
 	name = "Donk Co. Super-Stable Bomb Payload"
 	desc = "After a string of unwanted detonations, this payload has been specifically redesigned to not explode unless triggered electronically by a bomb shell."
+	explodes_when_burnt = FALSE
 
 /obj/item/bombcore/syndicate/ex_act(severity, target)
 	return FALSE
