@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "selecting layer and colour of a stack of ducts works correctly"

@@ -769,3 +769,13 @@
   - rscadd: Added the ability to modify sabre sheaths into gun-powered sheaths, making
       their counterattacks much more potent at the risk of great personal harm on
       failure, especially if you have a weak, fleshy arm.
+2026-01-30:
+  ERRORNAME:
+  - image: Shadow people and Nightmare resprite
+  - image: Unique sprites for light eater and heart of darkness
+  Melbert:
+  - qol: Secure prosthetic surgical operation ignores clothing
+  SyncIt21:
+  - bugfix: selecting layer and colour of a stack of ducts works correctly
+  - bugfix: floor light constructs now deconstruct when floor is deconstructed
+  - bugfix: RLD created lights now fall off when floor/wall is destroyed
