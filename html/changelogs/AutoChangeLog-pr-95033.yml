@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fix hand surgery (stomach pump, etc) being blocked by the patient being on combat mode rather than the surgeon"
