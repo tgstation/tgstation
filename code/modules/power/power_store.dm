@@ -206,7 +206,7 @@
 		return FALSE
 
 	if (!corrupted)
-		if (!(reagents?.spark_act(check_charge, TRUE) & SPARK_ACT_DESTRUCTIVE))
+		if (!(reagents?.spark_act(check_charge, SPARK_ACT_ENCLOSED) & SPARK_ACT_DESTRUCTIVE))
 			return FALSE
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has triggered a rigged power cell explosion at [AREACOORD(loc)].")
 		usr?.log_message("triggered a rigged power cell explosion", LOG_GAME)
@@ -281,7 +281,7 @@
 	if(discharged_energy < STANDARD_BATTERY_CHARGE)
 		return
 	user.dropItemToGround(src)
-	user.dust(just_ash = TRUE)
+	user.dust(just_ash = TRUE, drop_items = TRUE)
 	playsound(src, 'sound/effects/magic/lightningshock.ogg', 50, TRUE, 10)
 	tesla_zap(source = src, zap_range = 10, power = discharged_energy)
 

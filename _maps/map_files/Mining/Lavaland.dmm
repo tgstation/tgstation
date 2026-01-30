@@ -1569,6 +1569,12 @@
 	},
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
+"iI" = (
+/obj/machinery/power/weather_tower,
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "iN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3006,7 +3012,10 @@
 /area/mine/laborcamp/production)
 "ps" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/super/full,
+/obj/machinery/power/smes/super/full{
+	output_level = 100000;
+	input_level = 100000
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
@@ -4220,6 +4229,10 @@
 /area/lavaland/surface/outdoors)
 "wE" = (
 /obj/item/chair/wood,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"wG" = (
+/obj/structure/lattice/catwalk,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "wJ" = (
@@ -35917,7 +35930,7 @@ pU
 pU
 pU
 pU
-pU
+iI
 pU
 pU
 pU
@@ -36171,12 +36184,12 @@ ZY
 ZY
 pU
 pU
-pU
-pU
-pU
-pU
-pU
-pU
+aD
+aD
+aD
+aD
+wG
+wG
 pU
 pU
 pU
@@ -36428,7 +36441,7 @@ ZY
 ZY
 pU
 pU
-pU
+aD
 AJ
 AJ
 AJ
@@ -36685,7 +36698,7 @@ ZY
 pU
 pU
 pU
-pU
+aD
 TR
 Fs
 JM
@@ -36942,7 +36955,7 @@ ZY
 pU
 pU
 pU
-pU
+aD
 mA
 su
 xG
@@ -39250,8 +39263,8 @@ ZY
 ZY
 pU
 pU
-pU
-pU
+iI
+aD
 Qz
 ON
 ON
@@ -40021,9 +40034,9 @@ ZY
 ZY
 pU
 pU
-pU
-pU
-pU
+iI
+aD
+aD
 ON
 ON
 ON

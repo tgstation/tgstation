@@ -1,5 +1,10 @@
 /// Helper to open the panel
 /datum/lootpanel/proc/open(turf/tile)
+	if (tile != source_turf)
+		if (source_turf)
+			UnregisterSignal(source_turf, COMSIG_ATOM_ENTERED)
+		RegisterSignal(tile, COMSIG_ATOM_ENTERED, PROC_REF(on_source_turf_entered))
+
 	source_turf = tile
 
 #if !defined(OPENDREAM) && !defined(UNIT_TESTS)

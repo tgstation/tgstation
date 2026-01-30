@@ -344,3 +344,6 @@
 
 /// Trait gained by a guardian who is recalled
 #define GUARDIAN_RECALLED "guardian_recalled"
+
+/// Trait granted as a result of a mob being husked
+#define HUSK_TRAIT "husk"

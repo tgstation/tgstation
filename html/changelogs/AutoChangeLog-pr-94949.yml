@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Paywall firing pins are registerable again, & they'll keep being registerable after being unregistered."
