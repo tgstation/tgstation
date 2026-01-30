@@ -218,8 +218,8 @@
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
 	to_preload += /obj/item/sensor_device
 	to_preload += /obj/item/stack/medical/wrap/gauze/twelve
-	to_preload += /obj/item/stack/medical/bone_gel
-	to_preload += /obj/item/stack/medical/wrap/sticky_tape/surgical
+	to_preload += /obj/item/tourniquet
+	to_preload += /obj/item/bonesetter
 	to_preload += /obj/item/reagent_containers/syringe
 	to_preload += /obj/item/reagent_containers/cup/bottle/ammoniated_mercury
 	to_preload += /obj/item/reagent_containers/cup/bottle/formaldehyde
