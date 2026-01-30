@@ -136,7 +136,7 @@
 
 /obj/item/assembly/signaler/anomaly/bioscrambler/signal()
 	new /obj/effect/temp_visual/circle_wave/bioscrambler(get_turf(src))
-	for(var/mob/living/carbon/nearby in hearers(range, src))
+	for(var/mob/living/carbon/nearby in hearers(1, src))
 		nearby.bioscramble(name)
 
 /obj/item/assembly/signaler/anomaly/hallucination
