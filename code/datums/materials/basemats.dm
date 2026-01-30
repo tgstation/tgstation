@@ -4,6 +4,15 @@
 	desc = "Common iron ore often found in sedimentary and igneous layers of the crust."
 	color = "#B6BEC2"
 	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 6,
+		MATERIAL_HARDNESS = 6,
+		MATERIAL_FLEXIBILITY = 2,
+		MATERIAL_REFLECTIVITY = 3,
+		MATERIAL_ELECTRICAL = 6,
+		MATERIAL_THERMAL = 7,
+		MATERIAL_CHEMICAL = 3,
+	)
 	sheet_type = /obj/item/stack/sheet/iron
 	ore_type = /obj/item/stack/ore/iron
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
@@ -28,7 +37,15 @@
 	color = "#6292AF"
 	alpha = 150
 	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_RIGID
-	integrity_modifier = 0.1
+	mat_properties = list(
+		MATERIAL_DENSITY = 4,
+		MATERIAL_HARDNESS = 4,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 7,
+		MATERIAL_ELECTRICAL = 0,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 8,
+	)
 	sheet_type = /obj/item/stack/sheet/glass
 	ore_type = /obj/item/stack/ore/glass/basalt
 	shard_type = /obj/item/shard
@@ -37,8 +54,6 @@
 	minimum_value_override = 0
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
-	beauty_modifier = 0.05
-	armor_modifiers = list(MELEE = 0.2, BULLET = 0.2, ENERGY = 1, BIO = 0.2, FIRE = 1, ACID = 0.2)
 	mineral_rarity = MATERIAL_RARITY_COMMON
 	points_per_unit = 1 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
@@ -71,12 +86,20 @@
 	desc = "A precious metal known for being hated by oversized bats and dogs."
 	color = "#B5BCBB"
 	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 7,
+		MATERIAL_HARDNESS = 4,
+		MATERIAL_FLEXIBILITY = 3,
+		MATERIAL_REFLECTIVITY = 8,
+		MATERIAL_ELECTRICAL = 4,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 4,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	ore_type = /obj/item/stack/ore/silver
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
-	beauty_modifier = 0.075
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	points_per_unit = 16 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
@@ -98,15 +121,21 @@
 	name = "gold"
 	desc = "All that glitters is not gold."
 	color = "#E6BB45"
-	strength_modifier = 1.2
+	mat_properties = list(
+		MATERIAL_DENSITY = 9,
+		MATERIAL_HARDNESS = 3,
+		MATERIAL_FLEXIBILITY = 3,
+		MATERIAL_REFLECTIVITY = 6,
+		MATERIAL_ELECTRICAL = 8,
+		MATERIAL_THERMAL = 8,
+		MATERIAL_CHEMICAL = 2,
+	)
 	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	ore_type = /obj/item/stack/ore/gold
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
-	beauty_modifier = 0.15
-	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.15, ENERGY = 1.15, BOMB = 1, BIO = 1, FIRE = 0.7, ACID = 1.1)
 	mineral_rarity = MATERIAL_RARITY_PRECIOUS
 	points_per_unit = 18 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
@@ -130,17 +159,22 @@
 	desc = "Highly pressurized carbon."
 	color = "#C9D8F2"
 	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 4, // Wow these are light
+		MATERIAL_HARDNESS = 10,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 10,
+		MATERIAL_ELECTRICAL = 0, // Did you know they're also an *extremely* potent insulator, only beaten by some synthetic compounds?
+		MATERIAL_THERMAL = 9,
+		MATERIAL_CHEMICAL = 4,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	ore_type = /obj/item/stack/ore/diamond
 	alpha = 132
 	starlight_color = COLOR_BLUE_LIGHT
 	value_per_unit = 500 / SHEET_MATERIAL_AMOUNT
-	strength_modifier = 1.1
-	integrity_modifier = 1.25
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_EXOTIC
-	beauty_modifier = 0.3
-	armor_modifiers = list(MELEE = 1.3, BULLET = 1.3, LASER = 0.6, ENERGY = 1, BOMB = 1.2, BIO = 1, FIRE = 1, ACID = 1)
 	mineral_rarity = MATERIAL_RARITY_RARE
 	points_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 	fish_weight_modifier = 1.4
@@ -158,18 +192,27 @@
 		victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
 		return TRUE
 
-///Is slightly radioactive
+/// Is slightly radioactive
 /datum/material/uranium
 	name = "uranium"
 	desc = "Very spicy rocks."
 	color = "#2C992C"
 	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 9,
+		MATERIAL_HARDNESS = 5,
+		MATERIAL_FLEXIBILITY = 3,
+		MATERIAL_REFLECTIVITY = 0, // Its a bar of glowing stone
+		MATERIAL_ELECTRICAL = 6,
+		MATERIAL_THERMAL = 6,
+		MATERIAL_CHEMICAL = 6,
+		MATERIAL_BEAUTY = 0.3, // Overriden cause its ~shiny~
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	ore_type = /obj/item/stack/ore/uranium
 	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
-	beauty_modifier = 0.3 //It shines so beautiful
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.4, LASER = 0.5, ENERGY = 0.5, FIRE = 1, ACID = 1)
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	points_per_unit = 30 / SHEET_MATERIAL_AMOUNT
@@ -202,12 +245,22 @@
 	source_item?.reagents?.add_reagent(/datum/reagent/uranium, source_item.reagents.total_volume*(2/5))
 	return TRUE
 
-///Adds firestacks on hit (Still needs support to turn into gas on destruction)
+/// Adds firestacks on hit (Still needs support to turn into gas on destruction)
 /datum/material/plasma
 	name = "plasma"
 	desc = "Isn't plasma a state of matter? Oh whatever."
 	color = "#BA3692"
 	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 6,
+		MATERIAL_HARDNESS = 8,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 8,
+		MATERIAL_ELECTRICAL = 10,
+		MATERIAL_THERMAL = 8,
+		MATERIAL_CHEMICAL = 0,
+		MATERIAL_FLAMMABILITY = 10, // Literally sets itself on fire from any excitement
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	ore_type = /obj/item/stack/ore/plasma
 	value_per_unit = 200 / SHEET_MATERIAL_AMOUNT
@@ -248,7 +301,16 @@
 	alpha = 200
 	starlight_color = COLOR_BLUE
 	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL
-	beauty_modifier = 0.5
+	mat_properties = list(
+		MATERIAL_DENSITY = 2,
+		MATERIAL_HARDNESS = 8,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 10,
+		MATERIAL_ELECTRICAL = 10,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 4,
+		MATERIAL_BEAUTY = 0.5, // Absolutely mesmerizing
+	)
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal
 	ore_type = /obj/item/stack/ore/bluespace_crystal
 	value_per_unit = 300 / SHEET_MATERIAL_AMOUNT
@@ -360,15 +422,21 @@
 	name = "titanium"
 	desc = "Titanium"
 	color = "#EFEFEF"
-	strength_modifier = 1.3
+	mat_properties = list(
+		MATERIAL_DENSITY = 5,
+		MATERIAL_HARDNESS = 7,
+		MATERIAL_FLEXIBILITY = 2,
+		MATERIAL_REFLECTIVITY = 8,
+		MATERIAL_ELECTRICAL = 6,
+		MATERIAL_THERMAL = 7,
+		MATERIAL_CHEMICAL = 6,
+	)
 	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	ore_type = /obj/item/stack/ore/titanium
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
-	beauty_modifier = 0.05
-	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 1.25, BIO = 1, FIRE = 0.7, ACID = 1)
 	mat_rust_resistance = RUST_RESISTANCE_TITANIUM
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	texture_layer_icon_state = "shine"

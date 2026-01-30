@@ -222,16 +222,13 @@
 	var/beauty_modifier = material.get_property(MATERIAL_BEAUTY)
 	if(beauty_modifier)
 		AddElement(/datum/element/beauty, beauty_modifier * amount)
-
 		if(beauty_modifier >= 0.15 && HAS_TRAIT(src, TRAIT_FISHING_BAIT))
 			AddElement(/datum/element/shiny_bait)
 
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || !uses_integrity)
 		return
 
-	#warn rework this ffs
-	// Density is health, hardness is melee/projectile armor, 0.1 ~ 1.9 variance
-	var/base_modifier = material.get_property(MATERIAL_DENSITY) / MATERIAL_PROPERTY_MAX * 1.8 + 0.1
+	var/base_modifier = material.get_property(MATERIAL_INTEGRITY)
 	var/integrity_mod = GET_MATERIAL_MODIFIER(base_modifier, multiplier)
 	modify_max_integrity(ceil(max_integrity * integrity_mod))
 	var/list/armor_mods = material.get_armor_modifiers(multiplier)
@@ -295,7 +292,7 @@
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || !uses_integrity)
 		return
 
-	var/base_modifier = material.get_property(MATERIAL_DENSITY) / MATERIAL_PROPERTY_MAX * 1.8 + 0.1
+	var/base_modifier = material.get_property(MATERIAL_INTEGRITY)
 	var/integrity_mod = GET_MATERIAL_MODIFIER(base_modifier, multiplier)
 	modify_max_integrity(floor(max_integrity / integrity_mod))
 	var/list/armor_mods = material.get_armor_modifiers(1 / multiplier)

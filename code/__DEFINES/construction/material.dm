@@ -66,15 +66,26 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 #define MATERIAL_HARDNESS "hardness"
 #define MATERIAL_FLEXIBILITY "flexibility"
 #define MATERIAL_REFLECTIVITY "reflectivity"
-#define MATERIAL_ELECTRICAL "electrical"
-#define MATERIAL_THERMAL "thermal"
-#define MATERIAL_CHEMICAL "chemical"
+#define MATERIAL_ELECTRICAL "electrical conductivity"
+#define MATERIAL_THERMAL "thermal conductivity"
+#define MATERIAL_CHEMICAL "chemical resistance"
+
+// Optional material property IDs
+#define MATERIAL_FLAMMABILITY "flammability"
 
 // Derived material property IDs
+#define MATERIAL_INTEGRITY "integrity"
 #define MATERIAL_BEAUTY "beauty"
 
 /// Maximum value for a core material property
-#define MATERIAL_PROPERTY_MAX 9
+#define MATERIAL_PROPERTY_MAX 10
+/// Allows to easily add "deadzones" for properties, and only adjust stats if they go below/above said deadzones. Basically two starting points for modifiers.
+#define MATERIAL_PROPERTY_DIVERGENCE(property, minimum, maximum) (min(0, property - minimum) + max(0, property - maximum))
+
+/// Minimum theoretical item force multiplier from materials
+#define MATERIAL_MIN_FORCE_MULTIPLIER 0.1
+/// Maximum theoretical item force multiplier from materials
+#define MATERIAL_MAX_FORCE_MULTIPLIER 2
 
 // Material Container Flags.
 ///If the container shows the amount of contained materials on examine.

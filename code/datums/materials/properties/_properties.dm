@@ -12,6 +12,8 @@
 	id = MATERIAL_DENSITY
 
 /datum/material_property/density/get_descriptor(value)
+	// Just for reference, IRL density of ABS plastic and water is ~1g/cm3, glass is 2.5, iron is 7.5 and lead is 11
+	// So 0 ~ 1 would be paper/cardboard, then wood at 2, plastic at 3, glass at 4, iron at 6 and lead at 8
 	switch(value)
 		if (0 to 1)
 			return "extremely light"
@@ -19,9 +21,9 @@
 			return "very light"
 		if (2 to 3)
 			return "light"
-		if (3 to 5)
+		if (3 to 4)
 			return "slightly dense"
-		if (5 to 6)
+		if (4 to 6)
 			return "dense"
 		if (6 to 8)
 			return "very dense"
@@ -40,9 +42,9 @@
 			return "very soft"
 		if (2 to 3)
 			return "soft"
-		if (3 to 5)
+		if (3 to 4)
 			return "slightly hard"
-		if (5 to 6)
+		if (4 to 6)
 			return "hard"
 		if (6 to 8)
 			return "very hard"
@@ -61,9 +63,9 @@
 			return "very rigid"
 		if (2 to 3)
 			return "rigid"
-		if (3 to 5)
+		if (3 to 4)
 			return "slightly flexible"
-		if (5 to 6)
+		if (4 to 6)
 			return "flexible"
 		if (6 to 8)
 			return "very flexible"
@@ -82,9 +84,9 @@
 			return "very dull"
 		if (2 to 3)
 			return "dull"
-		if (3 to 5)
+		if (3 to 4)
 			return "matte"
-		if (5 to 6)
+		if (4 to 6)
 			return "reflective"
 		if (6 to 8)
 			return "very reflective"
@@ -105,9 +107,9 @@
 			return "insulating"
 		if (2 to 3)
 			return "poorly insulating"
-		if (3 to 5)
+		if (3 to 4)
 			return "mildly conductive"
-		if (5 to 6)
+		if (4 to 6)
 			return "conductive"
 		if (6 to 8)
 			return "highly conductive"
@@ -126,9 +128,9 @@
 			return "very temperature-resistant"
 		if (2 to 3)
 			return "temperature-resistant"
-		if (3 to 5)
+		if (3 to 4)
 			return "slightly thermally conductive"
-		if (5 to 6)
+		if (4 to 6)
 			return "thermally conductive"
 		if (6 to 8)
 			return "very thermally conductive"
@@ -147,11 +149,36 @@
 			return "reactive"
 		if (2 to 3)
 			return "slightly reactive"
-		if (3 to 5)
+		if (3 to 4)
 			return "mildly chemically resistant"
-		if (5 to 6)
+		if (4 to 6)
 			return "chemically resistant"
 		if (6 to 8)
 			return "highly chemically resistant"
 		if (8 to INFINITY)
 			return "extremely chemically resistant"
+
+// Optional properties
+
+/// If a material has this property, it is flammable and has reduced fire protection.
+/datum/material_property/flammability
+	id = MATERIAL_FLAMMABILITY
+
+/datum/material_property/flammability/get_descriptor(value)
+	switch(value)
+		if (0)
+			return "nonflammable"
+		if (0 to 1)
+			return "mostly nonflammable"
+		if (1 to 2)
+			return "mildly nonflammable"
+		if (2 to 3)
+			return "somewhat flammable"
+		if (3 to 4)
+			return "flammable"
+		if (4 to 6)
+			return "highly flammable"
+		if (6 to 8)
+			return "extremely flammable"
+		if (8 to INFINITY)
+			return "insanely flammable"

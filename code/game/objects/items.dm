@@ -1973,15 +1973,114 @@
 
 /obj/item/apply_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || (material_flags & MATERIAL_NO_SLOWDOWN) || !material.added_slowdown)
+	if (!(material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
-	slowdown += GET_MATERIAL_MODIFIER(material.added_slowdown * mat_amount, multiplier)
+
+	// [0 ~ 1] is fully insulating, (1 ~ 6] maps to (0 ~ 1] and [6 ~ 10] maps to [1 ~ 2]
+	// 1.18 and 0.15 here are to allow 6 to map to 1 and 10 to map to 2 and are pulled out of my ass (system in the desmos below)
+	// See https://www.desmos.com/calculator/rdbv1x8oty
+	var/conductivity = material.get_property(MATERIAL_ELECTRICAL)
+	var/siemens_modifier = round(max((conductivity - 1) ** 1.18 * 0.15, 0), 0.01)
+	// Thankfully 0 base still results in 0 modifier after the multiplier
+	siemens_coefficient *= GET_MATERIAL_MODIFIER(siemens_modifier, multiplier)
+
+	if (material_flags & MATERIAL_NO_SLOWDOWN)
+		return
+
+	// Density above 6 adds slowdown, density below 3 can reduce existing slowdown
+	var/density = material.get_property(MATERIAL_DENSITY)
+	var/flexibility = material.get_property(MATERIAL_FLEXIBILITY)
+	var/slowdown_change = 0
+
+	if (density > 6)
+		slowdown_change = (density - 6) * 0.05
+	else if (density < 3)
+		slowdown_change = (3 - density) * -0.05
+
+	// If the item applies slowdown only when worn, we also account for poor flexibility (below 6)
+	if (!(item_flags & SLOWS_WHILE_IN_HAND) && flexibility < 6)
+		slowdown_change += (flexibility - 6) * 0.05
+
+	if (slowdown_change)
+		slowdown += GET_MATERIAL_MODIFIER(slowdown_change, multiplier)
 
 /obj/item/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || (material_flags & MATERIAL_NO_SLOWDOWN) || !material.added_slowdown)
+	if (!(material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
-	slowdown -= GET_MATERIAL_MODIFIER(material.added_slowdown * mat_amount, multiplier)
+
+	var/conductivity = material.get_property(MATERIAL_ELECTRICAL)
+	var/siemens_modifier = round(max((conductivity - 1) ** 1.18 * 0.15, 0), 0.01)
+	siemens_coefficient /= GET_MATERIAL_MODIFIER(siemens_modifier, multiplier)
+
+	if (material_flags & MATERIAL_NO_SLOWDOWN)
+		return
+
+	var/density = material.get_property(MATERIAL_DENSITY)
+	var/flexibility = material.get_property(MATERIAL_FLEXIBILITY)
+	var/slowdown_change = 0
+
+	if (density > 6)
+		slowdown_change = (density - 6) * 0.05
+	else if (density < 3)
+		slowdown_change = (3 - density) * -0.05
+
+	// If the item applies slowdown only when worn, we also account for poor flexibility (below 6)
+	if (!(item_flags & SLOWS_WHILE_IN_HAND) && flexibility < 6)
+		slowdown_change += (flexibility - 6) * 0.05
+
+	if (slowdown_change)
+		slowdown -= GET_MATERIAL_MODIFIER(slowdown_change, multiplier)
+
+/obj/item/change_material_strength(datum/material/material, mat_amount, multiplier, remove = FALSE)
+	var/density = material.get_property(MATERIAL_DENSITY)
+	var/hardness = material.get_property(MATERIAL_HARDNESS)
+	var/flexibility = material.get_property(MATERIAL_FLEXIBILITY)
+
+	// Item force calculation depends on its initial (assumed to be main) sharpness
+	// Transforming component doesn't work with materials at all and will need a refactor to change that, so we don't care about it here.
+
+	var/force_mod = 1
+	var/throwforce_mod = 1
+
+	switch (sharpness)
+		if (NONE)
+			// Blunt items are really hurt by all the flexing
+			force_mod = (1 + (density - 4) * 0.1) * (1 - flexibility * 0.2)
+			throwforce_mod = 1 + (density - 4) * 0.1 - flexibility * 0.1
+
+		if (SHARP_EDGED)
+			// Sharp items don't care about density and need high hardness to get a real bonus, but can tolerate (and benefit from) some flex
+			force_mod = 1 + (hardness - 4) * 0.1
+			throwforce_mod = 1 + (hardness - 4) * 0.1
+
+			// Peaks out at 20% at flexibility of 1, drops off up to -80% at 10
+			if (flexibility < 2)
+				force_mod *= 1 + (1 - abs(1 - flexibility)) * 0.2
+				throwforce_mod += (1 - abs(1 - flexibility)) * 0.2
+			else
+				force_mod *= 1 - (flexibility - 2) * 0.1
+				throwforce_mod -= (flexibility - 2) * 0.1
+
+		if (SHARP_POINTY)
+			// Pointy items really care about both density and hardness
+			force_mod = 1 + (density - 6) * 0.05 + (hardness - 6) * 0.05
+			throwforce_mod = 1 + (density - 6) * 0.05 + (hardness - 6) * 0.05
+			// But are not affected by flexibility until higher values, although they don't benefit from it either
+			if (flexibility > 4)
+				force_mod *= (1 - (flexibility - 4) * 0.2)
+				throwforce_mod -= (flexibility - 4) * 0.2
+
+	// Just for sanity in case something breaks
+	force_mod = round(clamp(force_mod, MATERIAL_MIN_FORCE_MULTIPLIER, MATERIAL_MAX_FORCE_MULTIPLIER), 0.01)
+	throwforce_mod = round(clamp(throwforce_mod, MATERIAL_MIN_FORCE_MULTIPLIER, MATERIAL_MAX_FORCE_MULTIPLIER), 0.01)
+
+	if (!remove)
+		force *= GET_MATERIAL_MODIFIER(force_mod, multiplier)
+		throwforce *= GET_MATERIAL_MODIFIER(throwforce_mod, multiplier)
+	else
+		force /= GET_MATERIAL_MODIFIER(force_mod, multiplier)
+		throwforce /= GET_MATERIAL_MODIFIER(throwforce_mod, multiplier)
 
 /**
  * Returns the atom(either itself or an internal module) that will interact/attack the target on behalf of us

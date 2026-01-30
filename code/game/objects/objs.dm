@@ -332,18 +332,30 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	. = ..()
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
-	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
-	force *= strength_mod
-	throwforce *= strength_mod
+	chance_material_strength(material, mat_amount, multiplier)
 
-///This proc is called when the material is removed from an object specifically.
 /obj/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
-	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
-	force /= strength_mod
-	throwforce /= strength_mod
+	change_material_strength(material, mat_amount, multiplier, remove = TRUE)
+
+/// Changes force and throwforce of an item based on its properties. Split into a separate proc as to allow items to change theirs based on sharpness and behavior
+/obj/proc/change_material_strength(datum/material/material, mat_amount, multiplier, remove = FALSE)
+	var/density = material.get_property(MATERIAL_DENSITY)
+	var/hardness = material.get_property(MATERIAL_HARDNESS)
+	var/flexibility = material.get_property(MATERIAL_FLEXIBILITY)
+	// Dense and hard objects make for good melee weapons, bendy ones not so much
+	var/force_mod = (1 + (density - 4) * 0.05 + (hardness - 4) * 0.05) * (1 - flexibility * 0.1)
+	// Hardness doesn't matter much when we're just whacking someone in the back of the head
+	var/throwforce_mod = 1 + (density - 4) * 0.1 - flexibility * 0.1
+
+	if (!remove)
+		force *= GET_MATERIAL_MODIFIER(force_mod, multiplier)
+		throwforce *= GET_MATERIAL_MODIFIER(throwforce_mod, multiplier)
+	else
+		force /= GET_MATERIAL_MODIFIER(force_mod, multiplier)
+		throwforce /= GET_MATERIAL_MODIFIER(throwforce_mod, multiplier)
 
 /// Returns modifier to how much damage this object does to a target considered vulnerable to "demolition" (other objects, robots, etc)
 /obj/proc/get_demolition_modifier(obj/target)

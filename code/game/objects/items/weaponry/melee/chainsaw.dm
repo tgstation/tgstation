@@ -39,7 +39,6 @@
 		force_on = force_on, \
 		throwforce_on = force_on, \
 		throw_speed_on = throw_speed, \
-		sharpness_on = SHARP_EDGED, \
 		hitsound_on = 'sound/items/weapons/chainsawhit.ogg', \
 		w_class_on = w_class, \
 	)

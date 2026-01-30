@@ -158,10 +158,35 @@ Simple datum which is instanced once per type and is used for every object of sa
 ///Returns the list of armor modifiers, with each element having its assoc value multiplied by the multiplier arg
 /datum/material/proc/get_armor_modifiers(multiplier)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	var/list/return_list = list()
-	for(var/armor in armor_modifiers)
-		return_list[armor] = return_list[armor] * multiplier
-	return return_list
+	var/density = get_property(MATERIAL_DENSITY)
+	var/hardness = get_property(MATERIAL_HARDNESS)
+	var/flexibility = get_property(MATERIAL_FLEXIBILITY)
+	var/reflectivity = get_property(MATERIAL_REFLECTIVITY)
+	var/electric = get_property(MATERIAL_ELECTRICAL)
+	var/thermal = get_property(MATERIAL_THERMAL)
+	var/chemical = get_property(MATERIAL_CHEMICAL)
+	var/flammability = get_property(MATERIAL_FLAMMABILITY) // Optional, might be not present
+	// Welcome to hell
+	var/list/armor_modifiers = list(
+		// Based on density, with a bonus/malus for matching flexibility
+		// We cap divergence at 4 (reduced by hardness above 6 for REALLY dense stuff) to make it not extremely punishing on light fabrics or heavy materials
+		// Iron at a baseline of density of 6 and flexibility of 4 has divergence of 4, so (1 + 0.2) / (0.8 + 0.4) = 1
+		MELEE = (1 + (density - 4) * 0.1) / (0.8 + min(4 - max(0, hardness - 6), abs(flexibility - density)) * 0.1),
+		// Hardness and density, with flexibility actually being detrimental
+		BULLET = (1 + (density - 4) * 0.025 + (hardness - 4) * 0.075) / (1 - max(0, flexibility - 2) * 0.1),
+		// 0.6 ~ 1 for reflectivity below 4, 1 ~ 1.4 for reflectivity above 6
+		LASER = 1 + MATERIAL_PROPERTY_DIVERGENCE(reflectivity, 4, 6) * 0.1,
+		// Essentially laser but with contribution split between reflectivity and inverse electric conductivity
+		// Here reflectivity applies if its below 4 or above 8, and conductivity if its below 4 or above 6
+		ENERGY = 1 + MATERIAL_PROPERTY_DIVERGENCE(reflectivity, 4, 8) * 0.05 - MATERIAL_PROPERTY_DIVERGENCE(electric, 4, 6) * 0.1,
+		// Linearly scales from 0.2 to 1.8 with density
+		BOMB = 1 + (density - 4) * 0.2,
+		// Each level of flammability reduces FIRE armor by 20%, with thermal conductivity above 6 reducing it by further 20% for each level above 6
+		FIRE = max(0, 1 - max(0, (thermal - 6) * 0.2) - flammability * 0.2),
+		// Linearly scales from 0.2 to 1.8 with chemical resistance
+		ACID = 1 + (chemical - 4) * 0.2,
+	)
+	return armor_modifiers
 
 /datum/material/proc/get_property(prop_id)
 	if (mat_properties[prop_id])
@@ -169,5 +194,5 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 	var/datum/material_property/derived/derived_prop = SSmaterials.properties[prop_id]
 	if (!istype(derived_prop))
-		return 0 // Property was not specified on the material and wasn't a derived one
+		return null // Property was not specified on the material and wasn't a derived one
 	return derived_prop.get_value(src)
