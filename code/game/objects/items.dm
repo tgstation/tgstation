@@ -1980,7 +1980,7 @@
 	// 1.18 and 0.15 here are to allow 6 to map to 1 and 10 to map to 2 and are pulled out of my ass (system in the desmos below)
 	// See https://www.desmos.com/calculator/rdbv1x8oty
 	var/conductivity = material.get_property(MATERIAL_ELECTRICAL)
-	var/siemens_modifier = round(max((conductivity - 1) ** 1.18 * 0.15, 0), 0.01)
+	var/siemens_modifier = round(max(0, conductivity - 1) ** 1.18 * 0.15, 0.01)
 	// Thankfully 0 base still results in 0 modifier after the multiplier
 	siemens_coefficient *= GET_MATERIAL_MODIFIER(siemens_modifier, multiplier)
 

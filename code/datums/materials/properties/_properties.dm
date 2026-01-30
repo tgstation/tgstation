@@ -1,14 +1,16 @@
 /// Singleton datums used to hold material property info
 /datum/material_property
 	abstract_type = /datum/material_property
+	var/name = "Error"
 	/// Associated property ID
 	var/id = null
 
 /datum/material_property/proc/get_descriptor(value)
-	return "broken"
+	return null
 
 /// How dense a material is
 /datum/material_property/density
+	name = "Density"
 	id = MATERIAL_DENSITY
 
 /datum/material_property/density/get_descriptor(value)
@@ -32,6 +34,7 @@
 
 /// How hard to deformation a material is, pierce/slashing impacts
 /datum/material_property/hardness
+	name = "Hardness"
 	id = MATERIAL_HARDNESS
 
 /datum/material_property/hardness/get_descriptor(value)
@@ -53,6 +56,7 @@
 
 /// How well a material bends and sustains deformation
 /datum/material_property/flexibility
+	name = "Flexibility"
 	id = MATERIAL_FLEXIBILITY
 
 /datum/material_property/flexibility/get_descriptor(value)
@@ -74,6 +78,7 @@
 
 /// How shiny a material is
 /datum/material_property/reflectivity
+	name = "Reflectivity"
 	id = MATERIAL_REFLECTIVITY
 
 /datum/material_property/reflectivity/get_descriptor(value)
@@ -95,6 +100,7 @@
 
 /// How electrically conductive a material is (siemens coeff)
 /datum/material_property/electric_conductivity
+	name = "Electric Conductivity"
 	id = MATERIAL_ELECTRICAL
 
 /datum/material_property/electric_conductivity/get_descriptor(value)
@@ -118,6 +124,7 @@
 
 /// How well a material conducts heat
 /datum/material_property/thermal_conductivity
+	name = "Thermal Conductivity"
 	id = MATERIAL_THERMAL
 
 /datum/material_property/thermal_conductivity/get_descriptor(value)
@@ -139,6 +146,7 @@
 
 /// How well the material resists acids and other similar chemicals
 /datum/material_property/chemical_resistance
+	name = "Chemical Resistance"
 	id = MATERIAL_CHEMICAL
 
 /datum/material_property/chemical_resistance/get_descriptor(value)
@@ -162,6 +170,7 @@
 
 /// If a material has this property, it is flammable and has reduced fire protection.
 /datum/material_property/flammability
+	name = "Flammability"
 	id = MATERIAL_FLAMMABILITY
 
 /datum/material_property/flammability/get_descriptor(value)

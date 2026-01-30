@@ -43,7 +43,24 @@
 /obj/item/stack/sheet/examine(mob/user)
 	. = ..()
 	if (manufactured && gulag_valid)
-		. += "It has been embossed with a manufacturer's mark of guaranteed quality."
+		. += span_notice("It has been embossed with a manufacturer's mark of guaranteed quality.")
+
+	var/datum/material/material = get_master_material()
+	if (!HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER) || !material)
+		return
+
+	var/list/material_string = list()
+	for (var/prop_id in material.mat_properties)
+		var/datum/material_property/property = SSmaterials.properties[prop_id]
+		var/prop_value = material.get_property(prop_id)
+		if (isnull(prop_value)) // Error?
+			continue
+		var/descriptor = property?.get_descriptor(prop_value)
+		if (descriptor) // Overriden derivative property?
+			material_string += span_tooltip("[property]: [prop_value < 0 ? "-" : ""]\Roman[round(abs(prop_value), 1)]", descriptor)
+
+	if (length(material_string))
+		. += span_info("[capitalize(material.name)] is [english_list(material_string)].")
 
 /obj/item/stack/sheet/add(_amount)
 	. = ..()
