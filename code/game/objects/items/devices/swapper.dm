@@ -78,30 +78,12 @@
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
-//Gets the topmost teleportable container
-/obj/item/swapper/proc/get_teleportable_container()
-	var/atom/movable/teleportable = src
-	while(ismovable(teleportable.loc))
-		var/atom/movable/AM = teleportable.loc
-		if(AM.anchored)
-			break
-		if(isliving(AM))
-			var/mob/living/L = AM
-			if(L.buckled)
-				if(L.buckled.anchored)
-					break
-				else
-					var/obj/buckled_obj = L.buckled
-					buckled_obj.unbuckle_mob(L)
-		teleportable = AM
-	return teleportable
-
 /obj/item/swapper/proc/swap(mob/user)
 	if(QDELETED(linked_swapper) || isnull(linked_swapper.loc) || world.time < linked_swapper.cooldown)
 		return
 
-	var/atom/movable/A = get_teleportable_container()
-	var/atom/movable/B = linked_swapper.get_teleportable_container()
+	var/atom/movable/A = get_teleportable_container(src)
+	var/atom/movable/B = get_teleportable_container(linked_swapper)
 	var/target_A = A.drop_location()
 	var/target_B = B.drop_location()
 

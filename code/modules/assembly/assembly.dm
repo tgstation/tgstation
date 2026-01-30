@@ -26,6 +26,7 @@
 	var/assembly_behavior = ASSEMBLY_FUNCTIONAL_OUTPUT // how does the assembly behave with respect to what it's connected to
 	var/datum/wires/connected = null
 	var/next_activate = 0 //When we're next allowed to activate - for spam control
+	var/activation_cooldown = 30
 
 /obj/item/assembly/Destroy()
 	holder = null
@@ -99,9 +100,9 @@
 
 /// What the device does when turned on
 /obj/item/assembly/proc/activate(mob/activator)
-	if(QDELETED(src) || !secured || (next_activate > world.time))
+	if(QDELETED(src) || !secured || !COOLDOWN_FINISHED(src, next_activate))
 		return FALSE
-	next_activate = world.time + 30
+	COOLDOWN_START(src, next_activate, activation_cooldown)
 	return TRUE
 
 /obj/item/assembly/proc/toggle_secure()

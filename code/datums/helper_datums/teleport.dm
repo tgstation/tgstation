@@ -270,3 +270,36 @@
 		return FALSE
 
 	return TRUE
+
+//Gets the topmost teleportable container
+/proc/get_teleportable_container(atom/movable/teleportable, container_flags = ALL)
+	while(ismovable(teleportable.loc))
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_STORAGE) && isitem(teleportable))
+			var/obj/item/item = teleportable
+			if(item.item_flags & IN_STORAGE)
+				break
+		var/atom/movable/movable = teleportable.loc
+		if(movable.anchored)
+			break
+		if(isliving(movable))
+			var/mob/living/living = movable
+			if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_INVENTORY))
+				var/list/equipped = living.get_equipped_items(INCLUDE_HELD|INCLUDE_POCKETS)
+				if((teleportable in equipped) && !HAS_TRAIT(teleportable, TRAIT_NODROP))
+					break
+			if(living.buckled)
+				if(living.buckled.anchored)
+					break
+				else
+					var/obj/buckled_obj = living.buckled
+					buckled_obj.unbuckle_mob(living)
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_CLOSET) && iscloset(movable))
+			break
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_MECH_EQUIPMENT) && istype(movable, /obj/item/mecha_parts/mecha_equipment))
+			break
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_VEHICLE) && isvehicle(movable))
+			var/obj/vehicle/vehicle = movable
+			if(vehicle.is_occupant(teleportable))
+				break
+		teleportable = movable
+	return teleportable
