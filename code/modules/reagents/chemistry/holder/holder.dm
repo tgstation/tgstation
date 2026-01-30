@@ -792,10 +792,10 @@
  * Call in case of electrical current exposure, rapid heating or blunt force, things that would set off explosives and alike
  * Arguments:
  * * power_charge - If we were triggered from electric current, how much power was dumped into us?
- * * enclosed - Is the reaction happening in an enclosed container or not? Doesn't use reagent holder's flags as it might be called on reagents "exiting" the container
+ * * spark_flags - Set of flags describing the interaction
  * * banned_reagents - List of reagent types which we may want to have custom handling for and should avoid checking in here
  */
-/datum/reagents/proc/spark_act(power_charge, enclosed, list/banned_reagents)
+/datum/reagents/proc/spark_act(power_charge, spark_flags, list/banned_reagents)
 	if (!islist(banned_reagents))
 		banned_reagents = list(banned_reagents)
 	var/result = NONE
@@ -803,7 +803,7 @@
 	for (var/datum/reagent/reagent as anything in reagent_list)
 		if (is_type_in_list(reagent, banned_reagents))
 			continue
-		var/reagent_result = reagent.on_spark_act(power_charge, enclosed)
+		var/reagent_result = reagent.on_spark_act(power_charge, spark_flags)
 		if (!reagent_result)
 			continue
 		result |= (reagent_result & SPARK_ACT_RETURNS)

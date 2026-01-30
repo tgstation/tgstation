@@ -43,9 +43,7 @@ Difficulty: Medium
 	victor_memory_type = /datum/memory/megafauna_slayer
 
 	crusher_loot = list(/obj/item/crusher_trophy/miner_eye, /obj/item/knife/hunting/wildhunter)
-
-	/// Loot dropped on death in normal circumstances
-	var/list/regular_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator)
+	regular_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator)
 
 	/// Their little saw
 	var/obj/item/melee/cleaving_saw/miner/miner_saw
@@ -71,7 +69,6 @@ Difficulty: Medium
 	ai_controller.set_blackboard_key(BB_BDM_RANGED_ATTACK_COOLDOWN, ranged_attack_cooldown_duration)
 	RegisterSignals(ai_controller, list(AI_CONTROLLER_BEHAVIOR_QUEUED(/datum/ai_behavior/basic_melee_attack), AI_CONTROLLER_BEHAVIOR_QUEUED(/datum/ai_behavior/targeted_mob_ability)), PROC_REF(handle_saw_transformation))
 
-	AddElement(/datum/element/death_drops, string_list(regular_loot))
 	RegisterSignal(src, COMSIG_LIVING_DROP_LOOT, PROC_REF(death_effect))
 
 	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg', COMSIG_AI_BLACKBOARD_KEY_SET(BB_BASIC_MOB_CURRENT_TARGET))

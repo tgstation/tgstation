@@ -98,6 +98,11 @@
 		/// Can this head be dismembered normally?
 		can_dismember = FALSE
 
+/obj/item/bodypart/head/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/toy_talk)
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_DISFIGURED), SIGNAL_REMOVETRAIT(TRAIT_DISFIGURED)), PROC_REF(update_owner_name))
+
 /obj/item/bodypart/head/Destroy()
 	QDEL_NULL(worn_ears_offset)
 	QDEL_NULL(worn_glasses_offset)
@@ -121,32 +126,39 @@
 
 /obj/item/bodypart/head/examine(mob/user)
 	. = ..()
-	if(show_organs_on_examine && IS_ORGANIC_LIMB(src))
-		var/obj/item/organ/brain/brain = locate(/obj/item/organ/brain) in src
-		if(!brain)
-			. += span_info("The brain has been removed from [src].")
-		else if(brain.suicided || (brain.brainmob && HAS_TRAIT(brain.brainmob, TRAIT_SUICIDED)))
-			. += span_info("There's a miserable expression on [real_name]'s face; they must have really hated life. There's no hope of recovery.")
-		else if(brain.brainmob)
-			if(brain.brainmob?.health <= HEALTH_THRESHOLD_DEAD)
-				. += span_info("It's leaking some kind of... clear fluid? The brain inside must be in pretty bad shape.")
-			if(brain.brainmob.key || brain.brainmob.get_ghost(FALSE, TRUE))
-				. += span_info("Its muscles are twitching slightly... It seems to have some life still in it.")
-			else
-				. += span_info("It's completely lifeless. Perhaps there'll be a chance for them later.")
-		else if(brain?.decoy_override)
-			. += span_info("It's completely lifeless. Perhaps there'll be a chance for them later.")
+	if(!show_organs_on_examine || !IS_ORGANIC_LIMB(src))
+		return
+	var/shown_name = get_face_name()
+	var/obj/item/organ/brain/brain = locate(/obj/item/organ/brain) in src
+	if(!brain)
+		. += span_info("The brain has been removed from [src].")
+	else if(brain.suicided || (brain.brainmob && HAS_TRAIT(brain.brainmob, TRAIT_SUICIDED)))
+		. += span_info("There's a miserable expression on [shown_name]'s face; they must have really hated life. There's no hope of recovery.")
+	else if(brain.brainmob)
+		if(brain.brainmob?.health <= HEALTH_THRESHOLD_DEAD)
+			. += span_info("It's leaking some kind of... clear fluid? The brain inside must be in pretty bad shape.")
+		if(brain.brainmob.key || brain.brainmob.get_ghost(FALSE, TRUE))
+			. += span_info("Its muscles are twitching slightly... It seems to have some life still in it.")
 		else
-			. += span_info("It's completely lifeless.")
+			. += span_info("It's completely lifeless. Perhaps there'll be a chance for them later.")
+	else if(brain?.decoy_override)
+		. += span_info("It's completely lifeless. Perhaps there'll be a chance for them later.")
+	else
+		. += span_info("It's completely lifeless.")
 
-		if(!(locate(/obj/item/organ/eyes) in src))
-			. += span_info("[real_name]'s eyes have been removed.")
+	if(!(locate(/obj/item/organ/eyes) in src))
+		. += span_info("[shown_name]'s eyes have been removed.")
 
-		if(!(locate(/obj/item/organ/ears) in src))
-			. += span_info("[real_name]'s ears have been removed.")
+	if(!(locate(/obj/item/organ/ears) in src))
+		. += span_info("[shown_name]'s ears have been removed.")
 
-		if(!(locate(/obj/item/organ/tongue) in src))
-			. += span_info("[real_name]'s tongue has been removed.")
+	if(!(locate(/obj/item/organ/tongue) in src))
+		. += span_info("[shown_name]'s tongue has been removed.")
+
+/obj/item/bodypart/head/proc/get_face_name()
+	if (HAS_TRAIT(src, TRAIT_DISFIGURED))
+		return "Unknown"
+	return real_name
 
 /obj/item/bodypart/head/can_dismember(obj/item/item)
 	if (!can_dismember)
@@ -171,10 +183,11 @@
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
 	. = ..()
 	if(!isnull(owner))
-		if(HAS_TRAIT(owner, TRAIT_HUSK))
-			real_name = "Unknown"
+		real_name = owner.real_name
+		if(is_husked)
+			ADD_TRAIT(src, TRAIT_DISFIGURED, HUSK_TRAIT)
 		else
-			real_name = owner.real_name
+			REMOVE_TRAIT(src, TRAIT_DISFIGURED, HUSK_TRAIT)
 	update_hair_and_lips(dropping_limb, is_creating)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -222,12 +235,8 @@
 	. += eye_left
 	. += eye_right
 
-/obj/item/bodypart/head/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/toy_talk)
-
 /obj/item/bodypart/head/get_voice(add_id_name)
-	return "The head of [real_name]"
+	return "The head of [get_face_name()]"
 
 /obj/item/bodypart/head/update_bodypart_damage_state()
 	if (head_flags & HEAD_NO_DISFIGURE)
@@ -237,9 +246,16 @@
 	. = ..()
 	var/new_states = brutestate + burnstate
 	if(new_states >= HUMAN_DISFIGURATION_HEAD_DAMAGE_STATES)
-		add_bodypart_trait(TRAIT_DISFIGURED)
+		ADD_TRAIT(src, TRAIT_DISFIGURED, BODYPART_TRAIT)
 	else if(old_states >= HUMAN_DISFIGURATION_HEAD_DAMAGE_STATES)
-		remove_bodypart_trait(TRAIT_DISFIGURED)
+		REMOVE_TRAIT(src, TRAIT_DISFIGURED, BODYPART_TRAIT)
+
+/obj/item/bodypart/head/proc/update_owner_name(datum/source)
+	SIGNAL_HANDLER
+
+	if (ishuman(owner))
+		var/mob/living/carbon/human/as_human = owner
+		as_human?.update_visible_name()
 
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'

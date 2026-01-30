@@ -242,9 +242,9 @@
  * Probably shouldn't be called from within a mob's bloodstream, unless you're ready for some very explosive results
  * Arguments:
  * * power_charge - If we were triggered from electric current, how much power was dumped into us?
- * * enclosed - Is the reaction happening in an enclosed container or not? Doesn't use reagent holder's flags as it might be called on reagents "exiting" the container
+ * * spark_flags - Flags specific to the interaction, is it in an enclosed space, should we nerf common reagents, etc.
  */
-/datum/reagent/proc/on_spark_act(power_charge = 0, enclosed = TRUE)
+/datum/reagent/proc/on_spark_act(power_charge = 0, spark_flags = NONE)
 	return NONE
 
 /**

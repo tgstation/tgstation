@@ -4256,7 +4256,7 @@
 /area/centcom/central_command_areas/evacuation)
 "sS" = (
 /obj/structure/table,
-/obj/item/toy/katana{
+/obj/item/storage/belt/sheath/katana/toy{
 	pixel_y = 8
 	},
 /obj/item/toy/plush/carpplushie,

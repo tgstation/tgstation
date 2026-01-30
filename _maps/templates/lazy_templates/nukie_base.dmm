@@ -202,9 +202,15 @@
 /area/centcom/syndicate_mothership/control)
 "cT" = (
 /obj/structure/rack,
-/obj/item/katana/cursed{
-	desc = "A gift from your benefactors.";
-	force = 20
+/obj/item/storage/belt/sheath/katana/empty{
+	pixel_y = 3;
+	pixel_x = 7
+	},
+/obj/item/katana{
+	pixel_x = -3;
+	pixel_y = 2;
+	force = 20;
+	desc = "A gift from your benefactors."
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/centcom/syndicate_mothership/control)

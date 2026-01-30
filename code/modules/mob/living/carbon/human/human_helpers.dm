@@ -91,7 +91,7 @@
 	if(obscured_slots & HIDEFACE)
 		return TRUE
 	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
-	if(isnull(head) || HAS_TRAIT(src, TRAIT_DISFIGURED) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
+	if(isnull(head) || HAS_TRAIT(head, TRAIT_DISFIGURED) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
 		return TRUE
 	return FALSE
 

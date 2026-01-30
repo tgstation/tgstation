@@ -240,7 +240,7 @@
 			color_set = color
 		if(reagents || !is_full_charge())
 			START_PROCESSING(SSmachines, src)
-			if (reagents?.spark_act(active_power_usage, TRUE) & SPARK_ACT_DESTRUCTIVE)
+			if (reagents?.spark_act(active_power_usage, SPARK_ACT_ENCLOSED) & SPARK_ACT_DESTRUCTIVE)
 				message_admins("A rigged lightbulb at [AREACOORD(src)] has exploded.")
 				qdel(src)
 				return
@@ -279,7 +279,7 @@
 	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE * SSMACHINES_DT) && !turned_off())
 		use_power = IDLE_POWER_USE
 		low_power_mode = TRUE
-		if (reagents?.spark_act(idle_power_usage, TRUE) & SPARK_ACT_DESTRUCTIVE)
+		if (reagents?.spark_act(idle_power_usage, SPARK_ACT_ENCLOSED) & SPARK_ACT_DESTRUCTIVE)
 			message_admins("A rigged lightbulb at [AREACOORD(src)] has exploded.")
 			qdel(src)
 			return

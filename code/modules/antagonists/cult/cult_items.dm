@@ -593,6 +593,7 @@ Striking a noncultist, however, will tear their flesh."}
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
 	list_reagents = list(/datum/reagent/fuel/unholywater = 50)
+	can_lid = FALSE
 
 /obj/item/reagent_containers/cup/beaker/unholywater/Initialize(mapload)
 	. = ..()

@@ -17,10 +17,20 @@
 	/// Overlay added when you are in danger
 	var/state_danger
 
+	/// If null, does nothing
+	/// If set to a ztrait, like ZTRAIT_MINING, we check zlevels with that trait for weather towers
+	/// Having no active radar towers on those levels will reduce the accuracy of the warnings
+	var/radar_z_trait
+
+	/// Modifier to the accuracy of the weather warning times
+	/// Changes every unique storm event
+	VAR_FINAL/accuracy_mod = 0
+
 /datum/component/weather_announcer/Initialize(
 	state_normal,
 	state_warning,
 	state_danger,
+	radar_z_trait,
 )
 	. = ..()
 	if (!ismovable(parent))
@@ -34,6 +44,7 @@
 	src.state_normal = state_normal
 	src.state_warning = state_warning
 	src.state_danger = state_danger
+	src.radar_z_trait = radar_z_trait
 	var/atom/speaker = parent
 	speaker.update_appearance(UPDATE_ICON)
 	update_light_color()
@@ -70,6 +81,14 @@
 	var/atom/speaker = parent
 	speaker.update_appearance(UPDATE_ICON)
 
+/datum/component/weather_announcer/proc/check_accuracy()
+	for(var/z_level in SSmapping.levels_by_trait(radar_z_trait))
+		for(var/obj/machinery/power/weather_tower/radar as anything in GLOB.weather_towers["[z_level]"])
+			if(radar.active)
+				return TRUE
+
+	return FALSE
+
 /datum/component/weather_announcer/process(seconds_per_tick)
 	if (!enabled)
 		return
@@ -84,7 +103,7 @@
 	var/obj/machinery/announcement_system/aas = get_announcement_system(/datum/aas_config_entry/weather, speaker, list(RADIO_CHANNEL_SUPPLY))
 	// Active AAS will override default announcement lines
 	if (aas)
-		msg = aas.compile_config_message(/datum/aas_config_entry/weather, list(), !is_weather_dangerous ? 4 : warning_level + 1)
+		msg = aas.compile_config_message(/datum/aas_config_entry/weather, list(), is_weather_dangerous ? warning_level + 1 : 4)
 		// Stop toggling on radios for it, please!
 		aas.broadcast(msg, list(RADIO_CHANNEL_SUPPLY))
 	// Still say it, because you can be not on our level
@@ -117,10 +136,9 @@
 	return "Error in meteorological calculation. Please report this deviation to a trained programmer."
 
 /datum/component/weather_announcer/proc/time_till_storm()
-	var/list/mining_z_levels = SSmapping.levels_by_trait(ZTRAIT_MINING)
+	var/list/mining_z_levels = SSmapping.levels_by_trait(radar_z_trait)
 	if(!length(mining_z_levels))
 		return // No problems if there are no mining z levels
-
 
 	for(var/datum/weather/check_weather as anything in SSweather.processing)
 		if(!(check_weather.weather_flags & WEATHER_BAROMETER) || check_weather.stage == WIND_DOWN_STAGE || check_weather.stage == END_STAGE)
@@ -128,6 +146,7 @@
 		for (var/mining_level in mining_z_levels)
 			if(mining_level in check_weather.impacted_z_levels)
 				warning_level = WEATHER_ALERT_IMMINENT_OR_ACTIVE
+				accuracy_mod = 0 // reset for next storm
 				return 0
 
 	var/time_until_next = INFINITY
@@ -135,6 +154,13 @@
 		var/next_time = timeleft(SSweather.next_hit_by_zlevel["[mining_level ]"]) || INFINITY
 		if (next_time && next_time < time_until_next)
 			time_until_next = next_time
+
+	if(!check_accuracy())
+		if(!accuracy_mod && radar_z_trait)
+			accuracy_mod = rand(-9, 9) * 5 SECONDS
+
+		time_until_next = max(10 SECONDS, time_until_next + accuracy_mod)
+
 	return time_until_next
 
 /// Polls existing weather for what kind of warnings we should be displaying.
@@ -156,7 +182,7 @@
 	for(var/datum/weather/check_weather as anything in SSweather.processing)
 		if(!(check_weather.weather_flags & WEATHER_BAROMETER) || check_weather.stage == WIND_DOWN_STAGE || check_weather.stage == END_STAGE)
 			continue
-		var/list/mining_z_levels = SSmapping.levels_by_trait(ZTRAIT_MINING)
+		var/list/mining_z_levels = SSmapping.levels_by_trait(radar_z_trait)
 		for(var/mining_level in mining_z_levels)
 			if(mining_level in check_weather.impacted_z_levels)
 				is_weather_dangerous = (check_weather.weather_flags & FUNCTIONAL_WEATHER)
@@ -167,9 +193,12 @@
 	if(isnull(time_until_next))
 		return
 	if (time_until_next == 0)
-		examine_texts += span_warning ("A storm is currently active, please seek shelter.")
+		examine_texts += span_warning("A storm is currently active, please seek shelter.")
 	else
 		examine_texts += span_notice("The next storm is inbound in [DisplayTimeText(time_until_next)].")
+
+	if(!check_accuracy())
+		examine_texts += span_smallnoticeital("Due to insufficient radar coverage, the timing of this forecast may be inaccurate.")
 
 /datum/component/weather_announcer/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))

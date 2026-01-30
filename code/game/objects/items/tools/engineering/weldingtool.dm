@@ -184,7 +184,7 @@
 		user.log_message("set [key_name(attacked_mob)] on fire with [src].", LOG_ATTACK)
 
 /obj/item/weldingtool/attack_self(mob/user)
-	if(reagents.spark_act(0, TRUE, banned_reagents = /datum/reagent/fuel) & SPARK_ACT_DESTRUCTIVE)
+	if(reagents.spark_act(0, SPARK_ACT_ENCLOSED, banned_reagents = /datum/reagent/fuel) & SPARK_ACT_DESTRUCTIVE)
 		message_admins("[ADMIN_LOOKUPFLW(user)] activated a rigged welder at [AREACOORD(user)].")
 		user.log_message("activated a rigged welder", LOG_VICTIM)
 		qdel(src)

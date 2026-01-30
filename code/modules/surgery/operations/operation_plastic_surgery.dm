@@ -10,7 +10,7 @@
 		/obj/item/pen = 5,
 	)
 	time = 6.4 SECONDS
-	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE
+	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE | OPERATION_NO_PATIENT_REQUIRED
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN
@@ -25,15 +25,18 @@
 	return limb.body_zone == BODY_ZONE_HEAD
 
 /datum/surgery_operation/limb/plastic_surgery/pre_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
-	if(HAS_TRAIT_FROM(limb.owner, TRAIT_DISFIGURED, TRAIT_GENERIC))
+	if(HAS_TRAIT_FROM(limb, TRAIT_DISFIGURED, TRAIT_GENERIC))
 		return TRUE //skip name selection if fixing disfigurement
 
 	var/list/names = list()
 	if(isabductor(surgeon))
 		for(var/j in 1 to 9)
 			names += "Subject [limb.owner.gender == MALE ? "i" : "o"]-[pick("a", "b", "c", "d", "e")]-[rand(10000, 99999)]"
-		names += limb.owner.generate_random_mob_name(TRUE) //give one normal name in case they want to do regular plastic surgery
 
+		if(limb.owner)
+			names += limb.owner.generate_random_mob_name(TRUE) //give one normal name in case they want to do regular plastic surgery
+		else
+			names += generate_random_name_species_based(pick(MALE, FEMALE), TRUE, GLOB.species_list[limb.limb_id] || /datum/species/human)
 	else
 		var/advanced = LIMB_HAS_SURGERY_STATE(limb, SURGERY_PLASTIC_APPLIED)
 		var/obj/item/offhand = surgeon.get_inactive_held_item()
@@ -44,8 +47,12 @@
 		else
 			if(advanced)
 				to_chat(surgeon, span_warning("You have no picture to base the appearance on!"))
+
 			for(var/i in 1 to 10)
-				names += limb.owner.generate_random_mob_name(TRUE)
+				if(limb.owner)
+					names += limb.owner.generate_random_mob_name(TRUE)
+				else
+					names += generate_random_name_species_based(pick(MALE, FEMALE), TRUE, GLOB.species_list[limb.limb_id] || /datum/species/human)
 
 	operation_args[OPERATION_NEW_NAME] = tgui_input_list(surgeon, "New name to assign", "Plastic Surgery", names)
 	return !!operation_args[OPERATION_NEW_NAME]
@@ -54,34 +61,40 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to alter [limb.owner]'s appearance..."),
-		span_notice("[surgeon] begins to alter [limb.owner]'s appearance."),
-		span_notice("[surgeon] begins to make an incision in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to alter [limb.owner || limb]'s appearance..."),
+		span_notice("[surgeon] begins to alter [limb.owner || limb]'s appearance."),
+		span_notice("[surgeon] begins to make an incision in [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "You feel a slicing pain across your face!")
 
-/datum/surgery_operation/limb/plastic_surgery/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
-	if(HAS_TRAIT_FROM(limb.owner, TRAIT_DISFIGURED, TRAIT_GENERIC))
-		REMOVE_TRAIT(limb.owner, TRAIT_DISFIGURED, TRAIT_GENERIC)
+/datum/surgery_operation/limb/plastic_surgery/on_success(obj/item/bodypart/head/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+	if(!istype(limb))
+		CRASH("Plastic surgery finished on a non-head limb [limb]!")
+
+	if(HAS_TRAIT_FROM(limb, TRAIT_DISFIGURED, TRAIT_GENERIC))
+		REMOVE_TRAIT(limb, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		display_results(
 			surgeon,
 			limb.owner,
-			span_notice("You successfully restore [limb.owner]'s appearance."),
-			span_notice("[surgeon] successfully restores [limb.owner]'s appearance!"),
-			span_notice("[surgeon] finishes the operation on [limb.owner]'s face."),
+			span_notice("You successfully restore [limb.owner || limb]'s appearance."),
+			span_notice("[surgeon] successfully restores [limb.owner || limb]'s appearance!"),
+			span_notice("[surgeon] finishes the operation on [limb.owner ? "[limb.owner]'s face." : limb]"),
 		)
 		display_pain(limb.owner, "The pain fades, your face feels normal again!")
 		return
 
-	var/oldname = limb.owner.real_name
-	limb.owner.real_name = operation_args[OPERATION_NEW_NAME]
-	var/newname = limb.owner.real_name //something about how the code handles names required that I use this instead of target.real_name
+	var/oldname = limb.owner?.real_name || limb.real_name
+	if (limb.owner)
+		limb.owner.real_name = operation_args[OPERATION_NEW_NAME]
+	else
+		limb.real_name = operation_args[OPERATION_NEW_NAME]
+
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You alter [oldname]'s appearance completely, [limb.owner.p_they()] is now [newname]."),
-		span_notice("[surgeon] alters [oldname]'s appearance completely, [limb.owner.p_they()] is now [newname]!"),
-		span_notice("[surgeon] finishes the operation on [limb.owner]'s face."),
+		span_notice("You alter [oldname]'s appearance completely, [limb.owner.p_they()] is now [operation_args[OPERATION_NEW_NAME]]."),
+		span_notice("[surgeon] alters [oldname]'s appearance completely, [limb.owner.p_they()] is now [operation_args[OPERATION_NEW_NAME]]!"),
+		span_notice("[surgeon] finishes the operation on [limb.owner ? "[limb.owner]'s face." : limb]."),
 	)
 	display_pain(limb.owner, "The pain fades, your face feels new and unfamiliar!")
 	if(ishuman(limb.owner))
@@ -95,12 +108,12 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_warning("Your screw up, leaving [limb.owner]'s appearance disfigured!"),
-		span_warning("[surgeon] screws up, disfiguring [limb.owner]'s appearance!"),
-		span_notice("[surgeon] finishes the operation on [limb.owner]'s face."),
+		span_warning("Your screw up, leaving [limb.owner || limb]'s appearance disfigured!"),
+		span_warning("[surgeon] screws up, disfiguring [limb.owner || limb]'s appearance!"),
+		span_notice("[surgeon] finishes the operation on [limb.owner ? "[limb.owner]'s face." : limb]."),
 	)
 	display_pain(limb.owner, "Your face feels horribly scarred and deformed!")
-	ADD_TRAIT(limb.owner, TRAIT_DISFIGURED, TRAIT_GENERIC)
+	ADD_TRAIT(limb, TRAIT_DISFIGURED, TRAIT_GENERIC)
 
 #undef OPERATION_NEW_NAME
 
@@ -111,7 +124,7 @@
 		/obj/item/stack/sheet/plastic = 1,
 	)
 	time = 4.8 SECONDS
-	operation_flags = OPERATION_MORBID | OPERATION_LOCKED
+	operation_flags = OPERATION_MORBID | OPERATION_LOCKED | OPERATION_NO_PATIENT_REQUIRED
 	preop_sound = 'sound/effects/blob/blobattack.ogg'
 	success_sound = 'sound/effects/blob/attackblob.ogg'
 	failure_sound = 'sound/effects/blob/blobattack.ogg'
@@ -128,9 +141,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to apply plastic to [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to apply plastic to [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to perform surgery on [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to apply plastic to [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to apply plastic to [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] begins to perform surgery on [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "You feel a strange sensation as something is applied to your face!")
 

@@ -297,7 +297,7 @@
 	for(var/obj/item/result as anything in results)
 		if (victim.reagents)
 			victim.reagents.trans_to(result, victim.reagents.total_volume / reagents_in_produced, remove_blacklisted = TRUE)
-		result.reagents?.add_reagent(/datum/reagent/consumable/nutriment/fat, victim.nutrition / 15 / reagents_in_produced)
+		result.reagents?.add_reagent(/datum/reagent/consumable/nutriment/fat, victim.nutrition / /datum/reagent/consumable/nutriment/fat::nutriment_factor / reagents_in_produced)
 
 /obj/machinery/gibber/proc/finish_gibbing(list/obj/item/results, gibs_type, list/datum/disease/diseases)
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)

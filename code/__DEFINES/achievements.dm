@@ -62,6 +62,7 @@
 #define MEDAL_CIGARETTES "Cigarettes"
 #define MEDAL_SHARKDRAGON "Sharkdragon"
 #define MEDAL_THEORETICAL_LIMITS "All Within Theoretical Limits"
+#define MEDAL_DESENSITIZED "In Flanders Fields"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"

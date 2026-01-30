@@ -38,9 +38,14 @@
 		ui.open()
 
 
+/datum/lootpanel/ui_host(mob/user)
+	return source_turf
+
+
 /datum/lootpanel/ui_close(mob/user)
 	. = ..()
 
+	UnregisterSignal(source_turf, COMSIG_ATOM_ENTERED)
 	source_turf = null
 	reset_contents()
 
@@ -55,13 +60,6 @@
 	return data
 
 
-/datum/lootpanel/ui_status(mob/user, datum/ui_state/state)
-	if(user.incapacitated)
-		return UI_DISABLED
-
-	return UI_INTERACTIVE
-
-
 /datum/lootpanel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
@@ -70,7 +68,5 @@
 	switch(action)
 		if("grab")
 			return grab(usr, params)
-		if("refresh")
-			return populate_contents()
 
 	return FALSE

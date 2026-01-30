@@ -117,6 +117,14 @@
 	time = 4 SECONDS
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/fannypack
+	name = "Fannypack"
+	result = /obj/item/storage/belt/fannypack
+	reqs = list(/obj/item/stack/sheet/cloth = 2,
+				/obj/item/stack/sheet/leather = 1)
+	time = 2 SECONDS
+	category = CAT_CONTAINERS
+
 /datum/crafting_recipe/grass_sheath
 	name = "Grass Sabre Sheath"
 	result = /obj/item/storage/belt/sheath/grass_sabre
@@ -125,13 +133,31 @@
 	time = 4 SECONDS
 	category = CAT_CONTAINERS
 
-/datum/crafting_recipe/fannypack
-	name = "Fannypack"
-	result = /obj/item/storage/belt/fannypack
-	reqs = list(/obj/item/stack/sheet/cloth = 2,
-				/obj/item/stack/sheet/leather = 1)
-	time = 2 SECONDS
-	category = CAT_CONTAINERS
+/datum/crafting_recipe/gunsheath
+	name = "Gun Powered Sabre Sheath"
+	result = /obj/item/storage/belt/sheath/sabre/gunpowered
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH)
+	reqs = list(/datum/reagent/gunpowder = 15,
+		/obj/item/storage/belt/sheath/sabre = 1,
+		/obj/item/weaponcrafting/receiver = 1,
+		/obj/item/stack/cable_coil = 5,
+	)
+	time = 15 SECONDS
+	category = CAT_EQUIPMENT
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY
+
+/datum/crafting_recipe/grass_gunsheath
+	name = "Gun Powered Grass Sabre Sheath"
+	result = /obj/item/storage/belt/sheath/grass_sabre/gunpowered
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH)
+	reqs = list(/datum/reagent/gunpowder = 15,
+		/obj/item/storage/belt/sheath/grass_sabre = 1,
+		/obj/item/weaponcrafting/receiver = 1,
+		/obj/item/stack/cable_coil = 5,
+	)
+	time = 15 SECONDS
+	category = CAT_EQUIPMENT
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY
 
 /datum/crafting_recipe/hudsunsec
 	name = "Security HUDsunglasses"

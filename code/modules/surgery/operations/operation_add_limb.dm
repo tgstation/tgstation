@@ -173,7 +173,7 @@
 		/obj/item/stack/sticky_tape = 2,
 	)
 	time = 4.8 SECONDS
-	operation_flags = OPERATION_SELF_OPERABLE | OPERATION_STANDING_ALLOWED
+	operation_flags = OPERATION_SELF_OPERABLE | OPERATION_STANDING_ALLOWED | OPERATION_IGNORE_CLOTHES
 	all_surgery_states_required = SURGERY_PROSTHETIC_UNSECURED
 
 /datum/surgery_operation/limb/secure_arbitrary_prosthetic/get_default_radial_image()

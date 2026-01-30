@@ -19,6 +19,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 		Harms you if you dismiss the scythe without first causing harm to a creature. \
 		The shard also causes you to become Morbid, shifting your interests towards the macabre."
 	rods[/obj/item/melee/skateboard/holyboard] = "A skateboard that grants you flight and anti-magic abilities while ridden. Fits in your bag."
+	rods[/obj/item/storage/belt/sheath/hanzo_katana] = "A sharp katana which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt, wearing the sheath on belt allows for a swift counterattack."
 
 	for(var/obj/item/melee/energy/sword/nullrod/energy_nullrod_type as anything in typesof(/obj/item/melee/energy/sword/nullrod))
 		rods[energy_nullrod_type] = "An energy sword, but with a lower force, no armour penetration and a low chance of blocking. Can be switched on and off. \
@@ -174,8 +175,9 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	desc = "Capable of cutting clean through a holy claymore."
 	icon_state = "katana"
 	inhand_icon_state = "katana"
-	worn_icon_state = "katana"
-	menu_description = "A sharp katana which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
+	pickup_sound = 'sound/items/unsheath.ogg'
+	slot_flags = NONE
+	chaplain_spawnable = FALSE
 
 /obj/item/nullrod/claymore/multiverse
 	name = "extradimensional blade"
