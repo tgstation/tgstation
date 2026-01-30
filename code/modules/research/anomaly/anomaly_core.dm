@@ -57,10 +57,10 @@
 	anomaly_type = /obj/effect/anomaly/grav
 
 /obj/item/assembly/signaler/anomaly/grav/signal()
-	for(var/obj/O in orange(1, src))
+	for(var/obj/O in orange(2, src))
 		if(!O.anchored)
 			step_towards(O,src)
-	for(var/mob/living/M in orange(1, src))
+	for(var/mob/living/M in orange(2, src))
 		if(!M.mob_negates_gravity())
 			step_towards(M,src)
 
@@ -71,7 +71,7 @@
 	anomaly_type = /obj/effect/anomaly/flux
 
 /obj/item/assembly/signaler/anomaly/flux/signal()
-	tesla_zap(src, 1, 10000, zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_GENERATES_POWER)
+	tesla_zap(src, 0, 10 KILO JOULES, 5 KILO JOULES, ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_GENERATES_POWER)
 
 /obj/item/assembly/signaler/anomaly/bluespace
 	name = "\improper bluespace anomaly core"
