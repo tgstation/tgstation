@@ -12,7 +12,7 @@
 
 #define INTEGRITY_MIN 0.1
 // This results in iron being almost exactly 1
-#define INTEGRITY_MAX 2.05
+#define INTEGRITY_COEFF 1.57
 
 /// Base atom integrity multiplier of items made from this material
 /datum/material_property/derived/integrity
@@ -25,12 +25,13 @@
 	var/flexibility = material.get_property(MATERIAL_FLEXIBILITY)
 	// Its primarily hardness - the harder a material is, the more it is resistant to direct impacts
 	// But unless it has enough bend to it, it'll also fracture - which is why flexibility needs to be in a sweetspot, based on density
-	var/bend_coeff = 1 / 2 ** abs(flexibility - sqrt(density))
+	var/hardness_coeff = (2 + max(0, hardness - 4) * 2 - max(0, 2 - hardness)) / MATERIAL_PROPERTY_MAX
+	var/bend_coeff =  1 - abs(flexibility - sqrt(density)) * 0.1
 	// Check the math for yourself in https://www.desmos.com/calculator/nknotklq2l
-	return round(LERP(INTEGRITY_MIN, INTEGRITY_MAX, hardness / MATERIAL_PROPERTY_MAX * bend_coeff), 0.01)
+	return round(INTEGRITY_MIN + hardness_coeff * bend_coeff * INTEGRITY_COEFF, 0.01)
 
 #undef INTEGRITY_MIN
-#undef INTEGRITY_MAX
+#undef INTEGRITY_COEFF
 
 /// How pretty a material is
 /datum/material_property/derived/beauty

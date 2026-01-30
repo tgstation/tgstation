@@ -332,7 +332,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	. = ..()
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
-	chance_material_strength(material, mat_amount, multiplier)
+	change_material_strength(material, mat_amount, multiplier)
 
 /obj/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()

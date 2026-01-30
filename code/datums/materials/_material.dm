@@ -174,18 +174,24 @@ Simple datum which is instanced once per type and is used for every object of sa
 		MELEE = (1 + (density - 4) * 0.1) / (0.8 + min(4 - max(0, hardness - 6), abs(flexibility - density)) * 0.1),
 		// Hardness and density, with flexibility actually being detrimental
 		BULLET = (1 + (density - 4) * 0.025 + (hardness - 4) * 0.075) / (1 - max(0, flexibility - 2) * 0.1),
-		// 0.6 ~ 1 for reflectivity below 4, 1 ~ 1.4 for reflectivity above 6
-		LASER = 1 + MATERIAL_PROPERTY_DIVERGENCE(reflectivity, 4, 6) * 0.1,
+		// 0.6 ~ 1 for reflectivity below 4, 1 ~ 1.4 for reflectivity above 6, reduced for transparent materials
+		LASER = 1 + MATERIAL_PROPERTY_DIVERGENCE(reflectivity, 4, 6) * 0.1 - (255 - alpha) / 50 * 0.2,
 		// Essentially laser but with contribution split between reflectivity and inverse electric conductivity
 		// Here reflectivity applies if its below 4 or above 8, and conductivity if its below 4 or above 6
 		ENERGY = 1 + MATERIAL_PROPERTY_DIVERGENCE(reflectivity, 4, 8) * 0.05 - MATERIAL_PROPERTY_DIVERGENCE(electric, 4, 6) * 0.1,
 		// Linearly scales from 0.2 to 1.8 with density
 		BOMB = 1 + (density - 4) * 0.2,
-		// Each level of flammability reduces FIRE armor by 20%, with thermal conductivity above 6 reducing it by further 20% for each level above 6
-		FIRE = max(0, 1 - max(0, (thermal - 6) * 0.2) - flammability * 0.2),
+		// Each level of flammability reduces FIRE armor by 20%, with thermal conductivity reducing it by further 20% for each level above 6 and increasing for each level below 2
+		FIRE = max(0, 1 - max(0, (thermal - 6) * 0.2) + max(0, (2 - thermal) * 0.2) - flammability * 0.2),
 		// Linearly scales from 0.2 to 1.8 with chemical resistance
 		ACID = 1 + (chemical - 4) * 0.2,
 	)
+
+	// Safety check to ensure that we don't have inverted armor values
+	for (var/armor_key in armor_modifiers)
+		if (armor_modifiers[armor_key] < 0)
+			armor_modifiers[armor_key] = 0
+
 	return armor_modifiers
 
 /datum/material/proc/get_property(prop_id)

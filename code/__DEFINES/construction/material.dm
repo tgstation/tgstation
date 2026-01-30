@@ -61,6 +61,8 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 	ITEM_MATERIAL_CLASSES = "solid material",
 ))
 
+// You can use a calculator at https://www.desmos.com/calculator/ufa7ppklex for easy property calculations
+
 // Core material property IDs
 #define MATERIAL_DENSITY "density"
 #define MATERIAL_HARDNESS "hardness"

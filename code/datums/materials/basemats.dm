@@ -22,8 +22,6 @@
 	minimum_value_override = 0
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
-	fish_weight_modifier = 1.3
-	fishing_gravity_mult = 1.1
 
 /datum/material/iron/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
@@ -57,13 +55,6 @@
 	mineral_rarity = MATERIAL_RARITY_COMMON
 	points_per_unit = 1 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
-	fish_weight_modifier = 1.2
-	fishing_difficulty_modifier = 5
-	fishing_experience_multiplier = 1.2
-	fishing_bait_speed_mult = 0.9
-	fishing_deceleration_mult = 1.2
-	fishing_bounciness_mult = 0.5
-	fishing_gravity_mult = 0.9
 
 /datum/material/glass/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
@@ -103,13 +94,6 @@
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	points_per_unit = 16 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
-	fish_weight_modifier = 1.35
-	fishing_difficulty_modifier = -5
-	fishing_experience_multiplier = 0.85
-	fishing_completion_speed = 1.1
-	fishing_deceleration_mult = 1.1
-	fishing_bounciness_mult = 0.9
-	fishing_gravity_mult = 1.1
 
 /datum/material/silver/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
@@ -139,15 +123,6 @@
 	mineral_rarity = MATERIAL_RARITY_PRECIOUS
 	points_per_unit = 18 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
-	fish_weight_modifier = 1.5
-	fishing_difficulty_modifier = -8
-	fishing_cast_range = 1
-	fishing_experience_multiplier = 0.75
-	fishing_completion_speed = 1.2
-	fishing_bait_speed_mult = 1.1
-	fishing_deceleration_mult = 1.2
-	fishing_bounciness_mult = 0.8
-	fishing_gravity_mult = 1.2
 
 /datum/material/gold/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
@@ -177,15 +152,6 @@
 	tradable_base_quantity = MATERIAL_QUANTITY_EXOTIC
 	mineral_rarity = MATERIAL_RARITY_RARE
 	points_per_unit = 50 / SHEET_MATERIAL_AMOUNT
-	fish_weight_modifier = 1.4
-	fishing_difficulty_modifier = -12
-	fishing_cast_range = -1
-	fishing_experience_multiplier = 0.7
-	fishing_completion_speed = 1.25
-	fishing_bait_speed_mult = 1.1
-	fishing_deceleration_mult = 1.25
-	fishing_bounciness_mult = 0.8
-	fishing_gravity_mult = 1.1
 
 /datum/material/diamond/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
@@ -216,12 +182,6 @@
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.4, LASER = 0.5, ENERGY = 0.5, FIRE = 1, ACID = 1)
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	points_per_unit = 30 / SHEET_MATERIAL_AMOUNT
-	fish_weight_modifier = 2
-	fishing_completion_speed = 0.9
-	fishing_bait_speed_mult = 0.8
-	fishing_deceleration_mult = 1.4
-	fishing_bounciness_mult = 0.6
-	fishing_gravity_mult = 1.4
 
 /datum/material/uranium/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -268,9 +228,6 @@
 	armor_modifiers = list(MELEE = 1.4, BULLET = 0.7, ENERGY = 1.2, BIO = 1.2, ACID = 0.5)
 	mineral_rarity = MATERIAL_RARITY_PRECIOUS
 	points_per_unit = 15 / SHEET_MATERIAL_AMOUNT
-	fish_weight_modifier = 1.3
-	fishing_deceleration_mult = 1.3
-	fishing_bounciness_mult = 0.6
 
 /datum/material/plasma/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -319,14 +276,6 @@
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_EXOTIC
 	texture_layer_icon_state = "shine"
-	fish_weight_modifier = 1.3
-	fishing_difficulty_modifier = -5
-	fishing_cast_range = 5 //space-bending scifi magic
-	fishing_experience_multiplier = 0.85
-	fishing_completion_speed = 1.1
-	fishing_bait_speed_mult = 1.1
-	fishing_deceleration_mult = 0.9
-	fishing_bounciness_mult = 1.1
 
 /datum/material/bluespace/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -361,20 +310,22 @@
 	color = list(460/255, 464/255, 0, 0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //obnoxiously bright yellow //It's literally perfect I can't change it
 	greyscale_color = "#FFF269"
 	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 4,
+		MATERIAL_HARDNESS = 6,
+		MATERIAL_FLEXIBILITY = 2,
+		MATERIAL_REFLECTIVITY = 4,
+		MATERIAL_ELECTRICAL = 1, // ...Rubbery?
+		MATERIAL_THERMAL = 6,
+		MATERIAL_CHEMICAL = 6,
+		MATERIAL_BEAUTY = 0.5, // Honk
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	ore_type = /obj/item/stack/ore/bananium
 	value_per_unit = 1000 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.5
-	armor_modifiers = list(BOMB = 100, FIRE = 10) //Clowns cant be blown away.
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 60 / SHEET_MATERIAL_AMOUNT
-	fishing_difficulty_modifier = 20 //can't get a good grip on slipperiness.
-	fishing_cast_range = 3 //long slide
-	fishing_experience_multiplier = 1.6
-	fishing_completion_speed = 1.3
-	fishing_bait_speed_mult = 1.5
-	fishing_deceleration_mult = 0.5
-	fishing_bounciness_mult = 2
 
 /datum/material/bananium/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -440,14 +391,6 @@
 	mat_rust_resistance = RUST_RESISTANCE_TITANIUM
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	texture_layer_icon_state = "shine"
-	fish_weight_modifier = 1.2
-	fishing_difficulty_modifier = -5
-	fishing_cast_range = 1
-	fishing_completion_speed = 1.15
-	fishing_bait_speed_mult = 1.1
-	fishing_deceleration_mult = 1.3
-	fishing_bounciness_mult = 0.75
-	fishing_gravity_mult = 1.1
 
 /datum/material/titanium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
@@ -462,18 +405,18 @@
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
 	sheet_type = /obj/item/stack/sheet/mineral/runite
 	value_per_unit = 600 / SHEET_MATERIAL_AMOUNT
-	beauty_modifier = 0.5
+	mat_properties = list(
+		MATERIAL_DENSITY = 9,
+		MATERIAL_HARDNESS = 10,
+		MATERIAL_FLEXIBILITY = 1,
+		MATERIAL_REFLECTIVITY = 0,
+		MATERIAL_ELECTRICAL = 1,
+		MATERIAL_THERMAL = 0,
+		MATERIAL_CHEMICAL = 9,
+	)
 	armor_modifiers = list(MELEE = 1.35, BULLET = 2, LASER = 0.5, ENERGY = 1.25, BOMB = 1.25, BIO = 1, FIRE = 1.4, ACID = 1) //rune is weak against magic lasers but strong against bullets. This is the combat triangle.
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
-	fish_weight_modifier = 1.5
-	fishing_difficulty_modifier = -13
-	fishing_cast_range = 1
-	fishing_experience_multiplier = 3.2 //grind all the way to level 100 in no time.
-	fishing_completion_speed = 1.3
-	fishing_bait_speed_mult = 0.9
-	fishing_deceleration_mult = 1.2
-	fishing_gravity_mult = 1.2
 
 /datum/material/runite/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -497,28 +440,28 @@
 	color = "#BFB9AC"
 	strength_modifier = 0.85
 	sheet_type = /obj/item/stack/sheet/plastic
-	ore_type = /obj/item/stack/ore/slag //No plastic or coal ore, so we use slag.
+	ore_type = /obj/item/stack/ore/slag // No plastic or coal ore, so we use slag.
 	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_POLYMER | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 3,
+		MATERIAL_HARDNESS = 2,
+		MATERIAL_FLEXIBILITY = 5,
+		MATERIAL_REFLECTIVITY = 3,
+		MATERIAL_ELECTRICAL = 1,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 4,
+		MATERIAL_FLAMMABILITY = 4,
+	)
 	value_per_unit = 25 / SHEET_MATERIAL_AMOUNT
-	beauty_modifier = -0.01
-	armor_modifiers = list(MELEE = 1.5, BULLET = 1.1, LASER = 0.3, ENERGY = 0.5, BOMB = 1, BIO = 1, FIRE = 1.1, ACID = 1)
-	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED //Nobody's found oil on lavaland yet.
+	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED // Nobody's found oil on lavaland yet.
 	points_per_unit = 4 / SHEET_MATERIAL_AMOUNT
-	fish_weight_modifier = 0.8
-	fishing_difficulty_modifier = -5
-	fishing_cast_range = 2
-	fishing_experience_multiplier = 1.2
-	fishing_bait_speed_mult = 1.2
-	fishing_deceleration_mult = 0.8
-	fishing_bounciness_mult = 1.3
-	fishing_gravity_mult = 0.85
 
 /datum/material/plastic/on_accidental_mat_consumption(mob/living/carbon/eater, obj/item/food)
 	eater.reagents.add_reagent(/datum/reagent/plastic_polymers, rand(6, 8))
 	food?.reagents?.add_reagent(/datum/reagent/plastic_polymers, food.reagents.total_volume*(2/5))
 	return TRUE
 
-///Force decrease and mushy sound effect. (Not yet implemented)
+/// Force decrease and mushy sound effect. (Not yet implemented)
 /datum/material/biomass
 	name = "biomass"
 	desc = "Organic matter."
@@ -530,22 +473,21 @@
 	name = "wood"
 	desc = "Flexible, durable, but flammable. Hard to come across in space."
 	color = "#855932"
-	strength_modifier = 0.5
+	mat_properties = list(
+		MATERIAL_DENSITY = 2,
+		MATERIAL_HARDNESS = 4,
+		MATERIAL_FLEXIBILITY = 4,
+		MATERIAL_REFLECTIVITY = 1,
+		MATERIAL_ELECTRICAL = 6,
+		MATERIAL_THERMAL = 3,
+		MATERIAL_CHEMICAL = 1,
+		MATERIAL_FLAMMABILITY = 6,
+		MATERIAL_BEAUTY = 0.1, // Pretty patterns
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/wood
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_ORGANIC | MATERIAL_CLASS_RIGID
 	value_per_unit = 20 / SHEET_MATERIAL_AMOUNT
-	beauty_modifier = 0.1
-	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 0.4, ENERGY = 0.4, BOMB = 1, BIO = 0.2, ACID = 0.3)
 	texture_layer_icon_state = "woodgrain"
-	fish_weight_modifier = 0.5
-	fishing_difficulty_modifier = 8
-	fishing_cast_range = -1
-	fishing_experience_multiplier = 1.3
-	fishing_completion_speed = 0.9
-	fishing_bait_speed_mult = 0.8
-	fishing_deceleration_mult = 1.3
-	fishing_bounciness_mult = 0.4
-	fishing_gravity_mult = 0.8
 
 /datum/material/wood/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -567,66 +509,61 @@
 
 	return TRUE
 
-///Stronk force increase
+/// Stronk force increase
 /datum/material/adamantine
 	name = "adamantine"
 	desc = "A powerful material made out of magic, I mean science!"
 	color = "#2B7A74"
-	strength_modifier = 1.5
+	mat_properties = list(
+		MATERIAL_DENSITY = 7,
+		MATERIAL_HARDNESS = 10,
+		MATERIAL_FLEXIBILITY = 3,
+		MATERIAL_REFLECTIVITY = 6,
+		MATERIAL_ELECTRICAL = 6,
+		MATERIAL_THERMAL = 1,
+		MATERIAL_CHEMICAL = 9,
+	)
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
 	sheet_type = /obj/item/stack/sheet/mineral/adamantine
 	value_per_unit = 500 / SHEET_MATERIAL_AMOUNT
-	beauty_modifier = 0.4
-	armor_modifiers = list(MELEE = 1.5, BULLET = 1.5, LASER = 1.3, ENERGY = 1.3, BOMB = 1, BIO = 1, FIRE = 2.5, ACID = 1)
-	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED //Doesn't naturally spawn on lavaland.
+	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED // Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
-	fish_weight_modifier = 1.6
-	fishing_difficulty_modifier = -17
-	fishing_cast_range = 1
-	fishing_experience_multiplier = 0.6
-	fishing_completion_speed = 1.3
-	fishing_bait_speed_mult = 1.2
-	fishing_deceleration_mult = 1.3
-	fishing_bounciness_mult = 0.7
-	fishing_gravity_mult = 1.3
 
 /datum/material/adamantine/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
-		ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //light-absorbing, environment-cancelling fishing rod.
+		ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) // light-absorbing, environment-cancelling fishing rod.
 
 /datum/material/adamantine/on_removed(atom/source, mat_amount, multiplier)
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
-		REMOVE_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //light-absorbing, environment-cancelling fishing rod.
+		REMOVE_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) // light-absorbing, environment-cancelling fishing rod.
 
 /datum/material/adamantine/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
 		return TRUE
 
-///RPG Magic.
+/// RPG Magic.
 /datum/material/mythril
 	name = "mythril"
 	desc = "How this even exists is byond me"
 	color = "#f2d5d7"
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 6,
+		MATERIAL_HARDNESS = 10,
+		MATERIAL_FLEXIBILITY = 4,
+		MATERIAL_REFLECTIVITY = 8,
+		MATERIAL_ELECTRICAL = 6,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 9,
+		MATERIAL_BEAUTY = 0.5,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/mythril
 	value_per_unit = 1500 / SHEET_MATERIAL_AMOUNT
-	strength_modifier = 1.2
-	armor_modifiers = list(MELEE = 1.5, BULLET = 1.5, LASER = 1.5, ENERGY = 1.5, BOMB = 1.5, BIO = 1.5, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = 0.5
-	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED //Doesn't naturally spawn on lavaland.
+	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED // Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
-	fish_weight_modifier = 1.4
-	fishing_difficulty_modifier = -20
-	fishing_cast_range = 2
-	fishing_experience_multiplier = 0.5
-	fishing_completion_speed = 1.35
-	fishing_bait_speed_mult = 1.2
-	fishing_deceleration_mult = 1.35
-	fishing_bounciness_mult = 0.65
-	fishing_gravity_mult = 1.3
 
 /datum/material/mythril/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -653,18 +590,18 @@
 	alpha = 150
 	starlight_color = COLOR_BLUE_LIGHT
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL
+	mat_properties = list(
+		MATERIAL_DENSITY = 4,
+		MATERIAL_HARDNESS = 2,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 8,
+		MATERIAL_ELECTRICAL = 9,
+		MATERIAL_THERMAL = 8,
+		MATERIAL_CHEMICAL = 4,
+		MATERIAL_FLAMMABILITY = 10,
+	)
 	sheet_type = /obj/item/stack/sheet/hot_ice
 	value_per_unit = 400 / SHEET_MATERIAL_AMOUNT
-	beauty_modifier = 0.2
-	fish_weight_modifier = 0.9
-	fishing_difficulty_modifier = -8
-	fishing_cast_range = 1
-	fishing_experience_multiplier = 0.9
-	fishing_completion_speed = 1.4
-	fishing_bait_speed_mult = 1.3
-	fishing_deceleration_mult = 0.5
-	fishing_bounciness_mult = 0.3
-	fishing_gravity_mult = 0.8
 
 /datum/material/hot_ice/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -684,23 +621,19 @@
 	name = "Metal Hydrogen"
 	desc = "Solid metallic hydrogen. Some say it should be impossible"
 	color = "#62708A"
-	alpha = 150
 	starlight_color = COLOR_MODERATE_BLUE
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 3,
+		MATERIAL_HARDNESS = 10,
+		MATERIAL_FLEXIBILITY = 1,
+		MATERIAL_REFLECTIVITY = 8,
+		MATERIAL_ELECTRICAL = 2,
+		MATERIAL_THERMAL = 2,
+		MATERIAL_CHEMICAL = 8,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/metal_hydrogen
 	value_per_unit = 700 / SHEET_MATERIAL_AMOUNT
-	beauty_modifier = 0.35
-	strength_modifier = 1.2
-	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 0.7, BIO = 1, FIRE = 1.3, ACID = 1)
-	fish_weight_modifier = 0.6 //It may be metallic, but it's just "denser" hydrogen at the end of the day, no?
-	fishing_difficulty_modifier = -13
-	fishing_cast_range = 4
-	fishing_experience_multiplier = 0.8
-	fishing_completion_speed = 1.4
-	fishing_bait_speed_mult = 1.3
-	fishing_deceleration_mult = 0.8
-	fishing_bounciness_mult = 1.7
-	fishing_gravity_mult = 0.7
 
 /datum/material/metalhydrogen/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
@@ -722,15 +655,6 @@
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
 	mat_rust_resistance = RUST_RESISTANCE_BASIC
-	fish_weight_modifier = 1.2
-	fishing_difficulty_modifier = 30 //Sand fishing rods? What the hell are you doing?
-	fishing_cast_range = -2
-	fishing_experience_multiplier = 0.2
-	fishing_completion_speed = 0.8
-	fishing_bait_speed_mult = 0.8
-	fishing_deceleration_mult = 2.5
-	fishing_bounciness_mult = 0.3
-	fishing_gravity_mult = 0.9
 
 /datum/material/sand/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.adjust_disgust(17)
@@ -749,15 +673,6 @@
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "brick"
 	mat_rust_resistance = RUST_RESISTANCE_BASIC
-	fish_weight_modifier = 1.2
-	fishing_difficulty_modifier = 25 //Sand fishing rods? What the hell are you doing?
-	fishing_cast_range = -2
-	fishing_experience_multiplier = 0.3
-	fishing_completion_speed = 0.9
-	fishing_bait_speed_mult = 0.8
-	fishing_deceleration_mult = 2.5
-	fishing_bounciness_mult = 0.2
-	fishing_gravity_mult = 0.9
 
 /datum/material/snow
 	name = "snow"
@@ -773,15 +688,6 @@
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
 	mat_rust_resistance = RUST_RESISTANCE_ORGANIC
-	fish_weight_modifier = 0.8
-	fishing_difficulty_modifier = 25
-	fishing_cast_range = -2
-	fishing_experience_multiplier = 0.3
-	fishing_completion_speed = 0.9
-	fishing_bait_speed_mult = 0.75
-	fishing_deceleration_mult = 0.3
-	fishing_bounciness_mult = 0.2
-	fishing_gravity_mult = 0.7
 
 /datum/material/snow/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/water, rand(5, 10))
@@ -797,14 +703,6 @@
 	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 1, ENERGY = 1, BOMB = 1.2, BIO = 1.2, FIRE = 1.5, ACID = 1.5)
 	beauty_modifier = -0.15
 	texture_layer_icon_state = "runed"
-	fish_weight_modifier = 1.5
-	fishing_difficulty_modifier = -6.66
-	fishing_experience_multiplier = 0.666
-	fishing_completion_speed = 1.666
-	fishing_bait_speed_mult = 1.666
-	fishing_deceleration_mult = 1.666
-	fishing_bounciness_mult = 0.666
-	fishing_gravity_mult = 1.666
 
 /datum/material/runedmetal/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/fuel/unholywater, rand(8, 12))
@@ -821,11 +719,6 @@
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1.5, ACID = 1.5)
 	beauty_modifier = 0.2
-	fish_weight_modifier = 1.4
-	fishing_bait_speed_mult = 1.1
-	fishing_deceleration_mult = 0.8
-	fishing_bounciness_mult = 1.2
-	fishing_gravity_mult = 1.05
 
 /datum/material/paper
 	name = "paper"
@@ -839,14 +732,6 @@
 	beauty_modifier = 0.3
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "paper"
-	fish_weight_modifier = 0.4
-	fishing_difficulty_modifier = 40 //child's play
-	fishing_cast_range = -2
-	fishing_experience_multiplier = 0.1
-	fishing_bait_speed_mult = 0.7
-	fishing_deceleration_mult = 1.5
-	fishing_bounciness_mult = 0.2
-	fishing_gravity_mult = 0.6
 
 /datum/material/paper/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -886,14 +771,6 @@
 	strength_modifier = 0.3
 	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 0.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, ACID = 1.5)
 	beauty_modifier = -0.1
-	fish_weight_modifier = 0.4
-	fishing_difficulty_modifier = 40 //child's play
-	fishing_cast_range = -2
-	fishing_experience_multiplier = 0.1
-	fishing_bait_speed_mult = 0.7
-	fishing_deceleration_mult = 1.5
-	fishing_bounciness_mult = 0.2
-	fishing_gravity_mult = 0.6
 
 /datum/material/cardboard/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -917,15 +794,6 @@
 	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1.2, BULLET = 0.75, LASER = 0.75, ENERGY = 1.2, BOMB = 1, BIO = 1, FIRE = 1.5, ACID = 1.5)
 	beauty_modifier = -0.2
-	fish_weight_modifier = 1.05
-	fishing_difficulty_modifier = 15
-	fishing_cast_range = -2
-	fishing_experience_multiplier = 0.85
-	fishing_completion_speed = 0.9
-	fishing_bait_speed_mult = 0.9
-	fishing_deceleration_mult = 0.9
-	fishing_bounciness_mult = 0.8
-	fishing_gravity_mult = 0.85
 
 /datum/material/bone/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -972,15 +840,6 @@
 	beauty_modifier = 0.2
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "bamboo"
-	fish_weight_modifier = 0.5
-	fishing_difficulty_modifier = -4
-	fishing_cast_range = -1
-	fishing_experience_multiplier = 1.3
-	fishing_completion_speed = 1.15
-	fishing_bait_speed_mult = 1.1
-	fishing_deceleration_mult = 0.8
-	fishing_bounciness_mult = 0.7
-	fishing_gravity_mult = 0.7
 
 /datum/material/zaukerite
 	name = "zaukerite"
@@ -990,15 +849,6 @@
 	sheet_type = /obj/item/stack/sheet/mineral/zaukerite
 	value_per_unit = 900 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 0.9, BULLET = 0.9, LASER = 1.75, ENERGY = 1.75, BOMB = 0.5, BIO = 1, FIRE = 0.1, ACID = 1)
-	beauty_modifier = 0.001
-	fish_weight_modifier = 1.2
-	fishing_difficulty_modifier = -14
-	fishing_experience_multiplier = 0.9
-	fishing_completion_speed = 1.3
-	fishing_bait_speed_mult = 1.2
-	fishing_deceleration_mult = 1.3
-	fishing_bounciness_mult = 1.1
-	fishing_gravity_mult = 1.3
 
 /datum/material/zaukerite/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
