@@ -10,7 +10,7 @@
 	icon_state = "deathwand"
 	base_icon_state = "deathwand"
 	fire_sound = 'sound/effects/magic/wandodeath.ogg'
-	max_charges = 5
+	max_charges = 6
 
 /obj/item/gun/magic/wand/rebel/zap_self(mob/living/user, suicide = FALSE)
 	. = ..()

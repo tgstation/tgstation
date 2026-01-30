@@ -41,6 +41,7 @@
 	charges--
 
 /obj/item/gun/magic/wand/hallucination/do_suicide(mob/living/user)
+	charges--
 	playsound(user, fire_sound, 50, TRUE)
 	var/mob/living/basic/illusion/mirage/mirage = new(get_turf(src))
 	mirage.mock_as(user, 15 SECONDS)

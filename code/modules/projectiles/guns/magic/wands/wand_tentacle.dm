@@ -11,7 +11,7 @@
 	icon_state = "revivewand"
 	base_icon_state = "revivewand"
 	fire_sound = 'sound/effects/splat.ogg'
-	max_charges = 6
+	max_charges = 10
 
 /obj/item/gun/magic/wand/tentacles/zap_self(mob/living/user, suicide)
 	. = ..()

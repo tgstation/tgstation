@@ -12,7 +12,7 @@
 	icon_state = "nothingwand"
 	base_icon_state = "nothingwand"
 	fire_sound = 'sound/effects/slosh.ogg'
-	max_charges = 20
+	max_charges = 8
 
 /obj/item/gun/magic/wand/booze/zap_self(mob/living/user, suicide = FALSE)
 	playsound(user, fire_sound, 50, TRUE)

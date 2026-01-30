@@ -21,6 +21,7 @@
 	charges--
 
 /obj/item/gun/magic/wand/zap/do_suicide(mob/living/user)
+	charges--
 	playsound(user, fire_sound, 50, TRUE)
 	do_sparks(2, TRUE, user)
 	user.electrocute_act(0, src, siemens_coeff = 1, flags = SHOCK_IGNORE_IMMUNITY|SHOCK_DELAY_STUN|SHOCK_NOGLOVES)

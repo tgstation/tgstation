@@ -20,6 +20,7 @@
 		. = ..()
 		return SHAME
 
+	charges--
 	playsound(user, fire_sound, 50, TRUE)
 	user.visible_message(span_suicide("[user] inverts gravity inside of [user.p_their()] body!"))
 	var/mob/living/carbon/organ_haver = user

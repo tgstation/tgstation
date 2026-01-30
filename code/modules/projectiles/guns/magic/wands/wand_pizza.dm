@@ -16,6 +16,7 @@
 	return
 
 /obj/item/gun/magic/wand/pizza/do_suicide(mob/living/user)
+	charges--
 	playsound(user, fire_sound, 50, TRUE)
 	var/turf/user_loc = get_turf(user)
 	user.unequip_everything()

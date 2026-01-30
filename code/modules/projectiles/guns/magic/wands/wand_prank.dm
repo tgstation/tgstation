@@ -18,6 +18,7 @@
 	charges--
 
 /obj/item/gun/magic/wand/prank/do_suicide(mob/living/user)
+	charges--
 	playsound(user, fire_sound, 50, TRUE)
 	user.visible_message("[user] covers [user.p_themselves()] with magical lube!")
 	var/datum/reagents/lube = new /datum/reagents(40)

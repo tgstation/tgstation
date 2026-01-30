@@ -1,6 +1,6 @@
 /// Makes you bald, or emphasises your baldness
 /obj/item/gun/magic/wand/bald
-	name = "wand of depilation"
+	name = "shearing rod"
 	desc = "A wand commonly used in wizard collegiate hazing, renders victims bald or draws significant attention to their baldness."
 	school = SCHOOL_TRANSMUTATION
 	ammo_type = /obj/item/ammo_casing/magic/bald
@@ -26,6 +26,7 @@
 		visible_message(span_suicide("[user] desperately attempts to shave [user.p_themselves()] in a cry for help."))
 		return SHAME
 
+	charges--
 	user.apply_status_effect(/datum/status_effect/bald_flare)
 	dome.dismember(wounding_type = WOUND_SLASH, silent = TRUE)
 	visible_message(span_suicide("As the light fades, it becomes clear that [user] has shaved off [user.p_their()] entire head."))

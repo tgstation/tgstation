@@ -9,7 +9,7 @@
 	icon_state = "polywand"
 	base_icon_state = "polywand"
 	fire_sound = 'sound/effects/magic/staff_change.ogg'
-	max_charges = 10
+	max_charges = 6
 
 /obj/item/gun/magic/wand/babel/zap_self(mob/living/user, suicide = FALSE)
 	. = ..()

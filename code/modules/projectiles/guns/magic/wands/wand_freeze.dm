@@ -20,6 +20,7 @@
 	charges--
 
 /obj/item/gun/magic/wand/freeze/do_suicide(mob/living/user)
+	charges--
 	playsound(user, fire_sound, 50, TRUE)
 	var/obj/structure/statue/snow/snowman/snover = new(user.drop_location())
 	snover.name = user.real_name
