@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Item fortification scroll no longer requires combat mode in order to be used"
