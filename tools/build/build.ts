@@ -90,7 +90,10 @@ export const CutterTarget = new Juke.Target({
     const ver = dependencies.CUTTER_VERSION;
     const suffix = process.platform === 'win32' ? '.exe' : '';
     const download_from = `https://github.com/${repo}/releases/download/${ver}/hypnagogic${suffix}`;
-    await downloadFile(download_from, cutter_path);
+    const temp_path = `${cutter_path}_temp`; // yes this means its file extension is .exe_temp I don't really care
+    await downloadFile(download_from, temp_path);
+    fs.copyFileSync(temp_path, cutter_path);
+    fs.rmSync(temp_path)
     if (process.platform !== 'win32') {
       await Juke.exec('chmod', ['+x', cutter_path]);
     }
