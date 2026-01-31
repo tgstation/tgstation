@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - sound: "wands and staffs adjust their fire sound pitch instead of frequency as charges are depleted"
