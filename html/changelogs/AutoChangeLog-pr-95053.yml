@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "The \"Super-Stable\" line of Donk Co. Bomb Payloads are now stable when exposed to extreme temperatures"
