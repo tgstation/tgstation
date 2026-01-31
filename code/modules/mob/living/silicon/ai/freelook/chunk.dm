@@ -149,7 +149,7 @@
 		while(length(processing))
 			var/obj/machinery/camera/current_camera = processing[length(processing)]
 			processing.len--
-			if(!current_camera || !current_camera.can_use())
+			if(!current_camera?.can_use())
 				if(TICK_CHECK)
 					return FALSE
 				continue
@@ -158,7 +158,7 @@
 			if(get_dist(point, current_camera) > MAX_CAMERA_RANGE + (CHUNK_SIZE / 2))
 				continue
 
-			for(var/turf/vis_turf as anything in turfs & current_camera.can_see())
+			for(var/turf/vis_turf as anything in current_camera.can_see() & turfs)
 				updated_visible_turfs[vis_turf] = vis_turf
 
 			if(TICK_CHECK)
