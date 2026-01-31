@@ -286,7 +286,17 @@
 			if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_INVENTORY))
 				var/list/equipped = living.get_equipped_items(INCLUDE_HELD|INCLUDE_POCKETS)
 				if((teleportable in equipped) && !HAS_TRAIT(teleportable, TRAIT_NODROP))
-					break
+					if(istype(teleportable, /obj/item/mod/control) && (container_flags & TELEPORT_CONTAINER_INCLUDE_SEALED_MODSUIT))
+						var/obj/item/mod/control/modsuit = teleportable
+						var/sealed = TRUE
+						for(var/datum/mod_part/part as anything in modsuit.get_part_datums(TRUE))
+							if((part.part_item == modsuit || part.part_item.loc != modsuit) && !part.sealed)
+								sealed = FALSE
+								break
+						if(!sealed)
+							break
+					else
+						break
 			if(living.buckled)
 				if(living.buckled.anchored)
 					break

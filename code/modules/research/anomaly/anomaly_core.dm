@@ -47,6 +47,7 @@
 	var/turf/our_turf = get_turf(src)
 	if(!our_turf)
 		return
+	playsound(our_turf, 'sound/effects/magic/fireball.ogg', 100, TRUE)
 	for(var/turf/turf as anything in RANGE_TURFS(1, our_turf))
 		new /obj/effect/hotspot(turf)
 
@@ -81,10 +82,12 @@
 	activation_cooldown = 15 SECONDS // Slightly longer than reactive teleport armor cooldown
 
 /obj/item/assembly/signaler/anomaly/bluespace/signal()
-	var/atom/movable/to_teleport = get_teleportable_container(src, container_flags = NONE)
+	var/atom/movable/to_teleport = get_teleportable_container(src, container_flags = TELEPORT_CONTAINER_INCLUDE_SEALED_MODSUIT)
 	if(!to_teleport)
 		return
-	do_teleport(to_teleport, get_turf(to_teleport), 4, channel = TELEPORT_CHANNEL_BLUESPACE)
+	var/turf/teleportable_turf = get_turf(to_teleport)
+	playsound(teleportable_turf, 'sound/effects/magic/blink.ogg', 100, TRUE)
+	do_teleport(to_teleport, teleportable_turf, 4, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/item/assembly/signaler/anomaly/vortex
 	name = "\improper vortex anomaly core"
@@ -101,6 +104,7 @@
 	var/turf/our_turf = get_turf(src)
 	if(!our_turf)
 		return
+	playsound(our_turf, 'sound/effects/bamf.ogg', 100, TRUE)
 	for(var/turf/turf as anything in RANGE_TURFS(1, our_turf))
 		var/explosion_power = rand(EXPLODE_NONE, max_explosion_force)
 		if(prob(turf_contents_pull_chance))
