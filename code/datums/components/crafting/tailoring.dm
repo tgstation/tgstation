@@ -117,6 +117,14 @@
 	time = 4 SECONDS
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/fannypack
+	name = "Fannypack"
+	result = /obj/item/storage/belt/fannypack
+	reqs = list(/obj/item/stack/sheet/cloth = 2,
+				/obj/item/stack/sheet/leather = 1)
+	time = 2 SECONDS
+	category = CAT_CONTAINERS
+
 /datum/crafting_recipe/grass_sheath
 	name = "Grass Sabre Sheath"
 	result = /obj/item/storage/belt/sheath/grass_sabre
@@ -125,13 +133,31 @@
 	time = 4 SECONDS
 	category = CAT_CONTAINERS
 
-/datum/crafting_recipe/fannypack
-	name = "Fannypack"
-	result = /obj/item/storage/belt/fannypack
-	reqs = list(/obj/item/stack/sheet/cloth = 2,
-				/obj/item/stack/sheet/leather = 1)
-	time = 2 SECONDS
-	category = CAT_CONTAINERS
+/datum/crafting_recipe/gunsheath
+	name = "Gun Powered Sabre Sheath"
+	result = /obj/item/storage/belt/sheath/sabre/gunpowered
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH)
+	reqs = list(/datum/reagent/gunpowder = 15,
+		/obj/item/storage/belt/sheath/sabre = 1,
+		/obj/item/weaponcrafting/receiver = 1,
+		/obj/item/stack/cable_coil = 5,
+	)
+	time = 15 SECONDS
+	category = CAT_EQUIPMENT
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY
+
+/datum/crafting_recipe/grass_gunsheath
+	name = "Gun Powered Grass Sabre Sheath"
+	result = /obj/item/storage/belt/sheath/grass_sabre/gunpowered
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH)
+	reqs = list(/datum/reagent/gunpowder = 15,
+		/obj/item/storage/belt/sheath/grass_sabre = 1,
+		/obj/item/weaponcrafting/receiver = 1,
+		/obj/item/stack/cable_coil = 5,
+	)
+	time = 15 SECONDS
+	category = CAT_EQUIPMENT
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY
 
 /datum/crafting_recipe/hudsunsec
 	name = "Security HUDsunglasses"
@@ -219,8 +245,8 @@
 
 /datum/crafting_recipe/lizardboots
 	name = "Lizard Skin Boots"
-	result = /obj/effect/spawner/random/clothing/lizardboots
-	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1, /obj/item/stack/sheet/leather = 1)
+	result = /obj/item/clothing/shoes/cowboy/lizard
+	reqs = list(/obj/item/stack/sheet/animalhide/carbon/lizard = 1, /obj/item/stack/sheet/leather = 1)
 	time = 6 SECONDS
 	category = CAT_CLOTHING
 
@@ -264,7 +290,7 @@
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/costume/lizard
 	time = 1 SECONDS
-	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
+	reqs = list(/obj/item/stack/sheet/animalhide/carbon/lizard = 1)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/kittyears
@@ -421,12 +447,7 @@
 	)
 	reqs = list(/obj/item/stack/sheet/cloth = 4)
 	category = CAT_CLOTHING
-
-/datum/crafting_recipe/chaplain_hood/New()
-	. = ..()
-	//the resulting hoodie can be used to craft other hoodies.
-	//recipe blacklists should be refactored to only affect components and not tools.
-	blacklist -= result
+	blacklist_result = NEVER_BLACKLIST_RESULT //the resulting hoodie can be used to craft other hoodies.
 
 /datum/crafting_recipe/flower_garland
 	name = "Flower Garland"

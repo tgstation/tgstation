@@ -1,8 +1,9 @@
 /datum/action/changeling/biodegrade
 	name = "Biodegrade"
 	desc = "Dissolves restraints or other objects preventing free movement. Costs 30 chemicals."
-	helptext = "This is obvious to nearby people, and can destroy standard restraints and closets."
+	helptext = "This is obvious to nearby people, and can destroy standard restraints and closets. Works against grabs."
 	button_icon_state = "biodegrade"
+	category = "utility"
 	chemical_cost = 30
 	dna_cost = 2
 	req_human = TRUE
@@ -20,11 +21,11 @@
 	var/obj/item/clothing/shoes/sneakers/orange/prisoner_shoes = user.get_item_by_slot(ITEM_SLOT_FEET)
 	var/obj/item/clothing/shoes/knotted_shoes = user.get_item_by_slot(ITEM_SLOT_FEET)
 	var/obj/some_manner_of_cage = astype(user.loc, /obj)
-	var/mob/living/space_invader = user.pulledby
+	var/mob/living/space_invader = user.pulledby || user.buckled
 
-	if(!istype(prisoner_shoes, /obj/item/clothing/shoes/sneakers/orange) || !prisoner_shoes?.attached_cuffs)
+	if(!istype(prisoner_shoes) || !prisoner_shoes.attached_cuffs)
 		prisoner_shoes = null
-	if(!istype(knotted_shoes) || istype(knotted_shoes) && !knotted_shoes.tied == SHOES_KNOTTED)
+	if(!istype(knotted_shoes) || knotted_shoes.tied != SHOES_KNOTTED)
 		knotted_shoes = null
 	if(!straitjacket?.breakouttime)
 		straitjacket = null
@@ -60,6 +61,7 @@
 				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), restraint, 'sound/items/tools/welder.ogg', 50, TRUE), beat SECONDS)
 			log_combat(user = user, target = restraint, what_done = "melted restraining container", addition = "(biodegrade)")
 			return
+		//otherwise it's some kind of worn restraint
 		addtimer(CALLBACK(restraint, TYPE_PROC_REF(/atom, atom_destruction), ACID), 1.5 SECONDS)
 		log_combat(user = user, target = restraint, what_done = "melted restraining item", addition = "(biodegrade)")
 		user.visible_message(
@@ -76,7 +78,7 @@
 
 /// Spawn green acid puddle underneath obj, used for callback
 /datum/action/changeling/biodegrade/proc/make_puddle(obj/melted_restraint)
-	if (melted_restraint) // just incase obj gets qdel'd
+	if (melted_restraint) // incase obj gets qdel'd
 		return new /obj/effect/decal/cleanable/greenglow(get_turf(melted_restraint))
 
 /datum/action/changeling/biodegrade/proc/acid_blast(atom/movable/user, atom/movable/target)

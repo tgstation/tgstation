@@ -27,7 +27,7 @@
 		fishing_modifier -= 8
 	MakeRotate()
 	if(can_buckle && fishing_modifier)
-		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 
 /obj/structure/chair/buckle_feedback(mob/living/being_buckled, mob/buckler)
 	if(HAS_TRAIT(being_buckled, TRAIT_RESTRAINED))
@@ -71,7 +71,7 @@
 
 ///This proc adds the rotate component, overwrite this if you for some reason want to change some specific args.
 /obj/structure/chair/proc/MakeRotate()
-	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED|ROTATION_GHOSTS_ALLOWED)
+	AddElement(/datum/element/simple_rotation, ROTATION_IGNORE_ANCHORED|ROTATION_GHOSTS_ALLOWED)
 
 /obj/structure/chair/Destroy()
 	SSjob.latejoin_trackers -= src //These may be here due to the arrivals shuttle

@@ -58,6 +58,8 @@
 	// They're here instead of /stack/medical
 	// because sticky tape can be used as a makeshift bandage or splint
 
+	/// Verb used when applying this object to someone
+	var/apply_verb = "applying"
 	/// If set and this used as a splint for a broken bone wound,
 	/// This is used as a multiplier for applicable slowdowns (lower = better) (also for speeding up burn recoveries)
 	var/splint_factor
@@ -78,7 +80,7 @@
 	///What type of wall does this sheet spawn
 	var/walltype
 
-/obj/item/stack/Initialize(mapload, new_amount = amount, merge = TRUE, list/mat_override=null, mat_amt=1)
+/obj/item/stack/Initialize(mapload, new_amount = amount, merge = TRUE, list/mat_override = null, mat_amt = 1)
 	amount = new_amount
 	if(amount <= 0)
 		stack_trace("invalid amount [amount]!")
@@ -123,10 +125,16 @@
 	mats_per_unit = null
 	return ..()
 
+/obj/item/stack/update_name(updates)
+	. = ..()
+	maptext = (ismob(loc) || loc?.atom_storage) ? MAPTEXT("<font color='white'>[amount]</font>") : ""
+
 /obj/item/stack/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	if((!throwing || throwing.target_turf == loc) && old_loc != loc && (flags_1 & INITIALIZED_1))
 		merge_with_loc(merge_into_ourselves = !isnull(pulledby))
+	if(ismob(loc) || ismob(old_loc) || loc?.atom_storage || old_loc?.atom_storage)
+		update_appearance(UPDATE_NAME)
 
 ///Called to lazily update the materials of the item whenever the used or if more is added
 /obj/item/stack/proc/update_custom_materials()
@@ -174,14 +182,16 @@
 	if(current_amount <= 0 || QDELETED(src)) //just to get rid of this 0 amount/deleted stack we return success
 		return TRUE
 
+	var/list/grind_reagents = grind_results()
+
 	if(reagents)
 		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 	var/available_volume = target_holder.maximum_volume - target_holder.total_volume
 
 	//compute total volume of reagents that will be occupied by grind_results
 	var/total_volume = 0
-	for(var/reagent in grind_results)
-		total_volume += grind_results[reagent]
+	for(var/reagent in grind_reagents)
+		total_volume += grind_reagents[reagent]
 
 	//compute number of pieces(or sheets) from available_volume
 	var/available_amount = min(current_amount, round(available_volume / total_volume))
@@ -189,7 +199,6 @@
 		return FALSE
 
 	//Now transfer the grind results scaled by available_amount
-	var/list/grind_reagents = LAZYCOPY(grind_results)
 	for(var/reagent in grind_reagents)
 		grind_reagents[reagent] *= available_amount
 	target_holder.add_reagent_list(grind_reagents)

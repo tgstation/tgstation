@@ -12,7 +12,7 @@
 
 /obj/structure/toiletbong/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, post_rotation = CALLBACK(src, PROC_REF(post_rotation)))
+	AddElement(/datum/element/simple_rotation, post_rotation_proccall = PROC_REF(post_rotation))
 	create_storage(storage_type = /datum/storage/toiletbong)
 
 	weed_overlay = mutable_appearance('icons/obj/watercloset.dmi', "[base_icon_state]_overlay")
@@ -69,7 +69,7 @@
 				user.adjust_disgust(50)
 				user.vomit(VOMIT_CATEGORY_DEFAULT)
 			var/mob/living/spawned_mob = new /mob/living/basic/mouse(get_turf(user))
-			spawned_mob.faction |= "[REF(user)]"
+			spawned_mob.add_faction("[REF(user)]")
 			if(prob(50))
 				for(var/j in 1 to rand(1, 3))
 					step(spawned_mob, pick(NORTH,SOUTH,EAST,WEST))

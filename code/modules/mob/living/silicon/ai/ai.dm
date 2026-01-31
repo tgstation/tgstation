@@ -39,12 +39,14 @@
 	to_chat(src, "To use something, simply click on it.")
 	to_chat(src, "For department channels, use the following say commands:")
 	to_chat(src, ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science, :h - Holopad.")
-	show_laws()
+
+	INVOKE_ASYNC(src, PROC_REF(show_laws))
+
 	to_chat(src, span_bold("These laws may be changed by other players, random events, or by you becoming malfunctioning."))
 
 	job = "AI"
 
-	create_modularInterface()
+	INVOKE_ASYNC(src, PROC_REF(create_modularInterface))
 
 	// /mob/living/silicon/ai/apply_prefs_job() uses these to set these procs at mapload
 	// this is used when a person is being inserted into an AI core during a round
@@ -53,7 +55,7 @@
 		INVOKE_ASYNC(src, PROC_REF(apply_pref_hologram_display), client)
 		set_gender(client)
 
-	INVOKE_ASYNC(src, PROC_REF(set_core_display_icon))
+	INVOKE_ASYNC(src, PROC_REF(set_core_display_icon), null, client)
 
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -170,14 +172,25 @@
 /mob/living/silicon/ai/ignite_mob(silent)
 	return FALSE
 
+/mob/living/silicon/ai
+	var/selected_display_name
+
 /mob/living/silicon/ai/proc/set_core_display_icon(input, client/C)
-	if(client && !C)
-		C = client
-	if(!input && !C?.prefs?.read_preference(/datum/preference/choiced/ai_core_display))
-		icon_state = initial(icon_state)
-	else
-		var/preferred_icon = input ? input : C.prefs.read_preference(/datum/preference/choiced/ai_core_display)
-		icon_state = resolve_ai_icon(preferred_icon)
+	var/preferred_choice
+	if(input)
+		preferred_choice = input
+	else if(C && C.prefs)
+		preferred_choice = C.prefs.read_preference(/datum/preference/choiced/ai_core_display)
+	else if(client && client.prefs)
+		preferred_choice = client.prefs.read_preference(/datum/preference/choiced/ai_core_display)
+
+	display_icon_override = resolve_ai_icon(preferred_choice)
+
+	update_appearance()
+
+	if(istype(loc, /obj/item/aicard))
+		var/obj/item/aicard/card = loc
+		card.update_appearance()
 
 /// Apply an AI's hologram preference
 /mob/living/silicon/ai/proc/apply_pref_hologram_display(client/player_client)
@@ -220,6 +233,10 @@
 	if(!core_display_picker)
 		core_display_picker = new(src)
 	core_display_picker.ui_interact(src)
+
+	if(istype(loc, /obj/item/aicard))
+		var/obj/item/aicard/card = loc
+		card.update_appearance()
 
 /mob/living/silicon/ai/verb/pick_status_display()
 	set category = "AI Commands"
@@ -913,10 +930,11 @@
 
 /mob/living/silicon/ai/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
-	if(!.) //successfully ressuscitated from death
+	if(!.)
 		return
 
-	set_core_display_icon(display_icon_override)
+	update_appearance()
+
 	set_eyeobj_visible(TRUE)
 
 /mob/living/silicon/ai/proc/malfhacked(obj/machinery/power/apc/apc)
@@ -957,10 +975,14 @@
 	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
 	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
 
-/mob/living/silicon/ai/verb/deploy_to_shell(mob/living/silicon/robot/target)
+/mob/living/silicon/ai/verb/deploy_to_shell()
 	set category = "AI Commands"
+	set desc = "Transfer to an available remote body."
 	set name = "Deploy to Shell"
 
+	select_shell()
+
+/mob/living/silicon/ai/proc/select_shell(mob/living/silicon/robot/target)
 	if(incapacitated)
 		return
 	if(control_disabled)
@@ -976,6 +998,7 @@
 
 	if(!LAZYLEN(possible))
 		to_chat(src, "No usable AI shell beacons detected.")
+		return
 
 	if(!target || !(target in possible)) //If the AI is looking for a new shell, or its pre-selected shell is no longer valid
 		target = tgui_input_list(src, "Which body to control?", "Direct Control", sort_names(possible))
@@ -1003,7 +1026,7 @@
 	var/mob/living/silicon/ai/AI = owner
 	if(!AI)
 		return
-	AI.deploy_to_shell()
+	AI.select_shell()
 
 /datum/action/innate/deploy_last_shell
 	name = "Reconnect to shell"
@@ -1017,7 +1040,7 @@
 		return
 	if(last_used_shell)
 		var/mob/living/silicon/ai/AI = owner
-		AI.deploy_to_shell(last_used_shell)
+		AI.select_shell(last_used_shell)
 	else
 		Remove(owner) //If the last shell is blown, destroy it.
 
@@ -1082,10 +1105,10 @@
 
 	switchCamera(chosen_camera)
 
-/mob/living/silicon/on_handsblocked_start()
+/mob/living/silicon/ai/on_handsblocked_start()
 	return // AIs have no hands
 
-/mob/living/silicon/on_handsblocked_end()
+/mob/living/silicon/ai/on_handsblocked_end()
 	return // AIs have no hands
 
 /mob/living/silicon/ai/get_exp_list(minutes)
@@ -1193,6 +1216,63 @@
 			///which in this case would be somewhere else, so we drop their MMI at the core instead
 			mind?.transfer_to(mmi_gone.brainmob)
 			qdel(src)
+
+
+/mob/living/silicon/ai/update_icon_state()
+	icon_state = "ai-core"
+	return ..()
+
+/mob/living/silicon/ai/update_overlays()
+	. = ..()
+
+	var/screen_state
+	var/lights_state // Lights
+
+	if(!client && !mind)
+		screen_state = "ai-empty"
+
+		lights_state = "lights_active"
+
+		set_light(0.2, 0.2, LIGHT_COLOR_FAINT_CYAN)
+
+	else if(stat == DEAD)
+		var/base = display_icon_override || "ai"
+		var/dead_state = "[base]_dead"
+
+		if(icon_exists(icon, dead_state))
+			screen_state = dead_state
+		else
+			screen_state = "ai_dead"
+
+		lights_state = "lights_dead"
+
+		set_light(0.2, 0.2, LIGHT_COLOR_FAINT_CYAN)
+
+	else
+		screen_state = display_icon_override || "ai"
+
+		lights_state = "lights_active"
+
+		set_light(0.3, 0.3, LIGHT_COLOR_CYAN)
+
+
+	// Lights
+	var/mutable_appearance/lights_overlay = mutable_appearance(icon, lights_state)
+	lights_overlay.layer = FLOAT_LAYER
+	lights_overlay.appearance_flags = RESET_COLOR | KEEP_APART
+	. += lights_overlay
+
+	. += emissive_appearance(icon, lights_state, src)
+
+
+	// Display
+	var/mutable_appearance/screen_overlay = mutable_appearance(icon, screen_state)
+	screen_overlay.layer = FLOAT_LAYER + 0.1
+	screen_overlay.appearance_flags = RESET_COLOR | KEEP_APART
+	. += screen_overlay
+
+	. += emissive_appearance(icon, screen_state, src)//AI glow!
+
 
 #undef HOLOGRAM_CHOICE_CHARACTER
 #undef CHARACTER_TYPE_SELF

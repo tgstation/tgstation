@@ -64,7 +64,7 @@
 		stray_spawnable_supply_packs = SSshuttle.supply_packs.Copy()
 		for(var/pack in stray_spawnable_supply_packs)
 			var/datum/supply_pack/pack_type = pack
-			if(initial(pack_type.special))
+			if(initial(pack_type.order_flags) & ORDER_SPECIAL)
 				stray_spawnable_supply_packs -= pack
 
 ///Spawns a random supply pack, puts it in a pod, and spawns it on a random tile of the selected area
@@ -189,5 +189,5 @@
 ///Apply the syndicate pod skin
 /datum/round_event/stray_cargo/syndicate/make_pod()
 	var/obj/structure/closet/supplypod/S = new
-	S.setStyle(/datum/pod_style/syndicate)
+	S.set_style(/datum/pod_style/syndicate)
 	return S

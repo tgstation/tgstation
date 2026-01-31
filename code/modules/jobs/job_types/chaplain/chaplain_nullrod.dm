@@ -19,6 +19,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 		Harms you if you dismiss the scythe without first causing harm to a creature. \
 		The shard also causes you to become Morbid, shifting your interests towards the macabre."
 	rods[/obj/item/melee/skateboard/holyboard] = "A skateboard that grants you flight and anti-magic abilities while ridden. Fits in your bag."
+	rods[/obj/item/storage/belt/sheath/hanzo_katana] = "A sharp katana which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt, wearing the sheath on belt allows for a swift counterattack."
 
 	for(var/obj/item/melee/energy/sword/nullrod/energy_nullrod_type as anything in typesof(/obj/item/melee/energy/sword/nullrod))
 		rods[energy_nullrod_type] = "An energy sword, but with a lower force, no armour penetration and a low chance of blocking. Can be switched on and off. \
@@ -174,8 +175,9 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	desc = "Capable of cutting clean through a holy claymore."
 	icon_state = "katana"
 	inhand_icon_state = "katana"
-	worn_icon_state = "katana"
-	menu_description = "A sharp katana which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
+	pickup_sound = 'sound/items/unsheath.ogg'
+	slot_flags = NONE
+	chaplain_spawnable = FALSE
 
 /obj/item/nullrod/claymore/multiverse
 	name = "extradimensional blade"
@@ -220,7 +222,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	hitsound = 'sound/items/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which provides a low chance of blocking incoming melee attacks. Able to awaken a friendly spirit to provide guidance. Can be worn on the back."
 
-/obj/item/nullrod/spellblade/talking/Initialize(mapload)
+/obj/item/nullrod/claymore/talking/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/spirit_holding)
 
@@ -239,7 +241,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	toolspeed = 0.5 //same speed as an active chainsaw
 	chaplain_spawnable = FALSE //prevents being pickable as a chaplain weapon (it has 30 force)
 
-/obj/item/nullrod/spellblade/talking/chainsword/Initialize(mapload)
+/obj/item/nullrod/claymore/talking/chainsword/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/cuffable_item) //Thanks goodness it cannot be selected by chappies
 	AddComponent(
@@ -247,6 +249,19 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 		speed = 7 SECONDS, \
 		effectiveness = 110, \
 	)
+
+/obj/item/nullrod/claymore/heretic
+	name = "occultist's khopesh"
+	desc = "Steels your hand to slay foes beyond comprehension."
+	icon = 'icons/obj/weapons/khopesh.dmi'
+	icon_state = "eldritch_blade"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	inhand_icon_state = "eldritch_blade"
+	worn_icon_state = "eldritch_blade"
+	menu_description = "A sharp curved blade which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
 
 /// Other Variants
 /// Not a special category on their own, but usually possess more unique mechanics
@@ -846,7 +861,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	if(user == living_target)
 		return
 
-	if(living_target.stat == DEAD)
+	if(living_target.stat == DEAD || QDELETED(living_target))
 		return
 
 	sneak_attack(living_target, user)

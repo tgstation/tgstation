@@ -343,7 +343,7 @@
 /obj/item/storage/belt/champion/Initialize(mapload)
 	. = ..()
 
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
+	AddElement(/datum/element/adjust_fishing_difficulty, -2)
 
 /obj/item/storage/belt/military
 	name = "chest rig"
@@ -454,7 +454,7 @@
 		/obj/item/grenade/syndieminibomb = 2,
 		/obj/item/multitool = 1,
 		/obj/item/screwdriver = 1,
-	),src)
+	), src)
 
 
 /obj/item/storage/belt/wands
@@ -588,10 +588,19 @@
 	w_class = WEIGHT_CLASS_BULKY
 	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
 	var/stored_blade
+	actions_types = list(/datum/action/innate/blade_counter)
+	action_slots = ITEM_SLOT_BELT | ITEM_SLOT_SUITSTORE
+	COOLDOWN_DECLARE(resheath_cooldown)
+	COOLDOWN_DECLARE(full_ability_cooldown)
 
 /obj/item/storage/belt/sheath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/update_icon_updates_onmob, action_slots)
+	RegisterSignal(src, COMSIG_ATOM_STORED_ITEM, PROC_REF(post_resheath))
+
+/obj/item/storage/belt/sheath/Destroy(force)
+	. = ..()
+	UnregisterSignal(src, COMSIG_ATOM_STORED_ITEM)
 
 /obj/item/storage/belt/sheath/examine(mob/user)
 	. = ..()
@@ -609,7 +618,7 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/belt/sheath/update_icon_state()
-	icon_state = initial(inhand_icon_state)
+	icon_state = initial(icon_state)
 	inhand_icon_state = initial(inhand_icon_state)
 	worn_icon_state = initial(worn_icon_state)
 	if(contents.len)
@@ -622,6 +631,189 @@
 	if(stored_blade)
 		new stored_blade(src)
 		update_appearance()
+
+/obj/item/storage/belt/sheath/proc/post_resheath()
+	SIGNAL_HANDLER
+	COOLDOWN_START(src, resheath_cooldown, 10 SECONDS)
+
+/datum/action/innate/blade_counter
+	name = "Counterattack"
+	desc = "Anticipate an enemy's attack and strike back with your sheathed blade."
+	button_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon_state = "declaration"
+	ranged_mousepointer = 'icons/effects/mouse_pointers/honorbound.dmi'
+
+	enable_text = "You prepare to counterattack a target..."
+	disable_text = "You relax your stance."
+
+	click_action = TRUE
+
+	var/datum/weakref/eyed_fool
+
+/datum/action/innate/blade_counter/IsAvailable(feedback = TRUE)
+	if(!isliving(owner))
+		return FALSE
+	var/obj/item/storage/belt/sheath/owners_sheath = target
+	if(!COOLDOWN_FINISHED(owners_sheath, full_ability_cooldown))
+		if(feedback)
+			to_chat(owner, span_warning("You failed a counterattack too recently!"))
+		return FALSE
+	if(!length(owners_sheath.contents))
+		if(feedback)
+			to_chat(owner, span_warning("Your sheath is empty!"))
+		return FALSE
+	if(!COOLDOWN_FINISHED(owners_sheath, resheath_cooldown))
+		if(feedback)
+			to_chat(owner, span_warning("You only just resheathed your blade!"))
+		return FALSE
+	return TRUE
+
+/datum/action/innate/blade_counter/proc/final_checks(atom/cast_on)
+	if(!isliving(cast_on))
+		return FALSE
+	if(owner == cast_on)
+		to_chat(owner, span_warning("You can't counterattack yourself!"))
+		return FALSE
+	var/mob/living/target = cast_on
+	if(!target.mind)
+		to_chat(owner, span_warning("They are too unpredictable to counterattack!"))
+		return FALSE
+	var/obj/item/storage/belt/sheath/oursheath = target
+	if(!length(oursheath.contents))
+		return FALSE
+	return TRUE
+
+/datum/action/innate/blade_counter/do_ability(mob/living/swordsman, mob/living/cast_on)
+	if(!final_checks(cast_on))
+		return TRUE
+	var/obj/item/storage/belt/sheath/used_sheath = target
+	RegisterSignal(swordsman, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(counter_attack))
+	swordsman.Immobilize(1 SECONDS)
+	eyed_fool = WEAKREF(cast_on)
+	swordsman.visible_message(span_danger("[swordsman] widens [p_their(swordsman)] stance, [p_their(swordsman)] hand hovering over \the [used_sheath]!"), span_notice("You prepare to counterattack [cast_on]!"))
+	addtimer(CALLBACK(src, PROC_REF(relax), swordsman, used_sheath), 1 SECONDS)
+	COOLDOWN_START(used_sheath, full_ability_cooldown, 60 SECONDS)
+	unset_ranged_ability(swordsman)
+	return TRUE
+
+#define COUNTERMULTIPLIER 3
+
+/datum/action/innate/blade_counter/proc/counter_attack(mob/living/forward_thinker, atom/attackingthing, damage, attack_text, attack_type)
+	SIGNAL_HANDLER
+	var/obj/item/storage/belt/sheath/used_sheath = target
+	if(!used_sheath || !length(used_sheath.contents) || (attack_type != MELEE_ATTACK && attack_type != UNARMED_ATTACK))
+		return FAILED_BLOCK
+
+	var/obj/item/justicetool = used_sheath.contents[1]
+	var/mob/living/fool = isliving(attackingthing) ? attackingthing : attackingthing.loc
+	if(used_sheath.loc != forward_thinker || fool != eyed_fool.resolve() || !forward_thinker.put_in_active_hand(justicetool))
+		return FAILED_BLOCK
+	do_strike(fool, forward_thinker, justicetool)
+	playsound(forward_thinker, 'sound/items/unsheath.ogg', 50, TRUE)
+	COOLDOWN_RESET(used_sheath, full_ability_cooldown)
+	return SUCCESSFUL_BLOCK
+
+/datum/action/innate/blade_counter/proc/do_strike(mob/living/fool, mob/living/forward_thinker, obj/item/justicetool)
+	var/obj/item/bodypart/offending_hand = fool.get_active_hand()
+	forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [p_their(fool)] attack!"), span_notice("You swiftly draw \the [justicetool] and counter-attack [fool]!"))
+	fool.apply_damage(
+		damage = justicetool.force * COUNTERMULTIPLIER,
+		damagetype = justicetool.damtype,
+		def_zone = offending_hand,
+		blocked = fool.run_armor_check(offending_hand, MELEE, armour_penetration = justicetool.armour_penetration, silent = TRUE),
+		wound_bonus = justicetool.wound_bonus * COUNTERMULTIPLIER,
+		exposed_wound_bonus = justicetool.exposed_wound_bonus * COUNTERMULTIPLIER,
+		sharpness = justicetool.sharpness,
+		attack_direction = get_dir(forward_thinker, fool),
+		attacking_item = justicetool,
+	)
+
+
+/datum/action/innate/blade_counter/proc/relax(mob/living/holder, obj/item/storage/belt/sheath/active_sheath)
+	UnregisterSignal(holder, COMSIG_LIVING_CHECK_BLOCK)
+
+/datum/action/innate/blade_counter/gunpowered
+	name = "Powered Counterattack"
+	desc = "Anticipate an enemy's attack and attempt to strike back, at great risk to yourself. The firing angle requires it be held on your hip."
+
+	/// Whether the currently relevant counterattack succeeded.
+	var/succeeded_attempt = FALSE
+
+/datum/action/innate/blade_counter/gunpowered/do_ability(mob/living/swordsman, mob/living/cast_on)
+	. = ..()
+	succeeded_attempt = FALSE
+
+
+/datum/action/innate/blade_counter/gunpowered/do_strike(mob/living/fool, mob/living/forward_thinker, obj/item/justicetool)
+	if(forward_thinker.get_slot_by_item(target) == ITEM_SLOT_SUITSTORE)
+		return ..()
+	succeeded_attempt = TRUE
+	var/obj/item/bodypart/offending_hand = fool.get_active_hand()
+	var/obj/item/bodypart/risked_hand = forward_thinker.get_active_hand()
+	if(iscarbon(fool) && offending_hand.dismember(BRUTE, FALSE, WOUND_SLASH))
+		forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [p_their(fool)] attack, sending [p_their(fool)] arm flying!"),
+										span_notice("You swiftly draw \the [justicetool] and cut off [fool]'s arm!"))
+	else
+		fool.apply_damage(
+			damage = justicetool.force * COUNTERMULTIPLIER,
+			damagetype = justicetool.damtype,
+			def_zone = offending_hand,
+			blocked = fool.run_armor_check(offending_hand, MELEE, armour_penetration = justicetool.armour_penetration, silent = TRUE),
+			wound_bonus = justicetool.wound_bonus * COUNTERMULTIPLIER,
+			exposed_wound_bonus = justicetool.exposed_wound_bonus * COUNTERMULTIPLIER,
+			sharpness = justicetool.sharpness,
+			attack_direction = get_dir(forward_thinker, fool),
+			attacking_item = justicetool,
+		)
+		forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [p_their(fool)] attack!"),
+										span_notice("You swiftly draw \the [justicetool] and strike them mid-attack!"))
+	if(!IS_ROBOTIC_LIMB(risked_hand))
+		forward_thinker.visible_message(span_danger("[forward_thinker]'s arm is unable to withstand the force of the attack!"),
+										span_danger("You feel a sharp pain as your arm is mutilated by the force of the attack!"))
+		forward_thinker.apply_damage(
+		damage = 50,
+		damagetype = BRUTE,
+		def_zone = risked_hand,
+		wound_bonus = 50,
+		wound_clothing = FALSE,
+	)
+
+
+/datum/action/innate/blade_counter/gunpowered/relax(mob/living/holder, obj/item/storage/belt/sheath/active_sheath)
+	..()
+	if(succeeded_attempt || holder.get_slot_by_item(target) == ITEM_SLOT_SUITSTORE)
+		return
+
+	if(length(active_sheath.contents))
+		var/obj/item/denied_weapon = active_sheath.contents[1]
+		denied_weapon.forceMove(get_turf(holder))
+		denied_weapon.throw_at(pick(RANGE_TURFS(3, denied_weapon)), 3, 3)
+
+	// We can assume that the holder is a carbon, and thus has an actual arm, because they have a belt slot.
+	var/obj/item/bodypart/worthless_hand = holder.get_active_hand()
+	if(!worthless_hand)
+		worthless_hand = holder.get_inactive_hand()
+		if(!worthless_hand)
+			holder.visible_message(span_danger("[holder]'s sheath misfires, sending their blade flying!"),
+									span_danger("Your sheath misfires, sending your blade flying!"))
+			return
+
+	if(IS_ROBOTIC_LIMB(worthless_hand) || !worthless_hand.dismember(BRUTE, FALSE, WOUND_BLUNT))
+		holder.visible_message(span_danger("[holder]'s arm is mutilated as they misfire [p_their(holder)] sheathed blade!"),
+								span_danger("Your arm is mutilated as you fail to safely fire your blade!"))
+		holder.apply_damage(
+			damage = 50,
+			damagetype = BRUTE,
+			def_zone = worthless_hand,
+			wound_bonus = 50,
+			wound_clothing = FALSE,
+		)
+		return
+
+	holder.visible_message(span_danger("[holder]'s arm is violently torn off as they misfire [p_their(holder)] sheathed blade!"),
+							span_danger("Your arm is torn off as you fail to safely fire your blade!"))
+
+#undef COUNTERMULTIPLIER
 
 /obj/item/storage/belt/sheath/sabre
 	name = "sabre sheath"
@@ -649,6 +841,49 @@
 	storage_type = /datum/storage/gladius_belt
 	stored_blade = /obj/item/claymore/gladius
 
+/obj/item/storage/belt/sheath/katana
+	name = "katana sheath"
+	desc = "A sheath that houses the nimble katana."
+	icon_state = "katana_sheath"
+	inhand_icon_state = "katana_sheath"
+	worn_icon_state = "katana_sheath"
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
+	storage_type = /datum/storage/katana_sheath
+	stored_blade = /obj/item/katana
+
+/obj/item/storage/belt/sheath/katana/empty
+	stored_blade = NONE
+
+/obj/item/storage/belt/sheath/katana/toy
+	action_slots = NONE
+	storage_type = /datum/storage/toy_sheath
+	stored_blade = /obj/item/toy/katana
+
+/obj/item/storage/belt/sheath/katana/toy/empty
+	stored_blade = NONE
+
+/obj/item/storage/belt/sheath/ninja
+	name = "energy katana sheath"
+	desc = "A high tech katana sheath that allows for quick blade movements."
+	icon_state = "ninja_sheath"
+	inhand_icon_state = "ninja_sheath"
+	worn_icon_state = "ninja_sheath"
+	storage_type = /datum/storage/ninja_sheath
+	stored_blade = /obj/item/energy_katana
+
+/obj/item/storage/belt/sheath/hanzo_katana
+	name = "hanzo katana sheath"
+	desc = "A normal black sheath meant to house the legendary hanzo steel."
+	icon_state = "hanzo_sheath"
+	inhand_icon_state = "hanzo_sheath"
+	worn_icon_state = "hanzo_sheath"
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
+	storage_type = /datum/storage/hanzo_sheath
+	stored_blade = /obj/item/nullrod/claymore/katana
+
+/obj/item/storage/belt/sheath/hanzo_katana/empty
+	stored_blade = NONE
+
 /obj/item/storage/belt/plant
 	name = "botanical belt"
 	desc = "A sturdy leather belt used to hold most hydroponics supplies."
@@ -657,3 +892,17 @@
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
 	storage_type = /datum/storage/plant_belt
+
+/obj/item/storage/belt/sheath/sabre/gunpowered
+	name = "modified sabre sheath"
+	desc = "An imitation of a design made by the infamous Cold Space Wind. Has a trigger mechanism to more forcefully draw the blade."
+	icon_state = "gunsheath"
+	actions_types = list(/datum/action/innate/blade_counter/gunpowered)
+	stored_blade = null
+
+/obj/item/storage/belt/sheath/grass_sabre/gunpowered
+	name = "modified sabre sheath"
+	desc = "An imitation of a design grown by the infamous Tiziran Plasma Fire. Has a trigger mechanism to more forcefully draw the blade."
+	icon_state = "grass_gunsheath"
+	actions_types = list(/datum/action/innate/blade_counter/gunpowered)
+

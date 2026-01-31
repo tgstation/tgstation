@@ -293,6 +293,8 @@
 		return
 
 	var/mob/living/carbon/human/wearer = loc
+	if(wearer.get_item_by_slot(ITEM_SLOT_ICLOTHING) != src)
+		return
 
 	if(has_sensor >= HAS_SENSORS && sensor_mode >= SENSOR_LIVING)
 		GLOB.suit_sensors_list |= wearer
@@ -392,10 +394,10 @@
 /obj/item/clothing/under/proc/update_accessory_overlay()
 	if(!length(attached_accessories))
 		accessory_overlay = null
-		return
-	accessory_overlay = mutable_appearance()
-	for(var/obj/item/clothing/accessory/accessory as anything in attached_accessories)
-		accessory_overlay.overlays += accessory.generate_accessory_overlay(src)
+	else
+		accessory_overlay = mutable_appearance()
+		for(var/obj/item/clothing/accessory/accessory as anything in attached_accessories)
+			accessory_overlay.overlays += accessory.generate_accessory_overlay(src)
 	update_appearance() // so we update the suit inventory overlay too
 
 /obj/item/clothing/under/Exited(atom/movable/gone, direction)

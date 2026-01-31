@@ -255,7 +255,7 @@
 /obj/item/firing_pin/paywall/gun_insert(mob/living/user, obj/item/gun/new_gun, starting = FALSE)
 	if(pin_owner || starting)
 		. = ..()
-		gun.desc += span_notice("This [gun.name] has a [multi_payment ? "per-shot" : "license permit"] cost of [payment_amount] credit[payment_amount > 1 ? "s" : ""].")
+		gun.desc += span_notice("This [gun.name] has a [multi_payment ? "per-shot" : "license permit"] cost of [payment_amount] [MONEY_NAME_AUTOPURAL(payment_amount)].")
 		return
 
 	if(isnull(user))
@@ -276,13 +276,13 @@
 	if(!id.registered_account)
 		to_chat(user, span_warning("ERROR: Identification card lacks registered bank account!"))
 		return ITEM_INTERACT_BLOCKING
-	if(id.registered_account != pin_owner)
+	if(pin_owner && id.registered_account != pin_owner)
 		to_chat(user, span_warning("ERROR: This firing pin has already been authorized!"))
 		return ITEM_INTERACT_BLOCKING
 	if(id.registered_account == pin_owner)
 		to_chat(user, span_notice("You unlink the card from the firing pin."))
 		gun_owners -= user.get_bank_account()
-		pin_owner = NUTRITION_LEVEL_START_MIN
+		pin_owner = null
 		return ITEM_INTERACT_SUCCESS
 	var/transaction_amount = tgui_input_number(user, "Insert valid deposit amount for gun purchase", "Money Deposit")
 	if(!transaction_amount || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
@@ -314,7 +314,7 @@
 	if(active_prompt_user == user)
 		return FALSE
 	active_prompt_user = user
-	var/license_request = tgui_alert(user, "Do you wish to pay [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", list("Yes", "No"), 15 SECONDS)
+	var/license_request = tgui_alert(user, "Do you wish to pay [payment_amount] [MONEY_NAME_AUTOPURAL(payment_amount)] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", list("Yes", "No"), 15 SECONDS)
 	if(!user.can_perform_action(src))
 		active_prompt_user = null
 		return FALSE

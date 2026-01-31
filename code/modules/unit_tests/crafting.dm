@@ -48,17 +48,14 @@
 	//If it doesn't fail, then it was already handled, maybe through `unit_test_spawn_extras`
 	var/list/uncreatables_found
 
-	for(var/spawn_path in recipe.unit_test_spawn_extras)
-		var/amount = recipe.unit_test_spawn_extras[spawn_path]
+	for(var/spawn_path, amount in recipe.unit_test_spawn_extras)
 		if(ispath(spawn_path, /obj/item/stack))
 			new spawn_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
 			continue
 		for(var/index in 1 to amount)
 			new spawn_path(turf)
 
-	for(var/req_path in recipe.reqs) //spawn items and reagents
-		var/amount = recipe.reqs[req_path]
-
+	for(var/req_path, amount in recipe.reqs) //spawn items and reagents
 		if(ispath(req_path, /datum/reagent)) //it's a reagent
 			if(!bottomless_cup.reagents.has_reagent(req_path, amount))
 				bottomless_cup.reagents.add_reagent(req_path, amount + 1, no_react = TRUE)
@@ -76,8 +73,8 @@
 		for(var/iteration in 1 to amount)
 			new req_path(turf)
 
-	for(var/req_path in recipe.chem_catalysts) // spawn catalysts
-		var/amount = recipe.chem_catalysts[req_path]
+	for(var/req_path, chem_amount in recipe.chem_catalysts) // spawn catalysts
+		var/amount = chem_amount
 		if(!bottomless_cup.reagents.has_reagent(req_path, amount))
 			bottomless_cup.reagents.add_reagent(req_path, amount + 1, no_react = TRUE)
 
@@ -167,7 +164,7 @@
 		else
 			add_info = "set the [NAMEOF(recipe, requirements_mats_blacklist)] or [NAMEOF(recipe, removed_mats)] var of [recipe.type], or add the CRAFT_SKIP_MATERIALS_PARITY crafting flag to it"
 
-		TEST_FAIL("[warning]. [target_var] should be [what_it_should_be] (current value: [what_it_is])[other_info]. \
+		TEST_FAIL("[warning]. should be: [target_var] = [what_it_should_be] (current value: [what_it_is])[other_info]. \
 			Fix that. Otherwise, [add_info]")
 
 	clear_trash()

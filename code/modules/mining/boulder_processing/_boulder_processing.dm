@@ -16,7 +16,7 @@
 	/// What sound plays when a thing operates?
 	var/usage_sound = 'sound/machines/mining/wooping_teleport.ogg'
 	/// Silo link to its materials list.
-	var/datum/component/remote_materials/silo_materials
+	var/datum/remote_materials/silo_materials
 	/// Mining points held by the machine for miners.
 	var/points_held = 0
 	///The action verb to display to players
@@ -30,8 +30,8 @@
 /obj/machinery/bouldertech/Initialize(mapload)
 	. = ..()
 
-	silo_materials = AddComponent(
-		/datum/component/remote_materials, \
+	silo_materials = new (
+		src, \
 		mapload, \
 		mat_container_flags = MATCONTAINER_NO_INSERT \
 	)
@@ -46,7 +46,7 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/bouldertech/Destroy()
-	silo_materials = null
+	QDEL_NULL(silo_materials)
 	return ..()
 
 /obj/machinery/bouldertech/on_deconstruction(disassembled)

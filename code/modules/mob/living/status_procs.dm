@@ -513,7 +513,6 @@
 	REMOVE_TRAIT(src, TRAIT_HUSK, source)
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		return FALSE
-	REMOVE_TRAIT(src, TRAIT_DISFIGURED, "husk")
 	update_body()
 	UnregisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_UNHUSKABLE))
 	return TRUE
@@ -525,7 +524,6 @@
 	ADD_TRAIT(src, TRAIT_HUSK, source)
 	if (was_husk)
 		return
-	ADD_TRAIT(src, TRAIT_DISFIGURED, "husk")
 	update_body()
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_UNHUSKABLE), PROC_REF(became_unhuskable))
 
@@ -547,7 +545,7 @@
 		station_timestamp_timeofdeath = station_time_timestamp()
 
 	if(!HAS_TRAIT(src, TRAIT_FAKEDEATH) && !silent)
-		send_death_moodlets(/datum/mood_event/see_death)
+		send_death_moodlets()
 	add_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
 
 ///Unignores all slowdowns that lack the IGNORE_NOSLOW flag.

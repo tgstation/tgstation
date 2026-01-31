@@ -6,6 +6,7 @@
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	burning_particles = /particles/smoke/burning/small
 	pass_flags_self = PASSITEM
+	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
 
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
 
@@ -224,11 +225,6 @@
 	var/undyeable = FALSE
 	///What dye registry should be looked at when dying this item; see washing_machine.dm
 	var/dying_key
-
-	/// A lazy reagent list containing the reagents this item produces when ground up in a grinder
-	var/list/grind_results
-	///A reagent the nutriments are converted into when the item is juiced.
-	var/datum/reagent/consumable/juice_typepath
 
 	/// Used in obj/item/examine to give additional notes on what the weapon does, separate from the predetermined output variables
 	var/offensive_notes
@@ -484,10 +480,6 @@
 		research_msg += "None"
 	research_msg += "."
 	return research_msg.Join()
-
-/obj/item/interact(mob/user)
-	add_fingerprint(user)
-	ui_interact(user)
 
 /obj/item/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	add_fingerprint(usr)
@@ -842,7 +834,7 @@
 			return
 
 	if(usr.get_active_held_item() == null) // Let me know if this has any problems -Yota
-		usr.UnarmedAttack(src)
+		usr.UnarmedAttack(src, TRUE)
 
 /**
  *This proc is executed when someone clicks the on-screen UI button.
@@ -884,7 +876,6 @@
 	. = ..()
 
 	if(!isliving(hit_atom)) //Living mobs handle hit sounds differently.
-
 		throw_drop_sound_chain(YEET_SOUND_VOLUME)
 		return
 
@@ -1025,6 +1016,12 @@
 /obj/item/proc/blend_requirements(obj/machinery/reagentgrinder/R)
 	return TRUE
 
+///Returns a reagent list containing the reagents this item produces when ground up in a grinder
+/obj/item/proc/grind_results()
+	RETURN_TYPE(/list/datum/reagent)
+
+	return null
+
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_grind()
 	PROTECTED_PROC(TRUE)
@@ -1058,18 +1055,26 @@
 /obj/item/proc/grind_atom(datum/reagents/target_holder, mob/user)
 	PROTECTED_PROC(TRUE)
 
+	var/list/datum/reagent/grind_reagents = grind_results()
+
 	. = FALSE
-	if(LAZYLEN(grind_results))
-		target_holder.add_reagent_list(grind_results)
+	if(length(grind_reagents))
+		target_holder.add_reagent_list(grind_reagents)
 		. = TRUE
 	if(reagents?.trans_to(target_holder, reagents.total_volume, transferred_by = user))
 		. = TRUE
+
+///Returns A reagent the nutriments are converted into when the item is juiced.
+/obj/item/proc/juice_typepath()
+	RETURN_TYPE(/datum/reagent)
+
+	return null
 
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_juice()
 	PROTECTED_PROC(TRUE)
 
-	if(!juice_typepath)
+	if(!juice_typepath())
 		return -1
 
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_JUICE)
@@ -1103,9 +1108,11 @@
 
 	. = FALSE
 
-	if(ispath(juice_typepath))
-		reagents.convert_reagent(/datum/reagent/consumable/nutriment, juice_typepath, include_source_subtypes = FALSE)
-		reagents.convert_reagent(/datum/reagent/consumable/nutriment/vitamin, juice_typepath, include_source_subtypes = FALSE)
+	var/juice_result = juice_typepath()
+
+	if(ispath(juice_result))
+		reagents.convert_reagent(/datum/reagent/consumable/nutriment, juice_result, include_source_subtypes = FALSE)
+		reagents.convert_reagent(/datum/reagent/consumable/nutriment/vitamin, juice_result, include_source_subtypes = FALSE)
 		. = TRUE
 
 	if(!QDELETED(target_holder))
@@ -1753,7 +1760,7 @@
 
 /// Common proc used by painting tools like spraycans and palettes that can access the entire 24 bits color space.
 /obj/item/proc/pick_painting_tool_color(mob/user, default_color)
-	var/chosen_color = input(user,"Pick new color", "[src]", default_color) as color|null
+	var/chosen_color = tgui_color_picker(user, "Pick new color", "[src]", default_color)
 	if(!chosen_color || QDELETED(src) || IS_DEAD_OR_INCAP(user) || !user.is_holding(src))
 		return
 	set_painting_tool_color(chosen_color)
@@ -1886,7 +1893,7 @@
 	return null
 
 /obj/item/animate_atom_living(mob/living/owner)
-	new /mob/living/basic/mimic/copy(drop_location(), src, owner)
+	return new /mob/living/basic/mimic/copy(drop_location(), src, owner)
 
 /**
  * Used to update the weight class of the item in a way that other atoms can react to the change.

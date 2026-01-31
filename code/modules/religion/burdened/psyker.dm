@@ -22,7 +22,7 @@
 	qdel(removed_from.GetComponent(/datum/component/echolocation))
 	qdel(removed_from.GetComponent(/datum/component/anti_magic))
 
-/obj/item/organ/brain/psyker/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/brain/psyker/on_life(seconds_per_tick)
 	. = ..()
 	var/obj/item/bodypart/head/psyker/psyker_head = owner.get_bodypart(zone)
 	if(istype(psyker_head))
@@ -40,8 +40,12 @@
 	limb_id = BODYPART_ID_PSYKER
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED)
+	bodypart_traits = list(TRAIT_BALD, TRAIT_SHAVED)
 	head_flags = HEAD_DEBRAIN | HEAD_NO_DISFIGURE // ignore disfigurement by damage, as we're always disfigured
+
+/obj/item/bodypart/head/psyker/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_DISFIGURED, INNATE_TRAIT)
 
 /// flavorful variant of psykerizing that deals damage and sends messages before calling psykerize()
 /mob/living/carbon/human/proc/slow_psykerize(blind_them = FALSE)
@@ -71,8 +75,12 @@
 	if(stat == DEAD || !old_head || !old_brain)
 		return FALSE
 	var/obj/item/bodypart/head/psyker/psyker_head = new()
-	if(!psyker_head.replace_limb(src, special = TRUE))
+	if(!psyker_head.replace_limb(src))
 		return FALSE
+	psyker_head.species_id = dna?.species?.id
+	var/list/our_drops = psyker_head.get_butcher_drops(force = TRUE)
+	if (length(our_drops))
+		psyker_head.butcher_drops = string_list(our_drops)
 	qdel(old_head)
 	var/obj/item/organ/brain/psyker/psyker_brain = new() /// turns out if you make a flashing monochromatic outline against black background that refreshes on inconsistant intervals, it hurts peoples eyes. Who'da thunk.
 	if(is_blinding)

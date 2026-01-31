@@ -11,7 +11,7 @@
 	severity = DISEASE_SEVERITY_HARMFUL
 	required_organ = ORGAN_SLOT_LUNGS
 
-/datum/disease/cold9/stage_act(seconds_per_tick, times_fired)
+/datum/disease/cold9/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

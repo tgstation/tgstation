@@ -1319,9 +1319,6 @@
 	if(density && !open(BYPASS_DOOR_CHECKS))
 		to_chat(user, span_warning("Despite your attempts, [src] refuses to open."))
 
-/obj/machinery/door/airlock/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
-	try_to_crowbar(null, user, FALSE)
-
 /obj/machinery/door/airlock/open(forced = DEFAULT_DOOR_CHECKS)
 	if(cycle_pump && !operating && !welded && !seal && locked && density)
 		cycle_pump.airlock_act(src)
@@ -1711,6 +1708,9 @@
 
 	else if(istype(note, /obj/item/photo))
 		return "photo_[frame_state]"
+
+/obj/machinery/door/airlock/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return ..() || (contained == note)
 
 /obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

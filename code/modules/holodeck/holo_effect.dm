@@ -46,8 +46,7 @@
 
 
 /obj/effect/holodeck_effect/random_book/activate(obj/machinery/computer/holodeck/father_holodeck)
-	var/static/banned_books = list(/obj/item/book/manual/random, /obj/item/book/manual/nuclear, /obj/item/book/manual/wiki)
-	var/newtype = pick(subtypesof(/obj/item/book/manual) - banned_books)
+	var/newtype = get_random_manual()
 	var/obj/item/book/manual/to_spawn = new newtype(loc)
 	to_spawn.flags_1 |= HOLOGRAM_1
 	to_spawn.obj_flags |= NO_DEBRIS_AFTER_DECONSTRUCTION
@@ -64,7 +63,7 @@
 	our_mob.flags_1 |= HOLOGRAM_1
 
 	// these vars are not really standardized but all would theoretically create stuff on death
-	our_mob.add_traits(list(TRAIT_PERMANENTLY_MORTAL, TRAIT_NO_BLOOD_OVERLAY, TRAIT_NOBLOOD, TRAIT_NOHUNGER), INNATE_TRAIT)
+	our_mob.add_traits(list(TRAIT_PERMANENTLY_MORTAL, TRAIT_NO_BLOOD_OVERLAY, TRAIT_NOBLOOD, TRAIT_NOHUNGER, TRAIT_SPAWNED_MOB), INNATE_TRAIT)
 	RegisterSignal(our_mob, COMSIG_QDELETING, PROC_REF(handle_mob_delete))
 	return our_mob
 
