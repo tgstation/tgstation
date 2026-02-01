@@ -234,20 +234,14 @@
 
 /datum/component/plumbing/process()
 	var/obj/machinery/target = parent
-	if(istype(target) && !target.is_operational)
-		return
-	var/work_done = FALSE
 
 	var/datum/reagents/receiver = recipient_reagents_holder()
 	for(var/dir in GLOB.cardinals)
-		if(!receiver.holder_full() && (dir & demand_connects) && send_request(dir))
-			work_done = TRUE
+		if(!receiver.holder_full() && (dir & demand_connects))
+			send_request(dir)
 
-		if(reagents.total_volume && (dir & supply_connects) && supply_demand(dir))
-			work_done = TRUE
-
-	if(istype(target) && work_done)
-		target.use_energy(target.active_power_usage * 0.15)
+		if(reagents.total_volume && (dir & supply_connects))
+			supply_demand(dir)
 
 ///Returns a ductnet based on the requested direction
 /datum/component/plumbing/proc/net(dir)
