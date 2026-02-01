@@ -11,7 +11,7 @@
 	///cameras that can see into our grid
 	///indexed by the string z level of the camera
 	///this could one day be an alist but vv doesn't work with it yet
-	var/list/cameras = list()
+	var/list/list/cameras = list()
 	///list of all turfs, associative with that turf's static image
 	///turf -> /image
 	var/list/turfs = list()
@@ -30,7 +30,7 @@
 	/// Are we currently being updated by the cameras subsystem?
 	var/currently_updating = FALSE
 	/// List of cameras that need to be processed. For use in yielding when being lazyupdated by the cameras subsystem
-	var/list/processing_cameras = list()
+	var/list/list/processing_cameras = list()
 	/// List of newly visible turfs that are currently being generated. For use in lazyupdating.
 	var/list/processing_visible_turfs = list()
 
