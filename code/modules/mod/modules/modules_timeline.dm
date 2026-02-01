@@ -88,7 +88,7 @@
 
 	if(true_owner_ckey && user.ckey != true_owner_ckey)
 		to_chat(mod.wearer, span_userdanger("\"Unregistered wizard access attempt registered! Channeling...\""))
-		user.to_chat(src, span_userdanger("EI NATH!"))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "EI NATH!!")
 		playsound(user, 'sound/effects/magic/disintegrate.ogg', 50, TRUE)
 		user.gib(DROP_ORGANS|DROP_BODYPARTS)
 		return MOD_CANCEL_ACTIVATE
