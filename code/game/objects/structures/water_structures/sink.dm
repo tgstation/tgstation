@@ -52,13 +52,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 /obj/structure/sink/get_turfs_to_mount_on()
 	return list(get_step(src, REVERSE_DIR(dir)))
 
+/obj/structure/sink/is_mountable_turf(turf/target)
+	return !isgroundlessturf(target)
+
 /obj/structure/sink/get_moutable_objects()
 	var/static/list/sink_structures = null
 	if(isnull(sink_structures))
 		sink_structures = list()
 		sink_structures += ..()
 		sink_structures += /obj/machinery/smartfridge //medbay sometimes have sinks attached to fridges
-		sink_structures += /obj/structure/window // lets sinks mount to windows
 	return sink_structures
 
 /obj/structure/sink/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
