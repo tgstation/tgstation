@@ -82,10 +82,7 @@
 	// Assigning this manually as config is empty
 	GLOB.uncommon_roundstart_languages = list(/datum/language/uncommon)
 
-	for (var/datum/quirk/quirk_type as anything in subtypesof(/datum/quirk))
-		if (initial(quirk_type.abstract_type) == quirk_type)
-			continue
-
+	for (var/datum/quirk/quirk_type as anything in valid_subtypesof(/datum/quirk))
 		var/mob/dead/new_player/abstract_player = allocate(/mob/dead/new_player)
 		var/datum/client_interface/roundstart_mock_client = new()
 		abstract_player.mock_client = roundstart_mock_client

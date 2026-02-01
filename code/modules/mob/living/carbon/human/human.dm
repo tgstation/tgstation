@@ -780,10 +780,8 @@
 		if(!check_rights(R_SPAWN))
 			return
 		var/list/options = list("Clear"="Clear")
-		for(var/type in subtypesof(/datum/quirk))
+		for(var/type in valid_subtypesof(/datum/quirk))
 			var/datum/quirk/quirk_type = type
-			if(initial(quirk_type.abstract_type) == type)
-				continue
 			var/qname = initial(quirk_type.name)
 			options[has_quirk(quirk_type) ? "[qname] (Remove)" : "[qname] (Add)"] = quirk_type
 		var/result = input(usr, "Choose quirk to add/remove","Quirk Mod") as null|anything in sort_list(options)
