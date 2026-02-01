@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes:
+  - server: "If TGS is configured to push test merge commits to a publicly accessible GitHub, the exact game revision will be set as the `round`.`commit_hash` in the database."
