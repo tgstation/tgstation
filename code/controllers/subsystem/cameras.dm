@@ -131,13 +131,55 @@ SUBSYSTEM_DEF(cameras)
 		major_chunk_change(new_cam, ADD_CAMERA)
 
 /**
- * Used for Cyborg/mecha cameras. Since portable cameras can be in ANY chunk.
- * update_delay_buffer is passed all the way to queue_update() from their camera updates on movement
- * to change the time between static updates.
+ * Used to update cameras that are movin, since most everything in the game can.
+ * update_delay_buffer is passed to allow variable update delays. useful so one
+ * camera'd guy moving doesn't absolutely spam updates to watching ais (laggin the server)
 */
-/datum/controller/subsystem/cameras/proc/update_portable_camera(obj/machinery/camera/updating_camera, update_delay_buffer)
-	if(updating_camera.can_use())
-		major_chunk_change(updating_camera, ADD_CAMERA, update_delay_buffer)
+/datum/controller/subsystem/cameras/proc/camera_moved(obj/machinery/camera/updating_camera, turf/old_turf, turf/new_turf, update_delay_buffer)
+	if(old_turf == new_turf)
+		return
+
+	var/list/old_chunks = list()
+	var/range_difference = MAX_CAMERA_RANGE + 1
+	if(!isnull(old_turf))
+		var/x1 = max(1, old_turf.x - range_difference)
+		var/y1 = max(1, old_turf.y - range_difference)
+		var/x2 = min(world.maxx, old_turf.x + range_difference)
+		var/y2 = min(world.maxy, old_turf.y + range_difference)
+		for(var/x = x1; x <= x2; x += CHUNK_SIZE)
+			for(var/y = y1; y <= y2; y += CHUNK_SIZE)
+				var/datum/camerachunk/chunk = get_camera_chunk(x, y, old_turf.z)
+				if(isnull(chunk))
+					continue
+				old_chunks += chunk
+				// if we've moved, what we can see will have changed so queue er up
+				chunk.queue_update(updating_camera, update_delay_buffer)
+
+	var/list/new_chunks = list()
+	if(!isnull(new_turf) && updating_camera.can_use())
+		if(QDELETED(updating_camera))
+			stack_trace("Tried to add a qdeleting camera to the net")
+		else
+			var/x1 = max(1, new_turf.x - range_difference)
+			var/y1 = max(1, new_turf.y - range_difference)
+			var/x2 = min(world.maxx, new_turf.x + range_difference)
+			var/y2 = min(world.maxy, new_turf.y + range_difference)
+			for(var/x = x1; x <= x2; x += CHUNK_SIZE)
+				for(var/y = y1; y <= y2; y += CHUNK_SIZE)
+					var/datum/camerachunk/chunk = get_camera_chunk(x, y, new_turf.z)
+					if(isnull(chunk))
+						continue
+					new_chunks += chunk
+					// if we've moved, what we can see will have changed so queue er up
+					chunk.queue_update(updating_camera, update_delay_buffer)
+
+	// First, cut us from chunks who we can't see anymore
+	for(var/datum/camerachunk/lost as anything in old_chunks - new_chunks)
+		lost.cameras["[old_turf.z]"] -= updating_camera
+
+	// Then we add to turfs who we can newly see!
+	for(var/datum/camerachunk/found as anything in new_chunks - old_chunks)
+		found.cameras["[new_turf.z]"] |= updating_camera
 
 /**
  * Never access this proc directly!!!!
@@ -170,10 +212,10 @@ SUBSYSTEM_DEF(cameras)
 				continue
 			if(choice == REMOVE_CAMERA)
 				// Remove the camera.
-				chunk.cameras[chunk_turf.z] -= center_or_camera
+				chunk.cameras["[chunk_turf.z]"] -= center_or_camera
 			if(choice == ADD_CAMERA)
 				// You can't have the same camera in the list twice.
-				chunk.cameras[chunk_turf.z] |= center_or_camera
+				chunk.cameras["[chunk_turf.z]"] |= center_or_camera
 			chunk.queue_update(center_or_camera, update_delay_buffer)
 
 /// A faster, turf only version of [/datum/controller/subsystem/cameras/proc/major_chunk_change]

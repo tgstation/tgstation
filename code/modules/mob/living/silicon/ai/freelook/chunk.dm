@@ -9,8 +9,9 @@
 	///turfs our cameras can see inside our grid
 	var/list/visibleTurfs = list()
 	///cameras that can see into our grid
-	///indexed by the z level of the camera
-	var/alist/cameras = alist()
+	///indexed by the string z level of the camera
+	///this could one day be an alist but vv doesn't work with it yet
+	var/list/cameras = list()
 	///list of all turfs, associative with that turf's static image
 	///turf -> /image
 	var/list/turfs = list()
@@ -28,8 +29,8 @@
 	var/list/update_sources = list()
 	/// Are we currently being updated by the cameras subsystem?
 	var/currently_updating = FALSE
-	/// Alist of cameras that need to be processed. For use in yielding when being lazyupdated by the cameras subsystem
-	var/alist/processing_cameras = list()
+	/// List of cameras that need to be processed. For use in yielding when being lazyupdated by the cameras subsystem
+	var/list/processing_cameras = list()
 	/// List of newly visible turfs that are currently being generated. For use in lazyupdating.
 	var/list/processing_visible_turfs = list()
 
@@ -125,7 +126,7 @@
 		return
 
 	processing_visible_turfs = list()
-	processing_cameras = alist()
+	processing_cameras = list()
 	currently_updating = FALSE
 	// Not allowed to stick around in the list forever, that'd be dumb
 	SScameras.current_run -= src
@@ -139,13 +140,13 @@
 
 	if(!currently_updating)
 		currently_updating = TRUE
-		processing_cameras = alist()
+		processing_cameras = list()
 		for(var/z_level in lower_z to upper_z)
-			processing_cameras[z_level] = cameras[z_level].Copy()
+			processing_cameras["[z_level]"] = cameras["[z_level]"].Copy()
 
 	var/list/updated_visible_turfs = src.processing_visible_turfs
 	for(var/z_level in lower_z to upper_z)
-		var/list/processing = processing_cameras[z_level]
+		var/list/processing = processing_cameras["[z_level]"]
 		while(length(processing))
 			var/obj/machinery/camera/current_camera = processing[length(processing)]
 			processing.len--
@@ -181,7 +182,7 @@
 	var/list/updated_visible_turfs = list()
 
 	for(var/z_level in lower_z to upper_z)
-		for(var/obj/machinery/camera/current_camera as anything in cameras[z_level])
+		for(var/obj/machinery/camera/current_camera as anything in cameras["[z_level]"])
 			if(!current_camera || !current_camera.can_use())
 				continue
 
@@ -248,7 +249,7 @@
 	var/turf/upper_turf = get_highest_turf(locate(x, y, lower_z))
 	src.upper_z = upper_turf.z
 
-	var/alist/cameras = src.cameras
+	var/list/cameras = src.cameras
 	var/list/turfs = src.turfs
 	var/list/visibleTurfs = src.visibleTurfs
 	var/list/obscuredTurfs = src.obscuredTurfs
@@ -259,7 +260,7 @@
 	var/upper_y = min(lower_y + CHUNK_SIZE - 1, world.maxy)
 	var/list/stack = SSmapping.get_connected_levels(lower_z)
 	for(var/z_level in lower_z to upper_z)
-		cameras[z_level] = list()
+		cameras["[z_level]"] = list()
 		var/image/mirror_from = SScameras.obscured_images[GET_Z_PLANE_OFFSET(z_level) + 1]
 		var/turf/chunk_corner = locate(x, y, z_level)
 		for(var/turf/lad as anything in CORNER_BLOCK(chunk_corner, CHUNK_SIZE, CHUNK_SIZE)) //we use CHUNK_SIZE for width and height here as it handles subtracting 1 from those two parameters by itself
@@ -279,7 +280,7 @@
 		if(!camera.can_use())
 			continue
 
-		cameras[camera_loc.z] += camera
+		cameras["[camera_loc.z]"] += camera
 		for(var/turf/vis_turf as anything in camera.can_see() & turfs)
 			visibleTurfs[vis_turf] = vis_turf
 

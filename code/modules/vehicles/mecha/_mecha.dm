@@ -83,8 +83,6 @@
 	var/list/trackers = list()
 	///Camera installed into the mech
 	var/obj/machinery/camera/exosuit/chassis_camera
-	///Portable camera camerachunk update
-	var/updating = FALSE
 
 	var/max_temperature = 25000
 
