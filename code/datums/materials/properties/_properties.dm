@@ -5,8 +5,13 @@
 	/// Associated property ID
 	var/id = null
 
+/// Returns a string to display to sci glasses wearers when the material is examined
 /datum/material_property/proc/get_descriptor(value)
 	return null
+
+/// Called whenever a material with this property initializes. Mostly used for behavior tracking on optional properties
+/datum/material_property/proc/attach_to(datum/material/material)
+	return
 
 /// How dense a material is
 /datum/material_property/density
@@ -165,29 +170,3 @@
 			return "highly chemically resistant"
 		if (8 to INFINITY)
 			return "extremely chemically resistant"
-
-// Optional properties
-
-/// If a material has this property, it is flammable and has reduced fire protection.
-/datum/material_property/flammability
-	name = "Flammability"
-	id = MATERIAL_FLAMMABILITY
-
-/datum/material_property/flammability/get_descriptor(value)
-	switch(value)
-		if (0)
-			return "nonflammable"
-		if (0 to 1)
-			return "mostly nonflammable"
-		if (1 to 2)
-			return "mildly nonflammable"
-		if (2 to 3)
-			return "somewhat flammable"
-		if (3 to 4)
-			return "flammable"
-		if (4 to 6)
-			return "highly flammable"
-		if (6 to 8)
-			return "extremely flammable"
-		if (8 to INFINITY)
-			return "insanely flammable"

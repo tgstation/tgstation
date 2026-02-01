@@ -91,15 +91,21 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(texture_layer_icon_state)
 		cached_texture_filter_icon = icon('icons/turf/composite.dmi', texture_layer_icon_state)
 
+	for (var/prop_id in mat_properties)
+		var/datum/material_property/property = SSmaterials.properties[prop_id]
+		property.attach_to(src)
+
 	return TRUE
 
 ///This proc is called when the material is added to an object.
 /datum/material/proc/on_applied(atom/source, mat_amount, multiplier)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_APPLIED, source, mat_amount, multiplier)
 
 ///This proc is called when the material becomes the one the object is composed of the most
 /datum/material/proc/on_main_applied(atom/source, mat_amount, multiplier)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_MAIN_APPLIED, source, mat_amount, multiplier)
 
 /datum/material/proc/setup_glow(turf/on)
 	if(GET_TURF_PLANE_OFFSET(on) != GET_LOWEST_STACK_OFFSET(on.z)) // We ain't the bottom brother
@@ -121,11 +127,13 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 /// This proc is called when the material is removed from an object.
 /datum/material/proc/on_removed(atom/source, amount, material_flags)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_REMOVED, source, amount, material_flags)
 
 /// This proc is called when the material is no longer the one the object is composed by the most
 /datum/material/proc/on_main_removed(atom/source, mat_amount, multiplier)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_MAIN_REMOVED, source, mat_amount, multiplier)
 
 ////Called in `/datum/component/edible/proc/on_material_effects`
 /datum/material/proc/on_edible_applied(atom/source, datum/component/edible/edible)
@@ -195,7 +203,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	return armor_modifiers
 
 /datum/material/proc/get_property(prop_id)
-	if (mat_properties?[prop_id])
+	if (!isnull(mat_properties?[prop_id]))
 		return mat_properties[prop_id]
 
 	var/datum/material_property/derived/derived_prop = SSmaterials.properties[prop_id]

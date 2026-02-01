@@ -173,6 +173,7 @@
 		MATERIAL_THERMAL = 6,
 		MATERIAL_CHEMICAL = 6,
 		MATERIAL_BEAUTY = 0.3, // Overriden cause its ~shiny~
+		MATERIAL_RADIOACTIVITY = 4,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	ore_type = /obj/item/stack/ore/uranium
@@ -181,23 +182,6 @@
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	points_per_unit = 30 / SHEET_MATERIAL_AMOUNT
-
-/datum/material/uranium/on_applied(atom/source, mat_amount, multiplier)
-	. = ..()
-	// Uranium structures should irradiate, but not items, because item irradiation is a lot more annoying.
-	// For example, consider picking up uranium as a miner.
-	if (isitem(source))
-		return
-
-	source.AddElement(/datum/element/radioactive, chance = URANIUM_IRRADIATION_CHANCE * multiplier)
-
-/datum/material/uranium/on_removed(atom/source, mat_amount, multiplier)
-	. = ..()
-
-	if (isitem(source))
-		return
-
-	source.RemoveElement(/datum/element/radioactive, chance = URANIUM_IRRADIATION_CHANCE * multiplier)
 
 /datum/material/uranium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/uranium, rand(4, 6))
@@ -218,7 +202,7 @@
 		MATERIAL_ELECTRICAL = 10,
 		MATERIAL_THERMAL = 8,
 		MATERIAL_CHEMICAL = 0,
-		MATERIAL_FLAMMABILITY = 10, // Literally sets itself on fire from any excitement
+		MATERIAL_FLAMMABILITY = 9, // Literally sets itself on fire from any excitement
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	ore_type = /obj/item/stack/ore/plasma
@@ -230,7 +214,7 @@
 	. = ..()
 	if(ismovable(source))
 		source.AddElement(/datum/element/firestacker, 1 * multiplier)
-	source.AddComponent(/datum/component/combustible_flooder, "plasma", mat_amount * 0.05 * multiplier) //Empty temp arg, fully dependent on whatever ignited it.
+	source.AddComponent(/datum/component/combustible_flooder, GAS_PLASMA, mat_amount * 0.05 * multiplier) //Empty temp arg, fully dependent on whatever ignited it.
 	if(istype(source, /obj/item/fishing_rod))
 		ADD_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))
 
@@ -238,7 +222,6 @@
 	. = ..()
 	source.RemoveElement(/datum/element/firestacker, mat_amount = 1 * multiplier)
 	qdel(source.GetComponent(/datum/component/combustible_flooder))
-	qdel(source.GetComponent(/datum/component/explodable))
 	if(istype(source, /obj/item/fishing_rod))
 		ADD_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))
 
@@ -597,11 +580,11 @@
 
 /datum/material/hot_ice/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
-	source.AddComponent(/datum/component/combustible_flooder, "plasma", mat_amount * 1.5 * multiplier, (mat_amount * 0.2 + 300) * multiplier)
+	source.AddComponent(/datum/component/combustible_flooder, GAS_PLASMA, mat_amount * 1.5 * multiplier, (mat_amount * 0.2 + 300) * multiplier)
 
 /datum/material/hot_ice/on_removed(atom/source, mat_amount, multiplier)
+	. = ..()
 	qdel(source.GetComponent(/datum/component/combustible_flooder))
-	return ..()
 
 /datum/material/hot_ice/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 6))

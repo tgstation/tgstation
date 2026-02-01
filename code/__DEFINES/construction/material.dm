@@ -68,12 +68,13 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 #define MATERIAL_HARDNESS "hardness"
 #define MATERIAL_FLEXIBILITY "flexibility"
 #define MATERIAL_REFLECTIVITY "reflectivity"
-#define MATERIAL_ELECTRICAL "electrical conductivity"
-#define MATERIAL_THERMAL "thermal conductivity"
-#define MATERIAL_CHEMICAL "chemical resistance"
+#define MATERIAL_ELECTRICAL "electrical_conductivity"
+#define MATERIAL_THERMAL "thermal_conductivity"
+#define MATERIAL_CHEMICAL "chemical_resistance"
 
 // Optional material property IDs
 #define MATERIAL_FLAMMABILITY "flammability"
+#define MATERIAL_RADIOACTIVITY "radioactivity"
 
 // Derived material property IDs
 #define MATERIAL_INTEGRITY "integrity"
