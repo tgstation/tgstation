@@ -17,7 +17,6 @@
 	///What color is our supply connect?
 	var/supply_color = COLOR_BLUE
 
-///turn_connects is for wheter or not we spin with the object to change our pipes
 /datum/component/plumbing/Initialize(ducting_layer)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE

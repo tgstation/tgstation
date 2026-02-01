@@ -5,6 +5,7 @@
 #define PET_PRIORITY 30
 #define XENO_PRIORITY 35
 #define DONTCARE_PRIORITY 40
+#define ASHWALKER_PRIORITY 50
 #define GAMER_PRIORITY 80
 #define REVOLUTIONARY_PRIORITY 85
 #define CULT_PRIORITY 90
@@ -25,15 +26,18 @@
 	return TRUE
 
 /datum/mood_event/conditional/see_death/add_effects(mob/dead_mob, dusted, gibbed)
-	update_effect(dead_mob)
+	update_effect(dead_mob, dusted, gibbed)
 
 	if(HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB))
 		mood_change *= 0.25
 		timeout *= 0.2
 
-	if(HAS_PERSONALITY(owner, /datum/personality/compassionate) && mood_change < 0)
-		mood_change *= 1.5
-		timeout *= 1.5
+	if(mood_change < 0)
+		mood_change = ceil(mood_change * max(DESENSITIZED_MINIMUM, owner.mind?.desensitized_level || 1.0))
+
+		if(HAS_PERSONALITY(owner, /datum/personality/compassionate))
+			mood_change *= 1.5
+			timeout *= 1.5
 
 	if(gibbed || dusted)
 		mood_change *= 1.2
@@ -50,7 +54,7 @@
 	description = capitalize(replacetext(description, "%DEAD_MOB%", get_descriptor(dead_mob)))
 
 /// Blank proc which allows conditional effects to modify mood, timeout, or description before the main effect is applied
-/datum/mood_event/conditional/see_death/proc/update_effect(mob/dead_mob)
+/datum/mood_event/conditional/see_death/proc/update_effect(mob/dead_mob, dusted, gibbed)
 	return
 
 /// Checks if the dead mob is a pet
@@ -71,7 +75,7 @@
 /// Checks if our mood can get worse by seeing another death (or better if we're weird like that)
 /datum/mood_event/conditional/see_death/proc/can_stack_effect(mob/dead_mob)
 	// if we're desensitized, don't stack unless it's a buff
-	if(HAS_MIND_TRAIT(owner, TRAIT_DESENSITIZED) && mood_change > 0)
+	if(IS_DESENSITIZED(owner) && mood_change < 0)
 		return FALSE
 	// if we're seeing a spawned mob die, don't stack
 	if(HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB))
@@ -94,7 +98,7 @@
 /datum/mood_event/conditional/see_death/naive/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
 	return HAS_MIND_TRAIT(who, TRAIT_NAIVE) && !dusted && !gibbed
 
-/datum/mood_event/conditional/see_death/naive/update_effect(mob/dead_mob)
+/datum/mood_event/conditional/see_death/naive/update_effect(mob/dead_mob, dusted, gibbed)
 	description = "Have a good nap, [get_descriptor(dead_mob)]."
 
 /// Cultists are super brainwashed so they get buffs instead
@@ -118,7 +122,7 @@
 /datum/mood_event/conditional/see_death/revolutionary/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
 	return IS_REVOLUTIONARY(who) && (dead_mob.mind?.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 
-/datum/mood_event/conditional/see_death/revolutionary/update_effect(mob/dead_mob)
+/datum/mood_event/conditional/see_death/revolutionary/update_effect(mob/dead_mob, dusted, gibbed)
 	var/datum/job/possible_head_job = dead_mob.mind?.assigned_role
 	description = "[possible_head_job.title ? "The [LOWER_TEXT(possible_head_job.title)]" : "Another head of staff"] is dead! Long live the revolution!"
 
@@ -151,6 +155,23 @@
 		description = "Oh, %DEAD_MOB% was vaporized. Now I have to get the dustpan."
 	else
 		description = "Oh, %DEAD_MOB% died. Shame, I guess."
+
+/// Ashwalkers get a small boost from sacrificing people to the necropolis spire, and don't care otherwise
+/datum/mood_event/conditional/see_death/ashwalker
+	priority = ASHWALKER_PRIORITY
+	mood_change = 0
+
+/datum/mood_event/conditional/see_death/ashwalker/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
+	return HAS_TRAIT(who, TRAIT_NECROPOLIS_WORSHIP) && !HAS_TRAIT(dead_mob, TRAIT_NECROPOLIS_WORSHIP)
+
+/datum/mood_event/conditional/see_death/ashwalker/update_effect(mob/dead_mob, dusted, gibbed)
+	if(gibbed)
+		description = "%DEAD_MOB% hasss been torn asssunder, glory to the Necropolisss!"
+		mood_change = /datum/mood_event/conditional/see_death::mood_change * -0.5
+	else if(dusted)
+		description = "Oh, %DEAD_MOB% wasss vaporized."
+	else
+		description = "Oh, %DEAD_MOB% died. Ssshame, I guesss."
 
 /// Pets take priority over normal death moodlets
 /datum/mood_event/conditional/see_death/pet
@@ -257,11 +278,10 @@
 /// Desensitized brings up the rear
 /datum/mood_event/conditional/see_death/desensitized
 	priority = DESENSITIZED_PRIORITY
-	mood_change = parent_type::mood_change * 0.5
 	timeout = parent_type::timeout * 0.5
 
 /datum/mood_event/conditional/see_death/desensitized/condition_fulfilled(mob/living/who, mob/dead_mob, dusted, gibbed)
-	return HAS_MIND_TRAIT(who, TRAIT_DESENSITIZED)
+	return IS_DESENSITIZED(who)
 
 /datum/mood_event/conditional/see_death/desensitized/update_effect(mob/dead_mob, dusted, gibbed)
 	if(gibbed)
@@ -276,6 +296,7 @@
 #undef PET_PRIORITY
 #undef XENO_PRIORITY
 #undef DONTCARE_PRIORITY
+#undef ASHWALKER_PRIORITY
 #undef GAMER_PRIORITY
 #undef REVOLUTIONARY_PRIORITY
 #undef CULT_PRIORITY
