@@ -232,8 +232,6 @@
 		enable()
 
 /datum/component/plumbing/process()
-	var/obj/machinery/target = parent
-
 	var/datum/reagents/receiver = recipient_reagents_holder()
 	for(var/dir in GLOB.cardinals)
 		if(!receiver.holder_full() && (dir & demand_connects))
