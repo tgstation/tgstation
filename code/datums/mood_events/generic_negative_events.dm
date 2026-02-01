@@ -638,6 +638,8 @@
 		mood_change = 0
 		description = "I just got coated in blood. Fascinating!"
 		return
+	if(IS_DESENSITIZED(owner))
+		mood_change *= 0.5
 
 /datum/mood_event/teetotal_hangover
 	description = "What a disgraceful display! This is what happens when one indulges in alcohol!"
