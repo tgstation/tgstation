@@ -138,7 +138,7 @@
 
 	var/progress_text
 
-	if(surgeon.is_holding_item_of_type(/obj/item/healthanalyzer))
+	if(show_stats(surgeon, patient))
 		if(brute_healed > 0 && patient.get_brute_loss() > 0)
 			progress_text += ". Remaining brute: <font color='#ff3333'>[patient.get_brute_loss()]</font>"
 		if(burn_healed > 0 && patient.get_fire_loss() > 0)
@@ -162,6 +162,21 @@
 			progress_text += ", though you feel like you're barely making a dent in treating [patient.p_their()] [CONDITIONAL_DAMAGE_MESSAGE(brute_healed, burn_healed, "broken", "pulped", "charred")] body"
 
 	return progress_text
+
+/// Checks whether we show precise damage stats during the surgery
+/datum/surgery_operation/basic/tend_wounds/proc/show_stats(mob/living/surgeon, mob/living/patient)
+	if(surgeon.is_holding_item_of_type(/obj/item/healthanalyzer))
+		return TRUE
+	for(var/obj/machinery/vitals_reader/vitals in view(4, patient))
+		if(vitals.patient == patient)
+			return TRUE
+	for(var/obj/machinery/computer/operating/op_pc in range(1, patient))
+		if(op_pc.table?.patient == patient)
+			return TRUE
+	for(var/obj/item/mod/control/modsuit in surgeon.get_equipped_items())
+		if(modsuit.active && istype(modsuit.selected_module, /obj/item/mod/module/health_analyzer))
+			return TRUE
+	return FALSE
 
 #undef CONDITIONAL_DAMAGE_MESSAGE
 

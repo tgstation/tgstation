@@ -54829,7 +54829,7 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/toy/katana,
+/obj/item/storage/belt/sheath/katana/toy,
 /obj/item/gun/ballistic/shotgun/toy/crossbow,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,

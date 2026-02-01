@@ -676,3 +676,119 @@
 2026-01-27:
   KREKS:
   - image: resprites banners
+  Melbert:
+  - qol: Banners drop centered
+  - balance: Inexorable's crit damage is halted in hard crit while you have Epinephrine
+      or similar, so you can actually get healed out of hard crit
+  - balance: Atropine stops crit damage like Epinephrine
+  SmArtKar:
+  - qol: Ashwalkers are now desensetized to non-ashie deaths, and enjoy witnessing
+      gibbings
+  - bugfix: Some specific death moodlets now properly register when their target has
+      been dusted or gibbed in their description
+  - rscadd: Added back IEDs made by attaching some wire and tape to a soda can filled
+      with fuel, plasma, or any other explosive of your choice. They need to be lit
+      on fire with a lighter or a welding tool.
+  - rscadd: You can now attach a lid to beakers with alt-click, preventing them from
+      being spilled when thrown.
+  - rscadd: Added beakerbombs, made by attaching an assembly (with optional power
+      cell and wiring) to a lidded beaker.
+  - balance: Rigged explosions now create flames.
+  - balance: Plasma explosions now limit their explosion potency past a certain point
+      based on their volume
+  Thunder12345:
+  - bugfix: The Sanguine Excavation bitrunning domain will drop the cache on killing
+      the boss again.
+2026-01-28:
+  Cyberboss:
+  - bugfix: The lootpanel will now properly close with distance from the target like
+      most other tguis.
+  - qol: The lootpanel will now automatically refresh when new items enter it. Removed
+      the manual refresh button.
+  Ezel, Toriate:
+  - rscadd: you can now craft katana sheaths with 3 leather
+  - balance: Energy katana and hanzo katana and the normal katana now comes in a sheath
+      this allows them to counterattack aswell
+  - balance: Normal katanas aren't a huge item anymore but instead bulky this will
+      allow them to be stored in the suspicous dufflebag/bag of holding
+  - balance: Toy katana is now bulky too but comes in a sheath that can't counterattack
+      but looks like the normal katana's one as metabreaker
+  - balance: Normal and hanzo katana can't be wielded on your back or belt anymore
+      without a sheath
+  - balance: nukie base gets a katana with a sheath which can be stored now but still
+      force 20
+  - map: Most maps now include the katana sheaths if premapped in.
+  - image: energy katana sheath and katana sheaths by  Toriate
+  Melbert:
+  - rscadd: A bullet to the brain has a rare chance of providing a free lobotomy
+  - qol: Operating computers, Vitals readers, and the health analyzer MODsuit module
+      (when active) can be used in the place of a health analyzer to display precise
+      health stats during a Tend Wounds surgery
+  SmArtKar:
+  - bugfix: Fixed some reagents still using old (and now, incorrect) math for their
+      metabolization values
+  lelandkemble:
+  - bugfix: Improvised mounted weaponry now drops a reasonable amount of cable
+  - spellcheck: spine implant emp damaging text spells "shearing" correctly
+2026-01-29:
+  Geoengi:
+  - balance: X-ray eyes now possess flash sensitivity, requiring additional flash
+      protection to negate bright lights.
+  - balance: X-ray goggles also no longer have pseudo night vision, putting them more
+      in line with the eyes.
+  - balance: Moth thermal eyes are hyper-sensitive to flashes, like their x-ray brothers.
+  - bugfix: Penlight messages for examining zombie and x-ray eyes work as they should,
+      with maintenance eyes losing a superfluous period.
+  - image: X-ray goggles now have a relatively unique, blue tint and glasses color
+      to represent their capabilities.
+  Melbert:
+  - rscadd: Desensitization to death is no longer binary - some antagonists are now
+      more used to it than others.
+  - rscadd: Witnessing the death of a fellow humanoid (or dying yourself) will slightly
+      desensitize you to future deaths.
+  - rscadd: Adds an achievement for managing to max out desensitization across a round.
+  - rscadd: Desensitized crewmembers care less when splattered with blood.
+  - rscadd: Holodeck mobs have a reduced death mood impact.
+  - rscadd: Adds doppler radar towers to Lavaland and the Icemoon. These towers ensure
+      weather radios have accurate readings.
+  - rscadd: Adding a weather anomaly core to a radar tower upgrades it, giving you
+      control of weather - allowing you to cancel storms or even spawn a weather event
+      of your choice. However, the core will expire after use, requiring replacement.
+  - rscadd: You can construct radar towers with plasteel. Even on the station. Yes,
+      you can summon weather onto the station.
+  - balance: Limits weather anomaly cores to 5.
+  SmArtKar:
+  - qol: Plastic surgery can now be done on detached heads.
+  - refactor: Refactored how disfiguration is handled to be stored on head's side
+  - bugfix: Robotic (and other non-huskable) heads no longer become disfigured from
+      husking
+  - bugfix: Attaching a head from a husk to a different body no longer permanently
+      turns them into an Unknown.
+  lelandkemble:
+  - bugfix: You can no longer oneshot the hierophant with an EMP
+  - rscadd: Added the ability to modify sabre sheaths into gun-powered sheaths, making
+      their counterattacks much more potent at the risk of great personal harm on
+      failure, especially if you have a weak, fleshy arm.
+2026-01-30:
+  Boopideedoo:
+  - rscadd: added a fire extinguisher to the seed vault
+  ERRORNAME:
+  - image: Shadow people and Nightmare resprite
+  - image: Unique sprites for light eater and heart of darkness
+  Melbert:
+  - qol: Secure prosthetic surgical operation ignores clothing
+  - bugfix: Fix hand surgery (stomach pump, etc) being blocked by the patient being
+      on combat mode rather than the surgeon
+  SmArtKar:
+  - bugfix: Lipoplasty can no longer be used to infinitely farm meat or increase patient's
+      nutrition level
+  - bugfix: If your chest has somehow been swapped, you will drop the correct type
+      of meat when undergoing lipoplasty
+  - code_imp: Removed magic numbers in human meat related code
+  - bugfix: Moved floppy disk sticker reskins to alt-right-click
+  SyncIt21:
+  - bugfix: selecting layer and colour of a stack of ducts works correctly
+  - bugfix: floor light constructs now deconstruct when floor is deconstructed
+  - bugfix: RLD created lights now fall off when floor/wall is destroyed
+  Y0SH1M4S73R:
+  - bugfix: wire bundle circuit components work once again
