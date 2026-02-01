@@ -44,11 +44,11 @@
 /datum/getrev/proc/GetDatabaseCommitSha()
 	. = originmastercommit
 	if (commit == .)
-		return
+		return .
 
 	var/gh_url = CONFIG_GET(string/githuburl)
 	if(!gh_url)
-		return
+		return .
 
 	var/datum/http_request/request = new()
 	request.prepare(RUSTG_HTTP_METHOD_GET, "[gh_url]/commit/[commit]", "", "")
@@ -58,6 +58,8 @@
 
 	if (response.status_code >= 200 && response.status_code < 300)
 		return commit
+
+	return .
 
 /datum/getrev/proc/GetTestMergeInfo(header = TRUE)
 	if(!testmerge.len)
