@@ -268,6 +268,7 @@ type CanvasData = {
   medium: string | null;
   patron: string | null;
   date: string | null;
+  year_offset: number;
   show_plaque: boolean;
   show_grid: boolean;
   zoom: number;
@@ -449,7 +450,7 @@ export const Canvas = (props) => {
                 <Box bold>
                   {data.author}
                   {!!data.date &&
-                    `- ${new Date(data.date).getFullYear() + 540}`}
+                    `- ${new Date(data.date).getFullYear() + data.year_offset}`}
                 </Box>
                 <Box italic>{data.medium}</Box>
                 <Box italic>

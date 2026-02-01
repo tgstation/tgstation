@@ -145,6 +145,7 @@
 	. = ..()
 	.["px_per_unit"] = pixels_per_unit
 	.["max_zoom"] = MAX_PAINTING_ZOOM_OUT
+	.["year_offest"] = STATION_YEAR_OFFSET
 
 /obj/item/canvas/ui_data(mob/user)
 	. = ..()
