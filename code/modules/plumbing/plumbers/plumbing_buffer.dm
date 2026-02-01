@@ -32,6 +32,13 @@
 	disconnect()
 	return ..()
 
+/obj/machinery/plumbing/buffer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "Reset connections"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return ..()
+
 /obj/machinery/plumbing/buffer/examine(mob/user)
 	. = ..()
 	. += span_notice("It activates at a threshold of [activation_volume]u of reagents")
@@ -44,17 +51,6 @@
 			. += span_notice("It is sending reagents.")
 	. += span_notice("Its activation threshold can be changed with by [EXAMINE_HINT("hand")].")
 	. += span_notice("Its connections can be changed with a [EXAMINE_HINT("screwdriver")].")
-
-/obj/machinery/plumbing/buffer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_LMB] = "Set threshold"
-		return CONTEXTUAL_SCREENTIP_SET
-
-	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-		context[SCREENTIP_CONTEXT_LMB] = "Reset connections"
-		return CONTEXTUAL_SCREENTIP_SET
-
-	return ..()
 
 /obj/machinery/plumbing/buffer/update_icon_state()
 	. = ..()
@@ -101,23 +97,20 @@
 
 	//clear existing connections and ourself to it for other machines
 	LAZYCLEARLIST(connections)
-	LAZYADD(connections, src)
 
 	//Discover new connections
 	var/list/obj/machinery/plumbing/buffer/queue = list(src)
-	var/list/obj/machinery/plumbing/buffer/visited = list(src = TRUE)
+	var/list/obj/machinery/plumbing/buffer/visited = list()
 	while(queue.len)
 		var/obj/machinery/plumbing/buffer/node = popleft(queue)
+		node.connections = connections
+		LAZYADD(connections, node)
+		visited[node] = TRUE
+
 		for(var/direction in GLOB.cardinals)
 			for(var/obj/machinery/plumbing/buffer/sub_node in get_step(node, direction))
-				if(visited[sub_node])
+				if(!sub_node.anchored || visited[sub_node])
 					continue
-				visited[sub_node] = TRUE
-
-				sub_node.activation_volume = activation_volume
-				sub_node.connections = connections
-				LAZYADD(connections, sub_node)
-
 				queue += sub_node
 
 	//Ping the alert to the player
@@ -137,9 +130,33 @@
 		disconnect()
 		update_appearance(UPDATE_ICON_STATE)
 
-/obj/machinery/plumbing/buffer/attack_hand(mob/living/user, list/modifiers)
+/obj/machinery/plumbing/buffer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ChemAutomaticBuffer", name)
+		ui.open()
+
+/obj/machinery/plumbing/buffer/ui_data(mob/user)
+	return list(
+		threshold = activation_volume,
+		connections = max(LAZYLEN(connections) - 1, 0)
+	)
+
+/obj/machinery/plumbing/buffer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	var/new_volume = tgui_input_number(user, "Enter new activation threshold", "Beepityboop", activation_volume, buffer)
-	if(!new_volume || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+	if(.)
 		return
-	activation_volume = new_volume
+
+	switch(action)
+		if("set_threshold")
+			var/value = params["threshold"]
+			value = text2num(value)
+			if(!value)
+				return FALSE
+
+			activation_volume = clamp(value, 1, buffer)
+			return TRUE
+
+		if("sync")
+			for(var/obj/machinery/plumbing/buffer/node as anything in connections)
+				node.activation_volume = activation_volume
