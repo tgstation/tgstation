@@ -1,0 +1,5 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - refactor: "Painting has been significantly refactored with a new UI that should provide every painting control you need without having to unfocus the UI window. Please report any issues."
+  - refactor: "Items that can store paint palettes now start with no colors. Colors can be added to and removed from the item's palette, up to the number of colors they previously stored."
