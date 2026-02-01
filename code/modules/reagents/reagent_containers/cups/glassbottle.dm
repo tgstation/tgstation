@@ -1035,7 +1035,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/juice/lemonjuice
 	name = "lemon juice"
 	desc = "Some like to pour a few drops of this over their fish."
-	icon = 'icon/obj/drinks/boxes.dmi'
+	icon = 'icons/obj/drinks/boxes.dmi'
 	icon_state = "lemonjuice"
 	list_reagents = list(/datum/reagent/consumable/lemonjuice = 100)
 	drink_type = FRUIT
