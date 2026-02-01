@@ -13,6 +13,27 @@
 	//The amount of pixels to shift when mounted
 	var/pixel_shift
 
+/obj/item/wallframe/Initialize(mapload)
+	. = ..()
+	register_context()
+	register_item_context()
+
+/obj/item/wallframe/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/wallframe/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = NONE
+	if(find_support_structure(target))
+		context[SCREENTIP_CONTEXT_LMB] = "Mount"
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/wallframe/examine(mob/user)
+	. = ..()
+	. += span_notice("It can be [EXAMINE_HINT("wrenched")] apart.")
+
 /**
  * Returns an structure to mount on from the atom passed
  * for e.g if its not an closed turf then return an structure on the turf to mount on
@@ -93,19 +114,14 @@
 	return interact_with_atom(get_step(get_turf(user), user.dir), user)
 
 /obj/item/wallframe/wrench_act(mob/living/user, obj/item/tool)
-	var/metal_amt = round(custom_materials[GET_MATERIAL_REF(/datum/material/iron)]/SHEET_MATERIAL_AMOUNT) //Replace this shit later
-	var/glass_amt = round(custom_materials[GET_MATERIAL_REF(/datum/material/glass)]/SHEET_MATERIAL_AMOUNT) //Replace this shit later
-
-	if(!metal_amt && !glass_amt)
-		return FALSE
 	to_chat(user, span_notice("You dismantle [src]."))
-	tool.play_tool_sound(src)
-	if(metal_amt)
-		new /obj/item/stack/sheet/iron(get_turf(src), metal_amt)
-	if(glass_amt)
-		new /obj/item/stack/sheet/glass(get_turf(src), glass_amt)
-	qdel(src)
+	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/wallframe/atom_deconstruct(disassembled)
+	var/atom/drop = drop_location()
+	for(var/datum/material/mat as anything in custom_materials)
+		new mat.sheet_type(drop, round(custom_materials[mat] / SHEET_MATERIAL_AMOUNT))
 
 /obj/item/electronics
 	desc = "Looks like a circuit. Probably is."

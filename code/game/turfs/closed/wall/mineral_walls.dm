@@ -190,6 +190,8 @@
 	desc = "A solidly wooden wall. It's a bit weaker than a wall made with metal."
 	girder_type = /obj/structure/barricade/wooden
 	hardness = 67 //a bit weaker than iron (60)
+	sheet_amount = 5
+	make_delay = 5 SECONDS
 
 /turf/closed/wall/mineral/bamboo
 	name = "bamboo wall"

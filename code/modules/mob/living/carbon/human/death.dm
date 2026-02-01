@@ -53,8 +53,10 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 	return readout
 
 /mob/living/carbon/human/proc/makeSkeleton()
-	ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)
 	set_species(/datum/species/skeleton)
+	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
+	if(head)
+		ADD_TRAIT(head, TRAIT_DISFIGURED, INNATE_TRAIT)
 	return TRUE
 
 /mob/living/carbon/proc/Drain()

@@ -1,0 +1,13 @@
+2026-02-01:
+  Jacquerel:
+  - sound: wands and staffs adjust their fire sound pitch instead of frequency as
+      charges are depleted
+  Melbert:
+  - bugfix: Having an active honorific no longer changes your runechat emote color
+  SmArtKar:
+  - qol: Item fortification scroll no longer requires combat mode in order to be used
+  lelandkemble:
+  - bugfix: The "Super-Stable" line of Donk Co. Bomb Payloads are now stable when
+      exposed to extreme temperatures
+  - bugfix: bounties where you must submit reagents or pills or viruses now work
+  - map: Icebox engineering circuit lab no longer has firelocks placed in the windows
