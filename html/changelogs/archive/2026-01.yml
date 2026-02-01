@@ -730,3 +730,65 @@
   lelandkemble:
   - bugfix: Improvised mounted weaponry now drops a reasonable amount of cable
   - spellcheck: spine implant emp damaging text spells "shearing" correctly
+2026-01-29:
+  Geoengi:
+  - balance: X-ray eyes now possess flash sensitivity, requiring additional flash
+      protection to negate bright lights.
+  - balance: X-ray goggles also no longer have pseudo night vision, putting them more
+      in line with the eyes.
+  - balance: Moth thermal eyes are hyper-sensitive to flashes, like their x-ray brothers.
+  - bugfix: Penlight messages for examining zombie and x-ray eyes work as they should,
+      with maintenance eyes losing a superfluous period.
+  - image: X-ray goggles now have a relatively unique, blue tint and glasses color
+      to represent their capabilities.
+  Melbert:
+  - rscadd: Desensitization to death is no longer binary - some antagonists are now
+      more used to it than others.
+  - rscadd: Witnessing the death of a fellow humanoid (or dying yourself) will slightly
+      desensitize you to future deaths.
+  - rscadd: Adds an achievement for managing to max out desensitization across a round.
+  - rscadd: Desensitized crewmembers care less when splattered with blood.
+  - rscadd: Holodeck mobs have a reduced death mood impact.
+  - rscadd: Adds doppler radar towers to Lavaland and the Icemoon. These towers ensure
+      weather radios have accurate readings.
+  - rscadd: Adding a weather anomaly core to a radar tower upgrades it, giving you
+      control of weather - allowing you to cancel storms or even spawn a weather event
+      of your choice. However, the core will expire after use, requiring replacement.
+  - rscadd: You can construct radar towers with plasteel. Even on the station. Yes,
+      you can summon weather onto the station.
+  - balance: Limits weather anomaly cores to 5.
+  SmArtKar:
+  - qol: Plastic surgery can now be done on detached heads.
+  - refactor: Refactored how disfiguration is handled to be stored on head's side
+  - bugfix: Robotic (and other non-huskable) heads no longer become disfigured from
+      husking
+  - bugfix: Attaching a head from a husk to a different body no longer permanently
+      turns them into an Unknown.
+  lelandkemble:
+  - bugfix: You can no longer oneshot the hierophant with an EMP
+  - rscadd: Added the ability to modify sabre sheaths into gun-powered sheaths, making
+      their counterattacks much more potent at the risk of great personal harm on
+      failure, especially if you have a weak, fleshy arm.
+2026-01-30:
+  Boopideedoo:
+  - rscadd: added a fire extinguisher to the seed vault
+  ERRORNAME:
+  - image: Shadow people and Nightmare resprite
+  - image: Unique sprites for light eater and heart of darkness
+  Melbert:
+  - qol: Secure prosthetic surgical operation ignores clothing
+  - bugfix: Fix hand surgery (stomach pump, etc) being blocked by the patient being
+      on combat mode rather than the surgeon
+  SmArtKar:
+  - bugfix: Lipoplasty can no longer be used to infinitely farm meat or increase patient's
+      nutrition level
+  - bugfix: If your chest has somehow been swapped, you will drop the correct type
+      of meat when undergoing lipoplasty
+  - code_imp: Removed magic numbers in human meat related code
+  - bugfix: Moved floppy disk sticker reskins to alt-right-click
+  SyncIt21:
+  - bugfix: selecting layer and colour of a stack of ducts works correctly
+  - bugfix: floor light constructs now deconstruct when floor is deconstructed
+  - bugfix: RLD created lights now fall off when floor/wall is destroyed
+  Y0SH1M4S73R:
+  - bugfix: wire bundle circuit components work once again

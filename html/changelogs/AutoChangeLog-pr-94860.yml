@@ -1,8 +1,0 @@
-author: "Geoengi"
-delete-after: True
-changes:
-  - balance: "X-ray eyes now possess flash sensitivity, requiring additional flash protection to negate bright lights."
-  - balance: "X-ray goggles also no longer have pseudo night vision, putting them more in line with the eyes."
-  - balance: "Moth thermal eyes are hyper-sensitive to flashes, like their x-ray brothers."
-  - bugfix: "Penlight messages for examining zombie and x-ray eyes work as they should, with maintenance eyes losing a superfluous period."
-  - image: "X-ray goggles now have a relatively unique, blue tint and glasses color to represent their capabilities."

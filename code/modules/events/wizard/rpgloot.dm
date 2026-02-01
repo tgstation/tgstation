@@ -34,10 +34,9 @@
 	can_backfire = TRUE
 	return ..()
 
-
 /obj/item/upgradescroll/pre_attack(obj/item/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(. || !istype(target) || !user.combat_mode)
+	if(. || !istype(target))
 		return
 	target.AddComponent(/datum/component/fantasy, upgrade_amount, null, null, can_backfire, TRUE)
 	uses -= 1

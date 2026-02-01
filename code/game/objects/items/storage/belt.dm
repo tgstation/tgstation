@@ -793,6 +793,10 @@
 	var/obj/item/bodypart/worthless_hand = holder.get_active_hand()
 	if(!worthless_hand)
 		worthless_hand = holder.get_inactive_hand()
+		if(!worthless_hand)
+			holder.visible_message(span_danger("[holder]'s sheath misfires, sending their blade flying!"),
+									span_danger("Your sheath misfires, sending your blade flying!"))
+			return
 
 	if(IS_ROBOTIC_LIMB(worthless_hand) || !worthless_hand.dismember(BRUTE, FALSE, WOUND_BLUNT))
 		holder.visible_message(span_danger("[holder]'s arm is mutilated as they misfire [p_their(holder)] sheathed blade!"),

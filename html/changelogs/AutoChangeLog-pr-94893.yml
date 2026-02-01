@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Adds doppler radar towers to Lavaland and the Icemoon. These towers ensure weather radios have accurate readings."
-  - rscadd: "Adding a weather anomaly core to a radar tower upgrades it, giving you control of weather - allowing you to cancel storms or even spawn a weather event of your choice. However, the core will expire after use, requiring replacement."
-  - rscadd: "You can construct radar towers with plasteel. Even on the station. Yes, you can summon weather onto the station."
-  - balance: "Limits weather anomaly cores to 5."
