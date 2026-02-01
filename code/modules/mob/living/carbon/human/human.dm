@@ -782,7 +782,7 @@
 		var/list/options = list("Clear"="Clear")
 		for(var/type in subtypesof(/datum/quirk))
 			var/datum/quirk/quirk_type = type
-			if(initial(quirk_type.abstract_parent_type) == type)
+			if(initial(quirk_type.abstract_type) == type)
 				continue
 			var/qname = initial(quirk_type.name)
 			options[has_quirk(quirk_type) ? "[qname] (Remove)" : "[qname] (Add)"] = quirk_type

@@ -29,7 +29,7 @@
 	var/list/all_possible_knowledge = typesof(/datum/heretic_knowledge)
 
 	for(var/datum/heretic_knowledge/knowledge_type as anything in all_possible_knowledge)
-		if(initial(knowledge_type.abstract_parent_type) == knowledge_type)
+		if(initial(knowledge_type.abstract_type) == knowledge_type)
 			all_possible_knowledge -= knowledge_type
 
 	var/list/list_to_check = get_knowledge_unlockables(start_knowledges, all_knowledges)

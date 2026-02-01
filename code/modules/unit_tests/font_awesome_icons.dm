@@ -33,7 +33,7 @@
  */
 /datum/unit_test/font_awesome_icons/proc/verify_quirk_icons()
 	for(var/datum/quirk/quirk as anything in subtypesof(/datum/quirk))
-		if(quirk == initial(quirk.abstract_parent_type))
+		if(quirk == initial(quirk.abstract_type))
 			continue
 
 		var/quirk_icon = initial(quirk.icon)
