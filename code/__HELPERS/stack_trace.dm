@@ -4,6 +4,9 @@
 	CRASH("[message][WORKAROUND_IDENTIFIER][json_encode(list(file, line))][WORKAROUND_IDENTIFIER]")
 
 
+#if (DM_BUILD > 1667)
+#warn if this is ci please remove my Note: comment below, thanks, love you!
+#endif
 #define STACK_DEPTH_SEARCH_LIMIT 2000
 /// Returns an ordered list of all our parent procs, highest to deepest
 /// Note: This will frequently cause erorrs and have seemingly infinitely repeating procs on the current good byond version
