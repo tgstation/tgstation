@@ -91,16 +91,18 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 #define MATERIAL_MAX_FORCE_MULTIPLIER 2
 
 // Material Container Flags.
-///If the container shows the amount of contained materials on examine.
+/// If the container shows the amount of contained materials on examine.
 #define MATCONTAINER_EXAMINE (1 << 0)
-///If the container cannot have materials inserted through attackby().
+/// If the container cannot have materials inserted through attackby().
 #define MATCONTAINER_NO_INSERT (1 << 1)
-///If the user can insert mats into the container despite the intent.
+/// If the user can insert mats into the container despite the intent.
 #define MATCONTAINER_ANY_INTENT (1 << 2)
-///If the user won't receive a warning when attacking the container with an unallowed item.
+/// If the user won't receive a warning when attacking the container with an unallowed item.
 #define MATCONTAINER_SILENT (1 << 3)
-///Alloys won't be disassembled in its components when inserted.
+/// Alloys won't be disassembled in its components when inserted.
 #define MATCONTAINER_ACCEPT_ALLOYS (1 << 4)
+/// Prevents material items from displaying their descriptors in examine_more with sci glasses
+#define MATERIAL_NO_DESCRIPTORS (1 << 5)
 
 // Atom material behavior flags
 /// Whether a material's mechanical effects should apply to the atom. This is necessary for other flags to work.

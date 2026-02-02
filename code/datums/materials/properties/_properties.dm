@@ -4,6 +4,8 @@
 	var/name = "Error"
 	/// Associated property ID
 	var/id = null
+	/// Should this property be inherited by child materials?
+	var/inherited = TRUE
 
 /// Returns a string to display to sci glasses wearers when the material is examined
 /datum/material_property/proc/get_descriptor(value)

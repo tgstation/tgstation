@@ -13,7 +13,7 @@
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "smashes")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "smash")
 	novariants = FALSE
-	material_flags = MATERIAL_EFFECTS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_NO_DESCRIPTORS
 	table_type = /obj/structure/table/greyscale
 	pickup_sound = 'sound/items/handling/materials/metal_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/metal_drop.ogg'

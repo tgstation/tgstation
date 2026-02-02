@@ -60,7 +60,7 @@
 /datum/material_property/radioactivity/proc/on_removed(datum/material/source, atom/old_atom, mat_amount, multiplier)
 	SIGNAL_HANDLER
 
-	if (!isitem(old_aotm))
+	if (!isitem(old_atom))
 		old_atom.RemoveElement(/datum/element/radioactive, chance = source.get_property(id) / URANIUM_RADIOACTIVITY * URANIUM_IRRADIATION_CHANCE * multiplier)
 
 #undef URANIUM_RADIOACTIVITY

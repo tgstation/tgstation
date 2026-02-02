@@ -1,6 +1,7 @@
 /// Derived properties aren't present on materials, and are instead just centralized holders for formulas
 /datum/material_property/derived
 	abstract_type = /datum/material_property/derived
+	inherited = FALSE
 
 /// Does this property apply to our material?
 /datum/material_property/derived/proc/is_present(datum/material/material)

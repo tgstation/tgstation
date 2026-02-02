@@ -134,6 +134,23 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE_MORE, user, .)
 	SEND_SIGNAL(user, COMSIG_MOB_EXAMINING_MORE, src, .)
 
+	if (!length(custom_materials) || (material_flags & MATERIAL_NO_DESCRIPTORS) || !HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER))
+		return
+
+	for (var/datum/material/material as anything in custom_materials)
+		var/list/material_string = list()
+		for (var/prop_id in material.mat_properties)
+			var/datum/material_property/property = SSmaterials.properties[prop_id]
+			var/prop_value = material.get_property(prop_id)
+			if (isnull(prop_value)) // Error?
+				continue
+			var/descriptor = property?.get_descriptor(prop_value)
+			if (descriptor) // Overriden derivative property?
+				material_string += span_tooltip("[property]: [prop_value < 0 ? "-" : ""]\Roman[round(abs(prop_value), 1)]", descriptor)
+
+		if (length(material_string))
+			. += span_info("[capitalize(material.name)] is [english_list(material_string)].")
+
 /**
  * Get the name of this object for examine
  *

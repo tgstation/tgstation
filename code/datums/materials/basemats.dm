@@ -526,7 +526,7 @@
 	color = "#f2d5d7"
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
 	mat_properties = list(
-		MATERIAL_DENSITY = 6,
+		MATERIAL_DENSITY = 4,
 		MATERIAL_HARDNESS = 10,
 		MATERIAL_FLEXIBILITY = 4,
 		MATERIAL_REFLECTIVITY = 8,
@@ -534,6 +534,7 @@
 		MATERIAL_THERMAL = 4,
 		MATERIAL_CHEMICAL = 9,
 		MATERIAL_BEAUTY = 0.5,
+		MATERIAL_INTEGRITY = 2, // This is magic, I ain't gotta explain shit
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/mythril
 	value_per_unit = 1500 / SHEET_MATERIAL_AMOUNT
