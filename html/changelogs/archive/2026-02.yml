@@ -18,6 +18,12 @@
       the database.
   Justice12354:
   - rscadd: Added lemon juice box
+  Melbert:
+  - balance: Plant instability can no longer cause the value of the instability stat
+      to change randomly unless instability is >=80
+  - balance: Plants can no longer mutate their stats twice in one tick starting at
+      40 instability - though the degree to which stats mutate is still increased
+      at the 40 mark, that is unchanged.
   Y0SH1M4S73R:
   - refactor: Painting has been significantly refactored with a new UI that should
       provide every painting control you need without having to unfocus the UI window.
