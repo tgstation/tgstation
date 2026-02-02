@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Plant instability can no longer cause the value of the instability stat to change randomly unless instability is >=80"
+  - balance: "Plants can no longer mutate their stats twice in one tick starting at 40 instability - though the degree to which stats mutate is still increased at the 40 mark, that is unchanged."
