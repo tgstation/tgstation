@@ -2272,6 +2272,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /atom/movable/looking_holder
 	invisibility = INVISIBILITY_MAXIMUM
+	abstract_type = /atom/movable/looking_holder
 	///the direction we are operating in
 	var/look_direction
 	///actual atom on the turf, usually the owner

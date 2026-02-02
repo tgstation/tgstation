@@ -259,44 +259,10 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /datum/unit_test/proc/build_list_of_uncreatables()
 	RETURN_TYPE(/list)
 	var/list/returnable_list = list()
-	// The following are just generic, singular types.
-	returnable_list = list(
-		//Never meant to be created, errors out the ass for mobcode reasons
-		/mob/living/carbon,
-		//And another
-		/obj/item/slimecross/recurring,
-		//This should be obvious
-		/obj/machinery/doomsday_device,
-		//Yet more templates
-		/obj/machinery/restaurant_portal,
-		//Template type
-		/obj/machinery/power/turbine,
-		//Template type
-		/obj/effect/mob_spawn,
-		//Template type
-		/obj/structure/holosign/robot_seat,
-		//Singleton
-		/mob/dview,
-		//Template type
-		/obj/item/bodypart,
-		//This is meant to fail extremely loud every single time it occurs in any environment in any context, and it falsely alarms when this unit test iterates it. Let's not spawn it in.
-		/obj/merge_conflict_marker,
-		//briefcase launchpads erroring
-		/obj/machinery/launchpad/briefcase,
-		//Wings abstract path
-		/obj/item/organ/wings,
-		//Not meant to spawn without the machine wand
-		/obj/effect/bug_moving,
-		//The abstract grown item expects a seed, but doesn't have one
-		/obj/item/food/grown,
-		//Single use case holder atom requiring a user
-		/atom/movable/looking_holder,
-		//Should not exist outside of holders
-		/obj/effect/decal/cleanable/blood/trail,
-	)
 
 	// Everything that follows is a typesof() check.
-
+	returnable_list += typesof(/obj/machinery/doomsday_device) //This should be obvious
+	returnable_list += typesof(/obj/machinery/launchpad/briefcase) //briefcase launchpads erroring
 	//Say it with me now, type template
 	returnable_list += typesof(/obj/effect/mapping_helpers)
 	//This turf existing is an error in and of itself

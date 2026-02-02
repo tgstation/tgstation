@@ -170,6 +170,7 @@
 	layer = BELOW_OBJ_LAYER
 	armor_type = /datum/armor/restaurant_portal
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	abstract_type = /obj/machinery/restaurant_portal
 	///What venue is this portal for? Uses a typepath which is turned into an instance on Initialize
 	var/datum/venue/linked_venue
 
@@ -310,6 +311,7 @@
 	holosign_type = /obj/structure/holosign/robot_seat
 	desc = "Use this to place seats for your restaurant guests!"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	abstract_type = /obj/item/holosign_creator/robot_seat
 
 /obj/item/holosign_creator/robot_seat/attack_self(mob/user)
 	return

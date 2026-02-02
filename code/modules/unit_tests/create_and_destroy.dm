@@ -14,7 +14,8 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	var/original_baseturf_count = length(original_baseturfs)
 
 	GLOB.running_create_and_destroy = TRUE
-	for(var/type_path in typesof(/atom/movable, /turf) - uncreatables) //No areas please
+	var/list/type_paths_to_check = (valid_typesof(/atom/movable) + valid_typesof(/turf) - uncreatables)
+	for(var/type_path in type_paths_to_check - uncreatables) //No areas please
 		if(ispath(type_path, /turf))
 			spawn_at.ChangeTurf(type_path)
 			//We change it back to prevent baseturfs stacking and hitting the limit
