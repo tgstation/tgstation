@@ -153,8 +153,13 @@
 	chassis.update_icon_state()
 
 /datum/action/vehicle/sealed/mecha/mech_overclock
-	name = "Toggle overclocking"
+	name = "Toggle Overclocking"
+	desc = "Increases mech speed and power at the cost of heat generation."
 	button_icon_state = "mech_overload_off"
+
+/datum/action/vehicle/sealed/mecha/mech_overclock/siren/New()
+	. = ..()
+	build_all_button_icons()
 
 /datum/action/vehicle/sealed/mecha/mech_overclock/Trigger(mob/clicker, trigger_flags, forced_state = null)
 	if(!..())
@@ -162,8 +167,14 @@
 	if(!chassis || !(owner in chassis.occupants))
 		return
 	chassis.toggle_overclock(forced_state)
-	button_icon_state = "mech_overload_[chassis.overclock_mode ? "on" : "off"]"
 	build_all_button_icons()
+
+/datum/action/vehicle/sealed/mecha/mech_overclock/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force)
+	button_icon_state = get_button_icon_state()
+	return ..()
+
+/datum/action/vehicle/sealed/mecha/mech_overclock/proc/get_button_icon_state()
+	return "mech_overload_[chassis.overclock_mode ? "on" : "off"]"
 
 /datum/action/vehicle/sealed/mecha/equipment
 	name = "Mech Equipment"

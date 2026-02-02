@@ -173,7 +173,7 @@
 	var/defense_mode = FALSE
 
 	///Bool for leg overload on/off
-	var/overclock_mode = FALSE
+	VAR_FINAL/overclock_mode = FALSE
 	///Whether it is possible to toggle overclocking from the cabin
 	var/can_use_overclock = FALSE
 	///Speed and energy usage modifier for leg overload
@@ -186,6 +186,10 @@
 	var/overclock_safety_available = FALSE
 	///Whether the overclocking turns off automatically when overheated
 	var/overclock_safety = FALSE
+	/// Action type for overclocking, if null - no action
+	var/overclock_action_type = /datum/action/vehicle/sealed/mecha/mech_overclock
+	/// Name of the overclock action
+	var/overclock_name = "overclock"
 
 	//Bool for zoom on/off
 	var/zoom_mode = FALSE
@@ -410,8 +414,8 @@
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
 	if(mecha_flags & IS_ENCLOSED)
 		initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_cabin_seal, VEHICLE_CONTROL_SETTINGS)
-	if(can_use_overclock)
-		initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_overclock)
+	if(can_use_overclock && overclock_action_type)
+		initialize_passenger_action_type(overclock_action_type)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_safeties, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats, VEHICLE_CONTROL_SETTINGS)
@@ -959,20 +963,15 @@
 /obj/vehicle/sealed/mecha/proc/toggle_overclock(forced_state = null)
 	if(!isnull(forced_state))
 		if(overclock_mode == forced_state)
-			return
+			return FALSE
 		overclock_mode = forced_state
 	else
 		overclock_mode = !overclock_mode
-	log_message("Toggled overclocking.", LOG_MECHA)
-
+	log_message("Toggled [overclock_name].", LOG_MECHA)
 	for(var/mob/occupant as anything in occupants)
+		balloon_alert(occupant, "[overclock_name] [overclock_mode ? "on":"off"]")
 		var/datum/action/act = locate(/datum/action/vehicle/sealed/mecha/mech_overclock) in occupant.actions
-		if(!act)
-			continue
-		act.button_icon_state = "mech_overload_[overclock_mode ? "on" : "off"]"
-		balloon_alert(occupant, "overclock [overclock_mode ? "on":"off"]")
-		act.build_all_button_icons()
-
+		act?.build_all_button_icons(UPDATE_BUTTON_ICON)
 	if(overclock_mode)
 		movedelay = movedelay / overclock_coeff
 		visible_message(span_notice("[src] starts heating up, making humming sounds."))
@@ -980,6 +979,7 @@
 		movedelay = initial(movedelay)
 		visible_message(span_notice("[src] cools down and the humming stops."))
 	update_energy_drain()
+	return TRUE
 
 /// Update the energy drain according to parts and status
 /obj/vehicle/sealed/mecha/proc/update_energy_drain()
