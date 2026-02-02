@@ -602,6 +602,9 @@
 	RegisterSignal(human_user, COMSIG_SEND_ITEM_ATTACK_MESSAGE_CARBON, PROC_REF(item_attack_response))
 	signal_registered += COMSIG_SEND_ITEM_ATTACK_MESSAGE_CARBON
 
+	RegisterSignal(human_user, COMSIG_CARBON_LIMB_DAMAGED, PROC_REF(limb_damage))
+	signal_registered += COMSIG_CARBON_LIMB_DAMAGED
+
 	var/obj/item/organ/brain/our_brain = human_user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!our_brain)
 		return
@@ -637,8 +640,15 @@
 	return COMPONENT_IGNORE_CHANGE
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/handle_damage(mob/living/user, damage)
+	if(damage <= 0 || braindead)
+		return
 	user.adjust_organ_loss(ORGAN_SLOT_BRAIN, damage * damage_modifier)
 	check_braindeath(user)
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/limb_damage(mob/living/user, obj/item/bodypart/part, brute, burn)
+	SIGNAL_HANDLER
+	handle_damage(user, max(brute, 0) + max(burn, 0))
+	return COMPONENT_PREVENT_LIMB_DAMAGE
 
 /// Gives the health HUD to the wearer
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_hud_created(mob/living/carbon/human/wearer)
