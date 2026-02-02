@@ -10,21 +10,29 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_HUGE
 	can_muzzle_flash = FALSE
-	///what kind of magic is this
-	var/school = SCHOOL_EVOCATION
-	var/antimagic_flags = MAGIC_RESISTANCE
-	var/max_charges = 6
-	var/charges = 0
-	var/recharge_rate = 8
-	var/charge_timer = 0
-	/// Whether this wand/staff recharges on its own over time.
-	/// (This is not related to the spell "Charge" whatsoever!)
-	var/can_charge = TRUE
-	var/ammo_type
-	var/no_den_usage
-	clumsy_check = 0
+	clumsy_check = FALSE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL // Has no trigger at all, uses magic instead
 	pin = /obj/item/firing_pin/magic
+	/// If true, our fire sound gets lower as our charges decrease
+	var/pitch_with_charges = TRUE
+	/// What kind of magic is this
+	var/school = SCHOOL_EVOCATION
+	/// What kind of antimagic resists this
+	var/antimagic_flags = MAGIC_RESISTANCE
+	/// How many charges can we hold at most
+	var/max_charges = 6
+	/// How many charges do we currently have
+	var/charges = 0
+	/// How fast do we recharge charges? In seconds
+	var/recharge_rate = 8
+	/// How much have we currently recharged?
+	var/charge_timer = 0
+	/// Whether this wand/staff recharges on its own over time.
+	var/self_charging = TRUE
+	/// What kind of projectile do we fire?
+	var/ammo_type
+	/// If set to TRUE, wizards can't use this until they leave home
+	var/no_den_usage = FALSE
 
 /obj/item/gun/magic/Initialize(mapload)
 	. = ..()
@@ -43,11 +51,18 @@
 	return ..()
 
 /obj/item/gun/magic/fire_sounds()
-	var/frequency_to_use = sin((90/max_charges) * charges)
+	var/pitch_to_use = 1
+
+	if (pitch_with_charges && max_charges > 1)
+		pitch_to_use = LERP(1, 0.4, (1 - (charges/max_charges)) ** 2)
+
+	var/sound/playing_sound = sound(suppressed ? suppressed_sound : fire_sound)
+	playing_sound.pitch = pitch_to_use
+
 	if(suppressed)
-		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = frequency_to_use)
+		playsound(src, playing_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 	else
-		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound, frequency = frequency_to_use)
+		playsound(src, playing_sound, fire_sound_volume, vary_fire_sound)
 
 /**
  * Signal proc for [COMSIG_ITEM_MAGICALLY_CHARGED]
@@ -60,7 +75,7 @@
 	. = COMPONENT_ITEM_CHARGED
 
 	// Non-self charging staves and wands can potentially expire
-	if(!can_charge && max_charges && prob(80))
+	if(!self_charging && max_charges && prob(80))
 		max_charges--
 
 	if(max_charges <= 0)
@@ -81,11 +96,11 @@
 			to_chat(user, span_warning("You know better than to violate the security of The Den, best wait until you leave to use [src]."))
 			return
 		else
-			no_den_usage = 0
+			no_den_usage = FALSE // Well you're probably not going back
 	if(!user.can_cast_magic(antimagic_flags))
 		add_fingerprint(user)
 		return
-	. = ..()
+	return ..()
 
 /obj/item/gun/magic/can_shoot()
 	return charges
@@ -104,16 +119,14 @@
 	charges = max_charges
 	if(ammo_type)
 		chambered = new ammo_type(src)
-	if(can_charge)
+	if(self_charging)
 		START_PROCESSING(SSobj, src)
 	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_recharge))
 
-
 /obj/item/gun/magic/Destroy()
-	if(can_charge)
+	if(self_charging)
 		STOP_PROCESSING(SSobj, src)
 	return ..()
-
 
 /obj/item/gun/magic/process(seconds_per_tick)
 	if (charges >= max_charges)
@@ -128,14 +141,25 @@
 		recharge_newshot()
 	return 1
 
-
 /obj/item/gun/magic/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, span_warning("\The [src] whizzles quietly."))
 
 /obj/item/gun/magic/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is twisting [src] above [user.p_their()] head, releasing a magical blast! It looks like [user.p_theyre()] trying to commit suicide!"))
+	if (can_user_shoot(user))
+		charges--
+		return do_suicide(user)
+	user.visible_message(span_suicide("...but nothing happens."))
+	return SHAME
+
+/// Extend to do something funny
+/obj/item/gun/magic/proc/do_suicide(mob/living/user)
 	playsound(loc, fire_sound, 50, TRUE, -1)
 	return FIRELOSS
+
+/// Returns true if specified mob can fire this weapon
+/obj/item/gun/magic/proc/can_user_shoot(mob/living/user)
+	return can_shoot() && user.can_cast_magic(antimagic_flags)
 
 /obj/item/gun/magic/vv_edit_var(var_name, var_value)
 	. = ..()

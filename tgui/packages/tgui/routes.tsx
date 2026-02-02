@@ -10,7 +10,11 @@ import { backendStateAtom } from './events/store';
 import { LoadingScreen } from './interfaces/common/LoadingScreen';
 import { Window } from './layouts';
 
-const requireInterface = require.context('./interfaces');
+const requireInterface = require.context(
+  './interfaces',
+  true,
+  /^(?!.*\.test\.(tsx?|jsx?)).*\.(tsx?|jsx?)$/,
+);
 
 type RoutingErrorProps = {
   type: 'notFound' | 'missingExport' | 'unknown';

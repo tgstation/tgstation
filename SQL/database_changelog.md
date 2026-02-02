@@ -2,10 +2,10 @@ Any time you make a change to the schema files, remember to increment the databa
 
 Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be found in `code/__DEFINES/subsystem.dm`.
 
-The latest database version is 5.33; The query to update the schema revision table is:
+The latest database version is 5.34; The query to update the schema revision table is:
 
 ```sql
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 33);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 34);
 ```
 
 or
@@ -18,7 +18,7 @@ In any query remember to add a prefix to the table names if you use one.
 
 ---
 
-Version 5.34, godsnoknowswhen 2025, by Ghommie
+Version 5.34, 16 January 2026, by Ghommie
 Added `pda_themes_progress` as the second 'progress' subtype of 'datum/award/scores'
 
 ```sql

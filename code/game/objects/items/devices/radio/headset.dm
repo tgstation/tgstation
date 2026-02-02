@@ -476,7 +476,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		special_channels |= keyslot2.special_channels
 
 		for(var/ch_name in channels)
-			secure_radio_connections[ch_name] = add_radio(src, GLOB.default_radio_channels[ch_name])
+			LAZYSET(secure_radio_connections, ch_name, add_radio(src, GLOB.default_radio_channels[ch_name]))
 
 	// Updates radio languages entirely for the mob wearing the headset
 	var/mob/mob_loc = loc

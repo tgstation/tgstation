@@ -115,6 +115,7 @@
 					user.visible_message(span_notice("[user.name] deconstructs [src]."), \
 						span_notice("You deconstruct [src]."), span_hear("You hear a ratchet."))
 					playsound(src, 'sound/items/deconstruct.ogg', 75, TRUE)
+					deconstruct()
 				return
 
 			if(istype(tool, /obj/item/stack/cable_coil))
@@ -183,3 +184,9 @@
 	icon_state = "floor-construct-stage1"
 	fixture_type = "floor"
 	sheets_refunded = 1
+
+/obj/structure/light_construct/floor/get_turfs_to_mount_on()
+	return list(get_turf(src))
+
+/obj/structure/light_construct/floor/is_mountable_turf(turf/target)
+	return !isgroundlessturf(target)

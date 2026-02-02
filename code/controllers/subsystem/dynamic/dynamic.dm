@@ -140,8 +140,8 @@ SUBSYSTEM_DEF(dynamic)
 	// put rulesets in the queue (if admins didn't)
 	// this will even handle the case in which the tier wants 0 roundstart rulesets
 	if(!length(queued_rulesets))
-		for(var/ruleset_typepath in pick_roundstart_rulesets(antag_candidates))
-			queue_ruleset(ruleset_typepath)
+		for(var/ruleset in pick_roundstart_rulesets(antag_candidates))
+			queue_ruleset(ruleset)
 	// we got what we needed, reset so we can do real job selection later
 	// reset only happens AFTER roundstart selection so we can verify stuff like "can we get 3 heads of staff for revs?"
 	SSjob.reset_occupations()
@@ -295,8 +295,8 @@ SUBSYSTEM_DEF(dynamic)
 
 		rulesets_weighted[picked_ruleset] -= picked_ruleset.repeatable_weight_decrease
 		total_weight -= picked_ruleset.repeatable_weight_decrease
-		// Rulesets are not singletons. We need to to make a new one
-		picked_rulesets += new picked_ruleset.type(dynamic_config)
+		picked_rulesets += picked_ruleset.type
+		// Rulesets are not singletons. Queue_ruleset() will make them one.
 
 	// clean up unused rulesets
 	QDEL_LIST(rulesets_weighted)
