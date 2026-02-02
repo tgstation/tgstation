@@ -27,7 +27,7 @@
 	throw_speed = 3
 	drop_sound = 'sound/items/handling/tools/multitool_drop.ogg'
 	pickup_sound = 'sound/items/handling/tools/multitool_pickup.ogg'
-	materials = list(
+	custom_materials = list(
 		/datum/material/iron =SMALL_MATERIAL_AMOUNT * 0.5,
 		/datum/material/glass =SMALL_MATERIAL_AMOUNT * 0.2
 		)
