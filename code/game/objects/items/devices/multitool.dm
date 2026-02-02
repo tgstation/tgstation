@@ -31,6 +31,7 @@
 		/datum/material/iron =SMALL_MATERIAL_AMOUNT * 0.5,
 		/datum/material/glass =SMALL_MATERIAL_AMOUNT * 0.2
 		)
+	custom_premium_price = PAYCHECK_CREW * 3
 	toolspeed = 1
 	usesound = 'sound/items/weapons/empty.ogg'
 	var/datum/buffer // simple machine buffer for device linkage
