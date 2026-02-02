@@ -11,3 +11,17 @@
       exposed to extreme temperatures
   - bugfix: bounties where you must submit reagents or pills or viruses now work
   - map: Icebox engineering circuit lab no longer has firelocks placed in the windows
+2026-02-02:
+  Cyberboss:
+  - server: If TGS is configured to push test merge commits to a publicly accessible
+      GitHub, the exact game revision will be set as the `round`.`commit_hash` in
+      the database.
+  Justice12354:
+  - rscadd: Added lemon juice box
+  Y0SH1M4S73R:
+  - refactor: Painting has been significantly refactored with a new UI that should
+      provide every painting control you need without having to unfocus the UI window.
+      Please report any issues.
+  - refactor: Items that can store paint palettes now start with no colors. Colors
+      can be added to and removed from the item's palette, up to the number of colors
+      they previously stored.
