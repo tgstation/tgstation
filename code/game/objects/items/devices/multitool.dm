@@ -27,8 +27,10 @@
 	throw_speed = 3
 	drop_sound = 'sound/items/handling/tools/multitool_drop.ogg'
 	pickup_sound = 'sound/items/handling/tools/multitool_pickup.ogg'
-	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
-	custom_premium_price = PAYCHECK_COMMAND * 3
+	materials = list(
+		/datum/material/iron =SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/glass =SMALL_MATERIAL_AMOUNT * 0.2
+		)
 	toolspeed = 1
 	usesound = 'sound/items/weapons/empty.ogg'
 	var/datum/buffer // simple machine buffer for device linkage
