@@ -536,6 +536,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 	/// Reference to the linked vitals monitor
 	var/obj/machinery/vitals_reader/linked_monitor
 
+	/// Cooldown length between patient stat reads
+	var/read_cooldown_period = 4 SECONDS
+	/// Cooldown for reading patient stats
+	COOLDOWN_DECLARE(read_cooldown)
+
 	/// Outputs a signal when the vitals have been updated
 	var/datum/port/output/status_updated
 	/// Outputs a signal when the patient being monitored has changed
@@ -560,6 +565,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 	var/datum/port/output/patient_brain_damage
 	/// Outputs blood level
 	var/datum/port/output/patient_blood_level
+
 
 /obj/item/circuit_component/vitals_monitor/Destroy()
 	STOP_PROCESSING(SSclock_component, src)
@@ -597,7 +603,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 
 /obj/item/circuit_component/vitals_monitor/get_ui_notices()
 	. = ..()
-	. += create_ui_notice("Update Interval: [DisplayTimeText(COMP_CLOCK_DELAY)]", "orange", "clock")
+	. += create_ui_notice("Update Interval: [DisplayTimeText(read_cooldown_period)]", "orange", "clock")
 
 /obj/item/circuit_component/vitals_monitor/proc/handle_patient_change(datum/source, mob/living/old_patient, mob/living/new_patient)
 	SIGNAL_HANDLER
@@ -615,6 +621,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 /obj/item/circuit_component/vitals_monitor/process(seconds_per_tick)
 	if(isnull(linked_monitor?.patient))
 		return PROCESS_KILL
+	if(!COOLDOWN_FINISHED(src, read_cooldown))
+		return
+
+	COOLDOWN_START(src, read_cooldown, read_cooldown_period)
 
 	status_updated.set_output(COMPONENT_SIGNAL)
 
