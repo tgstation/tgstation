@@ -95,6 +95,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 
 /obj/machinery/vitals_reader/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/vitals_monitor), only_root_path = TRUE))
 	register_context()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -105,16 +106,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 		set_light_on(TRUE)
 
 /obj/machinery/vitals_reader/Destroy(force)
-	unset_connection()
-	unset_patient() // unset connection also unsets patient, but just in case
+	set_connection(null)
+	set_patient(null) // unset connection also unsets patient, but just in case
 	return ..()
 
-/obj/machinery/vitals_reader/proc/unset_connected(...)
+/obj/machinery/vitals_reader/proc/comsig_unset_connected(...)
 	SIGNAL_HANDLER
-	UnregisterSignal(connected, COMSIG_QDELETING)
-	UnregisterSignal(connected, list(COMSIG_OPERATING_TABLE_SET_PATIENT, COMSIG_MACHINERY_SET_OCCUPANT))
-	UnregisterSignal(connected, COMSIG_MOVABLE_MOVED)
-	connected = null
+	set_connection(null)
 
 /obj/machinery/vitals_reader/proc/connected_occupant_changed(datum/source, mob/living/new_patient)
 	SIGNAL_HANDLER
@@ -124,26 +122,25 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 /obj/machinery/vitals_reader/proc/connected_moved(...)
 	SIGNAL_HANDLER
 	if(get_dist(src, connected) > connection_range)
-		unset_connected()
+		set_connection(null)
 
-/obj/machinery/vitals_reader/proc/unset_connection(...)
-	SIGNAL_HANDLER
-	if(isnull(connected))
+/// Sets the machine as connected to this vitals reader
+/// If there is already a connection, it will be unset first.
+/obj/machinery/vitals_reader/proc/set_connection(obj/new_connected)
+	if(connected == new_connected)
+		return
+	if(!isnull(connected))
+		UnregisterSignal(connected, COMSIG_QDELETING)
+		UnregisterSignal(connected, list(COMSIG_OPERATING_TABLE_SET_PATIENT, COMSIG_MACHINERY_SET_OCCUPANT))
+		UnregisterSignal(connected, COMSIG_MOVABLE_MOVED)
+		connected = null
+		set_patient(null)
+		update_use_power(NO_POWER_USE)
+	if(isnull(new_connected))
 		return
 
-	UnregisterSignal(connected, COMSIG_QDELETING)
-	UnregisterSignal(connected, list(COMSIG_OPERATING_TABLE_SET_PATIENT, COMSIG_MACHINERY_SET_OCCUPANT))
-	UnregisterSignal(connected, COMSIG_MOVABLE_MOVED)
-	connected = null
-	unset_patient()
-	update_use_power(NO_POWER_USE)
-
-/obj/machinery/vitals_reader/proc/set_connection(obj/new_connected)
-	if(!isnull(connected))
-		unset_connected()
-
 	connected = new_connected
-	RegisterSignal(connected, COMSIG_QDELETING, PROC_REF(unset_connected))
+	RegisterSignal(connected, COMSIG_QDELETING, PROC_REF(comsig_unset_connected))
 	RegisterSignals(connected, list(COMSIG_OPERATING_TABLE_SET_PATIENT, COMSIG_MACHINERY_SET_OCCUPANT), PROC_REF(connected_occupant_changed))
 	RegisterSignal(connected, COMSIG_MOVABLE_MOVED, PROC_REF(connected_moved))
 	update_use_power(IDLE_POWER_USE)
@@ -178,7 +175,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "disconnected from [connected.name]")
-	unset_connection()
+	set_connection(null)
 	return ITEM_INTERACT_SUCCESS
 
 /// Find and connects to a nearby machine
@@ -217,14 +214,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 			Use a [EXAMINE_HINT("multitool")] to connect it to a neighboring machine.")
 		return
 
-	if(user.is_blind())
+	if(isnull(patient) || user.is_blind())
 		return
 
 	if(machine_stat & EMPED)
 		. += span_warning("The display is flickering erratically!")
 		return
 
-	if(!issilicon(user) && !isobserver(user) && get_dist(patient, user) > 2)
+	if(!issilicon(user) && !isobserver(user) && get_dist(src, user) > 2)
 		. += span_notice("<i>You are too far away to read the display.</i>")
 	else if(HAS_TRAIT(user, TRAIT_DUMB) || !user.can_read(src, reading_check_flags = READING_CHECK_LITERACY, silent = TRUE))
 		. += span_warning("You try to comprehend the display, but it's too complex for you to understand.")
@@ -468,15 +465,28 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 /obj/machinery/vitals_reader/proc/set_patient(mob/living/new_patient)
 	if(patient == new_patient)
 		return
-	if(isnull(new_patient))
-		unset_patient()
-		return
+	SEND_SIGNAL(src, COMSIG_VITALS_SET_PATIENT, patient, new_patient)
+	if(!isnull(patient))
+		UnregisterSignal(patient, list(
+			COMSIG_QDELETING,
+			COMSIG_CARBON_POST_REMOVE_LIMB,
+			COMSIG_CARBON_POST_ATTACH_LIMB,
+			COMSIG_LIVING_HEALTH_UPDATE,
+			COMSIG_LIVING_UPDATE_BLOOD_STATUS,
+		))
 
-	if(isnull(patient))
-		unset_patient()
+		patient = null
+		end_processing()
+		if(!QDELING(src))
+			update_use_power(IDLE_POWER_USE)
+			update_appearance()
+	if(isnull(new_patient))
+		return
+	if(QDELING(src))
+		CRASH("[src] is qdeleting but tried to set a new patient ([new_patient])!")
 
 	patient = new_patient
-	RegisterSignal(patient, COMSIG_QDELETING, PROC_REF(unset_patient))
+	RegisterSignal(patient, COMSIG_QDELETING, PROC_REF(comsig_unset_patient))
 	RegisterSignals(patient, list(
 		COMSIG_CARBON_POST_REMOVE_LIMB,
 		COMSIG_CARBON_POST_ATTACH_LIMB,
@@ -488,27 +498,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 	update_use_power(ACTIVE_POWER_USE)
 	last_reported_stat = null
 
-/// Unset the current patient.
-/obj/machinery/vitals_reader/proc/unset_patient(...)
+/obj/machinery/vitals_reader/proc/comsig_unset_patient(...)
 	SIGNAL_HANDLER
-	if(isnull(patient))
-		return
-
-	UnregisterSignal(patient, list(
-		COMSIG_QDELETING,
-		COMSIG_CARBON_POST_REMOVE_LIMB,
-		COMSIG_CARBON_POST_ATTACH_LIMB,
-		COMSIG_LIVING_HEALTH_UPDATE,
-		COMSIG_LIVING_UPDATE_BLOOD_STATUS,
-	))
-
-	patient = null
-	end_processing()
-	update_use_power(IDLE_POWER_USE)
-	if(QDELING(src))
-		return
-
-	update_appearance()
+	set_patient(null)
 
 /// Signal proc to update the display when a signal is received.
 /obj/machinery/vitals_reader/proc/update_overlay_on_signal(...)
@@ -536,3 +528,121 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 				playsound(src, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 		if(BURN)
 			playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
+
+/obj/item/circuit_component/vitals_monitor
+	display_name = "Vitals Monitor"
+	desc = "Allows you to interface with a vitals monitor to read a patient's status."
+
+	/// Reference to the linked vitals monitor
+	var/obj/machinery/vitals_reader/linked_monitor
+
+	/// Outputs a signal when the vitals have been updated
+	var/datum/port/output/status_updated
+	/// Outputs a signal when the patient being monitored has changed
+	var/datum/port/output/patient_changed
+
+	/// Outputs the patient being monitored
+	var/datum/port/output/patient_entity
+	/// Outputs a string corresponding to how defibbing would go
+	var/datum/port/output/defib_state
+
+	/// Outputs total brute damage
+	var/datum/port/output/patient_brute_damage
+	/// Outputs total burn damage
+	var/datum/port/output/patient_burn_damage
+	/// Outputs total oxyloss damage
+	var/datum/port/output/patient_oxy_loss
+	/// Outputs total toxin damage
+	var/datum/port/output/patient_tox_loss
+	/// Outputs overall health
+	var/datum/port/output/patient_overall_health
+	/// Outputs brain damage
+	var/datum/port/output/patient_brain_damage
+	/// Outputs blood level
+	var/datum/port/output/patient_blood_level
+
+/obj/item/circuit_component/vitals_monitor/Destroy()
+	STOP_PROCESSING(SSclock_component, src)
+	return ..()
+
+/obj/item/circuit_component/vitals_monitor/populate_ports()
+	status_updated = add_output_port("Status Updated", PORT_TYPE_SIGNAL)
+	patient_changed = add_output_port("Patient Changed", PORT_TYPE_SIGNAL)
+
+	patient_entity = add_output_port("Patient", PORT_TYPE_ATOM)
+	defib_state = add_output_port("Defib Status", PORT_TYPE_STRING)
+
+	patient_overall_health = add_output_port("Overall Health", PORT_TYPE_NUMBER)
+	patient_brute_damage = add_output_port("Brute Damage", PORT_TYPE_NUMBER)
+	patient_burn_damage = add_output_port("Burn Damage", PORT_TYPE_NUMBER)
+	patient_oxy_loss = add_output_port("Suffocation Damage", PORT_TYPE_NUMBER)
+	patient_tox_loss = add_output_port("Toxin Damage", PORT_TYPE_NUMBER)
+	patient_brain_damage = add_output_port("Brain Damage", PORT_TYPE_NUMBER)
+	patient_blood_level = add_output_port("Blood Level", PORT_TYPE_NUMBER)
+
+/obj/item/circuit_component/vitals_monitor/register_usb_parent(atom/movable/shell)
+	. = ..()
+	linked_monitor = shell
+	RegisterSignal(shell, COMSIG_VITALS_SET_PATIENT, PROC_REF(handle_patient_change))
+
+	var/obj/machinery/vitals_reader/monitor = shell
+	if(!isnull(monitor.patient))
+		START_PROCESSING(SSclock_component, src)
+
+/obj/item/circuit_component/vitals_monitor/unregister_usb_parent(atom/movable/shell)
+	. = ..()
+	linked_monitor = null
+	UnregisterSignal(shell, COMSIG_VITALS_SET_PATIENT)
+	STOP_PROCESSING(SSclock_component, src)
+
+/obj/item/circuit_component/vitals_monitor/get_ui_notices()
+	. = ..()
+	. += create_ui_notice("Update Interval: [DisplayTimeText(COMP_CLOCK_DELAY)]", "orange", "clock")
+
+/obj/item/circuit_component/vitals_monitor/proc/handle_patient_change(datum/source, mob/living/old_patient, mob/living/new_patient)
+	SIGNAL_HANDLER
+	if(isnull(new_patient))
+		STOP_PROCESSING(SSclock_component, src)
+	else
+		START_PROCESSING(SSclock_component, src)
+	patient_entity.set_output(new_patient)
+	patient_changed.set_output(COMPONENT_SIGNAL)
+
+/// Reads a patient value and applies a random amount of error if the monitor is emped or emagged
+#define GET_PATIENT_VALUE(monitor, value_to_get) \
+	round(monitor.patient.##value_to_get * ((monitor.machine_stat & (EMPED|EMAGGED)) ? rand(0, 100) * 0.01 : 1), DAMAGE_PRECISION)
+
+/obj/item/circuit_component/vitals_monitor/process(seconds_per_tick)
+	if(isnull(linked_monitor?.patient))
+		return PROCESS_KILL
+
+	status_updated.set_output(COMPONENT_SIGNAL)
+
+	patient_overall_health.set_output(GET_PATIENT_VALUE(linked_monitor, health))
+	patient_brute_damage.set_output(GET_PATIENT_VALUE(linked_monitor, get_brute_loss()))
+	patient_burn_damage.set_output(GET_PATIENT_VALUE(linked_monitor, get_fire_loss()))
+	patient_oxy_loss.set_output(GET_PATIENT_VALUE(linked_monitor, get_oxy_loss()))
+	patient_tox_loss.set_output(GET_PATIENT_VALUE(linked_monitor, get_tox_loss()))
+	patient_brain_damage.set_output(GET_PATIENT_VALUE(linked_monitor, get_organ_loss(ORGAN_SLOT_BRAIN)))
+	patient_blood_level.set_output(GET_PATIENT_VALUE(linked_monitor, get_blood_volume(TRUE)))
+
+	var/is_defib_possible = DEFIB_POSSIBLE
+	if(iscarbon(linked_monitor.patient))
+		var/mob/living/carbon/carbo_patient = linked_monitor.patient
+		is_defib_possible = carbo_patient.can_defib()
+
+	switch(is_defib_possible)
+		if(DEFIB_POSSIBLE)
+			defib_state.set_output("Possible")
+		if(DEFIB_FAIL_SUICIDE, DEFIB_FAIL_BLACKLISTED, DEFIB_FAIL_NO_INTELLIGENCE, DEFIB_FAIL_GOLEM)
+			defib_state.set_output("Impossible")
+		if(DEFIB_FAIL_HUSK)
+			defib_state.set_output("Husked")
+		if(DEFIB_FAIL_TISSUE_DAMAGE)
+			defib_state.set_output("Damaged")
+		if(DEFIB_FAIL_FAILING_HEART, DEFIB_FAIL_NO_HEART)
+			defib_state.set_output("Heart Failure")
+		if(DEFIB_FAIL_FAILING_BRAIN, DEFIB_FAIL_NO_BRAIN)
+			defib_state.set_output("Brain Failure")
+
+#undef GET_PATIENT_VALUE
