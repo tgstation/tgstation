@@ -603,6 +603,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 
 /obj/item/circuit_component/vitals_monitor/get_ui_notices()
 	. = ..()
+	. += create_ui_notice("Initial Delay: [DisplayTimeText(1 SECONDS)]", "orange", "clock")
 	. += create_ui_notice("Update Interval: [DisplayTimeText(read_cooldown_period)]", "orange", "clock")
 
 /obj/item/circuit_component/vitals_monitor/proc/handle_patient_change(datum/source, mob/living/old_patient, mob/living/new_patient)
