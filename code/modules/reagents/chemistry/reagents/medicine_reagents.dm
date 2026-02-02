@@ -60,7 +60,7 @@
 		if(33 to 65)
 			mytray.mutateweed()
 		if(1 to 32)
-			mytray.mutatepest(user)
+			mytray.mutatepest()
 		else
 			if(prob(20))
 				mytray.visible_message(span_warning("Nothing happens..."))
@@ -159,7 +159,9 @@
 	for(var/i in affected_mob.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_xadone(0.5 * power * metabolization_ratio * seconds_per_tick)
-	REMOVE_TRAIT(affected_mob, TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
+	var/obj/item/bodypart/head = affected_mob.get_bodypart(BODY_ZONE_HEAD)
+	if (head)
+		REMOVE_TRAIT(head, TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -178,29 +180,32 @@
 
 /datum/reagent/medicine/pyroxadone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-		var/power = 0
-		switch(affected_mob.bodytemperature)
-			if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
-				power = 2
-			if(400 to 460)
-				power = 3
-			else
-				power = 5
-		if(affected_mob.on_fire)
-			power *= 2
+	if(affected_mob.bodytemperature <= BODYTEMP_HEAT_DAMAGE_LIMIT)
+		return
+	var/power = 0
+	switch(affected_mob.bodytemperature)
+		if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
+			power = 2
+		if(400 to 460)
+			power = 3
+		else
+			power = 5
+	if(affected_mob.on_fire)
+		power *= 2
 
-		var/need_mob_update
-		need_mob_update = affected_mob.adjust_oxy_loss(-1 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		need_mob_update += affected_mob.adjust_brute_loss(-0.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += affected_mob.adjust_fire_loss(-0.75 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += affected_mob.adjust_tox_loss(-0.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype)
-		if(need_mob_update)
-			. = UPDATE_MOB_HEALTH
-		for(var/i in affected_mob.all_wounds)
-			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(0.5 * power * metabolization_ratio * seconds_per_tick)
-		REMOVE_TRAIT(affected_mob, TRAIT_DISFIGURED, TRAIT_GENERIC)
+	var/need_mob_update
+	need_mob_update = affected_mob.adjust_oxy_loss(-1 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update += affected_mob.adjust_brute_loss(-0.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjust_fire_loss(-0.75 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjust_tox_loss(-0.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype)
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
+	for(var/i in affected_mob.all_wounds)
+		var/datum/wound/iter_wound = i
+		iter_wound.on_xadone(0.5 * power * metabolization_ratio * seconds_per_tick)
+	var/obj/item/bodypart/head = affected_mob.get_bodypart(BODY_ZONE_HEAD)
+	if (head)
+		REMOVE_TRAIT(head, TRAIT_DISFIGURED, TRAIT_GENERIC)
 
 /datum/reagent/medicine/rezadone
 	name = "Rezadone"
@@ -223,7 +228,9 @@
 		required_bodytype = affected_biotype
 	))
 		. = UPDATE_MOB_HEALTH
-	REMOVE_TRAIT(affected_mob, TRAIT_DISFIGURED, TRAIT_GENERIC)
+	var/obj/item/bodypart/head = affected_mob.get_bodypart(BODY_ZONE_HEAD)
+	if (head)
+		REMOVE_TRAIT(head, TRAIT_DISFIGURED, TRAIT_GENERIC)
 
 /datum/reagent/medicine/rezadone/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -951,7 +958,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	inverse_chem_val = 0.35
 	inverse_chem = /datum/reagent/inverse/atropine
-	added_traits = list(TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION)
+	added_traits = list(TRAIT_NOCRITDAMAGE, TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION)
 
 /datum/reagent/medicine/atropine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1021,6 +1028,7 @@
 
 /datum/reagent/medicine/epinephrine/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
 	if(holder.has_reagent(/datum/reagent/toxin/lexorin))
+		// REM is intentional here
 		holder.remove_reagent(/datum/reagent/toxin/lexorin, 1 * REM * metabolized_volume * seconds_per_tick)
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 0.5 * REM * metabolized_volume * seconds_per_tick)
 	return ..()

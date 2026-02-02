@@ -303,7 +303,7 @@ SUBSYSTEM_DEF(ticker)
 	// Spawn traitors and stuff
 	for(var/datum/dynamic_ruleset/roundstart/ruleset in SSdynamic.queued_rulesets)
 		ruleset.execute()
-		SSdynamic.queued_rulesets -= ruleset
+		SSdynamic.unqueue_ruleset(ruleset)
 		SSdynamic.executed_rulesets += ruleset
 	// Queue roundstart intercept report
 	if(!CONFIG_GET(flag/no_intercept_report))
@@ -324,7 +324,7 @@ SUBSYSTEM_DEF(ticker)
 		var/arguments = list()
 		if(GLOB.revdata.originmastercommit)
 			to_set += "commit_hash = :commit_hash"
-			arguments["commit_hash"] = GLOB.revdata.originmastercommit
+			arguments["commit_hash"] = GLOB.revdata.GetDatabaseCommitSha()
 		if(to_set.len)
 			arguments["round_id"] = GLOB.round_id
 			var/datum/db_query/query_round_game_mode = SSdbcore.NewQuery(

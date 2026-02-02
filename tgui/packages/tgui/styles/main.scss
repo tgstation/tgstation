@@ -45,6 +45,7 @@
 @include meta.load-css('./interfaces/Uplink.scss');
 @include meta.load-css('./interfaces/DetectiveBoard.scss');
 @include meta.load-css('./interfaces/ColorPicker.scss');
+@include meta.load-css('./interfaces/AnomalyTower.scss');
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');

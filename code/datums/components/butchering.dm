@@ -221,7 +221,11 @@
 			results += butcher_result
 
 		if (is_stack && amount)
-			var/obj/item/stack/butcher_result = new drop_type(drop_loc, amount)
+			var/obj/item/stack/butcher_result = null
+			if (ispath(drop_type, /obj/item/stack/sheet/animalhide/carbon))
+				butcher_result = new drop_type(drop_loc, amount, /*merge = */TRUE, /*mat_override = */null, /*mat_amount = */1, target.skin_tone || target.species_color)
+			else
+				butcher_result = new drop_type(drop_loc, amount)
 			if (target.blood_dna_info)
 				butcher_result.add_blood_DNA(target.blood_dna_info.Copy())
 			results += butcher_result
@@ -246,7 +250,7 @@
 			if (reagents_in_produced)
 				if (target.owner.reagents)
 					target.owner.reagents.trans_to(result, target.owner.reagents.total_volume / reagents_in_produced / length(target.owner.bodyparts), remove_blacklisted = TRUE)
-				result.reagents?.add_reagent(/datum/reagent/consumable/nutriment/fat, target.owner.nutrition / 15 / reagents_in_produced)
+				result.reagents?.add_reagent(/datum/reagent/consumable/nutriment/fat, target.owner.nutrition / /datum/reagent/consumable/nutriment/fat::nutriment_factor / reagents_in_produced)
 
 			if(LAZYLEN(diseases))
 				var/list/datum/disease/diseases_to_add = list()
@@ -305,6 +309,7 @@
 /datum/component/butchering/proc/create_replacement_limb(obj/item/bodypart/target, drop_loc)
 	var/drop_type = target.butcher_replacement
 	var/obj/item/bodypart/replacement = new drop_type(drop_loc)
+	replacement.bodyshape = target.bodyshape
 	replacement.set_initial_damage(target.brute_dam, target.burn_dam)
 	if (IS_ORGANIC_LIMB(replacement) && target.owner)
 		replacement.blood_dna_info = target.owner.get_blood_dna_list()

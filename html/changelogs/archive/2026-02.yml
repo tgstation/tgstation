@@ -1,0 +1,33 @@
+2026-02-01:
+  Jacquerel:
+  - sound: wands and staffs adjust their fire sound pitch instead of frequency as
+      charges are depleted
+  Melbert:
+  - bugfix: Having an active honorific no longer changes your runechat emote color
+  SmArtKar:
+  - qol: Item fortification scroll no longer requires combat mode in order to be used
+  lelandkemble:
+  - bugfix: The "Super-Stable" line of Donk Co. Bomb Payloads are now stable when
+      exposed to extreme temperatures
+  - bugfix: bounties where you must submit reagents or pills or viruses now work
+  - map: Icebox engineering circuit lab no longer has firelocks placed in the windows
+2026-02-02:
+  Cyberboss:
+  - server: If TGS is configured to push test merge commits to a publicly accessible
+      GitHub, the exact game revision will be set as the `round`.`commit_hash` in
+      the database.
+  Justice12354:
+  - rscadd: Added lemon juice box
+  Melbert:
+  - balance: Plant instability can no longer cause the value of the instability stat
+      to change randomly unless instability is >=80
+  - balance: Plants can no longer mutate their stats twice in one tick starting at
+      40 instability - though the degree to which stats mutate is still increased
+      at the 40 mark, that is unchanged.
+  Y0SH1M4S73R:
+  - refactor: Painting has been significantly refactored with a new UI that should
+      provide every painting control you need without having to unfocus the UI window.
+      Please report any issues.
+  - refactor: Items that can store paint palettes now start with no colors. Colors
+      can be added to and removed from the item's palette, up to the number of colors
+      they previously stored.

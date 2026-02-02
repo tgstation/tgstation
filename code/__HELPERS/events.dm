@@ -47,6 +47,25 @@
 
 	return pick(possible_spawns)
 
+/// Finds us all suitable vent spawn locations on the station.
+/proc/find_vent_spawns()
+	var/list/vents = list()
+	var/list/vent_pumps = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_pump)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent as anything in vent_pumps)
+		if(QDELETED(temp_vent))
+			continue
+		if(!is_station_level(temp_vent.loc.z) || temp_vent.welded)
+			continue
+		var/datum/pipeline/temp_vent_parent = temp_vent.parents[1]
+		if(!temp_vent_parent)
+			continue
+		// Stops antagonists getting stuck in small networks.
+		// See: Security, Virology
+		if(length(temp_vent_parent.other_atmos_machines) <= 20)
+			continue
+		vents += temp_vent
+	return vents
+
 /proc/force_event(event_typepath, cause)
 	var/datum/round_event_control/our_event = locate(event_typepath) in SSevents.control
 	if(!our_event)

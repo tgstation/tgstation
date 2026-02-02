@@ -272,7 +272,7 @@
 	improvised_construction = FALSE
 
 /obj/item/spear/grey_tide/afterattack(atom/movable/target, mob/living/user, list/modifiers, list/attack_modifiers)
-	user.faction |= "greytide([REF(user)])"
+	user.add_ally("greytide([REF(user)])")
 	if(!isliving(target))
 		return
 	var/mob/living/stabbed = target
@@ -280,7 +280,7 @@
 		return
 	if(stabbed.stat == CONSCIOUS && prob(50))
 		var/mob/living/basic/illusion/fake_clone = new(user.loc)
-		fake_clone.full_setup(user, target_mob = stabbed, faction = user.faction, life = 10 SECONDS, hp = user.health / 2.5, damage = 12, replicate = 30)
+		fake_clone.full_setup(user, target_mob = stabbed, life = 10 SECONDS, hp = user.health / 2.5, damage = 12, replicate = 30)
 
 //MILITARY
 /obj/item/spear/military
@@ -341,7 +341,7 @@
 
 /obj/item/spear/dragonator/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bane, mob_biotypes = MOB_MINING, damage_multiplier = 3.5) //For killing really big monsters,
+	AddElement(/datum/element/bane, mob_biotypes = MOB_MINING, damage_multiplier = 0, added_damage = 80, requires_combat_mode = FALSE) //For killing really big monsters.
 
 /*
  * Untreated Giantslayer , needs to be thrown into lava

@@ -256,6 +256,13 @@
 					results += spawn_meat(victim, drop_type, diseases)
 				continue
 
+			if (ispath(drop_type, /obj/item/stack))
+				if (ispath(drop_type, /obj/item/stack/sheet/animalhide/carbon))
+					results += new drop_type(src, amount, /*merge = */TRUE, /*mat_override = */null, /*mat_amount = */1, limb.skin_tone || limb.species_color)
+				else
+					results += new drop_type(src, amount)
+				continue
+
 			for (var/i in 1 to amount)
 				results += new drop_type(src)
 
@@ -290,7 +297,7 @@
 	for(var/obj/item/result as anything in results)
 		if (victim.reagents)
 			victim.reagents.trans_to(result, victim.reagents.total_volume / reagents_in_produced, remove_blacklisted = TRUE)
-		result.reagents?.add_reagent(/datum/reagent/consumable/nutriment/fat, victim.nutrition / 15 / reagents_in_produced)
+		result.reagents?.add_reagent(/datum/reagent/consumable/nutriment/fat, victim.nutrition / /datum/reagent/consumable/nutriment/fat::nutriment_factor / reagents_in_produced)
 
 /obj/machinery/gibber/proc/finish_gibbing(list/obj/item/results, gibs_type, list/datum/disease/diseases)
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)

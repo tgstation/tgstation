@@ -1172,16 +1172,18 @@
 
 /mob/living/carbon/on_lying_down(new_lying_angle)
 	. = ..()
-	if(!buckled || buckled.buckle_lying != 0)
+	if(!buckled || (buckled.buckle_lying != 0 && buckled.buckle_lying != NO_BUCKLE_LYING))
 		lying_angle_on_lying_down(new_lying_angle)
 
 
 /// Special carbon interaction on lying down, to transform its sprite by a rotation.
 /mob/living/carbon/proc/lying_angle_on_lying_down(new_lying_angle)
-	if(!new_lying_angle)
-		set_lying_angle(pick(LYING_ANGLE_EAST, LYING_ANGLE_WEST))
-	else
+	if(new_lying_angle)
 		set_lying_angle(new_lying_angle)
+	else if (buckled && buckled.buckle_lying != NO_BUCKLE_LYING)
+		set_lying_angle(buckled.buckle_lying)
+	else
+		set_lying_angle(pick(LYING_ANGLE_EAST, LYING_ANGLE_WEST))
 
 /mob/living/carbon/vv_edit_var(var_name, var_value)
 	switch(var_name)
@@ -1322,3 +1324,18 @@
 	if(!CAN_HAVE_BLOOD(src))
 		return
 	return dna?.blood_type
+
+/mob/living/carbon/update_nutrition()
+	. = ..()
+	// Force a weight update in case we're stasis'd and don't tick
+	if (HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY))
+		if (overeatduration >= 200 SECONDS)
+			return
+
+		to_chat(src, span_notice("You feel fit again!"))
+		remove_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)
+		return
+
+	if (overeatduration >= 200 SECONDS)
+		to_chat(src, span_danger("You suddenly feel blubbery!"))
+		add_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)

@@ -119,11 +119,6 @@
 		. = ..()
 	update_appearance()
 
-/obj/item/weldingtool/proc/explode()
-	var/plasmaAmount = reagents.get_reagent_amount(/datum/reagent/toxin/plasma)
-	dyn_explosion(src, plasmaAmount/5, explosion_cause = src) // 20 plasma in a standard welder has a 4 power explosion. no breaches, but enough to kill/dismember holder
-	qdel(src)
-
 /obj/item/weldingtool/cyborg_unequip(mob/user)
 	if(!isOn())
 		return
@@ -189,10 +184,10 @@
 		user.log_message("set [key_name(attacked_mob)] on fire with [src].", LOG_ATTACK)
 
 /obj/item/weldingtool/attack_self(mob/user)
-	if(reagents.has_reagent(/datum/reagent/toxin/plasma))
+	if(reagents.spark_act(0, SPARK_ACT_ENCLOSED, banned_reagents = /datum/reagent/fuel) & SPARK_ACT_DESTRUCTIVE)
 		message_admins("[ADMIN_LOOKUPFLW(user)] activated a rigged welder at [AREACOORD(user)].")
 		user.log_message("activated a rigged welder", LOG_VICTIM)
-		explode()
+		qdel(src)
 		return
 
 	switched_on(user)

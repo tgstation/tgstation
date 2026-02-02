@@ -224,11 +224,10 @@
 	update_icon()
 
 /obj/machinery/restaurant_portal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	var/obj/item/card/id/used_id = tool.GetID()
-	if(!istype(used_id))
+	if(!tool.GetID())
 		return NONE
 
-	if(!check_access(used_id))
+	if(!allowed(user))
 		balloon_alert(user, "insufficient access!")
 		return ITEM_INTERACT_BLOCKING
 
