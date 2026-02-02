@@ -616,7 +616,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 	patient_changed.set_output(COMPONENT_SIGNAL)
 	// wait a small amount (arbitrary) to provide initial data
 	COOLDOWN_START(src, read_cooldown, 1 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(update_output_stats)), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(delayed_reading)), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_DELETE_ME)
 
 /// Reads a patient value and applies a random amount of error if the monitor is emped or emagged
 #define GET_PATIENT_VALUE(monitor, value_to_get) \
@@ -626,6 +626,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 	if(isnull(linked_monitor?.patient))
 		return PROCESS_KILL
 	if(!COOLDOWN_FINISHED(src, read_cooldown))
+		return
+	update_output_stats()
+
+/obj/item/circuit_component/vitals_monitor/proc/delayed_reading()
+	if(isnull(linked_monitor?.patient))
 		return
 	update_output_stats()
 
