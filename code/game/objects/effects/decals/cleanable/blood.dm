@@ -454,7 +454,6 @@
 	decay_bloodiness = FALSE // bloodiness is used as a metric for for how big the sprite is, so don't decay passively
 	bloodiness = BLOOD_AMOUNT_PER_DECAL * 0.1
 	base_suffix = "trail"
-	abstract_type = /obj/effect/decal/cleanable/blood/trail // Should not exist outside of holders
 	/// Is this just half of a trail
 	var/half_piece = FALSE
 	/// Beyond a threshold we change to a bloodier icon state

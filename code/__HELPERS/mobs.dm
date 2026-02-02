@@ -809,7 +809,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	invisibility = INVISIBILITY_ABSTRACT
 	density = FALSE
 	move_resist = INFINITY
-	abstract_type = /mob/dview
 	var/ready_to_die = FALSE
 
 /mob/dview/Initialize(mapload) //Properly prevents this mob from gaining huds or joining any global lists

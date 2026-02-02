@@ -15,6 +15,7 @@
 	mouse_drop_zone = TRUE
 	// STOP_OVERLAY_UPDATE_BODY_PARTS is removed after we call update_body_parts() during init.
 	living_flags = ALWAYS_DEATHGASP|STOP_OVERLAY_UPDATE_BODY_PARTS
+	abstract_type = /mob/living/carbon
 	///List of [/obj/item/organ]s in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/obj/item/organ/organs = list()
 	///Same as [above][/mob/living/carbon/var/organs], but stores "slot ID" - "organ" pairs for easy access.
