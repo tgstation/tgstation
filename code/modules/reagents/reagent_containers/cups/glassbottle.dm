@@ -1032,6 +1032,14 @@
 	list_reagents = list(/datum/reagent/consumable/orangejuice = 100)
 	drink_type = FRUIT | BREAKFAST
 
+/obj/item/reagent_containers/cup/glass/bottle/juice/lemonjuice
+	name = "lemon juice"
+	desc = "Some like to pour a few drops of this over their fish."
+	icon = 'icons/obj/drinks/boxes.dmi'
+	icon_state = "lemonjuice"
+	list_reagents = list(/datum/reagent/consumable/lemonjuice = 100)
+	drink_type = FRUIT
+
 /obj/item/reagent_containers/cup/glass/bottle/juice/cream
 	name = "milk cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
