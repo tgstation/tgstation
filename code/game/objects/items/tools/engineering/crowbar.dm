@@ -346,6 +346,7 @@
 	desc = "These offbrand jaws of 'life' look like they've lived a short but incredibly hard one. You risk pinching your hands just by holding them."
 	icon_state = "jaws_offbrand"
 	max_integrity = JAWS_INTEGRITY
+	force = FALSE //No buying all access.
 
 /obj/item/crowbar/power/offbrand/tool_use_check(mob/living/user, amount, heat_required)
 	. = ..()
