@@ -154,7 +154,7 @@
 	plane = ABOVE_GAME_PLANE
 	layer = FLY_LAYER
 	movement_type = PHASING
-	abstract_type = /obj/effect/bug_moving
+	abstract_type = /obj/effect/bug_moving // Not meant to spawn without the machine wand
 	///The controller that's sending us out to the machine.
 	var/obj/item/machine_remote/controller
 	///The machine we are trying to get remote access to.
