@@ -1,3 +1,5 @@
+GLOBAL_LIST_INIT_TYPED(addictions, /datum/addiction, init_subtypes_w_path_keys(/datum/addiction))
+
 ///base class for addiction, handles when you become addicted and what the effects of that are. By default you become addicted when you hit a certain threshold, and stop being addicted once you go below another one.
 /datum/addiction
 	///Name of this addiction

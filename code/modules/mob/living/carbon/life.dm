@@ -34,8 +34,7 @@
 
 	if(. && mind) //. == not dead
 		for(var/key in mind.addiction_points)
-			var/datum/addiction/addiction = SSaddiction.all_addictions[key]
-			addiction.process_addiction(src, seconds_per_tick)
+			GLOB.addictions[key].process_addiction(src, seconds_per_tick)
 	if(stat != DEAD)
 		return TRUE
 

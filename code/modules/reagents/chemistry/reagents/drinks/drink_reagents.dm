@@ -1388,7 +1388,7 @@
 	color = "#DE55ED"
 	quality = DRINK_GOOD
 	taste_description = "purple and a hint of opioid."
-	addiction_types = list(/datum/addiction/opioids = 6)
+	addiction_types = list(/datum/addiction/opioids = 200)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
