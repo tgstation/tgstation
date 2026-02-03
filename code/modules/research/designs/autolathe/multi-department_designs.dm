@@ -193,13 +193,15 @@
 
 /datum/design/toolbox/create_result(atom/drop_loc, list/custom_materials, amount)
 	var/obj/item/storage/toolbox/toolbox = ..()
-	if (length(custom_materials) && custom_materials[1] != /datum/material/iron)
+	if (length(custom_materials) && !istype(custom_materials[1], /datum/material/iron))
 		return toolbox
 
 	// Default and custom material iron toolboxes get a random color assigned rather than being greyscale'd
 	var/toolbox_color = pick("blue", "yellow", "red")
 	toolbox.icon_state = toolbox_color
 	toolbox.inhand_icon_state = "toolbox_[toolbox_color]"
+	toolbox.material_flags &= ~MATERIAL_COLOR
+	toolbox.remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	return toolbox
 
 /datum/design/emergency_oxygen
