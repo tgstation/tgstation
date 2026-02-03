@@ -21,6 +21,7 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ChemSplitter", name)
+		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /obj/machinery/plumbing/splitter/ui_static_data(mob/user)
@@ -29,27 +30,30 @@
 	)
 
 /obj/machinery/plumbing/splitter/ui_data(mob/user)
-	var/list/data = list()
-	data["straight"] = transfer_straight
-	data["side"] = transfer_side
-	return data
+	return list(
+		straight = transfer_straight,
+		side = transfer_side,
+	)
 
 /obj/machinery/plumbing/splitter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 
-	. = TRUE
 	switch(action)
 		if("set_amount")
-			var/direction = params["target"]
-			var/value = clamp(text2num(params["amount"]), 1, MAX_TRANSFER)
-			switch(direction)
+			var/value = text2num(params["amount"])
+			if(!value)
+				return FALSE
+			value = clamp(value, 1, MAX_TRANSFER)
+
+			switch(params["target"])
 				if("straight")
 					transfer_straight = value
+					return TRUE
+
 				if("side")
 					transfer_side = value
-				else
-					return FALSE
+					return TRUE
 
 #undef MAX_TRANSFER

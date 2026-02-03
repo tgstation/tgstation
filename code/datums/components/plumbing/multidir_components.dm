@@ -8,7 +8,7 @@
  *
  * * datum/ductnet/net - the net we are checking for an connection to
 */
-/datum/component/plumbing/multidirectional/get_connection(datum/ductnet/net)
+/datum/component/plumbing/multidirectional/proc/get_connection(datum/ductnet/net)
 	PROTECTED_PROC(TRUE)
 
 	var/atom/movable/parent_movable = parent
