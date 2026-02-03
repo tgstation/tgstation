@@ -31,3 +31,6 @@
   - refactor: Items that can store paint palettes now start with no colors. Colors
       can be added to and removed from the item's palette, up to the number of colors
       they previously stored.
+2026-02-03:
+  alien3301:
+  - qol: Heretic void cloak doesn't quickdraw
