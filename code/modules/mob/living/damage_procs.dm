@@ -541,5 +541,5 @@
 			amount -= amount_to_heal //remove what we healed from our current amount
 		if(!amount)
 			break
-	if(.)
+	if(. && update_health)
 		updateHealth()
