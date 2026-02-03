@@ -15,6 +15,7 @@
 	)
 	sheet_type = /obj/item/stack/sheet/iron
 	ore_type = /obj/item/stack/ore/iron
+	material_reagent = /datum/reagent/iron
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
 	mat_rust_resistance = RUST_RESISTANCE_BASIC
 	mineral_rarity = MATERIAL_RARITY_COMMON
@@ -24,6 +25,7 @@
 	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
 
 /datum/material/iron/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
 		return TRUE
@@ -44,6 +46,7 @@
 		MATERIAL_THERMAL = 4,
 		MATERIAL_CHEMICAL = 8,
 	)
+	material_reagent = /datum/reagent/silicon
 	sheet_type = /obj/item/stack/sheet/glass
 	ore_type = /obj/item/stack/ore/glass/basalt
 	shard_type = /obj/item/shard
@@ -57,6 +60,7 @@
 	texture_layer_icon_state = "shine"
 
 /datum/material/glass/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5, sharpness = TRUE) //cronch
 		return TRUE
@@ -88,6 +92,7 @@
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	ore_type = /obj/item/stack/ore/silver
+	material_reagent = /datum/reagent/silver
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
@@ -96,6 +101,7 @@
 	texture_layer_icon_state = "shine"
 
 /datum/material/silver/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
 		return TRUE
@@ -117,6 +123,7 @@
 	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	ore_type = /obj/item/stack/ore/gold
+	material_reagent = /datum/reagent/gold
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
@@ -125,8 +132,10 @@
 	texture_layer_icon_state = "shine"
 
 /datum/material/gold/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
-	return TRUE
+	. = ..()
+	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
+		victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
+		return TRUE
 
 ///Has no special properties
 /datum/material/diamond
@@ -145,6 +154,7 @@
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	ore_type = /obj/item/stack/ore/diamond
+	material_reagent = /datum/reagent/carbon
 	alpha = 132
 	starlight_color = COLOR_BLUE_LIGHT
 	value_per_unit = 500 / SHEET_MATERIAL_AMOUNT
@@ -154,6 +164,7 @@
 	points_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/diamond/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
 		return TRUE
@@ -177,16 +188,12 @@
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	ore_type = /obj/item/stack/ore/uranium
+	material_reagent = /datum/reagent/uranium
 	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	points_per_unit = 30 / SHEET_MATERIAL_AMOUNT
-
-/datum/material/uranium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.reagents.add_reagent(/datum/reagent/uranium, rand(4, 6))
-	source_item?.reagents?.add_reagent(/datum/reagent/uranium, source_item.reagents.total_volume*(2/5))
-	return TRUE
 
 /// Adds firestacks on hit (Still needs support to turn into gas on destruction)
 /datum/material/plasma
@@ -206,6 +213,7 @@
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	ore_type = /obj/item/stack/ore/plasma
+	material_reagent = /datum/reagent/toxin/plasma
 	value_per_unit = 200 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_PRECIOUS
 	points_per_unit = 15 / SHEET_MATERIAL_AMOUNT
@@ -224,11 +232,6 @@
 	qdel(source.GetComponent(/datum/component/combustible_flooder))
 	if(istype(source, /obj/item/fishing_rod))
 		ADD_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))
-
-/datum/material/plasma/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(6, 8))
-	source_item?.reagents?.add_reagent(/datum/reagent/toxin/plasma, source_item.reagents.total_volume*(2/5))
-	return TRUE
 
 ///Can cause bluespace effects on use. (Teleportation) (Not yet implemented)
 /datum/material/bluespace
@@ -250,6 +253,7 @@
 	)
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal
 	ore_type = /obj/item/stack/ore/bluespace_crystal
+	material_reagent = /datum/reagent/bluespace
 	value_per_unit = 300 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_RARE
 	points_per_unit = 50 / SHEET_MATERIAL_AMOUNT
@@ -278,11 +282,6 @@
 	if(istype(source, /obj/item/fishing_rod))
 		UnregisterSignal(source, COMSIG_ROD_BEGIN_FISHING)
 
-/datum/material/bluespace/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.reagents.add_reagent(/datum/reagent/bluespace, rand(5, 8))
-	source_item?.reagents?.add_reagent(/datum/reagent/bluespace, source_item.reagents.total_volume*(2/5))
-	return TRUE
-
 ///Honks and slips
 /datum/material/bananium
 	name = "bananium"
@@ -302,6 +301,7 @@
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	ore_type = /obj/item/stack/ore/bananium
+	material_reagent = /datum/reagent/consumable/banana
 	value_per_unit = 1000 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 60 / SHEET_MATERIAL_AMOUNT
@@ -342,11 +342,6 @@
 	if(istype(source, /obj/item/fishing_rod))
 		UnregisterSignal(source, COMSIG_ROD_BEGIN_FISHING)
 
-/datum/material/bananium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.reagents.add_reagent(/datum/reagent/consumable/banana, rand(8, 12))
-	source_item?.reagents?.add_reagent(/datum/reagent/consumable/banana, source_item.reagents.total_volume*(2/5))
-	return TRUE
-
 ///Mediocre force increase
 /datum/material/titanium
 	name = "titanium"
@@ -372,6 +367,7 @@
 	texture_layer_icon_state = "shine"
 
 /datum/material/titanium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
 		return TRUE
@@ -406,6 +402,7 @@
 		REMOVE_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //light-absorbing, environment-cancelling fishing rod.
 
 /datum/material/runite/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
 		return TRUE
@@ -428,14 +425,10 @@
 	)
 	sheet_type = /obj/item/stack/sheet/plastic
 	ore_type = /obj/item/stack/ore/slag // No plastic or coal ore, so we use slag.
+	material_reagent = /datum/reagent/plastic_polymers
 	value_per_unit = 25 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED // Nobody's found oil on lavaland yet.
 	points_per_unit = 4 / SHEET_MATERIAL_AMOUNT
-
-/datum/material/plastic/on_accidental_mat_consumption(mob/living/carbon/eater, obj/item/food)
-	eater.reagents.add_reagent(/datum/reagent/plastic_polymers, rand(6, 8))
-	food?.reagents?.add_reagent(/datum/reagent/plastic_polymers, food.reagents.total_volume*(2/5))
-	return TRUE
 
 /// Force decrease and mushy sound effect. (Not yet implemented)
 /datum/material/biomass
@@ -448,6 +441,7 @@
 	name = "wood"
 	desc = "Flexible, durable, but flammable. Hard to come across in space."
 	color = "#855932"
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_ORGANIC | MATERIAL_CLASS_RIGID
 	mat_properties = list(
 		MATERIAL_DENSITY = 2,
 		MATERIAL_HARDNESS = 4,
@@ -460,7 +454,7 @@
 		MATERIAL_BEAUTY = 0.1, // Pretty patterns
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/wood
-	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_ORGANIC | MATERIAL_CLASS_RIGID
+	material_reagent = /datum/reagent/cellulose
 	value_per_unit = 20 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "woodgrain"
 
@@ -477,12 +471,10 @@
 		wooden.resistance_flags &= ~FLAMMABLE
 
 /datum/material/wood/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
-	victim.reagents.add_reagent(/datum/reagent/cellulose, rand(8, 12))
-	source_item?.reagents?.add_reagent(/datum/reagent/cellulose, source_item.reagents.total_volume*(2/5))
-
-	return TRUE
+		return TRUE
 
 /// Stronk force increase
 /datum/material/adamantine
@@ -515,6 +507,7 @@
 		REMOVE_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) // light-absorbing, environment-cancelling fishing rod.
 
 /datum/material/adamantine/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
 		return TRUE
@@ -554,6 +547,7 @@
 		qdel(source.GetComponent(/datum/component/fantasy))
 
 /datum/material/mythril/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
 		return TRUE
@@ -577,6 +571,7 @@
 		MATERIAL_FLAMMABILITY = 10,
 	)
 	sheet_type = /obj/item/stack/sheet/hot_ice
+	material_reagent = /datum/reagent/toxin/plasma
 	value_per_unit = 400 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/hot_ice/on_applied(atom/source, mat_amount, multiplier)
@@ -586,11 +581,6 @@
 /datum/material/hot_ice/on_removed(atom/source, mat_amount, multiplier)
 	. = ..()
 	qdel(source.GetComponent(/datum/component/combustible_flooder))
-
-/datum/material/hot_ice/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 6))
-	source_item?.reagents?.add_reagent(/datum/reagent/toxin/plasma, source_item.reagents.total_volume*(3/5))
-	return TRUE
 
 // It's basically adamantine, but it isn't!
 /datum/material/metalhydrogen
@@ -612,6 +602,7 @@
 	value_per_unit = 700 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/metalhydrogen/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
 		return TRUE
@@ -632,12 +623,14 @@
 		MATERIAL_CHEMICAL = 4,
 	)
 	ore_type = /obj/item/stack/ore/glass
+	material_reagent = /datum/reagent/silicon
 	value_per_unit = 2 / SHEET_MATERIAL_AMOUNT
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
 	mat_rust_resistance = RUST_RESISTANCE_BASIC
 
 /datum/material/sand/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	victim.adjust_disgust(17)
 	return TRUE
 
@@ -657,6 +650,7 @@
 		MATERIAL_CHEMICAL = 6,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/sandstone
+	material_reagent = /datum/reagent/silicon
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "brick"
@@ -677,13 +671,10 @@
 		MATERIAL_CHEMICAL = 1,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/snow
+	material_reagent = /datum/reagent/water
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
 	mat_rust_resistance = RUST_RESISTANCE_ORGANIC
-
-/datum/material/snow/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.reagents.add_reagent(/datum/reagent/water, rand(5, 10))
-	return TRUE
 
 /datum/material/runedmetal
 	name = "runed metal"
@@ -704,6 +695,7 @@
 	texture_layer_icon_state = "runed"
 
 /datum/material/runedmetal/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	victim.reagents.add_reagent(/datum/reagent/fuel/unholywater, rand(8, 12))
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
@@ -731,8 +723,6 @@
 	desc = "Ten thousand folds of pure starchy power."
 	color = "#E5DCD5"
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_ORGANIC
-	sheet_type = /obj/item/stack/sheet/paperframes
-	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
 	mat_properties = list(
 		MATERIAL_DENSITY = 0,
 		MATERIAL_HARDNESS = 0,
@@ -744,6 +734,9 @@
 		MATERIAL_FLAMMABILITY = 8,
 		MATERIAL_BEAUTY = 0.3, // Origami is beautiful
 	)
+	material_reagent = /datum/reagent/cellulose
+	sheet_type = /obj/item/stack/sheet/paperframes
+	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "paper"
 
@@ -791,6 +784,7 @@
 		MATERIAL_FLAMMABILITY = 6,
 	)
 	sheet_type = /obj/item/stack/sheet/cardboard
+	material_reagent = /datum/reagent/cellulose
 	value_per_unit = 6 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/cardboard/on_main_applied(atom/source, mat_amount, multiplier)
@@ -873,6 +867,7 @@
 		MATERIAL_BEAUTY = 0.2, // Prettier patterns
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/bamboo
+	material_reagent = /datum/reagent/cellulose
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "bamboo"
@@ -892,6 +887,7 @@
 		MATERIAL_CHEMICAL = 0,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/zaukerite
+	material_reagent = /datum/reagent/toxin/plasma
 	value_per_unit = 900 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/zaukerite/on_applied(atom/source, mat_amount, multiplier)
@@ -905,7 +901,7 @@
 		REMOVE_TRAIT(source, TRAIT_ROD_IGNORE_ENVIRONMENT, REF(src)) //light-absorbing, environment-cancelling fishing rod.
 
 /datum/material/zaukerite/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(30, BURN, BODY_ZONE_HEAD, wound_bonus = 5)
-	source_item?.reagents?.add_reagent(/datum/reagent/toxin/plasma, source_item.reagents.total_volume*5)
 	return TRUE

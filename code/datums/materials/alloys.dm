@@ -40,6 +40,7 @@
 	)
 	value_per_unit = 0.135
 	sheet_type = /obj/item/stack/sheet/plasteel
+	material_reagent = list(/datum/reagent/iron = 1, /datum/reagent/toxin/plasma = 1)
 	composition = list(/datum/material/iron = 1, /datum/material/plasma = 1)
 	mat_rust_resistance = RUST_RESISTANCE_REINFORCED
 
@@ -73,7 +74,8 @@
 	)
 	value_per_unit = 0.225
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
-	composition = list(/datum/material/titanium=  1, /datum/material/plasma = 1)
+	material_reagent = /datum/reagent/toxin/plasma
+	composition = list(/datum/material/titanium = 1, /datum/material/plasma = 1)
 	mat_rust_resistance = RUST_RESISTANCE_TITANIUM
 
 /datum/material/alloy/plastitanium/on_applied(atom/target, mat_amount, multiplier)
@@ -109,6 +111,7 @@
 	sheet_type = /obj/item/stack/sheet/plasmaglass
 	shard_type = /obj/item/shard/plasma
 	debris_type = /obj/effect/decal/cleanable/glass/plasma
+	material_reagent = list(/datum/reagent/silicon = 1, /datum/reagent/toxin/plasma = 1)
 	value_per_unit = 0.075
 	composition = list(/datum/material/glass=1, /datum/material/plasma=0.5)
 
@@ -135,6 +138,7 @@
 	sheet_type = /obj/item/stack/sheet/titaniumglass
 	shard_type = /obj/item/shard/titanium
 	debris_type = /obj/effect/decal/cleanable/glass/titanium
+	material_reagent = /datum/reagent/silicon
 	value_per_unit = 0.04
 	composition = list(/datum/material/glass = 1, /datum/material/titanium = 0.5)
 
@@ -161,6 +165,7 @@
 	sheet_type = /obj/item/stack/sheet/plastitaniumglass
 	shard_type = /obj/item/shard/plastitanium
 	debris_type = /obj/effect/decal/cleanable/glass/plastitanium
+	material_reagent = list(/datum/reagent/silicon = 1, /datum/reagent/toxin/plasma = 1)
 	value_per_unit = 0.125
 	composition = list(/datum/material/glass=  1, /datum/material/alloy/plastitanium = 0.5)
 
@@ -185,6 +190,7 @@
 		MATERIAL_CHEMICAL = 10,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/abductor
+	material_reagent = list(/datum/reagent/iron = 1, /datum/reagent/toxin/plasma = 1)
 	value_per_unit = 0.4
 	composition = list(/datum/material/iron = 2, /datum/material/plasma = 2)
 

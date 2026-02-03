@@ -58,6 +58,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/obj/item/shard_type = null
 	/// What type of debris the tile will leave behind when shattered.
 	var/obj/effect/decal/debris_type = null
+	/// Reagent type(s) of this material. Can be a reagent typepath or a list.
+	var/list/material_reagent = null
 
 	// Misc stats
 	/// How resistant the material is to rusting when applied to a turf
@@ -149,8 +151,23 @@ Simple datum which is instanced once per type and is used for every object of sa
  * * M - person consuming the mat
  * * S - (optional) item the mat is contained in (NOT the item with the mat itself)
  */
-/datum/material/proc/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	return FALSE
+/datum/material/proc/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if (!material_reagent)
+		return FALSE
+
+	var/effect_multiplier = source_item.custom_materials[type] / SHEET_MATERIAL_AMOUNT
+	if (!islist(material_reagent))
+		victim.reagents?.add_reagent(material_reagent, rand(6, 8) * effect_multiplier)
+		source_item?.reagents?.add_reagent(material_reagent, source_item.reagents.total_volume * MATERIAL_REAGENT_CONSUMPTION_MULT * effect_multiplier)
+		return TRUE
+
+	for (var/datum/reagent/reagent_type as anything in material_reagent)
+		var/amount_mult = material_reagent[reagent_type] / length(material_reagent)
+		victim.reagents?.add_reagent(material_reagent, rand(6, 8) * effect_multiplier * amount_mult)
+		source_item?.reagents?.add_reagent(material_reagent, source_item.reagents.total_volume * MATERIAL_REAGENT_CONSUMPTION_MULT * effect_multiplier * amount_mult)
+	return TRUE
 
 /** Returns the composition of this material.
  *

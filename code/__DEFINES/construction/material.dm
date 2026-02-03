@@ -90,6 +90,9 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 /// Maximum theoretical item force multiplier from materials
 #define MATERIAL_MAX_FORCE_MULTIPLIER 2
 
+/// Multiplier for the amount of reagents added to the item upon accidental consumption
+#define MATERIAL_REAGENT_CONSUMPTION_MULT 0.4
+
 // Material Container Flags.
 /// If the container shows the amount of contained materials on examine.
 #define MATCONTAINER_EXAMINE (1 << 0)
