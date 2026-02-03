@@ -338,7 +338,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 		// Create map text prior to modifying message for goonchat, sign lang edition
 		if (use_runechat && !is_blind())
-			if (message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+			if (is_custom_emote)
 				create_chat_message(speaker, null, message_mods[MODE_CUSTOM_SAY_EMOTE], spans, EMOTE_MESSAGE)
 			else
 				create_chat_message(speaker, message_language, raw_message, spans)
@@ -361,7 +361,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	// Create map text prior to modifying message for goonchat
 	if (use_runechat && can_hear())
-		if (message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+		if (is_custom_emote)
 			create_chat_message(speaker, null, message_mods[MODE_CUSTOM_SAY_EMOTE], spans, EMOTE_MESSAGE)
 		else
 			create_chat_message(speaker, message_language, raw_message, spans)
