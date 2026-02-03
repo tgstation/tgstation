@@ -38,6 +38,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 	ai_controller = /datum/ai_controller/basic_controller/sloth
 
 /datum/emote/sloth
+	abstract_type = /datum/emote/sloth
 	mob_type_allowed_typecache = /mob/living/basic/sloth
 	mob_type_blacklist_typecache = list()
 

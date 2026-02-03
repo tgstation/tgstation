@@ -171,6 +171,7 @@
 	var/was_tamed = FALSE
 
 /datum/emote/lobstrosity_juvenile
+	abstract_type = /datum/emote/lobstrosity_juvenile
 	mob_type_allowed_typecache = /mob/living/basic/mining/lobstrosity/juvenile
 	mob_type_blacklist_typecache = list()
 

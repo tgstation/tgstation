@@ -37,6 +37,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/simple/simple_retaliate
 
 /datum/emote/roro
+	abstract_type = /datum/emote/roro
 	mob_type_allowed_typecache = /mob/living/basic/roro
 	mob_type_blacklist_typecache = list()
 
