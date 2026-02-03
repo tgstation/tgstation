@@ -159,7 +159,7 @@
 	var/efficiency = initial(creation_efficiency)
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
 		efficiency -= laser.tier * 0.2
-	creation_efficiency = max(1.2, efficiency)
+	creation_efficiency = max(1.2, round(efficiency, 0.1))
 
 /obj/machinery/flatpacker/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
 	SIGNAL_HANDLER

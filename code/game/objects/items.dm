@@ -2002,16 +2002,17 @@
 	var/slowdown_change = 0
 
 	if (density > 6)
-		slowdown_change = (density - 6) * 0.05
+		slowdown_change = (density - 6) * MATERIAL_DENSITY_SLOWDOWN * mat_amount / SHEET_MATERIAL_AMOUNT
 	else if (density < 3)
-		slowdown_change = (3 - density) * -0.05
+		slowdown_change = (3 - density) * -MATERIAL_DENSITY_SLOWDOWN * mat_amount / SHEET_MATERIAL_AMOUNT
 
 	// If the item applies slowdown only when worn, we also account for poor flexibility (below 6)
 	if (!(item_flags & SLOWS_WHILE_IN_HAND) && flexibility < 6)
 		slowdown_change += (flexibility - 6) * 0.05
 
-	if (slowdown_change)
-		slowdown += GET_MATERIAL_MODIFIER(slowdown_change, multiplier)
+	// Slowdown cannot be reduced below 0 if the item slows you down, or at all if the item speeds you up
+	if (slowdown_change > 0)
+		slowdown = max(slowdown >= 0 ? 0 : slowdown, slowdown + GET_MATERIAL_MODIFIER(slowdown_change, multiplier))
 
 /obj/item/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
@@ -2039,8 +2040,11 @@
 	if (!(item_flags & SLOWS_WHILE_IN_HAND) && flexibility < 6)
 		slowdown_change += (flexibility - 6) * 0.05
 
-	if (slowdown_change)
+	if (slowdown_change > 0)
 		slowdown -= GET_MATERIAL_MODIFIER(slowdown_change, multiplier)
+	else if (slowdown_change < 0)
+		// Not guaranteed to be correct if something modified our slowdown buuuut about as good as we can get
+		slowdown = min(initial(slowdown), slowdown - GET_MATERIAL_MODIFIER(slowdown_change, multiplier))
 
 /obj/item/change_material_strength(datum/material/material, mat_amount, multiplier, remove = FALSE)
 	var/density = material.get_property(MATERIAL_DENSITY)

@@ -90,6 +90,9 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 /// Maximum theoretical item force multiplier from materials
 #define MATERIAL_MAX_FORCE_MULTIPLIER 2
 
+/// Slowdown per density over 6 / below 3 per sheet of material
+#define MATERIAL_DENSITY_SLOWDOWN 0.02
+
 /// Multiplier for the amount of reagents added to the item upon accidental consumption
 #define MATERIAL_REAGENT_CONSUMPTION_MULT 0.4
 /// Amount of reagents per sheet of material. Not affected by density for simplicity and easier consistency upkeep

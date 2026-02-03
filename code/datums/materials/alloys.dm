@@ -111,9 +111,9 @@
 	sheet_type = /obj/item/stack/sheet/plasmaglass
 	shard_type = /obj/item/shard/plasma
 	debris_type = /obj/effect/decal/cleanable/glass/plasma
-	material_reagent = list(/datum/reagent/silicon = 1, /datum/reagent/toxin/plasma = 1)
+	material_reagent = list(/datum/reagent/silicon = 1, /datum/reagent/toxin/plasma = 0.5)
 	value_per_unit = 0.075
-	composition = list(/datum/material/glass=1, /datum/material/plasma=0.5)
+	composition = list(/datum/material/glass = 1, /datum/material/plasma = 0.5)
 
 /**
  * Titanium Glass
@@ -165,9 +165,9 @@
 	sheet_type = /obj/item/stack/sheet/plastitaniumglass
 	shard_type = /obj/item/shard/plastitanium
 	debris_type = /obj/effect/decal/cleanable/glass/plastitanium
-	material_reagent = list(/datum/reagent/silicon = 1, /datum/reagent/toxin/plasma = 1)
+	material_reagent = list(/datum/reagent/silicon = 1, /datum/reagent/toxin/plasma = 0.5)
 	value_per_unit = 0.125
-	composition = list(/datum/material/glass=  1, /datum/material/alloy/plastitanium = 0.5)
+	composition = list(/datum/material/glass = 1, /datum/material/alloy/plastitanium = 0.5)
 
 /**
  * Alien Alloy
