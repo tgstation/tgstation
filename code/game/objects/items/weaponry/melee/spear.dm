@@ -35,6 +35,8 @@
 	var/improvised_construction = TRUE
 	/// What is left over when a spear breaks
 	var/spear_leftovers = /obj/item/stack/rods
+	/// Material type from which our tip is made
+	var/tip_mat_type = null
 	/// What pike do we construct if someone kills themselves with us?
 	var/pike_type = /obj/structure/headpike
 
@@ -101,81 +103,67 @@
 	return BRUTELOSS // Just in case they survived losing the head
 
 /obj/item/spear/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/item/stack/rods/rod = locate() in components
+	if (rod)
+		spear_leftovers = rod.type
+
 	var/obj/item/shard/tip = locate() in components
-	if(!tip)
+	if (!tip)
 		return ..()
 
-	switch(tip.type)
-		if(/obj/item/shard/plasma)
-			force = 11
-			throwforce = 21
+	var/datum/material/tip_material = tip.get_master_material()
+	// For master material effects. As on_craft_completion is ran before set_custom_materials, this will allow the speartip to be treated as our master material no matter what
+	tip_mat_type = tip_material.id
+
+	var/density = tip_material.get_property(MATERIAL_DENSITY)
+	var/hardness = tip_material.get_property(MATERIAL_HARDNESS)
+
+	// Base of 4 ~ 5 as to keep parity with old spear stats
+	force_unwielded += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5)
+	force_wielded += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5)
+	force = force_unwielded
+	throwforce += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5)
+	wound_bonus += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5) * 5
+	modify_max_integrity(initial(max_integrity) + (hardness - 4) * 10)
+	throw_range += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5) - (density - 4)
+	throw_speed += floor((MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5) - (density - 4)) / 2)
+	// And these try to keep parity with titanium/plastitanium spears as armorpen boost was exclusive to them
+	armour_penetration += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) * 5
+	exposed_wound_bonus += (MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) - (density - 4)) * 5
+
+	switch (tip_mat_type)
+		if (/datum/material/alloy/plasmaglass)
 			icon_prefix = "spearplasma"
-			modify_max_integrity(220)
-			wound_bonus = -10
-			force_unwielded = 11
-			force_wielded = 19
-			AddComponent(/datum/component/two_handed, \
-				force_unwielded = force_unwielded, \
-				force_wielded = force_wielded, \
-				icon_wielded = "[icon_prefix]1", \
-				wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
-				unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
-			)
-
-		if(/obj/item/shard/titanium)
-			force = 12
-			throwforce = 22
-			throw_range = 8
-			throw_speed = 5
-			modify_max_integrity(230)
-			wound_bonus = -5
-			force_unwielded = 12
-			force_wielded = 20
-			armour_penetration = 10
+		if (/datum/material/alloy/titaniumglass)
 			icon_prefix = "speartitanium"
-			AddComponent(/datum/component/two_handed, \
-				force_unwielded = force_unwielded, \
-				force_wielded = force_wielded, \
-				icon_wielded = "[icon_prefix]1", \
-				wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
-				unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
-			)
-
-		if(/obj/item/shard/plastitanium)
-			force = 13
-			throwforce = 23
-			throw_range = 9
-			throw_speed = 5
-			modify_max_integrity(240)
-			wound_bonus = 0
-			exposed_wound_bonus = 20
-			force_unwielded = 13
-			force_wielded = 21
-			armour_penetration = 15
+		if (/datum/material/alloy/plastitaniumglass)
 			icon_prefix = "spearplastitanium"
-			AddComponent(/datum/component/two_handed, \
-				force_unwielded = force_unwielded, \
-				force_wielded = force_wielded, \
-				icon_wielded = "[icon_prefix]1", \
-				wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
-				unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
-			)
 
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = force_unwielded, \
+		force_wielded = force_wielded, \
+		icon_wielded = "[icon_prefix]1", \
+		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
+		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
+	)
 	update_appearance()
 	return ..()
 
+/obj/item/spear/get_master_material()
+	if (tip_mat_type)
+		return SSmaterials.get_material(tip_mat_type)
+	return ..()
+
 /obj/item/spear/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
-	if(!improvised_construction)
-		return
-	take_damage(force/2, sound_effect = FALSE)
+	if(improvised_construction)
+		take_damage(force / 2, sound_effect = FALSE)
 
 /obj/item/spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if (.) //spear was caught
 		return
-	if(!improvised_construction)
-		return
-	take_damage(throwforce/2, sound_effect = FALSE)
+	if(improvised_construction)
+		take_damage(throwforce / 2, sound_effect = FALSE)
 
 /obj/item/spear/atom_destruction(damage_flag)
 	playsound(src, 'sound/effects/grillehit.ogg', 50)
