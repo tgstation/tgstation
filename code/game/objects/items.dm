@@ -2044,7 +2044,7 @@
 	switch (sharpness)
 		if (NONE)
 			// Blunt items are really hurt by all the flexing
-			force_mod = (1 + (density - 4) * 0.1) * (1 - flexibility * 0.2)
+			force_mod = (1 + (density - 4) * 0.1) / (1 + flexibility * 0.1)
 			throwforce_mod = 1 + (density - 4) * 0.1 - flexibility * 0.1
 
 		if (SHARP_EDGED)
@@ -2061,9 +2061,9 @@
 				throwforce_mod -= (flexibility - 2) * 0.1
 
 		if (SHARP_POINTY)
-			// Pointy items really care about both density and hardness
-			force_mod = 1 + (density - 6) * 0.05 + (hardness - 6) * 0.05
-			throwforce_mod = 1 + (density - 6) * 0.05 + (hardness - 6) * 0.05
+			// Pointy items care about both density and hardness
+			force_mod = 1 + MATERIAL_PROPERTY_DIVERGENCE(density, 4, 6) * 0.05 + (hardness - 4) * 0.1
+			throwforce_mod = 1 + MATERIAL_PROPERTY_DIVERGENCE(density, 4, 6) * 0.05 * 0.05 + (hardness - 4) * 0.1
 			// But are not affected by flexibility until higher values, although they don't benefit from it either
 			if (flexibility > 4)
 				force_mod *= (1 - (flexibility - 4) * 0.2)

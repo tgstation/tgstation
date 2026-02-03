@@ -249,19 +249,19 @@
 		return
 	build_count = clamp(build_count, 1, 50)
 
-	//check for materials required. For custom material items decode their required materials
+	// Check for materials required. For custom material items decode their required materials
 	var/list/materials_needed = list()
 	var/mat_choice = FALSE
 	for(var/material, amount_needed in design.materials)
 		if(!isnum(material)) // Material flag(s)
-			if(isnull(material))
+			if(!ispath(material, /datum/material))
 				CRASH("Autolathe ui_act got passed an invalid material id: [material]")
 			materials_needed[material] += amount_needed
 			continue
 
 		var/list/choices = list()
 		for(var/datum/material/valid_candidate as anything in SSmaterials.get_materials_by_flag(material))
-			if(materials.get_material_amount(valid_candidate) >= (amount_needed + materials_needed[material]))
+			if(materials.get_material_amount(valid_candidate) >= (amount_needed + materials_needed[valid_candidate]))
 				choices[valid_candidate.name] = valid_candidate
 
 		if(!length(choices))

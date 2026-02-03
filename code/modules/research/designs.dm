@@ -68,12 +68,16 @@ other types of metals and chemistry for reagents).
 
 /datum/design/proc/InitializeMaterials()
 	var/alist/temp_list = alist()
-	for(var/mat_type, amount in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
-		if(!isnum(mat_type)) // Not a flag, so get the ref the normal way
-			var/datum/material/mat = SSmaterials.get_material(mat_type)
-			temp_list[mat] = amount
-		else
+	// Go through all of our materials, get the subsystem instance, and then replace the list.
+	for(var/mat_type, amount in materials)
+		if(isnum(mat_type) || ispath(mat_type))
 			temp_list[mat_type] = amount
+			continue
+
+		// Not a flag or a requirement, so get the ref the normal way
+		var/datum/material/mat = SSmaterials.get_material(mat_type)
+		temp_list[mat] = amount
+
 	materials = temp_list
 
 /datum/design/proc/icon_html(client/user)
@@ -89,15 +93,15 @@ other types of metals and chemistry for reagents).
 
 /// Produce the resulting item, optionally with a specfic amount if we're a stack design
 /datum/design/proc/create_result(atom/drop_loc, list/custom_materials, amount = null)
-	if (!ispath(build_type, /obj/item/stack) && !isnull(amount))
+	if (!ispath(build_path, /obj/item/stack) && !isnull(amount))
 		CRASH("[src] create_result was passed an amount, despite not being a stack design!")
 
-	if (!ispath(build_type, /obj/item/stack))
-		return new build_type(drop_loc)
+	if (!ispath(build_path, /obj/item/stack))
+		return new build_path(drop_loc)
 
 	if (isnull(amount))
 		amount = 1
-	return new build_type(drop_loc, amount)
+	return new build_path(drop_loc, amount)
 
 ////////////////////////////////////////
 //Disks for transporting design datums//

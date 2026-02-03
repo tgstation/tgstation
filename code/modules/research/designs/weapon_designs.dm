@@ -604,7 +604,7 @@
 	desc = "A mace fit for a cleric. Useful for bypassing plate armor, but too bulky for much else."
 	id = "cleric_mace"
 	build_type = AUTOLATHE
-	materials = alist(ITEM_MATERIAL_CLASSES = SHEET_MATERIAL_AMOUNT * 4.5, ITEM_MATERIAL_CLASSES = SHEET_MATERIAL_AMOUNT * 1.5)
+	materials = alist(ITEM_MATERIAL_CLASSES = SHEET_MATERIAL_AMOUNT * 4.5, MATERIAL_CLASS_RIGID = SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/melee/cleric_mace
 	category = list(RND_CATEGORY_IMPORTED)
 
