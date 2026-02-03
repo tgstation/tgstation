@@ -188,9 +188,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	)
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
-/obj/item/stack/sheet/iron/grind_results()
-	return list(/datum/reagent/iron = 20)
-
 /obj/item/stack/sheet/iron/examine(mob/user)
 	. = ..()
 	. += span_notice("Right click on floor to build:")
@@ -329,9 +326,6 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	fire = 100
 	acid = 80
 
-/obj/item/stack/sheet/plasteel/grind_results()
-	return list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
-
 /obj/item/stack/sheet/plasteel/get_main_recipes()
 	. = ..()
 	. += GLOB.plasteel_recipes
@@ -430,9 +424,6 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 /datum/armor/mineral_wood
 	fire = 50
 
-/obj/item/stack/sheet/mineral/wood/grind_results()
-	return list(/datum/reagent/cellulose = 20)
-
 /obj/item/stack/sheet/mineral/wood/get_main_recipes()
 	. = ..()
 	. += GLOB.wood_recipes
@@ -497,9 +488,6 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 
 /datum/armor/mineral_bamboo
 	fire = 50
-
-/obj/item/stack/sheet/mineral/bamboo/grind_results()
-	return list(/datum/reagent/cellulose = 10)
 
 /obj/item/stack/sheet/mineral/bamboo/get_main_recipes()
 	. = ..()
@@ -747,9 +735,6 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
-/obj/item/stack/sheet/cardboard/grind_results()
-	return list(/datum/reagent/cellulose = 10)
-
 /obj/item/stack/sheet/cardboard/get_main_recipes()
 	. = ..()
 	. += GLOB.cardboard_recipes
@@ -817,9 +802,6 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	material_type = /datum/material/bronze
 	walltype = /turf/closed/wall/mineral/bronze
 	has_unique_girder = TRUE
-
-/obj/item/stack/sheet/bronze/grind_results()
-	return list(/datum/reagent/iron = 20, /datum/reagent/copper = 12)
 
 /obj/item/stack/sheet/bronze/get_main_recipes()
 	. = ..()
@@ -890,9 +872,6 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
-
-/obj/item/stack/sheet/bone/grind_results()
-	return list(/datum/reagent/carbon = 10)
 
 GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("plastic floor tile", /obj/item/stack/tile/plastic, 1, 4, 20, time = 2 SECONDS, crafting_flags = NONE, category = CAT_TILES), \
@@ -1023,9 +1002,6 @@ GLOBAL_LIST_INIT(pizza_sheet_recipes, list(
 	merge_type = /obj/item/stack/sheet/hauntium
 	material_type = /datum/material/hauntium
 	material_modifier = 1 //None of that wussy stuff
-
-/obj/item/stack/sheet/hauntium/grind_results()
-	return list(/datum/reagent/hauntium = 20)
 
 /obj/item/stack/sheet/hauntium/fifty
 	amount = 50

@@ -15,9 +15,6 @@
 	/// The teleport range when crushed/thrown at someone.
 	var/blink_range = 8
 
-/obj/item/stack/ore/bluespace_crystal/grind_results()
-	return list(/datum/reagent/bluespace = 20)
-
 /obj/item/stack/ore/bluespace_crystal/refined
 	name = "refined bluespace crystal"
 	points = 0
@@ -59,7 +56,7 @@
 /obj/item/stack/ore/bluespace_crystal/artificial
 	name = "artificial bluespace crystal"
 	desc = "An artificially made bluespace crystal, it looks delicate."
-	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT*0.5)
+	mats_per_unit = list(/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	blink_range = 4 // Not as good as the organic stuff!
 	points = 0 //nice try
 	refined_type = null
@@ -67,10 +64,7 @@
 	drop_sound = null //till I make a better one
 	pickup_sound = null
 
-/obj/item/stack/ore/bluespace_crystal/artificial/grind_results()
-	return list(/datum/reagent/bluespace = 10, /datum/reagent/silicon = 20)
-
-//Polycrystals, aka stacks
+// Polycrystals, aka stacks
 /obj/item/stack/sheet/bluespace_crystal
 	name = "bluespace polycrystal"
 	icon = 'icons/obj/stack_objects.dmi'
@@ -86,9 +80,6 @@
 	merge_type = /obj/item/stack/sheet/bluespace_crystal
 	material_type = /datum/material/bluespace
 	var/crystal_type = /obj/item/stack/ore/bluespace_crystal/refined
-
-/obj/item/stack/sheet/bluespace_crystal/grind_results()
-	return list(/datum/reagent/bluespace = 20)
 
 /obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user)// to prevent the construction menu from ever happening
 	to_chat(user, span_warning("You cannot crush the polycrystal in-hand, try breaking one off."))

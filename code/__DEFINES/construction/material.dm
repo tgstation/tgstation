@@ -92,6 +92,8 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 
 /// Multiplier for the amount of reagents added to the item upon accidental consumption
 #define MATERIAL_REAGENT_CONSUMPTION_MULT 0.4
+/// Amount of reagents per sheet of material. Not affected by density for simplicity and easier consistency upkeep
+#define MATERIAL_REAGENTS_PER_SHEET 20
 
 // Material Container Flags.
 /// If the container shows the amount of contained materials on examine.
@@ -123,6 +125,8 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 /// This item is not affected by the standard food-related effects of materials like meat and pizza.
 /// Necessary for the edible component counterparts, on_edible_applied() and on_edible_removed()
 #define MATERIAL_NO_EDIBILITY (1 << 6)
+/// Ignore custom material grind results
+#define MATERIAL_NO_REAGENTS (1 << 7)
 
 //Special return values of [/datum/material_container/insert_item]
 /// No material was found inside them item

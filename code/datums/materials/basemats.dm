@@ -203,7 +203,7 @@
 	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_RIGID
 	mat_properties = list(
 		MATERIAL_DENSITY = 6,
-		MATERIAL_HARDNESS = 8,
+		MATERIAL_HARDNESS = 4,
 		MATERIAL_FLEXIBILITY = 0,
 		MATERIAL_REFLECTIVITY = 8,
 		MATERIAL_ELECTRICAL = 10,
@@ -458,18 +458,6 @@
 	value_per_unit = 20 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "woodgrain"
 
-/datum/material/wood/on_main_applied(atom/source, mat_amount, multiplier)
-	. = ..()
-	if(source.material_flags & MATERIAL_AFFECT_STATISTICS && isobj(source))
-		var/obj/wooden = source
-		wooden.resistance_flags |= FLAMMABLE
-
-/datum/material/wood/on_main_removed(atom/source, mat_amount, multiplier)
-	. = ..()
-	if(source.material_flags & MATERIAL_AFFECT_STATISTICS && isobj(source))
-		var/obj/wooden = source
-		wooden.resistance_flags &= ~FLAMMABLE
-
 /datum/material/wood/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
@@ -599,6 +587,7 @@
 		MATERIAL_CHEMICAL = 8,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/metal_hydrogen
+	material_reagent = /datum/reagent/hydrogen
 	value_per_unit = 700 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/metalhydrogen/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
@@ -671,7 +660,7 @@
 		MATERIAL_CHEMICAL = 1,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/snow
-	material_reagent = /datum/reagent/water
+	material_reagent = /datum/reagent/consumable/ice
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
 	mat_rust_resistance = RUST_RESISTANCE_ORGANIC
@@ -716,6 +705,7 @@
 		MATERIAL_CHEMICAL = 5,
 	)
 	sheet_type = /obj/item/stack/sheet/bronze
+	material_reagent = list(/datum/reagent/iron = 0.75, /datum/reagent/copper = 0.25)
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/paper
@@ -745,7 +735,6 @@
 	if(!isobj(source) || !(source.material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
 	var/obj/paper = source
-	paper.resistance_flags |= FLAMMABLE
 	paper.obj_flags |= UNIQUE_RENAME
 	if(istype(paper, /obj/item/fishing_rod))
 		RegisterSignal(paper, COMSIG_ROD_BEGIN_FISHING, PROC_REF(on_begin_fishing))
@@ -761,12 +750,8 @@
 
 /datum/material/paper/on_main_removed(atom/source, mat_amount, multiplier)
 	. = ..()
-	if(!isobj(source) || !(source.material_flags & MATERIAL_AFFECT_STATISTICS))
-		return
-	var/obj/paper = source
-	paper.resistance_flags &= ~FLAMMABLE
-	if(istype(paper, /obj/item/fishing_rod))
-		UnregisterSignal(paper, COMSIG_ROD_BEGIN_FISHING)
+	if(istype(source, /obj/item/fishing_rod) && (source.material_flags & MATERIAL_AFFECT_STATISTICS))
+		UnregisterSignal(source, COMSIG_ROD_BEGIN_FISHING)
 
 /datum/material/cardboard
 	name = "cardboard"
@@ -791,14 +776,7 @@
 	. = ..()
 	if(isobj(source) && source.material_flags & MATERIAL_AFFECT_STATISTICS)
 		var/obj/cardboard = source
-		cardboard.resistance_flags |= FLAMMABLE
 		cardboard.obj_flags |= UNIQUE_RENAME
-
-/datum/material/cardboard/on_main_removed(atom/source, mat_amount, multiplier)
-	if(isobj(source) && source.material_flags & MATERIAL_AFFECT_STATISTICS)
-		var/obj/cardboard = source
-		cardboard.resistance_flags &= ~FLAMMABLE
-	return ..()
 
 /datum/material/bone
 	name = "bone"
@@ -815,6 +793,7 @@
 		MATERIAL_CHEMICAL = 2,
 	)
 	sheet_type = /obj/item/stack/sheet/bone
+	material_reagent = /datum/reagent/bone_dust
 	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/bone/on_main_applied(atom/source, mat_amount, multiplier)

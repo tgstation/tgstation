@@ -169,11 +169,12 @@
 		other_stack = find_other_stack(already_found, TRUE)
 	return TRUE
 
-/obj/item/stack/blend_requirements()
-	if(is_cyborg)
-		to_chat(usr, span_warning("[src] is too integrated into your chassis and can't be ground up!"))
-		return
-	return TRUE
+/obj/item/stack/blend_requirements(obj/machinery/reagentgrinder/grinder, mob/living/user)
+	if(!is_cyborg)
+		return TRUE
+	if (user)
+		to_chat(user, span_warning("[src] is too integrated into your chassis and can't be ground up!"))
+	return FALSE
 
 /obj/item/stack/grind_atom(datum/reagents/target_holder, mob/user)
 	var/current_amount = get_amount()
@@ -192,7 +193,7 @@
 		total_volume += grind_reagents[reagent]
 
 	//compute number of pieces(or sheets) from available_volume
-	var/available_amount = min(current_amount, round(available_volume / total_volume))
+	var/available_amount = ceil(current_amount * min(1, available_volume / total_volume))
 	if(available_amount <= 0)
 		return FALSE
 

@@ -17,6 +17,7 @@
 		MATERIAL_FLAMMABILITY = 6,
 	)
 	sheet_type = /obj/item/stack/sheet/hauntium
+	material_reagent = /datum/reagent/hauntium
 	value_per_unit = 0.05
 
 /datum/material/hauntium/on_main_applied(atom/source, mat_amount, multiplier)

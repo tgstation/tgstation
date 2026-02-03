@@ -1013,14 +1013,26 @@
 	return SEND_SIGNAL(src, COMSIG_ITEM_MICROWAVE_ACT, microwave_source, microwaver, randomize_pixel_offset)
 
 ///Used to check for extra requirements for blending(grinding or juicing) an object
-/obj/item/proc/blend_requirements(obj/machinery/reagentgrinder/R)
+/obj/item/proc/blend_requirements(obj/machinery/reagentgrinder/grinder, mob/living/user)
 	return TRUE
 
 ///Returns a reagent list containing the reagents this item produces when ground up in a grinder
 /obj/item/proc/grind_results()
 	RETURN_TYPE(/list/datum/reagent)
+	if (!length(custom_materials) || (material_flags & MATERIAL_NO_REAGENTS))
+		return null
 
-	return null
+	. = list()
+	for (var/mat_id, amount in custom_materials)
+		var/datum/material/material = SSmaterials.get_material(mat_id)
+		if (!material.material_reagent)
+			continue
+		if (!islist(material.material_reagent))
+			.[material.material_reagent] = .[material.material_reagent] + amount * MATERIAL_REAGENTS_PER_SHEET / SHEET_MATERIAL_AMOUNT
+			continue
+		for (var/reagent_type in material.material_reagent)
+			.[reagent_type] = .[reagent_type] + amount * material.material_reagent[reagent_type] / length(material.material_reagent) * MATERIAL_REAGENTS_PER_SHEET / SHEET_MATERIAL_AMOUNT
+	return .
 
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_grind()

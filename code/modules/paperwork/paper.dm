@@ -88,9 +88,6 @@
 	LAZYREMOVE(SSpersistence.queued_message_bottles, src)
 	return ..()
 
-/obj/item/paper/grind_results()
-	return list(/datum/reagent/cellulose = 3)
-
 /obj/item/paper/custom_fire_overlay()
 	if (!custom_fire_overlay)
 		custom_fire_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_onfire_overlay", appearance_flags = RESET_COLOR|KEEP_APART)

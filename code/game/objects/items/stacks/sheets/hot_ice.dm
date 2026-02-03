@@ -9,7 +9,7 @@
 	merge_type = /obj/item/stack/sheet/hot_ice
 
 /obj/item/stack/sheet/hot_ice/grind_results()
-	return list(/datum/reagent/toxin/hot_ice = 25)
+	return list(/datum/reagent/toxin/hot_ice = 20)
 
 /obj/item/stack/sheet/hot_ice/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins licking \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

@@ -1,5 +1,9 @@
 
 // Optional properties, not guaranteed to be present on all materials
+
+/// Minimum flammability value required to make an object made out of this material flammable
+#define MINIMUM_FLAMMABILITY 4
+
 /// If a material has this property, it is flammable and has reduced fire protection.
 /datum/material_property/flammability
 	name = "Flammability"
@@ -8,13 +12,13 @@
 /datum/material_property/flammability/get_descriptor(value)
 	switch(value)
 		if (0)
-			return "nonflammable"
+			return "fireproof"
 		if (0 to 1)
-			return "mostly nonflammable"
+			return "nonflammable"
 		if (1 to 2)
-			return "mildly nonflammable"
+			return "mostly nonflammable"
 		if (2 to 3)
-			return "somewhat flammable"
+			return "slightly fire-resistant"
 		if (3 to 4)
 			return "flammable"
 		if (4 to 6)
@@ -23,6 +27,25 @@
 			return "extremely flammable"
 		if (8 to INFINITY)
 			return "insanely flammable"
+
+/datum/material_property/flammability/attach_to(datum/material/material)
+	. = ..()
+	RegisterSignal(material, COMSIG_MATERIAL_APPLIED, PROC_REF(on_applied))
+	RegisterSignal(material, COMSIG_MATERIAL_REMOVED, PROC_REF(on_removed))
+
+/datum/material_property/flammability/proc/on_applied(datum/material/source, atom/new_atom, mat_amount, multiplier)
+	SIGNAL_HANDLER
+
+	if (isobj(new_atom) && (new_atom.material_flags & MATERIAL_AFFECT_STATISTICS) && source.get_property(id) > MINIMUM_FLAMMABILITY)
+		new_atom.resistance_flags |= FLAMMABLE
+
+/datum/material_property/flammability/proc/on_removed(datum/material/source, atom/old_atom, mat_amount, multiplier)
+	SIGNAL_HANDLER
+
+	if (isobj(old_atom) && (old_atom.material_flags & MATERIAL_AFFECT_STATISTICS) && source.get_property(id) > MINIMUM_FLAMMABILITY && !(initial(old_atom.resistance_flags) & FLAMMABLE))
+		old_atom.resistance_flags &= ~FLAMMABLE
+
+#undef MINIMUM_FLAMMABILITY
 
 // Average value of 4 would equate to URANIUM_IRRADIATION_CHANCE radioactivity
 #define URANIUM_RADIOACTIVITY 4
