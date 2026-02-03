@@ -542,4 +542,4 @@
 		if(!amount)
 			break
 	if(. && update_health)
-		updateHealth()
+		updatehealth()
