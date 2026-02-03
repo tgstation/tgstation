@@ -13,11 +13,11 @@
 ///IV drip operation mode when it injects reagents into the object
 #define IV_INJECTING 1
 
-///Plumbing Accimilator is filling
+///Plumbing Acclimator is filling
 #define AC_FILLING 0
-///Plumbing Accimilator is heating
+///Plumbing Acclimator is heating
 #define AC_HEATING 1
-///Plumbing Accimilator is cooling
+///Plumbing Acclimator is cooling
 #define AC_COOLING 2
-///Plumbing Accimilator is emptying
+///Plumbing Acclimator is emptying
 #define AC_EMPTYING 3
