@@ -1,3 +1,5 @@
+#define MAX_TRANSFER 9
+
 ///it splits the reagents however you want. So you can "every 60 units, 45 goes left and 15 goes straight". The side direction is EAST, you can change this in the component
 /obj/machinery/plumbing/splitter
 	name = "chemical splitter"
@@ -6,18 +8,14 @@
 	buffer = 100
 	density = FALSE
 
-	///constantly switches between TRUE and FALSE. TRUE means the batch tick goes straight, FALSE means the next batch goes in the side duct.
-	var/turn_straight = TRUE
 	///how much we must transfer straight. note input can be as high as 10 reagents per process, usually
 	var/transfer_straight = 5
 	///how much we must transfer to the side
 	var/transfer_side = 5
-	//the maximum you can set the transfer to
-	var/max_transfer = 9
 
 /obj/machinery/plumbing/splitter/Initialize(mapload, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/splitter, layer)
+	AddComponent(/datum/component/plumbing/multidirectional/splitter, layer)
 
 /obj/machinery/plumbing/splitter/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -25,22 +23,27 @@
 		ui = new(user, src, "ChemSplitter", name)
 		ui.open()
 
+/obj/machinery/plumbing/splitter/ui_static_data(mob/user)
+	return list(
+		max_transfer = MAX_TRANSFER
+	)
+
 /obj/machinery/plumbing/splitter/ui_data(mob/user)
 	var/list/data = list()
 	data["straight"] = transfer_straight
 	data["side"] = transfer_side
-	data["max_transfer"] = max_transfer
 	return data
 
 /obj/machinery/plumbing/splitter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
+
 	. = TRUE
 	switch(action)
 		if("set_amount")
 			var/direction = params["target"]
-			var/value = clamp(text2num(params["amount"]), 1, max_transfer)
+			var/value = clamp(text2num(params["amount"]), 1, MAX_TRANSFER)
 			switch(direction)
 				if("straight")
 					transfer_straight = value
@@ -48,3 +51,5 @@
 					transfer_side = value
 				else
 					return FALSE
+
+#undef MAX_TRANSFER
