@@ -74,6 +74,7 @@
 	blood_hsl[3] = min(100, blood_hsl[3] + 30)
 
 	overlay.color = rgb(blood_hsl[1], blood_hsl[2], blood_hsl[3], space = COLORSPACE_HSL)
+	overlay.alpha = 200
 
 /datum/bodypart_overlay/simple/emote/cry
 	icon_state = "tears"
