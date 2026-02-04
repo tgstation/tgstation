@@ -28,7 +28,8 @@
 
 		if(stat != DEAD) // still not dead (blood could have changed that)
 			for(var/key in mind?.addiction_points)
-				GLOB.addictions[key].process_addiction(src, seconds_per_tick)
+				var/datum/addiction/addiction = SSaddiction.all_addictions[key]
+				addiction.process_addiction(src, seconds_per_tick)
 			handle_brain_damage(seconds_per_tick)
 
 	if(stat != DEAD)
