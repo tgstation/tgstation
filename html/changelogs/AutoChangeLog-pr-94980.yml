@@ -1,0 +1,7 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - bugfix: "The holy energy swords and the carp-sie plushie can once again be renamed"
+  - bugfix: "The holy energy swords and the carp-sie plushie can once again be sacrificed by cultists to spawn different weapons based on how many unique cultists the chaplain has crit or killed with them"
+  - qol: "The holy skateboard can be renamed like other null rod variants can"
+  - bugfix: "Unusual null rod variants like the holy skateboard and bow can now be sacrificed by cultists to spawn different weapons based on how many unique cultists the chaplain has crit or killed with them. The bow and the burdened chaplain's revolver, in particular, also count cultists crit or killed by arrows/bullets fired from them by the chaplain."
