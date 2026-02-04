@@ -183,7 +183,7 @@
 
 	for(var/z_level in lower_z to upper_z)
 		for(var/obj/machinery/camera/current_camera as anything in cameras["[z_level]"])
-			if(!current_camera || !current_camera.can_use())
+			if(!current_camera?.can_use())
 				continue
 
 			var/turf/point = locate(src.x + (CHUNK_SIZE / 2), src.y + (CHUNK_SIZE / 2), z_level)
