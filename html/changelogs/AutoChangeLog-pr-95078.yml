@@ -1,0 +1,5 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Sources of random slimes will now produce random slimes"
+  - bugfix: "Slimes revived via magic will now continue to look as they should"
