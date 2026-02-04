@@ -126,7 +126,7 @@
 	return ..()
 
 /obj/item/spear/get_master_material()
-	if (tip_mat_type)
+	if (tip_mat_type && custom_materials[tip_mat_type])
 		return SSmaterials.get_material(tip_mat_type)
 	return ..()
 
