@@ -52,9 +52,6 @@
 	if(amount <= 0)
 		return FALSE
 
-	//Set up new reagents to inherit the old ongoing reactions
-	transfer_reactions(target_holder)
-
 	var/list/cached_reagents = reagent_list
 	var/transfer_amount
 	var/transfered_amount
@@ -99,10 +96,6 @@
 		if(!isnull(target_id))
 			break
 	update_total()
-
-	//handle reactions
-	target_holder.handle_reactions()
-	handle_reactions()
 
 	return total_transfered_amount
 
@@ -190,9 +183,6 @@
 	if(amount <= 0)
 		return FALSE
 
-	//Set up new reagents to inherit the old ongoing reactions
-	transfer_reactions(target_holder)
-
 	var/working_volume
 	var/catalyst_volume
 	var/transfer_amount
@@ -246,9 +236,5 @@
 		if(!isnull(target_id))
 			break
 	update_total()
-
-	//handle reactions
-	target_holder.handle_reactions()
-	handle_reactions()
 
 	return total_transfered_amount

@@ -5,7 +5,7 @@
 	reagents = /datum/reagents
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
-	reagent_flags = TRANSPARENT | DRAINABLE
+	reagent_flags = /obj/machinery/plumbing::reagent_flags | DRAINABLE
 	buffer = 100
 
 	///how much do we fill
