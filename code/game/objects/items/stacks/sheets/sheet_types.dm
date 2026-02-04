@@ -932,9 +932,6 @@ GLOBAL_LIST_INIT(paperframe_recipes, list(
 	drop_sound = null
 	pickup_sound = null
 
-/obj/item/stack/sheet/paperframes/grind_results()
-	return list(/datum/reagent/cellulose = 20)
-
 /obj/item/stack/sheet/paperframes/get_main_recipes()
 	. = ..()
 	. += GLOB.paperframe_recipes

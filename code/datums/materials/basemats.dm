@@ -559,7 +559,7 @@
 		MATERIAL_FLAMMABILITY = 10,
 	)
 	sheet_type = /obj/item/stack/sheet/hot_ice
-	material_reagent = /datum/reagent/toxin/plasma
+	material_reagent = /datum/reagent/toxin/hot_ice
 	value_per_unit = 400 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/hot_ice/on_applied(atom/source, mat_amount, multiplier)
