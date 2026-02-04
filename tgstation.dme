@@ -1152,6 +1152,7 @@
 #include "code\datums\components\crank_recharge.dm"
 #include "code\datums\components\crate_carrier.dm"
 #include "code\datums\components\cuff_n_stun.dm"
+#include "code\datums\components\cult_kill_tracker.dm"
 #include "code\datums\components\cult_ritual_item.dm"
 #include "code\datums\components\curse_of_hunger.dm"
 #include "code\datums\components\curse_of_polymorph.dm"

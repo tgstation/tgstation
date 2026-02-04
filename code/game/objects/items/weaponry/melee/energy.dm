@@ -556,6 +556,7 @@
 	armour_penetration = 0
 	wound_bonus = -10
 	demolition_mod = 1
+	obj_flags = parent_type::obj_flags | UNIQUE_RENAME
 	sword_color_icon = "blue"
 	light_color = LIGHT_COLOR_LIGHT_CYAN
 	active_force = 18

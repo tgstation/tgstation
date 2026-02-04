@@ -53,11 +53,17 @@
 	var/instability = 10
 	///If true, riding the skateboard with walk intent on will prevent crashing.
 	var/can_slow_down = TRUE
+	///The actual item for the skateboard
+	var/obj/item/melee/skateboard/board_item
 
-/obj/vehicle/ridden/scooter/skateboard/Initialize(mapload)
+/obj/vehicle/ridden/scooter/skateboard/Initialize(mapload, obj/item/melee/skateboard/board_item)
 	. = ..()
 	sparks = new(src, 1, FALSE)
 	sparks.attach(src)
+	if(!istype(board_item))
+		src.board_item = new board_item_type(src)
+	else
+		src.board_item = board_item
 
 /obj/vehicle/ridden/scooter/skateboard/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard)
@@ -174,7 +180,7 @@
 	if(has_buckled_mobs())
 		to_chat(skater, span_warning("You can't lift this up when somebody's on it."))
 		return
-	skater.put_in_hands(new board_item_type(get_turf(skater)))
+	skater.put_in_hands(board_item)
 	qdel(src)
 
 /obj/vehicle/ridden/scooter/skateboard/pro
