@@ -45,6 +45,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	armour_penetration = 50 //Very good armor penetration to make up for our abysmal force
 	reach = 2 //why yes, this does have reach
 	slot_flags = null
+	obj_flags = UNIQUE_RENAME
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
 	attack_verb_simple = list("chop", "slice", "cut", "reap")
