@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 	MATERIAL_CLASS_POLYMER = "polymer",
 ))
 
-// You can use a calculator at https://www.desmos.com/calculator/ufa7ppklex for easy property calculations
+// You can use a calculator at https://www.desmos.com/calculator/wbkx4ttj3j for easy property calculations
 
 // Core material property IDs
 #define MATERIAL_DENSITY "density"
