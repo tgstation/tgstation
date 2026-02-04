@@ -1955,7 +1955,7 @@
 			new_inhand_right = righthand_path
 		)
 
-	if (!(material_flags & MATERIAL_NO_SLOWDOWN))
+	if ((material_flags & MATERIAL_AFFECT_STATISTICS) && !(material_flags & MATERIAL_NO_SLOWDOWN))
 		var/flexibility = main_material.get_property(MATERIAL_FLEXIBILITY)
 		// If the item applies slowdown only when worn, poor flexibility will increase our slowdown
 		if (!(item_flags & SLOWS_WHILE_IN_HAND) && flexibility < 6)
@@ -1980,7 +1980,7 @@
 			new_inhand_right = initial(greyscale_config_inhand_right)
 		)
 
-	if (!(material_flags & MATERIAL_NO_SLOWDOWN))
+	if ((material_flags & MATERIAL_AFFECT_STATISTICS) && !(material_flags & MATERIAL_NO_SLOWDOWN))
 		var/flexibility = main_material.get_property(MATERIAL_FLEXIBILITY)
 		// If the item applies slowdown only when worn, poor flexibility will increase our slowdown
 		if (!(item_flags & SLOWS_WHILE_IN_HAND) && flexibility < 6)
@@ -2006,8 +2006,14 @@
 	// See https://www.desmos.com/calculator/rdbv1x8oty
 	var/conductivity = material.get_property(MATERIAL_ELECTRICAL)
 	var/siemens_modifier = round(max(0, conductivity - 1) ** 1.18 * 0.15, 0.01)
-	// Thankfully 0 base still results in 0 modifier after the multiplier
-	siemens_coefficient *= GET_MATERIAL_MODIFIER(siemens_modifier, multiplier)
+	// Cannot use the base formula as it would make any item with glass not conduct electricity
+	if (siemens_modifier > 1)
+		siemens_coefficient *= 1 + (siemens_modifier - 1) * multiplier
+	else
+		siemens_coefficient *= max(0, 1 - (1 - siemens_modifier) * multiplier)
+
+	if (siemens_coefficient == 0)
+		obj_flags &= ~CONDUCTS_ELECTRICITY
 
 	if (material_flags & MATERIAL_NO_SLOWDOWN)
 		return
@@ -2033,7 +2039,18 @@
 	var/conductivity = material.get_property(MATERIAL_ELECTRICAL)
 	// 0 ~ 1 count as perfect insulators
 	var/siemens_modifier = round(max((conductivity - 1) ** 1.18 * 0.15, 0), 0.01)
-	siemens_coefficient /= GET_MATERIAL_MODIFIER(siemens_modifier, multiplier)
+	// Cannot use the base formula as it would make any item with glass not conduct electricity
+	if (siemens_modifier > 1)
+		siemens_coefficient /= 1 + (siemens_modifier - 1) * multiplier
+	else
+		var/used_mult = 1 - (1 - siemens_modifier) * multiplier
+		if (used_mult > 0)
+			siemens_coefficient /= used_mult
+		else // We are an insulator so we need to reset ourselves and hope we are last
+			siemens_coefficient = initial(siemens_coefficient)
+
+	if (siemens_coefficient > 0 && (initial(obj_flags) & CONDUCTS_ELECTRICITY) && !(obj_flags & CONDUCTS_ELECTRICITY))
+		obj_flags |= CONDUCTS_ELECTRICITY
 
 	if (material_flags & MATERIAL_NO_SLOWDOWN)
 		return
