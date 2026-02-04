@@ -43,7 +43,7 @@
 	/// List of containers that the nuke disk is inside
 	var/list/nukedisk_containers = list()
 	/// Flags that this map has
-	var/minimap_flags
+	var/minimap_flags = NONE
 
 /// Initialized only when needed
 /datum/tactical_map/proc/Initialize()
@@ -472,6 +472,10 @@
 	minimaps_by_z["[zlevel]"].images_raw["[minimap_flag]"] += blip
 	drawn_images[hash] = blip
 	return blip
+
+/datum/tactical_map/proc/updator_add(image/blip, flag)
+	for(var/datum/minimap_updator/updator as anything in update_targets["[flag]"])
+		updator.raw_blips |= blip
 
 ///Default HUD screen minimap object
 /atom/movable/screen/minimap

@@ -126,7 +126,7 @@
 /atom/movable/screen/minimap_tool/proc/set_zlevel(zlevel)
 	x_offset = my_map.minimaps_by_z["[zlevel]"].x_offset
 	y_offset = my_map.minimaps_by_z["[zlevel]"].y_offset
-	drawn_image = my_map.get_drawing_image(zlevel, my_map)
+	drawn_image = my_map.get_drawing_image(zlevel, my_map.minimap_flags)
 
 /atom/movable/screen/minimap_tool/MouseEntered(location, control, params)
 	. = ..()
@@ -145,6 +145,7 @@
 	if(modifiers[BUTTON] == LEFT_CLICK)
 		RegisterSignal(usr.client, COMSIG_CLIENT_MOUSEDOWN, PROC_REF(on_mousedown))
 		usr.client.mouse_pointer_icon = active_mouse_icon
+		my_map?.updator_add(drawn_image, my_map.minimap_flags)
 
 /**
  * handles actions when the mouse is held down while the tool is active.
