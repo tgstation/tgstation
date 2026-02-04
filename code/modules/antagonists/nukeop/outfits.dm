@@ -37,6 +37,12 @@
 	name = "Syndicate Leader - Basic"
 	command_radio = TRUE
 
+	implants = list(
+		/obj/item/implant/weapons_auth,
+		/obj/item/implant/explosive,
+		/obj/item/implant/tacmap/nuclear/leader,
+	)
+
 	id_trim = /datum/id_trim/chameleon/operative/nuke_leader
 
 /datum/outfit/syndicate/leader/plasmaman

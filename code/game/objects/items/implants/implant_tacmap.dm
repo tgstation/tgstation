@@ -99,7 +99,15 @@
 		return ..()
 	var/datum/team/nuclear/nukie_team = nukie.get_team()
 	my_map = nukie_team.nuclear_tacmap // Specify that we are using the nukeop map before calling parent
+	my_map.minimap_flags |= MINIMAP_FLAG_NUCLEAR
 	return ..()
+
+/obj/item/implant/tacmap/nuclear/leader // Leader subtype lets him draw on the map
+
+/obj/item/implant/tacmap/nuclear/leader/implant(mob/living/target, mob/user, silent, force)
+	. = ..()
+	var/datum/action/map_drawing/draw_action = new(implant_map = my_map)
+	draw_action.Grant(target)
 
 /obj/item/implanter/tacmap
 	name = "implanter (minimap)"

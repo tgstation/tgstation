@@ -97,6 +97,9 @@
 /// log game events
 /datum/config_entry/flag/log_game
 
+/// log minimap drawing events
+/datum/config_entry/flag/log_minimap_drawing
+
 /// log mech data
 /datum/config_entry/flag/log_mecha
 

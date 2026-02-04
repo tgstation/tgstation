@@ -42,6 +42,8 @@
 	var/list/minimap_viewers = list()
 	/// List of containers that the nuke disk is inside
 	var/list/nukedisk_containers = list()
+	/// Flags that this map has
+	var/minimap_flags
 
 /// Initialized only when needed
 /datum/tactical_map/proc/Initialize()
@@ -89,6 +91,12 @@
 ///Creates a minimap for a particular z level
 /datum/tactical_map/proc/load_new_z(datum/dcs, datum/space_level/z_level)
 	SIGNAL_HANDLER
+	var/static/list/skip_render_turfs = typecacheof(list(
+		/turf/open/floor/iron/solarpanel,
+		/turf/open/misc/asteroid/snow/icemoon,
+		/turf/open/misc/ice/icemoon,
+		/turf/open/misc/asteroid/basalt/lava_land_surface
+	))
 
 	var/level = z_level.z_value
 	minimaps_by_z["[level]"] = new /datum/hud_displays
@@ -102,9 +110,7 @@
 				continue
 			if(isshuttleturf(location))
 				continue
-			if(istype(location, /turf/open/floor/iron/solarpanel))
-				continue
-			if(istype(location, /turf/open/misc/asteroid/snow/icemoon))
+			if(is_type_in_typecache(location, skip_render_turfs))
 				continue
 			var/area/arealoc = get(location, /area)
 			map_position_to_name["[level]:[xval]:[yval]"] = arealoc?.name
@@ -662,6 +668,7 @@
  */
 /datum/action/minimap
 	name = "Toggle Minimap"
+	button_icon = 'icons/hud/implants.dmi'
 	button_icon_state = "minimap"
 	///Flags to allow the owner to see others of this type
 	var/minimap_flags = MINIMAP_FLAG_ALL
