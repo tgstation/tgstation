@@ -212,10 +212,11 @@ Simple datum which is instanced once per type and is used for every object of sa
 		ACID = 1 + (chemical - 4) * 0.2,
 	)
 
-	// Safety check to ensure that we don't have inverted armor values
 	for (var/armor_key in armor_modifiers)
+		// Safety check to ensure that we don't have inverted armor values
 		if (armor_modifiers[armor_key] < 0)
 			armor_modifiers[armor_key] = 0
+		armor_modifiers[armor_key] = GET_MATERIAL_MODIFIER(armor_modifiers[armor_key], multiplier)
 
 	return armor_modifiers
 

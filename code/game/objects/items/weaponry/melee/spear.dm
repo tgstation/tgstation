@@ -25,6 +25,7 @@
 	armor_type = /datum/armor/item_spear
 	wound_bonus = -15
 	exposed_wound_bonus = 15
+	material_flags = MATERIAL_EFFECTS
 	/// The icon prefix for this flavor of spear
 	var/icon_prefix = "spearglass"
 	/// How much damage to do unwielded
@@ -114,23 +115,6 @@
 	var/datum/material/tip_material = tip.get_master_material()
 	// For master material effects. As on_craft_completion is ran before set_custom_materials, this will allow the speartip to be treated as our master material no matter what
 	tip_mat_type = tip_material.id
-
-	var/density = tip_material.get_property(MATERIAL_DENSITY)
-	var/hardness = tip_material.get_property(MATERIAL_HARDNESS)
-
-	// Base of 4 ~ 5 as to keep parity with old spear stats
-	force_unwielded += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5)
-	force_wielded += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5)
-	force = force_unwielded
-	throwforce += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5)
-	wound_bonus += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5) * 5
-	modify_max_integrity(initial(max_integrity) + (hardness - 4) * 10)
-	throw_range += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5) - (density - 4)
-	throw_speed += floor((MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5) - (density - 4)) / 2)
-	// And these try to keep parity with titanium/plastitanium spears as armorpen boost was exclusive to them
-	armour_penetration += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) * 5
-	exposed_wound_bonus += (MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) - (density - 4)) * 5
-
 	switch (tip_mat_type)
 		if (/datum/material/alloy/plasmaglass)
 			icon_prefix = "spearplasma"
@@ -138,14 +122,6 @@
 			icon_prefix = "speartitanium"
 		if (/datum/material/alloy/plastitaniumglass)
 			icon_prefix = "spearplastitanium"
-
-	AddComponent(/datum/component/two_handed, \
-		force_unwielded = force_unwielded, \
-		force_wielded = force_wielded, \
-		icon_wielded = "[icon_prefix]1", \
-		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
-		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
-	)
 	update_appearance()
 	return ..()
 
@@ -153,6 +129,54 @@
 	if (tip_mat_type)
 		return SSmaterials.get_material(tip_mat_type)
 	return ..()
+
+/obj/item/spear/apply_main_material_effects(datum/material/main_material, amount, multipier)
+	. = ..()
+	var/density = main_material.get_property(MATERIAL_DENSITY)
+	var/hardness = main_material.get_property(MATERIAL_HARDNESS)
+	// Base of 4 ~ 5 as to keep parity with old spear stats
+	force_unwielded += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5)
+	force_wielded += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5)
+	force = force_unwielded
+	throwforce += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5)
+	wound_bonus += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5) * 5
+	modify_max_integrity(max_integrity + (hardness - 4) * 10)
+	throw_range += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5) - (density - 4)
+	throw_speed += floor((MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5) - (density - 4)) / 2)
+	// And these try to keep parity with titanium/plastitanium spears as armorpen boost was exclusive to them
+	armour_penetration += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) * 5
+	exposed_wound_bonus += (MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) - (density - 4)) * 5
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = force_unwielded, \
+		force_wielded = force_wielded, \
+		icon_wielded = "[icon_prefix]1", \
+		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
+		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
+	)
+
+/obj/item/spear/remove_main_material_effects(datum/material/main_material, amount, multipier)
+	. = ..()
+	var/density = main_material.get_property(MATERIAL_DENSITY)
+	var/hardness = main_material.get_property(MATERIAL_HARDNESS)
+	// Base of 4 ~ 5 as to keep parity with old spear stats
+	force_unwielded -= MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5)
+	force_wielded -= MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5)
+	force = force_unwielded
+	throwforce -= MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5)
+	wound_bonus -= MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5) * 5
+	modify_max_integrity(max_integrity - (hardness - 4) * 10)
+	throw_range -= MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5) - (density - 4)
+	throw_speed -= floor((MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5) - (density - 4)) / 2)
+	// And these try to keep parity with titanium/plastitanium spears as armorpen boost was exclusive to them
+	armour_penetration -= MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) * 5
+	exposed_wound_bonus -= (MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) - (density - 4)) * 5
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = force_unwielded, \
+		force_wielded = force_wielded, \
+		icon_wielded = "[icon_prefix]1", \
+		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
+		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
+	)
 
 /obj/item/spear/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(improvised_construction)
