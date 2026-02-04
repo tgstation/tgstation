@@ -20,11 +20,11 @@
 	for (var/prop_id in (property_minimums || list()) | (property_maximums || list()))
 		var/datum/material_property/property = SSmaterials.properties[prop_id]
 		if (property_minimums && property_maximums && !isnull(property_minimums[prop_id]) && !isnull(property_maximums[prop_id]))
-			prop_reqs += "[lowertext(property.name)] between [property_minimums[prop_id]] and [property_maximums[prop_id]]"
+			prop_reqs += "[LOWER_TEXT(property.name)] between [property_minimums[prop_id]] and [property_maximums[prop_id]]"
 		else if (property_minimums && !isnull(property_minimums[prop_id]))
-			prop_reqs += "[lowertext(property.name)] equal to or above [property_minimums[prop_id]]"
+			prop_reqs += "[LOWER_TEXT(property.name)] equal to or above [property_minimums[prop_id]]"
 		else
-			prop_reqs += "[lowertext(property.name)] equal to or below [property_maximums[prop_id]]"
+			prop_reqs += "[LOWER_TEXT(property.name)] equal to or below [property_maximums[prop_id]]"
 
 	return "[capitalize(english_list(flag_strings, and_text = " or "))] material with [english_list(prop_reqs)]"
 
