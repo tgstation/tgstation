@@ -368,9 +368,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	if(notice)
 		return null
 	//Totally nanite construction system not an immersion breaking spawning
-	var/datum/effect_system/fluid_spread/smoke/fourth_wall_guard = new
-	fourth_wall_guard.set_up(4, holder = src, location = get_turf(centerpiece))
-	fourth_wall_guard.start()
+	do_smoke(4, get_turf(centerpiece), get_turf(centerpiece))
 	var/obj/machinery/bsa/full/cannon = new(get_turf(centerpiece),centerpiece.get_cannon_direction())
 	QDEL_NULL(centerpiece.front_ref)
 	QDEL_NULL(centerpiece.back_ref)

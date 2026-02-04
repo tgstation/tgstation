@@ -134,9 +134,7 @@
 /mob/living/basic/bot/firebot/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	if(!COOLDOWN_FINISHED(src, foam_cooldown))
 		return
-	var/datum/effect_system/fluid_spread/foam/firefighting/foam = new
-	foam.set_up(3, holder = src, location = loc)
-	foam.start()
+	do_foam(3, src, loc, foam_type = /datum/effect_system/fluid_spread/foam/firefighting)
 	COOLDOWN_START(src, foam_cooldown, FOAM_INTERVAL)
 
 /mob/living/basic/bot/firebot/proc/spray_water(atom/attacked_atom, list/modifiers)
