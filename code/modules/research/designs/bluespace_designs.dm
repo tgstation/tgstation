@@ -32,7 +32,7 @@
 	desc = "A small blue crystal with mystical properties."
 	id = "bluespace_crystal"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/stack/ore/bluespace_crystal/artificial
 	category = list(
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
