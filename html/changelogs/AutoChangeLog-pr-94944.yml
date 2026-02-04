@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - qol: "plumbing disposer now has TGUI interface for operations"
-  - bugfix: "plumbing disposer icon state correctly switches between on & off under circumstances"

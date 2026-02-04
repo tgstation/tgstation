@@ -35,8 +35,29 @@
   alien3301:
   - qol: Heretic void cloak doesn't quickdraw
 2026-02-04:
+  Fghj240:
+  - bugfix: viruses should maybe probably not cure themselves
   Melbert:
   - qol: Blushing matches blood color, so lizards blush greeeen.
+  SmArtKar:
+  - refactor: Refactored sparks, foam, smoke, and other miscellaneous effect systems.
+  - refactor: Vapes now have consistent rigging with cigs using the new system.
+  - bugfix: Fixed some effects never working.
+  SyncIt21:
+  - qol: plumbing disposer now has TGUI interface for operations
+  - bugfix: plumbing disposer icon state correctly switches between on & off under
+      circumstances
+  Y0SH1M4S73R:
+  - bugfix: The holy energy swords and the carp-sie plushie can once again be renamed
+  - bugfix: The holy energy swords and the carp-sie plushie can once again be sacrificed
+      by cultists to spawn different weapons based on how many unique cultists the
+      chaplain has crit or killed with them
+  - qol: The holy skateboard can be renamed like other null rod variants can
+  - bugfix: Unusual null rod variants like the holy skateboard and bow can now be
+      sacrificed by cultists to spawn different weapons based on how many unique cultists
+      the chaplain has crit or killed with them. The bow and the burdened chaplain's
+      revolver, in particular, also count cultists crit or killed by arrows/bullets
+      fired from them by the chaplain.
   lelandkemble:
   - spellcheck: Language manuals correctly refer to the person using them up to viewers
   - bugfix: Sources of random slimes will now produce random slimes
