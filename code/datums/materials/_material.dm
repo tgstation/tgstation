@@ -16,9 +16,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 	/// Bitflags that influence how SSmaterials handles this material.
 	var/init_flags = MATERIAL_INIT_MAPLOAD
-	/// Material behaviors, the bread and butter. Can either be directly defined, or dynamically calculated for alloys
+	/// Material behaviors, controls how the material is categorized and in what recipes it can be used
 	var/mat_flags = NONE
-	/// List of material property IDs to their values, 0 - 9
+	/// List of material property IDs to their values, 0 - 10
 	var/mat_properties = null
 
 	// Color values

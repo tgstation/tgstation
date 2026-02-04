@@ -47,7 +47,7 @@
 
 #undef MINIMUM_FLAMMABILITY
 
-// Average value of 4 would equate to URANIUM_IRRADIATION_CHANCE radioactivity
+// An average value of 4 would equate to URANIUM_IRRADIATION_CHANCE radioactivity
 #define URANIUM_RADIOACTIVITY 4
 
 /datum/material_property/radioactivity

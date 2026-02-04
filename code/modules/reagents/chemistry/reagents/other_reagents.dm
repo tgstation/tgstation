@@ -2832,6 +2832,9 @@
 	if(!metal_amount)
 		metal_amount = default_material_amount //some stuff doesn't have materials at all. To still give them properties, we give them a material. Basically doesn't exist
 
+	// Delete existing materials first before changing the material flags
+	if(length(target.custom_materials))
+		target.set_custom_materials()
 	var/list/metal_dat = list((metal_ref) = metal_amount)
 	target.material_flags = applied_material_flags
 	target.set_custom_materials(metal_dat)

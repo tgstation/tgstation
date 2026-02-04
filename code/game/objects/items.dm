@@ -1954,8 +1954,10 @@
 			new_inhand_left = lefthand_path,
 			new_inhand_right = righthand_path
 		)
+
 	if(!main_material.item_sound_override)
 		return
+
 	hitsound = main_material.item_sound_override
 	usesound = main_material.item_sound_override
 	mob_throw_hit_sound = main_material.item_sound_override
@@ -1971,8 +1973,10 @@
 			new_inhand_left = initial(greyscale_config_inhand_left),
 			new_inhand_right = initial(greyscale_config_inhand_right)
 		)
+
 	if(!main_material.item_sound_override)
 		return
+
 	hitsound = initial(hitsound)
 	usesound = initial(usesound)
 	mob_throw_hit_sound = initial(mob_throw_hit_sound)
