@@ -149,8 +149,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
-	spark_system.set_up(4, 0, src.loc)
+	var/datum/effect_system/basic/spark_spread/spark_system = new(src.loc, 4, 0)
 	spark_system.start()
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	balloon_alert(user, "machine rigged")

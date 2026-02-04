@@ -15,9 +15,6 @@ on:
       required_build_versions:
         description: "Build versions that need to be precompiled"
         value: ${{ jobs.collect_data.outputs.required_build_versions }}
-      game_changes:
-        description: "Whether game files were changed"
-        value: ${{ jobs.collect_data.outputs.game_changes }}
 
 jobs:
   collect_data:
@@ -28,7 +25,6 @@ jobs:
       alternate_tests: ${{ steps.alternate_test_finder.outputs.alternate_tests }}
       max_required_byond_client: ${{ steps.max_required_byond_client.outputs.max_required_byond_client }}
       required_build_versions: ${{ steps.setup_required_build_versions.outputs.required_build_versions }}
-      game_changes: ${{ steps.find_game_changes.outputs.all_changed_files != '' }}
 
     steps:
       - uses: actions/checkout@v6
@@ -70,13 +66,3 @@ jobs:
             ($alternate + $default) | map({major, minor}) | unique
           ')
           echo "required_build_versions=$REQUIRED_BUILD_VERSIONS" >> $GITHUB_OUTPUT
-
-      - name: Find game changes
-        id: find_game_changes
-        uses: tj-actions/changed-files@v47
-        with:
-          fetch_depth: 0
-          files_ignore: |
-            **/*.md
-            html/**
-            tgui/**

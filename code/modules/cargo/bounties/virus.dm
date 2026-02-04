@@ -17,7 +17,7 @@
 	return "At least 1u"
 
 /datum/bounty/virus/can_claim()
-	return ..() && shipped
+	return shipped
 
 /datum/bounty/virus/applies_to(obj/export)
 	if(shipped)

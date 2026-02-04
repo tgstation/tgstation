@@ -46,8 +46,7 @@
 
 			// if effects are not specified and not explicitly disabled, sparks
 			if((!effectin || !effectout) && !no_effects)
-				var/datum/effect_system/spark_spread/sparks = new
-				sparks.set_up(5, 1, teleatom)
+				var/datum/effect_system/basic/spark_spread/sparks = new(teleatom, 5, TRUE)
 				if (!effectin)
 					effectin = sparks
 				if (!effectout)
@@ -55,8 +54,7 @@
 		if(TELEPORT_CHANNEL_QUANTUM)
 			// if effects are not specified and not explicitly disabled, rainbow sparks
 			if ((!effectin || !effectout) && !no_effects)
-				var/datum/effect_system/spark_spread/quantum/sparks = new
-				sparks.set_up(5, 1, teleatom)
+				var/datum/effect_system/basic/spark_spread/quantum/sparks = new(teleatom, 5, TRUE)
 				if (!effectin)
 					effectin = sparks
 				if (!effectout)
@@ -127,8 +125,7 @@
 	if(sound)
 		playsound(location, sound, 60, TRUE)
 	if(effect)
-		effect.attach(location)
-		effect.start()
+		effect.attach(location).start()
 
 /**
  * Attempts to find a "safe" floor turf within some given z-levels

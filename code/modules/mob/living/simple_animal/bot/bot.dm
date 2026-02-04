@@ -707,10 +707,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	bot_reset() //Reset a bot before setting it to call mode.
 
-	//For giving the bot temporary all-access. This method is bad and makes me feel bad. Refactoring access to a component is for another PR.
-	//Easier then building the list ourselves. I'm sorry.
-	var/static/obj/item/card/id/all_access = new /obj/item/card/id/advanced/gold/captains_spare()
-	set_path(get_path_to(src, waypoint, max_distance=200, access = all_access.GetAccess()))
+	set_path(get_path_to(src, waypoint, max_distance=200, access = REGION_ACCESS_ALL_STATION))
 	calling_ai = summoner //Link the AI to the bot!
 	ai_waypoint = waypoint
 

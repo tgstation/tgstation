@@ -1,4 +1,5 @@
 /datum/emote/brain
+	abstract_type = /datum/emote/brain
 	mob_type_allowed_typecache = list(/mob/living/brain)
 	mob_type_blacklist_typecache = list()
 	emote_type = EMOTE_AUDIBLE

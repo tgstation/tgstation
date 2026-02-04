@@ -4,7 +4,7 @@
 	var/datum/reagent/wanted_reagent
 
 /datum/bounty/reagent/can_claim()
-	return ..() && shipped_volume >= required_volume
+	return shipped_volume >= required_volume
 
 /datum/bounty/reagent/print_required()
 		return "[shipped_volume]/[required_volume] u"
@@ -211,7 +211,7 @@
 	var/wanted_vol = 30
 
 /datum/bounty/pill/can_claim()
-	return ..() && shipped_ammount >= required_ammount
+	return shipped_ammount >= required_ammount
 
 /datum/bounty/pill/applies_to(obj/shipped)
 	if(!istype(shipped, /obj/item/reagent_containers/applicator/pill))

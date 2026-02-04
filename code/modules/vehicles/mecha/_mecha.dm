@@ -59,7 +59,7 @@
 	var/mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | BEACON_TRACKABLE | AI_COMPATIBLE | BEACON_CONTROLLABLE
 
 	///Spark effects are handled by this datum
-	var/datum/effect_system/spark_spread/spark_system
+	var/datum/effect_system/basic/spark_spread/spark_system
 	///How powerful our lights are
 	var/lights_power = 6
 	///Just stop the mech from doing anything
@@ -230,13 +230,9 @@
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 
-	spark_system = new
-	spark_system.set_up(2, 0, src)
+	spark_system = new(src, 2, FALSE)
 	spark_system.attach(src)
-
-	smoke_system = new
-	smoke_system.set_up(3, holder = src, location = src)
-	smoke_system.attach(src)
+	smoke_system = new(src, 3, holder = src)
 
 	cabin_air = new(cabin_volume)
 

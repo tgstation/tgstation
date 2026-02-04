@@ -13,6 +13,8 @@
 	clumsy_check = FALSE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL // Has no trigger at all, uses magic instead
 	pin = /obj/item/firing_pin/magic
+	/// If true, our fire sound gets lower as our charges decrease
+	var/pitch_with_charges = TRUE
 	/// What kind of magic is this
 	var/school = SCHOOL_EVOCATION
 	/// What kind of antimagic resists this
@@ -49,11 +51,18 @@
 	return ..()
 
 /obj/item/gun/magic/fire_sounds()
-	var/frequency_to_use = sin((90/max_charges) * charges)
+	var/pitch_to_use = 1
+
+	if (pitch_with_charges && max_charges > 1)
+		pitch_to_use = LERP(1, 0.4, (1 - (charges/max_charges)) ** 2)
+
+	var/sound/playing_sound = sound(suppressed ? suppressed_sound : fire_sound)
+	playing_sound.pitch = pitch_to_use
+
 	if(suppressed)
-		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = frequency_to_use)
+		playsound(src, playing_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 	else
-		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound, frequency = frequency_to_use)
+		playsound(src, playing_sound, fire_sound_volume, vary_fire_sound)
 
 /**
  * Signal proc for [COMSIG_ITEM_MAGICALLY_CHARGED]

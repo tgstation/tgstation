@@ -20,6 +20,7 @@
 	var/obj/carried_egg
 
 /datum/emote/penguin
+	abstract_type = /datum/emote/penguin
 	mob_type_allowed_typecache = /mob/living/basic/pet/penguin
 	mob_type_blacklist_typecache = list()
 

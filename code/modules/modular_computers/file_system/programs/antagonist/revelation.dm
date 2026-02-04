@@ -34,8 +34,7 @@
 		if(computer.internal_cell && prob(25))
 			QDEL_NULL(computer.internal_cell)
 			computer.visible_message(span_notice("\The [computer]'s battery explodes in rain of sparks."))
-			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
-			spark_system.start()
+			do_sparks(3, FALSE, src)
 
 /datum/computer_file/program/revelation/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

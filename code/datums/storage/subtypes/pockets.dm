@@ -218,7 +218,6 @@
 
 ///Void cloak pocket
 /datum/storage/pockets/void_cloak
-	quickdraw = TRUE
 	max_total_storage = 5 // 2 small items + 1 tiny item, or 1 normal item + 1 small item
 	max_slots = 3
 

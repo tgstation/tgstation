@@ -79,7 +79,7 @@
 	spawn_location.visible_message(span_userdanger("A Magical [servant_title] appears in a cloud of smoke!"))
 	var/mob/living/carbon/human/human_servant = new(spawn_location)
 	human_servant.equipOutfit(/datum/outfit/butler)
-	do_smoke(0, holder = src, location = spawn_location)
+	do_smoke(0, src, spawn_location)
 	human_servant.PossessByPlayer(chosen_one.key)
 	summon_weakref = WEAKREF(human_servant)
 

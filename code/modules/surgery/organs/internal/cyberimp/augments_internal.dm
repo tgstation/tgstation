@@ -210,9 +210,7 @@
 	owner.set_stamina_loss(0)
 	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, set_stamina_loss), 0), stun_resistance_time)
 
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(5, 1, src)
-	sparks.start()
+	do_sparks(5, TRUE, src)
 
 	give_stun_buffs(owner)
 	addtimer(CALLBACK(src, PROC_REF(remove_stun_buffs), owner), stun_resistance_time)

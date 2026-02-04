@@ -97,9 +97,7 @@
 		new /obj/effect/gibspawner/generic(get_turf(vat)) //Spawn some gibs.
 
 /datum/micro_organism/cell_line/proc/succeed_growing(obj/machinery/vatgrower/vat)
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, holder = vat, location = vat.loc)
-	smoke.start()
+	do_smoke(0, vat, vat.loc)
 	for(var/x in 1 to resulting_atom_count)
 		var/atom/thing = new resulting_atom(get_turf(vat))
 		ADD_TRAIT(thing, TRAIT_VATGROWN, "vatgrowing")

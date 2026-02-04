@@ -833,10 +833,7 @@
 	if(!electrocute_mob(user, cable_node, src, 1, TRUE))
 		return FALSE
 
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(3, TRUE, src)
-	sparks.start()
-
+	do_sparks(3, TRUE, src)
 	return TRUE
 
 /obj/structure/table/bronze

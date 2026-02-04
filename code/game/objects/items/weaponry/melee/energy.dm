@@ -358,7 +358,7 @@
 	heat = 3500
 	w_class = WEIGHT_CLASS_BULKY
 	/// Our linked spark system that emits from our sword.
-	var/datum/effect_system/spark_spread/spark_system
+	var/datum/effect_system/basic/spark_spread/spark_system
 	var/list/alt_continuous = list("stabs", "pierces", "impales")
 	var/list/alt_simple = list("stab", "pierce", "impale")
 
@@ -368,8 +368,7 @@
 	alt_continuous = string_list(alt_continuous)
 	alt_simple = string_list(alt_simple)
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -10)
-	spark_system = new /datum/effect_system/spark_spread()
-	spark_system.set_up(5, 0, src)
+	spark_system = new(5, FALSE, src)
 	spark_system.attach(src)
 	START_PROCESSING(SSobj, src)
 	ADD_TRAIT(src, TRAIT_TRANSFORM_ACTIVE, INNATE_TRAIT) // Functions as an extended esword
@@ -557,6 +556,7 @@
 	armour_penetration = 0
 	wound_bonus = -10
 	demolition_mod = 1
+	obj_flags = parent_type::obj_flags | UNIQUE_RENAME
 	sword_color_icon = "blue"
 	light_color = LIGHT_COLOR_LIGHT_CYAN
 	active_force = 18

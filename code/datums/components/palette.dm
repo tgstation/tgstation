@@ -5,9 +5,10 @@
  * and call set_painting_tool_color() on the parent for more specific object behavior.
  */
 /datum/component/palette
+	/// The maximum number of colors this palette can have.
+	var/max_colors
 	/*
 	 * A list that stores a selection of colors.
-	 * The number of available spaces is defined by the available_space arg of Initialize()
 	 */
 	var/list/colors = list()
 	/*
@@ -20,25 +21,20 @@
 	/// The radial menu choice datums are stored here as a microop to avoid generating new ones every time the menu is opened or updated.
 	var/list/datum/radial_menu_choice/menu_choices
 
-/datum/component/palette/Initialize(available_space, selected_color)
+/datum/component/palette/Initialize(max_colors, selected_color)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	if(!isnum(available_space) || available_space < 1) /// This component means nothing if there's no space for colors
-		stack_trace("palette component initialized without a proper value for the available_space arg")
+	if(!isnum(max_colors) || max_colors < 1) /// This component means nothing if there's no space for colors
+		stack_trace("palette component initialized without a proper value for the max_colors arg")
 		return COMPONENT_INCOMPATIBLE
 
-	for(var/index in 1 to available_space)
-		colors += "#ffffff"
-
-	src.colors = colors
+	src.max_colors = max_colors
 	src.selected_color = selected_color || "#ffffff"
 
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF_SECONDARY, PROC_REF(on_attack_self_secondary))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_PAINTING_TOOL_SET_COLOR, PROC_REF(on_painting_tool_set_color))
-	RegisterSignal(parent, COMSIG_PAINTING_TOOL_GET_ADDITIONAL_DATA, PROC_REF(get_palette_data))
-	RegisterSignal(parent, COMSIG_PAINTING_TOOL_PALETTE_COLOR_CHANGED, PROC_REF(palette_color_changed))
 
 /datum/component/palette/Destroy()
 	QDEL_NULL(color_picker_menu)
@@ -51,7 +47,7 @@
 	SIGNAL_HANDLER
 
 	examine_list += span_notice("<b>Right-Click</b> this item while it's in your active hand to open/close its color picker menu.")
-	examine_list += span_notice("In the color picker, <b>Left-Click</b> a color button to pick it or <b>Right-Click</b> to edit it.")
+	examine_list += span_notice("In the color picker, <b>Left-Click</b> a color button to pick it or <b>Right-Click</b> to remove it.")
 
 /datum/component/palette/proc/on_attack_self_secondary(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -72,12 +68,27 @@
 
 /datum/component/palette/proc/build_radial_list()
 	var/radial_list = list()
-	LAZYSETLEN(menu_choices, length(colors))
+	var/color_count = length(colors)
+	LAZYSETLEN(menu_choices, max(color_count+1))
+	if(color_count < max_colors && !(selected_color in colors))
+		var/datum/radial_menu_choice/add_option = peek(menu_choices)
+		if(!add_option)
+			add_option = new
+			menu_choices[color_count+1] = add_option
+		var/image/element = image(icon = 'icons/hud/radial.dmi', icon_state = "palette_element")
+		element.color = selected_color
+		var/image/plus = image(icon = 'icons/hud/radial.dmi', icon_state = "palette_add")
+		plus.appearance_flags = /image::appearance_flags | RESET_COLOR
+		element.add_overlay(plus)
+		add_option.image = element
+		add_option.name = "Add Color ([selected_color])"
+		radial_list["add"] = add_option
 	for(var/index in 1 to length(colors))
 		var/hexcolor = colors[index]
 		var/datum/radial_menu_choice/option = menu_choices[index]
 		if(!option)
 			option = new
+			menu_choices[index] = option
 		var/icon_state_to_use = hexcolor == selected_color ? "palette_selected" : "palette_element"
 		var/image/element = image(icon = 'icons/hud/radial.dmi', icon_state = icon_state_to_use)
 		element.color = hexcolor
@@ -104,11 +115,14 @@
 		close_radial_menu()
 		return
 	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
+	if(choice == "add")
+		if(length(colors) < max_colors)
+			colors += selected_color
+			update_radial_list()
+		return
 	var/index = text2num(choice)
 	if(is_right_clicking)
-		var/chosen_color = tgui_color_picker(user, "Pick new color", "[parent]", colors[index])
-		if(chosen_color && !QDELETED(src) && !IS_DEAD_OR_INCAP(user) && user.is_holding(parent))
-			colors[index] = chosen_color
+		colors.Cut(index, index+1)
 		update_radial_list()
 	else
 		var/obj/item/parent_item = parent
@@ -119,24 +133,3 @@
 
 	selected_color = chosen_color
 	update_radial_list()
-
-/datum/component/palette/proc/get_palette_data(datum/source, data)
-	SIGNAL_HANDLER
-	var/list/painting_data = list()
-	for(var/hexcolor in colors)
-		painting_data += list(list(
-			"color" = hexcolor,
-			"is_selected" = hexcolor == selected_color
-		))
-	data["paint_tool_palette"] = painting_data
-
-/datum/component/palette/proc/palette_color_changed(datum/source, chosen_color, index)
-	SIGNAL_HANDLER
-
-	var/was_selected_color = selected_color == colors[index]
-	colors[index] = chosen_color
-	if(was_selected_color)
-		var/obj/item/parent_item = parent
-		parent_item.set_painting_tool_color(chosen_color)
-	else
-		update_radial_list()

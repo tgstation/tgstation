@@ -944,7 +944,7 @@
 
 	var/result = perform_hand_swap(held_index)
 	if (result)
-		SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS)
+		SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, get_active_held_item(), held_item)
 
 	return result
 

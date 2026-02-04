@@ -14,7 +14,7 @@
 		"editor.formatOnSave": true,
 		"editor.rulers": [80]
 	},
-	"[yaml][markdown][html][scss][github-actions-workflow]": {
+	"[yaml][markdown][html][scss]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode",
 		"editor.formatOnSave": true,
 		"editor.rulers": [80]

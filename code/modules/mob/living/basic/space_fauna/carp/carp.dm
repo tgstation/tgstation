@@ -84,6 +84,7 @@
 	))
 
 /datum/emote/carp
+	abstract_type = /datum/emote/carp
 	mob_type_allowed_typecache = /mob/living/basic/carp
 	mob_type_blacklist_typecache = list()
 

@@ -21,7 +21,7 @@
 	armor_type = /datum/armor/item_construction
 	resistance_flags = FIRE_PROOF
 	/// the spark system which sparks whever the ui options are dited
-	var/datum/effect_system/spark_spread/spark_system
+	var/datum/effect_system/basic/spark_spread/spark_system
 	/// current local matter inside the device, not used when silo link is on
 	var/matter = 0
 	/// maximum local matter this device can hold, not used when silo link is on
@@ -47,8 +47,7 @@
 
 /obj/item/construction/Initialize(mapload)
 	. = ..()
-	spark_system = new /datum/effect_system/spark_spread
-	spark_system.set_up(5, 0, src)
+	spark_system = new(5, FALSE, src)
 	spark_system.attach(src)
 	if(construction_upgrades & RCD_UPGRADE_SILO_LINK)
 		silo_mats = new (src, mapload, FALSE)
