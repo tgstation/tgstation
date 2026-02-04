@@ -130,20 +130,20 @@
 		return SSmaterials.get_material(tip_mat_type)
 	return ..()
 
-/obj/item/spear/apply_main_material_effects(datum/material/main_material, amount, multipier)
+/obj/item/spear/apply_main_material_effects(datum/material/main_material, amount, multiplier)
 	. = ..()
 	var/density = main_material.get_property(MATERIAL_DENSITY)
 	var/hardness = main_material.get_property(MATERIAL_HARDNESS)
-	// Base of 4 ~ 5 as to keep parity with old spear stats
-	force_unwielded += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5)
-	force_wielded += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5)
+	var/force_change = (hardness - 4) - (density - 4)
+	force_unwielded += force_change
+	force_wielded += force_change
 	force = force_unwielded
-	throwforce += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5)
-	wound_bonus += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5) * 5
+	throwforce += force_change
+	wound_bonus += force_change * 5
 	modify_max_integrity(max_integrity + (hardness - 4) * 10)
-	throw_range += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5) - (density - 4)
-	throw_speed += floor((MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5) - (density - 4)) / 2)
-	// And these try to keep parity with titanium/plastitanium spears as armorpen boost was exclusive to them
+	throw_range += (hardness - 4) - (density - 4) * 2
+	throw_speed += floor(((hardness - 4) - (density - 4) * 2) / 2)
+	// These try to keep parity with titanium/plastitanium spears as armorpen boost was exclusive to them
 	armour_penetration += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) * 5
 	exposed_wound_bonus += (MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) - (density - 4)) * 5
 	AddComponent(/datum/component/two_handed, \
@@ -154,20 +154,20 @@
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
 
-/obj/item/spear/remove_main_material_effects(datum/material/main_material, amount, multipier)
+/obj/item/spear/remove_main_material_effects(datum/material/main_material, amount, multiplier)
 	. = ..()
 	var/density = main_material.get_property(MATERIAL_DENSITY)
 	var/hardness = main_material.get_property(MATERIAL_HARDNESS)
-	// Base of 4 ~ 5 as to keep parity with old spear stats
-	force_unwielded -= MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5)
-	force_wielded -= MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5)
+	var/force_change = (hardness - 4) - (density - 4)
+	force_unwielded -= force_change
+	force_wielded -= force_change
 	force = force_unwielded
-	throwforce -= MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5)
-	wound_bonus -= MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5) * 5
+	throwforce -= force_change
+	wound_bonus -= force_change * 5
 	modify_max_integrity(max_integrity - (hardness - 4) * 10)
-	throw_range -= MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5) - (density - 4)
-	throw_speed -= floor((MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 5) - (density - 4)) / 2)
-	// And these try to keep parity with titanium/plastitanium spears as armorpen boost was exclusive to them
+	throw_range -= (hardness - 4) - (density - 4) * 2
+	throw_speed -= floor(((hardness - 4) - (density - 4) * 2) / 2)
+	// These try to keep parity with titanium/plastitanium spears as armorpen boost was exclusive to them
 	armour_penetration -= MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) * 5
 	exposed_wound_bonus -= (MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) - (density - 4)) * 5
 	AddComponent(/datum/component/two_handed, \

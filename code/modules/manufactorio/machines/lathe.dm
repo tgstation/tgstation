@@ -113,8 +113,8 @@
 	//check for materials required. For custom material items decode their required materials
 	var/list/materials_needed = list()
 	for(var/material, amount_needed in design.materials)
-		if(isnum(material)) // Material flag(s)
-			for(var/datum/material/valid_candidate as anything in SSmaterials.get_materials_by_flag(material))
+		if(ispath(material, /datum/material_requirement)) // Material requirement
+			for(var/datum/material/valid_candidate as anything in SSmaterials.get_materials_by_req(material))
 				if(materials.get_material_amount(valid_candidate) >= amount_needed)
 					material = valid_candidate
 					break

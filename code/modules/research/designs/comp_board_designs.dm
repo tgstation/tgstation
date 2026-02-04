@@ -4,7 +4,7 @@
 	name = "NULL ENTRY Board"
 	desc = "I promise this doesn't give you syndicate goodies!"
 	build_type = IMPRINTER | AWAY_IMPRINTER
-	materials = alist(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 
 /datum/design/board/arcade_battle
 	name = "Battle Arcade Machine Board"
@@ -60,7 +60,7 @@
 	name = "AI Upload Board"
 	desc = "Allows for the construction of circuit boards used to build an AI Upload Console."
 	id = "aiupload"
-	materials = alist(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/circuitboard/computer/aiupload
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
@@ -71,7 +71,7 @@
 	name = "Cyborg Upload Board"
 	desc = "Allows for the construction of circuit boards used to build a Cyborg Upload Console."
 	id = "borgupload"
-	materials = alist(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/circuitboard/computer/borgupload
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
@@ -173,7 +173,7 @@
 	name = "Robotics Control Console Board"
 	desc = "Allows for the construction of circuit boards used to build a Robotics Control console."
 	id = "robocontrol"
-	materials = alist(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/circuitboard/computer/robotics
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS

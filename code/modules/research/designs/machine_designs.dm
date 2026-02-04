@@ -724,7 +724,7 @@
 	name = "Weapon Recharger Board"
 	desc = "The circuit board for a Weapon Recharger."
 	id = "recharger"
-	materials = alist(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/circuitboard/machine/recharger
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_SECURITY
@@ -1186,7 +1186,7 @@
 /datum/design/board/brm
 	name = "Boulder Retrieval Matrix Board"
 	id = "brm"
-	materials = alist(
+	materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
 	)
 	build_path = /obj/item/circuitboard/machine/brm

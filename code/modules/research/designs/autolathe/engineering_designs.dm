@@ -2,7 +2,7 @@
 	name = "Solar Panel Frame"
 	id = "solar_panel"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = alist(/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.75, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.75, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/solar_assembly
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -14,7 +14,7 @@
 	name = "Solar Tracking Electronics"
 	id = "solar_tracker"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = alist(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/electronics/tracker
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -26,7 +26,7 @@
 	name = "Blast Door Controller"
 	id = "blast"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
-	materials = alist(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/assembly/control
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -38,7 +38,7 @@
 	name = "Ignition Switch Controller"
 	id = "ignition"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
-	materials = alist(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 	build_path = /obj/item/assembly/control/igniter
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -50,7 +50,7 @@
 	name = "Custom Vendor Refill"
 	id = "custom_vendor_refill"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = alist(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/vending_refill/custom
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -63,7 +63,7 @@
 	name = "Light Fixture Battery"
 	id = "miniature_power_cell"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = alist(/datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
 	build_path = /obj/item/stock_parts/power_store/cell/emergency_light
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -75,7 +75,7 @@
 	name = "Geiger Counter"
 	id = "geigercounter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = alist(/datum/material/iron = SMALL_MATERIAL_AMOUNT*1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*1.5)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*1.5)
 	build_path = /obj/item/geiger_counter
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -87,7 +87,7 @@
 	name = "Industrial Welding Tool"
 	id = "large_welding_tool"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = alist(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.7, /datum/material/glass = SMALL_MATERIAL_AMOUNT*0.6)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.7, /datum/material/glass = SMALL_MATERIAL_AMOUNT*0.6)
 	build_path = /obj/item/weldingtool/largetank/empty
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -99,7 +99,7 @@
 	name = "Earmuffs"
 	id = "earmuffs"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = alist(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/clothing/ears/earmuffs
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -111,7 +111,7 @@
 	name = "Pipe Painter"
 	id = "pipe_painter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = alist(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/pipe_painter
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -123,7 +123,7 @@
 	name = "Airlock Painter"
 	id = "airlock_painter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = alist(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/airlock_painter
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -135,7 +135,7 @@
 	name = "Decal Painter"
 	id = "decal_painter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = alist(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/airlock_painter/decal
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -147,7 +147,7 @@
 	name = "APC Module"
 	id = "power_control"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = alist(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/electronics/apc
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -159,7 +159,7 @@
 	name = "Airlock Electronics"
 	id = "airlock_board"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = alist(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/electronics/airlock
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -171,7 +171,7 @@
 	name = "Firelock Circuitry"
 	id = "firelock_board"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = alist(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/electronics/firelock
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -183,7 +183,7 @@
 	name = "Air Alarm Electronics"
 	id = "airalarm_electronics"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = alist(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/electronics/airalarm
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -195,7 +195,7 @@
 	name = "Fire Alarm Electronics"
 	id = "firealarm_electronics"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = alist(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/electronics/firealarm
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -207,7 +207,7 @@
 	name = "Trapdoor Controller Electronics"
 	id = "trapdoor_electronics"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = alist(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/assembly/trapdoor
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -219,7 +219,7 @@
 	name = "Fire Extinguisher"
 	id = "extinguisher"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = alist(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/extinguisher/empty
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -231,7 +231,7 @@
 	name = "Pocket Fire Extinguisher"
 	id = "pocketfireextinguisher"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = alist(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*0.4)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*0.4)
 	build_path = /obj/item/extinguisher/mini/empty
 	category = list(
 		RND_CATEGORY_INITIAL,

@@ -1,5 +1,5 @@
-#define AI_MODULE_MATERIALS_COMMON alist(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
-#define AI_MODULE_MATERIALS_UNUSUAL alist(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+#define AI_MODULE_MATERIALS_COMMON list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+#define AI_MODULE_MATERIALS_UNUSUAL list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 
 ///////////////////////////////////
 //////////AI Module Disks//////////
@@ -30,7 +30,7 @@
 	name = "OneHuman Module"
 	desc = "Allows for the construction of a OneHuman AI Module."
 	id = "onehuman_module"
-	materials = alist(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 3, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 3, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/ai_module/zeroth/onehuman
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
@@ -74,7 +74,7 @@
 	name = "Freeform Module"
 	desc = "Allows for the construction of a Freeform AI Module."
 	id = "freeform_module"
-	materials = alist(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT)//Custom inputs should be more expensive to get
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT)//Custom inputs should be more expensive to get
 	build_path = /obj/item/ai_module/supplied/freeform
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_LAW_MANIPULATION
@@ -85,7 +85,7 @@
 	name = "Reset Module"
 	desc = "Allows for the construction of a Reset AI Module."
 	id = "reset_module"
-	materials = alist(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/ai_module/reset
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_LAW_MANIPULATION
@@ -118,7 +118,7 @@
 	name = "Core Freeform Module"
 	desc = "Allows for the construction of a Core Freeform AI Core Module."
 	id = "freeformcore_module"
-	materials = alist(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT)//Ditto
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT)//Ditto
 	build_path = /obj/item/ai_module/core/freeformcore
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_LAW_MANIPULATION

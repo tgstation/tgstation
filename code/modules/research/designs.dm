@@ -29,8 +29,8 @@ other types of metals and chemistry for reagents).
 	var/id = DESIGN_ID_IGNORE
 	/// Bitflags indicating what machines this design is compatable with. ([IMPRINTER]|[AWAY_IMPRINTER]|[PROTOLATHE]|[AWAY_LATHE]|[AUTOLATHE]|[MECHFAB]|[BIOGENERATOR]|[LIMBGROWER]|[SMELTER])
 	var/build_type = null
-	/// List of materials required to create one unit of the product. Format is (typepath or flags) -> amount
-	var/alist/materials = alist()
+	/// List of materials required to create one unit of the product. Format is (typepath or requirements datum) -> amount
+	var/list/materials = list()
 	/// The amount of time required to create one unit of the product.
 	var/construction_time = 3.2 SECONDS
 	/// The typepath of the object produced by this design
@@ -67,14 +67,14 @@ other types of metals and chemistry for reagents).
 	return ..()
 
 /datum/design/proc/InitializeMaterials()
-	var/alist/temp_list = alist()
+	var/list/temp_list = list()
 	// Go through all of our materials, get the subsystem instance, and then replace the list.
 	for(var/mat_type, amount in materials)
-		if(isnum(mat_type) || ispath(mat_type))
+		if(ispath(mat_type, /datum/material_requirement))
 			temp_list[mat_type] = amount
 			continue
 
-		// Not a flag or a requirement, so get the ref the normal way
+		// Not a material requirement, so get the ref the normal way
 		var/datum/material/mat = SSmaterials.get_material(mat_type)
 		temp_list[mat] = amount
 

@@ -157,9 +157,15 @@
 			if(istype(mat))
 				cost[mat.name] = design_cost
 				customMaterials = FALSE
-			else
-				cost[GLOB.material_flags_to_string[mat]] = design_cost
-				customMaterials = TRUE
+				continue
+
+			var/datum/material_requirement/requirement = SSmaterials.requirements[mat]
+			if (!requirement)
+				stack_trace("Design [design] has an invalid material requirement [requirement]")
+				continue
+
+			cost[requirement.get_description()] = design_cost
+			customMaterials = TRUE
 
 		//create & send ui data
 		var/icon_size = spritesheet.icon_size_id(design.id)
@@ -253,14 +259,14 @@
 	var/list/materials_needed = list()
 	var/mat_choice = FALSE
 	for(var/material, amount_needed in design.materials)
-		if(!isnum(material)) // Material flag(s)
+		if(!ispath(material, /datum/material_requirement)) // Material requirement
 			if(!ispath(material, /datum/material))
 				CRASH("Autolathe ui_act got passed an invalid material id: [material]")
 			materials_needed[material] += amount_needed
 			continue
 
 		var/list/choices = list()
-		for(var/datum/material/valid_candidate as anything in SSmaterials.get_materials_by_flag(material))
+		for(var/datum/material/valid_candidate as anything in SSmaterials.get_materials_by_req(material))
 			if(materials.get_material_amount(valid_candidate) >= (amount_needed + materials_needed[valid_candidate]))
 				choices[valid_candidate.name] = valid_candidate
 

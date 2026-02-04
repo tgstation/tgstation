@@ -33,6 +33,8 @@ SUBSYSTEM_DEF(materials)
 	var/list/datum/dimension_theme/dimensional_themes
 	/// An ID -> instance list of material properties
 	var/list/datum/material_property/properties
+	/// A typepath -> instance list of material requirements
+	var/list/datum/material_requirement/requirements
 
 ///Ran on initialize, populated the materials and material dictionaries with their appropriate vars (See these variables for more info)
 /datum/controller/subsystem/materials/proc/initialize_materials()
@@ -44,6 +46,10 @@ SUBSYSTEM_DEF(materials)
 	properties = list()
 	for(var/datum/material_property/property_type as anything in valid_subtypesof(/datum/material_property))
 		properties[property_type::id] = new property_type()
+
+	requirements = list()
+	for(var/datum/material_requirement/requirement_type as anything in valid_subtypesof(/datum/material_requirement))
+		requirements[requirement_type] = new requirement_type()
 
 	for(var/datum/material/mat_type as anything in valid_subtypesof(/datum/material))
 		if(initial(mat_type.init_flags) & MATERIAL_INIT_MAPLOAD)
@@ -113,6 +119,7 @@ SUBSYSTEM_DEF(materials)
 	if (isnull(mat_flag) || mat_flag == MATERIAL_CLASS_ANY) // Wildcard for "any" material
 		return flat_materials
 
+	// Lazy cache for access speed on repeated calls
 	var/static/list/materials_by_flag
 	if (!materials_by_flag)
 		materials_by_flag = list()
@@ -184,3 +191,30 @@ SUBSYSTEM_DEF(materials)
 			combo[SSmaterials.get_material(mat)] = OPTIMAL_COST(materials_declaration[mat] * multiplier)
 		material_combos[combo_index] = combo
 	return combo
+
+/// Returns all materials that fit a requirement datum
+/datum/controller/subsystem/materials/proc/get_materials_by_req(datum/material_requirement/requirement)
+	if (ispath(requirement))
+		if (!requirements[requirement])
+			CRASH("Invalid material requirement passed into get_materials_by_req: [requirement]")
+		requirement = requirements[requirement]
+
+	. = list()
+	for (var/datum/material/material as anything in get_materials_by_flag(requirement.required_flags)) // If none are set, this returns all materials
+		var/failed = FALSE
+		for (var/prop_id, min_val in requirement.property_minimums)
+			if (material.get_property(prop_id) < min_val)
+				failed = TRUE
+				break
+
+		if (failed)
+			continue
+
+		for (var/prop_id, max_val in requirement.property_maximums)
+			if (material.get_property(prop_id) > max_val)
+				failed = TRUE
+				break
+
+		if (!failed)
+			. += material
+	return .

@@ -1942,9 +1942,9 @@
 			return TRUE
 	return FALSE
 
-/obj/item/apply_main_material_effects(datum/material/main_material, amount, multipier)
+/obj/item/apply_main_material_effects(datum/material/main_material, amount, multiplier)
 	. = ..()
-	if(material_flags & MATERIAL_GREYSCALE)
+	if (material_flags & MATERIAL_GREYSCALE)
 		var/main_mat_type = main_material.type
 		var/worn_path = get_material_greyscale_config(main_mat_type, greyscale_config_worn)
 		var/lefthand_path = get_material_greyscale_config(main_mat_type, greyscale_config_inhand_left)
@@ -1955,7 +1955,13 @@
 			new_inhand_right = righthand_path
 		)
 
-	if(!main_material.item_sound_override)
+	if (!(material_flags & MATERIAL_NO_SLOWDOWN))
+		var/flexibility = main_material.get_property(MATERIAL_FLEXIBILITY)
+		// If the item applies slowdown only when worn, poor flexibility will increase our slowdown
+		if (!(item_flags & SLOWS_WHILE_IN_HAND) && flexibility < 6)
+			slowdown = max(slowdown >= 0 ? 0 : slowdown, slowdown + (flexibility - 6) * 0.025 * multiplier)
+
+	if (!main_material.item_sound_override)
 		return
 
 	hitsound = main_material.item_sound_override
@@ -1965,16 +1971,22 @@
 	pickup_sound = main_material.item_sound_override
 	drop_sound = main_material.item_sound_override
 
-/obj/item/remove_main_material_effects(datum/material/main_material, amount, multipier)
+/obj/item/remove_main_material_effects(datum/material/main_material, amount, multiplier)
 	. = ..()
-	if(material_flags & MATERIAL_GREYSCALE)
+	if (material_flags & MATERIAL_GREYSCALE)
 		set_greyscale(
 			new_worn_config = initial(greyscale_config_worn),
 			new_inhand_left = initial(greyscale_config_inhand_left),
 			new_inhand_right = initial(greyscale_config_inhand_right)
 		)
 
-	if(!main_material.item_sound_override)
+	if (!(material_flags & MATERIAL_NO_SLOWDOWN))
+		var/flexibility = main_material.get_property(MATERIAL_FLEXIBILITY)
+		// If the item applies slowdown only when worn, poor flexibility will increase our slowdown
+		if (!(item_flags & SLOWS_WHILE_IN_HAND) && flexibility < 6)
+			slowdown = min(initial(slowdown), slowdown - (flexibility - 6) * 0.025 * multiplier)
+
+	if (!main_material.item_sound_override)
 		return
 
 	hitsound = initial(hitsound)
@@ -2002,7 +2014,6 @@
 
 	// Density above 6 adds slowdown, density below 3 can reduce existing slowdown
 	var/density = material.get_property(MATERIAL_DENSITY)
-	var/flexibility = material.get_property(MATERIAL_FLEXIBILITY)
 	var/slowdown_change = 0
 
 	if (density > 6)
@@ -2010,12 +2021,8 @@
 	else if (density < 3)
 		slowdown_change = (3 - density) * -MATERIAL_DENSITY_SLOWDOWN * mat_amount / SHEET_MATERIAL_AMOUNT
 
-	// If the item applies slowdown only when worn, we also account for poor flexibility (below 6)
-	if (!(item_flags & SLOWS_WHILE_IN_HAND) && flexibility < 6)
-		slowdown_change += (flexibility - 6) * 0.05
-
 	// Slowdown cannot be reduced below 0 if the item slows you down, or at all if the item speeds you up
-	if (slowdown_change > 0)
+	if (slowdown_change)
 		slowdown = max(slowdown >= 0 ? 0 : slowdown, slowdown + slowdown_change * multiplier)
 
 /obj/item/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
@@ -2032,17 +2039,12 @@
 		return
 
 	var/density = material.get_property(MATERIAL_DENSITY)
-	var/flexibility = material.get_property(MATERIAL_FLEXIBILITY)
 	var/slowdown_change = 0
 
 	if (density > 6)
-		slowdown_change = (density - 6) * 0.05
+		slowdown_change = (density - 6) * MATERIAL_DENSITY_SLOWDOWN * mat_amount / SHEET_MATERIAL_AMOUNT
 	else if (density < 3)
-		slowdown_change = (3 - density) * -0.05
-
-	// If the item applies slowdown only when worn, we also account for poor flexibility (below 6)
-	if (!(item_flags & SLOWS_WHILE_IN_HAND) && flexibility < 6)
-		slowdown_change += (flexibility - 6) * 0.05
+		slowdown_change = (3 - density) * -MATERIAL_DENSITY_SLOWDOWN * mat_amount / SHEET_MATERIAL_AMOUNT
 
 	if (slowdown_change > 0)
 		slowdown -= slowdown_change * multiplier

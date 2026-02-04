@@ -239,7 +239,7 @@
 	name = "Limb Design Disk"
 	desc = "Contains designs for various limbs."
 	build_type = PROTOLATHE
-	materials = alist(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/disk/design_disk/limbs
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL

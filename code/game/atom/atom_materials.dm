@@ -235,14 +235,14 @@
 	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
 
 ///A proc for material effects that only the main material (which the atom's primarly composed of) should apply.
-/atom/proc/apply_main_material_effects(datum/material/main_material, amount, multipier)
+/atom/proc/apply_main_material_effects(datum/material/main_material, amount, multiplier)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(main_material.texture_layer_icon_state && (material_flags & MATERIAL_COLOR))
 		ADD_KEEP_TOGETHER(src, MATERIAL_SOURCE(main_material))
 		add_filter("material_texture_[main_material.name]", 1, layering_filter(icon = main_material.cached_texture_filter_icon, blend_mode = BLEND_INSET_OVERLAY))
 
-	main_material.on_main_applied(src, amount, multipier)
+	main_material.on_main_applied(src, amount, multiplier)
 
 ///Called by remove_material_effects(). It ACTUALLY handles removing effects common to all atoms (depending on material flags)
 /atom/proc/finalize_remove_material_effects(list/materials)
