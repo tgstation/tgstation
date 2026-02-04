@@ -1,0 +1,6 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - refactor: "Refactored sparks, foam, smoke, and other miscellaneous effect systems."
+  - refactor: "Vapes now have consistent rigging with cigs using the new system."
+  - bugfix: "Fixed some effects never working."
