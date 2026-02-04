@@ -277,6 +277,14 @@
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		name = initial(name)
 
+	// Ensure that we restore armor zero'd out by zero multipliers, as we don't have anything to go off other than our initial values
+	if((material_flags & MATERIAL_AFFECT_STATISTICS) && uses_integrity && initial(armor_type))
+		var/datum/armor/inital_armor = get_armor_by_type(initial(armor_type))
+		for (var/armor_id in ARMOR_LIST_ALL)
+			var/initial_rating = inital_armor.get_rating(armor_id)
+			if (get_armor_rating(armor_id) == 0 && initial_rating != 0)
+				set_armor_rating(armor_id, initial_rating)
+
 	SEND_SIGNAL(src, COMSIG_ATOM_FINALIZE_REMOVE_MATERIAL_EFFECTS, materials, main_material)
 
 ///Remove material effects of a single material.
@@ -295,7 +303,10 @@
 	var/base_modifier = material.get_property(MATERIAL_INTEGRITY)
 	var/integrity_mod = GET_MATERIAL_MODIFIER(base_modifier, multiplier)
 	modify_max_integrity(floor(max_integrity / integrity_mod))
-	var/list/armor_mods = material.get_armor_modifiers(1 / multiplier)
+	var/list/armor_mods = material.get_armor_modifiers(multiplier)
+	for (var/armor_type, value in armor_mods)
+		if (value != 0) // Needs to be restored to initial values in finalize effects, sorry
+			armor_mods[armor_type] = 1 / value
 	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
 
 ///A proc to remove the material effects previously applied by the (ex-)main material

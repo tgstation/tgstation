@@ -2044,10 +2044,8 @@
 		siemens_coefficient /= 1 + (siemens_modifier - 1) * multiplier
 	else
 		var/used_mult = 1 - (1 - siemens_modifier) * multiplier
-		if (used_mult > 0)
+		if (used_mult > 0) // Perfect insulators need to be restored in finalize
 			siemens_coefficient /= used_mult
-		else // We are an insulator so we need to reset ourselves and hope we are last
-			siemens_coefficient = initial(siemens_coefficient)
 
 	if (siemens_coefficient > 0 && (initial(obj_flags) & CONDUCTS_ELECTRICITY) && !(obj_flags & CONDUCTS_ELECTRICITY))
 		obj_flags |= CONDUCTS_ELECTRICITY
@@ -2068,6 +2066,14 @@
 	else if (slowdown_change < 0)
 		// Not guaranteed to be correct if something modified our slowdown buuuut about as good as we can get
 		slowdown = min(initial(slowdown), slowdown - slowdown_change * multiplier)
+
+/obj/item/finalize_remove_material_effects(list/materials)
+	. = ..()
+	// If we were made from an insulator we cannot restore via division
+	if (initial(siemens_coefficient) != 0 && siemens_coefficient == 0)
+		siemens_coefficient = initial(siemens_coefficient)
+		if (siemens_coefficient > 0 && (initial(obj_flags) & CONDUCTS_ELECTRICITY) && !(obj_flags & CONDUCTS_ELECTRICITY))
+			obj_flags |= CONDUCTS_ELECTRICITY
 
 /obj/item/change_material_strength(datum/material/material, mat_amount, multiplier, remove = FALSE)
 	var/density = material.get_property(MATERIAL_DENSITY)
