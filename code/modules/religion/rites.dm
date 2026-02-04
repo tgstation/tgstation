@@ -424,11 +424,12 @@
 
 /datum/religion_rites/ceremonial_weapon/perform_rite(mob/living/user, atom/religious_tool)
 	var/not_rigid = null
+	var/datum/material_requirement/requirement = SSmaterials.requirements[/datum/material_requirement/rigid_material]
 	for(var/obj/item/stack/sheet/could_blade in get_turf(religious_tool))
 		var/datum/material/blade_mat = SSmaterials.get_material(could_blade.material_type)
 		if(!blade_mat)
 			continue
-		if(!(blade_mat.mat_flags & ITEM_MATERIAL_CLASSES))
+		if(!requirement.valid_material(blade_mat))
 			not_rigid = blade_mat
 			continue
 		if(could_blade.amount < 5)

@@ -366,21 +366,16 @@
 
 	return materials_of_type
 
-/**
- * Gets the most common material in the object.
- */
+/// Gets the most common material in the object.
 /atom/proc/get_master_material()
 	return length(custom_materials) ? SSmaterials.get_material(custom_materials[1]) : null //materials are sorted by amount, the first is always the main one
 
-/**
- * Gets the total amount of materials in this atom.
- */
+/// Gets the total amount of materials in this atom.
 /atom/proc/get_custom_material_amount()
 	return isnull(custom_materials) ? 0 : counterlist_sum(custom_materials)
 
-
-///A simple proc that iterates through each material that the object is made of and spawns some stacks based on their amount and associated sheet/ore type.
-/atom/proc/drop_costum_materials(multiplier = 1)
+/// A simple proc that iterates through each material that the object is made of and spawns some stacks based on their amount and associated sheet/ore type.
+/atom/proc/drop_custom_materials(multiplier = 1)
 	for(var/datum/material/material as anything in custom_materials)
 		var/stack_type = material.sheet_type || material.ore_type
 		if(!stack_type)

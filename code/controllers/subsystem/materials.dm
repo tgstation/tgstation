@@ -133,7 +133,7 @@ SUBSYSTEM_DEF(materials)
 		if (mat_flag > 0)
 			if (material.mat_flags & mat_flag)
 				result += material
-		else if (!(material.mat_flags & mat_flag))
+		else if (!(material.mat_flags & (-mat_flag)))
 			result += material
 
 	materials_by_flag["[mat_flag]"] = result
@@ -201,20 +201,5 @@ SUBSYSTEM_DEF(materials)
 
 	. = list()
 	for (var/datum/material/material as anything in get_materials_by_flag(requirement.required_flags)) // If none are set, this returns all materials
-		var/failed = FALSE
-		for (var/prop_id, min_val in requirement.property_minimums)
-			if (material.get_property(prop_id) < min_val)
-				failed = TRUE
-				break
-
-		if (failed)
-			continue
-
-		for (var/prop_id, max_val in requirement.property_maximums)
-			if (material.get_property(prop_id) > max_val)
-				failed = TRUE
-				break
-
-		if (!failed)
+		if (requirement.valid_material(material))
 			. += material
-	return .

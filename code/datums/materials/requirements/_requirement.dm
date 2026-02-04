@@ -17,7 +17,7 @@
 		return "[capitalize(english_list(flag_strings, and_text = " or "))] material"
 
 	var/list/prop_reqs = list()
-	for (var/prop_id in property_minimums | property_maximums)
+	for (var/prop_id in (property_minimums || list()) | (property_maximums || list()))
 		var/datum/material_property/property = SSmaterials.properties[prop_id]
 		if (property_minimums && property_maximums && !isnull(property_minimums[prop_id]) && !isnull(property_maximums[prop_id]))
 			prop_reqs += "[lowertext(property.name)] between [property_minimums[prop_id]] and [property_maximums[prop_id]]"
@@ -27,6 +27,21 @@
 			prop_reqs += "[lowertext(property.name)] equal to or below [property_maximums[prop_id]]"
 
 	return "[capitalize(english_list(flag_strings, and_text = " or "))] material with [english_list(prop_reqs)]"
+
+/datum/material_requirement/proc/valid_material(datum/material/material)
+	if (required_flags > 0 && !(material.mat_flags & required_flags))
+		return FALSE
+
+	if (required_flags < 0 && (material.mat_flags & (-required_flags)))
+		return FALSE
+
+	for (var/prop_id, min_val in property_minimums)
+		if (material.get_property(prop_id) < min_val)
+			return FALSE
+	for (var/prop_id, max_val in property_maximums)
+		if (material.get_property(prop_id) > max_val)
+			return FALSE
+	return TRUE
 
 // Actual requirement datums
 /datum/material_requirement/armor_material

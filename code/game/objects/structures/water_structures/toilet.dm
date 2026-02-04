@@ -237,7 +237,7 @@
 
 /obj/structure/toilet/atom_deconstruct(dissambled = TRUE)
 	dump_contents()
-	drop_costum_materials()
+	drop_custom_materials()
 	if(has_water_reclaimer)
 		new /obj/item/stock_parts/water_recycler(drop_location())
 

@@ -96,7 +96,7 @@
 	new /obj/item/flamethrower(get_turf(src))
 	var/obj/item/tank/internals/plasma/ptank = new /obj/item/tank/internals/plasma(get_turf(src))
 	ptank.air_contents.gases[/datum/gas/plasma][MOLES] = (0)
-	drop_costum_materials()
+	drop_custom_materials()
 	qdel(src)
 	return TRUE
 
