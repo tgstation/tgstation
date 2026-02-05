@@ -2038,7 +2038,7 @@
 
 	var/conductivity = material.get_property(MATERIAL_ELECTRICAL)
 	// 0 ~ 1 count as perfect insulators
-	var/siemens_modifier = round(max((conductivity - 1) ** 1.18 * 0.15, 0), 0.01)
+	var/siemens_modifier = round(max(conductivity - 1, 0) ** 1.18 * 0.15, 0.01)
 	// Cannot use the base formula as it would make any item with glass not conduct electricity
 	if (siemens_modifier > 1)
 		siemens_coefficient /= 1 + (siemens_modifier - 1) * multiplier
