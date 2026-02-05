@@ -32,7 +32,7 @@
 	var/override_allow_spacemove = FALSE
 	/// can anyone other than the rider unbuckle the rider?
 	var/can_force_unbuckle = TRUE
-	/// Like last_bump for mobs, but for vehicles. Exists to allow the door bump cooldown while also passing door openings through Bumped()
+	/// Like last_bumped for mobs, but for vehicles. Exists to allow the door bump cooldown while also passing door openings through Bumped()
 	var/vehicle_last_bumped = 0
 
 	/**
