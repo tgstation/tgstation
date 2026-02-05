@@ -278,6 +278,9 @@
 	else
 		return ..()
 
+/obj/machinery/door/poddoor/bumpopen(mob/living/carbon/user)
+	return FALSE
+
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
 	density = FALSE
