@@ -39,10 +39,13 @@
 			icon_state += "_hot"
 		if(AC_COOLING)
 			icon_state += "_cold"
+		if(AC_EMPTYING)
+			icon_state += "_empty"
 
 /obj/machinery/plumbing/acclimator/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(. == ITEM_INTERACT_SUCCESS)
+		acclimate_state = AC_FILLING
 		update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/plumbing/acclimator/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
