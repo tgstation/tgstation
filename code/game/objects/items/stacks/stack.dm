@@ -169,7 +169,7 @@
 		other_stack = find_other_stack(already_found, TRUE)
 	return TRUE
 
-/obj/item/stack/blend_requirements(obj/machinery/reagentgrinder/grinder, mob/living/user)
+/obj/item/stack/blend_requirements(atom/movable/grinder, mob/living/user)
 	if(!is_cyborg)
 		return TRUE
 	if (user)

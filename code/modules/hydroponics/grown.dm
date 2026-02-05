@@ -105,7 +105,7 @@
 
 	return new trash_type(location || drop_location())
 
-/obj/item/food/grown/blend_requirements(obj/machinery/reagentgrinder/grinder, mob/living/user)
+/obj/item/food/grown/blend_requirements(atom/movable/grinder, mob/living/user)
 	if(!dry_grind || HAS_TRAIT(src, TRAIT_DRIED))
 		return TRUE
 	if (user)

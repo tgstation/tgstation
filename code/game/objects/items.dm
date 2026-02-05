@@ -1013,7 +1013,7 @@
 	return SEND_SIGNAL(src, COMSIG_ITEM_MICROWAVE_ACT, microwave_source, microwaver, randomize_pixel_offset)
 
 ///Used to check for extra requirements for blending(grinding or juicing) an object
-/obj/item/proc/blend_requirements(obj/machinery/reagentgrinder/grinder, mob/living/user)
+/obj/item/proc/blend_requirements(atom/movable/grinder, mob/living/user)
 	return TRUE
 
 ///Returns a reagent list containing the reagents this item produces when ground up in a grinder
