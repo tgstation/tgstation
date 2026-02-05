@@ -62,3 +62,9 @@
   - spellcheck: Language manuals correctly refer to the person using them up to viewers
   - bugfix: Sources of random slimes will now produce random slimes
   - bugfix: Slimes revived via magic will now continue to look as they should
+2026-02-05:
+  Kashargul:
+  - bugfix: tgui error year display
+  lelandkemble:
+  - bugfix: the auto updating lootpanel now automatically shows new items that haven't
+      moved yet.

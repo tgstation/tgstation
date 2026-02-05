@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "the auto updating lootpanel now automatically shows new items that haven't moved yet."
