@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "the Space Furnace is now usable in rooms that have previously been breached, provided they have recovered enough air."
