@@ -177,7 +177,7 @@ GLOBAL_VAR(station_nuke_source)
 				return TRUE
 
 		if(NUKESTATE_CORE_REMOVED)
-			if(istype(weapon, /obj/item/nuke_core_container) && !istype(weapon, /obj/item/nuke_core_container/supermatter))
+			if(astype(weapon, /obj/item/nuke_core_container)?.core && !istype(weapon, /obj/item/nuke_core_container/supermatter))
 				var/obj/item/nuke_core_container/core_box = weapon
 				to_chat(user, span_notice("You pry open [core_box] and begin placing [core_box.core] into [src]'s inner chamber..."))
 				if(do_after(user, 15 SECONDS, src))
