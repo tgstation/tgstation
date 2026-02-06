@@ -129,6 +129,15 @@ GLOBAL_VAR(station_nuke_source)
 					to_chat(user, span_notice("You remove the screws from [src]'s front panel."))
 					update_appearance()
 				return TRUE
+		if(NUKESTATE_UNSCREWED)
+			if(istype(weapon, /obj/item/screwdriver/nuke))
+				to_chat(user, span_notice("You start screwing [src]'s front panel back in..."))
+				if(weapon.use_tool(src, user, 8 SECONDS, volume = 100))
+					deconstruction_state = NUKESTATE_INTACT
+					to_chat(user, span_notice("You screw [src]'s front panel back into place."))
+					deconstruction_state = NUKESTATE_INTACT
+					update_appearance()
+				return TRUE
 
 		if(NUKESTATE_PANEL_REMOVED)
 			if(weapon.tool_behaviour == TOOL_WELDER)
@@ -167,6 +176,29 @@ GLOBAL_VAR(station_nuke_source)
 					update_appearance()
 				return TRUE
 
+		if(NUKESTATE_CORE_REMOVED)
+			if(istype(weapon, /obj/item/nuke_core_container) && !istype(weapon, /obj/item/nuke_core_container/supermatter))
+				var/obj/item/nuke_core_container/core_box = weapon
+				to_chat(user, span_notice("You pry open [core_box] and begin placing [core_box.core] into [src]'s inner chamber..."))
+				if(do_after(user, 15 SECONDS, src))
+					core_box.core.forceMove(src)
+					core = core_box.core
+					to_chat(user, span_notice("You place [core_box.core] into [src]'s inner chamber."))
+					deconstruction_state = NUKESTATE_CORE_EXPOSED
+					update_appearance()
+					core_box.icon_state = core_box::icon_state
+					core_box.core = null
+				return TRUE
+			if(istype(weapon, /obj/item/nuke_core) && !istype(weapon, /obj/item/nuke_core/supermatter_sliver))
+				to_chat(user, span_notice("You begin placing [weapon] into [src]'s inner chamber..."))
+				if(do_after(user, 6 SECONDS, src))
+					weapon.forceMove(src)
+					core = weapon
+					to_chat(user, span_notice("You place [weapon] into [src]'s inner chamber."))
+					deconstruction_state = NUKESTATE_CORE_EXPOSED
+					update_appearance()
+				return TRUE
+
 	return ..()
 
 /obj/machinery/nuclearbomb/crowbar_act(mob/user, obj/item/tool)
@@ -181,12 +213,23 @@ GLOBAL_VAR(station_nuke_source)
 		if(NUKESTATE_WELDED)
 			to_chat(user, span_notice("You start prying off [src]'s inner plate..."))
 			if(tool.use_tool(src, user, 30, volume=100))
-				to_chat(user, span_notice("You pry off [src]'s inner plate. You can see the core's green glow!"))
-				deconstruction_state = NUKESTATE_CORE_EXPOSED
+				if(core)
+					to_chat(user, span_notice("You pry off [src]'s inner plate. You can see the core's green glow!"))
+					deconstruction_state = NUKESTATE_CORE_EXPOSED
+					START_PROCESSING(SSobj, core)
+				else
+					to_chat(user, span_notice("You pry off [src]'s inner plate. The inner chamber is empty, save for some beer stains."))
+					deconstruction_state = NUKESTATE_CORE_REMOVED
 				update_appearance()
-				START_PROCESSING(SSobj, core)
+				new /obj/item/stack/sheet/iron(loc, 15)
 			return TRUE
-
+		if(NUKESTATE_PANEL_REMOVED)
+			to_chat(user, span_notice("You start levering [src]'s inner panel back into place..."))
+			if(tool.use_tool(src, user, 30, volume = 100))
+				to_chat(user, span_notice("You lever [src]'s inner panel back into place."))
+				deconstruction_state = NUKESTATE_UNSCREWED
+				update_appearance()
+				return TRUE
 	return FALSE
 
 /obj/machinery/nuclearbomb/can_interact(mob/user)
