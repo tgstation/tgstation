@@ -16,7 +16,7 @@
 /datum/preference/choiced/body_type/apply_to_human(mob/living/carbon/human/target, value)
 	if (value == USE_GENDER)
 		value = target.gender
-		if (value == PLURAL)
+		if (value == PLURAL || value == NEUTER)
 			value = prob(50) ? MALE : FEMALE // non-binary physique does not work for several reasons, big refactor for whoever bites
 
 	target.physique = value
