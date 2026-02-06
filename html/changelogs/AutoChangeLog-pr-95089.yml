@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Stasis now stops addiction ticks while active - meaning addictions will not apply their ticking withdrawal effects, but also won't heal over time"

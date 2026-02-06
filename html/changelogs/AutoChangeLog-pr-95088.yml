@@ -1,4 +1,0 @@
-author: "Bugwasabi"
-delete-after: True
-changes:
-  - bugfix: "Play Internet Sounds will now only display song details to users who have admin music enabled."
