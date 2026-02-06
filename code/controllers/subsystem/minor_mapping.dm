@@ -1,5 +1,4 @@
 #define PROB_SPIDER_REPLACEMENT 50
-#define PROB_WEAKPOINT_SPAWNS 50
 
 SUBSYSTEM_DEF(minor_mapping)
 	name = "Minor Mapping"
@@ -24,11 +23,11 @@ SUBSYSTEM_DEF(minor_mapping)
 #else
 	trigger_migration(CONFIG_GET(number/mice_roundstart))
 	place_satchels(satchel_amount = 2)
-	var/weakpoint_spawns = 0
+	var/weakpoint_spawns = 3
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_SPAWN_WEAKPOINTS))
 		weakpoint_spawns = rand(4,8)
-	else if(prob(PROB_WEAKPOINT_SPAWNS))
-		weakpoint_spawns = 1
+
+	weakpoint_spawns += SSmapping.current_map.bonus_weakpoints //This will add 0 by default, or additional on large maps where it's included in the config.
 	place_weakpoints(weakpoint_spawns)
 	return SS_INIT_SUCCESS
 #endif
@@ -116,7 +115,6 @@ SUBSYSTEM_DEF(minor_mapping)
 		if(is_type_in_list(get_area(turf), blacklisted_area_types))
 			continue
 		var/obj/effect/weakpoint/new_point = new(turf)
-
 		SEND_SIGNAL(new_point, COMSIG_OBJ_HIDE, turf.underfloor_accessibility)
 		weakpoint_amount--
 
@@ -133,4 +131,3 @@ SUBSYSTEM_DEF(minor_mapping)
 
 
 #undef PROB_SPIDER_REPLACEMENT
-#undef PROB_WEAKPOINT_SPAWNS
