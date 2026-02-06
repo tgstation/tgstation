@@ -1,5 +1,3 @@
-#define ADDICT_PROBABILITY_FORGETFUL 20
-
 /datum/quirk/item_quirk/addict
 	name = "Addict"
 	desc = "You are addicted to something that doesn't exist. Suffer."
@@ -8,6 +6,7 @@
 	abstract_type = /datum/quirk/item_quirk/addict
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	no_process_traits = list(TRAIT_LIVERLESS_METABOLISM)
+	var/forget_prob = 20 // Probability that you forget to bring an initial fix with you to the station
 	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/reagent_instance //! actual instanced version of the reagent
 	var/where_drug //! Where the drug spawned
@@ -17,10 +16,6 @@
 	var/drug_flavour_text = "Better hope you don't run out... of what, exactly? You don't know."
 	var/process_interval = 30 SECONDS //! how frequently the quirk processes
 	COOLDOWN_DECLARE(next_process) //! ticker for processing
-
-/datum/quirk/item_quirk/addict/New()
-	..()
-	desc += " Don't forget to bring your fix!"
 
 /datum/quirk/item_quirk/addict/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -34,7 +29,7 @@
 		human_holder.last_mind?.add_addiction_points(addiction, 1000)
 
 /datum/quirk/item_quirk/addict/add_unique(client/client_source)
-	if (prob(ADDICT_PROBABILITY_FORGETFUL))
+	if (prob(forget_prob))
 		// you forgor
 		return
 
@@ -92,7 +87,7 @@
 
 /datum/quirk/item_quirk/addict/junkie
 	name = "Junkie"
-	desc = "You can't get enough of hard drugs."
+	desc = "You can't get enough of hard drugs. Don't forget to bring your fix!"
 	icon = FA_ICON_PILLS
 	value = -6
 	gain_text = span_danger("You suddenly feel the craving for drugs.")
@@ -119,7 +114,7 @@
 
 /datum/quirk/item_quirk/addict/smoker
 	name = "Smoker"
-	desc = "Sometimes you just really want a smoke. Probably not great for your lungs."
+	desc = "Sometimes you just really want a smoke. Probably not great for your lungs. Careful not to forget your pack at home!"
 	icon = FA_ICON_SMOKING
 	value = -4
 	gain_text = span_danger("You could really go for a smoke right about now.")
@@ -177,7 +172,7 @@
 
 /datum/quirk/item_quirk/addict/alcoholic
 	name = "Alcoholic"
-	desc = "You just can't live without alcohol. Your liver is a machine that turns ethanol into acetaldehyde."
+	desc = "You just can't live without alcohol. Your liver is a machine that turns ethanol into acetaldehyde. Don't forget your flask!"
 	icon = FA_ICON_WINE_GLASS
 	value = -4
 	gain_text = span_danger("You really need a drink.")
@@ -242,5 +237,3 @@
 		quirk_holder.clear_mood_event("wrong_alcohol")
 	else
 		quirk_holder.add_mood_event("wrong_alcohol", /datum/mood_event/wrong_brandy)
-
-#undef ADDICT_PROBABILITY_FORGETFUL
