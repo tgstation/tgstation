@@ -130,14 +130,7 @@
 	to_chat(user, span_warning("[parent_relic] leaks [reagent.name] everywhere!"))
 	playsound(get_turf(parent_relic), 'sound/effects/slosh.ogg', 25, TRUE)
 	var/turf/src_turf = get_turf(parent_relic)
-	var/datum/reagents/tmp_holder = new(units)
-	tmp_holder.my_atom = src
-	tmp_holder.add_reagent(reagent, units)
-
-	var/datum/effect_system/fluid_spread/foam/fluid = new
-	fluid.set_up(range = range, amount = units, holder = parent_relic, location = src_turf, carry = tmp_holder)
-	fluid.start()
-	// qdel(tmp_holder)
+	do_foam(range, parent_relic, src_turf, reagent, units)
 	return
 
 /datum/relic_node/item
@@ -274,7 +267,7 @@
 	return
 
 /datum/relic_node/emp/proc/cause_emp(mob/user)
-	parent_relic.sparks.start()
+	do_sparks(5, TRUE, parent_relic, parent_relic)
 	empulse(parent_relic, strong_range, weak_range)
 	return
 
@@ -299,10 +292,7 @@
 				if (!istype(each, /obj/item/stock_parts/power_store))
 					continue
 				var/obj/item/stock_parts/power_store/cell = each
-				var/datum/effect_system/spark_spread/_sparks = new
-				_sparks.set_up(5, 1, mach)
-				_sparks.attach(mach)
-				_sparks.start()
+				do_sparks(5, 1, mach, mach)
 				cell.give(min(amount, cell.used_charge()))
 				playsound(mach, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				parent_relic.lightning_fx(mach, stunner)
@@ -567,7 +557,7 @@
 	alpha = rand(0, 200)
 
 /datum/relic_node/cloaking/reaction_power(mob/user)
-	parent_relic.sparks.start()
+	do_sparks(5, TRUE, parent_relic, parent_relic)
 	parent_relic.alpha = alpha
 
 /datum/relic_node/embed
