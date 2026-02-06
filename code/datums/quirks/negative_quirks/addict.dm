@@ -1,3 +1,5 @@
+#define ADDICT_PROBABILITY_FORGETFUL 20
+
 /datum/quirk/item_quirk/addict
 	name = "Addict"
 	desc = "You are addicted to something that doesn't exist. Suffer."
@@ -16,6 +18,10 @@
 	var/process_interval = 30 SECONDS //! how frequently the quirk processes
 	COOLDOWN_DECLARE(next_process) //! ticker for processing
 
+/datum/quirk/item_quirk/addict/New()
+	..()
+	desc += " Don't forget to bring your fix!"
+
 /datum/quirk/item_quirk/addict/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
@@ -28,6 +34,10 @@
 		human_holder.last_mind?.add_addiction_points(addiction, 1000)
 
 /datum/quirk/item_quirk/addict/add_unique(client/client_source)
+	if (prob(ADDICT_PROBABILITY_FORGETFUL))
+		// you forgor
+		return
+
 	var/current_turf = get_turf(quirk_holder)
 
 	if(!drug_container_type)
@@ -232,3 +242,5 @@
 		quirk_holder.clear_mood_event("wrong_alcohol")
 	else
 		quirk_holder.add_mood_event("wrong_alcohol", /datum/mood_event/wrong_brandy)
+
+#undef ADDICT_PROBABILITY_FORGETFUL
