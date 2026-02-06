@@ -356,7 +356,7 @@
 	var/delta_dam = . //for the sake of clarity
 	if(isnull(bodypart_owner)) // no need to color it if it's in someone's noggin
 		update_brain_color()
-	if(delta_dam > 0 && damage > BRAIN_DAMAGE_MILD)
+	if(delta_dam < 0 && damage > BRAIN_DAMAGE_MILD)
 		roll_for_brain_trauma(delta_dam)
 
 /// Rolls a random chance to gain a brain trauma based on damage taken and current damage level

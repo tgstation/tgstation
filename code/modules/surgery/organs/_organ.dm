@@ -255,7 +255,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		return FALSE
 	damage = clamp(damage + damage_amount, 0, maximum)
 	SEND_SIGNAL(src, COMSIG_ORGAN_ADJUST_DAMAGE, damage_amount, maximum, required_organ_flag)
-	. = (damage - prev_damage) // return net damage
+	. = (prev_damage - damage) // return net damage
 	var/message = check_damage_thresholds()
 	prev_damage = damage
 
