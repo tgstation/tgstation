@@ -41,9 +41,9 @@
 	if(istype(A, /obj/machinery/door))
 		var/obj/machinery/door/conditionalwall = A
 		for(var/mob/occupant as anything in return_controllers_with_flag(access_provider_flags))
-			if(conditionalwall.try_safety_unlock(occupant))
+			if(conditionalwall.try_safety_unlock(occupant) || !conditionalwall.can_open_with_hands)
 				return
-			conditionalwall.Bumped(occupant)
+			conditionalwall.bumpopen(occupant)
 
 /obj/vehicle/sealed/after_add_occupant(mob/M)
 	. = ..()
