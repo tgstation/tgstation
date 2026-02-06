@@ -68,3 +68,17 @@
   lelandkemble:
   - bugfix: the auto updating lootpanel now automatically shows new items that haven't
       moved yet.
+2026-02-06:
+  Bugwasabi:
+  - bugfix: Play Internet Sounds will now only display song details to users who have
+      admin music enabled.
+  Melbert:
+  - balance: Stasis now stops addiction ticks while active - meaning addictions will
+      not apply their ticking withdrawal effects, but also won't heal over time
+  - refactor: Refactored how deafness is tracked. Please report any weird interactions
+      with sounds, like messages or sfx being missing.
+  - bugfix: Lacking ears and being in hard crit now consistently treats you as "being
+      deaf". This affects a few minor interactions like empath, the jukebox, and sleeping.
+  lelandkemble:
+  - bugfix: the Space Furnace is now usable in rooms that have previously been breached,
+      provided they have recovered enough air.
