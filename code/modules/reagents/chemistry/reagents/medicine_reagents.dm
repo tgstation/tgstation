@@ -929,7 +929,7 @@
 	. = ..()
 	if(creation_purity >= 1)
 		ADD_TRAIT(affected_mob, TRAIT_GOOD_HEARING, type)
-		if(affected_mob.can_hear())
+		if(!HAS_TRAIT(affected_mob, TRAIT_DEAF))
 			to_chat(affected_mob, span_nicegreen("You can feel your hearing drastically improve!"))
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -945,7 +945,7 @@
 /datum/reagent/medicine/inacusiate/on_mob_delete(mob/living/affected_mob)
 	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_GOOD_HEARING, type)
-	if(affected_mob.can_hear())
+	if(!HAS_TRAIT(affected_mob, TRAIT_DEAF))
 		to_chat(affected_mob, span_notice("Your hearing returns to its normal acuity."))
 
 /datum/reagent/medicine/atropine

@@ -1197,8 +1197,8 @@
 		return FALSE
 	var/datum/gas_mixture/environment = loc?.return_air()
 	var/affected_pressure = environment.return_pressure()
-	if(!light_on && (affected_pressure < ONE_ATMOSPHERE))
-		user.balloon_alert(user, "no pressure!")
+	if(!light_on && (affected_pressure < ONE_ATMOSPHERE - 1))
+		user.balloon_alert(user, "[affected_pressure < HAZARD_LOW_PRESSURE? "no" : "low"] pressure!")
 		return FALSE
 	. = ..()
 	if(light_on)

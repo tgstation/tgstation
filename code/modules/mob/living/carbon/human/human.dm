@@ -55,6 +55,8 @@
 /mob/living/carbon/human/proc/setup_organless_effects()
 	// All start without eyes, and get them via set species
 	become_blind(NO_EYES)
+	// And no ears, and get them via set species
+	ADD_TRAIT(src, TRAIT_DEAF, NO_EARS)
 	// Mobs cannot taste anything without a tongue; the tongue organ removes this on Insert
 	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 

@@ -453,7 +453,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 
 /obj/machinery/vitals_reader/proc/beep_message(message)
 	for(var/mob/viewer as anything in viewers(src))
-		if(isnull(viewer.client) || !viewer.can_hear())
+		if(isnull(viewer.client) || HAS_TRAIT(viewer, TRAIT_DEAF))
 			continue
 		if(!viewer.runechat_prefs_check(viewer, EMOTE_MESSAGE))
 			continue

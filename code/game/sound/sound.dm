@@ -98,7 +98,7 @@
  * * volume_preference - Optional: Will be checked to modify the volume of the sound.
  */
 /mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/sound_to_use, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1, use_reverb = TRUE, datum/preference/numeric/volume/volume_preference = null)
-	if(!client || !can_hear())
+	if(!client || HAS_TRAIT(src, TRAIT_DEAF))
 		return
 
 	if(!sound_to_use)
