@@ -28,12 +28,17 @@
 
 /obj/effect/weakpoint/ex_act(severity, target)
 	. = ..()
+	var/static/list/skip_turfs = typecacheof(list(
+		/turf/open/space,
+		/turf/open/misc/asteroid,
+		/turf/open/misc/snow,
+	))
 	if(severity < required_strength)
 		balloon_alert_to_viewers("crack!")
 		playsound(source = src, soundin = SFX_HULL_CREAKING, vol = 50, vary = TRUE, pressure_affected = FALSE, ignore_walls = TRUE)
 		return //return ominous sounds when we're under the threshold.
 
-	var/list/chain_turfs = get_crack_chain(get_turf(src), 8, TRUE) // Get a nice chain of turfs
+	var/list/chain_turfs = get_crack_chain(get_turf(src), 8, TRUE, skip_turfs) // Get a nice chain of turfs
 
 	var/crack_delay = 0
 	for(var/turf/crack_turf in chain_turfs)
@@ -43,11 +48,6 @@
 			crack_delay++
 
 	if(spawns_children)
-		var/static/list/skip_turfs = typecacheof(list(
-			/turf/open/space,
-			/turf/open/misc/asteroid,
-			/turf/open/misc/snow,
-		))
 		chain_turfs = typecache_filter_list_reverse(chain_turfs, skip_turfs) //Filter out things that we don't want to spawn new weakpoints onto.
 
 		for(var/i in 1 to new_weakpoints)
@@ -93,8 +93,9 @@
  * * start_location: The turf to begin the chain of turfs from.
  * * length: How many lengths this chain needs to be.
  * * add_splits: Should this crack chain apply additional instances of get_crack_chain while recursively cracking even further.
+ * * turfs_to_skip: a typecache of turfs that we block spreading to when getting a chain.
  */
-/obj/effect/weakpoint/proc/get_crack_chain(start_location, length, add_splits = TRUE)
+/obj/effect/weakpoint/proc/get_crack_chain(start_location, length, add_splits = TRUE, turfs_to_skip = list())
 	if(!length)
 		CRASH("Weakpoint spawned with no length value!")
 	if(!start_location)
@@ -105,13 +106,17 @@
 	var/direction = pick(NORTH, SOUTH, EAST, WEST)
 
 	for(var/i in 1 to length)
+		if(length(turfs_to_skip) && is_type_in_typecache(current, turfs_to_skip))
+			direction = turn(direction, pick(90, 135, 180, 225, 270)) //We'll either turn or reverse the direction of the crack if we can't get around our obstacle.
+			current = get_turf(get_step(current, direction))
+			continue
 		cracked_turfs += current
 		// Randomly branch or continue
 		if(prob(CRACK_TURN_CHANCE))
 			direction = turn(direction, pick(-90, -45, 45, 90))
 		current = get_turf(get_step(current, direction))
 		if(!isturf(current))
-			CRASH("Crack propagation was handed a non-turf.")
+			break
 	if(add_splits)
 		for(var/subcrack in 1 to crack_split_count)
 			cracked_turfs += get_crack_chain(pick(cracked_turfs), max(round(length/2 ), 1), FALSE) //Stop recursion here
