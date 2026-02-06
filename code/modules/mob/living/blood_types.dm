@@ -349,6 +349,7 @@
 // Ensures that lighter slimefolk look half-decent when wounded and bleeding
 /datum/blood_type/slime/get_wound_color(mob/living/carbon/victim)
 	return victim.dna?.features?[FEATURE_MUTANT_COLOR] || get_color()
+
 /datum/blood_type/slime/get_damage_color(mob/living/carbon/victim)
 	return victim.dna?.features?[FEATURE_MUTANT_COLOR] || get_color()
 

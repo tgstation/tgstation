@@ -20,6 +20,19 @@
 		edge_overlay.pixel_z = -parent_movable.pixel_y - parent_movable.pixel_z
 		overlays += edge_overlay
 
+///For disposing reagents
+/datum/component/plumbing/simple_demand/disposer
+
+/datum/component/plumbing/simple_demand/disposer/Initialize(ducting_layer, distinct_reagent_cap)
+	if(!istype(parent, /obj/machinery/plumbing/disposer))
+		return COMPONENT_INCOMPATIBLE
+	return ..()
+
+/datum/component/plumbing/simple_demand/disposer/send_request(dir)
+	var/obj/machinery/plumbing/disposer/target = parent
+	if(target.on)
+		process_request(target.disposal_rate * SSFLUIDS_DT, dir = dir)
+
 ///has one pipe output that only supplies. example is liquid pump and manual input pipe
 /datum/component/plumbing/simple_supply
 	supply_connects = SOUTH

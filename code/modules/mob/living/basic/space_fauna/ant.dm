@@ -37,6 +37,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/ant
 
 /datum/emote/ant
+	abstract_type = /datum/emote/ant
 	mob_type_allowed_typecache = /mob/living/basic/ant
 	mob_type_blacklist_typecache = list()
 

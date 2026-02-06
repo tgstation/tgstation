@@ -20,7 +20,7 @@
 				LAZYADD(GLOB.default_hotkeys[instance.name], list(bound_key))
 
 /proc/init_emote_keybinds()
-	for(var/i in subtypesof(/datum/emote))
+	for(var/i in valid_subtypesof(/datum/emote))
 		var/datum/emote/faketype = i
 		if(!initial(faketype.key))
 			continue
