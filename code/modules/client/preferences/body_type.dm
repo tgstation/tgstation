@@ -15,9 +15,11 @@
 
 /datum/preference/choiced/body_type/apply_to_human(mob/living/carbon/human/target, value)
 	if (value == USE_GENDER)
-		target.physique = target.gender
-	else
-		target.physique = value
+		value = target.gender
+		if (value == PLURAL)
+			value = prob(50) ? MALE : FEMALE // non-binary physique does not work for several reasons, big refactor for whoever bites
+
+	target.physique = value
 
 /datum/preference/choiced/body_type/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
