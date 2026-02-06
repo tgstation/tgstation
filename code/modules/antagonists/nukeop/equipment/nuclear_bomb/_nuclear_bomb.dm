@@ -232,6 +232,12 @@ GLOBAL_VAR(station_nuke_source)
 				return TRUE
 	return FALSE
 
+/obj/machinery/nuclearbomb/attack_hand_secondary(mob/user, list/modifiers)
+	if(deconstruction_state != NUKESTATE_CORE_EXPOSED)
+		return ..()
+	to_chat(user, span_danger("You can't hold [core] with your bare hands!"))
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/machinery/nuclearbomb/can_interact(mob/user)
 	if(HAS_TRAIT(user, TRAIT_CAN_USE_NUKE))
 		return TRUE
