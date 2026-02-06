@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - refactor: "Refactored how deafness is tracked. Please report any weird interactions with sounds, like messages or sfx being missing."
+  - bugfix: "Lacking ears and being in hard crit now consistently treats you as \"being deaf\". This affects a few minor interactions like empath, the jukebox, and sleeping."
