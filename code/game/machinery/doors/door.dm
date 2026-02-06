@@ -63,7 +63,7 @@
 
 	/// Whether or not the door can crush mobs.
 	var/can_crush = TRUE
-	/// Whether or not the door can be opened by hand (used for blast doors and shutters)
+	/// Whether or not the door can be opened by hand (used for blast doors, shutters & firelocks primarily)
 	var/can_open_with_hands = TRUE
 	/// Whether or not this door can be opened through a door remote, ever
 	var/opens_with_door_remote = FALSE
