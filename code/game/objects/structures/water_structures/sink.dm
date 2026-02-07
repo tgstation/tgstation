@@ -50,7 +50,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		new /obj/item/stock_parts/water_recycler(drop_location())
 
 /obj/structure/sink/get_turfs_to_mount_on()
-	return list(get_step(src, REVERSE_DIR(dir)))
+	return list(get_turf(src))
 
 /obj/structure/sink/is_mountable_turf(turf/target)
 	return !isgroundlessturf(target)
