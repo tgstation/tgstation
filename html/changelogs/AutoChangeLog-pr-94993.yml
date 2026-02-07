@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "floor light constructs now deconstruct when floor is deconstructed"
-  - bugfix: "RLD created lights now fall off when floor/wall is destroyed"

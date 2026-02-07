@@ -140,7 +140,12 @@ GLOBAL_VAR_INIT(web_sound_cooldown, 0)
 		if(credit)
 			to_chat_message += span_notice("<br>[credit]")
 
-		to_chat(world, fieldset_block("Now Playing: [span_bold(music_extra_data["title"])] by [span_bold(music_extra_data["artist"])]", jointext(to_chat_message, ""), "boxed_message"))
+		var/list/recipients = list()
+		for(var/client/client as anything in GLOB.clients)
+			if(client.prefs.read_preference(/datum/preference/numeric/volume/sound_midi) > 0)
+				recipients += client
+		recipients |= user.client
+		to_chat(recipients, fieldset_block("Now Playing: [span_bold(music_extra_data["title"])] by [span_bold(music_extra_data["artist"])]", jointext(to_chat_message, ""), "boxed_message"))
 
 		SSblackbox.record_feedback("nested tally", "played_url", 1, list("[user.ckey]", "[input]"))
 		log_admin("[key_name(user)] played web sound: [input]")

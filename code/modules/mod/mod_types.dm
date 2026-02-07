@@ -36,8 +36,7 @@
 
 /obj/item/mod/control/pre_equipped/uninstall(obj/item/mod/module/old_module, deleting)
 	. = ..()
-	if(default_pins[old_module.type])
-		default_pins -= old_module
+	default_pins -= old_module.type
 
 /obj/item/mod/control/pre_equipped/standard
 	applied_modules = list(
