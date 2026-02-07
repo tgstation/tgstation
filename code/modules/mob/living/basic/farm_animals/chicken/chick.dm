@@ -34,6 +34,7 @@
 	var/grow_as = /mob/living/basic/chicken
 
 /datum/emote/chick
+	abstract_type = /datum/emote/chick
 	mob_type_allowed_typecache = /mob/living/basic/chick
 	mob_type_blacklist_typecache = list()
 

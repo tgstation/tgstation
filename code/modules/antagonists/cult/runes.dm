@@ -242,7 +242,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(!IS_CULTIST(non_cultist))
 			myriad_targets += non_cultist
 
-	if(!length(myriad_targets) && !try_spawn_sword())
+	if(!length(myriad_targets) && !try_sacrifice_item())
 		fail_invoke()
 		return
 
@@ -400,57 +400,38 @@ structure_check() searches for nearby cultist structures required for the invoca
 		sacrificial.investigate_log("has been sacrificially gibbed by the cult.", INVESTIGATE_DEATHS)
 		sacrificial.gib(DROP_ALL_REMAINS)
 
-	try_spawn_sword() // after sharding and gibbing, which potentially dropped a null rod
+	try_sacrifice_item() // after sharding and gibbing, which potentially dropped a sacrificable item
 
 	return TRUE
 
-/// Tries to convert a null rod over the rune to a cult sword
-/obj/effect/rune/convert/proc/try_spawn_sword()
-	for(var/obj/item/potential_rod in loc)
-		if(!HAS_TRAIT(potential_rod, TRAIT_NULLROD_ITEM))
+/// Tries to convert a valid item over the rune to something else
+/obj/effect/rune/convert/proc/try_sacrifice_item()
+	for(var/obj/item/checked_item in loc)
+		if(checked_item.anchored || (checked_item.resistance_flags & INDESTRUCTIBLE))
 			continue
 
-		if(potential_rod.anchored || (potential_rod.resistance_flags & INDESTRUCTIBLE))
-			continue
-
-		var/num_slain = 0
-		if (istype(potential_rod, /obj/item/nullrod))
-			var/obj/item/nullrod/actual_rod = potential_rod
-			num_slain = LAZYLEN(actual_rod.cultists_slain)
-
-		var/displayed_message = "[potential_rod] glows an unholy red and begins to transform..."
-		if(num_slain && GET_ATOM_BLOOD_DNA_LENGTH(potential_rod))
-			displayed_message += " The blood of [num_slain] fallen cultist[num_slain == 1 ? "":"s"] is absorbed into [potential_rod]!"
-
-		potential_rod.visible_message(span_cult_italic(displayed_message))
-		switch(num_slain)
-			if(0)
-				animate_spawn_sword(potential_rod, /obj/item/melee/cultblade/dagger)
-			if(1)
-				animate_spawn_sword(potential_rod, /obj/item/melee/cultblade)
-			else
-				animate_spawn_sword(potential_rod, /obj/item/melee/cultblade/halberd)
-		return TRUE
+		if(SEND_SIGNAL(checked_item, COMSIG_ITEM_CULT_SACRIFICE, src) & COMPONENT_SACRIFICE_SUCCESSFUL)
+			return TRUE
 
 	return FALSE
 
-/// Does an animation of a null rod transforming into a cult sword
-/obj/effect/rune/convert/proc/animate_spawn_sword(obj/item/former_rod, new_blade_typepath)
+/// Does an animation of a sacrificable item transforming into something else
+/obj/effect/rune/convert/proc/animate_convert_item(obj/item/old_item, new_movable_typepath)
 	playsound(src, 'sound/effects/magic.ogg', 33, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.66)
-	former_rod.anchored = TRUE
-	former_rod.Shake()
-	animate(former_rod, alpha = 0, transform = matrix(former_rod.transform).Scale(0.01), time = 2 SECONDS, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
-	QDEL_IN(former_rod, 2 SECONDS)
+	old_item.anchored = TRUE
+	old_item.Shake()
+	animate(old_item, alpha = 0, transform = matrix(old_item.transform).Scale(0.01), time = 2 SECONDS, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
+	QDEL_IN(old_item, 2 SECONDS)
 
-	var/obj/item/new_blade = new new_blade_typepath(loc)
-	var/matrix/blade_matrix_on_spawn = matrix(new_blade.transform)
-	new_blade.name = "converted [new_blade.name]"
-	new_blade.anchored = TRUE
-	new_blade.alpha = 0
-	new_blade.transform = matrix(new_blade.transform).Scale(0.01)
-	new_blade.Shake()
-	animate(new_blade, alpha = 255, transform = blade_matrix_on_spawn, time = 2 SECONDS, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
-	addtimer(VARSET_CALLBACK(new_blade, anchored, FALSE), 2 SECONDS)
+	var/atom/movable/new_movable = new new_movable_typepath(loc)
+	var/matrix/matrix_on_spawn = matrix(new_movable.transform)
+	new_movable.name = "converted [new_movable.name]"
+	new_movable.anchored = TRUE
+	new_movable.alpha = 0
+	new_movable.transform = matrix(new_movable.transform).Scale(0.01)
+	new_movable.Shake()
+	animate(new_movable, alpha = 255, transform = matrix_on_spawn, time = 2 SECONDS, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
+	addtimer(VARSET_CALLBACK(new_movable, anchored, FALSE), 2 SECONDS)
 
 /obj/effect/rune/empower
 	cultist_name = "Empower"

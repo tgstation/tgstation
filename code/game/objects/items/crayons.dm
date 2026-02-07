@@ -238,6 +238,8 @@
 /// Sets painting color and updates appearance.
 /obj/item/toy/crayon/set_painting_tool_color(chosen_color)
 	. = ..()
+	if(!can_change_colour)
+		return
 	paint_color = chosen_color
 	update_appearance()
 

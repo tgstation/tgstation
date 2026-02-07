@@ -94,7 +94,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	/// Determines if our projectiles hit our faction
 	var/ignore_faction = FALSE
 	/// The spark system, used for generating... sparks?
-	var/datum/effect_system/spark_spread/spark_system
+	var/datum/effect_system/basic/spark_spread/spark_system
 	/// The turret will try to shoot from a turf in that direction when in a wall
 	var/wall_turret_direction
 	/// If the turret is manually controlled
@@ -124,11 +124,9 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(!base)
 		base = src
 	update_appearance()
-	//Sets up a spark system
-	spark_system = new /datum/effect_system/spark_spread
-	spark_system.set_up(5, 0, src)
+	// Sets up a spark system
+	spark_system = new(src, 5, FALSE)
 	spark_system.attach(src)
-
 	tracker = new(src, scan_range)
 	tracker.recalculate_field(full_recalc = TRUE) // manually call this so that our tracker var is set before we set anything up
 	setup()
