@@ -645,6 +645,7 @@
 	user.adjust_organ_loss(ORGAN_SLOT_BRAIN, damage * damage_modifier)
 	check_braindeath(user)
 
+/// Some sources of damage directly damage the limbs, so we have to handle physical damage on the limbs, not just mob-level damage
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/limb_damage(mob/living/user, obj/item/bodypart/part, brute, burn)
 	SIGNAL_HANDLER
 	handle_damage(user, max(brute, 0) + max(burn, 0))
