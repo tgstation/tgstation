@@ -3,10 +3,6 @@
 /datum/component/plumbing/simple_demand
 	demand_connects = SOUTH
 
-/datum/component/plumbing/simple_demand/Initialize(ducting_layer, distinct_reagent_cap = INFINITY)
-	src.distinct_reagent_cap = distinct_reagent_cap
-	return ..()
-
 ///Component for adding an extended overlay on wall mounts
 /datum/component/plumbing/simple_demand/extended/create_overlays(atom/movable/parent_movable, list/overlays)
 	. = ..()
@@ -23,7 +19,7 @@
 ///For disposing reagents
 /datum/component/plumbing/simple_demand/disposer
 
-/datum/component/plumbing/simple_demand/disposer/Initialize(ducting_layer, distinct_reagent_cap)
+/datum/component/plumbing/simple_demand/disposer/Initialize(ducting_layer)
 	if(!istype(parent, /obj/machinery/plumbing/disposer))
 		return COMPONENT_INCOMPATIBLE
 	return ..()
