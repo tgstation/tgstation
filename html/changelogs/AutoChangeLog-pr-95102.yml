@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Blast doors & shutters no longer inexplicably open when approached on a mount"

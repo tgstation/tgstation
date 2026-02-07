@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - rscadd: "Stations can now spawn with Structural weakpoints. If they're subject to an explosion, they'll crack open a tear in the station's turfs. If you spot one, make sure to weld it or seal it with sticky tape to fix one. Or not!"
-  - rscadd: "Adds a negative station trait that greatly increases the number of weakpoints that can spawn on station."

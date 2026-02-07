@@ -82,3 +82,15 @@
   lelandkemble:
   - bugfix: the Space Furnace is now usable in rooms that have previously been breached,
       provided they have recovered enough air.
+2026-02-07:
+  ArcaneMusic:
+  - rscadd: Stations can now spawn with Structural weakpoints. If they're subject
+      to an explosion, they'll crack open a tear in the station's turfs. If you spot
+      one, make sure to weld it or seal it with sticky tape to fix one. Or not!
+  - rscadd: Adds a negative station trait that greatly increases the number of weakpoints
+      that can spawn on station.
+  SmArtKar:
+  - bugfix: Fixed chemical foam not working
+  lelandkemble:
+  - bugfix: Blast doors & shutters no longer inexplicably open when approached on
+      a mount
