@@ -132,6 +132,10 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	ui_interact(user)
 	return ITEM_INTERACT_SUCCESS
 
+/obj/item/canvas/ui_static_data(mob/user)
+	. = ..()
+	.["year_offset"] = STATION_YEAR_OFFSET
+
 /obj/item/canvas/ui_data(mob/user)
 	. = ..()
 	var/list/metadata = list(
