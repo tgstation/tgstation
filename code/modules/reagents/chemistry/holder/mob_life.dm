@@ -30,6 +30,7 @@
 		liver_tolerance = liver.toxTolerance * liver_health_percent
 		provide_pain_message = HAS_NO_TOXIN
 
+	var/list/reagents_metabolized = list()
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		var/datum/reagent/toxin/toxin
 		if(istype(reagent, /datum/reagent/toxin))
@@ -44,7 +45,7 @@
 				owner.reagents.remove_reagent(toxin.type, toxin.metabolization_rate * owner.metabolism_efficiency * seconds_per_tick)
 				continue
 
-		need_mob_update += metabolize_reagent(owner, reagent, seconds_per_tick, can_overdose, liverless, dead)
+		need_mob_update += metabolize_reagent(owner, reagent, seconds_per_tick, can_overdose, liverless, dead, reagents_metabolized)
 
 		// If applicable, calculate any toxin-related liver damage
 		// Note: we have to do this AFTER metabolize_reagent, because we want handle_reagent to run before we make the determination.
@@ -66,8 +67,19 @@
 	if(provide_pain_message && liver.damage > 10 && SPT_PROB(liver.damage/6, seconds_per_tick)) //the higher the damage the higher the probability
 		to_chat(owner, span_warning("You feel a dull pain in your abdomen."))
 
-	if(owner && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
-		owner.updatehealth()
+	if(owner)
+		//apply side effects based on reagents metabolized
+		if(reagents_metabolized.len)
+			for(var/datum/stacked_reagent_effects/effect as anything in GLOB.stacked_reagent_effects)
+				var/update = effect.check_and_apply(reagents_metabolized, owner, seconds_per_tick)
+				if(update)
+					need_mob_update += update
+					break
+
+		//some of the metabolized reagents had effects on the mob that requires some updates.
+		if(need_mob_update)
+			owner.updatehealth()
+
 	update_total()
 
 #undef HAS_SILENT_TOXIN
@@ -81,11 +93,11 @@
  * Arguments:
  * * mob/living/carbon/owner - The mob to metabolize in, if null it uses [/datum/reagents/var/my_atom]
  * * seconds_per_tick - the time in server seconds between proc calls (when performing normally it will be 2)
- * * times_fired - the number of times the owner's life() tick has been called aka The number of times SSmobs has fired
  * * can_overdose - Allows overdosing
  * * liverless - Stops reagents that aren't set as [/datum/reagent/var/self_consuming] from metabolizing
+ * * list/reagents_metabolized - a list to hold the reagent metabolized with the metabolization ratio
  */
-/datum/reagents/proc/metabolize_reagent(mob/living/carbon/owner, datum/reagent/reagent, seconds_per_tick, can_overdose = FALSE, liverless = FALSE, dead = FALSE)
+/datum/reagents/proc/metabolize_reagent(mob/living/carbon/owner, datum/reagent/reagent, seconds_per_tick, can_overdose = FALSE, liverless = FALSE, dead = FALSE, list/reagents_metabolized)
 	if(QDELETED(reagent.holder))
 		return FALSE
 
@@ -105,6 +117,8 @@
 	var/need_mob_update = FALSE
 	var/metabolized_volume = reagent.compute_metabolization(owner, seconds_per_tick)
 	var/metabolization_ratio = REM * metabolized_volume
+	if(reagents_metabolized)
+		reagents_metabolized[reagent.type] = metabolization_ratio
 	if(can_overdose && !HAS_TRAIT(owner, TRAIT_OVERDOSEIMMUNE))
 		if(reagent.overdose_threshold && reagent.volume >= reagent.overdose_threshold && !reagent.overdosed)
 			reagent.overdosed = TRUE

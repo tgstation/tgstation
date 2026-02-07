@@ -58,6 +58,8 @@ GLOBAL_LIST_INIT(blacklisted_metalgen_types, typecacheof(list(
 GLOBAL_LIST_INIT(name2reagent, build_name2reagentlist())
 /// list of all plan traits
 GLOBAL_LIST_INIT(plant_traits, init_plant_traits())
+/// List of all reagent side effects
+GLOBAL_LIST_INIT(stacked_reagent_effects, init_chemical_side_effects())
 
 /// Initialises all /datum/reagent into a list indexed by reagent id
 /proc/init_chemical_reagent_list()
@@ -198,3 +200,9 @@ GLOBAL_LIST_INIT(plant_traits, init_plant_traits())
 	//build map with sorted keys
 	for(var/name in only_names)
 		.[name] = name_to_reagent[name]
+
+/proc/init_chemical_side_effects()
+	. = list()
+
+	for(var/datum/stacked_reagent_effects/effect as anything in valid_subtypesof(/datum/stacked_reagent_effects))
+		. += new effect()
