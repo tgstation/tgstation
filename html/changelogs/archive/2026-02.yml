@@ -62,3 +62,35 @@
   - spellcheck: Language manuals correctly refer to the person using them up to viewers
   - bugfix: Sources of random slimes will now produce random slimes
   - bugfix: Slimes revived via magic will now continue to look as they should
+2026-02-05:
+  Kashargul:
+  - bugfix: tgui error year display
+  lelandkemble:
+  - bugfix: the auto updating lootpanel now automatically shows new items that haven't
+      moved yet.
+2026-02-06:
+  Bugwasabi:
+  - bugfix: Play Internet Sounds will now only display song details to users who have
+      admin music enabled.
+  Melbert:
+  - balance: Stasis now stops addiction ticks while active - meaning addictions will
+      not apply their ticking withdrawal effects, but also won't heal over time
+  - refactor: Refactored how deafness is tracked. Please report any weird interactions
+      with sounds, like messages or sfx being missing.
+  - bugfix: Lacking ears and being in hard crit now consistently treats you as "being
+      deaf". This affects a few minor interactions like empath, the jukebox, and sleeping.
+  lelandkemble:
+  - bugfix: the Space Furnace is now usable in rooms that have previously been breached,
+      provided they have recovered enough air.
+2026-02-07:
+  ArcaneMusic:
+  - rscadd: Stations can now spawn with Structural weakpoints. If they're subject
+      to an explosion, they'll crack open a tear in the station's turfs. If you spot
+      one, make sure to weld it or seal it with sticky tape to fix one. Or not!
+  - rscadd: Adds a negative station trait that greatly increases the number of weakpoints
+      that can spawn on station.
+  SmArtKar:
+  - bugfix: Fixed chemical foam not working
+  lelandkemble:
+  - bugfix: Blast doors & shutters no longer inexplicably open when approached on
+      a mount

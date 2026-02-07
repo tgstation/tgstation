@@ -306,7 +306,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		// But we can still see them speak
 		if(speaker_is_signing)
 			deaf_message = "[span_name("[speaker]")] [speaker.get_default_say_verb()] something, but the motions are too subtle to make out from afar."
-		else if(can_hear()) // If we can't hear we want to continue to the default deaf message
+		else if(!HAS_TRAIT(src, TRAIT_DEAF)) // If we can't hear we want to continue to the default deaf message
 			if(isliving(speaker))
 				var/mob/living/living_speaker = speaker
 				var/mouth_hidden = living_speaker.is_mouth_covered() || HAS_TRAIT(living_speaker, TRAIT_FACE_COVERED)
@@ -360,7 +360,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		deaf_type = MSG_AUDIBLE // Since you should be able to hear yourself without looking
 
 	// Create map text prior to modifying message for goonchat
-	if (use_runechat && can_hear())
+	if (use_runechat && !HAS_TRAIT(src, TRAIT_DEAF))
 		if (message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 			create_chat_message(speaker, null, message_mods[MODE_CUSTOM_SAY_EMOTE], spans, EMOTE_MESSAGE)
 		else
