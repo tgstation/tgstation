@@ -1,471 +1,346 @@
-import { Component, createRef, type RefObject, useState } from 'react';
-import { Color } from 'tgui-core/color';
-import {
-  Box,
-  Button,
-  Flex,
-  Icon,
-  KeyListener,
-  Tooltip,
-} from 'tgui-core/components';
-import { KEY_F, KEY_G } from 'tgui-core/keycodes';
+import { type PropsWithChildren, type ReactNode, useState } from 'react';
+import { Box, Button, Stack } from 'tgui-core/components';
+import { clamp } from 'tgui-core/math';
+import type { BooleanLike } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { SpriteEditor } from './common/SpriteEditor';
+import {
+  AdvancedCanvas,
+  type AdvancedCanvasPropsBase,
+} from './common/SpriteEditor/Components/AdvancedCanvas';
+import { hasServerColorData } from './common/SpriteEditor/helpers';
+import { Dir, type SpriteEditorData } from './common/SpriteEditor/Types/types';
 
-const LEFT_CLICK = 0;
-
-type PaintCanvasProps = Partial<{
-  onCanvasModifiedHandler: (data: PointData[]) => void;
-  onCanvasDropperHandler: (x: number, y: number) => void;
-  onCanvasFillHandler: (x: number, y: number) => void;
-  value: string[][];
-  width: number;
-  height: number;
-  imageWidth: number;
-  imageHeight: number;
-  editable: boolean;
-  drawing_color: string | null;
-  has_palette: boolean;
-  show_grid: boolean;
-  zoom: number;
-  fillmode: boolean;
-}>;
-
-type PointData = {
-  x: number;
-  y: number;
-};
-
-const fromDM = (data: string[][]) => {
-  return data.map((inner) => inner.map((v) => Color.fromHex(v)));
-};
-
-const toMassPaintFormat = (data: PointData[]) => {
-  return data.map((p) => ({ x: p.x + 1, y: p.y + 1 })); // 1-based index dm side
-};
-
-const checkPointCoords = (x: number, y: number, p: PointData) => {
-  return p.x === x && p.y === y;
-};
-
-class PaintCanvas extends Component<PaintCanvasProps> {
-  canvasRef: RefObject<HTMLCanvasElement | null>;
-  baseImageData: Color[][];
-  is_grid_shown: boolean;
-  modifiedElements: PointData[];
-  onCanvasModified: (data: PointData[]) => void;
-  onCanvasDropper: (x: number, y: number) => void;
-  onCanvasFill: (x: number, y: number) => void;
-  drawing: boolean;
-  drawing_color: string;
-  zoom: number;
-
-  constructor(props) {
-    super(props);
-    this.canvasRef = createRef();
-    this.modifiedElements = [];
-    this.is_grid_shown = false;
-    this.drawing = false;
-    this.zoom = props.zoom;
-
-    this.onCanvasModified = props.onCanvasModifiedHandler;
-    this.onCanvasDropper = props.onCanvasDropperHandler;
-    this.onCanvasFill = props.onCanvasFillHandler;
-
-    this.handleStartDrawing = this.handleStartDrawing.bind(this);
-    this.handleDrawing = this.handleDrawing.bind(this);
-    this.handleEndDrawing = this.handleEndDrawing.bind(this);
-    this.handleDropper = this.handleDropper.bind(this);
-  }
-
-  componentDidMount() {
-    this.prepareCanvas();
-    this.syncCanvas();
-  }
-
-  componentDidUpdate() {
-    if (this.zoom !== this.props.zoom) {
-      this.prepareCanvas();
-      this.syncCanvas();
-    } else if (
-      (this.props.value !== undefined &&
-        JSON.stringify(this.baseImageData) !==
-          JSON.stringify(fromDM(this.props.value))) ||
-      this.is_grid_shown !== this.props.show_grid
-    ) {
-      this.syncCanvas();
-    }
-  }
-
-  prepareCanvas() {
-    this.zoom = this.props.zoom as number;
-    const canvas = this.canvasRef.current!;
-    const ctx = canvas.getContext('2d');
-    const width = this.props.width || canvas.width || 360;
-    const height = this.props.height || canvas.height || 360;
-    const x_resolution = this.props.imageWidth || 36;
-    const y_resolution = this.props.imageHeight || 36;
-    const x_scale = Math.round(width / x_resolution);
-    const y_scale = Math.round(height / y_resolution);
-    ctx?.setTransform(1, 0, 0, 1, 0, 0);
-    ctx?.scale(x_scale, y_scale); // This clears the canvas.
-  }
-
-  syncCanvas() {
-    if (this.props.value === undefined) {
-      return;
-    }
-    this.baseImageData = fromDM(this.props.value);
-    this.is_grid_shown = !!this.props.show_grid;
-    this.modifiedElements = [];
-
-    const canvas = this.canvasRef.current!;
-    const ctx = canvas.getContext('2d')!;
-    for (let x = 0; x < this.baseImageData.length; x++) {
-      const element = this.baseImageData[x];
-      for (let y = 0; y < element.length; y++) {
-        const color = element[y];
-        ctx.fillStyle = color.toString();
-        ctx.fillRect(x, y, 1, 1);
-        if (this.is_grid_shown) {
-          ctx.strokeStyle = '#888888';
-          ctx.lineWidth = 0.05;
-          ctx.strokeRect(x, y, 1, 1);
-        }
-      }
-    }
-  }
-
-  eventToCoords(event: MouseEvent) {
-    const canvas = this.canvasRef.current!;
-    const width = this.props.width || canvas.width || 360;
-    const height = this.props.height || canvas.height || 360;
-    const x_resolution = this.props.imageWidth || 36;
-    const y_resolution = this.props.imageHeight || 36;
-    const x_scale = Math.round(width / x_resolution);
-    const y_scale = Math.round(height / y_resolution);
-
-    const rect = canvas.getBoundingClientRect();
-    const x = Math.floor((event.clientX - rect.left) / x_scale);
-    const y = Math.floor((event.clientY - rect.top) / y_scale);
-    return { x, y };
-  }
-
-  handleStartDrawing(event: MouseEvent) {
-    if (
-      !this.props.editable ||
-      this.props.drawing_color === undefined ||
-      this.props.drawing_color === null ||
-      event.button !== LEFT_CLICK
-    ) {
-      return;
-    }
-    const coords = this.eventToCoords(event);
-    if (this.props.fillmode) {
-      this.onCanvasFill(coords.x + 1, coords.y + 1); // 1-based index dm side
-      return;
-    }
-    this.modifiedElements = [];
-    this.drawing = true;
-    this.drawing_color = this.props.drawing_color;
-    this.drawPoint(coords.x, coords.y, this.drawing_color);
-  }
-
-  drawPoint(x: number, y: number, color: any) {
-    // check if modifiedElements already contains a point with same x and y
-    if (this.modifiedElements.some(checkPointCoords.bind(null, x, y))) {
-      return;
-    }
-    const p: PointData = { x, y };
-    this.modifiedElements.push(p);
-    const canvas = this.canvasRef.current!;
-    const ctx = canvas.getContext('2d')!;
-    ctx.fillStyle = color;
-    ctx.fillRect(x, y, 1, 1);
-    if (this.is_grid_shown) {
-      ctx.strokeStyle = '#888888';
-      ctx.lineWidth = 0.05;
-      ctx.strokeRect(x, y, 1, 1);
-    }
-  }
-
-  handleDrawing(event: MouseEvent) {
-    if (!this.drawing) {
-      return;
-    }
-    const coords = this.eventToCoords(event);
-    this.drawPoint(coords.x, coords.y, this.drawing_color);
-  }
-
-  handleEndDrawing(event: MouseEvent) {
-    if (!this.drawing) {
-      return;
-    }
-    this.drawing = false;
-    if (this.onCanvasModified !== undefined) {
-      this.onCanvasModified(this.modifiedElements);
-    }
-  }
-
-  handleDropper(event: MouseEvent) {
-    event.preventDefault();
-    if (!this.props.has_palette) {
-      return;
-    }
-    const coords = this.eventToCoords(event);
-    this.onCanvasDropper(coords.x + 1, coords.y + 1); // 1-based index dm side
-  }
-
-  render() {
-    const {
-      value,
-      width = 300,
-      height = 300,
-      imageWidth = 36,
-      imageHeight = 36,
-      ...rest
-    } = this.props;
-    return (
-      <canvas
-        ref={this.canvasRef}
-        width={width}
-        height={height}
-        {...rest}
-        onMouseDown={this.handleStartDrawing as any}
-        onMouseMove={this.handleDrawing as any}
-        onMouseUp={this.handleEndDrawing as any}
-        onMouseOut={this.handleEndDrawing as any}
-        onContextMenu={this.handleDropper as any}
-      >
-        Canvas failed to render.
-      </canvas>
-    );
-  }
-}
-
-const getImageSize = (value) => {
-  const width = value.length;
-  const height = width !== 0 ? value[0].length : 0;
-  return [width, height];
-};
-
-type PaletteColor = {
-  color: string;
-  is_selected: boolean;
+type CanvasMetadata = {
+  title: string;
+  author: string;
+  patron?: string;
+  medium: string;
+  date?: string;
 };
 
 type CanvasData = {
-  grid: string[][];
-  px_per_unit: number;
-  finalized: boolean;
-  name: string;
-  editable: boolean;
-  paint_tool_color: string | null;
-  paint_tool_palette: PaletteColor[] | null;
-  author: string | null;
-  medium: string | null;
-  patron: string | null;
-  date: string | null;
-  show_plaque: boolean;
-  show_grid: boolean;
-  zoom: number;
-  max_zoom: number;
+  metadata: CanvasMetadata;
+  editorData: SpriteEditorData;
+  pixelsPerUnit: number;
+  finalized: BooleanLike;
+  editable: BooleanLike;
+  allowColorPicker: BooleanLike;
+  showPlaque: BooleanLike;
+  year_offset: number;
 };
 
-export const Canvas = (props) => {
-  const { act, data } = useBackend<CanvasData>();
-  const [width, height] = getImageSize(data.grid);
-  const scaled_width = width * data.px_per_unit * data.zoom;
-  const scaled_height = height * data.px_per_unit * data.zoom;
-  const average_plaque_height = 90;
-  const palette_height = 38;
-  const griddy = !!data.show_grid && !!data.editable && !!data.paint_tool_color;
-  const [fillmode, setFillMode] = useState(false);
+type ZoomProps = {
+  zoom: number;
+  setZoom: React.Dispatch<React.SetStateAction<number>>;
+  pixelsPerUnit: number;
+};
+
+type CanvasCommonProps = ZoomProps & {
+  width: number;
+  height: number;
+};
+
+const ZoomButtons = ({ zoom, setZoom, pixelsPerUnit }: ZoomProps) => (
+  <Stack>
+    <Stack.Item>
+      <Button
+        icon="search-minus"
+        tooltip="Zoom Out (Shift + Scroll Down)"
+        disabled={zoom <= 1}
+        onClick={() => setZoom(Math.max(1, zoom - 1 / pixelsPerUnit))}
+      />
+    </Stack.Item>
+    <Stack.Item>
+      <Button
+        icon="search-plus"
+        tooltip="Zoom In (Shift + Scroll Up)"
+        disabled={zoom >= 3}
+        onClick={() => setZoom(Math.min(3, zoom + 1 / pixelsPerUnit))}
+      />
+    </Stack.Item>
+  </Stack>
+);
+
+const ZoomListener = ({
+  zoom,
+  setZoom,
+  pixelsPerUnit,
+  children,
+}: PropsWithChildren<ZoomProps>) => (
+  <>
+    {/* I'm too lazy to go through the process of adding onWheel to BoxProps. */}
+    <div
+      onMouseOver={(ev) => ev.currentTarget.focus()}
+      onWheel={(ev) => {
+        if (!ev.shiftKey) return;
+        ev.preventDefault();
+        setZoom(
+          clamp(zoom + (Math.sign(-ev.deltaY) * 1) / pixelsPerUnit, 1, 3),
+        );
+      }}
+      style={{
+        width: '100%',
+        height: '100%',
+      }}
+    >
+      {children}
+    </div>
+  </>
+);
+
+type EditableCanvasProps = Pick<
+  CanvasData,
+  'editorData' | 'editable' | 'allowColorPicker'
+> &
+  CanvasCommonProps;
+
+const EditableCanvas = (props: EditableCanvasProps) => {
+  const { act } = useBackend();
+  const {
+    editorData,
+    pixelsPerUnit,
+    editable,
+    allowColorPicker,
+    zoom,
+    setZoom,
+    width,
+    height,
+  } = props;
+  const { sprite, colorMode, toolFlags } = editorData;
+  const usingImplement = editable && hasServerColorData(editorData);
+  const {
+    serverSelectedColor,
+    serverPalette,
+    maxServerColors,
+    onSelectServerColor,
+    onAddServerColor,
+    onRemoveServerColor,
+  } = usingImplement ? editorData : {};
+  const [showGrid, setShowGrid] = useState(false);
+  const sidebarItems: ReactNode[] = [];
+  SpriteEditor.syncBackend(onSelectServerColor, serverSelectedColor);
+  if (allowColorPicker) {
+    sidebarItems.push(
+      <Stack.Item width="100%">
+        <SpriteEditor.ColorPicker
+          width="100%"
+          colorMode={colorMode}
+          hslWidth="40%"
+          style={{ aspectRatio: 2 }}
+        />
+      </Stack.Item>,
+    );
+  }
+  if (usingImplement && maxServerColors! > 1) {
+    sidebarItems.push(
+      <Stack.Item grow width="100%">
+        <SpriteEditor.Palette
+          serverPalette={serverPalette!}
+          maxServerColors={maxServerColors!}
+          onAddServerColor={onAddServerColor!}
+          onRemoveServerColor={onRemoveServerColor!}
+          maxHeight="100%"
+          overflowY="auto"
+        />
+      </Stack.Item>,
+    );
+  }
+  const shouldRenderSidebar = sidebarItems.length > 0;
   return (
     <Window
-      width={Math.max(scaled_width + 72, 280)}
-      height={
-        scaled_height +
-        94 +
-        (data.show_plaque ? average_plaque_height : 0) +
-        (data.editable && data.paint_tool_palette ? palette_height : 0)
-      }
+      width={shouldRenderSidebar ? Math.max(width, 250) + 400 : width + 90}
+      height={shouldRenderSidebar ? Math.max(height + 110, 350) : height + 110}
     >
       <Window.Content>
-        <KeyListener
-          onKeyDown={(event) => {
-            const keyCode = event.code;
-
-            switch (keyCode) {
-              case KEY_F:
-                setFillMode((prevFill) => !prevFill);
-                break;
-
-              case KEY_G:
-                act('toggle_grid');
-                break;
-            }
-          }}
-        />
-        <Flex align="start" direction="row">
-          {!!data.paint_tool_palette && (
-            <Flex.Item>
-              <Tooltip
-                content={
-                  `
-                  Right-Click a pixel on the canvas to copy its color.
-                ` +
-                  (data.editable
-                    ? `
-                  \n Left-Click the palette at the
-                  bottom of the UI to select a color,
-                  or input a new one with Right-Click. \n
-                  Tools may have key shortcuts.
-                `
-                    : '')
-                }
-              >
-                <Icon name="question-circle" color="blue" size={1.5} m={0.5} />
-              </Tooltip>
-            </Flex.Item>
+        <Stack fill>
+          {shouldRenderSidebar && (
+            <Stack.Item>
+              <Stack fill vertical width="350px">
+                {sidebarItems}
+              </Stack>
+            </Stack.Item>
           )}
-          {!!data.editable && !!data.paint_tool_color && (
-            <>
-              <Flex.Item>
-                <Button
-                  tooltip="Grid Toggle (G)"
-                  icon="th-large"
-                  backgroundColor={data.show_grid ? 'green' : 'red'}
-                  onClick={() => act('toggle_grid')}
-                  m={0.5}
-                />
-              </Flex.Item>
-              <Flex.Item>
-                <Button
-                  tooltip="Bucket Tool (F)"
-                  icon="bucket"
-                  backgroundColor={fillmode ? 'green' : 'red'}
-                  onClick={() => setFillMode((prevFill) => !prevFill)}
-                  m={0.5}
-                />
-              </Flex.Item>
-            </>
-          )}
-          <Flex.Item>
-            <Button
-              tooltip="Zoom Out"
-              icon="search-minus"
-              disabled={data.zoom <= 1}
-              onClick={() => act('zoom_out')}
-              m={0.5}
-            />
-          </Flex.Item>
-          <Flex.Item>
-            <Button
-              tooltip="Zoom In"
-              icon="search-plus"
-              disabled={data.zoom >= data.max_zoom}
-              onClick={() => act('zoom_in')}
-              m={0.5}
-            />
-          </Flex.Item>
-        </Flex>
-        <Box textAlign="center">
-          <Flex align="center" justify="center" direction="column">
-            <Flex.Item>
-              <PaintCanvas
-                value={data.grid}
-                imageWidth={width}
-                imageHeight={height}
-                width={scaled_width}
-                height={scaled_height}
-                drawing_color={data.paint_tool_color}
-                show_grid={griddy}
-                zoom={data.zoom}
-                fillmode={fillmode}
-                onCanvasModifiedHandler={(changed) =>
-                  act('paint', { data: toMassPaintFormat(changed) })
-                }
-                onCanvasDropperHandler={(x, y) =>
-                  act('select_color_from_coords', { x: x, y: y })
-                }
-                onCanvasFillHandler={(x, y) => act('fill', { x: x, y: y })}
-                editable={data.editable}
-                has_palette={!!data.paint_tool_palette}
-              />
-            </Flex.Item>
-            {!!data.editable && !!data.paint_tool_palette && (
-              <Flex.Item>
-                {data.paint_tool_palette.map((element, index) => (
-                  <Button
-                    key={`${index}`}
-                    backgroundColor={element.color}
-                    style={{
-                      width: '24px',
-                      height: '24px',
-                      borderStyle: 'solid',
-                      borderColor: element.is_selected ? 'lightblue' : 'black',
-                      borderWidth: '2px',
-                    }}
-                    onClick={() =>
-                      act('select_color', {
-                        selected_color: element.color,
-                      })
-                    }
-                    onContextMenu={(e) => {
-                      e.preventDefault();
-                      act('change_palette', {
-                        color_index: index + 1,
-                        old_color: element.color,
-                      });
-                    }}
+          <Stack.Item grow minWidth="0">
+            <Stack fill vertical>
+              <Stack.Item>
+                <Stack fill justify="space-around">
+                  {!!editable && (
+                    <>
+                      <Stack.Item>
+                        <SpriteEditor.Toolbar
+                          toolFlags={toolFlags}
+                          perButtonProps={(tool) => {
+                            return { tooltip: tool.name };
+                          }}
+                        />
+                      </Stack.Item>
+                      <Stack.Item grow />
+                    </>
+                  )}
+                  <Stack.Item>
+                    <Button.Checkbox
+                      checked={showGrid}
+                      onClick={() => setShowGrid(!showGrid)}
+                    >
+                      Show Grid
+                    </Button.Checkbox>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <ZoomButtons {...{ zoom, setZoom, pixelsPerUnit }} />
+                  </Stack.Item>
+                </Stack>
+              </Stack.Item>
+              <Stack.Item grow width="100%" textAlign="center" overflow="auto">
+                <ZoomListener {...{ zoom, setZoom, pixelsPerUnit }}>
+                  <SpriteEditor.Canvas
+                    width={`${width}px`}
+                    height={`${height}px`}
+                    showGrid={showGrid}
+                    data={sprite}
+                    disabled={!editable}
+                    position="relative"
+                    top="50%"
+                    style={{ transform: 'translate(0, -50%)' }}
                   />
-                ))}
-              </Flex.Item>
-            )}
-            {!data.finalized && (
-              <Flex.Item>
-                <Button.Confirm
-                  onClick={() => act('finalize')}
-                  content="Finalize"
-                />
-              </Flex.Item>
-            )}
-            {!!data.finalized && !!data.show_plaque && (
-              <Flex.Item
-                basis="content"
-                p={2}
-                width="60%"
-                textColor="black"
-                textAlign="left"
-                backgroundColor="white"
-                style={{ borderStyle: 'inset' }}
-              >
-                <Box mb={1} fontSize="18px" bold>
-                  {decodeHtmlEntities(data.name)}
-                </Box>
-                <Box bold>
-                  {data.author}
-                  {!!data.date &&
-                    `- ${new Date(data.date).getFullYear() + 540}`}
-                </Box>
-                <Box italic>{data.medium}</Box>
-                <Box italic>
-                  {!!data.patron && `Sponsored by ${data.patron} `}
-                  <Button
-                    icon="hand-holding-usd"
-                    color="transparent"
-                    iconColor="black"
-                    onClick={() => act('patronage')}
-                  />
-                </Box>
-              </Flex.Item>
-            )}
-          </Flex>
-        </Box>
+                </ZoomListener>
+              </Stack.Item>
+              <Stack.Item basis={0} width="100%" textAlign="center">
+                <Button.Confirm onClick={() => act('finalize')}>
+                  Finalize
+                </Button.Confirm>
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
+};
+
+type FinalizedCanvasProps = { data: AdvancedCanvasPropsBase['data'] } & Pick<
+  CanvasData,
+  'metadata' | 'showPlaque' | 'year_offset'
+> &
+  CanvasCommonProps;
+
+const FinalizedCanvas = (props: FinalizedCanvasProps) => {
+  const {
+    data,
+    metadata,
+    showPlaque,
+    zoom,
+    setZoom,
+    pixelsPerUnit,
+    width,
+    height,
+    year_offset,
+  } = props;
+  const { title, author, date, medium, patron } = metadata;
+  const { act } = useBackend();
+  return (
+    <Window width={width + 90} height={height + (showPlaque ? 270 : 90)}>
+      <Window.Content>
+        <Stack fill vertical align="center">
+          <Stack.Item>
+            <ZoomButtons {...{ zoom, setZoom, pixelsPerUnit }} />
+          </Stack.Item>
+          <Stack.Item>
+            <ZoomListener {...{ zoom, setZoom, pixelsPerUnit }}>
+              <AdvancedCanvas
+                width={`${width}px`}
+                height={`${height}px`}
+                data={data}
+              />
+            </ZoomListener>
+          </Stack.Item>
+          {showPlaque ? (
+            <Stack.Item
+              p="2em"
+              width="60%"
+              basis={0}
+              textColor="black"
+              textAlign="left"
+              backgroundColor="white"
+              style={{ borderStyle: 'inset' }}
+            >
+              <Box mb="1em" fontSize="18px" bold>
+                {decodeHtmlEntities(title)}
+              </Box>
+              <Box bold>
+                {author}
+                {date && `- ${new Date(date).getFullYear() + year_offset}`}
+              </Box>
+              <Box italic>{medium}</Box>
+              <Box italic>
+                {patron && `Sponsored by ${patron}`}
+                <Button
+                  icon="hand-holding-usd"
+                  color="transparent"
+                  iconColor="black"
+                  onClick={() => act('patronage')}
+                />
+              </Box>
+            </Stack.Item>
+          ) : undefined}
+        </Stack>
+      </Window.Content>
+    </Window>
+  );
+};
+
+export const Canvas = () => {
+  const { data } = useBackend<CanvasData>();
+  const {
+    metadata,
+    editorData,
+    pixelsPerUnit,
+    finalized,
+    editable,
+    allowColorPicker,
+    showPlaque,
+    year_offset,
+  } = data;
+  const { sprite } = editorData;
+  const { width, height } = sprite;
+  const [zoom, setZoom] = useState(finalized ? 1 : 3);
+  const paintingRenderWidth = pixelsPerUnit * zoom * width;
+  const paintingRenderHeight = pixelsPerUnit * zoom * height;
+  if (finalized) {
+    const { layers } = sprite;
+    const spriteData = layers[0].data[Dir.SOUTH];
+    return (
+      <FinalizedCanvas
+        data={spriteData}
+        width={paintingRenderWidth}
+        height={paintingRenderHeight}
+        {...{
+          metadata,
+          showPlaque,
+          zoom,
+          setZoom,
+          pixelsPerUnit,
+          year_offset,
+        }}
+      />
+    );
+  } else {
+    return (
+      <EditableCanvas
+        width={paintingRenderWidth}
+        height={paintingRenderHeight}
+        {...{
+          editorData,
+          editable,
+          allowColorPicker,
+          zoom,
+          setZoom,
+          pixelsPerUnit,
+        }}
+      />
+    );
+  }
 };

@@ -37,6 +37,7 @@
 	var/milked_reagent = /datum/reagent/consumable/milk
 
 /datum/emote/cow
+	abstract_type = /datum/emote/cow
 	mob_type_allowed_typecache = /mob/living/basic/cow
 	mob_type_blacklist_typecache = list()
 

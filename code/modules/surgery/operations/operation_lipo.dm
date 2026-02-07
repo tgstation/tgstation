@@ -41,7 +41,9 @@
 /datum/surgery_operation/limb/lipoplasty/state_check(obj/item/bodypart/limb)
 	if(limb.body_zone != BODY_ZONE_CHEST)
 		return FALSE
-	if(!HAS_TRAIT_FROM(limb.owner, TRAIT_FAT, OBESITY) && limb.owner.nutrition < NUTRITION_LEVEL_WELL_FED)
+	if(HAS_TRAIT(limb.owner, TRAIT_NOHUNGER))
+		return FALSE
+	if(!HAS_TRAIT_FROM(limb.owner, TRAIT_FAT, OBESITY) || limb.owner.nutrition < NUTRITION_LEVEL_WELL_FED)
 		return FALSE
 	return TRUE
 
@@ -63,27 +65,29 @@
 		span_notice("[surgeon] successfully removes excess fat from [limb.owner]'s body!"),
 		span_notice("[surgeon] finishes cutting away excess fat from [limb.owner]'s [limb.plaintext_zone]."),
 	)
-	limb.owner.overeatduration = 0 //patient is unfatted
 	var/removednutriment = limb.owner.nutrition
+	limb.owner.overeatduration = 0 //patient is unfatted
 	limb.owner.set_nutrition(NUTRITION_LEVEL_WELL_FED)
 	removednutriment -= NUTRITION_LEVEL_WELL_FED //whatever was removed goes into the meat
 
-	var/typeofmeat = /obj/item/food/meat/slab/human
 	if(limb.owner.flags_1 & HOLOGRAM_1)
-		typeofmeat = null
-	else if(limb.owner.dna?.species)
-		typeofmeat = limb.owner.dna.species.meat
+		return
+
+	var/typeofmeat = null
+	for(var/meat_path in limb.butcher_drops)
+		if(ispath(meat_path, /obj/item/food/meat))
+			typeofmeat = meat_path
+			break
 
 	if(!typeofmeat)
 		return
 
-	var/obj/item/food/meat/slab/newmeat = new typeofmeat()
+	var/obj/item/food/meat/slab/newmeat = new typeofmeat(limb.owner.drop_location())
 	newmeat.name = "fatty meat"
 	newmeat.desc = "Extremely fatty tissue taken from a patient."
 	newmeat.subjectname = limb.owner.real_name
 	newmeat.subjectjob = limb.owner.job
-	newmeat.reagents.add_reagent(/datum/reagent/consumable/nutriment, (removednutriment / 15)) //To balance with nutriment_factor of nutriment
-	newmeat.forceMove(limb.owner.drop_location())
+	newmeat.reagents.add_reagent(/datum/reagent/consumable/nutriment, (removednutriment / /datum/reagent/consumable/nutriment::nutriment_factor))
 
 /datum/surgery_operation/limb/lipoplasty/mechanic
 	name = "engage expulsion valve" //gross

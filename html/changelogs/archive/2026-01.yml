@@ -769,3 +769,26 @@
   - rscadd: Added the ability to modify sabre sheaths into gun-powered sheaths, making
       their counterattacks much more potent at the risk of great personal harm on
       failure, especially if you have a weak, fleshy arm.
+2026-01-30:
+  Boopideedoo:
+  - rscadd: added a fire extinguisher to the seed vault
+  ERRORNAME:
+  - image: Shadow people and Nightmare resprite
+  - image: Unique sprites for light eater and heart of darkness
+  Melbert:
+  - qol: Secure prosthetic surgical operation ignores clothing
+  - bugfix: Fix hand surgery (stomach pump, etc) being blocked by the patient being
+      on combat mode rather than the surgeon
+  SmArtKar:
+  - bugfix: Lipoplasty can no longer be used to infinitely farm meat or increase patient's
+      nutrition level
+  - bugfix: If your chest has somehow been swapped, you will drop the correct type
+      of meat when undergoing lipoplasty
+  - code_imp: Removed magic numbers in human meat related code
+  - bugfix: Moved floppy disk sticker reskins to alt-right-click
+  SyncIt21:
+  - bugfix: selecting layer and colour of a stack of ducts works correctly
+  - bugfix: floor light constructs now deconstruct when floor is deconstructed
+  - bugfix: RLD created lights now fall off when floor/wall is destroyed
+  Y0SH1M4S73R:
+  - bugfix: wire bundle circuit components work once again

@@ -73,7 +73,7 @@
 		if(!advanced_disease.has_required_infectious_organ(advanced_disease.affected_mob, required_organ))
 			return FALSE
 	if(symptom_cure)
-		if(advanced_disease.affected_mob.has_reagent(symptom_cure))
+		if(symptom_cure && advanced_disease.affected_mob.has_reagent(symptom_cure))
 			remedied = TRUE
 			return FALSE
 		remedied = FALSE
