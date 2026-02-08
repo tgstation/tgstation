@@ -70,7 +70,7 @@
 		icon_state = "core_container_sealed"
 		playsound(src, 'sound/items/deconstruct.ogg', 60, TRUE)
 		if(ismob(loc))
-			to_chat(loc, span_warning("[src] is permanently sealed, [core]'s radiation is contained."))
+			to_chat(loc, span_warning("[src] is sealed, [core]'s radiation is contained."))
 
 /obj/item/nuke_core_container/attackby(obj/item/nuke_core/core, mob/user)
 	if(istype(core))
