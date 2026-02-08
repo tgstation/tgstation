@@ -11,3 +11,95 @@
       exposed to extreme temperatures
   - bugfix: bounties where you must submit reagents or pills or viruses now work
   - map: Icebox engineering circuit lab no longer has firelocks placed in the windows
+2026-02-02:
+  Cyberboss:
+  - server: If TGS is configured to push test merge commits to a publicly accessible
+      GitHub, the exact game revision will be set as the `round`.`commit_hash` in
+      the database.
+  Justice12354:
+  - rscadd: Added lemon juice box
+  Melbert:
+  - balance: Plant instability can no longer cause the value of the instability stat
+      to change randomly unless instability is >=80
+  - balance: Plants can no longer mutate their stats twice in one tick starting at
+      40 instability - though the degree to which stats mutate is still increased
+      at the 40 mark, that is unchanged.
+  Y0SH1M4S73R:
+  - refactor: Painting has been significantly refactored with a new UI that should
+      provide every painting control you need without having to unfocus the UI window.
+      Please report any issues.
+  - refactor: Items that can store paint palettes now start with no colors. Colors
+      can be added to and removed from the item's palette, up to the number of colors
+      they previously stored.
+2026-02-03:
+  alien3301:
+  - qol: Heretic void cloak doesn't quickdraw
+2026-02-04:
+  Fghj240:
+  - bugfix: viruses should maybe probably not cure themselves
+  Melbert:
+  - qol: Blushing matches blood color, so lizards blush greeeen.
+  SmArtKar:
+  - refactor: Refactored sparks, foam, smoke, and other miscellaneous effect systems.
+  - refactor: Vapes now have consistent rigging with cigs using the new system.
+  - bugfix: Fixed some effects never working.
+  SyncIt21:
+  - qol: plumbing disposer now has TGUI interface for operations
+  - bugfix: plumbing disposer icon state correctly switches between on & off under
+      circumstances
+  Y0SH1M4S73R:
+  - bugfix: The holy energy swords and the carp-sie plushie can once again be renamed
+  - bugfix: The holy energy swords and the carp-sie plushie can once again be sacrificed
+      by cultists to spawn different weapons based on how many unique cultists the
+      chaplain has crit or killed with them
+  - qol: The holy skateboard can be renamed like other null rod variants can
+  - bugfix: Unusual null rod variants like the holy skateboard and bow can now be
+      sacrificed by cultists to spawn different weapons based on how many unique cultists
+      the chaplain has crit or killed with them. The bow and the burdened chaplain's
+      revolver, in particular, also count cultists crit or killed by arrows/bullets
+      fired from them by the chaplain.
+  lelandkemble:
+  - spellcheck: Language manuals correctly refer to the person using them up to viewers
+  - bugfix: Sources of random slimes will now produce random slimes
+  - bugfix: Slimes revived via magic will now continue to look as they should
+2026-02-05:
+  Kashargul:
+  - bugfix: tgui error year display
+  lelandkemble:
+  - bugfix: the auto updating lootpanel now automatically shows new items that haven't
+      moved yet.
+2026-02-06:
+  Bugwasabi:
+  - bugfix: Play Internet Sounds will now only display song details to users who have
+      admin music enabled.
+  Melbert:
+  - balance: Stasis now stops addiction ticks while active - meaning addictions will
+      not apply their ticking withdrawal effects, but also won't heal over time
+  - refactor: Refactored how deafness is tracked. Please report any weird interactions
+      with sounds, like messages or sfx being missing.
+  - bugfix: Lacking ears and being in hard crit now consistently treats you as "being
+      deaf". This affects a few minor interactions like empath, the jukebox, and sleeping.
+  lelandkemble:
+  - bugfix: the Space Furnace is now usable in rooms that have previously been breached,
+      provided they have recovered enough air.
+2026-02-07:
+  ArcaneMusic:
+  - rscadd: Stations can now spawn with Structural weakpoints. If they're subject
+      to an explosion, they'll crack open a tear in the station's turfs. If you spot
+      one, make sure to weld it or seal it with sticky tape to fix one. Or not!
+  - rscadd: Adds a negative station trait that greatly increases the number of weakpoints
+      that can spawn on station.
+  SmArtKar:
+  - bugfix: Fixed chemical foam not working
+  lelandkemble:
+  - bugfix: Blast doors & shutters no longer inexplicably open when approached on
+      a mount
+2026-02-08:
+  ArcaneMusic:
+  - balance: Multitools cost has been decreased from youtool vendors, and their stock
+      increased (150 credits, 4 stock).
+  Cyberboss:
+  - bugfix: Fixed encoding of special characters in chem dispenser recorded recipe
+      names.
+  Laikodaemon:
+  - image: HoP's Accounting console now has a new sprite.

@@ -141,9 +141,7 @@
 /obj/item/soap/suicide_act(mob/living/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!", forced="soap suicide")
 	user.visible_message(span_suicide("[user] lifts [src] to [user.p_their()] mouth and gnaws on it furiously, producing a thick froth! [user.p_They()]'ll never get that BB gun now!"))
-	var/datum/effect_system/fluid_spread/foam/foam = new
-	foam.set_up(1, holder = src, location = get_turf(user))
-	foam.start()
+	do_foam(1, src, get_turf(user))
 	return TOXLOSS
 
 /obj/item/soap/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
@@ -268,7 +266,7 @@
 		return
 	var/turf/T = get_turf(src)
 	for(M in ohearers(7, T))
-		if(M.can_hear())
+		if(!HAS_TRAIT(M, TRAIT_DEAF))
 			M.emote("flip")
 	COOLDOWN_START(src, golden_horn_cooldown, 1 SECONDS)
 
