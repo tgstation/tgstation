@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - image: "Husk visuals now inherit their mob's blood color"
