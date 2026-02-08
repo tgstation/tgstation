@@ -16,7 +16,7 @@
 		return gender_has_physique(preferences.read_preference(/datum/preference/choiced/gender))
 
 /datum/preference/choiced/body_type/create_informed_default_value(datum/preferences/preferences)
-	return USE_GENDER
+	return gender_has_physique(preferences.read_preference(/datum/preference/choiced/gender)) ? USE_GENDER : FEMALE
 
 /datum/preference/choiced/body_type/apply_to_human(mob/living/carbon/human/target, value)
 	if (value == USE_GENDER)
