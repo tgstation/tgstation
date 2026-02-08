@@ -227,15 +227,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 				if (preference_middleware.pre_set_preference(usr, requested_preference_key, value))
-					return
+					return TRUE
 
 			var/datum/preference/requested_preference = GLOB.preference_entries_by_key[requested_preference_key]
 			if (isnull(requested_preference))
-				return
+				return FALSE
 
 			// SAFETY: `update_preference` performs validation checks
 			if (!update_preference(requested_preference, value))
-				return
+				return FALSE
 
 			if (istype(requested_preference, /datum/preference/name))
 				tainted_character_profiles = TRUE
