@@ -95,5 +95,8 @@
   - bugfix: Blast doors & shutters no longer inexplicably open when approached on
       a mount
 2026-02-08:
+  ArcaneMusic:
+  - balance: Multitools cost has been decreased from youtool vendors, and their stock
+      increased (150 credits, 4 stock).
   Laikodaemon:
   - image: HoP's Accounting console now has a new sprite.
