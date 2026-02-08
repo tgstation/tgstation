@@ -24,7 +24,7 @@
 	throwforce = 30
 	block_chance = 50
 	armour_penetration = 50
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	pickup_sound = 'sound/items/unsheath.ogg'
 	drop_sound = 'sound/items/sheath.ogg'
@@ -36,14 +36,13 @@
 	max_integrity = 200
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	item_flags = NEEDS_PERMIT
-	var/datum/effect_system/spark_spread/spark_system
+	var/datum/effect_system/basic/spark_spread/spark_system
 	var/datum/action/innate/dash/ninja/jaunt
 
 /obj/item/energy_katana/Initialize(mapload)
 	. = ..()
 	jaunt = new(src)
-	spark_system = new /datum/effect_system/spark_spread()
-	spark_system.set_up(5, 0, src)
+	spark_system = new(src, 5, FALSE)
 	spark_system.attach(src)
 
 /obj/item/energy_katana/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)

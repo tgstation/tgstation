@@ -18,25 +18,30 @@
 	severity = 1
 	symptom_delay_min = 25
 	symptom_delay_max = 75
+	symptom_cure = /datum/reagent/consumable/milk
 
-/datum/symptom/disfiguration/Activate(datum/disease/advance/A)
+/datum/symptom/disfiguration/Activate(datum/disease/advance/disease)
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/M = A.affected_mob
-	if (HAS_TRAIT(M, TRAIT_DISFIGURED))
+	var/mob/living/carbon/victim = disease.affected_mob
+	var/obj/item/bodypart/head = victim.get_bodypart(BODY_ZONE_HEAD)
+	if(!head || HAS_TRAIT_FROM(head, TRAIT_DISFIGURED, DISEASE_TRAIT))
 		return
-	switch(A.stage)
+
+	switch(disease.stage)
 		if(5)
-			ADD_TRAIT(M, TRAIT_DISFIGURED, DISEASE_TRAIT)
-			M.visible_message(span_warning("[M]'s face appears to cave in!"), span_notice("You feel your face crumple and cave in!"))
+			ADD_TRAIT(head, TRAIT_DISFIGURED, DISEASE_TRAIT)
+			victim.visible_message(span_warning("[victim]'s face appears to cave in!"), span_notice("You feel your face crumple and cave in!"))
 		else
-			M.visible_message(span_warning("[M]'s face begins to contort..."), span_notice("Your face feels wet and malleable..."))
+			victim.visible_message(span_warning("[victim]'s face begins to contort..."), span_notice("Your face feels wet and malleable..."))
 
 
-/datum/symptom/disfiguration/End(datum/disease/advance/A)
+/datum/symptom/disfiguration/End(datum/disease/advance/disease)
 	. = ..()
 	if(!.)
 		return
-	if(A.affected_mob)
-		REMOVE_TRAIT(A.affected_mob, TRAIT_DISFIGURED, DISEASE_TRAIT)
+	var/mob/living/carbon/victim = disease.affected_mob
+	var/obj/item/bodypart/head = victim?.get_bodypart(BODY_ZONE_HEAD)
+	if(head)
+		REMOVE_TRAIT(head, TRAIT_DISFIGURED, DISEASE_TRAIT)

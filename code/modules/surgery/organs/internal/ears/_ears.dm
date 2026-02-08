@@ -48,11 +48,16 @@
 	. = ..()
 	if(temporary_deafness)
 		on_deafened()
+	REMOVE_TRAIT(organ_owner, TRAIT_DEAF, NO_EARS)
 
 /obj/item/organ/ears/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	if(temporary_deafness)
 		on_undeafened(organ_owner)
+	// Do not apply with special flag, even if it would ultimately be redundant by new ears being hot-swapped in.
+	// This is so we don't trip signal_addtrait when hot-swapping ears, which could cause inappropriate behavior like nuking sound effects.
+	if(!special)
+		ADD_TRAIT(organ_owner, TRAIT_DEAF, NO_EARS)
 
 /obj/item/organ/ears/get_status_appendix(advanced, add_tooltips)
 	if(owner.stat == DEAD || !HAS_TRAIT(owner, TRAIT_DEAF))
@@ -303,6 +308,13 @@
 	icon_state = "ears-c-u"
 	desc = "Advanced cybernetic ears capable of dampening loud noises to protect their user."
 	bang_protect = EAR_PROTECTION_NORMAL
+	damage_multiplier = 0.5
+
+/obj/item/organ/ears/cybernetic/volume
+	name = "volume-adjusting cybernetic ears"
+	icon_state = "ears-c-u"
+	desc = "Advanced cybernetic ears capable of dampening loud noises to protect their user."
+	bang_protect = 1
 	damage_multiplier = 0.5
 
 // "X-ray ears" that let you hear through walls

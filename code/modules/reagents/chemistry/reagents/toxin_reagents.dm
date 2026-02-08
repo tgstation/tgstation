@@ -67,12 +67,12 @@
 
 /datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_tox_loss(0.5 * seconds_per_tick * REM, required_biotype = affected_biotype))
+	if(affected_mob.adjust_tox_loss(0.25 * seconds_per_tick * metabolization_ratio, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	mytray.mutation_roll(user)
-	mytray.adjust_toxic(3) //It is still toxic, mind you, but not to the same degree.
+	mytray.radioactive_exposure(modifier = volume * 0.1)
+	mytray.myseed?.adjust_instability(round(volume * 0.2))
 
 /datum/reagent/toxin/mutagen/used_on_fish(obj/item/fish/fish)
 	ADD_TRAIT(fish, TRAIT_FISH_MUTAGENIC, type)
@@ -81,6 +81,8 @@
 
 #define LIQUID_PLASMA_BP (50+T0C)
 #define LIQUID_PLASMA_IG (325+T0C)
+#define LIQUID_PLASMA_CHARGE_COEFF 2.7
+#define LIQUID_PLASMA_VOLUME_POWER_CAP 7
 
 /datum/reagent/toxin/plasma
 	name = "Plasma"
@@ -141,14 +143,46 @@
 		exposed_turf.atmos_spawn_air("[GAS_PLASMA]=[reac_volume];[TURF_TEMPERATURE(temp)]")
 	return ..()
 
-#undef LIQUID_PLASMA_BP
-#undef LIQUID_PLASMA_IG
 
-/datum/reagent/toxin/plasma/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
+// Splashing people with plasma is stronger than fuel!
+/datum/reagent/toxin/plasma/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	if(methods & (TOUCH|VAPOR))
 		exposed_mob.adjust_fire_stacks(reac_volume / 5)
 		return
+
+/datum/reagent/toxin/plasma/on_spark_act(power_charge, spark_flags)
+	// Tape up your plasma IEDs
+	if ((spark_flags & SPARK_ACT_WEAKEN_COMMON) && !(spark_flags & SPARK_ACT_ENCLOSED))
+		if(holder.chem_temp < LIQUID_PLASMA_BP)
+			return NONE
+		var/turf/holder_turf = get_turf(holder)
+		if (holder_turf)
+			holder_turf.atmos_spawn_air("[GAS_PLASMA]=[volume];[TURF_TEMPERATURE(holder.chem_temp)]")
+		return SPARK_ACT_NON_DESTRUCTIVE
+
+	// If we have any stabilizing agent in the mix, we need 0.2% of a standard cell value per mol of agent to be spent at once to blow
+	// This should allow for some more creative traps to be made with plasma
+	var/agent_volume = holder.get_reagent_amount(/datum/reagent/stabilizing_agent)
+	if (agent_volume && power_charge < agent_volume * 0.002 * STANDARD_CELL_CHARGE)
+		return NONE
+
+	// Plasma explosions become stronger with higher current, and don't care about if they're enclosed or not
+	var/power_modifier = max(0, round(sqrt(power_charge / STANDARD_CELL_CHARGE) * LIQUID_PLASMA_CHARGE_COEFF, 1) - 1)
+	var/strengthdiv = 5
+	if (spark_flags & SPARK_ACT_WEAKEN_COMMON)
+		strengthdiv *= 3 // Stronger than waterpot, weaker than methbombs
+	var/current_limit = round(volume / LIQUID_PLASMA_VOLUME_POWER_CAP, 1)
+	// High current can only get you so far before you get a sharp dropoff
+	if (power_modifier > current_limit)
+		power_modifier = round(current_limit + log(power_modifier - current_limit + 1), 1)
+	reagent_explode(holder, volume, modifier = power_modifier, strengthdiv = strengthdiv, clear_holder_reagents = FALSE, flame_factor = 1)
+	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
+
+#undef LIQUID_PLASMA_BP
+#undef LIQUID_PLASMA_IG
+#undef LIQUID_PLASMA_CHARGE_COEFF
+#undef LIQUID_PLASMA_VOLUME_POWER_CAP
 
 /datum/reagent/toxin/hot_ice
 	name = "Hot Ice Slush"
@@ -280,7 +314,7 @@
 /datum/reagent/toxin/zombiepowder/proc/zombify(mob/living/holder_mob)
 	PRIVATE_PROC(TRUE)
 
-	holder_mob.adjust_oxy_loss(0.5*REM, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	holder_mob.adjust_oxy_loss(0.25, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if((data?["method"] & (INGEST|INHALE)) && holder_mob.stat != DEAD)
 		holder_mob.apply_status_effect(/datum/status_effect/reagent_effect/fakedeath, type)
 
@@ -839,8 +873,7 @@
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	var/scratched = FALSE
-	var/scratch_damage = 0.2 * REM
-
+	var/scratch_damage = 0.25 * metabolization_ratio
 	var/obj/item/bodypart/head = affected_mob.get_bodypart(BODY_ZONE_HEAD)
 	if(!isnull(head) && SPT_PROB(8, seconds_per_tick))
 		scratched = affected_mob.itch(damage = scratch_damage, target_part = head)

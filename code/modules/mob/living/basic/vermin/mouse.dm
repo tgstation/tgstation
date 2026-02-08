@@ -45,6 +45,7 @@
 	)
 
 /datum/emote/mouse
+	abstract_type = /datum/emote/mouse
 	mob_type_allowed_typecache = /mob/living/basic/mouse
 	mob_type_blacklist_typecache = list()
 
@@ -81,7 +82,7 @@
 
 /mob/living/basic/mouse/proc/make_tameable()
 	if (tame)
-		faction |= FACTION_NEUTRAL
+		add_faction(FACTION_NEUTRAL)
 	else
 		var/static/list/food_types = list(/obj/item/food/cheese)
 		AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 100)
@@ -196,7 +197,7 @@
 /// Called when a mouse is hand-fed some cheese, it will stop being afraid of humans
 /mob/living/basic/mouse/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
 	new /obj/effect/temp_visual/heart(loc)
-	faction |= FACTION_NEUTRAL
+	add_faction(FACTION_NEUTRAL)
 	tame = TRUE
 	try_consume_cheese(cheese)
 	ai_controller.CancelActions() // Interrupt any current fleeing

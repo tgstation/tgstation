@@ -767,18 +767,18 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	random_span = pick("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia")
 	RegisterSignal(affected_mob, COMSIG_MOVABLE_HEAR, PROC_REF(owner_hear))
-	to_chat(affected_mob, span_warning("Your hearing seems to be a bit off[affected_mob.can_hear() ? "!" : " - wait, that's normal."]"))
+	to_chat(affected_mob, span_warning("Your hearing seems to be a bit off[!HAS_TRAIT(affected_mob, TRAIT_DEAF) ? "!" : " - wait, that's normal."]"))
 
 /datum/reagent/impurity/inacusiate/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
 	UnregisterSignal(affected_mob, COMSIG_MOVABLE_HEAR)
-	to_chat(affected_mob, span_notice("You start hearing things normally again[affected_mob.can_hear() ? "" : " - no, wait, no you don't"]."))
+	to_chat(affected_mob, span_notice("You start hearing things normally again[!HAS_TRAIT(affected_mob, TRAIT_DEAF) ? "" : " - no, wait, no you don't"]."))
 
 /datum/reagent/impurity/inacusiate/proc/owner_hear(mob/living/owner, list/hearing_args)
 	SIGNAL_HANDLER
 
 	// don't skip messages that the owner says or can't understand (since they still make sounds)
-	if(!owner.can_hear())
+	if(HAS_TRAIT(owner, TRAIT_DEAF))
 		return
 	// not technically hearing
 	var/atom/movable/speaker = hearing_args[HEARING_SPEAKER]
@@ -1220,7 +1220,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/colorful_reagent/overdose_start(mob/living/affected_mob)
 	. = ..()
-	metabolization_rate = 0.04 * REM
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 
 /datum/reagent/inverse/colorful_reagent/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()

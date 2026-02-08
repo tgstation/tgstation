@@ -588,7 +588,10 @@
 /obj/item/clothing/glasses/thermal/xray
 	name = "syndicate xray goggles"
 	desc = "A pair of xray goggles manufactured by the Syndicate."
+	icon_state = "material"
+	color_cutoffs = null
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
+	glass_colour_type = /datum/client_colour/glass_colour/lightblue
 
 /obj/item/clothing/glasses/thermal/xray/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
