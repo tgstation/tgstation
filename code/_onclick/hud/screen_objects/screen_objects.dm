@@ -1,3 +1,4 @@
+INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 /*
 	Screen objects
 	Todo: improve/re-implement
@@ -34,6 +35,10 @@
 	 */
 	var/del_on_map_removal = TRUE
 
+	/// A key for cleaning up references in hud datums
+	var/hud_group_key
+	var/hud_key
+
 	/// If FALSE, this will not be cleared when calling /client/clear_screen()
 	var/clear_with_screen = TRUE
 	/// If TRUE, clicking the screen element will fall through and perform a default "Click" call
@@ -50,6 +55,9 @@
 	set_new_hud(hud_owner)
 
 /atom/movable/screen/Destroy()
+	if(hud)
+		hud.screen_groups?[hud_group_key] -= src
+		hud.screen_objects -= hud_key
 	master_ref = null
 	hud = null
 	return ..()
@@ -57,6 +65,7 @@
 /atom/movable/screen/Click(location, control, params)
 	if(flags_1 & INITIALIZED_1)
 		SEND_SIGNAL(src, COMSIG_SCREEN_ELEMENT_CLICK, location, control, params, usr)
+
 	if(default_click)
 		return ..()
 
@@ -101,7 +110,6 @@
 	maptext_width = 480
 
 /atom/movable/screen/swap_hand
-	plane = HUD_PLANE
 	name = "swap hand"
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
@@ -167,6 +175,7 @@
 
 /atom/movable/screen/language_menu/ghost
 	icon = 'icons/hud/screen_ghost.dmi'
+	screen_loc = ui_ghost_language_menu
 
 /atom/movable/screen/inventory
 	/// The identifier for the slot. It has nothing to do with ID cards.
@@ -177,7 +186,6 @@
 	var/icon_full
 	/// The overlay when hovering over with an item in your hand
 	var/image/object_overlay
-	plane = HUD_PLANE
 
 /atom/movable/screen/inventory/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -310,7 +318,6 @@
 	name = "drop"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_drop"
-	plane = HUD_PLANE
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/drop/Click()
@@ -395,6 +402,7 @@
 
 /atom/movable/screen/floor_changer/vertical/ghost
 	icon = 'icons/hud/screen_ghost.dmi'
+	screen_loc = ui_ghost_floor_changer
 
 /atom/movable/screen/spacesuit
 	name = "Space suit cell status"
@@ -406,6 +414,11 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "running"
 	mouse_over_pointer = MOUSE_HAND_POINTER
+	screen_loc = ui_movi
+
+/atom/movable/screen/mov_intent/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	update_appearance(UPDATE_ICON_STATE)
 
 /atom/movable/screen/mov_intent/Click()
 	toggle(usr)
@@ -432,6 +445,11 @@
 	icon_state = "pull"
 	base_icon_state = "pull"
 	mouse_over_pointer = MOUSE_HAND_POINTER
+	screen_loc = ui_living_pull
+
+/atom/movable/screen/pull/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	update_appearance(UPDATE_ICON_STATE)
 
 /atom/movable/screen/pull/Click()
 	if(isobserver(usr))
@@ -447,8 +465,8 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_resist"
 	base_icon_state = "act_resist"
-	plane = HUD_PLANE
 	mouse_over_pointer = MOUSE_HAND_POINTER
+	screen_loc = ui_above_movement
 
 /atom/movable/screen/resist/Click()
 	flick("[base_icon_state]_on", src)
@@ -461,8 +479,12 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_rest"
 	base_icon_state = "act_rest"
-	plane = HUD_PLANE
 	mouse_over_pointer = MOUSE_HAND_POINTER
+	screen_loc = ui_rest
+
+/atom/movable/screen/rest/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	update_appearance(UPDATE_ICON_STATE)
 
 /atom/movable/screen/rest/Click()
 	if(isliving(usr))
@@ -481,8 +503,8 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_sleep"
 	base_icon_state = "act_sleep"
-	plane = HUD_PLANE
 	mouse_over_pointer = MOUSE_HAND_POINTER
+	screen_loc = ui_above_throw
 
 /atom/movable/screen/sleep/Click()
 	if(!isliving(usr) || HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
@@ -506,7 +528,6 @@
 	name = "storage"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "storage_cell"
-	plane = HUD_PLANE
 
 /atom/movable/screen/storage/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()
@@ -574,6 +595,7 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_throw"
 	mouse_over_pointer = MOUSE_HAND_POINTER
+	screen_loc = ui_drop_throw
 
 /atom/movable/screen/throw_catch/Click()
 	if(isliving(usr))
@@ -588,6 +610,10 @@
 	var/overlay_icon = 'icons/hud/screen_gen.dmi'
 	var/static/list/hover_overlays_cache = list()
 	var/hovering
+
+/atom/movable/screen/zone_sel/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	update_appearance()
 
 /atom/movable/screen/zone_sel/Click(location, control,params)
 	if(isobserver(usr))
@@ -879,7 +905,6 @@
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 
-INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 
 /atom/movable/screen/splash/Initialize(mapload, datum/hud/hud_owner, client/C, visible, use_previous_title)
 	. = ..()

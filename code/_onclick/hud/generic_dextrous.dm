@@ -1,70 +1,35 @@
 //Used for normal mobs that have hands.
-/datum/hud/dextrous/New(mob/living/owner)
-	..()
+/datum/hud/dextrous/initialize_screen_objects()
+	. = ..()
 	var/atom/movable/screen/using
-
-	pull_icon = new /atom/movable/screen/pull(null, src)
-	pull_icon.icon = ui_style
-	pull_icon.update_appearance()
-	pull_icon.screen_loc = ui_drone_pull
-	static_inventory += pull_icon
-
-	build_hand_slots()
-
-	using = new /atom/movable/screen/drop(null, src)
-	using.icon = ui_style
-	using.screen_loc = ui_swaphand_position(owner, 1)
-	static_inventory += using
-
-	using = new /atom/movable/screen/swap_hand(null, src)
-	using.icon = ui_style
+	add_screen_object(/atom/movable/screen/drop, HUD_MOB_DROP, HUD_GROUP_STATIC, ui_style, ui_swaphand_position(mymob, 1))
+	using = add_screen_object(/atom/movable/screen/swap_hand, HUD_MOB_SWAPHAND_2, HUD_GROUP_STATIC, ui_style, ui_swaphand_position(mymob, 2))
 	using.icon_state = "act_swap"
-	using.screen_loc = ui_swaphand_position(owner, 2)
-	static_inventory += using
-
-	action_intent = new /atom/movable/screen/combattoggle/flashy(null, src)
-	action_intent.icon = ui_style
-	action_intent.screen_loc = ui_movi
-	static_inventory += action_intent
-
-	floor_change = new /atom/movable/screen/floor_changer(null, src)
-	floor_change.icon = 'icons/hud/screen_midnight.dmi'
-	static_inventory += floor_change
-
-	if(HAS_TRAIT(owner, TRAIT_CAN_THROW_ITEMS))
-		throw_icon = new /atom/movable/screen/throw_catch(null, src)
-		throw_icon.icon = ui_style
-		throw_icon.screen_loc = ui_drop_throw
-		static_inventory += throw_icon
-
-	zone_select = new /atom/movable/screen/zone_sel(null, src)
-	zone_select.icon = ui_style
-	zone_select.update_appearance()
-	static_inventory += zone_select
-
-	using = new /atom/movable/screen/area_creator(null, src)
-	using.icon = ui_style
-	static_inventory += using
-
-	healthdoll = new /atom/movable/screen/healthdoll/living(null, src)
-	infodisplay += healthdoll
 
 	mymob.canon_client?.clear_screen()
 
-	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
-		if(inv.slot_id)
-			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
-			inv.update_appearance()
+	build_hand_slots()
+
+	add_screen_object(/atom/movable/screen/pull, HUD_MOB_PULL, HUD_GROUP_STATIC, ui_style, ui_drone_pull)
+	add_screen_object(/atom/movable/screen/combattoggle/flashy, HUD_MOB_INTENTS, HUD_GROUP_STATIC, ui_style, ui_movi)
+	add_screen_object(/atom/movable/screen/floor_changer, HUD_MOB_FLOOR_CHANGER, HUD_GROUP_STATIC, ui_style)
+	add_screen_object(/atom/movable/screen/zone_sel, HUD_MOB_ZONE_SELECTOR, HUD_GROUP_STATIC, ui_style)
+	add_screen_object(/atom/movable/screen/area_creator, HUD_MOB_AREA_CREATOR, HUD_GROUP_STATIC, ui_style)
+	add_screen_object(/atom/movable/screen/healthdoll/living, HUD_MOB_HEALTH, HUD_GROUP_INFO)
+
+	if(HAS_TRAIT(mymob, TRAIT_CAN_THROW_ITEMS))
+		add_screen_object(/atom/movable/screen/throw_catch, HUD_MOB_THROW, HUD_GROUP_HOTKEYS, ui_style, ui_drop_throw)
 
 /datum/hud/dextrous/persistent_inventory_update()
 	if(!mymob)
 		return
-	var/mob/living/D = mymob
+	var/mob/living/owner = mymob
 	if(hud_version != HUD_STYLE_NOHUD)
-		for(var/obj/item/I in D.held_items)
-			I.screen_loc = ui_hand_position(D.get_held_index_of_item(I))
-			D.client.screen += I
-	else
-		for(var/obj/item/I in D.held_items)
-			I.screen_loc = null
-			D.client.screen -= I
+		for(var/obj/item/held in owner.held_items)
+			held.screen_loc = ui_hand_position(owner.get_held_index_of_item(held))
+			owner.client.screen += held
+		return
+
+	for(var/obj/item/held in owner.held_items)
+		held.screen_loc = null
+		owner.client.screen -= held

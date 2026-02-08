@@ -1,297 +1,38 @@
-/atom/movable/screen/human
-	icon = 'icons/hud/screen_midnight.dmi'
+/datum/hud/human
+	inventory_slots = /datum/inventory_slot/human
 
-/atom/movable/screen/human/toggle
-	name = "toggle"
-	icon_state = "toggle"
-	base_icon_state = "toggle"
-	mouse_over_pointer = MOUSE_HAND_POINTER
-
-/atom/movable/screen/human/toggle/Click()
-
-	var/mob/targetmob = usr
-
-	if(isobserver(usr))
-		if(ishuman(usr.client.eye) && (usr.client.eye != usr))
-			var/mob/M = usr.client.eye
-			targetmob = M
-
-	if(usr.hud_used.inventory_shown && targetmob.hud_used)
-		usr.hud_used.inventory_shown = FALSE
-		usr.client.screen -= targetmob.hud_used.toggleable_inventory
-	else
-		usr.hud_used.inventory_shown = TRUE
-		usr.client.screen += targetmob.hud_used.toggleable_inventory
-
-	targetmob.hud_used.hidden_inventory_update(usr)
-	update_appearance()
-
-/atom/movable/screen/human/toggle/update_icon_state()
-	icon_state = "[base_icon_state][hud?.inventory_shown ? "_active" : ""]"
-	return ..()
-
-/atom/movable/screen/ling
-	icon = 'icons/hud/screen_changeling.dmi'
-
-/atom/movable/screen/ling/chems
-	name = "chemical storage"
-	icon_state = "power_display"
-	screen_loc = ui_lingchemdisplay
-
-/atom/movable/screen/ling/sting
-	name = "current sting"
-	screen_loc = ui_lingstingdisplay
-	invisibility = INVISIBILITY_ABSTRACT
-	mouse_over_pointer = MOUSE_HAND_POINTER
-
-/atom/movable/screen/ling/sting/Click()
-	if(isobserver(usr))
-		return
-	var/mob/living/carbon/carbon_user = usr
-	carbon_user.unset_sting()
-
-/datum/hud/human/New(mob/living/carbon/human/owner)
-	..()
-
+/datum/hud/human/initialize_screen_objects()
+	. = ..()
 	var/atom/movable/screen/using
-	var/atom/movable/screen/inventory/inv_box
-
-	using = new /atom/movable/screen/language_menu(null, src)
-	using.icon = ui_style
-	using.screen_loc = ui_human_language
-	static_inventory += using
-
-	using = new /atom/movable/screen/navigate(null, src)
-	using.icon = ui_style
-	using.screen_loc = ui_human_navigate
-	static_inventory += using
-
-	using = new /atom/movable/screen/area_creator(null, src)
-	using.icon = ui_style
-	using.screen_loc = ui_human_area
-	static_inventory += using
-
-	action_intent = new /atom/movable/screen/combattoggle/flashy(null, src)
-	action_intent.icon = ui_style
-	action_intent.screen_loc = ui_combat_toggle
-	static_inventory += action_intent
-
-	floor_change = new /atom/movable/screen/floor_changer/vertical(null, src)
-	floor_change.icon = ui_style
-	floor_change.screen_loc = ui_human_floor_changer
-	static_inventory += floor_change
-
-	using = new /atom/movable/screen/mov_intent(null, src)
-	using.icon = ui_style
-	using.icon_state = (owner.move_intent == MOVE_INTENT_RUN ? "running" : "walking")
-	using.screen_loc = ui_movi
-	static_inventory += using
-
-	inv_box = new /atom/movable/screen/inventory(null, src)
-	inv_box.name = "uniform"
-	inv_box.icon = ui_style
-	inv_box.slot_id = ITEM_SLOT_ICLOTHING
-	inv_box.icon_state = "uniform"
-	inv_box.icon_full = "template"
-	inv_box.screen_loc = ui_iclothing
-	toggleable_inventory += inv_box
-
-	inv_box = new /atom/movable/screen/inventory(null, src)
-	inv_box.name = "suit"
-	inv_box.icon = ui_style
-	inv_box.slot_id = ITEM_SLOT_OCLOTHING
-	inv_box.icon_state = "suit"
-	inv_box.icon_full = "template"
-	inv_box.screen_loc = ui_oclothing
-	toggleable_inventory += inv_box
-
+	// Static elements
+	add_screen_object(/atom/movable/screen/language_menu, HUD_MOB_LANGUAGE_MENU, HUD_GROUP_STATIC, ui_style, ui_human_language)
+	add_screen_object(/atom/movable/screen/navigate, HUD_MOB_NAVIGATE_MENU, HUD_GROUP_STATIC, ui_style, ui_human_navigate)
+	add_screen_object(/atom/movable/screen/area_creator, HUD_MOB_AREA_CREATOR, HUD_GROUP_STATIC, ui_style, ui_human_area)
+	add_screen_object(/atom/movable/screen/combattoggle/flashy, HUD_MOB_INTENTS, HUD_GROUP_STATIC, ui_style)
+	add_screen_object(/atom/movable/screen/floor_changer/vertical, HUD_MOB_FLOOR_CHANGER, HUD_GROUP_STATIC, ui_style, ui_human_floor_changer)
+	add_screen_object(/atom/movable/screen/mov_intent, HUD_MOB_MOVE_INTENT, HUD_GROUP_STATIC, ui_style)
+	add_screen_object(/atom/movable/screen/drop, HUD_MOB_DROP, HUD_GROUP_STATIC, ui_style, ui_swaphand_position(mymob, 1))
+	add_screen_object(/atom/movable/screen/human/toggle, HUD_HUMAN_TOGGLE_INVENTORY, HUD_GROUP_STATIC, ui_style)
+	add_screen_object(/atom/movable/screen/rest, HUD_MOB_REST, HUD_GROUP_STATIC, ui_style)
+	#warn Sleep is snowflaky
+	add_screen_object(/atom/movable/screen/sleep, HUD_MOB_SLEEP, HUD_GROUP_HOTKEYS, ui_style, ui_above_throw)
+	add_screen_object(/atom/movable/screen/pull, HUD_MOB_PULL, HUD_GROUP_STATIC, ui_style, ui_above_movement_top)
+	add_screen_object(/atom/movable/screen/zone_sel, HUD_MOB_ZONE_SELECTOR, HUD_GROUP_STATIC, ui_style)
 	build_hand_slots()
 
-	using = new /atom/movable/screen/drop(null, src)
-	using.icon = ui_style
-	using.screen_loc = ui_swaphand_position(owner, 1)
-	static_inventory += using
-
-	using = new /atom/movable/screen/swap_hand(null, src)
-	using.icon = ui_style
+	using = add_screen_object(/atom/movable/screen/swap_hand, HUD_MOB_SWAPHAND_2, HUD_GROUP_STATIC, ui_style, ui_swaphand_position(mymob, 2))
 	using.icon_state = "act_swap"
-	using.screen_loc = ui_swaphand_position(owner, 2)
-	static_inventory += using
 
-	inv_box = new /atom/movable/screen/inventory(null, src)
-	inv_box.name = "id"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "id"
-	inv_box.icon_full = "template_small"
-	inv_box.screen_loc = ui_id
-	inv_box.slot_id = ITEM_SLOT_ID
-	static_inventory += inv_box
+	// Hotkey buttons
+	add_screen_object(/atom/movable/screen/resist, HUD_MOB_RESIST, HUD_GROUP_HOTKEYS, ui_style)
+	add_screen_object(/atom/movable/screen/throw_catch, HUD_MOB_THROW, HUD_GROUP_HOTKEYS, ui_style)
 
-	inv_box = new /atom/movable/screen/inventory(null, src)
-	inv_box.name = "mask"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "mask"
-	inv_box.icon_full = "template"
-	inv_box.screen_loc = ui_mask
-	inv_box.slot_id = ITEM_SLOT_MASK
-	toggleable_inventory += inv_box
-
-	inv_box = new /atom/movable/screen/inventory(null, src)
-	inv_box.name = "neck"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "neck"
-	inv_box.icon_full = "template"
-	inv_box.screen_loc = ui_neck
-	inv_box.slot_id = ITEM_SLOT_NECK
-	toggleable_inventory += inv_box
-
-	inv_box = new /atom/movable/screen/inventory(null, src)
-	inv_box.name = "back"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "back"
-	inv_box.icon_full = "template_small"
-	inv_box.screen_loc = ui_back
-	inv_box.slot_id = ITEM_SLOT_BACK
-	static_inventory += inv_box
-
-	inv_box = new /atom/movable/screen/inventory(null, src)
-	inv_box.name = "left pocket"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "pocket"
-	inv_box.icon_full = "template_small"
-	inv_box.screen_loc = ui_storage1
-	inv_box.slot_id = ITEM_SLOT_LPOCKET
-	static_inventory += inv_box
-
-	inv_box = new /atom/movable/screen/inventory(null, src)
-	inv_box.name = "right pocket"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "pocket"
-	inv_box.icon_full = "template_small"
-	inv_box.screen_loc = ui_storage2
-	inv_box.slot_id = ITEM_SLOT_RPOCKET
-	static_inventory += inv_box
-
-	inv_box = new /atom/movable/screen/inventory(null, src)
-	inv_box.name = "suit storage"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "suit_storage"
-	inv_box.icon_full = "template"
-	inv_box.screen_loc = ui_sstore1
-	inv_box.slot_id = ITEM_SLOT_SUITSTORE
-	static_inventory += inv_box
-
-	resist_icon = new /atom/movable/screen/resist(null, src)
-	resist_icon.icon = ui_style
-	resist_icon.screen_loc = ui_above_movement
-	hotkeybuttons += resist_icon
-
-	using = new /atom/movable/screen/human/toggle(null, src)
-	using.icon = ui_style
-	using.screen_loc = ui_inventory
-	static_inventory += using
-
-	inv_box = new /atom/movable/screen/inventory(null, src)
-	inv_box.name = "gloves"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "gloves"
-	inv_box.icon_full = "template"
-	inv_box.screen_loc = ui_gloves
-	inv_box.slot_id = ITEM_SLOT_GLOVES
-	toggleable_inventory += inv_box
-
-	inv_box = new /atom/movable/screen/inventory(null, src)
-	inv_box.name = "eyes"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "glasses"
-	inv_box.icon_full = "template"
-	inv_box.screen_loc = ui_glasses
-	inv_box.slot_id = ITEM_SLOT_EYES
-	toggleable_inventory += inv_box
-
-	inv_box = new /atom/movable/screen/inventory(null, src)
-	inv_box.name = "ears"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "ears"
-	inv_box.icon_full = "template"
-	inv_box.screen_loc = ui_ears
-	inv_box.slot_id = ITEM_SLOT_EARS
-	toggleable_inventory += inv_box
-
-	inv_box = new /atom/movable/screen/inventory(null, src)
-	inv_box.name = "head"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "head"
-	inv_box.icon_full = "template"
-	inv_box.screen_loc = ui_head
-	inv_box.slot_id = ITEM_SLOT_HEAD
-	toggleable_inventory += inv_box
-
-	inv_box = new /atom/movable/screen/inventory(null, src)
-	inv_box.name = "shoes"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "shoes"
-	inv_box.icon_full = "template"
-	inv_box.screen_loc = ui_shoes
-	inv_box.slot_id = ITEM_SLOT_FEET
-	toggleable_inventory += inv_box
-
-	inv_box = new /atom/movable/screen/inventory(null, src)
-	inv_box.name = "belt"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "belt"
-	inv_box.icon_full = "template_small"
-	inv_box.screen_loc = ui_belt
-	inv_box.slot_id = ITEM_SLOT_BELT
-	static_inventory += inv_box
-
-	throw_icon = new /atom/movable/screen/throw_catch(null, src)
-	throw_icon.icon = ui_style
-	throw_icon.screen_loc = ui_drop_throw
-	hotkeybuttons += throw_icon
-
-	rest_icon = new /atom/movable/screen/rest(null, src)
-	rest_icon.icon = ui_style
-	rest_icon.screen_loc = ui_rest
-	rest_icon.update_appearance()
-	static_inventory += rest_icon
-
-	sleep_icon = new /atom/movable/screen/sleep(null, src)
-	sleep_icon.icon = ui_style
-	sleep_icon.screen_loc = ui_above_throw
-
-	spacesuit = new /atom/movable/screen/spacesuit(null, src)
-	infodisplay += spacesuit
-
-	healths = new /atom/movable/screen/healths(null, src)
-	infodisplay += healths
-
-	hunger = new /atom/movable/screen/hunger(null, src)
-	infodisplay += hunger
-
-	healthdoll = new /atom/movable/screen/healthdoll/human(null, src)
-	infodisplay += healthdoll
-
-	stamina = new /atom/movable/screen/stamina(null, src)
-	infodisplay += stamina
-
-	pull_icon = new /atom/movable/screen/pull(null, src)
-	pull_icon.icon = ui_style
-	pull_icon.screen_loc = ui_above_movement_top
-	pull_icon.update_appearance()
-	static_inventory += pull_icon
-
-	zone_select = new /atom/movable/screen/zone_sel(null, src)
-	zone_select.icon = ui_style
-	zone_select.update_appearance()
-	static_inventory += zone_select
-
-	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
-		if(inv.slot_id)
-			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
-			inv.update_appearance()
-
-	update_locked_slots()
+	// Info
+	add_screen_object(/atom/movable/screen/spacesuit, HUD_MOB_SPACESUIT, HUD_GROUP_INFO)
+	add_screen_object(/atom/movable/screen/healthdoll/human, HUD_MOB_HEALTH, HUD_GROUP_INFO)
+	add_screen_object(/atom/movable/screen/stamina, HUD_MOB_STAMINA, HUD_GROUP_INFO)
+	add_screen_object(/atom/movable/screen/combo, HUD_MOB_COMBO, HUD_GROUP_INFO)
+	add_screen_object(/atom/movable/screen/hunger, HUD_MOB_HUNGER, HUD_GROUP_INFO)
 
 /datum/hud/human/update_locked_slots()
 	if(!mymob)
@@ -324,7 +65,7 @@
 		if(eyes?.no_glasses)
 			blocked_slots |= ITEM_SLOT_EYES
 
-	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
+	for(var/atom/movable/screen/inventory/inv in screen_objects)
 		if(!inv.slot_id)
 			continue
 		inv.alpha = (blocked_slots & inv.slot_id) ? 128 : initial(inv.alpha)
@@ -384,8 +125,6 @@
 		if(H.head)
 			screenmob.client.screen -= H.head
 
-
-
 /datum/hud/human/persistent_inventory_update(mob/viewer)
 	if(!mymob)
 		return
@@ -437,15 +176,131 @@
 			I.screen_loc = null
 			screenmob.client.screen -= I
 
-
 /mob/living/carbon/human/verb/toggle_hotkey_verbs()
 	set category = "OOC"
 	set name = "Toggle hotkey buttons"
 	set desc = "This disables or enables the user interface buttons which can be used with hotkeys."
 
 	if(hud_used.hotkey_ui_hidden)
-		client.screen += hud_used.hotkeybuttons
+		client.screen += hud_used.screen_groups[HUD_GROUP_HOTKEYS]
 		hud_used.hotkey_ui_hidden = FALSE
 	else
-		client.screen -= hud_used.hotkeybuttons
+		client.screen -= hud_used.screen_groups[HUD_GROUP_HOTKEYS]
 		hud_used.hotkey_ui_hidden = TRUE
+
+/datum/inventory_slot/human
+	abstract_type = /datum/inventory_slot/human
+
+/datum/inventory_slot/human/uniform
+	name = "uniform"
+	slot_id = ITEM_SLOT_ICLOTHING
+	icon_state = "uniform"
+	icon_full = "template"
+	screen_loc = ui_iclothing
+	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
+
+/datum/inventory_slot/human/suit
+	name = "suit"
+	slot_id = ITEM_SLOT_OCLOTHING
+	icon_state = "suit"
+	icon_full = "template"
+	screen_loc = ui_oclothing
+	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
+
+/datum/inventory_slot/human/id
+	name = "id"
+	icon_state = "id"
+	icon_full = "template_small"
+	screen_loc = ui_id
+	slot_id = ITEM_SLOT_ID
+
+/datum/inventory_slot/human/mask
+	name = "mask"
+	icon_state = "mask"
+	icon_full = "template"
+	screen_loc = ui_mask
+	slot_id = ITEM_SLOT_MASK
+	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
+
+/datum/inventory_slot/human/neck
+	name = "neck"
+	icon_state = "neck"
+	icon_full = "template"
+	screen_loc = ui_neck
+	slot_id = ITEM_SLOT_NECK
+	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
+
+/datum/inventory_slot/human/back
+	name = "back"
+	icon_state = "back"
+	icon_full = "template_small"
+	screen_loc = ui_back
+	slot_id = ITEM_SLOT_BACK
+
+/datum/inventory_slot/human/l_pocket
+	name = "left pocket"
+	icon_state = "pocket"
+	icon_full = "template_small"
+	screen_loc = ui_storage1
+	slot_id = ITEM_SLOT_LPOCKET
+
+/datum/inventory_slot/human/l_pocket
+	name = "right pocket"
+	icon_state = "pocket"
+	icon_full = "template_small"
+	screen_loc = ui_storage2
+	slot_id = ITEM_SLOT_RPOCKET
+
+/datum/inventory_slot/human/l_pocket
+	name = "suit storage"
+	icon_state = "suit_storage"
+	icon_full = "template"
+	screen_loc = ui_sstore1
+	slot_id = ITEM_SLOT_SUITSTORE
+
+/datum/inventory_slot/human/l_pocket
+	name = "gloves"
+	icon_state = "gloves"
+	icon_full = "template"
+	screen_loc = ui_gloves
+	slot_id = ITEM_SLOT_GLOVES
+	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
+
+/datum/inventory_slot/human/eyes
+	name = "eyes"
+	icon_state = "glasses"
+	icon_full = "template"
+	screen_loc = ui_glasses
+	slot_id = ITEM_SLOT_EYES
+	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
+
+/datum/inventory_slot/human/ears
+	name = "ears"
+	icon_state = "ears"
+	icon_full = "template"
+	screen_loc = ui_ears
+	slot_id = ITEM_SLOT_EARS
+	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
+
+/datum/inventory_slot/human/head
+	name = "head"
+	icon_state = "head"
+	icon_full = "template"
+	screen_loc = ui_head
+	slot_id = ITEM_SLOT_HEAD
+	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
+
+/datum/inventory_slot/human/shoes
+	name = "shoes"
+	icon_state = "shoes"
+	icon_full = "template"
+	screen_loc = ui_shoes
+	slot_id = ITEM_SLOT_FEET
+	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
+
+/datum/inventory_slot/human/belt
+	name = "belt"
+	icon_state = "belt"
+	icon_full = "template_small"
+	screen_loc = ui_belt
+	slot_id = ITEM_SLOT_BELT

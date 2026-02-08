@@ -20,6 +20,120 @@
 #define WIDESCREEN_VIEWPORT_SIZE "19x15"
 #define SQUARE_VIEWPORT_SIZE "15x15"
 
+// Hud group keys
+/// Static elements that are always present in standard hud
+#define HUD_GROUP_STATIC 1
+/// Inventory elements toggled by the inventory switch
+#define HUD_GROUP_TOGGLEABLE_INVENTORY 2
+/// Info display HUD elements
+#define HUD_GROUP_INFO 3
+/// Permanently on-screen elements, regardless of your HUD status
+#define HUD_GROUP_SCREEN_OVERLAYS 4
+/// Hotkey buttons
+#define HUD_GROUP_HOTKEYS 5
+/// Total amount of screen groups in use
+#define SCREEN_GROUP_AMT 5
+
+// Hud keys for accessing hud objects
+#define HUD_MOB_TOGGLE_PALETTE "mobtogglepalette"
+#define HUD_MOB_PALETTE_UP "mobpaletteup"
+#define HUD_MOB_PALETTE_DOWN "mobpalettedown"
+#define HUD_MOB_SCREENTIP "screentips"
+#define HUD_MOB_HEALTH "mobhealth"
+#define HUD_MOB_LANGUAGE_MENU "moblanguage"
+#define HUD_MOB_NAVIGATE_MENU "mobnavigate"
+#define HUD_MOB_INTENTS "mobintents"
+#define HUD_MOB_MOVE_INTENT "mobmoveintent"
+#define HUD_MOB_ZONE_SELECTOR "mobzonesel"
+#define HUD_MOB_PULL "mobpull"
+#define HUD_MOB_DROP "mobdrop"
+#define HUD_MOB_THROW "mobthrow"
+#define HUD_MOB_HUNGER "mobhunger"
+#define HUD_MOB_STAMINA "mobstamina"
+#define HUD_MOB_SPACESUIT "mobspacesuit"
+#define HUD_MOB_COMBO "mobcombo"
+#define HUD_MOB_RESIST "mobresist"
+#define HUD_MOB_REST "mobrest"
+#define HUD_MOB_SLEEP "mobsleep"
+#define HUD_MOB_AREA_CREATOR "mobareacreator"
+#define HUD_MOB_SWAPHAND_1 "mobswaphand1"
+#define HUD_MOB_SWAPHAND_2 "mobswaphand2"
+#define HUD_MOB_CRAFTING_MENU "mobcrafting"
+#define HUD_MOB_FLOOR_CHANGER "mobfloorchanger"
+#define HUD_MOB_BLOOD_LEVEL "mobbloodlevel"
+#define HUD_OOZE_NUTRITION_DISPLAY "oozenutritiondisplay"
+
+#define HUD_HUMAN_TOGGLE_INVENTORY "humantoggleinventory"
+
+#define HUD_NEW_PLAYER_START_NOW "newplayerstartnow"
+#define HUD_NEW_PLAYER_SIGN_UP "newplayersignup"
+
+#define HUD_SILICON_TAKE_IMAGE "siliconcamera"
+#define HUD_SILICON_TABLET "silicontablet"
+#define HUD_SILICON_ALERTS "siliconalerts"
+
+#define HUD_CYBORG_LAMP "cyborglamp"
+#define HUD_CYBORG_HANDS "cyborgmodule"
+#define HUD_CYBORG_RADIO "cyborgradio"
+
+#define HUD_AI_FLOOR_INDICATOR "aifloorindicator"
+#define HUD_AI_GO_UP "aigoup"
+#define HUD_AI_GO_DOWN "aigodown"
+#define HUD_AI_AICORE "aicore"
+#define HUD_AI_CAMERA_LIST "aicameralist"
+#define HUD_AI_CAMERA_TRACK "aicameratrack"
+#define HUD_AI_CAMERA_LIGHT "aicameralight"
+#define HUD_AI_CREW_MONITOR "aicrewmonitor"
+#define HUD_AI_CREW_MANIFEST "aicrewmanifest"
+#define HUD_AI_ANNOUNCEMENT "aiannounce"
+#define HUD_AI_CALL_SHUTTLE "aishuttke"
+#define HUD_AI_STATE_LAWS "aistatelaws"
+#define HUD_AI_TAKE_IMAGE "aitakeimage"
+#define HUD_AI_IMAGE_VIEW "aivewimage"
+#define HUD_AI_SENSORS "aisensors"
+#define HUD_AI_MULTICAM "aiviewmulticam"
+#define HUD_AI_ADD_MULTICAM "aiaddmulticam"
+
+#define HUD_GHOST_SPAWNERS "ghostspawners"
+#define HUD_GHOST_ORBIT "ghostorbit"
+#define HUD_GHOST_REENTER_CORPSE "ghostcorpse"
+#define HUD_GHOST_TELEPORT "ghostteleport"
+#define HUD_GHOST_PAI "ghostpai"
+#define HUD_GHOST_MINIGAMES "ghostminigames"
+#define HUD_GHOST_DNR "ghostdnr"
+#define HUD_GHOST_SETTINGS "ghostsettings"
+
+#define HUD_ALIEN_QUEEN_FINDER "alienqueenfinder"
+#define HUD_ALIEN_PLASMA_DISPLAY "alienplasmadisplay"
+#define HUD_ALIEN_HUNTER_LEAP "alienhunterleap"
+
+#define HUD_BLOB_POWER_DISPLAY "blobpwrdisplay"
+#define HUD_BLOB_JUMP_TO_CORE "blobjumptocore"
+#define HUD_BLOB_JUMP_TO_NODE "blobjumptonode"
+#define HUD_BLOB_BLOBBERNAUT "blobblobbernaut"
+#define HUD_BLOB_RESOURCES "blobresources"
+#define HUD_BLOB_NODE "blobnode"
+#define HUD_BLOB_FACTORY "blobfactory"
+#define HUD_BLOB_READAPT "blobreadapt"
+#define HUD_BLOB_RELOCATE "blobrelocate"
+
+#define HUD_GUARDIAN_MANIFEST "guardianmanifest"
+#define HUD_GUARDIAN_RECALL "guardianrecall"
+#define HUD_GUARDIAN_LIGHT "guardianlight"
+#define HUD_GUARDIAN_COMMUNICATE "guardiancommunicate"
+#define HUD_GUARDIAN_TOGGLE "guardiantoggle"
+
+#define HUD_VOIDWALKER_SPACE_CAMO "voidwalkerspacecamo"
+#define HUD_VOIDWALKER_VOID_JUMP "voidwalkervoidjump"
+
+/// Converts item slots to hud keys as a compiler constant
+#define HUD_KEY_ITEM_SLOT(slot) "item_slot:" + #slot
+/// Hand2hudkey
+#define HUD_KEY_HAND_SLOT(slot) "hand_slot:[slot]"
+#define HUD_KEY_GHOST_HUDBOX(slot) "ghost_hudbox:[slot]"
+#define HUD_KEY_NEW_PLAYER(slot) "newplayer_hud:[slot]"
+#define HUD_KEY_CYBORG_MODULE(slot) "cyborg_module:[slot]"
+
 /*
 	These defines specificy screen locations.  For more information, see the byond documentation on the screen_loc var.
 
@@ -193,7 +307,7 @@
 #define ui_ghost_spawners_menu "SOUTH:6,CENTER-3:24"
 #define ui_ghost_orbit "SOUTH:6,CENTER-2:24"
 #define ui_ghost_reenter_corpse "SOUTH:6,CENTER-1:24"
-#define ui_dnr "SOUTH:6,CENTER:24"
+#define ui_ghost_dnr "SOUTH:6,CENTER:24"
 #define ui_ghost_teleport "SOUTH:6,CENTER+1:24"
 #define ui_ghost_settings "SOUTH: 6, CENTER+2:24"
 #define ui_ghost_minigames "SOUTH: 6, CENTER+3:24"

@@ -1,129 +1,36 @@
-/atom/movable/screen/alien
-	icon = 'icons/hud/screen_alien.dmi'
-
-/atom/movable/screen/alien/leap
-	name = "toggle leap"
-	icon_state = "leap_off"
-
-/atom/movable/screen/alien/leap/Click()
-	if(isalienhunter(usr))
-		var/mob/living/carbon/alien/adult/hunter/AH = usr
-		AH.toggle_leap()
-
-/atom/movable/screen/alien/plasma_display
-	name = "plasma stored"
-	icon_state = "power_display"
-	screen_loc = ui_alienplasmadisplay
-
-/atom/movable/screen/alien/alien_queen_finder
-	name = "queen sense"
-	desc = "Allows you to sense the general direction of your Queen."
-	icon_state = "queen_finder"
-	screen_loc = ui_alien_queen_finder
-
 /datum/hud/alien
 	ui_style = 'icons/hud/screen_alien.dmi'
 
-/datum/hud/alien/New(mob/living/carbon/alien/adult/owner)
-	..()
-
-	var/atom/movable/screen/using
-
-//equippable shit
-
-//hands
+/datum/hud/alien/initialize_screen_objects()
+	. = ..()
 	build_hand_slots()
 
-//begin buttons
-
-	using = new /atom/movable/screen/swap_hand(null, src)
-	using.icon = ui_style
+	var/atom/movable/screen/using
+	using = add_screen_object(/atom/movable/screen/swap_hand, HUD_MOB_SWAPHAND_1, HUD_GROUP_STATIC, ui_style, ui_swaphand_position(mymob, 1))
 	using.icon_state = "swap_1"
-	using.screen_loc = ui_swaphand_position(owner, 1)
-	static_inventory += using
-
-	using = new /atom/movable/screen/swap_hand(null, src)
-	using.icon = ui_style
+	using = add_screen_object(/atom/movable/screen/swap_hand, HUD_MOB_SWAPHAND_2, HUD_GROUP_STATIC, ui_style, ui_swaphand_position(mymob, 2))
 	using.icon_state = "swap_2"
-	using.screen_loc = ui_swaphand_position(owner, 2)
-	static_inventory += using
 
-	action_intent = new /atom/movable/screen/combattoggle/flashy(null, src)
-	action_intent.icon = ui_style
-	action_intent.screen_loc = ui_combat_toggle
-	static_inventory += action_intent
+	add_screen_object(/atom/movable/screen/combattoggle/flashy, HUD_MOB_INTENTS, HUD_GROUP_STATIC, ui_style)
+	add_screen_object(/atom/movable/screen/floor_changer, HUD_MOB_FLOOR_CHANGER, HUD_GROUP_STATIC, ui_style, ui_alien_floor_change)
+	add_screen_object(/atom/movable/screen/language_menu, HUD_MOB_LANGUAGE_MENU, ui_loc = ui_alien_language_menu)
+	add_screen_object(/atom/movable/screen/navigate, HUD_MOB_NAVIGATE_MENU, ui_loc = ui_alien_navigate_menu)
+	add_screen_object(/atom/movable/screen/zone_sel/alien, HUD_MOB_ZONE_SELECTOR)
+	add_screen_object(/atom/movable/screen/drop, HUD_MOB_DROP, HUD_GROUP_STATIC, ui_style)
+	add_screen_object(/atom/movable/screen/pull, HUD_MOB_PULL, HUD_GROUP_STATIC, ui_style)
+	add_screen_object(/atom/movable/screen/resist, HUD_MOB_RESIST, HUD_GROUP_HOTKEYS, ui_style)
+	add_screen_object(/atom/movable/screen/throw_catch, HUD_MOB_THROW, HUD_GROUP_HOTKEYS, ui_style)
+	add_screen_object(/atom/movable/screen/rest, HUD_MOB_REST, HUD_GROUP_HOTKEYS, ui_style)
+	#warn Sleep is snowflaky
+	add_screen_object(/atom/movable/screen/sleep, HUD_MOB_SLEEP, HUD_GROUP_HOTKEYS, ui_style)
+	add_screen_object(/atom/movable/screen/healths/alien, HUD_MOB_HEALTH, HUD_GROUP_INFO)
+	add_screen_object(/atom/movable/screen/alien/plasma_display, HUD_ALIEN_PLASMA_DISPLAY, HUD_GROUP_INFO)
 
 	if(isalienhunter(mymob))
-		var/mob/living/carbon/alien/adult/hunter/H = mymob
-		H.leap_icon = new /atom/movable/screen/alien/leap()
-		H.leap_icon.screen_loc = ui_alien_storage_r
-		static_inventory += H.leap_icon
-
-	floor_change = new /atom/movable/screen/floor_changer(null, src)
-	floor_change.icon = ui_style
-	floor_change.screen_loc = ui_alien_floor_change
-	static_inventory += floor_change
-
-	using = new/atom/movable/screen/language_menu(null, src)
-	using.screen_loc = ui_alien_language_menu
-	static_inventory += using
-
-	using = new /atom/movable/screen/navigate(null, src)
-	using.screen_loc = ui_alien_navigate_menu
-	static_inventory += using
-
-	using = new /atom/movable/screen/drop(null, src)
-	using.icon = ui_style
-	using.screen_loc = ui_drop_throw
-	static_inventory += using
-
-	resist_icon = new /atom/movable/screen/resist(null, src)
-	resist_icon.icon = ui_style
-	resist_icon.screen_loc = ui_above_movement
-	resist_icon.update_appearance()
-	hotkeybuttons += resist_icon
-
-	throw_icon = new /atom/movable/screen/throw_catch(null, src)
-	throw_icon.icon = ui_style
-	throw_icon.screen_loc = ui_drop_throw
-	hotkeybuttons += throw_icon
-
-	pull_icon = new /atom/movable/screen/pull(null, src)
-	pull_icon.icon = ui_style
-	pull_icon.update_appearance()
-	pull_icon.screen_loc = ui_above_movement
-	static_inventory += pull_icon
-
-	rest_icon = new /atom/movable/screen/rest(null, src)
-	rest_icon.icon = ui_style
-	rest_icon.screen_loc = ui_rest
-	rest_icon.update_appearance()
-	static_inventory += rest_icon
-
-	sleep_icon = new /atom/movable/screen/sleep(null, src)
-	sleep_icon.icon = ui_style
-	sleep_icon.screen_loc = ui_above_throw
-
-//begin indicators
-
-	healths = new /atom/movable/screen/healths/alien(null, src)
-	infodisplay += healths
-
-	alien_plasma_display = new /atom/movable/screen/alien/plasma_display(null, src)
-	infodisplay += alien_plasma_display
+		add_screen_object(/atom/movable/screen/alien/leap, HUD_ALIEN_HUNTER_LEAP, HUD_GROUP_STATIC, ui_style)
 
 	if(!isalienqueen(mymob))
-		alien_queen_finder = new /atom/movable/screen/alien/alien_queen_finder(null, src)
-		infodisplay += alien_queen_finder
-
-	zone_select = new /atom/movable/screen/zone_sel/alien(null, src)
-	zone_select.update_appearance()
-	static_inventory += zone_select
-
-	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
-		if(inv.slot_id)
-			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
-			inv.update_appearance()
+		add_screen_object(/atom/movable/screen/alien/plasma_display, HUD_ALIEN_QUEEN_FINDER, HUD_GROUP_INFO)
 
 /datum/hud/alien/persistent_inventory_update()
 	if(!mymob)

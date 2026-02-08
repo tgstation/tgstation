@@ -15,20 +15,29 @@
 
 /datum/component/personal_crafting/Initialize(screen_loc_override)
 	src.screen_loc_override = screen_loc_override
-	if(ismob(parent))
-		RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(create_mob_button))
 
-/datum/component/personal_crafting/proc/create_mob_button(mob/user, client/user_client)
+/datum/component/personal_crafting/RegisterWithParent()
+	if(!ismob(parent))
+		return
+
+	var/mob/user = parent
+	if(!user.hud_used)
+		RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
+	else
+		on_hud_created()
+
+/datum/component/personal_crafting/UnregisterFromParent()
+	if(!ismob(parent))
+		return
+	var/mob/user = parent
+	qdel(user.hud_used?.screen_objects?[HUD_MOB_CRAFTING_MENU])
+
+/datum/component/personal_crafting/proc/on_hud_created(datum/source)
 	SIGNAL_HANDLER
 
-	var/datum/hud/hud = user.hud_used
-	var/atom/movable/screen/craft/craft_ui = new()
-	craft_ui.icon = hud.ui_style
-	if (screen_loc_override)
-		craft_ui.screen_loc = screen_loc_override
-	hud.static_inventory += craft_ui
-	user_client.screen += craft_ui
-	RegisterSignal(craft_ui, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(component_ui_interact))
+	var/mob/user = parent
+	var/atom/movable/screen/screen_obj = user.hud_used.add_screen_object(/atom/movable/screen/craft, HUD_MOB_CRAFTING_MENU, HUD_GROUP_STATIC, mob_parent.hud_used.ui_style, screen_loc_override, update_screen = TRUE)
+	RegisterSignal(screen_obj, COMSIG_CLICK, PROC_REF(component_ui_interact))
 
 #define COOKING TRUE
 #define CRAFTING FALSE

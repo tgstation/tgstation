@@ -142,8 +142,5 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	plane = ESCAPE_MENU_PLANE
 	clear_with_screen = FALSE
 
-// The escape menu can be opened before SSatoms
-INITIALIZE_IMMEDIATE(/atom/movable/screen/escape_menu)
-
 #undef PAGE_HOME
 #undef PAGE_LEAVE_BODY

@@ -246,7 +246,6 @@
 		hud_used.set_parallax_movedir(areaobj.parallax_movedir, TRUE)
 
 // Root object for parallax, all parallax layers are drawn onto this
-INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_home)
 /atom/movable/screen/parallax_home
 	icon = null
 	blend_mode = BLEND_ADD
@@ -255,7 +254,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_home)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 // We need parallax to always pass its args down into initialize, so we immediate init it
-INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 /atom/movable/screen/parallax_layer
 	icon = 'icons/effects/parallax.dmi'
 	var/speed = 1

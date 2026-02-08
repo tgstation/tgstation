@@ -26,10 +26,10 @@
 	if(compact)
 		for(var/atom/movable/screen/perk/perk_on_hud as anything in perks_on_hud)
 			perks_compacted += perk_on_hud
-			user_hud.infodisplay -= perk_on_hud
+			user_hud.screen_groups[HUD_GROUP_INFO] -= perk_on_hud
 		user_hud.show_hud(user_hud.hud_version)
 	else
 		for(var/atom/movable/screen/perk/perk_compacted as anything in perks_compacted)
-			user_hud.infodisplay += perk_compacted
+			LAZYADD(user_hud.screen_groups[HUD_GROUP_INFO], perk_compacted)
 			perks_compacted -= perk_compacted
 		user_hud.show_hud(user_hud.hud_version)

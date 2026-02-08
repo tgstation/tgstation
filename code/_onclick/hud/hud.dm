@@ -22,34 +22,15 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud
 	var/mob/mymob
+	/// Used for the HUD toggle (F12)
+	var/hud_shown = TRUE
+	/// Current displayed version of the HUD
+	var/hud_version = HUD_STYLE_STANDARD
+	/// Equipped item inventory
+	var/inventory_shown = FALSE
+	/// This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
+	var/hotkey_ui_hidden = FALSE
 
-	var/hud_shown = TRUE //Used for the HUD toggle (F12)
-	var/hud_version = HUD_STYLE_STANDARD //Current displayed version of the HUD
-	var/inventory_shown = FALSE //Equipped item inventory
-	var/hotkey_ui_hidden = FALSE //This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
-
-	var/atom/movable/screen/alien_plasma_display
-	var/atom/movable/screen/alien_queen_finder
-
-	var/atom/movable/screen/action_intent
-	var/atom/movable/screen/zone_select
-	var/atom/movable/screen/pull_icon
-	var/atom/movable/screen/rest_icon
-	var/atom/movable/screen/sleep_icon
-	var/atom/movable/screen/throw_icon
-	var/atom/movable/screen/resist_icon
-	var/atom/movable/screen/floor_change
-
-	var/list/static_inventory = list() //the screen objects which are static
-	var/list/toggleable_inventory = list() //the screen objects which can be hidden
-	var/list/atom/movable/screen/hotkeybuttons = list() //the buttons that can be used via hotkeys
-	var/list/infodisplay = list() //the screen objects that display mob info (health, alien plasma, etc...)
-	/// Screen objects that never exit view.
-	var/list/always_visible_inventory = list()
-	var/list/inv_slots[SLOTS_AMT] // /atom/movable/screen/inventory objects, ordered by their slot ID.
-	var/list/hand_slots // /atom/movable/screen/inventory/hand objects, assoc list of "[held_index]" = object
-	/// storages (and its content) currently open by mob
-	var/list/open_containers = list()
 	/// Assoc list of key => "plane master groups"
 	/// This is normally just the main window, but it'll occasionally contain things like spyglasses windows
 	var/list/datum/plane_master_group/master_groups = list()
@@ -62,8 +43,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	/// Goes from 0 to the max (z level stack size - 1)
 	var/current_plane_offset = 0
 
-	///UI for screentips that appear when you mouse over things
-	var/atom/movable/screen/screentip/screentip_text
+	/// UI for screentips that appear when you mouse over things
+	/// Stored directly as it is used in very hot MouseEntered code
+	var/atom/movable/screen/screentip/screentip_text = null
 
 	/// Whether or not screentips are enabled.
 	/// This is updated by the preference for cheaper reads than would be
@@ -78,26 +60,28 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	/// The color to use for the screentips.
 	/// This is updated by the preference for cheaper reads than would be
-	/// had with a proc call, especially on one of the hottest procs in the
-	/// game (MouseEntered).
-	var/screentip_color
+	/// had with a proc call, especially on one of the hottest procs in the game (MouseEntered).
+	var/screentip_color = null
 
-	var/atom/movable/screen/button_palette/toggle_palette
-	var/atom/movable/screen/palette_scroll/down/palette_down
-	var/atom/movable/screen/palette_scroll/up/palette_up
-
-	var/datum/action_group/palette/palette_actions
-	var/datum/action_group/listed/listed_actions
-	var/list/floating_actions
-
-	var/atom/movable/screen/healths
-	var/atom/movable/screen/stamina
-	var/atom/movable/screen/healthdoll/healthdoll
-	var/atom/movable/screen/spacesuit
-	var/atom/movable/screen/hunger/hunger
+	var/datum/action_group/palette/palette_actions = null
+	var/datum/action_group/listed/listed_actions = null
+	var/list/floating_actions = null
 
 	/// Subtypes can override this to force a specific UI style
-	var/ui_style
+	var/ui_style = null
+	/// List of all screen objects we hold
+	var/list/atom/movable/screen/screen_objects = list()
+	/// List of screen objects by their screen group
+	var/list/screen_groups[SCREEN_GROUP_AMT]
+	/// List of all inventory slot screen objects by their slot ID. Some slots are fake and will be missing from here!
+	var/list/inv_slots[SLOTS_AMT]
+	/// List of hand slot objects, kept separate from the rest of inventory as mobs can have varying amount of hands
+	var/list/atom/movable/screen/inventory/hand/hand_slots = null
+
+	/// List of typepaths of /datum/inventory_slot which will be used to automatically create inventory slot UI elements
+	/// If assigned a typepath instead of a list, it will instead use all valid subtypes of said typepath
+	/// Safe to change in initialize_screen_objects() but not later
+	var/list/inventory_slots = null
 
 	/// List of weakrefs to objects that we add to our screen that we don't expect to DO anything
 	/// They typically use * in their render target. They exist solely so we can reuse them,
@@ -111,12 +95,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		// will fall back to the default if any of these are null
 		ui_style = ui_style2icon(owner.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 
-	toggle_palette = new()
-	toggle_palette.set_hud(src)
-	palette_down = new()
-	palette_down.set_hud(src)
-	palette_up = new()
-	palette_up.set_hud(src)
+	add_screen_object(/atom/movable/screen/button_palette, HUD_MOB_TOGGLE_PALETTE)
+	add_screen_object(/atom/movable/screen/palette_scroll/down, HUD_MOB_PALETTE_DOWN)
+	add_screen_object(/atom/movable/screen/palette_scroll/up, HUD_MOB_PALETTE_UP)
 
 	hand_slots = list()
 
@@ -127,8 +108,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	screentip_color = preferences?.read_preference(/datum/preference/color/screentip_color)
 	screentips_enabled = preferences?.read_preference(/datum/preference/choiced/enable_screentips)
 	screentip_images = preferences?.read_preference(/datum/preference/toggle/screentip_images)
-	screentip_text = new(null, src)
-	static_inventory += screentip_text
+	screentip_text = add_screen_object(/atom/movable/screen/screentip, HUD_MOB_SCREENTIP)
 
 	for(var/mytype in subtypesof(/atom/movable/plane_master_controller))
 		var/atom/movable/plane_master_controller/controller_instance = new mytype(null,src)
@@ -146,7 +126,58 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	RegisterSignal(mymob, COMSIG_MOB_LOGOUT, PROC_REF(clear_client))
 	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, PROC_REF(update_sightflags))
 	RegisterSignal(mymob, COMSIG_VIEWDATA_UPDATE, PROC_REF(on_viewdata_update))
+
+	initialize_screen_objects()
+	create_inventory_slots()
+	update_locked_slots()
+
 	update_sightflags(mymob, mymob.sight, NONE)
+
+/datum/hud/Destroy()
+	if(mymob.hud_used == src)
+		mymob.hud_used = null
+
+	screen_groups = null
+	inv_slots.Cut()
+	hand_slots.Cut()
+	QDEL_LIST_ASSOC_VAL(screen_objects)
+	QDEL_LIST_ASSOC_VAL(master_groups)
+	QDEL_LIST_ASSOC_VAL(plane_master_controllers)
+	mymob = null
+
+	return ..()
+
+/// Creates and registers a managed screen object
+/datum/hud/proc/add_screen_object(atom/movable/screen/new_object, hud_key, group_key = HUD_GROUP_STATIC, ui_icon, ui_loc, update_screen = FALSE)
+	if (ispath(new_object))
+		new_object = new new_object(null, src)
+
+	if (isnull(hud_key))
+		hud_key = REF(new_object)
+
+	if (!isnull(ui_icon))
+		new_object.icon = ui_icon
+
+	if (!isnull(ui_loc))
+		new_object.screen_loc = ui_loc
+
+	new_object.hud_key = hud_key
+	if (screen_objects[hud_key])
+		CRASH("Attempted to add a new [new_object] screen object to the [src] hud while an object with the same key [hud_key] is already present!")
+
+	screen_objects[hud_key] = hud_key
+
+	if (group_key)
+		LAZYADD(screen_groups[group_key], new_object)
+		new_object.hud_group_key = group_key
+
+	if (update_screen)
+		show_hud(hud_version)
+	return new_object
+
+/// Proc for children to spawn their screen object in
+/datum/hud/proc/initialize_screen_objects()
+	return
 
 /datum/hud/proc/client_refresh(datum/source)
 	SIGNAL_HANDLER
@@ -212,53 +243,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		var/datum/plane_master_group/group = master_groups[group_key]
 		group.build_planes_offset(src, new_offset)
 
-/datum/hud/Destroy()
-	if(mymob.hud_used == src)
-		mymob.hud_used = null
-
-	QDEL_NULL(toggle_palette)
-	QDEL_NULL(palette_down)
-	QDEL_NULL(palette_up)
-	QDEL_NULL(palette_actions)
-	QDEL_NULL(listed_actions)
-	QDEL_LIST(floating_actions)
-
-	QDEL_LIST(static_inventory)
-
-	// all already deleted by static inventory clear
-	inv_slots.Cut()
-	action_intent = null
-	zone_select = null
-	pull_icon = null
-	rest_icon = null
-	sleep_icon = null
-	floor_change = null
-	hand_slots.Cut()
-
-	QDEL_LIST(toggleable_inventory)
-	QDEL_LIST(hotkeybuttons)
-	throw_icon = null
-	resist_icon = null
-	QDEL_LIST(infodisplay)
-	open_containers = null
-
-	healths = null
-	stamina = null
-	healthdoll = null
-	spacesuit = null
-	hunger = null
-	alien_plasma_display = null
-	alien_queen_finder = null
-
-	QDEL_LIST_ASSOC_VAL(master_groups)
-	QDEL_LIST_ASSOC_VAL(plane_master_controllers)
-	QDEL_LIST(always_visible_inventory)
-	mymob = null
-
-	QDEL_NULL(screentip_text)
-
-	return ..()
-
 /datum/hud/proc/on_plane_increase(datum/source, old_max_offset, new_max_offset)
 	SIGNAL_HANDLER
 	for(var/i in old_max_offset + 1 to new_max_offset)
@@ -314,78 +298,78 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
  * * viewmob - what mob to show the hud to. Can be this hud's mob, can be another mob, can be null (will use this hud's mob if so)
  */
 /datum/hud/proc/show_hud(version = 0, mob/viewmob)
-	if(!ismob(mymob))
+	if (!ismob(mymob))
 		return FALSE
+
 	var/mob/screenmob = viewmob || mymob
-	if(!screenmob.client)
+	if (!screenmob.client)
 		return FALSE
 
 	// This code is the absolute fucking worst, I want it to go die in a fire
 	// Seriously, why
+	// I'm sorry
 	screenmob.client.clear_screen()
 	screenmob.client.apply_clickcatcher()
 
 	var/display_hud_version = version
-	if(!display_hud_version) //If 0 or blank, display the next hud version
+	if (!display_hud_version) // If 0 or blank, display the next hud version
 		display_hud_version = hud_version + 1
-	if(display_hud_version > HUD_VERSIONS) //If the requested version number is greater than the available versions, reset back to the first version
-		display_hud_version = 1
 
-	switch(display_hud_version)
-		if(HUD_STYLE_STANDARD) //Default HUD
-			hud_shown = TRUE //Governs behavior of other procs
-			if(static_inventory.len)
-				screenmob.client.screen += static_inventory
-			if(toggleable_inventory.len && screenmob.hud_used && screenmob.hud_used.inventory_shown)
-				screenmob.client.screen += toggleable_inventory
-			if(hotkeybuttons.len && !hotkey_ui_hidden)
-				screenmob.client.screen += hotkeybuttons
-			if(infodisplay.len)
-				screenmob.client.screen += infodisplay
-			if(always_visible_inventory.len)
-				screenmob.client.screen += always_visible_inventory
-			if(open_containers.len && screenmob == mymob) // Don't show open inventories to ghosts
-				list_clear_nulls(open_containers)
-				screenmob.client.screen += open_containers
-			screenmob.client.screen += toggle_palette
+	// If the requested version number is greater than the available versions, reset back to the first version
+	if (display_hud_version > HUD_VERSIONS)
+		display_hud_version = HUD_STYLE_STANDARD
+
+	var/list/group_static = screen_groups[HUD_GROUP_STATIC]
+	var/list/group_toggleable = screen_groups[HUD_GROUP_TOGGLEABLE_INVENTORY]
+	var/list/group_hotkeys = screen_groups[HUD_GROUP_HOTKEYS]
+	var/list/group_info = screen_groups[HUD_GROUP_INFO]
+	var/list/group_screen = screen_groups[HUD_GROUP_SCREEN_OVERLAYS]
+
+	// Screen overlays get added regardless of the HUD state
+	if (length(group_screen))
+		screenmob.client.screen += group_screen
+
+	var/atom/movable/screen/button_palette/palette = screen_objects[HUD_MOB_TOGGLE_PALETTE]
+	var/atom/movable/screen/action_intent = screen_objects[HUD_MOB_INTENTS]
+
+	switch (display_hud_version)
+		if (HUD_STYLE_STANDARD)
+			hud_shown = TRUE
+
+			if (length(group_static))
+				screenmob.client.screen += group_static
+			if (length(group_toggleable) && screenmob.hud_used && screenmob.hud_used.inventory_shown)
+				screenmob.client.screen += group_toggleable
+			if (length(group_hotkeys) && !hotkey_ui_hidden)
+				screenmob.client.screen += group_hotkeys
+			if (length(group_info))
+				screenmob.client.screen += group_info
+
+			screenmob.client.screen += palette
+
+			if (action_intent)
+				// Restore intent selection to the original position
+				action_intent.screen_loc = initial(action_intent.screen_loc)
+
+		if (HUD_STYLE_REDUCED)
+			hud_shown = FALSE
+
+			if (length(group_static))
+				screenmob.client.screen += group_static
+			if (length(group_info))
+				screenmob.client.screen += group_info
+
+			// Hands are apart of the static group but still should be presetn in the reduced mode
+			for (var/atom/movable/screen/hand in hand_slots)
+				screenmob.client.screen += hand
 
 			if(action_intent)
-				action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
+				screenmob.client.screen += action_intent
+				// Move this to the alternative position, where zone_select usually is.
+				action_intent.screen_loc = ui_acti_alt
 
-		if(HUD_STYLE_REDUCED) //Reduced HUD
-			hud_shown = FALSE //Governs behavior of other procs
-			if(static_inventory.len)
-				screenmob.client.screen -= static_inventory
-			if(toggleable_inventory.len)
-				screenmob.client.screen -= toggleable_inventory
-			if(hotkeybuttons.len)
-				screenmob.client.screen -= hotkeybuttons
-			if(infodisplay.len)
-				screenmob.client.screen += infodisplay
-			if(always_visible_inventory.len)
-				screenmob.client.screen += always_visible_inventory
-
-			//These ones are a part of 'static_inventory', 'toggleable_inventory' or 'hotkeybuttons' but we want them to stay
-			for(var/h in hand_slots)
-				var/atom/movable/screen/hand = hand_slots[h]
-				if(hand)
-					screenmob.client.screen += hand
-			if(action_intent)
-				screenmob.client.screen += action_intent //we want the intent switcher visible
-				action_intent.screen_loc = ui_acti_alt //move this to the alternative position, where zone_select usually is.
-
-		if(HUD_STYLE_NOHUD) //No HUD
-			hud_shown = FALSE //Governs behavior of other procs
-			if(static_inventory.len)
-				screenmob.client.screen -= static_inventory
-			if(toggleable_inventory.len)
-				screenmob.client.screen -= toggleable_inventory
-			if(hotkeybuttons.len)
-				screenmob.client.screen -= hotkeybuttons
-			if(infodisplay.len)
-				screenmob.client.screen -= infodisplay
-			if(always_visible_inventory.len)
-				screenmob.client.screen += always_visible_inventory
+		if (HUD_STYLE_NOHUD)
+			hud_shown = FALSE
 
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
@@ -445,12 +429,12 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if (initial(ui_style) || ui_style == new_ui_style)
 		return
 
-	for(var/atom/item in static_inventory + toggleable_inventory + hotkeybuttons + infodisplay + always_visible_inventory + inv_slots)
+	for(var/atom/item in screen_objects)
 		if (item.icon == ui_style)
 			item.icon = new_ui_style
 
 	ui_style = new_ui_style
-	build_hand_slots()
+	build_hand_slots(update_hud = TRUE)
 
 /datum/hud/proc/register_reuse(atom/movable/screen/reuse)
 	asset_refs_for_reuse += WEAKREF(reuse)
@@ -479,53 +463,69 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	else
 		to_chat(usr, span_warning("This mob type does not use a HUD."))
 
+/// Rebuilds our mob's hand slot screen elements
+/datum/hud/proc/build_hand_slots(update_hud = FALSE)
+	QDEL_LIST(hand_slots)
+	hand_slots = new /list(length(mymob.held_items))
 
-//(re)builds the hand ui slots, throwing away old ones
-//not really worth jugglying existing ones so we just scrap+rebuild
-//9/10 this is only called once per mob and only for 2 hands
-/datum/hud/proc/build_hand_slots()
-	for(var/h in hand_slots)
-		var/atom/movable/screen/inventory/hand/H = hand_slots[h]
-		if(H)
-			static_inventory -= H
-	hand_slots = list()
-	var/atom/movable/screen/inventory/hand/hand_box
-	for(var/i in 1 to mymob.held_items.len)
-		hand_box = new /atom/movable/screen/inventory/hand(null, src)
+	for(var/i in 1 to length(mymob.held_items))
+		var/atom/movable/screen/inventory/hand/hand_box = add_screen_object(/atom/movable/screen/inventory/hand, HUD_KEY_HAND_SLOT(i), HUD_GROUP_STATIC, ui_style, ui_hand_position(i))
 		hand_box.name = mymob.get_held_index_name(i)
-		hand_box.icon = ui_style
 		hand_box.icon_state = "hand_[mymob.held_index_to_dir(i)]"
-		hand_box.screen_loc = ui_hand_position(i)
 		hand_box.held_index = i
-		hand_slots["[i]"] = hand_box
-		static_inventory += hand_box
 		hand_box.update_appearance()
+		hand_slots[i] = hand_box
 
 	var/num_of_swaps = 0
-	for(var/atom/movable/screen/swap_hand/swap_hands in static_inventory)
+	for(var/atom/movable/screen/swap_hand/swap_hands in screen_groups[HUD_GROUP_STATIC])
 		num_of_swaps += 1
 
 	var/hand_num = 1
-	for(var/atom/movable/screen/swap_hand/swap_hands in static_inventory)
+	for(var/atom/movable/screen/swap_hand/swap_hands in screen_groups[HUD_GROUP_STATIC])
 		var/hand_ind = RIGHT_HANDS
 		if (num_of_swaps > 1)
 			hand_ind = IS_RIGHT_INDEX(hand_num) ? LEFT_HANDS : RIGHT_HANDS
 		swap_hands.screen_loc = ui_swaphand_position(mymob, hand_ind)
 		hand_num += 1
+
 	hand_num = 1
-	for(var/atom/movable/screen/drop/swap_hands in static_inventory)
+
+	for(var/atom/movable/screen/drop/swap_hands in screen_groups[HUD_GROUP_STATIC])
 		var/hand_ind = LEFT_HANDS
 		if (num_of_swaps > 1)
 			hand_ind = IS_LEFT_INDEX(hand_num) ? LEFT_HANDS : RIGHT_HANDS
 		swap_hands.screen_loc = ui_swaphand_position(mymob, hand_ind)
 		hand_num += 1
 
-	if(ismob(mymob) && mymob.hud_used == src)
+	if(update_hud && mymob?.hud_used == src)
 		show_hud(hud_version)
 
 /// Handles dimming inventory slots that a mob can't equip items to in their current state
 /datum/hud/proc/update_locked_slots()
 	return
+
+/// Creates inventory slot screen elements based on our assigned inventory_slots
+/datum/hud/proc/create_inventory_slots()
+	var/list/created_paths = inventory_slots
+	if (ispath(inventory_slots))
+		created_paths = valid_subtypesof(inventory_slots)
+
+	for (var/datum/inventory_slot/slot_type as anything in created_paths)
+		var/datum/inventory_slot/inv_slot = GLOB.inventory_slot_datums[slot_type]
+		if (!inv_slot)
+			stack_trace("[src] attempted to use an invalid inventory slot: [slot_type]")
+			continue
+		inv_slot.create_element(src)
+
+	update_inventory_slots()
+
+/// Updates all of our inventory slots
+/// Avoid calling directly in favor of specific update procs
+/datum/hud/proc/update_inventory_slots()
+	for(var/atom/movable/screen/inventory/inv in screen_groups[HUD_GROUP_STATIC] + screen_groups[HUD_GROUP_TOGGLEABLE_INVENTORY])
+		if(inv.slot_id)
+			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
+			inv.update_appearance()
 
 /datum/hud/proc/position_action(atom/movable/screen/movable/action_button/button, position)
 	// This is kinda a hack, I'm sorry.
@@ -533,8 +533,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	// Not as a position to target
 	if(position == SCRN_OBJ_FLOATING)
 		return
+
 	if(button.location != SCRN_OBJ_DEFAULT)
 		hide_action(button)
+
 	switch(position)
 		if(SCRN_OBJ_DEFAULT) // Reset to the default
 			button.dump_save() // Nuke any existing saves
@@ -551,6 +553,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			floating_actions += button
 			button.screen_loc = position
 			position = SCRN_OBJ_FLOATING
+			var/atom/movable/screen/button_palette/toggle_palette = screen_objects[HUD_MOB_TOGGLE_PALETTE]
 			toggle_palette.update_state()
 
 	button.location = position
@@ -558,18 +561,24 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/position_action_relative(atom/movable/screen/movable/action_button/button, atom/movable/screen/movable/action_button/relative_to)
 	if(button.location != SCRN_OBJ_DEFAULT)
 		hide_action(button)
+
 	switch(relative_to.location)
 		if(SCRN_OBJ_IN_LIST)
 			listed_actions.insert_action(button, listed_actions.index_of(relative_to))
+
 		if(SCRN_OBJ_IN_PALETTE)
 			palette_actions.insert_action(button, palette_actions.index_of(relative_to))
+
 		if(SCRN_OBJ_FLOATING) // If we don't have it as a define, this is a screen_loc, and we should be floating
 			floating_actions += button
 			var/client/our_client = mymob.canon_client
 			if(!our_client)
 				position_action(button, button.linked_action.default_button_position)
 				return
-			button.screen_loc = get_valid_screen_location(relative_to.screen_loc, ICON_SIZE_ALL, our_client.view_size.getView()) // Asks for a location adjacent to our button that won't overflow the map
+
+			// Asks for a location adjacent to our button that won't overflow the map
+			button.screen_loc = get_valid_screen_location(relative_to.screen_loc, ICON_SIZE_ALL, our_client.view_size.getView())
+			var/atom/movable/screen/button_palette/toggle_palette = screen_objects[HUD_MOB_TOGGLE_PALETTE]
 			toggle_palette.update_state()
 
 	button.location = relative_to.location
@@ -579,32 +588,44 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	switch(button.location)
 		if(SCRN_OBJ_DEFAULT) // Invalid
 			CRASH("We just tried to hide an action buttion that somehow has the default position as its location, you done fucked up")
+
 		if(SCRN_OBJ_FLOATING)
 			floating_actions -= button
+			var/atom/movable/screen/button_palette/toggle_palette = screen_objects[HUD_MOB_TOGGLE_PALETTE]
 			toggle_palette.update_state()
+
 		if(SCRN_OBJ_IN_LIST)
 			listed_actions.remove_action(button)
+
 		if(SCRN_OBJ_IN_PALETTE)
 			palette_actions.remove_action(button)
+
 	button.screen_loc = null
 
 /// Generates visual landings for all groups that the button is not a memeber of
 /datum/hud/proc/generate_landings(atom/movable/screen/movable/action_button/button)
 	listed_actions.generate_landing()
 	palette_actions.generate_landing()
+	var/atom/movable/screen/button_palette/toggle_palette = screen_objects[HUD_MOB_TOGGLE_PALETTE]
 	toggle_palette.activate_landing()
 
 /// Clears all currently visible landings
 /datum/hud/proc/hide_landings()
 	listed_actions.clear_landing()
 	palette_actions.clear_landing()
+	var/atom/movable/screen/button_palette/toggle_palette = screen_objects[HUD_MOB_TOGGLE_PALETTE]
 	toggle_palette.disable_landing()
 
 // Updates any existing "owned" visuals, ensures they continue to be visible
 /datum/hud/proc/update_our_owner()
+	var/atom/movable/screen/button_palette/toggle_palette = screen_objects[HUD_MOB_TOGGLE_PALETTE]
+	var/atom/movable/screen/palette_scroll/palette_down = screen_objects[HUD_MOB_PALETTE_DOWN]
+	var/atom/movable/screen/palette_scroll/palette_up = screen_objects[HUD_MOB_PALETTE_UP]
+
 	toggle_palette.refresh_owner()
 	palette_down.refresh_owner()
 	palette_up.refresh_owner()
+
 	listed_actions.update_landing()
 	palette_actions.update_landing()
 
@@ -631,214 +652,3 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			action.ShowTo(mymob)
 		else
 			position_action(button, button.location)
-
-/datum/action_group
-	/// The hud we're owned by
-	var/datum/hud/owner
-	/// The actions we're managing
-	var/list/atom/movable/screen/movable/action_button/actions
-	/// The initial vertical offset of our action buttons
-	var/north_offset = 0
-	/// The pixel vertical offset of our action buttons
-	var/pixel_north_offset = 0
-	/// Max amount of buttons we can have per row
-	/// Indexes at 1
-	var/column_max = 0
-	/// How far "ahead" of the first row we start. Lets us "scroll" our rows
-	/// Indexes at 1
-	var/row_offset = 0
-	/// How many rows of actions we can have at max before we just stop hiding
-	/// Indexes at 1
-	var/max_rows = INFINITY
-	/// The screen location we go by
-	var/location
-	/// Our landing screen object
-	var/atom/movable/screen/action_landing/landing
-
-/datum/action_group/New(datum/hud/owner)
-	..()
-	actions = list()
-	src.owner = owner
-
-/datum/action_group/Destroy()
-	owner = null
-	QDEL_NULL(landing)
-	QDEL_LIST(actions)
-	return ..()
-
-/datum/action_group/proc/insert_action(atom/movable/screen/action, index)
-	if(action in actions)
-		if(actions[index] == action)
-			return
-		actions -= action // Don't dupe, come on
-	if(!index)
-		index = length(actions) + 1
-	index = min(length(actions) + 1, index)
-	actions.Insert(index, action)
-	refresh_actions()
-
-/datum/action_group/proc/remove_action(atom/movable/screen/action)
-	actions -= action
-	refresh_actions()
-
-/datum/action_group/proc/refresh_actions()
-
-	// We don't use size() here because landings are not canon
-	var/total_rows = ROUND_UP(length(actions) / column_max)
-	total_rows -= max_rows // Lets get the amount of rows we're off from our max
-	row_offset = clamp(row_offset, 0, total_rows) // You're not allowed to offset so far that we have a row of blank space
-
-	var/button_number = 0
-	for(var/atom/movable/screen/button as anything in actions)
-		var/postion = ButtonNumberToScreenCoords(button_number )
-		button.screen_loc = postion
-		button_number++
-
-	if(landing)
-		var/postion = ButtonNumberToScreenCoords(button_number, landing = TRUE) // Need a good way to count buttons off screen, but allow this to display in the right place if it's being placed with no concern for dropdown
-		landing.screen_loc = postion
-		button_number++
-
-/// Accepts a number represeting our position in the group, indexes at 0 to make the math nicer
-/datum/action_group/proc/ButtonNumberToScreenCoords(number, landing = FALSE)
-	var/row = round(number / column_max)
-	row -= row_offset // If you're less then 0, you don't get to render, this lets us "scroll" rows ya feel?
-	if(row < 0)
-		return null
-
-	// Could use >= here, but I think it's worth noting that the two start at different places, since row is based on number here
-	if(row > max_rows - 1)
-		if(!landing) // If you're not a landing, go away please. thx
-			return null
-		// We always want to render landings, even if their action button can't be displayed.
-		// So we set a row equal to the max amount of rows + 1. Willing to overrun that max slightly to properly display the landing spot
-		row = max_rows // Remembering that max_rows indexes at 1, and row indexes at 0
-
-		// We're going to need to set our column to match the first item in the last row, so let's set number properly now
-		number = row * column_max
-
-	var/visual_row = row + north_offset
-	var/coord_row = visual_row ? "-[visual_row]" : "+0"
-
-	var/visual_column = number % column_max
-	var/coord_col = "+[visual_column]"
-	var/coord_col_offset = 4 + 2 * (visual_column + 1)
-	return "WEST[coord_col]:[coord_col_offset],NORTH[coord_row]:-[pixel_north_offset]"
-
-/datum/action_group/proc/check_against_view()
-	var/owner_view = owner?.mymob?.canon_client?.view
-	if(!owner_view)
-		return
-	// Unlikey as it is, we may have been changed. Want to start from our target position and fail down
-	column_max = initial(column_max)
-	// Convert our viewer's view var into a workable offset
-	var/list/view_size = view_to_pixels(owner_view)
-
-	// We're primarially concerned about width here, if someone makes us 1x2000 I wish them a swift and watery death
-	var/furthest_screen_loc = ButtonNumberToScreenCoords(column_max - 1)
-	var/list/offsets = screen_loc_to_offset(furthest_screen_loc, owner_view)
-	if(offsets[1] > ICON_SIZE_X && offsets[1] < view_size[1] && offsets[2] > ICON_SIZE_Y && offsets[2] < view_size[2]) // We're all good
-		return
-
-	for(column_max in column_max - 1 to 1 step -1) // Yes I could do this by unwrapping ButtonNumberToScreenCoords, but I don't feel like it
-		var/tested_screen_loc = ButtonNumberToScreenCoords(column_max)
-		offsets = screen_loc_to_offset(tested_screen_loc, owner_view)
-		// We've found a valid max length, pack it in
-		if(offsets[1] > ICON_SIZE_X && offsets[1] < view_size[1] && offsets[2] > ICON_SIZE_Y && offsets[2] < view_size[2])
-			break
-	// Use our newly resized column max
-	refresh_actions()
-
-/// Returns the amount of objects we're storing at the moment
-/datum/action_group/proc/size()
-	var/amount = length(actions)
-	if(landing)
-		amount += 1
-	return amount
-
-/datum/action_group/proc/index_of(atom/movable/screen/get_location)
-	return actions.Find(get_location)
-
-/// Generates a landing object that can be dropped on to join this group
-/datum/action_group/proc/generate_landing()
-	if(landing)
-		return
-	landing = new()
-	landing.set_owner(src)
-	refresh_actions()
-
-/// Clears any landing objects we may currently have
-/datum/action_group/proc/clear_landing()
-	QDEL_NULL(landing)
-
-/datum/action_group/proc/update_landing()
-	if(!landing)
-		return
-	landing.refresh_owner()
-
-/datum/action_group/proc/scroll(amount)
-	row_offset += amount
-	refresh_actions()
-
-/datum/action_group/palette
-	north_offset = 2
-	column_max = 3
-	max_rows = 3
-	location = SCRN_OBJ_IN_PALETTE
-
-/datum/action_group/palette/insert_action(atom/movable/screen/action, index)
-	. = ..()
-	var/atom/movable/screen/button_palette/palette = owner.toggle_palette
-	palette.play_item_added()
-
-/datum/action_group/palette/remove_action(atom/movable/screen/action)
-	. = ..()
-	var/atom/movable/screen/button_palette/palette = owner.toggle_palette
-	palette.play_item_removed()
-	if(!length(actions))
-		palette.set_expanded(FALSE)
-
-/datum/action_group/palette/refresh_actions()
-	var/atom/movable/screen/button_palette/palette = owner.toggle_palette
-	var/atom/movable/screen/palette_scroll/scroll_down = owner.palette_down
-	var/atom/movable/screen/palette_scroll/scroll_up = owner.palette_up
-
-	var/actions_above = round((owner.listed_actions.size() - 1) / owner.listed_actions.column_max)
-	north_offset = initial(north_offset) + actions_above
-
-	palette.screen_loc = ui_action_palette_offset(actions_above)
-	var/action_count = length(owner?.mymob?.actions)
-	var/our_row_count = round((length(actions) - 1) / column_max)
-	if(!action_count)
-		palette.screen_loc = null
-
-	if(palette.expanded && action_count && our_row_count >= max_rows)
-		scroll_down.screen_loc = ui_palette_scroll_offset(actions_above)
-		scroll_up.screen_loc = ui_palette_scroll_offset(actions_above)
-	else
-		scroll_down.screen_loc = null
-		scroll_up.screen_loc = null
-
-	return ..()
-
-/datum/action_group/palette/ButtonNumberToScreenCoords(number, landing)
-	var/atom/movable/screen/button_palette/palette = owner.toggle_palette
-	if(palette.expanded)
-		return ..()
-
-	if(!landing)
-		return null
-
-	// We only render the landing in this case, so we force it to be the second item displayed (Second rather then first since it looks nicer)
-	// Remember the number var indexes at 0
-	return ..(1 + (row_offset * column_max), landing)
-
-
-/datum/action_group/listed
-	pixel_north_offset = 6
-	column_max = 10
-	location = SCRN_OBJ_IN_LIST
-
-/datum/action_group/listed/refresh_actions()
-	. = ..()
-	owner?.palette_actions.refresh_actions() // We effect them, so we gotta refresh em
