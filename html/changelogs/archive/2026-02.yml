@@ -98,5 +98,8 @@
   ArcaneMusic:
   - balance: Multitools cost has been decreased from youtool vendors, and their stock
       increased (150 credits, 4 stock).
+  Cyberboss:
+  - bugfix: Fixed encoding of special characters in chem dispenser recorded recipe
+      names.
   Laikodaemon:
   - image: HoP's Accounting console now has a new sprite.
