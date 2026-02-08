@@ -41,6 +41,7 @@ export const ChemFilterPane = (props: Props) => {
       {list.map((filter) => (
         <>
           <Button
+            key={filter}
             fluid
             icon="minus"
             onClick={() =>
@@ -67,10 +68,10 @@ export const ChemFilter = (props) => {
       <Window.Content scrollable>
         <Stack>
           <Stack.Item grow>
-            <ChemFilterPane title="Left" list={left} buttonColor="yellow" />
+            <ChemFilterPane title="Right" list={right} buttonColor="red" />
           </Stack.Item>
           <Stack.Item grow>
-            <ChemFilterPane title="Right" list={right} buttonColor="red" />
+            <ChemFilterPane title="Left" list={left} buttonColor="yellow" />
           </Stack.Item>
         </Stack>
       </Window.Content>
