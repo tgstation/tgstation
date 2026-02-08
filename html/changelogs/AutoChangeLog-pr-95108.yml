@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes:
+  - bugfix: "Fixed encoding of special characters in chem dispenser recorded recipe names."
