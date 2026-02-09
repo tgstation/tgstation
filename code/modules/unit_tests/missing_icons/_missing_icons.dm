@@ -1,4 +1,5 @@
 /datum/unit_test/missing_icons
+	abstract_type = /datum/unit_test/missing_icons
 	var/list/possible_icon_states = list()
 	var/default_location = "icons/"
 	/// additional_icon_locations is for downstream modularity support for finding missing sprites in additonal DMI file locations.
