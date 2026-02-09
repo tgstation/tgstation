@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
@@ -39,8 +40,8 @@ export const ChemFilterPane = (props: Props) => {
       }
     >
       {list.map((filter) => (
+        <Fragment key={filter}>
           <Button
-            key={filter}
             fluid
             icon="minus"
             onClick={() =>
@@ -52,7 +53,7 @@ export const ChemFilterPane = (props: Props) => {
           >
             {filter}
           </Button>
-        </>
+        </Fragment>
       ))}
     </Section>
   );
