@@ -87,10 +87,6 @@
 #define EASY_ALLOCATE(arguments...) allocate(__IMPLIED_TYPE__, run_loc_floor_bottom_left, ##arguments)
 
 // BEGIN_INCLUDE
-#include "missing_icons\_missing_icons.dm"
-#include "missing_icons\icon_state.dm"
-#include "missing_icons\inhand_icon_state.dm"
-#include "missing_icons\worn_icon_state.dm"
 #include "aas_configs.dm"
 #include "abductor_baton_spell.dm"
 #include "ablative_hud.dm"
@@ -199,6 +195,10 @@
 #include "hydroponics_harvest.dm"
 #include "hydroponics_self_mutations.dm"
 #include "hydroponics_validate_genes.dm"
+#include "icon_state.dm"
+#include "icon_state_inhand.dm"
+#include "icon_state_worn.dm"
+#include "icons_missing.dm"
 #include "id_access.dm"
 #include "id_card.dm"
 #include "interaction_door.dm"
