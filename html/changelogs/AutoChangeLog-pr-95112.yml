@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes:
-  - bugfix: "Fixed right clicking a closet with an ID in hand toggling locks twice in one tick"

@@ -103,3 +103,16 @@
       names.
   Laikodaemon:
   - image: HoP's Accounting console now has a new sprite.
+2026-02-09:
+  Cyberboss:
+  - bugfix: Fixed right clicking a closet with an ID in hand toggling locks twice
+      in one tick
+  SmArtKar:
+  - image: Husk visuals now inherit their mob's blood color
+  lelandkemble:
+  - rscadd: You can now put a deconstructed nuclear bomb back together again
+  - bugfix: Nuclear bombs with exposed cores will again irradiate their surrounding
+      area
+  - map: Catwalks vault is now restricted access
+  vinylspiders:
+  - code_imp: sinks can be mounted to floors

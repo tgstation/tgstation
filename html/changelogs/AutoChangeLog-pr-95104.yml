@@ -1,5 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - rscadd: "You can now put a deconstructed nuclear bomb back together again"
-  - bugfix: "Nuclear bombs with exposed cores will again irradiate their surrounding area"
