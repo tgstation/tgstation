@@ -46,7 +46,6 @@
 		healths.icon_state = "health7"
 		return
 
-	#warn holy shit this is bad, think about maybe updating this via a signal (same for stamina/hunger?)
 	if(health >= maxHealth)
 		healths.icon_state = "health0"
 	else if(health > maxHealth*0.6)

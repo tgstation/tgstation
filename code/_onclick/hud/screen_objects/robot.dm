@@ -27,13 +27,23 @@
 /atom/movable/screen/robot/module_slot
 	name = "module"
 	icon_state = "inv1"
+	base_icon_state = "inv1"
 	/// Slot number of the module
 	var/slot_num = 1
 
 /atom/movable/screen/robot/module_slot/proc/set_slot(slot_num)
 	src.slot_num = slot_num
 	name = "module[slot_num]"
-	icon_state = "inv[slot_num]"
+	base_icon_state = "inv[slot_num]"
+	icon_state = base_icon_state
+
+	switch(slot_num)
+		if(BORG_CHOOSE_MODULE_ONE)
+			screen_loc = ui_inv1
+		if(BORG_CHOOSE_MODULE_TWO)
+			screen_loc = ui_inv2
+		if(BORG_CHOOSE_MODULE_THREE)
+			screen_loc = ui_inv3
 
 /atom/movable/screen/robot/module_slot/Click()
 	if(..())

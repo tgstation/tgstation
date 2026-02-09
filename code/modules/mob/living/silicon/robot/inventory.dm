@@ -81,6 +81,8 @@
 	var/turf/our_turf = get_turf(src)
 	for (var/held_index in 1 to length(held_items))
 		var/obj/item/held = held_items[held_index]
+		if (!held)
+			continue
 		SET_PLANE(held, ABOVE_HUD_PLANE, our_turf)
 		var/atom/movable/screen/robot/module_slot/slot = hud_used.screen_objects[HUD_KEY_CYBORG_MODULE(held_index)]
 		if (!slot) //??
@@ -143,7 +145,7 @@
 
 	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_CYBORG_MODULE(module_num)]
 	if(module)
-		module.icon_state = "[initial(module.icon_state)] +b"
+		module.icon_state = "[module.base_icon_state] +b"
 	return TRUE
 
 /**
@@ -188,7 +190,7 @@
 	to_chat(src, span_notice("ERROR CLEARED: Module [module_num] back online."))
 	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_CYBORG_MODULE(module_num)]
 	if(module)
-		module.icon_state = initial(module.icon_state)
+		module.icon_state = module.base_icon_state
 	return TRUE
 
 /**
@@ -270,7 +272,7 @@
 
 	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_CYBORG_MODULE(module_num)]
 	if(module && module_active != held_items[module_num])
-		module.icon_state = "[initial(module.icon_state)] +a"
+		module.icon_state = "[module.base_icon_state] +a"
 	module_active = held_items[module_num]
 	return TRUE
 
@@ -282,7 +284,7 @@
 /mob/living/silicon/robot/proc/deselect_module(module_num)
 	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_CYBORG_MODULE(module_num)]
 	if(module)
-		module.icon_state = initial(module.icon_state)
+		module.icon_state = module.base_icon_state
 	module_active = null
 	return TRUE
 

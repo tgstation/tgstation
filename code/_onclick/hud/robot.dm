@@ -47,17 +47,10 @@
 			screenmob.client.screen -= I
 		return
 
-	for(var/i in 1 to R.held_items.len)
+	for(var/i in 1 to length(R.held_items))
 		var/obj/item/I = R.held_items[i]
 		if(!I)
 			continue
-		switch(i)
-			if(BORG_CHOOSE_MODULE_ONE)
-				I.screen_loc = ui_inv1
-			if(BORG_CHOOSE_MODULE_TWO)
-				I.screen_loc = ui_inv2
-			if(BORG_CHOOSE_MODULE_THREE)
-				I.screen_loc = ui_inv3
-			else
-				return
+		var/atom/movable/screen/robot/module_slot/slot = screen_objects[HUD_KEY_CYBORG_MODULE(i)]
+		I.screen_loc = slot.screen_loc
 		screenmob.client.screen += I
