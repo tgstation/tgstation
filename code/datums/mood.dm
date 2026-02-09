@@ -368,9 +368,13 @@
 	SIGNAL_HANDLER
 
 	var/datum/hud/hud = mob_parent.hud_used
+	if (!hud)
+		return
+
 	var/atom/movable/screen/mood/mood_screen_object = hud.screen_objects[HUD_MOB_MOOD]
 	if(!mood_screen_object)
 		return
+
 	QDEL_NULL(mood_screen_object)
 	if (!QDELETED(hud))
 		hud.show_hud(hud.hud_version)
