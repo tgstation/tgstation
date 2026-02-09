@@ -293,8 +293,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/atom/movable/looking_holder,
 		//Should not exist outside of holders
 		/obj/effect/decal/cleanable/blood/trail,
-		//A lot of these depend on a hud datum to function and should not be created in a vacuum
-		/atom/movable/screen,
 	)
 
 	// Everything that follows is a typesof() check.
@@ -372,7 +370,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/turf/open/space/openspace)
 	returnable_list += typesof(/turf/open/openspace)
 	returnable_list += typesof(/obj/item/robot_model) // These should never be spawned outside of a robot.
-
+	//A lot of these depend on a hud datum to function and should not be created in a vacuum
+	returnable_list += typesof(/atom/movable/screen)
 	return returnable_list
 
 /proc/RunUnitTests()

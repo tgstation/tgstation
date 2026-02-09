@@ -137,6 +137,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if(mymob.hud_used == src)
 		mymob.hud_used = null
 
+	QDEL_NULL(palette_actions)
+	QDEL_NULL(listed_actions)
+	QDEL_LIST(floating_actions)
+	screentip_text = null
 	screen_groups = null
 	inv_slots.Cut()
 	hand_slots.Cut()
