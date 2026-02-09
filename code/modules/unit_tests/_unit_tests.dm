@@ -87,6 +87,10 @@
 #define EASY_ALLOCATE(arguments...) allocate(__IMPLIED_TYPE__, run_loc_floor_bottom_left, ##arguments)
 
 // BEGIN_INCLUDE
+#include "missing_icons/_missing_icons.dm"
+#include "missing_icons/icon_state.dm"
+#include "missing_icons/inhand_icon_state.dm"
+#include "missing_icons/worn_icon_state.dm"
 #include "aas_configs.dm"
 #include "abductor_baton_spell.dm"
 #include "ablative_hud.dm"
@@ -197,7 +201,6 @@
 #include "hydroponics_validate_genes.dm"
 #include "id_access.dm"
 #include "id_card.dm"
-#include "inhands.dm"
 #include "interaction_door.dm"
 #include "interaction_silicon.dm"
 #include "interaction_structures.dm"
@@ -227,7 +230,6 @@
 #include "merge_type.dm"
 #include "metabolizing.dm"
 #include "mindbound_actions.dm"
-#include "missing_icons.dm"
 #include "mob_chains.dm"
 #include "mob_damage.dm"
 #include "mob_faction.dm"
@@ -344,7 +346,6 @@
 #include "washing.dm"
 #include "weird_food.dm"
 #include "wizard_loadout.dm"
-#include "worn_icons.dm"
 // END_INCLUDE
 #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"
