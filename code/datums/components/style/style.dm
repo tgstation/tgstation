@@ -180,9 +180,6 @@
 		high_score = style_points
 
 /datum/component/style/proc/update_screen(rank_changed)
-	if(!meter)
-		return
-
 	var/go_back = null
 	if(!isnull(rank_changed))
 		timerid = null
@@ -202,6 +199,9 @@
 				mob_parent.balloon_alert(mob_parent, "hotswapping disabled")
 
 			rank = rank_changed
+
+	if(!meter)
+		return
 	meter.maptext = "[format_rank_string(rank)][generate_multiplier()][generate_actions()]"
 	meter.maptext_y = initial(meter.maptext_y) - 12 * length(actions)
 	update_meter(point_to_rank(), go_back)
