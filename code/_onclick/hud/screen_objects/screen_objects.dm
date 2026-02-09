@@ -56,7 +56,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 
 /atom/movable/screen/Destroy()
 	if(hud)
-		hud.screen_groups?[hud_group_key] -= src
+		if (hud_group_key && hud.screen_groups?[hud_group_key])
+			hud.screen_groups?[hud_group_key] -= src
 		hud.screen_objects -= hud_key
 	master_ref = null
 	hud = null
@@ -302,6 +303,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "storage_close"
 	mouse_over_pointer = MOUSE_HAND_POINTER
+	hud_group_key = HUD_GROUP_STORAGE
 
 /atom/movable/screen/close/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()
@@ -534,6 +536,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	name = "storage"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "storage_cell"
+	hud_group_key = HUD_GROUP_STORAGE
 
 /atom/movable/screen/storage/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()

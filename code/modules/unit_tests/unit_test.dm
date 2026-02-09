@@ -293,6 +293,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/atom/movable/looking_holder,
 		//Should not exist outside of holders
 		/obj/effect/decal/cleanable/blood/trail,
+		//A lot of these depend on a hud datum to function and should not be created in a vacuum
+		/atom/movable/screen,
 	)
 
 	// Everything that follows is a typesof() check.
@@ -366,8 +368,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/structure/transport/linear)
 	// Runtimes if the associated machinery does not exist, but not the base type
 	returnable_list += subtypesof(/obj/machinery/airlock_controller)
-	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
-	returnable_list += subtypesof(/atom/movable/screen/escape_menu)
 	// Can't spawn openspace above nothing, it'll get pissy at me
 	returnable_list += typesof(/turf/open/space/openspace)
 	returnable_list += typesof(/turf/open/openspace)

@@ -964,10 +964,10 @@
 	active_hand_index = held_index
 	if(hud_used)
 		var/atom/movable/screen/inventory/hand/held_location
-		held_location = hud_used.hand_slots["[previous_index]"]
+		held_location = hud_used.hand_slots[previous_index]
 		if(!isnull(held_location))
 			held_location.update_appearance()
-		held_location = hud_used.hand_slots["[held_index]"]
+		held_location = hud_used.hand_slots[held_index]
 		if(!isnull(held_location))
 			held_location.update_appearance()
 	return TRUE

@@ -204,7 +204,7 @@
 		arm_owner.set_handcuffed(null)
 		arm_owner.dropItemToGround(lost_cuffs, force = TRUE)
 	if(arm_owner.hud_used)
-		var/atom/movable/screen/inventory/hand/associated_hand = arm_owner.hud_used.hand_slots["[held_index]"]
+		var/atom/movable/screen/inventory/hand/associated_hand = arm_owner.hud_used.hand_slots[held_index]
 		associated_hand?.update_appearance()
 	if(arm_owner.num_hands == 0)
 		arm_owner.dropItemToGround(arm_owner.gloves, force = TRUE)

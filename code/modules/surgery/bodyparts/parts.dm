@@ -194,7 +194,7 @@
 	if(!old_owner.hud_used)
 		return
 
-	var/atom/movable/screen/inventory/hand/hand = old_owner.hud_used.hand_slots["[held_index]"]
+	var/atom/movable/screen/inventory/hand/hand = old_owner.hud_used.hand_slots[held_index]
 	hand?.update_appearance()
 
 /// We need to add hand hud items and appearance, so do that here
@@ -211,7 +211,7 @@
 	if(!new_owner.hud_used)
 		return
 
-	var/atom/movable/screen/inventory/hand/hand = new_owner.hud_used.hand_slots["[held_index]"]
+	var/atom/movable/screen/inventory/hand/hand = new_owner.hud_used.hand_slots[held_index]
 	hand?.update_appearance()
 
 /obj/item/bodypart/arm/set_disabled(new_disabled)
@@ -230,7 +230,7 @@
 		owner.set_usable_hands(owner.usable_hands + 1)
 
 	if(owner.hud_used)
-		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
+		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots[held_index]
 		hand_screen_object?.update_appearance()
 
 /obj/item/bodypart/arm/left

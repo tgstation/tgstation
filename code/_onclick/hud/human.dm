@@ -243,21 +243,21 @@
 	screen_loc = ui_storage1
 	slot_id = ITEM_SLOT_LPOCKET
 
-/datum/inventory_slot/human/l_pocket
+/datum/inventory_slot/human/r_pocket
 	name = "right pocket"
 	icon_state = "pocket"
 	icon_full = "template_small"
 	screen_loc = ui_storage2
 	slot_id = ITEM_SLOT_RPOCKET
 
-/datum/inventory_slot/human/l_pocket
+/datum/inventory_slot/human/suit_storage
 	name = "suit storage"
 	icon_state = "suit_storage"
 	icon_full = "template"
 	screen_loc = ui_sstore1
 	slot_id = ITEM_SLOT_SUITSTORE
 
-/datum/inventory_slot/human/l_pocket
+/datum/inventory_slot/human/gloves
 	name = "gloves"
 	icon_state = "gloves"
 	icon_full = "template"

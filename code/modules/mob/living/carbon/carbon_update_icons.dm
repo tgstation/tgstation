@@ -417,11 +417,11 @@
 
 //update whether handcuffs appears on our hud.
 /mob/living/carbon/proc/update_hud_handcuffed()
-	if(hud_used)
-		for(var/hand in hud_used.hand_slots)
-			var/atom/movable/screen/inventory/hand/H = hud_used.hand_slots[hand]
-			if(H)
-				H.update_appearance()
+	if(!hud_used)
+		return
+
+	for(var/atom/movable/screen/inventory/hand/hand in hud_used.hand_slots)
+		hand.update_appearance()
 
 //update whether our head item appears on our hud.
 /mob/living/carbon/proc/update_hud_head(obj/item/I)

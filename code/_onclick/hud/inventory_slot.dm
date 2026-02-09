@@ -1,9 +1,10 @@
 GLOBAL_LIST_INIT(inventory_slot_datums, initialize_inventory_slots())
 
 /proc/initialize_inventory_slots()
-	. = list()
+	var/list/slot_types = list()
 	for (var/slot_type in valid_subtypesof(/datum/inventory_slot))
-		. += new slot_type()
+		slot_types[slot_type] = new slot_type()
+	return slot_types
 
 /// Inventory slot datum (singleton) which holds data about an inventory screen element
 /datum/inventory_slot

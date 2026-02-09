@@ -157,8 +157,10 @@
 #define HUD_WIZARD_COMPACT_PERKS "wizard_compact_perks"
 #define HUD_WIZARD_PERK(slot) "wizard_perk:[slot]"
 
+/// Converts item slots to hud keys
+#define HUD_KEY_ITEM_SLOT(slot) "item_slot:[slot]"
 /// Converts item slots to hud keys as a compiler constant
-#define HUD_KEY_ITEM_SLOT(slot) "item_slot:" + #slot
+#define HUD_KEY_ITEM_SLOT_CONST(slot) "item_slot:" + #slot
 /// Hand2hudkey
 #define HUD_KEY_HAND_SLOT(slot) "hand_slot:[slot]"
 

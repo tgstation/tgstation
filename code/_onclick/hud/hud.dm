@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if (screen_objects[hud_key])
 		CRASH("Attempted to add a new [new_object] screen object to the [src] hud while an object with the same key [hud_key] is already present!")
 
-	screen_objects[hud_key] = hud_key
+	screen_objects[hud_key] = new_object
 
 	if (group_key)
 		LAZYADD(screen_groups[group_key], new_object)

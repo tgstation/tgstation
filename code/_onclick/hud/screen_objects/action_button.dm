@@ -291,6 +291,7 @@
 /atom/movable/screen/button_palette/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	update_appearance()
+	set_hud(hud_owner)
 
 /atom/movable/screen/button_palette/proc/set_hud(datum/hud/our_hud)
 	src.our_hud = our_hud
@@ -422,6 +423,10 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 	/// Positive scrolls down the list, negative scrolls back
 	var/scroll_direction = 0
 	var/datum/hud/our_hud
+
+/atom/movable/screen/palette_scroll/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	set_hud(hud_owner)
 
 /atom/movable/screen/palette_scroll/Destroy()
 	if (our_hud)
