@@ -127,14 +127,18 @@ SUBSYSTEM_DEF(persistence)
 
 ///Updates the list of the most recent maps.
 /datum/controller/subsystem/persistence/proc/collect_maps()
-	if(length(saved_maps) > KEEP_ROUNDS_MAP) //Get rid of extras from old configs.
-		saved_maps.Cut(KEEP_ROUNDS_MAP+1)
-	var/mapstosave = min(length(saved_maps)+1, KEEP_ROUNDS_MAP)
-	if(length(saved_maps) < mapstosave) //Add extras if too short, one per round.
-		saved_maps += mapstosave
-	for(var/i = mapstosave; i > 1; i--)
-		saved_maps[i] = saved_maps[i-1]
-	saved_maps[1] = SSmapping.current_map.map_name
+	//Clear the list when everyone has gone to bed so we can start fresh tomorrow
+	if(GLOB.clients.len < CONFIG_GET(number/map_vote_minimum_pop_to_remember_maps))
+		saved_maps = list()
+	else
+		if(length(saved_maps) > KEEP_ROUNDS_MAP) //Get rid of extras from old configs.
+			saved_maps.Cut(KEEP_ROUNDS_MAP+1)
+		var/mapstosave = min(length(saved_maps)+1, KEEP_ROUNDS_MAP)
+		if(length(saved_maps) < mapstosave) //Add extras if too short, one per round.
+			saved_maps += mapstosave
+		for(var/i = mapstosave; i > 1; i--)
+			saved_maps[i] = saved_maps[i-1]
+		saved_maps[1] = SSmapping.current_map.map_name
 	var/json_file = file(FILE_RECENT_MAPS)
 	var/list/file_data = list()
 	file_data["data"] = saved_maps
