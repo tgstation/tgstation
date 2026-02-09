@@ -1,43 +1,40 @@
-/datum/stacked_reagent_effects/liver_damage
+///Maximum amount of organ damage
+#define MAX_ORGAN_DAMAGE 7
+
+///Damage applied to an organ
+/datum/stacked_reagent_effects/organ_damage
+	abstract_type = /datum/stacked_reagent_effects/organ_damage
+	///Organ slot to apply damage to
+	VAR_PROTECTED/organ_slot
+	///Multiplier for damage
+	VAR_PROTECTED/scale
+
+/datum/stacked_reagent_effects/organ_damage/apply(list/reagents_metabolized, mob/living/carbon/owner, seconds_per_tick)
+	var/obj/item/organ/organ = owner.get_organ_slot(organ_slot)
+	if(organ)
+		var/damage = 0
+		for(var/datum/reagent/medicine/med as anything in reagents_metabolized)
+			damage += reagents_metabolized[med]
+		organ.apply_organ_damage(min(scale * damage * seconds_per_tick, MAX_ORGAN_DAMAGE))
+
+/datum/stacked_reagent_effects/organ_damage/liver_damage
 	requirements = list(/datum/reagent/medicine = 4)
+	organ_slot = ORGAN_SLOT_LIVER
+	scale = 0.5
 
-/datum/stacked_reagent_effects/liver_damage/apply(list/reagents_metabolized, mob/living/carbon/owner, seconds_per_tick)
-	var/obj/item/organ/liver = owner.get_organ_slot(ORGAN_SLOT_LIVER)
-	if(liver)
-		var/liver_damage = 0
-		for(var/datum/reagent/medicine/med as anything in reagents_metabolized)
-			liver_damage += 0.6 * reagents_metabolized[med]
-		liver.apply_organ_damage(liver_damage * seconds_per_tick)
-
-/datum/stacked_reagent_effects/stomache_damage
+/datum/stacked_reagent_effects/organ_damage/stomach_damage
 	requirements = list(/datum/reagent/medicine = 5)
+	organ_slot = ORGAN_SLOT_STOMACH
+	scale = 0.4
 
-/datum/stacked_reagent_effects/stomache_damage/apply(list/reagents_metabolized, mob/living/carbon/owner, seconds_per_tick)
-	var/obj/item/organ/stomach = owner.get_organ_slot(ORGAN_SLOT_STOMACH)
-	if(stomach)
-		var/stomach_damage = 0
-		for(var/datum/reagent/medicine/med as anything in reagents_metabolized)
-			stomach_damage += 0.5 * reagents_metabolized[med]
-		stomach.apply_organ_damage(stomach_damage * seconds_per_tick)
-
-/datum/stacked_reagent_effects/lung_damage
+/datum/stacked_reagent_effects/organ_damage/lung_damage
 	requirements = list(/datum/reagent/medicine = 6)
+	organ_slot = ORGAN_SLOT_LUNGS
+	scale = 0.3
 
-/datum/stacked_reagent_effects/lung_damage/apply(list/reagents_metabolized, mob/living/carbon/owner, seconds_per_tick)
-	var/obj/item/organ/lung = owner.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if(lung)
-		var/lung_damage = 0
-		for(var/datum/reagent/medicine/med as anything in reagents_metabolized)
-			lung_damage += 0.4 * reagents_metabolized[med]
-		lung.apply_organ_damage(lung_damage * seconds_per_tick)
-
-/datum/stacked_reagent_effects/heart_damage
+/datum/stacked_reagent_effects/organ_damage/lung_damage
 	requirements = list(/datum/reagent/medicine = 7)
+	organ_slot = ORGAN_SLOT_HEART
+	scale = 0.2
 
-/datum/stacked_reagent_effects/heart_damage/apply(list/reagents_metabolized, mob/living/carbon/owner, seconds_per_tick)
-	var/obj/item/organ/heart = owner.get_organ_slot(ORGAN_SLOT_HEART)
-	if(heart)
-		var/heart_damage = 0
-		for(var/datum/reagent/medicine/med as anything in reagents_metabolized)
-			heart_damage += 0.3 * reagents_metabolized[med]
-		heart.apply_organ_damage(heart_damage * seconds_per_tick)
+#undef MAX_ORGAN_DAMAGE
