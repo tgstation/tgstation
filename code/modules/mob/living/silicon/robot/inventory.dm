@@ -77,16 +77,15 @@
 	. = ..()
 	if(isnull(client) || isnull(hud_used) || hud_used.hud_version == HUD_STYLE_NOHUD)
 		return
-	var/turf/our_turf = get_turf(src)
 
-	for(var/obj/item/held in held_items)
+	var/turf/our_turf = get_turf(src)
+	for (var/held_index in 1 to length(held_items))
+		var/obj/item/held = held_items[held_index]
 		SET_PLANE(held, ABOVE_HUD_PLANE, our_turf)
-		if(held_items[BORG_CHOOSE_MODULE_ONE] == held)
-			held.screen_loc = inv1.screen_loc
-		else if(held_items[BORG_CHOOSE_MODULE_TWO] == held)
-			held.screen_loc = inv2.screen_loc
-		else if(held_items[BORG_CHOOSE_MODULE_THREE] == held)
-			held.screen_loc = inv3.screen_loc
+		var/atom/movable/screen/robot/module_slot/slot = hud_used.screen_objects[HUD_KEY_CYBORG_MODULE(held_index)]
+		if (!slot) //??
+			continue
+		held.screen_loc = slot.screen_loc
 		client.screen |= held
 
 /mob/living/silicon/robot/put_in_hand_check(obj/item/item_equipping)
@@ -111,7 +110,6 @@
 			if(disabled_modules & BORG_MODULE_ALL_DISABLED)
 				return FALSE
 
-			inv1.icon_state = "[initial(inv1.icon_state)] +b"
 			disabled_modules |= BORG_MODULE_ALL_DISABLED
 
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
@@ -127,7 +125,6 @@
 			if(disabled_modules & BORG_MODULE_TWO_DISABLED)
 				return FALSE
 
-			inv2.icon_state = "[initial(inv2.icon_state)] +b"
 			disabled_modules |= BORG_MODULE_TWO_DISABLED
 
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 60, TRUE, TRUE)
@@ -138,13 +135,15 @@
 			if(disabled_modules & BORG_MODULE_THREE_DISABLED)
 				return FALSE
 
-			inv3.icon_state = "[initial(inv3.icon_state)] +b"
 			disabled_modules |= BORG_MODULE_THREE_DISABLED
 
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, TRUE, TRUE)
 			audible_message(span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\""))
 			to_chat(src, span_userdanger("SYSTEM ERROR: Module [module_num] OFFLINE."))
 
+	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_CYBORG_MODULE(module_num)]
+	if(module)
+		module.icon_state = "[initial(module.icon_state)] +b"
 	return TRUE
 
 /**
@@ -169,26 +168,27 @@
 			if(!(disabled_modules & BORG_MODULE_ALL_DISABLED))
 				return FALSE
 
-			inv1.icon_state = initial(inv1.icon_state)
 			disabled_modules &= ~BORG_MODULE_ALL_DISABLED
 			if(builtInCamera)
 				builtInCamera.camera_enabled = TRUE
 				to_chat(src, span_notice("You hear your built in security camera focus adjust as it comes back online!"))
+
 		if(BORG_CHOOSE_MODULE_TWO)
 			if(!(disabled_modules & BORG_MODULE_TWO_DISABLED))
 				return FALSE
 
-			inv2.icon_state = initial(inv2.icon_state)
 			disabled_modules &= ~BORG_MODULE_TWO_DISABLED
+
 		if(BORG_CHOOSE_MODULE_THREE)
 			if(!(disabled_modules & BORG_MODULE_THREE_DISABLED))
 				return FALSE
 
-			inv3.icon_state = initial(inv3.icon_state)
 			disabled_modules &= ~BORG_MODULE_THREE_DISABLED
 
 	to_chat(src, span_notice("ERROR CLEARED: Module [module_num] back online."))
-
+	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_CYBORG_MODULE(module_num)]
+	if(module)
+		module.icon_state = initial(module.icon_state)
 	return TRUE
 
 /**
@@ -268,16 +268,9 @@
 	if(is_invalid_module_number(module_num) || !held_items[module_num]) //If the slot number is invalid, or there's nothing there, we have nothing to equip
 		return FALSE
 
-	switch(module_num)
-		if(BORG_CHOOSE_MODULE_ONE)
-			if(module_active != held_items[module_num])
-				inv1.icon_state = "[initial(inv1.icon_state)] +a"
-		if(BORG_CHOOSE_MODULE_TWO)
-			if(module_active != held_items[module_num])
-				inv2.icon_state = "[initial(inv2.icon_state)] +a"
-		if(BORG_CHOOSE_MODULE_THREE)
-			if(module_active != held_items[module_num])
-				inv3.icon_state = "[initial(inv3.icon_state)] +a"
+	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_CYBORG_MODULE(module_num)]
+	if(module && module_active != held_items[module_num])
+		module.icon_state = "[initial(module.icon_state)] +a"
 	module_active = held_items[module_num]
 	return TRUE
 
@@ -287,13 +280,9 @@
  * * module_num - the slot number being de-selected
  */
 /mob/living/silicon/robot/proc/deselect_module(module_num)
-	switch(module_num)
-		if(BORG_CHOOSE_MODULE_ONE)
-			inv1.icon_state = initial(inv1.icon_state)
-		if(BORG_CHOOSE_MODULE_TWO)
-			inv2.icon_state = initial(inv2.icon_state)
-		if(BORG_CHOOSE_MODULE_THREE)
-			inv3.icon_state = initial(inv3.icon_state)
+	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_CYBORG_MODULE(module_num)]
+	if(module)
+		module.icon_state = initial(module.icon_state)
 	module_active = null
 	return TRUE
 

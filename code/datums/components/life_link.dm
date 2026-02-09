@@ -118,8 +118,9 @@
 		mob_parent.overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
 	else
 		mob_parent.clear_fullscreen("brute")
-	if(mob_parent.hud_used?.healths)
-		mob_parent.hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[round(healthpercent, 0.5)]%</font></div>")
+
+	if(mob_parent.hud_used?.screen_objects[HUD_MOB_HEALTH])
+		mob_parent.hud_used.screen_objects[HUD_MOB_HEALTH].maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[round(healthpercent, 0.5)]%</font></div>")
 
 /// Update our health on the medical hud
 /datum/component/life_link/proc/update_med_hud_health(mob/living/mob_parent)

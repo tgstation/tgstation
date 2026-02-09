@@ -38,7 +38,9 @@
 		return
 
 	source.attack(user, user)
-	user.hud_used?.hunger?.update_hunger_bar()
+	var/atom/movable/screen/hunger/hunger_bar = user.hud_used?.screen_objects[HUD_MOB_HUNGER]
+	if (istype(hunger_bar))
+		hunger_bar.update_hunger_bar()
 
 /datum/element/foodlike_drink/proc/can_keep_drinking(obj/item/reagent_containers/source, mob/living/user)
 	if(QDELETED(source) || user.get_active_held_item() != source)

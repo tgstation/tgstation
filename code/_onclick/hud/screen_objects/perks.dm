@@ -8,10 +8,6 @@
 	icon_state = "more"
 	// When compact we don't show our perk huds in ui.
 	var/compact = FALSE
-	// List of all perks that we see on hud.
-	var/list/perks_on_hud = list()
-	// List to remember all perks we hide when compact it.
-	var/list/perks_compacted = list()
 
 /atom/movable/screen/perk/more/Click(location, control, params)
 	. = ..()
@@ -23,13 +19,11 @@
 		return
 	compact = !compact
 	var/datum/hud/user_hud = usr_is_living.hud_used
-	if(compact)
-		for(var/atom/movable/screen/perk/perk_on_hud as anything in perks_on_hud)
-			perks_compacted += perk_on_hud
-			user_hud.screen_groups[HUD_GROUP_INFO] -= perk_on_hud
-		user_hud.show_hud(user_hud.hud_version)
-	else
-		for(var/atom/movable/screen/perk/perk_compacted as anything in perks_compacted)
-			LAZYADD(user_hud.screen_groups[HUD_GROUP_INFO], perk_compacted)
-			perks_compacted -= perk_compacted
-		user_hud.show_hud(user_hud.hud_version)
+	for (var/perk_id in 1 to length(wizard_datum.perks))
+		var/atom/movable/screen/perk/perk = user_hud.screen_objects[HUD_WIZARD_PERK(perk_id)]
+		if (!perk) // ??
+			continue
+		if (compact)
+			perk.SetInvisibility(INVISIBILITY_ABSTRACT, type)
+		else
+			perk.RemoveInvisibility(type)

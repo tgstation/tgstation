@@ -760,13 +760,13 @@
 
 ///Update the pulling hud icon
 /mob/proc/update_pull_hud_icon()
-	hud_used?.pull_icon?.update_appearance()
+	hud_used?.screen_objects[HUD_MOB_PULL]?.update_appearance()
 
 ///Update the resting hud icon
 /mob/proc/update_rest_hud_icon()
 	if(!hud_used)
 		return FALSE
-	hud_used.rest_icon?.update_appearance()
+	hud_used.screen_objects[HUD_MOB_REST]?.update_appearance()
 	return TRUE
 
 /**
@@ -1530,7 +1530,9 @@
 /// Updates nutrition related effects
 /mob/living/proc/update_nutrition()
 	mob_mood?.update_nutrition_moodlets()
-	hud_used?.hunger?.update_hunger_bar()
+	var/atom/movable/screen/hunger/hunger_bar = hud_used?.screen_objects[HUD_MOB_HUNGER]
+	if (hunger_bar)
+		hunger_bar.update_hunger_bar()
 	SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_NUTRITION)
 
 /// Apply a proper movespeed modifier based on items we have equipped

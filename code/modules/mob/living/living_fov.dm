@@ -131,3 +131,5 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	plane = FIELD_OF_VISION_BLOCKER_PLANE
 	screen_loc = "BOTTOM,LEFT"
+	hud_key = HUD_MOB_FOV_BLOCKER
+	hud_group_key = HUD_GROUP_SCREEN_OVERLAYS

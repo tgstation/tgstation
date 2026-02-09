@@ -379,7 +379,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	human_who_gained_species.butcher_results = knife_butcher_results?.Copy()
 
 	//update body zones to match what they are supposed to have
-	human_who_gained_species.hud_used?.healthdoll.update_body_zones()
+	var/atom/movable/screen/healthdoll/doll = human_who_gained_species.hud_used?.screen_objects[HUD_MOB_HEALTHDOLL]
+	if (doll)
+		doll.update_body_zones()
 
 	if(old_species.type != type)
 		replace_body(human_who_gained_species, src)
@@ -431,7 +433,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	human_who_gained_species.living_flags &= ~STOP_OVERLAY_UPDATE_BODY_PARTS
 
 	//we don't allow it to update during species transition, so update it now
-	human_who_gained_species.hud_used?.healthdoll.update_appearance()
+	human_who_gained_species.hud_used?.screen_objects[HUD_MOB_HEALTHDOLL]?.update_appearance()
 
 /**
  * Proc called when a carbon is no longer this species.

@@ -692,7 +692,7 @@
 	. = ..()
 	// Handles changing limb colors and stuff
 	if(!(living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
-		hud_used.healthdoll?.update_appearance()
+		hud_used.screen_objects[HUD_MOB_HEALTHDOLL]?.update_appearance()
 
 /mob/living/carbon/human/fully_heal(heal_flags = HEAL_ALL)
 	if(heal_flags & HEAL_NEGATIVE_MUTATIONS)

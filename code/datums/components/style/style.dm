@@ -74,23 +74,7 @@
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	var/mob/mob_parent = parent
-
-	meter = new()
-	meter_image = new()
-	meter.vis_contents += meter_image
-	meter_image.add_filter("meter_mask", 1, list(type = "alpha", icon = icon('icons/hud/style_meter.dmi', "style_meter"), flags = MASK_INVERSE))
-	meter.update_appearance()
-	meter_image.update_appearance()
-
-	update_screen()
-
-	if(mob_parent.hud_used)
-		mob_parent.hud_used.static_inventory += meter
-		mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
-
 	START_PROCESSING(SSdcs, src)
-
 	if(multitooled)
 		src.multitooled = multitooled
 
@@ -108,6 +92,11 @@
 	RegisterSignal(parent, COMSIG_LIVING_CRUSHER_DETONATE, PROC_REF(on_crusher_detonate))
 	RegisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER, PROC_REF(on_geyser_discover))
 	ADD_TRAIT(parent, TRAIT_MINING_PARRYING, STYLE_TRAIT)
+	var/mob/mob_parent = parent
+	if (!mob_parent.hud_used)
+		RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
+	else
+		on_hud_created()
 
 /datum/component/style/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_USER_PRE_ITEM_ATTACK)
@@ -121,15 +110,30 @@
 	UnregisterSignal(parent, COMSIG_LIVING_DEFUSED_GIBTONITE)
 	UnregisterSignal(parent, COMSIG_LIVING_CRUSHER_DETONATE)
 	UnregisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER)
+	UnregisterSignal(parent, COMSIG_MOB_HUD_CREATED)
 	REMOVE_TRAIT(parent, TRAIT_MINING_PARRYING, STYLE_TRAIT)
 
 /datum/component/style/Destroy(force)
 	STOP_PROCESSING(SSdcs, src)
+	QDEL_NULL(meter)
+	QDEL_NULL(meter_image)
 	var/mob/mob_parent = parent
 	if(mob_parent.hud_used)
-		mob_parent.hud_used.static_inventory -= meter
 		mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
 	return ..()
+
+
+/datum/component/style/proc/on_hud_created(datum/source)
+	SIGNAL_HANDLER
+
+	var/mob/owner = parent
+	meter = owner.hud_used.add_screen_object(/atom/movable/screen/style_meter_background, HUD_MOB_STYLE_METER, update_screen = TRUE)
+	meter_image = new()
+	meter.vis_contents += meter_image
+	meter_image.add_filter("meter_mask", 1, list(type = "alpha", icon = icon('icons/hud/style_meter.dmi', "style_meter"), flags = MASK_INVERSE))
+	meter.update_appearance()
+	meter_image.update_appearance()
+	update_screen()
 
 /datum/component/style/process(seconds_per_tick)
 	point_multiplier = round(max(point_multiplier - 0.2 * seconds_per_tick, 1), 0.1)
@@ -176,6 +180,9 @@
 		high_score = style_points
 
 /datum/component/style/proc/update_screen(rank_changed)
+	if(!meter)
+		return
+
 	var/go_back = null
 	if(!isnull(rank_changed))
 		timerid = null

@@ -324,6 +324,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/list/group_hotkeys = screen_groups[HUD_GROUP_HOTKEYS]
 	var/list/group_info = screen_groups[HUD_GROUP_INFO]
 	var/list/group_screen = screen_groups[HUD_GROUP_SCREEN_OVERLAYS]
+	var/list/group_storage = screen_groups[HUD_GROUP_STORAGE]
 
 	// Screen overlays get added regardless of the HUD state
 	if (length(group_screen))
@@ -344,6 +345,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen += group_hotkeys
 			if (length(group_info))
 				screenmob.client.screen += group_info
+			if (length(group_storage))
+				screenmob.client.screen += group_storage
 
 			screenmob.client.screen += palette
 
@@ -354,8 +357,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		if (HUD_STYLE_REDUCED)
 			hud_shown = FALSE
 
-			if (length(group_static))
-				screenmob.client.screen += group_static
 			if (length(group_info))
 				screenmob.client.screen += group_info
 

@@ -30,14 +30,17 @@
 	if(!ismob(parent))
 		return
 	var/mob/user = parent
+	UnregisterSignal(parent, COMSIG_MOB_HUD_CREATED)
 	qdel(user.hud_used?.screen_objects?[HUD_MOB_CRAFTING_MENU])
+	user.hud_used?.show_hud(user.hud_used.hud_version)
 
 /datum/component/personal_crafting/proc/on_hud_created(datum/source)
 	SIGNAL_HANDLER
 
 	var/mob/user = parent
-	var/atom/movable/screen/screen_obj = user.hud_used.add_screen_object(/atom/movable/screen/craft, HUD_MOB_CRAFTING_MENU, HUD_GROUP_STATIC, mob_parent.hud_used.ui_style, screen_loc_override, update_screen = TRUE)
+	var/atom/movable/screen/screen_obj = user.hud_used.add_screen_object(/atom/movable/screen/craft, HUD_MOB_CRAFTING_MENU, HUD_GROUP_STATIC, user.hud_used.ui_style, screen_loc_override, update_screen = TRUE)
 	RegisterSignal(screen_obj, COMSIG_CLICK, PROC_REF(component_ui_interact))
+	UnregisterSignal(parent, COMSIG_MOB_HUD_CREATED)
 
 #define COOKING TRUE
 #define CRAFTING FALSE

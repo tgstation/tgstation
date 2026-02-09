@@ -506,23 +506,29 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	mouse_over_pointer = MOUSE_HAND_POINTER
 	screen_loc = ui_above_throw
 
+/atom/movable/screen/sleep/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	// Invisible by default
+	SetInvisibility(INVISIBILITY_ABSTRACT, "sleep")
+
 /atom/movable/screen/sleep/Click()
 	if(!isliving(usr) || HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
 		return
-	if(usr.client?.prefs.read_preference(/datum/preference/toggle/remove_double_click))
-		var/tgui_answer = tgui_alert(usr, "You sure you want to sleep for a while?", "Sleeping", list("Yes", "No"))
-		if(tgui_answer == "Yes" && !HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
-			var/mob/living/L = usr
-			L.SetSleeping(400)
-	else
+	if(!usr.client?.prefs.read_preference(/datum/preference/toggle/remove_double_click))
 		flick("[base_icon_state]_flick", src)
+		return
+
+	var/tgui_answer = tgui_alert(usr, "You sure you want to sleep for a while?", "Sleeping", list("Yes", "No"))
+	if(tgui_answer == "Yes" && !HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
+		var/mob/living/L = usr
+		L.Sleeping(400)
 
 /atom/movable/screen/sleep/DblClick(location, control, params)
 	if(!isliving(usr) || usr.client?.prefs.read_preference(/datum/preference/toggle/remove_double_click))
 		return
 	if(isliving(usr))
 		var/mob/living/L = usr
-		L.SetSleeping(400)
+		L.Sleeping(400)
 
 /atom/movable/screen/storage
 	name = "storage"

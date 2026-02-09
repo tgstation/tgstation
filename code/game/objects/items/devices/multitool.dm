@@ -94,18 +94,26 @@
 	user.balloon_alert(user, balloon_message)
 
 	var/datum/hud/user_hud = user.hud_used
-	if(!user_hud || !istype(user_hud, /datum/hud) || !islist(user_hud.infodisplay))
+	if(!user_hud)
 		return
 
-	var/atom/movable/screen/multitool_arrow/arrow = new(null, user_hud)
+	var/atom/movable/screen/multitool_arrow/arrow = user_hud.add_screen_object(/atom/movable/screen/multitool_arrow, HUD_MULTITOOL_ARROW, HUD_GROUP_INFO, update_screen = TRUE)
 	arrow.color = arrow_color
-	arrow.screen_loc = around_player
 	arrow.transform = matrix(dir2angle(dir), MATRIX_ROTATE)
-
-	user_hud.infodisplay += arrow
-	user_hud.show_hud(user_hud.hud_version)
-
 	QDEL_IN(arrow, 1.5 SECONDS)
+
+/atom/movable/screen/multitool_arrow
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "multitool_arrow"
+	pixel_x = -32
+	pixel_y = -32
+	screen_loc = around_player
+
+/atom/movable/screen/multitool_arrow/Destroy()
+	var/datum/hud/our_hud = hud
+	. = ..()
+	if (!QDELETED(our_hud))
+		INVOKE_ASYNC(our_hud, TYPE_PROC_REF(/datum/hud, show_hud), our_hud.hud_version)
 
 /obj/item/multitool/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!"))

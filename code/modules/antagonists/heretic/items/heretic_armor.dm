@@ -533,8 +533,6 @@
 		TRAIT_PACIFISM,
 		TRAIT_NOHUNGER
 	)
-	/// Hud that gets shown to the wearer, gives a rough estimate of their current brain damage
-	var/atom/movable/screen/moon_health/health_hud
 	/// Boolean if you are brain dead so the sound doesn't spam during the delay
 	var/braindead = FALSE
 	//---- Messages that get sent when someone wearing the moon robes is attacked
@@ -621,8 +619,7 @@
 	if(our_brain)
 		REMOVE_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
 	braindead = FALSE
-	if(health_hud in user.hud_used.infodisplay)
-		on_hud_remove(user)
+	on_hud_remove(user)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_apply_modifiers(mob/living/user, damage_mods, damage, damagetype, def_zone, sharpness, attack_direction, attacking_item)
 	SIGNAL_HANDLER
@@ -644,35 +641,30 @@
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_hud_created(mob/living/carbon/human/wearer)
 	SIGNAL_HANDLER
 	var/datum/hud/original_hud = wearer.hud_used
-	// Remove the old health elements
-	var/list/to_remove = list(/atom/movable/screen/stamina, /atom/movable/screen/healths, /atom/movable/screen/healthdoll/human)
-	for(var/removing in original_hud.infodisplay)
-		if(is_type_in_list(removing, to_remove))
-			original_hud.infodisplay -= removing
-			QDEL_NULL(removing)
+
+	for(var/removing in list(HUD_MOB_STAMINA, HUD_MOB_HEALTH, HUD_MOB_HEALTHDOLL))
+		var/atom/movable/screen/to_remove = original_hud.screen_objects[removing]
+		if (to_remove)
+			to_remove.SetInvisibility(INVISIBILITY_ABSTRACT, type)
 
 	wearer.mob_mood.unmodify_hud()
 	// Add the moon health hud element
-	health_hud = new(null, original_hud)
-	original_hud.infodisplay += health_hud
-	original_hud.show_hud(original_hud.hud_version)
+	original_hud.add_screen_object(/atom/movable/screen/moon_health, HUD_HERETIC_MOON_HEALTH, HUD_GROUP_INFO, update_screen = TRUE)
 	UnregisterSignal(wearer, COMSIG_MOB_HUD_CREATED)
 	signal_registered -= COMSIG_MOB_HUD_CREATED
 
 /// Removes the HUD element from the wearer
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_hud_remove(mob/living/carbon/human/wearer)
 	var/datum/hud/original_hud = wearer.hud_used
-	original_hud.infodisplay -= health_hud
-	QDEL_NULL(health_hud)
+	QDEL_NULL(original_hud.screen_objects[HUD_HERETIC_MOON_HEALTH])
 	// Restore the old health elements
-	var/atom/movable/screen/stamina/stamina_hud = new(null, original_hud)
-	var/atom/movable/screen/healths/old_health_hud = new(null, original_hud)
-	var/atom/movable/screen/healthdoll/human/health_doll_hud = new(null, original_hud)
-	original_hud.infodisplay += stamina_hud
-	original_hud.infodisplay += old_health_hud
-	original_hud.infodisplay += health_doll_hud
+	for(var/restoring in list(HUD_MOB_STAMINA, HUD_MOB_HEALTH, HUD_MOB_HEALTHDOLL))
+		var/atom/movable/screen/to_restore = original_hud.screen_objects[restoring]
+		if (to_restore)
+			to_restore.RemoveInvisibility(type)
+
+	// Updates HUD on its own
 	wearer.mob_mood.modify_hud()
-	original_hud.show_hud(original_hud.hud_version)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/can_mob_unequip(mob/user)
 	if(!ishuman(user))

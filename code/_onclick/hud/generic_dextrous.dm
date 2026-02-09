@@ -15,7 +15,7 @@
 	add_screen_object(/atom/movable/screen/floor_changer, HUD_MOB_FLOOR_CHANGER, HUD_GROUP_STATIC, ui_style)
 	add_screen_object(/atom/movable/screen/zone_sel, HUD_MOB_ZONE_SELECTOR, HUD_GROUP_STATIC, ui_style)
 	add_screen_object(/atom/movable/screen/area_creator, HUD_MOB_AREA_CREATOR, HUD_GROUP_STATIC, ui_style)
-	add_screen_object(/atom/movable/screen/healthdoll/living, HUD_MOB_HEALTH, HUD_GROUP_INFO)
+	add_screen_object(/atom/movable/screen/healthdoll/living, HUD_MOB_HEALTHDOLL, HUD_GROUP_INFO)
 
 	if(HAS_TRAIT(mymob, TRAIT_CAN_THROW_ITEMS))
 		add_screen_object(/atom/movable/screen/throw_catch, HUD_MOB_THROW, HUD_GROUP_HOTKEYS, ui_style, ui_drop_throw)

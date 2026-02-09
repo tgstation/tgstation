@@ -294,9 +294,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/new_maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
 	hud_used.screen_objects[HUD_MOB_HEALTH].maptext = new_maptext
 	for(var/mob/living/basic/blob_minion/blobbernaut/blobbernaut in blob_mobs)
-		if(isnull(blobbernaut.overmind_hud))
-			continue
-		blobbernaut.overmind_hud.maptext = new_maptext
+		var/atom/movable/screen/overmind_hud = blobbernaut.hud_used?.screen_objects[HUD_BLOBBERNAUT_OVERMIND]
+		if (overmind_hud)
+			overmind_hud.maptext = new_maptext
 
 /mob/eye/blob/proc/add_points(points)
 	blob_points = clamp(blob_points + points, 0, max_blob_points)

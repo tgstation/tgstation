@@ -169,7 +169,7 @@
 		essencecolor = "#9A5ACB" //oh boy you've got a lot of essence
 	else if(essence <= 0)
 		essencecolor = "#1D2953" //oh jeez you're dying
-	hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>")
+	hud_used.screen_objects[HUD_MOB_HEALTH]?.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>")
 
 /mob/living/basic/revenant/say(
 	message,

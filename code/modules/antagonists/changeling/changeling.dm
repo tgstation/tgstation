@@ -69,11 +69,6 @@
 	/// A reference to our cellular emporium action (which opens the UI for the datum).
 	var/datum/action/cellular_emporium/emporium_action
 
-	/// UI displaying how many chems we have
-	var/atom/movable/screen/ling/chems/lingchemdisplay
-	/// UI displayng our currently active sting
-	var/atom/movable/screen/ling/sting/lingstingdisplay
-
 	/// The name of our "hive" that our ling came from. Flavor.
 	var/hive_name
 
@@ -146,16 +141,8 @@
 	ADD_TRAIT(living_mob, TRAIT_FAKE_SOULLESS, CHANGELING_TRAIT)
 	ADD_TRAIT(living_mob, TRAIT_BRAINLESS_CARBON, CHANGELING_TRAIT)
 
-	if(living_mob.hud_used)
-		var/datum/hud/hud_used = living_mob.hud_used
-
-		lingchemdisplay = new /atom/movable/screen/ling/chems(null, hud_used)
-		hud_used.infodisplay += lingchemdisplay
-
-		lingstingdisplay = new /atom/movable/screen/ling/sting(null, hud_used)
-		hud_used.infodisplay += lingstingdisplay
-
-		hud_used.show_hud(hud_used.hud_version)
+	if (living_mob.hud_used)
+		on_hud_created()
 	else
 		RegisterSignal(living_mob, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
@@ -190,14 +177,8 @@
 	SIGNAL_HANDLER
 
 	var/datum/hud/ling_hud = owner.current.hud_used
-
-	lingchemdisplay = new(null, ling_hud)
-	ling_hud.infodisplay += lingchemdisplay
-
-	lingstingdisplay = new(null, ling_hud)
-	ling_hud.infodisplay += lingstingdisplay
-
-	ling_hud.show_hud(ling_hud.hud_version)
+	ling_hud.add_screen_object(/atom/movable/screen/ling/chems, HUD_CHANGELING_CHEMS, HUD_GROUP_INFO)
+	ling_hud.add_screen_object(/atom/movable/screen/ling/sting, HUD_CHANGELING_STING, HUD_GROUP_INFO, update_screen = TRUE)
 
 /datum/antagonist/changeling/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/living_mob = mob_override || owner.current
@@ -206,13 +187,15 @@
 	REMOVE_TRAIT(living_mob, TRAIT_FAKE_SOULLESS, CHANGELING_TRAIT)
 	REMOVE_TRAIT(living_mob, TRAIT_BRAINLESS_CARBON, CHANGELING_TRAIT)
 
-	if(living_mob.hud_used)
-		var/datum/hud/hud_used = living_mob.hud_used
+	if(!living_mob.hud_used)
+		return
 
-		hud_used.infodisplay -= lingchemdisplay
-		hud_used.infodisplay -= lingstingdisplay
-		QDEL_NULL(lingchemdisplay)
-		QDEL_NULL(lingstingdisplay)
+	var/datum/hud/hud_used = living_mob.hud_used
+	QDEL_NULL(hud_used.screen_objects[HUD_CHANGELING_CHEMS])
+	QDEL_NULL(hud_used.screen_objects[HUD_CHANGELING_STING])
+	if (!QDELETED(hud_used))
+		hud_used.show_hud(hud_used.hud_version)
+
 
 	// The old body's brain still remains a decoy, I guess?
 
@@ -331,7 +314,9 @@
 	var/cap_to = isnum(override_cap) ? override_cap : total_chem_storage
 	chem_charges = clamp(chem_charges + amount, 0, cap_to)
 
-	lingchemdisplay?.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
+	var/atom/movable/screen/ling/chems/chems = owner.current?.hud_used?.screen_objects[HUD_CHANGELING_CHEMS]
+	if (chems)
+		chems.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
 
 /*
  * Remove changeling powers from the current Changeling's purchased_powers list.
