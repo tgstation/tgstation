@@ -174,22 +174,16 @@
 	M.Move(dest)
 
 	if(entersparks)
-		var/datum/effect_system/spark_spread/s = new
-		s.set_up(4, 1, src)
-		s.start()
+		do_sparks(4, TRUE, src)
+
 	if(exitsparks)
-		var/datum/effect_system/spark_spread/s = new
-		s.set_up(4, 1, dest)
-		s.start()
+		do_sparks(4, TRUE, dest)
 
 	if(entersmoke)
-		var/datum/effect_system/fluid_spread/smoke/s = new
-		s.set_up(4, holder = src, location = src)
-		s.start()
+		do_smoke(4, src, src)
+
 	if(exitsmoke)
-		var/datum/effect_system/fluid_spread/smoke/s = new
-		s.set_up(4, holder = src, location = dest)
-		s.start()
+		do_smoke(4, dest, dest)
 
 	uses--
 	if(uses == 0)

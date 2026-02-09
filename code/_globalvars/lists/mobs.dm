@@ -124,7 +124,7 @@ GLOBAL_LIST_INIT(construct_radial_images, list(
 
 /proc/init_emote_list()
 	. = list()
-	for(var/path in subtypesof(/datum/emote))
+	for(var/path in valid_subtypesof(/datum/emote))
 		var/datum/emote/E = new path()
 		if(E.key)
 			if(!.[E.key])

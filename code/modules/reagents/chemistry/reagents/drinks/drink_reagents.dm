@@ -103,6 +103,7 @@
 	taste_description = "sourness"
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/lemonjuice
 
 /datum/reagent/consumable/banana
 	name = "Banana Juice"

@@ -68,13 +68,10 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 /datum/controller/subsystem/processing/quirks/proc/SetupQuirks()
 	// Sort by Positive, Negative, Neutral; and then by name
-	var/list/quirk_list = sort_list(subtypesof(/datum/quirk), GLOBAL_PROC_REF(cmp_quirk_asc))
+	var/list/quirk_list = sort_list(valid_subtypesof(/datum/quirk), GLOBAL_PROC_REF(cmp_quirk_asc))
 
 	for(var/type in quirk_list)
 		var/datum/quirk/quirk_type = type
-
-		if(initial(quirk_type.abstract_parent_type) == type)
-			continue
 
 		quirk_prototypes[type] = new type
 		quirks[initial(quirk_type.name)] = quirk_type
