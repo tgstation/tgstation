@@ -21,7 +21,7 @@
 	closingLayer = CLOSED_FIREDOOR_LAYER
 	armor_type = /datum/armor/door_firedoor
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
-
+	can_open_with_hands = FALSE
 	COOLDOWN_DECLARE(activation_cooldown)
 
 	///X offset for the overlay lights, so that they line up with the thin border firelocks
@@ -471,9 +471,6 @@
 	if(!density)
 		return ..()
 	return FALSE
-
-/obj/machinery/door/firedoor/bumpopen(mob/living/user)
-	return FALSE //No bumping to open, not even in mechs
 
 /obj/machinery/door/firedoor/proc/on_power_loss()
 	SIGNAL_HANDLER

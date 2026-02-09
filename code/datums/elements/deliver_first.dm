@@ -97,8 +97,7 @@
 ///called to remove the element in a flavorful way, either from delivery or from emagging/breaking open the crate
 /datum/element/deliver_first/proc/remove_lock(obj/structure/closet/target)
 	target.visible_message(span_notice("[target]'s delivery lock self destructs, spewing sparks from the mechanism!"))
-	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
-	spark_system.set_up(4, 0, target.loc)
+	var/datum/effect_system/basic/spark_spread/spark_system = new(target.loc, 4, 0)
 	spark_system.start()
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	target.RemoveElement(/datum/element/deliver_first, goal_area_type, payment)
