@@ -39,7 +39,6 @@ export const ChemFilterPane = (props: Props) => {
       }
     >
       {list.map((filter) => (
-        <>
           <Button
             key={filter}
             fluid
