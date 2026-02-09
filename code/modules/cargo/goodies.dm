@@ -436,9 +436,9 @@
 	contains = list(/obj/item/key/golfcart)
 
 /datum/supply_pack/goody/tier_two_parts
-	name = "Advanced Machine Parts (Tier 2)"
+	name = "Advanced Machine Parts (Tier 3)"
 	desc = "Top of the line consumer stock parts, offered by Nanotrasen's in-house internal requision network."
-	cost = PAYCHECK_CREW * 8
+	cost = PAYCHECK_CREW * 15
 	contains = list(/obj/item/storage/box/stockparts/advanced)
 
 /datum/supply_pack/goody/offbrand_powerdrill
