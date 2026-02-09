@@ -20,21 +20,26 @@
 /datum/stacked_reagent_effects/organ_damage/liver_damage
 	requirements = list(/datum/reagent/medicine = 4)
 	organ_slot = ORGAN_SLOT_LIVER
-	scale = 0.5
+	scale = 0.6
 
 /datum/stacked_reagent_effects/organ_damage/stomach_damage
 	requirements = list(/datum/reagent/medicine = 5)
 	organ_slot = ORGAN_SLOT_STOMACH
-	scale = 0.4
+	scale = 0.5
 
 /datum/stacked_reagent_effects/organ_damage/lung_damage
 	requirements = list(/datum/reagent/medicine = 6)
 	organ_slot = ORGAN_SLOT_LUNGS
-	scale = 0.3
+	scale = 0.4
 
-/datum/stacked_reagent_effects/organ_damage/lung_damage
+/datum/stacked_reagent_effects/organ_damage/heart_damage
 	requirements = list(/datum/reagent/medicine = 7)
 	organ_slot = ORGAN_SLOT_HEART
+	scale = 0.3
+
+/datum/stacked_reagent_effects/organ_damage/brain_damage
+	requirements = list(/datum/reagent/medicine = 8)
+	organ_slot = ORGAN_SLOT_BRAIN
 	scale = 0.2
 
 #undef MAX_ORGAN_DAMAGE
