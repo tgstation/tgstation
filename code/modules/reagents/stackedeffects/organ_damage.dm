@@ -10,12 +10,14 @@
 	VAR_PROTECTED/scale
 
 /datum/stacked_reagent_effects/organ_damage/apply(list/reagents_metabolized, mob/living/carbon/owner, seconds_per_tick)
+	. = 0
+
 	var/obj/item/organ/organ = owner.get_organ_slot(organ_slot)
 	if(organ)
 		var/damage = 0
 		for(var/datum/reagent/medicine/med as anything in reagents_metabolized)
 			damage += reagents_metabolized[med]
-		organ.apply_organ_damage(min(scale * damage * seconds_per_tick, MAX_ORGAN_DAMAGE))
+		return abs(organ.apply_organ_damage(min(scale * damage * seconds_per_tick, MAX_ORGAN_DAMAGE)))
 
 /datum/stacked_reagent_effects/organ_damage/liver_damage
 	requirements = list(/datum/reagent/medicine = 4)

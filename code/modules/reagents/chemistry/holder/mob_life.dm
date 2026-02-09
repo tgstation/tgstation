@@ -71,10 +71,7 @@
 		//apply side effects based on reagents metabolized
 		if(reagents_metabolized.len)
 			for(var/datum/stacked_reagent_effects/effect as anything in GLOB.stacked_reagent_effects)
-				var/update = effect.check_and_apply(reagents_metabolized, owner, seconds_per_tick)
-				if(update)
-					need_mob_update += update
-					break
+				need_mob_update += effect.check_and_apply(reagents_metabolized, owner, seconds_per_tick)
 
 		//some of the metabolized reagents had effects on the mob that requires some updates.
 		if(need_mob_update)

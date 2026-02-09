@@ -14,6 +14,7 @@
 */
 /datum/stacked_reagent_effects/proc/check_and_apply(list/reagents_metabolized, mob/living/carbon/owner, seconds_per_tick)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	. = 0
 
 	var/list/datum/reagent/requirements_needed = requirements
 	for(var/datum/reagent/test as anything in reagents_metabolized)
@@ -27,7 +28,7 @@
 				break
 
 	if(!requirements_needed.len)
-		apply(reagents_metabolized, owner, seconds_per_tick)
+		return apply(reagents_metabolized, owner, seconds_per_tick)
 
 /**
  * Apply a list of side effects to an mob once they have metabolized the requirments
@@ -36,8 +37,9 @@
  * * list/reagents_metabolized - a map of reagent type path -> metabolization_ratio of all reagents
  * * mob/living/carbon/owner - the mob to apply the side effects to
  * * seconds_per_tick - passed from /datum/reagents/proc/metabolize_reagent()
+ * Returns a positive value if the mobs health needs to be updated
 */
 /datum/stacked_reagent_effects/proc/apply(list/reagents_metabolized, mob/living/carbon/owner, seconds_per_tick)
 	PROTECTED_PROC(TRUE)
 
-	return FALSE
+	return 0
