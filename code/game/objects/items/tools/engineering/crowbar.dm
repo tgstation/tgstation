@@ -339,29 +339,33 @@
 	limit_jaws_access = FALSE
 	radio_alert = FALSE
 
-#define JAWS_INTEGRITY 30
+#define JAWS_INTEGRITY 150
 
 /obj/item/crowbar/power/offbrand
 	name = "hand-e clampz"
 	desc = "These offbrand jaws of 'life' look like they've lived a short but incredibly hard one. You risk pinching your hands just by holding them."
 	icon_state = "jaws_offbrand"
 	max_integrity = JAWS_INTEGRITY
-	force = FALSE //No buying all access.
+	force_opens = FALSE //No buying all access.
 
 /obj/item/crowbar/power/offbrand/tool_use_check(mob/living/user, amount, heat_required)
 	. = ..()
-	if(prob(20))
+	if(prob(10))
 		do_sparks(1, FALSE, src)
-	if(prob(5))
-		to_chat(user, "[span_warning("[src] slips and pinches you!")]")
-		user.adjust_brute_loss(amount = 1, forced = TRUE)
-		take_damage(1)
+		return TRUE
 
-/obj/item/crowbar/power/offbrand/atom_break(damage_flag)
+/obj/item/crowbar/power/offbrand/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks)
 	. = ..()
-	new /obj/effect/decal/cleanable/generic(drop_location())
-	visible_message(span_danger("[src] shreds itself apart!"))
-	qdel(src)
+	if(!QDELETED(src))
+		take_damage(1) //Tool degredation.
+	return TRUE
+
+/obj/item/crowbar/power/offbrand/atom_destruction(damage_flag)
+	. = ..()
+	var/turf/destination = get_turf(src)
+	new /obj/effect/decal/cleanable/generic(destination)
+	destination.visible_message(span_danger("[src] shreds itself apart!"))
+	return ..()
 
 #undef JAWS_INTEGRITY
 

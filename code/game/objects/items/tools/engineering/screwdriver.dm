@@ -153,7 +153,7 @@
 	playsound(loc, 'sound/items/tools/drill_use.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
-#define DRILL_INTEGRITY 30
+#define DRILL_INTEGRITY 150
 
 /obj/item/screwdriver/power/offbrand
 	name = "hand-e drill"
@@ -165,16 +165,19 @@
 	. = ..()
 	if(prob(20))
 		do_sparks(1, FALSE, src)
-	if(prob(5))
-		to_chat(user, "[span_warning("[src] overheats and burns you!")]")
-		user.adjust_fire_loss(amount = 1, forced = TRUE)
-		take_damage(1)
+		return TRUE
 
-/obj/item/screwdriver/power/offbrand/atom_break(damage_flag)
+/obj/item/screwdriver/power/offbrand/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks)
 	. = ..()
-	new /obj/effect/decal/cleanable/molten_object(drop_location())
-	visible_message(span_danger("[src] melts into molten plastic!"))
-	qdel(src)
+	if(!QDELETED(src))
+		take_damage(1)
+	return TRUE
+
+/obj/item/screwdriver/power/offbrand/atom_destruction(damage_flag)
+	var/turf/destination = get_turf(src)
+	new /obj/effect/decal/cleanable/molten_object(destination)
+	destination.visible_message(span_danger("[src] melts into molten plastic!"))
+	return ..()
 
 #undef DRILL_INTEGRITY
 
