@@ -266,7 +266,7 @@
 		return
 	var/turf/T = get_turf(src)
 	for(M in ohearers(7, T))
-		if(M.can_hear())
+		if(!HAS_TRAIT(M, TRAIT_DEAF))
 			M.emote("flip")
 	COOLDOWN_START(src, golden_horn_cooldown, 1 SECONDS)
 

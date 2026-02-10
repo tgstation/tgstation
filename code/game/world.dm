@@ -29,7 +29,7 @@ GLOBAL_VAR(restart_counter)
  *   - config.Load()
  *   - world.InitTgs() =>
  *     - TgsNew() *may sleep
- *     - GLOB.rev_data.load_tgs_info()
+ *     - GLOB.rev_data.load_tgs_info() *may sleep
  *   - world.ConfigLoaded() =>
  *     - SSdbcore.InitializeRound()
  *     - world.SetupLogs()
