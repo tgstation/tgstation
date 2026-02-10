@@ -3,21 +3,22 @@
 	desc = "What mysteries could this hold? Maybe Research & Development could find out."
 	icon = 'icons/obj/devices/artefacts.dmi'
 	icon_state = "debug_artefact"
-	//The name this artefact will have when it's activated.
+	/// The name this artefact will have when it's activated.
 	var/real_name = "artefact"
-	//Has this artefact been activated?
+	/// Has this artefact been activated?
 	var/activated = FALSE
-	//What effect this artefact has when used. Randomly determined when activated.
+	/// What effect this artefact has when used. Randomly determined when activated.
 	var/hidden_power
-	//Minimum possible cooldown.
+	/// Minimum possible cooldown.
 	var/min_cooldown = 6 SECONDS
-	//Max possible cooldown.
+	/// Max possible cooldown.
 	var/max_cooldown = 30 SECONDS
-	//Cooldown length. Randomly determined at activation if it isn't determined here.
+	/// Cooldown length. Randomly determined at activation if it isn't determined here.
 	var/cooldown_timer
-	COOLDOWN_DECLARE(cooldown)
-	//What visual theme this artefact has. Current possible choices: "prototype", "necrotech"
+	/// What visual theme this artefact has. Current possible choices: "prototype", "necrotech"
 	var/artifact_theme = "prototype"
+
+	COOLDOWN_DECLARE(cooldown)
 
 /obj/item/relic/Initialize(mapload)
 	. = ..()
@@ -303,7 +304,7 @@
 	card_id.details_colors = list(ready_random_color(), ready_random_color(), ready_random_color())
 	card_id.item_flags |= DROPDEL
 
-	var/datum/id_trim/random_trim = pick(subtypesof(/datum/id_trim)) // this can pick silly things
+	var/datum/id_trim/random_trim = pick(subtypesof(/datum/id_trim))
 	random_trim = new random_trim()
 	if(random_trim.trim_state && random_trim.assignment)
 		card_id.scribbled_trim = replacetext(random_trim.trim_state, "trim_", "cardboard_")
@@ -324,11 +325,11 @@
 	new_costume.item_flags |= DROPDEL
 	return new_costume
 
-//Admin Warning proc for relics
+/// Alerts admins on usage of dagnerous relics
 /obj/item/relic/proc/warn_admins(mob/user, relic_type, priority = 1)
 	var/turf/location = get_turf(src)
 	var/log_msg = "[relic_type] relic used by [key_name(user)] in [AREACOORD(location)]"
-	if(priority) //For truly dangerous relics that may need an admin's attention. BWOINK!
+	if(priority)
 		message_admins("[relic_type] relic activated by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(location)]")
 	log_game(log_msg)
 	investigate_log(log_msg, "experimentor")

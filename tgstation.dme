@@ -6198,6 +6198,7 @@
 #include "code\modules\research\designs\autolathe\service_designs.dm"
 #include "code\modules\research\experimentor\experimentor.dm"
 #include "code\modules\research\experimentor\experiments.dm"
+#include "code\modules\research\experimentor\wires.dm"
 #include "code\modules\research\machinery\_production.dm"
 #include "code\modules\research\machinery\circuit_imprinter.dm"
 #include "code\modules\research\machinery\departmental_circuit_imprinter.dm"

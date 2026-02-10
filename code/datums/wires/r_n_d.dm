@@ -41,16 +41,3 @@
 			R.hacked = !mend
 		if(WIRE_DISABLE)
 			R.disabled = !mend
-
-/datum/wires/rnd/experimentor
-	holder_type = /obj/machinery/rnd/experimentor
-	proper_name = "Experimentor"
-	randomize = TRUE
-
-/datum/wires/rnd/New(atom/holder)
-	wires = list(
-		WIRE_HACK
-	)
-	add_duds(5)
-	..()
-
