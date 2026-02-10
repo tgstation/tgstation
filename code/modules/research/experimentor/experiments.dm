@@ -17,13 +17,13 @@
 #define MSG_TYPE_WARNING "warning"
 #define MSG_TYPE_DANGER "danger"
 
-/datum/experiment_handler
+/datum/experimentor_result_handler
 	var/start_message_template
 	var/critical_prob
 	var/critical_message_template
 	var/start_message_type = MSG_TYPE_NOTICE
 
-/datum/experiment_handler/proc/execute(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/proc/execute(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/final_message = replacetext(start_message_template, "%ITEM%", exp_on)
 	machine.show_start_message(final_message, start_message_type)
 
@@ -34,12 +34,12 @@
 
 	handle_malfunctions(machine, exp_on)
 
-/datum/experiment_handler/proc/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/proc/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	if(critical_message_template)
 		var/final_critical_message = replacetext(critical_message_template, "%ITEM%", exp_on)
 		machine.visible_message(span_notice(final_critical_message))
 
-/datum/experiment_handler/proc/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/proc/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	return
 
 /obj/machinery/rnd/experimentor/proc/show_start_message(message, type)
@@ -54,17 +54,17 @@
 			visible_message(span_notice("[src] [message]"))
 
 /// Pokes the object
-/datum/experiment_handler/poke
+/datum/experimentor_result_handler/poke
 	start_message_template = "prods at %ITEM% with mechanical arms."
 	critical_prob = EFFECT_PROB_LOW
 	critical_message_template = "%ITEM% is gripped in just the right way, enhancing its focus."
 
-/datum/experiment_handler/poke/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/poke/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	..()
 	machine.critical_malfunction_counter++
 	machine.RefreshParts()
 
-/datum/experiment_handler/poke/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/poke/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/malf_chance = machine.get_malfunction_chance()
 
 	if(prob(EFFECT_PROB_VERYLOW * malf_chance))
@@ -89,18 +89,18 @@
 				throwing.throw_at(target, 10, 1)
 
 /// Infuses it with radiation
-/datum/experiment_handler/irradiate
+/datum/experimentor_result_handler/irradiate
 	start_message_template = "reflects radioactive rays at %ITEM%!"
 	start_message_type = MSG_TYPE_DANGER
 	critical_prob = EFFECT_PROB_VERYLOW
 	critical_message_template = "%ITEM% has activated an unknown subroutine!"
 
-/datum/experiment_handler/irradiate/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/irradiate/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	..()
 	machine.investigate_log("Experimentor has made a clone of [exp_on]", INVESTIGATE_EXPERIMENTOR)
 	machine.item_eject(TRUE)
 
-/datum/experiment_handler/irradiate/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/irradiate/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/malf_chance = machine.get_malfunction_chance()
 
 	if(prob(EFFECT_PROB_VERYLOW * malf_chance))
@@ -132,17 +132,17 @@
 		machine.item_eject()
 
 /// Fills the chamber with gas
-/datum/experiment_handler/gas
+/datum/experimentor_result_handler/gas
 	start_message_template = "fills its chamber with gas, %ITEM% included."
 	start_message_type = MSG_TYPE_WARNING
 	critical_prob = EFFECT_PROB_LOW
 	critical_message_template = "%ITEM% achieves the perfect mix!"
 
-/datum/experiment_handler/gas/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/gas/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	..()
 	new /obj/item/stack/sheet/mineral/plasma(get_turf(pick(oview(1, machine))))
 
-/datum/experiment_handler/gas/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/gas/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/malf_chance = machine.get_malfunction_chance()
 	var/chosenchem
 
@@ -187,13 +187,13 @@
 		QDEL_NULL(machine.loaded_item)
 
 /// Heats the object
-/datum/experiment_handler/heat
+/datum/experimentor_result_handler/heat
 	start_message_template = "raises %ITEM%'s temperature."
 	start_message_type = MSG_TYPE_NOTICE
 	critical_prob = EFFECT_PROB_LOW
 	critical_message_template = "%ITEM%'s emergency coolant system gives off a small ding!"
 
-/datum/experiment_handler/heat/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/heat/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	..()
 	playsound(machine, 'sound/machines/ding.ogg', 50, TRUE)
 
@@ -209,7 +209,7 @@
 	C.desc = "It has a large hazard symbol printed on the side in fading ink."
 	machine.investigate_log("Experimentor has made a cup of [chosenchem] coffee.", INVESTIGATE_EXPERIMENTOR)
 
-/datum/experiment_handler/heat/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/heat/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/malf_chance = machine.get_malfunction_chance()
 
 	if(prob(EFFECT_PROB_VERYLOW * malf_chance))
@@ -249,13 +249,13 @@
 		machine.item_eject()
 
 /// Cools the object
-/datum/experiment_handler/cold
+/datum/experimentor_result_handler/cold
 	start_message_template = "lowers %ITEM%'s temperature."
 	start_message_type = MSG_TYPE_NOTICE
 	critical_prob = EFFECT_PROB_LOW
 	critical_message_template = "%ITEM%'s emergency coolant system gives off a small ding!"
 
-/datum/experiment_handler/cold/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/cold/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	..()
 	playsound(machine, 'sound/machines/ding.ogg', 50, TRUE)
 
@@ -271,7 +271,7 @@
 	C.desc = "It has a large hazard symbol printed on the side in fading ink."
 	machine.investigate_log("Experimentor has made a cup of [chosenchem] coffee.", INVESTIGATE_EXPERIMENTOR)
 
-/datum/experiment_handler/cold/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/cold/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/malf_chance = machine.get_malfunction_chance()
 
 	if(prob(EFFECT_PROB_VERYLOW * malf_chance))
@@ -297,17 +297,17 @@
 		machine.item_eject()
 
 /// Crushes the object
-/datum/experiment_handler/obliterate
+/datum/experimentor_result_handler/obliterate
 	start_message_template = "activates the crushing mechanism, %ITEM% is destroyed!"
 	start_message_type = MSG_TYPE_WARNING
 	critical_prob = EFFECT_PROB_LOW
 	critical_message_template = "%ITEM%'s crushing mechanism slowly and smoothly descends, flattening the %ITEM%!"
 
-/datum/experiment_handler/obliterate/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/obliterate/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	..()
 	new /obj/item/stack/sheet/plasteel(get_turf(pick(oview(1, machine))))
 
-/datum/experiment_handler/obliterate/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/obliterate/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/malf_chance = machine.get_malfunction_chance()
 
 	if(prob(EFFECT_PROB_VERYLOW * malf_chance))
@@ -336,20 +336,20 @@
 	QDEL_NULL(machine.loaded_item)
 
 /// Experiment failure
-/datum/experiment_handler/fail
+/datum/experimentor_result_handler/fail
 	start_message_type = MSG_TYPE_WARNING
 
-/datum/experiment_handler/fail/execute(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/fail/execute(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/a = pick("rumbles", "shakes", "vibrates", "shudders", "honks")
 	var/b = pick("crushes", "spins", "viscerates", "smashes", "insults")
 	machine.visible_message(span_warning("[exp_on] [a], and [b], the experiment was a failure."))
 
 /// Discovers relic properties
-/datum/experiment_handler/discover
+/datum/experimentor_result_handler/discover
 	start_message_template = "scans the %ITEM%, revealing its true nature!"
 	start_message_type = MSG_TYPE_NOTICE
 
-/datum/experiment_handler/discover/execute(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/discover/execute(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/final_message = replacetext(start_message_template, "%ITEM%", exp_on)
 	machine.show_start_message(final_message, start_message_type)
 	playsound(machine, 'sound/effects/supermatter.ogg', 50, 3, -1)
