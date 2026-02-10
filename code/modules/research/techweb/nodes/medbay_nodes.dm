@@ -13,6 +13,7 @@
 		"chem_pack",
 		"circular_saw",
 		"defibmountdefault",
+		"defibrillator",
 		"dropper",
 		"hemostat",
 		"jerrycan",
