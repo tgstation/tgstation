@@ -6,7 +6,7 @@
 	abstract_type = /datum/quirk/item_quirk/addict
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	no_process_traits = list(TRAIT_LIVERLESS_METABOLISM)
-	var/forget_prob = 20 // Probability that you forget to bring an initial fix with you to the station
+	var/forget_prob = 0 // Probability that you forget to bring an initial fix with you to the station
 	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/reagent_instance //! actual instanced version of the reagent
 	var/where_drug //! Where the drug spawned
@@ -87,7 +87,7 @@
 
 /datum/quirk/item_quirk/addict/junkie
 	name = "Junkie"
-	desc = "You can't get enough of hard drugs. Don't forget to bring your fix!"
+	desc = "You can't get enough of hard drugs."
 	icon = FA_ICON_PILLS
 	value = -6
 	gain_text = span_danger("You suddenly feel the craving for drugs.")
@@ -117,6 +117,7 @@
 	desc = "Sometimes you just really want a smoke. Probably not great for your lungs. Careful not to forget your pack at home!"
 	icon = FA_ICON_SMOKING
 	value = -4
+	forget_prob = 20
 	gain_text = span_danger("You could really go for a smoke right about now.")
 	lose_text = span_notice("You don't feel nearly as hooked to nicotine anymore.")
 	medical_record_text = "Patient is a current smoker."
@@ -172,7 +173,7 @@
 
 /datum/quirk/item_quirk/addict/alcoholic
 	name = "Alcoholic"
-	desc = "You just can't live without alcohol. Your liver is a machine that turns ethanol into acetaldehyde. Don't forget your flask!"
+	desc = "You just can't live without alcohol. Your liver is a machine that turns ethanol into acetaldehyde."
 	icon = FA_ICON_WINE_GLASS
 	value = -4
 	gain_text = span_danger("You really need a drink.")
