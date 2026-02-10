@@ -37,7 +37,7 @@
 	/// Reactions that can occur
 	var/list/item_reactions = list()
 	/// Items that we can get by transforming
-	var/list/valid_items = list()
+	var/static/list/valid_items = list()
 	/// Items that will cause critical reactions
 	var/list/critical_items_typecache
 	/// Items that the machine shouldn't interact with
