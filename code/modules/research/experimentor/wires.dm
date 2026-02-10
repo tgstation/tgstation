@@ -17,7 +17,6 @@
 
 /datum/wires/rnd/experimentor
 	holder_type = /obj/machinery/rnd/experimentor
-	wire_count = 8
 	proper_name = "E.X.P.E.R.I-MENTOR"
 
 /datum/wires/rnd/New(atom/holder)

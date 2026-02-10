@@ -155,7 +155,7 @@
 			/datum/reagent/drug/mushroomhallucinogen,
 			/datum/reagent/drug/space_drugs,
 			/datum/reagent/consumable/ethanol,
-			/datum/reagent/consumable/ethanol/beepsky_smash
+			/datum/reagent/consumable/ethanol/beepsky_smash,
 		)
 		do_chem_smoke(0, machine, machine.loc, chosenchem, 50)
 		machine.investigate_log("Experimentor has released [chosenchem] smoke.", INVESTIGATE_EXPERIMENTOR)
@@ -167,7 +167,7 @@
 		chosenchem = pick(
 			/datum/reagent/mutationtoxin/classic,
 			/datum/reagent/cyborg_mutation_nanomachines,
-			/datum/reagent/toxin/acid
+			/datum/reagent/toxin/acid,
 		)
 		do_chem_smoke(0, machine, machine.loc, chosenchem, 50)
 		playsound(machine, 'sound/effects/smoke.ogg', 50, TRUE, -3)
@@ -200,7 +200,7 @@
 	var/chosenchem = pick(
 		/datum/reagent/toxin/plasma,
 		/datum/reagent/consumable/capsaicin,
-		/datum/reagent/consumable/ethanol
+		/datum/reagent/consumable/ethanol,
 	)
 	C.reagents.remove_all(25)
 	C.reagents.add_reagent(chosenchem, 50)
@@ -262,7 +262,7 @@
 	var/chosenchem = pick(
 		/datum/reagent/uranium,
 		/datum/reagent/consumable/frostoil,
-		/datum/reagent/medicine/ephedrine
+		/datum/reagent/medicine/ephedrine,
 	)
 	C.reagents.remove_all(25)
 	C.reagents.add_reagent(chosenchem, 50)
@@ -357,9 +357,7 @@
 	if(loaded_artifact)
 		loaded_artifact.reveal()
 		machine.investigate_log("Experimentor has revealed a relic with [span_danger("[loaded_artifact.hidden_power]")] effect.", INVESTIGATE_EXPERIMENTOR)
-
 	machine.item_eject()
-
 
 #undef EFFECT_PROB_VERYLOW
 #undef EFFECT_PROB_LOW
