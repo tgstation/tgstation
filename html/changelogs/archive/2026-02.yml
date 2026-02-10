@@ -116,3 +116,6 @@
   - map: Catwalks vault is now restricted access
   vinylspiders:
   - code_imp: sinks can be mounted to floors
+2026-02-10:
+  Melbert:
+  - qol: You are always notified if your paycheck amount changes

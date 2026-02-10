@@ -1,0 +1,4 @@
+author: "Maximal08"
+delete-after: True
+changes:
+  - map: "Adds missing wires and pipes to meta"
