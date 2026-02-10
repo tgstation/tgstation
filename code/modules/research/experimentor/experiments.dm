@@ -105,6 +105,7 @@
 
 	if(prob(EFFECT_PROB_VERYLOW * malf_chance))
 		machine.visible_message(span_danger("[machine] malfunctions, melting [exp_on] and leaking radiation!"))
+		playsound(machine, 'sound/effects/supermatter.ogg', 50, TRUE, -3)
 		radiation_pulse(machine, max_range = 6, threshold = 0.3)
 		QDEL_NULL(machine.loaded_item)
 

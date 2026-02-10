@@ -35,9 +35,9 @@
 	/// List of experiment handler datums
 	var/list/experiment_handlers = list()
 	/// Reactions that can occur
-	var/list/item_reactions
+	var/list/item_reactions = list()
 	/// Items that we can get by transforming
-	var/list/valid_items
+	var/list/valid_items = list()
 	/// Items that will cause critical reactions
 	var/list/critical_items_typecache
 	/// Items that the machine shouldn't interact with
@@ -262,7 +262,6 @@
 			else
 				new /mob/living/basic/pet/dog/corgi(loc)
 				investigate_log("Experimentor has spawned a new corgi.", INVESTIGATE_EXPERIMENTOR)
-			QDEL_NULL(src)
 		if(36 to 50)
 			visible_message(span_warning("Experimentor draws the life essence of those nearby!"))
 			for(var/mob/living/m in view(4,src))
@@ -281,7 +280,6 @@
 			else
 				new /mob/living/basic/pet/cat(loc)
 				investigate_log("Experimentor failed to steal Runtime the cat and instead spawned a new cat.", INVESTIGATE_EXPERIMENTOR)
-			QDEL_NULL(src)
 		if(76 to 98)
 			visible_message(span_warning("[src] begins to smoke and hiss, shaking violently!"))
 			use_energy(500 KILO JOULES)
