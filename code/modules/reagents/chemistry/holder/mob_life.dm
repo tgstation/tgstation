@@ -68,7 +68,6 @@
 
 	if(owner && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		owner.updatehealth()
-	update_total()
 
 #undef HAS_SILENT_TOXIN
 #undef HAS_NO_TOXIN
@@ -193,4 +192,3 @@
 		need_mob_update += metabolize_reagent(owner, reagent, seconds_per_tick, can_overdose = TRUE)
 	if(owner && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		owner.updatehealth()
-	update_total()
