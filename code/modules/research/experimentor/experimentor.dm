@@ -49,14 +49,14 @@
 	. = ..()
 	set_wires(new /datum/wires/rnd/experimentor(src))
 
-	experiment_handlers[SCANTYPE_POKE] = new /datum/experiment_handler/poke()
-	experiment_handlers[SCANTYPE_IRRADIATE] = new /datum/experiment_handler/irradiate()
-	experiment_handlers[SCANTYPE_GAS] = new /datum/experiment_handler/gas()
-	experiment_handlers[SCANTYPE_HEAT] = new /datum/experiment_handler/heat()
-	experiment_handlers[SCANTYPE_COLD] = new /datum/experiment_handler/cold()
-	experiment_handlers[SCANTYPE_OBLITERATE] = new /datum/experiment_handler/obliterate()
-	experiment_handlers[SCANTYPE_DISCOVER] = new /datum/experiment_handler/discover()
-	experiment_handlers[FAIL] = new /datum/experiment_handler/fail()
+	experiment_handlers["[SCANTYPE_POKE]"] = new /datum/experiment_handler/poke()
+	experiment_handlers["[SCANTYPE_IRRADIATE]"] = new /datum/experiment_handler/irradiate()
+	experiment_handlers["[SCANTYPE_GAS]"] = new /datum/experiment_handler/gas()
+	experiment_handlers["[SCANTYPE_HEAT]"] = new /datum/experiment_handler/heat()
+	experiment_handlers["[SCANTYPE_COLD]"] = new /datum/experiment_handler/cold()
+	experiment_handlers["[SCANTYPE_OBLITERATE]"] = new /datum/experiment_handler/obliterate()
+	experiment_handlers["[SCANTYPE_DISCOVER]"] = new /datum/experiment_handler/discover()
+	experiment_handlers["[FAIL]"] = new /datum/experiment_handler/fail()
 
 	tracked_ian_ref = WEAKREF(locate(/mob/living/basic/pet/dog/corgi/ian) in GLOB.mob_living_list)
 	tracked_runtime_ref = WEAKREF(locate(/mob/living/basic/pet/cat/runtime) in GLOB.mob_living_list)
@@ -100,7 +100,7 @@
 		return
 
 	icon_state = "[base_icon_state]_wloop"
-	var/datum/experiment_handler/handler = experiment_handlers[experiment_type]
+	var/datum/experiment_handler/handler = experiment_handlers["[experiment_type]"]
 	if(handler)
 		handler.execute(src, loaded_item)
 	else
@@ -121,7 +121,7 @@
 	var/b = pick("crushes", "spins", "crumbles", "smashes", "squeezes")
 	visible_message(span_warning("[loaded_item] [a] and [b] before coming to a stop. It seems the experiment was a failure."))
 
-/obj/machinery/rnd/experimentor/proc/try_generate_reaction_for_item(var/obj/item/some_item)
+/obj/machinery/rnd/experimentor/proc/try_generate_reaction_for_item(obj/item/some_item)
 	if(is_type_in_typecache(some_item.type, banned_typecache) || item_reactions["[some_item.type]"])
 		return
 
