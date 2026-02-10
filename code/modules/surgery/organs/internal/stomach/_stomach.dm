@@ -468,7 +468,7 @@
 	. = ..()
 	// So after a while, or a bunch of stomach meds, even a cut stomach can recover
 	if (. > 0)
-		cut_open_damage = max(0, cut_open_damage + .)
+		cut_open_damage = max(0, cut_open_damage - .)
 
 /obj/item/organ/stomach/examine(mob/user)
 	. = ..()

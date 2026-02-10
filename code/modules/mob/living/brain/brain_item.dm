@@ -357,7 +357,7 @@
 	if(isnull(bodypart_owner)) // no need to color it if it's in someone's noggin
 		update_brain_color()
 	if(delta_dam < 0 && damage > BRAIN_DAMAGE_MILD)
-		roll_for_brain_trauma(delta_dam)
+		roll_for_brain_trauma(-delta_dam) // parent call returns negative numbers if take damage and positive if we heal
 
 /// Rolls a random chance to gain a brain trauma based on damage taken and current damage level
 /obj/item/organ/brain/proc/roll_for_brain_trauma(delta_dam)
