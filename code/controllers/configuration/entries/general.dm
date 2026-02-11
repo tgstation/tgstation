@@ -185,11 +185,6 @@
 /// allow votes to change map
 /datum/config_entry/flag/allow_vote_map
 
-/// the number of times we allow players to rock the vote
-/datum/config_entry/number/max_rocking_votes
-	default = 1
-	min_val = 1
-
 /// minimum time between voting sessions (deciseconds, 10 minute default)
 /datum/config_entry/number/vote_delay
 	default = 10 MINUTES
