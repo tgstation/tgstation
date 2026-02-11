@@ -189,15 +189,13 @@ Possible to do for anyone motivated enough:
 	for(var/datum/holocall/holocall_to_disconnect as anything in holo_calls)
 		holocall_to_disconnect.ConnectionFailure(src)
 
-	for (var/I in masters)
-		clear_holo(I)
-
 	if(replay_mode)
 		replay_stop()
 	if(record_mode)
 		record_stop()
 
-	QDEL_NULL(disk)
+	for (var/I in masters)
+		clear_holo(I)
 
 	holopads -= src
 	return ..()
