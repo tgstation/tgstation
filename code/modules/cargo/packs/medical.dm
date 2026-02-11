@@ -78,7 +78,7 @@
 /datum/supply_pack/medical/compact_defib
 	name = "Compact Defibrillator Crate"
 	desc = "Contains a compact defibrillator, small enough to attach to your waist, for bringing the recently deceased back to life."
-	cost = CARGO_CRATE_VALUE * 12
+	cost = CARGO_CRATE_VALUE * 8
 	contains = list(/obj/item/defibrillator/compact/loaded = 1)
 	crate_name = "compact defibrillator crate"
 	crate_type = /obj/structure/closet/crate/medical
