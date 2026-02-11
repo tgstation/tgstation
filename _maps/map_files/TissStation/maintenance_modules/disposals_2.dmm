@@ -1,0 +1,455 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"d" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"e" = (
+/obj/machinery/conveyor{
+	id = "cargolower";
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"f" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/grime,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"g" = (
+/obj/machinery/conveyor{
+	id = "cargolower";
+	dir = 9
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"h" = (
+/obj/machinery/disposal/delivery_chute,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/structure/window/spawner/directional/north{
+	pixel_y = 4
+	},
+/obj/structure/window/spawner/directional/west{
+	pixel_x = -4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/tracking_beacon,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"k" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"m" = (
+/obj/machinery/door/poddoor/massdriver_trash,
+/obj/machinery/atmos_shield_gen/active{
+	dir = 1
+	},
+/obj/machinery/atmos_shield_gen/active,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"n" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"o" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"p" = (
+/obj/machinery/light/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"q" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"r" = (
+/obj/machinery/mineral/stacking_machine{
+	input_dir = 2
+	},
+/obj/structure/window/spawner/directional/north{
+	pixel_y = 4
+	},
+/obj/structure/window/spawner/directional/east{
+	pixel_x = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"s" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"u" = (
+/obj/structure/window/spawner/directional/west{
+	pixel_x = -4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"v" = (
+/obj/machinery/conveyor{
+	id = "cargolower";
+	dir = 8
+	},
+/obj/machinery/recycler{
+	dir = 8
+	},
+/obj/structure/window/spawner/directional/north{
+	pixel_y = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"w" = (
+/obj/machinery/conveyor_switch/oneway{
+	id = "cargolower"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"x" = (
+/obj/machinery/conveyor/inverted{
+	dir = 6;
+	id = "cargolower"
+	},
+/obj/machinery/door/window/left/directional/north{
+	name = "Danger: Conveyor Access";
+	req_access = list("maint_tunnels");
+	pixel_y = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"y" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"z" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"A" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"D" = (
+/obj/machinery/mass_driver/trash{
+	dir = 8
+	},
+/obj/structure/window/spawner/directional/north{
+	pixel_y = 4
+	},
+/obj/machinery/light/directional/south,
+/obj/structure/sign/warning/vacuum/directional/south,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"E" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/grime,
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"F" = (
+/obj/machinery/computer/pod/old/mass_driver_controller/trash{
+	pixel_x = -8;
+	pixel_y = 25
+	},
+/obj/machinery/button/door/directional/east{
+	name = "Trash Disposal Toggle";
+	pixel_y = 22;
+	id = "trash";
+	pixel_x = 8
+	},
+/obj/structure/chair/stool/directional/west{
+	pixel_y = 5
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"G" = (
+/turf/closed/wall/r_wall/rust,
+/area/station/maintenance/disposal)
+"H" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"I" = (
+/obj/machinery/camera/directional/west{
+	c_tag = "Cargo - Disposals";
+	network = list("ss13","cargo")
+	},
+/obj/machinery/mineral/stacking_unit_console{
+	pixel_x = -31;
+	pixel_y = -6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"J" = (
+/obj/machinery/conveyor{
+	id = "cargolower";
+	dir = 1
+	},
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"K" = (
+/obj/machinery/conveyor{
+	id = "cargolower"
+	},
+/obj/structure/window/spawner/directional/west{
+	pixel_x = -4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"L" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"M" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"P" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/grime,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"Q" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"R" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/landmark/navigate_destination,
+/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/unres/delayed{
+	dir = 8
+	},
+/obj/machinery/door/airlock/engineering,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"T" = (
+/obj/machinery/conveyor{
+	id = "cargolower";
+	dir = 10
+	},
+/obj/machinery/light/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"U" = (
+/obj/structure/disposaloutlet,
+/obj/structure/window/spawner/directional/west{
+	pixel_x = -4
+	},
+/obj/structure/window/spawner/directional/north{
+	pixel_y = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"V" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/grime,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"W" = (
+/obj/machinery/conveyor{
+	id = "cargolower";
+	dir = 9
+	},
+/obj/machinery/door/window/right/directional/north{
+	pixel_y = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+"Z" = (
+/obj/machinery/conveyor{
+	id = "cargolower";
+	dir = 8
+	},
+/obj/structure/window/spawner/directional/north{
+	pixel_y = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/disposal)
+
+(1,1,1) = {"
+a
+a
+a
+a
+G
+Q
+m
+G
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+G
+G
+F
+D
+G
+a
+a
+"}
+(3,1,1) = {"
+G
+G
+G
+G
+y
+k
+Z
+G
+G
+G
+"}
+(4,1,1) = {"
+G
+A
+p
+I
+H
+f
+x
+J
+g
+G
+"}
+(5,1,1) = {"
+G
+z
+P
+c
+V
+s
+h
+W
+e
+G
+"}
+(6,1,1) = {"
+G
+M
+j
+f
+H
+f
+u
+r
+e
+G
+"}
+(7,1,1) = {"
+G
+L
+o
+q
+n
+k
+E
+w
+v
+G
+"}
+(8,1,1) = {"
+G
+R
+G
+G
+d
+U
+K
+K
+T
+G
+"}
+(9,1,1) = {"
+a
+a
+a
+G
+G
+G
+G
+G
+G
+G
+"}

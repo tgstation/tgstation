@@ -1,0 +1,429 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/disposaloutlet,
+/obj/structure/window/spawner/directional/west{
+	pixel_x = -4
+	},
+/obj/structure/window/spawner/directional/north{
+	pixel_y = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/station/maintenance/disposal)
+"c" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/spawner/random/engineering/tracking_beacon,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/station/maintenance/disposal)
+"d" = (
+/obj/structure/platform/plastitanium,
+/obj/effect/spawner/random/trash/ghetto_containers,
+/turf/open/floor/mineral/plastitanium/red,
+/area/station/maintenance/disposal)
+"f" = (
+/obj/machinery/door/airlock/multi_tile/public{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
+/obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/unres/delayed{
+	dir = 8
+	},
+/obj/effect/landmark/navigate_destination,
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/station/maintenance/disposal)
+"h" = (
+/obj/machinery/mass_driver/trash{
+	dir = 8
+	},
+/obj/structure/window/spawner/directional/north{
+	pixel_y = 4
+	},
+/obj/machinery/light/directional/south,
+/obj/structure/sign/warning/vacuum/directional/south,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/station/maintenance/disposal)
+"i" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/window/bronze/spawner/directional/west,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/station/maintenance/disposal)
+"j" = (
+/obj/machinery/conveyor/inverted{
+	dir = 10;
+	id = "cargolower"
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/station/maintenance/disposal)
+"k" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/window/bronze/spawner/directional/north,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/station/maintenance/disposal)
+"l" = (
+/obj/structure/platform/plastitanium,
+/obj/effect/spawner/random/trash/deluxe_garbage,
+/turf/open/floor/mineral/plastitanium/red,
+/area/station/maintenance/disposal)
+"m" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/camera/directional/west{
+	c_tag = "Cargo - Disposals";
+	network = list("ss13","cargo")
+	},
+/obj/machinery/mineral/stacking_unit_console{
+	pixel_x = -31;
+	pixel_y = -6
+	},
+/obj/structure/window/bronze/spawner/directional/east,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/station/maintenance/disposal)
+"n" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/station/maintenance/disposal)
+"p" = (
+/obj/machinery/mineral/stacking_machine{
+	input_dir = 2
+	},
+/obj/structure/window/spawner/directional/east{
+	pixel_x = 4
+	},
+/obj/structure/window/spawner/directional/north{
+	pixel_y = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/station/maintenance/disposal)
+"q" = (
+/obj/machinery/conveyor{
+	id = "cargolower";
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/station/maintenance/disposal)
+"r" = (
+/obj/machinery/conveyor{
+	id = "cargolower"
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/station/maintenance/disposal)
+"t" = (
+/obj/machinery/computer/pod/old/mass_driver_controller/trash{
+	pixel_x = -8;
+	pixel_y = 25
+	},
+/obj/machinery/button/door/directional/east{
+	name = "Trash Disposal Toggle";
+	pixel_y = 22;
+	id = "trash";
+	pixel_x = 8
+	},
+/obj/structure/chair/stool/directional/west{
+	pixel_y = 5
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/station/maintenance/disposal)
+"u" = (
+/obj/machinery/conveyor{
+	id = "cargolower";
+	dir = 8
+	},
+/obj/structure/window/spawner/directional/north{
+	pixel_y = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/station/maintenance/disposal)
+"v" = (
+/obj/machinery/recycler{
+	dir = 8
+	},
+/obj/machinery/conveyor{
+	id = "cargolower";
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/station/maintenance/disposal)
+"w" = (
+/obj/machinery/conveyor/inverted{
+	dir = 6;
+	id = "cargolower"
+	},
+/obj/structure/window/spawner/directional/north{
+	pixel_y = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/station/maintenance/disposal)
+"y" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/disposal/delivery_chute{
+	dir = 4
+	},
+/obj/structure/window/spawner/directional/north{
+	pixel_y = 4
+	},
+/obj/structure/window/spawner/directional/west{
+	pixel_x = -4
+	},
+/obj/machinery/door/window/right/directional/east{
+	pixel_x = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/station/maintenance/disposal)
+"z" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/window/bronze/spawner/directional/west,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/station/maintenance/disposal)
+"A" = (
+/obj/structure/platform/plastitanium,
+/obj/effect/spawner/random/trash/botanical_waste,
+/obj/effect/spawner/random/trash/caution_sign{
+	pixel_x = 16;
+	pixel_y = 16
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/station/maintenance/disposal)
+"B" = (
+/obj/machinery/conveyor{
+	id = "cargolower";
+	dir = 5
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/station/maintenance/disposal)
+"C" = (
+/obj/machinery/door/poddoor/massdriver_trash,
+/obj/machinery/atmos_shield_gen/active{
+	dir = 1
+	},
+/obj/machinery/atmos_shield_gen/active,
+/turf/open/floor/plating,
+/area/station/maintenance/disposal)
+"D" = (
+/obj/structure/platform/plastitanium,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/mineral/plastitanium/red,
+/area/station/maintenance/disposal)
+"G" = (
+/obj/machinery/conveyor_switch/oneway{
+	id = "cargolower"
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/station/maintenance/disposal)
+"H" = (
+/obj/machinery/conveyor{
+	id = "cargolower";
+	dir = 10
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/station/maintenance/disposal)
+"J" = (
+/obj/machinery/conveyor{
+	id = "cargolower";
+	dir = 8
+	},
+/obj/machinery/door/window/left/directional/north{
+	name = "Danger: Conveyor Access";
+	req_access = list("maint_tunnels");
+	pixel_y = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/station/maintenance/disposal)
+"L" = (
+/obj/machinery/conveyor{
+	id = "cargolower";
+	dir = 9
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/station/maintenance/disposal)
+"M" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/maintenance/disposal)
+"Q" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/structure/window/bronze/spawner/directional/south,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/station/maintenance/disposal)
+"R" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/modular_map_connector,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/station/maintenance/disposal)
+"S" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/station/maintenance/disposal)
+"T" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/station/maintenance/disposal)
+"U" = (
+/obj/machinery/conveyor{
+	id = "cargolower";
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/station/maintenance/disposal)
+"V" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/station/maintenance/disposal)
+"W" = (
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/station/maintenance/disposal)
+"Y" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/station/maintenance/disposal)
+"Z" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/light/directional/west,
+/obj/structure/window/bronze/spawner/directional/east,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/station/maintenance/disposal)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+M
+C
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+t
+h
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+n
+W
+u
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+V
+Z
+m
+c
+y
+u
+B
+L
+a
+"}
+(5,1,1) = {"
+a
+Q
+l
+A
+k
+J
+q
+v
+q
+a
+"}
+(6,1,1) = {"
+a
+Q
+d
+D
+k
+p
+q
+U
+q
+a
+"}
+(7,1,1) = {"
+a
+R
+i
+z
+S
+G
+w
+j
+q
+a
+"}
+(8,1,1) = {"
+a
+T
+f
+a
+Y
+b
+r
+r
+H
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

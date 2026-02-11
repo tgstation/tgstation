@@ -1,0 +1,64 @@
+directory = "_maps/map_files/TissStation/maintenance_modules/"
+
+[rooms.brig]
+modules = ["brig_1.dmm", "brig_2.dmm"]
+
+[rooms.cargo]
+modules = ["cargo_1.dmm"]
+
+[rooms.disposals]
+modules = ["disposals_1.dmm", "disposals_2.dmm"]
+
+[rooms.engCentral]
+modules = ["engCentral_1.dmm"]
+
+[rooms.mainCentralEast]
+modules = ["mainCentralEast_1.dmm"]
+
+[rooms.mainCentralWest]
+modules = ["mainCentralWest_1.dmm","mainCentralWest_2.dmm"]
+
+[rooms.mainNorthEast]
+modules = ["mainNorthEast_1.dmm"]
+
+[rooms.mainNorthWest]
+modules = ["mainNorthWest_1.dmm"]
+
+[rooms.engUpperEast]
+modules = ["engUpperEast_1.dmm"]
+
+[rooms.engUpperWest]
+modules = ["engUpperWest_1.dmm"]
+
+[rooms.mainOuterWest]
+modules = ["mainOuterWest_1.dmm"]
+
+[rooms.mainOuterEast]
+modules = ["mainOuterEast_1.dmm","mainOuterEast_2.dmm"]
+
+[rooms.medEast]
+modules = ["medEast_1.dmm","medEast_2.dmm"]
+
+[rooms.medMorgue]
+modules = ["medMorgue_1.dmm"]
+
+[rooms.medNorth]
+modules = ["medNorth_1.dmm"]
+
+[rooms.medWest]
+modules = ["medWest_1.dmm","medWest_2.dmm"]
+
+[rooms.sciCentral]
+modules = ["sciCentral_1.dmm"]
+
+[rooms.sciNorth]
+modules = ["sciNorth_1.dmm"]
+
+[rooms.sciSouth]
+modules = ["sciSouth_1.dmm"]
+
+[rooms.sciWest]
+modules = ["sciWest_1.dmm"]
+
+[rooms.security]
+modules = ["security_1.dmm"]

@@ -1,0 +1,849 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/machinery/door/airlock/plasma/glass{
+	name = "Gay Room"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plastic,
+/area/station/maintenance/department/medical)
+"c" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plastic,
+/area/station/maintenance/department/medical)
+"d" = (
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"e" = (
+/obj/effect/spawner/random/structure/grille,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"f" = (
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"h" = (
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/machinery/light/floor,
+/obj/item/clothing/suit/armor/durability/gaywatermelon,
+/obj/item/clothing/head/helmet/durability/gaywatermelon,
+/turf/open/floor/plastic,
+/area/station/maintenance/department/medical)
+"i" = (
+/obj/effect/spawner/random/engineering/tank,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"k" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"m" = (
+/obj/effect/landmark/generic_maintenance_landmark,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/station/maintenance/department/medical)
+"n" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"o" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"p" = (
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"q" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"r" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"u" = (
+/turf/open/floor/plastic,
+/area/station/maintenance/department/medical)
+"v" = (
+/mob/living/simple_animal/bot/mulebot{
+	name = "\improper The Horrorscope";
+	desc = "Scary guy..."
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"w" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"x" = (
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"y" = (
+/obj/machinery/space_heater,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"z" = (
+/obj/effect/spawner/random/trash/box,
+/obj/effect/spawner/random/maintenance/no_decals/eight,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"A" = (
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"C" = (
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/item/plate/large,
+/obj/item/food/fairy_bread{
+	pixel_y = 5
+	},
+/obj/item/food/popsicle/golden_gaytime,
+/obj/machinery/light/floor,
+/turf/open/floor/plastic,
+/area/station/maintenance/department/medical)
+"D" = (
+/obj/structure/reagent_dispensers/water_cooler/gay,
+/turf/open/floor/plastic,
+/area/station/maintenance/department/medical)
+"F" = (
+/obj/structure/railing,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"I" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"J" = (
+/obj/effect/spawner/random/trash/graffiti,
+/turf/closed/wall,
+/area/station/maintenance/department/medical)
+"K" = (
+/obj/effect/spawner/random/structure/crate,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"L" = (
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"M" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/obj/modular_map_connector,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"N" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"P" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/reagent_dispensers/plumbed{
+	dir = 8;
+	name = "service water reservoir"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"R" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"S" = (
+/turf/closed/wall,
+/area/station/maintenance/department/medical)
+"T" = (
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/item/food/grown/gaywatermelon,
+/obj/machinery/light/floor,
+/obj/item/food/grown/gaywatermelon,
+/obj/item/food/grown/gaywatermelon,
+/obj/item/seeds/watermelon/gay,
+/turf/open/floor/plastic,
+/area/station/maintenance/department/medical)
+"U" = (
+/mob/living/basic/gay_skitterer,
+/turf/open/floor/plastic,
+/area/station/maintenance/department/medical)
+"V" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"W" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"X" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"Y" = (
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+"Z" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+Y
+Y
+Y
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+Y
+Y
+a
+a
+a
+a
+Y
+Y
+Y
+I
+Y
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+a
+Y
+I
+I
+I
+Y
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+Y
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+Y
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+Y
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+Y
+I
+I
+S
+S
+S
+S
+I
+I
+I
+I
+I
+I
+I
+Y
+Y
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+S
+S
+U
+D
+U
+S
+S
+I
+I
+I
+I
+I
+Y
+Y
+Y
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+D
+D
+u
+u
+u
+D
+S
+S
+I
+I
+I
+I
+Y
+Y
+Y
+a
+"}
+(9,1,1) = {"
+a
+Y
+I
+a
+a
+a
+a
+a
+a
+U
+u
+m
+C
+u
+u
+U
+D
+S
+S
+I
+I
+I
+I
+Y
+a
+"}
+(10,1,1) = {"
+Y
+I
+I
+a
+a
+a
+a
+a
+U
+u
+u
+c
+u
+u
+u
+u
+u
+h
+S
+S
+I
+I
+I
+I
+a
+"}
+(11,1,1) = {"
+I
+I
+I
+a
+a
+a
+a
+a
+D
+u
+T
+c
+T
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+a
+"}
+(12,1,1) = {"
+I
+I
+a
+a
+a
+a
+a
+a
+S
+S
+S
+b
+S
+S
+p
+F
+A
+A
+P
+f
+f
+Z
+Z
+Z
+a
+"}
+(13,1,1) = {"
+a
+S
+S
+i
+i
+f
+f
+f
+p
+K
+S
+o
+L
+N
+N
+N
+N
+N
+N
+N
+N
+N
+x
+a
+a
+"}
+(14,1,1) = {"
+a
+d
+f
+f
+f
+f
+x
+e
+p
+S
+J
+o
+f
+N
+a
+a
+a
+a
+a
+a
+x
+w
+y
+a
+a
+"}
+(15,1,1) = {"
+a
+M
+n
+n
+R
+n
+n
+n
+n
+n
+W
+q
+W
+V
+a
+a
+a
+a
+a
+a
+p
+w
+L
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+z
+v
+r
+N
+N
+N
+X
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+X
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+k
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+X
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+X
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(21,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+X
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(22,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+X
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

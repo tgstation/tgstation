@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"map_name": "Tisserand Station",
+	"map_path": "map_files/TissStation",
+	"map_file": "TissStation.dmm",
+	"shuttles": {
+		"emergency": "emergency_tiss",
+		"ferry": "ferry_fancy",
+		"cargo": "cargo_tiss",
+		"whiteship": "whiteship_tiss"
+	},
+	"job_changes": {
+		"Cook": {
+			"additional_cqc_areas": ["/area/station/commons/park"]
+		},
+		"Captain": {
+			"special_charter": "asteroid cluster"
+		}
+	},
+	"bonus_weakpoints": 2
+}

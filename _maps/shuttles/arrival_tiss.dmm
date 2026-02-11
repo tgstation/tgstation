@@ -1,0 +1,899 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aT" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leafy,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/machinery/light/directional/north,
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/arrival)
+"bB" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leafy,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/arrival)
+"dA" = (
+/obj/effect/turf_decal/tile/green/diagonal_centre{
+	alpha = 200
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light,
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/arrival)
+"ec" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/arrival)
+"fx" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+"hm" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/white/arrow_ccw{
+	dir = 8;
+	color = "#ff99fc";
+	alpha = 200
+	},
+/obj/effect/turf_decal/trimline/white/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/arrow_cw{
+	dir = 4;
+	alpha = 200
+	},
+/obj/effect/turf_decal/trimline/green/mid_joiner{
+	alpha = 200;
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/arrival)
+"hC" = (
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+"jU" = (
+/obj/structure/railing/corner,
+/obj/effect/turf_decal/trimline/white/arrow_ccw{
+	dir = 9;
+	color = "#ff99fc";
+	alpha = 200
+	},
+/obj/effect/turf_decal/trimline/white/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/white/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	alpha = 200
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/arrival)
+"kr" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/diagonal_centre{
+	color = "#ff99fc";
+	alpha = 200
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light,
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/arrival)
+"kE" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/arrival)
+"mk" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/arrival)
+"nk" = (
+/obj/effect/turf_decal/trimline/green/filled{
+	alpha = 200
+	},
+/obj/effect/turf_decal/trimline/green/filled/mid_joiner{
+	alpha = 200
+	},
+/obj/effect/turf_decal/trimline/green/filled/mid_joiner{
+	alpha = 200;
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/filled/mid_joiner{
+	alpha = 200;
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/filled/mid_joiner{
+	alpha = 200;
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/white{
+	color = "#ff99fc";
+	alpha = 200
+	},
+/obj/effect/turf_decal/trimline/white/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/white/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/white/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200
+	},
+/obj/effect/turf_decal/trimline/white/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light/end{
+	dir = 8
+	},
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/arrival)
+"nJ" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/arrival)
+"of" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/storage/medkit/regular,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/arrival)
+"oN" = (
+/obj/docking_port/mobile/arrivals,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/arrival)
+"qH" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leafy,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/window/reinforced/shuttle,
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/arrival)
+"tX" = (
+/obj/structure/table/reinforced/rglass,
+/obj/machinery/cell_charger,
+/obj/machinery/requests_console/directional/north{
+	department = "Arrival shuttle";
+	name = "Arrival Shuttle Requests Console"
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/arrival)
+"uu" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/white/arrow_ccw{
+	dir = 6;
+	color = "#ff99fc";
+	alpha = 200
+	},
+/obj/effect/turf_decal/trimline/white/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200
+	},
+/obj/effect/turf_decal/trimline/white/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	alpha = 200;
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/arrival)
+"vz" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leafy,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/machinery/light/directional/south,
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/arrival)
+"vC" = (
+/obj/structure/railing/corner,
+/obj/effect/turf_decal/tile/green/diagonal_centre{
+	alpha = 200
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light,
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 1
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/arrival)
+"wf" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leafy,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/window/reinforced/shuttle,
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/arrival)
+"wv" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/diagonal_centre{
+	color = "#ff99fc";
+	alpha = 200
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 4
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/arrival)
+"wH" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/arrival)
+"yt" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/arrival)
+"AB" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leafy,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/window/reinforced/shuttle,
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/arrival)
+"Bc" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/white/arrow_cw{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/white/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/white/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	alpha = 200;
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/arrival)
+"Cn" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Arrivals Shuttle Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+"Df" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/white/arrow_cw{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/white/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/arrow_ccw{
+	dir = 4;
+	alpha = 200
+	},
+/obj/effect/turf_decal/trimline/green/mid_joiner{
+	alpha = 200;
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/arrival)
+"Dy" = (
+/obj/effect/turf_decal/tile/neutral/diagonal_centre{
+	color = "#ff99fc";
+	alpha = 200
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light,
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/arrival)
+"Ej" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/arrival)
+"Fi" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green/diagonal_centre{
+	alpha = 200
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 8
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/arrival)
+"Gx" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/diagonal_centre{
+	color = "#ff99fc";
+	alpha = 200
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/arrival)
+"GD" = (
+/obj/effect/turf_decal/trimline/white/filled{
+	color = "#ff99fc";
+	alpha = 200
+	},
+/obj/effect/turf_decal/trimline/white/filled/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200
+	},
+/obj/effect/turf_decal/trimline/white/filled/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/white/filled/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/white/filled/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green{
+	alpha = 200
+	},
+/obj/effect/turf_decal/trimline/green/mid_joiner{
+	alpha = 200;
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/mid_joiner{
+	alpha = 200;
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/mid_joiner{
+	alpha = 200
+	},
+/obj/effect/turf_decal/trimline/green/mid_joiner{
+	alpha = 200;
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light/end{
+	dir = 4
+	},
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/arrival)
+"GJ" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+"GY" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green/diagonal_centre{
+	alpha = 200
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light/end,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/arrival)
+"JB" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/diagonal_centre{
+	color = "#ff99fc";
+	alpha = 200
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/arrival)
+"JE" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/white/arrow_cw{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 10
+	},
+/obj/effect/turf_decal/trimline/white/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200
+	},
+/obj/effect/turf_decal/trimline/white/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	alpha = 200;
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/arrival)
+"KN" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leafy,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/machinery/light/directional/south,
+/obj/item/radio/intercom/directional/south,
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/arrival)
+"No" = (
+/obj/effect/turf_decal/tile/neutral/diagonal_centre{
+	color = "#ff99fc";
+	alpha = 200
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light,
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 1
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/arrival)
+"Ob" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre{
+	color = "#ff99fc";
+	alpha = 200
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/arrival)
+"Po" = (
+/turf/closed/wall/mineral/titanium/overspace,
+/area/shuttle/arrival)
+"Qt" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leafy,
+/obj/structure/flora/bush/flowers_br/style_random,
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/arrival)
+"QE" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leafy,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/machinery/light/directional/north,
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/arrival)
+"QG" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/tile/green/diagonal_centre{
+	alpha = 200
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/arrival)
+"Rg" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leafy,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/large/style_random{
+	pixel_y = 0;
+	pixel_x = 0
+	},
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/arrival)
+"RG" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green/diagonal_centre{
+	alpha = 200
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light/end{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/arrival)
+"Sr" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leafy,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/arrival)
+"SN" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green/diagonal_centre{
+	alpha = 200
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light/corner,
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/arrival)
+"SP" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/diagonal_centre{
+	color = "#ff99fc";
+	alpha = 200
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light,
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 1
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/arrival)
+"TI" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leafy,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/machinery/light/directional/north,
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/arrival)
+"US" = (
+/obj/effect/turf_decal/tile/green/diagonal_centre{
+	alpha = 200
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light,
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 1
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/arrival)
+"VJ" = (
+/turf/template_noop,
+/area/template_noop)
+"Wy" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leafy,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/machinery/light/directional/south,
+/turf/open/misc/grass/jungle/station,
+/area/shuttle/arrival)
+"Xy" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/arrival)
+"Yf" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/white/arrow_cw{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/white/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/arrow_ccw{
+	dir = 8;
+	alpha = 200
+	},
+/obj/effect/turf_decal/trimline/green/mid_joiner{
+	alpha = 200;
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/arrival)
+"YI" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green/diagonal_centre{
+	alpha = 200
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light,
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/arrival)
+"ZK" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/white/arrow_ccw{
+	dir = 4;
+	color = "#ff99fc";
+	alpha = 200
+	},
+/obj/effect/turf_decal/trimline/white/mid_joiner{
+	color = "#ff99fc";
+	alpha = 200;
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/arrow_cw{
+	dir = 8;
+	alpha = 200
+	},
+/obj/effect/turf_decal/trimline/green/mid_joiner{
+	alpha = 200;
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/arrival)
+"ZX" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/arrival)
+
+(1,1,1) = {"
+VJ
+VJ
+Po
+GJ
+Po
+VJ
+VJ
+"}
+(2,1,1) = {"
+VJ
+Po
+mk
+bB
+mk
+Po
+VJ
+"}
+(3,1,1) = {"
+VJ
+GJ
+Qt
+Rg
+bB
+GJ
+VJ
+"}
+(4,1,1) = {"
+Po
+nJ
+QE
+Sr
+Wy
+nJ
+Po
+"}
+(5,1,1) = {"
+mk
+tX
+RG
+Gx
+GY
+of
+mk
+"}
+(6,1,1) = {"
+Cn
+Df
+JE
+nk
+jU
+hm
+Cn
+"}
+(7,1,1) = {"
+mk
+TI
+SN
+wv
+QG
+KN
+mk
+"}
+(8,1,1) = {"
+GJ
+kE
+kr
+AB
+SP
+Xy
+GJ
+"}
+(9,1,1) = {"
+GJ
+wH
+dA
+qH
+US
+ZX
+GJ
+"}
+(10,1,1) = {"
+GJ
+wH
+Dy
+wf
+No
+ZX
+GJ
+"}
+(11,1,1) = {"
+GJ
+yt
+YI
+qH
+vC
+Ej
+GJ
+"}
+(12,1,1) = {"
+mk
+aT
+JB
+Fi
+Ob
+vz
+mk
+"}
+(13,1,1) = {"
+Cn
+ZK
+uu
+GD
+Bc
+Yf
+Cn
+"}
+(14,1,1) = {"
+Po
+fx
+fx
+ec
+fx
+fx
+Po
+"}
+(15,1,1) = {"
+VJ
+hC
+hC
+oN
+hC
+hC
+VJ
+"}

@@ -1,0 +1,752 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"c" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance{
+	name = "Medbay Maintenance"
+	},
+/obj/effect/mapping_error,
+/turf/open/floor/plating,
+/area/station/medical/chemistry)
+"k" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
+/obj/machinery/door/airlock/maintenance{
+	name = "Medbay Maintenance"
+	},
+/obj/effect/mapping_error,
+/turf/open/floor/plating,
+/area/station/medical/medbay)
+"l" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/hatch{
+	dir = 4;
+	name = "Medbay Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/medical/morgue,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/mapping_error,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/medical/morgue)
+"n" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical/morgue)
+"o" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance{
+	name = "Medbay Maintenance"
+	},
+/obj/effect/mapping_error,
+/turf/open/floor/plating,
+/area/station/medical/medbay)
+"r" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical/morgue)
+"s" = (
+/obj/structure/plasticflaps/opaque,
+/obj/machinery/door/window/left/directional/south{
+	name = "MuleBot Access";
+	req_access = list("shipping")
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=1";
+	location = "Medbay"
+	},
+/obj/effect/mapping_error,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical/morgue)
+"B" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical/morgue)
+"C" = (
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+"E" = (
+/turf/template_noop,
+/area/template_noop)
+"H" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical/morgue)
+"K" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
+/obj/machinery/door/airlock/maintenance{
+	name = "Medbay Maintenance"
+	},
+/obj/effect/mapping_error,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical/morgue)
+"M" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/modular_map_connector,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical/morgue)
+"N" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical/morgue)
+"O" = (
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical/morgue)
+"P" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical/morgue)
+"W" = (
+/obj/effect/mapping_helpers/airlock/abandoned,
+/obj/machinery/door/airlock/maintenance,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/any/medical/general,
+/obj/effect/mapping_error,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical/morgue)
+"X" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical/morgue)
+
+(1,1,1) = {"
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+C
+C
+E
+E
+E
+E
+"}
+(2,1,1) = {"
+E
+E
+E
+C
+C
+C
+C
+C
+E
+E
+a
+C
+C
+E
+E
+E
+"}
+(3,1,1) = {"
+E
+E
+E
+a
+a
+a
+a
+a
+C
+a
+a
+a
+C
+E
+E
+E
+"}
+(4,1,1) = {"
+E
+E
+E
+E
+O
+O
+O
+O
+a
+a
+E
+E
+E
+a
+E
+E
+"}
+(5,1,1) = {"
+E
+E
+E
+K
+N
+N
+O
+O
+E
+E
+E
+E
+E
+a
+E
+E
+"}
+(6,1,1) = {"
+E
+E
+E
+E
+O
+N
+N
+N
+E
+E
+E
+E
+E
+a
+a
+E
+"}
+(7,1,1) = {"
+E
+E
+E
+O
+O
+O
+O
+N
+E
+E
+E
+E
+E
+E
+a
+a
+"}
+(8,1,1) = {"
+E
+E
+E
+N
+N
+N
+N
+N
+E
+E
+E
+E
+E
+E
+a
+a
+"}
+(9,1,1) = {"
+E
+E
+E
+N
+O
+O
+O
+r
+E
+E
+E
+E
+E
+E
+a
+E
+"}
+(10,1,1) = {"
+E
+E
+E
+N
+O
+O
+O
+r
+W
+E
+E
+E
+E
+E
+a
+C
+"}
+(11,1,1) = {"
+E
+E
+E
+N
+O
+O
+O
+O
+E
+E
+E
+E
+E
+a
+C
+C
+"}
+(12,1,1) = {"
+E
+E
+E
+N
+O
+O
+O
+O
+E
+E
+E
+E
+E
+a
+C
+E
+"}
+(13,1,1) = {"
+E
+E
+E
+N
+O
+E
+E
+E
+E
+E
+E
+E
+E
+a
+C
+E
+"}
+(14,1,1) = {"
+E
+E
+E
+N
+O
+E
+E
+E
+E
+E
+E
+E
+E
+a
+E
+E
+"}
+(15,1,1) = {"
+E
+E
+N
+N
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+"}
+(16,1,1) = {"
+E
+E
+k
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+"}
+(17,1,1) = {"
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+"}
+(18,1,1) = {"
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+"}
+(19,1,1) = {"
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+"}
+(20,1,1) = {"
+E
+E
+o
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+"}
+(21,1,1) = {"
+E
+O
+n
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+"}
+(22,1,1) = {"
+E
+O
+n
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+a
+E
+E
+"}
+(23,1,1) = {"
+E
+O
+n
+E
+E
+l
+E
+E
+E
+E
+E
+E
+E
+a
+C
+E
+"}
+(24,1,1) = {"
+E
+O
+n
+O
+O
+P
+O
+O
+a
+a
+a
+a
+a
+a
+C
+E
+"}
+(25,1,1) = {"
+E
+O
+n
+O
+O
+P
+O
+O
+a
+a
+a
+a
+a
+C
+E
+E
+"}
+(26,1,1) = {"
+E
+E
+n
+O
+O
+P
+O
+O
+a
+a
+C
+C
+C
+E
+E
+E
+"}
+(27,1,1) = {"
+E
+s
+H
+B
+B
+X
+O
+O
+a
+C
+C
+E
+E
+E
+E
+E
+"}
+(28,1,1) = {"
+E
+E
+n
+O
+O
+O
+O
+O
+a
+C
+E
+E
+E
+E
+E
+E
+"}
+(29,1,1) = {"
+E
+E
+n
+O
+O
+O
+O
+a
+a
+E
+E
+E
+E
+E
+E
+E
+"}
+(30,1,1) = {"
+E
+E
+n
+O
+O
+O
+O
+a
+E
+E
+E
+E
+E
+E
+E
+E
+"}
+(31,1,1) = {"
+E
+E
+n
+O
+O
+O
+a
+a
+E
+E
+E
+E
+E
+E
+E
+E
+"}
+(32,1,1) = {"
+E
+O
+M
+O
+O
+a
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+"}
+(33,1,1) = {"
+E
+E
+c
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+"}

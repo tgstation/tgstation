@@ -1,0 +1,2565 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"av" = (
+/obj/structure/fake_stairs/wood/directional/south{
+	color = "#9d9d9d"
+	},
+/obj/structure/railing{
+	dir = 8;
+	color = "#9d9d9d"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"az" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"aD" = (
+/obj/structure/steps/directional/east{
+	color = "#ffbd6b"
+	},
+/obj/structure/railing/corner/end/flip{
+	dir = 4;
+	color = "#0000AA"
+	},
+/turf/open/floor/iron/sepia,
+/area/station/maintenance/starboard/central)
+"ba" = (
+/obj/structure/mineral_door/wood{
+	color = "#979797";
+	name = "\improper The Downward Spiral"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"bf" = (
+/obj/structure/steps/directional/west{
+	color = "#ffbd6b"
+	},
+/obj/structure/railing/corner/end/flip{
+	dir = 8;
+	pixel_y = 7;
+	color = "#AA0000"
+	},
+/turf/open/floor/iron/sepia,
+/area/station/maintenance/starboard/central)
+"bk" = (
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/unres/delayed,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"bE" = (
+/obj/structure/railing{
+	color = "#0000AA";
+	dir = 1
+	},
+/obj/structure/platform/rusty{
+	name = "boxing ring";
+	desc = "A rusty, metal platform on which you can box. Watch for Tetanus."
+	},
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"bF" = (
+/obj/structure/fake_stairs/wood/directional/north{
+	color = "#303030"
+	},
+/obj/structure/railing{
+	dir = 4;
+	color = "#303030"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"bP" = (
+/turf/open/floor/iron/sepia,
+/area/station/maintenance/starboard/central)
+"bV" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/closed/wall/mineral/wood,
+/area/station/maintenance/starboard/central)
+"ci" = (
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"ck" = (
+/obj/machinery/light/floor,
+/obj/structure/platform/rusty{
+	name = "boxing ring";
+	desc = "A rusty, metal platform on which you can box. Watch for Tetanus."
+	},
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"cL" = (
+/obj/structure/platform/rusty{
+	name = "boxing ring";
+	desc = "A rusty, metal platform on which you can box. Watch for Tetanus."
+	},
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"dk" = (
+/obj/effect/spawner/random/structure/grille,
+/obj/structure/window/spawner/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"dr" = (
+/obj/machinery/light/floor,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"eZ" = (
+/obj/structure/transit_tube/curved{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"fq" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/closed/wall/mineral/wood,
+/area/station/maintenance/starboard/central)
+"fN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"gz" = (
+/obj/structure/transit_tube/crossing/horizontal,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"gG" = (
+/obj/effect/spawner/random/maintenance,
+/obj/structure/closet,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"gN" = (
+/obj/structure/fake_stairs/wood/directional/south{
+	color = "#ababab"
+	},
+/obj/structure/railing{
+	dir = 8;
+	color = "#ababab"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"hj" = (
+/obj/structure/fake_stairs/wood/directional/west{
+	color = "#5e5e5e"
+	},
+/obj/structure/railing{
+	dir = 1;
+	color = "#5e5e5e"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"hH" = (
+/obj/structure/fake_stairs/wood/directional/north{
+	color = "#e9e9e9"
+	},
+/obj/structure/railing{
+	dir = 4;
+	color = "#e9e9e9"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"hO" = (
+/obj/structure/railing{
+	color = "#0000AA";
+	dir = 5
+	},
+/obj/machinery/light/floor,
+/obj/structure/platform/rusty{
+	name = "boxing ring";
+	desc = "A rusty, metal platform on which you can box. Watch for Tetanus."
+	},
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"ih" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/closed/wall/mineral/wood,
+/area/station/maintenance/starboard/central)
+"im" = (
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"io" = (
+/obj/structure/fake_stairs/wood/directional/west{
+	color = "#cdcdcd"
+	},
+/obj/structure/railing{
+	dir = 1;
+	color = "#cdcdcd"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"it" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
+"iy" = (
+/obj/structure/fake_stairs/wood/directional/north,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"iT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"jt" = (
+/obj/structure/fake_stairs/wood/directional/west{
+	color = "#c6c6c6"
+	},
+/obj/structure/railing{
+	dir = 1;
+	color = "#c6c6c6"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"jO" = (
+/obj/item/chair/plastic,
+/obj/item/chair/plastic{
+	pixel_y = 5
+	},
+/obj/item/chair/plastic{
+	pixel_y = 10
+	},
+/obj/item/chair/plastic{
+	pixel_y = 15
+	},
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"jU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/railing/corner/end/flip{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"jX" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall/mineral/wood,
+/area/station/maintenance/starboard/central)
+"kF" = (
+/obj/structure/fake_stairs/wood/directional/north{
+	color = "#777777"
+	},
+/obj/structure/railing{
+	dir = 4;
+	color = "#777777"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"kI" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/light/dim/directional/south,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"kK" = (
+/obj/machinery/light/floor/broken{
+	color = "#2a2a2a"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/wood/large{
+	color = "#2a2a2a"
+	},
+/area/station/maintenance/starboard/central)
+"kM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"kX" = (
+/obj/structure/fake_stairs/wood/directional/north{
+	color = "#f1f1f1"
+	},
+/obj/structure/railing{
+	dir = 4;
+	color = "#f1f1f1"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"lu" = (
+/turf/closed/wall/rust,
+/area/station/maintenance/starboard/central)
+"lD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"lF" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/wood/large{
+	color = "#646464"
+	},
+/area/station/maintenance/starboard/central)
+"lI" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"lR" = (
+/obj/structure/transit_tube/horizontal,
+/obj/structure/window/reinforced/tinted/fulltile,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"mz" = (
+/obj/structure/sign/warning/vacuum/directional/north,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"mC" = (
+/obj/effect/spawner/random/structure/grille,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"mZ" = (
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"nk" = (
+/obj/structure/transit_tube/horizontal,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"nq" = (
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"nI" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"of" = (
+/obj/structure/fake_stairs/wood/directional/north{
+	color = "#e2e2e2"
+	},
+/obj/structure/railing{
+	dir = 4;
+	color = "#e2e2e2"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"oJ" = (
+/obj/structure/transit_tube/curved/flipped{
+	dir = 4
+	},
+/turf/template_noop,
+/area/station/maintenance/starboard/central)
+"oL" = (
+/turf/template_noop,
+/area/template_noop)
+"oZ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/sepia,
+/area/station/maintenance/starboard/central)
+"pl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"ps" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"pR" = (
+/obj/structure/transit_tube/curved{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"qE" = (
+/obj/structure/bonfire/dense/prelit,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"qT" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"qV" = (
+/obj/machinery/light/dim/directional/east,
+/obj/structure/closet/boxinggloves,
+/obj/item/clothing/head/helmet/thunderdome,
+/obj/item/clothing/head/soft/green,
+/obj/item/clothing/head/costume/snakeeater,
+/obj/item/clothing/head/costume/football_helmet,
+/obj/item/clothing/under/shorts/red,
+/obj/item/clothing/mask/luchador/tecnicos,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"rB" = (
+/obj/structure/cable,
+/turf/open/floor/iron/sepia,
+/area/station/maintenance/starboard/central)
+"rZ" = (
+/obj/effect/spawner/random/structure/grille,
+/obj/structure/window/spawner/directional/south,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"sb" = (
+/obj/item/food/butter/on_a_stick{
+	pixel_x = 18
+	},
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"sm" = (
+/obj/structure/transit_tube/diagonal/crossing/topleft,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"sn" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"sG" = (
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"sL" = (
+/obj/structure/transit_tube/curved,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"sT" = (
+/obj/machinery/light/floor,
+/obj/structure/platform/rusty{
+	name = "boxing ring";
+	desc = "A rusty, metal platform on which you can box. Watch for Tetanus."
+	},
+/obj/structure/railing{
+	color = "#AA0000";
+	pixel_y = 7
+	},
+/obj/structure/railing/corner/end{
+	dir = 1;
+	color = "#0000AA"
+	},
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"tt" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/spawner/random/structure/barricade/crude,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"tI" = (
+/obj/item/clothing/under/costume/referee,
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"tZ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"ub" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"ug" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/central)
+"uh" = (
+/obj/structure/fake_stairs/wood/directional/east{
+	color = "#8a8a8a"
+	},
+/obj/structure/railing{
+	color = "#8a8a8a"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"uw" = (
+/obj/structure/fake_stairs/wood/directional/west{
+	color = "#d4d4d4"
+	},
+/obj/structure/railing{
+	dir = 1;
+	color = "#d4d4d4"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"uJ" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall/rust,
+/area/station/maintenance/starboard/central)
+"vx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/transit_tube/crossing/horizontal,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"vI" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/wood/large{
+	color = "#dbdbdb"
+	},
+/area/station/maintenance/starboard/central)
+"wB" = (
+/obj/item/cardboard_cutout,
+/obj/structure/cable,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"wZ" = (
+/obj/item/cardboard_cutout,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"xa" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"xr" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"xv" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/closed/wall/mineral/wood,
+/area/station/maintenance/starboard/central)
+"xC" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/wood/large{
+	color = "#979797"
+	},
+/area/station/maintenance/starboard/central)
+"yB" = (
+/obj/structure/fake_stairs/wood/directional/east{
+	color = "#838383"
+	},
+/obj/structure/railing{
+	color = "#838383"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"yK" = (
+/obj/structure/railing{
+	color = "#AA0000";
+	dir = 10;
+	pixel_y = 7
+	},
+/obj/machinery/light/floor,
+/obj/structure/platform/rusty{
+	name = "boxing ring";
+	desc = "A rusty, metal platform on which you can box. Watch for Tetanus."
+	},
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"zg" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/wood/large{
+	color = "#353535"
+	},
+/area/station/maintenance/starboard/central)
+"zr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"zD" = (
+/obj/structure/fake_stairs/wood/directional/west{
+	color = "#585858"
+	},
+/obj/structure/railing{
+	dir = 1;
+	color = "#585858"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"zL" = (
+/obj/structure/transit_tube/diagonal,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"zM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/navigate_destination{
+	location = "Boxing Ring"
+	},
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"Ap" = (
+/obj/structure/railing{
+	color = "#0000AA";
+	dir = 4
+	},
+/obj/structure/platform/rusty{
+	name = "boxing ring";
+	desc = "A rusty, metal platform on which you can box. Watch for Tetanus."
+	},
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"Bn" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/wood/large{
+	color = "#b8b8b8"
+	},
+/area/station/maintenance/starboard/central)
+"Cb" = (
+/obj/structure/table/bronze,
+/obj/structure/desk_bell/speed_demon,
+/obj/item/clothing/mask/whistle{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/item/clothing/gloves/boxing/golden{
+	pixel_x = -11;
+	pixel_y = 8
+	},
+/turf/open/floor/iron/sepia,
+/area/station/maintenance/starboard/central)
+"Cp" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/wood/large{
+	color = "#525252"
+	},
+/area/station/maintenance/starboard/central)
+"Dv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"DZ" = (
+/obj/item/paper/fluff/downward_spiral,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/wood/large{
+	color = "#2a2a2a"
+	},
+/area/station/maintenance/starboard/central)
+"Eb" = (
+/obj/structure/fake_stairs/wood/directional/west{
+	color = "#bfbfbf"
+	},
+/obj/structure/railing{
+	dir = 1;
+	color = "#bfbfbf"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"Ej" = (
+/obj/structure/fake_stairs/wood/directional/south{
+	color = "#a4a4a4"
+	},
+/obj/structure/railing{
+	dir = 8;
+	color = "#a4a4a4"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"EF" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"EN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/transit_tube/crossing/horizontal,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Fx" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"FB" = (
+/obj/modular_map_connector,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"FK" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"FW" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/external,
+/obj/effect/mapping_helpers/airlock/unres/delayed{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Gm" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Gr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"GK" = (
+/obj/structure/railing{
+	color = "#AA0000";
+	pixel_y = 7
+	},
+/obj/structure/platform/rusty{
+	name = "boxing ring";
+	desc = "A rusty, metal platform on which you can box. Watch for Tetanus."
+	},
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"GM" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"GR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"GW" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"HK" = (
+/obj/structure/fake_stairs/wood/directional/north{
+	color = "#f8f8f8"
+	},
+/obj/structure/railing{
+	dir = 4;
+	color = "#f8f8f8"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"Ik" = (
+/obj/structure/fake_stairs/wood/directional/east{
+	color = "#909090"
+	},
+/obj/structure/railing{
+	color = "#909090"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"Iy" = (
+/obj/structure/transit_tube/crossing/horizontal,
+/obj/effect/spawner/random/structure/grille,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"JN" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/wood/large{
+	color = "#404040"
+	},
+/area/station/maintenance/starboard/central)
+"Kc" = (
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+"Kw" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"KC" = (
+/obj/structure/transit_tube/curved{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"KR" = (
+/obj/structure/fake_stairs/wood/directional/south{
+	color = "#b2b2b2"
+	},
+/obj/structure/railing{
+	dir = 8;
+	color = "#b2b2b2"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"LE" = (
+/obj/structure/transit_tube/curved,
+/obj/item/clothing/head/soft/propeller_hat,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"LO" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Mj" = (
+/obj/structure/fake_stairs/wood/directional/east{
+	color = "#3b3b3b"
+	},
+/obj/structure/railing{
+	color = "#3b3b3b"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"Nk" = (
+/obj/structure/transit_tube/curved/flipped{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"NN" = (
+/obj/structure/transit_tube/crossing/horizontal,
+/turf/open/space/basic,
+/area/space)
+"Of" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"Oy" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"OA" = (
+/obj/structure/fake_stairs/wood/directional/north{
+	color = "#6a6a6a"
+	},
+/obj/structure/railing{
+	dir = 4;
+	color = "#6a6a6a"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"Qv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"QB" = (
+/obj/structure/transit_tube/crossing/horizontal,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"QW" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/aft)
+"Rc" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Sa" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"Sc" = (
+/obj/structure/transit_tube/crossing,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"SH" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/wood/large{
+	color = "#7d7d7d"
+	},
+/area/station/maintenance/starboard/central)
+"Tm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"TW" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Uj" = (
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"UE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/crate_loot,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Vd" = (
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"Wb" = (
+/obj/structure/closet/boxinggloves,
+/obj/item/clothing/head/helmet/thunderdome,
+/obj/item/clothing/head/soft/orange,
+/obj/item/clothing/head/costume/tmc,
+/obj/item/clothing/head/costume/football_helmet,
+/obj/item/clothing/under/shorts/blue,
+/obj/item/clothing/mask/luchador/rudos,
+/obj/item/clothing/mask/luchador,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"Wd" = (
+/obj/machinery/light/floor,
+/obj/structure/railing{
+	color = "#0000AA";
+	dir = 1
+	},
+/obj/structure/platform/rusty{
+	name = "boxing ring";
+	desc = "A rusty, metal platform on which you can box. Watch for Tetanus."
+	},
+/obj/structure/railing/corner/end{
+	pixel_y = 7;
+	color = "#AA0000"
+	},
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"WJ" = (
+/obj/structure/transit_tube/diagonal/crossing,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"WL" = (
+/obj/effect/spawner/random/maintenance,
+/obj/structure/closet,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"WV" = (
+/obj/structure/fake_stairs/wood/directional/south{
+	color = "#464646"
+	},
+/obj/structure/railing{
+	dir = 8;
+	color = "#464646"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"Xe" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/closed/wall/mineral/wood,
+/area/station/maintenance/starboard/central)
+"XM" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/wood/large{
+	color = "#2a2a2a"
+	},
+/area/station/maintenance/starboard/central)
+"Yy" = (
+/obj/structure/railing{
+	color = "#AA0000";
+	dir = 8;
+	pixel_y = 7
+	},
+/obj/structure/platform/rusty{
+	name = "boxing ring";
+	desc = "A rusty, metal platform on which you can box. Watch for Tetanus."
+	},
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"YT" = (
+/obj/effect/spawner/random/structure/grille,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"YU" = (
+/obj/structure/fake_stairs/wood/directional/south{
+	color = "#4c4c4c"
+	},
+/obj/structure/railing{
+	dir = 8;
+	color = "#4c4c4c"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"Zy" = (
+/obj/structure/fake_stairs/wood/directional/north{
+	color = "#707070"
+	},
+/obj/structure/railing{
+	dir = 4;
+	color = "#707070"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/maintenance/starboard/central)
+"ZK" = (
+/obj/item/cardboard_cutout,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"ZL" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating/rust,
+/area/station/maintenance/starboard/central)
+"ZZ" = (
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+
+(1,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+"}
+(2,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+FB
+oL
+oL
+oL
+oL
+oL
+"}
+(3,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+Tm
+Tm
+Tm
+oL
+oL
+oL
+"}
+(4,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+GR
+Kw
+im
+ug
+oL
+oL
+"}
+(5,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+LO
+Kw
+dk
+eZ
+im
+gG
+QB
+im
+im
+im
+Tm
+Kw
+sG
+ug
+oL
+oL
+"}
+(6,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+qT
+dr
+dk
+Kw
+sm
+pl
+gz
+Kw
+GR
+GR
+GR
+Kw
+Oy
+ug
+QW
+oL
+"}
+(7,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+nq
+im
+rZ
+WL
+Kw
+pR
+QB
+im
+GR
+im
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+"}
+(8,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+nk
+nk
+ug
+GR
+im
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+"}
+(9,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+NN
+NN
+ug
+GR
+Oy
+Oy
+Oy
+ci
+Oy
+Oy
+Oy
+"}
+(10,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+NN
+NN
+FW
+GR
+Oy
+Oy
+ci
+sb
+ci
+Oy
+Oy
+"}
+(11,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+NN
+NN
+ug
+mz
+ci
+ci
+ci
+qE
+ci
+Oy
+Oy
+"}
+(12,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+NN
+NN
+ug
+Tm
+Oy
+ci
+ci
+ci
+ci
+Oy
+Kc
+"}
+(13,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+NN
+NN
+ug
+Tm
+Oy
+Oy
+ci
+ci
+Oy
+Oy
+Kc
+"}
+(14,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+NN
+NN
+ug
+Tm
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Kc
+"}
+(15,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+sn
+qT
+TW
+mZ
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+nk
+nk
+ug
+GR
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+"}
+(16,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+az
+Kw
+im
+ZZ
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+WL
+lD
+Kw
+WL
+im
+QB
+QB
+im
+GR
+Oy
+Oy
+Oy
+Oy
+Oy
+Kc
+oL
+"}
+(17,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+xa
+Qv
+Gr
+Gr
+Gr
+Gr
+Gr
+Gr
+Gr
+Gr
+Gr
+iT
+Tm
+Tm
+Tm
+jU
+Tm
+kM
+kM
+vx
+EN
+Tm
+GR
+Oy
+Oy
+Oy
+Oy
+Oy
+Kc
+oL
+"}
+(18,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+Dv
+EF
+Of
+kI
+uJ
+uJ
+uJ
+EF
+EF
+jX
+jX
+jX
+bV
+jX
+jX
+jX
+ih
+im
+Kw
+gz
+gz
+Kw
+Kw
+Oy
+Oy
+Oy
+Oy
+Oy
+Kc
+oL
+"}
+(19,1,1) = {"
+oL
+oL
+oL
+oL
+lu
+ub
+lI
+wZ
+ZK
+ZK
+Uj
+Uj
+lu
+Uj
+ba
+iy
+HK
+kX
+hH
+of
+vI
+xv
+mC
+mC
+Iy
+Iy
+YT
+mC
+Oy
+Oy
+Oy
+Kc
+Kc
+Kc
+oL
+"}
+(20,1,1) = {"
+oL
+oL
+oL
+oL
+lu
+oZ
+aD
+bP
+bP
+bP
+bP
+bP
+ZK
+lu
+xv
+SH
+kF
+Zy
+OA
+lF
+uw
+xv
+im
+Kw
+gz
+gz
+UE
+Oy
+Oy
+Oy
+Oy
+Kc
+Kc
+oL
+oL
+"}
+(21,1,1) = {"
+oL
+oL
+oL
+oL
+lu
+oZ
+Wd
+Yy
+Yy
+Yy
+yK
+bP
+ZK
+lu
+xv
+yB
+zg
+bF
+XM
+hj
+io
+xv
+Kw
+WL
+QB
+QB
+ug
+Oy
+Oy
+Oy
+Oy
+Kc
+Kc
+oL
+oL
+"}
+(22,1,1) = {"
+oL
+oL
+oL
+oL
+lu
+oZ
+bE
+cL
+cL
+cL
+GK
+bP
+Uj
+lu
+xv
+uh
+Mj
+kK
+DZ
+zD
+jt
+xv
+im
+ug
+lR
+lR
+ug
+Oy
+Oy
+Oy
+Kc
+Kc
+oL
+oL
+oL
+"}
+(23,1,1) = {"
+oL
+oL
+oL
+oL
+lu
+oZ
+bE
+cL
+ck
+cL
+GK
+Cb
+tI
+lu
+xv
+Ik
+JN
+WV
+YU
+Cp
+Eb
+xv
+tt
+ug
+Nk
+Nk
+Oy
+Oy
+Oy
+Oy
+Kc
+oL
+oL
+oL
+oL
+"}
+(24,1,1) = {"
+oL
+oL
+oL
+lu
+lu
+oZ
+bE
+cL
+cL
+cL
+GK
+bP
+Uj
+lu
+xv
+xC
+av
+Ej
+gN
+KR
+Bn
+xv
+Kw
+WJ
+WJ
+ug
+Oy
+Oy
+Oy
+Kc
+Kc
+oL
+oL
+oL
+oL
+"}
+(25,1,1) = {"
+oL
+oL
+lu
+jO
+Uj
+oZ
+hO
+Ap
+Ap
+Ap
+sT
+bP
+ZK
+lu
+Xe
+jX
+jX
+jX
+jX
+jX
+jX
+fq
+WJ
+WJ
+ug
+ug
+Oy
+Oy
+Oy
+Kc
+oL
+oL
+oL
+oL
+oL
+"}
+(26,1,1) = {"
+oL
+oL
+lu
+jO
+Uj
+oZ
+rB
+rB
+rB
+rB
+bf
+bP
+ZK
+lu
+ug
+ug
+ug
+ug
+ug
+ug
+ug
+WJ
+WJ
+ug
+ug
+Oy
+Oy
+Oy
+Oy
+Kc
+Kc
+oL
+oL
+oL
+oL
+"}
+(27,1,1) = {"
+oL
+oL
+lu
+Vd
+zM
+Sa
+Uj
+wZ
+ZK
+wB
+Uj
+Uj
+lu
+sL
+Sc
+Sc
+Sc
+Sc
+Sc
+Sc
+KC
+WJ
+ug
+ug
+Oy
+Oy
+Oy
+Oy
+Oy
+Kc
+oL
+oL
+oL
+oL
+oL
+"}
+(28,1,1) = {"
+oL
+oL
+lu
+FK
+FK
+Sa
+nI
+Uj
+FK
+Fx
+Uj
+lu
+zL
+LE
+Sc
+Sc
+Sc
+Sc
+Sc
+Sc
+KC
+ug
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Kc
+Kc
+oL
+oL
+oL
+oL
+"}
+(29,1,1) = {"
+oL
+lu
+lu
+FK
+FK
+ub
+Uj
+qV
+Wb
+lu
+lu
+oJ
+oJ
+ug
+ug
+ug
+ug
+ug
+ug
+ug
+ug
+Oy
+Oy
+Oy
+Oy
+Oy
+Kc
+Kc
+Kc
+Kc
+oL
+oL
+oL
+oL
+oL
+"}
+(30,1,1) = {"
+oL
+tZ
+Uj
+Uj
+Uj
+Sa
+Uj
+lu
+lu
+lu
+Oy
+oL
+oL
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+"}
+(31,1,1) = {"
+oL
+Tm
+fN
+fN
+ZL
+zr
+lu
+lu
+Oy
+Oy
+Oy
+oL
+oL
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Kc
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+"}
+(32,1,1) = {"
+oL
+im
+im
+GW
+Gm
+lu
+lu
+Oy
+Oy
+Oy
+Oy
+oL
+oL
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Oy
+Kc
+Kc
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+"}
+(33,1,1) = {"
+oL
+oL
+Kw
+xr
+ug
+ug
+Oy
+Oy
+Oy
+Oy
+Oy
+oL
+oL
+it
+Oy
+Oy
+Oy
+Kc
+Kc
+Kc
+Kc
+Kc
+Kc
+Kc
+Kc
+Kc
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+"}
+(34,1,1) = {"
+oL
+bk
+Kw
+ps
+ug
+Oy
+Oy
+Oy
+Oy
+Oy
+it
+oL
+oL
+it
+it
+Oy
+Kc
+Kc
+Kc
+oL
+oL
+oL
+Kc
+Kc
+Kc
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+"}
+(35,1,1) = {"
+oL
+oL
+Kw
+ps
+ug
+ug
+Oy
+Oy
+Oy
+it
+it
+oL
+oL
+it
+it
+Kc
+Kc
+Kc
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+"}
+(36,1,1) = {"
+oL
+oL
+Kw
+xr
+Kw
+ug
+Oy
+Oy
+it
+it
+it
+oL
+oL
+it
+it
+it
+Kc
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+"}
+(37,1,1) = {"
+oL
+oL
+im
+GM
+Rc
+ug
+Kc
+Kc
+Kc
+it
+oL
+oL
+it
+it
+it
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+"}
+(38,1,1) = {"
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+Kc
+Kc
+oL
+oL
+it
+it
+it
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+oL
+"}

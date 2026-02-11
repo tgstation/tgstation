@@ -37,3 +37,11 @@
 /datum/map_template/shuttle/arrival/nebula
 	suffix = "nebula"
 	name = "arrival shuttle (Nebula)"
+
+/// Troutstation Edit start
+
+/datum/map_template/shuttle/arrival/tiss
+	suffix = "tiss"
+	name = "arrival shuttle (Tisserand)"
+
+/// Troutstation Edit end

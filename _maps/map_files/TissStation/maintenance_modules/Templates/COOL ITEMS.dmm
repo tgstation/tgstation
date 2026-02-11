@@ -1,0 +1,236 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/item/clothing/suit/caution,
+/turf/open/space/basic,
+/area/space)
+"e" = (
+/obj/structure/votebox,
+/turf/open/space/basic,
+/area/space)
+"j" = (
+/obj/structure/fluff/sat_dish,
+/turf/open/space/basic,
+/area/space)
+"n" = (
+/obj/structure/mounted_gun/organ_gun,
+/turf/open/space/basic,
+/area/space)
+"p" = (
+/obj/item/clothing/head/mothcap/original,
+/obj/item/clothing/suit/mothcoat/original,
+/turf/open/space/basic,
+/area/space)
+"q" = (
+/obj/item/clothing/suit/armor/dragoon,
+/obj/item/clothing/head/helmet/dragoon,
+/obj/item/spear/skybulge,
+/turf/open/space/basic,
+/area/space)
+"s" = (
+/obj/structure/healingfountain,
+/turf/open/space/basic,
+/area/space)
+"v" = (
+/obj/item/clothing/suit/armor/balloon_vest,
+/obj/item/implanter/sad_trombone,
+/obj/item/clothing/head/helmet/balloon,
+/obj/item/clothing/head/hats/tophat/balloon,
+/obj/item/balloon_mallet,
+/obj/item/toy/waterballoon,
+/turf/open/space/basic,
+/area/space)
+"y" = (
+/obj/item/clothing/accessory/skilt,
+/obj/item/clothing/accessory/skullcodpiece,
+/obj/item/clothing/accessory/talisman,
+/turf/open/space/basic,
+/area/space)
+"z" = (
+/obj/item/clothing/suit/hooded/flashsuit,
+/obj/item/clothing/head/hooded/flashsuit,
+/turf/open/space/basic,
+/area/space)
+"A" = (
+/obj/item/firing_pin/dna/dredd,
+/turf/open/space/basic,
+/area/space)
+"B" = (
+/obj/vehicle/ridden/scooter,
+/turf/open/space/basic,
+/area/space)
+"E" = (
+/obj/structure/spider/effigy,
+/turf/open/space/basic,
+/area/space)
+"H" = (
+/turf/open/space/basic,
+/area/space)
+"J" = (
+/obj/structure/pinata,
+/turf/open/space/basic,
+/area/space)
+"K" = (
+/obj/vehicle/ridden/wheelchair/gold,
+/turf/open/space/basic,
+/area/space)
+"N" = (
+/obj/structure/fluff/preserved_borer,
+/turf/open/space/basic,
+/area/space)
+"O" = (
+/obj/item/rupee,
+/obj/item/shield/mirror,
+/turf/open/space/basic,
+/area/space)
+"P" = (
+/obj/item/mod/module/insignia/clown,
+/obj/item/mod/module/sphere_transform,
+/obj/item/mod/module/springlock/bite_of_87,
+/obj/item/mod/module/waddle,
+/turf/open/space/basic,
+/area/space)
+"Q" = (
+/obj/structure/reagent_dispensers/beerkeg,
+/turf/open/space/basic,
+/area/space)
+"T" = (
+/obj/item/broken_missile,
+/turf/open/space/basic,
+/area/space)
+"V" = (
+/obj/structure/fluff/empty_terrarium,
+/turf/open/space/basic,
+/area/space)
+"X" = (
+/obj/vehicle/ridden/atv,
+/turf/open/space/basic,
+/area/space)
+"Y" = (
+/obj/vehicle/sealed/car/vim,
+/turf/open/space/basic,
+/area/space)
+"Z" = (
+/obj/structure/toiletbong,
+/turf/open/space/basic,
+/area/space)
+
+(1,1,1) = {"
+H
+H
+H
+H
+H
+H
+H
+K
+Z
+A
+"}
+(2,1,1) = {"
+H
+H
+H
+H
+H
+H
+H
+Y
+E
+N
+"}
+(3,1,1) = {"
+H
+H
+H
+H
+H
+H
+H
+X
+Q
+V
+"}
+(4,1,1) = {"
+H
+H
+H
+H
+H
+H
+H
+B
+n
+j
+"}
+(5,1,1) = {"
+H
+H
+H
+H
+H
+H
+H
+H
+J
+s
+"}
+(6,1,1) = {"
+H
+H
+H
+H
+H
+H
+H
+H
+p
+T
+"}
+(7,1,1) = {"
+H
+H
+H
+H
+H
+H
+H
+H
+a
+z
+"}
+(8,1,1) = {"
+H
+H
+H
+H
+H
+H
+H
+H
+P
+O
+"}
+(9,1,1) = {"
+H
+H
+H
+H
+H
+H
+H
+H
+q
+y
+"}
+(10,1,1) = {"
+H
+H
+H
+H
+H
+H
+H
+H
+v
+e
+"}

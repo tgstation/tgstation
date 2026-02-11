@@ -1,0 +1,370 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"c" = (
+/obj/structure/window/bronze/spawner/directional/east{
+	pixel_x = 4
+	},
+/obj/machinery/conveyor/auto,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"d" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/conveyor/auto/inverted{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"e" = (
+/obj/docking_port/mobile/supply{
+	dir = 1
+	},
+/obj/machinery/door/airlock/sandstone,
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"h" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/conveyor/auto/inverted{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"i" = (
+/obj/machinery/conveyor/auto/inverted{
+	dir = 6
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"k" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/conveyor/auto/inverted{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"o" = (
+/obj/structure/window/bronze/fulltile,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"p" = (
+/turf/closed/wall/rock/porous,
+/area/shuttle/supply)
+"q" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/flashlight/lantern/on{
+	anchored = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"r" = (
+/obj/machinery/door/airlock/sandstone,
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"s" = (
+/obj/machinery/button/door/directional/south{
+	pixel_x = 6;
+	id = "cargounload";
+	name = "Loading Doors"
+	},
+/obj/machinery/button/door/directional/south{
+	pixel_x = -6;
+	id = "cargoload";
+	name = "Loading Doors"
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"u" = (
+/obj/machinery/conveyor/auto{
+	dir = 4
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"y" = (
+/obj/machinery/conveyor/auto{
+	dir = 9
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"z" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/conveyor/auto/inverted{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"C" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 4
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"E" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"H" = (
+/obj/structure/window/bronze/spawner/directional/east{
+	pixel_x = 4
+	},
+/obj/machinery/conveyor/auto{
+	dir = 10
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"J" = (
+/obj/machinery/conveyor/auto{
+	dir = 5
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"K" = (
+/obj/machinery/door/poddoor{
+	id = "cargounload";
+	name = "Supply Dock Unloading Door"
+	},
+/obj/machinery/conveyor/auto,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"L" = (
+/obj/machinery/conveyor/auto{
+	dir = 10
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"P" = (
+/obj/machinery/door/poddoor{
+	id = "cargoload";
+	name = "Supply Dock Loading Door"
+	},
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"Q" = (
+/obj/structure/window/bronze/spawner/directional/east{
+	pixel_x = 4
+	},
+/obj/machinery/conveyor/auto{
+	dir = 6
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"S" = (
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"T" = (
+/obj/machinery/conveyor/auto/inverted{
+	dir = 5
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"V" = (
+/obj/machinery/conveyor/auto{
+	dir = 6
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"W" = (
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+W
+W
+p
+p
+p
+W
+W
+"}
+(2,1,1) = {"
+W
+p
+p
+a
+p
+p
+W
+"}
+(3,1,1) = {"
+W
+p
+J
+E
+y
+p
+W
+"}
+(4,1,1) = {"
+W
+p
+u
+a
+S
+p
+W
+"}
+(5,1,1) = {"
+p
+p
+u
+a
+S
+p
+p
+"}
+(6,1,1) = {"
+p
+J
+d
+a
+k
+y
+p
+"}
+(7,1,1) = {"
+p
+u
+q
+a
+a
+S
+p
+"}
+(8,1,1) = {"
+p
+u
+a
+a
+a
+i
+P
+"}
+(9,1,1) = {"
+o
+u
+a
+a
+a
+a
+e
+"}
+(10,1,1) = {"
+p
+u
+a
+a
+a
+s
+p
+"}
+(11,1,1) = {"
+o
+u
+a
+a
+a
+a
+r
+"}
+(12,1,1) = {"
+p
+u
+a
+a
+a
+T
+K
+"}
+(13,1,1) = {"
+p
+u
+a
+a
+a
+S
+p
+"}
+(14,1,1) = {"
+p
+u
+a
+a
+a
+S
+p
+"}
+(15,1,1) = {"
+p
+u
+a
+a
+q
+S
+p
+"}
+(16,1,1) = {"
+p
+V
+h
+a
+z
+L
+p
+"}
+(17,1,1) = {"
+p
+p
+u
+a
+S
+p
+p
+"}
+(18,1,1) = {"
+W
+p
+Q
+c
+H
+p
+W
+"}
+(19,1,1) = {"
+W
+p
+C
+C
+C
+p
+W
+"}

@@ -1,0 +1,1890 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ay" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"aH" = (
+/obj/effect/spawner/random/engineering/canister,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"aQ" = (
+/obj/structure/transit_tube/crossing/horizontal,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"bE" = (
+/obj/machinery/computer/arcade/orion_trail/kobayashi{
+	dir = 1;
+	desc = "A test for all henchmen.";
+	name = "The Cocoon flight simulator";
+	prize_override = list(/obj/item/storage/backpack/henchmen = 1, /obj/item/gun/syringe/blowgun = 1, /obj/item/clothing/under/costume/henchmen = 1);
+	settlers = list("Henchman 21","Henchman 24","Henchman 1")
+	},
+/obj/effect/turf_decal/tile/dark/half,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"bH" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"bK" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"bU" = (
+/obj/structure/closet,
+/obj/item/storage/backpack/henchmen,
+/obj/item/clothing/under/costume/henchmen,
+/obj/item/clothing/neck/scarf/yellow,
+/obj/item/clothing/head/soft/yellow,
+/obj/item/clothing/head/beanie/yellow,
+/obj/item/clothing/mask/bandana/gold,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"cJ" = (
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"dg" = (
+/obj/machinery/modular_computer/preset/civilian{
+	dir = 4;
+	color = "#c551e0"
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/obj/machinery/light/floor,
+/obj/structure/cable,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"er" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/firealarm_sanity,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"fe" = (
+/obj/structure/steps/directional/east{
+	color = "#c551e0"
+	},
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"ff" = (
+/obj/effect/spawner/random/structure/crate,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"fF" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	color = "#7a3e73";
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/purple/corner{
+	color = "#7a3e73";
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"fM" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/maintenance/four,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"ga" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"gh" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	color = "#7a3e73";
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"gj" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"gk" = (
+/obj/machinery/modular_computer/preset/civilian{
+	dir = 1;
+	color = "#c551e0"
+	},
+/obj/effect/turf_decal/tile/dark/anticorner,
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"go" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"gv" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 9;
+	color = "#7a3e73"
+	},
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"gw" = (
+/obj/structure/closet,
+/obj/item/storage/backpack/henchmen,
+/obj/item/clothing/under/costume/henchmen,
+/obj/item/clothing/neck/scarf/yellow,
+/obj/item/clothing/head/soft/yellow,
+/obj/item/clothing/head/beanie/yellow,
+/obj/item/clothing/mask/bandana/gold,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"gN" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"ib" = (
+/obj/structure/steps/directional/north{
+	color = "#c551e0";
+	pixel_y = 5
+	},
+/obj/structure/chair/comfy/carp{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"iz" = (
+/obj/structure/cable,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"ja" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"jC" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"jH" = (
+/obj/effect/spawner/random/structure/crate,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"jP" = (
+/obj/effect/turf_decal/tile/dark,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"kC" = (
+/obj/effect/spawner/random/structure/tank_holder,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"kZ" = (
+/obj/modular_map_connector,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"lg" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	color = "#7a3e73";
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple/corner{
+	color = "#7a3e73"
+	},
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"ll" = (
+/obj/structure/transit_tube/crossing/horizontal,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"ln" = (
+/obj/structure/closet,
+/obj/item/storage/backpack/henchmen,
+/obj/item/clothing/under/costume/henchmen,
+/obj/item/clothing/neck/scarf/yellow,
+/obj/item/clothing/head/soft/yellow,
+/obj/item/clothing/head/beanie/yellow,
+/obj/item/clothing/mask/bandana/gold,
+/obj/effect/mapping_helpers/airalarm/tlv_no_checks,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"lr" = (
+/turf/template_noop,
+/area/template_noop)
+"lw" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	color = "#7a3e73";
+	dir = 4
+	},
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"lx" = (
+/obj/effect/spawner/random/trash/grille_or_waste,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"lz" = (
+/obj/structure/steps/directional/west{
+	color = "#c551e0"
+	},
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"mj" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"mo" = (
+/obj/item/mop,
+/obj/effect/spawner/random/trash/bucket,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"mI" = (
+/obj/effect/spawner/structure/window/bronze,
+/turf/open/floor/plating,
+/area/station/maintenance/cocoon)
+"mX" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"nW" = (
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"os" = (
+/turf/closed/wall,
+/area/station/maintenance/department/science/west)
+"qA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"qD" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 8;
+	color = "#7a3e73"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"rj" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"rQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/door/airlock/plasma/glass,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate/general,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
+/obj/effect/mapping_helpers/airlock/unres/delayed{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock_note_placer{
+	note_info = "We crashed, and my henchmen all left, but there are new costumes inside The Cocoon if you want to volunteer to replace them.";
+	note_name = "Note from the Monarch"
+	},
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"rT" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"sx" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 4;
+	color = "#7a3e73"
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"sR" = (
+/obj/structure/chair/comfy/carp,
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"tt" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 6;
+	color = "#7a3e73"
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"tX" = (
+/obj/effect/spawner/random/structure/closet_empty,
+/obj/effect/spawner/random/maintenance/four,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"ui" = (
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"up" = (
+/obj/machinery/modular_computer/preset/civilian{
+	dir = 8;
+	color = "#c551e0"
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"uH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"vn" = (
+/obj/structure/rack,
+/obj/item/screwdriver,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"vq" = (
+/obj/structure/cable,
+/obj/effect/spawner/random/engineering/tracking_beacon,
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"vv" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 8;
+	color = "#7a3e73"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"vx" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 5;
+	color = "#7a3e73"
+	},
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"wc" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1;
+	color = "#7a3e73"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"xV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/grime,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"yz" = (
+/obj/effect/spawner/random/structure/grille,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"zb" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/hazardvest,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"zp" = (
+/obj/effect/spawner/structure/window/plasma,
+/turf/open/floor/plating,
+/area/station/maintenance/cocoon)
+"zv" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 10;
+	color = "#7a3e73"
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"Al" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	color = "#7a3e73";
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"AA" = (
+/obj/effect/spawner/random/trash/janitor_supplies,
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"Bi" = (
+/turf/closed/wall/mineral/plasma,
+/area/station/maintenance/cocoon)
+"Bj" = (
+/obj/structure/steps/directional/north{
+	color = "#c551e0";
+	pixel_y = -5
+	},
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"BI" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"BS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/unres/delayed,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"BU" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"BY" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"Ck" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"CA" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	color = "#7a3e73"
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"DD" = (
+/obj/effect/spawner/random/engineering/tank,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"Ft" = (
+/obj/structure/steps/directional/north{
+	color = "#c551e0";
+	pixel_y = 5
+	},
+/obj/structure/chair/comfy/carp{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"FK" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/spawner/random/trash/grille_or_waste,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"Gb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"GK" = (
+/obj/machinery/computer/message_monitor{
+	dir = 4;
+	color = "#c551e0"
+	},
+/obj/effect/turf_decal/tile/dark/anticorner{
+	dir = 1
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"GY" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"Hf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"Hz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/effect/spawner/random/structure/steam_vent,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"HI" = (
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"Jb" = (
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"Jt" = (
+/obj/effect/spawner/random/structure/grille,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"Kv" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/transit_tube/diagonal/crossing,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"KG" = (
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"KQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/grime,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"Lk" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	color = "#7a3e73";
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"LH" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
+"LJ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"LV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"NF" = (
+/obj/structure/steps/directional/east{
+	color = "#c551e0"
+	},
+/obj/effect/turf_decal/tile/dark/anticorner,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"OA" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"OG" = (
+/obj/structure/chair/comfy/carp,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"OL" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"PF" = (
+/obj/effect/spawner/random/structure/tank_holder,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"QF" = (
+/obj/structure/reagent_dispensers/wall,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"Rb" = (
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"RA" = (
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+"RR" = (
+/obj/structure/transit_tube/crossing/horizontal,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"SL" = (
+/obj/machinery/computer/crew{
+	dir = 1;
+	color = "#c551e0"
+	},
+/obj/effect/turf_decal/tile/dark/anticorner{
+	dir = 8
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"SP" = (
+/obj/structure/steps/directional/north{
+	color = "#c551e0";
+	pixel_y = 5
+	},
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"Us" = (
+/obj/structure/transit_tube/diagonal/crossing,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"Ux" = (
+/obj/structure/steps/directional/west{
+	color = "#c551e0"
+	},
+/obj/effect/turf_decal/tile/dark/anticorner{
+	dir = 8
+	},
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"VI" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"VN" = (
+/obj/machinery/computer/old{
+	dir = 8;
+	color = "#c551e0"
+	},
+/obj/effect/turf_decal/tile/dark/anticorner{
+	dir = 4
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"VX" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"WT" = (
+/turf/closed/wall/mineral/bronze,
+/area/station/maintenance/cocoon)
+"Xr" = (
+/obj/structure/closet/firecloset,
+/obj/item/clothing/accessory/anti_sec_pin,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"XG" = (
+/obj/effect/spawner/random/structure/closet_empty,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"Yb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"YI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/grime,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+"ZK" = (
+/obj/structure/closet,
+/obj/item/storage/backpack/henchmen,
+/obj/item/clothing/under/costume/henchmen,
+/obj/item/clothing/neck/scarf/yellow,
+/obj/item/clothing/head/soft/yellow,
+/obj/item/clothing/head/beanie/yellow,
+/obj/item/clothing/mask/bandana/gold,
+/turf/open/floor/mineral/plasma,
+/area/station/maintenance/cocoon)
+"ZW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/west)
+
+(1,1,1) = {"
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+"}
+(2,1,1) = {"
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+RA
+RA
+RA
+lr
+lr
+lr
+lr
+"}
+(3,1,1) = {"
+lr
+nW
+kZ
+os
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+RA
+RA
+RA
+RA
+RA
+RA
+RA
+RA
+RA
+RA
+lr
+"}
+(4,1,1) = {"
+lr
+HI
+bK
+BI
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+RA
+RA
+RA
+WT
+WT
+mI
+mI
+mI
+WT
+WT
+VI
+RA
+RA
+RA
+RA
+RA
+RA
+lr
+"}
+(5,1,1) = {"
+lr
+lr
+os
+rT
+Yb
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+RA
+RA
+RA
+RA
+VI
+VI
+RA
+RA
+RA
+VI
+WT
+Bi
+Bi
+zp
+zp
+zp
+Bi
+Bi
+WT
+VI
+RA
+RA
+RA
+RA
+RA
+RA
+"}
+(6,1,1) = {"
+lr
+lr
+lr
+bH
+gj
+ga
+lr
+lr
+lr
+lr
+lr
+lr
+LH
+lr
+lr
+lr
+lr
+lr
+lr
+RA
+RA
+RA
+RA
+VI
+VI
+VI
+VI
+VI
+VI
+WT
+Bi
+bU
+CA
+sx
+sx
+lg
+lw
+gN
+Bi
+WT
+VI
+RA
+RA
+RA
+RA
+RA
+"}
+(7,1,1) = {"
+lr
+lr
+lr
+lr
+os
+rT
+lr
+lr
+lr
+lr
+LH
+LH
+LH
+lr
+lr
+LH
+LH
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+os
+os
+os
+os
+WT
+Bi
+fe
+tt
+GK
+dg
+Ux
+vx
+Lk
+Bi
+WT
+VI
+VI
+RA
+RA
+RA
+RA
+"}
+(8,1,1) = {"
+lr
+lr
+lr
+lr
+ui
+Kv
+os
+VI
+VI
+lr
+lr
+LH
+LH
+lr
+LH
+LH
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+os
+BY
+ff
+PF
+WT
+Bi
+cJ
+sR
+Bj
+Ft
+iz
+Rb
+SL
+wc
+ZK
+Bi
+WT
+VI
+VI
+RA
+RA
+RA
+"}
+(9,1,1) = {"
+lr
+lr
+lr
+lr
+Us
+rT
+os
+VI
+VI
+VI
+lr
+LH
+VI
+lr
+LH
+VI
+os
+os
+os
+os
+os
+os
+os
+os
+os
+ui
+VX
+Jb
+WT
+Bi
+OL
+cJ
+Bj
+SP
+vq
+OG
+bE
+wc
+ln
+Bi
+WT
+VI
+VI
+RA
+RA
+RA
+"}
+(10,1,1) = {"
+lr
+lr
+lr
+lr
+QF
+rT
+os
+os
+os
+os
+lr
+os
+os
+lr
+os
+os
+os
+jH
+ff
+os
+AA
+KG
+mo
+KG
+os
+yz
+yz
+ui
+WT
+Bi
+cJ
+sR
+Bj
+ib
+iz
+jP
+gk
+wc
+ZK
+Bi
+WT
+VI
+VI
+RA
+RA
+RA
+"}
+(11,1,1) = {"
+lr
+lr
+lr
+lr
+lr
+OA
+gj
+FK
+GY
+os
+lr
+os
+vn
+ll
+rj
+Hz
+Hf
+Hf
+Hf
+BS
+mj
+Hf
+Hf
+Gb
+os
+KG
+VX
+KG
+aH
+WT
+Bi
+lz
+zv
+VN
+up
+NF
+gv
+Al
+Bi
+WT
+VI
+VI
+VI
+RA
+RA
+lr
+"}
+(12,1,1) = {"
+lr
+lr
+lr
+lr
+lr
+kC
+BU
+BU
+mX
+lx
+ll
+zb
+KG
+aQ
+rT
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+Xr
+go
+Hf
+Hf
+Gb
+YI
+VX
+WT
+Bi
+LJ
+gh
+qD
+vv
+fF
+Al
+gw
+Bi
+WT
+VI
+VI
+VI
+RA
+RA
+lr
+"}
+(13,1,1) = {"
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+ja
+Hf
+RR
+Hf
+KQ
+RR
+ZW
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+uH
+os
+VX
+KG
+WT
+Bi
+Bi
+Bi
+ay
+Bi
+Bi
+Bi
+WT
+VI
+VI
+VI
+RA
+lr
+lr
+lr
+"}
+(14,1,1) = {"
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+LV
+Jt
+fM
+KG
+KG
+WT
+WT
+WT
+rQ
+WT
+WT
+WT
+os
+VI
+VI
+VI
+RA
+lr
+lr
+lr
+"}
+(15,1,1) = {"
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+LV
+yz
+yz
+VX
+os
+tX
+VX
+VX
+qA
+VX
+VX
+XG
+os
+VI
+VI
+VI
+RA
+lr
+lr
+lr
+"}
+(16,1,1) = {"
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+LV
+Ck
+Ck
+qA
+qA
+qA
+er
+Ck
+qA
+qA
+Ck
+os
+os
+VI
+VI
+VI
+VI
+RA
+lr
+lr
+"}
+(17,1,1) = {"
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+LV
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+Ck
+os
+os
+VI
+VI
+VI
+RA
+RA
+lr
+lr
+"}
+(18,1,1) = {"
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+LV
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+qA
+os
+os
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+"}
+(19,1,1) = {"
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+LV
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+qA
+KG
+os
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+"}
+(20,1,1) = {"
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+LV
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+xV
+VX
+DD
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+"}
+(21,1,1) = {"
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+jC
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+Ck
+qA
+VX
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+"}
+(22,1,1) = {"
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+"}

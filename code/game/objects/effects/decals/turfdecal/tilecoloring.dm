@@ -137,6 +137,15 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/neutral)
 
 TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/dark)
 
+/// Troutstation edit start - White tiles
+/obj/effect/turf_decal/tile/white
+	name = "white tile decal"
+	color = "#d9d9d9"
+	alpha = 255
+
+TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/white)
+/// Troutstation edit end
+
 /// Date-specific tiles
 /obj/effect/turf_decal/tile/holiday
 	name = "ERROR tile decal"

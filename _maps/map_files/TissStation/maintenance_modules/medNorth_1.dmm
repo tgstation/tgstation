@@ -1,0 +1,816 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"b" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"d" = (
+/obj/effect/spawner/random/structure/grille,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"e" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"g" = (
+/obj/effect/spawner/random/engineering/canister,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"i" = (
+/obj/structure/falsewall,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"j" = (
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"m" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"n" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/modular_map_connector,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"q" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"r" = (
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/no_decals/three,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"t" = (
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"v" = (
+/turf/closed/wall/r_wall,
+/area/station/maintenance/department/medical)
+"w" = (
+/obj/structure/railing,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"y" = (
+/obj/effect/spawner/random/structure/shipping_container/gas,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"z" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"A" = (
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"B" = (
+/obj/effect/spawner/random/structure/tank_holder,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"C" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"D" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/reagent_dispensers/plumbed{
+	dir = 8;
+	name = "service water reservoir"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"E" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"F" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"G" = (
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/no_decals/four,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"I" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"K" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"N" = (
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/no_decals/two,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"P" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"Q" = (
+/obj/effect/spawner/random/structure/grille,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"R" = (
+/obj/effect/decal/cleanable/confetti,
+/obj/item/storage/box/party_poppers,
+/obj/item/reagent_containers/spray/chemsprayer/party,
+/obj/item/clothing/mask/party_horn,
+/obj/item/clothing/head/costume/party/festive,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"S" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"V" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"W" = (
+/turf/template_noop,
+/area/template_noop)
+"X" = (
+/turf/closed/wall,
+/area/station/maintenance/department/medical)
+"Y" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"Z" = (
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+
+(1,1,1) = {"
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+Z
+b
+W
+W
+W
+W
+W
+W
+"}
+(2,1,1) = {"
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+Z
+Z
+b
+b
+W
+W
+W
+W
+W
+W
+"}
+(3,1,1) = {"
+W
+W
+W
+W
+W
+W
+W
+W
+W
+Z
+b
+b
+b
+b
+W
+W
+W
+W
+W
+W
+W
+"}
+(4,1,1) = {"
+W
+W
+W
+W
+W
+W
+W
+b
+b
+b
+X
+X
+X
+X
+W
+W
+W
+W
+W
+W
+W
+"}
+(5,1,1) = {"
+W
+W
+W
+W
+W
+W
+b
+X
+X
+X
+X
+d
+a
+e
+W
+W
+W
+W
+W
+W
+W
+"}
+(6,1,1) = {"
+W
+W
+W
+W
+W
+Z
+b
+X
+a
+e
+e
+e
+e
+t
+W
+W
+W
+W
+W
+W
+W
+"}
+(7,1,1) = {"
+W
+W
+W
+W
+W
+Z
+b
+X
+e
+Q
+N
+t
+t
+B
+W
+W
+W
+W
+W
+W
+W
+"}
+(8,1,1) = {"
+W
+W
+W
+W
+W
+b
+X
+X
+e
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(9,1,1) = {"
+W
+W
+W
+W
+b
+b
+X
+z
+e
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(10,1,1) = {"
+W
+W
+W
+W
+b
+X
+X
+V
+e
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(11,1,1) = {"
+W
+W
+W
+W
+b
+X
+e
+e
+a
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(12,1,1) = {"
+W
+W
+W
+Z
+b
+X
+e
+X
+X
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(13,1,1) = {"
+W
+W
+W
+b
+b
+X
+e
+X
+R
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(14,1,1) = {"
+W
+W
+Z
+b
+b
+X
+e
+X
+i
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(15,1,1) = {"
+W
+W
+Z
+b
+b
+X
+e
+e
+a
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(16,1,1) = {"
+W
+W
+Z
+b
+b
+X
+v
+v
+a
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(17,1,1) = {"
+W
+Z
+b
+b
+X
+X
+b
+b
+a
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}
+(18,1,1) = {"
+W
+Z
+b
+b
+X
+g
+t
+y
+e
+K
+w
+G
+A
+D
+W
+W
+W
+W
+W
+n
+W
+"}
+(19,1,1) = {"
+Z
+Z
+b
+b
+X
+g
+t
+t
+e
+a
+a
+e
+e
+e
+W
+W
+W
+W
+W
+E
+W
+"}
+(20,1,1) = {"
+Z
+b
+b
+b
+X
+K
+K
+K
+S
+X
+X
+X
+X
+X
+W
+W
+W
+W
+W
+F
+W
+"}
+(21,1,1) = {"
+W
+b
+b
+b
+X
+A
+K
+K
+t
+b
+b
+b
+b
+b
+W
+W
+W
+W
+W
+P
+W
+"}
+(22,1,1) = {"
+W
+W
+b
+b
+b
+X
+b
+X
+X
+b
+b
+b
+b
+b
+b
+b
+b
+X
+I
+E
+W
+"}
+(23,1,1) = {"
+W
+W
+W
+Z
+Z
+b
+b
+b
+b
+b
+Z
+Z
+Z
+Z
+b
+b
+b
+X
+m
+C
+W
+"}
+(24,1,1) = {"
+W
+W
+W
+W
+W
+W
+b
+b
+b
+Z
+W
+W
+W
+Z
+b
+b
+X
+X
+K
+Y
+W
+"}
+(25,1,1) = {"
+W
+W
+W
+W
+W
+W
+W
+Z
+Z
+W
+W
+W
+W
+W
+b
+X
+X
+r
+K
+q
+W
+"}
+(26,1,1) = {"
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+b
+b
+X
+j
+K
+K
+q
+W
+"}
+(27,1,1) = {"
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+W
+"}

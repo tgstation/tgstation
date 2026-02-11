@@ -56,3 +56,12 @@
 	name = "Obelisk"
 	description = "A large research vessel affected by the Cult of Nar'Sie. PACMAN generator is not wired and next to main grid cabling, so it requires some work."
 	admin_notes = "Not actually an obelisk, has nonsentient cult constructs."
+
+/// Troutstation Edit start
+
+/datum/map_template/shuttle/whiteship/tiss
+	suffix = "tiss"
+	name = "NT Logging Caravel"
+	description = "A small ship formerly carrying engineers on a logging mission. Now contains some rather suspicious trees."
+
+/// Troutstation Edit end

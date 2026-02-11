@@ -1,0 +1,2600 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"am" = (
+/obj/effect/spawner/random/trash/grille_or_waste,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"ap" = (
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"aq" = (
+/obj/structure/closet/wardrobe/mixed,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"aP" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"bg" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/transit_tube/curved{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
+"bh" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/central)
+"bo" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"bt" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"bP" = (
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"bV" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/station/commons/fitness/recreation/bowling)
+"cu" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/structure/punji_sticks,
+/turf/open/misc/grass/jungle/station,
+/area/station/maintenance/starboard/central)
+"cA" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/structure/punji_sticks,
+/turf/open/misc/grass/jungle/station,
+/area/station/maintenance/starboard/central)
+"cS" = (
+/obj/structure/closet/crate/glitter/lavender,
+/obj/item/grenade/mirage,
+/obj/item/grenade/mirage,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"de" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/station/commons/fitness/recreation/bowling)
+"dD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"dJ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/station/commons/fitness/recreation/bowling)
+"ej" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"eL" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/commons/fitness/recreation/bowling)
+"fE" = (
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"fV" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/aft)
+"gq" = (
+/obj/structure/transit_tube/curved/flipped{
+	dir = 4
+	},
+/turf/template_noop,
+/area/station/commons/fitness/recreation/bowling)
+"gD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"gN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"gQ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"hc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola{
+	pixel_y = 6
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood/parquet,
+/area/station/commons/fitness/recreation/bowling)
+"hd" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"iy" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/sneakers/purple{
+	pixel_y = -4
+	},
+/obj/item/clothing/shoes/sneakers/blue{
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/parquet,
+/area/station/commons/fitness/recreation/bowling)
+"iM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"iS" = (
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"ja" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"je" = (
+/obj/structure/table,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"jl" = (
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"jF" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/maintenance/department/science/west)
+"jI" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/transit_tube/diagonal/topleft,
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
+"jN" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"kg" = (
+/obj/structure/transit_tube/diagonal/crossing/topleft,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"kr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/structure/railing{
+	dir = 4;
+	pixel_x = 2
+	},
+/obj/item/plate/large,
+/obj/item/food/fishandchips,
+/obj/machinery/light/floor,
+/turf/open/floor/wood/parquet,
+/area/station/commons/fitness/recreation/bowling)
+"kC" = (
+/turf/open/floor/wood/large,
+/area/station/commons/fitness/recreation/bowling)
+"lj" = (
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/obj/item/popsicle_stick{
+	pixel_x = 8;
+	name = "totally real bowling pin";
+	desc = "Listen. We'll get real bowling pins some day. Just pretend, okay?";
+	pixel_y = -16
+	},
+/obj/item/popsicle_stick{
+	name = "totally real bowling pin";
+	desc = "Listen. We'll get real bowling pins some day. Just pretend, okay?";
+	pixel_y = -5;
+	pixel_x = 16
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/wood/bowling,
+/area/station/commons/fitness/recreation/bowling)
+"lU" = (
+/turf/template_noop,
+/area/template_noop)
+"mh" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"mM" = (
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood/bowling,
+/area/station/commons/fitness/recreation/bowling)
+"ni" = (
+/obj/structure/falsewall,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"nk" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4;
+	pixel_x = 2
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/chair/stool/directional/south,
+/turf/open/floor/wood/large,
+/area/station/commons/fitness/recreation/bowling)
+"nr" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/sneakers/black{
+	pixel_y = -4
+	},
+/obj/item/clothing/shoes/sneakers/green{
+	pixel_y = 4
+	},
+/obj/structure/railing{
+	dir = 4;
+	pixel_x = 2
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood/parquet,
+/area/station/commons/fitness/recreation/bowling)
+"nD" = (
+/obj/machinery/door/airlock/glass,
+/obj/effect/landmark/navigate_destination{
+	location = "Boxing Ring"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"oK" = (
+/obj/structure/railing{
+	dir = 4;
+	pixel_x = 2
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/wood/large,
+/area/station/commons/fitness/recreation/bowling)
+"oO" = (
+/obj/structure/transit_tube/diagonal/crossing/topleft,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"pm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres/delayed{
+	dir = 8
+	},
+/obj/machinery/door/airlock/maintenance,
+/turf/open/floor/plating,
+/area/station/commons/fitness/recreation/bowling)
+"py" = (
+/obj/structure/transit_tube/diagonal,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/station/commons/fitness/recreation/bowling)
+"pM" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/sneakers/orange{
+	pixel_y = -4
+	},
+/obj/item/clothing/shoes/sneakers/red{
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/parquet,
+/area/station/commons/fitness/recreation/bowling)
+"pV" = (
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"qs" = (
+/obj/structure/railing{
+	dir = 4;
+	pixel_x = 2
+	},
+/obj/item/popsicle_stick{
+	pixel_x = 8;
+	name = "totally real bowling pin";
+	desc = "Listen. We'll get real bowling pins some day. Just pretend, okay?";
+	pixel_y = -4
+	},
+/obj/item/popsicle_stick{
+	pixel_x = -8;
+	name = "totally real bowling pin";
+	desc = "Listen. We'll get real bowling pins some day. Just pretend, okay?";
+	pixel_y = -4
+	},
+/obj/item/popsicle_stick{
+	name = "totally real bowling pin";
+	desc = "Listen. We'll get real bowling pins some day. Just pretend, okay?";
+	pixel_y = 6
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark/corner{
+	dir = 4
+	},
+/turf/open/floor/wood/bowling,
+/area/station/commons/fitness/recreation/bowling)
+"qV" = (
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/station/commons/fitness/recreation/bowling)
+"rf" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"rA" = (
+/obj/structure/railing{
+	dir = 4;
+	pixel_x = 2
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 4
+	},
+/obj/item/popsicle_stick{
+	pixel_x = -8;
+	name = "totally real bowling pin";
+	desc = "Listen. We'll get real bowling pins some day. Just pretend, okay?";
+	pixel_y = -16
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/turf/open/floor/wood/bowling,
+/area/station/commons/fitness/recreation/bowling)
+"rN" = (
+/obj/structure/chair/stool/directional/west,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"sd" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"si" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/stool/directional/south,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"sq" = (
+/obj/modular_map_connector,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"sr" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood/large,
+/area/station/commons/fitness/recreation/bowling)
+"ss" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood/large,
+/area/station/commons/fitness/recreation/bowling)
+"ta" = (
+/turf/closed/wall,
+/area/station/commons/fitness/recreation/bowling)
+"to" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/transit_tube/diagonal,
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
+"tJ" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 1
+	},
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"tR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"up" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"us" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"uL" = (
+/obj/structure/railing,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"uO" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/commons/fitness/recreation/bowling)
+"uT" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"vy" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/structure/table,
+/obj/machinery/light/directional/east,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"vR" = (
+/obj/item/popsicle_stick{
+	pixel_x = -8;
+	name = "totally real bowling pin";
+	desc = "Listen. We'll get real bowling pins some day. Just pretend, okay?";
+	pixel_y = -4
+	},
+/obj/item/popsicle_stick{
+	pixel_x = 8;
+	name = "totally real bowling pin";
+	desc = "Listen. We'll get real bowling pins some day. Just pretend, okay?";
+	pixel_y = -4
+	},
+/obj/item/popsicle_stick{
+	name = "totally real bowling pin";
+	desc = "Listen. We'll get real bowling pins some day. Just pretend, okay?";
+	pixel_y = 6
+	},
+/obj/item/popsicle_stick{
+	name = "totally real bowling pin";
+	desc = "Listen. We'll get real bowling pins some day. Just pretend, okay?";
+	pixel_y = 6;
+	pixel_x = 16
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark/corner{
+	dir = 1
+	},
+/turf/open/floor/wood/bowling,
+/area/station/commons/fitness/recreation/bowling)
+"wc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/shipping_container,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"wt" = (
+/obj/structure/transit_tube/curved/flipped{
+	dir = 1
+	},
+/obj/effect/spawner/structure/window/reinforced/tinted,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"xe" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/punji_sticks,
+/obj/structure/sign/warning/directional/east,
+/obj/machinery/light/blacklight/directional/east,
+/turf/open/misc/grass/jungle/station,
+/area/station/maintenance/starboard/central)
+"xO" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/sneakers/rainbow{
+	pixel_y = -4
+	},
+/obj/item/clothing/shoes/sneakers/white{
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood/parquet,
+/area/station/commons/fitness/recreation/bowling)
+"yr" = (
+/obj/machinery/conveyor/auto/inverted,
+/obj/structure/railing{
+	dir = 4;
+	pixel_x = 2
+	},
+/turf/open/floor/iron/smooth,
+/area/station/commons/fitness/recreation/bowling)
+"yV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/garbage{
+	spawn_scatter_radius = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"zg" = (
+/obj/structure/table,
+/obj/machinery/light/directional/north,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"zt" = (
+/obj/structure/transit_tube,
+/obj/effect/spawner/structure/window/reinforced/tinted,
+/turf/open/floor/plating,
+/area/station/commons/fitness/recreation/bowling)
+"zz" = (
+/obj/effect/spawner/random/structure/crate_loot,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Ab" = (
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Al" = (
+/obj/machinery/conveyor/auto{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/station/commons/fitness/recreation/bowling)
+"AV" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/transit_tube/curved{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
+"Bq" = (
+/obj/structure/railing{
+	dir = 4;
+	pixel_x = 2
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/turf/open/floor/wood/bowling,
+/area/station/commons/fitness/recreation/bowling)
+"BX" = (
+/obj/structure/transit_tube/curved/flipped,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Ck" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"DJ" = (
+/obj/structure/transit_tube/curved,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/plastic,
+/area/station/commons/fitness/recreation/bowling)
+"DW" = (
+/obj/effect/spawner/random/engineering/canister,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Es" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"EX" = (
+/obj/structure/transit_tube,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"EZ" = (
+/obj/structure/chair/stool/directional/south,
+/obj/item/radio/intercom/directional/east,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"Ff" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 5
+	},
+/turf/open/floor/plastic,
+/area/station/commons/fitness/recreation/bowling)
+"Fn" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/transit_tube/curved/flipped{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
+"FC" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"FT" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/station/commons/fitness/recreation/bowling)
+"FU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/transit_tube/diagonal/crossing/topleft,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Gl" = (
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4;
+	pixel_x = 2
+	},
+/turf/open/floor/iron/smooth,
+/area/station/commons/fitness/recreation/bowling)
+"GC" = (
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"GP" = (
+/obj/structure/transit_tube,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 10
+	},
+/turf/open/floor/plastic,
+/area/station/commons/fitness/recreation/bowling)
+"Hx" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"HO" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
+"Ij" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/station/commons/fitness/recreation/bowling)
+"Ip" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood/parquet,
+/area/station/commons/fitness/recreation/bowling)
+"IF" = (
+/obj/machinery/conveyor/auto/inverted,
+/obj/structure/railing{
+	dir = 4;
+	pixel_x = 2
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/iron/smooth,
+/area/station/commons/fitness/recreation/bowling)
+"IH" = (
+/obj/effect/spawner/random/maintenance,
+/obj/structure/closet,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"JC" = (
+/obj/effect/spawner/random/structure/grille,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"JP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/chair/stool/directional/east,
+/obj/machinery/light/directional/north,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"Ka" = (
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Ks" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"KJ" = (
+/obj/structure/chair/sofa/middle/maroon{
+	dir = 8;
+	pixel_y = 8;
+	pixel_x = 8
+	},
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"Lz" = (
+/obj/structure/transit_tube/crossing/horizontal,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"LY" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"LZ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"Ma" = (
+/obj/machinery/conveyor/auto/inverted,
+/obj/machinery/light/red/directional/south,
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/turf/open/floor/iron/smooth,
+/area/station/commons/fitness/recreation/bowling)
+"Me" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"Mr" = (
+/obj/item/storage/pill_bottle/maintenance_pill/full,
+/obj/structure/table/wood,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Mw" = (
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/wood/bowling,
+/area/station/commons/fitness/recreation/bowling)
+"MO" = (
+/obj/structure/chair/sofa/right/maroon{
+	dir = 8;
+	pixel_y = 8;
+	pixel_x = 8
+	},
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"Nd" = (
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"Nf" = (
+/obj/structure/rack,
+/obj/item/food/grown/bowling_ball{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/food/grown/bowling_ball{
+	pixel_x = -4;
+	pixel_y = -6
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/light/floor,
+/turf/open/floor/wood/large,
+/area/station/commons/fitness/recreation/bowling)
+"Nh" = (
+/obj/effect/spawner/structure/window/reinforced/tinted,
+/obj/structure/transit_tube,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Nz" = (
+/turf/open/floor/wood/parquet,
+/area/station/commons/fitness/recreation/bowling)
+"On" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/parquet,
+/area/station/commons/fitness/recreation/bowling)
+"Op" = (
+/obj/item/popsicle_stick{
+	pixel_x = -8;
+	name = "totally real bowling pin";
+	desc = "Listen. We'll get real bowling pins some day. Just pretend, okay?";
+	pixel_y = -4
+	},
+/obj/item/popsicle_stick{
+	pixel_x = 8;
+	name = "totally real bowling pin";
+	desc = "Listen. We'll get real bowling pins some day. Just pretend, okay?";
+	pixel_y = -4
+	},
+/obj/item/popsicle_stick{
+	name = "totally real bowling pin";
+	desc = "Listen. We'll get real bowling pins some day. Just pretend, okay?";
+	pixel_y = 6
+	},
+/obj/item/popsicle_stick{
+	name = "totally real bowling pin";
+	desc = "Listen. We'll get real bowling pins some day. Just pretend, okay?";
+	pixel_y = 6;
+	pixel_x = 16
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark/corner{
+	dir = 1
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood/bowling,
+/area/station/commons/fitness/recreation/bowling)
+"ON" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/station/commons/fitness/recreation/bowling)
+"OP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"OX" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Pr" = (
+/obj/structure/rack,
+/obj/item/food/grown/bowling_ball{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/food/grown/bowling_ball{
+	pixel_x = -4;
+	pixel_y = -6
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/wood/large,
+/area/station/commons/fitness/recreation/bowling)
+"PY" = (
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+"Qt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/effect/spawner/random/engineering/material_cheap,
+/obj/effect/spawner/random/maintenance/four,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Qv" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"QB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"QE" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 9
+	},
+/turf/open/floor/plastic,
+/area/station/commons/fitness/recreation/bowling)
+"Rr" = (
+/obj/effect/spawner/random/structure/crate_loot,
+/obj/effect/spawner/random/engineering/tool_advanced,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"RZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"SY" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/transit_tube,
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
+"Tw" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"TU" = (
+/obj/effect/spawner/random/trash/garbage{
+	spawn_scatter_radius = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Vc" = (
+/obj/structure/closet/crate/hydroponics{
+	name = "hydroponics equipment crate"
+	},
+/obj/item/shovel/spade,
+/obj/item/cultivator,
+/obj/item/plant_analyzer,
+/obj/item/reagent_containers/cup/jerrycan/eznutriment,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"Vx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/chair/stool/directional/south,
+/turf/open/floor/wood/large,
+/area/station/commons/fitness/recreation/bowling)
+"VH" = (
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Wo" = (
+/obj/structure/table/glass,
+/obj/item/food/grown/bowling_ball{
+	pixel_y = 7
+	},
+/obj/item/food/grown/bowling_ball{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/food/grown/bowling_ball{
+	pixel_x = -8
+	},
+/obj/item/food/grown/bowling_ball,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"WI" = (
+/obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
+/obj/machinery/door/airlock,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"WL" = (
+/obj/structure/transit_tube/curved,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/station/commons/fitness/recreation/bowling)
+"WS" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Xg" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood/large,
+/area/station/commons/fitness/recreation/bowling)
+"Xk" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/transit_tube/horizontal,
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
+"Xn" = (
+/obj/effect/spawner/structure/window/hollow,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"XB" = (
+/obj/structure/railing,
+/obj/structure/chair/sofa/left/maroon{
+	dir = 8;
+	pixel_y = 8;
+	pixel_x = 8
+	},
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"XE" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/large,
+/area/station/commons/fitness/recreation/bowling)
+"XO" = (
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"Yc" = (
+/obj/structure/table/glass,
+/obj/item/seeds/coconut{
+	pixel_x = -5
+	},
+/obj/item/seeds/bowling_ball{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/seeds/bowling_ball{
+	pixel_x = 2
+	},
+/obj/item/seeds/bowling_ball{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+"YM" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/station/commons/fitness/recreation/bowling)
+"YT" = (
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"YY" = (
+/obj/structure/transit_tube,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 6
+	},
+/turf/open/floor/plastic,
+/area/station/commons/fitness/recreation/bowling)
+"Ze" = (
+/obj/structure/transit_tube/curved{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
+"Zm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood/large,
+/area/station/commons/fitness/recreation/bowling)
+"Zz" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/eighties,
+/area/station/commons/fitness/recreation/bowling)
+"ZY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/central)
+
+(1,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+"}
+(2,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+sq
+lU
+lU
+lU
+lU
+lU
+"}
+(3,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+OP
+OP
+OP
+lU
+lU
+lU
+"}
+(4,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+OP
+gQ
+iS
+bh
+lU
+lU
+"}
+(5,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+bP
+iS
+gQ
+Ze
+iS
+fE
+Lz
+iS
+gQ
+wc
+bt
+gQ
+iS
+bh
+lU
+lU
+"}
+(6,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+bh
+pV
+VH
+gQ
+kg
+iS
+Lz
+IH
+gQ
+iS
+OP
+bo
+RZ
+bh
+fV
+lU
+"}
+(7,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+bh
+bh
+zz
+JC
+iS
+kg
+Ze
+QB
+iS
+gQ
+ej
+bh
+ni
+gQ
+bh
+jN
+"}
+(8,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+iS
+kg
+kg
+iS
+gQ
+OP
+bh
+bh
+Mr
+bh
+jN
+"}
+(9,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+IH
+iS
+kg
+kg
+gQ
+OP
+JC
+bh
+bh
+bh
+jN
+"}
+(10,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+bh
+gQ
+gQ
+kg
+oO
+OP
+JC
+iS
+bh
+bh
+jN
+"}
+(11,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+bh
+Ka
+yV
+iS
+kg
+FU
+iS
+iS
+bh
+jN
+jN
+"}
+(12,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+bh
+WS
+iS
+QB
+iS
+FU
+kg
+iS
+bh
+jN
+HO
+"}
+(13,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+bh
+bh
+JC
+iS
+gQ
+OP
+kg
+BX
+wt
+HO
+HO
+"}
+(14,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+cS
+bh
+bh
+FC
+FC
+bt
+gQ
+BX
+wt
+jI
+HO
+"}
+(15,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+sd
+Hx
+WS
+fE
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+mh
+mh
+bh
+bh
+bh
+OP
+IH
+bh
+bh
+bg
+bg
+"}
+(16,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+Qv
+gQ
+iS
+Tw
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+fE
+iS
+fE
+iS
+gQ
+gQ
+gQ
+iS
+fE
+IH
+OP
+bh
+bh
+jN
+Xk
+Xk
+"}
+(17,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+iM
+OP
+OP
+bt
+bt
+bt
+OP
+bt
+bt
+OP
+OP
+OP
+bt
+bt
+OP
+bt
+bt
+tR
+Ck
+OP
+bt
+bt
+bt
+bt
+OP
+bh
+jN
+jN
+Xk
+Xk
+"}
+(18,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+pm
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+jN
+Ks
+Ks
+Ks
+aq
+gQ
+us
+iS
+cu
+xe
+cA
+iS
+iS
+bh
+bh
+jN
+jN
+Xk
+Xk
+"}
+(19,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+Xg
+dJ
+dJ
+sr
+mM
+Mw
+Mw
+lj
+Op
+Al
+ta
+jN
+jN
+Ks
+bh
+bh
+QB
+us
+Ka
+bh
+bh
+bh
+JC
+JC
+bh
+jN
+PY
+PY
+Xk
+Xk
+"}
+(20,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+Vx
+kC
+kC
+XE
+Bq
+Bq
+Bq
+rA
+qs
+Al
+ta
+jN
+jN
+jN
+bh
+OX
+gQ
+us
+bh
+bh
+Hx
+iS
+iS
+bh
+bh
+jN
+PY
+PY
+Xk
+Xk
+"}
+(21,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+Vx
+kC
+Pr
+Nf
+yr
+yr
+IF
+yr
+yr
+Ma
+ta
+jN
+jN
+jN
+jN
+TU
+gQ
+am
+bh
+Rr
+iS
+iS
+Ab
+bh
+jN
+jN
+PY
+PY
+Xk
+Xk
+"}
+(22,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+Zm
+de
+kC
+XE
+Mw
+Mw
+Mw
+lj
+vR
+qV
+ta
+jN
+jN
+jN
+jN
+bP
+iS
+us
+bh
+DW
+Qt
+bh
+bh
+bh
+jN
+PY
+PY
+HO
+Fn
+Fn
+"}
+(23,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+Vx
+kC
+kC
+XE
+Bq
+Bq
+Bq
+rA
+qs
+Al
+ta
+jN
+jN
+jN
+jN
+bh
+Xn
+WI
+bh
+bh
+bh
+bh
+bh
+jN
+jN
+PY
+HO
+to
+to
+lU
+"}
+(24,1,1) = {"
+lU
+lU
+lU
+lU
+lU
+nk
+uO
+Pr
+Nf
+yr
+yr
+IF
+yr
+yr
+Ma
+ta
+jN
+jN
+jN
+Vc
+ap
+up
+ZY
+ap
+Yc
+bh
+bh
+jN
+jN
+PY
+PY
+to
+to
+lU
+lU
+"}
+(25,1,1) = {"
+lU
+lU
+lU
+xO
+Ip
+hc
+bV
+kC
+XE
+Mw
+Mw
+Mw
+lj
+vR
+qV
+ta
+jN
+jN
+jN
+ap
+jl
+ap
+ap
+Wo
+bh
+bh
+jN
+jN
+jN
+PY
+to
+to
+lU
+lU
+lU
+"}
+(26,1,1) = {"
+lU
+lU
+lU
+pM
+Nz
+On
+ss
+Ij
+oK
+Bq
+Bq
+Bq
+rA
+qs
+Gl
+ta
+bh
+jN
+bh
+LY
+Nd
+Nd
+aP
+bh
+bh
+jN
+jN
+jN
+jN
+to
+to
+lU
+lU
+lU
+lU
+"}
+(27,1,1) = {"
+lU
+lU
+lU
+iy
+Nz
+On
+YT
+YT
+MO
+KJ
+XB
+QE
+ON
+WL
+GP
+zt
+EX
+EX
+EX
+EX
+EX
+EX
+EX
+Nh
+SY
+SY
+SY
+SY
+AV
+to
+lU
+lU
+lU
+lU
+lU
+"}
+(28,1,1) = {"
+lU
+lU
+lU
+nr
+YM
+kr
+YT
+YT
+YT
+hd
+uL
+Ff
+py
+DJ
+YY
+zt
+EX
+EX
+EX
+EX
+EX
+EX
+EX
+Nh
+SY
+SY
+SY
+SY
+AV
+PY
+PY
+lU
+lU
+lU
+lU
+"}
+(29,1,1) = {"
+lU
+ta
+lU
+YT
+YT
+gD
+YT
+EZ
+tJ
+ta
+ta
+gq
+gq
+ta
+ta
+ta
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+jN
+jN
+PY
+PY
+PY
+PY
+lU
+lU
+lU
+lU
+lU
+"}
+(30,1,1) = {"
+lU
+dD
+YT
+YT
+YT
+gN
+Me
+ta
+ta
+ta
+jN
+lU
+lU
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+"}
+(31,1,1) = {"
+lU
+JP
+dD
+ja
+si
+vy
+ta
+ta
+jN
+jN
+jN
+lU
+lU
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+PY
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+"}
+(32,1,1) = {"
+lU
+je
+XO
+rf
+Es
+ta
+ta
+jN
+jN
+jN
+jN
+lU
+lU
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+PY
+PY
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+"}
+(33,1,1) = {"
+lU
+lU
+YT
+Zz
+ta
+ta
+jN
+jN
+jN
+jN
+jN
+lU
+lU
+HO
+jN
+jN
+jN
+PY
+PY
+PY
+PY
+PY
+PY
+PY
+PY
+PY
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+"}
+(34,1,1) = {"
+lU
+nD
+YT
+uT
+ta
+jN
+jN
+jN
+jN
+jN
+HO
+lU
+lU
+HO
+HO
+jN
+PY
+PY
+PY
+lU
+lU
+lU
+PY
+PY
+PY
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+"}
+(35,1,1) = {"
+lU
+lU
+GC
+LZ
+ta
+ta
+jN
+jN
+jN
+HO
+HO
+lU
+lU
+HO
+HO
+PY
+PY
+PY
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+"}
+(36,1,1) = {"
+lU
+lU
+zg
+rf
+YT
+ta
+jN
+jN
+HO
+HO
+HO
+lU
+lU
+HO
+HO
+HO
+PY
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+"}
+(37,1,1) = {"
+lU
+lU
+rN
+FT
+eL
+ta
+PY
+PY
+PY
+HO
+lU
+lU
+HO
+HO
+HO
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+"}
+(38,1,1) = {"
+lU
+lU
+lU
+lU
+jF
+lU
+lU
+PY
+PY
+lU
+lU
+HO
+HO
+HO
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+"}

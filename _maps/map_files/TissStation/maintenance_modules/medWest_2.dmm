@@ -1,0 +1,1126 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"bv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock{
+	name = "Unisex Showers"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/unres/delayed,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/medical)
+"dB" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"dJ" = (
+/obj/structure/sign/poster/official/no_erp/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer{
+	initial_gas_mix = "o2=22;n2=82;water_vapor=50;TEMP=293.15"
+	},
+/area/station/maintenance/department/medical)
+"fb" = (
+/obj/machinery/space_heater,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"fq" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"fG" = (
+/obj/structure/closet/secure_closet/personal{
+	anchored = 1;
+	name = "Vaska's Locker"
+	},
+/obj/item/clothing/shoes/cowboy/black/laced{
+	name = "Vaska's Boots"
+	},
+/obj/item/clothing/under/costume/buttondown/slacks/service{
+	greyscale_colors = "#233e69#cbdbfc#333333#343434";
+	name = "Vaska's Button-down"
+	},
+/obj/item/clothing/accessory/waistcoat{
+	greyscale_colors = "#333333";
+	name = "Vaska's Waistcoat"
+	},
+/obj/item/clothing/neck/tie{
+	greyscale_colors = "#FFFFFF";
+	name = "Vaska's Tie"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/medical)
+"gr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"hr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/medical)
+"ip" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/random/directional/south,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/medical)
+"iu" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/random/directional/south,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"iW" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"jy" = (
+/turf/closed/wall,
+/area/station/maintenance/department/medical)
+"jF" = (
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+"ki" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/medical)
+"ky" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/medical)
+"kI" = (
+/obj/effect/spawner/random/structure/table_or_rack,
+/obj/effect/spawner/random/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"kW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"mh" = (
+/obj/effect/spawner/random/structure/tank_holder,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"mZ" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"oW" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/structure/barricade/wooden/crude,
+/obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
+/obj/effect/mapping_helpers/airlock/unres/delayed,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"pQ" = (
+/obj/machinery/shower/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/door/window/left/directional/north{
+	name = "Shower Cubicle"
+	},
+/turf/open/floor/iron/freezer{
+	initial_gas_mix = "o2=22;n2=82;water_vapor=50;TEMP=293.15"
+	},
+/area/station/maintenance/department/medical)
+"qz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/medical)
+"sJ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"sM" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"tN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/obj/structure/sign/poster/contraband/random/directional/east,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"ug" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sign/poster/contraband/random/directional/south,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/medical)
+"uD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"vk" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"vu" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"vz" = (
+/obj/structure/closet/wardrobe/mixed,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"wu" = (
+/obj/effect/spawner/random/structure/crate,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"wC" = (
+/obj/machinery/shower/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/door/window/left/directional/north{
+	name = "Shower Cubicle"
+	},
+/turf/open/floor/iron/freezer{
+	initial_gas_mix = "o2=22;n2=82;water_vapor=50;TEMP=293.15"
+	},
+/area/station/maintenance/department/medical)
+"wZ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"yS" = (
+/obj/structure/sink/directional/west,
+/obj/structure/mirror/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer{
+	initial_gas_mix = "o2=22;n2=82;water_vapor=50;TEMP=293.15"
+	},
+/area/station/maintenance/department/medical)
+"zj" = (
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"zl" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"zM" = (
+/obj/structure/closet/secure_closet/personal{
+	anchored = 1;
+	name = "Maddie's Locker"
+	},
+/obj/item/toy/plush/maddie,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"AU" = (
+/obj/structure/closet/secure_closet/personal{
+	anchored = 1;
+	name = "Chocobo's Locker"
+	},
+/obj/item/clothing/shoes/cowboy/laced{
+	name = "Chocobo's Boots"
+	},
+/obj/item/clothing/under/costume/buttondown/slacks/service{
+	greyscale_colors = "#aa0000#222227#222227#222227";
+	name = "Chocobo's Shirt"
+	},
+/obj/item/clothing/suit/apron/overalls{
+	name = "Chocobo's Overalls";
+	greyscale_colors = "#160f00"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/medical)
+"Bn" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/freezer{
+	initial_gas_mix = "o2=22;n2=82;water_vapor=50;TEMP=293.15"
+	},
+/area/station/maintenance/department/medical)
+"Br" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/structure/closet/secure_closet/personal{
+	anchored = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"Ca" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/medical)
+"Dl" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/structure/barricade/wooden/crude,
+/obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
+/obj/effect/mapping_helpers/airlock/unres/delayed{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"Fh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"Hc" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"HS" = (
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/medical)
+"Is" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/medical)
+"Jc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"Jn" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"JP" = (
+/turf/template_noop,
+/area/template_noop)
+"Nc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/east,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/medical)
+"Nw" = (
+/obj/effect/spawner/random/trash/grille_or_waste,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"Ob" = (
+/obj/structure/closet/secure_closet/personal{
+	anchored = 1;
+	name = "Akari's Locker"
+	},
+/obj/item/clothing/shoes/sneakers/white{
+	greyscale_colors = "#f7a5e1#d67bb4";
+	name = "Akari's Shoes"
+	},
+/obj/item/clothing/under/dress/skirt/turtleskirt{
+	greyscale_colors = "#095600#212121";
+	name = "Akari's Turtleneck"
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"Px" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/structure/steam_vent,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"Qs" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/random/directional/west,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"QT" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"QZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/food/pie_smudge,
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/medical)
+"Te" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/medical)
+"TK" = (
+/obj/machinery/shower/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/door/window/left/directional/north{
+	name = "Shower Cubicle"
+	},
+/obj/item/soap/nanotrasen,
+/turf/open/floor/iron/freezer{
+	initial_gas_mix = "o2=22;n2=82;water_vapor=50;TEMP=293.15"
+	},
+/area/station/maintenance/department/medical)
+"TU" = (
+/obj/item/clothing/head/costume/jester{
+	greyscale_colors = "#7f9aba#e76970";
+	name = "Jesterville Funny Furry Freaks Cap";
+	desc = "Part of the uniform of the baseball team the Jesterville Funny Furry Freaks."
+	},
+/obj/item/clothing/shoes/jester_shoes{
+	greyscale_colors = "#7f9aba#e76970";
+	desc = "Part of the uniform of the baseball team the Jesterville Funny Furry Freaks.";
+	name = "Jesterville Funny Furry Freaks Shoes"
+	},
+/obj/item/clothing/under/rank/civilian/clown/jester{
+	greyscale_colors = "#7f9aba#e76970";
+	desc = "Part of the uniform of the baseball team the Jesterville Funny Furry Freaks.";
+	name = "Jesterville Funny Furry Freaks Suit"
+	},
+/obj/item/melee/baseball_bat,
+/obj/item/toy/beach_ball/baseball,
+/obj/structure/closet/secure_closet/personal{
+	anchored = 1;
+	name = "Noodle's Locker"
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"Ux" = (
+/obj/structure/closet/secure_closet/personal{
+	anchored = 1;
+	name = "Zlath's Locker"
+	},
+/obj/item/clothing/shoes/cowboy/black/laced{
+	name = "Zlath's Boots"
+	},
+/obj/item/clothing/suit/jacket/oversized{
+	name = "Zlath's Jacket"
+	},
+/obj/item/clothing/under/costume/tmc{
+	name = "Zlath's Shirt"
+	},
+/obj/item/clothing/head/wig{
+	name = "Zlath-style Wig";
+	hairstyle = "Bedhead";
+	color = "#594d8d"
+	},
+/obj/item/clothing/gloves/color/black{
+	name = "Vaska's Gloves";
+	pixel_y = -8
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"UQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/medical)
+"VA" = (
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/medical)
+"Wx" = (
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"YD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"Zd" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/secure_closet/personal{
+	anchored = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/maintenance/department/medical)
+"Zi" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"ZM" = (
+/obj/effect/spawner/random/maintenance/three,
+/obj/structure/closet/crate,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"ZT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/obj/modular_map_connector,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+
+(1,1,1) = {"
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+jF
+jF
+jF
+JP
+JP
+JP
+"}
+(2,1,1) = {"
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+jF
+jF
+JP
+JP
+JP
+JP
+jF
+jF
+jF
+Hc
+jF
+JP
+JP
+"}
+(3,1,1) = {"
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+jF
+jF
+jF
+jF
+jF
+jF
+jF
+JP
+jF
+Hc
+Hc
+Hc
+jF
+JP
+JP
+"}
+(4,1,1) = {"
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+Hc
+Hc
+jF
+jF
+jF
+jF
+jF
+jF
+Hc
+Hc
+Hc
+Hc
+jF
+JP
+JP
+"}
+(5,1,1) = {"
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+jF
+Hc
+jy
+jy
+vk
+vk
+vk
+jy
+jy
+jy
+jy
+Hc
+Hc
+Hc
+jF
+JP
+"}
+(6,1,1) = {"
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+jF
+Hc
+Hc
+jy
+fG
+HS
+fq
+Jc
+bv
+dJ
+pQ
+jy
+Hc
+Hc
+jF
+jF
+JP
+"}
+(7,1,1) = {"
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+jy
+jy
+jy
+Ux
+ki
+Is
+Br
+jy
+Bn
+wC
+jy
+Hc
+jF
+jF
+jF
+JP
+"}
+(8,1,1) = {"
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+vz
+wu
+jy
+Ob
+ki
+hr
+Zd
+jy
+yS
+TK
+jy
+Hc
+jF
+jF
+jF
+JP
+"}
+(9,1,1) = {"
+JP
+jF
+Hc
+JP
+JP
+JP
+JP
+JP
+JP
+sJ
+sJ
+oW
+ky
+Is
+VA
+Ca
+jy
+jy
+jy
+jy
+Hc
+Hc
+Hc
+jF
+JP
+"}
+(10,1,1) = {"
+jF
+Hc
+Hc
+JP
+JP
+JP
+JP
+JP
+ZM
+sJ
+Nw
+jy
+Nc
+QZ
+Te
+UQ
+UQ
+ug
+jy
+jy
+Hc
+Hc
+Hc
+Hc
+JP
+"}
+(11,1,1) = {"
+Hc
+Hc
+Hc
+JP
+JP
+JP
+JP
+JP
+zj
+bq
+Fh
+jy
+zM
+TU
+AU
+mZ
+qz
+ip
+jy
+jy
+jy
+jy
+jy
+jy
+JP
+"}
+(12,1,1) = {"
+Hc
+Hc
+JP
+JP
+JP
+JP
+JP
+JP
+jy
+jy
+Fh
+jy
+jy
+jy
+jy
+jy
+jy
+Dl
+jy
+fb
+fb
+uD
+uD
+uD
+JP
+"}
+(13,1,1) = {"
+JP
+Zi
+sJ
+jy
+jy
+Wx
+sJ
+kI
+jy
+jy
+Fh
+sJ
+sJ
+YD
+Px
+Qs
+YD
+YD
+YD
+YD
+YD
+YD
+sJ
+JP
+JP
+"}
+(14,1,1) = {"
+JP
+Wx
+sJ
+Wx
+Wx
+sJ
+sJ
+sJ
+mh
+jy
+dB
+Wx
+jy
+zl
+JP
+JP
+JP
+JP
+JP
+JP
+Wx
+sM
+sJ
+JP
+JP
+"}
+(15,1,1) = {"
+JP
+ZT
+kW
+kW
+kW
+tN
+kW
+kW
+kW
+kW
+kW
+kW
+wZ
+iW
+JP
+JP
+JP
+JP
+JP
+JP
+QT
+sM
+Jn
+JP
+JP
+"}
+(16,1,1) = {"
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+jy
+jy
+jy
+jy
+jy
+jy
+vu
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+"}
+(17,1,1) = {"
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+gr
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+"}
+(18,1,1) = {"
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+gr
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+"}
+(19,1,1) = {"
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+iu
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+"}
+(20,1,1) = {"
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+gr
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+"}
+(21,1,1) = {"
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+gr
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+"}
+(22,1,1) = {"
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+vu
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+"}
+(23,1,1) = {"
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+JP
+"}

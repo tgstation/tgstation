@@ -17,6 +17,13 @@ endmap
 
 # Production-level maps.
 
+map tissstation
+    minplayers 20
+	votable
+	feedbacklink https://github.com/Cirrial/troutstation/issues
+	webmap_url https://theguff.in/Tisserand.png
+endmap
+
 map deltastation
 	minplayers 50
 	votable

@@ -14,7 +14,7 @@
 	/// True if the holder is moving, otherwise inactive
 	var/active = FALSE
 	/// Can travel 1000 steps before going inactive (in case of loops)
-	var/count = 1000
+	var/count = 2000 // Troutstation Edit (for tisserand)
 	/// Changes if contains a delivery container
 	var/destinationTag = NONE
 	/// Contains wrapped package?

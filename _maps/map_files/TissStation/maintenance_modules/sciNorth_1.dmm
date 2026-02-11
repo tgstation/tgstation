@@ -1,0 +1,2670 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"am" = (
+/mob/living/basic/mad_piano,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"bV" = (
+/turf/closed/wall/r_wall,
+/area/station/maintenance/department/science/xenobiology)
+"cv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/broken/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/small,
+/area/station/maintenance/rags)
+"cH" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "TV Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/unres/delayed{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"dW" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"dZ" = (
+/obj/machinery/door/airlock/wood{
+	name = "Bathroom"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/small,
+/area/station/maintenance/rags)
+"eb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"fa" = (
+/turf/open/floor/carpet,
+/area/station/maintenance/rags)
+"fd" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"gd" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/obj/effect/landmark/start/detective,
+/turf/open/floor/carpet,
+/area/station/maintenance/rags)
+"gx" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"gF" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"gI" = (
+/obj/machinery/space_heater,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"gO" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/wood,
+/obj/item/paper/fluff/junkmail_generic,
+/turf/open/floor/iron,
+/area/station/maintenance/department/science/xenobiology)
+"gZ" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/structure/table/wood,
+/obj/item/photo/old,
+/turf/open/floor/carpet/green,
+/area/station/maintenance/rags)
+"jv" = (
+/obj/machinery/door/airlock/wood{
+	name = "Whirling-In-Rags Room #2"
+	},
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/security/detective,
+/obj/effect/mapping_helpers/airlock/unres/delayed{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"jQ" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/detective,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"jV" = (
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"kl" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/station/maintenance/department/science/xenobiology)
+"kZ" = (
+/obj/effect/spawner/random/structure/shipping_container,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"lA" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/carpet/green,
+/area/station/maintenance/rags)
+"mK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/item/clothing/under/rank/security/detective/disco{
+	pixel_x = 11;
+	pixel_y = -10
+	},
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/iron/white/small,
+/area/station/maintenance/rags)
+"mM" = (
+/obj/structure/railing/corner,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"nc" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/maintenance/rags)
+"ne" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"nn" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/spawner/random/trash/crushed_can,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"nq" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/structure/cable,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"nu" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/station/maintenance/department/science/xenobiology)
+"nx" = (
+/obj/structure/chair/sofa/corp,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"oa" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/structure/chair/comfy{
+	color = "#cc8f3f"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"ob" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/airalarm/directional/east{
+	name = "Whirling-In-Rags Room #1 Air Alarm"
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"of" = (
+/obj/machinery/shower/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sink/directional/west{
+	pixel_y = -7
+	},
+/obj/structure/mirror/directional/east{
+	pixel_y = -4
+	},
+/obj/structure/fluff/shower_drain,
+/turf/open/floor/iron/white/small,
+/area/station/maintenance/rags)
+"or" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"oL" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/maintenance/no_decals/two,
+/turf/open/floor/iron,
+/area/station/maintenance/department/science/xenobiology)
+"pi" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/structure/door_assembly/door_assembly_wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"qr" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/machinery/space_heater,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
+/obj/structure/sign/poster/contraband/random/directional/east,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"ro" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"rZ" = (
+/obj/machinery/door/airlock/wood{
+	name = "Whirling-In-Rags Room #1"
+	},
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/security/detective,
+/obj/effect/mapping_helpers/airlock/unres/delayed{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"sc" = (
+/obj/structure/transit_tube/curved,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"sp" = (
+/turf/closed/wall,
+/area/station/maintenance/rags)
+"sM" = (
+/turf/closed/wall/r_wall,
+/area/station/maintenance/rags)
+"sP" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"sR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/small,
+/area/station/maintenance/rags)
+"tS" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"ul" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/structure/closet/secure_closet/detective,
+/obj/machinery/light/small/directional/south,
+/obj/machinery/airalarm/directional/south{
+	name = "Whirling-In-Rags Room #2 Air Alarm"
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"vP" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/spawner/random/trash/deluxe_garbage,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/reagent_containers/cup/glass/bottle/wine{
+	pixel_y = -7;
+	pixel_x = 12;
+	list_reagents = list(/datum/reagent/consumable/ethanol/wine = 1);
+	name = "Commodore Red";
+	desc = "This magnum-sized bottle of "\CommodoreRed\" is empty."
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"vS" = (
+/obj/structure/closet/crate/trashcart/filled,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/station/maintenance/department/science/xenobiology)
+"wo" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/maintenance/department/science/xenobiology)
+"xd" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/spawner/random/trash/crushed_can,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/camera/directional/south{
+	c_tag = "Whirling-In-Rags Room #1"
+	},
+/turf/open/floor/carpet/green,
+/area/station/maintenance/rags)
+"xf" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
+"xY" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/item/hand_labeler_refill,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"yU" = (
+/obj/item/clothing/head/costume/tv_head{
+	pixel_x = 5
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"yV" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"yW" = (
+/obj/item/bedsheet/brown{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/structure/bed{
+	pixel_y = 10
+	},
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/item/clothing/suit/jacket/det_suit/disco{
+	pixel_x = 7;
+	pixel_y = -8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"zd" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"zH" = (
+/obj/structure/transit_tube/diagonal/crossing,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"zO" = (
+/turf/template_noop,
+/area/template_noop)
+"zV" = (
+/obj/modular_map_connector,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"AZ" = (
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+"Bp" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/dim/directional/south,
+/turf/open/floor/iron,
+/area/station/maintenance/department/science/xenobiology)
+"Cc" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/landmark/firealarm_sanity,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"CP" = (
+/obj/item/clothing/under/rank/security/detective/kim,
+/obj/item/clothing/gloves/kim,
+/obj/item/clothing/suit/jacket/det_suit/kim,
+/obj/item/clothing/glasses/regular/kim,
+/obj/item/clothing/shoes/jackboots/kim,
+/obj/item/clothing/under/rank/security/detective/kim,
+/obj/structure/closet,
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"Dd" = (
+/obj/structure/railing,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"Dh" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"Dx" = (
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"DN" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/spawner/random/trash/crushed_can,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"EM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"EX" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"Fm" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/emergency{
+	pixel_y = 5;
+	pixel_x = 3
+	},
+/obj/effect/spawner/random/engineering/toolbox{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -6;
+	pixel_x = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"FK" = (
+/obj/structure/chair/sofa/corp/right,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"FZ" = (
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"Gu" = (
+/obj/machinery/portable_atmospherics/pump,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"Gw" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/floor/iron,
+/area/station/maintenance/department/science/xenobiology)
+"HX" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/green,
+/area/station/maintenance/rags)
+"Ia" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/random/structure/steam_vent,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"Jk" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/structure/table/wood,
+/obj/item/tape{
+	pixel_x = -8;
+	pixel_y = 8;
+	desc = "Looks like someone tore out the tape while the song was playing.";
+	used_capacity = 6000;
+	unspooled = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/taperecorder{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"Jo" = (
+/turf/closed/wall,
+/area/station/maintenance/department/science/xenobiology)
+"Kd" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"Ko" = (
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"Ky" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"Ld" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"LV" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/structure/bookcase/random/nonfiction,
+/obj/machinery/camera/directional/south{
+	c_tag = "Whirling-In-Rags Room #2"
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"MV" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"Nb" = (
+/obj/structure/transit_tube,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"Np" = (
+/obj/item/stack/sheet/cardboard,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/station/maintenance/department/science/xenobiology)
+"NI" = (
+/obj/structure/chair/sofa/corp/left,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"NJ" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/item/clothing/glasses/salesman{
+	pixel_x = -5
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"Oe" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"OS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"PW" = (
+/obj/effect/spawner/random/engineering/tank,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"Qc" = (
+/obj/machinery/computer/records/security{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/carpet,
+/area/station/maintenance/rags)
+"QA" = (
+/obj/machinery/computer/records/medical{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/carpet,
+/area/station/maintenance/rags)
+"Rd" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating,
+/area/station/maintenance/rags)
+"Rm" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"Sv" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/item/clothing/neck/tie/disco,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"Tb" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/structure/chair/comfy/lime{
+	dir = 4;
+	color = "#98a37f"
+	},
+/turf/open/floor/carpet/green,
+/area/station/maintenance/rags)
+"Ts" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/small,
+/area/station/maintenance/rags)
+"TB" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 7;
+	pixel_y = 1
+	},
+/obj/item/restraints/handcuffs{
+	pixel_x = 0;
+	pixel_y = -4
+	},
+/turf/open/floor/carpet,
+/area/station/maintenance/rags)
+"Ug" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+"Uu" = (
+/obj/structure/bed{
+	pixel_x = 2
+	},
+/obj/item/bedsheet/grey{
+	pixel_x = 2
+	},
+/turf/open/floor/carpet,
+/area/station/maintenance/rags)
+"UT" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/clothing/shoes/discoshoes,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"VO" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"WT" = (
+/obj/effect/spawner/random/structure/grille,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"XF" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/wood,
+/obj/item/paper/fluff/junkmail_redpill,
+/turf/open/floor/iron,
+/area/station/maintenance/department/science/xenobiology)
+"XK" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/structure/table/wood,
+/obj/machinery/light/small/directional/south,
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
+	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 5);
+	pixel_y = 7;
+	pixel_x = 5
+	},
+/turf/open/floor/carpet/green,
+/area/station/maintenance/rags)
+"XN" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"Yt" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/iron/white/diagonal,
+/area/station/maintenance/rags)
+"ZD" = (
+/obj/effect/spawner/random/structure/crate,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+
+(1,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+gF
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(2,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+gF
+gF
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(3,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+gF
+gF
+bV
+bV
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(4,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+AZ
+gF
+bV
+bV
+Ko
+Jo
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(5,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+AZ
+gF
+gF
+bV
+Dx
+sP
+Dx
+Dx
+Dx
+Dx
+Dx
+zV
+zO
+"}
+(6,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+gF
+gF
+gF
+bV
+Dx
+sc
+Nb
+Nb
+Nb
+Nb
+Nb
+Nb
+zO
+"}
+(7,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+AZ
+gF
+bV
+bV
+bV
+zH
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(8,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+xf
+gF
+gF
+bV
+Gu
+zH
+Dx
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(9,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+xf
+xf
+gF
+bV
+zH
+Dx
+Dx
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(10,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+WT
+Jo
+Dx
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(11,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+xf
+xf
+xf
+gF
+bV
+Jo
+Jo
+Dx
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(12,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+xf
+gF
+gF
+gF
+bV
+PW
+Dx
+Dx
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(13,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+gF
+gF
+bV
+bV
+mM
+Oe
+VO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(14,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+AZ
+gF
+bV
+PW
+Dd
+xY
+Rm
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(15,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+AZ
+gF
+bV
+Jo
+Jo
+Jo
+ne
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(16,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+AZ
+gF
+bV
+gO
+XF
+Jo
+Dx
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(17,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+AZ
+gF
+bV
+kl
+wo
+Jo
+Dx
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(18,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+AZ
+gF
+bV
+Gw
+Bp
+Jo
+Dx
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(19,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+gF
+gF
+bV
+kl
+kl
+cH
+Dx
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(20,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+gF
+bV
+bV
+kl
+oL
+Jo
+eb
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(21,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+bV
+bV
+kl
+kl
+Jo
+Jo
+EM
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(22,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+EX
+Np
+kl
+vS
+Jo
+Dx
+eb
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(23,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+EX
+kl
+kl
+vS
+Jo
+Dx
+eb
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(24,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+EX
+kl
+nu
+Bp
+Jo
+sP
+eb
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(25,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+EX
+vS
+vS
+vS
+Jo
+Dx
+eb
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(26,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+AZ
+bV
+bV
+bV
+Jo
+Jo
+FZ
+eb
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(27,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+AZ
+gF
+gF
+gF
+Jo
+Ko
+WT
+eb
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(28,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+gF
+gF
+gF
+Jo
+Jo
+ZD
+WT
+eb
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(29,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+AZ
+gF
+gF
+gF
+Jo
+tS
+Dx
+WT
+eb
+sP
+Dx
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(30,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+AZ
+gF
+Jo
+Jo
+Jo
+Jo
+Jo
+Jo
+Ky
+Ky
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(31,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+gF
+gF
+Jo
+Dx
+kZ
+FK
+yU
+Jo
+Ky
+sP
+sP
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(32,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+gF
+gF
+gF
+Jo
+Dx
+Dx
+nx
+NJ
+Jo
+Ky
+WT
+Jo
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(33,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+gF
+gF
+Jo
+Jo
+Dx
+Dx
+NI
+jV
+cH
+Ky
+Dx
+Jo
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(34,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+gF
+gF
+Jo
+Jo
+Ko
+Jo
+Jo
+Jo
+Jo
+Jo
+Ky
+Dx
+Jo
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(35,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+gF
+bV
+Jo
+Ky
+Ky
+Ky
+Ky
+Ky
+Ky
+Ky
+Ky
+Dx
+Jo
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(36,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+AZ
+gF
+bV
+sP
+Ky
+Dx
+WT
+sP
+sP
+WT
+WT
+Dx
+Jo
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(37,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+AZ
+gF
+bV
+Dx
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(38,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+AZ
+gF
+bV
+PW
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(39,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+AZ
+gF
+bV
+bV
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(40,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+AZ
+gF
+gF
+bV
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(41,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+AZ
+gF
+gF
+bV
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(42,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+AZ
+gF
+gF
+bV
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(43,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+AZ
+gF
+gF
+bV
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(44,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+gF
+gF
+bV
+bV
+Ky
+Jo
+am
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(45,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+gF
+gF
+bV
+Dx
+Ky
+Jo
+Jo
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(46,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+gF
+gF
+bV
+or
+Ky
+WT
+Jo
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(47,1,1) = {"
+zO
+zO
+zO
+zO
+AZ
+gF
+gF
+bV
+Dx
+Ky
+Dx
+Jo
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(48,1,1) = {"
+zO
+zO
+zO
+zO
+AZ
+gF
+gF
+bV
+Jo
+Ky
+Ky
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(49,1,1) = {"
+zO
+zO
+zO
+AZ
+gF
+gF
+gF
+gF
+Jo
+xY
+Dx
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(50,1,1) = {"
+zO
+zO
+zO
+AZ
+gF
+gF
+gF
+gF
+Jo
+Jo
+sP
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(51,1,1) = {"
+zO
+zO
+AZ
+AZ
+gF
+gF
+gF
+gF
+gF
+Jo
+Dx
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(52,1,1) = {"
+zO
+AZ
+AZ
+AZ
+AZ
+gF
+gF
+gF
+gF
+bV
+ZD
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(53,1,1) = {"
+AZ
+AZ
+AZ
+AZ
+AZ
+AZ
+gF
+gF
+gF
+bV
+bV
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(54,1,1) = {"
+AZ
+AZ
+AZ
+AZ
+AZ
+AZ
+AZ
+AZ
+gF
+gF
+bV
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(55,1,1) = {"
+zO
+AZ
+AZ
+AZ
+AZ
+AZ
+Ug
+AZ
+AZ
+gF
+bV
+Ia
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(56,1,1) = {"
+zO
+AZ
+AZ
+AZ
+AZ
+Ug
+Ug
+Ug
+AZ
+gF
+bV
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(57,1,1) = {"
+zO
+AZ
+sM
+nc
+nc
+nc
+Rd
+nc
+nc
+sM
+bV
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(58,1,1) = {"
+zO
+AZ
+sM
+oa
+XN
+Kd
+nn
+Tb
+gZ
+sp
+bV
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(59,1,1) = {"
+AZ
+AZ
+sM
+yW
+lA
+jQ
+Sv
+HX
+XK
+sp
+bV
+Ky
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(60,1,1) = {"
+AZ
+AZ
+nc
+qr
+DN
+pi
+Dh
+vP
+xd
+sp
+ZD
+Ky
+Dx
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(61,1,1) = {"
+AZ
+AZ
+sM
+sp
+sR
+sp
+Jk
+yV
+dW
+sp
+Dx
+Ky
+Fm
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(62,1,1) = {"
+AZ
+AZ
+sM
+mK
+cv
+sp
+gx
+UT
+ob
+rZ
+zd
+Ky
+bV
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(63,1,1) = {"
+AZ
+AZ
+sM
+of
+Ts
+sp
+sp
+sp
+sp
+sp
+Dx
+OS
+bV
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(64,1,1) = {"
+AZ
+AZ
+sM
+sM
+dZ
+sp
+CP
+ul
+sp
+Dx
+Cc
+OS
+bV
+gF
+gF
+gF
+gF
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(65,1,1) = {"
+AZ
+gF
+sM
+ro
+Ld
+Yt
+nq
+fd
+jv
+OS
+OS
+OS
+bV
+gF
+gF
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(66,1,1) = {"
+AZ
+AZ
+nc
+fa
+fa
+gd
+fa
+MV
+sp
+Dx
+gI
+bV
+bV
+gF
+gF
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(67,1,1) = {"
+zO
+AZ
+sM
+Uu
+TB
+QA
+Qc
+LV
+sM
+bV
+bV
+bV
+gF
+gF
+gF
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(68,1,1) = {"
+AZ
+AZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+gF
+gF
+gF
+gF
+gF
+gF
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(69,1,1) = {"
+AZ
+AZ
+AZ
+AZ
+gF
+gF
+gF
+gF
+gF
+gF
+gF
+gF
+gF
+gF
+gF
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(70,1,1) = {"
+AZ
+AZ
+AZ
+AZ
+AZ
+gF
+gF
+gF
+gF
+gF
+gF
+gF
+gF
+gF
+gF
+gF
+gF
+gF
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(71,1,1) = {"
+zO
+AZ
+AZ
+AZ
+zO
+zO
+AZ
+gF
+gF
+gF
+gF
+gF
+AZ
+AZ
+AZ
+gF
+gF
+gF
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(72,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+AZ
+AZ
+zO
+zO
+zO
+zO
+AZ
+AZ
+gF
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}
+(73,1,1) = {"
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+AZ
+zO
+zO
+zO
+zO
+zO
+zO
+zO
+"}

@@ -515,9 +515,21 @@
 
 #undef EMAG_LOCKED_SHUTTLE_COST
 
+//troutstation edit start
+
 /datum/map_template/shuttle/emergency/gay
 	suffix = "gay2"
 	name = "Gay Emergency Shuttle"
 	description = "Oh! This shuttle is gay."
 	credit_cost = CARGO_CRATE_VALUE * 15
 	occupancy_limit = "80"
+
+/datum/map_template/shuttle/emergency/tiss
+	suffix = "tiss"
+	name = "Tisserand Asteroid Shuttle"
+	description = "A shuttle made up of 5 individual asteroids, haphazardly stitched together. It's a bit sucks."
+	admin_notes = "A bit tight."
+	credit_cost = CARGO_CRATE_VALUE * 10
+	occupancy_limit = "45"
+
+//troutstation edit end

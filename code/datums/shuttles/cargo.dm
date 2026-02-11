@@ -41,3 +41,11 @@
 /datum/map_template/shuttle/cargo/nebula
 	suffix = "nebula"
 	name = "supply shuttle (Nebula)"
+
+//troutstation edit start
+
+/datum/map_template/shuttle/cargo/tiss
+	suffix = "tiss"
+	name = "supply shuttle (Tisserand)"
+
+//troutstation edit end

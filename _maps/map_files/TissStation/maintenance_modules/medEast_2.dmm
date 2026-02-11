@@ -1,0 +1,1038 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+"b" = (
+/obj/structure/flora/rock/style_random,
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+"c" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"d" = (
+/obj/structure/transit_tube/horizontal,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/medical)
+"e" = (
+/obj/structure/flora/rock/style_random,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/medical)
+"h" = (
+/obj/structure/table/abductor,
+/obj/item/plate,
+/obj/item/knife/plastic{
+	pixel_x = 10;
+	pixel_y = 2
+	},
+/obj/item/kitchen/fork/plastic{
+	pixel_x = -11;
+	pixel_y = 2
+	},
+/obj/item/food/fairy_bread,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"j" = (
+/obj/structure/chair/sofa/corp/right{
+	dir = 8
+	},
+/obj/item/toy/plush/moth{
+	name = "Gay Statler"
+	},
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"l" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"m" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
+"n" = (
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"o" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"q" = (
+/obj/machinery/airalarm/directional/north,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/medical)
+"r" = (
+/turf/closed/wall/rock/porous,
+/area/station/asteroid)
+"t" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 8
+	},
+/obj/item/toy/plush/moth{
+	name = "Straight Waldorf"
+	},
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"v" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"w" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"x" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"A" = (
+/turf/closed/wall/rock/porous,
+/area/station/maintenance/department/medical)
+"B" = (
+/obj/structure/transit_tube/curved{
+	dir = 4
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/medical)
+"D" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/maintenance/department/medical)
+"F" = (
+/obj/structure/transit_tube/crossing/horizontal,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/medical)
+"G" = (
+/obj/structure/transit_tube/crossing/horizontal,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"H" = (
+/obj/effect/spawner/random/structure/table_or_rack,
+/obj/item/pickaxe/rusted,
+/obj/structure/sign/warning/vacuum/directional/south,
+/obj/item/paper/crumpled/muddy{
+	desc = "A scrap of paper reading \"TO DO: Finish building out these maints.\" They clearly didn't."
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/medical)
+"I" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"J" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"L" = (
+/obj/structure/transit_tube/crossing/horizontal,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"M" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"N" = (
+/turf/template_noop,
+/area/template_noop)
+"O" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/medical)
+"P" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"T" = (
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/medical)
+"U" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"V" = (
+/obj/structure/lattice,
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+"W" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/junction{
+	dir = 8
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"X" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"Y" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/obj/modular_map_connector,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"Z" = (
+/obj/structure/table/abductor,
+/obj/item/plate,
+/obj/item/knife/plastic{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/kitchen/fork/plastic{
+	pixel_x = -11;
+	pixel_y = 9
+	},
+/obj/item/food/breadslice/plain,
+/obj/item/food/butter,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+
+(1,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}
+(2,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+U
+l
+T
+x
+x
+"}
+(3,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+v
+T
+T
+x
+b
+"}
+(4,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+v
+e
+x
+x
+N
+"}
+(5,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+v
+T
+x
+x
+a
+"}
+(6,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+v
+T
+x
+x
+N
+"}
+(7,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+T
+v
+T
+T
+x
+a
+"}
+(8,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+r
+x
+x
+N
+x
+x
+N
+x
+N
+N
+N
+N
+N
+N
+Y
+W
+T
+e
+x
+a
+"}
+(9,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+U
+c
+L
+c
+c
+L
+J
+N
+N
+N
+N
+N
+N
+q
+v
+T
+T
+x
+a
+"}
+(10,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+x
+v
+x
+n
+x
+x
+F
+o
+J
+N
+N
+N
+N
+A
+e
+v
+T
+e
+x
+a
+"}
+(11,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+x
+v
+x
+a
+b
+x
+N
+x
+w
+c
+c
+c
+c
+c
+c
+l
+x
+x
+x
+a
+"}
+(12,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+x
+v
+x
+a
+a
+b
+N
+x
+D
+D
+e
+T
+T
+D
+T
+T
+x
+x
+b
+a
+"}
+(13,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+x
+x
+v
+x
+a
+a
+N
+N
+m
+x
+x
+x
+x
+x
+x
+h
+Z
+x
+x
+a
+a
+"}
+(14,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+x
+x
+X
+l
+x
+a
+a
+N
+N
+N
+N
+a
+a
+x
+r
+x
+j
+t
+x
+x
+a
+a
+"}
+(15,1,1) = {"
+N
+N
+N
+N
+N
+N
+x
+x
+e
+M
+T
+x
+a
+N
+N
+N
+N
+N
+N
+a
+a
+a
+x
+x
+x
+r
+a
+a
+N
+"}
+(16,1,1) = {"
+N
+N
+N
+N
+N
+x
+x
+T
+T
+M
+H
+r
+a
+N
+N
+N
+N
+N
+N
+N
+a
+a
+a
+a
+a
+a
+a
+N
+N
+"}
+(17,1,1) = {"
+N
+N
+N
+N
+x
+x
+X
+P
+P
+I
+x
+x
+a
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}
+(18,1,1) = {"
+N
+N
+N
+N
+N
+O
+M
+T
+T
+x
+x
+a
+a
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}
+(19,1,1) = {"
+N
+N
+N
+N
+x
+B
+v
+e
+x
+x
+b
+a
+a
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}
+(20,1,1) = {"
+N
+N
+N
+x
+x
+d
+v
+x
+x
+a
+a
+N
+V
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}
+(21,1,1) = {"
+N
+N
+x
+x
+X
+G
+l
+r
+a
+a
+r
+N
+V
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}
+(22,1,1) = {"
+N
+x
+x
+U
+l
+F
+T
+x
+N
+N
+N
+N
+V
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}
+(23,1,1) = {"
+x
+x
+U
+l
+x
+N
+x
+x
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}
+(24,1,1) = {"
+x
+U
+l
+x
+x
+a
+a
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}
+(25,1,1) = {"
+N
+N
+x
+x
+b
+a
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}

@@ -1,0 +1,1528 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aX" = (
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/item/clothing/glasses/sunglasses/gar/orange{
+	pixel_y = -9
+	},
+/obj/item/clothing/glasses/sunglasses/gar{
+	pixel_y = -1
+	},
+/obj/item/clothing/glasses/material/mining/gar{
+	pixel_y = 7
+	},
+/turf/open/floor/plastic,
+/area/station/maintenance/department/science/south)
+"bp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"dk" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/spawner/random/trash/garbage{
+	spawn_scatter_radius = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"ed" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"fq" = (
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"ft" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"gg" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"gi" = (
+/obj/effect/spawner/random/structure/grille,
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"gy" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/modular_map_connector,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"hb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/spawner/random/structure/steam_vent,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"iI" = (
+/obj/effect/spawner/random/trash/garbage{
+	spawn_scatter_radius = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"je" = (
+/obj/effect/spawner/random/structure/crate_loot,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"jK" = (
+/obj/effect/spawner/random/structure/closet_empty,
+/obj/item/hand_labeler_refill,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"jX" = (
+/obj/item/clothing/shoes/swagshoes,
+/turf/open/floor/plastic,
+/area/station/maintenance/department/science/south)
+"ka" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"kB" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"kV" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"mK" = (
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/item/clothing/glasses/sunglasses/gar/giga/red,
+/obj/item/clothing/glasses/sunglasses/gar/giga{
+	pixel_y = 7
+	},
+/obj/item/clothing/glasses/psych{
+	pixel_y = -9
+	},
+/turf/open/floor/plastic,
+/area/station/maintenance/department/science/south)
+"nT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"oh" = (
+/obj/effect/spawner/random/trash/garbage{
+	spawn_scatter_radius = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"oO" = (
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/item/clothing/glasses/nightmare_vision{
+	pixel_y = 10
+	},
+/obj/item/clothing/glasses/night,
+/obj/machinery/light/floor,
+/turf/open/floor/plastic,
+/area/station/maintenance/department/science/south)
+"qq" = (
+/turf/template_noop,
+/area/template_noop)
+"ry" = (
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"rC" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"ue" = (
+/obj/effect/spawner/random/structure/table,
+/obj/item/food/roast_dinner{
+	pixel_y = 6;
+	pixel_x = 1;
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 21, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/inverse/gravitum = 2)
+	},
+/turf/open/floor/carpet/royalblue,
+/area/station/maintenance/department/science/south)
+"vy" = (
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/item/clothing/glasses/trickblindfold{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/clothing/glasses/blindfold{
+	pixel_x = 4
+	},
+/obj/item/clothing/glasses/blindfold/white{
+	pixel_y = 8;
+	pixel_x = 7
+	},
+/obj/item/clothing/glasses/monocle{
+	pixel_y = 5;
+	pixel_x = -1
+	},
+/turf/open/floor/plastic,
+/area/station/maintenance/department/science/south)
+"wA" = (
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/item/clothing/glasses/geist_gazers,
+/obj/item/clothing/glasses/thermal/monocle{
+	pixel_x = 5;
+	pixel_y = 14
+	},
+/turf/open/floor/plastic,
+/area/station/maintenance/department/science/south)
+"wR" = (
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"xj" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"xG" = (
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/item/clothing/glasses/eyepatch{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/clothing/glasses/eyepatch/medical{
+	pixel_x = 7
+	},
+/turf/open/floor/plastic,
+/area/station/maintenance/department/science/south)
+"zD" = (
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"Am" = (
+/obj/item/clothing/suit/space/freedom,
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+"Bb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"By" = (
+/obj/effect/spawner/random/structure/grille,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"Db" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"DA" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"DL" = (
+/obj/effect/spawner/random/structure/closet_empty,
+/obj/item/hand_labeler_refill,
+/obj/effect/spawner/random/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"Fm" = (
+/turf/open/floor/carpet/royalblack,
+/area/station/maintenance/department/science/south)
+"Fo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"FC" = (
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"Ga" = (
+/obj/machinery/door/airlock/glass{
+	name = "Sunglass Hut"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/service/general,
+/obj/effect/mapping_helpers/airlock/access/any/science/xenobio,
+/turf/open/floor/plastic,
+/area/station/maintenance/department/science/south)
+"Gh" = (
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/item/clothing/glasses/orange{
+	pixel_y = -4
+	},
+/obj/item/clothing/glasses/osi{
+	pixel_y = 5
+	},
+/obj/item/clothing/glasses/phantom{
+	pixel_y = 12
+	},
+/turf/open/floor/plastic,
+/area/station/maintenance/department/science/south)
+"GO" = (
+/turf/closed/wall,
+/area/station/maintenance/department/science/south)
+"IB" = (
+/obj/effect/spawner/random/engineering/tank,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"IW" = (
+/obj/effect/spawner/random/structure/grille,
+/obj/structure/window/spawner/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"Ln" = (
+/obj/effect/spawner/random/engineering/canister,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"Mr" = (
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+"Ms" = (
+/turf/closed/wall/r_wall,
+/area/station/maintenance/department/science/south)
+"Mz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/science/ordnance,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"MH" = (
+/turf/open/floor/plastic,
+/area/station/maintenance/department/science/south)
+"ML" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"Oi" = (
+/obj/effect/spawner/random/engineering/canister,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"OA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"OF" = (
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/item/clothing/glasses/welding{
+	pixel_y = -2
+	},
+/obj/item/clothing/glasses/regular/circle{
+	pixel_y = 2
+	},
+/obj/item/clothing/glasses/regular/thin,
+/obj/item/clothing/glasses/regular/jamjar{
+	pixel_y = 7
+	},
+/obj/item/clothing/glasses/regular/hipster{
+	pixel_y = 9
+	},
+/obj/item/clothing/glasses/regular{
+	pixel_y = 12
+	},
+/turf/open/floor/plastic,
+/area/station/maintenance/department/science/south)
+"Pl" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"Rz" = (
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/item/clothing/glasses/prism_glasses,
+/obj/item/clothing/glasses/sunglasses/oval{
+	pixel_y = 9
+	},
+/obj/item/clothing/glasses/salesman{
+	pixel_x = 15;
+	pixel_y = 5
+	},
+/turf/open/floor/plastic,
+/area/station/maintenance/department/science/south)
+"SR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"Un" = (
+/obj/effect/spawner/random/engineering/tank,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"Us" = (
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"UG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/effect/spawner/random/structure/steam_vent,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+"YY" = (
+/obj/structure/closet/crate,
+/obj/item/disk/computer/virus/clown,
+/obj/item/firing_pin/clown,
+/obj/item/extendohand/acme,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/south)
+
+(1,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+"}
+(2,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+GO
+ed
+Ms
+Ms
+ML
+ML
+ML
+ML
+Mr
+Mr
+qq
+qq
+qq
+"}
+(3,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+GO
+Bb
+ry
+Ms
+Ms
+ML
+ML
+Mr
+Mr
+Mr
+ML
+qq
+qq
+"}
+(4,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+FC
+Bb
+DA
+gi
+Ms
+Ms
+ML
+ML
+Mr
+Mr
+ML
+qq
+qq
+"}
+(5,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+Db
+Bb
+DA
+IW
+je
+Ms
+ML
+ML
+ML
+Mr
+Mr
+qq
+qq
+"}
+(6,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+DA
+dk
+DA
+IW
+YY
+Ms
+ML
+ML
+ML
+ML
+Mr
+Mr
+qq
+"}
+(7,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+fq
+ed
+DA
+IW
+je
+Ms
+ML
+ML
+ML
+ML
+Mr
+Mr
+Mr
+"}
+(8,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+GO
+Bb
+FC
+Ms
+Ms
+Ms
+ML
+ML
+ML
+ML
+Mr
+Mr
+Mr
+"}
+(9,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+GO
+GO
+Bb
+Ms
+Ms
+ML
+ML
+ML
+ML
+ML
+ML
+Mr
+Mr
+Mr
+"}
+(10,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+Fo
+UG
+nT
+Ms
+ML
+ML
+ML
+Mr
+ML
+ML
+ML
+Mr
+Mr
+Mr
+"}
+(11,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+Bb
+Ms
+Ms
+Ms
+ML
+ML
+Mr
+Mr
+ML
+ML
+ML
+Mr
+Mr
+Mr
+"}
+(12,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+GO
+GO
+GO
+Fo
+nT
+fq
+Ms
+ML
+ML
+ML
+Mr
+Mr
+Mr
+ML
+ML
+Mr
+Mr
+Mr
+"}
+(13,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+ft
+gg
+gg
+nT
+kV
+Ga
+Ms
+Ms
+ML
+Mr
+Mr
+Am
+Mr
+ML
+Mr
+Mr
+Mr
+qq
+"}
+(14,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+Bb
+Oi
+Ms
+kV
+kV
+MH
+MH
+Ms
+ML
+Mr
+Mr
+Mr
+Mr
+ML
+Mr
+Mr
+Mr
+qq
+"}
+(15,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+ft
+nT
+Un
+Ms
+Rz
+jX
+oO
+MH
+xG
+Ms
+ML
+Mr
+Mr
+ML
+ML
+Mr
+Mr
+Mr
+qq
+"}
+(16,1,1) = {"
+qq
+GO
+GO
+GO
+GO
+je
+Mz
+Pl
+Ms
+Ms
+OF
+MH
+MH
+MH
+vy
+Ms
+ML
+ML
+ML
+ML
+ML
+Mr
+Mr
+qq
+qq
+"}
+(17,1,1) = {"
+qq
+GO
+ft
+ka
+gg
+gg
+nT
+kB
+Ms
+ML
+Ms
+aX
+mK
+Gh
+wA
+Ms
+ML
+ML
+ML
+ML
+Mr
+Mr
+Mr
+qq
+qq
+"}
+(18,1,1) = {"
+qq
+GO
+ed
+oh
+DA
+By
+SR
+rC
+Ms
+ML
+ML
+Ms
+Ms
+Ms
+Ms
+ML
+ML
+ML
+ML
+Mr
+Mr
+Mr
+qq
+qq
+qq
+"}
+(19,1,1) = {"
+qq
+gy
+xj
+Us
+GO
+GO
+SR
+rC
+Ms
+Ms
+Ms
+Ms
+ML
+ML
+ML
+ML
+ML
+ML
+ML
+qq
+qq
+qq
+qq
+qq
+qq
+"}
+(20,1,1) = {"
+qq
+GO
+GO
+GO
+GO
+GO
+SR
+OA
+gg
+UG
+bp
+Ms
+ML
+ML
+ML
+ML
+ML
+ML
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+"}
+(21,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+Bb
+Ms
+ML
+ML
+ML
+ML
+ML
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+"}
+(22,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+Bb
+Ms
+Ms
+Ms
+ML
+ML
+ML
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+"}
+(23,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+Bb
+Ms
+zD
+Ms
+Ms
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+"}
+(24,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+Bb
+Fm
+Fm
+Fm
+Ms
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+"}
+(25,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+Bb
+Fm
+ue
+Fm
+fq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+"}
+(26,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+Bb
+Fm
+Fm
+Fm
+DA
+qq
+qq
+qq
+Mr
+Mr
+qq
+qq
+qq
+qq
+qq
+"}
+(27,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+Bb
+Ms
+Ln
+jK
+Ms
+qq
+qq
+qq
+Mr
+Mr
+qq
+qq
+qq
+qq
+qq
+"}
+(28,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+Bb
+Ms
+Ms
+Ms
+Ms
+ML
+ML
+ML
+Mr
+Mr
+qq
+qq
+qq
+qq
+qq
+"}
+(29,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+Bb
+Ms
+Ms
+Ms
+ML
+ML
+ML
+ML
+ML
+Mr
+Mr
+qq
+qq
+qq
+qq
+"}
+(30,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+ft
+ka
+ka
+nT
+Ms
+ML
+ML
+ML
+ML
+ML
+ML
+Mr
+Mr
+Mr
+qq
+qq
+qq
+qq
+"}
+(31,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+ed
+By
+Ms
+Ms
+Ms
+ML
+ML
+ML
+ML
+ML
+ML
+Mr
+Mr
+Mr
+Mr
+qq
+qq
+qq
+"}
+(32,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+ed
+Ms
+Ms
+ML
+ML
+ML
+ML
+ML
+ML
+ML
+Mr
+Mr
+Mr
+Mr
+Mr
+qq
+qq
+qq
+"}
+(33,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+Bb
+Ms
+ML
+ML
+ML
+ML
+ML
+ML
+ML
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+qq
+qq
+qq
+"}
+(34,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+hb
+Ms
+Ms
+Ms
+Ms
+ML
+ML
+ML
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+qq
+qq
+qq
+qq
+"}
+(35,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+Bb
+Ms
+Ms
+Db
+Ms
+Ms
+ML
+ML
+Mr
+Mr
+Mr
+Mr
+Mr
+qq
+qq
+qq
+qq
+qq
+"}
+(36,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+Bb
+iI
+DA
+DA
+DL
+Ms
+ML
+ML
+Mr
+Mr
+Mr
+Mr
+qq
+qq
+qq
+qq
+qq
+qq
+"}
+(37,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+ed
+By
+fq
+fq
+IB
+Ms
+ML
+ML
+Mr
+Mr
+Mr
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+"}
+(38,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+GO
+ed
+Ms
+wR
+wR
+Ms
+Ms
+ML
+ML
+Mr
+Mr
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+"}
+(39,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+ka
+gg
+nT
+Ms
+Ms
+Ms
+Ms
+ML
+Mr
+Mr
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+"}
+(40,1,1) = {"
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+ML
+ML
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+"}

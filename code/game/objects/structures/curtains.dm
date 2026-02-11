@@ -157,3 +157,4 @@
 /obj/structure/curtain/cloth/fancy/mechanical/start_closed/Initialize(mapload)
 	. = ..()
 	close()
+
