@@ -122,11 +122,12 @@
 	return .
 
 /datum/export/material/market/get_base_cost(obj/exported_obj)
+	. = ..()
 	if(!istype(exported_obj, /obj/item/stock_block))
-		return ..() * SSstock_market.materials_prices[material_id]
+		return . * SSstock_market.materials_prices[material_id]
 
 	var/obj/item/stock_block/exported_block = exported_obj
-	return (exported_block.fluid ? SSstock_market.materials_prices[exported_block.custom_materials[1].type] : exported_block.export_value)
+	return . * (exported_block.fluid ? SSstock_market.materials_prices[exported_block.custom_materials[1].type] : exported_block.export_value)
 
 /datum/export/material/market/sell_object(obj/sold_item, datum/export_report/report, dry_run, apply_elastic)
 	. = ..()
