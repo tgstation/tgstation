@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagentlist())
 /// list of all plan traits
 GLOBAL_LIST_INIT(plant_traits, init_plant_traits())
 /// List of all reagent side effects
-GLOBAL_LIST_INIT(stacked_reagent_effects, init_chemical_side_effects())
+GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 
 /// Initialises all /datum/reagent into a list indexed by reagent id
 /proc/init_chemical_reagent_list()
@@ -204,5 +204,5 @@ GLOBAL_LIST_INIT(stacked_reagent_effects, init_chemical_side_effects())
 /proc/init_chemical_side_effects()
 	. = list()
 
-	for(var/datum/stacked_reagent_effects/effect as anything in valid_subtypesof(/datum/stacked_reagent_effects))
+	for(var/datum/stacked_metabolization_effect/effect as anything in valid_subtypesof(/datum/stacked_metabolization_effect))
 		. += new effect()

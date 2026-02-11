@@ -1,6 +1,6 @@
 ///Side effects from metabolizing an reagent or a combination of them
-/datum/stacked_reagent_effects
-	abstract_type = /datum/stacked_reagent_effects
+/datum/stacked_metabolization_effect
+	abstract_type = /datum/stacked_metabolization_effect
 	///List of reagents that need to be metabolized for this side effect to kick in. For subtypes values greater than requirement list will also trigger this effect
 	var/list/datum/reagent/requirements
 
@@ -12,7 +12,7 @@
  * * mob/living/carbon/owner - the mob to apply the side effects to
  * * seconds_per_tick - passed from /datum/reagents/proc/metabolize_reagent()
 */
-/datum/stacked_reagent_effects/proc/check_and_apply(list/reagents_metabolized, mob/living/carbon/owner, seconds_per_tick)
+/datum/stacked_metabolization_effect/proc/check_and_apply(list/reagents_metabolized, mob/living/carbon/owner, seconds_per_tick)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	. = 0
 
@@ -39,7 +39,8 @@
  * * seconds_per_tick - passed from /datum/reagents/proc/metabolize_reagent()
  * Returns a positive value if the mobs health needs to be updated
 */
-/datum/stacked_reagent_effects/proc/apply(list/reagents_metabolized, mob/living/carbon/owner, seconds_per_tick)
+/datum/stacked_metabolization_effect/proc/apply(list/reagents_metabolized, mob/living/carbon/owner, seconds_per_tick)
 	PROTECTED_PROC(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
 
 	return 0

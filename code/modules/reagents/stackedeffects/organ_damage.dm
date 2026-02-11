@@ -1,15 +1,15 @@
 ///Maximum amount of organ damage
-#define MAX_ORGAN_DAMAGE 7
+#define MAX_ORGAN_DAMAGE 3
 
 ///Damage applied to an organ
-/datum/stacked_reagent_effects/organ_damage
-	abstract_type = /datum/stacked_reagent_effects/organ_damage
+/datum/stacked_metabolization_effect/organ_damage
+	abstract_type = /datum/stacked_metabolization_effect/organ_damage
 	///Organ slot to apply damage to
 	VAR_PROTECTED/organ_slot
 	///Multiplier for damage
 	VAR_PROTECTED/scale
 
-/datum/stacked_reagent_effects/organ_damage/apply(list/reagents_metabolized, mob/living/carbon/owner, seconds_per_tick)
+/datum/stacked_metabolization_effect/organ_damage/apply(list/reagents_metabolized, mob/living/carbon/owner, seconds_per_tick)
 	. = 0
 
 	var/obj/item/organ/organ = owner.get_organ_slot(organ_slot)
@@ -19,29 +19,29 @@
 			damage += reagents_metabolized[med]
 		return abs(organ.apply_organ_damage(min(scale * damage * seconds_per_tick, MAX_ORGAN_DAMAGE)))
 
-/datum/stacked_reagent_effects/organ_damage/liver_damage
+/datum/stacked_metabolization_effect/organ_damage/liver_damage
 	requirements = list(/datum/reagent/medicine = 4)
 	organ_slot = ORGAN_SLOT_LIVER
-	scale = 0.6
+	scale = 0.25
 
-/datum/stacked_reagent_effects/organ_damage/stomach_damage
+/datum/stacked_metabolization_effect/organ_damage/stomach_damage
 	requirements = list(/datum/reagent/medicine = 5)
 	organ_slot = ORGAN_SLOT_STOMACH
-	scale = 0.5
+	scale = 0.2
 
-/datum/stacked_reagent_effects/organ_damage/lung_damage
+/datum/stacked_metabolization_effect/organ_damage/lung_damage
 	requirements = list(/datum/reagent/medicine = 6)
 	organ_slot = ORGAN_SLOT_LUNGS
-	scale = 0.4
+	scale = 0.15
 
-/datum/stacked_reagent_effects/organ_damage/heart_damage
+/datum/stacked_metabolization_effect/organ_damage/heart_damage
 	requirements = list(/datum/reagent/medicine = 7)
 	organ_slot = ORGAN_SLOT_HEART
-	scale = 0.3
+	scale = 0.1
 
-/datum/stacked_reagent_effects/organ_damage/brain_damage
+/datum/stacked_metabolization_effect/organ_damage/brain_damage
 	requirements = list(/datum/reagent/medicine = 8)
 	organ_slot = ORGAN_SLOT_BRAIN
-	scale = 0.2
+	scale = 0.05
 
 #undef MAX_ORGAN_DAMAGE
