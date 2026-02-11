@@ -86,8 +86,8 @@
 		update_actions()
 
 /obj/item/circuit_component/equipment_action/proc/update_actions()
-	for(var/ref in granted_to)
-		var/datum/action/granted_action = granted_to[ref]
+	for(var/target in granted_to)
+		var/datum/action/granted_action = granted_to[target]
 		granted_action.name = button_name.value || "Action"
 		granted_action.button_icon_state = "bci_[replacetextEx(LOWER_TEXT(icon_options.value), " ", "_")]"
 
@@ -97,17 +97,15 @@
 	button_icon_state = "bci_power"
 	check_flags = AB_CHECK_CONSCIOUS
 
-	var/datum/granted_to
 	var/obj/item/circuit_component/equipment_action/action_comp
 
-/datum/action/innate/circuit_equipment_action/New(datum/granted_to, obj/item/circuit_component/equipment_action/action_comp)
+/datum/action/innate/circuit_equipment_action/New(datum/target, obj/item/circuit_component/equipment_action/action_comp)
 	. = ..()
-	src.granted_to = granted_to
-	action_comp.granted_to[REF(granted_to)] = src
+	action_comp.granted_to[REF(target)] = src
 	src.action_comp = action_comp
 
 /datum/action/innate/circuit_equipment_action/Destroy()
-	action_comp.granted_to -= REF(granted_to)
+	action_comp.granted_to -= REF(target)
 	action_comp = null
 
 	return ..()
