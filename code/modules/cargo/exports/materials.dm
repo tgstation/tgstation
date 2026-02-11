@@ -26,9 +26,9 @@
 
 /**
  * Inits an list of exports for this type.
- * For performance this returns a static list of exports
- * that is shared by everything under the same abstract type,
- * unless use_shared_exports is FALSE.
+ * For performance, unless use_shared_exports is FALSE,
+ * this returns a static list of types we check for export
+ * that is shared by everything under the same abstract type.
  *
  * Arguments
  * * export_data - exports whos type cache we are trying to create
