@@ -1,10 +1,26 @@
 import { Button, Section, Table } from 'tgui-core/components';
-
+import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 
+type FileEntry = {
+  name: string;
+  type: string;
+  size: number;
+  undeletable: BooleanLike;
+  alert_able: BooleanLike;
+  alert_silenced: BooleanLike;
+  printable: BooleanLike;
+};
+
+type NtosFileManagerData = {
+  usbconnected: BooleanLike;
+  files: FileEntry[];
+  usbfiles: FileEntry[];
+};
+
 export const NtosFileManager = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<NtosFileManagerData>();
   const { usbconnected, files = [], usbfiles = [] } = data;
   return (
     <NtosWindow>
@@ -23,6 +39,7 @@ export const NtosFileManager = (props) => {
             }
             onDuplicate={(file) => act('PRG_clone', { file: file })}
             onToggleSilence={(file) => act('PRG_togglesilence', { name: file })}
+            onPrint={(file) => act('PRG_print', { name: file })}
           />
         </Section>
         {usbconnected && (
@@ -40,6 +57,7 @@ export const NtosFileManager = (props) => {
                 })
               }
               onDuplicate={(file) => act('PRG_clone', { file: file })}
+              onPrint={(file) => act('PRG_usbprint', { name: file })}
             />
           </Section>
         )}
@@ -48,7 +66,19 @@ export const NtosFileManager = (props) => {
   );
 };
 
-const FileTable = (props) => {
+type FileTableProps = {
+  files: FileEntry[];
+  usbconnected: BooleanLike;
+  usbmode?: BooleanLike;
+  onUpload: (file: string) => void;
+  onDelete: (file: string) => void;
+  onRename: (file: string, newName: string) => void;
+  onDuplicate: (file: string) => void;
+  onToggleSilence?: (file: string) => void;
+  onPrint: (file: string) => void;
+};
+
+const FileTable = (props: FileTableProps) => {
   const {
     files = [],
     usbconnected,
@@ -57,6 +87,7 @@ const FileTable = (props) => {
     onDelete,
     onRename,
     onToggleSilence,
+    onPrint,
   } = props;
   return (
     <Table>
@@ -86,7 +117,7 @@ const FileTable = (props) => {
                 icon={file.alert_silenced ? 'bell-slash' : 'bell'}
                 color={file.alert_silenced ? 'red' : 'default'}
                 tooltip={file.alert_silenced ? 'Unmute Alerts' : 'Mute Alerts'}
-                onClick={() => onToggleSilence(file.name)}
+                onClick={() => onToggleSilence!(file.name)}
               />
             )}
             {!file.undeletable && (
@@ -113,6 +144,13 @@ const FileTable = (props) => {
                     />
                   ))}
               </>
+            )}
+            {!!file.printable && (
+              <Button
+                icon="print"
+                tooltip="Print"
+                onClick={() => onPrint(file.name)}
+              />
             )}
           </Table.Cell>
         </Table.Row>

@@ -18,6 +18,9 @@ export const onSelectServerColorAtom = atom<string | undefined>(undefined);
 export const currentColorAtom = atom<EditorColor, [EditorColor], void>(
   (get) => get(currentColorInternalAtom),
   (get, set, color) => {
+    if (!color) {
+      return;
+    }
     const onSetServerColor = get(onSelectServerColorAtom);
     if (onSetServerColor) {
       act(onSetServerColor, { color: colorToHexString(color) });
@@ -33,7 +36,20 @@ export const tools: Tool[] = [
   new Bucket(),
 ];
 
-export const currentToolAtom = atom(tools[0]);
+const currentToolInternalAtom = atom(tools[0]);
+export const currentToolAtom = atom<Tool, [Tool], void>(
+  (get) => get(currentToolInternalAtom),
+  (get, set, tool) => {
+    if (!tool) {
+      return;
+    }
+    const oldTool = get(currentToolInternalAtom);
+    if (oldTool !== tool) {
+      oldTool?.cancel?.();
+    }
+    set(currentToolInternalAtom, tool);
+  },
+);
 export const dirAtom = atom(Dir.SOUTH);
 export const layerAtom = atom(0);
 export const previewLayerAtom = atom<number | undefined>();

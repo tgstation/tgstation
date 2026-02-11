@@ -91,6 +91,33 @@
 	new_data["frame_type"] = frame_type
 	return new_data
 
+/datum/painting/proc/get_icon()
+	return icon("data/paintings/images/[md5].png")
+
+/datum/painting/proc/spawn_canvas(spawn_loc)
+	var/icon/art_icon = get_icon()
+	var/art_width = art_icon.Width()
+	var/art_height = art_icon.Height()
+	var/obj/item/canvas/printed_canvas
+	for(var/obj/item/canvas/canvas_type in typesof(/obj/item/canvas))
+		if(canvas_type::width == art_width && canvas_type::height == art_height)
+			printed_canvas = new canvas_type(spawn_loc)
+	if(!printed_canvas)
+		return
+	fill_canvas(printed_canvas, art_icon)
+	return printed_canvas
+
+/datum/painting/proc/fill_canvas(obj/item/canvas/canvas, icon = get_icon())
+	canvas.painting_metadata = src
+	canvas.fill_grid_from_icon(icon)
+	canvas.generated_icon = icon
+	canvas.icon_generated = TRUE
+	canvas.finalized = TRUE
+	canvas.name = "painting - [title]"
+	///this is a copy of something that is already in the database- it should not be able to be saved.
+	canvas.no_save = TRUE
+	canvas.update_icon()
+
 SUBSYSTEM_DEF(persistent_paintings)
 	name = "Persistent Paintings"
 	flags = SS_NO_FIRE

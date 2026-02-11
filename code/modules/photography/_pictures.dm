@@ -17,8 +17,10 @@
 	var/id //this var is NOT protected because the worst you can do with this that you couldn't do otherwise is overwrite photos, and photos aren't going to be used as attack logs/investigations anytime soon.
 	///Was this image capable of seeing ghosts?
 	var/see_ghosts = CAMERA_NO_GHOSTS
+	///The ckey of the player who printed this photo from an edited computer image.
+	var/author_ckey
 
-/datum/picture/New(name, desc, mobs_spotted, dead_spotted, names, image, icon, size_x, size_y, bp, caption_, autogenerate_icon, can_see_ghosts)
+/datum/picture/New(name, desc, mobs_spotted, dead_spotted, names, image, icon, size_x, size_y, bp, caption_, autogenerate_icon, can_see_ghosts, author_ckey_)
 	if(!isnull(name))
 		picture_name = name
 	if(!isnull(desc))
@@ -48,6 +50,8 @@
 		regenerate_small_icon()
 	if(can_see_ghosts)
 		see_ghosts = can_see_ghosts
+	if(!isnull(author_ckey))
+		author_ckey = author_ckey
 
 /datum/picture/proc/get_small_icon(iconstate)
 	if(!picture_icon)
@@ -73,13 +77,20 @@
 	.["pixel_size_x"] = psize_x
 	.["pixel_size_y"] = psize_y
 	.["logpath"] = logpath
+	.["author"] = author_ckey
 
-	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
+	SET_SERIALIZATION_SEMVER(semvers, "1.0.1")
 	return .
 
 /datum/picture/deserialize_list(list/input, list/options)
-	if((SCHEMA_VERSION in options) && (options[SCHEMA_VERSION] != "1.0.0"))
-		CRASH("Invalid schema version for datum/picture: [options[SCHEMA_VERSION]] (expected 1.0.0)")
+	if((SCHEMA_VERSION in options))
+		switch(options[SCHEMA_VERSION])
+			if("1.0.0")
+			if("1.0.1")
+				if(input["author"])
+					author_ckey = input["author"]
+			else
+				CRASH("Invalid schema version for datum/picture: [options[SCHEMA_VERSION]] (expected \[1.0.0, 1.0.1\])")
 	. = ..()
 	if(!.)
 		return .

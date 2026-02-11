@@ -302,7 +302,7 @@ export namespace SpriteEditor {
       if (disabled) {
         currentTool.cancel?.();
       }
-    }, [disabled, currentTool]);
+    }, [disabled]);
     return (
       <AdvancedCanvas
         data={getFlattenedSpriteDir(
@@ -345,7 +345,14 @@ export namespace SpriteEditor {
   };
 
   export const LayerManager = (
-    props: Omit<BaseLayerManagerProps, 'context'>,
+    props: Omit<
+      BaseLayerManagerProps,
+      | 'context'
+      | 'selectedDir'
+      | 'setSelectedDir'
+      | 'selectedLayer'
+      | 'setSelectedLayer'
+    >,
   ) => {
     const [selectedDir, setSelectedDir] = useAtom(dirAtom);
     const [selectedLayer, setSelectedLayer] = useAtom(layerAtom);

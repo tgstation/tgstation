@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction, useSyncExternalStore } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import type { Box } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
@@ -66,8 +66,6 @@ export type BorderStyleProps = Omit<
     never
   >
 >;
-
-export type SubscribeFn = Parameters<typeof useSyncExternalStore>[0];
 
 export type StringLayer = string[][];
 

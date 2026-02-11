@@ -86,4 +86,26 @@
 	temp.gas_record = gas_record
 	return temp
 
+/datum/computer_file/data/paint_project
+	filetype = "NPNT"
+	/// The sprite editor workspace stored in the file
+	var/datum/sprite_editor_workspace/workspace
+	/// The unmodified photo or painting this is a digital copy of.
+	var/source_photo_or_painting
+
+/datum/computer_file/data/paint_project/New(datum/sprite_editor_workspace/workspace, source_photo_or_painting)
+	..()
+	src.workspace = workspace
+	src.source_photo_or_painting = source_photo_or_painting
+
+/datum/computer_file/data/paint_project/clone(rename)
+	var/datum/computer_file/data/paint_project/temp = ..()
+	temp.workspace = workspace.copy()
+	temp.source_photo_or_painting = source_photo_or_painting
+	return temp
+
+/// Assign this file's backing datum
+/datum/computer_file/data/paint_project/proc/set_source(new_source)
+	source_photo_or_painting = new_source
+
 #undef BLOCK_SIZE

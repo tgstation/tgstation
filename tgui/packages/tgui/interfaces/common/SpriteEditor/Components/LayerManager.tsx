@@ -30,7 +30,7 @@ export const LayerManager = (props: LayerManagerProps) => {
   const { width, height, dirs: iconDirs, layers } = data;
   const layerCount = layers.length;
   const cells = [
-    `". ${dirCellPrefixes.slice(0, iconDirs).join(' ')} add"`,
+    `". ${dirCellPrefixes.slice(0, iconDirs).join(' ')} ."`,
     ...Array.from(
       { length: layerCount },
       (_, i) =>
@@ -42,7 +42,22 @@ export const LayerManager = (props: LayerManagerProps) => {
   ].join(' ');
   return (
     <Box {...rest}>
-      <Section fill title="Layers">
+      <Section
+        fill
+        title="Layers"
+        buttons={
+          <Button
+            icon="plus"
+            tooltip="Add Layer"
+            onClick={() =>
+              act('spriteEditorCommand', {
+                command: 'transaction',
+                transaction: { type: 'addLayer', name: 'Add Layer' },
+              })
+            }
+          />
+        }
+      >
         <Box
           width="100%"
           height="100%"
@@ -69,18 +84,6 @@ export const LayerManager = (props: LayerManagerProps) => {
                 }}
               />
             ))}
-          <Box style={{ gridArea: 'add' }}>
-            <Button
-              icon="plus"
-              tooltip="Add Layer"
-              onClick={() =>
-                act('spriteEditorCommand', {
-                  command: 'transaction',
-                  transaction: { type: 'addLayer', name: 'Add Layer' },
-                })
-              }
-            />
-          </Box>
           {layers.map((layer, i) => {
             const { name, data, visible } = layer;
             return (
@@ -199,6 +202,7 @@ export const LayerManager = (props: LayerManagerProps) => {
                       <Button.Confirm
                         icon="xmark"
                         tooltip="Delete"
+                        confirmIcon="xmark"
                         disabled={layerCount === 1}
                         onClick={() =>
                           act('spriteEditorCommand', {
