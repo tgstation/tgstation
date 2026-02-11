@@ -120,6 +120,12 @@
   Melbert:
   - qol: You are always notified if your paycheck amount changes
 2026-02-11:
+  Iajret:
+  - bugfix: fixed brain not getting traumas from brain damage (including rotting or
+      chemicals)
+  - bugfix: brains should no longer be getting traumas from mannitol healing
+  - bugfix: apparently cut stomach healing had been broken too, and it should be fixed
+      now.
   Maximal08:
   - map: Adds missing wires and pipes to meta
   Neocloudy:
