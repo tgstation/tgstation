@@ -739,7 +739,7 @@
 	wires?.cut(WIRE_TX)
 
 /obj/item/radio/entertainment/speakers/on_receive_message(list/data)
-	playsound(source = src, soundin = SFX_MUFFLED_SPEECH, vol = 60, extrarange = -4, vary = TRUE, ignore_walls = FALSE)
+	playsound(src, SFX_MUFFLED_SPEECH, 60, TRUE, -4, ignore_walls = FALSE, volume_preference = /datum/preference/numeric/volume/sound_radio_noise)
 
 	return ..()
 

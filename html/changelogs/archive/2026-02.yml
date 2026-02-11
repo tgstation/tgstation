@@ -116,3 +116,23 @@
   - map: Catwalks vault is now restricted access
   vinylspiders:
   - code_imp: sinks can be mounted to floors
+2026-02-10:
+  Melbert:
+  - qol: You are always notified if your paycheck amount changes
+2026-02-11:
+  Cerulyss-Aureon:
+  - qol: The HFR can now produce Tier 5 gases at Level 4 when plasma is present in
+      the moderator. This makes it a more viable and competitive alternative to traditional
+      pipe or chamber gas synthesis.
+  Iajret:
+  - bugfix: fixed brain not getting traumas from brain damage (including rotting or
+      chemicals)
+  - bugfix: brains should no longer be getting traumas from mannitol healing
+  - bugfix: apparently cut stomach healing had been broken too, and it should be fixed
+      now.
+  Maximal08:
+  - map: Adds missing wires and pipes to meta
+  Neocloudy:
+  - bugfix: Entertainment monitors don't bypass radio speech volume.
+  lelandkemble:
+  - spellcheck: Pronouns in counterattack text are more correct
