@@ -757,7 +757,7 @@
 /obj/machinery/light/floor/is_mountable_turf(turf/target)
 	return !isgroundlessturf(target)
 
-/obj/machinery/light/floor/get_moutable_objects()
+/obj/machinery/light/floor/get_mountable_objects()
 	var/static/list/attachables = list(
 		/obj/structure/thermoplastic,
 		/obj/structure/lattice/catwalk,

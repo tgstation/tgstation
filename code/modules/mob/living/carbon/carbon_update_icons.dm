@@ -547,6 +547,11 @@
 	. += "[husk_type]"
 	. += "-husk"
 	. += "-[body_zone]"
+	var/list/blood_dna = blood_dna_info || owner?.get_blood_dna_list()
+	if (LAZYLEN(blood_dna))
+		. += "-[get_color_from_blood_list(blood_dna)]"
+	else
+		. += "-[BLOOD_COLOR_RED]"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "-[human_owner.mob_height]"
