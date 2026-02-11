@@ -37,6 +37,11 @@
 		source.balloon_alert(user, "duplicate implant present!")
 		return COMPONENT_STOP_IMPLANTING
 
+/obj/item/implant/circuit/ui_host(mob/user)
+	if(istype(loc, /obj/item/implantcase))
+		return loc
+	return ..()
+
 /obj/item/circuit_component/implant_core
 	display_name = "Implant Core"
 	desc = "Controls the core operations of the implant."

@@ -1643,7 +1643,4 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Makes the owner desensetized to death, but happy whenever someone gets blown to pieces (as a sacrifice to the necropolis) unless its another worshipper
 #define TRAIT_NECROPOLIS_WORSHIP "necropolis_worship"
 
-/// Movable treats its contents as unobscured for /mob/living/shared_living_interactivity_checks
-#define TRAIT_UI_CONTENTS_UNOBSCURED "ui_contents_unobscured"
-
 // END TRAIT DEFINES

@@ -22,7 +22,6 @@
 
 /obj/item/implantcase/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_UI_CONTENTS_UNOBSCURED, INNATE_TRAIT)
 	if(imp_type)
 		imp = new imp_type(src)
 	update_appearance()
