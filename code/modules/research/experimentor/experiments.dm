@@ -4,20 +4,23 @@
 #define EFFECT_PROB_HIGH 75
 #define EFFECT_PROB_VERYHIGH 95
 
-#define SCANTYPE_POKE "poke"
-#define SCANTYPE_IRRADIATE "irradiate"
-#define SCANTYPE_GAS "gas"
-#define SCANTYPE_HEAT "heat"
-#define SCANTYPE_COLD "cold"
-#define SCANTYPE_OBLITERATE "obliterate"
-#define SCANTYPE_DISCOVER "discover"
-#define FAIL "fail"
+#define SCANTYPE_POKE "Poke"
+#define SCANTYPE_IRRADIATE "Irradiate"
+#define SCANTYPE_GAS "Gas"
+#define SCANTYPE_HEAT "Heat"
+#define SCANTYPE_COLD "Freeze"
+#define SCANTYPE_OBLITERATE "Obliterate"
+#define SCANTYPE_DISCOVER "Discover"
+#define FAIL "Fail"
 
 #define MSG_TYPE_NOTICE "notice"
 #define MSG_TYPE_WARNING "warning"
 #define MSG_TYPE_DANGER "danger"
 
 /datum/experimentor_result_handler
+	var/name
+	var/fa_icon
+	var/scantype
 	var/start_message_template
 	var/critical_prob
 	var/critical_message_template
@@ -42,19 +45,11 @@
 /datum/experimentor_result_handler/proc/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	return
 
-/obj/machinery/rnd/experimentor/proc/show_start_message(message, type)
-	switch(type)
-		if(MSG_TYPE_NOTICE)
-			visible_message(span_notice("[src] [message]"))
-		if(MSG_TYPE_WARNING)
-			visible_message(span_warning("[src] [message]"))
-		if(MSG_TYPE_DANGER)
-			visible_message(span_danger("[src] [message]"))
-		else
-			visible_message(span_notice("[src] [message]"))
-
 /// Pokes the object
 /datum/experimentor_result_handler/poke
+	name = "Poke"
+	fa_icon = "hand"
+	scantype = SCANTYPE_POKE
 	start_message_template = "prods at %ITEM% with mechanical arms."
 	critical_prob = EFFECT_PROB_LOW
 	critical_message_template = "%ITEM% is gripped in just the right way, enhancing its focus."
@@ -90,6 +85,9 @@
 
 /// Infuses it with radiation
 /datum/experimentor_result_handler/irradiate
+	name = "Irradiate"
+	fa_icon = "radiation"
+	scantype = SCANTYPE_IRRADIATE
 	start_message_template = "reflects radioactive rays at %ITEM%!"
 	start_message_type = MSG_TYPE_DANGER
 	critical_prob = EFFECT_PROB_VERYLOW
@@ -133,6 +131,9 @@
 
 /// Fills the chamber with gas
 /datum/experimentor_result_handler/gas
+	name = "Gas"
+	fa_icon = "cloud"
+	scantype = SCANTYPE_GAS
 	start_message_template = "fills its chamber with gas, %ITEM% included."
 	start_message_type = MSG_TYPE_WARNING
 	critical_prob = EFFECT_PROB_LOW
@@ -188,6 +189,9 @@
 
 /// Heats the object
 /datum/experimentor_result_handler/heat
+	name = "Heat"
+	fa_icon = "fire"
+	scantype = SCANTYPE_HEAT
 	start_message_template = "raises %ITEM%'s temperature."
 	start_message_type = MSG_TYPE_NOTICE
 	critical_prob = EFFECT_PROB_LOW
@@ -250,6 +254,9 @@
 
 /// Cools the object
 /datum/experimentor_result_handler/cold
+	name = "Freeze"
+	fa_icon = "snowflake"
+	scantype = SCANTYPE_COLD
 	start_message_template = "lowers %ITEM%'s temperature."
 	start_message_type = MSG_TYPE_NOTICE
 	critical_prob = EFFECT_PROB_LOW
@@ -298,6 +305,9 @@
 
 /// Crushes the object
 /datum/experimentor_result_handler/obliterate
+	name = "Obliterate"
+	fa_icon = "trash"
+	scantype = SCANTYPE_OBLITERATE
 	start_message_template = "activates the crushing mechanism, %ITEM% is destroyed!"
 	start_message_type = MSG_TYPE_WARNING
 	critical_prob = EFFECT_PROB_LOW
@@ -335,17 +345,9 @@
 
 	QDEL_NULL(machine.loaded_item)
 
-/// Experiment failure
-/datum/experimentor_result_handler/fail
-	start_message_type = MSG_TYPE_WARNING
-
-/datum/experimentor_result_handler/fail/execute(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
-	var/a = pick("rumbles", "shakes", "vibrates", "shudders", "honks")
-	var/b = pick("crushes", "spins", "viscerates", "smashes", "insults")
-	machine.visible_message(span_warning("[exp_on] [a], and [b], the experiment was a failure."))
-
 /// Discovers relic properties
 /datum/experimentor_result_handler/discover
+	scantype = SCANTYPE_DISCOVER
 	start_message_template = "scans the %ITEM%, revealing its true nature!"
 	start_message_type = MSG_TYPE_NOTICE
 
@@ -359,6 +361,15 @@
 		loaded_artifact.reveal()
 		machine.investigate_log("Experimentor has revealed a relic with [span_danger("[loaded_artifact.hidden_power]")] effect.", INVESTIGATE_EXPERIMENTOR)
 	machine.item_eject()
+
+/// Experiment failure
+/datum/experimentor_result_handler/fail
+	start_message_type = MSG_TYPE_WARNING
+
+/datum/experimentor_result_handler/fail/execute(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+	var/a = pick("rumbles", "shakes", "vibrates", "shudders", "honks")
+	var/b = pick("crushes", "spins", "viscerates", "smashes", "insults")
+	machine.visible_message(span_warning("[exp_on] [a], and [b], the experiment was a failure."))
 
 #undef EFFECT_PROB_VERYLOW
 #undef EFFECT_PROB_LOW
