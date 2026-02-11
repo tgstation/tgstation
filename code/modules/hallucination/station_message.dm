@@ -8,7 +8,7 @@
 	var/require_hearing = TRUE
 
 /datum/hallucination/station_message/start()
-	if(require_hearing && !hallucinator.can_hear())
+	if(require_hearing && HAS_TRAIT(hallucinator, TRAIT_DEAF))
 		return FALSE
 	if(do_fake_alert() == CANCEL_FAKE_ALERT)
 		return FALSE

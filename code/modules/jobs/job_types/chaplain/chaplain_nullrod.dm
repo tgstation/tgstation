@@ -19,6 +19,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 		Harms you if you dismiss the scythe without first causing harm to a creature. \
 		The shard also causes you to become Morbid, shifting your interests towards the macabre."
 	rods[/obj/item/melee/skateboard/holyboard] = "A skateboard that grants you flight and anti-magic abilities while ridden. Fits in your bag."
+	rods[/obj/item/storage/belt/sheath/hanzo_katana] = "A sharp katana which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt, wearing the sheath on belt allows for a swift counterattack."
 
 	for(var/obj/item/melee/energy/sword/nullrod/energy_nullrod_type as anything in typesof(/obj/item/melee/energy/sword/nullrod))
 		rods[energy_nullrod_type] = "An energy sword, but with a lower force, no armour penetration and a low chance of blocking. Can be switched on and off. \
@@ -46,8 +47,6 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	var/chaplain_spawnable = TRUE
 	/// Short description of what this item is capable of, for radial menu uses.
 	var/menu_description = "A standard chaplain's weapon. Fits in pockets. Can be worn on the belt."
-	/// Lazylist, tracks refs()s to all cultists which have been crit or killed by this nullrod.
-	var/list/cultists_slain
 	/// Affects GLOB.holy_weapon_type. Disable to allow null rods to change at will and without affecting the station's type.
 	var/station_holy_item = TRUE
 
@@ -71,26 +70,6 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
 	return (BRUTELOSS|FIRELOSS)
 
-/obj/item/nullrod/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(!user.mind?.holy_role)
-		return ..()
-	if(!IS_CULTIST(target_mob) || istype(target_mob, /mob/living/carbon/human/cult_ghost))
-		return ..()
-
-	var/old_stat = target_mob.stat
-	. = ..()
-	if(old_stat < target_mob.stat)
-		LAZYOR(cultists_slain, REF(target_mob))
-	return .
-
-/obj/item/nullrod/examine(mob/user)
-	. = ..()
-	if(!IS_CULTIST(user) || !GET_ATOM_BLOOD_DNA_LENGTH(src))
-		return
-
-	var/num_slain = LAZYLEN(cultists_slain)
-	. += span_cult_italic("It has the blood of [num_slain] fallen cultist[num_slain == 1 ? "" : "s"] on it. \
-		<b>Offering</b> it to Nar'sie will transform it into a [num_slain >= 3 ? "powerful" : "standard"] cult weapon.")
 
 /obj/item/nullrod/non_station
 	station_holy_item = FALSE
@@ -174,8 +153,9 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	desc = "Capable of cutting clean through a holy claymore."
 	icon_state = "katana"
 	inhand_icon_state = "katana"
-	worn_icon_state = "katana"
-	menu_description = "A sharp katana which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
+	pickup_sound = 'sound/items/unsheath.ogg'
+	slot_flags = NONE
+	chaplain_spawnable = FALSE
 
 /obj/item/nullrod/claymore/multiverse
 	name = "extradimensional blade"
@@ -611,6 +591,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 15
+	obj_flags = parent_type::obj_flags | UNIQUE_RENAME
 	offspring_type = /obj/item/toy/plush/carpplushie
 	divine = TRUE
 
