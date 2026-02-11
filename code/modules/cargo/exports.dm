@@ -159,7 +159,7 @@ Then the player gets the profit from selling his own wasted time.
 
 
 /**
- * Returns the cost of the xported item i.e. amount * base cost * elasticity if TRUE
+ * Returns the cost of the exported item i.e. amount * base cost * elasticity if TRUE
  *
  * Arguments
  * * obj/exported_item - the item we are trying to export
