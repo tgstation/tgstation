@@ -69,7 +69,7 @@
 
 	if(owner)
 		//apply side effects based on reagents metabolized
-		if(reagents_metabolized.len)
+		if(reagents_metabolized.len > 1)
 			for(var/datum/stacked_reagent_effects/effect as anything in GLOB.stacked_reagent_effects)
 				need_mob_update += effect.check_and_apply(reagents_metabolized, owner, seconds_per_tick)
 
