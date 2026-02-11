@@ -119,3 +119,10 @@
 2026-02-10:
   Melbert:
   - qol: You are always notified if your paycheck amount changes
+2026-02-11:
+  Maximal08:
+  - map: Adds missing wires and pipes to meta
+  Neocloudy:
+  - bugfix: Entertainment monitors don't bypass radio speech volume.
+  lelandkemble:
+  - spellcheck: Pronouns in counterattack text are more correct
