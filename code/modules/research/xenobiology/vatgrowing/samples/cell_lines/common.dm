@@ -486,7 +486,7 @@
 /datum/micro_organism/cell_line/clown
 
 /datum/micro_organism/cell_line/clown/succeed_growing(obj/machinery/vatgrower/vat)
-	if(vat.has_reagent(/datum/reagent/toxin/mutagen) && prob(CYTO_SHINY_CHANCE))
+	if(vat.reagents.has_reagent(/datum/reagent/toxin/mutagen) && prob(CYTO_SHINY_CHANCE))
 		resulting_atom = pick(/mob/living/basic/clown/mutant, /mob/living/basic/clown/fleshclown)
 		vat.visible_message(span_warning("The biological sample in [vat] mutates into something horrific!"))
 	else
