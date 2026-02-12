@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes:
+  - bugfix: "Fixed some inconsistencies with bodytypes when non-binary genders had it set to \"Use gender\". This is no longer possible. If you use have previously used this setting, your bodytype will be explicitly set to female."

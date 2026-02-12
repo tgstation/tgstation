@@ -777,6 +777,12 @@
 	min_val = 0
 	max_val = 100
 
+/// Pop requirement to exclude recently played maps from votes.
+/datum/config_entry/number/map_vote_minimum_pop_to_remember_maps
+	default = 0 //0 means disabled
+	integer = TRUE
+	min_val = 0
+
 /// If admins with +DEBUG can initialize byond-tracy midround.
 /datum/config_entry/flag/allow_tracy_start
 	protection = CONFIG_ENTRY_LOCKED
