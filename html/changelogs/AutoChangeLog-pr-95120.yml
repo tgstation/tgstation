@@ -1,0 +1,4 @@
+author: "sesametg"
+delete-after: True
+changes:
+  - server: "fix: HR have reopened positions at unstaffed stations"
