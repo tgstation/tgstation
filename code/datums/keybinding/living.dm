@@ -152,7 +152,7 @@
 	return TRUE
 
 /datum/keybinding/living/toggle_move_intent_alternative
-	hotkey_keys = list("Unbound")
+	hotkey_keys = list("...")
 	name = "toggle_move_intent_alt"
 	full_name = "press to cycle move intent"
 	description = "Pressing this cycle to the opposite move intent, does not cycle back"

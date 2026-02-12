@@ -143,7 +143,7 @@ class KeybindingButton extends Component<{
         }}
         selected={typingHotkey !== undefined}
       >
-        {typingHotkey || currentHotkey || 'Unbound'}
+        {typingHotkey || currentHotkey || '...'}
       </Button>
     );
 
@@ -437,7 +437,7 @@ export class KeybindingsPage extends Component<any, KeybindingsPageState> {
     this.setState({
       selectedKeybindings: Object.fromEntries(
         Object.entries(data.keybindings).map(([keybind, hotkeys]) => {
-          return [keybind, hotkeys.filter((value) => value !== 'Unbound')];
+          return [keybind, hotkeys.filter((value) => value !== '...')];
         }),
       ),
     });

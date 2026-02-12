@@ -14,7 +14,7 @@
 	// Hotkey
 	if(LAZYLEN(instance.hotkey_keys))
 		for(var/bound_key in instance.hotkey_keys)
-			if (bound_key == "Unbound")
+			if (bound_key == "...")
 				LAZYADD(GLOB.default_hotkeys[instance.name], list())
 			else
 				LAZYADD(GLOB.default_hotkeys[instance.name], list(bound_key))
