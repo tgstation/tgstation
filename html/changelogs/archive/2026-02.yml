@@ -136,3 +136,8 @@
   - bugfix: Entertainment monitors don't bypass radio speech volume.
   lelandkemble:
   - spellcheck: Pronouns in counterattack text are more correct
+2026-02-12:
+  SyncIt21:
+  - qol: you can place plumbing machines on ducts with different layers again
+  lelandkemble:
+  - bugfix: Airlock painters are now short range once again
