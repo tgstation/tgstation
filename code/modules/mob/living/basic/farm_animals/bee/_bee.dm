@@ -197,6 +197,17 @@
 	AddElement(/datum/element/venomous, beegent.type, injection_range, thrown_effect = TRUE)
 	generate_bee_visuals()
 
+/// Picks a random toxin and assigns it to the bee
+/mob/living/basic/bee/proc/assign_random_toxin_reagent()
+	var/datum/reagent/toxin = pick(typesof(/datum/reagent/toxin))
+	assign_reagent(GLOB.chemical_reagents_list[toxin])
+
+/mob/living/basic/bee/mutate()
+	. = ..()
+	if(!.)
+		assign_random_toxin_reagent()
+		. = TRUE
+
 /mob/living/basic/bee/queen
 	name = "queen bee"
 	desc = "She's the queen of bees, BZZ BZZ!"
@@ -212,8 +223,7 @@
 
 /mob/living/basic/bee/toxin/Initialize(mapload)
 	. = ..()
-	var/datum/reagent/toxin = pick(typesof(/datum/reagent/toxin))
-	assign_reagent(GLOB.chemical_reagents_list[toxin])
+	assign_random_toxin_reagent()
 
 /// A bee which despawns after a short amount of time (beespawns?)
 /mob/living/basic/bee/timed

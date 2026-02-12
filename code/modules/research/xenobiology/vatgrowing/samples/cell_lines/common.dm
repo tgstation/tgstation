@@ -667,7 +667,7 @@
 /datum/micro_organism/cell_line/queen_bee/succeed_growing(obj/machinery/vatgrower/vat)
 	if(grow_count % 2) // every other growth cycle spawns a horde of bees insteads
 		resulting_atom_count = 5
-		resulting_atom = prob(CYTO_SHINY_CHANCE) ? /mob/living/basic/bee : /mob/living/basic/bee/toxin
+		resulting_atom = /mob/living/basic/bee
 		vat.visible_message(span_warning("You hear angry buzzing coming from the inside of the vat!"))
 	else
 		resulting_atom_count = initial(resulting_atom_count)
