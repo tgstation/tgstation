@@ -22,26 +22,26 @@
 /datum/stacked_metabolization_effect/organ_damage/liver_damage
 	requirements = list(/datum/reagent/medicine = 4)
 	organ_slot = ORGAN_SLOT_LIVER
-	scale = 0.25
+	scale = 0.3
 
 /datum/stacked_metabolization_effect/organ_damage/stomach_damage
 	requirements = list(/datum/reagent/medicine = 5)
 	organ_slot = ORGAN_SLOT_STOMACH
-	scale = 0.2
+	scale = 0.25
 
 /datum/stacked_metabolization_effect/organ_damage/lung_damage
 	requirements = list(/datum/reagent/medicine = 6)
 	organ_slot = ORGAN_SLOT_LUNGS
-	scale = 0.15
+	scale = 0.2
 
 /datum/stacked_metabolization_effect/organ_damage/heart_damage
 	requirements = list(/datum/reagent/medicine = 7)
 	organ_slot = ORGAN_SLOT_HEART
-	scale = 0.1
+	scale = 0.15
 
 /datum/stacked_metabolization_effect/organ_damage/brain_damage
 	requirements = list(/datum/reagent/medicine = 8)
 	organ_slot = ORGAN_SLOT_BRAIN
-	scale = 0.05
+	scale = 0.1
 
 #undef MAX_ORGAN_DAMAGE
