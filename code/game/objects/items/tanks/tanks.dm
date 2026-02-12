@@ -475,7 +475,7 @@
 	tank_assembly = assembly //Tell the tank about its assembly part
 	assembly.master = src //Tell the assembly about its new owner
 	assembly.on_attach()
-	
+
 
 	balloon_alert(user, "bomb assembled")
 	update_appearance(UPDATE_OVERLAYS)
