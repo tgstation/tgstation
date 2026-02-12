@@ -198,7 +198,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /// Create a blob spore and link it to us
 /mob/eye/blob/proc/create_spore(turf/spore_turf, spore_type = /mob/living/basic/blob_minion/spore/minion)
-	var/mob/living/basic/blob_minion/spore/spore = new spore_type(spore_turf)
+	var/mob/living/basic/blob_minion/spore/spore = new spore_type(spore_turf, blob_borne = TRUE)
 	spore.AddComponent(/datum/component/blob_minion, src)
 	return spore
 
@@ -240,7 +240,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(!(blob_area.area_flags & BLOBS_ALLOWED))
 			continue
 
-		if(!(ROLE_BLOB in live_guy.faction))
+		if(!live_guy.has_faction(ROLE_BLOB))
 			playsound(live_guy, 'sound/effects/splat.ogg', 50, TRUE)
 			if(live_guy.stat != DEAD)
 				live_guy.investigate_log("has died from blob takeover.", INVESTIGATE_DEATHS)

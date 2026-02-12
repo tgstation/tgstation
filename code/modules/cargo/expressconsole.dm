@@ -119,7 +119,7 @@
 	data["beaconError"] = using_beacon && !canBeacon ? "(BEACON ERROR)" : ""//changes button text to include an error alert if necessary
 	data["hasBeacon"] = beacon != null//is there a linked beacon?
 	data["beaconName"] = beacon ? beacon.name : "No Beacon Found"
-	data["printMsg"] = COOLDOWN_FINISHED(src, beacon_print_cooldown) ? "Print Beacon for [BEACON_COST] credits" : "Print Beacon for [BEACON_COST] credits ([COOLDOWN_TIMELEFT(src, beacon_print_cooldown)])" //buttontext for printing beacons
+	data["printMsg"] = COOLDOWN_FINISHED(src, beacon_print_cooldown) ? "Print Beacon for [BEACON_COST] [MONEY_NAME]" : "Print Beacon for [BEACON_COST] [MONEY_NAME] ([COOLDOWN_TIMELEFT(src, beacon_print_cooldown)])" //buttontext for printing beacons
 	data["supplies"] = list()
 	message = "Sales are near-instantaneous - please choose carefully."
 	if(SSshuttle.supply_blocked)
@@ -174,8 +174,15 @@
 			var/id = params["id"]
 			id = text2path(id) || id
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
+
 			if(!istype(pack))
 				CRASH("Unknown supply pack id given by express order console ui. ID: [params["id"]]")
+
+			if((pack.order_flags & ORDER_GOODY) && !self_paid && !(obj_flags & EMAGGED))
+				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
+				say("ERROR: Small crates may only be purchased by private accounts.")
+				return
+
 			var/name = "*None Provided*"
 			var/rank = "*None Provided*"
 			var/ckey = user.ckey
@@ -194,6 +201,7 @@
 
 			if (obj_flags & EMAGGED)
 				landingzone = GLOB.areas_by_type[pick(GLOB.the_station_areas)]
+
 
 			var/list/empty_turfs
 			if (!istype(beacon) || !using_beacon || (obj_flags & EMAGGED))

@@ -15,14 +15,10 @@
 #define OFFSET_ABSOLUTE "Absolute offset"
 #define OFFSET_RELATIVE "Relative offset"
 
-GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
-
 /*
 	An instance of a /tg/UI™ Spawn Panel. Stores preferences, spawns things, controls the UI. Unique for each user (their ckey).
 */
 /datum/spawnpanel
-	/// Who this instance of spawn panel belongs to. The instances are unique to correctly keep modified values between multiple admins.
-	var/owner_ckey
 	/// Where and how the atom should be spawned.
 	var/where_target_type = WHERE_FLOOR_BELOW_MOB
 	/// The atom selected from the panel.
@@ -57,29 +53,10 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 	offset = list("X" = 0, "Y" = 0, "Z" = 0)
 
 /datum/spawnpanel/ui_interact(mob/user, datum/tgui/ui)
-	if(user.client.ckey != owner_ckey)
-		return
-
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "SpawnPanel")
 		ui.open()
-
-/// Returns a `spawnpanel` instance belonging to this `user`, or creates and registers a new one
-/proc/get_spawnpanel_for_admin(mob/user)
-	if(!user?.client?.ckey)
-		return null
-
-	var/ckey = user.client.ckey
-
-	if(GLOB.spawnpanels_by_ckey[ckey])
-		return GLOB.spawnpanels_by_ckey[ckey]
-
-	var/datum/spawnpanel/new_panel = new()
-	new_panel.owner_ckey = ckey
-	GLOB.spawnpanels_by_ckey[ckey] = new_panel
-
-	return new_panel
 
 /datum/spawnpanel/ui_close(mob/user)
 	. = ..()
@@ -87,15 +64,10 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 		toggle_precise_mode(PRECISE_MODE_OFF)
 
 /datum/spawnpanel/ui_state(mob/user)
-	if(user.client.ckey != owner_ckey)
-		return GLOB.never_state
-	return ADMIN_STATE(R_ADMIN)
+	return ADMIN_STATE(R_SPAWN)
 
-/datum/spawnpanel/ui_act(action, params)
-	if(..())
-		return FALSE
-
-	if(usr.client.ckey != owner_ckey)
+/datum/spawnpanel/ui_act(action, params, datum/tgui/ui)
+	if(..() || !check_rights_for(ui.user.client, R_SPAWN))
 		return FALSE
 
 	switch(action)
@@ -106,12 +78,10 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 				available_icon_states = icon_states(selected_atom_icon)
 				if(!(selected_atom_icon_state in available_icon_states))
 					selected_atom_icon_state = available_icon_states[1]
-			SStgui.update_uis(src)
 			return TRUE
 
 		if("set-apply-icon-override")
 			apply_icon_override = !!params["value"]
-			SStgui.update_uis(src)
 			return TRUE
 
 		if("reset-DMI-icon")
@@ -123,35 +93,28 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 				available_icon_states = icon_states(selected_atom_icon)
 			else
 				available_icon_states = list()
-
-			SStgui.update_uis(src)
 			return TRUE
 
 		if("select-new-icon-state")
 			selected_atom_icon_state = params["new_state"]
-			SStgui.update_uis(src)
 			return TRUE
 
 		if("reset-icon-state")
 			selected_atom_icon_state = null
 			if(selected_atom)
 				selected_atom_icon_state = initial(selected_atom.icon_state)
-			SStgui.update_uis(src)
 			return TRUE
 
 		if("set-icon-size")
 			atom_icon_size = params["size"]
-			SStgui.update_uis(src)
 			return TRUE
 
 		if("reset-icon-size")
 			atom_icon_size = 100
-			SStgui.update_uis(src)
 			return TRUE
 
 		if("get-icon-states")
 			available_icon_states = icon_states(selected_atom_icon)
-			SStgui.update_uis(src)
 			return TRUE
 
 		if("selected-atom-changed")

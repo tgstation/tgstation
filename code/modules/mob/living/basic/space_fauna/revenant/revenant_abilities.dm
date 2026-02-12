@@ -119,9 +119,7 @@
 			continue
 
 		light.visible_message(span_boldwarning("[light] suddenly flares brightly and begins to spark!"))
-		var/datum/effect_system/spark_spread/light_sparks = new /datum/effect_system/spark_spread()
-		light_sparks.set_up(4, 0, light)
-		light_sparks.start()
+		do_sparks(4, FALSE, light)
 		new /obj/effect/temp_visual/revenant(get_turf(light))
 		addtimer(CALLBACK(src, PROC_REF(overload_shock), light, caster), 2 SECONDS)
 
@@ -277,7 +275,7 @@
 				if(mob.reagents)
 					mob.reagents.add_reagent(/datum/reagent/toxin/plasma, 5)
 		else
-			mob.adjustToxLoss(5)
+			mob.adjust_tox_loss(5)
 	for(var/obj/structure/spacevine/vine in victim) //Fucking with botanists, the ability.
 		vine.add_atom_colour("#823abb", TEMPORARY_COLOUR_PRIORITY)
 		new /obj/effect/temp_visual/revenant(vine.loc)

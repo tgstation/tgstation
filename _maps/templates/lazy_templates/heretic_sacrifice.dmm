@@ -19,7 +19,7 @@
 /turf/open/floor/stone,
 /area/centcom/heretic_sacrifice/flesh)
 "cW" = (
-/obj/structure/no_effect_signpost/void,
+/obj/structure/signpost/void,
 /turf/open/misc/asteroid,
 /area/centcom/heretic_sacrifice/void)
 "dX" = (

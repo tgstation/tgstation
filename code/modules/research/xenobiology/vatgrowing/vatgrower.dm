@@ -18,12 +18,12 @@
 	/// Whether or not to add the plumbing component and related stuff
 	var/use_plumbing = TRUE
 
-/obj/machinery/vatgrower/Initialize(mapload, bolt, layer)
+/obj/machinery/vatgrower/Initialize(mapload)
 	. = ..()
 	create_reagents(reagent_volume, reagent_flags)
 
 	if(use_plumbing)
-		AddComponent(/datum/component/simple_rotation)
+		AddElement(/datum/element/simple_rotation)
 		AddComponent(/datum/component/plumbing/simple_demand)
 
 	var/static/list/hovering_item_typechecks = list(

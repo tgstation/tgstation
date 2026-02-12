@@ -24,6 +24,7 @@
 		action_text = "",\
 		complete_text = "",\
 		required_modifier = RIGHT_CLICK,\
+		extra_checks = CALLBACK(src, PROC_REF(is_deployed)),\
 		after_healed = CALLBACK(src, PROC_REF(after_healed)),\
 	)
 

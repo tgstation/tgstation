@@ -3,6 +3,9 @@
 	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 /datum/hallucination/message/start()
+	if(hallucinator.stat >= UNCONSCIOUS)
+		return FALSE
+
 	var/list/nearby_humans = list()
 	var/adjacent_to_us = FALSE
 	var/mob/living/carbon/human/suspicious_personnel

@@ -4,6 +4,8 @@
 		we will snatch their arms off and instantly finalize our stasis."
 	helptext = "This ability is passive, and will trigger when a defibrillator paddle is applied to our chest \
 		while we are dead or in stasis. Will also stun cyborgs momentarily."
+	button_icon_state = "defibrillator_grasp"
+	category = "utility"
 	owner_has_control = FALSE
 	dna_cost = 0
 	disabled_by_fire = FALSE

@@ -214,7 +214,7 @@
  * At the atom level, if you edit a var named "color" it will add the atom colour with
  * admin level priority to the atom colours list
  *
- * Also, if GLOB.Debug2 is FALSE, it sets the [ADMIN_SPAWNED_1] flag on [flags_1][/atom/var/flags_1], which signifies
+ * Also, if GLOB.debugging_enabled is FALSE, it sets the [ADMIN_SPAWNED_1] flag on [flags_1][/atom/var/flags_1], which signifies
  * the object has been admin edited
  */
 /atom/vv_edit_var(var_name, var_value)
@@ -287,7 +287,7 @@
 		datum_flags |= DF_VAR_EDITED
 		return
 
-	if(!GLOB.Debug2)
+	if(!GLOB.debugging_enabled)
 		flags_1 |= ADMIN_SPAWNED_1
 
 	. = ..()

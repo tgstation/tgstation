@@ -11,10 +11,10 @@ on:
 jobs:
   setup_build_artifact:
     name: Setup build artifact (${{ format('{0}.{1}', inputs.major, inputs.minor) }})
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup Bun
         uses: ./.github/actions/setup_bun
       - name: Restore BYOND from Cache
@@ -35,7 +35,7 @@ jobs:
           bash tools/ci/copy_build_output.sh $OUTPUT_DIR
       - name: Upload artifact
         if: success()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: build-artifact-${{ inputs.major }}-${{ inputs.minor }}
           path: ${{ env.OUTPUT_DIR }}

@@ -1,0 +1,33 @@
+name: "Generate Client Storage"
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - tgui/public/*
+
+jobs:
+  dispatch_repo:
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
+    name: Repository Dispatch
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Generate App Token
+        id: app-token-generation
+        uses: actions/create-github-app-token@v2
+        if: env.APP_PRIVATE_KEY != '' && env.APP_ID != ''
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          owner: tgstation
+        env:
+          APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+          APP_ID: ${{ secrets.APP_ID }}
+
+      - name: Send Repository Dispatch
+        if: success()
+        uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ steps.app-token-generation.outputs.token }}
+          repository: tgstation/byond-client-storage
+          event-type: on_master_push

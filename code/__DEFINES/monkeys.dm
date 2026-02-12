@@ -30,6 +30,8 @@
 #define MONKEY_HATRED_AMOUNT 4
 /// amount of aggro to add to an enemy when a monkey is recruited
 #define MONKEY_RECRUIT_HATED_AMOUNT 2
+/// amount of aggro to add if someone stole the food we wanted
+#define MONKEY_FOOD_HATRED_AMOUNT 2
 /// probability of reducing aggro by one when the monkey attacks
 #define MONKEY_HATRED_REDUCTION_PROB 20
 

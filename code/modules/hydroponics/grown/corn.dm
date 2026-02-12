@@ -24,10 +24,14 @@
 	trash_type = /obj/item/grown/corncob
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
-	grind_results = list(/datum/reagent/consumable/cornmeal = 0, /datum/reagent/consumable/nutriment/fat/oil/corn = 0)
-	juice_typepath = /datum/reagent/consumable/corn_starch
 	tastes = list("corn" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/whiskey
+
+/obj/item/food/grown/corn/grind_results()
+	return list(/datum/reagent/consumable/cornmeal = 0, /datum/reagent/consumable/nutriment/fat/oil/corn = 0)
+
+/obj/item/food/grown/corn/juice_typepath()
+	return /datum/reagent/consumable/corn_starch
 
 /obj/item/food/grown/corn/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/oven_baked_corn, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -45,7 +49,9 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	grind_results = list(/datum/reagent/cellulose = 10) //really partially hemicellulose
+
+/obj/item/grown/corncob/grind_results()
+	return list(/datum/reagent/cellulose = 10)
 
 /obj/item/grown/corncob/attackby(obj/item/grown/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.get_sharpness())
@@ -116,8 +122,10 @@
 	icon_state = "peppercorn"
 	trash_type = /obj/item/grown/corncob/pepper
 	foodtypes = VEGETABLES
-	grind_results = list(/datum/reagent/consumable/blackpepper = 0)
 	tastes = list("pepper" = 1, "sneezing" = 1)
+
+/obj/item/food/grown/peppercorn/grind_results()
+	return list(/datum/reagent/consumable/blackpepper = 0)
 
 /obj/item/grown/corncob/pepper
 	seed = /obj/item/seeds/corn/pepper

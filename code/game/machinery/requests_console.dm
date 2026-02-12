@@ -128,7 +128,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	if(dept_key)
 		LAZYADD(GLOB.reta_consoles_by_origin[dept_key], src)
 
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/machinery/requests_console/Destroy()
 	QDEL_LIST(messages)
@@ -546,6 +547,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 	icon_state = "req_comp_off"
 	result_path = /obj/machinery/requests_console/auto_name
 	pixel_shift = 30
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7)
 
 /datum/aas_config_entry/rc_emergency
 	name = "RC Alert: Emergency Request"

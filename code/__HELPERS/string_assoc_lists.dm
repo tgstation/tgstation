@@ -9,6 +9,9 @@ GLOBAL_LIST_EMPTY(string_assoc_lists)
 		string_id += "[val]_[values[val]]"
 	string_id = string_id.Join("-")
 
+	if(!length(GLOB.string_assoc_lists)) // because we might be accessing this super early in some cases, it might not be set up yet!
+		GLOB.string_assoc_lists = list() // so do that now.
+
 	. = GLOB.string_assoc_lists[string_id]
 
 	if(.)

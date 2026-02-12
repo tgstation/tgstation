@@ -104,7 +104,7 @@
 
 /datum/map_generator/cave_generator/generate_terrain(list/turfs, area/generate_in)
 	. = ..()
-	if(!(generate_in.area_flags & CAVES_ALLOWED))
+	if(!(generate_in.area_flags_mapping & CAVES_ALLOWED))
 		return
 
 	if(length(possible_biomes))
@@ -138,7 +138,7 @@
  * you're probably doing something wrong.
  */
 /datum/map_generator/cave_generator/proc/generate_terrain_with_biomes(list/turfs, area/generate_in)
-	if(!(generate_in.area_flags & CAVES_ALLOWED))
+	if(!(generate_in.area_flags_mapping & CAVES_ALLOWED))
 		return
 
 	var/humidity_seed = rand(0, 50000)
@@ -212,10 +212,10 @@
 		return populate_terrain_with_biomes(turfs, generate_in)
 
 	// Area var pullouts to make accessing in the loop faster
-	var/flora_allowed = (generate_in.area_flags & FLORA_ALLOWED) && length(flora_spawn_list)
-	var/feature_allowed = (generate_in.area_flags & FLORA_ALLOWED) && length(feature_spawn_list)
-	var/mobs_allowed = (generate_in.area_flags & MOB_SPAWN_ALLOWED) && length(mob_spawn_list)
-	var/megas_allowed = (generate_in.area_flags & MEGAFAUNA_SPAWN_ALLOWED) && length(megafauna_spawn_list)
+	var/flora_allowed = (generate_in.area_flags_mapping & FLORA_ALLOWED) && length(flora_spawn_list)
+	var/feature_allowed = (generate_in.area_flags_mapping & FLORA_ALLOWED) && length(feature_spawn_list)
+	var/mobs_allowed = (generate_in.area_flags_mapping & MOB_SPAWN_ALLOWED) && length(mob_spawn_list)
+	var/megas_allowed = (generate_in.area_flags_mapping & MEGAFAUNA_SPAWN_ALLOWED) && length(megafauna_spawn_list)
 
 	var/start_time = REALTIMEOFDAY
 
@@ -310,9 +310,9 @@
  */
 /datum/map_generator/cave_generator/proc/populate_terrain_with_biomes(list/turfs, area/generate_in)
 	// Area var pullouts to make accessing in the loop faster
-	var/flora_allowed = (generate_in.area_flags & FLORA_ALLOWED)
-	var/features_allowed = (generate_in.area_flags & FLORA_ALLOWED)
-	var/fauna_allowed = (generate_in.area_flags & MOB_SPAWN_ALLOWED)
+	var/flora_allowed = (generate_in.area_flags_mapping & FLORA_ALLOWED)
+	var/features_allowed = (generate_in.area_flags_mapping & FLORA_ALLOWED)
+	var/fauna_allowed = (generate_in.area_flags_mapping & MOB_SPAWN_ALLOWED)
 
 	var/start_time = REALTIMEOFDAY
 

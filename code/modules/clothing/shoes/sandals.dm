@@ -3,19 +3,19 @@
 	name = "sandals"
 	icon_state = "wizard"
 	inhand_icon_state = "wizshoe"
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 0.5)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
 	strip_delay = 0.5 SECONDS
 	equip_delay_other = 5 SECONDS
 	armor_type = /datum/armor/shoes_sandal
 	fastening_type = SHOES_SLIPON
 	species_exception = list(/datum/species/golem)
-
 	lace_time = 3 SECONDS
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/shoes/sandal/alt
-	desc = "A pair of shiny black wooden sandals."
 	name = "black sandals"
+	desc = "A pair of shiny black wooden sandals."
 	icon_state = "blacksandals"
 	inhand_icon_state = "blacksandals"
 

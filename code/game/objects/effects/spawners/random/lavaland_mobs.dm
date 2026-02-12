@@ -55,11 +55,41 @@
 	desc = "Chance to spawn a rare shiny version."
 	icon = 'icons/mob/simple/lavaland/raptor_big.dmi'
 	icon_state = "raptor_red"
+	pixel_x = -12
 	loot = list(
-		/mob/living/basic/raptor/red = 20,
-		/mob/living/basic/raptor/white = 20,
-		/mob/living/basic/raptor/purple = 20,
-		/mob/living/basic/raptor/green = 20,
-		/mob/living/basic/raptor/yellow = 20,
+		/mob/living/basic/raptor/red = 25,
+		/mob/living/basic/raptor/white = 25,
+		/mob/living/basic/raptor/purple = 25,
+		/mob/living/basic/raptor/green = 25,
+		/mob/living/basic/raptor/yellow = 25,
+		/mob/living/basic/raptor/blue = 25,
 		/mob/living/basic/raptor/black = 1,
+	)
+
+/obj/effect/spawner/random/lavaland_mob/raptor/young
+	name = "random raptor youngling"
+	icon_state = "young_red"
+	loot = list(
+		/mob/living/basic/raptor/young/red = 25,
+		/mob/living/basic/raptor/young/white = 25,
+		/mob/living/basic/raptor/young/purple = 25,
+		/mob/living/basic/raptor/young/green = 25,
+		/mob/living/basic/raptor/young/yellow = 25,
+		/mob/living/basic/raptor/young/blue = 25,
+		/mob/living/basic/raptor/young/black = 1,
+	)
+
+/obj/effect/spawner/random/lavaland_mob/raptor/baby
+	name = "random raptor chick"
+	icon = 'icons/mob/simple/lavaland/raptor_baby.dmi'
+	icon_state = "baby_red"
+	pixel_x = 0
+	loot = list(
+		/mob/living/basic/raptor/baby/red = 25,
+		/mob/living/basic/raptor/baby/white = 25,
+		/mob/living/basic/raptor/baby/purple = 25,
+		/mob/living/basic/raptor/baby/green = 25,
+		/mob/living/basic/raptor/baby/yellow = 25,
+		/mob/living/basic/raptor/baby/blue = 25,
+		/mob/living/basic/raptor/baby/black = 1,
 	)

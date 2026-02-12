@@ -256,7 +256,6 @@
 	var/open_delay = animation_segment_delay(DOOR_OPENING_FINISHED) - passable_delay
 	sleep(open_delay)
 	air_update_turf(TRUE, FALSE)
-	update_freelook_sight()
 
 	if(operating == 1) //emag again
 		operating = FALSE
@@ -299,7 +298,6 @@
 	sleep(unpassable_delay)
 	set_density(TRUE)
 	air_update_turf(TRUE, TRUE)
-	update_freelook_sight()
 	var/close_delay = animation_segment_delay(DOOR_CLOSING_FINISHED) - unpassable_delay
 	sleep(close_delay)
 
@@ -453,7 +451,7 @@
 /obj/machinery/door/window/interact(mob/user) //for sillycones
 	try_to_activate_door(user)
 
-/obj/machinery/door/window/try_to_activate_door(mob/user, access_bypass = FALSE)
+/obj/machinery/door/window/try_to_activate_door(mob/user, access_bypass = FALSE, bumped = FALSE)
 	. = ..()
 	if(.)
 		autoclose = FALSE
@@ -486,7 +484,7 @@
 	return FALSE
 
 /obj/machinery/door/window/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_DECONSTRUCT)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_DECONSTRUCT)
 		qdel(src)
 		return TRUE
 	return FALSE
@@ -549,8 +547,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holding
 	operating = TRUE
 
 	set_density(FALSE)
+	set_opacity(FALSE)
 	air_update_turf(TRUE, FALSE)
-	update_freelook_sight()
 
 	operating = FALSE
 	update_appearance()
@@ -564,8 +562,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holding
 	operating = TRUE
 
 	set_density(TRUE)
+	set_opacity(TRUE)
 	air_update_turf(TRUE, TRUE)
-	update_freelook_sight()
 
 	operating = FALSE
 	update_appearance()

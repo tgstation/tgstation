@@ -11,6 +11,8 @@
 /area/centcom/central_command_areas/control)
 "x" = (
 /obj/effect/landmark/error,
+/obj/effect/landmark/observer_start,
+/obj/effect/landmark/latejoin,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "A" = (

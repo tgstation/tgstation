@@ -10,6 +10,7 @@
 	desc = "A simple homemade shortbow. Great for LARPing. Or poking out someones eye."
 	obj_flags = UNIQUE_RENAME
 	projectile_damage_multiplier = 0.5
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 ///chaplain's divine archer bow
 /obj/item/gun/ballistic/bow/divine
@@ -42,9 +43,11 @@
 /obj/item/gun/ballistic/bow/ashenbow
 	name = "ashen bow"
 	desc = "A bow made from watcher sinew and bone. Seems to possess an almost eerie radiance about it."
+	icon_state = "ashenbow"
 	inhand_icon_state = "ashenbow"
 	base_icon_state = "ashenbow"
 	worn_icon_state = "ashenbow"
 	slot_flags = ITEM_SLOT_BACK
 	obj_flags = UNIQUE_RENAME
 	projectile_damage_multiplier = 0.5
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 6)

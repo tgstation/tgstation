@@ -110,7 +110,7 @@
 	var/level_gain = (consumed.powerlevel - powerlevel)
 	if(level_gain >= 0 && !ckey && !consumed.bruised)//Player shrooms can't level up to become robust gods.
 		consumed.level_up(level_gain)
-	adjustBruteLoss(-consumed.maxHealth)
+	adjust_brute_loss(-consumed.maxHealth)
 	qdel(consumed)
 
 /mob/living/basic/mushroom/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
@@ -144,11 +144,11 @@
 	if(stat == DEAD)
 		revive(HEAL_ALL)
 	else
-		adjustBruteLoss(-5)
+		adjust_brute_loss(-5)
 	COOLDOWN_START(src, recovery_cooldown, 5 MINUTES)
 
 /mob/living/basic/mushroom/proc/level_up(level_gain)
-	adjustBruteLoss(-maxHealth) //They'll always heal, even if they don't gain a level
+	adjust_brute_loss(-maxHealth) //They'll always heal, even if they don't gain a level
 	if(powerlevel > 9)
 		return
 	if(level_gain == 0)

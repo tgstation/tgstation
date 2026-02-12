@@ -104,16 +104,16 @@
 
 	if(!ID)
 		to_chat(user, span_warning("You don't have an ID."))
-		return
+		return .
 
 	if(!(ACCESS_COMMAND in ID.access))
 		to_chat(user, span_warning("The access level of your card is not high enough."))
-		return
+		return .
 
-	if (user in acted_recently)
-		return
+	if(user in acted_recently)
+		return .
 
-	var/old_len = authorized.len
+	var/old_len = length(authorized)
 	addtimer(CALLBACK(src, PROC_REF(clear_recent_action), user), SHUTTLE_CONSOLE_ACTION_DELAY)
 
 	switch(action)
@@ -124,23 +124,36 @@
 			authorized -= ID
 
 		if("abort")
-			if(authorized.len)
-				// Abort. The action for when heads are fighting over whether
-				// to launch early.
+			if(length(authorized))
+				// Abort. The action for when heads are fighting over whether to launch early.
 				authorized.Cut()
 				. = TRUE
 
-	if((old_len != authorized.len) && !ENGINES_STARTED)
-		var/alert = (authorized.len > old_len)
-		var/repeal = (authorized.len < old_len)
-		var/remaining = max(0, auth_need - authorized.len)
-		if(authorized.len && remaining)
-			minor_announce("[remaining] authorizations needed until shuttle is launched early", null, alert)
+	var/new_len = length(authorized)
+	if((old_len != new_len) && !ENGINES_STARTED)
+		var/repeal = (new_len < old_len)
+		var/remaining = max(0, auth_need - new_len)
+		if(new_len && remaining)
+			priority_announce(
+				"[remaining] authorization\s needed until shuttle is launched early.",
+				"Emergency Shuttle Status",
+				sound = 'sound/announcer/notice/notice1.ogg',
+				type = ANNOUNCEMENT_TYPE_PRIORITY,
+				has_important_message = TRUE,
+				color_override = "red",
+			)
 		if(repeal)
-			minor_announce("Early launch authorization revoked, [remaining] authorizations needed")
+			priority_announce(
+				"Early launch authorization revoked, [remaining] authorization\s needed.",
+				"Emergency Shuttle Status",
+				sound = 'sound/announcer/notice/notice2.ogg',
+				type = ANNOUNCEMENT_TYPE_PRIORITY,
+				color_override = "blue",
+			)
 
 	acted_recently += user
 	SStgui.update_user_uis(user, src)
+	return .
 
 /obj/machinery/computer/emergency_shuttle/proc/authorize(mob/living/user, source)
 	var/obj/item/card/id/ID = user.get_idcard(TRUE)

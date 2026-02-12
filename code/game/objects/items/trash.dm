@@ -46,7 +46,9 @@
 /obj/item/trash/boritos
 	name = "boritos bag"
 	icon_state = "boritos"
-	grind_results = list(/datum/reagent/aluminium = 1) //from the mylar bag
+
+/obj/item/trash/boritos/grind_results()
+	return list(/datum/reagent/aluminium = 1)
 
 /obj/item/trash/boritos/green
 	icon_state = "boritosgreen"
@@ -130,8 +132,10 @@
 	name = "crushed can"
 	icon_state = "cola"
 	resistance_flags = NONE
-	grind_results = list(/datum/reagent/aluminium = 10)
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2)
+
+/obj/item/trash/can/grind_results()
+	return list(/datum/reagent/aluminium = 10)
 
 /obj/item/trash/can/food
 	icon = 'icons/obj/food/canned.dmi'

@@ -265,7 +265,7 @@
 	playsound(chassis, 'sound/items/airhorn/airhorn.ogg', 100, TRUE)
 	to_chat(source, "[icon2html(src, source)]<font color='red' size='5'>HONK</font>")
 	for(var/mob/living/carbon/M in ohearers(6, chassis))
-		if(!M.can_hear())
+		if(HAS_TRAIT(M, TRAIT_DEAF))
 			continue
 		var/turf/turf_check = get_turf(M)
 		if(isspaceturf(turf_check) && !turf_check.Adjacent(src)) //in space nobody can hear you honk.
@@ -273,9 +273,7 @@
 		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
 		M.adjust_stutter(40 SECONDS)
-		var/obj/item/organ/ears/ears = M.get_organ_slot(ORGAN_SLOT_EARS)
-		if(ears)
-			ears.adjustEarDamage(0, 30)
+		M.sound_damage(deafen = 30 SECONDS)
 		M.Paralyze(60)
 		if(prob(30))
 			M.Stun(200)

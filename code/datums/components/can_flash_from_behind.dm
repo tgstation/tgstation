@@ -10,10 +10,10 @@
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/can_flash_from_behind/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOB_PRE_FLASHED_CARBON, PROC_REF(on_pre_flashed_carbon))
+	RegisterSignal(parent, COMSIG_MOB_PRE_FLASHED_MOB, PROC_REF(on_pre_flashed_carbon))
 
 /datum/component/can_flash_from_behind/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_MOB_PRE_FLASHED_CARBON)
+	UnregisterSignal(parent, COMSIG_MOB_PRE_FLASHED_MOB)
 
 /datum/component/can_flash_from_behind/proc/on_pre_flashed_carbon(source, flashed, flash, deviation)
 	SIGNAL_HANDLER

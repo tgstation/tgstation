@@ -55,7 +55,7 @@
 	amount = 10
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "lq" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -187,7 +187,7 @@
 "CX" = (
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "DZ" = (
 /obj/machinery/power/rtg/advanced,
 /obj/structure/cable,

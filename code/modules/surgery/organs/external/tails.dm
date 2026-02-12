@@ -7,7 +7,7 @@
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_EXTERNAL_TAIL
 
-	dna_block = /datum/dna_block/feature/tail
+	dna_block = /datum/dna_block/feature/accessory/tail
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	// defaults to cat, but the parent type shouldn't be created regardless
@@ -166,9 +166,6 @@
 	feature_key = FEATURE_TAIL_CAT
 	color_source = ORGAN_COLOR_HAIR
 
-/datum/bodypart_overlay/mutant/tail/cat/get_global_feature_list()
-	return SSaccessories.tails_list_felinid
-
 /obj/item/organ/tail/monkey
 	name = "monkey tail"
 	icon_state = "severedmonkeytail"
@@ -179,9 +176,6 @@
 /datum/bodypart_overlay/mutant/tail/monkey
 	color_source = NONE
 	feature_key = FEATURE_TAIL_MONKEY
-
-/datum/bodypart_overlay/mutant/tail/monkey/get_global_feature_list()
-	return SSaccessories.tails_list_monkey
 
 /obj/item/organ/tail/xeno
 	name = "alien tail"
@@ -230,9 +224,6 @@
 	. = ..()
 	set_appearance_from_name(default_appearance)
 
-/datum/bodypart_overlay/mutant/tail/xeno/get_global_feature_list()
-	return SSaccessories.tails_list_xeno
-
 /datum/bodypart_overlay/mutant/tail/xeno/randomize_appearance()
 	set_appearance_from_name(default_appearance)
 
@@ -246,14 +237,11 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/lizard
 
 	wag_flags = WAG_ABLE
-	dna_block = /datum/dna_block/feature/tail_lizard
+	dna_block = /datum/dna_block/feature/accessory/tail_lizard
 
 ///Lizard tail bodypart overlay datum
 /datum/bodypart_overlay/mutant/tail/lizard
 	feature_key = FEATURE_TAIL_LIZARD
-
-/datum/bodypart_overlay/mutant/tail/lizard/get_global_feature_list()
-	return SSaccessories.tails_list_lizard
 
 /obj/item/organ/tail/lizard/fake
 	name = "fabricated lizard tail"
@@ -267,9 +255,6 @@
 	var/wagging = FALSE
 	/// Key for tail spine states, depends on the shape of the tail. Defined in the tail sprite datum.
 	var/tail_spine_key = NONE
-
-/datum/bodypart_overlay/mutant/tail_spines/get_global_feature_list()
-	return SSaccessories.tail_spines_list
 
 /datum/bodypart_overlay/mutant/tail_spines/get_base_icon_state()
 	return (!isnull(tail_spine_key) ? "[tail_spine_key]_" : "") + (wagging ? "wagging_" : "") + sprite_datum.icon_state // Select the wagging state if appropriate

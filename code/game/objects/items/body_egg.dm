@@ -33,17 +33,17 @@
 	egg_owner.med_hud_set_status()
 	INVOKE_ASYNC(src, PROC_REF(RemoveInfectionImages), egg_owner)
 
-/obj/item/organ/body_egg/on_death(seconds_per_tick, times_fired)
+/obj/item/organ/body_egg/on_death(seconds_per_tick)
 	. = ..()
 	if(!owner)
 		return
-	egg_process(seconds_per_tick, times_fired)
+	egg_process(seconds_per_tick)
 
-/obj/item/organ/body_egg/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/body_egg/on_life(seconds_per_tick)
 	. = ..()
-	egg_process(seconds_per_tick, times_fired)
+	egg_process(seconds_per_tick)
 
-/obj/item/organ/body_egg/proc/egg_process(seconds_per_tick, times_fired)
+/obj/item/organ/body_egg/proc/egg_process(seconds_per_tick)
 	return
 
 /obj/item/organ/body_egg/proc/RefreshInfectionImage()

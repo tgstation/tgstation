@@ -2,35 +2,38 @@
 /// The default priority level
 #define PREFERENCE_PRIORITY_DEFAULT 1
 
+/// For things that should be applied after the default prio, but before species to apply properly.
+#define PREFERENCE_PRIORITY_PRE_SPECIES 2
+
 /// The priority at which species runs, needed for external organs to apply properly.
-#define PREFERENCE_PRIORITY_SPECIES 2
+#define PREFERENCE_PRIORITY_SPECIES 3
 
 /**
  * Some preferences get applied directly to bodyparts (anything head_flags related right now).
  * These must apply after species, as species gaining might replace the bodyparts of the human.
  */
-#define PREFERENCE_PRIORITY_BODYPARTS 3
+#define PREFERENCE_PRIORITY_BODYPARTS 4
 
 /// The priority at which gender is determined, needed for proper randomization.
-#define PREFERENCE_PRIORITY_GENDER 4
+#define PREFERENCE_PRIORITY_GENDER 5
 
 /// The priority at which body type is decided, applied after gender so we can
 /// support the "use gender" option.
-#define PREFERENCE_PRIORITY_BODY_TYPE 5
+#define PREFERENCE_PRIORITY_BODY_TYPE 6
 
 /// Used for preferences that rely on body setup being finalized.
-#define PREFERENCE_PRORITY_LATE_BODY_TYPE 6
+#define PREFERENCE_PRORITY_LATE_BODY_TYPE 7
 
 /// Equpping items based on preferences.
 /// Should happen after species and body type to make sure it looks right.
 /// Mostly redundant, but a safety net for saving/loading.
-#define PREFERENCE_PRIORITY_LOADOUT 7
+#define PREFERENCE_PRIORITY_LOADOUT 8
 
 /// The priority at which names are decided, needed for proper randomization.
-#define PREFERENCE_PRIORITY_NAMES 8
+#define PREFERENCE_PRIORITY_NAMES 9
 
 /// Preferences that aren't names, but change the name changes set by PREFERENCE_PRIORITY_NAMES.
-#define PREFERENCE_PRIORITY_NAME_MODIFICATIONS 9
+#define PREFERENCE_PRIORITY_NAME_MODIFICATIONS 10
 
 /// The maximum preference priority, keep this updated, but don't use it for `priority`.
 #define MAX_PREFERENCE_PRIORITY PREFERENCE_PRIORITY_NAME_MODIFICATIONS
@@ -50,17 +53,13 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /proc/init_preference_entries()
 	var/list/output = list()
-	for (var/datum/preference/preference_type as anything in subtypesof(/datum/preference))
-		if (initial(preference_type.abstract_type) == preference_type)
-			continue
+	for (var/datum/preference/preference_type as anything in valid_subtypesof(/datum/preference))
 		output[preference_type] = new preference_type
 	return output
 
 /proc/init_preference_entries_by_key()
 	var/list/output = list()
-	for (var/datum/preference/preference_type as anything in subtypesof(/datum/preference))
-		if (initial(preference_type.abstract_type) == preference_type)
-			continue
+	for (var/datum/preference/preference_type as anything in valid_subtypesof(/datum/preference))
 		output[initial(preference_type.savefile_key)] = GLOB.preference_entries[preference_type]
 	return output
 
@@ -74,7 +73,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	var/list/flattened = list()
 	for (var/index in 1 to MAX_PREFERENCE_PRIORITY)
-		flattened += preferences[index]
+		if(preferences[index])
+			flattened += preferences[index]
 	return flattened
 
 /// Represents an individual preference.
@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	/// If the selected species has this in its /datum/species/body_markings,
 	/// will show the feature as selectable.
-	var/relevant_body_markings = null
+	var/datum/bodypart_overlay/simple/body_marking/relevant_body_markings = null
 
 	/// If the selected species has this in its /datum/species/inherent_traits,
 	/// will show the feature as selectable.
@@ -121,7 +121,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	/// If the selected species has this in its /datum/species/var/external_organs,
 	/// will show the feature as selectable.
-	var/relevant_organ = null
+	var/obj/item/organ/relevant_organ = null
 
 	/// If the selected species has this head_flag by default,
 	/// will show the feature as selectable.
@@ -446,6 +446,42 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		data["name"] = main_feature_name
 
 	return data
+
+/// This subtype handles a lot of boilerplate for implementing a species preference tied to a feature key / sprite accessory
+/datum/preference/choiced/species_feature
+	abstract_type = /datum/preference/choiced/species_feature
+	/// What feature key does this feature represent?
+	/// Does not need to be set, it will infer it from either relevant_organ or relevant_body_markings.
+	/// However you can set it manually if you have a more complex feature.
+	var/feature_key
+
+/datum/preference/choiced/species_feature/New()
+	. = ..()
+	if(relevant_organ && relevant_organ::bodypart_overlay)
+		feature_key ||= relevant_organ::bodypart_overlay::feature_key
+		main_feature_name ||= capitalize(relevant_organ::name)
+	if(relevant_body_markings)
+		feature_key ||= relevant_body_markings::dna_feature_key
+		main_feature_name ||= "Body markings"
+	if(isnull(feature_key))
+		CRASH("`feature_key` was not set or inferable for [type]!")
+
+/datum/preference/choiced/species_feature/init_possible_values()
+	return assoc_to_keys_features(get_accessory_list())
+
+/datum/preference/choiced/species_feature/create_default_value()
+	return get_consistent_feature_entry(get_accessory_list())
+
+/datum/preference/choiced/species_feature/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features[feature_key] = value
+
+/// Returns what acessory list to draw from
+/datum/preference/choiced/species_feature/proc/get_accessory_list() as /list
+	return SSaccessories.feature_list[feature_key]
+
+/// Get a specific accessory for a given value
+/datum/preference/choiced/species_feature/proc/get_accessory_for_value(value)
+	return get_accessory_list()[value]
 
 /// A preference that represents an RGB color of something.
 /// Will give the value as 6 hex digits, without a hash.

@@ -38,6 +38,17 @@ function PrefsWindowInner(props) {
   const [serverData, setServerData] = useState<ServerData>();
   const randomization = useState(false);
 
+  useEffect(() => {
+    fetchRetry(resolveAsset('preferences.json'))
+      .then((response) => response.json())
+      .then((data) => {
+        setServerData(data);
+      })
+      .catch((error) => {
+        logger.log('Failed to fetch preferences.json', error);
+      });
+  }, []);
+
   let content;
   let title;
   switch (window) {
@@ -60,17 +71,6 @@ function PrefsWindowInner(props) {
     default:
       exhaustiveCheck(window);
   }
-
-  useEffect(() => {
-    fetchRetry(resolveAsset('preferences.json'))
-      .then((response) => response.json())
-      .then((data) => {
-        setServerData(data);
-      })
-      .catch((error) => {
-        logger.log('Failed to fetch preferences.json', error);
-      });
-  }, []);
 
   return (
     <ServerPrefs.Provider value={serverData}>

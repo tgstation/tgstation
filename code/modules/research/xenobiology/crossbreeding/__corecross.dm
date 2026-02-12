@@ -142,24 +142,27 @@ To add a crossbreed:
 	. = ..()
 	reagents.flags = DRAWABLE // Cannot be refilled, since it's basically an autoinjector!
 
-/obj/item/slimecrossbeaker/autoinjector/attack(mob/living/M, mob/user)
+/obj/item/slimecrossbeaker/autoinjector/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!iscarbon(interacting_with))
+		return NONE
+	var/mob/living/carbon/injecting_mob = interacting_with
 	if(!reagents.total_volume)
 		to_chat(user, span_warning("[src] is empty!"))
-		return
-	if(!iscarbon(M))
-		return
-	if(self_use_only && M != user)
+		return ITEM_INTERACT_BLOCKING
+	if(self_use_only && injecting_mob != user)
 		to_chat(user, span_warning("This can only be used on yourself."))
-		return
-	if(reagents.total_volume && (ignore_flags || M.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE)))
-		reagents.trans_to(M, reagents.total_volume, transferred_by = user)
-		if(user != M)
-			to_chat(M, span_warning("[user] presses [src] against you!"))
-			to_chat(user, span_notice("You press [src] against [M], injecting [M.p_them()]."))
+		return ITEM_INTERACT_BLOCKING
+	if(reagents.total_volume && (ignore_flags || injecting_mob.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE)))
+		reagents.trans_to(injecting_mob, reagents.total_volume, transferred_by = user)
+		if(user != injecting_mob)
+			to_chat(injecting_mob, span_warning("[user] presses [src] against you!"))
+			to_chat(user, span_notice("You press [src] against [injecting_mob], injecting [injecting_mob.p_them()]."))
 		else
 			to_chat(user, span_notice("You press [src] against yourself, and it flattens against you!"))
+		return ITEM_INTERACT_SUCCESS
 	else
 		to_chat(user, span_warning("There's no place to stick [src]!"))
+		return ITEM_INTERACT_BLOCKING
 
 /obj/item/slimecrossbeaker/autoinjector/regenpack
 	ignore_flags = TRUE //It is, after all, intended to heal.

@@ -11,7 +11,7 @@
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/find_hunt_target/find_owner/valid_dinner(mob/living/source, atom/friend, radius, datum/ai_controller/controller, seconds_per_tick)
-	return (friend != source) && (source.faction.Find(REF(friend))) && can_see(source, friend, radius)
+	return (friend != source) && (source.has_ally(friend)) && can_see(source, friend, radius)
 
 /datum/ai_behavior/hunt_target/play_with_owner
 

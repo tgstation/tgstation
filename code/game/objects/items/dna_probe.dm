@@ -54,6 +54,9 @@
 
 /obj/item/dna_probe/proc/try_upload_dna(obj/machinery/dna_vault/target, mob/user)
 	var/uploaded = 0
+	stored_dna_plants -= target.plant_dna
+	stored_dna_human -= target.human_dna
+	stored_dna_animal -= target.animal_dna
 	var/plant_dna_length = length(stored_dna_plants)
 	var/human_dna_length = length(stored_dna_human)
 	var/animal_dna_length = length(stored_dna_animal)

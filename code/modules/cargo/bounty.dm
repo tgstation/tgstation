@@ -8,30 +8,44 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	var/name
 	/// A description for the bounty.
 	var/description
-	/// The reward for completing the bounty in credits, before being split by cargo/the player.
-	var/reward = 1000
 	/// Whether or not the bounty has been claimed by cargo. Only applies to cargo list bounties.
 	var/claimed = FALSE
 	/// Whether or not the bounty is high priority. High priority bounties appear at the top of the list.
 	var/high_priority = FALSE
+	/// The reward for completing the bounty in credits, before being split by cargo/the player.
+	VAR_PROTECTED/reward = CARGO_CRATE_VALUE * 5 // In credits.
+	var/allow_duplicate = FALSE
 
+/// Can this bounty be claimed right now?
 /datum/bounty/proc/can_claim()
-	return !claimed
-
-/// Called when the claim button is clicked. Override to provide fancy rewards.
-/datum/bounty/proc/claim()
-	if(can_claim())
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-		if(D)
-			D.adjust_money(reward * SSeconomy.bounty_modifier)
-		claimed = TRUE
+	return FALSE
 
 /// If an item in question can satisfy the bounty.
-/datum/bounty/proc/applies_to(obj/O)
+/datum/bounty/proc/applies_to(obj/shipped)
 	return FALSE
 
 /// Called when an object is sent on the bounty pad.
-/datum/bounty/proc/ship(obj/O)
+/datum/bounty/proc/ship(obj/shipped)
+	return
+
+/// Formats the text for what is required to complete the bounty, for display purposes.
+/datum/bounty/proc/print_required()
+	return ""
+
+/// Returns the adjusted reward for this bounty, taking into account any global modifiers.
+/datum/bounty/proc/get_bounty_reward()
+	return reward * SSeconomy.bounty_modifier
+
+/// Called when this bounty is selected by the passed ID card
+/datum/bounty/proc/on_selected(obj/item/card/id/id_card)
+	return
+
+/// Called when this bounty is successfully claimed by the passed ID card
+/datum/bounty/proc/on_claimed(obj/item/card/id/id_card)
+	return
+
+/// Called when this bounty is reset from the passed ID card, either from successful claim or from being replaced by another bounty
+/datum/bounty/proc/on_reset(obj/item/card/id/id_card)
 	return
 
 /** Returns a new bounty of random type.
@@ -56,7 +70,10 @@ GLOBAL_LIST_EMPTY(bounties_list)
 			if(CIV_JOB_CHEF)
 				chosen_type = pick(subtypesof(/datum/bounty/item/chef) + subtypesof(/datum/bounty/reagent/chef))
 			if(CIV_JOB_SEC)
-				chosen_type = pick(subtypesof(/datum/bounty/item/security))
+				if(prob(75))
+					chosen_type = /datum/bounty/patrol
+				else
+					chosen_type = /datum/bounty/item/contraband
 			if(CIV_JOB_DRINK)
 				if(prob(50))
 					chosen_type = /datum/bounty/reagent/simple_drink
@@ -92,5 +109,3 @@ GLOBAL_LIST_EMPTY(bounties_list)
 		else
 			qdel(bounty_ref)
 	return bounty_ref
-
-#undef MAXIMUM_BOUNTY_JOBS

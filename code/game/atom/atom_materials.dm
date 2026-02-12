@@ -29,9 +29,20 @@
 /atom/proc/initialize_materials(list/materials, multiplier = 1)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(multiplier != 1)
-		materials = materials.Copy() //avoid editing the list that was originally used as argument if it's ever going to be used again.
+		materials = materials.Copy() //avoid editing the original list since it may be cached somewhere (likely in the materials subsystem).
 		for(var/current_material in materials)
 			materials[current_material] *= multiplier
+
+	//Let's be sure that there are absolutely no materials in the list that aren't positive.
+	var/list/nonpos_mats
+	for(var/mat in materials)
+		if(materials[mat] <= 0)
+			LAZYADD(nonpos_mats, "[mat] = [materials[mat]]")
+			materials -= mat
+	if(length(nonpos_mats))
+		stack_trace("materials with non-positive values found in [type]: [english_list(nonpos_mats, and_text = ", ")]")
+		if(!length(materials))
+			return
 
 	sortTim(materials, GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
 	apply_material_effects(materials)
@@ -39,6 +50,7 @@
 ///proc responsible for applying material effects when setting materials.
 /atom/proc/apply_material_effects(list/materials)
 	SHOULD_CALL_PARENT(TRUE)
+
 	if(material_flags & MATERIAL_EFFECTS)
 		var/list/material_effects = get_material_effects_list(materials)
 		finalize_material_effects(material_effects)
@@ -375,10 +387,7 @@
  * Gets the most common material in the object.
  */
 /atom/proc/get_master_material()
-	var/list/cached_materials = custom_materials
-	if(!length(cached_materials))
-		return null
-	return GET_MATERIAL_REF(cached_materials[1]) //materials are sorted by amount, the first is always the main one
+	return length(custom_materials) ? GET_MATERIAL_REF(custom_materials[1]) : null //materials are sorted by amount, the first is always the main one
 
 /**
  * Gets the total amount of materials in this atom.
@@ -386,6 +395,16 @@
 /atom/proc/get_custom_material_amount()
 	return isnull(custom_materials) ? 0 : counterlist_sum(custom_materials)
 
+
+///A simple proc that iterates through each material that the object is made of and spawns some stacks based on their amount and associated sheet/ore type.
+/atom/proc/drop_costum_materials(multiplier = 1)
+	for(var/datum/material/material as anything in custom_materials)
+		var/stack_type = material.sheet_type || material.ore_type
+		if(!stack_type)
+			continue
+		var/amount_to_spawn = FLOOR(custom_materials[material] / SHEET_MATERIAL_AMOUNT * multiplier, 1)
+		if(amount_to_spawn > 0)
+			new stack_type(loc, amount_to_spawn)
 
 /**
  * A bit of leeway when comparing the amount of material of two items.
@@ -401,6 +420,8 @@
 
 /// Compares the materials of two items to see if they're roughly the same. Primarily used in crafting and processing unit tests.
 /atom/proc/compare_materials(atom/target)
+	if(custom_materials == target.custom_materials) // SSmaterials caches the combinations so we don't have to run more complex checks
+		return TRUE
 	if(length(custom_materials) != length(target.custom_materials))
 		return FALSE
 	for(var/mat in custom_materials)
@@ -412,22 +433,65 @@
 			return FALSE
 	return TRUE
 
-#undef COMPARISION_ACCEPTABLE_MATERIAL_DEVIATION
-
 /**
- * Returns a string with the materials and their respective amounts in it (eg. [list(/datum/material/meat = 100, /datum/material/plastic = 10)] )
- * also used in several unit tests.
+ * Returns a string with the materials and their respective amounts written in a way that reflects how it's displayed in the code
+ * (eg. [list(/datum/material/meat = 100, /datum/material/plastic = 10)]). Also used in several unit tests.
+ * Not to be confused with get_material_english_list()
+ * Arguments:
+ * * as_sheets: returns the text in terms of sheets, e.g "[list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2)]"
  */
-/atom/proc/get_materials_english_list()
-	if(!custom_materials)
-		return "null"
-	var/text = "\[list("
+/atom/proc/transcribe_materials_list(list/mats_list, as_sheets = TRUE)
+	if(!mats_list)
+		if(!custom_materials)
+			return "null"
+		mats_list = custom_materials
+	var/text = "list("
 	var/index = 1
-	var/mats_len = length(custom_materials)
-	for(var/datum/material/mat as anything in custom_materials)
-		text += "[mat.type] = [custom_materials[mat]]"
+	var/mats_len = length(mats_list)
+	for(var/datum/material/mat as anything in mats_list)
+		var/amount_string = ""
+		if(as_sheets)
+			var/amount = sheets_from_value(mats_list[mat])
+			switch(amount)
+				if(0 to 0.49)
+					amount_string = "SMALL_MATERIAL_AMOUNT * " + num2text(amount * 10)
+				if(0.5)
+					amount_string = "HALF_SHEET_MATERIAL_AMOUNT"
+				if(1)
+					amount_string = "SHEET_MATERIAL_AMOUNT"
+				else
+					amount_string = "SHEET_MATERIAL_AMOUNT * " + num2text(amount)
+		else
+			amount_string = "[mats_list[mat]]"
+		text += "[mat.type] = " + amount_string
 		if(index < mats_len)
 			text += ", "
 		index++
-	text += ")\]"
+	text += ")"
 	return text
+
+/// Convert a raw material amount into
+/// "SHEET_MATERIAL_AMOUNT", or "* N", with rounding rules.
+/proc/sheets_from_value(value, sheet_amount = SHEET_MATERIAL_AMOUNT)
+	if(!value)
+		return 0
+
+	// If value is small, do NOT try rounding to nearest 0 or 5. percentage error becomes huge.
+	var/final_value
+
+	if(value < sheet_amount)
+		// Use exact amount for small-value materials (0.1, 0.25, 0.55, etc)
+		final_value = value
+	else
+		// Large values: round to nearest 0 or 5
+		var/nearest5_value = round(value / 5) * 5
+		var/max_error = value * COMPARISION_ACCEPTABLE_MATERIAL_DEVIATION // 3%
+		if(abs(nearest5_value - value) <= max_error)
+			final_value = nearest5_value
+		else
+			final_value = value
+
+	var/final_sheet_multiplier = final_value / sheet_amount
+	return final_sheet_multiplier
+
+#undef COMPARISION_ACCEPTABLE_MATERIAL_DEVIATION

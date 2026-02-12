@@ -586,8 +586,12 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/syndicate/medical)
 "fB" = (
-/obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
+/obj/structure/chair/comfy/shuttle/tactical{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_red,
+/obj/structure/sign/warning/vacuum/external/directional/east,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "gt" = (
 /obj/item/storage/box/handcuffs{
@@ -1481,7 +1485,7 @@ aB
 aQ
 iE
 RO
-nN
+fB
 nN
 bn
 bA
@@ -1506,7 +1510,7 @@ bO
 aB
 Xy
 aY
-fB
+Xy
 aB
 bn
 bB

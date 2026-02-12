@@ -174,7 +174,7 @@
 	program_open_overlay = "generic"
 	extended_desc = "This program allows for remote monitoring of mission-assigned cyborgs."
 	program_flags = PROGRAM_ON_SYNDINET_STORE
-	download_access = list()
+	download_access = null
 	circuit_comp_type = /obj/item/circuit_component/mod_program/borg_monitor/syndie
 
 /datum/computer_file/program/borg_monitor/syndicate/evaluate_borg(mob/living/silicon/robot/R)

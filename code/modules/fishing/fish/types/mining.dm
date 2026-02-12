@@ -126,7 +126,6 @@
 	min_pressure = HAZARD_LOW_PRESSURE
 	max_integrity = 300
 	stable_population = 3
-	grind_results = list(/datum/reagent/bone_dust = 10)
 	fillet_type = /obj/item/stack/sheet/bone
 	num_fillets = 2
 	fish_traits = list(/datum/fish_trait/revival, /datum/fish_trait/carnivore)
@@ -139,6 +138,9 @@
 /obj/item/fish/boned/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_FISH_MADE_OF_BONE, INNATE_TRAIT)
+
+/obj/item/fish/boned/fish_grind_results()
+	return list(/datum/reagent/bone_dust = 10)
 
 /obj/item/fish/boned/make_edible(weight_val)
 	return //it's all bones and no meat.
@@ -182,6 +184,7 @@
 		/datum/fish_trait/carnivore,
 		/datum/fish_trait/heavy,
 	)
+	stable_population = 5
 	compatible_types = list(/obj/item/fish/lavaloop/plasma_river)
 	evolution_types = list(/datum/fish_evolution/plasmaloop)
 	hitsound = null
@@ -204,6 +207,7 @@
 		sound_on_success = 'sound/items/weapons/parry.ogg',\
 		effect_on_success = /obj/effect/temp_visual/guardian/phase,\
 	)
+	AddElement(/datum/element/raptor_food, attack_modifier = 1.5, growth_modifier = -0.075)
 
 /obj/item/fish/lavaloop/get_fish_taste()
 	return list("chewy fish" = 2)

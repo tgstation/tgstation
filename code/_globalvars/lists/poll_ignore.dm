@@ -5,6 +5,7 @@
 #define POLL_IGNORE_ASH_SPIRIT "ash_spirit"
 #define POLL_IGNORE_ASHWALKER "ashwalker"
 #define POLL_IGNORE_BLOB "blob"
+#define POLL_IGNORE_BLOOD_WORM "blood_worm"
 #define POLL_IGNORE_BOTS "bots"
 #define POLL_IGNORE_CARGORILLA "cargorilla"
 #define POLL_IGNORE_CONSTRUCT "construct"
@@ -16,6 +17,7 @@
 #define POLL_IGNORE_GOLEM "golem"
 #define POLL_IGNORE_HERETIC_MONSTER "heretic_monster"
 #define POLL_IGNORE_HOLOPARASITE "holoparasite"
+#define POLL_IGNORE_HORRIFIC_NECKTIE "horrific_necktie"
 #define POLL_IGNORE_IMAGINARYFRIEND "imaginary_friend"
 #define POLL_IGNORE_LAVALAND_ELITE "lavaland_elite"
 #define POLL_IGNORE_MAID_IN_MIRROR "maid_in_mirror"
@@ -57,6 +59,7 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_GOLEM = "Golems",
 	POLL_IGNORE_HERETIC_MONSTER = "Heretic Monster",
 	POLL_IGNORE_HOLOPARASITE = "Holoparasite",
+	POLL_IGNORE_HORRIFIC_NECKTIE = "Horrific Necktie",
 	POLL_IGNORE_IMAGINARYFRIEND = "Imaginary Friend",
 	POLL_IGNORE_LAVALAND_ELITE = "Lavaland elite",
 	POLL_IGNORE_MAID_IN_MIRROR = "Maid in the Mirror",

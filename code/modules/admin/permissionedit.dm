@@ -28,13 +28,13 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 
 	output += {"
 		<a href='byond://?_src_=holder;[HrefToken()];editrightsbrowser=1'>\
-			[action == PERMISSIONS_PAGE_PERMISSIONS ? "<b>\[Permissions\]</b": "\[Permissions\]"]
+			[action == PERMISSIONS_PAGE_PERMISSIONS ? "<b>\[Permissions\]</b>": "\[Permissions\]"]
 		</a>
 		[new_line]<a href='byond://?_src_=holder;[HrefToken()];editrightsbrowserranks=1'>
-			[action == PERMISSIONS_PAGE_RANKS ? "<b>\[Ranks\]</b": "\[Ranks\]"]
+			[action == PERMISSIONS_PAGE_RANKS ? "<b>\[Ranks\]</b>": "\[Ranks\]"]
 		</a>
 		[new_line]<a href='byond://?_src_=holder;[HrefToken()];editrightsbrowserlogging=1;editrightslogpage=0'>
-			[action == PERMISSIONS_PAGE_LOGGING ? "<b>\[Logging\]</b": "\[Logging\]"]
+			[action == PERMISSIONS_PAGE_LOGGING ? "<b>\[Logging\]</b>": "\[Logging\]"]
 		</a>
 		[new_line]<a href='byond://?_src_=holder;[HrefToken()];editrightsbrowserhousekeep=1'>
 			[action == PERMISSIONS_PAGE_HOUSEKEEPING ? "<b>\[Housekeeping\]</b>": "\[Housekeeping\]"]

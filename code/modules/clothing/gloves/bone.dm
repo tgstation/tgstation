@@ -11,10 +11,11 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	armor_type = /datum/armor/gloves_bracer
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/clothing/gloves/bracer/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 2)
+	AddElement(/datum/element/adjust_fishing_difficulty, 2)
 
 /datum/armor/gloves_bracer
 	melee = 15

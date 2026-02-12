@@ -59,9 +59,9 @@
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 	ambience_index = AMBIENCE_DANGER
 	area_flags = NOTELEPORT
+	area_flags_mapping = NONE
 	mood_bonus = -10
 	mood_message = "What the fuck."
-
 
 /area/ruin/planetengi
 	name = "\improper Engineering Outpost"
@@ -115,11 +115,13 @@
 /area/ruin/outpost31/lab
 	name = "\improper Outpost 31 Lab"
 	area_flags = NOTELEPORT //megafauna arena
+	area_flags_mapping = NONE
 	requires_power = FALSE
 
 /area/ruin/outpost31/lootroom
 	name = "\improper Outpost 31 Secondary Storage"
 	area_flags = NOTELEPORT //megafauna loot room
+	area_flags_mapping = NONE
 	requires_power = FALSE
 
 /area/ruin/outpost31/recroom

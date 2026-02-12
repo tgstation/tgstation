@@ -1331,7 +1331,6 @@
 /obj/machinery/door/airlock/cult/unruned/friendly{
 	name = "Processing"
 	},
-/obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -2088,7 +2087,6 @@
 /obj/machinery/door/airlock/science{
 	name = "Xenobiology"
 	},
-/obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)

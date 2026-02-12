@@ -347,7 +347,7 @@
 "bm" = (
 /obj/structure/table,
 /obj/item/stamp/denied,
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = 6;
 	pixel_y = 6
 	},
@@ -876,7 +876,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "ux" = (
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "uL" = (

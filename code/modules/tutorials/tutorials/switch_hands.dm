@@ -68,14 +68,14 @@
 		if (STAGE_PICK_UP_ITEM)
 			show_instruction("Pick something up!")
 
-/datum/tutorial/switch_hands/proc/on_swap_hands()
+/datum/tutorial/switch_hands/proc/on_swap_hands(mob/living/source, obj/item/swapped_to, obj/item/swapped_from)
 	SIGNAL_HANDLER
 
 	//FIXME: this checking breaks easily
-	if (isnull(user.get_active_held_item()))
+	if (isnull(swapped_to))
 		stage = STAGE_PICK_UP_ITEM
 		show_instructions()
-	else if (isnull(user.get_inactive_held_item()))
+	else if (isnull(swapped_from))
 		stage = STAGE_SHOULD_SWAP_HAND
 		show_instructions()
 	else

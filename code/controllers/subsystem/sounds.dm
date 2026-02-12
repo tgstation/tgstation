@@ -34,6 +34,50 @@ SUBSYSTEM_DEF(sounds)
 	/// Any errors from precaching.
 	VAR_PRIVATE/list/precache_errors = list()
 
+	// Comments from https://github.com/DaedalusDock/daedalusdock We love Francinum.
+	/// A list of sound formats that work in byond. Indexed for direct accesing rather then loop itteration or usage of `in`
+	var/static/list/byond_sound_formats = list(
+		"mid" = TRUE, //Midi, 8.3 File Name
+		"midi" = TRUE, //Midi, Long File Name
+		"mod" = TRUE, //Module, Original Amiga Tracker format
+		"it" = TRUE, //Impulse Tracker Module format
+		"s3m" = TRUE, //ScreamTracker 3 Module
+		"xm" = TRUE, //FastTracker 2 Module
+		"oxm" = TRUE, //FastTracker 2 (Vorbis Compressed Samples)
+		"wav" = TRUE, //Waveform Audio File Format, A (R)IFF-class format, and Microsoft's choice in the 80s sound format pissing match.
+		"ogg" = TRUE, //OGG Audio Container, Usually contains Vorbis-compressed Audio
+		//"raw" = TRUE, //On the tin, byond purports to support raw, uncompressed PCM Audio. I actually have no fucking idea how FMOD actually handles these.
+		//since they completely lack all information. As a confusion based anti-footgun, I'm just going to wire this to FALSE for now. It's here though.
+		"wma" = TRUE, //Windows Media Audio container
+		"aiff" = TRUE, //Audio Interchange File Format, Apple's side of the 80s sound format pissing match. It's also (R)IFF in a trenchcoat.
+		"mp3" = TRUE //MPeg Layer 3 Container (And usually, Codec.)
+	)
+
+	/// File types we can sniff the duration from using rustg.
+	var/static/list/safe_formats = list(
+		"ogg" = TRUE,
+		"mp3" = TRUE
+	)
+
+	// Currently set to private as I would prefer you use byond_sound_formats but you can unprivate it if you have a valid use!
+	// Put more common extensions first to speed this up a bit (So only ogg and mp3 lol.)
+	/// Similar to byond_sound_formats, a list of sound formats that work in byond.
+	VAR_PRIVATE/static/list/byond_sound_extensions = list(
+		".ogg",
+		".mp3",
+		".mid",
+		".midi",
+		".mod",
+		".it",
+		".s3m",
+		".xm",
+		".oxm",
+		".wav",
+		//".raw", See byond_sound_formats
+		".wma",
+		".aiff"
+	)
+
 /datum/controller/subsystem/sounds/Initialize()
 	setup_available_channels()
 	find_all_available_sounds()
@@ -63,23 +107,7 @@ SUBSYSTEM_DEF(sounds)
 
 /datum/controller/subsystem/sounds/proc/find_all_available_sounds()
 	all_sounds = list()
-	// Put more common extensions first to speed this up a bit
-	var/static/list/valid_file_extensions = list(
-		".ogg",
-		".wav",
-		".mid",
-		".midi",
-		".mod",
-		".it",
-		".s3m",
-		".xm",
-		".oxm",
-		".raw",
-		".wma",
-		".aiff",
-	)
-
-	all_sounds = pathwalk("sound/", valid_file_extensions)
+	all_sounds = pathwalk("sound/", byond_sound_extensions)
 
 /// Removes a channel from using list.
 /datum/controller/subsystem/sounds/proc/free_sound_channel(channel)

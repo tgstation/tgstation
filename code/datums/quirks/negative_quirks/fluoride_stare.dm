@@ -10,6 +10,11 @@
 	quirk_flags = QUIRK_HUMAN_ONLY
 	mail_goodies = list(/obj/item/reagent_containers/cup/bottle/salglu_solution, /obj/item/light/bulb)
 
+/datum/quirk/item_quirk/fluoride_stare/is_species_appropriate(datum/species/mob_species)
+	if(ispath(mob_species, /datum/species/dullahan))
+		return FALSE
+	return ..()
+
 /datum/quirk/item_quirk/fluoride_stare/add_unique(client/client_source)
 	var/obj/item/reagent_containers/cup/bottle/salglu_solution/saline = new(get_turf(quirk_holder))
 	give_item_to_holder(saline, list(

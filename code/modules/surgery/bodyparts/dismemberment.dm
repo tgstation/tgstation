@@ -106,12 +106,6 @@
 	for(var/datum/wound/wound as anything in wounds)
 		wound.remove_wound(TRUE)
 
-	for(var/datum/surgery/surgery as anything in phantom_owner.surgeries) //if we had an ongoing surgery on that limb, we stop it.
-		if(surgery.operated_bodypart == src)
-			phantom_owner.surgeries -= surgery
-			qdel(surgery)
-			break
-
 	if(!phantom_owner.has_embedded_objects())
 		phantom_owner.clear_alert(ALERT_EMBEDDED_OBJECT)
 		phantom_owner.clear_mood_event("embedded")
@@ -246,17 +240,17 @@
 
 	return ..()
 
-///Try to attach this bodypart to a mob, while replacing one if it exists, does nothing if it fails.
-/obj/item/bodypart/proc/replace_limb(mob/living/carbon/limb_owner, special)
+///Try to attach this bodypart to a mob, while replacing one if it exists, does nothing if it fails. Returns TRUE on success, FALSE on failure.
+/obj/item/bodypart/proc/replace_limb(mob/living/carbon/limb_owner)
 	if(!istype(limb_owner))
-		return
+		return FALSE
 	var/obj/item/bodypart/old_limb = limb_owner.get_bodypart(body_zone)
-	if(old_limb)
-		old_limb.drop_limb(TRUE)
+	old_limb?.drop_limb(TRUE)
 
-	. = try_attach_limb(limb_owner, special)
-	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
-		old_limb.try_attach_limb(limb_owner, TRUE)
+	if(!try_attach_limb(limb_owner, TRUE)) //If it failed to replace, re-attach their old limb as if nothing happened.
+		old_limb?.try_attach_limb(limb_owner, TRUE)
+		return FALSE
+	return TRUE
 
 ///Checks if a limb qualifies as a BODYPART_IMPLANTED
 /obj/item/bodypart/proc/check_for_frankenstein(mob/living/carbon/human/monster)
@@ -295,15 +289,10 @@
 		LAZYREMOVE(new_limb_owner.body_zone_dismembered_by, body_zone)
 
 		if(special) //non conventional limb attachment
-			for(var/datum/surgery/attach_surgery as anything in new_limb_owner.surgeries) //if we had an ongoing surgery to attach a new limb, we stop it.
-				var/surgery_zone = check_zone(attach_surgery.location)
-				if(surgery_zone == body_zone)
-					new_limb_owner.surgeries -= attach_surgery
-					qdel(attach_surgery)
-					break
-
 			for(var/obj/item/organ/organ as anything in new_limb_owner.organs)
 				if(deprecise_zone(organ.zone) != body_zone)
+					continue
+				if(organ.bodypart_owner == src) // someone manually updated the organs already
 					continue
 				organ.bodypart_insert(src)
 
@@ -370,8 +359,8 @@
 		sexy_chad.hair_color = hair_color
 		sexy_chad.facial_hairstyle = facial_hairstyle
 		sexy_chad.facial_hair_color = facial_hair_color
-		sexy_chad.grad_style = gradient_styles.Copy()
-		sexy_chad.grad_color = gradient_colors.Copy()
+		sexy_chad.grad_style = LAZYCOPY(gradient_styles)
+		sexy_chad.grad_color = LAZYCOPY(gradient_colors)
 		sexy_chad.lip_style = lip_style
 		sexy_chad.lip_color = lip_color
 

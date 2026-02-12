@@ -6,7 +6,6 @@ import {
   Stack,
   Tooltip,
 } from 'tgui-core/components';
-
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -507,6 +506,9 @@ export function PlaneMasterDebug() {
   const [connectionOpen, setConnectionOpen] = useState<boolean>(false);
   const [infoOpen, setInfoOpen] = useState<boolean>(false);
   const [planeOpen, setPlaneOpen] = useState<boolean>(false);
+  const [zoomToX, setZoomToX] = useState<number>();
+  const [zoomToY, setZoomToY] = useState<number>();
+  const [zoomToPlane, setZoomToPlane] = useState<string>();
 
   return (
     <PlaneDebugContext.Provider
@@ -522,6 +524,10 @@ export function PlaneMasterDebug() {
         planeOpen,
         setPlaneOpen,
         planesProcessed,
+        zoomToX,
+        setZoomToX,
+        zoomToY,
+        setZoomToY,
       }}
     >
       <Window
@@ -529,7 +535,26 @@ export function PlaneMasterDebug() {
         height={800}
         title={`Plane Debugging: ${mob_name}`}
         buttons={
-          <Stack>
+          <Stack fill>
+            <Stack.Item>
+              <Dropdown
+                options={planes.map((plane) => plane.name).sort()}
+                placeholder="Find Plane"
+                selected={zoomToPlane}
+                onSelected={(value) => {
+                  setZoomToPlane(value);
+                  const locatedPlane = planes.find(
+                    (plane) => plane.name === value,
+                  );
+                  if (locatedPlane) {
+                    const position =
+                      planesProcessed[locatedPlane.plane].position;
+                    setZoomToX(position.x + (zoomToX === position.x ? 0.1 : 0));
+                    setZoomToY(position.y + (zoomToY === position.y ? 0.1 : 0));
+                  }
+                }}
+              />
+            </Stack.Item>
             {!!enable_group_view && (
               <Tooltip
                 content="Plane masters are stored in groups, based off where they came from. MAIN is the main group, but if you open something that displays atoms in a new window, it'll show up here."
@@ -603,6 +628,8 @@ export function PlaneMasterDebug() {
             imageWidth={900}
             initialLeft={500}
             initialTop={-1350}
+            zoomToX={-(zoomToX || 0) + 525}
+            zoomToY={-(zoomToY || 0) + 300}
           >
             {planes.map((plane) => (
               <PlaneMaster

@@ -21,7 +21,11 @@
 	desc = "A bundle of various herbs. Somehow, you're always able to pick what you need out."
 	icon_state = "herbs"
 	foodtypes = VEGETABLES
-	grind_results = list(/datum/reagent/consumable/nutriment = 0)
-	juice_typepath = /datum/reagent/consumable/nutriment
 	tastes = list("nondescript herbs" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/fernet
+
+/obj/item/food/grown/herbs/grind_results()
+	return list(/datum/reagent/consumable/nutriment = 0)
+
+/obj/item/food/grown/herbs/juice_typepath()
+	return /datum/reagent/consumable/nutriment

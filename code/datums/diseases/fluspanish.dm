@@ -12,7 +12,7 @@
 	severity = DISEASE_SEVERITY_DANGEROUS
 	required_organ = ORGAN_SLOT_LUNGS
 
-/datum/disease/fluspanish/stage_act(seconds_per_tick, times_fired)
+/datum/disease/fluspanish/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

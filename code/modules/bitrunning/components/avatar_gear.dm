@@ -64,6 +64,6 @@
 	tracked_human_ref = WEAKREF(to_track)
 	RegisterSignal(to_track, COMSIG_BITRUNNER_STOCKING_GEAR, PROC_REF(load_onto_avatar))
 
-/datum/component/loads_avatar_gear/proc/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
+/datum/component/loads_avatar_gear/proc/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, domain_flags)
 	SIGNAL_HANDLER
-	return load_callback?.Invoke(neo, avatar, external_load_flags)
+	return load_callback?.Invoke(neo, avatar, domain_flags)

@@ -167,7 +167,6 @@
 	desc = "Used to see the boundaries of shuttle regions."
 	modes = list(MODE_NONE, MODE_SHUTTLE)
 
-
 /obj/item/clothing/glasses/meson/engine/atmos_imaging
 	name = "atmospheric thermal imaging goggles"
 	desc = "Goggles used by Atmospheric Technicians to see the thermal energy of gasses in open areas."

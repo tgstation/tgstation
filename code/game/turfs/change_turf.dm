@@ -193,7 +193,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			space_tile.enable_starlight()
 
 	if(old_opacity != opacity && SSticker)
-		GLOB.cameranet.bareMajorChunkChange(src)
+		SScameras.bare_major_chunk_change(src)
 
 	// We will only run this logic if the tile is not on the prime z layer, since we use area overlays to cover that
 	if(SSmapping.z_level_to_plane_offset[z])

@@ -58,9 +58,12 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player 
 	if(!message)
 		return
 
+	if(!SSshuttle.centcom_recall(usr, SSshuttle.emergency.timer, message)) // feedback handled within
+		return
+
 	message_admins("[key_name_admin(usr)] triggered a CentCom recall, with the admiral message of: [message]")
 	usr.log_message("triggered a CentCom recall, with the message of: [message]", LOG_GAME)
-	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
+
 
 /datum/admins/proc/cmd_show_exp_panel(client/client_to_check)
 	if(!check_rights(R_ADMIN))
@@ -125,7 +128,7 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player 
 		return
 	chosen_trait = available_traits[chosen_trait]
 
-	var/source = "adminabuse"
+	var/source = TRAIT_ADMIN_GRANTED
 	switch(add_or_remove)
 		if("Add") //Not doing source choosing here intentionally to make this bit faster to use, you can always vv it.
 			if(GLOB.movement_type_trait_to_flag[chosen_trait]) //include the required element.

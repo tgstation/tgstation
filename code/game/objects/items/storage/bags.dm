@@ -158,6 +158,12 @@
 
 	RegisterSignal(tile, COMSIG_ATOM_ENTERED, PROC_REF(on_obj_entered))
 	RegisterSignal(tile, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_initialized_on))
+	INVOKE_ASYNC(src, PROC_REF(handle_move), user)
+
+/obj/item/storage/bag/ore/proc/handle_move(mob/living/user)
+	if(user.stat != CONSCIOUS)
+		return
+	var/turf/tile = get_turf(user)
 	var/obj/structure/ore_box/box = null
 	if(istype(user.pulling, /obj/structure/ore_box))
 		box = user.pulling
@@ -199,8 +205,17 @@
 		box = user.pulling
 
 	if (box)
-		user.transferItemToLoc(ore, box)
+		user.transferItemToLoc(ore, box, animated = FALSE)
 		return TRUE
+
+	if (istype(ore, /obj/item/stack/ore))
+		var/obj/item/stack/ore/real_ore = ore
+		for(var/obj/item/stack/ore/stored_ore as anything in src)
+			if(!real_ore.can_merge(stored_ore))
+				continue
+			real_ore.merge(stored_ore)
+			if(QDELETED(real_ore))
+				return TRUE
 
 	if (atom_storage.attempt_insert(ore, user))
 		return TRUE
@@ -212,13 +227,13 @@
 
 /obj/item/storage/bag/ore/proc/on_obj_entered(atom/new_loc, atom/movable/arrived, atom/old_loc)
 	SIGNAL_HANDLER
-	if(is_type_in_list(arrived, atom_storage.can_hold) && !dropping_ores)
-		pickup_ore(arrived, listening_to)
+	if(is_type_in_list(arrived, atom_storage.can_hold) && !dropping_ores && old_loc != loc)
+		INVOKE_ASYNC(src, PROC_REF(pickup_ore), arrived, listening_to)
 
 /obj/item/storage/bag/ore/proc/on_atom_initialized_on(atom/loc, atom/new_atom)
 	SIGNAL_HANDLER
 	if(is_type_in_list(new_atom, atom_storage.can_hold))
-		pickup_ore(new_atom, listening_to)
+		INVOKE_ASYNC(src, PROC_REF(pickup_ore), new_atom, listening_to)
 
 /obj/item/storage/bag/ore/cyborg
 	name = "cyborg mining satchel"
@@ -292,7 +307,7 @@
 // "Only 20 uranium 'cause of radiation"
 /obj/item/storage/bag/sheetsnatcher/debug/PopulateContents()
 	// amount should be null if it should spawn with the type's default amount
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/stack/sheet/iron/fifty = null,
 		/obj/item/stack/sheet/glass/fifty = null,
 		/obj/item/stack/sheet/rglass/fifty = null,
@@ -314,6 +329,7 @@
 		/obj/item/stack/rods/fifty = null,
 		/obj/item/stack/sheet/mineral/plastitanium = 50,
 		/obj/item/stack/sheet/mineral/abductor = 50,
+		/obj/item/stack/sheet/mineral/sandbags/fifty = null,
 		/obj/item/stack/sheet/cardboard/fifty = null,
 	)
 	for(var/obj/item/stack/stack_type as anything in items_inside)
@@ -344,6 +360,9 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*1.5)
 	custom_price = PAYCHECK_CREW * 0.6
 	storage_type = /datum/storage/bag/tray
+	sound_vary = TRUE
+	pickup_sound = SFX_TRAY_PICKUP
+	drop_sound = SFX_TRAY_DROP
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -497,6 +516,7 @@
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE|ITEM_SLOT_NECK
 	resistance_flags = FLAMMABLE
 	storage_type = /datum/storage/bag/rebar_quiver
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 6.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
 
 /obj/item/storage/bag/rebar_quiver/syndicate
 	icon_state = "syndie_quiver_0"
@@ -550,7 +570,7 @@
 		return
 
 	var/obj/item/ammo_casing/rebar/ammo_to_load = contents[1]
-	held_crossbow.attackby(ammo_to_load, user)
+	held_crossbow.item_interaction(user, ammo_to_load)
 
 /obj/item/storage/bag/quiver
 	name = "quiver"
@@ -566,6 +586,7 @@
 
 /obj/item/storage/bag/quiver/lesser
 	storage_type = /datum/storage/bag/quiver/less
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/storage/bag/quiver/full/PopulateContents()
 	. = ..()

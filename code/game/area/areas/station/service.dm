@@ -77,7 +77,7 @@
 	mood_bonus = 5
 	mood_message = "I love being in the library!"
 	mood_trait = TRAIT_INTROVERT
-	area_flags = CULT_PERMITTED | BLOBS_ALLOWED | UNIQUE_AREA
+	area_flags = CULT_PERMITTED | BLOBS_ALLOWED
 	sound_environment = SOUND_AREA_LARGE_SOFTFLOOR
 
 /area/station/service/library/garden
@@ -180,7 +180,7 @@
 /area/station/service/janitor
 	name = "\improper Custodial Closet"
 	icon_state = "janitor"
-	area_flags = CULT_PERMITTED | BLOBS_ALLOWED | UNIQUE_AREA
+	area_flags = CULT_PERMITTED | BLOBS_ALLOWED
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /area/station/service/barber

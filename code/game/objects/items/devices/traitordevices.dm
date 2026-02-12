@@ -404,6 +404,7 @@ effective or pretty fucking useless.
 	desc = "A jury-rigged device that disrupts nearby radio communication. Its crude construction provides a significantly smaller area of effect compared to its Syndicate counterpart."
 	range = 5
 	disruptor_range = 3
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/jammer/makeshift/Initialize(mapload)
 	. = ..()
@@ -428,7 +429,7 @@ effective or pretty fucking useless.
 
 /obj/machinery/porta_turret/syndicate/toolbox/examine(mob/user)
 	. = ..()
-	if(faction_check(faction, user.faction))
+	if(faction_check_atom(user))
 		. += span_notice("You can repair it by <b>left-clicking</b> with a combat wrench.")
 		. += span_notice("You can fold it by <b>right-clicking</b> with a combat wrench.")
 
@@ -493,7 +494,7 @@ effective or pretty fucking useless.
 		qdel(src)
 
 /obj/machinery/porta_turret/syndicate/toolbox/ui_status(mob/user, datum/ui_state/state)
-	if(faction_check(user.faction, faction))
+	if(faction_check_atom(user))
 		return ..()
 
 	return UI_CLOSE

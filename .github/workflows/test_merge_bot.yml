@@ -11,7 +11,7 @@ on:
 jobs:
   test_merge_bot:
     name: Test Merge Detector
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Check for GET_TEST_MERGES_URL
         id: secrets_set
@@ -23,7 +23,7 @@ jobs:
           echo "GET_TEST_MERGES_URL=$SECRET_EXISTS" >> $GITHUB_OUTPUT
       - name: Checkout
         if: steps.secrets_set.outputs.GET_TEST_MERGES_URL
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Prepare module
         if: steps.secrets_set.outputs.GET_TEST_MERGES_URL
         run: |

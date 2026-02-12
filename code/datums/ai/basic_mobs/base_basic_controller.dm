@@ -64,6 +64,7 @@
 	forgive_target(new_friend)
 	clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
 	clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST) //we have just been tamed by a new party, clean slate for everyone!
+	CancelActions()
 	RegisterSignal(new_friend, COMSIG_LIVING_MADE_NEW_FRIEND, PROC_REF(on_master_tame))
 
 /datum/ai_controller/proc/on_untamed(datum/source, mob/living/old_friend)

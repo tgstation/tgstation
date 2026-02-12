@@ -103,10 +103,10 @@
 		to_chat(user, span_warning("You are too far away to activate the button!"))
 
 /obj/machinery/button/transport/tram/setup_device()
+	. = ..()
 	var/obj/item/assembly/control/transport/call_button/tram_device = device
-	tram_device.id = id
-	tram_device.specific_transport_id = specific_transport_id
-	return ..()
+	if(istype(tram_device))
+		tram_device.specific_transport_id = specific_transport_id
 
 /obj/machinery/button/transport/tram/examine(mob/user)
 	. = ..()

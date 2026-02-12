@@ -116,7 +116,7 @@ ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_
 			var/datum/dynamic_ruleset/ruleset = SSdynamic.queued_rulesets[index]
 			if(!ruleset)
 				return
-			SSdynamic.queued_rulesets -= ruleset
+			SSdynamic.unqueue_ruleset(ruleset)
 			message_admins("[key_name_admin(ui.user)] removed [ruleset.config_tag] from the dynamic ruleset queue.")
 			log_admin("[key_name_admin(ui.user)] removed [ruleset.config_tag] from the dynamic ruleset queue.")
 			qdel(ruleset)

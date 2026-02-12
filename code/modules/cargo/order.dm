@@ -72,7 +72,7 @@
 	coupon,
 	charge_on_purchase = TRUE,
 	manifest_can_fail = TRUE,
-	cost_type = "cr",
+	cost_type = MONEY_SYMBOL,
 	can_be_cancelled = TRUE,
 )
 	id = SSshuttle.order_number++
@@ -98,7 +98,7 @@
 	var/cost = pack.get_cost()
 	if(applied_coupon) //apply discount price
 		cost *= (1 - applied_coupon.discount_pct_off)
-	if(paying_account?.add_to_accounts && !pack.goody) //privately purchased and not a goody means 1.1x the cost
+	if(paying_account?.add_to_accounts && !(pack.order_flags & ORDER_GOODY)) //privately purchased and not a goody means 1.1x the cost
 		cost *= 1.1
 	return round(cost)
 
@@ -141,7 +141,7 @@
 	manifest_text += "Contents: <br/>"
 	manifest_text += "<ul>"
 	var/container_contents = list() // Associative list with the format (item_name = nº of occurrences, ...)
-	for(var/obj/item/stuff in container.contents - manifest_paper)
+	for(var/atom/movable/stuff as anything in container.contents - manifest_paper)
 		if(isstack(stuff))
 			var/obj/item/stack/thing = stuff
 			container_contents[thing.singular_name] += thing.amount
@@ -158,7 +158,7 @@
 					container_contents -= missing_item
 
 	for(var/item in container_contents)
-		manifest_text += "<li> [container_contents[item]] [item][container_contents[item] == 1 ? "" : "s"]</li>"
+		manifest_text += "<li> [container_contents[item]] [item][container_contents[item] == 1 ? "" : plural_s(item)]</li>"
 	manifest_text += "</ul>"
 	manifest_text += "<h4>Stamp below to confirm receipt of goods:</h4>"
 
@@ -189,7 +189,7 @@
 	else
 		account_holder = "Cargo"
 	var/obj/structure/closet/crate/crate = pack.generate(A, paying_account)
-	if(pack.contraband)
+	if(pack.order_flags & ORDER_CONTRABAND)
 		for(var/atom/movable/item_within as anything in crate.get_all_contents())
 			ADD_TRAIT(item_within, TRAIT_CONTRABAND, INNATE_TRAIT)
 	if(department_destination)

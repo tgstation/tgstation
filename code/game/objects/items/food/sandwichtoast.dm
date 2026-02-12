@@ -30,9 +30,9 @@
 	custom_materials = null
 
 /obj/item/food/sandwich/cheese/make_grillable()
-	AddComponent(/datum/component/grillable, /obj/item/food/sandwich/cheese/grilled, rand(30 SECONDS, 60 SECONDS), TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/sandwich/grilled_cheese, rand(30 SECONDS, 60 SECONDS), TRUE)
 
-/obj/item/food/sandwich/cheese/grilled
+/obj/item/food/sandwich/grilled_cheese
 	name = "grilled cheese sandwich"
 	desc = "A warm, melty sandwich that goes perfectly with tomato soup."
 	icon_state = "toastedsandwich"
@@ -43,8 +43,10 @@
 		/datum/reagent/carbon = 4,
 	)
 	tastes = list("toast" = 2, "cheese" = 3, "butter" = 1)
+	foodtypes = GRAIN | DAIRY
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = null
 
 /obj/item/food/sandwich/jelly
 	name = "jelly sandwich"
@@ -268,6 +270,7 @@
 	tastes = list("bread" = 1, "meat" = 1, "tomato sauce" = 1, "death" = 1)
 	foodtypes = MEAT|VEGETABLES|GRAIN
 	eat_time = 4 SECONDS // Makes it harder to force-feed this to people as a weapon, as funny as that is.
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 2)
 	var/static/list/correct_clothing = list(/obj/item/clothing/under/rank/civilian/cookjorts, /obj/item/clothing/under/shorts/jeanshorts)
 
 /obj/item/food/sandwich/death/Initialize(mapload)

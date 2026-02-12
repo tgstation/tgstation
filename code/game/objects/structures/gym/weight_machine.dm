@@ -12,6 +12,7 @@
 	density = TRUE
 	anchored = TRUE
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7)
 
 	///How much we shift the user's pixel y when using the weight machine.
 	var/pixel_shift_z = -3
@@ -214,7 +215,7 @@
 	if(HAS_TRAIT(user, TRAIT_STRENGTH)) //The strong get reductions to stamina damage taken while exercising
 		stamina_exhaustion *= 0.5
 
-	user.adjustStaminaLoss(stamina_exhaustion * seconds_per_tick)
+	user.adjust_stamina_loss(stamina_exhaustion * seconds_per_tick)
 
 	return TRUE
 

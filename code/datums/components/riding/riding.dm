@@ -32,6 +32,8 @@
 	var/override_allow_spacemove = FALSE
 	/// can anyone other than the rider unbuckle the rider?
 	var/can_force_unbuckle = TRUE
+	/// Like last_bumped for mobs, but for vehicles. Exists to allow the door bump cooldown while also passing door openings through Bumped()
+	var/vehicle_last_bumped = 0
 
 	/**
 	 * Ride check flags defined for the specific riding component types, so we know if we need arms, legs, or whatever.
@@ -270,10 +272,12 @@
 /// So we can check all occupants when we bump a door to see if anyone has access
 /datum/component/riding/proc/vehicle_bump(atom/movable/movable_parent, obj/machinery/door/possible_bumped_door)
 	SIGNAL_HANDLER
-	if(!istype(possible_bumped_door))
+	if(!istype(possible_bumped_door) || world.time - vehicle_last_bumped <= 0.3 SECONDS)
 		return
-	for(var/occupant in movable_parent.buckled_mobs)
-		INVOKE_ASYNC(possible_bumped_door, TYPE_PROC_REF(/obj/machinery/door/, bumpopen), occupant)
+	for(var/mob/living/occupant in movable_parent.buckled_mobs)
+		vehicle_last_bumped = world.time
+		occupant.last_bumped = 0
+		INVOKE_ASYNC(possible_bumped_door, TYPE_PROC_REF(/atom, Bumped), occupant)
 
 /datum/component/riding/proc/Unbuckle(atom/movable/M)
 	addtimer(CALLBACK(parent, TYPE_PROC_REF(/atom/movable/, unbuckle_mob), M), 0, TIMER_UNIQUE)

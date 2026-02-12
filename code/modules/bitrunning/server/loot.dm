@@ -16,11 +16,36 @@
 
 	rewards_base += (length(spawned_threat_refs) * 2)
 
-	for(var/index in 2 to length(avatar_connection_refs))
-		rewards_base += multiplayer_bonus
+	rewards_base += get_multiplayer_bonus()
+
+	rewards_base += get_nohit_bouns()
 
 	return rewards_base
 
+/// Calculates total bonus from completing the domain in multiplayer
+/obj/machinery/quantum_server/proc/get_multiplayer_bonus()
+	var/total = 0
+	var/multiplayer = FALSE
+	for(var/datum/weakref/connection_ref as anything in avatar_connection_refs)
+		var/datum/component/avatar_connection/connection = connection_ref.resolve()
+		if(isnull(connection))
+			continue
+		if(multiplayer)
+			total += multiplayer_bonus
+		multiplayer = TRUE
+	return total
+
+/// Calculates total bonus from completing the domain without taking damage
+/obj/machinery/quantum_server/proc/get_nohit_bouns()
+	if(generated_domain.domain_flags & DOMAIN_NO_NOHIT_BONUS)
+		return 0
+
+	var/total = 0
+	for(var/datum/weakref/connection_ref as anything in avatar_connection_refs)
+		var/datum/component/avatar_connection/connection = connection_ref.resolve()
+		if(connection?.nohit)
+			total += nohit_bonus
+	return total
 
 /// Handles spawning the (new) crate and deleting the former
 /obj/machinery/quantum_server/proc/generate_loot(obj/cache, obj/machinery/byteforge/chosen_forge)
@@ -101,8 +126,13 @@
 	if(domain_randomized)
 		text += "- **Randomized:** + 0.2\n"
 
-	if(length(avatar_connection_refs) > 1)
-		text += "- **Multiplayer:** + [(length(avatar_connection_refs) - 1) * multiplayer_bonus]\n"
+	var/mp_bonus = get_multiplayer_bonus()
+	if(mp_bonus)
+		text += "- **Multiplayer:** + [mp_bonus]\n"
+
+	var/nohit_bonus = get_nohit_bouns()
+	if(nohit_bonus)
+		text += "- **No hit:** + [nohit_bonus]\n"
 
 	if(domain_threats > 0)
 		text += "- **Threats:** + [domain_threats * 2]\n"

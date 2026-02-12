@@ -66,7 +66,7 @@
 	. = ..()
 	update_appearance(UPDATE_ICON_STATE)
 	update_anomaly_state()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -7) // PSYCHIC FISHING
+	AddElement(/datum/element/adjust_fishing_difficulty, -7) // PSYCHIC FISHING
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
 
 /obj/item/clothing/head/helmet/perceptomatrix/equipped(mob/living/user, slot)
@@ -102,7 +102,7 @@
 
 	// When someone makes TRAIT_DEAF an element, or status effect, or whatever, give this item a way to bypass said deafness.
 	// just blocking future instances of deafness isn't what the item is meant to do but there's no proper way to do it otherwise at the moment.
-	active_components += AddComponent(/datum/component/wearertargeting/earprotection, reduce_amount = 2) // should be same as highest value
+	active_components += AddComponent(/datum/component/wearertargeting/earprotection, EAR_PROTECTION_HEAVY) // should be same as highest value
 	active_components += AddComponent(
 		/datum/component/anti_magic, \
 		antimagic_flags = MAGIC_RESISTANCE_MIND, \
@@ -164,17 +164,6 @@
 	var/stagger_duration = 3 SECONDS
 	/// The amount of hallucination to apply
 	var/hallucination_duration = 25 SECONDS
-	/// Spark system
-	var/datum/effect_system/spark_spread/quantum/spark_sys
-
-/datum/action/cooldown/spell/pointed/percept_hallucination/New(Target)
-	. = ..()
-
-	spark_sys = new /datum/effect_system/spark_spread/quantum
-
-/datum/action/cooldown/spell/pointed/percept_hallucination/Destroy()
-	QDEL_NULL(spark_sys)
-	return ..()
 
 /datum/action/cooldown/spell/pointed/percept_hallucination/is_valid_target(atom/cast_on)
 	. = ..()
@@ -216,11 +205,8 @@
 
 /datum/action/cooldown/spell/pointed/percept_hallucination/proc/cast_fx(atom/cast_on)
 	owner.Beam(cast_on, icon_state = "greyscale_lightning", beam_color = COLOR_FADED_PINK, time = 0.5 SECONDS)
-
-	spark_sys.set_up(2, 1, get_turf(owner))
-	spark_sys.start()
-	spark_sys.set_up(4, 1, get_turf(cast_on))
-	spark_sys.start()
+	do_sparks(2, TRUE, get_turf(owner), spark_type = /datum/effect_system/basic/spark_spread/quantum)
+	do_sparks(4, TRUE, get_turf(owner), spark_type = /datum/effect_system/basic/spark_spread/quantum)
 
 /datum/action/cooldown/spell/pointed/percept_hallucination/cast(mob/living/carbon/human/cast_on)
 	. = ..()

@@ -178,6 +178,10 @@
 		return FALSE
 	if(action_disabled)
 		return FALSE
+	if((check_flags & AB_CHECK_CONSCIOUS) && owner.stat != CONSCIOUS)
+		if (feedback)
+			owner.balloon_alert(owner, "[owner.stat == DEAD ? "dead" : "unconscious"]!")
+		return FALSE
 	if((check_flags & AB_CHECK_HANDS_BLOCKED) && HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
 		if (feedback)
 			owner.balloon_alert(owner, "hands blocked!")
@@ -196,10 +200,6 @@
 			if (feedback)
 				owner.balloon_alert(owner, "must stand up!")
 			return FALSE
-	if((check_flags & AB_CHECK_CONSCIOUS) && owner.stat != CONSCIOUS)
-		if (feedback)
-			owner.balloon_alert(owner, "unconscious!")
-		return FALSE
 	if((check_flags & AB_CHECK_PHASED) && HAS_TRAIT(owner, TRAIT_MAGICALLY_PHASED))
 		if (feedback)
 			owner.balloon_alert(owner, "incorporeal!")
@@ -452,3 +452,8 @@
 		else
 			source.next_click = world.time + CLICK_CD_ACTIVATE_ABILITY
 	INVOKE_ASYNC(src, PROC_REF(Trigger))
+
+/// Used for setting the keybind via external sources.
+/datum/action/proc/set_key(new_full_key)
+	full_key = new_full_key
+	build_all_button_icons(UPDATE_BUTTON_STATUS)

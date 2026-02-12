@@ -76,6 +76,8 @@
 
 //Generic subtree defines
 
+/// default search range (tiles, passed to oview) when using find_and_set
+#define SEARCH_TACTIC_DEFAULT_RANGE 7
 /// probability that the pawn should try resisting out of restraints
 #define RESIST_SUBTREE_PROB 50
 ///macro for whether it's appropriate to resist right now, used by resist subtree

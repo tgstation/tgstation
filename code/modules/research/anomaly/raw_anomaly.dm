@@ -74,6 +74,12 @@
 	anomaly_type = /obj/item/assembly/signaler/anomaly/ectoplasm
 	icon_state = "rawcore_dimensional"
 
+/obj/item/raw_anomaly_core/weather
+	name = "raw weather core"
+	desc = "The raw core of a weather anomaly. It makes you wish for a rainy day."
+	anomaly_type = /obj/item/assembly/signaler/anomaly/weather
+	icon_state = "rawcore_weather"
+
 /obj/item/raw_anomaly_core/random/Initialize(mapload)
 	. = ..()
 	var/path = pick(subtypesof(/obj/item/raw_anomaly_core))

@@ -5,7 +5,7 @@
 	illustration = "implant"
 
 /obj/item/storage/box/trackimp/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/implantcase/tracking = 4,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
@@ -19,12 +19,26 @@
 	illustration = "implant"
 
 /obj/item/storage/box/minertracker/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/implantcase/tracking = 2,
 		/obj/item/implantcase/beacon = 2,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
 		/obj/item/locator = 1,
+	)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/box/minerdeathrattle
+	name = "boxed expeditionary deathrattle implant kit"
+	desc = "For realizing that your coworkers are dead instead of actively ignoring comms. Requires manual setup. \
+		Only works for deaths in raw Lavaland or Icemoon wastelands."
+	illustration = "implant"
+
+/obj/item/storage/box/minerdeathrattle/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/implantcase/deathrattle/lavaland = 5, // 3 miners 1 QM/paramed/etc, 1 for saving config, presumably
+		/obj/item/implanter = 1,
+		/obj/item/implantpad = 1,
 	)
 	generate_items_inside(items_inside,src)
 
@@ -34,7 +48,7 @@
 	illustration = "implant"
 
 /obj/item/storage/box/chemimp/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/implantcase/chem = 5,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
@@ -47,7 +61,7 @@
 	illustration = "implant"
 
 /obj/item/storage/box/exileimp/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/implantcase/exile = 5,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
@@ -61,7 +75,7 @@
 	illustration = "implant"
 
 /obj/item/storage/box/beaconimp/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/implantcase/beacon = 3,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
@@ -74,7 +88,7 @@
 	illustration = "implant"
 
 /obj/item/storage/box/teleport_blocker/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/implantcase/teleport_blocker = 2,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,

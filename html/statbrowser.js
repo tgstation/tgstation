@@ -236,7 +236,7 @@ function tab_change(tab) {
     document.getElementById(tab).className = "button active"; // make current button active
   var spell_tabs_thingy = spell_tabs.includes(tab);
   var verb_tabs_thingy = verb_tabs.includes(tab);
-  statcontentdiv.className = "statcontent"
+  statcontentdiv.className = "statcontent";
   if (tab == "Status") {
     draw_status();
   } else if (tab == "MC") {
@@ -390,23 +390,27 @@ function draw_status() {
 
 function draw_mc() {
   statcontentdiv.textContent = "";
-  statcontentdiv.className = "mcstatcontent"
+  statcontentdiv.className = "mcstatcontent";
   var table = document.createElement("table");
   for (var i = 0; i < mc_tab_parts.length; i++) {
     var part = mc_tab_parts[i];
     var tr = document.createElement("tr");
+    var td0 = document.createElement("td");
+    td0.className = "monospace";
+    td0.textContent = part[0];
     var td1 = document.createElement("td");
-    td1.textContent = part[0];
+    td1.textContent = part[1];
     var td2 = document.createElement("td");
-    if (part[2]) {
+    if (part[3]) {
       var a = document.createElement("a");
       a.href =
-        "byond://?_src_=vars;admin_token=" + href_token + ";Vars=" + part[2];
-      a.textContent = part[1];
+        "byond://?_src_=vars;admin_token=" + href_token + ";Vars=" + part[3];
+      a.textContent = part[2];
       td2.appendChild(a);
     } else {
-      td2.textContent = part[1];
+      td2.textContent = part[2];
     }
+    tr.appendChild(td0);
     tr.appendChild(td1);
     tr.appendChild(td2);
     table.appendChild(tr);
@@ -916,7 +920,7 @@ Byond.subscribeTo("update_stat", function (payload) {
 
 Byond.subscribeTo("update_mc", function (payload) {
   mc_tab_parts = payload.mc_data;
-  mc_tab_parts.splice(0, 0, ["Location:", payload.coord_entry]);
+  mc_tab_parts.splice(0, 0, ["", "Location:", payload.coord_entry]);
 
   if (!verb_tabs.includes("MC")) {
     verb_tabs.push("MC");

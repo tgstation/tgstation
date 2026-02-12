@@ -5,6 +5,7 @@
 	icon_state = "empty_plate"
 	novariants = FALSE
 	max_amount = 50
+	abstract_type = /obj/item/stack/license_plates
 
 /obj/item/stack/license_plates/empty
 	name = "empty license plate"

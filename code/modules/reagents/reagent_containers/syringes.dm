@@ -137,8 +137,8 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user) // transfer from, transfer to - who cares?
-
-	to_chat(user, span_notice("You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units."))
+	if(trans)
+		to_chat(user, span_notice("You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units."))
 	target.update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -352,6 +352,7 @@
 	dart_insert_casing_icon_state = "overlay_syringe_crude"
 	dart_insert_projectile_icon_state = "overlay_syringe_crude_proj"
 	embed_type = /datum/embedding/syringe/crude
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 5)
 
 /datum/embedding/syringe/crude
 	embed_chance = 75

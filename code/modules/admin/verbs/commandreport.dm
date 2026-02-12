@@ -100,13 +100,13 @@ ADMIN_VERB(create_command_report, R_ADMIN, "Create Command Report", "Create a co
 		if("set_report_sound")
 			if(params["picked_sound"] == CUSTOM_SOUND_PRESET)
 				played_sound = DEFAULT_ANNOUNCEMENT_SOUND // fallback by default
-				var/sound_file = input(ui_user, "Select sound file (OGG, WAV, MP3)", "Upload sound") as file|null
+				var/sound_file = input(ui_user, "Select sound file", "Upload sound") as sound|null
 				if(!sound_file)
 					tgui_alert(ui_user, "The custom sound could not be loaded. The standard sound will be played.", "Loading error", list("Ok"))
 					return
 
-				if(!(copytext("[sound_file]", -4) in list(".ogg", ".wav", ".mp3")))
-					tgui_alert(ui_user, "Invalid file type. Please select an OGG, WAV, or MP3 file.", "Loading error", list("Ok"))
+				if(!IS_SOUND_FILE(sound_file))
+					tgui_alert(ui_user, "Invalid file type. Please select a sound file.", "Loading error", list("Ok"))
 					return
 
 				played_sound = sound_file

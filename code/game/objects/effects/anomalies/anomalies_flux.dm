@@ -44,10 +44,10 @@
 /obj/effect/anomaly/flux/detonate()
 	switch(emp_zap)
 		if(FLUX_EMP)
-			empulse(src, 4, 16)
+			empulse(src, 4, 16, emp_source = src)
 			explosion(src, heavy_impact_range = 1, light_impact_range = 4, flash_range = 6) //Trashes the room a bit, might blow a small hole in the hull.
 		if(FLUX_LIGHT_EMP)
-			empulse(src, 4, 6)
+			empulse(src, 4, 6, emp_source = src)
 			explosion(src, light_impact_range = 3, flash_range = 6)
 		if(FLUX_NO_EMP)
 			new /obj/effect/particle_effect/sparks(loc)

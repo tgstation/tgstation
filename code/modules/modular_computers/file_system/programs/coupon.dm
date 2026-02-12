@@ -14,7 +14,7 @@
 	can_run_on_flags = PROGRAM_PDA //It relies on the PDA messenger to let you know of new codes
 	detomatix_resistance = DETOMATIX_RESIST_MALUS
 
-/datum/computer_file/program/coupon/on_install()
+/datum/computer_file/program/coupon/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	///set the discount_coupons list, which means SSmodular_computers will now begin to periodically produce new coupon codes.
 	LAZYINITLIST(SSmodular_computers.discount_coupons)

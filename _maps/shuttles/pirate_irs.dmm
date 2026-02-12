@@ -1379,7 +1379,6 @@
 	dir = 4
 	},
 /obj/machinery/turretid{
-	icon_state = "control_kill";
 	lethal = 1;
 	pixel_y = -24;
 	req_access = list("syndicate")
@@ -1509,7 +1508,7 @@
 /area/shuttle/pirate)
 "NW" = (
 /obj/structure/table/reinforced,
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = 7;
 	pixel_y = 10
 	},

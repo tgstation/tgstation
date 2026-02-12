@@ -13,6 +13,9 @@
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 	/// Cached data from ui_interact
 	var/list/last_scan_data
 	/// Weakref to the last thing we scanned
@@ -323,11 +326,11 @@
 			product_grinder_results[seed.product] = list()
 			var/obj/item/food/grown/product = new seed.product
 			var/datum/reagent/product_distill_reagent = product.distill_reagent
-			var/datum/reagent/product_juice_typepath = product.juice_typepath
+			var/datum/reagent/product_juice_typepath = product.juice_typepath()
 			product_grinder_results[seed.product]["distill_reagent"] = initial(product_distill_reagent.name)
 			product_grinder_results[seed.product]["juice_name"] = initial(product_juice_typepath.name)
 			product_grinder_results[seed.product]["grind_results"] = list()
-			for(var/datum/reagent/reagent as anything in product.grind_results)
+			for(var/datum/reagent/reagent as anything in product.grind_results())
 				product_grinder_results[seed.product]["grind_results"] += initial(reagent.name)
 			qdel(product)
 		seed_data["distill_reagent"] = product_grinder_results[seed.product]["distill_reagent"]

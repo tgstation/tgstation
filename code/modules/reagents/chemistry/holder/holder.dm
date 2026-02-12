@@ -142,10 +142,10 @@
 			iter_reagent.purity = ((iter_reagent.creation_purity * iter_reagent.volume) + (added_purity * amount)) /(iter_reagent.volume + amount) //This should add the purity to the product
 			iter_reagent.creation_purity = iter_reagent.purity
 			iter_reagent.ph = ((iter_reagent.ph * (iter_reagent.volume)) + (added_ph * amount)) / (iter_reagent.volume + amount)
+			iter_reagent.on_merge(data, amount) // Update this before updating volume. FIXME: Move all of the surrounding crap into this proc so implementations decide whether they go first or base code goes first.
 			iter_reagent.volume += amount
 			update_total()
 
-			iter_reagent.on_merge(data, amount)
 			if(reagtemp != cached_temp)
 				var/new_heat_capacity = heat_capacity()
 				if(new_heat_capacity)
@@ -338,6 +338,8 @@
 	include_source_subtypes = FALSE,
 	keep_data = FALSE,
 )
+	if(!total_volume)
+		return FALSE
 	if(!ispath(source_reagent_typepath))
 		stack_trace("invalid reagent path passed to convert reagent [source_reagent_typepath]")
 		return FALSE
@@ -786,6 +788,34 @@
 	set_temperature(round(chem_temp))
 	handle_reactions()
 
+/*
+ * Call in case of electrical current exposure, rapid heating or blunt force, things that would set off explosives and alike
+ * Arguments:
+ * * power_charge - If we were triggered from electric current, how much power was dumped into us?
+ * * spark_flags - Set of flags describing the interaction
+ * * banned_reagents - List of reagent types which we may want to have custom handling for and should avoid checking in here
+ */
+/datum/reagents/proc/spark_act(power_charge, spark_flags, list/banned_reagents)
+	if (!islist(banned_reagents))
+		banned_reagents = list(banned_reagents)
+	var/result = NONE
+	var/update = FALSE
+	for (var/datum/reagent/reagent as anything in reagent_list)
+		if (is_type_in_list(reagent, banned_reagents))
+			continue
+		var/reagent_result = reagent.on_spark_act(power_charge, spark_flags)
+		if (!reagent_result)
+			continue
+		result |= (reagent_result & SPARK_ACT_RETURNS)
+		if (!(reagent_result & SPARK_ACT_KEEP_REAGENT))
+			reagent.volume = 0
+			update = TRUE
+
+	if (result & SPARK_ACT_CLEAR_ALL)
+		clear_reagents()
+	else if (update)
+		update_total()
+	return result
 
 //===============================Logging==========================================
 /// Outputs a log-friendly list of reagents based on the internal reagent_list.

@@ -6,12 +6,13 @@
 	base_icon_state = "toiletbong"
 	density = FALSE
 	anchored = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.05, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.8)
 	var/smokeradius = 1
 	var/mutable_appearance/weed_overlay
 
 /obj/structure/toiletbong/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, post_rotation = CALLBACK(src, PROC_REF(post_rotation)))
+	AddElement(/datum/element/simple_rotation, post_rotation_proccall = PROC_REF(post_rotation))
 	create_storage(storage_type = /datum/storage/toiletbong)
 
 	weed_overlay = mutable_appearance('icons/obj/watercloset.dmi', "[base_icon_state]_overlay")
@@ -55,9 +56,10 @@
 			user.balloon_alert(user, "[item.name] is blocking the pipes!")
 			continue
 		playsound(src, 'sound/items/modsuit/flamethrower.ogg', 50)
-		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/puff = new
-		puff.set_up(smokeradius, holder = src, location = user, carry = item.reagents, efficiency = 20)
-		puff.start()
+
+		var/smoke_amount = DIAMOND_AREA(smokeradius)
+		do_chem_smoke(amount = smoke_amount, holder = src, location = loc, carry = reagents, carry_limit = 20, smoke_type = /datum/effect_system/fluid_spread/smoke/chem/smoke_machine)
+		reagents.remove_all(smoke_amount / 20)
 		if (prob(5) && !(obj_flags & EMAGGED))
 			if(user.get_liked_foodtypes() & GORE)
 				user.balloon_alert(user, "a hidden treat!")
@@ -68,7 +70,7 @@
 				user.adjust_disgust(50)
 				user.vomit(VOMIT_CATEGORY_DEFAULT)
 			var/mob/living/spawned_mob = new /mob/living/basic/mouse(get_turf(user))
-			spawned_mob.faction |= "[REF(user)]"
+			spawned_mob.add_faction("[REF(user)]")
 			if(prob(50))
 				for(var/j in 1 to rand(1, 3))
 					step(spawned_mob, pick(NORTH,SOUTH,EAST,WEST))
@@ -93,9 +95,9 @@
 	if (!do_after(user, 10 SECONDS, target = src))
 		return FALSE
 	new /obj/item/flamethrower(get_turf(src))
-	new /obj/item/stack/sheet/iron(get_turf(src))
 	var/obj/item/tank/internals/plasma/ptank = new /obj/item/tank/internals/plasma(get_turf(src))
 	ptank.air_contents.gases[/datum/gas/plasma][MOLES] = (0)
+	drop_costum_materials()
 	qdel(src)
 	return TRUE
 

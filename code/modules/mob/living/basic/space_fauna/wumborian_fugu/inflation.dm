@@ -43,7 +43,8 @@
 /atom/movable/screen/alert/status_effect/inflated
 	name = "WUMBO"
 	desc = "You feel big and strong!"
-	icon_state = "gross"
+	use_user_hud_icon = TRUE
+	overlay_state = "gross"
 
 /datum/status_effect/inflated/on_creation(mob/living/new_owner, ...)
 	if (!istype(new_owner, /mob/living/basic/wumborian_fugu))

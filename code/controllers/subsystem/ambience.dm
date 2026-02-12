@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(ambience)
 			client_old_areas -= client_iterator
 			continue
 
-		if(!client_mob.can_hear()) //WHAT? I CAN'T HEAR YOU
+		if(HAS_TRAIT(client_mob, TRAIT_DEAF)) //WHAT? I CAN'T HEAR YOU
 			continue
 
 		//Check to see if the client-mob is in a valid area
@@ -54,12 +54,17 @@ SUBSYSTEM_DEF(ambience)
 ///Attempts to play an ambient sound to a mob, returning the cooldown in deciseconds
 /area/proc/play_ambience(mob/M, sound/override_sound, volume = 27)
 	var/sound/new_sound = override_sound || pick(ambientsounds)
+	if(!new_sound) // Dont try to play a sound if we dont have any.
+		return 1 MINUTES
 	/// volume modifier for ambience as set by the player in preferences.
 	var/volume_modifier = (M.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_ambience_volume))/100
 	new_sound = sound(new_sound, repeat = 0, wait = 0, volume = volume*volume_modifier, channel = CHANNEL_AMBIENCE)
 	SEND_SOUND(M, new_sound)
 
 	var/sound_length = SSsounds.get_sound_length(new_sound.file)
+	if(!sound_length)
+		// This will cause sounds to cut into eachother if the sound is longer then the min_ambience_cooldown
+		stack_trace("play_ambience failed to get soundlength from [new_sound] with a file of [new_sound.file].")
 	return sound_length + rand(min_ambience_cooldown, max_ambience_cooldown)
 
 /datum/controller/subsystem/ambience/proc/remove_ambience_client(client/to_remove)
@@ -121,7 +126,7 @@ SUBSYSTEM_DEF(ambience)
 		client.current_ambient_sound = null
 		return
 
-	if(!can_hear()) // Can the mob hear?
+	if(HAS_TRAIT(src, TRAIT_DEAF)) // Can the mob hear?
 		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
 		client.current_ambient_sound = null
 		return

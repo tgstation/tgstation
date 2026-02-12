@@ -23,9 +23,13 @@
 	icon_state = "tomato"
 	splat_type = /obj/effect/decal/cleanable/food/tomato_smudge
 	foodtypes = VEGETABLES
-	grind_results = list(/datum/reagent/consumable/ketchup = 0)
-	juice_typepath = /datum/reagent/consumable/tomatojuice
 	distill_reagent = /datum/reagent/consumable/enzyme
+
+/obj/item/food/grown/tomato/grind_results()
+	return list(/datum/reagent/consumable/ketchup = 0)
+
+/obj/item/food/grown/tomato/juice_typepath()
+	return /datum/reagent/consumable/tomatojuice
 
 // Blood Tomato
 /obj/item/seeds/tomato/blood
@@ -47,8 +51,10 @@
 	bite_consumption_mod = 3
 	splat_type = /obj/effect/gibspawner/generic
 	foodtypes = VEGETABLES | GORE
-	grind_results = list(/datum/reagent/consumable/ketchup = 0, /datum/reagent/blood = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bloody_mary
+
+/obj/item/food/grown/tomato/blood/grind_results()
+	return list(/datum/reagent/consumable/ketchup = 0, /datum/reagent/blood = 0)
 
 // Blue Tomato
 /obj/item/seeds/tomato/blue

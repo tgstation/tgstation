@@ -330,3 +330,17 @@
 //snails
 ///snails retreat ability
 #define BB_SNAIL_RETREAT_ABILITY "snail_retreat_ability"
+
+//blood drunk miner keys
+///key for dash ability
+#define BB_BDM_DASH_ABILITY "BB_bdm_dash_ability"
+/// key for kinetic accelerator ability
+#define BB_BDM_KINETIC_ACCELERATOR_ABILITY "BB_bdm_kinetic_accelerator_ability"
+/// key for dash attack ability
+#define BB_BDM_DASH_ATTACK_ABILITY "BB_bdm_dash_attack_ability"
+/// key for transform weapon ability
+#define BB_BDM_TRANSFORM_WEAPON_ABILITY "BB_bdm_transform_weapon_ability"
+/// Shared cooldown group for blood drunk miner ranged abilities
+#define BB_BDM_RANGED_ATTACK_COOLDOWN "BB_bdm_ranged_attack_cooldown"
+/// Cooldown duration for blood drunk miner ranged abilities
+#define BB_BDM_RANGED_ATTACK_COOLDOWN_DURATION "BB_bdm_ranged_attack_cooldown_duration"

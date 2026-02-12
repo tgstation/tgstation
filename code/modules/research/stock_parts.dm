@@ -9,6 +9,9 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	///The generic category type that the stock part belongs to.  Generic objects that should not be instantiated should have the same type and abstract_type
 	abstract_type = /obj/item/stock_parts
 	w_class = WEIGHT_CLASS_SMALL
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 	var/rating = 1
 	///Used when a base part has a different name to higher tiers of part. For example, machine frames want any servo and not just a micro-servo.
 	var/base_name

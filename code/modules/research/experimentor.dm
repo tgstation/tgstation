@@ -67,24 +67,20 @@
 	item_reactions = list()
 	valid_items = list()
 
-	for(var/I in typesof(/obj/item))
-		if(ispath(I, /obj/item/relic))
-			item_reactions["[I]"] = SCANTYPE_DISCOVER
+	for(var/obj/item/item_path as anything in valid_subtypesof(/obj/item))
+		if(ispath(item_path, /obj/item/relic))
+			item_reactions["[item_path]"] = SCANTYPE_DISCOVER
 		else
-			item_reactions["[I]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
+			item_reactions["[item_path]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
 
-		if(is_type_in_typecache(I, banned_typecache))
+		if(is_type_in_typecache(item_path, banned_typecache))
 			continue
 
-		if(ispath(I, /obj/item/stock_parts) || ispath(I, /obj/item/grenade/chem_grenade) || ispath(I, /obj/item/knife))
-			var/obj/item/tempCheck = I
-			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
-				valid_items["[I]"] += 15
+		if(ispath(item_path, /obj/item/stock_parts) || ispath(item_path, /obj/item/grenade/chem_grenade) || ispath(item_path, /obj/item/knife))
+			valid_items["[item_path]"] += 15
 
-		if(ispath(I, /obj/item/food))
-			var/obj/item/tempCheck = I
-			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
-				valid_items["[I]"] += rand(1,4)
+		if(ispath(item_path, /obj/item/food))
+			valid_items["[item_path]"] += rand(1,4)
 
 /obj/machinery/rnd/experimentor/Initialize(mapload)
 	. = ..()
@@ -237,9 +233,7 @@
 	use_energy(750 JOULES)
 
 /obj/machinery/rnd/experimentor/proc/throwSmoke(turf/where)
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, holder = src, location = where)
-	smoke.start()
+	do_smoke(0, src, where)
 
 /obj/machinery/rnd/experimentor/proc/experiment(exp,obj/item/exp_on)
 	recentlyExperimented = 1
@@ -290,6 +284,7 @@
 					if(prob(EFFECT_PROB_VERYHIGH) && !(locate(/obj/effect/decal/cleanable/greenglow) in T))
 						var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
 						reagentdecal.reagents.add_reagent(/datum/reagent/uranium/radium, 7)
+			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_MEDIUM * (100 - malfunction_probability_coeff) * 0.01))
 			var/savedName = "[exp_on]"
 			ejectItem(TRUE)
@@ -310,27 +305,15 @@
 		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src] destroys [exp_on], leaking dangerous gas!"))
 			chosenchem = pick(/datum/reagent/carbon,/datum/reagent/uranium/radium,/datum/reagent/toxin,/datum/reagent/consumable/condensedcapsaicin,/datum/reagent/drug/mushroomhallucinogen,/datum/reagent/drug/space_drugs,/datum/reagent/consumable/ethanol,/datum/reagent/consumable/ethanol/beepsky_smash)
-			var/datum/reagents/tmp_holder = new/datum/reagents(50)
-			tmp_holder.my_atom = src
-			tmp_holder.add_reagent(chosenchem , 50)
+			do_chem_smoke(0, src, loc, chosenchem, 50)
 			investigate_log("Experimentor has released [chosenchem] smoke.", INVESTIGATE_EXPERIMENTOR)
-			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
-			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)
 			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
-			smoke.start()
-			qdel(tmp_holder)
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src]'s chemical chamber has sprung a leak!"))
 			chosenchem = pick(/datum/reagent/mutationtoxin/classic,/datum/reagent/cyborg_mutation_nanomachines,/datum/reagent/toxin/acid)
-			var/datum/reagents/tmp_holder = new/datum/reagents(50)
-			tmp_holder.my_atom = src
-			tmp_holder.add_reagent(chosenchem , 50)
-			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
-			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)
+			do_chem_smoke(0, src, loc, chosenchem, 50)
 			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
-			smoke.start()
-			qdel(tmp_holder)
 			ejectItem(TRUE)
 			warn_admins(usr, "[chosenchem] smoke")
 			investigate_log("Experimentor has released <font color='red'>[chosenchem]</font> smoke!", INVESTIGATE_EXPERIMENTOR)
@@ -339,7 +322,7 @@
 			throwSmoke(loc)
 		else if(prob(EFFECT_PROB_MEDIUM * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_warning("[src] melts [exp_on], ionizing the air around it!"))
-			empulse(loc, 4, 6)
+			empulse(loc, 4, 6, emp_source = src)
 			investigate_log("Experimentor has generated an Electromagnetic Pulse.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -401,15 +384,9 @@
 			investigate_log("Experimentor has made a cup of [chosenchem] coffee.", INVESTIGATE_EXPERIMENTOR)
 		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src] malfunctions, shattering [exp_on] and releasing a dangerous cloud of coolant!"))
-			var/datum/reagents/tmp_holder = new/datum/reagents(50)
-			tmp_holder.my_atom = src
-			tmp_holder.add_reagent(/datum/reagent/consumable/frostoil, 50)
+			do_chem_smoke(0, src, loc, /datum/reagent/consumable/frostoil, 50)
 			investigate_log("Experimentor has released frostoil gas.", INVESTIGATE_EXPERIMENTOR)
-			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
-			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)
 			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
-			smoke.start()
-			qdel(tmp_holder)
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_LOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_warning("[src] malfunctions, shattering [exp_on] and leaking cold air!"))
@@ -422,9 +399,7 @@
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_MEDIUM * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_warning("[src] malfunctions, releasing a flurry of chilly air as [exp_on] pops out!"))
-			var/datum/effect_system/fluid_spread/smoke/smoke = new
-			smoke.set_up(0, holder = src, location = loc)
-			smoke.start()
+			do_smoke(0, src, loc)
 			ejectItem()
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_OBLITERATE)
@@ -574,18 +549,10 @@
 	COOLDOWN_DECLARE(cooldown)
 	//What visual theme this artefact has. Current possible choices: "prototype", "necrotech"
 	var/artifact_theme = "prototype"
-	var/datum/effect_system/spark_spread/sparks
 
 /obj/item/relic/Initialize(mapload)
 	. = ..()
-	sparks = new()
-	sparks.set_up(5, 1, src)
-	sparks.attach(src)
 	random_themed_appearance()
-
-/obj/item/relic/Destroy(force)
-	QDEL_NULL(sparks)
-	. = ..()
 
 /obj/item/relic/proc/random_themed_appearance()
 	var/themed_name_prefix
@@ -645,9 +612,7 @@
 	call(src, hidden_power)(user)
 
 /obj/item/relic/proc/throw_smoke(turf/where)
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, holder = src, location = get_turf(where))
-	smoke.start()
+	do_smoke(0, src, get_turf(where))
 
 // Artefact Powers \\
 
@@ -690,7 +655,8 @@
 	)
 	for(var/counter in 1 to rand(1, 25))
 		var/animal_spawn = pick(valid_animals)
-		new animal_spawn(get_turf(src))
+		var/mob/living/animal = new animal_spawn(get_turf(src))
+		ADD_TRAIT(animal, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
 	warn_admins(user, "Mass Mob Spawn")
 	if(prob(60))
 		to_chat(user, span_warning("[src] falls apart!"))
@@ -742,7 +708,7 @@
 /obj/item/relic/proc/drink_dispenser(mob/user)
 	var/obj/item/reagent_containers/cup/glass/drinkingglass/freebie = new(get_step_rand(user))
 	playsound(freebie, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	sparks.start()
+	do_sparks(5, TRUE, src, src)
 	addtimer(CALLBACK(src, PROC_REF(dispense_drink), freebie), 0.5 SECONDS)
 
 /obj/item/relic/proc/dispense_drink(obj/item/reagent_containers/cup/glass/glasser)

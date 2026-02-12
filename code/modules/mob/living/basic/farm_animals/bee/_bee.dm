@@ -80,6 +80,7 @@
 	if(beegent)
 		reee[beegent.type] = 5
 	holder.AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, reee, null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
+	SEND_SIGNAL(src, COMSIG_LIVING_SCOOPED_UP, picker, holder)
 	picker.visible_message(span_warning("[picker] scoops up [src]!"))
 	picker.put_in_hands(holder)
 

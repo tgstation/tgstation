@@ -27,6 +27,11 @@
 	icon_state = list("steam_1" = 1, "steam_2" = 1, "steam_3" = 2)
 	fade = 1.5 SECONDS
 
+/particles/smoke/steam/guardian
+	position = list(-1, 8, 0)
+	fadein = 5
+	height = 200
+
 /particles/smoke/steam/mild
 	spawning = 1
 	velocity = list(0, 0.3, 0)

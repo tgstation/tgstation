@@ -300,12 +300,14 @@
 			return
 		our_turf = get_turf(cultist) //we may have moved. adjust as needed...
 
+	var/can_have_blood = CAN_HAVE_BLOOD(cultist)
+
 	cultist.visible_message(
-		span_warning("[cultist] [cultist.blood_volume ? "cuts open [cultist.p_their()] arm and begins writing in [cultist.p_their()] own blood":"begins sketching out a strange design"]!"),
-		span_cult("You [cultist.blood_volume ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.")
+		span_warning("[cultist] [can_have_blood ? "cuts open [cultist.p_their()] arm and begins writing in [cultist.p_their()] own blood":"begins sketching out a strange design"]!"),
+		span_cult("You [can_have_blood ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.")
 		)
 
-	if(cultist.blood_volume)
+	if(can_have_blood)
 		cultist.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick(GLOB.arm_zones), wound_bonus = CANT_WOUND) // *cuts arm* *bone explodes* ever have one of those days?
 
 	var/scribe_mod = initial(rune_to_scribe.scribe_delay)
@@ -332,7 +334,7 @@
 		return FALSE
 
 	cultist.visible_message(
-		span_warning("[cultist] creates a strange circle[cultist.blood_volume ? " in [cultist.p_their()] own blood":""]."),
+		span_warning("[cultist] creates a strange circle[can_have_blood ? " in [cultist.p_their()] own blood":""]."),
 		span_cult("You finish drawing the arcane markings of the Geometer.")
 		)
 

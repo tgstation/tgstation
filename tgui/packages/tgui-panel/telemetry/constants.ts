@@ -1,0 +1,1 @@
+export const MAX_CONNECTIONS_STORED = 10;

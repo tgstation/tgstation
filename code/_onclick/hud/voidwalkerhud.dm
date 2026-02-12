@@ -8,6 +8,11 @@
 	floor_change.screen_loc = ui_rest
 	static_inventory += floor_change
 
+	resist_icon = new /atom/movable/screen/resist(null, src)
+	resist_icon.icon = ui_style
+	resist_icon.screen_loc = ui_voidwalker_left_of_hands
+	resist_icon.update_appearance()
+
 	action_intent = new /atom/movable/screen/combattoggle/flashy/voidwalker(null, src)
 	action_intent.icon = ui_style
 	static_inventory += action_intent
@@ -51,7 +56,7 @@
 /atom/movable/screen/vomit_jump
 	name = "vomit tracker"
 	icon = 'icons/hud/screen_voidwalker.dmi'
-	icon_state = "vomitjump"
+	icon_state = "template"
 	/// So we can sort of loop through it
 	var/index = 1
 

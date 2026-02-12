@@ -72,6 +72,8 @@
 	if(istype(mob_caster))
 		mob_caster.put_in_hands(created, del_on_fail = delete_on_failure)
 
+	post_created(cast_on, created)
+
 	return ..()
 
 /// Instantiates the item we're conjuring and returns it.

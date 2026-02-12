@@ -20,7 +20,7 @@
 		if(OFFSET_HEAD)
 			update_worn_head()
 		if(OFFSET_FACE)
-			dna?.species?.update_face_offset(src) // updates eye and lipstick icon
+			update_face_offset() // updates eye and lipstick icon
 			update_worn_mask()
 		if(OFFSET_BELT)
 			update_worn_belt()
@@ -49,7 +49,6 @@
 	SEND_SIGNAL(src, COMSIG_CARBON_REMOVE_OVERLAY, cache_index, I)
 
 /mob/living/carbon/update_body(is_creating = FALSE)
-	dna?.species.handle_body(src)
 	update_body_parts(is_creating)
 
 /mob/living/carbon/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -296,7 +295,6 @@
 			continue
 		if(isnull(damage_overlay) && (iter_part.brutestate || iter_part.burnstate))
 			damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "blank", -DAMAGE_LAYER, appearance_flags = KEEP_TOGETHER)
-			damage_overlay.color = iter_part.damage_overlay_color
 		if(iter_part.brutestate)
 			var/mutable_appearance/blood_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0", appearance_flags = RESET_COLOR) //we're adding icon_states of the base image as overlays
 			blood_damage_overlay.color = get_bloodtype()?.get_damage_color(src)
@@ -504,6 +502,9 @@
 
 	apply_overlay(BODYPARTS_LAYER)
 
+/mob/living/carbon/proc/update_face_offset()
+	return
+
 /////////////////////////
 // Limb Icon Cache 2.0 //
 /////////////////////////
@@ -535,6 +536,7 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "-[human_owner.mob_height]"
+	SEND_SIGNAL(src, COMSIG_BODYPART_GENERATE_ICON_KEY, .)
 	return .
 
 ///Generates a cache key specifically for husks
@@ -545,6 +547,11 @@
 	. += "[husk_type]"
 	. += "-husk"
 	. += "-[body_zone]"
+	var/list/blood_dna = blood_dna_info || owner?.get_blood_dna_list()
+	if (LAZYLEN(blood_dna))
+		. += "-[get_color_from_blood_list(blood_dna)]"
+	else
+		. += "-[BLOOD_COLOR_RED]"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "-[human_owner.mob_height]"
@@ -562,9 +569,10 @@
 		. += "-[facial_hairstyle]"
 		. += "-[override_hair_color || fixed_hair_color || facial_hair_color]"
 		. += "-[facial_hair_alpha]"
-		if(gradient_styles?[GRADIENT_FACIAL_HAIR_KEY])
-			. += "-[gradient_styles[GRADIENT_FACIAL_HAIR_KEY]]"
-			. += "-[gradient_colors[GRADIENT_FACIAL_HAIR_KEY]]"
+		var/facial_hair_gradient_style = get_hair_gradient_style(GRADIENT_FACIAL_HAIR_KEY)
+		if(facial_hair_gradient_style)
+			. += "-[facial_hair_gradient_style]"
+			. += "-[get_hair_gradient_color(GRADIENT_FACIAL_HAIR_KEY)]"
 
 	if(show_eyeless)
 		. += "-SHOW_EYELESS"
@@ -578,9 +586,10 @@
 		. += "-[hairstyle]"
 		. += "-[override_hair_color || fixed_hair_color || hair_color]"
 		. += "-[hair_alpha]"
-		if(gradient_styles?[GRADIENT_HAIR_KEY])
-			. += "-[gradient_styles[GRADIENT_HAIR_KEY]]"
-			. += "-[gradient_colors[GRADIENT_HAIR_KEY]]"
+		var/hair_gradient_style = get_hair_gradient_style(GRADIENT_HAIR_KEY)
+		if(hair_gradient_style)
+			. += "-[hair_gradient_style]"
+			. += "-[get_hair_gradient_color(GRADIENT_HAIR_KEY)]"
 		if(LAZYLEN(hair_masks))
 			. += "-[jointext(hair_masks, "-")]"
 

@@ -177,7 +177,7 @@
 	rate_up_lim = 10
 	purity_min = 0.7
 	reaction_flags = REACTION_PH_VOL_CONSTANT
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_PLANT | REACTION_TAG_OTHER
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_PLANT | REACTION_TAG_OTHER | REACTION_TAG_COMPONENT
 
 /datum/chemical_reaction/lexorin
 	results = list(/datum/reagent/toxin/lexorin = 3)
@@ -204,7 +204,7 @@
 	required_reagents = list(/datum/reagent/toxin/hot_ice = 1)
 	required_temp = T0C + 30 //Don't burst into flames when you melt
 	thermic_constant = -200//Counter the heat
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_CHEMICAL | REACTION_TAG_TOXIN
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_CHEMICAL | REACTION_TAG_TOXIN | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/chloralhydrate
 	results = list(/datum/reagent/toxin/chloralhydrate = 1)

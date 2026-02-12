@@ -298,15 +298,16 @@
 	icon_state = "coatmedical"
 	inhand_icon_state = "coatmedical"
 	allowed = list(
+		/obj/item/defibrillator/compact,
 		/obj/item/flashlight/pen,
 		/obj/item/gun/syringe,
 		/obj/item/healthanalyzer,
-		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
+		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/sensor_device,
 		/obj/item/storage/pill_bottle,
@@ -416,6 +417,11 @@
 	inhand_icon_state = null
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/paramedic
 
+/obj/item/clothing/suit/hooded/wintercoat/medical/paramedic/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/adjust_fishing_difficulty, -3) //mirrored from jacket
+	allowed += /obj/item/crowbar/power/paramedic
+
 /obj/item/clothing/head/hooded/winterhood/medical/paramedic
 	desc = "A white winter coat hood with blue markings."
 	icon_state = "hood_paramed"
@@ -445,7 +451,7 @@
 	species_exception = list(/datum/species/golem)
 
 /datum/armor/wintercoat_science
-	bomb = 10
+	bio = 10
 	fire = 20
 
 /obj/item/clothing/head/hooded/winterhood/science
@@ -455,7 +461,7 @@
 
 // Research Director
 /datum/armor/winterhood_science
-	bomb = 10
+	bio = 10
 	fire = 20
 
 /obj/item/clothing/suit/hooded/wintercoat/science/rd

@@ -12,7 +12,7 @@
 	required_organ = ORGAN_SLOT_STOMACH
 	max_stages = 5
 
-/datum/disease/advance/nebula_nausea/stage_act(seconds_per_tick, times_fired)
+/datum/disease/advance/nebula_nausea/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

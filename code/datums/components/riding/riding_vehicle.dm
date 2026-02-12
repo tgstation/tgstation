@@ -97,7 +97,10 @@
 		return
 
 	step(movable_parent, direction)
-	COOLDOWN_START(src, vehicle_move_cooldown, vehicle_move_delay)
+	var/move_delay = vehicle_move_delay
+	if(NSCOMPONENT(direction) && EWCOMPONENT(direction))
+		move_delay = FLOOR(move_delay * sqrt(2), world.tick_lag)
+	COOLDOWN_START(src, vehicle_move_cooldown, move_delay)
 
 	if(QDELETED(src))
 		return
@@ -475,3 +478,60 @@
 	var/obj/vehicle/ridden/wheelchair/motorized/our_chair = parent
 	if(istype(our_chair) && our_chair.power_cell)
 		our_chair.power_cell.use(our_chair.energy_usage / max(our_chair.power_efficiency, 1) * 0.05)
+
+/datum/component/riding/vehicle/golfcart
+	ride_check_flags = RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
+	vehicle_move_delay = 1.5
+	keytype = /obj/item/key/golfcart
+
+/datum/component/riding/vehicle/golfcart/restore_parent_layer_and_offsets()
+	// just don't restore anything.
+	// restoring layers fucks stuff to do with the rear part
+	return
+
+/datum/component/riding/vehicle/golfcart/driver_move(atom/movable/movable_parent, mob/living/user, direction)
+	if (!istype(parent, /obj/vehicle/ridden/golfcart))
+		return ..()
+	var/obj/vehicle/ridden/golfcart/cart = parent
+	if (!cart.cell && !cart.is_hotrod())
+		return COMPONENT_DRIVER_BLOCK_MOVE
+	if (cart.cell)
+		if (cart.cell.charge <= 0)
+			return COMPONENT_DRIVER_BLOCK_MOVE
+	if (get_turf(cart.child) == get_step(cart, direction))
+		cart.set_movedelay_effect(2)
+	else
+		cart.set_movedelay_effect(1)
+	vehicle_move_delay = cart.movedelay
+	return ..()
+
+/datum/component/riding/vehicle/golfcart/handle_ride(mob/user, direction)
+	if (!istype(parent, /obj/vehicle/ridden/golfcart))
+		return ..()
+	var/obj/vehicle/ridden/golfcart/cart = parent
+	if (cart.cell)
+		var/charge_to_use = min(cart.charge_per_move, cart.cell.charge)
+		cart.cell.use(charge_to_use)
+	return ..()
+
+/datum/component/riding/vehicle/golfcart/update_parent_layer_and_offsets(dir, animate)
+	. = ..()
+	if (istype(parent, /obj))
+		var/obj/objectified = parent
+		objectified.update_appearance(UPDATE_ICON)
+
+/datum/component/riding/vehicle/golfcart/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list(0, -16),
+		TEXT_SOUTH = list(0, 10),
+		TEXT_EAST =  list(-8, 2),
+		TEXT_WEST =  list(8, 2),
+	)
+
+/datum/component/riding/vehicle/golfcart/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_SOUTH = list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_EAST =  list(0, 0, VEHICLE_LAYER),
+		TEXT_WEST =  list(0, 0, VEHICLE_LAYER),
+	)

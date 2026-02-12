@@ -710,17 +710,17 @@
 /obj/structure/closet/crate/freezer{
 	name = "cat hide"
 	},
-/obj/item/stack/sheet/animalhide/human,
-/obj/item/stack/sheet/animalhide/human,
-/obj/item/stack/sheet/animalhide/human,
-/obj/item/stack/sheet/animalhide/human,
-/obj/item/stack/sheet/animalhide/human,
-/obj/item/stack/sheet/animalhide/human,
-/obj/item/stack/sheet/animalhide/human,
-/obj/item/stack/sheet/animalhide/human,
-/obj/item/stack/sheet/animalhide/human,
-/obj/item/stack/sheet/animalhide/human,
-/obj/item/stack/sheet/animalhide/human,
+/obj/item/stack/sheet/animalhide/carbon/human,
+/obj/item/stack/sheet/animalhide/carbon/human,
+/obj/item/stack/sheet/animalhide/carbon/human,
+/obj/item/stack/sheet/animalhide/carbon/human,
+/obj/item/stack/sheet/animalhide/carbon/human,
+/obj/item/stack/sheet/animalhide/carbon/human,
+/obj/item/stack/sheet/animalhide/carbon/human,
+/obj/item/stack/sheet/animalhide/carbon/human,
+/obj/item/stack/sheet/animalhide/carbon/human,
+/obj/item/stack/sheet/animalhide/carbon/human,
+/obj/item/stack/sheet/animalhide/carbon/human,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
 "ct" = (

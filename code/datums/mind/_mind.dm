@@ -101,6 +101,12 @@
 	/// A list to keep track of which books a person has read (to prevent people from reading the same book again and again for positive mood events)
 	var/list/book_titles_read
 
+	/// How desensitized are we to death - multiplier to magnitude of death moodlet.
+	/// Doesn't go beneath 0.1 (but could go above 1.0 if you really wanted)
+	var/desensitized_level = 1
+	/// Counts how many humanoid deaths we've seen
+	var/deaths_witnessed = 0
+
 /datum/mind/New(_key)
 	key = _key
 	init_known_skills()
@@ -211,9 +217,9 @@
 		new_character.client.init_verbs() // re-initialize character specific verbs
 
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFERRED, old_current)
-	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO, old_current)
+	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO, old_current, src)
 	if(!isnull(old_current))
-		SEND_SIGNAL(old_current, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, current)
+		SEND_SIGNAL(old_current, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, current, src)
 
 //I cannot trust you fucks to do this properly
 /datum/mind/proc/set_original_character(new_original_character)
@@ -543,3 +549,20 @@
 			work_areas += dep.primary_work_area
 
 	return work_areas
+
+/// Called when we witness the death of a humanoid mob.
+/datum/mind/proc/witnessed_death(mob/living/dead_mob)
+	if(HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB) || !ishuman(dead_mob) || (dead_mob.flags_1 & ADMIN_SPAWNED_1))
+		return
+
+	// every humanoid death gives us % resistance to the next one
+	desensitized_level = max(desensitized_level - DESENSITIZED_REDUCTION_PER_DEATH, DESENSITIZED_MINIMUM)
+	deaths_witnessed += 1
+
+	// if you manage to gain 90% resistance to death moodlets in one shift, you get an "achievement"
+	if(deaths_witnessed * DESENSITIZED_REDUCTION_PER_DEATH >= (1.0 - DESENSITIZED_MINIMUM))
+		current.client?.give_award(/datum/award/achievement/misc/desensitized, current)
+
+/// Called when this mob is killed, but not gibbed or dusted
+/datum/mind/proc/experienced_death()
+	witnessed_death(current) // you get desensitized for your own death!

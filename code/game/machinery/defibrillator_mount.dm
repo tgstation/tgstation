@@ -21,10 +21,14 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 
+/obj/machinery/defibrillator_mount/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
+
 /obj/machinery/defibrillator_mount/loaded/Initialize(mapload) //loaded subtype for mapping use
 	. = ..()
 	defib = new/obj/item/defibrillator/loaded(src)
-	find_and_hang_on_wall()
 
 /obj/machinery/defibrillator_mount/Destroy()
 	QDEL_NULL(defib)
@@ -104,19 +108,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	else if(defib && item == defib.paddles)
 		defib.paddles.snap_back()
 		return
-	var/obj/item/card/id = item.GetID()
-	if(id)
-		if(check_access(id) || SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED) //anyone can toggle the clamps in red alert!
-			if(!defib)
-				to_chat(user, span_warning("You can't engage the clamps on a defibrillator that isn't there."))
-				return
-			clamps_locked = !clamps_locked
-			to_chat(user, span_notice("Clamps [clamps_locked ? "" : "dis"]engaged."))
-			update_appearance()
-		else
-			to_chat(user, span_warning("Insufficient access."))
+
+	if(!item.GetID() || (!allowed(user) && SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_RED)) //anyone can toggle the clamps in red alert!
+		to_chat(user, span_warning("Insufficient access."))
 		return
-	..()
+	if(!defib)
+		to_chat(user, span_warning("You can't engage the clamps on a defibrillator that isn't there."))
+		return
+	clamps_locked = !clamps_locked
+	to_chat(user, span_notice("Clamps [clamps_locked ? "" : "dis"]engaged."))
+	update_appearance()
 
 /obj/machinery/defibrillator_mount/multitool_act(mob/living/user, obj/item/multitool)
 	..()
@@ -227,10 +228,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	icon_state = "mobile"
 	anchored = FALSE
 	density = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.15, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
 
 /obj/machinery/defibrillator_mount/mobile/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noisy_movement)
+
+/obj/machinery/defibrillator_mount/mobile/find_and_mount_on_atom(mark_for_late_init, late_init)
+	return //its mobile
 
 /obj/machinery/defibrillator_mount/mobile/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(user.combat_mode)

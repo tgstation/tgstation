@@ -4,8 +4,11 @@
 	icon = FA_ICON_LIGHTBULB
 	value = -3
 	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
+	medical_symptom_text = "Experiences panic attacks and shortness of breath when in dark environments. \
+		Medication such as Psicodine may lessen the severity of the reaction."
 	hardcore_value = 5
 	mail_goodies = list(/obj/effect/spawner/random/engineering/flashlight)
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_TRAUMALIKE
 
 /datum/quirk/nyctophobia/add(client/client_source)
 	quirk_holder.AddComponentFrom(type, /datum/component/fearful, list(/datum/terror_handler/simple_source/nyctophobia))

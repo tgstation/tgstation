@@ -10,6 +10,7 @@
 	density = TRUE
 	max_integrity = 300
 	integrity_failure = 0.5
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10)
 
 	///A flag that describes this device type
 	var/hardware_flag = PROGRAM_CONSOLE

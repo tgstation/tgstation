@@ -13,3 +13,4 @@
 	var/mob/living/carbon/human/consistent/dummy = allocate(/mob/living/carbon/human/consistent)
 	TEST_ASSERT(!HAS_TRAIT_FROM(dummy, TRAIT_AGEUSIA, NO_TONGUE_TRAIT), "Dummy has ageusia on init, when it should've been removed by its default tongue.")
 	TEST_ASSERT(!dummy.is_blind_from(NO_EYES), "Dummy is blind on init,  when it should've been removed by its default eyes.")
+	TEST_ASSERT(!HAS_TRAIT_FROM(dummy, TRAIT_DEAF, NO_EARS), "Dummy is deaf on init, when it should've been removed by its default ears.")

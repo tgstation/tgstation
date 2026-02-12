@@ -2327,10 +2327,7 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape/brig)
 "Fq" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32;
-	pixel_y = 32
-	},
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
 "FC" = (
@@ -4348,7 +4345,7 @@ bP
 bj
 QI
 hp
-Fq
+La
 nk
 gv
 Ks
@@ -4395,7 +4392,7 @@ jt
 jt
 jt
 uV
-La
+Fq
 nk
 fI
 uu

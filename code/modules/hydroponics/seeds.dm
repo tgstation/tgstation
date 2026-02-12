@@ -9,6 +9,7 @@
 	abstract_type = /obj/item/seeds
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
+	obj_flags = UNIQUE_RENAME
 	/// Name of plant when planted.
 	var/plantname = "Plants"
 	/// A type path. The thing that is created when the plant is harvested.
@@ -293,7 +294,7 @@
 			T.reagents.add_reagent(rid, amount, data, added_purity = reagent_purity)
 
 		//Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist. Mutually exclusive with distilling.
-		if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_typepath)
+		if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_typepath())
 			grown_edible.juice(juicer = FALSE) //we pass FALSE & not null because Byond default args will subtitute it with the default value
 		else if(get_gene(/datum/plant_gene/trait/brewing))
 			grown_edible.ferment()
@@ -475,40 +476,24 @@
 /obj/item/seeds/proc/on_chem_reaction(datum/reagents/reagents)
 	return
 
-/obj/item/seeds/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
-	if(IS_WRITING_UTENSIL(O))
-		var/choice = tgui_input_list(usr, "What would you like to change?", "Seed Alteration", list("Plant Name", "Seed Description", "Product Description"))
-		if(isnull(choice))
-			return
-		if(!user.can_perform_action(src))
-			return
-		switch(choice)
-			if("Plant Name")
-				var/newplantname = reject_bad_text(tgui_input_text(user, "Write a new plant name", "Plant Name", plantname, max_length = MAX_NAME_LEN))
-				if(isnull(newplantname))
-					return
-				if(!user.can_perform_action(src))
-					return
-				name = "[LOWER_TEXT(newplantname)]"
-				plantname = newplantname
-			if("Seed Description")
-				var/newdesc = tgui_input_text(user, "Write a new seed description", "Seed Description", desc, max_length = MAX_DESC_LEN)
-				if(isnull(newdesc))
-					return
-				if(!user.can_perform_action(src))
-					return
-				desc = newdesc
-			if("Product Description")
-				if(product && !productdesc)
-					productdesc = initial(product.desc)
-				var/newproductdesc = tgui_input_text(user, "Write a new product description", "Product Description", productdesc, max_length = MAX_DESC_LEN)
-				if(isnull(newproductdesc))
-					return
-				if(!user.can_perform_action(src))
-					return
-				productdesc = newproductdesc
+/obj/item/seeds/nameformat(input, user)
+	plantname = input
+	return "[LOWER_TEXT(input)]"
 
-	..() // Fallthrough to item/attackby() so that bags can pick seeds up
+/obj/item/seeds/descformat(input, mob/living/user)
+	. = input
+	if(product && !productdesc)
+		productdesc = initial(product.desc)
+	var/newproductdesc = tgui_input_text(user, "Write a new product description", "Product Description", productdesc, max_length = MAX_DESC_LEN)
+	if(isnull(newproductdesc))
+		return
+	if(!user.can_perform_action(src))
+		return
+	productdesc = newproductdesc
+
+/obj/item/seeds/rename_reset()
+	plantname = initial(plantname)
+	productdesc = initial(productdesc)
 
 /obj/item/seeds/proc/randomize_stats()
 	set_lifespan(rand(25, 60))
@@ -585,7 +570,7 @@
 	if(new_trait?.can_add(src))
 		genes += new_trait
 	else
-		return
+		new_trait = null
 
 	// Adjust stats based on graft stats
 	set_lifespan(round(max(lifespan, (lifespan + (2/3)*(snip.plant_dna.lifespan - lifespan)))))

@@ -22,7 +22,7 @@
 	if (target.health <= 1)
 		target.gib(DROP_BODYPARTS)
 	else
-		target.adjustBruteLoss(min(BSA_MAX_DAMAGE, target.health - 1))
+		target.adjust_brute_loss(min(BSA_MAX_DAMAGE, target.health - 1))
 		target.Paralyze(BSA_PARALYZE_TIME)
 		target.set_stutter(BSA_STUTTER_TIME)
 

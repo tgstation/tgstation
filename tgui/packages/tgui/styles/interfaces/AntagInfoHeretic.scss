@@ -1,0 +1,193 @@
+.theme-Heretic {
+  --background-color: radial-gradient(
+    circle,
+    rgb(3, 3, 7) 54%,
+    rgb(9, 9, 26) 60%,
+    rgb(8, 5, 15) 80%,
+    rgb(13, 7, 26) 100%
+  );
+  --background-color-title: radial-gradient(
+    circle,
+    rgb(3, 3, 7) 54%,
+    rgb(9, 9, 26) 60%,
+    rgb(8, 5, 15) 80%,
+    rgb(13, 7, 26) 100%
+  );
+
+  &--AshPath {
+    --background-color: radial-gradient(
+      circle,
+      rgba(24, 9, 9, 1) 54%,
+      rgba(31, 10, 10, 1) 60%,
+      rgba(46, 11, 11, 1) 80%,
+      rgba(47, 14, 14, 1) 100%
+    );
+    --background-color-title: radial-gradient(
+      circle,
+      rgba(24, 9, 9, 1) 54%,
+      rgba(31, 10, 10, 1) 60%,
+      rgba(46, 11, 11, 1) 80%,
+      rgba(47, 14, 14, 1) 100%
+    );
+  }
+
+  &--RustPath {
+    // brown like poop
+    --background-color: radial-gradient(
+      circle,
+      rgba(120, 48, 9) 54%,
+      rgba(139, 48, 9) 60%,
+      rgb(150, 48, 9) 80%,
+      rgba(160, 48, 9) 100%
+    );
+    --background-color-title: radial-gradient(
+      circle,
+      rgb(107, 48, 48) 54%,
+      rgb(211, 19, 19) 60%,
+      rgb(221, 84, 25) 80%,
+      rgb(230, 81, 12) 100%
+    );
+  }
+
+  &--FleshPath {
+    --background-color: radial-gradient(
+      circle,
+      rgb(153, 26, 26) 54%,
+      rgba(130, 9, 9, 1) 60%,
+      rgb(150, 33, 30) 80%,
+      rgb(141, 30, 26) 100%
+    );
+    --background-color-title: radial-gradient(
+      circle,
+      rgb(100, 0, 0) 54%,
+      rgb(100, 2, 2) 60%,
+      rgba(150, 8, 5, 1) 80%,
+      rgb(200, 34, 0) 100%
+    );
+  }
+
+  &--VoidPath {
+    --background-color: radial-gradient(
+      circle,
+      rgb(13, 13, 66) 54%,
+      rgb(22, 22, 66) 60%,
+      rgb(25, 25, 99) 80%,
+      rgb(42, 42, 192) 100%
+    );
+    --background-color-title: radial-gradient(
+      circle,
+      rgb(13, 13, 66) 54%,
+      rgb(22, 22, 66) 60%,
+      rgb(25, 25, 99) 80%,
+      rgb(42, 42, 192) 100%
+    );
+  }
+
+  &--BladePath {
+    --background-color: radial-gradient(
+      circle,
+      rgb(139, 141, 137) 54%,
+      rgb(139, 141, 137) 60%,
+      rgb(170, 188, 186) 80%,
+      rgba(185, 188, 182) 100%
+    );
+    --background-color-title: radial-gradient(
+      circle,
+      rgb(139, 141, 137) 54%,
+      rgb(139, 141, 137) 60%,
+      rgb(170, 188, 186) 80%,
+      rgba(185, 188, 182) 100%
+    );
+  }
+
+  &--CosmicPath {
+    --background-color: radial-gradient(
+      circle,
+      rgb(78, 38, 110) 54%,
+      rgb(78, 38, 110) 60%,
+      rgb(78, 38, 110) 80%,
+      rgb(78, 38, 110) 100%
+    );
+    --background-color-title: radial-gradient(
+      circle,
+      rgba(3, 3, 7, 1) 54%,
+      rgba(9, 9, 26, 1) 60%,
+      rgba(8, 5, 15, 1) 80%,
+      rgba(13, 7, 26, 1) 100%
+    );
+  }
+
+  &--LockPath {
+    --background-color: radial-gradient(
+      circle,
+      rgba(3, 3, 7, 1) 54%,
+      rgba(9, 9, 26, 1) 60%,
+      rgba(8, 5, 15, 1) 80%,
+      rgba(13, 7, 26, 1) 100%
+    );
+    --background-color-title: radial-gradient(
+      circle,
+      rgba(3, 3, 7, 1) 54%,
+      rgba(9, 9, 26, 1) 60%,
+      rgba(8, 5, 15, 1) 80%,
+      rgba(13, 7, 26, 1) 100%
+    );
+  }
+
+  &--MoonPath {
+    --background-color: radial-gradient(
+      circle,
+      rgb(215, 179, 218) 54%,
+      rgb(163, 139, 165) 60%,
+      rgb(108, 92, 109) 80%,
+      rgba(13, 7, 26, 1) 100%
+    );
+    --background-color-title: radial-gradient(
+      circle,
+      rgb(215, 179, 218) 54%,
+      rgb(163, 139, 165) 60%,
+      rgb(108, 92, 109) 80%,
+      rgba(13, 7, 26, 1) 100%
+    );
+  }
+
+  .TitleBar {
+    background: var(--background-color);
+  }
+
+  .Window {
+    background: var(--background-color);
+
+    &__content {
+      background-image: none;
+    }
+  }
+
+  &--ascended {
+    --background-color: radial-gradient(
+      circle,
+      rgba(24, 9, 9, 1) 54%,
+      rgba(31, 10, 10, 1) 60%,
+      rgba(46, 11, 11, 1) 80%,
+      rgba(47, 14, 14, 1) 100%
+    );
+  }
+}
+
+.path-title {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.Passive {
+  margin: 0.5em 0;
+  background-color: #808080;
+  border-radius: 5px;
+  width: 50%;
+  padding: 0.5em;
+
+  &--Active {
+    background-color: #62cc67;
+  }
+}

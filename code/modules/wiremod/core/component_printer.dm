@@ -7,7 +7,7 @@
 	circuit = /obj/item/circuitboard/machine/component_printer
 
 	/// The internal material bus
-	var/datum/component/remote_materials/materials
+	var/datum/remote_materials/materials
 
 	density = TRUE
 
@@ -22,7 +22,7 @@
 
 /obj/machinery/component_printer/Initialize(mapload)
 	. = ..()
-	materials = AddComponent(/datum/component/remote_materials, mapload)
+	materials = new (src, mapload)
 
 /obj/machinery/component_printer/post_machine_initialize()
 	. = ..()
@@ -30,6 +30,10 @@
 		CONNECT_TO_RND_SERVER_ROUNDSTART(techweb, src)
 	if(techweb)
 		on_connected_techweb()
+
+/obj/machinery/component_printer/Destroy(force)
+	QDEL_NULL(materials)
+	return ..()
 
 /obj/machinery/component_printer/proc/connect_techweb(datum/techweb/new_techweb)
 	if(techweb)
@@ -338,7 +342,7 @@
 	density = TRUE
 
 	///The internal material bus
-	var/datum/component/remote_materials/materials
+	var/datum/remote_materials/materials
 	///List of designs scanned and saved
 	var/list/scanned_designs = list()
 	///Constant material cost per component
@@ -349,7 +353,11 @@
 /obj/machinery/module_duplicator/Initialize(mapload)
 	. = ..()
 
-	materials = AddComponent(/datum/component/remote_materials, mapload)
+	materials = new (src, mapload)
+
+/obj/machinery/module_duplicator/Destroy(force)
+	QDEL_NULL(materials)
+	return ..()
 
 /obj/machinery/module_duplicator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

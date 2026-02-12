@@ -1,0 +1,131 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"g" = (
+/obj/structure/broken_flooring/corner/directional/north,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"i" = (
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"j" = (
+/turf/closed/wall,
+/area/virtual_domain/safehouse)
+"l" = (
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/virtual_domain/safehouse)
+"q" = (
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/safehouse)
+"t" = (
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/safehouse)
+"v" = (
+/obj/structure/broken_flooring/side/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"y" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"C" = (
+/obj/structure/broken_flooring/singular/directional/north,
+/obj/structure/railing/corner/end/flip,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"E" = (
+/obj/machinery/light/red/dim/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"I" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"M" = (
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/virtual_domain/safehouse)
+"N" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"O" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"Y" = (
+/obj/machinery/light/red/dim/directional/east,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+
+(1,1,1) = {"
+j
+j
+j
+j
+j
+j
+"}
+(2,1,1) = {"
+j
+i
+E
+g
+M
+j
+"}
+(3,1,1) = {"
+j
+y
+N
+v
+l
+j
+"}
+(4,1,1) = {"
+I
+N
+a
+C
+q
+j
+"}
+(5,1,1) = {"
+j
+a
+y
+N
+t
+j
+"}
+(6,1,1) = {"
+j
+O
+Y
+N
+t
+j
+"}
+(7,1,1) = {"
+j
+j
+j
+j
+j
+j
+"}

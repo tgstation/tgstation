@@ -45,10 +45,11 @@
 			"icon" = "bottle-water",
 			"products" = list(
 				/obj/item/reagent_containers/cup/glass/ice = 10,
+				/obj/item/reagent_containers/cup/glass/bottle/juice/lemonjuice = 4,
 				/obj/item/reagent_containers/cup/glass/bottle/juice/limejuice = 4,
+				/obj/item/reagent_containers/cup/glass/bottle/juice/orangejuice = 4,
 				/obj/item/reagent_containers/cup/glass/bottle/juice/menthol = 4,
 				/obj/item/reagent_containers/cup/glass/bottle/juice/cream = 4,
-				/obj/item/reagent_containers/cup/glass/bottle/juice/orangejuice = 4,
 				/obj/item/reagent_containers/cup/glass/bottle/juice/tomatojuice = 4,
 				/obj/item/reagent_containers/cup/soda_cans/sodawater = 15,
 				/obj/item/reagent_containers/cup/soda_cans/sol_dry = 8,

@@ -22,6 +22,7 @@
 	attack_sound = 'sound/effects/hallucinations/growl1.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/paper_wizard
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	unsuitable_atmos_damage = 0
 	///spell to summon minions
 	var/datum/action/cooldown/spell/conjure/wizard_summon_minions/summon
 	///spell to summon clones
@@ -87,7 +88,7 @@
 /datum/ai_behavior/find_and_set/empty_paper
 	action_cooldown = 10 SECONDS
 
-/datum/ai_behavior/find_and_set/empty_paper/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/empty_paper/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/list/empty_papers = list()
 
 	for(var/obj/item/paper/target_paper in oview(search_range, controller.pawn))
@@ -123,7 +124,7 @@
 	SIGNAL_HANDLER
 
 	if(!(attack_flags & (ATTACKER_STAMINA_ATTACK|ATTACKER_SHOVING)))
-		attacker.adjustBruteLoss(20)
+		attacker.adjust_brute_loss(20)
 		to_chat(attacker, span_warning("The clone casts a spell to damage you before he dies!"))
 
 

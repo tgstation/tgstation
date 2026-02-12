@@ -17,8 +17,7 @@
 	attack_sound = 'sound/items/weapons/punch1.ogg'
 	combat_mode = TRUE
 	faction = list(FACTION_STICKMAN)
-	unsuitable_atmos_damage = 7.5
-	unsuitable_cold_damage = 7.5
+	unsuitable_atmos_damage = 0
 	unsuitable_heat_damage = 7.5
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 

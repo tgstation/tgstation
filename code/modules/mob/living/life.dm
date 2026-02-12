@@ -9,11 +9,11 @@
  * - seconds_per_tick: The amount of time that has elapsed since this last fired.
  * - times_fired: The number of times SSmobs has fired
  */
-/mob/living/proc/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/proc/Life(seconds_per_tick = SSMOBS_DT)
 	set waitfor = FALSE
 	SHOULD_NOT_SLEEP(TRUE)
 
-	var/signal_result = SEND_SIGNAL(src, COMSIG_LIVING_LIFE, seconds_per_tick, times_fired)
+	var/signal_result = SEND_SIGNAL(src, COMSIG_LIVING_LIFE, seconds_per_tick)
 
 	if(signal_result & COMPONENT_LIVING_CANCEL_LIFE_PROCESSING) // mmm less work
 		return
@@ -44,11 +44,11 @@
 	if(!HAS_TRAIT(src, TRAIT_STASIS))
 		if(stat != DEAD)
 			//Mutations and radiation
-			handle_mutations(seconds_per_tick, times_fired)
+			handle_mutations(seconds_per_tick)
 			//Breathing, if applicable
-			handle_breathing(seconds_per_tick, times_fired)
+			handle_breathing(seconds_per_tick)
 
-		handle_diseases(seconds_per_tick, times_fired) // DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+		handle_diseases(seconds_per_tick) // DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
 
 		if (QDELETED(src)) // Diseases can qdel the mob via transformations
 			return
@@ -56,30 +56,32 @@
 		// Handle temperature/pressure differences between body and environment
 		var/datum/gas_mixture/environment = loc.return_air()
 		if(environment)
-			handle_environment(environment, seconds_per_tick, times_fired)
+			handle_environment(environment, seconds_per_tick)
 
-		handle_gravity(seconds_per_tick, times_fired)
+		handle_gravity(seconds_per_tick)
 
 	if(living_flags & QUEUE_NUTRITION_UPDATE)
-		mob_mood?.update_nutrition_moodlets()
-		hud_used?.hunger?.update_hunger_bar()
+		update_nutrition()
 		living_flags &= ~QUEUE_NUTRITION_UPDATE
+
+	if (living_flags & BLOOD_UPDATE_QUEUED)
+		update_blood_effects()
 
 	if(stat != DEAD)
 		return TRUE
 
-/mob/living/proc/handle_breathing(seconds_per_tick, times_fired)
-	SEND_SIGNAL(src, COMSIG_LIVING_HANDLE_BREATHING, seconds_per_tick, times_fired)
+/mob/living/proc/handle_breathing(seconds_per_tick)
+	SEND_SIGNAL(src, COMSIG_LIVING_HANDLE_BREATHING, seconds_per_tick)
 	return
 
-/mob/living/proc/handle_mutations(seconds_per_tick, times_fired)
+/mob/living/proc/handle_mutations(seconds_per_tick)
 	return
 
-/mob/living/proc/handle_diseases(seconds_per_tick, times_fired)
+/mob/living/proc/handle_diseases(seconds_per_tick)
 	return
 
 // Base mob environment handler for body temperature
-/mob/living/proc/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+/mob/living/proc/handle_environment(datum/gas_mixture/environment, seconds_per_tick)
 	var/loc_temp = get_temperature(environment)
 	var/temp_delta = loc_temp - bodytemperature
 
@@ -126,9 +128,9 @@
 /mob/living/proc/update_damage_hud()
 	return
 
-/mob/living/proc/handle_gravity(seconds_per_tick, times_fired)
+/mob/living/proc/handle_gravity(seconds_per_tick)
 	if(gravity_state > STANDARD_GRAVITY)
-		handle_high_gravity(gravity_state, seconds_per_tick, times_fired)
+		handle_high_gravity(gravity_state, seconds_per_tick)
 
 /mob/living/proc/gravity_animate()
 	if(!get_filter("gravity"))
@@ -136,17 +138,17 @@
 	animate(get_filter("gravity"), y = 1, time = 10, loop = -1)
 	animate(y = 0, time = 10)
 
-/mob/living/proc/handle_high_gravity(gravity, seconds_per_tick, times_fired)
+/mob/living/proc/handle_high_gravity(gravity, seconds_per_tick)
 	if(gravity < GRAVITY_DAMAGE_THRESHOLD) //Aka gravity values of 3 or more
 		return
 
 	var/grav_strength = gravity - GRAVITY_DAMAGE_THRESHOLD
-	adjustBruteLoss(min(GRAVITY_DAMAGE_SCALING * grav_strength, GRAVITY_DAMAGE_MAXIMUM) * seconds_per_tick)
+	adjust_brute_loss(min(GRAVITY_DAMAGE_SCALING * grav_strength, GRAVITY_DAMAGE_MAXIMUM) * seconds_per_tick)
 
 /// Proc used for custom metabolization of reagents, if any
-/mob/living/proc/reagent_tick(datum/reagent/chem, seconds_per_tick, times_fired)
+/mob/living/proc/reagent_tick(datum/reagent/chem, seconds_per_tick)
 	SHOULD_CALL_PARENT(TRUE)
-	return SEND_SIGNAL(src, COMSIG_MOB_REAGENT_TICK, chem, seconds_per_tick, times_fired)
+	return SEND_SIGNAL(src, COMSIG_MOB_REAGENT_TICK, chem, seconds_per_tick)
 
 /// Proc used for custom reagent exposure effects, if any
 /mob/living/proc/reagent_expose(datum/reagent/chem, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)

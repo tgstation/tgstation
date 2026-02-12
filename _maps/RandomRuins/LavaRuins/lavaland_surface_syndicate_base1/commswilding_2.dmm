@@ -3,9 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/telecomms)
 "h" = (
@@ -93,7 +91,6 @@
 "F" = (
 /obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/telecomms)
@@ -229,7 +226,7 @@ a
 K
 y
 b
-y
+S
 T
 K
 a
@@ -238,8 +235,8 @@ a
 a
 K
 y
-S
 y
+S
 T
 K
 a

@@ -23,9 +23,9 @@
 		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(comp_on_round_start))
 		return
 
-	//if the round has already taken long enough, just leap right away.
+	//if the round has already taken long enough, evolve in three seconds.
 	if((world.time - SSticker.round_start_time) > evolve_mark)
-		leap(silent = TRUE)
+		addtimer(CALLBACK(src, PROC_REF(leap)), 3 SECONDS, TIMER_DELETE_ME)
 		return
 
 	setup_timer()
@@ -49,12 +49,11 @@
 	var/mark = evolve_mark - sum
 	timer_id = addtimer(CALLBACK(src, PROC_REF(leap), FALSE), mark, TIMER_STOPPABLE)
 
-/datum/component/evolutionary_leap/proc/leap(silent)
+/datum/component/evolutionary_leap/proc/leap()
 	var/mob/living/old_mob = parent
 	if (old_mob.stat == DEAD)
 		return
 	var/mob/living/new_mob = evolve_path
 	var/new_mob_name = initial(new_mob.name)
-	if(!silent)
-		old_mob.visible_message(span_warning("[old_mob] evolves into \a [new_mob_name]!"))
+	old_mob.visible_message(span_warning("[old_mob] evolves into \a [new_mob_name]!"))
 	old_mob.change_mob_type(evolve_path, old_mob.loc, new_name = new_mob_name, delete_old_mob = TRUE)

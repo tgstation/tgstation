@@ -119,7 +119,7 @@
 		user.balloon_alert(user, "at full integrity!")
 		return TRUE
 	if(welder.use_tool(src, user, 0, volume=40))
-		adjustBruteLoss(-15)
+		adjust_brute_loss(-15)
 		user.balloon_alert(user, "successfully repaired!")
 	return TRUE
 
@@ -276,4 +276,4 @@
 	if(isnull(required_access))
 		var/datum/id_trim/access_card = SSid_access.trim_singletons_by_path[/datum/id_trim/job/shaft_miner]
 		required_access = access_card.access
-	AddElement(/datum/element/mob_access, required_access)
+	AddComponent(/datum/component/simple_access, required_access)

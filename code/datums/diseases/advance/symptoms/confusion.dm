@@ -10,15 +10,16 @@
 	name = "Confusion"
 	desc = "The virus interferes with the proper function of the neural system, leading to bouts of confusion and erratic movement."
 	illness = "Shattered Reality"
-	stealth = 1
-	resistance = -1
-	stage_speed = -3
-	transmittable = 0
+	stealth = 2
+	resistance = 1
+	stage_speed = 1
+	transmittable = 2
 	level = 4
 	severity = 2
 	base_message_chance = 25
 	symptom_delay_min = 10
 	symptom_delay_max = 30
+	symptom_cure = /datum/reagent/medicine/synaptizine
 	threshold_descs = list(
 		"Resistance 6" = "Causes brain damage over time.",
 		"Transmission 6" = "Increases confusion duration and strength.",
@@ -57,6 +58,6 @@
 			to_chat(infected_mob, span_userdanger("You can't think straight!"))
 			infected_mob.adjust_confusion_up_to(16 SECONDS * power, 30 SECONDS)
 			if(brain_damage)
-				infected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * power, 80)
+				infected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 3 * power, 80)
 				infected_mob.updatehealth()
 	return

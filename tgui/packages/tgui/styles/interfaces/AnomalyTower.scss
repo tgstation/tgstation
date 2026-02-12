@@ -1,0 +1,33 @@
+.AnomalyTower__HazardBg {
+  background-size: 42.42px 42.42px; // ~30 * sqrt(2) to avoid weird artifacts
+  background-image: repeating-linear-gradient(
+    45deg,
+    #ffc107,
+    #ffc107 15px,
+    #000000 15px,
+    #000000 30px
+  );
+
+  border-style: outset;
+  border-color: #333333;
+}
+
+.AnomalyTower__HazardButton {
+  border-radius: 50px;
+  border-style: outset;
+  border-color: #bebebe;
+
+  box-shadow: 0 0 20px #0c0c0c;
+
+  width: 100px;
+  height: 100px;
+  color: red;
+}
+
+.AnomalyTower__Charge {
+  font-family: 'Consolas', monospace;
+  background-color: black;
+
+  border-style: ridge;
+  border-color: #8f8f8f;
+}

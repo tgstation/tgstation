@@ -759,8 +759,12 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "cg" = (
-/obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/warning/vacuum/external/directional/west,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ch" = (
 /obj/effect/turf_decal/stripes/white/corner{
@@ -939,8 +943,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cP" = (
-/obj/structure/sign/departments/cargo,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/departments/cargo/directional/south,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cQ" = (
 /obj/effect/turf_decal/delivery/white,
@@ -1466,7 +1471,6 @@
 "ep" = (
 /obj/machinery/turretid{
 	desc = "Used to the Raven's automated defenses.";
-	icon_state = "control_kill";
 	lethal = 1;
 	pixel_x = 5;
 	pixel_y = 32;
@@ -1487,6 +1491,13 @@
 /obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"fB" = (
+/obj/effect/turf_decal/stripes/white/corner,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/warning/vacuum/external/directional/east,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "fD" = (
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -1528,6 +1539,14 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"ri" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/warning/vacuum/external/directional/east,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "vw" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
@@ -1543,6 +1562,14 @@
 	},
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Cz" = (
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ds" = (
@@ -1772,7 +1799,7 @@ bt
 bC
 ax
 ax
-cg
+ax
 cd
 ax
 ax
@@ -1782,7 +1809,7 @@ SA
 ax
 ax
 cd
-cg
+ax
 ax
 ax
 dH
@@ -1806,7 +1833,7 @@ aZ
 bD
 br
 bW
-ch
+Cz
 cr
 cz
 cF
@@ -1816,7 +1843,7 @@ bP
 cU
 br
 dg
-cr
+cg
 dv
 ax
 dI
@@ -1913,8 +1940,8 @@ bP
 bP
 bP
 bP
-bP
 cP
+ax
 ax
 ax
 ax
@@ -2117,8 +2144,8 @@ bP
 bP
 bP
 bP
-bP
 cP
+ax
 ax
 ax
 ax
@@ -2214,7 +2241,7 @@ bA
 bL
 br
 ca
-cl
+fB
 cs
 cC
 cG
@@ -2224,7 +2251,7 @@ bP
 cU
 br
 do
-cs
+ri
 dy
 ax
 dQ
@@ -2248,7 +2275,7 @@ bB
 bM
 ax
 ax
-cg
+ax
 ct
 ax
 ax
@@ -2258,7 +2285,7 @@ Pd
 ax
 ax
 cd
-cg
+ax
 ax
 ax
 dR

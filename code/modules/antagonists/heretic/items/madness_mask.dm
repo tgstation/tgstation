@@ -4,9 +4,10 @@
 	desc = "A mask created from suffering. When you look into its eyes, it looks back."
 	icon_state = "mad_mask"
 	inhand_icon_state = null
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	w_class = WEIGHT_CLASS_SMALL
-	flags_cover = MASKCOVERSEYES
-	resistance_flags = FLAMMABLE
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	///Who is wearing this
 	var/mob/living/carbon/human/local_user
@@ -53,7 +54,7 @@
 		REMOVE_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 
 	for(var/mob/living/carbon/human/human_in_range in view(local_user))
-		if(IS_HERETIC_OR_MONSTER(human_in_range) || human_in_range.is_blind())
+		if(IS_HERETIC_OR_MONSTER(human_in_range) || human_in_range.stat > SOFT_CRIT || human_in_range.is_blind())
 			continue
 
 		if(human_in_range.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
@@ -67,9 +68,9 @@
 		if(SPT_PROB(40, seconds_per_tick))
 			human_in_range.set_jitter_if_lower(10 SECONDS)
 
-		if(human_in_range.getStaminaLoss() <= 85 && SPT_PROB(30, seconds_per_tick))
+		if(human_in_range.get_stamina_loss() <= 85 && SPT_PROB(30, seconds_per_tick))
 			human_in_range.emote(pick("giggle", "laugh"))
-			human_in_range.adjustStaminaLoss(10)
+			human_in_range.adjust_stamina_loss(10)
 
 		if(SPT_PROB(25, seconds_per_tick))
 			human_in_range.set_dizzy_if_lower(10 SECONDS)

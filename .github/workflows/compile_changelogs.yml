@@ -2,13 +2,13 @@ name: Compile changelogs
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 0 * * 1"
   workflow_dispatch:
 
 jobs:
   compile:
     name: "Compile changelogs"
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
     steps:
@@ -35,7 +35,7 @@ jobs:
 
       - name: "Checkout"
         if: steps.value_holder.outputs.ACTIONS_ENABLED
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 25
           persist-credentials: false

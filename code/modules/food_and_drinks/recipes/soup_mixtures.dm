@@ -205,10 +205,7 @@
 		if(holder.total_volume >= holder.maximum_volume * 0.95)
 			below_pot.visible_message(span_warning("[pot] starts to boil over!"))
 			// Create a spread of dirty foam
-			var/datum/effect_system/fluid_spread/foam/dirty/soup_mess = new()
-			soup_mess.reagent_scale = 0.1 // (Just a little)
-			soup_mess.set_up(range = 1, holder = pot, location = below_pot, carry = holder, stop_reactions = TRUE)
-			soup_mess.start()
+			do_foam(1, pot, below_pot, carry = holder, foam_type = /datum/effect_system/fluid_spread/foam/dirty, stop_reactions = TRUE, reagent_scale = 0.1)
 			// Loses a bit from the foam
 			for(var/datum/reagent/reagent as anything in holder.reagent_list)
 				reagent.volume *= 0.5

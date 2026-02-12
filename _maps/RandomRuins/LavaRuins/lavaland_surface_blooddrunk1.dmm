@@ -112,7 +112,7 @@
 /obj/structure/stone_tile/surrounding/cracked{
 	dir = 6
 	},
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner{
+/mob/living/basic/boss/blood_drunk_miner{
 	dir = 1
 	},
 /turf/open/lava/smooth/lava_land_surface,

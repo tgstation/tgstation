@@ -1,4 +1,5 @@
 /datum/emote/living/alien
+	abstract_type = /datum/emote/living/alien
 	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
 
 /datum/emote/living/alien/gnarl

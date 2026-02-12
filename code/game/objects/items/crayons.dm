@@ -30,7 +30,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("attacks", "colours")
 	attack_verb_simple = list("attack", "colour")
-	grind_results = list()
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 
 	/// Icon state to use when capped
@@ -215,7 +214,10 @@
 	drawtype = pick(all_drawables)
 
 	AddElement(/datum/element/venue_price, FOOD_PRICE_EXOTIC)
-	if(can_change_colour)
+	//This makes sure that spraycans do not rename stuff instead of painting
+	if(!can_change_colour)
+		AddElement(/datum/element/tool_renaming)
+	else
 		AddComponent(/datum/component/palette, AVAILABLE_SPRAYCAN_SPACE, paint_color)
 
 	refill()
@@ -236,6 +238,8 @@
 /// Sets painting color and updates appearance.
 /obj/item/toy/crayon/set_painting_tool_color(chosen_color)
 	. = ..()
+	if(!can_change_colour)
+		return
 	paint_color = chosen_color
 	update_appearance()
 

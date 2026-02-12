@@ -11,9 +11,11 @@
 	max_integrity = 50
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
 	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
-	grind_results = list(/datum/reagent/iodine = 4)
 	var/datum/picture/picture
 	var/scribble //Scribble on the back.
+
+/obj/item/photo/grind_results()
+	return LAZYACCESS(custom_materials, /datum/material/hauntium) ? list(/datum/reagent/hauntium = 20) : list(/datum/reagent/iodine = 4)
 
 /obj/item/photo/get_save_vars()
 	return ..() - NAMEOF(src, icon)
@@ -56,7 +58,6 @@
 		if(!isobserver(seen) && !isghostspecies(seen))
 			continue
 		set_custom_materials(list(/datum/material/hauntium =SHEET_MATERIAL_AMOUNT))
-		grind_results = list(/datum/reagent/hauntium = 20)
 		break
 
 /obj/item/photo/update_icon_state()

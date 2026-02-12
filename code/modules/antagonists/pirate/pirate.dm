@@ -8,11 +8,12 @@
 	suicide_cry = "FOR ME MATEYS!!"
 	stinger_sound = 'sound/music/antag/pirate/pirate_start.ogg'
 	hijack_speed = 2 // That is without doubt the worst pirate I have ever seen.
+	desensitized_modifier = DESENSITIZED_THRESHOLD
 	var/datum/team/pirate/crew
 
 /datum/antagonist/pirate/greet()
 	. = ..()
-	to_chat(owner, "<B>The station refused to pay for your protection. Protect the ship, siphon the credits from the station, and raid it for even more loot.</B>")
+	to_chat(owner, "<B>The station refused to pay for your protection. Protect the ship, siphon the [MONEY_NAME] from the station, and raid it for even more loot.</B>")
 	owner.announce_objectives()
 
 /datum/antagonist/pirate/get_team()
@@ -46,12 +47,10 @@
 	var/datum/language_holder/holder = owner_mob.get_language_holder()
 	holder.grant_language(/datum/language/piratespeak, source = LANGUAGE_PIRATE)
 	holder.selected_language = /datum/language/piratespeak
-	ADD_TRAIT(owner_mob, TRAIT_DESENSITIZED, REF(src))
 
 /datum/antagonist/pirate/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/owner_mob = mob_override || owner.current
 	owner_mob.remove_language(/datum/language/piratespeak, source = LANGUAGE_PIRATE)
-	REMOVE_TRAIT(owner_mob, TRAIT_DESENSITIZED, REF(src))
 
 /datum/team/pirate
 	name = "\improper Pirate crew"
@@ -81,7 +80,7 @@
 /datum/objective/loot/update_explanation_text()
 	if(cargo_hold)
 		var/area/storage_area = get_area(cargo_hold)
-		explanation_text = "Acquire loot and store [target_value] of credits worth in [storage_area.name] cargo hold."
+		explanation_text = "Acquire loot and store [target_value] of [MONEY_NAME] worth in [storage_area.name] cargo hold."
 
 /datum/objective/loot/proc/loot_listing()
 	//Lists notable loot.
@@ -117,7 +116,7 @@
 	parts += "Loot stolen: "
 	var/datum/objective/loot/L = locate() in objectives
 	parts += L.loot_listing()
-	parts += "Total loot value : [L.get_loot_value()]/[L.target_value] credits"
+	parts += "Total loot value : [L.get_loot_value()]/[L.target_value] [MONEY_NAME]"
 
 	if(L.check_completion() && !all_dead)
 		parts += "<span class='greentext big'>The pirate crew was successful!</span>"

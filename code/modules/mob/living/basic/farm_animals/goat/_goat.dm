@@ -31,7 +31,7 @@
 
 	minimum_survivable_temperature = COLD_ROOM_TEMP - 75 // enough so that they can survive the cold room spawn with plenty of room for comfort
 
-	blood_volume = BLOOD_VOLUME_NORMAL
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 
 	ai_controller = /datum/ai_controller/basic_controller/goat
 	/// How often will we develop an evil gleam in our eye?
@@ -72,7 +72,7 @@
 	if(!(living_target.mob_biotypes & MOB_PLANT))
 		return
 
-	living_target.adjustBruteLoss(20)
+	living_target.adjust_brute_loss(20)
 	playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
 	var/obj/item/bodypart/edible_bodypart
 

@@ -68,9 +68,9 @@
 	design_category = GLOB.rcd_designs[root_category][1]
 	var/list/design = GLOB.rcd_designs[root_category][design_category][1]
 
-	rcd_design_path = design["[RCD_DESIGN_PATH]"]
+	rcd_design_path = design[RCD_DESIGN_PATH]
 	design_title = initial(rcd_design_path.name)
-	mode = design["[RCD_DESIGN_MODE]"]
+	mode = design[RCD_DESIGN_MODE]
 	construction_mode = mode
 
 	GLOB.rcd_list += src
@@ -115,15 +115,13 @@
 
 	mode = RCD_TURF
 	user.visible_message(span_suicide("[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!"))
-	if(checkResource(16, user)) // It takes 16 resources to construct a wall
+	if(useResource(16, user)) // It takes 16 resources to construct a wall
 		var/success = T.rcd_act(user, src, list("[RCD_DESIGN_MODE]" = RCD_TURF, "[RCD_DESIGN_PATH]" = /turf/open/floor/plating/rcd))
 		T = get_turf(user)
 		// If the RCD placed a floor instead of a wall, having a wall without plating under it is cursed
 		// There isn't an easy programmatical way to check if rcd_act will place a floor or a wall, so just repeat using it for free
 		if(success && isopenturf(T))
 			T.rcd_act(user, src, list("[RCD_DESIGN_MODE]" = RCD_TURF, "[RCD_DESIGN_PATH]" = /turf/open/floor/plating/rcd))
-		useResource(16, user)
-		activate()
 		playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
 		user.gib(DROP_ALL_REMAINS)
 		return MANUAL_SUICIDE
@@ -140,8 +138,8 @@
  * * [mob][user]- the user
  */
 /obj/item/construction/rcd/proc/can_place(atom/target, list/rcd_results, mob/user)
-	var/rcd_mode = rcd_results["[RCD_DESIGN_MODE]"]
-	var/atom/movable/rcd_structure = rcd_results["[RCD_DESIGN_PATH]"]
+	var/rcd_mode = rcd_results[RCD_DESIGN_MODE]
+	var/atom/movable/rcd_structure = rcd_results[RCD_DESIGN_PATH]
 	/**
 	 *For anything that does not go an a wall we have to make sure that turf is clear for us to put the structure on it
 	 *If we are just trying to destroy something then this check is not necessary
@@ -173,9 +171,18 @@
 		 * if we are trying to create plating on turf which is not a proper floor then don't check for objects on top of the turf just allow that turf to be converted into plating. e.g. create plating beneath a player or underneath a machine frame/any dense object
 		 * if we are trying to finish a wall girder then let it finish then make sure no one/nothing is stuck in the girder
 		 */
-		else if(rcd_mode == RCD_TURF && rcd_structure == /turf/open/floor/plating/rcd  && (!istype(target_turf, /turf/open/floor) || istype(target, /obj/structure/girder)))
+		else if(rcd_mode == RCD_TURF && rcd_structure == /turf/open/floor/plating/rcd)
 			//if a player builds a wallgirder on top of himself manually with iron sheets he can't finish the wall if he is still on the girder. Exclude the girder itself when checking for other dense objects on the turf
-			if(istype(target, /obj/structure/girder) && target_turf.is_blocked_turf(exclude_mobs = FALSE, source_atom = null, ignore_atoms = list(target)))
+			var/list/ignore_types = list()
+			if(isturf(target))
+				if(isfloorturf(target))
+					ignore_types += /obj/structure/girder
+				else
+					ignore_types = null
+			else if(istype(target, /obj/structure/girder))
+				ignore_types += /obj/structure/girder
+
+			if(ignore_types && target_turf.is_blocked_turf(exclude_mobs = FALSE, source_atom = null, ignore_atoms = ignore_types, type_list = TRUE))
 				playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
 				balloon_alert(user, "something is on the girder!")
 				return FALSE
@@ -250,8 +257,8 @@
 		balloon_alert(user, "too durable!")
 		return ITEM_INTERACT_BLOCKING
 
-	rcd_results["[RCD_DESIGN_MODE]"] = mode
-	rcd_results["[RCD_DESIGN_PATH]"] = rcd_design_path
+	rcd_results[RCD_DESIGN_MODE] = mode
+	rcd_results[RCD_DESIGN_PATH] = rcd_design_path
 
 	var/delay = rcd_results["delay"] * delay_mod
 	if (
@@ -265,10 +272,10 @@
 
 	var/target_name = target.name //Store this information before it gets mutated by the rcd.
 	var/target_path = target.type
-	var/atom/design_path = rcd_results["[RCD_DESIGN_PATH]"]
+	var/atom/design_path = rcd_results[RCD_DESIGN_PATH]
 	var/location = AREACOORD(target)
 	if(_rcd_create_effect(target, user, delay, rcd_results))
-		log_tool("[key_name(user)] used [src] to [rcd_results["[RCD_DESIGN_MODE]"] != RCD_DECONSTRUCT ? "construct [initial(design_path.name)]([design_path])" : "deconstruct [target_name]([target_path])"] at [location]")
+		log_tool("[key_name(user)] used [src] to [rcd_results[RCD_DESIGN_MODE] != RCD_DECONSTRUCT ? "construct [initial(design_path.name)]([design_path])" : "deconstruct [target_name]([target_path])"] at [location]")
 
 	current_active_effects -= 1
 	return ITEM_INTERACT_SUCCESS
@@ -285,10 +292,10 @@
 /obj/item/construction/rcd/proc/_rcd_create_effect(atom/target, mob/user, delay, list/rcd_results)
 	PRIVATE_PROC(TRUE)
 
-	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, rcd_results["[RCD_DESIGN_MODE]"], construction_upgrades)
+	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, rcd_results[RCD_DESIGN_MODE], construction_upgrades)
 
 	//resource & structure placement sanity checks before & after delay along with beam effects
-	if(!checkResource(rcd_results["cost"], user) || !can_place(target, rcd_results, user))
+	if(!useResource(rcd_results["cost"], user, TRUE) || !can_place(target, rcd_results, user))
 		qdel(rcd_effect)
 		return FALSE
 	var/beam
@@ -302,17 +309,14 @@
 		return FALSE
 	if (QDELETED(rcd_effect))
 		return FALSE
-	if(!checkResource(rcd_results["cost"], user) || !can_place(target, rcd_results, user))
+	if(!useResource(rcd_results["cost"], user, TRUE) || !can_place(target, rcd_results, user))
 		qdel(rcd_effect)
 		return FALSE
 
-	if(!useResource(rcd_results["cost"], user))
-		qdel(rcd_effect)
-		return FALSE
-	activate()
 	if(!target.rcd_act(user, src, rcd_results))
 		qdel(rcd_effect)
 		return FALSE
+	useResource(rcd_results["cost"], user)
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	rcd_effect.end_animation()
 	return TRUE
@@ -417,9 +421,9 @@
 			if(design == null) //not a valid design
 				return TRUE
 			design_category = category_name
-			mode = design["[RCD_DESIGN_MODE]"]
+			mode = design[RCD_DESIGN_MODE]
 			construction_mode = mode
-			rcd_design_path = design["[RCD_DESIGN_PATH]"]
+			rcd_design_path = design[RCD_DESIGN_PATH]
 			design_title = initial(rcd_design_path.name)
 			blueprint_changed = TRUE
 
@@ -486,31 +490,20 @@
 	max_matter = borgy.cell.maxcharge
 	return borgy.cell.charge
 
-/obj/item/construction/rcd/borg/useResource(amount, mob/user)
-	if(!iscyborg(user))
-		return 0
+/obj/item/construction/rcd/borg/useResource(amount, mob/user, dry_run)
 	var/mob/living/silicon/robot/borgy = user
+	if(!iscyborg(borgy))
+		return FALSE
 	if(!borgy.cell)
-		if(user)
-			balloon_alert(user, "no cell found!")
-		return 0
-	. = borgy.cell.use(amount * energyfactor) //borgs get 1.3x the use of their RCDs
-	if(!. && user)
+		balloon_alert(user, "no cell found!")
+		return FALSE
+	if(borgy.cell.charge < (amount * energyfactor))
 		balloon_alert(user, "insufficient charge!")
-	return .
-
-/obj/item/construction/rcd/borg/checkResource(amount, mob/user)
-	if(!iscyborg(user))
-		return 0
-	var/mob/living/silicon/robot/borgy = user
-	if(!borgy.cell)
-		if(user)
-			balloon_alert(user, "no cell found!")
-		return 0
-	. = borgy.cell.charge >= (amount * energyfactor)
-	if(!. && user)
-		balloon_alert(user, "insufficient charge!")
-	return .
+		return FALSE
+	if(!dry_run)
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		return borgy.cell.use(amount * energyfactor)
+	return TRUE
 
 /obj/item/construction/rcd/borg/syndicate
 	name = "syndicate RCD"
@@ -603,27 +596,36 @@
 	var/obj/vehicle/sealed/mecha/gundam = owner
 	return round(gundam.get_charge() / MASS_TO_ENERGY)
 
-/obj/item/construction/rcd/exosuit/useResource(amount, mob/user)
+/obj/item/construction/rcd/exosuit/useResource(amount, mob/user, dry_run)
 	if(silo_link)
 		return ..()
 	if(!ismecha(owner))
-		return 0
-	var/obj/vehicle/sealed/mecha/gundam = owner
-	if(!gundam.use_energy(amount * MASS_TO_ENERGY))
-		gundam.balloon_alert(user, "insufficient charge!")
 		return FALSE
-	return TRUE
-
-/obj/item/construction/rcd/exosuit/checkResource(amount, mob/user)
-	if(silo_link)
-		return ..()
-	if(!ismecha(owner))
-		return 0
 	var/obj/vehicle/sealed/mecha/gundam = owner
 	if(!gundam.has_charge(amount * MASS_TO_ENERGY))
 		gundam.balloon_alert(user, "insufficient charge!")
 		return FALSE
+	if(!dry_run)
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		return gundam.use_energy(amount * MASS_TO_ENERGY)
 	return TRUE
+
+/obj/item/construction/rcd/exosuit/detonate_pulse()
+	var/obj/item/mecha_parts/mecha_equipment/rcd/ourshell = loc
+	if(!istype(ourshell))
+		return
+	ourshell.audible_message(span_danger("<b>[ourshell] begins to vibrate and buzz loudly!</b>"), \
+	span_danger("<b>[ourshell] begins vibrating violently!</b>"))
+	// 5 seconds to get rid of it
+	addtimer(CALLBACK(src, PROC_REF(detonate_pulse_explode)), 5 SECONDS)
+
+/obj/item/construction/rcd/exosuit/detonate_pulse_explode()
+	var/obj/item/mecha_parts/mecha_equipment/rcd/ourshell = loc
+	explosion(ourshell, light_impact_range = 3, flame_range = 1, flash_range = 1)
+	if(owner)
+		ourshell.detach()
+	qdel(ourshell)
+
 
 #undef MASS_TO_ENERGY
 

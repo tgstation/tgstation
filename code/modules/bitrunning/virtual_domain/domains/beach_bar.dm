@@ -6,6 +6,7 @@
 	Maybe a few drinks of liquid charm will get the spirits up. As the saying goes, if you can't beat 'em, join 'em."
 	key = "beach_bar"
 	map_name = "beach_bar"
+	domain_flags = DOMAIN_NO_NOHIT_BONUS
 
 /datum/lazy_template/virtual_domain/beach_bar/setup_domain(list/created_atoms)
 	. = ..()

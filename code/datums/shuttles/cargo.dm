@@ -3,6 +3,10 @@
 	name = "Base Shuttle Template (Cargo)"
 	who_can_purchase = null
 
+/datum/map_template/shuttle/cargo/mini
+	suffix ="mini"
+	name = "supply shuttle (Mini)"
+
 /datum/map_template/shuttle/cargo/kilo
 	suffix = "kilo"
 	name = "supply shuttle (Kilo)"

@@ -1,5 +1,5 @@
 
-/mob/living/basic/slime/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/slime/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(!.) //dead or deleted
 		return
@@ -9,7 +9,7 @@
 
 	handle_slime_stasis()
 
-/mob/living/basic/slime/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+/mob/living/basic/slime/handle_environment(datum/gas_mixture/environment, seconds_per_tick)
 	..()
 	if(bodytemperature <= (T0C - 40)) // stun temperature
 		apply_status_effect(/datum/status_effect/freon, SLIME_COLD)
@@ -59,7 +59,7 @@
 
 	if(nutrition == 0) //adjust nutrition ensures it can't go below 0
 		if(SPT_PROB(50, seconds_per_tick))
-			adjustBruteLoss(rand(0,5))
+			adjust_brute_loss(rand(0,5))
 		return
 
 	if (SLIME_GROW_NUTRITION <= nutrition)

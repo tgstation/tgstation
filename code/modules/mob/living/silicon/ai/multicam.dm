@@ -105,7 +105,7 @@
 	static_lighting = FALSE
 
 	base_lighting_alpha = 255
-	area_flags = NOTELEPORT | HIDDEN_AREA | UNIQUE_AREA
+	area_flags = NOTELEPORT | HIDDEN_AREA
 	ambientsounds = null
 	flags_1 = NONE
 

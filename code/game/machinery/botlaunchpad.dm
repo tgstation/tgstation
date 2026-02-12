@@ -48,7 +48,7 @@
 	launched_bot = WEAKREF(possible_bot)
 	podspawn(list(
 		"target" = get_turf(src),
-		"path" = /obj/structure/closet/supplypod/botpod,
+		"path" = /obj/structure/closet/supplypod/transport/botpod,
 		"style" = /datum/pod_style/seethrough,
 		"reverse_dropoff_coords" = list(reverse_turf.x, reverse_turf.y, reverse_turf.z)
 	))
@@ -66,15 +66,6 @@
 	var/mob/living/simple_animal/bot/simple_bot = our_bot
 	simple_bot.call_bot(src,  get_turf(src))
 
-/obj/structure/closet/supplypod/botpod
-	style = /datum/pod_style/seethrough
-	explosionSize = list(0,0,0,0)
-	reversing = TRUE
+/obj/structure/closet/supplypod/transport/botpod
 	reverse_option_list = list("Mobs"=TRUE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE,"Mecha"=FALSE)
-	delays = list(POD_TRANSIT = 0, POD_FALLING = 0, POD_OPENING = 0, POD_LEAVING = 0)
-	reverse_delays = list(POD_TRANSIT = 15, POD_FALLING = 10, POD_OPENING = 0, POD_LEAVING = 0)
-	custom_rev_delay = TRUE
-	effectQuiet = TRUE
 	leavingSound = 'sound/vehicles/rocketlaunch.ogg'
-	close_sound = null
-	pod_flags = FIRST_SOUNDS

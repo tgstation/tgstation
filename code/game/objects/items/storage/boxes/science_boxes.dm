@@ -25,12 +25,13 @@
 //Disk boxes
 
 /obj/item/storage/box/disks
-	name = "diskette box"
+	name = "floppy disk box"
 	illustration = "disk_kit"
+	desc = "A set of 8 Nanotrasen-approved floppy disks in individual packaging."
 
 /obj/item/storage/box/disks/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/disk/data(src)
+	for(var/i in 1 to 8)
+		new /obj/item/delivery/small/floppy(src)
 
 /obj/item/storage/box/monkeycubes
 	name = "monkey cube box"
@@ -71,7 +72,7 @@
 	desc = "Contains a variety of basic stock parts."
 
 /obj/item/storage/box/stockparts/basic/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/stock_parts/capacitor = 3,
 		/obj/item/stock_parts/servo = 3,
 		/obj/item/stock_parts/matter_bin = 3,
@@ -86,7 +87,7 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/stockparts/deluxe/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/stock_parts/capacitor/quadratic = 3,
 		/obj/item/stock_parts/scanning_module/triphasic = 3,
 		/obj/item/stock_parts/servo/femto = 3,
@@ -104,7 +105,7 @@
 	new /obj/item/circuitboard/machine/protolathe/offstation(src)
 	new /obj/item/circuitboard/machine/destructive_analyzer(src)
 	new /obj/item/circuitboard/machine/circuit_imprinter/offstation(src)
-	new /obj/item/circuitboard/computer/rdconsole(src)
+	new /obj/item/circuitboard/computer/rdconsole/unlocked(src)
 
 /obj/item/storage/box/stabilized //every single stabilized extract from xenobiology
 	name = "box of stabilized extracts"
@@ -112,7 +113,7 @@
 	storage_type = /datum/storage/box/stabilized
 
 /obj/item/storage/box/stabilized/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/slimecross/stabilized/adamantine=1,
 		/obj/item/slimecross/stabilized/black=1,
 		/obj/item/slimecross/stabilized/blue=1,

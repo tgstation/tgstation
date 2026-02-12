@@ -429,12 +429,20 @@
 	name = "R&D Console"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/rdconsole
+	req_access = list(ACCESS_RESEARCH) // Research access is required to toggle the lock.
+
 	var/silence_announcements = FALSE
+	var/locked = TRUE
+
+// An unlocked subtype of the board for mapping.
+/obj/item/circuitboard/computer/rdconsole/unlocked
+	locked = FALSE
 
 /obj/item/circuitboard/computer/rdconsole/examine(mob/user)
 	. = ..()
 	. += span_info("The board is configured to [silence_announcements ? "silence" : "announce"] researched nodes on radio.")
 	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
+	. += span_notice("The board is [locked ? "locked" : "unlocked"], and can be [locked ? "unlocked" : "locked"] with an ID that has research access.")
 
 /obj/item/circuitboard/computer/rdconsole/multitool_act(mob/living/user)
 	. = ..()
@@ -445,6 +453,10 @@
 	balloon_alert(user, "announcements [silence_announcements ? "enabled" : "disabled"]")
 
 /obj/item/circuitboard/computer/rdconsole/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if (locked)
+		locked = FALSE
+		to_chat(user, span_notice("You magnetically trigger the locking mechanism, causing it to unlock."))
+
 	if (obj_flags & EMAGGED)
 		return FALSE
 
@@ -452,6 +464,20 @@
 	silence_announcements = FALSE
 	to_chat(user, span_notice("You overload the node announcement chip, forcing every node to be announced on the common channel."))
 	return TRUE
+
+/obj/item/circuitboard/computer/rdconsole/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+	if (user.combat_mode || !isidcard(attacking_item))
+		return ..()
+	if (check_access(attacking_item))
+		locked = !locked
+		balloon_alert(user, locked ? "locked" : "unlocked")
+		user.visible_message(
+			message = span_notice("\The [user] unlock[user.p_s()] \the [src] with \the [attacking_item]."),
+			self_message = span_notice("You unlock \the [src] with \the [attacking_item]."),
+			blind_message = span_hear("You hear a soft beep."),
+		)
+	else
+		balloon_alert(user, "no access!")
 
 /obj/item/circuitboard/computer/rdservercontrol
 	name = "R&D Server Control"

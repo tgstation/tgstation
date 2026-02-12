@@ -104,7 +104,7 @@
 				}; \
 				if (!length(_L[_T])) { \
 					_L -= _T; \
-					SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(_T)); \
+					SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(_T), _T); \
 					}; \
 				};\
 			if (!length(_L)) { \

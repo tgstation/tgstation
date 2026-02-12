@@ -12,7 +12,7 @@
 	fire_sound = 'sound/items/weapons/gun/rifle/shot.ogg'
 	pinless = TRUE
 	max_charges = 1
-	can_charge = FALSE
+	self_charging = FALSE
 	item_flags = NEEDS_PERMIT
 	w_class = WEIGHT_CLASS_BULKY // Should fit on a belt.
 	force = 3
@@ -100,10 +100,27 @@
 /obj/item/gun/magic/midas_hand/proc/check_gold_range(mob/living/user, mob/living/victim)
 	return IN_GIVEN_RANGE(user, victim, gold_suck_range*2)
 
+/obj/item/gun/magic/midas_hand/suicide_act(mob/living/user)
+	if(!ishuman(user))
+		return
+
+	var/mob/living/carbon/human/victim = user
+	victim.visible_message(span_suicide("[victim] holds the barrel of [src] to [victim.p_their()] head, lighting the fuse. It looks like [user.p_theyre()] trying to commit suicide!"))
+	if(!do_after(victim, 1.5 SECONDS))
+		return SHAME
+	playsound(src, 'sound/items/weapons/gun/rifle/shot.ogg', 75, TRUE)
+	to_chat(victim, span_danger("You don't even have the time to register the gunshot by the time your body has completely converted into a golden statue."))
+	var/newcolors = list(rgb(206, 164, 50), rgb(146, 146, 139), rgb(28,28,28), rgb(0,0,0))
+	victim.petrify(statue_timer = INFINITY, save_brain = FALSE, colorlist = newcolors)
+	playsound(victim, 'sound/effects/coin2.ogg', 75, TRUE)
+	charges = 0
+	gold_timer = 0
+	return OXYLOSS
+
 /obj/item/ammo_casing/magic/midas_round
 	projectile_type = /obj/projectile/magic/midas_round
 
-
+/// Turns people into gold
 /obj/projectile/magic/midas_round
 	name = "gold pellet"
 	desc = "A typical flintlock ball, save for the fact it's made of cursed Egyptian gold."
@@ -117,37 +134,18 @@
 	/// The gold charge in this pellet
 	var/gold_charge = 0
 
-
 /obj/projectile/magic/midas_round/fire(setAngle)
 	/// Transfer the gold energy to our bullet
 	var/obj/item/gun/magic/midas_hand/my_gun = fired_from
 	gold_charge = my_gun.gold_timer
 	my_gun.gold_timer = 0
-	..()
+	return ..()
 
 // Gives human targets Midas Blight.
 /obj/projectile/magic/midas_round/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(ishuman(target))
-		var/mob/living/carbon/human/my_guy = target
-		if(isskeleton(my_guy)) // No cheap farming
-			return
+	if(!ishuman(target))
+		return
+	var/mob/living/carbon/human/my_guy = target
+	if(!isskeleton(my_guy)) // No cheap farming
 		my_guy.apply_status_effect(/datum/status_effect/midas_blight, min(30 SECONDS, round(gold_charge, 0.2))) // 100u gives 10 seconds
-		return
-
-/obj/item/gun/magic/midas_hand/suicide_act(mob/living/user)
-	if(!ishuman(user))
-		return
-
-	var/mob/living/carbon/human/victim = user
-	victim.visible_message(span_suicide("[victim] holds the barrel of [src] to [victim.p_their()] head, lighting the fuse. It looks like [user.p_theyre()] trying to commit suicide!"))
-	if(!do_after(victim, 1.5 SECONDS))
-		return
-	playsound(src, 'sound/items/weapons/gun/rifle/shot.ogg', 75, TRUE)
-	to_chat(victim, span_danger("You don't even have the time to register the gunshot by the time your body has completely converted into a golden statue."))
-	var/newcolors = list(rgb(206, 164, 50), rgb(146, 146, 139), rgb(28,28,28), rgb(0,0,0))
-	victim.petrify(statue_timer = INFINITY, save_brain = FALSE, colorlist = newcolors)
-	playsound(victim, 'sound/effects/coin2.ogg', 75, TRUE)
-	charges = 0
-	gold_timer = 0
-	return OXYLOSS

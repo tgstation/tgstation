@@ -180,20 +180,20 @@
 	. = ..()
 	var/mob/living/real_mob = mob_override || owner.current
 	real_mob.AddComponentFrom(REF(src), /datum/component/can_flash_from_behind)
-	RegisterSignal(real_mob, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, PROC_REF(on_flash_success))
+	RegisterSignal(real_mob, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB, PROC_REF(on_flash_success))
 
 /datum/antagonist/rev/head/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/real_mob = mob_override || owner.current
 	real_mob.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
-	UnregisterSignal(real_mob, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON)
+	UnregisterSignal(real_mob, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB)
 
-/// Signal proc for [COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON].
+/// Signal proc for [COMSIG_MOB_SUCCESSFUL_FLASHED_MOB].
 /// Bread and butter of revolution conversion, successfully flashing a carbon will make them a revolutionary
-/datum/antagonist/rev/head/proc/on_flash_success(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash, deviation)
+/datum/antagonist/rev/head/proc/on_flash_success(mob/living/source, mob/living/flashed, obj/item/assembly/flash/flash, deviation)
 	SIGNAL_HANDLER
 
-	if(flashed.stat == DEAD)
+	if(flashed.stat == DEAD || issilicon(flashed) || isdrone(flashed))
 		return
 	if(flashed.stat != CONSCIOUS)
 		to_chat(source, span_warning("[flashed.p_They()] must be conscious before you can convert [flashed.p_them()]!"))
