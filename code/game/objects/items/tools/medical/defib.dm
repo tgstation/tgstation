@@ -181,15 +181,15 @@
 
 	if(combat) // Elite agents do not subscribe to your notion of "Safety"
 		visible_message(span_notice("[src] beeps: Safety protocols nonexistent!"))
-		playsound(src, 'sound/machines/defib_saftyOff.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE)
 	else if(safety)
 		safety = FALSE
 		visible_message(span_notice("[src] beeps: Safety protocols disabled!"))
-		playsound(src, 'sound/machines/defib_saftyOff.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/defib/defib_saftyOff.ogg', 50, FALSE)
 	else
 		safety = TRUE
 		visible_message(span_notice("[src] beeps: Safety protocols enabled!"))
-		playsound(src, 'sound/machines/defib_saftyOn.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/defib/defib_SaftyOn.ogg', 50, FALSE)
 	update_power()
 
 /obj/item/defibrillator/proc/toggle_paddles()
