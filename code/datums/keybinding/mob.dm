@@ -21,7 +21,7 @@
 	return TRUE
 
 /datum/keybinding/mob/swap_hands
-	hotkey_keys = list("...")
+	hotkey_keys = list(UNBOUND_KEY)
 	name = "swap_hands"
 	full_name = "Swap hands"
 	description = ""
@@ -166,7 +166,7 @@
 	keybind_signal = COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN
 
 /datum/keybinding/mob/target/head
-	hotkey_keys = list("...")
+	hotkey_keys = list(UNBOUND_KEY)
 	name = "target_head"
 	full_name = "Target: Head"
 	description = "Pressing this key targets the head. This will impact where you hit people, and can be used for surgery."
