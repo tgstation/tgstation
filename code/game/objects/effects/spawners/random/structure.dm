@@ -18,6 +18,7 @@
 		/obj/effect/spawner/random/structure/crate_loot = 744,
 		/obj/structure/closet/crate/trashcart/filled = 75,
 		/obj/effect/spawner/random/trash/moisture_trap = 50,
+		/obj/structure/closet/crate/slime = 40, // Troutstation Edit
 		/obj/effect/spawner/random/trash/hobo_squat = 30,
 		/obj/structure/closet/mini_fridge = 35,
 		/obj/effect/spawner/random/trash/mess = 30,
@@ -117,6 +118,7 @@
 	loot = list(
 		/obj/structure/closet/crate = 20,
 		/obj/structure/closet/crate/cardboard = 5,
+		/obj/structure/closet/crate/slime = 2, // Troutstation Edit
 		/obj/structure/closet/crate/wooden = 1,
 		/obj/structure/closet/crate/internals = 1,
 		/obj/structure/closet/crate/medical = 1,
@@ -144,6 +146,7 @@
 	loot = list(
 		/obj/effect/spawner/random/structure/closet_empty/crate/with_loot = 15,
 		/obj/effect/spawner/random/structure/closet_empty/crate = 4,
+		/obj/structure/closet/crate/slime = 2, // Troutstation Edit
 		/obj/structure/closet/crate/secure/loot = 1,
 	)
 

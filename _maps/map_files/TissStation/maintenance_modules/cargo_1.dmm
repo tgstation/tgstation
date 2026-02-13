@@ -261,6 +261,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
+"oP" = (
+/obj/effect/decal/cleanable/greenglow,
+/obj/structure/closet/crate/slime,
+/turf/open/floor/glass/reinforced,
+/area/station/maintenance/department/cargo)
 "oZ" = (
 /obj/structure/rack,
 /obj/item/reagent_containers/cup/bucket,
@@ -2388,7 +2393,7 @@ fm
 fm
 fm
 fm
-Rn
+oP
 au
 TW
 iT

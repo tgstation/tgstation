@@ -6873,6 +6873,7 @@
 #include "troutstation\code\game\objects\items\stacks\tiles\tile_types.dm"
 #include "troutstation\code\game\objects\machinery\computer\orders\order_items\order_veggies.dm"
 #include "troutstation\code\game\objects\structures\curtains.dm"
+#include "troutstation\code\game\objects\structures\crates_lockers\crates.dm"
 #include "troutstation\code\game\objects\structures\signs\signs_maps.dm"
 #include "troutstation\code\game\turfs\open\floor\fancy_floor.dm"
 #include "troutstation\code\modules\cargo\bounties\botany.dm"

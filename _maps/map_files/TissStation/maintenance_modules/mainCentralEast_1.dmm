@@ -314,7 +314,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "LV" = (
-/obj/effect/spawner/random/structure/table_fancy,
+/obj/structure/closet/crate/slime,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "MP" = (
