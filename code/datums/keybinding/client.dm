@@ -20,17 +20,37 @@
 
 /datum/keybinding/client/screenshot
 	hotkey_keys = list("F2")
-	name = "screenshot"
-	full_name = "Screenshot"
-	description = "Take a screenshot."
+	name = "quick screenshot"
+	full_name = "Quick Screenshot"
+	description = "Take a screenshot, which will be stored in BYOND's screenshots folder."
 	keybind_signal = COMSIG_KB_CLIENT_SCREENSHOT_DOWN
+	can_edit = FALSE
 
+/* This is dealt by BYOND. Keeping this here in case that ever changes.
 /datum/keybinding/client/screenshot/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
-	winset(user, null, "command=.auto")
+	winset(user, null, "command=.screenshot auto")
 	return TRUE
+*/
+
+/datum/keybinding/client/screenshot_loc
+	hotkey_keys = list("ShiftF2")
+	name = "screenshot as"
+	full_name = "Save Screenshot as"
+	description = "Take a screenshot and save it at a specific location."
+	keybind_signal = COMSIG_KB_CLIENT_SCREENSHOT_DOWN
+	can_edit = FALSE
+
+/* This is dealt by BYOND. Keeping this here in case that ever changes.
+/datum/keybinding/client/screenshot_loc/down(client/user, turf/target, mousepos_x, mousepos_y)
+	. = ..()
+	if(.)
+		return
+	winset(user, null, "command=.screenshot")
+	return TRUE
+*/
 
 /datum/keybinding/client/toggle_fullscreen
 	hotkey_keys = list("F11")
