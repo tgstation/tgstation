@@ -32,13 +32,11 @@
 		weapon.interact_with_atom(keg, user) // redirect refillable containers to the keg, allowing them to be filled
 		return TRUE // pretend we handled the attack, too.
 
-	if(istype(weapon, /obj/item/nuke_core_container))
-		to_chat(user, span_notice("[src] has had its plutonium core removed as a part of being decommissioned."))
-		return TRUE
-
 	return ..()
 
 /obj/machinery/nuclearbomb/beer/actually_explode()
+	if(core)
+		return ..()
 	//Unblock roundend, we're not actually exploding.
 	SSticker.roundend_check_paused = FALSE
 	var/turf/bomb_location = get_turf(src)
@@ -61,6 +59,8 @@
 	disarm_nuke()
 
 /obj/machinery/nuclearbomb/beer/really_actually_explode(detonation_status)
+	if(core)
+		return ..()
 	//if it's always hooked in it'll override admin choices
 	RegisterSignal(overflow_control, COMSIG_CREATED_ROUND_EVENT, PROC_REF(on_created_round_event))
 	disarm_nuke()

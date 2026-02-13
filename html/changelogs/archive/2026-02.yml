@@ -103,3 +103,52 @@
       names.
   Laikodaemon:
   - image: HoP's Accounting console now has a new sprite.
+2026-02-09:
+  Cyberboss:
+  - bugfix: Fixed right clicking a closet with an ID in hand toggling locks twice
+      in one tick
+  SmArtKar:
+  - image: Husk visuals now inherit their mob's blood color
+  lelandkemble:
+  - rscadd: You can now put a deconstructed nuclear bomb back together again
+  - bugfix: Nuclear bombs with exposed cores will again irradiate their surrounding
+      area
+  - map: Catwalks vault is now restricted access
+  vinylspiders:
+  - code_imp: sinks can be mounted to floors
+2026-02-10:
+  Melbert:
+  - qol: You are always notified if your paycheck amount changes
+2026-02-11:
+  Cerulyss-Aureon:
+  - qol: The HFR can now produce Tier 5 gases at Level 4 when plasma is present in
+      the moderator. This makes it a more viable and competitive alternative to traditional
+      pipe or chamber gas synthesis.
+  Iajret:
+  - bugfix: fixed brain not getting traumas from brain damage (including rotting or
+      chemicals)
+  - bugfix: brains should no longer be getting traumas from mannitol healing
+  - bugfix: apparently cut stomach healing had been broken too, and it should be fixed
+      now.
+  Maximal08:
+  - map: Adds missing wires and pipes to meta
+  Neocloudy:
+  - bugfix: Entertainment monitors don't bypass radio speech volume.
+  lelandkemble:
+  - spellcheck: Pronouns in counterattack text are more correct
+2026-02-12:
+  SyncIt21:
+  - qol: you can place plumbing machines on ducts with different layers again
+  lelandkemble:
+  - bugfix: Airlock painters are now short range once again
+  sesametg:
+  - server: 'fix: HR have reopened positions at unstaffed stations'
+2026-02-13:
+  Cyberboss:
+  - bugfix: Fixed some inconsistencies with bodytypes when non-binary genders had
+      it set to "Use gender". This is no longer possible. If you use have previously
+      used this setting, your bodytype will be explicitly set to female.
+  LT3:
+  - code_imp: Removed unused rock the vote config entry
+  TealSeer:
+  - balance: The CE spawns with upgraded tools again
