@@ -198,7 +198,7 @@
 	generate_bee_visuals()
 
 /// Picks a random toxin and assigns it to the bee
-/mob/living/basic/bee/proc/assign_random_toxin_reagent(respect_can_synth = FALSE)
+/mob/living/basic/bee/proc/assign_random_toxin_reagent(respect_can_synth = TRUE)
 	var/list/toxin_pool = typesof(/datum/reagent/toxin)
 	var/datum/reagent/toxin
 	var/sanity = 0
@@ -217,7 +217,7 @@
 /mob/living/basic/bee/mutate()
 	. = ..()
 	if(!.)
-		assign_random_toxin_reagent(respect_can_synth = TRUE)
+		assign_random_toxin_reagent()
 		. = TRUE
 
 /mob/living/basic/bee/queen
@@ -235,7 +235,7 @@
 
 /mob/living/basic/bee/toxin/Initialize(mapload)
 	. = ..()
-	assign_random_toxin_reagent()
+	assign_random_toxin_reagent(respect_can_synth = FALSE)
 
 /// A bee which despawns after a short amount of time (beespawns?)
 /mob/living/basic/bee/timed
