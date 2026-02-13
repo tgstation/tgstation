@@ -40,7 +40,7 @@
 	name = "screenshot as"
 	full_name = "Save Screenshot as"
 	description = "Take a screenshot and save it at a specific location."
-	keybind_signal = COMSIG_KB_CLIENT_SCREENSHOT_DOWN
+	keybind_signal = COMSIG_KB_CLIENT_SCREENSHOT_AS_DOWN
 	can_edit = FALSE
 
 /* This is dealt by BYOND. Keeping this here in case that ever changes.
