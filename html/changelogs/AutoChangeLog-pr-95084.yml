@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - refactor: "code for plumbing splitter & filter have been improved. plumbing splitter is now a 3 way component. Report bugs on github"
