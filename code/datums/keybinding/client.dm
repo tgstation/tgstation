@@ -26,14 +26,14 @@
 	keybind_signal = COMSIG_KB_CLIENT_SCREENSHOT_DOWN
 	can_edit = FALSE
 
-/* This is dealt by BYOND. Keeping this here in case that ever changes.
 /datum/keybinding/client/screenshot/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
-	winset(user, null, "command=.screenshot auto")
+	to_chat(user, span_notice("Screenshot saved in 'BYOND/screenshots' folder."))
+	//This is dealt by BYOND. Keeping this here in case that ever changes, though this command doesn't actually work when manually called.
+	//winset(user, null, "command=.screenshot auto")
 	return TRUE
-*/
 
 /datum/keybinding/client/screenshot_loc
 	hotkey_keys = list("ShiftF2")
@@ -43,14 +43,13 @@
 	keybind_signal = COMSIG_KB_CLIENT_SCREENSHOT_AS_DOWN
 	can_edit = FALSE
 
-/* This is dealt by BYOND. Keeping this here in case that ever changes.
 /datum/keybinding/client/screenshot_loc/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
-	winset(user, null, "command=.screenshot")
+	//This is dealt by BYOND. Keeping this here in case that ever changes.
+	//winset(user, null, "command=.screenshot")
 	return TRUE
-*/
 
 /datum/keybinding/client/toggle_fullscreen
 	hotkey_keys = list("F11")

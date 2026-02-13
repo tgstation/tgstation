@@ -250,9 +250,11 @@ function getKeybindingNodes(
                 />
               </Stack.Item>
             ))}
-            <Stack.Item shrink>
-              <ResetToDefaultButton keybindingId={keybindingId} />
-            </Stack.Item>
+            {!!keybinding.can_edit && (
+              <Stack.Item shrink>
+                <ResetToDefaultButton keybindingId={keybindingId} />
+              </Stack.Item>
+            )}
           </Stack>
         </Stack.Item>
       );
