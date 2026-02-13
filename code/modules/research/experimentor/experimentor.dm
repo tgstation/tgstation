@@ -56,7 +56,7 @@
 			/obj/item/grenade/chem_grenade/tuberculosis
 		))
 
-	if(!valid_items)
+	if(!length(valid_items))
 		for(var/obj/item/item_path as anything in valid_subtypesof(/obj/item))
 			if(ispath(item_path, /obj/item/stock_parts) || ispath(item_path, /obj/item/grenade/chem_grenade) || ispath(item_path, /obj/item/knife))
 				valid_items["[item_path]"] += 15
@@ -169,10 +169,10 @@
 
 	var/list/available_experiments = list()
 	for(var/scantype in experimentor_result_handlers)
-		var/datum/experimentor_result_handler/handler = experimentor_result_handlers[scantype]
-
-		if(handler.is_special && !handler.scantype == SCANTYPE_DISCOVER)
+		if(scantype == FAIL)
 			continue
+
+		var/datum/experimentor_result_handler/scan/handler = experimentor_result_handlers[scantype]
 
 		var/is_available = TRUE
 		var/is_discover = (scantype == SCANTYPE_DISCOVER)
