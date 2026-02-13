@@ -198,14 +198,26 @@
 	generate_bee_visuals()
 
 /// Picks a random toxin and assigns it to the bee
-/mob/living/basic/bee/proc/assign_random_toxin_reagent()
-	var/datum/reagent/toxin = pick(typesof(/datum/reagent/toxin))
+/mob/living/basic/bee/proc/assign_random_toxin_reagent(respect_can_synth = FALSE)
+	var/list/toxin_pool = typesof(/datum/reagent/toxin)
+	var/datum/reagent/toxin
+	var/sanity = 0
+
+	do
+		if(sanity > 20 || !length(toxin_pool))
+			toxin = pick(/datum/reagent/toxin, /datum/reagent/toxin/histamine, /datum/reagent/toxin/venom)
+			respect_can_synth = FALSE // in case someone removes cansynth from all of the above for some goofy reason
+		else
+			toxin = pick_n_take(toxin_pool)
+			sanity += 1
+	while(respect_can_synth && !(toxin::chemical_flags & REAGENT_CAN_BE_SYNTHESIZED))
+
 	assign_reagent(GLOB.chemical_reagents_list[toxin])
 
 /mob/living/basic/bee/mutate()
 	. = ..()
 	if(!.)
-		assign_random_toxin_reagent()
+		assign_random_toxin_reagent(respect_can_synth = TRUE)
 		. = TRUE
 
 /mob/living/basic/bee/queen
