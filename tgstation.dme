@@ -4073,6 +4073,7 @@
 #include "code\modules\client\preferences\prosthetic_organ.dm"
 #include "code\modules\client\preferences\random.dm"
 #include "code\modules\client\preferences\rds_limit.dm"
+#include "code\modules\client\preferences\ready_job.dm"
 #include "code\modules\client\preferences\runechat.dm"
 #include "code\modules\client\preferences\scaling_method.dm"
 #include "code\modules\client\preferences\scarred_eye.dm"

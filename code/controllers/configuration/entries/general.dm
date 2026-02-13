@@ -804,3 +804,5 @@
 	min_val = 0
 
 /datum/config_entry/flag/fishing
+
+/datum/config_entry/flag/show_job_estimation // Troutstation Edit

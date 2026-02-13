@@ -384,4 +384,15 @@
 	if(CONFIG_GET(flag/auto_deadmin_on_ready_or_latejoin) || (client.prefs.read_preference(/datum/preference/toggle/auto_deadmin_on_ready_or_latejoin)) || (client.prefs?.toggles & DEADMIN_ALWAYS))
 		return client.holder.auto_deadmin()
 
+
+
+/// Troutstation Edit Start
+/mob/dead/new_player/get_status_tab_items()
+	. = ..()
+	if(SSticker.HasRoundStarted())
+		return
+
+	. += SSticker.player_ready_data
+/// Troutstation Edit End
+
 #undef RESET_HUD_INTERVAL
