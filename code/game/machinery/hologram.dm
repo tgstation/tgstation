@@ -197,6 +197,8 @@ Possible to do for anyone motivated enough:
 	for (var/I in masters)
 		clear_holo(I)
 
+	QDEL_NULL(disk)
+
 	holopads -= src
 	return ..()
 
@@ -214,6 +216,11 @@ Possible to do for anyone motivated enough:
 	. = ..()
 	if(outgoing_call)
 		outgoing_call.ConnectionFailure(src)
+
+/obj/machinery/holopad/on_deconstruction(dissassembled)
+	disk?.forceMove(drop_location())
+	disk = null
+	return ..()
 
 /obj/machinery/holopad/RefreshParts()
 	. = ..()
