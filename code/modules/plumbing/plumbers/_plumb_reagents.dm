@@ -288,9 +288,6 @@
 	if(amount <= 0)
 		return FALSE
 
-	//Set up new reagents to inherit the old ongoing reactions
-	transfer_reactions(target_holder)
-
 	var/transfer_amount
 	var/transfered_amount
 	var/total_transfered_amount = 0
@@ -327,9 +324,5 @@
 			to_transfer -= transfered_amount
 		reagent.volume -= transfered_amount
 	update_total()
-
-	//handle reactions
-	target_holder.handle_reactions()
-	handle_reactions()
 
 	return total_transfered_amount

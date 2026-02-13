@@ -15,6 +15,7 @@
 			. = ..()
 			if(!reagents.holder_full())
 				return
+		reagents.flags &= ~NO_REACT
 		myacclimator.acclimate_state = reagents.chem_temp > myacclimator.target_temperature ? AC_COOLING : AC_HEATING
 		myacclimator.update_appearance(UPDATE_ICON_STATE)
 
