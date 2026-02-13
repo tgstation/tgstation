@@ -24,7 +24,7 @@
 	hitsound = 'sound/items/weapons/tap.ogg'
 	var/hitsound_on = 'sound/items/weapons/sear.ogg' //so we can differentiate between cakehat and energyhat
 	var/hitsound_off = 'sound/items/weapons/tap.ogg'
-	var/force_on = 15
+	var/force_on = 100
 	var/throwforce_on = 15
 	var/damtype_on = BURN
 
