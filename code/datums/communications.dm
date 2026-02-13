@@ -78,7 +78,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 
 	. = ""
 	. += "<center><img src='[SSassets.transport.get_asset_url("nanotrasen-logo")]' width='50%'></center><hr>"
-	. += "<h2><center>[command_name()], TCD [time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]</h2></center><hr>"
+	. += "<center><h2>[command_name()], TCD [time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]</h2></center><hr>"
 	. += command_report_main_content || pick_list_replacements("flavor_reports.json", "reports")
 	if(CONFIG_GET(flag/no_dynamic_report))
 		if(isnull(greenshift))
@@ -88,7 +88,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 		if(isnull(greenshift)) // if we're not forced to be greenshift or not - check if we are an actual greenshift
 			greenshift = SSdynamic.current_tier.tier == 0 && dynamic_report == /datum/dynamic_tier/greenshift::advisory_report
 
-		. += "<hr><h3>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector</h3>"
+		. += "<hr><center><h3>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector</h3></center>"
 		. += dynamic_report
 
 	SSstation.generate_station_goals(greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget))
