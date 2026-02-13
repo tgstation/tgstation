@@ -670,6 +670,7 @@
 	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	set_type(valid_vendor_names_paths[choice])
+	all_products_free = FALSE
 	return ITEM_INTERACT_SUCCESS
 
 /**
