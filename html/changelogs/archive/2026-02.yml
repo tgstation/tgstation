@@ -148,3 +148,7 @@
   - bugfix: Fixed some inconsistencies with bodytypes when non-binary genders had
       it set to "Use gender". This is no longer possible. If you use have previously
       used this setting, your bodytype will be explicitly set to female.
+  LT3:
+  - code_imp: Removed unused rock the vote config entry
+  TealSeer:
+  - balance: The CE spawns with upgraded tools again
