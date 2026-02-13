@@ -664,13 +664,14 @@
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_FAILURE
+	if(all_products_free)
+		return
 	var/choice = tgui_input_list(user, "Choose a new brand", "Select an Item", sort_list(valid_vendor_names_paths))
 	if(isnull(choice))
 		return
 	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	set_type(valid_vendor_names_paths[choice])
-	all_products_free = FALSE
 	return ITEM_INTERACT_SUCCESS
 
 /**
