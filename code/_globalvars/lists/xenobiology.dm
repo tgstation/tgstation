@@ -10,6 +10,7 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 		/datum/micro_organism/cell_line/mouse = 1,
 		/datum/micro_organism/cell_line/sholean_grapes = 2,
 		/datum/micro_organism/cell_line/slime = 2,
+		/datum/micro_organism/cell_line/goat = 1,
 	),
 
 	CELL_LINE_TABLE_MOIST = list(
@@ -77,6 +78,7 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 	CELL_LINE_TABLE_QUEEN_BEE = list(/datum/micro_organism/cell_line/queen_bee = 1),
 	CELL_LINE_TABLE_BUTTERFLY = list(/datum/micro_organism/cell_line/butterfly = 1),
 	CELL_LINE_TABLE_MEGA_ARACHNID = list(/datum/micro_organism/cell_line/mega_arachnid = 1),
+	CELL_LINE_TABLE_GOAT = list(/datum/micro_organism/cell_line/goat = 1),
 	CELL_LINE_TABLE_ALGAE = list(
 		/datum/micro_organism/cell_line/frog = 2,
 		/datum/micro_organism/cell_line/mega_arachnid = 1,

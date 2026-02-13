@@ -55,6 +55,7 @@
 #define CELL_LINE_TABLE_QUEEN_BEE "cell_line_bee_queen_table"
 #define CELL_LINE_TABLE_BUTTERFLY "cell_line_butterfly_table"
 #define CELL_LINE_TABLE_MEGA_ARACHNID "cell_line_table_mega_arachnid"
+#define CELL_LINE_TABLE_GOAT "cell_line_table_goat"
 
 //! Biopsy cell line organ types
 #define CELL_LINE_ORGAN_HEART "cell_line_organ_heart"
