@@ -73,6 +73,12 @@
 /obj/structure/plaque/static_plaque/golden/commission/wawa
 	desc = "Spinward Sector Station SS-13\n'Wawa' Class Outpost\nCommissioned 04/06/2564\n'Forever Vertical'"
 
+///Troutstation Edit Start
+// Tisserand: added Feb 13, 2026 (https://github.com/Cirrial/troutstation/pull/100)
+/obj/structure/plaque/static_plaque/golden/commission/tiss
+	desc = "Spinward Sector Station SS-13\n'Tisserand' Class Outpost\nCommissioned 13/02/2566\n'Orbiting Greatness'"
+///Troutstation Edit End
+
 //Removed stations
 
 // Asteroidstation: added Oct 17, 2015 (169ab09f7b52254ee505e54cdea681fab287647b), removed Jun 19, 2016 (#18661)- 8 months, 2 days

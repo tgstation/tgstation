@@ -38199,9 +38199,8 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/qm)
 "lwn" = (
-/obj/structure/plaque/static_plaque/golden/commission,
+/obj/structure/plaque/static_plaque/golden/commission/tiss,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/effect/mapping_error,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/hallway/secondary/entry)
@@ -50404,6 +50403,10 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
 /area/station/asteroid)
+"pkm" = (
+/obj/machinery/light/floor,
+/turf/open/floor/iron,
+/area/station/hallway/tube)
 "pku" = (
 /obj/structure/kitchenspike,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -57983,7 +57986,7 @@
 /area/station/maintenance/port/fore)
 "rDA" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "Crematorium"
+	name = "Crypt"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/crematorium,
 /obj/effect/turf_decal/trimline/red/filled,
@@ -110501,7 +110504,7 @@ jKF
 lAu
 xZq
 joo
-mWX
+pkm
 mWX
 mom
 mIP
