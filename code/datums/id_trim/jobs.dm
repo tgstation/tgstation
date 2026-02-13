@@ -475,7 +475,7 @@
 		ACCESS_HOP,
 		)
 	job = /datum/job/clown
-	honorifics = list(" the Clown")
+	honorifics = list(" the Clown", " the Jester")
 	honorific_positions = HONORIFIC_POSITION_LAST_FULL | HONORIFIC_POSITION_NONE
 
 /datum/id_trim/job/cook
