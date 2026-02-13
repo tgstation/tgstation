@@ -79,7 +79,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 	. = ""
 	. += "<center><img src='[SSassets.transport.get_asset_url("nanotrasen-logo")]' width='50%'></center><hr>"
 	. += "<center><h2>[command_name()], TCD [time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]</h2></center><hr>"
-	. += command_report_main_content || pick_list_replacements("flavor_reports.json", "reports")
+	. += command_report_main_content || get_main_report_content()
 	if(CONFIG_GET(flag/no_dynamic_report))
 		if(isnull(greenshift))
 			greenshift = SSdynamic.current_tier.tier == 0
@@ -156,6 +156,12 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 #endif
 
 	return .
+
+/// Return a random flavor/meme report to use in the command report
+/datum/communciations_controller/proc/get_main_report_content()
+	if(istype(SSstation.announcer, /datum/centcom_announcer/intern))
+		return pick_list_replacements("flavor_reports.json", "intern_reports")
+	return pick_list_replacements("flavor_reports.json", "reports")
 
 #undef COMMUNICATION_COOLDOWN
 #undef COMMUNICATION_COOLDOWN_AI
