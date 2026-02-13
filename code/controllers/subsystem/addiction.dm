@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(addiction)
 	name = "Addiction"
 	flags = SS_NO_FIRE
 	///Dictionary of addiction.type || addiction ref
-	var/list/all_addictions = list()
+	var/list/datum/addiction/all_addictions = list()
 
 /datum/controller/subsystem/addiction/Initialize()
 	InitializeAddictions()
