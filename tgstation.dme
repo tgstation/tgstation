@@ -6196,6 +6196,7 @@
 #include "code\modules\research\designs\autolathe\multi-department_designs.dm"
 #include "code\modules\research\designs\autolathe\security_designs.dm"
 #include "code\modules\research\designs\autolathe\service_designs.dm"
+#include "code\modules\research\experimentor\_defines.dm"
 #include "code\modules\research\experimentor\experimentor.dm"
 #include "code\modules\research\experimentor\experiments.dm"
 #include "code\modules\research\experimentor\wires.dm"

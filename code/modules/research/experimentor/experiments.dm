@@ -1,30 +1,20 @@
-#define EFFECT_PROB_VERYLOW 20
-#define EFFECT_PROB_LOW 35
-#define EFFECT_PROB_MEDIUM 50
-#define EFFECT_PROB_HIGH 75
-#define EFFECT_PROB_VERYHIGH 95
-
-#define SCANTYPE_POKE "Poke"
-#define SCANTYPE_IRRADIATE "Irradiate"
-#define SCANTYPE_GAS "Gas"
-#define SCANTYPE_HEAT "Heat"
-#define SCANTYPE_COLD "Freeze"
-#define SCANTYPE_OBLITERATE "Obliterate"
-#define SCANTYPE_DISCOVER "Discover"
-#define FAIL "Fail"
-
-#define MSG_TYPE_NOTICE "notice"
-#define MSG_TYPE_WARNING "warning"
-#define MSG_TYPE_DANGER "danger"
-
 /datum/experimentor_result_handler
+	/// The name as seen in the UI
 	var/name
+	/// The FontAwesome icon for the UI
 	var/fa_icon
+	/// Which scan type triggers this reaction
 	var/scantype
+	/// Message to display when the experiment begins
 	var/start_message_template
+	/// The probability of the experiment reaching critical state
 	var/critical_prob
+	/// Message to display when the critical state triggers
 	var/critical_message_template
+	/// The span for the visible message
 	var/start_message_type = MSG_TYPE_NOTICE
+	/// This reaction handler has bespoke handing
+	var/is_special = FALSE
 
 /datum/experimentor_result_handler/proc/execute(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/final_message = replacetext(start_message_template, "%ITEM%", exp_on)
@@ -46,7 +36,7 @@
 	return
 
 /// Pokes the object
-/datum/experimentor_result_handler/poke
+/datum/experimentor_result_handler/scan/poke
 	name = "Poke"
 	fa_icon = "hand"
 	scantype = SCANTYPE_POKE
@@ -54,12 +44,12 @@
 	critical_prob = EFFECT_PROB_LOW
 	critical_message_template = "%ITEM% is gripped in just the right way, enhancing its focus."
 
-/datum/experimentor_result_handler/poke/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/scan/poke/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	..()
 	machine.critical_malfunction_counter++
 	machine.RefreshParts()
 
-/datum/experimentor_result_handler/poke/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/scan/poke/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/malf_chance = machine.get_malfunction_chance()
 
 	if(prob(EFFECT_PROB_VERYLOW * malf_chance))
@@ -84,7 +74,7 @@
 				throwing.throw_at(target, 10, 1)
 
 /// Infuses it with radiation
-/datum/experimentor_result_handler/irradiate
+/datum/experimentor_result_handler/scan/irradiate
 	name = "Irradiate"
 	fa_icon = "radiation"
 	scantype = SCANTYPE_IRRADIATE
@@ -93,12 +83,12 @@
 	critical_prob = EFFECT_PROB_VERYLOW
 	critical_message_template = "%ITEM% has activated an unknown subroutine!"
 
-/datum/experimentor_result_handler/irradiate/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/scan/irradiate/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	..()
 	machine.investigate_log("Experimentor has made a clone of [exp_on]", INVESTIGATE_EXPERIMENTOR)
 	machine.item_eject(TRUE)
 
-/datum/experimentor_result_handler/irradiate/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/scan/irradiate/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/malf_chance = machine.get_malfunction_chance()
 
 	if(prob(EFFECT_PROB_VERYLOW * malf_chance))
@@ -130,7 +120,7 @@
 		machine.item_eject()
 
 /// Fills the chamber with gas
-/datum/experimentor_result_handler/gas
+/datum/experimentor_result_handler/scan/gas
 	name = "Gas"
 	fa_icon = "cloud"
 	scantype = SCANTYPE_GAS
@@ -139,11 +129,11 @@
 	critical_prob = EFFECT_PROB_LOW
 	critical_message_template = "%ITEM% achieves the perfect mix!"
 
-/datum/experimentor_result_handler/gas/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/scan/gas/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	..()
 	new /obj/item/stack/sheet/mineral/plasma(get_turf(pick(oview(1, machine))))
 
-/datum/experimentor_result_handler/gas/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/scan/gas/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/malf_chance = machine.get_malfunction_chance()
 	var/chosenchem
 
@@ -188,7 +178,7 @@
 		QDEL_NULL(machine.loaded_item)
 
 /// Heats the object
-/datum/experimentor_result_handler/heat
+/datum/experimentor_result_handler/scan/heat
 	name = "Heat"
 	fa_icon = "fire"
 	scantype = SCANTYPE_HEAT
@@ -197,7 +187,7 @@
 	critical_prob = EFFECT_PROB_LOW
 	critical_message_template = "%ITEM%'s emergency coolant system gives off a small ding!"
 
-/datum/experimentor_result_handler/heat/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/scan/heat/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	..()
 	playsound(machine, 'sound/machines/ding.ogg', 50, TRUE)
 
@@ -213,7 +203,7 @@
 	C.desc = "It has a large hazard symbol printed on the side in fading ink."
 	machine.investigate_log("Experimentor has made a cup of [chosenchem] coffee.", INVESTIGATE_EXPERIMENTOR)
 
-/datum/experimentor_result_handler/heat/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/scan/heat/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/malf_chance = machine.get_malfunction_chance()
 
 	if(prob(EFFECT_PROB_VERYLOW * malf_chance))
@@ -253,7 +243,7 @@
 		machine.item_eject()
 
 /// Cools the object
-/datum/experimentor_result_handler/cold
+/datum/experimentor_result_handler/scan/cold
 	name = "Freeze"
 	fa_icon = "snowflake"
 	scantype = SCANTYPE_COLD
@@ -262,7 +252,7 @@
 	critical_prob = EFFECT_PROB_LOW
 	critical_message_template = "%ITEM%'s emergency coolant system gives off a small ding!"
 
-/datum/experimentor_result_handler/cold/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/scan/cold/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	..()
 	playsound(machine, 'sound/machines/ding.ogg', 50, TRUE)
 
@@ -278,7 +268,7 @@
 	C.desc = "It has a large hazard symbol printed on the side in fading ink."
 	machine.investigate_log("Experimentor has made a cup of [chosenchem] coffee.", INVESTIGATE_EXPERIMENTOR)
 
-/datum/experimentor_result_handler/cold/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/scan/cold/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/malf_chance = machine.get_malfunction_chance()
 
 	if(prob(EFFECT_PROB_VERYLOW * malf_chance))
@@ -304,7 +294,7 @@
 		machine.item_eject()
 
 /// Crushes the object
-/datum/experimentor_result_handler/obliterate
+/datum/experimentor_result_handler/scan/obliterate
 	name = "Obliterate"
 	fa_icon = "trash"
 	scantype = SCANTYPE_OBLITERATE
@@ -313,11 +303,11 @@
 	critical_prob = EFFECT_PROB_LOW
 	critical_message_template = "%ITEM%'s crushing mechanism slowly and smoothly descends, flattening the %ITEM%!"
 
-/datum/experimentor_result_handler/obliterate/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/scan/obliterate/handle_critical(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	..()
 	new /obj/item/stack/sheet/plasteel(get_turf(pick(oview(1, machine))))
 
-/datum/experimentor_result_handler/obliterate/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/scan/obliterate/handle_malfunctions(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/malf_chance = machine.get_malfunction_chance()
 
 	if(prob(EFFECT_PROB_VERYLOW * malf_chance))
@@ -346,12 +336,13 @@
 	QDEL_NULL(machine.loaded_item)
 
 /// Discovers relic properties
-/datum/experimentor_result_handler/discover
+/datum/experimentor_result_handler/scan/discover
 	scantype = SCANTYPE_DISCOVER
 	start_message_template = "scans the %ITEM%, revealing its true nature!"
 	start_message_type = MSG_TYPE_NOTICE
+	is_special = TRUE
 
-/datum/experimentor_result_handler/discover/execute(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
+/datum/experimentor_result_handler/scan/discover/execute(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/final_message = replacetext(start_message_template, "%ITEM%", exp_on)
 	machine.show_start_message(final_message, start_message_type)
 	playsound(machine, 'sound/effects/supermatter.ogg', 50, 3, -1)
@@ -365,27 +356,9 @@
 /// Experiment failure
 /datum/experimentor_result_handler/fail
 	start_message_type = MSG_TYPE_WARNING
+	is_special = TRUE
 
 /datum/experimentor_result_handler/fail/execute(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/a = pick("rumbles", "shakes", "vibrates", "shudders", "honks")
 	var/b = pick("crushes", "spins", "viscerates", "smashes", "insults")
 	machine.visible_message(span_warning("[exp_on] [a], and [b], the experiment was a failure."))
-
-#undef EFFECT_PROB_VERYLOW
-#undef EFFECT_PROB_LOW
-#undef EFFECT_PROB_MEDIUM
-#undef EFFECT_PROB_HIGH
-#undef EFFECT_PROB_VERYHIGH
-
-#undef SCANTYPE_POKE
-#undef SCANTYPE_IRRADIATE
-#undef SCANTYPE_GAS
-#undef SCANTYPE_HEAT
-#undef SCANTYPE_COLD
-#undef SCANTYPE_OBLITERATE
-#undef SCANTYPE_DISCOVER
-#undef FAIL
-
-#undef MSG_TYPE_NOTICE
-#undef MSG_TYPE_WARNING
-#undef MSG_TYPE_DANGER

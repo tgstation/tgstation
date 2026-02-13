@@ -1,20 +1,3 @@
-#define SCANTYPE_POKE "Poke"
-#define SCANTYPE_IRRADIATE "Irradiate"
-#define SCANTYPE_GAS "Gas"
-#define SCANTYPE_HEAT "Heat"
-#define SCANTYPE_COLD "Freeze"
-#define SCANTYPE_OBLITERATE "Obliterate"
-#define SCANTYPE_DISCOVER "Discover"
-#define FAIL "Fail"
-
-#define MSG_TYPE_NOTICE "notice"
-#define MSG_TYPE_WARNING "warning"
-#define MSG_TYPE_DANGER "danger"
-
-#define EFFECT_PROBABILITY 20
-#define EXPERIMENT_COOLDOWN_BASE 2 SECONDS
-
-/// experimentor.dm
 /obj/machinery/rnd/experimentor
 	name = "\improper E.X.P.E.R.I-MENTOR"
 	desc = "Experimental Xeon Particle Entropy Reaction Infuser or something like that. Nanotrasen's new reaction infuser, with a slight less tendency to catastrophically fail than the previous model... or so they say."
@@ -43,9 +26,9 @@
 	/// Items that we can get by transforming
 	var/static/list/valid_items = list()
 	/// Items that will cause critical reactions
-	var/list/critical_items_typecache
+	var/static/list/critical_items_typecache
 	/// Items that the machine shouldn't interact with
-	var/list/banned_typecache
+	var/static/list/banned_typecache
 
 	COOLDOWN_DECLARE(run_experiment)
 
@@ -58,43 +41,49 @@
 	tracked_ian_ref = WEAKREF(locate(/mob/living/basic/pet/dog/corgi/ian) in GLOB.mob_living_list)
 	tracked_runtime_ref = WEAKREF(locate(/mob/living/basic/pet/cat/runtime) in GLOB.mob_living_list)
 
-	critical_items_typecache = typecacheof(list(
-		/obj/item/construction/rcd,
-		/obj/item/grenade,
-		/obj/item/aicard,
-		/obj/item/slime_extract,
-		/obj/item/transfer_valve,
-	))
+	if(!critical_items_typecache)
+		critical_items_typecache = typecacheof(list(
+			/obj/item/construction/rcd,
+			/obj/item/grenade,
+			/obj/item/aicard,
+			/obj/item/slime_extract,
+			/obj/item/transfer_valve,
+		))
 
-	banned_typecache = typecacheof(list(
-		/obj/item/stock_parts/power_store/cell/infinite,
-		/obj/item/grenade/chem_grenade/tuberculosis
-	))
+	if(!banned_typecache)
+		banned_typecache = typecacheof(list(
+			/obj/item/stock_parts/power_store/cell/infinite,
+			/obj/item/grenade/chem_grenade/tuberculosis
+		))
 
-	for(var/obj/item/item_path as anything in valid_subtypesof(/obj/item))
-		if(ispath(item_path, /obj/item/stock_parts) || ispath(item_path, /obj/item/grenade/chem_grenade) || ispath(item_path, /obj/item/knife))
-			valid_items["[item_path]"] += 15
+	if(!valid_items)
+		for(var/obj/item/item_path as anything in valid_subtypesof(/obj/item))
+			if(ispath(item_path, /obj/item/stock_parts) || ispath(item_path, /obj/item/grenade/chem_grenade) || ispath(item_path, /obj/item/knife))
+				valid_items["[item_path]"] += 15
 
-		if(ispath(item_path, /obj/item/food))
-			valid_items["[item_path]"] += rand(1,4)
+			if(ispath(item_path, /obj/item/food))
+				valid_items["[item_path]"] += rand(1,4)
 
 /obj/machinery/rnd/experimentor/proc/load_handlers()
-	for(var/datum/experimentor_result_handler/handler_type as anything in valid_subtypesof(/datum/experimentor_result_handler))
-		var/datum/experimentor_result_handler/handler = new handler_type()
-		if(handler.scantype)
-			experimentor_result_handlers[handler.scantype] = handler
-		else if(handler_type == /datum/experimentor_result_handler/fail)
-			experimentor_result_handlers[FAIL] = handler
+	for(var/datum/experimentor_result_handler/scan/handler_type as anything in valid_subtypesof(/datum/experimentor_result_handler/scan))
+		var/datum/experimentor_result_handler/scan/handler = new handler_type()
+		experimentor_result_handlers[handler.scantype] = handler
+
+	experimentor_result_handlers[FAIL] = new /datum/experimentor_result_handler/fail
 
 /obj/machinery/rnd/experimentor/proc/get_available_reactions()
 	var/list/all_reactions = list()
 	for(var/scantype in experimentor_result_handlers)
-		if(scantype != SCANTYPE_DISCOVER && scantype != FAIL)
-			all_reactions += scantype
+		var/datum/experimentor_result_handler/handler = experimentor_result_handlers[scantype]
+		if(handler.is_special)
+			continue
+		all_reactions += scantype
+
 	return all_reactions
 
 /obj/machinery/rnd/experimentor/proc/is_special_reaction(reaction_type)
-	return reaction_type == SCANTYPE_DISCOVER || reaction_type == FAIL
+	var/datum/experimentor_result_handler/handler = experimentor_result_handlers[reaction_type]
+	return handler.is_special
 
 /obj/machinery/rnd/experimentor/proc/run_experiment(experiment_type)
 	if(!loaded_item)
@@ -182,7 +171,7 @@
 	for(var/scantype in experimentor_result_handlers)
 		var/datum/experimentor_result_handler/handler = experimentor_result_handlers[scantype]
 
-		if(scantype == FAIL)
+		if(handler.is_special && !handler.scantype == SCANTYPE_DISCOVER)
 			continue
 
 		var/is_available = TRUE
@@ -260,11 +249,8 @@
 	if(isnull(matching) || isnull(target_reaction))
 		return FAIL
 
-	if("[matching.type]" in item_reactions)
-		var/associated_reaction = item_reactions["[matching.type]"]
-		if(associated_reaction == target_reaction)
-			return associated_reaction
-
+	if(item_reactions["[matching.type]"] == target_reaction)
+		return item_reactions["[matching.type]"]
 	return FAIL
 
 /obj/machinery/rnd/experimentor/proc/try_perform_experiment(reaction)
@@ -344,28 +330,26 @@
 	new /obj/item/grown/bananapeel(loc)
 
 
-/obj/machinery/rnd/experimentor/item_interaction_secondary(mob/living/user, obj/item/weapon, list/modifiers)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) || !is_insertion_ready(user))
-		return ..()
+/obj/machinery/rnd/experimentor/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
+	if(user.combat_mode)
+		return ITEM_INTERACT_BLOCKING
+
+	if(panel_open && is_wire_tool(weapon))
+		wires.interact(user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(!is_insertion_ready(user))
+		return ITEM_INTERACT_BLOCKING
 
 	if(!user.transferItemToLoc(weapon, src))
 		to_chat(user, span_warning("\The [weapon] is stuck to your hand!"))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
 	loaded_item = weapon
 	to_chat(user, span_notice("You put [weapon] in the chamber."))
 	flick("h_lathe_load", src)
 	try_generate_reaction_for_item(loaded_item)
-	return TRUE
-
-/obj/machinery/rnd/experimentor/item_interaction(mob/living/user, obj/item/weapon, params)
-	if(panel_open && is_wire_tool(weapon))
-		return NONE
-
-	if(user.combat_mode)
-		return ..()
-
-	return item_interaction_secondary(user, weapon, params)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/rnd/experimentor/attack_hand_secondary(mob/user, list/modifiers)
 	if(!panel_open)
@@ -399,19 +383,3 @@
 	var/turf/T = get_turf(user)
 	message_admins("Experimentor reaction: [ReactionName] generated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(T)]")
 	log_game("Experimentor reaction: [ReactionName] generated by [key_name(user)] in [AREACOORD(T)]")
-
-#undef SCANTYPE_POKE
-#undef SCANTYPE_IRRADIATE
-#undef SCANTYPE_GAS
-#undef SCANTYPE_HEAT
-#undef SCANTYPE_COLD
-#undef SCANTYPE_OBLITERATE
-#undef SCANTYPE_DISCOVER
-#undef FAIL
-
-#undef MSG_TYPE_NOTICE
-#undef MSG_TYPE_WARNING
-#undef MSG_TYPE_DANGER
-
-#undef EFFECT_PROBABILITY
-#undef EXPERIMENT_COOLDOWN_BASE
