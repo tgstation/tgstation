@@ -67,7 +67,7 @@
 	hitsound_on = 'sound/items/weapons/blade1.ogg'
 	hitsound_off = 'sound/items/weapons/tap.ogg'
 	damtype_on = BRUTE
-	force_on = 18 //same as epen (but much more obvious)
+	force_on = 20 //same as epen (but much more obvious)
 	light_range = 3 //ditto
 	heat = 0
 
