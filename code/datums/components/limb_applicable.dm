@@ -1,3 +1,11 @@
+/**
+ * ## Limb Applicable
+ *
+ * Allows item to be attached to limbs by clicking on humans with them while limb targeting
+ *
+ * The item then goes in the limb's contents, where it will be added to the limb's applied_items list
+ * The applied_items is indexed by category so you can easily check for the presence of a given item or category of item
+ */
 /datum/component/limb_applicable
 	/// List of body zones we can apply parent to
 	var/list/valid_zones
