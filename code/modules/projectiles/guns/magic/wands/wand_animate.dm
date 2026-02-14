@@ -24,6 +24,7 @@
 	some_item.animate_atom_living(user)
 
 /obj/item/gun/magic/wand/animate/do_suicide(mob/living/user)
+	charges--
 	if (!iscarbon(user))
 		user.visible_message(span_suicide("... but [user] is already animate!"))
 		return SHAME
