@@ -236,6 +236,10 @@
 	max_integrity = 120
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2)
 
+/obj/structure/chair/comfy/shuttle/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
 /obj/structure/chair/comfy/shuttle/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
 		var/mutable_appearance/echair_overlay = mutable_appearance('icons/obj/chairs.dmi', "echair_over", OBJ_LAYER, src, appearance_flags = KEEP_APART)
