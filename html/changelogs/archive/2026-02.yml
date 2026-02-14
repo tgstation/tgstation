@@ -185,6 +185,11 @@
   - rscadd: Queen bee lines now alternate between spawning a queen bee and a swarm
       of bees. (Before, failure caused a swarm of bees to spawn.)
   - rscadd: Cytology created bees have a rare chance of having a random toxin.
+  - rscadd: When you get absorbed by a changeling, you get made into an imaginary
+      friend of the changeling that absorbed you.
+  - refactor: Refactored how people are returned to their bodies after occupying separate
+      bodies, such as bitrunners and ghost roles. Report any oddities or failure to
+      return correctly.
   lelandkemble:
   - map: Meta's cryo waste pipe is connected to main waste pipes
   matchalabubu67:
