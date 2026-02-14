@@ -79,24 +79,24 @@
 
 	. = TRUE
 	if(!canLoadItem(inserted_item, user))
-		to_chat(user, span_warning("[src] does not accept [inserted_item]!"))
 		return FALSE
 
-	to_chat(user, span_notice("You insert [inserted_item] into [src]'s input compartment."))
 	for(var/datum/data/vending_product/product_datum in product_records + coin_records + hidden_records)
-		if(inserted_item.type == product_datum.product_path)
-			if(product_datum.amount == product_datum.max_amount)
-				var/category_name_string = product_datum.category ? "[product_datum.category["name"]] " : ""
-				to_chat(user, span_warning("No space for any more [category_name_string]products!"))
-				return FALSE
+		if(inserted_item.type != product_datum.product_path)
+			continue
 
-			if(!user.transferItemToLoc(inserted_item, src))
-				to_chat(user, span_warning("[inserted_item] is stuck in your hand!"))
-				return FALSE
+		if(product_datum.amount == product_datum.max_amount)
+			to_chat(user, span_warning("[src] can't accept any more [inserted_item][inserted_item.p_s()]!"))
+			return FALSE
 
-			product_datum.amount++
-			LAZYADD(product_datum.returned_products, inserted_item)
-			break
+		if(!user.transferItemToLoc(inserted_item, src))
+			to_chat(user, span_warning("[inserted_item] is stuck in your hand!"))
+			return FALSE
+
+		product_datum.amount++
+		LAZYADD(product_datum.returned_products, inserted_item)
+		to_chat(user, span_notice("You insert [inserted_item] into [src]'s input compartment."))
+		break
 
 /obj/machinery/vending/item_interaction(mob/living/user, obj/item/attack_item, list/modifiers)
 	. = ..()
