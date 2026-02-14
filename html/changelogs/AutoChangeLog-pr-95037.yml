@@ -1,0 +1,5 @@
+author: "Co0kie-GG"
+delete-after: True
+changes:
+  - bugfix: "AI portraits are now displayed correctly"
+  - bugfix: "AI display selector displays them correctly"
