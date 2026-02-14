@@ -43,6 +43,17 @@
 
 /obj/item/golem_shell/attackby(obj/item/potential_food, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
+	if(istype(potential_food, /obj/item/crowbar)) //Dissasemble the shell, crowbar_act is overriden by attackby.
+		to_chat(user, span_notice("You begin dislodging structurally integral chunks."))
+		playsound(src,'sound/items/tools/crowbar.ogg', 70)
+		if(!do_after(user, delay = 1 SECONDS, target = src))
+			return
+		if(!src)
+			return
+		new /obj/item/stack/sheet/mineral/adamantine(get_turf(src), 1) //Return less than was used to construct the shell
+		to_chat(user, span_notice("The shell collapses in on itself!"))
+		playsound(src, 'sound/effects/rock/rock_break.ogg', 40)
+		qdel(src)
 	if(!isstack(potential_food))
 		balloon_alert(user, "not a mineral!")
 		return
