@@ -86,7 +86,8 @@
 	for(var/datum/data/vending_product/product_datum in product_records + coin_records + hidden_records)
 		if(inserted_item.type == product_datum.product_path)
 			if(product_datum.amount == product_datum.max_amount)
-				to_chat(user, span_warning("no space for any more [product_datum.category || "Products"]!"))
+				var/category_name_string = product_datum.category ? "[product_datum.category["name"]] " : ""
+				to_chat(user, span_warning("No space for any more [category_name_string]products!"))
 				return FALSE
 
 			if(!user.transferItemToLoc(inserted_item, src))
