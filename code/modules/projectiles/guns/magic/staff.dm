@@ -188,6 +188,7 @@
 		/obj/projectile/magic/animate,
 		/obj/projectile/magic/antimagic,
 		/obj/projectile/magic/arcane_barrage,
+		/obj/projectile/magic/babel,
 		/obj/projectile/magic/bounty,
 		/obj/projectile/magic/change,
 		/obj/projectile/magic/death,
@@ -195,15 +196,20 @@
 		/obj/projectile/magic/fetch,
 		/obj/projectile/magic/fireball,
 		/obj/projectile/magic/flying,
+		/obj/projectile/magic/freeze,
+		/obj/projectile/magic/levitate,
 		/obj/projectile/magic/locker,
 		/obj/projectile/magic/necropotence,
+		/obj/projectile/magic/plague,
+		/obj/projectile/magic/rebellion,
 		/obj/projectile/magic/resurrection,
-		/obj/projectile/magic/babel,
+		/obj/projectile/magic/shrink,
 		/obj/projectile/magic/spellblade,
+		/obj/projectile/magic/swap,
 		/obj/projectile/magic/teleport,
+		/obj/projectile/magic/tentacle,
 		/obj/projectile/magic/wipe,
-		/obj/projectile/temp/chill,
-		/obj/projectile/magic/shrink
+		/obj/projectile/temp/chill
 	)
 
 /obj/item/gun/magic/staff/chaos/unrestricted
