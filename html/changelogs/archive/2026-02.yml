@@ -163,3 +163,5 @@
 2026-02-14:
   lelandkemble:
   - map: Meta's cryo waste pipe is connected to main waste pipes
+  matchalabubu67:
+  - bugfix: radio uplinks now generate three word codes instead of one

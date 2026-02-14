@@ -1,4 +1,0 @@
-author: "matchalabubu67"
-delete-after: True
-changes:
-  - bugfix: "radio uplinks now generate three word codes instead of one"
