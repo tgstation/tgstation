@@ -59,8 +59,8 @@
 	user.balloon_alert(user, "inserted!")
 
 	playsound(user, 'sound/items/handling/surgery/organ1.ogg', vol = 80, vary = TRUE, ignore_walls = FALSE)
-
 	user.temporarilyRemoveItemFromInventory(organ, force = TRUE)
+	organ.pre_surgical_insertion(user, user, organ.zone)
 	organ.Insert(user)
 	organ.on_surgical_insertion(user, user, organ.zone, organ)
 
@@ -74,9 +74,6 @@
 		user.balloon_alert(user, "your [existing_organ] [existing_organ.p_are()] in the way!")
 		return FALSE
 
-	if (!organ.pre_surgical_insertion(user, user, organ.zone))
-		user.balloon_alert(user, "failed!")
-		return FALSE
 	if (!organ.useable)
 		user.balloon_alert(user, "unusable!")
 		return FALSE
