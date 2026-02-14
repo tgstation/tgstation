@@ -96,7 +96,7 @@
 /mob/living/carbon/proc/on_liverless_metabolism_trait_gain(datum/source)
 	SIGNAL_HANDLER
 
-	for(var/addiction_type in subtypesof(/datum/addiction))
+	for(var/addiction_type in GLOB.addictions)
 		mind?.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
 
 	reagents.end_metabolization(keep_liverless = TRUE)

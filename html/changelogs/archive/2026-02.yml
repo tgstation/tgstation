@@ -143,3 +143,56 @@
   - bugfix: Airlock painters are now short range once again
   sesametg:
   - server: 'fix: HR have reopened positions at unstaffed stations'
+2026-02-13:
+  Cyberboss:
+  - bugfix: Fixed some inconsistencies with bodytypes when non-binary genders had
+      it set to "Use gender". This is no longer possible. If you use have previously
+      used this setting, your bodytype will be explicitly set to female.
+  LT3:
+  - code_imp: Removed unused rock the vote config entry
+  SyncIt21:
+  - refactor: plumbing automatic buffer has been refactored for better performance
+      & interactions. report bugs on github
+  - refactor: plumbing accmilator code has been improved. Report bugs on github
+  - bugfix: power monitors report accurate readings for plumbing machinery
+  - refactor: code for plumbing splitter & filter have been improved. plumbing splitter
+      is now a 3 way component. Report bugs on github
+  - code_imp: mob metabolization code has better cpu performance
+  TealSeer:
+  - balance: The CE spawns with upgraded tools again
+2026-02-14:
+  Co0kie-GG:
+  - bugfix: AI portraits are now displayed correctly
+  - bugfix: AI display selector displays them correctly
+  Cyberboss:
+  - bugfix: The Kommand action icon will now properly reflect your pointer colour
+      after being reset.
+  Melbert:
+  - refactor: Rewrites how addiction points are applied from reagents. Some reagents
+      may be marginally more or less addictive as a consequence.
+  - balance: Addiction gained per metabolism tick now scales to the amount of reagents
+      metabolized. In other words if you metabolize 0.2 units instead of the expected
+      0.4 units, you get 0.5x of the amount of addiction gain. This ultimately changes
+      very little and I would imagine it's how most people expected it to work in
+      the first place...
+  - rscdel: Cytology creations no longer have a random chance to fail if another sample
+      in the vat has growth process. All growth is still reset on any successful creation.
+      As growth failure has been removed, some cell lines that had unique fail interactions
+      have been altered.
+  - rscadd: Clown cell lines are now all boosted by supplying mutagen. However, using
+      mutagen may cause a mutant clown to spawn. (Before, failure caused a mutant
+      clown to spawn.)
+  - rscadd: Queen bee lines now alternate between spawning a queen bee and a swarm
+      of bees. (Before, failure caused a swarm of bees to spawn.)
+  - rscadd: Cytology created bees have a rare chance of having a random toxin.
+  - rscadd: When you get absorbed by a changeling, you get made into an imaginary
+      friend of the changeling that absorbed you.
+  - refactor: Refactored how people are returned to their bodies after occupying separate
+      bodies, such as bitrunners and ghost roles. Report any oddities or failure to
+      return correctly.
+  lelandkemble:
+  - map: Meta's cryo waste pipe is connected to main waste pipes
+  matchalabubu67:
+  - bugfix: radio uplinks now generate three word codes instead of one
+  vinylspiders:
+  - bugfix: fixes certain particle effects not triggering under certain conditions
