@@ -164,6 +164,9 @@
   Co0kie-GG:
   - bugfix: AI portraits are now displayed correctly
   - bugfix: AI display selector displays them correctly
+  Cyberboss:
+  - bugfix: The Kommand action icon will now properly reflect your pointer colour
+      after being reset.
   Melbert:
   - refactor: Rewrites how addiction points are applied from reagents. Some reagents
       may be marginally more or less addictive as a consequence.

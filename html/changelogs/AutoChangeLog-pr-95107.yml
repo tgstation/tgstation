@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes:
-  - bugfix: "The Kommand action icon will now properly reflect your pointer colour after being reset."
