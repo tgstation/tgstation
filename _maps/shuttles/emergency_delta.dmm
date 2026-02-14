@@ -142,6 +142,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/vitals_reader/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "am" = (
@@ -344,6 +345,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "aR" = (
@@ -1055,6 +1057,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Rz" = (
@@ -1480,8 +1483,8 @@ ag
 aF
 aF
 ag
-aP
 af
+aP
 af
 af
 af
@@ -1566,7 +1569,7 @@ aa
 (16,1,1) = {"
 ab
 ad
-hB
+af
 al
 aR
 aA
@@ -1597,7 +1600,7 @@ aa
 (17,1,1) = {"
 ab
 ad
-af
+hB
 am
 au
 QD

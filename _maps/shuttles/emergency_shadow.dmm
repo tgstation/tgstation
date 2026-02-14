@@ -296,6 +296,7 @@
 /area/shuttle/escape)
 "mw" = (
 /obj/machinery/stasis,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape)
 "nq" = (
@@ -553,6 +554,7 @@
 "Bm" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Bu" = (
@@ -1136,6 +1138,7 @@
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Zk" = (
@@ -1610,11 +1613,11 @@ vU
 GK
 Wc
 XA
+vU
+vU
 US
-US
-US
-US
-US
+vU
+vU
 XA
 AS
 Ns

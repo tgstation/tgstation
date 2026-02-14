@@ -526,6 +526,7 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
 	},
+/obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "GK" = (
@@ -819,6 +820,16 @@
 	},
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
+"UI" = (
+/obj/machinery/stasis{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 1
+	},
+/obj/machinery/vitals_reader/directional/west,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "UL" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -982,10 +993,10 @@ Id
 xH
 Me
 oB
-FA
+UI
 VD
 FA
-kd
+jL
 Me
 UW
 UW
@@ -1015,7 +1026,7 @@ DM
 DM
 DM
 Hy
-jL
+kd
 Me
 UW
 UW

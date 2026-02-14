@@ -313,10 +313,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"br" = (
-/obj/machinery/stasis,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "bs" = (
 /obj/machinery/door/airlock{
 	name = "Unit 1"
@@ -339,6 +335,7 @@
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bx" = (
@@ -477,6 +474,7 @@
 "cb" = (
 /obj/machinery/light/small/directional/east,
 /obj/machinery/stasis,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "en" = (
@@ -512,6 +510,13 @@
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
+/area/shuttle/escape)
+"NA" = (
+/obj/machinery/stasis{
+	dir = 4
+	},
+/obj/machinery/vitals_reader/directional/west,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "UI" = (
 /obj/item/kirbyplants/organic/plant21{
@@ -716,7 +721,7 @@ bd
 aN
 aE
 bn
-bi
+NA
 bw
 bz
 bC
@@ -764,7 +769,7 @@ be
 eK
 bk
 ac
-br
+bi
 cb
 bU
 ab

@@ -435,6 +435,7 @@
 "cu" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/stasis,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "cw" = (
@@ -1217,6 +1218,7 @@
 /obj/structure/table/optable,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/south,
+/obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "Su" = (
@@ -1305,6 +1307,7 @@
 /obj/machinery/stasis{
 	dir = 4
 	},
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "XM" = (
@@ -1447,7 +1450,7 @@ MQ
 bZ
 as
 ab
-bg
+ab
 as
 Dr
 cV
@@ -1478,7 +1481,7 @@ XD
 sy
 Rk
 ru
-cL
+ab
 dc
 cT
 "}
@@ -1586,7 +1589,7 @@ cu
 oZ
 Wv
 RH
-cL
+ab
 dc
 cT
 "}
@@ -1609,7 +1612,7 @@ pj
 bZ
 as
 ab
-bg
+ab
 as
 lU
 db

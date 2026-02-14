@@ -1245,12 +1245,12 @@
 /turf/open/floor/iron/dark/corner,
 /area/shuttle/escape)
 "Bm" = (
-/obj/machinery/status_display/evac/directional/east,
 /obj/machinery/stasis,
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/camera/autoname{
 	dir = 1
 	},
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/white/herringbone,
 /area/shuttle/escape)
 "Bu" = (
@@ -1702,8 +1702,8 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/escape)
 "Ho" = (
-/obj/machinery/status_display/evac/directional/east,
 /obj/machinery/stasis,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/white/herringbone,
 /area/shuttle/escape)
 "HL" = (
@@ -1925,7 +1925,8 @@
 	dir = 1
 	},
 /obj/machinery/light/small/directional/south,
-/obj/item/radio/intercom/directional/south,
+/obj/machinery/vitals_reader/directional/south,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/shuttle/escape)
 "NI" = (

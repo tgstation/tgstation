@@ -721,6 +721,7 @@
 "Pp" = (
 /obj/machinery/stasis,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "Pw" = (
@@ -753,6 +754,7 @@
 /obj/machinery/stasis,
 /obj/structure/broken_flooring/singular,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/vitals_reader/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Xw" = (
