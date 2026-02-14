@@ -447,7 +447,7 @@ export class KeybindingsPage extends Component<any, KeybindingsPageState> {
     this.setState({
       selectedKeybindings: Object.fromEntries(
         Object.entries(data.keybindings).map(([keybind, hotkeys]) => {
-          return [keybind, hotkeys.filter((value) => value !== '...')];
+          return [keybind, hotkeys.filter((value) => value !== 'Unbound')];
         }),
       ),
     });
