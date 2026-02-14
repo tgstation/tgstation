@@ -56,6 +56,7 @@
 #define CELL_LINE_TABLE_BUTTERFLY "cell_line_butterfly_table"
 #define CELL_LINE_TABLE_MEGA_ARACHNID "cell_line_table_mega_arachnid"
 #define CELL_LINE_TABLE_GOAT "cell_line_table_goat"
+#define CELL_LINE_TABLE_PIG "cell_line_table_pig"
 
 //! Biopsy cell line organ types
 #define CELL_LINE_ORGAN_HEART "cell_line_organ_heart"
