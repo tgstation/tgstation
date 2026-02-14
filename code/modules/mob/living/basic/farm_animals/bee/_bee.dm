@@ -235,7 +235,7 @@
 
 /mob/living/basic/bee/toxin/Initialize(mapload)
 	. = ..()
-	assign_random_toxin_reagent(respect_can_synth = FALSE)
+	assign_random_toxin_reagent()
 
 /// A bee which despawns after a short amount of time (beespawns?)
 /mob/living/basic/bee/timed
