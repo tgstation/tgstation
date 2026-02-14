@@ -117,13 +117,24 @@
 /datum/spellbook_entry/item/wands
 	name = "Wand Assortment"
 	desc = "A collection of wands that allow for a wide variety of utility. \
-		Wands have a limited number of charges, so be conservative with their use. Comes in a handy belt."
+		Wands have a limited number of charges, so be conservative with their use. \
+		Comes in a handy belt, or a fancy bandolier if you are already wearing one."
 	item_path = /obj/item/storage/belt/wands/full
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 
 /datum/spellbook_entry/item/wands/try_equip_item(mob/living/carbon/human/user, obj/item/to_equip)
+	// TODO spawn a wand bandolier here instead
 	var/was_equipped = user.equip_to_slot_if_possible(to_equip, ITEM_SLOT_BELT, disable_warning = TRUE)
 	to_chat(user, span_notice("\A [to_equip.name] has been summoned [was_equipped ? "on your waist" : "at your feet"]."))
+
+/datum/spellbook_entry/item/wands/discount
+	name = "Bargain Bin Wand Assortment"
+	desc = "A random collection of wands sourced from apprentice wandmaking studies. \
+		You're never quite sure what you're going to get. \
+		Comes in a handy belt, or a fancy bandolier if you are already wearing one."
+	cost = 1
+	item_path = /obj/item/storage/belt/wands/full/discount
+	category = SPELLBOOK_CATEGORY_DEFENSIVE
 
 /datum/spellbook_entry/item/armor
 	name = "Mastercrafted Armor Set"

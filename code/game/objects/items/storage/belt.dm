@@ -465,7 +465,8 @@
 	worn_icon_state = "soulstonebelt"
 	storage_type = /datum/storage/wands_belt
 
-/obj/item/storage/belt/wands/full/PopulateContents()
+/// Put some wands in that bad boy
+/obj/item/storage/belt/wands/full/proc/create_wands()
 	new /obj/item/gun/magic/wand/death(src)
 	new /obj/item/gun/magic/wand/resurrection(src)
 	new /obj/item/gun/magic/wand/polymorph(src)
@@ -474,9 +475,43 @@
 	new /obj/item/gun/magic/wand/fireball(src)
 	new /obj/item/gun/magic/wand/shrink(src)
 
+/obj/item/storage/belt/wands/full/PopulateContents()
+	create_wands()
 	for(var/obj/item/gun/magic/wand/W in contents) //All wands in this pack come in the best possible condition
 		W.max_charges = initial(W.max_charges)
 		W.charges = W.max_charges
+
+/// Filled with budget wands instead of cool ones
+/obj/item/storage/belt/wands/full/discount
+	/// Which wands can appear?
+	var/static/list/possible_options = list(
+		/obj/item/gun/magic/wand/animate,
+		/obj/item/gun/magic/wand/babel,
+		/obj/item/gun/magic/wand/bald,
+		/obj/item/gun/magic/wand/door,
+		/obj/item/gun/magic/wand/fireball,
+		/obj/item/gun/magic/wand/freeze,
+		/obj/item/gun/magic/wand/hallucination,
+		/obj/item/gun/magic/wand/levitate,
+		/obj/item/gun/magic/wand/pax,
+		/obj/item/gun/magic/wand/pizza,
+		/obj/item/gun/magic/wand/plague,
+		/obj/item/gun/magic/wand/prank,
+		/obj/item/gun/magic/wand/rebel,
+		/obj/item/gun/magic/wand/repulse,
+		/obj/item/gun/magic/wand/swap,
+		/obj/item/gun/magic/wand/teleport,
+		/obj/item/gun/magic/wand/tentacles,
+		/obj/item/gun/magic/wand/zap,
+	)
+
+/obj/item/storage/belt/wands/full/discount/create_wands()
+	var/list/available_options = possible_options.Copy()
+	for (var/i in 1 to 6)
+		if (!length(available_options))
+			break
+		var/wand_path = pick_n_take(available_options)
+		new wand_path(src)
 
 /obj/item/storage/belt/janitor
 	name = "janibelt"
