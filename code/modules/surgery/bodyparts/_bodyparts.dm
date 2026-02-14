@@ -1357,14 +1357,9 @@
 			// Add two masked images based on the old one
 			. += leg_source.generate_masked_leg(limb_image)
 
-	// And finally put bodypart_overlays on if not husked
-	if(is_husked)
-		SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped, update_on)
-		return .
-
 	// Draw external organs like horns and frills
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
-		if(!overlay.can_draw_on_bodypart(src, owner))
+		if(!overlay.can_draw_on_bodypart(src, owner, is_husked))
 			continue
 
 		// Some externals have multiple layers for background, foreground and between
@@ -1372,7 +1367,7 @@
 			if(!(overlay.layers & external_layer))
 				continue
 
-			var/external_overlay = overlay.get_overlay(external_layer, src)
+			var/external_overlay = overlay.get_overlay(external_layer, src, is_husked)
 			if (!dropped)
 				. += external_overlay
 				continue
