@@ -453,7 +453,7 @@ const NewscasterChannelBox = (props) => {
               <Button
                 icon="ban"
                 tooltip="Censor the whole channel and its \
-                  contents as dangerous to the station. Cannot be undone."
+                  contents as dangerous to the station."
                 disabled={!admin_mode || !viewing_channel}
                 onClick={() =>
                   act('channelDNotice', {
