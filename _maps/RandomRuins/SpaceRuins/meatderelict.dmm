@@ -354,16 +354,6 @@
 	},
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
-"hY" = (
-/obj/structure/barricade/wooden/crude,
-/obj/machinery/door/airlock/science/glass{
-	name = "Janitorial Closet"
-	},
-/obj/effect/mapping_helpers/airlock_note_placer{
-	note_info = "DO NOT ENTER!!!"
-	},
-/turf/open/indestructible/white,
-/area/ruin/space/has_grav/powered/biooutpost)
 "id" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -751,6 +741,16 @@
 "oX" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/indestructible/dark,
+/area/ruin/space/has_grav/powered/biooutpost)
+"pc" = (
+/obj/structure/barricade/wooden/crude,
+/obj/machinery/door/airlock/science/glass{
+	name = "Janitorial Closet"
+	},
+/obj/effect/mapping_helpers/airlock_note_placer{
+	note_info = "DO NOT ENTER!!!"
+	},
+/turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
 "pe" = (
 /obj/structure/chair/office,
@@ -1145,6 +1145,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"vO" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/ai_module/law/core/full/ten_commandments,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/biooutpost)
 "vY" = (
 /obj/machinery/door/puzzle/keycard{
@@ -2512,14 +2520,6 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/biooutpost)
-"Xm" = (
-/obj/structure/table/wood/fancy/orange,
-/obj/item/ai_module/core/full/ten_commandments,
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/ruin/space/has_grav/powered/biooutpost)
 "Xo" = (
 /obj/structure/showcase/horrific_experiment,
 /turf/open/indestructible/plating,
@@ -3028,7 +3028,7 @@ Jh
 Jh
 Jh
 Jh
-hY
+pc
 Jh
 fH
 EE
@@ -3188,7 +3188,7 @@ Jh
 Jh
 Jh
 eT
-Xm
+vO
 Tw
 tg
 Jh

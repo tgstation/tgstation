@@ -1532,6 +1532,20 @@
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
+"ne" = (
+/obj/structure/cable/multilayer,
+/obj/structure/cable/layer1,
+/obj/structure/safe/floor,
+/obj/item/sticker/syndicate/apc,
+/obj/item/grenade/empgrenade,
+/obj/item/book/granter/crafting_recipe/donk_secret_recipe,
+/obj/item/ai_module/law/core/full/cybersun,
+/obj/item/reagent_containers/condiment/donksauce,
+/mob/living/basic/cybersun_ai_core{
+	donk_ai_master = 1
+	},
+/turf/open/floor/plating/reinforced,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "nf" = (
 /obj/machinery/door/airlock/external/glass/ruin{
 	name = "Dock 1 Internal Airlock"
@@ -1722,20 +1736,6 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
-"pb" = (
-/obj/structure/cable/multilayer,
-/obj/structure/cable/layer1,
-/obj/structure/safe/floor,
-/obj/item/sticker/syndicate/apc,
-/obj/item/grenade/empgrenade,
-/obj/item/book/granter/crafting_recipe/donk_secret_recipe,
-/obj/item/ai_module/core/full/cybersun,
-/obj/item/reagent_containers/condiment/donksauce,
-/mob/living/basic/cybersun_ai_core{
-	donk_ai_master = 1
-	},
-/turf/open/floor/plating/reinforced,
-/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "pc" = (
 /obj/structure/table/wood,
 /obj/item/cardpack/series_one{
@@ -3212,6 +3212,14 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/maint/disposals)
+"BY" = (
+/obj/structure/showerframe{
+	pixel_y = -2;
+	pixel_x = -8
+	},
+/obj/item/wallframe/sinkframe,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hauntedtradingpost/maint)
 "Ct" = (
 /obj/structure/cable/layer1,
 /obj/item/cigbutt,
@@ -4063,14 +4071,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
-"Jj" = (
-/obj/structure/showerframe{
-	pixel_y = -2;
-	pixel_x = -8
-	},
-/obj/item/wallframe/sinkframe,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hauntedtradingpost/maint)
 "Ju" = (
 /mob/living/basic/viscerator,
 /obj/effect/turf_decal/bot_red,
@@ -4273,16 +4273,6 @@
 /obj/effect/spawner/random/medical/minor_healing,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
-"Lz" = (
-/obj/structure/cable/layer1,
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/ai_module/supplied/protect_station{
-	pixel_x = 2;
-	pixel_y = 5
-	},
-/obj/machinery/light/red/dim/directional/east,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "LC" = (
 /obj/structure/cable/layer1,
 /obj/machinery/door/firedoor,
@@ -4560,6 +4550,16 @@
 /obj/machinery/button/door/directional/north{
 	id = "donk_corridor_peek"
 	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
+"ND" = (
+/obj/structure/cable/layer1,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ai_module/law/supplied/protect_station{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/machinery/light/red/dim/directional/east,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "NH" = (
@@ -6511,7 +6511,7 @@ gv
 GS
 yi
 CZ
-Jj
+BY
 yi
 qR
 "}
@@ -6757,7 +6757,7 @@ iv
 iv
 ot
 XW
-pb
+ne
 MR
 tl
 YR
@@ -7019,7 +7019,7 @@ hV
 vx
 tm
 Gg
-Lz
+ND
 bu
 cv
 gb

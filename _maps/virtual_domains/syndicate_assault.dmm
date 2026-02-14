@@ -111,20 +111,9 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/carpet/royalblack,
 /area/virtual_domain)
-"cZ" = (
-/obj/structure/table/reinforced,
-/obj/item/gun/ballistic/automatic/l6_saw/unrestricted,
-/obj/item/ammo_box/magazine/m7mm,
-/obj/structure/sign/departments/cargo/directional/north,
-/turf/open/floor/mineral/plastitanium,
-/area/virtual_domain/protected_space)
 "da" = (
 /obj/machinery/stasis,
 /turf/open/floor/plastic,
-/area/virtual_domain)
-"dd" = (
-/obj/structure/sign/warning/vacuum/external/directional/north,
-/turf/open/floor/mineral/plastitanium,
 /area/virtual_domain)
 "di" = (
 /obj/machinery/power/terminal{
@@ -371,6 +360,11 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/virtual_domain)
+"nL" = (
+/obj/item/ai_module/law/core/full/cybersun,
+/obj/structure/table/reinforced,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain)
 "nU" = (
 /obj/structure/sign/poster/contraband/syndicate_pistol,
 /turf/closed/wall/r_wall/plastitanium/syndicate,
@@ -379,6 +373,10 @@
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/cup/glass/trophy/silver_cup,
 /turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain)
+"om" = (
+/obj/structure/sign/warning/vacuum/external/directional/south,
+/turf/open/floor/mineral/plastitanium,
 /area/virtual_domain)
 "oM" = (
 /obj/structure/cable,
@@ -628,11 +626,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/virtual_domain)
-"yT" = (
-/obj/item/ai_module/core/full/cybersun,
-/obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium/red,
-/area/virtual_domain)
 "yV" = (
 /obj/structure/table/reinforced,
 /obj/item/assembly/prox_sensor,
@@ -752,6 +745,10 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain)
+"EW" = (
+/obj/structure/sign/warning/vacuum/external/directional/north,
+/turf/open/floor/mineral/plastitanium,
 /area/virtual_domain)
 "Fp" = (
 /obj/structure/tank_dispenser/oxygen,
@@ -1002,10 +999,6 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/virtual_domain)
-"PQ" = (
-/obj/structure/sign/warning/vacuum/external/directional/south,
-/turf/open/floor/mineral/plastitanium,
-/area/virtual_domain)
 "PR" = (
 /obj/machinery/door/password/voice/sfc{
 	password = null
@@ -1151,6 +1144,13 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/virtual_domain)
+"Xj" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/ballistic/automatic/l6_saw/unrestricted,
+/obj/item/ammo_box/magazine/m7mm,
+/obj/structure/sign/departments/cargo/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/protected_space)
 "Xp" = (
 /turf/open/space/basic,
 /area/virtual_domain)
@@ -2389,7 +2389,7 @@ qx
 qx
 qx
 ru
-yT
+nL
 Kz
 ru
 Yu
@@ -2972,7 +2972,7 @@ ru
 uP
 uP
 ru
-dd
+EW
 uP
 uP
 Ox
@@ -2980,7 +2980,7 @@ aw
 uP
 uP
 uP
-PQ
+om
 ru
 uP
 Qg
@@ -2993,7 +2993,7 @@ qx
 qx
 qx
 zN
-cZ
+Xj
 dp
 dp
 RU

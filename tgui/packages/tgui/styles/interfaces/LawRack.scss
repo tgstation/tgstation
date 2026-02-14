@@ -1,0 +1,35 @@
+.LawRack__Welded {
+  background: linear-gradient(
+    180deg,
+    rgba(180, 180, 180, 0) 0%,
+    rgba(140, 140, 140, 25) 15%,
+    rgba(100, 100, 100, 255) 50%,
+    rgba(180, 180, 180, 25) 85%,
+    rgba(200, 200, 200, 0) 100%
+  );
+  border-radius: 6px;
+}
+
+.LawRack__Screw {
+  background: linear-gradient(
+    135deg,
+    lightgrey 0%,
+    lightgrey 40%,
+    darkgrey 40%,
+    darkgrey 60%,
+    lightgrey 60%,
+    lightgrey 100%
+  );
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  border-radius: 25px;
+
+  &.Empty {
+    background: black;
+  }
+}
+
+.LawRack__Slot {
+  border-radius: 4px;
+}

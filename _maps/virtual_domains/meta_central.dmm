@@ -212,15 +212,6 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
-"bQ" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/ai_module/malf,
-/turf/open/floor/iron,
-/area/virtual_domain)
 "bR" = (
 /obj/structure/chair{
 	dir = 1
@@ -983,6 +974,13 @@
 "iv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"iw" = (
+/obj/machinery/door/airlock{
+	name = "Central Emergency Storage"
+	},
+/obj/effect/mapping_helpers/airlock/unres/delayed,
 /turf/open/floor/plating,
 /area/virtual_domain)
 "ix" = (
@@ -5096,6 +5094,15 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/virtual_domain)
+"QF" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ai_module/law/malf,
+/turf/open/floor/iron,
+/area/virtual_domain)
 "QM" = (
 /obj/machinery/light_switch/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -5662,13 +5669,6 @@
 	pixel_x = -17;
 	pixel_y = 16
 	},
-/turf/open/floor/plating,
-/area/virtual_domain)
-"VO" = (
-/obj/machinery/door/airlock{
-	name = "Central Emergency Storage"
-	},
-/obj/effect/mapping_helpers/airlock/unres/delayed,
 /turf/open/floor/plating,
 /area/virtual_domain)
 "VP" = (
@@ -6867,7 +6867,7 @@ uS
 nU
 Vt
 bs
-VO
+iw
 ey
 sr
 fh
@@ -7010,7 +7010,7 @@ HM
 ps
 hV
 Hd
-bQ
+QF
 hZ
 ii
 SN

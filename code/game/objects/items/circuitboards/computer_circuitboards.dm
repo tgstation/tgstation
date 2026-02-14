@@ -10,16 +10,6 @@
 
 //Command
 
-/obj/item/circuitboard/computer/aiupload
-	name = "AI Upload"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/computer/upload/ai
-
-/obj/item/circuitboard/computer/borgupload
-	name = "Cyborg Upload"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/computer/upload/borg
-
 /obj/item/circuitboard/computer/bsa_control
 	name = "Bluespace Artillery Controls"
 	build_path = /obj/machinery/computer/bsa_control

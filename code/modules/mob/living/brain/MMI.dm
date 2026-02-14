@@ -6,22 +6,28 @@
 	base_icon_state = "mmi"
 	w_class = WEIGHT_CLASS_NORMAL
 	var/braintype = "Cyborg"
-	var/obj/item/radio/radio = null //Let's give it a radio.
-	var/mob/living/brain/brainmob = null //The current occupant.
-	var/mob/living/silicon/robot = null //Appears unused.
-	var/obj/vehicle/sealed/mecha = null //This does not appear to be used outside of reference in mecha.dm.
-	var/obj/item/organ/brain/brain = null //The actual brain
-	var/datum/ai_laws/laws = new()
+	VAR_FINAL/obj/item/radio/radio = null //Let's give it a radio.
+	VAR_FINAL/mob/living/brain/brainmob = null //The current occupant.
+	VAR_FINAL/mob/living/silicon/robot = null //Appears unused.
+	VAR_FINAL/obj/vehicle/sealed/mecha = null //This does not appear to be used outside of reference in mecha.dm.
+	VAR_FINAL/obj/item/organ/brain/brain = null //The actual brain
+
+	/// If TRUE, and placed in an AI, calls replacement_ai_name() and uses that as the AI's name.
 	var/force_replace_ai_name = FALSE
-	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
 	/// Whether the brainmob can move. Doesnt usually matter but SPHERICAL POSIBRAINSSS
 	var/immobilize = TRUE
+
+	/// If supplied with a law datum, the laws will be transferred to whatever it's placed in.
+	/// - If placed in a cyborg, it will start de-synced from the AI.
+	/// The cyborg's laws will be unmodifiable unless synced to the AI or a law rack.
+	/// - If placed in an AI, it will override the AI's laws.
+	/// Likewise, the AI's laws will be unmodifiable unless synced to a law rack.
+	var/datum/ai_laws/laws
 
 /obj/item/mmi/Initialize(mapload)
 	. = ..()
 	radio = new(src) //Spawns a radio inside the MMI.
 	radio.set_broadcasting(FALSE) //researching radio mmis turned the robofabs into radios because this didnt start as 0.
-	laws.set_laws_config()
 
 /obj/item/mmi/Destroy()
 	set_mecha(null)
@@ -354,10 +360,17 @@
 
 /obj/item/mmi/syndie
 	name = "\improper Syndicate Man-Machine Interface"
-	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs and AIs created with it."
-	overrides_aicore_laws = TRUE
+	desc = "Syndicate's own brand of MMI. \
+		It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs and AIs created with it."
 
 /obj/item/mmi/syndie/Initialize(mapload)
 	. = ..()
 	laws = new /datum/ai_laws/syndicate_override()
 	radio.set_on(FALSE)
+
+/obj/item/mmi/syndie/examine(mob/user)
+	. = ..()
+	. += span_notice("If used to create a cyborg, it will be unlinked from the station's AI. \
+		The lawset cannot be modified until it is synced to a module rack or an AI.")
+	. += span_notice("If used to create an AI, it will not automatically sync to a module rack. \
+		The lawset cannot be modified until it is synced to a module rack.")

@@ -11,15 +11,13 @@
 	max_integrity = 500
 	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 4)
 	var/state = CORE_STATE_EMPTY
-	var/datum/ai_laws/laws
 	var/obj/item/circuitboard/aicore/circuit
 	var/obj/item/mmi/core_mmi
+	/// Weakref to an ai module rack, if present we will try to link new AI to it instead of the station core
+	var/datum/weakref/default_link_ref
 
 /obj/structure/ai_core/Initialize(mapload, state = src.state, obj/item/mmi/core_mmi = null)
 	. = ..()
-	laws = new
-	laws.set_laws_config()
-
 	if(core_mmi && state < CORE_STATE_CABLED)
 		stack_trace("supplied a core_mmi as constructor argument, but core state wouldn't have accepted it!")
 		state = CORE_STATE_FINISHED // just in case...
@@ -86,12 +84,13 @@
 /obj/structure/ai_core/Destroy()
 	QDEL_NULL(circuit)
 	QDEL_NULL(core_mmi)
-	QDEL_NULL(laws)
 	return ..()
 
 /obj/structure/ai_core/examine(mob/user)
 	. = ..()
 	. += span_notice("It has some <b>bolts</b> that look [anchored ? "tightened" : "loosened"].")
+	. += span_notice("Save this core to a multitool's buffer and upload it to a module rack to automatically link it on first boot. \
+		Otherwise, it will link[is_station_level(z) ? " to the station's core rack or" : ""] to the first rack found.")
 
 	switch(state)
 		if(CORE_STATE_EMPTY)
@@ -101,17 +100,14 @@
 		if(CORE_STATE_SCREWED)
 			. += span_notice("The frame can be <b>wired</b>, the circuit board can be <b>unfastened</b>.")
 		if(CORE_STATE_CABLED)
-			if(!core_mmi)
-				. += span_notice("There are wires which could be hooked up to an <b>MMI or positronic brain</b>, or <b>cut</b>.")
+			if(core_mmi)
+				. += span_notice("There is a <b>slot</b> for a reinforced glass panel, the [AI_CORE_BRAIN(core_mmi)] could be <b>pried</b> out.")
 			else
-				var/accept_laws = TRUE
-				if(core_mmi.laws.id != DEFAULT_AI_LAWID || !core_mmi.brainmob || !core_mmi.brainmob?.mind)
-					accept_laws = FALSE
-				. += span_notice("There is a <b>slot</b> for a reinforced glass panel, the [AI_CORE_BRAIN(core_mmi)] could be <b>pried</b> out.[accept_laws ? " A law module can be <b>swiped</b> across." : ""]")
+				. += span_notice("There are wires which could be hooked up to an <b>MMI or positronic brain</b>, or <b>cut</b>.")
 		if(CORE_STATE_GLASSED)
-			. += span_notice("The monitor [core_mmi?.brainmob?.mind && !suicide_check() ? "and neural interface " : ""]can be <b>screwed</b> in, the panel can be <b>pried</b> out.")
+			. += span_notice("The monitor [(core_mmi?.brainmob?.mind && !suicide_check()) ? "and neural interface " : ""]can be <b>screwed</b> in, the panel can be <b>pried</b> out.")
 		if(CORE_STATE_FINISHED)
-			. += span_notice("The monitor's connection can be <b>cut</b>[core_mmi?.brainmob?.mind && !suicide_check() ? " the neural interface can be <b>screwed</b> in." : "."]")
+			. += span_notice("The monitor's connection can be <b>cut</b>[(core_mmi?.brainmob?.mind && !suicide_check()) ? " the neural interface can be <b>screwed</b> in." : "."]")
 
 /obj/structure/ai_core/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(state < CORE_STATE_FINISHED)
@@ -142,8 +138,8 @@
 
 /obj/structure/ai_core/latejoin_inactive/examine(mob/user)
 	. = ..()
-	. += "Its transmitter seems to be <b>[active? "on" : "off"]</b>."
-	. += span_notice("You could [active? "deactivate" : "activate"] it with a multitool.")
+	. += span_info("Its transmitter seems to be <b>[active? "on" : "off"]</b>.")
+	. += span_notice("You could [active ? "deactivate" : "activate"] it by [EXAMINE_HINT("right clicking")] with a multitool.")
 
 /obj/structure/ai_core/latejoin_inactive/proc/is_available() //If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
 	if(!available)
@@ -164,15 +160,18 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/ai_core/latejoin_inactive/multitool_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
-
+/obj/structure/ai_core/latejoin_inactive/multitool_act_secondary(mob/living/user, obj/item/tool)
 	if(!tool.use_tool(src, user, 0 SECONDS, 0, 50))
 		return ITEM_INTERACT_BLOCKING
 
 	active = !active
 	balloon_alert(user, "[active ? "activated" : "deactivated"] transmitters")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/ai_core/multitool_act(mob/living/user, obj/item/multitool/tool)
+	tool.play_tool_sound(src, 50)
+	tool.set_buffer(src)
+	balloon_alert(user, "core saved to buffer")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ai_core/proc/ai_structure_to_mob()
@@ -182,21 +181,9 @@
 	the_brainmob.mind.remove_antags_for_borging()
 	if(!the_brainmob.mind.has_ever_been_ai)
 		SSblackbox.record_feedback("amount", "ais_created", 1)
-	var/mob/living/silicon/ai/ai_mob = null
 
-	if(core_mmi.overrides_aicore_laws)
-		ai_mob = new /mob/living/silicon/ai(loc, core_mmi.laws, the_brainmob)
-		core_mmi.laws = null //MMI's law datum is being donated, so we need the MMI to let it go or the GC will eat it
-	else
-		ai_mob = new /mob/living/silicon/ai(loc, laws, the_brainmob)
-		laws = null //we're giving the new AI this datum, so let's not delete it when we qdel(src) 5 lines from now
+	var/mob/living/silicon/ai/ai_mob = new(loc, the_brainmob, core_mmi.laws, default_link_ref?.resolve())
 
-	var/datum/antagonist/malf_ai/malf_datum = IS_MALF_AI(ai_mob)
-	if(malf_datum)
-		malf_datum.add_law_zero()
-
-	if(!isnull(the_brainmob.client))
-		ai_mob.set_gender(the_brainmob.client)
 	if(core_mmi.force_replace_ai_name)
 		ai_mob.fully_replace_character_name(ai_mob.name, core_mmi.replacement_ai_name())
 	ai_mob.posibrain_inside = core_mmi.braintype == "Android"
@@ -251,7 +238,8 @@ That prevents a few funky behaviors.
 		to_chat(user, span_alert("There is no AI loaded on this terminal."))
 
 /obj/item/circuitboard/aicore
-	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent
+	name = "AI Core"
+	name_extension = "(AI Core Board)" //Well, duh, but best to be consistent
 	var/battery = 200 //backup battery for when the AI loses power. Copied to/from AI mobs when carding, and placed here to avoid recharge via deconning the core
 
 /obj/item/circuitboard/aicore/Initialize(mapload)

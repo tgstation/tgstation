@@ -1078,11 +1078,6 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"vR" = (
-/obj/item/ai_module/core/full/cybersun,
-/obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "yf" = (
 /mob/living/basic/trooper/nanotrasen/ranged/assault,
 /turf/open/floor/mineral/plastitanium/red,
@@ -1100,6 +1095,11 @@
 /obj/structure/sign/departments/cargo/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"AM" = (
+/obj/item/ai_module/law/core/full/cybersun,
+/obj/structure/table/reinforced,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "Cy" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
@@ -2002,7 +2002,7 @@ aa
 aa
 aa
 bZ
-vR
+AM
 aw
 bZ
 aB

@@ -8,10 +8,6 @@
 		return //won't work if dead
 	src.show_laws()
 
-/mob/living/silicon/ai/show_laws()
-	. = ..()
-	try_sync_laws() // Yes we lawsync borgs EVERY TIME WE CHECK LAWS
-
 /mob/living/silicon/ai/try_sync_laws()
 	for(var/mob/living/silicon/robot/borgo in connected_robots)
 		if(borgo.try_sync_laws())
