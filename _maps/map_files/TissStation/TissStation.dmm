@@ -9433,7 +9433,8 @@
 /area/station/cargo/miningdock)
 "cUq" = (
 /obj/machinery/conveyor{
-	speed = 10
+	speed = 10;
+	id = "pDeliv"
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/security/execution/transfer)
@@ -15615,7 +15616,8 @@
 /area/station/engineering/storage)
 "eOK" = (
 /obj/structure/table,
-/obj/item/storage/bag/tray,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/storage/box/drinkingglasses,
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/mess)
 "eOO" = (
@@ -16116,6 +16118,7 @@
 "eVq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/fore/port)
 "eVs" = (
@@ -17620,8 +17623,6 @@
 /area/station/service/chapel)
 "frZ" = (
 /obj/structure/cable,
-/obj/structure/table,
-/obj/structure/reagent_dispensers/servingdish,
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
@@ -24149,14 +24150,12 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "hsM" = (
-/obj/structure/table/reinforced,
-/obj/item/clothing/gloves/latex/nitrile,
-/obj/item/wrench/medical,
 /obj/machinery/requests_console/directional/south{
 	department = "Medbay";
 	name = "Medbay Requests Console"
 	},
 /obj/effect/mapping_helpers/requests_console/assistance,
+/obj/machinery/recharge_station,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/storage)
 "hsS" = (
@@ -24860,7 +24859,7 @@
 	dir = 8
 	},
 /obj/machinery/requests_console/directional/west{
-	name = "Chemistry Requests Console";
+	name = "Paramedic Requests Console";
 	department = "Chemistry"
 	},
 /turf/open/floor/iron/dark,
@@ -29883,9 +29882,8 @@
 /area/station/tcommsat/computer)
 "jdm" = (
 /obj/machinery/firealarm/directional/south,
-/obj/effect/turf_decal/siding/white/end,
-/obj/machinery/light/floor,
-/turf/open/floor/iron/white,
+/obj/machinery/vending/drugs,
+/turf/open/floor/iron/dark/small,
 /area/station/medical/storage)
 "jdq" = (
 /turf/closed/wall,
@@ -31971,10 +31969,11 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/virology)
 "jHB" = (
-/obj/machinery/vending/sustenance,
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/mess)
 "jHC" = (
@@ -33849,13 +33848,16 @@
 /obj/structure/table,
 /obj/effect/turf_decal/delivery/red,
 /obj/machinery/airalarm/directional/north,
-/obj/item/restraints/handcuffs,
+/obj/item/restraints/handcuffs{
+	pixel_y = 10;
+	pixel_x = 4
+	},
 /obj/machinery/recharger{
 	pixel_x = 7
 	},
 /obj/item/clothing/head/cone{
 	pixel_x = -4;
-	pixel_y = 4
+	pixel_y = 1
 	},
 /turf/open/floor/plastic,
 /area/station/security/lockers)
@@ -36403,6 +36405,10 @@
 	dir = 9
 	},
 /obj/machinery/airalarm/directional/west,
+/obj/machinery/conveyor_switch/oneway{
+	id = "mining";
+	name = "mining conveyor switch"
+	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningfoundry)
 "kWs" = (
@@ -36973,7 +36979,8 @@
 /area/space/nearstation)
 "lep" = (
 /obj/machinery/conveyor_switch/oneway{
-	conveyor_speed = 10
+	conveyor_speed = 10;
+	id = "pDeliv"
 	},
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 4
@@ -38829,7 +38836,8 @@
 "lFv" = (
 /obj/machinery/conveyor/inverted{
 	dir = 5;
-	speed = 10
+	speed = 10;
+	id = "pDeliv"
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/security/execution/transfer)
@@ -41525,6 +41533,7 @@
 	},
 /obj/effect/turf_decal/tile/red/half,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/security/prison)
 "mvC" = (
@@ -43562,10 +43571,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/medical_doctor,
-/obj/effect/turf_decal/siding/white/corner,
-/obj/effect/turf_decal/siding/white/corner{
-	dir = 8
-	},
+/obj/effect/turf_decal/siding/white,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "ncI" = (
@@ -44088,6 +44094,7 @@
 	codes_txt = "patrol;next_patrol=HallFarWest";
 	location = "Vault"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/fore/port)
 "nkn" = (
@@ -46303,9 +46310,12 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "nUj" = (
-/obj/machinery/rnd/production/techfab/department/medical,
 /obj/machinery/status_display/ai/directional/south,
 /obj/machinery/light/directional/south,
+/obj/structure/table/reinforced,
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/wrench/medical,
+/obj/machinery/cell_charger,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/storage)
 "nUq" = (
@@ -46393,7 +46403,8 @@
 "nVw" = (
 /obj/machinery/conveyor{
 	dir = 1;
-	speed = 10
+	speed = 10;
+	id = "pDeliv"
 	},
 /obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Delivery Conveyor Belt";
@@ -46464,6 +46475,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/fore/port)
 "nXm" = (
@@ -52463,6 +52475,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/firealarm/directional/south,
+/obj/structure/table,
+/obj/machinery/recharger,
 /turf/open/floor/plastic,
 /area/station/security/lockers)
 "pQR" = (
@@ -52742,12 +52756,12 @@
 /area/station/hallway/primary/tram/sciai)
 "pVz" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_red,
+/obj/machinery/vending/sustenance,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/mess)
 "pVB" = (
@@ -53622,8 +53636,8 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "qjM" = (
-/obj/machinery/recharge_station,
 /obj/machinery/newscaster/directional/south,
+/obj/machinery/vending/medical,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/storage)
 "qjO" = (
@@ -55077,7 +55091,8 @@
 "qGx" = (
 /obj/machinery/conveyor{
 	dir = 9;
-	speed = 10
+	speed = 10;
+	id = "pDeliv"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -57534,7 +57549,8 @@
 "ruX" = (
 /obj/machinery/conveyor/inverted{
 	dir = 6;
-	speed = 10
+	speed = 10;
+	id = "pDeliv"
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/security/execution/transfer)
@@ -63617,8 +63633,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "tqD" = (
-/obj/structure/table/reinforced,
-/obj/machinery/cell_charger,
+/obj/machinery/rnd/production/techfab/department/medical,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/storage)
 "tqH" = (
@@ -65620,7 +65635,8 @@
 "tXW" = (
 /obj/machinery/conveyor{
 	dir = 10;
-	speed = 10
+	speed = 10;
+	id = "pDeliv"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -66666,6 +66682,7 @@
 /obj/effect/turf_decal/tile/dark_green{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/fore/port)
 "uoy" = (
@@ -68849,7 +68866,8 @@
 "uUq" = (
 /obj/machinery/conveyor{
 	dir = 1;
-	speed = 10
+	speed = 10;
+	id = "pDeliv"
 	},
 /obj/structure/window/spawner/directional/west,
 /turf/open/floor/iron/white/smooth_large,
@@ -72341,7 +72359,8 @@
 "vZT" = (
 /obj/machinery/conveyor{
 	dir = 1;
-	speed = 10
+	speed = 10;
+	id = "pDeliv"
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/security/execution/transfer)
@@ -74597,6 +74616,8 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_red,
+/obj/structure/table,
+/obj/structure/reagent_dispensers/servingdish,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/mess)
 "wLA" = (
