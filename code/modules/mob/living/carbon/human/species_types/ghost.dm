@@ -141,12 +141,11 @@
 	if(force_off && HAS_TRAIT_FROM(owner, TRAIT_NO_FLOATING_ANIM, SPECIES_TRAIT))
 		return
 
-	var/mob/living/carbon/carbon_owner = owner
-	if(HAS_TRAIT_FROM(carbon_owner, TRAIT_NO_FLOATING_ANIM, SPECIES_TRAIT))
-		grave.forceMove(get_turf(carbon_owner))
-		carbon_owner.AddComponent(/datum/component/leash, grave, distance = 7)
-		REMOVE_TRAIT(carbon_owner, TRAIT_NO_FLOATING_ANIM, SPECIES_TRAIT)
-		carbon_owner.add_traits(list(
+	if(HAS_TRAIT_FROM(owner, TRAIT_NO_FLOATING_ANIM, SPECIES_TRAIT))
+		grave.forceMove(get_turf(owner))
+		owner.AddComponent(/datum/component/leash, grave, distance = 7)
+		REMOVE_TRAIT(owner, TRAIT_NO_FLOATING_ANIM, SPECIES_TRAIT)
+		owner.add_traits(list(
 			TRAIT_MOVE_PHASING,
 			TRAIT_PIERCEIMMUNE,
 			TRAIT_INVISIBLE_TO_CAMERA,
@@ -154,12 +153,13 @@
 			TRAIT_PULL_BLOCKED, //MOBILITY_PULL
 			TRAIT_UI_BLOCKED, //MOBILITY_UI
 		), SPECIES_TRAIT)
+		RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_owner_died))
 	else
-		qdel(carbon_owner.GetComponent(/datum/component/leash))
-		carbon_owner.forceMove(get_turf(grave))
+		qdel(owner.GetComponent(/datum/component/leash))
+		owner.forceMove(get_turf(grave))
 		grave.moveToNullspace()
-		ADD_TRAIT(carbon_owner, TRAIT_NO_FLOATING_ANIM, SPECIES_TRAIT)
-		carbon_owner.remove_traits(list(
+		ADD_TRAIT(owner, TRAIT_NO_FLOATING_ANIM, SPECIES_TRAIT)
+		owner.remove_traits(list(
 			TRAIT_MOVE_PHASING,
 			TRAIT_PIERCEIMMUNE,
 			TRAIT_INVISIBLE_TO_CAMERA,
@@ -167,13 +167,27 @@
 			TRAIT_PULL_BLOCKED,
 			TRAIT_UI_BLOCKED,
 		), SPECIES_TRAIT)
+		UnregisterSignal(owner, COMSIG_LIVING_DEATH)
+
+/datum/action/innate/toggle_passthrough/proc/on_owner_died(mob/living/owner)
+	SIGNAL_HANDLER
+	swap_mode(force_off = TRUE)
 
 ///Called when the contents are made, which means the grave has been 'opened', therefore robbed.
 /datum/action/innate/toggle_passthrough/proc/on_grave_robbed(obj/structure/closet/crate/grave/skeleton/source)
 	SIGNAL_HANDLER
 	var/mob/living/carbon/human/species/skeleton/skeletons_in_the_closet = locate() in source.contents
-	owner.mind.transfer_to(skeletons_in_the_closet, force_key_move = TRUE)
-	skeletons_in_the_closet.death(gibbed = FALSE)
+	skeletons_in_the_closet.real_name = owner.real_name
+	skeletons_in_the_closet.name = owner.name
+
+	if (owner.mind?.active)
+		owner.mind?.transfer_to(skeletons_in_the_closet, force_key_move = TRUE)
+	skeletons_in_the_closet.death(gibbed = TRUE) // This is a lie, but it stops the skeleton from deathgasping as if it only just died
+
+	if (isliving(owner)) // You know just in case we give an observer the crazy ability to walk through walls
+		var/mob/living/living_owner = owner
+		living_owner.forceMove(source)
+		living_owner.unequip_everything()
 
 ///Called AFTER the contents have been spit out, which means the owner is now in the skeleton. Let's clean up.
 /datum/action/innate/toggle_passthrough/proc/post_grave_robbed(obj/structure/closet/crate/grave/skeleton/source)
