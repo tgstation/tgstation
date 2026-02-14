@@ -161,6 +161,17 @@
   TealSeer:
   - balance: The CE spawns with upgraded tools again
 2026-02-14:
+  Co0kie-GG:
+  - bugfix: AI portraits are now displayed correctly
+  - bugfix: AI display selector displays them correctly
+  Melbert:
+  - refactor: Rewrites how addiction points are applied from reagents. Some reagents
+      may be marginally more or less addictive as a consequence.
+  - balance: Addiction gained per metabolism tick now scales to the amount of reagents
+      metabolized. In other words if you metabolize 0.2 units instead of the expected
+      0.4 units, you get 0.5x of the amount of addiction gain. This ultimately changes
+      very little and I would imagine it's how most people expected it to work in
+      the first place...
   lelandkemble:
   - map: Meta's cryo waste pipe is connected to main waste pipes
   matchalabubu67:
