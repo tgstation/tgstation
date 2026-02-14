@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscdel: "Cytology creations no longer have a random chance to fail if another sample in the vat has growth process. All growth is still reset on any successful creation. As growth failure has been removed, some cell lines that had unique fail interactions have been altered."
+  - rscadd: "Clown cell lines are now all boosted by supplying mutagen. However, using mutagen may cause a mutant clown to spawn. (Before, failure caused a mutant clown to spawn.)"
+  - rscadd: "Queen bee lines now alternate between spawning a queen bee and a swarm of bees. (Before, failure caused a swarm of bees to spawn.)"
+  - rscadd: "Cytology created bees have a rare chance of having a random toxin."
