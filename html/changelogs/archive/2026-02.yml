@@ -176,3 +176,5 @@
   - map: Meta's cryo waste pipe is connected to main waste pipes
   matchalabubu67:
   - bugfix: radio uplinks now generate three word codes instead of one
+  vinylspiders:
+  - bugfix: fixes certain particle effects not triggering under certain conditions
