@@ -6,7 +6,12 @@ import { Bucket } from './Types/Tools/Bucket';
 import { Eraser } from './Types/Tools/Eraser';
 import { Eyedropper } from './Types/Tools/Eyedropper';
 import { Pencil } from './Types/Tools/Pencil';
-import { Dir, type EditorColor, type StringLayer } from './Types/types';
+import {
+  Dir,
+  type EditorColor,
+  type SpriteEditorToolCancelContext,
+  type StringLayer,
+} from './Types/types';
 
 export const colorsAtom = atom<EditorColor[]>([]);
 export const currentColorInternalAtom = atom<EditorColor>({
@@ -37,15 +42,19 @@ export const tools: Tool[] = [
 ];
 
 const currentToolInternalAtom = atom(tools[0]);
-export const currentToolAtom = atom<Tool, [Tool], void>(
+export const currentToolAtom = atom<
+  Tool,
+  [Tool, SpriteEditorToolCancelContext],
+  void
+>(
   (get) => get(currentToolInternalAtom),
-  (get, set, tool) => {
+  (get, set, tool, context) => {
     if (!tool) {
       return;
     }
     const oldTool = get(currentToolInternalAtom);
     if (oldTool !== tool) {
-      oldTool?.cancel?.();
+      oldTool?.cancel?.(context);
     }
     set(currentToolInternalAtom, tool);
   },

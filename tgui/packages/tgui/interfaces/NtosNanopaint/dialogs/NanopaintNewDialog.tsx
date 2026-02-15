@@ -71,10 +71,9 @@ export const NanopaintNewDialog = (props: NanopaintNewDialogProps) => {
                           <Stack.Item fontSize="24px">{name}</Stack.Item>
                           <Stack.Item>
                             <Box
+                              className="NtosNanopaint__NewDialog__TemplatePreview"
                               width={`${templateWidth * 3}px`}
                               height={`${templateHeight * 3}px`}
-                              backgroundColor="white"
-                              m="0.5rem"
                             />
                           </Stack.Item>
                         </Stack>

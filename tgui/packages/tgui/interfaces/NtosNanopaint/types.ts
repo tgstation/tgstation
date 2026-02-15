@@ -19,14 +19,14 @@ export type NanopaintFileDialogData = {
   type: 'select';
   title: string;
   confirmText: string;
-  selectAct: string;
+  action: string;
 };
 
 export type NanopaintConfirmDialogData = {
   type: 'confirm';
   title: string;
   message: string;
-  confirmAct: string;
+  action: string;
   params: Record<string, unknown>;
 };
 
@@ -43,7 +43,7 @@ export type NanopaintDialogData =
 
 export type NanopaintData = {
   templateSizes: Record<string, [number, number]>;
-  saveableTypes: Record<string, { typepath: string; extension: string }>;
+  saveableTypes: { displayText: string; typepath: string; extension: string }[];
   editorData:
     | Required<ServerColorData>
     | (Required<ServerColorData> & SpriteEditorData);

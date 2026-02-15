@@ -155,3 +155,29 @@ export function hasServerColorData(
 ): data is ServerColorData & SpriteEditorData {
   return Object.hasOwn(data, 'serverPalette');
 }
+
+export function bresenhamLine(
+  x0: number,
+  y0: number,
+  x1: number,
+  y1: number,
+  plot: (x: number, y: number) => void,
+) {
+  const dx = Math.abs(x1 - x0);
+  const sx = x0 < x1 ? 1 : -1;
+  const dy = Math.abs(y1 - y0);
+  const sy = y0 < y1 ? 1 : -1;
+  let error = dx + dy;
+  do {
+    plot(x0, y0);
+    const e2 = 2 * error;
+    if (e2 > -dy) {
+      error -= dy;
+      x0 += sx;
+    }
+    if (e2 < dx) {
+      error += dx;
+      y0 += sy;
+    }
+  } while (x0 !== x1 && y0 !== y1);
+}

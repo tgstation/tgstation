@@ -36,11 +36,13 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 	return list(
 		"templateSizes" = GLOB.canvas_dimensions,
 		"saveableTypes" = list(
-			"NanoPaint Project (.[/datum/computer_file/data/paint_project::filetype])" = list(
+			list(
+				"displayName" = "NanoPaint Project (.[/datum/computer_file/data/paint_project::filetype])",
 				"typepath" = /datum/computer_file/data/paint_project,
 				"extension" = /datum/computer_file/data/paint_project::filetype,
 			),
-			"PNG Image (.[/datum/computer_file/image::filetype])" = list(
+			list(
+				"displayName" = "PNG Image (.[/datum/computer_file/image::filetype])",
 				"typepath" = /datum/computer_file/image,
 				"extension" = /datum/computer_file/image::filetype,
 			),
@@ -82,7 +84,7 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 	return data
 
 /datum/computer_file/program/nanopaint/proc/check_dialog(act, modal_type)
-	return dialog && dialog["type"] == modal_type && (!act || dialog["act"] == act)
+	return dialog && dialog["type"] == modal_type && (!act || dialog["action"] == act)
 
 /datum/computer_file/program/nanopaint/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -90,7 +92,7 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 	switch(action)
 		if("spriteEditorCommand")
 			if(!current_workspace)
-				return TRUE
+				return
 			var/command = params["command"]
 			switch(command)
 				if("transaction")
@@ -116,7 +118,7 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 			return TRUE
 		if("onAddPaletteColor")
 			if(length(palette) >= PALETTE_SIZE)
-				return TRUE
+				return
 			palette += params["color"]
 		if("onRemovePaletteColor")
 			var/index = params["index"]
@@ -131,42 +133,41 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 		if("new")
 			if(!check_dialog(null, "new"))
 				return
-			dialog = null
 			var/width = params["width"]
 			if(!ISINRANGE(width, 1, SANE_PHOTO_EDITING_SIZE_LIMIT))
-				return TRUE
+				return
 			var/height = params["height"]
 			if(!ISINRANGE(height, 1, SANE_PHOTO_EDITING_SIZE_LIMIT))
-				return TRUE
+				return
+			dialog = null
 			close_workspace()
-			current_workspace = new(width, height)
+			INVOKE_ASYNC(src, PROC_REF(new_workspace), width, height)
+			return TRUE
 		if("openDialog")
-			dialog = list("type" = "select", "title" = "Open File", "confirmText" = "Open", "act" = "open")
+			dialog = list("type" = "select", "title" = "Open File", "confirmText" = "Open", "action" = "open")
 			return TRUE
 		if("open")
 			if(!check_dialog("open", "select"))
 				return
 			dialog = null
-			open_file(user, params["uid"], params["onDisk"], params["name"], text2path(params["type"]))
+			INVOKE_ASYNC(src, PROC_REF(open_file), user, params["uid"], params["onDisk"], params["name"], text2path(params["type"]))
 			return TRUE
 		if("save")
-			if(!check_dialog("save", "select"))
-				return
-			var/datum/computer_file/actual_file = backing_file.resolve()
+			var/datum/computer_file/actual_file = backing_file?.resolve()
 			if(!actual_file)
 				if(!opened_file_name)
-					dialog = list("type" = "select", "title" = "Save As", "confirmText" = "Save", "act" = "saveAs")
+					dialog = list("type" = "select", "title" = "Save As", "confirmText" = "Save", "action" = "saveAs")
 					return TRUE
 				actual_file = computer.find_file_by_full_name("[opened_file_name].[opened_file_type::filetype]")
 			if(actual_file && actual_file.computer != computer && actual_file.disk_host != computer.inserted_disk)
 				actual_file = null
 			if(actual_file)
-				write_to_file(user, actual_file, actual_file.disk_host)
+				INVOKE_ASYNC(src, PROC_REF(write_to_file), user, actual_file, actual_file.disk_host)
 			else
-				save_file(user, opened_file_name, opened_file_type)
+				INVOKE_ASYNC(src, PROC_REF(save_file), user, opened_file_name, opened_file_type)
 			return TRUE
 		if("saveAsDialog")
-			dialog = list("type" = "select", "title" = "Save As", "confirmText" = "Save", "act" = "saveAs")
+			dialog = list("type" = "select", "title" = "Save As", "confirmText" = "Save", "action" = "saveAs")
 			return TRUE
 		if("saveAs", "overwrite")
 			if(!check_dialog(action, action == "saveAs" ? "select" : "confirm"))
@@ -178,7 +179,6 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 			var/datum/computer_file/new_file_type = text2path(params["type"])
 			var/extension = new_file_type::filetype
 			var/datum/computer_file/existing_file
-			var/save_successful
 			if(saving_to_disk)
 				if(!computer.inserted_disk)
 					dialog = list("type" = "error", "message" = "[new_file_name] - The disk has been removed.")
@@ -198,21 +198,19 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 						"type" = "confirm",
 						"title" = "Confirm Save As",
 						"message" = "[new_file_name] already exists. Do you want to overwrite this file?",
-						"confirmAct" = "overwrite",
+						"action" = "overwrite",
 						"params" = list("name" = new_file_name,
 							"onDisk" = params["onDisk"],
 							"type" = new_file_type),
 						)
 				else
-					write_to_file(user, existing_file)
+					INVOKE_ASYNC(src, PROC_REF(write_to_file), user, existing_file)
 				return TRUE
-			else if(saving_to_disk)
-				save_successful = save_file(user, new_file_name, new_file_type, computer.inserted_disk)
-			else
-				save_successful = save_file(user, new_file_name, new_file_type)
-			if(!save_successful)
-				dialog = list("type" = "error", "message" = "[new_file_name] - Unable to save file")
+			INVOKE_ASYNC(src, PROC_REF(save_file), user, new_file_name, new_file_type, saving_to_disk && computer.inserted_disk)
 			return TRUE
+
+/datum/computer_file/program/nanopaint/proc/new_workspace(width, height)
+	current_workspace = new(width, height)
 
 /datum/computer_file/program/nanopaint/proc/open_file(mob/user, uid, on_disk, file_name, datum/computer_file/file_type)
 	var/datum/computer_file/file_being_opened
@@ -287,7 +285,9 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 		file_stored = computer.store_file(file)
 	if(file_stored)
 		write_to_file(user, file)
-	return file_stored
+	else
+		dialog = list("type" = "error", "message" = "[name] - Unable to save file")
+		SStgui.update_uis(computer)
 
 /datum/computer_file/program/nanopaint/proc/close_workspace()
 	backing_file = null

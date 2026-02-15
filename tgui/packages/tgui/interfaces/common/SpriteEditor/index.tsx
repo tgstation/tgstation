@@ -250,6 +250,9 @@ export namespace SpriteEditor {
 
   export const Toolbar = (props: ToolbarProps) => {
     const [currentTool, setCurrentTool] = useAtom(currentToolAtom);
+    const setPreviewLayer = useSetAtom(previewLayerAtom);
+    const setPreviewData = useSetAtom(previewDataAtom);
+    const cancelContext = { setPreviewLayer, setPreviewData };
     const {
       toolButtonProps,
       perButtonProps,
@@ -258,7 +261,10 @@ export namespace SpriteEditor {
     } = props;
     useEffect(() => {
       if (!(toolFlags & (1 << tools.indexOf(currentTool)))) {
-        setCurrentTool(tools.find((_, i) => toolFlags & (1 << i))!);
+        setCurrentTool(
+          tools.find((_, i) => toolFlags & (1 << i))!,
+          cancelContext,
+        );
       }
     }, [toolFlags]);
     return (
@@ -270,7 +276,7 @@ export namespace SpriteEditor {
                 <Button
                   icon={tool.icon}
                   selected={currentTool === tool}
-                  onClick={() => setCurrentTool(tool)}
+                  onClick={() => setCurrentTool(tool, cancelContext)}
                   {...toolButtonProps}
                   {...perButtonProps?.(tool, i)}
                 />
@@ -300,9 +306,13 @@ export namespace SpriteEditor {
     };
     useEffect(() => {
       if (disabled) {
-        currentTool.cancel?.();
+        currentTool.cancel?.(toolContext);
       }
     }, [disabled]);
+    useEffect(() => {
+      setPreviewLayer(undefined);
+      setPreviewData(undefined);
+    }, [JSON.stringify(data)]);
     return (
       <AdvancedCanvas
         data={getFlattenedSpriteDir(

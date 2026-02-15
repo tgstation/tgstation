@@ -13,10 +13,6 @@ export const NanopaintMenuBar = (props: NanopaintMenuBarProps) => {
   const { undoHistory, redoHistory, workspaceOpen } = props;
   const [openOnHover, setOpenOnHover] = useState(false);
   const [openMenuBar, setOpenMenuBar] = useState<string | null>(null);
-  const closeMenu = () => {
-    setOpenOnHover(false);
-    setOpenMenuBar(null);
-  };
   // Adds the key using the value
   const getMenuItemProps = (
     value: string,
@@ -28,7 +24,8 @@ export const NanopaintMenuBar = (props: NanopaintMenuBarProps) => {
       value,
       displayText,
       onClick: (_value) => {
-        closeMenu();
+        setOpenOnHover(false);
+        setOpenMenuBar(null);
         action();
       },
     };
@@ -71,16 +68,16 @@ export const NanopaintMenuBar = (props: NanopaintMenuBarProps) => {
       >
         <MenuBar.Dropdown.MenuItem
           {...getMenuItemProps(
-            `Undo${undoHistory.length > 0 ? ` ${undoHistory[0]}` : ''}`,
             'undo',
+            `Undo${undoHistory.length > 0 ? ` ${undoHistory[0]}` : ''}`,
             () => act('spriteEditorCommand', { command: 'undo' }),
           )}
           disabled={undoHistory.length === 0}
         />
         <MenuBar.Dropdown.MenuItem
           {...getMenuItemProps(
-            `Redo${undoHistory.length > 0 ? ` ${redoHistory[0]}` : ''}`,
             'redo',
+            `Redo${undoHistory.length > 0 ? ` ${redoHistory[0]}` : ''}`,
             () => act('spriteEditorCommand', { command: 'redo' }),
           )}
           disabled={redoHistory.length === 0}

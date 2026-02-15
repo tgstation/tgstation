@@ -4,13 +4,20 @@
   border-radius: 0%;
   background-color: var(--color-base);
 
-  &:hover {
-    background-color: colors.fg(var(--color-primary));
-  }
-
   &:nth-child(odd) {
     background-color: colors.fg(var(--color-base));
   }
+
+  &:hover {
+    background-color: colors.fg(var(--color-primary));
+  }
+}
+
+.NtosNanopaint__NewDialog__TemplatePreview {
+  border-color: black;
+  border-width: 1px;
+  background-color: white;
+  margin: 0.5rem;
 }
 
 .NtosNanopaint__SelectDialog__EntryCell {

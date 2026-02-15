@@ -63,13 +63,13 @@ export const NtosNanopaint = (props) => {
       break;
     }
     case 'select': {
-      const { title, confirmText, selectAct } = dialog;
+      const { title, confirmText, action } = dialog;
       dialogNode = (
         <NanopaintSelectDialog
           {...{
             title,
             confirmText,
-            selectAct,
+            action,
             saveableTypes,
             driveFiles,
             diskFiles,
@@ -80,9 +80,9 @@ export const NtosNanopaint = (props) => {
       break;
     }
     case 'confirm': {
-      const { title, message, confirmAct, params } = dialog;
+      const { title, message, action, params } = dialog;
       dialogNode = (
-        <NanopaintConfirmDialog {...{ title, message, confirmAct, params }} />
+        <NanopaintConfirmDialog {...{ title, message, action, params }} />
       );
       break;
     }
@@ -112,6 +112,12 @@ export const NtosNanopaint = (props) => {
               <Stack>
                 <Stack.Item>
                   <SpriteEditor.Toolbar toolFlags={toolFlags} />
+                </Stack.Item>
+                <Stack.Item>
+                  <SpriteEditor.Undo stack={undoStack} />
+                </Stack.Item>
+                <Stack.Item>
+                  <SpriteEditor.Redo stack={redoStack} />
                 </Stack.Item>
               </Stack>
             ) : (

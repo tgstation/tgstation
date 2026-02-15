@@ -127,3 +127,8 @@ export type SpriteEditorToolContext = {
   setPreviewLayer: Dispatch<SetStateAction<number | undefined>>;
   setPreviewData: Dispatch<SetStateAction<StringLayer | undefined>>;
 };
+
+export type SpriteEditorToolCancelContext = Pick<
+  SpriteEditorToolContext,
+  'setPreviewLayer' | 'setPreviewData'
+>;

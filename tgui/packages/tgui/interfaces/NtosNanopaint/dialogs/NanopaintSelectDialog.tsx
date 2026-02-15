@@ -10,16 +10,16 @@ import {
   Tabs,
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
-import type { NanopaintFileEntry } from '../types';
+import type { NanopaintData, NanopaintFileEntry } from '../types';
 
 type NanopaintSelectDialogProps = {
   title: string;
   driveFiles: NanopaintFileEntry[];
   diskFiles: NanopaintFileEntry[];
   diskInserted: BooleanLike;
-  saveableTypes: Record<string, { typepath: string; extension: string }>;
+  saveableTypes: NanopaintData['saveableTypes'];
   confirmText: string;
-  selectAct: string;
+  action: string;
 };
 
 export const NanopaintSelectDialog = (props: NanopaintSelectDialogProps) => {
@@ -30,17 +30,16 @@ export const NanopaintSelectDialog = (props: NanopaintSelectDialogProps) => {
     diskInserted,
     saveableTypes,
     confirmText,
-    selectAct,
+    action,
   } = props;
-  const typeDescriptions = Object.entries(saveableTypes);
   const [pathLastPickedByInput, setPathLastPickedByInput] = useState(true);
   const [tab, setTab] = useState('drive');
   const [path, setPath] = useState('');
   const [descIndex, setDescIndex] = useState(0);
-  const extension = typeDescriptions[descIndex][1].extension;
-  const typepath = typeDescriptions[descIndex][1].typepath;
+  const extension = saveableTypes[descIndex].extension;
+  const typepath = saveableTypes[descIndex].typepath;
   const visibleFiles = tab === 'drive' ? driveFiles : diskFiles;
-  const dropdownOptions = typeDescriptions.map(([displayText, _], value) => {
+  const dropdownOptions = saveableTypes.map(({ displayText }, value) => {
     return { displayText, value };
   });
   useEffect(() => {
@@ -104,11 +103,14 @@ export const NanopaintSelectDialog = (props: NanopaintSelectDialogProps) => {
                   selected={dropdownOptions[descIndex]}
                   options={dropdownOptions}
                   onSelected={(v) => {
-                    const newExtension = typeDescriptions[v][1].extension;
+                    const newExtension = saveableTypes[v].extension;
                     const splitPath = path.split('.');
-                    if (splitPath.at(-1) !== newExtension) {
+                    if (
+                      splitPath.at(-1) !== newExtension &&
+                      path.length !== 0
+                    ) {
                       setPath(
-                        [...splitPath.slice(0, -2), newExtension].join('.'),
+                        [...splitPath.slice(0, -1), newExtension].join('.'),
                       );
                     }
                     setDescIndex(v);
@@ -123,12 +125,12 @@ export const NanopaintSelectDialog = (props: NanopaintSelectDialogProps) => {
                 <Button
                   onClick={() => {
                     const splitPath = path.split('.');
-                    const pathDesc = typeDescriptions.find(
-                      ([_, { extension: entryExtension }]) =>
+                    const pathDesc = saveableTypes.find(
+                      ({ extension: entryExtension }) =>
                         splitPath.at(-1) === entryExtension,
-                    )?.[1];
+                    );
                     const name = pathDesc
-                      ? splitPath.slice(0, -2).join('.')
+                      ? splitPath.slice(0, -1).join('.')
                       : path;
                     const inputExtension = pathDesc
                       ? splitPath.at(-1)
@@ -139,7 +141,7 @@ export const NanopaintSelectDialog = (props: NanopaintSelectDialogProps) => {
                         fileEntry.name === name &&
                         fileEntry.extension === inputExtension,
                     )?.uid;
-                    act(selectAct, {
+                    act(action, {
                       name,
                       uid: uid ?? null,
                       onDisk: tab === 'disk',

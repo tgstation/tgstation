@@ -10,13 +10,7 @@ export const NanopaintErrorDialog = (props: NanopaintErrorDialogProps) => {
   return (
     <Dimmer>
       <Section>
-        <Stack
-          vertical
-          width="150px"
-          height="100px"
-          textAlign="center"
-          align="center"
-        >
+        <Stack vertical textAlign="center" align="center">
           <Stack.Item align="start" fontSize="16px">
             Error
           </Stack.Item>
@@ -24,7 +18,7 @@ export const NanopaintErrorDialog = (props: NanopaintErrorDialogProps) => {
           <Stack.Item>
             <Stack fill justify="space-evenly">
               <Stack.Item>
-                <Button onClick={() => act('closeDialog')}>Ok</Button>
+                <Button onClick={() => act('closeDialog')}>OK</Button>
               </Stack.Item>
             </Stack>
           </Stack.Item>

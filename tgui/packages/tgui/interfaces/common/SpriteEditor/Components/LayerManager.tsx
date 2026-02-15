@@ -131,8 +131,7 @@ export const LayerManager = (props: LayerManagerProps) => {
                       data={data[dir]!}
                       width={`${width}px`}
                       height={`${height}px`}
-                      ml="0.25rem"
-                      mr="0.25rem"
+                      m="0.25rem"
                       onClick={() => {
                         setSelectedDir(dir);
                         setSelectedLayer(i);

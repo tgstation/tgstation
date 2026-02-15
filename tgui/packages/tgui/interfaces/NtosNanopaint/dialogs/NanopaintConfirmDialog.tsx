@@ -4,22 +4,16 @@ import { Button, Dimmer, Section, Stack } from 'tgui-core/components';
 type NanopaintConfirmDialogProps = {
   title: string;
   message: string;
-  confirmAct: string;
+  action: string;
   params: Record<string, unknown>;
 };
 
 export const NanopaintConfirmDialog = (props: NanopaintConfirmDialogProps) => {
-  const { title, message, confirmAct, params } = props;
+  const { title, message, action: confirmAct, params } = props;
   return (
     <Dimmer>
       <Section>
-        <Stack
-          vertical
-          width="150px"
-          height="100px"
-          textAlign="center"
-          align="center"
-        >
+        <Stack vertical textAlign="center" align="center">
           <Stack.Item align="start" fontSize="16px">
             {title}
           </Stack.Item>
