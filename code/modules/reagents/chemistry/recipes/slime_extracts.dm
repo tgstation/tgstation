@@ -75,6 +75,11 @@
 	required_reagents = list(/datum/reagent/cellulose = 1)
 	required_container = /obj/item/slime_extract/green
 
+/datum/chemical_reaction/slime/slimeghost
+	results = list(/datum/reagent/mutationtoxin/ghost = 1)
+	required_reagents = list(/datum/reagent/hauntium = 1)
+	required_container = /obj/item/slime_extract/green
+
 //Metal
 /datum/chemical_reaction/slime/slimemetal
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
