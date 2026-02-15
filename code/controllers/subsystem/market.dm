@@ -116,10 +116,7 @@ SUBSYSTEM_DEF(market)
 		return
 	var/atom/movable/thing = purchase.entry.spawn_item(target, purchase)
 	purchase.post_purchase_effects(thing)
-	var/datum/effect_system/spark_spread/sparks = new
-	sparks.set_up(5, 1, target)
-	sparks.attach(thing)
-	sparks.start()
+	do_sparks(5, TRUE, target)
 	qdel(purchase)
 
 /// Used to add /datum/market_purchase to queued_purchases var. Returns TRUE when queued.

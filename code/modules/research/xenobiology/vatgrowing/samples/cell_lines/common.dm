@@ -468,7 +468,8 @@
 		/datum/reagent/wittel = 10, //stupid rare
 		/datum/reagent/medicine/omnizine/protozine = 5,
 		/datum/reagent/plasma_oxide = 3,
-		/datum/reagent/clf3 = 1)//since this is also chemistry it's worth near nothing
+		/datum/reagent/clf3 = 1,
+	)//since this is also chemistry it's worth near nothing
 
 	suppressive_reagents = list(//generics you would regularly put in a vat kill abberant residue
 		/datum/reagent/consumable/nutriment/peptides = -6,
@@ -482,12 +483,20 @@
 	resulting_atom = pick(/mob/living/basic/creature, /mob/living/basic/migo, /mob/living/basic/blankbody) //i looked myself, pretty much all of them are reasonably strong and somewhat on the same level. except migo is the jackpot and the blank body is whiff.
 	return ..()
 
-/datum/micro_organism/cell_line/clown/fuck_up_growing(obj/machinery/vatgrower/vat)
-	vat.visible_message(span_warning("The biological sample in [vat] seems to have created something horrific!"))
+/datum/micro_organism/cell_line/clown
 
-	var/mob/selected_mob = pick(list(/mob/living/basic/clown/mutant, /mob/living/basic/clown/fleshclown))
+/datum/micro_organism/cell_line/clown/succeed_growing(obj/machinery/vatgrower/vat)
+	if(vat.reagents.has_reagent(/datum/reagent/toxin/mutagen) && prob(CYTO_SHINY_CHANCE))
+		resulting_atom = pick(/mob/living/basic/clown/mutant, /mob/living/basic/clown/fleshclown)
+		vat.visible_message(span_warning("The biological sample in [vat] mutates into something horrific!"))
+	else
+		resulting_atom = initial(resulting_atom)
+	return ..()
 
-	new selected_mob(get_turf(vat))
+/datum/micro_organism/cell_line/clown/New()
+	. = ..()
+	// all clown mutations get a huge boost from mutagen, at the cost of causing occasional mutations
+	supplementary_reagents[/datum/reagent/toxin/mutagen] = 8
 
 /datum/micro_organism/cell_line/clown/bananaclown
 	desc = "Clown bits with banana chunks"
@@ -655,11 +664,15 @@
 	virus_suspectibility = 0
 	resulting_atom = /obj/item/queen_bee/bought
 
-/datum/micro_organism/cell_line/queen_bee/fuck_up_growing(obj/machinery/vatgrower/vat) //we love job hazards
-	vat.visible_message(span_warning("You hear angry buzzing coming from the inside of the vat!"))
-	for(var/i in 1 to 5)
-		new /mob/living/basic/bee(get_turf(vat))
-
+/datum/micro_organism/cell_line/queen_bee/succeed_growing(obj/machinery/vatgrower/vat)
+	if(grow_count % 2) // every other growth cycle spawns a horde of bees insteads
+		resulting_atom_count = 5
+		resulting_atom = /mob/living/basic/bee
+		vat.visible_message(span_warning("You hear angry buzzing coming from the inside of the vat!"))
+	else
+		resulting_atom_count = initial(resulting_atom_count)
+		resulting_atom = initial(resulting_atom)
+	return ..()
 
 /datum/micro_organism/cell_line/butterfly
 	desc = "Papilionoidea cells"

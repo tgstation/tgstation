@@ -192,7 +192,7 @@
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
-	if (istype(tool, /obj/item/stack/sticky_tape))
+	if (istype(tool, /obj/item/stack/medical/wrap/sticky_tape))
 		if (tape_color)
 			to_chat(user, span_warning("[src]'s hole is already covered up with tape!"))
 			return ITEM_INTERACT_BLOCKING
@@ -201,7 +201,7 @@
 			to_chat(user, span_warning("[src] hasn't been opened yet!"))
 			return ITEM_INTERACT_BLOCKING
 
-		var/obj/item/stack/sticky_tape/tape = tool
+		var/obj/item/stack/medical/wrap/sticky_tape/tape = tool
 		var/list/tape_colors = SSgreyscale.ParseColorString(tape.greyscale_colors)
 		add_fingerprint(user)
 		if (!tape.use(1))

@@ -1026,6 +1026,4 @@
 /obj/item/mod/module/shock_absorber/proc/mob_batoned(datum/source)
 	SIGNAL_HANDLER
 	drain_power(use_energy_cost)
-	var/datum/effect_system/lightning_spread/sparks = new /datum/effect_system/lightning_spread
-	sparks.set_up(number = 5, cardinals_only = TRUE, location = mod.wearer.loc)
-	sparks.start()
+	do_sparks(5, TRUE, mod.wearer.loc)

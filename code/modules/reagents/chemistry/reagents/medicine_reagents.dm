@@ -665,7 +665,7 @@
 	ph = 12
 	purity = REAGENT_STANDARD_PURITY
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/stimulants = 4) //1.6 per 2 seconds
+	addiction_types = list(/datum/addiction/stimulants = 150)
 	inverse_chem = /datum/reagent/inverse/corazargh
 	inverse_chem_val = 0.4
 	metabolized_traits = list(TRAIT_BATON_RESISTANCE, TRAIT_STIMULATED)
@@ -732,7 +732,7 @@
 	overdose_threshold = 30
 	ph = 8.96
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/opioids = 20) // 30 units of morphine may cause addition
+	addiction_types = list(/datum/addiction/opioids = 30)
 	metabolized_traits = list(TRAIT_ANALGESIA)
 
 /datum/reagent/medicine/morphine/on_mob_metabolize(mob/living/affected_mob)
@@ -929,7 +929,7 @@
 	. = ..()
 	if(creation_purity >= 1)
 		ADD_TRAIT(affected_mob, TRAIT_GOOD_HEARING, type)
-		if(affected_mob.can_hear())
+		if(!HAS_TRAIT(affected_mob, TRAIT_DEAF))
 			to_chat(affected_mob, span_nicegreen("You can feel your hearing drastically improve!"))
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -945,7 +945,7 @@
 /datum/reagent/medicine/inacusiate/on_mob_delete(mob/living/affected_mob)
 	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_GOOD_HEARING, type)
-	if(affected_mob.can_hear())
+	if(!HAS_TRAIT(affected_mob, TRAIT_DEAF))
 		to_chat(affected_mob, span_notice("Your hearing returns to its normal acuity."))
 
 /datum/reagent/medicine/atropine
@@ -1331,7 +1331,7 @@
 	overdose_threshold = 60
 	ph = 8.7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-	addiction_types = list(/datum/addiction/stimulants = 4) //0.8 per 2 seconds
+	addiction_types = list(/datum/addiction/stimulants = 150)
 	metabolized_traits = list(TRAIT_BATON_RESISTANCE, TRAIT_ANALGESIA, TRAIT_STIMULATED)
 
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/affected_mob)
@@ -1453,7 +1453,7 @@
 	overdose_threshold = 25
 	ph = 11
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/hallucinogens = 14)
+	addiction_types = list(/datum/addiction/hallucinogens = 90)
 	metabolized_traits = list(TRAIT_PACIFISM)
 
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
