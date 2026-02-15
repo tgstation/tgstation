@@ -1,0 +1,8 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Adds Tourniquets. While attached to a limb, reduces blood loss from that limb by 90%, but makes you walk / interact slower. (Or if you put it on your head, you die.)"
+  - rscadd: "You can purchase Tourniquets from the premium section of the medical vendor"
+  - rscadd: "Paramedic belt setup has changed yet again: Surgical tape replaced with Tourniquet, Bone gel replaced with Bonesetter."
+  - rscadd: "You can use all forms of tape as splint - like Gauze. Will secure a fracture but won't stop your blood from exiting."
+  - refactor: "Refactored gauze entirely, report any strangeness with it (or tape, or tourniquets)"
