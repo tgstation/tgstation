@@ -6126,7 +6126,6 @@
 #include "code\modules\reagents\reagent_containers\cups\mauna_mug.dm"
 #include "code\modules\reagents\reagent_containers\cups\organ_jar.dm"
 #include "code\modules\reagents\reagent_containers\cups\soda.dm"
-#include "code\modules\reagents\stackedeffects\organ_damage.dm"
 #include "code\modules\reagents\stackedeffects\stackedeffects.dm"
 #include "code\modules\reagents\withdrawal\_addiction.dm"
 #include "code\modules\reagents\withdrawal\generic_addictions.dm"
