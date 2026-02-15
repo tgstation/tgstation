@@ -113,7 +113,7 @@
 	var/metabolized_volume = reagent.compute_metabolization(owner, seconds_per_tick)
 	var/metabolization_ratio = REM * metabolized_volume
 	if(reagents_metabolized)
-		reagents_metabolized[reagent] = metabolization_ratio
+		reagents_metabolized[reagent.type] = metabolization_ratio
 	if(can_overdose && !HAS_TRAIT(owner, TRAIT_OVERDOSEIMMUNE))
 		if(reagent.overdose_threshold && reagent.volume >= reagent.overdose_threshold && !reagent.overdosed)
 			reagent.overdosed = TRUE

@@ -34,7 +34,7 @@
 	var/list/datum/reagent/requirements_needed = requirements
 	for(var/datum/reagent/test as anything in reagents_metabolized)
 		for(var/datum/reagent/requirement as anything in requirements_needed)
-			if(istype(test, requirement))
+			if(ispath(test, requirement))
 				if(requirements_needed == requirements)
 					requirements_needed = requirements.Copy()
 				requirements_needed[requirement] -= 1
