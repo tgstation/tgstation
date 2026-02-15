@@ -9,9 +9,11 @@
  */
 /datum/tgui_say/proc/alter_entry(payload)
 	var/entry = payload["entry"]
+	var/list/phrases = alter_phrases || hurt_phrases
+
 	/// No OOC leaks
 	if(!entry || payload["channel"] == OOC_CHANNEL || payload["channel"] == ME_CHANNEL)
-		return pick(hurt_phrases)
+		return pick(phrases)
 	/// Random trimming for larger sentences
 	if(length(entry) > 50)
 		entry = trim(entry, rand(40, 50))
@@ -19,7 +21,7 @@
 		/// Otherwise limit trim to just last letter
 		if(length(entry) > 1)
 			entry = trim(entry, length(entry))
-	return entry + "-" + pick(hurt_phrases)
+	return entry + "-" + pick(phrases)
 
 /**
  * Delegates the speech to the proper channel.
@@ -52,9 +54,23 @@
 /**
  * Force say handler.
  * Sends a message to the say modal to send its current value.
+ * Arguments:
+ * 	alter_phrases - Optional list of alternate suffixes to blurt out
+ * 	immediate - If [TRUE], the say must be invoked inline due to side effects that may cause the mob to be unable to speak
  */
-/datum/tgui_say/proc/force_say()
-	window.send_message("force")
+/datum/tgui_say/proc/force_say(list/alter_phrases = null, immediate = FALSE)
+	src.alter_phrases = alter_phrases
+	if(immediate)
+		if(!saved_text)
+			saved_text = ""
+			if(!saved_channel)
+				saved_channel = SAY_CHANNEL
+
+		handle_entry("force", list("type" = "force", "entry" = saved_text, "channel" = saved_channel))
+		window.send_message("close")
+	else
+		window.send_message("force")
+
 	stop_typing()
 
 /**
@@ -66,11 +82,14 @@
 
 /**
  * Makes the player force say what's in their current input box.
+ * Arguments:
+ * 	alter_phrases - Optional list of alternate suffixes to blurt out
+ * 	immediate - If [TRUE], the say must be invoked inline due to side effects that may cause the mob to be unable to speak
  */
-/mob/living/carbon/human/proc/force_say()
+/mob/living/carbon/human/proc/force_say(list/alter_phrases = null, immediate = FALSE)
 	if(stat != CONSCIOUS || !client?.tgui_say?.window_open)
 		return FALSE
-	client.tgui_say.force_say()
+	client.tgui_say.force_say(alter_phrases, immediate)
 	if(client.typing_indicators)
 		log_speech_indicators("[key_name(client)] FORCED to stop typing, indicators enabled.")
 	else
@@ -118,5 +137,6 @@
 		var/target_channel = payload["channel"]
 		if(target_channel == SAY_CHANNEL || target_channel == RADIO_CHANNEL)
 			saved_text = payload["entry"] // only save IC text
+			saved_channel = target_channel
 		return TRUE
 	return FALSE

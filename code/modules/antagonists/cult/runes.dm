@@ -314,8 +314,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	if(check_holidays(APRIL_FOOLS) && prob(10))
 		convertee.Paralyze(10 SECONDS)
-		if(istype(human_convertee))
-			human_convertee.force_say()
 		convertee.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in. (April Fools)")
 
 	else
