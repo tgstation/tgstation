@@ -32,9 +32,9 @@
 ///from /obj/item/bodypart/proc/receive_damage, sent from the limb owner (limb, brute, burn)
 #define COMSIG_CARBON_LIMB_DAMAGED "carbon_limb_damaged"
 	#define COMPONENT_PREVENT_LIMB_DAMAGE (1 << 0)
-/// from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze): (/obj/item/stack/medical/gauze/applied_gauze, /obj/item/stack/medical/gauze/stack_used)
+/// from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze): (/obj/item/stack/medical/wrap/gauze/applied_gauze, /obj/item/stack/medical/wrap/gauze/stack_used)
 #define COMSIG_BODYPART_GAUZED "bodypart_gauzed"
-/// from /obj/item/stack/medical/gauze/Destroy(): (/obj/item/stack/medical/gauze/removed_gauze)
+/// from /obj/item/stack/medical/wrap/gauze/Destroy(): (/obj/item/stack/medical/wrap/gauze/removed_gauze)
 #define COMSIG_BODYPART_UNGAUZED "bodypart_ungauzed"
 
 /// Called from bodypart changing owner, which could be on attach or detachment. Either argument can be null. (mob/living/carbon/new_owner, mob/living/carbon/old_owner)
