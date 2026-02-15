@@ -22,14 +22,6 @@
 	var/list/obj/item/stack/drop_on_deconstruct
 	//Time it takes to deconstruct a completed shell.	 Note : You can dissssemble multiple at once
 	var/deconstruct_time = 4 SECONDS
-	//Message to player when beginning deconstruction
-	var/start_deconstruct_text = "You begin prying load-bearing chunks from the completed shell."
-	//Message to player when sucessfully deconstructing the Shell
-	var/successful_deconstruct_text = "The Golem crumbles in on itself!"
-	//Sound to play when attempting Deconstruction
-	var/tool_deconstruct_sound = 'sound/items/tools/crowbar.ogg'
-	//Sound to play on successful deconstruction
-	var/deconstruct_success_sound = 'sound/effects/rock/rock_break.ogg'
 
 
 /obj/effect/mob_spawn/ghost_role/human/golem/Initialize(mapload, mob/living/creator, made_of)
@@ -125,13 +117,12 @@
 /obj/effect/mob_spawn/ghost_role/human/golem/crowbar_act(mob/living/user, obj/item/tool)
 
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	var/mob/living/typecast_user = user
-	if(typecast_user.combat_mode)
+	if(user.combat_mode)
 		return
-	to_chat(user, span_notice(start_deconstruct_text))
-	playsound(user, tool_deconstruct_sound, 70)
+	to_chat(user, span_notice("You begin prying load-bearing chunks from the completed shell."))
+	playsound(user, 'sound/items/tools/crowbar.ogg', 70)
 
 	if(do_after(user, delay = deconstruct_time, target = src))
 		new /obj/item/stack/sheet/mineral/adamantine(get_turf(src))
@@ -140,8 +131,8 @@
 		else
 			new /obj/item/stack/sheet/iron/five(get_turf(src))
 
-		to_chat(user, span_notice(successful_deconstruct_text))
-		playsound(src, deconstruct_success_sound, 60)
+		to_chat(user, span_notice("The Golem crumbles in on itself!"))
+		playsound(src, 'sound/effects/rock/rock_break.ogg', 60)
 		qdel(src)
 
-	return
+	return ITEM_INTERACT_SUCCESS
