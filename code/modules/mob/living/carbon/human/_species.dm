@@ -770,9 +770,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/obj/item/organ/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	var/obj/item/bodypart/attacking_bodypart = attacker_style?.get_attacking_limb(user, target) || brain?.get_attacking_limb(target) || user.get_active_hand()
 
-	// Whether or not we get some protein for a successful attack. Nom.
-	var/biting = FALSE
-
 	var/atk_verb_index = rand(1, length(attacking_bodypart.unarmed_attack_verbs))
 	var/atk_verb = attacking_bodypart.unarmed_attack_verbs[atk_verb_index]
 	var/atk_verb_continuous = "[atk_verb]s"
@@ -783,7 +780,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	if(atk_effect == ATTACK_EFFECT_BITE)
 		if(!user.is_mouth_covered(ITEM_SLOT_MASK))
-			biting = TRUE
+			EMPTY_BLOCK_GUARD
 		else if(user.get_active_hand()) //In the event we can't bite, emergency swap to see if we can attack with a hand.
 			attacking_bodypart = user.get_active_hand()
 			atk_verb_index = rand(1, length(attacking_bodypart.unarmed_attack_verbs))
@@ -803,6 +800,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	//Someone in a grapple is much more vulnerable to being harmed by punches.
 	var/grappled = (target.pulledby && target.pulledby.grab_state >= GRAB_AGGRESSIVE)
+	var/kicking = (atk_effect == ATTACK_EFFECT_KICK)
+	var/biting = (atk_effect == ATTACK_EFFECT_BITE)
 
 	// Our lower and upper unarmed damage values. Damage is rolled between these two values.
 	var/lower_unarmed_damage = attacking_bodypart.unarmed_damage_low
@@ -828,10 +827,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		limb_accuracy = floor(limb_accuracy * pummel_bonus)
 
 	//Get our puncher's combined brute and burn damage.
-	var/puncher_brute_and_burn = (user.get_fire_loss() + user.get_brute_loss())
+	var/puncher_brute_and_burn = user.get_brute_and_fire_loss()
 
 	//Get our targets combined brute and burn damage.
-	var/target_brute_and_burn = (target.get_fire_loss() + target.get_brute_loss())
+	var/target_brute_and_burn = target.get_brute_and_fire_loss()
 
 	// In a brawl, drunkenness can make you swing more wildly and with more force, and thus catch your opponent off guard, but it could also totally throw you off if you're too intoxicated
 	// But god is it going to make you sick moving too much while drunk
@@ -908,7 +907,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/attack_direction = get_dir(user, target)
 	var/attack_type = attacking_bodypart.attack_type
-	var/kicking = (atk_effect == ATTACK_EFFECT_KICK)
 	var/final_armor_block = armor_block
 	if(kicking || grappled) //kicks and punches when grappling bypass armor slightly.
 		if(damage >= 9)
