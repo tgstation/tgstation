@@ -20,11 +20,15 @@
 
 	//Deconstruction var's
 	var/list/obj/item/stack/drop_on_deconstruct
+	//Time it takes to deconstruct a completed shell.	 Note : You can dissssemble multiple at once
 	var/deconstruct_time = 4 SECONDS
+	//Message to player when beginning deconstruction
 	var/start_deconstruct_text = "You begin prying load-bearing chunks from the completed shell."
+	//Message to player when sucessfully deconstructing the Shell
 	var/successful_deconstruct_text = "The Golem crumbles in on itself!"
-	var/obj/item/deconstruct_tool = /obj/item/crowbar
+	//Sound to play when attempting Deconstruction
 	var/tool_deconstruct_sound = 'sound/items/tools/crowbar.ogg'
+	//Sound to play on successful deconstruction
 	var/deconstruct_success_sound = 'sound/effects/rock/rock_break.ogg'
 
 
@@ -41,13 +45,6 @@
 			ignore_key = POLL_IGNORE_GOLEM,
 			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		)
-
-		RegisterSignal(src, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
-
-/obj/effect/mob_spawn/ghost_role/human/golem/Destroy()
-	. = ..()
-
-		UnregisterSignal(src, COMSIG_ATOM_ATTACKBY)
 
 /obj/effect/mob_spawn/ghost_role/human/golem/special(mob/living/new_spawn, mob/mob_possessor, apply_prefs)
 	. = ..()
@@ -124,6 +121,32 @@
 		forced_name =  "Golem ([rand(1,999)])"
 	return ..()
 
+
+/obj/effect/mob_spawn/ghost_role/human/golem/crowbar_act(mob/living/user, obj/item/tool)
+
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return
+
+	var/mob/living/typecast_user = user
+	if(typecast_user.combat_mode)
+		return
+	to_chat(user, span_notice(start_deconstruct_text))
+	playsound(user, tool_deconstruct_sound, 70)
+
+	if(do_after(user, delay = deconstruct_time, target = src))
+		new /obj/item/stack/sheet/mineral/adamantine(get_turf(src))
+		if(initial_type)
+			new initial_type(get_turf(src), 5)
+		else
+			new /obj/item/stack/sheet/iron/five(get_turf(src))
+
+		to_chat(user, span_notice(successful_deconstruct_text))
+		playsound(src, deconstruct_success_sound, 60)
+		qdel(src)
+
+	return
+
+/*
 /obj/effect/mob_spawn/ghost_role/human/golem/proc/on_attackby(datum/source, obj/item/used_item, mob/user)
 
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
@@ -146,4 +169,4 @@
 		playsound(src, deconstruct_success_sound, 60)
 		qdel(src)
 
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+	return COMPONENT_CANCEL_ATTACK_CHAIN*/
