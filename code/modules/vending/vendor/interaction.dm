@@ -86,7 +86,7 @@
 			continue
 
 		if(product_datum.amount == product_datum.max_amount)
-			to_chat(user, span_warning("[src] can't accept any more [inserted_item][inserted_item.p_s()]!"))
+			to_chat(user, span_warning("[src] can't accept any more [inserted_item.name][inserted_item.p_s()]!"))
 			return FALSE
 
 		if(!user.transferItemToLoc(inserted_item, src))
