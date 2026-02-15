@@ -908,16 +908,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/attack_direction = get_dir(user, target)
 	var/attack_type = attacking_bodypart.attack_type
 	var/final_armor_block = armor_block
+
+	if(damage >= 9)
+		target.force_say()
 	if(kicking || grappled) //kicks and punches when grappling bypass armor slightly.
-		if(damage >= 9)
-			target.force_say()
 		final_armor_block -= limb_accuracy
 		target.apply_damage(damage, attack_type, affecting, final_armor_block, attack_direction = attack_direction, sharpness = limb_sharpness)
 		log_combat(user, target, grappled ? "grapple punched" : "kicked")
 	else // Normal attacks do not gain the benefit of armor penetration.
 		target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction, sharpness = limb_sharpness)
-		if(damage >= 9)
-			target.force_say()
 		log_combat(user, target, "punched")
 
 	if(user != target && biting && (target.mob_biotypes & MOB_ORGANIC)) //Good for you. You probably just ate someone alive.
