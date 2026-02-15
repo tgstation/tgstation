@@ -513,6 +513,56 @@
 		var/wand_path = pick_n_take(available_options)
 		new wand_path(src)
 
+/// Not a subtype of bandolier because it acts pretty differently
+/obj/item/storage/belt/wand_bandolier
+	name = "wand bandolier"
+	desc = "A bandolier for holding a whole lot of wands. If worn on your suit, swaps expended wands for fresh ones on the fly."
+	icon_state = "bandolier"
+	inhand_icon_state = "bandolier"
+	worn_icon_state = "bandolier"
+	storage_type = /datum/storage/wands_belt
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/belt/wand_bandolier/equipped(mob/user, slot)
+	. = ..()
+	if (!(slot & ITEM_SLOT_SUITSTORE))
+		return
+	ADD_CLOTHING_TRAIT(user, TRAIT_GUNFLIP)
+	RegisterSignal(user, COMSIG_MOB_FIRED_GUN, PROC_REF(on_gun_fired))
+
+/obj/item/storage/belt/wand_bandolier/dropped(mob/user)
+	. = ..()
+	REMOVE_CLOTHING_TRAIT(user, TRAIT_GUNFLIP)
+	UnregisterSignal(user, COMSIG_MOB_FIRED_GUN)
+
+/// After we fire a gun, check if it's a wand. If it is and it's empty, do a swap
+/obj/item/storage/belt/wand_bandolier/proc/on_gun_fired(mob/living/wizard, obj/item/gun/magic/wand/old_wand)
+	SIGNAL_HANDLER
+	if (!istype(old_wand))
+		return
+	if (!atom_storage.real_location.contents.len) // no other wands
+		return
+	if (old_wand.charges > 1) // It hasn't subtracted yet
+		return
+
+	var/obj/item/fresh_wand
+	for (var/obj/item/gun/magic/wand/checked in atom_storage.real_location.contents)
+		if (checked.charges)
+			fresh_wand = checked
+			break
+	if (!fresh_wand || fresh_wand.on_found())
+		return // Nothing to swap with
+
+	wizard.temporarilyRemoveItemFromInventory(old_wand)
+	if (!wizard.put_in_active_hand(fresh_wand))
+		wizard.put_in_active_hand(fresh_wand)
+		return
+	to_chat(wizard, span_notice("You quickly draw [fresh_wand]."))
+	if (atom_storage.attempt_insert(old_wand, wizard))
+		return
+	old_wand.forceMove(wizard.drop_location())
+	to_chat(wizard, span_warning("...and drop [old_wand] on the ground."))
+
 /obj/item/storage/belt/janitor
 	name = "janibelt"
 	desc = "A belt used to hold most janitorial supplies."

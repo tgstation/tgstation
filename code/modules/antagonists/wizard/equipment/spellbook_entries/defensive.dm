@@ -123,12 +123,24 @@
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 
 /datum/spellbook_entry/item/wands/try_equip_item(mob/living/carbon/human/user, obj/item/to_equip)
-	// TODO spawn a wand bandolier here instead
-	var/was_equipped = user.equip_to_slot_if_possible(to_equip, ITEM_SLOT_BELT, disable_warning = TRUE)
-	to_chat(user, span_notice("\A [to_equip.name] has been summoned [was_equipped ? "on your waist" : "at your feet"]."))
+	if (!istype(user.belt, /obj/item/storage/belt/wands))
+		var/was_equipped = user.equip_to_slot_if_possible(to_equip, ITEM_SLOT_BELT, disable_warning = TRUE)
+		to_chat(user, span_notice("\A [to_equip.name] has been summoned [was_equipped ? "on your waist" : "at your feet"]."))
+		return
+
+	// If you already have a wand belt you get a cool bandolier instead for your copious amount of wands
+	var/obj/item/storage/belt/wand_bandolier/bandolier = new(user.drop_location())
+
+	for (var/obj/item/wand_presumably in to_equip.atom_storage.real_location)
+		bandolier.atom_storage.attempt_insert(wand_presumably, user, messages = FALSE)
+
+	qdel(to_equip)
+
+	var/was_equipped = user.equip_to_slot_if_possible(bandolier, ITEM_SLOT_SUITSTORE, disable_warning = TRUE)
+	to_chat(user, span_notice("\A [bandolier.name] has been summoned [was_equipped ? "across your chest" : "at your feet"]."))
 
 /datum/spellbook_entry/item/wands/discount
-	name = "Bargain Bin Wand Assortment"
+	name = "Wand Assortment (Bargain Bin)"
 	desc = "A random collection of wands sourced from apprentice wandmaking studies. \
 		You're never quite sure what you're going to get. \
 		Comes in a handy belt, or a fancy bandolier if you are already wearing one."
