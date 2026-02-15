@@ -145,28 +145,3 @@
 		qdel(src)
 
 	return
-
-/*
-/obj/effect/mob_spawn/ghost_role/human/golem/proc/on_attackby(datum/source, obj/item/used_item, mob/user)
-
-	if(DOING_INTERACTION_WITH_TARGET(user, src))
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-	if(istype(used_item, deconstruct_tool))
-		var/mob/living/typecast_user = user
-		if(typecast_user.combat_mode)
-			return NONE
-	to_chat(user, span_notice(start_deconstruct_text))
-	playsound(user, tool_deconstruct_sound, 70)
-
-	if(do_after(user, delay = deconstruct_time, target = src))
-		new /obj/item/stack/sheet/mineral/adamantine(get_turf(src))
-		if(initial_type)
-			new initial_type(get_turf(src), 5)
-		else
-			new /obj/item/stack/sheet/iron/five(get_turf(src))
-
-		to_chat(user, span_notice(successful_deconstruct_text))
-		playsound(src, deconstruct_success_sound, 60)
-		qdel(src)
-
-	return COMPONENT_CANCEL_ATTACK_CHAIN*/
