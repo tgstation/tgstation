@@ -260,7 +260,7 @@
 	var/mat_choice = FALSE
 	for(var/material, amount_needed in design.materials)
 		if(!ispath(material, /datum/material_requirement)) // Material requirement
-			if(!ispath(material, /datum/material))
+			if(!istype(material, /datum/material))
 				CRASH("Autolathe ui_act got passed an invalid material id: [material]")
 			materials_needed[material] += amount_needed
 			continue
