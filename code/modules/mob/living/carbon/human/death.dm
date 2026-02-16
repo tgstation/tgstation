@@ -22,7 +22,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 	human_heart?.beat = BEAT_NONE
 	human_heart?.Stop()
 
-	force_say()
+	force_say(immediate = TRUE)
 
 	. = ..()
 
