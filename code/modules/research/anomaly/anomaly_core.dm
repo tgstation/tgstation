@@ -58,12 +58,12 @@
 	anomaly_type = /obj/effect/anomaly/grav
 
 /obj/item/assembly/signaler/anomaly/grav/signal()
-	for(var/obj/O in orange(2, src))
-		if(!O.anchored)
-			step_towards(O,src)
-	for(var/mob/living/M in orange(2, src))
-		if(!M.mob_negates_gravity())
-			step_towards(M,src)
+	for(var/obj/object in orange(2, src))
+		if(!object.anchored)
+			step_towards(object,src)
+	for(var/mob/living/living in orange(2, src))
+		if(!living.mob_negates_gravity())
+			step_towards(living,src)
 
 /obj/item/assembly/signaler/anomaly/flux
 	name = "\improper flux anomaly core"
