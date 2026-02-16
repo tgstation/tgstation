@@ -6,8 +6,8 @@
 	desc = "Exchanges the position of the wielder and an unanchored object they point at."
 	school = SCHOOL_TRANSLOCATION
 	ammo_type = /obj/item/ammo_casing/magic/swap
-	icon_state = "telewand"
-	base_icon_state = "telewand"
+	icon_state = "swapwand"
+	base_icon_state = "swapwand"
 	fire_sound = 'sound/effects/magic/swap.ogg'
 	max_charges = 20
 
