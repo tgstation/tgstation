@@ -400,10 +400,42 @@
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
 	playsound(loc, 'sound/items/poster/poster_ripped.ogg', vol = 50, vary = TRUE)
 	for(var/obj/item/stuff as anything in contents) // Mail and envelope actually can have more than 1 item.
-		if(user.put_in_hands(stuff) && armed)
-			var/whomst = made_by_cached_name ? "[made_by_cached_name] ([made_by_cached_ckey])" : "no one in particular"
-			log_bomber(user, "opened armed mail made by [whomst], activating", stuff)
-			INVOKE_ASYNC(stuff, TYPE_PROC_REF(/obj/item, attack_self), user)
+		if(!armed)
+			continue
+		var/whomst = made_by_cached_name ? "[made_by_cached_name] ([made_by_cached_ckey])" : "no one in particular"
+		log_bomber(user, "opened armed mail made by [whomst], activating", stuff)
+
+		if(istype(stuff, /obj/item/clothing/mask/facehugger)) //Alien has to go first because if its put in user's hands, it'll trigger attach() which will make attached TRUE which will make valid_to_attach() fail which will make Leap() fail
+			var/obj/item/clothing/mask/facehugger/alien = stuff
+			if(alien.stat == UNCONSCIOUS)
+				continue
+			to_chat(user, span_danger("There's something moving inside of \the [src]!"))
+			alien.Leap(user)
+			continue
+
+		if(!user.put_in_hands(stuff))
+			continue
+
+		if(istype(stuff, /obj/item/gun))
+			to_chat(user, span_danger("As you open [src] you see [stuff] inside! [istype(stuff, /obj/item/gun/magic) ? "It's humming with energy!" : "Its trigger is already pulled!"]"))
+			var/obj/item/gun/realgun = stuff
+			if(!realgun.can_shoot())
+				realgun.shoot_with_empty_chamber(user)
+				continue
+			realgun.process_fire(user, user, FALSE, zone_override = BODY_ZONE_HEAD)
+			realgun.forceMove(get_turf(user))
+			realgun.throw_at(pick(get_step(user, user.dir)), 1, 3)
+			continue
+
+		if(istype(stuff, /obj/item/assembly/flash))
+			var/obj/item/assembly/flash/realflash = stuff
+			if(!realflash.try_use_flash())
+				continue
+			to_chat(user, span_danger("As you open [src], a very bright light shoots out from inside!"))
+			realflash.flash_mob(user)
+			continue
+
+		INVOKE_ASYNC(stuff, TYPE_PROC_REF(/obj/item, attack_self), user)
 	qdel(src)
 	return TRUE
 
@@ -418,20 +450,18 @@
 		playsound(src, 'sound/machines/defib/defib_ready.ogg', vol = 100, vary = TRUE)
 		armed = FALSE
 		return TRUE
-	else
-		balloon_alert(user, "tinkering with something...")
+	balloon_alert(user, "tinkering with something...")
 
-		if(!do_after(user, 2 SECONDS, target = src))
-			after_unwrap(user)
-			return FALSE
-		if(prob(50))
-			balloon_alert(user, "disarmed something...?")
-			playsound(src, 'sound/machines/defib/defib_ready.ogg', vol = 100, vary = TRUE)
-			armed = FALSE
-			return TRUE
-		else
-			after_unwrap(user)
-			return TRUE
+	if(!do_after(user, 2 SECONDS, target = src))
+		after_unwrap(user)
+		return FALSE
+	if(prob(50))
+		balloon_alert(user, "disarmed something...?")
+		playsound(src, 'sound/machines/defib/defib_ready.ogg', vol = 100, vary = TRUE)
+		armed = FALSE
+		return TRUE
+	after_unwrap(user)
+	return TRUE
 
 ///Generic mail used in the mail strike shuttle loan event
 /obj/item/mail/mail_strike
