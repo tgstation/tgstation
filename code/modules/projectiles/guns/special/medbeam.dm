@@ -93,6 +93,9 @@
 	if(current_target)
 		on_beam_tick(current_target)
 
+/obj/item/gun/medbeam/on_mail_unwrap(mob/user, obj/item/mail/traitor/letter)
+	return
+
 /obj/item/gun/medbeam/proc/mid_los_check(atom/movable/user, mob/target, pass_args = PASSTABLE|PASSGLASS|PASSGRILLE, turf/next_step, obj/dummy)
 	for(var/obj/effect/ebeam/medical/B in next_step)// Don't cross the str-beams!
 		if(QDELETED(current_beam))

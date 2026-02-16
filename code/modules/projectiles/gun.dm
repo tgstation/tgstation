@@ -110,6 +110,9 @@
 
 	var/pb_knockback = 0
 
+	/// What this gun says when it's gonna shoot inside mail.
+	var/about_to_shoot_inside_mail_text = "Its trigger is already pulled!"
+
 	/// Cooldown for the visible message sent from gun flipping.
 	COOLDOWN_DECLARE(flip_cooldown)
 
@@ -121,6 +124,7 @@
 
 	add_seclight_point()
 	add_bayonet_point()
+	RegisterSignal(src, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, PROC_REF(on_mail_unwrap))
 
 /obj/item/gun/Destroy()
 	if(isobj(pin)) //Can still be the initial path, then we skip
@@ -712,6 +716,17 @@
 //Happens before the actual projectile creation
 /obj/item/gun/proc/before_firing(atom/target,mob/user)
 	return
+
+/obj/item/gun/proc/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
+	user.put_in_hands(src) // It doesn't matter if this fails
+	to_chat(user, span_danger("As you open [letter], you see [src] inside! [about_to_shoot_inside_mail_text]"))
+	if(!can_shoot())
+		shoot_with_empty_chamber(user)
+		return COMPONENT_TRAITOR_MAIL_HANDLED
+	if(process_fire(user, user, FALSE, zone_override = BODY_ZONE_HEAD))
+		forceMove(user.loc)
+		throw_at(pick(get_step(user, user.dir)), 1, 3)
+	return COMPONENT_TRAITOR_MAIL_HANDLED
 
 #undef FIRING_PIN_REMOVAL_DELAY
 #undef DUALWIELD_PENALTY_EXTRA_MULTIPLIER

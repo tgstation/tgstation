@@ -642,3 +642,7 @@
 /// Sent from /obj/effect/rune/convert/try_sacrifice_item(obj/effect/rune/convert/rune)
 #define COMSIG_ITEM_CULT_SACRIFICE "item_cult_sacrifice"
 	#define COMPONENT_SACRIFICE_SUCCESSFUL (1<<0)
+
+/// Sent from /obj/item/mail/traitor/after_unwrap(mob/user, obj/item/mail/traitor/letter)
+#define COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL "traitor_mail_opened"
+	#define COMPONENT_TRAITOR_MAIL_HANDLED (1<<0)

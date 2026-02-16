@@ -369,6 +369,11 @@
 	shoot_self(user, check_zone(user.zone_selected))
 	return .
 
+/obj/item/gun/ballistic/revolver/russian/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
+	if(get_ammo(FALSE, FALSE) > 1)
+		return
+	return ..()
+
 /// Called after successfully(if you can call it that) shooting ourselves
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = BODY_ZONE_HEAD)
 	user.add_mood_event(

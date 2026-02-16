@@ -28,6 +28,10 @@
 	var/cooldown = 0
 	var/last_trigger = 0 //Last time it was successfully triggered.
 
+/obj/item/assembly/flash/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, PROC_REF(on_mail_unwrap))
+
 /obj/item/assembly/flash/suicide_act(mob/living/user)
 	if(burnt_out)
 		user.visible_message(span_suicide("[user] raises \the [src] up to [user.p_their()] eyes and activates it ... but it's burnt out!"))
@@ -264,6 +268,15 @@
 	// - - -
 	// Attacker lateral to the victim.
 	return DEVIATION_PARTIAL
+
+/obj/item/assembly/flash/proc/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
+	SIGNAL_HANDLER
+	if(!try_use_flash())
+		return
+	to_chat(user, span_danger("As you open [letter], a very bright light shoots out from inside!"))
+	flash_mob(user)
+	forceMove(user.loc)
+	return COMPONENT_TRAITOR_MAIL_HANDLED
 
 /obj/item/assembly/flash/attack(mob/living/target, mob/user)
 	if(!try_use_flash(user))
