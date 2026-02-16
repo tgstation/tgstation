@@ -267,14 +267,15 @@ const GlobalBountyBlock = (props) => {
     <Stack fill>
       <Stack.Item
         width="30%"
-        bold
         >
         <Tabs vertical>
           <Tabs.Tab
             onClick={() => act('update_list')}
-            backgroundColor="good"
+            backgroundColor="blue"
             textColor="white"
             width="100%"
+            bold
+            icon="refresh"
           >
             Update List
           </Tabs.Tab>
@@ -283,8 +284,10 @@ const GlobalBountyBlock = (props) => {
             backgroundColor="#ffffff70"
             textColor="white"
             width="100%"
+            bold
+            icon="print"
           >
-            Update List
+            Printout List
           </Tabs.Tab>
           {safeListBounty.map((bounty) => (
             <Tabs.Tab
@@ -323,7 +326,11 @@ const GlobalBountyBlock = (props) => {
             tooltip={sending ? 'Stop Sending' : 'Send Goods'}
             selected={sending}
             disabled={!pad || !id_inserted}
-            onClick={() => act(sending ? 'stop' : 'send')}
+            onClick={() =>
+              
+
+              )
+            }
           >
             Send & Claim
           </Button>

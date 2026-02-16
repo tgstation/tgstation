@@ -34,7 +34,8 @@ GLOBAL_LIST_EMPTY(bounties_list)
 
 /// Returns the adjusted reward for this bounty, taking into account any global modifiers.
 /datum/bounty/proc/get_bounty_reward()
-	return reward * SSeconomy.bounty_modifier
+	var/high_priority_mult = high_priority ? 1.5 : 1
+	return reward * SSeconomy.bounty_modifier * high_priority_mult
 
 /// Called when this bounty is selected by the passed ID card
 /datum/bounty/proc/on_selected(obj/item/card/id/id_card)

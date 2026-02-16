@@ -305,6 +305,7 @@
 		else
 			data["picking"] = FALSE
 
+// below here
 	data["listBounty"] = list()
 	for(var/datum/bounty/global_bounty in GLOB.bounties_list)
 		var/ship_total = 0
@@ -314,6 +315,7 @@
 			var/datum/bounty/item/global_item = global_bounty
 			ship_max = global_item.required_count
 			ship_total = global_item.shipped_count
+
 		else if (istype(global_bounty, /datum/bounty/reagent))
 			var/datum/bounty/reagent/global_chems = global_bounty
 			ship_max = global_chems.required_volume
@@ -325,10 +327,10 @@
 
 			if(data["listBounty"]["name"] == global_bounty.name)
 				continue
-			data["listBounty"] += list(list(
+			data["listBounty"] += list(list( //TODO:unfuck this
 				"name" = global_bounty.name,
 				"description" = global_bounty.description,
-				"reward" = global_bounty.reward,
+				"reward" = global_bounty.get_bounty_reward(),
 				"claimed" = global_bounty.claimed,
 				"shipped" = ship_total,
 				"maximum" = ship_max,
@@ -434,7 +436,6 @@
 	if(enable_high_priority && length(GLOB.bounties_list))
 		var/datum/bounty/high_pri = pick(GLOB.bounties_list)
 		high_pri.high_priority = TRUE
-		high_pri.reward = high_pri.reward * 1.5
 		high_pri.description = "[initial(high_pri.description)] This bounty is marked as <b>high priority</b>, and will reward <b>1.5x</b> the normal payout!"
 	return TRUE
 
