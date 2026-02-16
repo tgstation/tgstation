@@ -134,7 +134,8 @@
 	. = ..()
 	var/density = main_material.get_property(MATERIAL_DENSITY)
 	var/hardness = main_material.get_property(MATERIAL_HARDNESS)
-	var/force_change = (hardness - 4) - (density - 4)
+	// If a spear is too hard its unwieldy, if it is too light it doesn't have enough weight behind it
+	var/force_change = (hardness - 4) - max(0, density - 4) - max(0, 4 - density) * 2
 	force_unwielded += force_change
 	force_wielded += force_change
 	force = force_unwielded
