@@ -189,13 +189,13 @@ Possible to do for anyone motivated enough:
 	for(var/datum/holocall/holocall_to_disconnect as anything in holo_calls)
 		holocall_to_disconnect.ConnectionFailure(src)
 
-	for (var/I in masters)
-		clear_holo(I)
-
 	if(replay_mode)
 		replay_stop()
 	if(record_mode)
 		record_stop()
+
+	for (var/I in masters)
+		clear_holo(I)
 
 	QDEL_NULL(disk)
 
@@ -216,6 +216,11 @@ Possible to do for anyone motivated enough:
 	. = ..()
 	if(outgoing_call)
 		outgoing_call.ConnectionFailure(src)
+
+/obj/machinery/holopad/on_deconstruction(dissassembled)
+	disk?.forceMove(drop_location())
+	disk = null
+	return ..()
 
 /obj/machinery/holopad/RefreshParts()
 	. = ..()
