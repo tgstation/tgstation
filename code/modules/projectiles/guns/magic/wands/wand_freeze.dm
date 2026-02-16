@@ -39,7 +39,9 @@
 
 /obj/projectile/magic/freeze
 	name = "bolt of freezing"
-	icon_state = "ice_2"
+	icon_state = "ice_1"
+	/// Temperature change to apply to hit mob
+	var/temperature = -350
 
 /obj/projectile/magic/freeze/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
@@ -47,7 +49,24 @@
 	if (isfloorturf(hit_turf) && !isspaceturf(hit_turf) && !isindestructiblefloor(hit_turf))
 		hit_turf.ChangeTurf(/turf/open/floor/fakeice/slippery, flags = CHANGETURF_INHERIT_AIR)
 
+	if(isobj(target))
+		var/obj/thingy = target
+
+		if(thingy.reagents)
+			var/datum/reagents/reagents = thingy.reagents
+			reagents?.expose_temperature(temperature)
+		return
+
 	var/mob/living/victim = target
 	if (!istype(victim))
 		return
+
 	victim.apply_status_effect(/datum/status_effect/ice_block_talisman, 10 SECONDS)
+
+	var/applied_temp = (1 - blocked) * temperature
+	if(iscarbon(target))
+		var/mob/living/carbon/chill_dude = target
+		var/thermal_protection = 1 - chill_dude.get_insulation_protection(chill_dude.bodytemperature + temperature)
+		applied_temp = (thermal_protection * temperature) + temperature
+
+	victim.adjust_bodytemperature(applied_temp)
