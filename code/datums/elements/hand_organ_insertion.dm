@@ -62,7 +62,7 @@
 
 	user.temporarilyRemoveItemFromInventory(organ, force = TRUE)
 	organ.Insert(user)
-	organ.on_surgical_insertion(user, user, organ.zone, organ)
+	organ.on_surgical_insertion(user, user.get_bodypart(deprecise_zone(organ.zone)))
 
 /datum/element/hand_organ_insertion/proc/can_insert_organ(mob/living/carbon/user, obj/item/organ/organ, feedback = FALSE)
 	if (!user.get_bodypart(deprecise_zone(organ.zone)))
@@ -74,9 +74,6 @@
 		user.balloon_alert(user, "your [existing_organ] [existing_organ.p_are()] in the way!")
 		return FALSE
 
-	if (!organ.pre_surgical_insertion(user, user, organ.zone))
-		user.balloon_alert(user, "failed!")
-		return FALSE
 	if (!organ.useable)
 		user.balloon_alert(user, "unusable!")
 		return FALSE
