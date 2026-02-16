@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Holopads no longer runtime or delete their disks when being destroyed"
