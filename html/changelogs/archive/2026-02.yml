@@ -116,3 +116,113 @@
   - map: Catwalks vault is now restricted access
   vinylspiders:
   - code_imp: sinks can be mounted to floors
+2026-02-10:
+  Melbert:
+  - qol: You are always notified if your paycheck amount changes
+2026-02-11:
+  Cerulyss-Aureon:
+  - qol: The HFR can now produce Tier 5 gases at Level 4 when plasma is present in
+      the moderator. This makes it a more viable and competitive alternative to traditional
+      pipe or chamber gas synthesis.
+  Iajret:
+  - bugfix: fixed brain not getting traumas from brain damage (including rotting or
+      chemicals)
+  - bugfix: brains should no longer be getting traumas from mannitol healing
+  - bugfix: apparently cut stomach healing had been broken too, and it should be fixed
+      now.
+  Maximal08:
+  - map: Adds missing wires and pipes to meta
+  Neocloudy:
+  - bugfix: Entertainment monitors don't bypass radio speech volume.
+  lelandkemble:
+  - spellcheck: Pronouns in counterattack text are more correct
+2026-02-12:
+  SyncIt21:
+  - qol: you can place plumbing machines on ducts with different layers again
+  lelandkemble:
+  - bugfix: Airlock painters are now short range once again
+  sesametg:
+  - server: 'fix: HR have reopened positions at unstaffed stations'
+2026-02-13:
+  Cyberboss:
+  - bugfix: Fixed some inconsistencies with bodytypes when non-binary genders had
+      it set to "Use gender". This is no longer possible. If you use have previously
+      used this setting, your bodytype will be explicitly set to female.
+  LT3:
+  - code_imp: Removed unused rock the vote config entry
+  SyncIt21:
+  - refactor: plumbing automatic buffer has been refactored for better performance
+      & interactions. report bugs on github
+  - refactor: plumbing accmilator code has been improved. Report bugs on github
+  - bugfix: power monitors report accurate readings for plumbing machinery
+  - refactor: code for plumbing splitter & filter have been improved. plumbing splitter
+      is now a 3 way component. Report bugs on github
+  - code_imp: mob metabolization code has better cpu performance
+  TealSeer:
+  - balance: The CE spawns with upgraded tools again
+2026-02-14:
+  Co0kie-GG:
+  - bugfix: AI portraits are now displayed correctly
+  - bugfix: AI display selector displays them correctly
+  Cyberboss:
+  - bugfix: The Kommand action icon will now properly reflect your pointer colour
+      after being reset.
+  Melbert:
+  - refactor: Rewrites how addiction points are applied from reagents. Some reagents
+      may be marginally more or less addictive as a consequence.
+  - balance: Addiction gained per metabolism tick now scales to the amount of reagents
+      metabolized. In other words if you metabolize 0.2 units instead of the expected
+      0.4 units, you get 0.5x of the amount of addiction gain. This ultimately changes
+      very little and I would imagine it's how most people expected it to work in
+      the first place...
+  - rscdel: Cytology creations no longer have a random chance to fail if another sample
+      in the vat has growth process. All growth is still reset on any successful creation.
+      As growth failure has been removed, some cell lines that had unique fail interactions
+      have been altered.
+  - rscadd: Clown cell lines are now all boosted by supplying mutagen. However, using
+      mutagen may cause a mutant clown to spawn. (Before, failure caused a mutant
+      clown to spawn.)
+  - rscadd: Queen bee lines now alternate between spawning a queen bee and a swarm
+      of bees. (Before, failure caused a swarm of bees to spawn.)
+  - rscadd: Cytology created bees have a rare chance of having a random toxin.
+  - rscadd: When you get absorbed by a changeling, you get made into an imaginary
+      friend of the changeling that absorbed you.
+  - refactor: Refactored how people are returned to their bodies after occupying separate
+      bodies, such as bitrunners and ghost roles. Report any oddities or failure to
+      return correctly.
+  lelandkemble:
+  - map: Meta's cryo waste pipe is connected to main waste pipes
+  matchalabubu67:
+  - bugfix: radio uplinks now generate three word codes instead of one
+  vinylspiders:
+  - bugfix: fixes certain particle effects not triggering under certain conditions
+2026-02-15:
+  Melbert:
+  - rscadd: Adds Tourniquets. While attached to a limb, reduces blood loss from that
+      limb by 90%, but makes you walk / interact slower. (Or if you put it on your
+      head, you die.)
+  - rscadd: You can purchase Tourniquets from the premium section of the medical vendor
+  - rscadd: 'Paramedic belt setup has changed yet again: Surgical tape replaced with
+      Tourniquet, Bone gel replaced with Bonesetter.'
+  - rscadd: You can use all forms of tape as splint - like Gauze. Will secure a fracture
+      but won't stop your blood from exiting.
+  - refactor: Refactored gauze entirely, report any strangeness with it (or tape,
+      or tourniquets)
+2026-02-16:
+  Arturlang:
+  - bugfix: moon heretics getting hit by things that target limbs specifically (like
+      vendors) will no longer bypass moon robe protection, but, good luck surviving
+      that.
+  - bugfix: fix moon heretic's empathy runtiming on when they gain their initial knowledge
+  Exester509:
+  - rscadd: Pigs and goats can now be grown in a cytology vat
+  LT3:
+  - bugfix: Admins can now actually adjust the speed of the tram
+  - bugfix: Fixed tram doors repeating multiple varied copies of their audio
+  - bugfix: Fixed tram doors emergency release sound/animation
+  - code_imp: Cleaned up some tram signal code
+  Y0SH1M4S73R:
+  - rscadd: Anomaly cores now have effects when pulsed by an assembly, button, or
+      wire. These effects are generally weaker versions of the effects of the source
+      anomalies, or of their respective reactive armors, and many have a 50% longer
+      cooldown than said armors.

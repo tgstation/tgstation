@@ -16,7 +16,7 @@
 	overdose_threshold = 30
 	ph = 9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/hallucinogens = 10) //4 per 2 seconds
+	addiction_types = list(/datum/addiction/hallucinogens = 60)
 
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -72,7 +72,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	ph = 8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/nicotine = 15) // 6 per 2 seconds
+	addiction_types = list(/datum/addiction/nicotine = 10)
 
 	//Nicotine is used as a pesticide IRL.
 /datum/reagent/drug/nicotine/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -107,7 +107,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	inverse_chem_val = 0.3
 	inverse_chem = /datum/reagent/inverse/krokodil
-	addiction_types = list(/datum/addiction/opioids = 18) //7.2 per 2 seconds
+	addiction_types = list(/datum/addiction/opioids = 30)
 
 /datum/reagent/drug/krokodil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -147,7 +147,7 @@
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	ph = 5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/stimulants = 12) //4.8 per 2 seconds
+	addiction_types = list(/datum/addiction/stimulants = 75)
 	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/drug/methamphetamine/on_new(data)
@@ -213,7 +213,7 @@
 	taste_description = "salt" // because they're bathsalts?
 	inverse_chem_val = 0.3
 	inverse_chem = /datum/reagent/inverse/bath_salts
-	addiction_types = list(/datum/addiction/stimulants = 25)  //8 per 2 seconds
+	addiction_types = list(/datum/addiction/stimulants = 25)
 	ph = 8.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED)
@@ -265,7 +265,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	inverse_chem_val = 0.5
 	inverse_chem = /datum/reagent/inverse/aranesp
-	addiction_types = list(/datum/addiction/stimulants = 8)
+	addiction_types = list(/datum/addiction/stimulants = 75)
 	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/drug/aranesp/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -291,7 +291,7 @@
 	taste_description = "paint thinner"
 	inverse_chem_val = 0.4
 	inverse_chem = /datum/reagent/inverse/happiness
-	addiction_types = list(/datum/addiction/hallucinogens = 18)
+	addiction_types = list(/datum/addiction/hallucinogens = 30)
 	metabolized_traits = list(TRAIT_FEARLESS, TRAIT_ANALGESIA)
 
 /datum/reagent/drug/happiness/on_mob_metabolize(mob/living/affected_mob)
@@ -334,7 +334,7 @@
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/stimulants = 6) //2.6 per 2 seconds
+	addiction_types = list(/datum/addiction/stimulants = 400)
 	metabolized_traits = list(TRAIT_BATON_RESISTANCE, TRAIT_ANALGESIA, TRAIT_STIMULATED)
 
 /datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/carbon/affected_mob)
@@ -398,7 +398,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 15
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/maintenance_drugs = 14)
+	addiction_types = list(/datum/addiction/maintenance_drugs = 50)
 
 /datum/reagent/drug/maint/powder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -425,7 +425,7 @@
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/maintenance_drugs = 8)
+	addiction_types = list(/datum/addiction/maintenance_drugs = 300)
 	metabolized_traits = list(TRAIT_HARDLY_WOUNDED, TRAIT_ANALGESIA)
 
 /datum/reagent/drug/maint/sludge/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -453,7 +453,7 @@
 	color = COLOR_BLACK
 	overdose_threshold = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/maintenance_drugs = 5)
+	addiction_types = list(/datum/addiction/maintenance_drugs = 120)
 
 /datum/reagent/drug/maint/tar/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -478,7 +478,7 @@
 	ph = 11
 	overdose_threshold = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/hallucinogens = 12)
+	addiction_types = list(/datum/addiction/hallucinogens = 20)
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/psychonaut, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -560,7 +560,7 @@
 	ph = 5
 	overdose_threshold = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/hallucinogens = 15)
+	addiction_types = list(/datum/addiction/hallucinogens = 40)
 	metabolized_traits = list(TRAIT_STIMULATED)
 	///How many flips have we done so far?
 	var/flip_count = 0
@@ -685,7 +685,7 @@
 	overdose_threshold = 25
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/maintenance_drugs = 20)
+	addiction_types = list(/datum/addiction/maintenance_drugs = 30)
 
 /datum/reagent/drug/saturnx/on_mob_life(mob/living/carbon/invisible_man, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -773,7 +773,7 @@
 	description = "A chemical extract originating from the Saturn-X compound, stabilized and safer for tactical use. After the recipe was discovered, it was planned to be put into mass production, but the program fell apart after its lead disappeared and was never seen again."
 	metabolization_rate = 0.15 * REAGENTS_METABOLISM
 	overdose_threshold = 50
-	addiction_types = list(/datum/addiction/maintenance_drugs = 35)
+	addiction_types = list(/datum/addiction/maintenance_drugs = 5)
 
 /*Kronkaine is a rare natural stimulant that can help you instantly clear stamina damage in combat,
 but it also greatly aids civilians by letting them perform everyday actions like cleaning, building, pick pocketing and even performing surgery at double speed.
@@ -793,7 +793,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 	overdose_threshold = 20
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/stimulants = 20)
+	addiction_types = list(/datum/addiction/stimulants = 50)
 	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/drug/kronkaine/on_new(data)
@@ -907,7 +907,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 	ph = 7
 	overdose_threshold = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/hallucinogens = 20)
+	addiction_types = list(/datum/addiction/hallucinogens = 50)
 	/// Track the active hallucination we're giving out so we don't replace it by accident
 	VAR_PRIVATE/datum/weakref/active_hallucination_weakref
 

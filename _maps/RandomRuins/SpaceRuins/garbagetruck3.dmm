@@ -332,7 +332,7 @@
 /obj/item/boxcutter{
 	pixel_x = 10
 	},
-/obj/item/stack/sticky_tape{
+/obj/item/stack/medical/wrap/sticky_tape{
 	pixel_x = -5
 	},
 /obj/structure/closet/crate/preopen,

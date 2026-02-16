@@ -189,3 +189,9 @@ DEFINE_BITFIELD(surgery_state, list(
 #define HUSK_OVERLAY_GRAYSCALE 1
 /// Draw this overlay on husks as normal
 #define HUSK_OVERLAY_NORMAL 2
+
+// Limb item categories
+/// Gauze slot, asserted to be wrap items
+#define LIMB_ITEM_GAUZE "gauze"
+/// Tourniquet slot
+#define LIMB_ITEM_TOURNIQUET "tourniquet"

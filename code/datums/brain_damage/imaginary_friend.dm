@@ -89,13 +89,17 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	invisibility = INVISIBILITY_MAXIMUM
 	has_emotes = TRUE
-	var/icon/human_image
+	var/icon/human_icon
 	var/image/current_image
 	var/hidden = FALSE
 	var/move_delay = 0
 	var/mob/living/owner
 	var/bubble_icon = "default"
 
+	/// Max distance we can be from our owner before we teleport to them
+	var/distance_allowance = 9
+	/// If TRUE, we must keep line of sight with the owner
+	var/require_los = FALSE
 	/// Whether our host and other imaginary friends can hear us only when nearby or practically anywhere.
 	var/extended_message_range = TRUE
 
@@ -145,7 +149,7 @@
 	gender = pick(MALE, FEMALE)
 	real_name = generate_random_name_species_based(gender, FALSE, /datum/species/human)
 	name = real_name
-	human_image = get_flat_human_icon(null, pick(SSjob.joinable_occupations))
+	human_icon = get_flat_human_icon(null, pick(SSjob.joinable_occupations))
 	Show()
 
 /**
@@ -176,11 +180,11 @@
 		appearance_job = SSjob.get_job(JOB_ASSISTANT)
 
 	if(istype(appearance_job, /datum/job/ai))
-		human_image = icon('icons/mob/silicon/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
+		human_icon = icon('icons/mob/silicon/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
 	else if(istype(appearance_job, /datum/job/cyborg))
-		human_image = icon('icons/mob/silicon/robots.dmi', icon_state = "robot")
+		human_icon = icon('icons/mob/silicon/robots.dmi', icon_state = "robot")
 	else
-		human_image = get_flat_human_icon(null, appearance_job, appearance_from_prefs)
+		human_icon = get_flat_human_icon(null, appearance_job, appearance_from_prefs)
 	Show()
 
 /// Returns all member clients of the imaginary_group
@@ -200,7 +204,7 @@
 	remove_image_from_clients(current_image, friend_clients)
 
 	//Generate image from the static icon and the current dir
-	current_image = image(human_image, src, , MOB_LAYER, dir=src.dir)
+	current_image = image(human_icon, src, , MOB_LAYER, dir=src.dir)
 	current_image.override = TRUE
 	current_image.name = name
 	if(hidden)
@@ -213,10 +217,8 @@
 	src.client.images |= current_image
 
 /mob/eye/imaginary_friend/Destroy()
-	if(owner?.client)
-		owner.client.images.Remove(human_image)
-	if(client)
-		client.images.Remove(human_image)
+	owner.client?.images -= current_image
+	client?.images -= current_image
 	owner.imaginary_group -= src
 	return ..()
 
@@ -431,7 +433,7 @@
 	if(world.time < move_delay)
 		return FALSE
 	setDir(Dir)
-	if(get_dist(src, owner) > 9)
+	if(get_dist(src, owner) > distance_allowance || (require_los && !can_see(owner, src, distance_allowance)))
 		recall()
 		move_delay = world.time + 10
 		return FALSE
@@ -541,7 +543,7 @@
 /mob/eye/imaginary_friend/trapped/setup_friend()
 	real_name = "[owner.real_name]?"
 	name = real_name
-	human_image = icon('icons/mob/simple/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")
+	human_icon = icon('icons/mob/simple/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")
 
 #undef IMAGINARY_FRIEND_RANGE
 #undef IMAGINARY_FRIEND_SPEECH_RANGE
