@@ -228,3 +228,4 @@
       cooldown than said armors.
   lelandkemble:
   - bugfix: Holopads no longer runtime or delete their disks when being destroyed
+  - bugfix: You can no longer make any vending machine free
