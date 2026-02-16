@@ -95,12 +95,10 @@
 	return round(amount, DAMAGE_PRECISION)
 
 // Micro op so we only search limbs once.
-/mob/living/carbon/proc/get_brute_and_fire_loss()
+/mob/living/carbon/proc/get_all_body_damage()
 	var/amount = 0
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		// We could use get_damage() here but we are assuming you only want these two.
-		amount += bodypart.brute_dam
-		amount += bodypart.burn_dam
+		amount += bodypart.get_damage()
 	return round(amount, DAMAGE_PRECISION)
 
 /**

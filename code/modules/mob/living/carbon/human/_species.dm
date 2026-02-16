@@ -779,9 +779,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
 	if(atk_effect == ATTACK_EFFECT_BITE)
-		if(!user.is_mouth_covered(ITEM_SLOT_MASK))
-			EMPTY_BLOCK_GUARD
-		else if(user.get_active_hand()) //In the event we can't bite, emergency swap to see if we can attack with a hand.
+		if(user.is_mouth_covered(ITEM_SLOT_MASK) && user.get_active_hand())
 			attacking_bodypart = user.get_active_hand()
 			atk_verb_index = rand(1, length(attacking_bodypart.unarmed_attack_verbs))
 			atk_verb = attacking_bodypart.unarmed_attack_verbs[atk_verb_index]
@@ -789,7 +787,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if (length(attacking_bodypart.unarmed_attack_verbs_continuous) >= atk_verb_index) // Just in case
 				atk_verb_continuous = attacking_bodypart.unarmed_attack_verbs_continuous[atk_verb_index]
 			atk_effect = attacking_bodypart.unarmed_attack_effect
-		else  //Nothing? Okay. Fail.
+		else //Nothing? Okay. Fail.
 			user.balloon_alert(user, "can't attack!")
 			return FALSE
 
@@ -827,10 +825,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		limb_accuracy = floor(limb_accuracy * pummel_bonus)
 
 	//Get our puncher's combined brute and burn damage.
-	var/puncher_brute_and_burn = user.get_brute_and_fire_loss()
+	var/puncher_brute_and_burn = user.get_all_body_damage()
 
 	//Get our targets combined brute and burn damage.
-	var/target_brute_and_burn = target.get_brute_and_fire_loss()
+	var/target_brute_and_burn = target.get_all_body_damage()
 
 	// In a brawl, drunkenness can make you swing more wildly and with more force, and thus catch your opponent off guard, but it could also totally throw you off if you're too intoxicated
 	// But god is it going to make you sick moving too much while drunk
