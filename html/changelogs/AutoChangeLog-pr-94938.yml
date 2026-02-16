@@ -1,0 +1,7 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Admins can now actually adjust the speed of the tram"
+  - bugfix: "Fixed tram doors repeating multiple varied copies of their audio"
+  - bugfix: "Fixed tram doors emergency release sound/animation"
+  - code_imp: "Cleaned up some tram signal code"
