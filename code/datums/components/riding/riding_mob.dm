@@ -739,3 +739,21 @@
 		TEXT_EAST =  list(0, 5),
 		TEXT_WEST =  list(0, 5),
 	)
+
+/datum/component/riding/creature/spider
+
+/datum/component/riding/creature/spider/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list( 0, 10),
+		TEXT_SOUTH = list( 0, 10),
+		TEXT_EAST =  list(-5, 10),
+		TEXT_WEST =  list( 5, 10),
+	)
+
+/datum/component/riding/creature/spider/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+	)

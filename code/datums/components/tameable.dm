@@ -27,6 +27,10 @@
 	RegisterSignal(parent, COMSIG_SIMPLEMOB_SENTIENCEPOTION, PROC_REF(on_tame)) //Instantly succeeds
 	RegisterSignal(parent, COMSIG_SIMPLEMOB_TRANSFERPOTION, PROC_REF(on_tame)) //Instantly succeeds
 
+/datum/component/tameable/Destroy()
+	REMOVE_TRAIT(parent, TRAIT_TAMED, INNATE_TRAIT)
+	return ..()
+
 /datum/component/tameable/proc/try_tame(atom/source, obj/item/food, mob/living/attacker)
 	SIGNAL_HANDLER
 
@@ -60,6 +64,8 @@
 		INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, befriend), tamer)
 		if(inform_tamer)
 			source.balloon_alert(tamer, "tamed")
+
+	ADD_TRAIT(parent, TRAIT_TAMED, INNATE_TRAIT)
 
 	if(HAS_TRAIT(tamer, TRAIT_BEAST_EMPATHY))
 		INVOKE_ASYNC(src, PROC_REF(rename_pet), source, tamer)
