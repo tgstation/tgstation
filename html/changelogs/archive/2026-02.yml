@@ -208,3 +208,21 @@
       but won't stop your blood from exiting.
   - refactor: Refactored gauze entirely, report any strangeness with it (or tape,
       or tourniquets)
+2026-02-16:
+  Arturlang:
+  - bugfix: moon heretics getting hit by things that target limbs specifically (like
+      vendors) will no longer bypass moon robe protection, but, good luck surviving
+      that.
+  - bugfix: fix moon heretic's empathy runtiming on when they gain their initial knowledge
+  Exester509:
+  - rscadd: Pigs and goats can now be grown in a cytology vat
+  LT3:
+  - bugfix: Admins can now actually adjust the speed of the tram
+  - bugfix: Fixed tram doors repeating multiple varied copies of their audio
+  - bugfix: Fixed tram doors emergency release sound/animation
+  - code_imp: Cleaned up some tram signal code
+  Y0SH1M4S73R:
+  - rscadd: Anomaly cores now have effects when pulsed by an assembly, button, or
+      wire. These effects are generally weaker versions of the effects of the source
+      anomalies, or of their respective reactive armors, and many have a 50% longer
+      cooldown than said armors.

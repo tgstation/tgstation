@@ -1,4 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes:
-  - rscadd: "Anomaly cores now have effects when pulsed by an assembly, button, or wire. These effects are generally weaker versions of the effects of the source anomalies, or of their respective reactive armors, and many have a 50% longer cooldown than said armors."
