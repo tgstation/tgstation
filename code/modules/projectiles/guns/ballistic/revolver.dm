@@ -370,7 +370,7 @@
 	return .
 
 /obj/item/gun/ballistic/revolver/russian/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
-	if(get_ammo(FALSE, FALSE) > 1)
+	if((get_ammo(FALSE, FALSE) > 1) || (get_ammo(TRUE, TRUE) < 6))
 		return
 	return ..()
 
