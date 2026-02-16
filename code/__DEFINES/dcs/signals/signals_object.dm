@@ -642,6 +642,11 @@
 /// Sent from /obj/machinery/vitals_monitor/proc/set_patient() : (mob/living/old_patient, mob/living/new_patient)
 #define COMSIG_VITALS_SET_PATIENT "vitals_set_patient"
 
+/// Sent from /obj/item/bodypart/limb/proc/apply_item(): (obj/item/bodypart/limb)
+#define COMSIG_ITEM_APPLIED_TO_LIMB "item_applied_to_limb"
+/// Sent from /obj/item/bodypart/limb/proc/Exited(): (obj/item/bodypart/limb)
+#define COMSIG_ITEM_UNAPPLIED_FROM_LIMB "item_removed_from_limb"
+
 /// Sent from /obj/effect/rune/convert/try_sacrifice_item(obj/effect/rune/convert/rune)
 #define COMSIG_ITEM_CULT_SACRIFICE "item_cult_sacrifice"
 	#define COMPONENT_SACRIFICE_SUCCESSFUL (1<<0)

@@ -61,7 +61,7 @@
 		/obj/item/scalpel,
 		/obj/item/shears,
 		/obj/item/stack/medical,
-		/obj/item/stack/sticky_tape, //surgical tape
+		/obj/item/stack/medical/wrap/sticky_tape, //surgical tape
 		/obj/item/stamp,
 		/obj/item/sensor_device,
 		/obj/item/storage/fancy/cigarettes,

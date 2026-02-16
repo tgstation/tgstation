@@ -47,8 +47,9 @@
 			name = "Natural " + name
 		if(data["boozepwr"])
 			boozepwr = data["boozepwr"]
-	if(boozepwr) // anything other than 0
-		LAZYSET(addiction_types, /datum/addiction/alcohol, 0.05 * boozepwr)
+	if(boozepwr > 0)
+		// the stronger the drink, the less total of the drink is needed to reach addiction
+		LAZYSET(addiction_types, /datum/addiction/alcohol, max(50, round(150 - boozepwr, 5)))
 	return ..()
 
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
@@ -462,7 +463,7 @@
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 100
 	taste_description = "pure resignation"
-	addiction_types = list(/datum/addiction/alcohol = 5, /datum/addiction/maintenance_drugs = 2)
+	addiction_types = list(/datum/addiction/maintenance_drugs = 600)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/ale

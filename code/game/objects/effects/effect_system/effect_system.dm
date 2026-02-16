@@ -87,13 +87,12 @@
 	var/step_amt = rand(1, 3)
 	var/step_delay = 5
 	var/datum/move_loop/loop = GLOB.move_manager.move(effect, direction, step_delay, timeout = step_delay * step_amt, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
-	if (autocleanup)
-		RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(decrement_total_effect))
+	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(decrement_total_effect))
 
 /datum/effect_system/basic/proc/decrement_total_effect(datum/source)
 	SIGNAL_HANDLER
 	total_effects--
-	if(total_effects == 0)
+	if(autocleanup && total_effects == 0)
 		QDEL_IN(src, 2 SECONDS)
 
 #undef PER_SYSTEM_PARTICLE_CAP
