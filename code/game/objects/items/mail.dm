@@ -408,6 +408,7 @@
 		if(istype(stuff, /obj/item/clothing/mask/facehugger)) //Alien has to go first because if its put in user's hands, it'll trigger attach() which will make attached TRUE which will make valid_to_attach() fail which will make Leap() fail
 			var/obj/item/clothing/mask/facehugger/alien = stuff
 			if(alien.stat == UNCONSCIOUS)
+				user.put_in_hands(alien)
 				continue
 			to_chat(user, span_danger("There's something moving inside of \the [src]!"))
 			alien.Leap(user)
@@ -417,7 +418,16 @@
 			continue
 
 		if(istype(stuff, /obj/item/gun))
-			to_chat(user, span_danger("As you open [src] you see [stuff] inside! [istype(stuff, /obj/item/gun/magic) ? "It's humming with energy!" : "Its trigger is already pulled!"]"))
+			if(istype(stuff, /obj/item/gun/magic/hook) || istype(stuff, /obj/item/gun/medbeam))
+				continue // "Gun"
+			var/itsabouttoshoottext = "Its trigger is already pulled!"
+			if(istype(stuff, /obj/item/gun/magic))
+				itsabouttoshoottext = "It's humming with energy!"
+			else if (istype(stuff, /obj/item/gun/ballistic/bow))
+				itsabouttoshoottext = "Its bowstring is pulled back!"
+			else if (istype(stuff, /obj/item/gun/syringe/blowgun))
+				itsabouttoshoottext = "The air in the envelope is rushing out!"
+			to_chat(user, span_danger("As you open [src], you see [stuff] inside! [itsabouttoshoottext]"))
 			var/obj/item/gun/realgun = stuff
 			if(!realgun.can_shoot())
 				realgun.shoot_with_empty_chamber(user)
@@ -433,6 +443,38 @@
 				continue
 			to_chat(user, span_danger("As you open [src], a very bright light shoots out from inside!"))
 			realflash.flash_mob(user)
+			continue
+
+		if(istype(stuff, /obj/item/clothing/gloves/boxing))
+			var/evil = istype(stuff, /obj/item/clothing/gloves/boxing/evil)
+			to_chat(user, span_danger("As you open [src], boxing gloves spring out and deliver you a swift uppercut!"))
+			var/mob/living/userasliving = user
+			playsound(user, SFX_PUNCH, 25, TRUE)
+			userasliving.Knockdown(evil? 2 : 4 SECONDS, evil? 4 : 6 SECONDS)
+			userasliving.adjust_stamina_loss(evil? 40: 80)
+			continue
+
+		if(istype(stuff, /obj/item/reagent_containers/syringe))
+			var/obj/item/reagent_containers/syringe/real_syringe = stuff
+			var/mob/living/userasliving = user
+			if(!real_syringe.reagents.total_volume || !user.reagents || !userasliving.try_inject(user, user.get_active_hand()))
+				continue
+			to_chat(user, span_danger("As you open [src], you prick yourself on a syringe inside!"))
+			real_syringe.reagents.trans_to(user, min(real_syringe.reagents.total_volume, 15))
+			continue
+
+		if(istype(stuff, /obj/item/reagent_containers/spray))
+			var/obj/item/reagent_containers/spray/real_spray = stuff
+			if(real_spray.reagents.total_volume < real_spray.amount_per_transfer_from_this)
+				continue
+			to_chat(user, span_danger("As you open [src], a mist spritzes out from inside!"))
+			real_spray.spray(user, user)
+			playsound(user, real_spray.spray_sound, 50, TRUE, -6)
+			continue
+
+		if(stuff.type == /obj/item/assembly/signaler) // No istype() because we don't want anomaly cores
+			to_chat(user, span_danger("As you open [src], you accidentally press a button on [stuff]!"))
+			astype(stuff, /obj/item/assembly/signaler).signal() // No need to check for cooldown, the cooldown is shorter than the do_after for opening mail
 			continue
 
 		INVOKE_ASYNC(stuff, TYPE_PROC_REF(/obj/item, attack_self), user)
