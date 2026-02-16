@@ -78,18 +78,23 @@
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
+/**
+ * Swaps two atoms following the activation of a swapper item.
+ * If a mob is holding a swapper, it will carry the mob as-per the rules of do_teleport().
+ */
 /obj/item/swapper/proc/swap(mob/user)
 	if(QDELETED(linked_swapper) || isnull(linked_swapper.loc) || world.time < linked_swapper.cooldown)
 		return
 
-	var/atom/movable/A = get_teleportable_container(src)
-	var/atom/movable/B = get_teleportable_container(linked_swapper)
-	var/target_A = A.drop_location()
-	var/target_B = B.drop_location()
+	var/atom/movable/container_A = get_teleportable_container(src)
+	var/atom/movable/container_B = get_teleportable_container(linked_swapper)
+	var/target_A = container_A.drop_location()
+	var/target_B = container_B.drop_location()
 
-	//TODO: add a sound effect or visual effect
-	if(do_teleport(A, target_B, channel = TELEPORT_CHANNEL_QUANTUM))
-		do_teleport(B, target_A, channel = TELEPORT_CHANNEL_QUANTUM)
-		if(ismob(B))
-			var/mob/M = B
-			to_chat(M, span_warning("[linked_swapper] activates, and you find yourself somewhere else."))
+	playsound(target_A, 'sound/effects/swapper/swap_a.ogg', 30, TRUE)
+	playsound(target_B, 'sound/effects/swapper/swap_b.ogg', 30, TRUE)
+	if(do_teleport(container_A, target_B, channel = TELEPORT_CHANNEL_QUANTUM))
+		do_teleport(container_B, target_A, channel = TELEPORT_CHANNEL_QUANTUM)
+		if(ismob(container_B))
+			var/mob/swapped_mob = container_B
+			to_chat(swapped_mob, span_warning("[linked_swapper] activates, and you find yourself somewhere else."))
