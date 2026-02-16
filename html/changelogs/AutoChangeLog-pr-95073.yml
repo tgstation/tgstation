@@ -1,0 +1,5 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - bugfix: "moon heretics getting hit by things that target limbs specifically (like vendors) will no longer bypass moon robe protection, but, good luck surviving that."
+  - bugfix: "fix moon heretic's empathy runtiming on when they gain their initial knowledge"
