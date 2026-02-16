@@ -8,8 +8,8 @@
 	desc = "This wriggling wand binds its victims in a place for a time, although it doesn't stop them from shooting back."
 	school = SCHOOL_CONJURATION
 	ammo_type = /obj/item/ammo_casing/magic/tentacle
-	icon_state = "revivewand"
-	base_icon_state = "revivewand"
+	icon_state = "tentawand"
+	base_icon_state = "tentawand"
 	fire_sound = 'sound/effects/splat.ogg'
 	max_charges = 10
 
