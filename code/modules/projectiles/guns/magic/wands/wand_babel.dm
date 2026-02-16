@@ -6,8 +6,8 @@
 	desc = "The incredible power of this wand causes victims to forget all of the languages they know, and learn a new one."
 	school = SCHOOL_TRANSMUTATION
 	ammo_type = /obj/item/ammo_casing/magic/babel
-	icon_state = "polywand"
-	base_icon_state = "polywand"
+	icon_state = "babelwand"
+	base_icon_state = "babelwand"
 	fire_sound = 'sound/effects/magic/staff_change.ogg'
 	max_charges = 6
 
