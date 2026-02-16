@@ -505,7 +505,7 @@
 	result = /obj/item/clothing/suit/pillow_suit
 	time = 2 SECONDS
 	reqs = list(
-		/obj/item/stack/sticky_tape = 10,
+		/obj/item/stack/medical/wrap/sticky_tape = 10,
 		/obj/item/pillow = 5,
 	)
 	category = CAT_CLOTHING
@@ -516,7 +516,7 @@
 	tool_behaviors = list(TOOL_WIRECUTTER, TOOL_KNIFE)
 	time = 2 SECONDS
 	reqs = list(
-		/obj/item/stack/sticky_tape = 5,
+		/obj/item/stack/medical/wrap/sticky_tape = 5,
 		/obj/item/pillow = 1,
 	)
 	category = CAT_CLOTHING

@@ -90,6 +90,49 @@
 	virus_suspectibility = 1
 	resulting_atom = /mob/living/basic/cow/moonicorn
 
+/datum/micro_organism/cell_line/goat
+	desc = "Caprine cells"
+	required_reagents = list(
+	/datum/reagent/consumable/nutriment/protein,
+	/datum/reagent/cellulose
+	)
+
+	supplementary_reagents = list(
+	/datum/reagent/growthserum = 4,
+	/datum/reagent/consumable/nutriment/vitamin = 2,
+	/datum/reagent/barbers_aid = 3
+	)
+
+	suppressive_reagents = list(
+	/datum/reagent/toxin = -2,
+	/datum/reagent/baldium = -2,
+	/datum/reagent/consumable/sugar = -1
+	)
+
+	virus_suspectibility = 1
+	resulting_atom = /mob/living/basic/goat
+
+/datum/micro_organism/cell_line/pig
+	desc = "Porcine stem cells"
+	required_reagents = list(
+	/datum/reagent/consumable/nutriment/protein
+	)
+
+	supplementary_reagents = list(
+	/datum/reagent/growthserum = 4,
+	/datum/reagent/consumable/nutriment/vitamin = 2,
+	/datum/reagent/consumable/bbqsauce = 4
+	)
+
+	suppressive_reagents = list(
+	/datum/reagent/toxin = -2,
+	/datum/reagent/toxin/carpotoxin = -2,
+	/datum/reagent/acetone = -1
+	)
+
+	virus_suspectibility = 1
+	resulting_atom = /mob/living/basic/pig
+
 /datum/micro_organism/cell_line/cat
 	desc = "Feliform cells"
 	required_reagents = list(

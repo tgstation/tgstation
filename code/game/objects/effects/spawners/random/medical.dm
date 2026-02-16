@@ -8,7 +8,7 @@
 	loot = list(
 		/obj/item/stack/medical/suture,
 		/obj/item/stack/medical/mesh,
-		/obj/item/stack/medical/gauze,
+		/obj/item/stack/medical/wrap/gauze,
 	)
 
 /obj/effect/spawner/random/medical/injector
