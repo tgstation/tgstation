@@ -157,7 +157,7 @@
 /mob/living/basic/slime/random
 
 /mob/living/basic/slime/random/Initialize(mapload, new_colour, new_life_stage)
-	return ..(mapload, null, prob(50) ? SLIME_LIFE_STAGE_ADULT : SLIME_LIFE_STAGE_BABY)
+	return ..(mapload, SLIME_TYPE_RANDOM, prob(50) ? SLIME_LIFE_STAGE_ADULT : SLIME_LIFE_STAGE_BABY)
 
 ///Friendly docile subtype
 /mob/living/basic/slime/pet
@@ -197,10 +197,11 @@
 	if(slime_type.transparent)
 		alpha = SLIME_TRANSPARENCY_ALPHA
 
+	icon_living = "[slime_type.colour]-[life_stage]"
 	icon_dead = !cores ? "[slime_type.colour]-cut" : "[slime_type.colour]-[life_stage]-dead"
 
 	if(stat != DEAD)
-		icon_state = "[slime_type.colour]-[life_stage]"
+		icon_state = icon_living
 		if(current_mood && current_mood != SLIME_MOOD_NONE && !stat)
 			add_overlay("aslime-[current_mood]")
 	else
@@ -273,8 +274,8 @@
 
 /// Sets the slime's type, name and its icons.
 /// If not provided with a type it will instead be random
-/mob/living/basic/slime/proc/set_slime_type(new_type = null)
-	if(isnull(new_type))
+/mob/living/basic/slime/proc/set_slime_type(new_type = SLIME_TYPE_RANDOM)
+	if(new_type == SLIME_TYPE_RANDOM)
 		new_type = pick(subtypesof(/datum/slime_type))
 
 	slime_type = possible_slime_types[new_type]

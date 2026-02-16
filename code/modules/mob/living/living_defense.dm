@@ -142,7 +142,7 @@
 		apply_projectile_effects(proj, def_zone, blocked)
 
 /mob/living/proc/apply_projectile_effects(obj/projectile/proj, def_zone, armor_check)
-	apply_damage(
+	var/damage_dealt = apply_damage(
 		damage = proj.damage,
 		damagetype = proj.damage_type,
 		def_zone = def_zone,
@@ -153,6 +153,10 @@
 		attack_direction = get_dir(proj.starting, src),
 		attacking_item = proj,
 	)
+
+	if(proj.damage_type == BRUTE && damage_dealt >= 10 && proj.speed >= 1 && prob(0.1))
+		var/obj/item/organ/brain/a_brain = locate() in get_bodypart(def_zone)
+		a_brain?.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
 
 	apply_effects(
 		stun = proj.stun,
@@ -174,6 +178,10 @@
 
 	if (proj.damage && armor_check < 100)
 		create_projectile_hit_effects(proj, def_zone, armor_check)
+
+	if(proj.fired_from)
+		SEND_SIGNAL(proj.fired_from, COMSIG_PROJECTILE_POST_HIT_LIVING, src, def_zone, armor_check)
+	SEND_SIGNAL(proj, COMSIG_PROJECTILE_SELF_POST_HIT_LIVING, src, def_zone, armor_check)
 
 /mob/living/proc/create_projectile_hit_effects(obj/projectile/proj, def_zone, blocked)
 	if (proj.damage_type != BRUTE)
@@ -473,7 +481,7 @@
 	if(.)
 		return TRUE
 
-	if(!combat_mode && HAS_TRAIT(src, TRAIT_READY_TO_OPERATE) && user.perform_surgery(src))
+	if(!user.combat_mode && HAS_TRAIT(src, TRAIT_READY_TO_OPERATE) && user.perform_surgery(src))
 		return TRUE
 
 	return FALSE

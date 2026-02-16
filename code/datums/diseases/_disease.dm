@@ -107,6 +107,7 @@
 	var/recovery_prob = 0
 	var/cure_mod
 	var/bad_immune = HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) ? 2 : 1
+	var/is_sleeping = HAS_TRAIT_FROM_ONLY(affected_mob, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(/datum/status_effect/incapacitating/sleeping::id))
 
 	if(required_organ)
 		if(!has_required_infectious_organ(affected_mob, required_organ))
@@ -133,7 +134,7 @@
 	if(stage == max_stages && stage_peaked != TRUE) //mostly a sanity check in case we manually set a virus to max stages
 		stage_peaked = TRUE
 
-	if(SPT_PROB(stage_prob*slowdown*bad_immune, seconds_per_tick))
+	if(SPT_PROB(stage_prob * slowdown * bad_immune, seconds_per_tick))
 		update_stage(min(stage + 1, max_stages))
 
 	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)
@@ -185,7 +186,7 @@
 				if(SANITY_LEVEL_INSANE)
 					recovery_prob += -0.4
 
-		if((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) || !(affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING)) && HAS_TRAIT_FROM_ONLY(affected_mob, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(/datum/status_effect/incapacitating/sleeping::id))) //resting starved won't help, but resting helps
+		if((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) || !(affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING)) && is_sleeping) //resting starved won't help, but resting helps
 			var/turf/rest_turf = get_turf(affected_mob)
 			var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
 
@@ -230,7 +231,7 @@
 						return FALSE
 				update_stage(max(stage - 1, 1))
 
-		if(HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT) || slowdown != 1) //sleeping and using spaceacillin lets us nosell applicable virus symptoms firing with decreasing effectiveness over time
+		if(is_sleeping || slowdown != 1) //sleeping and using spaceacillin lets us nosell applicable virus symptoms firing with decreasing effectiveness over time
 			if(prob(100 - min((100 * (symptom_offsets / DISEASE_SYMPTOM_OFFSET_DURATION)), 100 - cure_chance * DISEASE_FINAL_CURE_CHANCE_MULTIPLIER))) //viruses with higher cure_chance will ultimately be more possible to offset symptoms on
 				symptom_offsets = min(symptom_offsets + 1, DISEASE_SYMPTOM_OFFSET_DURATION)
 				return FALSE

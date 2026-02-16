@@ -410,6 +410,10 @@
 /atom/proc/is_drainable()
 	return reagents && (reagents.flags & DRAINABLE)
 
+/// Can we dunk stuff into this container?
+/atom/proc/is_dunkable()
+	return reagents && (reagents.flags & DUNKABLE)
+
 /** Handles exposing this atom to a list of reagents.
  *
  * Sends COMSIG_ATOM_EXPOSE_REAGENTS

@@ -459,7 +459,7 @@
 	id = "sticky_tape"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT*5)
-	build_path = /obj/item/stack/sticky_tape
+	build_path = /obj/item/stack/medical/wrap/sticky_tape
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE,

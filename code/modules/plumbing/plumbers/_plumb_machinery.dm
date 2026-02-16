@@ -22,6 +22,8 @@
 /obj/machinery/plumbing/Initialize(mapload)
 	. = ..()
 	set_anchored(mapload)
+	if(mapload)
+		begin_processing()
 	create_reagents(buffer, reagent_flags)
 	AddElement(/datum/element/simple_rotation)
 	register_context()

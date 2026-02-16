@@ -339,8 +339,8 @@
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-
-	data["deciseconds_metabolized"] += (seconds_per_tick * 1 SECONDS * REM)
+	// Microdosing holy water is less effective than just gulping it down
+	data["deciseconds_metabolized"] += seconds_per_tick * 1 SECONDS * metabolization_ratio
 
 	affected_mob.adjust_jitter_up_to(2 SECONDS * metabolization_ratio * seconds_per_tick, 20 SECONDS)
 	var/need_mob_update = FALSE
@@ -1016,7 +1016,7 @@
 
 /datum/reagent/chlorine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.take_bodypart_damage(0.5*REM*seconds_per_tick, 0))
+	if(affected_mob.take_bodypart_damage(0.25 * metabolization_ratio * seconds_per_tick, 0))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/fluorine
@@ -1036,7 +1036,7 @@
 
 /datum/reagent/fluorine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_tox_loss(0.5*REM*seconds_per_tick, updating_health = FALSE))
+	if(affected_mob.adjust_tox_loss(0.25 * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/sodium
@@ -1137,7 +1137,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/effect/decal/cleanable/greenglow
 	/// How much tox damage to deal per tick
-	var/tox_damage = 0.5
+	var/tox_damage = 0.25
 	/// How radioactive is this reagent
 	var/rad_power = 1
 
@@ -1147,7 +1147,8 @@
 		var/chance = min(volume / (20 - rad_power * 5), rad_power)
 		if(SPT_PROB(chance, seconds_per_tick)) // ignore rad protection calculations bc it's inside of us
 			affected_mob.AddComponent(/datum/component/irradiated)
-	if(affected_mob.adjust_tox_loss(tox_damage * seconds_per_tick * REM, updating_health = FALSE))
+
+	if(affected_mob.adjust_tox_loss(tox_damage * seconds_per_tick * metabolization_rate, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/uranium/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
@@ -1205,16 +1206,16 @@
 
 //Mutagenic chem side-effects.
 /datum/reagent/uranium/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-	mytray.mutation_roll(user)
-	mytray.adjust_plant_health(-round(volume))
-	mytray.adjust_toxic(round(volume / tox_damage)) // more damage = more
+	mytray.radioactive_exposure(modifier = volume * 0.1)
+	mytray.myseed?.adjust_instability(round(volume * 0.1))
+	mytray.adjust_toxic(round(0.5 * volume * tox_damage))
 
 /datum/reagent/uranium/radium
 	name = "Radium"
 	description = "Radium is an alkaline earth metal. It is extremely radioactive."
 	color = "#00CC00" // ditto
 	taste_description = "the colour blue and regret"
-	tox_damage = 1
+	tox_damage = 0.5
 	material = null
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1273,7 +1274,7 @@
 	burning_temperature = 1725 //more refined than oil
 	burning_volume = 0.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/alcohol = 4)
+	addiction_types = list(/datum/addiction/alcohol = 300)
 
 /datum/glass_style/drinking_glass/fuel
 	required_drink_type = /datum/reagent/fuel
@@ -1308,14 +1309,18 @@
 	if(pool)
 		pool.burn_amount = max(min(round(reac_volume / 5), 10), 1)
 
-/datum/reagent/fuel/on_spark_act(power_charge, enclosed)
+/datum/reagent/fuel/on_spark_act(power_charge, spark_flags)
 	// Doesn't go boom in open air unless we pass a REALLY high current or if we're hot enough
-	if (!enclosed && power_charge < STANDARD_BATTERY_VALUE && holder.chem_temp < 474)
+	if (!(spark_flags & SPARK_ACT_ENCLOSED) && power_charge < STANDARD_BATTERY_VALUE && holder.chem_temp < 474)
 		var/turf/our_turf = get_turf(holder.my_atom)
 		our_turf?.hotspot_expose(holder.chem_temp * 10, volume)
 		return NONE
 
-	reagent_explode(holder, volume, strengthdiv = 10, clear_holder_reagents = FALSE)
+	var/strengthdiv = 10
+	if (spark_flags & SPARK_ACT_WEAKEN_COMMON)
+		strengthdiv *= 3 // Noticeably weaker than waterpot, at least put some effort in, cmon
+
+	reagent_explode(holder, volume, strengthdiv = strengthdiv, clear_holder_reagents = FALSE, flame_factor = 1)
 	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 /datum/reagent/space_cleaner
@@ -1416,7 +1421,7 @@
 	taste_description = "numbness"
 	ph = 9.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/opioids = 10)
+	addiction_types = list(/datum/addiction/opioids = 120)
 
 /datum/reagent/impedrezene/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -2636,7 +2641,6 @@
 	taste_description = "acrid cinnamon"
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-	metabolized_traits = list(TRAIT_CHANGELING_HIVEMIND_MUTE)
 
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/carbon/target, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -3094,7 +3098,7 @@
 	color = "#228f63"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/stimulants = 5)
+	addiction_types = list(/datum/addiction/stimulants = 120)
 
 /datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer, seconds_per_tick, metabolization_ratio)
 	. = ..()

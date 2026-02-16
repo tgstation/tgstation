@@ -14,7 +14,7 @@
 	/// distortion to really give you that sense of oh shit
 	var/atom/movable/warp_effect/warp
 	/// and another oh shit in the form of quantum sparks
-	var/datum/effect_system/spark_spread/quantum/spark_system
+	var/datum/effect_system/basic/spark_spread/quantum/spark_system
 	/// in case we miss, we can go back to the previous security level
 	var/previous_security_level
 
@@ -26,8 +26,7 @@
 		SSsecurity_level.set_level(SEC_LEVEL_RED)
 	warp = new(src)
 	vis_contents += warp
-	spark_system = new /datum/effect_system/spark_spread/quantum()
-	spark_system.set_up(4, TRUE, src)
+	spark_system = new /datum/effect_system/basic/spark_spread/quantum(src, 4, TRUE)
 	spark_system.attach(src)
 	START_PROCESSING(SSobj, src)
 

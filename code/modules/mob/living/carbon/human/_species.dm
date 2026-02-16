@@ -1324,6 +1324,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		// No pressure issues here clear pressure alerts
 		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
 			H.clear_alert(ALERT_PRESSURE)
+			H.seconds_in_low_pressure = 0
 
 		// Low pressure here, show an alert
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
@@ -1332,6 +1333,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				H.clear_alert(ALERT_PRESSURE)
 			else
 				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 1)
+			H.seconds_in_low_pressure = 0
 
 		// Very low pressure, show an alert and take damage
 		else
@@ -1339,9 +1341,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(HAS_TRAIT(H, TRAIT_RESISTLOWPRESSURE))
 				H.clear_alert(ALERT_PRESSURE)
 			else
-				var/pressure_damage = LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod * H.physiology.brute_mod * seconds_per_tick
+				var/pressure_damage = min(round(1 + (H.seconds_in_low_pressure / 80 SECONDS), 0.05) * BASE_LOW_PRESSURE_DAMAGE, MAX_LOW_PRESSURE_DAMAGE)  * H.physiology.pressure_mod * H.physiology.brute_mod * seconds_per_tick
 				H.adjust_brute_loss(pressure_damage, required_bodytype = BODYTYPE_ORGANIC)
 				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 2)
+			H.seconds_in_low_pressure += seconds_per_tick
 
 /**
  *	Handles exposure to the skin of various gases.

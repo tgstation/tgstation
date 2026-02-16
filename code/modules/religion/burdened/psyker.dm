@@ -40,8 +40,12 @@
 	limb_id = BODYPART_ID_PSYKER
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED)
+	bodypart_traits = list(TRAIT_BALD, TRAIT_SHAVED)
 	head_flags = HEAD_DEBRAIN | HEAD_NO_DISFIGURE // ignore disfigurement by damage, as we're always disfigured
+
+/obj/item/bodypart/head/psyker/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_DISFIGURED, INNATE_TRAIT)
 
 /// flavorful variant of psykerizing that deals damage and sends messages before calling psykerize()
 /mob/living/carbon/human/proc/slow_psykerize(blind_them = FALSE)
@@ -177,27 +181,9 @@
 
 /obj/item/gun/ballistic/revolver/chaplain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
-	AddComponent(/datum/component/effect_remover, \
-		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
-		success_forcesay = "BEGONE FOUL MAGIKS!!", \
-		tip_text = "Clear rune", \
-		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
-		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
-	)
-	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 25)
+	AddElement(/datum/element/nullrod_core, FALSE)
 	name = pick(possible_names)
 	desc = possible_names[name]
-
-/obj/item/gun/ballistic/revolver/chaplain/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
-	SIGNAL_HANDLER
-	if(!istype(target, /obj/effect/rune))
-		return
-
-	var/obj/effect/rune/target_rune = target
-	if(target_rune.log_when_erased)
-		user.log_message("erased [target_rune.cultist_name] rune using [src]", LOG_GAME)
-	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 /obj/item/gun/ballistic/revolver/chaplain/suicide_act(mob/living/user)
 	. = ..()

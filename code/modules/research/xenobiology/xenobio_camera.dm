@@ -254,7 +254,7 @@
 ///Places one monkey, if possible
 /obj/machinery/computer/camera_advanced/xenobio/proc/feed_slime(mob/living/user, turf/open/target_turf)
 	if(stored_monkeys < 1)
-		to_chat(user, span_warning("[src] needs to have at least 1 monkey stored. Currently has [stored_monkeys] stored_monkeys stored."))
+		to_chat(user, span_warning("[src] needs to have at least 1 monkey stored. Currently has [stored_monkeys] monkeys stored."))
 		target_turf.balloon_alert(user, "not enough monkeys")
 		return
 

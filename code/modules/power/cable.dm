@@ -132,7 +132,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 
 ///Clear the linked indicator bitflags
 /obj/structure/cable/proc/disconnect_cable()
-	for(var/check_dir in linked_dirs)
+	for(var/check_dir in GLOB.cardinals)
+		if(!(linked_dirs & check_dir))
+			continue
 		var/inverse = REVERSE_DIR(check_dir)
 		var/turf/check_turf = get_step(loc, check_dir)
 		for(var/obj/structure/cable/other_cable in check_turf)

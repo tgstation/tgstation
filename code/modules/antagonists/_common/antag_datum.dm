@@ -57,6 +57,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/hardcore_random_bonus = FALSE
 	/// A path to the audio stinger that plays upon gaining this datum.
 	var/stinger_sound
+	/// Multiplicative modifier to the mind's desensitized level when this antagonist is applied. Minimum is 0.1.
+	var/desensitized_modifier = 1.0
 
 	//ANTAG UI
 
@@ -262,6 +264,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		if(type_policy)
 			to_chat(owner.current, type_policy)
 
+	owner.desensitized_level *= max(DESENSITIZED_MINIMUM, desensitized_modifier)
 	apply_innate_effects()
 	give_antag_moodies()
 	RegisterSignal(owner, COMSIG_PRE_MINDSHIELD_IMPLANT, PROC_REF(pre_mindshield))
@@ -320,6 +323,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!owner)
 		CRASH("Antag datum with no owner.")
 
+	owner.desensitized_level /= max(DESENSITIZED_MINIMUM, desensitized_modifier)
 	if(owner.current)
 		remove_innate_effects()
 	clear_antag_moodies()

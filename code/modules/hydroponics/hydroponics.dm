@@ -333,20 +333,26 @@
 //Toxins/////////////////////////////////////////////////////////////////
 
 			// Too much toxins cause harm, but when the plant drinks the contaiminated water, the toxins disappear slowly
-			if(toxic >= 40 && toxic < 80)
-				adjust_plant_health(-1 / rating)
-				adjust_toxic(-rating * 2)
-			else if(toxic >= 80) // I don't think it ever gets here tbh unless above is commented out
-				adjust_plant_health(-3)
-				adjust_toxic(-rating * 3)
+			if(toxic >= 10)
+				if(myseed.get_gene(/datum/plant_gene/trait/plant_type/toxin_adaptation))
+					adjust_plant_health(round(toxic / rand(10, 16)))
+					myseed.adjust_potency(round(toxic / rand(20, 30)))
+
+				else if(toxic >= 40 && !myseed.get_gene(/datum/plant_gene/trait/tox_resistance))
+					if(toxic < 80)
+						adjust_plant_health(-1 / rating)
+						adjust_toxic(-rating * 2)
+					else
+						adjust_plant_health(-3)
+						adjust_toxic(-rating * 3)
 
 //Pests & Weeds//////////////////////////////////////////////////////////
 
 			if(pestlevel >= 8)
 				if(!myseed.get_gene(/datum/plant_gene/trait/carnivory))
 					if(myseed.potency >= 30)
-						myseed.adjust_potency(-rand(2,6)) //Pests eat leaves and nibble on fruit, lowering potency.
-						myseed.set_potency(min((myseed.potency), CARNIVORY_POTENCY_MIN, MAX_PLANT_POTENCY))
+						// Pests eat leaves and nibble on fruit, lowering potency.
+						myseed.set_potency(min(myseed.potency - rand(2, 6), CARNIVORY_POTENCY_MIN))
 				else
 					adjust_plant_health(2 / rating)
 					adjust_pestlevel(-1 / rating)
@@ -354,8 +360,7 @@
 			else if(pestlevel >= 4)
 				if(!myseed.get_gene(/datum/plant_gene/trait/carnivory))
 					if(myseed.potency >= 30)
-						myseed.adjust_potency(-rand(1,4))
-						myseed.set_potency(min((myseed.potency), CARNIVORY_POTENCY_MIN, MAX_PLANT_POTENCY))
+						myseed.set_potency(min(myseed.potency - rand(1, 4) , CARNIVORY_POTENCY_MIN))
 
 				else
 					adjust_plant_health(1 / rating)
@@ -377,18 +382,16 @@
 
 //This is where stability mutations exist now.
 			if(myseed.instability >= 80)
-				var/mutation_chance = myseed.instability - 75
-				mutate(0, 0, 0, 0, 0, 0, 0, mutation_chance, 0) //Scaling odds of a random trait or chemical
+				traitmutate(myseed.instability - 75) //Scaling odds of a random trait or chemical
 			if(myseed.instability >= 60)
 				if(prob((myseed.instability)/2) && !self_sustaining && LAZYLEN(myseed.mutatelist) && !myseed.get_gene(/datum/plant_gene/trait/never_mutate)) //Minimum 30%, Maximum 50% chance of mutating every age tick when not on autogrow or having Prosophobic Inclination trait.
 					mutatespecie()
 					myseed.set_instability(myseed.instability/2)
-			if(myseed.instability >= 40)
-				if(prob(myseed.instability) && !myseed.get_gene(/datum/plant_gene/trait/stable_stats)) //No hardmutation if Symbiotic Resilience trait is present.
-					hardmutate()
-			if(myseed.instability >= 20 )
-				if(prob(myseed.instability) && !myseed.get_gene(/datum/plant_gene/trait/stable_stats)) //No mutation if Symbiotic Resilience trait is present.
-					mutate()
+			if(myseed.instability >= 20 && prob(myseed.instability) && !myseed.get_gene(/datum/plant_gene/trait/stable_stats)) //No hardmutation if Symbiotic Resilience trait is present.
+				if(myseed.instability >= 40)
+					hardmutate(stabmut = myseed.instability >= 80 ? 5 : 0)
+				else
+					mutate(stabmut = 0)
 
 //Health & Age///////////////////////////////////////////////////////////
 
@@ -399,7 +402,7 @@
 
 			// If the plant is too old, lose health fast
 			if(age > myseed.lifespan)
-				adjust_plant_health(-rand(1,5) / rating)
+				adjust_plant_health(-rand(1, 5) / rating)
 
 			// Harvest code
 			if(age > myseed.production && (age - lastproduce) > myseed.production && plant_status == HYDROTRAY_PLANT_GROWING)
@@ -672,15 +675,50 @@
 	set_pestlevel(0) // Reset
 	visible_message(span_warning("The [oldPlantName] is overtaken by some [myseed.plantname]!"))
 
+/// Mutates the stats of the current seed
 /obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0, stabmut = 3) // Mutates the current seed
-	if(!myseed)
-		return
-	myseed.mutate(lifemut, endmut, productmut, yieldmut, potmut, wrmut, wcmut, traitmut, stabmut)
+	myseed?.mutate(
+		lifemut = lifemut,
+		endmut = endmut,
+		productmut = productmut,
+		yieldmut = yieldmut,
+		potmut = potmut,
+		wrmut = wrmut,
+		wcmut = wcmut,
+		traitmut = traitmut,
+		stabmut = stabmut,
+	)
 
+/// Mutate but with higher default values
 /obj/machinery/hydroponics/proc/hardmutate(lifemut = 4, endmut = 10, productmut = 2, yieldmut = 4, potmut = 50, wrmut = 4, wcmut = 10, traitmut = 0, stabmut = 4)
-	mutate(lifemut, endmut, productmut, yieldmut, potmut, wrmut, wcmut, traitmut, stabmut)
+	myseed?.mutate(
+		lifemut = lifemut,
+		endmut = endmut,
+		productmut = productmut,
+		yieldmut = yieldmut,
+		potmut = potmut,
+		wrmut = wrmut,
+		wcmut = wcmut,
+		traitmut = traitmut,
+		stabmut = stabmut,
+	)
 
-/obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
+/// Mutate but only introduce a random trait
+/obj/machinery/hydroponics/proc/traitmutate(traitmut = 1)
+	myseed?.mutate(
+		lifemut = 0,
+		endmut = 0,
+		productmut = 0,
+		yieldmut = 0,
+		potmut = 0,
+		wrmut = 0,
+		wcmut = 0,
+		traitmut = traitmut,
+		stabmut = 0,
+	)
+
+/// Mutate the species of the plant into one of its mutations
+/obj/machinery/hydroponics/proc/mutatespecie()
 	if(!myseed || plant_status == HYDROTRAY_PLANT_DEAD || !LAZYLEN(myseed.mutatelist))
 		return
 
@@ -696,7 +734,8 @@
 	var/message = span_warning("[oldPlantName] suddenly mutates into [myseed.plantname]!")
 	addtimer(CALLBACK(src, PROC_REF(after_mutation), message), 0.5 SECONDS)
 
-/obj/machinery/hydroponics/proc/polymorph() // Polymorph a plant into another plant
+/// Transform the plant into a completely random species
+/obj/machinery/hydroponics/proc/polymorph()
 	if(!myseed || plant_status == HYDROTRAY_PLANT_DEAD)
 		return
 
@@ -712,20 +751,23 @@
 	var/message = span_warning("[oldPlantName] suddenly polymorphs into [myseed.plantname]!")
 	addtimer(CALLBACK(src, PROC_REF(after_mutation), message), 0.5 SECONDS)
 
-/obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
-	if( weedlevel > 5 )
-		set_seed(null)
-		var/newWeed = pick(/obj/item/seeds/liberty, /obj/item/seeds/angel, /obj/item/seeds/nettle/death, /obj/item/seeds/kudzu)
-		set_seed(new newWeed(src))
-		hardmutate()
-		set_plant_health(myseed.endurance, update_icon = FALSE)
-		lastcycle = world.time
-		set_weedlevel(0, update_icon = FALSE) // Reset
+/// Mutates the weeds in the tray into a random weed plant (which can overtake existing plants)
+/obj/machinery/hydroponics/proc/mutateweed()
+	if(weedlevel <= 5)
+		visible_message(span_warning("The few weeds in [src] seem to react, but only for a moment..."))
+		return
 
-		var/message = span_warning("The mutated weeds in [src] spawn some [myseed.plantname]!")
-		addtimer(CALLBACK(src, PROC_REF(after_mutation), message), 0.5 SECONDS)
-	else
-		to_chat(usr, span_warning("The few weeds in [src] seem to react, but only for a moment..."))
+	set_seed(null)
+	var/newWeed = pick(/obj/item/seeds/liberty, /obj/item/seeds/angel, /obj/item/seeds/nettle/death, /obj/item/seeds/kudzu)
+	set_seed(new newWeed(src))
+	hardmutate()
+	set_plant_health(myseed.endurance, update_icon = FALSE)
+	lastcycle = world.time
+	set_weedlevel(0, update_icon = FALSE) // Reset
+
+	var/message = span_warning("The mutated weeds in [src] spawn some [myseed.plantname]!")
+	addtimer(CALLBACK(src, PROC_REF(after_mutation), message), 0.5 SECONDS)
+
 /**
  * Called after plant mutation, update the appearance of the tray content and send a visible_message()
  */
@@ -785,14 +827,18 @@
  * When a tray is mutated with high pest values, it will spawn spiders.
  * * User - Person who last added chemicals to the tray for logging purposes.
  */
-/obj/machinery/hydroponics/proc/mutatepest(mob/user)
-	if(pestlevel > 5)
+/obj/machinery/hydroponics/proc/mutatepest()
+	if(pestlevel <= 5)
+		visible_message(span_warning("The pests seem to behave oddly in [src], but quickly settle down..."))
+		return
+
+	var/mob/user = lastuser?.resolve()
+	if(!isnull(user))
 		message_admins("[ADMIN_LOOKUPFLW(user)] last altered a hydro tray's contents which spawned spiderlings.")
 		user.log_message("last altered a hydro tray, which spiderlings spawned from.", LOG_GAME)
-		visible_message(span_warning("The pests seem to behave oddly..."))
-		spawn_atom_to_turf(/mob/living/basic/spider/growing/spiderling/hunter, src, 3, FALSE)
-	else if(myseed)
-		visible_message(span_warning("The pests seem to behave oddly in [myseed.name] tray, but quickly settle down..."))
+
+	visible_message(span_warning("The pests seem to behave oddly..."))
+	spawn_atom_to_turf(/mob/living/basic/spider/growing/spiderling/hunter, src, 3, FALSE)
 
 /obj/machinery/hydroponics/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

@@ -145,7 +145,6 @@
 		new_player.AddComponent( \
 			/datum/component/temporary_body, \
 			old_mind = observer.mind, \
-			old_body = observer.mind.current, \
 		)
 	new_player.equipOutfit(loadout) // Loadout
 	new_player.PossessByPlayer(ckey)

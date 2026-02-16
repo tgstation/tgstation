@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "You can't shoot yourself using a wand or staff that you can't use, or that has no charge"
-  - rscadd: "Most wands and staves now do something funnier if you use them to kill yourself"

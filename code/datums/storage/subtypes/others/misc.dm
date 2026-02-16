@@ -34,7 +34,7 @@
 		/obj/item/scalpel,
 		/obj/item/shears,
 		/obj/item/stack/medical/bone_gel,
-		/obj/item/stack/sticky_tape/surgical,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical,
 		/obj/item/surgical_drapes,
 		/obj/item/surgicaldrill,
 		/obj/item/blood_scanner,
