@@ -20,11 +20,17 @@
 	playsound(user, fire_sound, 50, TRUE)
 	var/turf/user_loc = get_turf(user)
 	user.unequip_everything()
+
 	new /obj/effect/particle_effect/fluid/smoke(user_loc)
-	var/obj/item/food/pizzaslice/margherita/pizza = new(user_loc)
+
+	var/list/slice_types = subtypesof(/obj/item/food/pizzaslice)
+	var/special_slice = pick(slice_types)
+	var/obj/item/pizza = new special_slice(user_loc)
+
 	pizza.name = "[user.real_name] slice"
 	user.ghostize()
 	qdel(user)
+
 	return MANUAL_SUICIDE
 
 /obj/item/ammo_casing/magic/pizza
@@ -40,6 +46,20 @@
 	. = ..()
 	var/turf/hit_turf = get_turf(target)
 	var/datum/dimension_theme/pizza/converter = new()
-	if(!converter.can_convert(hit_turf))
+	if(converter.can_convert(hit_turf))
+		converter.apply_theme(hit_turf)
+
+	var/mob/living/lunch_haver = target
+	if (!istype(lunch_haver))
 		return
-	converter.apply_theme(hit_turf)
+
+	var/list/slice_types = subtypesof(/obj/item/food/pizzaslice)
+	var/special_slice = pick(slice_types)
+
+	var/obj/item/the_piz = new special_slice()
+	if (lunch_haver.put_in_hands(the_piz))
+		if (lunch_haver.get_active_held_item() != the_piz)
+			lunch_haver.swap_hand()
+
+		lunch_haver.set_combat_mode(FALSE) // You can't eat pizza if you're on combat mode
+	the_piz.attack(lunch_haver, lunch_haver)
