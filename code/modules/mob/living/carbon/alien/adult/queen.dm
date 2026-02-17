@@ -35,6 +35,23 @@
 /mob/living/carbon/alien/adult/royal/can_inject(mob/user, target_zone, injection_flags)
 	return FALSE
 
+/mob/living/carbon/alien/adult/royal/get_fire_overlay(stacks, on_fire)
+	var/fire_key = "royal_fire"
+
+	if(!GLOB.fire_appearances[fire_key])
+		var/mutable_appearance/fire = mutable_appearance(
+			'icons/mob/effects/onfire.dmi',
+			"generic_fire",
+			ABOVE_ALL_MOB_LAYER,
+			appearance_flags = RESET_COLOR|KEEP_APART|PIXEL_SCALE,
+		)
+		fire.pixel_x = 16
+		fire.pixel_y = 8
+		fire.transform = fire.transform.Scale(2, 2)
+		GLOB.fire_appearances[fire_key] = fire
+
+	return GLOB.fire_appearances[fire_key]
+
 /mob/living/carbon/alien/adult/royal/queen
 	name = "alien queen"
 	caste = "q"
