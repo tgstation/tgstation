@@ -185,10 +185,9 @@
 	grown.set_fire_loss(get_fire_loss())
 
 	if(HAS_TRAIT(src, TRAIT_TAMED))
-		grown.AddElement(/datum/element/ridable, /datum/component/riding/creature/spider)
 		grown.tamed()
-	else
-		qdel(grown.GetComponent(/datum/component/tameable)) // Adults cannot be tamed via snacks
+	else if(istype(grown, /mob/living/basic/spider/giant)) // Adults cannot be tamed via snacks
+		qdel(grown.GetComponent(/datum/component/tameable))
 
 	qdel(src)
 
