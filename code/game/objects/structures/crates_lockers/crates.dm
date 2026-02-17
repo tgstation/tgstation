@@ -500,3 +500,25 @@
 	icon_state = "lavender"
 	base_icon_state = "lavender"
 	glitter_color = "#db80ff"
+
+/obj/structure/closet/crate/market
+	name = "shield bubble"
+	desc = "A rippling blue energy bubble, capable of sustaining itself until it hits a solid wall."
+	icon = 'icons/effects/effects.dmi'
+	base_icon_state = "shield2"
+
+/obj/structure/closet/crate/market/after_open(mob/living/user, force)
+	. = ..()
+	visible_message(span_notice("[src] pops as [user] touches it!"))
+	pop_crate()
+
+/obj/structure/closet/crate/market/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	pop_crate()
+
+/// Called when the bubble either arrives at the station, or is interacted with someone/something.
+/obj/structure/closet/crate/market/proc/pop_crate()
+	new /obj/effect/particle_effect/sparks(get_turf(src))
+	balloon_alert_to_viewers("pop!")
+	dump_contents()
+	qdel(src)
