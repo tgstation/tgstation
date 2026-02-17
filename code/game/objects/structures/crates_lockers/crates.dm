@@ -505,6 +505,7 @@
 	name = "shield bubble"
 	desc = "A rippling blue energy bubble, capable of sustaining itself until it hits a solid wall."
 	icon = 'icons/effects/effects.dmi'
+	icon_state = "shield2"
 	base_icon_state = "shield2"
 
 /obj/structure/closet/crate/market/after_open(mob/living/user, force)
