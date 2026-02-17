@@ -741,6 +741,8 @@
 	)
 
 /datum/component/riding/creature/spider
+	rider_traits = list(TRAIT_WEB_SURFER, TRAIT_FENCE_CLIMBER)
+	ride_check_flags = RIDER_NEEDS_ARM | UNBUCKLE_DISABLED_RIDER
 
 /datum/component/riding/creature/spider/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	return list(
