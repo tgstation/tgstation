@@ -93,7 +93,8 @@
 	echolocator.apply_status_effect(/datum/status_effect/grouped/see_no_names, ECHOLOCATION_TRAIT)
 	START_PROCESSING(SSfastprocess, src)
 
-	hud_created()
+	if(echolocator.hud_used)
+		hud_created()
 	RegisterSignal(echolocator, COMSIG_MOB_HUD_CREATED, PROC_REF(hud_created))
 	echolocator.update_sight()
 
