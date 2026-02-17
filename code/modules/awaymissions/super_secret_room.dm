@@ -29,9 +29,7 @@
 			SpeakPeace(list("Welcome to the error handling room.","Something's goofed up bad to send you here.","You should probably tell an admin what you were doing, or make a bug report."))
 			for(var/obj/structure/signpost/salvation/sign in orange(7))
 				sign.SetInvisibility(INVISIBILITY_NONE)
-				var/datum/effect_system/fluid_spread/smoke/smoke = new
-				smoke.set_up(1, holder = src, location = sign.loc)
-				smoke.start()
+				do_smoke(1, src, sign.loc)
 				break
 		if(1)
 			SpeakPeace(list("Take that ladder up.","It'll send you back to the station.","Hopefully you'll never need to see this place again."))

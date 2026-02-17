@@ -600,7 +600,7 @@
 "Ix" = (
 /obj/structure/closet/cardboard,
 /obj/item/bodypart/chest/robot,
-/obj/item/toy/katana,
+/obj/item/storage/belt/sheath/katana/toy,
 /obj/item/toy/plush/snakeplushie,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)

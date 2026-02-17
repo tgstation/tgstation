@@ -53,7 +53,6 @@
 			reagents.add_reagent_list(internal_list_reagents)
 	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
 	register_context()
-	update_appearance(UPDATE_ICON)
 	AddElement(/datum/element/noisy_movement)
 
 /obj/machinery/iv_drip/Destroy()

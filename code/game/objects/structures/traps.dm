@@ -16,14 +16,12 @@
 	var/list/mob/immune_minds = list()
 
 	var/sparks = TRUE
-	var/datum/effect_system/spark_spread/spark_system
+	var/datum/effect_system/basic/spark_spread/spark_system
 
 /obj/structure/trap/Initialize(mapload)
 	. = ..()
 	flare_message = span_warning("[src] flares brightly!")
-	spark_system = new
-	spark_system.set_up(4,1,src)
-	spark_system.attach(src)
+	spark_system = new(src, 4, TRUE)
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered)
@@ -37,9 +35,8 @@
 		))
 
 /obj/structure/trap/Destroy()
-	qdel(spark_system)
-	spark_system = null
-	. = ..()
+	QDEL_NULL(spark_system)
+	return ..()
 
 /obj/structure/trap/examine(mob/user)
 	. = ..()
@@ -147,7 +144,7 @@
 	icon_state = "bounty_trap_off"
 	var/obj/structure/trap/stun/hunter/stored_trap
 	var/obj/item/radio/radio
-	var/datum/effect_system/spark_spread/spark_system
+	var/datum/effect_system/basic/spark_spread/spark_system
 
 /obj/item/bountytrap/Initialize(mapload)
 	. = ..()
@@ -155,8 +152,7 @@
 	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
 	radio.recalculateChannels()
-	spark_system = new
-	spark_system.set_up(4,1,src)
+	spark_system = new(src, 4, TRUE)
 	spark_system.attach(src)
 	name = "[name] #[rand(1, 999)]"
 	stored_trap = new(src)

@@ -408,13 +408,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 	return TRUE
 
-/obj/structure/sinkframe/wrench_act_secondary(mob/living/user, obj/item/tool)
-	. = ..()
-	tool.play_tool_sound(src)
-	deconstruct()
-	return TRUE
-
-
 /obj/effect/mist
 	name = "mist"
 	icon = 'icons/obj/watercloset.dmi'

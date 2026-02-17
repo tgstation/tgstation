@@ -38,7 +38,7 @@
 /datum/action/cooldown/spell/pointed/swap/InterceptClickOn(mob/living/clicker, params, atom/target)
 	if(!LAZYACCESS(params2list(params), RIGHT_CLICK))
 		return ..()
-		
+
 	if(!IsAvailable(feedback = TRUE))
 		return FALSE
 	if(!target)
@@ -69,16 +69,13 @@
 
 	to_chat(cast_on, span_userdanger("You feel space bending."))
 	if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
-		var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type()
-		smoke.set_up(smoke_amt, holder = owner, location = get_turf(owner))
-		smoke.start()
+		do_smoke(smoke_amt, owner, get_turf(owner), smoke_type = smoke_type)
+
 	var/turf/target_location = get_turf(cast_on)
 	if(!isnull(second_target) && get_dist(owner, second_target) <= cast_range && !(cast_on == second_target))
 		to_chat(second_target, span_userdanger("You feel space bending."))
 		if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
-			var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type()
-			smoke.set_up(smoke_amt, holder = owner, location = get_turf(second_target))
-			smoke.start()
+			do_smoke(smoke_amt, owner, get_turf(second_target))
 		var/turf/second_location = get_turf(second_target)
 		do_teleport(second_target, owner.loc, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 		do_teleport(cast_on, second_location, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)

@@ -5,14 +5,14 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 
 /proc/init_heretic_path_datums()
 	var/list/paths = list()
-	for(var/datum/heretic_knowledge_tree_column/column_path as anything in subtypesof(/datum/heretic_knowledge_tree_column))
-		if(initial(column_path.abstract_parent_type) == column_path)
-			continue
+	for(var/datum/heretic_knowledge_tree_column/column_path as anything in valid_subtypesof(/datum/heretic_knowledge_tree_column))
 		var/datum/heretic_knowledge_tree_column/heretic_route = new column_path()
 		paths[heretic_route.route] += heretic_route
 	return paths
 
 /datum/heretic_knowledge_tree_column
+	///Used to determine if this is a side path or a main path
+	abstract_type = /datum/heretic_knowledge_tree_column
 	///Route that symbolizes what path this is, MUST be unique between paths
 	var/route = PATH_START
 	var/icon_state = "dark_blade"
@@ -35,8 +35,6 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 	var/list/pros = list("Is bad", "Is very bad", "Is extremely bad")
 	var/list/cons = list("Smells bad", "Looks bad", "Tastes bad")
 	var/list/tips = list("Don't use it", "Don't touch it", "Don't look at it")
-	///Used to determine if this is a side path or a main path
-	var/abstract_parent_type = /datum/heretic_knowledge_tree_column
 	///UI background
 	var/ui_bgr = BGR_SIDE
 

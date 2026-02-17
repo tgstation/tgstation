@@ -96,7 +96,7 @@
 	if (carried_mob == user) //Piggyback user.
 		return NONE
 
-	INVOKE_ASYNC(src, PROC_REF(riding_offhand_act), user, item)
+	INVOKE_ASYNC(src, PROC_REF(riding_offhand_act), user, item, table)
 	return ITEM_INTERACT_BLOCKING
 
 /// Called when someone clicks on our surface using a fireman's carry

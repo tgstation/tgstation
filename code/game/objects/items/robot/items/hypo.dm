@@ -137,6 +137,8 @@
 	var/datum/reagent/selected_reagent
 	/// The theme for our UI (hacked hypos get syndicate UI)
 	var/tgui_theme = "ntos"
+	/// Whether this hypo should be upgradable to enable piercing
+	var/allow_piercing = TRUE
 
 /obj/item/reagent_containers/borghypo/Initialize(mapload)
 	. = ..()
@@ -332,6 +334,7 @@
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP //Water stays wet, ice stays ice
 	default_reagent_types = BASE_SERVICE_REAGENTS
 	expanded_reagent_types = EXPANDED_SERVICE_REAGENTS
+	allow_piercing = FALSE // Can't be used on carbons, so this prevents applying the piercing hypo upgrade to no effect.
 	var/reagent_search_container = REAGENT_CONTAINER_BEVAPPARATUS
 
 /obj/item/reagent_containers/borghypo/borgshaker/ui_interact(mob/user, datum/tgui/ui)
@@ -431,6 +434,7 @@
 	recharge_time = 6 //Double the recharge time too, for the same reason.
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 	default_reagent_types = EXPANDED_SERVICE_REAGENTS
+	allow_piercing = FALSE // Can't be used on carbons, so this prevents applying the piercing hypo upgrade to no effect.
 
 /obj/item/reagent_containers/borghypo/condiment_synthesizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

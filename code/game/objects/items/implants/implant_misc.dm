@@ -56,9 +56,7 @@
 /obj/item/implant/smoke/activate()
 	. = ..()
 	uses--
-	var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
-	smoke.set_up(6, holder = imp_in, location = imp_in)
-	smoke.start()
+	do_smoke(6, imp_in, imp_in.loc, smoke_type = /datum/effect_system/fluid_spread/smoke/bad)
 	if(!uses)
 		qdel(src)
 

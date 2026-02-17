@@ -250,7 +250,7 @@
 			if (reagents_in_produced)
 				if (target.owner.reagents)
 					target.owner.reagents.trans_to(result, target.owner.reagents.total_volume / reagents_in_produced / length(target.owner.bodyparts), remove_blacklisted = TRUE)
-				result.reagents?.add_reagent(/datum/reagent/consumable/nutriment/fat, target.owner.nutrition / 15 / reagents_in_produced)
+				result.reagents?.add_reagent(/datum/reagent/consumable/nutriment/fat, target.owner.nutrition / /datum/reagent/consumable/nutriment/fat::nutriment_factor / reagents_in_produced)
 
 			if(LAZYLEN(diseases))
 				var/list/datum/disease/diseases_to_add = list()

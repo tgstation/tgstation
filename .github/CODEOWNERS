@@ -202,7 +202,7 @@
 
 # MULTIPLE OWNERS
 
-/SQL/ @Jordie0608 @scriptis
+/SQL/ @Jordie0608 @strandsofivy
 
 /_maps/ @EOBGames @Maurukas @MMMiracles @san7890 @ShizCalev
 
@@ -225,15 +225,15 @@
 
 /code/modules/surgery/ @ExcessiveUseOfCobblestone @Ryll-Ryll
 
-/tools/build/ @scriptis @stylemistake
-/tools/tgs_scripts/ @Cyberboss @scriptis
+/tools/build/ @strandsofivy @stylemistake
+/tools/tgs_scripts/ @Cyberboss @strandsofivy
 
 /code/modules/antagonists/heretic @Xander3359 @EnterTheJake
 
 # Host Hell
 
-/code/controllers/configuration/entries @scriptis
-/config/ @scriptis
+/code/controllers/configuration/entries @strandsofivy
+/config/ @strandsofivy
 
 # Expensive files that touching basically always cause performance problems
 ## Init times

@@ -5,7 +5,7 @@
 	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 /datum/hallucination/battle/start()
-	if(!hallucinator.can_hear())
+	if(HAS_TRAIT(hallucinator, TRAIT_DEAF))
 		return FALSE
 
 	// for subtypes

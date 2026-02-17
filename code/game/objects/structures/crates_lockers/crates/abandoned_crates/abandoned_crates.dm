@@ -42,7 +42,7 @@
 			/obj/item/melee/baton = 2,
 			/obj/item/clothing/gloves/boxing/evil = 1,
 			/obj/item/melee/energy/sword/bananium = 1,
-			/obj/item/katana = 1,
+			/obj/item/storage/belt/sheath/katana = 1,
 			) = 5,
 
 		list( // Clothing

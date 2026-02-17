@@ -310,3 +310,9 @@
 
 /// Valid values to be returned from reagent holder's spark_act
 #define SPARK_ACT_RETURNS (SPARK_ACT_NON_DESTRUCTIVE | SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL)
+
+// spark_flags values
+/// We're reacting in an enclosed container
+#define SPARK_ACT_ENCLOSED (1 << 0)
+/// We're in a large container or something, so decrease the power of bootleg explosives like welding fuel
+#define SPARK_ACT_WEAKEN_COMMON (1 << 1)

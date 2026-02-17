@@ -155,9 +155,7 @@
 					var/turf/T = get_turf(drone)
 					message_admins("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(drone)] at [ADMIN_VERBOSEJMP(T)]!")
 					log_silicon("[key_name(usr)] detonated [key_name(drone)]!")
-					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-					s.set_up(3, TRUE, drone)
-					s.start()
+					do_sparks(3, TRUE< drone)
 					drone.visible_message(span_danger("\the [drone] self-destructs!"))
 					drone.investigate_log("has been gibbed by a robotics console.", INVESTIGATE_DEATHS)
 					drone.gib()

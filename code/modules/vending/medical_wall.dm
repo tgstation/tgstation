@@ -9,7 +9,7 @@
 		/obj/item/stack/medical/bandage = 4,
 		/obj/item/stack/medical/ointment = 2,
 		/obj/item/reagent_containers/applicator/pill/multiver = 2,
-		/obj/item/stack/medical/gauze = 4,
+		/obj/item/stack/medical/wrap/gauze = 4,
 		/obj/item/reagent_containers/hypospray/medipen/ekit = 2,
 		/obj/item/healthanalyzer/simple = 2,
 	)

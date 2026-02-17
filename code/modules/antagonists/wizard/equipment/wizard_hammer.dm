@@ -105,9 +105,8 @@
 /obj/item/mjollnir/proc/shock(mob/living/target)
 	target.Stun(1.5 SECONDS)
 	target.Knockdown(10 SECONDS)
-	var/datum/effect_system/lightning_spread/s = new /datum/effect_system/lightning_spread
-	s.set_up(5, 1, target.loc)
-	s.start()
+	var/datum/effect_system/basic/lightning_spread/lightning = new(target.loc, 5, TRUE)
+	lightning.start()
 	target.visible_message(span_danger("[target.name] is shocked by [src]!"), \
 		span_userdanger("You feel a powerful shock course through your body sending you flying!"), \
 		span_hear("You hear a heavy electrical crack!"))

@@ -113,7 +113,7 @@
 	return isclosedturf(target)
 
 /// Returns an list of object types we can mount on if the turf is unmountable
-/obj/proc/get_moutable_objects()
+/obj/proc/get_mountable_objects()
 	PROTECTED_PROC(TRUE)
 	SHOULD_BE_PURE(TRUE)
 	RETURN_TYPE(/list/obj)
@@ -156,7 +156,7 @@
 		if(is_mountable_turf(target))
 			attachable_atom = target //your usual wallmount
 		else
-			var/list/obj/attachables = get_moutable_objects()
+			var/list/obj/attachables = get_mountable_objects()
 			for(var/obj/attachable in target)
 				if(is_type_in_list(attachable, attachables))
 					attachable_atom = attachable

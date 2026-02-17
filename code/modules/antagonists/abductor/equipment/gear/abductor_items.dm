@@ -484,9 +484,7 @@ Return to step 11 of normal process."}
 /obj/item/restraints/handcuffs/energy/on_uncuffed(datum/source, mob/living/wearer)
 	. = ..()
 	wearer.visible_message(span_danger("[wearer]'s [name] breaks in a discharge of energy!"), span_userdanger("[wearer]'s [name] breaks in a discharge of energy!"))
-	var/datum/effect_system/spark_spread/sparks = new
-	sparks.set_up(4,0,wearer.loc)
-	sparks.start()
+	do_sparks(4, FALSE, wearer.loc)
 	qdel(src)
 
 /obj/item/melee/baton/abductor/examine(mob/user)

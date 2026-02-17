@@ -55,7 +55,7 @@
 	var/safe = TRUE
 	///whether the door is bolted or not.
 	var/locked = FALSE
-	var/datum/effect_system/spark_spread/spark_system
+	var/datum/effect_system/basic/spark_spread/spark_system
 	///ignore this, just use explosion_block
 	var/real_explosion_block
 	///if TRUE, this door will always open on red alert
@@ -63,7 +63,7 @@
 
 	/// Whether or not the door can crush mobs.
 	var/can_crush = TRUE
-	/// Whether or not the door can be opened by hand (used for blast doors and shutters)
+	/// Whether or not the door can be opened by hand (used for blast doors, shutters & firelocks primarily)
 	var/can_open_with_hands = TRUE
 	/// Whether or not this door can be opened through a door remote, ever
 	var/opens_with_door_remote = FALSE
@@ -120,8 +120,7 @@
 			GLOB.elevator_doors += src
 		else
 			stack_trace("Elevator door [src] ([x],[y],[z]) has no linked elevator ID!")
-	spark_system = new /datum/effect_system/spark_spread
-	spark_system.set_up(2, 1, src)
+	spark_system = new(src, 2, TRUE)
 	if(density)
 		flags_1 |= PREVENT_CLICK_UNDER_1
 	else
@@ -178,9 +177,7 @@
 /obj/machinery/door/Destroy()
 	if(elevator_mode)
 		GLOB.elevator_doors -= src
-	if(spark_system)
-		qdel(spark_system)
-		spark_system = null
+	QDEL_NULL(spark_system)
 	QDEL_NULL(filler)
 	air_update_turf(TRUE, FALSE)
 	return ..()

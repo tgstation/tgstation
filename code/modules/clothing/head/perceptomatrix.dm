@@ -164,17 +164,6 @@
 	var/stagger_duration = 3 SECONDS
 	/// The amount of hallucination to apply
 	var/hallucination_duration = 25 SECONDS
-	/// Spark system
-	var/datum/effect_system/spark_spread/quantum/spark_sys
-
-/datum/action/cooldown/spell/pointed/percept_hallucination/New(Target)
-	. = ..()
-
-	spark_sys = new /datum/effect_system/spark_spread/quantum
-
-/datum/action/cooldown/spell/pointed/percept_hallucination/Destroy()
-	QDEL_NULL(spark_sys)
-	return ..()
 
 /datum/action/cooldown/spell/pointed/percept_hallucination/is_valid_target(atom/cast_on)
 	. = ..()
@@ -216,11 +205,8 @@
 
 /datum/action/cooldown/spell/pointed/percept_hallucination/proc/cast_fx(atom/cast_on)
 	owner.Beam(cast_on, icon_state = "greyscale_lightning", beam_color = COLOR_FADED_PINK, time = 0.5 SECONDS)
-
-	spark_sys.set_up(2, 1, get_turf(owner))
-	spark_sys.start()
-	spark_sys.set_up(4, 1, get_turf(cast_on))
-	spark_sys.start()
+	do_sparks(2, TRUE, get_turf(owner), spark_type = /datum/effect_system/basic/spark_spread/quantum)
+	do_sparks(4, TRUE, get_turf(owner), spark_type = /datum/effect_system/basic/spark_spread/quantum)
 
 /datum/action/cooldown/spell/pointed/percept_hallucination/cast(mob/living/carbon/human/cast_on)
 	. = ..()

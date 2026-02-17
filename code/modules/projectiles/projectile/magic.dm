@@ -95,13 +95,13 @@
 	if(!isturf(target))
 		teleloc = target.loc
 	for(var/atom/movable/stuff in teleloc)
-		if(!stuff.anchored && stuff.loc && !isobserver(stuff))
-			if(do_teleport(stuff, stuff, 10, channel = TELEPORT_CHANNEL_MAGIC))
-				teleammount++
-				var/smoke_range = max(round(4 - teleammount), 0)
-				var/datum/effect_system/fluid_spread/smoke/smoke = new
-				smoke.set_up(smoke_range, holder = src, location = stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
-				smoke.start()
+		if(stuff.anchored || isobserver(stuff))
+			continue
+		if(!do_teleport(stuff, stuff, 10, channel = TELEPORT_CHANNEL_MAGIC))
+			continue
+		teleammount++
+		var/smoke_range = max(round(4 - teleammount), 0)
+		do_smoke(smoke_range, src, stuff.loc)
 
 /// Teleports you somewhere on the station where the local conditions won't kill you
 /obj/projectile/magic/safety
@@ -116,11 +116,11 @@
 	var/turf/origin_turf = get_turf(target)
 	var/turf/destination_turf = find_safe_turf(extended_safety_checks = TRUE)
 
-	if(do_teleport(target, destination_turf, channel=TELEPORT_CHANNEL_MAGIC))
-		for(var/t in list(origin_turf, destination_turf))
-			var/datum/effect_system/fluid_spread/smoke/smoke = new
-			smoke.set_up(0, holder = src, location = t)
-			smoke.start()
+	if(!do_teleport(target, destination_turf, channel = TELEPORT_CHANNEL_MAGIC))
+		return
+
+	for(var/turf/smoke_turf as anything in list(origin_turf, destination_turf))
+		do_smoke(0, src, smoke_turf)
 
 /// Turns walls into doors, or opens doors
 /obj/projectile/magic/door

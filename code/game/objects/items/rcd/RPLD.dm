@@ -221,7 +221,7 @@
 		return FALSE
 	if(initial(blueprint.density) && destination.is_blocked_turf(exclude_mobs = FALSE, source_atom = null, ignore_atoms = null))
 		return FALSE
-	return isnull(ducting_layer_check(destination, ispath(blueprint, /obj/machinery/duct) ? GLOB.plumbing_layers[current_layer] : NONE))
+	return isnull(ducting_layer_check(destination, (ispath(blueprint, /obj/machinery/duct) ? 1 : -1) * GLOB.plumbing_layers[current_layer]))
 
 /obj/item/construction/plumbing/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()

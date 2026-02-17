@@ -325,9 +325,7 @@ at the cost of risking a vicious bite.**/
 		return
 	if(!ismob(leaving))
 		return
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(range = 1, amount = 1, location = src)
-	smoke.start()
+	do_smoke(1, src, loc)
 	playsound(src, 'sound/machines/steam_hiss.ogg', 75, TRUE, -2)
 	COOLDOWN_START(src, steam_vent_interact, steam_speed)
 

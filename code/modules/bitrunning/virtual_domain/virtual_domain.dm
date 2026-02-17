@@ -85,6 +85,13 @@
 	/// The role that ghosts will get. Only used for poll text.
 	var/spawner_role = "Antagonist"
 
+
+/datum/lazy_template/virtual_domain/proc/can_view_name(scanner_tier, server_points)
+	return difficulty < scanner_tier && cost <= server_points + 5
+
+/datum/lazy_template/virtual_domain/proc/can_view_reward(scanner_tier, server_points)
+	return difficulty < (scanner_tier + 1) && cost <= server_points + 3
+
 /datum/lazy_template/virtual_domain/Destroy(force)
 	QDEL_NULL(ghost_spawners)
 	QDEL_NULL(ghost_mobs)

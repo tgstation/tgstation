@@ -40,10 +40,11 @@
 	var/icon_prefix = "rabbit"
 
 /datum/emote/rabbit
+	abstract_type = /datum/emote/rabbit
 	mob_type_allowed_typecache = /mob/living/basic/rabbit
 	mob_type_blacklist_typecache = list()
 
-/datum/emote/rabbit
+/datum/emote/rabbit/hop
 	key = "hop"
 	key_third_person = "hops"
 	message = "hops around happily!"

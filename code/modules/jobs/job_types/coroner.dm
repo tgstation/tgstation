@@ -12,7 +12,8 @@
 	outfit = /datum/outfit/job/coroner
 	plasmaman_outfit = /datum/outfit/plasmaman/coroner
 
-	mind_traits = list(TRAIT_MORBID, MEDICAL_MIND_TRAITS)
+	mind_traits = list(TRAIT_MORBID)
+	desensitized_base = DESENSITIZED_THRESHOLD
 	liver_traits = list(TRAIT_CORONER_METABOLISM)
 
 	paycheck = PAYCHECK_CREW

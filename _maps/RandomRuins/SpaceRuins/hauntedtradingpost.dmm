@@ -4068,9 +4068,7 @@
 	pixel_y = -2;
 	pixel_x = -8
 	},
-/obj/structure/sinkframe{
-	pixel_x = 2
-	},
+/obj/item/wallframe/sinkframe,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/maint)
 "Ju" = (

@@ -808,6 +808,14 @@
 /obj/effect/temp_visual/circle_wave/star_blast
 	color = COLOR_VOID_PURPLE
 
+/obj/effect/temp_visual/circle_wave/vortex
+	color = COLOR_BLACK
+	duration = 3 SECONDS
+	amount_to_scale = 4
+
+/obj/effect/temp_visual/circle_wave/vortex/small
+	amount_to_scale = 2
+
 /obj/effect/temp_visual/focus_ring
 	randomdir = FALSE
 	name = "ring"

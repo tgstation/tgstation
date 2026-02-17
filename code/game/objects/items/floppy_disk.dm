@@ -133,7 +133,7 @@
 	read_only = !read_only
 	to_chat(user, span_notice("You flip the write-protect tab to [span_bold("[read_only ? "protected" : "unprotected"]")]."))
 
-/obj/item/disk/click_alt(mob/user)
+/obj/item/disk/click_alt_secondary(mob/user)
 	if(sticker_icon_state != STARTING_STICKER)
 		return CLICK_ACTION_BLOCKING
 

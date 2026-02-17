@@ -91,7 +91,6 @@
 	icon_state = "puddle-oil"
 	capacity = 20
 	dispensedreagent = /datum/reagent/fuel/oil
-	pixel_shift = 0
 
 /obj/structure/sink/oil_well/Initialize(mapload)
 	. = ..()
@@ -99,34 +98,30 @@
 	//Thankfully, the user can cast the line from a distance.
 	AddComponent(/datum/component/fishing_spot, /datum/fish_source/oil_well)
 
+/obj/structure/sink/oil_well/find_and_mount_on_atom(mark_for_late_init, late_init)
+	///Oil wells exist indepent of any wall structure
+	return FALSE
+
 /obj/structure/sink/oil_well/attack_hand(mob/user, list/modifiers)
 	flick("puddle-oil-splash",src)
 	reagents.expose(user, TOUCH, 20) //Covers target in 20u of oil.
 	to_chat(user, span_notice("You touch the pool of oil, only to get oil all over yourself. It would be wise to wash this off with water."))
 
-/obj/structure/sink/oil_well/attackby(obj/item/O, mob/living/user, list/modifiers, list/attack_modifiers)
-	flick("puddle-oil-splash",src)
-	if(O.tool_behaviour == TOOL_SHOVEL) //attempt to deconstruct the puddle with a shovel
-		to_chat(user, "You fill in the oil well with soil.")
-		O.play_tool_sound(src)
-		deconstruct()
-		return 1
-	if(is_reagent_container(O)) //Refilling bottles with oil
-		var/obj/item/reagent_containers/RG = O
-		if(RG.is_refillable())
-			if(!RG.reagents.holder_full())
-				RG.reagents.add_reagent(dispensedreagent, min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-				to_chat(user, span_notice("You fill [RG] from [src]."))
-				return TRUE
-			to_chat(user, span_notice("\The [RG] is full."))
-			return FALSE
-	if(!user.combat_mode)
-		to_chat(user, span_notice("You won't have any luck getting \the [O] out if you drop it in the oil."))
-		return 1
-	else
-		return ..()
+/obj/structure/sink/oil_well/wrench_act(mob/living/user, obj/item/tool)
+	//we deconstruct with a shovel
+	return NONE
 
-/obj/structure/sink/oil_well/drop_materials()
+/obj/structure/sink/oil_well/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	flick("puddle-oil-splash",src)
+	if(tool.tool_behaviour == TOOL_SHOVEL) //attempt to deconstruct the puddle with a shovel
+		to_chat(user, "You fill in the oil well with soil.")
+		tool.play_tool_sound(src)
+		deconstruct(TRUE)
+		return ITEM_INTERACT_SUCCESS
+
+	return ..()
+
+/obj/structure/sink/oil_well/atom_deconstruct(dissambled = TRUE)
 	new /obj/effect/decal/cleanable/blood/oil(loc)
 
 //***Grave mounds.

@@ -72,6 +72,8 @@
 	var/list/haters = list()
 	for(var/hater_department_type in list(/datum/job_department/security, /datum/job_department/command))
 		var/datum/job_department/hater_department = SSjob.get_department_type(hater_department_type)
+		if (isnull(hater_department))
+			continue
 		for(var/datum/job/hater_job as anything in hater_department.department_jobs)
 			haters += hater_job.title
 	var/datum/job/quartermaster/fucking_quartermaster = SSjob.get_job_type(/datum/job/quartermaster)

@@ -1,4 +1,11 @@
-#define MAX_PAINTING_ZOOM_OUT 3
+GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
+
+/proc/init_canvas_dimensions()
+	. = list()
+	for(var/obj/item/canvas/canvas_type in typesof(/obj/item/canvas))
+		var/width = canvas_type::width
+		var/height = canvas_type::height
+		.["[width]x[height]"] = list(width, height)
 
 ///////////
 // EASEL //
@@ -16,15 +23,14 @@
 	var/obj/item/canvas/painting = null
 
 //Adding canvases
-/obj/structure/easel/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/canvas))
-		var/obj/item/canvas/canvas = I
+/obj/structure/easel/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/canvas))
+		var/obj/item/canvas/canvas = tool
 		user.transfer_item_to_turf(canvas, get_turf(src), silent = FALSE)
 		painting = canvas
 		canvas.layer = layer+0.1
 		user.visible_message(span_notice("[user] puts \the [canvas] on \the [src]."),span_notice("You place \the [canvas] on \the [src]."))
-	else
-		return ..()
+		return ITEM_INTERACT_SUCCESS
 
 
 //Stick to the easel like glue
@@ -46,14 +52,13 @@
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION
 	var/width = 11
 	var/height = 11
-	var/list/grid
 	/// empty canvas color
 	var/canvas_color = "#ffffff"
+	/// The sprite editor workspace that carries the data for this canvas
+	var/datum/sprite_editor_workspace/workspace
 	/// Is it clean canvas or was there something painted on it at some point, used to decide when to show wip splotch overlay
 	var/used = FALSE
 	var/finalized = FALSE //Blocks edits
-	/// Whether a grid should be shown in the UI if the canvas is editable and the viewer is holding a painting tool.
-	var/show_grid = TRUE
 	var/icon_generated = FALSE
 	var/icon/generated_icon
 	///boolean that blocks persistence from saving it. enabled from printing copies, because we do not want to save copies.
@@ -74,17 +79,20 @@
 	 */
 	var/pixels_per_unit = 9
 
-	///A list that keeps track of the current zoom value for each current viewer.
-	var/list/zoom_by_observer
-
 	SET_BASE_PIXEL(11, 10)
 
 	custom_price = PAYCHECK_CREW
 
 /obj/item/canvas/Initialize(mapload)
 	. = ..()
-	reset_grid()
-
+	workspace = new(width,
+		height,
+		color_mode = SPRITE_EDITOR_COLOR_MODE_RGB,
+		config_flags = NONE,
+		tool_flags = SPRITE_EDITOR_TOOL_PENCIL | SPRITE_EDITOR_TOOL_BUCKET,
+		initial_layer_color = "[canvas_color]ff" // To avoid needing to handle strings of mixed lengths, sprite editor workspaces always use the alpha channel
+	)
+	RegisterSignal(workspace, COMSIG_SPRITE_EDITOR_VALIDATE_COLOR, PROC_REF(validate_color))
 	painting_metadata = new
 	painting_metadata.title = "Untitled Artwork"
 	painting_metadata.creation_round_id = GLOB.round_id
@@ -100,12 +108,6 @@
 	painting_metadata = null
 	return ..()
 
-/obj/item/canvas/proc/reset_grid()
-	grid = new/list(width,height)
-	for(var/x in 1 to width)
-		for(var/y in 1 to height)
-			grid[x][y] = canvas_color
-
 /obj/item/canvas/attack_self(mob/user)
 	. = ..()
 	ui_interact(user)
@@ -116,18 +118,9 @@
 	return ..()
 
 /obj/item/canvas/ui_state(mob/user)
-	if(isobserver(user))
-		return GLOB.observer_state
 	if(finalized)
 		return GLOB.hold_or_view_state
 	return GLOB.default_state
-
-/obj/item/canvas/ui_status(mob/user, datum/ui_state/state)
-	if(state == GLOB.default_state || !state)
-		return ..()
-	//Skip the can_interact() check from atom/ui_status() and let them zoom in/out!
-	var/src_object = ui_host(user)
-	return state.can_use_topic(src_object, user)
 
 /obj/item/canvas/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -135,37 +128,49 @@
 		ui = new(user, src, "Canvas", name)
 		ui.open()
 
-/obj/item/canvas/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(!user.combat_mode)
-		ui_interact(user)
-	else
-		return ..()
+/obj/item/canvas/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	ui_interact(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/canvas/ui_static_data(mob/user)
 	. = ..()
-	.["px_per_unit"] = pixels_per_unit
-	.["max_zoom"] = MAX_PAINTING_ZOOM_OUT
+	.["year_offset"] = STATION_YEAR_OFFSET
 
 /obj/item/canvas/ui_data(mob/user)
 	. = ..()
-	.["grid"] = grid
-	.["zoom"] = LAZYACCESS(zoom_by_observer, user.key) || (finalized ? 1 : MAX_PAINTING_ZOOM_OUT)
-	.["name"] = painting_metadata.title
-	.["author"] = painting_metadata.creator_name
-	.["patron"] = painting_metadata.patron_name
-	.["medium"] = painting_metadata.medium
-	.["date"] = painting_metadata.creation_date
-	.["finalized"] = finalized
-	.["editable"] = !finalized //Ideally you should be able to draw moustaches on existing paintings in the gallery but that's not implemented yet
-	.["show_plaque"] = istype(loc,/obj/structure/sign/painting)
-	.["show_grid"] = show_grid
-	.["paint_tool_palette"] = null
-	var/obj/item/painting_implement = user.get_active_held_item()
-	if(!painting_implement)
-		.["paint_tool_color"] = null
-		return
-	.["paint_tool_color"] = get_paint_tool_color(painting_implement)
-	SEND_SIGNAL(painting_implement, COMSIG_PAINTING_TOOL_GET_ADDITIONAL_DATA, .)
+	var/list/metadata = list(
+		"title" = painting_metadata.title,
+		"author" = painting_metadata.creator_name,
+		"patron" = painting_metadata.patron_name,
+		"medium" = painting_metadata.medium,
+		"date" = painting_metadata.creation_date,
+	)
+	var/list/editor_data = workspace.sprite_editor_ui_data()
+	var/can_edit = TRUE
+
+	var/obj/item/implement = user.get_active_held_item()
+	var/implement_color = get_paint_tool_color(implement)
+	var/can_change_implement_color = can_change_paint_tool_color(implement)
+	if(implement_color)
+		editor_data["serverSelectedColor"] = implement_color
+		editor_data["serverPalette"] = get_paint_tool_palette(implement)
+		editor_data["maxServerColors"] = get_paint_tool_palette_capacity(implement)
+		editor_data["onSelectServerColor"] = "onSelectColor"
+		editor_data["onAddServerColor"] = "onAddPaletteColor"
+		editor_data["onRemoveServerColor"] = "onRemovePaletteColor"
+		if(can_change_implement_color)
+			editor_data["toolFlags"] |= SPRITE_EDITOR_TOOL_DROPPER
+	else
+		can_edit = FALSE
+	return list(
+		"metadata" = metadata,
+		"editorData" = editor_data,
+		"pixelsPerUnit" = pixels_per_unit,
+		"finalized" = finalized,
+		"allowColorPicker" = can_change_implement_color,
+		"editable" = can_edit && !finalized, //Ideally you should be able to draw moustaches on existing paintings in the gallery but that's not implemented yet
+		"showPlaque" = istype(loc, /obj/structure/sign/painting)
+	)
 
 /obj/item/canvas/examine(mob/user)
 	. = ..()
@@ -176,87 +181,56 @@
 	if(.)
 		return
 	var/mob/user = usr
-	//this is here to allow observers and viewers to zoom in and out regardless of adjacency.
-	//observers need this special check because we allow them to operate the UI in ui_state
-	if((action != "zoom_in" && action != "zoom_out") && (isobserver(user) || !can_interact(user)))
-		return
+	var/obj/item/implement = user.get_active_held_item()
+	var/datum/component/palette/palette_comp = implement?.GetComponent(/datum/component/palette)
 	switch(action)
-		if("paint", "fill")
+		if("spriteEditorCommand")
+			. = TRUE
 			if(finalized)
-				return TRUE
-			var/obj/item/I = user.get_active_held_item()
-			var/tool_color = get_paint_tool_color(I)
-			if(!tool_color)
-				return FALSE
-			if(action == "fill")
-				var/x = params["x"]
-				var/y = params["y"]
-				if(!canvas_fill(x, y, tool_color))
-					return FALSE
-			else
-				var/list/data = params["data"]
-				for(var/point in data)
-					var/x = text2num(point["x"])
-					var/y = text2num(point["y"])
-					grid[x][y] = tool_color
-			var/medium = get_paint_tool_medium(I)
+				return
+			var/command = params["command"]
+			if(command != "transaction") // Painting only allows transactions, no undo/redo or layer visibility toggling
+				return
+			if(!workspace.new_transaction(params["transaction"]))
+				return
+			var/medium = get_paint_tool_medium(implement)
 			if(medium && painting_metadata.medium && painting_metadata.medium != medium)
 				painting_metadata.medium = "Mixed medium"
 			else
 				painting_metadata.medium = medium
 			used = TRUE
 			update_appearance()
+		if("onSelectColor")
 			. = TRUE
-		if("select_color")
-			var/obj/item/painting_implement = user.get_active_held_item()
-			painting_implement?.set_painting_tool_color(params["selected_color"])
+			var/paint_color = copytext(params["color"], 1, 8)
+			implement?.set_painting_tool_color(paint_color)
+		if("onAddPaletteColor")
 			. = TRUE
-		if("select_color_from_coords")
-			var/obj/item/painting_implement = user.get_active_held_item()
-			if(!painting_implement)
-				return FALSE
-			var/x = text2num(params["x"])
-			var/y = text2num(params["y"])
-			painting_implement.set_painting_tool_color(grid[x][y])
+			if(!palette_comp)
+				return
+			if(length(palette_comp.colors) >= palette_comp.max_colors)
+				return
+			var/paint_color = copytext(params["color"], 1, 8)
+			palette_comp.colors += paint_color
+		if("onRemovePaletteColor")
 			. = TRUE
-		if("change_palette")
-			var/obj/item/painting_implement = user.get_active_held_item()
-			if(!painting_implement)
-				return FALSE
-			//I'd have this done inside the signal, but that'd have to be asynced,
-			//while we want the UI to be updated after the color is chosen, not before.
-			var/chosen_color = tgui_color_picker(user, "Pick new color", painting_implement, params["old_color"])
-			if(!chosen_color || IS_DEAD_OR_INCAP(user) || !user.is_holding(painting_implement))
-				return FALSE
-			SEND_SIGNAL(painting_implement, COMSIG_PAINTING_TOOL_PALETTE_COLOR_CHANGED, chosen_color, params["color_index"])
-			. = TRUE
-		if("toggle_grid")
-			. = TRUE
-			show_grid = !show_grid
+			if(!palette_comp)
+				return
+			var/color_index = params["index"]
+			palette_comp.colors.Cut(color_index, color_index+1)
 		if("finalize")
 			. = TRUE
 			finalize(user)
 		if("patronage")
 			. = TRUE
 			patron(user)
-		if("zoom_in")
-			. = TRUE
-			LAZYINITLIST(zoom_by_observer)
-			if(!zoom_by_observer[user.key])
-				zoom_by_observer[user.key] = 2
-			else
-				zoom_by_observer[user.key] = min(zoom_by_observer[user.key] + 1, MAX_PAINTING_ZOOM_OUT)
-		if("zoom_out")
-			. = TRUE
-			LAZYINITLIST(zoom_by_observer)
-			if(!zoom_by_observer[user.key])
-				zoom_by_observer[user.key] = MAX_PAINTING_ZOOM_OUT - 1
-			else
-				zoom_by_observer[user.key] = max(zoom_by_observer[user.key] - 1, 1)
 
-/obj/item/canvas/ui_close(mob/user)
-	. = ..()
-	LAZYREMOVE(zoom_by_observer, user.key)
+/obj/item/canvas/proc/validate_color(_source, paint_color)
+	SIGNAL_HANDLER
+	paint_color = copytext(paint_color, 1, 8)
+	var/obj/item/implement = usr.get_active_held_item()
+	if(!implement || !((get_paint_tool_color(implement) == paint_color) || (paint_color in get_paint_tool_palette(implement))))
+		return COLOR_IS_INVALID
 
 /obj/item/canvas/proc/finalize(mob/user)
 	if(finalized || painting_metadata.loaded_from_json)
@@ -401,9 +375,10 @@
 
 /obj/item/canvas/proc/get_data_string()
 	var/list/data = list()
+	var/list/grid = workspace.layers[1]["data"]["[SOUTH]"]
 	for(var/y in 1 to height)
 		for(var/x in 1 to width)
-			data += grid[x][y]
+			data += grid[y][x]
 	return data.Join("")
 
 //Todo make this element ?
@@ -419,8 +394,37 @@
 	else if(istype(painting_implement, /obj/item/pen))
 		var/obj/item/pen/pen = painting_implement
 		return pen.colour
+	else if (istype(painting_implement, /obj/item/airlock_painter/decal))
+		var/obj/item/airlock_painter/decal/painter = painting_implement
+		return painter.selected_custom_color
 	else if(istype(painting_implement, /obj/item/soap) || istype(painting_implement, /obj/item/rag))
 		return canvas_color
+
+/obj/item/canvas/proc/get_paint_tool_palette(obj/item/painting_implement)
+	if(!painting_implement)
+		return list()
+	var/datum/component/palette/palette_comp = painting_implement.GetComponent(/datum/component/palette)
+	if(!palette_comp)
+		var/implement_color = get_paint_tool_color(painting_implement)
+		return implement_color ? list(implement_color) : list()
+	return palette_comp.colors
+
+/obj/item/canvas/proc/get_paint_tool_palette_capacity(obj/item/painting_implement)
+	if(!painting_implement)
+		return
+	var/datum/component/palette/palette_comp = painting_implement.GetComponent(/datum/component/palette)
+	if(!palette_comp)
+		return get_paint_tool_color(painting_implement) ? 1 : 0
+	return palette_comp.max_colors
+
+/obj/item/canvas/proc/can_change_paint_tool_color(obj/item/painting_implement)
+	if(!painting_implement)
+		return
+	if(istype(painting_metadata, /obj/item/paint_palette) || istype(painting_implement, /obj/item/airlock_painter/decal))
+		return TRUE
+	if(istype(painting_implement, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/crayon = painting_implement
+		return crayon.can_change_colour
 
 /// Generates medium description
 /obj/item/canvas/proc/get_paint_tool_medium(obj/item/painting_implement)
@@ -432,7 +436,7 @@
 		return "Spraycan on canvas"
 	else if(istype(painting_implement, /obj/item/toy/crayon))
 		return "Crayon on canvas"
-	else if(istype(painting_implement, /obj/item/pen))
+	else if(istype(painting_implement, /obj/item/pen) || istype(painting_implement, /obj/item/airlock_painter/decal))
 		return "Ink on canvas"
 	else if(istype(painting_implement, /obj/item/soap) || istype(painting_implement, /obj/item/rag))
 		return //These are just for cleaning, ignore them
@@ -456,147 +460,6 @@
 			return TRUE
 
 	return FALSE
-
-///The pixel to the right matches the previous color we're flooding over
-#define CANVAS_FILL_R_MATCH (1<<0)
-///The pixel to the left matches the previous color we're flooding over
-#define CANVAS_FILL_L_MATCH (1<<1)
-
-//a macro for the stringized key for coordinates to check later
-#define CANVAS_COORD(x, y) "[x]-[y]"
-///queues a coordinate on the canvas for future cycles.
-#define QUEUE_CANVAS_COORD(x, y, queue) \
-	if(y && !queue[CANVAS_COORD(x, y)]) {\
-		queue[CANVAS_COORD(x, y)] = list(x, y);\
-	}
-
-/**
- * A proc that adopts a span-based, 4-dir (correct me if I'm wrong) flood fill algorithm used
- * by the bucked tool in the UI, to facilitate coloring larger portions of the canvas.
- * If you have never used the bucket/flood tool on an image editor, I suggest you do it
- * now so you know what I'm basically talking about.
- *
- * @ param x The point on the x axys where we start flooding our canvas. The arg is later used to store the current x
- * @ param y The point on the y axys where we start flooding the canvas. The arg is later used to store the current y
- * @ param new_color The new color that floods over the old one
- */
-/obj/item/canvas/proc/canvas_fill(x, y, new_color)
-	var/prev_color = grid[x][y]
-	//If the colors are the same, don't do anything.
-	if(prev_color == new_color)
-		return FALSE
-
-	//The queue for coordinates to the right of the current line
-	var/list/queue_right = list()
-	//Inversely for those to our left
-	var/list/queue_left = list()
-	//Whether we're currently checking the right or left queue.
-	var/go_right = TRUE
-
-	//The current coordinates. The only reason this is outside the loop
-	//is because we first go up, then reset our vertical position to just below
-	//the starting position and go down from there.
-	var/list/coords = list(x, y)
-
-	//Basically, the way it works is that each cycle we first go up, then down until we
-	//either reach the vertical borders of the raster or find a pixel that is not of the color we want
-	//to flood. As we do this, we try to queue a minimum of coordinates to our
-	//left and right to use for future cycles, moving horizontally in one direction until there are no
-	//more queued coordinates for that dir. Then we turn around and repeat
-	//until both left and right queues are completely empty.
-	while(coords)
-		//The current vertical line, the right and the left ones.
-		var/list/curr_line = grid[x]
-		var/list/right_line = x < width ? grid[x+1] : null
-		var/list/left_line = x > 1 ? grid[x-1] : null
-		//the queue we're on, depending on direction
-		var/list/curr_queue = go_right ? queue_right : queue_left
-		//Instead of queueing every point to our left and right that shares our prevous color,
-		//Causing a lot of empty cycles, we only queue an extremity of a vertical segment
-		//delimited by pixels of other colors or the y boundaries of the raster. To do this,
-		//we need to track where the segment (called line for simplicity) starts (or ends).
-		var/r_line_start
-		var/l_line_start
-
-		//go up first (y = 1 is the upper border is)
-		while(y >= 1 && curr_line[y] == prev_color)
-			var/return_flags = canvas_scan_step(x, y, queue_left, queue_right, left_line, right_line, l_line_start, r_line_start, prev_color)
-			if(return_flags & CANVAS_FILL_R_MATCH)
-				r_line_start = y
-			else
-				r_line_start = null
-			if(return_flags & CANVAS_FILL_L_MATCH)
-				l_line_start = y
-			else
-				l_line_start = null
-			curr_line[y] = new_color
-			curr_queue -= CANVAS_COORD(x, y) //remove it from the queue if possible.
-			y--
-
-		//Any unqueued coordinate is queued and cleared before the next half of the cycle
-		QUEUE_CANVAS_COORD(x + 1, r_line_start, queue_right)
-		QUEUE_CANVAS_COORD(x - 1, l_line_start, queue_left)
-		r_line_start = l_line_start = null
-
-		//set y to the pixel immediately below the starting y
-		y = coords[2] + 1
-
-		//then go down (y = height is the bottom border)
-		while(y <= height && curr_line[y] == prev_color)
-			var/return_flags = canvas_scan_step(x, y, queue_left, queue_right, left_line, right_line, l_line_start, r_line_start, prev_color)
-			if(!(return_flags & CANVAS_FILL_R_MATCH))
-				r_line_start = null
-			else if(!r_line_start)
-				r_line_start = y
-			if(!(return_flags & CANVAS_FILL_L_MATCH))
-				l_line_start = null
-			else if(!l_line_start)
-				l_line_start = y
-			curr_line[y] = new_color
-			curr_queue -= CANVAS_COORD(x, y)
-			y++
-
-		QUEUE_CANVAS_COORD(x + 1, r_line_start, queue_right)
-		QUEUE_CANVAS_COORD(x - 1, l_line_start, queue_left)
-
-		//Pick the next set of coords from the queue (and change direction if necessary)
-		if(!length(curr_queue))
-			var/list/other_queue = go_right ? queue_left : queue_right
-			coords = other_queue[other_queue[1]]
-			other_queue.Cut(1, 2)
-			go_right = !go_right
-		else
-			coords = curr_queue[curr_queue[1]]
-			curr_queue.Cut(1, 2)
-
-		x = coords?[1]
-		y = coords?[2]
-
-	return TRUE
-
-/**
- * The step of canvas_fill() that scans the pixels to the immediate right and left of our coord and see if they need to be queue'd or not.
- * Kept as a separate proc to reduce copypasted code.
- */
-/proc/canvas_scan_step(x, y, list/queue_left, list/queue_right, list/left_line, list/right_line, left_pos, right_pos, prev_color)
-	if(left_line)
-		if(left_line[y] == prev_color)
-			. += CANVAS_FILL_L_MATCH
-		else
-			QUEUE_CANVAS_COORD(x - 1, left_pos, queue_left)
-
-	if(!right_line)
-		return
-
-	if(right_line[y] == prev_color)
-		. += CANVAS_FILL_R_MATCH
-	else
-		QUEUE_CANVAS_COORD(x + 1, right_pos, queue_right)
-
-#undef CANVAS_FILL_R_MATCH
-#undef CANVAS_FILL_L_MATCH
-#undef CANVAS_COORD
-#undef QUEUE_CANVAS_COORD
 
 /obj/item/canvas/nineteen_nineteen
 	name = "canvas (19x19)"
@@ -725,14 +588,14 @@
 	. = ..()
 	SSpersistent_paintings.painting_frames -= src
 
-/obj/structure/sign/painting/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!current_canvas && istype(I, /obj/item/canvas))
-		frame_canvas(user,I)
-	else if(current_canvas && current_canvas.painting_metadata.title == initial(current_canvas.painting_metadata.title) && istype(I,/obj/item/pen))
+/obj/structure/sign/painting/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!current_canvas && istype(tool, /obj/item/canvas))
+		frame_canvas(user, tool)
+		return ITEM_INTERACT_SUCCESS
+	if(current_canvas && current_canvas.painting_metadata.title == initial(current_canvas.painting_metadata.title) && istype(tool, /obj/item/pen))
 		if(try_rename(user))
 			SStgui.update_uis(src)
-	else
-		return ..()
+		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/sign/painting/atom_deconstruct(disassembled)
 	var/turf/drop_turf = drop_location()
@@ -849,7 +712,7 @@
 	if(!istype(new_canvas))
 		CRASH("Found painting size with no matching canvas type")
 	new_canvas.painting_metadata = painting
-	new_canvas.fill_grid_from_icon(I)
+	fill_grid_from_icon(new_canvas.workspace.get_first_layer_pixel_data(), I)
 	new_canvas.generated_icon = I
 	new_canvas.icon_generated = TRUE
 	new_canvas.finalized = TRUE
@@ -907,10 +770,11 @@
 	SSpersistent_paintings.paintings += current_canvas.painting_metadata
 
 /obj/item/canvas/proc/fill_grid_from_icon(icon/I)
+	var/list/grid = workspace.layers[1]["data"]["[SOUTH]"]
 	var/h = I.Height() + 1
 	for(var/x in 1 to width)
 		for(var/y in 1 to height)
-			grid[x][y] = I.GetPixel(x,h-y)
+			grid[y][x] = I.GetPixel(x,h-y)
 
 /obj/item/wallframe/painting/large
 	name = "large painting frame"
@@ -1073,4 +937,3 @@
 	current_color = chosen_color
 
 #undef AVAILABLE_PALETTE_SPACE
-#undef MAX_PAINTING_ZOOM_OUT

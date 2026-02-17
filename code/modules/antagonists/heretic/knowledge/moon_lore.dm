@@ -303,8 +303,7 @@
 			var/obj/item/bodypart/head/head = locate() in carbon_view.bodyparts
 			if(!head?.dismember())
 				carbon_view.gib(DROP_ALL_REMAINS)
-			var/datum/effect_system/reagents_explosion/explosion = new()
-			explosion.set_up(1, get_turf(carbon_view), 1)
+			var/datum/effect_system/reagents_explosion/explosion = new(get_turf(carbon_view), 1, 1, 1)
 			explosion.start(src)
 		else
 			attempt_conversion(carbon_view, source)
