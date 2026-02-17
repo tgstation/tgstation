@@ -195,6 +195,7 @@
 
 /// Called when a mouse is hand-fed some cheese, it will stop being afraid of humans
 /mob/living/basic/mouse/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
+	. = ..()
 	new /obj/effect/temp_visual/heart(loc)
 	add_faction(FACTION_NEUTRAL)
 	tame = TRUE

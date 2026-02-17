@@ -120,6 +120,7 @@
 	return ..()
 
 /mob/living/basic/spider/tamed(mob/living/tamer, atom/food, feedback = TRUE)
+	. = ..()
 	new /obj/effect/temp_visual/heart(src.loc)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/spider)
 	AddComponent(/datum/component/obeys_commands, tamed_commands)

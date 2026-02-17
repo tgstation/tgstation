@@ -74,6 +74,7 @@
 	charge.Trigger(target = atom_target)
 
 /mob/living/basic/mining/lobstrosity/tamed(mob/living/tamer, obj/item/food)
+	. = ..()
 	new /obj/effect/temp_visual/heart(loc)
 	/// Pet commands for this mob, however you'll have to tame juvenile lobstrosities to a trained adult one.
 	var/list/pet_commands = list(

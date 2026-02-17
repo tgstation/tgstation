@@ -61,8 +61,6 @@
 		if(inform_tamer)
 			source.balloon_alert(tamer, "tamed")
 
-	ADD_TRAIT(parent, TRAIT_TAMED, INNATE_TRAIT)
-
 	if(HAS_TRAIT(tamer, TRAIT_BEAST_EMPATHY))
 		INVOKE_ASYNC(src, PROC_REF(rename_pet), source, tamer)
 	if(unique)
