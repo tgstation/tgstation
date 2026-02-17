@@ -86,18 +86,15 @@
 	src.fade_out_time = fade_out_time
 
 	ADD_TRAIT(echolocator, TRAIT_ECHOLOCATOR, ECHOLOCATION_TRAIT)
-	if(echolocator.can_hear())
-		ADD_TRAIT(echolocator, TRAIT_SIGHT_BYPASS, ECHOLOCATION_TRAIT)
+	deafness_check()
+	RegisterSignals(echolocator, list(SIGNAL_ADDTRAIT(TRAIT_DEAF), SIGNAL_REMOVETRAIT(TRAIT_DEAF)), PROC_REF(deafness_check))
 	echolocator.become_blind(ECHOLOCATION_TRAIT)
 	echolocator.overlay_fullscreen(ECHOLOCATION_TRAIT, /atom/movable/screen/fullscreen/echo, echo_icon)
 	echolocator.apply_status_effect(/datum/status_effect/grouped/see_no_names, ECHOLOCATION_TRAIT)
 	START_PROCESSING(SSfastprocess, src)
 
-	for(var/tplane in planes)
-		for (var/atom/movable/screen/plane_master/game_plane as anything in echolocator.hud_used?.get_true_plane_masters(tplane))
-			game_plane.add_filter("[ECHOLOCATION_TRAIT]_color", 1, color_matrix_filter(black_white_matrix))
-			game_plane.add_filter("[ECHOLOCATION_TRAIT]_outline", 1, outline_filter(size = 1, color = COLOR_WHITE))
-
+	hud_created()
+	RegisterSignal(echolocator, COMSIG_MOB_HUD_CREATED, PROC_REF(hud_created))
 	echolocator.update_sight()
 
 /datum/component/echolocation/Destroy(force)
@@ -106,16 +103,18 @@
 
 	REMOVE_TRAIT(echolocator, TRAIT_ECHOLOCATOR, ECHOLOCATION_TRAIT)
 	REMOVE_TRAIT(echolocator, TRAIT_SIGHT_BYPASS, ECHOLOCATION_TRAIT)
+	UnregisterSignal(echolocator, list(SIGNAL_ADDTRAIT(TRAIT_DEAF), SIGNAL_REMOVETRAIT(TRAIT_DEAF)))
 	echolocator.cure_blind(ECHOLOCATION_TRAIT)
 	echolocator.clear_fullscreen(ECHOLOCATION_TRAIT)
 	echolocator.remove_status_effect(/datum/status_effect/grouped/see_no_names, ECHOLOCATION_TRAIT)
 	QDEL_NULL(focus)
 
 	for(var/tplane in planes)
-		for (var/atom/movable/screen/plane_master/game_plane as anything in echolocator.hud_used?.get_true_plane_masters(tplane))
+		for(var/atom/movable/screen/plane_master/game_plane as anything in echolocator.hud_used?.get_true_plane_masters(tplane))
 			game_plane.remove_filter("[ECHOLOCATION_TRAIT]_color")
 			game_plane.remove_filter("[ECHOLOCATION_TRAIT]_outline")
 
+	UnregisterSignal(echolocator, COMSIG_MOB_HUD_CREATED)
 	echolocator.update_sight()
 
 	for(var/time, image_list in active_images)
@@ -124,14 +123,29 @@
 
 	return ..()
 
+/// Add or remove SIGHT_BYPASS depending on if we are deaf or not
+/datum/component/echolocation/proc/deafness_check(...)
+	SIGNAL_HANDLER
+
+	if(HAS_TRAIT(parent, TRAIT_DEAF))
+		REMOVE_TRAIT(parent, TRAIT_SIGHT_BYPASS, ECHOLOCATION_TRAIT)
+	else
+		ADD_TRAIT(parent, TRAIT_SIGHT_BYPASS, ECHOLOCATION_TRAIT)
+
+/// If the mob had no hud when they gained echolocation we need to apply the effect now
+/datum/component/echolocation/proc/hud_created(...)
+	SIGNAL_HANDLER
+
+	var/mob/living/echolocator = parent
+	for(var/tplane in planes)
+		for(var/atom/movable/screen/plane_master/game_plane as anything in echolocator.hud_used.get_true_plane_masters(tplane))
+			game_plane.add_filter("[ECHOLOCATION_TRAIT]_color", 1, color_matrix_filter(black_white_matrix))
+			game_plane.add_filter("[ECHOLOCATION_TRAIT]_outline", 1, outline_filter(size = 1, color = COLOR_WHITE))
+
 /datum/component/echolocation/process()
 	var/mob/living/echolocator = parent
 	if(echolocator.stat == DEAD)
 		return
-	if(echolocator.can_hear()) // i'd like to make this a signal_trait check but deafness isn't only tied to the trait
-		ADD_TRAIT(echolocator, TRAIT_SIGHT_BYPASS, ECHOLOCATION_TRAIT)
-	else
-		REMOVE_TRAIT(echolocator, TRAIT_SIGHT_BYPASS, ECHOLOCATION_TRAIT)
 	COOLDOWN_START(src, deafness_check, 0. SECONDS)
 	echolocate()
 
