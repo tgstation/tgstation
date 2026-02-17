@@ -320,7 +320,7 @@
 /datum/action/echolocation_focus/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(isnull(ui))
-		ui = new /datum/tgui(user, src, "EcholocationFocus")
+		ui = new(user, src, "EcholocationFocus")
 		ui.open()
 
 /datum/action/echolocation_focus/ui_data(mob/user)
