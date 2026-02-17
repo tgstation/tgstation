@@ -3,6 +3,8 @@
 	cut_overlays()
 	for(var/I in overlays_standing)
 		add_overlay(I)
+	for(var/I in managed_overlays)
+		add_overlay(I)
 
 	var/are_we_drooling = istype(click_intercept, /datum/action/cooldown/alien/acid)
 

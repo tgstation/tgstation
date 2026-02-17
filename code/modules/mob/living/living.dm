@@ -1900,6 +1900,15 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	RETURN_TYPE(/mutable_appearance)
 	return null
 
+/// Takes a fire overlay and generates an emissive appearance for it
+/mob/living/proc/make_fire_emissive(mutable_appearance/fire_overlay)
+	return emissive_appearance(
+		fire_overlay.icon,
+		fire_overlay.icon_state,
+		src,
+		-HIGHEST_LAYER,
+	)
+
 /**
  * Handles effects happening when mob is on normal fire
  *
