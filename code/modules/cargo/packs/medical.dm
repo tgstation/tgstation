@@ -93,7 +93,7 @@
 					/obj/item/reagent_containers/cup/bottle/toxin,
 					/obj/item/reagent_containers/cup/beaker/large,
 					/obj/item/reagent_containers/applicator/pill/insulin,
-					/obj/item/stack/medical/gauze,
+					/obj/item/stack/medical/wrap/gauze,
 					/obj/item/storage/box/bandages,
 					/obj/item/storage/box/beakers,
 					/obj/item/storage/box/medigels,

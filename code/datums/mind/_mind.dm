@@ -481,15 +481,19 @@
 
 ///Adds addiction points to the specified addiction
 /datum/mind/proc/add_addiction_points(type, amount)
+	var/last_amount = LAZYACCESS(addiction_points, type) || 0
 	LAZYSET(addiction_points, type, min(LAZYACCESS(addiction_points, type) + amount, MAX_ADDICTION_POINTS))
-	var/datum/addiction/affected_addiction = SSaddiction.all_addictions[type]
-	return affected_addiction.on_gain_addiction_points(src)
+	var/new_amount = LAZYACCESS(addiction_points, type)
+	return GLOB.addictions[type].on_gain_addiction_points(src, new_amount, last_amount)
 
 ///Adds addiction points to the specified addiction
 /datum/mind/proc/remove_addiction_points(type, amount)
+	var/last_amount = LAZYACCESS(addiction_points, type) || 0
 	LAZYSET(addiction_points, type, max(LAZYACCESS(addiction_points, type) - amount, 0))
-	var/datum/addiction/affected_addiction = SSaddiction.all_addictions[type]
-	return affected_addiction.on_lose_addiction_points(src)
+	var/new_amount = LAZYACCESS(addiction_points, type)
+	if(new_amount <= 0)
+		LAZYREMOVE(addiction_points, type)
+	return GLOB.addictions[type].on_lose_addiction_points(src, new_amount, last_amount)
 
 /// Setter for the assigned_role job datum.
 /datum/mind/proc/set_assigned_role(datum/job/new_role)

@@ -15,13 +15,14 @@
 /datum/element/blood_limb_overlay/proc/on_limb_icon(obj/item/bodypart/source, list/limb_icons, dropped, mob/living/carbon/update_on)
 	SIGNAL_HANDLER
 
-	if (!LAZYLEN(source.blood_dna_info) || source.is_invisible)
+	var/list/blood_dna_info = source.blood_dna_info || update_on?.get_blood_dna_list()
+	if (!LAZYLEN(blood_dna_info) || source.is_invisible)
 		return
 
 	var/image/limb = limb_icons[1]
 	var/image/blood_visual = image(limb.icon, "[limb.icon_state]_blood", dir = (dropped ? SOUTH : null))
 	// We need to convert it to HSV and then adjust the colors to make them look brighter on the grayscale blood overlay
-	var/list/target_color = rgb2num(get_color_from_blood_list(source.blood_dna_info), COLORSPACE_HSV)
+	var/list/target_color = rgb2num(get_color_from_blood_list(blood_dna_info), COLORSPACE_HSV)
 	blood_visual.color = rgb(target_color[1], ceil(target_color[2] * 0.4), clamp(ceil(target_color[3] * 1.33), 0, 100), space = COLORSPACE_HSV)
 	limb.overlays += blood_visual
 	if (!source.aux_zone)
@@ -35,5 +36,6 @@
 /datum/element/blood_limb_overlay/proc/on_icon_key(obj/item/bodypart/source, list/icon_keys)
 	SIGNAL_HANDLER
 
-	if (LAZYLEN(source.blood_dna_info) && !source.is_invisible)
-		icon_keys += "-blood-[get_color_from_blood_list(source.blood_dna_info)]"
+	var/list/blood_dna_info = source.blood_dna_info || source.owner?.get_blood_dna_list()
+	if (LAZYLEN(blood_dna_info) && !source.is_invisible)
+		icon_keys += "-blood-[get_color_from_blood_list(blood_dna_info)]"

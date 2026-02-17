@@ -343,10 +343,7 @@
 		return FALSE
 	if(prob(50)) // Shocking hurts the grille (to weaken monkey powersinks)
 		take_damage(1, BURN, FIRE, sound_effect = FALSE)
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(3, 1, src)
-	sparks.start()
-
+	do_sparks(3, TRUE, src)
 	return TRUE
 
 /obj/structure/grille/should_atmos_process(datum/gas_mixture/air, exposed_temperature)

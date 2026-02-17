@@ -9,14 +9,14 @@
  *
  */
 /datum/heretic_knowledge
+	/// The abstract parent type of the knowledge, used in determine mutual exclusivity in some cases
+	abstract_type = /datum/heretic_knowledge
 	/// Name of the knowledge, shown to the heretic.
 	var/name = "Basic knowledge"
 	/// Description of the knowledge, shown to the heretic. Describes what it unlocks / does.
 	var/desc = "Basic knowledge of forbidden arts."
 	/// What's shown to the heretic when the knowledge is acquired
 	var/gain_text
-	/// The abstract parent type of the knowledge, used in determine mutual exclusivity in some cases
-	var/datum/heretic_knowledge/abstract_parent_type = /datum/heretic_knowledge
 	/// Assoc list of [typepaths we need] to [amount needed].
 	/// If set, this knowledge allows the heretic to do a ritual on a transmutation rune with the components set.
 	/// If one of the items in the list is a list, it's treated as 'any of these items will work'
@@ -191,7 +191,7 @@
  * A knowledge subtype that grants the heretic a certain spell.
  */
 /datum/heretic_knowledge/spell
-	abstract_parent_type = /datum/heretic_knowledge/spell
+	abstract_type = /datum/heretic_knowledge/spell
 	/// Spell path we add to the heretic. Type-path.
 	var/datum/action/action_to_add
 	/// The spell we actually created.
@@ -220,7 +220,7 @@
  * created at once.
  */
 /datum/heretic_knowledge/limited_amount
-	abstract_parent_type = /datum/heretic_knowledge/limited_amount
+	abstract_type = /datum/heretic_knowledge/limited_amount
 	/// The limit to how many items we can create at once.
 	var/limit = 1
 	/// A list of weakrefs to all items we've created.
@@ -262,7 +262,7 @@
  * and their ascension depends on whichever they chose.
  */
 /datum/heretic_knowledge/limited_amount/starting
-	abstract_parent_type = /datum/heretic_knowledge/limited_amount/starting
+	abstract_type = /datum/heretic_knowledge/limited_amount/starting
 	limit = 2
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 5
@@ -362,7 +362,7 @@
  * A heretic can only learn one /blade_upgrade type knowledge.
  */
 /datum/heretic_knowledge/blade_upgrade
-	abstract_parent_type = /datum/heretic_knowledge/blade_upgrade
+	abstract_type = /datum/heretic_knowledge/blade_upgrade
 	cost = 1
 
 /datum/heretic_knowledge/blade_upgrade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -411,7 +411,7 @@
  * A knowledge subtype lets the heretic summon a monster with the ritual.
  */
 /datum/heretic_knowledge/summon
-	abstract_parent_type = /datum/heretic_knowledge/summon
+	abstract_type = /datum/heretic_knowledge/summon
 	/// Typepath of a mob to summon when we finish the recipe.
 	var/mob/living/mob_to_summon
 
@@ -476,7 +476,7 @@
 	name = "Ritual of Knowledge"
 	desc = "A randomly generated transmutation ritual that rewards knowledge points and can only be completed once."
 	gain_text = "Everything can be a key to unlocking the secrets behind the Gates. I must be wary and wise."
-	abstract_parent_type = /datum/heretic_knowledge/knowledge_ritual
+	abstract_type = /datum/heretic_knowledge/knowledge_ritual
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 10 // A pretty important midgame ritual.
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
@@ -564,7 +564,7 @@
  * The special final tier of knowledges that unlocks ASCENSION.
  */
 /datum/heretic_knowledge/ultimate
-	abstract_parent_type = /datum/heretic_knowledge/ultimate
+	abstract_type = /datum/heretic_knowledge/ultimate
 	cost = 2
 	priority = MAX_KNOWLEDGE_PRIORITY + 1 // Yes, the final ritual should be ABOVE the max priority.
 	required_atoms = list(/mob/living/carbon/human = 3)

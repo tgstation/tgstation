@@ -18,7 +18,7 @@
 	result = /obj/item/shield/improvised
 	reqs = list(
 		/obj/item/stack/sheet/iron = 10,
-		/obj/item/stack/sticky_tape = 2,
+		/obj/item/stack/medical/wrap/sticky_tape = 2,
 	)
 	time = 4 SECONDS
 	category = CAT_EQUIPMENT
@@ -249,7 +249,7 @@
 	name = "Improvised Gripper Gloves"
 	reqs = list(
 		/obj/item/clothing/gloves/fingerless = 1,
-		/obj/item/stack/sticky_tape = 1,
+		/obj/item/stack/medical/wrap/sticky_tape = 1,
 	)
 	result = /obj/item/clothing/gloves/tackler/offbrand
 	category = CAT_EQUIPMENT

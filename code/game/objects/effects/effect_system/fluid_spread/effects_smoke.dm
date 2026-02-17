@@ -165,12 +165,13 @@
  * - range: The amount of smoke to produce as number of steps from origin covered.
  * - amount: The amount of smoke to produce as the total desired coverage area. Autofilled from the range arg if not set.
  * - location: Where to produce the smoke cloud.
- * - smoke_type: The smoke typepath to spawn.
+ * - smoke_type - Typepath for the effect system to use
+ * - effect_type: The smoke typepath to spawn.
+ * - log: Should the system log the smoke spawned?
  */
-/proc/do_smoke(range = 0, amount = DIAMOND_AREA(range), atom/holder = null, location = null, smoke_type = /obj/effect/particle_effect/fluid/smoke, log = FALSE)
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.effect_type = smoke_type
-	smoke.set_up(amount = amount, holder = holder, location = location)
+/proc/do_smoke(range = 0, atom/holder = null, location = null, amount = null, smoke_type = /datum/effect_system/fluid_spread/smoke, effect_type = /obj/effect/particle_effect/fluid/smoke, log = FALSE)
+	var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type(location, range, amount, holder)
+	smoke.effect_type = effect_type
 	smoke.start(log = log)
 
 /////////////////////////////////////////////
@@ -205,7 +206,6 @@
 	. = ..()
 	if(!.)
 		return
-
 	smoker.drop_all_held_items()
 	smoker.adjust_oxy_loss(1)
 	smoker.emote("cough")
@@ -275,6 +275,10 @@
 	/// Whether to make sure each affected turf is actually within range before cooling it.
 	var/distcheck = TRUE
 
+/datum/effect_system/fluid_spread/smoke/freezing/New(turf/location, range = 1, amount = null, atom/holder = null, blast_radius = 0)
+	. = ..()
+	blast = blast_radius
+
 /**
  * Chills an open turf.
  *
@@ -286,7 +290,7 @@
  * Arguments:
  * - [chilly][/turf/open]: The open turf to chill
  */
-/datum/effect_system/fluid_spread/smoke/freezing/proc/Chilled(turf/open/chilly)
+/datum/effect_system/fluid_spread/smoke/freezing/proc/chill_turf(turf/open/chilly)
 	if(!istype(chilly))
 		return
 
@@ -319,14 +323,10 @@
 	for(var/obj/item/potential_tinder in chilly)
 		potential_tinder.extinguish()
 
-/datum/effect_system/fluid_spread/smoke/freezing/set_up(range = 5, amount = DIAMOND_AREA(range), atom/holder, atom/location, blast_radius = 0)
-	. = ..()
-	blast = blast_radius
-
 /datum/effect_system/fluid_spread/smoke/freezing/start(log = FALSE)
 	if(blast)
 		for(var/turf/T in RANGE_TURFS(blast, location))
-			Chilled(T)
+			chill_turf(T)
 	return ..()
 
 /// A variant of the base freezing smoke formerly used by the vent decontamination event.
@@ -398,13 +398,33 @@
 	return TRUE
 
 /// Helper to quickly create a cloud of reagent smoke
-/proc/do_chem_smoke(range = 0, amount = DIAMOND_AREA(range), atom/holder = null, location = null, reagent_type = /datum/reagent/water, reagent_volume = 10, log = FALSE, datum/effect_system/fluid_spread/smoke/chem/smoke_type = /datum/effect_system/fluid_spread/smoke/chem)
-	var/datum/reagents/smoke_reagents = new/datum/reagents(reagent_volume)
-	smoke_reagents.add_reagent(reagent_type, reagent_volume)
+/// reagent_type can accept a list of reagents, optionally as a key-value pair with values overriding reagent_volume if not null
+/proc/do_chem_smoke(range = 0, atom/holder = null, location = null, reagent_type = /datum/reagent/water, reagent_volume = 10, datum/reagents/carry = null, carry_limit = null, log = FALSE, amount = null, datum/effect_system/fluid_spread/smoke/chem/smoke_type = /datum/effect_system/fluid_spread/smoke/chem, silent = TRUE)
+	if (carry)
+		var/datum/effect_system/fluid_spread/smoke/chem/smoke = new smoke_type(location, range, amount, holder || location, carry, carry_limit, silent)
+		smoke.start(log = log)
+		return
 
-	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new smoke_type
-	smoke.attach(location)
-	smoke.set_up(amount = amount, holder = holder, location = location, carry = smoke_reagents, silent = TRUE)
+	if (ispath(reagent_type, /datum/reagent))
+		var/datum/reagents/smoke_reagents = new /datum/reagents(reagent_volume)
+		smoke_reagents.add_reagent(reagent_type, reagent_volume)
+		var/datum/effect_system/fluid_spread/smoke/chem/smoke = new smoke_type(location, range, amount, holder || location, smoke_reagents, carry_limit, silent)
+		smoke.start(log = log)
+		return
+
+	if (!islist(reagent_type))
+		CRASH("do_chem_smoke passed a non-reagent path, non-list reagent_type [reagent_type]!")
+
+	var/list/reagent_list = reagent_type
+	var/chem_volume = 0
+	for (var/chem_type in reagent_list)
+		chem_volume += reagent_list[chem_type] || reagent_volume
+
+	var/datum/reagents/smoke_reagents = new /datum/reagents(chem_volume)
+	for (var/chem_type in reagent_list)
+		smoke_reagents.add_reagent(chem_type, reagent_list[chem_type] || reagent_volume)
+
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new smoke_type(location, range, amount, holder || location, smoke_reagents, carry_limit, silent)
 	smoke.start(log = log)
 
 /// A factory which produces clouds of chemical bearing smoke.
@@ -413,18 +433,10 @@
 	var/datum/reagents/chemholder
 	effect_type = /obj/effect/particle_effect/fluid/smoke/chem
 
-/datum/effect_system/fluid_spread/smoke/chem/New()
-	..()
-	chemholder = new(1000, NO_REACT)
-
-/datum/effect_system/fluid_spread/smoke/chem/Destroy()
-	QDEL_NULL(chemholder)
-	return ..()
-
-
-/datum/effect_system/fluid_spread/smoke/chem/set_up(range = 1, amount = DIAMOND_AREA(range), atom/holder, atom/location = null, datum/reagents/carry = null, silent = FALSE)
+/datum/effect_system/fluid_spread/smoke/chem/New(turf/location, range = 1, amount = null, atom/holder = null, datum/reagents/carry = null, carry_limit = null, silent = FALSE)
 	. = ..()
-	carry?.trans_to(chemholder, carry.total_volume, copy_only = TRUE)
+	chemholder = new(1000, NO_REACT)
+	carry?.trans_to(chemholder, isnull(carry_limit) ? carry.total_volume : carry_limit, copy_only = TRUE)
 
 	if(silent)
 		return
@@ -436,18 +448,22 @@
 	var/where = "[AREACOORD(location)]"
 	var/contained = length(contained_reagents) ? "\[[contained_reagents.Join(", ")]\] @ [chemholder.chem_temp]K" : null
 	var/area/fluid_area = get_area(location)
-	if(carry.my_atom?.fingerprintslast) //Some reagents don't have a my_atom in some cases
-		var/mob/M = get_mob_by_key(carry.my_atom.fingerprintslast)
-		var/more = ""
-		if(M)
-			more = "[ADMIN_LOOKUPFLW(M)] "
-		if(!istype(carry.my_atom, /obj/machinery/plumbing) && !(fluid_area.area_flags & QUIET_LOGS)) // I like to be able to see my logs thank you
-			message_admins("Smoke: ([ADMIN_VERBOSEJMP(location)])[contained]. Key: [more ? more : carry.my_atom.fingerprintslast].")
-		log_game("A chemical smoke reaction has taken place in ([where])[contained]. Last touched by [carry.my_atom.fingerprintslast].")
-	else
-		if(!istype(carry.my_atom, /obj/machinery/plumbing) && !(fluid_area.area_flags & QUIET_LOGS)) // Deathmatch has way too much smoke to log
+	// Some reagents don't have a my_atom in some cases
+	if(!carry.my_atom?.fingerprintslast)
+		// Deathmatch has way too much smoke to log
+		if(!istype(carry.my_atom, /obj/machinery/plumbing) && !(fluid_area.area_flags & QUIET_LOGS))
 			message_admins("Smoke: ([ADMIN_VERBOSEJMP(location)])[contained]. No associated key.")
 		log_game("A chemical smoke reaction has taken place in ([where])[contained]. No associated key.")
+		return
+
+	var/mob/bomber = get_mob_by_key(carry.my_atom.fingerprintslast)
+	if(!istype(carry.my_atom, /obj/machinery/plumbing) && !(fluid_area.area_flags & QUIET_LOGS)) // I like to be able to see my logs thank you
+		message_admins("Smoke: ([ADMIN_VERBOSEJMP(location)])[contained]. Key: [bomber ? "[ADMIN_LOOKUPFLW(bomber)] " : carry.my_atom.fingerprintslast].")
+	log_game("A chemical smoke reaction has taken place in ([where])[contained]. Last touched by [carry.my_atom.fingerprintslast].")
+
+/datum/effect_system/fluid_spread/smoke/chem/Destroy()
+	QDEL_NULL(chemholder)
+	return ..()
 
 /datum/effect_system/fluid_spread/smoke/chem/start(log = FALSE)
 	var/start_loc = holder ? get_turf(holder) : src.location

@@ -26,16 +26,14 @@
 		if(.) //not dead
 			handle_blood(seconds_per_tick)
 
-		if(stat != DEAD)
+		if(stat != DEAD) // still not dead (blood could have changed that)
+			for(var/key in mind?.addiction_points)
+				GLOB.addictions[key].process_addiction(src, seconds_per_tick)
 			handle_brain_damage(seconds_per_tick)
 
 	if(stat != DEAD)
 		handle_bodyparts(seconds_per_tick)
 
-	if(. && mind) //. == not dead
-		for(var/key in mind.addiction_points)
-			var/datum/addiction/addiction = SSaddiction.all_addictions[key]
-			addiction.process_addiction(src, seconds_per_tick)
 	if(stat != DEAD)
 		return TRUE
 
@@ -121,18 +119,12 @@
 				loc_as_obj.handle_internal_lifeform(src,0)
 
 	if(check_breath(breath) && is_on_internals)
-		try_breathing_sound(breath)
+		// successful breath from internals, try to play the breathing sound
+		if(!HAS_TRAIT(src, TRAIT_DEAF) && client?.prefs?.read_preference(/datum/preference/toggle/sound_breathing))
+			breathing_loop.start()
 
 	if(breath)
 		loc.assume_air(breath)
-
-//Tries to play the carbon a breathing sound when using internals, also invokes check_breath
-/mob/living/carbon/proc/try_breathing_sound(breath)
-	var/should_be_on =  canon_client?.prefs?.read_preference(/datum/preference/toggle/sound_breathing)
-	if(should_be_on && !breathing_loop.timer_id && canon_client?.mob.can_hear())
-		breathing_loop.start()
-	else if((!should_be_on && breathing_loop.timer_id) || !canon_client?.mob.can_hear())
-		breathing_loop.stop()
 
 /mob/living/carbon/proc/has_smoke_protection()
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
