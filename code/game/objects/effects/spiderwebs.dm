@@ -57,6 +57,11 @@
 	if (has_frill)
 		pixel_x = -9
 		pixel_y = -9
+
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 	return ..()
 
 /obj/structure/spider/stickyweb/attack_hand(mob/user, list/modifiers)
@@ -79,23 +84,28 @@
 		return
 	if(sealed)
 		return FALSE
-	if(isliving(mover))
-		if(HAS_TRAIT(mover, TRAIT_WEB_SURFER))
-			return TRUE
-		if(mover.pulledby && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
-			return TRUE
-		if(prob(stuck_chance))
-			stuck_react(mover)
-			return FALSE
-		return .
 	if(isprojectile(mover))
 		return prob(projectile_stuck_chance)
 	return .
 
-/// Show some feedback when you can't pass through something
-/obj/structure/spider/stickyweb/proc/stuck_react(atom/movable/stuck_guy)
-	loc.balloon_alert(stuck_guy, "stuck in web!")
-	stuck_guy.Shake(duration = 0.1 SECONDS)
+/obj/structure/spider/stickyweb/proc/on_entered(datum/source, atom/movable/victim, old_loc)
+	SIGNAL_HANDLER
+
+	if(!isliving(victim))
+		return
+	if(HAS_TRAIT(victim, TRAIT_WEB_SURFER))
+		return
+	if(victim.pulledby && HAS_TRAIT(victim.pulledby, TRAIT_WEB_SURFER))
+		return
+
+	if(prob(stuck_chance))
+		stuck_react(victim)
+
+/// Drains stamina and shows feedback when you get stuck moving thru a web
+/obj/structure/spider/stickyweb/proc/stuck_react(mob/living/victim)
+	loc.balloon_alert(victim, "stuck in web!")
+	victim.Shake(duration = 0.2 SECONDS)
+	victim.adjust_stamina_loss(rand(10, 15))
 
 /// Web made by geneticists, needs special handling to allow them to pass through their own webs
 /obj/structure/spider/stickyweb/genetic
