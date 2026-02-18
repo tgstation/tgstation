@@ -67,7 +67,7 @@
 				return
 			var/obj/vehicle/sealed/mecha/our_mecha = our_mecha_tracker.chassis
 			if(our_mecha)
-				our_mecha_tracker.shock()
+				our_mecha_tracker.remote_emp_triggered()
 				usr.log_message("has activated remote EMP on exosuit [our_mecha], located at [loc_name(our_mecha)], which is currently [LAZYLEN(our_mecha.occupants) ? "occupied by [our_mecha.occupants.Join(", ")]." : "without a pilot."]", LOG_ATTACK)
 				usr.log_message("has activated remote EMP on exosuit [our_mecha], located at [loc_name(our_mecha)], which is currently [LAZYLEN(our_mecha.occupants) ? "occupied by [our_mecha.occupants.Join(", ")]." : "without a pilot."]", LOG_GAME, log_globally = FALSE)
 				message_admins("[key_name_admin(usr)][ADMIN_FLW(usr)] has activated remote EMP on exosuit [our_mecha][ADMIN_JMP(our_mecha)], which is currently [LAZYLEN(our_mecha.occupants) ? "occupied by [our_mecha.occupants.Join(",")][ADMIN_FLW(our_mecha)]." : "without a pilot."]")
@@ -137,7 +137,7 @@
 /**
  * Attempts to EMP mech that the tracker is attached to, if there is one and tracker is not on cooldown
  */
-/obj/item/mecha_parts/mecha_tracking/proc/shock()
+/obj/item/mecha_parts/mecha_tracking/proc/remote_emp_triggered()
 	if(recharging)
 		return
 	if(!chassis)

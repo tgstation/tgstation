@@ -366,3 +366,28 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /// Called when UNIQUE_RENAME is reset
 /obj/proc/rename_reset()
 	return
+
+/**
+ * Used to deliver a shock to a mob from this object
+ * The target must be adjacent to this object, or else the shock will fail
+ *
+ * * shocking - who are we zapping
+ * * chance - probability the shock fails
+ * * shock_source - used for determining where to get the power to zap them.
+ * can be an apc, a cable, an area, a cell, or even a powernet datum
+ * defaults to our cell or our current area/apc if it doesn't
+ * subtypes may override this proc to pass this up to the parent
+ * * siemens_coeff - multiplier to how much shock is delivered
+ *
+ * Returns TRUE if the shock was successfully delivered
+ * Returns FALSE if the shock failed for any reason
+ */
+/obj/proc/shock(mob/living/shocking, chance = 100, shock_source, siemens_coeff = 1)
+	SHOULD_CALL_PARENT(TRUE)
+	if(!isliving(shocking))
+		return FALSE
+	if(!prob(chance))
+		return FALSE // you lucked out, no shock for you
+
+	do_sparks(5, TRUE, src)
+	return electrocute_mob(shocking, shock_source || get_cell() || get_area(src), src, siemens_coeff, TRUE)

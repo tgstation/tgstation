@@ -122,7 +122,7 @@
 	if(has_shocked)
 		return
 	if(isliving(mover))
-		shock(mover)
+		yeet_shock(mover)
 		return
 	if(ismachinery(mover) || isstructure(mover) || isvehicle(mover))
 		bump_field(mover)
@@ -134,7 +134,7 @@
 	if(has_shocked || isliving(mover) || ismachinery(mover) || isstructure(mover) || ismecha(mover))
 		return FALSE
 
-/obj/machinery/field/proc/shock(mob/living/user)
+/obj/machinery/field/proc/yeet_shock(mob/living/user)
 	var/shock_damage = min(rand(30,40),rand(30,40))
 
 	if(iscarbon(user))
