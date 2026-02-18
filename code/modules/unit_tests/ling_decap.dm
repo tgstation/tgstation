@@ -34,7 +34,7 @@
 /datum/unit_test/ling_decap/post_species_change/test_setup(mob/living/carbon/human/ling)
 	// Regression test for a bug where changing to a species with a new brain would wipe the special changeling handling
 	var/obj/item/organ/brain/oldbrain = ling.get_organ_slot(ORGAN_SLOT_BRAIN)
-	ling.set_species(/datum/species/lizard)
+	ling.set_species(/datum/species/human/felinid)
 	var/obj/item/organ/brain/newbrain = ling.get_organ_slot(ORGAN_SLOT_BRAIN)
 	TEST_ASSERT(oldbrain.type != newbrain.type, "Changling decap test setup failed to change the ling's brain typepath when changing their species.")
 
