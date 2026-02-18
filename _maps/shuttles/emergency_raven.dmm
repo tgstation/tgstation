@@ -281,9 +281,9 @@
 /area/shuttle/escape)
 "aU" = (
 /obj/machinery/light/directional/north,
-/obj/machinery/status_display/evac/directional/north,
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
+/obj/machinery/vitals_reader/directional/north,
 /turf/open/floor/iron/white/side{
 	dir = 1
 	},
@@ -393,6 +393,8 @@
 "bh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/stasis,
+/obj/machinery/vitals_reader/directional/north,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/white/side{
 	dir = 5
 	},
@@ -456,8 +458,8 @@
 /area/shuttle/escape)
 "bq" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/radio/intercom/directional/east,
 /obj/machinery/stasis,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
