@@ -47,11 +47,11 @@
 	if(get_dist(src, user) > 1)
 		return FALSE
 	else
-		shock(user)
+		yeet_shock(user)
 		return TRUE
 
 /obj/machinery/field/containment/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	shock(user)
+	yeet_shock(user)
 	return TRUE
 
 /obj/machinery/field/containment/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -83,7 +83,7 @@
 	if(isliving(considered_atom))
 		var/mob/living/living_moving_through_field = considered_atom
 		if(!living_moving_through_field.incorporeal_move)
-			shock(considered_atom)
+			yeet_shock(considered_atom)
 
 	if(ismachinery(considered_atom) || isstructure(considered_atom) || ismecha(considered_atom))
 		bump_field(considered_atom)
@@ -100,7 +100,7 @@
 
 	return SINGULARITY_TRY_MOVE_BLOCK
 
-/obj/machinery/field/containment/shock(mob/living/user)
+/obj/machinery/field/containment/yeet_shock(mob/living/user)
 	if(!field_gen_1 || !field_gen_2)
 		qdel(src)
 		return FALSE
