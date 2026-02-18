@@ -230,8 +230,21 @@
   - bugfix: Holopads no longer runtime or delete their disks when being destroyed
   - bugfix: You can no longer make any vending machine free
 2026-02-18:
+  00-Steven:
+  - bugfix: Trying to insert an item into a vendor that has reached its maximum capacity
+      for that item no longer says "no space for any more /list", and no longer TRIES
+      to say it has too much of that category. It now correctly says it can't accept
+      any more of that item.
+  - bugfix: Trying to insert an item into a vendor that can hold it but you can't
+      put it in no longer both says you insert the item into its input compartment
+      while also sending an error message about not being able to put it in.
+  - bugfix: Trying to insert an item into a vendor that can't hold it no longer sends
+      the error message twice.
   Aliceee2ch:
   - image: Added missing directional sprites for few apps on consoles.
   - map: The shuttles were also equipped with vitals displays.
+  ArcaneMusic:
+  - sound: The quantum spin inverter now makes a sound effect on either side of the
+      inverters when activated.
   Melbert:
   - bugfix: Tourniquet fits in medkits and medbelts
