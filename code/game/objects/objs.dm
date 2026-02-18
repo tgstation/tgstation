@@ -372,12 +372,14 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
  * The target must be adjacent to this object, or else the shock will fail
  *
  * * shocking - who are we zapping
- * * chance - probability the shock fails
+ * * chance - probability the shock succeeds
+ * defaults to 100 (guaranteed to shock)
  * * shock_source - used for determining where to get the power to zap them.
  * can be an apc, a cable, an area, a cell, or even a powernet datum
- * defaults to our cell or our current area/apc if it doesn't
  * subtypes may override this proc to pass this up to the parent
+ * defaults to our cell or our current area/apc
  * * siemens_coeff - multiplier to how much shock is delivered
+ * default to a 1x modifier
  *
  * Returns TRUE if the shock was successfully delivered
  * Returns FALSE if the shock failed for any reason
