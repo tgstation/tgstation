@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - sound: "The quantum spin inverter now makes a sound effect on either side of the inverters when activated."
