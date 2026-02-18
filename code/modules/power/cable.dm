@@ -269,7 +269,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 		return NONE
 	add_fingerprint(user)
 	to_chat(user, get_power_info())
-	shock(user, 5, 0.2)
+	shock(user, 5, null, 0.2)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/cable/proc/get_power_info()
