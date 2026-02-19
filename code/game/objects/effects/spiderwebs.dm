@@ -103,9 +103,18 @@
 
 /// Drains stamina and shows feedback when you get stuck moving thru a web
 /obj/structure/spider/stickyweb/proc/stuck_react(mob/living/victim)
-	loc.balloon_alert(victim, "stuck in web!")
-	victim.Shake(duration = 0.2 SECONDS)
-	victim.adjust_stamina_loss(rand(10, 15))
+	if(victim.get_stamina_loss() > 90)
+		if(!victim.IsKnockdown())
+			to_chat(victim, span_warning("You trip over \the [src] due to exhaustion!"))
+
+		victim.SetKnockdown(3 SECONDS, 3 SECONDS)
+		return
+
+	if(prob(25))
+		loc.balloon_alert(victim, "stuck in web!")
+		victim.Shake(duration = 0.2 SECONDS)
+
+	victim.adjust_stamina_loss(rand(7, 10))
 
 /// Web made by geneticists, needs special handling to allow them to pass through their own webs
 /obj/structure/spider/stickyweb/genetic
