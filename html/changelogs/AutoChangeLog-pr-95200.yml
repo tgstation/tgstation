@@ -1,0 +1,4 @@
+author: "Dominion"
+delete-after: True
+changes:
+  - qol: "Did you know the roundstart countdown is inclusive of loading times? Now you can see it."
