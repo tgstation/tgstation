@@ -104,7 +104,7 @@
 /// Drains stamina and shows feedback when you get stuck moving thru a web
 /obj/structure/spider/stickyweb/proc/stuck_react(mob/living/victim)
 	if(victim.get_stamina_loss() > 90)
-		if(!victim.IsKnockdown())
+		if(victim.body_position != LYING_DOWN)
 			to_chat(victim, span_warning("You trip over \the [src] due to exhaustion!"))
 
 		victim.SetKnockdown(3 SECONDS)
