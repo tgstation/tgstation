@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - code_imp: "adds a framework for implementing effects when multiple reagents are metabolized per tick"

@@ -251,6 +251,11 @@
 2026-02-19:
   Dominion:
   - map: Pulled the medical wrench out from under the cryogenics freeze on Deltastation
+  - qol: Did you know the roundstart countdown is inclusive of loading times? Now
+      you can see it.
+  SyncIt21:
+  - code_imp: adds a framework for implementing effects when multiple reagents are
+      metabolized per tick
   Y0SH1M4S73R:
   - rscadd: A subdermally implantable integrated circuit shell is now available to
       print from the component printer upon researching advanced circuit shells. Implanter
