@@ -799,6 +799,7 @@
 
 ///Called after the atom is 'tamed' for type-specific operations, Usually called by the tameable component but also other things.
 /atom/proc/tamed(mob/living/tamer, obj/item/food)
+	SHOULD_CALL_PARENT(TRUE)
 	ADD_TRAIT(src, TRAIT_TAMED, INNATE_TRAIT)
 	return
 
