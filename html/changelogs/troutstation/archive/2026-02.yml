@@ -5,3 +5,6 @@
   GuffyWuffy:
   - rscadd: Added a new random maint crate containing a green substance
   - rscadd: Adds " the Jester" honorific option to clown ID
+2026-02-19:
+  GuffyWuffy:
+  - rscadd: Added job estimator in the lobby
