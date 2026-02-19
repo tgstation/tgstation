@@ -313,6 +313,7 @@
 #include "spraycan.dm"
 #include "spritesheets.dm"
 #include "stack_singular_name.dm"
+#include "stacked_metab.dm"
 #include "station_trait_tests.dm"
 #include "status_effect_validity.dm"
 #include "stomach.dm"
