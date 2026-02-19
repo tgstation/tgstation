@@ -332,7 +332,7 @@
 
 /obj/machinery/rnd/experimentor/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
 	if(user.combat_mode)
-		return ITEM_INTERACT_BLOCKING
+		return NONE
 
 	if(panel_open && is_wire_tool(weapon))
 		wires.interact(user)
