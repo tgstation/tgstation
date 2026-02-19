@@ -187,6 +187,7 @@
 "hr" = (
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "hw" = (
@@ -218,6 +219,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "iQ" = (

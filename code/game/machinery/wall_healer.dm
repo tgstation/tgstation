@@ -12,7 +12,7 @@
 	armor_type = /datum/armor/obj_machinery/wall_healer
 
 	/// Cost per bandage dispensed. Note, always disregarded on red alert.
-	var/per_bandage_cost = (/obj/item/stack/medical/gauze::custom_price) / (/obj/item/stack/medical/gauze::amount)
+	var/per_bandage_cost = (/obj/item/stack/medical/wrap/gauze::custom_price) / (/obj/item/stack/medical/wrap/gauze::amount)
 	/// Number of bandages to dispense on rmb. Never recharges but can be restocked.
 	var/num_bandages = 5
 	/// Lazylist of bandages that have been restocked into the wall healer.
@@ -82,7 +82,7 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Heal self"
 		context[SCREENTIP_CONTEXT_RMB] = "Get gauze"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(istype(held_item, /obj/item/stack/medical/gauze))
+	if(istype(held_item, /obj/item/stack/medical/wrap/gauze))
 		context[SCREENTIP_CONTEXT_LMB] = "Restock"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -335,7 +335,7 @@
 		to_chat(user, span_warning("You try to retrieve some gauze, but it gets all jammed up in the access port."))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	var/obj/item/stack/medical/gauze/bandage = LAZYACCESS(stocked_bandages, 1)
+	var/obj/item/stack/medical/wrap/gauze/bandage = LAZYACCESS(stocked_bandages, 1)
 	if(isnull(bandage))
 		num_bandages--
 		bandage = new(user.drop_location(), 1)
@@ -352,12 +352,12 @@
 
 /obj/machinery/wall_healer/on_deconstruction(disassembled)
 	var/atom/drop_loc = drop_location()
-	for(var/obj/item/stack/medical/gauze/bandage as anything in stocked_bandages)
+	for(var/obj/item/stack/medical/wrap/gauze/bandage as anything in stocked_bandages)
 		bandage.forceMove(drop_loc)
-	new /obj/item/stack/medical/gauze(drop_loc, num_bandages)
+	new /obj/item/stack/medical/wrap/gauze(drop_loc, num_bandages)
 
 /obj/machinery/wall_healer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/stack/medical/gauze))
+	if(!istype(tool, /obj/item/stack/medical/wrap/gauze))
 		return NONE
 	if(!user.temporarilyRemoveItemFromInventory(tool))
 		to_chat(user, span_warning("You try to restock [src] with [tool], but it seems stuck to your hand."))
@@ -369,9 +369,9 @@
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		vision_distance = 5,
 	)
-	var/obj/item/stack/medical/gauze/bandage = tool
+	var/obj/item/stack/medical/wrap/gauze/bandage = tool
 	while(bandage.amount > 1)
-		var/obj/item/stack/medical/gauze/split_bandage = bandage.split_stack(1)
+		var/obj/item/stack/medical/wrap/gauze/split_bandage = bandage.split_stack(1)
 		LAZYADD(stocked_bandages, split_bandage)
 		split_bandage.forceMove(src)
 	LAZYADD(stocked_bandages, bandage)

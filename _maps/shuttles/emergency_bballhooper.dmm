@@ -101,6 +101,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "gl" = (
@@ -328,6 +329,7 @@
 	pixel_x = 1;
 	pixel_y = 6
 	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "rb" = (
@@ -664,7 +666,6 @@
 /obj/item/coin/titanium{
 	pixel_y = 2
 	},
-/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "HO" = (
@@ -825,6 +826,7 @@
 	},
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Pd" = (
