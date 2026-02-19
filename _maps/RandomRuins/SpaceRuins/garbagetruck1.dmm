@@ -904,7 +904,7 @@
 /obj/item/stack/tile/bamboo/tatami{
 	amount = 40
 	},
-/obj/item/stack/sticky_tape{
+/obj/item/stack/medical/wrap/sticky_tape{
 	pixel_y = -2
 	},
 /obj/effect/decal/cleanable/plastic,

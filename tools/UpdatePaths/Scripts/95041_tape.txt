@@ -1,0 +1,2 @@
+/obj/item/stack/sticky_tape/@SUBTYPES : /obj/item/stack/medical/wrap/sticky_tape/@SUBTYPES {@OLD}
+/obj/item/stack/medical/gauze/@SUBTYPES : /obj/item/stack/medical/wrap/gauze/@SUBTYPES {@OLD}

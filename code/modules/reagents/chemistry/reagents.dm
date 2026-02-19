@@ -56,7 +56,13 @@
 	var/burning_temperature = null
 	///How much is consumed when it is burnt per second
 	var/burning_volume = 0.5
-	///Assoc list with key type of addiction this reagent feeds, and value amount of addiction points added per unit of reagent metabolzied (which means * REAGENTS_METABOLISM every life())
+	/**
+	 * Lazyassoc list of [addiction typepath] to [threshold value].
+	 *
+	 * [threshold value] can be interpreted as the number of units that must be consumed before an addiction is formed.
+	 *
+	 * Ex: list(/datum/addiction/stimulants = 50) -> "become addicted to stimulants after metabolizing 50 units of this reagent".
+	 */
 	var/list/addiction_types = null
 	/// The affected organ_flags, if the reagent damages/heals organ damage of an affected mob.
 	/// See "Organ defines for carbon mobs" in /code/_DEFINES/surgery.dm

@@ -434,8 +434,8 @@
 /obj/structure/table,
 /obj/item/healthanalyzer,
 /obj/item/healthanalyzer,
-/obj/item/stack/medical/gauze,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/wrap/gauze,
+/obj/item/stack/medical/wrap/gauze,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "cz" = (
@@ -1030,11 +1030,11 @@
 /area/awaymission/beach/heretic)
 "fK" = (
 /obj/structure/table,
-/obj/item/stack/sticky_tape{
+/obj/item/stack/medical/wrap/sticky_tape{
 	pixel_x = 6;
 	pixel_y = 5
 	},
-/obj/item/stack/sticky_tape{
+/obj/item/stack/medical/wrap/sticky_tape{
 	pixel_x = -6;
 	pixel_y = 5
 	},
@@ -1385,7 +1385,7 @@
 /area/awaymission/beach/heretic)
 "ho" = (
 /obj/structure/table/glass,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/wrap/gauze,
 /obj/item/stack/medical/mesh,
 /obj/effect/turf_decal/siding{
 	dir = 6
@@ -3929,7 +3929,7 @@
 "uM" = (
 /obj/structure/table/glass,
 /obj/item/storage/medkit/regular,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/wrap/gauze,
 /obj/item/stack/medical/suture,
 /obj/effect/turf_decal/siding{
 	dir = 10
@@ -5603,7 +5603,7 @@
 /area/awaymission/beach/heretic)
 "Dz" = (
 /obj/structure/table/glass,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/wrap/gauze,
 /obj/item/stack/medical/mesh,
 /obj/item/stack/medical/suture,
 /obj/effect/turf_decal/siding{
