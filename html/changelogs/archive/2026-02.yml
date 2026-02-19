@@ -248,3 +248,10 @@
       inverters when activated.
   Melbert:
   - bugfix: Tourniquet fits in medkits and medbelts
+2026-02-19:
+  Dominion:
+  - map: Pulled the medical wrench out from under the cryogenics freeze on Deltastation
+  Y0SH1M4S73R:
+  - rscadd: A subdermally implantable integrated circuit shell is now available to
+      print from the component printer upon researching advanced circuit shells. Implanter
+      not included.
