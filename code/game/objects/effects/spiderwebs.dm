@@ -107,7 +107,7 @@
 		if(!victim.IsKnockdown())
 			to_chat(victim, span_warning("You trip over \the [src] due to exhaustion!"))
 
-		victim.SetKnockdown(3 SECONDS, 3 SECONDS)
+		victim.SetKnockdown(3 SECONDS)
 		return
 
 	if(prob(25))
