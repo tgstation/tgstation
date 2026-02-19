@@ -29,6 +29,7 @@
 	QDEL_LIST_ASSOC_VAL(action_comp.granted_to)
 
 /obj/item/implant/circuit/proc/on_new_implant(obj/item/implant/source, list/arguments, obj/item/implant/other_implant)
+	SIGNAL_HANDLER
 	if(!istype(other_implant, /obj/item/implant/circuit))
 		return
 	var/mob/living/user = arguments[2]
