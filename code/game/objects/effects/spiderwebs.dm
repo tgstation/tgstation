@@ -114,7 +114,7 @@
 		loc.balloon_alert(victim, "stuck in web!")
 		victim.Shake(duration = 0.2 SECONDS)
 
-	victim.adjust_stamina_loss(rand(7, 10))
+	victim.adjust_stamina_loss(rand(10, 15))
 
 /// Web made by geneticists, needs special handling to allow them to pass through their own webs
 /obj/structure/spider/stickyweb/genetic
