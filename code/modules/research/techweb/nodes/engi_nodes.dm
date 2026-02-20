@@ -155,6 +155,7 @@
 		"manulathe",
 		"manusorter",
 		"manurouter",
+		"manugasrefinery",
 		"mailsorter",
 	)
 

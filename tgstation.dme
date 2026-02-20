@@ -4897,6 +4897,7 @@
 #include "code\modules\manufactorio\machines\crafter.dm"
 #include "code\modules\manufactorio\machines\crusher.dm"
 #include "code\modules\manufactorio\machines\debug.dm"
+#include "code\modules\manufactorio\machines\gasrefinery.dm"
 #include "code\modules\manufactorio\machines\lathe.dm"
 #include "code\modules\manufactorio\machines\router.dm"
 #include "code\modules\manufactorio\machines\smelter.dm"

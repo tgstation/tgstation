@@ -15,7 +15,8 @@
 /obj/machinery/power/manufacturing/storagebox/receive_resource(atom/movable/receiving, atom/from, receive_dir)
 	if(iscloset(receiving) && length(receiving.contents))
 		return MANUFACTURING_FAIL
-	if(length(contents - circuit) >= max_stuff && !may_merge_in_contents_and_do_so(receiving))
+	if(length(contents - circuit) >= max_stuff)
+		try_merge_stack_in_contents(receiving)
 		return MANUFACTURING_FAIL
 	receiving.Move(src,receive_dir)
 	return MANUFACTURING_SUCCESS

@@ -28,7 +28,8 @@
 /obj/machinery/power/manufacturing/crusher/receive_resource(obj/receiving, atom/from, receive_dir)
 	if(istype(receiving, /obj/item/stack/ore) || receiving.resistance_flags & INDESTRUCTIBLE || !isitem(receiving) || surplus() < crush_cost  || receive_dir != REVERSE_DIR(dir))
 		return MANUFACTURING_FAIL
-	if(length(contents - circuit) >= capacity && may_merge_in_contents_and_do_so(receiving))
+	if(length(contents - circuit) >= capacity)
+		try_merge_stack_in_contents(receiving)
 		return MANUFACTURING_FAIL
 	receiving.Move(src, get_dir(receiving, src))
 	START_PROCESSING(SSmanufacturing, src)
@@ -40,8 +41,11 @@
 		withholding = null
 
 /obj/machinery/power/manufacturing/crusher/process(seconds_per_tick)
-	if(!isnull(withholding) && !send_resource(withholding, dir))
-		return
+	if(!isnull(withholding))
+		var/success = send_resource(withholding, dir)
+		if(!success)
+			return
+		withholding = null
 	for(var/material in held_mats)
 		if(held_mats[material] >= 1)
 			var/new_amount = floor(held_mats[material])
@@ -55,11 +59,12 @@
 		return PROCESS_KILL
 	if(surplus() < crush_cost)
 		return
+	add_load(crush_cost)
 	var/obj/victim = poor_saps[length(poor_saps)]
 	if(istype(victim)) //todo handling for other things
 		if(!length(victim.custom_materials))
-			add_load(crush_cost)
 			victim.atom_destruction()
+			return
 		for(var/obj/object in victim.contents+victim)
 			for(var/datum/material/possible_mat as anything in object.custom_materials)
 				var/quantity = object.custom_materials[possible_mat]
