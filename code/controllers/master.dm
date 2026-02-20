@@ -31,6 +31,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	// Vars for keeping track of tick drift.
 	var/init_timeofday
 	var/init_time
+	/// Time in deciseconds for how long initializations are taking, updated per subsystem initialized
+	var/initializations_duration_real
 	var/tickdrift = 0
 	/// Tickdrift as of last tick, w no averaging going on
 	var/olddrift = 0
@@ -434,6 +436,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	var/evaluated_order = 1
 	sortTim(subsystems, GLOBAL_PROC_REF(cmp_subsystem_display))
 	var/start_timeofday = REALTIMEOFDAY
+	initializations_duration_real = 0
 	for (var/current_init_stage in 1 to INITSTAGE_MAX)
 
 		// Initialize subsystems.
@@ -441,7 +444,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 			subsystem.init_order = evaluated_order
 			evaluated_order++
 			init_subsystem(subsystem)
-
+			initializations_duration_real = REALTIMEOFDAY - start_timeofday
 			CHECK_TICK
 		current_initializing_subsystem = null
 		init_stage_completed = current_init_stage
@@ -452,9 +455,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 			// Loop.
 			Master.StartProcessing(0)
 
-	var/time = (REALTIMEOFDAY - start_timeofday) / 10
-
-
+	var/time = initializations_duration_real / 10
 
 	var/msg = "Initializations complete within [time] second[time == 1 ? "" : "s"]!"
 	to_chat(world, span_boldannounce("[msg]"), MESSAGE_TYPE_DEBUG)
