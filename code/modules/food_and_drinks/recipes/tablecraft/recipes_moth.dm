@@ -28,6 +28,7 @@
 	)
 	result = /obj/item/food/toasted_seeds
 	category = CAT_MOTH
+	crafting_flags = CRAFT_TRANSFERS_REAGENT_COMPONENTS
 
 /datum/crafting_recipe/food/engine_fodder
 	name = "Engine fodder"
