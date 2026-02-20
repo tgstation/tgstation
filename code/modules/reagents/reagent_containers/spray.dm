@@ -235,14 +235,15 @@
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	amount_per_transfer_from_this = 1
+	initial_reagent_flags = OPENCONTAINER
 	has_variable_transfer_amount = FALSE
 	can_toggle_range = FALSE
 	current_range = 1
 	volume = 10
 	list_reagents = list(/datum/reagent/water = 10)
 
-/obj/item/reagent_containers/spray/waterflower/try_splash(mob/user, atom/target, allow_closed_splash = TRUE)
-	return ..()
+/obj/item/reagent_containers/spray/waterflower/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash)
+	return ..(hit_atom, throwingdatum, do_splash = FALSE)
 
 ///Subtype used for the lavaland clown ruin.
 /obj/item/reagent_containers/spray/waterflower/superlube
