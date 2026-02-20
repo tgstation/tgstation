@@ -73,6 +73,7 @@ const HistoryButton = (props: HistoryButtonProps) => {
   return (
     <Floating
       handleOpen={historyOpen}
+      disabled
       content={
         <Box backgroundColor="rgba(0, 0, 0, 33%)">
           <Stack vertical maxHeight="15rem" overflowY="scroll">

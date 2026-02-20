@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react';
-import { Stack } from 'tgui-core/components';
+import { type ReactNode, useState } from 'react';
+import { Button, Stack } from 'tgui-core/components';
+import { clamp } from 'tgui-core/math';
 import type { BooleanLike } from 'tgui-core/react';
-
 import { useBackend } from '../../backend';
 import { NtosWindow } from '../../layouts';
 import { SpriteEditor } from '../common/SpriteEditor';
@@ -53,6 +53,10 @@ export const NtosNanopaint = (props) => {
     sprite,
     toolFlags,
   } = hasEditorData ? editorData : {};
+  const { width = 0, height = 0 } = sprite ?? {};
+
+  const [showGrid, setShowGrid] = useState(false);
+  const [zoom, setZoom] = useState(1);
 
   let dialogNode: ReactNode;
   switch (dialog?.type) {
@@ -105,6 +109,10 @@ export const NtosNanopaint = (props) => {
               undoHistory={undoStack}
               redoHistory={redoStack}
               workspaceOpen={workspaceOpen}
+              zoom={zoom}
+              maxZoom={20}
+              minZoom={1}
+              setZoom={setZoom}
             />
           </Stack.Item>
           <Stack.Item>
@@ -119,15 +127,39 @@ export const NtosNanopaint = (props) => {
                 <Stack.Item>
                   <SpriteEditor.Redo stack={redoStack} />
                 </Stack.Item>
+                <Stack.Item>
+                  <Button.Checkbox
+                    checked={showGrid}
+                    onClick={() => setShowGrid(!showGrid)}
+                  >
+                    Show Grid
+                  </Button.Checkbox>
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    icon="search-minus"
+                    tooltip="Zoom Out (Shift + Scroll Down)"
+                    disabled={zoom <= 1}
+                    onClick={() => setZoom(zoom - 1)}
+                  />
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    icon="search-plus"
+                    tooltip="Zoom In (Shift + Scroll Up)"
+                    disabled={zoom >= 20}
+                    onClick={() => setZoom(zoom + 1)}
+                  />
+                </Stack.Item>
               </Stack>
             ) : (
               <Stack fill />
             )}
           </Stack.Item>
-          <Stack.Item grow>
-            <Stack fill height="100%">
-              <Stack.Item maxWidth="33%">
-                <Stack vertical>
+          <Stack.Item grow shrink maxHeight="calc(100% - 5.4rem)">
+            <Stack fill maxHeight="100%">
+              <Stack.Item>
+                <Stack vertical width="420px">
                   <Stack.Item>
                     <SpriteEditor.ColorPicker
                       colorMode={SpriteEditorColorMode.Rgba}
@@ -148,11 +180,24 @@ export const NtosNanopaint = (props) => {
               </Stack.Item>
               {hasEditorData && (
                 <>
-                  <Stack.Item grow height="100%">
+                  <Stack.Item
+                    width="100%"
+                    height="100%"
+                    textAlign="center"
+                    onWheel={(ev) => {
+                      if (!ev.shiftKey) return;
+                      ev.preventDefault();
+                      setZoom(clamp(zoom - Math.sign(ev.deltaY), 1, 20));
+                    }}
+                    overflow="scroll"
+                  >
                     <SpriteEditor.Canvas
-                      height="100%"
-                      width="100%"
+                      height={`${height * zoom}px`}
+                      width={`${width * zoom}px`}
                       data={sprite!}
+                      showGrid={showGrid}
+                      position="relative"
+                      top={`max(50% - ${(height * zoom) / 2}px, 0px)`}
                     />
                   </Stack.Item>
                   <Stack.Item height="100%">

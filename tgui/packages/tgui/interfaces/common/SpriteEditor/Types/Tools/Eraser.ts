@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { sendAct as act } from 'tgui/events/act';
 import { parseHexColorString } from '../../colorSpaces';
 import {
@@ -106,25 +105,16 @@ export class Eraser extends Tool {
     const { dir, layer } = currentTransaction;
     const [px, py] = constrainToIconGrid(x, y, width, height);
     const [opx, opy] = lastPoint!;
-    bresenhamLine(
-      opx,
-      opy,
-      px,
-      py,
-      useCallback(
-        (x, y) => {
-          if (x < 0 || x >= width || y < 0 || y >= height) {
-            return;
-          }
-          currentTransaction.addPoint(
-            x,
-            y,
-            getDataPixel(data, selectedLayer, selectedDir, x, y),
-          );
-        },
-        [currentTransaction, width, height, selectedLayer, selectedDir, data],
-      ),
-    );
+    bresenhamLine(opx, opy, px, py, (x, y) => {
+      if (x < 0 || x >= width || y < 0 || y >= height) {
+        return;
+      }
+      currentTransaction.addPoint(
+        x,
+        y,
+        getDataPixel(data, selectedLayer, selectedDir, x, y),
+      );
+    });
     this.lastPoint = [px, py];
     setPreviewData(
       currentTransaction.getPreviewLayer(layers[layer].data[dir]!),

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { type Dispatch, type SetStateAction, useState } from 'react';
 import { sendAct as act } from 'tgui/events/act';
 import { MenuBar } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
@@ -7,10 +7,22 @@ type NanopaintMenuBarProps = {
   undoHistory: string[];
   redoHistory: string[];
   workspaceOpen: BooleanLike;
+  zoom: number;
+  maxZoom: number;
+  minZoom: number;
+  setZoom: Dispatch<SetStateAction<number>>;
 };
 
 export const NanopaintMenuBar = (props: NanopaintMenuBarProps) => {
-  const { undoHistory, redoHistory, workspaceOpen } = props;
+  const {
+    undoHistory,
+    redoHistory,
+    workspaceOpen,
+    zoom,
+    minZoom,
+    maxZoom,
+    setZoom,
+  } = props;
   const [openOnHover, setOpenOnHover] = useState(false);
   const [openMenuBar, setOpenMenuBar] = useState<string | null>(null);
   // Adds the key using the value
@@ -81,6 +93,21 @@ export const NanopaintMenuBar = (props: NanopaintMenuBarProps) => {
             () => act('spriteEditorCommand', { command: 'redo' }),
           )}
           disabled={redoHistory.length === 0}
+        />
+      </MenuBar.Dropdown>
+      <MenuBar.Dropdown
+        entry="view"
+        openWidth="22rem"
+        display="View"
+        {...dropdownProps}
+      >
+        <MenuBar.Dropdown.MenuItem
+          disabled={!workspaceOpen || zoom === maxZoom}
+          {...getMenuItemProps('zoomIn', 'Zoom In', () => setZoom(zoom + 1))}
+        />
+        <MenuBar.Dropdown.MenuItem
+          disabled={!workspaceOpen || zoom === minZoom}
+          {...getMenuItemProps('zoomOut', 'Zoom Out', () => setZoom(zoom - 1))}
         />
       </MenuBar.Dropdown>
     </MenuBar>

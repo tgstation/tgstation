@@ -7,7 +7,7 @@
 	if(!CONFIG_GET(flag/log_image))
 		return
 	GLOB.sprite_auditor.add_entry(created_icon, author)
-	var/datum/log_category/category = logger.log_categories[/datum/log_category/image]
+	var/datum/log_category/category = logger.log_categories[LOG_CATEGORY_IMAGE]
 	var/output_directory
 	if(category.secret)
 		output_directory = "[GLOB.log_directory]/secret/[category.category]"

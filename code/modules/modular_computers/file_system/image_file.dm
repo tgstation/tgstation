@@ -7,6 +7,9 @@
 	size = 1
 	/// The instance of the stored image.
 	var/icon/stored_icon
+	/// The mutable appearance used to provide an appearance reference to uis.
+	/// Dynamic icons refs do not work for this purpose, so they must be wrapped in mutable appearances.
+	var/mutable_appearance/ref_appearance
 	/// The name of the asset cache item.
 	/// This will be initialized after assign_path() is called.
 	var/image_name
@@ -27,6 +30,7 @@
 /datum/computer_file/image/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
 	. = ..()
 	assign_path()
+	assign_ref_appearance()
 
 /// Assigns an asset path to the stored image, for use in the UI.
 /datum/computer_file/image/proc/assign_path()
@@ -35,9 +39,18 @@
 	image_name = SSmodular_computers.get_next_picture_name()
 	SSassets.transport.register_asset(image_name, stored_icon)
 
+/datum/computer_file/image/proc/assign_ref_appearance()
+	if(!isnull(ref_appearance))
+		return
+	ref_appearance = mutable_appearance(stored_icon)
+
+/datum/computer_file/image/proc/get_image_ref()
+	return REF(ref_appearance.appearance)
+
 /datum/computer_file/image/clone(rename = FALSE)
 	var/datum/computer_file/image/temp = ..()
 	temp.stored_icon = stored_icon
+	temp.ref_appearance = ref_appearance
 	temp.image_name = image_name
 	temp.source_photo_or_painting = source_photo_or_painting
 	temp.author_ckey = author_ckey

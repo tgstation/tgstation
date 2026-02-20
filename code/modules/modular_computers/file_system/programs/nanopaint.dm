@@ -37,12 +37,12 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 		"templateSizes" = GLOB.canvas_dimensions,
 		"saveableTypes" = list(
 			list(
-				"displayName" = "NanoPaint Project (.[/datum/computer_file/data/paint_project::filetype])",
+				"displayText" = "NanoPaint Project (.[/datum/computer_file/data/paint_project::filetype])",
 				"typepath" = /datum/computer_file/data/paint_project,
 				"extension" = /datum/computer_file/data/paint_project::filetype,
 			),
 			list(
-				"displayName" = "PNG Image (.[/datum/computer_file/image::filetype])",
+				"displayText" = "PNG Image (.[/datum/computer_file/image::filetype])",
 				"typepath" = /datum/computer_file/image,
 				"extension" = /datum/computer_file/image::filetype,
 			),
@@ -176,7 +176,7 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 			var/uid = params["uid"]
 			var/new_file_name = params["name"]
 			var/saving_to_disk = params["onDisk"]
-			var/datum/computer_file/new_file_type = text2path(params["type"])
+			var/datum/computer_file/new_file_type = text2path(params["typepath"])
 			var/extension = new_file_type::filetype
 			var/datum/computer_file/existing_file
 			if(saving_to_disk)
@@ -199,9 +199,10 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 						"title" = "Confirm Save As",
 						"message" = "[new_file_name] already exists. Do you want to overwrite this file?",
 						"action" = "overwrite",
-						"params" = list("name" = new_file_name,
-							"onDisk" = params["onDisk"],
-							"type" = new_file_type),
+						"params" = list("uid" = uid,
+							"name" = new_file_name,
+							"onDisk" = saving_to_disk,
+							"typepath" = new_file_type),
 						)
 				else
 					INVOKE_ASYNC(src, PROC_REF(write_to_file), user, existing_file)
@@ -269,7 +270,10 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 		if(/datum/computer_file/image)
 			var/datum/computer_file/image/image_file = file
 			image_file.stored_icon = current_workspace.to_icon()
+			image_file.image_name = null
 			image_file.assign_path()
+			image_file.ref_appearance = null
+			image_file.assign_ref_appearance()
 			image_file.set_source(source_photo_or_painting)
 			if(!source_photo_or_painting)
 				image_file.author_ckey = user.ckey

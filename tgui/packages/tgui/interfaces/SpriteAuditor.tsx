@@ -17,7 +17,7 @@ export const SpriteAuditor = (props) => {
   const { act, data } = useBackend<SpriteAuditorData>();
   const { entries } = data;
   return (
-    <Window width={360} height={720}>
+    <Window width={360} height={720} title="Sprite Auditor">
       <Window.Content>
         <Stack vertical overflowY="scroll">
           {entries?.map((entry, i) => {

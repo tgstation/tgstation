@@ -164,10 +164,10 @@ export function bresenhamLine(
   plot: (x: number, y: number) => void,
 ) {
   const dx = Math.abs(x1 - x0);
-  const sx = x0 < x1 ? 1 : -1;
+  const sx = Math.sign(x1 - x0);
   const dy = Math.abs(y1 - y0);
-  const sy = y0 < y1 ? 1 : -1;
-  let error = dx + dy;
+  const sy = Math.sign(y1 - y0);
+  let error = dx - dy;
   do {
     plot(x0, y0);
     const e2 = 2 * error;
@@ -179,5 +179,5 @@ export function bresenhamLine(
       error += dx;
       y0 += sy;
     }
-  } while (x0 !== x1 && y0 !== y1);
+  } while (!(x0 === x1 && y0 === y1));
 }

@@ -6,7 +6,7 @@ GLOBAL_DATUM_INIT(sprite_auditor, /datum/sprite_auditor, new)
 /datum/sprite_auditor/proc/add_entry(icon/created_icon, mob/author)
 	var/mutable_appearance/icon_appearance = mutable_appearance(created_icon)
 	LAZYADD(entries, list(list(
-		"ref" = REF(icon_appearance),
+		"ref" = REF(icon_appearance.appearance),
 		"name" = author.real_name,
 		"ckey" = author.ckey,
 		"appearance" = icon_appearance,
