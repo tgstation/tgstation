@@ -302,6 +302,11 @@
 	dir = 10
 	},
 /obj/effect/landmark/generic_maintenance_landmark,
+/mob/living/basic/snail/angry{
+	name = "\improper Nine Inch Snail";
+	desc = "part of my christmas gift from my brother last year was a box with 9 individual nails hammered into it, each one inch long";
+	color = "#2a2a2a"
+	},
 /turf/open/floor/wood/large{
 	color = "#2a2a2a"
 	},
@@ -936,7 +941,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/wood/large,
+/turf/open/floor/wood/large{
+	color = "#2a2a2a"
+	},
 /area/station/maintenance/starboard/central)
 "Nk" = (
 /obj/structure/transit_tube/curved/flipped{
@@ -1766,8 +1773,8 @@ Gr
 Gr
 Gr
 Gr
+Gr
 iT
-Tm
 Tm
 Tm
 jU
