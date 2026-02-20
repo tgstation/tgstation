@@ -533,7 +533,6 @@
 		log_combat(transferred_by, log_target, "transferred reagents to", my_atom, "which had [english_list(transfer_log)]")
 
 	if(!no_react)
-		transfer_reactions(target_holder)
 		target_holder.handle_reactions()
 
 	return total_transfered_amount
