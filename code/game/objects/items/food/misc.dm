@@ -225,8 +225,9 @@
 	var/bad_food_amount = 0
 	for(var/datum/reagent/consumable/food_reagent in reagents.reagent_list)
 		var/amount_to_remove = food_reagent.volume * rand(6, 8) * 0.1 //around 60% to 80% of the volume is to be converted.
-		reagents.remove_reagent(food_reagent.type, amount_to_remove, safety = FALSE)
+		food_reagent.volume -= amount_to_remove
 		bad_food_amount += amount_to_remove
+	reagents.update_total()
 	reagents.add_reagent(/datum/reagent/toxin/bad_food, bad_food_amount, reagtemp = reagents.chem_temp)
 
 /obj/item/food/badrecipe/Destroy(force)

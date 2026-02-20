@@ -209,10 +209,9 @@
  *
  * * [reagent_type][datum/reagent] - the type of reagent
  * * amount - the volume to remove
- * * safety - if FALSE will initiate reactions upon removing. used for trans_id_to
  * * include_subtypes - if TRUE will remove the specified amount from all subtypes of reagent_type as well
  */
-/datum/reagents/proc/remove_reagent(datum/reagent/reagent_type, amount, safety = TRUE, include_subtypes = FALSE)
+/datum/reagents/proc/remove_reagent(datum/reagent/reagent_type, amount, include_subtypes = FALSE)
 	if(!ispath(reagent_type))
 		stack_trace("invalid reagent passed to remove reagent [reagent_type]")
 		return FALSE
@@ -248,8 +247,6 @@
 
 	//update the holder & handle reactions
 	update_total()
-	if(!safety)
-		handle_reactions()
 
 	return total_removed_amount
 
@@ -294,7 +291,6 @@
 
 		total_removed_amount += remove_amount
 	update_total()
-	handle_reactions()
 
 	return round(total_removed_amount, CHEMICAL_QUANTISATION_LEVEL)
 
