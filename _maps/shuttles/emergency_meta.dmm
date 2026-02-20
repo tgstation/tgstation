@@ -302,6 +302,7 @@
 /area/shuttle/escape)
 "bl" = (
 /obj/machinery/stasis,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bm" = (
@@ -408,7 +409,7 @@
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
 /obj/machinery/light/directional/west,
-/obj/machinery/status_display/evac/directional/west,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bA" = (
@@ -613,6 +614,7 @@
 /obj/machinery/camera/autoname{
 	dir = 4
 	},
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "jw" = (
@@ -1052,7 +1054,7 @@ LY
 aE
 ba
 ad
-ac
+ad
 aZ
 ba
 ad
