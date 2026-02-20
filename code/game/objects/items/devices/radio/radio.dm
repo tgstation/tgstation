@@ -102,7 +102,7 @@
 	. = ..()
 
 	if(ispath(keyslot))
-		keyslot = new keyslot()
+		keyslot = new keyslot(src)
 		recalculateChannels()
 
 	perform_update_icon = FALSE
