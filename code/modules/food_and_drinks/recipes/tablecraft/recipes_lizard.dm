@@ -196,7 +196,7 @@
 	result = /obj/item/food/rootdough
 	added_foodtypes = NUTS
 	category = CAT_LIZARD
-	crafting_flags = CRAFT_CLEARS_REAGENTS
+	crafting_flags = parent_type::crafting_flags & ~CRAFT_TRANSFERS_REAGENT_COMPONENTS // prevents water from reacting immediately, clearing the dish
 
 /datum/crafting_recipe/food/rootdough/with_eggs
 	name = "Rootdough (With Eggs)"
@@ -222,7 +222,7 @@
 		/obj/item/reagent_containers/cup/beaker/slime = 1,
 		/obj/item/reagent_containers/applicator/patch/synthflesh = 1,
 	)
-	crafting_flags = CRAFT_CLEARS_REAGENTS
+	crafting_flags = parent_type::crafting_flags & ~CRAFT_TRANSFERS_REAGENT_COMPONENTS // prevents water from reacting immediately, clearing the dish
 
 /datum/crafting_recipe/food/snail_nizaya
 	name = "Desert snail nizaya"
