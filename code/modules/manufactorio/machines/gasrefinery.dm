@@ -33,7 +33,7 @@
 
 /obj/machinery/power/manufacturing/gasrefinery
 	name = "manufacturing gas refinery"
-	desc = "Turns ore into gas with the help of piped plasma. Emits said created gas into the air at a high temperature. Build preferably in an airless room."
+	desc = "Turns ore into gas with the help of piped plasma. Emits said created gas into the air at a high temperature. Build preferably in an airless room. Requires power via wire."
 	icon_state = "gasrefinery"
 	base_icon_state = "gasrefinery"
 	circuit = /obj/item/circuitboard/machine/manurefinery
