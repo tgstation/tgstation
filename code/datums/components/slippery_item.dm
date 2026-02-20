@@ -31,6 +31,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_afterattack))
 	RegisterSignal(parent, COMSIG_GUN_TRY_FIRE, PROC_REF(on_tryfire))
 	RegisterSignal(parent, COMSIG_GRENADE_ARMED, PROC_REF(on_grenade_arm))
+	RegisterSignal(parent, COMSIG_ITEM_USED_IN_SURGERY, PROC_REF(on_surgery_started))
 
 /datum/component/slippery_item/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -41,6 +42,7 @@
 		COMSIG_ITEM_AFTERATTACK,
 		COMSIG_GUN_TRY_FIRE,
 		COMSIG_GRENADE_ARMED,
+		COMSIG_ITEM_USED_IN_SURGERY,
 	))
 
 /datum/component/slippery_item/proc/on_examine(obj/item/source, mob/living/user, list/examine_list)
@@ -84,6 +86,12 @@
 	if(isliving(source.loc))
 		try_fall(source, source.loc)
 
+/datum/component/slippery_item/proc/on_surgery_started(obj/item/source, datum/surgery_operation/surgery, atom/movable/operating_on, mob/living/surgeon)
+	SIGNAL_HANDLER
+
+	if(try_fall(source, surgeon))
+		return ITEM_INTERACT_BLOCKING
+
 /// Check for falling and handle it if it happens.
 /// Returns TRUE if the item fell, FALSE otherwise
 /datum/component/slippery_item/proc/try_fall(obj/item/source, mob/living/user)
@@ -93,7 +101,7 @@
 		return FALSE
 	if(!prob(fall_chance))
 		return FALSE
-	if(!user.dropItemToGround(source))
+	if(source.loc != user || !user.dropItemToGround(source))
 		return FALSE
 	if(QDELETED(source))
 		return FALSE // dropdel
