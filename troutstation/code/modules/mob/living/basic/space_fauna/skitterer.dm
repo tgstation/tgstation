@@ -119,6 +119,24 @@
 	)
 	grant_actions_by_list(innate_actions)
 
+	AddComponent(\
+		/datum/component/ghost_direct_control,\
+		poll_candidates = TRUE,\
+		role_name = "Gay Skitterer",\
+		poll_ignore_key = POLL_IGNORE_GAY_SKITTERER,\
+		assumed_control_message = "You are a Gay Skitterer. You are a Skitterer but Gay. Go on, gayass. Be gay.",\
+		poll_length = 30 SECONDS,\
+		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
+		poll_chat_border_icon = /mob/living/basic/skitterer,\
+	)
+
+/mob/living/basic/gay_skitterer/proc/became_player_controlled()
+	notify_ghosts(
+		"A Gay Skitterer has gained sentience in \the [get_area(src)].",
+		source = src,
+		header = "Gay Skitterer Sentience",
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+	)
 
 /datum/ai_controller/basic_controller/skitterer
 	blackboard = list(
