@@ -342,10 +342,9 @@ Behavior that's still missing from this component that original food items had t
 	for(var/obj/item/food/crafted_part in components)
 		if(!crafted_part.reagents)
 			continue
-		this_food.reagents.maximum_volume += crafted_part.reagents.maximum_volume
-		crafted_part.reagents.trans_to(this_food.reagents, crafted_part.reagents.maximum_volume)
-
-	this_food.reagents.maximum_volume = ROUND_UP(this_food.reagents.maximum_volume) // Just because I like whole numbers for this.
+		var/transferred_volume = ceil(sqrt(crafted_part.reagents.total_volume))
+		this_food.reagents.maximum_volume += transferred_volume
+		crafted_part.reagents.trans_to(this_food.reagents, transferred_volume)
 
 	BLACKBOX_LOG_FOOD_MADE(parent.type)
 
