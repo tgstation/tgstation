@@ -94,6 +94,7 @@
 		keybindings[keybinding.category][keybinding.name] = list(
 			"name" = keybinding.full_name,
 			"description" = keybinding.description,
+			"can_edit" = keybinding.can_edit,
 		)
 
 	return keybindings
