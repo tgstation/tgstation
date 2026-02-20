@@ -86,6 +86,7 @@
 	if((SCHEMA_VERSION in options))
 		switch(options[SCHEMA_VERSION])
 			if("1.0.0")
+				author_ckey = null
 			if("1.0.1")
 				if(input["author"])
 					author_ckey = input["author"]
