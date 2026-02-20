@@ -67,8 +67,8 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/effect/weakpoint/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/stack/sticky_tape))
-		var/obj/item/stack/sticky_tape/duct_tape = tool
+	if(istype(tool, /obj/item/stack/medical/wrap/sticky_tape))
+		var/obj/item/stack/medical/wrap/sticky_tape/duct_tape = tool
 		if(!duct_tape.use(1))
 			return ITEM_INTERACT_BLOCKING
 		to_chat(user, span_notice("\The [src] is sealed with a little elbow grease and a mound of [duct_tape]."))

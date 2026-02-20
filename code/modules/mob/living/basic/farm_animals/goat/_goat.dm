@@ -51,6 +51,7 @@
 	AddElement(/datum/element/cliff_walking) //we walk the cliff
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SHOE)
 	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GOAT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_pre_attack))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))

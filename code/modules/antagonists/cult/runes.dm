@@ -1016,7 +1016,6 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			new_human.AddComponent( \
 				/datum/component/temporary_body, \
 				old_mind = ghost_to_spawn.mind, \
-				old_body = ghost_to_spawn.mind.current, \
 			)
 		new_human.PossessByPlayer(ghost_to_spawn.key)
 		var/datum/antagonist/cult/created_cultist = new_human.mind?.add_antag_datum(/datum/antagonist/cult)

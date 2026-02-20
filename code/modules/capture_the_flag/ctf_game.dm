@@ -157,7 +157,6 @@
 		player_mob.AddComponent( \
 			/datum/component/temporary_body, \
 			old_mind = new_member_mind, \
-			old_body = new_member_mind.current, \
 		)
 
 	player_mob.ckey = new_team_member.ckey

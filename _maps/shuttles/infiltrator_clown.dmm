@@ -290,7 +290,7 @@
 /area/shuttle/syndicate/medical)
 "bu" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/wrap/gauze,
 /obj/item/stack/medical/bruise_pack,
 /obj/item/stack/medical/ointment,
 /obj/effect/turf_decal/tile/blue{

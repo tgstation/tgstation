@@ -182,3 +182,9 @@ DEFINE_BITFIELD(surgery_state, list(
 #define UNCLAMPED_VESSELS_BLEEDING 1.5
 /// How much blood is lost from clamped vessels or cut organs?
 #define CLAMPED_VESSELS_BLEEDING 0.2
+
+// Limb item categories
+/// Gauze slot, asserted to be wrap items
+#define LIMB_ITEM_GAUZE "gauze"
+/// Tourniquet slot
+#define LIMB_ITEM_TOURNIQUET "tourniquet"

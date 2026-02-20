@@ -113,11 +113,11 @@
 "dd" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/stasis,
-/obj/structure/sign/poster/official/moth_epi/directional/north,
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/vitals_reader/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "dA" = (
@@ -473,6 +473,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/vitals_reader/directional/south,
+/obj/structure/sign/poster/official/moth_epi/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "ju" = (
@@ -2060,6 +2062,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "MO" = (

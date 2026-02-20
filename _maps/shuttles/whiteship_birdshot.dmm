@@ -1038,7 +1038,7 @@
 /obj/item/tank/internals/anesthetic{
 	pixel_x = -3
 	},
-/obj/item/stack/sticky_tape/surgical,
+/obj/item/stack/medical/wrap/sticky_tape/surgical,
 /obj/item/clothing/mask/breath/medical{
 	pixel_y = 3
 	},

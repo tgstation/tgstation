@@ -372,7 +372,7 @@
 	ph = 11
 	inverse_chem = /datum/reagent/impurity/rosenol
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/hallucinogens = 18)  //7.2 per 2 seconds
+	addiction_types = list(/datum/addiction/hallucinogens = 60)
 	metabolized_traits = list(TRAIT_RDS_SUPPRESSED)
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)

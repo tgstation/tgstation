@@ -64,7 +64,7 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "jY" = (
-/obj/item/stack/medical/gauze{
+/obj/item/stack/medical/wrap/gauze{
 	amount = 1
 	},
 /turf/open/indestructible,

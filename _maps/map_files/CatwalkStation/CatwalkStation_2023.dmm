@@ -18570,7 +18570,7 @@
 /area/station/maintenance/port/aft)
 "eVY" = (
 /obj/structure/cable,
-/obj/item/stack/sticky_tape{
+/obj/item/stack/medical/wrap/sticky_tape{
 	pixel_x = 12;
 	pixel_y = 14
 	},
@@ -43394,7 +43394,7 @@
 "lzW" = (
 /obj/structure/table/glass,
 /obj/item/clothing/gloves/latex/nitrile,
-/obj/item/stack/sticky_tape/surgical{
+/obj/item/stack/medical/wrap/sticky_tape/surgical{
 	pixel_x = -4;
 	pixel_y = 5
 	},
@@ -57984,12 +57984,12 @@
 /turf/open/floor/iron/textured,
 /area/station/cargo/storage)
 "pux" = (
-/obj/item/stack/sticky_tape{
+/obj/item/stack/medical/wrap/sticky_tape{
 	pixel_x = 8;
 	pixel_y = 14
 	},
 /obj/structure/table,
-/obj/item/stack/sticky_tape{
+/obj/item/stack/medical/wrap/sticky_tape{
 	pixel_x = -4;
 	pixel_y = 11
 	},
@@ -66934,7 +66934,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
-/obj/item/stack/medical/gauze{
+/obj/item/stack/medical/wrap/gauze{
 	pixel_x = 8
 	},
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner{

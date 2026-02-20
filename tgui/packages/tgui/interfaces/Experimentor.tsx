@@ -17,6 +17,7 @@ type Data = {
   hasItem: BooleanLike;
   isOnCooldown: BooleanLike;
   isServerConnected: BooleanLike;
+  availableExperiments: Experiment[];
   loadedItem: Item;
 };
 
@@ -32,17 +33,32 @@ type Node = {
   isUnlocked: BooleanLike;
 };
 
-export const Experimentator = (props: any) => {
+type Experiment = {
+  id: number;
+  name: string;
+  fa_icon: string;
+  isAvailable: BooleanLike;
+  isDiscover: BooleanLike;
+};
+
+export const Experimentor = (props: any) => {
   const { act, data } = useBackend<Data>();
-  const { hasItem, isOnCooldown, isServerConnected, loadedItem } = data;
+  const {
+    hasItem,
+    isOnCooldown,
+    isServerConnected,
+    loadedItem,
+    availableExperiments = [],
+  } = data;
 
   return (
-    <Window width={450} height={325} title="E.X.P.E.R.I-MENTOR">
+    <Window width={450} height={350} title="E.X.P.E.R.I-MENTOR">
       <Window.Content>
         {isServerConnected ? (
           hasItem && loadedItem ? (
             <ExperimentScreen
               item={loadedItem}
+              experiments={availableExperiments}
               isOnCooldown={isOnCooldown}
               onEject={() => act('eject')}
               onExperiment={(id) => act('experiment', { id: id })}
@@ -62,34 +78,20 @@ export const Experimentator = (props: any) => {
   );
 };
 
-enum Experiment {
-  Poke = 'Poke',
-  Irradiate = 'Irradiate',
-  Gas = 'Gas',
-  Heat = 'Heat',
-  Cold = 'Freeze',
-  Obliterate = 'Obliterate',
-}
-
-const EXPERIMENT2ICON = {
-  Poke: 'hand',
-  Irradiate: 'radiation',
-  Gas: 'cloud',
-  Heat: 'fire',
-  Cold: 'snowflake',
-  Obliterate: 'trash',
-};
-
 type ExperimentScreenProps = {
   item: Item;
+  experiments: Experiment[];
   isOnCooldown: BooleanLike;
   onEject: () => void;
   onExperiment: (id: number) => void;
 };
 
 const ExperimentScreen = (props: ExperimentScreenProps) => {
-  const { item, isOnCooldown, onEject, onExperiment } = props;
+  const { item, experiments, isOnCooldown, onEject, onExperiment } = props;
   const { name, icon, isRelic, associatedNodes } = item;
+
+  const regularExperiments = experiments.filter((exp) => !exp.isDiscover);
+  const discoverExperiments = experiments.filter((exp) => exp.isDiscover);
 
   return (
     <Stack fill vertical>
@@ -107,6 +109,8 @@ const ExperimentScreen = (props: ExperimentScreenProps) => {
         <ExperimentButtons
           isRelic={isRelic}
           disabled={isOnCooldown}
+          experiments={regularExperiments}
+          discoverExperiment={discoverExperiments[0]}
           onExperiment={onExperiment}
         />
       </Stack.Item>
@@ -201,44 +205,48 @@ const NodePreview = (props: NodePreviewProps) => {
 type ExperimentButtonsProps = {
   isRelic: BooleanLike;
   disabled: BooleanLike;
+  experiments: Experiment[];
+  discoverExperiment?: Experiment;
   onExperiment: (id: number) => void;
 };
 
 const ExperimentButtons = (props: ExperimentButtonsProps) => {
-  const { isRelic, disabled, onExperiment } = props;
+  const { isRelic, disabled, experiments, discoverExperiment, onExperiment } = props;
 
   return (
     <Section fill>
       <Stack fill>
-        {Object.keys(Experiment).map((value, index) => (
-          <Stack.Item key={index}>
+        {experiments.map((exp) => (
+          <Stack.Item key={exp.id}>
             <Button
               width={3}
               height={3}
               fontSize={1.6}
               textAlign="center"
-              disabled={disabled}
-              tooltip={Experiment[value]}
+              disabled={disabled || !exp.isAvailable}
+              tooltip={exp.name}
               verticalAlignContent="middle"
-              icon={EXPERIMENT2ICON[value]}
-              onClick={() => onExperiment(index + 1)}
+              icon={exp.fa_icon}
+              onClick={() => onExperiment(exp.id)}
             />
           </Stack.Item>
         ))}
         <Stack.Item grow>
-          <Button
-            bold
-            fluid
-            height={3}
-            fontSize={1.6}
-            textAlign="center"
-            icon="magnifying-glass"
-            verticalAlignContent="middle"
-            disabled={!isRelic || disabled}
-            onClick={() => onExperiment(7)}
-          >
-            Discover!
-          </Button>
+          {discoverExperiment && (
+            <Button
+              bold
+              fluid
+              height={3}
+              fontSize={1.6}
+              textAlign="center"
+              icon={discoverExperiment.fa_icon}
+              verticalAlignContent="middle"
+              disabled={!isRelic || disabled || !discoverExperiment.isAvailable}
+              onClick={() => onExperiment(discoverExperiment.id)}
+            >
+              Discover!
+            </Button>
+          )}
         </Stack.Item>
       </Stack>
     </Section>

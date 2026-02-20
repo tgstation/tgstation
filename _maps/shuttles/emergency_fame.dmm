@@ -348,6 +348,7 @@
 /obj/item/cautery,
 /obj/structure/table/glass,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "nx" = (
@@ -792,7 +793,12 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "KG" = (
-/obj/machinery/shower/directional/south,
+/obj/machinery/shower/directional/south{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = -16
+	},
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Ll" = (
@@ -1246,13 +1252,13 @@ mm
 Ec
 Oa
 Uu
-gm
+Oa
 el
 Fi
 Fi
 Fi
 DO
-gm
+Oa
 Uu
 Oa
 UA
@@ -1270,7 +1276,7 @@ Km
 LR
 LR
 cV
-Oa
+gm
 KG
 Fi
 Fi
@@ -1278,7 +1284,7 @@ xt
 Fi
 Fi
 la
-Oa
+gm
 we
 iN
 iN

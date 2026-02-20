@@ -43,7 +43,7 @@
 	if(empty)
 		return
 	var/list/items_inside = list(
-		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/wrap/gauze = 1,
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
@@ -62,7 +62,7 @@
 		return
 	var/list/items_inside = list(
 		/obj/item/healthanalyzer/simple = 1,
-		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/wrap/gauze = 1,
 		/obj/item/stack/medical/bandage = 1,
 		/obj/item/stack/medical/ointment = 1,
 		/obj/item/reagent_containers/hypospray/medipen/ekit = 2,
@@ -82,7 +82,7 @@
 		return
 	var/list/items_inside = list(
 		/obj/item/healthanalyzer = 1,
-		/obj/item/stack/medical/gauze/twelve = 1,
+		/obj/item/stack/medical/wrap/gauze/twelve = 1,
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
@@ -109,12 +109,12 @@
 		/obj/item/retractor/advanced = 1,
 		/obj/item/cautery/advanced = 1,
 		/obj/item/surgical_drapes = 1,
-		/obj/item/stack/medical/gauze/twelve = 1,
+		/obj/item/stack/medical/wrap/gauze/twelve = 1,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/bonesetter = 1,
 		/obj/item/blood_filter = 1,
 		/obj/item/stack/medical/bone_gel = 1,
-		/obj/item/stack/sticky_tape/surgical = 1,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical = 1,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/reagent_containers/cup/bottle/sodium_thiopental = 1,
 	)
@@ -131,7 +131,7 @@
 	if(empty)
 		return
 	var/list/items_inside = list(
-		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/wrap/gauze = 1,
 		/obj/item/stack/medical/bruise_pack = 3,
 		/obj/item/stack/medical/ointment= 3)
 	generate_items_inside(items_inside,src)
@@ -234,7 +234,7 @@
 		return
 	var/list/items_inside = list(
 		/obj/item/reagent_containers/applicator/patch/libital = 3,
-		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/wrap/gauze = 1,
 		/obj/item/storage/pill_bottle/probital = 1,
 		/obj/item/reagent_containers/hypospray/medipen/salacid = 1,
 		/obj/item/healthanalyzer/simple = 1,
@@ -258,7 +258,7 @@
 	var/list/items_inside = list(
 		/obj/item/reagent_containers/applicator/patch/synthflesh = 3,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
-		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/wrap/gauze = 1,
 		/obj/item/storage/pill_bottle/penacid = 1)
 	generate_items_inside(items_inside,src)
 
@@ -277,7 +277,7 @@
 	var/list/items_inside = list(
 		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 1,
-		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/wrap/gauze = 1,
 		/obj/item/stack/medical/suture/medicated = 2,
 		/obj/item/stack/medical/mesh/advanced = 2,
 	)
@@ -306,7 +306,7 @@
 		/obj/item/storage/box/bandages = 1,
 		/obj/item/surgical_drapes = 1,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
-		/obj/item/stack/medical/gauze = 2,
+		/obj/item/stack/medical/wrap/gauze = 2,
 		/obj/item/stack/medical/suture/medicated = 2,
 		/obj/item/stack/medical/mesh/advanced = 2,
 		/obj/item/reagent_containers/applicator/patch/libital = 4,
@@ -333,7 +333,7 @@
 		/obj/item/reagent_containers/applicator/patch/libital = 3,
 		/obj/item/reagent_containers/applicator/patch/aiuri = 3,
 		/obj/item/healthanalyzer/advanced = 1,
-		/obj/item/stack/medical/gauze = 2,
+		/obj/item/stack/medical/wrap/gauze = 2,
 		/obj/item/mod/module/thread_ripper = 1,
 		/obj/item/mod/module/surgical_processor/preloaded = 1,
 		/obj/item/mod/module/defibrillator/combat = 1,
@@ -510,4 +510,3 @@
 	for(var/i in 1 to atom_storage.max_slots)
 		new /obj/item/reagent_containers/cup/tube(src)
 	update_appearance(UPDATE_ICON_STATE)
-

@@ -306,18 +306,18 @@
 
 /obj/machinery/computer/camera_advanced/proc/add_circuit_action(datum/_source, obj/item/circuit_component/equipment_action/action_comp)
 	SIGNAL_HANDLER
-	var/datum/action/innate/camera_circuit_action/new_action = new(src, action_comp)
+	var/datum/action/innate/circuit_equipment_action/new_action = new(src, action_comp)
 	LAZYADD(actions, new_action)
 	if(current_user)
 		new_action.Grant(current_user)
 
 /obj/machinery/computer/camera_advanced/proc/remove_circuit_action(datum/_source, obj/item/circuit_component/equipment_action/action_comp)
 	SIGNAL_HANDLER
-	var/datum/action/innate/camera_circuit_action/action = action_comp.granted_to[REF(src)]
+	var/datum/action/innate/circuit_equipment_action/action = action_comp.granted_to[REF(src)]
 	if(!istype(action))
 		return
 	LAZYREMOVE(actions, action)
-	qdel(action)
+	QDEL_LIST_ASSOC_VAL(action_comp.granted_to)
 
 /obj/machinery/computer/camera_advanced/proc/on_port_unregister_object(datum/component/usb_port/source, atom/movable/object)
 	SIGNAL_HANDLER
@@ -330,32 +330,6 @@
 	if(port.physical_object)
 		on_port_unregister_object(port, port.physical_object)
 	UnregisterSignal(port, list(COMSIG_USB_PORT_REGISTER_PHYSICAL_OBJECT, COMSIG_USB_PORT_UNREGISTER_PHYSICAL_OBJECT))
-
-/datum/action/innate/camera_circuit_action
-	name = "Action"
-	button_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "bci_power"
-
-	var/obj/machinery/computer/camera_advanced/console
-	var/obj/item/circuit_component/equipment_action/action_comp
-
-/datum/action/innate/camera_circuit_action/New(obj/machinery/computer/camera_advanced/console, obj/item/circuit_component/equipment_action/action_comp)
-	. = ..()
-	src.console = console
-	action_comp.granted_to[REF(console)] = src
-	src.action_comp = action_comp
-
-/datum/action/innate/camera_circuit_action/Destroy()
-	action_comp.granted_to -= REF(console)
-	action_comp = null
-
-	return ..()
-
-/datum/action/innate/camera_circuit_action/Activate()
-	action_comp.user.set_output(owner)
-	action_comp.signal.set_output(COMPONENT_SIGNAL)
-
-	return ..()
 
 /// Advanced camera component
 

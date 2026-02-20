@@ -1075,7 +1075,7 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "oJ" = (
 /obj/item/stack/medical/bandage,
-/obj/item/stack/medical/gauze/twelve,
+/obj/item/stack/medical/wrap/gauze/twelve,
 /obj/item/reagent_containers/hypospray/medipen/blood_loss,
 /obj/effect/spawner/random/medical/injector,
 /obj/effect/turf_decal/tile/dark_red/anticorner{

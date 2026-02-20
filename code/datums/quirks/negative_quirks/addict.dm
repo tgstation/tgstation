@@ -104,7 +104,7 @@
 
 /datum/quirk/item_quirk/addict/remove()
 	if(!QDELETED(quirk_holder) && reagent_instance)
-		for(var/addiction_type in subtypesof(/datum/addiction))
+		for(var/addiction_type in GLOB.addictions)
 			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 
 /datum/quirk/item_quirk/addict/smoker

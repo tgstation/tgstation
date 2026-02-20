@@ -14,8 +14,8 @@
 /area/ruin/powered/snow_biodome)
 "ad" = (
 /obj/structure/table,
-/obj/item/stack/medical/gauze,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/wrap/gauze,
+/obj/item/stack/medical/wrap/gauze,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)

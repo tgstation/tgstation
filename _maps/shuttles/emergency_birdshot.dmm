@@ -360,10 +360,11 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "qd" = (
-/obj/machinery/stasis{
-	dir = 8
-	},
 /obj/effect/mapping_helpers/broken_floor,
+/obj/item/emergency_bed{
+	pixel_x = -5
+	},
+/obj/item/trash/pistachios,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "qj" = (
@@ -417,10 +418,10 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "tH" = (
-/obj/item/trash/pistachios,
-/obj/item/emergency_bed{
-	pixel_x = -5
+/obj/machinery/stasis{
+	dir = 1
 	},
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "ud" = (
