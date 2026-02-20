@@ -261,6 +261,9 @@
       print from the component printer upon researching advanced circuit shells. Implanter
       not included.
 2026-02-20:
+  SyncIt21:
+  - qol: except for plumbing reaction chamber & acclimator, no reactions will occur
+      inside plumbing machines
   mcbalaam:
   - rscadd: E.X.P.E.R.I-MENTOR now has proper wires
   - refactor: Refactored the E.X.P.E.R.I-MENTOR and it's E.X.P.E.R.I-ment system
