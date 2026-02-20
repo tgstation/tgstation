@@ -86,7 +86,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "gy" = (
-/obj/structure/reagent_dispensers/plumbed,
+/obj/structure/reagent_dispensers/plumbed{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "hM" = (

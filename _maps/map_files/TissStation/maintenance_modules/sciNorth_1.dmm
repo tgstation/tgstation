@@ -23,6 +23,19 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
+"do" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/door/airlock/wood{
+	name = "Whirling-In-Rags Upper Floor"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/detective,
+/obj/effect/mapping_helpers/airlock/unres/delayed{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "dW" = (
 /obj/effect/turf_decal/tile/dark/diagonal_centre,
 /obj/effect/decal/cleanable/dirt,
@@ -87,7 +100,6 @@
 	name = "Whirling-In-Rags Room #2"
 	},
 /obj/effect/turf_decal/tile/dark/diagonal_centre,
-/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/security/detective,
 /obj/effect/mapping_helpers/airlock/unres/delayed{
 	dir = 1
@@ -107,7 +119,7 @@
 /turf/open/floor/iron/white/diagonal,
 /area/station/maintenance/rags)
 "jV" = (
-/obj/effect/landmark/generic_maintenance_landmark,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "kl" = (
@@ -169,6 +181,7 @@
 /area/station/maintenance/department/science/xenobiology)
 "nx" = (
 /obj/structure/chair/sofa/corp,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "oa" = (
@@ -240,7 +253,6 @@
 	name = "Whirling-In-Rags Room #1"
 	},
 /obj/effect/turf_decal/tile/dark/diagonal_centre,
-/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/security/detective,
 /obj/effect/mapping_helpers/airlock/unres/delayed{
 	dir = 1
@@ -658,6 +670,17 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
+"Wi" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "TV Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/unres/delayed{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "WT" = (
@@ -1577,7 +1600,7 @@ Dx
 Dx
 NI
 jV
-cH
+Wi
 Ky
 Dx
 Jo
@@ -2194,7 +2217,7 @@ Ug
 AZ
 gF
 bV
-Ky
+do
 zO
 zO
 zO

@@ -1,0 +1,1960 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ad" = (
+/obj/effect/spawner/random/trash/box,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"ak" = (
+/obj/machinery/door/airlock/survival_pod,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"aV" = (
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"cD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/transit_tube/crossing/horizontal,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"cY" = (
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"dd" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"dG" = (
+/turf/template_noop,
+/area/template_noop)
+"dM" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"eM" = (
+/obj/effect/spawner/random/structure/chair_comfy,
+/obj/effect/decal/cleanable/food/salt{
+	name = "???";
+	desc = "It's not what you're thinking I PROMISE."
+	},
+/obj/item/food/grown/cucumber,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"fo" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/transit_tube/crossing/horizontal,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"fy" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"fM" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/maintenance/no_decals/six,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"fV" = (
+/obj/effect/spawner/random/structure/crate,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"gd" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"gH" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/transit_tube/crossing/horizontal,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"gW" = (
+/obj/effect/spawner/random/structure/closet_empty,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"ht" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/transit_tube/crossing/horizontal,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"hX" = (
+/obj/structure/transit_tube/horizontal,
+/obj/structure/window/reinforced/tinted/fulltile,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"iE" = (
+/obj/effect/spawner/random/junk_shell{
+	pixel_y = -4;
+	pixel_x = 4
+	},
+/obj/effect/spawner/random/junk_shell{
+	pixel_y = 9;
+	pixel_x = -7
+	},
+/obj/item/fake_items/l6_saw{
+	pixel_y = 1;
+	pixel_x = -14
+	},
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"kj" = (
+/obj/effect/spawner/random/engineering/tank,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"lE" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"mq" = (
+/obj/effect/spawner/random/structure/table_or_rack,
+/obj/effect/spawner/random/maintenance/no_decals/two,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"nk" = (
+/obj/effect/spawner/random/peel_or_nana,
+/mob/living/basic/mad_piano,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"nJ" = (
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"oA" = (
+/obj/structure/transit_tube/curved/flipped{
+	dir = 4
+	},
+/obj/structure/window/reinforced/tinted/fulltile,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"qr" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/transit_tube/crossing/horizontal,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"sf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"sH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/closet_empty/crate,
+/obj/effect/spawner/random/maintenance/no_decals/two,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"uI" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"vJ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"vL" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"wc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"wB" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"wY" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"xf" = (
+/obj/effect/spawner/random/structure/table_or_rack,
+/obj/effect/spawner/random/engineering/toolbox,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"xg" = (
+/obj/structure/transit_tube/horizontal,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"xo" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/transit_tube/horizontal,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"xv" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"xJ" = (
+/obj/structure/window/fulltile,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"xP" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"xT" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"yb" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"yf" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"zd" = (
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"zf" = (
+/obj/effect/spawner/random/structure/chair_flipped{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"zh" = (
+/obj/effect/spawner/random/trash/grime,
+/obj/structure/railing{
+	dir = 8;
+	pixel_x = -2
+	},
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"zy" = (
+/obj/effect/spawner/random/bedsheet/any/double{
+	dir = 1
+	},
+/obj/structure/bed/double{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"zR" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/trash/grime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Bd" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/maintenance/glass,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Ce" = (
+/obj/structure/transit_tube/crossing/horizontal,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"CV" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/obj/effect/spawner/random/structure/steam_vent,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Di" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"DF" = (
+/obj/structure/transit_tube/curved/flipped{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"ET" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Fo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Fp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Ft" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"FZ" = (
+/turf/closed/wall,
+/area/station/maintenance/port/central)
+"GG" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"GQ" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/spawner/random/structure/barricade,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"GW" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/transit_tube/horizontal,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Hn" = (
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/effect/spawner/random/structure/closet_empty,
+/obj/effect/spawner/random/maintenance/no_decals/three,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Ia" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/closet_maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Ik" = (
+/obj/effect/spawner/random/structure/crate_loot,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"JB" = (
+/obj/effect/spawner/random/structure/crate,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"KI" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Lk" = (
+/obj/structure/transit_tube/horizontal,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"MO" = (
+/obj/structure/transit_tube/diagonal/crossing,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Nt" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Ps" = (
+/obj/effect/spawner/random/decoration/glowstick/on{
+	pixel_x = -8;
+	pixel_y = -8
+	},
+/obj/effect/spawner/random/decoration/glowstick/on{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/effect/spawner/random/decoration/glowstick/on{
+	pixel_x = 8;
+	pixel_y = -8
+	},
+/obj/effect/spawner/random/decoration/glowstick/on{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/effect/spawner/random/decoration/flower,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"PW" = (
+/obj/effect/spawner/random/junk_shell,
+/obj/effect/spawner/random/junk_shell{
+	pixel_y = -8;
+	pixel_x = 6
+	},
+/obj/effect/spawner/random/junk_shell{
+	pixel_y = 10;
+	pixel_x = -11
+	},
+/obj/effect/mob_spawn/corpse/human/plasmaman{
+	pixel_x = -14
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"PZ" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Qp" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"QU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"QY" = (
+/obj/effect/spawner/random/engineering/canister,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"QZ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Ri" = (
+/obj/effect/spawner/random/engineering/tank,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"SH" = (
+/obj/structure/transit_tube/crossing/horizontal,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"SI" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"SQ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Td" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/transit_tube/crossing/horizontal,
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Tm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"TD" = (
+/obj/modular_map_connector,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"TU" = (
+/obj/effect/spawner/random/structure/grille,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Ud" = (
+/obj/effect/spawner/random/junk_shell,
+/obj/effect/spawner/random/junk_shell{
+	pixel_y = -8;
+	pixel_x = 6
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Vi" = (
+/obj/structure/railing{
+	dir = 8;
+	pixel_x = -2
+	},
+/obj/effect/spawner/random/engineering/tool_advanced,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"Vx" = (
+/obj/effect/spawner/random/structure/table_or_rack,
+/obj/effect/spawner/random/maintenance/no_decals/four,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"VO" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/transit_tube/horizontal,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"YE" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+"YQ" = (
+/obj/effect/spawner/random/trash/grime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
+
+(1,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+"}
+(2,1,1) = {"
+dG
+dG
+dG
+FZ
+gd
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+"}
+(3,1,1) = {"
+dG
+dG
+dG
+FZ
+gd
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+"}
+(4,1,1) = {"
+dG
+dG
+dG
+Qp
+SQ
+Nt
+vL
+dG
+dG
+yb
+dG
+yb
+dG
+yb
+xP
+yb
+xP
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+"}
+(5,1,1) = {"
+dG
+dG
+dG
+ET
+vJ
+FZ
+lE
+Nt
+vL
+dd
+FZ
+vJ
+FZ
+Ia
+FZ
+vJ
+FZ
+yb
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+"}
+(6,1,1) = {"
+dG
+Ri
+vJ
+QU
+Ia
+FZ
+GQ
+FZ
+lE
+Di
+Nt
+Di
+Bd
+Di
+Nt
+wY
+FZ
+aV
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+"}
+(7,1,1) = {"
+dG
+ET
+ET
+zR
+Hn
+FZ
+sH
+FZ
+xf
+vJ
+FZ
+SI
+FZ
+xv
+FZ
+SQ
+Nt
+Di
+vL
+aV
+xP
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+"}
+(8,1,1) = {"
+dG
+xP
+xP
+xP
+xP
+xP
+xP
+FZ
+zh
+Vi
+FZ
+vJ
+FZ
+vJ
+FZ
+SI
+FZ
+aV
+gd
+vJ
+xP
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+"}
+(9,1,1) = {"
+dG
+dG
+dG
+dG
+xP
+xP
+xP
+FZ
+Ud
+PW
+FZ
+zf
+FZ
+JB
+FZ
+Ik
+FZ
+vJ
+gd
+vJ
+Vx
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+"}
+(10,1,1) = {"
+dG
+dG
+dG
+dG
+xP
+xP
+xP
+xP
+xP
+iE
+FZ
+nk
+xP
+xP
+xP
+xP
+xP
+mq
+lE
+uI
+Di
+Di
+CV
+vL
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+"}
+(11,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+gd
+dG
+dG
+dG
+dG
+xP
+xP
+dG
+dG
+dG
+dG
+"}
+(12,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+gd
+vJ
+DF
+xg
+fM
+FZ
+xP
+xP
+dG
+dG
+dG
+"}
+(13,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+lE
+MO
+vJ
+SH
+vJ
+FZ
+xP
+xP
+dG
+dG
+dG
+"}
+(14,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+oA
+Fp
+FZ
+hX
+FZ
+FZ
+FZ
+xP
+xP
+dG
+dG
+"}
+(15,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+gH
+QZ
+aV
+SH
+vJ
+aV
+FZ
+xP
+xP
+dG
+dG
+"}
+(16,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+fo
+FZ
+FZ
+xg
+gW
+vJ
+FZ
+xP
+xP
+dG
+dG
+"}
+(17,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+qr
+FZ
+FZ
+hX
+FZ
+vJ
+FZ
+FZ
+xP
+dG
+dG
+"}
+(18,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+fo
+vJ
+vJ
+SH
+vJ
+vJ
+JB
+FZ
+xP
+xP
+dG
+"}
+(19,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+fo
+aV
+vJ
+SH
+Ia
+xJ
+FZ
+FZ
+FZ
+xP
+dG
+"}
+(20,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+fo
+FZ
+FZ
+hX
+FZ
+aV
+dM
+zy
+FZ
+xP
+dG
+"}
+(21,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+ht
+Tm
+Tm
+Ce
+Tm
+wc
+FZ
+vJ
+FZ
+xP
+xP
+"}
+(22,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+hX
+FZ
+YQ
+xg
+FZ
+wB
+FZ
+vJ
+FZ
+xP
+xP
+"}
+(23,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+xg
+vJ
+vJ
+xg
+FZ
+wB
+aV
+vJ
+FZ
+xP
+xP
+"}
+(24,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+xg
+QY
+FZ
+hX
+FZ
+wB
+Ia
+fV
+FZ
+xP
+xP
+"}
+(25,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+hX
+FZ
+FZ
+hX
+FZ
+wB
+FZ
+FZ
+FZ
+xP
+xP
+"}
+(26,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+xg
+vJ
+cY
+Lk
+FZ
+sf
+Tm
+wc
+FZ
+xP
+xP
+"}
+(27,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+xg
+vJ
+zd
+Lk
+FZ
+FZ
+FZ
+wB
+FZ
+xP
+xP
+"}
+(28,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+xg
+nJ
+FZ
+Lk
+yf
+zd
+FZ
+wB
+FZ
+xP
+xP
+"}
+(29,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+VO
+fy
+Tm
+Ce
+Tm
+Tm
+Tm
+Fo
+FZ
+xP
+xP
+"}
+(30,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+FZ
+FZ
+GW
+vJ
+vJ
+xg
+FZ
+JB
+vJ
+ad
+FZ
+xP
+xP
+"}
+(31,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+eM
+ak
+fo
+YQ
+aV
+hX
+FZ
+FZ
+FZ
+FZ
+FZ
+xP
+xP
+"}
+(32,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+FZ
+FZ
+xo
+aV
+FZ
+hX
+GG
+kj
+kj
+YE
+FZ
+FZ
+xP
+"}
+(33,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+Ps
+TU
+cD
+Di
+Di
+Td
+Di
+KI
+Di
+vL
+yf
+FZ
+dG
+"}
+(34,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+gd
+vJ
+vJ
+dG
+"}
+(35,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+Ft
+xT
+PZ
+dG
+"}
+(36,1,1) = {"
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+dG
+TD
+dG
+dG
+dG
+"}

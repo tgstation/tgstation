@@ -1,6 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ap" = (
 /obj/structure/chair/comfy/shuttle,
+/obj/structure/sign/poster/official/cleanliness/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aW" = (
@@ -88,9 +89,10 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"gH" = (
-/obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced/spawner/directional/north,
+"hV" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "hZ" = (
@@ -124,7 +126,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "md" = (
-/obj/machinery/power/shuttle_engine/propulsion,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "mg" = (
@@ -323,6 +325,11 @@
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
+"Bm" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/vitals_reader/advanced/directional/west,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
 "Cg" = (
 /obj/machinery/computer/records/security,
 /turf/open/floor/mineral/plastitanium/red,
@@ -375,6 +382,10 @@
 "GY" = (
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Hp" = (
+/obj/structure/lattice,
+/turf/template_noop,
 /area/shuttle/escape)
 "HD" = (
 /obj/item/clothing/suit/hazardvest{
@@ -474,6 +485,12 @@
 "JJ" = (
 /mob/living/basic/bot/medbot/stationary,
 /turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"JK" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "JP" = (
 /obj/structure/table,
@@ -831,7 +848,7 @@
 	id_tag = "stasis2"
 	},
 /obj/machinery/light/dim/directional/west,
-/obj/structure/sign/poster/official/cleanliness/directional/west,
+/obj/machinery/vitals_reader/advanced/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Zv" = (
@@ -948,7 +965,7 @@ HD
 YP
 OP
 EP
-cG
+Bm
 dr
 oX
 OY
@@ -989,8 +1006,8 @@ MX
 vM
 Ue
 Oj
-gH
-md
+Np
+Do
 VU
 "}
 (5,1,1) = {"
@@ -1026,8 +1043,8 @@ RX
 lU
 Ue
 vz
-gH
-md
+Np
+Do
 VU
 "}
 (6,1,1) = {"
@@ -1063,8 +1080,8 @@ DH
 Ue
 Ue
 Sh
-gH
-md
+Np
+Do
 VU
 "}
 (7,1,1) = {"
@@ -1137,7 +1154,7 @@ kr
 oX
 OY
 OY
-Do
+ZB
 Do
 VU
 "}
@@ -1245,8 +1262,8 @@ Do
 Np
 VU
 VU
-Do
-Do
+VU
+VU
 VU
 VU
 VU
@@ -1318,13 +1335,13 @@ gC
 Vf
 OY
 ZB
-Do
 VU
 VU
 VU
 VU
 VU
-VU
+oX
+oX
 "}
 (14,1,1) = {"
 Do
@@ -1352,16 +1369,16 @@ Ll
 Vf
 Vf
 Vf
-EM
+Jh
 oX
 OY
-ZB
 VU
 VU
 VU
 VU
-VU
-VU
+hV
+JK
+oX
 "}
 (15,1,1) = {"
 Do
@@ -1389,16 +1406,16 @@ TR
 qO
 hZ
 Vf
-Jh
-gH
-md
-VU
-VU
-VU
-VU
-VU
-VU
-VU
+Vf
+EM
+oX
+Hp
+Hp
+Hp
+OY
+oX
+oX
+oX
 "}
 (16,1,1) = {"
 VU
@@ -1426,14 +1443,14 @@ Vf
 qO
 hZ
 wB
+Vf
 Jh
-gH
 md
 VU
 VU
-VU
-VU
-VU
+hV
+JK
+oX
 VU
 VU
 "}
@@ -1463,16 +1480,16 @@ Vf
 qO
 hZ
 Vf
+Vf
 Jh
-gH
-md
-VU
-VU
-VU
-VU
-VU
-VU
-VU
+oX
+Hp
+Hp
+Hp
+OY
+oX
+oX
+oX
 "}
 (18,1,1) = {"
 VU
@@ -1503,13 +1520,13 @@ Vf
 KO
 oX
 OY
-Do
 VU
 VU
 VU
 VU
-VU
-VU
+hV
+JK
+oX
 "}
 (19,1,1) = {"
 VU
@@ -1540,11 +1557,11 @@ aY
 OY
 oX
 Do
-Do
 VU
 VU
 VU
 VU
 VU
-VU
+oX
+oX
 "}
