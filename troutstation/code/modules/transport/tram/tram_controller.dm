@@ -11,4 +11,4 @@
 		return
 
 	controller_datum.notify_controller(src)
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(sync_controller))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(sync_controller))
