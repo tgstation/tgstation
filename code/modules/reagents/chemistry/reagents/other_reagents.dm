@@ -524,10 +524,20 @@
 
 /datum/reagent/lube/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
-	if(!istype(exposed_turf))
-		return
-	if(reac_volume >= 1)
-		exposed_turf.MakeSlippery(lube_kind, 15 SECONDS, min(reac_volume * 2 SECONDS, 120))
+	if(isopenturf(exposed_turf) && reac_volume >= 1)
+		exposed_turf.MakeSlippery(lube_kind, 15 SECONDS, min(reac_volume * 2 SECONDS, 12 SECONDS))
+
+/datum/reagent/lube/expose_obj(obj/exposed_obj, reac_volume, methods, show_message)
+	. = ..()
+	if(isitem(exposed_obj) && reac_volume >= 1)
+		exposed_obj.AddComponent( \
+			/datum/component/slippery_item, \
+			fall_chance = (lube_kind == TURF_WET_SUPERLUBE ? 80 : 50), \
+			fall_catch_chance = (lube_kind == TURF_WET_SUPERLUBE ? 10 : 30), \
+			examine_msg = span_info("It's coated in a slippery substance!"), \
+			wash_flags = CLEAN_TYPE_HARD_DECAL, \
+			duration = min(reac_volume * 3 SECONDS, 30 SECONDS), \
+		)
 
 /datum/reagent/lube/used_on_fish(obj/item/fish/fish)
 	ADD_TRAIT(fish, TRAIT_FISH_FED_LUBE, type) //required for the lubefish mutation
