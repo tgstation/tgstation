@@ -1,0 +1,9 @@
+author: "GuffyWuffy"
+delete-after: True
+changes:
+  - rscadd: "Tisserand: two maint modules added"
+  - qol: "Tisserand: all space tubes are crossable"
+  - bugfix: "Tisserand: missing objects, door access, and connections now placed"
+  - bugfix: "Tisserand: AI internal chamber turrets can now be disabled"
+  - map: "Tisserand: adjusted security office locker room, and lobby window"
+  - rscadd: "Orbs"
