@@ -15,7 +15,7 @@
 	if(!can_take_picture(clicker))
 		return
 	clicker.face_atom(clicked_on)
-	captureimage(clicked_on, clicker)
+	captureimage(clicked_on, clicker, picture_size_x - 1, picture_size_y - 1)
 	toggle_camera_mode(clicker, sound = FALSE)
 
 /// Toggles the camera mode on or off.
