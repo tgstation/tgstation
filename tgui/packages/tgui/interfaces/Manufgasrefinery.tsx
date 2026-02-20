@@ -37,7 +37,7 @@ export const Manufgasrefinery = (props) => {
                     >
                       <Stack.Item align="center" width="100%">
                         <Divider/>
-                        PIPED PLASMA: {recipe.plasma_required ? plasma_mols_needed+ " MOL/SHEET" : "NOT NEEDED"}
+                        PIPED PLASMA: {recipe.plasma_required ? `${plasma_mols_needed}  MOL/SHEET` : "NOT NEEDED"}
                         <Divider/>
                         MATERIAL: {recipe.required_material}
                         <Divider/>
@@ -94,7 +94,7 @@ export const Manufgasrefinery = (props) => {
                 textAlign="center"
                 color={last_failure_reason !== null ? "red" : "green"}
               >
-                {last_failure_reason !== null ? "LAST FAIL: "+last_failure_reason : "OK"}
+                {last_failure_reason !== null ? `LAST FAIL: ${last_failure_reason}` : "OK"}
               </Box>
             </Stack.Item>
           </Stack>
