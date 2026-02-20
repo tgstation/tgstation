@@ -60,9 +60,7 @@
 
 /obj/machinery/power/manufacturing/gasrefinery/Initialize(mapload)
 	. = ..()
-	internal_connector = new(loc, src, dir, CELL_VOLUME)
-	internal_connector.disconnect_connector()
-	internal_connector.reconnect_connector() // oh my god fuck this
+	internal_connector = new(loc, src, dir, CELL_VOLUME) //this is the jankiest least functional shit ever and i do not have the knowhow to refactor gas machine connectors
 
 /obj/machinery/power/manufacturing/gasrefinery/Destroy()
 	QDEL_NULL(internal_connector)
