@@ -346,7 +346,7 @@ Behavior that's still missing from this component that original food items had t
 		this_food.reagents.maximum_volume += transferred_volume
 		crafted_part.reagents.trans_to(this_food.reagents, transferred_volume)
 
-	this_food.reagents.maximum_volume = ceil(crafted_part.reagents.maximum_volume)
+	this_food.reagents.maximum_volume = ceil(this_food.reagents.maximum_volume)
 
 	BLACKBOX_LOG_FOOD_MADE(parent.type)
 
