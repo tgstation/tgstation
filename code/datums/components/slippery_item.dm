@@ -17,7 +17,7 @@
 
 	src.fall_chance = fall_chance
 	src.fall_catch_chance = fall_catch_chance
-	src.examine_msg = examine_msg || "It looks very slipper, and may fall out of your hands when you try to use it."
+	src.examine_msg = examine_msg || "It looks very slippery, and may fall out of your hands when you try to use it."
 	src.wash_flags = wash_flags
 	if(duration != INFINITY)
 		QDEL_IN(src, duration)
