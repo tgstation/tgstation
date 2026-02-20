@@ -534,8 +534,6 @@
 
 	if(!no_react)
 		transfer_reactions(target_holder)
-		if(!copy_only)
-			handle_reactions()
 		target_holder.handle_reactions()
 
 	return total_transfered_amount
