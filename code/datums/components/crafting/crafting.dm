@@ -279,7 +279,7 @@
 				qdel(thing)
 	result.setDir(crafter.dir)
 	if(recipe.crafting_flags & CRAFT_CLEARS_REAGENTS)
-		result.reagents.clear_reagents()
+		result.reagents?.clear_reagents()
 	var/datum/reagents/holder = locate() in stuff_to_use
 	if(holder) //transfer reagents from ingredients to result
 		if(!ispath(recipe.result, /obj/item/reagent_containers) && result.reagents && (recipe.crafting_flags & CRAFT_TRANSFERS_REAGENT_COMPONENTS))
