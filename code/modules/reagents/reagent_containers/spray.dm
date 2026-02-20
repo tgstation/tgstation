@@ -241,6 +241,9 @@
 	volume = 10
 	list_reagents = list(/datum/reagent/water = 10)
 
+/obj/item/reagent_containers/spray/waterflower/try_splash(mob/user, atom/target, allow_closed_splash = TRUE)
+	. = ..()
+
 ///Subtype used for the lavaland clown ruin.
 /obj/item/reagent_containers/spray/waterflower/superlube
 	name = "clown flower"

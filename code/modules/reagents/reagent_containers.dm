@@ -141,9 +141,10 @@
 	return NONE
 
 /// Tries to splash the target, called when right-clicking with a reagent container.
-/obj/item/reagent_containers/proc/try_splash(mob/user, atom/target)
-	if (!is_open_container() || (reagents.flags & NO_SPLASH))
-		return FALSE
+/obj/item/reagent_containers/proc/try_splash(mob/user, atom/target, allow_closed_splash = FALSE)
+	if(!allow_closed_splash)
+		if (!is_open_container() || (reagents.flags & NO_SPLASH))
+			return FALSE
 
 	if (!reagents?.total_volume)
 		return FALSE
