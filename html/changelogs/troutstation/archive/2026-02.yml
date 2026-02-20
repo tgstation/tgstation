@@ -8,3 +8,12 @@
 2026-02-19:
   GuffyWuffy:
   - rscadd: Added job estimator in the lobby
+2026-02-20:
+  GuffyWuffy:
+  - rscadd: 'Tisserand: two maint modules added'
+  - qol: 'Tisserand: all space tubes are crossable'
+  - bugfix: 'Tisserand: missing objects, door access, and connections now placed'
+  - bugfix: 'Tisserand: AI internal chamber turrets can now be disabled'
+  - map: 'Tisserand: adjusted security office locker room, and lobby window'
+  - rscadd: Orbs
+  - rscadd: Gay Skitterers are ghost controllable
