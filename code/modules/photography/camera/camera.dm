@@ -256,7 +256,7 @@
 	var/list/dead_spotted = list()
 	var/list/viewlist = getviewsize(user?.client?.view || world.view)
 	var/view_range = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
-	var/viewer = user?.client?.eye || user || target // not sure why target is a fallback
+	var/viewer = get_turf(user?.client?.eye || user || target) // not sure why target is a fallback
 	var/list/seen = get_hear_turfs(view_range, viewer)
 	var/list/turfs = list()
 	var/list/mobs = list()
