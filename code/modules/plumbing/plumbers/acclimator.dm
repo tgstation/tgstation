@@ -82,6 +82,7 @@
 
 	if(acclimate_state == AC_EMPTYING && !reagents.total_volume)
 		acclimate_state = AC_FILLING
+		reagents.flags |= NO_REACT
 		update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/plumbing/acclimator/ui_interact(mob/user, datum/tgui/ui)

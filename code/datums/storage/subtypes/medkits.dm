@@ -19,14 +19,15 @@
 		/obj/item/blood_filter,
 
 		//special tools
-		/obj/item/healthanalyzer,
-		/obj/item/dnainjector,
-		/obj/item/lazarus_injector,
-		/obj/item/implantcase,
-		/obj/item/implant,
-		/obj/item/implanter,
 		/obj/item/blood_scanner,
+		/obj/item/dnainjector,
+		/obj/item/healthanalyzer,
+		/obj/item/implant,
+		/obj/item/implantcase,
+		/obj/item/implanter,
+		/obj/item/lazarus_injector,
 		/obj/item/reflexhammer,
+		/obj/item/tourniquet,
 
 		//stacks
 		/obj/item/stack/medical,
