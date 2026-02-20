@@ -383,18 +383,18 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 		return
 	if(istype(painting_implement, /obj/item/paint_palette))
 		var/obj/item/paint_palette/palette = painting_implement
-		return lowertext(palette.current_color)
+		return LOWER_TEXT(palette.current_color)
 	if(istype(painting_implement, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/crayon = painting_implement
-		return lowertext(crayon.paint_color)
+		return LOWER_TEXT(crayon.paint_color)
 	else if(istype(painting_implement, /obj/item/pen))
 		var/obj/item/pen/pen = painting_implement
-		return lowertext(pen.colour)
+		return LOWER_TEXT(pen.colour)
 	else if (istype(painting_implement, /obj/item/airlock_painter/decal))
 		var/obj/item/airlock_painter/decal/painter = painting_implement
-		return lowertext(painter.selected_custom_color)
+		return LOWER_TEXT(painter.selected_custom_color)
 	else if(istype(painting_implement, /obj/item/soap) || istype(painting_implement, /obj/item/rag))
-		return lowertext(canvas_color)
+		return LOWER_TEXT(canvas_color)
 
 /obj/item/canvas/proc/get_paint_tool_palette(obj/item/painting_implement)
 	if(!painting_implement)
