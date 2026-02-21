@@ -680,40 +680,45 @@
 	if(!hud || !show_static)
 		maptext = null
 		return
+
+	var/round_started = SSticker.HasRoundStarted()
 	if(!MC_RUNNING())
-		maptext = MAPTEXT("<span style='text-align: center; vertical-align: middle'>Loading...</span>")
+		maptext = MAPTEXT("<span style='text-align: center; vertical-align: middle'>[(round_started ? null : "[time_remaining_str()]<br />")]Loading...</span>")
 		return
+
 	if(SSticker.IsPostgame())
 		maptext = MAPTEXT("<span style='text-align: center; vertical-align: middle'>Game ended, <br /> \
 			restart soon</span>")
 		return
 
 	var/new_maptext
-	var/round_started = SSticker.HasRoundStarted()
 	if(round_started)
 		new_maptext = "<span style='text-align: center; vertical-align: middle'>[SSmapping.current_map.map_name]<br /> \
 			[LAZYLEN(GLOB.clients)] player\s online<br /> \
 			[ROUND_TIME()] in<br />"
 		new_maptext += "</span>"
 	else
-		var/time_remaining = SSticker.GetTimeLeft()
-		if(time_remaining > 0)
-			time_remaining = "[round(time_remaining/10)]s"
-		else if(time_remaining == -10)
-			time_remaining = "DELAYED"
-		else
-			time_remaining = "SOON"
-
 		if(hud.mymob.client?.holder)
-			new_maptext = "<span style='text-align: center; vertical-align: middle'>Starting in [time_remaining]<br /> \
+			new_maptext = "<span style='text-align: center; vertical-align: middle'>[time_remaining_str()]<br /> \
 				[LAZYLEN(GLOB.clients)] player\s<br /> \
 				[SSticker.totalPlayersReady] players ready<br /> \
 				[SSticker.total_admins_ready] / [length(GLOB.admins)] admins ready</span>"
 		else
-			new_maptext = "<span style='text-align: center; vertical-align: middle; font-size: 18px'>[time_remaining]</span><br /> \
+			new_maptext = "<span style='text-align: center; vertical-align: middle; font-size: 18px'>[time_remaining_str()]</span><br /> \
 				<span style='text-align: center; vertical-align: middle'>[LAZYLEN(GLOB.clients)] player\s</span>"
 
 	maptext = MAPTEXT(new_maptext)
+
+/atom/movable/screen/lobby/new_player_info/proc/time_remaining_str()
+	var/time_remaining = SSticker.GetTimeLeft()
+	if(time_remaining > 0)
+		time_remaining = "[round(time_remaining/10)]s"
+	else if(time_remaining == -10)
+		time_remaining = "DELAYED"
+	else
+		time_remaining = "SOON"
+
+	return "Starting in [time_remaining]"
 
 #undef OVERLAY_X_DIFF
 #undef OVERLAY_Y_DIFF

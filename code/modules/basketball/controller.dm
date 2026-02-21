@@ -196,7 +196,6 @@ GLOBAL_VAR(basketball_game)
 			baller.AddComponent( \
 				/datum/component/temporary_body, \
 				old_mind = player_client.mob.mind, \
-				old_body = player_client.mob.mind.current, \
 			)
 		baller.PossessByPlayer(player_key)
 		minigame_basketball_mobs |= baller

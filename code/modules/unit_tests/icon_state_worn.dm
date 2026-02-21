@@ -1,25 +1,9 @@
 /// Makes sure suit slot items aren't using CS:S fallbacks.
-/datum/unit_test/worn_icons
-	var/static/list/possible_icon_states = list()
-	/// additional_icon_location is for downstream modularity support for finding missing sprites in additonal DMI file locations.
-	/// Make sure this location is also present in tools/deploy.sh
-	/// If you need additional paths ontop of this second one, you can add another generate_possible_icon_states_list("your/folder/path/") below the if(additional_icon_location) block in Run(), and make sure to add that path to tools/deploy.sh as well.
-	var/additional_icon_location = null
+/datum/unit_test/missing_icons/worn_icons
+	default_location = "icons/mob/clothing/"
 
-/datum/unit_test/worn_icons/proc/generate_possible_icon_states_list(directory_path)
-	if(!directory_path)
-		directory_path = "icons/mob/clothing/"
-	for(var/file_path in flist(directory_path))
-		if(findtext(file_path, ".dmi"))
-			for(var/sprite_icon in icon_states("[directory_path][file_path]", 1)) //2nd arg = 1 enables 64x64+ icon support, otherwise you'll end up with "sword0_1" instead of "sword"
-				possible_icon_states[sprite_icon] += list("[directory_path][file_path]")
-		else
-			possible_icon_states += generate_possible_icon_states_list("[directory_path][file_path]")
-
-/datum/unit_test/worn_icons/Run()
-	generate_possible_icon_states_list()
-	if(additional_icon_location)
-		generate_possible_icon_states_list(additional_icon_location)
+/datum/unit_test/missing_icons/worn_icons/Run()
+	compile_icon_state_locations()
 
 	var/list/already_warned_icons = list()
 

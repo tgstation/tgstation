@@ -8,7 +8,6 @@
 	icon = 'icons/obj/pipes_n_cables/hydrochem/plumbers.dmi'
 	icon_state = "pump"
 	density = TRUE
-	subsystem_type = /datum/controller/subsystem/processing/plumbing
 	processing_flags = START_PROCESSING_MANUALLY
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.75
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -18,7 +17,7 @@
 	///Plumbing machinery is always gonna need reagents, so we might aswell put it here
 	var/buffer = 50
 	///Flags for reagents, like INJECTABLE, TRANSPARENT bla bla everything thats in DEFINES/reagents.dm
-	var/reagent_flags = TRANSPARENT
+	var/reagent_flags = TRANSPARENT | NO_REACT
 
 /obj/machinery/plumbing/Initialize(mapload)
 	. = ..()

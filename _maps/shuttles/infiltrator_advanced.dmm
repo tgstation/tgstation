@@ -378,7 +378,7 @@
 /obj/item/storage/box/bodybags{
 	pixel_y = 6
 	},
-/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/wrap/gauze,
 /obj/item/stack/medical/bruise_pack{
 	pixel_x = 6
 	},

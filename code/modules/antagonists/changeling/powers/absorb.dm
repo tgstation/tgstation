@@ -40,7 +40,15 @@
 
 	SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "4"))
 	owner.visible_message(span_danger("[owner] sucks the fluids from [target]!"), span_notice("We have absorbed [target]."))
-	to_chat(target, span_userdanger("You are absorbed by the changeling!"))
+
+	if(target.client && target.mind)
+		var/mob/eye/imaginary_friend/hivemind/new_member = new(target.loc)
+		new_member.AddComponent(/datum/component/temporary_body, old_mind = target.mind, return_on_revive = TRUE)
+		new_member.real_name = target.real_name
+		new_member.gender = target.gender
+		new_member.human_icon = get_flat_human_icon(null, target.mind.assigned_role, target.client.prefs)
+		new_member.PossessByPlayer(target.ckey)
+		new_member.attach_to_owner(owner)
 
 	var/true_absorbtion = (!isnull(target.client) || !isnull(target.mind) || !isnull(target.last_mind))
 	if (!true_absorbtion)
@@ -159,4 +167,129 @@
 			qdel(absorbing_loop)
 			is_absorbing = FALSE
 			return FALSE
+	return TRUE
+
+/mob/eye/imaginary_friend/hivemind
+	name = "hivemind member"
+	desc = "A drifting thought in the ocean that is the changeling hivemind."
+	distance_allowance = 5
+	require_los = TRUE
+	hidden = TRUE
+	/// Don't spam the hivemind on login logout
+	var/alerted = FALSE
+
+/mob/eye/imaginary_friend/hivemind/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CHANGELING_HIVEMIND, INNATE_TRAIT)
+	var/datum/action/innate/exit_hivemind/exit_action = new(src)
+	exit_action.Grant(src)
+
+/mob/eye/imaginary_friend/hivemind/Login()
+	. = ..()
+	client.eye = owner || src
+
+/mob/eye/imaginary_friend/hivemind/greet()
+
+	var/greet_message = ""
+	greet_message += separator_hr(span_danger(span_slightly_larger("You are absorbed by the changeling!")))
+	greet_message += "You are now a part of the changeling hivemind, and can communicate with them freely by speaking. \
+		Your knowledge may be useful to them..."
+	greet_message += "<br>You may also choose to <a href='byond://?src=[REF(src)];exit_hivemind=1'>exit the hivemind</a> \
+		if you prefer to observe instead."
+	greet_message += "<br>Either way, if your body or brain is revived, you will be returned to it as normal."
+
+	to_chat(src, boxed_message(span_changeling(greet_message)))
+
+	if(!alerted)
+		alerted = TRUE
+		alert_hivemind("You sense the presence of [real_name] in the hivemind.")
+
+/mob/eye/imaginary_friend/hivemind/send_speech(message, range, obj/source, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced)
+	// chops any message mods, even though they won't actually do anything
+	message = get_message_mods(message, message_mods)
+	// forces message through the changeling saymode
+	var/datum/saymode/changeling/saymode = SSradio.saymodes[/datum/saymode/changeling::key]
+	saymode.handle_message(src, message, spans, message_language, message_mods)
+
+/mob/eye/imaginary_friend/hivemind/Topic(href, list/href_list)
+	. = ..()
+	if(href_list["exit_hivemind"] && !QDELETED(src))
+		exit_hivemind()
+
+/mob/eye/imaginary_friend/hivemind/verb/exit_hivemind()
+	set category = "IC"
+	set name = "Exit Hivemind"
+	set desc = "Leave the hivemind behind and enter the land of the dead."
+
+	var/response = tgui_alert(src, "Are you sure you want to exit the hivemind? \
+		You can't re-enter it, though you can still be revived.", "Confirm Exit", list("Exit", "Stay"))
+	if(response != "Exit" || QDELETED(src))
+		return
+	ghostize(TRUE)
+
+/mob/eye/imaginary_friend/hivemind/ghostize(can_reenter_corpse, admin_ghost)
+	. = ..()
+	if(admin_ghost)
+		return
+
+	alert_hivemind("You sense the presence of [real_name] disappear from the hivemind.")
+	if(!QDELING(src))
+		qdel(src)
+
+/mob/eye/imaginary_friend/hivemind/proc/alert_hivemind(message)
+	var/datum/saymode/changeling/saymode = SSradio.saymodes[/datum/saymode/changeling::key]
+	for(var/mob/ling_mob as anything in saymode.get_lings() - src)
+		to_chat(ling_mob, span_changeling("<i>[message]</i>"))
+
+/mob/eye/imaginary_friend/hivemind/attach_to_owner(mob/living/imaginary_friend_owner)
+	. = ..()
+	client?.eye = owner
+	if(locate(/datum/action/changeling/eject_from_hivemind) in owner.actions)
+		return
+	var/datum/action/changeling/eject_from_hivemind/ejector = new(owner)
+	ejector.Grant(owner)
+
+/mob/eye/imaginary_friend/hivemind/Destroy()
+	for(var/mob/eye/imaginary_friend/hivemind/other_member in owner.imaginary_group - src)
+		return ..()
+
+	var/datum/action/changeling/eject_from_hivemind/ejector = locate() in owner.actions
+	qdel(ejector)
+	return ..()
+
+/datum/action/innate/exit_hivemind
+	name = "Exit Hivemind"
+	desc = "Exit the changeling hivemind permanently. You may still be revived later."
+	// button_icon_state = "exit_hivemind"
+
+/datum/action/innate/exit_hivemind/Activate()
+	var/mob/eye/imaginary_friend/hivemind/member = owner
+	member.exit_hivemind()
+
+/// Allow the changeling to nuke people griffing them
+/datum/action/changeling/eject_from_hivemind
+	name = "Eject from Hivemind"
+	desc = "Eject an unwanted member from the hivemind."
+	// button_icon_state = "eject_hivemind"
+	chemical_cost = 0
+	dna_cost = CHANGELING_POWER_UNOBTAINABLE
+
+/datum/action/changeling/eject_from_hivemind/sting_action(mob/living/user)
+	var/list/freeloaders = list()
+	for(var/mob/eye/imaginary_friend/hivemind/freeloader in user.imaginary_group)
+		freeloaders[freeloader.real_name] = freeloader
+
+	if(!length(freeloaders))
+		stack_trace("Tried to eject from hivemind with no hivemind members!")
+		qdel(src)
+		return FALSE
+
+	var/chosen = tgui_input_list(owner, "Choose a member to eject from the hivemind.", "Eject Hivemind Member", freeloaders)
+	var/mob/eye/imaginary_friend/hivemind/freeloader = freeloaders[chosen]
+	if(QDELETED(freeloader) || QDELETED(src))
+		return FALSE
+
+	to_chat(freeloader, span_userdanger("You have been ejected from the changeling hivemind!"))
+	qdel(freeloader)
+	..()
 	return TRUE

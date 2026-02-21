@@ -340,7 +340,7 @@
 			trauma_data["id"] = quirk_type
 			trauma_info += list(trauma_data)
 
-		for(var/datum/addiction/addiction_type as anything in valid_subtypesof(/datum/addiction))
+		for(var/datum/addiction/addiction_type as anything in GLOB.addictions)
 			var/list/trauma_data = list()
 			trauma_data["full_name"] = "[capitalize(addiction_type::name)] Addiction"
 			trauma_data["scan_name"] = "[addiction_type::name] addiction"
