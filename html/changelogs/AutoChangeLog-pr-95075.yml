@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "When the Paddy enables its sirens, it also enables overclock mode, speeding it up 1.5x."
-  - balance: "Paddy is forced onto overclock safety mode, meaning said overclock will self-disable eventually."

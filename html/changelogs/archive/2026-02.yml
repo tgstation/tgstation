@@ -267,3 +267,11 @@
   mcbalaam:
   - rscadd: E.X.P.E.R.I-MENTOR now has proper wires
   - refactor: Refactored the E.X.P.E.R.I-MENTOR and it's E.X.P.E.R.I-ment system
+2026-02-21:
+  Melbert:
+  - balance: When the Paddy enables its sirens, it also enables overclock mode, speeding
+      it up 1.5x.
+  - balance: Paddy is forced onto overclock safety mode, meaning said overclock will
+      self-disable eventually.
+  lelandkemble:
+  - bugfix: Radio encryption keys are no longer tied to their radios once removed
