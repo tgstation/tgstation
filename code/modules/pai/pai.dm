@@ -318,12 +318,8 @@
  * 	or FALSE if the pAI is not being carried.
  */
 /mob/living/silicon/pai/proc/get_holder()
-	var/mob/living/carbon/holder
-	if(!holoform && iscarbon(card.loc))
-		holder = card.loc
-	if(holoform && ispickedupmob(loc) && iscarbon(loc.loc))
-		holder = loc.loc
-	if(!holder || !iscarbon(holder))
+	var/mob/holder = recursive_loc_check(card, /mob)
+	if(isnull(holder))
 		return FALSE
 	return holder
 
