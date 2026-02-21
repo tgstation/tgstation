@@ -502,7 +502,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		)
 
 	else if(ishuman(guy_infront) && guy_infront.get_bodypart(BODY_ZONE_HEAD) && !guy_infront.is_pepper_proof())
-		guy_infront.visible_message(
+		smoker.visible_message(
 			span_notice("[smoker] exhales a large cloud of smoke from [src] directly at [guy_infront]'s face!"),
 			span_notice("You exhale a large cloud of smoke from [src] directly at [guy_infront]'s face."),
 			ignored_mobs = guy_infront,
@@ -511,7 +511,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		smoke_in_face(guy_infront)
 
 	else
-		guy_infront.visible_message(
+		smoker.visible_message(
 			span_notice("[smoker] exhales a large cloud of smoke from [src] at [guy_infront]."),
 			span_notice("You exhale a large cloud of smoke from [src] at [guy_infront]."),
 		)
@@ -888,16 +888,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 20 MINUTES
 	chem_volume = 80
 	list_reagents = list(/datum/reagent/drug/nicotine = 40)
+	type_butt = /obj/item/cigbutt/cigarbutt/cohiba
 
 /obj/item/cigarette/cigar/havana
 	name = "premium Havanian cigar"
 	desc = "A cigar fit for only the best of the best."
-	icon_state = "cigar2off"
-	icon_on = "cigar2on"
-	icon_off = "cigar2off"
+	icon_state = "cigar3off"
+	icon_on = "cigar3on"
+	icon_off = "cigar3off"
 	smoketime = 30 MINUTES
 	chem_volume = 60
 	list_reagents = list(/datum/reagent/drug/nicotine = 45)
+	type_butt = /obj/item/cigbutt/cigarbutt/havana
 
 /obj/item/cigbutt
 	name = "cigarette butt"
@@ -914,6 +916,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "cigar butt"
 	desc = "A manky old cigar butt."
 	icon_state = "cigarbutt"
+
+/obj/item/cigbutt/cigarbutt/cohiba
+	icon_state = "cigar2butt"
+
+/obj/item/cigbutt/cigarbutt/havana
+	icon_state = "cigar3butt"
 
 /////////////////
 //SMOKING PIPES//

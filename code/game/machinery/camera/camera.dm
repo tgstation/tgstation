@@ -144,7 +144,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/Destroy(force)
 	if(can_use())
 		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
-	SScameras.remove_camera_from_chunk(src)
 	SScameras.cameras -= src
 	cancelCameraAlarm()
 	if(isarea(myarea))
@@ -154,6 +153,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	QDEL_NULL(xray_module)
 	QDEL_NULL(emp_module)
 	QDEL_NULL(proximity_monitor)
+	// moveToNullspace will clear us from our current chunks
 	return ..()
 
 /obj/machinery/camera/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
@@ -179,6 +179,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	else if(gone == proximity_monitor)
 		emp_module = null
 		removeMotion()
+
+/obj/machinery/camera/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	SScameras.camera_moved(src, get_turf(old_loc), get_turf(loc))
 
 /obj/machinery/camera/proc/create_prox_monitor()
 	if(!proximity_monitor)
@@ -271,6 +275,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	user.switchCamera(src)
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
+	if(num > MAX_CAMERA_RANGE)
+		CRASH("Attempted to set camera view range to something ([num]) greater then we support ([MAX_CAMERA_RANGE]).\
+			This would break chunk updating. If you really need to do this, update MAX_CAMERA_RANGE")
 	src.view_range = num
 	SScameras.update_visibility(src)
 
@@ -424,10 +431,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		// Haha datum var access KILL ME
 		for(var/turf/seen as anything in see)
 			if(check_lower)
-				var/turf/below = GET_TURF_BELOW(seen)
+				var/turf/below = seen
 				while(below && istransparentturf(below))
-					see += RANGE_TURFS(1, below)
 					below = GET_TURF_BELOW(below)
+					see += RANGE_TURFS(1, below)
 			if(check_higher)
 				var/turf/above = GET_TURF_ABOVE(seen)
 				while(above && istransparentturf(above))
