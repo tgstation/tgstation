@@ -275,6 +275,10 @@
       the most recently sold stock block.
   Aliceee2ch:
   - bugfix: Replaced loot spawner in Catwalk's space to prevent flaky errors.
+  Dominion:
+  - image: After decades of failing to compete with Cohiba Robustos, Havana cigars
+      have rebranded to a new colour theme.
+  - image: Cigar butts are now distinguishable based on the type of cigar it was.
   LemonInTheDark:
   - bugfix: Cameras should work a little better (won't fail in the dark, will display
       multiz correctly
