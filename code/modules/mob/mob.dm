@@ -438,7 +438,7 @@
 	return TRUE
 
 /mob/dead/observer/runechat_prefs_check(mob/target, visible_message_flags = NONE)
-	if(!target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
+	if(!..())
 		return FALSE
 	if(!target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat_ghosts))
 		return FALSE
