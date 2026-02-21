@@ -1,0 +1,8 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Paper UI now updates immediately when you pick up or drop a writing tool."
+  - qol: "The roundstart command report has had its style updated, and now contains some bonus lore."
+  - admin: "Changes the perms needed to add command report footnotes to \"Fun\" rather than \"Admin\""
+  - admin: "Adds a verb for changing the command report main contents (Requiring \"Fun\")"
+  - config: "Adds a config for hiding the dynamic report, disabled by default (disabled meaning you still get the report)"
