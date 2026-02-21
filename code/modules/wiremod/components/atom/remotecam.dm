@@ -189,7 +189,9 @@
 /obj/item/circuit_component/remotecam/proc/update_camera_location(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 	if(current_camera_state && current_cameranet_state)
-		SScameras.update_portable_camera(shell_camera, 0.5 SECONDS)
+		if(!shell_camera?.can_use())
+			return
+		SScameras.camera_moved(shell_camera, get_turf(old_loc), get_turf(shell_camera), 0.5 SECONDS)
 
 /**
  * Add camera from global cameranet
