@@ -502,7 +502,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		)
 
 	else if(ishuman(guy_infront) && guy_infront.get_bodypart(BODY_ZONE_HEAD) && !guy_infront.is_pepper_proof())
-		guy_infront.visible_message(
+		smoker.visible_message(
 			span_notice("[smoker] exhales a large cloud of smoke from [src] directly at [guy_infront]'s face!"),
 			span_notice("You exhale a large cloud of smoke from [src] directly at [guy_infront]'s face."),
 			ignored_mobs = guy_infront,
@@ -511,7 +511,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		smoke_in_face(guy_infront)
 
 	else
-		guy_infront.visible_message(
+		smoker.visible_message(
 			span_notice("[smoker] exhales a large cloud of smoke from [src] at [guy_infront]."),
 			span_notice("You exhale a large cloud of smoke from [src] at [guy_infront]."),
 		)
