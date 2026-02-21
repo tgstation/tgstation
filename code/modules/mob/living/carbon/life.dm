@@ -80,8 +80,10 @@
 
 	var/datum/gas_mixture/breath
 
-	if(!get_organ_slot(ORGAN_SLOT_BREATHING_TUBE))
-		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby?.grab_state >= GRAB_KILL) || (lungs?.organ_flags & ORGAN_FAILING))
+	if(lungs?.organ_flags & ORGAN_FAILING)
+		losebreath++
+	else if(!get_organ_slot(ORGAN_SLOT_BREATHING_TUBE))
+		if(health <= HEALTH_THRESHOLD_FULLCRIT || pulledby?.grab_state >= GRAB_KILL)
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
 		else if(health <= crit_threshold)
