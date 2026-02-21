@@ -30,7 +30,7 @@ STATIONNAME Space Station 13
 ## Put on byond hub: Uncomment this to put your server on the byond hub.
 #HUB
 
-## Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready. This is inclusive of initialization time, if initializations take longer, the round will start immediately once they complete
+## Lobby time: This is the amount of time in seconds between rounds that players have to setup their characters and be ready. This is inclusive of initialization time, if initializations take longer, the round will start immediately once they complete
 LOBBY_COUNTDOWN 120
 
 ## Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
