@@ -44,7 +44,8 @@
 			client.mob.me_verb(entry)
 			return TRUE
 		if(OOC_CHANNEL)
-			INVOKE_ASYNC(client, TYPE_PROC_REF(/client, ooc), entry)
+			ASYNC
+				client.ooc(entry)
 			return TRUE
 		if(ADMIN_CHANNEL)
 			INVOKE_ASYNC(SSadmin_verbs, TYPE_PROC_REF(/datum/controller/subsystem/admin_verbs, dynamic_invoke_verb), client, /datum/admin_verb/cmd_admin_say, entry)
