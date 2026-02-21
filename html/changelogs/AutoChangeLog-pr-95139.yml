@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Exporting stock blocks no longer uses its own elasticity value separate from the materials exports, and no longer erroneously shows the stock block elasticity instead of the material elasticity in the GMM for the material of the most recently sold stock block."
