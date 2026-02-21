@@ -1,0 +1,4 @@
+author: "MajManatee"
+delete-after: True
+changes:
+  - bugfix: "Smoke blowing emote perspective is now correct."
