@@ -328,26 +328,28 @@
 /**
  * Handles winning the event, gives everyone a payout and start boulder production
  */
-/obj/structure/ore_vent/proc/initiate_wave_win()
+/obj/structure/ore_vent/proc/initiate_wave_win(forced = FALSE)
 	tapped = TRUE //The Node Drone has survived the wave defense, and the ore vent is tapped.
 	SSore_generation.processed_vents += src
-	log_game("Ore vent [key_name_and_tag(src)] was tapped")
-	SSblackbox.record_feedback("tally", "ore_vent_completed", 1, type)
-	balloon_alert_to_viewers("vent tapped!")
+	if(!forced)
+		log_game("Ore vent [key_name_and_tag(src)] was tapped")
+		SSblackbox.record_feedback("tally", "ore_vent_completed", 1, type)
+		balloon_alert_to_viewers("vent tapped!")
 	icon_state = icon_state_tapped
 	update_appearance(UPDATE_ICON_STATE)
 	qdel(GetComponent(/datum/component/gps))
 
-	for(var/mob/living/miner in range(7, src)) //Give the miners who are near the vent points and xp.
-		var/obj/item/card/id/user_id_card = miner.get_idcard(TRUE)
-		if(miner.stat <= SOFT_CRIT)
-			miner.mind?.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * boulder_size)
-		if(!user_id_card)
-			continue
-		var/point_reward_val = (MINER_POINT_MULTIPLIER * boulder_size) - MINER_POINT_MULTIPLIER // We remove the base value of discovering the vent
-		if(user_id_card.registered_account)
-			user_id_card.registered_account.mining_points += point_reward_val
-			user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
+	if(!forced)
+		for(var/mob/living/miner in range(7, src)) //Give the miners who are near the vent points and xp.
+			var/obj/item/card/id/user_id_card = miner.get_idcard(TRUE)
+			if(miner.stat <= SOFT_CRIT)
+				miner.mind?.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * boulder_size)
+			if(!user_id_card)
+				continue
+			var/point_reward_val = (MINER_POINT_MULTIPLIER * boulder_size) - MINER_POINT_MULTIPLIER // We remove the base value of discovering the vent
+			if(user_id_card.registered_account)
+				user_id_card.registered_account.mining_points += point_reward_val
+				user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
 	reset_drone(success = TRUE)
 	add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", ABOVE_MOB_LAYER))
 
