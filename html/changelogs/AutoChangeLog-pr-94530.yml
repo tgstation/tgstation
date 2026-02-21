@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - bugfix: "Cameras should work a little better (won't fail in the dark, will display multiz correctly"
-  - refactor: "Changed how static turf generation thinks about cameras. Shouldn't break anything but it MIGHT so keep an eye out for that. The chunks we use to divvy up the world for them are also 1/4th the area now, which should make flying around as ai less lagsikey"

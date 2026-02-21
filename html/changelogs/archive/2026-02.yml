@@ -268,8 +268,20 @@
   - rscadd: E.X.P.E.R.I-MENTOR now has proper wires
   - refactor: Refactored the E.X.P.E.R.I-MENTOR and it's E.X.P.E.R.I-ment system
 2026-02-21:
+  00-Steven:
+  - bugfix: Exporting stock blocks no longer uses its own elasticity value separate
+      from the materials exports, and no longer erroneously shows the stock block
+      elasticity instead of the material elasticity in the GMM for the material of
+      the most recently sold stock block.
   Aliceee2ch:
   - bugfix: Replaced loot spawner in Catwalk's space to prevent flaky errors.
+  LemonInTheDark:
+  - bugfix: Cameras should work a little better (won't fail in the dark, will display
+      multiz correctly
+  - refactor: Changed how static turf generation thinks about cameras. Shouldn't break
+      anything but it MIGHT so keep an eye out for that. The chunks we use to divvy
+      up the world for them are also 1/4th the area now, which should make flying
+      around as ai less lagsikey
   MajManatee:
   - bugfix: Smoke blowing emote perspective is now correct.
   Melbert:
@@ -277,7 +289,17 @@
       it up 1.5x.
   - balance: Paddy is forced onto overclock safety mode, meaning said overclock will
       self-disable eventually.
+  - qol: Paper UI now updates immediately when you pick up or drop a writing tool.
+  - qol: The roundstart command report has had its style updated, and now contains
+      some bonus lore.
+  - admin: Changes the perms needed to add command report footnotes to "Fun" rather
+      than "Admin"
+  - admin: Adds a verb for changing the command report main contents (Requiring "Fun")
+  - config: Adds a config for hiding the dynamic report, disabled by default (disabled
+      meaning you still get the report)
   SmArtKar:
   - bugfix: Fixed tapes being invisible
+  - spellcheck: Fixed the channel D-Notice toggle description
+  - bugfix: Fixed shuttle chair buckle bars not appearing until sat on
   lelandkemble:
   - bugfix: Radio encryption keys are no longer tied to their radios once removed
