@@ -1,0 +1,5 @@
+author: "Dominion"
+delete-after: True
+changes:
+  - rscadd: "Added a 3x handheld crew monitor medical crate to cargo."
+  - rscadd: "Added a goodie crate with a handheld crew monitor to cargo."
