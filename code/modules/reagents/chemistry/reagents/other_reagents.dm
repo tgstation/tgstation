@@ -2808,11 +2808,15 @@
 
 /datum/reagent/metalgen/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
-	metal_morph(exposed_obj)
+	// Don't morph holographic or abstract objects
+	if (!(exposed_obj.flags_1 & HOLOGRAM_1) && exposed_obj.invisibility < INVISIBILITY_ABSTRACT)
+		metal_morph(exposed_obj)
 
 /datum/reagent/metalgen/expose_turf(turf/exposed_turf, volume)
 	. = ..()
-	metal_morph(exposed_turf)
+	// Or non-real turfs
+	if (isclosedturf(exposed_turf) || isopenturf(exposed_turf))
+		metal_morph(exposed_turf)
 
 ///turn an object into a special material
 /datum/reagent/metalgen/proc/metal_morph(atom/target)
