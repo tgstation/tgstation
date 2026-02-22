@@ -20,17 +20,11 @@
 
 /obj/item/ammo_box/magazine/recharge/ctf
 	ammo_type = /obj/item/ammo_casing/laser/ctf
-
-/obj/item/ammo_box/magazine/recharge/ctf/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/delete_on_drop)
+	item_flags = DROPDEL
 
 /obj/item/ammo_casing/laser/ctf
 	projectile_type = /obj/projectile/beam/ctf/
-
-/obj/item/ammo_casing/laser/ctf/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/delete_on_drop)
+	item_flags = DROPDEL
 
 // LASER RIFLE
 
@@ -40,10 +34,7 @@
 	force = 50
 	weapon_weight = WEAPON_HEAVY
 	slot_flags = null
-
-/obj/item/gun/ballistic/automatic/laser/ctf/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/delete_on_drop)
+	item_flags = DROPDEL
 
 /obj/item/ammo_box/magazine/recharge/ctf/rifle
 	ammo_type = /obj/item/ammo_casing/laser/ctf/rifle
@@ -71,10 +62,7 @@
 	semi_auto = TRUE
 	internal_magazine = FALSE
 	tac_reloads = TRUE
-
-/obj/item/gun/ballistic/shotgun/ctf/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/delete_on_drop)
+	item_flags = DROPDEL
 
 /obj/item/ammo_box/magazine/recharge/ctf/shotgun
 	ammo_type = /obj/item/ammo_casing/laser/ctf/shotgun
@@ -124,10 +112,7 @@
 	desc = "This looks like it could really hurt in melee."
 	force = 75
 	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/deagle
-
-/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/delete_on_drop)
+	item_flags = DROPDEL
 
 /obj/item/ammo_box/magazine/recharge/ctf/deagle
 	ammo_type = /obj/item/ammo_casing/laser/ctf/deagle
@@ -164,9 +149,9 @@
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
-/obj/item/gun/energy/laser/instakill/ctf/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/delete_on_drop)
+//Only difference is that it deletes on drop, like other CTF equipment
+/obj/item/gun/energy/laser/instakill/ctf
+	item_flags = DROPDEL
 
 /obj/item/ammo_casing/energy/instakill
 	projectile_type = /obj/projectile/beam/instakill
