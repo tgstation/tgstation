@@ -311,6 +311,8 @@
   GregariousJB:
   - qol: 'Keybinding visual improvements: "Unbound" is grayed out and custom binds
       are highlighted in green for better visibility'
+  JohnFulpWillard:
+  - qol: You now need to click twice on the telecomms monitor console to wipe logs.
   SmArtKar:
   - bugfix: Fixed incorrect deuteragonist being passed to surgery memories
   - refactor: Refactored the material system to calculate material effects based on
@@ -325,3 +327,5 @@
       simplified.
   - image: Iron toolboxes now get printed with a random sprite instead of being grey.
   - bugfix: Fixed metalgenned armor having broken armor stat calculations.
+  lelandkemble:
+  - bugfix: Fixed infinite machine guns
