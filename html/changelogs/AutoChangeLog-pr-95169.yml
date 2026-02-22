@@ -1,0 +1,6 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Dead ghosts will return to the grave upon dying."
+  - bugfix: "When you dig up a ghost's grave you will find the skeleton of that ghost, not the skeleton of some other random guy."
+  - bugfix: "The grave will also contain all of the ghost's worldly belongings."
