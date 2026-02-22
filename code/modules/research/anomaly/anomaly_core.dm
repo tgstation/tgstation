@@ -9,7 +9,7 @@
 	resistance_flags = FIRE_PROOF
 	custom_materials = null
 	assembly_behavior = ASSEMBLY_FUNCTIONAL_OUTPUT
-	var/anomaly_type = /obj/effect/anomaly
+	var/obj/effect/anomaly/anomaly_type = /obj/effect/anomaly
 
 /obj/item/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
 	if(!signal)
