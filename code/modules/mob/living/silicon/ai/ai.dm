@@ -140,6 +140,7 @@
 	GLOB.ai_list -= src
 	GLOB.shuttle_caller_list -= src
 	SSshuttle.autoEvac()
+	disable_camera_telegraphing() // Clean up camera red lights before destroying
 	QDEL_NULL(eyeobj) // No AI, no Eye
 	QDEL_NULL(spark_system)
 	QDEL_NULL(malf_picker)
@@ -174,6 +175,7 @@
 /mob/living/silicon/ai
 	var/selected_display_name
 	var/mutable_appearance/portrait_appearance
+	var/list/obj/machinery/camera/telegraphed_cameras = list() // Cameras currently showing the red "in use" indicator
 
 /mob/living/silicon/ai/proc/set_core_display_icon(input, client/C)
 	portrait_appearance = null
@@ -736,6 +738,13 @@
 
 	to_chat(src, "Camera lights activated.")
 
+/// Disables all camera telegraphing
+/mob/living/silicon/ai/proc/disable_camera_telegraphing()
+	for (var/obj/machinery/camera/C in telegraphed_cameras)
+		C.in_use_lights--
+		C.update_icon()
+	telegraphed_cameras.Cut()
+
 //AI_CAMERA_LUMINOSITY
 
 /mob/living/silicon/ai/proc/light_cameras()
@@ -758,6 +767,30 @@
 	for (var/obj/machinery/camera/C in add)
 		C.Togglelight(1)
 		lit_cameras |= C
+
+/// Updates the red "in use" indicator on cameras the AI is viewing
+/mob/living/silicon/ai/proc/telegraph_cameras()
+	var/list/obj/machinery/camera/add = list()
+	var/list/obj/machinery/camera/remove = list()
+	var/list/obj/machinery/camera/visible = list()
+	for (var/datum/camerachunk/chunk as anything in eyeobj.visibleCameraChunks)
+		for (var/z_key in chunk.cameras)
+			for(var/obj/machinery/camera/camera as anything in chunk.cameras[z_key])
+				if(isnull(camera) || !camera.can_use() || get_dist(camera, eyeobj) > 7)
+					continue
+				visible |= camera
+
+	add = visible - telegraphed_cameras
+	remove = telegraphed_cameras - visible
+
+	for (var/obj/machinery/camera/C in remove)
+		telegraphed_cameras -= C
+		C.in_use_lights--
+		C.update_icon()
+	for (var/obj/machinery/camera/C in add)
+		telegraphed_cameras |= C
+		C.in_use_lights++
+		C.update_icon()
 
 /mob/living/silicon/ai/proc/control_integrated_radio()
 	set name = "Transceiver Settings"
@@ -1063,6 +1096,8 @@
 
 /mob/living/silicon/ai/proc/camera_visibility(mob/eye/camera/ai/moved_eye)
 	SScameras.update_eye_chunk(moved_eye)
+	if(moved_eye == eyeobj) // Only telegraph for the main eye
+		telegraph_cameras()
 
 /mob/living/silicon/ai/forceMove(atom/destination)
 	. = ..()

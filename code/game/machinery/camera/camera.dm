@@ -200,6 +200,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/examine(mob/user)
 	. = ..()
 
+	if(in_use_lights)
+		. += span_notice("It's red! It looks like it's currently in use.")
+
 	if(isEmpProof(TRUE)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
 		. += span_info("It has electromagnetic interference shielding installed.")
 	else
@@ -467,11 +470,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 ///Called when the camera starts being watched on a camera console.
 /obj/machinery/camera/proc/on_start_watching()
-	return
+	in_use_lights++
+	update_appearance()
 
 ///Called when the camera stops being watched on a camera console.
 /obj/machinery/camera/proc/on_stop_watching()
-	return
+	in_use_lights--
+	if(in_use_lights < 0)
+		in_use_lights = 0
+	update_appearance()
 
 /obj/machinery/camera/proc/calculate_active_power()
 	if(!can_use())
