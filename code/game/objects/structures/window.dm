@@ -985,11 +985,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	. += (atom_integrity < max_integrity) ? torn : paper
 
 /obj/structure/window/paperframe/attackby(obj/item/W, mob/living/user)
-	if(W.get_temperature())
+	if(W.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		fire_act(W.get_temperature())
 		return
+
 	if(user.combat_mode)
 		return ..()
+
 	if(istype(W, /obj/item/paper) && atom_integrity < max_integrity)
 		user.visible_message(span_notice("[user] starts to patch the holes in \the [src]."))
 		if(do_after(user, 2 SECONDS, target = src))

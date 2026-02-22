@@ -921,8 +921,9 @@
 		new /obj/effect/hotspot(get_turf(target))
 
 /obj/item/reagent_containers/cup/glass/bottle/molotov/item_interaction(mob/living/user, obj/item/item, list/modifiers)
-	if(!item.get_temperature() || active)
+	if(item.get_temperature() < FIRE_MINIMUM_TEMPERATURE_TO_EXIST || active)
 		return NONE
+
 	active = TRUE
 	log_bomber(user, "has primed a", src, "for detonation")
 
