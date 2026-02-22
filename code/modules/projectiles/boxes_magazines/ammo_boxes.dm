@@ -27,6 +27,10 @@
 	name = "ammo box (40mm rubber slug)"
 	ammo_type = /obj/item/ammo_casing/a40mm/rubber
 
+/obj/item/ammo_box/a40mm/flak
+	name = "ammo box (40mm titanium flak)"
+	ammo_type = /obj/item/ammo_casing/a40mm/flak
+
 /obj/item/ammo_box/rocket
 	name = "rocket bouquet (84mm HE)"
 	icon_state = "rocketbundle"

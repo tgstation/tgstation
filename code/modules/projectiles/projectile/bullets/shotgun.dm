@@ -101,6 +101,13 @@
 	name = "milspec buckshot pellet"
 	damage = 7.5
 
+/obj/projectile/bullet/pellet/shotgun_buckshot/milspec/flak
+	name = "titanium ball bearing"
+	damage = 10
+	damage_falloff_tile = -0.5 //much harsher falloff
+	wound_bonus = 0
+	armour_penetration = 20
+
 /obj/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubber shot pellet"
 	damage = 3

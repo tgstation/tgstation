@@ -60,6 +60,22 @@
 		overlay_x = 20, \
 		overlay_y = 11)
 
+/obj/item/gun/ballistic/shotgun/china_lake
+	name = "pump-action grenade launcher"
+	desc = "A pump-action grenade launcher. Typically found in the hands of space pirate raiders. The weight leaves a lot to be desired, but the high ammo capacity makes \
+		up for the bulk."
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	icon_state = "china_lake"
+	inhand_icon_state = "china_lake"
+	worn_icon_state = "riotshotgun"
+	fire_sound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/lake
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
+
+	SET_BASE_PIXEL(-8, 0)
 // Automatic Shotguns//
 
 /obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user)
