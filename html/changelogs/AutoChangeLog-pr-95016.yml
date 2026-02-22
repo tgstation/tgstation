@@ -1,0 +1,9 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Revamped echolocation effect entirely. Now updates constantly, rather than on a cooldown."
+  - balance: "Echolocaters can filter out certain objects that they would really prefer not to see at the moment."
+  - balance: "Echolocaters are mechanically (but not visually) blind, which means they have flash immunity and whatnot. Because of course they are."
+  - balance: "Echolocater lose their ability to echolocate if they've gone deaf. Then you're truly fully blind."
+  - balance: "Echolocaters can see (or rather, hear) mobs through walls."
+  - refactor: "Refactored Prosopagnosia to make the effect a bit more generic."
