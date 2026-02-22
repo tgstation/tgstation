@@ -73,7 +73,7 @@
 
 	materials = new ( \
 		src, \
-		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
+		SSmaterials.get_materials_by_flag(MATERIAL_SILO_STORED), \
 		INFINITY, \
 		MATCONTAINER_EXAMINE, \
 		container_signals = list( \

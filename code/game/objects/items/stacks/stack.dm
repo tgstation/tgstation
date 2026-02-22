@@ -84,18 +84,16 @@
 	if(LAZYLEN(mat_override))
 		mats_per_unit = mat_override
 	if(LAZYLEN(mats_per_unit))
-		mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(mats_per_unit, mat_amt)
+		mats_per_unit = SSmaterials.get_material_set_cache(mats_per_unit, mat_amt)
 		initialize_materials(mats_per_unit, amount)
 
 	recipes = get_main_recipes().Copy()
 	if(material_type)
-		var/datum/material/what_are_we_made_of = GET_MATERIAL_REF(material_type) //First/main material
-		for(var/category in what_are_we_made_of.categories)
-			switch(category)
-				if(MAT_CATEGORY_BASE_RECIPES)
-					recipes |= SSmaterials.base_stack_recipes.Copy()
-				if(MAT_CATEGORY_RIGID)
-					recipes |= SSmaterials.rigid_stack_recipes.Copy()
+		var/datum/material/our_mat = SSmaterials.get_material(material_type) //First/main material
+		if (our_mat.mat_flags & MATERIAL_BASIC_RECIPES)
+			recipes |= SSmaterials.base_stack_recipes.Copy()
+		if (our_mat.mat_flags & MATERIAL_CLASS_RIGID)
+			recipes |= SSmaterials.rigid_stack_recipes.Copy()
 
 	update_weight()
 	update_appearance()
@@ -156,11 +154,12 @@
 		other_stack = find_other_stack(already_found, TRUE)
 	return TRUE
 
-/obj/item/stack/blend_requirements()
-	if(is_cyborg)
-		to_chat(usr, span_warning("[src] is too integrated into your chassis and can't be ground up!"))
-		return
-	return TRUE
+/obj/item/stack/blend_requirements(atom/movable/grinder, mob/living/user)
+	if(!is_cyborg)
+		return TRUE
+	if (user)
+		to_chat(user, span_warning("[src] is too integrated into your chassis and can't be ground up!"))
+	return FALSE
 
 /obj/item/stack/grind_atom(datum/reagents/target_holder, mob/user)
 	var/current_amount = get_amount()
@@ -179,7 +178,7 @@
 		total_volume += grind_reagents[reagent]
 
 	//compute number of pieces(or sheets) from available_volume
-	var/available_amount = min(current_amount, round(available_volume / total_volume))
+	var/available_amount = ceil(current_amount * min(1, available_volume / total_volume))
 	if(available_amount <= 0)
 		return FALSE
 
@@ -476,7 +475,7 @@
 
 		if(isstack(created))
 			var/obj/item/stack/crafted_stack = created
-			crafted_stack.mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(result_mats)
+			crafted_stack.mats_per_unit = SSmaterials.get_material_set_cache(result_mats)
 			update_custom_materials()
 		else
 			created.set_custom_materials(result_mats, recipe.req_amount * multiplier)

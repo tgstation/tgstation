@@ -91,7 +91,7 @@
 		if(result["button"] == 2) // If the user pressed the cancel button
 			return
 
-		var/list/armor_all = ARMOR_LIST_ALL()
+		var/list/armor_all = ARMOR_LIST_ALL
 		// text2num conveniently returns a null on invalid values
 		var/list/converted = list()
 		for(var/armor_key in armor_all)

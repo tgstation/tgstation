@@ -237,7 +237,7 @@
 
 /obj/structure/toilet/atom_deconstruct(dissambled = TRUE)
 	dump_contents()
-	drop_costum_materials()
+	drop_custom_materials()
 	if(has_water_reclaimer)
 		new /obj/item/stock_parts/water_recycler(drop_location())
 
@@ -425,7 +425,7 @@
 			if (suicide.transferItemToLoc(thing, newloc = src, silent = TRUE))
 				add_cistern_item(thing)
 		suicide.gib(DROP_BRAIN) //we delete everything but the brain, as it's going to be moved to the cistern
-		set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, suicide) = SHEET_MATERIAL_AMOUNT))
+		set_custom_materials(list(SSmaterials.get_material(/datum/material/meat/mob_meat, suicide) = SHEET_MATERIAL_AMOUNT))
 	else
 		toilet_brain = new(drop_location())
 		set_custom_materials(list(/datum/material/meat = SHEET_MATERIAL_AMOUNT))
