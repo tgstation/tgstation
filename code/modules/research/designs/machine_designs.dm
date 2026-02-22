@@ -1336,6 +1336,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
+/datum/design/board/manugasrefinery
+	name = "Manufacturing Gas Refinery Board"
+	desc = "The circuit board for this machine."
+	id = "manugasrefinery"
+	build_path = /obj/item/circuitboard/machine/manurefinery
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+
 /datum/design/board/mailsorter
 	name = "Mail Sorter Board"
 	desc = "The circuit board for a mail sorting unit."

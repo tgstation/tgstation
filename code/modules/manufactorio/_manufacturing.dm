@@ -45,7 +45,7 @@
 /obj/machinery/power/manufacturing/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!may_be_moved)
-		return
+		return default_change_direction_wrench(user, tool)
 	default_unfasten_wrench(user, tool)
 	if(anchored)
 		connect_to_network()
@@ -97,11 +97,14 @@
 		var/obj/machinery/power/manufacturing/target = what_or_dir
 		return target.receive_resource(sending, src, get_step(src, what_or_dir))
 	var/turf/next_turf = isturf(what_or_dir) ? what_or_dir : get_step(src, what_or_dir)
+	// now trying to find a manufacturing machine to send to at next_turf
 	var/obj/machinery/power/manufacturing/manufactury = locate(/obj/machinery/power/manufacturing) in next_turf
 	if(!isnull(manufactury))
 		if(!manufactury.anchored)
 			return MANUFACTURING_FAIL
-		return manufactury.receive_resource(sending, src, isturf(what_or_dir) ? get_dir(src, what_or_dir) : what_or_dir)
+		return manufactury.receive_resource(sending, src, get_dir(manufactury, src))
+
+	// now sending resource to next_turf
 	if(next_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = sending) && !ischasm(next_turf))
 		return MANUFACTURING_FAIL
 	if(length(get_overfloor_objects(next_turf)) >= MANUFACTURING_TURF_LAG_LIMIT)
@@ -112,21 +115,14 @@
 		sending.forceMove(next_turf)
 	return MANUFACTURING_SUCCESS
 
-/// Checks if this stack (if not a stack does not do anything) can merge WITHOUT creating two stacks in contents
-/obj/machinery/power/manufacturing/proc/may_merge_in_contents(obj/item/stack/stack)
+/obj/machinery/power/manufacturing/proc/try_merge_stack_in_contents(obj/item/stack/stack)
 	if(!istype(stack))
 		return
 	for(var/obj/item/stack/other in contents - circuit)
 		if(!stack.can_merge(other))
 			continue
-		if(other.amount + stack.amount <= other.max_amount)
+		if(stack.merge(other))
 			return other
-
-/obj/machinery/power/manufacturing/proc/may_merge_in_contents_and_do_so(obj/item/stack/stack)
-	var/merging_into = may_merge_in_contents(stack)
-	if(isnull(merging_into))
-		return
-	return stack.merge(merging_into)
 
 /obj/machinery/power/manufacturing/proc/get_overfloor_objects(turf/target)
 	. = list()
