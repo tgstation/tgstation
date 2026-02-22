@@ -1,0 +1,4 @@
+author: "GregariousJB"
+delete-after: True
+changes:
+  - qol: "Keybinding visual improvements: \"Unbound\" is grayed out and custom binds are highlighted in green for better visibility"
