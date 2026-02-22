@@ -820,7 +820,7 @@
 		uses -= round(blood_needed / USES_TO_BLOOD)
 		to_chat(user,span_warning("Your blood rites have restored [human_bloodbag == user ? "your" : "[human_bloodbag.p_their()]"] blood to safe levels!"))
 
-	var/overall_damage = human_bloodbag.get_brute_loss() + human_bloodbag.get_fire_loss() + human_bloodbag.get_tox_loss() + human_bloodbag.get_oxy_loss()
+	var/overall_damage = human_bloodbag.get_total_damage()
 	if(overall_damage == 0)
 		if(blood_donor)
 			return TRUE

@@ -822,7 +822,7 @@
 /mob/living/proc/updatehealth()
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
-	set_health(maxHealth - get_oxy_loss() - get_tox_loss() - get_fire_loss() - get_brute_loss())
+	set_health(maxHealth - get_total_damage())
 	update_stat()
 	med_hud_set_health()
 	med_hud_set_status()

@@ -26,7 +26,7 @@
 
 /datum/reagent/medicine/c2/helbital/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	var/death_is_coming = (affected_mob.get_tox_loss() + affected_mob.get_oxy_loss() + affected_mob.get_fire_loss() + affected_mob.get_brute_loss())*normalise_creation_purity()
+	var/death_is_coming = affected_mob.get_total_damage() * normalise_creation_purity()
 	var/thou_shall_heal = 0
 	var/good_kind_of_healing = FALSE
 	var/need_mob_update = FALSE

@@ -94,6 +94,12 @@
 		amount += bodypart.burn_dam
 	return round(amount, DAMAGE_PRECISION)
 
+// Micro op so we only search limbs once.
+/mob/living/carbon/proc/get_all_body_damage()
+	var/amount = 0
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		amount += bodypart.get_damage()
+	return round(amount, DAMAGE_PRECISION)
 
 /**
  * Returns the amount of bruteloss across all bodyparts meeting the matching bodytype.
