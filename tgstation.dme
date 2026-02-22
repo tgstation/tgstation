@@ -1308,6 +1308,7 @@
 #include "code\datums\components\slide_under_doors.dm"
 #include "code\datums\components\slime_friends.dm"
 #include "code\datums\components\slippery.dm"
+#include "code\datums\components\slippery_item.dm"
 #include "code\datums\components\smooth_tunes.dm"
 #include "code\datums\components\soapbox.dm"
 #include "code\datums\components\soul_stealer.dm"

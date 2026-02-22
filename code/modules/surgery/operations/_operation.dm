@@ -837,6 +837,12 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(!check_availability(patient, operating_on, surgeon, tool, operation_args[OPERATION_TARGET_ZONE]))
 		return ITEM_INTERACT_BLOCKING
 
+	if(isitem(tool))
+		var/obj/item/realtool = tool
+		var/tool_return = SEND_SIGNAL(realtool, COMSIG_ITEM_USED_IN_SURGERY, src, operating_on, surgeon)
+		if(tool_return & ITEM_INTERACT_ANY_BLOCKER)
+			return tool_return
+
 	if(!start_operation(operating_on, surgeon, tool, operation_args))
 		return ITEM_INTERACT_BLOCKING
 
