@@ -87,7 +87,7 @@
 	if (user.usable_hands <= 0 || user.combat_mode)
 		return FALSE
 
-	if(!isnull(user.hud_used?.zone_select) && (user.zone_selected != BODY_ZONE_HEAD && user.zone_selected != BODY_ZONE_PRECISE_EYES))
+	if(!isnull(user.hud_used?.screen_objects[HUD_MOB_ZONE_SELECTOR]) && (user.zone_selected != BODY_ZONE_HEAD && user.zone_selected != BODY_ZONE_PRECISE_EYES))
 		return FALSE
 
 	if (victim.body_position != LYING_DOWN)

@@ -46,8 +46,6 @@
 	var/max_slimes = 5
 	/// The amount of monkey cubes inside this machine.
 	var/stored_monkeys = 0
-	/// The HUD for this console.
-	var/atom/movable/screen/xenobio_console/xeno_hud
 
 /obj/machinery/computer/camera_advanced/xenobio/Initialize(mapload)
 	. = ..()
@@ -60,8 +58,6 @@
 	actions += new /datum/action/innate/hotkey_help(src)
 
 	stored_slimes = list()
-	xeno_hud = new(null, src)
-	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
 	register_context()
 
 /obj/machinery/computer/camera_advanced/xenobio/post_machine_initialize()
@@ -77,7 +73,6 @@
 		var/mob/living/basic/slime/stored_slime = thing
 		stored_slime.forceMove(drop_location())
 	stored_slimes.Cut()
-	QDEL_NULL(xeno_hud)
 	return ..()
 
 /obj/machinery/computer/camera_advanced/xenobio/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
@@ -115,8 +110,8 @@
 	RegisterSignal(user, COMSIG_CLICK_SHIFT, PROC_REF(user_shift_click))
 	if(!user.hud_used)
 		return
-	user.hud_used.static_inventory += xeno_hud
-	user.hud_used.show_hud(user.hud_used.hud_version)
+	var/atom/movable/screen/xenobio_console/xeno_hud = user.hud_used.add_screen_object(/atom/movable/screen/xenobio_console, HUD_XENOBIO_CONSOLE, update_screen = TRUE)
+	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
 
 /obj/machinery/computer/camera_advanced/xenobio/remove_eye_control(mob/living/user)
 	UnregisterSignal(user, list(
@@ -124,10 +119,10 @@
 		COMSIG_MOB_ALTCLICKON,
 		COMSIG_CLICK_SHIFT,
 	))
+
 	if(user.hud_used)
-		if(xeno_hud)
-			user.hud_used.static_inventory -= xeno_hud
-			user.hud_used.show_hud(user.hud_used.hud_version)
+		QDEL_NULL(user.hud_used.screen_objects[HUD_XENOBIO_CONSOLE])
+		user.hud_used.show_hud(user.hud_used.hud_version)
 	return ..()
 
 /obj/machinery/computer/camera_advanced/xenobio/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -156,14 +151,18 @@
 		balloon_alert(user, "inserted")
 
 	current_potion = used_potion
-	xeno_hud.update_potion(current_potion)
+	var/atom/movable/screen/xenobio_console/xeno_hud = user.hud_used?.screen_objects[HUD_XENOBIO_CONSOLE]
+	if(xeno_hud)
+		xeno_hud.update_potion(current_potion)
 	return ITEM_INTERACT_SUCCESS
 
 /// Handles inserting a monkey cube into the console.
 /obj/machinery/computer/camera_advanced/xenobio/proc/monkeycube_act(mob/living/user, obj/item/food/monkeycube/used_cube)
 	stored_monkeys += 1
 	balloon_alert(user, "[stored_monkeys] cube\s stored")
-	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
+	var/atom/movable/screen/xenobio_console/xeno_hud = user.hud_used?.screen_objects[HUD_XENOBIO_CONSOLE]
+	if(xeno_hud)
+		xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
 	qdel(used_cube)
 	return ITEM_INTERACT_SUCCESS
 
@@ -180,7 +179,9 @@
 		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "[stored_monkeys] cube\s stored")
-	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
+	var/atom/movable/screen/xenobio_console/xeno_hud = user.hud_used?.screen_objects[HUD_XENOBIO_CONSOLE]
+	if(xeno_hud)
+		xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/camera_advanced/xenobio/multitool_act(mob/living/user, obj/item/multitool/tool)
@@ -212,19 +213,24 @@
 	return TRUE
 
 ///Places every slime in storage on target turf
-/obj/machinery/computer/camera_advanced/xenobio/proc/slime_place(turf/open/target_turf)
+/obj/machinery/computer/camera_advanced/xenobio/proc/slime_place(turf/open/target_turf, mob/living/user)
 	spit_out(stored_slimes, target_turf)
 	if(stored_slimes.len <= 0)
 		return
+
 	if(stored_slimes.len == 1)
 		target_turf.visible_message(span_notice("The slime is spat out!"))
 	else
 		target_turf.visible_message(span_notice("[stored_slimes.len] slimes are spat out!"))
+
 	for(var/mob/living/basic/slime/stored_slime in stored_slimes)
 		stored_slime.forceMove(target_turf)
 		REMOVE_TRAIT(stored_slime, TRAIT_STASIS, XENOBIO_CONSOLE_TRAIT)
 		stored_slime.handle_slime_stasis()
-	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
+
+	var/atom/movable/screen/xenobio_console/xeno_hud = user.hud_used?.screen_objects[HUD_XENOBIO_CONSOLE]
+	if(xeno_hud)
+		xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
 
 ///Places every slime not controlled by a player into the internal storage, respecting its limits
 ///Returns TRUE to signal it hitting the limit, in case its being called from a loop and we want it to stop
@@ -233,13 +239,16 @@
 		// It's possible for this proc to be called on a slime that's already being picked up,
 		// so we need to check whether we already have to avoid duplicate entries.
 		return FALSE
+
 	if(stored_slimes.len >= max_slimes)
 		to_chat(user, span_warning("Slime storage is full."))
 		target_slime.balloon_alert(user, "storage full")
 		return TRUE
+
 	if(target_slime.ckey)
 		to_chat(user, span_warning("The slime wiggled free!"))
 		return FALSE
+
 	if(target_slime.buckled)
 		target_slime.stop_feeding(silent = TRUE)
 	target_slime.visible_message(span_notice("The slime gets sucked up!"))
@@ -247,8 +256,10 @@
 	target_slime.forceMove(src)
 	stored_slimes += target_slime
 	ADD_TRAIT(target_slime, TRAIT_STASIS, XENOBIO_CONSOLE_TRAIT)
-	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
 
+	var/atom/movable/screen/xenobio_console/xeno_hud = user.hud_used?.screen_objects[HUD_XENOBIO_CONSOLE]
+	if(xeno_hud)
+		xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
 	return FALSE
 
 ///Places one monkey, if possible
@@ -261,13 +272,16 @@
 	var/mob/living/carbon/human/species/monkey/food = new /mob/living/carbon/human/species/monkey(target_turf, TRUE, user)
 	if (QDELETED(food))
 		return
+
 	food.apply_status_effect(/datum/status_effect/slime_food, user)
 	ADD_TRAIT(food, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
-
 	stored_monkeys--
 	stored_monkeys = round(stored_monkeys, 0.1) //Prevents rounding errors
 	spit_out(food, target_turf)
-	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
+
+	var/atom/movable/screen/xenobio_console/xeno_hud = user.hud_used?.screen_objects[HUD_XENOBIO_CONSOLE]
+	if(xeno_hud)
+		xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
 
 /// Check whether we can recycle monkeys at all. Optionally, displays a balloon alert over a target atom for feedback.
 /obj/machinery/computer/camera_advanced/xenobio/proc/can_recycle_monkeys(mob/living/user, atom/target_atom)
@@ -302,7 +316,7 @@
 	for(var/mob/living/carbon/human/target_human in target_turf)
 		if(!can_recycle_target_monkey(target_human))
 			continue
-		recycle_monkey(target_human)
+		recycle_monkey(target_human, user)
 		monkey_found = TRUE
 
 	return monkey_found
@@ -314,11 +328,11 @@
 	if(!can_recycle_monkeys(user, target_human))
 		return FALSE
 
-	recycle_monkey(target_human)
+	recycle_monkey(target_human, user)
 	return TRUE
 
 /// Recycles a given monkey.
-/obj/machinery/computer/camera_advanced/xenobio/proc/recycle_monkey(mob/living/carbon/human/target_monkey)
+/obj/machinery/computer/camera_advanced/xenobio/proc/recycle_monkey(mob/living/carbon/human/target_monkey, mob/living/user)
 	var/obj/machinery/monkey_recycler/connected_recycler = connected_recycler_ref?.resolve()
 	if(isnull(connected_recycler))
 		return
@@ -328,7 +342,9 @@
 	connected_recycler.use_energy(500 JOULES)
 	stored_monkeys += connected_recycler.cube_production
 	stored_monkeys = round(stored_monkeys, 0.1) //Prevents rounding errors
-	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
+	var/atom/movable/screen/xenobio_console/xeno_hud = user.hud_used?.screen_objects[HUD_XENOBIO_CONSOLE]
+	if(xeno_hud)
+		xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
 	qdel(target_monkey)
 
 /datum/action/innate/slime_place
@@ -346,7 +362,7 @@
 	if(!xeno_console.validate_turf(owner, eye_turf))
 		return
 
-	xeno_console.slime_place(eye_turf)
+	xeno_console.slime_place(eye_turf, owner)
 
 /datum/action/innate/slime_pick_up
 	name = "Pick up Slime"
@@ -443,7 +459,9 @@
 	for(var/mob/living/basic/slime/potioned_slime in eye_turf)
 		xeno_console.spit_atom(xeno_console.current_potion, eye_turf)
 		xeno_console.current_potion.interact_with_slime(potioned_slime, living_owner)
-		xeno_console.xeno_hud.update_potion(xeno_console.current_potion)
+		var/atom/movable/screen/xenobio_console/xeno_hud = owner.hud_used?.screen_objects[HUD_XENOBIO_CONSOLE]
+		if(xeno_hud)
+			xeno_hud.update_potion(xeno_console.current_potion)
 		break
 
 /datum/action/innate/hotkey_help
@@ -485,7 +503,9 @@
 
 	spit_atom(current_potion, slime_turf)
 	INVOKE_ASYNC(current_potion, TYPE_PROC_REF(/obj/item/slimepotion/slime, attack), target_slime, user)
-	xeno_hud.update_potion(current_potion)
+	var/atom/movable/screen/xenobio_console/xeno_hud = user.hud_used?.screen_objects[HUD_XENOBIO_CONSOLE]
+	if(xeno_hud)
+		xeno_hud.update_potion(current_potion)
 
 /// Handles console user shift-clicking, forwards to other procs based on target type.
 /obj/machinery/computer/camera_advanced/xenobio/proc/user_shift_click(mob/living/user, atom/target)

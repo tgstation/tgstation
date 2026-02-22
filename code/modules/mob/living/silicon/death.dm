@@ -8,12 +8,11 @@
 
 /mob/living/silicon/set_stat(new_stat)
 	. = ..()
-	if(. != DEAD)
+	if(. != DEAD || !hud_used)
 		return
 	// Clean up hud element used for the death sequence
-	for(var/atom/movable/screen/cyborg_death/deathhud in hud_used?.always_visible_inventory)
-		hud_used.always_visible_inventory -= deathhud
-		qdel(deathhud)
+	QDEL_NULL(hud_used.screen_objects[HUD_CYBORG_DEATH])
+	hud_used.show_hud(hud_used.hud_version)
 
 /mob/living/silicon/death(gibbed)
 	diag_hud_set_status()
@@ -38,10 +37,8 @@
 	if(get_oxy_loss() > 100)
 		cause_of_death = "Critically low power."
 
-	var/atom/movable/screen/cyborg_death/deathhud = new(null, hud_used, cause_of_death)
-	hud_used.always_visible_inventory += deathhud
-	hud_used.show_hud(hud_used.hud_version)
-	deathhud.run_animation()
+	var/atom/movable/screen/cyborg_death/deathhud = hud_used.add_screen_object(/atom/movable/screen/cyborg_death, HUD_CYBORG_DEATH, HUD_GROUP_SCREEN_OVERLAYS, update_screen = TRUE)
+	deathhud.run_animation(cause_of_death)
 
 #define WARNING_ROBOT(text) ("<font color='yellow'>" + text + "</font>")
 #define DANGER_ROBOT(text) ("<font color='red'>" + text + "</font>")
@@ -88,13 +85,10 @@
 		WARNING_ROBOT("WARNI-"),
 	)
 
-/atom/movable/screen/cyborg_death/Initialize(mapload, datum/hud/hud_owner, cause_of_death = "Unidentified kernel error.")
-	. = ..()
-	messages.Insert(1, WARNING_ROBOT("WARNING: [cause_of_death]"))
-
-/atom/movable/screen/cyborg_death/proc/run_animation()
+/atom/movable/screen/cyborg_death/proc/run_animation(cause_of_death = "Unidentified kernel error.")
 	set waitfor = FALSE
 
+	messages.Insert(1, WARNING_ROBOT("WARNING: [cause_of_death]"))
 	if(prob(1))
 		messages[length(messages)] = SENTIENT_ROBOT(pick("I don't want to go.", "I don't feel good.", "I don't want to die."))
 

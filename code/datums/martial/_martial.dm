@@ -24,8 +24,6 @@
 	var/smashes_tables = FALSE
 	/// If TRUE, a combo meter will be displayed on the HUD for the current streak
 	var/display_combos = FALSE
-	///The Combo HUD given to display comboes, if we're set to display them.
-	var/atom/movable/screen/combo/combo_display
 	/// The length of time until streaks are auto-reset.
 	var/combo_timer = 6 SECONDS
 	/// Timer ID for the combo reset timer.
@@ -276,8 +274,11 @@
 	streak += element
 	if(length(streak) > max_streak_length)
 		streak = copytext(streak, 1 + length(streak[1]))
-	if(display_combos)
-		timerid = addtimer(CALLBACK(src, PROC_REF(reset_streak), null, FALSE), combo_timer, TIMER_UNIQUE | TIMER_STOPPABLE)
+	if(!display_combos)
+		return
+	timerid = addtimer(CALLBACK(src, PROC_REF(reset_streak), null, FALSE), combo_timer, TIMER_UNIQUE | TIMER_STOPPABLE)
+	var/atom/movable/screen/combo/combo_display = holder.hud_used?.screen_objects[HUD_MOB_COMBO]
+	if(istype(combo_display))
 		combo_display.update_icon_state(streak, combo_timer - 2 SECONDS)
 
 /**
@@ -292,7 +293,8 @@
 		deltimer(timerid)
 	current_target = WEAKREF(new_target)
 	streak = ""
-	if(display_combos && update_icon)
+	var/atom/movable/screen/combo/combo_display = holder.hud_used?.screen_objects[HUD_MOB_COMBO]
+	if(istype(combo_display) && display_combos && update_icon)
 		combo_display.update_icon_state(streak)
 
 /datum/martial_art/proc/smash_table(mob/living/source, mob/living/pushed_mob, obj/structure/table/table)
@@ -397,19 +399,15 @@
 	if(help_verb)
 		remove_verb(remove_from, help_verb)
 	UnregisterSignal(remove_from, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_GRAB, COMSIG_LIVING_TABLE_SLAMMING, COMSIG_LIVING_TABLE_LIMB_SLAMMING))
+	var/atom/movable/screen/combo/combo_display = remove_from.hud_used?.screen_objects[HUD_MOB_COMBO]
 	if(!isnull(combo_display))
-		var/datum/hud/hud_used = remove_from.hud_used
-		hud_used.infodisplay -= combo_display
-		hud_used.show_hud(hud_used.hud_version)
 		QDEL_NULL(combo_display)
+		remove_from.hud_used.show_hud(remove_from.hud_used.hud_version)
 
 ///Gives the owner of the martial art the combo HUD.
 /datum/martial_art/proc/on_hud_created(mob/source)
 	SIGNAL_HANDLER
-	var/datum/hud/hud_used = source.hud_used
-	combo_display = new(null, hud_used)
-	hud_used.infodisplay += combo_display
-	hud_used.show_hud(hud_used.hud_version)
+	source.hud_used.add_screen_object(/atom/movable/screen/combo, HUD_MOB_COMBO, HUD_GROUP_INFO, update_screen = TRUE)
 
 /mob/living/proc/verb_switch_style()
 	set name = "Swap Style"

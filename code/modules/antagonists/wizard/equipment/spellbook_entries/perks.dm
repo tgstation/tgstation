@@ -7,44 +7,29 @@
 	requires_wizard_garb = FALSE
 	/// Icon that will be shown on wizard hud when purchasing a perk.
 	var/hud_icon
-	/// Type path to perks hud.
-	var/atom/movable/screen/perk/hud_to_show = /atom/movable/screen/perk
 
 /datum/spellbook_entry/perks/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	var/datum/antagonist/wizard/wizard_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
 	if(wizard_datum)
 		wizard_datum.perks += src
-		create_hud_icon(user, wizard_datum)
+	if (user.hud_used)
+		on_hud_created()
+	else
+		RegisterSignal(user, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 	to_chat(user, span_notice("You got a new perk: [src.name]."))
 	log_purchase(user.key)
 	return TRUE
 
-/datum/spellbook_entry/perks/proc/create_compact_button(mob/living/carbon/human/user, datum/antagonist/wizard/wizard_datum)
-	var/datum/hud/user_hud = user.hud_used
-	wizard_datum.compact_button = new /atom/movable/screen/perk/more(null, user_hud)
-	wizard_datum.compact_button.screen_loc = ui_perk_position(0)
-	user_hud.infodisplay += wizard_datum.compact_button
-	user_hud.show_hud(user_hud.hud_version)
-
-/datum/spellbook_entry/perks/proc/create_hud_icon(mob/living/carbon/human/user, datum/antagonist/wizard/wizard_datum)
-	if(user.hud_used)
-		var/datum/hud/user_hud = user.hud_used
-		if(isnull(wizard_datum.compact_button))
-			create_compact_button(user, wizard_datum)
-		hud_to_show = new hud_to_show(null, user_hud)
-		hud_to_show.name = name
-		hud_to_show.icon_state = hud_icon
-		hud_to_show.screen_loc = ui_perk_position(wizard_datum.perks.len)
-		user_hud.infodisplay += hud_to_show
-		user_hud.show_hud(user_hud.hud_version)
-		wizard_datum.compact_button.perks_on_hud += hud_to_show
-	else
-		RegisterSignal(user, COMSIG_MOB_HUD_CREATED, wizard_datum, PROC_REF(on_hud_created))
-
 /datum/spellbook_entry/perks/proc/on_hud_created(mob/living/carbon/human/user, datum/antagonist/wizard/wizard_datum)
 	SIGNAL_HANDLER
 
-	create_hud_icon(user, wizard_datum)
+	var/datum/hud/user_hud = user.hud_used
+	if(!user_hud.screen_objects[HUD_WIZARD_COMPACT_PERKS])
+		user_hud.add_screen_object(/atom/movable/screen/perk/more, HUD_WIZARD_COMPACT_PERKS, HUD_GROUP_INFO, ui_loc = ui_perk_position(0), update_screen = TRUE)
+
+	var/atom/movable/screen/perk/perk = user_hud.add_screen_object(/atom/movable/screen/perk, HUD_WIZARD_PERK(length(wizard_datum.perks)), HUD_GROUP_INFO, ui_loc = ui_perk_position(length(wizard_datum.perks)), update_screen = TRUE)
+	perk.name = name
+	perk.icon_state = hud_icon
 
 /datum/spellbook_entry/perks/fourhands
 	name = "Four Hands"

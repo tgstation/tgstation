@@ -1,30 +1,3 @@
-/datum/hud/dextrous/voidwalker
-	ui_style = 'icons/hud/screen_voidwalker.dmi'
-
-/datum/hud/dextrous/voidwalker/New(mob/living/owner)
-	. = ..()
-
-	floor_change.icon = ui_style
-	floor_change.screen_loc = ui_rest
-	static_inventory += floor_change
-
-	resist_icon = new /atom/movable/screen/resist(null, src)
-	resist_icon.icon = ui_style
-	resist_icon.screen_loc = ui_voidwalker_left_of_hands
-	resist_icon.update_appearance()
-
-	action_intent = new /atom/movable/screen/combattoggle/flashy/voidwalker(null, src)
-	action_intent.icon = ui_style
-	static_inventory += action_intent
-
-	var/atom/movable/screen/space_camo_toggle = new /atom/movable/screen/space_camo(null, src)
-	space_camo_toggle.screen_loc = ui_above_movement
-	static_inventory += space_camo_toggle
-
-	var/atom/movable/screen/vomit_jump/vomit = new /atom/movable/screen/vomit_jump(null, src)
-	vomit.screen_loc = ui_mood
-	static_inventory += vomit
-
 /// This exists because for some reason only the combat indicator screen_loc is constantly set to initial
 /atom/movable/screen/combattoggle/flashy/voidwalker
 	screen_loc = ui_movi
@@ -33,6 +6,7 @@
 	name = "space camouflage toggle"
 	icon = 'icons/hud/screen_voidwalker.dmi'
 	icon_state = "camo_toggle"
+	screen_loc = ui_above_movement
 
 	/// Wheter or not we're toggled on or off
 	var/invisibility_toggle = TRUE
@@ -57,6 +31,7 @@
 	name = "vomit tracker"
 	icon = 'icons/hud/screen_voidwalker.dmi'
 	icon_state = "template"
+	screen_loc = ui_mood
 	/// So we can sort of loop through it
 	var/index = 1
 

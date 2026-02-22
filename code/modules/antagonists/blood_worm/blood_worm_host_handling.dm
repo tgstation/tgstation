@@ -245,16 +245,15 @@
 	UnregisterSignal(host, COMSIG_MOB_HUD_CREATED)
 
 	var/datum/hud/hud = host.hud_used
-	blood_display = new(null, hud)
-	hud.infodisplay += blood_display
-	hud.show_hud(hud.hud_version)
+	var/atom/movable/screen/blood_level/blood_display = hud.screen_objects[HUD_MOB_BLOOD_LEVEL]
+	if (blood_display)
+		return
+
+	blood_display = hud.add_screen_object(/atom/movable/screen/blood_level, HUD_MOB_BLOOD_LEVEL, HUD_GROUP_INFO, update_screen = TRUE)
 
 /mob/living/basic/blood_worm/proc/remove_host_hud()
 	var/datum/hud/hud = host.hud_used
-
 	if (!hud)
-		QDEL_NULL(blood_display)
 		return
-
-	hud.infodisplay -= blood_display
-	QDEL_NULL(blood_display)
+	QDEL_NULL(hud.screen_objects[HUD_MOB_BLOOD_LEVEL])
+	hud.show_hud(hud.hud_version)

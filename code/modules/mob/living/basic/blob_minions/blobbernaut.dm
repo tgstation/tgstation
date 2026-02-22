@@ -27,8 +27,6 @@
 	mob_size = MOB_SIZE_LARGE
 	ai_controller = /datum/ai_controller/basic_controller/blobbernaut
 	loot = null
-	///The HUD given to blobbernauts, updated by the Blob itself
-	var/atom/movable/screen/healths/blob/overmind/overmind_hud
 	///The overlay for veins.
 	var/mutable_appearance/vein_overlay
 	///The overlay for our eyes
@@ -53,11 +51,6 @@
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15)
 	update_appearance()
 
-
-/mob/living/basic/blob_minion/blobbernaut/Destroy()
-	QDEL_NULL(overmind_hud)
-	return ..()
-
 /mob/living/basic/blob_minion/blobbernaut/death(gibbed)
 	flick("[icon_state]_death", src)
 	playsound(src, 'sound/mobs/non-humanoids/blobmob/blobbernaut_death.ogg', 100, TRUE)
@@ -68,9 +61,7 @@
 	. = ..()
 	if(!.)
 		return
-	overmind_hud = new(null, hud_used)
-	hud_used.infodisplay += overmind_hud
-	hud_used.show_hud(hud_used.hud_version)
+	hud_used.add_screen_object(/atom/movable/screen/healths/blob/overmind, HUD_BLOBBERNAUT_OVERMIND, HUD_GROUP_INFO, update_screen = TRUE)
 
 /mob/living/basic/blob_minion/blobbernaut/on_strain_updated(mob/eye/blob/overmind, datum/blobstrain/new_strain)
 	. = ..()

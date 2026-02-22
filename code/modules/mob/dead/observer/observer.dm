@@ -642,7 +642,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		remove_data_huds()
 	update_sight()
-	for(var/atom/movable/screen/ghost/hudbox/hud in hud_used?.static_inventory)
+	for(var/atom/movable/screen/ghost/hudbox/hud in hud_used?.screen_objects)
 		if(hud.relevant_flag & toggled)
 			hud.update_appearance(UPDATE_ICON_STATE)
 

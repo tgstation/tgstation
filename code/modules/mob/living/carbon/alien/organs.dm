@@ -56,37 +56,57 @@
 	//Instantly healing to max health in a single tick would be silly. If it takes 8 seconds to fire, then something's fucked.
 	var/delta_time_capped = min(delta_time, 8)
 	//If there are alien weeds on the ground then heal if needed or give some plasma
-	if(locate(/obj/structure/alien/weeds) in owner.loc)
-		if(owner.health >= owner.maxHealth)
-			owner.adjustPlasma(plasma_rate * delta_time)
-		else
-			var/heal_amt = heal_rate
-			if(!isalien(owner))
-				heal_amt *= 0.2
-			owner.adjustPlasma(0.5 * plasma_rate * delta_time_capped)
-			owner.adjust_brute_loss(-heal_amt * delta_time_capped)
-			owner.adjust_fire_loss(-heal_amt * delta_time_capped)
-			owner.adjust_oxy_loss(-heal_amt * delta_time_capped)
-	else
+	if(!(locate(/obj/structure/alien/weeds) in owner.loc))
 		owner.adjustPlasma(0.1 * plasma_rate * delta_time)
+		return
+
+	if(owner.health >= owner.maxHealth)
+		owner.adjustPlasma(plasma_rate * delta_time)
+		return
+
+	var/heal_amt = heal_rate
+	if(!isalien(owner))
+		heal_amt *= 0.2
+	owner.adjustPlasma(0.5 * plasma_rate * delta_time_capped)
+	owner.adjust_brute_loss(-heal_amt * delta_time_capped)
+	owner.adjust_fire_loss(-heal_amt * delta_time_capped)
+	owner.adjust_oxy_loss(-heal_amt * delta_time_capped)
+
+/obj/item/organ/alien/plasmavessel/proc/adjust_plasma(amount)
+	stored_plasma = clamp(stored_plasma + amount, 0, max_plasma)
+	update_plasma_display()
+
+/obj/item/organ/alien/plasmavessel/proc/on_hud_created(mob/source)
+	SIGNAL_HANDLER
+
+	if (!owner.hud_used.screen_objects[HUD_ALIEN_PLASMA_DISPLAY])
+		owner.hud_used.add_screen_object(/atom/movable/screen/alien/plasma_display, HUD_ALIEN_PLASMA_DISPLAY, HUD_GROUP_INFO, ui_loc = istype(owner.hud_used, /datum/hud/alien) ? null : ui_alienplasmadisplay_human, update_screen = TRUE)
+	update_plasma_display()
 
 /obj/item/organ/alien/plasmavessel/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
-	if(isalien(organ_owner))
-		var/mob/living/carbon/alien/target_alien = organ_owner
-		target_alien.updatePlasmaDisplay()
 	RegisterSignal(organ_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+	if (organ_owner.hud_used)
+		on_hud_created()
+	else
+		RegisterSignal(organ_owner, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 /obj/item/organ/alien/plasmavessel/on_mob_remove(mob/living/carbon/organ_owner)
 	. = ..()
-	if(isalien(organ_owner))
-		var/mob/living/carbon/alien/organ_owner_alien = organ_owner
-		organ_owner_alien.updatePlasmaDisplay()
 	UnregisterSignal(organ_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
+	UnregisterSignal(organ_owner, COMSIG_MOB_HUD_CREATED)
+	if (organ_owner.hud_used)
+		QDEL_NULL(organ_owner.hud_used.screen_objects[HUD_ALIEN_PLASMA_DISPLAY])
+		organ_owner.hud_used.show_hud(organ_owner.hud_used.hud_version)
 
 /obj/item/organ/alien/plasmavessel/proc/get_status_tab_item(mob/living/carbon/source, list/items)
 	SIGNAL_HANDLER
 	items += "Plasma Stored: [stored_plasma]/[max_plasma]"
+
+/obj/item/organ/alien/plasmavessel/proc/update_plasma_display()
+	owner.hud_used?.screen_objects[HUD_ALIEN_PLASMA_DISPLAY]?.maptext = MAPTEXT( \
+		"<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='magenta'>[round(owner.getPlasma())]</font></div>" \
+	)
 
 #define QUEEN_DEATH_DEBUFF_DURATION 2400
 

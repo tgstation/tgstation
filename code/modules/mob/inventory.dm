@@ -676,7 +676,7 @@
 	held_items.len = amt
 
 	if(hud_used)
-		hud_used.build_hand_slots()
+		hud_used.build_hand_slots(update_hud = TRUE)
 
 //GetAllContents that is reasonable and not stupid
 /mob/living/proc/get_all_gear(equipment_flags = INCLUDE_ACCESSORIES|INCLUDE_PROSTHETICS, recursive = TRUE)
