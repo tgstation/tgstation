@@ -60,6 +60,8 @@
 		overlay_x = 20, \
 		overlay_y = 11)
 
+// Pump-Action Grenade Launcher //
+
 /obj/item/gun/ballistic/shotgun/china_lake
 	name = "pump-action grenade launcher"
 	desc = "A pump-action grenade launcher. Typically found in the hands of space pirate raiders. The weight leaves a lot to be desired, but the high ammo capacity makes \
@@ -74,8 +76,10 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/lake
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
+	pb_knockback = 4 // Not advised.
 
 	SET_BASE_PIXEL(-8, 0)
+
 // Automatic Shotguns//
 
 /obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user)

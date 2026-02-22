@@ -60,7 +60,13 @@
 	name = "40mm titanium flak shell"
 	desc = "An oversized shotgun case. The big brother of buckshot, this shell launches dense titanium shells for immense damage to armor and flesh alike."
 	pellets = 8
+	variance = 10
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot/milspec/flak
+
+/obj/item/ammo_casing/a40mm/incendiary
+	name = "40mm incendiary shell"
+	desc = "A cased incendiary explosive grenade that can only be activated once fired out of a grenade launcher. Creates a mighty conflagration. A favourite of inquisitors."
+	projectile_type = /obj/projectile/bullet/a40mm/incendiary
 
 /obj/item/ammo_casing/rebar
 	name = "Sharpened Iron Rod"

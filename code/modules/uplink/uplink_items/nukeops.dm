@@ -535,22 +535,28 @@
 	purchasable_from = UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/ammo_nuclear/basic/a40mm
-	name = "40mm HE Shell Box (M-90gl)"
+	name = "40mm HE Shell Box (Grenade Launchers)"
 	desc = "A box of 40mm HE grenades for use with ballistic grenade launchers. \
 		Your teammates will ask you to not shoot these down small hallways. \
 		You'll do it anyway."
 	item = /obj/item/ammo_box/a40mm
 
 /datum/uplink_item/ammo_nuclear/basic/a40mm/rubber
-	name = "40mm Rubber Shell Box (M-90gl)"
+	name = "40mm Rubber Shell Box (Grenade Launchers)"
 	desc = "A box of 40mm rubber grenades for use with ballistic grenade launchers. Launching a giant rubber puck at someone at high velocity is maybe the most \
 		humane thing you are about to do today. For when you're trying to earn some karma points or something."
 	item = /obj/item/ammo_box/a40mm/rubber
 
 /datum/uplink_item/ammo_nuclear/ap/a40mm
-	name = "40mm Titanium Flak Shell Box (M-90gl)"
+	name = "40mm Titanium Flak Shell Box (Grenade Launchers)"
 	desc = "A box of 40mm titanium flak shells for use with ballistic grenade launchers. Launches an obscene number of titanium ball bearings into your enemies. \
 		For when you want to get up close and personal."
+	item = /obj/item/ammo_box/a40mm
+
+/datum/uplink_item/ammo_nuclear/incendiary/a40mm
+	name = "40mm Incendiary Shell Box (Grenade Launchers)"
+	desc = "A box of 40mm incendiary grenade shells for use with ballistic grenade launchers. Launches a incendiary payload at targets, bursting on contact and \
+		engulfing everything around it in roaring fire. For when you really don't want to leave anything and anyone unscathed. Including possibly your allies."
 	item = /obj/item/ammo_box/a40mm
 
 // ~~ Detonator: In case you lose the old one ~~

@@ -31,6 +31,10 @@
 	name = "ammo box (40mm titanium flak)"
 	ammo_type = /obj/item/ammo_casing/a40mm/flak
 
+/obj/item/ammo_box/a40mm/incendiary
+	name = "ammo box (40mm incendiary grenade)"
+	ammo_type = /obj/item/ammo_casing/a40mm/incendiary
+
 /obj/item/ammo_box/rocket
 	name = "rocket bouquet (84mm HE)"
 	icon_state = "rocketbundle"
