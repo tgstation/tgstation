@@ -231,7 +231,7 @@
 	return ..()
 
 /obj/item/mod/control/wrench_act(mob/living/user, obj/item/wrench)
-	if(seconds_electrified && get_charge() && shock(user))
+	if(seconds_electrified && get_charge() && shock(user, 100))
 		return ITEM_INTERACT_BLOCKING
 	if(open)
 		if(!core)
@@ -541,12 +541,12 @@
 		return
 	picked_module.on_select()
 
-/obj/item/mod/control/proc/shock(mob/living/user)
-	if(!istype(user) || get_charge() < 1)
+/obj/item/mod/control/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+	if(get_charge() < 1)
 		return FALSE
-	do_sparks(5, TRUE, src)
-	var/check_range = TRUE
-	return electrocute_mob(user, get_charge_source(), src, 0.7, check_range)
+	if(isnull(siemens_coeff))
+		siemens_coeff = 0.7
+	return ..()
 
 /obj/item/mod/control/proc/install(obj/item/mod/module/new_module, mob/user)
 	for(var/obj/item/mod/module/old_module as anything in modules)

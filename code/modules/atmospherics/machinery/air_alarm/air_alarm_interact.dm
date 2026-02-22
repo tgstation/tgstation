@@ -162,15 +162,10 @@
 			if(!wires.is_cut(WIRE_AI))
 				aidisabled = FALSE
 
-/obj/machinery/airalarm/proc/shock(mob/user, prb)
-	if((machine_stat & (NOPOWER))) // unpowered, no shock
+/obj/machinery/airalarm/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+	if(machine_stat & NOPOWER) // unpowered, no shock
 		return FALSE
-	if(!prob(prb))
-		return FALSE //you lucked out, no shock for you
-	do_sparks(5, TRUE, src)
-	if (electrocute_mob(user, get_area(src), src, 1, TRUE))
-		return TRUE
-	return FALSE
+	return ..()
 
 /obj/item/electronics/airalarm
 	name = "air alarm electronics"
