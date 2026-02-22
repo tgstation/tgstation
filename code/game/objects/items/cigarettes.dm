@@ -449,11 +449,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.flags |= NO_REACT
 
 	// allowing reagents to react after being lit
+	reagents.handle_reactions()
+	if(QDELETED(src))
+		return
+	START_PROCESSING(SSobj, src)
+
 	update_appearance(UPDATE_ICON)
 	if(flavor_text)
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
-	START_PROCESSING(SSobj, src)
 
 	if(iscarbon(loc))
 		var/mob/living/carbon/smoker = loc
@@ -536,6 +540,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	reagents.expose_temperature(heat, 0.05)
 	if(!reagents.total_volume) //may have reacted and gone to 0 after expose_temperature
 		return
+
 	var/to_smoke = smoke_all ? (reagents.total_volume * (dragtime / smoketime)) : REAGENTS_METABOLISM
 	var/mob/living/carbon/smoker = loc
 	// These checks are a bit messy but at least they're fairly readable
@@ -1152,8 +1157,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	to_chat(user, span_notice("You start puffing on the vape."))
 	reagents.flags &= ~(NO_REACT)
-	START_PROCESSING(SSobj, src)
+	reagents.handle_reactions()
+	if(QDELETED(src))
+		return
 	set_light_on(TRUE)
+	START_PROCESSING(SSobj, src)
 
 /obj/item/vape/dropped(mob/user)
 	. = ..()

@@ -142,12 +142,14 @@
 		if(reagent.purity == 1)
 			return
 
-		var/cached_volume = reagent.volume
-		var/cached_purity = reagent.purity
 		if((reaction_flags & REACTION_CLEAR_INVERSE) && reagent.inverse_chem)
 			if(reagent.inverse_chem_val > reagent.purity)
-				holder.remove_reagent(reagent.type, cached_volume, safety = FALSE)
-				holder.add_reagent(reagent.inverse_chem, cached_volume, FALSE, added_purity = reagent.get_inverse_purity(cached_purity))
+				var/inverse_chem = reagent.inverse_chem
+				var/cached_volume = reagent.volume
+				var/cached_purity = reagent.get_inverse_purity(reagent.purity)
+				reagent.volume = 0
+				holder.update_total()
+				holder.add_reagent(inverse_chem, cached_volume, FALSE, added_purity = cached_purity)
 				return
 
 /**
