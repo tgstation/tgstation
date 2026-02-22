@@ -318,7 +318,7 @@
  * 	or FALSE if the pAI is not being carried.
  */
 /mob/living/silicon/pai/proc/get_holder()
-	var/mob/holder = recursive_loc_check(card, /mob)
+	var/mob/holder = recursive_loc_check(card, /mob/living/carbon)
 	if(isnull(holder))
 		return FALSE
 	return holder

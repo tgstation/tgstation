@@ -163,9 +163,6 @@
 	if(!isnull(holder))
 		balloon_alert(src, "not being carried")
 		return FALSE
-	if(!iscarbon(holder))
-		balloon_alert(src, "no dna detected!")
-		return FALSE
 	balloon_alert(src, "requesting dna sample")
 	if(tgui_alert(holder, "[src] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "Checking DNA", list("Yes", "No")) != "Yes")
 		balloon_alert(src, "dna sample refused!")
@@ -201,8 +198,8 @@
 /mob/living/silicon/pai/proc/host_scan(mode)
 	switch(mode)
 		if(PAI_SCAN_TARGET)
-			var/mob/living/target = get_holder()
-			if(!isliving(target))
+			var/mob/living/carbon/target = get_holder()
+			if(isnull(target))
 				balloon_alert(src, "not being carried!")
 				return FALSE
 			healthscan(src, target)
