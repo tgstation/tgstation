@@ -185,7 +185,7 @@
 		if(suture_tool.amount <= 0)
 			return FALSE
 	else if(tool.tool_behaviour != TOOL_CAUTERY)
-		if(tool.get_temperature() <= 0)
+		if(tool.get_temperature() <= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			return FALSE
 
 	// we need to have a surgery state worth closing

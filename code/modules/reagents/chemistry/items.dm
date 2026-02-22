@@ -211,7 +211,7 @@
 
 	else if(isitem(interacting_with))
 		var/obj/item/item = interacting_with
-		if(item.get_temperature() > 1000)
+		if(item.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			set_lit(TRUE)
 			user.visible_message(span_notice("[user] lights up [src]."), span_notice("You light up [src]."))
 			return ITEM_INTERACT_SUCCESS
