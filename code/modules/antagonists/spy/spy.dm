@@ -196,7 +196,9 @@
 	var/mob/living/carbon/human/dummy/consistent/dummy = new()
 	dummy.set_haircolor(COLOR_SILVER, update = FALSE)
 	dummy.set_hairstyle("CIA", update = FALSE)
-	return finish_preview_icon(render_preview_outfit(preview_outfit, dummy))
+	var/datum/universal_icon/dummy_icon = render_preview_outfit(preview_outfit, dummy)
+	qdel(dummy)
+	return finish_preview_icon(dummy_icon)
 
 /datum/outfit/spy
 	name = "Spy (Preview only)"

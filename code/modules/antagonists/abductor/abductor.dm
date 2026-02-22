@@ -23,14 +23,14 @@
 	scientist.set_species(/datum/species/abductor)
 	agent.set_species(/datum/species/abductor)
 
-	var/icon/scientist_icon = render_preview_outfit(/datum/outfit/abductor/scientist, scientist)
-	scientist_icon.Shift(WEST, 8)
+	var/datum/universal_icon/scientist_icon = render_preview_outfit(/datum/outfit/abductor/scientist, scientist)
+	scientist_icon.shift(WEST, 8)
 
-	var/icon/agent_icon = render_preview_outfit(/datum/outfit/abductor/agent, agent)
-	agent_icon.Shift(EAST, 8)
+	var/datum/universal_icon/agent_icon = render_preview_outfit(/datum/outfit/abductor/agent, agent)
+	agent_icon.shift(EAST, 8)
 
-	var/icon/final_icon = scientist_icon
-	final_icon.Blend(agent_icon, ICON_OVERLAY)
+	var/datum/universal_icon/final_icon = scientist_icon
+	final_icon.blend_icon(agent_icon, ICON_OVERLAY)
 
 	qdel(scientist)
 	qdel(agent)

@@ -260,12 +260,12 @@
 	return result.Join("<br>")
 
 /datum/antagonist/malf_ai/get_preview_icon()
-	var/icon/malf_ai_icon = icon('icons/mob/silicon/ai.dmi', "ai-red")
+	var/datum/universal_icon/malf_ai_icon = uni_icon('icons/mob/silicon/ai.dmi', "ai-red")
 
 	// Crop out the borders of the AI, just the face
-	malf_ai_icon.Crop(5, 27, 28, 6)
+	malf_ai_icon.crop(5, 6, 28, 27)
 
-	malf_ai_icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+	malf_ai_icon.scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
 	return malf_ai_icon
 
