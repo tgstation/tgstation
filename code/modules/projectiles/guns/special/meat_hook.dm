@@ -42,6 +42,9 @@
 	removable.dismember(silent = FALSE)
 	return BRUTELOSS
 
+/obj/item/gun/magic/hook/on_mail_unwrap(mob/user, obj/item/mail/traitor/letter)
+	return
+
 /obj/item/ammo_casing/magic/hook
 	name = "hook"
 	desc = "A hook."

@@ -13,6 +13,10 @@
 	/// Whether we've been wetted and are expanding
 	var/expanding = FALSE
 
+/obj/item/food/monkeycube/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, PROC_REF(on_mail_unwrap))
+
 /obj/item/food/monkeycube/attempt_pickup(mob/user)
 	if(expanding)
 		return FALSE
@@ -76,6 +80,11 @@
 	Expand()
 	user.visible_message(span_danger("[user]'s torso bursts open as a primate emerges!"))
 	user.gib(DROP_BRAIN|DROP_BODYPARTS|DROP_ITEMS) // just remove the organs
+
+/obj/item/food/monkeycube/proc/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
+	to_chat(user, span_danger("As you open [letter], its contents rapidly expand!"))
+	Expand()
+	return COMPONENT_TRAITOR_MAIL_HANDLED
 
 /obj/item/food/monkeycube/syndicate
 	faction = list(FACTION_NEUTRAL, ROLE_SYNDICATE)
