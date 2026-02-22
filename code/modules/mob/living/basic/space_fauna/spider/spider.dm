@@ -53,6 +53,13 @@
 	var/menu_description = "Tanky and strong for the defense of the nest and other spiders."
 	/// If true then you shouldn't be told that you're a spider antagonist as soon as you are placed into this mob
 	var/apply_spider_antag = TRUE
+	/// Commands you can give this spider once it is tamed
+	var/static/list/tamed_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/attack,
+	)
 
 /datum/emote/spider
 	abstract_type = /datum/emote/spider
@@ -85,12 +92,25 @@
 	webbing.Grant(src)
 	ai_controller?.set_blackboard_key(BB_SPIDER_WEB_ACTION, webbing)
 
+	var/static/list/food_types = list(
+		/obj/item/food/meat/slab/human/mutant/lizard,
+		/obj/item/food/meat/slab/human/mutant/fly,
+		/obj/item/food/meat/slab/human/mutant/moth,
+		/obj/item/food/meat/slab/mouse,
+		/obj/item/food/meat/slab/mothroach,
+		/obj/item/food/meat/slab/blood_worm,
+		/obj/item/food/deadmouse,
+	)
+	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 20, bonus_tame_chance = 10)
+
 /mob/living/basic/spider/Login()
 	. = ..()
 	if(!. || !client)
 		return FALSE
 	GLOB.spidermobs[src] = TRUE
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/player_spider_modifier, multiplicative_slowdown = player_speed_modifier)
+
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/spider)
 
 /mob/living/basic/spider/Logout()
 	. = ..()
@@ -99,6 +119,12 @@
 /mob/living/basic/spider/Destroy()
 	GLOB.spidermobs -= src
 	return ..()
+
+/mob/living/basic/spider/tamed(mob/living/tamer, atom/food, feedback = TRUE)
+	. = ..()
+	new /obj/effect/temp_visual/heart(src.loc)
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/spider)
+	AddComponent(/datum/component/obeys_commands, tamed_commands)
 
 /mob/living/basic/spider/mob_negates_gravity()
 	if(locate(/obj/structure/spider/stickyweb) in loc)
@@ -158,6 +184,12 @@
 	grown.set_name()
 	grown.set_brute_loss(get_brute_loss())
 	grown.set_fire_loss(get_fire_loss())
+
+	if(HAS_TRAIT(src, TRAIT_TAMED))
+		grown.tamed()
+	else if(istype(grown, /mob/living/basic/spider/giant)) // Adults cannot be tamed via snacks
+		qdel(grown.GetComponent(/datum/component/tameable))
+
 	qdel(src)
 
 /**
