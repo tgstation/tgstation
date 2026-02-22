@@ -102,3 +102,23 @@ it will be sent to all connected chats.
 			avoid_highlighting = (creature == source),
 		)
 	send_to_observers(message, source)
+
+/**
+ * Outputs a TGUI component directly to the user's chat'
+ *
+ * * user - The mob to send the component to
+ * * component_name - The name of the TGUI component to send (you MUST have this component registered in tgui-panel/chat/renderer.tsx)
+ * * component_data - A list of key/value pairs to send as data attributes to the component (the data MUST be registered in tgui-panel/chat/renderer.tsx)
+ * * fallback - An optional fallback string to display if TGUI chat is not working
+ */
+/proc/tgui_component_to_chat(mob/user, component_name, list/component_data, fallback)
+	if(winget(user, OUTPUT_ELEMENT_ID, OUTPUT_ELEMENT_PARAM) == OUTPUT_ELEMENT_VALUE_LEGACY)
+		to_chat(user, fallback || span_alert("Unsupported action in legacy chat."))
+		return
+
+	var/list/comps = list("data-component=\"[component_name]\"")
+	for(var/key, value in component_data)
+		comps += "data-[key]=\"[value]\""
+
+	to_chat(user, "<span [jointext(comps, " ")]/>")
+	to_chat(user, "<br>") // the chat won't auto-scroll without this, idk. enjoy your state mandated newline

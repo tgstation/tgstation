@@ -54,3 +54,13 @@
  * * required_perms: Which admin permission flags to check the user for, such as [R_ADMIN]
  */
 #define ADMIN_STATE(required_perms) (GLOB.admin_states[required_perms] ||= new /datum/ui_state/admin_state(required_perms))
+
+// For winset/winget
+/// Output element id
+#define OUTPUT_ELEMENT_ID "output_selector.legacy_output_selector"
+/// Output element parameter
+#define OUTPUT_ELEMENT_PARAM "left"
+/// Output to legacy / old chat
+#define OUTPUT_ELEMENT_VALUE_LEGACY "output_legacy"
+/// Output to browser / tgui chat
+#define OUTPUT_ELEMENT_VALUE_MODERN "output_browser"
