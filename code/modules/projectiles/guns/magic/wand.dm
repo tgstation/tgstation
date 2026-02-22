@@ -330,6 +330,15 @@
 	. = ..()
 	return SHAME
 
+// Animating a nothing wand makes it into an animating wand (and also animates it)
+/obj/item/gun/magic/wand/nothing/animate_atom_living(mob/living/owner)
+	var/obj/item/gun/magic/wand/animate/animated_wand = new()
+	animated_wand.charges = charges
+	animated_wand.name = name + "?"
+	var/mob/living/basic/mimic/copy/ranged/living_wand = new(drop_location(), animated_wand, owner)
+	qdel(src)
+	return living_wand
+
 /// Wand of making things small
 /obj/item/gun/magic/wand/shrink
 	name = "wand of shrinking"

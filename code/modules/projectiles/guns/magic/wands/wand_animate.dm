@@ -5,8 +5,8 @@
 	desc = "This wand is attuned to life and will animate effected objects into destructive servants."
 	school = SCHOOL_EVOCATION
 	ammo_type = /obj/item/ammo_casing/magic/animate
-	icon_state = "polywand"
-	base_icon_state = "polywand"
+	icon_state = "animatewand"
+	base_icon_state = "animatewand"
 	fire_sound = 'sound/effects/magic/staff_animation.ogg'
 	max_charges = 10
 
