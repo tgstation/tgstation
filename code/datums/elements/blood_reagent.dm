@@ -33,10 +33,10 @@
 
 
 	if (!blood_source)
-		target.material = GET_MATERIAL_REF(/datum/material/meat/blood_meat, target)
+		target.material = SSmaterials.get_material(/datum/material/meat/blood_meat, target)
 		return
 
-	target.material = GET_MATERIAL_REF(/datum/material/meat/mob_meat, blood_source)
+	target.material = SSmaterials.get_material(/datum/material/meat/mob_meat, blood_source)
 
 	var/list/blood_data = blood_source.get_blood_data()
 	if(blood_data["viruses"])

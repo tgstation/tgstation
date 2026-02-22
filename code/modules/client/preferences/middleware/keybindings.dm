@@ -94,6 +94,7 @@
 		keybindings[keybinding.category][keybinding.name] = list(
 			"name" = keybinding.full_name,
 			"description" = keybinding.description,
+			"default" = keybinding.hotkey_keys,
 		)
 
 	return keybindings

@@ -36,7 +36,7 @@
 	print_sound = new(src,  FALSE)
 	materials = new ( \
 		src, \
-		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
+		SSmaterials.flat_materials, \
 		0, \
 		MATCONTAINER_EXAMINE|MATCONTAINER_ACCEPT_ALLOYS, \
 		container_signals = list(COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/autolathe, AfterMaterialInsert)) \
@@ -151,16 +151,21 @@
 		var/coeff = (ispath(design.build_path, /obj/item/stack) ? 1 : creation_efficiency)
 		var/list/cost = list()
 		var/customMaterials = FALSE
-		for(var/i in design.materials)
-			var/datum/material/mat = i
-
-			var/design_cost = OPTIMAL_COST(design.materials[i] * coeff)
+		for(var/datum/material/mat as anything in design.materials)
+			var/mat_cost = design.materials[mat]
+			var/design_cost = OPTIMAL_COST(mat_cost * coeff)
 			if(istype(mat))
 				cost[mat.name] = design_cost
 				customMaterials = FALSE
-			else
-				cost[i] = design_cost
-				customMaterials = TRUE
+				continue
+
+			var/datum/material_requirement/requirement = SSmaterials.requirements[mat]
+			if (!requirement)
+				stack_trace("Design [design] has an invalid material requirement [requirement]")
+				continue
+
+			cost[requirement.get_description()] = design_cost
+			customMaterials = TRUE
 
 		//create & send ui data
 		var/icon_size = spritesheet.icon_size_id(design.id)
@@ -215,11 +220,13 @@
 	if(action != "make")
 		stack_trace("unknown autolathe ui_act: [action]")
 		return
+
 	if(disabled)
 		say("Unable to print, voltage mismatch in internal wiring.")
 		return
+
 	if(busy)
-		say("currently printing.")
+		say("Currently printing.")
 		return
 
 	//validate design
@@ -248,32 +255,38 @@
 		return
 	build_count = clamp(build_count, 1, 50)
 
-	//check for materials required. For custom material items decode their required materials
+	// Check for materials required. For custom material items decode their required materials
 	var/list/materials_needed = list()
-	for(var/material in design.materials)
-		var/amount_needed = design.materials[material]
-		if(istext(material)) // category
-			var/list/choices = list()
-			for(var/datum/material/valid_candidate as anything in SSmaterials.materials_by_category[material])
-				if(materials.get_material_amount(valid_candidate) < (amount_needed + materials_needed[material]))
-					continue
+	var/mat_choice = FALSE
+	for(var/material, amount_needed in design.materials)
+		if(!ispath(material, /datum/material_requirement)) // Material requirement
+			if(!istype(material, /datum/material))
+				CRASH("Autolathe ui_act got passed an invalid material id: [material]")
+			materials_needed[material] += amount_needed
+			continue
+
+		var/list/choices = list()
+		for(var/datum/material/valid_candidate as anything in SSmaterials.get_materials_by_req(material))
+			if(materials.get_material_amount(valid_candidate) >= (amount_needed + materials_needed[valid_candidate]))
 				choices[valid_candidate.name] = valid_candidate
-			if(!length(choices))
-				say("No valid materials with applicable amounts detected for design.")
-				return
-			var/chosen = tgui_input_list(
-				ui.user,
-				"Select the material to use",
-				"Material Selection",
-				sort_list(choices),
-			)
-			if(isnull(chosen))
-				return // user cancelled
-			material = choices[chosen]
+
+		if(!length(choices))
+			say("No valid materials with applicable amounts detected for design.")
+			return
+
+		var/chosen = tgui_input_list(
+			ui.user,
+			"Select the material to use",
+			"Material Selection",
+			sort_list(choices),
+		)
+		if(isnull(chosen))
+			return // user cancelled
+
+		material = choices[chosen]
 
 		if(isnull(material))
-			stack_trace("got passed an invalid material id: [material]")
-			return
+			CRASH("A player chose an invalid custom material in autolathe ui_act: [material]")
 		materials_needed[material] += amount_needed
 
 	//checks for available materials
@@ -284,8 +297,9 @@
 
 	//compute power & time to print 1 item
 	var/charge_per_item = 0
-	for(var/material in design.materials)
-		charge_per_item += design.materials[material]
+	for(var/material, amount in design.materials)
+		charge_per_item += amount
+
 	charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * material_cost_coefficient * active_power_usage)
 	var/build_time_per_item = (design.construction_time * design.lathe_time_factor) ** 0.8
 
@@ -304,7 +318,7 @@
 		target_location = get_turf(src)
 
 	//give achievement for using unique material
-	if(design.materials[MAT_CATEGORY_ITEM_MATERIAL])
+	if(mat_choice)
 		for(var/datum/material/material in materials_needed)
 			if(!istype(material, /datum/material/glass) && !istype(material, /datum/material/iron))
 				ui.user.client.give_award(/datum/award/achievement/misc/getting_an_upgrade, ui.user)
@@ -364,24 +378,20 @@
 		var/max_stack_amount = initial(stack_item.max_amount)
 		var/number_to_make = (initial(stack_item.amount) * items_remaining)
 		while(number_to_make > max_stack_amount)
-			created = new stack_item(null, max_stack_amount) //it's imporant to spawn things in nullspace, since obj's like stacks qdel when they enter a tile/merge with other stacks of the same type, resulting in runtimes.
+			created = design.create_result(target, materials_needed, amount = max_stack_amount)
 			if(isitem(created))
 				created.pixel_x = created.base_pixel_x + rand(-6, 6)
 				created.pixel_y = created.base_pixel_y + rand(-6, 6)
-			created.forceMove(target)
 			number_to_make -= max_stack_amount
-
-		created = new stack_item(null, number_to_make)
-
+		created = design.create_result(target, materials_needed, amount = number_to_make)
 	else
-		created = new design.build_path(null)
+		created = design.create_result(target, materials_needed)
 		split_materials_uniformly(materials_needed, material_cost_coefficient, created)
 
 	if(isitem(created))
 		created.pixel_x = created.base_pixel_x + rand(-6, 6)
 		created.pixel_y = created.base_pixel_y + rand(-6, 6)
 	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[created.type]"))
-	created.forceMove(target)
 
 	if(is_stack)
 		items_remaining = 0
@@ -483,10 +493,10 @@
 		mat_capacity += new_matter_bin.tier * (37.5*SHEET_MATERIAL_AMOUNT)
 	materials.max_amount = mat_capacity
 
-	var/efficiency=1.8
+	var/efficiency = 1.8
 	for(var/datum/stock_part/servo/new_servo in component_parts)
 		efficiency -= new_servo.tier * 0.2
-	creation_efficiency = max(1,efficiency) // creation_efficiency goes 1.6 -> 1.4 -> 1.2 -> 1 per level of servo efficiency
+	creation_efficiency = max(1, round(efficiency, 0.1)) // creation_efficiency goes 1.6 -> 1.4 -> 1.2 -> 1 per level of servo efficiency
 
 /**
  * Cut a wire in the autolathe

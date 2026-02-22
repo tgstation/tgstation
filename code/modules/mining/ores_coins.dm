@@ -438,7 +438,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	force = 1
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron = COIN_MATERIAL_AMOUNT)
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
@@ -554,44 +553,26 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/gold
 	custom_materials = list(/datum/material/gold = COIN_MATERIAL_AMOUNT)
 
-/obj/item/coin/gold/grind_results()
-	return list(/datum/reagent/gold = 4)
-
 /obj/item/coin/silver
 	custom_materials = list(/datum/material/silver = COIN_MATERIAL_AMOUNT)
-
-/obj/item/coin/silver/grind_results()
-	return list(/datum/reagent/silver = 4)
 
 /obj/item/coin/diamond
 	custom_materials = list(/datum/material/diamond = COIN_MATERIAL_AMOUNT)
 
-/obj/item/coin/diamond/grind_results()
-	return list(/datum/reagent/carbon = 4)
-
 /obj/item/coin/plasma
 	custom_materials = list(/datum/material/plasma = COIN_MATERIAL_AMOUNT)
 
-/obj/item/coin/plasma/grind_results()
-	return list(/datum/reagent/toxin/plasma = 4)
-
 /obj/item/coin/uranium
 	custom_materials = list(/datum/material/uranium = COIN_MATERIAL_AMOUNT)
-
-/obj/item/coin/uranium/grind_results()
-	return list(/datum/reagent/uranium = 4)
 
 /obj/item/coin/titanium
 	custom_materials = list(/datum/material/titanium = COIN_MATERIAL_AMOUNT)
 
 /obj/item/coin/titanium/grind_results()
-	return list(/datum/reagent/flash_powder = 4)
+	return list(/datum/reagent/flash_powder = 8)
 
 /obj/item/coin/bananium
 	custom_materials = list(/datum/material/bananium = COIN_MATERIAL_AMOUNT)
-
-/obj/item/coin/bananium/grind_results()
-	return list(/datum/reagent/consumable/nutriment/soup/clown_tears = 4)
 
 /obj/item/coin/adamantine
 	custom_materials = list(/datum/material/adamantine = COIN_MATERIAL_AMOUNT)
@@ -600,19 +581,16 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	custom_materials = list(/datum/material/mythril = COIN_MATERIAL_AMOUNT)
 
 /obj/item/coin/mythril/grind_results()
-	return list(/datum/reagent/medicine/omnizine/godblood = 4)
+	return list(/datum/reagent/medicine/omnizine/godblood = 8)
 
 /obj/item/coin/plastic
 	custom_materials = list(/datum/material/plastic = COIN_MATERIAL_AMOUNT)
-
-/obj/item/coin/plastic/grind_results()
-	return list(/datum/reagent/plastic_polymers = 4)
 
 /obj/item/coin/runite
 	custom_materials = list(/datum/material/runite = COIN_MATERIAL_AMOUNT)
 
 /obj/item/coin/runite/grind_results()
-	return list(/datum/reagent/iron = 2, /datum/reagent/consumable/ethanol/ritual_wine = 2)
+	return list(/datum/reagent/iron = 4, /datum/reagent/consumable/ethanol/ritual_wine = 4)
 
 /obj/item/coin/twoheaded
 	desc = "Hey, this coin's the same on both sides!"
@@ -629,17 +607,17 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	override_material_worth = TRUE
 
 /obj/item/coin/antagtoken/grind_results()
-	return list(/datum/reagent/ants = 2, /datum/reagent/consumable/eggyolk = 2)
+	return list(/datum/reagent/ants = 4, /datum/reagent/consumable/eggyolk = 4)
 
-/obj/item/coin/iron/grind_results()
-	return list(/datum/reagent/iron = 4)
+/obj/item/coin/iron
+	custom_materials = list(/datum/material/iron = COIN_MATERIAL_AMOUNT)
 
 /obj/item/coin/gold/debug
 	custom_materials = list(/datum/material/gold = COIN_MATERIAL_AMOUNT)
 	desc = "If you got this somehow, be aware that it will dust you. Almost certainly."
 
 /obj/item/coin/gold/debug/grind_results()
-	return list(/datum/reagent/gold/cursed = 4)
+	return list(/datum/reagent/gold/cursed = 8)
 
 /obj/item/coin/gold/debug/attack_self(mob/user)
 	if(cooldown < world.time)

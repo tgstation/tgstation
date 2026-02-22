@@ -177,21 +177,22 @@
 	//surface level checks to filter out items that can be grinded/juice
 	var/list/obj/item/filtered_list = list()
 	for(var/obj/item/ingredient as anything in to_add)
-		//what are we trying to grind exactly?
+		// What are we trying to grind exactly?
 		if((ingredient.item_flags & ABSTRACT) || (ingredient.flags_1 & HOLOGRAM_1))
 			continue
 
-		//Nothing would come from grinding or juicing
+		// Nothing would come from grinding or juicing
 		if(!length(ingredient.grind_results()) && !ingredient.reagents.total_volume)
 			to_chat(user, span_warning("You cannot grind/juice [ingredient] into reagents!"))
 			continue
 
-		//Error messages should be in the objects' definitions
-		if(!ingredient.blend_requirements(src))
+		// Error messages should be in the objects' definitions
+		if(!ingredient.blend_requirements(src, user))
 			continue
 
 		filtered_list += ingredient
-	if(!filtered_list.len)
+
+	if(!length(filtered_list))
 		return FALSE
 
 	//find total weight of all items already in grinder

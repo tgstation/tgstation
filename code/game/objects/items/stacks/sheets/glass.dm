@@ -38,9 +38,6 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	fire = 50
 	acid = 100
 
-/obj/item/stack/sheet/glass/grind_results()
-	return list(/datum/reagent/silicon = 20)
-
 /obj/item/stack/sheet/glass/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to slice [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
@@ -108,9 +105,6 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 
-/obj/item/stack/sheet/plasmaglass/grind_results()
-	return list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10)
-
 /obj/item/stack/sheet/plasmaglass/fifty
 	amount = 50
 
@@ -171,7 +165,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 
 /obj/item/stack/sheet/rglass/grind_results()
-	return list(/datum/reagent/silicon = 20, /datum/reagent/iron = 10)
+	return list(/datum/reagent/silicon = 10, /datum/reagent/iron = 10)
 
 /obj/item/stack/sheet/rglass/fifty
 	amount = 50
@@ -213,7 +207,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 
 /obj/item/stack/sheet/plasmarglass/grind_results()
-	return list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10, /datum/reagent/iron = 10)
+	return list(/datum/reagent/silicon = 10, /datum/reagent/toxin/plasma = 10, /datum/reagent/iron = 10)
 
 /datum/armor/sheet_plasmarglass
 	melee = 20

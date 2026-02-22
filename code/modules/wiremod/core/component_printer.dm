@@ -137,7 +137,7 @@
 		return
 
 	materials.use_materials(design.materials, efficiency_coeff, 1, "processed", "[design.name]", user_data)
-	return new design.build_path(drop_location())
+	return design.create_result(drop_location())
 
 /obj/machinery/component_printer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -165,7 +165,7 @@
 			balloon_alert_to_viewers("printed [design.name]")
 
 			materials.use_materials(design.materials, efficiency_coeff, 1, "processed", "[design.name]", user_data)
-			var/atom/printed_design = new design.build_path(drop_location())
+			var/atom/printed_design = design.create_result(drop_location())
 			printed_design.pixel_x = printed_design.base_pixel_x + rand(-5, 5)
 			printed_design.pixel_y = printed_design.base_pixel_y + rand(-5, 5)
 		if ("remove_mat")
@@ -196,8 +196,8 @@
 			continue
 
 		var/list/cost = list()
-		for(var/datum/material/mat in design.materials)
-			cost[mat.name] = OPTIMAL_COST(design.materials[mat] * efficiency_coeff)
+		for(var/datum/material/mat, amount in design.materials)
+			cost[mat.name] = OPTIMAL_COST(amount * efficiency_coeff)
 
 		var/icon_size = spritesheet.icon_size_id(design.id)
 		designs[researched_design_id] = list(
@@ -461,7 +461,7 @@
 
 		data["name"] = module.display_name
 		data["desc"] = "A module that has been loaded in by [user]."
-		data["materials"] = list(GET_MATERIAL_REF(/datum/material/glass) = module.circuit_size * cost_per_component)
+		data["materials"] = list(SSmaterials.get_material(/datum/material/glass) = module.circuit_size * cost_per_component)
 	else if(istype(weapon, /obj/item/integrated_circuit))
 		var/obj/item/integrated_circuit/integrated_circuit = weapon
 		if(HAS_TRAIT(integrated_circuit, TRAIT_CIRCUIT_UNDUPABLE))
@@ -473,9 +473,9 @@
 		data["desc"] = "An integrated circuit that has been loaded in by [user]."
 
 		var/datum/design/integrated_circuit/circuit_design = SSresearch.techweb_design_by_id("integrated_circuit")
-		var/materials = list(GET_MATERIAL_REF(/datum/material/glass) = integrated_circuit.current_size * cost_per_component)
-		for(var/material_type in circuit_design.materials)
-			materials[material_type] += circuit_design.materials[material_type]
+		var/materials = list(SSmaterials.get_material(/datum/material/glass) = integrated_circuit.current_size * cost_per_component)
+		for(var/material_type, amount in circuit_design.materials)
+			materials[material_type] += amount
 
 		data["materials"] = materials
 		data["integrated_circuit"] = TRUE

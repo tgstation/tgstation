@@ -307,3 +307,21 @@
   - bugfix: Fixed shuttle chair buckle bars not appearing until sat on
   lelandkemble:
   - bugfix: Radio encryption keys are no longer tied to their radios once removed
+2026-02-22:
+  GregariousJB:
+  - qol: 'Keybinding visual improvements: "Unbound" is grayed out and custom binds
+      are highlighted in green for better visibility'
+  SmArtKar:
+  - bugfix: Fixed incorrect deuteragonist being passed to surgery memories
+  - refactor: Refactored the material system to calculate material effects based on
+      7 main properties. You can check them using science goggles!
+  - balance: A lot of materials have had their stats slightly changed, with some affected
+      more than others.
+  - balance: Material items now inherit their material's conductivity and have a slowdown
+      based on its density if it is especially dense.
+  - balance: Spears now use their shard's material for their combat stats, slightly
+      changing plastitanium spear's efficiency.
+  - balance: Material fishing rods have had their stat calculations significantly
+      simplified.
+  - image: Iron toolboxes now get printed with a random sprite instead of being grey.
+  - bugfix: Fixed metalgenned armor having broken armor stat calculations.
