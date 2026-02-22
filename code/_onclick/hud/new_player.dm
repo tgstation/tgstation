@@ -816,11 +816,11 @@
 
 	var/result = "Starting in [(approximate ? "~" : null)]"
 	if (big_num)
-		result += "<span style='font-size: 18px'>"
+		result += "<br /><span style='font-size: 18px'>"
 
 	result += time_remaining
 	if (big_num)
-		result += "</span>"
+		result += "</span><br />"
 
 	return result
 
