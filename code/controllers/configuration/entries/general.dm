@@ -166,6 +166,9 @@
 /// log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
 /datum/config_entry/flag/log_shuttle
 
+/// log image authoring, such as using the modular computer paint app
+/datum/config_entry/flag/log_image
+
 /// logs all timers in buckets on automatic bucket reset (Useful for timer debugging)
 /datum/config_entry/flag/log_timers_on_bucket_reset
 

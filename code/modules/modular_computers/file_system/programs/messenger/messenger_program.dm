@@ -52,19 +52,19 @@
 /datum/computer_file/program/messenger/on_install()
 	. = ..()
 	RegisterSignal(computer, COMSIG_MODULAR_COMPUTER_FILE_STORE, PROC_REF(check_new_photo))
-	RegisterSignal(computer, COMSIG_MODULAR_COMPUTER_FILE_DELETE, PROC_REF(check_photo_removed))
+	RegisterSignal(computer, COMSIG_MODULAR_COMPUTER_FILE_DELETE, PROC_REF(check_image_removed))
 	RegisterSignal(computer, COMSIG_MODULAR_PDA_IMPRINT_UPDATED, PROC_REF(on_imprint_added))
 	RegisterSignal(computer, COMSIG_MODULAR_PDA_IMPRINT_RESET, PROC_REF(on_imprint_reset))
 
-/datum/computer_file/program/messenger/proc/check_new_photo(sender, datum/computer_file/picture/storing_picture)
+/datum/computer_file/program/messenger/proc/check_new_photo(sender, datum/computer_file/image/storing_image)
 	SIGNAL_HANDLER
-	if(!istype(storing_picture))
+	if(!istype(storing_image))
 		return
 	update_pictures_for_all()
 
-/datum/computer_file/program/messenger/proc/check_photo_removed(sender, datum/computer_file/picture/photo_removed)
+/datum/computer_file/program/messenger/proc/check_image_removed(sender, datum/computer_file/image/image_removed)
 	SIGNAL_HANDLER
-	if(istype(photo_removed) && selected_image == photo_removed.picture_name)
+	if(istype(image_removed) && selected_image == image_removed.image_name)
 		selected_image = null
 
 /datum/computer_file/program/messenger/proc/on_imprint_added(sender)
@@ -109,12 +109,12 @@
 /datum/computer_file/program/messenger/proc/can_send_everyone_message()
 	return COOLDOWN_FINISHED(src, last_text) && COOLDOWN_FINISHED(src, last_text_everyone)
 
-/// Gets all currently relevant photo asset keys
+/// Gets all currently relevant image asset keys
 /datum/computer_file/program/messenger/proc/get_picture_assets()
 	var/list/data = list()
 
-	for(var/datum/computer_file/picture/photo in computer.stored_files)
-		data |= photo.picture_name
+	for(var/datum/computer_file/image/image_file in computer.stored_files)
+		data |= image_file.image_name
 
 	if(viewing_messages_of in saved_chats)
 		var/datum/pda_chat/chat = LAZYACCESS(saved_chats, viewing_messages_of)
@@ -309,12 +309,12 @@
 
 			var/photo_uid = text2num(params["uid"])
 
-			var/datum/computer_file/picture/selected_photo = computer.find_file_by_uid(photo_uid)
+			var/datum/computer_file/image/selected_image = computer.find_file_by_uid(photo_uid)
 
-			if(!istype(selected_photo))
+			if(!istype(selected_image))
 				return FALSE
 
-			selected_image = selected_photo.picture_name
+			selected_image = selected_image.image_name
 			return TRUE
 
 		if("PDA_siliconSelectPhoto")
@@ -367,10 +367,10 @@
 	// silicons handle selecting photos a bit differently for now
 	if(!issilicon(user))
 		var/list/stored_photos = list()
-		for(var/datum/computer_file/picture/photo_file in computer.stored_files)
+		for(var/datum/computer_file/image/image_file in computer.stored_files)
 			stored_photos += list(list(
-				"uid" = photo_file.uid,
-				"path" = SSassets.transport.get_asset_url(photo_file.picture_name)
+				"uid" = image_file.uid,
+				"path" = SSassets.transport.get_asset_url(image_file.image_name)
 			))
 		data["stored_photos"] = stored_photos
 	data["selected_photo_path"] = !isnull(selected_image) ? SSassets.transport.get_asset_url(selected_image) : null

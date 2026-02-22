@@ -1,0 +1,34 @@
+@use '../colors.scss';
+
+.NtosNanopaint__NewDialog__TemplateCell {
+  border-radius: 0%;
+  background-color: var(--color-base);
+
+  &:nth-child(odd) {
+    background-color: colors.fg(var(--color-base));
+  }
+
+  &:hover {
+    background-color: colors.fg(var(--color-primary));
+  }
+}
+
+.NtosNanopaint__NewDialog__TemplatePreview {
+  border-color: black;
+  border-width: 1px;
+  background-color: white;
+  margin: 0.5rem;
+}
+
+.NtosNanopaint__SelectDialog__EntryCell {
+  border-radius: 0%;
+  background-color: var(--color-base);
+
+  &.Button--selected {
+    background-color: var(--color-primary);
+  }
+
+  &:hover {
+    background-color: colors.fg(var(--color-primary));
+  }
+}

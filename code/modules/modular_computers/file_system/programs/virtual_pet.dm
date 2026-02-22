@@ -195,7 +195,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 
 	if(isnull(photo))
 		return
-	computer.store_file(new /datum/computer_file/picture(photo))
+	computer.store_file(new /datum/computer_file/image(photo.picture_image, display_name = photo.picture_name))
 
 /datum/computer_file/program/virtual_pet/proc/set_hat_offsets(new_dir)
 	var/direction_text = dir2text(new_dir)

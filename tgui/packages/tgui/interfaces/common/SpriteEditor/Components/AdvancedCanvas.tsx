@@ -119,6 +119,7 @@ export const AdvancedCanvas = (props: AdvancedCanvasProps) => {
     }
     const scalingFactor = canvasWidth / imageWidth;
     const context = canvas.getContext('2d')!;
+    context.clearRect(0, 0, canvasWidth, canvasHeight);
     if (backdropColor) {
       context.fillStyle = backdropColor;
       context.fillRect(0, 0, canvasWidth, canvasHeight);

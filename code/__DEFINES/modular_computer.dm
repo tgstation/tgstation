@@ -83,6 +83,12 @@
 /// The maximum length of the ringtone of the Messenger app.
 #define MESSENGER_RINGTONE_MAX_LENGTH 20
 
+///how much paper it takes from the printer to create a canvas.
+#define CANVAS_PAPER_COST 10
+
+///how much paper it takes from the printer to create a photo.
+#define PHOTO_PAPER_COST 1
+
 /**
  * PDA Themes
  * For these to work, the defines must be defined in tgui/styles/themes/[define].scss

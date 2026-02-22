@@ -95,7 +95,7 @@ export const NtosPortraitPrinter = (props) => {
             <Stack>
               <Stack.Item grow={3}>
                 <Section height="100%">
-                  <Stack justify="space-between">
+                  <Stack justify="space-between" align="center">
                     <Stack.Item grow={1}>
                       <Button
                         icon="angle-double-left"
@@ -111,16 +111,36 @@ export const NtosPortraitPrinter = (props) => {
                       />
                     </Stack.Item>
                     <Stack.Item grow={3}>
-                      <Button
-                        icon="check"
-                        content={!is_console ? "View Only" : "Print Portrait"}
-                        disabled={!got_paintings || !is_console}
-                        onClick={() =>
-                          act('select', {
-                            selected: paintings[listIndex].ref,
-                          })
-                        }
-                      />
+                      <Stack vertical>
+                        {!!is_console && (
+                          <Stack.Item>
+                            <Button
+                              width="100%"
+                              icon="print"
+                              content="Print Portrait"
+                              disabled={!got_paintings}
+                              onClick={() =>
+                                act('print', {
+                                  selected: paintings[listIndex].ref,
+                                })
+                              }
+                            />
+                          </Stack.Item>
+                        )}
+                        <Stack.Item>
+                          <Button
+                            width="100%"
+                            icon="download"
+                            content="Download"
+                            disabled={!got_paintings}
+                            onClick={() =>
+                              act('download', {
+                                selected: painting[listIndex].ref,
+                              })
+                            }
+                          />
+                        </Stack.Item>
+                      </Stack>
                     </Stack.Item>
                     <Stack.Item grow={1}>
                       <Button
