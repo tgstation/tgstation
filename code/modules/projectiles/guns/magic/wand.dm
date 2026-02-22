@@ -335,7 +335,11 @@
 	var/obj/item/gun/magic/wand/animate/animated_wand = new()
 	animated_wand.charges = charges
 	animated_wand.name = name + "?"
-	var/mob/living/basic/mimic/copy/ranged/living_wand = new(drop_location(), animated_wand, owner)
+
+	var/mob/living/basic/mimic/copy/ranged/living_wand = new(drop_location(), animated_wand, owner, TRUE) // It's already got eyes
+	QDEL_NULL(living_wand.ai_controller)
+	living_wand.ai_controller=  new /datum/ai_controller/basic_controller/mimic_copy/gun/animator(living_wand)
+
 	qdel(src)
 	return living_wand
 

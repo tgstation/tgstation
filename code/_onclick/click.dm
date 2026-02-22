@@ -64,6 +64,7 @@
  * * [mob/proc/RangedAttack] (atom,modifiers) - used only ranged, only used for tk and laser eyes but could be changed
  */
 /mob/proc/ClickOn( atom/A, params )
+	to_chat(world, "[src] tried AI click [world.time <= next_click]")
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1

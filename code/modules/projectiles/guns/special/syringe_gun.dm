@@ -52,6 +52,7 @@
 	if(!syringes.len)
 		return
 	chambered.newshot()
+	return ..()
 
 /obj/item/gun/syringe/can_shoot()
 	return syringes.len
