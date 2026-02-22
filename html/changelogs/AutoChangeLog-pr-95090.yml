@@ -1,0 +1,10 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - refactor: "Refactored the material system to calculate material effects based on 7 main properties. You can check them using science goggles!"
+  - balance: "A lot of materials have had their stats slightly changed, with some affected more than others."
+  - balance: "Material items now inherit their material's conductivity and have a slowdown based on its density if it is especially dense."
+  - balance: "Spears now use their shard's material for their combat stats, slightly changing plastitanium spear's efficiency."
+  - balance: "Material fishing rods have had their stat calculations significantly simplified."
+  - image: "Iron toolboxes now get printed with a random sprite instead of being grey."
+  - bugfix: "Fixed metalgenned armor having broken armor stat calculations."
