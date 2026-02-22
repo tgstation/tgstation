@@ -131,8 +131,9 @@
 /obj/machinery/computer/bank_machine/proc/end_siphon()
 	siphoning = FALSE
 	unauthorized = FALSE
-	if(syphoning_credits > 0)
-		new /obj/item/holochip(drop_location(), syphoning_credits) //get the loot
+	var/atom/droploc = drop_location()
+	for(var/cash_typepath in credits_to_spacecash(syphoning_credits))
+		new cash_typepath(droploc)
 	syphoning_credits = 0
 
 /obj/machinery/computer/bank_machine/proc/start_siphon(mob/living/carbon/user)
