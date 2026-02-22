@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(market)
 
 	/// Descriptions for each shipping methods.
 	var/shipping_method_descriptions = list(
-		SHIPPING_METHOD_LAUNCH = "Launches the item at the station from space, cheap but you might not receive your item at all.",
+		SHIPPING_METHOD_LAUNCH = "Launches the item at the station from space, with free shipping! However, you'll need to risk a spacewalk to receive your goods.",
 		SHIPPING_METHOD_LTSRBT = "Long-To-Short-Range-Bluespace-Transceiver, a machine that receives items outside the station and then teleports them to the location of the uplink.",
 		SHIPPING_METHOD_TELEPORT = "Teleports the item in a random area in the station, you get 60 seconds to get there first though.",
 		SHIPPING_METHOD_SUPPLYPOD = "Ships the item inside a supply pod at your exact location. Showy, speedy and expensive.",
@@ -19,6 +19,8 @@ SUBSYSTEM_DEF(market)
 	var/list/obj/machinery/ltsrbt/telepads = list()
 	/// Currently queued purchases.
 	var/list/queued_purchases = list()
+	/// How many admin items have been spawned this round? Used to iterate the identifier of admin-created market items.
+	var/admin_items_spawned = 0
 
 /datum/controller/subsystem/market/Initialize()
 	for(var/market in subtypesof(/datum/market))
@@ -29,10 +31,28 @@ SUBSYSTEM_DEF(market)
 
 	return SS_INIT_SUCCESS
 
+/**
+ * Follows the standard process for adding an item to the market from a path.
+ * @param path The path of the market datum to initialize and add to the market.
+ * @param market_whitelist A list of markets to which the item should be added. If null, the item is added to all markets.
+ */
 /datum/controller/subsystem/market/proc/initialize_item(datum/market_item/path, list/market_whitelist)
-	if(!path::item || !prob(path::availability_prob))
+	if((!path::item || !prob(path::availability_prob)))
 		return
 	var/datum/market_item/item_instance = new path()
+	for(var/potential_market in item_instance.markets)
+		if(!markets[potential_market])
+			stack_trace("SSmarket: Item [item_instance] available in market that does not exist.")
+			continue
+		if(isnull(market_whitelist) || (potential_market in market_whitelist))
+			markets[potential_market].add_item(item_instance)
+
+/**
+ * Adds an admin polled item to the market, expecting a market_item object having been created.
+ */
+/datum/controller/subsystem/market/proc/initialize_admin_item(datum/market_item/item_instance, list/market_whitelist)
+	if(!item_instance)
+		return
 	for(var/potential_market in item_instance.markets)
 		if(!markets[potential_market])
 			stack_trace("SSmarket: Item [item_instance] available in market that does not exist.")
@@ -72,7 +92,7 @@ SUBSYSTEM_DEF(market)
 
 			// Get random area, throw it somewhere there.
 			if(SHIPPING_METHOD_TELEPORT)
-				var/turf/targetturf = get_safe_random_station_turf_equal_weight()
+				var/turf/targetturf = get_safe_random_station_turf_equal_weight() //todo: split weights
 				// This shouldn't happen.
 				if (!targetturf)
 					continue
@@ -88,10 +108,11 @@ SUBSYSTEM_DEF(market)
 				var/startSide = pick(GLOB.cardinals)
 				var/turf/T = get_turf(purchase.uplink)
 				var/pickedloc = spaceDebrisStartLoc(startSide, T.z)
+				var/obj/delivery_pod = new /obj/structure/closet/crate/market(pickedloc)
 
-				var/atom/movable/item = purchase.entry.spawn_item(pickedloc, purchase)
+				var/atom/movable/item = purchase.entry.spawn_item(delivery_pod, purchase)
 				purchase.post_purchase_effects(item)
-				item.throw_at(purchase.uplink, 3, 3, spin = FALSE)
+				delivery_pod.throw_at(purchase.uplink, 3, 3, spin = FALSE)
 
 				to_chat(buyer, span_notice("[purchase.uplink] flashes a message noting the order is being launched at the station from [dir2text(startSide)]."))
 				qdel(purchase)
