@@ -234,3 +234,14 @@
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/reagent_containers/cup/bottle/inversing_buffer)
 	crate_name = "chiral inversing buffer crate"
+
+/datum/supply_pack/medical/handheld_crew_monitor
+	name = "Handheld Crew Monitor Crate"
+	desc = "A crate containing three handheld crew monitors"
+	cost = (CARGO_CRATE_VALUE * /obj/item/sensor_device::custom_premium_price * 3 * 0.8) / 280 // Bulk discount .8X base /tg/ vending machine value with the CARGO_CRATE_VALUE modifier
+	contains = list(
+		/obj/item/sensor_device,
+		/obj/item/sensor_device,
+		/obj/item/sensor_device,
+	)
+	crate_name = "handheld crew monitor crate"
