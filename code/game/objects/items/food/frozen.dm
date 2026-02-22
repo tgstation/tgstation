@@ -110,6 +110,15 @@
 	crafting_complexity = FOOD_COMPLEXITY_2
 	crafted_food_buff = /datum/status_effect/food/chilling
 
+/obj/item/food/snowcones/on_craft_completion(list/components, datum/crafting_recipe/food/current_recipe, atom/crafter)
+	. = ..()
+	// replaces the ice from the input with water
+	reagents.remove_reagent(/datum/reagent/consumable/ice, 15)
+	reagents.add_reagent(/datum/reagent/water, 11)
+	// then add 1u nutriment for free
+	reagents.add_reagent(/datum/reagent/consumable/nutriment, 1)
+	// the juice component will be transferred in from crafting
+
 /obj/item/food/snowcones/lime
 	name = "lime snowcone"
 	desc = "Lime syrup drizzled over a snowball in a paper cup."
