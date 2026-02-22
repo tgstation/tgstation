@@ -16,6 +16,8 @@
 	remove_on_fullheal = TRUE
 	heal_flag_necessary = HEAL_CC_STATUS
 	var/needs_update_stat = FALSE
+	/// Suffixes attached to the force_say when applied, uses the "hurt" suffixes by default
+	var/list/alter_phrases
 
 /datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -31,6 +33,15 @@
 		owner.update_stat()
 	return ..()
 
+/datum/status_effect/incapacitating/on_apply()
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	if(!.)
+		return
+
+	var/mob/living/carbon/human/human = owner
+	if(istype(human))
+		human.force_say(alter_phrases, immediate = TRUE)
 
 //STUN
 /datum/status_effect/incapacitating/stun
@@ -79,6 +90,7 @@
 //PARALYZED
 /datum/status_effect/incapacitating/paralyzed
 	id = "paralyzed"
+	alter_phrases = list("") // "Why am I about to be froz-"
 
 /datum/status_effect/incapacitating/paralyzed/on_apply()
 	. = ..()
@@ -134,6 +146,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/asleep
 	needs_update_stat = TRUE
 	tick_interval = 2 SECONDS
+	alter_phrases = list("Zzz...", "ZZz...", "ZZZ...", "zzZ...", "zZZ...", "ZzZ...", "zzz...", "zZz...", "mimimimimimi...")
 
 /datum/status_effect/incapacitating/sleeping/on_apply()
 	. = ..()

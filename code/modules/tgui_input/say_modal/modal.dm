@@ -33,6 +33,10 @@
 	var/window_open
 	/// What text was present in the say box the last time save_text was called
 	var/saved_text = ""
+	/// What channel was in use in the say box the last time save_text was called
+	var/saved_channel
+	/// Speech suffuxes used for force_say after "-". Defaults to hurt_phrases
+	var/list/alter_phrases
 
 /** Creates the new input window to exist in the background. */
 /datum/tgui_say/New(client/client, id)
