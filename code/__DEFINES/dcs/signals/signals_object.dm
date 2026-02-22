@@ -639,6 +639,9 @@
 /// Sent from /obj/item/mob_holder/purple_raptor/proc/toggle_wings() : (mob/living/carbon/human/user)
 #define COMSIG_RAPTOR_WINGS_CLOSED "raptor_wings_closed"
 
+/// Sent from /obj/machinery/vitals_monitor/proc/set_patient() : (mob/living/old_patient, mob/living/new_patient)
+#define COMSIG_VITALS_SET_PATIENT "vitals_set_patient"
+
 /// Sent from /obj/item/bodypart/limb/proc/apply_item(): (obj/item/bodypart/limb)
 #define COMSIG_ITEM_APPLIED_TO_LIMB "item_applied_to_limb"
 /// Sent from /obj/item/bodypart/limb/proc/Exited(): (obj/item/bodypart/limb)
