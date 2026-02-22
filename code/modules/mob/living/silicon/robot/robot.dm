@@ -1047,18 +1047,7 @@
 	to_chat(src, span_notice("Your frustration has empowered you! You can now right yourself faster!"))
 
 /mob/living/silicon/robot/get_fire_overlay(stacks, on_fire)
-	var/fire_icon = "generic_fire"
-
-	if(!GLOB.fire_appearances[fire_icon])
-		var/mutable_appearance/new_fire_overlay = mutable_appearance(
-			'icons/mob/effects/onfire.dmi',
-			fire_icon,
-			-HIGHEST_LAYER,
-			appearance_flags = RESET_COLOR|KEEP_APART,
-		)
-		GLOB.fire_appearances[fire_icon] = new_fire_overlay
-
-	return GLOB.fire_appearances[fire_icon]
+	return make_generic_fire_overlay()
 
 /// Draw power from the robot
 /mob/living/silicon/robot/proc/draw_power(power_to_draw)

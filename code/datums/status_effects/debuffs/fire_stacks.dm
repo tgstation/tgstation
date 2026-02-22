@@ -136,7 +136,7 @@
 	/// Reference to the mob light emitter itself
 	var/obj/effect/dummy/lighting_obj/moblight
 	/// Type of mob light emitter we use when on fire
-	var/moblight_type = /obj/effect/dummy/lighting_obj/moblight/fire
+	var/obj/effect/dummy/lighting_obj/moblight/moblight_type = /obj/effect/dummy/lighting_obj/moblight/fire
 	/// Cached particle type
 	var/cached_state
 
@@ -157,8 +157,14 @@
 
 /datum/status_effect/fire_handler/fire_stacks/on_remove()
 	UnregisterSignal(owner, COMSIG_ATOM_TOUCHED_SPARKS)
-	if (cached_state)
-		owner.remove_shared_particles(cached_state)
+
+/datum/status_effect/fire_handler/fire_stacks/cache_stacks()
+	. = ..()
+	if(isnull(moblight))
+		return
+	var/stack_percent = stacks / stack_limit
+	moblight.set_light_power(max(0.5, round(moblight_type::light_power * stack_percent, 0.1)))
+	moblight.set_light_range(max(1.5, round(moblight_type::light_range * stack_percent, 0.1)))
 
 /datum/status_effect/fire_handler/fire_stacks/tick(seconds_between_ticks)
 	if(stacks <= 0)
@@ -182,25 +188,6 @@
 		return TRUE
 
 	deal_damage(seconds_between_ticks)
-
-/datum/status_effect/fire_handler/fire_stacks/update_particles()
-	if (!on_fire)
-		if (cached_state)
-			owner.remove_shared_particles(cached_state)
-		cached_state = null
-		return
-
-	var/particle_type = /particles/embers/minor
-	if(stacks > MOB_BIG_FIRE_STACK_THRESHOLD)
-		particle_type = /particles/embers
-
-	if (cached_state == particle_type)
-		return
-
-	if (cached_state)
-		owner.remove_shared_particles(cached_state)
-	owner.add_shared_particles(particle_type)
-	cached_state = particle_type
 
 /**
  * Proc that handles damage dealing and all special effects
@@ -309,6 +296,7 @@
 		return
 
 	overlays |= created_overlay
+	overlays |= source.make_fire_emissive(created_overlay)
 
 /datum/status_effect/fire_handler/wet_stacks
 	id = "wet_stacks"
