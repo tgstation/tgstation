@@ -478,7 +478,7 @@
 	new /obj/item/reagent_containers/cup/bottle/polonium(src)
 	new /obj/item/reagent_containers/cup/bottle/venom(src)
 	new /obj/item/reagent_containers/cup/bottle/fentanyl(src)
-	new /obj/item/reagent_containers/cup/bottle/formaldehyde(src)
+	new /obj/item/reagent_containers/cup/bottle/anacea(src)
 	new /obj/item/reagent_containers/cup/bottle/spewium(src)
 	new /obj/item/reagent_containers/cup/bottle/syndol(src)
 	new /obj/item/reagent_containers/cup/bottle/cyanide(src)
