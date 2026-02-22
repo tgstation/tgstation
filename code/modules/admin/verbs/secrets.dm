@@ -377,6 +377,18 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(return_escape_shuttle), make_announcement), new_timer SECONDS)
 			else
 				INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(return_escape_shuttle), make_announcement)
+		if("ore_vents")
+			if(!is_funmin)
+				return
+			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Tap Ore Vents"))
+			var/vent_count = 0
+			for(var/obj/structure/ore_vent/vent as anything in SSore_generation.possible_vents)
+				if(vent.tapped || !COOLDOWN_FINISHED(vent, wave_cooldown) || vent.node) // skip if already tapped or currently being tapped
+					continue
+				vent.initiate_wave_win(forced = TRUE)
+				vent_count++
+			message_admins("[key_name_admin(holder)] tapped [vent_count] ore vents")
+			log_admin("[key_name_admin(holder)] tapped [vent_count] ore vents")
 		if("blackout")
 			if(!is_funmin)
 				return
