@@ -272,7 +272,7 @@
 /obj/item/assembly/flash/proc/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
 	SIGNAL_HANDLER
 	if(!try_use_flash())
-		return
+		return NONE
 	to_chat(user, span_danger("As you open [letter], a very bright light shoots out from inside!"))
 	flash_mob(user)
 	forceMove(user.loc)

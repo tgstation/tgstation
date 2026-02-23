@@ -82,6 +82,7 @@
 	user.gib(DROP_BRAIN|DROP_BODYPARTS|DROP_ITEMS) // just remove the organs
 
 /obj/item/food/monkeycube/proc/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
+	SIGNAL_HANDLER
 	to_chat(user, span_danger("As you open [letter], its contents rapidly expand!"))
 	Expand()
 	return COMPONENT_TRAITOR_MAIL_HANDLED

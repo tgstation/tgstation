@@ -298,7 +298,7 @@
 /obj/item/clothing/mask/facehugger/proc/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
 	SIGNAL_HANDLER
 	if(stat != CONSCIOUS)
-		return
+		return NONE
 	to_chat(user, span_danger("There's something moving inside of \the [letter]!"))
 	Leap(user)
 	return COMPONENT_TRAITOR_MAIL_HANDLED

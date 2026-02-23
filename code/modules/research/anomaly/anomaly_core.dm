@@ -36,7 +36,7 @@
 	return ..()
 
 /obj/item/assembly/signaler/anomaly/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
-	return
+	return NONE
 
 //Anomaly cores
 /obj/item/assembly/signaler/anomaly/pyro

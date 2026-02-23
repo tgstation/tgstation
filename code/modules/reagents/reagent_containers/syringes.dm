@@ -199,7 +199,7 @@
 	if(!reagents.total_volume || !user.reagents || !user.try_inject(user, user.get_active_hand()))
 		return
 	to_chat(user, span_danger("As you open [letter], you prick yourself on a syringe inside!"))
-	reagents.trans_to(user, min(reagents.total_volume, 15))
+	reagents.trans_to(user, min(reagents.total_volume, 5))
 	forceMove(user.loc)
 	return COMPONENT_TRAITOR_MAIL_HANDLED
 

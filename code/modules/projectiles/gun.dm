@@ -718,15 +718,20 @@
 	return
 
 /obj/item/gun/proc/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
-	user.put_in_hands(src) // It doesn't matter if this fails
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(fire_at_opener), user, letter)
+	return COMPONENT_TRAITOR_MAIL_HANDLED
+
+/obj/item/gun/proc/fire_at_opener(mob/user, obj/item/mail/traitor/letter)
+	if(!user.put_in_hands(src)) //this won't ever fail under normal circumstances, but will happen with the admin versions
+		forceMove(user.loc)
 	to_chat(user, span_danger("As you open [letter], you see [src] inside! [about_to_shoot_inside_mail_text]"))
 	if(!can_shoot())
 		shoot_with_empty_chamber(user)
-		return COMPONENT_TRAITOR_MAIL_HANDLED
+		return
 	if(process_fire(user, user, FALSE, zone_override = BODY_ZONE_HEAD))
 		forceMove(user.loc)
 		throw_at(pick(get_step(user, user.dir)), 1, 3)
-	return COMPONENT_TRAITOR_MAIL_HANDLED
 
 #undef FIRING_PIN_REMOVAL_DELAY
 #undef DUALWIELD_PENALTY_EXTRA_MULTIPLIER

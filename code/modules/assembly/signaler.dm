@@ -186,7 +186,7 @@
 	SIGNAL_HANDLER
 	to_chat(user, span_danger("As you open [letter], you accidentally press a button on [src]!"))
 	INVOKE_ASYNC(src, PROC_REF(signal)) // No need to check for cooldown, the cooldown is shorter than the do_after for opening mail
-	return //don't return handled, we want in hands and open ui
+	return NONE //don't return handled, we want in hands and open ui
 
 /obj/item/assembly/signaler/cyborg
 
