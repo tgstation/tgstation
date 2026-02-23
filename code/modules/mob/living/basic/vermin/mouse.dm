@@ -28,8 +28,6 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/mouse
 
-	/// Whether this rat is friendly to players
-	var/tame = FALSE
 	/// What color our mouse is. Brown, gray and white - leave blank for random.
 	var/body_color
 	/// Does this mouse contribute to the ratcap?
@@ -62,7 +60,8 @@
 		SSmobs.cheeserats |= src
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-	src.tame = tame
+	if(tame)
+		ADD_TRAIT(src, TRAIT_MOB_TAMED, INNATE_TRAIT)
 	if(!isnull(new_body_color))
 		body_color = new_body_color
 	if(isnull(body_color))
@@ -80,7 +79,7 @@
 	AddComponent(/datum/component/swarming, 16, 16) //max_x, max_y
 
 /mob/living/basic/mouse/proc/make_tameable()
-	if (tame)
+	if (HAS_TRAIT(src, TRAIT_MOB_TAMED))
 		add_faction(FACTION_NEUTRAL)
 	else
 		var/static/list/food_types = list(/obj/item/food/cheese)
@@ -198,7 +197,6 @@
 	. = ..()
 	new /obj/effect/temp_visual/heart(loc)
 	add_faction(FACTION_NEUTRAL)
-	tame = TRUE
 	try_consume_cheese(cheese)
 	ai_controller.CancelActions() // Interrupt any current fleeing
 
@@ -248,7 +246,7 @@
 
 /// Creates a new mouse based on this mouse's subtype.
 /mob/living/basic/mouse/proc/create_a_new_rat()
-	new /mob/living/basic/mouse(loc, /* tame = */ tame)
+	new /mob/living/basic/mouse(loc, HAS_TRAIT(src, TRAIT_MOB_TAMED))
 
 /// Biting into a cable will cause a mouse to get shocked and die if applicable. Or do nothing if they're lucky.
 /mob/living/basic/mouse/proc/try_bite_cable(obj/structure/cable/cable)
@@ -302,7 +300,7 @@
 	contributes_to_ratcap = FALSE
 
 /mob/living/basic/mouse/brown/tom/make_tameable()
-	tame = TRUE
+	ADD_TRAIT(src, TRAIT_MOB_TAMED, INNATE_TRAIT)
 	return ..()
 
 /mob/living/basic/mouse/brown/tom/Initialize(mapload)
