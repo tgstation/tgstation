@@ -547,6 +547,13 @@
 	beakers += beaker_one
 	beakers += beaker_two
 
+/obj/item/grenade/chem_grenade/teargas/instant/Initialize(mapload)
+	. = ..()
+	detonate()
+
+/obj/item/grenade/chem_grenade/teargas/instant/detonate(mob/living/lanced_by)
+	. = ..()
+	qdel(src)
 
 /obj/item/grenade/chem_grenade/facid
 	name = "acid grenade"

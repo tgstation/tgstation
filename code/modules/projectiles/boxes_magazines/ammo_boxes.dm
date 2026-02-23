@@ -24,7 +24,7 @@
 	multiple_sprites = AMMO_BOX_PER_BULLET
 
 /obj/item/ammo_box/a40mm/rubber
-	name = "ammo box (40mm rubber slug)"
+	name = "ammo box (40mm rubber puck)"
 	ammo_type = /obj/item/ammo_casing/a40mm/rubber
 
 /obj/item/ammo_box/a40mm/flak
@@ -34,6 +34,10 @@
 /obj/item/ammo_box/a40mm/incendiary
 	name = "ammo box (40mm incendiary grenade)"
 	ammo_type = /obj/item/ammo_casing/a40mm/incendiary
+
+/obj/item/ammo_box/a40mm/tear_gas
+	name = "ammo box (40mm tear gas grenade)"
+	ammo_type = /obj/item/ammo_casing/a40mm/tear_gas
 
 /obj/item/ammo_box/rocket
 	name = "rocket bouquet (84mm HE)"

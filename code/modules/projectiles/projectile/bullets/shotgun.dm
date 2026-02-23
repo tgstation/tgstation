@@ -32,12 +32,12 @@
 	embed_type = null
 
 /obj/projectile/bullet/shotgun_beanbag/a40mm
-	name = "rubber slug"
+	name = "rubber puck"
 	icon_state = "cannonball"
-	damage = 20
-	stamina = 160 //BONK
+	damage = 10
+	stamina = 80 //BONK
+	knockdown = 10
 	wound_bonus = 30
-	weak_against_armour = TRUE
 
 /obj/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"

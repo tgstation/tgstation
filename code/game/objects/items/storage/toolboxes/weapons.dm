@@ -237,7 +237,7 @@
 	weapon_to_spawn = /obj/item/gun/ballistic/shotgun/china_lake
 	extra_to_spawn = /obj/item/storage/belt/bandolier/china_lake_extra
 
-/obj/item/storage/toolbox/guncase/doublesword/PopulateContents()
+/obj/item/storage/toolbox/guncase/china_lake/PopulateContents()
 	new weapon_to_spawn (src)
 	new extra_to_spawn (src)
 	new /obj/item/clothing/under/rank/prisoner/nosensor (src)
