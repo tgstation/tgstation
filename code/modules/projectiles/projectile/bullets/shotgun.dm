@@ -38,6 +38,13 @@
 	stamina = 80 //BONK
 	knockdown = 10
 	wound_bonus = 30
+	ricochets_max = 4
+	ricochet_chance = 100
+	ricochet_decay_chance = 1
+	ricochet_decay_damage = 0.8
+	ricochet_auto_aim_range = 2
+	ricochet_auto_aim_angle = 30
+	ricochet_incidence_leeway = 75
 
 /obj/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
