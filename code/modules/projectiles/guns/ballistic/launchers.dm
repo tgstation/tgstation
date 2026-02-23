@@ -11,6 +11,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/grenadelauncher
 	fire_sound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
 	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
 	pin = /obj/item/firing_pin/implant/pindicate
 	bolt_type = BOLT_TYPE_NO_BOLT
 	can_muzzle_flash = FALSE
