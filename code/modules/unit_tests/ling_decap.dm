@@ -36,7 +36,7 @@
 	var/obj/item/organ/brain/oldbrain = ling.get_organ_slot(ORGAN_SLOT_BRAIN)
 	ling.set_species(/datum/species/human/felinid)
 	var/obj/item/organ/brain/newbrain = ling.get_organ_slot(ORGAN_SLOT_BRAIN)
-	TEST_ASSERT(oldbrain.type != newbrain.type, "Changling decap test setup failed to change the ling's brain typepath when changing their species.")
+	TEST_ASSERT(oldbrain.type != newbrain.type, "Changeling decap test setup failed to change the ling's brain typepath when changing their species.")
 
 /// Tests people get decapitated properly.
 /datum/unit_test/normal_decap
