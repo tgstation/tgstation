@@ -174,7 +174,7 @@
 		balloon_alert(user, "already emagged!")
 		return FALSE
 	balloon_alert(user, "safeties shorted out")
-	dispensable_reagents |= emagged_reagents//add the emagged reagents to the dispensable ones
+	dispensable_reagents = sort_list(dispensable_reagents | emagged_reagents, GLOBAL_PROC_REF(cmp_reagents_asc)) // add the emagged reagents to the dispensable ones
 	obj_flags |= EMAGGED
 	return TRUE
 
@@ -473,7 +473,7 @@
 		parts_rating += capacitor.tier
 	for(var/datum/stock_part/servo/servo in component_parts)
 		if (servo.tier > 3)
-			dispensable_reagents |= upgrade_reagents
+			dispensable_reagents = sort_list(dispensable_reagents | upgrade_reagents, GLOBAL_PROC_REF(cmp_reagents_asc))
 		else
 			dispensable_reagents -= upgrade_reagents
 		parts_rating += servo.tier
@@ -671,7 +671,7 @@
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade/Initialize(mapload)
 	. = ..()
-	dispensable_reagents |= emagged_reagents //adds emagged reagents
+	dispensable_reagents = sort_list(dispensable_reagents | emagged_reagents, GLOBAL_PROC_REF(cmp_reagents_asc)) // adds emagged reagents
 
 /obj/machinery/chem_dispenser/drinks/beer
 	name = "booze dispenser"
@@ -731,7 +731,7 @@
 
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade/Initialize(mapload)
 	. = ..()
-	dispensable_reagents |= emagged_reagents //adds emagged reagents
+	dispensable_reagents = sort_list(dispensable_reagents | emagged_reagents, GLOBAL_PROC_REF(cmp_reagents_asc)) // adds emagged reagents
 
 /obj/machinery/chem_dispenser/mutagen
 	name = "mutagen dispenser"
@@ -782,7 +782,7 @@
 
 /obj/machinery/chem_dispenser/fullupgrade/Initialize(mapload)
 	. = ..()
-	dispensable_reagents |= emagged_reagents //adds emagged reagents
+	dispensable_reagents = sort_list(dispensable_reagents | emagged_reagents, GLOBAL_PROC_REF(cmp_reagents_asc)) // adds emagged reagents
 
 /obj/machinery/chem_dispenser/abductor
 	name = "reagent synthesizer"
