@@ -178,7 +178,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		directional_opacity = ALL_CARDINALS
 
 	// apply materials properly from the default custom_materials value
-	if (!length(custom_materials))
+	if (length(custom_materials))
 		set_custom_materials(custom_materials)
 
 	if(uses_integrity)
