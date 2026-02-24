@@ -426,18 +426,18 @@
 
 		if("deploy", "undeploy")
 			owner.visible_message(
-				span_warning("[user] tries to [action_key] [owner]'s [source]"),
-				span_userdanger("[user] tries to [action_key] your [source]."),
+				span_warning("[user] tries to [action_key] [owner]'s [source]..."),
+				span_userdanger("[user] is trying to [action_key] your [source]!"),
 				blind_message = span_hear("You hear rustling."),
 				ignored_mobs = user,
 			)
-			INVOKE_ASYNC(src, PROC_REF(attempt_strip_deploy), owner, user)
+			INVOKE_ASYNC(src, PROC_REF(attempt_strip_deploy), owner, user, action_key)
 			return COMPONENT_ALT_ACTION_DONE
 
 		if("activate_mod", "deactivate_mod")
 			owner.visible_message(
-				span_warning("[user] tries to press [owner]'s [source]'s power button."),
-				span_userdanger("[user] tries to press your [source]'s power button."),
+				span_warning("[user] tries to press [owner]'s [source]'s power button..."),
+				span_userdanger("[user] is trying to press your [source]'s power button!"),
 				blind_message = span_hear("You hear rustling."),
 				ignored_mobs = user,
 			)
@@ -447,14 +447,24 @@
 		else
 			return NONE
 
-/obj/item/mod/control/proc/attempt_strip_deploy(atom/owner, mob/user)
+/obj/item/mod/control/proc/attempt_strip_deploy(atom/owner, mob/user, message)
 	if(!do_after(user, strip_delay, owner))
 		return
+	owner.visible_message(
+		span_warning("[user] [message]s [owner]'s [source]."),
+		span_userdanger("[user] [message]s your [source]!"),
+		ignored_mobs = user,
+	)
 	quick_deploy(user)
 
 /obj/item/mod/control/proc/attempt_strip_activate(atom/owner, mob/user)
 	if(!do_after(user, strip_delay, owner))
 		return
+	owner.visible_message(
+		span_warning("[user] presses [owner]'s [source]'s power button."),
+		span_userdanger("[user] presses your [source]'s power button!"),
+		ignored_mobs = user,
+	)
 	toggle_activate(user)
 
 
