@@ -119,10 +119,7 @@
 		COMSIG_MOB_ALTCLICKON,
 		COMSIG_CLICK_SHIFT,
 	))
-
-	if(user.hud_used)
-		QDEL_NULL(user.hud_used.screen_objects[HUD_XENOBIO_CONSOLE])
-		user.hud_used.show_hud(user.hud_used.hud_version)
+	user.hud_used?.remove_screen_object(HUD_XENOBIO_CONSOLE)
 	return ..()
 
 /obj/machinery/computer/camera_advanced/xenobio/item_interaction(mob/living/user, obj/item/tool, list/modifiers)

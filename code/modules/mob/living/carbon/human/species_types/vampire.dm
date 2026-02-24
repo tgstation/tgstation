@@ -33,18 +33,14 @@
 	new_vampire.skin_tone = "albino"
 	new_vampire.update_body(0)
 	RegisterSignal(new_vampire, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(new_vampire, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 	if(new_vampire.hud_used)
 		on_hud_created(new_vampire)
-	else
-		RegisterSignal(new_vampire, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 /datum/species/human/vampire/on_species_loss(mob/living/carbon/human/old_vampire, datum/species/new_species, pref_load)
 	. = ..()
 	UnregisterSignal(old_vampire, COMSIG_ATOM_ATTACKBY)
-	if(!old_vampire.hud_used)
-		return
-	QDEL_NULL(old_vampire.hud_used.screen_objects[HUD_MOB_BLOOD_LEVEL])
-	old_vampire.hud_used.show_hud(old_vampire.hud_used.hud_version)
+	old_vampire.hud_used?.remove_screen_object(HUD_MOB_BLOOD_LEVEL)
 
 /datum/species/human/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick)
 	. = ..()

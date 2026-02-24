@@ -385,10 +385,9 @@
 	RegisterSignal(new_holder, COMSIG_LIVING_GRAB, PROC_REF(attempt_grab))
 	RegisterSignals(new_holder, list(COMSIG_LIVING_TABLE_SLAMMING, COMSIG_LIVING_TABLE_LIMB_SLAMMING), PROC_REF(smash_table))
 	if(display_combos)
+		RegisterSignal(new_holder, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 		if(new_holder.hud_used)
 			on_hud_created(new_holder)
-		else
-			RegisterSignal(new_holder, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 /**
  * Called when this martial art is removed from a mob.
@@ -399,10 +398,7 @@
 	if(help_verb)
 		remove_verb(remove_from, help_verb)
 	UnregisterSignal(remove_from, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_GRAB, COMSIG_LIVING_TABLE_SLAMMING, COMSIG_LIVING_TABLE_LIMB_SLAMMING))
-	var/atom/movable/screen/combo/combo_display = remove_from.hud_used?.screen_objects[HUD_MOB_COMBO]
-	if(!isnull(combo_display))
-		QDEL_NULL(combo_display)
-		remove_from.hud_used.show_hud(remove_from.hud_used.hud_version)
+	remove_from.hud_used?.remove_screen_object(HUD_MOB_COMBO)
 
 ///Gives the owner of the martial art the combo HUD.
 /datum/martial_art/proc/on_hud_created(mob/source)

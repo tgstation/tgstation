@@ -91,11 +91,10 @@
 	RegisterSignal(parent, COMSIG_LIVING_DEFUSED_GIBTONITE, PROC_REF(on_gibtonite_defuse))
 	RegisterSignal(parent, COMSIG_LIVING_CRUSHER_DETONATE, PROC_REF(on_crusher_detonate))
 	RegisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER, PROC_REF(on_geyser_discover))
+	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 	ADD_TRAIT(parent, TRAIT_MINING_PARRYING, STYLE_TRAIT)
 	var/mob/mob_parent = parent
-	if (!mob_parent.hud_used)
-		RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
-	else
+	if (mob_parent.hud_used)
 		on_hud_created()
 
 /datum/component/style/UnregisterFromParent()

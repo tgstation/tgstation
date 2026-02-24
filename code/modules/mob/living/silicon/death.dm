@@ -11,8 +11,7 @@
 	if(. != DEAD || !hud_used)
 		return
 	// Clean up hud element used for the death sequence
-	QDEL_NULL(hud_used.screen_objects[HUD_CYBORG_DEATH])
-	hud_used.show_hud(hud_used.hud_version)
+	hud_used.remove_screen_object(HUD_CYBORG_DEATH)
 
 /mob/living/silicon/death(gibbed)
 	diag_hud_set_status()

@@ -179,6 +179,16 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		show_hud(hud_version)
 	return new_object
 
+/// Removes a screen object and refreshes the hud. Can just be passed a key.
+/datum/hud/proc/remove_screen_object(atom/movable/screen/to_remove, update = TRUE)
+	if (!istype(to_remove))
+		to_remove = screen_objects[to_remove]
+		if (!to_remove)
+			return
+	qdel(to_remove)
+	if (update && !QDELETED(src))
+		show_hud(hud_version)
+
 /// Proc for children to spawn their screen object in
 /datum/hud/proc/initialize_screen_objects()
 	return

@@ -132,7 +132,7 @@
 	host.remove_blood_volume_modifier(REF(src))
 	sync_health(already_ejecting = TRUE)
 
-	remove_host_hud()
+	host.hud_used?.remove_screen_object(HUD_MOB_BLOOD_LEVEL)
 
 	host.set_blood_volume(0)
 
@@ -250,10 +250,3 @@
 		return
 
 	blood_display = hud.add_screen_object(/atom/movable/screen/blood_level, HUD_MOB_BLOOD_LEVEL, HUD_GROUP_INFO, update_screen = TRUE)
-
-/mob/living/basic/blood_worm/proc/remove_host_hud()
-	var/datum/hud/hud = host.hud_used
-	if (!hud)
-		return
-	QDEL_NULL(hud.screen_objects[HUD_MOB_BLOOD_LEVEL])
-	hud.show_hud(hud.hud_version)

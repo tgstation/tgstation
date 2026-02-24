@@ -12,10 +12,9 @@
 	var/datum/antagonist/wizard/wizard_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
 	if(wizard_datum)
 		wizard_datum.perks += src
+	RegisterSignal(user, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 	if (user.hud_used)
 		on_hud_created()
-	else
-		RegisterSignal(user, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 	to_chat(user, span_notice("You got a new perk: [src.name]."))
 	log_purchase(user.key)
 	return TRUE

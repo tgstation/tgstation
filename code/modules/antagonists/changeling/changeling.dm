@@ -137,6 +137,7 @@
 	RegisterSignal(living_mob, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 	RegisterSignal(living_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_fullhealed))
 	RegisterSignal(living_mob, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+	RegisterSignal(living_mob, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 	RegisterSignals(living_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), PROC_REF(on_click_sting))
 	ADD_TRAIT(living_mob, TRAIT_FAKE_SOULLESS, CHANGELING_TRAIT)
 	ADD_TRAIT(living_mob, TRAIT_BRAINLESS_CARBON, CHANGELING_TRAIT)
@@ -144,8 +145,6 @@
 
 	if (living_mob.hud_used)
 		on_hud_created()
-	else
-		RegisterSignal(living_mob, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 	make_brain_decoy(living_mob)
 
@@ -196,12 +195,8 @@
 		return
 
 	var/datum/hud/hud_used = living_mob.hud_used
-	QDEL_NULL(hud_used.screen_objects[HUD_CHANGELING_CHEMS])
-	QDEL_NULL(hud_used.screen_objects[HUD_CHANGELING_STING])
-	if (!QDELETED(hud_used))
-		hud_used.show_hud(hud_used.hud_version)
-
-
+	hud_used.remove_screen_object(HUD_CHANGELING_CHEMS, update = FALSE)
+	hud_used.remove_screen_object(HUD_CHANGELING_STING)
 	// The old body's brain still remains a decoy, I guess?
 
 /datum/antagonist/changeling/on_removal()

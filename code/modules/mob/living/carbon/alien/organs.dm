@@ -86,18 +86,15 @@
 /obj/item/organ/alien/plasmavessel/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
 	RegisterSignal(organ_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+	RegisterSignal(organ_owner, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 	if (organ_owner.hud_used)
 		on_hud_created()
-	else
-		RegisterSignal(organ_owner, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 /obj/item/organ/alien/plasmavessel/on_mob_remove(mob/living/carbon/organ_owner)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
 	UnregisterSignal(organ_owner, COMSIG_MOB_HUD_CREATED)
-	if (organ_owner.hud_used)
-		QDEL_NULL(organ_owner.hud_used.screen_objects[HUD_ALIEN_PLASMA_DISPLAY])
-		organ_owner.hud_used.show_hud(organ_owner.hud_used.hud_version)
+	organ_owner.hud_used?.remove_screen_object(HUD_ALIEN_PLASMA_DISPLAY)
 
 /obj/item/organ/alien/plasmavessel/proc/get_status_tab_item(mob/living/carbon/source, list/items)
 	SIGNAL_HANDLER
