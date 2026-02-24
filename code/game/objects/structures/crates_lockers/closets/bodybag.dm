@@ -235,9 +235,9 @@
 
 /obj/structure/closet/body_bag/before_open(mob/living/user, force)
 	if(pinned)
-		if(force || user.loc == src)
+		if(force || !user || user.loc == src)
 			pinned.forceMove(drop_location())
-			return TRUE // force open, or we can't take the note out from inside
+			return TRUE // force open, no user, or we can't take the note out from inside
 		balloon_alert(user, "paper removed")
 		if(!user.put_in_inactive_hand(pinned) && pinned.loc == src)
 			pinned.forceMove(drop_location())
