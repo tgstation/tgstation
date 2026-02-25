@@ -794,6 +794,7 @@
 /atom/movable/screen/healthdoll/human/update_body_zones()
 	vis_contents.Cut()
 	QDEL_LIST_ASSOC_VAL(limbs)
+	limbs ||= list()
 	var/mob/living/carbon/human/owner = hud.mymob
 	for(var/body_zone in owner.get_all_limbs())
 		var/atom/movable/screen/healthdoll_limb/limb = new(src, null)

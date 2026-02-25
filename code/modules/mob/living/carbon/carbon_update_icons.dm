@@ -468,8 +468,8 @@
 	for(var/body_zone, limb_untyped in get_bodyparts_by_zones())
 		var/obj/item/bodypart/limb = limb_untyped
 		if(isnull(limb) || IS_STUMP(limb))
-			if(icon_render_keys[limb.body_zone])
-				icon_render_keys -= limb.body_zone
+			if(icon_render_keys[body_zone])
+				icon_render_keys -= body_zone
 				limb_count_update += 1
 			continue
 
