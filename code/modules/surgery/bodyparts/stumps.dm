@@ -11,7 +11,7 @@
 
 /obj/item/bodypart/leg/left/stump/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_PARALYSIS, STUMP_TRAIT)
+	ADD_TRAIT(src, TRAIT_PARALYSIS, INNATE_TRAIT)
 
 /obj/item/bodypart/leg/right/stump
 	name = "stump"
@@ -24,7 +24,7 @@
 
 /obj/item/bodypart/leg/right/stump/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_PARALYSIS, STUMP_TRAIT)
+	ADD_TRAIT(src, TRAIT_PARALYSIS, INNATE_TRAIT)
 
 /obj/item/bodypart/arm/left/stump
 	name = "stump"
@@ -37,7 +37,7 @@
 
 /obj/item/bodypart/arm/left/stump/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_PARALYSIS, STUMP_TRAIT)
+	ADD_TRAIT(src, TRAIT_PARALYSIS, INNATE_TRAIT)
 
 /obj/item/bodypart/arm/right/stump
 	name = "stump"
@@ -50,7 +50,7 @@
 
 /obj/item/bodypart/arm/right/stump/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_PARALYSIS, STUMP_TRAIT)
+	ADD_TRAIT(src, TRAIT_PARALYSIS, INNATE_TRAIT)
 
 /obj/item/bodypart/head/stump
 	name = "stump"
@@ -66,4 +66,4 @@
 
 /obj/item/bodypart/head/stump/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_PARALYSIS, STUMP_TRAIT)
+	ADD_TRAIT(src, TRAIT_PARALYSIS, INNATE_TRAIT)

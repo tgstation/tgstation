@@ -259,7 +259,6 @@
 #define LEFT_ARM_TRAIT "left_arm"
 #define RIGHT_LEG_TRAIT "right_leg"
 #define LEFT_LEG_TRAIT "left_leg"
-#define STUMP_TRAIT "stump"
 
 ///coming from a fish trait datum.
 #define FISH_TRAIT_DATUM "fish_trait_datum"

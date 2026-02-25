@@ -70,8 +70,6 @@
 /// This limb cannot be disabled via damage thresholds
 #define LIMB_NO_DISABLE -1
 
-#define IS_STUMP(bodypart) (HAS_TRAIT_FROM(bodypart, TRAIT_PARALYSIS, STUMP_TRAIT))
-
 // Bodypart surgery state
 /// An incision has been made into the skin
 #define SURGERY_SKIN_CUT (1<<0)

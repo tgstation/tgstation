@@ -54,6 +54,9 @@
 /// Helper to figure out if a limb is a peg limb
 #define IS_PEG_LIMB(limb) (limb.bodytype & BODYTYPE_PEG)
 
+/// Is the bodypart a stump
+#define IS_STUMP(limb) (limb.bodypart_flags & BODYPART_STUMP)
+
 // Flags for the bodypart_flags var on /obj/item/bodypart
 /// Bodypart cannot be dismembered or amputated
 #define BODYPART_UNREMOVABLE (1<<0)
