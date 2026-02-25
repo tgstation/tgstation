@@ -185,7 +185,7 @@
 		if(suture_tool.amount <= 0)
 			return FALSE
 	else if(tool.tool_behaviour != TOOL_CAUTERY)
-		if(tool.get_temperature() <= 0)
+		if(tool.get_temperature() <= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			return FALSE
 
 	// we need to have a surgery state worth closing
@@ -837,6 +837,12 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(!check_availability(patient, operating_on, surgeon, tool, operation_args[OPERATION_TARGET_ZONE]))
 		return ITEM_INTERACT_BLOCKING
 
+	if(isitem(tool))
+		var/obj/item/realtool = tool
+		var/tool_return = SEND_SIGNAL(realtool, COMSIG_ITEM_USED_IN_SURGERY, src, operating_on, surgeon)
+		if(tool_return & ITEM_INTERACT_ANY_BLOCKER)
+			return tool_return
+
 	if(!start_operation(operating_on, surgeon, tool, operation_args))
 		return ITEM_INTERACT_BLOCKING
 
@@ -1136,7 +1142,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 	if(operation_flags & OPERATION_NOTABLE)
 		SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
-		surgeon.add_mob_memory(/datum/memory/surgery, deuteragonist = surgeon, surgery_type = name)
+		surgeon.add_mob_memory(/datum/memory/surgery, deuteragonist = get_patient(operating_on) || operating_on, surgery_type = name)
 
 	SEND_SIGNAL(surgeon, COMSIG_ATOM_SURGERY_SUCCESS, src, operating_on, tool)
 	play_operation_sound(operating_on, surgeon, tool, success_sound)

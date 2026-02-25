@@ -19,6 +19,13 @@ export const see_chat_non_mob: FeatureToggle = {
   component: CheckboxInput,
 };
 
+export const chat_on_ghosts: FeatureToggle = {
+  name: 'Enable Runechat on ghosts',
+  category: 'RUNECHAT',
+  description: 'Chat messages will show above ghosts when they speak.',
+  component: CheckboxInput,
+};
+
 export const see_rc_emotes: FeatureToggle = {
   name: 'Enable Runechat emotes',
   category: 'RUNECHAT',

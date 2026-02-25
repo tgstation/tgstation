@@ -400,10 +400,18 @@
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
 	playsound(loc, 'sound/items/poster/poster_ripped.ogg', vol = 50, vary = TRUE)
 	for(var/obj/item/stuff as anything in contents) // Mail and envelope actually can have more than 1 item.
-		if(user.put_in_hands(stuff) && armed)
-			var/whomst = made_by_cached_name ? "[made_by_cached_name] ([made_by_cached_ckey])" : "no one in particular"
-			log_bomber(user, "opened armed mail made by [whomst], activating", stuff)
-			INVOKE_ASYNC(stuff, TYPE_PROC_REF(/obj/item, attack_self), user)
+		if(!armed)
+			continue
+		var/whomst = made_by_cached_name ? "[made_by_cached_name] ([made_by_cached_ckey])" : "no one in particular"
+		log_bomber(user, "opened armed mail made by [whomst], activating", stuff)
+
+		if(SEND_SIGNAL(stuff, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, user, src) & COMPONENT_TRAITOR_MAIL_HANDLED)
+			continue
+
+		if(!user.put_in_hands(stuff))
+			continue
+
+		INVOKE_ASYNC(stuff, TYPE_PROC_REF(/obj/item, attack_self), user)
 	qdel(src)
 	return TRUE
 
@@ -418,20 +426,18 @@
 		playsound(src, 'sound/machines/defib/defib_ready.ogg', vol = 100, vary = TRUE)
 		armed = FALSE
 		return TRUE
-	else
-		balloon_alert(user, "tinkering with something...")
+	balloon_alert(user, "tinkering with something...")
 
-		if(!do_after(user, 2 SECONDS, target = src))
-			after_unwrap(user)
-			return FALSE
-		if(prob(50))
-			balloon_alert(user, "disarmed something...?")
-			playsound(src, 'sound/machines/defib/defib_ready.ogg', vol = 100, vary = TRUE)
-			armed = FALSE
-			return TRUE
-		else
-			after_unwrap(user)
-			return TRUE
+	if(!do_after(user, 2 SECONDS, target = src))
+		after_unwrap(user)
+		return FALSE
+	if(prob(50))
+		balloon_alert(user, "disarmed something...?")
+		playsound(src, 'sound/machines/defib/defib_ready.ogg', vol = 100, vary = TRUE)
+		armed = FALSE
+		return TRUE
+	after_unwrap(user)
+	return TRUE
 
 ///Generic mail used in the mail strike shuttle loan event
 /obj/item/mail/mail_strike

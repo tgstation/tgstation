@@ -24,7 +24,7 @@
 			"manifold",
 			"pipe_input",
 			"filter",
-			"splitter_tri",
+			"splitter",
 			"beacon",
 			"pipe_output",
 			"tank",

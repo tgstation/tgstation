@@ -533,7 +533,7 @@
 	if(is_invisible)
 		. += "-invisible"
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
-		if(!overlay.can_draw_on_bodypart(src, owner))
+		if(!overlay.can_draw_on_bodypart(src, owner, is_husked))
 			continue
 		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
 	if(ishuman(owner))
@@ -550,7 +550,13 @@
 	. += "[husk_type]"
 	. += "-husk"
 	. += "-[body_zone]"
+	if(is_invisible)
+		. += "-invisible"
 	. += "-[LAZYLEN(blood_dna_info) ? get_color_from_blood_list(blood_dna_info) : BLOOD_COLOR_RED]"
+	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
+		if(!overlay.can_draw_on_bodypart(src, owner, TRUE))
+			continue
+		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "-[human_owner.mob_height]"

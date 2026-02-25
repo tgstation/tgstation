@@ -284,6 +284,7 @@
 /datum/bodypart_overlay/mutant/tail/fish
 	feature_key = FEATURE_TAIL_FISH
 	color_source = ORGAN_COLOR_OVERRIDE
+	draw_on_husks = HUSK_OVERLAY_GRAYSCALE
 
 /datum/bodypart_overlay/mutant/tail/fish/on_mob_insert(obj/item/organ/parent, mob/living/carbon/receiver)
 	//Initialize the related dna feature block if we don't have any so it doesn't error out.
@@ -306,7 +307,7 @@
 	// We add all appearances the parent bodypart has to the tail to inherit scales and fancy effects
 	// but most other organs don't want to inherit those so we do it here and not on parent
 	for (var/datum/bodypart_overlay/texture/texture in limb.bodypart_overlays)
-		if(texture.can_draw_on_bodypart(limb, limb.owner))
+		if(texture.can_draw_on_bodypart(limb, limb.owner, limb.is_husked))
 			texture.modify_bodypart_appearance(appearance)
 	return appearance
 
@@ -388,6 +389,7 @@
 	icon = 'icons/mob/human/fish_features.dmi'
 	icon_state = "gills"
 	layers = EXTERNAL_ADJACENT
+	draw_on_husks = HUSK_OVERLAY_GRAYSCALE
 
 /datum/bodypart_overlay/simple/gills/get_image(image_layer, obj/item/bodypart/limb)
 	return image(

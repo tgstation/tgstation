@@ -14785,11 +14785,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"dUz" = (
-/obj/effect/spawner/random/maintenance,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "dUF" = (
 /obj/structure/cable,
 /obj/machinery/power/smes,
@@ -126881,7 +126876,7 @@ gcb
 ohG
 heR
 dcE
-dUz
+jPs
 eap
 eqT
 nHY
