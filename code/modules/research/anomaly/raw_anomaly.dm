@@ -79,6 +79,7 @@
 	name = "random raw core"
 	desc = "You should not see this!"
 	icon_state = "rawcore_bluespace"
+	item_flags = parent_type::item_flags | ABSTRACT
 
 /obj/item/raw_anomaly_core/random/Initialize(mapload)
 	. = ..()
