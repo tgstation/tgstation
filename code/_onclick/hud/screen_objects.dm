@@ -792,8 +792,8 @@
 	update_appearance()
 
 /atom/movable/screen/healthdoll/human/update_body_zones()
-	limbs = list()
 	vis_contents.Cut()
+	QDEL_LIST_ASSOC_VAL(limbs)
 	var/mob/living/carbon/human/owner = hud.mymob
 	for(var/body_zone in owner.get_all_limbs())
 		var/atom/movable/screen/healthdoll_limb/limb = new(src, null)
@@ -820,14 +820,13 @@
 
 	var/list/current_animated = LAZYLISTDUPLICATE(animated_zones)
 
-	for(var/obj/item/bodypart/body_part as anything in owner.get_bodyparts(include_stumps = TRUE))
+	for(var/part_zone, body_part_untyped in owner.get_bodyparts_by_zones())
 		var/icon_key = 0
-		var/part_zone = body_part.body_zone
-
+		var/obj/item/bodypart/body_part = body_part_untyped
 		var/list/overridable_key = list(icon_key)
-		if(IS_STUMP(body_part))
+		if(isnull(body_part) || IS_STUMP(body_part))
 			icon_key = 6
-		if(body_part.bodypart_disabled)
+		else if(body_part.bodypart_disabled)
 			icon_key = 7
 		else if(owner.stat == DEAD)
 			icon_key = "DEAD"
@@ -838,7 +837,7 @@
 			// calculate what icon state (1-5, or 0 if undamaged) to use based on damage
 			icon_key = clamp(ceil(damage * 5), 0, 5)
 
-		if(length(body_part.wounds))
+		if(length(body_part?.wounds))
 			LAZYSET(animated_zones, part_zone, TRUE)
 		else
 			LAZYREMOVE(animated_zones, part_zone)

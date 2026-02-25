@@ -465,8 +465,9 @@
 	update_wound_overlays()
 	var/limb_count_update = 0
 	var/list/new_limbs = list()
-	for(var/obj/item/bodypart/limb as anything in get_bodyparts(include_stumps = TRUE))
-		if(IS_STUMP(limb))
+	for(var/body_zone, limb_untyped in get_bodyparts_by_zones())
+		var/obj/item/bodypart/limb = limb_untyped
+		if(isnull(limb) || IS_STUMP(limb))
 			if(icon_render_keys[limb.body_zone])
 				icon_render_keys -= limb.body_zone
 				limb_count_update += 1

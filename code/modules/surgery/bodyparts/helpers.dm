@@ -30,15 +30,25 @@
  * Returns a list of bodyparts, which may be empty.
  */
 /mob/living/proc/get_bodyparts(include_stumps = FALSE)
-	return list()
-
-/mob/living/carbon/get_bodyparts(include_stumps = FALSE)
 	var/list/parts = list()
 	for(var/zone in get_all_limbs())
 		var/obj/item/bodypart/bodypart = get_bodypart(zone, include_stumps)
 		if(bodypart)
 			parts += bodypart
 
+	return parts
+
+/**
+ * Returns all bodyparts this mob has, indexed by their body zone
+ * Also includes stumps and nulls, so be sure to check for those if you use this proc.
+ * (Note: nulls will be very rare - as 95% of missing limbs are represented as stumps - but not impossible due to some edge cases)
+ *
+ * Returns a list of bodyparts indexed by their body zone
+ */
+/mob/living/proc/get_bodyparts_by_zones() as /list
+	var/list/parts = list()
+	for(var/zone in get_all_limbs())
+		parts[zone] = get_bodypart(zone)
 	return parts
 
 ///Returns TRUE/FALSE on whether the mob should have a limb in a given zone, used for species-restrictions.
@@ -158,9 +168,11 @@
 
 ///Returns a list of all limbs this mob should have.
 /mob/living/carbon/get_all_limbs()
-	if(dna)
-		return dna.species.bodypart_overrides.Copy()
-	return ..()
+	// gets the "normal list", ie chest-head-legs-arms. order matters for human rendering!
+	. = dna?.species?.bodypart_overrides.Copy() || ..()
+	// includes any additional adminbussed hands
+	for(var/obj/item/bodypart/hand as anything in hand_bodyparts)
+		. |= hand.body_zone
 
 ///Returns a list of all missing limbs this mob should have on them, but don't.
 /mob/living/carbon/proc/get_missing_limbs() as /list
