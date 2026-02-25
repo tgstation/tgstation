@@ -86,31 +86,31 @@
 /datum/surgery_operation/limb/prosthetic_replacement/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
-		chest.owner,
+		limb.owner,
 		// "You begin to attach the right arm to john doe's right arm stump"
 		span_notice("You begin to attach [tool]'s to [FORMAT_LIMB_OWNER(limb)]..."),
 		span_notice("[surgeon] begins to attach [tool]'s to [FORMAT_LIMB_OWNER(limb)]."),
 		span_notice("[surgeon] begins to attach [tool]'s to [FORMAT_LIMB_OWNER(limb)]."),
 	)
-	display_pain(chest.owner, "You feel an uncomfortable sensation where your [parse_zone(limb.body_zone)] should be!")
+	display_pain(limb.owner, "You feel an uncomfortable sensation where your [parse_zone(limb.body_zone)] should be!")
 
 	operation_args[OPERATION_REJECTION_DAMAGE] = 10
 	if(isbodypart(tool))
 		var/obj/item/bodypart/new_limb = tool
 		if(IS_ROBOTIC_LIMB(new_limb))
 			operation_args[OPERATION_REJECTION_DAMAGE] = 0
-		else if(new_limb.check_for_frankenstein(chest.owner))
+		else if(new_limb.check_for_frankenstein(limb.owner))
 			operation_args[OPERATION_REJECTION_DAMAGE] = 30
 
 /datum/surgery_operation/limb/prosthetic_replacement/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	if(!surgeon.temporarilyRemoveItemFromInventory(tool))
 		return // should never happen
 	if(operation_args[OPERATION_REJECTION_DAMAGE] > 0)
-		chest.owner.apply_damage(operation_args[OPERATION_REJECTION_DAMAGE], TOX)
+		limb.owner.apply_damage(operation_args[OPERATION_REJECTION_DAMAGE], TOX)
 	if(isbodypart(tool))
-		handle_bodypart(chest.owner, surgeon, tool)
+		handle_bodypart(limb.owner, surgeon, tool)
 		return
-	handle_arbitrary_prosthetic(chest.owner, surgeon, tool, operation_args[OPERATION_TARGET_ZONE])
+	handle_arbitrary_prosthetic(limb.owner, surgeon, tool, operation_args[OPERATION_TARGET_ZONE])
 
 /datum/surgery_operation/limb/prosthetic_replacement/proc/handle_bodypart(mob/living/carbon/patient, mob/living/surgeon, obj/item/bodypart/bodypart_to_attach)
 	bodypart_to_attach.try_attach_limb(patient)
