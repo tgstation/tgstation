@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(stock_market)
 
 ///Adjust the price of a material(either through buying or selling) ensuring it stays within limits
 /datum/controller/subsystem/stock_market/proc/adjust_material_price(datum/material/mat, delta)
-	mat = GET_MATERIAL_REF(mat)
+	mat = SSmaterials.get_material(mat)
 
 	//adjust the price
 	var/new_price = materials_prices[mat.type] + delta
@@ -51,7 +51,7 @@ SUBSYSTEM_DEF(stock_market)
 
 ///Adjust the amount of material(either through buying or selling) ensuring it stays within limits
 /datum/controller/subsystem/stock_market/proc/adjust_material_quantity(datum/material/mat, delta)
-	mat = GET_MATERIAL_REF(mat)
+	mat = SSmaterials.get_material(mat)
 
 	//adjust the quantity
 	var/new_quantity = materials_quantity[mat.type] + delta

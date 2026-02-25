@@ -82,7 +82,7 @@
 			else
 				transfer_amount = reagent.volume * part
 
-		if(reagent.intercept_reagents_transfer(target_holder, amount))
+		if(reagent.intercept_reagents_transfer(target_holder, transfer_amount))
 			continue
 
 		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount, copy_data(reagent), chem_temp, reagent.purity, reagent.ph, no_react = TRUE) //we only handle reaction after every reagent has been transferred.
@@ -222,7 +222,7 @@
 			else
 				transfer_amount = working_volume * part
 
-		if(reagent.intercept_reagents_transfer(target_holder, amount))
+		if(reagent.intercept_reagents_transfer(target_holder, transfer_amount))
 			continue
 
 		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount, copy_data(reagent), chem_temp, reagent.purity, reagent.ph, no_react = TRUE) //we only handle reaction after every reagent has been transferred.
@@ -313,7 +313,7 @@
 			else
 				transfer_amount = reagent.volume * part
 
-		if(reagent.intercept_reagents_transfer(target_holder, amount))
+		if(reagent.intercept_reagents_transfer(target_holder, transfer_amount))
 			continue
 
 		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount, copy_data(reagent), chem_temp, reagent.purity, reagent.ph, no_react = TRUE) //we only handle reaction after every reagent has been transferred.

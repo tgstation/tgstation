@@ -35,7 +35,7 @@
 */
 /datum/export/material/proc/init_export_types(export_data)
 	PROTECTED_PROC(TRUE)
-	
+
 	if(!use_shared_exports)
 		return generate_export_typecache(export_data)
 
@@ -54,7 +54,7 @@
 
 	var/obj/item/our_item = exported_item
 	var/list/mat_comp = our_item.get_material_composition()
-	var/datum/material/mat_ref = ispath(material_id) ? locate(material_id) in mat_comp : GET_MATERIAL_REF(material_id)
+	var/datum/material/mat_ref = ispath(material_id) ? locate(material_id) in mat_comp : SSmaterials.get_material(material_id)
 	var/amount = mat_comp[mat_ref]
 	if(!amount)
 		return 0

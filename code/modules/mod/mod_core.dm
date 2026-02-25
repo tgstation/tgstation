@@ -227,7 +227,7 @@
 /obj/item/mod/core/standard/proc/on_attack_hand(datum/source, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(mod.seconds_electrified && charge_amount() && mod.shock(user))
+	if(mod.seconds_electrified && charge_amount() && mod.shock(user, 100))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(mod.open && mod.loc == user)
 		INVOKE_ASYNC(src, PROC_REF(mod_uninstall_cell), user)

@@ -138,6 +138,7 @@
 	RegisterSignal(living_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_fullhealed))
 	RegisterSignal(living_mob, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 	RegisterSignal(living_mob, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
+	RegisterSignal(living_mob, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(new_brain))
 	RegisterSignals(living_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), PROC_REF(on_click_sting))
 	ADD_TRAIT(living_mob, TRAIT_FAKE_SOULLESS, CHANGELING_TRAIT)
 	ADD_TRAIT(living_mob, TRAIT_BRAINLESS_CARBON, CHANGELING_TRAIT)
@@ -180,10 +181,26 @@
 	ling_hud.add_screen_object(/atom/movable/screen/ling/chems, HUD_CHANGELING_CHEMS, HUD_GROUP_INFO)
 	ling_hud.add_screen_object(/atom/movable/screen/ling/sting, HUD_CHANGELING_STING, HUD_GROUP_INFO, update_screen = TRUE)
 
+/datum/antagonist/changeling/proc/new_brain(mob/living/carbon/ling, obj/item/organ/new_brain)
+	SIGNAL_HANDLER
+
+	if(!istype(new_brain, /obj/item/organ/brain))
+		return
+	make_brain_decoy(ling)
+
 /datum/antagonist/changeling/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/living_mob = mob_override || owner.current
 	handle_clown_mutation(living_mob, removing = FALSE)
-	UnregisterSignal(living_mob, list(COMSIG_MOB_LOGIN, COMSIG_LIVING_LIFE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
+	UnregisterSignal(living_mob, list(
+		COMSIG_MOB_LOGIN,
+		COMSIG_LIVING_LIFE,
+		COMSIG_LIVING_POST_FULLY_HEAL,
+		COMSIG_MOB_GET_STATUS_TAB_ITEMS,
+		COMSIG_MOB_MIDDLECLICKON,
+		COMSIG_MOB_ALTCLICKON,
+		COMSIG_MOB_HUD_CREATED,
+		COMSIG_CARBON_GAIN_ORGAN,
+	))
 	REMOVE_TRAIT(living_mob, TRAIT_FAKE_SOULLESS, CHANGELING_TRAIT)
 	REMOVE_TRAIT(living_mob, TRAIT_BRAINLESS_CARBON, CHANGELING_TRAIT)
 	REMOVE_TRAIT(living_mob, TRAIT_CHANGELING_HIVEMIND, CHANGELING_TRAIT)

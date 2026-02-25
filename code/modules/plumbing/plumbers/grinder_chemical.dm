@@ -130,6 +130,7 @@
 
 	if((item_to_blend.item_flags & ABSTRACT) || (item_to_blend.flags_1 & HOLOGRAM_1))
 		return
+
 	if(!item_to_blend.blend_requirements(src))
 		return
 

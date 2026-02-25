@@ -36,6 +36,9 @@
 		to_chat(user, span_notice("Analyzing... [src]'s stabilized field is fluctuating along frequency [format_frequency(frequency)], code [code]."))
 	return ..()
 
+/obj/item/assembly/signaler/anomaly/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
+	return NONE
+
 //Anomaly cores
 /obj/item/assembly/signaler/anomaly/pyro
 	name = "\improper pyroclastic anomaly core"
@@ -140,7 +143,7 @@
 
 /obj/item/assembly/signaler/anomaly/bioscrambler/signal()
 	new /obj/effect/temp_visual/circle_wave/bioscrambler(get_turf(src))
-	for(var/mob/living/carbon/nearby in hearers(1, src))
+	for(var/mob/living/carbon/nearby in hearers(1, get_turf(src)))
 		nearby.bioscramble(name)
 
 /obj/item/assembly/signaler/anomaly/hallucination

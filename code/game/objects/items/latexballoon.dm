@@ -106,7 +106,7 @@
 		var/obj/item/tank/air_tank = item
 		blow(air_tank, user)
 		return
-	if(item.get_sharpness() || item.get_temperature())
+	if(item.get_sharpness() || item.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		burst()
 		return
 
