@@ -83,16 +83,16 @@
 	// always operate on absolute body zones
 	operation_args[OPERATION_TARGET_ZONE] = deprecise_zone(operation_args[OPERATION_TARGET_ZONE])
 
-/datum/surgery_operation/limb/prosthetic_replacement/on_preop(obj/item/bodypart/chest/chest, mob/living/surgeon, obj/item/tool, list/operation_args)
-	var/target_zone_readable = parse_zone(operation_args[OPERATION_TARGET_ZONE])
+/datum/surgery_operation/limb/prosthetic_replacement/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		chest.owner,
-		span_notice("You begin to replace [chest.owner]'s missing [target_zone_readable] with [tool]..."),
-		span_notice("[surgeon] begins to replace [chest.owner]'s missing [target_zone_readable] with [tool]."),
-		span_notice("[surgeon] begins to replace [chest.owner]'s missing [target_zone_readable]."),
+		// "You begin to attach the right arm to john doe's right arm stump"
+		span_notice("You begin to attach [tool]'s to [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to attach [tool]'s to [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] begins to attach [tool]'s to [FORMAT_LIMB_OWNER(limb)]."),
 	)
-	display_pain(chest.owner, "You feel an uncomfortable sensation where your [target_zone_readable] should be!")
+	display_pain(chest.owner, "You feel an uncomfortable sensation where your [parse_zone(limb.body_zone)] should be!")
 
 	operation_args[OPERATION_REJECTION_DAMAGE] = 10
 	if(isbodypart(tool))
@@ -102,7 +102,7 @@
 		else if(new_limb.check_for_frankenstein(chest.owner))
 			operation_args[OPERATION_REJECTION_DAMAGE] = 30
 
-/datum/surgery_operation/limb/prosthetic_replacement/on_success(obj/item/bodypart/chest/chest, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/prosthetic_replacement/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	if(!surgeon.temporarilyRemoveItemFromInventory(tool))
 		return // should never happen
 	if(operation_args[OPERATION_REJECTION_DAMAGE] > 0)
@@ -161,8 +161,7 @@
 		span_notice("[surgeon] begins to [tool.singular_name] [limb] to [limb.owner]'s body."),
 		span_notice("[surgeon] begins to [tool.singular_name] something to [limb.owner]'s body."),
 	)
-	var/obj/item/bodypart/chest = limb.owner.get_bodypart(BODY_ZONE_CHEST)
-	display_pain(limb.owner, "[surgeon] begins to [tool.singular_name] [limb] to your body!", IS_ROBOTIC_LIMB(chest))
+	display_pain(limb.owner, "[surgeon] begins to [tool.singular_name] [limb] to your body!", IS_ROBOTIC_LIMB(limb))
 
 /datum/surgery_operation/limb/secure_arbitrary_prosthetic/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/stack/medical/tool, list/operation_args)
 	display_results(
@@ -172,8 +171,7 @@
 		span_notice("[surgeon] finishes [tool.apply_verb] [limb] to [limb.owner]'s body."),
 		span_notice("[surgeon] finishes the [tool.apply_verb] procedure!"),
 	)
-	var/obj/item/bodypart/chest = limb.owner.get_bodypart(BODY_ZONE_CHEST)
-	display_pain(limb.owner, "You feel more secure as your prosthetic is firmly attached to your body!", IS_ROBOTIC_LIMB(chest))
+	display_pain(limb.owner, "You feel more secure as your prosthetic is firmly attached to your body!", IS_ROBOTIC_LIMB(limb))
 	limb.remove_surgical_state(SURGERY_PROSTHETIC_UNSECURED)
 	limb.AddComponent(/datum/component/item_as_prosthetic_limb, null, 0) // updates drop probability to zero
 	tool.use(1)

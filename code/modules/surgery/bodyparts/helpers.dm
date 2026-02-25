@@ -1,4 +1,13 @@
-
+/**
+ * Returns a bodypart of the specified zone that this mob has
+ *
+ * * zone: the zone to get.
+ * Defaults to chest, allowing for skilling zone nullchecks if you don't care what bodypart you get.
+ * * include_stumps: whether or not to consider stumps as valid bodyparts to return.
+ * Defaults to FALSE, meaning that if a limb is missing (is a stump), nothing will be returned.
+ *
+ * Returns a bodypart, or null.
+ */
 /mob/living/proc/get_bodypart(zone = BODY_ZONE_CHEST, include_stumps = FALSE)
 	return
 
@@ -12,6 +21,14 @@
 			continue
 		return bodypart
 
+/**
+ * Returns all bodyparts this mob has, optionally including stumps.
+ *
+ * include_stumps: whether or not to consider stumps as valid bodyparts to return.
+ * Defaults to FALSE, meaning that if a limb is missing (is a stump), it won't be included in the returned list.
+ *
+ * Returns a list of bodyparts, which may be empty.
+ */
 /mob/living/proc/get_bodyparts(include_stumps = FALSE)
 	return list()
 
