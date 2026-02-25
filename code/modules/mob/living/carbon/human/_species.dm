@@ -189,6 +189,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		plural_form = "[name]\s"
 	if(!examine_limb_id)
 		examine_limb_id = id
+	// Carbons determine bodypart order by this list, so we need to make sure it's sorted properly
+	sortTim(bodypart_overrides, GLOBAL_PROC_REF(cmp_bodypart_by_body_part_asc), associative = TRUE)
 
 	return ..()
 

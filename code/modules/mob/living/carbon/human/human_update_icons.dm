@@ -967,7 +967,7 @@ generate/load female uniform sprites matching all previously decided variables
 		// optimization - none of our limbs or organs have the desired shape
 		return .
 
-	for(var/obj/item/bodypart/limb as anything in get_bodyparts(include_stumps = TRUE))
+	for(var/obj/item/bodypart/limb as anything in get_bodyparts())
 		var/checked_bodyshape = limb.bodyshape
 		// accounts for stuff like snouts
 		for(var/obj/item/organ/organ in limb)

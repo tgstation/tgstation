@@ -38,7 +38,9 @@
 	var/limbs_to_take = round(min_limbs + (max_limbs - min_limbs) * severity)
 	var/list/limbs_we_can_take = list()
 	for(var/zone in GLOB.limb_zones)
-		limbs_we_can_take += body.get_bodypart(zone)
+		var/bodypart = body.get_bodypart(zone)
+		if(bodypart)
+			limbs_we_can_take += bodypart
 
 	if(!limbs_we_can_take.len)
 		return

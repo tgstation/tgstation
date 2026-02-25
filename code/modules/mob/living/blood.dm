@@ -263,7 +263,7 @@
 
 /// Has each bodypart update its bleed/wound overlay icon states
 /mob/living/carbon/proc/update_bodypart_bleed_overlays()
-	for(var/obj/item/bodypart/iter_part as anything in get_bodyparts(include_stumps = TRUE))
+	for(var/obj/item/bodypart/iter_part as anything in get_bodyparts())
 		iter_part.update_part_wound_overlay()
 
 /// Bleeds amount units of blood from the mob, sometimes creating a blood splatter on the floor.

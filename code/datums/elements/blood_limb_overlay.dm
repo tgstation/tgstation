@@ -12,10 +12,10 @@
 	. = ..()
 	UnregisterSignal(source, list(COMSIG_BODYPART_GET_LIMB_ICON, COMSIG_BODYPART_GENERATE_ICON_KEY))
 
-/datum/element/blood_limb_overlay/proc/on_limb_icon(obj/item/bodypart/source, list/limb_icons, dropped, mob/living/carbon/update_on)
+/datum/element/blood_limb_overlay/proc/on_limb_icon(obj/item/bodypart/source, list/limb_icons, dropped)
 	SIGNAL_HANDLER
 
-	var/list/blood_dna_info = source.blood_dna_info || update_on?.get_blood_dna_list()
+	var/list/blood_dna_info = source.blood_dna_info
 	if (!LAZYLEN(blood_dna_info) || source.is_invisible)
 		return
 

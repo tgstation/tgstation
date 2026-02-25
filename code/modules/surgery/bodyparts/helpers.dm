@@ -38,6 +38,7 @@
 		var/obj/item/bodypart/bodypart = get_bodypart(zone, include_stumps)
 		if(bodypart)
 			parts += bodypart
+
 	return parts
 
 ///Returns TRUE/FALSE on whether the mob should have a limb in a given zone, used for species-restrictions.

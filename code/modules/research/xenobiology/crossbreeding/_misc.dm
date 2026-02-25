@@ -37,10 +37,6 @@ Slimecrossing Items
 		saved_part.old_part.heal_damage(INFINITY, INFINITY, null, FALSE)
 		saved_part.old_part.receive_damage(saved_part.brute_dam, saved_part.burn_dam, wound_bonus=CANT_WOUND)
 		dont_chop[zone] = TRUE
-	// for(var/obj/item/bodypart/part as anything in get_bodyparts(include_stumps = TRUE))
-	// 	if(dont_chop[part.body_zone])
-	// 		continue
-	// 	part.drop_limb(TRUE)
 
 /mob/living/carbon/proc/save_bodyparts()
 	var/list/datum/saved_bodypart/ret = list()

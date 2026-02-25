@@ -290,7 +290,7 @@
 	remove_overlay(DAMAGE_LAYER)
 
 	var/mutable_appearance/damage_overlay
-	for(var/obj/item/bodypart/iter_part as anything in get_bodyparts(include_stumps = TRUE))
+	for(var/obj/item/bodypart/iter_part as anything in get_bodyparts())
 		if(!iter_part.dmg_overlay_type)
 			continue
 		if(isnull(damage_overlay) && (iter_part.brutestate || iter_part.burnstate))
@@ -319,7 +319,7 @@
 		return
 
 	var/mutable_appearance/wound_overlay
-	for(var/obj/item/bodypart/iter_part as anything in get_bodyparts(include_stumps = TRUE))
+	for(var/obj/item/bodypart/iter_part as anything in get_bodyparts())
 		if(iter_part.bleed_overlay_icon)
 			var/mutable_appearance/blood_overlay = mutable_appearance('icons/mob/effects/bleed_overlays.dmi', "blank", -WOUND_LAYER, appearance_flags = KEEP_TOGETHER)
 			blood_overlay.color = blood_type.get_wound_color(src)
@@ -463,37 +463,33 @@
 /mob/living/carbon/proc/update_body_parts(update_limb_data)
 	update_damage_overlays()
 	update_wound_overlays()
-	var/list/needs_update = list()
 	var/limb_count_update = 0
+	var/list/new_limbs = list()
 	for(var/obj/item/bodypart/limb as anything in get_bodyparts(include_stumps = TRUE))
-		limb.update_limb(is_creating = update_limb_data) //Update limb actually doesn't do much, get_limb_icon is the cpu eater.
+		if(IS_STUMP(limb))
+			if(icon_render_keys[limb.body_zone])
+				icon_render_keys -= limb.body_zone
+				limb_count_update += 1
+			continue
 
-		var/old_key = icon_render_keys?[limb.body_zone] //Checks the mob's icon render key list for the bodypart
-		icon_render_keys[limb.body_zone] = (limb.is_husked) ? limb.generate_husk_key().Join() : limb.generate_icon_key().Join() //Generates a key for the current bodypart
+		// Update limb actually doesn't do much, get_limb_icon is the cpu eater.
+		limb.update_limb(is_creating = update_limb_data)
 
-		if(icon_render_keys[limb.body_zone] != old_key) //If the keys match, that means the limb doesn't need to be redrawn
-			needs_update += limb
+		var/old_key = icon_render_keys[limb.body_zone]
+		var/new_key = limb.get_cache_key()
 
-	limb_count_update += length(needs_update)
-	var/list/missing_bodyparts = get_missing_limbs()
-	if(((dna ? dna.species.max_bodypart_count : BODYPARTS_DEFAULT_MAXIMUM) - icon_render_keys.len) != missing_bodyparts.len) //Checks to see if the target gained or lost any limbs.
-		limb_count_update += 1
-		for(var/missing_limb in missing_bodyparts)
-			icon_render_keys -= missing_limb //Removes dismembered limbs from the key list
+		if(new_key == old_key)
+			new_limbs += limb_icon_cache[new_key]
+
+		else
+			limb_icon_cache[new_key] ||= limb.get_limb_icon(dropped = FALSE)
+			new_limbs += limb_icon_cache[new_key]
+			icon_render_keys[limb.body_zone] = new_key
+			limb_count_update += 1
 
 	. = limb_count_update
 	if(!.)
 		return
-
-	//GENERATE NEW LIMBS
-	var/list/new_limbs = list()
-	for(var/obj/item/bodypart/limb as anything in get_bodyparts(include_stumps = TRUE))
-		if(limb in needs_update)
-			var/bodypart_icon = limb.get_limb_icon(dropped = FALSE, update_on = src)
-			new_limbs += bodypart_icon
-			limb_icon_cache[icon_render_keys[limb.body_zone]] = bodypart_icon //Caches the icon with the bodypart key, as it is new
-		else
-			new_limbs += limb_icon_cache[icon_render_keys[limb.body_zone]] //Pulls existing sprites from the cache
 
 	remove_overlay(BODYPARTS_LAYER)
 
@@ -508,6 +504,13 @@
 /////////////////////////
 // Limb Icon Cache 2.0 //
 /////////////////////////
+
+/// Returns a string representing the bodyparts icon cache key
+/obj/item/bodypart/proc/get_cache_key()
+	if(is_husked)
+		return generate_husk_key().Join()
+	return generate_icon_key().Join()
+
 /**
  * Called from update_body_parts() these procs handle the limb icon cache.
  * the limb icon cache adds an icon_render_key to a human mob, it represents:
@@ -547,11 +550,7 @@
 	. += "[husk_type]"
 	. += "-husk"
 	. += "-[body_zone]"
-	var/list/blood_dna = blood_dna_info || owner?.get_blood_dna_list()
-	if (LAZYLEN(blood_dna))
-		. += "-[get_color_from_blood_list(blood_dna)]"
-	else
-		. += "-[BLOOD_COLOR_RED]"
+	. += "-[LAZYLEN(blood_dna_info) ? get_color_from_blood_list(blood_dna_info) : BLOOD_COLOR_RED]"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "-[human_owner.mob_height]"
