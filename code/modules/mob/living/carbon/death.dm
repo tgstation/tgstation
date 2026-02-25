@@ -79,7 +79,7 @@
 			continue
 		else if(part.body_zone == BODY_ZONE_CHEST)
 			continue
-		part.drop_limb()
+		part.drop_limb(TRUE)
 		part.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
 
 /mob/living/carbon/set_suicide(suicide_state) //you thought that box trick was pretty clever, didn't you? well now hardmode is on, boyo.
