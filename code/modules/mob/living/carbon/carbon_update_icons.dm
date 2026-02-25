@@ -509,8 +509,8 @@
 /// Returns a string representing the bodyparts icon cache key
 /obj/item/bodypart/proc/get_cache_key()
 	if(is_husked)
-		return generate_husk_key().Join()
-	return generate_icon_key().Join()
+		return jointext(generate_husk_key(), "-")
+	return jointext(generate_icon_key(), "-")
 
 /**
  * Called from update_body_parts() these procs handle the limb icon cache.
@@ -526,20 +526,20 @@
 	RETURN_TYPE(/list)
 	. = list()
 	if(is_dimorphic)
-		. += "[limb_gender]-"
-	. += "[limb_id]"
-	. += "-[body_zone]"
+		. += limb_gender
+	. += limb_id
+	. += body_zone
 	if(should_draw_greyscale && draw_color)
-		. += "-[draw_color]"
+		. += draw_color
 	if(is_invisible)
-		. += "-invisible"
+		. += "invisible"
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 		if(!overlay.can_draw_on_bodypart(src, owner, is_husked))
 			continue
-		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
+		. += overlay.generate_icon_cache()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
-		. += "-[human_owner.mob_height]"
+		. += "[human_owner.mob_height]"
 	SEND_SIGNAL(src, COMSIG_BODYPART_GENERATE_ICON_KEY, .)
 	return .
 
@@ -547,20 +547,22 @@
 /obj/item/bodypart/proc/generate_husk_key()
 	RETURN_TYPE(/list)
 	. = list()
-	. += "[limb_id]-"
-	. += "[husk_type]"
-	. += "-husk"
-	. += "-[body_zone]"
+	if(is_dimorphic)
+		. += limb_gender
+	. += limb_id
+	. += husk_type
+	. += "husk"
+	. += body_zone
 	if(is_invisible)
-		. += "-invisible"
-	. += "-[LAZYLEN(blood_dna_info) ? get_color_from_blood_list(blood_dna_info) : BLOOD_COLOR_RED]"
+		. += "invisible"
+	. += "[LAZYLEN(blood_dna_info) ? get_color_from_blood_list(blood_dna_info) : BLOOD_COLOR_RED]"
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 		if(!overlay.can_draw_on_bodypart(src, owner, TRUE))
 			continue
-		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
+		. += overlay.generate_icon_cache()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
-		. += "-[human_owner.mob_height]"
+		. += "[human_owner.mob_height]"
 	return .
 
 /obj/item/bodypart/head/generate_icon_key()

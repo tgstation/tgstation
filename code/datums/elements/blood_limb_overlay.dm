@@ -38,4 +38,4 @@
 
 	var/list/blood_dna_info = source.blood_dna_info || source.owner?.get_blood_dna_list()
 	if (LAZYLEN(blood_dna_info) && !source.is_invisible)
-		icon_keys += "-blood-[get_color_from_blood_list(blood_dna_info)]"
+		icon_keys += "blood:[get_color_from_blood_list(blood_dna_info)]"
