@@ -57,9 +57,9 @@
 	TEST_ASSERT_EQUAL(bobs_head.real_name, "Bob", "Bob's head does not remember that it is from Bob")
 
 	// Put Bob's head onto Alice's body
-	var/datum/surgery_operation/prosthetic_replacement/surgery = GLOB.operations.operations_by_typepath[__IMPLIED_TYPE__]
+	var/datum/surgery_operation/limb/prosthetic_replacement/surgery = GLOB.operations.operations_by_typepath[__IMPLIED_TYPE__]
 	user.put_in_active_hand(bobs_head)
-	UNLINT(surgery.success(alice.get_bodypart(BODY_ZONE_CHEST), user, bobs_head, list()))
+	UNLINT(surgery.success(alice.get_bodypart(BODY_ZONE_HEAD), user, bobs_head, list()))
 
 	TEST_ASSERT(!isnull(alice.get_bodypart(BODY_ZONE_HEAD)), "Alice has no head after prosthetic replacement")
 	TEST_ASSERT_EQUAL(alice.get_visible_name(), "Bob", "Bob's head was transplanted onto Alice's body, but their name is not Bob")

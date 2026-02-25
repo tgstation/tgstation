@@ -123,7 +123,7 @@
 	if(!special)
 		phantom_owner.hud_used?.update_locked_slots()
 
-	if(bodypart_flags & BODYPART_PSEUDOPART)
+	if((bodypart_flags & BODYPART_PSEUDOPART) || IS_STUMP(src))
 		drop_organs(phantom_owner) //Psuedoparts shouldn't have organs, but just in case
 		if(!QDELING(src)) // we might be removed as a part of something qdeling us
 			qdel(src)
@@ -280,6 +280,13 @@
 /obj/item/bodypart/proc/try_attach_limb(mob/living/carbon/new_limb_owner, special, lazy)
 	if(!can_attach_limb(new_limb_owner, special))
 		return FALSE
+
+	var/obj/item/bodypart/existing_limb = new_limb_owner.get_bodypart(body_zone, include_stumps = TRUE)
+	if(existing_limb)
+		if(existing_limb.type != stump_typepath)
+			stack_trace("Attempted to attach a limb to [new_limb_owner] in zone [body_zone] where they already have a non-stump limb")
+		existing_limb.drop_limb(special = TRUE)
+		qdel(existing_limb)
 
 	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special, lazy)
 	SEND_SIGNAL(src, COMSIG_BODYPART_ATTACHED, new_limb_owner, special, lazy)

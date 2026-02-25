@@ -20,7 +20,7 @@
 		TEST_ASSERT_NULL(organ.bodypart_owner, "Organ '[organ.name] kept reference to bodypart after forceMove into nullspace.")
 
 	// 3. replace all bodyparts with new ones and place the previously removed organs into the new bodyparts
-	for(var/obj/item/bodypart/bodypart as anything in hollow_boy.bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in hollow_boy.get_bodyparts())
 		var/obj/item/bodypart/replacement = allocate(bodypart.type)
 		for(var/obj/item/organ/organ as anything in removed_organs)
 			if(replacement.body_zone != deprecise_zone(organ.zone))

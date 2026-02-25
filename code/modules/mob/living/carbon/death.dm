@@ -28,7 +28,7 @@
 	return ..()
 
 /mob/living/carbon/get_gibs_type(drop_bitflags = NONE)
-	var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST) || (length(bodyparts) ? bodyparts[1] : null)
+	var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST) || get_bodypart()
 	if (!istype(chest)) // what
 		return ..()
 
@@ -74,7 +74,7 @@
 		qdel(organ)
 
 /mob/living/carbon/spread_bodyparts(drop_bitflags=NONE)
-	for(var/obj/item/bodypart/part as anything in bodyparts)
+	for(var/obj/item/bodypart/part as anything in get_bodyparts())
 		if(!(drop_bitflags & DROP_BRAIN) && part.body_zone == BODY_ZONE_HEAD)
 			continue
 		else if(part.body_zone == BODY_ZONE_CHEST)

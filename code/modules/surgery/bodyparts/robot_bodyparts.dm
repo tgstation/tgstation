@@ -277,7 +277,7 @@
 	SIGNAL_HANDLER
 
 	var/all_robotic = TRUE
-	for(var/obj/item/bodypart/part in owner.bodyparts)
+	for(var/obj/item/bodypart/part in owner.get_bodyparts())
 		all_robotic = all_robotic && IS_ROBOTIC_LIMB(part)
 
 	if(all_robotic)

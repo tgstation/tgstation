@@ -1,15 +1,27 @@
 
-/mob/living/proc/get_bodypart(zone)
+/mob/living/proc/get_bodypart(zone = BODY_ZONE_CHEST, include_stumps = FALSE)
 	return
 
-/mob/living/carbon/get_bodypart(zone)
+/mob/living/carbon/get_bodypart(zone = BODY_ZONE_CHEST, include_stumps = FALSE)
 	RETURN_TYPE(/obj/item/bodypart)
 
-	if(!zone)
-		zone = BODY_ZONE_CHEST
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		if(bodypart.body_zone == zone)
-			return bodypart
+		if(!include_stumps && IS_STUMP(bodypart))
+			continue
+		if(bodypart.body_zone != zone)
+			continue
+		return bodypart
+
+/mob/living/proc/get_bodyparts(include_stumps = FALSE)
+	return list()
+
+/mob/living/carbon/get_bodyparts(include_stumps = FALSE)
+	var/list/parts = list()
+	for(var/zone in get_all_limbs())
+		var/obj/item/bodypart/bodypart = get_bodypart(zone, include_stumps)
+		if(bodypart)
+			parts += bodypart
+	return parts
 
 ///Returns TRUE/FALSE on whether the mob should have a limb in a given zone, used for species-restrictions.
 /mob/living/carbon/proc/should_have_limb(zone)
@@ -134,7 +146,6 @@
 
 ///Returns a list of all missing limbs this mob should have on them, but don't.
 /mob/living/carbon/proc/get_missing_limbs() as /list
-	RETURN_TYPE(/list)
 	var/list/full = get_all_limbs()
 	for(var/zone in full)
 		if(get_bodypart(zone))
@@ -177,12 +188,12 @@
 
 ///Remove all embedded objects from all limbs on the carbon mob
 /mob/living/carbon/proc/remove_all_embedded_objects()
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in get_bodyparts(include_stumps = TRUE))
 		for(var/obj/item/embedded as anything in bodypart.embedded_objects)
 			remove_embedded_object(embedded)
 
 /mob/living/carbon/proc/has_embedded_objects(include_harmless = FALSE)
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in get_bodyparts(include_stumps = TRUE))
 		for(var/obj/item/embedded as anything in bodypart.embedded_objects)
 			if(!include_harmless && embedded.get_embed().is_harmless(consider_stamina = TRUE))
 				continue
@@ -228,7 +239,7 @@
 /// Makes sure that the owner's bodytype flags match the flags of all of its parts and organs
 /mob/living/carbon/proc/synchronize_bodytypes()
 	var/all_limb_flags = NONE
-	for(var/obj/item/bodypart/limb as anything in bodyparts)
+	for(var/obj/item/bodypart/limb as anything in get_bodyparts(include_stumps = TRUE))
 		for(var/obj/item/organ/organ in limb)
 			all_limb_flags |= organ.external_bodytypes
 		all_limb_flags |= limb.bodytype
@@ -238,7 +249,7 @@
 /// Makes sure that the owner's bodyshape flags match the flags of all of its parts and organs
 /mob/living/carbon/proc/synchronize_bodyshapes()
 	var/all_limb_flags = NONE
-	for(var/obj/item/bodypart/limb as anything in bodyparts)
+	for(var/obj/item/bodypart/limb as anything in get_bodyparts(include_stumps = TRUE))
 		for(var/obj/item/organ/organ in limb)
 			all_limb_flags |= organ.external_bodyshapes
 		all_limb_flags |= limb.bodyshape

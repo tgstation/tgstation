@@ -143,7 +143,7 @@
 	for(var/mob/living/carbon/carbon_occupant in occupants)
 		if(prob(35)) //Note: The randomstep on dump_mobs throws occupants into each other and often causes wounds regardless.
 			continue
-		for(var/obj/item/bodypart/head/head_to_wound as anything in carbon_occupant.bodyparts)
+		for(var/obj/item/bodypart/head/head_to_wound as anything in carbon_occupant.get_bodyparts())
 			var/pick_mode = text2num(pick(list(
 				"[WOUND_PICK_LOWEST_SEVERITY]",
 				"[WOUND_PICK_HIGHEST_SEVERITY]"

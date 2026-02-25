@@ -820,11 +820,13 @@
 
 	var/list/current_animated = LAZYLISTDUPLICATE(animated_zones)
 
-	for(var/obj/item/bodypart/body_part as anything in owner.bodyparts)
+	for(var/obj/item/bodypart/body_part as anything in owner.get_bodyparts(include_stumps = TRUE))
 		var/icon_key = 0
 		var/part_zone = body_part.body_zone
 
 		var/list/overridable_key = list(icon_key)
+		if(IS_STUMP(body_part))
+			icon_key = 6
 		if(body_part.bodypart_disabled)
 			icon_key = 7
 		else if(owner.stat == DEAD)
@@ -841,10 +843,6 @@
 		else
 			LAZYREMOVE(animated_zones, part_zone)
 		limbs[part_zone].icon_state = "[part_zone][icon_key]"
-	// handle leftovers
-	for(var/missing_zone in owner.get_missing_limbs())
-		limbs[missing_zone].icon_state = "[missing_zone]6"
-		LAZYREMOVE(animated_zones, missing_zone)
 	// time to re-sync animations, something changed
 	if(animated_zones ~! current_animated)
 		for(var/animated_zone in animated_zones)

@@ -180,7 +180,7 @@
 		bleed(bleed_rate * seconds_per_tick)
 		bleed_warn(bleed_rate)
 
-	for (var/obj/item/bodypart/bodypart as anything in bodyparts)
+	for (var/obj/item/bodypart/bodypart as anything in get_bodyparts())
 		if (bodypart.generic_bleedstacks)
 			bodypart.adjustBleedStacks(-1, 0)
 
@@ -263,7 +263,7 @@
 
 /// Has each bodypart update its bleed/wound overlay icon states
 /mob/living/carbon/proc/update_bodypart_bleed_overlays()
-	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
+	for(var/obj/item/bodypart/iter_part as anything in get_bodyparts(include_stumps = TRUE))
 		iter_part.update_part_wound_overlay()
 
 /// Bleeds amount units of blood from the mob, sometimes creating a blood splatter on the floor.
@@ -290,7 +290,7 @@
 		return 0
 
 	. = 0
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in get_bodyparts())
 		. += bodypart.cached_bleed_rate
 
 /mob/living/carbon/human/get_bleed_rate()
@@ -359,7 +359,7 @@
 
 /mob/living/carbon/restore_blood()
 	. = ..()
-	for(var/obj/item/bodypart/bodypart_to_restore as anything in bodyparts)
+	for(var/obj/item/bodypart/bodypart_to_restore as anything in get_bodyparts())
 		bodypart_to_restore.setBleedStacks(0)
 
 /****************************************************

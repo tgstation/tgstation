@@ -784,7 +784,7 @@
 
 	chosen_dna.copy_dna(user.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 
-	for(var/obj/item/bodypart/limb as anything in user.bodyparts)
+	for(var/obj/item/bodypart/limb as anything in user.get_bodyparts())
 		limb.update_limb(is_creating = TRUE)
 
 	user.updateappearance(mutcolor_update = TRUE)

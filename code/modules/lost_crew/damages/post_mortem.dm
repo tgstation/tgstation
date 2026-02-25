@@ -36,7 +36,9 @@
 
 /datum/corpse_damage/post_mortem/limb_loss/apply_to_body(mob/living/carbon/human/body, severity, list/saved_movables, list/datum/callback/on_revive_and_player_occupancy)
 	var/limbs_to_take = round(min_limbs + (max_limbs - min_limbs) * severity)
-	var/list/limbs_we_can_take = body.bodyparts - body.get_bodypart(BODY_ZONE_HEAD) - body.get_bodypart(BODY_ZONE_CHEST)
+	var/list/limbs_we_can_take = list()
+	for(var/zone in GLOB.limb_zones)
+		limbs_we_can_take += body.get_bodypart(zone)
 
 	if(!limbs_we_can_take.len)
 		return
