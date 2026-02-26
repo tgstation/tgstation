@@ -184,20 +184,24 @@
 	visible_message(message)
 	to_chat(user, message)
 	var/static/list/valid_monsters = list(
-		/mob/living/basic/mining/goliath,
-		/mob/living/basic/mining/watcher,
-		/mob/living/basic/mining/goldgrub,
-		/mob/living/basic/mining/hivelord,
+		/mob/living/basic/construct/artificer,
+		/mob/living/basic/construct/juggernaut,
+		/mob/living/basic/construct/proteon,
+		/mob/living/basic/construct/wraith,
 		/mob/living/basic/mining/brimdemon,
-		/mob/living/basic/mining/lobstrosity,
-		/mob/living/basic/mining/legion,
+		/mob/living/basic/mining/goldgrub,
+		/mob/living/basic/mining/goliath,
+		/mob/living/basic/mining/hivelord,
 		/mob/living/basic/mining/ice_demon,
+		/mob/living/basic/mining/legion,
+		/mob/living/basic/mining/lobstrosity,
+		/mob/living/basic/mining/watcher,
+		/mob/living/basic/raptor/blue,
+		/mob/living/basic/raptor/green,
+		/mob/living/basic/raptor/purple,
 		/mob/living/basic/raptor/red,
 		/mob/living/basic/raptor/white,
-		/mob/living/basic/raptor/purple,
-		/mob/living/basic/raptor/green,
 		/mob/living/basic/raptor/yellow,
-		/mob/living/basic/raptor/blue,
 	)
 	for(var/counter in 1 to rand(3, 9))
 		var/animal_spawn = pick(valid_monsters)
@@ -239,7 +243,10 @@
 /// Teleports the relic, and anyone holding it, to a random location nearby
 /obj/item/relic/proc/uncontrolled_teleport(mob/user)
 	to_chat(user, span_notice("[src] begins to vibrate!"))
-	addtimer(CALLBACK(src, PROC_REF(do_the_teleport), user), rand(1 SECONDS, 3 SECONDS))
+
+	var/teleport_time = rand(1 SECONDS, 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(do_the_teleport), user), teleport_time)
+	Shake(1, 1, teleport_time, 0.05 SECONDS)
 
 /obj/item/relic/proc/do_the_teleport(mob/user)
 	var/turf/userturf = get_turf(user)
@@ -256,13 +263,15 @@
 /// Version of uncontrolled_teleport with cult theming, and that affects all nearby movables rather than just the relic
 /obj/item/relic/proc/uncontrolled_aoe_teleport(mob/user)
 	to_chat(user, span_notice("[src] begins to vibrate intensely!"))
-	addtimer(CALLBACK(src, PROC_REF(do_the_aoe_teleport), user), rand(1 SECONDS, 3 SECONDS))
+
+	var/teleport_time = rand(1 SECONDS, 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(do_the_aoe_teleport), user), teleport_time)
+	Shake(2, 2, teleport_time, 0.03 SECONDS)
 
 /obj/item/relic/proc/do_the_aoe_teleport(mob/user)
 	visible_message(span_notice("[src] twists and bends, relocating anything nearby!"))
 	var/turf/teleturf = get_turf(src)
-	var/atom/telesource = ismovable(loc) ? loc : src
-	for(var/atom/movable/nearby in view(2, telesource))
+	for(var/atom/movable/nearby in view(2, teleturf))
 		if(nearby.anchored || nearby.invisibility || HAS_TRAIT(nearby, TRAIT_UNDERFLOOR))
 			continue
 		if(isliving(nearby))
@@ -555,7 +564,7 @@
 /obj/item/relic/proc/actually_yeet_blood()
 	var/mob/living/user = loc
 	var/splatcount = 0
-	if(istype(user) && CAN_HAVE_BLOOD(user))
+	if(istype(user) && CAN_HAVE_BLOOD(user) && !user.can_block_magic(MAGIC_RESISTANCE_HOLY, 1))
 		for(var/splatdir in GLOB.alldirs)
 			if(prob(splatcount * 5))
 				continue
@@ -592,9 +601,9 @@
 /obj/item/relic/proc/actually_suck_blood()
 	var/mob/living/user = loc
 	var/any_affected = FALSE
-	if(istype(user) && CAN_HAVE_BLOOD(user))
+	if(istype(user) && CAN_HAVE_BLOOD(user) && !user.can_block_magic(MAGIC_RESISTANCE_HOLY, 1))
 		for(var/mob/living/nearby in view(2, user))
-			if(!CAN_HAVE_BLOOD(nearby) || nearby.can_block_magic(MAGIC_RESISTANCE_HOLY, 1))
+			if(nearby == user || !CAN_HAVE_BLOOD(nearby) || nearby.can_block_magic(MAGIC_RESISTANCE_HOLY, 1))
 				continue
 			nearby.transfer_blood_to(user, rand(6, 10), ignore_low_blood = TRUE, ignore_incompatibility = TRUE, transfer_viruses = FALSE)
 			to_chat(nearby, span_danger("You feel a sudden weakness as blood is drawn out of you [nearby.is_blind() ? "" : " and into [user]"]!"))
