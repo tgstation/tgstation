@@ -570,7 +570,7 @@
 				continue
 			var/strength = rand(2, 3)
 			user.spray_blood(splatdir, strength)
-			user.bleed(strength)
+			user.bleed(strength ** 2)
 			splatcount += strength
 
 	if(splatcount > 0)
