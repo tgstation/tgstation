@@ -198,6 +198,9 @@
 	qdel(src)
 
 /datum/escape_menu/proc/home_quit()
+	var/confirmquit = tgui_alert(usr, "Are you sure you want to quit?", "Quit", list("Yes", "No"))
+	if(confirmquit != "Yes")
+		return
 	winset(usr, null, list("command"=".quit"))
 
 /datum/escape_menu/proc/home_open_character_settings()
