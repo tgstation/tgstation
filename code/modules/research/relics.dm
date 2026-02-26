@@ -184,10 +184,10 @@
 	visible_message(message)
 	to_chat(user, message)
 	var/static/list/valid_monsters = list(
-		/mob/living/basic/construct/artificer,
-		/mob/living/basic/construct/juggernaut,
-		/mob/living/basic/construct/proteon,
-		/mob/living/basic/construct/wraith,
+		/mob/living/basic/construct/artificer/hostile,
+		/mob/living/basic/construct/juggernaut/hostile,
+		/mob/living/basic/construct/proteon/hostile,
+		/mob/living/basic/construct/wraith/hostile,
 		/mob/living/basic/mining/brimdemon,
 		/mob/living/basic/mining/goldgrub,
 		/mob/living/basic/mining/goliath,
