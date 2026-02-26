@@ -654,3 +654,6 @@
 /// Sent from /obj/item/mail/traitor/after_unwrap(mob/user, obj/item/mail/traitor/letter)
 #define COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL "traitor_mail_opened"
 	#define COMPONENT_TRAITOR_MAIL_HANDLED (1<<0)
+
+/// Send to items that have been unwrapped from a gift
+#define COMSIG_ITEM_OPENED_FROM_GIFT "gift_opened"
