@@ -24,11 +24,24 @@
 
 /datum/component/defaceable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_drawn))
+	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_hovered))
+	var/atom/atom_parent = parent
+	atom_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 /datum/component/defaceable/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ATOM_ITEM_INTERACTION, COMSIG_ATOM_EXAMINE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_ATOM_UPDATE_OVERLAYS))
+	UnregisterSignal(parent, list(COMSIG_ATOM_ITEM_INTERACTION, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, COMSIG_ATOM_EXAMINE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_ATOM_UPDATE_OVERLAYS))
 	var/atom/atom_parent = parent
 	atom_parent.update_appearance(UPDATE_OVERLAYS)
+
+/// Inform people that they can mess us up
+/datum/component/defaceable/proc/on_hovered(atom/source, list/context, obj/item/held_item, mob/user)
+	if (HAS_TRAIT(source, TRAIT_DEFACED))
+		if (is_type_in_list(held_item, list(/obj/item/reagent_containers/spray, /obj/item/soap, /obj/item/rag)))
+			context[SCREENTIP_CONTEXT_LMB] = "Clean"
+	else
+		if (istype(held_item, /obj/item/pen) || istype(held_item, /obj/item/toy/crayon))
+			context[SCREENTIP_CONTEXT_LMB] = "Draw on"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /// See if someone can draw on us
 /datum/component/defaceable/proc/on_drawn(atom/source, mob/living/user, obj/item/tool)
