@@ -288,8 +288,8 @@
 
 	warn_admins(user, "AOE Teleport")
 	if(prob(30))
-		relic_message(span_warning("[src] falls apart!"))
-		deconstruct(FALSE)
+		relic_message(span_warning("[src] teleports away, never to be seen again!"))
+		qdel(src)
 
 // Creates a glass and fills it up with a drink.
 /obj/item/relic/proc/drink_dispenser(mob/user)
