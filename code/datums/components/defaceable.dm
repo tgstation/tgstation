@@ -33,6 +33,10 @@
 	var/atom/atom_parent = parent
 	atom_parent.update_appearance(UPDATE_OVERLAYS)
 
+/datum/component/defaceable/Destroy(force = FALSE)
+	. = ..()
+	on_defaced = null
+
 /// Inform people that they can mess us up
 /datum/component/defaceable/proc/on_hovered(atom/source, list/context, obj/item/held_item, mob/user)
 	if (HAS_TRAIT(source, TRAIT_DEFACED))
