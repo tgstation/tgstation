@@ -544,7 +544,7 @@
 			within_rock.apply_damage(10, BRUTE, BODY_ZONE_CHEST, blocked = within_rock.getarmor(BODY_ZONE_CHEST, MELEE), wound_bonus = 10, exposed_wound_bonus = 10)
 			to_chat(within_rock, span_danger("You are smashed by [rock]!"))
 	warn_admins(user, "Rocks", FALSE)
-	if(prob(60))
+	if(prob(20))
 		relic_message(span_warning("[src] crumbles into dust!"))
 		deconstruct(FALSE)
 
