@@ -1,673 +1,480 @@
-#define TANK_PLATING_SHEETS 12
+#define NO_BOUND 3
 
-/obj/machinery/atmospherics/components/tank
-	name = "pressure tank"
-	desc = "A large vessel containing pressurized gas."
+/obj/machinery/atmospherics/components/unary/vent_pump
+	icon_state = "vent_map-3"
 
-	icon = 'icons/map_icons/objects.dmi'
-	icon_state = "/obj/machinery/atmospherics/components/tank"
-	post_init_icon_state = "canister-0"
-	base_icon_state = "canister"
+	name = "air vent"
+	desc = "Has a valve and pump attached to it."
+	construction_type = /obj/item/pipe/directional/vent
+	use_power = IDLE_POWER_USE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.15
+	can_unwrench = TRUE
+	welded = FALSE
+	layer = GAS_SCRUBBER_LAYER
+	hide = TRUE
+	shift_underlay_only = FALSE
+	pipe_state = "uvent"
+	has_cap_visuals = TRUE
+	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
+	// vents are more complex machinery and so are less resistant to damage
+	max_integrity = 100
+	interaction_flags_click = NEED_VENTCRAWL
 
-	max_integrity = 800
-	integrity_failure = 0.2
-	density = TRUE
-	layer = ABOVE_WINDOW_LAYER
+	///Direction of pumping the gas (ATMOS_DIRECTION_RELEASING or ATMOS_DIRECTION_SIPHONING)
+	var/pump_direction = ATMOS_DIRECTION_RELEASING
+	///Should we check internal pressure, external pressure, both or none? (ATMOS_EXTERNAL_BOUND, ATMOS_INTERNAL_BOUND, NO_BOUND)
+	var/pressure_checks = ATMOS_EXTERNAL_BOUND
+	///The external pressure threshold (default 101 kPa)
+	var/external_pressure_bound = ONE_ATMOSPHERE
+	///The internal pressure threshold (default 0 kPa)
+	var/internal_pressure_bound = 0
+	// ATMOS_EXTERNAL_BOUND: Do not pass external_pressure_bound
+	// ATMOS_INTERNAL_BOUND: Do not pass internal_pressure_bound
+	// NO_BOUND: Do not pass either
 
-	custom_materials = list(/datum/material/iron = TANK_PLATING_SHEETS * SHEET_MATERIAL_AMOUNT) // plasteel is not a material to prevent two bugs: one where the default pressure is 1.5 times higher as plasteel's material modifier is added, and a second one where the tank names could be "plasteel plasteel" tanks
-	material_flags = MATERIAL_EFFECTS | MATERIAL_GREYSCALE | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
+	///area this vent is assigned to
+	var/area/assigned_area
 
-	pipe_flags = PIPING_ONE_PER_TURF
-	device_type = QUATERNARY
-	initialize_directions = NONE
-	custom_reconcilation = TRUE
+	/// Is this vent currently overclocked, removing pressure limits but damaging the fan?
+	var/fan_overclocked = FALSE
 
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_OBJ
-	smoothing_groups = SMOOTH_GROUP_GAS_TANK
-	canSmoothWith = SMOOTH_GROUP_GAS_TANK
-	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
+	/// Rate of damage per atmos process to the fan when overclocked. Set to 0 to disable damage.
+	var/fan_damage_rate = 0.5
 
-	greyscale_config = /datum/greyscale_config/stationary_canister
-	greyscale_colors = "#ffffff"
-	var/overlay_greyscale_config = /datum/greyscale_config/stationary_canister_overlays
+	/// The cached string we show for examine that lets you know how fucked up the fan is.
+	var/examine_condition
 
-	///The image showing the gases inside of the tank
-	var/image/window
-	/// Next world.time when we should refresh gas window visuals from process_atmos().
-	var/next_window_update = 0
-	/// Minimum delay between automatic visual refreshes from process_atmos().
-	var/window_update_cooldown = 1 SECONDS
+	/// Pressure where normal (non-overclocked) venting is blocked for safety.
+	var/static/max_safe_vent_pressure = 50 * ONE_ATMOSPHERE
 
-	/// The open node directions of the tank, assuming that the tank is facing NORTH.
-	var/open_ports = NONE
-	/// The volume of the gas mixture
-	var/volume = 2500 //in liters
-	/// The max pressure of the gas mixture before damaging the tank
-	var/max_pressure = 46000
-	/// The typepath of the gas this tank should be filled with.
-	var/gas_type = null
-	/// Up to how much percent of the max pressure do we fill the tank on init
-	var/starting_pressure_percent = 0.5
+	/// Datum for managing the overclock sound loop
+	var/datum/looping_sound/vent_pump_overclock/sound_loop
 
-	///Reference to the gas mix inside the tank
-	var/datum/gas_mixture/air_contents
-
-	/// The sounds that play when the tank is breaking from overpressure
-	var/static/list/breaking_sounds = list(
-		'sound/effects/structure_stress/pop1.ogg',
-		'sound/effects/structure_stress/pop2.ogg',
-		'sound/effects/structure_stress/pop3.ogg',
-	)
-
-	/// Shared images for the knob overlay representing a side of the tank that is open to connections
-	var/static/list/knob_overlays
-
-	/// Number of crack states to fill the list with. This exists because I'm lazy and didn't want to keeping adding more things manually to the below list.
-	var/crack_states_count = 10
-	/// The icon states for the cracks in the tank dmi
-	var/static/list/crack_states
-
-	/// The merger id used to create/get the merger group in charge of handling tanks that share an internal gas storage
-	var/merger_id = "stationary_tanks"
-	/// The typecache of types which are allowed to merge internal storage
-	var/static/list/merger_typecache
-
-/obj/machinery/atmospherics/components/tank/Initialize(mapload)
+/obj/machinery/atmospherics/components/unary/vent_pump/Initialize(mapload)
+	if(!id_tag)
+		id_tag = assign_random_name()
+		var/static/list/tool_screentips
+		if(!tool_screentips)
+			tool_screentips = string_assoc_nested_list(list(
+				TOOL_MULTITOOL = list(
+					SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
+				),
+				TOOL_SCREWDRIVER = list(
+					SCREENTIP_CONTEXT_LMB = "Repair",
+				),
+			))
+		AddElement(/datum/element/contextual_screentip_tools, tool_screentips)
 	. = ..()
+	sound_loop = new(src)
+	assign_to_area()
 
-	if(!knob_overlays)
-		knob_overlays = list()
-		for(var/dir in GLOB.cardinals)
-			knob_overlays["[dir]"] = image('icons/obj/pipes_n_cables/stationary_canisters_misc.dmi', icon_state = "knob", dir = dir, layer = FLOAT_LAYER)
-
-	if(!crack_states)
-		crack_states = list()
-		for(var/i in 1 to crack_states_count)
-			crack_states += "crack[i]"
-
-	if(!merger_typecache)
-		merger_typecache = typecacheof(/obj/machinery/atmospherics/components/tank)
-
-	AddComponent(/datum/component/gas_leaker, leak_rate = 0.05)
-	AddElement(/datum/element/volatile_gas_storage)
-	AddElement(/datum/element/crackable, 'icons/obj/pipes_n_cables/stationary_canisters_misc.dmi', crack_states)
-
-	RegisterSignal(src, COMSIG_MERGER_ADDING, PROC_REF(merger_adding))
-	RegisterSignal(src, COMSIG_MERGER_REMOVING, PROC_REF(merger_removing))
-	RegisterSignal(src, COMSIG_ATOM_SMOOTHED_ICON, PROC_REF(smoothed))
-
-	air_contents = new
-	air_contents.temperature = T20C
-	air_contents.volume = volume
-
-	if(gas_type && starting_pressure_percent > 0)
-		fill_to_pressure(gas_type, starting_pressure_percent)
-
-	QUEUE_SMOOTH(src)
-	QUEUE_SMOOTH_NEIGHBORS(src)
-
-	// Mapped in tanks should automatically connect to adjacent pipenets in the direction set in dir
-	if(mapload)
-		set_portdir_relative(dir, TRUE)
-		set_init_directions()
-
-	return INITIALIZE_HINT_LATELOAD
-
-// We late initialize here so all stationary tanks have time to set up their
-// initial gas mixes and signal registrations.
-/obj/machinery/atmospherics/components/tank/post_machine_initialize()
+/obj/machinery/atmospherics/components/unary/vent_pump/on_update_integrity(old_value, new_value)
 	. = ..()
-	GetMergeGroup(merger_id, merger_typecache)
-
-/obj/machinery/atmospherics/components/tank/Destroy()
-	QUEUE_SMOOTH_NEIGHBORS(src)
-	return ..()
-
-/obj/machinery/atmospherics/components/tank/examine(mob/user, thats)
-	. = ..()
-	var/wrench_hint = EXAMINE_HINT("wrench")
-	if(!initialize_directions)
-		. += span_notice("A pipe port can be opened with a [wrench_hint].")
-	else
-		. += span_notice("The pipe port can be moved or closed with a [wrench_hint].")
-	. += span_notice("A holographic sticker on it says that its maximum safe pressure is: [siunit_pressure(max_pressure, 0)].")
-
-/obj/machinery/atmospherics/components/tank/finalize_material_effects(list/materials)
-	. = ..()
-	refresh_pressure_limit()
-
-/// Recalculates pressure based on the current max integrity compared to original
-/obj/machinery/atmospherics/components/tank/proc/refresh_pressure_limit()
-	var/max_pressure_multiplier = max_integrity / initial(max_integrity)
-	max_pressure = max_pressure_multiplier * initial(max_pressure)
-
-/// Fills the tank to the maximum safe pressure.
-/// Safety margin is a multiplier for the cap for the purpose of this proc so it doesn't have to be filled completely.
-/obj/machinery/atmospherics/components/tank/proc/fill_to_pressure(gastype, safety_margin = 0.5)
-	var/pressure_limit = max_pressure * safety_margin
-
-	var/moles_to_add = (pressure_limit * air_contents.volume) / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-	air_contents.assert_gas(gastype)
-	air_contents.gases[gastype][MOLES] += moles_to_add
-	air_contents.archive()
-
-/obj/machinery/atmospherics/components/tank/process_atmos()
-	var/should_refresh_window = FALSE
-	if(air_contents.react(src))
-		update_parents()
-		should_refresh_window = TRUE
-
-	if(air_contents.return_pressure() > max_pressure)
-		take_damage(0.1, BRUTE, sound_effect = FALSE)
-		if(prob(40))
-			playsound(src, pick(breaking_sounds), 30, vary = TRUE)
-
-	if(should_refresh_window || world.time >= next_window_update)
-		refresh_window()
-		next_window_update = world.time + window_update_cooldown
-
-///////////////////////////////////////////////////////////////////
-// Port stuff
-
-/**
- * Enables/Disables a port direction in var/open_ports. \
- * Use this, then call set_init_directions() instead of setting initialize_directions directly \
- * This system exists because tanks not having all initialize_directions set correctly breaks shuttle rotations
- */
-/obj/machinery/atmospherics/components/tank/proc/set_portdir_relative(relative_port_dir, enable)
-	ASSERT(!isnull(enable), "Did not receive argument enable")
-
-	// Rotate the given dir so that it's relative to north
-	var/port_dir
-	if(dir == NORTH) // We're already facing north, no rotation needed
-		port_dir = relative_port_dir
-	else
-		var/offnorth_angle = dir2angle(dir)
-		port_dir = turn(relative_port_dir, offnorth_angle)
-
-	if(enable)
-		open_ports |= port_dir
-	else
-		open_ports &= ~port_dir
-
-/**
- * Toggles a port direction in var/open_ports \
- * Use this, then call set_init_directions() instead of setting initialize_directions directly \
- * This system exists because tanks not having all initialize_directions set correctly breaks shuttle rotations
- */
-/obj/machinery/atmospherics/components/tank/proc/toggle_portdir_relative(relative_port_dir)
-	var/toggle = ((initialize_directions & relative_port_dir) ? FALSE : TRUE)
-	set_portdir_relative(relative_port_dir, toggle)
-
-/obj/machinery/atmospherics/components/tank/set_init_directions()
-	if(!open_ports)
-		initialize_directions = NONE
-		return
-
-	//We're rotating open_ports relative to dir, and
-	//setting initialize_directions to that rotated dir
-	var/relative_port_dirs = NONE
-	var/dir_angle = dir2angle(dir)
-	for(var/cardinal in GLOB.cardinals)
-		var/current_dir = cardinal & open_ports
-		if(!current_dir)
-			continue
-
-		var/rotated_dir = turn(current_dir, -dir_angle)
-		relative_port_dirs |= rotated_dir
-
-	initialize_directions = relative_port_dirs
-
-/obj/machinery/atmospherics/components/tank/proc/toggle_side_port(port_dir)
-	toggle_portdir_relative(port_dir)
-	set_init_directions()
-
-	for(var/i in 1 to length(nodes))
-		var/obj/machinery/atmospherics/components/node = nodes[i]
-		if(!node)
-			continue
-		if(src in node.nodes)
-			node.disconnect(src)
-		nodes[i] = null
-		if(parents[i])
-			nullify_pipenet(parents[i])
-
-	atmos_init()
-
-	for(var/obj/machinery/atmospherics/components/node as anything in nodes)
-		if(!node)
-			continue
-		node.atmos_init()
-		node.add_member(src)
-	SSair.add_to_rebuild_queue(src)
-
-	update_parents()
-
-///////////////////////////////////////////////////////////////////
-// Pipenet stuff
-
-/obj/machinery/atmospherics/components/tank/return_analyzable_air()
-	return air_contents
-
-/obj/machinery/atmospherics/components/tank/return_airs_for_reconcilation(datum/pipeline/requester)
-	. = ..()
-	if(!air_contents)
-		return
-	. += air_contents
-
-/obj/machinery/atmospherics/components/tank/return_pipenets_for_reconcilation(datum/pipeline/requester)
-	. = ..()
-	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
-	for(var/obj/machinery/atmospherics/components/tank/tank as anything in merge_group.members)
-		. += tank.parents
-
-///////////////////////////////////////////////////////////////////
-// Merger handling
-
-/obj/machinery/atmospherics/components/tank/proc/merger_adding(obj/machinery/atmospherics/components/tank/us, datum/merger/new_merger)
-	SIGNAL_HANDLER
-	if(new_merger.id != merger_id)
-		return
-	RegisterSignal(new_merger, COMSIG_MERGER_REFRESH_COMPLETE, PROC_REF(merger_refresh_complete))
-
-/obj/machinery/atmospherics/components/tank/proc/merger_removing(obj/machinery/atmospherics/components/tank/us, datum/merger/old_merger)
-	SIGNAL_HANDLER
-	if(old_merger.id != merger_id)
-		return
-	UnregisterSignal(old_merger, COMSIG_MERGER_REFRESH_COMPLETE)
-
-/// Handles the combined gas tank for the entire merger group, only the origin tank actualy runs this.
-/obj/machinery/atmospherics/components/tank/proc/merger_refresh_complete(datum/merger/merger, list/leaving_members, list/joining_members)
-	SIGNAL_HANDLER
-	if(merger.origin != src)
-		return
-	var/shares = length(merger.members) + length(leaving_members) - length(joining_members)
-	for(var/obj/machinery/atmospherics/components/tank/leaver as anything in leaving_members)
-		var/datum/gas_mixture/gas_share = air_contents.remove_ratio(1 / shares--)
-		air_contents.volume -= leaver.volume
-		leaver.air_contents = gas_share
-		leaver.update_appearance(UPDATE_ICON)
-
-	for(var/obj/machinery/atmospherics/components/tank/joiner as anything in joining_members)
-		if(joiner == src)
-			continue
-		var/datum/gas_mixture/joiner_share = joiner.air_contents
-		if(joiner_share)
-			air_contents.merge(joiner_share)
-		joiner.air_contents = air_contents
-		air_contents.volume += joiner.volume
-		joiner.update_appearance(UPDATE_ICON)
-
-	for(var/dir in GLOB.cardinals)
-		if(dir & initialize_directions & merger.members[src])
-			toggle_side_port(dir)
-
-///////////////////////////////////////////////////////////////////
-// Appearance stuff
-
-/obj/machinery/atmospherics/components/tank/proc/smoothed()
-	SIGNAL_HANDLER
-	refresh_window()
-
-/obj/machinery/atmospherics/components/tank/update_appearance()
-	. = ..()
-	refresh_window()
-
-/obj/machinery/atmospherics/components/tank/update_overlays()
-	. = ..()
-	if(!initialize_directions)
-		return
-	for(var/dir in GLOB.cardinals)
-		if(initialize_directions & dir)
-			. += knob_overlays["[dir]"]
-
-/obj/machinery/atmospherics/components/tank/update_greyscale()
-	. = ..()
-	refresh_window()
-
-/obj/machinery/atmospherics/components/tank/proc/refresh_window()
-	cut_overlay(window)
-
-	if(!air_contents)
-		window = null
-		return
-	var/icon/greyscaled_icon = SSgreyscale.GetColoredIconByType(overlay_greyscale_config, greyscale_colors)
-
-	window = image(greyscaled_icon, icon_state = "window-bg", layer = FLOAT_LAYER)
-
-	var/static/alpha_filter
-	if(!alpha_filter) // Gotta do this separate since the icon may not be correct at world init
-		alpha_filter = filter(type="alpha", icon = icon('icons/obj/pipes_n_cables/stationary_canisters_misc.dmi', "window-bg"))
-
-	var/list/new_underlays = list()
-	for(var/obj/effect/overlay/gas/gas as anything in air_contents.return_visuals(get_turf(src)))
-		var/image/new_underlay = image(gas.icon, icon_state = gas.icon_state, layer = FLOAT_LAYER)
-		new_underlay.filters = alpha_filter
-		new_underlays += new_underlay
-
-	var/image/foreground = image(greyscaled_icon, icon_state = "window-fg", layer = FLOAT_LAYER)
-	foreground.underlays = new_underlays
-	window.overlays = list(foreground)
-
-	add_overlay(window)
-
-///////////////////////////////////////////////////////////////////
-// Tool interactions
-
-/obj/machinery/atmospherics/components/tank/wrench_act(mob/living/user, obj/item/item)
-	. = TRUE
-	var/new_dir = get_dir(src, user)
-
-	if(new_dir in GLOB.diagonals)
-		return
-
-	item.play_tool_sound(src, 10)
-	if(!item.use_tool(src, user, 3 SECONDS))
-		return
-
-	toggle_side_port(new_dir)
-
-	item.play_tool_sound(src, 50)
-
-/obj/machinery/atmospherics/components/tank/welder_act(mob/living/user, obj/item/tool)
-	. = ..()
-	. = TRUE
-	if(atom_integrity >= max_integrity)
-		return
-	if(!tool.tool_start_check(user, amount = 0, heat_required = HIGH_TEMPERATURE_REQUIRED))
-		return
-	to_chat(user, span_notice("You begin to repair the cracks in the gas tank..."))
-	var/repair_amount = max_integrity / 10
-	do
-		if(!tool.use_tool(src, user, 2.5 SECONDS, volume = 40))
-			return
-	while(repair_damage(repair_amount))
-	to_chat(user, span_notice("The gas tank has been fully repaired and all cracks sealed."))
-
-/obj/machinery/atmospherics/components/tank/welder_act_secondary(mob/living/user, obj/item/tool)
-	. = ..()
-	. = TRUE
-	to_chat(user, span_notice("You begin cutting open the gas tank..."))
-	var/turf/current_location = get_turf(src)
-	var/datum/gas_mixture/airmix = current_location.return_air()
-
-	var/time_taken = 4 SECONDS
-	var/unsafe = FALSE
-
-	var/internal_pressure = air_contents.return_pressure() - airmix.return_pressure()
-	if(internal_pressure > 2 * ONE_ATMOSPHERE)
-		time_taken *= 2
-		to_chat(user, span_warning("The tank seems to be pressurized, are you sure this is a good idea?"))
-		unsafe = TRUE
-
-	if(!tool.use_tool(src, user, time_taken, volume = 60))
-		return
-
-	if(unsafe)
-		unsafe_pressure_release(user, internal_pressure)
-	deconstruct(disassembled=TRUE)
-	to_chat(user, span_notice("You finish cutting open the sealed gas tank, revealing the innards."))
-
-/obj/machinery/atmospherics/components/tank/on_deconstruction(disassembled)
-	var/turf/location = drop_location()
-	. = ..()
-	location.assume_air(air_contents)
-	if(!disassembled)
-		return
-	var/obj/structure/tank_frame/frame = new(location)
-	frame.construction_state = TANK_PLATING_UNSECURED
-	for(var/datum/material/material as anything in custom_materials)
-		if (frame.material_end_product)
-			// If something looks fishy, you get nothing
-			message_admins("\The [src] had multiple materials set. Unless you were messing around with VV, yell at a coder")
-			frame.material_end_product = null
-			frame.construction_state = TANK_FRAME
-			break
+	var/condition_string
+	switch(get_integrity_percentage())
+		if(1)
+			condition_string = "perfect"
+		if(0.75 to 0.99)
+			condition_string = "good"
+		if(0.50 to 0.74)
+			condition_string = "okay"
+		if(0.25 to 0.49)
+			condition_string = "bad"
 		else
-			frame.material_end_product = material
-	frame.update_appearance(UPDATE_ICON)
+			condition_string = "terrible"
+	examine_condition = "The fan is in [condition_string] condition."
 
-///////////////////////////////////////////////////////////////////
-// Gas tank variants
-
-/obj/machinery/atmospherics/components/tank/air
-	name = "pressure tank (Air)"
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/air/layer1
-	piping_layer = 1
-
-/obj/machinery/atmospherics/components/tank/air/layer2
-	piping_layer = 2
-
-/obj/machinery/atmospherics/components/tank/air/layer4
-	piping_layer = 4
-
-/obj/machinery/atmospherics/components/tank/air/layer5
-	piping_layer = 5
-
-/obj/machinery/atmospherics/components/tank/air/Initialize(mapload)
+/obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	. = ..()
-	if(starting_pressure_percent > 0)
-		fill_to_pressure(/datum/gas/oxygen, safety_margin = (O2STANDARD * starting_pressure_percent))
-		fill_to_pressure(/datum/gas/nitrogen, safety_margin = (N2STANDARD * starting_pressure_percent))
+	. += span_notice("You can link it with an air sensor using a multitool.")
 
-/obj/machinery/atmospherics/components/tank/carbon_dioxide
-	gas_type = /datum/gas/carbon_dioxide
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
+	if(fan_overclocked)
+		. += span_warning("It is currently overclocked causing it to take damage over time.")
 
-/obj/machinery/atmospherics/components/tank/plasma
-	gas_type = /datum/gas/plasma
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/nitrogen
-	gas_type = /datum/gas/nitrogen
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/oxygen
-	gas_type = /datum/gas/oxygen
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/nitrous
-	gas_type = /datum/gas/nitrous_oxide
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/bz
-	gas_type = /datum/gas/bz
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/freon
-	gas_type = /datum/gas/freon
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/halon
-	gas_type = /datum/gas/halon
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/healium
-	gas_type = /datum/gas/healium
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/hydrogen
-	gas_type = /datum/gas/hydrogen
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/hypernoblium
-	gas_type = /datum/gas/hypernoblium
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/miasma
-	gas_type = /datum/gas/miasma
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/nitrium
-	gas_type = /datum/gas/nitrium
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/pluoxium
-	gas_type = /datum/gas/pluoxium
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/proto_nitrate
-	gas_type = /datum/gas/proto_nitrate
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/tritium
-	gas_type = /datum/gas/tritium
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/water_vapor
-	gas_type = /datum/gas/water_vapor
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/zauker
-	gas_type = /datum/gas/zauker
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/helium
-	gas_type = /datum/gas/helium
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-/obj/machinery/atmospherics/components/tank/antinoblium
-	gas_type = /datum/gas/antinoblium
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
-
-///////////////////////////////////////////////////////////////////
-// Tank Frame Structure
-
-/obj/structure/tank_frame
-	icon = 'icons/obj/pipes_n_cables/stationary_canisters_misc.dmi'
-	icon_state = "frame"
-	anchored = FALSE
-	density = TRUE
-	custom_materials = list(/datum/material/alloy/plasteel = 4 * SHEET_MATERIAL_AMOUNT)
-	var/construction_state = TANK_FRAME
-	var/datum/material/material_end_product
-
-/obj/structure/tank_frame/examine(mob/user)
-	. = ..()
-	var/wrenched_hint = EXAMINE_HINT("wrenched")
-
-	if(!anchored)
-		. += span_notice("[src] has not been [wrenched_hint] to the floor yet.")
+	if(get_integrity() > 0)
+		. += span_notice(examine_condition)
 	else
-		. += span_notice("[src] is [wrenched_hint] to the floor.")
+		. += span_warning("The fan is broken.")
 
-	switch(construction_state)
-		if(TANK_FRAME)
-			var/screwed_hint = EXAMINE_HINT("screwed")
-			var/plating_hint = EXAMINE_HINT("metal plating")
-			. += span_notice("[src] is [screwed_hint] together and now just needs some [plating_hint].")
-		if(TANK_PLATING_UNSECURED)
-			var/crowbar_hint = EXAMINE_HINT("crowbar")
-			var/welder_hint = EXAMINE_HINT("welder")
-			. += span_notice("The plating has been firmly attached and would need a [crowbar_hint] to detach, but still needs to be sealed by a [welder_hint].")
+/obj/machinery/atmospherics/components/unary/vent_pump/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
+	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
+		multi_tool.set_buffer(src)
+		sensor.multitool_act(user, multi_tool)
+		return ITEM_INTERACT_SUCCESS
 
-/obj/structure/tank_frame/atom_deconstruct(disassembled)
-	if(disassembled)
-		for(var/datum/material/mat as anything in custom_materials)
-			new mat.sheet_type(drop_location(), custom_materials[mat] / SHEET_MATERIAL_AMOUNT)
-
-/obj/structure/tank_frame/update_icon(updates)
-	. = ..()
-	switch(construction_state)
-		if(TANK_FRAME)
-			icon_state = "frame"
-		if(TANK_PLATING_UNSECURED)
-			icon_state = "plated_frame"
-
-/obj/structure/tank_frame/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(construction_state == TANK_FRAME && isstack(item) && add_plating(user, item))
-		return
-	return ..()
-
-/obj/structure/tank_frame/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	default_unfasten_wrench(user, tool, time = 0.5 SECONDS)
+	balloon_alert(user, "vent saved in buffer")
+	multi_tool.set_buffer(src)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/tank_frame/screwdriver_act_secondary(mob/living/user, obj/item/tool)
-	. = ..()
-	if(construction_state != TANK_FRAME)
-		return
-	. = TRUE
-	to_chat(user, span_notice("You begin taking apart [src]."))
-	if(!tool.use_tool(src, user, 1 SECONDS))
-		return
-	deconstruct(TRUE)
-	to_chat(user, span_notice("[src] has been taken apart."))
+/obj/machinery/atmospherics/components/unary/vent_pump/screwdriver_act(mob/living/user, obj/item/tool)
+	var/time_to_repair = (10 SECONDS) * (1 - get_integrity_percentage())
+	if(!time_to_repair)
+		return FALSE
 
-/obj/structure/tank_frame/proc/add_plating(mob/living/user, obj/item/stack/stack)
-	. = FALSE
-	if(!stack.material_type)
-		balloon_alert(user, "invalid material!")
-	var/datum/material/stack_mat = SSmaterials.get_material(stack.material_type)
-	if(!(stack_mat.mat_flags & MATERIAL_CLASS_RIGID))
-		to_chat(user, span_notice("This material doesn't seem rigid enough to hold the shape of a tank..."))
-		return
+	balloon_alert(user, "repairing vent...")
+	if(do_after(user, time_to_repair, src))
+		balloon_alert(user, "vent repaired")
+		repair_damage(max_integrity)
 
-	. = TRUE
-	to_chat(user, span_notice("You begin adding [stack] to [src]..."))
-	if(!stack.use_tool(src, user, 3 SECONDS))
-		return
-	if(!stack.use(TANK_PLATING_SHEETS))
-		var/amount_more
-		switch(100 * stack.amount / TANK_PLATING_SHEETS)
-			if(0) // Wat?
-				amount_more = "any at all"
-			if(1 to 25)
-				amount_more = "a lot more"
-			if(26 to 50)
-				amount_more = "about four times as much"
-			if(51 to 75)
-				amount_more = "about twice as much"
-			if(76 to 100)
-				amount_more = "just a bit more"
-			else
-				amount_more = "an indeterminate amount more"
-		to_chat(user, span_notice("You don't have enough [stack] to add all the plating. Maybe [amount_more]."))
-		return
+	else
+		balloon_alert(user, "interrupted!")
+	return ITEM_INTERACT_SUCCESS
 
-	material_end_product = stack_mat
-	construction_state = TANK_PLATING_UNSECURED
+/obj/machinery/atmospherics/components/unary/vent_pump/atom_fix()
+	set_is_operational(TRUE)
 	update_appearance(UPDATE_ICON)
-	to_chat(user, span_notice("You finish attaching [stack] to [src]."))
+	return ..()
 
-/obj/structure/tank_frame/crowbar_act_secondary(mob/living/user, obj/item/tool)
+/obj/machinery/atmospherics/components/unary/vent_pump/atom_break(damage_flag)
+	set_is_operational(FALSE)
+	update_appearance()
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
+	disconnect_from_area()
+	QDEL_NULL(sound_loop)
+
+	var/area/vent_area = get_area(src)
+	if(vent_area)
+		vent_area.air_vents -= src
+
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/vent_pump/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
-	if(construction_state != TANK_PLATING_UNSECURED)
+
+	var/area/old_area = get_area(old_loc)
+	var/area/new_area = get_area(src)
+
+	if (old_area == new_area)
 		return
-	. = TRUE
-	to_chat(user, span_notice("You start prying off the outer plating..."))
-	if(!tool.use_tool(src, user, 2 SECONDS))
+
+	disconnect_from_area(old_area)
+	assign_to_area(new_area)
+
+/obj/machinery/atmospherics/components/unary/vent_pump/on_enter_area(datum/source, area/area_to_register)
+	assign_to_area(area_to_register)
+	. = ..()
+
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/assign_to_area(area/target_area = get_area(src))
+	//this vent is already assigned to an area. Unassign it from here first before reassigning it to an new area
+	if(isnull(target_area) || !isnull(assigned_area))
 		return
-	construction_state = TANK_FRAME
-	new material_end_product.sheet_type(drop_location(), TANK_PLATING_SHEETS)
-	material_end_product = null
+	assigned_area = target_area
+	assigned_area.air_vents += src
+	update_appearance(UPDATE_NAME)
+
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/disconnect_from_area(area/target_area = get_area(src))
+	//you cannot unassign from an area we never were assigned to
+	if(isnull(target_area) || assigned_area != target_area)
+		return
+	assigned_area.air_vents -= src
+	assigned_area = null
+
+/obj/machinery/atmospherics/components/unary/vent_pump/on_exit_area(datum/source, area/area_to_unregister)
+	. = ..()
+	disconnect_from_area(area_to_unregister)
+
+/obj/machinery/atmospherics/components/unary/vent_pump/update_overlays()
+	. = ..()
+	if(!powered())
+		return
+
+	if(get_integrity() <= 0)
+		. += mutable_appearance(icon, "broken")
+
+	else if(fan_overclocked)
+		. += mutable_appearance(icon, "overclocked")
+
+/obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
+	cut_overlays()
+	if(underfloor_state)
+		var/image/cap = get_pipe_image(icon, "vent_cap", initialize_directions)
+		add_overlay(cap)
+	else
+		PIPING_LAYER_SHIFT(src, PIPING_LAYER_DEFAULT)
+
+	if(welded)
+		icon_state = "vent_welded"
+		return
+
+	if(!nodes[1] || !on || !is_operational)
+		if(icon_state == "vent_welded")
+			icon_state = "vent_off"
+			return
+
+		if(pump_direction & ATMOS_DIRECTION_RELEASING)
+			icon_state = "vent_off"
+			flick("vent_out-shutdown", src)
+		else // pump_direction == SIPHONING
+			icon_state = "vent_off"
+			flick("vent_in-shutdown", src)
+		return
+
+	if(icon_state == "vent_off")
+		if(pump_direction & ATMOS_DIRECTION_RELEASING)
+			icon_state = "vent_out"
+			flick("vent_out-starting", src)
+		else // pump_direction == SIPHONING
+			icon_state = "vent_in"
+			flick("vent_in-starting", src)
+		return
+
+	if(pump_direction & ATMOS_DIRECTION_RELEASING)
+		icon_state = "vent_out"
+	else // pump_direction == SIPHONING
+		icon_state = "vent_in"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/toggle_overclock(source, from_break = FALSE)
+	fan_overclocked = !fan_overclocked
+
+	if(from_break)
+		playsound(src, 'sound/machines/fan/fan_break.ogg', 100)
+		fan_overclocked = FALSE
+
+	if(fan_overclocked)
+		sound_loop.start()
+	else
+		sound_loop.stop()
+
+	investigate_log("had its overlock setting [fan_overclocked ? "enabled" : "disabled"] by [source]", INVESTIGATE_ATMOS)
+
 	update_appearance(UPDATE_ICON)
 
-/obj/structure/tank_frame/welder_act(mob/living/user, obj/item/tool)
+/obj/machinery/atmospherics/components/unary/vent_pump/process_atmos()
+	if(!is_operational)
+		return
+	if(!nodes[1])
+		set_on(FALSE)
+	if(!on || welded)
+		return
+	var/turf/open/us = loc
+	if(!istype(us))
+		return
+
+	if(fan_overclocked)
+		take_damage(fan_damage_rate, sound_effect=FALSE)
+		if(get_integrity() == 0)
+			investigate_log("was destroyed as a result of overclocking", INVESTIGATE_ATMOS)
+			return
+
+	var/datum/gas_mixture/air_contents = airs[1]
+	var/datum/gas_mixture/environment = us.return_air()
+	var/percent_integrity = 1
+	if(!fan_overclocked && atom_integrity < max_integrity)
+		percent_integrity = get_integrity_percentage()
+	var/environment_pressure
+
+	if(pump_direction & ATMOS_DIRECTION_RELEASING) // internal -> external
+		environment_pressure = environment.return_pressure()
+		if(!fan_overclocked && (environment_pressure >= max_safe_vent_pressure))
+			return FALSE
+
+		var/pressure_delta = 10000
+
+		if(pressure_checks&ATMOS_EXTERNAL_BOUND)
+			pressure_delta = min(pressure_delta, (external_pressure_bound - environment_pressure))
+		if(pressure_checks&ATMOS_INTERNAL_BOUND)
+			pressure_delta = min(pressure_delta, (air_contents.return_pressure() - internal_pressure_bound))
+		if(pressure_delta <= 0 || air_contents.temperature <= 0)
+			return
+
+		var/transfer_moles = (pressure_delta * environment.volume) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
+		if(percent_integrity < 1)
+			transfer_moles *= percent_integrity
+		if(transfer_moles <= MOLAR_ACCURACY)
+			return
+
+		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
+		if(!removed || !length(removed.gases))
+			return
+
+		us.assume_air(removed)
+		update_parents()
+
+	else // external -> internal
+		var/internal_pressure
+		if(!fan_overclocked)
+			internal_pressure = air_contents.return_pressure()
+			if(internal_pressure >= max_safe_vent_pressure)
+				return FALSE
+
+		environment_pressure = environment.return_pressure()
+		var/pressure_delta = 10000
+		if(pressure_checks&ATMOS_EXTERNAL_BOUND)
+			pressure_delta = min(pressure_delta, (environment_pressure - external_pressure_bound))
+		if(pressure_checks&ATMOS_INTERNAL_BOUND)
+			if(isnull(internal_pressure))
+				internal_pressure = air_contents.return_pressure()
+			pressure_delta = min(pressure_delta, (internal_pressure_bound - internal_pressure))
+		if(pressure_delta <= 0 || environment.temperature <= 0)
+			return
+
+		var/transfer_moles = (pressure_delta * air_contents.volume) / (environment.temperature * R_IDEAL_GAS_EQUATION)
+		if(percent_integrity < 1)
+			transfer_moles *= percent_integrity
+		if(transfer_moles <= MOLAR_ACCURACY)
+			return
+
+		var/datum/gas_mixture/removed = us.remove_air(transfer_moles)
+		if(!removed || !length(removed.gases)) // No venting from space
+			return
+
+		air_contents.merge(removed)
+		update_parents()
+
+/obj/machinery/atmospherics/components/unary/vent_pump/update_name()
 	. = ..()
-	if(construction_state != TANK_PLATING_UNSECURED)
+	if(override_naming)
 		return
-	. = TRUE
-	if(!anchored)
-		to_chat(user, span_notice("You need to <b>wrench</b> [src] to the floor before finishing."))
-		return
-	if(!tool.tool_start_check(user, amount = 0, heat_required = HIGH_TEMPERATURE_REQUIRED))
-		return
-	to_chat(user, span_notice("You begin sealing the outer plating with the welder..."))
-	if(!tool.use_tool(src, user, 2 SECONDS, volume = 60))
-		return
+	name = "\proper [get_area_name(src)] [name] [id_tag]"
 
-	var/turf/build_location = drop_location()
-	if(!isturf(build_location))
-		return
-	var/obj/machinery/atmospherics/components/tank/new_tank = new(build_location)
-	var/list/new_custom_materials = list((material_end_product) = TANK_PLATING_SHEETS * SHEET_MATERIAL_AMOUNT)
-	new_tank.set_custom_materials(new_custom_materials)
-	new_tank.on_construction(user, new_tank.pipe_color, new_tank.piping_layer)
-	to_chat(user, span_notice("[new_tank] has been sealed and is ready to accept gases."))
-	qdel(src)
+/obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/welder)
+	..()
+	if(!welder.tool_start_check(user, amount=1))
+		return TRUE
+	to_chat(user, span_notice("You begin welding the vent..."))
+	if(welder.use_tool(src, user, 20, volume=50))
+		if(!welded)
+			user.visible_message(span_notice("[user] welds the vent shut."), span_notice("You weld the vent shut."), span_hear("You hear welding."))
+			welded = TRUE
+		else
+			user.visible_message(span_notice("[user] unwelded the vent."), span_notice("You unweld the vent."), span_hear("You hear welding."))
+			welded = FALSE
+		update_appearance(UPDATE_ICON)
+		pipe_vision_img = image(src, loc, dir = dir)
+		SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
+		investigate_log("was [welded ? "welded shut" : "unwelded"] by [key_name(user)]", INVESTIGATE_ATMOS)
+		add_fingerprint(user)
+	return TRUE
 
-#undef TANK_PLATING_SHEETS
+/obj/machinery/atmospherics/components/unary/vent_pump/can_unwrench(mob/user)
+	. = ..()
+	if(. && on && is_operational)
+		to_chat(user, span_warning("You cannot unwrench [src], turn it off first!"))
+		return FALSE
+
+/obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
+	. = ..()
+	if(welded)
+		. += "It seems welded shut."
+
+/obj/machinery/atmospherics/components/unary/vent_pump/power_change()
+	. = ..()
+	update_icon_nopipes()
+
+/obj/machinery/atmospherics/components/unary/vent_pump/attack_alien(mob/user, list/modifiers)
+	if(!welded || !(do_after(user, 2 SECONDS, target = src)))
+		return
+	user.visible_message(span_warning("[user] furiously claws at [src]!"), span_notice("You manage to clear away the stuff blocking the vent."), span_hear("You hear loud scraping noises."))
+	welded = FALSE
+	update_appearance(UPDATE_ICON)
+	pipe_vision_img = image(src, loc, dir = dir)
+	SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
+	playsound(loc, 'sound/items/weapons/bladeslice.ogg', 100, TRUE)
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume
+	name = "large air vent"
+	power_channel = AREA_USAGE_EQUIP
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/Initialize(mapload)
+	. = ..()
+	var/datum/gas_mixture/air_contents = airs[1]
+	air_contents.volume = 1000
+
+// mapping
+
+/obj/machinery/atmospherics/components/unary/vent_pump/layer2
+	piping_layer = 2
+	icon_state = "vent_map-2"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/layer4
+	piping_layer = 4
+	icon_state = "vent_map-4"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/on
+	on = TRUE
+	icon_state = "vent_map_on-3"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2
+	piping_layer = 2
+	icon_state = "vent_map_on-2"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4
+	piping_layer = 4
+	icon_state = "vent_map_on-4"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon
+	pump_direction = ATMOS_DIRECTION_SIPHONING
+	pressure_checks = ATMOS_INTERNAL_BOUND
+	internal_pressure_bound = 4000
+	external_pressure_bound = 0
+
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/layer2
+	piping_layer = 2
+	icon_state = "vent_map-2"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/layer4
+	piping_layer = 4
+	icon_state = "vent_map-4"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on
+	on = TRUE
+	icon_state = "vent_map_siphon_on-3"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/layer2
+	piping_layer = 2
+	icon_state = "vent_map_siphon_on-2"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/layer4
+	piping_layer = 4
+	icon_state = "vent_map_siphon_on-4"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/layer2
+	piping_layer = 2
+	icon_state = "vent_map-2"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/layer4
+	piping_layer = 4
+	icon_state = "vent_map-4"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on
+	on = TRUE
+	icon_state = "vent_map_on-3"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on/layer2
+	piping_layer = 2
+	icon_state = "vent_map_on-2"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on/layer4
+	piping_layer = 4
+	icon_state = "vent_map_on-4"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon
+	pump_direction = ATMOS_DIRECTION_SIPHONING
+	pressure_checks = ATMOS_INTERNAL_BOUND
+	internal_pressure_bound = 2000
+	external_pressure_bound = 0
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/layer2
+	piping_layer = 2
+	icon_state = "vent_map-2"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/layer4
+	piping_layer = 4
+	icon_state = "vent_map-4"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on
+	on = TRUE
+	icon_state = "vent_map_siphon_on-3"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on/layer2
+	piping_layer = 2
+	icon_state = "vent_map_siphon_on-2"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on/layer4
+	piping_layer = 4
+	icon_state = "vent_map_siphon_on-4"
+
+#undef NO_BOUND
