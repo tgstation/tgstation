@@ -53,6 +53,9 @@
 /atom/movable/proc/block_superconductivity() // objects that block air and don't let superconductivity act
 	return FALSE
 
+/turf/proc/update_atmos_share_coeff()
+	atmos_share_coeff = 1 / (length(atmos_adjacent_turfs) + 1)
+
 /// This proc is a more deeply optimized version of immediate_calculate_adjacent_turfs
 /// It contains dumbshit, and also stuff I just can't do at runtime
 /// If you're not editing behavior, just read that proc. It's less bad
@@ -102,10 +105,12 @@
 			if (current_turf.atmos_adjacent_turfs)
 				current_turf.atmos_adjacent_turfs -= src
 			UNSETEMPTY(current_turf.atmos_adjacent_turfs)
+		current_turf.update_atmos_share_coeff()
 		SEND_SIGNAL(current_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
 
 	UNSETEMPTY(atmos_adjacent_turfs)
 	src.atmos_adjacent_turfs = atmos_adjacent_turfs
+	src.update_atmos_share_coeff()
 	SEND_SIGNAL(src, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
 
 /turf/proc/immediate_calculate_adjacent_turfs()
@@ -128,10 +133,12 @@
 			if (current_turf.atmos_adjacent_turfs)
 				current_turf.atmos_adjacent_turfs -= src
 			UNSETEMPTY(current_turf.atmos_adjacent_turfs)
+		current_turf.update_atmos_share_coeff()
 		SEND_SIGNAL(current_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
 
 	UNSETEMPTY(atmos_adjacent_turfs)
 	src.atmos_adjacent_turfs = atmos_adjacent_turfs
+	src.update_atmos_share_coeff()
 	SEND_SIGNAL(src, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
 
 /**
