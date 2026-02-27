@@ -561,7 +561,8 @@
 			INVOKE_ASYNC(carbon_victim, TYPE_PROC_REF(/mob/living/carbon, equip_to_slot), src, ITEM_SLOT_LEGCUFFED)
 			SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
-	victim.apply_damage(trap_damage, BRUTE, def_zone, wound_bonus=trap_damage, exposed_wound_bonus=trap_damage*2)
+	var/randomize_sharpness = prob(50) ? SHARP_POINTY : NONE
+	victim.apply_damage(trap_damage, BRUTE, def_zone, sharpness=randomize_sharpness, wound_bonus=trap_damage, exposed_wound_bonus=trap_damage*2)
 
 /**
  * # Energy snare
