@@ -16,7 +16,7 @@
 	demolition_mod = 0.75 // Note: This is significant, as this needs to be low enough that any possible force adjustments from better spears does not go over airlock deflection. See AIRLOCK_DAMAGE_DEFLECTION_N.
 	embed_type = /datum/embedding/spear
 	armour_penetration = 5
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.65, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 1.15)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.65, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.15)
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
@@ -25,6 +25,7 @@
 	armor_type = /datum/armor/item_spear
 	wound_bonus = -15
 	exposed_wound_bonus = 15
+	material_flags = MATERIAL_EFFECTS
 	/// The icon prefix for this flavor of spear
 	var/icon_prefix = "spearglass"
 	/// How much damage to do unwielded
@@ -35,6 +36,8 @@
 	var/improvised_construction = TRUE
 	/// What is left over when a spear breaks
 	var/spear_leftovers = /obj/item/stack/rods
+	/// Material type from which our tip is made
+	var/tip_mat_type = null
 	/// What pike do we construct if someone kills themselves with us?
 	var/pike_type = /obj/structure/headpike
 
@@ -101,81 +104,91 @@
 	return BRUTELOSS // Just in case they survived losing the head
 
 /obj/item/spear/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/item/stack/rods/rod = locate() in components
+	if (rod)
+		spear_leftovers = rod.type
+
 	var/obj/item/shard/tip = locate() in components
-	if(!tip)
+	if (!tip)
 		return ..()
 
-	switch(tip.type)
-		if(/obj/item/shard/plasma)
-			force = 11
-			throwforce = 21
+	var/datum/material/tip_material = tip.get_master_material()
+	// For master material effects. As on_craft_completion is ran before set_custom_materials, this will allow the speartip to be treated as our master material no matter what
+	tip_mat_type = tip_material.id
+	switch (tip_mat_type)
+		if (/datum/material/alloy/plasmaglass)
 			icon_prefix = "spearplasma"
-			modify_max_integrity(220)
-			wound_bonus = -10
-			force_unwielded = 11
-			force_wielded = 19
-			AddComponent(/datum/component/two_handed, \
-				force_unwielded = force_unwielded, \
-				force_wielded = force_wielded, \
-				icon_wielded = "[icon_prefix]1", \
-				wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
-				unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
-			)
-
-		if(/obj/item/shard/titanium)
-			force = 12
-			throwforce = 22
-			throw_range = 8
-			throw_speed = 5
-			modify_max_integrity(230)
-			wound_bonus = -5
-			force_unwielded = 12
-			force_wielded = 20
-			armour_penetration = 10
+		if (/datum/material/alloy/titaniumglass)
 			icon_prefix = "speartitanium"
-			AddComponent(/datum/component/two_handed, \
-				force_unwielded = force_unwielded, \
-				force_wielded = force_wielded, \
-				icon_wielded = "[icon_prefix]1", \
-				wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
-				unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
-			)
-
-		if(/obj/item/shard/plastitanium)
-			force = 13
-			throwforce = 23
-			throw_range = 9
-			throw_speed = 5
-			modify_max_integrity(240)
-			wound_bonus = 0
-			exposed_wound_bonus = 20
-			force_unwielded = 13
-			force_wielded = 21
-			armour_penetration = 15
+		if (/datum/material/alloy/plastitaniumglass)
 			icon_prefix = "spearplastitanium"
-			AddComponent(/datum/component/two_handed, \
-				force_unwielded = force_unwielded, \
-				force_wielded = force_wielded, \
-				icon_wielded = "[icon_prefix]1", \
-				wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
-				unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
-			)
-
 	update_appearance()
 	return ..()
 
+/obj/item/spear/get_master_material()
+	if (tip_mat_type && custom_materials[tip_mat_type])
+		return SSmaterials.get_material(tip_mat_type)
+	return ..()
+
+/obj/item/spear/apply_main_material_effects(datum/material/main_material, amount, multiplier)
+	. = ..()
+	var/density = main_material.get_property(MATERIAL_DENSITY)
+	var/hardness = main_material.get_property(MATERIAL_HARDNESS)
+	// If a spear is too hard its unwieldy, if it is too light it doesn't have enough weight behind it
+	var/force_change = (hardness - 4) - max(0, density - 4) - max(0, 4 - density) * 2
+	force_unwielded += force_change
+	force_wielded += force_change
+	force = force_unwielded
+	throwforce += force_change
+	wound_bonus += force_change * 5
+	modify_max_integrity(max_integrity + (hardness - 4) * 10)
+	throw_range += (hardness - 4) - (density - 4) * 2
+	throw_speed += floor(((hardness - 4) - (density - 4) * 2) / 2)
+	// These try to keep parity with titanium/plastitanium spears as armorpen boost was exclusive to them
+	armour_penetration += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) * 5
+	exposed_wound_bonus += (MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) - (density - 4)) * 5
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = force_unwielded, \
+		force_wielded = force_wielded, \
+		icon_wielded = "[icon_prefix]1", \
+		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
+		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
+	)
+
+/obj/item/spear/remove_main_material_effects(datum/material/main_material, amount, multiplier)
+	. = ..()
+	var/density = main_material.get_property(MATERIAL_DENSITY)
+	var/hardness = main_material.get_property(MATERIAL_HARDNESS)
+	var/force_change = (hardness - 4) - (density - 4)
+	force_unwielded -= force_change
+	force_wielded -= force_change
+	force = force_unwielded
+	throwforce -= force_change
+	wound_bonus -= force_change * 5
+	modify_max_integrity(max_integrity - (hardness - 4) * 10)
+	throw_range -= (hardness - 4) - (density - 4) * 2
+	throw_speed -= floor(((hardness - 4) - (density - 4) * 2) / 2)
+	// These try to keep parity with titanium/plastitanium spears as armorpen boost was exclusive to them
+	armour_penetration -= MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) * 5
+	exposed_wound_bonus -= (MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) - (density - 4)) * 5
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = force_unwielded, \
+		force_wielded = force_wielded, \
+		icon_wielded = "[icon_prefix]1", \
+		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
+		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
+	)
+
 /obj/item/spear/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
-	if(!improvised_construction)
-		return
-	take_damage(force/2, sound_effect = FALSE)
+	if(improvised_construction)
+		take_damage(force / 2, sound_effect = FALSE)
 
 /obj/item/spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if (.) //spear was caught
 		return
-	if(!improvised_construction)
-		return
-	take_damage(throwforce/2, sound_effect = FALSE)
+	if(improvised_construction)
+		take_damage(throwforce / 2, sound_effect = FALSE)
 
 /obj/item/spear/atom_destruction(damage_flag)
 	playsound(src, 'sound/effects/grillehit.ogg', 50)

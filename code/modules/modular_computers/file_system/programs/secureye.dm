@@ -172,7 +172,7 @@
 	var/datum/camerachunk/target_camerachunk = SScameras.get_turf_camera_chunk(target_turf)
 	if(!target_camerachunk)
 		CRASH("[src] was able to track [target] through /datum/trackable, but was not on a visible turf to cameras.")
-	for(var/obj/machinery/camera/cameras as anything in target_camerachunk.cameras[target.z])
+	for(var/obj/machinery/camera/cameras as anything in target_camerachunk.cameras["[target.z]"])
 		// We need to find a particular camera that can see this turf
 		if(length(cameras.can_see() & list(target_turf)))
 			continue

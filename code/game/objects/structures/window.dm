@@ -346,7 +346,7 @@
 
 ///Spawns shard and debris decal based on the glass_material_datum, spawns rods if window is reinforned and number of shards/rods is determined by the window being fulltile or not.
 /obj/structure/window/proc/spawn_debris(location)
-	var/datum/material/glass_material_ref = GET_MATERIAL_REF(glass_material_datum)
+	var/datum/material/glass_material_ref = SSmaterials.get_material(glass_material_datum)
 	var/obj/item/shard_type = glass_material_ref.shard_type
 	var/obj/effect/decal/debris_type = glass_material_ref.debris_type
 	var/list/dropped_debris = list()
@@ -985,11 +985,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	. += (atom_integrity < max_integrity) ? torn : paper
 
 /obj/structure/window/paperframe/attackby(obj/item/W, mob/living/user)
-	if(W.get_temperature())
+	if(W.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		fire_act(W.get_temperature())
 		return
+
 	if(user.combat_mode)
 		return ..()
+
 	if(istype(W, /obj/item/paper) && atom_integrity < max_integrity)
 		user.visible_message(span_notice("[user] starts to patch the holes in \the [src]."))
 		if(do_after(user, 2 SECONDS, target = src))

@@ -19,96 +19,27 @@
 	crate_name = "plasma assembly crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
-/datum/supply_pack/science/raw_flux_anomaly
-	name = "Raw Flux Anomaly"
-	desc = "Contains the raw core of a flux anomaly, ready to be implosion-compressed into a powerful artifact."
+// Dummy type used in generating anomaly core supply packs, not actually orderable
+/datum/supply_pack/science/raw_anomaly
 	cost = CARGO_CRATE_VALUE * 10
 	access = ACCESS_ORDNANCE
 	access_view = ACCESS_ORDNANCE
-	contains = list(/obj/item/raw_anomaly_core/flux)
-	crate_name = "raw flux anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
 
-/datum/supply_pack/science/raw_hallucination_anomaly
-	name = "Raw Hallucination Anomaly"
-	desc = "Contains the raw core of a hallucination anomaly, ready to be implosion-compressed into a powerful artifact."
-	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_ORDNANCE
-	access_view = ACCESS_ORDNANCE
-	contains = list(/obj/item/raw_anomaly_core/hallucination)
-	crate_name = "raw hallucination anomaly"
-	crate_type = /obj/structure/closet/crate/secure/science
+/datum/supply_pack/science/raw_anomaly/generate_supply_packs()
+	if(length(contains))
+		return null // having contents indicates this is a generated pack so it doesn't need to generate more
 
-/datum/supply_pack/science/raw_grav_anomaly
-	name = "Raw Gravitational Anomaly"
-	desc = "Contains the raw core of a gravitational anomaly, ready to be implosion-compressed into a powerful artifact."
-	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_ORDNANCE
-	access_view = ACCESS_ORDNANCE
-	contains = list(/obj/item/raw_anomaly_core/grav)
-	crate_name = "raw gravitational anomaly"
-	crate_type = /obj/structure/closet/crate/secure/science
-
-/datum/supply_pack/science/raw_vortex_anomaly
-	name = "Raw Vortex Anomaly"
-	desc = "Contains the raw core of a vortex anomaly, ready to be implosion-compressed into a powerful artifact."
-	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_ORDNANCE
-	access_view = ACCESS_ORDNANCE
-	contains = list(/obj/item/raw_anomaly_core/vortex)
-	crate_name = "raw vortex anomaly"
-	crate_type = /obj/structure/closet/crate/secure/science
-
-/datum/supply_pack/science/raw_ectoplasm_anomaly
-	name = "Raw Ectoplasm Anomaly"
-	desc = "Contains the raw core of an ectoplasm anomaly, ready to be implosion-compressed into a powerful artifact."
-	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_ORDNANCE
-	access_view = ACCESS_ORDNANCE
-	contains = list(/obj/item/raw_anomaly_core/ectoplasm)
-	crate_name = "raw ectoplasm anomaly"
-	crate_type = /obj/structure/closet/crate/secure/science
-
-/datum/supply_pack/science/raw_bluespace_anomaly
-	name = "Raw Bluespace Anomaly"
-	desc = "Contains the raw core of a bluespace anomaly, ready to be implosion-compressed into a powerful artifact."
-	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_ORDNANCE
-	access_view = ACCESS_ORDNANCE
-	contains = list(/obj/item/raw_anomaly_core/bluespace)
-	crate_name = "raw bluespace anomaly"
-	crate_type = /obj/structure/closet/crate/secure/science
-
-/datum/supply_pack/science/raw_pyro_anomaly
-	name = "Raw Pyro Anomaly"
-	desc = "Contains the raw core of a pyro anomaly, ready to be implosion-compressed into a powerful artifact."
-	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_ORDNANCE
-	access_view = ACCESS_ORDNANCE
-	contains = list(/obj/item/raw_anomaly_core/pyro)
-	crate_name = "raw pyro anomaly"
-	crate_type = /obj/structure/closet/crate/secure/science
-
-/datum/supply_pack/science/raw_bioscrambler_anomaly
-	name = "Raw Bioscrambler Anomaly"
-	desc = "Contains the raw core of a bioscrambler anomaly, ready to be implosion-compressed into a powerful artifact."
-	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_ORDNANCE
-	access_view = ACCESS_ORDNANCE
-	contains = list(/obj/item/raw_anomaly_core/bioscrambler)
-	crate_name = "raw bioscrambler anomaly"
-	crate_type = /obj/structure/closet/crate/secure/science
-
-/datum/supply_pack/science/raw_dimensional_anomaly
-	name = "Raw Dimensional Anomaly"
-	desc = "Contains the raw core of a dimensional anomaly, ready to be implosion-compressed into a powerful artifact."
-	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_ORDNANCE
-	access_view = ACCESS_ORDNANCE
-	contains = list(/obj/item/raw_anomaly_core/dimensional)
-	crate_name = "raw dimensional anomaly"
-	crate_type = /obj/structure/closet/crate/secure/science
-
+	var/list/anomaly_packs = list()
+	for(var/obj/item/raw_anomaly_core/raw_core as anything in subtypesof(/obj/item/raw_anomaly_core) - /obj/item/raw_anomaly_core/random)
+		var/datum/supply_pack/science/raw_anomaly/pack = new
+		pack.name = full_capitalize(raw_core::name)
+		pack.id = "[type]/[raw_core]"
+		pack.desc = "Contains the raw core of \a [raw_core::anomaly_type::anomaly_type::name || "anomaly"], ready to be implosion-compressed into a powerful artifact."
+		pack.contains = list(raw_core)
+		pack.crate_name = LOWER_TEXT(pack.name)
+		anomaly_packs += pack
+	return anomaly_packs
 
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"

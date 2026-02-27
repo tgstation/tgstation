@@ -167,7 +167,7 @@
 			if(power_pack.stored_ammo.len < power_pack.max_ammo)
 				power_pack.stored_ammo += new power_pack.ammo_type(power_pack)
 				use_energy(active_power_usage * seconds_per_tick)
-				if(power_pack.stored_ammo >= power_pack.max_ammo)
+				if(power_pack.stored_ammo.len >= power_pack.max_ammo)
 					playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 					say("[charging] has finished recharging!")
 				else

@@ -424,6 +424,15 @@ const FunTab = (props) => {
               onClick={() => act('send_shuttle_back')}
             />
           </Stack.Item>
+          <Stack.Item>
+            <Button
+              icon="oil-well"
+              lineHeight={lineHeightNormal}
+              width={buttonWidthNormal}
+              content="Tap Ore Vents"
+              onClick={() => act('ore_vents')}
+            />
+          </Stack.Item>
         </Stack>
       </Stack.Item>
       <Stack.Item>

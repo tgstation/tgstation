@@ -3,15 +3,19 @@
 	name = "iron"
 	desc = "Common iron ore often found in sedimentary and igneous layers of the crust."
 	color = "#B6BEC2"
-	categories = list(
-		MAT_CATEGORY_SILO = TRUE,
-		MAT_CATEGORY_RIGID=TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 6,
+		MATERIAL_HARDNESS = 6,
+		MATERIAL_FLEXIBILITY = 2,
+		MATERIAL_REFLECTIVITY = 3,
+		MATERIAL_ELECTRICAL = 6,
+		MATERIAL_THERMAL = 7,
+		MATERIAL_CHEMICAL = 3,
 	)
 	sheet_type = /obj/item/stack/sheet/iron
 	ore_type = /obj/item/stack/ore/iron
+	material_reagent = /datum/reagent/iron
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
 	mat_rust_resistance = RUST_RESISTANCE_BASIC
 	mineral_rarity = MATERIAL_RARITY_COMMON
@@ -19,10 +23,9 @@
 	minimum_value_override = 0
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
-	fish_weight_modifier = 1.3
-	fishing_gravity_mult = 1.1
 
 /datum/material/iron/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
 		return TRUE
@@ -33,14 +36,17 @@
 	desc = "Glass forged by melting sand."
 	color = "#6292AF"
 	alpha = 150
-	categories = list(
-		MAT_CATEGORY_SILO = TRUE,
-		MAT_CATEGORY_RIGID=TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 4,
+		MATERIAL_HARDNESS = 4,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 7,
+		MATERIAL_ELECTRICAL = 0,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 8,
 	)
-	integrity_modifier = 0.1
+	material_reagent = /datum/reagent/silicon
 	sheet_type = /obj/item/stack/sheet/glass
 	ore_type = /obj/item/stack/ore/glass/basalt
 	shard_type = /obj/item/shard
@@ -49,69 +55,53 @@
 	minimum_value_override = 0
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
-	beauty_modifier = 0.05
-	armor_modifiers = list(MELEE = 0.2, BULLET = 0.2, ENERGY = 1, BIO = 0.2, FIRE = 1, ACID = 0.2)
 	mineral_rarity = MATERIAL_RARITY_COMMON
 	points_per_unit = 1 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
-	fish_weight_modifier = 1.2
-	fishing_difficulty_modifier = 5
-	fishing_experience_multiplier = 1.2
-	fishing_bait_speed_mult = 0.9
-	fishing_deceleration_mult = 1.2
-	fishing_bounciness_mult = 0.5
-	fishing_gravity_mult = 0.9
 
 /datum/material/glass/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5, sharpness = TRUE) //cronch
 		return TRUE
 
 /datum/material/glass/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
-	if(isobj(source) && !isstack(source))
+	if(isobj(source) && !isstack(source) && (source.material_flags & MATERIAL_AFFECT_STATISTICS))
 		source.AddElement(/datum/element/can_shatter, shard_type, round(mat_amount / SHEET_MATERIAL_AMOUNT * multiplier), SFX_SHATTER)
 
 /datum/material/glass/on_main_removed(atom/source, mat_amount, multiplier)
 	. = ..()
-	if(isobj(source) && !isstack(source))
+	if(isobj(source) && !isstack(source) && (source.material_flags & MATERIAL_AFFECT_STATISTICS))
 		source.RemoveElement(/datum/element/can_shatter, shard_type, round(mat_amount / SHEET_MATERIAL_AMOUNT * multiplier), SFX_SHATTER)
 
-/*
-Color matrices are like regular colors but unlike with normal colors, you can go over 255 on a channel.
-Unless you know what you're doing, only use the first three numbers. They're in RGB order.
-*/
-
-///Has no special properties. Could be good against vampires in the future perhaps.
+/// Has no special properties. Could be good against vampires in the future perhaps.
 /datum/material/silver
 	name = "silver"
-	desc = "Silver"
+	desc = "A precious metal known for being hated by oversized bats and dogs."
 	color = "#B5BCBB"
-	categories = list(
-		MAT_CATEGORY_SILO = TRUE,
-		MAT_CATEGORY_RIGID=TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 7,
+		MATERIAL_HARDNESS = 4,
+		MATERIAL_FLEXIBILITY = 3,
+		MATERIAL_REFLECTIVITY = 8,
+		MATERIAL_ELECTRICAL = 9,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 4,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	ore_type = /obj/item/stack/ore/silver
+	material_reagent = /datum/reagent/silver
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
-	beauty_modifier = 0.075
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	points_per_unit = 16 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
-	fish_weight_modifier = 1.35
-	fishing_difficulty_modifier = -5
-	fishing_experience_multiplier = 0.85
-	fishing_completion_speed = 1.1
-	fishing_deceleration_mult = 1.1
-	fishing_bounciness_mult = 0.9
-	fishing_gravity_mult = 1.1
 
 /datum/material/silver/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
 		return TRUE
@@ -119,159 +109,120 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 ///Slight force increase
 /datum/material/gold
 	name = "gold"
-	desc = "Gold"
+	desc = "All that glitters is not gold."
 	color = "#E6BB45"
-	strength_modifier = 1.2
-	categories = list(
-		MAT_CATEGORY_SILO = TRUE,
-		MAT_CATEGORY_RIGID=TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	mat_properties = list(
+		MATERIAL_DENSITY = 9,
+		MATERIAL_HARDNESS = 3,
+		MATERIAL_FLEXIBILITY = 3,
+		MATERIAL_REFLECTIVITY = 6,
+		MATERIAL_ELECTRICAL = 8,
+		MATERIAL_THERMAL = 8,
+		MATERIAL_CHEMICAL = 2,
 	)
+	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	ore_type = /obj/item/stack/ore/gold
+	material_reagent = /datum/reagent/gold
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
-	beauty_modifier = 0.15
-	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.15, ENERGY = 1.15, BOMB = 1, BIO = 1, FIRE = 0.7, ACID = 1.1)
 	mineral_rarity = MATERIAL_RARITY_PRECIOUS
 	points_per_unit = 18 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
-	fish_weight_modifier = 1.5
-	fishing_difficulty_modifier = -8
-	fishing_cast_range = 1
-	fishing_experience_multiplier = 0.75
-	fishing_completion_speed = 1.2
-	fishing_bait_speed_mult = 1.1
-	fishing_deceleration_mult = 1.2
-	fishing_bounciness_mult = 0.8
-	fishing_gravity_mult = 1.2
 
 /datum/material/gold/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
-	return TRUE
+	. = ..()
+	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
+		victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
+		return TRUE
 
 ///Has no special properties
 /datum/material/diamond
 	name = "diamond"
-	desc = "Highly pressurized carbon"
+	desc = "Highly pressurized carbon."
 	color = "#C9D8F2"
-	categories = list(
-		MAT_CATEGORY_SILO = TRUE,
-		MAT_CATEGORY_RIGID=TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 4, // Wow these are light
+		MATERIAL_HARDNESS = 9,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 10,
+		MATERIAL_ELECTRICAL = 0, // Did you know they're also an *extremely* potent insulator, only beaten by some synthetic compounds?
+		MATERIAL_THERMAL = 9,
+		MATERIAL_CHEMICAL = 4,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	ore_type = /obj/item/stack/ore/diamond
+	material_reagent = /datum/reagent/carbon
 	alpha = 132
 	starlight_color = COLOR_BLUE_LIGHT
 	value_per_unit = 500 / SHEET_MATERIAL_AMOUNT
-	strength_modifier = 1.1
-	integrity_modifier = 1.25
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_EXOTIC
-	beauty_modifier = 0.3
-	armor_modifiers = list(MELEE = 1.3, BULLET = 1.3, LASER = 0.6, ENERGY = 1, BOMB = 1.2, BIO = 1, FIRE = 1, ACID = 1)
 	mineral_rarity = MATERIAL_RARITY_RARE
 	points_per_unit = 50 / SHEET_MATERIAL_AMOUNT
-	fish_weight_modifier = 1.4
-	fishing_difficulty_modifier = -12
-	fishing_cast_range = -1
-	fishing_experience_multiplier = 0.7
-	fishing_completion_speed = 1.25
-	fishing_bait_speed_mult = 1.1
-	fishing_deceleration_mult = 1.25
-	fishing_bounciness_mult = 0.8
-	fishing_gravity_mult = 1.1
 
 /datum/material/diamond/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
 		return TRUE
 
-///Is slightly radioactive
+/// Is slightly radioactive
 /datum/material/uranium
 	name = "uranium"
-	desc = "Uranium"
+	desc = "Very spicy rocks."
 	color = "#2C992C"
-	categories = list(
-		MAT_CATEGORY_SILO = TRUE,
-		MAT_CATEGORY_RIGID=TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 9,
+		MATERIAL_HARDNESS = 5,
+		MATERIAL_FLEXIBILITY = 1,
+		MATERIAL_REFLECTIVITY = 0, // Its a bar of glowing stone
+		MATERIAL_ELECTRICAL = 6,
+		MATERIAL_THERMAL = 6,
+		MATERIAL_CHEMICAL = 6,
+		MATERIAL_BEAUTY = 0.3, // Overriden cause its ~shiny~
+		MATERIAL_RADIOACTIVITY = 4,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	ore_type = /obj/item/stack/ore/uranium
+	material_reagent = /datum/reagent/uranium
 	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
-	beauty_modifier = 0.3 //It shines so beautiful
-	armor_modifiers = list(MELEE = 1.5, BULLET = 1.4, LASER = 0.5, ENERGY = 0.5, FIRE = 1, ACID = 1)
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	points_per_unit = 30 / SHEET_MATERIAL_AMOUNT
-	fish_weight_modifier = 2
-	fishing_completion_speed = 0.9
-	fishing_bait_speed_mult = 0.8
-	fishing_deceleration_mult = 1.4
-	fishing_bounciness_mult = 0.6
-	fishing_gravity_mult = 1.4
 
-/datum/material/uranium/on_applied(atom/source, mat_amount, multiplier)
-	. = ..()
-
-	// Uranium structures should irradiate, but not items, because item irradiation is a lot more annoying.
-	// For example, consider picking up uranium as a miner.
-	if (isitem(source))
-		return
-
-	source.AddElement(/datum/element/radioactive, chance = URANIUM_IRRADIATION_CHANCE * multiplier)
-
-/datum/material/uranium/on_removed(atom/source, mat_amount, multiplier)
-	. = ..()
-
-	if (isitem(source))
-		return
-
-	source.RemoveElement(/datum/element/radioactive, chance = URANIUM_IRRADIATION_CHANCE * multiplier)
-
-/datum/material/uranium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.reagents.add_reagent(/datum/reagent/uranium, rand(4, 6))
-	source_item?.reagents?.add_reagent(/datum/reagent/uranium, source_item.reagents.total_volume*(2/5))
-	return TRUE
-
-///Adds firestacks on hit (Still needs support to turn into gas on destruction)
+/// Adds firestacks on hit (Still needs support to turn into gas on destruction)
 /datum/material/plasma
 	name = "plasma"
 	desc = "Isn't plasma a state of matter? Oh whatever."
 	color = "#BA3692"
-	categories = list(
-		MAT_CATEGORY_SILO = TRUE,
-		MAT_CATEGORY_RIGID=TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 6,
+		MATERIAL_HARDNESS = 4,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 8,
+		MATERIAL_ELECTRICAL = 10,
+		MATERIAL_THERMAL = 8,
+		MATERIAL_CHEMICAL = 0,
+		MATERIAL_FLAMMABILITY = 9, // Literally sets itself on fire from any excitement
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	ore_type = /obj/item/stack/ore/plasma
+	material_reagent = /datum/reagent/toxin/plasma
 	value_per_unit = 200 / SHEET_MATERIAL_AMOUNT
-	beauty_modifier = 0.15
-	armor_modifiers = list(MELEE = 1.4, BULLET = 0.7, ENERGY = 1.2, BIO = 1.2, ACID = 0.5)
 	mineral_rarity = MATERIAL_RARITY_PRECIOUS
 	points_per_unit = 15 / SHEET_MATERIAL_AMOUNT
-	fish_weight_modifier = 1.3
-	fishing_deceleration_mult = 1.3
-	fishing_bounciness_mult = 0.6
 
 /datum/material/plasma/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
 	if(ismovable(source))
 		source.AddElement(/datum/element/firestacker, 1 * multiplier)
-	source.AddComponent(/datum/component/combustible_flooder, "plasma", mat_amount * 0.05 * multiplier) //Empty temp arg, fully dependent on whatever ignited it.
+	source.AddComponent(/datum/component/combustible_flooder, GAS_PLASMA, mat_amount * 0.05 * multiplier) //Empty temp arg, fully dependent on whatever ignited it.
 	if(istype(source, /obj/item/fishing_rod))
 		ADD_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))
 
@@ -279,46 +230,36 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	. = ..()
 	source.RemoveElement(/datum/element/firestacker, mat_amount = 1 * multiplier)
 	qdel(source.GetComponent(/datum/component/combustible_flooder))
-	qdel(source.GetComponent(/datum/component/explodable))
 	if(istype(source, /obj/item/fishing_rod))
 		ADD_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))
-
-/datum/material/plasma/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(6, 8))
-	source_item?.reagents?.add_reagent(/datum/reagent/toxin/plasma, source_item.reagents.total_volume*(2/5))
-	return TRUE
 
 ///Can cause bluespace effects on use. (Teleportation) (Not yet implemented)
 /datum/material/bluespace
 	name = "bluespace crystal"
-	desc = "Crystals with bluespace properties"
+	desc = "Crystals with bluespace properties."
 	color = "#2E50B7"
 	alpha = 200
 	starlight_color = COLOR_BLUE
-	categories = list(
-		MAT_CATEGORY_SILO = TRUE,
-		MAT_CATEGORY_RIGID=TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 2,
+		MATERIAL_HARDNESS = 8,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 10,
+		MATERIAL_ELECTRICAL = 10,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 4,
+		MATERIAL_BEAUTY = 0.5, // Absolutely mesmerizing
 	)
-	beauty_modifier = 0.5
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal
 	ore_type = /obj/item/stack/ore/bluespace_crystal
+	material_reagent = /datum/reagent/bluespace
 	value_per_unit = 300 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_RARE
 	points_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_EXOTIC
 	texture_layer_icon_state = "shine"
-	fish_weight_modifier = 1.3
-	fishing_difficulty_modifier = -5
-	fishing_cast_range = 5 //space-bending scifi magic
-	fishing_experience_multiplier = 0.85
-	fishing_completion_speed = 1.1
-	fishing_bait_speed_mult = 1.1
-	fishing_deceleration_mult = 0.9
-	fishing_bounciness_mult = 1.1
 
 /datum/material/bluespace/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -341,38 +282,29 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if(istype(source, /obj/item/fishing_rod))
 		UnregisterSignal(source, COMSIG_ROD_BEGIN_FISHING)
 
-/datum/material/bluespace/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.reagents.add_reagent(/datum/reagent/bluespace, rand(5, 8))
-	source_item?.reagents?.add_reagent(/datum/reagent/bluespace, source_item.reagents.total_volume*(2/5))
-	return TRUE
-
 ///Honks and slips
 /datum/material/bananium
 	name = "bananium"
-	desc = "Material with hilarious properties"
+	desc = "Material with hilarious properties."
 	color = list(460/255, 464/255, 0, 0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //obnoxiously bright yellow //It's literally perfect I can't change it
 	greyscale_color = "#FFF269"
-	categories = list(
-		MAT_CATEGORY_SILO = TRUE,
-		MAT_CATEGORY_RIGID=TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 4,
+		MATERIAL_HARDNESS = 6,
+		MATERIAL_FLEXIBILITY = 2,
+		MATERIAL_REFLECTIVITY = 4,
+		MATERIAL_ELECTRICAL = 1, // ...Rubbery?
+		MATERIAL_THERMAL = 6,
+		MATERIAL_CHEMICAL = 6,
+		MATERIAL_BEAUTY = 0.5, // Honk
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	ore_type = /obj/item/stack/ore/bananium
+	material_reagent = /datum/reagent/consumable/banana
 	value_per_unit = 1000 / SHEET_MATERIAL_AMOUNT
-	beauty_modifier = 0.5
-	armor_modifiers = list(BOMB = 100, FIRE = 10) //Clowns cant be blown away.
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 60 / SHEET_MATERIAL_AMOUNT
-	fishing_difficulty_modifier = 20 //can't get a good grip on slipperiness.
-	fishing_cast_range = 3 //long slide
-	fishing_experience_multiplier = 1.6
-	fishing_completion_speed = 1.3
-	fishing_bait_speed_mult = 1.5
-	fishing_deceleration_mult = 0.5
-	fishing_bounciness_mult = 2
 
 /datum/material/bananium/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -410,44 +342,32 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if(istype(source, /obj/item/fishing_rod))
 		UnregisterSignal(source, COMSIG_ROD_BEGIN_FISHING)
 
-/datum/material/bananium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.reagents.add_reagent(/datum/reagent/consumable/banana, rand(8, 12))
-	source_item?.reagents?.add_reagent(/datum/reagent/consumable/banana, source_item.reagents.total_volume*(2/5))
-	return TRUE
-
 ///Mediocre force increase
 /datum/material/titanium
 	name = "titanium"
 	desc = "Titanium"
 	color = "#EFEFEF"
-	strength_modifier = 1.3
-	categories = list(
-		MAT_CATEGORY_SILO = TRUE,
-		MAT_CATEGORY_RIGID=TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	mat_properties = list(
+		MATERIAL_DENSITY = 5,
+		MATERIAL_HARDNESS = 7,
+		MATERIAL_FLEXIBILITY = 2,
+		MATERIAL_REFLECTIVITY = 8,
+		MATERIAL_ELECTRICAL = 5,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 6,
 	)
+	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	ore_type = /obj/item/stack/ore/titanium
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
-	beauty_modifier = 0.05
-	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 1.25, BIO = 1, FIRE = 0.7, ACID = 1)
 	mat_rust_resistance = RUST_RESISTANCE_TITANIUM
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	texture_layer_icon_state = "shine"
-	fish_weight_modifier = 1.2
-	fishing_difficulty_modifier = -5
-	fishing_cast_range = 1
-	fishing_completion_speed = 1.15
-	fishing_bait_speed_mult = 1.1
-	fishing_deceleration_mult = 1.3
-	fishing_bounciness_mult = 0.75
-	fishing_gravity_mult = 1.1
 
 /datum/material/titanium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
 		return TRUE
@@ -456,27 +376,20 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "runite"
 	desc = "Runite"
 	color = "#526F77"
-	strength_modifier = 1.3
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 9,
+		MATERIAL_HARDNESS = 9,
+		MATERIAL_FLEXIBILITY = 1,
+		MATERIAL_REFLECTIVITY = 0,
+		MATERIAL_ELECTRICAL = 1,
+		MATERIAL_THERMAL = 0,
+		MATERIAL_CHEMICAL = 9,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/runite
 	value_per_unit = 600 / SHEET_MATERIAL_AMOUNT
-	beauty_modifier = 0.5
-	armor_modifiers = list(MELEE = 1.35, BULLET = 2, LASER = 0.5, ENERGY = 1.25, BOMB = 1.25, BIO = 1, FIRE = 1.4, ACID = 1) //rune is weak against magic lasers but strong against bullets. This is the combat triangle.
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
-	fish_weight_modifier = 1.5
-	fishing_difficulty_modifier = -13
-	fishing_cast_range = 1
-	fishing_experience_multiplier = 3.2 //grind all the way to level 100 in no time.
-	fishing_completion_speed = 1.3
-	fishing_bait_speed_mult = 0.9
-	fishing_deceleration_mult = 1.2
-	fishing_gravity_mult = 1.2
 
 /datum/material/runite/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -489,6 +402,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		REMOVE_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //light-absorbing, environment-cancelling fishing rod.
 
 /datum/material/runite/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
 		return TRUE
@@ -498,159 +412,115 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "plastic"
 	desc = "Plastic"
 	color = "#BFB9AC"
-	strength_modifier = 0.85
-	sheet_type = /obj/item/stack/sheet/plastic
-	ore_type = /obj/item/stack/ore/slag //No plastic or coal ore, so we use slag.
-	categories = list(
-		MAT_CATEGORY_SILO = TRUE,
-		MAT_CATEGORY_RIGID=TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	mat_flags = MATERIAL_SILO_STORED | MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_POLYMER | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 3,
+		MATERIAL_HARDNESS = 2,
+		MATERIAL_FLEXIBILITY = 5,
+		MATERIAL_REFLECTIVITY = 3,
+		MATERIAL_ELECTRICAL = 1,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 4,
+		MATERIAL_FLAMMABILITY = 4,
 	)
+	sheet_type = /obj/item/stack/sheet/plastic
+	ore_type = /obj/item/stack/ore/slag // No plastic or coal ore, so we use slag.
+	material_reagent = /datum/reagent/plastic_polymers
 	value_per_unit = 25 / SHEET_MATERIAL_AMOUNT
-	beauty_modifier = -0.01
-	armor_modifiers = list(MELEE = 1.5, BULLET = 1.1, LASER = 0.3, ENERGY = 0.5, BOMB = 1, BIO = 1, FIRE = 1.1, ACID = 1)
-	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED //Nobody's found oil on lavaland yet.
+	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED // Nobody's found oil on lavaland yet.
 	points_per_unit = 4 / SHEET_MATERIAL_AMOUNT
-	fish_weight_modifier = 0.8
-	fishing_difficulty_modifier = -5
-	fishing_cast_range = 2
-	fishing_experience_multiplier = 1.2
-	fishing_bait_speed_mult = 1.2
-	fishing_deceleration_mult = 0.8
-	fishing_bounciness_mult = 1.3
-	fishing_gravity_mult = 0.85
 
-/datum/material/plastic/on_accidental_mat_consumption(mob/living/carbon/eater, obj/item/food)
-	eater.reagents.add_reagent(/datum/reagent/plastic_polymers, rand(6, 8))
-	food?.reagents?.add_reagent(/datum/reagent/plastic_polymers, food.reagents.total_volume*(2/5))
-	return TRUE
-
-///Force decrease and mushy sound effect. (Not yet implemented)
+/// Force decrease and mushy sound effect. (Not yet implemented)
 /datum/material/biomass
 	name = "biomass"
 	desc = "Organic matter."
 	color = "#735b4d"
-	strength_modifier = 0.8
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/wood
 	name = "wood"
 	desc = "Flexible, durable, but flammable. Hard to come across in space."
 	color = "#855932"
-	strength_modifier = 0.5
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_ORGANIC | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 2,
+		MATERIAL_HARDNESS = 4,
+		MATERIAL_FLEXIBILITY = 4,
+		MATERIAL_REFLECTIVITY = 1,
+		MATERIAL_ELECTRICAL = 8,
+		MATERIAL_THERMAL = 3,
+		MATERIAL_CHEMICAL = 1,
+		MATERIAL_FLAMMABILITY = 6,
+		MATERIAL_BEAUTY = 0.1, // Pretty patterns
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/wood
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	material_reagent = /datum/reagent/cellulose
 	value_per_unit = 20 / SHEET_MATERIAL_AMOUNT
-	beauty_modifier = 0.1
-	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 0.4, ENERGY = 0.4, BOMB = 1, BIO = 0.2, ACID = 0.3)
 	texture_layer_icon_state = "woodgrain"
-	fish_weight_modifier = 0.5
-	fishing_difficulty_modifier = 8
-	fishing_cast_range = -1
-	fishing_experience_multiplier = 1.3
-	fishing_completion_speed = 0.9
-	fishing_bait_speed_mult = 0.8
-	fishing_deceleration_mult = 1.3
-	fishing_bounciness_mult = 0.4
-	fishing_gravity_mult = 0.8
-
-/datum/material/wood/on_main_applied(atom/source, mat_amount, multiplier)
-	. = ..()
-	if(source.material_flags & MATERIAL_AFFECT_STATISTICS && isobj(source))
-		var/obj/wooden = source
-		wooden.resistance_flags |= FLAMMABLE
-
-/datum/material/wood/on_main_removed(atom/source, mat_amount, multiplier)
-	. = ..()
-	if(source.material_flags & MATERIAL_AFFECT_STATISTICS && isobj(source))
-		var/obj/wooden = source
-		wooden.resistance_flags &= ~FLAMMABLE
 
 /datum/material/wood/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
-	victim.reagents.add_reagent(/datum/reagent/cellulose, rand(8, 12))
-	source_item?.reagents?.add_reagent(/datum/reagent/cellulose, source_item.reagents.total_volume*(2/5))
+		return TRUE
 
-	return TRUE
-
-///Stronk force increase
+/// Stronk force increase
 /datum/material/adamantine
 	name = "adamantine"
 	desc = "A powerful material made out of magic, I mean science!"
 	color = "#2B7A74"
-	strength_modifier = 1.5
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_properties = list(
+		MATERIAL_DENSITY = 7,
+		MATERIAL_HARDNESS = 9,
+		MATERIAL_FLEXIBILITY = 3,
+		MATERIAL_REFLECTIVITY = 6,
+		MATERIAL_ELECTRICAL = 6,
+		MATERIAL_THERMAL = 1,
+		MATERIAL_CHEMICAL = 9,
+	)
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
 	sheet_type = /obj/item/stack/sheet/mineral/adamantine
 	value_per_unit = 500 / SHEET_MATERIAL_AMOUNT
-	beauty_modifier = 0.4
-	armor_modifiers = list(MELEE = 1.5, BULLET = 1.5, LASER = 1.3, ENERGY = 1.3, BOMB = 1, BIO = 1, FIRE = 2.5, ACID = 1)
-	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED //Doesn't naturally spawn on lavaland.
+	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED // Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
-	fish_weight_modifier = 1.6
-	fishing_difficulty_modifier = -17
-	fishing_cast_range = 1
-	fishing_experience_multiplier = 0.6
-	fishing_completion_speed = 1.3
-	fishing_bait_speed_mult = 1.2
-	fishing_deceleration_mult = 1.3
-	fishing_bounciness_mult = 0.7
-	fishing_gravity_mult = 1.3
 
 /datum/material/adamantine/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
-		ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //light-absorbing, environment-cancelling fishing rod.
+		ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) // light-absorbing, environment-cancelling fishing rod.
 
 /datum/material/adamantine/on_removed(atom/source, mat_amount, multiplier)
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
-		REMOVE_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //light-absorbing, environment-cancelling fishing rod.
+		REMOVE_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) // light-absorbing, environment-cancelling fishing rod.
 
 /datum/material/adamantine/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
 		return TRUE
 
-///RPG Magic.
+/// RPG Magic.
 /datum/material/mythril
 	name = "mythril"
 	desc = "How this even exists is byond me"
 	color = "#f2d5d7"
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 4,
+		MATERIAL_HARDNESS = 10,
+		MATERIAL_FLEXIBILITY = 4,
+		MATERIAL_REFLECTIVITY = 8,
+		MATERIAL_ELECTRICAL = 6,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 9,
+		MATERIAL_BEAUTY = 0.5,
+		MATERIAL_INTEGRITY = 2, // This is magic, I ain't gotta explain shit
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/mythril
 	value_per_unit = 1500 / SHEET_MATERIAL_AMOUNT
-	strength_modifier = 1.2
-	armor_modifiers = list(MELEE = 1.5, BULLET = 1.5, LASER = 1.5, ENERGY = 1.5, BOMB = 1.5, BIO = 1.5, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = 0.5
-	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED //Doesn't naturally spawn on lavaland.
+	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED // Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
-	fish_weight_modifier = 1.4
-	fishing_difficulty_modifier = -20
-	fishing_cast_range = 2
-	fishing_experience_multiplier = 0.5
-	fishing_completion_speed = 1.35
-	fishing_bait_speed_mult = 1.2
-	fishing_deceleration_mult = 1.35
-	fishing_bounciness_mult = 0.65
-	fishing_gravity_mult = 1.3
 
 /datum/material/mythril/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -665,6 +535,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		qdel(source.GetComponent(/datum/component/fantasy))
 
 /datum/material/mythril/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
 		return TRUE
@@ -676,67 +547,51 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	color = "#88cdf1"
 	alpha = 150
 	starlight_color = COLOR_BLUE_LIGHT
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL
+	mat_properties = list(
+		MATERIAL_DENSITY = 4,
+		MATERIAL_HARDNESS = 2,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 8,
+		MATERIAL_ELECTRICAL = 9,
+		MATERIAL_THERMAL = 8,
+		MATERIAL_CHEMICAL = 4,
+		MATERIAL_FLAMMABILITY = 10,
+	)
 	sheet_type = /obj/item/stack/sheet/hot_ice
+	material_reagent = /datum/reagent/toxin/hot_ice
 	value_per_unit = 400 / SHEET_MATERIAL_AMOUNT
-	beauty_modifier = 0.2
-	fish_weight_modifier = 0.9
-	fishing_difficulty_modifier = -8
-	fishing_cast_range = 1
-	fishing_experience_multiplier = 0.9
-	fishing_completion_speed = 1.4
-	fishing_bait_speed_mult = 1.3
-	fishing_deceleration_mult = 0.5
-	fishing_bounciness_mult = 0.3
-	fishing_gravity_mult = 0.8
 
 /datum/material/hot_ice/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
-	source.AddComponent(/datum/component/combustible_flooder, "plasma", mat_amount * 1.5 * multiplier, (mat_amount * 0.2 + 300) * multiplier)
+	source.AddComponent(/datum/component/combustible_flooder, GAS_PLASMA, mat_amount * 1.5 * multiplier, (mat_amount * 0.2 + 300) * multiplier)
 
 /datum/material/hot_ice/on_removed(atom/source, mat_amount, multiplier)
+	. = ..()
 	qdel(source.GetComponent(/datum/component/combustible_flooder))
-	return ..()
-
-/datum/material/hot_ice/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 6))
-	source_item?.reagents?.add_reagent(/datum/reagent/toxin/plasma, source_item.reagents.total_volume*(3/5))
-	return TRUE
 
 // It's basically adamantine, but it isn't!
 /datum/material/metalhydrogen
 	name = "Metal Hydrogen"
 	desc = "Solid metallic hydrogen. Some say it should be impossible"
 	color = "#62708A"
-	alpha = 150
 	starlight_color = COLOR_MODERATE_BLUE
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 3,
+		MATERIAL_HARDNESS = 10,
+		MATERIAL_FLEXIBILITY = 1,
+		MATERIAL_REFLECTIVITY = 8,
+		MATERIAL_ELECTRICAL = 2,
+		MATERIAL_THERMAL = 2,
+		MATERIAL_CHEMICAL = 8,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/metal_hydrogen
+	material_reagent = /datum/reagent/hydrogen
 	value_per_unit = 700 / SHEET_MATERIAL_AMOUNT
-	beauty_modifier = 0.35
-	strength_modifier = 1.2
-	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 0.7, BIO = 1, FIRE = 1.3, ACID = 1)
-	fish_weight_modifier = 0.6 //It may be metallic, but it's just "denser" hydrogen at the end of the day, no?
-	fishing_difficulty_modifier = -13
-	fishing_cast_range = 4
-	fishing_experience_multiplier = 0.8
-	fishing_completion_speed = 1.4
-	fishing_bait_speed_mult = 1.3
-	fishing_deceleration_mult = 0.8
-	fishing_bounciness_mult = 1.7
-	fishing_gravity_mult = 0.7
 
 /datum/material/metalhydrogen/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
 		return TRUE
@@ -746,31 +601,25 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "sand"
 	desc = "You know, it's amazing just how structurally sound sand can be."
 	color = "#EDC9AF"
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_AMORPHOUS
+	mat_properties = list(
+		MATERIAL_DENSITY = 2,
+		MATERIAL_HARDNESS = 0,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 7,
+		MATERIAL_ELECTRICAL = 1,
+		MATERIAL_THERMAL = 8,
+		MATERIAL_CHEMICAL = 4,
+	)
 	ore_type = /obj/item/stack/ore/glass
+	material_reagent = /datum/reagent/silicon
 	value_per_unit = 2 / SHEET_MATERIAL_AMOUNT
-	strength_modifier = 0.5
-	integrity_modifier = 0.1
-	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 1.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = 0.25
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
 	mat_rust_resistance = RUST_RESISTANCE_BASIC
-	fish_weight_modifier = 1.2
-	fishing_difficulty_modifier = 30 //Sand fishing rods? What the hell are you doing?
-	fishing_cast_range = -2
-	fishing_experience_multiplier = 0.2
-	fishing_completion_speed = 0.8
-	fishing_bait_speed_mult = 0.8
-	fishing_deceleration_mult = 2.5
-	fishing_bounciness_mult = 0.3
-	fishing_gravity_mult = 0.9
 
 /datum/material/sand/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	victim.adjust_disgust(17)
 	return TRUE
 
@@ -779,86 +628,63 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "sandstone"
 	desc = "Bialtaakid 'ant taerif ma hdha."
 	color = "#ECD5A8"
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_flags = MATERIAL_BASIC_RECIPES
+	mat_properties = list(
+		MATERIAL_DENSITY = 4,
+		MATERIAL_HARDNESS = 3,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 2,
+		MATERIAL_ELECTRICAL = 2,
+		MATERIAL_THERMAL = 6,
+		MATERIAL_CHEMICAL = 6,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/sandstone
+	material_reagent = /datum/reagent/silicon
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
-	armor_modifiers = list(MELEE = 0.5, BULLET = 0.5, LASER = 1.25, ENERGY = 0.5, BOMB = 0.5, BIO = 0.25, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = 0.3
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "brick"
 	mat_rust_resistance = RUST_RESISTANCE_BASIC
-	fish_weight_modifier = 1.2
-	fishing_difficulty_modifier = 25 //Sand fishing rods? What the hell are you doing?
-	fishing_cast_range = -2
-	fishing_experience_multiplier = 0.3
-	fishing_completion_speed = 0.9
-	fishing_bait_speed_mult = 0.8
-	fishing_deceleration_mult = 2.5
-	fishing_bounciness_mult = 0.2
-	fishing_gravity_mult = 0.9
 
 /datum/material/snow
 	name = "snow"
 	desc = "There's no business like snow business."
 	color = COLOR_WHITE
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_AMORPHOUS
+	mat_properties = list(
+		MATERIAL_DENSITY = 2,
+		MATERIAL_HARDNESS = 1,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 6,
+		MATERIAL_ELECTRICAL = 6,
+		MATERIAL_THERMAL = 6,
+		MATERIAL_CHEMICAL = 1,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/snow
-	strength_modifier = 0.4
-	integrity_modifier = 0.4
-	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
-	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 0.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, FIRE = 0.25, ACID = 1.5)
-	beauty_modifier = 0.3
+	material_reagent = /datum/reagent/consumable/ice
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
 	mat_rust_resistance = RUST_RESISTANCE_ORGANIC
-	fish_weight_modifier = 0.8
-	fishing_difficulty_modifier = 25
-	fishing_cast_range = -2
-	fishing_experience_multiplier = 0.3
-	fishing_completion_speed = 0.9
-	fishing_bait_speed_mult = 0.75
-	fishing_deceleration_mult = 0.3
-	fishing_bounciness_mult = 0.2
-	fishing_gravity_mult = 0.7
-
-/datum/material/snow/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.reagents.add_reagent(/datum/reagent/water, rand(5, 10))
-	return TRUE
 
 /datum/material/runedmetal
 	name = "runed metal"
 	desc = "Mir'ntrath barhah Nar'sie."
 	color = "#504742"
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 7,
+		MATERIAL_HARDNESS = 7,
+		MATERIAL_FLEXIBILITY = 3,
+		MATERIAL_REFLECTIVITY = 2,
+		MATERIAL_ELECTRICAL = 5,
+		MATERIAL_THERMAL = 1,
+		MATERIAL_CHEMICAL = 8,
+	)
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	value_per_unit = 1500 / SHEET_MATERIAL_AMOUNT
-	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 1, ENERGY = 1, BOMB = 1.2, BIO = 1.2, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = -0.15
 	texture_layer_icon_state = "runed"
-	fish_weight_modifier = 1.5
-	fishing_difficulty_modifier = -6.66
-	fishing_experience_multiplier = 0.666
-	fishing_completion_speed = 1.666
-	fishing_bait_speed_mult = 1.666
-	fishing_deceleration_mult = 1.666
-	fishing_bounciness_mult = 0.666
-	fishing_gravity_mult = 1.666
 
 /datum/material/runedmetal/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	victim.reagents.add_reagent(/datum/reagent/fuel/unholywater, rand(8, 12))
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
@@ -868,54 +694,47 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "bronze"
 	desc = "Clock Cult? Never heard of it."
 	color = "#876223"
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 8, // Bronze is *very* dense, almost as dense as lead
+		MATERIAL_HARDNESS = 5,
+		MATERIAL_FLEXIBILITY = 3,
+		MATERIAL_REFLECTIVITY = 7,
+		MATERIAL_ELECTRICAL = 8,
+		MATERIAL_THERMAL = 8,
+		MATERIAL_CHEMICAL = 5,
+	)
 	sheet_type = /obj/item/stack/sheet/bronze
+	material_reagent = list(/datum/reagent/iron = 0.75, /datum/reagent/copper = 0.25)
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
-	armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = 0.2
-	fish_weight_modifier = 1.4
-	fishing_bait_speed_mult = 1.1
-	fishing_deceleration_mult = 0.8
-	fishing_bounciness_mult = 1.2
-	fishing_gravity_mult = 1.05
 
 /datum/material/paper
 	name = "paper"
 	desc = "Ten thousand folds of pure starchy power."
 	color = "#E5DCD5"
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_ORGANIC
+	mat_properties = list(
+		MATERIAL_DENSITY = 0,
+		MATERIAL_HARDNESS = 0,
+		MATERIAL_FLEXIBILITY = 8,
+		MATERIAL_REFLECTIVITY = 1,
+		MATERIAL_ELECTRICAL = 4,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 0,
+		MATERIAL_FLAMMABILITY = 8,
+		MATERIAL_BEAUTY = 0.3, // Origami is beautiful
+	)
+	material_reagent = /datum/reagent/cellulose
 	sheet_type = /obj/item/stack/sheet/paperframes
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
-	strength_modifier = 0.3
-	armor_modifiers = list(MELEE = 0.1, BULLET = 0.1, LASER = 0.1, ENERGY = 0.1, BOMB = 0.1, BIO = 0.1, ACID = 1.5)
-	beauty_modifier = 0.3
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "paper"
-	fish_weight_modifier = 0.4
-	fishing_difficulty_modifier = 40 //child's play
-	fishing_cast_range = -2
-	fishing_experience_multiplier = 0.1
-	fishing_bait_speed_mult = 0.7
-	fishing_deceleration_mult = 1.5
-	fishing_bounciness_mult = 0.2
-	fishing_gravity_mult = 0.6
 
 /datum/material/paper/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
 	if(!isobj(source) || !(source.material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
 	var/obj/paper = source
-	paper.resistance_flags |= FLAMMABLE
 	paper.obj_flags |= UNIQUE_RENAME
 	if(istype(paper, /obj/item/fishing_rod))
 		RegisterSignal(paper, COMSIG_ROD_BEGIN_FISHING, PROC_REF(on_begin_fishing))
@@ -931,73 +750,51 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/paper/on_main_removed(atom/source, mat_amount, multiplier)
 	. = ..()
-	if(!isobj(source) || !(source.material_flags & MATERIAL_AFFECT_STATISTICS))
-		return
-	var/obj/paper = source
-	paper.resistance_flags &= ~FLAMMABLE
-	if(istype(paper, /obj/item/fishing_rod))
-		UnregisterSignal(paper, COMSIG_ROD_BEGIN_FISHING)
+	if(istype(source, /obj/item/fishing_rod) && (source.material_flags & MATERIAL_AFFECT_STATISTICS))
+		UnregisterSignal(source, COMSIG_ROD_BEGIN_FISHING)
 
 /datum/material/cardboard
 	name = "cardboard"
 	desc = "They say cardboard is used by hobos to make incredible things."
 	color = "#5F625C"
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_ORGANIC
+	mat_properties = list(
+		MATERIAL_DENSITY = 1,
+		MATERIAL_HARDNESS = 0,
+		MATERIAL_FLEXIBILITY = 6,
+		MATERIAL_REFLECTIVITY = 1,
+		MATERIAL_ELECTRICAL = 4,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 2,
+		MATERIAL_FLAMMABILITY = 6,
+	)
 	sheet_type = /obj/item/stack/sheet/cardboard
+	material_reagent = /datum/reagent/cellulose
 	value_per_unit = 6 / SHEET_MATERIAL_AMOUNT
-	strength_modifier = 0.3
-	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 0.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, ACID = 1.5)
-	beauty_modifier = -0.1
-	fish_weight_modifier = 0.4
-	fishing_difficulty_modifier = 40 //child's play
-	fishing_cast_range = -2
-	fishing_experience_multiplier = 0.1
-	fishing_bait_speed_mult = 0.7
-	fishing_deceleration_mult = 1.5
-	fishing_bounciness_mult = 0.2
-	fishing_gravity_mult = 0.6
 
 /datum/material/cardboard/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
 	if(isobj(source) && source.material_flags & MATERIAL_AFFECT_STATISTICS)
 		var/obj/cardboard = source
-		cardboard.resistance_flags |= FLAMMABLE
 		cardboard.obj_flags |= UNIQUE_RENAME
-
-/datum/material/cardboard/on_main_removed(atom/source, mat_amount, multiplier)
-	if(isobj(source) && source.material_flags & MATERIAL_AFFECT_STATISTICS)
-		var/obj/cardboard = source
-		cardboard.resistance_flags &= ~FLAMMABLE
-	return ..()
 
 /datum/material/bone
 	name = "bone"
 	desc = "Man, building with this will make you the coolest caveman on the block."
 	color = "#e3dac9"
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_ORGANIC | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 3,
+		MATERIAL_HARDNESS = 5,
+		MATERIAL_FLEXIBILITY = 2,
+		MATERIAL_REFLECTIVITY = 4,
+		MATERIAL_ELECTRICAL = 3,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 2,
+	)
 	sheet_type = /obj/item/stack/sheet/bone
+	material_reagent = /datum/reagent/bone_dust
 	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
-	armor_modifiers = list(MELEE = 1.2, BULLET = 0.75, LASER = 0.75, ENERGY = 1.2, BOMB = 1, BIO = 1, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = -0.2
-	fish_weight_modifier = 1.05
-	fishing_difficulty_modifier = 15
-	fishing_cast_range = -2
-	fishing_experience_multiplier = 0.85
-	fishing_completion_speed = 0.9
-	fishing_bait_speed_mult = 0.9
-	fishing_deceleration_mult = 0.9
-	fishing_bounciness_mult = 0.8
-	fishing_gravity_mult = 0.85
 
 /datum/material/bone/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -1036,51 +833,41 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "bamboo"
 	desc = "If it's good enough for pandas, it's good enough for you."
 	color = "#87a852"
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_ORGANIC | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 3, // Denser and bendier than wood, but pretty much the same otherwise
+		MATERIAL_HARDNESS = 4,
+		MATERIAL_FLEXIBILITY = 5,
+		MATERIAL_REFLECTIVITY = 1,
+		MATERIAL_ELECTRICAL = 6,
+		MATERIAL_THERMAL = 3,
+		MATERIAL_CHEMICAL = 1,
+		MATERIAL_FLAMMABILITY = 6,
+		MATERIAL_BEAUTY = 0.2, // Prettier patterns
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/bamboo
-	strength_modifier = 0.5
+	material_reagent = /datum/reagent/cellulose
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
-	armor_modifiers = list(MELEE = 0.5, BULLET = 0.5, LASER = 0.5, ENERGY = 0.5, BOMB = 0.5, BIO = 0.51, FIRE = 0.5, ACID = 1.5)
-	beauty_modifier = 0.2
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "bamboo"
-	fish_weight_modifier = 0.5
-	fishing_difficulty_modifier = -4
-	fishing_cast_range = -1
-	fishing_experience_multiplier = 1.3
-	fishing_completion_speed = 1.15
-	fishing_bait_speed_mult = 1.1
-	fishing_deceleration_mult = 0.8
-	fishing_bounciness_mult = 0.7
-	fishing_gravity_mult = 0.7
 
 /datum/material/zaukerite
 	name = "zaukerite"
 	desc = "A light absorbing crystal"
 	color = COLOR_ALMOST_BLACK
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 1,
+		MATERIAL_HARDNESS = 9,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 0,
+		MATERIAL_ELECTRICAL = 1,
+		MATERIAL_THERMAL = 9,
+		MATERIAL_CHEMICAL = 0,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/zaukerite
+	material_reagent = /datum/reagent/toxin/plasma
 	value_per_unit = 900 / SHEET_MATERIAL_AMOUNT
-	armor_modifiers = list(MELEE = 0.9, BULLET = 0.9, LASER = 1.75, ENERGY = 1.75, BOMB = 0.5, BIO = 1, FIRE = 0.1, ACID = 1)
-	beauty_modifier = 0.001
-	fish_weight_modifier = 1.2
-	fishing_difficulty_modifier = -14
-	fishing_experience_multiplier = 0.9
-	fishing_completion_speed = 1.3
-	fishing_bait_speed_mult = 1.2
-	fishing_deceleration_mult = 1.3
-	fishing_bounciness_mult = 1.1
-	fishing_gravity_mult = 1.3
 
 /datum/material/zaukerite/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -1093,7 +880,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		REMOVE_TRAIT(source, TRAIT_ROD_IGNORE_ENVIRONMENT, REF(src)) //light-absorbing, environment-cancelling fishing rod.
 
 /datum/material/zaukerite/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(30, BURN, BODY_ZONE_HEAD, wound_bonus = 5)
-	source_item?.reagents?.add_reagent(/datum/reagent/toxin/plasma, source_item.reagents.total_volume*5)
 	return TRUE

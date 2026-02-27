@@ -28,6 +28,7 @@
 	)
 	result = /obj/item/food/toasted_seeds
 	category = CAT_MOTH
+	crafting_flags = parent_type::crafting_flags & ~CRAFT_CLEARS_REAGENTS // seeds don't have nutriment
 
 /datum/crafting_recipe/food/engine_fodder
 	name = "Engine fodder"

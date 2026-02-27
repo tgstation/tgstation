@@ -44,6 +44,7 @@
 
 /datum/bodypart_overlay/augment
 	layers = EXTERNAL_ADJACENT
+	draw_on_husks = HUSK_OVERLAY_NORMAL
 	/// Implant that owns this overlay
 	var/obj/item/organ/cyberimp/implant
 

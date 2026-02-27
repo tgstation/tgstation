@@ -177,12 +177,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if (opacity)
 		directional_opacity = ALL_CARDINALS
 
-	// apply materials properly from the default custom_materials value
-	if (!length(custom_materials))
-		set_custom_materials(custom_materials)
-
 	if(uses_integrity)
 		atom_integrity = max_integrity
+
+	// apply materials properly from the default custom_materials value
+	if (length(custom_materials))
+		set_custom_materials(custom_materials)
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -786,14 +786,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	inherent_explosive_resistance = explosion_block
 	explosive_resistance += get_explosive_block()
 
-/turf/apply_main_material_effects(datum/material/main_material, amount, multipier)
+/turf/apply_main_material_effects(datum/material/main_material, amount, multiplier)
 	. = ..()
 	if(alpha < 255)
 		ADD_TURF_TRANSPARENCY(src, MATERIAL_SOURCE(main_material))
 		main_material.setup_glow(src)
 	rust_resistance = main_material.mat_rust_resistance
 
-/turf/remove_main_material_effects(datum/material/custom_material, amount, multipier)
+/turf/remove_main_material_effects(datum/material/custom_material, amount, multiplier)
 	. = ..()
 	rust_resistance = initial(rust_resistance)
 	if(alpha == 255)

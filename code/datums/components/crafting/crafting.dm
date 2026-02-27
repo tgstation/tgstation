@@ -278,13 +278,12 @@
 			for(var/obj/item/thing in result)
 				qdel(thing)
 	result.setDir(crafter.dir)
+	if(recipe.crafting_flags & CRAFT_CLEARS_REAGENTS)
+		result.reagents?.clear_reagents()
 	var/datum/reagents/holder = locate() in stuff_to_use
 	if(holder) //transfer reagents from ingredients to result
-		if(!ispath(recipe.result, /obj/item/reagent_containers) && result.reagents)
-			if(recipe.crafting_flags & CRAFT_CLEARS_REAGENTS)
-				result.reagents.clear_reagents()
-			if(recipe.crafting_flags & CRAFT_TRANSFERS_REAGENTS)
-				holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
+		if(result.reagents && (recipe.crafting_flags & CRAFT_TRANSFERS_REAGENT_COMPONENTS))
+			holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
 		stuff_to_use -= holder //This is the only non-movable in our list, we need to remove it.
 		qdel(holder)
 	result.on_craft_completion(stuff_to_use, recipe, crafter)

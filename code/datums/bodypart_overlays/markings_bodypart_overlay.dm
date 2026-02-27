@@ -35,8 +35,8 @@
 	. += use_gender
 	. += draw_color
 
-/datum/bodypart_overlay/simple/body_marking/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	return icon_state != SPRITE_ACCESSORY_NONE
+/datum/bodypart_overlay/simple/body_marking/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner, is_husked = FALSE)
+	return ..() && icon_state != SPRITE_ACCESSORY_NONE
 
 /datum/bodypart_overlay/simple/body_marking/get_image(layer, obj/item/bodypart/limb)
 	var/gender_string = (use_gender && limb.is_dimorphic) ? (limb.gender == MALE ? MALE : FEMALE + "_") : "" //we only got male and female sprites

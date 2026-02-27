@@ -359,10 +359,10 @@
 
 
 /obj/machinery/biogenerator/proc/use_biomass(list/materials, amount = 1, remove_biomass = TRUE)
-	if(materials.len != 1 || materials[1] != GET_MATERIAL_REF(/datum/material/biomass))
+	if(materials.len != 1 || materials[1] != SSmaterials.get_material(/datum/material/biomass))
 		return FALSE
 
-	var/cost = materials[GET_MATERIAL_REF(/datum/material/biomass)] * amount / efficiency
+	var/cost = materials[SSmaterials.get_material(/datum/material/biomass)] * amount / efficiency
 	if (cost > biomass)
 		return FALSE
 
@@ -392,13 +392,12 @@
 		if(!use_biomass(design.materials, amount))
 			return FALSE
 
+		var/drop_location = drop_location()
 		if(istype(design.build_path, /obj/item/stack/sheet))
-			new design.build_path(drop_location(), amount)
-
+			design.create_result(drop_location, amount = amount)
 		else
-			var/drop_location = drop_location()
 			for(var/i in 1 to amount)
-				new design.build_path(drop_location)
+				design.create_result(drop_location)
 
 	return TRUE
 
@@ -519,7 +518,7 @@
 				"id" = design.id,
 				"name" = design.name,
 				"is_reagent" = design.make_reagent != null,
-				"cost" = design.materials[GET_MATERIAL_REF(/datum/material/biomass)] / efficiency,
+				"cost" = design.materials[SSmaterials.get_material(/datum/material/biomass)] / efficiency,
 			))
 		data["categories"] += list(cat)
 

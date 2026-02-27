@@ -97,6 +97,7 @@
 /datum/bodypart_overlay/mutant/wings/moth
 	feature_key = FEATURE_MOTH_WINGS
 	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
+	slot_blocker = HIDEMUTWINGS
 	///Accessory datum of the burn sprite
 	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_wings/burnt_off
 	///Are we burned? If so we draw differently
@@ -104,11 +105,7 @@
 
 /datum/bodypart_overlay/mutant/wings/moth/New()
 	. = ..()
-
 	burn_datum = fetch_sprite_datum(burn_datum)
-
-/datum/bodypart_overlay/mutant/wings/moth/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	return !(bodypart_owner.owner?.obscured_slots & HIDEMUTWINGS)
 
 /datum/bodypart_overlay/mutant/wings/moth/get_base_icon_state()
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state

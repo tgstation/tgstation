@@ -132,10 +132,10 @@
 /datum/wound/pierce/bleed/check_grab_treatments(obj/item/tool, mob/user)
 	// if we're using something hot but not a cautery, we need to be aggro grabbing them first,
 	// so we don't try treating someone we're eswording
-	return tool.get_temperature()
+	return tool.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 
 /datum/wound/pierce/bleed/treat(obj/item/tool, mob/user)
-	if(tool.tool_behaviour == TOOL_CAUTERY || tool.get_temperature())
+	if(tool.tool_behaviour == TOOL_CAUTERY || tool.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		tool_cauterize(tool, user)
 
 /datum/wound/pierce/bleed/on_xadone(power)

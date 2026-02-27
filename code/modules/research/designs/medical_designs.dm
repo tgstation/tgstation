@@ -446,7 +446,7 @@
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
 	id = "ci-surgery"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	materials = list (
+	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25,
 		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
@@ -463,7 +463,7 @@
 	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm."
 	id = "ci-toolset"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	materials = list (
+	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25,
 		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,

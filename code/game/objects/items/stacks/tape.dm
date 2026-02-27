@@ -5,6 +5,7 @@
 	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/stack/medical/wrap/sticky_tape"
 	post_init_icon_state = "tape"
+	novariants = TRUE
 	item_flags = NOBLUDGEON
 	amount = 5
 	max_amount = 5

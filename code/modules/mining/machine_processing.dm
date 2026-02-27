@@ -152,7 +152,7 @@
 
 	materials = new ( \
 		src, \
-		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
+		SSmaterials.get_materials_by_flag(MATERIAL_SILO_STORED), \
 		INFINITY, \
 		MATCONTAINER_EXAMINE, \
 		allowed_items = accepted_type \
@@ -160,7 +160,7 @@
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter])
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter] = new /datum/techweb/autounlocking/smelter
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter]
-	selected_material = GET_MATERIAL_REF(/datum/material/iron)
+	selected_material = SSmaterials.get_material(/datum/material/iron)
 
 /obj/machinery/mineral/processing_unit/Destroy()
 	QDEL_NULL(proximity_monitor)
@@ -267,16 +267,14 @@
 
 	generate_mineral(alloy.build_path)
 
-/obj/machinery/mineral/processing_unit/proc/can_smelt(datum/design/D, seconds_per_tick = 2)
-	if(D.make_reagent)
+/obj/machinery/mineral/processing_unit/proc/can_smelt(datum/design/design, seconds_per_tick = 2)
+	if(design.make_reagent)
 		return FALSE
 
 	var/build_amount = SMELT_AMOUNT * seconds_per_tick
 
-	for(var/mat_cat in D.materials)
-		var/required_amount = D.materials[mat_cat]
+	for(var/mat_cat, required_amount in design.materials)
 		var/amount = materials.materials[mat_cat]
-
 		build_amount = min(build_amount, round(amount / required_amount))
 
 	return build_amount

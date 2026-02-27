@@ -269,7 +269,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 		return NONE
 	add_fingerprint(user)
 	to_chat(user, get_power_info())
-	shock(user, 5, 0.2)
+	shock(user, 5, null, 0.2)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/cable/proc/get_power_info()
@@ -279,13 +279,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 		return span_danger("The cable is not powered.")
 
 // shock the user with probability prb
-/obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1)
-	if(!prob(prb))
-		return FALSE
-	if(electrocute_mob(user, powernet, src, siemens_coeff))
-		do_sparks(5, TRUE, src)
-		return TRUE
-	return FALSE
+/obj/structure/cable/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+	shock_source = powernet
+	return ..()
 
 /obj/structure/cable/singularity_pull(atom/singularity, current_size)
 	..()
@@ -722,9 +718,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 
 	use(1)
 
-	if(C.shock(user, 50))
-		if(prob(50)) //fail
-			C.deconstruct()
+	if(C.shock(user, 50) && prob(50)) //fail
+		C.deconstruct()
 
 	return C
 

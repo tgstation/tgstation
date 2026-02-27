@@ -61,7 +61,7 @@
 				add_overlay("bonfire_grill")
 			else
 				return ..()
-	if(used_item.get_temperature())
+	if(used_item.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		start_burning()
 	if(grill)
 		if(istype(used_item, /obj/item/melee/roastingstick))

@@ -169,15 +169,13 @@
 				A.regainMainPower()
 			else
 				A.loseMainPower()
-			if(isliving(usr))
-				A.shock(usr, 50)
+			A.shock(usr, 50)
 		if(WIRE_BACKUP1, WIRE_BACKUP2) // Cut to lose backup power, repair all to gain backup power.
 			if(mend && !is_cut(WIRE_BACKUP1) && !is_cut(WIRE_BACKUP2))
 				A.regainBackupPower()
 			else
 				A.loseBackupPower()
-			if(isliving(usr))
-				A.shock(usr, 50)
+			A.shock(usr, 50)
 		if(WIRE_BOLTS) // Cut to engage bolts, mend does nothing.
 			if(!mend)
 				A.bolt()
@@ -214,8 +212,7 @@
 			A.feedback = mend
 			A.update_appearance()
 		if(WIRE_ZAP1, WIRE_ZAP2) // Ouch.
-			if(isliving(usr))
-				A.shock(usr, 50)
+			A.shock(usr, 50)
 		if(WIRE_UNRESTRICTED_EXIT) // If this wire is cut, the unrestricted helper goes away. If you mend it, it'll go "haywire" and pick a new direction at random. Might have to cut/mend a time or two to get the direction you want.
 			if(!A.unres_latch) //only works if the "latch" is installed (a variable that we assign to the door either upon creation of a door with unrestricted directions, or if an unrestricted helper is added to a door in mapping)
 				return
