@@ -141,7 +141,6 @@ class KeybindingButton extends Component<{
     const keyText = typingHotkey || currentHotkey || 'Unbound';
     const child = (
       <Button
-        color={!can_edit && 'transparent'}
         fluid
         textAlign="center"
         captureKeys={typingHotkey === undefined}
@@ -154,9 +153,11 @@ class KeybindingButton extends Component<{
         selected={typingHotkey !== undefined}
         textColor={keyText === 'Unbound' ? 'grey' : undefined}
         color={
-          keyText === 'Unbound' || !defaults || defaults.includes(keyText)
-            ? undefined
-            : 'green'
+          !can_edit
+            ? 'transparent'
+            : keyText === 'Unbound' || !defaults || defaults.includes(keyText)
+              ? undefined
+              : 'green'
         }
       >
         {keyText}
