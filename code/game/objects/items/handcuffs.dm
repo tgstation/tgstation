@@ -456,13 +456,52 @@
 	playsound(loc, 'sound/items/weapons/bladeslice.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
-/obj/item/restraints/legcuffs/beartrap/attack_self(mob/user)
+/obj/item/restraints/legcuffs/beartrap/attack_self(mob/living/user)
 	. = ..()
 	if(!ishuman(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
+
+	playsound(loc, 'sound/items/weapons/handcuffs.ogg', 30, TRUE, -3)
+
+	if(!do_after(user, 5 SECONDS, src))
+		user.balloon_alert(user, "interrupted!")
+		return
+
+	armed = !armed
+	update_appearance()
+	user.dropItemToGround(src)
+
+	if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(35))
+		to_chat(user, span_warning("Your hand slips, setting off the trigger!"))
+		var/hand_zone = user.held_index_to_dir(user.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
+		spring_trap(user, def_zone = hand_zone)
+		return
+
+	to_chat(user, span_notice("[src] is now [armed ? "armed" : "disarmed"]"))
+
+
+/obj/item/restraints/legcuffs/beartrap/attempt_pickup(mob/user)
+	if(!armed)
+		return ..()
+
+	if(!ishuman(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		return TRUE
+
+	if(!do_after(user, 2 SECONDS, src))
+		user.balloon_alert(user, "interrupted!")
+		return TRUE
+
+	if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(35))
+		to_chat(user, span_warning("Your hand slips, setting off the trigger!"))
+		var/hand_zone = user.held_index_to_dir(user.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
+		spring_trap(user, def_zone = hand_zone)
+		return TRUE
+
 	armed = !armed
 	update_appearance()
 	to_chat(user, span_notice("[src] is now [armed ? "armed" : "disarmed"]"))
+
+	return ..()
 
 /**
  * Closes a bear trap
@@ -488,7 +527,7 @@
  * Does not trigger on tiny mobs.
  * If ignore_movetypes is FALSE, does not trigger on floating / flying / etc. mobs.
  */
-/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(atom/movable/target, ignore_movetypes = FALSE, hit_prone = FALSE)
+/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(atom/movable/target, ignore_movetypes = FALSE, hit_prone = FALSE, def_zone = BODY_ZONE_CHEST)
 	if(!armed || !isturf(loc) || !isliving(target))
 		return
 
@@ -513,15 +552,15 @@
 	else
 		victim.visible_message(span_danger("[victim] triggers \the [src]."), \
 				span_userdanger("You trigger \the [src]!"))
-	var/def_zone = BODY_ZONE_CHEST
-	if(iscarbon(victim) && (victim.body_position == STANDING_UP || hit_prone))
+
+	if(iscarbon(victim) && (victim.body_position == STANDING_UP || hit_prone) && !((def_zone == BODY_ZONE_PRECISE_R_HAND) || (def_zone == BODY_ZONE_PRECISE_L_HAND)))
 		var/mob/living/carbon/carbon_victim = victim
 		def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 		if(!carbon_victim.legcuffed && carbon_victim.num_legs >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
 			INVOKE_ASYNC(carbon_victim, TYPE_PROC_REF(/mob/living/carbon, equip_to_slot), src, ITEM_SLOT_LEGCUFFED)
 			SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
-	victim.apply_damage(trap_damage, BRUTE, def_zone)
+	victim.apply_damage(trap_damage, BRUTE, def_zone, wound_bonus=25, exposed_wound_bonus=40)
 
 /**
  * # Energy snare
