@@ -132,6 +132,9 @@
 
 // See software.dm for Topic()
 /mob/living/silicon/pai/can_perform_action(atom/target, action_bitflags)
+	if(!(action_bitflags & ALLOW_PAI))
+		to_chat(src, span_warning("Your holochasis does not allow you to do this!"))
+		return FALSE
 	action_bitflags |= ALLOW_RESTING // Resting is just an aesthetic feature for them
 	action_bitflags &= ~ALLOW_SILICON_REACH // They don't get long reach like the rest of silicons
 	return ..(target, action_bitflags)
@@ -315,12 +318,8 @@
  * 	or FALSE if the pAI is not being carried.
  */
 /mob/living/silicon/pai/proc/get_holder()
-	var/mob/living/carbon/holder
-	if(!holoform && iscarbon(card.loc))
-		holder = card.loc
-	if(holoform && ispickedupmob(loc) && iscarbon(loc.loc))
-		holder = loc.loc
-	if(!holder || !iscarbon(holder))
+	var/mob/holder = recursive_loc_check(card, /mob/living/carbon)
+	if(isnull(holder))
 		return FALSE
 	return holder
 

@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Weather anomaly cores are orderable from cargo"
-  - refactor: "Anomaly core cargo orders are auto-generated - report any oddities with them."
