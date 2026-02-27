@@ -4,7 +4,6 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher
 	name = "break-action grenade launcher"
 	desc = "A break-action grenade launcher. Archaic by modern standards, but it still works, so who can complain?"
-	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	icon_state = "grenade_launcher"
 	inhand_icon_state = "grenade_launcher"
 	worn_icon_state = "shotgun"
@@ -15,8 +14,6 @@
 	pin = /obj/item/firing_pin/implant/pindicate
 	bolt_type = BOLT_TYPE_NO_BOLT
 	can_muzzle_flash = FALSE
-
-	SET_BASE_PIXEL(-8, 0)
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted
 	pin = /obj/item/firing_pin

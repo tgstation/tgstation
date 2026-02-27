@@ -66,7 +66,6 @@
 	name = "pump-action grenade launcher"
 	desc = "A pump-action grenade launcher. Typically found in the hands of space pirate raiders. The weight leaves a lot to be desired, but the high ammo capacity makes \
 		up for the bulk."
-	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	icon_state = "china_lake"
@@ -77,8 +76,6 @@
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	pb_knockback = 4 // Not advised.
-
-	SET_BASE_PIXEL(-8, 0)
 
 // Automatic Shotguns//
 
