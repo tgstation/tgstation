@@ -193,8 +193,9 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 	typepath = text2path(typepath)
 	if(!call(print_type["check_proc"])(typepath, picture, computer, user))
 		return
-	var/obj/item/printed_item = new typepath(get_turf(computer.physical))
+	var/obj/item/printed_item = new typepath(computer.physical.drop_location())
 	call(print_type["prepare_proc"])(printed_item, picture, computer, width, height, offset_x, offset_y)
+	user?.put_in_hands(printed_item)
 	playsound(computer.physical, 'sound/machines/printer.ogg', 100, TRUE)
 
 /datum/computer_file/program/filemanager/ui_static_data(mob/user)
