@@ -310,7 +310,6 @@ SUBSYSTEM_DEF(air)
 		var/atom/talk_to = currentrun[currentrun.len]
 		currentrun.len--
 		if(!talk_to)
-			atom_process -= talk_to
 			continue
 		talk_to.process_exposure()
 		if(MC_TICK_CHECK)
