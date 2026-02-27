@@ -12,29 +12,28 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 
+type NtosCameraCommonData = {
+  size: number;
+  minSize: number;
+  maxSize: number;
+  maxNameLength: number;
+  maxDescLength: number;
+  maxCaptionLength: number;
+  printCost: number;
+};
+
+type NtosCameraPictureData = {
+  photo: string;
+  canEditMetadata: BooleanLike;
+  name?: string;
+  desc?: string;
+  caption?: string;
+  storedPaper: number;
+};
+
 type NtosCameraData =
-  | {
-      size: number;
-      minSize: number;
-      maxSize: number;
-      maxNameLength: number;
-      maxDescLength: number;
-      maxCaptionLength: number;
-    }
-  | ({
-      size: number;
-      minSize: number;
-      maxSize: number;
-      maxNameLength: number;
-      maxDescLength: number;
-      maxCaptionLength: number;
-    } & {
-      photo: string;
-      canEditMetadata: BooleanLike;
-      name?: string;
-      desc?: string;
-      caption?: string;
-    });
+  | NtosCameraCommonData
+  | (NtosCameraCommonData & NtosCameraPictureData);
 
 export const NtosCamera = (props) => {
   return (
@@ -55,11 +54,13 @@ export const NtosCameraContent = (props) => {
     maxNameLength,
     maxDescLength,
     maxCaptionLength,
+    printCost,
     photo,
     canEditMetadata,
     name,
     desc,
     caption,
+    storedPaper,
   } = data;
 
   return (
@@ -115,6 +116,18 @@ export const NtosCameraContent = (props) => {
           </Stack.Item>
           <Stack.Item align="center">
             <Button onClick={() => act('savePhoto')}>Save Photo</Button>
+          </Stack.Item>
+          <Stack.Item align="center">
+            <Button
+              disabled={storedPaper! < printCost}
+              tooltip={
+                !storedPaper &&
+                `You need at least ${printCost} sheet${printCost === 1 ? '' : 's'} of paper to print a photo.`
+              }
+              onClick={() => act('printPhoto')}
+            >
+              Print Photo
+            </Button>
           </Stack.Item>
         </>
       ) : (

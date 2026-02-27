@@ -93,16 +93,30 @@
 		source_photo_or_painting = internal_picture
 	)
 	if(computer.store_file(photo_file, user))
-		if(can_edit_metadata)
-			internal_picture.picture_name = current_picture_name
-			internal_picture.picture_desc = "[current_picture_desc] - [internal_picture.picture_desc]"
-			internal_picture.caption = current_picture_caption
-			can_edit_metadata = FALSE
-		return TRUE
-	return FALSE
+		return FALSE
+	commit_metadata()
+	return TRUE
+
+/datum/computer_file/program/maintenance/camera/proc/print_picture(mob/user)
+	if(computer.stored_paper < PHOTO_PAPER_COST)
+		return
+	commit_metadata()
+	var/obj/item/photo/new_photo = new(computer.physical.drop_location())
+	new_photo.set_picture(internal_picture, TRUE, TRUE)
+	user?.put_in_hands(new_photo)
+	playsound(computer.physical, 'sound/machines/printer.ogg', 100, TRUE)
+	computer.stored_paper--
+	computer.visible_message(span_notice("\The [computer] prints out a paper."))
+
+/datum/computer_file/program/maintenance/camera/proc/commit_metadata()
+	if(can_edit_metadata)
+		internal_picture.picture_name = current_picture_name
+		internal_picture.picture_desc = "[current_picture_desc] - [internal_picture.picture_desc]"
+		internal_picture.caption = current_picture_caption
+		can_edit_metadata = FALSE
 
 /datum/computer_file/program/maintenance/camera/ui_static_data(mob/user)
-	return list("maxNameLength" = 32, "maxDescLength" = 128, "maxCaptionLength" = 256)
+	return list("maxNameLength" = 32, "maxDescLength" = 128, "maxCaptionLength" = 256, "printCost" = 1)
 
 /datum/computer_file/program/maintenance/camera/ui_data(mob/user)
 	var/list/data = list()
@@ -113,6 +127,7 @@
 		data["name"] = current_picture_name
 		data["desc"] = current_picture_desc
 		data["caption"] = current_picture_caption
+		data["storedPaper"] = computer.stored_paper
 	data["size"] = internal_camera.picture_size_x
 	data["minSize"] = internal_camera.picture_size_x_min
 	data["maxSize"] = min(internal_camera.picture_size_x_max, CAMERA_PICTURE_SIZE_HARD_LIMIT)
@@ -144,6 +159,10 @@
 			if(!internal_picture)
 				return
 			save_picture(ui.user)
+		if("printPhoto")
+			if(!internal_picture)
+				return
+			print_picture(ui.user)
 	return TRUE
 
 /obj/item/circuit_component/mod_program/camera
