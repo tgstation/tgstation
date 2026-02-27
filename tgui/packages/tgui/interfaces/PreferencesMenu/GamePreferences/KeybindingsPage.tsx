@@ -23,6 +23,7 @@ type Keybinding = {
   name: string;
   description?: string;
   can_edit: BooleanLike;
+  default?: string[];
 };
 
 type Keybindings = Record<string, Record<string, Keybinding>>;
@@ -124,6 +125,7 @@ class KeybindingButton extends Component<{
   currentHotkey?: string;
   onClick?: () => void;
   typingHotkey?: string;
+  defaults?: string[];
 }> {
   shouldComponentUpdate(nextProps) {
     return (
@@ -133,8 +135,9 @@ class KeybindingButton extends Component<{
   }
 
   render() {
-    const { can_edit, currentHotkey, onClick, typingHotkey } = this.props;
+    const { can_edit, currentHotkey, onClick, typingHotkey, defaults } = this.props;
 
+    const keyText = typingHotkey || currentHotkey || 'Unbound';
     const child = (
       <Button
         color={!can_edit && 'transparent'}
@@ -148,8 +151,14 @@ class KeybindingButton extends Component<{
           }
         }}
         selected={typingHotkey !== undefined}
+        textColor={keyText === 'Unbound' ? 'grey' : undefined}
+        color={
+          keyText === 'Unbound' || !defaults || defaults.includes(keyText)
+            ? undefined
+            : 'green'
+        }
       >
-        {typingHotkey || currentHotkey || 'Unbound'}
+        {keyText}
       </Button>
     );
 
@@ -247,6 +256,7 @@ function getKeybindingNodes(
                   currentHotkey={keys[key]}
                   typingHotkey={getTypingHotkey(keybindingId, key)}
                   onClick={getKeybindingOnClick(keybindingId, key)}
+                  defaults={keybinding.default}
                 />
               </Stack.Item>
             ))}

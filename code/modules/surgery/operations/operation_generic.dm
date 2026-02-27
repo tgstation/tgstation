@@ -186,7 +186,7 @@
 		var/obj/item/gun/energy/laser/lasergun = tool
 		return lasergun.cell?.charge > 0
 
-	return tool.get_temperature() > 0
+	return tool.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 
 /datum/surgery_operation/limb/close_skin/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -368,15 +368,15 @@
 	operation_flags = OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		/obj/item/stack/medical/bone_gel = 1,
-		/obj/item/stack/sticky_tape/surgical = 1,
-		/obj/item/stack/sticky_tape/super = 2,
-		/obj/item/stack/sticky_tape = 3.33,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical = 1,
+		/obj/item/stack/medical/wrap/sticky_tape/super = 2,
+		/obj/item/stack/medical/wrap/sticky_tape = 3.33,
 	)
 	preop_sound = list(
 		/obj/item/stack/medical/bone_gel = 'sound/misc/soggy.ogg',
-		/obj/item/stack/sticky_tape/surgical = 'sound/items/duct_tape/duct_tape_rip.ogg',
-		/obj/item/stack/sticky_tape/super = 'sound/items/duct_tape/duct_tape_rip.ogg',
-		/obj/item/stack/sticky_tape = 'sound/items/duct_tape/duct_tape_rip.ogg',
+		/obj/item/stack/medical/wrap/sticky_tape/surgical = 'sound/items/duct_tape/duct_tape_rip.ogg',
+		/obj/item/stack/medical/wrap/sticky_tape/super = 'sound/items/duct_tape/duct_tape_rip.ogg',
+		/obj/item/stack/medical/wrap/sticky_tape = 'sound/items/duct_tape/duct_tape_rip.ogg',
 	)
 	time = 4 SECONDS
 	all_surgery_states_required = SURGERY_SKIN_OPEN

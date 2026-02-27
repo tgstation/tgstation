@@ -822,7 +822,7 @@
 	. = ..()
 
 	if(!length(accepted_mats))
-		accepted_mats = SSmaterials.materials_by_category[MAT_CATEGORY_SILO]
+		accepted_mats = SSmaterials.get_materials_by_flag(MATERIAL_SILO_STORED)
 
 	container = new ( \
 		src, \
