@@ -499,6 +499,7 @@
 
 	armed = !armed
 	update_appearance()
+	playsound(loc, 'sound/items/weapons/handcuffs.ogg', 30, TRUE, -3)
 	to_chat(user, span_notice("[src] is now [armed ? "armed" : "disarmed"]"))
 
 	return ..()
