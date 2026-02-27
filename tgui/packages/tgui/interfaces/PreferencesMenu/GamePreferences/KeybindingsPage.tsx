@@ -135,7 +135,8 @@ class KeybindingButton extends Component<{
   }
 
   render() {
-    const { can_edit, currentHotkey, onClick, typingHotkey, defaults } = this.props;
+    const { can_edit, currentHotkey, onClick, typingHotkey, defaults } =
+      this.props;
 
     const keyText = typingHotkey || currentHotkey || 'Unbound';
     const child = (
