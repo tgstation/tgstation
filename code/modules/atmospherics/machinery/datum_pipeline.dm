@@ -274,6 +274,7 @@
 
 	for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
 		if(!gas_mixture)
+			stack_trace("[src] encountered a null gas mixture during reconcile_air() indicating a stale/invalid/broken pipenet air reference.")
 			continue
 		// Ensure we never walk the same mix twice
 		if(gas_mixture.pipeline_cycle == process_id)
