@@ -310,7 +310,8 @@ SUBSYSTEM_DEF(air)
 		var/atom/talk_to = currentrun[currentrun.len]
 		currentrun.len--
 		if(!talk_to)
-			return
+			atom_process -= talk_to
+			continue
 		talk_to.process_exposure()
 		if(MC_TICK_CHECK)
 			return
@@ -320,12 +321,14 @@ SUBSYSTEM_DEF(air)
 		src.currentrun = atmos_machinery.Copy()
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
+	var/seconds_per_tick = wait * 0.1
 	while(currentrun.len)
 		var/obj/machinery/M = currentrun[currentrun.len]
 		currentrun.len--
 		if(!M)
 			atmos_machinery -= M
-		if(M.process_atmos(wait * 0.1) == PROCESS_KILL)
+			continue
+		if(M.process_atmos(seconds_per_tick) == PROCESS_KILL)
 			stop_processing_machine(M)
 		if(MC_TICK_CHECK)
 			return
