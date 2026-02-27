@@ -33,6 +33,10 @@
 
 	///The image showing the gases inside of the tank
 	var/image/window
+	/// Next world.time when we should refresh gas window visuals from process_atmos().
+	var/next_window_update = 0
+	/// Minimum delay between automatic visual refreshes from process_atmos().
+	var/window_update_cooldown = 1 SECONDS
 
 	/// The open node directions of the tank, assuming that the tank is facing NORTH.
 	var/open_ports = NONE
@@ -148,15 +152,19 @@
 	air_contents.archive()
 
 /obj/machinery/atmospherics/components/tank/process_atmos()
+	var/should_refresh_window = FALSE
 	if(air_contents.react(src))
 		update_parents()
+		should_refresh_window = TRUE
 
 	if(air_contents.return_pressure() > max_pressure)
 		take_damage(0.1, BRUTE, sound_effect = FALSE)
 		if(prob(40))
 			playsound(src, pick(breaking_sounds), 30, vary = TRUE)
 
-	refresh_window()
+	if(should_refresh_window || world.time >= next_window_update)
+		refresh_window()
+		next_window_update = world.time + window_update_cooldown
 
 ///////////////////////////////////////////////////////////////////
 // Port stuff
