@@ -31,11 +31,10 @@
 		RegisterSignal(src, COMSIG_BIBLE_SMACKED, PROC_REF(on_bible_smacked))
 	if(!base_name)
 		base_name = initial(name)
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/mod_core_soul)
 
 	AddElement(
 		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
+		slapcraft_recipes = list(/datum/crafting_recipe/mod_core_soul),\
 	)
 
 /obj/item/soulstone/grind_results()
