@@ -34,6 +34,7 @@
 	var/list/ponycolors = list("#cc8c5d", "#cc8c5d")
 
 /datum/emote/pony
+	abstract_type = /datum/emote/pony
 	mob_type_allowed_typecache = /mob/living/basic/pony
 	mob_type_blacklist_typecache = list()
 

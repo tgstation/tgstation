@@ -97,11 +97,7 @@
 	. = ..()
 	if(prob(33))
 		visible_message(span_danger("[src] spews out a ton of space lube!"))
-		var/datum/effect_system/fluid_spread/foam/foam = new
-		var/datum/reagents/foamreagent = new /datum/reagents(25)
-		foamreagent.add_reagent(/datum/reagent/lube, 25)
-		foam.set_up(4, holder = src, location = loc, carry = foamreagent)
-		foam.start()
+		do_foam(4, src, loc, /datum/reagent/lube, 25)
 
 /obj/vehicle/sealed/car/clowncar/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/food/grown/banana))
@@ -218,12 +214,7 @@
 			new /obj/item/grown/bananapeel/specialpeel(loc)
 		if(2)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and unknown chemicals flood out of it."))
-			var/datum/reagents/randomchems = new/datum/reagents(300)
-			randomchems.my_atom = src
-			randomchems.add_reagent(get_random_reagent_id(), 100)
-			var/datum/effect_system/fluid_spread/foam/foam = new
-			foam.set_up(200, holder = src, location = loc, carry = randomchems)
-			foam.start(log = TRUE)
+			do_foam(200, src, loc, get_random_reagent_id(), 100, log = TRUE)
 		if(3)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car turns on its singularity disguise system."))
 			icon = 'icons/obj/machines/engine/singularity.dmi'
@@ -231,13 +222,8 @@
 			addtimer(CALLBACK(src, PROC_REF(reset_icon)), 10 SECONDS)
 		if(4)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car spews out a cloud of laughing gas."))
-			var/datum/reagents/funnychems = new/datum/reagents(300)
-			funnychems.my_atom = src
-			funnychems.add_reagent(/datum/reagent/consumable/superlaughter, 50)
-			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
-			smoke.set_up(4, holder = src, location = src, carry = funnychems)
-			smoke.attach(src)
-			smoke.start(log = TRUE)
+			do_chem_smoke(4, src, src, /datum/reagent/consumable/superlaughter, 50, log = TRUE)
+
 		if(5)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car starts dropping an oil trail."))
 			RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(cover_in_oil))

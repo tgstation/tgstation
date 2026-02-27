@@ -1,0 +1,6 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "pAIs/AIs in a Modsuit/PDA can now take photos properly, and their zoom functionality works again."
+  - bugfix: "pAI abilities like host scan now works while inside of a PDA."
+  - qol: "pAI HUD now takes widescreen into account."

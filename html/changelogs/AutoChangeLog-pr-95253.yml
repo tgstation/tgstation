@@ -1,0 +1,4 @@
+author: "Swan"
+delete-after: True
+changes:
+  - bugfix: "fixes the gravity generator's crushing gravity effect not disappearing when the gen goes offline"

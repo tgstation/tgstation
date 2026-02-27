@@ -47,6 +47,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_UNIQUE_AI "station_trait_unique_ai"
 #define STATION_TRAIT_UNNATURAL_ATMOSPHERE "station_trait_unnatural_atmosphere"
 #define STATION_TRAIT_SPIKED_DRINKS "station_trait_spiked_drinks"
+#define STATION_TRAIT_SPAWN_WEAKPOINTS "station_trait_spawn_weakpoints"
 
 // Hud traits
 /// This hud is owned by a client with an open escape menu
@@ -1129,10 +1130,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This target has recently been shot by a marksman coin and is very briefly immune to being hit by one again to prevent recursion
 #define TRAIT_RECENTLY_COINED "recently_coined"
 
-/// Receives echolocation images.
-#define TRAIT_ECHOLOCATION_RECEIVER "echolocation_receiver"
-/// Echolocation has a higher range.
-#define TRAIT_ECHOLOCATION_EXTRA_RANGE "echolocation_extra_range"
+/// Mob is an echolocator
+#define TRAIT_ECHOLOCATOR "echolocator"
 
 /// Trait given to a living mob and any observer mobs that stem from them if they suicide.
 /// For clarity, this trait should always be associated/tied to a reference to the mob that suicided- not anything else.
@@ -1240,8 +1239,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This item is currently under the control of telekinesis
 #define TRAIT_TELEKINESIS_CONTROLLED "telekinesis_controlled"
 
-/// changelings with this trait can no longer talk over the hivemind
-#define TRAIT_CHANGELING_HIVEMIND_MUTE "ling_mute"
+/// mobs with this trait can talk over the hivemind
+#define TRAIT_CHANGELING_HIVEMIND "ling_hivemind"
 /// This guy is a hulk! (Bulky and green, lacks tact)
 #define TRAIT_HULK "hulk"
 /// Isn't attacked harmfully by blob structures

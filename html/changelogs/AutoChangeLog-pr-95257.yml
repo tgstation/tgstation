@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed a rare bug that could result in people permanently becoming pitch black as a result of stabilized pyrite or regenerative rainbow extracts."

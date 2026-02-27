@@ -295,7 +295,6 @@
 			continue
 		if(isnull(damage_overlay) && (iter_part.brutestate || iter_part.burnstate))
 			damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "blank", -DAMAGE_LAYER, appearance_flags = KEEP_TOGETHER)
-			damage_overlay.color = iter_part.damage_overlay_color
 		if(iter_part.brutestate)
 			var/mutable_appearance/blood_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0", appearance_flags = RESET_COLOR) //we're adding icon_states of the base image as overlays
 			blood_damage_overlay.color = get_bloodtype()?.get_damage_color(src)
@@ -531,7 +530,7 @@
 	if(is_invisible)
 		. += "-invisible"
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
-		if(!overlay.can_draw_on_bodypart(src, owner))
+		if(!overlay.can_draw_on_bodypart(src, owner, is_husked))
 			continue
 		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
 	if(ishuman(owner))
@@ -548,6 +547,17 @@
 	. += "[husk_type]"
 	. += "-husk"
 	. += "-[body_zone]"
+	if(is_invisible)
+		. += "-invisible"
+	var/list/blood_dna = blood_dna_info || owner?.get_blood_dna_list()
+	if (LAZYLEN(blood_dna))
+		. += "-[get_color_from_blood_list(blood_dna)]"
+	else
+		. += "-[BLOOD_COLOR_RED]"
+	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
+		if(!overlay.can_draw_on_bodypart(src, owner, TRUE))
+			continue
+		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "-[human_owner.mob_height]"

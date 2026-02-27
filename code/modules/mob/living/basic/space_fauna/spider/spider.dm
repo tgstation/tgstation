@@ -62,6 +62,7 @@
 	)
 
 /datum/emote/spider
+	abstract_type = /datum/emote/spider
 	mob_type_allowed_typecache = /mob/living/basic/spider
 	mob_type_blacklist_typecache = list()
 

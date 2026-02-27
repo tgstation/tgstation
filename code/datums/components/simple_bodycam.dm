@@ -29,7 +29,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, PROC_REF(rotate_cam))
 	RegisterSignals(bodycam, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(camera_gone))
 
-	do_update_cam()
+	do_update_cam(null)
 
 /datum/component/simple_bodycam/Destroy()
 	if(QDELETED(bodycam))
@@ -51,12 +51,12 @@
 
 /datum/component/simple_bodycam/proc/update_cam(datum/source, atom/old_loc, ...)
 	SIGNAL_HANDLER
+	do_update_cam(old_loc)
 
-	if(get_turf(old_loc) != get_turf(parent))
-		do_update_cam()
-
-/datum/component/simple_bodycam/proc/do_update_cam()
-	SScameras.update_portable_camera(bodycam, camera_update_time)
+/datum/component/simple_bodycam/proc/do_update_cam(atom/old_loc)
+	if(!bodycam?.can_use())
+		return
+	SScameras.camera_moved(bodycam, get_turf(old_loc), get_turf(bodycam), camera_update_time)
 
 /datum/component/simple_bodycam/proc/rotate_cam(datum/source, old_dir, new_dir)
 	SIGNAL_HANDLER

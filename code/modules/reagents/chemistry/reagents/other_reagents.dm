@@ -524,10 +524,20 @@
 
 /datum/reagent/lube/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
-	if(!istype(exposed_turf))
-		return
-	if(reac_volume >= 1)
-		exposed_turf.MakeSlippery(lube_kind, 15 SECONDS, min(reac_volume * 2 SECONDS, 120))
+	if(isopenturf(exposed_turf) && reac_volume >= 1)
+		exposed_turf.MakeSlippery(lube_kind, 15 SECONDS, min(reac_volume * 2 SECONDS, 12 SECONDS))
+
+/datum/reagent/lube/expose_obj(obj/exposed_obj, reac_volume, methods, show_message)
+	. = ..()
+	if(isitem(exposed_obj) && reac_volume >= 1)
+		exposed_obj.AddComponent( \
+			/datum/component/slippery_item, \
+			fall_chance = (lube_kind == TURF_WET_SUPERLUBE ? 80 : 50), \
+			fall_catch_chance = (lube_kind == TURF_WET_SUPERLUBE ? 10 : 30), \
+			examine_msg = span_info("It's coated in a slippery substance!"), \
+			wash_flags = CLEAN_TYPE_HARD_DECAL, \
+			duration = min(reac_volume * 3 SECONDS, 30 SECONDS), \
+		)
 
 /datum/reagent/lube/used_on_fish(obj/item/fish/fish)
 	ADD_TRAIT(fish, TRAIT_FISH_FED_LUBE, type) //required for the lubefish mutation
@@ -703,7 +713,7 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/human/felinid
 	taste_description = "something nyat good"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/mutationtoxin/lizard
 	name = "Lizard Mutation Toxin"
@@ -727,7 +737,15 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/moth
 	taste_description = "clothing"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/mutationtoxin/ethereal
+	name = "Ethereal Mutation Toxin"
+	description = "An electrifying toxin."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/ethereal
+	taste_description = "static"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/mutationtoxin/pod
 	name = "Podperson Mutation Toxin"
@@ -811,6 +829,14 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/lizard/ashwalker
 	taste_description = "savagery"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+
+/datum/reagent/mutationtoxin/ghost
+	name = "Ghost Mutation Toxin"
+	description = "A spiritual toxin."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/ghost
+	taste_description = "ectoplasm"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 //DANGEROUS RACES
@@ -1274,7 +1300,7 @@
 	burning_temperature = 1725 //more refined than oil
 	burning_volume = 0.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/alcohol = 4)
+	addiction_types = list(/datum/addiction/alcohol = 300)
 
 /datum/glass_style/drinking_glass/fuel
 	required_drink_type = /datum/reagent/fuel
@@ -1421,7 +1447,7 @@
 	taste_description = "numbness"
 	ph = 9.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/opioids = 10)
+	addiction_types = list(/datum/addiction/opioids = 120)
 
 /datum/reagent/impedrezene/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -2641,7 +2667,6 @@
 	taste_description = "acrid cinnamon"
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-	metabolized_traits = list(TRAIT_CHANGELING_HIVEMIND_MUTE)
 
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/carbon/target, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -2809,11 +2834,15 @@
 
 /datum/reagent/metalgen/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
-	metal_morph(exposed_obj)
+	// Don't morph holographic or abstract objects
+	if (!(exposed_obj.flags_1 & HOLOGRAM_1) && exposed_obj.invisibility < INVISIBILITY_ABSTRACT)
+		metal_morph(exposed_obj)
 
 /datum/reagent/metalgen/expose_turf(turf/exposed_turf, volume)
 	. = ..()
-	metal_morph(exposed_turf)
+	// Or non-real turfs
+	if (isclosedturf(exposed_turf) || isopenturf(exposed_turf))
+		metal_morph(exposed_turf)
 
 ///turn an object into a special material
 /datum/reagent/metalgen/proc/metal_morph(atom/target)
@@ -2832,6 +2861,9 @@
 	if(!metal_amount)
 		metal_amount = default_material_amount //some stuff doesn't have materials at all. To still give them properties, we give them a material. Basically doesn't exist
 
+	// Delete existing materials first before changing the material flags
+	if(length(target.custom_materials))
+		target.set_custom_materials()
 	var/list/metal_dat = list((metal_ref) = metal_amount)
 	target.material_flags = applied_material_flags
 	target.set_custom_materials(metal_dat)
@@ -3099,7 +3131,7 @@
 	color = "#228f63"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/stimulants = 5)
+	addiction_types = list(/datum/addiction/stimulants = 120)
 
 /datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer, seconds_per_tick, metabolization_ratio)
 	. = ..()

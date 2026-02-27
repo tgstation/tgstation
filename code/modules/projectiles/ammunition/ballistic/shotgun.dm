@@ -100,11 +100,8 @@
 
 /obj/item/ammo_casing/shotgun/buckshot/old/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
 	. = ..()
-	if(!fired_from)
-		return
-
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, holder = fired_from, location = fired_from)
+	if(fired_from)
+		do_smoke(0, fired_from, fired_from)
 
 /obj/item/ammo_casing/shotgun/buckshot/milspec
 	name = "milspec buckshot shell"

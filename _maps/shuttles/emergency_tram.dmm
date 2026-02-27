@@ -205,6 +205,7 @@
 /obj/structure/table/optable,
 /obj/effect/spawner/surgery_tray/full,
 /obj/item/clothing/mask/surgical,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aY" = (
@@ -224,6 +225,7 @@
 "bb" = (
 /obj/machinery/stasis,
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bc" = (

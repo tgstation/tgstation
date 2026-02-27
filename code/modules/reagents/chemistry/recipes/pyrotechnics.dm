@@ -393,12 +393,8 @@
 		return
 	holder.remove_reagent(/datum/reagent/smoke_powder, created_volume * 3)
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect_system/fluid_spread/smoke/chem/S = new
-	S.attach(location)
+	do_chem_smoke(amount = created_volume * 3, holder = holder.my_atom, location = location, carry = holder, silent = FALSE, log = TRUE)
 	playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
-	if(S)
-		S.set_up(amount = created_volume * 3, holder = holder.my_atom, location = location, carry = holder, silent = FALSE)
-		S.start(log = TRUE)
 	if(holder?.my_atom)
 		holder.clear_reagents()
 	if (!iscarbon(holder?.my_atom))
@@ -417,12 +413,8 @@
 
 /datum/chemical_reaction/smoke_powder_smoke/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect_system/fluid_spread/smoke/chem/S = new
-	S.attach(location)
+	do_chem_smoke(amount = created_volume, holder = holder.my_atom, location = location, carry = holder, log = TRUE, silent = FALSE)
 	playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
-	if(S)
-		S.set_up(amount = created_volume, holder = holder.my_atom, location = location, carry = holder, silent = FALSE)
-		S.start(log = TRUE)
 	if(holder?.my_atom)
 		holder.clear_reagents()
 	if(holder?.my_atom)

@@ -247,7 +247,7 @@
 	pixel_y = 10;
 	pixel_x = -6
 	},
-/obj/item/stack/medical/gauze{
+/obj/item/stack/medical/wrap/gauze{
 	pixel_y = -2;
 	pixel_x = 5
 	},

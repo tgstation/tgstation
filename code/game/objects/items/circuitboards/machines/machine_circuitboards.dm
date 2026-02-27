@@ -664,6 +664,8 @@
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_FAILURE
+	if(all_products_free)
+		return
 	var/choice = tgui_input_list(user, "Choose a new brand", "Select an Item", sort_list(valid_vendor_names_paths))
 	if(isnull(choice))
 		return

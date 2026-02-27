@@ -116,7 +116,7 @@
 	///Whether the robot has no charge left.
 	var/low_power_mode = FALSE
 	///So they can initialize sparks whenever/N
-	var/datum/effect_system/spark_spread/spark_system
+	var/datum/effect_system/basic/spark_spread/spark_system
 	///Smoke particle type for brute damage
 	var/smoke_particles
 	///Spark particle type for burn damage
