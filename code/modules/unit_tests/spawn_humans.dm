@@ -21,3 +21,16 @@
 /datum/unit_test/many_armed_humans/Run()
 	var/mob/living/carbon/human/consistent/dummy = allocate(/mob/living/carbon/human/consistent)
 	dummy.change_number_of_hands(4)
+
+/// Tests spawned humans have the correct bodypart order
+/datum/unit_test/human_bodypart_order
+
+/datum/unit_test/human_bodypart_order/Run()
+	var/mob/living/carbon/human/consistent/dummy = allocate(/mob/living/carbon/human/consistent)
+	var/list/obj/item/bodypart/bodyparts = dummy.get_bodyparts()
+	TEST_ASSERT(bodyparts[1].body_zone == BODY_ZONE_CHEST, "First bodypart in bodyparts list is not the chest, this is important for human rendering")
+	TEST_ASSERT(bodyparts[2].body_zone == BODY_ZONE_HEAD, "Second bodypart in bodyparts list is not the head, this is important for human rendering")
+
+	var/list/obj/item/bodypart/bodyparts_by_zone = dummy.get_bodyparts_by_zones()
+	TEST_ASSERT(bodyparts_by_zone[1] == BODY_ZONE_CHEST, "First bodypart in bodyparts_by_zone list is not the chest, this is important for human rendering")
+	TEST_ASSERT(bodyparts_by_zone[2] == BODY_ZONE_HEAD, "Second bodypart in bodyparts_by_zone list is not the head, this is important for human rendering")
