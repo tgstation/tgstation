@@ -155,11 +155,9 @@
 	else if (diskie)
 		laser_color = diskie.laser_color
 	var/mutable_appearance/overlay = mutable_appearance(icon, "emitter_overlay")
-	var/mutable_appearance/emissive_overlay = emissive_appearance(icon, "emitter_overlay", src)
 	overlay.color = laser_color
-	emissive_overlay.color = laser_color
 	. += overlay
-	. += emissive_overlay
+	. += emissive_appearance(icon, "emitter_overlay", src, alpha = src.alpha)
 
 /obj/machinery/power/emitter/update_icon_state()
 	if(panel_open)
