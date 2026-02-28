@@ -311,6 +311,24 @@ SUBSYSTEM_DEF(tts)
 	else
 		queued_http_messages.insert(current_request)
 
+/// Helper to get a random TTS voice for a certain gender. Passing no gender just results in a random voice.
+/datum/controller/subsystem/tts/proc/random_tts_voice(gender)
+	if(!tts_enabled)
+		return null
+
+	var/sanity = 0
+	while(sanity < 10)
+		var/voice = pick(available_speakers)
+		if(gender != MALE && gender != FEMALE)
+			return voice
+		if(gender == MALE && findtext(voice, "Man"))
+			return voice
+		if(gender == FEMALE && findtext(voice, "Woman"))
+			return voice
+		sanity += 1
+
+	return pick(available_speakers) // failsafe
+
 /// A struct containing information on an individual player or mob who has made a TTS request
 /datum/tts_request
 	/// The mob to play this TTS message on
@@ -422,5 +440,6 @@ SUBSYSTEM_DEF(tts)
 			return request.is_complete()
 	else
 		return request.is_complete() && request_blips.is_complete()
+
 
 #undef SHIFT_DATA_ARRAY
