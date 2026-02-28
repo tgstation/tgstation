@@ -3,7 +3,7 @@
 	maptext_width = 100
 	maptext_height = 8
 
-	VAR_PRIVATE/list/screen_directions = list("NORTH", "WEST")
+	VAR_PROTECTED/list/screen_directions = list("NORTH", "WEST")
 	VAR_PRIVATE/datum/escape_menu/escape_menu
 	VAR_PRIVATE/button_text
 	VAR_PRIVATE/font_size
