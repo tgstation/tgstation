@@ -3,7 +3,7 @@
 #define MINIMAP_DRAW_OFFSET 8
 
 /// Action that lets you draw on a minimap
-/datum/action/map_drawing
+/datum/action/minimap/map_drawing
 	name = "Toggle Minimap Drawing"
 	button_icon = 'icons/hud/implants.dmi'
 	button_icon_state = "minimap_drawing"
@@ -17,86 +17,27 @@
 		/atom/movable/screen/minimap_tool/label,
 		/atom/movable/screen/minimap_tool/clear,
 	)
-	/// the Zlevel that this tablet will be allowed to edit
-	var/editing_z = 2
-	/// The minimap to draw on
-	var/datum/tactical_map/my_map
-	/// If the map is visible
-	var/active = FALSE
 
-	///Minimap object we'll be displaying
-	var/atom/movable/screen/minimap/map_object
-	///button granted when you're on a multiz level that lets you check above and below you
-	var/atom/movable/screen/minimap_extras/minimap_z_indicator/z_indicator
-	///button granted when you're on a multiz level that lets you check above and below you
-	var/atom/movable/screen/minimap_extras/minimap_z_up/z_up
-	///button granted when you're on a multiz level that lets you check above and below you
-	var/atom/movable/screen/minimap_extras/minimap_z_down/z_down
-
-
-/datum/action/map_drawing/New(Target, datum/tactical_map/implant_map)
+/datum/action/minimap/map_drawing/New(Target, new_minimap_flags, new_marker_flags, tactical_map)
 	. = ..()
-	my_map = implant_map
 	var/list/atom/movable/screen/actions = list()
 	for(var/path in drawing_tools)
-		actions += new path(null, null, editing_z, my_map)
+		actions += new path(null, null, current_z_shown, my_map)
 	drawing_tools = actions
 
-	z_indicator = new
-	z_indicator.minimap_action = src
-	z_up = new
-	z_up.minimap_action = src
-	z_down = new
-	z_down.minimap_action = src
-
-/datum/action/map_drawing/Destroy()
+/datum/action/minimap/map_drawing/Destroy()
 	QDEL_LIST(drawing_tools)
-	QDEL_NULL(z_indicator)
-	QDEL_NULL(z_up)
-	QDEL_NULL(z_down)
 	return ..()
 
-/datum/action/map_drawing/Trigger(mob/clicker, trigger_flags)
+/datum/action/minimap/map_drawing/toggle_minimap(force_state)
 	. = ..()
-	if(!map_object)
-		map_object = my_map.fetch_minimap_object(editing_z, my_map.minimap_flags)
-	active = !active
+	if(!.)
+		return
 
-	if(active)
-		owner.client.screen += map_object
+	if(force_state)
 		owner.client.screen += drawing_tools
-		if(length(SSmapping.get_connected_levels(editing_z)) > 1)
-			owner.client.screen += z_indicator
-			owner.client.screen += z_up
-			owner.client.screen += z_down
 		return
-	owner.client.screen -= map_object
 	owner.client.screen -= drawing_tools
-	owner.client.screen -= z_indicator
-	owner.client.screen -= z_up
-	owner.client.screen -= z_down
-
-/// changes the currently to be displayed z. takes the new z as an arg
-/datum/action/map_drawing/proc/change_z_shown(newz)
-	owner.client?.screen -= map_object
-	var/old_map_z = map_object?.tracked_z
-	var/new_z_is_multiz = length(SSmapping.get_connected_levels(newz)) > 1
-	var/old_z_is_multiz = old_map_z ? length(SSmapping.get_connected_levels(old_map_z)) > 1 : FALSE
-	if(old_z_is_multiz != new_z_is_multiz)
-		if(new_z_is_multiz)
-			owner.client.screen += z_indicator
-			owner.client.screen += z_up
-			owner.client.screen += z_down
-		else
-			owner.client.screen -= z_indicator
-			owner.client.screen -= z_up
-			owner.client.screen -= z_down
-
-	z_indicator.set_indicated_z(newz)
-	if(!my_map.minimaps_by_z["[newz]"] || !my_map.minimaps_by_z["[newz]"].hud_image)
-		return
-	map_object = my_map.fetch_minimap_object(newz, my_map.minimap_flags)
-	owner.client.screen += map_object
 
 /atom/movable/screen/minimap_tool
 	icon = 'icons/ui_icons/minimap/minimap_buttons.dmi'

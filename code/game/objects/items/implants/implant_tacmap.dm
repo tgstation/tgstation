@@ -106,7 +106,7 @@
 
 /obj/item/implant/tacmap/nuclear/leader/implant(mob/living/target, mob/user, silent, force)
 	. = ..()
-	var/datum/action/map_drawing/draw_action = new(implant_map = my_map)
+	var/datum/action/minimap/map_drawing/draw_action = new(tactical_map = my_map)
 	draw_action.Grant(target)
 
 /obj/item/implanter/tacmap
