@@ -58,6 +58,18 @@
 		)
 	)
 
+	page_holder.give_screen_object(
+		new /atom/movable/screen/escape_menu/text/clickable(
+			null,
+			/* hud_owner = */ null,
+			/* escape_menu = */ src,
+			/* button_text = */ "Quit",
+			/* offset = */ list(-311, 30),
+			/* font_size = */ 24,
+			/* on_click_callback = */ CALLBACK(src, PROC_REF(home_quit)),
+		)
+	)
+
 	//Bottom right buttons, from right to left, starting with the button to open the list.
 	page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
 		null,
@@ -184,6 +196,12 @@
 
 /datum/escape_menu/proc/home_resume()
 	qdel(src)
+
+/datum/escape_menu/proc/home_quit()
+	var/confirmquit = tgui_alert(usr, "Are you sure you want to quit?", "Quit", list("Yes", "No"))
+	if(confirmquit != "Yes")
+		return
+	winset(usr, null, list("command"=".quit"))
 
 /datum/escape_menu/proc/home_open_character_settings()
 	client?.prefs.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
