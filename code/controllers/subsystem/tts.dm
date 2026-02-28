@@ -441,5 +441,4 @@ SUBSYSTEM_DEF(tts)
 	else
 		return request.is_complete() && request_blips.is_complete()
 
-
 #undef SHIFT_DATA_ARRAY
