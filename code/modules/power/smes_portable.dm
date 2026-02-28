@@ -56,7 +56,12 @@
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 
-/// checks if the connector is free; if not, alerts a user and returns FALSE
+/**
+ * Checks if the connector is free
+ * Arguments
+ *
+ * * mob/living/user - the player doing the checking
+ */
 /obj/machinery/power/smes/connector/proc/connector_free(mob/living/user)
 	PRIVATE_PROC(TRUE)
 
@@ -86,14 +91,18 @@
 		total_capacity = 1
 		for(var/obj/item/stock_parts/power_store/power_cell in component_parts)
 			component_parts -= power_cell
+		SStgui.close_uis(src)
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/machinery/power/smes/connector/ui_act(action, params)
-	// prevent UI interactions if there's no SMES
+/obj/machinery/power/smes/connector/ui_interact(mob/user, datum/tgui/ui)
 	if(!connected_smes)
-		balloon_alert(usr, "needs a connected SMES!")
+		balloon_alert(user, "no power bank!")
 		return FALSE
+
 	return ..()
+
+/obj/machinery/power/smes/connector/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	return connected_smes ? ..() : FALSE
 
 /// The actual portable part of the portable SMES system. Pretty useless without an actual connector.
 /obj/machinery/smesbank
@@ -195,7 +204,6 @@
 // adapted from portable atmos connection code
 /obj/machinery/smesbank/wrench_act(mob/living/user, obj/item/wrench)
 	if(connected_port)
-		wrench.play_tool_sound(src)
 		if(!wrench.use_tool(src, user, 8 SECONDS))
 			return ITEM_INTERACT_BLOCKING
 		user.visible_message( \
@@ -208,14 +216,9 @@
 		return ITEM_INTERACT_SUCCESS
 
 	var/obj/machinery/power/smes/connector/possible_connector = locate(/obj/machinery/power/smes/connector) in loc
-	if(!possible_connector)
-		to_chat(user, span_notice("There's no power connector to connect to."))
+	if(!wrench.use_tool(src, user, 4 SECONDS, extra_checks = CALLBACK(src, PROC_REF(connect_port), possible_connector, user, TRUE)))
 		return ITEM_INTERACT_BLOCKING
-	wrench.play_tool_sound(src)
-	if(!wrench.use_tool(src, user, 4 SECONDS))
-		return ITEM_INTERACT_BLOCKING
-	if(!connect_port(possible_connector))
-		to_chat(user, span_notice("[src] failed to connect to [possible_connector]."))
+	if(!connect_port(possible_connector, user))
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message( \
 		"[user] connects [src].", \
@@ -231,30 +234,39 @@
 		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/smesbank/default_deconstruction_crowbar(obj/item/crowbar/crowbar)
-	if(istype(crowbar) && connected_port)
-		balloon_alert(usr, "disconnect from [connected_port] first!")
+/obj/machinery/smesbank/crowbar_act(mob/living/user, obj/item/tool)
+	if(connected_port)
+		balloon_alert(user, "disconnect from [connected_port] first!")
 		return ITEM_INTERACT_FAILURE
-	return ..()
+
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
 
 /**
  * Attempt to connect the portable SMES to a given connector. Adapted from portable atmos connection code.
  *
  * Arguments
  * * obj/machinery/power/smes/connector/possible_connector - the connector we are trying to link with
+ * * mob/living/user - the mob trying to connect the port
+ * * check_only - don't connect but check if we can
  */
-/obj/machinery/smesbank/proc/connect_port(obj/machinery/power/smes/connector/possible_connector)
+/obj/machinery/smesbank/proc/connect_port(obj/machinery/power/smes/connector/possible_connector, mob/living/user, check_only = FALSE)
 	PRIVATE_PROC(TRUE)
 
-	//Make sure not already connected to something else
-	if(connected_port || !possible_connector || possible_connector.connected_smes || possible_connector.panel_open)
+	if(QDELETED(possible_connector))
+		if(user)
+			balloon_alert(user, "no connector!")
 		return FALSE
 
-	//Make sure are close enough for a valid connection
-	if(possible_connector.loc != get_turf(src))
+	//Make sure not already connected to something else
+	if(possible_connector.panel_open)
+		if(user)
+			balloon_alert(user, "close connector panel!")
 		return FALSE
 
 	//Perform the connection
+	if(check_only)
+		return TRUE
 	connected_port = possible_connector
 	connected_port.connect_smes(src)
 	set_anchored(TRUE)

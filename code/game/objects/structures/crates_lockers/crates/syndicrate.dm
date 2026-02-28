@@ -47,7 +47,7 @@
 	if(!istype(item, /obj/item/syndicrate_key) || created_items)
 		return ..()
 	created_items = TRUE
-	for(var/item_path as anything in unlock_contents)
+	for(var/item_path in unlock_contents)
 		new item_path(src)
 	unlock_contents = list()
 	qdel(item)

@@ -15,6 +15,7 @@
 	armor_type = /datum/armor/structure_grille
 	max_integrity = 50
 	integrity_failure = 0.4
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	var/rods_type = /obj/item/stack/rods
 	var/rods_amount = 2
 	/// Whether or not we're disappearing but dramatically
@@ -92,7 +93,7 @@
 	return FALSE
 
 /obj/structure/grille/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data["[RCD_DESIGN_MODE]"])
+	switch(rcd_data[RCD_DESIGN_MODE])
 		if(RCD_DECONSTRUCT)
 			qdel(src)
 			return TRUE
@@ -106,7 +107,7 @@
 			if(!clear_tile(user))
 				return FALSE
 
-			var/obj/structure/window/window_path = rcd_data["[RCD_DESIGN_PATH]"]
+			var/obj/structure/window/window_path = rcd_data[RCD_DESIGN_PATH]
 			if(!ispath(window_path))
 				CRASH("Invalid window path type in RCD: [window_path]")
 
@@ -321,31 +322,21 @@
 	update_appearance()
 	return TRUE
 
-// shock user with probability prb (if all connections & power are working)
-// returns 1 if shocked, 0 otherwise
-
-/obj/structure/grille/proc/shock(mob/user, prb)
+/obj/structure/grille/shock(mob/living/shocking, chance = 100, shock_source, siemens_coeff = 1)
 	if(!anchored || broken) // anchored/broken grilles are never connected
 		return FALSE
-	if(!prob(prb))
+	var/turf/grill_loc = get_turf(src)
+	if(grill_loc.overfloor_placed)//cant be a floor in the way!
 		return FALSE
-	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
+	var/obj/structure/cable/grill_cable = grill_loc.get_cable_node()
+	if(isnull(grill_cable))
 		return FALSE
-	var/turf/T = get_turf(src)
-	if(T.overfloor_placed)//cant be a floor in the way!
+	shock_source = grill_cable
+	if(!..())
 		return FALSE
-
-	var/obj/structure/cable/cable_node = T.get_cable_node()
-	if(isnull(cable_node))
-		return FALSE
-	if(!electrocute_mob(user, cable_node, src, 1, TRUE))
-		return FALSE
-	if(prob(50)) // Shocking hurts the grille (to weaken monkey powersinks)
+	// Shocking hurts the grille (to weaken monkey powersinks)
+	if(prob(50))
 		take_damage(1, BURN, FIRE, sound_effect = FALSE)
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(3, 1, src)
-	sparks.start()
-
 	return TRUE
 
 /obj/structure/grille/should_atmos_process(datum/gas_mixture/air, exposed_temperature)

@@ -44,7 +44,7 @@
 /mob/living/basic/living_limb_flesh/Initialize(mapload, obj/item/bodypart/limb)
 	. = ..()
 	AddComponent(/datum/component/swarming, max_x = 8, max_y = 8)
-	AddElement(/datum/element/death_drops, string_list(list(/obj/effect/gibspawner/generic)))
+	AddElement(/datum/element/death_drops, /obj/effect/gibspawner/generic)
 	if(!isnull(limb))
 		register_to_limb(limb)
 
@@ -59,7 +59,7 @@
 		if(!QDELETED(bodypart))
 			qdel(bodypart)
 
-/mob/living/basic/living_limb_flesh/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/living_limb_flesh/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(stat == DEAD)
 		return
@@ -85,7 +85,7 @@
 	for(var/atom/movable/movable in orange(victim, 1))
 		if(movable == victim)
 			continue
-		if(!victim.CanReach(movable) || movable.invisibility > victim.see_invisible)
+		if(!movable.IsReachableBy(victim) || movable.invisibility > victim.see_invisible)
 			continue
 		candidates += movable
 	if(!length(candidates))
@@ -153,7 +153,7 @@
 
 	var/obj/item/bodypart/new_bodypart = new part_type()
 	forceMove(new_bodypart)
-	new_bodypart.replace_limb(target, TRUE)
+	new_bodypart.replace_limb(target)
 	register_to_limb(new_bodypart)
 
 /mob/living/basic/living_limb_flesh/proc/owner_shocked(datum/source, shock_damage, shock_source, siemens_coeff, flags)
@@ -181,7 +181,7 @@
 /mob/living/basic/living_limb_flesh/proc/on_limb_lost(atom/movable/source, mob/living/carbon/old_owner, special, dismembered)
 	SIGNAL_HANDLER
 	unregister_from_limb(old_owner)
-	addtimer(CALLBACK(src, PROC_REF(wake_up), source), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(wake_up), source), 2 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME)
 
 /mob/living/basic/living_limb_flesh/proc/register_to_limb(obj/item/bodypart/part)
 	current_bodypart = part
@@ -199,6 +199,8 @@
 	current_bodypart = null
 
 /mob/living/basic/living_limb_flesh/proc/wake_up(atom/limb)
+	if(QDELETED(src))
+		return
 	visible_message(span_warning("[src] begins flailing around!"))
 	Shake(6, 6, 0.5 SECONDS)
 	ai_controller.set_ai_status(AI_STATUS_ON)

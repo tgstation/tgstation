@@ -13,17 +13,19 @@
 	full_w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	var/value = 0
-	grind_results = list(/datum/reagent/cellulose = 10)
 
 /obj/item/stack/spacecash/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	add_traits(list(TRAIT_FISHING_BAIT, TRAIT_BAIT_ALLOW_FISHING_DUD), INNATE_TRAIT)
 	update_desc()
 
+/obj/item/stack/spacecash/grind_results()
+	return list(/datum/reagent/cellulose = 10)
+
 /obj/item/stack/spacecash/update_desc()
 	. = ..()
 	var/total_worth = get_item_credit_value()
-	desc = "It's worth [total_worth] credit[(total_worth > 1) ? "s" : null] in total."
+	desc = "It's worth [total_worth] [MONEY_NAME_AUTOPURAL(total_worth)] in total."
 
 /obj/item/stack/spacecash/get_item_credit_value()
 	return (amount*value)
@@ -47,6 +49,48 @@
 			icon_state = "[initial(icon_state)]_3"
 		if(25 to INFINITY)
 			icon_state = "[initial(icon_state)]_4"
+
+/**
+ * Takes an amount of credit and returns a list of space cash typepaths that are equivalent to that amount.
+ * For example, if you passed 450 credits, it would return a list with a c200, another c200, and a c50 space cash stack typepath.
+ * You can then use the list to new() all the types provided if you wanted to give a player that amount in space cash.
+ *
+ * * amount - the amount of credits to convert to space cash.
+ * If you provide a decimal, rounds down to the nearest whole number.
+ */
+/proc/credits_to_spacecash(amount)
+	amount = floor(amount)
+	// ordered by value so we can always provide the highest denominations possible
+	var/list/spacecash_types_by_value = list(
+		/obj/item/stack/spacecash/c10000,
+		/obj/item/stack/spacecash/c1000,
+		/obj/item/stack/spacecash/c500,
+		/obj/item/stack/spacecash/c200,
+		/obj/item/stack/spacecash/c100,
+		/obj/item/stack/spacecash/c50,
+		/obj/item/stack/spacecash/c20,
+		/obj/item/stack/spacecash/c10,
+		/obj/item/stack/spacecash/c1,
+	)
+	var/list/spacecash_list = list()
+	while(amount > 0)
+		var/obj/item/stack/spacecash/found_cashtype
+		for(var/obj/item/stack/spacecash/cashtype as anything in spacecash_types_by_value)
+			if(cashtype::value <= amount)
+				found_cashtype = cashtype
+				break
+
+		if(!found_cashtype)
+			stack_trace("credits_to_spacecash failed to find a cashtype for amount: [amount]")
+			break
+
+		spacecash_list += found_cashtype
+		amount -= found_cashtype::value
+
+	if(amount > 0)
+		stack_trace("credits_to_spacecash failed to convert [amount] credits into space cash. Remaining amount: [amount]")
+
+	return spacecash_list
 
 /obj/item/stack/spacecash/c1
 	icon_state = "spacecash1"

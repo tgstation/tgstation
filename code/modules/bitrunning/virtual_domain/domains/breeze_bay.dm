@@ -5,6 +5,7 @@
 	key = "breeze_bay"
 	map_name = "breeze_bay"
 	reward_points = BITRUNNER_REWARD_LOW
+	domain_flags = DOMAIN_NO_NOHIT_BONUS
 
 /datum/lazy_template/virtual_domain/breeze_bay/setup_domain(list/created_atoms)
 	. = ..()

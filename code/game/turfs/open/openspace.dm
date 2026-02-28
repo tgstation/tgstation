@@ -12,6 +12,7 @@
 	plane = TRANSPARENT_FLOOR_PLANE
 	layer = SPACE_LAYER
 	rust_resistance = RUST_RESISTANCE_ABSOLUTE
+	turf_flags = NO_RUST
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
@@ -25,8 +26,8 @@
 // I am so sorry
 /turf/open/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
-	if(PERFORM_ALL_TESTS(focus_only/openspace_clear) && !GET_TURF_BELOW(src))
-		stack_trace("[src] was inited as openspace with nothing below it at ([x], [y], [z])")
+	if(PERFORM_ALL_TESTS(maptest_log_mapping) && !GET_TURF_BELOW(src))
+		log_mapping("[src] was inited as openspace with nothing below it at ([x], [y], [z])")
 	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_created))
 	var/area/our_area = loc
 	if(istype(our_area, /area/space))
@@ -142,7 +143,7 @@
 	return FALSE
 
 /turf/open/openspace/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF && rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_TURF && rcd_data[RCD_DESIGN_PATH] == /turf/open/floor/plating/rcd)
 		place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
 	return FALSE

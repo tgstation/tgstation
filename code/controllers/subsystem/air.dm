@@ -325,7 +325,7 @@ SUBSYSTEM_DEF(air)
 		currentrun.len--
 		if(!M)
 			atmos_machinery -= M
-		if(M.process_atmos() == PROCESS_KILL)
+		if(M.process_atmos(wait * 0.1) == PROCESS_KILL)
 			stop_processing_machine(M)
 		if(MC_TICK_CHECK)
 			return
@@ -390,9 +390,11 @@ SUBSYSTEM_DEF(air)
 	while(currentrun.len)
 		var/datum/excited_group/EG = currentrun[currentrun.len]
 		currentrun.len--
+		var/volatile_reaction = EG.turf_reactions & VOLATILE_REACTION
 		EG.breakdown_cooldown++
-		EG.dismantle_cooldown++
-		if(EG.breakdown_cooldown >= EXCITED_GROUP_BREAKDOWN_CYCLES)
+		if(!volatile_reaction)
+			EG.dismantle_cooldown++
+		if(EG.breakdown_cooldown >= EXCITED_GROUP_BREAKDOWN_CYCLES && !volatile_reaction)
 			EG.self_breakdown(poke_turfs = TRUE)
 		else if(EG.dismantle_cooldown >= EXCITED_GROUP_DISMANTLE_CYCLES && !(EG.turf_reactions & (REACTING | STOP_REACTIONS)))
 			EG.dismantle()

@@ -15,7 +15,7 @@
 	datum/hud/hud_owner,
 	button_text,
 	tooltip_text,
-	list/pixel_offset,
+	button_screen_loc,
 	on_click_callback,
 	button_overlay,
 )
@@ -24,12 +24,12 @@
 	src.on_click_callback = on_click_callback
 	src.tooltip_text = tooltip_text
 
+	screen_loc = button_screen_loc
+
 	if(button_overlay)
 		add_overlay(button_overlay)
 	if(button_text)
 		add_maptext(button_text)
-
-	screen_loc = "CENTER:[pixel_offset[1]],CENTER:[pixel_offset[2]]"
 
 /atom/movable/screen/escape_menu/lobby_button/Destroy()
 	on_click_callback = null
@@ -93,7 +93,7 @@
 	datum/hud/hud_owner,
 	button_text,
 	tooltip_text,
-	list/pixel_offset,
+	button_screen_loc,
 	on_click_callback,
 	button_overlay,
 	end_point,

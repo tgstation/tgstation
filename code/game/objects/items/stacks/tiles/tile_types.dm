@@ -137,6 +137,7 @@
 		/obj/item/stack/tile/wood/tile,
 		/obj/item/stack/tile/wood/parquet,
 	)
+	mats_per_unit = list(/datum/material/wood = HALF_SHEET_MATERIAL_AMOUNT / 2)
 
 /obj/item/stack/tile/wood/parquet
 	name = "parquet wood floor tile"
@@ -175,6 +176,7 @@
 		/obj/item/stack/tile/bamboo/tatami/purple,
 		/obj/item/stack/tile/bamboo/tatami/black,
 	)
+	mats_per_unit = list(/datum/material/bamboo = HALF_SHEET_MATERIAL_AMOUNT / 2)
 
 /obj/item/stack/tile/bamboo/tatami
 	name = "Tatami with green rim"
@@ -207,6 +209,7 @@
 	inhand_icon_state = "tile-basalt"
 	turf_type = /turf/open/floor/fakebasalt
 	merge_type = /obj/item/stack/tile/basalt
+	mats_per_unit = list(/datum/material/sand = SHEET_MATERIAL_AMOUNT * 2)
 
 //Carpets
 /obj/item/stack/tile/carpet
@@ -1079,6 +1082,7 @@
 		/obj/item/stack/tile/circuit/green,
 		/obj/item/stack/tile/circuit/red,
 	)
+	mats_per_unit = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.05, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.05)
 
 /obj/item/stack/tile/circuit/green
 	name = "green circuit tile"
@@ -1142,7 +1146,7 @@
 	singular_name = "plastic floor tile"
 	desc = "A tile of cheap, flimsy plastic flooring."
 	icon_state = "tile_plastic"
-	mats_per_unit = list(/datum/material/plastic=SMALL_MATERIAL_AMOUNT*5)
+	mats_per_unit = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT / 2)
 	turf_type = /turf/open/floor/plastic
 	merge_type = /obj/item/stack/tile/plastic
 
@@ -1191,13 +1195,13 @@
 	desc = "A clangy tile made of high-quality bronze. Clockwork construction techniques allow the clanging to be minimized."
 	icon_state = "tile_brass"
 	turf_type = /turf/open/floor/bronze
-	mats_per_unit = list(/datum/material/bronze=SMALL_MATERIAL_AMOUNT*5)
+	mats_per_unit = list(/datum/material/bronze = HALF_SHEET_MATERIAL_AMOUNT / 2)
 	merge_type = /obj/item/stack/tile/bronze
 	tile_reskin_types = list(
 		/obj/item/stack/tile/bronze,
 		/obj/item/stack/tile/bronze/flat,
 		/obj/item/stack/tile/bronze/filled,
-		)
+	)
 
 /obj/item/stack/tile/bronze/flat
 	name = "flat bronze tile"
@@ -1257,7 +1261,7 @@
 	desc = "Flooring that shows its contents underneath. Engineers love it!"
 	icon_state = "maint_catwalk"
 	inhand_icon_state = "tile-catwalk"
-	mats_per_unit = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.2)
 	turf_type = /turf/open/floor/catwalk_floor
 	merge_type = /obj/item/stack/tile/catwalk_tile //Just to be cleaner, these all stack with each other
 	tile_reskin_types = list(
@@ -1324,7 +1328,7 @@
 	inhand_icon_state = "tile-rglass"
 	turf_type = /turf/open/floor/glass/reinforced
 	merge_type = /obj/item/stack/tile/rglass
-	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 0.125, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
+	mats_per_unit = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.125, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
 
 /obj/item/stack/tile/rglass/sixty
 	amount = 60

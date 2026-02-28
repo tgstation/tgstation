@@ -118,6 +118,11 @@ GLOBAL_LIST_INIT(em_block_color, EM_BLOCK_COLOR)
 /// A globally cached version of [EM_MASK_MATRIX] for quick access.
 GLOBAL_LIST_INIT(em_mask_matrix, EM_MASK_MATRIX)
 
+/// Maximum selectable value for emissive bloom, minimum being 0 which just disables it outright
+#define MAXIMUM_EMISSIVE_BLOOM_SIZE 5
+/// Default value for emissive bloom
+#define DEFAULT_EMISSIVE_BLOOM_SIZE 2
+
 /// Parse the hexadecimal color into lumcounts of each perspective.
 #define PARSE_LIGHT_COLOR(source) \
 do { \

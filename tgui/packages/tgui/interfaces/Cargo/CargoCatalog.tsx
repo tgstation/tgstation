@@ -147,6 +147,7 @@ function CatalogTabs(props: CatalogTabsProps & Props) {
                 setActiveSupplyName(supply.name);
                 setSearchText('');
               }}
+              style={supply.name === "Goodies" ? {display: 'none'} : undefined}
             >
               <Stack justify="space-between">
                 <span>{supply.name}</span>
@@ -181,7 +182,7 @@ type CatalogListProps = {
 
 function CatalogList(props: CatalogListProps) {
   const { act, data } = useBackend<CargoData>();
-  const { amount_by_name = {}, max_order, self_paid, app_cost } = data;
+  const { cart = [], max_order, self_paid, app_cost, displayed_currency_name } = data;
   const { packs = [], openContents } = props;
 
   return (
@@ -206,6 +207,14 @@ function CatalogList(props: CatalogListProps) {
           </Stack.Item>
         );
 
+        let amount = 0;
+        if (cart) {
+          const entry = cart.find((entry) => entry.object === pack.name);
+          if (entry) {
+            amount = entry.amount;
+          }
+        }
+
         return (
           <ImageButton
             key={pack.id}
@@ -214,7 +223,7 @@ function CatalogList(props: CatalogListProps) {
             dmIconState={pack.first_item_icon_state}
             imageSize={32}
             color={color}
-            disabled={(amount_by_name[pack.name] || 0) >= max_order}
+            disabled={amount >= max_order}
             buttonsAlt={
               <Button
                 color="transparent"
@@ -250,11 +259,11 @@ function CatalogList(props: CatalogListProps) {
                     opacity={privateBuy && 0.75}
                     style={{ textDecoration: privateBuy && 'red line-through' }}
                   >
-                    {formatMoney(pack.cost)} cr
+                    {formatMoney(pack.cost)}{displayed_currency_name}
                   </Stack.Item>
                   {!!privateBuy && (
                     <Stack.Item>
-                      {formatMoney(Math.round(pack.cost * 1.1))} cr
+                      {formatMoney(Math.round(pack.cost * 1.1))}{displayed_currency_name}
                     </Stack.Item>
                   )}
                 </Stack>

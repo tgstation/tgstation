@@ -14,6 +14,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	basic_mob_flags = DEL_ON_DEATH
 	status_flags = CANPUSH
+	mob_biotypes = MOB_MINERAL
 
 	response_help_continuous = "rubs"
 	response_help_simple = "rub"
@@ -45,8 +46,7 @@
 /mob/living/basic/festivus/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/seethrough_mob)
-	var/static/list/death_loot = list(/obj/item/stack/rods)
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, /obj/item/stack/rods)
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("growls")), emote_chance = 20)
 	grant_actions_by_list(list(/datum/action/cooldown/mob_cooldown/charge_apc = BB_FESTIVE_APC))
 

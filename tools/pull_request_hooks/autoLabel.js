@@ -48,7 +48,7 @@ function check_body_for_labels(body) {
   const labels_to_add = [];
 
   // detect "fixes #1234" or "resolves #1234" in body
-  const fix_regex = /\b(?:fix(?:es|ed)?|resolve[sd]?)\s*#\d+\b/gim;
+  const fix_regex = /\b(?:fix(?:es|ed)?|resolve[sd]?)\s*(?:#\d+|https:\/\/github\.com\/\S+\/issues\/\d+)/gim;
   if (fix_regex.test(body)) {
     labels_to_add.push("Fix");
   }
@@ -194,9 +194,7 @@ export async function get_updated_label_set({ github, context }) {
 
   // Always check body/title (otherwise we can lose the changelog labels)
   if (title)
-    check_title_for_labels(title).forEach((label) =>
-      updated_labels.add(label)
-    );
+    check_title_for_labels(title).forEach((label) => updated_labels.add(label));
   if (body)
     check_body_for_labels(body).forEach((label) => updated_labels.add(label));
 
@@ -213,13 +211,9 @@ export async function get_updated_label_set({ github, context }) {
       }
     );
 
-    // The REST api returns timeline events in reverse chronological order
-    // So let's reverse them to have it go from oldest -> newest.
-    // That way, if a maintainer removes and then re-adds the same label it
-    // remains true to their final intent.
-    for (const eventData of events.reverse()) {
+    for (const eventData of events) {
       // Skip all bot actions
-      if (eventData.actor?.login === "github-actions") {
+      if (eventData.actor?.login === "github-actions[bot]") {
         continue;
       }
       if (eventData.event === "labeled") {
@@ -228,9 +222,9 @@ export async function get_updated_label_set({ github, context }) {
         updated_labels.delete(eventData.label.name);
       }
     }
-} catch (error) {
-  console.error("Error fetching paginated events:", error);
-}
+  } catch (error) {
+    console.error("Error fetching paginated events:", error);
+  }
 
   // Always remove Test Merge Candidate
   updated_labels.delete("Test Merge Candidate");

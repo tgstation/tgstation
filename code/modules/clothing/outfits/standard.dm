@@ -35,7 +35,7 @@
 	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/space
-	back = /obj/item/tank/jetpack/oxygen
+	back = /obj/item/tank/jetpack
 	head = /obj/item/clothing/head/helmet/space
 	mask = /obj/item/clothing/mask/breath
 
@@ -117,10 +117,10 @@
 	name = "Heretic Hallucination"
 
 	uniform = /obj/item/clothing/under/color/grey
-	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
+	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust
 	neck = /obj/item/clothing/neck/heretic_focus
 	r_hand = /obj/item/melee/touch_attack/mansus_fist
-	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
+	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/rust
 	shoes = /obj/item/clothing/shoes/sneakers/black
 
 /datum/outfit/rev_cutout
@@ -221,7 +221,7 @@
 		sec_briefcase.contents += new /obj/item/stack/spacecash/c1000
 	sec_briefcase.contents += new /obj/item/gun/energy/recharge/ebow
 	sec_briefcase.contents += new /obj/item/gun/ballistic/revolver/mateba
-	sec_briefcase.contents += new /obj/item/ammo_box/a357
+	sec_briefcase.contents += new /obj/item/ammo_box/speedloader/c357
 	sec_briefcase.contents += new /obj/item/grenade/c4/x4
 
 	var/obj/item/modular_computer/pda/heads/pda = H.belt
@@ -247,7 +247,7 @@
 	head = /obj/item/clothing/head/hats/centhat
 	mask = /obj/item/cigarette/cigar/cohiba
 	shoes = /obj/item/clothing/shoes/combat/swat
-	l_pocket = /obj/item/ammo_box/a357
+	l_pocket = /obj/item/ammo_box/speedloader/c357
 	r_pocket = /obj/item/lighter
 
 /datum/outfit/centcom/commander/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
@@ -427,7 +427,7 @@
 		/obj/item/debug/human_spawner = 1,
 		/obj/item/debug/omnitool = 1,
 )
-	belt = /obj/item/storage/belt/utility/chief/full
+	belt = /obj/item/storage/belt/utility/full/powertools
 	ears = /obj/item/radio/headset/headset_cent/commander
 	glasses = /obj/item/clothing/glasses/debug
 	gloves = /obj/item/clothing/gloves/combat
@@ -459,7 +459,7 @@
 		/obj/item/debug/omnitool = 1,
 		/obj/item/storage/box/stabilized = 1,
 )
-	belt = /obj/item/storage/belt/utility/chief/full
+	belt = /obj/item/storage/belt/utility/full/powertools
 	ears = /obj/item/radio/headset/headset_cent/commander
 	glasses = /obj/item/clothing/glasses/debug
 	gloves = /obj/item/clothing/gloves/combat

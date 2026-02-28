@@ -26,15 +26,13 @@ export const NtosCivCargoHoldTerminal = (props) => {
             <Section
               title="Bounty Choice"
               buttons={
-                <>
-                  <Button
-                    icon={id_bounty_info ? 'recycle' : 'pen'}
-                    color={id_bounty_info ? 'green' : 'default'}
-                    tooltip={id_bounty_info ? 'Replace Bounty' : 'New Bounty'}
-                    disabled={!id_inserted}
-                    onClick={() => act('bounty')}
-                  />
-                </>
+                <Button
+                  icon={id_bounty_info ? 'recycle' : 'pen'}
+                  color={id_bounty_info ? 'green' : 'default'}
+                  tooltip={id_bounty_info ? 'Replace Bounty' : 'New Bounty'}
+                  disabled={!id_inserted}
+                  onClick={() => act('bounty')}
+                />
               }
             >
               <LabeledList>

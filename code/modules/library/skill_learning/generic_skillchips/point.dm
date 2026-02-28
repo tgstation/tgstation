@@ -26,7 +26,7 @@
 
 /obj/item/skillchip/big_pointer/proc/fancier_pointer(mob/living/user, atom/pointed, obj/effect/temp_visual/point/point)
 	SIGNAL_HANDLER
-	if(HAS_TRAIT(user, TRAIT_UNKNOWN))
+	if(HAS_TRAIT(user, TRAIT_UNKNOWN_APPEARANCE))
 		return
 	point.cut_overlays()
 	var/datum/action/change_pointer_color/action = locate() in actions
@@ -72,7 +72,7 @@
 		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON, force = TRUE)
 
 /datum/action/change_pointer_color/proc/pick_color(mob/user)
-	var/ncolor = input(owner, "Pick new color", "Pointer Color", arrow_color) as color|null
+	var/ncolor = tgui_color_picker(owner, "Pick new color", "Pointer Color", arrow_color)
 	if(user != owner || !IsAvailable(feedback = TRUE))
 		return
 	arrow_color = ncolor
@@ -80,13 +80,15 @@
 	build_all_button_icons(update_flags = UPDATE_BUTTON_ICON, force = TRUE)
 
 /datum/action/change_pointer_color/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
+	var/initial_icon = /obj/effect/temp_visual/point::icon
+	current_button.cut_overlay(arrow_overlay)
 	if(!arrow_color)
+		current_button.icon = initial_icon
+		current_button.icon_state = /obj/effect/temp_visual/point::icon_state
 		return ..()
 
 	current_button.icon = current_button.icon_state = null
-	current_button.cut_overlay(arrow_overlay)
-
-	arrow_overlay = mutable_appearance(icon = /obj/effect/temp_visual/point::icon, icon_state = "arrow_large_white_still")
+	arrow_overlay = mutable_appearance(icon = initial_icon, icon_state = "arrow_large_white_still")
 	arrow_overlay.color = arrow_color
-	arrow_overlay.overlays += mutable_appearance(icon = /obj/effect/temp_visual/point::icon, icon_state = "arrow_large_white_still_highlights", appearance_flags = RESET_COLOR)
+	arrow_overlay.overlays += mutable_appearance(icon = initial_icon, icon_state = "arrow_large_white_still_highlights", appearance_flags = RESET_COLOR)
 	current_button.add_overlay(arrow_overlay)

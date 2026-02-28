@@ -10,6 +10,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	melee_damage_lower = 30
 	melee_damage_upper = 30
+	melee_attack_cooldown = CLICK_CD_MELEE
 	maxHealth = 300
 	health = 300
 

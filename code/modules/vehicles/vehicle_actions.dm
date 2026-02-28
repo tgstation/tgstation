@@ -340,8 +340,8 @@
 		return
 	var/mob/living/rider = owner
 	var/turf/landing_turf = get_step(vehicle.loc, vehicle.dir)
-	rider.adjustStaminaLoss(vehicle.instability* 0.75)
-	if (rider.getStaminaLoss() >= 100)
+	rider.adjust_stamina_loss(vehicle.instability* 0.75)
+	if (rider.get_stamina_loss() >= 100)
 		vehicle.obj_flags &= ~CAN_BE_HIT
 		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
 		vehicle.unbuckle_mob(rider)
@@ -379,8 +379,8 @@
 	var/obj/vehicle/ridden/scooter/skateboard/board = vehicle_target
 	var/mob/living/rider = owner
 
-	rider.adjustStaminaLoss(board.instability)
-	if (rider.getStaminaLoss() >= 100)
+	rider.adjust_stamina_loss(board.instability)
+	if (rider.get_stamina_loss() >= 100)
 		playsound(src, 'sound/effects/bang.ogg', 20, vary = TRUE)
 		board.unbuckle_mob(rider)
 		rider.Paralyze(50)
@@ -390,7 +390,7 @@
 				span_userdanger("You smack against the board, hard."),
 			)
 			rider.emote("scream")
-			rider.adjustBruteLoss(10)  // thats gonna leave a mark
+			rider.adjust_brute_loss(10)  // thats gonna leave a mark
 			return
 		rider.visible_message(
 			span_danger("[rider] misses the landing and falls on [rider.p_their()] face!"),
@@ -409,7 +409,8 @@
 	animate(board, pixel_z = 6, time = 0.3 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 	animate(pixel_z = -6, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
 	board.unbuckle_mob(rider)
-	addtimer(CALLBACK(board, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard, pick_up_board), rider), 0.5 SECONDS)  // so the board can still handle "picking it up"
+	rider.Immobilize(0.5 SECONDS)
+	addtimer(CALLBACK(board, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard, pick_up_board), rider, TRUE), 0.5 SECONDS)  // so the board can still handle "picking it up"
 
 
 

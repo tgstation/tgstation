@@ -15,8 +15,10 @@
 
 	automated_announcements = list(ED209_VOICED_DOWN_WEAPONS = 'sound/mobs/non-humanoids/ed209/ed209_20sec.ogg')
 
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.8, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.1)
+
 	var/lastfired = 0
-	var/shot_delay = 15
+	var/shot_delay = 1.5 SECONDS
 	var/shoot_sound = 'sound/items/weapons/laser.ogg'
 	var/projectile = /obj/projectile/beam/disabler
 	var/fair_market_projectile = /obj/projectile/bullet/c38 // For shooting the worst scumbags of all: the poor

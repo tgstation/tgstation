@@ -46,10 +46,10 @@
 		if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
 			context[SCREENTIP_CONTEXT_LMB] = "Inject"
 			return CONTEXTUAL_SCREENTIP_SET
-		if(is_reagent_container(held_item)  && held_item.is_open_container())
+		if(held_item.is_chem_container())
 			context[SCREENTIP_CONTEXT_LMB] = "Replace beaker"
 			return CONTEXTUAL_SCREENTIP_SET
-	else if(is_reagent_container(held_item)  && held_item.is_open_container())
+	else if(held_item.is_chem_container())
 		context[SCREENTIP_CONTEXT_LMB] = "Insert beaker"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -90,22 +90,22 @@
 		heater_coefficient *= micro_laser.tier
 
 /obj/machinery/chem_heater/item_interaction(mob/living/user, obj/item/held_item, list/modifiers)
-	if(user.combat_mode || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1) || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
-		return NONE
-
 	if(!QDELETED(beaker))
 		if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
 			var/obj/item/reagent_containers/injector = held_item
 			injector.interact_with_atom(beaker, user, modifiers)
 			return ITEM_INTERACT_SUCCESS
 
-	if(is_reagent_container(held_item)  && held_item.is_open_container())
-		if(replace_beaker(user, held_item))
-			ui_interact(user)
-		balloon_alert(user, "beaker added")
-		return ITEM_INTERACT_SUCCESS
+	if(!held_item.can_insert_container(user, src))
+		return NONE
 
-	return NONE
+	if(!replace_beaker(user, held_item))
+		return ITEM_INTERACT_BLOCKING
+
+	ui_interact(user)
+	balloon_alert(user, "beaker added")
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
@@ -147,7 +147,7 @@
 	return attack_hand_secondary(user, modifiers)
 
 /**
- * Replace or eject the beaker inside this machine
+ * Replace or eject the beaker inside this machine. Returns TRUE on success.
  * Arguments
  * * mob/living/user - the player operating this machine
  * * obj/item/reagent_containers/new_beaker - the new beaker to replace the current one if not null else it will just eject
@@ -160,12 +160,12 @@
 
 	if(!QDELETED(new_beaker))
 		if(!user.transferItemToLoc(new_beaker, src))
-			update_appearance()
+			update_appearance(UPDATE_ICON_STATE)
 			return FALSE
 		beaker = new_beaker
 		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, PROC_REF(on_reaction_step))
 
-	update_appearance()
+	update_appearance(UPDATE_ICON_STATE)
 
 	return TRUE
 
@@ -221,6 +221,8 @@
 	.["targetTemp"] = target_temperature
 	.["isActive"] = on
 	.["upgradeLevel"] = heater_coefficient * 10
+	var/obj/item/held_item = user.get_active_held_item()
+	.["hasBeakerInHand"] = held_item?.is_chem_container() || FALSE
 
 	var/list/beaker_data = null
 	var/chem_temp = 0
@@ -321,6 +323,13 @@
 		if("eject")
 			//Eject doesn't turn it off, so you can preheat for beaker swapping
 			return replace_beaker(ui.user)
+
+		if("insert")
+			var/obj/item/reagent_containers/container = ui.user.get_active_held_item()
+			if(container?.can_insert_container(ui.user, src))
+				replace_beaker(ui.user, container)
+
+			return TRUE
 
 		if("acidBuffer")
 			var/target = params["target"]

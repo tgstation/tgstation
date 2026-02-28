@@ -233,7 +233,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		E.pixel_x = px
 
 	if(anim_flag & BUTTON_FADE_IN)
-		animate(E, alpha = 255, time = 0.15 SECONDS, easing = EASE_OUT)
+		animate(E, alpha = 255, time = 0.15 SECONDS, easing = CUBIC_EASING|EASE_OUT)
 	else
 		E.alpha = 255
 
@@ -429,7 +429,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 /// Can be provided to choices in radial menus if you want to provide more information
 /datum/radial_menu_choice
 	/// Required -- what to display for this button
-	var/image
+	var/image/image
 
 	/// If provided, this will be the name the radial slice hud button. This has priority over everything else.
 	var/name

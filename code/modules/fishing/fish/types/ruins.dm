@@ -15,8 +15,7 @@
 	required_fluid_type = AQUARIUM_FLUID_ANY_WATER
 	min_pressure = HAZARD_LOW_PRESSURE
 	max_integrity = 600
-	stable_population = 1 //This means they can only crossbreed.
-	grind_results = list(/datum/reagent/bone_dust = 5, /datum/reagent/consumable/liquidgibs = 5)
+	stable_population = 2
 	fillet_type = /obj/item/stack/sheet/bone
 	num_fillets = 2
 	feeding_frequency = 2 MINUTES
@@ -30,6 +29,9 @@
 /obj/item/fish/mastodon/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_FISH_MADE_OF_BONE, INNATE_TRAIT)
+
+/obj/item/fish/mastodon/fish_grind_results()
+	return list(/datum/reagent/bone_dust = 5, /datum/reagent/consumable/liquidgibs = 5)
 
 /obj/item/fish/mastodon/make_edible(weight_val)
 	return //it's all bones and gibs.

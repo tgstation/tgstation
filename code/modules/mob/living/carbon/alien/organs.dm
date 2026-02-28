@@ -49,7 +49,9 @@
 	max_plasma = 100
 	actions_types = list(/datum/action/cooldown/alien/transfer)
 
-/obj/item/organ/alien/plasmavessel/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/alien/plasmavessel/on_life(seconds_per_tick)
+	. = ..()
+
 	var/delta_time = DELTA_WORLD_TIME(SSmobs)
 	//Instantly healing to max health in a single tick would be silly. If it takes 8 seconds to fire, then something's fucked.
 	var/delta_time_capped = min(delta_time, 8)
@@ -62,9 +64,9 @@
 			if(!isalien(owner))
 				heal_amt *= 0.2
 			owner.adjustPlasma(0.5 * plasma_rate * delta_time_capped)
-			owner.adjustBruteLoss(-heal_amt * delta_time_capped)
-			owner.adjustFireLoss(-heal_amt * delta_time_capped)
-			owner.adjustOxyLoss(-heal_amt * delta_time_capped)
+			owner.adjust_brute_loss(-heal_amt * delta_time_capped)
+			owner.adjust_fire_loss(-heal_amt * delta_time_capped)
+			owner.adjust_oxy_loss(-heal_amt * delta_time_capped)
 	else
 		owner.adjustPlasma(0.1 * plasma_rate * delta_time)
 
@@ -101,11 +103,11 @@
 
 /obj/item/organ/alien/hivenode/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
-	organ_owner.faction |= ROLE_ALIEN
+	organ_owner.add_faction(ROLE_ALIEN)
 
 /obj/item/organ/alien/hivenode/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
 	if(organ_owner)
-		organ_owner.faction -= ROLE_ALIEN
+		organ_owner.remove_faction(ROLE_ALIEN)
 	return ..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.

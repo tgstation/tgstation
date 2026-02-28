@@ -3,7 +3,7 @@
 	desc = "A market uplink. Usable with markets. You probably shouldn't have this!"
 	icon = 'icons/obj/devices/blackmarket.dmi'
 	icon_state = "uplink"
-
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.65, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3.3)
 	// UI variables.
 	/// What category is the current uplink viewing?
 	var/viewing_category
@@ -56,7 +56,7 @@
 		current_user = null
 	data["categories"] = market ? market.categories : null
 	data["delivery_methods"] = list()
-	data["money"] = "N/A cr"
+	data["money"] = "N/A [MONEY_SYMBOL]"
 	if(current_user)
 		data["money"] = current_user.account_balance
 	data["buying"] = buying
@@ -162,7 +162,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
-/datum/crafting_recipe/blackmarket_uplink
+/datum/crafting_recipe/radio_containing/blackmarket_uplink
 	name = "Black Market Uplink"
 	result = /obj/item/market_uplink/blackmarket
 	time = 3 SECONDS
@@ -175,8 +175,3 @@
 		/obj/item/analyzer = 1
 	)
 	category = CAT_EQUIPMENT
-
-/datum/crafting_recipe/blackmarket_uplink/New()
-	..()
-	blacklist |= typesof(/obj/item/radio/headset) // because we got shit like /obj/item/radio/off ... WHY!?!
-	blacklist |= typesof(/obj/item/radio/intercom)

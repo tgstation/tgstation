@@ -82,10 +82,10 @@
 		if(duration == STATUS_EFFECT_PERMANENT)
 			return // Already paused
 
-		time_before_pause = duration - world.time
+		time_before_pause = duration
 		duration = STATUS_EFFECT_PERMANENT
 
 	// Resume if we're none of the above and also were paused
 	else if(time_before_pause != -1)
-		duration = time_before_pause + world.time
+		duration = time_before_pause
 		time_before_pause = -1

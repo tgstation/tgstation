@@ -13,6 +13,10 @@
 	/// Whether we've been wetted and are expanding
 	var/expanding = FALSE
 
+/obj/item/food/monkeycube/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, PROC_REF(on_mail_unwrap))
+
 /obj/item/food/monkeycube/attempt_pickup(mob/user)
 	if(expanding)
 		return FALSE
@@ -31,8 +35,8 @@
 	var/mob/spammer = get_mob_by_key(fingerprintslast)
 	var/mob/living/bananas = new spawned_mob(drop_location(), TRUE, spammer) // funny that we pass monkey init args to non-monkey mobs, that's totally a future issue
 	if (!QDELETED(bananas))
-		if(faction)
-			bananas.faction = faction
+		ADD_TRAIT(bananas, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
+		SET_FACTION_AND_ALLIES_FROM(bananas, src)
 
 		visible_message(span_notice("[src] expands!"))
 		bananas.log_message("spawned via [src], Last attached mob: [key_name(spammer)].", LOG_ATTACK)
@@ -76,6 +80,12 @@
 	Expand()
 	user.visible_message(span_danger("[user]'s torso bursts open as a primate emerges!"))
 	user.gib(DROP_BRAIN|DROP_BODYPARTS|DROP_ITEMS) // just remove the organs
+
+/obj/item/food/monkeycube/proc/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
+	SIGNAL_HANDLER
+	to_chat(user, span_danger("As you open [letter], its contents rapidly expand!"))
+	Expand()
+	return COMPONENT_TRAITOR_MAIL_HANDLED
 
 /obj/item/food/monkeycube/syndicate
 	faction = list(FACTION_NEUTRAL, ROLE_SYNDICATE)
@@ -124,3 +134,37 @@
 	)
 	tastes = list("the loss of 5 TC" = 1, "eaten friend" = 1)
 	spawned_mob = /mob/living/basic/pony/dangerous
+
+/obj/item/food/monkeycube/random
+	name = "monster cube"
+	desc = "A cube that, when water is added, creates a random creature. Who knows what's inside?"
+	food_reagents = list(
+		/datum/reagent/toxin = 15,
+		/datum/reagent/medicine/strange_reagent = 1,
+	)
+
+/obj/item/food/monkeycube/random/Initialize(mapload)
+	. = ..()
+	spawned_mob = pick_weight(list(
+		/mob/living/basic/bear = 4,
+		/mob/living/basic/bear/snow = 1,
+		/mob/living/basic/blankbody = 2,
+		/mob/living/basic/blob_minion/blobbernaut = 2,
+		/mob/living/basic/blob_minion/spore = 2,
+		/mob/living/basic/carp = 4,
+		/mob/living/basic/carp/mega = 1,
+		/mob/living/basic/creature = 2,
+		/mob/living/basic/eyeball = 1,
+		/mob/living/basic/gorilla = 5,
+		/mob/living/basic/migo = 2,
+		/mob/living/basic/mining/basilisk = 5,
+		/mob/living/basic/mining/lobstrosity = 1,
+		/mob/living/basic/mining/lobstrosity/lava = 4,
+		/mob/living/basic/mining/wolf = 4,
+		/mob/living/basic/pet/cat/feral = 1,
+		/mob/living/basic/spider/giant = 5,
+		/mob/living/basic/spider/giant/hunter = 1,
+		/mob/living/basic/spider/giant/tank = 1,
+		/mob/living/basic/spider/giant/tarantula = 1,
+		/mob/living/basic/spider/giant/viper = 1,
+	))

@@ -48,12 +48,10 @@
 /mob/living/basic/lightgeist/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_MEDICAL_HUD, INNATE_TRAIT)
 
 	remove_verb(src, /mob/living/verb/pulled)
 	remove_verb(src, /mob/verb/me_verb)
-
-	var/datum/atom_hud/medical_sensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	medical_sensor.show_to(src)
 
 	AddElement(/datum/element/simple_flying)
 	AddComponent(\
@@ -69,7 +67,7 @@
 /mob/living/basic/lightgeist/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	. = ..()
 	if (. && isliving(target))
-		faction |= REF(target) // Anyone we heal will treat us as a friend
+		add_ally(target) // Anyone we heal will treat us as a friend
 
 /mob/living/basic/lightgeist/ghost()
 	. = ..()
@@ -103,7 +101,7 @@
 	if (!(heal_biotypes & target.mob_biotypes))
 		return FALSE
 	if (!iscarbon(target))
-		return target.getBruteLoss() > 0 || target.getFireLoss() > 0
+		return target.get_brute_loss() > 0 || target.get_fire_loss() > 0
 	var/mob/living/carbon/carbon_target = target
 	for (var/obj/item/bodypart/part in carbon_target.bodyparts)
 		if (!part.brute_dam && !part.burn_dam)

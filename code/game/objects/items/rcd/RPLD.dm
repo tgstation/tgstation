@@ -44,7 +44,6 @@
 			/obj/machinery/plumbing/fermenter = 30,
 			/obj/machinery/plumbing/liquid_pump = 35, //extracting chemicals from ground is one way of creation
 			/obj/machinery/plumbing/disposer = 10,
-			/obj/machinery/plumbing/buffer = 10, //creates chemicals as it waits for other buffers containing other chemicals and when mixed creates new chemicals
 		),
 
 		//category 2 distributors i.e devices which inject , move around , remove chemicals from the network
@@ -62,9 +61,10 @@
 		"Storage" = list(
 			/obj/machinery/plumbing/tank = 20,
 			/obj/machinery/plumbing/acclimator = 10,
+			/obj/machinery/plumbing/buffer = 10,
 			/obj/machinery/plumbing/bottler = 50,
 			/obj/machinery/plumbing/pill_press = 20,
-			/obj/machinery/iv_drip/plumbing = 20
+			/obj/machinery/iv_drip/plumbing = 20,
 		),
 	)
 
@@ -197,26 +197,23 @@
 
 	//resource & placement sanity check before & after delay
 	var/is_allowed = TRUE
-	if(!checkResource(cost, user) || !(is_allowed = canPlace(destination)))
+	if(!useResource(cost, user, TRUE) || !(is_allowed = canPlace(destination)))
 		if(!is_allowed)
-			balloon_alert(user, "turf is blocked!")
+			balloon_alert(user, "tile is blocked!")
 		return FALSE
 	if(!build_delay(user, cost, target = destination))
 		return FALSE
-	if(!checkResource(cost, user) || !(is_allowed = canPlace(destination)))
+	if(!useResource(cost, user, TRUE) || !(is_allowed = canPlace(destination)))
 		if(!is_allowed)
-			balloon_alert(user, "turf is blocked!")
+			balloon_alert(user, "tile is blocked!")
 		return FALSE
 
-	if(!useResource(cost, user))
-		return FALSE
-	activate()
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	if(ispath(blueprint, /obj/machinery/duct))
-		var/is_omni = current_color == DUCT_COLOR_OMNI
-		new blueprint(destination, FALSE, GLOB.pipe_paint_colors[current_color], GLOB.plumbing_layers[current_layer], null, is_omni)
+		new blueprint(destination, GLOB.pipe_paint_colors[current_color], GLOB.plumbing_layers[current_layer])
 	else
-		new blueprint(destination, FALSE, GLOB.plumbing_layers[current_layer])
+		new blueprint(destination, GLOB.plumbing_layers[current_layer])
+	useResource(cost, user)
 	return TRUE
 
 /obj/item/construction/plumbing/proc/canPlace(turf/destination)
@@ -224,20 +221,7 @@
 		return FALSE
 	if(initial(blueprint.density) && destination.is_blocked_turf(exclude_mobs = FALSE, source_atom = null, ignore_atoms = null))
 		return FALSE
-	. = TRUE
-
-	var/layer_id = GLOB.plumbing_layers[current_layer]
-	for(var/obj/content_obj in destination.contents)
-		// Make sure plumbling isn't overlapping.
-		for(var/datum/component/plumbing/plumber as anything in content_obj.GetComponents(/datum/component/plumbing))
-			if(plumber.ducting_layer & layer_id)
-				return FALSE
-
-		// Make sure ducts aren't overlapping.
-		if(istype(content_obj, /obj/machinery/duct))
-			var/obj/machinery/duct/duct_machine = content_obj
-			if(duct_machine.duct_layer & layer_id)
-				return FALSE
+	return isnull(ducting_layer_check(destination, (ispath(blueprint, /obj/machinery/duct) ? 1 : -1) * GLOB.plumbing_layers[current_layer]))
 
 /obj/item/construction/plumbing/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
@@ -312,6 +296,8 @@
 	name = "service plumbing constructor"
 	desc = "A type of plumbing constructor designed to rapidly deploy the machines needed to make a brewery."
 	icon_state = "plumberer_service"
+	///Extra price because it appears in bartender's vendor
+	custom_premium_price = PAYCHECK_CREW * 6
 	///Design types for plumbing service constructor
 	var/static/list/service_design_types = list(
 		//Category 1 synthesizers

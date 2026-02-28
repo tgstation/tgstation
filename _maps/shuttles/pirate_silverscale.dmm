@@ -802,18 +802,18 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/item/ammo_box/strilka310/phasic{
+/obj/item/ammo_box/speedloader/strilka310/phasic{
 	pixel_y = -5;
 	pixel_x = 5
 	},
-/obj/item/ammo_box/strilka310/phasic{
+/obj/item/ammo_box/speedloader/strilka310/phasic{
 	pixel_x = 5
 	},
-/obj/item/ammo_box/strilka310/phasic{
+/obj/item/ammo_box/speedloader/strilka310/phasic{
 	pixel_x = -5;
 	pixel_y = -5
 	},
-/obj/item/ammo_box/strilka310/phasic{
+/obj/item/ammo_box/speedloader/strilka310/phasic{
 	pixel_x = -5
 	},
 /obj/item/gun/ballistic/rifle/boltaction/prime{

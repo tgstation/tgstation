@@ -35,7 +35,7 @@
 		playsound(living_target, 'sound/effects/magic/fireball.ogg', 20, TRUE)
 		new /obj/effect/temp_visual/fire(living_target.loc)
 		addtimer(CALLBACK(src, PROC_REF(pushback), living_target, user), 1) //no free backstabs, we push AFTER module stuff is done
-		living_target.adjustFireLoss(bonus_value, forced = TRUE)
+		living_target.adjust_fire_loss(bonus_value, forced = TRUE)
 
 /obj/item/crusher_trophy/tail_spike/proc/pushback(mob/living/target, mob/living/user)
 	if(!QDELETED(target) && !QDELETED(user) && (!target.anchored || ismegafauna(target))) //megafauna will always be pushed
@@ -150,7 +150,7 @@
 	denied_type = /obj/item/crusher_trophy/wendigo_horn
 
 /obj/item/crusher_trophy/wendigo_horn/effect_desc()
-	return "melee hits inflict twice as much damage"
+	return "melee hits to inflict twice as much damage"
 
 /obj/item/crusher_trophy/wendigo_horn/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
@@ -220,7 +220,7 @@
 	. = ..()
 	if(!prob(bonus_value) || target.stat == DEAD)
 		return
-	var/mob/living/basic/legion_brood/minion = new (user.loc)
+	var/mob/living/basic/mining/legion_brood/minion = new (user.loc)
 	minion.assign_creator(user)
 	minion.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
 
@@ -234,7 +234,7 @@
 		return
 	LivingUser.visible_message(span_boldwarning("[LivingUser] shakes the [src] and summons a legion skull!"))
 
-	var/mob/living/basic/legion_brood/minion = new (LivingUser.loc)
+	var/mob/living/basic/mining/legion_brood/minion = new (LivingUser.loc)
 	minion.assign_creator(LivingUser)
 	next_use_time = world.time + 4 SECONDS
 

@@ -165,6 +165,10 @@
 		/datum/reagent/blood = 30,
 		/datum/reagent/teslium = 1 //To shock the whole thing into life
 	)
+	parts = list(
+		/obj/item/organ/brain,
+		/obj/item/organ/heart
+	)
 	result = /mob/living/basic/pet/dog/breaddog
 	category = CAT_BREAD
 

@@ -13,7 +13,7 @@
 	severity = DISEASE_SEVERITY_HARMFUL
 	bypasses_immunity = TRUE
 
-/datum/disease/brainrot/stage_act(seconds_per_tick, times_fired) //Removed toxloss because damaging diseases are pretty horrible. Last round it killed the entire station because the cure didn't work -- Urist -ACTUALLY Removed rather than commented out, I don't see it returning - RR
+/datum/disease/brainrot/stage_act(seconds_per_tick) //Removed toxloss because damaging diseases are pretty horrible. Last round it killed the entire station because the cure didn't work -- Urist -ACTUALLY Removed rather than commented out, I don't see it returning - RR
 	. = ..()
 	if(!.)
 		return
@@ -27,14 +27,14 @@
 			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You don't feel like yourself."))
 			if(SPT_PROB(2.5, seconds_per_tick))
-				affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, 170)
+				affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 1, 170)
 		if(3)
 			if(SPT_PROB(1, seconds_per_tick))
 				affected_mob.emote("stare")
 			if(SPT_PROB(1, seconds_per_tick))
 				affected_mob.emote("drool")
 			if(SPT_PROB(5, seconds_per_tick))
-				affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2, 170)
+				affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 2, 170)
 				if(prob(2))
 					to_chat(affected_mob, span_danger("Your try to remember something important...but can't."))
 
@@ -44,7 +44,7 @@
 			if(SPT_PROB(1, seconds_per_tick))
 				affected_mob.emote("drool")
 			if(SPT_PROB(7.5, seconds_per_tick))
-				affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 170)
+				affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 3, 170)
 				if(prob(2))
 					to_chat(affected_mob, span_danger("Strange buzzing fills your head, removing all thoughts."))
 			if(SPT_PROB(1.5, seconds_per_tick))

@@ -5,6 +5,8 @@
 	//Traits that register add and remove
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_AGENDER), PROC_REF(on_agender_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AGENDER), PROC_REF(on_agender_trait_loss))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOBLOOD), PROC_REF(on_noblood_trait_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD), PROC_REF(on_noblood_trait_loss))
 
 	//Traits that register add only
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOBREATH), PROC_REF(on_nobreath_trait_gain))
@@ -12,6 +14,7 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_VIRUSIMMUNE), PROC_REF(on_virusimmune_trait_gain))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_TOXIMMUNE), PROC_REF(on_toximmune_trait_gain))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_GENELESS), PROC_REF(on_geneless_trait_gain))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NO_SPLIT_PERSONALITY), PROC_REF(on_no_split_personality_trait_gain))
 
 /**
  * On gain of TRAIT_AGENDER
@@ -35,6 +38,26 @@
 	to_update.apply_to_mob(src, src.dna.unique_identity)
 
 /**
+ * On gain of TRAIT_NOBLOOD
+ *
+ * This will make the mob update its blood state.
+ */
+/mob/living/carbon/proc/on_noblood_trait_gain(datum/source)
+	SIGNAL_HANDLER
+
+	update_blood_status()
+
+/**
+ * On removal of TRAIT_NOBLOOD
+ *
+ * This will make the mob update its blood state.
+ */
+/mob/living/carbon/proc/on_noblood_trait_loss(datum/source)
+	SIGNAL_HANDLER
+
+	update_blood_status()
+
+/**
  * On gain of TRAIT_NOBREATH
  *
  * This will clear all alerts and moods related to breathing.
@@ -42,7 +65,7 @@
 /mob/living/carbon/proc/on_nobreath_trait_gain(datum/source)
 	SIGNAL_HANDLER
 
-	setOxyLoss(0, updating_health = TRUE, forced = TRUE)
+	set_oxy_loss(0, updating_health = TRUE, forced = TRUE)
 	losebreath = 0
 	failed_last_breath = FALSE
 
@@ -73,7 +96,7 @@
 /mob/living/carbon/proc/on_liverless_metabolism_trait_gain(datum/source)
 	SIGNAL_HANDLER
 
-	for(var/addiction_type in subtypesof(/datum/addiction))
+	for(var/addiction_type in GLOB.addictions)
 		mind?.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
 
 	reagents.end_metabolization(keep_liverless = TRUE)
@@ -97,7 +120,7 @@
 /mob/living/carbon/proc/on_toximmune_trait_gain(datum/source)
 	SIGNAL_HANDLER
 
-	setToxLoss(0, updating_health = TRUE, forced = TRUE)
+	set_tox_loss(0, updating_health = TRUE, forced = TRUE)
 
 /**
  * On gain of TRAIT_GENELLESS
@@ -108,3 +131,17 @@
 	SIGNAL_HANDLER
 
 	dna?.remove_all_mutations()
+
+/**
+ * On gain of TRAIT_NO_SPLIT_PERSONALITY
+ *
+ * This will make the mob lose the split personality trauma if they have it.
+ */
+/mob/living/carbon/proc/on_no_split_personality_trait_gain(datum/source)
+	SIGNAL_HANDLER
+
+	cure_trauma_type(/datum/brain_trauma/severe/split_personality, TRAUMA_LIMIT_ABSOLUTE)
+
+/mob/living/carbon/on_hearing_loss(datum/source)
+	. = ..()
+	breathing_loop.stop()

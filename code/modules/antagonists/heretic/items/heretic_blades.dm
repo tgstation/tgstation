@@ -54,6 +54,9 @@
 	return .
 
 /obj/item/melee/sickly_blade/attack_self(mob/user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	if(heretic_datum?.unlimited_blades)
+		return
 	if(HAS_TRAIT(user, TRAIT_ELDRITCH_ARENA_PARTICIPANT))
 		user.balloon_alert(user, "can't escape!")
 		if(escape_attempts > 2)
@@ -78,7 +81,7 @@
 
 /// Attempts to teleport the passed mob to somewhere safe on the station, if they can use the blade.
 /obj/item/melee/sickly_blade/proc/seek_safety(mob/user)
-	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
+	var/turf/safe_turf = find_safe_turf(z, extended_safety_checks = TRUE)
 	if(check_usability(user))
 		if(do_teleport(user, safe_turf, channel = TELEPORT_CHANNEL_MAGIC))
 			to_chat(user, span_warning("As you shatter [src], you feel a gust of energy flow through your body. [after_use_message]"))
@@ -163,23 +166,20 @@
 
 /obj/item/melee/sickly_blade/dark/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(!infused || target == user || !isliving(target))
+	if(!infused || target == user || !isliving(target) || QDELETED(target))
 		return
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	var/mob/living/living_target = target
 	if(!heretic_datum)
 		return
 
-	//Apply our heretic mark
-	var/datum/heretic_knowledge/mark/blade_mark/mark_to_apply = heretic_datum.get_knowledge(/datum/heretic_knowledge/mark/blade_mark)
+	// Apply our heretic mark
+	var/datum/heretic_knowledge/limited_amount/starting/base_blade/mark_to_apply = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/starting/base_blade)
 	if(!mark_to_apply)
 		return
 	mark_to_apply.create_mark(user, living_target)
-
-	//Remove the infusion from any blades we own (and update their sprite)
-	for(var/obj/item/melee/sickly_blade/dark/to_infuse in user.get_all_contents_type(/obj/item/melee/sickly_blade/dark))
-		to_infuse.infused = FALSE
-		to_infuse.update_appearance(UPDATE_ICON)
+	infused = FALSE
+	update_appearance(UPDATE_ICON)
 	user.update_held_items()
 
 	if(!check_behind(user, living_target))
@@ -279,7 +279,7 @@
 	else if(prob(15))
 		to_chat(user, span_big(span_hypnophrase("LW'NAFH'NAHOR UH'ENAH'YMG EPGOKA AH NAFL MGEMPGAH'EHYE")))
 		to_chat(user, span_danger("Horrible, unintelligible utterances flood your mind!"))
-		user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15) // This can kill you if you ignore it
+		user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 15) // This can kill you if you ignore it
 	return TRUE
 
 /obj/item/melee/sickly_blade/cursed/equipped(mob/user, slot)
@@ -303,6 +303,11 @@
 		heretic_datum.try_draw_rune(user, target, drawing_time = 14 SECONDS) // Faster than pen, slower than cicatrix
 		return ITEM_INTERACT_BLOCKING
 	return NONE
+
+/obj/item/melee/sickly_blade/cursed/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
+	return ..()
 
 // Weaker blade variant given to people so they can participate in the heretic arena spell
 /obj/item/melee/sickly_blade/training

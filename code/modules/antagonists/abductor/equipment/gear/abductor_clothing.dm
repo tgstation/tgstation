@@ -160,7 +160,7 @@
 			to_chat(loc, span_warning("Combat injection is still recharging."))
 			return
 		var/mob/living/carbon/human/wearer = loc
-		wearer.adjustStaminaLoss(-75)
+		wearer.adjust_stamina_loss(-75)
 		wearer.SetUnconscious(0)
 		wearer.SetStun(0)
 		wearer.SetKnockdown(0)

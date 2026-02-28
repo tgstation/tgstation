@@ -76,9 +76,8 @@
 /obj/item/storage/part_replacer/bluespace/play_rped_effect()
 	if(prob(1))
 		playsound(src, 'sound/items/pshoom/pshoom_2.ogg', 40, TRUE)
-		flick("[icon_state]_old", src)
-		return
-	playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, TRUE)
+	else
+		playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, TRUE)
 	flick("[icon_state]_active", src)
 
 /**
@@ -91,10 +90,10 @@
 
 	if(istype(inserted_component, /obj/item/stock_parts/power_store))
 		var/obj/item/stock_parts/power_store/inserted_cell = inserted_component
-		if(inserted_cell.rigged || inserted_cell.corrupted)
-			message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
-			usr.log_message("has inserted rigged/corrupted [inserted_cell] into [src].", LOG_GAME)
-			usr.log_message("inserted rigged/corrupted [inserted_cell] into [src]", LOG_ATTACK)
+		if(inserted_cell.corrupted)
+			message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted corrupted [inserted_cell] into [src].")
+			usr.log_message("has inserted corrupted [inserted_cell] into [src].", LOG_GAME)
+			usr.log_message("inserted corrupted [inserted_cell] into [src]", LOG_ATTACK)
 		return
 
 	var/datum/reagents/target_holder = inserted_component.reagents
@@ -170,3 +169,8 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	storage_type = /datum/storage/rped/bluespace
+
+/obj/item/storage/part_replacer/cyborg/small
+	desc = "Special mechanical module made to store, sort, and apply standard machine parts. This one has as much space, as your regular RPED"
+	icon_state = "RPED"
+	storage_type = /datum/storage/rped

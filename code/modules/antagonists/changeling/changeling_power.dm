@@ -3,6 +3,7 @@
  */
 
 /datum/action/changeling
+	abstract_type = /datum/action/changeling
 	name = "Prototype Sting - Debug button, ahelp this"
 	background_icon_state = "bg_changeling"
 	overlay_icon_state = "bg_changeling_border"
@@ -34,6 +35,8 @@
 	var/active = FALSE
 	/// Does this ability stop working if you are burning?
 	var/disabled_by_fire = TRUE
+	///Defines the ability category: 'stings', 'combat', 'stealth', 'utility'
+	var/category = "utility"
 
 /*
 changeling code now relies on on_purchase to grant powers.

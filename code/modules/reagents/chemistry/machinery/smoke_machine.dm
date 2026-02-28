@@ -30,21 +30,13 @@
 	opacity = FALSE
 	alpha = 100
 
-/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/set_up(range = 1, amount = DIAMOND_AREA(range), atom/holder, atom/location, datum/reagents/carry, efficiency = 10, silent = FALSE)
-	src.holder = holder
-	src.location = get_turf(location)
-	src.amount = amount
-	if(carry)
-		carry.trans_to(chemholder, 20, copy_only = TRUE)
-		carry.remove_all(amount / efficiency)
-
 /obj/machinery/smoke_machine/Initialize(mapload)
 	create_reagents(REAGENTS_BASE_VOLUME, INJECTABLE)
 
 	. = ..()
 
-	AddComponent(/datum/component/plumbing/simple_demand)
-	AddComponent(/datum/component/simple_rotation)
+	AddComponent(/datum/component/plumbing/simple_demand, distinct_reagent_cap = 5)
+	AddElement(/datum/element/simple_rotation)
 
 	register_context()
 
@@ -77,7 +69,7 @@
 	. += span_notice("Reagent capacity <b>[reagents.total_volume]/[reagents.maximum_volume]</b>.")
 	. += span_notice("Operating at <b>[round((efficiency / 26) * 100)]%</b> efficiency.")
 
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 	if(panel_open)
 		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
 
@@ -163,12 +155,14 @@
 		return PROCESS_KILL
 
 	var/turf/location = get_turf(src)
-	if(!(locate(/obj/effect/particle_effect/fluid/smoke) in location))
-		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/smoke = new()
-		smoke.set_up(setting * 3, holder = src, location = location, carry = reagents, efficiency = efficiency)
-		smoke.start()
-		use_energy(active_power_usage * (setting / max_range))
-		update_appearance(UPDATE_ICON_STATE)
+	if(locate(/obj/effect/particle_effect/fluid/smoke) in location)
+		return
+
+	var/smoke_amount = DIAMOND_AREA(setting * 3)
+	do_chem_smoke(amount = smoke_amount, holder = src, location = location, carry = reagents, carry_limit = 20, smoke_type = /datum/effect_system/fluid_spread/smoke/chem/smoke_machine)
+	reagents.remove_all(smoke_amount / efficiency)
+	use_energy(active_power_usage * (setting / max_range))
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/smoke_machine/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

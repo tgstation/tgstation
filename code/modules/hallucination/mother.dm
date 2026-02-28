@@ -6,6 +6,9 @@
 	var/obj/effect/client_image_holder/hallucination/your_mother/mother
 
 /datum/hallucination/your_mother/start()
+	if(!hallucinator.client || hallucinator.stat >= UNCONSCIOUS)
+		return FALSE
+
 	var/list/spawn_locs = list()
 	for(var/turf/open/floor in view(hallucinator, 4))
 		if(floor.is_blocked_turf(exclude_mobs = TRUE))
@@ -39,7 +42,7 @@
 	var/obj/visual = image('icons/hud/screen_gen.dmi', mother.loc, "arrow", FLY_LAYER)
 
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), visual, list(hallucinator.client), 2.5 SECONDS)
-	animate(visual, pixel_x = (tile.x - mother.x) * ICON_SIZE_X, pixel_y = (tile.y - mother.y) * ICON_SIZE_Y, time = 1.7, easing = EASE_OUT)
+	animate(visual, pixel_x = (tile.x - mother.x) * ICON_SIZE_X, pixel_y = (tile.y - mother.y) * ICON_SIZE_Y, time = 1.7, easing = QUAD_EASING|EASE_OUT)
 
 /datum/hallucination/your_mother/proc/talk(text)
 	var/plus_runechat = hallucinator.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat)

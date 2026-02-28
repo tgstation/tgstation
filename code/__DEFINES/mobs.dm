@@ -3,8 +3,8 @@
 //Misc mob defines
 
 //Ready states at roundstart for mob/dead/new_player
-#define PLAYER_NOT_READY 0
-#define PLAYER_READY_TO_PLAY 1
+#define PLAYER_NOT_READY "Not Ready"
+#define PLAYER_READY_TO_PLAY "Ready"
 
 //movement intent defines for the move_intent var
 #define MOVE_INTENT_WALK "walk"
@@ -124,6 +124,8 @@
 #define MOB_MINING (1 << 13)
 ///The mob is a crustacean. Like crabs. Or lobsters.
 #define MOB_CRUSTACEAN (1 << 14)
+///The mob is all boney
+#define MOB_SKELETAL (1 << 15)
 
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)
@@ -160,6 +162,8 @@
 #define BODYSHAPE_DIGITIGRADE (1<<2)
 ///The limb is snouted.
 #define BODYSHAPE_SNOUTED (1<<3)
+/// Golem's wacky rocky limbs
+#define BODYSHAPE_GOLEM (1<<4)
 
 #define BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE (BODYTYPE_ROBOTIC | BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_GOLEM | BODYTYPE_PEG)
 #define BODYTYPE_CAN_BE_BIOSCRAMBLED(bodytype) (!(bodytype & BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE))
@@ -177,7 +181,6 @@
 #define SPECIES_HUMAN "human"
 #define SPECIES_JELLYPERSON "jelly"
 #define SPECIES_SLIMEPERSON "slime"
-#define SPECIES_SPIRIT "spirit"
 #define SPECIES_LUMINESCENT "luminescent"
 #define SPECIES_STARGAZER "stargazer"
 #define SPECIES_LIZARD "lizard"
@@ -206,6 +209,7 @@
 #define BODYPART_ID_PSYKER "psyker"
 #define BODYPART_ID_MEAT "meat"
 #define BODYPART_ID_PEG "peg"
+#define BODYPART_ID_BONE "bone"
 
 
 //See: datum/species/var/digitigrade_customization
@@ -476,11 +480,11 @@
 /// How much nutrition eating clothes as moth gives and drains
 #define CLOTHING_NUTRITION_GAIN 15
 #define REAGENTS_METABOLISM 0.2 //How many units of reagent are consumed per second, by default.
-#define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4) // By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
+#define REAGENTS_EFFECT_MULTIPLIER (1 / (REAGENTS_METABOLISM * SSMOBS_DT)) // When multiplied with the volume of reagent metabolized you get an value from 0->1 to scale all reagent affects
 #define REM REAGENTS_EFFECT_MULTIPLIER //! Shorthand for the above define for ease of use in equations and the like
 
 // Eye protection
-// THese values are additive to determine your overall flash protection.
+// These values are additive to determine your overall flash protection.
 #define FLASH_PROTECTION_HYPER_SENSITIVE -2
 #define FLASH_PROTECTION_SENSITIVE -1
 #define FLASH_PROTECTION_NONE 0
@@ -488,6 +492,29 @@
 #define FLASH_PROTECTION_WELDER 2
 #define FLASH_PROTECTION_WELDER_SENSITIVE 3
 #define FLASH_PROTECTION_WELDER_HYPER_SENSITIVE 4
+
+/**
+ * Ear protection
+ * These values are additive to determine your overall ear/soundbang protection
+ */
+#define EAR_PROTECTION_NONE 0
+#define EAR_PROTECTION_NORMAL 1
+#define EAR_PROTECTION_HEAVY 2
+#define EAR_PROTECTION_VACUUM 3
+#define EAR_PROTECTION_FULL INFINITY
+
+/**
+ * Soundbang defines
+ * These values are used as argument to determine the strength of the soundbang_act call
+ */
+///Soundbang strength for most things like flashbangs, honkblasts and harm control modules
+#define SOUNDBANG_NORMAL 1
+///Soundbang strength for things like flashbangs in proximity and emagged harm alarm megaphones, cannot be countered by standard ear protection equipment
+#define SOUNDBANG_STRONG 2
+///Soundbang strength for things like changeling shrieks, which can affect robots and aliens as well.
+#define SOUNDBANG_MASSIVE 3
+///Soundbang strength for anything that cannot be stopped unless you're stacked on multiple effects and equipment to counter it (or are simply deaf)
+#define SOUNDBANG_OVERWHELMING 4
 
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY 5
@@ -554,9 +581,10 @@
 #define DEFIB_FAIL_NO_INTELLIGENCE (1<<8)
 #define DEFIB_FAIL_BLACKLISTED (1<<9)
 #define DEFIB_NOGRAB_AGHOST (1<<10)
+#define DEFIB_FAIL_GOLEM (1<<11)
 
 // Bit mask of possible return values by can_defib that would result in a revivable patient
-#define DEFIB_REVIVABLE_STATES (DEFIB_FAIL_NO_HEART | DEFIB_FAIL_FAILING_HEART | DEFIB_FAIL_HUSK | DEFIB_FAIL_TISSUE_DAMAGE | DEFIB_FAIL_FAILING_BRAIN | DEFIB_POSSIBLE)
+#define DEFIB_REVIVABLE_STATES (DEFIB_FAIL_NO_HEART | DEFIB_FAIL_FAILING_HEART | DEFIB_FAIL_HUSK | DEFIB_FAIL_TISSUE_DAMAGE | DEFIB_FAIL_FAILING_BRAIN | DEFIB_FAIL_GOLEM | DEFIB_POSSIBLE)
 
 #define SLEEP_CHECK_DEATH(X, A) \
 	sleep(X); \
@@ -623,7 +651,7 @@
 #define AI_EMOTION_UNSURE "Unsure"
 #define AI_EMOTION_CONFUSED "Confused"
 #define AI_EMOTION_SAD "Sad"
-#define AI_EMOTION_BSOD "BSOD"
+#define AI_EMOTION_BSOD "BSOD" //It is used only on EMP pulse displays.
 #define AI_EMOTION_BLANK "Blank"
 #define AI_EMOTION_PROBLEMS "Problems?"
 #define AI_EMOTION_AWESOME "Awesome"
@@ -633,6 +661,8 @@
 #define AI_EMOTION_DORFY "Dorfy"
 #define AI_EMOTION_BLUE_GLOW "Blue Glow"
 #define AI_EMOTION_RED_GLOW "Red Glow"
+#define AI_EMOTION_DEAD "Dead" //This one is used when deactivating the AI
+#define AI_EMOTION_DOWNLOAD "Download"
 
 // Defines for AI holograms
 #define AI_HOLOGRAM_CATEGORY_ANIMAL "Animal"
@@ -668,8 +698,8 @@
 #define GET_TARGETS_FROM(who) (who.targets_from ? who.get_targets_from() : who)
 
 //defines for grad_color and grad_styles list access keys
-#define GRADIENT_HAIR_KEY 1
-#define GRADIENT_FACIAL_HAIR_KEY 2
+#define GRADIENT_HAIR_KEY "1"
+#define GRADIENT_FACIAL_HAIR_KEY "2"
 
 // /datum/sprite_accessory/gradient defines
 #define GRADIENT_APPLIES_TO_HAIR (1<<0)
@@ -710,55 +740,57 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 /// Total number of layers for mob overlays
 /// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK
 /// Also consider updating layers_to_offset
-#define TOTAL_LAYERS 38
+#define TOTAL_LAYERS 39
 /// Mutations layer - Tk headglows, cold resistance glow, etc
-#define MUTATIONS_LAYER 37
+#define MUTATIONS_LAYER 38
 /// Mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODY_BEHIND_LAYER 36
+#define BODY_BEHIND_LAYER 37
 /// Layer for bodyparts that should appear behind every other bodypart - Mostly, legs when facing WEST or EAST
-#define BODYPARTS_LOW_LAYER 35
+#define BODYPARTS_LOW_LAYER 36
 /// Layer for most bodyparts, appears above BODYPARTS_LOW_LAYER and below BODYPARTS_HIGH_LAYER
-#define BODYPARTS_LAYER 34
+#define BODYPARTS_LAYER 35
 /// Mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_ADJ_LAYER 33
+#define BODY_ADJ_LAYER 34
 /// Underwear, undershirts, socks
-#define BODY_LAYER 32
+#define BODY_LAYER 33
 /// Eyes and eyelids
-#define EYES_LAYER 31
+#define EYES_LAYER 32
 /// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define FRONT_MUTATIONS_LAYER 30
+#define FRONT_MUTATIONS_LAYER 31
 /// Damage indicators (cuts and burns)
-#define DAMAGE_LAYER 29
+#define DAMAGE_LAYER 30
 /// Jumpsuit clothing layer
-#define UNIFORM_LAYER 28
+#define UNIFORM_LAYER 29
 /// ID card layer
-#define ID_LAYER 27
+#define ID_LAYER 28
 /// ID card layer (might be deprecated)
-#define ID_CARD_LAYER 26
+#define ID_CARD_LAYER 27
 /// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
-#define BODYPARTS_HIGH_LAYER 25
+#define BODYPARTS_HIGH_LAYER 26
 /// Gloves layer
-#define GLOVES_LAYER 24
+#define GLOVES_LAYER 25
 /// Shoes layer
-#define SHOES_LAYER 23
+#define SHOES_LAYER 24
 /// Layer for masks that are worn below ears and eyes (like Balaclavas) (layers below hair, use flagsinv=HIDEHAIR as needed)
-#define LOW_FACEMASK_LAYER 22
+#define LOW_FACEMASK_LAYER 23
 /// Ears layer (Spessmen have ears? Wow)
-#define EARS_LAYER 21
+#define EARS_LAYER 22
 /// Layer for neck apperal that should appear below the suit slot (like neckties)
-#define LOW_NECK_LAYER 20
+#define LOW_NECK_LAYER 21
 /// Suit layer (armor, coats, etc.)
-#define SUIT_LAYER 19
+#define SUIT_LAYER 20
 /// Glasses layer
-#define GLASSES_LAYER 18
+#define GLASSES_LAYER 19
 /// Belt layer
-#define BELT_LAYER 17 //Possible make this an overlay of something required to wear a belt?
+#define BELT_LAYER 18 //Possible make this an overlay of something required to wear a belt?
 /// Suit storage layer (tucking a gun or baton underneath your armor)
-#define SUIT_STORE_LAYER 16
+#define SUIT_STORE_LAYER 17
 /// Neck layer (for wearing capes and bedsheets)
-#define NECK_LAYER 15
+#define NECK_LAYER 16
 /// Back layer (for backpacks and equipment on your back)
-#define BACK_LAYER 14
+#define BACK_LAYER 15
+/// Special layer for rendering beneath hair, for special facemasks
+#define BENEATH_HAIR_LAYER 14
 /// Hair layer (mess with the fro and you got to go!)
 #define HAIR_LAYER 13 //TODO: make part of head layer?
 /// Facemask layer (gas masks, breath masks, etc.)
@@ -800,6 +832,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	"[HEAD_LAYER]" = UPPER_BODY,
 	// Hair will get cut off by filter
 	"[HAIR_LAYER]" = UPPER_BODY,
+	"[BENEATH_HAIR_LAYER]" = UPPER_BODY,
 	// Long belts (sabre sheathe) will get cut off by filter
 	"[BELT_LAYER]" = LOWER_BODY,
 	// Everything below looks fine with or without a filter, so we can skip it and just offset
@@ -1023,7 +1056,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define MINING_MOB_PROJECTILE_VULNERABILITY list(BRUTE)
 
 /// Helper macro that determines if the mob is at the threshold to start vomitting due to high toxin levels
-#define AT_TOXIN_VOMIT_THRESHOLD(mob) (mob.getToxLoss() > 45 && mob.nutrition > 20)
+#define AT_TOXIN_VOMIT_THRESHOLD(mob) (mob.get_tox_loss() > 45 && mob.nutrition > 20)
 
 /// The duration of the flip emote animation
 #define FLIP_EMOTE_DURATION 0.7 SECONDS

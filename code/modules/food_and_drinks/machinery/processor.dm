@@ -207,9 +207,7 @@
 
 /obj/machinery/processor/slime/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/slime_processor,
-	))
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/slime_processor), only_root_path = TRUE))
 
 /obj/machinery/processor/slime/adjust_item_drop_location(atom/movable/atom_to_drop)
 	var/static/list/slimecores = subtypesof(/obj/item/slime_extract)
@@ -232,7 +230,7 @@
 	/// We pick up a number of slimes equal to the rating of the matter bin
 	var/slimes_picked = 0
 	for(var/mob/living/basic/slime/slime in range(1,src))
-		if(!CanReach(slime)) //don't take slimes behind glass panes or somesuch; also makes it ignore slimes inside the processor
+		if(!slime.IsReachableBy(src)) //don't take slimes behind glass panes or somesuch; also makes it ignore slimes inside the processor
 			continue
 		if(slime.stat)
 			var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(slime)

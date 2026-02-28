@@ -12,6 +12,7 @@
 	possible_transfer_amounts = list(20, 40, 60, 120)
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
 	w_class = WEIGHT_CLASS_SMALL // Organs are small by default, so the jar should be at least small as well
+	can_lid = FALSE
 	/// The organ that is currently inside the jar
 	var/obj/item/organ/held_organ = null
 	/// Whether the jar is filled to capacity with formaldehyde, preserving any organ inside
@@ -43,12 +44,11 @@
 // Clicking on the jar with an organ lets you put the organ inside, if there isn't one already
 // Otherwise it should act like a normal bottle
 /obj/item/reagent_containers/cup/beaker/organ_jar/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
 	if(!istype(tool, /obj/item/organ))
-		return
+		return ..()
 	if(held_organ)
 		balloon_alert(user, "the jar already contains [held_organ]")
-		return  ITEM_INTERACT_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING

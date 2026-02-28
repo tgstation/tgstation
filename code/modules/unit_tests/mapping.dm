@@ -1,9 +1,9 @@
 /// Conveys all log_mapping messages as unit test failures, as they all indicate mapping problems.
-/datum/unit_test/log_mapping
+/datum/unit_test/maptest_log_mapping
 	// Happen before all other tests, to make sure we only capture normal mapping logs.
 	priority = TEST_PRE
 
-/datum/unit_test/log_mapping/Run()
+/datum/unit_test/maptest_log_mapping/Run()
 	var/static/regex/test_areacoord_regex = regex(@"\(-?\d+,-?\d+,(-?\d+)\)")
 
 	for(var/log_entry in GLOB.unit_test_mapping_logs)

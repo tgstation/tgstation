@@ -753,7 +753,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 /// # If you already have a human and need to get its flat icon, call `get_flat_existing_human_icon()` instead.
 /// For creating consistent icons for human looking simple animals.
-/proc/get_flat_human_icon(icon_id, datum/job/job, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals, outfit_override = null)
+/proc/get_flat_human_icon(icon_id, datum/job/job, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals, outfit_override = null, no_anim = FALSE)
 	var/static/list/humanoid_icon_cache = list()
 	if(icon_id && humanoid_icon_cache[icon_id])
 		return humanoid_icon_cache[icon_id]
@@ -771,7 +771,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 	var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 	for(var/direction in showDirs)
-		var/icon/partial = getFlatIcon(body, defdir = direction)
+		var/icon/partial = getFlatIcon(body, defdir = direction, no_anim = no_anim)
 		out_icon.Insert(partial, dir = direction)
 
 	humanoid_icon_cache[icon_id] = out_icon
@@ -1370,3 +1370,73 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	copy.underlays = underlays_to_keep
 
 	return copy
+
+/// Returns the (isolated) security HUD icon for the given job.
+/proc/get_job_hud_icon(datum/job/job) as /icon
+	var/static/alist/icon_cache = alist()
+	if(isnull(job))
+		return
+
+	if(!is_job(job))
+		if(ispath(job, /datum/job))
+			job = SSjob.get_job_type(job)
+		else if(istext(job))
+			job = SSjob.get_job(job)
+		if(isnull(job))
+			return null
+
+	//add it to the cache if it isn't already
+	var/job_type = job.type
+	if(!icon_cache[job_type])
+		var/icon/sechud_icon = job.get_lobby_icon()
+		sechud_icon.Crop(1, 17, 8, 24)
+		icon_cache[job_type] = sechud_icon
+
+	return icon(icon_cache[job_type])
+
+/**
+ * Copies the pixel colors from the passed in icon `I` to the 2d list `grid`
+ */
+/proc/fill_grid_from_icon(list/grid, icon/I)
+	var/width = I.Width()
+	var/height = I.Height()
+	for(var/x in 1 to width)
+		for(var/y in 1 to height)
+			grid[y][x] = I.GetPixel(x,height+1-y)
+
+// Given a number of frames for an icon state, and the dimensions of the icon, returns the ideal dimensions for a DMI file
+/proc/calculate_optimal_icon_grid_dimensions(width, height, count)
+	var/grid_width = 1
+	var/grid_height = 1
+	while(grid_width * grid_height < count)
+		if(height*grid_height < width*grid_width)
+			grid_height++
+		else
+			grid_width++
+	return list(grid_height, grid_width)
+
+// Reorder the 2d pixel data of the passed in frames into a data string that can be passed to rustg_dmi_create_png
+/proc/reorder_pixels(icon_width, icon_height, grid_width, grid_height, list/frames)
+	var/file_height = icon_height * grid_height
+
+	// This little trick right here reduces the total iteration of repeat_string from the product of the arguments to their sum.
+	// Can't be applied to the general case without a complex partitioning algorithm,
+	// since the count could either be a large prime or have large primes as factors
+	var/linear_pixels = COLOR_DMI_MASK
+	for(var/count in list(icon_width, icon_height, grid_width, grid_height))
+		if(count == 1)
+			continue
+		linear_pixels = repeat_string(count, linear_pixels)
+
+	for(var/i in 1 to length(frames))
+		var/list/frame = frames[i]
+		var/row_index = floor((i-1)/grid_width)
+		var/column = (i-1)%grid_width
+		for(var/y in 1 to length(frame))
+			var/list/row = jointext(frame[y], "")
+			var/splice_start = (row_index+y-1)*file_height + column*icon_width + 1
+			linear_pixels = splicetext(splice_start*9, (splice_start+icon_width)*9, row)
+	var/zero_alpha_regex = regex(@@#(?:(?!a0a0a0)([0-9]|[a-f]){6}00)@, "gi")
+	linear_pixels = replacetext(linear_pixels, zero_alpha_regex, COLOR_DMI_MASK)
+	return linear_pixels
+

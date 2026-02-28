@@ -1,7 +1,8 @@
 // ~wound damage/rolling defines
 /// the cornerstone of the wound threshold system, your base wound roll for any attack is rand(1, damage^this), after armor reduces said damage. See [/obj/item/bodypart/proc/check_wounding]
 #define WOUND_DAMAGE_EXPONENT 1.4
-/// any damage dealt over this is ignored for damage rolls unless the target has the frail quirk (25^1.4=91, for reference)
+/// any damage dealt over this is ignored for damage rolls unless the target has the frail quirk (25^1.4=91, for reference). Does not apply if the mob has TRAIT_BLOODY_MESS.
+/// This is further affected by TRAIT_EASILY_WOUNDED increasing the max considered damage (before applying the exponent) by 50%, and TRAIT_HARDLY_WOUNDED reducing it by 50%.
 #define WOUND_MAX_CONSIDERED_DAMAGE 25
 /// an attack must do this much damage after armor in order to roll for being a wound (so pressure damage/being on fire doesn't proc it)
 #define WOUND_MINIMUM_DAMAGE 5
@@ -79,12 +80,16 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 #define BIO_FLESH (1<<1)
 /// Has metal - allows the victim to suffer robotic blunt and burn wounds
 #define BIO_METAL (1<<2)
+/// Has wood - should probably be able to catch on fire, or something
+#define BIO_WOOD (1<<3)
 /// Is wired internally - allows the victim to suffer electrical wounds (robotic T1-T3 slash/pierce)
-#define BIO_WIRED (1<<3)
+#define BIO_WIRED (1<<4)
 /// Has bloodflow - can suffer bleeding wounds and can bleed
-#define BIO_BLOODED (1<<4)
+#define BIO_BLOODED (1<<5)
 /// Is connected by a joint - can suffer T1 bone blunt wounds (dislocation)
-#define BIO_JOINTED (1<<5)
+#define BIO_JOINTED (1<<6)
+/// Skin is covered in thick chitin and is resistant to cutting
+#define BIO_CHITIN (1<<7)
 /// Robotic - can suffer all metal/wired wounds, such as: UNIMPLEMENTED PLEASE UPDATE ONCE SYNTH WOUNDS 9/5/2023 ~Niko
 #define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
 /// Has flesh and bone - See BIO_BONE and BIO_FLESH
@@ -93,6 +98,8 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 #define BIO_STANDARD_UNJOINTED (BIO_FLESH_BONE|BIO_BLOODED)
 /// Standard humanoid limbs - can bleed and suffer all flesh/bone wounds, such as: T1-3 slash/pierce/burn/blunt. Can also bleed, and be dislocated. Think human arms and legs
 #define BIO_STANDARD_JOINTED (BIO_STANDARD_UNJOINTED|BIO_JOINTED)
+/// Xenomorph limbs (xenos are immune to wounds anyhow)
+#define BIO_STANDARD_ALIEN (BIO_CHITIN|BIO_BONE|BIO_BLOODED|BIO_JOINTED)
 
 // "Where" a specific biostate is within a given limb
 // Interior is hard shit, the last line, shit like bones
@@ -114,6 +121,7 @@ GLOBAL_LIST_INIT(bio_state_anatomy, list(
 	"[BIO_METAL]" = ANATOMY_INTERIOR,
 	"[BIO_FLESH]" = ANATOMY_EXTERIOR,
 	"[BIO_BONE]" = ANATOMY_INTERIOR,
+	"[BIO_CHITIN]" = ANATOMY_EXTERIOR,
 ))
 
 // Wound series
@@ -234,7 +242,7 @@ GLOBAL_LIST_INIT(wounding_types_to_series, list(
  * severity_max to the highest wound you're willing to tolerate, and severity_pick_mode to WOUND_PICK_LOWEST_SEVERITY.
  *
  * Args:
- * * list/wounding_types: A list of wounding_types. Only wounds that accept these wound types will be considered.
+ * * wounding_type: Wounding type wounds of which we should be searching for
  * * obj/item/bodypart/part: The limb we are considering. Extremely important for biostates.
  * * severity_min: The minimum wound severity we will search for.
  * * severity_max = severity_min: The maximum wound severity we will search for.
@@ -246,23 +254,21 @@ GLOBAL_LIST_INIT(wounding_types_to_series, list(
  * Returns:
  * A randomly picked wound typepath meeting all the above criteria and being applicable to the part's biotype - or null if there were none.
  */
-/proc/get_corresponding_wound_type(list/wounding_types, obj/item/bodypart/part, severity_min, severity_max = severity_min, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, random_roll = TRUE, duplicates_allowed = FALSE, care_about_existing_wounds = TRUE)
+/proc/get_corresponding_wound_type(wounding_type, obj/item/bodypart/part, severity_min, severity_max = severity_min, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, random_roll = TRUE, duplicates_allowed = FALSE, care_about_existing_wounds = TRUE)
 	RETURN_TYPE(/datum/wound) // note that just because its set to return this doesnt mean its non-nullable
 
-	var/list/wounding_type_list = list()
-	for (var/wounding_type as anything in wounding_types)
-		wounding_type_list += GLOB.wounding_types_to_series[wounding_type]
+	var/list/wounding_type_list = GLOB.wounding_types_to_series[wounding_type]
 	if (!length(wounding_type_list))
 		return null
 
 	var/list/datum/wound/paths_to_pick_from = list()
-	for (var/series as anything in shuffle(wounding_type_list))
+	for (var/series in shuffle(wounding_type_list))
 		var/list/severity_list = GLOB.wound_series_collections[series]
 		if (!length(severity_list))
 			continue
 
 		var/picked_severity
-		for (var/severity_text as anything in shuffle(GLOB.wound_severities_chronological))
+		for (var/severity_text in shuffle(GLOB.wound_severities_chronological))
 			var/severity = text2num(severity_text)
 			if (!ISINRANGE(severity, severity_min, severity_max))
 				continue
@@ -276,7 +282,7 @@ GLOBAL_LIST_INIT(wounding_types_to_series, list(
 
 		for (var/datum/wound/iterated_path as anything in wound_typepaths)
 			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[iterated_path]
-			if (pregen_data.can_be_applied_to(part, wounding_types, random_roll = random_roll, duplicates_allowed = duplicates_allowed, care_about_existing_wounds = care_about_existing_wounds))
+			if (pregen_data.can_be_applied_to(part, wounding_type, random_roll = random_roll, duplicates_allowed = duplicates_allowed, care_about_existing_wounds = care_about_existing_wounds))
 				paths_to_pick_from[iterated_path] = wound_typepaths[iterated_path]
 
 	return pick_weight(paths_to_pick_from) // we found our winners!

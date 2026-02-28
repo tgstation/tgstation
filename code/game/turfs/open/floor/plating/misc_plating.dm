@@ -18,7 +18,7 @@
 	name = "alien floor"
 	icon_state = "alienpod1"
 	base_icon_state = "alienpod1"
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	rust_resistance = RUST_RESISTANCE_ORGANIC
 	// Not actually broken, just should never break...yeah.
 	broken = TRUE
@@ -32,7 +32,7 @@
 	name = "alien plating"
 	icon_state = "alienplating"
 	base_icon_state = "alienplating"
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	rust_resistance = RUST_RESISTANCE_ORGANIC
 	damaged_dmi = null
 

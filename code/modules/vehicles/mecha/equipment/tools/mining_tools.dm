@@ -190,7 +190,7 @@
 	target.visible_message(span_danger("[chassis] is drilling [target] with [src]!"), \
 						span_userdanger("[chassis] is drilling you with [src]!"))
 	log_combat(user, target, "drilled", "[name]", "Combat mode: [user.combat_mode ? "On" : "Off"])(DAMTYPE: [uppertext(damtype)])")
-	if(target.stat == DEAD && target.getBruteLoss() >= (target.maxHealth * 2))
+	if(target.stat == DEAD && target.get_brute_loss() >= (target.maxHealth * 2))
 		log_combat(user, target, "gibbed", name)
 		if(LAZYLEN(target.butcher_results) || LAZYLEN(target.guaranteed_butcher_results))
 			SEND_SIGNAL(src, COMSIG_MECHA_DRILL_MOB, chassis, target)
@@ -262,9 +262,8 @@
 				return FALSE
 			COOLDOWN_START(src, area_scan_cooldown, 15 SECONDS)
 			for(var/mob/living/driver in chassis.return_drivers())
-				for(var/obj/structure/ore_vent/vent as anything in range(5, chassis))
-					if(istype(vent, /obj/structure/ore_vent))
-						vent.scan_and_confirm(driver, TRUE)
+				for(var/obj/structure/ore_vent/vent in range(5, chassis))
+					vent.scan_and_confirm(driver, TRUE)
 			return TRUE
 
 #undef DRILL_BASIC

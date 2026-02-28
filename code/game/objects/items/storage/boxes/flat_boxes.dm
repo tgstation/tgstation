@@ -20,3 +20,13 @@
 	flat_box.pixel_y = pixel_y
 
 	qdel(src)
+
+/obj/item/storage/box/flat/fentanylpatches
+	name = "discrete box"
+	desc = "A small box containing a set of unmarked transdermal patches."
+	icon_state = "flat"
+
+/obj/item/storage/box/flat/fentanylpatches/Initialize(mapload)
+	. = ..()
+	for(var/i = 1 to 3)
+		new /obj/item/reagent_containers/applicator/patch/fent(src)

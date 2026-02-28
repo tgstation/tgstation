@@ -12,7 +12,7 @@
 	organ_flags = ORGAN_MINERAL
 	color = COLOR_GOLEM_GRAY
 
-/obj/item/organ/liver/golem/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
+/obj/item/organ/liver/golem/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick)
 	. = ..()
 	// parent returned COMSIG_MOB_STOP_REAGENT_TICK or we are failing
 	if((. & COMSIG_MOB_STOP_REAGENT_TICK) || (organ_flags & ORGAN_FAILING))

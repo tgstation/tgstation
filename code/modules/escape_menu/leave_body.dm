@@ -7,7 +7,7 @@
 			/* hud_owner = */ null,
 			"Back",
 			/* tooltip_text = */ null,
-			/* pixel_offset = */ list(-260, 190),
+			/* button_screen_loc = */ "TOP:-30,LEFT:30",
 			CALLBACK(src, PROC_REF(open_home_page)),
 			/* button_overlay = */ "back",
 		)
@@ -25,7 +25,7 @@
 		/* hud_owner = */ null,
 		"Suicide",
 		"Perform a dramatic suicide in game",
-		/* pixel_offset = */ list(-55, -1),
+		/* button_screen_loc = */ "CENTER:-55,CENTER:-1",
 		CALLBACK(src, PROC_REF(leave_suicide)),
 		/* button_overlay = */ dead_clown,
 	))
@@ -36,7 +36,7 @@
 			/* hud_owner = */ null,
 			"Ghost",
 			"Exit quietly, leaving your body",
-			/* pixel_offset = */ list(55, -1),
+			/* button_screen_loc = */ "CENTER:55,CENTER:-1",
 			CALLBACK(src, PROC_REF(leave_ghost)),
 			/* button_overlay = */ "ghost",
 		)

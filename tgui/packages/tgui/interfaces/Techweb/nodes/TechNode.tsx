@@ -206,7 +206,7 @@ export function TechNode(props: Props) {
             if (thisExp === null || thisExp === undefined) {
               return <LockedExperiment key={index} />;
             }
-            return <Experiment key={thisExp} exp={thisExp} />;
+            return <Experiment key={thisExp.name} exp={thisExp} />;
           })}
         </Collapsible>
       )}
@@ -221,7 +221,7 @@ export function TechNode(props: Props) {
               return <LockedExperiment key={index} />;
             }
             return (
-              <Experiment key={thisExp} exp={thisExp}>
+              <Experiment key={thisExp.name} exp={thisExp}>
                 <Box className="Techweb__ExperimentDiscount">
                   Provides a discount of {discount_experiments[k]} points to all
                   required point pools.

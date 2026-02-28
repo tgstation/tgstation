@@ -40,15 +40,10 @@
 	)
 
 	var/mob/living/living_owner = owner
-	cast_on.adjustBruteLoss(20)
-	living_owner.adjustBruteLoss(-20)
+	cast_on.adjust_brute_loss(20)
+	living_owner.adjust_brute_loss(-20)
 
-	if(!cast_on.blood_volume || !living_owner.blood_volume)
-		return TRUE
-
-	cast_on.blood_volume -= 20
-	if(living_owner.blood_volume < BLOOD_VOLUME_MAXIMUM) // we dont want to explode from casting
-		living_owner.blood_volume += 20
+	cast_on.transfer_blood_to(living_owner, 20, ignore_low_blood = TRUE, ignore_incompatibility = TRUE, transfer_viruses = FALSE)
 
 	if(!iscarbon(cast_on) || !iscarbon(owner))
 		return TRUE

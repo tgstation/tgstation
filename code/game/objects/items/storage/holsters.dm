@@ -37,9 +37,13 @@
 	desc = "A rather plain pair of shoulder holsters with a bit of insulated padding inside. Designed to hold energy weaponry. A production stamp indicates that it was shipped with a disabler."
 
 /obj/item/storage/belt/holster/energy/disabler/PopulateContents()
-	generate_items_inside(list(
-		/obj/item/gun/energy/disabler = 1,
-	),src)
+	new /obj/item/gun/energy/disabler(src)
+
+/obj/item/storage/belt/holster/energy/laser_pistol
+	desc = "A rather plain pair of shoulder holsters with a bit of insulated padding inside. Designed to hold energy weaponry. A production stamp indicates that it was shipped with a Type 5C laser pistol."
+
+/obj/item/storage/belt/holster/energy/laser_pistol/PopulateContents()
+	new /obj/item/gun/energy/laser/pistol(src)
 
 /obj/item/storage/belt/holster/energy/smoothbore
 	desc = "A rather plain pair of shoulder holsters with a bit of insulated padding inside. Designed to hold energy weaponry. Seems it was meant to fit two smoothbores."
@@ -57,7 +61,7 @@
 
 /obj/item/storage/belt/holster/detective/full/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/ammo_box/c38 = 2,
+		/obj/item/ammo_box/speedloader/c38 = 2,
 		/obj/item/gun/ballistic/revolver/c38/detective = 1,
 	), src)
 
@@ -99,9 +103,6 @@
 
 /obj/item/storage/belt/holster/nukie/cowboy/full/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/ammo_box/a357 = 2,
+		/obj/item/ammo_box/speedloader/c357 = 2,
 		/obj/item/gun/ballistic/revolver/cowboy/nuclear = 1,
 	), src)
-
-
-

@@ -16,7 +16,7 @@ import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
 
 type RadioData = {
-  freqlock: number;
+  freqlock: BooleanLike;
   frequency: number;
   minFrequency: number;
   maxFrequency: number;
@@ -26,7 +26,7 @@ type RadioData = {
   useCommand: BooleanLike;
   subspace: BooleanLike;
   subspaceSwitchable: BooleanLike;
-  channels: string[];
+  channels: Record<string, BooleanLike>;
   radio_noises: number;
 };
 
@@ -54,15 +54,13 @@ export const Radio = (props) => {
   }));
   // Calculate window height
   let height = 133;
-  if (subspace) {
-    if (channels.length > 0) {
-      height += channels.length * 25 + 8;
-    } else {
-      height += 24;
-    }
+  if (channels.length > 0) {
+    height += channels.length * 25 + 8;
+  } else if (subspace) {
+    height += 24;
   }
   return (
-    <Window width={376} height={height}>
+    <Window width={380} height={height}>
       <Window.Content>
         <Section>
           <LabeledList>
@@ -74,6 +72,7 @@ export const Radio = (props) => {
               )) || (
                 <NumberInput
                   animated
+                  tickWhileDragging
                   unit="kHz"
                   step={0.2}
                   stepPixelSize={10}
@@ -81,7 +80,7 @@ export const Radio = (props) => {
                   maxValue={maxFrequency / 10}
                   value={frequency / 10}
                   format={(value) => toFixed(value, 1)}
-                  onDrag={(value) =>
+                  onChange={(value) =>
                     act('frequency', {
                       adjust: value - frequency / 10,
                     })
@@ -142,7 +141,7 @@ export const Radio = (props) => {
                 stepPixelSize={10}
               />
             </LabeledList.Item>
-            {!!subspace && (
+            {(!!subspace || channels.length > 0) && (
               <LabeledList.Item label="Channels">
                 {channels.length === 0 && (
                   <Box inline color="bad">
@@ -162,6 +161,23 @@ export const Radio = (props) => {
                           })
                         }
                       />
+                      {!subspace && !freqlock && (
+                        <Button
+                          icon="walkie-talkie"
+                          ml={1}
+                          disabled={
+                            RADIO_CHANNELS.find((c) => c.name === channel.name)
+                              ?.freq === frequency
+                          }
+                          onClick={() =>
+                            act('tune_to_channel', {
+                              channel: channel.name,
+                            })
+                          }
+                        >
+                          Tune
+                        </Button>
+                      )}
                     </Box>
                   ))}
                 </Stack>

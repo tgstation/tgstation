@@ -231,14 +231,14 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
  * * to_check - The component to check.
  **/
 /obj/item/integrated_circuit/proc/is_duplicate(obj/item/circuit_component/to_check)
-	for(var/component as anything in attached_components)
+	for(var/component in attached_components)
 		if(component == to_check)
 			continue
 		if(istype(component, to_check.type))
 			return TRUE
 		if(istype(component, /obj/item/circuit_component/module))
 			var/obj/item/circuit_component/module/module = component
-			for(var/module_component as anything in module.internal_circuit.attached_components)
+			for(var/module_component in module.internal_circuit.attached_components)
 				if(module_component == to_check)
 					continue
 				if(istype(module_component, to_check.type))

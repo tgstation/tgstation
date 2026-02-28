@@ -1,12 +1,12 @@
-/mob/living/silicon/robot/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/silicon/robot/Life(seconds_per_tick = SSMOBS_DT)
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	. = ..()
 	handle_robot_hud_updates()
-	handle_robot_cell(seconds_per_tick, times_fired)
+	handle_robot_cell(seconds_per_tick)
 
-/mob/living/silicon/robot/proc/handle_robot_cell(seconds_per_tick, times_fired)
+/mob/living/silicon/robot/proc/handle_robot_cell(seconds_per_tick)
 	if(stat == DEAD)
 		return
 
@@ -14,9 +14,9 @@
 		if(cell?.charge)
 			low_power_mode = FALSE
 	else if(stat == CONSCIOUS)
-		use_energy(seconds_per_tick, times_fired)
+		use_energy(seconds_per_tick)
 
-/mob/living/silicon/robot/proc/use_energy(seconds_per_tick, times_fired)
+/mob/living/silicon/robot/proc/use_energy(seconds_per_tick)
 	if(cell?.charge)
 		if(cell.charge <= 0.01 * STANDARD_CELL_CHARGE)
 			drop_all_held_items()

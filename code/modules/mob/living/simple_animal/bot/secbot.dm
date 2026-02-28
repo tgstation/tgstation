@@ -20,7 +20,7 @@
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
 	bot_type = SEC_BOT
 	bot_mode_flags = ~BOT_MODE_CAN_BE_SAPIENT
-	data_hud_type = DATA_HUD_SECURITY_ADVANCED
+	data_hud_type = TRAIT_SECURITY_HUD
 	hackables = "target identification systems"
 	path_image_color = COLOR_RED
 	possessed_message = "You are a securitron! Guard the station to the best of your ability!"
@@ -33,6 +33,8 @@
 		BEEPSKY_VOICED_I_AM_THE_LAW = 'sound/mobs/non-humanoids/beepsky/iamthelaw.ogg',
 		BEEPSKY_VOICED_SECURE_DAY = 'sound/mobs/non-humanoids/beepsky/secureday.ogg',
 	)
+
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3.2)
 
 	///Whether this secbot is considered 'commissioned' and given the trait on Initialize.
 	var/commissioned = FALSE
@@ -57,10 +59,11 @@
 	var/security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_RECORDS | SECBOT_HANDCUFF_TARGET
 //	Selections: SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_WEAPONS | SECBOT_CHECK_RECORDS | SECBOT_HANDCUFF_TARGET
 
-	///On arrest, charges the violator this much. If they don't have that much in their account, they will get beaten instead
-	var/fair_market_price_arrest = 25
-	///Charged each time the violator is stunned on detain
-	var/fair_market_price_detain = 5
+	/// On arrest, charges the violator this much.
+	/// If they don't have that much in their account, they will get beaten instead
+	var/price_arrest = 0
+	/// Charged each time the violator is stunned on detain
+	var/price_detain = 0
 	///Force of the harmbaton used on them
 	var/weapon_force = 20
 	///The department the secbot will deposit collected money into
@@ -93,7 +96,7 @@
 	desc = "It's Sergeant-At-Armsky! He's a disgruntled assistant to the warden that would probably shoot you if he had hands."
 	health = 45
 	bot_mode_flags = ~(BOT_MODE_CAN_BE_SAPIENT|BOT_MODE_AUTOPATROL)
-	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS
+	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS | SECBOT_CHECK_WEAPONS
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr
 	name = "Officer Pipsqueak"
@@ -317,10 +320,7 @@
 		return ..()
 	var/mob/living/carbon/carbon_target = attack_target
 	if(!carbon_target.IsParalyzed() || !(security_mode_flags & SECBOT_HANDCUFF_TARGET))
-		if(!check_nap_violations())
-			stun_attack(attack_target, TRUE)
-		else
-			stun_attack(attack_target)
+		stun_attack(attack_target, payment_check())
 	else if(carbon_target.canBeHandcuffed() && !carbon_target.handcuffed)
 		start_handcuffing(attack_target)
 
@@ -349,7 +349,6 @@
 		return FALSE
 	if(!current_target.handcuffed)
 		current_target.set_handcuffed(new cuff_type(current_target))
-		current_target.update_handcuffed()
 		playsound(src, SFX_LAW, 50, FALSE)
 		back_to_idle()
 
@@ -406,11 +405,7 @@
 				back_to_idle()
 				return
 			if(Adjacent(target) && isturf(target.loc)) // if right next to perp
-				if(!check_nap_violations())
-					stun_attack(target, TRUE)
-				else
-					stun_attack(target)
-
+				stun_attack(target, payment_check())
 				set_anchored(TRUE)
 				return
 
@@ -447,11 +442,11 @@
 				frustration = 0
 				return
 
-			if(target.handcuffed) //no target or target cuffed? back to idle.
-				if(!check_nap_violations())
+			if(target.handcuffed) // target is cuffed, mission accomplished
+				if(payment_check()) // try to fine them - give them a love tap if they fail
 					stun_attack(target, TRUE)
-					return
-				back_to_idle()
+				else // otherwise return to idle state
+					back_to_idle()
 				return
 
 			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !HAS_TRAIT(target, TRAIT_FLOORED))) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
@@ -568,36 +563,26 @@
 			return
 		knockOver(C)
 
-/// Returns false if the current target is unable to pay the fair_market_price for being arrested/detained
-/mob/living/simple_animal/bot/secbot/proc/check_nap_violations()
-	if(!SSeconomy.full_ancap)
-		return TRUE
-	if(!target)
-		return TRUE
+/// Returns true if the current target is unable to pay to be detained/arrested
+/mob/living/simple_animal/bot/secbot/proc/payment_check()
+	var/fair_market_price = (security_mode_flags & SECBOT_HANDCUFF_TARGET) ? price_arrest : price_detain
+	if(fair_market_price <= 0)
+		return FALSE
 	if(!ishuman(target))
-		return TRUE
+		return FALSE
 	var/mob/living/carbon/human/human_target = target
 	var/obj/item/card/id/target_id = human_target.get_idcard()
 	if(!target_id)
-		say("Suspect NAP Violation: No ID card found.")
-		nap_violation(target)
-		return FALSE
+		say("Unable to pay fine: No ID card found.")
+		return TRUE
 	var/datum/bank_account/insurance = target_id.registered_account
 	if(!insurance)
-		say("Suspect NAP Violation: No bank account found.")
-		nap_violation(target)
-		return FALSE
-	var/fair_market_price = (security_mode_flags & SECBOT_HANDCUFF_TARGET ? fair_market_price_detain : fair_market_price_arrest)
-	if(!insurance.adjust_money(-fair_market_price))
-		say("Suspect NAP Violation: Unable to pay.")
-		nap_violation(target)
-		return FALSE
-	var/datum/bank_account/beepsky_department_account = SSeconomy.get_dep_account(payment_department)
-	say("Thank you for your compliance. Your account been charged [fair_market_price] credits.")
-	if(beepsky_department_account)
-		beepsky_department_account.adjust_money(fair_market_price)
+		say("Unable to pay fine: No bank account found.")
+		return TRUE
+	if(!insurance.adjust_money(-fair_market_price, "Securitron fine"))
+		say("Unable to pay fine: Not enough funds in account.")
 		return TRUE
 
-/// Does nothing
-/mob/living/simple_animal/bot/secbot/proc/nap_violation(mob/violator)
-	return
+	SSeconomy.get_dep_account(payment_department)?.adjust_money(fair_market_price)
+	say("Fine paid: Thank you for your compliance. Your account been charged [fair_market_price] [MONEY_NAME].")
+	return FALSE

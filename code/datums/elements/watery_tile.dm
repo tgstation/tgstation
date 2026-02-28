@@ -1,5 +1,11 @@
 /datum/element/watery_tile
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
+	/// List of atoms that are present in this element's turfs
+	var/list/atom/movable/wet_dogs = list()
+
+/datum/element/watery_tile/Destroy(force)
+	wet_dogs = null
+	return ..()
 
 /datum/element/watery_tile/Attach(turf/target)
 	. = ..()
@@ -22,11 +28,20 @@
 /datum/element/watery_tile/proc/enter_water(atom/source, atom/movable/entered)
 	SIGNAL_HANDLER
 
-	RegisterSignal(entered, SIGNAL_ADDTRAIT(TRAIT_IMMERSED), PROC_REF(dip_in))
-	if(isliving(entered))
-		RegisterSignal(entered, SIGNAL_REMOVETRAIT(TRAIT_IMMERSED), PROC_REF(dip_out))
+	if(QDELETED(entered) || HAS_TRAIT(entered, TRAIT_WALLMOUNTED))
+		return
+
 	if(HAS_TRAIT(entered, TRAIT_IMMERSED))
 		dip_in(entered)
+
+	if(entered in wet_dogs)
+		return
+
+	RegisterSignal(entered, SIGNAL_ADDTRAIT(TRAIT_IMMERSED), PROC_REF(dip_in))
+	RegisterSignal(entered, COMSIG_QDELETING, PROC_REF(on_content_del))
+	if(isliving(entered))
+		RegisterSignal(entered, SIGNAL_REMOVETRAIT(TRAIT_IMMERSED), PROC_REF(dip_out))
+	wet_dogs |= entered
 
 /datum/element/watery_tile/proc/dip_in(atom/movable/source)
 	SIGNAL_HANDLER
@@ -39,9 +54,14 @@
 
 /datum/element/watery_tile/proc/out_of_water(atom/source, atom/movable/gone)
 	SIGNAL_HANDLER
-	UnregisterSignal(gone, list(SIGNAL_ADDTRAIT(TRAIT_IMMERSED), SIGNAL_REMOVETRAIT(TRAIT_IMMERSED)))
+	on_content_del(gone)
 	if(isliving(gone))
 		dip_out(gone)
+
+/datum/element/watery_tile/proc/on_content_del(atom/movable/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, list(SIGNAL_ADDTRAIT(TRAIT_IMMERSED), SIGNAL_REMOVETRAIT(TRAIT_IMMERSED), COMSIG_QDELETING))
+	wet_dogs -= source
 
 /datum/element/watery_tile/proc/dip_out(mob/living/source)
 	SIGNAL_HANDLER

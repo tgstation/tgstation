@@ -3,6 +3,7 @@
 	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
 	icon_state = "sheet-metal_3"
+	abstract_type = /obj/item/stack/sheet
 	full_w_class = WEIGHT_CLASS_NORMAL
 	force = 5
 	throwforce = 5
@@ -12,19 +13,18 @@
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "smashes")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "smash")
 	novariants = FALSE
-	material_flags = MATERIAL_EFFECTS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_NO_DESCRIPTORS
 	table_type = /obj/structure/table/greyscale
 	pickup_sound = 'sound/items/handling/materials/metal_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/metal_drop.ogg'
 	sound_vary = TRUE
-	/// this is used for girders in the creation of walls/false walls
-	var/sheettype = null
+	usable_for_construction = TRUE
+	/// text string used to find typepaths used in door and wall (false and tram too) construction for door assemblies and girders respectively
+	var/construction_path_type = null
 	///If true, this is worth points in the gulag labour stacker
 	var/gulag_valid = FALSE
 	///Set to true if this is vended from a material storage
 	var/manufactured = FALSE
-	///What type of wall does this sheet spawn
-	var/walltype
 	/// whether this sheet can be sniffed by the material sniffer
 	var/sniffable = FALSE
 
@@ -43,7 +43,24 @@
 /obj/item/stack/sheet/examine(mob/user)
 	. = ..()
 	if (manufactured && gulag_valid)
-		. += "It has been embossed with a manufacturer's mark of guaranteed quality."
+		. += span_notice("It has been embossed with a manufacturer's mark of guaranteed quality.")
+
+	var/datum/material/material = get_master_material()
+	if (!HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER) || !material)
+		return
+
+	var/list/material_string = list()
+	for (var/prop_id in material.mat_properties)
+		var/datum/material_property/property = SSmaterials.properties[prop_id]
+		var/prop_value = material.get_property(prop_id)
+		if (isnull(prop_value)) // Error?
+			continue
+		var/descriptor = property?.get_descriptor(prop_value)
+		if (descriptor) // Overriden derivative property?
+			material_string += span_tooltip("[property]: [prop_value < 0 ? "-" : ""]\Roman[round(abs(prop_value), 1)]", descriptor)
+
+	if (length(material_string))
+		. += span_info("[capitalize(material.name)] is [english_list(material_string)].")
 
 /obj/item/stack/sheet/add(_amount)
 	. = ..()

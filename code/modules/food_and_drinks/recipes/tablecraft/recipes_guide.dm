@@ -9,12 +9,8 @@
 	)
 	result = /obj/item/knife/shiv
 	category = CAT_WEAPON_MELEE
+	non_craftable = TRUE
 	steps = list("Use cloth on a glass shard of any type")
-
-/datum/crafting_recipe/restraints
-	reqs = list(/obj/item/stack/cable_coil = 15)
-	result = /obj/item/restraints/handcuffs/cable
-	category = CAT_TOOLS
 
 /datum/crafting_recipe/runed_metal
 	reqs = list(/obj/item/stack/sheet/plasteel = 1)
@@ -56,7 +52,7 @@
  */
 /datum/crafting_recipe/food/reaction/proc/setup_chemical_reaction_details(datum/chemical_reaction/chemical_reaction)
 	reqs = chemical_reaction.required_reagents?.Copy()
-	chem_catalysts = chemical_reaction.required_catalysts?.Copy()
+	chem_catalysts = LAZYLISTDUPLICATE(chemical_reaction.required_catalysts)
 	if(isnull(result) && length(chemical_reaction.results))
 		result = chemical_reaction.results[1]
 		result_amount = chemical_reaction.results[result]
@@ -135,6 +131,7 @@
 /datum/crafting_recipe/food/reaction/cakebatter/vegan
 	name = "Cake batter (vegan)"
 	reaction = /datum/chemical_reaction/food/cakebatter/vegan
+	result = /obj/item/food/cakebatter/vegan
 
 /datum/crafting_recipe/food/reaction/pancakebatter
 	result = /datum/reagent/consumable/pancakebatter
@@ -453,7 +450,7 @@
 
 /datum/crafting_recipe/food/grill/grilled_cheese_sandwich
 	reqs = list(/obj/item/food/sandwich/cheese = 1)
-	result = /obj/item/food/sandwich/cheese/grilled
+	result = /obj/item/food/sandwich/grilled_cheese
 	category = CAT_SANDWICH
 
 /datum/crafting_recipe/food/grill/grilled_cheese

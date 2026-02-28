@@ -12,6 +12,7 @@
 	can_assign_self_objectives = TRUE
 	ui_name = "AntagInfoNinja"
 	default_custom_objective = "Destroy vital station infrastructure, without being seen."
+	desensitized_modifier = DESENSITIZED_THRESHOLD
 	///Whether or not this ninja will obtain objectives
 	var/give_objectives = TRUE
 
@@ -24,7 +25,7 @@
  * * Returns a proc call on the given human which will equip them with all the gear.
  */
 /datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/ninja = owner.current)
-	return ninja.equipOutfit(/datum/outfit/ninja)
+	return ninja.equip_species_outfit(/datum/outfit/ninja)
 
 /**
  * Proc that adds the proper memories to the antag datum

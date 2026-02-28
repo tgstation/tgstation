@@ -1,6 +1,6 @@
 import { binaryInsertWith } from 'common/collections';
 import { sortBy } from 'es-toolkit';
-import type { ReactNode } from 'react';
+import { type ReactNode, useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Box, Flex, Tooltip } from 'tgui-core/components';
 
@@ -97,10 +97,23 @@ export function GamePreferencesPage(props) {
     );
   }
 
-  const gamePreferenceEntries: [string, ReactNode][] = sortByName(
+  const [searchText, setSearchText] = useState('');
+
+  const gamePreferenceEntries: [string, ReactNode[]][] = sortByName(
     Object.entries(gamePreferences),
   ).map(([category, preferences]) => {
-    return [category, preferences.map((entry) => entry.children)];
+    return [
+      category,
+      preferences
+        .filter((entry) => {
+          return (
+            !searchText ||
+            searchText.length < 2 ||
+            entry.name.toLowerCase().includes(searchText.toLowerCase())
+          );
+        })
+        .map((entry) => entry.children),
+    ];
   });
 
   return (
@@ -109,6 +122,8 @@ export function GamePreferencesPage(props) {
       contentProps={{
         fontSize: 1.5,
       }}
+      searchText={searchText}
+      setSearchText={setSearchText}
     />
   );
 }

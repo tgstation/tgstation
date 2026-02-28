@@ -156,19 +156,22 @@
 /turf/open/floor/plating/foam/break_tile()
 	return //jetfuel can't break steel foam...
 
-/turf/open/floor/plating/foam/attackby(obj/item/attacking_item, mob/user, list/modifiers)
-	if(ismetaltile(attacking_item))
-		var/obj/item/stack/tile/tiles = attacking_item
-		if(!tiles.use(1))
-			return
-		var/obj/lattice = locate(/obj/structure/lattice) in src
-		if(lattice)
-			qdel(lattice)
-		to_chat(user, span_notice("You reinforce the foamed plating with tiling."))
-		playsound(src, 'sound/items/weapons/Genhit.ogg', 50, TRUE)
-		ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-		return
+/turf/open/floor/plating/foam/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!ismetaltile(tool))
+		return NONE
 
+	var/obj/item/stack/tile/tiles = tool
+	if(!tiles.use(1))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/lattice = locate(/obj/structure/lattice) in src
+	if(lattice)
+		qdel(lattice)
+	to_chat(user, span_notice("You reinforce the foamed plating with tiling."))
+	playsound(src, 'sound/items/weapons/Genhit.ogg', 50, TRUE)
+	ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	return ITEM_INTERACT_SUCCESS
+
+/turf/open/floor/plating/foam/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	playsound(src, 'sound/items/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
@@ -184,7 +187,7 @@
 		return list("delay" = 0, "cost" = 1)
 
 /turf/open/floor/plating/foam/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF && rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_TURF && rcd_data[RCD_DESIGN_PATH] == /turf/open/floor/plating/rcd)
 		ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
 	return FALSE

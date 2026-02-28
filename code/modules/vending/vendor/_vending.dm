@@ -38,6 +38,7 @@
 	desc = "A generic vending machine."
 	icon = 'icons/obj/machines/vending.dmi'
 	icon_state = "generic"
+	abstract_type = /obj/machinery/vending
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	verb_say = "beeps"
@@ -71,7 +72,7 @@
 	///Icon for the maintenance panel overlay
 	var/panel_type = "panel1"
 	///Whether this vendor can be selected when building a custom vending machine
-	var/allow_custom = FALSE
+	var/allow_custom = TRUE
 
 	/**
 	  * List of products this machine sells
@@ -152,7 +153,7 @@
 	///fontawesome icon name to use in to display the user's balance in the vendor UI
 	var/displayed_currency_icon = "coins"
 	///String of the used currency to display in the vendor UI
-	var/displayed_currency_name = " cr"
+	var/displayed_currency_name = MONEY_SYMBOL
 	///Whether our age check is currently functional
 	var/age_restrictions = TRUE
 	/// How many credits does this vending machine have? 20% of all sales go to this pool, and are given freely when the machine is restocked, or successfully tilted. Lost on deconstruction.
@@ -233,6 +234,7 @@
 					all_products_free = TRUE
 			if(circuit)
 				circuit.all_products_free = all_products_free //sync up the circuit so the pricing schema is carried over if it's reconstructed.
+				circuit.desc = "This board's card reader component has been cut out, along with its brand selection dial."
 
 	else if(circuit)
 		all_products_free = circuit.all_products_free //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
@@ -329,7 +331,7 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(panel_open && istype(held_item, refill_canister))
-		context[SCREENTIP_CONTEXT_LMB] = "Restock vending machine[credits_contained ? " and collect credits" : null]"
+		context[SCREENTIP_CONTEXT_LMB] = "Restock vending machine[credits_contained ? " and collect [MONEY_NAME]" : null]"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /**
@@ -358,7 +360,7 @@
 	if(isnull(refill_canister))
 		return // you can add the comment here instead
 
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"]")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 	if(panel_open)
 		. += span_notice("The machine may be [EXAMINE_HINT("pried")] apart.")
 
@@ -369,9 +371,9 @@
 		else
 			. += span_notice("\The [src] is fully stocked.")
 	if(credits_contained < CREDITS_DUMP_THRESHOLD && credits_contained > 0)
-		. += span_notice("It should have a handfull of credits stored based on the missing items.")
+		. += span_notice("It should have a handfull of [MONEY_NAME] stored based on the missing items.")
 	else if (credits_contained > PAYCHECK_CREW)
-		. += span_notice("It should have at least a full paycheck worth of credits inside!")
+		. += span_notice("It should have at least a full paycheck worth of [MONEY_NAME] inside!")
 
 /obj/machinery/vending/update_appearance(updates = ALL)
 	. = ..()
@@ -396,11 +398,12 @@
 
 /obj/machinery/vending/vv_edit_var(vname, vval)
 	. = ..()
-	if (vname == NAMEOF(src, all_products_free))
+	if(vname == NAMEOF(src, all_products_free))
 		if (all_products_free)
-			RemoveComponentSource(src, /datum/component/payment)
+			qdel(GetComponent(/datum/component/payment))
 		else
 			AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_VENDING)
+		update_static_data_for_all_viewers()
 
 /obj/machinery/vending/emp_act(severity)
 	. = ..()

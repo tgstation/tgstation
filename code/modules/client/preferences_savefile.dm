@@ -13,7 +13,7 @@
 /// You do not need to raise this if you are adding new values that have sane defaults.
 /// Only raise this value when changing the meaning/format/name/layout of an existing value
 /// where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 49
+#define SAVEFILE_VERSION_MAX 52
 
 #define IS_DATA_OBSOLETE(version) (version == SAVE_DATA_OBSOLETE)
 #define SHOULD_UPDATE_DATA(version) (version >= SAVE_DATA_NO_ERROR && version < SAVEFILE_VERSION_MAX)
@@ -137,6 +137,36 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			quirk_to_migrate = "Cyborg Pre-screened dogtag",
 			new_typepath = /obj/item/clothing/accessory/dogtag/borg_ready,
 		)
+	if(current_version < 50)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Extrovert",
+			new_typepath = /datum/personality/extrovert,
+		)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Introvert",
+			new_typepath = /datum/personality/introvert,
+		)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Bad Touch",
+			new_typepath = /datum/personality/aloof,
+		)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Apathetic",
+			new_typepath = /datum/personality/apathetic,
+		)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Snob",
+			new_typepath = /datum/personality/snob,
+		)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Spiritual",
+			new_typepath = /datum/personality/spiritual,
+		)
+	if(current_version < 51)
+		migrate_felinid_feature_keys(save_data)
+
+	if(current_version < 52)
+		migrate_gendered_nonbinary_physique(save_data)
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
@@ -154,14 +184,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		if(parent.hotkeys)
 			for(var/hotkeytobind in kb.hotkey_keys)
-				if(hotkeytobind == "Unbound")
+				if(hotkeytobind == UNBOUND_KEY)
 					addedbind = TRUE
 				else if(!length(binds_by_key[hotkeytobind])) //Only bind to the key if nothing else is bound
 					key_bindings[kb.name] |= hotkeytobind
 					addedbind = TRUE
 		else
 			for(var/classickeytobind in kb.classic_keys)
-				if(classickeytobind == "Unbound")
+				if(classickeytobind == UNBOUND_KEY)
 					addedbind = TRUE
 				else if(!length(binds_by_key[classickeytobind])) //Only bind to the key if nothing else is bound
 					key_bindings[kb.name] |= classickeytobind
@@ -169,7 +199,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		if(!addedbind)
 			notadded += kb
-	save_preferences() //Save the players pref so that new keys that were set to Unbound as default are permanently stored
+	save_preferences() //Save the players pref so that new keys that were set to UNBOUND_KEY as default are permanently stored
 	if(length(notadded))
 		addtimer(CALLBACK(src, PROC_REF(announce_conflict), notadded), 5 SECONDS)
 
@@ -200,7 +230,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	var/data_validity_integer = check_savedata_version(savefile.get_entry())
 	if(load_and_save && IS_DATA_OBSOLETE(data_validity_integer)) //fatal, can't load any data
-		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
+		var/bacpath = PREFS_BACKUP_PATH(path) //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
 		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.
@@ -235,14 +265,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//try to fix any outdated data if necessary
 	if(SHOULD_UPDATE_DATA(data_validity_integer))
-		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
+		var/bacpath = PREFS_BACKUP_PATH(path) //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
 		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.
 		update_preferences(data_validity_integer, savefile)
 
 	check_keybindings() // this apparently fails every time and overwrites any unloaded prefs with the default values, so don't load anything after this line or it won't actually save
-	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
 
 	//Sanitize
 	lastchangelog = sanitize_text(lastchangelog, initial(lastchangelog))
@@ -251,6 +280,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_special = sanitize_be_special(SANITIZE_LIST(be_special))
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
+
+	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
 
 	if(SHOULD_UPDATE_DATA(data_validity_integer)) //save the updated version
 		var/old_default_slot = default_slot
@@ -275,6 +306,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/save_preferences()
 	if(!savefile)
 		CRASH("Attempted to save the preferences of [parent] without a savefile. This should have been handled by load_preferences()")
+	if(path == DEV_PREFS_PATH)
+		// Don't save over dev preferences
+		return TRUE
+
 	savefile.set_entry("version", SAVEFILE_VERSION_MAX) //updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
 
 	for (var/preference_type in GLOB.preference_entries)
@@ -396,6 +431,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return TRUE
 
 /datum/preferences/proc/switch_to_slot(new_slot)
+	if(new_slot == default_slot) // sanity check, nothing to do here.
+		return
 	// SAFETY: `load_character` performs sanitization on the slot number
 	if (!load_character(new_slot))
 		tainted_character_profiles = TRUE

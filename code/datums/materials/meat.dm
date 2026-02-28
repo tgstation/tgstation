@@ -4,27 +4,21 @@
 	desc = "Meat"
 	id = /datum/material/meat // So the bespoke versions are categorized under this
 	color = rgb(214, 67, 67)
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_ORGANIC
+	mat_properties = list(
+		MATERIAL_DENSITY = 5,
+		MATERIAL_HARDNESS = 0,
+		MATERIAL_FLEXIBILITY = 6,
+		MATERIAL_REFLECTIVITY = 4,
+		MATERIAL_ELECTRICAL = 8,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 2,
+		MATERIAL_BEAUTY = -0.3, // EWW
+	)
 	sheet_type = /obj/item/stack/sheet/meat
-	value_per_unit = 0.05
-	beauty_modifier = -0.3
-	strength_modifier = 0.7
-	armor_modifiers = list(MELEE = 0.3, BULLET = 0.3, LASER = 1.2, ENERGY = 1.2, BOMB = 0.3, FIRE = 1, ACID = 1)
 	item_sound_override = 'sound/effects/meatslap.ogg'
 	turf_sound_override = FOOTSTEP_MEAT
 	texture_layer_icon_state = "meat"
-	fishing_difficulty_modifier = 13
-	fishing_cast_range = -2
-	fishing_experience_multiplier = 0.8
-	fishing_bait_speed_mult = 0.9
-	fishing_deceleration_mult = 0.9
-	fishing_bounciness_mult = 0.9
-	fishing_gravity_mult = 0.85
 	var/list/blood_dna
 
 /datum/material/meat/on_main_applied(atom/source, mat_amount, multiplier)
@@ -134,9 +128,10 @@
 		subjectname = source.name
 
 	var/datum/blood_type/blood_type = source.get_bloodtype()
-	color = blood_type.get_color()
-
-	blood_dna = source.get_blood_dna_list()
+	if (blood_type && blood_type.get_color() != BLOOD_COLOR_RED)
+		var/list/transition_filter = color_transition_filter(blood_type.get_color())
+		color = transition_filter["color"]
+		blood_dna = source.get_blood_dna_list()
 
 	if(ishuman(source))
 		var/mob/living/carbon/human/human_source = source
@@ -155,8 +150,10 @@
 
 	if(source.exotic_bloodtype)
 		var/datum/blood_type/blood_type = get_blood_type(source.exotic_bloodtype)
-		color = blood_type.get_color()
-		blood_dna = list("[blood_type.dna_string]" = blood_type)
+		if (blood_type && blood_type.get_color() != BLOOD_COLOR_RED)
+			var/list/transition_filter = color_transition_filter(blood_type.get_color())
+			color = transition_filter["color"]
+			blood_dna = list("[blood_type.dna_string]" = blood_type)
 
 	return ..()
 
@@ -170,8 +167,9 @@
 	var/list/blood_data = source.data
 	name = "[blood_data["real_name"] || "mystery"] [initial(name)]"
 	var/datum/blood_type/blood_type = blood_data["blood_type"]
-	if(blood_type)
-		color = blood_type.get_color()
+	if(blood_type && blood_type.get_color() != BLOOD_COLOR_RED)
+		var/list/transition_filter = color_transition_filter(blood_type.get_color())
+		color = transition_filter["color"]
 		blood_dna = list("[blood_type.dna_string]" = blood_type)
 	else
 		color = source.color

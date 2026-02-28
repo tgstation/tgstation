@@ -7,6 +7,7 @@
 	lose_text = ""
 	resilience = TRAUMA_RESILIENCE_LOBOTOMY
 	random_gain = FALSE
+	known_trauma = FALSE
 	/// Type for the bodypart texture we add
 	var/bodypart_overlay_type = /datum/bodypart_overlay/texture/spacey
 	/// Color in which we paint the space texture
@@ -78,7 +79,7 @@
 		untexture_limb(owner, bodypart)
 	owner.update_body()
 
-/datum/brain_trauma/voided/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/voided/on_life(seconds_per_tick)
 	. = ..()
 
 	if(prob(vomit_frequency))

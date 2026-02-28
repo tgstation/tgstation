@@ -94,12 +94,12 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 
 		//Buttons for helpful stuff. This is where people land in the tgui
 		if("clear_virus")
-			var/choice = tgui_alert(usr, "Are you sure you want to cure all disease?",, list("Yes", "Cancel"))
+			var/choice = tgui_alert(usr, "Are you sure you want to cure all disease? This will also grant immunity for that disease",, list("Yes", "Cancel"))
 			if(choice == "Yes")
 				message_admins("[key_name_admin(holder)] has cured all diseases.")
 				for(var/thing in SSdisease.active_diseases)
 					var/datum/disease/D = thing
-					D.cure(0)
+					D.cure()
 
 		if("list_bombers")
 			holder.holder.list_bombers()
@@ -231,9 +231,8 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				log_admin("[key_name(holder)] turned all humans into [result]")
 				message_admins("\blue [key_name_admin(holder)] turned all humans into [result]")
 				var/newtype = GLOB.species_list[result]
-				for(var/i in GLOB.human_list)
-					var/mob/living/carbon/human/H = i
-					H.set_species(newtype)
+				for(var/mob/living/carbon/human/human_mob as anything in GLOB.human_list)
+					human_mob.set_species(newtype)
 		if("power")
 			if(!is_funmin)
 				return
@@ -350,16 +349,6 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 					airlock.req_one_access = list()
 			message_admins("[key_name_admin(holder)] activated Egalitarian Station mode")
 			priority_announce("CentCom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, SSstation.announcer.get_rand_report_sound())
-		if("ancap")
-			if(!is_funmin)
-				return
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Anarcho-capitalist Station"))
-			SSeconomy.full_ancap = !SSeconomy.full_ancap
-			message_admins("[key_name_admin(holder)] toggled Anarcho-capitalist mode")
-			if(SSeconomy.full_ancap)
-				priority_announce("The NAP is now in full effect.", null, SSstation.announcer.get_rand_report_sound())
-			else
-				priority_announce("The NAP has been revoked.", null, SSstation.announcer.get_rand_report_sound())
 		if("send_shuttle_back")
 			if (!is_funmin)
 				return
@@ -388,6 +377,18 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(return_escape_shuttle), make_announcement), new_timer SECONDS)
 			else
 				INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(return_escape_shuttle), make_announcement)
+		if("ore_vents")
+			if(!is_funmin)
+				return
+			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Tap Ore Vents"))
+			var/vent_count = 0
+			for(var/obj/structure/ore_vent/vent as anything in SSore_generation.possible_vents)
+				if(vent.tapped || !COOLDOWN_FINISHED(vent, wave_cooldown) || vent.node) // skip if already tapped or currently being tapped
+					continue
+				vent.initiate_wave_win(forced = TRUE)
+				vent_count++
+			message_admins("[key_name_admin(holder)] tapped [vent_count] ore vents")
+			log_admin("[key_name_admin(holder)] tapped [vent_count] ore vents")
 		if("blackout")
 			if(!is_funmin)
 				return
@@ -518,9 +519,8 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Monkeyize All Humans"))
 			message_admins("[key_name_admin(holder)] made everyone into monkeys.")
 			log_admin("[key_name_admin(holder)] made everyone into monkeys.")
-			for(var/i in GLOB.human_list)
-				var/mob/living/carbon/human/H = i
-				INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon, monkeyize))
+			for(var/mob/living/carbon/human/human_mob as anything in GLOB.human_list)
+				INVOKE_ASYNC(human_mob, TYPE_PROC_REF(/mob/living/carbon, monkeyize))
 		if("antag_all")
 			if(!is_funmin)
 				return
@@ -554,9 +554,9 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Mass Braindamage"))
-			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				to_chat(H, span_bolddanger("You suddenly feel stupid."), confidential = TRUE)
-				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60, 80)
+			for(var/mob/living/carbon/human/human_mob in GLOB.player_list)
+				to_chat(human_mob, span_bolddanger("You suddenly feel stupid."), confidential = TRUE)
+				human_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 60, 80)
 			message_admins("[key_name_admin(holder)] made everybody brain damaged")
 		if("floorlava")
 			SSweather.run_weather(/datum/weather/floor_is_lava)
@@ -573,33 +573,32 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Chinese Cartoons"))
 			message_admins("[key_name_admin(holder)] made everything kawaii.")
-			for(var/i in GLOB.human_list)
-				var/mob/living/carbon/human/H = i
-				SEND_SOUND(H, sound(SSstation.announcer.event_sounds[ANNOUNCER_ANIMES]))
+			for(var/mob/living/carbon/human/human_mob as anything in GLOB.human_list)
+				SEND_SOUND(human_mob, sound(SSstation.announcer.event_sounds[ANNOUNCER_ANIMES]))
 
-				if(H.dna.species.id == SPECIES_HUMAN)
-					if(H.dna.features[FEATURE_TAIL] == "None" || H.dna.features[FEATURE_EARS] == "None")
+				if(human_mob.dna.species.id == SPECIES_HUMAN)
+					if(human_mob.dna.features[FEATURE_TAIL_CAT] == "None" || human_mob.dna.features[FEATURE_EARS] == "None")
 						var/obj/item/organ/ears/cat/ears = new
 						var/obj/item/organ/tail/cat/tail = new
-						ears.Insert(H, movement_flags = DELETE_IF_REPLACED)
-						tail.Insert(H, movement_flags = DELETE_IF_REPLACED)
+						ears.Insert(human_mob, movement_flags = DELETE_IF_REPLACED)
+						tail.Insert(human_mob, movement_flags = DELETE_IF_REPLACED)
 					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san"), "[PLURAL]" = list("san")) //John Robust -> Robust-kun
-					var/list/names = splittext(H.real_name," ")
+					var/list/names = splittext(human_mob.real_name," ")
 					var/forename = names.len > 1 ? names[2] : names[1]
-					var/newname = "[forename]-[pick(honorifics["[H.gender]"])]"
-					H.fully_replace_character_name(H.real_name,newname)
-					H.update_body_parts()
+					var/newname = "[forename]-[pick(honorifics["[human_mob.gender]"])]"
+					human_mob.fully_replace_character_name(human_mob.real_name,newname)
+					human_mob.update_body_parts()
 					if(animetype == "Yes")
 						var/seifuku = pick(typesof(/obj/item/clothing/under/costume/seifuku))
-						var/obj/item/clothing/under/costume/seifuku/I = new seifuku
-						var/olduniform = H.w_uniform
-						H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE, FALSE)
-						H.equip_to_slot_or_del(I, ITEM_SLOT_ICLOTHING)
+						var/obj/item/clothing/under/costume/seifuku/anime_uniform = new seifuku
+						var/olduniform = human_mob.w_uniform
+						human_mob.temporarilyRemoveItemFromInventory(human_mob.w_uniform, TRUE, FALSE)
+						human_mob.equip_to_slot_or_del(anime_uniform, ITEM_SLOT_ICLOTHING)
 						qdel(olduniform)
 						if(droptype == "Yes")
-							ADD_TRAIT(I, TRAIT_NODROP, ADMIN_TRAIT)
+							ADD_TRAIT(anime_uniform, TRAIT_NODROP, ADMIN_TRAIT)
 				else
-					to_chat(H, span_warning("You're not kawaii enough for this!"), confidential = TRUE)
+					to_chat(human_mob, span_warning("You're not kawaii enough for this!"), confidential = TRUE)
 		if("masspurrbation")
 			if(!is_funmin)
 				return
@@ -640,7 +639,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			if(teamsize <= 0)
 				return FALSE
 
-			candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for a [span_notice("Nanotrasen emergency response drone")]?", check_jobban = ROLE_DRONE, alert_pic = /mob/living/basic/drone/classic, role_name_text = "nanotrasen emergency response drone")
+			candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for a [span_notice("Nanotrasen emergency response drone")]?", check_jobban = ROLE_DRONE, alert_pic = /mob/living/basic/drone/classic, role_name_text = "Nanotrasen emergency response drone")
 
 			if(length(candidates) == 0)
 				return FALSE
@@ -690,6 +689,20 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			message_admins("[key_name_admin(holder)] healed everyone.")
 			log_admin("[key_name(holder)] healed everyone.")
 
+		if("cascade")
+			if(!is_funmin)
+				return
+			message_admins("[key_name_admin(holder)] started a resonance cascade! You're supposed to be a scientist! Use your common sense!")
+			for(var/obj/machinery/power/supermatter_crystal/S in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/supermatter_crystal))
+				if(!S.is_main_engine)
+					continue
+				S.explosion_point = 0
+				S.set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade)
+				S.external_damage_immediate += 200
+				S.count_down()
+				return
+			return
+
 	if(holder)
 		log_admin("[key_name(holder)] used secret: [action].")
 #undef THUNDERDOME_TEMPLATE_FILE
@@ -709,16 +722,16 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 /// portal_appearance is a list in the form (turf's plane offset + 1) -> appearance to use
 /proc/do_portal_spawn(turf/loc, mobtype, numtospawn, list/portal_appearance, players, humanoutfit)
 	for (var/i in 1 to numtospawn)
-		var/mob/spawnedMob = new mobtype(loc)
+		var/mob/spawned_mob = new mobtype(loc)
 		if (length(players))
 			var/mob/chosen = players[1]
 			if (chosen.client)
-				chosen.client.prefs.safe_transfer_prefs_to(spawnedMob, is_antag = TRUE)
-				spawnedMob.PossessByPlayer(chosen.key)
+				chosen.client.prefs.safe_transfer_prefs_to(spawned_mob, is_antag = TRUE)
+				spawned_mob.PossessByPlayer(chosen.key)
 			players -= chosen
-		if (ishuman(spawnedMob) && ispath(humanoutfit, /datum/outfit))
-			var/mob/living/carbon/human/H = spawnedMob
-			H.equipOutfit(humanoutfit)
+		if (ishuman(spawned_mob) && ispath(humanoutfit, /datum/outfit))
+			var/mob/living/carbon/human/human_mob = spawned_mob
+			human_mob.equipOutfit(humanoutfit)
 	var/turf/T = get_step(loc, SOUTHWEST)
 	T.flick_overlay_static(portal_appearance[GET_TURF_PLANE_OFFSET(T) + 1], 15)
 	playsound(T, 'sound/effects/magic/lightningbolt.ogg', rand(80, 100), TRUE)

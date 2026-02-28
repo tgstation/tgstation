@@ -463,7 +463,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 				subtypesof(/area/station/service), \
 				subtypesof(/area/station/command), \
 				subtypesof(/area/station/hallway), \
-				subtypesof(/area/station/ai_monitored), \
+				subtypesof(/area/station/ai), \
 				subtypesof(/area/station/cargo)
 			)
 

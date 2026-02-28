@@ -20,7 +20,8 @@ export type LoadoutList = Record<typePath, LoadoutListInfo>;
 export type ReskinOption = {
   name: string;
   tooltip: string;
-  skin_icon_state: DmIconState; // The icon is the same as the item icon
+  skin_icon: DmIconFile | null;
+  skin_icon_state: DmIconState;
 };
 
 export type LoadoutTooltip = {

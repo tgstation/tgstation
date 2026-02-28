@@ -54,7 +54,7 @@
 
 		var/old_color = carbon_hit.color
 		carbon_hit.color = COLOR_CULT_RED
-		animate(carbon_hit, color = old_color, time = 4 SECONDS, easing = EASE_IN)
+		animate(carbon_hit, color = old_color, time = 4 SECONDS, easing = SINE_EASING|EASE_IN)
 		carbon_hit.mob_light(range = 1.5, power = 2.5, color = COLOR_CULT_RED, duration = 0.5 SECONDS)
 		playsound(carbon_hit, 'sound/effects/magic/curse.ogg', 50, TRUE)
 
@@ -65,7 +65,7 @@
 
 	carbon_hit.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/heretic)
 	carbon_hit.AdjustKnockdown(5 SECONDS, daze_amount = 3 SECONDS)
-	carbon_hit.adjustStaminaLoss(80)
+	carbon_hit.adjust_stamina_loss(80)
 
 	return TRUE
 
@@ -127,7 +127,7 @@
 			return FIRELOSS
 
 		if(prob(70))
-			carbon_user.adjustFireLoss(20)
+			carbon_user.adjust_fire_loss(20)
 			playsound(carbon_user, 'sound/effects/wounds/sizzle1.ogg', 70, vary = TRUE)
 			if(prob(50))
 				carbon_user.emote("scream")

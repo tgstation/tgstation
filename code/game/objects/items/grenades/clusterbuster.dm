@@ -106,25 +106,12 @@
 /obj/effect/payload_spawner/random_slime/volatile
 	volatile = TRUE
 
-/obj/item/slime_extract/proc/activate_slime()
-	var/list/slime_chems = src.activate_reagents
-	if(!QDELETED(src))
-		var/chem = pick(slime_chems)
-		var/amount = 5
-		if(chem == "lesser plasma") //In the rare case we get another rainbow.
-			chem = /datum/reagent/toxin/plasma
-			amount = 4
-		if(chem == "holy water and uranium")
-			chem = /datum/reagent/uranium
-			reagents.add_reagent(/datum/reagent/water/holywater)
-		reagents.add_reagent(chem, amount)
-
 /obj/effect/payload_spawner/random_slime/spawn_payload(type, numspawned)
 	for(var/_ in 1 to numspawned)
 		var/chosen = pick(subtypesof(/obj/item/slime_extract))
 		var/obj/item/slime_extract/slime_extract = new chosen(loc)
 		if(volatile)
-			addtimer(CALLBACK(slime_extract, TYPE_PROC_REF(/obj/item/slime_extract, activate_slime)), rand(RANDOM_DETONATE_MIN_TIME, RANDOM_DETONATE_MAX_TIME))
+			addtimer(CALLBACK(slime_extract, TYPE_PROC_REF(/obj/item/slime_extract, auto_activate_reaction)), rand(RANDOM_DETONATE_MIN_TIME, RANDOM_DETONATE_MAX_TIME))
 		var/steps = rand(1, 4)
 		for(var/step in 1 to steps)
 			step_away(src, loc)

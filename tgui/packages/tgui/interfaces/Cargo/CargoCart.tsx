@@ -57,7 +57,7 @@ export function CargoCart(props) {
 
 function CheckoutItems(props) {
   const { act, data } = useBackend<CargoData>();
-  const { amount_by_name = {}, can_send, cart = [], max_order } = data;
+  const { can_send, cart = [], max_order } = data;
 
   const [isValid, setIsValid] = useState(true);
 
@@ -107,7 +107,7 @@ function CheckoutItems(props) {
                 />
                 <Button
                   icon="plus"
-                  disabled={amount_by_name[entry.object] >= max_order}
+                  disabled={entry.amount >= max_order}
                   onClick={() =>
                     act('add_by_name', { order_name: entry.object })
                   }
@@ -119,8 +119,8 @@ function CheckoutItems(props) {
           </Table.Cell>
 
           <Table.Cell collapsing color="average">
-            {!!entry.paid && <b>[Private x {entry.paid}]</b>}
-            {!!entry.dep_order && <b>[Department x {entry.dep_order}]</b>}
+            {!!entry.paid && <b>[Private x {entry.amount}]</b>}
+            {!!entry.dep_order && <b>[Department x {entry.amount}]</b>}
           </Table.Cell>
 
           <Table.Cell collapsing color="gold" textAlign="right">

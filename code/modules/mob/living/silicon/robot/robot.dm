@@ -1,9 +1,8 @@
 /mob/living/silicon/robot/Initialize(mapload)
-	spark_system = new /datum/effect_system/spark_spread()
-	spark_system.set_up(5, 0, src)
+	spark_system = new /datum/effect_system/basic/spark_spread(src, 5, FALSE)
 	spark_system.attach(src)
 
-	add_traits(list(TRAIT_CAN_STRIP, TRAIT_FORCED_STANDING, TRAIT_KNOW_ENGI_WIRES), INNATE_TRAIT)
+	add_traits(list(TRAIT_CAN_STRIP, TRAIT_FORCED_STANDING, TRAIT_KNOW_ENGI_WIRES, TRAIT_IGNORE_SURGERY_MODIFIERS), INNATE_TRAIT)
 	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \
 		untip_time = 2 SECONDS, \
@@ -84,7 +83,13 @@
 	log_silicon("New cyborg [key_name(src)] created with [connected_ai ? "master AI: [key_name(connected_ai)]" : "no master AI"]")
 	log_current_laws()
 
-	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z))
+	var/static/list/alert_areas
+	if(isnull(alert_areas))
+		alert_areas = (GLOB.the_station_areas + typesof(/area/mine))
+	if(is_station_level(z))
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), SSmapping.levels_by_trait(ZTRAIT_STATION), alert_areas)
+	else
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), (SSmapping.levels_by_trait(ZTRAIT_STATION) + z), alert_areas)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
 	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_DEATH, TYPE_PROC_REF(/datum/alarm_listener, prevent_alarm_changes))
@@ -244,8 +249,7 @@
 		return
 
 	if(!ion_trail)
-		ion_trail = new
-		ion_trail.set_up(src)
+		ion_trail = new(src)
 
 	ionpulse_on = !ionpulse_on
 	to_chat(src, span_notice("You [ionpulse_on ? null :"de"]activate your ion thrusters."))
@@ -311,6 +315,12 @@
 			SET_PLANE_EXPLICIT(eye_lights, ABOVE_GAME_PLANE, src)
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
+
+	var/obj/item/shield_module/shield_module = locate(/obj/item/shield_module) in src
+	if(shield_module && shield_module.active)
+		add_overlay(shield_module.shield_overlay)
+	else if (shield_module && !shield_module.active)
+		cut_overlay(shield_module.shield_overlay)
 
 	if(opened)
 		if(wiresexposed)
@@ -897,7 +907,7 @@
 		radio.command = TRUE
 		radio.channels = AI.radio.channels
 		for(var/chan in radio.channels)
-			radio.secure_radio_connections[chan] = add_radio(radio, GLOB.default_radio_channels[chan])
+			LAZYSET(radio.secure_radio_connections, chan, add_radio(radio, GLOB.default_radio_channels[chan]))
 
 	diag_hud_set_aishell()
 	undeployment_action.Grant(src)
@@ -943,7 +953,7 @@
 /mob/living/silicon/robot/attack_ai(mob/user)
 	if(shell && (!connected_ai || connected_ai == user))
 		var/mob/living/silicon/ai/AI = user
-		AI.deploy_to_shell(src)
+		AI.select_shell(src)
 
 /mob/living/silicon/robot/mouse_buckle_handling(mob/living/M, mob/living/user)
 	//Don't try buckling on INTENT_HARM so that silicons can search people's inventories without loading them

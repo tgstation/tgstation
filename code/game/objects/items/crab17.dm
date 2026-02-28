@@ -22,7 +22,7 @@
 		var/turf/targetturf = get_safe_random_station_turf_equal_weight()
 		if (!targetturf)
 			return FALSE
-		var/list/accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
+		var/list/accounts_to_rob = assoc_to_values(SSeconomy.bank_accounts_by_id)
 		var/mob/living/L
 		if(isliving(user))
 			L = user
@@ -201,7 +201,7 @@
  * Grabs the accounts to be robbed and puts them in accounts_to_rob, tells the accounts they're being drained and calls dump() to start draining.
  */
 /obj/structure/checkoutmachine/proc/start_dumping()
-	accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
+	accounts_to_rob = assoc_to_values(SSeconomy.bank_accounts_by_id)
 	accounts_to_rob -= bogdanoff?.get_bank_account()
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
@@ -293,12 +293,12 @@
 	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src)] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
 	animate(DF, pixel_z = -8, time = 5, , easing = LINEAR_EASING)
 	playsound(src,  'sound/items/weapons/mortar_whistle.ogg', 70, TRUE, 6)
-	addtimer(CALLBACK(src, PROC_REF(endLaunch)), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
+	addtimer(CALLBACK(src, PROC_REF(end_launch)), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
 /**
  * Cleans up after the falling animation.
  */
-/obj/effect/dumpeet_target/proc/endLaunch()
+/obj/effect/dumpeet_target/proc/end_launch()
 	QDEL_NULL(DF) //Delete the falling machine effect, because at this point its animation is over. We dont use temp_visual because we want to manually delete it as soon as the pod appears
 	playsound(src, SFX_EXPLOSION, 80, TRUE)
 	dump.forceMove(get_turf(src))

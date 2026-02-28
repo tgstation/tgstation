@@ -33,11 +33,11 @@
 		return
 
 	var/final_phrase = ""
-	var/original_char = ""
-
-	for(var/i = 1, i <= length(phrase), i += length(original_char))
-		original_char = phrase[i]
-		final_phrase += apply_speech(original_char)
+	var/list/words = splittext(phrase, " ")
+	var/list/new_words = list()
+	for(var/i in 1 to length(words))
+		new_words += apply_speech(words[i], i)
+	final_phrase = jointext(new_words, " ")
 
 	if(final_phrase == phrase)
 		return // No change was done, whatever
@@ -51,13 +51,13 @@
 
 /**
  * Applies the speech effects on the past character, changing
- * the original_char into the modified_char.
+ * the original_word into some modified_word
  *
- * Return the modified_char to be reapplied to the message.
+ * Return the newly modified word
  */
-/datum/status_effect/speech/proc/apply_speech(original_char)
+/datum/status_effect/speech/proc/apply_speech(original_word, index)
 	stack_trace("[type] didn't implement apply_speech.")
-	return original_char
+	return original_word
 
 /datum/status_effect/speech/stutter
 	id = "stutter"
@@ -65,33 +65,41 @@
 	tts_filter = "tremolo=f=10:d=0.8,rubberband=tempo=0.5"
 
 	/// The probability of adding a stutter to any character
-	var/stutter_prob = 80
+	var/stutter_prob = 75
 	/// The chance of a four character stutter
 	var/four_char_chance = 10
 	/// The chance of a three character stutter
 	var/three_char_chance = 20
 	/// The chance of a two character stutter
-	var/two_char_chance = 95
-	/// Regex of characters we won't apply a stutter to
-	var/static/regex/no_stutter
+	var/two_char_chance = 90
+	/// Regex to apply generically to stuttered words
+	/// * 1st capture group is any leading invalid characters (can be empty)
+	/// * 2nd capture group is either a digraph (th, qu, ch) or a consonant
+	/// * 3rd capture group is the rest of the word (can be empty)
+	VAR_FINAL/static/regex/stutter_regex
 
 /datum/status_effect/speech/stutter/on_creation(mob/living/new_owner, ...)
-	. = ..()
-	if(!.)
-		return
-	if(!no_stutter)
-		no_stutter = regex(@@[aeiouAEIOU ""''()[\]{}.!?,:;_`~-]@)
+	stutter_regex ||= regex(@@^([\s"'()[\]{}.!?,:;_`~-]*\b)([^aeoiuh\d]h|qu|[^\d])(.*)@, "i")
+	return ..()
 
-/datum/status_effect/speech/stutter/apply_speech(original_char)
-	if(prob(stutter_prob) && !no_stutter.Find(original_char))
-		if(prob(four_char_chance))
-			return "[original_char]-[original_char]-[original_char]-[original_char]"
-		if(prob(three_char_chance))
-			return "[original_char]-[original_char]-[original_char]"
-		if(prob(two_char_chance))
-			return "[original_char]-[original_char]"
+/datum/status_effect/speech/stutter/apply_speech(original_word, index)
+	if(!prob(stutter_prob))
+		return original_word
 
-	return original_char
+	if(stutter_regex.Find(original_word))
+		return "[stutter_regex.group[1]][stutter_char(stutter_regex.group[2])][stutter_regex.group[3]]"
+
+	return original_word // i give up
+
+/datum/status_effect/speech/stutter/proc/stutter_char(some_char)
+	if(prob(four_char_chance))
+		return "[some_char]-[some_char]-[some_char]-[some_char]"
+	if(prob(three_char_chance))
+		return "[some_char]-[some_char]-[some_char]"
+	if(prob(two_char_chance))
+		return "[some_char]-[some_char]"
+
+	return some_char
 
 /datum/status_effect/speech/stutter/anxiety
 	id = "anxiety_stutter"
@@ -133,7 +141,7 @@
 	if(prob(capitalize_prob))
 		var/exclamation = pick("!", "!!", "!!!")
 		message = uppertext(message)
-		message += "[apply_speech(exclamation, exclamation)]"
+		message += "[stutter_char(exclamation)]"
 
 	message_args[TREAT_MESSAGE_ARG] = message
 
@@ -170,6 +178,12 @@
 	/// Strings that are appended to a character - populated in on_creation
 	var/list/string_additions
 
+	/// Regex for characters we won't apply any slurring to
+	var/static/regex/no_slur
+
+	/// If the last character we processed was a replacement, don't do another replacement right after it
+	VAR_PRIVATE/replacement_dupe_check = FALSE
+
 /datum/status_effect/speech/slurring/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	. = ..()
 	if(!.)
@@ -184,46 +198,57 @@
 	string_replacements = speech_changes["string_replacements"]
 	string_additions = speech_changes["string_additions"]
 
-/datum/status_effect/speech/slurring/apply_speech(original_char)
+	no_slur ||= regex(@@[ "'()[\]{}.!?,:;_`~-]@)
 
+/datum/status_effect/speech/slurring/apply_speech(original_word, index)
+	var/original_char = ""
+	var/modified_word = ""
+	for(var/i = 1, i <= length(original_word), i += length(original_char))
+		original_char = original_word[i]
+		modified_word += slur_character(original_char, i)
+	return modified_word
+
+/datum/status_effect/speech/slurring/proc/slur_character(original_char, index)
 	var/modified_char = original_char
+	var/allow_slurring = index != 1 && !no_slur.Find(modified_char)
 	var/lower_char = LOWER_TEXT(modified_char)
 	if(prob(common_prob) && (lower_char in common_replacements))
 		var/to_replace = common_replacements[lower_char]
-		if(islist(to_replace))
-			modified_char = pick(to_replace)
-		else
-			modified_char = to_replace
+		modified_char = islist(to_replace) ? pick(to_replace) : to_replace
+		replacement_dupe_check = FALSE
 
-	if(prob(uncommon_prob) && (modified_char in uncommon_replacements))
+	else if(prob(uncommon_prob) && (modified_char in uncommon_replacements))
 		var/to_replace = uncommon_replacements[modified_char]
-		if(islist(to_replace))
-			modified_char = pick(to_replace)
-		else
-			modified_char = to_replace
+		modified_char = islist(to_replace) ? pick(to_replace) : to_replace
+		replacement_dupe_check = FALSE
 
-	if(prob(replacement_prob))
-		var/replacements_len = length(string_replacements)
-		var/additions_len = length(string_additions)
-		if(replacements_len && additions_len)
-			// Calculate the probability of grabbing a replacement vs an addition
-			var/weight = (replacements_len + additions_len) / replacements_len * 100
-			if(prob(weight))
+	else if(allow_slurring) // Don't do replacements on the first character, or punctuation
+		if(!replacement_dupe_check && prob(replacement_prob))
+			var/replacements_len = length(string_replacements)
+			var/additions_len = length(string_additions)
+			if(replacements_len && additions_len)
+				// Calculate the probability of grabbing a replacement vs an addition
+				var/weight = (replacements_len + additions_len) / replacements_len * 100
+				if(prob(weight))
+					modified_char = pick(string_replacements)
+				else
+					modified_char += pick(string_additions)
+
+			else if(replacements_len)
 				modified_char = pick(string_replacements)
-			else
+
+			else if(additions_len)
 				modified_char += pick(string_additions)
+			replacement_dupe_check = TRUE
 
-		else if(replacements_len)
-			modified_char = pick(string_replacements)
+		else if(prob(doubletext_prob))
+			modified_char += "[modified_char][prob(50) ? "" : modified_char]"
+			replacement_dupe_check = FALSE
 
-		else if(additions_len)
-			modified_char += pick(string_additions)
-
-	if(prob(doubletext_prob))
-		if(prob(50))
-			modified_char += "[modified_char]"
-		else
-			modified_char += "[modified_char][modified_char]"
+	else
+		// If we don't allow replacements we don't want the next character to be a replacement either
+		// This makes some more coherent speech by disallowing structures like "Y'''e"
+		replacement_dupe_check = TRUE
 
 	return modified_char
 
@@ -231,8 +256,8 @@
 	id = "generic_slurring"
 	common_prob = 33
 	uncommon_prob = 0
-	replacement_prob = 5
-	doubletext_prob = 10
+	replacement_prob = 24
+	doubletext_prob = 40
 	text_modification_file = "slurring_drunk_text.json"
 
 /datum/status_effect/speech/slurring/drunk
@@ -248,13 +273,13 @@
 	var/current_drunkness = owner.get_drunk_amount()
 	// These numbers are arbitarily picked
 	// Common replacements start at about 20, and maxes out at about 85
-	common_prob = clamp((current_drunkness * 0.8) - 16, 0, 50)
+	common_prob = clamp((current_drunkness * 0.8) - 16, 4, 50)
 	// Uncommon replacements (burping) start at 50 and max out at 110 (when you are dying)
-	uncommon_prob = clamp((current_drunkness * 0.2) - 10, 0, 12)
+	uncommon_prob = clamp((current_drunkness * 0.3) - 10, 0, 12)
 	// Replacements start at 20 and max out at about 60
-	replacement_prob = clamp((current_drunkness * 0.4) - 8, 0, 12)
+	replacement_prob = clamp((current_drunkness * 0.6) - 8, 0, 12)
 	// Double texting start out at about 25 and max out at about 60
-	doubletext_prob = clamp((current_drunkness * 0.5) - 12, 0, 20)
+	doubletext_prob = clamp((current_drunkness * 0.8) - 8, 2, 50)
 	return ..()
 
 /datum/status_effect/speech/slurring/cult

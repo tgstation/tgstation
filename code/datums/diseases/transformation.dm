@@ -31,7 +31,7 @@
 	return D
 
 
-/datum/disease/transformation/stage_act(seconds_per_tick, times_fired)
+/datum/disease/transformation/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
@@ -129,7 +129,7 @@
 /datum/disease/transformation/jungle_flu/do_disease_transformation(mob/living/carbon/affected_mob)
 	affected_mob.monkeyize()
 
-/datum/disease/transformation/jungle_flu/stage_act(seconds_per_tick, times_fired)
+/datum/disease/transformation/jungle_flu/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
@@ -168,7 +168,7 @@
 	infectable_biotypes = MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC
 	bantype = JOB_CYBORG
 
-/datum/disease/transformation/robot/stage_act(seconds_per_tick, times_fired)
+/datum/disease/transformation/robot/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
@@ -212,7 +212,7 @@
 	bantype = ROLE_ALIEN
 
 
-/datum/disease/transformation/xeno/stage_act(seconds_per_tick, times_fired)
+/datum/disease/transformation/xeno/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
@@ -244,7 +244,7 @@
 	new_form = /mob/living/basic/slime
 
 
-/datum/disease/transformation/slime/stage_act(seconds_per_tick, times_fired)
+/datum/disease/transformation/slime/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
@@ -284,7 +284,7 @@
 	new_form = /mob/living/basic/pet/dog/corgi
 
 
-/datum/disease/transformation/corgi/stage_act(seconds_per_tick, times_fired)
+/datum/disease/transformation/corgi/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
@@ -337,7 +337,7 @@
 	new_form = /mob/living/basic/pet/gondola
 
 
-/datum/disease/transformation/gondola/stage_act(seconds_per_tick, times_fired)
+/datum/disease/transformation/gondola/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

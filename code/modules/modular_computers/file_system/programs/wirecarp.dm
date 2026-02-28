@@ -101,7 +101,7 @@
 
 /obj/item/circuit_component/mod_program/ntnetmonitor/proc/get_pdas(datum/port/port)
 	var/list/computers_with_messenger = list()
-	for(var/messenger_ref as anything in GLOB.pda_messengers)
+	for(var/messenger_ref in GLOB.pda_messengers)
 		var/datum/computer_file/program/messenger/messenger = GLOB.pda_messengers[messenger_ref]
 		computers_with_messenger |= WEAKREF(messenger.computer)
 	all_messengers.set_output(computers_with_messenger)

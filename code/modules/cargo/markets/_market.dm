@@ -61,7 +61,7 @@
 
 	// I can't get the price of the item and shipping in a clean way to the UI, so I have to do this.
 	if(balance < price)
-		to_chat(user, span_warning("You don't have enough credits in [uplink] for [item] with [method] shipping."))
+		to_chat(user, span_warning("You don't have enough [MONEY_NAME] in [uplink] for [item] with [method] shipping."))
 		return FALSE
 
 	if(item.buy(uplink, user, method, legal_status))

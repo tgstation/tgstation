@@ -172,22 +172,22 @@
 #define ui_ai_godownup "BOTTOM+5,RIGHT-1"
 
 //pAI
-#define ui_pai_software "SOUTH:6,WEST"
-#define ui_pai_shell "SOUTH:6,WEST+1"
-#define ui_pai_chassis "SOUTH:6,WEST+2"
-#define ui_pai_rest "SOUTH:6,WEST+3"
-#define ui_pai_light "SOUTH:6,WEST+4"
-#define ui_pai_state_laws "SOUTH:6,WEST+5"
-#define ui_pai_crew_manifest "SOUTH:6,WEST+6"
-#define ui_pai_host_monitor "SOUTH:6,WEST+7"
-#define ui_pai_internal_gps "SOUTH:6,WEST+8"
-#define ui_pai_mod_int "SOUTH:6,WEST+9"
-#define ui_pai_newscaster "SOUTH:6,WEST+10"
-#define ui_pai_take_picture "SOUTH:6,WEST+11"
-#define ui_pai_view_images "SOUTH:6,WEST+12"
-#define ui_pai_radio "SOUTH:6,WEST+13"
-#define ui_pai_language_menu "SOUTH+1:8,WEST+12:31"
-#define ui_pai_navigate_menu "SOUTH+1:8,WEST+12:15"
+#define ui_pai_software "SOUTH+1:5,WEST:2"
+#define ui_pai_state_laws "SOUTH+1:5,WEST+1"
+#define ui_pai_shell "SOUTH:5,WEST:2"
+#define ui_pai_chassis "SOUTH:5,WEST+1:2"
+#define ui_pai_rest "SOUTH:5,WEST+2:2"
+#define ui_pai_light "SOUTH:5,WEST+3:2"
+#define ui_pai_crew_manifest "SOUTH:5,CENTER-2"
+#define ui_pai_host_monitor "SOUTH:5,CENTER-1"
+#define ui_pai_internal_gps "SOUTH:5,CENTER"
+#define ui_pai_mod_int "SOUTH:5,CENTER+1"
+#define ui_pai_newscaster "SOUTH:5,CENTER+2"
+#define ui_pai_take_picture "SOUTH:5,EAST-3:28"
+#define ui_pai_view_images "SOUTH:5,EAST-2:28"
+#define ui_pai_radio "SOUTH:5,EAST-1:28"
+#define ui_pai_language_menu "SOUTH:1:37,EAST-1:12"
+#define ui_pai_navigate_menu "SOUTH:1:37,EAST-1:28"
 
 //Ghosts
 #define ui_ghost_spawners_menu "SOUTH:6,CENTER-3:24"
@@ -199,6 +199,9 @@
 #define ui_ghost_minigames "SOUTH: 6, CENTER+3:24"
 #define ui_ghost_language_menu "SOUTH: 6, CENTER+4:22"
 #define ui_ghost_floor_changer "SOUTH: 6, CENTER+4:7"
+
+//Voidwalker
+#define ui_voidwalker_left_of_hands "CENTER+-2:16,SOUTH+0:5"
 
 //Blobbernauts
 #define ui_blobbernaut_overmind_health "EAST-1:28,CENTER+0:19"

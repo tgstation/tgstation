@@ -38,3 +38,6 @@
 
 /datum/job/cyborg/on_respawn(mob/new_character)
 	new_character.Robotize(TRUE)
+
+/datum/job/cyborg/get_lobby_icon()
+	return icon('icons/mob/huds/hud.dmi', "hudcyborg")

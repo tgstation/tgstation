@@ -213,12 +213,11 @@
 		/obj/item/reagent_containers/cup/glass/bottle/vodka,
 		/obj/item/reagent_containers/cup/glass/bottle/molotov,
 		/obj/item/reagent_containers/cup/glass/drinkingglass,
-		/obj/item/ammo_box/strilka310
+		/obj/item/ammo_box/speedloader/strilka310
 	))
 
 ///Void cloak pocket
 /datum/storage/pockets/void_cloak
-	quickdraw = TRUE
 	max_total_storage = 5 // 2 small items + 1 tiny item, or 1 normal item + 1 small item
 	max_slots = 3
 
@@ -231,7 +230,7 @@
 	. = ..()
 	set_holdable(
 		can_hold_list = list(
-			/obj/item/ammo_box/strilka310/lionhunter,
+			/obj/item/ammo_box/speedloader/strilka310/lionhunter,
 			/obj/item/bodypart, // Bodyparts are often used in rituals. They're also often normal sized, so you can only fit one.
 			/obj/item/clothing/neck/eldritch_amulet,
 			/obj/item/clothing/neck/heretic_focus,

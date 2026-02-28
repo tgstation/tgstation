@@ -25,10 +25,11 @@
 	health = 50
 	maxHealth = 50
 	gold_core_spawnable = FRIENDLY_SPAWN
-	blood_volume = BLOOD_VOLUME_NORMAL
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/pig
 
 /datum/emote/pig
+	abstract_type = /datum/emote/pig
 	mob_type_allowed_typecache = /mob/living/basic/pig
 	mob_type_blacklist_typecache = list()
 
@@ -39,11 +40,13 @@
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	vary = TRUE
 	sound = SFX_PIG_OINK
+
 /mob/living/basic/pig/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "oink")
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PIG, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	make_tameable()
 
 ///wrapper for the tameable component addition so you can have non tamable cow subtypes

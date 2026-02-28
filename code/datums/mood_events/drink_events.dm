@@ -31,11 +31,21 @@
 		if(90 to INFINITY)
 			mood_change = 3 // crash out
 			description = "You're my BESSST frien'... You and me agains' th' world, buddy. Le's get another drink."
+	if(HAS_PERSONALITY(owner, /datum/personality/teetotal))
+		mood_change *= -1.5
+		description = "I don't like drinking... It makes me feel horrible."
+	if(HAS_PERSONALITY(owner, /datum/personality/bibulous))
+		mood_change *= 1.5
 	if(old_mood != mood_change)
 		owner.mob_mood.update_mood()
 
 /datum/mood_event/drunk/remove_effects()
 	QDEL_NULL(blush_overlay)
+
+/datum/mood_event/drunk_after
+	mood_change = 2
+	description = "The buzz might be gone, but I still feel good."
+	timeout = 5 MINUTES
 
 /datum/mood_event/wrong_brandy
 	description = "I hate that type of drink."

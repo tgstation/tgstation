@@ -1,21 +1,3 @@
-/// Returns a list of slots that are *visibly* covered by clothing and thus cannot be seen by others
-/mob/living/carbon/proc/check_obscured_slots()
-	var/hidden_slots = NONE
-
-	for(var/obj/item/equipped_item in get_equipped_items())
-		hidden_slots |= equipped_item.flags_inv
-
-	return hidden_slots_to_inventory_slots(hidden_slots)
-
-/// Returns a list of slots that are protected by other clothing, but could possibly be seen by others, via transparent visors and similar stuff
-/mob/living/carbon/proc/check_covered_slots()
-	var/hidden_slots = NONE
-
-	for(var/obj/item/equipped_item in get_equipped_items())
-		hidden_slots |= equipped_item.flags_inv | equipped_item.transparent_protection
-
-	return hidden_slots_to_inventory_slots(hidden_slots)
-
 /// Convers HIDEX to ITEM_SLOT_X, should be phased out in favor of using latter everywhere later
 /proc/hidden_slots_to_inventory_slots(hidden_slots)
 	var/obscured = NONE
@@ -81,34 +63,11 @@
 
 /// Returns items which are currently visible on the mob
 /mob/living/carbon/proc/get_visible_items()
-	var/static/list/visible_slots = list(
-		ITEM_SLOT_OCLOTHING,
-		ITEM_SLOT_ICLOTHING,
-		ITEM_SLOT_GLOVES,
-		ITEM_SLOT_EYES,
-		ITEM_SLOT_EARS,
-		ITEM_SLOT_MASK,
-		ITEM_SLOT_HEAD,
-		ITEM_SLOT_FEET,
-		ITEM_SLOT_ID,
-		ITEM_SLOT_BELT,
-		ITEM_SLOT_BACK,
-		ITEM_SLOT_NECK,
-		ITEM_SLOT_HANDS,
-		ITEM_SLOT_SUITSTORE,
-		ITEM_SLOT_HANDCUFFED,
-		ITEM_SLOT_LEGCUFFED,
-	)
-	var/list/obscured = check_obscured_slots()
 	var/list/visible_items = list()
-	for (var/slot in visible_slots)
-		if (obscured & slot)
-			continue
-		var/obj/item/equipped = get_item_by_slot(slot)
-		if (equipped)
-			visible_items += equipped
-	for (var/obj/item/held in held_items)
-		visible_items += held
+	var/obscured_item_slots = hidden_slots_to_inventory_slots(obscured_slots)
+	for(var/obj/item/thing in get_equipped_items(INCLUDE_HELD|INCLUDE_PROSTHETICS))
+		if(!(get_slot_by_item(thing) & obscured_item_slots))
+			visible_items += thing
 	return visible_items
 
 /mob/living/carbon/proc/equip_in_one_of_slots(obj/item/equipping, list/slots, qdel_on_fail = TRUE, indirect_action = FALSE)
@@ -154,15 +113,12 @@
 		equipping.pulledby.stop_pulling()
 
 	equipping.screen_loc = null
-	if(client)
-		client.screen -= equipping
+	client?.screen -= equipping
 
-	if(observers?.len)
-		for(var/mob/dead/observe as anything in observers)
-			if(observe.client)
-				observe.client.screen -= equipping
+	for(var/mob/dead/observe as anything in observers)
+		observe.client?.screen -= equipping
 
-	equipping.forceMove(src)
+	equipping.forceMove(src) //This has to come before has_equipped is called.
 	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
 	equipping.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
@@ -190,7 +146,6 @@
 			update_worn_neck(equipping)
 		if(ITEM_SLOT_HANDCUFFED)
 			set_handcuffed(equipping)
-			update_handcuffed()
 		if(ITEM_SLOT_LEGCUFFED)
 			legcuffed = equipping
 			update_worn_legcuffs()
@@ -203,24 +158,38 @@
 	//Item has been handled at this point and equipped callback can be safely called
 	//We cannot call it for items that have not been handled as they are not yet correctly
 	//in a slot (handled further down inheritance chain, probably living/carbon/human/equip_to_slot
-	if(!not_handled)
+	if(!not_handled && slot != ITEM_SLOT_HANDS) // put in hands calls equipped on its own, annoyingly
 		has_equipped(equipping, slot, initial)
 
 	return not_handled
 
-/mob/living/carbon/has_equipped(obj/item/item, slot, initial)
+/mob/living/carbon/has_equipped(obj/item/item, slot, initial = FALSE)
 	. = ..()
-	hud_used?.update_locked_slots()
+	if(!.)
+		return
 
-/mob/living/carbon/get_equipped_speed_mod_items()
-	return ..() + get_equipped_items()
+	hud_used?.update_locked_slots()
+	if(!(slot & item.slot_flags)) // Things below only update if slotted in (ie: not held)
+		return
+	if(item.hair_mask)
+		update_body()
+	add_item_coverage(item)
+
+/mob/living/carbon/has_unequipped(obj/item/item)
+	. = ..()
+	if(!.)
+		return
+
+	hud_used?.update_locked_slots()
+	if(item.hair_mask)
+		update_body()
+	remove_item_coverage(item)
 
 /mob/living/carbon/doUnEquip(obj/item/item_dropping, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	. = ..() //Sets the default return value to what the parent returns.
 	if(!. || !item_dropping) //We don't want to set anything to null if the parent returned 0.
 		return
 
-	var/not_handled = FALSE //if we actually unequipped an item, this is because we dont want to run this proc twice, once for carbons and once for humans
 	if(item_dropping == head)
 		head = null
 		if(!QDELETED(src))
@@ -241,14 +210,10 @@
 		set_handcuffed(null)
 		if(buckled?.buckle_requires_restraints)
 			buckled.unbuckle_mob(src)
-		if(!QDELETED(src))
-			update_handcuffed()
 	else if(item_dropping == legcuffed)
 		legcuffed = null
 		if(!QDELETED(src))
 			update_worn_legcuffs()
-	else
-		not_handled = TRUE
 
 	// Not an else-if because we're probably equipped in another slot
 	if(item_dropping == internal && (QDELETED(src) || QDELETED(item_dropping) || item_dropping.loc != src))
@@ -256,21 +221,53 @@
 		if(!QDELETED(src))
 			update_mob_action_buttons(UPDATE_BUTTON_STATUS)
 
-	if(not_handled)
-		return
+/// Adds the passed item's coverage to the mob's coverage related flags
+/mob/living/carbon/proc/add_item_coverage(obj/item/item)
+	var/pre_coverage = obscured_slots
+	obscured_slots |= item.flags_inv
+	covered_slots |= item.flags_inv | item.transparent_protection
+	if(pre_coverage != obscured_slots)
+		item_coverage_changed(obscured_slots & ~pre_coverage, pre_coverage & ~obscured_slots)
 
-	update_equipment_speed_mods()
-	update_obscured_slots(item_dropping.flags_inv)
-	hud_used?.update_locked_slots()
+/// Removes the passed item's coverage from the mob's coverage related flags
+/mob/living/carbon/proc/remove_item_coverage(obj/item/item)
+	refresh_obscured() // No way to remove a single item's coverage without recalculating everything
+
+/mob/living/carbon/refresh_obscured()
+	var/pre_coverage = obscured_slots
+
+	obscured_slots = NONE
+	covered_slots = NONE
+	for(var/obj/item/other_equipped_item as anything in get_equipped_items())
+		obscured_slots |= other_equipped_item.flags_inv
+		covered_slots |= other_equipped_item.flags_inv | other_equipped_item.transparent_protection
+
+	if(HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
+		obscured_slots |= HIDEHAIR|HIDEFACIALHAIR
+
+	if(pre_coverage != obscured_slots)
+		item_coverage_changed(obscured_slots & ~pre_coverage, pre_coverage & ~obscured_slots)
+
+/**
+ * Called when a mob's obscured slots change
+ *
+ * Args
+ * * added_slots - slots that were added to obscured_slots
+ * * removed_slots - slots that were removed from obscured_slots
+ */
+/mob/living/carbon/proc/item_coverage_changed(added_slots, removed_slots)
+	update_clothing(hidden_slots_to_inventory_slots(added_slots|removed_slots))
+	if((added_slots|removed_slots) & (HIDEJUMPSUIT|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEMUTWINGS|HIDEANTENNAE))
+		update_body()
 
 /// Returns the helmet if an air tank compatible helmet is equipped.
 /mob/living/carbon/proc/can_breathe_helmet()
-	if (isclothing(head) && (head.clothing_flags & HEADINTERNALS))
+	if (astype(head, /obj/item/clothing)?.clothing_flags & HEADINTERNALS)
 		return head
 
 /// Returns the mask if an air tank compatible mask is equipped.
 /mob/living/carbon/proc/can_breathe_mask()
-	if (isclothing(wear_mask) && (wear_mask.clothing_flags & MASKINTERNALS))
+	if (astype(wear_mask, /obj/item/clothing)?.clothing_flags & MASKINTERNALS)
 		return wear_mask
 
 /// Returns the tube if a breathing tube is equipped.
@@ -421,23 +418,45 @@
 	RETURN_TYPE(/list)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	var/covered_flags = NONE
-	var/list/all_worn_items = get_equipped_items()
-	for(var/obj/item/worn_item in all_worn_items)
-		covered_flags |= worn_item.body_parts_covered
-
-	return cover_flags2body_zones(covered_flags)
+	return cover_flags2body_zones(get_all_covered_flags())
 
 ///Returns a bitfield of all zones covered by clothing
 /mob/living/carbon/proc/get_all_covered_flags()
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/covered_flags = NONE
-	var/list/all_worn_items = get_equipped_items()
-	for(var/obj/item/worn_item in all_worn_items)
+	for(var/obj/item/worn_item in get_equipped_items(INCLUDE_ABSTRACT))
 		covered_flags |= worn_item.body_parts_covered
 
 	return covered_flags
+
+/mob/living/carbon/is_location_accessible(location, exluded_equipment_slots = NONE)
+	switch(location)
+		// Snowflake checks for these precise zones
+		if(BODY_ZONE_PRECISE_EYES)
+			if(is_eyes_covered(~exluded_equipment_slots) || (obscured_slots & (HIDEEYES|HIDEFACE)))
+				return FALSE
+		if(BODY_ZONE_PRECISE_MOUTH)
+			if(is_mouth_covered(~exluded_equipment_slots) || (obscured_slots & HIDEFACE))
+				return FALSE
+
+	var/covered_flags = NONE
+	for(var/obj/item/worn_item in get_equipped_items(INCLUDE_ABSTRACT))
+		if(worn_item.slot_flags & exluded_equipment_slots)
+			continue
+		covered_flags |= worn_item.body_parts_covered
+
+	// NB: we have to convert covered_flags via cover_flags2body_zones here
+	// instead of converting location via body_zones2cover_flags
+	//
+	// our coverage might look something like GROIN|LEGS, which would convert to list(BODY_ZONE_GROIN, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	// so if we were checking "is BODY_ZONE_CHEST accessible", we would pass - this is correct!
+	//
+	// however, if we convert the location to body zone, we would get CHEST|GROIN
+	// then we would check (CHEST|GROIN) & (GROIN|LEGS) and return FALSE - which is incorrect, the chest is perfectly accessible!
+	// checking for ((CHEST|GROIN) & (GROIN|LEGS)) == (CHEST|GROIN) would also be incorrect,
+	// as it would imply your chest is accessible from lacking groin coverage
+	return !(location in cover_flags2body_zones(covered_flags))
 
 /// Attempts to equip the given item in a conspicious place.
 /// This is used when, for instance, a character spawning with an item

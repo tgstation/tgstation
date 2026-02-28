@@ -95,7 +95,7 @@
 /datum/dna_block/identity/hair_gradient
 
 /datum/dna_block/identity/hair_gradient/create_unique_block(mob/living/carbon/human/target)
-	return construct_block(SSaccessories.hair_gradients_list.Find(target.grad_style[GRADIENT_HAIR_KEY]), length(SSaccessories.hair_gradients_list))
+	return construct_block(SSaccessories.hair_gradients_list.Find(target.get_hair_gradient_style(GRADIENT_HAIR_KEY)), length(SSaccessories.hair_gradients_list))
 
 /datum/dna_block/identity/hair_gradient/apply_to_mob(mob/living/carbon/human/target, dna_hash)
 	var/gradient_style = SSaccessories.hair_gradients_list[deconstruct_block(get_block(dna_hash), length(SSaccessories.hair_gradients_list))]
@@ -105,7 +105,7 @@
 	block_length = DNA_BLOCK_SIZE_COLOR
 
 /datum/dna_block/identity/hair_gradient_color/create_unique_block(mob/living/carbon/human/target)
-	return sanitize_hexcolor(target.grad_color[GRADIENT_HAIR_KEY], include_crunch = FALSE)
+	return sanitize_hexcolor(target.get_hair_gradient_color(GRADIENT_HAIR_KEY), include_crunch = FALSE)
 
 /datum/dna_block/identity/hair_gradient_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)
 	target.set_hair_gradient_color(sanitize_hexcolor(get_block(dna_hash)), update = FALSE)
@@ -113,7 +113,7 @@
 /datum/dna_block/identity/facial_gradient
 
 /datum/dna_block/identity/facial_gradient/create_unique_block(mob/living/carbon/human/target)
-	return construct_block(SSaccessories.facial_hair_gradients_list.Find(target.grad_style[GRADIENT_FACIAL_HAIR_KEY]), length(SSaccessories.facial_hair_gradients_list))
+	return construct_block(SSaccessories.facial_hair_gradients_list.Find(target.get_hair_gradient_style(GRADIENT_FACIAL_HAIR_KEY)), length(SSaccessories.facial_hair_gradients_list))
 
 /datum/dna_block/identity/facial_gradient/apply_to_mob(mob/living/carbon/human/target, dna_hash)
 	var/gradient_style = SSaccessories.facial_hair_gradients_list[deconstruct_block(get_block(dna_hash), length(SSaccessories.facial_hair_gradients_list))]
@@ -123,7 +123,7 @@
 	block_length = DNA_BLOCK_SIZE_COLOR
 
 /datum/dna_block/identity/facial_gradient_color/create_unique_block(mob/living/carbon/human/target)
-	return sanitize_hexcolor(target.grad_color[GRADIENT_FACIAL_HAIR_KEY], include_crunch = FALSE)
+	return sanitize_hexcolor(target.get_hair_gradient_color(GRADIENT_FACIAL_HAIR_KEY), include_crunch = FALSE)
 
 /datum/dna_block/identity/facial_gradient_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)
 	target.set_facial_hair_gradient_color(sanitize_hexcolor(get_block(dna_hash)), update = FALSE)

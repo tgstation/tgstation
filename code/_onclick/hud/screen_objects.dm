@@ -1169,12 +1169,12 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		return INITIALIZE_HINT_QDEL
 	RegisterSignal(hud_owner.mymob, COMSIG_LIVING_LIFE, PROC_REF(on_mob_life))
 
-/atom/movable/screen/blood_level/proc/on_mob_life(mob/living/source, seconds_per_tick, times_fired)
+/atom/movable/screen/blood_level/proc/on_mob_life(mob/living/source, seconds_per_tick)
 	SIGNAL_HANDLER
 
 	if(!isliving(source))
 		return
-	maptext = FORMAT_BLOOD_LEVEL_HUD_MAPTEXT(source.blood_volume)
+	maptext = FORMAT_BLOOD_LEVEL_HUD_MAPTEXT(source.get_blood_volume())
 
 #undef FORMAT_BLOOD_LEVEL_HUD_MAPTEXT
 

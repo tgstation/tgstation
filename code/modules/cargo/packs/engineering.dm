@@ -160,7 +160,7 @@
 		devastating feat of human engineering and testament to wartime determination. \
 		Highly advanced research is required for proper construction."
 	cost = CARGO_CRATE_VALUE * 30
-	special = TRUE
+	order_flags = ORDER_SPECIAL
 	access_view = ACCESS_COMMAND
 	contains = list(/obj/item/paper/guides/jobs/engineering/bsa,
 					/obj/item/circuitboard/machine/bsa/front,
@@ -176,7 +176,7 @@
 		library of scientific knowledge, capable of granting superhuman powers and abilities. \
 		Highly advanced research is required for proper construction. Also contains five DNA probes."
 	cost = CARGO_CRATE_VALUE * 24
-	special = TRUE
+	order_flags = ORDER_SPECIAL
 	access_view = ACCESS_COMMAND
 	contains = list(/obj/item/circuitboard/machine/dna_vault,
 					/obj/item/dna_probe = 5,
@@ -187,7 +187,7 @@
 	name = "DNA Vault Samplers"
 	desc = "Contains five DNA probes for use in the DNA vault."
 	cost = CARGO_CRATE_VALUE * 6
-	special = TRUE
+	order_flags = ORDER_SPECIAL
 	access_view = ACCESS_COMMAND
 	contains = list(/obj/item/dna_probe = 5)
 	crate_name= "dna samplers crate"
@@ -236,7 +236,7 @@
 	contains = list(/obj/machinery/power/emitter = 2)
 	crate_name = "emitter crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
-	dangerous = TRUE
+	order_flags = ORDER_DANGEROUS
 
 /datum/supply_pack/engine/field_gen
 	name = "Field Generator Crate"
@@ -276,7 +276,7 @@
 	contains = list(/obj/machinery/power/supermatter_crystal/shard)
 	crate_name = "supermatter shard crate"
 	crate_type = /obj/structure/closet/crate/secure/radiation
-	dangerous = TRUE
+	order_flags = ORDER_DANGEROUS
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /datum/supply_pack/engine/tesla_coils
@@ -302,12 +302,12 @@
 				)
 	crate_name = "HFR crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering/atmos
-	dangerous = TRUE
+	order_flags = ORDER_DANGEROUS
 
 /datum/supply_pack/engineering/rad_protection_modules
 	name = "Radiation Protection Modules"
 	desc = "Contains multiple radiation protections modules for MODsuits."
-	hidden = TRUE
+	order_flags = ORDER_INVISIBLE
 	contains = list(/obj/item/mod/module/rad_protection = 3)
 	crate_name = "modsuit radiation modules"
 	crate_type = /obj/structure/closet/crate/engineering
@@ -317,7 +317,7 @@
 	desc = "Contains circuitboards and radiation modules for constructing radioactive nebula shielding."
 	cost = CARGO_CRATE_VALUE * 2
 
-	special = TRUE
+	order_flags = ORDER_SPECIAL
 	contains = list(
 		/obj/item/mod/module/rad_protection = 5,
 		/obj/item/circuitboard/machine/radioactive_nebula_shielding = 5,
@@ -333,4 +333,14 @@
 	access_view = ACCESS_ENGINEERING
 	contains = list(/obj/machinery/power/portagrav = 1)
 	crate_name = "portable gravity unit crate"
+	crate_type = /obj/structure/closet/crate/engineering
+
+/datum/supply_pack/engineering/golfcart
+	name = "Golf Cart Parts Kit Crate"
+	desc = "Contains the parts to build a cart intended for moving heavy machinery and cargo across the station. \
+		Nanotrasen assumes no liability for carts operated as 'party wagons'."
+	cost = CARGO_CRATE_VALUE * 11
+	access_view = ACCESS_ENGINEERING
+	contains = list(/obj/item/golfcart_kit = 1, /obj/item/key/golfcart = 2, /obj/item/stock_parts/power_store/cell/lead = 1)
+	crate_name = "golf cart parts kit"
 	crate_type = /obj/structure/closet/crate/engineering

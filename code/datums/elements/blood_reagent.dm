@@ -33,10 +33,10 @@
 
 
 	if (!blood_source)
-		target.material = GET_MATERIAL_REF(/datum/material/meat/blood_meat, target)
+		target.material = SSmaterials.get_material(/datum/material/meat/blood_meat, target)
 		return
 
-	target.material = GET_MATERIAL_REF(/datum/material/meat/mob_meat, blood_source)
+	target.material = SSmaterials.get_material(/datum/material/meat/mob_meat, blood_source)
 
 	var/list/blood_data = blood_source.get_blood_data()
 	if(blood_data["viruses"])
@@ -156,7 +156,7 @@
 		return
 
 	if (blood_type.blood_flags & (BLOOD_ADD_DNA | BLOOD_COVER_ITEMS))
-		exposed_obj.add_blood_DNA(list(list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type) = blood_type))
+		exposed_obj.add_blood_DNA(list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type))
 
 	if (!(blood_type.blood_flags & BLOOD_TRANSFER_VIRAL_DATA) || !source.data?["viruses"])
 		return
@@ -171,6 +171,17 @@
 
 /datum/element/blood_reagent/proc/on_merge(datum/reagent/source, list/mix_data, amount)
 	SIGNAL_HANDLER
+
+	// Proportionally mix synth contents
+	if (source.data?[BLOOD_DATA_SYNTH_CONTENT] || mix_data?[BLOOD_DATA_SYNTH_CONTENT])
+		var/added_synth_volume = amount * mix_data?[BLOOD_DATA_SYNTH_CONTENT]
+		var/existing_synth_volume = source.volume * source.data?[BLOOD_DATA_SYNTH_CONTENT]
+
+		if (!source.data)
+			source.data = list()
+
+		// A simple weighted average that simplifies down to "total synth volume / total blood volume" i.e. "how much of the blood is synthetic"
+		source.data[BLOOD_DATA_SYNTH_CONTENT] = (added_synth_volume + existing_synth_volume) / (amount + source.volume)
 
 	// Presumably artificially generated blood
 	if (!source.data || !mix_data)

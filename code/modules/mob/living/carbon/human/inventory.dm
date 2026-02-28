@@ -185,7 +185,6 @@
 			if(w_uniform)
 				return
 			w_uniform = equipping
-			update_suit_sensors()
 			update_worn_undersuit()
 		if(ITEM_SLOT_LPOCKET)
 			l_store = equipping
@@ -208,14 +207,10 @@
 
 	return not_handled //For future deeper overrides
 
-/mob/living/carbon/human/get_equipped_speed_mod_items()
-	return ..() - list(l_store, r_store, s_store)
-
 /mob/living/carbon/human/doUnEquip(obj/item/item_dropping, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
 	if(!. || !item_dropping)
 		return
-	var/not_handled = FALSE //if we actually unequipped an item, this is because we dont want to run this proc twice, once for carbons and once for humans
 	if(item_dropping == wear_suit)
 		if(s_store && invdrop)
 			dropItemToGround(s_store, TRUE) //It makes no sense for your suit storage to stay on you if you drop your suit.
@@ -228,7 +223,6 @@
 			update_worn_oversuit()
 	else if(item_dropping == w_uniform)
 		w_uniform = null
-		update_suit_sensors()
 		if(!QDELETED(src))
 			update_worn_undersuit()
 		if(invdrop)
@@ -280,15 +274,12 @@
 		s_store = null
 		if(!QDELETED(src))
 			update_suit_storage()
-	else
-		not_handled = TRUE
 
-	if(not_handled)
-		return
-
-	update_equipment_speed_mods()
-	update_obscured_slots(item_dropping.flags_inv)
-	hud_used?.update_locked_slots()
+/mob/living/carbon/human/item_coverage_changed(added_slots, removed_slots)
+	. = ..()
+	if((added_slots|removed_slots) & HIDEFACE)
+		sec_hud_set_security_status()
+		update_visible_name()
 
 /mob/living/carbon/human/toggle_internals(obj/item/tank, is_external = FALSE)
 	// Just close the tank if it's the one the mob already has open.
@@ -355,7 +346,7 @@
 
 //delete all equipment without dropping anything
 /mob/living/carbon/human/proc/delete_equipment()
-	for(var/slot in get_equipped_items(INCLUDE_POCKETS))//order matters, dependant slots go first
+	for(var/slot in get_equipped_items(INCLUDE_POCKETS|INCLUDE_HELD))//order matters, dependant slots go first
 		qdel(slot)
 	for(var/obj/item/held_item in held_items)
 		qdel(held_item)
@@ -367,6 +358,9 @@
 		return
 	var/obj/item/thing = get_active_held_item()
 	var/obj/item/equipped_item = get_item_by_slot(slot_type)
+	var/thing_reject = NONE
+	if(thing)
+		thing_reject = SEND_SIGNAL(thing, COMSIG_HUMAN_NON_STORAGE_HOTKEY, src, equipped_item)
 	if(!equipped_item) // We also let you equip an item like this
 		if(!thing)
 			to_chat(src, span_warning("You have no [slot_item_name] to take something out of!"))
@@ -379,6 +373,8 @@
 		if(!thing)
 			equipped_item.attack_hand(src)
 		else
+			if(thing_reject & COMPONENT_STORAGE_HOTKEY_HANDLED)
+				return
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
 		return
 	if(!storage.supports_smart_equip)
@@ -420,9 +416,3 @@
 			new_bodypart.try_attach_limb(src, TRUE)
 			hand_bodyparts[i] = new_bodypart
 	..() //Don't redraw hands until we have organs for them
-
-/mob/living/carbon/human/update_equipment(obj/item/source)
-	. = ..()
-	// If the item we equipped/unequipped hides our face, we (potentially) need to update our name
-	if (source.flags_inv & HIDEFACE)
-		update_visible_name()

@@ -10,6 +10,9 @@
 	var/obj/item/template_item_type
 
 /datum/hallucination/fake_item/start()
+	if(hallucinator.stat >= UNCONSCIOUS)
+		return FALSE
+
 	var/list/slots_free = list()
 	if(valid_slots & ITEM_SLOT_HANDS)
 		for(var/hand in hallucinator.get_empty_held_indexes())

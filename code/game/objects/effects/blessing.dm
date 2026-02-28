@@ -6,15 +6,21 @@
 	anchored = TRUE
 	density = FALSE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	/// Is this blessing visible to those with the ability to see blessed tiles? (chaplains)
+	var/invisible
 
 /obj/effect/blessing/Initialize(mapload)
 	. = ..()
+
+	RegisterSignal(loc, COMSIG_ATOM_INTERCEPT_TELEPORTING, PROC_REF(block_cult_teleport))
+
+	if(invisible)
+		return
+
 	var/image/blessing_icon = image(icon = 'icons/effects/effects.dmi', icon_state = "blessed", layer = ABOVE_NORMAL_TURF_LAYER, loc = src)
 	blessing_icon.alpha = 64
 	blessing_icon.appearance_flags = RESET_ALPHA
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/blessed_aware, "blessing", blessing_icon)
-
-	RegisterSignal(loc, COMSIG_ATOM_INTERCEPT_TELEPORTING, PROC_REF(block_cult_teleport))
 
 /obj/effect/blessing/Destroy()
 	UnregisterSignal(loc, COMSIG_ATOM_INTERCEPT_TELEPORTING)
@@ -26,3 +32,6 @@
 
 	if(channel == TELEPORT_CHANNEL_CULT)
 		return TRUE
+
+/obj/effect/blessing/invisible
+	invisible = TRUE

@@ -78,8 +78,9 @@
 
 /obj/effect/decal/cleanable/fuel_pool/bullet_act(obj/projectile/hit_proj)
 	. = ..()
-	ignite()
-	log_combat(hit_proj.firer, src, "used [hit_proj] to ignite")
+	if(hit_proj.damage > 0)
+		ignite()
+		log_combat(hit_proj.firer, src, "used [hit_proj] to ignite")
 
 /obj/effect/decal/cleanable/fuel_pool/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(item.ignition_effect(src, user))
@@ -98,7 +99,7 @@
 
 	if(isitem(enflammable_atom))
 		var/obj/item/enflamed_item = enflammable_atom
-		if(enflamed_item.get_temperature() > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		if(enflamed_item.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			ignite()
 		return
 	else if(isliving(enflammable_atom))

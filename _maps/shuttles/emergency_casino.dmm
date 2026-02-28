@@ -97,6 +97,7 @@
 /area/shuttle/escape/brig)
 "el" = (
 /obj/machinery/stasis,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ep" = (
@@ -404,7 +405,7 @@
 	pixel_x = 2;
 	pixel_y = 7
 	},
-/obj/machinery/vending/wallmed/directional/west,
+/obj/machinery/wall_healer/free/directional/west,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "mn" = (
@@ -448,7 +449,7 @@
 /obj/item/canvas,
 /obj/item/canvas,
 /obj/item/canvas,
-/obj/machinery/vending/wallmed/directional/west,
+/obj/machinery/wall_healer/free/directional/west,
 /obj/machinery/light/directional/north,
 /turf/open/floor/sepia,
 /area/shuttle/escape)
@@ -544,6 +545,7 @@
 	pixel_x = 2;
 	pixel_y = 8
 	},
+/obj/machinery/wall_healer/free/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "pp" = (
@@ -571,8 +573,8 @@
 /area/shuttle/escape)
 "qn" = (
 /obj/machinery/stasis,
-/obj/machinery/vending/wallmed/directional/east,
 /obj/machinery/light/directional/north,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "qr" = (
@@ -691,6 +693,7 @@
 "vL" = (
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "vM" = (
@@ -1352,7 +1355,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "VT" = (
-/obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/wall_healer/free/directional/east,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Wp" = (

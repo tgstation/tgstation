@@ -11,6 +11,12 @@
 /datum/movespeed_modifier/jetpack/wings
 	multiplicative_slowdown = -0.3
 
+/datum/movespeed_modifier/jetpack/raptor
+	multiplicative_slowdown = 0.2
+
+/datum/movespeed_modifier/jetpack/raptor/slow
+	multiplicative_slowdown = 1
+
 /datum/movespeed_modifier/die_of_fate
 	multiplicative_slowdown = 1
 

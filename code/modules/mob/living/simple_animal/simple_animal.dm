@@ -2,6 +2,7 @@
 /mob/living/simple_animal
 	name = "animal"
 	icon = 'icons/mob/simple/animal.dmi'
+	abstract_type = /mob/living/simple_animal
 	health = 20
 	maxHealth = 20
 	gender = PLURAL //placeholder
@@ -16,14 +17,14 @@
 	///Flip the sprite upside down on death. Mostly here for things lacking custom dead sprites.
 	var/flip_on_death = FALSE
 
-	var/list/speak = list()
+	var/list/speak
 	///Emotes while speaking IE: `Ian [emote], [text]` -- `Ian barks, "WOOF!".` Spoken text is generated from the speak variable.
-	var/list/speak_emote = list()
+	var/list/speak_emote
 	var/speak_chance = 0
 	///Hearable emotes
-	var/list/emote_hear = list()
+	var/list/emote_hear
 	///Unlike speak_emote, the list of things in this variable only show by themselves with no spoken text. IE: Ian barks, Ian yaps
-	var/list/emote_see = list()
+	var/list/emote_see
 
 	///ticks up every time `handle_automated_movement()` is called, which is every 2 seconds at the time of documenting. 1  turns per move is 1 movement every 2 seconds.
 	var/turns_per_move = 1
@@ -112,9 +113,6 @@
 	///Sorry, no spider+corgi buttbabies.
 	var/animal_species
 
-	///Simple_animal access.
-	///Innate access uses an internal ID card.
-	var/obj/item/card/id/access_card = null
 	///If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
 	var/gold_core_spawnable = NO_SPAWN
 
@@ -176,16 +174,15 @@
 		add_traits(weather_immunities, ROUNDSTART_TRAIT)
 	if (environment_smash >= ENVIRONMENT_SMASH_WALLS)
 		AddElement(/datum/element/wall_smasher, strength_flag = environment_smash)
-	if(speak)
+	if(LAZYLEN(speak))
 		speak = string_list(speak)
-	if(speak_emote)
+	if(LAZYLEN(speak_emote))
 		speak_emote = string_list(speak_emote)
-	if(emote_hear)
+	if(LAZYLEN(emote_hear))
 		emote_hear = string_list(emote_hear)
-	if(emote_see)
-		emote_see = string_list(emote_hear)
-	if(damage_coeff)
-		damage_coeff = string_assoc_list(damage_coeff)
+	if(LAZYLEN(emote_see))
+		emote_see = string_list(emote_see)
+	damage_coeff = string_assoc_list(damage_coeff)
 	if(footstep_type)
 		AddElement(/datum/element/footstep, footstep_type)
 	if(isnull(unsuitable_cold_damage))
@@ -211,13 +208,12 @@
 	if((unsuitable_cold_damage || unsuitable_heat_damage) && (minbodytemp > 0 || maxbodytemp < INFINITY))
 		AddElement(/datum/element/body_temp_sensitive, minbodytemp, maxbodytemp, unsuitable_cold_damage, unsuitable_heat_damage, mapload)
 
-/mob/living/simple_animal/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(staminaloss > 0)
-		adjustStaminaLoss(-stamina_recovery * seconds_per_tick, FALSE, TRUE)
+		adjust_stamina_loss(-stamina_recovery * seconds_per_tick, FALSE, TRUE)
 
 /mob/living/simple_animal/Destroy()
-	QDEL_NULL(access_card)
 	GLOB.simple_animals[AIStatus] -= src
 	SSnpcpool.currentrun -= src
 
@@ -230,8 +226,6 @@
 			. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be asleep.")
 		else
 			. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be dead.")
-	if(access_card)
-		. += "There appears to be [icon2html(access_card, user)] \a [access_card] pinned to [p_them()]."
 
 /mob/living/simple_animal/update_stat()
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
@@ -313,7 +307,7 @@
 					else
 						manual_emote(pick(emote_hear))
 
-/mob/living/simple_animal/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+/mob/living/simple_animal/handle_environment(datum/gas_mixture/environment, seconds_per_tick)
 	var/atom/A = loc
 	if(isturf(A))
 		var/areatemp = get_temperature(environment)
@@ -360,17 +354,18 @@
 	. += "Health: [round((health / maxHealth) * 100)]%"
 	. += "Combat Mode: [combat_mode ? "On" : "Off"]"
 
-/mob/living/simple_animal/proc/drop_loot()
+/mob/living/simple_animal/proc/drop_loot(drop_loc)
 	if (!length(loot))
 		return
 	for(var/i in loot)
-		new i(drop_location())
+		new i(drop_loc)
 	loot.Cut()
 
 /mob/living/simple_animal/death(gibbed)
-	drop_loot()
+	var/drop_loc = drop_location()
 	if(del_on_death)
 		..()
+		drop_loot(drop_loc)
 		//Prevent infinite loops if the mob Destroy() is overridden in such
 		//a manner as to cause a call to death() again //Pain
 		del_on_death = FALSE
@@ -382,7 +377,8 @@
 	if(flip_on_death)
 		transform = transform.Turn(180)
 	ADD_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
-	return ..()
+	. = ..()
+	drop_loot(drop_loc)
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(!isatom(the_target)) // no
@@ -474,10 +470,6 @@
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
 	return ..()
-
-//Will always check hands first, because access_card is internal to the mob and can't be removed or swapped.
-/mob/living/simple_animal/get_idcard(hand_first)
-	return (..() || access_card)
 
 /mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
 	. = ..()

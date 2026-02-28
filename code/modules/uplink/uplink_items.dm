@@ -9,7 +9,7 @@
 			per_category[possible_sale.category] = list()
 		per_category[possible_sale.category] += possible_sale
 
-	for (var/i in 1 to num)
+	for (var/i in 1 to min(length(per_category), num))
 		var/datum/uplink_category/item_category = pick(per_category)
 		var/datum/uplink_item/taken_item = pick(per_category[item_category])
 		per_category -= item_category
@@ -109,6 +109,9 @@
 	/// Uses the purchase log, so items purchased that are not visible in the purchase log will not count towards this.
 	/// However, they won't be purchasable afterwards.
 	var/lock_other_purchases = FALSE
+	/// A lazylist of typepaths to uplink items relevant to this this item
+	/// EX: a pistol would list its magazines or modifications here
+	var/list/relevant_child_items
 
 /datum/uplink_item/New()
 	. = ..()
@@ -209,7 +212,7 @@
 
 	QDEL_NULL(gun_reward.pin)
 	var/obj/item/firing_pin/pin = new
-	pin.gun_insert(new_gun = gun_reward)
+	pin.gun_insert(new_gun = gun_reward, starting = TRUE)
 
 ///For special overrides if an item can be bought or not.
 /datum/uplink_item/proc/can_be_bought(datum/uplink_handler/source)

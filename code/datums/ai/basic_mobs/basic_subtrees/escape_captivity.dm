@@ -8,11 +8,13 @@
 /datum/ai_planning_subtree/escape_captivity/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
 
-	if (living_pawn.buckled && !ismob(living_pawn.buckled))
-		if (!pacifist && !living_pawn.can_hold_items() || living_pawn.usable_hands < 1) // If we don't have hands then prioritise slapping the shit out of whatever we are attached to
-			controller.queue_behavior(/datum/ai_behavior/break_out_of_object, living_pawn.buckled)
-		else
+	if (isobj(living_pawn.buckled))
+		// we can just stand up we don't need to freak out
+		if (pacifist || !HAS_TRAIT(living_pawn.buckled, TRAIT_DANGEROUS_BUCKLE))
 			controller.queue_behavior(/datum/ai_behavior/resist)
+		// otherwise beat the shit out of we we gotta get out NOW
+		else
+			controller.queue_behavior(/datum/ai_behavior/break_out_of_object, living_pawn.buckled)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 	if (!isturf(living_pawn.loc) && !ismob(living_pawn.loc) && !istype(living_pawn.loc, /obj/item/mob_holder))
@@ -26,7 +28,7 @@
 			controller.queue_behavior(/datum/ai_behavior/break_out_of_object, contained_in)
 		else
 			controller.queue_behavior(/datum/ai_behavior/resist)
-			return SUBTREE_RETURN_FINISH_PLANNING
+		return SUBTREE_RETURN_FINISH_PLANNING
 
 	var/mob/puller = living_pawn.pulledby
 	if (puller && puller.grab_state > GRAB_PASSIVE)
@@ -60,7 +62,7 @@
 	if (QDELETED(target))
 		return FALSE
 	var/mob/living/pawn = controller.pawn
-	if (!pawn.CanReach(target))
+	if (!target.IsReachableBy(pawn))
 		return FALSE
 	return pawn.loc == target || pawn.buckled == target
 

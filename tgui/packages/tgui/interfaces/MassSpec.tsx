@@ -37,6 +37,7 @@ type Data = {
   peakHeight: number;
   beaker1: Beaker;
   beaker2: Beaker;
+  hasBeakerInHand: BooleanLike;
 };
 
 const GRAPH_MAX_WIDTH = 1060;
@@ -53,6 +54,7 @@ export const MassSpec = (props) => {
     peakHeight,
     beaker1,
     beaker2,
+    hasBeakerInHand,
   } = data;
 
   const centerValue = (lowerRange + upperRange) / 2;
@@ -106,17 +108,30 @@ export const MassSpec = (props) => {
         <Section
           title="Input beaker"
           buttons={
-            !!beaker1 && (
+            beaker1 ? (
               <>
-                {
-                  <Box inline color="label" mr={2}>
-                    {beaker1.currentVolume} / {beaker1.maxVolume} units
-                  </Box>
-                }
+                <Box inline color="label" mr={2}>
+                  {beaker1.currentVolume} / {beaker1.maxVolume} units
+                </Box>
                 <Button icon="eject" onClick={() => act('eject1')}>
                   Eject
                 </Button>
               </>
+            ) : (
+              <Button
+                icon="eject"
+                onClick={() => act('insert1')}
+                style={{
+                  opacity: hasBeakerInHand ? 1 : 0.5,
+                }}
+                tooltip={
+                  !hasBeakerInHand &&
+                  'You need to hold a container in your hand'
+                }
+                tooltipPosition="bottom-start"
+              >
+                Insert
+              </Button>
             )
           }
         >
@@ -132,17 +147,30 @@ export const MassSpec = (props) => {
         <Section
           title="Output beaker"
           buttons={
-            !!beaker2 && (
+            beaker2 ? (
               <>
-                {
-                  <Box inline color="label" mr={2}>
-                    {beaker2.currentVolume} / {beaker2.maxVolume} units
-                  </Box>
-                }
+                <Box inline color="label" mr={2}>
+                  {beaker2.currentVolume} / {beaker2.maxVolume} units
+                </Box>
                 <Button icon="eject" onClick={() => act('eject2')}>
                   Eject
                 </Button>
               </>
+            ) : (
+              <Button
+                icon="eject"
+                onClick={() => act('insert2')}
+                style={{
+                  opacity: hasBeakerInHand ? 1 : 0.5,
+                }}
+                tooltip={
+                  !hasBeakerInHand &&
+                  'You need to hold a container in your hand'
+                }
+                tooltipPosition="bottom-start"
+              >
+                Insert
+              </Button>
             )
           }
         >

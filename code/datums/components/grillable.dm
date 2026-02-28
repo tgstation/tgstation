@@ -41,8 +41,8 @@
 	var/atom/result = new cook_result
 	if(!item_parent.compare_materials(result))
 		var/warning = "custom_materials of [result.type] when grilled compared to just spawned don't match"
-		var/what_it_should_be = item_parent.get_materials_english_list()
-		stack_trace("[warning]. custom_materials should be [what_it_should_be].")
+		var/what_it_should_be = item_parent.transcribe_materials_list()
+		stack_trace("[warning]. should be: custom_materials = [what_it_should_be].")
 	qdel(result)
 
 /datum/component/grillable/RegisterWithParent()
@@ -147,7 +147,6 @@
 	if(isstack(parent)) //Check if its a sheet, for grilling multiple things in a stack
 		var/obj/item/stack/stack_parent = original_object
 		grilled_result = new cook_result(original_object.loc, stack_parent.amount)
-
 	else
 		grilled_result = new cook_result(original_object.loc)
 		if(istype(original_object, /obj/item/food) && istype(grilled_result, /obj/item/food))
@@ -156,9 +155,11 @@
 			LAZYADD(grilled_food.intrinsic_food_materials, original_food.intrinsic_food_materials)
 		grilled_result.set_custom_materials(original_object.custom_materials)
 
-	if(IsEdible(grilled_result) && positive_result)
+	if(IS_EDIBLE(grilled_result) && positive_result)
 		BLACKBOX_LOG_FOOD_MADE(grilled_result.type)
-		grilled_result.reagents.clear_reagents()
+	//make space and tranfer reagents if it has any, also let any bad result handle removing or converting the transferred reagents on its own terms
+	if(grilled_result.reagents && original_object.reagents)
+		grilled_result.reagents?.clear_reagents()
 		original_object.reagents?.trans_to(grilled_result, original_object.reagents.total_volume)
 		if(added_reagents) // Add any new reagents that should be added
 			grilled_result.reagents.add_reagent_list(added_reagents)

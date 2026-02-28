@@ -32,8 +32,9 @@
 		/obj/item/reagent_containers/medigel/sterilizine,
 		/obj/item/retractor,
 		/obj/item/scalpel,
+		/obj/item/shears,
 		/obj/item/stack/medical/bone_gel,
-		/obj/item/stack/sticky_tape/surgical,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical,
 		/obj/item/surgical_drapes,
 		/obj/item/surgicaldrill,
 		/obj/item/blood_scanner,
@@ -209,6 +210,7 @@
 			/obj/item/stack/medical,
 			/obj/item/stamp,
 			/obj/item/toy/crayon,
+			/obj/item/poker_chip,
 		),
 		cant_hold_list = list(
 			/obj/item/screwdriver/power

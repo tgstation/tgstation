@@ -14,7 +14,7 @@
 	required_organ = ORGAN_SLOT_LIVER
 	bypasses_immunity = TRUE
 
-/datum/disease/parasite/stage_act(seconds_per_tick, times_fired)
+/datum/disease/parasite/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
