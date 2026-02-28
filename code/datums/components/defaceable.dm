@@ -10,8 +10,6 @@
 	var/ink_colour
 	/// Optional callback called when we are drawn on, we pass in the ink colour
 	var/datum/callback/on_defaced
-	/// Our overlays
-	var/list/cached_overlays = list()
 
 /datum/component/defaceable/Initialize(icon, list/icon_states, drawing_of, datum/callback/on_defaced)
 	if (!isatom(parent))
@@ -34,8 +32,8 @@
 	atom_parent.update_appearance(UPDATE_OVERLAYS)
 
 /datum/component/defaceable/Destroy(force = FALSE)
-	. = ..()
 	on_defaced = null
+	return ..()
 
 /// Inform people that they can mess us up
 /datum/component/defaceable/proc/on_hovered(atom/source, list/context, obj/item/held_item, mob/user)
@@ -52,7 +50,6 @@
 	SIGNAL_HANDLER
 	if (user.combat_mode)
 		return
-	var/ink_colour
 	if(istype(tool, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/crayon = tool
 		ink_colour = crayon.paint_color
@@ -73,11 +70,6 @@
 		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 
 	if (icon && icon_states)
-		for (var/state in icon_states)
-			var/mutable_appearance/appearance = mutable_appearance(icon, state)
-			if (!icon_states[state])
-				appearance.color = ink_colour
-			cached_overlays += appearance
 		RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	source.update_appearance(UPDATE_OVERLAYS)
 
@@ -88,7 +80,11 @@
 /// Render our beautiful drawing
 /datum/component/defaceable/proc/on_update_overlays(atom/source, list/overlays)
 	SIGNAL_HANDLER
-	overlays += cached_overlays
+	for (var/state in icon_states)
+		var/mutable_appearance/appearance = mutable_appearance(icon, state)
+		if (!icon_states[state])
+			appearance.color = ink_colour
+		overlays += appearance
 
 /// Wash it off
 /datum/component/defaceable/proc/on_cleaned(atom/source, clean_types)
@@ -96,7 +92,6 @@
 	if (!(clean_types & (CLEAN_WASH|CLEAN_SCRUB)))
 		return
 
-	cached_overlays = list()
 	REMOVE_TRAIT(parent, TRAIT_DEFACED, ref(src))
 	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_drawn))
 	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_ATOM_UPDATE_OVERLAYS))
