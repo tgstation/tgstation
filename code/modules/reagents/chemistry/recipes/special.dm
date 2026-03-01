@@ -317,7 +317,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 		qui officia deserunt mollit anim id est laborum."
 
 /obj/item/paper/secretrecipe/proc/UpdateInfo()
-	var/datum/chemical_reaction/recipe = get_chemical_reaction(recipe_id)
+	var/datum/chemical_reaction/recipe = GLOB.chemical_reactions_list[recipe_id]
 	if(!recipe)
 		add_raw_text("This recipe is illegible.")
 		update_appearance()

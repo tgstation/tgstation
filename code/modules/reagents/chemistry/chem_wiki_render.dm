@@ -22,7 +22,7 @@ ADMIN_VERB(generate_wikichem_list, R_DEBUG, "Parse Wikichems", "Parse and genera
 	var/list/names = splittext("[input_text]", ",")
 
 	for(var/name in names)
-		var/datum/reagent/reagent = find_reagent_object_from_type(get_chem_id(name))
+		var/datum/reagent/reagent = GLOB.chemical_reagents_list[get_chem_id(name)]
 		if(!reagent)
 			to_chat(user, "Could not find [name]. Skipping.")
 			continue
