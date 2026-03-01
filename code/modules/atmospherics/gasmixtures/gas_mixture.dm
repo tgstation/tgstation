@@ -486,14 +486,23 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(!length(cached_gases))
 		return
 
+	var/list/pre_formation = list()
+	var/list/mid_formation = list()
+	var/list/post_formation = list()
+	var/list/fires = list()
 	var/list/gas_reactions = SSair.gas_reactions
-	var/list/gas_reaction_sets = list()
 	for(var/gas_id in cached_gases)
 		var/list/reaction_set = gas_reactions[gas_id]
 		if(!reaction_set)
 			continue
-		gas_reaction_sets += list(reaction_set)
-	if(!length(gas_reaction_sets))
+		pre_formation += reaction_set[1]
+		mid_formation += reaction_set[2]
+		post_formation += reaction_set[3]
+		fires += reaction_set[4]
+
+	var/list/reactions = pre_formation + mid_formation + post_formation + fires
+
+	if(!length(reactions))
 		return
 
 	//Fuck you
@@ -503,21 +512,21 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	reaction_results = new
 	//It might be worth looking into updating these after each reaction, but that makes us care more about order of operations, so be careful
 	var/temp = temperature
-	for(var/priority_group in 1 to 4)
-		for(var/list/reaction_set as anything in gas_reaction_sets)
-			reaction_loop:
-				for(var/datum/gas_reaction/reaction as anything in reaction_set[priority_group])
-					if((reaction.min_temp && temp < reaction.min_temp) || (reaction.max_temp && temp > reaction.max_temp))
-						continue
+	reaction_loop:
+		for(var/datum/gas_reaction/reaction as anything in reactions)
 
-					var/list/required_gases = reaction.required_gases
-					if(required_gases)
-						for(var/id in required_gases)
-							if(!cached_gases[id] || cached_gases[id][MOLES] < required_gases[id])
-								continue reaction_loop
+			var/list/reqs = reaction.requirements
+			if((reqs["MIN_TEMP"] && temp < reqs["MIN_TEMP"]) || (reqs["MAX_TEMP"] && temp > reqs["MAX_TEMP"]))
+				continue
 
-					//at this point, all requirements for the reaction are satisfied. we can now react()
-					. |= reaction.react(src, holder)
+			for(var/id in reqs)
+				if (id == "MIN_TEMP" || id == "MAX_TEMP")
+					continue
+				if(!cached_gases[id] || cached_gases[id][MOLES] < reqs[id])
+					continue reaction_loop
+
+			//at this point, all requirements for the reaction are satisfied. we can now react()
+			. |= reaction.react(src, holder)
 
 
 	if(.) //If we changed the mix to any degree
