@@ -14,12 +14,6 @@
 	var/gasmix_color
 	/// A named list of icon_file:overlay_object that gets automatically colored when the gasmix_color updates
 	var/list/gas_visuals
-	/// Scratch list reused during reconcile to reduce per-tick allocations.
-	var/list/datum/gas_mixture/reconcile_gas_mixtures
-	/// Scratch queue reused while traversing custom reconcilation links.
-	var/list/datum/pipeline/reconcile_pipelines
-	/// Scratch mixture reused as the reconciliation target mix.
-	var/datum/gas_mixture/reconcile_total_mix
 
 	///Should we equalize air amoung all our members?
 	var/update = TRUE
@@ -32,9 +26,6 @@
 	other_atmos_machines = list()
 	require_custom_reconcilation = list()
 	gas_visuals = list()
-	reconcile_gas_mixtures = list()
-	reconcile_pipelines = list()
-	reconcile_total_mix = new
 	SSair.networks += src
 
 /datum/pipeline/Destroy()
@@ -246,21 +237,19 @@
 
 /// Called when the pipenet needs to update and mix together all the air mixes
 /datum/pipeline/proc/reconcile_air()
-	var/list/datum/gas_mixture/gas_mixture_list = reconcile_gas_mixtures
-	gas_mixture_list.Cut()
-	var/list/datum/pipeline/pipeline_list = reconcile_pipelines
-	pipeline_list.Cut()
+	var/list/datum/gas_mixture/gas_mixture_list = list()
+	var/list/datum/pipeline/pipeline_list = list()
 	pipeline_list += src
 
 	for(var/i = 1; i <= pipeline_list.len; i++) //can't do a for-each here because we may add to the list within the loop
 		var/datum/pipeline/pipeline = pipeline_list[i]
 		if(!pipeline)
 			continue
-		gas_mixture_list |= pipeline.other_airs
-		gas_mixture_list |= pipeline.air
+		gas_mixture_list += pipeline.other_airs
+		gas_mixture_list += pipeline.air
 		for(var/obj/machinery/atmospherics/components/atmos_machine as anything in pipeline.require_custom_reconcilation)
 			pipeline_list |= atmos_machine.return_pipenets_for_reconcilation(src)
-			gas_mixture_list |= atmos_machine.return_airs_for_reconcilation(src)
+			gas_mixture_list += atmos_machine.return_airs_for_reconcilation(src)
 
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0
@@ -273,11 +262,9 @@
 	process_id = (process_id + 1) % (SHORT_REAL_LIMIT - 1)
 
 	for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
-		if(!gas_mixture)
-			stack_trace("[src] encountered a null gas mixture during reconcile_air() indicating a stale/invalid/broken pipenet air reference.")
-			continue
 		// Ensure we never walk the same mix twice
 		if(gas_mixture.pipeline_cycle == process_id)
+			gas_mixture_list -= gas_mixture
 			continue
 		gas_mixture.pipeline_cycle = process_id
 		volume_sum += gas_mixture.volume
@@ -299,16 +286,13 @@
 	if(volume_sum == 0)
 		return
 
-	var/datum/gas_mixture/total_gas_mixture = reconcile_total_mix
-	total_gas_mixture.volume = volume_sum
+	var/datum/gas_mixture/total_gas_mixture = new(volume_sum)
 	total_gas_mixture.temperature = total_heat_capacity ? (total_thermal_energy / total_heat_capacity) : 0
 	total_gas_mixture.gases = total_gases
 	total_gas_mixture.garbage_collect()
 
 	//Update individual gas_mixtures by volume ratio
 	for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
-		if(!gas_mixture || gas_mixture.pipeline_cycle != process_id)
-			continue
 		gas_mixture.copy_from_ratio(total_gas_mixture, gas_mixture.volume / volume_sum)
 
 //--------------------
