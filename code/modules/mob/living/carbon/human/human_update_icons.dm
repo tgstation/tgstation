@@ -1036,8 +1036,7 @@ generate/load female uniform sprites matching all previously decided variables
 		else
 			return
 
-	appearance.pixel_z = initial(appearance.pixel_z)
-	appearance.pixel_z += final_offset
+	appearance.pixel_z = initial(appearance.pixel_z) + final_offset
 	return appearance
 
 /**
