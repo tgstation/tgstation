@@ -47,12 +47,6 @@
 	 * More complex implementations will require modifications to gas_mixture.react()
 	 */
 	var/list/requirements
-	/// Cached minimum temperature requirement.
-	var/min_temp
-	/// Cached maximum temperature requirement.
-	var/max_temp
-	/// Cached non-temperature gas requirements (gas id -> minimum moles).
-	var/list/required_gases
 	var/major_gas //the highest rarity gas used in the reaction.
 	var/exclude = FALSE //do it this way to allow for addition/removal of reactions midmatch in the future
 	///The priority group this reaction is a part of. You can think of these as processing in batches, put your reaction into the one that's most fitting
@@ -78,21 +72,6 @@
 /datum/gas_reaction/New()
 	init_reqs()
 	init_factors()
-	cache_requirements()
-
-/datum/gas_reaction/proc/cache_requirements()
-	if(!requirements)
-		required_gases = null
-		min_temp = null
-		max_temp = null
-		return
-	min_temp = requirements["MIN_TEMP"]
-	max_temp = requirements["MAX_TEMP"]
-	required_gases = list()
-	for(var/id in requirements)
-		if(id == "MIN_TEMP" || id == "MAX_TEMP")
-			continue
-		required_gases[id] = requirements[id]
 
 /datum/gas_reaction/proc/init_reqs() // Override this
 	CRASH("Reaction [type] made without specifying requirements.")
